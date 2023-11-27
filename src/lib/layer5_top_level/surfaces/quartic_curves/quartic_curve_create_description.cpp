@@ -74,7 +74,8 @@ quartic_curve_create_description::~quartic_curve_create_description()
 {
 }
 
-int quartic_curve_create_description::read_arguments(int argc, std::string *argv,
+int quartic_curve_create_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

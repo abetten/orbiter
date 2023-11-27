@@ -203,7 +203,8 @@ void table_of_surfaces::do_export(
 }
 
 
-void table_of_surfaces::create_table(std::string *&Table, int &nb_cols,
+void table_of_surfaces::create_table(
+		std::string *&Table, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

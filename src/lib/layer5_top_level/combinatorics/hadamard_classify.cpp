@@ -16,14 +16,16 @@ namespace apps_combinatorics {
 
 
 
-static void hadamard_classify_early_test_function(long int *S, int len,
+static void hadamard_classify_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 
 
 
-void hadamard_classify::init(int n,
+void hadamard_classify::init(
+		int n,
 		int f_draw,
 		int verbose_level,
 		int verbose_level_clique)
@@ -482,7 +484,8 @@ int hadamard_classify::dot_product(
 	return c;
 }
 
-void hadamard_classify_early_test_function(long int *S, int len,
+void hadamard_classify_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

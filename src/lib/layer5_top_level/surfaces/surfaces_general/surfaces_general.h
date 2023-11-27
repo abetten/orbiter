@@ -89,7 +89,8 @@ public:
 			cubic_surfaces_in_general::cubic_surface_activity_description
 				*Cubic_surface_activity_description,
 			surface_create *SC, int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 };
 
 
@@ -115,8 +116,10 @@ public:
 
 	surface_clebsch_map();
 	~surface_clebsch_map();
-	void report(std::ostream &ost, int verbose_level);
-	void init(surface_object_with_group *SOA,
+	void report(
+			std::ostream &ost, int verbose_level);
+	void init(
+			surface_object_with_group *SOA,
 			int orbit_idx, int verbose_level);
 
 };
@@ -271,8 +274,10 @@ public:
 			std::string &module_basis_label,
 			std::string &gens_label,
 			int verbose_level);
-	void export_gap(int verbose_level);
-	void do_report(int verbose_level);
+	void export_gap(
+			int verbose_level);
+	void do_report(
+			int verbose_level);
 	void do_report_group_elements(
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
@@ -284,9 +289,12 @@ public:
 	void report_with_group(
 			std::string &Control_six_arcs_label,
 			int verbose_level);
-	void test_group(int verbose_level);
-	void all_quartic_curves(int verbose_level);
-	void export_all_quartic_curves(int verbose_level);
+	void test_group(
+			int verbose_level);
+	void all_quartic_curves(
+			int verbose_level);
+	void export_all_quartic_curves(
+			int verbose_level);
 
 };
 
@@ -402,7 +410,8 @@ public:
 
 	surface_create_description();
 	~surface_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };
@@ -482,7 +491,8 @@ public:
 			int nb_e, int *Idx, int nb,
 			std::string &fname_report_tex,
 			int verbose_level);
-	void do_create_dickson_atlas(int verbose_level);
+	void do_create_dickson_atlas(
+			int verbose_level);
 	void make_fname_surface_report_tex(
 			std::string &fname, int q, int ocn);
 	void make_fname_surface_report_pdf(
@@ -492,8 +502,10 @@ public:
 			int verbose_level);
 
 	// report the data in the knowledge base:
-	void make_table_of_surfaces(int verbose_level);
-	void make_table_of_quartic_curves(int verbose_level);
+	void make_table_of_surfaces(
+			int verbose_level);
+	void make_table_of_quartic_curves(
+			int verbose_level);
 	void make_table_of_objects(
 			std::ostream &ost,
 			std::string &prefix,
@@ -735,12 +747,18 @@ public:
 
 	void init(
 			field_theory::finite_field *F, int nb, int verbose_level);
-	void study_intersection_points(int verbose_level);
-	void study_line_orbits(int verbose_level);
-	void study_group(int verbose_level);
-	void study_orbits_on_lines(int verbose_level);
-	void study_find_eckardt_points(int verbose_level);
-	void study_surface_with_6_eckardt_points(int verbose_level);
+	void study_intersection_points(
+			int verbose_level);
+	void study_line_orbits(
+			int verbose_level);
+	void study_group(
+			int verbose_level);
+	void study_orbits_on_lines(
+			int verbose_level);
+	void study_find_eckardt_points(
+			int verbose_level);
+	void study_surface_with_6_eckardt_points(
+			int verbose_level);
 };
 
 
@@ -806,9 +824,12 @@ public:
 		int *Polarity36,
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
-	void report_basics(std::ostream &ost);
-	void report_double_triplets(std::ostream &ost);
-	void report_double_triplets_detailed(std::ostream &ost);
+	void report_basics(
+			std::ostream &ost);
+	void report_double_triplets(
+			std::ostream &ost);
+	void report_double_triplets_detailed(
+			std::ostream &ost);
 	void sweep_4_15_lines(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
@@ -865,7 +886,8 @@ public:
 		int verbose_level);
 	void do_export(
 			int verbose_level);
-	void create_table(std::string *&Table, int &nb_cols,
+	void create_table(
+			std::string *&Table, int &nb_cols,
 			int verbose_level);
 	void export_csv(
 			std::string *Table,

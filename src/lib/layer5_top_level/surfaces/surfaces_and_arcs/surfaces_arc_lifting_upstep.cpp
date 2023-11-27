@@ -72,7 +72,8 @@ surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 	}
 }
 
-void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_level)
+void surfaces_arc_lifting_upstep::init(
+		surfaces_arc_lifting *Lift, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -175,7 +176,8 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 	}
 }
 
-void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
+void surfaces_arc_lifting_upstep::process_flag_orbit(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -291,7 +293,8 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 
 }
 
-void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_definition_node *D,
+void surfaces_arc_lifting_upstep::compute_stabilizer(
+		surfaces_arc_lifting_definition_node *D,
 		groups::strong_generators *&Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -580,7 +583,8 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 
 
 
-void surfaces_arc_lifting_upstep::make_seventytwo_cases(int verbose_level)
+void surfaces_arc_lifting_upstep::make_seventytwo_cases(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int c;

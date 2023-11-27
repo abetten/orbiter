@@ -84,7 +84,8 @@ void coding_theoretic_activity::init_code(
 }
 
 
-void coding_theoretic_activity::perform_activity(int verbose_level)
+void coding_theoretic_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -169,7 +169,8 @@ void surface_repository::init(
 }
 
 
-void surface_repository::generate_source_code(int verbose_level)
+void surface_repository::generate_source_code(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

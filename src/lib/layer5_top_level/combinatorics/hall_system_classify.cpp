@@ -316,7 +316,8 @@ void hall_system_classify::init(
 	}
 }
 
-void hall_system_classify::orbits_on_triples(int verbose_level)
+void hall_system_classify::orbits_on_triples(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -436,7 +437,8 @@ void hall_system_classify::print(
 	} // next i
 }
 
-void hall_system_classify::unrank_triple(long int *T, int rk)
+void hall_system_classify::unrank_triple(
+		long int *T, int rk)
 {
 	int a, b, i;
 	int set[3];

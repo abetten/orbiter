@@ -946,7 +946,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 }
 
 
-void surface_with_action::report_basics(std::ostream &ost)
+void surface_with_action::report_basics(
+		std::ostream &ost)
 {
 
 	Surf->print_basics(ost);
@@ -955,7 +956,8 @@ void surface_with_action::report_basics(std::ostream &ost)
 
 }
 
-void surface_with_action::report_double_triplets(std::ostream &ost)
+void surface_with_action::report_double_triplets(
+		std::ostream &ost)
 {
 
 
@@ -964,7 +966,8 @@ void surface_with_action::report_double_triplets(std::ostream &ost)
 
 }
 
-void surface_with_action::report_double_triplets_detailed(std::ostream &ost)
+void surface_with_action::report_double_triplets_detailed(
+		std::ostream &ost)
 {
 
 

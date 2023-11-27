@@ -297,7 +297,8 @@ void spread_lifting::print_free_points()
 
 }
 
-void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
+void spread_lifting::compute_colors(
+		int &f_ruled_out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;
@@ -398,7 +399,8 @@ void spread_lifting::compute_colors(int &f_ruled_out, int verbose_level)
 }
 
 
-void spread_lifting::reduce_candidates(int verbose_level)
+void spread_lifting::reduce_candidates(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//geometry::geometry_global Geo;
@@ -531,7 +533,8 @@ void spread_lifting::reduce_candidates(int verbose_level)
 
 }
 
-solvers::diophant *spread_lifting::create_system(int verbose_level)
+solvers::diophant *spread_lifting::create_system(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -631,7 +634,8 @@ solvers::diophant *spread_lifting::create_system(int verbose_level)
 }
 
 
-int spread_lifting::is_e1_vector(int *v)
+int spread_lifting::is_e1_vector(
+		int *v)
 {
 	int j;
 
@@ -646,7 +650,8 @@ int spread_lifting::is_e1_vector(int *v)
 	return true;
 }
 
-int spread_lifting::is_zero_vector(int *v)
+int spread_lifting::is_zero_vector(
+		int *v)
 {
 	int j;
 
@@ -727,7 +732,8 @@ void spread_lifting::create_graph(
 }
 
 
-void spread_lifting::create_dummy_graph(int verbose_level)
+void spread_lifting::create_dummy_graph(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_v3 = (verbose_level >= 3);

@@ -137,7 +137,8 @@ trihedral_pair_with_action::~trihedral_pair_with_action()
 	}
 }
 
-void trihedral_pair_with_action::init(arc_lifting *AL, int verbose_level)
+void trihedral_pair_with_action::init(
+		arc_lifting *AL, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -640,7 +641,8 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 
 
-void trihedral_pair_with_action::create_the_six_plane_equations(int t_idx, int verbose_level)
+void trihedral_pair_with_action::create_the_six_plane_equations(
+		int t_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -825,7 +827,8 @@ void trihedral_pair_with_action::create_action_on_equations_and_compute_orbits(
 	}
 }
 
-void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
+void trihedral_pair_with_action::create_clebsch_system(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -872,7 +875,8 @@ void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
 	}
 }
 
-void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbose_level)
+void trihedral_pair_with_action::compute_iso_types_as_double_triplets(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int planes6[6];
@@ -931,7 +935,8 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 	}
 }
 
-void trihedral_pair_with_action::print_FG(std::ostream &ost)
+void trihedral_pair_with_action::print_FG(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 
@@ -1285,7 +1290,8 @@ void trihedral_pair_with_action::print_isomorphism_types_of_trihedral_pairs(
 }
 #endif
 
-void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
+void trihedral_pair_with_action::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1407,7 +1413,8 @@ void trihedral_pair_with_action::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void trihedral_pair_with_action::report_iso_type_as_double_triplets(std::ostream &ost)
+void trihedral_pair_with_action::report_iso_type_as_double_triplets(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 	int i;

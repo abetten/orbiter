@@ -1133,7 +1133,8 @@ void surface_classify_wedge::identify_general_abcd(
 	}
 }
 
-void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_level)
+void surface_classify_wedge::identify_general_abcd_and_print_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, c, d;
@@ -1279,7 +1280,8 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	}
 }
 
-void surface_classify_wedge::identify_Eckardt_and_print_table(int verbose_level)
+void surface_classify_wedge::identify_Eckardt_and_print_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1345,7 +1347,8 @@ void surface_classify_wedge::identify_Eckardt_and_print_table(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::identify_F13_and_print_table(int verbose_level)
+void surface_classify_wedge::identify_F13_and_print_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;
@@ -1394,7 +1397,8 @@ void surface_classify_wedge::identify_F13_and_print_table(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::identify_Bes_and_print_table(int verbose_level)
+void surface_classify_wedge::identify_Bes_and_print_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, c;

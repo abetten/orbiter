@@ -309,7 +309,8 @@ void quartic_curve_object_properties::report_properties_simple(
 	}
 }
 
-void quartic_curve_object_properties::print_equation(std::ostream &ost)
+void quartic_curve_object_properties::print_equation(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{The equation}" << endl;
 	ost << "The equation of the quartic curve ";
@@ -347,7 +348,8 @@ void quartic_curve_object_properties::print_equation(std::ostream &ost)
 
 }
 
-void quartic_curve_object_properties::print_gradient(std::ostream &ost)
+void quartic_curve_object_properties::print_gradient(
+		std::ostream &ost)
 {
 	int i;
 
@@ -384,7 +386,8 @@ void quartic_curve_object_properties::print_gradient(std::ostream &ost)
 
 
 
-void quartic_curve_object_properties::print_general(std::ostream &ost)
+void quartic_curve_object_properties::print_general(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{General information}" << endl;
 
@@ -421,7 +424,8 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 }
 
 
-void quartic_curve_object_properties::print_points(std::ostream &ost)
+void quartic_curve_object_properties::print_points(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{All points on the curve}" << endl;
 
@@ -433,7 +437,8 @@ void quartic_curve_object_properties::print_points(std::ostream &ost)
 
 
 
-void quartic_curve_object_properties::print_all_points(std::ostream &ost)
+void quartic_curve_object_properties::print_all_points(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	//int i;
@@ -477,7 +482,8 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 	}
 }
 
-void quartic_curve_object_properties::print_bitangents(std::ostream &ost)
+void quartic_curve_object_properties::print_bitangents(
+		std::ostream &ost)
 {
 	if (QO->f_has_bitangents) {
 		ost << "\\subsection*{The 28 Bitangents}" << endl;
@@ -565,7 +571,8 @@ void quartic_curve_object_properties::print_bitangents_with_points_on_them(std::
 
 
 
-void quartic_curve_object_properties::compute_gradient(int verbose_level)
+void quartic_curve_object_properties::compute_gradient(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -579,7 +586,8 @@ void quartic_curve_object_properties::compute_gradient(int verbose_level)
 				"before QO->Dom->compute_gradient" << endl;
 	}
 
-	QO->Dom->compute_gradient(QO->eqn15, gradient, verbose_level);
+	QO->Dom->compute_gradient(
+			QO->eqn15, gradient, verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::compute_gradient done" << endl;
@@ -687,7 +695,8 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 
 	nb_tangent_lines = nb_non_singular_pts;
 
-	Sorting.lint_vec_sort_and_remove_duplicates(tangent_line_rank_dual, nb_tangent_lines);
+	Sorting.lint_vec_sort_and_remove_duplicates(
+			tangent_line_rank_dual, nb_tangent_lines);
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines nb_tangent_lines " << nb_tangent_lines << endl;
@@ -719,7 +728,8 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 
 
 
-	QO->Dom->Poly2_3->vanishing_ideal(tangent_line_rank_dual, nb_non_singular_pts,
+	QO->Dom->Poly2_3->vanishing_ideal(
+			tangent_line_rank_dual, nb_non_singular_pts,
 			r, Kernel, 0 /*verbose_level */);
 
 	ns = QO->Dom->Poly2_3->get_nb_monomials() - r; // dimension of null space

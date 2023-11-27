@@ -99,7 +99,8 @@ void code_modification_description::print()
 	}
 }
 
-void code_modification_description::apply(apps_coding_theory::create_code *Code, int verbose_level)
+void code_modification_description::apply(
+		apps_coding_theory::create_code *Code, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

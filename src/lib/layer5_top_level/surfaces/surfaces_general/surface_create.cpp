@@ -3001,7 +3001,8 @@ void surface_create::action_on_module(
 }
 
 
-void surface_create::export_gap(int verbose_level)
+void surface_create::export_gap(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3061,7 +3062,8 @@ void surface_create::export_gap(int verbose_level)
 }
 
 
-void surface_create::do_report(int verbose_level)
+void surface_create::do_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3444,7 +3446,8 @@ void surface_create::report_with_group(
 
 }
 
-void surface_create::test_group(int verbose_level)
+void surface_create::test_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

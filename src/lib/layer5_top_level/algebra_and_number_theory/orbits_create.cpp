@@ -457,9 +457,11 @@ void orbits_create::init(
 					<< Descr->Canonical_form_classifier_description->space_label << endl;
 		}
 
+#if 0
 		Descr->Canonical_form_classifier_description->PA =
 				Get_object_of_projective_space(
 						Descr->Canonical_form_classifier_description->space_label);
+#endif
 
 		if (Descr->Canonical_form_classifier_description->f_algorithm_substructure) {
 

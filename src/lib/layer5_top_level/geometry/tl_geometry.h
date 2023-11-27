@@ -107,14 +107,17 @@ public:
 
 	arc_generator();
 	~arc_generator();
-	void main(int verbose_level);
+	void main(
+			int verbose_level);
 	void init(
 		arc_generator_description *Descr,
 		projective_geometry::projective_space_with_action *PA,
 		groups::strong_generators *SG,
 		int verbose_level);
-	void prepare_generator(int verbose_level);
-	void compute_starter(int verbose_level);
+	void prepare_generator(
+			int verbose_level);
+	void compute_starter(
+			int verbose_level);
 
 	int test_nb_Eckardt_points(
 			long int *S, int len, int pt, int nb_E,
@@ -126,10 +129,14 @@ public:
 			long int *candidates, int nb_candidates,
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void print(int len, long int *S);
-	void print_set_in_affine_plane(int len, long int *S);
-	void point_unrank(int *v, long int rk);
-	long int point_rank(int *v);
+	void print(
+			int len, long int *S);
+	void print_set_in_affine_plane(
+			int len, long int *S);
+	void point_unrank(
+			int *v, long int rk);
+	long int point_rank(
+			int *v);
 	void compute_line_type(
 			long int *set, int len, int verbose_level);
 	void lifting_prepare_function_new(
@@ -200,9 +207,11 @@ public:
 
 	arc_lifting_simeon();
 	~arc_lifting_simeon();
-	void init(int q, int d, int n, int k,
+	void init(
+			int q, int d, int n, int k,
 			int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -359,20 +368,33 @@ public:
 			cubic_curve_with_action *CCA,
 			arc_generator_description *Descr,
 			int verbose_level);
-	void compute_starter(int verbose_level);
-	void test_orbits(int verbose_level);
-	void downstep(int verbose_level);
-	void upstep(int verbose_level);
-	void do_classify(int verbose_level);
-	int recognize(int *eqn_in,
+	void compute_starter(
+			int verbose_level);
+	void test_orbits(
+			int verbose_level);
+	void downstep(
+			int verbose_level);
+	void upstep(
+			int verbose_level);
+	void do_classify(
+			int verbose_level);
+	int recognize(
+			int *eqn_in,
 			int *Elt, int &iso_type, int verbose_level);
-	void family1_recognize(int *Iso_type, int verbose_level);
-	void family2_recognize(int *Iso_type, int verbose_level);
-	void family3_recognize(int *Iso_type, int verbose_level);
-	void familyE_recognize(int *Iso_type, int verbose_level);
-	void familyH_recognize(int *Iso_type, int verbose_level);
-	void familyG_recognize(int *Iso_type, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void family1_recognize(
+			int *Iso_type, int verbose_level);
+	void family2_recognize(
+			int *Iso_type, int verbose_level);
+	void family3_recognize(
+			int *Iso_type, int verbose_level);
+	void familyE_recognize(
+			int *Iso_type, int verbose_level);
+	void familyH_recognize(
+			int *Iso_type, int verbose_level);
+	void familyG_recognize(
+			int *Iso_type, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -453,10 +475,14 @@ public:
 
 	hermitian_spreads_classify();
 	~hermitian_spreads_classify();
-	void init(int n, int Q, int verbose_level);
-	void read_arguments(int argc, std::string *argv);
-	void init2(int verbose_level);
-	void compute(int depth, int verbose_level);
+	void init(
+			int n, int Q, int verbose_level);
+	void read_arguments(
+			int argc, std::string *argv);
+	void init2(
+			int verbose_level);
+	void compute(
+			int depth, int verbose_level);
 	void early_test_func(
 			long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -584,7 +610,8 @@ public:
 		int level, int orbit_at_level,
 		groups::strong_generators *strong_gens,
 		int verbose_level);
-	void init_secondary(int argc, const char **argv,
+	void init_secondary(
+			int argc, const char **argv,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens_previous,
 		int verbose_level);
@@ -732,7 +759,8 @@ public:
 
 	ovoid_classify_description();
 	~ovoid_classify_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -784,7 +812,8 @@ public:
 
 	ovoid_classify();
 	~ovoid_classify();
-	void init(ovoid_classify_description *Descr,
+	void init(
+			ovoid_classify_description *Descr,
 			groups::linear_group *LG,
 			int &verbose_level);
 	void early_test_func(
@@ -888,7 +917,8 @@ public:
 		int epsilon, int n, int k,
 		field_theory::finite_field *F, int depth,
 		int verbose_level);
-	void init2(int depth, int verbose_level);
+	void init2(
+			int depth, int verbose_level);
 	void compute_orbits(
 			int t0, int verbose_level);
 	void compute_cosets(
@@ -916,13 +946,18 @@ public:
 			ring_theory::longinteger_object &go_G);
 	void get_orbit_length(
 			int orbit_idx, ring_theory::longinteger_object &length);
-	int get_orbit_length_as_int(int orbit_idx);
-	void orbit_element_unrank(int orbit_idx, long int rank,
+	int get_orbit_length_as_int(
+			int orbit_idx);
+	void orbit_element_unrank(
+			int orbit_idx, long int rank,
 		long int *set, int verbose_level);
-	void orbit_element_rank(int &orbit_idx, long int &rank,
+	void orbit_element_rank(
+			int &orbit_idx, long int &rank,
 		long int *set, int verbose_level);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(
+			int *v, int rk);
+	int rank_point(
+			int *v);
 	void list_whole_orbit(
 			int depth, int orbit_idx, int f_limit, int limit);
 };
@@ -975,18 +1010,23 @@ public:
 			int verbose_level);
 	void find_partial_blocking_sets(
 			int depth, int verbose_level);
-	int test_level(int depth, int verbose_level);
+	int test_level(
+			int depth, int verbose_level);
 	int test_blocking_set(
 			int len, long int *S, int verbose_level);
 	int test_blocking_set_upper_bound_only(
 			int len, long int *S,
 		int verbose_level);
-	void search_for_blocking_set(int input_no, 
+	void search_for_blocking_set(
+			int input_no,
 		int level, int f_all, int verbose_level);
-	int recursive_search_for_blocking_set(int input_no, 
+	int recursive_search_for_blocking_set(
+			int input_no,
 		int starter_level, int level, int verbose_level);
-	void save_line_intersection_size(int level);
-	void restore_line_intersection_size(int level);
+	void save_line_intersection_size(
+			int level);
+	void restore_line_intersection_size(
+			int level);
 };
 
 
@@ -1026,9 +1066,11 @@ public:
 
 	singer_cycle();
 	~singer_cycle();
-	void init(int n, field_theory::finite_field *F, actions::action *A,
+	void init(
+			int n, field_theory::finite_field *F, actions::action *A,
 			actions::action *A2, int verbose_level);
-	void init_lines(int verbose_level);
+	void init_lines(
+			int verbose_level);
 };
 
 
@@ -1073,16 +1115,19 @@ public:
 	void init(
 			field_theory::finite_field *F, groups::linear_group *LG,
 			int verbose_level);
-	void classify_poset(int depth,
+	void classify_poset(
+			int depth,
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void create_restricted_action_on_rank_one_tensors(
 			int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void report(int f_poset_classify, int poset_classify_depth,
+	void report(
+			int f_poset_classify, int poset_classify_depth,
 			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 };

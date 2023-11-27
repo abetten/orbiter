@@ -17,9 +17,12 @@ namespace layer5_applications {
 namespace apps_geometry {
 
 
-static long int polar_callback_rank_point_func(int *v, void *data);
-static void polar_callback_unrank_point_func(int *v, long int rk, void *data);
-static void polar_callback_early_test_func(long int *S, int len,
+static long int polar_callback_rank_point_func(
+		int *v, void *data);
+static void polar_callback_unrank_point_func(
+		int *v, long int rk, void *data);
+static void polar_callback_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -169,7 +172,8 @@ void polar::init(
 
 }
 
-void polar::init2(int depth, int verbose_level)
+void polar::init2(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1144,31 +1148,36 @@ void polar::get_orbit_length(
 	Gen->orbit_length(orbit_idx, depth, length);
 }
 
-int polar::get_orbit_length_as_int(int orbit_idx)
+int polar::get_orbit_length_as_int(
+		int orbit_idx)
 {
 	return Gen->orbit_length_as_int(orbit_idx, depth);
 }
 
-void polar::orbit_element_unrank(int orbit_idx,
+void polar::orbit_element_unrank(
+		int orbit_idx,
 		long int rank, long int *set, int verbose_level)
 {
 	return Gen->orbit_element_unrank(depth,
 			orbit_idx, rank, set, verbose_level);
 }
 
-void polar::orbit_element_rank(int &orbit_idx,
+void polar::orbit_element_rank(
+		int &orbit_idx,
 		long int &rank, long int *set, int verbose_level)
 {
 	return Gen->orbit_element_rank(depth,
 			orbit_idx, rank, set, verbose_level);
 }
 
-void polar::unrank_point(int *v, int rk)
+void polar::unrank_point(
+		int *v, int rk)
 {
 	O->Hyperbolic_pair->unrank_point(v, 1, rk, 0);
 }
 
-int polar::rank_point(int *v)
+int polar::rank_point(
+		int *v)
 {
 	return O->Hyperbolic_pair->rank_point(v, 1, 0);
 }
@@ -1253,7 +1262,8 @@ void polar::list_whole_orbit(
 // global functions:
 // #############################################################################
 
-long int static polar_callback_rank_point_func(int *v, void *data)
+long int static polar_callback_rank_point_func(
+		int *v, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
@@ -1263,7 +1273,8 @@ long int static polar_callback_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-void static polar_callback_unrank_point_func(int *v, long int rk, void *data)
+void static polar_callback_unrank_point_func(
+		int *v, long int rk, void *data)
 {
 	polar *P = (polar *) data;
 	//generator *gen = P->Gen;
@@ -1298,7 +1309,8 @@ int polar_callback_test_func(int len, int *S,
 }
 #endif
 
-void static polar_callback_early_test_func(long int *S, int len,
+void static polar_callback_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

@@ -654,7 +654,8 @@ int design_create::get_color_as_two_design_assume_sorted(
 	return c;
 }
 
-void design_create::compute_incidence_matrix(int verbose_level)
+void design_create::compute_incidence_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

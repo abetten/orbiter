@@ -30,7 +30,8 @@ domino_change::~domino_change()
 
 }
 
-void domino_change::init(domino_assignment *DA,
+void domino_change::init(
+		domino_assignment *DA,
 		int type_of_change, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

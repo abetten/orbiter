@@ -73,11 +73,16 @@ public:
 			action_on_forms_activity_description *Descr,
 			apps_algebra::action_on_forms *AF,
 			int verbose_level);
-	void perform_activity(int verbose_level);
-	void do_algebraic_normal_form(int verbose_level);
-	void do_orbits_on_functions(int verbose_level);
-	void do_associated_set_in_plane(int verbose_level);
-	void do_differential_uniformity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
+	void do_algebraic_normal_form(
+			int verbose_level);
+	void do_orbits_on_functions(
+			int verbose_level);
+	void do_associated_set_in_plane(
+			int verbose_level);
+	void do_differential_uniformity(
+			int verbose_level);
 
 };
 
@@ -242,7 +247,8 @@ public:
 			actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
 			int *&perm, int verbose_level);
-	void presentation(actions::action *A,
+	void presentation(
+			actions::action *A,
 			groups::sims *S, int goi,
 			data_structures_groups::vector_ge *gens,
 		int *primes, int verbose_level);
@@ -258,18 +264,22 @@ public:
 			layer2_discreta::typed_objects::discreta_matrix & B,
 			layer2_discreta::typed_objects::domain *dom_GFq,
 			int verbose_level);
-	void A5_in_PSL_2_q_easy(int q,
+	void A5_in_PSL_2_q_easy(
+			int q,
 			layer2_discreta::typed_objects::discreta_matrix & A,
 			layer2_discreta::typed_objects::discreta_matrix & B,
 			layer2_discreta::typed_objects::domain *dom_GFq,
 			int verbose_level);
-	void A5_in_PSL_2_q_hard(int q,
+	void A5_in_PSL_2_q_hard(
+			int q,
 			layer2_discreta::typed_objects::discreta_matrix & A,
 			layer2_discreta::typed_objects::discreta_matrix & B,
 			layer2_discreta::typed_objects::domain *dom_GFq,
 			int verbose_level);
-	int proj_order(layer2_discreta::typed_objects::discreta_matrix &A);
-	void trace(layer2_discreta::typed_objects::discreta_matrix &A,
+	int proj_order(
+			layer2_discreta::typed_objects::discreta_matrix &A);
+	void trace(
+			layer2_discreta::typed_objects::discreta_matrix &A,
 			layer2_discreta::typed_objects::discreta_base &tr);
 	void elementwise_power_int(
 			layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level);
@@ -379,11 +389,14 @@ public:
 			graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
-	void export_group_table(int verbose_level);
+	void export_group_table(
+			int verbose_level);
 	void do_export_orbiter(
 			actions::action *A2, int verbose_level);
-	void do_export_gap(int verbose_level);
-	void do_export_magma(int verbose_level);
+	void do_export_gap(
+			int verbose_level);
+	void do_export_magma(
+			int verbose_level);
 	void do_canonical_image_GAP(
 			std::string &input_set, int verbose_level);
 	void do_canonical_image_orbiter(
@@ -391,7 +404,8 @@ public:
 			int verbose_level);
 	void create_group_table(
 			int *&Table, long int &n, int verbose_level);
-	void normalizer(int verbose_level);
+	void normalizer(
+			int verbose_level);
 	void centralizer(
 			std::string &element_label,
 			std::string &element_description_text,
@@ -406,8 +420,10 @@ public:
 	void do_find_subgroups(
 			int order_of_subgroup,
 			int verbose_level);
-	void print_elements(int verbose_level);
-	void print_elements_tex(int f_with_permutation,
+	void print_elements(
+			int verbose_level);
+	void print_elements_tex(
+			int f_with_permutation,
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
 	void order_of_products_of_elements_by_rank(
@@ -437,7 +453,8 @@ public:
 	void conjugacy_class_of(
 			std::string &label, std::string &rank_string,
 			int verbose_level);
-	void do_reverse_isomorphism_exterior_square(int verbose_level);
+	void do_reverse_isomorphism_exterior_square(
+			int verbose_level);
 
 	void orbits_on_set_system_from_file(
 			std::string &fname_csv,
@@ -445,7 +462,8 @@ public:
 			int verbose_level);
 	void orbits_on_set_from_file(
 			std::string &fname_csv, int verbose_level);
-	void orbit_of(int point_idx, int verbose_level);
+	void orbit_of(
+			int point_idx, int verbose_level);
 	void orbits_on_points(
 			groups::orbits_on_something *&Orb, int verbose_level);
 	void orbits_on_points_from_generators(
@@ -502,11 +520,16 @@ public:
 			int verbose_level);
 
 	// any_group_linear.cpp:
-	void classes_based_on_normal_form(int verbose_level);
-	void classes(int verbose_level);
-	void find_singer_cycle(int verbose_level);
-	void search_element_of_order(int order, int verbose_level);
-	void find_standard_generators(int order_a,
+	void classes_based_on_normal_form(
+			int verbose_level);
+	void classes(
+			int verbose_level);
+	void find_singer_cycle(
+			int verbose_level);
+	void search_element_of_order(
+			int order, int verbose_level);
+	void find_standard_generators(
+			int order_a,
 			int order_b,
 			int order_ab,
 			int verbose_level);
@@ -520,7 +543,8 @@ public:
 			std::string &control_label,
 			apps_geometry::tensor_classify *&T,
 			int depth, int verbose_level);
-	void do_tensor_permutations(int verbose_level);
+	void do_tensor_permutations(
+			int verbose_level);
 	void do_linear_codes(
 			std::string &control_label,
 			int minimum_distance,
@@ -561,7 +585,8 @@ public:
 class character_table_burnside {
 public:
 
-	void do_it(int n, int verbose_level);
+	void do_it(
+			int n, int verbose_level);
 	void create_matrix(
 			typed_objects::discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
@@ -600,7 +625,8 @@ public:
 			actions::action *A, int n,
 			int **&Elt, int &nb_gens, int f_special,
 			int verbose_level);
-	void integral_eigenvalues(int *M, int n,
+	void integral_eigenvalues(
+			int *M, int n,
 		int *&Lambda,
 		int &nb_lambda,
 		int *&Mu,
@@ -611,12 +637,15 @@ public:
 			int *N, int size,
 			typed_objects::unipoly &charpoly,
 			int verbose_level);
-	void double_swap(double &a, double &b);
+	void double_swap(
+			double &a, double &b);
 	int double_Gauss(
 			double *A, int m, int n, int *base_cols,
 			int verbose_level);
-	void double_matrix_print(double *A, int m, int n);
-	double double_abs(double x);
+	void double_matrix_print(
+			double *A, int m, int n);
+	double double_abs(
+			double x);
 	void kernel_columns(
 			int n, int nb_base_cols, int *base_cols,
 			int *kernel_cols);
@@ -624,7 +653,8 @@ public:
 			double *M, int m, int n,
 			int *base_cols, int nb_base_cols,
 		int &kernel_m, int &kernel_n, double *kernel);
-	int double_as_int(double x);
+	int double_as_int(
+			double x);
 
 };
 
@@ -944,7 +974,8 @@ public:
 			group_theoretic_activity_description *Descr,
 			any_group *AG_secondary,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -1066,7 +1097,8 @@ public:
 			int N, int k, any_group *G,
 			std::string &Control_label,
 			int verbose_level);
-	void downstep(int verbose_level);
+	void downstep(
+			int verbose_level);
 	void upstep(
 			std::vector<long int> &Ago, int verbose_level);
 
@@ -1157,17 +1189,28 @@ public:
 			orbits_activity_description *Descr,
 			apps_algebra::orbits_create *OC,
 			int verbose_level);
-	void perform_activity(int verbose_level);
-	void do_report(int verbose_level);
-	void do_export(int verbose_level);
-	void do_export_trees(int verbose_level);
-	void do_export_source_code(int verbose_level);
-	void do_export_levels(int orbit_idx, int verbose_level);
-	void do_draw_tree(int verbose_level);
-	void do_stabilizer(int verbose_level);
-	void do_stabilizer_of_orbit_rep(int verbose_level);
-	void do_Kramer_Mesner_matrix(int verbose_level);
-	void do_recognize(int verbose_level);
+	void perform_activity(
+			int verbose_level);
+	void do_report(
+			int verbose_level);
+	void do_export(
+			int verbose_level);
+	void do_export_trees(
+			int verbose_level);
+	void do_export_source_code(
+			int verbose_level);
+	void do_export_levels(
+			int orbit_idx, int verbose_level);
+	void do_draw_tree(
+			int verbose_level);
+	void do_stabilizer(
+			int verbose_level);
+	void do_stabilizer_of_orbit_rep(
+			int verbose_level);
+	void do_Kramer_Mesner_matrix(
+			int verbose_level);
+	void do_recognize(
+			int verbose_level);
 	void do_transporter(
 			std::string &label_of_set, int verbose_level);
 
@@ -1230,7 +1273,8 @@ public:
 
 	orbits_create_description();
 	~orbits_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -1344,8 +1388,10 @@ public:
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			expression_parser::symbolic_object_builder *Symbol,
 			int verbose_level);
-	void compute_points(int verbose_level);
-	void report(int verbose_level);
+	void compute_points(
+			int verbose_level);
+	void report(
+			int verbose_level);
 	void report_detailed_list(
 			std::ostream &ost,
 			int verbose_level);
@@ -1419,7 +1465,8 @@ public:
 			ring_theory::polynomial_ring_activity_description *Descr,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -1498,7 +1545,8 @@ public:
 
 	young();
 	~young();
-	void init(int n, int verbose_level);
+	void init(
+			int n, int verbose_level);
 	void create_module(
 			int *h_alpha,
 		int *&Base, int *&base_cols, int &rk, 
@@ -1517,7 +1565,8 @@ public:
 		int verbose_level);
 	void compute_generators(
 			int &go1, int &go2, int verbose_level);
-	void Maschke(int *Rep, 
+	void Maschke(
+			int *Rep,
 		int dim_of_module, int dim_of_submodule, 
 		int *&Mu, 
 		int verbose_level);

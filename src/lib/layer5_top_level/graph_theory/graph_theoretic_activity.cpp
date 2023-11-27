@@ -28,7 +28,8 @@ graph_theoretic_activity::~graph_theoretic_activity()
 }
 
 
-void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
+void graph_theoretic_activity::init(
+		graph_theoretic_activity_description *Descr,
 		graph_theory::colored_graph *CG,
 		int verbose_level)
 {
@@ -52,7 +53,8 @@ void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
 	}
 }
 
-void graph_theoretic_activity::perform_activity(int verbose_level)
+void graph_theoretic_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

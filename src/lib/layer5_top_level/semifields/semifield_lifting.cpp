@@ -167,7 +167,8 @@ void semifield_lifting::init_level_three(
 }
 
 
-void semifield_lifting::report(std::ostream &ost, int verbose_level)
+void semifield_lifting::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, ext, idx;
@@ -361,7 +362,8 @@ void semifield_lifting::report(std::ostream &ost, int verbose_level)
 }
 
 
-void semifield_lifting::recover_level_three_downstep(int verbose_level)
+void semifield_lifting::recover_level_three_downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -456,7 +458,8 @@ void semifield_lifting::recover_level_three_from_file(
 	}
 }
 
-void semifield_lifting::compute_level_three(int verbose_level)
+void semifield_lifting::compute_level_three(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -547,7 +550,8 @@ void semifield_lifting::compute_level_three(int verbose_level)
 	}
 }
 
-void semifield_lifting::level_two_down(int verbose_level)
+void semifield_lifting::level_two_down(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -599,7 +603,8 @@ void semifield_lifting::level_two_down(int verbose_level)
 	}
 }
 
-void semifield_lifting::level_two_flag_orbits(int verbose_level)
+void semifield_lifting::level_two_flag_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -614,7 +619,8 @@ void semifield_lifting::level_two_flag_orbits(int verbose_level)
 	}
 }
 
-void semifield_lifting::level_two_upstep(int verbose_level)
+void semifield_lifting::level_two_upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2837,7 +2843,8 @@ void semifield_lifting::write_level_info_file(
 }
 
 
-void semifield_lifting::read_level_info_file(int verbose_level)
+void semifield_lifting::read_level_info_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
@@ -2886,7 +2893,8 @@ void semifield_lifting::read_level_info_file(int verbose_level)
 		}
 }
 
-void semifield_lifting::save_flag_orbits(int verbose_level)
+void semifield_lifting::save_flag_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = false; //(verbose_level >= 2);
@@ -2916,7 +2924,8 @@ void semifield_lifting::save_flag_orbits(int verbose_level)
 	}
 }
 
-void semifield_lifting::read_flag_orbits(int verbose_level)
+void semifield_lifting::read_flag_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = false; //(verbose_level >= 2);
@@ -2972,7 +2981,8 @@ void semifield_lifting::read_flag_orbits(int verbose_level)
 
 
 
-void semifield_lifting::save_stabilizers(int verbose_level)
+void semifield_lifting::save_stabilizers(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = false; //(verbose_level >= 2);
@@ -3002,7 +3012,8 @@ void semifield_lifting::save_stabilizers(int verbose_level)
 	}
 }
 
-void semifield_lifting::read_stabilizers(int verbose_level)
+void semifield_lifting::read_stabilizers(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = false; //(verbose_level >= 2);
@@ -3054,7 +3065,8 @@ void semifield_lifting::read_stabilizers(int verbose_level)
 	}
 }
 
-void semifield_lifting::make_file_name_schreier(std::string &fname,
+void semifield_lifting::make_file_name_schreier(
+		std::string &fname,
 		int level, int orbit_idx)
 {
 	if (f_prefix) {
@@ -3065,7 +3077,8 @@ void semifield_lifting::make_file_name_schreier(std::string &fname,
 	}
 }
 
-void semifield_lifting::create_fname_level_info_file(std::string &fname)
+void semifield_lifting::create_fname_level_info_file(
+		std::string &fname)
 {
 	if (f_prefix) {
 		fname = prefix + "L" + std::to_string(cur_level) + "_info.csv";
@@ -3075,7 +3088,8 @@ void semifield_lifting::create_fname_level_info_file(std::string &fname)
 	}
 }
 
-void semifield_lifting::make_fname_flag_orbits(std::string &fname)
+void semifield_lifting::make_fname_flag_orbits(
+		std::string &fname)
 {
 	if (f_prefix) {
 		fname = prefix + "L" + std::to_string(cur_level) + "_flag_orbits.bin";
@@ -3085,7 +3099,8 @@ void semifield_lifting::make_fname_flag_orbits(std::string &fname)
 	}
 }
 
-void semifield_lifting::make_fname_stabilizers(std::string &fname)
+void semifield_lifting::make_fname_stabilizers(
+		std::string &fname)
 {
 	if (f_prefix) {
 		fname = prefix + "L" + std::to_string(cur_level) + "_flag_stabilizers.bin";

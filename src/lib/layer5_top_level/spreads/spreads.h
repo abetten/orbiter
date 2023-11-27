@@ -26,16 +26,6 @@ public:
 
 	geometry::three_skew_subspaces *Three_skew_subspaces;
 
-#if 0
-	geometry::spread_domain *SD;
-
-	int n;
-	int k;
-	int q;
-	geometry::grassmann *Grass;
-	field_theory::finite_field *F;
-	int nCkq; // n choose k in q
-#endif
 
 	actions::action *A;
 		// P Gamma L(n,q)
@@ -49,19 +39,6 @@ public:
 	void *check_function_incremental_data;
 
 	//std::string fname_live_points;
-
-#if 0
-	int f_data_is_allocated;
-	int *M; // [(3 * k) * n]
-	int *M1; // [(3 * k) * n]
-	int *AA; // [n * n]
-	int *AAv; // [n * n]
-	int *TT; // [k * k]
-	int *TTv; // [k * k]
-	int *B; // [n * n]
-	int *C; // [n * n + 1]
-	int *N; // [(3 * k) * n]
-#endif
 
 	int *transform; // [n * n + 1]
 	int *Elt; // [A->elt_size_in_int]
@@ -100,7 +77,8 @@ public:
 	void stabilizer_of_first_three(
 			groups::strong_generators *&Strong_gens,
 		int verbose_level);
-	void compute_live_points(int verbose_level);
+	void compute_live_points(
+			int verbose_level);
 	void compute_live_points_low_level(
 			long int *&live_points,
 		int &nb_live_points, int verbose_level);
@@ -125,7 +103,8 @@ public:
 
 	spread_activity_description();
 	~spread_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -166,9 +145,12 @@ public:
 			spread_activity_description *Descr,
 			spread_create *Spread_create,
 			int verbose_level);
-	void perform_activity(int verbose_level);
-	void report(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
+	void perform_activity(
+			int verbose_level);
+	void report(
+			int verbose_level);
+	void report2(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -208,7 +190,8 @@ public:
 
 	spread_classify_activity_description();
 	~spread_classify_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -237,7 +220,8 @@ public:
 			spread_classify_activity_description *Descr,
 			spread_classify *Spread_classify,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -275,7 +259,8 @@ public:
 
 	spread_classify_description();
 	~spread_classify_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -353,8 +338,10 @@ public:
 			geometry::spread_domain *SD,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
-	void init2(int verbose_level);
-	void classify_partial_spreads(int verbose_level);
+	void init2(
+			int verbose_level);
+	void classify_partial_spreads(
+			int verbose_level);
 	void lifting(
 			int orbit_at_level, int level_of_candidates_file,
 			int f_lexorder_test, int f_eliminate_graphs_if_possible,
@@ -406,7 +393,8 @@ public:
 	void orbit_info_short(
 			std::ostream &ost, isomorph::isomorph &Iso,
 			int h, int verbose_level);
-	void report_stabilizer(isomorph::isomorph &Iso,
+	void report_stabilizer(
+			isomorph::isomorph &Iso,
 			std::ostream &ost, int orbit,
 		int verbose_level);
 };
@@ -456,7 +444,8 @@ public:
 
 	spread_create_description();
 	~spread_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };
@@ -505,7 +494,8 @@ public:
 
 	spread_create();
 	~spread_create();
-	void init(spread_create_description *Descr,
+	void init(
+			spread_create_description *Descr,
 			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
@@ -569,7 +559,8 @@ public:
 
 	spread_lifting();
 	~spread_lifting();
-	void init(spread_classify *S,
+	void init(
+			spread_classify *S,
 			data_structures_groups::orbit_rep *R,
 		std::string &output_prefix,
 		int f_lex,
@@ -579,15 +570,21 @@ public:
 	void prepare_free_points(
 		int verbose_level);
 	void print_free_points();
-	void compute_colors(int &f_ruled_out, int verbose_level);
-	void reduce_candidates(int verbose_level);
-	solvers::diophant *create_system(int verbose_level);
-	int is_e1_vector(int *v);
-	int is_zero_vector(int *v);
+	void compute_colors(
+			int &f_ruled_out, int verbose_level);
+	void reduce_candidates(
+			int verbose_level);
+	solvers::diophant *create_system(
+			int verbose_level);
+	int is_e1_vector(
+			int *v);
+	int is_zero_vector(
+			int *v);
 	void create_graph(
 			data_structures::bitvector *Adj,
 			int verbose_level);
-	void create_dummy_graph(int verbose_level);
+	void create_dummy_graph(
+			int verbose_level);
 
 };
 
@@ -660,7 +657,8 @@ public:
 			spreads::spread_table_activity_description *Descr,
 			packings::packing_classify *P,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 	void export_spreads_to_csv(
 			std::string &fname,
 			int *spread_idx, int nb, int verbose_level);
@@ -718,16 +716,22 @@ public:
 
 	spread_table_with_selection();
 	~spread_table_with_selection();
-	void init(spread_classify *T,
+	void init(
+			spread_classify *T,
 		int f_select_spread,
 		std::string &select_spread_text,
 		std::string &path_to_spread_tables,
 		int verbose_level);
-	void compute_spread_table(int verbose_level);
-	void compute_spread_table_from_scratch(int verbose_level);
-	void create_action_on_spreads(int verbose_level);
-	int find_spread(long int *set, int verbose_level);
-	long int *get_spread(int spread_idx);
+	void compute_spread_table(
+			int verbose_level);
+	void compute_spread_table_from_scratch(
+			int verbose_level);
+	void create_action_on_spreads(
+			int verbose_level);
+	int find_spread(
+			long int *set, int verbose_level);
+	long int *get_spread(
+			int spread_idx);
 	void find_spreads_containing_two_lines(
 			std::vector<int> &v,
 			int line1, int line2, int verbose_level);
@@ -769,8 +773,10 @@ public:
 		int nb_points_covered_by_starter,
 		long int *starter, int starter_size,
 		int verbose_level);
-	void compute_adjacency_matrix(int verbose_level);
-	int is_adjacent(int i, int j);
+	void compute_adjacency_matrix(
+			int verbose_level);
+	int is_adjacent(
+			int i, int j);
 
 };
 
@@ -795,7 +801,8 @@ public:
 
 	translation_plane_activity_description();
 	~translation_plane_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -824,7 +831,8 @@ public:
 			translation_plane_activity_description *Descr,
 			data_structures_groups::translation_plane_via_andre_model *TP,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 

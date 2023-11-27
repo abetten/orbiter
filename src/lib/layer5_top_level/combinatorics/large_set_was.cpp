@@ -63,7 +63,8 @@ large_set_was::~large_set_was()
 {
 }
 
-void large_set_was::init(large_set_was_description *Descr,
+void large_set_was::init(
+		large_set_was_description *Descr,
 		large_set_classify *LS,
 		int verbose_level)
 {

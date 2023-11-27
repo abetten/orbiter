@@ -31,7 +31,8 @@ packing_was_activity::~packing_was_activity()
 
 
 
-void packing_was_activity::init(packing_was_activity_description *Descr,
+void packing_was_activity::init(
+		packing_was_activity_description *Descr,
 		packing_was *PW,
 		int verbose_level)
 {

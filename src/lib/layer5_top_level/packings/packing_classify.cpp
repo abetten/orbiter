@@ -345,7 +345,8 @@ void packing_classify::init2(
 
 
 
-void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
+void packing_classify::init_P3_and_P5_and_Gr(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -448,7 +449,8 @@ void packing_classify::prepare_generator(
 }
 
 
-void packing_classify::compute(int search_depth, int verbose_level)
+void packing_classify::compute(
+		int search_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = search_depth;

@@ -17,7 +17,8 @@ namespace layer5_applications {
 namespace apps_graph_theory {
 
 
-void cayley_graph_search::init(int level,
+void cayley_graph_search::init(
+		int level,
 		int group, int subgroup, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -116,7 +117,8 @@ void cayley_graph_search::init(int level,
 
 }
 
-void cayley_graph_search::init_group(int verbose_level)
+void cayley_graph_search::init_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -143,7 +145,8 @@ void cayley_graph_search::init_group(int verbose_level)
 
 }
 
-void cayley_graph_search::init_group2(int verbose_level)
+void cayley_graph_search::init_group2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -269,7 +272,8 @@ void cayley_graph_search::init_group2(int verbose_level)
 		}
 }
 
-void cayley_graph_search::init_group_level_3(int verbose_level)
+void cayley_graph_search::init_group_level_3(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -329,7 +333,8 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 		}
 }
 
-void cayley_graph_search::init_group_level_4(int verbose_level)
+void cayley_graph_search::init_group_level_4(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -612,7 +617,8 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 }
 
-void cayley_graph_search::init_group_level_5(int verbose_level)
+void cayley_graph_search::init_group_level_5(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -768,7 +774,8 @@ int cayley_graph_search::incremental_check_func(
 
 
 
-void cayley_graph_search::classify_subsets(int verbose_level)
+void cayley_graph_search::classify_subsets(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -822,7 +829,8 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 
 
 
-void cayley_graph_search::write_file(int verbose_level)
+void cayley_graph_search::write_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -981,7 +989,8 @@ void cayley_graph_search::write_file(int verbose_level)
 		}
 }
 
-void cayley_graph_search::create_Adjacency_list(long int *Adj,
+void cayley_graph_search::create_Adjacency_list(
+		long int *Adj,
 	long int *connection_set, int connection_set_sz,
 	int verbose_level)
 // Adj[go * connection_set_sz]

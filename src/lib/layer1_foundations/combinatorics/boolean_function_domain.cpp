@@ -97,7 +97,8 @@ boolean_function_domain::~boolean_function_domain()
 	}
 }
 
-void boolean_function_domain::init(field_theory::finite_field *F2,
+void boolean_function_domain::init(
+		field_theory::finite_field *F2,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -122,7 +123,8 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	boolean_function_domain::Fq = F2;
 
 	if (Fq->q != 2) {
-		cout << "boolean_function_domain::init order of the field must be equal to 2" << endl;
+		cout << "boolean_function_domain::init "
+				"order of the field must be equal to 2" << endl;
 		exit(1);
 	}
 
@@ -188,7 +190,8 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	// setup the Walsh matrix:
 
 	if (f_v) {
-		cout << "boolean_function_domain::init before Gg.Walsh_matrix" << endl;
+		cout << "boolean_function_domain::init "
+				"before Gg.Walsh_matrix" << endl;
 	}
 	if (n <= 10) {
 		Algebra.Walsh_matrix(Fq, n, W, verbose_level);
@@ -197,16 +200,19 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 		cout << "Walsh matrix is too big" << endl;
 	}
 	if (f_v) {
-		cout << "boolean_function_domain::init after Gg.Walsh_matrix" << endl;
+		cout << "boolean_function_domain::init "
+				"after Gg.Walsh_matrix" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "boolean_function_domain::init before setup_polynomial_rings" << endl;
+		cout << "boolean_function_domain::init "
+				"before setup_polynomial_rings" << endl;
 	}
 	setup_polynomial_rings(verbose_level);
 	if (f_v) {
-		cout << "boolean_function_domain::init after setup_polynomial_rings" << endl;
+		cout << "boolean_function_domain::init "
+				"after setup_polynomial_rings" << endl;
 	}
 
 
@@ -216,7 +222,8 @@ void boolean_function_domain::init(field_theory::finite_field *F2,
 	}
 }
 
-void boolean_function_domain::setup_polynomial_rings(int verbose_level)
+void boolean_function_domain::setup_polynomial_rings(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_vars;
@@ -467,7 +474,8 @@ void boolean_function_domain::compute_polynomial_representation(
 	}
 }
 
-void boolean_function_domain::evaluate_projectively(int *coeff, int *f)
+void boolean_function_domain::evaluate_projectively(
+		int *coeff, int *f)
 {
 	int i;
 
@@ -477,7 +485,8 @@ void boolean_function_domain::evaluate_projectively(int *coeff, int *f)
 
 }
 
-void boolean_function_domain::evaluate(int *coeff, int *f)
+void boolean_function_domain::evaluate(
+		int *coeff, int *f)
 {
 	int i;
 	geometry::geometry_global Gg;
@@ -490,7 +499,8 @@ void boolean_function_domain::evaluate(int *coeff, int *f)
 
 }
 
-void boolean_function_domain::raise(int *in, int *out)
+void boolean_function_domain::raise(
+		int *in, int *out)
 {
 	int i;
 
@@ -504,7 +514,8 @@ void boolean_function_domain::raise(int *in, int *out)
 	}
 }
 
-void boolean_function_domain::apply_Walsh_transform(int *in, int *out)
+void boolean_function_domain::apply_Walsh_transform(
+		int *in, int *out)
 {
 	int i, j;
 
@@ -516,7 +527,8 @@ void boolean_function_domain::apply_Walsh_transform(int *in, int *out)
 	}
 }
 
-int boolean_function_domain::is_bent(int *T)
+int boolean_function_domain::is_bent(
+		int *T)
 {
 	int i;
 
@@ -534,7 +546,8 @@ int boolean_function_domain::is_bent(int *T)
 	}
 }
 
-int boolean_function_domain::is_near_bent(int *T)
+int boolean_function_domain::is_near_bent(
+		int *T)
 {
 	int i;
 

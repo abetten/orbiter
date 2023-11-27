@@ -28,7 +28,8 @@ graph_classification_activity::~graph_classification_activity()
 }
 
 
-void graph_classification_activity::init(graph_classification_activity_description *Descr,
+void graph_classification_activity::init(
+		graph_classification_activity_description *Descr,
 		graph_classify *GC,
 		int verbose_level)
 {

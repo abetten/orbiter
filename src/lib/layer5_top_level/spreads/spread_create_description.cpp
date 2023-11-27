@@ -54,7 +54,8 @@ spread_create_description::~spread_create_description()
 }
 
 
-int spread_create_description::read_arguments(int argc, std::string *argv,
+int spread_create_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

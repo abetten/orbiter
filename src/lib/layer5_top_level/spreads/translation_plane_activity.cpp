@@ -52,7 +52,8 @@ void translation_plane_activity::init(
 }
 
 
-void translation_plane_activity::perform_activity(int verbose_level)
+void translation_plane_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

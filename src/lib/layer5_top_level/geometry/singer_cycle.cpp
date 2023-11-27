@@ -102,7 +102,8 @@ singer_cycle::~singer_cycle()
 	}
 }
 
-void singer_cycle::init(int n,
+void singer_cycle::init(
+		int n,
 		field_theory::finite_field *F,
 		actions::action *A,
 		actions::action *A2, int verbose_level)
@@ -202,7 +203,8 @@ void singer_cycle::init(int n,
 	}
 }
 
-void singer_cycle::init_lines(int verbose_level)
+void singer_cycle::init_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, h;

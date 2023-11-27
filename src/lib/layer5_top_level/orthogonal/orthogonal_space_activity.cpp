@@ -59,7 +59,8 @@ void orthogonal_space_activity::init(
 }
 
 
-void orthogonal_space_activity::perform_activity(int verbose_level)
+void orthogonal_space_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

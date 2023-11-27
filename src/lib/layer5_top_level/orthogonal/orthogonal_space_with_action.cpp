@@ -141,7 +141,8 @@ void orthogonal_space_with_action::init(
 	}
 }
 
-void orthogonal_space_with_action::init_group(int verbose_level)
+void orthogonal_space_with_action::init_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -303,7 +304,8 @@ void orthogonal_space_with_action::report2(
 }
 
 
-void orthogonal_space_with_action::make_table_of_blt_sets(int verbose_level)
+void orthogonal_space_with_action::make_table_of_blt_sets(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -142,7 +142,8 @@ void arc_partition::init(
 	}
 }
 
-void arc_partition::recognize(int *partition, int *transporter,
+void arc_partition::recognize(
+		int *partition, int *transporter,
 		int &orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

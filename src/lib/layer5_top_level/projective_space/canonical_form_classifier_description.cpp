@@ -24,6 +24,9 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_space = false;
 	//std::string space_label;
 
+	f_ring = false;
+	//std::string ring_label;
+
 	f_input_fname_mask = false;
 	std::string fname_mask;
 
@@ -52,8 +55,8 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 	//std::vector<std::string> carry_through;
 
-	f_degree = false;
-	degree = 0;
+	//f_degree = false;
+	//degree = 0;
 
 	f_algorithm_nauty = false;
 	f_algorithm_substructure = false;
@@ -64,7 +67,6 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_skip = false;
 	//std::string skip_label;
 
-	PA = NULL;
 
 	Canon_substructure = NULL;
 
@@ -92,6 +94,13 @@ int canonical_form_classifier_description::read_arguments(
 			space_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-space " << space_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-ring") == 0) {
+			f_ring = true;
+			ring_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-ring " << ring_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-input_fname_mask") == 0) {
@@ -173,6 +182,7 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-carry_through " << s << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-degree") == 0) {
 			f_degree = true;
 			degree = ST.strtoi(argv[++i]);
@@ -180,6 +190,7 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-degree " << degree << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-algorithm_nauty") == 0) {
 			f_algorithm_nauty = true;
 			if (f_v) {
@@ -228,6 +239,9 @@ void canonical_form_classifier_description::print()
 	if (f_space) {
 		cout << "-space " << space_label << endl;
 	}
+	if (f_ring) {
+		cout << "-ring " << ring_label << endl;
+	}
 	if (f_input_fname_mask) {
 		cout << "-input_fname_mask " << fname_mask << endl;
 	}
@@ -265,9 +279,11 @@ void canonical_form_classifier_description::print()
 			cout << "-carry_through " << carry_through[i] << endl;
 		}
 	}
+#if 0
 	if (f_degree) {
 		cout << "-degree " << degree << endl;
 	}
+#endif
 	if (f_algorithm_nauty) {
 		cout << "-algorithm_nauty" << endl;
 	}

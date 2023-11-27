@@ -17,8 +17,10 @@ namespace layer5_applications {
 namespace semifields {
 
 
-static void coset_action_unrank_point(int *v, long int a, void *data);
-static long int coset_action_rank_point(int *v, void *data);
+static void coset_action_unrank_point(
+		int *v, long int a, void *data);
+static long int coset_action_rank_point(
+		int *v, void *data);
 
 
 semifield_downstep_node::semifield_downstep_node()
@@ -238,7 +240,8 @@ void semifield_downstep_node::init(
 	}
 }
 
-int semifield_downstep_node::find_point(long int a)
+int semifield_downstep_node::find_point(
+		long int a)
 {
 	int idx;
 	data_structures::sorting Sorting;
@@ -261,7 +264,8 @@ int semifield_downstep_node::find_point(long int a)
 // #############################################################################
 
 
-static void coset_action_unrank_point(int *v, long int a, void *data)
+static void coset_action_unrank_point(
+		int *v, long int a, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;
@@ -269,7 +273,8 @@ static void coset_action_unrank_point(int *v, long int a, void *data)
 	SC->matrix_unrank(a, v);
 }
 
-static long int coset_action_rank_point(int *v, void *data)
+static long int coset_action_rank_point(
+		int *v, void *data)
 {
 	semifield_downstep_node *DN = (semifield_downstep_node *) data;
 	semifield_classify *SC = DN->SC;

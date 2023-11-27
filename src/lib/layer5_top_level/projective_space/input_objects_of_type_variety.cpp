@@ -227,14 +227,67 @@ void input_objects_of_type_variety::read_input_objects(
 			}
 		}
 
+#if 0
+		int f_label_po_go;
+		std::string column_label_po_go;
+		int f_label_po_index;
+		std::string column_label_po_index;
+		int f_label_po;
+		std::string column_label_po;
+		int f_label_so;
+		std::string column_label_so;
+		int f_label_equation;
+		std::string column_label_eqn;
+		int f_label_points;
+		std::string column_label_pts;
+		int f_label_lines;
+		std::string column_label_bitangents;
+#endif
 
-		idx_po_go = S.find_column(Classifier->Descr->column_label_po_go);
-		idx_po_index = S.find_column(Classifier->Descr->column_label_po_index);
-		idx_po = S.find_column(Classifier->Descr->column_label_po);
-		idx_so = S.find_column(Classifier->Descr->column_label_so);
-		idx_eqn = S.find_column(Classifier->Descr->column_label_eqn);
-		idx_pts = S.find_column(Classifier->Descr->column_label_pts);
-		idx_bitangents = S.find_column(Classifier->Descr->column_label_bitangents);
+		if (Classifier->Descr->f_label_po_go) {
+			idx_po_go = S.find_column(Classifier->Descr->column_label_po_go);
+		}
+		else {
+			idx_po_go = -1;
+		}
+		if (Classifier->Descr->f_label_po_index) {
+			idx_po_index = S.find_column(Classifier->Descr->column_label_po_index);
+		}
+		else {
+			idx_po_index = -1;
+		}
+		if (Classifier->Descr->f_label_po) {
+			idx_po = S.find_column(Classifier->Descr->column_label_po);
+		}
+		else {
+			idx_po = -1;
+		}
+		if (Classifier->Descr->f_label_so) {
+			idx_so = S.find_column(Classifier->Descr->column_label_so);
+		}
+		else {
+			idx_so = -1;
+		}
+		if (Classifier->Descr->f_label_equation) {
+			idx_eqn = S.find_column(Classifier->Descr->column_label_eqn);
+		}
+		else {
+			idx_eqn = -1;
+		}
+
+		if (Classifier->Descr->f_label_points) {
+			idx_pts = S.find_column(Classifier->Descr->column_label_pts);
+		}
+		else {
+			idx_pts = -1;
+		}
+
+		if (Classifier->Descr->f_label_lines) {
+			idx_bitangents = S.find_column(Classifier->Descr->column_label_bitangents);
+		}
+		else {
+			idx_bitangents = -1;
+		}
 
 		for (row = 0; row < S.nb_rows - 1; row++, counter++) {
 
@@ -269,6 +322,20 @@ void input_objects_of_type_variety::read_input_objects(
 			if (f_v) {
 				cout << "input_objects_of_type_variety::read_input_objects "
 						"after prepare_input" << endl;
+			}
+
+			if (idx_pts == -1) {
+				if (f_v) {
+					cout << "input_objects_of_type_variety::read_input_objects "
+							"before enumerate_points" << endl;
+				}
+				Qco[counter]->Quartic_curve_object->enumerate_points(
+						Classifier->Poly_ring,
+						verbose_level - 1);
+				if (f_v) {
+					cout << "input_objects_of_type_variety::read_input_objects "
+							"after enumerate_points" << endl;
+				}
 			}
 
 
@@ -319,8 +386,20 @@ void input_objects_of_type_variety::prepare_input(
 	string bitangents_txt;
 
 	eqn_txt = S->get_entry_ij(row + 1, idx_eqn);
-	pts_txt = S->get_entry_ij(row + 1, idx_pts);
-	bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
+
+	if (idx_pts >= 0) {
+		pts_txt = S->get_entry_ij(row + 1, idx_pts);
+	}
+	else {
+		pts_txt = "";
+	}
+
+	if (idx_bitangents >= 0) {
+		bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
+	}
+	else {
+		bitangents_txt = "";
+	}
 
 	data_structures::string_tools ST;
 
@@ -351,8 +430,11 @@ void input_objects_of_type_variety::prepare_input(
 		cout << "input_objects_of_type_variety::prepare_input "
 				"before Qco->init" << endl;
 	}
+
+
 	Qco->init(
 			counter, po_go, po_index, po, so,
+			Classifier->Poly_ring,
 			eqn_txt,
 			pts_txt, bitangents_txt,
 			verbose_level);

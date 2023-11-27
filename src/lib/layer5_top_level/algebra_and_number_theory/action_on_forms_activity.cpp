@@ -52,7 +52,8 @@ void action_on_forms_activity::init(
 }
 
 
-void action_on_forms_activity::perform_activity(int verbose_level)
+void action_on_forms_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -79,7 +80,8 @@ void action_on_forms_activity::perform_activity(int verbose_level)
 	}
 }
 
-void action_on_forms_activity::do_algebraic_normal_form(int verbose_level)
+void action_on_forms_activity::do_algebraic_normal_form(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -105,7 +107,8 @@ void action_on_forms_activity::do_algebraic_normal_form(int verbose_level)
 	}
 }
 
-void action_on_forms_activity::do_orbits_on_functions(int verbose_level)
+void action_on_forms_activity::do_orbits_on_functions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -134,7 +137,8 @@ void action_on_forms_activity::do_orbits_on_functions(int verbose_level)
 
 }
 
-void action_on_forms_activity::do_associated_set_in_plane(int verbose_level)
+void action_on_forms_activity::do_associated_set_in_plane(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -156,7 +160,8 @@ void action_on_forms_activity::do_associated_set_in_plane(int verbose_level)
 	}
 }
 
-void action_on_forms_activity::do_differential_uniformity(int verbose_level)
+void action_on_forms_activity::do_differential_uniformity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

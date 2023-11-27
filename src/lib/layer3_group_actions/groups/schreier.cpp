@@ -1340,6 +1340,8 @@ void schreier::compute_point_orbit(
 	int f_vv = false; //(verbose_level >= 2);
 	int f_vvv = false; //(verbose_level >= 3);
 
+	int print_interval = 100000;
+
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
 		cout << "computing orbit of point " << pt;
@@ -1415,8 +1417,8 @@ void schreier::compute_point_orbit(
 			total++;
 			total1 = total - orbit_first[nb_orbits];
 			cur1 = cur - orbit_first[nb_orbits];
-			if ((total1 % 10000) == 0 ||
-					(cur1 > 0 && (cur1 % 10000) == 0)) {
+			if ((total1 % print_interval) == 0 ||
+					(cur1 > 0 && (cur1 % print_interval) == 0)) {
 				cout << "schreier::compute_point_orbit degree = "
 						<< degree << " length = " << total1
 					<< " processed = " << cur1 << " nb_orbits="

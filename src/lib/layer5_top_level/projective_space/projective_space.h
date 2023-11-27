@@ -32,6 +32,9 @@ public:
 	int f_space;
 	std::string space_label;
 
+	int f_ring;
+	std::string ring_label;
+
 	int f_input_fname_mask;
 	std::string fname_mask;
 
@@ -58,8 +61,8 @@ public:
 
 	std::vector<std::string> carry_through;
 
-	int f_degree;
-	int degree;
+	//int f_degree;
+	//int degree;
 
 	int f_algorithm_nauty;
 	int f_algorithm_substructure;
@@ -70,7 +73,7 @@ public:
 	int f_skip;
 	std::string skip_label;
 
-	projective_space_with_action *PA;
+	//projective_space_with_action *PA;
 
 	canonical_form_classifier *Canon_substructure;
 
@@ -101,6 +104,7 @@ public:
 
 	canonical_form_classifier_description *Descr;
 
+	projective_geometry::projective_space_with_action *PA;
 
 	ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
@@ -170,6 +174,8 @@ public:
 	// the set of rational points of the curve.
 	// Computes the stabilizer of the set of rational points of the curve.
 	// Computes the orbit of the equation under the stabilizer of the set.
+	void set_stabilizer_using_nauty(int verbose_level);
+	void orbit_of_equation_under_set_stabilizer(int verbose_level);
 
 };
 
@@ -206,6 +212,7 @@ public:
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Canonical_object;
 
 
+
 	canonical_form_of_variety();
 	~canonical_form_of_variety();
 	void init(
@@ -214,26 +221,50 @@ public:
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
 			int verbose_level);
 	void classify_curve_nauty(
+			int &f_found_canonical_form,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
 			int verbose_level);
 	void handle_repeated_canonical_form_of_set(
 			int idx,
 			canonical_form_nauty *C,
 			long int *alpha, int *gamma,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
 			int verbose_level);
 	int find_equation(
 			canonical_form_nauty *C,
 			long int *alpha, int *gamma,
 			int idx1, int &found_at,
 			int verbose_level);
+	// relies on reverse_engineer_semilinear_map,
+	// which only works in a projective plane.
 	void add_object_and_compute_canonical_equation(
 			canonical_form_nauty *C,
 			int idx, int verbose_level);
+	// adds the canonical form at position idx
+	void compute_canonical_form_nauty(
+			int counter,
+			int &f_found_canonical_form,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
+			int verbose_level);
+	void compute_canonical_form_substructure(
+			int counter,
+			int verbose_level);
+#if 0
 	void compute_canonical_form(
 			int counter,
 			int verbose_level);
+#endif
 	void compute_canonical_object(
 			int verbose_level);
 	void prepare_csv_entry_one_line(
+			std::vector<std::string> &v, int i, int verbose_level);
+	void prepare_csv_entry_one_line_nauty(
 			std::vector<std::string> &v, int i, int verbose_level);
 
 };
@@ -342,28 +373,48 @@ public:
 	int nb_types; // number of isomorphism types
 
 
+	// nauty specific:
+	int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
+	int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
+	int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
+	int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
+
+	int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
+
 	classification_of_varieties();
 	~classification_of_varieties();
 	void init(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
+	void finalize_classification_by_nauty(
+			int verbose_level);
+	void write_classification_by_nauty_csv(
+			std::string &fname_base,
+			int verbose_level);
+	void finalize_canonical_forms(
+			int verbose_level);
 	void classify_nauty(
 			int verbose_level);
 	void classify_with_substructure(
 			int verbose_level);
-	void main_loop(int verbose_level);
-	void write_canonical_forms_csv(
-			std::string &fname_base,
+	void make_classification_table_nauty(
+			int *&T,
 			int verbose_level);
-	void generate_source_code(
+	void main_loop(
+			int verbose_level);
+	void write_canonical_forms_csv(
 			std::string &fname_base,
 			int verbose_level);
 	void report(
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
+	void report_substructure(
+			std::ostream &ost, int verbose_level);
 	void export_canonical_form_data(
 			std::string &fname, int verbose_level);
+	void generate_source_code(
+			std::string &fname_base,
+			int verbose_level);
 
 };
 
@@ -734,7 +785,8 @@ public:
 
 	projective_space_activity();
 	~projective_space_activity();
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 	void do_rank_lines_in_PG(
 			std::string &label,
 			int verbose_level);
@@ -901,7 +953,8 @@ public:
 			field_theory::finite_field *F,
 			int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
-	void init_group(int f_semilinear, int verbose_level);
+	void init_group(
+			int f_semilinear, int verbose_level);
 	void canonical_labeling(
 			geometry::object_with_canonical_form *OiP,
 		int *canonical_labeling,
@@ -915,7 +968,8 @@ public:
 		int *Elt, std::ostream &ost,
 		int verbose_level);
 #if 0
-	void compute_group_of_set(long int *set, int set_sz,
+	void compute_group_of_set(
+			long int *set, int set_sz,
 			groups::strong_generators *&Sg,
 			int verbose_level);
 #endif
@@ -941,7 +995,8 @@ public:
 	void cheat_sheet(
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
-	void do_spread_classify(int k,
+	void do_spread_classify(
+			int k,
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);

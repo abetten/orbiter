@@ -21,7 +21,8 @@ namespace layer5_applications {
 namespace apps_algebra {
 
 
-void character_table_burnside::do_it(int n, int verbose_level)
+void character_table_burnside::do_it(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1036,7 +1037,8 @@ void character_table_burnside::create_generators(
 
 
 
-void character_table_burnside::integral_eigenvalues(int *M, int n,
+void character_table_burnside::integral_eigenvalues(
+		int *M, int n,
 	int *&Lambda,
 	int &nb_lambda,
 	int *&Mu,
@@ -1230,7 +1232,8 @@ void character_table_burnside::characteristic_poly(
 
 
 
-void character_table_burnside::double_swap(double &a, double &b)
+void character_table_burnside::double_swap(
+		double &a, double &b)
 {
 	double c;
 
@@ -1384,7 +1387,8 @@ int character_table_burnside::double_Gauss(
 	return rank;
 }
 
-void character_table_burnside::double_matrix_print(double *A, int m, int n)
+void character_table_burnside::double_matrix_print(
+		double *A, int m, int n)
 {
 	int i, j;
 
@@ -1396,7 +1400,8 @@ void character_table_burnside::double_matrix_print(double *A, int m, int n)
 		}
 }
 
-double character_table_burnside::double_abs(double x)
+double character_table_burnside::double_abs(
+		double x)
 {
 	if (x < 0) {
 		return - x;
@@ -1442,69 +1447,70 @@ void character_table_burnside::matrix_get_kernel(
 	j = 0;
 	if (j < r) {
 		b = base_cols[j];
-		}
+	}
 	else {
 		b = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		if (i == b) {
 			j++;
 			if (j < r) {
 				b = base_cols[j];
-				}
+			}
 			else {
 				b = -1;
-				}
 			}
+		}
 		else {
 			kcol[ii] = i;
 			ii++;
-			}
 		}
+	}
 	if (ii != k) {
 		cout << "character_table_burnside::matrix_get_kernel ii != k" << endl;
 		exit(1);
-		}
+	}
 	//cout << "kcol = " << kcol << endl;
 	ii = 0;
 	j = 0;
 	if (j < r) {
 		b = base_cols[j];
-		}
+	}
 	else {
 		b = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		if (i == b) {
 			for (iii = 0; iii < k; iii++) {
 				a = kcol[iii];
 				kernel[i * kernel_n + iii] = M[j * n + a];
-				}
+			}
 			j++;
 			if (j < r) {
 				b = base_cols[j];
-				}
+			}
 			else {
 				b = -1;
-				}
 			}
+		}
 		else {
 			for (iii = 0; iii < k; iii++) {
 				if (iii == ii) {
 					kernel[i * kernel_n + iii] = -1.;
-					}
+				}
 				else {
 					kernel[i * kernel_n + iii] = 0;
-					}
 				}
-			ii++;
 			}
+			ii++;
 		}
+	}
 	FREE_int(kcol);
 }
 
 
-int character_table_burnside::double_as_int(double x)
+int character_table_burnside::double_as_int(
+		double x)
 {
 	int a;
 	double a1, a2;
@@ -1514,7 +1520,7 @@ int character_table_burnside::double_as_int(double x)
 	a2 = (double)a + 0.000001;
 	if (a1 < a && a < a2) {
 		return a;
-		}
+	}
 	cout << "error in double_as_int" << endl;
 	exit(1);
 }

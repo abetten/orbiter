@@ -125,7 +125,8 @@ hermitian_spreads_classify::~hermitian_spreads_classify()
 	}
 }
 
-void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
+void hermitian_spreads_classify::init(
+		int n, int Q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -304,7 +305,8 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	}
 }
 
-void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
+void hermitian_spreads_classify::read_arguments(
+		int argc, std::string *argv)
 {
 	int i;
 	data_structures::string_tools ST;
@@ -337,7 +339,8 @@ void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 	}
 }
 
-void hermitian_spreads_classify::init2(int verbose_level)
+void hermitian_spreads_classify::init2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -381,7 +384,8 @@ void hermitian_spreads_classify::init2(int verbose_level)
 	}
 }
 
-void hermitian_spreads_classify::compute(int depth, int verbose_level)
+void hermitian_spreads_classify::compute(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = depth;
@@ -489,7 +493,8 @@ void hermitian_spreads_classify::early_test_func(
 }
 
 
-static void HS_early_test_func_callback(long int *S, int len,
+static void HS_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

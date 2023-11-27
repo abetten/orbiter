@@ -22,6 +22,8 @@ canonical_form_classifier::canonical_form_classifier()
 {
 	Descr = NULL;
 
+	PA = NULL;
+
 	Poly_ring = NULL;
 	AonHPD = NULL;
 
@@ -33,6 +35,9 @@ canonical_form_classifier::canonical_form_classifier()
 
 canonical_form_classifier::~canonical_form_classifier()
 {
+	if (AonHPD) {
+		FREE_OBJECT(AonHPD);
+	}
 	if (Input) {
 		FREE_OBJECT(Input);
 	}
@@ -53,7 +58,8 @@ void canonical_form_classifier::init(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init algorithm = ";
+		cout << "canonical_form_classifier::init "
+				"algorithm = ";
 		if (Descr->f_algorithm_nauty) {
 			cout << "nauty";
 		}
@@ -80,24 +86,59 @@ void canonical_form_classifier::init(
 	canonical_form_classifier::Descr = Descr;
 
 
+	if (!Descr->f_space) {
+		cout << "canonical_form_classifier::init "
+				"please use -space <label>  to specify the space" << endl;
+		exit(1);
+	}
+	PA = Get_object_of_projective_space(
+					Descr->space_label);
+
+
+#if 0
 	if (!Descr->f_degree) {
 		cout << "canonical_form_classifier::init "
 				"please use -degree <d>  to specify the degree" << endl;
 		exit(1);
 	}
+#endif
+
+	if (!Descr->f_ring) {
+		cout << "canonical_form_classifier::init "
+				"please use -ring <label>  to specify the ring" << endl;
+		exit(1);
+	}
+
+
 	if (!Descr->f_output_fname) {
 		cout << "please use -output_fname" << endl;
 		exit(1);
 	}
 
-	Poly_ring = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+
+	Poly_ring = Get_ring(Descr->ring_label);
+	if (f_v) {
+		cout << "canonical_form_classifier::init "
+				"polynomial degree " << Poly_ring->degree << endl;
+		cout << "canonical_form_classifier::init "
+				"polynomial number of variables " << Poly_ring->nb_variables << endl;
+	}
+
+	if (Poly_ring->nb_variables != PA->n + 1) {
+		cout << "canonical_form_classifier::init "
+				"polynomial number of variables must equal projective dimension plus one" << endl;
+		exit(1);
+	}
+
+#if 0
+ 	Poly_ring = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"before Poly_ring->init" << endl;
 	}
 	Poly_ring->init(
-			Descr->PA->F,
-			Descr->PA->n + 1,
+			PA->F,
+			PA->n + 1,
 			Descr->degree,
 			t_PART,
 			verbose_level - 3);
@@ -105,6 +146,8 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init "
 				"after Poly_ring->init" << endl;
 	}
+#endif
+
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"nb_monomials = " << Poly_ring->get_nb_monomials() << endl;
@@ -117,7 +160,7 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init "
 				"before AonHPD->init" << endl;
 	}
-	AonHPD->init(Descr->PA->A, Poly_ring, verbose_level - 3);
+	AonHPD->init(PA->A, Poly_ring, verbose_level - 3);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"after AonHPD->init" << endl;
@@ -162,11 +205,13 @@ void canonical_form_classifier::classify(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::classify before Output->init" << endl;
+		cout << "canonical_form_classifier::classify "
+				"before Output->init" << endl;
 	}
 	Output->init(this, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_classifier::classify after Output->init" << endl;
+		cout << "canonical_form_classifier::classify "
+				"after Output->init" << endl;
 	}
 
 

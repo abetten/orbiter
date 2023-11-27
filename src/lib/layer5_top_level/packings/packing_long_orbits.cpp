@@ -69,7 +69,8 @@ packing_long_orbits::~packing_long_orbits()
 #endif
 }
 
-void packing_long_orbits::init(packing_was_fixpoints *PWF,
+void packing_long_orbits::init(
+		packing_was_fixpoints *PWF,
 		packing_long_orbits_description *Descr,
 		int verbose_level)
 {
@@ -221,7 +222,8 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	}
 }
 
-void packing_long_orbits::list_of_cases_from_file(int verbose_level)
+void packing_long_orbits::list_of_cases_from_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1218,7 +1220,8 @@ void packing_long_orbits::create_graph_on_long_orbits(
 }
 
 
-void packing_long_orbits::report_filtered_orbits(std::ostream &ost)
+void packing_long_orbits::report_filtered_orbits(
+		std::ostream &ost)
 {
 	int i;
 

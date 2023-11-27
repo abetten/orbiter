@@ -949,7 +949,8 @@ void linear_set_classify::classify_secondary(
 	FREE_lint(candidates);
 }
 
-void linear_set_classify::init_secondary(int argc, const char **argv,
+void linear_set_classify::init_secondary(
+		int argc, const char **argv,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens_previous,
 	int verbose_level)

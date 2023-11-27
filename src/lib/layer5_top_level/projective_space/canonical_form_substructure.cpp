@@ -67,8 +67,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	canonical_form_substructure::Variety = Variety;
 
 
-	trans1 = NEW_int(Variety->Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
-	trans2 = NEW_int(Variety->Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
+	trans1 = NEW_int(Variety->Canonical_form_classifier->PA->A->elt_size_in_int);
+	trans2 = NEW_int(Variety->Canonical_form_classifier->PA->A->elt_size_in_int);
 	intermediate_equation = NEW_int(Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
 
 
@@ -142,7 +142,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the original set:" << endl;
 		//Gens_stabilizer_original_set->print_generators_tex();
 	}
@@ -160,7 +160,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the canonical form:" << endl;
 		//Gens_stabilizer_canonical_form->print_generators_tex();
 	}
@@ -202,8 +202,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 				"before Orb->init" << endl;
 	}
 	Orb->init(
-			Variety->Canonical_form_classifier->Descr->PA->A,
-			Variety->Canonical_form_classifier->Descr->PA->F,
+			Variety->Canonical_form_classifier->PA->A,
+			Variety->Canonical_form_classifier->PA->F,
 			Variety->Canonical_form_classifier->AonHPD,
 			Gens_stabilizer_canonical_form /* A->Strong_gens*/,
 			intermediate_equation,
@@ -235,13 +235,13 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 
 
-	Variety->Canonical_form_classifier->Descr->PA->A->Group_element->element_mult(
+	Variety->Canonical_form_classifier->PA->A->Group_element->element_mult(
 			trans1, trans2, Variety->transporter_to_canonical_form, 0);
 
 
 	Variety->gens_stab_of_canonical_equation->group_order(*Variety->go_eqn);
 
-	Variety->Canonical_form_classifier->Descr->PA->F->Projective_space_basic->PG_element_normalize(
+	Variety->Canonical_form_classifier->PA->F->Projective_space_basic->PG_element_normalize(
 			Variety->canonical_equation, 1,
 			Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
 

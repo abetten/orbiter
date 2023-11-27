@@ -196,7 +196,7 @@ void quartic_curve_from_surface::quartic(
 	map_surface_to_special_form(
 			pt_orbit,
 			//SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
-			verbose_level - 2);
+			0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
 				"after map_surface_to_special_form" << endl;
@@ -531,7 +531,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	SOA->Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
 			SOA->Surf_A->A,
 			pt_A, pt_B, transporter,
-			verbose_level);
+			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -544,7 +544,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 			transporter,
 			SOA->SO->eqn /*int *input*/,
 			equation_nice /* int *output */,
-			verbose_level);
+			0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "

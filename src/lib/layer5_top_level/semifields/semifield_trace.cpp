@@ -65,7 +65,8 @@ semifield_trace::~semifield_trace()
 	//freeself();
 }
 
-void semifield_trace::init(semifield_lifting *SL)
+void semifield_trace::init(
+		semifield_lifting *SL)
 {
 	semifield_trace::SL = SL;
 	SC = SL->SC;

@@ -152,7 +152,8 @@ void blt_set_with_action::init_set(
 }
 
 
-void blt_set_with_action::compute_T(int verbose_level)
+void blt_set_with_action::compute_T(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -176,7 +177,8 @@ void blt_set_with_action::compute_T(int verbose_level)
 }
 
 
-void blt_set_with_action::compute_Pi_ij(int verbose_level)
+void blt_set_with_action::compute_Pi_ij(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

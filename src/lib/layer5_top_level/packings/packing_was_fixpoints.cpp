@@ -119,7 +119,8 @@ void packing_was_fixpoints::init(
 	}
 }
 
-void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
+void packing_was_fixpoints::setup_file_names(
+		int clique_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -162,7 +163,8 @@ void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 
 }
 
-void packing_was_fixpoints::create_graph_on_fixpoints(int verbose_level)
+void packing_was_fixpoints::create_graph_on_fixpoints(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -189,7 +191,8 @@ void packing_was_fixpoints::create_graph_on_fixpoints(int verbose_level)
 	}
 }
 
-void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
+void packing_was_fixpoints::action_on_fixpoints(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -469,7 +472,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 	}
 }
 
-void packing_was_fixpoints::process_long_orbits(int verbose_level)
+void packing_was_fixpoints::process_long_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -506,7 +510,8 @@ void packing_was_fixpoints::process_long_orbits(int verbose_level)
 
 
 
-long int *packing_was_fixpoints::clique_by_index(int idx)
+long int *packing_was_fixpoints::clique_by_index(
+		int idx)
 {
 
 	if (Cliques == NULL) {
@@ -520,7 +525,8 @@ long int *packing_was_fixpoints::clique_by_index(int idx)
 	return Cliques + idx * fixpoint_clique_size;
 }
 
-groups::strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
+groups::strong_generators *packing_was_fixpoints::get_stabilizer(
+		int idx)
 {
 	if (Fixp_cliques == NULL) {
 		cout << "packing_was_fixpoints::get_stabilizer Fixp_cliques == NULL" << endl;
@@ -608,7 +614,8 @@ void packing_was_fixpoints::print_packing(
 	}
 }
 
-void packing_was_fixpoints::report(int verbose_level)
+void packing_was_fixpoints::report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -794,7 +801,8 @@ void packing_was_fixpoints::report2(
 
 }
 
-long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_level)
+long int packing_was_fixpoints::fixpoint_to_reduced_spread(
+		int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int b, c;

@@ -78,7 +78,8 @@ void combinatorial_object_activity::init_input_stream(
 	}
 }
 
-void combinatorial_object_activity::perform_activity(int verbose_level)
+void combinatorial_object_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -97,7 +98,8 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 }
 
 
-void combinatorial_object_activity::perform_activity_geometric_object(int verbose_level)
+void combinatorial_object_activity::perform_activity_geometric_object(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -356,7 +358,8 @@ void combinatorial_object_activity::perform_activity_geometric_object(int verbos
 }
 
 
-void combinatorial_object_activity::perform_activity_input_stream(int verbose_level)
+void combinatorial_object_activity::perform_activity_input_stream(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

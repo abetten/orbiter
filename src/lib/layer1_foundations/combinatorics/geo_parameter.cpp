@@ -73,7 +73,8 @@ geo_parameter::~geo_parameter()
 	}
 }
 
-void geo_parameter::append_to_part(int a)
+void geo_parameter::append_to_part(
+		int a)
 {
 	int nb_alloc;
 	
@@ -97,7 +98,8 @@ void geo_parameter::append_to_part(int a)
 	part[nb_parts++] = a;
 }
 
-void geo_parameter::append_to_entries(int a1, int a2, int a3, int a4)
+void geo_parameter::append_to_entries(
+		int a1, int a2, int a3, int a4)
 {
 	int nb_alloc;
 	
@@ -230,7 +232,8 @@ void geo_parameter::write_mode_stack(
 	
 }
 
-void geo_parameter::convert_single_to_stack(int verbose_level)
+void geo_parameter::convert_single_to_stack(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, sum, x, y, z, w, xy;
@@ -369,7 +372,8 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 	}
 }
 
-int geo_parameter::partition_number_row(int row_idx)
+int geo_parameter::partition_number_row(
+		int row_idx)
 {
 	if (row_idx == 0) {
 		return 0;
@@ -379,7 +383,8 @@ int geo_parameter::partition_number_row(int row_idx)
 	}
 }
  
-int geo_parameter::partition_number_col(int col_idx)
+int geo_parameter::partition_number_col(
+		int col_idx)
 {
 	if (col_idx == 0) {
 		return 1;
@@ -389,7 +394,8 @@ int geo_parameter::partition_number_col(int col_idx)
 	}
 }
  
-int geo_parameter::input(std::ifstream &aStream)
+int geo_parameter::input(
+		std::ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
 	cout << "geo_parameter::input SYSTEMUNIX" << endl;
@@ -421,7 +427,8 @@ int geo_parameter::input(std::ifstream &aStream)
 	return false;
 }
 
-int geo_parameter::input_mode_single(std::ifstream &aStream)
+int geo_parameter::input_mode_single(
+		std::ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
 	int i, j, l, val, eqpos;
@@ -761,7 +768,8 @@ void geo_parameter::init_tdo_scheme(
 	}
 }
 
-void geo_parameter::print_schemes(tdo_scheme_synthetic &G)
+void geo_parameter::print_schemes(
+		tdo_scheme_synthetic &G)
 {
 	cout << "geo_parameter::print_schemes" << endl;
 	cout << "decomposition " << label << ":" << endl;
@@ -780,7 +788,8 @@ void geo_parameter::print_schemes(tdo_scheme_synthetic &G)
 	}
 }
 
-void geo_parameter::print_schemes_tex(tdo_scheme_synthetic &G)
+void geo_parameter::print_schemes_tex(
+		tdo_scheme_synthetic &G)
 {
 	cout << "decomposition " << label << ":" << endl;
 	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, true, label);
@@ -885,7 +894,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	Sorting.sorted_vec_get_first_and_length(fuse, nb_V, class_first, class_len, nb_classes);
+	Sorting.sorted_vec_get_first_and_length(
+			fuse, nb_V, class_first, class_len, nb_classes);
 
 
 	prev_scheme = NEW_int(nb_classes * nb_B);
@@ -1084,7 +1094,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	Sorting.sorted_vec_get_first_and_length(fuse, nb_B, class_first, class_len, nb_classes);
+	Sorting.sorted_vec_get_first_and_length(
+			fuse, nb_B, class_first, class_len, nb_classes);
 
 	prev_scheme = NEW_int(nb_V * nb_classes);
 	for (J = 0; J < nb_classes; J++) {
@@ -1578,7 +1589,8 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 
 }
 
-void geo_parameter::cut_off_two_lines(geo_parameter &GP2, 
+void geo_parameter::cut_off_two_lines(
+		geo_parameter &GP2,
 	int *&part_relabel, int *&part_length,
 	int verbose_level)
 {
@@ -1647,7 +1659,8 @@ void geo_parameter::cut_off_some_lines(geo_parameter &GP2, int w,
 }
 #endif
 
-void geo_parameter::cut_off(geo_parameter &GP2, int w,
+void geo_parameter::cut_off(
+		geo_parameter &GP2, int w,
 	int *&part_relabel, int *&part_length,
 	int verbose_level)
 {
@@ -1820,7 +1833,8 @@ void geo_parameter::cut_off(geo_parameter &GP2, int w,
 	}
 }
 
-void geo_parameter::copy(geo_parameter &GP2)
+void geo_parameter::copy(
+		geo_parameter &GP2)
 {
 	int i;
 	

@@ -107,7 +107,8 @@ packing_was::~packing_was()
 	}
 }
 
-void packing_was::init(packing_was_description *Descr,
+void packing_was::init(
+		packing_was_description *Descr,
 		packing_classify *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -181,7 +182,8 @@ void packing_was::init(packing_was_description *Descr,
 	}
 }
 
-void packing_was::compute_H_orbits_and_reduce(int verbose_level)
+void packing_was::compute_H_orbits_and_reduce(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -363,7 +365,8 @@ void packing_was::compute_H_orbits_and_reduce(int verbose_level)
 	}
 }
 
-void packing_was::init_regular_packing(int verbose_level)
+void packing_was::init_regular_packing(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -381,7 +384,8 @@ void packing_was::init_regular_packing(int verbose_level)
 	}
 }
 
-void packing_was::init_N(int verbose_level)
+void packing_was::init_N(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -461,7 +465,8 @@ void packing_was::init_N(int verbose_level)
 	}
 }
 
-void packing_was::init_H(int verbose_level)
+void packing_was::init_H(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -554,7 +559,8 @@ void packing_was::init_H(int verbose_level)
 	}
 }
 
-void packing_was::compute_H_orbits_on_points(int verbose_level)
+void packing_was::compute_H_orbits_on_points(
+		int verbose_level)
 // computes the orbits of H on points
 // and writes to file prefix_point_orbits
 {
@@ -589,7 +595,8 @@ void packing_was::compute_H_orbits_on_points(int verbose_level)
 	}
 }
 
-void packing_was::compute_N_orbits_on_points(int verbose_level)
+void packing_was::compute_N_orbits_on_points(
+		int verbose_level)
 // computes the orbits of N on points
 // and writes to file prefix_point_orbits
 {
@@ -626,7 +633,8 @@ void packing_was::compute_N_orbits_on_points(int verbose_level)
 
 
 
-void packing_was::compute_H_orbits_on_lines(int verbose_level)
+void packing_was::compute_H_orbits_on_lines(
+		int verbose_level)
 // computes the orbits of H on lines (NOT on spreads!)
 // and writes to file prefix_line_orbits
 {
@@ -661,7 +669,8 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 	}
 }
 
-void packing_was::compute_N_orbits_on_lines(int verbose_level)
+void packing_was::compute_N_orbits_on_lines(
+		int verbose_level)
 // computes the orbits of N on lines (NOT on spreads!)
 // and writes to file prefix_line_orbits
 {
@@ -696,7 +705,8 @@ void packing_was::compute_N_orbits_on_lines(int verbose_level)
 	}
 }
 
-void packing_was::compute_spread_types_wrt_H(int verbose_level)
+void packing_was::compute_spread_types_wrt_H(
+		int verbose_level)
 // Spread_types[P->nb_spreads * (group_order + 1)]
 {
 	int f_v = (verbose_level >= 1);
@@ -728,7 +738,8 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 	}
 }
 
-void packing_was::compute_H_orbits_on_spreads(int verbose_level)
+void packing_was::compute_H_orbits_on_spreads(
+		int verbose_level)
 // computes the orbits of H on spreads (NOT on lines!)
 // and writes to file fname_orbits
 {
@@ -790,7 +801,8 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	}
 }
 
-void packing_was::test_orbits_on_spreads(int verbose_level)
+void packing_was::test_orbits_on_spreads(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -900,7 +912,8 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 	}
 }
 
-void packing_was::reduce_spreads(int verbose_level)
+void packing_was::reduce_spreads(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -988,7 +1001,8 @@ void packing_was::reduce_spreads(int verbose_level)
 
 }
 
-void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
+void packing_was::compute_reduced_spread_types_wrt_H(
+		int verbose_level)
 // Spread_types[P->nb_spreads * (group_order + 1)]
 {
 	int f_v = (verbose_level >= 1);
@@ -1020,7 +1034,8 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 }
 
 
-void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
+void packing_was::compute_H_orbits_on_reduced_spreads(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -1444,7 +1459,8 @@ int packing_was::evaluate_orbit_invariant_function(
 	return val;
 }
 
-void packing_was::classify_orbit_invariant(int verbose_level)
+void packing_was::classify_orbit_invariant(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1653,7 +1669,8 @@ void packing_was::report2(
 	}
 }
 
-void packing_was::report(int verbose_level)
+void packing_was::report(
+		int verbose_level)
 {
 	orbiter_kernel_system::file_io Fio;
 

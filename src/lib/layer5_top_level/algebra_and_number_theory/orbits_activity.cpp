@@ -51,7 +51,8 @@ void orbits_activity::init(
 }
 
 
-void orbits_activity::perform_activity(int verbose_level)
+void orbits_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -206,7 +207,8 @@ void orbits_activity::perform_activity(int verbose_level)
 	}
 }
 
-void orbits_activity::do_report(int verbose_level)
+void orbits_activity::do_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -353,7 +355,8 @@ void orbits_activity::do_report(int verbose_level)
 
 }
 
-void orbits_activity::do_export(int verbose_level)
+void orbits_activity::do_export(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -427,7 +430,8 @@ void orbits_activity::do_export(int verbose_level)
 
 }
 
-void orbits_activity::do_export_trees(int verbose_level)
+void orbits_activity::do_export_trees(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -464,7 +468,8 @@ void orbits_activity::do_export_trees(int verbose_level)
 }
 
 
-void orbits_activity::do_export_source_code(int verbose_level)
+void orbits_activity::do_export_source_code(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -525,7 +530,8 @@ void orbits_activity::do_export_source_code(int verbose_level)
 }
 
 
-void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
+void orbits_activity::do_export_levels(
+		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -625,7 +631,8 @@ void orbits_activity::do_export_levels(int orbit_idx, int verbose_level)
 }
 
 
-void orbits_activity::do_draw_tree(int verbose_level)
+void orbits_activity::do_draw_tree(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -710,7 +717,8 @@ void orbits_activity::do_draw_tree(int verbose_level)
 	}
 }
 
-void orbits_activity::do_stabilizer(int verbose_level)
+void orbits_activity::do_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -787,7 +795,8 @@ void orbits_activity::do_stabilizer(int verbose_level)
 
 }
 
-void orbits_activity::do_stabilizer_of_orbit_rep(int verbose_level)
+void orbits_activity::do_stabilizer_of_orbit_rep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -818,7 +827,8 @@ void orbits_activity::do_stabilizer_of_orbit_rep(int verbose_level)
 
 }
 
-void orbits_activity::do_Kramer_Mesner_matrix(int verbose_level)
+void orbits_activity::do_Kramer_Mesner_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -926,7 +936,8 @@ void orbits_activity::do_Kramer_Mesner_matrix(int verbose_level)
 	}
 }
 
-void orbits_activity::do_recognize(int verbose_level)
+void orbits_activity::do_recognize(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

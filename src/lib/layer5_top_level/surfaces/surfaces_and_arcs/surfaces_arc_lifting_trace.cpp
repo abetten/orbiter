@@ -235,7 +235,8 @@ void surfaces_arc_lifting_trace::process_flag_orbit(
 }
 
 
-void surfaces_arc_lifting_trace::move_arc(int verbose_level)
+void surfaces_arc_lifting_trace::move_arc(
+		int verbose_level)
 // computes alpha1 (4x4), alpha2 (3x3), beta1 (3x3) and beta2 (3x3) and f2
 // The following data is computed but not stored:
 // P6_local, orbit_not_on_conic_idx, pair_orbit_idx, the_partition4

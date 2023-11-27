@@ -323,7 +323,8 @@ void semifield_substructure::compute_orbits(
 }
 
 
-void semifield_substructure::compute_flag_orbits(int verbose_level)
+void semifield_substructure::compute_flag_orbits(
+		int verbose_level)
 // initializes Fo_first and Flag_orbits
 {
 	int f_v = (verbose_level >= 1);
@@ -489,7 +490,8 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 }
 
 
-void semifield_substructure::do_classify(int verbose_level)
+void semifield_substructure::do_classify(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -1237,7 +1239,8 @@ void semifield_substructure::all_two_dimensional_subspaces(
 }
 
 
-int semifield_substructure::identify(long int *data,
+int semifield_substructure::identify(
+		long int *data,
 		int &rk, int &trace_po, int &fo, int &po,
 		int *transporter,
 		int verbose_level)

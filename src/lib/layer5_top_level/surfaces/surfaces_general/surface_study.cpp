@@ -22,13 +22,15 @@ namespace cubic_surfaces_in_general {
 
 
 
-static void move_point_set(actions::action *A2,
+static void move_point_set(
+		actions::action *A2,
 		data_structures_groups::set_and_stabilizer *Universe,
 		long int *Pts, int nb_pts,
 	int *Elt,
 	data_structures_groups::set_and_stabilizer *&new_stab,
 	int verbose_level);
-static void matrix_entry_print(long int *p,
+static void matrix_entry_print(
+		long int *p,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data);
 
@@ -327,7 +329,8 @@ void surface_study::init(
 }
 
 
-void surface_study::study_intersection_points(int verbose_level)
+void surface_study::study_intersection_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -431,7 +434,8 @@ void surface_study::study_intersection_points(int verbose_level)
 
 
 
-void surface_study::study_line_orbits(int verbose_level)
+void surface_study::study_line_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -462,7 +466,8 @@ void surface_study::study_line_orbits(int verbose_level)
 
 
 
-void surface_study::study_group(int verbose_level)
+void surface_study::study_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -609,7 +614,8 @@ void surface_study::study_group(int verbose_level)
 
 
 
-void surface_study::study_orbits_on_lines(int verbose_level)
+void surface_study::study_orbits_on_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -673,7 +679,8 @@ void surface_study::study_orbits_on_lines(int verbose_level)
 		}
 }
 
-void surface_study::study_find_eckardt_points(int verbose_level)
+void surface_study::study_find_eckardt_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -792,7 +799,8 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 
 
-void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
+void surface_study::study_surface_with_6_eckardt_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1513,7 +1521,8 @@ void compute_decomposition(orthogonal *O,
 }
 #endif
 
-static void move_point_set(actions::action *A2,
+static void move_point_set(
+		actions::action *A2,
 		data_structures_groups::set_and_stabilizer *Universe,
 	long int *Pts, int nb_pts,
 	int *Elt,
@@ -1630,7 +1639,8 @@ static void move_point_set(actions::action *A2,
 		}
 }
 
-static void matrix_entry_print(long int *p,
+static void matrix_entry_print(
+		long int *p,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {

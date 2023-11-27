@@ -19,8 +19,10 @@ namespace apps_geometry {
 
 //static int wreath_rank_point_func(int *v, void *data);
 //static void wreath_unrank_point_func(int *v, int rk, void *data);
-static void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data);
-static void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+static void wreath_product_print_set(
+		std::ostream &ost, int len, long int *S, void *data);
+static void wreath_product_rank_one_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -166,7 +168,8 @@ void tensor_classify::init(
 }
 
 
-void tensor_classify::classify_poset(int depth,
+void tensor_classify::classify_poset(
+		int depth,
 		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
@@ -308,7 +311,8 @@ void tensor_classify::create_restricted_action_on_rank_one_tensors(
 }
 
 
-void tensor_classify::early_test_func(long int *S, int len,
+void tensor_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -373,7 +377,8 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 
 
-void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
+void tensor_classify::report(
+		int f_poset_classify, int poset_classify_depth,
 		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
@@ -586,7 +591,8 @@ static void wreath_unrank_point_func(int *v, int rk, void *data)
 #endif
 
 
-static void wreath_product_print_set(std::ostream &ost, int len, long int *S, void *data)
+static void wreath_product_print_set(
+		std::ostream &ost, int len, long int *S, void *data)
 {
 	tensor_classify *T;
 	int i;
@@ -608,7 +614,8 @@ static void wreath_product_print_set(std::ostream &ost, int len, long int *S, vo
 
 
 
-static void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
+static void wreath_product_rank_one_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

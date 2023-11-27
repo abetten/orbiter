@@ -2435,7 +2435,8 @@ void algebra_global_with_action::A5_in_PSL_2_q(
 	}
 }
 
-void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
+void algebra_global_with_action::A5_in_PSL_2_q_easy(
+		int q,
 		layer2_discreta::typed_objects::discreta_matrix & A,
 		layer2_discreta::typed_objects::discreta_matrix & B,
 		layer2_discreta::typed_objects::domain *dom_GFq,
@@ -2503,7 +2504,8 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 }
 
 
-void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
+void algebra_global_with_action::A5_in_PSL_2_q_hard(
+		int q,
 		layer2_discreta::typed_objects::discreta_matrix & A,
 		layer2_discreta::typed_objects::discreta_matrix & B,
 		layer2_discreta::typed_objects::domain *dom_GFq,
@@ -2764,7 +2766,8 @@ void algebra_global_with_action::trace(
 }
 
 void algebra_global_with_action::elementwise_power_int(
-		layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level)
+		layer2_discreta::typed_objects::discreta_matrix &A, int k,
+		int verbose_level)
 {
 	int i, j, m, n;
 

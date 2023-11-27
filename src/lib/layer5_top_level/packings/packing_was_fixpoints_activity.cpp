@@ -49,7 +49,8 @@ void packing_was_fixpoints_activity::init(
 	}
 }
 
-void packing_was_fixpoints_activity::perform_activity(int verbose_level)
+void packing_was_fixpoints_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

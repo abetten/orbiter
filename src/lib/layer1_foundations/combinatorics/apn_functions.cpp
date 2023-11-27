@@ -26,7 +26,8 @@ apn_functions::~apn_functions()
 {
 }
 
-void apn_functions::init(field_theory::finite_field *F,
+void apn_functions::init(
+		field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

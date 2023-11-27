@@ -215,15 +215,23 @@ public:
 
 	classify_bitvectors();
 	~classify_bitvectors();
-	void init(int N, int rep_len, int verbose_level);
-	int search(uchar *data, int &idx, int verbose_level);
-	void search_and_add_if_new(uchar *data,
+	void init(
+			int N, int rep_len, int verbose_level);
+	int search(
+			uchar *data, int &idx, int verbose_level);
+	void search_and_add_if_new(
+			uchar *data,
 			void *extra_data, int &f_found, int &idx,
 			int verbose_level);
-	int compare_at(uchar *data, int idx);
-	void add_at_idx(uchar *data,
+	// if f_found is true: idx is where the canonical form was found.
+	// if f_found is false: idx is where the new canonical form was added.
+	int compare_at(
+			uchar *data, int idx);
+	void add_at_idx(
+			uchar *data,
 			void *extra_data, int idx, int verbose_level);
-	void finalize(int verbose_level);
+	void finalize(
+			int verbose_level);
 	void print_reps();
 	void print_table();
 	void save(

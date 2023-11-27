@@ -52,7 +52,8 @@ packing_was_description::~packing_was_description()
 {
 }
 
-int packing_was_description::read_arguments(int argc, std::string *argv,
+int packing_was_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

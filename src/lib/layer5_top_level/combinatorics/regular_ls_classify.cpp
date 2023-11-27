@@ -161,7 +161,8 @@ void regular_ls_classify::init_and_run(
 	}
 }
 
-void regular_ls_classify::init_group(int verbose_level)
+void regular_ls_classify::init_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -260,7 +261,8 @@ void regular_ls_classify::init_generator(
 }
 
 
-void regular_ls_classify::early_test_func(long int *S, int len,
+void regular_ls_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -358,7 +360,8 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 	}
 }
 
-void regular_ls_classify::print(std::ostream &ost, long int *S, int len)
+void regular_ls_classify::print(
+		std::ostream &ost, long int *S, int len)
 {
 	int i;
 	

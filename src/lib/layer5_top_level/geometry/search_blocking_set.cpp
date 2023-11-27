@@ -205,7 +205,8 @@ void search_blocking_set::find_partial_blocking_sets(
 		}
 }
 
-int search_blocking_set::test_level(int depth, int verbose_level)
+int search_blocking_set::test_level(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_OK;
@@ -651,7 +652,8 @@ int search_blocking_set::recursive_search_for_blocking_set(
 	return true;
 }
 
-void search_blocking_set::save_line_intersection_size(int level)
+void search_blocking_set::save_line_intersection_size(
+		int level)
 {
 	int j;
 
@@ -660,7 +662,8 @@ void search_blocking_set::save_line_intersection_size(int level)
 		}
 }
 
-void search_blocking_set::restore_line_intersection_size(int level)
+void search_blocking_set::restore_line_intersection_size(
+		int level)
 {
 	int j;
 
@@ -671,7 +674,8 @@ void search_blocking_set::restore_line_intersection_size(int level)
 
 
 #if 0
-int callback_check_partial_blocking_set(int len, int *S,
+int callback_check_partial_blocking_set(
+		int len, int *S,
 		void *data, int verbose_level)
 {
 	search_blocking_set *SBS = (search_blocking_set *) data;

@@ -520,7 +520,8 @@ void orbits_on_polynomials::orbit_of_one_polynomial(
 }
 
 
-void orbits_on_polynomials::compute_points(int verbose_level)
+void orbits_on_polynomials::compute_points(
+		int verbose_level)
 {
 	int *coeff;
 	int i;
@@ -554,7 +555,8 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 
 }
 
-void orbits_on_polynomials::report(int verbose_level)
+void orbits_on_polynomials::report(
+		int verbose_level)
 // used to create a projective_geometry::projective_space_with_action
 {
 	int f_v = (verbose_level >= 1);

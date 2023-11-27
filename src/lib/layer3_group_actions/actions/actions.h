@@ -236,10 +236,6 @@ public:
 			groups::sims *G, int verbose_level);
 	void compute_strong_generators_from_sims(
 			int verbose_level);
-#if 0
-	void init_base_from_sims(
-			groups::sims *G, int verbose_level);
-#endif
 	void compute_all_point_orbits(
 			groups::schreier &S,
 			data_structures_groups::vector_ge &gens,

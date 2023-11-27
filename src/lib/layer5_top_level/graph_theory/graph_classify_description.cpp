@@ -46,7 +46,8 @@ graph_classify_description::~graph_classify_description()
 {
 }
 
-int graph_classify_description::read_arguments(int argc, std::string *argv,
+int graph_classify_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

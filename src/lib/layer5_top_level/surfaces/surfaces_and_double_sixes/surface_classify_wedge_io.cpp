@@ -76,7 +76,8 @@ void surface_classify_wedge::read_file(
 
 
 
-void surface_classify_wedge::generate_history(int verbose_level)
+void surface_classify_wedge::generate_history(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -136,7 +137,8 @@ int surface_classify_wedge::test_if_surfaces_have_been_computed_already()
 	return ret;
 }
 
-void surface_classify_wedge::write_surfaces(int verbose_level)
+void surface_classify_wedge::write_surfaces(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -166,7 +168,8 @@ void surface_classify_wedge::write_surfaces(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::read_surfaces(int verbose_level)
+void surface_classify_wedge::read_surfaces(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -224,7 +227,8 @@ int surface_classify_wedge::test_if_double_sixes_have_been_computed_already()
 	return ret;
 }
 
-void surface_classify_wedge::write_double_sixes(int verbose_level)
+void surface_classify_wedge::write_double_sixes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -256,7 +260,8 @@ void surface_classify_wedge::write_double_sixes(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::read_double_sixes(int verbose_level)
+void surface_classify_wedge::read_double_sixes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -45,7 +45,8 @@ large_set_was_description::~large_set_was_description()
 {
 }
 
-int large_set_was_description::read_arguments(int argc, std::string *argv,
+int large_set_was_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

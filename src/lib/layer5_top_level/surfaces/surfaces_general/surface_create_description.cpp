@@ -129,7 +129,8 @@ surface_create_description::~surface_create_description()
 {
 }
 
-int surface_create_description::read_arguments(int argc, std::string *argv,
+int surface_create_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

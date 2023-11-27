@@ -804,7 +804,8 @@ void create_code::export_magma(
 	}
 }
 
-void create_code::create_genma_from_checkma(int verbose_level)
+void create_code::create_genma_from_checkma(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -859,7 +860,8 @@ void create_code::create_genma_from_checkma(int verbose_level)
 }
 
 
-void create_code::create_checkma_from_genma(int verbose_level)
+void create_code::create_checkma_from_genma(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1277,7 +1279,8 @@ void create_code::export_checkma_as_projective_set(
 }
 
 
-void create_code::weight_enumerator(int verbose_level)
+void create_code::weight_enumerator(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1512,7 +1515,8 @@ void create_code::polynomial_representation_of_boolean_function(
 }
 
 
-void create_code::report(int verbose_level)
+void create_code::report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1578,7 +1582,8 @@ void create_code::report(int verbose_level)
 	}
 }
 
-void create_code::report2(std::ofstream &ost, int verbose_level)
+void create_code::report2(
+		std::ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -190,7 +190,8 @@ void surface_classify_wedge::init(
 	}
 }
 
-void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
+void surface_classify_wedge::do_classify_double_sixes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -260,7 +261,8 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::do_classify_surfaces(int verbose_level)
+void surface_classify_wedge::do_classify_surfaces(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -366,7 +368,8 @@ void surface_classify_wedge::classify_surfaces_from_double_sixes(
 	}
 }
 
-void surface_classify_wedge::post_process(int verbose_level)
+void surface_classify_wedge::post_process(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -392,7 +395,8 @@ void surface_classify_wedge::post_process(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::downstep(int verbose_level)
+void surface_classify_wedge::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -494,7 +498,8 @@ void surface_classify_wedge::downstep(int verbose_level)
 	}
 }
 
-void surface_classify_wedge::upstep(int verbose_level)
+void surface_classify_wedge::upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, po, so, i, j;
@@ -761,7 +766,8 @@ void surface_classify_wedge::upstep(int verbose_level)
 }
 
 
-void surface_classify_wedge::derived_arcs(int verbose_level)
+void surface_classify_wedge::derived_arcs(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int iso_type;

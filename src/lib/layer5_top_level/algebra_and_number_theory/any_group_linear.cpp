@@ -15,7 +15,8 @@ namespace orbiter {
 namespace layer5_applications {
 namespace apps_algebra {
 
-void any_group::classes_based_on_normal_form(int verbose_level)
+void any_group::classes_based_on_normal_form(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -46,7 +47,8 @@ void any_group::classes_based_on_normal_form(int verbose_level)
 }
 
 
-void any_group::classes(int verbose_level)
+void any_group::classes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -84,7 +86,8 @@ void any_group::classes(int verbose_level)
 	}
 }
 
-void any_group::find_singer_cycle(int verbose_level)
+void any_group::find_singer_cycle(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -106,7 +109,8 @@ void any_group::find_singer_cycle(int verbose_level)
 	}
 }
 
-void any_group::search_element_of_order(int order, int verbose_level)
+void any_group::search_element_of_order(
+		int order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -128,7 +132,8 @@ void any_group::search_element_of_order(int order, int verbose_level)
 	}
 }
 
-void any_group::find_standard_generators(int order_a,
+void any_group::find_standard_generators(
+		int order_a,
 		int order_b,
 		int order_ab,
 		int verbose_level)
@@ -492,7 +497,8 @@ void any_group::do_tensor_classify(
 }
 
 
-void any_group::do_tensor_permutations(int verbose_level)
+void any_group::do_tensor_permutations(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

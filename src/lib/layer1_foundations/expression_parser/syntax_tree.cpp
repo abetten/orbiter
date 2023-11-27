@@ -928,11 +928,21 @@ void syntax_tree::print_variables(
 	int i;
 
 	if (f_has_managed_variables) {
-		for (i = 0; i < managed_variables.size(); i++) {
-			ost << i << " : " << managed_variables[i] << endl;
+		if (managed_variables.size() == 0) {
+			cout << "even though there are managed variables, none is listed" << endl;
+			exit(1);
+		}
+		else {
+			for (i = 0; i < managed_variables.size(); i++) {
+				ost << i << " : " << managed_variables[i] << endl;
+			}
 		}
 	}
+	else {
+		cout << "there are no managed variables" << endl;
+	}
 	ost << "-" << endl;
+	cout << "ordinary variables:" << endl;
 	for (i = 0; i < variables.size(); i++) {
 		ost << managed_variables.size() + i << " : " << variables[i] << endl;
 	}

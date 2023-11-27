@@ -50,7 +50,8 @@ void polynomial_ring_activity::init(
 	}
 }
 
-void polynomial_ring_activity::perform_activity(int verbose_level)
+void polynomial_ring_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

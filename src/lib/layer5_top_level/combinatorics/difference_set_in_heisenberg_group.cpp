@@ -17,7 +17,8 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-void difference_set_in_heisenberg_group::init(int n,
+void difference_set_in_heisenberg_group::init(
+		int n,
 		field_theory::finite_field *F,
 		int verbose_level)
 {
@@ -152,7 +153,8 @@ void difference_set_in_heisenberg_group::init(int n,
 	}
 }
 
-void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
+void difference_set_in_heisenberg_group::do_n2q3(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, t;
@@ -189,7 +191,8 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	E1 = NEW_int(A->elt_size_in_int);
 
 	cout << "making element" << endl;
-	A->Group_element->make_element_from_base_image(E1, A->Sims, base_image, verbose_level);
+	A->Group_element->make_element_from_base_image(
+			E1, A->Sims, base_image, verbose_level);
 	cout << "generator has been created:" << endl;
 	A->Group_element->element_print(E1, cout);
 	cout << endl;
@@ -225,7 +228,8 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	groups::strong_generators *gens_N;
 	interfaces::magma_interface Magma;
 
-	Magma.normalizer_using_MAGMA(A, prefix, Aut, U, gens_N, verbose_level);
+	Magma.normalizer_using_MAGMA(
+			A, prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
 
 	fname_magma_out = prefix + "normalizer.txt";

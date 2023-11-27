@@ -28,7 +28,8 @@ projective_space_activity::~projective_space_activity()
 
 }
 
-void projective_space_activity::perform_activity(int verbose_level)
+void projective_space_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -92,7 +93,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before PA->P->write_lines_vs_tritangent_planes" << endl;
 		}
-		PA->Surf_A->Surf->Schlaefli->Schlaefli_tritangent_planes->write_lines_vs_tritangent_planes(prefix, verbose_level);
+		PA->Surf_A->Surf->Schlaefli->Schlaefli_tritangent_planes->write_lines_vs_tritangent_planes(
+				prefix, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after PA->P->write_lines_vs_tritangent_planes" << endl;
@@ -109,7 +111,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before Schlaefli_double_six->write_double_sixes" << endl;
 		}
-		PA->Surf_A->Surf->Schlaefli->Schlaefli_double_six->write_double_sixes(prefix, verbose_level);
+		PA->Surf_A->Surf->Schlaefli->Schlaefli_double_six->write_double_sixes(
+				prefix, verbose_level);
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"after Schlaefli_double_six->write_double_sixes" << endl;
@@ -826,7 +829,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		for (i = 0; i < set_size_in; i++) {
 			a = the_set_in[i];
 			cout << "i=" << i << " in=" << a << endl;
-			PA->P->Subspaces->polarity_rank_k_subspace(Descr->dualize_rank_k_subspaces_k,
+			PA->P->Subspaces->polarity_rank_k_subspace(
+					Descr->dualize_rank_k_subspaces_k,
 					a, the_set_out[i], verbose_level);
 			cout << "i=" << i << " in=" << a << " out=" << the_set_out[i] << endl;
 		}
@@ -939,7 +943,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before Geo.do_move_two_lines_in_hyperplane_stabilizer" << endl;
 		}
-		Geo.do_move_two_lines_in_hyperplane_stabilizer(PA->P,
+		Geo.do_move_two_lines_in_hyperplane_stabilizer(
+				PA->P,
 				Descr->line1_from, Descr->line2_from,
 				Descr->line1_to, Descr->line2_to, verbose_level);
 		if (f_v) {
@@ -955,7 +960,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 			cout << "projective_space_activity::perform_activity "
 					"before Geo.do_move_two_lines_in_hyperplane_stabilizer_text" << endl;
 		}
-		Geo.do_move_two_lines_in_hyperplane_stabilizer_text(PA->P,
+		Geo.do_move_two_lines_in_hyperplane_stabilizer_text(
+				PA->P,
 				Descr->line1_from_text, Descr->line2_from_text,
 				Descr->line1_to_text, Descr->line2_to_text,
 				verbose_level);

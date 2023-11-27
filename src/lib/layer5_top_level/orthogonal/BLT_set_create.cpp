@@ -513,7 +513,8 @@ void BLT_set_create::apply_transformations(
 	}
 }
 
-void BLT_set_create::report(int verbose_level)
+void BLT_set_create::report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -534,7 +535,8 @@ void BLT_set_create::report(int verbose_level)
 	}
 }
 
-void BLT_set_create::export_gap(int verbose_level)
+void BLT_set_create::export_gap(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -613,7 +615,8 @@ void BLT_set_create::export_gap(int verbose_level)
 
 
 
-void BLT_set_create::create_flock(int point_idx, int verbose_level)
+void BLT_set_create::create_flock(
+		int point_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -680,7 +683,8 @@ void BLT_set_create::create_flock(int point_idx, int verbose_level)
 	}
 }
 
-void BLT_set_create::BLT_test(int verbose_level)
+void BLT_set_create::BLT_test(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -714,7 +718,8 @@ void BLT_set_create::BLT_test(int verbose_level)
 	}
 }
 
-void BLT_set_create::export_set_in_PG(int verbose_level)
+void BLT_set_create::export_set_in_PG(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -771,7 +776,8 @@ void BLT_set_create::export_set_in_PG(int verbose_level)
 	}
 }
 
-void BLT_set_create::plane_invariant(int verbose_level)
+void BLT_set_create::plane_invariant(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -800,7 +806,8 @@ void BLT_set_create::plane_invariant(int verbose_level)
 }
 
 
-void BLT_set_create::report2(std::ostream &ost, int verbose_level)
+void BLT_set_create::report2(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

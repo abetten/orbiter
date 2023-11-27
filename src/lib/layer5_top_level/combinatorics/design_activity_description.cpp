@@ -54,7 +54,8 @@ design_activity_description::~design_activity_description()
 }
 
 
-int design_activity_description::read_arguments(int argc, std::string *argv,
+int design_activity_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

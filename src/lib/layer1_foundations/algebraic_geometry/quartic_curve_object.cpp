@@ -62,6 +62,7 @@ quartic_curve_object::~quartic_curve_object()
 }
 
 void quartic_curve_object::init_from_string(
+		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		std::string &eqn_txt,
 		std::string &pts_txt, std::string &bitangents_txt,
 		int verbose_level)
@@ -74,20 +75,63 @@ void quartic_curve_object::init_from_string(
 
 	quartic_curve_object::Dom = NULL;
 
-	int sz;
-	int *eqn;
 
-	Int_vec_scan(eqn_txt, eqn, sz);
+	if (std::isalpha(eqn_txt[0])) {
 
-	if (sz != 15) {
-		cout << "quartic_curve_object::init_from_string "
-				"the equation must have 15 terms" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"reading formula" << endl;
+		}
+
+		if (Poly_ring->get_nb_monomials() != 15) {
+			cout << "quartic_curve_object::init_from_string "
+					"the ring should have 15 monomials" << endl;
+			exit(1);
+		}
+		ring_theory::ring_theory_global R;
+		int *coeffs;
+
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"before R.parse_equation_easy" << endl;
+		}
+
+		R.parse_equation_easy(
+				Poly_ring,
+				eqn_txt,
+				coeffs,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"after R.parse_equation_easy" << endl;
+		}
+
+		Int_vec_copy(coeffs, eqn15, 15);
+		FREE_int(coeffs);
+
 	}
+	else {
 
-	Int_vec_copy(eqn, eqn15, 15);
-	FREE_int(eqn);
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"reading coefficients numerically" << endl;
+		}
 
+		int sz;
+		int *eqn;
+
+		Int_vec_scan(eqn_txt, eqn, sz);
+
+		if (sz != 15) {
+			cout << "quartic_curve_object::init_from_string "
+					"the equation must have 15 terms" << endl;
+			exit(1);
+		}
+
+		Int_vec_copy(eqn, eqn15, 15);
+		FREE_int(eqn);
+	}
 
 	Lint_vec_scan(pts_txt, Pts, nb_pts);
 
@@ -96,17 +140,30 @@ void quartic_curve_object::init_from_string(
 
 	Lint_vec_scan(bitangents_txt, Bitangents, nb_bitangents);
 
+	if (nb_bitangents == 28) {
 
-	if (nb_bitangents != 28) {
-		cout << "quartic_curve_object::init_from_string "
-				"the number of bitangents must be 28" << endl;
-		exit(1);
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"with 28 bitangents" << endl;
+		}
+
+		Lint_vec_copy(Bitangents, bitangents28, 28);
+
+		f_has_bitangents = true;
+	}
+	else {
+
+		if (f_v) {
+			cout << "quartic_curve_object::init_from_string "
+					"no bitangents" << endl;
+		}
+
+		f_has_bitangents = false;
+
 	}
 
-	Lint_vec_copy(Bitangents, bitangents28, 28);
 	FREE_lint(Bitangents);
 
-	f_has_bitangents = true;
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_from_string done" << endl;
@@ -160,7 +217,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"before enumerate_points" << endl;
 	}
-	enumerate_points(verbose_level - 1);
+	enumerate_points(Dom->Poly4_3, verbose_level - 1);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents "
 				"after enumerate_points" << endl;
@@ -211,7 +268,7 @@ void quartic_curve_object::init_equation_and_bitangents(
 		cout << "quartic_curve_object::init_equation_and_bitangents "
 				"before enumerate_points" << endl;
 	}
-	enumerate_points(0/*verbose_level - 1*/);
+	enumerate_points(Dom->Poly4_3, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents "
 				"after enumerate_points" << endl;
@@ -238,7 +295,8 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"before init_equation_and_bitangents" << endl;
 	}
-	init_equation_and_bitangents(Dom, eqn15, bitangents28, verbose_level);
+	init_equation_and_bitangents(
+			Dom, eqn15, bitangents28, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
 				"after init_equation_and_bitangents" << endl;
@@ -264,6 +322,7 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
 
 
 void quartic_curve_object::enumerate_points(
+		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -276,7 +335,8 @@ void quartic_curve_object::enumerate_points(
 		cout << "quartic_curve_object::enumerate_points before "
 				"Dom->Poly4_3->enumerate_points" << endl;
 	}
-	Dom->Poly4_3->enumerate_points_lint(eqn15, Pts, nb_pts, 0/*verbose_level - 1*/);
+	Poly_ring->enumerate_points_lint(
+			eqn15, Pts, nb_pts, 0/*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "quartic_curve_object::enumerate_points after "
@@ -359,7 +419,8 @@ void quartic_curve_object::identify_lines(
 		cout << "quartic_curve_object::identify_lines" << endl;
 	}
 	for (i = 0; i < nb_lines; i++) {
-		if (!Sorting.lint_vec_search_linear(bitangents28, 28, lines[i], idx)) {
+		if (!Sorting.lint_vec_search_linear(
+				bitangents28, 28, lines[i], idx)) {
 			cout << "quartic_curve_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
 					<< " in bitangents28[]" << endl;
@@ -379,7 +440,8 @@ int quartic_curve_object::find_point(
 {
 	data_structures::sorting Sorting;
 
-	if (Sorting.lint_vec_search(Pts, nb_pts, P,
+	if (Sorting.lint_vec_search(
+			Pts, nb_pts, P,
 			idx, 0 /* verbose_level */)) {
 		return true;
 	}

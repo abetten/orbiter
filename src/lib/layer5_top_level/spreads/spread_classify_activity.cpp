@@ -53,7 +53,8 @@ void spread_classify_activity::init(
 }
 
 
-void spread_classify_activity::perform_activity(int verbose_level)
+void spread_classify_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

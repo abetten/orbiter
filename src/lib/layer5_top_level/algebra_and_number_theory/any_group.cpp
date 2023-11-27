@@ -209,7 +209,8 @@ void any_group::create_latex_report(
 	}
 }
 
-void any_group::export_group_table(int verbose_level)
+void any_group::export_group_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -308,7 +309,8 @@ void any_group::do_export_orbiter(
 
 
 
-void any_group::do_export_gap(int verbose_level)
+void any_group::do_export_gap(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -376,7 +378,8 @@ void any_group::do_export_gap(int verbose_level)
 	}
 }
 
-void any_group::do_export_magma(int verbose_level)
+void any_group::do_export_magma(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -495,7 +498,8 @@ void any_group::create_group_table(
 	}
 }
 
-void any_group::normalizer(int verbose_level)
+void any_group::normalizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -813,7 +817,8 @@ void any_group::do_find_subgroups(
 }
 
 
-void any_group::print_elements(int verbose_level)
+void any_group::print_elements(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -862,7 +867,8 @@ void any_group::print_elements(int verbose_level)
 	}
 }
 
-void any_group::print_elements_tex(int f_with_permutation,
+void any_group::print_elements_tex(
+		int f_with_permutation,
 		int f_override_action, actions::action *A_special,
 		int verbose_level)
 {
@@ -1609,7 +1615,8 @@ void any_group::conjugacy_class_of(
 }
 
 
-void any_group::do_reverse_isomorphism_exterior_square(int verbose_level)
+void any_group::do_reverse_isomorphism_exterior_square(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 5);

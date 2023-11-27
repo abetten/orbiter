@@ -17,11 +17,13 @@ namespace layer5_applications {
 namespace apps_graph_theory {
 
 
-static void graph_classify_test_function(long int *S, int len,
+static void graph_classify_test_function(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level);
-static void graph_classify_print_set(std::ostream &ost,
+static void graph_classify_print_set(
+		std::ostream &ost,
 		int len, long int *S, void *data);
 
 
@@ -283,7 +285,8 @@ void graph_classify::init(
 
 }
 
-int graph_classify::check_conditions(int len,
+int graph_classify::check_conditions(
+		int len,
 		long int *S, int verbose_level)
 {
 	//verbose_level = 2;
@@ -468,7 +471,8 @@ int graph_classify::compute_degree_sequence(
 	return true;
 }
 
-int graph_classify::girth_check(long int *line, int len,
+int graph_classify::girth_check(
+		long int *line, int len,
 		int verbose_level)
 {
 	int f_OK = true, i;
@@ -501,7 +505,8 @@ int graph_classify::girth_check(long int *line, int len,
 	return f_OK;
 }
 
-int graph_classify::girth_test_vertex(long int *S, int len,
+int graph_classify::girth_test_vertex(
+		long int *S, int len,
 		int vertex, int girth,
 		int verbose_level)
 {
@@ -563,7 +568,8 @@ int graph_classify::girth_test_vertex(long int *S, int len,
 	return true;
 }
 
-void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
+void graph_classify::get_adjacency(
+		long int *S, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int h, i, j, a;
@@ -607,7 +613,8 @@ void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
 		}
 }
 
-void graph_classify::print(std::ostream &ost, long int *S, int len)
+void graph_classify::print(
+		std::ostream &ost, long int *S, int len)
 {
 	int i, j;
 	
@@ -702,7 +709,8 @@ void graph_classify::score_sequence(
 }
 
 
-void graph_classify::list_graphs(int level_min, int level_max, int verbose_level)
+void graph_classify::list_graphs(
+		int level_min, int level_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, nb_orbits, level, nb;
@@ -773,7 +781,8 @@ void graph_classify::list_graphs(int level_min, int level_max, int verbose_level
 }
 
 
-void graph_classify::draw_graphs(int level,
+void graph_classify::draw_graphs(
+		int level,
 		graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
@@ -928,7 +937,8 @@ void graph_classify::draw_graphs(int level,
 	}
 }
 
-void graph_classify::recognize_graph_from_adjacency_list(int *Adj, int N2,
+void graph_classify::recognize_graph_from_adjacency_list(
+		int *Adj, int N2,
 		int &iso_type,
 		int verbose_level)
 {
@@ -1003,7 +1013,8 @@ int graph_classify::number_of_orbits()
 // #############################################################################
 
 
-static void graph_classify_test_function(long int *S, int len,
+static void graph_classify_test_function(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		void *data, int verbose_level)
@@ -1028,7 +1039,8 @@ static void graph_classify_test_function(long int *S, int len,
 	}
 }
 
-static void graph_classify_print_set(std::ostream &ost,
+static void graph_classify_print_set(
+		std::ostream &ost,
 		int len, long int *S, void *data)
 {
 	graph_classify *Gen = (graph_classify *) data;

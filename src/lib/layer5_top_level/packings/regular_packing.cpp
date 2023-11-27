@@ -37,7 +37,8 @@ regular_packing::~regular_packing()
 	}
 }
 
-void regular_packing::init(packing_was *PW, int verbose_level)
+void regular_packing::init(
+		packing_was *PW, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

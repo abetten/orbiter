@@ -42,7 +42,8 @@ public:
 
 	blt_set_activity_description();
 	~blt_set_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -72,7 +73,8 @@ public:
 			blt_set_activity_description *Descr,
 			orthogonal_geometry_applications::BLT_set_create *BC,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -108,7 +110,8 @@ public:
 
 	blt_set_classify_activity_description();
 	~blt_set_classify_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -139,7 +142,8 @@ public:
 			blt_set_classify *BLT_classify,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -293,7 +297,8 @@ public:
 
 	BLT_set_create_description();
 	~BLT_set_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };
@@ -345,13 +350,20 @@ public:
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);
-	void report(int verbose_level);
-	void export_gap(int verbose_level);
-	void create_flock(int point_idx, int verbose_level);
-	void BLT_test(int verbose_level);
-	void export_set_in_PG(int verbose_level);
-	void plane_invariant(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
+	void report(
+			int verbose_level);
+	void export_gap(
+			int verbose_level);
+	void create_flock(
+			int point_idx, int verbose_level);
+	void BLT_test(
+			int verbose_level);
+	void export_set_in_PG(
+			int verbose_level);
+	void plane_invariant(
+			int verbose_level);
+	void report2(
+			std::ostream &ost, int verbose_level);
 	void print_set_of_points(
 				std::ostream &ost, long int *Pts, int nb_pts);
 	void print_set_of_points_with_ABC(
@@ -429,7 +441,8 @@ public:
 		std::ostream &ost);
 	void report(
 			std::ostream &ost, int verbose_level);
-	void print_summary(std::ostream &ost);
+	void print_summary(
+			std::ostream &ost);
 
 
 };
@@ -475,8 +488,10 @@ public:
 			groups::strong_generators *Aut_gens,
 			int f_invariants,
 			int verbose_level);
-	void compute_T(int verbose_level);
-	void compute_Pi_ij(int verbose_level);
+	void compute_T(
+			int verbose_level);
+	void compute_Pi_ij(
+			int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
 	void report_basics(
@@ -605,10 +620,12 @@ public:
 
 	orthogonal_space_activity();
 	~orthogonal_space_activity();
-	void init(orthogonal_space_activity_description *Descr,
+	void init(
+			orthogonal_space_activity_description *Descr,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 	void set_stabilizer(
 			orthogonal_space_with_action *OA,
 			int intermediate_subset_size,
@@ -688,7 +705,8 @@ public:
 			int verbose_level);
 	// creates a projective space and an orthogonal space.
 	// For n == 5, it also creates a blt_set_domain
-	void init_group(int verbose_level);
+	void init_group(
+			int verbose_level);
 	void report(
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
@@ -696,7 +714,8 @@ public:
 			std::ostream &ost,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
-	void make_table_of_blt_sets(int verbose_level);
+	void make_table_of_blt_sets(
+			int verbose_level);
 
 };
 

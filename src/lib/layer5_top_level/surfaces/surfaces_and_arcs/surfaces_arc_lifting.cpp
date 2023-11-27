@@ -17,11 +17,14 @@ namespace applications_in_algebraic_geometry {
 namespace cubic_surfaces_and_arcs {
 
 
-static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+static void callback_surfaces_arc_lifting_report(
+		std::ostream &ost, int i,
 		invariant_relations::classification_step *Step, void *print_function_data);
-static void callback_surfaces_arc_lifting_free_trace_result(void *ptr,
+static void callback_surfaces_arc_lifting_free_trace_result(
+		void *ptr,
 		void *data, int verbose_level);
-static void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost,
+static void callback_surfaces_arc_lifting_latex_report_trace(
+		std::ostream &ost,
 		void *trace_result, void *data, int verbose_level);
 
 
@@ -225,7 +228,8 @@ void surfaces_arc_lifting::init(
 	}
 }
 
-void surfaces_arc_lifting::downstep(int verbose_level)
+void surfaces_arc_lifting::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int arc_idx;
@@ -457,7 +461,8 @@ void surfaces_arc_lifting::downstep(int verbose_level)
 	}
 }
 
-void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
+void surfaces_arc_lifting::downstep_one_arc(
+		int arc_idx,
 		int &cur_flag_orbit, long int *Flag, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -847,7 +852,8 @@ void surfaces_arc_lifting::report(
 	}
 }
 
-void surfaces_arc_lifting::report2(std::ostream &ost,
+void surfaces_arc_lifting::report2(
+		std::ostream &ost,
 		graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
@@ -988,7 +994,8 @@ void surfaces_arc_lifting::report2(std::ostream &ost,
 	}
 }
 
-void surfaces_arc_lifting::report_flag_orbits(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_flag_orbits(
+		std::ostream &ost, int verbose_level)
 {
 	int flag_orbit_idx;
 	int i;
@@ -1062,7 +1069,8 @@ void surfaces_arc_lifting::report_flag_orbits(std::ostream &ost, int verbose_lev
 	ost << "$$" << endl;
 }
 
-void surfaces_arc_lifting::report_flag_orbits_in_detail(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_flag_orbits_in_detail(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;
@@ -1474,7 +1482,8 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(std::ostream &ost, int v
 }
 
 
-void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verbose_level)
+void surfaces_arc_lifting::report_surfaces_in_detail(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1581,7 +1590,8 @@ void surfaces_arc_lifting::report_surfaces_in_detail(std::ostream &ost, int verb
 }
 
 
-static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
+static void callback_surfaces_arc_lifting_report(
+		std::ostream &ost, int i,
 		invariant_relations::classification_step *Step, void *print_function_data)
 {
 	int verbose_level = 0;
@@ -1597,7 +1607,8 @@ static void callback_surfaces_arc_lifting_report(std::ostream &ost, int i,
 	D->report_tally_F2(ost, verbose_level);
 }
 
-static void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *data, int verbose_level)
+static void callback_surfaces_arc_lifting_free_trace_result(
+		void *ptr, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1616,7 +1627,8 @@ static void callback_surfaces_arc_lifting_free_trace_result(void *ptr, void *dat
 	}
 }
 
-static void callback_surfaces_arc_lifting_latex_report_trace(std::ostream &ost, void *trace_result, void *data, int verbose_level)
+static void callback_surfaces_arc_lifting_latex_report_trace(
+		std::ostream &ost, void *trace_result, void *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

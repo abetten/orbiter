@@ -16,7 +16,8 @@ namespace orbiter {
 namespace layer5_applications {
 namespace semifields {
 
-static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
+static void semifield_print_function_callback(
+		std::ostream &ost, int orbit_idx,
 		invariant_relations::classification_step *Step, void *print_function_data);
 
 
@@ -214,7 +215,8 @@ void semifield_classify_with_substructure::init(
 	}
 }
 
-void semifield_classify_with_substructure::read_data(int verbose_level)
+void semifield_classify_with_substructure::read_data(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -366,17 +368,20 @@ void semifield_classify_with_substructure::read_data(int verbose_level)
 	}
 }
 
-void semifield_classify_with_substructure::create_fname_for_classification(std::string &fname)
+void semifield_classify_with_substructure::create_fname_for_classification(
+		std::string &fname)
 {
 	fname = "semifields_" + std::to_string(Sub->SC->order) + "_classification.bin";
 }
 
-void semifield_classify_with_substructure::create_fname_for_flag_orbits(std::string &fname)
+void semifield_classify_with_substructure::create_fname_for_flag_orbits(
+		std::string &fname)
 {
 	fname = "semifields_" + std::to_string(Sub->SC->order) + "_flag_orbits.bin";
 }
 
-void semifield_classify_with_substructure::classify_semifields(int verbose_level)
+void semifield_classify_with_substructure::classify_semifields(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -418,7 +423,8 @@ void semifield_classify_with_substructure::classify_semifields(int verbose_level
 	}
 }
 
-void semifield_classify_with_substructure::load_classification(int verbose_level)
+void semifield_classify_with_substructure::load_classification(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -456,7 +462,8 @@ void semifield_classify_with_substructure::load_classification(int verbose_level
 	}
 }
 
-void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
+void semifield_classify_with_substructure::load_flag_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -491,7 +498,8 @@ void semifield_classify_with_substructure::load_flag_orbits(int verbose_level)
 }
 
 
-void semifield_classify_with_substructure::identify_semifield(int verbose_level)
+void semifield_classify_with_substructure::identify_semifield(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -849,7 +857,8 @@ void semifield_classify_with_substructure::generate_source_code(
 
 
 
-void semifield_classify_with_substructure::decomposition(int verbose_level)
+void semifield_classify_with_substructure::decomposition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -991,7 +1000,8 @@ void semifield_classify_with_substructure::decomposition(int verbose_level)
 //##############################################################################
 
 
-static void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
+static void semifield_print_function_callback(
+		std::ostream &ost, int orbit_idx,
 		invariant_relations::classification_step *Step, void *print_function_data)
 {
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;

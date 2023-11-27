@@ -775,6 +775,7 @@ void formula::copy_to(
 
 	if (f_v) {
 		cout << "formula::copy_to" << endl;
+		cout << "formula::copy_to managed_variables=" << managed_variables << endl;
 	}
 
 	//output->name_of_formula = name_of_formula + "copy";
@@ -1126,6 +1127,24 @@ void formula::expand_in_place(
 		cout << "formula::expand_in_place" << endl;
 	}
 
+	if (f_v) {
+		cout << "formula::expand_in_place (beginning) "
+				"before tree->collect_variables" << endl;
+	}
+	tree->collect_variables(0 /*verbose_level_down*/);
+	if (f_v) {
+		cout << "formula::expand_in_place (beginning) "
+				"after tree->collect_variables" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "formula::expand_in_place (beginning) "
+				"variables:" << endl;
+		tree->print_variables(cout, 0 /*verbose_level_down*/);
+	}
+
+
 	int verbose_level_down = verbose_level - 2;
 
 	std::string label;
@@ -1351,32 +1370,32 @@ void formula::expand_in_place(
 
 
 	if (f_v) {
-		cout << "formula::expand_in_place "
+		cout << "formula::expand_in_place (end) "
 				"before tree->collect_variables" << endl;
 	}
 	tree->collect_variables(0 /*verbose_level_down*/);
 	if (f_v) {
-		cout << "formula::expand_in_place "
+		cout << "formula::expand_in_place (end) "
 				"after tree->collect_variables" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "formula::expand_in_place "
+		cout << "formula::expand_in_place (end) "
 				"variables:" << endl;
 		tree->print_variables(cout, 0 /*verbose_level_down*/);
 	}
 
 
 	if (f_v) {
-		cout << "formula::expand_in_place "
+		cout << "formula::expand_in_place (end) "
 				"before tree->Root->collect_like_terms" << endl;
 	}
 
 	tree->Root->collect_like_terms(verbose_level_down);
 
 	if (f_v) {
-		cout << "formula::expand_in_place "
+		cout << "formula::expand_in_place (end) "
 				"after tree->Root->collect_like_terms" << endl;
 	}
 
@@ -1546,6 +1565,10 @@ void formula::collect_coefficients_of_equation(
 	if (nb_vars != Poly->get_nb_variables()) {
 		cout << "formula::collect_coefficients_of_equation "
 				"nb_vars != Poly->get_nb_variables()" << endl;
+		cout << "formula::collect_coefficients_of_equation "
+				"nb_vars = " << nb_vars << endl;
+		cout << "formula::collect_coefficients_of_equation "
+				"Poly->get_nb_variables() = " << Poly->get_nb_variables() << endl;
 		exit(1);
 	}
 

@@ -1731,7 +1731,8 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 }
 
-void surface_domain_high_level::do_create_dickson_atlas(int verbose_level)
+void surface_domain_high_level::do_create_dickson_atlas(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1931,7 +1932,8 @@ void surface_domain_high_level::table_of_cubic_surfaces(
 }
 
 
-void surface_domain_high_level::make_table_of_surfaces(int verbose_level)
+void surface_domain_high_level::make_table_of_surfaces(
+		int verbose_level)
 {
 
 
@@ -2035,7 +2037,8 @@ void surface_domain_high_level::make_table_of_surfaces(int verbose_level)
 }
 
 
-void surface_domain_high_level::make_table_of_quartic_curves(int verbose_level)
+void surface_domain_high_level::make_table_of_quartic_curves(
+		int verbose_level)
 {
 
 

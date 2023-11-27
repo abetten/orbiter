@@ -525,7 +525,8 @@ void spread_classify::init(
 	}
 }
 
-void spread_classify::init2(int verbose_level)
+void spread_classify::init2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -624,7 +625,8 @@ void spread_classify::init2(int verbose_level)
 
 
 
-void spread_classify::classify_partial_spreads(int verbose_level)
+void spread_classify::classify_partial_spreads(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth;

@@ -549,6 +549,7 @@ public:
 	void init(
 			field_theory::finite_field *F,
 			int verbose_level);
+	// creates a projective_space object
 	void init_polynomial_domains(
 			int verbose_level);
 	void print_equation_maple(
@@ -649,13 +650,20 @@ public:
 			int verbose_level);
 	void report_properties_simple(
 			std::ostream &ost, int verbose_level);
-	void print_equation(std::ostream &ost);
-	void print_gradient(std::ostream &ost);
-	void print_general(std::ostream &ost);
-	void print_points(std::ostream &ost);
-	void print_all_points(std::ostream &ost);
-	void print_bitangents(std::ostream &ost);
-	void compute_gradient(int verbose_level);
+	void print_equation(
+			std::ostream &ost);
+	void print_gradient(
+			std::ostream &ost);
+	void print_general(
+			std::ostream &ost);
+	void print_points(
+			std::ostream &ost);
+	void print_all_points(
+			std::ostream &ost);
+	void print_bitangents(
+			std::ostream &ost);
+	void compute_gradient(
+			int verbose_level);
 	void compute_singular_points_and_tangent_lines(
 			int verbose_level);
 	// a singular point is a point where all partials vanish
@@ -694,6 +702,7 @@ public:
 	quartic_curve_object();
 	~quartic_curve_object();
 	void init_from_string(
+			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			std::string &eqn_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
@@ -713,6 +722,7 @@ public:
 			int *eqn15, long int *bitangents28,
 			int verbose_level);
 	void enumerate_points(
+			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int verbose_level);
 	void compute_properties(
 			int verbose_level);

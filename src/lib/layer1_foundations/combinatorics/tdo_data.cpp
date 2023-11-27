@@ -79,7 +79,8 @@ void tdo_data::free()
 	}
 }
 
-void tdo_data::allocate(int R)
+void tdo_data::allocate(
+		int R)
 {
 	types_first = NEW_int(R + 1);
 	types_len = NEW_int(R);
@@ -90,7 +91,8 @@ void tdo_data::allocate(int R)
 	D2 = NEW_OBJECT(solvers::diophant);
 }
 
-int tdo_data::solve_first_system(int verbose_level, 
+int tdo_data::solve_first_system(
+		int verbose_level,
 	int *&line_types, int &nb_line_types, int &line_types_allocated)
 {
 	int f_v = (verbose_level >= 1);
@@ -148,7 +150,8 @@ int tdo_data::solve_first_system(int verbose_level,
 	return nb_sol;
 }
 
-void tdo_data::solve_second_system_omit(int verbose_level,
+void tdo_data::solve_second_system_omit(
+		int verbose_level,
 	int *classes_len, 
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
@@ -372,7 +375,8 @@ void tdo_data::solve_second_system_omit(int verbose_level,
 #endif
 }
 
-void tdo_data::solve_second_system_with_help(int verbose_level,
+void tdo_data::solve_second_system_with_help(
+		int verbose_level,
 	int f_use_mckay_solver, int f_once, 
 	int *classes_len, int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
@@ -401,7 +405,8 @@ void tdo_data::solve_second_system_with_help(int verbose_level,
 		distributions, nb_distributions);
 }
 
-void tdo_data::solve_second_system_from_file(int verbose_level,
+void tdo_data::solve_second_system_from_file(
+		int verbose_level,
 	int *classes_len, int f_scale, int scaling,
 	int *&line_types, int &nb_line_types, 
 	int *&distributions, int &nb_distributions,
@@ -482,7 +487,8 @@ void tdo_data::solve_second_system_from_file(int verbose_level,
 	}
 }
 
-void tdo_data::solve_second_system(int verbose_level,
+void tdo_data::solve_second_system(
+		int verbose_level,
 	int f_use_mckay_solver, int f_once, 
 	int *classes_len,
 	int f_scale, int scaling,

@@ -55,7 +55,8 @@ arc_lifting_simeon::~arc_lifting_simeon()
 
 }
 
-void arc_lifting_simeon::init(int q, int d, int n, int k,
+void arc_lifting_simeon::init(
+		int q, int d, int n, int k,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -170,7 +171,8 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 }
 
-void arc_lifting_simeon::early_test_func(long int *S, int len,
+void arc_lifting_simeon::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)

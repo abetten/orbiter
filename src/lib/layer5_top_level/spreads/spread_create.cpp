@@ -72,7 +72,8 @@ spread_create::~spread_create()
 }
 
 
-void spread_create::init(spread_create_description *Descr,
+void spread_create::init(
+		spread_create_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

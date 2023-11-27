@@ -48,7 +48,8 @@ void spread_table_activity::init(
 	}
 }
 
-void spread_table_activity::perform_activity(int verbose_level)
+void spread_table_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -76,16 +76,26 @@ public:
 	poset_classification::poset_classification *gen;
 
 
-	void init(int level, int group, int subgroup, int verbose_level);
-	void init_group(int verbose_level);
-	void init_group2(int verbose_level);
-	void init_group_level_3(int verbose_level);
-	void init_group_level_4(int verbose_level);
-	void init_group_level_5(int verbose_level);
-	int incremental_check_func(int len, long int *S, int verbose_level);
-	void classify_subsets(int verbose_level);
-	void write_file(int verbose_level);
-	void create_Adjacency_list(long int *Adj,
+	void init(
+			int level, int group, int subgroup, int verbose_level);
+	void init_group(
+			int verbose_level);
+	void init_group2(
+			int verbose_level);
+	void init_group_level_3(
+			int verbose_level);
+	void init_group_level_4(
+			int verbose_level);
+	void init_group_level_5(
+			int verbose_level);
+	int incremental_check_func(
+			int len, long int *S, int verbose_level);
+	void classify_subsets(
+			int verbose_level);
+	void write_file(
+			int verbose_level);
+	void create_Adjacency_list(
+			long int *Adj,
 		long int *connection_set, int connection_set_sz,
 		int verbose_level);
 	// Adj[go * connection_set_sz]
@@ -333,7 +343,8 @@ public:
 
 	graph_classification_activity();
 	~graph_classification_activity();
-	void init(graph_classification_activity_description *Descr,
+	void init(
+			graph_classification_activity_description *Descr,
 			graph_classify *GC,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -375,13 +386,14 @@ public:
 
 
 	int f_identify;
-	long int identify_data[1000];
+	long int identify_data[1000]; // ToDo
 	int identify_data_sz;
 
 
 	graph_classify_description();
 	~graph_classify_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -428,27 +440,38 @@ public:
 	~graph_classify();
 	void init(
 			graph_classify_description *Descr, int verbose_level);
-	int check_conditions(int len, long int *S, int verbose_level);
-	int check_conditions_tournament(int len, long int *S,
+	int check_conditions(
+			int len, long int *S, int verbose_level);
+	int check_conditions_tournament(
+			int len, long int *S,
 			int verbose_level);
-	int check_regularity(long int *S, int len,
+	int check_regularity(
+			long int *S, int len,
 			int verbose_level);
 	int compute_degree_sequence(
 			long int *S, int len);
-	int girth_check(long int *S, int len, int verbose_level);
-	int girth_test_vertex(long int *S, int len,
+	int girth_check(
+			long int *S, int len, int verbose_level);
+	int girth_test_vertex(
+			long int *S, int len,
 			int vertex, int girth, int verbose_level);
-	void get_adjacency(long int *S, int len, int verbose_level);
-	void print(std::ostream &ost, long int *S, int len);
-	void print_score_sequences(int level, int verbose_level);
+	void get_adjacency(
+			long int *S, int len, int verbose_level);
+	void print(
+			std::ostream &ost, long int *S, int len);
+	void print_score_sequences(
+			int level, int verbose_level);
 	void score_sequence(
 			int n, long int *set, int sz, long int *score,
 			int verbose_level);
-	void list_graphs(int level_min, int level_max, int verbose_level);
-	void draw_graphs(int level,
+	void list_graphs(
+			int level_min, int level_max, int verbose_level);
+	void draw_graphs(
+			int level,
 			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
-	void recognize_graph_from_adjacency_list(int *Adj, int N2,
+	void recognize_graph_from_adjacency_list(
+			int *Adj, int N2,
 			int &iso_type,
 			int verbose_level);
 	int number_of_orbits();
@@ -482,7 +505,8 @@ public:
 		int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	void apply(graph_theory::colored_graph *&CG, int verbose_level);
+	void apply(
+			graph_theory::colored_graph *&CG, int verbose_level);
 
 };
 
@@ -559,10 +583,12 @@ public:
 
 	graph_theoretic_activity();
 	~graph_theoretic_activity();
-	void init(graph_theoretic_activity_description *Descr,
+	void init(
+			graph_theoretic_activity_description *Descr,
 			graph_theory::colored_graph *CG,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 
 };

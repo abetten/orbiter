@@ -147,7 +147,8 @@ young::~young()
 		}
 }
 
-void young::init(int n, int verbose_level)
+void young::init(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -798,7 +799,8 @@ void young::compute_generators(
 
 }
 
-void young::Maschke(int *Rep, 
+void young::Maschke(
+		int *Rep,
 	int dim_of_module, int dim_of_submodule, 
 	int *&Mu, 
 	int verbose_level)

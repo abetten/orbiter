@@ -87,7 +87,8 @@ arc_generator::~arc_generator()
 	}
 }
 
-void arc_generator::main(int verbose_level)
+void arc_generator::main(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -219,7 +220,8 @@ void arc_generator::init(
 }
 
 
-void arc_generator::prepare_generator(int verbose_level)
+void arc_generator::prepare_generator(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -297,7 +299,8 @@ void arc_generator::prepare_generator(int verbose_level)
 	}
 }
 
-void arc_generator::compute_starter(int verbose_level)
+void arc_generator::compute_starter(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -474,7 +477,8 @@ void arc_generator::early_test_func(
 	
 }
 
-void arc_generator::print(int len, long int *S)
+void arc_generator::print(
+		int len, long int *S)
 {
 	int i, a;
 	
@@ -567,7 +571,8 @@ void arc_generator::print(int len, long int *S)
 	FREE_int(Coord);
 }
 
-void arc_generator::print_set_in_affine_plane(int len, long int *S)
+void arc_generator::print_set_in_affine_plane(
+		int len, long int *S)
 {
 	geometry::geometry_global Geo;
 
@@ -577,13 +582,15 @@ void arc_generator::print_set_in_affine_plane(int len, long int *S)
 
 
 
-void arc_generator::point_unrank(int *v, long int rk)
+void arc_generator::point_unrank(
+		int *v, long int rk)
 {
 	PA->F->Projective_space_basic->PG_element_unrank_modified(
 			v, 1 /* stride */, (PA->n + 1) /* len */, rk);
 }
 
-long int arc_generator::point_rank(int *v)
+long int arc_generator::point_rank(
+		int *v)
 {
 	long int rk;
 	

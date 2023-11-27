@@ -228,7 +228,8 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 	}
 }
 
-void classify_trihedral_pairs::report_summary(std::ostream &ost)
+void classify_trihedral_pairs::report_summary(
+		std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
@@ -254,7 +255,8 @@ void classify_trihedral_pairs::report_summary(std::ostream &ost)
 }
 
 
-void classify_trihedral_pairs::report(std::ostream &ost)
+void classify_trihedral_pairs::report(
+		std::ostream &ost)
 {
 	cout << "classify_trihedral_pairs::report "
 			"before list_orbits_on_trihedra_type1" << endl;
@@ -865,7 +867,8 @@ void classify_trihedral_pairs::classify(
 	}
 }
 
-void classify_trihedral_pairs::downstep(int verbose_level)
+void classify_trihedral_pairs::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -971,7 +974,8 @@ void classify_trihedral_pairs::downstep(int verbose_level)
 	}
 }
 
-void classify_trihedral_pairs::upstep(int verbose_level)
+void classify_trihedral_pairs::upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

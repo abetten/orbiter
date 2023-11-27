@@ -101,7 +101,8 @@ large_set_classify::~large_set_classify()
 #endif
 }
 
-void large_set_classify::init(design_create *DC,
+void large_set_classify::init(
+		design_create *DC,
 		design_tables *T,
 		int verbose_level)
 {
@@ -168,7 +169,8 @@ void large_set_classify::init(design_create *DC,
 		}
 }
 
-void large_set_classify::create_action_and_poset(int verbose_level)
+void large_set_classify::create_action_and_poset(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -253,7 +255,8 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 	}
 }
 
-void large_set_classify::compute(int verbose_level)
+void large_set_classify::compute(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = search_depth;
@@ -340,7 +343,8 @@ void large_set_classify::read_classification_single_case(
 	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before T->read_from_file_one_case_only" << endl;
+		cout << "large_set_classify::read_classification_single_case "
+				"before T->read_from_file_one_case_only" << endl;
 	}
 
 	T->read_from_file_one_case_only(gen->get_A(), gen->get_A2(),
@@ -350,15 +354,18 @@ void large_set_classify::read_classification_single_case(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case after T->read_from_file_one_case_only" << endl;
+		cout << "large_set_classify::read_classification_single_case "
+				"after T->read_from_file_one_case_only" << endl;
 	}
 
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case before FREE_OBJECT(T)" << endl;
+		cout << "large_set_classify::read_classification_single_case "
+				"before FREE_OBJECT(T)" << endl;
 	}
 	FREE_OBJECT(T);
 	if (f_v) {
-		cout << "large_set_classify::read_classification_single_case after FREE_OBJECT(T)" << endl;
+		cout << "large_set_classify::read_classification_single_case "
+				"after FREE_OBJECT(T)" << endl;
 	}
 
 	if (f_v) {
@@ -722,7 +729,8 @@ void large_set_classify::process_starter_case(
 #endif
 
 
-int large_set_classify::test_if_designs_are_disjoint(int i, int j)
+int large_set_classify::test_if_designs_are_disjoint(
+		int i, int j)
 {
 	return Design_table->test_if_designs_are_disjoint(i, j);
 }

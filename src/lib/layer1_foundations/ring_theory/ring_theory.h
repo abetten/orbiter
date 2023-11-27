@@ -161,6 +161,7 @@ public:
 	int get_nb_variables();
 	field_theory::finite_field *get_F();
 	std::string &get_symbol(int i);
+	std::string list_of_variables();
 	int get_monomial(int i, int j);
 	std::string &get_monomial_symbol_easy(int i);
 	int *get_monomial_pointer(int i);
@@ -937,6 +938,11 @@ public:
 	void print_longinteger_after_multiplying(
 			std::ostream &ost,
 			int *factors, int len);
+	void parse_equation_easy(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &equation_text,
+			int *&coeffs,
+			int verbose_level);
 	void parse_equation(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
@@ -947,6 +953,24 @@ public:
 			std::string &equation_parameters_tex,
 			std::string &equation_parameter_values,
 			int *&coeffs, int &nb_coeffs,
+			int verbose_level);
+	void simplify_and_expand(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			expression_parser::formula_vector *Formula_vector_after_sub,
+			expression_parser::formula_vector *&Formula_vector_after_expand,
+			int verbose_level);
+	void perform_substitution(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			std::string &equation_parameters,
+			std::string &equation_parameter_values,
+			expression_parser::symbolic_object_builder *SB1,
+			expression_parser::formula_vector *&Formula_vector_after_sub,
 			int verbose_level);
 
 };

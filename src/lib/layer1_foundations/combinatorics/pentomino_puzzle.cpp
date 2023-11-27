@@ -16,13 +16,16 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace combinatorics {
 
-static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
+static void pentomino_puzzle_compute_image_function(
+		data_structures::set_of_sets *S,
 		void *compute_image_data, int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level);
-static int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
+static int pentomino_puzzle_compare_func(
+		void *vec, void *a, int b, void *data_for_compare);
 
 
-void pentomino_puzzle::main(int verbose_level)
+void pentomino_puzzle::main(
+		int verbose_level)
 {
 	setup_pieces();
 	setup_rotate();
@@ -278,7 +281,8 @@ void pentomino_puzzle::main(int verbose_level)
 }
 
 
-int pentomino_puzzle::has_interlocking_Ps(long int *set)
+int pentomino_puzzle::has_interlocking_Ps(
+		long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -303,7 +307,8 @@ int pentomino_puzzle::has_interlocking_Ps(long int *set)
 	return false;
 }
 
-int pentomino_puzzle::has_interlocking_Pprime(long int *set)
+int pentomino_puzzle::has_interlocking_Pprime(
+		long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -328,7 +333,8 @@ int pentomino_puzzle::has_interlocking_Pprime(long int *set)
 	return false;
 }
 
-int pentomino_puzzle::has_interlocking_Ls(long int *set)
+int pentomino_puzzle::has_interlocking_Ls(
+		long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -353,7 +359,8 @@ int pentomino_puzzle::has_interlocking_Ls(long int *set)
 	return false;
 }
 
-int pentomino_puzzle::has_interlocking_Lprime(long int *set)
+int pentomino_puzzle::has_interlocking_Lprime(
+		long int *set)
 {
 	int i, j, a;
 	int L[5];
@@ -378,7 +385,8 @@ int pentomino_puzzle::has_interlocking_Lprime(long int *set)
 	return false;
 }
 
-int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
+int pentomino_puzzle::test_if_interlocking_Ps(
+		int a1, int a2)
 {
 	int h1 = 0, r1 = 0, t1 = 0, tt1, x1, y1, rr1;
 	int h2 = 0, r2 = 0, t2 = 0, tt2, x2, y2, rr2;
@@ -409,7 +417,8 @@ int pentomino_puzzle::test_if_interlocking_Ps(int a1, int a2)
 	return true;
 }
 
-int pentomino_puzzle::test_if_interlocking_Ls(int a1, int a2)
+int pentomino_puzzle::test_if_interlocking_Ls(
+		int a1, int a2)
 {
 	int h1 = 0, r1 = 0, t1 = 0, tt1, x1, y1, rr1;
 	int h2 = 0, r2 = 0, t2 = 0, tt2, x2, y2, rr2;
@@ -440,7 +449,8 @@ int pentomino_puzzle::test_if_interlocking_Ls(int a1, int a2)
 	return true;
 }
 
-int pentomino_puzzle::number_of_pieces_of_type(int t, long int *set)
+int pentomino_puzzle::number_of_pieces_of_type(
+		int t, long int *set)
 {
 	int i, a, cnt = 0;
 
@@ -453,7 +463,8 @@ int pentomino_puzzle::number_of_pieces_of_type(int t, long int *set)
 	return cnt;
 }
 
-int pentomino_puzzle::does_it_contain_an_I(long int *set)
+int pentomino_puzzle::does_it_contain_an_I(
+		long int *set)
 {
 	int i, a;
 
@@ -466,7 +477,8 @@ int pentomino_puzzle::does_it_contain_an_I(long int *set)
 	return false;
 }
 
-void pentomino_puzzle::decode_assembly(long int *set)
+void pentomino_puzzle::decode_assembly(
+		long int *set)
 // input set[5]
 {
 	int i, h = 0, r = 0, t = 0, tt, x, y, rr;
@@ -487,7 +499,8 @@ void pentomino_puzzle::decode_assembly(long int *set)
 		}
 }
 
-void pentomino_puzzle::decode_piece(int j, int &h, int &r, int &t)
+void pentomino_puzzle::decode_piece(
+		int j, int &h, int &r, int &t)
 // h is the kind of piece
 // r is the rotation index
 // t is the translation index
@@ -512,7 +525,8 @@ void pentomino_puzzle::decode_piece(int j, int &h, int &r, int &t)
 		}
 }
 
-int pentomino_puzzle::code_piece(int h, int r, int t)
+int pentomino_puzzle::code_piece(
+		int h, int r, int t)
 {
 	int j;
 
@@ -521,7 +535,8 @@ int pentomino_puzzle::code_piece(int h, int r, int t)
 }
 
 
-void pentomino_puzzle::draw_it(std::ostream &ost, long int *sol)
+void pentomino_puzzle::draw_it(
+		std::ostream &ost, long int *sol)
 {
 	int sol_length = 5;
 	int u, h = 0, r = 0, rr, t = 0, tt, tx, ty, s, a, b, x, y, j;
@@ -631,7 +646,8 @@ void pentomino_puzzle::compute_image_function(
 
 }
 
-void pentomino_puzzle::turn_piece(int &h, int &r, int &t, int verbose_level)
+void pentomino_puzzle::turn_piece(
+		int &h, int &r, int &t, int verbose_level)
 {
 	int tx, ty, txx = 0, tyy = 0, tt;
 	data_structures::sorting Sorting;
@@ -667,7 +683,8 @@ void pentomino_puzzle::turn_piece(int &h, int &r, int &t, int verbose_level)
 		}
 }
 
-void pentomino_puzzle::flip_piece(int &h, int &r, int &t, int verbose_level)
+void pentomino_puzzle::flip_piece(
+		int &h, int &r, int &t, int verbose_level)
 {
 	//int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1100,7 +1117,8 @@ void pentomino_puzzle::setup_var_start()
 }
 
 
-void pentomino_puzzle::make_coefficient_matrix(solvers::diophant *D)
+void pentomino_puzzle::make_coefficient_matrix(
+		solvers::diophant *D)
 {
 	int i, h, j0, r, t, rr, tt, s, x, y, z;
 
@@ -1149,7 +1167,8 @@ void pentomino_puzzle::make_coefficient_matrix(solvers::diophant *D)
 }
 
 
-static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
+static void pentomino_puzzle_compute_image_function(
+		data_structures::set_of_sets *S,
 		void *compute_image_data, int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 {
@@ -1159,7 +1178,8 @@ static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets
 			gen_idx, idx_of_image, verbose_level);
 }
 
-static int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare)
+static int pentomino_puzzle_compare_func(
+		void *vec, void *a, int b, void *data_for_compare)
 {
 	//pentomino_puzzle *PP = (pentomino_puzzle *) data_for_compare;
 	data_structures::set_of_sets *S = (data_structures::set_of_sets *) vec;

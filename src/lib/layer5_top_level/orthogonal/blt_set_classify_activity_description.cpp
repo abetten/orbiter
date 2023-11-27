@@ -38,7 +38,8 @@ blt_set_classify_activity_description::~blt_set_classify_activity_description()
 {
 }
 
-int blt_set_classify_activity_description::read_arguments(int argc, std::string *argv,
+int blt_set_classify_activity_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

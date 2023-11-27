@@ -48,7 +48,8 @@ packing_long_orbits_description::~packing_long_orbits_description()
 {
 }
 
-int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
+int packing_long_orbits_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

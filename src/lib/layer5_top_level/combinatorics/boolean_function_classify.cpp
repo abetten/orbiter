@@ -151,7 +151,8 @@ void boolean_function_classify::init_group(
 }
 
 
-void boolean_function_classify::search_for_bent_functions(int verbose_level)
+void boolean_function_classify::search_for_bent_functions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *poly;

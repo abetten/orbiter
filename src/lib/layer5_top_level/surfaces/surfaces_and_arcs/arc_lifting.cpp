@@ -105,7 +105,8 @@ void arc_lifting::create_surface_and_group(
 }
 
 
-void arc_lifting::create_web_of_cubic_curves(int verbose_level)
+void arc_lifting::create_web_of_cubic_curves(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -139,7 +140,8 @@ void arc_lifting::create_web_of_cubic_curves(int verbose_level)
 
 
 
-void arc_lifting::report(std::ostream &ost, int verbose_level)
+void arc_lifting::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -171,7 +173,8 @@ void arc_lifting::report(std::ostream &ost, int verbose_level)
 }
 
 
-void arc_lifting::report_equation(std::ostream &ost)
+void arc_lifting::report_equation(
+		std::ostream &ost)
 {
 	Surf_A->Surf->PolynomialDomains->print_equation_in_trihedral_form(ost,
 				Trihedral_pair->The_six_plane_equations,

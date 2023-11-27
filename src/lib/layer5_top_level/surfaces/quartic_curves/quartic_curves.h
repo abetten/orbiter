@@ -148,7 +148,8 @@ public:
 
 	quartic_curve_create_description();
 	~quartic_curve_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };
@@ -453,6 +454,7 @@ public:
 	~quartic_curve_object_with_action();
 	void init(
 			int cnt, int po_go, int po_index, int po, int so,
+			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			std::string &eqn_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
@@ -463,7 +465,8 @@ public:
 			actions::action *A_on_lines,
 			int *eqn2,
 			int verbose_level);
-	void print(std::ostream &ost);
+	void print(
+			std::ostream &ost);
 	std::string stringify_Pts();
 	std::string stringify_bitangents();
 

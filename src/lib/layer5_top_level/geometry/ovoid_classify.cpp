@@ -100,7 +100,8 @@ ovoid_classify::~ovoid_classify()
 	
 }
 
-void ovoid_classify::init(ovoid_classify_description *Descr,
+void ovoid_classify::init(
+		ovoid_classify_description *Descr,
 		groups::linear_group *LG,
 		int &verbose_level)
 {

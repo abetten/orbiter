@@ -263,7 +263,8 @@ void tdo_scheme_synthetic::exit_TDO()
 	}
 }
 
-void tdo_scheme_synthetic::init_partition_stack(int verbose_level)
+void tdo_scheme_synthetic::init_partition_stack(
+		int verbose_level)
 {
 	int k, at, f, c, l, i;
 	int f_v = (verbose_level >= 1);
@@ -505,7 +506,8 @@ void tdo_scheme_synthetic::get_partition(
 	}
 }
 
-void tdo_scheme_synthetic::free_partition(int i)
+void tdo_scheme_synthetic::free_partition(
+		int i)
 {
 	if (row_classes[i]) {
 		FREE_int(row_classes[i]);

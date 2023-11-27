@@ -33,7 +33,8 @@ public:
 
 	apn_functions();
 	~apn_functions();
-	void init(field_theory::finite_field *F,
+	void init(
+			field_theory::finite_field *F,
 			int verbose_level);
 	void search_APN(
 			int delta_max, int verbose_level);
@@ -130,15 +131,25 @@ public:
 
 	boolean_function_domain();
 	~boolean_function_domain();
-	void init(field_theory::finite_field *F2, int n, int verbose_level);
-	void setup_polynomial_rings(int verbose_level);
-	void compute_polynomial_representation(int *func, int *coeff, int verbose_level);
-	void evaluate_projectively(int *coeff, int *f);
-	void evaluate(int *coeff, int *f);
-	void raise(int *in, int *out);
-	void apply_Walsh_transform(int *in, int *out);
-	int is_bent(int *T);
-	int is_near_bent(int *T);
+	void init(
+			field_theory::finite_field *F2, int n,
+			int verbose_level);
+	void setup_polynomial_rings(
+			int verbose_level);
+	void compute_polynomial_representation(
+			int *func, int *coeff, int verbose_level);
+	void evaluate_projectively(
+			int *coeff, int *f);
+	void evaluate(
+			int *coeff, int *f);
+	void raise(
+			int *in, int *out);
+	void apply_Walsh_transform(
+			int *in, int *out);
+	int is_bent(
+			int *T);
+	int is_near_bent(
+			int *T);
 };
 
 
@@ -745,19 +756,27 @@ public:
 
 	domino_assignment();
 	~domino_assignment();
-	void stage0(int verbose_level);
-	void stage1(int verbose_level);
-	void stage2(int verbose_level);
+	void stage0(
+			int verbose_level);
+	void stage1(
+			int verbose_level);
+	void stage2(
+			int verbose_level);
 	void initialize_assignment(
 			int D, int s, int verbose_level);
-	void init_matching(int verbose_level);
+	void init_matching(
+			int verbose_level);
 	int cost_function();
-	int compute_cost_of_one_piece(int idx);
+	int compute_cost_of_one_piece(
+			int idx);
 	int compute_cost_of_one_piece_directly(
 			int m, int n, int o, int i, int j);
-	int my_distance(int a, int b);
-	void compute_domino_matrix(int depth);
-	void move(domino_assignment *To);
+	int my_distance(
+			int a, int b);
+	void compute_domino_matrix(
+			int depth);
+	void move(
+			domino_assignment *To);
 	void draw_domino_matrix(
 			std::string &fname,
 			int depth,
@@ -771,19 +790,32 @@ public:
 		int f_numbers, int f_gray,
 		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level);
-	void read_photo(std::string &photo_fname, int verbose_level);
-	void scale_photo(double *dphoto, int verbose_level);
-	void do_flip_recorded(int f2, int verbose_level);
-	void do_flip(int f2, int verbose_level);
-	void flip_each(int verbose_level);
-	void flip_randomized(int verbose_level);
-	void do_swap_recorded(int s1, int s2, int verbose_level);
-	void do_swap(int s1, int s2, int verbose_level);
-	int do_flipswap(int f2);
-	void swap_randomized(int verbose_level);
-	void swap_each(int verbose_level);
-	void do_horizontal_rotate(int ro, int verbose_level);
-	void do_vertical_rotate(int ro, int verbose_level);
+	void read_photo(
+			std::string &photo_fname, int verbose_level);
+	void scale_photo(
+			double *dphoto, int verbose_level);
+	void do_flip_recorded(
+			int f2, int verbose_level);
+	void do_flip(
+			int f2, int verbose_level);
+	void flip_each(
+			int verbose_level);
+	void flip_randomized(
+			int verbose_level);
+	void do_swap_recorded(
+			int s1, int s2, int verbose_level);
+	void do_swap(
+			int s1, int s2, int verbose_level);
+	int do_flipswap(
+			int f2);
+	void swap_randomized(
+			int verbose_level);
+	void swap_each(
+			int verbose_level);
+	void do_horizontal_rotate(
+			int ro, int verbose_level);
+	void do_vertical_rotate(
+			int ro, int verbose_level);
 	int modify_matching(
 			int idx_first_broken,
 			int ass_m, int ass_n,
@@ -793,7 +825,8 @@ public:
 			int l, int *used, int *reached,
 			int *list, int *length, int *prec,
 			int verbose_level);
-	int find_match(int l,
+	int find_match(
+			int l,
 		int *reached1, int *list1, int *length1, int *prec1,
 		int *reached2, int *list2, int *length2, int *prec2,
 		int verbose_level);
@@ -851,7 +884,8 @@ public:
 
 	domino_change();
 	~domino_change();
-	void init(domino_assignment *DA,
+	void init(
+			domino_assignment *DA,
 			int type_of_change, int verbose_level);
 };
 
@@ -904,9 +938,12 @@ public:
 	std::string stringify_incma();
 	int get_nb_flags();
 	int *get_Incma();
-	void set_incidence_ij(int i, int j);
-	int get_incidence_ij(int i, int j);
-	void set_incidence(int a);
+	void set_incidence_ij(
+			int i, int j);
+	int get_incidence_ij(
+			int i, int j);
+	void set_incidence(
+			int a);
 	void init_canonical_form(
 			encoded_combinatorial_object *Enc,
 			l1_interfaces::nauty_output *NO,
@@ -1028,8 +1065,10 @@ public:
 
 	geo_parameter();
 	~geo_parameter();
-	void append_to_part(int a);
-	void append_to_entries(int a1, int a2, int a3, int a4);
+	void append_to_part(
+			int a);
+	void append_to_entries(
+			int a1, int a2, int a3, int a4);
 	void write(std::ofstream &aStream, std::string &label);
 	void write_mode_single(
 			std::ofstream &aStream,
@@ -1037,31 +1076,44 @@ public:
 	void write_mode_stack(
 			std::ofstream &aStream,
 			std::string &label);
-	void convert_single_to_stack(int verbose_level);
-	int partition_number_row(int row_idx);
-	int partition_number_col(int col_idx);
-	int input(std::ifstream &aStream);
-	int input_mode_single(std::ifstream &aStream);
+	void convert_single_to_stack(
+			int verbose_level);
+	int partition_number_row(
+			int row_idx);
+	int partition_number_col(
+			int col_idx);
+	int input(
+			std::ifstream &aStream);
+	int input_mode_single(
+			std::ifstream &aStream);
 	int input_mode_stack(
 			std::ifstream &aStream, int verbose_level);
 	void init_tdo_scheme(
 			tdo_scheme_synthetic &G, int verbose_level);
-	void print_schemes(tdo_scheme_synthetic &G);
-	void print_schemes_tex(tdo_scheme_synthetic &G);
+	void print_schemes(
+			tdo_scheme_synthetic &G);
+	void print_schemes_tex(
+			tdo_scheme_synthetic &G);
 	void print_scheme_tex(
 			std::ostream &ost,
 			tdo_scheme_synthetic &G, int h);
 	void print_C_source();
-	void convert_single_to_stack_fuse_simple_pt(int verbose_level);
-	void convert_single_to_stack_fuse_simple_bt(int verbose_level);
-	void convert_single_to_stack_fuse_double_pt(int verbose_level);
-	void cut_off_two_lines(geo_parameter &GP2,
+	void convert_single_to_stack_fuse_simple_pt(
+			int verbose_level);
+	void convert_single_to_stack_fuse_simple_bt(
+			int verbose_level);
+	void convert_single_to_stack_fuse_double_pt(
+			int verbose_level);
+	void cut_off_two_lines(
+			geo_parameter &GP2,
 		int *&part_relabel, int *&part_length,
 		int verbose_level);
-	void cut_off(geo_parameter &GP2, int w,
+	void cut_off(
+			geo_parameter &GP2, int w,
 		int *&part_relabel, int *&part_length,
 		int verbose_level);
-	void copy(geo_parameter &GP2);
+	void copy(
+			geo_parameter &GP2);
 	void print_schemes();
 	int tdo_scheme_get_row_class_length_fused(
 			tdo_scheme_synthetic &G,
@@ -1102,35 +1154,51 @@ class pentomino_puzzle {
 	int var_length[NB_PIECES + 1];
 
 
-	void main(int verbose_level);
-	int has_interlocking_Ps(long int *set);
-	int has_interlocking_Pprime(long int *set);
-	int has_interlocking_Ls(long int *set);
-	int test_if_interlocking_Ps(int a1, int a2);
-	int has_interlocking_Lprime(long int *set);
-	int test_if_interlocking_Ls(int a1, int a2);
-	int number_of_pieces_of_type(int t, long int *set);
-	int does_it_contain_an_I(long int *set);
-	void decode_assembly(long int *set);
+	void main(
+			int verbose_level);
+	int has_interlocking_Ps(
+			long int *set);
+	int has_interlocking_Pprime(
+			long int *set);
+	int has_interlocking_Ls(
+			long int *set);
+	int test_if_interlocking_Ps(
+			int a1, int a2);
+	int has_interlocking_Lprime(
+			long int *set);
+	int test_if_interlocking_Ls(
+			int a1, int a2);
+	int number_of_pieces_of_type(
+			int t, long int *set);
+	int does_it_contain_an_I(
+			long int *set);
+	void decode_assembly(
+			long int *set);
 	// input set[5]
-	void decode_piece(int j, int &h, int &r, int &t);
+	void decode_piece(
+			int j, int &h, int &r, int &t);
 	// h is the kind of piece
 	// r is the rotation index
 	// t is the translation index
 	// to get the actual rotation and translation, use
 	// R[h][r] and T[h][t].
-	int code_piece(int h, int r, int t);
-	void draw_it(std::ostream &ost, long int *sol);
+	int code_piece(
+			int h, int r, int t);
+	void draw_it(
+			std::ostream &ost, long int *sol);
 	void compute_image_function(
 			data_structures::set_of_sets *S,
 			int elt_idx,
 			int gen_idx, int &idx_of_image, int verbose_level);
-	void turn_piece(int &h, int &r, int &t, int verbose_level);
-	void flip_piece(int &h, int &r, int &t, int verbose_level);
+	void turn_piece(
+			int &h, int &r, int &t, int verbose_level);
+	void flip_piece(
+			int &h, int &r, int &t, int verbose_level);
 	void setup_pieces();
 	void setup_rotate();
 	void setup_var_start();
-	void make_coefficient_matrix(solvers::diophant *D);
+	void make_coefficient_matrix(
+			solvers::diophant *D);
 
 };
 
@@ -1188,7 +1256,8 @@ public:
 			int *coeff, int *f);
 	void evaluate(
 			int *coeff, int *f);
-	void raise(int *in, int *out);
+	void raise(
+			int *in, int *out);
 	void multiply_i_times_j(
 			int i, int j,
 			int *A_eqn, int *B_eqn, int *C_eqn,
@@ -1224,27 +1293,33 @@ public:
 	tdo_data();
 	~tdo_data();
 	void free();
-	void allocate(int R);
-	int solve_first_system(int verbose_level,
+	void allocate(
+			int R);
+	int solve_first_system(
+			int verbose_level,
 		int *&line_types, int &nb_line_types,
 		int &line_types_allocated);
-	void solve_second_system_omit(int verbose_level,
+	void solve_second_system_omit(
+			int verbose_level,
 		int *classes_len,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
 		int omit);
-	void solve_second_system_with_help(int verbose_level,
+	void solve_second_system_with_help(
+			int verbose_level,
 		int f_use_mckay_solver, int f_once,
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
 		int cnt_second_system, solution_file_data *Sol);
-	void solve_second_system_from_file(int verbose_level,
+	void solve_second_system_from_file(
+			int verbose_level,
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
 		int *&distributions, int &nb_distributions,
 		std::string &solution_file_name);
-	void solve_second_system(int verbose_level,
+	void solve_second_system(
+			int verbose_level,
 		int f_use_mckay_solver, int f_once,
 		int *classes_len, int f_scale, int scaling,
 		int *&line_types, int &nb_line_types,
@@ -1290,7 +1365,8 @@ class tdo_refinement_description {
 
 	tdo_refinement_description();
 	~tdo_refinement_description();
-	int read_arguments(int argc, std::string *argv, int verbose_level);
+	int read_arguments(
+			int argc, std::string *argv, int verbose_level);
 	void print();
 
 };
@@ -1494,11 +1570,13 @@ public:
 		int Extra_row_level, int Extra_col_level,
 		int Lambda_level, int verbose_level);
 	void exit_TDO();
-	void init_partition_stack(int verbose_level);
+	void init_partition_stack(
+			int verbose_level);
 	void exit_partition_stack();
 	void get_partition(
 			int h, int l, int verbose_level);
-	void free_partition(int h);
+	void free_partition(
+			int h);
 	void complete_partition_info(
 			int h, int verbose_level);
 	void get_row_or_col_scheme(

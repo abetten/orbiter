@@ -52,9 +52,12 @@ public:
 			cubic_surfaces_in_general::surface_with_action *Surf_A,
 			long int *Arc6,
 		int verbose_level);
-	void create_web_of_cubic_curves(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void report_equation(std::ostream &ost);
+	void create_web_of_cubic_curves(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void report_equation(
+			std::ostream &ost);
 };
 
 
@@ -97,7 +100,8 @@ public:
 		actions::action *A,
 		int verbose_level);
 	void print();
-	void recognize(long int *pair, int *transporter,
+	void recognize(
+			long int *pair, int *transporter,
 			int &orbit_idx, int verbose_level);
 
 };
@@ -137,7 +141,8 @@ public:
 		arc_orbits_on_pairs *OP, int pair_orbit_idx,
 		actions::action *A, actions::action *A_on_arc,
 		int verbose_level);
-	void recognize(int *partition, int *transporter,
+	void recognize(
+			int *partition, int *transporter,
 			int &orbit_idx, int verbose_level);
 
 };
@@ -192,8 +197,10 @@ public:
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
 			int verbose_level);
-	void report_summary(std::ostream &ost);
-	void report(std::ostream &ost);
+	void report_summary(
+			std::ostream &ost);
+	void report(
+			std::ostream &ost);
 	void list_orbits_on_trihedra_type1(
 			std::ostream &ost, int f_detailed);
 	void list_orbits_on_trihedra_type2(
@@ -215,8 +222,10 @@ public:
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
 			int verbose_level);
-	void downstep(int verbose_level);
-	void upstep(int verbose_level);
+	void downstep(
+			int verbose_level);
+	void upstep(
+			int verbose_level);
 	void print_trihedral_pairs_summary(
 			std::ostream &ost);
 	void print_trihedral_pairs(
@@ -321,7 +330,8 @@ public:
 	void report2(std::ostream &ost,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
-	void report_decomposition_matrix(std::ostream &ost, int verbose_level);
+	void report_decomposition_matrix(
+			std::ostream &ost, int verbose_level);
 };
 
 // #############################################################################
@@ -358,10 +368,13 @@ public:
 
 	surface_create_by_arc_lifting();
 	~surface_create_by_arc_lifting();
-	void init(int arc_idx,
+	void init(
+			int arc_idx,
 			surface_classify_using_arc *SCA, int verbose_level);
-	void report_summary(std::ostream &ost, int verbose_level);
-	void report(std::ostream &ost,
+	void report_summary(
+			std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 
@@ -423,23 +436,38 @@ public:
 
 	surfaces_arc_lifting_definition_node();
 	~surfaces_arc_lifting_definition_node();
-	void init_with_27_lines(surfaces_arc_lifting *Lift,
+	void init_with_27_lines(
+			surfaces_arc_lifting *Lift,
 			int f, int orbit_idx, long int *Lines27, int *eqn20,
 			int verbose_level);
-	void tally_f2(int verbose_level);
-	void report(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
-	void report_cosets(std::ostream &ost, int verbose_level);
-	void report_cosets_detailed(std::ostream &ost, int verbose_level);
-	void report_cosets_HDS(std::ostream &ost, int verbose_level);
-	void report_HDS_top(std::ostream &ost);
-	void report_HDS_bottom(std::ostream &ost);
-	void report_cosets_T3(std::ostream &ost, int verbose_level);
-	void report_T3_top(std::ostream &ost);
-	void report_T3_bottom(std::ostream &ost);
-	void report_tally_F2(std::ostream &ost, int verbose_level);
-	void report_Clebsch_maps(std::ostream &ost, int verbose_level);
-	void report_Clebsch_maps_for_one_tritangent_plane(std::ostream &ost,
+	void tally_f2(
+			int verbose_level);
+	void report(
+			int verbose_level);
+	void report2(
+			std::ostream &ost, int verbose_level);
+	void report_cosets(
+			std::ostream &ost, int verbose_level);
+	void report_cosets_detailed(
+			std::ostream &ost, int verbose_level);
+	void report_cosets_HDS(
+			std::ostream &ost, int verbose_level);
+	void report_HDS_top(
+			std::ostream &ost);
+	void report_HDS_bottom(
+			std::ostream &ost);
+	void report_cosets_T3(
+			std::ostream &ost, int verbose_level);
+	void report_T3_top(
+			std::ostream &ost);
+	void report_T3_bottom(
+			std::ostream &ost);
+	void report_tally_F2(
+			std::ostream &ost, int verbose_level);
+	void report_Clebsch_maps(
+			std::ostream &ost, int verbose_level);
+	void report_Clebsch_maps_for_one_tritangent_plane(
+			std::ostream &ost,
 			int plane_idx, int verbose_level);
 };
 
@@ -519,8 +547,10 @@ public:
 			int seventytwo_case_idx, int verbose_level);
 	void process_flag_orbit(
 			surfaces_arc_lifting_upstep *Up, int verbose_level);
-	void move_arc(int verbose_level);
-	void move_plane_and_arc(long int *P6a, int verbose_level);
+	void move_arc(
+			int verbose_level);
+	void move_plane_and_arc(
+			long int *P6a, int verbose_level);
 	void make_arc_canonical(
 			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
@@ -531,7 +561,8 @@ public:
 			int orbit_not_on_conic_idx,
 			int pair_orbit_idx, int &partition_orbit_idx,
 			int *the_partition4, int verbose_level);
-	void lift_group_elements_and_move_two_lines(int verbose_level);
+	void lift_group_elements_and_move_two_lines(
+			int verbose_level);
 	void embed(
 			int *Elt_A3, int *Elt_A4, int verbose_level);
 	void report_product(
@@ -605,13 +636,18 @@ public:
 
 	surfaces_arc_lifting_upstep();
 	~surfaces_arc_lifting_upstep();
-	void init(surfaces_arc_lifting *Lift, int verbose_level);
-	void process_flag_orbit(int verbose_level);
-	void compute_stabilizer(surfaces_arc_lifting_definition_node *D,
-			groups::strong_generators *&Aut_gens, int verbose_level);
-	void process_tritangent_plane(surfaces_arc_lifting_definition_node *D,
+	void init(
+			surfaces_arc_lifting *Lift, int verbose_level);
+	void process_flag_orbit(
 			int verbose_level);
-	void make_seventytwo_cases(int verbose_level);
+	void compute_stabilizer(
+			surfaces_arc_lifting_definition_node *D,
+			groups::strong_generators *&Aut_gens, int verbose_level);
+	void process_tritangent_plane(
+			surfaces_arc_lifting_definition_node *D,
+			int verbose_level);
+	void make_seventytwo_cases(
+			int verbose_level);
 
 };
 
@@ -668,8 +704,10 @@ public:
 			std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level);
-	void downstep(int verbose_level);
-	void downstep_one_arc(int arc_idx,
+	void downstep(
+			int verbose_level);
+	void downstep_one_arc(
+			int arc_idx,
 			int &cur_flag_orbit, long int *Flag, int verbose_level);
 	void report(
 			std::string &Control_six_arcs_label,
@@ -677,9 +715,12 @@ public:
 	void report2(std::ostream &ost,
 			graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
-	void report_flag_orbits(std::ostream &ost, int verbose_level);
-	void report_flag_orbits_in_detail(std::ostream &ost, int verbose_level);
-	void report_surfaces_in_detail(std::ostream &ost, int verbose_level);
+	void report_flag_orbits(
+			std::ostream &ost, int verbose_level);
+	void report_flag_orbits_in_detail(
+			std::ostream &ost, int verbose_level);
+	void report_surfaces_in_detail(
+			std::ostream &ost, int verbose_level);
 };
 
 
@@ -742,12 +783,14 @@ public:
 
 	trihedral_pair_with_action();
 	~trihedral_pair_with_action();
-	void init(arc_lifting *AL, int verbose_level);
+	void init(
+			arc_lifting *AL, int verbose_level);
 	void loop_over_trihedral_pairs(
 			data_structures_groups::vector_ge *cosets,
 			data_structures_groups::vector_ge *&coset_reps,
 		int *&aut_T_index, int *&aut_coset_index, int verbose_level);
-	void create_the_six_plane_equations(int t_idx,
+	void create_the_six_plane_equations(
+			int t_idx,
 		int verbose_level);
 	void create_surface_from_trihedral_pair_and_arc(
 		int t_idx,
@@ -762,12 +805,17 @@ public:
 		groups::strong_generators *gens_for_stabilizer_of_trihedral_pair,
 		actions::action *&A_on_equations, groups::schreier *&Orb,
 		int verbose_level);
-	void create_clebsch_system(int verbose_level);
-	void compute_iso_types_as_double_triplets(int verbose_level);
-	void print_FG(std::ostream &ost);
+	void create_clebsch_system(
+			int verbose_level);
+	void compute_iso_types_as_double_triplets(
+			int verbose_level);
+	void print_FG(
+			std::ostream &ost);
 	void print_equations();
-	void report(std::ostream &ost, int verbose_level);
-	void report_iso_type_as_double_triplets(std::ostream &ost);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void report_iso_type_as_double_triplets(
+			std::ostream &ost);
 
 };
 

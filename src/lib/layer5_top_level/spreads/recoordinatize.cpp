@@ -358,7 +358,8 @@ void recoordinatize::stabilizer_of_first_three(
 }
 
 
-void recoordinatize::compute_live_points(int verbose_level)
+void recoordinatize::compute_live_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

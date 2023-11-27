@@ -1295,7 +1295,8 @@ void projective_space_with_action::cheat_sheet(
 }
 
 
-void projective_space_with_action::do_spread_classify(int k,
+void projective_space_with_action::do_spread_classify(
+		int k,
 		poset_classification::poset_classification_control
 			*Control,
 		int verbose_level)

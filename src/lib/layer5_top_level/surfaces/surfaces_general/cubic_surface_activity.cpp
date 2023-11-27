@@ -47,7 +47,8 @@ void cubic_surface_activity::init(
 	}
 }
 
-void cubic_surface_activity::perform_activity(int verbose_level)
+void cubic_surface_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

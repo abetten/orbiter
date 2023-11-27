@@ -50,7 +50,8 @@ tactical_decomposition::~tactical_decomposition()
 	}
 }
 
-void tactical_decomposition::init(int nb_rows, int nb_cols,
+void tactical_decomposition::init(
+		int nb_rows, int nb_cols,
 		geometry::incidence_structure *Inc,
 		int f_combined_action,
 		actions::action *A,
@@ -173,7 +174,8 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 
 }
 
-void tactical_decomposition::report(int f_enter_math, std::ostream &ost)
+void tactical_decomposition::report(
+		int f_enter_math, std::ostream &ost)
 {
 #if 0
 	Inc->get_and_print_tactical_decomposition_scheme_tex(

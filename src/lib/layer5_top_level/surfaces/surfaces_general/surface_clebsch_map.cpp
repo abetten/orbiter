@@ -38,7 +38,8 @@ surface_clebsch_map::~surface_clebsch_map()
 	}
 }
 
-void surface_clebsch_map::report(std::ostream &ost, int verbose_level)
+void surface_clebsch_map::report(
+		std::ostream &ost, int verbose_level)
 {
 
 	ost << "\\subsection*{Orbit on single sixes " << orbit_idx << " / "

@@ -215,6 +215,9 @@ void formula_vector::init_and_allocate(
 	int i;
 
 	for (i = 0; i < len; i++) {
+		if (f_has_managed_variables) {
+			V[i].managed_variables = managed_variables_text;
+		}
 		V[i].name_of_formula = label_txt + "_" + std::to_string(i);
 		V[i].name_of_formula_latex = label_tex + "_{" + std::to_string(i) + "}";
 	}

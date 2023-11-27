@@ -328,7 +328,8 @@ semifield_level_two::~semifield_level_two()
 	//freeself();
 }
 
-void semifield_level_two::init(semifield_classify *SC,
+void semifield_level_two::init(
+		semifield_classify *SC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -414,7 +415,8 @@ void semifield_level_two::init(semifield_classify *SC,
 }
 
 
-void semifield_level_two::init_desired_pivots(int verbose_level)
+void semifield_level_two::init_desired_pivots(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -535,7 +537,8 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	}
 }
 
-void semifield_level_two::compute_level_two(int nb_stages, int verbose_level)
+void semifield_level_two::compute_level_two(
+		int nb_stages, int verbose_level)
 // nb_stages = 4 for everything
 {
 	int f_v = (verbose_level >= 1);
@@ -606,7 +609,8 @@ void semifield_level_two::compute_level_two(int nb_stages, int verbose_level)
 
 
 
-void semifield_level_two::downstep(int verbose_level)
+void semifield_level_two::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -806,7 +810,8 @@ void semifield_level_two::downstep(int verbose_level)
 }
 
 
-void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
+void semifield_level_two::compute_stabilizers_downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -924,7 +929,8 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 }
 
 
-void semifield_level_two::upstep(int verbose_level)
+void semifield_level_two::upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1209,7 +1215,8 @@ void semifield_level_two::upstep(int verbose_level)
 	}
 }
 
-void semifield_level_two::trace(int f, int coset,
+void semifield_level_two::trace(
+		int f, int coset,
 		long int a, long int b, int &f_automorphism, int *&Aut,
 		int verbose_level)
 // a and b are the ranks of two matrices whose span we consider.
@@ -2084,7 +2091,8 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	}
 }
 
-void semifield_level_two::get_basis_and_pivots(int po,
+void semifield_level_two::get_basis_and_pivots(
+		int po,
 		int *basis, int *pivots, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2123,7 +2131,7 @@ void semifield_level_two::get_basis_and_pivots(int po,
 }
 
 void semifield_level_two::report(
-	ofstream &ost, int verbose_level)
+	std::ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, ext, idx;
@@ -2341,14 +2349,16 @@ void semifield_level_two::report(
 	}
 }
 
-void semifield_level_two::create_fname_level_info_file(std::string &fname)
+void semifield_level_two::create_fname_level_info_file(
+		std::string &fname)
 {
 	fname = SC->level_two_prefix + "Level_2_info.csv";
 }
 
 
 
-void semifield_level_two::write_level_info_file(int verbose_level)
+void semifield_level_two::write_level_info_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -2397,7 +2407,8 @@ void semifield_level_two::write_level_info_file(int verbose_level)
 }
 
 
-void semifield_level_two::read_level_info_file(int verbose_level)
+void semifield_level_two::read_level_info_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;

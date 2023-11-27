@@ -17,8 +17,10 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static int design_tables_compare_func(void *data, int i, int j, void *extra_data);
-static void design_tables_swap_func(void *data, int i, int j, void *extra_data);
+static int design_tables_compare_func(
+		void *data, int i, int j, void *extra_data);
+static void design_tables_swap_func(
+		void *data, int i, int j, void *extra_data);
 
 
 
@@ -45,7 +47,8 @@ design_tables::~design_tables()
 }
 
 
-void design_tables::init(actions::action *A,
+void design_tables::init(
+		actions::action *A,
 		actions::action *A2,
 		long int *initial_set, int design_size,
 		std::string &label,
@@ -121,7 +124,8 @@ void design_tables::init(actions::action *A,
 	}
 }
 
-void design_tables::create_table(int verbose_level)
+void design_tables::create_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -168,7 +172,8 @@ void design_tables::create_table(int verbose_level)
 				"sorting design table of size " << nb_designs << endl;
 	}
 
-	Sorting.Heapsort_general(Sets, nb_designs,
+	Sorting.Heapsort_general(
+			Sets, nb_designs,
 			design_tables_compare_func,
 			design_tables_swap_func,
 			this);
@@ -334,8 +339,10 @@ void design_tables::make_reduced_design_table(
 			}
 		}
 		if (j == set_sz) {
-			Lint_vec_copy(the_table + i * design_size,
-					reduced_table + nb_reduced_designs * design_size, design_size);
+			Lint_vec_copy(
+					the_table + i * design_size,
+					reduced_table + nb_reduced_designs * design_size,
+					design_size);
 			reduced_table_idx[nb_reduced_designs] = i;
 			nb_reduced_designs++;
 		}
@@ -405,13 +412,15 @@ int design_tables::test_if_table_exists(
 
 	if (Fio.file_size(fname_design_table) > 0) {
 		if (f_v) {
-			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " exists" << endl;
+			cout << "design_tables::test_if_table_exists "
+					"design table " << fname_design_table << " exists" << endl;
 		}
 		return true;
 	}
 	else {
 		if (f_v) {
-			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " does not exist" << endl;
+			cout << "design_tables::test_if_table_exists "
+					"design table " << fname_design_table << " does not exist" << endl;
 		}
 		return false;
 	}
@@ -419,7 +428,8 @@ int design_tables::test_if_table_exists(
 
 
 
-void design_tables::save(int verbose_level)
+void design_tables::save(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -447,7 +457,8 @@ void design_tables::save(int verbose_level)
 	}
 }
 
-void design_tables::load(int verbose_level)
+void design_tables::load(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int b;
@@ -467,7 +478,8 @@ void design_tables::load(int verbose_level)
 			the_table, nb_designs, b,
 			0 /* verbose_level */);
 	if (b != design_size) {
-		cout << "design_tables::load b != design_size" << endl;
+		cout << "design_tables::load "
+				"b != design_size" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -483,7 +495,8 @@ void design_tables::load(int verbose_level)
 }
 
 
-int design_tables::test_if_designs_are_disjoint(int i, int j)
+int design_tables::test_if_designs_are_disjoint(
+		int i, int j)
 {
 	long int *p1, *p2;
 	data_structures::sorting Sorting;
@@ -552,7 +565,8 @@ int design_tables::test_between_two_sets(
 // global functions:
 
 
-static int design_tables_compare_func(void *data, int i, int j, void *extra_data)
+static int design_tables_compare_func(
+		void *data, int i, int j, void *extra_data)
 {
 	design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;
@@ -563,7 +577,8 @@ static int design_tables_compare_func(void *data, int i, int j, void *extra_data
 	return ret;
 }
 
-static void design_tables_swap_func(void *data, int i, int j, void *extra_data)
+static void design_tables_swap_func(
+		void *data, int i, int j, void *extra_data)
 {
 	//design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;

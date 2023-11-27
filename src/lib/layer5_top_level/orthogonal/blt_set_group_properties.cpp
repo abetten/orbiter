@@ -297,7 +297,8 @@ void blt_set_group_properties::report(
 	}
 }
 
-void blt_set_group_properties::print_summary(std::ostream &ost)
+void blt_set_group_properties::print_summary(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{Summary}" << endl;
 

@@ -2929,7 +2929,8 @@ void surface_object_with_group::print_action_on_surface(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->Group_element->make_element(Elt,
+			A->Group_element->make_element(
+					Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
 
@@ -2938,7 +2939,8 @@ void surface_object_with_group::print_action_on_surface(
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost, Elt, false /*f_with_permutation*/);
+			A->print_one_element_tex(
+					ost, Elt, false /*f_with_permutation*/);
 
 			if (true /* f_with_fix_structure*/) {
 				int f;

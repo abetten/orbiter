@@ -53,7 +53,8 @@ void blt_set_classify_activity::init(
 }
 
 
-void blt_set_classify_activity::perform_activity(int verbose_level)
+void blt_set_classify_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

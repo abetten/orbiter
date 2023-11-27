@@ -176,7 +176,8 @@ delandtsheer_doyen::~delandtsheer_doyen()
 	}
 }
 
-void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
+void delandtsheer_doyen::init(
+		delandtsheer_doyen_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -275,27 +276,31 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	if (Descr->q1 == 1) {
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init before create_monomial_group" << endl;
+			cout << "delandtsheer_doyen::init "
+					"before create_monomial_group" << endl;
 		}
 		create_monomial_group(verbose_level);
 		if (f_v) {
-			cout << "delandtsheer_doyen::init after create_monomial_group" << endl;
+			cout << "delandtsheer_doyen::init "
+					"after create_monomial_group" << endl;
 		}
 
 	}
 
 	else {
 		if (!A0->f_has_strong_generators) {
-			cout << "delandtsheer_doyen::init action A0 does not "
+			cout << "delandtsheer_doyen::init "
+					"action A0 does not "
 					"have strong generators" << endl;
 			exit(1);
-			}
+		}
 
 		SG = A0->Strong_gens;
 		SG->group_order(go);
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init The group " << A->label << " has order " << go
+			cout << "delandtsheer_doyen::init "
+					"The group " << A->label << " has order " << go
 				<< " and permutation degree " << A->degree << endl;
 		}
 	}
@@ -313,26 +318,31 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init before scan_subgroup_generators" << endl;
+			cout << "delandtsheer_doyen::init "
+					"before scan_subgroup_generators" << endl;
 		}
 		Strong_gens = scan_subgroup_generators(verbose_level);
 		if (f_v) {
-			cout << "delandtsheer_doyen::init after scan_subgroup_generators" << endl;
+			cout << "delandtsheer_doyen::init "
+					"after scan_subgroup_generators" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init before compute_orbits_on_pairs" << endl;
+			cout << "delandtsheer_doyen::init "
+					"before compute_orbits_on_pairs" << endl;
 		}
 		compute_orbits_on_pairs(Strong_gens, verbose_level);
 		if (f_v) {
-			cout << "delandtsheer_doyen::init after compute_orbits_on_pairs" << endl;
+			cout << "delandtsheer_doyen::init "
+					"after compute_orbits_on_pairs" << endl;
 		}
 
 
 	}
 	else {
-		cout << "We don't have -subgroup, so orbits on pairs "
+		cout << "We don't have -subgroup, "
+				"so orbits on pairs "
 				"are not computed" << endl;
 		//exit(1);
 	}
@@ -359,11 +369,13 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	if (Descr->f_singletons) {
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init before search_singletons" << endl;
+			cout << "delandtsheer_doyen::init "
+					"before search_singletons" << endl;
 		}
 		search_singletons(verbose_level);
 		if (f_v) {
-			cout << "delandtsheer_doyen::init after search_singletons" << endl;
+			cout << "delandtsheer_doyen::init "
+					"after search_singletons" << endl;
 		}
 
 
@@ -371,11 +383,13 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	else {
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::init before search_starter" << endl;
+			cout << "delandtsheer_doyen::init "
+					"before search_starter" << endl;
 		}
 		search_starter(verbose_level);
 		if (f_v) {
-			cout << "delandtsheer_doyen::init after search_starter" << endl;
+			cout << "delandtsheer_doyen::init "
+					"after search_starter" << endl;
 		}
 
 
@@ -389,7 +403,8 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 
 
 
-void delandtsheer_doyen::show_generators(int verbose_level)
+void delandtsheer_doyen::show_generators(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
@@ -412,12 +427,12 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 				0 /* verbose_level*/);
 		//A->element_print_as_permutation(SG->gens->ith(i), cout);
 		cout << endl;
-		}
+	}
 	cout << "Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		A->Group_element->element_print_as_permutation(SG->gens->ith(i), cout);
 		cout << endl;
-		}
+	}
 	cout << "Generators in GAP format are:" << endl;
 	cout << "G := Group([";
 	for (i = 0; i < SG->gens->len; i++) {
@@ -439,9 +454,9 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 			a = A->Group_element->element_image_of(j,
 					SG->gens->ith(i), 0 /* verbose_level */);
 			cout << a << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	cout << "-1" << endl;
 
 	if (f_v) {
@@ -449,7 +464,8 @@ void delandtsheer_doyen::show_generators(int verbose_level)
 	}
 }
 
-void delandtsheer_doyen::search_singletons(int verbose_level)
+void delandtsheer_doyen::search_singletons(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -571,7 +587,8 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 			exit(1);
 		}
 
-		create_graph(line0, level, 0 /*verbose_level*/);
+		create_graph(
+				line0, level, 0 /*verbose_level*/);
 
 		if (f_vv) {
 			cout << "orbit_not_ruled_out=" << orbit_not_ruled_out << " / "
@@ -602,17 +619,21 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 			combinatorics::combinatorics_domain Combi;
 
 			subset = NEW_int(target_depth);
-			nCk = Combi.int_n_choose_k(nb_live_points, target_depth);
+			nCk = Combi.int_n_choose_k(
+					nb_live_points, target_depth);
 
 			cout << "nb_live_points = " << nb_live_points
 					<< " target_depth = " << target_depth << " nCk = " << nCk << endl;
 			for (l = 0; l < nCk; l++) {
 
-				Combi.unrank_k_subset(l, subset, nb_live_points, target_depth);
+				Combi.unrank_k_subset(
+						l, subset, nb_live_points, target_depth);
 
-				Lint_vec_copy(line0, line, level);
+				Lint_vec_copy(
+						line0, line, level);
 
-				Int_vec_apply_lint(subset, live_points, line + level, target_depth);
+				Int_vec_apply_lint(
+						subset, live_points, line + level, target_depth);
 
 				if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 					cout << "found a solution, subset " << l
@@ -636,7 +657,8 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 
 
 
-void delandtsheer_doyen::search_starter(int verbose_level)
+void delandtsheer_doyen::search_starter(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -674,7 +696,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	//Gen->depth = Descr->depth;
 	//Control_search = NEW_OBJECT(poset_classification_control);
 	Poset_search = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset_search->init_subset_lattice(A0, A, SG,
+	Poset_search->init_subset_lattice(
+			A0, A, SG,
 			verbose_level);
 
 	if (f_v) {
@@ -717,7 +740,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 	//Control->f_max_depth = false;
 	//Gen->depth = Descr->depth;
-	Gen->main(t0,
+	Gen->main(
+			t0,
 			Descr->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
 			f_debug,
@@ -759,7 +783,8 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 			pi = line[i];
 			for (j = i + 1; j < k; j++, l++) {
 				pj = line[j];
-				o = find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
+				o = find_pair_orbit(
+						pi, pj, 0 /*verbose_level - 1*/);
 				if (pi == pj) {
 					cout << "delandtsheer_doyen::search_starter "
 							"pi = " << pi << " == pj = " << pj << endl;
@@ -822,7 +847,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 	Descr->Pair_search_control->depth = 2;
 
 	Poset_pairs = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
+	Poset_pairs->init_subset_lattice(
+			A0, A, Strong_gens,
 			verbose_level);
 
 
@@ -830,7 +856,8 @@ void delandtsheer_doyen::compute_orbits_on_pairs(
 		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
 				"before Pairs->init" << endl;
 	}
-	Pairs->initialize_and_allocate_root_node(Descr->Pair_search_control, Poset_pairs,
+	Pairs->initialize_and_allocate_root_node(
+			Descr->Pair_search_control, Poset_pairs,
 			2 /* sz */, verbose_level);
 	if (f_v) {
 		cout << "direct_product_action::compute_orbits_on_pairs "
@@ -941,7 +968,8 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
 	}
 	cout << "nb_gens=" << nb_gens << endl;
-	Strong_gens->init_from_data_with_target_go_ascii(A0,
+	Strong_gens->init_from_data_with_target_go_ascii(
+			A0,
 			data,
 			nb_gens, A0->make_element_size,
 			Descr->subgroup_order,
@@ -958,7 +986,8 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 	return Strong_gens;
 }
 
-void delandtsheer_doyen::create_monomial_group(int verbose_level)
+void delandtsheer_doyen::create_monomial_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
@@ -977,7 +1006,8 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 		cout << "before generators_for_the_monomial_group "
 				"action" << A1->label << endl;
 	}
-	SG1->generators_for_the_monomial_group(A1,
+	SG1->generators_for_the_monomial_group(
+			A1,
 		M1, verbose_level);
 	if (f_v) {
 		cout << "after generators_for_the_monomial_group "
@@ -989,7 +1019,8 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 		cout << "before generators_for_the_monomial_group "
 				"action" << A2->label << endl;
 	}
-	SG2->generators_for_the_monomial_group(A2,
+	SG2->generators_for_the_monomial_group(
+			A2,
 		M2, verbose_level);
 	if (f_v) {
 		cout << "after generators_for_the_monomial_group "
@@ -1047,7 +1078,8 @@ void delandtsheer_doyen::create_monomial_group(int verbose_level)
 }
 
 
-void delandtsheer_doyen::create_action(int verbose_level)
+void delandtsheer_doyen::create_action(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1071,7 +1103,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 				0);
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::create_action initializing projective groups:" << endl;
+			cout << "delandtsheer_doyen::create_action "
+					"initializing projective groups:" << endl;
 		}
 
 		A1->Known_groups->init_projective_group(
@@ -1108,11 +1141,13 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 
-		F1->finite_field_init_small_order(Descr->q1,
+		F1->finite_field_init_small_order(
+				Descr->q1,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
-		F2->finite_field_init_small_order(Descr->q2,
+		F2->finite_field_init_small_order(
+				Descr->q2,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
@@ -1121,31 +1156,36 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::create_action initializing affine groups:" << endl;
+			cout << "delandtsheer_doyen::create_action "
+					"initializing affine groups:" << endl;
 		}
 
-		M1->init_affine_group(Descr->d1, F1,
+		M1->init_affine_group(
+				Descr->d1, F1,
 				false /* f_semilinear */, /*A1,*/ verbose_level);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
 					"before AG.init_base" << endl;
 		}
-		AG.init_base(A1, M1, 0 /*verbose_level - 1*/);
+		AG.init_base(
+				A1, M1, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
 					"after AG.init_base" << endl;
 		}
 
 
-		M2->init_affine_group(Descr->d2, F2,
+		M2->init_affine_group(
+				Descr->d2, F2,
 				false /* f_semilinear */, /*A2,*/ verbose_level);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
 					"before AG.init_base" << endl;
 		}
-		AG.init_base(A2, M2, 0 /*verbose_level - 1*/);
+		AG.init_base(
+				A2, M2, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
 					"after AG.init_base" << endl;
@@ -1160,7 +1200,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 	actions::action_global AG;
 
-	A = AG.init_direct_product_group_and_restrict(M1, M2,
+	A = AG.init_direct_product_group_and_restrict(
+			M1, M2,
 			verbose_level);
 
 	if (f_v) {
@@ -1178,7 +1219,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 	}
 }
 
-void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_level)
+void delandtsheer_doyen::create_graph(
+		long int *line0, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, x, y, h, ph, k, pk, o;
@@ -1200,9 +1242,11 @@ void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_leve
 		col_sum[y]++;
 	}
 
-	if (!check_orbit_covering(line0,
+	if (!check_orbit_covering(
+			line0,
 		len, 0 /* verbose_level */)) {
-		cout << "delandtsheer_doyen::create_graph line0 is not good (check_orbit_covering)" << endl;
+		cout << "delandtsheer_doyen::create_graph "
+				"line0 is not good (check_orbit_covering)" << endl;
 		check_orbit_covering(line0, len, 2 /* verbose_level */);
 		exit(1);
 	}
@@ -1221,12 +1265,14 @@ void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_leve
 			for (h = 0; h < len; h++) {
 
 				ph = line0[h];
-				o = find_pair_orbit(ph, a, 0 /*verbose_level - 1*/);
+				o = find_pair_orbit(
+						ph, a, 0 /*verbose_level - 1*/);
 				orbit_covered[o]++;
 				if (orbit_covered[o] > orbit_covered_max[o]) {
 					for (k = h; k >= 0; k--) {
 						pk = line0[k];
-						o = find_pair_orbit(pk, a, 0 /*verbose_level - 1*/);
+						o = find_pair_orbit(
+								pk, a, 0 /*verbose_level - 1*/);
 						orbit_covered[o]--;
 					}
 					break;
@@ -1247,7 +1293,8 @@ void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_leve
 }
 
 
-int delandtsheer_doyen::find_pair_orbit(int i, int j, int verbose_level)
+int delandtsheer_doyen::find_pair_orbit(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_no;
@@ -1267,7 +1314,8 @@ int delandtsheer_doyen::find_pair_orbit(int i, int j, int verbose_level)
 	return orbit_no;
 }
 
-int delandtsheer_doyen::find_pair_orbit_by_tracing(int i, int j, int verbose_level)
+int delandtsheer_doyen::find_pair_orbit_by_tracing(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_no;
@@ -1284,7 +1332,8 @@ int delandtsheer_doyen::find_pair_orbit_by_tracing(int i, int j, int verbose_lev
 	}
 	set[0] = i;
 	set[1] = j;
-	orbit_no = Pairs->trace_set(set, 2, 2,
+	orbit_no = Pairs->trace_set(
+			set, 2, 2,
 		canonical_set, transporter,
 		verbose_level - 1);
 	if (f_v) {
@@ -1294,7 +1343,8 @@ int delandtsheer_doyen::find_pair_orbit_by_tracing(int i, int j, int verbose_lev
 	return orbit_no;
 }
 
-void delandtsheer_doyen::compute_pair_orbit_table(int verbose_level)
+void delandtsheer_doyen::compute_pair_orbit_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
@@ -1320,7 +1370,8 @@ void delandtsheer_doyen::compute_pair_orbit_table(int verbose_level)
 	}
 }
 
-void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
+void delandtsheer_doyen::write_pair_orbit_file(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
@@ -1370,7 +1421,8 @@ void delandtsheer_doyen::write_pair_orbit_file(int verbose_level)
 
 }
 
-void delandtsheer_doyen::print_mask_test_i(std::ostream &ost, int i)
+void delandtsheer_doyen::print_mask_test_i(
+		std::ostream &ost, int i)
 {
 	int who, what;
 
@@ -1452,7 +1504,8 @@ void delandtsheer_doyen::early_test_func(
 	} // else
 }
 
-int delandtsheer_doyen::check_conditions(long int *S, int len, int verbose_level)
+int delandtsheer_doyen::check_conditions(
+		long int *S, int len, int verbose_level)
 {
 	//verbose_level = 4;
 	int f_v = (verbose_level >= 1);
@@ -1527,7 +1580,8 @@ int delandtsheer_doyen::check_conditions(long int *S, int len, int verbose_level
 	}
 }
 
-int delandtsheer_doyen::check_orbit_covering(long int *line,
+int delandtsheer_doyen::check_orbit_covering(
+		long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1573,7 +1627,8 @@ int delandtsheer_doyen::check_orbit_covering(long int *line,
 	return f_OK;
 }
 
-int delandtsheer_doyen::check_row_sums(long int *line,
+int delandtsheer_doyen::check_row_sums(
+		long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1648,7 +1703,8 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 	return f_OK;
 }
 
-int delandtsheer_doyen::check_col_sums(long int *line,
+int delandtsheer_doyen::check_col_sums(
+		long int *line,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1723,7 +1779,8 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 	return f_OK;
 }
 
-int delandtsheer_doyen::check_mask(long int *line,
+int delandtsheer_doyen::check_mask(
+		long int *line,
 		int len, int verbose_level)
 {
 	//verbose_level = 4;
@@ -1832,7 +1889,7 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 		row_col_idx[i] = j;
 		f_col_used[j]++;
 		col_row_idx[j] = i;
-		}
+	}
 	nb_singletons = 0;
 	nb_rows_used = 0;
 	for (i = 0; i < m; i++) {
@@ -1872,7 +1929,8 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 // #############################################################################
 
 
-static void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
+static void delandtsheer_doyen_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

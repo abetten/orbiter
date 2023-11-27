@@ -78,7 +78,8 @@ void combinatorics_global::create_design_table(
 
 
 
-void combinatorics_global::load_design_table(design_create *DC,
+void combinatorics_global::load_design_table(
+		design_create *DC,
 		std::string &problem_label,
 		design_tables *&T,
 		groups::strong_generators *Gens,

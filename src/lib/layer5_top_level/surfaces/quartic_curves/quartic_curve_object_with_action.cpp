@@ -43,6 +43,7 @@ quartic_curve_object_with_action::~quartic_curve_object_with_action()
 
 void quartic_curve_object_with_action::init(
 		int cnt, int po_go, int po_index, int po, int so,
+		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		std::string &eqn_txt,
 		std::string &pts_txt, std::string &bitangents_txt,
 		int verbose_level)
@@ -68,10 +69,19 @@ void quartic_curve_object_with_action::init(
 	Quartic_curve_object = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
 
 
+	if (f_v) {
+		cout << "quartic_curve_object_with_action::init "
+				"before Quartic_curve_object->init_from_string" << endl;
+	}
 	Quartic_curve_object->init_from_string(
+			Poly_ring,
 			eqn_txt,
 			pts_txt, bitangents_txt,
 			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_object_with_action::init "
+				"after Quartic_curve_object->init_from_string" << endl;
+	}
 
 	if (f_v) {
 		print(cout);

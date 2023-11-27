@@ -102,7 +102,8 @@ void classify_bitvectors::init(
 	}
 }
 
-int classify_bitvectors::search(uchar *data,
+int classify_bitvectors::search(
+		uchar *data,
 		int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -126,9 +127,12 @@ int classify_bitvectors::search(uchar *data,
 	return ret;
 }
 
-void classify_bitvectors::search_and_add_if_new(uchar *data,
+void classify_bitvectors::search_and_add_if_new(
+		uchar *data,
 		void *extra_data, int &f_found, int &idx,
 		int verbose_level)
+// if f_found is true: idx is where the canonical form was found.
+// if f_found is false: idx is where the new canonical form was added.
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -176,7 +180,8 @@ void classify_bitvectors::search_and_add_if_new(uchar *data,
 	}
 }
 
-int classify_bitvectors::compare_at(uchar *data, int idx)
+int classify_bitvectors::compare_at(
+		uchar *data, int idx)
 {
 	int ret;
 
@@ -185,7 +190,8 @@ int classify_bitvectors::compare_at(uchar *data, int idx)
 	return ret;
 }
 
-void classify_bitvectors::add_at_idx(uchar *data,
+void classify_bitvectors::add_at_idx(
+		uchar *data,
 		void *extra_data, int idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -218,7 +224,8 @@ void classify_bitvectors::add_at_idx(uchar *data,
 }
 
 
-void classify_bitvectors::finalize(int verbose_level)
+void classify_bitvectors::finalize(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;

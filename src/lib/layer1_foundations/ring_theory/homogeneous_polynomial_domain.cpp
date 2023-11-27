@@ -333,6 +333,20 @@ std::string &homogeneous_polynomial_domain::get_symbol(int i)
 	return symbols[i];
 }
 
+std::string homogeneous_polynomial_domain::list_of_variables()
+{
+	string s;
+	int i;
+
+	for (i = 0; i < nb_variables; i++) {
+		s += symbols[i];
+		if (i < nb_variables - 1) {
+			s += ",";
+		}
+	}
+	return s;
+}
+
 
 int homogeneous_polynomial_domain::get_monomial(int i, int j)
 {

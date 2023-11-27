@@ -82,7 +82,8 @@ spread_table_with_selection::~spread_table_with_selection()
 	}
 }
 
-void spread_table_with_selection::init(spread_classify *T,
+void spread_table_with_selection::init(
+		spread_classify *T,
 	int f_select_spread,
 	std::string &select_spread_text,
 	std::string &path_to_spread_tables,
@@ -181,7 +182,8 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 }
 
-void spread_table_with_selection::compute_spread_table(int verbose_level)
+void spread_table_with_selection::compute_spread_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -237,7 +239,8 @@ void spread_table_with_selection::compute_spread_table(int verbose_level)
 	}
 }
 
-void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_level)
+void spread_table_with_selection::compute_spread_table_from_scratch(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -448,7 +451,8 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	}
 }
 
-void spread_table_with_selection::create_action_on_spreads(int verbose_level)
+void spread_table_with_selection::create_action_on_spreads(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -473,7 +477,8 @@ void spread_table_with_selection::create_action_on_spreads(int verbose_level)
 	}
 }
 
-int spread_table_with_selection::find_spread(long int *set, int verbose_level)
+int spread_table_with_selection::find_spread(
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -489,7 +494,8 @@ int spread_table_with_selection::find_spread(long int *set, int verbose_level)
 	return idx;
 }
 
-long int *spread_table_with_selection::get_spread(int spread_idx)
+long int *spread_table_with_selection::get_spread(
+		int spread_idx)
 {
 	return Spread_tables->get_spread(spread_idx);
 }
@@ -943,7 +949,8 @@ void spread_table_with_selection::compute_live_blocks2(
 	}
 }
 
-void spread_table_with_selection::compute_adjacency_matrix(int verbose_level)
+void spread_table_with_selection::compute_adjacency_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -963,7 +970,8 @@ void spread_table_with_selection::compute_adjacency_matrix(int verbose_level)
 
 
 
-int spread_table_with_selection::is_adjacent(int i, int j)
+int spread_table_with_selection::is_adjacent(
+		int i, int j)
 {
 	int k;
 	combinatorics::combinatorics_domain Combi;

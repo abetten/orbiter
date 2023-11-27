@@ -43,6 +43,7 @@ quartic_curve_domain::~quartic_curve_domain()
 void quartic_curve_domain::init(
 		field_theory::finite_field *F,
 		int verbose_level)
+// creates a projective_space object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -250,7 +251,8 @@ void quartic_curve_domain::unrank_line_in_dual_coordinates(
 	//int r;
 
 	P->unrank_line(basis, rk);
-	F->Linear_algebra->RREF_and_kernel(3, 2, basis,
+	F->Linear_algebra->RREF_and_kernel(
+			3, 2, basis,
 			0 /* verbose_level */);
 	Int_vec_copy(basis + 6, v, 3);
 }
@@ -837,7 +839,8 @@ void quartic_curve_domain::compute_gradient(
 
 	if (f_v) {
 		cout << "quartic_curve_domain::compute_gradient "
-				"Poly3_3->get_nb_monomials() = " << Poly3_3->get_nb_monomials() << endl;
+				"Poly3_3->get_nb_monomials() = "
+				<< Poly3_3->get_nb_monomials() << endl;
 	}
 
 	gradient = NEW_int(3 * Poly3_3->get_nb_monomials());

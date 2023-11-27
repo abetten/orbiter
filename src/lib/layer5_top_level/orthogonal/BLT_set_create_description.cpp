@@ -43,7 +43,8 @@ BLT_set_create_description::~BLT_set_create_description()
 {
 }
 
-int BLT_set_create_description::read_arguments(int argc, std::string *argv,
+int BLT_set_create_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

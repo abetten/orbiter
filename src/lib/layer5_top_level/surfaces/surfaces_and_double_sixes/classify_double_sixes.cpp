@@ -84,7 +84,8 @@ void classify_double_sixes::init(
 
 
 
-void classify_double_sixes::test_orbits(int verbose_level)
+void classify_double_sixes::test_orbits(
+		int verbose_level)
 {
 	//verbose_level += 2;
 	int f_v = (verbose_level >= 1);
@@ -162,7 +163,8 @@ void classify_double_sixes::test_orbits(int verbose_level)
 }
 
 
-void classify_double_sixes::classify(int verbose_level)
+void classify_double_sixes::classify(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -205,7 +207,8 @@ void classify_double_sixes::classify(int verbose_level)
 }
 
 
-void classify_double_sixes::downstep(int verbose_level)
+void classify_double_sixes::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -399,7 +402,8 @@ void classify_double_sixes::downstep(int verbose_level)
 }
 
 
-void classify_double_sixes::upstep(int verbose_level)
+void classify_double_sixes::upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -715,7 +719,8 @@ void classify_double_sixes::upstep(int verbose_level)
 }
 
 
-void classify_double_sixes::print_five_plus_ones(std::ostream &ost)
+void classify_double_sixes::print_five_plus_ones(
+		std::ostream &ost)
 {
 	int f, i, l;
 
@@ -1007,7 +1012,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 }
 
 void classify_double_sixes::write_file(
-		ofstream &fp, int verbose_level)
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -1067,7 +1072,7 @@ void classify_double_sixes::write_file(
 }
 
 void classify_double_sixes::read_file(
-		ifstream &fp, int verbose_level)
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, nb_flag_orbits;

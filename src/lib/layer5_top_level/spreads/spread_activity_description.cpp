@@ -26,7 +26,8 @@ spread_activity_description::~spread_activity_description()
 {
 }
 
-int spread_activity_description::read_arguments(int argc, std::string *argv,
+int spread_activity_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

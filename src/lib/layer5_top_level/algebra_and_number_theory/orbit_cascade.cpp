@@ -349,7 +349,8 @@ void orbit_cascade::init(
 }
 
 
-void orbit_cascade::downstep(int verbose_level)
+void orbit_cascade::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int po, so, f;

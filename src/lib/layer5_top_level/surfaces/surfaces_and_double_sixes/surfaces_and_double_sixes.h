@@ -230,11 +230,16 @@ public:
 	void init(
 			classify_five_plus_one *Five_p1,
 			int verbose_level);
-	void test_orbits(int verbose_level);
-	void classify(int verbose_level);
-	void downstep(int verbose_level);
-	void upstep(int verbose_level);
-	void print_five_plus_ones(std::ostream &ost);
+	void test_orbits(
+			int verbose_level);
+	void classify(
+			int verbose_level);
+	void downstep(
+			int verbose_level);
+	void upstep(
+			int verbose_level);
+	void print_five_plus_ones(
+			std::ostream &ost);
 	void identify_double_six(
 			long int *double_six,
 		int *transporter, int &orbit_index,
@@ -388,14 +393,20 @@ public:
 		poset_classification::poset_classification_control
 			*Control,
 		int verbose_level);
-	void do_classify_double_sixes(int verbose_level);
-	void do_classify_surfaces(int verbose_level);
+	void do_classify_double_sixes(
+			int verbose_level);
+	void do_classify_surfaces(
+			int verbose_level);
 	void classify_surfaces_from_double_sixes(
 			int verbose_level);
-	void post_process(int verbose_level);
-	void downstep(int verbose_level);
-	void upstep(int verbose_level);
-	void derived_arcs(int verbose_level);
+	void post_process(
+			int verbose_level);
+	void downstep(
+			int verbose_level);
+	void upstep(
+			int verbose_level);
+	void derived_arcs(
+			int verbose_level);
 	void starter_configurations_which_are_involved(
 			int iso_type,
 		int *&Starter_configuration_idx,
@@ -408,13 +419,18 @@ public:
 			std::ofstream &fp, int verbose_level);
 	void read_file(
 			std::ifstream &fp, int verbose_level);
-	void generate_history(int verbose_level);
+	void generate_history(
+			int verbose_level);
 	int test_if_surfaces_have_been_computed_already();
-	void write_surfaces(int verbose_level);
-	void read_surfaces(int verbose_level);
+	void write_surfaces(
+			int verbose_level);
+	void read_surfaces(
+			int verbose_level);
 	int test_if_double_sixes_have_been_computed_already();
-	void write_double_sixes(int verbose_level);
-	void read_double_sixes(int verbose_level);
+	void write_double_sixes(
+			int verbose_level);
+	void read_double_sixes(
+			int verbose_level);
 	void create_report(
 			int f_with_stabilizers,
 			graphics::layered_graph_draw_options *draw_options,
@@ -451,13 +467,18 @@ public:
 		int &isomorphic_to, int *Elt_isomorphism,
 		int verbose_level);
 
-	void sweep_Cayley(int verbose_level);
+	void sweep_Cayley(
+			int verbose_level);
 	void identify_general_abcd(
 		int *Iso_type, int *Nb_lines, int verbose_level);
-	void identify_general_abcd_and_print_table(int verbose_level);
-	void identify_Eckardt_and_print_table(int verbose_level);
-	void identify_F13_and_print_table(int verbose_level);
-	void identify_Bes_and_print_table(int verbose_level);
+	void identify_general_abcd_and_print_table(
+			int verbose_level);
+	void identify_Eckardt_and_print_table(
+			int verbose_level);
+	void identify_F13_and_print_table(
+			int verbose_level);
+	void identify_Bes_and_print_table(
+			int verbose_level);
 	void identify_Eckardt(
 			int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_F13(
@@ -490,8 +511,10 @@ public:
 
 	surface_repository();
 	~surface_repository();
-	void init(surface_classify_wedge *Wedge, int verbose_level);
-	void generate_source_code(int verbose_level);
+	void init(
+			surface_classify_wedge *Wedge, int verbose_level);
+	void generate_source_code(
+			int verbose_level);
 	void report_surface(
 			std::ostream &ost,
 			int orbit_index, int verbose_level);

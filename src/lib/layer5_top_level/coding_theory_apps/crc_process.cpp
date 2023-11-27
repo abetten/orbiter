@@ -38,7 +38,8 @@ crc_process::~crc_process()
 }
 
 
-void crc_process::init(crc_process_description *Descr,
+void crc_process::init(
+		crc_process_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

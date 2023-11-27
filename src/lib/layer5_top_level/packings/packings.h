@@ -123,12 +123,13 @@ public:
 	void init2(
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
-	void init_P3_and_P5_and_Gr(int verbose_level);
-	void compute_adjacency_matrix(int verbose_level);
+	void init_P3_and_P5_and_Gr(
+			int verbose_level);
 	void prepare_generator(
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
-	void compute(int search_depth, int verbose_level);
+	void compute(
+			int search_depth, int verbose_level);
 	void lifting_prepare_function_new(
 			solvers_package::exact_cover *E,
 			int starter_case,
@@ -253,13 +254,16 @@ public:
 
 	packing_invariants();
 	~packing_invariants();
-	void init(packing_classify *P,
+	void init(
+			packing_classify *P,
 			std::string &prefix,
 			std::string &prefix_tex,
 			int iso_cnt,
 		long int *the_packing, int verbose_level);
-	void init_klein_invariants(typed_objects::Vector &v, int verbose_level);
-	void compute_decomposition(int verbose_level);
+	void init_klein_invariants(
+			typed_objects::Vector &v, int verbose_level);
+	void compute_decomposition(
+			int verbose_level);
 };
 
 // #############################################################################
@@ -295,7 +299,8 @@ public:
 
 	packing_long_orbits_description();
 	~packing_long_orbits_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -337,10 +342,12 @@ public:
 
 	packing_long_orbits();
 	~packing_long_orbits();
-	void init(packing_was_fixpoints *PWF,
+	void init(
+			packing_was_fixpoints *PWF,
 			packing_long_orbits_description *Descr,
 			int verbose_level);
-	void list_of_cases_from_file(int verbose_level);
+	void list_of_cases_from_file(
+			int verbose_level);
 	void save_packings_by_case(
 			std::string &fname_packings,
 			std::vector<std::vector<std::vector<int> > >
@@ -350,8 +357,10 @@ public:
 			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
-	void init_fixpoint_clique_from_orbit_numbers(int verbose_level);
-	void filter_orbits(int verbose_level);
+	void init_fixpoint_clique_from_orbit_numbers(
+			int verbose_level);
+	void filter_orbits(
+			int verbose_level);
 	void create_graph_on_remaining_long_orbits(
 			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
@@ -367,7 +376,8 @@ public:
 			graph_theory::colored_graph *&CG,
 			long int *user_data, int user_data_sz,
 			int verbose_level);
-	void report_filtered_orbits(std::ostream &ost);
+	void report_filtered_orbits(
+			std::ostream &ost);
 
 };
 
@@ -415,7 +425,8 @@ public:
 
 	packing_was_activity();
 	~packing_was_activity();
-	void init(packing_was_activity_description *Descr,
+	void init(
+			packing_was_activity_description *Descr,
 			packing_was *PW,
 			int verbose_level);
 	void perform_activity(int verbose_level);
@@ -460,7 +471,8 @@ public:
 
 	packing_was_description();
 	~packing_was_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -510,7 +522,8 @@ public:
 			packing_was_fixpoints_activity_description *Descr,
 			packing_was_fixpoints *PWF,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -563,9 +576,12 @@ public:
 			poset_classification::poset_classification_control
 				*Control,
 			int verbose_level);
-	void setup_file_names(int clique_size, int verbose_level);
-	void create_graph_on_fixpoints(int verbose_level);
-	void action_on_fixpoints(int verbose_level);
+	void setup_file_names(
+			int clique_size, int verbose_level);
+	void create_graph_on_fixpoints(
+			int verbose_level);
+	void action_on_fixpoints(
+			int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
 			int clique_size,
 			poset_classification::poset_classification_control
@@ -582,9 +598,12 @@ public:
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored
 	// in Cliques[nb_cliques * clique_size]
-	void process_long_orbits(int verbose_level);
-	long int *clique_by_index(int idx);
-	groups::strong_generators *get_stabilizer(int idx);
+	void process_long_orbits(
+			int verbose_level);
+	long int *clique_by_index(
+			int idx);
+	groups::strong_generators *get_stabilizer(
+			int idx);
 	void print_packing(
 			long int *packing, int sz, int verbose_level);
 	void process_long_orbits(
@@ -593,10 +612,12 @@ public:
 			std::string &solution_path,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
-	void report(int verbose_level);
+	void report(
+			int verbose_level);
 	void report2(
 			std::ostream &ost, int verbose_level);
-	long int fixpoint_to_reduced_spread(int a, int verbose_level);
+	long int fixpoint_to_reduced_spread(
+			int a, int verbose_level);
 
 };
 
@@ -722,33 +743,48 @@ public:
 
 	packing_was();
 	~packing_was();
-	void init(packing_was_description *Descr,
+	void init(
+			packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
-	void compute_H_orbits_and_reduce(int verbose_level);
-	void init_regular_packing(int verbose_level);
-	void init_N(int verbose_level);
-	void init_H(int verbose_level);
-	void compute_H_orbits_on_points(int verbose_level);
+	void compute_H_orbits_and_reduce(
+			int verbose_level);
+	void init_regular_packing(
+			int verbose_level);
+	void init_N(
+			int verbose_level);
+	void init_H(
+			int verbose_level);
+	void compute_H_orbits_on_points(
+			int verbose_level);
 	// computes the orbits of H on points
 	// and writes to file prefix_point_orbits
-	void compute_N_orbits_on_points(int verbose_level);
+	void compute_N_orbits_on_points(
+			int verbose_level);
 	// computes the orbits of N on points
 	// and writes to file prefix_point_orbits
-	void compute_H_orbits_on_lines(int verbose_level);
+	void compute_H_orbits_on_lines(
+			int verbose_level);
 		// computes the orbits of H on lines (NOT on spreads!)
 		// and writes to file prefix_line_orbits
-	void compute_N_orbits_on_lines(int verbose_level);
+	void compute_N_orbits_on_lines(
+			int verbose_level);
 	// computes the orbits of N on lines (NOT on spreads!)
 	// and writes to file prefix_line_orbits
-	void compute_spread_types_wrt_H(int verbose_level);
-	void compute_H_orbits_on_spreads(int verbose_level);
+	void compute_spread_types_wrt_H(
+			int verbose_level);
+	void compute_H_orbits_on_spreads(
+			int verbose_level);
 		// computes the orbits of H on spreads (NOT on lines!)
 		// and writes to file fname_orbits
-	void test_orbits_on_spreads(int verbose_level);
-	void reduce_spreads(int verbose_level);
-	void compute_reduced_spread_types_wrt_H(int verbose_level);
+	void test_orbits_on_spreads(
+			int verbose_level);
+	void reduce_spreads(
+			int verbose_level);
+	void compute_reduced_spread_types_wrt_H(
+			int verbose_level);
 		// Spread_types[P->nb_spreads * (group_order + 1)]
-	void compute_H_orbits_on_reduced_spreads(int verbose_level);
+	void compute_H_orbits_on_reduced_spreads(
+			int verbose_level);
 	actions::action *restricted_action(
 			int orbit_length, int verbose_level);
 	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
@@ -775,13 +811,18 @@ public:
 			int verbose_level);
 	int evaluate_orbit_invariant_function(
 			int a, int i, int j, int verbose_level);
-	void classify_orbit_invariant(int verbose_level);
-	void report_orbit_invariant(std::ostream &ost);
-	void report2(std::ostream &ost, int verbose_level);
-	void report(int verbose_level);
+	void classify_orbit_invariant(
+			int verbose_level);
+	void report_orbit_invariant(
+			std::ostream &ost);
+	void report2(
+			std::ostream &ost, int verbose_level);
+	void report(
+			int verbose_level);
 	void report_line_orbits_under_H(
 			std::ostream &ost, int verbose_level);
-	void get_spreads_in_reduced_orbits_by_type(int type_idx,
+	void get_spreads_in_reduced_orbits_by_type(
+			int type_idx,
 			int &nb_orbits, int &orbit_length,
 			long int *&orbit_idx,
 			long int *&spreads_in_reduced_orbits_by_type,
@@ -862,7 +903,8 @@ public:
 
 	regular_packing();
 	~regular_packing();
-	void init(packing_was *PW, int verbose_level);
+	void init(
+			packing_was *PW, int verbose_level);
 
 };
 

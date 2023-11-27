@@ -116,17 +116,28 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
-	void read_data(int verbose_level);
-	void create_fname_for_classification(std::string &fname);
-	void create_fname_for_flag_orbits(std::string &fname);
-	void classify_semifields(int verbose_level);
-	void load_classification(int verbose_level);
-	void load_flag_orbits(int verbose_level);
-	void identify_semifield(int verbose_level);
-	void identify_semifields_from_file(int verbose_level);
-	void latex_report(int verbose_level);
-	void generate_source_code(int verbose_level);
-	void decomposition(int verbose_level);
+	void read_data(
+			int verbose_level);
+	void create_fname_for_classification(
+			std::string &fname);
+	void create_fname_for_flag_orbits(
+			std::string &fname);
+	void classify_semifields(
+			int verbose_level);
+	void load_classification(
+			int verbose_level);
+	void load_flag_orbits(
+			int verbose_level);
+	void identify_semifield(
+			int verbose_level);
+	void identify_semifields_from_file(
+			int verbose_level);
+	void latex_report(
+			int verbose_level);
+	void generate_source_code(
+			int verbose_level);
+	void decomposition(
+			int verbose_level);
 };
 
 
@@ -220,11 +231,15 @@ public:
 	void init_poset_classification(
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
-	void compute_orbits(int depth, int verbose_level);
+	void compute_orbits(
+			int depth, int verbose_level);
 	void list_points();
-	long int rank_point(int *v, int verbose_level);
-	void unrank_point(int *v, long int rk, int verbose_level);
-	void early_test_func(long int *S, int len,
+	long int rank_point(
+			int *v, int verbose_level);
+	void unrank_point(
+			int *v, long int rk, int verbose_level);
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -236,21 +251,32 @@ public:
 	int test_partial_semifield(
 			int *Basis, int n, int verbose_level);
 	void test_rank_unrank();
-	void matrix_unrank(long int rk, int *Mtx);
-	long int matrix_rank(int *Mtx);
-	long int matrix_rank_without_first_column(int *Mtx);
-	void basis_print(int *Mtx, int sz);
-	void basis_print_numeric(long int *Rk, int sz);
-	void matrix_print(int *Mtx);
-	void matrix_print_numeric(long int rk);
-	void print_set_of_matrices_numeric(long int *Rk, int nb);
-	void apply_element(int *Elt,
+	void matrix_unrank(
+			long int rk, int *Mtx);
+	long int matrix_rank(
+			int *Mtx);
+	long int matrix_rank_without_first_column(
+			int *Mtx);
+	void basis_print(
+			int *Mtx, int sz);
+	void basis_print_numeric(
+			long int *Rk, int sz);
+	void matrix_print(
+			int *Mtx);
+	void matrix_print_numeric(
+			long int rk);
+	void print_set_of_matrices_numeric(
+			long int *Rk, int nb);
+	void apply_element(
+			int *Elt,
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
-	void apply_element_and_copy_back(int *Elt,
+	void apply_element_and_copy_back(
+			int *Elt,
 		int *basis_in, int *basis_out,
 		int first, int last_plus_one, int verbose_level);
-	int test_if_third_basis_vector_is_ok(int *Basis);
+	int test_if_third_basis_vector_is_ok(
+			int *Basis);
 	void candidates_classify_by_first_column(
 		long int *Input_set, int input_set_sz,
 		int window_bottom, int window_size,
@@ -270,8 +296,10 @@ public:
 		orbits_schreier::orbit_of_subspaces *&Orb,
 		int verbose_level);
 	// allocates an orbit_of_subspaces data structure in Orb
-	void init_desired_pivots(int verbose_level);
-	void knuth_operation(int t,
+	void init_desired_pivots(
+			int verbose_level);
+	void knuth_operation(
+			int t,
 			long int *data_in, long int *data_out,
 			int verbose_level);
 };
@@ -400,15 +428,22 @@ public:
 
 	semifield_level_two();
 	~semifield_level_two();
-	void init(semifield_classify *SC, int verbose_level);
-	void init_desired_pivots(int verbose_level);
+	void init(
+			semifield_classify *SC, int verbose_level);
+	void init_desired_pivots(
+			int verbose_level);
 	void list_all_elements_in_conjugacy_class(
 			int c, int verbose_level);
-	void compute_level_two(int nb_stages, int verbose_level);
-	void downstep(int verbose_level);
-	void compute_stabilizers_downstep(int verbose_level);
-	void upstep(int verbose_level);
-	void trace(int f, int coset,
+	void compute_level_two(
+			int nb_stages, int verbose_level);
+	void downstep(
+			int verbose_level);
+	void compute_stabilizers_downstep(
+			int verbose_level);
+	void upstep(
+			int verbose_level);
+	void trace(
+			int f, int coset,
 			long int a, long int b, int &f_automorphism, int *&Aut,
 			int verbose_level);
 	void multiply_to_the_right(
@@ -445,12 +480,17 @@ public:
 			data_structures::set_of_sets_lint *&Candidates_by_type,
 			int orbit,
 			int verbose_level);
-	void get_basis_and_pivots(int po,
+	void get_basis_and_pivots(
+			int po,
 			int *basis, int *pivots, int verbose_level);
-	void report(std::ofstream &ost, int verbose_level);
-	void create_fname_level_info_file(std::string &fname);
-	void write_level_info_file(int verbose_level);
-	void read_level_info_file(int verbose_level);
+	void report(
+			std::ofstream &ost, int verbose_level);
+	void create_fname_level_info_file(
+			std::string &fname);
+	void write_level_info_file(
+			int verbose_level);
+	void read_level_info_file(
+			int verbose_level);
 };
 
 
@@ -525,17 +565,24 @@ public:
 
 	semifield_lifting();
 	~semifield_lifting();
-	void init_level_three(semifield_level_two *L2,
+	void init_level_three(
+			semifield_level_two *L2,
 			int f_prefix, std::string &prefix,
 			int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void recover_level_three_downstep(int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void recover_level_three_downstep(
+			int verbose_level);
 	void recover_level_three_from_file(
 			int f_read_flag_orbits, int verbose_level);
-	void compute_level_three(int verbose_level);
-	void level_two_down(int verbose_level);
-	void level_two_flag_orbits(int verbose_level);
-	void level_two_upstep(int verbose_level);
+	void compute_level_three(
+			int verbose_level);
+	void level_two_down(
+			int verbose_level);
+	void level_two_flag_orbits(
+			int verbose_level);
+	void level_two_upstep(
+			int verbose_level);
 	void downstep(
 		int level,
 		int verbose_level);
@@ -615,17 +662,27 @@ public:
 	void level_three_get_a1_a2_a3(
 		int po3, long int &a1, long int &a2, long int &a3,
 		int verbose_level);
-	void write_level_info_file(int verbose_level);
-	void read_level_info_file(int verbose_level);
-	void make_fname_flag_orbits(std::string &fname);
-	void save_flag_orbits(int verbose_level);
-	void read_flag_orbits(int verbose_level);
-	void save_stabilizers(int verbose_level);
-	void read_stabilizers(int verbose_level);
-	void make_file_name_schreier(std::string &fname,
+	void write_level_info_file(
+			int verbose_level);
+	void read_level_info_file(
+			int verbose_level);
+	void make_fname_flag_orbits(
+			std::string &fname);
+	void save_flag_orbits(
+			int verbose_level);
+	void read_flag_orbits(
+			int verbose_level);
+	void save_stabilizers(
+			int verbose_level);
+	void read_stabilizers(
+			int verbose_level);
+	void make_file_name_schreier(
+			std::string &fname,
 			int level, int orbit_idx);
-	void create_fname_level_info_file(std::string &fname);
-	void make_fname_stabilizers(std::string &fname);
+	void create_fname_level_info_file(
+			std::string &fname);
+	void make_fname_stabilizers(
+			std::string &fname);
 	void make_fname_deep_search_slice_solutions(
 			std::string &fname,
 			int f_out_path, std::string &out_path,
@@ -709,9 +766,12 @@ public:
 			int nb_non_unique_cases,
 			int *Non_unique_cases, long int *Non_unique_cases_go,
 			int verbose_level);
-	void compute_orbits(int verbose_level);
-	void compute_flag_orbits(int verbose_level);
-	void do_classify(int verbose_level);
+	void compute_orbits(
+			int verbose_level);
+	void compute_flag_orbits(
+			int verbose_level);
+	void do_classify(
+			int verbose_level);
 	void loop_over_all_subspaces(
 			int *f_processed, int &nb_processed,
 			int verbose_level);
@@ -723,7 +783,8 @@ public:
 		long int *given_data,
 		int &idx,
 		int verbose_level);
-	int identify(long int *data,
+	int identify(
+			long int *data,
 			int &rk, int &trace_po, int &fo, int &po,
 			int *transporter,
 			int verbose_level);
@@ -769,7 +830,8 @@ public:
 			int level, int orbit_number,
 		long int *Candidates, int nb_candidates, int first_flag_orbit,
 		int verbose_level);
-	int find_point(long int a);
+	int find_point(
+			long int a);
 
 };
 
@@ -804,7 +866,8 @@ public:
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);
-	void group_order(ring_theory::longinteger_object &go);
+	void group_order(
+			ring_theory::longinteger_object &go);
 	int group_order_as_int();
 	void write_to_file_binary(
 			semifield_lifting *SL, std::ofstream &fp,
@@ -841,7 +904,8 @@ public:
 
 	semifield_trace();
 	~semifield_trace();
-	void init(semifield_lifting *SL);
+	void init(
+			semifield_lifting *SL);
 	void trace_very_general(
 		int cur_level,
 		int *input_basis, int basis_sz,

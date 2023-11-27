@@ -720,7 +720,8 @@ void semifield_classify::init_poset_classification(
 }
 
 
-void semifield_classify::compute_orbits(int depth, int verbose_level)
+void semifield_classify::compute_orbits(
+		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::os_interface Os;
@@ -813,7 +814,8 @@ void semifield_classify::list_points()
 	FREE_int(v);
 }
 
-long int semifield_classify::rank_point(int *v, int verbose_level)
+long int semifield_classify::rank_point(
+		int *v, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -839,7 +841,8 @@ long int semifield_classify::rank_point(int *v, int verbose_level)
 	return rk;
 }
 
-void semifield_classify::unrank_point(int *v, long int rk, int verbose_level)
+void semifield_classify::unrank_point(
+		int *v, long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -867,7 +870,8 @@ void semifield_classify::unrank_point(int *v, long int rk, int verbose_level)
 	}
 }
 
-void semifield_classify::early_test_func(long int *S, int len,
+void semifield_classify::early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	int verbose_level)
@@ -1151,7 +1155,8 @@ void semifield_classify::test_rank_unrank()
 	}
 }
 
-void semifield_classify::matrix_unrank(long int rk, int *Mtx)
+void semifield_classify::matrix_unrank(
+		long int rk, int *Mtx)
 {
 	int i, j, a;
 
@@ -1169,7 +1174,8 @@ void semifield_classify::matrix_unrank(long int rk, int *Mtx)
 	}
 }
 
-long int semifield_classify::matrix_rank(int *Mtx)
+long int semifield_classify::matrix_rank(
+		int *Mtx)
 {
 	int i, j;
 	long int rk;
@@ -1184,7 +1190,8 @@ long int semifield_classify::matrix_rank(int *Mtx)
 	return rk;
 }
 
-long int semifield_classify::matrix_rank_without_first_column(int *Mtx)
+long int semifield_classify::matrix_rank_without_first_column(
+		int *Mtx)
 {
 	int i, j;
 	long int rk;
@@ -1199,7 +1206,8 @@ long int semifield_classify::matrix_rank_without_first_column(int *Mtx)
 	return rk;
 }
 
-void semifield_classify::basis_print(int *Mtx, int sz)
+void semifield_classify::basis_print(
+		int *Mtx, int sz)
 {
 	int i;
 	long int *A;
@@ -1216,7 +1224,8 @@ void semifield_classify::basis_print(int *Mtx, int sz)
 	FREE_lint(A);
 }
 
-void semifield_classify::basis_print_numeric(long int *Rk, int sz)
+void semifield_classify::basis_print_numeric(
+		long int *Rk, int sz)
 {
 	int i;
 
@@ -1229,12 +1238,14 @@ void semifield_classify::basis_print_numeric(long int *Rk, int sz)
 	cout << endl;
 }
 
-void semifield_classify::matrix_print(int *Mtx)
+void semifield_classify::matrix_print(
+		int *Mtx)
 {
 	Int_matrix_print(Mtx, k, k);
 }
 
-void semifield_classify::matrix_print_numeric(long int rk)
+void semifield_classify::matrix_print_numeric(
+		long int rk)
 {
 	int *Mtx;
 
@@ -1260,7 +1271,8 @@ void semifield_classify::print_set_of_matrices_numeric(
 	FREE_int(Mtx);
 }
 
-void semifield_classify::apply_element(int *Elt,
+void semifield_classify::apply_element(
+		int *Elt,
 	int *basis_in, int *basis_out,
 	int first, int last_plus_one, int verbose_level)
 {
@@ -1281,7 +1293,8 @@ void semifield_classify::apply_element(int *Elt,
 	}
 }
 
-void semifield_classify::apply_element_and_copy_back(int *Elt,
+void semifield_classify::apply_element_and_copy_back(
+		int *Elt,
 	int *basis_in, int *basis_out,
 	int first, int last_plus_one, int verbose_level)
 {
@@ -1302,7 +1315,8 @@ void semifield_classify::apply_element_and_copy_back(int *Elt,
 }
 
 
-int semifield_classify::test_if_third_basis_vector_is_ok(int *Basis)
+int semifield_classify::test_if_third_basis_vector_is_ok(
+		int *Basis)
 {
 	int *v = test_v;
 	int i;
@@ -1481,7 +1495,8 @@ void semifield_classify::compute_orbit_of_subspaces(
 
 
 
-void semifield_classify::init_desired_pivots(int verbose_level)
+void semifield_classify::init_desired_pivots(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1511,7 +1526,8 @@ void semifield_classify::init_desired_pivots(int verbose_level)
 	}
 }
 
-void semifield_classify::knuth_operation(int t,
+void semifield_classify::knuth_operation(
+		int t,
 		long int *data_in, long int *data_out,
 		int verbose_level)
 {

@@ -506,7 +506,8 @@ void polynomial_function_domain::evaluate(
 
 }
 
-void polynomial_function_domain::raise(int *in, int *out)
+void polynomial_function_domain::raise(
+		int *in, int *out)
 {
 	int i;
 

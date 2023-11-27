@@ -52,7 +52,8 @@ surface_create_by_arc_lifting::~surface_create_by_arc_lifting()
 }
 
 
-void surface_create_by_arc_lifting::init(int arc_idx,
+void surface_create_by_arc_lifting::init(
+		int arc_idx,
 		surface_classify_using_arc *SCA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -253,7 +254,8 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 
 }
 
-void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbose_level)
+void surface_create_by_arc_lifting::report_summary(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -305,7 +307,8 @@ void surface_create_by_arc_lifting::report_summary(std::ostream &ost, int verbos
 
 }
 
-void surface_create_by_arc_lifting::report(std::ostream &ost,
+void surface_create_by_arc_lifting::report(
+		std::ostream &ost,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {

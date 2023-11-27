@@ -46,7 +46,8 @@ public:
 			combinatorics::boolean_function_domain *BF,
 			actions::action *A,
 			int verbose_level);
-	void search_for_bent_functions(int verbose_level);
+	void search_for_bent_functions(
+			int verbose_level);
 
 };
 
@@ -226,9 +227,12 @@ public:
 			combinatorial_object_activity_description *Descr,
 			data_structures::data_input_stream *IS,
 			int verbose_level);
-	void perform_activity(int verbose_level);
-	void perform_activity_geometric_object(int verbose_level);
-	void perform_activity_input_stream(int verbose_level);
+	void perform_activity(
+			int verbose_level);
+	void perform_activity_geometric_object(
+			int verbose_level);
+	void perform_activity_input_stream(
+			int verbose_level);
 	void do_save(
 			std::string &save_as_fname,
 			int f_extract,
@@ -321,7 +325,8 @@ public:
 			design_tables *&T,
 			groups::strong_generators *Gens,
 			int verbose_level);
-	void load_design_table(design_create *DC,
+	void load_design_table(
+			design_create *DC,
 			std::string &problem_label,
 			design_tables *&T,
 			groups::strong_generators *Gens,
@@ -524,34 +529,51 @@ public:
 
 	delandtsheer_doyen();
 	~delandtsheer_doyen();
-	void init(delandtsheer_doyen_description *Descr,
+	void init(
+			delandtsheer_doyen_description *Descr,
 			int verbose_level);
-	void show_generators(int verbose_level);
-	void search_singletons(int verbose_level);
-	void search_starter(int verbose_level);
+	void show_generators(
+			int verbose_level);
+	void search_singletons(
+			int verbose_level);
+	void search_starter(
+			int verbose_level);
 	void compute_orbits_on_pairs(
 			groups::strong_generators *Strong_gens,
 			int verbose_level);
 	groups::strong_generators *scan_subgroup_generators(
 			int verbose_level);
-	void create_monomial_group(int verbose_level);
-	void create_action(int verbose_level);
-	void create_graph(long int *line0, int len, int verbose_level);
-	int find_pair_orbit(int i, int j, int verbose_level);
-	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
-	void compute_pair_orbit_table(int verbose_level);
-	void write_pair_orbit_file(int verbose_level);
-	void print_mask_test_i(std::ostream &ost, int i);
+	void create_monomial_group(
+			int verbose_level);
+	void create_action(
+			int verbose_level);
+	void create_graph(
+			long int *line0, int len, int verbose_level);
+	int find_pair_orbit(
+			int i, int j, int verbose_level);
+	int find_pair_orbit_by_tracing(
+			int i, int j, int verbose_level);
+	void compute_pair_orbit_table(
+			int verbose_level);
+	void write_pair_orbit_file(
+			int verbose_level);
+	void print_mask_test_i(
+			std::ostream &ost, int i);
 	void early_test_func(
 			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	int check_conditions(long int *S, int len, int verbose_level);
-	int check_orbit_covering(long int *line, int len, int verbose_level);
-	int check_row_sums(long int *line, int len, int verbose_level);
-	int check_col_sums(long int *line, int len, int verbose_level);
-	int check_mask(long int *line, int len, int verbose_level);
+	int check_conditions(
+			long int *S, int len, int verbose_level);
+	int check_orbit_covering(
+			long int *line, int len, int verbose_level);
+	int check_row_sums(
+			long int *line, int len, int verbose_level);
+	int check_col_sums(
+			long int *line, int len, int verbose_level);
+	int check_mask(
+			long int *line, int len, int verbose_level);
 	void get_mask_core_and_singletons(
 		long int *line, int len,
 		int &nb_rows_used, int &nb_cols_used,
@@ -605,7 +627,8 @@ public:
 
 	design_activity_description();
 	~design_activity_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -724,7 +747,8 @@ public:
 
 	design_create_description();
 	~design_create_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -792,7 +816,8 @@ public:
 			int verbose_level);
 	void create_design_PG_2_q(
 			field_theory::finite_field *F,
-			long int *&set, int &sz, int &k, int verbose_level);
+			long int *&set, int &sz, int &k,
+			int verbose_level);
 	void unrank_block_in_PG_2_q(
 			int *block,
 			int rk, int verbose_level);
@@ -803,7 +828,8 @@ public:
 			int verbose_level);
 	int get_color_as_two_design_assume_sorted(
 			long int *design, int verbose_level);
-	void compute_incidence_matrix(int verbose_level);
+	void compute_incidence_matrix(
+			int verbose_level);
 	void compute_incidence_matrix_from_blocks(
 			int *blocks, int nb_blocks, int k, int verbose_level);
 
@@ -835,7 +861,8 @@ public:
 
 	design_tables();
 	~design_tables();
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			actions::action *A2,
 			long int *initial_set, int design_size,
 			std::string &label,
@@ -865,9 +892,12 @@ public:
 	int test_if_table_exists(
 			std::string &label,
 			int verbose_level);
-	void save(int verbose_level);
-	void load(int verbose_level);
-	int test_if_designs_are_disjoint(int i, int j);
+	void save(
+			int verbose_level);
+	void load(
+			int verbose_level);
+	int test_if_designs_are_disjoint(
+			int i, int j);
 	int test_set_within_itself(
 			long int *set_of_designs_by_index,
 			int set_size);
@@ -958,11 +988,15 @@ public:
 
 
 
-	void init(int n,
+	void init(
+			int n,
 			field_theory::finite_field *F, int verbose_level);
-	void do_n2q3(int verbose_level);
-	void check_overgroups_of_order_nine(int verbose_level);
-	void create_minimal_overgroups(int verbose_level);
+	void do_n2q3(
+			int verbose_level);
+	void check_overgroups_of_order_nine(
+			int verbose_level);
+	void create_minimal_overgroups(
+			int verbose_level);
 	void early_test_func(
 			long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -998,7 +1032,8 @@ public:
 	poset_classification::poset_classification *gen;
 	int nb_orbits;
 
-	void init(int n,
+	void init(
+			int n,
 			int f_draw, int verbose_level,
 			int verbose_level_clique);
 	int clique_test(
@@ -1108,10 +1143,12 @@ public:
 			int argc, const char **argv,
 			int n, int depth,
 			int verbose_level);
-	void orbits_on_triples(int verbose_level);
+	void orbits_on_triples(
+			int verbose_level);
 	void print(
 			std::ostream &ost, long int *S, int len);
-	void unrank_triple(long int *T, int rk);
+	void unrank_triple(
+			long int *T, int rk);
 	void unrank_triple_pair(
 			long int *T1, long int *T2, int rk);
 	void early_test_func(
@@ -1218,11 +1255,14 @@ public:
 
 	large_set_classify();
 	~large_set_classify();
-	void init(design_create *DC,
+	void init(
+			design_create *DC,
 			design_tables *T,
 			int verbose_level);
-	void create_action_and_poset(int verbose_level);
-	void compute(int verbose_level);
+	void create_action_and_poset(
+			int verbose_level);
+	void compute(
+			int verbose_level);
 	void read_classification(
 			data_structures_groups::orbit_transversal *&T,
 			int level, int verbose_level);
@@ -1232,7 +1272,8 @@ public:
 	void compute_colors(
 			design_tables *Design_table, int *&design_color_table,
 			int verbose_level);
-	int test_if_designs_are_disjoint(int i, int j);
+	int test_if_designs_are_disjoint(
+			int i, int j);
 
 };
 
@@ -1342,7 +1383,8 @@ public:
 
 	large_set_was_description();
 	~large_set_was_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 
@@ -1406,7 +1448,8 @@ public:
 
 	large_set_was();
 	~large_set_was();
-	void init(large_set_was_description *Descr,
+	void init(
+			large_set_was_description *Descr,
 			large_set_classify *LS,
 			int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length(
@@ -1436,7 +1479,8 @@ public:
 			int starter_set_sz,
 			int orbit_length,
 			int verbose_level);
-	void normalizer_orbits_early_test_func(long int *S, int len,
+	void normalizer_orbits_early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
@@ -1516,7 +1560,8 @@ public:
 			combinatorics::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
-	void compute_TDO(int max_TDO_depth, int verbose_level);
+	void compute_TDO(
+			int max_TDO_depth, int verbose_level);
 	void print_TDO(
 			std::ostream &ost,
 			combinatorics::classification_of_objects_report_options
@@ -1619,17 +1664,21 @@ public:
 	void init_and_run(
 			regular_linear_space_description *Descr,
 			int verbose_level);
-	void init_group(int verbose_level);
-	void init_action_on_k_subsets(int onk, int verbose_level);
+	void init_group(
+			int verbose_level);
+	void init_action_on_k_subsets(
+			int onk, int verbose_level);
 	void init_generator(
 			poset_classification::poset_classification_control *Control,
 			groups::strong_generators *Strong_gens,
 			int verbose_level);
-	void early_test_func(long int *S, int len,
+	void early_test_func(
+			long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
-	void print(std::ostream &ost, long int *S, int len);
+	void print(
+			std::ostream &ost, long int *S, int len);
 	void lifting_prepare_function_new(
 			solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
@@ -1671,7 +1720,8 @@ public:
 
 	tactical_decomposition();
 	~tactical_decomposition();
-	void init(int nb_rows, int nb_cols,
+	void init(
+			int nb_rows, int nb_cols,
 			geometry::incidence_structure *Inc,
 			int f_combined_action,
 			actions::action *Aut,
@@ -1679,7 +1729,8 @@ public:
 			actions::action *A_on_lines,
 			groups::strong_generators * gens,
 			int verbose_level);
-	void report(int f_enter_math, std::ostream &ost);
+	void report(
+			int f_enter_math, std::ostream &ost);
 
 };
 

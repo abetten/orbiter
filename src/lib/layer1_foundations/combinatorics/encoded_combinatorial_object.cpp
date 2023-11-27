@@ -216,7 +216,8 @@ int *encoded_combinatorial_object::get_Incma()
 	return Incma;
 }
 
-void encoded_combinatorial_object::set_incidence_ij(int i, int j)
+void encoded_combinatorial_object::set_incidence_ij(
+		int i, int j)
 {
 	if (Incma[i * nb_cols + j] == 0) {
 		Incma[i * nb_cols + j] = 1;
@@ -224,12 +225,14 @@ void encoded_combinatorial_object::set_incidence_ij(int i, int j)
 	}
 }
 
-int encoded_combinatorial_object::get_incidence_ij(int i, int j)
+int encoded_combinatorial_object::get_incidence_ij(
+		int i, int j)
 {
 	return Incma[i * nb_cols + j];
 }
 
-void encoded_combinatorial_object::set_incidence(int a)
+void encoded_combinatorial_object::set_incidence(
+		int a)
 {
 	if (Incma[a] == 0) {
 		Incma[a] = 1;

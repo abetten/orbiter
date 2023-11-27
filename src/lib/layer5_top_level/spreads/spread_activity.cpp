@@ -141,7 +141,8 @@ void spread_activity::init(
 }
 
 
-void spread_activity::perform_activity(int verbose_level)
+void spread_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -181,7 +182,8 @@ void spread_activity::perform_activity(int verbose_level)
 
 }
 
-void spread_activity::report(int verbose_level)
+void spread_activity::report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -232,7 +234,8 @@ void spread_activity::report(int verbose_level)
 	}
 }
 
-void spread_activity::report2(std::ostream &ost, int verbose_level)
+void spread_activity::report2(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

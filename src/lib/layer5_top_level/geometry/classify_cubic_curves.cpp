@@ -115,7 +115,8 @@ void classify_cubic_curves::init(
 	}
 }
 
-void classify_cubic_curves::compute_starter(int verbose_level)
+void classify_cubic_curves::compute_starter(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -130,7 +131,8 @@ void classify_cubic_curves::compute_starter(int verbose_level)
 }
 
 
-void classify_cubic_curves::test_orbits(int verbose_level)
+void classify_cubic_curves::test_orbits(
+		int verbose_level)
 {
 	//verbose_level += 2;
 	int f_v = (verbose_level >= 1);
@@ -268,7 +270,8 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 }
 
 
-void classify_cubic_curves::downstep(int verbose_level)
+void classify_cubic_curves::downstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; // (verbose_level >= 2);
@@ -412,7 +415,8 @@ void classify_cubic_curves::downstep(int verbose_level)
 }
 
 
-void classify_cubic_curves::upstep(int verbose_level)
+void classify_cubic_curves::upstep(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, r;
@@ -741,7 +745,8 @@ void classify_cubic_curves::upstep(int verbose_level)
 }
 
 
-void classify_cubic_curves::do_classify(int verbose_level)
+void classify_cubic_curves::do_classify(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -784,7 +789,8 @@ void classify_cubic_curves::do_classify(int verbose_level)
 }
 
 
-int classify_cubic_curves::recognize(int *eqn_in,
+int classify_cubic_curves::recognize(
+		int *eqn_in,
 		int *Elt, int &iso_type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -986,7 +992,8 @@ int classify_cubic_curves::recognize(int *eqn_in,
 	return ret;
 }
 
-void classify_cubic_curves::family1_recognize(int *Iso_type,
+void classify_cubic_curves::family1_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1036,7 +1043,8 @@ void classify_cubic_curves::family1_recognize(int *Iso_type,
 	FREE_int(Elt);
 }
 
-void classify_cubic_curves::family2_recognize(int *Iso_type,
+void classify_cubic_curves::family2_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1087,7 +1095,8 @@ void classify_cubic_curves::family2_recognize(int *Iso_type,
 	FREE_int(Elt);
 }
 
-void classify_cubic_curves::family3_recognize(int *Iso_type,
+void classify_cubic_curves::family3_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1150,7 +1159,8 @@ void classify_cubic_curves::family3_recognize(int *Iso_type,
 	FREE_int(Elt);
 }
 
-void classify_cubic_curves::familyE_recognize(int *Iso_type,
+void classify_cubic_curves::familyE_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1199,7 +1209,8 @@ void classify_cubic_curves::familyE_recognize(int *Iso_type,
 	FREE_int(Elt);
 }
 
-void classify_cubic_curves::familyH_recognize(int *Iso_type,
+void classify_cubic_curves::familyH_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1249,7 +1260,8 @@ void classify_cubic_curves::familyH_recognize(int *Iso_type,
 }
 
 
-void classify_cubic_curves::familyG_recognize(int *Iso_type,
+void classify_cubic_curves::familyG_recognize(
+		int *Iso_type,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1302,7 +1314,8 @@ void classify_cubic_curves::familyG_recognize(int *Iso_type,
 }
 
 
-void classify_cubic_curves::report(std::ostream &ost, int verbose_level)
+void classify_cubic_curves::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_with_stabilizers = true;

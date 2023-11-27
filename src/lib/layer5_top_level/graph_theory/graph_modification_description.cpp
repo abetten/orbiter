@@ -118,7 +118,8 @@ void graph_modification_description::print()
 	}
 }
 
-void graph_modification_description::apply(graph_theory::colored_graph *&CG, int verbose_level)
+void graph_modification_description::apply(
+		graph_theory::colored_graph *&CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
