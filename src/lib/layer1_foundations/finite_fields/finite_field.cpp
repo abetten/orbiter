@@ -285,7 +285,8 @@ void finite_field::finite_field_init(
 	}
 }
 
-void finite_field::check_size(int verbose_level)
+void finite_field::check_size(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -359,7 +360,8 @@ void finite_field::check_size(int verbose_level)
 }
 
 
-void finite_field::finite_field_init_small_order(int q,
+void finite_field::finite_field_init_small_order(
+		int q,
 		int f_without_tables, int f_compute_related_fields,
 		int verbose_level)
 {
@@ -499,8 +501,10 @@ void finite_field::setup_related_fields(
 		}
 	}
 	else {
-		cout << "finite_field::setup_related_fields q=" << q
+		if (f_v) {
+			cout << "finite_field::setup_related_fields q=" << q
 				<< " not computing related fields" << endl;
+		}
 
 	}
 
@@ -625,7 +629,7 @@ void finite_field::init_override_polynomial_small_order(
 				cout << "finite_field::init_override_polynomial_small_order "
 						"before K.get_primitive_polynomial field" << endl;
 			}
-			K.get_primitive_polynomial(my_poly, p, e, verbose_level);
+			K.get_primitive_polynomial(my_poly, p, e, verbose_level - 3);
 			if (f_v) {
 				cout << "finite_field::init_override_polynomial_small_order "
 						"after K.get_primitive_polynomial field" << endl;
@@ -697,7 +701,7 @@ void finite_field::init_override_polynomial_small_order(
 		cout << "finite_field::init_override_polynomial_small_order "
 				"before init_implementation" << endl;
 	}
-	init_implementation(f_without_tables, verbose_level - 1);
+	init_implementation(f_without_tables, verbose_level - 2);
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial_small_order "
 				"after init_implementation" << endl;
@@ -708,7 +712,7 @@ void finite_field::init_override_polynomial_small_order(
 				"before setup_related_fields" << endl;
 	}
 	setup_related_fields(f_compute_related_fields,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial_small_order "
 				"after setup_related_fields" << endl;
@@ -1041,6 +1045,10 @@ long int finite_field::compute_subfield_polynomial(
 	FREE_int(M);
 	FREE_int(K);
 	FREE_int(base_cols);
+	if (f_v) {
+		cout << "finite_field::compute_subfield_polynomial "
+				"for subfield of order " << order_subfield << " done" << endl;
+	}
 	return a;
 }
 

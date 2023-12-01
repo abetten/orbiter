@@ -131,7 +131,8 @@ diophant::~diophant()
 	}
 }
 
-void diophant::open(int m, int n, int verbose_level)
+void diophant::open(
+		int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -463,7 +464,8 @@ void diophant::init_clique_finding_problem(
 }
 
 
-void diophant::fill_coefficient_matrix_with(int a)
+void diophant::fill_coefficient_matrix_with(
+		int a)
 {
 	int i;
 	
@@ -472,7 +474,8 @@ void diophant::fill_coefficient_matrix_with(int a)
 	}
 }
 
-void diophant::set_x_min_constant(int a)
+void diophant::set_x_min_constant(
+		int a)
 {
 	int j;
 
@@ -481,7 +484,8 @@ void diophant::set_x_min_constant(int a)
 	}
 }
 
-void diophant::set_x_max_constant(int a)
+void diophant::set_x_max_constant(
+		int a)
 {
 	int j;
 
@@ -490,7 +494,8 @@ void diophant::set_x_max_constant(int a)
 	}
 }
 
-int &diophant::Aij(int i, int j)
+int &diophant::Aij(
+		int i, int j)
 {
 	if (i >= m) {
 		cout << "diophant::Aij i >= m" << endl;
@@ -507,7 +512,8 @@ int &diophant::Aij(int i, int j)
 	return A[i * n + j];
 }
 
-int &diophant::Gij(int i, int j)
+int &diophant::Gij(
+		int i, int j)
 {
 	if (i >= m) {
 		cout << "diophant::Gij i >= m" << endl;
@@ -524,7 +530,8 @@ int &diophant::Gij(int i, int j)
 	return G[i * n + j];
 }
 
-int &diophant::RHSi(int i)
+int &diophant::RHSi(
+		int i)
 {
 	if (i >= m) {
 		cout << "diophant::RHSi i >= m" << endl;
@@ -533,7 +540,8 @@ int &diophant::RHSi(int i)
 	return RHS[i];
 }
 
-int &diophant::RHS_low_i(int i)
+int &diophant::RHS_low_i(
+		int i)
 {
 	if (i >= m) {
 		cout << "diophant::RHS_low_i i >= m" << endl;
@@ -542,7 +550,8 @@ int &diophant::RHS_low_i(int i)
 	return RHS_low[i];
 }
 
-void diophant::init_eqn_label(int i, std::string &label)
+void diophant::init_eqn_label(
+		int i, std::string &label)
 {
 	if (i >= m) {
 		cout << "diophant::init_eqn_label i >= m" << endl;
@@ -590,7 +599,8 @@ void diophant::print_tight()
 	}
 }
 
-void diophant::print2(int f_with_gcd)
+void diophant::print2(
+		int f_with_gcd)
 {
 	int i, j;
 	
@@ -660,7 +670,8 @@ void diophant::print_compressed()
 }
 
 
-void diophant::print_eqn(int i, int f_with_gcd)
+void diophant::print_eqn(
+		int i, int f_with_gcd)
 {
 	int j;
 	
@@ -687,7 +698,8 @@ void diophant::print_eqn(int i, int f_with_gcd)
 	cout << endl;
 }
 
-void diophant::print_eqn_compressed(int i)
+void diophant::print_eqn_compressed(
+		int i)
 {
 	int j;
 	
@@ -720,7 +732,8 @@ void diophant::print_eqn_compressed(int i)
 	cout << endl;
 }
 
-void diophant::print_eqn_dense(int i)
+void diophant::print_eqn_dense(
+		int i)
 {
 	int j;
 	
@@ -753,7 +766,8 @@ void diophant::print_x_long()
 	}
 }
 
-void diophant::print_x(int header)
+void diophant::print_x(
+		int header)
 {
 	int j;
 	
@@ -776,7 +790,8 @@ int diophant::RHS_ge_zero()
 	return true;
 }
 
-int diophant::solve_first(int verbose_level)
+int diophant::solve_first(
+		int verbose_level)
 {
 
 #if 0
@@ -856,7 +871,8 @@ int diophant::solve_first_mckay(
 }
 
 
-void diophant::write_solutions(std::string &fname, int verbose_level)
+void diophant::write_solutions(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -908,7 +924,8 @@ void diophant::write_solutions(std::string &fname, int verbose_level)
 	}
 }
 
-void diophant::read_solutions_from_file(std::string &fname_sol,
+void diophant::read_solutions_from_file(
+		std::string &fname_sol,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -961,7 +978,8 @@ void diophant::read_solutions_from_file(std::string &fname_sol,
 }
 
 
-void diophant::get_solutions(long int *&Sol, int &nb_sol, int verbose_level)
+void diophant::get_solutions(
+		long int *&Sol, int &nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -999,7 +1017,8 @@ void diophant::get_solutions(long int *&Sol, int &nb_sol, int verbose_level)
 	}
 }
 
-void diophant::get_solutions_full_length(int *&Sol,
+void diophant::get_solutions_full_length(
+		int *&Sol,
 		int &nb_sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1031,7 +1050,8 @@ void diophant::get_solutions_full_length(int *&Sol,
 	}
 }
 
-void diophant::test_solution_full_length(int *sol, int verbose_level)
+void diophant::test_solution_full_length(
+		int *sol, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, s;
@@ -1101,7 +1121,8 @@ void diophant::test_solution_full_length(int *sol, int verbose_level)
 	}
 }
 
-int diophant::solve_all_DLX(int verbose_level)
+int diophant::solve_all_DLX(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1359,7 +1380,8 @@ int diophant::solve_all_mckay(
 	return _resultanz;
 }
 
-int diophant::solve_once_mckay(int verbose_level)
+int diophant::solve_once_mckay(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int maxresults = 1;
@@ -1377,7 +1399,8 @@ int diophant::solve_once_mckay(int verbose_level)
 }
 
 
-int diophant::solve_all_betten(int verbose_level)
+int diophant::solve_all_betten(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1416,7 +1439,8 @@ int diophant::solve_all_betten(int verbose_level)
 	return _resultanz;
 }
 
-int diophant::solve_all_betten_with_conditions(int verbose_level, 
+int diophant::solve_all_betten_with_conditions(
+		int verbose_level,
 	int f_max_sol, int max_sol, 
 	int f_max_time, int max_time_in_seconds)
 {
@@ -1475,7 +1499,8 @@ int diophant::solve_all_betten_with_conditions(int verbose_level,
 	return false;
 }
 
-int diophant::solve_first_betten(int verbose_level)
+int diophant::solve_first_betten(
+		int verbose_level)
 {
 	int i, j, g;
 	int f_v = (verbose_level >= 1);
@@ -1664,7 +1689,8 @@ int diophant::solve_first_betten(int verbose_level)
 	}
 }
 
-int diophant::solve_next_mckay(int verbose_level)
+int diophant::solve_next_mckay(
+		int verbose_level)
 {
 	int j;
 	if (_cur_result < _resultanz) {
@@ -1680,7 +1706,8 @@ int diophant::solve_next_mckay(int verbose_level)
 	}
 }
 
-int diophant::solve_next_betten(int verbose_level)
+int diophant::solve_next_betten(
+		int verbose_level)
 {
 	int j;
 	orbiter_kernel_system::os_interface Os;
@@ -1760,7 +1787,8 @@ int diophant::solve_next_betten(int verbose_level)
 	}
 }
 
-int diophant::j_fst(int j, int verbose_level)
+int diophant::j_fst(
+		int j, int verbose_level)
 // if return value is false, 
 // x[j] is 0 and RHS1[i] unchanged;
 // otherwise RHS1[i] := RHS1[i] - lf->x[j] * lf->a[i][j] 
@@ -1949,7 +1977,8 @@ int diophant::j_fst(int j, int verbose_level)
 	return true;
 }
 
-int diophant::j_nxt(int j, int verbose_level)
+int diophant::j_nxt(
+		int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2223,7 +2252,8 @@ void diophant::latex_it()
 	latex_it(cout);
 }
 
-void diophant::latex_it(std::ostream &ost)
+void diophant::latex_it(
+		std::ostream &ost)
 {
 	int i, j, a;
 	
@@ -2335,7 +2365,8 @@ void diophant::trivial_row_reductions(
 	}
 }
 
-diophant *diophant::trivial_column_reductions(int verbose_level)
+diophant *diophant::trivial_column_reductions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, rhs;
@@ -2425,7 +2456,8 @@ diophant *diophant::trivial_column_reductions(int verbose_level)
 
 }
 
-int diophant::count_non_zero_coefficients_in_row(int i)
+int diophant::count_non_zero_coefficients_in_row(
+		int i)
 {
 	int j, d, a;
 	
@@ -2439,7 +2471,8 @@ int diophant::count_non_zero_coefficients_in_row(int i)
 	return d;
 }
 
-void diophant::coefficient_values_in_row(int i, int &nb_values, 
+void diophant::coefficient_values_in_row(
+		int i, int &nb_values,
 	int *&values, int *&multiplicities, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3151,7 +3184,8 @@ void diophant::read_general_format(
 	}
 }
 
-void diophant::eliminate_zero_rows_quick(int verbose_level)
+void diophant::eliminate_zero_rows_quick(
+		int verbose_level)
 {
 	int *eqn_number;
 	eliminate_zero_rows(eqn_number, verbose_level);
@@ -3205,7 +3239,8 @@ void diophant::eliminate_zero_rows(
 	m = mm;
 }
 
-int diophant::is_zero_outside(int first, int len, int i)
+int diophant::is_zero_outside(
+		int first, int len, int i)
 {
 	int j;
 	
@@ -3783,7 +3818,8 @@ void diophant::append_equation()
 	
 }
 
-void diophant::delete_equation(int I)
+void diophant::delete_equation(
+		int I)
 {
 	int i, j;
 	
@@ -3799,7 +3835,8 @@ void diophant::delete_equation(int I)
 	m--;
 }
 
-void diophant::write_gurobi_binary_variables(const char *fname)
+void diophant::write_gurobi_binary_variables(
+		std::string &fname)
 {
 	int i, j, a;
 	orbiter_kernel_system::file_io Fio;
@@ -3834,7 +3871,8 @@ void diophant::write_gurobi_binary_variables(const char *fname)
 			<< Fio.file_size(fname) << endl;
 }
 
-void diophant::draw_as_bitmap(std::string &fname,
+void diophant::draw_as_bitmap(
+		std::string &fname,
 		int f_box_width, int box_width,
 		int bit_depth, int verbose_level)
 {
@@ -4066,7 +4104,8 @@ void diophant::draw_partitioned(
 	}
 }
 
-int diophant::test_solution(int *sol, int len, int verbose_level)
+int diophant::test_solution(
+		int *sol, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, b, c, ret;
@@ -4157,7 +4196,8 @@ int diophant::test_solution(int *sol, int len, int verbose_level)
 }
 
 
-void diophant::get_columns(int *col, int nb_col,
+void diophant::get_columns(
+		int *col, int nb_col,
 		data_structures::set_of_sets *&S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4189,7 +4229,8 @@ void diophant::get_columns(int *col, int nb_col,
 	}
 }
 
-void diophant::test_solution_file(std::string &solution_file,
+void diophant::test_solution_file(
+		std::string &solution_file,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4231,7 +4272,8 @@ void diophant::test_solution_file(std::string &solution_file,
 	}
 }
 
-void diophant::analyze(int verbose_level)
+void diophant::analyze(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, h, val, d;
@@ -4287,7 +4329,8 @@ int diophant::is_of_Steiner_type()
 	return true;
 }
 
-void diophant::make_clique_graph_adjacency_matrix(data_structures::bitvector *&Adj,
+void diophant::make_clique_graph_adjacency_matrix(
+		data_structures::bitvector *&Adj,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

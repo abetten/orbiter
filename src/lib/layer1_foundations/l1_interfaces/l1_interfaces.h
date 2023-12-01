@@ -411,8 +411,8 @@ public:
 	int *Base; // [Base_length]
 	int Base_length;
 
-	long int *Base_lint;
-	int *Transversal_length;
+	long int *Base_lint; // [N]
+	int *Transversal_length; // [N]
 
 
 	ring_theory::longinteger_object *Ago;
@@ -432,7 +432,18 @@ public:
 			int verbose_level);
 	void print();
 	void print_stats();
-	int belong_to_the_same_orbit(int a, int b, int verbose_level);
+	int belong_to_the_same_orbit(
+			int a, int b, int verbose_level);
+	void stringify_as_vector(
+			std::vector<std::string> &V,
+			int verbose_level);
+	void stringify(
+			std::string &s_n, std::string &s_ago,
+			std::string &s_base_length, std::string &s_aut_counter,
+			std::string &s_base, std::string &s_tl,
+			std::string &s_aut, std::string &s_cl,
+			std::string &s_stats,
+			int verbose_level);
 
 };
 

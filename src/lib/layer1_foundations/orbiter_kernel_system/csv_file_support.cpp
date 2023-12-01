@@ -29,7 +29,8 @@ csv_file_support::~csv_file_support()
 
 }
 
-void csv_file_support::init(file_io *Fio)
+void csv_file_support::init(
+		file_io *Fio)
 {
 	csv_file_support::Fio = Fio;
 }

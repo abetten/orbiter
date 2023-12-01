@@ -37,6 +37,13 @@ canonical_form_nauty::canonical_form_nauty()
 	Orb = NULL;
 
 	Stab_gens_quartic = NULL;
+
+	f_found_canonical_form = false;
+	idx_canonical_form = 0;
+	idx_equation = 0;
+	f_found_eqn = false;
+
+	//std::vector<std::string> NO_stringified;
 }
 
 canonical_form_nauty::~canonical_form_nauty()
@@ -145,7 +152,8 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	}
 }
 
-void canonical_form_nauty::set_stabilizer_using_nauty(int verbose_level)
+void canonical_form_nauty::set_stabilizer_using_nauty(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -223,17 +231,19 @@ void canonical_form_nauty::set_stabilizer_using_nauty(int verbose_level)
 		NO->print_stats();
 	}
 
+	NO->stringify_as_vector(
+			NO_stringified,
+			verbose_level);
 
-	//int i;
+
 
 	canonical_labeling = NEW_lint(NO->N);
 	canonical_labeling_len = NO->N;
-	Int_vec_copy_to_lint(NO->canonical_labeling, canonical_labeling, canonical_labeling_len);
-#if 0
-	for (i = 0; i < NO->N; i++) {
-		canonical_labeling[i] = NO->canonical_labeling[i];
-	}
-#endif
+
+	Int_vec_copy_to_lint(
+			NO->canonical_labeling,
+			canonical_labeling,
+			canonical_labeling_len);
 
 	FREE_OBJECT(NO);
 	FREE_OBJECT(Enc);
@@ -248,7 +258,8 @@ void canonical_form_nauty::set_stabilizer_using_nauty(int verbose_level)
 }
 
 
-void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(int verbose_level)
+void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

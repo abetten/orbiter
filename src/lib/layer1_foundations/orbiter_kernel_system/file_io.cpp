@@ -3292,7 +3292,8 @@ void file_io::create_file(
 
 }
 
-void file_io::fix_escape_characters(char *str)
+void file_io::fix_escape_characters(
+		char *str)
 {
 	int i, j, l;
 

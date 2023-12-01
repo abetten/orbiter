@@ -73,7 +73,8 @@ void linear_algebra::reverse_matrix(
 	}
 }
 
-void linear_algebra::identity_matrix(int *A, int n)
+void linear_algebra::identity_matrix(
+		int *A, int n)
 {
 	int i, j;
 
@@ -89,7 +90,8 @@ void linear_algebra::identity_matrix(int *A, int n)
 	}
 }
 
-int linear_algebra::is_identity_matrix(int *A, int n)
+int linear_algebra::is_identity_matrix(
+		int *A, int n)
 {
 	int i, j;
 
@@ -110,7 +112,8 @@ int linear_algebra::is_identity_matrix(int *A, int n)
 	return true;
 }
 
-int linear_algebra::is_diagonal_matrix(int *A, int n)
+int linear_algebra::is_diagonal_matrix(
+		int *A, int n)
 {
 	algebra::algebra_global Algebra;
 
@@ -151,7 +154,8 @@ void linear_algebra::diagonal_matrix(
 	}
 }
 
-void linear_algebra::matrix_minor(int f_semilinear,
+void linear_algebra::matrix_minor(
+		int f_semilinear,
 		int *A, int *B, int n, int f, int l)
 // initializes B as the l x l minor of A
 // (which is n x n) starting from row f.
@@ -759,7 +763,8 @@ void linear_algebra::affine_action_from_the_right(
 	add_vector(vA, A + n * n, vA, n);
 }
 
-void linear_algebra::zero_vector(int *A, int m)
+void linear_algebra::zero_vector(
+		int *A, int m)
 {
 	int i;
 
@@ -768,7 +773,8 @@ void linear_algebra::zero_vector(int *A, int m)
 	}
 }
 
-void linear_algebra::all_one_vector(int *A, int m)
+void linear_algebra::all_one_vector(
+		int *A, int m)
 {
 	int i;
 
@@ -802,7 +808,8 @@ void linear_algebra::characteristic_vector(
 	}
 }
 
-int linear_algebra::is_zero_vector(int *A, int m)
+int linear_algebra::is_zero_vector(
+		int *A, int m)
 {
 	int i;
 

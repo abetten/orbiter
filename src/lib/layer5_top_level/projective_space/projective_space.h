@@ -161,6 +161,13 @@ public:
 	groups::strong_generators *Stab_gens_quartic;
 		// the stabilizer of the original curve
 
+	int f_found_canonical_form;
+	int idx_canonical_form;
+	int idx_equation;
+	int f_found_eqn;
+
+	std::vector<std::string> NO_stringified;
+
 
 	canonical_form_nauty();
 	~canonical_form_nauty();
@@ -174,8 +181,10 @@ public:
 	// the set of rational points of the curve.
 	// Computes the stabilizer of the set of rational points of the curve.
 	// Computes the orbit of the equation under the stabilizer of the set.
-	void set_stabilizer_using_nauty(int verbose_level);
-	void orbit_of_equation_under_set_stabilizer(int verbose_level);
+	void set_stabilizer_using_nauty(
+			int verbose_level);
+	void orbit_of_equation_under_set_stabilizer(
+			int verbose_level);
 
 };
 
@@ -198,14 +207,18 @@ public:
 	std::string fname_case_out;
 
 	// input:
+	int counter;
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco;
 
 
-	// output:
+	// substructure output:
 	long int *canonical_pts;
 	int *canonical_equation;
 	int *transporter_to_canonical_form;
 	groups::strong_generators *gens_stab_of_canonical_equation;
+
+	// nauty output:
+	canonical_form_nauty *Canonical_form_nauty;
 
 	ring_theory::longinteger_object *go_eqn;
 
@@ -218,13 +231,10 @@ public:
 	void init(
 			canonical_form_classifier *Canonical_form_classifier,
 			std::string &fname_case_out,
+			int counter,
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
 			int verbose_level);
 	void classify_curve_nauty(
-			int &f_found_canonical_form,
-			int &idx_canonical_form,
-			int &idx_equation,
-			int &f_found_eqn,
 			int verbose_level);
 	void handle_repeated_canonical_form_of_set(
 			int idx,
@@ -246,14 +256,8 @@ public:
 			int idx, int verbose_level);
 	// adds the canonical form at position idx
 	void compute_canonical_form_nauty(
-			int counter,
-			int &f_found_canonical_form,
-			int &idx_canonical_form,
-			int &idx_equation,
-			int &f_found_eqn,
 			int verbose_level);
 	void compute_canonical_form_substructure(
-			int counter,
 			int verbose_level);
 #if 0
 	void compute_canonical_form(
@@ -378,6 +382,8 @@ public:
 	int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
 	int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
 	int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
+	int nb_iso_orbits;
+	int *Orbit_input_idx; // [nb_iso_orbits]
 
 	int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
 
@@ -408,6 +414,8 @@ public:
 	void report(
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
+	void report_nauty(
+			std::ostream &ost, int verbose_level);
 	void report_substructure(
 			std::ostream &ost, int verbose_level);
 	void export_canonical_form_data(

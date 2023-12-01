@@ -156,15 +156,20 @@ public:
 			std::vector<std::string> *variables_tex,
 			int verbose_level);
 	void print();
-	void print_latex(std::ostream &ost);
+	void print_latex(
+			std::ostream &ost);
 	int get_nb_monomials();
 	int get_nb_variables();
 	field_theory::finite_field *get_F();
-	std::string &get_symbol(int i);
+	std::string &get_symbol(
+			int i);
 	std::string list_of_variables();
-	int get_monomial(int i, int j);
-	std::string &get_monomial_symbol_easy(int i);
-	int *get_monomial_pointer(int i);
+	int get_monomial(
+			int i, int j);
+	std::string &get_monomial_symbol_easy(
+			int i);
+	int *get_monomial_pointer(
+			int i);
 	int evaluate_monomial(
 			int idx_of_monomial, int *coords);
 	void remake_symbols(
@@ -357,7 +362,8 @@ public:
 			geometry::projective_space *P,
 			long int *&Image_pts, int &N_points,
 			int verbose_level);
-	std::string stringify(int *eqn);
+	std::string stringify(
+			int *eqn);
 	void parse_equation_and_substitute_parameters(
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,

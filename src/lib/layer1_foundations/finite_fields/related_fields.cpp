@@ -205,7 +205,8 @@ void related_fields::init(
 	}
 }
 
-void related_fields::print(std::ostream &ost)
+void related_fields::print(
+		std::ostream &ost)
 {
 	ost << "Number of (true) subfields: " << nb_subfields << endl;
 	int i;
@@ -215,7 +216,8 @@ void related_fields::print(std::ostream &ost)
 	}
 }
 
-int related_fields::position_of_subfield(int order_of_subfield)
+int related_fields::position_of_subfield(
+		int order_of_subfield)
 {
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;

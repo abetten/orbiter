@@ -14,7 +14,8 @@ namespace layer3_group_actions {
 namespace actions {
 
 
-void action_global::action_print_symmetry_group_type(std::ostream &ost,
+void action_global::action_print_symmetry_group_type(
+		std::ostream &ost,
 		symmetry_group_type a)
 {
 	std::string txt;
@@ -2763,6 +2764,44 @@ void action_global::all_point_orbits(
 	}
 	if (f_v) {
 		cout << "action_global::all_point_orbits done" << endl;
+	}
+}
+
+void action_global::get_orbits_on_points_as_characteristic_vector(
+		actions::action *A,
+		int *&orbit_no,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::get_orbits_on_points_as_characteristic_vector" << endl;
+	}
+
+	groups::schreier Schreier;
+
+	if (f_v) {
+		cout << "action_global::get_orbits_on_points_as_characteristic_vector "
+				"before all_point_orbits" << endl;
+	}
+	all_point_orbits(
+			A,
+			Schreier, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::get_orbits_on_points_as_characteristic_vector "
+				"after all_point_orbits" << endl;
+	}
+
+	orbit_no = NEW_int(A->degree);
+
+	int pt;
+
+	for (pt = 0; pt < A->degree; pt++) {
+		orbit_no[pt] = Schreier.orbit_number(pt);
+	}
+
+	if (f_v) {
+		cout << "action_global::get_orbits_on_points_as_characteristic_vector done" << endl;
 	}
 }
 

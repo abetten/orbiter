@@ -214,7 +214,8 @@ void minimum_polynomial::compute_subfield_polynomial(
 	}
 }
 
-void minimum_polynomial::report_table(std::ostream &ost)
+void minimum_polynomial::report_table(
+		std::ostream &ost)
 {
 	ost << "The power table shows $(\\alpha^d)^i$ "
 			"for $i=0,1,\\ldots,e$ where $q=p^{e}$:" << endl;

@@ -59,30 +59,35 @@ void graph_theoretic_activity::perform_activity(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theoretic_activity::perform_activity, CG->label=" << CG->label << endl;
+		cout << "graph_theoretic_activity::perform_activity, "
+				"CG->label=" << CG->label << endl;
 	}
 	data_structures::string_tools ST;
 
 	if (Descr->f_find_cliques) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_find_cliques" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_find_cliques" << endl;
 		}
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity before CG->all_cliques" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG->all_cliques" << endl;
 		}
 		CG->all_cliques(
 				Descr->Clique_finder_control,
 				CG->label, verbose_level);
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity after CG->all_cliques" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG->all_cliques" << endl;
 		}
 
 
 
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity Gr->label=" << CG->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"Gr->label=" << CG->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
 	}
@@ -93,26 +98,30 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity before CG->find_subgraph" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CG->find_subgraph" << endl;
 		}
 		CG->find_subgraph(
 				Descr->find_subgraph_label,
 				verbose_level);
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity after CG->find_subgraph" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CG->find_subgraph" << endl;
 		}
 
 
 
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity Gr->label=" << CG->label << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"Gr->label=" << CG->label << endl;
 		}
 
 	}
 	else if (Descr->f_export_magma) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_export_magma" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_export_magma" << endl;
 		}
 
 		string fname_magma;
@@ -141,7 +150,8 @@ void graph_theoretic_activity::perform_activity(
 	}
 	else if (Descr->f_export_maple) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_export_maple" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_export_maple" << endl;
 		}
 
 
@@ -166,7 +176,8 @@ void graph_theoretic_activity::perform_activity(
 	}
 	else if (Descr->f_export_csv) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_export_csv" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_export_csv" << endl;
 		}
 
 
@@ -186,7 +197,8 @@ void graph_theoretic_activity::perform_activity(
 
 	else if (Descr->f_export_graphviz) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_export_graphviz" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_export_graphviz" << endl;
 		}
 
 
@@ -206,14 +218,16 @@ void graph_theoretic_activity::perform_activity(
 
 	else if (Descr->f_print) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_print" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_print" << endl;
 		}
 		CG->print();
 
 	}
 	else if (Descr->f_sort_by_colors) {
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_sort_by_colors" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_sort_by_colors" << endl;
 		}
 		graph_theory::colored_graph *CG2;
 		string fname2;
@@ -373,7 +387,8 @@ void graph_theoretic_activity::perform_activity(
 	else if (Descr->f_automorphism_group) {
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_automorphism_group" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_automorphism_group" << endl;
 		}
 
 		graph_theory_apps GTA;
@@ -392,7 +407,8 @@ void graph_theoretic_activity::perform_activity(
 	else if (Descr->f_properties) {
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_properties" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_properties" << endl;
 		}
 
 		if (f_v) {
@@ -408,7 +424,8 @@ void graph_theoretic_activity::perform_activity(
 	else if (Descr->f_eigenvalues) {
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_properties" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_properties" << endl;
 		}
 
 		graph_theory::graph_theory_domain GT;
@@ -428,7 +445,8 @@ void graph_theoretic_activity::perform_activity(
 	else if (Descr->f_draw) {
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity f_draw" << endl;
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_draw" << endl;
 		}
 
 		string fname;

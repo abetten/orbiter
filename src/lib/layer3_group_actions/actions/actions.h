@@ -543,7 +543,8 @@ public:
 class action_global {
 public:
 	void action_print_symmetry_group_type(
-			std::ostream &ost, symmetry_group_type a);
+			std::ostream &ost,
+			symmetry_group_type a);
 	void get_symmetry_group_type_text(
 			std::string &txt, std::string &tex,
 			symmetry_group_type a);
@@ -694,6 +695,10 @@ public:
 	void all_point_orbits(
 			actions::action *A,
 			groups::schreier &Schreier, int verbose_level);
+	void get_orbits_on_points_as_characteristic_vector(
+			actions::action *A,
+			int *&orbit_no,
+			int verbose_level);
 	void all_point_orbits_from_generators(
 			actions::action *A,
 			groups::schreier &Schreier,

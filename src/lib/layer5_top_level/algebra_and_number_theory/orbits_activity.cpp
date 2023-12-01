@@ -344,7 +344,8 @@ void orbits_activity::do_report(
 
 
 	else {
-		cout << "orbits_activity::do_report no suitable data structure" << endl;
+		cout << "orbits_activity::do_report "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -376,7 +377,8 @@ void orbits_activity::do_export(
 
 		OC->Orb->export_something(
 				Descr->export_something_what,
-				Descr->export_something_data1, fname, verbose_level);
+				Descr->export_something_data1, fname,
+				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -402,7 +404,8 @@ void orbits_activity::do_export(
 
 		OC->On_polynomials->export_something(
 				Descr->export_something_what,
-				Descr->export_something_data1, fname, verbose_level);
+				Descr->export_something_data1, fname,
+				verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -419,7 +422,8 @@ void orbits_activity::do_export(
 	}
 
 	else {
-		cout << "orbits_activity::do_export no suitable data structure" << endl;
+		cout << "orbits_activity::do_export "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -450,14 +454,16 @@ void orbits_activity::do_export_trees(
 			cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
 					<< " before Sch->export_tree_as_layered_graph" << endl;
 
-			OC->Orb->Sch->export_tree_as_layered_graph(orbit_idx,
+			OC->Orb->Sch->export_tree_as_layered_graph(
+					orbit_idx,
 					fname_tree_mask,
 					verbose_level - 1);
 		}
 
 	}
 	else {
-		cout << "orbits_activity::do_export_trees no suitable data structure" << endl;
+		cout << "orbits_activity::do_export_trees "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -498,7 +504,8 @@ void orbits_activity::do_export_source_code(
 #endif
 	if (OC->f_has_classification_by_canonical_form) {
 		if (f_v) {
-			cout << "orbits_activity::do_export_source_code f_has_classification_by_canonical_form" << endl;
+			cout << "orbits_activity::do_export_source_code "
+					"f_has_classification_by_canonical_form" << endl;
 		}
 
 
@@ -519,7 +526,8 @@ void orbits_activity::do_export_source_code(
 
 	}
 	else {
-		cout << "orbits_activity::do_export_source_code no suitable data structure" << endl;
+		cout << "orbits_activity::do_export_source_code "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -567,7 +575,8 @@ void orbits_activity::do_export_levels(
 					fname, label);
 
 			if (f_v) {
-				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+				cout << "Written file " << fname
+						<< " of size " << Fio.file_size(fname) << endl;
 			}
 		}
 
@@ -599,7 +608,8 @@ void orbits_activity::do_export_levels(
 
 
 			if (path.size() != i) {
-				cout << "orbits_activity::do_export_levels path.size() != i" << endl;
+				cout << "orbits_activity::do_export_levels "
+						"path.size() != i" << endl;
 				cout << "path.size()=" << path.size() << endl;
 				cout << "i=" << i << endl;
 				exit(1);
@@ -620,7 +630,8 @@ void orbits_activity::do_export_levels(
 		}
 	}
 	else {
-		cout << "orbits_activity::do_export_levels no suitable data structure" << endl;
+		cout << "orbits_activity::do_export_levels "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -641,7 +652,8 @@ void orbits_activity::do_draw_tree(
 	}
 
 	if (f_v) {
-		cout << "orbits_activity::do_draw_tree tree index = " << Descr->draw_tree_idx << endl;
+		cout << "orbits_activity::do_draw_tree "
+				"tree index = " << Descr->draw_tree_idx << endl;
 	}
 
 
@@ -654,7 +666,8 @@ void orbits_activity::do_draw_tree(
 			cout << "orbits_activity::do_draw_tree "
 					"before OC->Orb->Sch->draw_tree" << endl;
 		}
-		OC->Orb->Sch->draw_tree(fname,
+		OC->Orb->Sch->draw_tree(
+				fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->draw_tree_idx,
 				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
@@ -670,7 +683,8 @@ void orbits_activity::do_draw_tree(
 			cout << "orbits_activity::do_draw_tree "
 					"before OC->Orb->Sch->get_orbit_in_order" << endl;
 		}
-		OC->Orb->Sch->get_orbit_in_order(Orb,
+		OC->Orb->Sch->get_orbit_in_order(
+				Orb,
 				Descr->draw_tree_idx, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree "
@@ -699,7 +713,8 @@ void orbits_activity::do_draw_tree(
 
 		fname = OC->prefix + "_orbit_" + std::to_string(Descr->draw_tree_idx) + "_tree";
 
-		OC->On_polynomials->Sch->draw_tree(fname,
+		OC->On_polynomials->Sch->draw_tree(
+				fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->draw_tree_idx,
 				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
@@ -708,7 +723,8 @@ void orbits_activity::do_draw_tree(
 
 	}
 	else {
-		cout << "orbits_activity::do_draw_tree no suitable data structure" << endl;
+		cout << "orbits_activity::do_draw_tree "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -731,16 +747,19 @@ void orbits_activity::do_stabilizer(
 		groups::strong_generators *Stab;
 
 		if (f_v) {
-			cout << "orbits_activity::do_stabilizer before Orb->stabilizer_of" << endl;
+			cout << "orbits_activity::do_stabilizer "
+					"before Orb->stabilizer_of" << endl;
 		}
 		//OC->Orb->stabilizer_of(Descr->stabilizer_orbit_idx, verbose_level);
 
-		OC->Orb->stabilizer_any_point(Descr->stabilizer_point,
+		OC->Orb->stabilizer_any_point(
+				Descr->stabilizer_point,
 				Stab, verbose_level);
 
 
 		if (f_v) {
-			cout << "orbits_activity::do_stabilizer after Orb->stabilizer_of" << endl;
+			cout << "orbits_activity::do_stabilizer "
+					"after Orb->stabilizer_of" << endl;
 		}
 
 
@@ -769,12 +788,14 @@ void orbits_activity::do_stabilizer(
 
 		label_stab = OC->prefix + "_stab_pt_" + std::to_string(Descr->stabilizer_point);
 
-		Stab->report_group(label_stab, verbose_level);
+		Stab->report_group(
+				label_stab, verbose_level);
 
 		if (f_v) {
 			cout << "orbits_activity::do_stabilizer "
 					"exporting stabilizer orbit representative "
-					"of point " << Descr->stabilizer_point << " to " << fname_stab << endl;
+					"of point " << Descr->stabilizer_point
+					<< " to " << fname_stab << endl;
 		}
 		Stab->export_to_orbiter_as_bsgs(
 				Stab->A,
@@ -785,7 +806,8 @@ void orbits_activity::do_stabilizer(
 
 	}
 	else {
-		cout << "orbits_activity::do_stabilizer no suitable data structure" << endl;
+		cout << "orbits_activity::do_stabilizer "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -817,7 +839,7 @@ void orbits_activity::do_stabilizer_of_orbit_rep(
 	}
 	else {
 		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
-				"no suitable data structure" << endl;
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 
@@ -1002,7 +1024,8 @@ void orbits_activity::do_recognize(
 	}
 
 	else {
-		cout << "orbits_activity::do_stabilizer_of_orbit_rep no suitable data structure" << endl;
+		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
+				"no suitable data structure found" << endl;
 		exit(1);
 	}
 

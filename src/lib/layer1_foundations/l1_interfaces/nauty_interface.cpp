@@ -49,7 +49,7 @@ namespace l1_interfaces {
 
 
 
-#define MAX_WORKSPACE 50000
+//#define MAX_WORKSPACE 50000
 
 
 static graph g[MAXN * MAXM];
@@ -123,9 +123,10 @@ void nauty_interface::nauty_interface_graph_bitvec(
 		}
 	}
 
+	Int_vec_copy(partition, ptn, n);
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
-		ptn[i] = partition[i];
+		//ptn[i] = partition[i];
 	}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
@@ -149,12 +150,15 @@ void nauty_interface::nauty_interface_graph_bitvec(
 				"after nauty" << endl;
 		cout << "base_length=" << base_length << endl;
 		cout << "transversal_length=";
+		Int_vec_print(cout, transversal_length, base_length);
+#if 0
 		for (i = 0; i < base_length; i++) {
 			cout << transversal_length[i];
 			if (i < base_length - 1) {
 				cout << ", ";
 			}
 		}
+#endif
 		cout << endl;
 	}
 	//cout << "numnodes=" << stats.numnodes << endl;
@@ -220,9 +224,10 @@ void nauty_interface::nauty_interface_graph_int(
 		}
 	}
 
+	Int_vec_copy(partition, ptn, n);
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
-		ptn[i] = partition[i];
+		//ptn[i] = partition[i];
 	}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
@@ -238,11 +243,6 @@ void nauty_interface::nauty_interface_graph_int(
 		cout << "nauty_interface::nauty_interface_graph_int after nauty" << endl;
 	}
 	//cout << "numnodes=" << stats.numnodes << endl;
-#if 0
-	for (i = 0; i < n; i++) {
-		labeling[i] = lab[i];
-	}
-#endif
 
 #if 1
 
@@ -273,7 +273,8 @@ void nauty_interface::nauty_interface_matrix_int(
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_matrix_int "
-				"nb_rows=" << Enc->nb_rows << " nb_cols=" << Enc->nb_cols << endl;
+				"nb_rows=" << Enc->nb_rows
+				<< " nb_cols=" << Enc->nb_cols << endl;
 	}
 	options.getcanon = true;
 	options.defaultptn = false;
@@ -337,9 +338,11 @@ void nauty_interface::nauty_interface_matrix_int(
 		cout << "nauty_interface::nauty_interface_matrix_int "
 				"init lab[] and ptn[]" << endl;
 	}
+
+	Int_vec_copy(Enc->partition, ptn, n);
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
-		ptn[i] = Enc->partition[i];
+		//ptn[i] = Enc->partition[i];
 	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
@@ -417,7 +420,7 @@ static void nauty_interface_fill_nauty_output(
 	int f_vv = (verbose_level >= 2);
 	//Ago = ago;
 	ring_theory::longinteger_domain Dom;
-	int i, j;
+	int i; //, j;
 
 	if (f_v) {
 		cout << "nauty_interface_fill_nauty_output" << endl;
@@ -444,15 +447,21 @@ static void nauty_interface_fill_nauty_output(
 		cout << endl;
 	}
 
+	Int_vec_copy(aut, NO->Aut, aut_counter * n);
+#if 0
 	for (i = 0; i < aut_counter; i++) {
 		for (j = 0; j < n; j++) {
 			NO->Aut[i * n + j] = aut[i * n + j];
 		}
 	}
+#endif
 
+	Int_vec_copy(lab, NO->canonical_labeling, n);
+#if 0
 	for (i = 0; i < n; i++) {
 		NO->canonical_labeling[i] = lab[i];
 	}
+#endif
 
 	NO->Aut_counter = aut_counter;
 	NO->nb_firstpathnode = nb_firstpathnode;

@@ -302,7 +302,8 @@ public:
 			finite_field_activity_description *Descr,
 			finite_field *F,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 
 };
 
@@ -352,37 +353,58 @@ public:
 	int *private_add_table();
 	int *private_mult_table();
 	int has_quadratic_subfield();
-	int belongs_to_quadratic_subfield(int a);
-	void create_alpha_table(int verbose_level);
-	void create_alpha_table_prime_field(int verbose_level);
-	void create_alpha_table_extension_field(int verbose_level);
-	void init_binary_operations(int verbose_level);
-	void create_tables_prime_field(int verbose_level);
-	void create_tables_extension_field(int verbose_level);
-	void print_add_mult_tables(std::ostream &ost);
-	void print_add_mult_tables_in_C(std::string &fname_base);
-	void init_quadratic_subfield(int verbose_level);
-	void init_frobenius_table(int verbose_level);
-	void init_absolute_trace_table(int verbose_level);
+	int belongs_to_quadratic_subfield(
+			int a);
+	void create_alpha_table(
+			int verbose_level);
+	void create_alpha_table_prime_field(
+			int verbose_level);
+	void create_alpha_table_extension_field(
+			int verbose_level);
+	void init_binary_operations(
+			int verbose_level);
+	void create_tables_prime_field(
+			int verbose_level);
+	void create_tables_extension_field(
+			int verbose_level);
+	void print_add_mult_tables(
+			std::ostream &ost);
+	void print_add_mult_tables_in_C(
+			std::string &fname_base);
+	void init_quadratic_subfield(
+			int verbose_level);
+	void init_frobenius_table(
+			int verbose_level);
+	void init_absolute_trace_table(
+			int verbose_level);
 	void print_tables_extension_field(
 			std::string &poly);
-	int add(int i, int j);
+	int add(
+			int i, int j);
 	int add_without_table(
 			int i, int j);
 	int mult_verbose(
 			int i, int j, int verbose_level);
 	int mult_using_discrete_log(
 			int i, int j, int verbose_level);
-	int negate(int i);
-	int negate_without_table(int i);
-	int inverse(int i);
-	int inverse_without_table(int i);
-	int frobenius_image(int a);
+	int negate(
+			int i);
+	int negate_without_table(
+			int i);
+	int inverse(
+			int i);
+	int inverse_without_table(
+			int i);
+	int frobenius_image(
+			int a);
 	// computes a^p
-	int frobenius_power(int a, int frob_power);
+	int frobenius_power(
+			int a, int frob_power);
 	// computes a^{p^frob_power}
-	int alpha_power(int i);
-	int log_alpha(int i);
+	int alpha_power(
+			int i);
+	int log_alpha(
+			int i);
 	void addition_table_reordered_save_csv(
 			std::string &fname, int verbose_level);
 	void multiplication_table_reordered_save_csv(
@@ -428,12 +450,18 @@ private:
 public:
 	finite_field_implementation_wo_tables();
 	~finite_field_implementation_wo_tables();
-	void init(finite_field *F, int verbose_level);
-	void init_extension_field(int verbose_level);
-	int mult(int i, int j, int verbose_level);
-	int inverse(int i, int verbose_level);
-	int negate(int i, int verbose_level);
-	int add(int i, int j, int verbose_level);
+	void init(
+			finite_field *F, int verbose_level);
+	void init_extension_field(
+			int verbose_level);
+	int mult(
+			int i, int j, int verbose_level);
+	int inverse(
+			int i, int verbose_level);
+	int negate(
+			int i, int verbose_level);
+	int add(
+			int i, int j, int verbose_level);
 
 };
 
@@ -500,16 +528,22 @@ public:
 			int p,
 			std::string &polynomial, std::stringstream &s);
 	void print();
-	void print_detailed(int f_add_mult_table);
+	void print_detailed(
+			int f_add_mult_table);
 	void print_tables();
-	void display_T2(std::ostream &ost);
-	void display_T3(std::ostream &ost);
-	void display_N2(std::ostream &ost);
-	void display_N3(std::ostream &ost);
+	void display_T2(
+			std::ostream &ost);
+	void display_T3(
+			std::ostream &ost);
+	void display_N2(
+			std::ostream &ost);
+	void display_N3(
+			std::ostream &ost);
 	void print_integer_matrix_zech(
 			std::ostream &ost,
 		int *p, int m, int n);
-	void print_indicator_square_nonsquare(int a);
+	void print_indicator_square_nonsquare(
+			int a);
 	void print_element(
 			std::ostream &ost, int a);
 	void print_element_str(
@@ -628,6 +662,8 @@ private:
 public:
 
 	finite_field_description *Descr;
+		// may not be available,
+		// for instance if we create the field object ourselves
 
 	int f_has_table;
 		// if true, T is available, otherwise Iwo is available.
@@ -676,8 +712,10 @@ public:
 			int f_without_tables,
 			int f_compute_related_fields,
 			int verbose_level);
-	void check_size(int verbose_level);
-	void finite_field_init_small_order(int q,
+	void check_size(
+			int verbose_level);
+	void finite_field_init_small_order(
+			int q,
 			int f_without_tables,
 			int f_compute_related_fields,
 			int verbose_level);
@@ -831,7 +869,8 @@ public:
 	void compute_subfield_polynomial(
 			finite_field *F,
 			int order_subfield, int verbose_level);
-	void report_table(std::ostream &ost);
+	void report_table(
+			std::ostream &ost);
 
 };
 
@@ -901,7 +940,8 @@ public:
 	void init_with_polynomial_coded(
 			finite_field *F, std::string &poly, int d,
 			int verbose_level);
-	void report(std::ostream &ost);
+	void report(
+			std::ostream &ost);
 
 };
 
@@ -1010,8 +1050,10 @@ public:
 	~related_fields();
 	void init(
 			finite_field *F, int verbose_level);
-	void print(std::ostream &ost);
-	int position_of_subfield(int order_of_subfield);
+	void print(
+			std::ostream &ost);
+	int position_of_subfield(
+			int order_of_subfield);
 
 };
 
@@ -1040,7 +1082,8 @@ public:
 	~square_nonsquare();
 	void init(
 			field_theory::finite_field *F, int verbose_level);
-	int is_minus_square(int i);
+	int is_minus_square(
+			int i);
 	void print_minus_square_tables();
 
 };
@@ -1109,8 +1152,10 @@ public:
 			finite_field *FQ,
 			finite_field *Fq,
 		int *given_basis, int verbose_level);
-	int embed(int b, int verbose_level);
-	int retract(int b, int verbose_level);
+	int embed(
+			int b, int verbose_level);
+	int retract(
+			int b, int verbose_level);
 	void embed_int_vec(
 				int *v_in, int *v_out, int len,
 				int verbose_level);
@@ -1118,13 +1163,16 @@ public:
 				int *v_in, int *v_out, int len,
 				int verbose_level);
 	void print_embedding();
-	void report(std::ostream &ost);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void report_embedding(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void report_embedding_reverse(
-			std::ostream &ost);
-	int evaluate_over_FQ(int *v);
-	int evaluate_over_Fq(int *v);
+			std::ostream &ost, int verbose_level);
+	int evaluate_over_FQ(
+			int *v);
+	int evaluate_over_Fq(
+			int *v);
 	void lift_matrix(
 			int *MQ, int m, int *Mq, int verbose_level);
 		// input is MQ[m * m] over the field FQ.
@@ -1146,7 +1194,8 @@ public:
 			int *input, int sz, int *output,
 			int verbose_level);
 	// input[sz], output[s * (sz * n)],
-	void embedding_2dimensional(int verbose_level);
+	void embedding_2dimensional(
+			int verbose_level);
 		// we think of FQ as two dimensional vector space
 		// over Fq with basis (1,alpha)
 		// for i,j \in Fq, with x = i + j * alpha \in FQ, we have
@@ -1160,8 +1209,10 @@ public:
 		// components_2D[Q * 2]
 		// embedding_2D[q]
 		// pair_embedding_2D[q * q]
-	void print_embedding_2D();
-	void print_embedding_2D_table_tex();
+	void print_embedding_2D(
+			std::ostream &ost, int verbose_level);
+	void print_embedding_2D_table_tex(
+			std::ostream &ost, int verbose_level);
 
 };
 

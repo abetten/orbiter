@@ -224,12 +224,14 @@ int finite_field_implementation_by_tables::has_quadratic_subfield()
 	return f_has_quadratic_subfield;
 }
 
-int finite_field_implementation_by_tables::belongs_to_quadratic_subfield(int a)
+int finite_field_implementation_by_tables::belongs_to_quadratic_subfield(
+		int a)
 {
 	return f_belongs_to_quadratic_subfield[a];
 }
 
-void finite_field_implementation_by_tables::create_alpha_table(int verbose_level)
+void finite_field_implementation_by_tables::create_alpha_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -562,7 +564,8 @@ void finite_field_implementation_by_tables::create_tables_prime_field(
 	}
 }
 
-void finite_field_implementation_by_tables::create_tables_extension_field(int verbose_level)
+void finite_field_implementation_by_tables::create_tables_extension_field(
+		int verbose_level)
 // assumes that alpha_table and log_alpha_table have been computed already
 {
 	int f_v = (verbose_level >= 1);
@@ -707,7 +710,8 @@ void finite_field_implementation_by_tables::print_add_mult_tables_in_C(
 }
 
 
-void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_level)
+void finite_field_implementation_by_tables::init_quadratic_subfield(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -740,7 +744,8 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 	}
 }
 
-void finite_field_implementation_by_tables::init_frobenius_table(int verbose_level)
+void finite_field_implementation_by_tables::init_frobenius_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -908,7 +913,8 @@ void finite_field_implementation_by_tables::print_tables_extension_field(
 	//print_integer_matrix(cout, log_alpha_table, 1, q);
 }
 
-int finite_field_implementation_by_tables::add(int i, int j)
+int finite_field_implementation_by_tables::add(
+		int i, int j)
 {
 	geometry::geometry_global Gg;
 
@@ -1047,7 +1053,8 @@ int finite_field_implementation_by_tables::mult_using_discrete_log(
 	return c;
 }
 
-int finite_field_implementation_by_tables::negate(int i)
+int finite_field_implementation_by_tables::negate(
+		int i)
 {
 	geometry::geometry_global Gg;
 
@@ -1060,7 +1067,8 @@ int finite_field_implementation_by_tables::negate(int i)
 	return negate_table[i];
 }
 
-int finite_field_implementation_by_tables::negate_without_table(int i)
+int finite_field_implementation_by_tables::negate_without_table(
+		int i)
 {
 	geometry::geometry_global Gg;
 
@@ -1081,7 +1089,8 @@ int finite_field_implementation_by_tables::negate_without_table(int i)
 
 
 
-int finite_field_implementation_by_tables::inverse(int i)
+int finite_field_implementation_by_tables::inverse(
+		int i)
 {
 	if (i <= 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::inverse "
@@ -1092,7 +1101,8 @@ int finite_field_implementation_by_tables::inverse(int i)
 	return inv_table[i];
 }
 
-int finite_field_implementation_by_tables::inverse_without_table(int i)
+int finite_field_implementation_by_tables::inverse_without_table(
+		int i)
 {
 	if (i <= 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::inverse_without_table "
@@ -1108,7 +1118,8 @@ int finite_field_implementation_by_tables::inverse_without_table(int i)
 	return j;
 }
 
-int finite_field_implementation_by_tables::frobenius_image(int a)
+int finite_field_implementation_by_tables::frobenius_image(
+		int a)
 // computes a^p
 {
 	return frobenius_table[a];
@@ -1129,12 +1140,14 @@ int finite_field_implementation_by_tables::frobenius_power(
 	return b;
 }
 
-int finite_field_implementation_by_tables::alpha_power(int i)
+int finite_field_implementation_by_tables::alpha_power(
+		int i)
 {
 	return alpha_power_table[i];
 }
 
-int finite_field_implementation_by_tables::log_alpha(int i)
+int finite_field_implementation_by_tables::log_alpha(
+		int i)
 {
 	return log_alpha_table[i];
 }

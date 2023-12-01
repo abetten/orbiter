@@ -50,7 +50,8 @@ void finite_field_activity::init(
 	}
 }
 
-void finite_field_activity::perform_activity(int verbose_level)
+void finite_field_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

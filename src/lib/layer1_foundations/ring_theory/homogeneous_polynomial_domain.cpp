@@ -305,7 +305,8 @@ void homogeneous_polynomial_domain::print()
 }
 
 
-void homogeneous_polynomial_domain::print_latex(std::ostream &ost)
+void homogeneous_polynomial_domain::print_latex(
+		std::ostream &ost)
 {
 	ost << "Polynomial ring over a field of order " << F->q
 			<< " in " << nb_variables << " variables "
@@ -328,7 +329,8 @@ field_theory::finite_field *homogeneous_polynomial_domain::get_F()
 	return F;
 }
 
-std::string &homogeneous_polynomial_domain::get_symbol(int i)
+std::string &homogeneous_polynomial_domain::get_symbol(
+		int i)
 {
 	return symbols[i];
 }
@@ -348,7 +350,8 @@ std::string homogeneous_polynomial_domain::list_of_variables()
 }
 
 
-int homogeneous_polynomial_domain::get_monomial(int i, int j)
+int homogeneous_polynomial_domain::get_monomial(
+		int i, int j)
 {
 	if (j > nb_variables) {
 		cout << "homogeneous_polynomial_domain::get_monomial "
@@ -358,12 +361,14 @@ int homogeneous_polynomial_domain::get_monomial(int i, int j)
 	return Monomials[i * nb_variables + j];
 }
 
-std::string &homogeneous_polynomial_domain::get_monomial_symbol_easy(int i)
+std::string &homogeneous_polynomial_domain::get_monomial_symbol_easy(
+		int i)
 {
 	return monomial_symbols_easy[i];
 }
 
-int *homogeneous_polynomial_domain::get_monomial_pointer(int i)
+int *homogeneous_polynomial_domain::get_monomial_pointer(
+		int i)
 {
 	return Monomials + i * nb_variables;
 }
@@ -3241,7 +3246,8 @@ void homogeneous_polynomial_domain::evaluate_regular_map(
 	}
 }
 
-std::string homogeneous_polynomial_domain::stringify(int *eqn)
+std::string homogeneous_polynomial_domain::stringify(
+		int *eqn)
 {
 	string output;
 	ostringstream s;

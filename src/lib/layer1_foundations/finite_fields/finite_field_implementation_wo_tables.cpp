@@ -51,7 +51,8 @@ finite_field_implementation_wo_tables::~finite_field_implementation_wo_tables()
 	}
 }
 
-void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_level)
+void finite_field_implementation_wo_tables::init(
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -114,7 +115,8 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 	}
 }
 
-void finite_field_implementation_wo_tables::init_extension_field(int verbose_level)
+void finite_field_implementation_wo_tables::init_extension_field(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -210,7 +212,8 @@ void finite_field_implementation_wo_tables::init_extension_field(int verbose_lev
 	}
 }
 
-int finite_field_implementation_wo_tables::mult(int i, int j, int verbose_level)
+int finite_field_implementation_wo_tables::mult(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -283,7 +286,8 @@ int finite_field_implementation_wo_tables::mult(int i, int j, int verbose_level)
 	return k;
 }
 
-int finite_field_implementation_wo_tables::inverse(int i, int verbose_level)
+int finite_field_implementation_wo_tables::inverse(
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -343,7 +347,8 @@ int finite_field_implementation_wo_tables::inverse(int i, int verbose_level)
 	return k;
 }
 
-int finite_field_implementation_wo_tables::negate(int i, int verbose_level)
+int finite_field_implementation_wo_tables::negate(
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -382,7 +387,8 @@ int finite_field_implementation_wo_tables::negate(int i, int verbose_level)
 	return k;
 }
 
-int finite_field_implementation_wo_tables::add(int i, int j, int verbose_level)
+int finite_field_implementation_wo_tables::add(
+		int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

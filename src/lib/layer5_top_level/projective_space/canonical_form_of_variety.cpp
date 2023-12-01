@@ -27,12 +27,15 @@ canonical_form_of_variety::canonical_form_of_variety()
 
 	//std::string fname_case_out;
 
+	counter = 0;
 	Qco = NULL;
 
 	canonical_pts = NULL;
 	canonical_equation = NULL;
 	transporter_to_canonical_form = NULL;
 	gens_stab_of_canonical_equation = NULL;
+
+	Canonical_form_nauty = NULL;
 
 	go_eqn = NULL;
 
@@ -52,6 +55,9 @@ canonical_form_of_variety::~canonical_form_of_variety()
 	if (canonical_pts) {
 		FREE_lint(canonical_pts);
 	}
+	if (Canonical_form_nauty) {
+		FREE_OBJECT(Canonical_form_nauty);
+	}
 	if (go_eqn) {
 		FREE_OBJECT(go_eqn);
 	}
@@ -64,6 +70,7 @@ canonical_form_of_variety::~canonical_form_of_variety()
 void canonical_form_of_variety::init(
 		canonical_form_classifier *Canonical_form_classifier,
 		std::string &fname_case_out,
+		int counter,
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
 		int verbose_level)
 {
@@ -71,11 +78,14 @@ void canonical_form_of_variety::init(
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::init "
-				"verbose_level=" << verbose_level << endl;
+				" counter=" << counter
+				<< " verbose_level=" << verbose_level
+				<< endl;
 	}
 
 	canonical_form_of_variety::Canonical_form_classifier = Canonical_form_classifier;
 	canonical_form_of_variety::fname_case_out.assign(fname_case_out);
+	canonical_form_of_variety::counter = counter;
 	canonical_form_of_variety::Qco = Qco;
 
 	canonical_equation =
@@ -97,10 +107,6 @@ void canonical_form_of_variety::init(
 
 
 void canonical_form_of_variety::classify_curve_nauty(
-		int &f_found_canonical_form,
-		int &idx_canonical_form,
-		int &idx_equation,
-		int &f_found_eqn,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -110,7 +116,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	canonical_form_nauty *C;
+	//canonical_form_nauty *C;
 	ring_theory::longinteger_object go;
 
 
@@ -121,24 +127,24 @@ void canonical_form_of_variety::classify_curve_nauty(
 
 
 
-	C = NEW_OBJECT(canonical_form_nauty);
+	Canonical_form_nauty = NEW_OBJECT(canonical_form_nauty);
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
-				"before C->init" << endl;
+				"before Canonical_form_nauty->init" << endl;
 	}
-	C->init(Canonical_form_classifier, verbose_level - 2);
+	Canonical_form_nauty->init(Canonical_form_classifier, verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
-				"after C->init" << endl;
+				"after Canonical_form_nauty->init" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
-				"before C->canonical_form_of_quartic_curve" << endl;
+				"before Canonical_form_nauty->canonical_form_of_quartic_curve" << endl;
 	}
-	C->canonical_form_of_quartic_curve(
+	Canonical_form_nauty->canonical_form_of_quartic_curve(
 			this,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
@@ -150,11 +156,13 @@ void canonical_form_of_variety::classify_curve_nauty(
 				"after C->canonical_form_of_quartic_curve" << endl;
 	}
 
-	C->Stab_gens_quartic->group_order(go);
+	Canonical_form_nauty->Stab_gens_quartic->group_order(go);
+
+	//goi = go.as_int();
 
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
 
-	Canonical_form_classifier->Output->canonical_labeling_len = C->canonical_labeling_len;
+	Canonical_form_classifier->Output->canonical_labeling_len = Canonical_form_nauty->canonical_labeling_len;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
@@ -173,7 +181,7 @@ void canonical_form_of_variety::classify_curve_nauty(
 	if (Canonical_form_classifier->Output->CB->n == 0) {
 		Canonical_form_classifier->Output->CB->init(
 				Canonical_form_classifier->Input->nb_objects_to_test,
-				C->Canonical_form->get_allocated_length(),
+				Canonical_form_nauty->Canonical_form->get_allocated_length(),
 				verbose_level - 2);
 	}
 	//int f_found;
@@ -184,10 +192,10 @@ void canonical_form_of_variety::classify_curve_nauty(
 				"before Canonical_form_classifier->CB->search_and_add_if_new" << endl;
 	}
 	Canonical_form_classifier->Output->CB->search_and_add_if_new(
-			C->Canonical_form->get_data(),
-			C /* void *extra_data */,
-			f_found_canonical_form,
-			idx_canonical_form,
+			Canonical_form_nauty->Canonical_form->get_data(),
+			Canonical_form_nauty /* void *extra_data */,
+			Canonical_form_nauty->f_found_canonical_form,
+			Canonical_form_nauty->idx_canonical_form,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_curve_nauty "
@@ -197,14 +205,14 @@ void canonical_form_of_variety::classify_curve_nauty(
 	// if f_found is false: idx_canonical_form is where the new canonical form was added.
 
 
-	if (f_found_canonical_form) {
+	if (Canonical_form_nauty->f_found_canonical_form) {
 		if (f_v) {
 			cout << "canonical_form_of_variety::classify_curve_nauty "
 					"After search_and_add_if_new, "
 					"cnt = " << Qco->cnt
 					<< " po = " << Qco->po
 					<< " so = " << Qco->so
-					<< " We found the canonical form at idx_canonical_form = " << idx_canonical_form << endl;
+					<< " We found the canonical form at idx_canonical_form = " << Canonical_form_nauty->idx_canonical_form << endl;
 		}
 
 
@@ -215,12 +223,12 @@ void canonical_form_of_variety::classify_curve_nauty(
 					"before handle_repeated_canonical_form_of_set" << endl;
 		}
 		handle_repeated_canonical_form_of_set(
-				idx_canonical_form,
-				C,
+				Canonical_form_nauty->idx_canonical_form,
+				Canonical_form_nauty,
 				alpha, gamma,
-				idx_canonical_form,
-				idx_equation,
-				f_found_eqn,
+				Canonical_form_nauty->idx_canonical_form,
+				Canonical_form_nauty->idx_equation,
+				Canonical_form_nauty->f_found_eqn,
 				verbose_level);
 		if (f_v) {
 			cout << "canonical_form_of_variety::classify_curve_nauty "
@@ -658,11 +666,6 @@ void canonical_form_of_variety::add_object_and_compute_canonical_equation(
 }
 
 void canonical_form_of_variety::compute_canonical_form_nauty(
-		int counter,
-		int &f_found_canonical_form,
-		int &idx_canonical_form,
-		int &idx_equation,
-		int &f_found_eqn,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -673,28 +676,26 @@ void canonical_form_of_variety::compute_canonical_form_nauty(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form "
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
 				"before classify_curve_nauty" << endl;
 	}
 
 	classify_curve_nauty(
-			f_found_canonical_form,
-			idx_canonical_form,
-			idx_equation,
-			f_found_eqn,
 			0 /*verbose_level - 2 */);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form "
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
 				"after classify_curve_nauty" << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form "
-				"f_found_canonical_form=" << f_found_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form "
-				"idx_canonical_form=" << idx_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form "
-				"idx_equation=" << idx_equation << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form "
-				"f_found_eqn=" << f_found_eqn << endl;
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+				"f_found_canonical_form=" << Canonical_form_nauty->f_found_canonical_form << endl;
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+				"idx_canonical_form=" << Canonical_form_nauty->idx_canonical_form << endl;
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+				"idx_equation=" << Canonical_form_nauty->idx_equation << endl;
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+				"f_found_eqn=" << Canonical_form_nauty->f_found_eqn << endl;
+		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+				"group_order=" << Canonical_form_nauty->Stab_gens_quartic->group_order_as_lint() << endl;
 	}
 
 	if (f_v) {
@@ -704,7 +705,6 @@ void canonical_form_of_variety::compute_canonical_form_nauty(
 
 
 void canonical_form_of_variety::compute_canonical_form_substructure(
-		int counter,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1030,6 +1030,18 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 			v.push_back(Qco->Carrying_through[j]);
 		}
 	}
+
+	int l;
+
+	l = Canonical_form_nauty->NO_stringified.size();
+	int j;
+
+	for (j = 0; j < l; j++) {
+		v.push_back("\"" + Canonical_form_nauty->NO_stringified[j] + "\"");
+	}
+	v.push_back("\"" + std::to_string(Canonical_form_nauty->Orb->used_length) + "\"");
+	v.push_back("\"" + Canonical_form_nauty->Stab_gens_quartic->group_order_stringify() + "\"");
+
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty done" << endl;

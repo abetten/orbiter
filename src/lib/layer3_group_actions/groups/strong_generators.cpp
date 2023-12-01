@@ -1741,7 +1741,8 @@ void strong_generators::canonical_image_orbiter(
 		cout << "strong_generators::canonical_image_orbiter "
 				"before GL.make_canonical" << endl;
 	}
-	GL.make_canonical(A, Sims,
+	GL.make_canonical(
+			A, Sims,
 			sz, set,
 		canonical_set, transporter,
 		total_backtrack_nodes,

@@ -114,7 +114,8 @@ void nauty_output::print_stats()
 
 }
 
-int nauty_output::belong_to_the_same_orbit(int a, int b, int verbose_level)
+int nauty_output::belong_to_the_same_orbit(
+		int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -172,6 +173,78 @@ int nauty_output::belong_to_the_same_orbit(int a, int b, int verbose_level)
 	return false;
 }
 
+void nauty_output::stringify_as_vector(
+		std::vector<std::string> &V,
+		int verbose_level)
+{
+	std::string s_n;
+	std::string s_ago;
+	std::string s_base_length;
+	std::string s_aut_counter;
+	std::string s_base;
+	std::string s_tl;
+	std::string s_aut;
+	std::string s_cl;
+	std::string s_stats;
+
+	stringify(s_n,
+		s_ago,
+		s_base_length,
+		s_aut_counter,
+		s_base,
+		s_tl,
+		s_aut,
+		s_cl,
+		s_stats,
+		verbose_level - 1);
+
+	V.push_back(s_n);
+	V.push_back(s_ago);
+	V.push_back(s_base_length);
+	V.push_back(s_aut_counter);
+	V.push_back(s_base);
+	V.push_back(s_tl);
+	V.push_back(s_aut);
+	V.push_back(s_cl);
+	V.push_back(s_stats);
+}
+
+void nauty_output::stringify(
+		std::string &s_n, std::string &s_ago,
+		std::string &s_base_length, std::string &s_aut_counter,
+		std::string &s_base, std::string &s_tl,
+		std::string &s_aut, std::string &s_cl,
+		std::string &s_stats,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "nauty_output::stringify" << endl;
+	}
+
+	s_n = std::to_string(N);
+	s_ago = Ago->stringify();
+	s_base_length = std::to_string(Base_length);
+	s_aut_counter = std::to_string(Aut_counter);
+	s_base = Int_vec_stringify(Base, Base_length);
+	s_tl = Int_vec_stringify(Transversal_length, Base_length);
+	s_aut = Int_vec_stringify(Aut, Aut_counter * N);
+	s_cl = Int_vec_stringify(canonical_labeling, N);
+
+	long int stats[4];
+
+	stats[0] = nb_firstpathnode;
+	stats[1] = nb_othernode;
+	stats[2] = nb_processnode;
+	stats[3] = nb_firstterminal;
+
+	s_stats = Lint_vec_stringify(stats, 4);
+
+	if (f_v) {
+		cout << "nauty_output::stringify done" << endl;
+	}
+}
 
 
 

@@ -29,7 +29,8 @@ diophant_activity::~diophant_activity()
 }
 
 
-void diophant_activity::init_from_file(diophant_activity_description *Descr,
+void diophant_activity::init_from_file(
+		diophant_activity_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

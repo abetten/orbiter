@@ -81,7 +81,8 @@ public:
 
 	diophant_activity();
 	~diophant_activity();
-	void init_from_file(diophant_activity_description *Descr,
+	void init_from_file(
+			diophant_activity_description *Descr,
 			int verbose_level);
 	void perform_activity(
 			diophant_activity_description *Descr, diophant *Dio,
@@ -251,7 +252,8 @@ public:
 	diophant();
 	~diophant();
 	
-	void open(int m, int n, int verbose_level);
+	void open(
+			int m, int n, int verbose_level);
 	void init_var_labels(
 			long int *labels, int verbose_level);
 	void join_problems(
@@ -276,37 +278,57 @@ public:
 	void init_clique_finding_problem(
 			int *Adj, int nb_pts,
 		int nb_to_select, int verbose_level);
-	void fill_coefficient_matrix_with(int a);
-	void set_x_min_constant(int a);
-	void set_x_max_constant(int a);
-	int &Aij(int i, int j);
-	int &Gij(int i, int j);
-	int &RHSi(int i);
-	int &RHS_low_i(int i);
-	void init_eqn_label(int i, std::string &label);
+	void fill_coefficient_matrix_with(
+			int a);
+	void set_x_min_constant(
+			int a);
+	void set_x_max_constant(
+			int a);
+	int &Aij(
+			int i, int j);
+	int &Gij(
+			int i, int j);
+	int &RHSi(
+			int i);
+	int &RHS_low_i(
+			int i);
+	void init_eqn_label(
+			int i, std::string &label);
 	void print();
 	void print_tight();
 	void print_dense();
-	void print2(int f_with_gcd);
+	void print2(
+			int f_with_gcd);
 	void print_compressed();
-	void print_eqn(int i, int f_with_gcd);
-	void print_eqn_compressed(int i);
-	void print_eqn_dense(int i);
+	void print_eqn(
+			int i, int f_with_gcd);
+	void print_eqn_compressed(
+			int i);
+	void print_eqn_dense(
+			int i);
 	void print_x_long();
-	void print_x(int header);
+	void print_x(
+			int header);
 	int RHS_ge_zero();
-	int solve_first(int verbose_level);
+	int solve_first(
+			int verbose_level);
 	int solve_next();
 	int solve_first_mckay(
 			int f_once, int verbose_level);
-	void write_solutions(std::string &fname, int verbose_level);
-	void read_solutions_from_file(std::string &fname_sol,
+	void write_solutions(
+			std::string &fname, int verbose_level);
+	void read_solutions_from_file(
+			std::string &fname_sol,
 		int verbose_level);
-	void get_solutions(long int *&Sol, int &nb_sol, int verbose_level);
-	void get_solutions_full_length(int *&Sol, int &nb_sol, 
+	void get_solutions(
+			long int *&Sol, int &nb_sol, int verbose_level);
+	void get_solutions_full_length(
+			int *&Sol, int &nb_sol,
 		int verbose_level);
-	void test_solution_full_length(int *sol, int verbose_level);
-	int solve_all_DLX(int verbose_level);
+	void test_solution_full_length(
+			int *sol, int verbose_level);
+	int solve_all_DLX(
+			int verbose_level);
 	int solve_all_DLX_with_RHS(
 			int f_write_tree, const char *fname_tree,
 		int verbose_level);
@@ -319,16 +341,24 @@ public:
 	int solve_all_mckay(
 			long int &nb_backtrack_nodes, int maxresults,
 			int verbose_level);
-	int solve_once_mckay(int verbose_level);
-	int solve_all_betten(int verbose_level);
-	int solve_all_betten_with_conditions(int verbose_level, 
+	int solve_once_mckay(
+			int verbose_level);
+	int solve_all_betten(
+			int verbose_level);
+	int solve_all_betten_with_conditions(
+			int verbose_level,
 		int f_max_sol, int max_sol, 
 		int f_max_time, int max_time_in_seconds);
-	int solve_first_betten(int verbose_level);
-	int solve_next_mckay(int verbose_level);
-	int solve_next_betten(int verbose_level);
-	int j_fst(int j, int verbose_level);
-	int j_nxt(int j, int verbose_level);
+	int solve_first_betten(
+			int verbose_level);
+	int solve_next_mckay(
+			int verbose_level);
+	int solve_next_betten(
+			int verbose_level);
+	int j_fst(
+			int j, int verbose_level);
+	int j_nxt(
+			int j, int verbose_level);
 	void solve_mckay(
 			std::string &label,
 			int maxresults,
@@ -339,12 +369,16 @@ public:
 		int maxresults, long int &nb_backtrack_nodes,
 		int minrhs, int &nb_sol, int verbose_level);
 	void latex_it();
-	void latex_it(std::ostream &ost);
+	void latex_it(
+			std::ostream &ost);
 	void trivial_row_reductions(
 			int &f_no_solution, int verbose_level);
-	diophant *trivial_column_reductions(int verbose_level);
-	int count_non_zero_coefficients_in_row(int i);
-	void coefficient_values_in_row(int i, int &nb_values, 
+	diophant *trivial_column_reductions(
+			int verbose_level);
+	int count_non_zero_coefficients_in_row(
+			int i);
+	void coefficient_values_in_row(
+			int i, int &nb_values,
 		int *&values, int *&multiplicities, int verbose_level);
 	int maximum_number_of_non_zero_coefficients_in_row();
 	void get_coefficient_matrix(
@@ -354,10 +388,12 @@ public:
 			std::string &fname, int verbose_level);
 	void read_general_format(
 			std::string &fname, int verbose_level);
-	void eliminate_zero_rows_quick(int verbose_level);
+	void eliminate_zero_rows_quick(
+			int verbose_level);
 	void eliminate_zero_rows(
 			int *&eqn_number, int verbose_level);
-	int is_zero_outside(int first, int len, int i);
+	int is_zero_outside(
+			int first, int len, int i);
 	void project(
 			diophant *D, int first, int len, int *&eqn_number,
 		int &nb_eqns_replaced, int *&eqns_replaced, 
@@ -385,9 +421,12 @@ public:
 	void read_xml(
 			std::ifstream &f, std::string &label, int verbose_level);
 	void append_equation();
-	void delete_equation(int I);
-	void write_gurobi_binary_variables(const char *fname);
-	void draw_as_bitmap(std::string &fname,
+	void delete_equation(
+			int I);
+	void write_gurobi_binary_variables(
+			std::string &fname);
+	void draw_as_bitmap(
+			std::string &fname,
 			int f_box_width, int box_width,
 			int bit_depth, int verbose_level);
 	void draw_it(
@@ -399,13 +438,17 @@ public:
 			graphics::layered_graph_draw_options *Draw_options,
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
-	int test_solution(int *sol, int len, int verbose_level);
-	void get_columns(int *col, int nb_col,
+	int test_solution(
+			int *sol, int len, int verbose_level);
+	void get_columns(
+			int *col, int nb_col,
 			data_structures::set_of_sets *&S,
 		int verbose_level);
-	void test_solution_file(std::string &solution_file,
+	void test_solution_file(
+			std::string &solution_file,
 		int verbose_level);
-	void analyze(int verbose_level);
+	void analyze(
+			int verbose_level);
 	int is_of_Steiner_type();
 	void make_clique_graph_adjacency_matrix(
 			data_structures::bitvector *&Adj,

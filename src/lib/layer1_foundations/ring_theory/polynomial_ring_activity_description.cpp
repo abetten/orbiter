@@ -170,7 +170,6 @@ void polynomial_ring_activity_description::print()
 		cout << "-cheat_sheet " << endl;
 	}
 	if (f_ideal) {
-
 		cout << "-ideal "
 				<< ideal_label_txt << " "
 				<< ideal_label_tex << " "

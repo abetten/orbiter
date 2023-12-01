@@ -90,15 +90,19 @@ public:
 			int *A, int *B, int m, int n);
 	void reverse_matrix(
 			int *A, int *B, int ma, int na);
-	void identity_matrix(int *A, int n);
-	int is_identity_matrix(int *A, int n);
-	int is_diagonal_matrix(int *A, int n);
+	void identity_matrix(
+			int *A, int n);
+	int is_identity_matrix(
+			int *A, int n);
+	int is_diagonal_matrix(
+			int *A, int n);
 	int is_scalar_multiple_of_identity_matrix(
 			int *A,
 		int n, int &scalar);
 	void diagonal_matrix(
 			int *A, int n, int alpha);
-	void matrix_minor(int f_semilinear, int *A,
+	void matrix_minor(
+			int f_semilinear, int *A,
 		int *B, int n, int f, int l);
 		// initializes B as the l x l minor of A
 		// (which is n x n) starting from row f.
@@ -157,13 +161,16 @@ public:
 			int f_semilinear,
 		int *v, int *A, int *vA, int n);
 		// vA = (v * A)^{p^f} + b
-	void zero_vector(int *A, int m);
-	void all_one_vector(int *A, int m);
+	void zero_vector(
+			int *A, int m);
+	void all_one_vector(
+			int *A, int m);
 	void support(
 			int *A, int m, int *&support, int &size);
 	void characteristic_vector(
 			int *A, int m, int *set, int size);
-	int is_zero_vector(int *A, int m);
+	int is_zero_vector(
+			int *A, int m);
 	void add_vector(
 			int *A, int *B, int *C, int m);
 	void linear_combination_of_vectors(

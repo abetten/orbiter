@@ -234,7 +234,8 @@ void normal_basis::init_with_polynomial_coded(
 
 }
 
-void normal_basis::report(std::ostream &ost)
+void normal_basis::report(
+		std::ostream &ost)
 {
 
 	l1_interfaces::latex_interface L;

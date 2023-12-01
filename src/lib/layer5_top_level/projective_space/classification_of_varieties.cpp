@@ -55,6 +55,8 @@ classification_of_varieties::classification_of_varieties()
 	Iso_idx = NULL;
 	Idx_canonical_form = NULL;
 	Idx_equation = NULL;
+	nb_iso_orbits = 0;
+	Orbit_input_idx = NULL;
 
 	Classification_table_nauty = NULL;
 
@@ -73,6 +75,9 @@ classification_of_varieties::~classification_of_varieties()
 	}
 	if (Idx_equation) {
 		FREE_int(Idx_equation);
+	}
+	if (Orbit_input_idx) {
+		FREE_int(Orbit_input_idx);
 	}
 
 	if (Classification_table_nauty) {
@@ -131,7 +136,9 @@ void classification_of_varieties::init(
 		Iso_idx = NEW_int(Classifier->Input->nb_objects_to_test);
 		Idx_canonical_form = NEW_int(Classifier->Input->nb_objects_to_test);
 		Idx_equation = NEW_int(Classifier->Input->nb_objects_to_test);
-
+		Orbit_input_idx = NEW_int(Classifier->Input->nb_objects_to_test);
+		Goi = NEW_lint(Classifier->Input->nb_objects_to_test);
+		nb_iso_orbits = 0;
 
 
 		if (f_v) {
@@ -272,10 +279,6 @@ void classification_of_varieties::write_classification_by_nauty_csv(
 
 		ost << "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Pts,Bitangents";
 
-
-
-
-
 		if (Classifier->Descr->carry_through.size()) {
 			int i;
 
@@ -283,6 +286,9 @@ void classification_of_varieties::write_classification_by_nauty_csv(
 				ost << "," << Classifier->Descr->carry_through[i];
 			}
 		}
+
+		ost << ",NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats";
+		ost << ",nb_eqn,ago";
 		ost << endl;
 
 
@@ -602,6 +608,7 @@ void classification_of_varieties::main_loop(
 		Variety->init(
 				Classifier,
 				fname_case_out,
+				counter,
 				Classifier->Input->Qco[counter],
 				verbose_level - 2);
 		if (f_v) {
@@ -620,17 +627,8 @@ void classification_of_varieties::main_loop(
 						"counter = " << counter << " / " << Classifier->Input->nb_objects_to_test
 						<< " before Variety->compute_canonical_form_nauty" << endl;
 			}
-			int f_found_canonical_form;
-			int idx_canonical_form;
-			int idx_equation;
-			int f_found_eqn;
 
 			Variety->compute_canonical_form_nauty(
-					counter,
-					f_found_canonical_form,
-					idx_canonical_form,
-					idx_equation,
-					f_found_eqn,
 					verbose_level);
 
 
@@ -640,17 +638,19 @@ void classification_of_varieties::main_loop(
 						<< " after Variety->compute_canonical_form_nauty" << endl;
 			}
 
-			if (f_found_canonical_form && f_found_eqn) {
+			Goi[counter] = Variety->Canonical_form_nauty->Stab_gens_quartic->group_order_as_lint();
+
+			if (Variety->Canonical_form_nauty->f_found_canonical_form && Variety->Canonical_form_nauty->f_found_eqn) {
 
 				F_first_time[counter] = false;
 
 			}
-			else if (f_found_canonical_form && !f_found_eqn) {
+			else if (Variety->Canonical_form_nauty->f_found_canonical_form && !Variety->Canonical_form_nauty->f_found_eqn) {
 
 				F_first_time[counter] = true;
 
 			}
-			else if (!f_found_canonical_form) {
+			else if (!Variety->Canonical_form_nauty->f_found_canonical_form) {
 
 				F_first_time[counter] = true;
 
@@ -660,10 +660,11 @@ void classification_of_varieties::main_loop(
 				exit(1);
 			}
 
-			Idx_canonical_form[counter] = idx_canonical_form;
-			Idx_equation[counter] = idx_equation;
+			Idx_canonical_form[counter] = Variety->Canonical_form_nauty->idx_canonical_form;
+			Idx_equation[counter] = Variety->Canonical_form_nauty->idx_equation;
 
 			if (F_first_time[counter]) {
+
 
 				Iso_idx[counter] = nb_iso;
 
@@ -672,10 +673,14 @@ void classification_of_varieties::main_loop(
 
 				for (i = 0; i < counter; i++) {
 					idx = Idx_canonical_form[i];
-					if (idx >= idx_canonical_form) {
+					if (idx >= Variety->Canonical_form_nauty->idx_canonical_form) {
 						Idx_canonical_form[i]++;
 					}
 				}
+
+				Orbit_input_idx[nb_iso_orbits] = counter;
+				nb_iso_orbits++;
+
 			}
 			else {
 				Iso_idx[counter] = Iso_idx[Idx_canonical_form[counter]];
@@ -691,7 +696,7 @@ void classification_of_varieties::main_loop(
 			}
 
 			Variety->compute_canonical_form_substructure(
-					counter, verbose_level - 1);
+					verbose_level - 1);
 
 			if (f_v) {
 				cout << "classification_of_varieties::main_loop "
@@ -836,6 +841,17 @@ void classification_of_varieties::report(
 
 		if (Classifier->Descr->f_algorithm_nauty) {
 
+			if (f_v) {
+				cout << "classification_of_varieties::report "
+						"before report_nauty" << endl;
+			}
+
+			report_nauty(ost, verbose_level);
+			if (f_v) {
+				cout << "classification_of_varieties::report "
+						"after report_nauty" << endl;
+			}
+
 		}
 		else if (Classifier->Descr->f_algorithm_substructure) {
 			if (f_v) {
@@ -890,6 +906,253 @@ void classification_of_varieties::report(
 	}
 
 }
+
+void classification_of_varieties::report_nauty(
+		std::ostream &ost, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_varieties::report_nauty" << endl;
+	}
+
+
+	int orbit_index;
+	//int i, j;
+
+	int nb_orbits;
+	//int nb_monomials;
+
+	//actions::action *A;
+	//actions::action *A_on_lines;
+
+	if (f_v) {
+		cout << "classification_of_varieties::report_nauty" << endl;
+	}
+
+
+	nb_orbits = nb_iso_orbits;
+	//nb_monomials = Classifier->Poly_ring->get_nb_monomials();
+
+
+	//A = Descr->PA->A;
+	//A_on_lines = Descr->PA->A_on_lines;
+
+
+	int idx;
+
+	{
+
+
+		ost << "Classification\\\\" << endl;
+		ost << "$q=" << Classifier->PA->F->q << "$\\\\" << endl;
+		ost << "Number of isomorphism classes: " << nb_orbits << "\\\\" << endl;
+
+
+		std::vector<long int> Ago;
+
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+			idx = Orbit_input_idx[orbit_index];
+
+
+			Ago.push_back(Goi[idx]);
+		}
+
+		data_structures::tally_lint T;
+
+		T.init_vector_lint(
+				Ago,
+				false /* f_second */,
+				0 /* verbose_level */);
+		ost << "Automorphism group order statistic: " << endl;
+		//ost << "$";
+		T.print_file_tex(ost, true /* f_backwards */);
+		ost << "\\\\" << endl;
+
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+
+		if (f_v) {
+			cout << "classification_of_varieties::report_nauty "
+					"preparing reps" << endl;
+		}
+		ost << "The isomorphism classes are:\\\\" << endl;
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+			idx = Orbit_input_idx[orbit_index];
+
+			//int *equation;
+
+			if (f_v) {
+				cout << "classification_of_varieties::report_nauty "
+						"orbit_index = " << orbit_index << endl;
+			}
+
+			ost << "Isomorphism class " << orbit_index << " / " << nb_orbits << " is input " << idx << ":\\\\" << endl;
+			ost << "Automorphism group order " << Goi[idx] << "\\\\" << endl;
+
+
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco;
+				// [nb_objects_to_test]
+
+			Qco = Classifier->Input->Qco[idx];
+
+			ost << "Number of points " << Qco->Quartic_curve_object->nb_pts << "\\\\" << endl;
+			ost << "Equation ";
+			ost << "\\verb'";
+			ost << Qco->Quartic_curve_object->eqn_txt;
+			ost << "'";
+			ost << "\\\\" << endl;
+			ost << "Equation ";
+			Int_vec_print(ost, Qco->Quartic_curve_object->eqn15, 15);
+			ost << "\\\\" << endl;
+
+			ost << "Points:\\\\" << endl;
+			Classifier->PA->P->Reporting->print_set_of_points(
+					ost, Qco->Quartic_curve_object->Pts, Qco->Quartic_curve_object->nb_pts);
+
+#if 0
+			field_theory::finite_field *F;
+			geometry::projective_space *P;
+
+			// we use the monomial ordering t_PART in all polynomial rings:
+
+			ring_theory::homogeneous_polynomial_domain *Poly1_3;
+				// linear polynomials in three variables
+			ring_theory::homogeneous_polynomial_domain *Poly2_3;
+				// quadratic polynomials in three variables
+			ring_theory::homogeneous_polynomial_domain *Poly3_3;
+				// cubic polynomials in three variables
+			ring_theory::homogeneous_polynomial_domain *Poly4_3;
+				// quartic polynomials in three variables
+
+			ring_theory::homogeneous_polynomial_domain *Poly3_4;
+				// cubic polynomials in four variables
+
+			ring_theory::partial_derivative *Partials; // [3]
+
+			algebraic_geometry::schlaefli_labels *Schlaefli;
+#endif
+
+#if 0
+			quartic_curve_domain *Dom; // we may not have it
+
+			std::string eqn_txt;
+
+			long int *Pts; // in increasing order
+			int nb_pts;
+
+
+			int eqn15[15];
+
+			int f_has_bitangents;
+			long int bitangents28[28];
+
+			quartic_curve_object_properties *QP;
+#endif
+
+			canonical_form_nauty *Canonical_form_nauty;
+
+#if 0
+			canonical_form_of_variety *Variety;
+
+			int nb_rows, nb_cols;
+			data_structures::bitvector *Canonical_form;
+			long int *canonical_labeling;
+			int canonical_labeling_len;
+
+
+			groups::strong_generators *Set_stab;
+				// the set stabilizer of the variety
+				// this is not the stabilizer of the variety!
+
+			orbits_schreier::orbit_of_equations *Orb;
+				// orbit under the set stabilizer
+
+			groups::strong_generators *Stab_gens_quartic;
+				// the stabilizer of the original curve
+
+			int f_found_canonical_form;
+			int idx_canonical_form;
+			int idx_equation;
+			int f_found_eqn;
+#endif
+
+#if 0
+			actions::action *A;
+			induced_actions::action_on_homogeneous_polynomials *AonHPD;
+			field_theory::finite_field *F;
+			groups::strong_generators *SG;
+
+			int nb_monomials;
+			int sz; // = 1 + nb_monomials
+			int sz_for_compare; // = 1 + nb_monomials
+			int *data_tmp; // [sz]
+
+			int position_of_original_object;
+			int allocation_length;
+			int used_length;
+
+			int **Equations; // [allocation_length][sz]
+			int *prev; // [allocation_length]
+			int *label; // [allocation_length]
+
+			int f_has_print_function;
+			void (*print_function)(int *object,
+					int sz, void *print_function_data);
+			void *print_function_data;
+
+			int f_has_reduction;
+			void (*reduction_function)(int *object,
+					void *reduction_function_data);
+			void *reduction_function_data;
+#endif
+			Canonical_form_nauty = Variety_table[idx]->Canonical_form_nauty;
+
+
+			ost << "Number of equations with the same set of points " << Canonical_form_nauty->Orb->used_length << "\\\\" << endl;
+
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+
+			ost << "Automorphism group: \\\\" << endl;
+			Canonical_form_nauty->Stab_gens_quartic->print_generators_tex(ost);
+
+
+			if (Canonical_form_nauty->Stab_gens_quartic->group_order_as_lint() < 50) {
+
+				ost << endl;
+				ost << "\\bigskip" << endl;
+				ost << endl;
+
+				ost << "List of all elements of the automorphism group: \\\\" << endl;
+				Canonical_form_nauty->Stab_gens_quartic->print_elements_ost(ost);
+			}
+
+
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+		}
+	}
+	if (f_v) {
+		cout << "classification_of_varieties::report_nauty done" << endl;
+	}
+}
+
 
 void classification_of_varieties::report_substructure(
 		std::ostream &ost, int verbose_level)

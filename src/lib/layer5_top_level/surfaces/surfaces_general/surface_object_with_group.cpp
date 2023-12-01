@@ -2398,7 +2398,7 @@ void surface_object_with_group::export_all_quartic_curves(
 
 	po_go = Aut_gens->group_order_as_lint();
 
-	ost_quartics_csv << "orbit,PO_GO,PO_INDEX,curve,pts_on_curve,bitangents,go,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO" << endl;
+	ost_quartics_csv << "orbit,PO_GO,PO_INDEX,curve,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,go" << endl;
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
 		if (f_v) {

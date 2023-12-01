@@ -88,7 +88,8 @@ public:
 	csv_file_support();
 	~csv_file_support();
 
-	void init(file_io *Fio);
+	void init(
+			file_io *Fio);
 	void int_vec_write_csv(
 			int *v, int len,
 			std::string &fname, std::string &label);
@@ -268,7 +269,8 @@ public:
 			std::string &prefix,
 			int level_of_candidates_file, long int *starter,
 			int verbose_level);
-	void write_exact_cover_problem_to_file(int *Inc, int nb_rows,
+	void write_exact_cover_problem_to_file(
+			int *Inc, int nb_rows,
 		int nb_cols, std::string &fname);
 	void read_solution_file(
 			std::string &fname,
@@ -435,7 +437,8 @@ public:
 			int *v, int *b, int *aij, int verbose_level);
 	void create_file(
 			create_file_description *Descr, int verbose_level);
-	void fix_escape_characters(char *str);
+	void fix_escape_characters(
+			char *str);
 	void create_files(
 			create_file_description *Descr,
 		int verbose_level);
@@ -531,13 +534,16 @@ public:
 	
 	file_output();
 	~file_output();
-	void open(std::string &fname,
+	void open(
+			std::string &fname,
 			void *user_data,
 			int verbose_level);
 	void close();
-	void write_line(int nb, int *data,
+	void write_line(
+			int nb, int *data,
 			int verbose_level);
-	void write_EOF(int nb_sol, int verbose_level);
+	void write_EOF(
+			int nb_sol, int verbose_level);
 };
 
 
@@ -564,11 +570,15 @@ public:
 	mem_object_registry_entry();
 	~mem_object_registry_entry();
 	void null();
-	void set_type_from_string(char *str);
-	void print_type(std::ostream &ost);
+	void set_type_from_string(
+			char *str);
+	void print_type(
+			std::ostream &ost);
 	int size_of();
-	void print(int line);
-	void print_csv(std::ostream &ost, int line);
+	void print(
+			int line);
+	void print_csv(
+			std::ostream &ost, int line);
 };
 
 

@@ -152,7 +152,8 @@ void square_nonsquare::init(
 	}
 }
 
-int square_nonsquare::is_minus_square(int i)
+int square_nonsquare::is_minus_square(
+		int i)
 {
 	if (DOUBLYEVEN(F->q - 1)) {
 		if (EVEN(i)) {

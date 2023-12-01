@@ -686,6 +686,8 @@ public:
 
 	quartic_curve_domain *Dom; // we may not have it
 
+	std::string eqn_txt;
+
 	long int *Pts; // in increasing order
 	int nb_pts;
 

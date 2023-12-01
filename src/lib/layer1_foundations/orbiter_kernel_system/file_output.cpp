@@ -30,7 +30,8 @@ file_output::~file_output()
 }
 
 
-void file_output::open(std::string &fname,
+void file_output::open(
+		std::string &fname,
 		void *user_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -60,7 +61,8 @@ void file_output::close()
 	f_file_is_open = false;
 }
 
-void file_output::write_line(int nb, int *data,
+void file_output::write_line(
+		int nb, int *data,
 		int verbose_level)
 {
 	int i;
@@ -76,7 +78,8 @@ void file_output::write_line(int nb, int *data,
 	*fp << endl;
 }
 
-void file_output::write_EOF(int nb_sol, int verbose_level)
+void file_output::write_EOF(
+		int nb_sol, int verbose_level)
 {
 	*fp << "-1 " << nb_sol << endl;
 }

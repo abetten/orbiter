@@ -25,6 +25,8 @@ quartic_curve_object::quartic_curve_object()
 {
 	Dom = NULL;
 
+	//std::string eqn_txt;
+
 
 	Pts = NULL;
 	nb_pts = 0;
@@ -74,6 +76,8 @@ void quartic_curve_object::init_from_string(
 	}
 
 	quartic_curve_object::Dom = NULL;
+
+	quartic_curve_object::eqn_txt = eqn_txt;
 
 
 	if (std::isalpha(eqn_txt[0])) {
