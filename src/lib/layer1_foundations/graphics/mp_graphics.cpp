@@ -2901,8 +2901,8 @@ void mp_graphics::draw_graph(
 		Py[0] = y + (int) Y[i];
 		nice_circle(Px[0], Py[0], rad);
 	}
-	delete X;
-	delete Y;
+	delete [] X;
+	delete [] Y;
 	if (f_v) {
 		cout << "mp_graphics::draw_graph done" << endl;
 	}
@@ -2957,8 +2957,8 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 		Py[0] = y + (int) Y[i];
 		nice_circle(Px[0], Py[0], rad);
 	}
-	delete X;
-	delete Y;
+	delete [] X;
+	delete [] Y;
 }
 
 void mp_graphics::draw_graph_on_multiple_circles(
@@ -3006,8 +3006,8 @@ void mp_graphics::draw_graph_on_multiple_circles(
 		Py[0] = y + (int) Y[i];
 		nice_circle(Px[0], Py[0], rad);
 	}
-	delete X;
-	delete Y;
+	delete [] X;
+	delete [] Y;
 }
 
 void mp_graphics::draw_graph_on_2D_grid(
@@ -3069,8 +3069,8 @@ void mp_graphics::draw_graph_on_2D_grid(
 	if (f_directed) {
 		sl_ends(0, 0);
 	}
-	delete X;
-	delete Y;
+	delete [] X;
+	delete [] Y;
 }
 
 void mp_graphics::draw_tournament(
@@ -3138,8 +3138,8 @@ void mp_graphics::draw_tournament(
 		Py[0] = y + (int) Y[i];
 		nice_circle(Px[0], Py[0], rad);
 	}
-	delete X;
-	delete Y;
+	delete [] X;
+	delete [] Y;
 }
 
 void mp_graphics::draw_bitmatrix2(
