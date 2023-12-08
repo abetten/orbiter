@@ -141,10 +141,9 @@ void graph_classify::init(
 	}
 
 	S1 = NEW_lint(n2);
-	int f_no_base = false;
 
 	A_base->Known_groups->init_symmetric_group(
-			Descr->n, f_no_base, verbose_level - 3);
+			Descr->n, verbose_level - 3);
 	if (f_v) {
 		cout << "A_base->init_symmetric_group done" << endl;
 	}

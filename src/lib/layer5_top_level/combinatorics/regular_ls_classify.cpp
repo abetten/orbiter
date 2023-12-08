@@ -175,10 +175,9 @@ void regular_ls_classify::init_group(
 				"creating symmetric group of degree " << Descr->m << endl;
 	}
 	A = NEW_OBJECT(actions::action);
-	int f_no_base = false;
 
 	A->Known_groups->init_symmetric_group(
-			Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
+			Descr->m /* degree */, 0 /* verbose_level - 2*/);
 	
 
 	if (f_v) {

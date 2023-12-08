@@ -786,15 +786,11 @@ void known_groups::init_permutation_group(
 	if (f_v) {
 		cout << "known_groups::init_permutation_group, "
 				"degree=" << degree
+				<< " f_no_base=" << f_no_base
 				<< " verbose_level=" << verbose_level << endl;
 	}
 
 
-	if (degree > 20000) {
-		cout << "known_groups::init_permutation_group the degree is too large" << endl;
-		cout << "known_groups::init_permutation_group degree = " << degree << endl;
-		exit(1);
-	}
 	A->label = "Perm_" + std::to_string(degree);
 	A->label_tex = "Perm\\_" + std::to_string(degree);
 
@@ -840,6 +836,11 @@ void known_groups::init_permutation_group(
 		}
 	}
 	else {
+		if (degree > 20000) {
+			cout << "known_groups::init_permutation_group the degree is too large" << endl;
+			cout << "known_groups::init_permutation_group degree = " << degree << endl;
+			exit(1);
+		}
 		if (f_vv) {
 			cout << "known_groups::init_permutation_group "
 					"calling allocate_base_data" << endl;
@@ -982,7 +983,7 @@ void known_groups::init_permutation_group_from_generators(
 	int f_target_go, ring_theory::longinteger_object &target_go,
 	int nb_gens, int *gens,
 	int given_base_length, long int *given_base,
-	int f_no_base,
+	int f_given_base,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1028,7 +1029,7 @@ void known_groups::init_permutation_group_from_generators(
 		cout << "known_groups::init_permutation_group_from_generators "
 				"calling init_permutation_group" << endl;
 	}
-	init_permutation_group(degree, f_no_base, verbose_level - 2);
+	init_permutation_group(degree, f_given_base /*f_no_base*/, verbose_level - 2);
 	if (f_vv) {
 		cout << "known_groups::init_permutation_group_from_generators "
 				"after init_permutation_group" << endl;
@@ -1040,10 +1041,10 @@ void known_groups::init_permutation_group_from_generators(
 	}
 
 
-	if (f_no_base) {
+	if (!f_given_base) {
 		if (f_vv) {
 			cout << "known_groups::init_permutation_group_from_generators "
-					"no base" << endl;
+					"!f_given_base" << endl;
 		}
 	}
 	else {
@@ -1218,7 +1219,7 @@ void known_groups::init_affine_group(
 
 
 void known_groups::init_symmetric_group(
-		int degree, int f_no_base, int verbose_level)
+		int degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1229,8 +1230,7 @@ void known_groups::init_symmetric_group(
 	ring_theory::longinteger_domain D;
 
 	if (f_v) {
-		cout << "known_groups::init_symmetric_group "
-				"f_no_base=" << f_no_base << endl;
+		cout << "known_groups::init_symmetric_group" << endl;
 	}
 
 	D.factorial(go, degree);
@@ -1261,7 +1261,7 @@ void known_groups::init_symmetric_group(
 		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
-		f_no_base,
+		true /* f_given_base */,
 		verbose_level);
 	if (f_v) {
 		cout << "known_groups::init_symmetric_group "
@@ -1280,7 +1280,7 @@ void known_groups::init_symmetric_group(
 }
 
 void known_groups::init_cyclic_group(
-		int degree, int f_no_base, int verbose_level)
+		int degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1291,8 +1291,7 @@ void known_groups::init_cyclic_group(
 	//ring_theory::longinteger_domain D;
 
 	if (f_v) {
-		cout << "known_groups::init_cyclic_group "
-				"f_no_base=" << f_no_base << endl;
+		cout << "known_groups::init_cyclic_group" << endl;
 	}
 
 	//D.factorial(go, degree);
@@ -1324,7 +1323,7 @@ void known_groups::init_cyclic_group(
 		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
-		f_no_base,
+		true /* f_given_base */,
 		verbose_level);
 	if (f_v) {
 		cout << "known_groups::init_cyclic_group "
@@ -1342,7 +1341,7 @@ void known_groups::init_cyclic_group(
 }
 
 void known_groups::init_identity_group(
-		int degree, int f_no_base, int verbose_level)
+		int degree, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -1353,7 +1352,7 @@ void known_groups::init_identity_group(
 	//ring_theory::longinteger_domain D;
 
 	if (f_v) {
-		cout << "known_groups::init_identity_group f_no_base=" << f_no_base << endl;
+		cout << "known_groups::init_identity_group" << endl;
 	}
 	//D.factorial(go, degree);
 	go.create(1);
@@ -1384,7 +1383,7 @@ void known_groups::init_identity_group(
 		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
-		f_no_base,
+		true /* f_given_base */,
 		verbose_level);
 	if (f_v) {
 		cout << "known_groups::init_identity_group "

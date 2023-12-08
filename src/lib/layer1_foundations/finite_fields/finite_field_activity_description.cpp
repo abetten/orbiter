@@ -65,18 +65,6 @@ finite_field_activity_description::finite_field_activity_description()
 	power_map_k = 0;
 	//std::string power_map_elements;
 
-#if 0
-	f_parse_and_evaluate = false;
-	//parse_name_of_formula
-	//parse_managed_variables
-	//std::string parse_text;
-	//std::string parse_parameters
-
-	f_evaluate = false;
-	//std::string evaluate_formula_label;
-	//std::string evaluate_parameters;
-#endif
-
 	// Extension fields:
 
 	f_trace = false;
@@ -205,11 +193,6 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_reduce_mod_p = false;
 	//polynomial_reduce_mod_p_A;
 
-#if 0
-	f_cheat_sheet_Gr = false;
-	cheat_sheet_Gr_n = 0;
-	cheat_sheet_Gr_k = 0;
-#endif
 
 	f_cheat_sheet_hermitian = false;
 	cheat_sheet_hermitian_projective_dimension = 0;
@@ -397,33 +380,6 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-parse_and_evaluate") == 0) {
-			f_parse_and_evaluate = true;
-			parse_name_of_formula.assign(argv[++i]);
-			parse_managed_variables.assign(argv[++i]);
-			parse_text.assign(argv[++i]);
-			parse_parameters.assign(argv[++i]);
-			if (f_v) {
-				cout << "-parse_and_evaluate " << parse_name_of_formula
-					<< " " << parse_managed_variables
-					<< " " << parse_text
-					<< " " << parse_parameters
-					<< endl;
-			}
-		}
-
-		else if (ST.stringcmp(argv[i], "-evaluate") == 0) {
-			f_evaluate = true;
-			evaluate_formula_label.assign(argv[++i]);
-			evaluate_parameters.assign(argv[++i]);
-			if (f_v) {
-				cout << "-evaluate " << evaluate_formula_label
-					<< " " << evaluate_parameters
-					<< endl;
-			}
-		}
-#endif
 
 		// Extension fields:
 
@@ -494,20 +450,6 @@ int finite_field_activity_description::read_arguments(
 				cout << "-RREF " << RREF_input_matrix << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-normalize_from_the_right") == 0) {
-			f_normalize_from_the_right = true;
-			if (f_v) {
-				cout << "-normalize_from_the_right " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-normalize_from_the_left") == 0) {
-			f_normalize_from_the_left = true;
-			if (f_v) {
-				cout << "-normalize_from_the_left " << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-RREF_random_matrix") == 0) {
 			f_RREF_random_matrix = true;
 			RREF_random_matrix_m = ST.strtolint(argv[++i]);
@@ -766,18 +708,6 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-#if 0
-		else if (ST.stringcmp(argv[i], "-cheat_sheet_Gr") == 0) {
-			f_cheat_sheet_Gr = true;
-			cheat_sheet_Gr_n = ST.strtoi(argv[++i]);
-			cheat_sheet_Gr_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
-			}
-		}
-#endif
-
-
 		else if (ST.stringcmp(argv[i], "-cheat_sheet_hermitian") == 0) {
 			f_cheat_sheet_hermitian = true;
 			cheat_sheet_hermitian_projective_dimension = ST.strtoi(argv[++i]);
@@ -960,21 +890,6 @@ void finite_field_activity_description::print()
 					<< " " << power_map_elements
 				<< endl;
 	}
-#if 0
-	if (f_parse_and_evaluate) {
-		cout << "-parse_and_evaluate " << parse_name_of_formula
-				<< " " << parse_managed_variables
-				<< " " << parse_text
-				<< " " << parse_parameters
-				<< endl;
-	}
-
-	if (f_evaluate) {
-		cout << "-evaluate " << evaluate_formula_label
-				<< " " << evaluate_parameters
-				<< endl;
-	}
-#endif
 
 	// Extension fields:
 
@@ -1013,14 +928,6 @@ void finite_field_activity_description::print()
 	if (f_nullspace) {
 		cout << "-nullspace " << nullspace_input_matrix << endl;
 	}
-#if 0
-	if (f_normalize_from_the_right) {
-		cout << "-normalize_from_the_right " << endl;
-	}
-	if (f_normalize_from_the_left) {
-		cout << "-normalize_from_the_left " << endl;
-	}
-#endif
 	if (f_RREF_random_matrix) {
 		cout << "-RREF_random_matrix "
 				<< " " << RREF_random_matrix_m
@@ -1152,17 +1059,6 @@ void finite_field_activity_description::print()
 		cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p_A << endl;
 	}
 
-#if 0
-	if (f_cheat_sheet_PG) {
-		cout << "-cheat_sheet_PG " << cheat_sheet_PG_n << endl;
-	}
-
-	if (f_cheat_sheet_Gr) {
-		cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
-	}
-#endif
-
-
 	if (f_cheat_sheet_hermitian) {
 		cout << "-cheat_sheet_hermitian " << cheat_sheet_hermitian_projective_dimension << endl;
 	}
@@ -1193,10 +1089,6 @@ void finite_field_activity_description::print()
 				<< " " << assemble_monopoly_coefficient_vector
 				<< " " << assemble_monopoly_exponent_vector << endl;
 	}
-
-
-
-
 
 	if (f_transversal) {
 		cout << "-transversal "

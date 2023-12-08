@@ -156,19 +156,18 @@ void young::init(
 
 	if (f_v) {
 		cout << "young::init" << endl;
-		}
-	int f_no_base = false;
+	}
 
 	young::n = n;
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
 	goi = go.as_int();
 
 	if (f_v) {
 		cout << "Created group Sym(" << n << ") of size " << goi << endl;
-		}
+	}
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -184,13 +183,13 @@ void young::init(
 			cout << "element " << i << " is ";
 			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
-			}
 		}
+	}
 
 
 	if (f_v) {
 		cout << "computing conjugacy classes:" << endl;
-		}
+	}
 
 	S->compute_conjugacy_classes(Aconj, ABC, Sch,
 		SG, nb_classes, class_size, class_rep, 
@@ -198,7 +197,7 @@ void young::init(
 
 	if (f_v) {
 		cout << "computing conjugacy classes done" << endl;
-		}
+	}
 
 
 
@@ -207,7 +206,7 @@ void young::init(
 
 	if (f_v) {
 		cout << "young::init done" << endl;
-		}
+	}
 }
 
 void young::create_module(

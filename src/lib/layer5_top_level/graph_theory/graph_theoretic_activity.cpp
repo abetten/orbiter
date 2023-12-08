@@ -344,7 +344,7 @@ void graph_theoretic_activity::perform_activity(
 
 		fname_base = CG->label;
 
-		fname_base = "_" + Descr->split_by_clique_label;
+		fname_base += "_" + Descr->split_by_clique_label;
 
 		fname_out = fname_base + ".graph";
 

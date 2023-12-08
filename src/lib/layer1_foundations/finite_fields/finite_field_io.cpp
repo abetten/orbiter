@@ -659,7 +659,8 @@ void finite_field_io::latex_multiplication_table(
 void finite_field_io::latex_matrix(
 		std::ostream &f,
 		int f_elements_exponential,
-		std::string &symbol_for_print, int *M, int m, int n)
+		std::string &symbol_for_print,
+		int *M, int m, int n)
 {
 	int i, j;
 

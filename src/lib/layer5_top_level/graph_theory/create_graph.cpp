@@ -1149,10 +1149,9 @@ void create_graph::create_Shrikhande(
 	int i, j;
 	int nb_G, nb_S;
 	long int goi;
-	int f_no_base = false;
 
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_symmetric_group(n, f_no_base, verbose_level);
+	A->Known_groups->init_symmetric_group(n, verbose_level);
 	goi = A->group_order_lint();
 
 	if (f_v) {

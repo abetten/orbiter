@@ -68,18 +68,6 @@ public:
 	int power_map_k;
 	std::string power_map_elements;
 
-#if 0
-	int f_parse_and_evaluate;
-	std::string parse_name_of_formula;
-	std::string parse_managed_variables;
-	std::string parse_text;
-	std::string parse_parameters;
-
-	int f_evaluate;
-	std::string evaluate_formula_label;
-	std::string evaluate_parameters;
-#endif
-
 
 	// Section 3.3:
 	// Extension fields:
@@ -115,10 +103,6 @@ public:
 
 	int f_RREF;
 	std::string RREF_input_matrix;
-
-	// the following two options affect nullspace and RREF:
-	//int f_normalize_from_the_right;
-	//int f_normalize_from_the_left;
 
 
 	int f_RREF_random_matrix;
@@ -176,7 +160,6 @@ public:
 	int f_EC_Koblitz_encoding;
 	std::string EC_message;
 	int EC_s;
-	// EC_b, EC_c, EC_s, EC_pt_text, EC_message
 
 	int f_EC_points;
 	std::string EC_label;
@@ -196,7 +179,6 @@ public:
 
 	int f_EC_discrete_log;
 	std::string EC_discrete_log_pt_text;
-	// EC_b, EC_c, EC_pt_text, EC_discrete_log_pt_text
 
 
 	int f_EC_baby_step_giant_step;
@@ -585,7 +567,8 @@ public:
 		int f_elements_exponential, std::string &symbol_for_print);
 	void latex_matrix(
 			std::ostream &f, int f_elements_exponential,
-			std::string &symbol_for_print, int *M, int m, int n);
+			std::string &symbol_for_print,
+			int *M, int m, int n);
 	void power_table(
 			int t, int *power_table, int len);
 	void cheat_sheet(
@@ -759,38 +742,64 @@ public:
 	int zero();
 	int one();
 	int minus_one();
-	int is_zero(int i);
-	int is_one(int i);
+	int is_zero(
+			int i);
+	int is_one(
+			int i);
 	int mult(
 			int i, int j);
 	int mult_verbose(
 			int i, int j, int verbose_level);
-	int a_over_b(int a, int b);
-	int mult3(int a1, int a2, int a3);
-	int product3(int a1, int a2, int a3);
-	int mult4(int a1, int a2, int a3, int a4);
-	int mult5(int a1, int a2, int a3, int a4, int a5);
-	int mult6(int a1, int a2, int a3, int a4, int a5, int a6);
-	int product4(int a1, int a2, int a3, int a4);
-	int product5(int a1, int a2, int a3, int a4, int a5);
-	int product_n(int *a, int n);
-	int square(int a);
-	int twice(int a);
-	int four_times(int a);
-	int Z_embedding(int k);
-	int add(int i, int j);
-	int add3(int i1, int i2, int i3);
-	int add4(int i1, int i2, int i3, int i4);
-	int add5(int i1, int i2, int i3, int i4, int i5);
-	int add6(int i1, int i2, int i3, int i4, int i5, int i6);
-	int add7(int i1, int i2, int i3, int i4, int i5, int i6,
+	int a_over_b(
+			int a, int b);
+	int mult3(
+			int a1, int a2, int a3);
+	int product3(
+			int a1, int a2, int a3);
+	int mult4(
+			int a1, int a2, int a3, int a4);
+	int mult5(
+			int a1, int a2, int a3, int a4, int a5);
+	int mult6(
+			int a1, int a2, int a3, int a4, int a5, int a6);
+	int product4(
+			int a1, int a2, int a3, int a4);
+	int product5(
+			int a1, int a2, int a3, int a4, int a5);
+	int product_n(
+			int *a, int n);
+	int square(
+			int a);
+	int twice(
+			int a);
+	int four_times(
+			int a);
+	int Z_embedding(
+			int k);
+	int add(
+			int i, int j);
+	int add3(
+			int i1, int i2, int i3);
+	int add4(
+			int i1, int i2, int i3, int i4);
+	int add5(
+			int i1, int i2, int i3, int i4, int i5);
+	int add6(
+			int i1, int i2, int i3, int i4, int i5, int i6);
+	int add7(
+			int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7);
-	int add8(int i1, int i2, int i3, int i4, int i5, int i6,
+	int add8(
+			int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8);
-	int negate(int i);
-	int inverse(int i);
-	int power(int a, int n);
-	int power_verbose(int a, int n, int verbose_level);
+	int negate(
+			int i);
+	int inverse(
+			int i);
+	int power(
+			int a, int n);
+	int power_verbose(
+			int a, int n, int verbose_level);
 		// computes a^n
 	void frobenius_power_vec(
 			int *v, int len, int frob_power);
@@ -800,21 +809,33 @@ public:
 	int frobenius_power(
 			int a, int frob_power);
 		// computes a^{p^frob_power}
-	int absolute_trace(int i);
-	int absolute_norm(int i);
-	int alpha_power(int i);
-	int log_alpha(int i);
-	int multiplicative_order(int a);
+	int absolute_trace(
+			int i);
+	int absolute_norm(
+			int i);
+	int alpha_power(
+			int i);
+	int log_alpha(
+			int i);
+	int multiplicative_order(
+			int a);
 	void all_square_roots(
 			int a, int &nb_roots, int *roots2);
-	int is_square(int i);
-	int square_root(int i);
+	int is_square(
+			int i);
+	int square_root(
+			int i);
 	int primitive_root();
-	int N2(int a);
-	int N3(int a);
-	int T2(int a);
-	int T3(int a);
-	int bar(int a);
+	int N2(
+			int a);
+	int N3(
+			int a);
+	int T2(
+			int a);
+	int T3(
+			int a);
+	int bar(
+			int a);
 	void abc2xy(
 			int a, int b, int c, int &x, int &y,
 		int verbose_level);

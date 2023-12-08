@@ -293,14 +293,14 @@ void vector_builder::init(
 	if (f_v) {
 		cout << "vector_builder::init "
 				"created vector of length " << len << endl;
-		//Lint_vec_print(cout, v, len);
-		//cout << endl;
-		Lint_vec_print_fully(cout, v, len);
+		Lint_vec_print(cout, v, len);
 		cout << endl;
+		//Lint_vec_print_fully(cout, v, len);
+		//cout << endl;
 		if (f_has_k) {
 			cout << "also seen as matrix of size "
 					<< k << " x " << len / k << endl;
-			if (k > 20) {
+			if (k > 20 || (len / k) > 20) {
 				cout << "too large to print" << endl;
 			}
 			else {

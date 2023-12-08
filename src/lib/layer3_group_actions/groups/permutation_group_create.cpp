@@ -70,9 +70,9 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = false;
 
-		A_initial->Known_groups->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_symmetric_group(
+				Descr->degree, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -99,10 +99,9 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = false;
 
 		A_initial->Known_groups->init_cyclic_group(
-				Descr->degree, f_no_base, verbose_level);
+				Descr->degree, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -129,9 +128,9 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(actions::action);
-		int f_no_base = false;
 
-		A_initial->Known_groups->init_identity_group(Descr->degree, f_no_base, verbose_level);
+		A_initial->Known_groups->init_identity_group(
+				Descr->degree, verbose_level);
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
@@ -152,6 +151,10 @@ void permutation_group_create::permutation_group_init(
 
 	else if (Descr->type == bsgs_t) {
 
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"bsgs_t" << endl;
+		}
 		A_initial = NEW_OBJECT(actions::action);
 
 		ring_theory::longinteger_object target_go;
@@ -163,20 +166,33 @@ void permutation_group_create::permutation_group_init(
 
 		Get_int_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
 
-		int f_no_base = false;
+		//int f_no_base = false;
 
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"Descr->bsgs_base=" << Descr->bsgs_base << endl;
+		}
 
 		Lint_vec_scan(Descr->bsgs_base, given_base, given_base_length);
 
 
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"before init_permutation_group_from_generators" << endl;
+		}
 		A_initial->Known_groups->init_permutation_group_from_generators(
 				Descr->degree,
 			true /* f_target_go */, target_go,
 			Descr->bsgs_nb_generators, gens,
 			given_base_length, given_base,
-			f_no_base,
+			true /* f_given_base */,
 			verbose_level);
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"after init_permutation_group_from_generators" << endl;
+		}
 
 		A_initial->Strong_gens->print_generators_in_latex_individually(cout);
 		A_initial->Strong_gens->print_generators_in_source_code();

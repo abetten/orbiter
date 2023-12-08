@@ -521,12 +521,11 @@ void finite_field::init_override_polynomial(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
-				"q=" << q_text << " verbose_level = " << verbose_level << endl;
+				"q=" << q_text
+				<< " verbose_level = " << verbose_level << endl;
 	}
 
 	finite_field::q_text.assign(q_text);
@@ -1281,7 +1280,8 @@ int finite_field::minus_one()
 	return negate(1);
 }
 
-int finite_field::is_zero(int i)
+int finite_field::is_zero(
+		int i)
 {
 	if (i == 0) {
 		return true;
@@ -1291,7 +1291,8 @@ int finite_field::is_zero(int i)
 	}
 }
 
-int finite_field::is_one(int i)
+int finite_field::is_one(
+		int i)
 {
 	if (i == 1) {
 		return true;
@@ -1346,7 +1347,8 @@ int finite_field::mult_verbose(
 	return c;
 }
 
-int finite_field::a_over_b(int a, int b)
+int finite_field::a_over_b(
+		int a, int b)
 {
 	int bv, c;
 
@@ -1359,7 +1361,8 @@ int finite_field::a_over_b(int a, int b)
 	return c;
 }
 
-int finite_field::mult3(int a1, int a2, int a3)
+int finite_field::mult3(
+		int a1, int a2, int a3)
 {
 	int x;
 	
@@ -1368,7 +1371,8 @@ int finite_field::mult3(int a1, int a2, int a3)
 	return x;
 }
 
-int finite_field::product3(int a1, int a2, int a3)
+int finite_field::product3(
+		int a1, int a2, int a3)
 {
 	int x;
 	
@@ -1377,7 +1381,8 @@ int finite_field::product3(int a1, int a2, int a3)
 	return x;
 }
 
-int finite_field::mult4(int a1, int a2, int a3, int a4)
+int finite_field::mult4(
+		int a1, int a2, int a3, int a4)
 {
 	int x;
 	
@@ -1387,7 +1392,8 @@ int finite_field::mult4(int a1, int a2, int a3, int a4)
 	return x;
 }
 
-int finite_field::mult5(int a1, int a2, int a3, int a4, int a5)
+int finite_field::mult5(
+		int a1, int a2, int a3, int a4, int a5)
 {
 	int x;
 
@@ -1398,7 +1404,8 @@ int finite_field::mult5(int a1, int a2, int a3, int a4, int a5)
 	return x;
 }
 
-int finite_field::mult6(int a1, int a2, int a3, int a4, int a5, int a6)
+int finite_field::mult6(
+		int a1, int a2, int a3, int a4, int a5, int a6)
 {
 	int x;
 
@@ -1410,7 +1417,8 @@ int finite_field::mult6(int a1, int a2, int a3, int a4, int a5, int a6)
 	return x;
 }
 
-int finite_field::product4(int a1, int a2, int a3, int a4)
+int finite_field::product4(
+		int a1, int a2, int a3, int a4)
 {
 	int x;
 	
@@ -1420,7 +1428,8 @@ int finite_field::product4(int a1, int a2, int a3, int a4)
 	return x;
 }
 
-int finite_field::product5(int a1, int a2, int a3, int a4, int a5)
+int finite_field::product5(
+		int a1, int a2, int a3, int a4, int a5)
 {
 	int x;
 	
@@ -1431,7 +1440,8 @@ int finite_field::product5(int a1, int a2, int a3, int a4, int a5)
 	return x;
 }
 
-int finite_field::product_n(int *a, int n)
+int finite_field::product_n(
+		int *a, int n)
 {
 	int x, i;
 
@@ -1445,12 +1455,14 @@ int finite_field::product_n(int *a, int n)
 	return x;
 }
 
-int finite_field::square(int a)
+int finite_field::square(
+		int a)
 {
 	return mult(a, a);
 }
 
-int finite_field::twice(int a)
+int finite_field::twice(
+		int a)
 {
 	int two;
 	
@@ -1458,7 +1470,8 @@ int finite_field::twice(int a)
 	return mult(two, a);
 }
 
-int finite_field::four_times(int a)
+int finite_field::four_times(
+		int a)
 {
 	int four;
 	
@@ -1466,7 +1479,8 @@ int finite_field::four_times(int a)
 	return mult(four, a);
 }
 
-int finite_field::Z_embedding(int k)
+int finite_field::Z_embedding(
+		int k)
 {
 	int a;
 	
@@ -1474,9 +1488,9 @@ int finite_field::Z_embedding(int k)
 	return a;
 }
 
-int finite_field::add(int i, int j)
+int finite_field::add(
+		int i, int j)
 {
-	//geometry::geometry_global Gg;
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int c;
@@ -1500,7 +1514,8 @@ int finite_field::add(int i, int j)
 	return c;
 }
 
-int finite_field::add3(int i1, int i2, int i3)
+int finite_field::add3(
+		int i1, int i2, int i3)
 {
 	int x;
 	
@@ -1509,7 +1524,8 @@ int finite_field::add3(int i1, int i2, int i3)
 	return x;
 }
 
-int finite_field::add4(int i1, int i2, int i3, int i4)
+int finite_field::add4(
+		int i1, int i2, int i3, int i4)
 {
 	int x;
 	
@@ -1519,7 +1535,8 @@ int finite_field::add4(int i1, int i2, int i3, int i4)
 	return x;
 }
 
-int finite_field::add5(int i1, int i2, int i3, int i4, int i5)
+int finite_field::add5(
+		int i1, int i2, int i3, int i4, int i5)
 {
 	int x;
 	
@@ -1530,7 +1547,8 @@ int finite_field::add5(int i1, int i2, int i3, int i4, int i5)
 	return x;
 }
 
-int finite_field::add6(int i1, int i2, int i3, int i4, int i5, int i6)
+int finite_field::add6(
+		int i1, int i2, int i3, int i4, int i5, int i6)
 {
 	int x;
 	
@@ -1542,7 +1560,8 @@ int finite_field::add6(int i1, int i2, int i3, int i4, int i5, int i6)
 	return x;
 }
 
-int finite_field::add7(int i1, int i2, int i3, int i4, int i5, int i6, int i7)
+int finite_field::add7(
+		int i1, int i2, int i3, int i4, int i5, int i6, int i7)
 {
 	int x;
 	
@@ -1555,7 +1574,8 @@ int finite_field::add7(int i1, int i2, int i3, int i4, int i5, int i6, int i7)
 	return x;
 }
 
-int finite_field::add8(int i1, int i2, int i3, int i4, int i5,
+int finite_field::add8(
+		int i1, int i2, int i3, int i4, int i5,
 		int i6, int i7, int i8)
 {
 	int x;
@@ -1570,7 +1590,8 @@ int finite_field::add8(int i1, int i2, int i3, int i4, int i5,
 	return x;
 }
 
-int finite_field::negate(int i)
+int finite_field::negate(
+		int i)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1598,7 +1619,8 @@ int finite_field::negate(int i)
 	return c;
 }
 
-int finite_field::inverse(int i)
+int finite_field::inverse(
+		int i)
 {
 	int c;
 	int verbose_level = 0;
@@ -1621,7 +1643,8 @@ int finite_field::inverse(int i)
 	return c;
 }
 
-int finite_field::power(int a, int n)
+int finite_field::power(
+		int a, int n)
 // computes a^n
 {
 	int r;
@@ -1631,7 +1654,8 @@ int finite_field::power(int a, int n)
 	return r;
 }
 
-int finite_field::power_verbose(int a, int n, int verbose_level)
+int finite_field::power_verbose(
+		int a, int n, int verbose_level)
 // computes a^n
 {
 	int f_v = (verbose_level >= 1);
@@ -1710,7 +1734,8 @@ int finite_field::frobenius_power(
 	return a;
 }
 
-int finite_field::absolute_trace(int i)
+int finite_field::absolute_trace(
+		int i)
 {
 	int j, ii = i, t = 0;
 	
@@ -1739,7 +1764,8 @@ int finite_field::absolute_trace(int i)
 	return t;
 }
 
-int finite_field::absolute_norm(int i)
+int finite_field::absolute_norm(
+		int i)
 {
 	int j, ii = i, t = 1;
 	
@@ -1761,7 +1787,8 @@ int finite_field::absolute_norm(int i)
 	return t;
 }
 
-int finite_field::alpha_power(int i)
+int finite_field::alpha_power(
+		int i)
 {
 	if (!f_has_table) {
 		cout << "finite_field::alpha_power !f_has_table" << endl;
@@ -1770,7 +1797,8 @@ int finite_field::alpha_power(int i)
 	return T->alpha_power(i);
 }
 
-int finite_field::log_alpha(int i)
+int finite_field::log_alpha(
+		int i)
 {
 	if (!f_has_table) {
 		cout << "finite_field::log_alpha !f_has_table" << endl;
@@ -1779,7 +1807,8 @@ int finite_field::log_alpha(int i)
 	return T->log_alpha(i);
 }
 
-int finite_field::multiplicative_order(int a)
+int finite_field::multiplicative_order(
+		int a)
 {
 	int l, g, order;
 	number_theory::number_theory_domain NT;
@@ -1827,7 +1856,8 @@ void finite_field::all_square_roots(
 	}
 }
 
-int finite_field::is_square(int i)
+int finite_field::is_square(
+		int i)
 {
 	int r;
 
@@ -1839,7 +1869,8 @@ int finite_field::is_square(int i)
 }
 
 
-int finite_field::square_root(int i)
+int finite_field::square_root(
+		int i)
 {
 	int r, root;
 
@@ -1859,7 +1890,8 @@ int finite_field::primitive_root()
 	return alpha;
 }
 
-int finite_field::N2(int a)
+int finite_field::N2(
+		int a)
 {
 	int r;
 	int b, c;
@@ -1875,7 +1907,8 @@ int finite_field::N2(int a)
 	return c;
 }
 
-int finite_field::N3(int a)
+int finite_field::N3(
+		int a)
 {
 	int r;
 	int b, c;
@@ -1893,7 +1926,8 @@ int finite_field::N3(int a)
 	return c;
 }
 
-int finite_field::T2(int a)
+int finite_field::T2(
+		int a)
 {
 	int r;
 	int b, c;
@@ -1910,7 +1944,8 @@ int finite_field::T2(int a)
 	return c;
 }
 
-int finite_field::T3(int a)
+int finite_field::T3(
+		int a)
 {
 	int r;
 	int b, c;
@@ -1928,7 +1963,8 @@ int finite_field::T3(int a)
 	return c;
 }
 
-int finite_field::bar(int a)
+int finite_field::bar(
+		int a)
 {
 	int r;
 	int b;
