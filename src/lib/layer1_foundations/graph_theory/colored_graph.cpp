@@ -2896,6 +2896,7 @@ void colored_graph::all_cliques_black_and_white(
 		ost_csv << endl;
 
 		for (size_t i = 0; i < solutions.size(); ++i) {
+			ost_csv << i << ",";
 			for (size_t j = 0; j < solutions[i].size(); ++j) {
 				ost_csv << points[solutions[i][j]];
 				if (j < solutions[i].size() - 1) {
