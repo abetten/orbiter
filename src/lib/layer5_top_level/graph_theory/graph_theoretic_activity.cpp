@@ -415,6 +415,8 @@ void graph_theoretic_activity::perform_activity(
 
 			FREE_int(M);
 			FREE_OBJECT(Subgraph);
+			FREE_OBJECT(color_subset);
+			FREE_OBJECT(vertex_subset);
 
 			nb_sol_total += nb_sol;
 
@@ -491,12 +493,14 @@ void graph_theoretic_activity::perform_activity(
 				}
 				for (j = 0; j < width; j++) {
 					a = M[i * width + j];
-					Sol[cur * sz + Reps->Set_size[c] + j] = vertex_subset->set[a];
+					Sol[cur * sz + Reps->Set_size[c] + j] = Subgraph->points[a];
 				}
 
 			}
 			FREE_int(M);
 			FREE_OBJECT(Subgraph);
+			FREE_OBJECT(color_subset);
+			FREE_OBJECT(vertex_subset);
 		}
 
 		string fname_out;
