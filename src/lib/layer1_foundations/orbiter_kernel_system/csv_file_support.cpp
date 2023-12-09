@@ -1872,6 +1872,7 @@ void csv_file_support::read_column_and_parse(
 	}
 	{
 		data_structures::spreadsheet S;
+		data_structures::string_tools ST;
 		int idx;
 		int nb_sets;
 		int i;
@@ -1895,14 +1896,39 @@ void csv_file_support::read_column_and_parse(
 
 		for (i = 0; i < nb_sets; i++) {
 
-			string str;
+			if (f_v) {
+				cout << "csv_file_support::read_column_and_parse "
+						"i= " << i << " / " << nb_sets << endl;
+			}
+
+
+			string str1, str2;
 			long int *set;
 			int sz;
 
-			S.get_string(str, i + 1, idx);
+			S.get_string(str1, i + 1, idx);
 
-			Lint_vec_scan(str, set, sz);
+			if (f_v) {
+				cout << "csv_file_support::read_column_and_parse "
+						"str1 = " << str1 << endl;
+			}
 
+			ST.drop_quotes(
+					str1, str2);
+
+			if (f_v) {
+				cout << "csv_file_support::read_column_and_parse "
+						"str2 = " << str2 << endl;
+			}
+
+			Lint_vec_scan(str2, set, sz);
+
+			if (f_v) {
+				cout << "csv_file_support::read_column_and_parse "
+						"str = ";
+				Lint_vec_print(cout, set, sz);
+				cout << endl;
+			}
 			SoS->Sets[i] = set;
 			SoS->Set_size[i] = sz;
 
