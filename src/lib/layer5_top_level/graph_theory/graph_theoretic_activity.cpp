@@ -434,6 +434,7 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "combining solutions nb_sol_total = " << nb_sol_total << endl;
+			cout << "combining solutions sz = " << sz << endl;
 		}
 
 		int *Sol;
@@ -501,6 +502,10 @@ void graph_theoretic_activity::perform_activity(
 			FREE_OBJECT(Subgraph);
 			FREE_OBJECT(color_subset);
 			FREE_OBJECT(vertex_subset);
+		}
+		if (cur != nb_sol_total) {
+			cout << "cur != nb_sol_total" << endl;
+			exit(1);
 		}
 
 		string fname_out;
