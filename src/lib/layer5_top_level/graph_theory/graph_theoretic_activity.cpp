@@ -413,11 +413,6 @@ void graph_theoretic_activity::perform_activity(
 				cout << endl;
 			}
 
-			FREE_int(M);
-			FREE_OBJECT(Subgraph);
-			FREE_OBJECT(color_subset);
-			FREE_OBJECT(vertex_subset);
-
 			nb_sol_total += nb_sol;
 
 			sz1 = Reps->Set_size[c] + width;
@@ -429,6 +424,12 @@ void graph_theoretic_activity::perform_activity(
 				cout << "sz1 != sz" << endl;
 				exit(1);
 			}
+
+			FREE_int(M);
+			FREE_OBJECT(Subgraph);
+			FREE_OBJECT(color_subset);
+			FREE_OBJECT(vertex_subset);
+
 
 		}
 
@@ -483,8 +484,6 @@ void graph_theoretic_activity::perform_activity(
 			}
 
 
-			nb_sol_total += nb_sol;
-
 
 			int i, j;
 
@@ -505,6 +504,8 @@ void graph_theoretic_activity::perform_activity(
 		}
 		if (cur != nb_sol_total) {
 			cout << "cur != nb_sol_total" << endl;
+			cout << "cur = " << cur << endl;
+			cout << "nb_sol_total = " << nb_sol_total << endl;
 			exit(1);
 		}
 
