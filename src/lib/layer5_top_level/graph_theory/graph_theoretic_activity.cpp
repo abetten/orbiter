@@ -403,7 +403,7 @@ void graph_theoretic_activity::perform_activity(
 
 			Fio.Csv_file_support->int_matrix_read_csv(
 					fname_sol, M,
-					nb_sol, width, verbose_level);
+					nb_sol, width, verbose_level - 2);
 
 
 			if (f_v) {
@@ -471,7 +471,7 @@ void graph_theoretic_activity::perform_activity(
 
 			Fio.Csv_file_support->int_matrix_read_csv(
 					fname_sol, M,
-					nb_sol, width, verbose_level);
+					nb_sol, width, verbose_level - 2);
 
 
 			if (f_v) {

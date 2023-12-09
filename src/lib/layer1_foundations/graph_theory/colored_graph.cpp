@@ -1592,7 +1592,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 			color_in_graph[vertex_subset->k * nb_colors_per_vertex + j] = c;
 			color_subset->add_element(c);
 		}
-		point_labels[vertex_subset->k] = points[i];
+		point_labels[vertex_subset->k] = i; //points[i];
 		vertex_subset->add_element(i);
 	}
 
