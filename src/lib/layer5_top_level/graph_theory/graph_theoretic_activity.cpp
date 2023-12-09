@@ -356,6 +356,19 @@ void graph_theoretic_activity::perform_activity(
 			cout << "We found " << Reps->nb_sets << " cases for splitting" << endl;
 		}
 
+		if (Reps->nb_sets == 0) {
+			cout << "Reps->nb_sets == 0" << endl;
+			exit(1);
+		}
+
+		int starter_size;
+
+		starter_size = Reps->Set_size[0];
+
+		int nb_sol_total, sz;
+
+		nb_sol_total = 0;
+
 		for (c = 0; c < Reps->nb_sets; c++) {
 
 			if (false) {
@@ -380,6 +393,7 @@ void graph_theoretic_activity::perform_activity(
 
 			int *M;
 			int nb_sol, width;
+			int sz1;
 
 			Fio.Csv_file_support->int_matrix_read_csv(
 					fname_sol, M,
@@ -392,8 +406,101 @@ void graph_theoretic_activity::perform_activity(
 
 			FREE_int(M);
 
+			nb_sol_total += nb_sol;
+
+			sz1 = Reps->Set_size[c] + width;
+
+			if (c == 0) {
+				sz = sz1;
+			}
+			else if (sz1 != sz) {
+				cout << "sz1 != sz" << endl;
+				exit(1);
+			}
 
 		}
+
+		if (f_v) {
+			cout << "combining solutions nb_sol_total = " << nb_sol_total << endl;
+		}
+
+		int *Sol;
+		int cur;
+
+		Sol = NEW_int(nb_sol_total * sz);
+
+		cur = 0;
+
+		for (c = 0; c < Reps->nb_sets; c++) {
+
+			if (false) {
+				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
+			}
+
+			graph_theory::colored_graph *Subgraph;
+			data_structures::fancy_set *color_subset;
+			data_structures::fancy_set *vertex_subset;
+
+
+			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+					Reps->Sets[c], Reps->Set_size[c],
+					vertex_subset, color_subset,
+					verbose_level - 2);
+
+
+			string fname_sol;
+
+
+			fname_sol = CG->label + "_case_" + std::to_string(c) + "_sol.csv";
+
+			int *M;
+			int nb_sol, width;
+			int sz1, a;
+
+			Fio.Csv_file_support->int_matrix_read_csv(
+					fname_sol, M,
+					nb_sol, width, verbose_level);
+
+
+			if (f_v) {
+				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << " with " << nb_sol << " solutions" << endl;
+			}
+
+
+			nb_sol_total += nb_sol;
+
+			sz1 = Reps->Set_size[c] + width;
+
+			int i, j;
+
+			for (i = 0; i < nb_sol; i++, cur++) {
+				for (j = 0; j < Reps->Set_size[c]; j++) {
+					Sol[cur * sz + j] = Reps->Sets[c][j];
+				}
+				for (j = 0; j < width; j++) {
+					a = M[i * width + j];
+					Sol[cur * sz + Reps->Set_size[c] + j] = vertex_subset->set[a];
+				}
+
+			}
+			FREE_int(M);
+		}
+
+		string fname_out;
+
+		fname_out = CG->label + "_split_" + std::to_string(starter_size) + "_sol.csv";
+
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname_out, Sol,
+				nb_sol_total, sz);
+
+		if (f_v) {
+			cout << "Written file " << fname_out << " of size "
+					<< Fio.file_size(fname_out) << endl;
+		}
+
+
+
 	}
 
 	else if (Descr->f_split_by_clique) {
