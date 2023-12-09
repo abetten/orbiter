@@ -493,7 +493,7 @@ void graph_theoretic_activity::perform_activity(
 				}
 				for (j = 0; j < width; j++) {
 					a = M[i * width + j];
-					Sol[cur * sz + Reps->Set_size[c] + j] = Subgraph->points[a];
+					Sol[cur * sz + Reps->Set_size[c] + j] = a;
 				}
 
 			}
