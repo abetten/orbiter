@@ -364,6 +364,9 @@ void graph_theoretic_activity::perform_activity(
 		int starter_size;
 
 		starter_size = Reps->Set_size[0];
+		if (f_v) {
+			cout << "starter_size = " << starter_size << endl;
+		}
 
 		int nb_sol_total, sz;
 
@@ -373,6 +376,9 @@ void graph_theoretic_activity::perform_activity(
 
 			if (false) {
 				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
+				cout << "starter set = ";
+				Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+				cout << endl;
 			}
 
 			graph_theory::colored_graph *Subgraph;
@@ -402,9 +408,13 @@ void graph_theoretic_activity::perform_activity(
 
 			if (f_v) {
 				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << " with " << nb_sol << " solutions" << endl;
+				cout << "starter set = ";
+				Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+				cout << endl;
 			}
 
 			FREE_int(M);
+			FREE_OBJECT(Subgraph);
 
 			nb_sol_total += nb_sol;
 
@@ -455,7 +465,7 @@ void graph_theoretic_activity::perform_activity(
 
 			int *M;
 			int nb_sol, width;
-			int sz1, a;
+			int a;
 
 			Fio.Csv_file_support->int_matrix_read_csv(
 					fname_sol, M,
@@ -464,12 +474,14 @@ void graph_theoretic_activity::perform_activity(
 
 			if (f_v) {
 				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << " with " << nb_sol << " solutions" << endl;
+				cout << "starter set = ";
+				Lint_vec_print(cout, Reps->Sets[c], Reps->Set_size[c]);
+				cout << endl;
 			}
 
 
 			nb_sol_total += nb_sol;
 
-			sz1 = Reps->Set_size[c] + width;
 
 			int i, j;
 
@@ -484,6 +496,7 @@ void graph_theoretic_activity::perform_activity(
 
 			}
 			FREE_int(M);
+			FREE_OBJECT(Subgraph);
 		}
 
 		string fname_out;
@@ -499,7 +512,7 @@ void graph_theoretic_activity::perform_activity(
 					<< Fio.file_size(fname_out) << endl;
 		}
 
-
+		FREE_int(Sol);
 
 	}
 
