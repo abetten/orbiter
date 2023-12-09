@@ -44,6 +44,11 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	//std::string split_by_starters_fname_reps;
 	//std::string split_by_starters_col_label;
 
+	f_combine_by_starters = false;
+	//std::string combine_by_starters_fname_reps;
+	//std::string combine_by_starters_col_label;
+
+
 	f_split_by_clique = false;
 	//std::string split_by_clique_label;
 	//std::string split_by_clique_set;
@@ -79,7 +84,7 @@ int graph_theoretic_activity_description::read_arguments(
 		if (ST.stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = true;
 			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
-			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
+			i += Clique_finder_control->parse_arguments(argc - i - 1, argv + i + 1);
 		}
 		else if (ST.stringcmp(argv[i], "-find_subgraph") == 0) {
 			f_find_subgraph = true;
@@ -138,6 +143,14 @@ int graph_theoretic_activity_description::read_arguments(
 			split_by_starters_col_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-combine_by_starters") == 0) {
+			f_combine_by_starters = true;
+			combine_by_starters_fname_reps.assign(argv[++i]);
+			combine_by_starters_col_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-combine_by_starters " << combine_by_starters_fname_reps << " " << combine_by_starters_col_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-split_by_clique") == 0) {
@@ -229,6 +242,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_split_by_starters) {
 		cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
+	}
+	if (f_combine_by_starters) {
+		cout << "-combine_by_starters " << combine_by_starters_fname_reps << " " << combine_by_starters_col_label << endl;
 	}
 	if (f_split_by_clique) {
 		cout << "-split_by_clique " << split_by_clique_label << " " << split_by_clique_set << endl;

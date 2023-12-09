@@ -212,6 +212,34 @@ public:
 			std::string &headings,
 			int verbose_level);
 
+	void read_column_and_parse(
+			std::string &fname, std::string &col_label,
+			data_structures::set_of_sets *&SoS,
+			int verbose_level);
+	void save_fibration(
+			std::vector<std::vector<std::pair<int, int> > > &Fibration,
+			std::string &fname, int verbose_level);
+	void save_cumulative_canonical_labeling(
+			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+			std::string &fname, int verbose_level);
+	void save_cumulative_ago(
+			std::vector<long int> &Cumulative_Ago,
+			std::string &fname, int verbose_level);
+	void save_cumulative_data(
+			std::vector<std::vector<int> > &Cumulative_data,
+			std::string &fname, int verbose_level);
+	void write_characteristic_matrix(
+			std::string &fname,
+			long int *data, int nb_rows, int data_sz, int nb_cols,
+			int verbose_level);
+	void split_by_values(
+			std::string &fname_in, int verbose_level);
+	void change_values(
+			std::string &fname_in, std::string &fname_out,
+			std::string &input_values,
+			std::string &output_values,
+			int verbose_level);
+
 
 };
 
@@ -313,10 +341,6 @@ public:
 
 
 
-	void read_column_and_parse(
-			std::string &fname, std::string &col_label,
-			data_structures::set_of_sets *&SoS,
-			int verbose_level);
 	void int_matrix_write_cas_friendly(
 			std::string &fname, int *M, int m, int n);
 	void int_matrix_write_text(
@@ -453,22 +477,6 @@ public:
 
 	void read_solutions_and_tally(
 			std::string &fname, int sz, int verbose_level);
-	void save_fibration(
-			std::vector<std::vector<std::pair<int, int> > > &Fibration,
-			std::string &fname, int verbose_level);
-	void save_cumulative_canonical_labeling(
-			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
-			std::string &fname, int verbose_level);
-	void save_cumulative_ago(
-			std::vector<long int> &Cumulative_Ago,
-			std::string &fname, int verbose_level);
-	void save_cumulative_data(
-			std::vector<std::vector<int> > &Cumulative_data,
-			std::string &fname, int verbose_level);
-	void write_characteristic_matrix(
-			std::string &fname,
-			long int *data, int nb_rows, int data_sz, int nb_cols,
-			int verbose_level);
 	void extract_from_makefile(
 			std::string &fname,
 			std::string &label,
@@ -488,13 +496,6 @@ public:
 					void *final_test_data, int verbose_level),
 			void *final_test_data,
 			int verbose_level);
-	void split_by_values(
-			std::string &fname_in, int verbose_level);
-	void change_values(
-			std::string &fname_in, std::string &fname_out,
-			std::string &input_values,
-			std::string &output_values,
-			int verbose_level);
 	void read_file_as_array_of_strings(
 			std::string &fname,
 		std::string *&Lines,
@@ -511,6 +512,7 @@ public:
 			std::vector<std::vector<int> > &Error1,
 			std::vector<std::vector<int> > &Error2,
 		int verbose_level);
+
 
 
 

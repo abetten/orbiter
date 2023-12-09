@@ -1404,13 +1404,13 @@ void interface_toolkit::worker(int verbose_level)
 
 		if (f_v) {
 			cout << "interface_toolkit::worker "
-					"before Fio.split_by_values" << endl;
+					"before Fio.Csv_file_support->split_by_values" << endl;
 		}
-		Fio.split_by_values(
+		Fio.Csv_file_support->split_by_values(
 				split_by_values_fname_in, verbose_level);
 		if (f_v) {
 			cout << "interface_toolkit::worker "
-					"after Fio.split_by_values" << endl;
+					"after Fio.Csv_file_support->split_by_values" << endl;
 		}
 
 
@@ -1425,9 +1425,9 @@ void interface_toolkit::worker(int verbose_level)
 
 		if (f_v) {
 			cout << "interface_toolkit::worker "
-					"before Fio.change_values" << endl;
+					"before Fio.Csv_file_support->change_values" << endl;
 		}
-		Fio.change_values(
+		Fio.Csv_file_support->change_values(
 				change_values_fname_in,
 				change_values_fname_out,
 				change_values_function_input,
@@ -1435,7 +1435,7 @@ void interface_toolkit::worker(int verbose_level)
 				verbose_level);
 		if (f_v) {
 			cout << "interface_toolkit::worker "
-					"after Fio.change_values" << endl;
+					"after Fio.Csv_file_support->change_values" << endl;
 		}
 
 

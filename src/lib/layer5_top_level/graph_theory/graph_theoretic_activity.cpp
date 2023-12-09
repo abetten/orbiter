@@ -87,7 +87,8 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"Gr->label=" << CG->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+					"Gr->label=" << CG->label
+					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
 	}
@@ -209,7 +210,9 @@ void graph_theoretic_activity::perform_activity(
 
 		ST.replace_extension_with(fname_csv, ".gv");
 
-		cout << "exporting to gv as " << fname_csv << endl;
+		if (f_v) {
+			cout << "exporting to gv as " << fname_csv << endl;
+		}
 
 
 		CG->export_to_graphviz(fname_csv, verbose_level);
@@ -242,7 +245,10 @@ void graph_theoretic_activity::perform_activity(
 	}
 
 	else if (Descr->f_split) {
-		cout << "splitting by file " << Descr->split_by_file << endl;
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_file << endl;
+		}
+
 		orbiter_kernel_system::file_io Fio;
 		long int *Split;
 		int m, n;
@@ -252,10 +258,14 @@ void graph_theoretic_activity::perform_activity(
 
 		Fio.Csv_file_support->lint_matrix_read_csv(
 				Descr->split_by_file, Split, m, n, verbose_level - 2);
-		cout << "We found " << m << " cases for splitting" << endl;
+		if (f_v) {
+			cout << "We found " << m << " cases for splitting" << endl;
+		}
 		for (c = 0; c < m; c++) {
 
-			cout << "splitting case " << c << " / " << m << ":" << endl;
+			if (f_v) {
+				cout << "splitting case " << c << " / " << m << ":" << endl;
+			}
 			a = Split[2 * c + 0];
 
 			graph_theory::colored_graph *Subgraph;
@@ -264,7 +274,7 @@ void graph_theoretic_activity::perform_activity(
 
 			Subgraph = CG->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset,
-					verbose_level);
+					verbose_level - 2);
 
 			string fname_out;
 
@@ -279,24 +289,31 @@ void graph_theoretic_activity::perform_activity(
 	}
 
 	else if (Descr->f_split_by_starters) {
-		cout << "splitting by file " << Descr->split_by_starters_fname_reps
-				<< " column " << Descr->split_by_starters_col_label << endl;
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_starters_fname_reps
+					<< " column " << Descr->split_by_starters_col_label << endl;
+		}
 		orbiter_kernel_system::file_io Fio;
 		data_structures::set_of_sets *Reps;
 		//string_tools ST;
 		int c;
 
 
-		Fio.read_column_and_parse(Descr->split_by_starters_fname_reps,
+		Fio.Csv_file_support->read_column_and_parse(
+				Descr->split_by_starters_fname_reps,
 				Descr->split_by_starters_col_label,
 				Reps, verbose_level);
 
 
-		cout << "We found " << Reps->nb_sets << " cases for splitting" << endl;
+		if (f_v) {
+			cout << "We found " << Reps->nb_sets << " cases for splitting" << endl;
+		}
 
 		for (c = 0; c < Reps->nb_sets; c++) {
 
-			cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
+			if (f_v) {
+				cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
+			}
 
 			graph_theory::colored_graph *Subgraph;
 			data_structures::fancy_set *color_subset;
@@ -306,22 +323,84 @@ void graph_theoretic_activity::perform_activity(
 			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
 					Reps->Sets[c], Reps->Set_size[c],
 					vertex_subset, color_subset,
-					verbose_level);
+					verbose_level - 2);
 
 			string fname_out;
 
-			fname_out.assign(CG->label);
-			//ST.chop_off_extension(fname_out);
-
-			fname_out += "_case_" + std::to_string(c) + ".bin";
+			fname_out = CG->label + "_case_" + std::to_string(c) + ".bin";
 
 
 			Subgraph->save(fname_out, verbose_level - 2);
 		}
 	}
+
+
+	else if (Descr->f_combine_by_starters) {
+		if (f_v) {
+			cout << "combining by file " << Descr->combine_by_starters_fname_reps
+					<< " column " << Descr->combine_by_starters_col_label << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		data_structures::set_of_sets *Reps;
+		//string_tools ST;
+		int c;
+
+
+		Fio.Csv_file_support->read_column_and_parse(
+				Descr->combine_by_starters_fname_reps,
+				Descr->combine_by_starters_col_label,
+				Reps, verbose_level);
+
+
+		if (f_v) {
+			cout << "We found " << Reps->nb_sets << " cases for splitting" << endl;
+		}
+
+		for (c = 0; c < Reps->nb_sets; c++) {
+
+			if (false) {
+				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
+			}
+
+			graph_theory::colored_graph *Subgraph;
+			data_structures::fancy_set *color_subset;
+			data_structures::fancy_set *vertex_subset;
+
+
+			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+					Reps->Sets[c], Reps->Set_size[c],
+					vertex_subset, color_subset,
+					verbose_level - 2);
+
+
+			string fname_sol;
+
+
+			fname_sol = CG->label + "_case_" + std::to_string(c) + "_sol.csv";
+
+			int *M;
+			int nb_sol, width;
+
+			Fio.Csv_file_support->int_matrix_read_csv(
+					fname_sol, M,
+					nb_sol, width, verbose_level);
+
+
+			if (f_v) {
+				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << " with " << nb_sol << " solutions" << endl;
+			}
+
+			FREE_int(M);
+
+
+		}
+	}
+
 	else if (Descr->f_split_by_clique) {
-		cout << "splitting by clique " << Descr->split_by_clique_label
-				<< " clique " << Descr->split_by_clique_set << endl;
+		if (f_v) {
+			cout << "splitting by clique " << Descr->split_by_clique_label
+					<< " clique " << Descr->split_by_clique_set << endl;
+		}
 
 		long int *set;
 		int sz;
@@ -342,9 +421,8 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname_base, fname_out, fname_subset;
 
-		fname_base = CG->label;
 
-		fname_base += "_" + Descr->split_by_clique_label;
+		fname_base = CG->label + "_" + Descr->split_by_clique_label;
 
 		fname_out = fname_base + ".graph";
 

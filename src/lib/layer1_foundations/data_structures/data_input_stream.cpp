@@ -916,11 +916,13 @@ void data_input_stream::read_objects(int verbose_level)
 			col_label.assign("REP");
 
 
-			Fio.read_column_and_parse(cases_fname,
+			Fio.Csv_file_support->read_column_and_parse(
+					cases_fname,
 					col_label,
 					Reps, verbose_level);
 			if (!Reps->has_constant_size_property()) {
-				cout << "data_input_stream::read_objects the sets have different sizes" << endl;
+				cout << "data_input_stream::read_objects "
+						"the sets have different sizes" << endl;
 				exit(1);
 			}
 			prefix_sz = Reps->Set_size[0];
@@ -955,7 +957,8 @@ void data_input_stream::read_objects(int verbose_level)
 				}
 				if (nb_sol) {
 					if (!SoS->has_constant_size_property()) {
-						cout << "data_input_stream::read_objects the sets have different sizes" << endl;
+						cout << "data_input_stream::read_objects "
+								"the sets have different sizes" << endl;
 						exit(1);
 					}
 					sol_width = SoS->Set_size[0];
@@ -1002,7 +1005,8 @@ void data_input_stream::read_objects(int verbose_level)
 	}
 
 	if (nb_objects_to_test != Objects.size()) {
-		cout << "data_input_stream::read_objects nb_objects_to_test != Objects.size()" << endl;
+		cout << "data_input_stream::read_objects "
+				"nb_objects_to_test != Objects.size()" << endl;
 		exit(1);
 	}
 

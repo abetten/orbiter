@@ -171,6 +171,11 @@ void design_activity::do_extract_solutions_by_index(
 
 	AG = Get_object_of_type_any_group(group_label);
 
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index "
+				"before Combi.load_design_table" << endl;
+	}
+
 	Combi.load_design_table(DC,
 			label,
 			T,
@@ -178,7 +183,8 @@ void design_activity::do_extract_solutions_by_index(
 			verbose_level);
 
 	if (f_v) {
-		cout << "design_activity::do_extract_solutions_by_index after Combi.load_design_table" << endl;
+		cout << "design_activity::do_extract_solutions_by_index "
+				"after Combi.load_design_table" << endl;
 	}
 
 	int *prefix;
