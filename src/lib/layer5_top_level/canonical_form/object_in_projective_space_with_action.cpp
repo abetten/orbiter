@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 
@@ -78,7 +78,7 @@ void object_in_projective_space_with_action::print()
 
 void object_in_projective_space_with_action::report(
 		std::ostream &fp,
-		projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth, int verbose_level)
 // includes the TDO
 {

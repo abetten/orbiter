@@ -16,8 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace applications_in_algebraic_geometry {
-namespace quartic_curves {
+namespace canonical_form {
 
 
 
@@ -99,6 +98,7 @@ void quartic_curve_object_with_action::init_image_of(
 		actions::action *A_on_lines,
 		int *eqn2,
 		int verbose_level)
+// we are not mapping the equation
 {
 	int f_v = (verbose_level >= 1);
 
@@ -190,7 +190,7 @@ std::string quartic_curve_object_with_action::stringify_bitangents()
 }
 
 
-}}}}
+}}}
 
 
 

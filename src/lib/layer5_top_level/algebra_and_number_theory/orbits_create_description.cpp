@@ -151,7 +151,7 @@ int orbits_create_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
 			f_classification_by_canonical_form = true;
-			Canonical_form_classifier_description = NEW_OBJECT(projective_geometry::canonical_form_classifier_description);
+			Canonical_form_classifier_description = NEW_OBJECT(canonical_form::canonical_form_classifier_description);
 			if (f_v) {
 				cout << "-classification_by_canonical_form" << endl;
 			}

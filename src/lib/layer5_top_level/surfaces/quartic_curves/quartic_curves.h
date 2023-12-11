@@ -424,53 +424,6 @@ public:
 
 
 
-// #############################################################################
-// quartic_curve_object_with_action.cpp
-// #############################################################################
-
-
-
-
-//! a quartic curve with bitangents and equation. There is another class of the same name in layer1_foundations::algebraic_geometry
-
-
-
-class quartic_curve_object_with_action {
-
-public:
-
-	int cnt;
-	int po_go;
-	int po_index;
-	int po;
-	int so;
-
-	std::vector<std::string> Carrying_through;
-
-	algebraic_geometry::quartic_curve_object *Quartic_curve_object;
-
-
-	quartic_curve_object_with_action();
-	~quartic_curve_object_with_action();
-	void init(
-			int cnt, int po_go, int po_index, int po, int so,
-			ring_theory::homogeneous_polynomial_domain *Poly_ring,
-			std::string &eqn_txt,
-			std::string &pts_txt, std::string &bitangents_txt,
-			int verbose_level);
-	void init_image_of(
-			quartic_curve_object_with_action *old_one,
-			int *Elt,
-			actions::action *A,
-			actions::action *A_on_lines,
-			int *eqn2,
-			int verbose_level);
-	void print(
-			std::ostream &ost);
-	std::string stringify_Pts();
-	std::string stringify_bitangents();
-
-};
 
 
 

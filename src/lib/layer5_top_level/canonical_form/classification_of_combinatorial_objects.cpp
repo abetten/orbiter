@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_combinatorics {
+namespace canonical_form {
 
 
 

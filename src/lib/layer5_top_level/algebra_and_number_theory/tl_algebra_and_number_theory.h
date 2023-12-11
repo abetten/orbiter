@@ -1265,7 +1265,7 @@ public:
 	std::string of_one_polynomial_equation;
 
 	int f_classification_by_canonical_form;
-	projective_geometry::canonical_form_classifier_description
+	canonical_form::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
 
 	int f_override_generators;
@@ -1322,7 +1322,7 @@ public:
 	orbits_on_polynomials *Of_One_polynomial;
 
 	int f_has_classification_by_canonical_form;
-	projective_geometry::canonical_form_classifier *Canonical_form_classifier;
+	canonical_form::canonical_form_classifier *Canonical_form_classifier;
 
 	orbits_create();
 	~orbits_create();

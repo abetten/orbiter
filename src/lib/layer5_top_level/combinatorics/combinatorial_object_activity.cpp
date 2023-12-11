@@ -405,9 +405,9 @@ void combinatorial_object_activity::perform_activity_input_stream(
 
 
 
-		classification_of_combinatorial_objects *C;
+		canonical_form::classification_of_combinatorial_objects *C;
 
-		C = NEW_OBJECT(classification_of_combinatorial_objects);
+		C = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
 		C->init_after_nauty(
 				CO->Descr->label,
@@ -507,15 +507,23 @@ void combinatorial_object_activity::perform_activity_input_stream(
 		}
 
 
-		classification_of_combinatorial_objects *C;
+		canonical_form::classification_of_combinatorial_objects *C;
 
-		C = NEW_OBJECT(classification_of_combinatorial_objects);
+		C = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"before C->init_after_nauty" << endl;
+		}
 		C->init_after_nauty(
 				CO->Descr->label,
 				CO,
 				false /* f_projective_space */, NULL,
 				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_input_stream "
+					"after C->init_after_nauty" << endl;
+		}
 
 #if 0
 		object_with_properties *OwP;

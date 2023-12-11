@@ -7,7 +7,6 @@ LFLAGS = -lm
 
 MODULES = \
 	boolean_function_classify.o \
-	classification_of_combinatorial_objects.o \
 	combinatorial_object_activity_description.o \
 	combinatorial_object_activity.o \
 	combinatorics_global.o \
@@ -28,7 +27,6 @@ MODULES = \
 	large_set_was_activity.o \
 	large_set_was_description.o \
 	large_set_was.o \
-	object_with_properties.o \
 	regular_linear_space_description.o \
 	regular_ls_classify.o \
 	tactical_decomposition.o

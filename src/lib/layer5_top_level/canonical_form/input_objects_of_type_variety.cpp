@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 input_objects_of_type_variety::input_objects_of_type_variety()
@@ -187,7 +187,7 @@ void input_objects_of_type_variety::read_input_objects(
 	count_nb_objects_to_test(verbose_level);
 
 
-	Qco = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action **)
+	Qco = (quartic_curve_object_with_action **)
 			NEW_pvoid(nb_objects_to_test);
 
 	int counter;
@@ -359,7 +359,7 @@ void input_objects_of_type_variety::prepare_input(
 		int row, int counter,
 		int *Carry_through,
 		data_structures::spreadsheet *S,
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *&Qco,
+		quartic_curve_object_with_action *&Qco,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -424,7 +424,7 @@ void input_objects_of_type_variety::prepare_input(
 
 
 
-	Qco = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action);
+	Qco = NEW_OBJECT(quartic_curve_object_with_action);
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::prepare_input "

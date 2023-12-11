@@ -2116,15 +2116,11 @@ public:
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
 
-	//quartic_curve_domain *Dom; // we may not have it
+	int *eqn; // [Ring->get_nb_monomials()]
 
 
-	//long int *Pts; // in increasing order
-	//int nb_pts;
-
-
-	int *eqn;
-
+	// the partition into points and lines
+	// must be invariant under the group:
 
 	data_structures::set_of_sets *Point_sets;
 
@@ -2132,10 +2128,6 @@ public:
 
 
 
-	//int f_has_bitangents;
-	//long int bitangents28[28];
-
-	//quartic_curve_object_properties *QP;
 
 
 	variety_object();

@@ -97,6 +97,10 @@ void group_action_on_combinatorial_object::init(
 	group_action_on_combinatorial_object::A_perm = A_perm;
 
 
+	if (!A_perm->f_has_strong_generators) {
+		cout << "group_action_on_combinatorial_object::init !A_perm->f_has_strong_generators" << endl;
+		exit(1);
+	}
 	groups::strong_generators *gens = A_perm->Strong_gens;
 
 
@@ -245,11 +249,29 @@ void group_action_on_combinatorial_object::init(
 	}
 #endif
 
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"computing orbits on points" << endl;
+	}
+
+	if (gens == NULL) {
+		cout << "group_action_on_combinatorial_object::init gens == NULL" << endl;
+		exit(1);
+	}
+
 	Sch_points = NEW_OBJECT(groups::schreier);
 	Sch_points->init(A_on_points, verbose_level - 2);
 	Sch_points->initialize_tables();
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"before Sch_points->init_generators" << endl;
+	}
 	Sch_points->init_generators(
 			*gens->gens /* *generators */, verbose_level - 2);
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"after Sch_points->init_generators" << endl;
+	}
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"before Sch_points->compute_all_point_orbits" << endl;
@@ -265,6 +287,12 @@ void group_action_on_combinatorial_object::init(
 				"found " << Sch_points->nb_orbits
 				<< " orbits on points" << endl;
 	}
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::init "
+				"computing orbits on lines or blocks" << endl;
+	}
+
 	Sch_lines = NEW_OBJECT(groups::schreier);
 	Sch_lines->init(A_on_lines, verbose_level - 2);
 	Sch_lines->initialize_tables();

@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 

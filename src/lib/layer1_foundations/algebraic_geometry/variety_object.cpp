@@ -50,7 +50,7 @@ void variety_object::init_equation(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "variety_object::init_equation_and_bitangents" << endl;
+		cout << "variety_object::init_equation" << endl;
 	}
 
 	variety_object::Projective_space = Projective_space;
@@ -58,20 +58,21 @@ void variety_object::init_equation(
 
 
 	eqn = NEW_int(Ring->get_nb_monomials());
-	Int_vec_copy(equation, eqn, Ring->get_nb_monomials());
+	Int_vec_copy(
+			equation, eqn, Ring->get_nb_monomials());
 
 	if (f_v) {
-		cout << "variety_object::init_equation_and_bitangents "
+		cout << "variety_object::init_equation "
 				"before enumerate_points" << endl;
 	}
 	enumerate_points(verbose_level - 1);
 	if (f_v) {
-		cout << "variety_object::init_equation_and_bitangents "
+		cout << "variety_object::init_equation "
 				"after enumerate_points" << endl;
 	}
 
 	if (f_v) {
-		cout << "variety_object::init_equation_and_bitangents done" << endl;
+		cout << "variety_object::init_equation done" << endl;
 	}
 }
 
@@ -89,7 +90,10 @@ void variety_object::init_set_of_sets(
 	if (f_v) {
 		cout << "variety_object::init_set_of_sets" << endl;
 	}
-	init_equation(Projective_space, Ring, equation, verbose_level - 1);
+
+	init_equation(
+			Projective_space, Ring, equation, verbose_level - 1);
+
 	variety_object::Point_sets = Point_sets->copy();
 	variety_object::Line_sets = Line_sets->copy();
 	if (f_v) {
@@ -115,7 +119,8 @@ void variety_object::enumerate_points(
 				"Ring->enumerate_points" << endl;
 	}
 	Ring->enumerate_points_lint(
-			eqn, Pts, nb_pts, 0/*verbose_level - 1*/);
+			eqn, Pts, nb_pts,
+			0/*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "variety_object::enumerate_points after "

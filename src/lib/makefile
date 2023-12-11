@@ -501,6 +501,17 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \
+		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
+		layer5_top_level/canonical_form/canonical_form_classifier.o \
+		layer5_top_level/canonical_form/canonical_form_nauty.o \
+		layer5_top_level/canonical_form/canonical_form_of_variety.o \
+		layer5_top_level/canonical_form/canonical_form_substructure.o \
+		layer5_top_level/canonical_form/classification_of_varieties.o \
+		layer5_top_level/canonical_form/input_objects_of_type_variety.o \
+		layer5_top_level/canonical_form/classification_of_combinatorial_objects.o \
+		layer5_top_level/canonical_form/object_in_projective_space_with_action.o \
+		layer5_top_level/canonical_form/object_with_properties.o \
+		layer5_top_level/canonical_form/quartic_curve_object_with_action.o \
 		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \
@@ -509,7 +520,6 @@ ORBITER_MODULES= \
 		layer5_top_level/coding_theory_apps/create_code_description.o \
 		layer5_top_level/coding_theory_apps/create_code.o \
 		layer5_top_level/combinatorics/boolean_function_classify.o \
-		layer5_top_level/combinatorics/classification_of_combinatorial_objects.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
@@ -530,7 +540,6 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/large_set_was_activity.o \
 		layer5_top_level/combinatorics/large_set_was_description.o \
 		layer5_top_level/combinatorics/large_set_was.o \
-		layer5_top_level/combinatorics/object_with_properties.o \
 		layer5_top_level/combinatorics/regular_linear_space_description.o \
 		layer5_top_level/combinatorics/regular_ls_classify.o \
 		layer5_top_level/combinatorics/tactical_decomposition.o \
@@ -606,14 +615,6 @@ ORBITER_MODULES= \
 		layer5_top_level/packings/packing_was.o \
 		layer5_top_level/packings/packings_global.o \
 		layer5_top_level/packings/regular_packing.o \
-		layer5_top_level/projective_space/canonical_form_classifier_description.o \
-		layer5_top_level/projective_space/canonical_form_classifier.o \
-		layer5_top_level/projective_space/canonical_form_nauty.o \
-		layer5_top_level/projective_space/canonical_form_of_variety.o \
-		layer5_top_level/projective_space/canonical_form_substructure.o \
-		layer5_top_level/projective_space/classification_of_varieties.o \
-		layer5_top_level/projective_space/input_objects_of_type_variety.o \
-		layer5_top_level/projective_space/object_in_projective_space_with_action.o \
 		layer5_top_level/projective_space/projective_space_activity_description.o \
 		layer5_top_level/projective_space/projective_space_activity.o \
 		layer5_top_level/projective_space/projective_space_global.o \
@@ -652,7 +653,6 @@ ORBITER_MODULES= \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_create.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_domain_with_action.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_from_surface.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_object_with_action.o \
 		layer5_top_level/surfaces/quartic_curves/quartic_curve_object_with_group.o \
 		layer5_top_level/surfaces/surfaces_and_arcs/arc_lifting.o \
 		layer5_top_level/surfaces/surfaces_and_arcs/arc_orbits_on_pairs.o \

@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 
@@ -71,7 +71,7 @@ void canonical_form_of_variety::init(
 		canonical_form_classifier *Canonical_form_classifier,
 		std::string &fname_case_out,
 		int counter,
-		applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco,
+		quartic_curve_object_with_action *Qco,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -812,7 +812,7 @@ void canonical_form_of_variety::compute_canonical_object(
 	}
 
 
-	Canonical_object = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action);
+	Canonical_object = NEW_OBJECT(quartic_curve_object_with_action);
 
 
 	actions::action *A;

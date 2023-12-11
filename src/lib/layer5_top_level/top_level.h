@@ -58,6 +58,27 @@ namespace apps_algebra {
 
 }
 
+
+//! Nauty front end
+
+
+namespace canonical_form {
+
+	class canonical_form_classifier_description;
+	class canonical_form_classifier;
+	class canonical_form_nauty;
+	class canonical_form_of_variety;
+	class canonical_form_substructure;
+	class classification_of_varieties;
+	class input_objects_of_type_variety;
+	class classification_of_combinatorial_objects;
+	class object_in_projective_space_with_action;
+	class object_with_properties;
+	class quartic_curve_object_with_action;
+
+}
+
+
 //! Applications in coding theory
 
 
@@ -80,7 +101,6 @@ namespace apps_combinatorics {
 
 	// combinatorics
 	class boolean_function_classify;
-	class classification_of_combinatorial_objects;
 	class combinatorial_object_activity_description;
 	class combinatorial_object_activity;
 	class combinatorics_global;
@@ -101,7 +121,6 @@ namespace apps_combinatorics {
 	class large_set_was_activity;
 	class large_set_was_description;
 	class large_set_was;
-	class object_with_properties;
 	class regular_linear_space_description;
 	class regular_ls_classify;
 	class tactical_decomposition;
@@ -226,14 +245,6 @@ namespace packings {
 namespace projective_geometry {
 
 	// projective_space.h:
-	class canonical_form_classifier_description;
-	class canonical_form_classifier;
-	class canonical_form_nauty;
-	class canonical_form_of_variety;
-	class canonical_form_substructure;
-	class classification_of_varieties;
-	class input_objects_of_type_variety;
-	class object_in_projective_space_with_action;
 	class projective_space_activity_description;
 	class projective_space_activity;
 	class projective_space_globals;
@@ -304,7 +315,6 @@ namespace applications_in_algebraic_geometry {
 		class quartic_curve_create;
 		class quartic_curve_domain_with_action;
 		class quartic_curve_from_surface;
-		class quartic_curve_object_with_action;
 		class quartic_curve_object_with_group;
 
 	}
@@ -386,6 +396,7 @@ namespace applications_in_algebraic_geometry {
 
 
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"
+#include "./canonical_form/canonical_form.h"
 #include "./coding_theory_apps/coding_theory_apps.h"
 #include "./combinatorics/tl_combinatorics.h"
 #include "./geometry/tl_geometry.h"

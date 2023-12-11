@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 
@@ -54,9 +54,6 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 
 	//std::vector<std::string> carry_through;
-
-	//f_degree = false;
-	//degree = 0;
 
 	f_algorithm_nauty = false;
 	f_algorithm_substructure = false;
@@ -182,15 +179,6 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-carry_through " << s << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-degree") == 0) {
-			f_degree = true;
-			degree = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-degree " << degree << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-algorithm_nauty") == 0) {
 			f_algorithm_nauty = true;
 			if (f_v) {
@@ -279,11 +267,6 @@ void canonical_form_classifier_description::print()
 			cout << "-carry_through " << carry_through[i] << endl;
 		}
 	}
-#if 0
-	if (f_degree) {
-		cout << "-degree " << degree << endl;
-	}
-#endif
 	if (f_algorithm_nauty) {
 		cout << "-algorithm_nauty" << endl;
 	}

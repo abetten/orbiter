@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace projective_geometry {
+namespace canonical_form {
 
 
 classification_of_varieties::classification_of_varieties()
@@ -1000,7 +1000,7 @@ void classification_of_varieties::report_nauty(
 			ost << "Automorphism group order " << Goi[idx] << "\\\\" << endl;
 
 
-			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_action *Qco;
+			quartic_curve_object_with_action *Qco;
 				// [nb_objects_to_test]
 
 			Qco = Classifier->Input->Qco[idx];

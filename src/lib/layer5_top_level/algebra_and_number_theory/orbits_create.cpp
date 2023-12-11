@@ -469,7 +469,7 @@ void orbits_create::init(
 				cout << "orbits_create::init f_algorithm_substructure" << endl;
 			}
 
-			Canonical_form_classifier = NEW_OBJECT(projective_geometry::canonical_form_classifier);
+			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 			if (f_v) {
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
@@ -517,7 +517,7 @@ void orbits_create::init(
 				cout << "orbits_create::init f_algorithm_nauty" << endl;
 			}
 
-			Canonical_form_classifier = NEW_OBJECT(projective_geometry::canonical_form_classifier);
+			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 			if (f_v) {
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
