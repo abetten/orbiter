@@ -75,6 +75,7 @@ namespace canonical_form {
 	class object_in_projective_space_with_action;
 	class object_with_properties;
 	class quartic_curve_object_with_action;
+	class variety_object_with_action;
 
 }
 

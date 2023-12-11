@@ -28,7 +28,7 @@ canonical_form_of_variety::canonical_form_of_variety()
 	//std::string fname_case_out;
 
 	counter = 0;
-	Qco = NULL;
+	Vo = NULL;
 
 	canonical_pts = NULL;
 	canonical_equation = NULL;
@@ -71,7 +71,7 @@ void canonical_form_of_variety::init(
 		canonical_form_classifier *Canonical_form_classifier,
 		std::string &fname_case_out,
 		int counter,
-		quartic_curve_object_with_action *Qco,
+		variety_object_with_action *Vo,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -86,7 +86,7 @@ void canonical_form_of_variety::init(
 	canonical_form_of_variety::Canonical_form_classifier = Canonical_form_classifier;
 	canonical_form_of_variety::fname_case_out.assign(fname_case_out);
 	canonical_form_of_variety::counter = counter;
-	canonical_form_of_variety::Qco = Qco;
+	canonical_form_of_variety::Vo = Vo;
 
 	canonical_equation =
 			NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());
@@ -94,7 +94,7 @@ void canonical_form_of_variety::init(
 			NEW_int(Canonical_form_classifier->PA->A->elt_size_in_int);
 
 
-	canonical_pts = NEW_lint(Qco->Quartic_curve_object->nb_pts);
+	canonical_pts = NEW_lint(Vo->Variety_object->Point_sets->Set_size[0]);
 
 	go_eqn = NEW_OBJECT(ring_theory::longinteger_object);
 
@@ -209,9 +209,9 @@ void canonical_form_of_variety::classify_curve_nauty(
 		if (f_v) {
 			cout << "canonical_form_of_variety::classify_curve_nauty "
 					"After search_and_add_if_new, "
-					"cnt = " << Qco->cnt
-					<< " po = " << Qco->po
-					<< " so = " << Qco->so
+					"cnt = " << Vo->cnt
+					<< " po = " << Vo->po
+					<< " so = " << Vo->so
 					<< " We found the canonical form at idx_canonical_form = " << Canonical_form_nauty->idx_canonical_form << endl;
 		}
 
@@ -241,9 +241,9 @@ void canonical_form_of_variety::classify_curve_nauty(
 		if (f_v) {
 			cout << "canonical_form_of_variety::classify_curve_nauty "
 					"After search_and_add_if_new, "
-					"cnt = " << Qco->cnt
-					<< " po = " << Qco->po
-					<< " so = " << Qco->so
+					"cnt = " << Vo->cnt
+					<< " po = " << Vo->po
+					<< " so = " << Vo->so
 					<< " The canonical form is new" << endl;
 		}
 
@@ -381,8 +381,9 @@ int canonical_form_of_variety::find_equation(
 		long int *alpha, int *gamma,
 		int idx1, int &found_at,
 		int verbose_level)
-// relies on reverse_engineer_semilinear_map,
-// which only works in a projective plane.
+// Assumes we are in a plane
+// gets the canonical_form_nauty object from
+// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
 {
 	int f_v = (verbose_level >= 1);
 
@@ -460,13 +461,25 @@ int canonical_form_of_variety::find_equation(
 	// turn gamma into a matrix
 
 
+#if 0
+
 	if (Canonical_form_classifier->PA->n != 2) {
 		cout << "canonical_form_of_variety::find_equation "
 				"need projective dimension to be 2." << endl;
 		exit(1);
 	}
+#endif
 
-	int Mtx[10];
+
+	int d = Canonical_form_classifier->PA->P->Subspaces->n + 1;
+	int *Mtx; // [d * d + 1]
+
+
+	Mtx = NEW_int(d * d + 1);
+
+	// why are we in a plane?
+
+	//int Mtx[10];
 		// We are in a plane, so we have 3 x 3 matrices,
 		// possibly plus a field automorphism
 
@@ -478,6 +491,8 @@ int canonical_form_of_variety::find_equation(
 		cout << "canonical_form_of_variety::find_equation "
 				"before LA.reverse_engineer_semilinear_map" << endl;
 	}
+
+	// works for any dimension:
 
 	LA.reverse_engineer_semilinear_map(
 			Canonical_form_classifier->PA->P->Subspaces->F,
@@ -491,7 +506,8 @@ int canonical_form_of_variety::find_equation(
 				"after LA.reverse_engineer_semilinear_map" << endl;
 	}
 
-	Mtx[9] = frobenius;
+	//Mtx[9] = frobenius;
+	Mtx[d * d] = frobenius;
 
 	Canonical_form_classifier->PA->A->Group_element->make_element(
 			Canonical_form_classifier->Output->Elt, Mtx,
@@ -510,7 +526,7 @@ int canonical_form_of_variety::find_equation(
 				"before substitute_semilinear" << endl;
 	}
 	Canonical_form_classifier->Poly_ring->substitute_semilinear(
-			Qco->Quartic_curve_object->eqn15 /* coeff_in */,
+			Vo->Variety_object->eqn /* coeff_in */,
 			Canonical_form_classifier->Output->eqn2 /* coeff_out */,
 			Canonical_form_classifier->PA->A->is_semilinear_matrix_group(),
 			frobenius, Mtx,
@@ -519,6 +535,8 @@ int canonical_form_of_variety::find_equation(
 		cout << "canonical_form_of_variety::find_equation "
 				"after substitute_semilinear" << endl;
 	}
+
+	FREE_int(Mtx);
 
 	// now, eqn2 is the image of the curve C
 	// and belongs to the orbit of equations associated with C1.
@@ -554,9 +572,9 @@ int canonical_form_of_variety::find_equation(
 	else {
 		if (f_v) {
 			cout << "canonical_form_of_variety::find_equation "
-					"After C1->Orb->search_equation, cnt = " << Qco->cnt
-					<< " po = " << Qco->po
-					<< " so = " << Qco->so
+					"After C1->Orb->search_equation, cnt = " << Vo->cnt
+					<< " po = " << Vo->po
+					<< " so = " << Vo->so
 					<< " We found the canonical form and the equation "
 							"at idx2 " << idx2 << ", idx1=" << idx1 << endl;
 		}
@@ -681,7 +699,7 @@ void canonical_form_of_variety::compute_canonical_form_nauty(
 	}
 
 	classify_curve_nauty(
-			0 /*verbose_level - 2 */);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
@@ -716,7 +734,7 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 
 
 
-	if (Qco->Quartic_curve_object->nb_pts >= Canonical_form_classifier->Descr->substructure_size) {
+	if (Vo->Variety_object->Point_sets->Set_size[0] >= Canonical_form_classifier->Descr->substructure_size) {
 
 		if (f_v) {
 			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
@@ -812,7 +830,7 @@ void canonical_form_of_variety::compute_canonical_object(
 	}
 
 
-	Canonical_object = NEW_OBJECT(quartic_curve_object_with_action);
+	Canonical_object = NEW_OBJECT(variety_object_with_action);
 
 
 	actions::action *A;
@@ -827,7 +845,7 @@ void canonical_form_of_variety::compute_canonical_object(
 				"before Qco_canonical->init_image_of" << endl;
 	}
 	Canonical_object->init_image_of(
-			Qco,
+			Vo,
 			transporter_to_canonical_form,
 			A,
 			A_on_lines,
@@ -843,6 +861,25 @@ void canonical_form_of_variety::compute_canonical_object(
 	}
 }
 
+std::string canonical_form_of_variety::stringify_csv_entry_one_line(
+		int i, int verbose_level)
+{
+
+	vector<string> v;
+	int j;
+	string line;
+
+	prepare_csv_entry_one_line(
+			v, i, verbose_level);
+	for (j = 0; j < v.size(); j++) {
+		line = v[j];
+		if (j < v.size()) {
+			line += ",";
+		}
+	}
+	return line;
+}
+
 void canonical_form_of_variety::prepare_csv_entry_one_line(
 		std::vector<std::string> &v,
 		int i, int verbose_level)
@@ -853,11 +890,11 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 		cout << "canonical_form_of_variety::prepare_csv_entry_one_line" << endl;
 	}
 
-	v.push_back(std::to_string(Qco->cnt));
-	v.push_back(std::to_string(Qco->po));
-	v.push_back(std::to_string(Qco->so));
-	v.push_back(std::to_string(Qco->po_go));
-	v.push_back(std::to_string(Qco->po_index));
+	v.push_back(std::to_string(Vo->cnt));
+	v.push_back(std::to_string(Vo->po));
+	v.push_back(std::to_string(Vo->so));
+	v.push_back(std::to_string(Vo->po_go));
+	v.push_back(std::to_string(Vo->po_index));
 	v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
 
 
@@ -876,7 +913,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	std::string s_tl, s_gens, s_go;
 
 
-	Qco->Quartic_curve_object->stringify(
+	Vo->Variety_object->stringify(
 			s_Eqn, s_Pts, s_Bitangents);
 
 	s_transporter = Canonical_form_classifier->PA->A->Group_element->stringify(
@@ -924,7 +961,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 		int j;
 
 		for (j = 0; j < Canonical_form_classifier->Descr->carry_through.size(); j++) {
-			v.push_back(Qco->Carrying_through[j]);
+			v.push_back(Vo->Carrying_through[j]);
 		}
 	}
 
@@ -933,6 +970,25 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	}
 
 
+}
+
+std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty(
+		int i, int verbose_level)
+{
+	vector<string> v;
+	int j;
+	string line;
+
+	prepare_csv_entry_one_line_nauty(
+			v, i, verbose_level);
+
+	for (j = 0; j < v.size(); j++) {
+		line += v[j];
+		if (j < v.size() - 1) {
+			line += ",";
+		}
+	}
+	return line;
 }
 
 void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
@@ -944,11 +1000,11 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty" << endl;
 	}
 
-	v.push_back(std::to_string(Qco->cnt));
-	v.push_back(std::to_string(Qco->po));
-	v.push_back(std::to_string(Qco->so));
-	v.push_back(std::to_string(Qco->po_go));
-	v.push_back(std::to_string(Qco->po_index));
+	v.push_back(std::to_string(Vo->cnt));
+	v.push_back(std::to_string(Vo->po));
+	v.push_back(std::to_string(Vo->so));
+	v.push_back(std::to_string(Vo->po_go));
+	v.push_back(std::to_string(Vo->po_index));
 	v.push_back(std::to_string(Canonical_form_classifier->Output->Iso_idx[i]));
 	v.push_back(std::to_string(Canonical_form_classifier->Output->F_first_time[i]));
 	v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_canonical_form[i]));
@@ -976,7 +1032,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 #endif
 
 
-	Qco->Quartic_curve_object->stringify(
+	Vo->Variety_object->stringify(
 			s_Eqn, s_Pts, s_Bitangents);
 
 #if 0
@@ -1027,7 +1083,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 		int j;
 
 		for (j = 0; j < Canonical_form_classifier->Descr->carry_through.size(); j++) {
-			v.push_back(Qco->Carrying_through[j]);
+			v.push_back(Vo->Carrying_through[j]);
 		}
 	}
 

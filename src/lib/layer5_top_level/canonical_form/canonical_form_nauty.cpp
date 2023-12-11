@@ -97,7 +97,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 	if (f_v) {
 		cout << "equation is:";
 		Classifier->Poly_ring->print_equation_simple(
-				cout, Variety->Qco->Quartic_curve_object->eqn15);
+				cout, Variety->Vo->Variety_object->eqn);
 		cout << endl;
 	}
 
@@ -173,8 +173,8 @@ void canonical_form_nauty::set_stabilizer_using_nauty(
 				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
-			Variety->Qco->Quartic_curve_object->Pts,
-			Variety->Qco->Quartic_curve_object->nb_pts,
+			Variety->Vo->Variety_object->Point_sets->Sets[0],
+			Variety->Vo->Variety_object->Point_sets->Set_size[0],
 			verbose_level - 1);
 	if (f_v) {
 		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
@@ -217,7 +217,7 @@ void canonical_form_nauty::set_stabilizer_using_nauty(
 		Canonical_form,
 		NO,
 		Enc,
-		0 /*verbose_level*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
 				"after Nau.set_stabilizer_of_object" << endl;
@@ -285,7 +285,7 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 			Classifier->PA->F,
 			Classifier->AonHPD,
 			Set_stab /* A->Strong_gens*/,
-			Variety->Qco->Quartic_curve_object->eqn15,
+			Variety->Vo->Variety_object->eqn,
 		verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "

@@ -130,24 +130,6 @@ void canonical_form_classifier::init(
 		exit(1);
 	}
 
-#if 0
- 	Poly_ring = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"before Poly_ring->init" << endl;
-	}
-	Poly_ring->init(
-			PA->F,
-			PA->n + 1,
-			Descr->degree,
-			t_PART,
-			verbose_level - 3);
-	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"after Poly_ring->init" << endl;
-	}
-#endif
-
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"nb_monomials = " << Poly_ring->get_nb_monomials() << endl;

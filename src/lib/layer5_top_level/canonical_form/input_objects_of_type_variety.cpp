@@ -34,12 +34,14 @@ input_objects_of_type_variety::input_objects_of_type_variety()
 
 	idx_po = idx_so = idx_eqn = idx_pts = idx_bitangents = 0;
 
-	Qco = NULL;
+	//Qco = NULL;
+	Vo = NULL;
 
 }
 
 input_objects_of_type_variety::~input_objects_of_type_variety()
 {
+#if 0
 	if (Qco) {
 		int i;
 
@@ -49,6 +51,17 @@ input_objects_of_type_variety::~input_objects_of_type_variety()
 			}
 		}
 		FREE_pvoid((void **) Qco);
+	}
+#endif
+	if (Vo) {
+		int i;
+
+		for (i = 0; i < nb_objects_to_test; i++) {
+			if (Vo[i]) {
+				FREE_OBJECT(Vo[i]);
+			}
+		}
+		FREE_pvoid((void **) Vo);
 	}
 }
 
@@ -187,14 +200,15 @@ void input_objects_of_type_variety::read_input_objects(
 	count_nb_objects_to_test(verbose_level);
 
 
-	Qco = (quartic_curve_object_with_action **)
-			NEW_pvoid(nb_objects_to_test);
+	//Qco = (quartic_curve_object_with_action **) NEW_pvoid(nb_objects_to_test);
+	Vo = (variety_object_with_action **) NEW_pvoid(nb_objects_to_test);
 
 	int counter;
 
 	counter = 0;
 
 	for (cnt = 0; cnt < Classifier->Descr->nb_files; cnt++) {
+
 		char str[1000];
 		string fname;
 		int row;
@@ -302,7 +316,7 @@ void input_objects_of_type_variety::read_input_objects(
 					cout << "input_objects_of_type_variety::read_input_objects "
 							"skipping case counter = " << counter << endl;
 				}
-				Qco[counter] = NULL;
+				Vo[counter] = NULL;
 				continue;
 			}
 
@@ -312,16 +326,16 @@ void input_objects_of_type_variety::read_input_objects(
 
 			if (f_v) {
 				cout << "input_objects_of_type_variety::read_input_objects "
-						"before prepare_input" << endl;
+						"before prepare_input_of_variety_type" << endl;
 			}
-			prepare_input(
+			prepare_input_of_variety_type(
 					row, counter,
 					Carry_through,
 					&S,
-					Qco[counter], verbose_level - 2);
+					Vo[counter], verbose_level - 2);
 			if (f_v) {
 				cout << "input_objects_of_type_variety::read_input_objects "
-						"after prepare_input" << endl;
+						"after prepare_input_of_variety_type" << endl;
 			}
 
 			if (idx_pts == -1) {
@@ -329,8 +343,8 @@ void input_objects_of_type_variety::read_input_objects(
 					cout << "input_objects_of_type_variety::read_input_objects "
 							"before enumerate_points" << endl;
 				}
-				Qco[counter]->Quartic_curve_object->enumerate_points(
-						Classifier->Poly_ring,
+				Vo[counter]->Variety_object->enumerate_points(
+						//Classifier->Poly_ring,
 						verbose_level - 1);
 				if (f_v) {
 					cout << "input_objects_of_type_variety::read_input_objects "
@@ -457,6 +471,113 @@ void input_objects_of_type_variety::prepare_input(
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::prepare_input done" << endl;
+	}
+
+}
+
+void input_objects_of_type_variety::prepare_input_of_variety_type(
+		int row, int counter,
+		int *Carry_through,
+		data_structures::spreadsheet *S,
+		variety_object_with_action *&Vo,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type" << endl;
+	}
+
+
+
+	int i;
+	int po_go, po_index;
+	int po, so;
+
+
+	po_go = S->get_lint(row + 1, idx_po_go);
+	po_index = S->get_lint(row + 1, idx_po_index);
+	po = S->get_lint(row + 1, idx_po);
+	so = S->get_lint(row + 1, idx_so);
+	string eqn_txt;
+	string pts_txt;
+	string bitangents_txt;
+
+	eqn_txt = S->get_entry_ij(row + 1, idx_eqn);
+
+	if (idx_pts >= 0) {
+		pts_txt = S->get_entry_ij(row + 1, idx_pts);
+	}
+	else {
+		pts_txt = "";
+	}
+
+	if (idx_bitangents >= 0) {
+		bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
+	}
+	else {
+		bitangents_txt = "";
+	}
+
+	data_structures::string_tools ST;
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+				"row = " << row
+				<< " before processing, eqn=" << eqn_txt
+				<< " pts_txt=" << pts_txt
+				<< " =" << bitangents_txt << endl;
+	}
+
+
+	ST.remove_specific_character(eqn_txt, '\"');
+	ST.remove_specific_character(pts_txt, '\"');
+	ST.remove_specific_character(bitangents_txt, '\"');
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+				"row = " << row << " after processing, eqn=" << eqn_txt
+				<< " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
+	}
+
+
+
+	Vo = NEW_OBJECT(variety_object_with_action);
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+				"before Vo->init" << endl;
+	}
+
+
+	Vo->init(
+			counter, po_go, po_index, po, so,
+			Classifier->PA->P,
+			Classifier->Poly_ring,
+			eqn_txt,
+			pts_txt, bitangents_txt,
+			verbose_level);
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+				"after Vo->init" << endl;
+	}
+
+
+	for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
+
+		string s;
+
+		s = S->get_entry_ij(row + 1, Carry_through[i]);
+
+		Vo->Carrying_through.push_back(s);
+
+	}
+
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type done" << endl;
 	}
 
 }

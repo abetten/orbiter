@@ -917,7 +917,8 @@ void known_groups::init_permutation_group_from_nauty_output(
 		for (i = 0; i < NO->Base_length; i++) {
 			b = NO->Base_lint[i] - NO->invariant_set_start;
 			if (b >= NO->invariant_set_size) {
-				cout << "known_groups::init_permutation_group_from_nauty_output the base does not beling to the invariant set" << endl;
+				cout << "known_groups::init_permutation_group_from_nauty_output "
+						"the base does not belong to the invariant set" << endl;
 				exit(1);
 			}
 			fresh_base[i] = b;
@@ -929,7 +930,8 @@ void known_groups::init_permutation_group_from_nauty_output(
 				image = NO->Aut[i * NO->N + NO->invariant_set_start + j];
 				image -= NO->invariant_set_start;
 				if (image >= NO->invariant_set_size) {
-					cout << "known_groups::init_permutation_group_from_nauty_output the set if not invariant" << endl;
+					cout << "known_groups::init_permutation_group_from_nauty_output "
+							"the set if not invariant" << endl;
 					exit(1);
 				}
 				gens[i * NO->invariant_set_size + j] = image;
@@ -944,7 +946,7 @@ void known_groups::init_permutation_group_from_nauty_output(
 			true, *NO->Ago,
 			NO->Aut_counter, gens,
 			NO->Base_length, fresh_base,
-			false /* f_no_base */,
+			true /* f_given_base */,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "known_groups::init_permutation_group_from_nauty_output "
@@ -964,7 +966,7 @@ void known_groups::init_permutation_group_from_nauty_output(
 			true, *NO->Ago,
 			NO->Aut_counter, NO->Aut,
 			NO->Base_length, NO->Base_lint,
-			false /* f_no_base */,
+			true /* f_given_base */,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "known_groups::init_permutation_group_from_nauty_output "

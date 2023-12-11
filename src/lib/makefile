@@ -512,6 +512,7 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/object_in_projective_space_with_action.o \
 		layer5_top_level/canonical_form/object_with_properties.o \
 		layer5_top_level/canonical_form/quartic_curve_object_with_action.o \
+		layer5_top_level/canonical_form/variety_object_with_action.o \
 		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \

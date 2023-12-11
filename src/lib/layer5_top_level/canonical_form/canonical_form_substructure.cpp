@@ -74,15 +74,16 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 	if (f_v) {
 		cout << "fname_case_out = " << Variety->fname_case_out << endl;
-		cout << "cnt = " << Variety->Qco->cnt << " eqn=";
-		Int_vec_print(cout, Variety->Qco->Quartic_curve_object->eqn15, 15);
+		cout << "cnt = " << Variety->Vo->cnt << " eqn=";
+		Int_vec_print(cout, Variety->Vo->Variety_object->eqn, Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
 		cout << " pts=";
-		Lint_vec_print(cout, Variety->Qco->Quartic_curve_object->Pts,
-				Variety->Qco->Quartic_curve_object->nb_pts);
+		Lint_vec_print(cout,
+				Variety->Vo->Variety_object->Point_sets->Sets[0],
+				Variety->Vo->Variety_object->Point_sets->Set_size[0]);
 		cout << endl;
 
 		Variety->Canonical_form_classifier->Poly_ring->print_equation_tex(
-				cout, Variety->Qco->Quartic_curve_object->eqn15);
+				cout, Variety->Vo->Variety_object->eqn);
 		cout << endl;
 
 		//Canonical_form_classifier->Poly_ring->get_P()->print_set_of_points(cout, pts, nb_pts);
@@ -105,8 +106,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	SubSt->init(
 			Variety->fname_case_out,
 			Variety->Canonical_form_classifier->Output->SubC,
-			Variety->Qco->Quartic_curve_object->Pts,
-			Variety->Qco->Quartic_curve_object->nb_pts,
+			Variety->Vo->Variety_object->Point_sets->Sets[0],
+			Variety->Vo->Variety_object->Point_sets->Set_size[0],
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
@@ -134,8 +135,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Lint_vec_print(cout, Variety->canonical_pts,
-				Variety->Qco->Quartic_curve_object->nb_pts);
+		Lint_vec_print(cout,
+				Variety->canonical_pts,
+				Variety->Vo->Variety_object->Point_sets->Set_size[0]);
 		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
@@ -152,8 +154,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Lint_vec_print(cout, Variety->canonical_pts,
-				Variety->Qco->Quartic_curve_object->nb_pts);
+		Lint_vec_print(cout,
+				Variety->canonical_pts,
+				Variety->Vo->Variety_object->Point_sets->Set_size[0]);
 		ring_theory::longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);
@@ -173,8 +176,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"canonical point set: ";
-		Lint_vec_print(cout, Variety->canonical_pts,
-				Variety->Qco->Quartic_curve_object->nb_pts);
+		Lint_vec_print(cout,
+				Variety->canonical_pts,
+				Variety->Vo->Variety_object->Point_sets->Set_size[0]);
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 	}
@@ -186,7 +190,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 	Variety->Canonical_form_classifier->AonHPD->compute_image_int_low_level(
 			trans1,
-			Variety->Qco->Quartic_curve_object->eqn15,
+			Variety->Vo->Variety_object->eqn,
 			intermediate_equation,
 			verbose_level - 2);
 	if (f_v) {

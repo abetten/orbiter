@@ -213,221 +213,7 @@ void classification_of_varieties::init(
 
 }
 
-void classification_of_varieties::finalize_classification_by_nauty(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty "
-				"before make_classification_table_nauty" << endl;
-	}
-
-	make_classification_table_nauty(
-			Classification_table_nauty,
-			verbose_level);
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty "
-				"after make_classification_table_nauty" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty "
-				"before write_classification_by_nauty_csv" << endl;
-	}
-	write_classification_by_nauty_csv(
-			Classifier->Descr->fname_base_out,
-			verbose_level);
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty "
-				"after write_classification_by_nauty_csv" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_classification_by_nauty done" << endl;
-	}
-}
-
-
-void classification_of_varieties::write_classification_by_nauty_csv(
-		std::string &fname_base,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	std::string fname;
-	int i;
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::write_classification_by_nauty_csv" << endl;
-	}
-	fname = fname_base + "_classification_by_nauty.csv";
-
-
-
-	{
-		ofstream ost(fname);
-
-		ost << "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Pts,Bitangents";
-
-		if (Classifier->Descr->carry_through.size()) {
-			int i;
-
-			for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
-				ost << "," << Classifier->Descr->carry_through[i];
-			}
-		}
-
-		ost << ",NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats";
-		ost << ",nb_eqn,ago";
-		ost << endl;
-
-
-
-		for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
-
-			if (f_v) {
-				cout << "classification_of_varieties::write_classification_by_nauty_csv "
-						"i=" << i << " / " << Classifier->Input->nb_objects_to_test << endl;
-			}
-
-
-
-			ost << i;
-
-			{
-				vector<string> v;
-				int j;
-				Variety_table[i]->prepare_csv_entry_one_line_nauty(
-						v, i, verbose_level);
-				for (j = 0; j < v.size(); j++) {
-					ost << "," << v[j];
-				}
-			}
-
-			ost << endl;
-
-		}
-		ost << "END" << endl;
-	}
-
-
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname.c_str()) << endl;
-	if (f_v) {
-		cout << "classification_of_varieties::write_classification_by_nauty_csv done" << endl;
-	}
-}
-
-
-void classification_of_varieties::finalize_canonical_forms(
-		int verbose_level)
-// this only works if we use the substructure algorithm.
-// The Nauty based algorithm does not give us a canonical equation.
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_canonical_forms" << endl;
-	}
-
-	int i, j;
-
-
-	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
-		Variety_table[i]->compute_canonical_object(verbose_level);
-	}
-
-
-
-
-	cout << "canonical forms of all input objects:" << endl;
-	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
-		cout << setw(2) << i << " : ";
-		Int_vec_print(cout,
-				Canonical_equation + i * Classifier->Poly_ring->get_nb_monomials(),
-				Classifier->Poly_ring->get_nb_monomials());
-		cout << " : " << Goi[i] << endl;
-	}
-
-	Tally = NEW_OBJECT(data_structures::tally_vector_data);
-
-	Tally->init(Canonical_equation,
-			Classifier->Input->nb_objects_to_test, Classifier->Poly_ring->get_nb_monomials(),
-			verbose_level);
-
-
-	Tally->get_transversal(
-			transversal, frequency, nb_types, verbose_level);
-
-	cout << "Number of orbits = " << Tally->nb_types << endl;
-
-	cout << "Classification of input curves:" << endl;
-
-	cout << "Input object : Iso type" << endl;
-	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
-		cout << setw(2) << i << " : " <<
-				Tally->rep_idx[i] << endl;
-	}
-
-	cout << "Transversal of the isomorphism classes = orbit representatives:" << endl;
-	Int_vec_print(cout, transversal, nb_types);
-	cout << endl;
-
-	//Classification_of_quartic_curves->print();
-
-	for (i = 0; i < Tally->nb_types; i++) {
-
-		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
-
-		cout << i << " : " << Tally->Frequency[i] << " x ";
-		Int_vec_print(cout,
-				Tally->Reps + i * Tally->data_set_sz,
-				Tally->data_set_sz);
-		cout << " : ";
-		j = Tally->sorting_perm_inv[Tally->type_first[i]];
-		cout << Goi[j] << " : ";
-		Int_vec_print(cout,
-				Tally->sorting_perm_inv + Tally->type_first[i],
-				Tally->Frequency[i]);
-		cout << endl;
-#if 0
-		cout << "for elements ";
-		int_vec_print(cout, sorting_perm_inv + type_first[i], Frequency[i]);
-		cout << endl;
-#endif
-	}
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_canonical_forms "
-				"before write_canonical_forms_csv" << endl;
-	}
-	write_canonical_forms_csv(
-			Classifier->Descr->fname_base_out,
-			verbose_level);
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_canonical_forms "
-				"after write_canonical_forms_csv" << endl;
-	}
-
-	if (f_v) {
-		cout << "classification_of_varieties::finalize_canonical_forms done" << endl;
-	}
-
-}
 
 void classification_of_varieties::classify_nauty(
 		int verbose_level)
@@ -533,35 +319,6 @@ void classification_of_varieties::classify_with_substructure(
 
 }
 
-void classification_of_varieties::make_classification_table_nauty(
-		int *&T,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::make_classification_table_nauty" << endl;
-	}
-
-	T = NEW_int(Classifier->Input->nb_objects_to_test * 4);
-
-	int counter;
-
-	for (counter = 0; counter < Classifier->Input->nb_objects_to_test; counter++) {
-		T[counter * 4 + 0] = F_first_time[counter];
-		T[counter * 4 + 1] = Iso_idx[counter];
-		T[counter * 4 + 2] = Idx_canonical_form[counter];
-		T[counter * 4 + 3] = Idx_equation[counter];
-	}
-
-	if (f_v) {
-		cout << "classification_of_varieties::make_classification_table_nauty done" << endl;
-	}
-
-}
-
 
 void classification_of_varieties::main_loop(
 		int verbose_level)
@@ -593,8 +350,7 @@ void classification_of_varieties::main_loop(
 
 		string fname_case_out;
 
-		fname_case_out = Classifier->Descr->fname_base_out
-				+ "_cnt" + std::to_string(counter);
+		fname_case_out = Classifier->Descr->fname_base_out + "_cnt" + std::to_string(counter);
 
 		canonical_form_of_variety *Variety;
 
@@ -609,7 +365,7 @@ void classification_of_varieties::main_loop(
 				Classifier,
 				fname_case_out,
 				counter,
-				Classifier->Input->Qco[counter],
+				Classifier->Input->Vo[counter],
 				verbose_level - 2);
 		if (f_v) {
 			cout << "classification_of_varieties::main_loop "
@@ -722,85 +478,6 @@ void classification_of_varieties::main_loop(
 }
 
 
-
-void classification_of_varieties::write_canonical_forms_csv(
-		std::string &fname_base,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	std::string fname;
-	int i;
-
-	int nb_monomials;
-
-
-	if (f_v) {
-		cout << "classification_of_varieties::write_canonical_forms_csv" << endl;
-	}
-	fname = fname_base + "_canonical_form.csv";
-
-
-	nb_monomials = Classifier->Poly_ring->get_nb_monomials();
-	if (f_v) {
-		cout << "classification_of_varieties::write_canonical_forms_csv "
-				"nb_monomials = " << nb_monomials << endl;
-	}
-
-
-
-	{
-		ofstream ost(fname);
-
-		ost << "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Pts,Bitangents,"
-				"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
-
-		if (Classifier->Descr->carry_through.size()) {
-			int i;
-
-			for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
-				ost << "," << Classifier->Descr->carry_through[i];
-			}
-		}
-		ost << endl;
-
-
-
-		for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
-
-			if (f_v) {
-				cout << "classification_of_varieties::write_canonical_forms_csv "
-						"i=" << i << " / " << Classifier->Input->nb_objects_to_test << endl;
-			}
-
-
-
-			ost << i;
-
-			{
-				vector<string> v;
-				int j;
-				Variety_table[i]->prepare_csv_entry_one_line(
-						v, i, verbose_level);
-				for (j = 0; j < v.size(); j++) {
-					ost << "," << v[j];
-				}
-			}
-
-			ost << endl;
-
-		}
-		ost << "END" << endl;
-	}
-
-
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname.c_str()) << endl;
-	if (f_v) {
-		cout << "classification_of_varieties::write_canonical_forms_csv done" << endl;
-	}
-}
 
 
 
@@ -919,13 +596,7 @@ void classification_of_varieties::report_nauty(
 
 
 	int orbit_index;
-	//int i, j;
-
 	int nb_orbits;
-	//int nb_monomials;
-
-	//actions::action *A;
-	//actions::action *A_on_lines;
 
 	if (f_v) {
 		cout << "classification_of_varieties::report_nauty" << endl;
@@ -933,11 +604,6 @@ void classification_of_varieties::report_nauty(
 
 
 	nb_orbits = nb_iso_orbits;
-	//nb_monomials = Classifier->Poly_ring->get_nb_monomials();
-
-
-	//A = Descr->PA->A;
-	//A_on_lines = Descr->PA->A_on_lines;
 
 
 	int idx;
@@ -1000,121 +666,29 @@ void classification_of_varieties::report_nauty(
 			ost << "Automorphism group order " << Goi[idx] << "\\\\" << endl;
 
 
-			quartic_curve_object_with_action *Qco;
+			variety_object_with_action *Vo;
 				// [nb_objects_to_test]
 
-			Qco = Classifier->Input->Qco[idx];
+			Vo = Classifier->Input->Vo[idx];
 
-			ost << "Number of points " << Qco->Quartic_curve_object->nb_pts << "\\\\" << endl;
+			ost << "Number of points " << Vo->Variety_object->Point_sets->Set_size[0] << "\\\\" << endl;
 			ost << "Equation ";
 			ost << "\\verb'";
-			ost << Qco->Quartic_curve_object->eqn_txt;
+			ost << Vo->Variety_object->eqn_txt;
 			ost << "'";
 			ost << "\\\\" << endl;
 			ost << "Equation ";
-			Int_vec_print(ost, Qco->Quartic_curve_object->eqn15, 15);
+			Int_vec_print(ost, Vo->Variety_object->eqn, Classifier->Poly_ring->get_nb_monomials());
 			ost << "\\\\" << endl;
 
 			ost << "Points:\\\\" << endl;
 			Classifier->PA->P->Reporting->print_set_of_points(
-					ost, Qco->Quartic_curve_object->Pts, Qco->Quartic_curve_object->nb_pts);
-
-#if 0
-			field_theory::finite_field *F;
-			geometry::projective_space *P;
-
-			// we use the monomial ordering t_PART in all polynomial rings:
-
-			ring_theory::homogeneous_polynomial_domain *Poly1_3;
-				// linear polynomials in three variables
-			ring_theory::homogeneous_polynomial_domain *Poly2_3;
-				// quadratic polynomials in three variables
-			ring_theory::homogeneous_polynomial_domain *Poly3_3;
-				// cubic polynomials in three variables
-			ring_theory::homogeneous_polynomial_domain *Poly4_3;
-				// quartic polynomials in three variables
-
-			ring_theory::homogeneous_polynomial_domain *Poly3_4;
-				// cubic polynomials in four variables
-
-			ring_theory::partial_derivative *Partials; // [3]
-
-			algebraic_geometry::schlaefli_labels *Schlaefli;
-#endif
-
-#if 0
-			quartic_curve_domain *Dom; // we may not have it
-
-			std::string eqn_txt;
-
-			long int *Pts; // in increasing order
-			int nb_pts;
-
-
-			int eqn15[15];
-
-			int f_has_bitangents;
-			long int bitangents28[28];
-
-			quartic_curve_object_properties *QP;
-#endif
+					ost,
+					Vo->Variety_object->Point_sets->Sets[0],
+					Vo->Variety_object->Point_sets->Set_size[0]);
 
 			canonical_form_nauty *Canonical_form_nauty;
 
-#if 0
-			canonical_form_of_variety *Variety;
-
-			int nb_rows, nb_cols;
-			data_structures::bitvector *Canonical_form;
-			long int *canonical_labeling;
-			int canonical_labeling_len;
-
-
-			groups::strong_generators *Set_stab;
-				// the set stabilizer of the variety
-				// this is not the stabilizer of the variety!
-
-			orbits_schreier::orbit_of_equations *Orb;
-				// orbit under the set stabilizer
-
-			groups::strong_generators *Stab_gens_quartic;
-				// the stabilizer of the original curve
-
-			int f_found_canonical_form;
-			int idx_canonical_form;
-			int idx_equation;
-			int f_found_eqn;
-#endif
-
-#if 0
-			actions::action *A;
-			induced_actions::action_on_homogeneous_polynomials *AonHPD;
-			field_theory::finite_field *F;
-			groups::strong_generators *SG;
-
-			int nb_monomials;
-			int sz; // = 1 + nb_monomials
-			int sz_for_compare; // = 1 + nb_monomials
-			int *data_tmp; // [sz]
-
-			int position_of_original_object;
-			int allocation_length;
-			int used_length;
-
-			int **Equations; // [allocation_length][sz]
-			int *prev; // [allocation_length]
-			int *label; // [allocation_length]
-
-			int f_has_print_function;
-			void (*print_function)(int *object,
-					int sz, void *print_function_data);
-			void *print_function_data;
-
-			int f_has_reduction;
-			void (*reduction_function)(int *object,
-					void *reduction_function_data);
-			void *reduction_function_data;
-#endif
 			Canonical_form_nauty = Variety_table[idx]->Canonical_form_nauty;
 
 
@@ -1254,7 +828,7 @@ void classification_of_varieties::report_substructure(
 
 				ost << "Number of rational points over "
 						"$\\bbF_{" << Classifier->PA->F->q << "}$: ";
-				ost << Variety_table[idx]->Qco->Quartic_curve_object->nb_pts;
+				ost << Variety_table[idx]->Vo->Variety_object->Point_sets->Set_size[0];
 				ost << "\\\\" << endl;
 
 
@@ -1424,14 +998,14 @@ void classification_of_varieties::export_canonical_form_data(
 
 		if (Variety_table[i]) {
 
-			Table[i * nb_cols + 1] = std::to_string(Variety_table[i]->Qco->cnt);
+			Table[i * nb_cols + 1] = std::to_string(Variety_table[i]->Vo->cnt);
 			if (idx_po >= 0) {
-				Table[i * nb_cols + idx_po] = std::to_string(Variety_table[i]->Qco->po);
+				Table[i * nb_cols + idx_po] = std::to_string(Variety_table[i]->Vo->po);
 			}
 			if (idx_so >= 0) {
-				Table[i * nb_cols + idx_so] = std::to_string(Variety_table[i]->Qco->so);
+				Table[i * nb_cols + idx_so] = std::to_string(Variety_table[i]->Vo->so);
 			}
-			Table[i * nb_cols + idx_nb_pts] = std::to_string(Variety_table[i]->Qco->Quartic_curve_object->nb_pts);
+			Table[i * nb_cols + idx_nb_pts] = std::to_string(Variety_table[i]->Vo->Variety_object->Point_sets->Set_size[0]);
 
 			if (Classifier->Descr->f_algorithm_nauty) {
 
@@ -1533,13 +1107,13 @@ void classification_of_varieties::generate_source_code(
 	int f_vv = (verbose_level >= 2);
 	std::string fname;
 	int orbit_index;
-	int i, j;
+	int i;
 
 	int nb_orbits;
 	int nb_monomials;
 
 	actions::action *A;
-	actions::action *A_on_lines;
+	//actions::action *A_on_lines;
 
 	if (f_v) {
 		cout << "classification_of_varieties::generate_source_code" << endl;
@@ -1562,7 +1136,7 @@ void classification_of_varieties::generate_source_code(
 
 
 	A = Classifier->PA->A;
-	A_on_lines = Classifier->PA->A_on_lines;
+	//A_on_lines = Classifier->PA->A_on_lines;
 
 	{
 		ofstream f(fname);
@@ -1656,7 +1230,7 @@ void classification_of_varieties::generate_source_code(
 
 
 
-
+#if 0
 		if (f_v) {
 			cout << "classification_of_varieties::generate_source_code "
 					"preparing Bitangents" << endl;
@@ -1718,6 +1292,7 @@ void classification_of_varieties::generate_source_code(
 
 		}
 		f << "};" << endl;
+#endif
 
 		f << "static int " << fname_base << "_make_element_size = "
 				<< A->make_element_size << ";" << endl;
@@ -1869,6 +1444,349 @@ void classification_of_varieties::generate_source_code(
 	if (f_v) {
 		cout << "classification_of_varieties::generate_source_code done" << endl;
 	}
+}
+
+void classification_of_varieties::write_classification_by_nauty_csv(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	std::string fname;
+	int i;
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::write_classification_by_nauty_csv" << endl;
+	}
+	fname = fname_base + "_classification_by_nauty.csv";
+
+
+
+	{
+		ofstream ost(fname);
+
+
+		string header;
+
+		header = stringify_csv_header_line_nauty(verbose_level);
+		ost << header << endl;
+
+
+		for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+
+			if (f_v) {
+				cout << "classification_of_varieties::write_classification_by_nauty_csv "
+						"i=" << i << " / " << Classifier->Input->nb_objects_to_test << endl;
+			}
+
+			string line;
+
+			line = Variety_table[i]->stringify_csv_entry_one_line_nauty(
+					i, verbose_level);
+
+			ost << i << "," << line << endl;
+
+
+		}
+		ost << "END" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "classification_of_varieties::write_classification_by_nauty_csv done" << endl;
+	}
+}
+
+void classification_of_varieties::write_canonical_forms_csv(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	std::string fname;
+	int i;
+
+	int nb_monomials;
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::write_canonical_forms_csv" << endl;
+	}
+	fname = fname_base + "_canonical_form.csv";
+
+
+	nb_monomials = Classifier->Poly_ring->get_nb_monomials();
+	if (f_v) {
+		cout << "classification_of_varieties::write_canonical_forms_csv "
+				"nb_monomials = " << nb_monomials << endl;
+	}
+
+
+
+	{
+		ofstream ost(fname);
+
+		string header;
+
+		header = stringify_csv_header(verbose_level);
+		ost << header << endl;
+
+
+		for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+
+			if (f_v) {
+				cout << "classification_of_varieties::write_canonical_forms_csv "
+						"i=" << i << " / " << Classifier->Input->nb_objects_to_test << endl;
+			}
+
+			string line;
+
+			line = Variety_table[i]->stringify_csv_entry_one_line(
+					i, verbose_level);
+
+			ost << i << "," << line << endl;
+
+		}
+		ost << "END" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "classification_of_varieties::write_canonical_forms_csv done" << endl;
+	}
+}
+
+
+
+std::string classification_of_varieties::stringify_csv_header(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_header" << endl;
+	}
+	string header;
+
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Pts,Bitangents,"
+			"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
+
+	if (Classifier->Descr->carry_through.size()) {
+		int i;
+
+		for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
+			header += "," + Classifier->Descr->carry_through[i];
+		}
+	}
+	return header;
+
+}
+
+std::string classification_of_varieties::stringify_csv_header_line_nauty(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_header_line_nauty" << endl;
+	}
+
+	std::string header;
+
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Pts,Bitangents";
+
+	if (Classifier->Descr->carry_through.size()) {
+		int i;
+
+		for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
+			header += "," + Classifier->Descr->carry_through[i];
+		}
+	}
+
+	header += ",NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats";
+	header += ",nb_eqn,ago";
+
+	return header;
+}
+
+void classification_of_varieties::finalize_classification_by_nauty(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty "
+				"before make_classification_table_nauty" << endl;
+	}
+
+	make_classification_table_nauty(
+			Classification_table_nauty,
+			verbose_level);
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty "
+				"after make_classification_table_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty "
+				"before write_classification_by_nauty_csv" << endl;
+	}
+	write_classification_by_nauty_csv(
+			Classifier->Descr->fname_base_out,
+			verbose_level);
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty "
+				"after write_classification_by_nauty_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_classification_by_nauty done" << endl;
+	}
+}
+
+
+void classification_of_varieties::finalize_canonical_forms(
+		int verbose_level)
+// this only works if we use the substructure algorithm.
+// The Nauty based algorithm does not give us a canonical equation.
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_canonical_forms" << endl;
+	}
+
+	int i, j;
+
+
+	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+		Variety_table[i]->compute_canonical_object(verbose_level);
+	}
+
+
+
+
+	cout << "canonical forms of all input objects:" << endl;
+	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+		cout << setw(2) << i << " : ";
+		Int_vec_print(cout,
+				Canonical_equation + i * Classifier->Poly_ring->get_nb_monomials(),
+				Classifier->Poly_ring->get_nb_monomials());
+		cout << " : " << Goi[i] << endl;
+	}
+
+	Tally = NEW_OBJECT(data_structures::tally_vector_data);
+
+	Tally->init(Canonical_equation,
+			Classifier->Input->nb_objects_to_test,
+			Classifier->Poly_ring->get_nb_monomials(),
+			verbose_level);
+
+
+	Tally->get_transversal(
+			transversal, frequency, nb_types, verbose_level);
+
+	cout << "Number of orbits = " << Tally->nb_types << endl;
+
+	cout << "Classification of input curves:" << endl;
+
+	cout << "Input object : Iso type" << endl;
+	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+		cout << setw(2) << i << " : " <<
+				Tally->rep_idx[i] << endl;
+	}
+
+	cout << "Transversal of the isomorphism classes = orbit representatives:" << endl;
+	Int_vec_print(cout, transversal, nb_types);
+	cout << endl;
+
+	//Classification_of_quartic_curves->print();
+
+	for (i = 0; i < Tally->nb_types; i++) {
+
+		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
+
+		cout << i << " : " << Tally->Frequency[i] << " x ";
+		Int_vec_print(cout,
+				Tally->Reps + i * Tally->data_set_sz,
+				Tally->data_set_sz);
+		cout << " : ";
+		j = Tally->sorting_perm_inv[Tally->type_first[i]];
+		cout << Goi[j] << " : ";
+		Int_vec_print(cout,
+				Tally->sorting_perm_inv + Tally->type_first[i],
+				Tally->Frequency[i]);
+		cout << endl;
+#if 0
+		cout << "for elements ";
+		int_vec_print(cout, sorting_perm_inv + type_first[i], Frequency[i]);
+		cout << endl;
+#endif
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_canonical_forms "
+				"before write_canonical_forms_csv" << endl;
+	}
+	write_canonical_forms_csv(
+			Classifier->Descr->fname_base_out,
+			verbose_level);
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_canonical_forms "
+				"after write_canonical_forms_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties::finalize_canonical_forms done" << endl;
+	}
+
+}
+
+void classification_of_varieties::make_classification_table_nauty(
+		int *&T,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+
+	if (f_v) {
+		cout << "classification_of_varieties::make_classification_table_nauty" << endl;
+	}
+
+	T = NEW_int(Classifier->Input->nb_objects_to_test * 4);
+
+	int counter;
+
+	for (counter = 0; counter < Classifier->Input->nb_objects_to_test; counter++) {
+		T[counter * 4 + 0] = F_first_time[counter];
+		T[counter * 4 + 1] = Iso_idx[counter];
+		T[counter * 4 + 2] = Idx_canonical_form[counter];
+		T[counter * 4 + 3] = Idx_equation[counter];
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties::make_classification_table_nauty done" << endl;
+	}
+
 }
 
 

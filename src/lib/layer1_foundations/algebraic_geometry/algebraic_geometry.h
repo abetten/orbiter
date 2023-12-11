@@ -2115,6 +2115,7 @@ public:
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
+	std::string eqn_txt;
 
 	int *eqn; // [Ring->get_nb_monomials()]
 
@@ -2132,6 +2133,12 @@ public:
 
 	variety_object();
 	~variety_object();
+	void init_from_string(
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			std::string &eqn_txt,
+			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
 	void init_equation(
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
@@ -2146,6 +2153,10 @@ public:
 			int verbose_level);
 	void enumerate_points(
 			int verbose_level);
+	void print(
+			std::ostream &ost);
+	void stringify(
+			std::string &s_Eqn, std::string &s_Pts, std::string &s_Bitangents);
 
 
 };

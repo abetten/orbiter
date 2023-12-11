@@ -182,7 +182,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	automorphism_group_as_permutation_group(
 				NO,
 				A_perm,
-				verbose_level);
+				verbose_level - 2);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
@@ -205,7 +205,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 			P,
 			gens_in,
 			gens_out,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"after AG.reverse_engineer_semilinear_group" << endl;
@@ -226,7 +226,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	AG.test_if_two_actions_agree_vector(
 			A_linear, A_perm,
 			gens_out, gens_in,
-			verbose_level);
+			verbose_level - 2);
 
 
 	if (f_vv) {

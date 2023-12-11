@@ -201,7 +201,7 @@ public:
 
 	// input:
 	int counter;
-	quartic_curve_object_with_action *Qco;
+	variety_object_with_action *Vo;
 
 
 	// substructure output:
@@ -215,7 +215,7 @@ public:
 
 	ring_theory::longinteger_object *go_eqn;
 
-	quartic_curve_object_with_action *Canonical_object;
+	variety_object_with_action *Canonical_object;
 
 
 
@@ -225,7 +225,7 @@ public:
 			canonical_form_classifier *Canonical_form_classifier,
 			std::string &fname_case_out,
 			int counter,
-			quartic_curve_object_with_action *Qco,
+			variety_object_with_action *Vo,
 			int verbose_level);
 	void classify_curve_nauty(
 			int verbose_level);
@@ -254,8 +254,12 @@ public:
 			int verbose_level);
 	void compute_canonical_object(
 			int verbose_level);
+	std::string stringify_csv_entry_one_line(
+			int i, int verbose_level);
 	void prepare_csv_entry_one_line(
 			std::vector<std::string> &v, int i, int verbose_level);
+	std::string stringify_csv_entry_one_line_nauty(
+			int i, int verbose_level);
 	void prepare_csv_entry_one_line_nauty(
 			std::vector<std::string> &v, int i, int verbose_level);
 
@@ -348,7 +352,7 @@ public:
 
 
 	int *Elt;
-	int *eqn2;
+	int *eqn2; // used by canonical_form_of_variety::find_equation
 
 
 	int *Canonical_equation;
@@ -380,24 +384,11 @@ public:
 	void init(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
-	void finalize_classification_by_nauty(
-			int verbose_level);
-	void write_classification_by_nauty_csv(
-			std::string &fname_base,
-			int verbose_level);
-	void finalize_canonical_forms(
-			int verbose_level);
 	void classify_nauty(
 			int verbose_level);
 	void classify_with_substructure(
 			int verbose_level);
-	void make_classification_table_nauty(
-			int *&T,
-			int verbose_level);
 	void main_loop(
-			int verbose_level);
-	void write_canonical_forms_csv(
-			std::string &fname_base,
 			int verbose_level);
 	void report(
 			poset_classification::poset_classification_report_options *Opt,
@@ -410,6 +401,23 @@ public:
 			std::string &fname, int verbose_level);
 	void generate_source_code(
 			std::string &fname_base,
+			int verbose_level);
+	void write_classification_by_nauty_csv(
+			std::string &fname_base,
+			int verbose_level);
+	void write_canonical_forms_csv(
+			std::string &fname_base,
+			int verbose_level);
+	std::string stringify_csv_header(
+			int verbose_level);
+	std::string stringify_csv_header_line_nauty(
+			int verbose_level);
+	void finalize_classification_by_nauty(
+			int verbose_level);
+	void finalize_canonical_forms(
+			int verbose_level);
+	void make_classification_table_nauty(
+			int *&T,
 			int verbose_level);
 
 };
@@ -440,7 +448,8 @@ public:
 	int idx_po_go, idx_po_index;
 	int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
 
-	quartic_curve_object_with_action **Qco;
+	//quartic_curve_object_with_action **Qco;
+	variety_object_with_action **Vo;
 		// [nb_objects_to_test]
 
 
@@ -460,6 +469,12 @@ public:
 			int *Carry_through,
 			data_structures::spreadsheet *S,
 			quartic_curve_object_with_action *&Qco,
+			int verbose_level);
+	void prepare_input_of_variety_type(
+			int row, int counter,
+			int *Carry_through,
+			data_structures::spreadsheet *S,
+			variety_object_with_action *&Vo,
 			int verbose_level);
 
 
@@ -676,6 +691,57 @@ public:
 			int verbose_level);
 	void init_image_of(
 			quartic_curve_object_with_action *old_one,
+			int *Elt,
+			actions::action *A,
+			actions::action *A_on_lines,
+			int *eqn2,
+			int verbose_level);
+	void print(
+			std::ostream &ost);
+	std::string stringify_Pts();
+	std::string stringify_bitangents();
+
+};
+
+
+
+// #############################################################################
+// veriety_object_with_action.cpp
+// #############################################################################
+
+
+
+
+//! a variety with an equation.
+
+
+
+class variety_object_with_action {
+
+public:
+
+	int cnt;
+	int po_go;
+	int po_index;
+	int po;
+	int so;
+
+	std::vector<std::string> Carrying_through;
+
+	algebraic_geometry::variety_object *Variety_object;
+
+
+	variety_object_with_action();
+	~variety_object_with_action();
+	void init(
+			int cnt, int po_go, int po_index, int po, int so,
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Poly_ring,
+			std::string &eqn_txt,
+			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
+	void init_image_of(
+			variety_object_with_action *old_one,
 			int *Elt,
 			actions::action *A,
 			actions::action *A_on_lines,

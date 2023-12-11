@@ -16,7 +16,8 @@ MODULES = \
 	input_objects_of_type_variety.o \
 	object_in_projective_space_with_action.o \
 	object_with_properties.o \
-	quartic_curve_object_with_action.o
+	quartic_curve_object_with_action.o \
+	variety_object_with_action.o
 
 
 all : $(MODULES)
