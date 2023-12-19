@@ -150,8 +150,8 @@ public:
 	int f_has_geometric_object;
 	geometry::geometric_object_create *GOC;
 
-	int f_has_input_stream;
-	data_structures::data_input_stream *IS;
+	int f_has_combo;
+	apps_combinatorics::combinatorial_object *Combo;
 
 
 	combinatorial_object_activity();
@@ -160,15 +160,15 @@ public:
 			combinatorial_object_activity_description *Descr,
 			geometry::geometric_object_create *GOC,
 			int verbose_level);
-	void init_input_stream(
+	void init_combo(
 			combinatorial_object_activity_description *Descr,
-			data_structures::data_input_stream *IS,
+			apps_combinatorics::combinatorial_object *Combo,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);
 	void perform_activity_geometric_object(
 			int verbose_level);
-	void perform_activity_input_stream(
+	void perform_activity_combo(
 			int verbose_level);
 	void do_save(
 			std::string &save_as_fname,
@@ -240,6 +240,32 @@ public:
 
 
 
+
+// #############################################################################
+// combinatorial_object.cpp
+// #############################################################################
+
+
+//! a list of combinatorial objects all of the same type
+
+class combinatorial_object {
+public:
+	data_structures::data_input_stream_description
+		*Data_input_stream_description;
+
+	data_structures::data_input_stream *IS;
+
+	combinatorics::classification_of_objects *Classification;
+	canonical_form::classification_of_combinatorial_objects *Classification_CO;
+
+	combinatorial_object();
+	~combinatorial_object();
+	void init(
+			data_structures::data_input_stream_description
+					*Data_input_stream_description,
+			int verbose_level);
+
+};
 
 
 // #############################################################################

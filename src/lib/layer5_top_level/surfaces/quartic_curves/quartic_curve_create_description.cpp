@@ -51,10 +51,6 @@ quartic_curve_create_description::quartic_curve_create_description()
 	//std::string equation_parameter_values;
 
 
-
-	//nb_select_double_six = 0;
-	//select_double_six_string[];
-
 	f_from_cubic_surface = false;
 	//std::string from_cubic_surface_label;
 	from_cubic_surface_point_orbit_idx = 0;

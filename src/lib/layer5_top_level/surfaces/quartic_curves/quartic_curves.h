@@ -33,8 +33,6 @@ public:
 	std::string export_something_what;
 
 
-	//int f_export_points;
-
 	int f_create_surface;
 
 	int f_extract_orbit_on_bitangents_by_length;
@@ -254,9 +252,6 @@ public:
 	void apply_single_transformation(int f_inverse,
 			int *transformation_coeffs,
 			int sz, int verbose_level);
-	void compute_group(
-			projective_geometry::projective_space_with_action *PA,
-			int verbose_level);
 	void export_something(
 			std::string &what, int verbose_level);
 	void do_report(

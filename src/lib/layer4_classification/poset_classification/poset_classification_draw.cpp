@@ -1911,11 +1911,9 @@ void poset_classification::make_graph(
 			go.print_to_string(text);
 			if (lvl) {
 				text2 = std::to_string(the_set[lvl - 1]);
-				//snprintf(text2, 1000, "%d;%s", the_set[lvl - 1], text);
 			}
 			else {
 				text2 = "$\\emptyset$";
-				//snprintf(text2, 1000, "$\\emptyset$;%s", text);
 			}
 
 			string text3;

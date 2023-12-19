@@ -2959,6 +2959,7 @@ void ring_theory_global::parse_equation_easy(
 	string equation_parameter_values;
 
 	int nb_coeffs;
+	int f_has_managed_variables = true;
 
 	managed_variables = Poly->list_of_variables();
 	if (f_v) {
@@ -2969,6 +2970,7 @@ void ring_theory_global::parse_equation_easy(
 	parse_equation(Poly,
 			name_of_formula,
 			name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
 			equation_text,
 			equation_parameters,
@@ -2993,6 +2995,7 @@ void ring_theory_global::parse_equation(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &equation_text,
 		std::string &equation_parameters,
@@ -3009,6 +3012,8 @@ void ring_theory_global::parse_equation(
 				"name_of_formula=" << name_of_formula << endl;
 		cout << "ring_theory_global::parse_equation "
 				"name_of_formula_tex=" << name_of_formula_tex << endl;
+		cout << "ring_theory_global::parse_equation "
+				"f_has_managed_variables=" << f_has_managed_variables << endl;
 		cout << "ring_theory_global::parse_equation "
 				"managed_variables=" << managed_variables << endl;
 		cout << "ring_theory_global::parse_equation "
@@ -3038,7 +3043,7 @@ void ring_theory_global::parse_equation(
 	Descr1->field_pointer = Poly->get_F();
 	Descr1->f_text = true;
 	Descr1->text_txt = equation_text;
-	Descr1->f_managed_variables = true;
+	Descr1->f_managed_variables = f_has_managed_variables;
 	Descr1->managed_variables = managed_variables;
 
 
@@ -3083,12 +3088,13 @@ void ring_theory_global::parse_equation(
 				Poly,
 				name_of_formula,
 				name_of_formula_tex,
+				f_has_managed_variables,
 				managed_variables,
 				equation_parameters,
 				equation_parameter_values,
 				SB1,
 				Formula_vector_after_sub,
-				verbose_level - 1);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "ring_theory_global::parse_equation "
@@ -3099,6 +3105,10 @@ void ring_theory_global::parse_equation(
 	else {
 
 		Formula_vector_after_sub = SB1->Formula_vector;
+	}
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
 	}
 
 
@@ -3113,10 +3123,11 @@ void ring_theory_global::parse_equation(
 			Poly,
 			name_of_formula,
 			name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
 			Formula_vector_after_sub,
 			Formula_vector_after_expand,
-			verbose_level - 1);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
@@ -3126,13 +3137,23 @@ void ring_theory_global::parse_equation(
 
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
+				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
 				"before collect_variables" << endl;
 	}
 	Formula_vector_after_expand->V[0].collect_variables(
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
 				"after collect_variables" << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	// assemble the equation as a vector of coefficients
@@ -3148,10 +3169,15 @@ void ring_theory_global::parse_equation(
 	Formula_vector_after_expand->V[0].collect_coefficients_of_equation(
 			Poly,
 			coeffs, nb_coeffs,
-			verbose_level - 1);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
 				"after Formula_vector_after_expand->V[0].collect_coefficients_of_equation" << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation "
+				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	if (f_v) {
@@ -3165,6 +3191,7 @@ void ring_theory_global::simplify_and_expand(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		expression_parser::formula_vector *Formula_vector_after_sub,
 		expression_parser::formula_vector *&Formula_vector_after_expand,
@@ -3176,6 +3203,10 @@ void ring_theory_global::simplify_and_expand(
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand" << endl;
 	}
+	if (f_v) {
+		cout << "ring_theory_global::simplify_and_expand "
+				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
+	}
 
 	// Perform simplification
 
@@ -3183,11 +3214,17 @@ void ring_theory_global::simplify_and_expand(
 		cout << "ring_theory_global::simplify_and_expand "
 				"before Formula_vector_after_sub->V[0].simplify" << endl;
 	}
-	Formula_vector_after_sub->V[0].simplify(verbose_level);
+	Formula_vector_after_sub->V[0].simplify(verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
 				"after Formula_vector_after_sub->V[0].simplify" << endl;
 	}
+
+	if (f_v) {
+		cout << "ring_theory_global::simplify_and_expand "
+				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
+	}
+
 
 	// Perform expansion.
 	// The result will be in the temporary object Formula_vector_after_expand
@@ -3206,12 +3243,19 @@ void ring_theory_global::simplify_and_expand(
 			Formula_vector_after_sub,
 			Poly->get_F(),
 			name_of_formula, name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
 			f_write_trees_during_expand,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
 				"after Formula_vector->expand" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "ring_theory_global::simplify_and_expand "
+				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	// Perform simplification
@@ -3222,10 +3266,15 @@ void ring_theory_global::simplify_and_expand(
 		cout << "ring_theory_global::simplify_and_expand "
 				"before Formula_vector_after_expand->V[0].simplify" << endl;
 	}
-	Formula_vector_after_expand->V[0].simplify(verbose_level);
+	Formula_vector_after_expand->V[0].simplify(verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
 				"after Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::simplify_and_expand "
+				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 
@@ -3239,6 +3288,7 @@ void ring_theory_global::perform_substitution(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
 		std::string &name_of_formula_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &equation_parameters,
 		std::string &equation_parameter_values,
@@ -3264,7 +3314,7 @@ void ring_theory_global::perform_substitution(
 	Descr2->field_pointer = Poly->get_F();
 	Descr2->f_text = true;
 	Descr2->text_txt = equation_parameter_values;
-	Descr2->f_managed_variables = true;
+	Descr2->f_managed_variables = f_has_managed_variables;
 	Descr2->managed_variables = managed_variables;
 
 
@@ -3314,8 +3364,9 @@ void ring_theory_global::perform_substitution(
 			O_target->Formula_vector,
 			equation_parameters /*Descr->substitute_variables*/,
 			name_of_formula, name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "ring_theory_global::perform_substitution "
 				"after Formula_vector_after_sub->substitute" << endl;

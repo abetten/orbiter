@@ -3022,6 +3022,50 @@ void combinatorics_domain::Dedekind_numbers(
 	if (f_v) {
 		cout << "combinatorics_domain::Dedekind_numbers" << endl;
 	}
+
+
+	int width, height;
+	std::string *Table;
+	std::string *Row_headers;
+	std::string *Col_headers;
+
+	height = q_max - q_min + 1;
+	width = n_max - n_min + 1;
+	Row_headers = new string[height];
+	Col_headers = new string[width];
+	Table = new string[height * width];
+
+
+	int n, q, i, j;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object Dnq;
+
+	for (n = n_min; n <= n_max; n++) {
+		i = n - n_min;
+		Row_headers[i] = std::to_string(n);
+	}
+	for (q = q_min; q <= q_max; q++) {
+		j = q - q_min;
+		Col_headers[j] = std::to_string(q);
+	}
+
+	for (n = n_min; n <= n_max; n++) {
+		i = n - n_min;
+		for (q = q_min; q <= q_max; q++) {
+			j = q - q_min;
+
+			ring_theory::longinteger_object Dnk;
+
+			//cout << "computing n=" << n << " q=" << q << endl;
+			D.Dedekind_number(Dnq, n, q, verbose_level);
+			Table[i * width + j] = Dnq.stringify();
+		}
+	}
+	if (f_v) {
+		cout << "combinatorics_domain::Dedekind_numbers computing is done" << endl;
+	}
+
+
 	{
 		string fname;
 
@@ -3033,7 +3077,7 @@ void combinatorics_domain::Dedekind_numbers(
 
 
 		{
-			ofstream ost(fname);
+			//ofstream ost(fname);
 
 			if (f_v) {
 				cout << "combinatorics_domain::Dedekind_numbers "
@@ -3041,10 +3085,9 @@ void combinatorics_domain::Dedekind_numbers(
 			}
 			//report(ost, verbose_level);
 
-			int n, q;
-			ring_theory::longinteger_domain D;
-			ring_theory::longinteger_object Dnq;
 
+
+#if 0
 			ost << "ROW";
 			for (q = q_min; q <= q_max; q++) {
 				ost << "," << q;
@@ -3062,6 +3105,16 @@ void combinatorics_domain::Dedekind_numbers(
 				ost << endl;
 			}
 			ost << "END" << endl;
+#endif
+
+			orbiter_kernel_system::file_io Fio;
+
+			Fio.Csv_file_support->write_table_of_strings_with_headings(
+					fname,
+					height, width, Table,
+					Row_headers,
+					Col_headers,
+					verbose_level);
 
 			if (f_v) {
 				cout << "combinatorics_domain::Dedekind_numbers "

@@ -76,15 +76,6 @@ int spread_classify_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = true;
 			poset_classification_control_label.assign(argv[++i]);
-#if 0
-			Control = NEW_OBJECT(poset_classification::poset_classification_control);
-			if (f_v) {
-				cout << "-poset_classification_control " << endl;
-			}
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-#endif
-
 			if (f_v) {
 				cout << "-poset_classification_control " << poset_classification_control_label << endl;
 			}

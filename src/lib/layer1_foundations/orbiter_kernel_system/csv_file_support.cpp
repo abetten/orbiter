@@ -1245,7 +1245,7 @@ void csv_file_support::do_csv_file_join(
 #endif
 
 	for (i = 0; i < nb_files; i++) {
-		identifier_column[i] = S[i].find_by_column(csv_file_join_identifier[i].c_str());
+		identifier_column[i] = S[i].find_column(csv_file_join_identifier[i]);
 		cout << "Table " << csv_file_join_fname[i]
 			<< ", identifier " << identifier_column[i] << endl;
 	}
@@ -1261,7 +1261,10 @@ void csv_file_support::do_csv_file_join(
 	for (i = 1; i < nb_files; i++) {
 		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0]
 			<< " with table " << i << " = " << csv_file_join_fname[i] << endl;
-		S[0].join_with(S + i, identifier_column[0], identifier_column[i], verbose_level - 2);
+		S[0].join_with(
+				S + i,
+				identifier_column[0], identifier_column[i],
+				verbose_level - 2);
 		cout << "joining " << csv_file_join_fname[0]
 			<< " with table " << csv_file_join_fname[i] << " done" << endl;
 #if 0
@@ -1342,11 +1345,13 @@ void csv_file_support::do_csv_file_concatenate(
 		int j;
 		int f_enclose_in_parentheses = false;
 
-		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
+		S[0].print_table_row(
+				0, f_enclose_in_parentheses, ost);
 		for (i = 0; i < nb_files; i++) {
 			//S[i].print_table(ost, false);
 			for (j = 1; j < S[i].nb_rows; j++) {
-				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
+				S[i].print_table_row(
+						j, f_enclose_in_parentheses, ost);
 			}
 		}
 		ost << "END" << endl;
@@ -1381,13 +1386,16 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 	S = new data_structures::spreadsheet[nb_files];
 	//identifier_column = NEW_int(nb_files);
 
+	data_structures::string_tools ST;
+
+
+
 	for (i = 0; i < nb_files; i++) {
 
-		char str[1000];
+
 		std::string fname_in;
 
-		snprintf(str, sizeof(str), fname_in_mask.c_str(), i);
-		fname_in.assign(str);
+		fname_in = ST.printf_d(fname_in_mask, i);
 
 		cout << "Reading table " << fname_in << endl;
 		S[i].read_spreadsheet(fname_in, 0 /*verbose_level*/);
@@ -1447,8 +1455,10 @@ void csv_file_support::do_csv_file_latex(
 
 
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_latex S.nb_rows = " << S.nb_rows << endl;
-		cout << "csv_file_support::do_csv_file_latex S.nb_cols = " << S.nb_cols << endl;
+		cout << "csv_file_support::do_csv_file_latex "
+				"S.nb_rows = " << S.nb_rows << endl;
+		cout << "csv_file_support::do_csv_file_latex "
+				"S.nb_cols = " << S.nb_cols << endl;
 	}
 
 
@@ -1706,7 +1716,8 @@ void csv_file_support::csv_file_sort_rows(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "csv_file_support::csv_file_sort_rows fname = "<< fname << endl;
+		cout << "csv_file_support::csv_file_sort_rows "
+				"fname = "<< fname << endl;
 	}
 
 	int *M;
@@ -1812,7 +1823,8 @@ void csv_file_support::csv_file_sort_rows_and_remove_duplicates(
 	}
 }
 
-void csv_file_support::write_table_of_strings(std::string &fname,
+void csv_file_support::write_table_of_strings(
+		std::string &fname,
 		int nb_rows, int nb_cols, std::string *Table,
 		std::string &headings,
 		int verbose_level)
@@ -1849,6 +1861,53 @@ void csv_file_support::write_table_of_strings(std::string &fname,
 
 	if (f_v) {
 		cout << "csv_file_support::write_table_of_strings done" << endl;
+	}
+}
+
+void csv_file_support::write_table_of_strings_with_headings(
+		std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string *Row_headings,
+		std::string *Col_headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_headings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row";
+		for (j = 0; j < nb_cols; j++) {
+			f << "," << Col_headings[j];
+		}
+		f << endl;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			f << i << "," << Row_headings[i];
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_headings done" << endl;
 	}
 }
 
@@ -1914,7 +1973,7 @@ void csv_file_support::read_column_and_parse(
 			}
 
 			ST.drop_quotes(
-					str1, str2);
+				str1, str2);
 
 			if (f_v) {
 				cout << "csv_file_support::read_column_and_parse "
@@ -1940,6 +1999,7 @@ void csv_file_support::read_column_and_parse(
 
 }
 
+#if 0
 void csv_file_support::save_fibration(
 		std::vector<std::vector<std::pair<int, int> > > &Fibration,
 		std::string &fname, int verbose_level)
@@ -2164,6 +2224,7 @@ void csv_file_support::save_cumulative_data(
 	FREE_lint(M);
 
 }
+#endif
 
 void csv_file_support::write_characteristic_matrix(
 		std::string &fname,
@@ -2184,7 +2245,8 @@ void csv_file_support::write_characteristic_matrix(
 		}
 
 	}
-	int_matrix_write_csv(fname, T,
+	int_matrix_write_csv(
+			fname, T,
 			nb_rows,
 			nb_cols);
 

@@ -395,22 +395,28 @@ void homogeneous_polynomial_domain::remake_symbols(
 		cout << "homogeneous_polynomial_domain::remake_symbols" << endl;
 	}
 
-	int i; //, l;
-	char label[1000];
+	data_structures::string_tools ST;
+
+	int i;
 
 	symbols.clear();
 	symbols_latex.clear();
+
 	for (i = 0; i < nb_variables; i++) {
-		string s;
-		snprintf(label, 1000, symbol_mask.c_str(), i + symbol_offset);
-		s.assign(label);
-		symbols.push_back(s);
+
+		string label;
+
+		label = ST.printf_d(symbol_mask, i + symbol_offset);
+
+		symbols.push_back(label);
 	}
 	for (i = 0; i < nb_variables; i++) {
-		string s;
-		snprintf(label, 1000, symbol_mask_latex.c_str(), i + symbol_offset);
-		s.assign(label);
-		symbols_latex.push_back(s);
+
+		string label;
+
+		label = ST.printf_d(symbol_mask_latex, i + symbol_offset);
+
+		symbols_latex.push_back(label);
 	}
 
 	if (f_v) {
@@ -430,17 +436,26 @@ void homogeneous_polynomial_domain::remake_symbols_interval(
 		cout << "homogeneous_polynomial_domain::remake_symbols_interval" << endl;
 	}
 
-	int i, j; //, l;
-	char label[1000];
+	data_structures::string_tools ST;
+
+	int i, j;
 
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		snprintf(label, 1000, symbol_mask.c_str(), i + symbol_offset);
+
+		string label;
+
+		label = ST.printf_d(symbol_mask, i + symbol_offset);
+
 		symbols[i].assign(label);
 	}
 	for (j = 0; j < len; j++) {
 		i = from + j;
-		snprintf(label, 1000, symbol_mask_latex.c_str(), i + symbol_offset);
+
+		string label;
+
+		label = ST.printf_d(symbol_mask_latex, i + symbol_offset);
+
 		symbols_latex[i].assign(label);
 	}
 
@@ -1594,6 +1609,69 @@ void homogeneous_polynomial_domain::enumerate_points(
 	}
 }
 
+
+void homogeneous_polynomial_domain::enumerate_points_in_intersection(
+		int *coeff1,
+		int *coeff2,
+		std::vector<long int> &Pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 2);
+	long int rk;
+	int a, b;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection" << endl;
+	}
+
+	long int N_points;
+	geometry::geometry_global Gg;
+
+	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
+
+	if (f_vv) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection "
+				"N_points=" << N_points << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection "
+				"coeff1=" << endl;
+		Int_vec_print(cout, coeff1, nb_monomials);
+		cout << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection "
+				"coeff2=" << endl;
+		Int_vec_print(cout, coeff2, nb_monomials);
+		cout << endl;
+#if 0
+		print_equation_with_line_breaks_tex(cout,
+				coeff, 8 /* nb_terms_per_line*/,
+				"\\\\\n");
+		cout << endl;
+#endif
+	}
+	//nb_pts = 0;
+	for (rk = 0; rk < N_points; rk++) {
+		unrank_point(v, rk);
+		a = evaluate_at_a_point(coeff1, v);
+		b = evaluate_at_a_point(coeff2, v);
+		if (f_vv) {
+			cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection "
+					"point " << rk << " / " << N_points << " :";
+			Int_vec_print(cout, v, nb_variables);
+			cout << " evaluates to (" << a << "," << b << ")" << endl;
+		}
+		if (a == 0 && b == 0) {
+			Pts.push_back(rk);
+		}
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection "
+				"done" << endl;
+	}
+}
+
+
+
 void homogeneous_polynomial_domain::enumerate_points_lint(
 		int *coeff,
 		long int *&Pts, int &nb_pts, int verbose_level)
@@ -1633,6 +1711,47 @@ void homogeneous_polynomial_domain::enumerate_points_lint(
 		cout << "homogeneous_polynomial_domain::enumerate_points_lint done" << endl;
 	}
 }
+
+void homogeneous_polynomial_domain::enumerate_points_in_intersection_lint(
+		int *coeff1, int *coeff2,
+		long int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection_lint" << endl;
+	}
+
+	vector<long int> Points;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection_lint "
+				"before enumerate_points" << endl;
+	}
+	enumerate_points_in_intersection(coeff1, coeff2, Points, verbose_level - 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection_lint "
+				"after enumerate_points" << endl;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection_lint "
+				"The object has " << Points.size() << " points" << endl;
+	}
+	int i;
+
+	nb_pts = Points.size();
+	Pts = NEW_lint(nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Points[i];
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_in_intersection_lint done" << endl;
+	}
+}
+
 
 
 void homogeneous_polynomial_domain::enumerate_points_zariski_open_set(
@@ -3388,7 +3507,7 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 
 
 	std::string managed_variables;
-
+	int f_has_managed_variables = false;
 
 	int i;
 
@@ -3414,6 +3533,7 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 			O_target->Formula_vector,
 			equation_parameters /*Descr->substitute_variables*/,
 			name_of_formula, name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
 			verbose_level);
 	if (f_v) {
@@ -3452,6 +3572,7 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 			Formula_vector_after_sub,
 			F,
 			name_of_formula, name_of_formula_tex,
+			f_has_managed_variables,
 			managed_variables,
 			f_write_trees_during_expand,
 			verbose_level);

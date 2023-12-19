@@ -195,7 +195,8 @@ void group_element::print_point(
 	(*A->ptr->ptr_print_point)(*A, a, ost);
 }
 
-void group_element::unrank_point(long int rk, int *v)
+void group_element::unrank_point(
+		long int rk, int *v)
 // v[low_level_point_size]
 {
 	if (A->ptr->ptr_unrank_point == NULL) {
@@ -207,7 +208,8 @@ void group_element::unrank_point(long int rk, int *v)
 	(*A->ptr->ptr_unrank_point)(*A, rk, v);
 }
 
-long int group_element::rank_point(int *v)
+long int group_element::rank_point(
+		int *v)
 // v[low_level_point_size]
 {
 	if (A->ptr->ptr_rank_point == NULL) {

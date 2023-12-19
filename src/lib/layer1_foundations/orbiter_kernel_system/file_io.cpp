@@ -57,15 +57,20 @@ void file_io::concatenate_files(
 			<< " N=" << N << " fname_out=" << fname_out << endl;
 	}
 
+	data_structures::string_tools ST;
+
 	//missing_idx = NEW_int(N);
 	cnt_total = 0;
 	{
 		ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
 
-			char fname[1000];
+			string fname;
 
-			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
+			//snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
+
+			fname = ST.printf_d(fname_in_mask, h);
+
 
 
 			long int sz;
@@ -127,9 +132,11 @@ void file_io::concatenate_files(
 
 	for (h = 0; h < (int) missing_idx.size(); h++) {
 
-		char fname[1000];
+		string fname;
 
-		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+		//snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+
+		fname = ST.printf_d(fname_in_mask, missing_idx[h]);
 
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
@@ -155,15 +162,18 @@ void file_io::concatenate_files_into(
 			<< " N=" << N << " into an open file" << endl;
 	}
 
+	data_structures::string_tools ST;
+
 	//missing_idx = NEW_int(N);
 	cnt_total = 0;
 	{
 		//ofstream fp_out(fname_out);
 		for (h = 0; h < N; h++) {
 
-			char fname[1000];
+			string fname;
 
-			snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
+			//snprintf(fname, sizeof(fname), fname_in_mask.c_str(), h);
+			fname = ST.printf_d(fname_in_mask, h);
 
 			fp_out << "# start of file " << fname << endl;
 
@@ -220,9 +230,10 @@ void file_io::concatenate_files_into(
 
 	for (h = 0; h < (int) missing_idx.size(); h++) {
 
-		char fname[1000];
+		string fname;
 
-		snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+		//snprintf(fname, sizeof(fname), fname_in_mask.c_str(), missing_idx[h]);
+		fname = ST.printf_d(fname_in_mask, missing_idx[h]);
 
 		cout << h << " : " << missing_idx[h] << " : " << fname << endl;
 	}
@@ -3108,10 +3119,11 @@ void file_io::create_file(
 
 		cout << "Descr->f_read_cases" << endl;
 		string fname;
-		char str[1000];
+		//char str[1000];
 		//int *Cases;
 		int nb_cases;
 		int n, c;
+		data_structures::string_tools ST;
 
 		cout << "reading file " << Descr->read_cases_fname << endl;
 
@@ -3148,28 +3160,35 @@ void file_io::create_file(
 		for (c = 0; c < nb_cases; c++) {
 
 			//i = Cases[c];
-			snprintf(str, sizeof(str), Descr->file_mask.c_str(), c);
-			fname.assign(str);
+			//snprintf(str, sizeof(str), Descr->file_mask.c_str(), c);
+			//fname.assign(str);
+
+			fname = ST.printf_d(Descr->file_mask, c);
 
 
 			{
 				ofstream fp(fname);
 
+				string line;
+
 				for (j = 0; j < Descr->nb_lines; j++) {
 					if (Descr->f_line_numeric[j]) {
-						snprintf(str, sizeof(str),
-								Descr->lines[j].c_str(), c);
+						//snprintf(str, sizeof(str), Descr->lines[j].c_str(), c);
+						line = ST.printf_d(Descr->lines[j], c);
+
 					}
 					else {
 						string s;
+						char str[1000];
 
 						S.get_string(s, c, 0);
 
 						snprintf(str, sizeof(str),
 								Descr->lines[j].c_str(), s.c_str());
+						line = str;
 					}
-					fix_escape_characters(str);
-					fp << str << endl;
+					ST.fix_escape_characters(line);
+					fp << line << endl;
 				}
 			}
 			cout << "Written file " << fname << " of size "
@@ -3231,36 +3250,6 @@ void file_io::create_file(
 
 }
 
-void file_io::fix_escape_characters(
-		char *str)
-{
-	int i, j, l;
-
-	l = strlen(str);
-	for (i = 0, j = 0; i < l; i++, j++) {
-		if (str[i] == '\\' && i < l - 1 && str[i + 1] == 't') {
-			str[j] = '\t';
-			i++;
-		}
-		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'D') {
-			str[j] = '$';
-			i++;
-		}
-		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'B') {
-			str[j] = '\\';
-			i++;
-		}
-		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'n') {
-			str[j] = '\n';
-			i++;
-		}
-		else {
-			str[j] = str[i];
-		}
-	}
-	str[j] = 0;
-}
-
 void file_io::create_files(
 		create_file_description *Descr,
 	int verbose_level)
@@ -3268,9 +3257,9 @@ void file_io::create_files(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	file_io Fio;
+	data_structures::string_tools ST;
 
 	string fname;
-	char str[1000];
 	int r;
 
 	if (f_v) {
@@ -3283,8 +3272,7 @@ void file_io::create_files(
 
 	for (i = 0; i < Descr->N; i++) {
 
-		snprintf(str, sizeof(str), Descr->file_mask.c_str(), i);
-		fname.assign(str);
+		fname = ST.printf_d(Descr->file_mask, i);
 
 		fp_makefile << "\tsbatch " << fname << endl;
 		{
@@ -3293,46 +3281,68 @@ void file_io::create_files(
 			for (j = 0; j < Descr->nb_lines; j++) {
 
 
-				cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
-				snprintf(str, sizeof(str),
-						Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+				{
+					cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
+					char str[1000];
 
+					snprintf(str, sizeof(str),
+							Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 
-				fix_escape_characters(str);
-				cout << "str='" << str << "'" << endl;
-				fp << str << endl;
+					string s;
+
+					s = str;
+
+					ST.fix_escape_characters(s);
+					cout << "str='" << s << "'" << endl;
+					fp << s << endl;
+				}
 			}
 			if (Descr->f_repeat) {
 				if (Descr->f_split) {
 					for (r = 0; r < Descr->split_m; r++) {
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
-								snprintf(str, sizeof(str),
-										Descr->repeat_mask.c_str(), j);
-								fix_escape_characters(str);
-								fp << str << endl;
+
+								string s;
+
+								s = ST.printf_d(Descr->repeat_mask, i);
+								ST.fix_escape_characters(s);
+								fp << s << endl;
+
 							}
 						}
 						fp << endl;
 					}
 				}
 				else {
-					int c;
 
-					snprintf(str, sizeof(str),
-							Descr->repeat_mask.c_str(), Descr->repeat_N);
-					fix_escape_characters(str);
-					fp << str << endl;
+					{
+						string s;
+
+						s = ST.printf_d(Descr->repeat_mask, Descr->repeat_N);
+
+						ST.fix_escape_characters(s);
+						fp << s << endl;
+					}
 					if (!Descr->f_command) {
 						cout << "please use option -command when using -repeat" << endl;
 						exit(1);
 					}
 					for (j = 0; j < Descr->repeat_N; j++) {
+
+						int c;
 						c = Descr->repeat_start + j * Descr->repeat_increment;
+
+						string s;
+						char str[1000];
+
 						snprintf(str, sizeof(str),
 								Descr->command.c_str(), c, c, c, c);
-						fix_escape_characters(str);
-						fp << str << endl;
+
+						s = str;
+
+						ST.fix_escape_characters(s);
+						fp << s << endl;
 					}
 				}
 				for (j = 0; j < Descr->nb_final_lines; j++) {
@@ -3363,8 +3373,8 @@ void file_io::create_files_list_of_cases(
 	int i, j;
 
 	string fname;
-	char str[1000];
 	file_io Fio;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "file_io::create_files_list_of_cases" << endl;
@@ -3383,9 +3393,7 @@ void file_io::create_files_list_of_cases(
 		fp_submit_script << "#!/bin/bash" << endl;
 		for (i = 0; i < Descr->N; i++) {
 
-			snprintf(str, sizeof(str),
-					Descr->file_mask.c_str(), i);
-			fname.assign(str);
+			fname = ST.printf_d(Descr->file_mask, i);
 
 			fp_makefile << "\tsbatch " << fname << endl;
 			fp_submit_script << "sbatch " << fname << endl;
@@ -3393,26 +3401,39 @@ void file_io::create_files_list_of_cases(
 				ofstream fp(fname);
 
 				for (j = 0; j < Descr->nb_lines; j++) {
+					char str[1000];
+					string s;
+
 					snprintf(str, sizeof(str),
 							Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
-					fix_escape_characters(str);
-					fp << str << endl;
+					s = str;
+					ST.fix_escape_characters(s);
+					fp << s << endl;
 				}
 
 				if (Descr->f_tasks) {
-					char str[1000];
 					int t;
 					//int NT;
 
-					snprintf(str, sizeof(str),
-							Descr->tasks_line.c_str(), Descr->nb_tasks);
-					fp << str << endl;
+					{
+						string s;
+
+						s = ST.printf_d(Descr->tasks_line, Descr->nb_tasks);
+						fp << s << endl;
+					}
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
+
+						char str[1000];
 						snprintf(str, sizeof(str),
 								Descr->command.c_str(), i, t, i, t);
-						fix_escape_characters(str);
-						fp << str; // << " \\" << endl;
+
+						string s;
+
+						s = str;
+						ST.fix_escape_characters(s);
+						fp << s; // << " \\" << endl;
+
 						for (j = 0; j < nb_cases; j++) {
 							if ((j % Descr->N) != i) {
 								continue;
@@ -3439,9 +3460,16 @@ void file_io::create_files_list_of_cases(
 					}
 				} // if
 				else {
-					snprintf(str, sizeof(str), Descr->command.c_str(), i);
-					fix_escape_characters(str);
-					fp << str << " \\" << endl;
+
+
+					{
+						string s;
+
+						s = ST.printf_d(Descr->command, i);
+						ST.fix_escape_characters(s);
+						fp << s << " \\" << endl;
+					}
+
 					//fp << command << " \\" << endl;
 					for (j = 0; j < nb_cases; j++) {
 						if ((j % Descr->N) != i) {
@@ -3467,11 +3495,18 @@ void file_io::create_files_list_of_cases(
 				} // else
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
+
+					char str[1000];
+
 					snprintf(str, sizeof(str),
 							Descr->final_lines[j].c_str(),
 							i, i, i, i, i, i, i, i);
-					fix_escape_characters(str);
-					fp << str << endl;
+
+					string s;
+
+					s = str;
+					ST.fix_escape_characters(s);
+					fp << s << endl;
 				} // next j
 
 			} // close fp(fname)
@@ -3485,17 +3520,16 @@ void file_io::create_files_list_of_cases(
 	cout << "Written file " << makefile_fname << " of size "
 			<< Fio.file_size(makefile_fname) << endl;
 
-	const char *mask_submit_script_piecewise = "submit_jobs_%d.sh";
-	char fname_submit_piecewise[1000];
-	char cmd[2000];
+	string mask_submit_script_piecewise;
+
+	mask_submit_script_piecewise = "submit_jobs_%d.sh";
+	string fname_submit_piecewise;
 	int h;
 	int N1 = 128;
 
 	for (h = 0; h < Descr->N / N1; h++) {
 
-		snprintf(fname_submit_piecewise,
-				sizeof(fname_submit_piecewise),
-				mask_submit_script_piecewise, h * N1);
+		fname_submit_piecewise = ST.printf_d(mask_submit_script_piecewise, h * N1);
 
 		{
 			ofstream fp_submit_script(fname_submit_piecewise);
@@ -3503,8 +3537,7 @@ void file_io::create_files_list_of_cases(
 			fp_submit_script << "#!/bin/bash" << endl;
 			for (i = 0; i < N1; i++) {
 
-				snprintf(str, sizeof(str), Descr->file_mask.c_str(), h * N1 + i);
-				fname.assign(str);
+				fname = ST.printf_d(Descr->file_mask, h * N1 + i);
 
 				fp_submit_script << "sbatch " << fname;
 				if (i < N1 - 1) {
@@ -3518,8 +3551,11 @@ void file_io::create_files_list_of_cases(
 
 		cout << "Written file " << fname_submit_piecewise << " of size "
 			<< Fio.file_size(fname_submit_piecewise) << endl;
-		snprintf(cmd, sizeof(cmd), "chmod +x %s", fname_submit_piecewise);
-		system(cmd);
+
+		string cmd;
+
+		cmd = "chmod +x " + fname_submit_piecewise;
+		system(cmd.c_str());
 
 	}
 	if (f_v) {

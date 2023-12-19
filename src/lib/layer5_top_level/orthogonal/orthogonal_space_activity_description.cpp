@@ -19,10 +19,6 @@ namespace orthogonal_geometry_applications {
 
 orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
-#if 0
-	f_create_BLT_set = false;
-	BLT_Set_create_description = NULL;
-#endif
 
 	f_cheat_sheet_orthogonal = false;
 
@@ -77,26 +73,6 @@ int orthogonal_space_activity_description::read_arguments(
 		cout << "orthogonal_space_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-
-#if 0
-		if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
-			f_create_BLT_set = true;
-			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
-			if (f_v) {
-				cout << "-create_BLT_set" << endl;
-			}
-			i += BLT_Set_create_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-			if (f_v) {
-				cout << "orthogonal_space_activity_description::read_arguments finished reading -create_BLT_set" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
-#endif
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = true;
@@ -206,28 +182,6 @@ int orthogonal_space_activity_description::read_arguments(
 
 void orthogonal_space_activity_description::print()
 {
-#if 0
-	if (f_input) {
-		cout << "-input" << endl;
-	}
-#endif
-#if 0
-	if (f_create_BLT_set) {
-		cout << "-create_BLT_set ";
-		BLT_Set_create_description->print();
-	}
-#endif
-#if 0
-	if (f_BLT_set_starter) {
-		cout << "-BLT_set_starter " << BLT_set_starter_size << endl;
-	}
-	if (f_BLT_set_graphs) {
-		cout << "-BLT_set_graphs " << BLT_set_graphs_starter_size << " " << BLT_set_graphs_r << " " << BLT_set_graphs_m << endl;
-	}
-	if (f_fname_base_out) {
-		cout << "-fname_base_out " << fname_base_out << endl;
-	}
-#endif
 	if (f_cheat_sheet_orthogonal) {
 		f_cheat_sheet_orthogonal = true;
 		cout << "-cheat_sheet_orthogonal "<< endl;

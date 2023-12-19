@@ -380,12 +380,14 @@ void orbiter_session::fork(
 			}
 			cmd += "\" ";
 		}
-		char str[1000];
+		data_structures::string_tools ST;
 
-		snprintf(str, sizeof(str), fork_logfile_mask.c_str(), case_number);
-		cmd += " >";
-		cmd += str;
-		cmd += " &";
+
+		string str;
+
+		str = ST.printf_d(fork_logfile_mask, case_number);
+
+		cmd += " >" + str + " &";
 		cout << "system: " << cmd << endl;
 		system(cmd.c_str());
 	}

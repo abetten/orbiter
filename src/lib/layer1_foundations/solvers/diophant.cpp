@@ -25,7 +25,7 @@ static void diophant_callback_solution_found(int *sol,
 
 diophant::diophant()
 {
-	label[0] = 0;
+	//std::string label;
 
 	m = 0;
 	n = 0;
@@ -392,7 +392,8 @@ void diophant::init_problem_of_Steiner_type(
 	}
 }
 
-void diophant::init_RHS(int RHS_value, int verbose_level)
+void diophant::init_RHS(
+		int RHS_value, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

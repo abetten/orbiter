@@ -542,7 +542,8 @@ void action_global::compute_generators_GL_n_q(
 		cout << "action_global::compute_generators_GL_n_q "
 				"before A->Known_groups->init_projective_group" << endl;
 	}
-	A->Known_groups->init_projective_group(n, F,
+	A->Known_groups->init_projective_group(
+			n, F,
 			false /* f_semilinear */,
 			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
@@ -1452,16 +1453,15 @@ void action_global::orbits_on_equations(
 groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		action *A_linear,
 		geometry::projective_space *P,
-	long int *set, int set_size, //int &canonical_pt,
-	int *canonical_set_or_NULL,
+	long int *set, int set_size,
 	int verbose_level)
+// used by hermitian_spreads_classify
 // assuming we are in a linear action.
 // added 2/28/2011, called from analyze.cpp
 // November 17, 2014 moved here from TOP_LEVEL/extra.cpp
 // December 31, 2014, moved here from projective_space.cpp
 {
 	int f_v = (verbose_level >= 1);
-	geometry::object_with_canonical_form *OwCF;
 	interfaces::nauty_interface_with_group Nau;
 
 	if (f_v) {
@@ -1470,6 +1470,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		cout << "set_size = " << set_size << endl;
 	}
 
+#if 0
+	geometry::object_with_canonical_form *OwCF;
 
 	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
 
@@ -1495,7 +1497,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		cout << "action_global::set_stabilizer_in_projective_space "
 				"before NO->nauty_output_allocate" << endl;
 	}
-	NO->nauty_output_allocate(nb_rows + nb_cols,
+	NO->nauty_output_allocate(
+			nb_rows + nb_cols,
 			0,
 			nb_rows + nb_cols,
 			0 /* verbose_level */);
@@ -1532,11 +1535,41 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	FREE_OBJECT(Enc);
 
 	FREE_OBJECT(OwCF);
+#else
+
+	groups::strong_generators *Set_stab;
+
+	data_structures::bitvector *Canonical_form;
+	long int *canonical_labeling;
+	int canonical_labeling_len;
+	std::vector<std::string> NO_stringified;
+
+	if (f_v) {
+		cout << "action_global::set_stabilizer_in_projective_space "
+				"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+	}
+	Nau.set_stabilizer_in_projective_space_using_nauty(
+			P,
+			A_linear,
+			set, set_size,
+			Set_stab,
+			Canonical_form,
+			canonical_labeling, canonical_labeling_len,
+			NO_stringified,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::set_stabilizer_in_projective_space "
+				"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+	}
+
+	FREE_OBJECT(Canonical_form);
+	FREE_lint(canonical_labeling);
+#endif
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space done" << endl;
 	}
-	return SG;
+	return Set_stab;
 }
 
 void action_global::stabilizer_of_dual_hyperoval_representative(
@@ -1591,7 +1624,6 @@ void action_global::stabilizer_of_spread_representative(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
-	//int i;
 	knowledge_base::knowledge_base K;
 
 	if (f_v) {
@@ -2401,9 +2433,9 @@ void action_global::consecutive_powers_based_on_text(
 			ost << "\\begin{array}{|r|l|}" << endl;
 			ost << "\\hline" << endl;
 
-			ost << "i & {" << endl;
+			ost << "i & \\left({" << endl;
 			A->Group_element->element_print_latex(Elt1, ost);
-			ost << "}^i\\\\" << endl;
+			ost << "}\\right)^i\\\\" << endl;
 			ost << "\\hline" << endl;
 			ost << "\\hline" << endl;
 
@@ -3313,7 +3345,8 @@ void action_global::make_canonical(
 			cout << "action_global::make_canonical iteration "
 						<< cnt << " before is_minimal_witness" << endl;
 		}
-		c = A->is_minimal_witness(/*default_action,*/ size, set1, Sims,
+		c = A->is_minimal_witness(
+				/*default_action,*/ size, set1, Sims,
 			backtrack_level, set2, Elt2,
 			backtrack_nodes,
 			f_get_automorphism_group, *Aut,
@@ -3353,8 +3386,10 @@ void action_global::make_canonical(
 	Lint_vec_copy(set1, canonical_set, size);
 	A->Group_element->element_move(Elt1, transporter, false);
 
-	if (!A->Group_element->check_if_transporter_for_set(transporter,
-			size, set, canonical_set, verbose_level - 3)) {
+	if (!A->Group_element->check_if_transporter_for_set(
+			transporter,
+			size, set, canonical_set,
+			verbose_level - 3)) {
 		cout << "action_global::make_canonical "
 				"check_if_transporter_for_set returns false" << endl;
 		exit(1);
@@ -3417,7 +3452,8 @@ void action_global::make_element_which_moves_a_line_in_PG3q(
 
 
 	//N[4 * 4] = 0;
-	A->Group_element->make_element(Elt, Mtx17, 0);
+	A->Group_element->make_element(
+			Elt, Mtx17, 0);
 
 	if (f_v) {
 		cout << "action_global::make_element_which_moves_a_line_in_PG3q done" << endl;
@@ -3490,7 +3526,8 @@ void action_global::orthogonal_group_random_generator(
 
 
 void action_global::init_base(
-		actions::action *A, algebra::matrix_group *M,
+		actions::action *A,
+		algebra::matrix_group *M,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3543,7 +3580,8 @@ void action_global::init_base(
 }
 
 void action_global::init_base_projective(
-		actions::action *A, algebra::matrix_group *M,
+		actions::action *A,
+		algebra::matrix_group *M,
 		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
@@ -3611,7 +3649,9 @@ void action_global::init_base_projective(
 }
 
 void action_global::init_base_affine(
-		actions::action *A, algebra::matrix_group *M, int verbose_level)
+		actions::action *A,
+		algebra::matrix_group *M,
+		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -3659,7 +3699,9 @@ void action_global::init_base_affine(
 }
 
 void action_global::init_base_general_linear(
-		actions::action *A, algebra::matrix_group *M, int verbose_level)
+		actions::action *A,
+		algebra::matrix_group *M,
+		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
@@ -3758,6 +3800,60 @@ void action_global::substitute_semilinear(
 }
 
 
+void action_global::report_TDO_and_TDA_projective_space(
+		std::ostream &ost,
+		geometry::projective_space *P,
+		long int *points, int nb_points,
+		actions::action *A_on_points, actions::action *A_on_lines,
+		groups::strong_generators *gens, int size_limit_for_printing,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space" << endl;
+	}
+	geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::incidence_structure);
+
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space "
+				"before Inc->init_projective_space" << endl;
+	}
+	Inc->init_projective_space(
+			P, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space "
+				"after Inc->init_projective_space" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space "
+				"before report_TDO_and_TDA" << endl;
+	}
+	report_TDO_and_TDA(
+			ost,
+			Inc,
+			points, nb_points,
+			A_on_points, A_on_lines,
+			gens, size_limit_for_printing,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space "
+				"after report_TDO_and_TDA" << endl;
+	}
+
+
+	FREE_OBJECT(Inc);
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA_projective_space done" << endl;
+	}
+}
+
+
 void action_global::report_TDA_projective_space(
 		std::ostream &ost,
 		geometry::projective_space *P,
@@ -3773,27 +3869,6 @@ void action_global::report_TDA_projective_space(
 	geometry::incidence_structure *Inc;
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
-#if 0
-	int *Mtx;
-	int i, j, h;
-
-	Mtx = NEW_int(P->Subspaces->N_points * P->Subspaces->N_lines);
-	Int_vec_zero(
-			Mtx,
-			P->Subspaces->N_points * P->Subspaces->N_lines);
-
-	for (j = 0; j < P->Subspaces->N_lines; j++) {
-		for (h = 0; h < P->Subspaces->k; h++) {
-			i = P->Subspaces->Implementation->Lines[j * P->Subspaces->k + h];
-			Mtx[i * P->Subspaces->N_lines + j] = 1;
-		}
-	}
-
-	Inc->init_by_matrix(
-			P->Subspaces->N_points,
-			P->Subspaces->N_lines,
-			Mtx, 0 /* verbose_level*/);
-#else
 
 	if (f_v) {
 		cout << "action_global::report_TDA_projective_space "
@@ -3805,8 +3880,6 @@ void action_global::report_TDA_projective_space(
 		cout << "action_global::report_TDA_projective_space "
 				"after Inc->init_projective_space" << endl;
 	}
-
-#endif
 
 
 	if (f_v) {
@@ -3879,6 +3952,128 @@ void action_global::report_TDA_combinatorial_object(
 }
 
 
+void action_global::report_TDO_and_TDA(
+		std::ostream &ost,
+		geometry::incidence_structure *Inc,
+		long int *points, int nb_points,
+		actions::action *A_on_points, actions::action *A_on_lines,
+		groups::strong_generators *gens, int size_limit_for_printing,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA" << endl;
+	}
+
+
+	geometry::decomposition *Decomposition;
+
+
+	Decomposition = NEW_OBJECT(geometry::decomposition);
+
+	Decomposition->init_incidence_structure(
+			Inc,
+			verbose_level);
+
+
+	int TDO_depth = Decomposition->N;
+	//int TDO_ht;
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA "
+				"before Stack->split_cell_front_or_back_lint" << endl;
+	}
+
+	Decomposition->Stack->split_cell_front_or_back_lint(
+			points, nb_points, true /* f_front*/,
+			verbose_level);
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA "
+				"after Stack->split_cell_front_or_back_lint" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA "
+				"before Inc->compute_TDO_safe" << endl;
+	}
+	Decomposition->compute_TDO_safe(TDO_depth, verbose_level - 3);
+	//TDO_ht = S.ht;
+
+
+	if (Decomposition->Stack->ht < size_limit_for_printing) {
+
+		ost << "The TDO decomposition is" << endl;
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
+	}
+	else {
+		ost << "The TDO decomposition is very large (with "
+				<< Decomposition->Stack->ht<< " classes).\\\\" << endl;
+	}
+
+	Decomposition->get_and_report_classes(
+			ost,
+			verbose_level);
+
+
+
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA "
+				"before refine_decomposition_by_group_orbits" << endl;
+	}
+	refine_decomposition_by_group_orbits(
+			Decomposition,
+			A_on_points, A_on_lines,
+			gens,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA "
+				"after refine_decomposition_by_group_orbits" << endl;
+	}
+
+
+	if (Decomposition->Stack->ht < size_limit_for_printing) {
+		ost << "The TDA decomposition is" << endl;
+		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
+	}
+	else {
+		ost << "The TDA decomposition is very large (with "
+				<< Decomposition->Stack->ht << " classes).\\\\" << endl;
+	}
+
+
+	Decomposition->get_and_report_classes(
+			ost,
+			verbose_level);
+
+
+
+
+
+	FREE_OBJECT(Decomposition);
+
+	if (f_v) {
+		cout << "action_global::report_TDO_and_TDA done" << endl;
+	}
+}
+
 void action_global::report_TDA(
 		std::ostream &ost,
 		geometry::incidence_structure *Inc,
@@ -3903,29 +4098,6 @@ void action_global::report_TDA(
 			verbose_level);
 
 
-#if 0
-	data_structures::partitionstack S;
-
-	int N;
-
-	if (f_v) {
-		cout << "action_global::report_TDA "
-				"allocating partitionstack" << endl;
-	}
-	N = Inc->nb_points() + Inc->nb_lines();
-
-	S.allocate(N, 0);
-	// split off the column class:
-	S.subset_contiguous(Inc->nb_points(), Inc->nb_lines());
-	S.split_cell(0);
-
-	#if 0
-	// ToDo:
-	S.split_cell_front_or_back(data, target_size,
-			true /* f_front */, 0 /* verbose_level*/);
-	#endif
-#endif
-
 	int TDO_depth = Decomposition->N;
 	//int TDO_ht;
 
@@ -3939,97 +4111,71 @@ void action_global::report_TDA(
 
 
 	if (Decomposition->Stack->ht < size_limit_for_printing) {
+
 		ost << "The TDO decomposition is" << endl;
 		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				ost, true /* f_enter_math */,
 				true /* f_print_subscripts */);
+
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
 	}
 	else {
 		ost << "The TDO decomposition is very large (with "
 				<< Decomposition->Stack->ht<< " classes).\\\\" << endl;
 	}
 
-
-	{
-		groups::schreier *Sch_points;
-		groups::schreier *Sch_lines;
-		Sch_points = NEW_OBJECT(groups::schreier);
-		Sch_points->init(A_on_points, verbose_level - 2);
-		Sch_points->initialize_tables();
-		Sch_points->init_generators(
-				*gens->gens /* *generators */, verbose_level - 2);
-		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
-
-		if (f_v) {
-			cout << "found " << Sch_points->nb_orbits
-					<< " orbits on points" << endl;
-		}
-		Sch_lines = NEW_OBJECT(groups::schreier);
-		Sch_lines->init(A_on_lines, verbose_level - 2);
-		Sch_lines->initialize_tables();
-		Sch_lines->init_generators(
-				*gens->gens /* *generators */, verbose_level - 2);
-		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
-
-		if (f_v) {
-			cout << "found " << Sch_lines->nb_orbits
-					<< " orbits on lines" << endl;
-		}
-		Decomposition->Stack->split_by_orbit_partition(
-				Sch_points->nb_orbits,
-			Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
-			0 /* offset */,
-			verbose_level - 2);
-		Decomposition->Stack->split_by_orbit_partition(
-				Sch_lines->nb_orbits,
-			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
-			Inc->nb_points() /* offset */,
-			verbose_level - 2);
-
-		data_structures::set_of_sets *SoS_points;
-		data_structures::set_of_sets *SoS_lines;
-
-#if 0
-		Sch_points->orbits_as_set_of_sets(
-				SoS_points,
-				0 /*verbose_level*/);
-
-		Sch_lines->orbits_as_set_of_sets(
-				SoS_lines,
-				0 /*verbose_level*/);
-#endif
-
-		Decomposition->Stack->get_row_classes(
-				SoS_points, 0 /*verbose_level*/);
-		Decomposition->Stack->get_column_classes(
-				SoS_lines, 0 /*verbose_level*/);
-
-		ost << "Point orbits:\\\\" << endl;
-		SoS_points->print_table_tex(ost);
-
-		ost << "Line orbits:\\\\" << endl;
-		SoS_lines->print_table_tex(ost);
+	Decomposition->get_and_report_classes(
+			ost,
+			verbose_level);
 
 
-		FREE_OBJECT(SoS_points);
-		FREE_OBJECT(SoS_lines);
-		FREE_OBJECT(Sch_points);
-		FREE_OBJECT(Sch_lines);
+
+
+	if (f_v) {
+		cout << "action_global::report_TDA "
+				"before refine_decomposition_by_group_orbits" << endl;
 	}
+	refine_decomposition_by_group_orbits(
+			Decomposition,
+			A_on_points, A_on_lines,
+			gens,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::report_TDA "
+				"after refine_decomposition_by_group_orbits" << endl;
+	}
+
 
 	if (Decomposition->Stack->ht < size_limit_for_printing) {
 		ost << "The TDA decomposition is" << endl;
 		Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				ost, true /* f_enter_math */,
 				true /* f_print_subscripts */);
+
+		Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
+				ost, true /* f_enter_math */,
+				true /* f_print_subscripts */);
+
 	}
 	else {
 		ost << "The TDA decomposition is very large (with "
 				<< Decomposition->Stack->ht << " classes).\\\\" << endl;
 	}
 
+
+	Decomposition->get_and_report_classes(
+			ost,
+			verbose_level);
+
+
+
+
+
 	FREE_OBJECT(Decomposition);
-	FREE_OBJECT(gens);
+	//FREE_OBJECT(gens);
 
 	if (f_v) {
 		cout << "action_global::report_TDA done" << endl;
@@ -4037,7 +4183,7 @@ void action_global::report_TDA(
 }
 
 
-void action_global::refine_decomposition_TDA(
+void action_global::refine_decomposition_by_group_orbits(
 		geometry::decomposition *Decomposition,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens,
@@ -4046,50 +4192,96 @@ void action_global::refine_decomposition_TDA(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "action_global::refine_decomposition_TDA" << endl;
+		cout << "action_global::refine_decomposition_by_group_orbits" << endl;
 	}
-	groups::schreier *Sch_points;
-	groups::schreier *Sch_lines;
-	Sch_points = NEW_OBJECT(groups::schreier);
-	Sch_points->init(A_on_points, verbose_level - 2);
-	Sch_points->initialize_tables();
-	Sch_points->init_generators(
-			*gens->gens /* *generators */, verbose_level - 2);
-	Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "action_global::refine_decomposition_TDA "
-				"found " << Sch_points->nb_orbits
-				<< " orbits on points" << endl;
+		cout << "action_global::refine_decomposition_by_group_orbits "
+				"before refine_decomposition_by_group_orbits_one_side" << endl;
 	}
-	Sch_lines = NEW_OBJECT(groups::schreier);
-	Sch_lines->init(A_on_lines, verbose_level - 2);
-	Sch_lines->initialize_tables();
-	Sch_lines->init_generators(
-			*gens->gens /* *generators */, verbose_level - 2);
-	Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
+	refine_decomposition_by_group_orbits_one_side(
+			Decomposition,
+			A_on_points,
+			false /* f_lines */,
+			gens,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::refine_decomposition_by_group_orbits "
+				"after refine_decomposition_by_group_orbits_one_side" << endl;
+	}
 
 	if (f_v) {
-		cout << "action_global::refine_decomposition_TDA "
-				"found " << Sch_lines->nb_orbits
-				<< " orbits on lines" << endl;
+		cout << "action_global::refine_decomposition_by_group_orbits "
+				"before refine_decomposition_by_group_orbits_one_side" << endl;
 	}
-	Decomposition->Stack->split_by_orbit_partition(
-			Sch_points->nb_orbits,
-		Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
-		0 /* offset */,
-		verbose_level - 2);
-	Decomposition->Stack->split_by_orbit_partition(
-			Sch_lines->nb_orbits,
-		Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
-		Decomposition->Inc->nb_points() /* offset */,
-		verbose_level - 2);
-
-	FREE_OBJECT(Sch_points);
-	FREE_OBJECT(Sch_lines);
+	refine_decomposition_by_group_orbits_one_side(
+			Decomposition,
+			A_on_lines,
+			true /* f_lines */,
+			gens,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::refine_decomposition_by_group_orbits "
+				"after refine_decomposition_by_group_orbits_one_side" << endl;
+	}
 
 	if (f_v) {
-		cout << "action_global::refine_decomposition_TDA done" << endl;
+		cout << "action_global::refine_decomposition_by_group_orbits done" << endl;
+	}
+}
+
+void action_global::refine_decomposition_by_group_orbits_one_side(
+		geometry::decomposition *Decomposition,
+		actions::action *A_on_points_or_lines,
+		int f_lines,
+		groups::strong_generators *gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_by_group_orbits_one_side" << endl;
+	}
+
+	int offset;
+
+	if (f_lines) {
+		offset = Decomposition->Inc->nb_points();
+	}
+	else {
+		offset = 0;
+	}
+	{
+		groups::schreier *Schreier;
+
+		Schreier = NEW_OBJECT(groups::schreier);
+		Schreier->init(
+				A_on_points_or_lines,
+				verbose_level - 2);
+		Schreier->initialize_tables();
+		Schreier->init_generators(
+				*gens->gens /* *generators */,
+				verbose_level - 2);
+		Schreier->compute_all_point_orbits(0 /*verbose_level - 2*/);
+
+		if (f_v) {
+			cout << "action_global::refine_decomposition_by_group_orbits "
+					"found " << Schreier->nb_orbits
+					<< " orbits on points" << endl;
+		}
+		Decomposition->Stack->split_by_orbit_partition(
+				Schreier->nb_orbits,
+				Schreier->orbit_first,
+				Schreier->orbit_len,
+				Schreier->orbit,
+				offset,
+			verbose_level - 2);
+
+		FREE_OBJECT(Schreier);
+	}
+
+	if (f_v) {
+		cout << "action_global::refine_decomposition_by_group_orbits_one_side done" << endl;
 	}
 }
 
@@ -4106,7 +4298,8 @@ void action_global::test_if_two_actions_agree_vector(
 	}
 
 	if (gens1->len != gens2->len) {
-		cout << "action_global::test_if_two_actions_agree_vector vector length does not agree" << endl;
+		cout << "action_global::test_if_two_actions_agree_vector "
+				"vectors of different length" << endl;
 		exit(1);
 	}
 

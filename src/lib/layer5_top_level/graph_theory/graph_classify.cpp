@@ -101,39 +101,6 @@ void graph_classify::init(
 	A_on_edges = NEW_OBJECT(actions::action);
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
-#if 0
-	if (Descr->f_tournament) {
-		if (f_v) {
-			cout << "graph_classify::init tournaments "
-					"on " << Descr->n << " vertices" << endl;
-			}
-		snprintf(prefix, sizeof(prefix), "tournament_%d", Descr->n);
-		if (Descr->f_no_superking) {
-			sprintf(prefix + strlen(prefix), "_no_superking");
-			}
-		}
-	else {
-		if (f_v) {
-			cout << "graph_classify::init graphs "
-					"on " << Descr->n << " vertices" << endl;
-			}
-		snprintf(prefix, sizeof(prefix), "graph_%d", Descr->n);
-		}
-	
-
-	
-	if (Descr->f_regular) {
-		sprintf(prefix + strlen(prefix), "_r%d", Descr->regularity);
-		}
-	
-	if (Descr->f_girth) {
-		sprintf(prefix + strlen(prefix), "_g%d", Descr->girth);
-		}
-
-	if (f_v) {
-		cout << "prefix=" << prefix << endl;
-		}
-#endif
 	
 	n2 = Combi.int_n_choose_k(Descr->n, 2);
 	if (f_v) {

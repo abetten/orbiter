@@ -146,8 +146,13 @@ void orbiter_top_level_session::handle_everything(
 				cout << "orbiter_top_level_session::handle_everything memory_debug "
 						"before global_mem_object_registry.dump" << endl;
 			}
+
+			string fname;
+
+			fname = "orbiter_memory_dump.cvs";
+
 			orbiter_kernel_system::Orbiter->global_mem_object_registry->dump();
-			orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file("orbiter_memory_dump.cvs");
+			orbiter_kernel_system::Orbiter->global_mem_object_registry->dump_to_csv_file(fname);
 			orbiter_kernel_system::Orbiter->global_mem_object_registry->sort_by_location_and_get_frequency(verbose_level);
 			if (f_v) {
 				cout << "orbiter_top_level_session::handle_everything memory_debug "
@@ -849,9 +854,9 @@ void free_symbol_table_entry_callback(
 		}
 
 	}
-	else if (t == orbiter_kernel_system::t_combinatorial_objects) {
+	else if (t == orbiter_kernel_system::t_combinatorial_object) {
 		if (f_v) {
-			cout << "t_combinatorial_objects" << endl;
+			cout << "t_combinatorial_object" << endl;
 		}
 	}
 	else if (t == orbiter_kernel_system::t_geometry_builder) {

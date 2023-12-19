@@ -3801,7 +3801,7 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 
 void syntax_tree_node::collect_variables(int verbose_level)
 {
-	int f_v = false;//(verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "syntax_tree_node::collect_variables" << endl;
@@ -3813,7 +3813,15 @@ void syntax_tree_node::collect_variables(int verbose_level)
 					T->value_text,
 					verbose_level) == -1) {
 
-				Tree->add_variable(T->value_text);
+				if (f_v) {
+					cout << "syntax_tree_node::collect_variables "
+							"before Tree->add_variable value = " << T->value_text << endl;
+				}
+				Tree->add_variable(T->value_text, verbose_level);
+				if (f_v) {
+					cout << "syntax_tree_node::collect_variables "
+							"after Tree->add_variable value = " << T->value_text << endl;
+				}
 
 			}
 		}
@@ -3822,7 +3830,15 @@ void syntax_tree_node::collect_variables(int verbose_level)
 		int i;
 
 		for (i = 0; i < nb_nodes; i++) {
+			if (f_v) {
+				cout << "syntax_tree_node::collect_variables "
+						"node " << i << " / " << nb_nodes << endl;
+			}
 			Nodes[i]->collect_variables(verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::collect_variables "
+						"node " << i << " / " << nb_nodes << " done" << endl;
+			}
 		}
 	}
 	if (f_v) {

@@ -405,6 +405,9 @@ public:
 class data_input_stream_description {
 public:
 
+	int f_label;
+	std::string label_txt;
+	std::string label_tex;
 
 	int nb_inputs;
 
@@ -412,10 +415,12 @@ public:
 
 	data_input_stream_description();
 	~data_input_stream_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	void print_item(int i);
+	void print_item(
+			int i);
 
 
 };
@@ -440,7 +445,8 @@ public:
 
 	data_input_stream();
 	~data_input_stream();
-	void init(data_input_stream_description *Descr, int verbose_level);
+	void init(
+			data_input_stream_description *Descr, int verbose_level);
 	int count_number_of_objects_to_test(
 		int verbose_level);
 	void read_objects(int verbose_level);
@@ -1848,7 +1854,7 @@ public:
 			const char *p, char *ext);
 	void get_extension_if_present_and_chop_off(
 			char *p, char *ext);
-	void string_fix_escape_characters(std::string &str);
+	void fix_escape_characters(std::string &str);
 	void remove_specific_character(std::string &str, char c);
 	void create_comma_separated_list(
 			std::string &output, long int *input, int input_sz);
@@ -1908,6 +1914,8 @@ public:
 			std::vector<std::string> &S, int verbose_level);
 	void make_latex_friendly_string(
 			std::string &in, std::string &out, int verbose_level);
+	std::string printf_d(std::string &format, int value);
+	std::string printf_dd(std::string &format, int value1, int value2);
 
 
 };

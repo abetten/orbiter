@@ -633,7 +633,8 @@ void string_tools::chop_string_comma_separated(
 		if (*p_buf == 0) {
 			break;
 		}
-		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
+		s_scan_token_comma_separated(
+				&p_buf, buf, 0 /* verbose_level */);
 
 		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
@@ -649,7 +650,8 @@ void string_tools::chop_string_comma_separated(
 		if (*p_buf == 0) {
 			break;
 		}
-		s_scan_token_comma_separated(&p_buf, buf, 0 /* verbose_level */);
+		s_scan_token_comma_separated(
+				&p_buf, buf, 0 /* verbose_level */);
 
 		if (false) {
 			cout << "Token " << setw(6) << i << " is '"
@@ -716,14 +718,14 @@ void string_tools::convert_arguments(
 
 			variable = "%" + variable_name;
 
-			for (loop_var = loop_from; loop_var < loop_upper_bound; loop_var += loop_increment) {
+			for (loop_var = loop_from;
+					loop_var < loop_upper_bound;
+					loop_var += loop_increment) {
 				for (h = index_of_repeat_start; h < index_of_repeat_end; h++) {
 					string arg;
 					string value_L;
-					char str[1000];
 
-					snprintf(str, sizeof(str), "%d", loop_var);
-					value_L.assign(str);
+					value_L = std::to_string(loop_var);
 
 					arg.assign(argv[h]);
 
@@ -984,7 +986,7 @@ void string_tools::get_extension_if_present_and_chop_off(
 	}
 }
 
-void string_tools::string_fix_escape_characters(
+void string_tools::fix_escape_characters(
 		std::string &str)
 {
 	string str_t, str_D, str_B, str_n;
@@ -1882,6 +1884,47 @@ void string_tools::make_latex_friendly_string(
 	if (f_v) {
 		cout << "string_tools::make_latex_friendly_string done" << endl;
 	}
+}
+
+
+std::string string_tools::printf_d(std::string &format, int value)
+{
+	string percent, d, info, pre, post, output, insert;
+	int len;
+
+	percent = "%";
+	d = "d";
+
+
+	std::size_t loc_percent = format.find(percent);
+
+	if (loc_percent == std::string::npos) {
+		output = format;
+	}
+	else {
+		std::size_t loc_d = format.find(d, loc_percent);
+
+		info = format.substr(loc_percent + 1, loc_d - 1);
+		pre = format.substr(0, loc_percent - 1);
+		post = format.substr(loc_d + 1);
+		insert = std::to_string(value);
+		if (info.length()) {
+			len = strtoi(info);
+			while (insert.length() < len) {
+				insert = "0" + insert;
+			}
+		}
+		output = pre + insert + post;
+	}
+	return output;
+}
+
+std::string string_tools::printf_dd(std::string &format, int value1, int value2)
+{
+	string s1, s2;
+	s1 = printf_d(format, value1);
+	s2 = printf_d(s1, value2);
+	return s2;
 }
 
 

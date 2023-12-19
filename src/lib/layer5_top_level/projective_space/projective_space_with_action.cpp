@@ -1098,9 +1098,9 @@ void projective_space_with_action::canonical_form_of_code(
 	ISD.Input.push_back(E);
 	ISD.nb_inputs++;
 
-	data_structures::data_input_stream IS;
+	//data_structures::data_input_stream IS;
 
-	IS.init(&ISD, verbose_level);
+	//IS.init(&ISD, verbose_level);
 
 
 
@@ -1159,21 +1159,32 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.Classification_of_objects_report_options->f_export_group_orbiter = true;
 
 
+	apps_combinatorics::combinatorial_object *Combo;
 
-	apps_combinatorics::combinatorial_object_activity COA;
-
-	COA.init_input_stream(&COAD,
-			&IS,
+	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object);
+	Combo->init(
+			&ISD,
 			verbose_level);
 
 
+	apps_combinatorics::combinatorial_object_activity COA;
+
+	COA.init_combo(&COAD,
+			Combo,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code "
+				"before COA.perform_activity" << endl;
+	}
 	COA.perform_activity(verbose_level);
 
 
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code "
-				"after PA->canonical_form" << endl;
+				"after COA.perform_activity" << endl;
 	}
 
 

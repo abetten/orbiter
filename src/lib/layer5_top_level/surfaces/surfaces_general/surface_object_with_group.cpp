@@ -3254,16 +3254,16 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before AG.refine_decomposition_TDA" << endl;
+				"before AG.refine_decomposition_by_group_orbits" << endl;
 	}
-	AG.refine_decomposition_TDA(
+	AG.refine_decomposition_by_group_orbits(
 			Decomposition_scheme->Decomposition,
 			Surf_A->A /* A_on_points */, Surf_A->A2 /* A_on_lines */,
 			Aut_gens,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after AG.refine_decomposition_TDA" << endl;
+				"after AG.refine_decomposition_by_group_orbits" << endl;
 	}
 
 	geometry::decomposition_scheme *Decomposition_scheme_TDA;

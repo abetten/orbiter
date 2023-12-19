@@ -9,6 +9,7 @@ MODULES = \
 	boolean_function_classify.o \
 	combinatorial_object_activity_description.o \
 	combinatorial_object_activity.o \
+	combinatorial_object.o \
 	combinatorics_global.o \
 	delandtsheer_doyen_description.o \
 	delandtsheer_doyen.o \

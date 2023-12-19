@@ -672,21 +672,21 @@ void orbiter_symbol_table_entry::init_symbolic_object(
 	}
 }
 
-void orbiter_symbol_table_entry::init_combinatorial_objects(
+void orbiter_symbol_table_entry::init_combinatorial_object(
 		std::string &label,
-		data_structures::data_input_stream *IS, int verbose_level)
+		void *Combo, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_combinatorial_objects" << endl;
+		cout << "orbiter_symbol_table_entry::init_combinatorial_object" << endl;
 	}
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
-	object_type = t_combinatorial_objects;
-	ptr = IS;
+	object_type = t_combinatorial_object;
+	ptr = Combo;
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_combinatorial_objects done" << endl;
+		cout << "orbiter_symbol_table_entry::init_combinatorial_object done" << endl;
 	}
 }
 
@@ -957,8 +957,8 @@ void orbiter_symbol_table_entry::print()
 			VB = (data_structures::vector_builder *) ptr;
 			VB->print(cout);
 		}
-		else if (object_type == t_combinatorial_objects) {
-			cout << "combinatorial_objects" << endl;
+		else if (object_type == t_combinatorial_object) {
+			cout << "combinatorial_object" << endl;
 		}
 		else if (object_type == t_geometry_builder) {
 			cout << "geometry_builder" << endl;

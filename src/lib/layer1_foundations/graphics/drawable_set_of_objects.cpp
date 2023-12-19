@@ -50,7 +50,8 @@ drawable_set_of_objects::~drawable_set_of_objects()
 {
 }
 
-void drawable_set_of_objects::init_spheres(int group_idx,
+void drawable_set_of_objects::init_spheres(
+		int group_idx,
 		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,7 +70,8 @@ void drawable_set_of_objects::init_spheres(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_cylinders(int group_idx,
+void drawable_set_of_objects::init_cylinders(
+		int group_idx,
 		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,7 +90,8 @@ void drawable_set_of_objects::init_cylinders(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_prisms(int group_idx,
+void drawable_set_of_objects::init_prisms(
+		int group_idx,
 		double thickness, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -107,7 +110,8 @@ void drawable_set_of_objects::init_prisms(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_planes(int group_idx,
+void drawable_set_of_objects::init_planes(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -126,7 +130,8 @@ void drawable_set_of_objects::init_planes(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_lines(int group_idx,
+void drawable_set_of_objects::init_lines(
+		int group_idx,
 		double rad, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -145,7 +150,8 @@ void drawable_set_of_objects::init_lines(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_cubics(int group_idx,
+void drawable_set_of_objects::init_cubics(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -164,7 +170,8 @@ void drawable_set_of_objects::init_cubics(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_quadrics(int group_idx,
+void drawable_set_of_objects::init_quadrics(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -183,7 +190,8 @@ void drawable_set_of_objects::init_quadrics(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_quartics(int group_idx,
+void drawable_set_of_objects::init_quartics(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -202,7 +210,8 @@ void drawable_set_of_objects::init_quartics(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_quintics(int group_idx,
+void drawable_set_of_objects::init_quintics(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -221,7 +230,8 @@ void drawable_set_of_objects::init_quintics(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_octics(int group_idx,
+void drawable_set_of_objects::init_octics(
+		int group_idx,
 		std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -240,7 +250,8 @@ void drawable_set_of_objects::init_octics(int group_idx,
 	}
 }
 
-void drawable_set_of_objects::init_labels(int group_idx,
+void drawable_set_of_objects::init_labels(
+		int group_idx,
 		double thickness_half, double scale, std::string &properties, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -261,7 +272,8 @@ void drawable_set_of_objects::init_labels(int group_idx,
 }
 
 
-void drawable_set_of_objects::draw(animate *Anim, std::ostream &ost,
+void drawable_set_of_objects::draw(
+		animate *Anim, std::ostream &ost,
 		int f_group_is_animated, int frame, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

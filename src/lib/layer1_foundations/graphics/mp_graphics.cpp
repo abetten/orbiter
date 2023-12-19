@@ -112,7 +112,8 @@ void mp_graphics::init(
 	}
 }
 
-void mp_graphics::exit(std::ostream &ost, int verbose_level)
+void mp_graphics::exit(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -145,7 +146,8 @@ void mp_graphics::exit(std::ostream &ost, int verbose_level)
 	}
 }
 
-void mp_graphics::frame(double move_out)
+void mp_graphics::frame(
+		double move_out)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -299,7 +301,8 @@ void mp_graphics::frame(double move_out)
 	polygon3(Px, Py, 11, 9, 10);
 }
 
-void mp_graphics::frame_constant_aspect_ratio(double move_out)
+void mp_graphics::frame_constant_aspect_ratio(
+		double move_out)
 {
 	int Px[30];
 	int Py[30];
@@ -422,7 +425,8 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 	polygon3(Px, Py, 11, 9, 10);
 }
 
-void mp_graphics::finish(std::ostream &ost, int verbose_level)
+void mp_graphics::finish(
+		std::ostream &ost, int verbose_level)
 {
 	end_figure();
 	footer();
@@ -469,35 +473,40 @@ int& mp_graphics::out_ymax()
 	return dev[3];
 }
 
-void mp_graphics::user2dev(int &x, int &y)
+void mp_graphics::user2dev(
+		int &x, int &y)
 {
 	orbiter_kernel_system::numerics Num;
 
 	Num.transform_llur(user, dev, x, y);
 }
 
-void mp_graphics::dev2user(int &x, int &y)
+void mp_graphics::dev2user(
+		int &x, int &y)
 {
 	orbiter_kernel_system::numerics Num;
 
 	Num.transform_llur(dev, user, x, y);
 }
 
-void mp_graphics::user2dev_dist_x(int &x)
+void mp_graphics::user2dev_dist_x(
+		int &x)
 {
 	orbiter_kernel_system::numerics Num;
 
 	Num.transform_dist_x(user, dev, x);
 }
 
-void mp_graphics::user2dev_dist_y(int &y)
+void mp_graphics::user2dev_dist_y(
+		int &y)
 {
 	orbiter_kernel_system::numerics Num;
 
 	Num.transform_dist_y(user, dev, y);
 }
 
-void mp_graphics::draw_polar_grid(double r_max,
+void mp_graphics::draw_polar_grid(
+		double r_max,
 		int nb_circles, int nb_rays, double x_stretch)
 {
 	int N = 1000;
@@ -1216,7 +1225,8 @@ void mp_graphics::polygon_idx(
 	polygon_idx2(Px, Py, Idx, n, false);
 }
 
-void mp_graphics::bezier(int *Px, int *Py, int n)
+void mp_graphics::bezier(
+		int *Px, int *Py, int n)
 {
 	int *Idx = NEW_int(n);
 	int i;
@@ -1228,7 +1238,8 @@ void mp_graphics::bezier(int *Px, int *Py, int n)
 	FREE_int(Idx);
 }
 
-void mp_graphics::bezier2(int *Px, int *Py,
+void mp_graphics::bezier2(
+		int *Px, int *Py,
 		int i1, int i2)
 {
 	int Idx[2];
@@ -1237,7 +1248,8 @@ void mp_graphics::bezier2(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 2);
 }
 
-void mp_graphics::bezier3(int *Px, int *Py,
+void mp_graphics::bezier3(
+		int *Px, int *Py,
 		int i1, int i2, int i3)
 {
 	int Idx[3];
@@ -1247,7 +1259,8 @@ void mp_graphics::bezier3(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 3);
 }
 
-void mp_graphics::bezier4(int *Px, int *Py,
+void mp_graphics::bezier4(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4)
 {
 	int Idx[4];
@@ -1258,7 +1271,8 @@ void mp_graphics::bezier4(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 4);
 }
 
-void mp_graphics::bezier5(int *Px, int *Py,
+void mp_graphics::bezier5(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5)
 {
 	int Idx[5];
@@ -1270,7 +1284,8 @@ void mp_graphics::bezier5(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 5);
 }
 
-void mp_graphics::bezier6(int *Px, int *Py,
+void mp_graphics::bezier6(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6)
 {
 	int Idx[6];
@@ -1283,7 +1298,8 @@ void mp_graphics::bezier6(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 6);
 }
 
-void mp_graphics::bezier7(int *Px, int *Py,
+void mp_graphics::bezier7(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6, int i7)
 {
 	int Idx[7];
@@ -1297,13 +1313,15 @@ void mp_graphics::bezier7(int *Px, int *Py,
 	bezier_idx(Px, Py, Idx, 7);
 }
 
-void mp_graphics::bezier_idx(int *Px, int *Py, int *Idx, int n)
+void mp_graphics::bezier_idx(
+		int *Px, int *Py, int *Idx, int n)
 {
 	bezier_idx_log(Px, Py, Idx, n);
 	bezier_idx2(Px, Py, Idx, n, false);
 }
 
-void mp_graphics::grid_fill_polygon4(grid_frame *F, 
+void mp_graphics::grid_fill_polygon4(
+		grid_frame *F,
 	int x0, int y0, int x1, int y1,
 	int x2, int y2, int x3, int y3)
 {
@@ -1343,7 +1361,8 @@ void mp_graphics::grid_fill_polygon4(grid_frame *F,
 	FREE_int(Idx);
 }
 
-void mp_graphics::grid_fill_polygon5(grid_frame *F, 
+void mp_graphics::grid_fill_polygon5(
+		grid_frame *F,
 	int x0, int y0, int x1, int y1, int x2, int y2,
 	int x3, int y3, int x4, int y4)
 {
@@ -1387,7 +1406,8 @@ void mp_graphics::grid_fill_polygon5(grid_frame *F,
 	FREE_int(Idx);
 }
 
-void mp_graphics::fill_polygon3(int *Px, int *Py,
+void mp_graphics::fill_polygon3(
+		int *Px, int *Py,
 		int i1, int i2, int i3)
 {
 	int Idx[10];
@@ -1397,7 +1417,8 @@ void mp_graphics::fill_polygon3(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 3, "--", false);
 }
 
-void mp_graphics::fill_polygon4(int *Px, int *Py,
+void mp_graphics::fill_polygon4(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4)
 {
 	int Idx[10];
@@ -1408,7 +1429,8 @@ void mp_graphics::fill_polygon4(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 4, "--", false);
 }
 
-void mp_graphics::fill_polygon5(int *Px, int *Py,
+void mp_graphics::fill_polygon5(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5)
 {
 	int Idx[10];
@@ -1420,7 +1442,8 @@ void mp_graphics::fill_polygon5(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 5, "--", false);
 }
 
-void mp_graphics::fill_polygon6(int *Px, int *Py,
+void mp_graphics::fill_polygon6(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6)
 {
 	int Idx[10];
@@ -1433,7 +1456,8 @@ void mp_graphics::fill_polygon6(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 6, "--", false);
 }
 
-void mp_graphics::fill_polygon7(int *Px, int *Py,
+void mp_graphics::fill_polygon7(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7)
 {
@@ -1448,7 +1472,8 @@ void mp_graphics::fill_polygon7(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 7, "--", false);
 }
 
-void mp_graphics::fill_polygon8(int *Px, int *Py,
+void mp_graphics::fill_polygon8(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8)
 {
@@ -1464,7 +1489,8 @@ void mp_graphics::fill_polygon8(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 8, "--", false);
 }
 
-void mp_graphics::fill_polygon9(int *Px, int *Py,
+void mp_graphics::fill_polygon9(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9)
 {
@@ -1481,7 +1507,8 @@ void mp_graphics::fill_polygon9(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 9, "--", false);
 }
 
-void mp_graphics::fill_polygon10(int *Px, int *Py,
+void mp_graphics::fill_polygon10(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9, int i10)
 {
@@ -1499,7 +1526,8 @@ void mp_graphics::fill_polygon10(int *Px, int *Py,
 	fill_idx(Px, Py, Idx, 10, "--", false);
 }
 
-void mp_graphics::fill_polygon11(int *Px, int *Py,
+void mp_graphics::fill_polygon11(
+		int *Px, int *Py,
 		int i1, int i2, int i3, int i4, int i5, int i6,
 		int i7, int i8, int i9, int i10, int i11)
 {
@@ -1579,7 +1607,8 @@ void mp_graphics::polygon2_arrow_halfway_and_label(
 	aligned_text(X[2], Y[2], alignment, s);
 }
 
-void mp_graphics::grid_aligned_text(grid_frame *F,
+void mp_graphics::grid_aligned_text(
+		grid_frame *F,
 		int x, int y, const char *alignment, std::string &s)
 {
 	int *Px, *Py;
@@ -1600,7 +1629,8 @@ void mp_graphics::grid_aligned_text(grid_frame *F,
 	FREE_int(Py);
 }
 
-void mp_graphics::aligned_text(int x, int y,
+void mp_graphics::aligned_text(
+		int x, int y,
 		const char *alignment, std::string &s)
 {
 	//fp_log << "AlignedText " << x << " " << y << " "
@@ -1608,13 +1638,15 @@ void mp_graphics::aligned_text(int x, int y,
 	aligned_text_with_offset(x, y, 0, 0, alignment, s);
 }
 
-void mp_graphics::aligned_text_array(int *Px, int *Py, int idx,
+void mp_graphics::aligned_text_array(
+		int *Px, int *Py, int idx,
 		const char *alignment, std::string &s)
 {
 	aligned_text(Px[idx], Py[idx], alignment, s);
 }
 
-void mp_graphics::aligned_text_with_offset(int x, int y,
+void mp_graphics::aligned_text_with_offset(
+		int x, int y,
 		int xoffset, int yoffset,
 	const char *alignment, std::string &s)
 {
@@ -1653,82 +1685,95 @@ void mp_graphics::aligned_text_with_offset(int x, int y,
 
 
 
-void mp_graphics::st_alignment(int txt_halign, int txt_valign)
+void mp_graphics::st_alignment(
+		int txt_halign, int txt_valign)
 {
 	mp_graphics::txt_halign = txt_halign;
 	mp_graphics::txt_valign = txt_valign;
 	st_alignment_log();
 }
 
-void mp_graphics::sl_udsty(int line_dashing)
+void mp_graphics::sl_udsty(
+		int line_dashing)
 {
 	mp_graphics::line_dashing = line_dashing;
 	sl_udsty_log();
 }
 
-void mp_graphics::sl_ends(int line_beg_style, int line_end_style)
+void mp_graphics::sl_ends(
+		int line_beg_style, int line_end_style)
 {
 	mp_graphics::line_beg_style = line_beg_style;
 	mp_graphics::line_end_style = line_end_style;
 	sl_ends_log();
 }
 
-void mp_graphics::sl_thickness(int line_thickness)
+void mp_graphics::sl_thickness(
+		int line_thickness)
 {
 	mp_graphics::line_thickness = line_thickness;
 	line_thickness_mp();
 	sl_thickness_log();
 }
 
-void mp_graphics::sl_color(int line_color)
+void mp_graphics::sl_color(
+		int line_color)
 {
 	mp_graphics::line_color = line_color;
 	sl_color_log();
 }
 
-void mp_graphics::sf_interior(int fill_interior)
+void mp_graphics::sf_interior(
+		int fill_interior)
 {
 	mp_graphics::fill_interior = fill_interior;
 	sf_interior_log();
 }
 
-void mp_graphics::sf_color(int fill_color)
+void mp_graphics::sf_color(
+		int fill_color)
 {
 	mp_graphics::fill_color = fill_color;
 	sf_color_log();
 }
 
-void mp_graphics::sf_outline(int fill_outline)
+void mp_graphics::sf_outline(
+		int fill_outline)
 {
 	mp_graphics::fill_outline = fill_outline;
 	sf_outline_log();
 }
 
-void mp_graphics::sf_shape(int fill_shape)
+void mp_graphics::sf_shape(
+		int fill_shape)
 {
 	mp_graphics::fill_shape = fill_shape;
 	sf_shape_log();
 }
 
-void mp_graphics::sf_nofill(int fill_nofill)
+void mp_graphics::sf_nofill(
+		int fill_nofill)
 {
 	mp_graphics::fill_nofill = fill_nofill;
 	sf_nofill_log();
 }
 
-void mp_graphics::st_boxed(int txt_boxed)
+void mp_graphics::st_boxed(
+		int txt_boxed)
 {
 	mp_graphics::txt_boxed = txt_boxed;
 	st_boxed_log();
 }
 
-void mp_graphics::st_overwrite(int txt_overwrite)
+void mp_graphics::st_overwrite(
+		int txt_overwrite)
 {
 	mp_graphics::txt_overwrite = txt_overwrite;
 	st_overwrite_log();
 }
 
-void mp_graphics::st_rotate(int txt_rotate)
+void mp_graphics::st_rotate(
+		int txt_rotate)
 {
 	mp_graphics::txt_rotate = txt_rotate;
 	st_rotate_log();
@@ -1737,7 +1782,8 @@ void mp_graphics::st_rotate(int txt_rotate)
 
 
 
-void mp_graphics::coords_min_max(int x, int y)
+void mp_graphics::coords_min_max(
+		int x, int y)
 {
 	if (!f_min_max_set) {
 		x_min = x_max = x;
@@ -2826,11 +2872,13 @@ void mp_graphics::integer_4pts(
 		int p1, int p2, int p3, int p4,
 		const char *align, int a)
 {
-	char str[100];
-	string s;
+	data_structures::string_tools ST;
 
-	snprintf(str, sizeof(str), "%d", a);
-	s.assign(str);
+	string mask, s;
+
+	mask = "%d";
+
+	s = ST.printf_d(mask, a);
 	text_4pts(Px, Py, p1, p2, p3, p4, align, s);
 }
 

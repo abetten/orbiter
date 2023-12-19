@@ -35,7 +35,7 @@ mem_object_registry::mem_object_registry()
 
 	f_automatic_dump = false;
 	automatic_dump_interval = 0;
-	automatic_dump_fname_mask[0] = 0;
+	// std::string automatic_dump_fname_mask;
 
 	entries = NULL;
 	nb_allocate_total = 0;
@@ -135,7 +135,7 @@ void mem_object_registry::allocate(int N, int verbose_level)
 
 
 void mem_object_registry::set_automatic_dump(
-		int automatic_dump_interval, const char *fname_mask,
+		int automatic_dump_interval, std::string &fname_mask,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -145,7 +145,7 @@ void mem_object_registry::set_automatic_dump(
 	}
 	f_automatic_dump = true;
 	mem_object_registry::automatic_dump_interval = automatic_dump_interval;
-	strcpy(automatic_dump_fname_mask, fname_mask);
+	automatic_dump_fname_mask = fname_mask;
 }
 
 void mem_object_registry::automatic_dump()
@@ -156,13 +156,18 @@ void mem_object_registry::automatic_dump()
 	if ((cur_time % automatic_dump_interval) != 0) {
 		return;
 	}
-	char fname[1000];
+	data_structures::string_tools ST;
+
+
+	string fname;
+
+
 	int a;
 
 	a = cur_time / automatic_dump_interval;
 
 	cout << "automatic memory dump " << a << endl;
-	snprintf(fname, sizeof(fname), automatic_dump_fname_mask, a);
+	fname = ST.printf_d(automatic_dump_fname_mask, a);
 
 	dump_to_csv_file(fname);
 }
@@ -172,18 +177,21 @@ void mem_object_registry::manual_dump()
 	if (!f_automatic_dump) {
 		return;
 	}
-	char fname[1000];
+	data_structures::string_tools ST;
+
+
+	string fname;
 	int a;
 
 	a = cur_time / automatic_dump_interval + 1;
 
-	snprintf(fname, sizeof(fname), automatic_dump_fname_mask, a);
+	fname = ST.printf_d(automatic_dump_fname_mask, a);
 
 	dump_to_csv_file(fname);
 }
 
 void mem_object_registry::manual_dump_with_file_name(
-		const char *fname)
+		std::string &fname)
 {
 	dump_to_csv_file(fname);
 }
@@ -212,7 +220,7 @@ void mem_object_registry::dump()
 	}
 }
 
-void mem_object_registry::dump_to_csv_file(const char *fname)
+void mem_object_registry::dump_to_csv_file(std::string &fname)
 {
 	int i, s, sz;
 

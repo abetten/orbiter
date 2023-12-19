@@ -487,12 +487,16 @@ void symbolic_object_builder::process_arguments(
 				Fq,
 				label,
 				label,
-				verbose_level - 2);
+				verbose_level - 1);
 
-		FREE_OBJECT(old);
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments "
 					"after simplifying the formula vector" << endl;
+		}
+		FREE_OBJECT(old);
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments "
+					"after FREE_OBJECT(old)" << endl;
 		}
 	}
 	else {
@@ -536,6 +540,7 @@ void symbolic_object_builder::do_determinant(
 			O1->Formula_vector,
 			Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -603,6 +608,7 @@ void symbolic_object_builder::do_characteristic_polynomial(
 			Fq,
 			variable,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -647,6 +653,7 @@ void symbolic_object_builder::do_substitute(
 			O_target->Formula_vector,
 			Descr->substitute_variables,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -728,6 +735,7 @@ void symbolic_object_builder::do_expand(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
 			verbose_level - 1);
@@ -772,6 +780,7 @@ void symbolic_object_builder::do_right_nullspace(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -815,6 +824,7 @@ void symbolic_object_builder::do_minor(
 			Fq,
 			minor_i, minor_j,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -856,6 +866,7 @@ void symbolic_object_builder::do_symbolic_nullspace(
 			O_source->Formula_vector,
 			Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -1057,7 +1068,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 
 	Formula_vector_tmp->init_and_allocate(
 				label, label,
-				true,
+				Descr->f_managed_variables,
 				Descr->managed_variables,
 				len, verbose_level - 1);
 
@@ -1071,6 +1082,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			i, j,
 			O_source->Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -1090,6 +1102,7 @@ void symbolic_object_builder::do_multiply_2x2_from_the_left(
 			Formula_vector_tmp,
 			Fq,
 			label, label,
+			Descr->f_managed_variables,
 			Descr->managed_variables,
 			Descr->f_write_trees_during_expand,
 			verbose_level - 1);
@@ -1283,6 +1296,7 @@ void symbolic_object_builder::do_collect(
 		}
 		Formula_vector->V[i].init_empty_plus_node(
 				label, label /*label_tex*/,
+				Descr->f_managed_variables,
 				Descr->managed_variables,
 				Fq, 0 /*verbose_level*/);
 	}
@@ -1600,6 +1614,7 @@ void symbolic_object_builder::do_CRC_encode(
 		Formula_vector->V[cnt].init_formula_monopoly(
 				label, label,
 				Fq,
+				true,
 				managed_variables,
 				variable2,
 				Data, N,
@@ -1636,6 +1651,11 @@ void symbolic_object_builder::do_CRC_decode(
 				<< " " << Descr->decode_CRC_check_polynomial
 				<< endl;
 	}
+
+	int f_has_managed_variables;
+
+	f_has_managed_variables = Descr->f_managed_variables;
+
 	symbolic_object_builder *O_data;
 	symbolic_object_builder *O_check;
 
@@ -1702,7 +1722,7 @@ void symbolic_object_builder::do_CRC_decode(
 
 	Formula_vector->init_and_allocate(
 				label, label,
-				true,
+				f_has_managed_variables,
 				Descr->managed_variables,
 				nb_blocks, 0 /*verbose_level*/);
 
@@ -1832,6 +1852,7 @@ void symbolic_object_builder::do_CRC_decode(
 		Formula_vector->V[cnt].init_formula_monopoly(
 				label, label,
 				Fq,
+				f_has_managed_variables,
 				managed_variables,
 				variable2,
 				Data, coeff_table_r_len,

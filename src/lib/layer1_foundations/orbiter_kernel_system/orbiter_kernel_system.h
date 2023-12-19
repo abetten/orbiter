@@ -28,7 +28,7 @@ namespace orbiter_kernel_system {
 
 #define MAX_LINES 100
 
-//! rules to create text files
+//! instructions to create text files
 
 
 class create_file_description {
@@ -207,15 +207,23 @@ public:
 	void csv_file_sort_rows_and_remove_duplicates(
 			std::string &fname,
 			int verbose_level);
-	void write_table_of_strings(std::string &fname,
+	void write_table_of_strings(
+			std::string &fname,
 			int nb_rows, int nb_cols, std::string *Table,
 			std::string &headings,
+			int verbose_level);
+	void write_table_of_strings_with_headings(
+			std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string *Row_headings,
+			std::string *Col_headings,
 			int verbose_level);
 
 	void read_column_and_parse(
 			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS,
 			int verbose_level);
+#if 0
 	void save_fibration(
 			std::vector<std::vector<std::pair<int, int> > > &Fibration,
 			std::string &fname, int verbose_level);
@@ -228,6 +236,7 @@ public:
 	void save_cumulative_data(
 			std::vector<std::vector<int> > &Cumulative_data,
 			std::string &fname, int verbose_level);
+#endif
 	void write_characteristic_matrix(
 			std::string &fname,
 			long int *data, int nb_rows, int data_sz, int nb_cols,
@@ -461,8 +470,6 @@ public:
 			int *v, int *b, int *aij, int verbose_level);
 	void create_file(
 			create_file_description *Descr, int verbose_level);
-	void fix_escape_characters(
-			char *str);
 	void create_files(
 			create_file_description *Descr,
 		int verbose_level);
@@ -617,7 +624,7 @@ class mem_object_registry {
 public:
 	int f_automatic_dump;
 	int automatic_dump_interval;
-	char automatic_dump_fname_mask[1000];
+	std::string automatic_dump_fname_mask;
 
 	int nb_entries_allocated;
 	int nb_entries_used;
@@ -643,13 +650,13 @@ public:
 	void accumulate_and_ignore_duplicates(int verbose_level);
 	void allocate(int N, int verbose_level);
 	void set_automatic_dump(
-			int automatic_dump_interval, const char *fname_mask,
+			int automatic_dump_interval, std::string &fname_mask,
 			int verbose_level);
 	void automatic_dump();
 	void manual_dump();
-	void manual_dump_with_file_name(const char *fname);
+	void manual_dump_with_file_name(std::string &fname);
 	void dump();
-	void dump_to_csv_file(const char *fname);
+	void dump_to_csv_file(std::string &fname);
 	int *allocate_int(long int n, const char *file, int line);
 	void free_int(int *p, const char *file, int line);
 	int **allocate_pint(long int n, const char *file, int line);
@@ -1232,9 +1239,9 @@ public:
 	void init_symbolic_object(
 			std::string &label,
 			void *SB, int verbose_level);
-	void init_combinatorial_objects(
+	void init_combinatorial_object(
 			std::string &label,
-			data_structures::data_input_stream *IS, int verbose_level);
+			void *Combo, int verbose_level);
 	void init_geometry_builder_object(
 			std::string &label,
 			geometry_builder::geometry_builder *GB, int verbose_level);

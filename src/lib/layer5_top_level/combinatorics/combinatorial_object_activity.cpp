@@ -25,8 +25,8 @@ combinatorial_object_activity::combinatorial_object_activity()
 	f_has_geometric_object = false;
 	GOC = NULL;
 
-	f_has_input_stream = false;
-	IS = NULL;
+	f_has_combo = false;
+	Combo = NULL;
 
 }
 
@@ -57,9 +57,9 @@ void combinatorial_object_activity::init(
 
 
 
-void combinatorial_object_activity::init_input_stream(
+void combinatorial_object_activity::init_combo(
 		combinatorial_object_activity_description *Descr,
-		data_structures::data_input_stream *IS,
+		apps_combinatorics::combinatorial_object *Combo,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -69,8 +69,8 @@ void combinatorial_object_activity::init_input_stream(
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_input_stream = true;
-	combinatorial_object_activity::IS = IS;
+	f_has_combo = true;
+	combinatorial_object_activity::Combo = Combo;
 
 
 	if (f_v) {
@@ -89,8 +89,8 @@ void combinatorial_object_activity::perform_activity(
 	if (f_has_geometric_object) {
 		perform_activity_geometric_object(verbose_level);
 	}
-	else if (f_has_input_stream) {
-		perform_activity_input_stream(verbose_level);
+	else if (f_has_combo) {
+		perform_activity_combo(verbose_level);
 	}
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity done" << endl;
@@ -358,19 +358,19 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 }
 
 
-void combinatorial_object_activity::perform_activity_input_stream(
+void combinatorial_object_activity::perform_activity_combo(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_input_stream" << endl;
+		cout << "combinatorial_object_activity::perform_activity_combo" << endl;
 	}
 
 	if (Descr->f_canonical_form_PG) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_canonical_form_PG" << endl;
 		}
 
@@ -385,42 +385,54 @@ void combinatorial_object_activity::perform_activity_input_stream(
 			PA = Get_object_of_projective_space(Descr->canonical_form_PG_PG_label);
 		}
 
-		combinatorics::classification_of_objects *CO;
 
-		CO = NEW_OBJECT(combinatorics::classification_of_objects);
+		Combo->Classification = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before CO->perform_classification" << endl;
 		}
-		CO->perform_classification(
+		Combo->Classification->perform_classification(
 				Descr->Canonical_form_PG_Descr,
 				true /* f_projective_space */, PA->P,
-				IS,
+				Combo->IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after CO->perform_classification" << endl;
 		}
 
 
 
-		canonical_form::classification_of_combinatorial_objects *C;
+		Combo->Classification_CO;
 
-		C = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+		Combo->Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
-		C->init_after_nauty(
-				CO->Descr->label,
-				CO,
+		if (!Combo->Data_input_stream_description) {
+			cout << "please use -label <label_txt> <label_tex> "
+					"when defining the input stream for the combinatorial object" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->Classification_CO->init_after_nauty" << endl;
+		}
+		Combo->Classification_CO->init_after_nauty(
+				Combo->Data_input_stream_description->label_txt,
+				Combo->Classification,
 				true /* f_projective_space */, PA,
 				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->Classification_CO->init_after_nauty" << endl;
+		}
 
 
 #if 0
 		object_with_properties *OwP;
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before post_process_classification" << endl;
 		}
 		post_process_classification(
@@ -430,70 +442,96 @@ void combinatorial_object_activity::perform_activity_input_stream(
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after post_process_classification" << endl;
 		}
 #endif
 
-		if (Descr->f_report) {
-			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_input_stream "
-						"before classification_report" << endl;
-			}
-			C->classification_report(
-					Descr->Classification_of_objects_report_options,
-					verbose_level);
-			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_input_stream "
-						"after classification_report" << endl;
-			}
 
-			string fname_base;
-
-			fname_base = Descr->Classification_of_objects_report_options->prefix;
-			C->classification_write_file(
-					fname_base,
-					verbose_level);
-		}
-
+#if 0
 		//FREE_OBJECTS(OwP);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before FREE_OBJECT(C)" << endl;
 		}
 		FREE_OBJECT(C);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after FREE_OBJECT(C)" << endl;
 		}
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before FREE_OBJECT(CO)" << endl;
 		}
 		FREE_OBJECT(CO);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after FREE_OBJECT(CO)" << endl;
 		}
+#endif
 
 
+	}
+	if (Descr->f_report) {
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before classification_report" << endl;
+		}
+		Combo->Classification_CO->classification_report(
+				Descr->Classification_of_objects_report_options,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after classification_report" << endl;
+		}
+#if 0
+		string fname_base;
 
+		fname_base = Descr->Classification_of_objects_report_options->prefix;
+		Combo->Classification_CO->classification_write_file(
+				fname_base,
+				verbose_level);
+#endif
 	}
 	else if (Descr->f_canonical_form) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_canonical_form" << endl;
 		}
+#if 0
+		classification_of_objects::perform_classification(
+				classification_of_objects_description *Descr,
+				int f_projective_space,
+				geometry::projective_space *P,
+				data_structures::data_input_stream *IS,
+				int verbose_level)
+#endif
 
 
+		Combo->Classification = NEW_OBJECT(combinatorics::classification_of_objects);
 
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before CO->perform_classification" << endl;
+		}
+		Combo->Classification->perform_classification(
+				Descr->Canonical_form_Descr,
+				false /* f_projective_space */, NULL /* P */,
+				Combo->IS,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after CO->perform_classification" << endl;
+		}
+
+#if 0
 		combinatorics::classification_of_objects *CO;
 
 		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before CO->perform_classification" << endl;
 		}
 		CO->perform_classification(
@@ -502,26 +540,26 @@ void combinatorial_object_activity::perform_activity_input_stream(
 				IS,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after CO->perform_classification" << endl;
 		}
+#endif
 
+		//canonical_form::classification_of_combinatorial_objects *C;
 
-		canonical_form::classification_of_combinatorial_objects *C;
-
-		C = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+		Combo->Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before C->init_after_nauty" << endl;
 		}
-		C->init_after_nauty(
-				CO->Descr->label,
-				CO,
+		Combo->Classification_CO->init_after_nauty(
+				Combo->Classification->Descr->label,
+				Combo->Classification,
 				false /* f_projective_space */, NULL,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after C->init_after_nauty" << endl;
 		}
 
@@ -529,7 +567,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 		object_with_properties *OwP;
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before post_process_classification" << endl;
 		}
 		post_process_classification(
@@ -539,7 +577,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after post_process_classification" << endl;
 		}
 
@@ -548,63 +586,66 @@ void combinatorial_object_activity::perform_activity_input_stream(
 #endif
 
 
-		if (Descr->f_report) {
-			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_input_stream "
-						"before classification_report" << endl;
-			}
-			C->classification_report(
-					Descr->Classification_of_objects_report_options,
-					verbose_level);
-			if (f_v) {
-				cout << "combinatorial_object_activity::perform_activity_input_stream "
-						"after classification_report" << endl;
-			}
-		}
-
+#if 0
 		string fname_base;
 
 		fname_base = Descr->Classification_of_objects_report_options->prefix;
-		C->classification_write_file(
+		Combo->Classification_CO->classification_write_file(
 				fname_base,
 				verbose_level);
+#endif
 
+
+#if 0
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before FREE_OBJECT(C)" << endl;
 		}
 		FREE_OBJECT(C);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after FREE_OBJECT(C)" << endl;
 		}
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before FREE_OBJECT(CO)" << endl;
 		}
 		FREE_OBJECT(CO);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after FREE_OBJECT(CO)" << endl;
 		}
+#endif
 
-
+	}
+	if (Descr->f_report) {
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before classification_report" << endl;
+		}
+		Combo->Classification_CO->classification_report(
+				Descr->Classification_of_objects_report_options,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after classification_report" << endl;
+		}
 	}
 	else if (Descr->f_draw_incidence_matrices) {
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_draw_incidence_matrices" << endl;
 		}
 		draw_incidence_matrices(
 				Descr->draw_incidence_matrices_prefix,
-				IS,
+				Combo->IS,
 				verbose_level);
 
 	}
 	else if (Descr->f_test_distinguishing_property) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_test_distinguishing_property" << endl;
 		}
 
@@ -630,21 +671,21 @@ void combinatorial_object_activity::perform_activity_input_stream(
 
 #if 0
 		if (!Gr->f_has_CG) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream !Gr->f_has_CG" << endl;
+			cout << "combinatorial_object_activity::perform_activity_combo !Gr->f_has_CG" << endl;
 			exit(1);
 		}
 #endif
 		int input_idx;
 		int *F_distinguishing;
 
-		F_distinguishing = NEW_int(IS->Objects.size());
+		F_distinguishing = NEW_int(Combo->IS->Objects.size());
 
 
-		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 
 			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			F_distinguishing[input_idx] = CG->test_distinguishing_property(
 					OwCF->set, OwCF->sz, verbose_level);
@@ -652,13 +693,13 @@ void combinatorial_object_activity::perform_activity_input_stream(
 
 		data_structures::tally T;
 
-		T.init(F_distinguishing, IS->Objects.size(), false, 0);
+		T.init(F_distinguishing, Combo->IS->Objects.size(), false, 0);
 		cout << "classification : ";
 		T.print_first(true /* f_backwards*/);
 		cout << endl;
 
 		cout << "distinguishing sets are:";
-		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 			if (F_distinguishing[input_idx]) {
 				cout << input_idx << ", ";
 			}
@@ -666,14 +707,14 @@ void combinatorial_object_activity::perform_activity_input_stream(
 		cout << endl;
 
 		cout << "distinguishing sets are:";
-		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 			if (!F_distinguishing[input_idx]) {
 				continue;
 			}
 
 			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			OwCF->print(cout);
 
@@ -687,7 +728,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_combo f_ideal" << endl;
 		}
 
 		ring_theory::homogeneous_polynomial_domain *HPD;
@@ -699,11 +740,11 @@ void combinatorial_object_activity::perform_activity_input_stream(
 		int input_idx;
 
 
-		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 
 			geometry::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
 
@@ -713,7 +754,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	else if (Descr->f_save_as) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_save_as " << Descr->save_as_fname << endl;
 		}
 
@@ -726,7 +767,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	else if (Descr->f_extract_subset) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_extract_subset " << Descr->extract_subset_fname << endl;
 		}
 		long int *extract_idx_set;
@@ -746,7 +787,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	else if (Descr->f_unpack_from_restricted_action) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"unpack_from_restricted_action "
 					<< Descr->unpack_from_restricted_action_prefix
 					<< " " << Descr->unpack_from_restricted_action_group_label << endl;
@@ -755,7 +796,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 		unpack_from_restricted_action(
 				Descr->unpack_from_restricted_action_prefix,
 				Descr->unpack_from_restricted_action_group_label,
-				IS,
+				Combo->IS,
 				verbose_level);
 
 	}
@@ -763,7 +804,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	else if (Descr->f_line_covering_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"line_covering_type "
 					<< Descr->line_covering_type_prefix
 					<< " " << Descr->line_covering_type_projective_space
@@ -775,7 +816,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 				Descr->line_covering_type_prefix,
 				Descr->line_covering_type_projective_space,
 				Descr->line_covering_type_lines,
-				IS,
+				Combo->IS,
 				verbose_level);
 
 	}
@@ -783,7 +824,7 @@ void combinatorial_object_activity::perform_activity_input_stream(
 	else if (Descr->f_line_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
+			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_line_type" << endl;
 		}
 
@@ -819,11 +860,11 @@ void combinatorial_object_activity::do_save(
 	int sz;
 	int N;
 
-	N = IS->Objects.size();
+	N = Combo->IS->Objects.size();
 
 	geometry::object_with_canonical_form *OwCF;
 
-	OwCF = (geometry::object_with_canonical_form *) IS->Objects[0];
+	OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[0];
 
 	//OwCF->set;
 	sz = OwCF->sz;
@@ -832,12 +873,12 @@ void combinatorial_object_activity::do_save(
 
 		if (false) {
 			cout << "combinatorial_object_activity::perform_activity_IS "
-					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
+					"input_idx = " << input_idx << " / " << Combo->IS->Objects.size() << endl;
 		}
 
 		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 		//OwCF->set;
 		if (OwCF->sz != sz) {
@@ -855,7 +896,7 @@ void combinatorial_object_activity::do_save(
 	for (input_idx = 0; input_idx < N; input_idx++) {
 		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
 	}

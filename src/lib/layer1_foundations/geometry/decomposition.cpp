@@ -2086,6 +2086,41 @@ done:
 
 }
 
+void decomposition::get_and_report_classes(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition::get_and_report_classes" << endl;
+	}
+
+	data_structures::set_of_sets *SoS_points;
+	data_structures::set_of_sets *SoS_lines;
+
+
+	Stack->get_row_classes(
+			SoS_points, 0 /*verbose_level*/);
+	Stack->get_column_classes(
+			SoS_lines, 0 /*verbose_level*/);
+
+	ost << "Point classes:\\\\" << endl;
+	SoS_points->print_table_tex(ost);
+
+	ost << "Block classes:\\\\" << endl;
+	SoS_lines->print_table_tex(ost);
+
+
+	FREE_OBJECT(SoS_points);
+	FREE_OBJECT(SoS_lines);
+
+	if (f_v) {
+		cout << "decomposition::get_and_report_classes done" << endl;
+	}
+}
+
+
 
 }}}
 

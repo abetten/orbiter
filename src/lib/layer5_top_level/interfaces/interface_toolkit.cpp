@@ -181,6 +181,11 @@ interface_toolkit::interface_toolkit()
 	gcd_worksheet_N = 0;
 	gcd_worksheet_key = false;
 
+	f_draw_layered_graph = false;
+	//draw_layered_graph_fname;
+	Layered_graph_draw_options = NULL;
+
+
 }
 
 
@@ -294,6 +299,9 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (ST.stringcmp(argv[i], "-gcd_worksheet") == 0) {
 		cout << "-gcd_worksheet <nb_problems> <N> <f_key>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
+		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
 	}
 
 }
@@ -410,6 +418,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-gcd_worksheet") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		return true;
 	}
 	return false;
@@ -920,6 +931,25 @@ void interface_toolkit::read_arguments(int argc,
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
+		f_draw_layered_graph = true;
+		draw_layered_graph_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-draw_layered_graph " << endl;
+		}
+		Layered_graph_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments "
+					"finished reading -draw_layered_graph" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 
 	if (f_v) {
@@ -1123,6 +1153,10 @@ void interface_toolkit::print()
 				<< " " << gcd_worksheet_N
 				<< " " << gcd_worksheet_key
 				<< endl;
+	}
+	if (f_draw_layered_graph) {
+		cout << "-draw_layered_graph " << endl;
+		Layered_graph_draw_options->print();
 	}
 }
 
@@ -1877,7 +1911,8 @@ void interface_toolkit::worker(int verbose_level)
 					<< endl;
 		}
 
-		l1_interfaces::gnuplot_interface(gnuplot_file_fname,
+		l1_interfaces::gnuplot_interface(
+				gnuplot_file_fname,
 				gnuplot_title,
 				gnuplot_label_x,
 				gnuplot_label_y,
@@ -1910,6 +1945,14 @@ void interface_toolkit::worker(int verbose_level)
 		NT.create_gcd_worksheet(
 				gcd_worksheet_nb_problems, gcd_worksheet_N, gcd_worksheet_key,
 				verbose_level);
+	}
+	else if (f_draw_layered_graph) {
+		graphics::graphical_output GO;
+
+		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
+				Layered_graph_draw_options,
+				verbose_level);
+
 	}
 
 

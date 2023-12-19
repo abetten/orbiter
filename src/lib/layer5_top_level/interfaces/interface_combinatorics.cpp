@@ -23,11 +23,14 @@ namespace user_interface {
 
 interface_combinatorics::interface_combinatorics()
 {
+
+#if 0
 	f_diophant = false;
 	Diophant_description = NULL;
 
 	f_diophant_activity = false;
 	Diophant_activity_description = NULL;
+#endif
 
 	f_random_permutation = false;
 	random_permutation_degree = 0;
@@ -80,10 +83,6 @@ interface_combinatorics::interface_combinatorics()
 	f_regular_linear_space_classify = false;
 	Rls_descr = NULL;
 
-	f_draw_layered_graph = false;
-	//draw_layered_graph_fname;
-	Layered_graph_draw_options = NULL;
-
 	f_domino_portrait = false;
 	domino_portrait_D = 0;
 	domino_portrait_s = 0;
@@ -134,18 +133,21 @@ interface_combinatorics::interface_combinatorics()
 }
 
 
-void interface_combinatorics::print_help(int argc,
+void interface_combinatorics::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
 
+#if 0
 	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		cout << "-diophant <description> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
+#endif
+	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <int : degree> <string : <fname_csv>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
@@ -190,9 +192,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		cout << "-regular_linear_space_classify <description>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
-		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		cout << "-domino_portrait <string : fname> <int : D> <int : s> <layered_graph_options>" << endl;
 	}
@@ -228,20 +227,24 @@ void interface_combinatorics::print_help(int argc,
 	}
 }
 
-int interface_combinatorics::recognize_keyword(int argc,
+int interface_combinatorics::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
 	if (i >= argc) {
 		return false;
 	}
+#if 0
 	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
+#endif
+
+	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-create_random_k_subsets") == 0) {
@@ -286,9 +289,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
-		return true;
-	}
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		return true;
 	}
@@ -325,7 +325,8 @@ int interface_combinatorics::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_combinatorics::read_arguments(int argc,
+void interface_combinatorics::read_arguments(
+		int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -340,6 +341,7 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
 	}
 
+#if 0
 	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = true;
 		if (f_v) {
@@ -378,7 +380,9 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
+#endif
+
+	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		f_random_permutation = true;
 		random_permutation_degree = ST.strtoi(argv[++i]);
 		random_permutation_fname_csv.assign(argv[++i]);
@@ -526,29 +530,10 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-regular_linear_space_classify " <<endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
-		f_draw_layered_graph = true;
-		draw_layered_graph_fname.assign(argv[++i]);
-		if (f_v) {
-			cout << "-draw_layered_graph " << endl;
-		}
-		Layered_graph_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
-		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
-				argv + i + 1, verbose_level);
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments "
-					"finished reading -draw_layered_graph" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		f_domino_portrait = true;
 		if (f_v) {
-			cout << "-draw_layered_graph " << endl;
+			cout << "-domino_portrait " << endl;
 		}
 		domino_portrait_D = ST.strtoi(argv[++i]);
 		domino_portrait_s = ST.strtoi(argv[++i]);
@@ -691,6 +676,7 @@ void interface_combinatorics::read_arguments(int argc,
 
 void interface_combinatorics::print()
 {
+#if 0
 	if (f_diophant) {
 		cout << "-diophant " << endl;
 		Diophant_description->print();
@@ -699,6 +685,8 @@ void interface_combinatorics::print()
 		cout << "-diophant_activity " << endl;
 		Diophant_activity_description->print();
 	}
+#endif
+
 	if (f_random_permutation) {
 		cout << "-random_permutation " << random_permutation_degree << endl;
 	}
@@ -754,10 +742,6 @@ void interface_combinatorics::print()
 	if (f_regular_linear_space_classify) {
 		cout << "-regular_linear_space_classify " << endl;
 		//Rls_descr->print();
-	}
-	if (f_draw_layered_graph) {
-		cout << "-draw_layered_graph " << endl;
-		Layered_graph_draw_options->print();
 	}
 	if (f_domino_portrait) {
 		cout << "-draw_layered_graph " << domino_portrait_D
@@ -824,19 +808,22 @@ void interface_combinatorics::print()
 }
 
 
-void interface_combinatorics::worker(int verbose_level)
+void interface_combinatorics::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "interface_combinatorics::worker" << endl;
 	}
+#if 0
 	if (f_diophant) {
 		do_diophant(Diophant_description, verbose_level);
 	}
 	else if (f_diophant_activity) {
 		do_diophant_activity(Diophant_activity_description, verbose_level);
 	}
+#endif
 	else if (f_random_permutation) {
 
 		combinatorics::combinatorics_domain Combi;
@@ -946,14 +933,6 @@ void interface_combinatorics::worker(int verbose_level)
 			cout << "interface_combinatorics::worker after Rls->init_and_run" << endl;
 		}
 		FREE_OBJECT(Rls);
-
-	}
-	else if (f_draw_layered_graph) {
-		graphics::graphical_output GO;
-
-		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
-				Layered_graph_draw_options,
-				verbose_level);
 
 	}
 	else if (f_domino_portrait) {
@@ -1120,7 +1099,7 @@ void interface_combinatorics::worker(int verbose_level)
 
 }
 
-
+#if 0
 void interface_combinatorics::do_diophant(
 		solvers::diophant_description *Descr, int verbose_level)
 {
@@ -1164,6 +1143,7 @@ void interface_combinatorics::do_diophant_activity(
 		cout << "interface_combinatorics::do_diophant_activity done" << endl;
 	}
 }
+#endif
 
 #if 0
 void interface_combinatorics::do_bent(int n, int verbose_level)
@@ -1225,7 +1205,8 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 }
 #endif
 
-void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_level)
+void interface_combinatorics::do_conjugacy_classes_Sym_n(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1276,7 +1257,8 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	}
 }
 
-void interface_combinatorics::do_conjugacy_classes_Sym_n_file(int n, int verbose_level)
+void interface_combinatorics::do_conjugacy_classes_Sym_n_file(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

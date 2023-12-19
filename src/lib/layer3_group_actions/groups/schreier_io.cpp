@@ -390,12 +390,16 @@ void schreier::make_orbit_trees(
 		cout << "schreier::make_orbit_trees after draw_forest" << endl;
 	}
 
+	data_structures::string_tools ST;
+
+
 
 	int i;
 	for (i = 0; i < nb_orbits; i++) {
-		char fname[1000];
+		string fname;
 
-		snprintf(fname, sizeof(fname), fname_mask.c_str(), i);
+		fname = ST.printf_d(fname_mask, i);
+
 		ost << "" << endl;
 		ost << "\\bigskip" << endl;
 		ost << "" << endl;
@@ -411,7 +415,7 @@ void schreier::make_orbit_trees(
 		ost << "\\input " << fname << endl;
 		ost << "\\end{center}" << endl;
 		ost << "" << endl;
-		}
+	}
 
 
 	if (f_v) {
@@ -1339,12 +1343,15 @@ void schreier::draw_forest(
 	if (f_v) {
 		cout << "schreier::draw_forest" << endl;
 	}
+
+	data_structures::string_tools ST;
+
+
+
 	for (i = 0; i < nb_orbits; i++) {
-		char str[1000];
-		snprintf(str, sizeof(str), fname_mask.c_str(), i);
 		string fname;
 
-		fname.assign(str);
+		fname = ST.printf_d(fname_mask, i);
 
 		if (f_v) {
 			cout << "schreier::draw_forest drawing orbit "
@@ -1584,11 +1591,16 @@ void schreier::export_tree_as_layered_graph(
 		LG->add_text(l, horizontal_position[j], text2, 0/*verbose_level*/);
 		LG->add_node_data1(l, horizontal_position[j], a, 0/*verbose_level*/);
 	}
-	char str[1000];
+
+	data_structures::string_tools ST;
+
+
+
 	string fname;
 
-	snprintf(str, sizeof(str), fname_mask.c_str(), orbit_no);
-	fname.assign(str);
+	fname = ST.printf_d(fname_mask, orbit_no);
+
+
 	LG->write_file(fname, 0 /*verbose_level*/);
 	FREE_OBJECT(LG);
 
@@ -1864,7 +1876,6 @@ void schreier::subtree_draw_lines(
 	if (Opt->f_label_edges) {
 		if (l > 1) {
 			// if pt is not the root node:
-			//snprintf(str, sizeof(str), "$\\alpha_{%d}$", label[i]);
 			string s;
 			s = "$\\alpha_{" + std::to_string(label[i]) + "}$";
 			G.aligned_text(Px[2], Py[2], "", s);
@@ -1936,11 +1947,9 @@ void schreier::subtree_draw_vertices(
 #endif
 	if (f_has_point_labels) {
 		str = std::to_string(point_labels[pt]);
-		//snprintf(str, sizeof(str), "%ld", point_labels[pt]);
 	}
 	else {
 		str = std::to_string(pt);
-		//snprintf(str, sizeof(str), "%d", pt);
 	}
 	if (Opt->f_nodes_empty) {
 		s.assign("");

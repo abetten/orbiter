@@ -20,26 +20,11 @@ namespace solvers {
 
 diophant_description::diophant_description()
 {
-	f_field = false;
-	//std::string field_label;
-
-	f_maximal_arc = false;
-	maximal_arc_sz = 0;
-	maximal_arc_d = 0;
-	//maximal_arc_secants_text;
-	//external_lines_as_subset_of_secants_text;
-
 	f_label = false;
 	//label = NULL;
-	//from_scratch_m = 0;
-	//from_scratch_n = 0;
 
 	f_coefficient_matrix = false;
 	//coefficient_matrix_label;
-
-	f_problem_of_Steiner_type = false;
-	problem_of_Steiner_type_nb_t_orbits = 0;
-	//std::string problem_of_Steiner_type_covering_matrix_fname;
 
 	f_coefficient_matrix_csv = false;
 	//coefficient_matrix_csv;
@@ -68,6 +53,20 @@ diophant_description::diophant_description()
 
 	f_has_sum = false;
 	has_sum = 0;
+
+	f_problem_of_Steiner_type = false;
+	problem_of_Steiner_type_nb_t_orbits = 0;
+	//std::string problem_of_Steiner_type_covering_matrix_fname;
+
+	f_maximal_arc = false;
+	maximal_arc_sz = 0;
+	maximal_arc_d = 0;
+	//maximal_arc_secants_text;
+	//external_lines_as_subset_of_secants_text;
+
+	f_field = false;
+	//std::string field_label;
+
 }
 
 
@@ -89,26 +88,7 @@ int diophant_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (ST.stringcmp(argv[i], "-field") == 0) {
-			f_field = true;
-			field_label = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-field" << field_label << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
-			f_maximal_arc = true;
-			maximal_arc_sz = ST.strtoi(argv[++i]);
-			maximal_arc_d = ST.strtoi(argv[++i]);
-			maximal_arc_secants_text.assign(argv[++i]);
-			external_lines_as_subset_of_secants_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
-					<< " " << maximal_arc_secants_text
-					<< " " << external_lines_as_subset_of_secants_text << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-label") == 0) {
+		if (ST.stringcmp(argv[i], "-label") == 0) {
 			f_label = true;
 			label.assign(argv[++i]);
 			if (f_v) {
@@ -120,15 +100,6 @@ int diophant_description::read_arguments(
 			coefficient_matrix_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coefficient_matrix " << coefficient_matrix_label << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
-			f_problem_of_Steiner_type = true;
-			problem_of_Steiner_type_nb_t_orbits = ST.strtoi(argv[++i]);
-			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
-					<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
 			}
 		}
 
@@ -195,6 +166,34 @@ int diophant_description::read_arguments(
 				cout << "-has_sum " << has_sum << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
+			f_problem_of_Steiner_type = true;
+			problem_of_Steiner_type_nb_t_orbits = ST.strtoi(argv[++i]);
+			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+					<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
+			f_maximal_arc = true;
+			maximal_arc_sz = ST.strtoi(argv[++i]);
+			maximal_arc_d = ST.strtoi(argv[++i]);
+			maximal_arc_secants_text.assign(argv[++i]);
+			external_lines_as_subset_of_secants_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
+					<< " " << maximal_arc_secants_text
+					<< " " << external_lines_as_subset_of_secants_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-field") == 0) {
+			f_field = true;
+			field_label = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-field" << field_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -216,23 +215,11 @@ int diophant_description::read_arguments(
 
 void diophant_description::print()
 {
-	if (f_field) {
-		cout << "-field" << field_label << endl;
-	}
-	if (f_maximal_arc) {
-		cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
-				<< " " << maximal_arc_secants_text
-				<< " " << external_lines_as_subset_of_secants_text << endl;
-	}
 	if (f_label) {
 		cout << "-label " << label << endl;
 	}
 	if (f_coefficient_matrix) {
 		cout << "-coefficient_matrix " << coefficient_matrix_label << endl;
-	}
-	if (f_problem_of_Steiner_type) {
-		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
-				<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
 	}
 
 	if (f_coefficient_matrix_csv) {
@@ -261,6 +248,18 @@ void diophant_description::print()
 	}
 	if (f_has_sum) {
 		cout << "-has_sum " << has_sum << endl;
+	}
+	if (f_problem_of_Steiner_type) {
+		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+				<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
+	}
+	if (f_maximal_arc) {
+		cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
+				<< " " << maximal_arc_secants_text
+				<< " " << external_lines_as_subset_of_secants_text << endl;
+	}
+	if (f_field) {
+		cout << "-field" << field_label << endl;
 	}
 }
 

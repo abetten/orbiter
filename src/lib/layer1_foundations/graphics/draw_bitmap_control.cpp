@@ -29,13 +29,6 @@ draw_bitmap_control::draw_bitmap_control()
 	f_input_object = false;
 	//std::string input_object_label;
 
-
-	f_input_matrix = false;
-	M = NULL;
-	M2 = NULL;
-	m = 0;
-	n = 0;
-
 	f_partition = false;
 	part_width = 4;
 	//std::string part_row;
@@ -48,6 +41,13 @@ draw_bitmap_control::draw_bitmap_control()
 	bit_depth = 8;
 
 	f_grayscale = false;
+
+	// not a command line argument
+	f_input_matrix = false;
+	M = NULL;
+	M2 = NULL;
+	m = 0;
+	n = 0;
 
 }
 

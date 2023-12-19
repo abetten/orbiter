@@ -72,7 +72,8 @@ public:
 			int *object_in, int *object_out,
 		int *Elt, int verbose_level);
 	void print_orbit();
-	void compute_orbit(int *coeff, int verbose_level);
+	void compute_orbit(
+			int *coeff, int verbose_level);
 	void reallocate(
 			int *&Q, int Q_len, int verbose_level);
 	void get_transporter(
@@ -267,7 +268,8 @@ public:
 
 	orbit_of_subspaces();
 	~orbit_of_subspaces();
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			actions::action *A2,
 			field_theory::finite_field *F,
 		int *subspace, int k, int n, 
@@ -298,8 +300,10 @@ public:
 		void *compute_image_of_vector_callback_data,
 		data_structures_groups::vector_ge *gens,
 		int verbose_level);
-	int rank_vector(int *v, int verbose_level);
-	long int rank_vector_lint(int *v, int verbose_level);
+	int rank_vector(
+			int *v, int verbose_level);
+	long int rank_vector_lint(
+			int *v, int verbose_level);
 	void unrank_vector(
 			int rk, int *v, int verbose_level);
 	void unrank_vector_lint(
@@ -318,7 +322,8 @@ public:
 			int *rk, int *subspace_basis, int verbose_level);
 	void rank_lint(
 			long int *rk, int *subspace_basis, int verbose_level);
-	void rref(int *subspace, int verbose_level);
+	void rref(
+			int *subspace, int verbose_level);
 	void rref_and_rank(
 			int *subspace, int *rk, int verbose_level);
 	void rref_and_rank_lint(
@@ -330,7 +335,8 @@ public:
 	int rank_hash_and_find(
 			int *subspace,
 			int &idx, uint32_t &h, int verbose_level);
-	void compute(int verbose_level);
+	void compute(
+			int verbose_level);
 	void get_transporter(
 			int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps the orbit 

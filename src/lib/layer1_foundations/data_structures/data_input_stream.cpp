@@ -149,15 +149,6 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 			FREE_OBJECT(SoS);
 
-#if 0
-			nb_obj = Fio.count_number_of_orbits_in_file(
-					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
-			if (f_v) {
-				cout << "The file " << Descr->Input[input_idx].input_string
-					<< " has " << nb_obj << " objects" << endl;
-			}
-			nb_objects_to_test += nb_obj;
-#endif
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_lines) {
@@ -196,8 +187,6 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "through spread table "
 					<< Descr->Input[input_idx].input_string2 << " :" << endl;
 			}
-			//nb_obj = Fio.count_number_of_orbits_in_file(
-			//		Descr->input_string[input_idx], 0 /* verbose_level*/);
 
 			set_of_sets *SoS;
 
@@ -361,6 +350,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input from parallel search, cases_fname=" << cases_fname << endl;
 			}
 
+			data_structures::string_tools ST;
 			orbiter_kernel_system::file_io Fio;
 			int i;
 
@@ -368,12 +358,11 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			for (i = 0; i < nb_cases; i++) {
 
 
-				char str[1000];
+
+
 				string fname;
 
-
-				snprintf(str, sizeof(str), mask.c_str(), i);
-				fname.assign(str);
+				fname = ST.printf_d(mask, i);
 
 				set_of_sets *SoS;
 				int underlying_set_size = 0;
@@ -935,12 +924,12 @@ void data_input_stream::read_objects(int verbose_level)
 					Lint_vec_print(cout, Reps->Sets[c], prefix_sz);
 				}
 
-				char str[1000];
+				data_structures::string_tools ST;
+
+
 				string fname;
 
-
-				snprintf(str, sizeof(str), mask.c_str(), c);
-				fname.assign(str);
+				fname = ST.printf_d(mask, c);
 
 				set_of_sets *SoS;
 				int underlying_set_size = 0;

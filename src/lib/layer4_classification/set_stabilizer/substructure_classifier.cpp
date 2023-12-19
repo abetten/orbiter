@@ -159,10 +159,6 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		cout << "substructure_classifier::set_stabilizer_in_any_space" << endl;
 	}
 
-	//substructure_classifier *SubC;
-
-	//SubC = NEW_OBJECT(substructure_classifier);
-
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer_in_any_space "
 				"before SubC->classify_substructures" << endl;
@@ -195,11 +191,11 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 	for (cnt = 0; cnt < nb; cnt++) {
 
-		char str[1000];
+		data_structures::string_tools ST;
+
 		string fname;
 
-		snprintf(str, sizeof(str), fname_mask.c_str(), cnt);
-		fname.assign(str);
+		fname = ST.printf_d(fname_mask, cnt);
 
 		data_structures::spreadsheet S;
 
@@ -226,11 +222,11 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 	for (cnt = 0; cnt < nb; cnt++) {
 
-		char str[1000];
+		data_structures::string_tools ST;
+
 		string fname;
 
-		snprintf(str, sizeof(str), fname_mask.c_str(), cnt);
-		fname.assign(str);
+		fname = ST.printf_d(fname_mask, cnt);
 
 		data_structures::spreadsheet S;
 
@@ -264,14 +260,6 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 			j = col_idx;
 			pts_txt = S.get_entry_ij(row + 1, j);
-#if 0
-			t = S.Table[(row + 1) * S.nb_cols + j];
-			if (S.tokens[t] == NULL) {
-				cout << "substructure_classifier::set_stabilizer_in_any_space "
-						"token[t] == NULL" << endl;
-			}
-			pts_txt.assign(S.tokens[t]);
-#endif
 
 			data_structures::string_tools ST;
 
@@ -319,7 +307,6 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 	}
 
-	//FREE_OBJECT(SubC);
 	if (f_v) {
 		cout << "substructure_classifier::set_stabilizer_in_any_space done" << endl;
 	}

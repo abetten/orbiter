@@ -139,8 +139,11 @@ void hermitian_spreads_classify::init(
 	}
 	hermitian_spreads_classify::n = n;
 	hermitian_spreads_classify::Q = Q;
+
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(Q,
+
+	F->finite_field_init_small_order(
+			Q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
 			0);
@@ -173,7 +176,8 @@ void hermitian_spreads_classify::init(
 	P = NEW_OBJECT(geometry::projective_space);
 
 	cout << "Creating projective_space" << endl;
-	P->projective_space_init(n, F,
+	P->projective_space_init(
+			n, F,
 		true /* f_init_incidence_structure */,
 		0 /* verbose_level */);
 	cout << "Creating projective_space done" << endl;
@@ -182,7 +186,8 @@ void hermitian_spreads_classify::init(
 
 	cout << "Creating linear group" << endl;
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_general_linear_group(n + 1, F,
+	A->Known_groups->init_general_linear_group(
+			n + 1, F,
 			true /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
 			verbose_level - 2);
@@ -196,7 +201,8 @@ void hermitian_spreads_classify::init(
 
 	line_type = NEW_int(P->Subspaces->N_lines);
 
-	P->Subspaces->line_intersection_type(Pts, nb_pts, line_type, verbose_level);
+	P->Subspaces->line_intersection_type(
+			Pts, nb_pts, line_type, verbose_level);
 
 
 	C.init(line_type, P->Subspaces->N_lines, false, 0);
@@ -268,9 +274,11 @@ void hermitian_spreads_classify::init(
 	actions::action_global AcGl;
 
 	//int canonical_pt;
+
 	sg = AcGl.set_stabilizer_in_projective_space(A, P,
-			Pts, nb_pts, /*canonical_pt,*/ NULL,
+			Pts, nb_pts, /*canonical_pt,*/ //NULL,
 			verbose_level);
+
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);
 	ring_theory::longinteger_object go;
 

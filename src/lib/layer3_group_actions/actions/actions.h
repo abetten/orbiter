@@ -214,13 +214,18 @@ public:
 	
 	int f_has_base();
 	int base_len();
-	void set_base_len(int base_len);
-	long int &base_i(int i);
+	void set_base_len(
+			int base_len);
+	long int &base_i(
+			int i);
 	long int *&get_base();
-	int &transversal_length_i(int i);
+	int &transversal_length_i(
+			int i);
 	int *&get_transversal_length();
-	long int &orbit_ij(int i, int j);
-	long int &orbit_inv_ij(int i, int j);
+	long int &orbit_ij(
+			int i, int j);
+	long int &orbit_inv_ij(
+			int i, int j);
 
 	void null_element_data();
 	void allocate_element_data();
@@ -242,7 +247,8 @@ public:
 			int verbose_level);
 	
 	/** the index of the first moved base point */
-	int depth_in_stab_chain(int *Elt);
+	int depth_in_stab_chain(
+			int *Elt);
 
 
 		/** all strong generators that
@@ -625,8 +631,7 @@ public:
 	groups::strong_generators *set_stabilizer_in_projective_space(
 			action *A_linear,
 			geometry::projective_space *P,
-		long int *set, int set_size, //int &canonical_pt,
-		int *canonical_set_or_NULL,
+		long int *set, int set_size,
 		int verbose_level);
 	// assuming we are in a linear action.
 	void stabilizer_of_dual_hyperoval_representative(
@@ -746,18 +751,33 @@ public:
 		int f_semisimilarity,
 		int *Elt, int verbose_level);
 	void init_base(
-			actions::action *A, algebra::matrix_group *M, int verbose_level);
+			actions::action *A,
+			algebra::matrix_group *M,
+			int verbose_level);
 	void init_base_projective(
-			actions::action *A, algebra::matrix_group *M, int verbose_level);
+			actions::action *A,
+			algebra::matrix_group *M,
+			int verbose_level);
 	void init_base_affine(
-			actions::action *A, algebra::matrix_group *M, int verbose_level);
+			actions::action *A,
+			algebra::matrix_group *M,
+			int verbose_level);
 	void init_base_general_linear(
-			actions::action *A, algebra::matrix_group *M, int verbose_level);
+			actions::action *A,
+			algebra::matrix_group *M,
+			int verbose_level);
 	void substitute_semilinear(
 			action *A,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			int *Elt,
 			int *input, int *output,
+			int verbose_level);
+	void report_TDO_and_TDA_projective_space(
+			std::ostream &ost,
+			geometry::projective_space *P,
+			long int *points, int nb_points,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA_projective_space(
 			std::ostream &ost,
@@ -771,15 +791,32 @@ public:
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
+	void report_TDO_and_TDA(
+			std::ostream &ost,
+			geometry::incidence_structure *Inc,
+			long int *points, int nb_points,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
 	void report_TDA(
 			std::ostream &ost,
 			geometry::incidence_structure *Inc,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
-	void refine_decomposition_TDA(
+	void get_and_report_classes(
+			std::ostream &ost,
+			geometry::decomposition *Decomposition,
+			int verbose_level);
+	void refine_decomposition_by_group_orbits(
 			geometry::decomposition *Decomposition,
 			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens,
+			int verbose_level);
+	void refine_decomposition_by_group_orbits_one_side(
+			geometry::decomposition *Decomposition,
+			actions::action *A_on_points_or_lines,
+			int f_lines,
 			groups::strong_generators *gens,
 			int verbose_level);
 	void test_if_two_actions_agree_vector(
@@ -817,36 +854,62 @@ public:
 	std::string label;
 
 	/** function pointers for group actions */
-	long int (*ptr_element_image_of)(action &A, long int a, void *elt, int verbose_level);
-	void (*ptr_element_image_of_low_level)(action &A, int *input, int *output, void *elt, int verbose_level);
-	int (*ptr_element_linear_entry_ij)(action &A, void *elt, int i, int j, int verbose_level);
-	int (*ptr_element_linear_entry_frobenius)(action &A, void *elt, int verbose_level);
-	void (*ptr_element_one)(action &A, void *elt, int verbose_level);
-	int (*ptr_element_is_one)(action &A, void *elt, int verbose_level);
-	void (*ptr_element_unpack)(action &A, void *elt, void *Elt, int verbose_level);
-	void (*ptr_element_pack)(action &A, void *Elt, void *elt, int verbose_level);
-	void (*ptr_element_retrieve)(action &A, int hdl, void *elt, int verbose_level);
-	int (*ptr_element_store)(action &A, void *elt, int verbose_level);
-	void (*ptr_element_mult)(action &A, void *a, void *b, void *ab, int verbose_level);
-	void (*ptr_element_invert)(action &A, void *a, void *av, int verbose_level);
-	void (*ptr_element_transpose)(action &A, void *a, void *at, int verbose_level);
-	void (*ptr_element_move)(action &A, void *a, void *b, int verbose_level);
-	void (*ptr_element_dispose)(action &A, int hdl, int verbose_level);
-	void (*ptr_element_print)(action &A, void *elt, std::ostream &ost);
-	void (*ptr_element_print_quick)(action &A, void *elt, std::ostream &ost);
-	void (*ptr_element_print_latex)(action &A, void *elt, std::ostream &ost);
-	void (*ptr_element_print_latex_with_print_point_function)(action &A,
+	long int (*ptr_element_image_of)(
+			action &A, long int a, void *elt, int verbose_level);
+	void (*ptr_element_image_of_low_level)(
+			action &A, int *input, int *output, void *elt, int verbose_level);
+	int (*ptr_element_linear_entry_ij)(
+			action &A, void *elt, int i, int j, int verbose_level);
+	int (*ptr_element_linear_entry_frobenius)(
+			action &A, void *elt, int verbose_level);
+	void (*ptr_element_one)(
+			action &A, void *elt, int verbose_level);
+	int (*ptr_element_is_one)(
+			action &A, void *elt, int verbose_level);
+	void (*ptr_element_unpack)(
+			action &A, void *elt, void *Elt, int verbose_level);
+	void (*ptr_element_pack)(
+			action &A, void *Elt, void *elt, int verbose_level);
+	void (*ptr_element_retrieve)(
+			action &A, int hdl, void *elt, int verbose_level);
+	int (*ptr_element_store)(
+			action &A, void *elt, int verbose_level);
+	void (*ptr_element_mult)(
+			action &A, void *a, void *b, void *ab, int verbose_level);
+	void (*ptr_element_invert)(
+			action &A, void *a, void *av, int verbose_level);
+	void (*ptr_element_transpose)(
+			action &A, void *a, void *at, int verbose_level);
+	void (*ptr_element_move)(
+			action &A, void *a, void *b, int verbose_level);
+	void (*ptr_element_dispose)(
+			action &A, int hdl, int verbose_level);
+	void (*ptr_element_print)(
+			action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_quick)(
+			action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_latex)(
+			action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_latex_with_print_point_function)(
+			action &A,
 		void *elt, std::ostream &ost,
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data);
-	void (*ptr_element_print_verbose)(action &A, void *elt, std::ostream &ost);
-	void (*ptr_print_point)(action &A, long int i, std::ostream &ost);
-	void (*ptr_element_code_for_make_element)(action &A, void *elt, int *data);
-	void (*ptr_element_print_for_make_element)(action &A, void *elt, std::ostream &ost);
-	void (*ptr_element_print_for_make_element_no_commas)(action &A,
+	void (*ptr_element_print_verbose)(
+			action &A, void *elt, std::ostream &ost);
+	void (*ptr_print_point)(
+			action &A, long int i, std::ostream &ost);
+	void (*ptr_element_code_for_make_element)(
+			action &A, void *elt, int *data);
+	void (*ptr_element_print_for_make_element)(
+			action &A, void *elt, std::ostream &ost);
+	void (*ptr_element_print_for_make_element_no_commas)(
+			action &A,
 		void *elt, std::ostream &ost);
-	void (*ptr_unrank_point)(action &A, long int rk, int *v);
-	long int (*ptr_rank_point)(action &A, int *v);
+	void (*ptr_unrank_point)(
+			action &A, long int rk, int *v);
+	long int (*ptr_rank_point)(
+			action &A, int *v);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -886,7 +949,8 @@ public:
 
 	known_groups();
 	~known_groups();
-	void init(action *A, int verbose_level);
+	void init(
+			action *A, int verbose_level);
 
 	/** Create any linear group */
 	void init_linear_group(
@@ -949,6 +1013,12 @@ public:
 		int given_base_length, long int *given_base,
 		int f_given_base,
 		int verbose_level);
+	void init_base_and_generators(
+			int f_target_go, ring_theory::longinteger_object &target_go,
+			int nb_gens, int *gens,
+			int given_base_length, long int *given_base,
+			int f_given_base,
+			int verbose_level);
 
 	/** Create the affine group AGL(n,q) as abstract permutation group,
 	 * not as matrix group */
@@ -1108,8 +1178,10 @@ public:
 			std::ostream &ost, void *elt);
 	void print_point(
 			int a, std::ostream &ost);
-	void unrank_point(long int rk, int *v);
-	long int rank_point(int *v);
+	void unrank_point(
+			long int rk, int *v);
+	long int rank_point(
+			int *v);
 	void code_for_make_element(
 			int *data, void *elt);
 	void print_for_make_element(
@@ -1174,9 +1246,11 @@ public:
 	void element_print_for_make_element_no_commas(
 			void *elt,
 			std::ostream &ost);
-	void element_print_as_permutation(void *elt,
+	void element_print_as_permutation(
+			void *elt,
 			std::ostream &ost);
-	void compute_permutation(void *elt,
+	void compute_permutation(
+			void *elt,
 		int *perm, int verbose_level);
 	void element_print_as_permutation_verbose(
 			void *elt,
@@ -1373,7 +1447,8 @@ public:
 
 	induced_action();
 	~induced_action();
-	void init(action *A, int verbose_level);
+	void init(
+			action *A, int verbose_level);
 
 	action *induced_action_on_interior_direct_product(
 			int nb_rows,
@@ -1564,7 +1639,8 @@ public:
 			int i, int j);
 	long int &orbit_inv_ij(
 			int i, int j);
-	int &path_i(int i);
+	int &path_i(
+			int i);
 	void group_order(
 			ring_theory::longinteger_object &go);
 	void init_projective_matrix_group(

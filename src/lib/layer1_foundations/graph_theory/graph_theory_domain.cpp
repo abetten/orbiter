@@ -123,7 +123,9 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	std::string fname;
-	char fname_tmp[1000];
+	data_structures::string_tools ST;
+
+
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
@@ -148,7 +150,11 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				cout << "colored_graph_all_cliques_list_of_cases case " << i
 						<< " / " << nb_cases << " which is " << c << endl;
 			}
-			snprintf(fname_tmp, 1000, fname_template.c_str(), c);
+
+			string fname_tmp;
+
+			fname_tmp = ST.printf_d(fname_template, c);
+
 			if (f_prefix) {
 				fname = prefix + fname_tmp;
 			}

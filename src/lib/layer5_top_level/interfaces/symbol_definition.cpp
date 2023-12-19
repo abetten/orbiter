@@ -145,7 +145,7 @@ symbol_definition::symbol_definition()
 	Symbolic_object_builder_description = NULL;
 
 
-	f_combinatorial_objects = false;
+	f_combinatorial_object = false;
 	Data_input_stream_description = false;
 
 	f_geometry_builder = false;
@@ -947,8 +947,8 @@ void symbol_definition::read_definition(
 	}
 
 
-	else if (ST.stringcmp(argv[i], "-combinatorial_objects") == 0) {
-		f_combinatorial_objects = true;
+	else if (ST.stringcmp(argv[i], "-combinatorial_object") == 0) {
+		f_combinatorial_object = true;
 
 
 		Data_input_stream_description =
@@ -1534,7 +1534,7 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_symbolic_object" << endl;
 		}
 	}
-	else if (f_combinatorial_objects) {
+	else if (f_combinatorial_object) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
 					"before definition_of_combinatorial_object" << endl;
@@ -1802,8 +1802,8 @@ void symbol_definition::print()
 		cout << "-symbolic_object ";
 		Symbolic_object_builder_description->print();
 	}
-	if (f_combinatorial_objects) {
-		cout << "-combinatorial_objects ";
+	if (f_combinatorial_object) {
+		cout << "-combinatorial_object ";
 		Data_input_stream_description->print();
 	}
 	if (f_geometry_builder) {
@@ -3701,28 +3701,20 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 		cout << "symbol_definition::definition_of_combinatorial_object" << endl;
 	}
 
-	data_structures::data_input_stream *IS;
+	apps_combinatorics::combinatorial_object *Combo;
 
-	IS = NEW_OBJECT(data_structures::data_input_stream);
+	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object);
 
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object "
-				"before IS->init" << endl;
-	}
 
-	IS->init(Data_input_stream_description, verbose_level);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object "
-				"after IS->init" << endl;
-	}
-
+	Combo->init(
+			Data_input_stream_description,
+			verbose_level);
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_combinatorial_objects(
-			define_label, IS, verbose_level);
+	Symb->init_combinatorial_object(
+			define_label, Combo, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_combinatorial_object "
 				"before add_symbol_table_entry" << endl;

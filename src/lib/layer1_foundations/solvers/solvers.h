@@ -126,24 +126,11 @@ public:
 
 class diophant_description {
 public:
-	int f_field;
-	std::string field_label;
-
-	int f_maximal_arc;
-	int maximal_arc_sz;
-	int maximal_arc_d;
-	std::string maximal_arc_secants_text;
-	std::string external_lines_as_subset_of_secants_text;
-
 	int f_label;
 	std::string label;
 
 	int f_coefficient_matrix;
 	std::string coefficient_matrix_label;
-
-	int f_problem_of_Steiner_type;
-	int problem_of_Steiner_type_nb_t_orbits;
-	std::string problem_of_Steiner_type_covering_matrix_fname;
 
 	int f_coefficient_matrix_csv;
 	std::string coefficient_matrix_csv;
@@ -172,6 +159,19 @@ public:
 
 	int f_has_sum;
 	int has_sum;
+
+	int f_problem_of_Steiner_type;
+	int problem_of_Steiner_type_nb_t_orbits;
+	std::string problem_of_Steiner_type_covering_matrix_fname;
+
+	int f_maximal_arc;
+	int maximal_arc_sz;
+	int maximal_arc_d;
+	std::string maximal_arc_secants_text;
+	std::string external_lines_as_subset_of_secants_text;
+
+	int f_field;
+	std::string field_label;
 
 
 	diophant_description();

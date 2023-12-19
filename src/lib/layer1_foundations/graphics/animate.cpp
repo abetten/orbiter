@@ -297,14 +297,15 @@ void animate::animate_one_round(
 		}
 	}
 
+	data_structures::string_tools ST;
+
+
 
 	for (h = 0; h < nb_frames_this_round; h++) {
 
-		char str[1000];
 		string fname_pov;
 		string fname_png;
 		string povray_opts;
-		data_structures::string_tools ST;
 
 
 		povray_opts = "";
@@ -315,11 +316,12 @@ void animate::animate_one_round(
 			povray_opts += "-H" + std::to_string(Opt->H) + " ";
 		}
 		// for instance -W1920 -H1200  for larger pictures
-		snprintf(str, sizeof(str), output_mask.c_str(), round, h);
+		string str;
+
+		str = ST.printf_d(output_mask, h);
 		fname_pov = str;
 
-		snprintf(str, sizeof(str), output_mask.c_str(), round, h);
-		ST.replace_extension_with(fname_png, ".png");
+		str = ST.printf_dd(output_mask, round, h);
 		fname_png = str;
 
 		cout << "round " << round << ", frame " << h << " / "
@@ -627,17 +629,23 @@ void animate::animate_one_round(
 
 					if (!Opt->latex_f_label_has_been_prepared[i]) {
 
-						char str[1000];
 						data_structures::string_tools ST;
 
 
+						string fname;
+
+						string str;
+
+
 						cout << "creating latex label " << i << endl;
-						snprintf(str, sizeof(str), output_mask.c_str(), round, h);
+						str = ST.printf_dd(output_mask, round, h);
 
 						Opt->latex_fname_base[i].assign(str);
 
 						ST.chop_off_extension(Opt->latex_fname_base[i]);
-						snprintf(str, sizeof(str), "_%04d", i);
+						string mask;
+						mask = "_%4d";
+						str = ST.printf_d(mask, i);
 						Opt->latex_fname_base[i] += str;
 
 						//sprintf(Opt->latex_fname_base[i] +
@@ -2312,7 +2320,9 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	int idx;
 	double thickness_half = 0.15;
 	double extra_spacing = 0;
-	string color_options("pigment { Black } ");
+	string color_options;
+
+	color_options = "pigment { Black } ";
 	//const char *color_options = "pigment { BrightGold } finish { reflection .25 specular 1 }";
 	//double up_x = 1.,up_y = 1., up_z = 1.;
 	//double view[3];
@@ -2342,12 +2352,14 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 	double off_y = 0.25;
 	double off_z = -0.1;
 
-	string one("1");
-	string two("2");
-	string three("3");
-	string four("4");
-	string five("5");
-	string six("6");
+	string one, two, three, four, five, six;
+
+	one = "1";
+	two = "2";
+	three = "3";
+	four = "4";
+	five = "5";
+	six = "6";
 
 	idx = 36;
 	draw_text(one, thickness_half, extra_spacing,

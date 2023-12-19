@@ -636,6 +636,9 @@ public:
 		row_and_col_partition *RC,
 		int *col_scheme, int f_print_subscripts);
 	void compute_TDO(int verbose_level);
+	void get_and_report_classes(
+			std::ostream &ost,
+			int verbose_level);
 
 };
 
@@ -2744,6 +2747,8 @@ public:
 	void print_line_set_numerical(
 			long int *set, int set_size);
 	void print_set_of_points(
+			std::ostream &ost, long int *Pts, int nb_pts);
+	void print_set_of_points_easy(
 			std::ostream &ost, long int *Pts, int nb_pts);
 	void print_all_points();
 

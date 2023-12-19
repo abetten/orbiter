@@ -60,7 +60,8 @@ void poset_orbit_node::read_memory_object(
 		first_strong_generator_handle = -1;
 		tl = NEW_int(A->base_len());
 		for (i = 0; i < nb_strong_generators; i++) {
-			A->Group_element->element_read_from_memory_object(Elt, m, verbose_level - 2);
+			A->Group_element->element_read_from_memory_object(
+					Elt, m, verbose_level - 2);
 			if (i == 0) {
 				first_strong_generator_handle = A->Group_element->element_store(Elt, false);
 			}
@@ -324,7 +325,8 @@ void poset_orbit_node::sv_write_file(
 		cout << "poset_orbit_node::sv_write_file node " << node << endl;
 	}
 
-	PC->get_schreier_vector_handler()->sv_write_file(Schreier_vector,
+	PC->get_schreier_vector_handler()->sv_write_file(
+			Schreier_vector,
 			fp, verbose_level);
 	
 	if (f_v) {

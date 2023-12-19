@@ -28,6 +28,7 @@ formula::formula()
 	Fq = NULL;
 	tree = NULL;
 
+	f_has_managed_variables = false;
 	nb_managed_vars = 0;
 
 	f_is_homogeneous = false;
@@ -130,6 +131,7 @@ void formula::print(std::ostream &ost)
 
 void formula::init_empty_plus_node(
 		std::string &label, std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		field_theory::finite_field *Fq,
 		int verbose_level)
@@ -143,6 +145,7 @@ void formula::init_empty_plus_node(
 	name_of_formula.assign(label);
 	name_of_formula_latex.assign(label_tex);
 	managed_variables = managed_variables_text;
+	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
 
@@ -203,6 +206,7 @@ void formula::init_formula_int(
 		std::string &label, std::string &label_tex,
 		int value,
 		field_theory::finite_field *Fq,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
 {
@@ -216,6 +220,7 @@ void formula::init_formula_int(
 	name_of_formula_latex.assign(label_tex);
 	formula::managed_variables.assign(managed_variables);
 	//formula::formula_text.assign(formula_text);
+	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
 
@@ -242,6 +247,7 @@ void formula::init_formula_int(
 void formula::init_formula_monopoly(
 		std::string &label, std::string &label_tex,
 		field_theory::finite_field *Fq,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &variable,
 		int *coeffs, int nb_coeffs,
@@ -257,6 +263,7 @@ void formula::init_formula_monopoly(
 	name_of_formula_latex.assign(label_tex);
 	formula::managed_variables.assign(managed_variables);
 	//formula::formula_text.assign(formula_text);
+	formula::f_has_managed_variables = f_has_managed_variables;
 
 	formula::Fq = Fq;
 
@@ -303,7 +310,7 @@ void formula::init_formula_monopoly(
 
 void formula::init_formula_Sajeeb(
 		std::string &label, std::string &label_tex,
-		int f_managed_variables,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		std::string &formula_text,
 		field_theory::finite_field *Fq,
@@ -318,7 +325,7 @@ void formula::init_formula_Sajeeb(
 	name_of_formula.assign(label);
 	name_of_formula_latex.assign(label_tex);
 
-	if (f_managed_variables) {
+	if (f_has_managed_variables) {
 		if (f_v) {
 			cout << "formula::init_formula_Sajeeb "
 					"managed_variables = " << managed_variables << endl;
@@ -391,6 +398,7 @@ void formula::init_formula_Sajeeb(
 	Expression_parser_sajeeb->convert_to_orbiter(
 			tree,
 			Fq,
+			f_has_managed_variables,
 			managed_variables,
 			verbose_level - 1);
 	if (f_v) {
@@ -796,7 +804,7 @@ void formula::copy_to(
 	output->tree = NEW_OBJECT(syntax_tree);
 	output->tree->init(
 			Fq,
-			true, managed_variables,
+			f_has_managed_variables, managed_variables,
 			verbose_level - 1);
 
 
@@ -1490,7 +1498,23 @@ void formula::latex_tree_split(
 void formula::collect_variables(
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::collect_variables" << endl;
+	}
+	if (f_v) {
+		cout << "formula::collect_variables "
+				"before tree->collect_variables" << endl;
+	}
 	tree->collect_variables(verbose_level);
+	if (f_v) {
+		cout << "formula::collect_variables "
+				"after tree->collect_variables" << endl;
+	}
+	if (f_v) {
+		cout << "formula::collect_variables done" << endl;
+	}
 }
 
 void formula::collect_monomial_terms(

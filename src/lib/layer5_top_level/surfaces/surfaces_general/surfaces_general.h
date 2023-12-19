@@ -222,6 +222,7 @@ public:
 			std::string &ring_label,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &equation_text,
 			std::string &equation_parameters,
@@ -259,12 +260,6 @@ public:
 			int verbose_level);
 	// transforms SO->eqn, SO->Lines and SO->Pts,
 	// Also transforms Sg (if f_has_group is true)
-#if 0
-	void compute_group(
-			projective_geometry::projective_space_with_action *PA,
-			int verbose_level);
-		// not working ToDo
-#endif
 	void export_something(
 			std::string &what, int verbose_level);
 	void export_something_with_group_element(

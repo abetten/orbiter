@@ -92,6 +92,7 @@ public:
 			std::string &substitution_variables,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
 	void simplify(
@@ -105,6 +106,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			int f_write_trees,
 			int verbose_level);
@@ -114,6 +116,7 @@ public:
 			std::string &variable,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
 	void determinant(
@@ -121,6 +124,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
 	void right_nullspace(
@@ -128,6 +132,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
 	void matrix_minor(
@@ -136,6 +141,7 @@ public:
 			int i, int j,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
 	void symbolic_nullspace(
@@ -143,6 +149,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
 	void multiply_2by2_from_the_left(
@@ -152,6 +159,7 @@ public:
 			field_theory::finite_field *Fq,
 			std::string &label_txt,
 			std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
 	void latex_tree(int verbose_level);
@@ -186,7 +194,7 @@ public:
 	field_theory::finite_field *Fq;
 	syntax_tree *tree;
 
-
+	int f_has_managed_variables;
 	int nb_managed_vars;
 
 	int f_is_homogeneous;
@@ -206,6 +214,7 @@ public:
 	void print(std::ostream &ost);
 	void init_empty_plus_node(
 			std::string &label, std::string &label_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			field_theory::finite_field *Fq,
 			int verbose_level);
@@ -218,18 +227,20 @@ public:
 			std::string &label, std::string &label_tex,
 			int value,
 			field_theory::finite_field *Fq,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			int verbose_level);
 	void init_formula_monopoly(
 			std::string &label, std::string &label_tex,
 			field_theory::finite_field *Fq,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &variable,
 			int *coeffs, int nb_coeffs,
 			int verbose_level);
 	void init_formula_Sajeeb(
 			std::string &label, std::string &label_tex,
-			int f_managed_variables,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &formula_text,
 			field_theory::finite_field *Fq,
@@ -992,7 +1003,8 @@ public:
 	int find_managed_variable(
 			std::string &var,
 			int verbose_level);
-	void add_variable(std::string &var);
+	void add_variable(
+			std::string &var, int verbose_level);
 	int get_number_of_variables();
 	std::string &get_variable_name(int index);
 	int needs_to_be_expanded();

@@ -188,6 +188,8 @@ void mapping::evaluate_regular_map(
 	if (Ring->get_nb_variables() != P->Subspaces->n + 1) {
 		cout << "mapping::evaluate_regular_map "
 				"number of variables does not match" << endl;
+		cout << "number of variables in the ring = " << Ring->get_nb_variables() << endl;
+		cout << "projective dimension of the domain plus one = " << P->Subspaces->n + 1 << endl;
 		exit(1);
 	}
 

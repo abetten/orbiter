@@ -421,7 +421,8 @@ int action::base_len()
 	}
 }
 
-void action::set_base_len(int base_len)
+void action::set_base_len(
+		int base_len)
 {
 	if (Stabilizer_chain) {
 		Stabilizer_chain->get_base_len() = base_len;
@@ -432,7 +433,8 @@ void action::set_base_len(int base_len)
 
 }
 
-long int &action::base_i(int i)
+long int &action::base_i(
+		int i)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->base_i(i);
@@ -454,7 +456,8 @@ long int *&action::get_base()
 	}
 }
 
-int &action::transversal_length_i(int i)
+int &action::transversal_length_i(
+		int i)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->transversal_length_i(i);
@@ -476,7 +479,8 @@ int *&action::get_transversal_length()
 	}
 }
 
-long int &action::orbit_ij(int i, int j)
+long int &action::orbit_ij(
+		int i, int j)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->orbit_ij(i, j);
@@ -487,7 +491,8 @@ long int &action::orbit_ij(int i, int j)
 	}
 }
 
-long int &action::orbit_inv_ij(int i, int j)
+long int &action::orbit_inv_ij(
+		int i, int j)
 {
 	if (Stabilizer_chain) {
 		return Stabilizer_chain->orbit_inv_ij(i, j);
@@ -692,7 +697,8 @@ void action::compute_all_point_orbits(
 	}
 }
 
-int action::depth_in_stab_chain(int *Elt)
+int action::depth_in_stab_chain(
+		int *Elt)
 // the index of the first moved base point
 {
 	int i, j, b;

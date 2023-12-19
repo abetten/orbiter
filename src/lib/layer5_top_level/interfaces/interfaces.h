@@ -325,11 +325,13 @@ public:
 
 class interface_combinatorics {
 
+#if 0
 	int f_diophant;
 	solvers::diophant_description *Diophant_description;
 
 	int f_diophant_activity;
 	solvers::diophant_activity_description *Diophant_activity_description;
+#endif
 
 	int f_random_permutation;
 	int random_permutation_degree;
@@ -381,10 +383,6 @@ class interface_combinatorics {
 	int f_regular_linear_space_classify;
 	apps_combinatorics::regular_linear_space_description *Rls_descr;
 
-	int f_draw_layered_graph;
-	std::string draw_layered_graph_fname;
-	graphics::layered_graph_draw_options *Layered_graph_draw_options;
-
 	int f_domino_portrait;
 	int domino_portrait_D;
 	int domino_portrait_s;
@@ -435,22 +433,22 @@ class interface_combinatorics {
 
 public:
 	interface_combinatorics();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
-	void do_diophant(
-			solvers::diophant_description *Descr,
+	void worker(
 			int verbose_level);
-	void do_diophant_activity(
-			solvers::diophant_activity_description *Descr,
-			int verbose_level);
-	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
-	void do_conjugacy_classes_Sym_n_file(int n, int verbose_level);
+	void do_conjugacy_classes_Sym_n(
+			int n, int verbose_level);
+	void do_conjugacy_classes_Sym_n_file(
+			int n, int verbose_level);
 	void do_Delandtsheer_Doyen(
 			apps_combinatorics::delandtsheer_doyen_description *Descr,
 			int verbose_level);
@@ -911,6 +909,11 @@ class interface_toolkit {
 	int gcd_worksheet_N;
 	int gcd_worksheet_key;
 
+	int f_draw_layered_graph;
+	std::string draw_layered_graph_fname;
+	graphics::layered_graph_draw_options *Layered_graph_draw_options;
+
+
 
 public:
 
@@ -1213,7 +1216,7 @@ public:
 	expression_parser::symbolic_object_builder_description
 		*Symbolic_object_builder_description;
 
-	int f_combinatorial_objects;
+	int f_combinatorial_object;
 	data_structures::data_input_stream_description
 		*Data_input_stream_description;
 

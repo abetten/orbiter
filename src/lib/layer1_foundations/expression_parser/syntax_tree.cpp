@@ -49,6 +49,12 @@ void syntax_tree::init(
 	if (f_v) {
 		cout << "syntax_tree::init" << endl;
 	}
+	if (f_v) {
+		cout << "syntax_tree::init f_managed_variables = " << f_managed_variables << endl;
+		if (f_managed_variables) {
+			cout << "syntax_tree::init managed_variables_text = " << managed_variables_text << endl;
+		}
+	}
 
 	syntax_tree::Fq = Fq;
 
@@ -56,6 +62,9 @@ void syntax_tree::init(
 
 		f_has_managed_variables = true;
 
+		if (f_v) {
+			cout << "syntax_tree::init with managed variables: " << managed_variables_text << endl;
+		}
 
 		syntax_tree::managed_variables_text.assign(managed_variables_text);
 		data_structures::string_tools ST;
@@ -65,6 +74,10 @@ void syntax_tree::init(
 				managed_variables_text, managed_variables,
 				verbose_level);
 
+		if (f_v) {
+			cout << "syntax_tree::init "
+					"number of managed variables = " << managed_variables.size() << endl;
+		}
 	}
 	else {
 		f_has_managed_variables = false;
@@ -903,9 +916,25 @@ void syntax_tree::collect_variables(
 
 	if (f_v) {
 		cout << "syntax_tree::collect_variables" << endl;
+		cout << "syntax_tree::collect_variables "
+				"f_has_managed_variables = " << f_has_managed_variables << endl;
+		cout << "syntax_tree::collect_variables "
+				"number of managed variables = " << managed_variables.size() << endl;
+		int i;
+		for (i = 0; i < managed_variables.size(); i++) {
+			cout << i << " : " << managed_variables[i] << endl;
+		}
 	}
 
+	if (f_v) {
+		cout << "syntax_tree::collect_variables "
+				"before Root->collect_variables" << endl;
+	}
 	Root->collect_variables(verbose_level);
+	if (f_v) {
+		cout << "syntax_tree::collect_variables "
+				"after Root->collect_variables" << endl;
+	}
 
 
 	if (f_v) {
@@ -1019,8 +1048,14 @@ int syntax_tree::find_managed_variable(
 	return -1;
 }
 
-void syntax_tree::add_variable(std::string &var)
+void syntax_tree::add_variable(
+		std::string &var, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::add_variable var=" << var << endl;
+	}
 	data_structures::string_tools String;
 	int cmp;
 	std::vector<std::string>::iterator it;
@@ -1029,9 +1064,17 @@ void syntax_tree::add_variable(std::string &var)
 	idx = find_managed_variable(var,
 			0 /* verbose_level */);
 	if (idx >= 0) {
+		if (f_v) {
+			cout << "syntax_tree::add_variable "
+					"var=" << var << " is managed variable at idx=" << idx << endl;
+		}
 		return;
 	}
 	else {
+		if (f_v) {
+			cout << "syntax_tree::add_variable "
+					"var=" << var << " is not a managed variable" << endl;
+		}
 		for (it = variables.begin(); it < variables.end(); it++) {
 			cmp = String.compare_string_string(*it, var);
 			if (cmp > 0) {

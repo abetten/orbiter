@@ -649,7 +649,7 @@ namespace orbiter_kernel_system {
 		t_set,
 		t_vector,
 		t_symbolic_object,
-		t_combinatorial_objects,
+		t_combinatorial_object,
 		t_geometry_builder,
 		t_vector_ge,
 		t_action_on_forms,
@@ -944,41 +944,6 @@ enum diophant_equation_type {
 typedef enum monomial_ordering_type monomial_ordering_type;
 typedef enum diophant_equation_type diophant_equation_type;
 
-
-enum TokenType
-{
-	NONE,
-	NAME,
-	NUMBER,
-	END,
-	PLUS='+',
-	MINUS='-',
-	MULTIPLY='*',
-	DIVIDE='/',
-	ASSIGN='=',
-	LHPAREN='(',
-	RHPAREN=')',
-	COMMA=',',
-	NOT='!',
-
-	// comparisons
-	LT='<',
-	GT='>',
-	LE,     // <=
-	GE,     // >=
-	EQ,     // ==
-	NE,     // !=
-	AND,    // &&
-	OR,      // ||
-
-	// special assignments
-
-	ASSIGN_ADD,  //  +=
-	ASSIGN_SUB,  //  +-
-	ASSIGN_MUL,  //  +*
-	ASSIGN_DIV   //  +/
-
-};
 
 enum syntax_tree_node_operation_type
 {

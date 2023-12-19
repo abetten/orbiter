@@ -50,10 +50,18 @@ public:
 	std::string column_label_po;
 	int f_label_so;
 	std::string column_label_so;
+
+
 	int f_label_equation;
 	std::string column_label_eqn;
+
+	int f_label_equation2;
+	std::string column_label_eqn2;
+
 	int f_label_points;
 	std::string column_label_pts;
+
+
 	int f_label_lines;
 	std::string column_label_bitangents;
 
@@ -151,8 +159,8 @@ public:
 	orbits_schreier::orbit_of_equations *Orb;
 		// orbit under the set stabilizer
 
-	groups::strong_generators *Stab_gens_quartic;
-		// the stabilizer of the original curve
+	groups::strong_generators *Stab_gens_variety;
+		// the stabilizer of the original variety
 
 	int f_found_canonical_form;
 	int idx_canonical_form;
@@ -167,17 +175,16 @@ public:
 	void init(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
-	void canonical_form_of_quartic_curve(
+	void compute_canonical_form_of_variety(
 			canonical_form_of_variety *Variety,
 			int verbose_level);
 	// Computes the canonical labeling of the graph associated with
-	// the set of rational points of the curve.
-	// Computes the stabilizer of the set of rational points of the curve.
+	// the set of rational points of the variety.
+	// Computes the stabilizer of the set of rational points of the variety.
 	// Computes the orbit of the equation under the stabilizer of the set.
-	void set_stabilizer_using_nauty(
-			int verbose_level);
 	void orbit_of_equation_under_set_stabilizer(
 			int verbose_level);
+	void report(std::ostream &ost);
 
 };
 
@@ -227,7 +234,7 @@ public:
 			int counter,
 			variety_object_with_action *Vo,
 			int verbose_level);
-	void classify_curve_nauty(
+	void classify_using_nauty(
 			int verbose_level);
 	void handle_repeated_canonical_form_of_set(
 			int idx,
@@ -242,8 +249,6 @@ public:
 			long int *alpha, int *gamma,
 			int idx1, int &found_at,
 			int verbose_level);
-	// relies on reverse_engineer_semilinear_map,
-	// which only works in a projective plane.
 	void add_object_and_compute_canonical_equation(
 			canonical_form_nauty *C,
 			int idx, int verbose_level);
@@ -351,8 +356,9 @@ public:
 	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
 
 
-	int *Elt;
-	int *eqn2; // used by canonical_form_of_variety::find_equation
+	int *Elt; // [Classifier->PA->A->elt_size_in_int]
+	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
+		// used by canonical_form_of_variety::find_equation
 
 
 	int *Canonical_equation;
@@ -446,9 +452,8 @@ public:
 
 
 	int idx_po_go, idx_po_index;
-	int idx_po, idx_so, idx_eqn, idx_pts, idx_bitangents;
+	int idx_po, idx_so, idx_eqn, idx_eqn2, idx_pts, idx_bitangents;
 
-	//quartic_curve_object_with_action **Qco;
 	variety_object_with_action **Vo;
 		// [nb_objects_to_test]
 
@@ -463,12 +468,6 @@ public:
 	void count_nb_objects_to_test(
 			int verbose_level);
 	void read_input_objects(
-			int verbose_level);
-	void prepare_input(
-			int row, int counter,
-			int *Carry_through,
-			data_structures::spreadsheet *S,
-			quartic_curve_object_with_action *&Qco,
 			int verbose_level);
 	void prepare_input_of_variety_type(
 			int row, int counter,
@@ -738,6 +737,7 @@ public:
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			std::string &eqn_txt,
+			int f_second_equation, std::string &eqn2_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
 	void init_image_of(

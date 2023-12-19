@@ -2117,7 +2117,13 @@ public:
 
 	std::string eqn_txt;
 
+	int f_second_equation;
+	std::string eqn2_txt;
+
+
+
 	int *eqn; // [Ring->get_nb_monomials()]
+	int *eqn2; // [Ring->get_nb_monomials()]
 
 
 	// the partition into points and lines
@@ -2137,7 +2143,12 @@ public:
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			std::string &eqn_txt,
+			int f_second_equation, std::string &eqn2_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
+			int verbose_level);
+	void parse_equation(
+			std::string &equation_txt,
+			int *&equation,
 			int verbose_level);
 	void init_equation(
 			geometry::projective_space *Projective_space,
@@ -2156,7 +2167,11 @@ public:
 	void print(
 			std::ostream &ost);
 	void stringify(
-			std::string &s_Eqn, std::string &s_Pts, std::string &s_Bitangents);
+			std::string &s_Eqn, std::string &s_Eqn2,
+			std::string &s_Pts, std::string &s_Bitangents);
+	void report_equations(std::ostream &ost);
+	void report_equation(std::ostream &ost);
+	void report_equation2(std::ostream &ost);
 
 
 };

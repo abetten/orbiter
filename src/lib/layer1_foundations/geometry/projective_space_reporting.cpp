@@ -842,6 +842,30 @@ void projective_space_reporting::print_set_of_points(
 	FREE_int(v);
 }
 
+void projective_space_reporting::print_set_of_points_easy(
+		std::ostream &ost, long int *Pts, int nb_pts)
+{
+	int h;
+	int *v;
+
+	v = NEW_int(P->Subspaces->n + 1);
+
+	for (h = 0; h < nb_pts; h++) {
+		P->unrank_point(v, Pts[h]);
+		ost << h << ": $" << Pts[h] << " = ";
+		Int_vec_print(ost, v, P->Subspaces->n + 1);
+		ost << "$";
+		if (h < nb_pts - 1) {
+			ost << ",";
+		}
+		ost << endl;
+	}
+	ost << "\\\\" << endl;
+	FREE_int(v);
+}
+
+
+
 void projective_space_reporting::print_all_points()
 {
 	int *v;

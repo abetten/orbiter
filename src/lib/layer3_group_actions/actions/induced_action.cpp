@@ -28,7 +28,8 @@ induced_action::~induced_action()
 {
 }
 
-void induced_action::init(action *A, int verbose_level)
+void induced_action::init(
+		action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -517,7 +518,8 @@ action *induced_action::induced_action_on_factor_space(
 	return A;
 }
 
-action *induced_action::induced_action_on_grassmannian(int k, int verbose_level)
+action *induced_action::induced_action_on_grassmannian(
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_on_grassmannian *AG;

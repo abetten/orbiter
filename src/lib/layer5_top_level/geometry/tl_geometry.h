@@ -828,7 +828,7 @@ public:
 			std::string &prefix,
 			int f_split, int split_r, int split_m,
 			int f_lexorder_test,
-			const char *fname_mask,
+			std::string &fname_mask,
 			int verbose_level);
 	void make_one_graph(
 			orbiter_kernel_system::orbiter_data_file *ODF,

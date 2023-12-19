@@ -358,6 +358,15 @@ public:
 		int *Adj, int n, int *labeling,
 		int verbose_level);
 	// labeling[n]
+	void set_stabilizer_in_projective_space_using_nauty(
+			geometry::projective_space *P,
+			actions::action *A,
+			long int *Pts, int sz,
+			groups::strong_generators *&Set_stab,
+			data_structures::bitvector *&Canonical_form,
+			long int *&canonical_labeling, int &canonical_labeling_len,
+			std::vector<std::string> &NO_stringified,
+			int verbose_level);
 
 };
 

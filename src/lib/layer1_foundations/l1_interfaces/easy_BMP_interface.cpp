@@ -20,9 +20,12 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
-std::vector<int> get_color_grayscale(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
-static std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
-static void fillBitmap(BMP &image, int i, int j, std::vector<int> color);
+std::vector<int> get_color_grayscale(
+		int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
+static std::vector<int> get_color(
+		int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
+static void fillBitmap(
+		BMP &image, int i, int j, std::vector<int> color);
 
 
 
@@ -472,7 +475,8 @@ void easy_BMP_interface::random_noise_in_bitmap_file_burst(
 
 
 
-std::vector<int> get_color_grayscale(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
+std::vector<int> get_color_grayscale(
+		int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	int r, g, b;
@@ -494,7 +498,8 @@ std::vector<int> get_color_grayscale(int bit_depth, int max_value, int loopCount
 }
 
 
-std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
+std::vector<int> get_color(
+		int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
 {
 	int f_v = (verbose_level>= 1);
 	int r, g, b;
@@ -666,20 +671,20 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 			// 16 predefined colors:
 			255,255,255, // white
 			0,0,0, // black
-			255,0,0,
-			0,255,0,
-			0,0,255,
-			255,255,0,
-			0,255,255,
-			255,0,255,
-			192,192,192,
-			128,128,128,
-			128,0,0,
-			128,128,0,
-			0,128,0,
-			128,0,128,
-			0,128,128,
-			0,0,128,
+			255,0,0, // red
+			0,255,0, // Lime (green)
+			0,0,255, // Blue
+			255,255,0, // Yellow
+			0,255,255, // Cyan / Aqua
+			255,0,255, // Magenta / Fuchsi
+			192,192,192, // Silver
+			128,128,128, // Gray
+			128,0,0, // Maroon
+			128,128,0, // Olive
+			0,128,0, // Green
+			128,0,128, // Purple
+			0,128,128, // Teal
+			0,0,128, // Navy
 
 			// 137 more:
 			128,0,0,
@@ -893,7 +898,8 @@ std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_in
 	return { r, g, b};
 }
 
-void fillBitmap(BMP &image, int i, int j, std::vector<int> color)
+void fillBitmap(
+		BMP &image, int i, int j, std::vector<int> color)
 {
 	// The pixel is set using its image
 	// location and stacks 3 variables (RGB) into the vector word.

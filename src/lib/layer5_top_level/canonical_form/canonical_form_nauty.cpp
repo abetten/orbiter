@@ -36,7 +36,7 @@ canonical_form_nauty::canonical_form_nauty()
 
 	Orb = NULL;
 
-	Stab_gens_quartic = NULL;
+	Stab_gens_variety = NULL;
 
 	f_found_canonical_form = false;
 	idx_canonical_form = 0;
@@ -57,8 +57,8 @@ canonical_form_nauty::~canonical_form_nauty()
 	if (Orb) {
 		FREE_OBJECT(Orb);
 	}
-	if (Stab_gens_quartic) {
-		FREE_OBJECT(Stab_gens_quartic);
+	if (Stab_gens_variety) {
+		FREE_OBJECT(Stab_gens_variety);
 	}
 }
 
@@ -76,7 +76,7 @@ void canonical_form_nauty::init(
 }
 
 
-void canonical_form_nauty::canonical_form_of_quartic_curve(
+void canonical_form_nauty::compute_canonical_form_of_variety(
 		canonical_form_of_variety *Variety,
 		int verbose_level)
 // Computes the canonical labeling of the graph associated with
@@ -88,30 +88,38 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve" << endl;
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety" << endl;
 	}
 
 
 	canonical_form_nauty::Variety = Variety;
 
 	if (f_v) {
-		cout << "equation is:";
-		Classifier->Poly_ring->print_equation_simple(
-				cout, Variety->Vo->Variety_object->eqn);
-		cout << endl;
+		Variety->Vo->Variety_object->print(cout);
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
-				"before set_stabilizer_using_nauty" << endl;
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+				"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 	}
 
-	set_stabilizer_using_nauty(verbose_level - 1);
+	interfaces::nauty_interface_with_group Nau;
+
+	Nau.set_stabilizer_in_projective_space_using_nauty(
+			Classifier->PA->P,
+			Classifier->PA->A,
+			Variety->Vo->Variety_object->Point_sets->Sets[0],
+			Variety->Vo->Variety_object->Point_sets->Set_size[0],
+			Set_stab,
+			Canonical_form,
+			canonical_labeling, canonical_labeling_len,
+			NO_stringified,
+			verbose_level);
 
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
-				"after set_stabilizer_using_nauty" << endl;
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+				"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 	}
 
 
@@ -124,7 +132,7 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 	Set_stab->group_order(set_stab_order);
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
 				"set_stab_order = " << set_stab_order << endl;
 	}
 
@@ -136,125 +144,20 @@ void canonical_form_nauty::canonical_form_of_quartic_curve(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
 				"before orbit_of_equation_under_set_stabilizer" << endl;
 	}
 	orbit_of_equation_under_set_stabilizer(verbose_level - 1);
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve "
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
 				"after orbit_of_equation_under_set_stabilizer" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::canonical_form_of_quartic_curve done" << endl;
+		cout << "canonical_form_nauty::compute_canonical_form_of_variety done" << endl;
 	}
-}
-
-void canonical_form_nauty::set_stabilizer_using_nauty(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty" << endl;
-	}
-
-
-	geometry::object_with_canonical_form *OwCF = NULL;
-
-
-	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
-
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"before OwCF->init_point_set" << endl;
-	}
-	OwCF->init_point_set(
-			Variety->Vo->Variety_object->Point_sets->Sets[0],
-			Variety->Vo->Variety_object->Point_sets->Set_size[0],
-			verbose_level - 1);
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"after OwCF->init_point_set" << endl;
-	}
-	OwCF->P = Classifier->PA->P;
-
-	int nb_rows, nb_cols;
-
-	OwCF->encoding_size(
-				nb_rows, nb_cols,
-				verbose_level);
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"nb_rows = " << nb_rows << endl;
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"nb_cols = " << nb_cols << endl;
-	}
-
-
-	interfaces::nauty_interface_with_group Nau;
-	l1_interfaces::nauty_output *NO;
-	combinatorics::encoded_combinatorial_object *Enc;
-
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	NO->nauty_output_allocate(nb_rows + nb_cols,
-			0,
-			nb_rows + nb_cols,
-			verbose_level);
-
-
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"before Nau.set_stabilizer_of_object" << endl;
-	}
-	Set_stab = Nau.set_stabilizer_of_object(
-			OwCF,
-			Classifier->PA->A,
-		true /* f_compute_canonical_form */,
-		Canonical_form,
-		NO,
-		Enc,
-		verbose_level - 2);
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"after Nau.set_stabilizer_of_object" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty "
-				"order of set stabilizer = " << *NO->Ago << endl;
-
-		NO->print_stats();
-	}
-
-	NO->stringify_as_vector(
-			NO_stringified,
-			verbose_level);
-
-
-
-	canonical_labeling = NEW_lint(NO->N);
-	canonical_labeling_len = NO->N;
-
-	Int_vec_copy_to_lint(
-			NO->canonical_labeling,
-			canonical_labeling,
-			canonical_labeling_len);
-
-	FREE_OBJECT(NO);
-	FREE_OBJECT(Enc);
-	FREE_OBJECT(OwCF);
-
-
-	if (f_v) {
-		cout << "canonical_form_nauty::set_stabilizer_using_nauty done" << endl;
-	}
-
-
 }
 
 
@@ -318,7 +221,7 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
-	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
+	Stab_gens_variety = Orb->stabilizer_orbit_rep(
 			set_stab_order, verbose_level);
 	if (f_v) {
 		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
@@ -327,9 +230,9 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 	if (f_v) {
 		ring_theory::longinteger_object go;
 
-		Stab_gens_quartic->group_order(go);
-		cout << "The stabilizer is a group of order " << go << endl;
-		Stab_gens_quartic->print_generators_tex(cout);
+		Stab_gens_variety->group_order(go);
+		cout << "The stabilizer of the variety is a group of order " << go << endl;
+		Stab_gens_variety->print_generators_tex(cout);
 	}
 #endif
 
@@ -337,6 +240,33 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 	if (f_v) {
 		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer done" << endl;
 	}
+}
+
+void canonical_form_nauty::report(std::ostream &ost)
+{
+	ost << "Number of equations with the same set of points "
+			<< Orb->used_length << "\\\\" << endl;
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+
+
+	ost << "Automorphism group: \\\\" << endl;
+	Stab_gens_variety->print_generators_tex(ost);
+
+
+	if (Stab_gens_variety->group_order_as_lint() < 50) {
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+		ost << "List of all elements of the automorphism group: \\\\" << endl;
+		Stab_gens_variety->print_elements_ost(ost);
+	}
+
 }
 
 }}}

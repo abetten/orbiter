@@ -104,6 +104,7 @@ namespace apps_combinatorics {
 	class boolean_function_classify;
 	class combinatorial_object_activity_description;
 	class combinatorial_object_activity;
+	class combinatorial_object;
 	class combinatorics_global;
 	class delandtsheer_doyen_description;
 	class delandtsheer_doyen;

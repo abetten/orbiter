@@ -45,8 +45,12 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	column_label_po.assign("PO");
 	f_label_so = false;
 	column_label_so.assign("orbit");
+
+
 	f_label_equation = false;
-	column_label_eqn.assign("curve");
+	column_label_eqn.assign("equation1");
+	f_label_equation2 = false;
+	column_label_eqn2.assign("equation2");
 	f_label_points = false;
 	column_label_pts.assign("pts_on_curve");
 	f_label_lines = false;
@@ -156,6 +160,13 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-label_equation " << column_label_eqn << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-label_equation2") == 0) {
+			f_label_equation2 = true;
+			column_label_eqn2.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_equation2 " << column_label_eqn2 << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-label_points") == 0) {
 			f_label_points = true;
 			column_label_pts.assign(argv[++i]);
@@ -253,6 +264,9 @@ void canonical_form_classifier_description::print()
 	}
 	if (f_label_equation) {
 		cout << "-label_equation " << column_label_eqn << endl;
+	}
+	if (f_label_equation2) {
+		cout << "-label_equation2 " << column_label_eqn2 << endl;
 	}
 	if (f_label_points) {
 		cout << "-label_points " << column_label_pts << endl;

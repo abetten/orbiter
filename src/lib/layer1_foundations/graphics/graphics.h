@@ -165,12 +165,6 @@ public:
 	int f_input_object;
 	std::string input_object_label;
 
-	int f_input_matrix;
-	int *M;
-	int *M2;
-
-	int m;
-	int n;
 	int f_partition;
 	int part_width;
 	std::string part_row;
@@ -183,6 +177,14 @@ public:
 	int bit_depth;
 
 	int f_grayscale;
+
+
+	// not a command line argument:
+	int f_input_matrix;
+	int *M;
+	int *M2;
+	int m;
+	int n;
 
 
 	draw_bitmap_control();
@@ -374,31 +376,43 @@ public:
 
 	drawable_set_of_objects();
 	~drawable_set_of_objects();
-	void init_spheres(int group_idx, double rad,
+	void init_spheres(
+			int group_idx, double rad,
 			std::string &properties, int verbose_level);
-	void init_cylinders(int group_idx,
+	void init_cylinders(
+			int group_idx,
 			double rad, std::string &properties, int verbose_level);
-	void init_prisms(int group_idx,
+	void init_prisms(
+			int group_idx,
 			double thickness,
 			std::string &properties, int verbose_level);
-	void init_planes(int group_idx,
+	void init_planes(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_lines(int group_idx,
+	void init_lines(
+			int group_idx,
 			double rad, std::string &properties, int verbose_level);
-	void init_cubics(int group_idx,
+	void init_cubics(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_quadrics(int group_idx,
+	void init_quadrics(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_quartics(int group_idx,
+	void init_quartics(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_quintics(int group_idx,
+	void init_quintics(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_octics(int group_idx,
+	void init_octics(
+			int group_idx,
 			std::string &properties, int verbose_level);
-	void init_labels(int group_idx,
+	void init_labels(
+			int group_idx,
 			double thickness_half, double scale,
 			std::string &properties, int verbose_level);
-	void draw(animate *Anim, std::ostream &ost,
+	void draw(
+			animate *Anim, std::ostream &ost,
 			int f_group_is_animated, int frame, int verbose_level);
 
 };
@@ -623,10 +637,14 @@ public:
 			std::string &file_name,
 			layered_graph_draw_options *Draw_options,
 		int verbose_level);
-	void exit(std::ostream &ost, int verbose_level);
-	void frame(double move_out);
-	void frame_constant_aspect_ratio(double move_out);
-	void finish(std::ostream &ost, int verbose_level);
+	void exit(
+			std::ostream &ost, int verbose_level);
+	void frame(
+			double move_out);
+	void frame_constant_aspect_ratio(
+			double move_out);
+	void finish(
+			std::ostream &ost, int verbose_level);
 
 	int& in_xmin();
 	int& in_ymin();
@@ -637,12 +655,17 @@ public:
 	int& out_xmax();
 	int& out_ymax();
 
-	void user2dev(int &x, int &y);
-	void dev2user(int &x, int &y);
-	void user2dev_dist_x(int &x);
-	void user2dev_dist_y(int &y);
+	void user2dev(
+			int &x, int &y);
+	void dev2user(
+			int &x, int &y);
+	void user2dev_dist_x(
+			int &x);
+	void user2dev_dist_y(
+			int &y);
 
-	void draw_polar_grid(double r_max, int nb_circles, 
+	void draw_polar_grid(
+			double r_max, int nb_circles,
 		int nb_rays, double x_stretch);
 	void draw_axes_and_grid(
 			layered_graph_draw_options *O,
@@ -705,41 +728,75 @@ public:
 		int i10, int i11);
 	void polygon_idx(
 			int *Px, int *Py, int *Idx, int n);
-	void bezier(int *Px, int *Py, int n);
-	void bezier2(int *Px, int *Py, int i1, int i2);
-	void bezier3(int *Px, int *Py, int i1, int i2, int i3);
-	void bezier4(int *Px, int *Py, int i1, int i2, int i3, 
+	void bezier(
+			int *Px, int *Py, int n);
+	void bezier2(
+			int *Px, int *Py,
+			int i1, int i2);
+	void bezier3(
+			int *Px, int *Py,
+			int i1, int i2, int i3);
+	void bezier4(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4);
-	void bezier5(int *Px, int *Py, int i1, int i2, int i3, 
+	void bezier5(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5);
-	void bezier6(int *Px, int *Py, int i1, int i2, int i3, 
+	void bezier6(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6);
-	void bezier7(int *Px, int *Py, int i1, int i2, int i3, 
+	void bezier7(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7);
-	void bezier_idx(int *Px, int *Py, int *Idx, int n);
-	void grid_fill_polygon4(grid_frame *F, 
+	void bezier_idx(
+			int *Px, int *Py, int *Idx, int n);
+	void grid_fill_polygon4(
+			grid_frame *F,
 		int x0, int y0, int x1, int y1, int x2, 
 		int y2, int x3, int y3);
-	void grid_fill_polygon5(grid_frame *F, 
+	void grid_fill_polygon5(
+			grid_frame *F,
 		int x0, int y0, int x1, int y1, 
 		int x2, int y2, int x3, int y3, 
 		int x4, int y4);
-	void fill_polygon3(int *Px, int *Py, int i1, int i2, int i3);
-	void fill_polygon4(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon3(
+			int *Px, int *Py,
+			int i1, int i2, int i3);
+	void fill_polygon4(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4);
-	void fill_polygon5(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon5(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5);
-	void fill_polygon6(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon6(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6);
-	void fill_polygon7(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon7(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7);
-	void fill_polygon8(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon8(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8);
-	void fill_polygon9(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon9(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, int i9);
-	void fill_polygon10(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon10(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, int i9, int i10);
-	void fill_polygon11(int *Px, int *Py, int i1, int i2, int i3, 
+	void fill_polygon11(
+			int *Px, int *Py,
+			int i1, int i2, int i3,
 		int i4, int i5, int i6, int i7, int i8, 
 		int i9, int i10, int i11);
 	void polygon2_arrow_halfway(
@@ -747,30 +804,46 @@ public:
 	void polygon2_arrow_halfway_and_label(
 			int *Px, int *Py, int i1, int i2,
 		const char *alignment, std::string &s);
-	void grid_aligned_text(grid_frame *F, int x, int y, 
+	void grid_aligned_text(
+			grid_frame *F, int x, int y,
 		const char *alignment, std::string &s);
 	void aligned_text(
 			int x, int y, const char *alignment, std::string &s);
-	void aligned_text_array(int *Px, int *Py, int idx, 
+	void aligned_text_array(
+			int *Px, int *Py, int idx,
 		const char *alignment, std::string &s);
 	void aligned_text_with_offset(
 			int x, int y, int xoffset, int yoffset,
 		const char *alignment, std::string &s);
 
-	void st_alignment(int txt_halign, int txt_valign);
-	void sl_udsty(int line_dashing);
-	void sl_ends(int line_beg_style, int line_end_style);
-	void sl_thickness(int line_thickness);
-	void sl_color(int line_color);
-	void sf_interior(int fill_interior);
-	void sf_color(int fill_color);
-	void sf_shape(int fill_shape);
-	void sf_outline(int fill_outline);
-	void sf_nofill(int fill_nofill);
-	void st_boxed(int txt_boxed);
-	void st_overwrite(int txt_overwrite);
-	void st_rotate(int txt_rotate);
-	void coords_min_max(int x, int y);
+	void st_alignment(
+			int txt_halign, int txt_valign);
+	void sl_udsty(
+			int line_dashing);
+	void sl_ends(
+			int line_beg_style, int line_end_style);
+	void sl_thickness(
+			int line_thickness);
+	void sl_color(
+			int line_color);
+	void sf_interior(
+			int fill_interior);
+	void sf_color(
+			int fill_color);
+	void sf_shape(
+			int fill_shape);
+	void sf_outline(
+			int fill_outline);
+	void sf_nofill(
+			int fill_nofill);
+	void st_boxed(
+			int txt_boxed);
+	void st_overwrite(
+			int txt_overwrite);
+	void st_rotate(
+			int txt_rotate);
+	void coords_min_max(
+			int x, int y);
 
 	// output commands:
 	void header();

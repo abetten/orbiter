@@ -131,7 +131,8 @@ void stabilizer_chain_base_data::allocate_base_data(
 	}
 }
 
-void stabilizer_chain_base_data::reallocate_base(int new_base_point, int verbose_level)
+void stabilizer_chain_base_data::reallocate_base(
+		int new_base_point, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -388,7 +389,8 @@ long int &stabilizer_chain_base_data::orbit_inv_ij(
 	}
 }
 
-int &stabilizer_chain_base_data::path_i(int i)
+int &stabilizer_chain_base_data::path_i(
+		int i)
 {
 	return path[i];
 }

@@ -251,8 +251,16 @@ public:
 	void enumerate_points(int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
+	void enumerate_points_in_intersection(
+			int *coeff1,
+			int *coeff2,
+			std::vector<long int> &Pts,
+			int verbose_level);
 	void enumerate_points_lint(
 			int *coeff,
+			long int *&Pts, int &nb_pts, int verbose_level);
+	void enumerate_points_in_intersection_lint(
+			int *coeff1, int *coeff2,
 			long int *&Pts, int &nb_pts, int verbose_level);
 	void enumerate_points_zariski_open_set(
 			int *coeff,
@@ -953,6 +961,7 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &equation_text,
 			std::string &equation_parameters,
@@ -964,6 +973,7 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			expression_parser::formula_vector *Formula_vector_after_sub,
 			expression_parser::formula_vector *&Formula_vector_after_expand,
@@ -972,6 +982,7 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
+			int f_has_managed_variables,
 			std::string &managed_variables,
 			std::string &equation_parameters,
 			std::string &equation_parameter_values,

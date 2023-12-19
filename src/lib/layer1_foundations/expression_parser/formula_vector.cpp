@@ -216,6 +216,7 @@ void formula_vector::init_and_allocate(
 
 	for (i = 0; i < len; i++) {
 		if (f_has_managed_variables) {
+			V[i].f_has_managed_variables = f_has_managed_variables;
 			V[i].managed_variables = managed_variables_text;
 		}
 		V[i].name_of_formula = label_txt + "_" + std::to_string(i);
@@ -882,6 +883,7 @@ void formula_vector::substitute(
 		std::string &substitution_variables,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
 {
@@ -931,7 +933,7 @@ void formula_vector::substitute(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables,
 			len, verbose_level - 2);
 
@@ -1040,7 +1042,7 @@ void formula_vector::simplify(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			A->f_has_managed_variables,
 			A->managed_variables_text,
 			A->len, verbose_level);
 
@@ -1054,7 +1056,7 @@ void formula_vector::simplify(
 	for (i = 0; i < A->len; i++) {
 		if (f_v) {
 			cout << "formula_vector::simplify "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " before copy_to" << endl;
 		}
 
@@ -1063,13 +1065,13 @@ void formula_vector::simplify(
 
 		if (f_v) {
 			cout << "formula_vector::simplify "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " after copy_to" << endl;
 		}
 
 		if (f_v) {
 			cout << "formula_vector::simplify "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " before V[i].simplify" << endl;
 		}
 
@@ -1077,7 +1079,7 @@ void formula_vector::simplify(
 
 		if (f_v) {
 			cout << "formula_vector::simplify "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " after V[i].simplify" << endl;
 			cout << "formula_vector::simplify ";
 			V[i].tree->Root->print_subtree_easy(cout);
@@ -1086,13 +1088,22 @@ void formula_vector::simplify(
 
 		if (f_v) {
 			cout << "formula_vector::simplify "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " done" << endl;
 		}
 	}
 
+	if (f_v) {
+		cout << "formula_vector::simplify before collect_variables" << endl;
+	}
 	collect_variables(verbose_level);
+	if (f_v) {
+		cout << "formula_vector::simplify after collect_variables" << endl;
+	}
 
+	if (f_v) {
+		cout << "formula_vector::simplify done" << endl;
+	}
 }
 
 void formula_vector::expand(
@@ -1100,6 +1111,7 @@ void formula_vector::expand(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int f_write_trees,
 		int verbose_level)
@@ -1112,7 +1124,7 @@ void formula_vector::expand(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables,
 			A->len, verbose_level);
 
@@ -1126,7 +1138,7 @@ void formula_vector::expand(
 	for (i = 0; i < A->len; i++) {
 		if (f_v) {
 			cout << "formula_vector::expand "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " before copy_to" << endl;
 		}
 
@@ -1135,13 +1147,13 @@ void formula_vector::expand(
 
 		if (f_v) {
 			cout << "formula_vector::expand "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " after copy_to" << endl;
 		}
 
 		if (f_v) {
 			cout << "formula_vector::expand "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " before V[i].expand_in_place" << endl;
 		}
 
@@ -1149,18 +1161,26 @@ void formula_vector::expand(
 
 		if (f_v) {
 			cout << "formula_vector::expand "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " after V[i].expand_in_place" << endl;
 		}
 
 		if (f_v) {
 			cout << "formula_vector::expand "
-					"-simplify " << i << " / " << A->len
+					"node " << i << " / " << A->len
 					<< " done" << endl;
 		}
 	}
 
+	if (f_v) {
+		cout << "formula_vector::expand "
+				"before collect_variables" << endl;
+	}
 	collect_variables(verbose_level);
+	if (f_v) {
+		cout << "formula_vector::expand "
+				"after collect_variables" << endl;
+	}
 
 	if (f_v) {
 		cout << "formula_vector::expand done" << endl;
@@ -1174,6 +1194,7 @@ void formula_vector::characteristic_polynomial(
 		std::string &variable,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		int verbose_level)
 {
@@ -1194,7 +1215,7 @@ void formula_vector::characteristic_polynomial(
 			variable,
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables_text,
 			verbose_level);
 	if (f_v) {
@@ -1268,6 +1289,7 @@ void formula_vector::determinant(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		int verbose_level)
 {
@@ -1308,7 +1330,7 @@ void formula_vector::determinant(
 		cout << "formula_vector::determinant "
 				"before Tree->init" << endl;
 	}
-	Tree->init(Fq, true, managed_variables_text, verbose_level);
+	Tree->init(Fq, f_has_managed_variables, managed_variables_text, verbose_level);
 	if (f_v) {
 		cout << "formula_vector::determinant "
 				"after Tree->init" << endl;
@@ -1333,7 +1355,7 @@ void formula_vector::determinant(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables_text,
 			1 /*len*/, verbose_level);
 
@@ -1357,6 +1379,7 @@ void formula_vector::right_nullspace(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
 {
@@ -1425,7 +1448,7 @@ void formula_vector::right_nullspace(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables_text,
 			nullspace_m * nullspace_n, verbose_level);
 
@@ -1441,6 +1464,7 @@ void formula_vector::right_nullspace(
 				label_txt, label_tex,
 				value,
 				Fq,
+				f_has_managed_variables,
 				managed_variables,
 				verbose_level);
 	}
@@ -1469,6 +1493,7 @@ void formula_vector::matrix_minor(
 		int i, int j,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		int verbose_level)
 {
@@ -1533,7 +1558,7 @@ void formula_vector::matrix_minor(
 	M->init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables_text,
 			(n - 1) * (n - 1), verbose_level);
 
@@ -1588,6 +1613,7 @@ void formula_vector::matrix_minor(
 			Fq,
 			label_txt,
 			label_tex,
+			f_has_managed_variables,
 			managed_variables_text,
 			verbose_level);
 
@@ -1646,6 +1672,7 @@ void formula_vector::symbolic_nullspace(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
 {
@@ -1736,6 +1763,7 @@ void formula_vector::symbolic_nullspace(
 				label_txt, label_tex,
 				1,
 				Fq,
+				f_has_managed_variables,
 				managed_variables,
 				verbose_level);
 		if (f_v) {
@@ -1758,6 +1786,7 @@ void formula_vector::symbolic_nullspace(
 				i, j,
 				label_txt,
 				label_tex,
+				f_has_managed_variables,
 				managed_variables_text,
 				verbose_level);
 
@@ -1788,6 +1817,7 @@ void formula_vector::multiply_2by2_from_the_left(
 		field_theory::finite_field *Fq,
 		std::string &label_txt,
 		std::string &label_tex,
+		int f_has_managed_variables,
 		std::string &managed_variables_text,
 		int verbose_level)
 {
@@ -1818,7 +1848,7 @@ void formula_vector::multiply_2by2_from_the_left(
 	init_and_allocate(
 			label_txt,
 			label_tex,
-			true,
+			f_has_managed_variables,
 			managed_variables_text,
 			m * n, verbose_level);
 
@@ -1999,17 +2029,20 @@ void formula_vector::collect_variables(int verbose_level)
 	for (i = 0; i < len; i++) {
 		if (f_v) {
 			cout << "formula_vector::collect_variables "
-					"i=" << i << " / " << len << endl;
+					"node i=" << i << " / " << len << endl;
 		}
 		V[i].collect_variables(verbose_level);
 		if (f_v) {
 			cout << "formula_vector::collect_variables "
-					"i=" << i << " / " << len << " done" << endl;
+					"node i=" << i << " / " << len << " done" << endl;
 		}
 	}
 
+	if (f_v) {
+		cout << "formula_vector::collect_variables print_variables" << endl;
+		print_variables(cout);
+	}
 
-	print_variables(cout);
 
 	if (f_v) {
 		cout << "formula_vector::collect_variables done" << endl;

@@ -529,7 +529,8 @@ void spreadsheet::print_table_latex(
 
 		for (i = 0; i < nb_lines_per_table; i++) {
 			if (1 + I * nb_lines_per_table + i < nb_rows) {
-				print_table_row_latex(1 + I * nb_lines_per_table + i,
+				print_table_row_latex(
+						1 + I * nb_lines_per_table + i,
 						f_column_select,
 						f_enclose_in_parentheses,
 						ost);

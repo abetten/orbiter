@@ -846,6 +846,7 @@ void expression_parser_sajeeb::multiply(
 void expression_parser_sajeeb::convert_to_orbiter(
 		expression_parser::syntax_tree *&Tree,
 		field_theory::finite_field *F,
+		int f_has_managed_variables,
 		std::string &managed_variables,
 		int verbose_level)
 {
@@ -855,6 +856,8 @@ void expression_parser_sajeeb::convert_to_orbiter(
 		cout << "expression_parser_sajeeb::convert_to_orbiter" << endl;
 		cout << "expression_parser_sajeeb::convert_to_orbiter "
 				"verbose_level = " << verbose_level << endl;
+		cout << "expression_parser_sajeeb::convert_to_orbiter "
+				"f_has_managed_variables = " << f_has_managed_variables << endl;
 	}
 
 	expression_parser_sajeeb_private_data *PD;
@@ -875,7 +878,7 @@ void expression_parser_sajeeb::convert_to_orbiter(
 			cout << "expression_parser_sajeeb::convert_to_orbiter "
 					"before Tree->init" << endl;
 		}
-		Tree->init(F, true, managed_variables, verbose_level);
+		Tree->init(F, f_has_managed_variables, managed_variables, verbose_level);
 		if (f_v) {
 			cout << "expression_parser_sajeeb::convert_to_orbiter "
 					"after Tree->init" << endl;

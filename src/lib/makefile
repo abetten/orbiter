@@ -523,6 +523,7 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/boolean_function_classify.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
+		layer5_top_level/combinatorics/combinatorial_object.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
 		layer5_top_level/combinatorics/delandtsheer_doyen_description.o \
 		layer5_top_level/combinatorics/delandtsheer_doyen.o \

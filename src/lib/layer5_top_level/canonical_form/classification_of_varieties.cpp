@@ -394,7 +394,7 @@ void classification_of_varieties::main_loop(
 						<< " after Variety->compute_canonical_form_nauty" << endl;
 			}
 
-			Goi[counter] = Variety->Canonical_form_nauty->Stab_gens_quartic->group_order_as_lint();
+			Goi[counter] = Variety->Canonical_form_nauty->Stab_gens_variety->group_order_as_lint();
 
 			if (Variety->Canonical_form_nauty->f_found_canonical_form && Variety->Canonical_form_nauty->f_found_eqn) {
 
@@ -672,52 +672,46 @@ void classification_of_varieties::report_nauty(
 			Vo = Classifier->Input->Vo[idx];
 
 			ost << "Number of points " << Vo->Variety_object->Point_sets->Set_size[0] << "\\\\" << endl;
-			ost << "Equation ";
-			ost << "\\verb'";
-			ost << Vo->Variety_object->eqn_txt;
-			ost << "'";
-			ost << "\\\\" << endl;
-			ost << "Equation ";
-			Int_vec_print(ost, Vo->Variety_object->eqn, Classifier->Poly_ring->get_nb_monomials());
-			ost << "\\\\" << endl;
+
+			Vo->Variety_object->report_equations(ost);
 
 			ost << "Points:\\\\" << endl;
-			Classifier->PA->P->Reporting->print_set_of_points(
+			Classifier->PA->P->Reporting->print_set_of_points_easy(
 					ost,
 					Vo->Variety_object->Point_sets->Sets[0],
 					Vo->Variety_object->Point_sets->Set_size[0]);
 
-			canonical_form_nauty *Canonical_form_nauty;
+			Variety_table[idx]->Canonical_form_nauty->report(ost);
 
-			Canonical_form_nauty = Variety_table[idx]->Canonical_form_nauty;
-
-
-			ost << "Number of equations with the same set of points " << Canonical_form_nauty->Orb->used_length << "\\\\" << endl;
 
 			ost << endl;
 			ost << "\\bigskip" << endl;
 			ost << endl;
 
 
+			actions::action_global Action_global;
+			int size_limit_for_printing = 50;
+			groups::strong_generators *gens;
 
-			ost << "Automorphism group: \\\\" << endl;
-			Canonical_form_nauty->Stab_gens_quartic->print_generators_tex(ost);
+			gens = Variety_table[idx]->Canonical_form_nauty->Stab_gens_variety;
 
 
-			if (Canonical_form_nauty->Stab_gens_quartic->group_order_as_lint() < 50) {
-
-				ost << endl;
-				ost << "\\bigskip" << endl;
-				ost << endl;
-
-				ost << "List of all elements of the automorphism group: \\\\" << endl;
-				Canonical_form_nauty->Stab_gens_quartic->print_elements_ost(ost);
+			if (f_v) {
+				cout << "classification_of_varieties::report_nauty "
+						"before Action_global.report_TDO_and_TDA_projective_space" << endl;
 			}
-
-
-			ost << endl;
-			ost << "\\bigskip" << endl;
-			ost << endl;
+			Action_global.report_TDO_and_TDA_projective_space(
+					ost,
+					Classifier->PA->P,
+					Vo->Variety_object->Point_sets->Sets[0],
+					Vo->Variety_object->Point_sets->Set_size[0],
+					Classifier->PA->A, Classifier->PA->A_on_lines,
+					gens, size_limit_for_printing,
+					verbose_level);
+			if (f_v) {
+				cout << "classification_of_varieties::report_nauty "
+						"after Action_global.report_TDO_and_TDA_projective_space" << endl;
+			}
 
 
 		}
@@ -1575,7 +1569,7 @@ std::string classification_of_varieties::stringify_csv_header(
 	}
 	string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Pts,Bitangents,"
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Eqn2,Pts,Bitangents,"
 			"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
 
 	if (Classifier->Descr->carry_through.size()) {
@@ -1600,7 +1594,7 @@ std::string classification_of_varieties::stringify_csv_header_line_nauty(
 
 	std::string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Pts,Bitangents";
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,Pts,Bitangents";
 
 	if (Classifier->Descr->carry_through.size()) {
 		int i;

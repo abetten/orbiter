@@ -1609,14 +1609,14 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 		}
 	}
-	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_objects) {
-		data_structures::data_input_stream *IS;
+	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
+		apps_combinatorics::combinatorial_object *Combo;
 
-		IS = (data_structures::data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		Combo = (apps_combinatorics::combinatorial_object *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 
-			Activity.init_input_stream(Combinatorial_object_activity_description, IS, verbose_level);
+			Activity.init_combo(Combinatorial_object_activity_description, Combo, verbose_level);
 
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "

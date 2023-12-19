@@ -122,6 +122,7 @@ int permutation_group_description::read_arguments(
 
 			if (f_v) {
 				cout << "-subgroup_by_generators " << subgroup_label
+						<< " " << subgroup_order_text
 						<< " " << nb_subgroup_generators
 						<< " " << subgroup_generators_label
 						<< endl;

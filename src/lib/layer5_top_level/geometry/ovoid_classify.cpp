@@ -410,8 +410,8 @@ void ovoid_classify::print(
 			O->Hyperbolic_pair->unrank_point(u, 1, S[i], 0);
 			Int_vec_print(ost, u, Descr->d - 1);
 			ost << endl;
-			}
 		}
+	}
 }
 
 void ovoid_classify::make_graphs(
@@ -419,20 +419,21 @@ void ovoid_classify::make_graphs(
 		std::string &prefix,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,
-		const char *fname_mask,
+		std::string &fname_mask,
 		int verbose_level)
 {
 	int orbit_idx;
 	int f_v = (verbose_level >= 1);
 	int f_v3 = (verbose_level >= 3);
 	string fname_graph;
-	char str[1000];
 	int level;
 	orbiter_kernel_system::file_io Fio;
+	data_structures::string_tools ST;
+
 
 	if (f_v) {
 		cout << "ovoid_classify::make_graphs" << endl;
-		}
+	}
 
 	level = ODF->set_sizes[0];
 
@@ -449,8 +450,8 @@ void ovoid_classify::make_graphs(
 		cout << " : " << ODF->Ago_ascii[orbit_idx]
 				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
 
-		snprintf(str, sizeof(str), fname_mask, orbit_idx);
-		fname_graph.assign(str);
+		fname_graph = ST.printf_d(fname_mask, orbit_idx);
+
 
 		long int *candidates;
 		int nb_candidates;
@@ -561,7 +562,7 @@ void ovoid_classify::make_graphs(
 	}
 	if (f_v) {
 		cout << "ovoid_classify::make_graphs done" << endl;
-		}
+	}
 }
 
 void ovoid_classify::make_one_graph(
@@ -578,7 +579,7 @@ void ovoid_classify::make_one_graph(
 
 	if (f_v) {
 		cout << "ovoid_classify::make_one_graph" << endl;
-		}
+	}
 
 	level = ODF->set_sizes[0];
 
@@ -681,7 +682,7 @@ void ovoid_classify::make_one_graph(
 
 	if (f_v) {
 		cout << "ovoid_classify::make_one_graph done" << endl;
-		}
+	}
 }
 
 void ovoid_classify::create_graph(

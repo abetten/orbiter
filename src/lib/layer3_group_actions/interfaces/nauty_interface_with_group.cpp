@@ -842,6 +842,119 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 	return A;
 }
 
+
+void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
+		geometry::projective_space *P,
+		actions::action *A,
+		long int *Pts, int sz,
+		groups::strong_generators *&Set_stab,
+		data_structures::bitvector *&Canonical_form,
+		long int *&canonical_labeling, int &canonical_labeling_len,
+		std::vector<std::string> &NO_stringified,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty" << endl;
+	}
+
+
+	geometry::object_with_canonical_form *OwCF = NULL;
+
+
+	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"before OwCF->init_point_set" << endl;
+	}
+	OwCF->init_point_set(
+			Pts,
+			sz,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"after OwCF->init_point_set" << endl;
+	}
+	OwCF->P = P;
+
+	int nb_rows, nb_cols;
+
+	OwCF->encoding_size(
+				nb_rows, nb_cols,
+				verbose_level);
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"nb_rows = " << nb_rows << endl;
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"nb_cols = " << nb_cols << endl;
+	}
+
+
+	l1_interfaces::nauty_output *NO;
+	combinatorics::encoded_combinatorial_object *Enc;
+
+	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO->nauty_output_allocate(nb_rows + nb_cols,
+			0,
+			nb_rows + nb_cols,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"before set_stabilizer_of_object" << endl;
+	}
+	Set_stab = set_stabilizer_of_object(
+			OwCF,
+			A,
+		true /* f_compute_canonical_form */,
+		Canonical_form,
+		NO,
+		Enc,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"after set_stabilizer_of_object" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
+				"order of set stabilizer = " << *NO->Ago << endl;
+
+		NO->print_stats();
+	}
+
+	NO->stringify_as_vector(
+			NO_stringified,
+			verbose_level);
+
+
+
+	canonical_labeling = NEW_lint(NO->N);
+	canonical_labeling_len = NO->N;
+
+	Int_vec_copy_to_lint(
+			NO->canonical_labeling,
+			canonical_labeling,
+			canonical_labeling_len);
+
+	FREE_OBJECT(NO);
+	FREE_OBJECT(Enc);
+	FREE_OBJECT(OwCF);
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty done" << endl;
+	}
+
+
+}
+
+
 #if 0
 action *nauty_interface_with_group::create_automorphism_group_of_block_system(
 	int nb_points, int nb_blocks, int block_size, long int *Blocks,

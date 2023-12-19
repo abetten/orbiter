@@ -26,8 +26,6 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 	f_export_something = false;
 	//std::string export_something_what;
 
-	//f_export_points = false;
-
 	f_create_surface = false;
 
 	f_extract_orbit_on_bitangents_by_length = false;
@@ -72,14 +70,6 @@ int quartic_curve_activity_description::read_arguments(
 				cout << "-export_something " << export_something_what << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-export_points") == 0) {
-			f_export_points = true;
-			if (f_v) {
-				cout << "-export_points " << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = true;
 			if (f_v) {
@@ -140,11 +130,6 @@ void quartic_curve_activity_description::print()
 	if (f_export_something) {
 		cout << "-export_something " << export_something_what << endl;
 	}
-#if 0
-	if (f_export_points) {
-		cout << "-export_points " << endl;
-	}
-#endif
 	if (f_create_surface) {
 		cout << "-create_surface " << endl;
 	}

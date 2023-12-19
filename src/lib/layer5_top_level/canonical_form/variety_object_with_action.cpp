@@ -43,6 +43,7 @@ void variety_object_with_action::init(
 		geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		std::string &eqn_txt,
+		int f_second_equation, std::string &eqn2_txt,
 		std::string &pts_txt, std::string &bitangents_txt,
 		int verbose_level)
 {
@@ -75,6 +76,7 @@ void variety_object_with_action::init(
 			Projective_space,
 			Poly_ring,
 			eqn_txt,
+			f_second_equation, eqn2_txt,
 			pts_txt, bitangents_txt,
 			verbose_level);
 	if (f_v) {
