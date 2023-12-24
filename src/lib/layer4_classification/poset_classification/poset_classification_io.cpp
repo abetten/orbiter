@@ -1699,7 +1699,8 @@ void poset_classification::wedge_product_export_magma(
 	}
 }
 
-void poset_classification::write_reps_csv(int lvl, int verbose_level)
+void poset_classification::write_reps_csv(
+		int lvl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string fname_reps_csv;
@@ -1716,6 +1717,103 @@ void poset_classification::write_reps_csv(int lvl, int verbose_level)
 	}
 
 }
+
+void poset_classification::write_reps_csv_fname(
+		std::string &fname,
+		int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_reps_csv;
+
+	if (f_v) {
+		cout << "poset_classification::write_reps_csv_fname" << endl;
+	}
+
+	Poo->save_representatives_at_level_to_csv(fname, lvl, verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification::write_reps_csv_fname done" << endl;
+	}
+
+}
+
+void poset_classification::export_something(
+		std::string &what, int data1,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::export_something" << endl;
+	}
+
+	data_structures::string_tools ST;
+
+
+	if (f_v) {
+		cout << "poset_classification::export_something "
+				"before export_something_worker" << endl;
+	}
+	export_something_worker(
+			what, data1, fname, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::export_something "
+				"after export_something_worker" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "poset_classification::export_something "
+				"written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "poset_classification::export_something done" << endl;
+	}
+
+}
+
+void poset_classification::export_something_worker(
+		std::string &what, int data1,
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::export_something_worker" << endl;
+	}
+
+	data_structures::string_tools ST;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (ST.stringcmp(what, "orbit_reps") == 0) {
+
+		if (f_v) {
+			cout << "poset_classification::export_something_worker type orbit" << endl;
+		}
+		fname = problem_label_with_path + "_orbits" + "_level_" + std::to_string(data1) + ".csv";
+
+
+		write_reps_csv(
+				data1 /* lvl */, verbose_level);
+
+
+	}
+	else {
+		cout << "poset_classification::export_something_worker unrecognized export target: " << what << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::export_something_worker done" << endl;
+	}
+
+}
+
 
 
 

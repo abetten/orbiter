@@ -647,6 +647,32 @@ apps_coding_theory::create_code
 	return (apps_coding_theory::create_code *) get_object(idx);
 }
 
+
+graph_theory::colored_graph
+	*orbiter_top_level_session::get_object_of_type_graph(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_graph "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_graph) {
+		cout << "orbiter_top_level_session::get_object_of_type_graph "
+				"object type != t_graph" << endl;
+		exit(1);
+	}
+
+
+	return (graph_theory::colored_graph *) get_object(idx);
+}
+
+
+
+
 orthogonal_geometry_applications::orthogonal_space_with_action
 	*orbiter_top_level_session::get_orthogonal_space(
 			std::string &label)

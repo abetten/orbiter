@@ -2322,7 +2322,8 @@ void orbits_on_something::export_something(
 	if (f_v) {
 		cout << "orbits_on_something::export_something before export_something_worker" << endl;
 	}
-	export_something_worker(fname_base, what, data1, fname, verbose_level);
+	export_something_worker(
+			fname_base, what, data1, fname, verbose_level);
 	if (f_v) {
 		cout << "orbits_on_something::export_something after export_something_worker" << endl;
 	}
@@ -2351,6 +2352,9 @@ void orbits_on_something::export_something_worker(
 
 	if (ST.stringcmp(what, "orbit") == 0) {
 
+		if (f_v) {
+			cout << "orbits_on_something::export_something_worker type orbit" << endl;
+		}
 		fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
 
 		int orbit_idx = data1;

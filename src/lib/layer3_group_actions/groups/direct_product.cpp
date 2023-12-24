@@ -335,13 +335,15 @@ long int direct_product::element_image_of(
 	return b;
 }
 
-void direct_product::element_one(int *Elt)
+void direct_product::element_one(
+		int *Elt)
 {
 	M1->GL_one(Elt + offset_i(0));
 	M2->GL_one(Elt + offset_i(1));
 }
 
-int direct_product::element_is_one(int *Elt)
+int direct_product::element_is_one(
+		int *Elt)
 {
 	if (!M1->GL_is_one(Elt + offset_i(0))) {
 		return false;
@@ -352,7 +354,8 @@ int direct_product::element_is_one(int *Elt)
 	return true;
 }
 
-void direct_product::element_mult(int *A, int *B, int *AB,
+void direct_product::element_mult(
+		int *A, int *B, int *AB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -374,7 +377,8 @@ void direct_product::element_mult(int *A, int *B, int *AB,
 	}
 }
 
-void direct_product::element_move(int *A, int *B, int verbose_level)
+void direct_product::element_move(
+		int *A, int *B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -387,7 +391,8 @@ void direct_product::element_move(int *A, int *B, int verbose_level)
 	}
 }
 
-void direct_product::element_invert(int *A, int *Av, int verbose_level)
+void direct_product::element_invert(
+		int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -402,7 +407,8 @@ void direct_product::element_invert(int *A, int *Av, int verbose_level)
 }
 
 
-int direct_product::offset_i(int f)
+int direct_product::offset_i(
+		int f)
 {
 	if (f == 0) {
 		return 0;
@@ -416,7 +422,8 @@ int direct_product::offset_i(int f)
 	}
 }
 
-void direct_product::element_pack(int *Elt, uchar *elt)
+void direct_product::element_pack(
+		int *Elt, uchar *elt)
 {
 	int i;
 
@@ -428,7 +435,8 @@ void direct_product::element_pack(int *Elt, uchar *elt)
 	}
 }
 
-void direct_product::element_unpack(uchar *elt, int *Elt)
+void direct_product::element_unpack(
+		uchar *elt, int *Elt)
 {
 	int i;
 	int *m;
@@ -450,7 +458,8 @@ void direct_product::element_unpack(uchar *elt, int *Elt)
 	//element_print_easy(Elt, cout);
 }
 
-void direct_product::put_digit(uchar *elt, int f, int i, int d)
+void direct_product::put_digit(
+		uchar *elt, int f, int i, int d)
 {
 	int h0 = 0;
 	int h, h1, a;
@@ -479,7 +488,8 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 	}
 }
 
-int direct_product::get_digit(uchar *elt, int f, int i)
+int direct_product::get_digit(
+		uchar *elt, int f, int i)
 {
 	int h0 = 0;
 	int h, h1, a, d;
@@ -507,7 +517,8 @@ int direct_product::get_digit(uchar *elt, int f, int i)
 	return d;
 }
 
-void direct_product::make_element(int *Elt, int *data, int verbose_level)
+void direct_product::make_element(
+		int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -535,7 +546,8 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-void direct_product::element_print_easy(int *Elt, std::ostream &ost)
+void direct_product::element_print_easy(
+		int *Elt, std::ostream &ost)
 {
 	int f;
 
@@ -560,7 +572,8 @@ void direct_product::element_print_easy(int *Elt, std::ostream &ost)
 	ost << "end element of direct product" << endl;
 }
 
-void direct_product::compute_base_and_transversals(int verbose_level)
+void direct_product::compute_base_and_transversals(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, h;
@@ -603,7 +616,8 @@ void direct_product::compute_base_and_transversals(int verbose_level)
 		}
 }
 
-void direct_product::make_strong_generators_data(int *&data,
+void direct_product::make_strong_generators_data(
+		int *&data,
 		int &size, int &nb_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -130,9 +130,9 @@ void matrix_group::init_projective_group(
 	degree = Gg.nb_PG_elements(n - 1, F->q);
 
 
-	data_structures::string_tools String;
+	data_structures::string_tools ST;
 
-	String.name_of_group_projective(
+	ST.name_of_group_projective(
 			label,
 			label_tex,
 			n, F->q,
@@ -225,9 +225,9 @@ void matrix_group::init_affine_group(
 		make_element_size++;
 	}
 
-	data_structures::string_tools String;
+	data_structures::string_tools ST;
 
-	String.name_of_group_affine(
+	ST.name_of_group_affine(
 			label,
 			label_tex,
 			n, F->q, f_semilinear, false /* f_special */,
@@ -297,9 +297,9 @@ void matrix_group::init_general_linear_group(
 		make_element_size++;
 	}
 
-	data_structures::string_tools String;
+	data_structures::string_tools ST;
 
-	String.name_of_group_general_linear(
+	ST.name_of_group_general_linear(
 			label,
 			label_tex,
 			n, F->q, f_semilinear, false /* f_special */,
@@ -341,7 +341,8 @@ void matrix_group::init_general_linear_group(
 	}
 }
 
-void matrix_group::allocate_data(int verbose_level)
+void matrix_group::allocate_data(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -373,7 +374,8 @@ void matrix_group::allocate_data(int verbose_level)
 	}
 }
 
-void matrix_group::free_data(int verbose_level)
+void matrix_group::free_data(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -501,7 +503,8 @@ void matrix_group::setup_page_storage(
 }
 
 
-void matrix_group::compute_elt_size(int verbose_level)
+void matrix_group::compute_elt_size(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -568,7 +571,8 @@ void matrix_group::compute_elt_size(int verbose_level)
 	}
 }
 
-void matrix_group::init_gl_classes(int verbose_level)
+void matrix_group::init_gl_classes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -615,7 +619,8 @@ int matrix_group::GL_element_entry_ij(
 	return Elt[i * n + j];
 }
 
-int matrix_group::GL_element_entry_frobenius(int *Elt)
+int matrix_group::GL_element_entry_frobenius(
+		int *Elt)
 {
 	if (!f_semilinear) {
 		cout << "matrix_group::GL_element_entry_frobenius "
@@ -781,7 +786,8 @@ void matrix_group::general_linear_action_from_the_right(
 	}
 }
 
-void matrix_group::substitute_surface_equation(int *Elt,
+void matrix_group::substitute_surface_equation(
+		int *Elt,
 		int *coeff_in, int *coeff_out,
 		algebraic_geometry::surface_domain *Surf,
 		int verbose_level)
@@ -826,13 +832,15 @@ void matrix_group::substitute_surface_equation(int *Elt,
 	}
 }
 
-void matrix_group::GL_one(int *Elt)
+void matrix_group::GL_one(
+		int *Elt)
 {
 	GL_one_internal(Elt);
 	GL_one_internal(Elt + elt_size_int_half);
 }
 
-void matrix_group::GL_one_internal(int *Elt)
+void matrix_group::GL_one_internal(
+		int *Elt)
 {
 	int i;
 	
@@ -859,7 +867,8 @@ void matrix_group::GL_one_internal(int *Elt)
 	}
 }
 
-void matrix_group::GL_zero(int *Elt)
+void matrix_group::GL_zero(
+		int *Elt)
 {
 	if (f_projective) {
 		if (f_semilinear) {
@@ -892,7 +901,8 @@ void matrix_group::GL_zero(int *Elt)
 	GL_copy_internal(Elt, Elt + elt_size_int_half);
 }
 
-int matrix_group::GL_is_one(int *Elt)
+int matrix_group::GL_is_one(
+		int *Elt)
 {
 	int c;
 	
@@ -1056,12 +1066,14 @@ void matrix_group::GL_mult_internal(
 	}
 }
 
-void matrix_group::GL_copy(int *A, int *B)
+void matrix_group::GL_copy(
+		int *A, int *B)
 {
 	Int_vec_copy(A, B, elt_size_int);
 }
 
-void matrix_group::GL_copy_internal(int *A, int *B)
+void matrix_group::GL_copy_internal(
+		int *A, int *B)
 {
 	Int_vec_copy(A, B, elt_size_int_half);
 }
@@ -1107,7 +1119,8 @@ void matrix_group::GL_transpose_internal(
 	}
 }
 
-void matrix_group::GL_invert(int *A, int *Ainv)
+void matrix_group::GL_invert(
+		int *A, int *Ainv)
 {
 	GL_copy_internal(A, Ainv + elt_size_int_half);
 	GL_copy_internal(A + elt_size_int_half, Ainv);
@@ -2106,7 +2119,8 @@ void matrix_group::matrix_minor(
 	}
 }
 
-int matrix_group::base_len(int verbose_level)
+int matrix_group::base_len(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int base_len;
@@ -2234,7 +2248,8 @@ void matrix_group::strong_generators_low_level(
 	}
 }
 
-int matrix_group::has_shape_of_singer_cycle(int *Elt)
+int matrix_group::has_shape_of_singer_cycle(
+		int *Elt)
 {
 	int i, j, a, a0;
 

@@ -98,7 +98,8 @@ void subgroup::print()
 	cout << endl;
 }
 
-int subgroup::contains_this_element(int elt)
+int subgroup::contains_this_element(
+		int elt)
 {
 	int idx;
 	data_structures::sorting Sorting;
@@ -111,7 +112,8 @@ int subgroup::contains_this_element(int elt)
 		}
 }
 
-void subgroup::report(std::ostream &ost)
+void subgroup::report(
+		std::ostream &ost)
 {
 	SG->print_generators_tex(ost);
 }

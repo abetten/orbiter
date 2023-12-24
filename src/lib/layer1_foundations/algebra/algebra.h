@@ -817,28 +817,36 @@ public:
 	matrix_group();
 	~matrix_group();
 
-	void init_projective_group(int n,
+	void init_projective_group(
+			int n,
 			field_theory::finite_field *F,
 		int f_semilinear,
 		int verbose_level);
-	void init_affine_group(int n,
+	void init_affine_group(
+			int n,
 			field_theory::finite_field *F,
 		int f_semilinear,
 		int verbose_level);
-	void init_general_linear_group(int n,
+	void init_general_linear_group(
+			int n,
 			field_theory::finite_field *F,
 		int f_semilinear,
 		int verbose_level);
-	void allocate_data(int verbose_level);
-	void free_data(int verbose_level);
+	void allocate_data(
+			int verbose_level);
+	void free_data(
+			int verbose_level);
 	void setup_page_storage(
 			int page_length_log, int verbose_level);
-	void compute_elt_size(int verbose_level);
-	void init_gl_classes(int verbose_level);
+	void compute_elt_size(
+			int verbose_level);
+	void init_gl_classes(
+			int verbose_level);
 
 	int GL_element_entry_ij(
 			int *Elt, int i, int j);
-	int GL_element_entry_frobenius(int *Elt);
+	int GL_element_entry_frobenius(
+			int *Elt);
 	long int image_of_element(
 			int *Elt, long int a, int verbose_level);
 	long int GL_image_of_PG_element(
@@ -851,25 +859,33 @@ public:
 		int *v, int *A, int *vA, int verbose_level);
 	void general_linear_action_from_the_right(
 		int *v, int *A, int *vA, int verbose_level);
-	void substitute_surface_equation(int *Elt,
+	void substitute_surface_equation(
+			int *Elt,
 			int *coeff_in, int *coeff_out,
 			algebraic_geometry::surface_domain *Surf,
 			int verbose_level);
-	void GL_one(int *Elt);
-	void GL_one_internal(int *Elt);
-	void GL_zero(int *Elt);
-	int GL_is_one(int *Elt);
+	void GL_one(
+			int *Elt);
+	void GL_one_internal(
+			int *Elt);
+	void GL_zero(
+			int *Elt);
+	int GL_is_one(
+			int *Elt);
 	void GL_mult(
 			int *A, int *B, int *AB, int verbose_level);
 	void GL_mult_internal(
 			int *A, int *B, int *AB, int verbose_level);
-	void GL_copy(int *A, int *B);
-	void GL_copy_internal(int *A, int *B);
+	void GL_copy(
+			int *A, int *B);
+	void GL_copy_internal(
+			int *A, int *B);
 	void GL_transpose(
 			int *A, int *At, int verbose_level);
 	void GL_transpose_internal(
 			int *A, int *At, int verbose_level);
-	void GL_invert(int *A, int *Ainv);
+	void GL_invert(
+			int *A, int *Ainv);
 	void GL_invert_internal(
 			int *A, int *Ainv, int verbose_level);
 	void GL_unpack(
@@ -918,7 +934,8 @@ public:
 	void matrix_minor(
 			int *Elt, int *Elt1,
 		matrix_group *mtx1, int f, int verbose_level);
-	int base_len(int verbose_level);
+	int base_len(
+			int verbose_level);
 	void base_and_transversal_length(
 			int base_len,
 			long int *base, int *transversal_length,
@@ -926,7 +943,8 @@ public:
 	void strong_generators_low_level(
 			int *&data,
 			int &size, int &nb_gens, int verbose_level);
-	int has_shape_of_singer_cycle(int *Elt);
+	int has_shape_of_singer_cycle(
+			int *Elt);
 };
 
 

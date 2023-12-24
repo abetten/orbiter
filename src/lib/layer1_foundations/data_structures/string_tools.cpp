@@ -1553,7 +1553,7 @@ void string_tools::name_of_group_affine(
 			label_tex = "{\\rm A}\\Gamma {\\rm L}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 		else {
-			label_txt = "GL_" + std::to_string(n) + "_" + std::to_string(q);
+			label_txt = "AGL_" + std::to_string(n) + "_" + std::to_string(q);
 			label_tex = "{\\rm AGL}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 		}
 	}
@@ -1905,7 +1905,7 @@ std::string string_tools::printf_d(std::string &format, int value)
 		std::size_t loc_d = format.find(d, loc_percent);
 
 		info = format.substr(loc_percent + 1, loc_d - 1);
-		pre = format.substr(0, loc_percent - 1);
+		pre = format.substr(0, loc_percent);
 		post = format.substr(loc_d + 1);
 		insert = std::to_string(value);
 		if (info.length()) {

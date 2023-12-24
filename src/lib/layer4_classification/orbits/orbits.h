@@ -164,12 +164,14 @@ public:
 
 	orbit_of_sets();
 	~orbit_of_sets();
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			actions::action *A2,
 			long int *set, int sz,
 			data_structures_groups::vector_ge *gens,
 			int verbose_level);
-	void compute(int verbose_level);
+	void compute(
+			int verbose_level);
 	void setup_root_node(
 			long int *Q, int &Q_len, int verbose_level);
 	void reallocate(
@@ -185,7 +187,8 @@ public:
 	void make_table_of_coset_reps(
 			data_structures_groups::vector_ge *&Coset_reps,
 			int verbose_level);
-	void coset_rep(int j);
+	void coset_rep(
+			int j);
 		// result is in cosetrep
 		// determines an element in the group
 		// that moves the orbit representative

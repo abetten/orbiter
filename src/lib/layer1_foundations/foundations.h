@@ -960,6 +960,7 @@ enum data_input_stream_type {
 	t_data_input_stream_set_of_points_and_lines,
 	t_data_input_stream_set_of_packing,
 	t_data_input_stream_file_of_points,
+	t_data_input_stream_file_of_points_csv,
 	t_data_input_stream_file_of_lines,
 	t_data_input_stream_file_of_packings,
 	t_data_input_stream_file_of_packings_through_spread_table,

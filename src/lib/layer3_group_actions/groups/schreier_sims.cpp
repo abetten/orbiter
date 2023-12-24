@@ -221,7 +221,8 @@ void schreier_sims::init_random_process(
 	f_from_random_process = true;
 }
 
-void schreier_sims::init_old_G(sims *old_G, int verbose_level)
+void schreier_sims::init_old_G(
+		sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -411,7 +412,8 @@ void schreier_sims::get_generator_external_old_G(
 	}
 }
 
-void schreier_sims::get_generator(int *Elt, int verbose_level)
+void schreier_sims::get_generator(
+		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -445,7 +447,8 @@ void schreier_sims::get_generator(int *Elt, int verbose_level)
 	}
 }
 
-void schreier_sims::closure_group(int verbose_level)
+void schreier_sims::closure_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
@@ -495,7 +498,8 @@ void schreier_sims::closure_group(int verbose_level)
 	}
 }
 
-void schreier_sims::create_group(int verbose_level)
+void schreier_sims::create_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);

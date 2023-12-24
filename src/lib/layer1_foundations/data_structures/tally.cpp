@@ -154,9 +154,14 @@ void tally::init(
 	Set_partition->sort();
 
 	if (f_v) {
-		int i;
 		cout << "tally::init "
 				"after get_set_partition_and_types" << endl;
+
+		print_types();
+
+#if 0
+		int i;
+
 		cout << "types: ";
 		Int_vec_print(cout, data_values,
 				nb_types);
@@ -168,6 +173,7 @@ void tally::init(
 			cout << i << " : " << data_values[i] << " : "
 					<< Set_partition->Set_size[i] << endl;
 		}
+#endif
 	}
 
 
@@ -175,6 +181,24 @@ void tally::init(
 	if (f_v) {
 		cout << "tally::init done" << endl;
 	}
+}
+
+void tally::print_types()
+{
+	int i;
+
+	cout << "types: ";
+	Int_vec_print(cout, data_values,
+			nb_types);
+	cout << endl;
+	cout << "data classified:" << endl;
+	Set_partition->print();
+	cout << "i : type[i] : number of elements" << endl;
+	for (i = 0; i < Set_partition->nb_sets; i++) {
+		cout << i << " : " << data_values[i] << " : "
+				<< Set_partition->Set_size[i] << endl;
+	}
+
 }
 
 void tally::init_lint(

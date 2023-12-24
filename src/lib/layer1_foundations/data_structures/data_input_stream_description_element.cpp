@@ -58,6 +58,9 @@ void data_input_stream_description_element::print()
 	else if (input_type == t_data_input_stream_file_of_points) {
 		cout << "-file_of_points " << input_string << endl;
 	}
+	else if (input_type == t_data_input_stream_file_of_points_csv) {
+		cout << "-file_of_points_csv " << input_string << endl;
+	}
 	else if (input_type == t_data_input_stream_file_of_lines) {
 		cout << "-file_of_lines " << input_string << endl;
 	}
@@ -169,6 +172,16 @@ void data_input_stream_description_element::init_file_of_points(
 	input_type = t_data_input_stream_file_of_points;
 
 	input_string.assign(a);
+
+}
+
+void data_input_stream_description_element::init_file_of_points_csv(
+		std::string &a, std::string &b)
+{
+	input_type = t_data_input_stream_file_of_points_csv;
+
+	input_string.assign(a);
+	input_string2.assign(b);
 
 }
 

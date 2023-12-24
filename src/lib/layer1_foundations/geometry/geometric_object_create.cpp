@@ -162,7 +162,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 					"before Quadratic_form->init" << endl;
 		}
-		Quadratic_form->init(0 /*epsilon*/, 5 /* n */, F, verbose_level);
+		Quadratic_form->init(
+				0 /*epsilon*/, 5 /* n */, F, verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 					"after Quadratic_form->init" << endl;
@@ -172,7 +173,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before K.retrieve_BLT_set_from_database" << endl;
 		}
-		K.retrieve_BLT_set_from_database(Quadratic_form,
+		K.retrieve_BLT_set_from_database(
+				Quadratic_form,
 				false /* f_embedded */,
 				Descr->BLT_database_k,
 				label_txt,
@@ -197,7 +199,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 					"before Quadratic_form->init" << endl;
 		}
-		Quadratic_form->init(0 /*epsilon*/, 5 /* n */, F, verbose_level);
+		Quadratic_form->init(
+				0 /*epsilon*/, 5 /* n */, F, verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 					"after Quadratic_form->init" << endl;
@@ -206,7 +209,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before K.retrieve_BLT_set_from_database_embedded" << endl;
 		}
-		K.retrieve_BLT_set_from_database_embedded(Quadratic_form,
+		K.retrieve_BLT_set_from_database_embedded(
+				Quadratic_form,
 				Descr->BLT_database_embedded_k,
 				label_txt,
 				label_tex,
@@ -269,7 +273,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_elliptic_quadric_ovoid" << endl;
 		}
-		create_elliptic_quadric_ovoid(P,
+		create_elliptic_quadric_ovoid(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -284,7 +289,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_ovoid_ST" << endl;
 		}
-		create_ovoid_ST(P,
+		create_ovoid_ST(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -302,7 +308,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_Baer_substructure" << endl;
 		}
-		create_Baer_substructure(P,
+		create_Baer_substructure(
+				P,
 			Pts, nb_pts,
 			label_txt,
 			label_tex,
@@ -341,7 +348,8 @@ void geometric_object_create::init(
 		}
 		geometry_global Geo;
 
-		Geo.create_hermitian(F,
+		Geo.create_hermitian(
+				F,
 				P->Subspaces->n,
 				label_txt,
 				label_tex,
@@ -358,7 +366,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_cuspidal_cubic" << endl;
 		}
-		create_cuspidal_cubic(P,
+		create_cuspidal_cubic(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -373,7 +382,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_twisted_cubic" << endl;
 		}
-		create_twisted_cubic(P,
+		create_twisted_cubic(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -388,8 +398,10 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_elliptic_curve" << endl;
 		}
-		create_elliptic_curve(P,
-				Descr->elliptic_curve_b, Descr->elliptic_curve_c,
+		create_elliptic_curve(
+				P,
+				Descr->elliptic_curve_b,
+				Descr->elliptic_curve_c,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -427,7 +439,8 @@ void geometric_object_create::init(
 					"before create_unital_XXq_YZq_ZYq" << endl;
 		}
 
-		create_unital_XXq_YZq_ZYq(P,
+		create_unital_XXq_YZq_ZYq(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -483,7 +496,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_whole_space" << endl;
 		}
-		create_whole_space(P,
+		create_whole_space(
+				P,
 				label_txt,
 				label_tex,
 			nb_pts, Pts,
@@ -498,7 +512,8 @@ void geometric_object_create::init(
 			cout << "geometric_object_create::init "
 					"before create_hyperplane" << endl;
 		}
-		create_hyperplane(P,
+		create_hyperplane(
+				P,
 				Descr->pt,
 				label_txt,
 				label_tex,
@@ -718,7 +733,8 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(epsilon, P->Subspaces->n + 1, P->Subspaces->F, verbose_level);
+	Quadratic_form->init(
+			epsilon, P->Subspaces->n + 1, P->Subspaces->F, verbose_level);
 	if (f_v) {
 		cout << "geometric_object_create::create_elliptic_quadric_ovoid "
 				"after Quadratic_form->init" << endl;
@@ -1080,7 +1096,9 @@ void geometric_object_create::create_elliptic_curve(
 	v = NEW_int(P->Subspaces->n + 1);
 	Pts = NEW_lint(P->Subspaces->N_points);
 
-	E->init(P->Subspaces->F, elliptic_curve_b, elliptic_curve_c,
+	E->init(
+			P->Subspaces->F,
+			elliptic_curve_b, elliptic_curve_c,
 			verbose_level);
 
 	nb_pts = E->nb;
@@ -1149,7 +1167,8 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq(
 	Pts = NEW_lint(P->Subspaces->N_points);
 
 
-	create_unital_XXq_YZq_ZYq_brute_force(P, Pts, nb_pts, verbose_level - 1);
+	create_unital_XXq_YZq_ZYq_brute_force(
+			P, Pts, nb_pts, verbose_level - 1);
 
 
 	if (f_v) {
@@ -1270,7 +1289,8 @@ void geometric_object_create::create_Baer_substructure(
 	int Q = P->Subspaces->q;
 	int q = NT.i_power_j(P->Subspaces->F->p, P->Subspaces->F->e >> 1);
 	if (f_v) {
-		cout << "geometric_object_create::create_Baer_substructure Q=" << Q << " q=" << q << endl;
+		cout << "geometric_object_create::create_Baer_substructure "
+				"Q=" << Q << " q=" << q << endl;
 	}
 
 	int sz;
@@ -1379,7 +1399,10 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq_brute_force(
 		Xq = P->Subspaces->F->frobenius_power(X, e);
 		Yq = P->Subspaces->F->frobenius_power(Y, e);
 		Zq = P->Subspaces->F->frobenius_power(Z, e);
-		a = P->Subspaces->F->add3(P->Subspaces->F->mult(X, Xq), P->Subspaces->F->mult(Y, Zq), P->Subspaces->F->mult(Z, Yq));
+		a = P->Subspaces->F->add3(
+				P->Subspaces->F->mult(X, Xq),
+				P->Subspaces->F->mult(Y, Zq),
+				P->Subspaces->F->mult(Z, Yq));
 		if (f_vvv) {
 			cout << " a=" << a << endl;
 		}

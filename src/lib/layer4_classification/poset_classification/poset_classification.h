@@ -1074,7 +1074,18 @@ public:
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
-	void write_reps_csv(int lvl, int verbose_level);
+	void write_reps_csv(
+			int lvl, int verbose_level);
+	void write_reps_csv_fname(
+			std::string &fname,
+			int lvl, int verbose_level);
+	void export_something(
+			std::string &what, int data1,
+			std::string &fname, int verbose_level);
+	void export_something_worker(
+			std::string &what, int data1,
+			std::string &fname,
+			int verbose_level);
 
 
 

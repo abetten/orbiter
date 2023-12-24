@@ -1138,7 +1138,8 @@ void sims::swap_points(
 	orbit_inv[lvl][pj] = i;
 }
 
-void sims::path_unrank_lint(long int a)
+void sims::path_unrank_lint(
+		long int a)
 {
 	long int h, l;
 	
@@ -1234,7 +1235,8 @@ void sims::element_from_path(
 		}
 }
 
-void sims::element_from_path_inv(int *elt)
+void sims::element_from_path_inv(
+		int *elt)
 // very specialized routine, used in backtrack.cpp
 // action_is_minimal_recursion
 // used coset_rep_inv instead of coset_rep,
@@ -2221,7 +2223,8 @@ int sims::least_moved_point_at_level(
 	return least_moved_point;
 }
 
-int sims::get_orbit(int i, int j)
+int sims::get_orbit(
+		int i, int j)
 {
 	if (orbit == NULL) {
 		cout << "sims::get_orbit orbit == NULL "
@@ -2250,7 +2253,8 @@ int sims::get_orbit(int i, int j)
 	return orbit[i][j];
 }
 
-int sims::get_orbit_inv(int i, int j)
+int sims::get_orbit_inv(
+		int i, int j)
 {
 	if (orbit_inv == NULL) {
 		cout << "sims::get_orbit_inv orbit_inv == NULL "
@@ -2281,7 +2285,8 @@ int sims::get_orbit_inv(int i, int j)
 	return orbit_inv[i][j];
 }
 
-int sims::get_orbit_length(int i)
+int sims::get_orbit_length(
+		int i)
 {
 	if (i < 0 || i >= my_base_len) {
 		cout << "sims::get_orbit_length out of range "

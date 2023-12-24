@@ -294,15 +294,20 @@ public:
 
 	colored_graph();
 	~colored_graph();
-	void compute_edges(int verbose_level);
-	int is_adjacent(int i, int j);
-	void set_adjacency(int i, int j, int a);
-	void set_adjacency_k(long int k, int a);
+	void compute_edges(
+			int verbose_level);
+	int is_adjacent(
+			int i, int j);
+	void set_adjacency(
+			int i, int j, int a);
+	void set_adjacency_k(
+			long int k, int a);
 	void partition_by_color_classes(
 		int *&partition, int *&partition_first, 
 		int &partition_length, 
 		int verbose_level);
-	colored_graph *sort_by_color_classes(int verbose_level);
+	colored_graph *sort_by_color_classes(
+			int verbose_level);
 	colored_graph *subgraph_by_color_classes(
 			int c, int verbose_level);
 	colored_graph *subgraph_by_color_classes_with_condition(
@@ -395,10 +400,14 @@ public:
 		data_structures::fancy_set *&vertex_subset,
 		data_structures::fancy_set *&color_subset,
 		int verbose_level);
-	void export_to_magma(std::string &fname, int verbose_level);
-	void export_to_maple(std::string &fname, int verbose_level);
-	void export_to_file(std::string &fname, int verbose_level);
-	void export_to_text(std::string &fname, int verbose_level);
+	void export_to_magma(
+			std::string &fname, int verbose_level);
+	void export_to_maple(
+			std::string &fname, int verbose_level);
+	void export_to_file(
+			std::string &fname, int verbose_level);
+	void export_to_text(
+			std::string &fname, int verbose_level);
 	void export_laplacian_to_file(
 			std::string &fname,
 		int verbose_level);
@@ -463,12 +472,27 @@ public:
 			clique_finder_control *Control,
 			std::ostream &fp,
 			int verbose_level);
-	void complement(int verbose_level);
-	void distance_2(int verbose_level);
-	void properties(int verbose_level);
+	void complement(
+			int verbose_level);
+	void distance_2(
+			int verbose_level);
+	void properties(
+			int verbose_level);
 	int test_distinguishing_property(
 			long int *set, int sz,
 			int verbose_level);
+	void all_distinguishing_codes(
+			long int *set, int sz,
+			int *code,
+			int verbose_level);
+	// code[nb_points], where nb_points = number of vertices
+	void distinguishing_code_frequency(
+			long int *set, int sz,
+			int *frequency, int N,
+			int verbose_level);
+	// frequency[N], where N = 1 << sz
+	int distinguishing_code_wrt_set(
+			long int *set, int sz, int i);
 	void eigenvalues(
 			double *&E, int verbose_level);
 	void Laplace_eigenvalues(

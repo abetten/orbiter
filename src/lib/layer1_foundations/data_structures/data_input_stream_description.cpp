@@ -137,6 +137,23 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i], "-file_of_points_csv") == 0) {
+
+			data_input_stream_description_element E;
+			string a, b;
+
+			a.assign(argv[++i]);
+			b.assign(argv[++i]);
+
+			E.init_file_of_points_csv(a, b);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-file_of_lines") == 0) {
 
 			data_input_stream_description_element E;

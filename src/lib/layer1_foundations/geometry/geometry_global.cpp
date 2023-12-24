@@ -356,17 +356,20 @@ void geometry_global::create_Buekenhout_Metz(
 }
 
 
-long int geometry_global::count_Sbar(int n, int q)
+long int geometry_global::count_Sbar(
+		int n, int q)
 {
 	return count_T1(1, n, q);
 }
 
-long int geometry_global::count_S(int n, int q)
+long int geometry_global::count_S(
+		int n, int q)
 {
 	return (q - 1) * count_Sbar(n, q) + 1;
 }
 
-long int geometry_global::count_N1(int n, int q)
+long int geometry_global::count_N1(
+		int n, int q)
 {
 	if (n <= 0) {
 		return 0;
@@ -374,7 +377,8 @@ long int geometry_global::count_N1(int n, int q)
 	return nb_pts_N1(n, q);
 }
 
-long int geometry_global::count_T1(int epsilon, int n, int q)
+long int geometry_global::count_T1(
+		int epsilon, int n, int q)
 // n = Witt index
 {
 	number_theory::number_theory_domain NT;
@@ -399,7 +403,8 @@ long int geometry_global::count_T1(int epsilon, int n, int q)
 	//exit(1);
 }
 
-long int geometry_global::count_T2(int n, int q)
+long int geometry_global::count_T2(
+		int n, int q)
 {
 	number_theory::number_theory_domain NT;
 
@@ -411,7 +416,8 @@ long int geometry_global::count_T2(int n, int q)
 			(NT.i_power_j_lint(q, n - 2) + 1) / ((q - 1) * (NT.i_power_j_lint(q, 2) - 1));
 }
 
-long int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
+long int geometry_global::nb_pts_Qepsilon(
+		int epsilon, int k, int q)
 // number of singular points on Q^epsilon(k,q)
 {
 	if (epsilon == 0) {
@@ -430,7 +436,8 @@ long int geometry_global::nb_pts_Qepsilon(int epsilon, int k, int q)
 	}
 }
 
-int geometry_global::dimension_given_Witt_index(int epsilon, int n)
+int geometry_global::dimension_given_Witt_index(
+		int epsilon, int n)
 {
 	if (epsilon == 0) {
 		return 2 * n + 1;
@@ -448,7 +455,8 @@ int geometry_global::dimension_given_Witt_index(int epsilon, int n)
 	}
 }
 
-int geometry_global::Witt_index(int epsilon, int k)
+int geometry_global::Witt_index(
+		int epsilon, int k)
 // k = projective dimension
 {
 	int n;
@@ -491,7 +499,8 @@ int geometry_global::Witt_index(int epsilon, int k)
 	return n;
 }
 
-long int geometry_global::nb_pts_Q(int k, int q)
+long int geometry_global::nb_pts_Q(
+		int k, int q)
 // number of singular points on Q(k,q), parabolic quadric, so k is even
 {
 	int n;
@@ -500,7 +509,8 @@ long int geometry_global::nb_pts_Q(int k, int q)
 	return nb_pts_Sbar(n, q) + nb_pts_N1(n, q);
 }
 
-long int geometry_global::nb_pts_Qplus(int k, int q)
+long int geometry_global::nb_pts_Qplus(
+		int k, int q)
 // number of singular points on Q^+(k,q)
 {
 	int n;
@@ -509,7 +519,8 @@ long int geometry_global::nb_pts_Qplus(int k, int q)
 	return nb_pts_Sbar(n, q);
 }
 
-long int geometry_global::nb_pts_Qminus(int k, int q)
+long int geometry_global::nb_pts_Qminus(
+		int k, int q)
 // number of singular points on Q^-(k,q)
 {
 	int n;
@@ -3395,7 +3406,8 @@ void geometry_global::make_restricted_incidence_matrix(
 				<< Fio.file_size(fname_csv) << endl;
 	}
 
-	Fio.write_incidence_matrix_to_file(fname_inc,
+	Fio.write_incidence_matrix_to_file(
+			fname_inc,
 		M, nb_row_objects, nb_col_objects, 0 /*verbose_level*/);
 
 	if (f_v) {

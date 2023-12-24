@@ -123,20 +123,34 @@ public:
 			int verbose_level);
 	long int element_image_of(
 			int *Elt, long int a, int verbose_level);
-	void element_one(int *Elt);
-	int element_is_one(int *Elt);
-	void element_mult(int *A, int *B, int *AB, int verbose_level);
-	void element_move(int *A, int *B, int verbose_level);
-	void element_invert(int *A, int *Av, int verbose_level);
-	int offset_i(int i);
-	void element_pack(int *Elt, uchar *elt);
-	void element_unpack(uchar *elt, int *Elt);
-	void put_digit(uchar *elt, int f, int i, int d);
-	int get_digit(uchar *elt, int f, int i);
-	void make_element(int *Elt, int *data, int verbose_level);
-	void element_print_easy(int *Elt, std::ostream &ost);
-	void compute_base_and_transversals(int verbose_level);
-	void make_strong_generators_data(int *&data,
+	void element_one(
+			int *Elt);
+	int element_is_one(
+			int *Elt);
+	void element_mult(
+			int *A, int *B, int *AB, int verbose_level);
+	void element_move(
+			int *A, int *B, int verbose_level);
+	void element_invert(
+			int *A, int *Av, int verbose_level);
+	int offset_i(
+			int i);
+	void element_pack(
+			int *Elt, uchar *elt);
+	void element_unpack(
+			uchar *elt, int *Elt);
+	void put_digit(
+			uchar *elt, int f, int i, int d);
+	int get_digit(
+			uchar *elt, int f, int i);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void element_print_easy(
+			int *Elt, std::ostream &ost);
+	void compute_base_and_transversals(
+			int verbose_level);
+	void make_strong_generators_data(
+			int *&data,
 			int &size, int &nb_gens, int verbose_level);
 	void lift_generators(
 			strong_generators *SG1,
@@ -683,32 +697,51 @@ public:
 	permutation_representation_domain();
 	~permutation_representation_domain();
 	void allocate();
-	void init_product_action(int m, int n, 
+	void init_product_action(
+			int m, int n,
 		int page_length_log, int verbose_level);
-	void init(int degree, int page_length_log, int verbose_level);
-	void init_data(int page_length_log, int verbose_level);
-	void init_with_base(int degree, 
+	void init(
+			int degree, int page_length_log, int verbose_level);
+	void init_data(
+			int page_length_log, int verbose_level);
+	void init_with_base(
+			int degree,
 		int base_length, int *base, int page_length_log, 
 		actions::action &A, int verbose_level);
-	void transversal_rep(int i, int j, int *Elt, int verbose_level);
-	void one(int *Elt);
-	int is_one(int *Elt);
-	void mult(int *A, int *B, int *AB);
-	void copy(int *A, int *B);
-	void invert(int *A, int *Ainv);
-	void unpack(uchar *elt, int *Elt);
-	void pack(int *Elt, uchar *elt);
-	void print(int *Elt, std::ostream &ost);
-	void print_with_print_point_function(int *Elt,
+	void transversal_rep(
+			int i, int j, int *Elt, int verbose_level);
+	void one(
+			int *Elt);
+	int is_one(
+			int *Elt);
+	void mult(
+			int *A, int *B, int *AB);
+	void copy(
+			int *A, int *B);
+	void invert(
+			int *A, int *Ainv);
+	void unpack(
+			uchar *elt, int *Elt);
+	void pack(
+			int *Elt, uchar *elt);
+	void print(
+			int *Elt, std::ostream &ost);
+	void print_with_print_point_function(
+			int *Elt,
 			std::ostream &ost,
 			void (*point_label)(
 					std::stringstream &sstr, long int pt, void *data),
 			void *point_label_data);
-	void code_for_make_element(int *Elt, int *data);
-	void print_for_make_element(int *Elt, std::ostream &ost);
-	void print_for_make_element_no_commas(int *Elt, std::ostream &ost);
-	void print_with_action(actions::action *A, int *Elt, std::ostream &ost);
-	void make_element(int *Elt, int *data, int verbose_level);
+	void code_for_make_element(
+			int *Elt, int *data);
+	void print_for_make_element(
+			int *Elt, std::ostream &ost);
+	void print_for_make_element_no_commas(
+			int *Elt, std::ostream &ost);
+	void print_with_action(
+			actions::action *A, int *Elt, std::ostream &ost);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
 
 };
 
@@ -760,16 +793,26 @@ public:
 		// Perms is degree x nb_gens
 	long int element_image_of(
 			int *Elt, long int a, int verbose_level);
-	void element_one(int *Elt);
-	int element_is_one(int *Elt);
-	void element_mult(int *A, int *B, int *AB, int verbose_level);
-	void element_move(int *A, int *B, int verbose_level);
-	void element_invert(int *A, int *Av, int verbose_level);
-	void element_pack(int *Elt, uchar *elt);
-	void element_unpack(uchar *elt, int *Elt);
-	void element_print_for_make_element(int *Elt, std::ostream &ost);
-	void element_print_easy(int *Elt, std::ostream &ost);
-	void element_print_latex(int *Elt, std::ostream &ost);
+	void element_one(
+			int *Elt);
+	int element_is_one(
+			int *Elt);
+	void element_mult(
+			int *A, int *B, int *AB, int verbose_level);
+	void element_move(
+			int *A, int *B, int verbose_level);
+	void element_invert(
+			int *A, int *Av, int verbose_level);
+	void element_pack(
+			int *Elt, uchar *elt);
+	void element_unpack(
+			uchar *elt, int *Elt);
+	void element_print_for_make_element(
+			int *Elt, std::ostream &ost);
+	void element_print_easy(
+			int *Elt, std::ostream &ost);
+	void element_print_latex(
+			int *Elt, std::ostream &ost);
 };
 
 
@@ -1342,7 +1385,8 @@ public:
 		int verbose_level), 
 		void *callback_choose_random_generator_data, 
 		int verbose_level);
-	void init_old_G(sims *old_G, int verbose_level);
+	void init_old_G(
+			sims *old_G, int verbose_level);
 	void init_base_of_choice(
 		int base_of_choice_len, int *base_of_choice, 
 		int verbose_level);
@@ -1365,9 +1409,12 @@ public:
 	void get_generator_external_old_G(
 			int *Elt,
 		int verbose_level);
-	void get_generator(int *Elt, int verbose_level);
-	void closure_group(int verbose_level);
-	void create_group(int verbose_level);
+	void get_generator(
+			int *Elt, int verbose_level);
+	void closure_group(
+			int verbose_level);
+	void create_group(
+			int verbose_level);
 };
 
 // #############################################################################
@@ -1536,7 +1583,8 @@ public:
 	void swap_points(
 			int lvl, int i, int j);
 		// swaps two points given by their cosets
-	void path_unrank_lint(long int a);
+	void path_unrank_lint(
+			long int a);
 	long int path_rank_lint();
 	
 	void element_from_path(
@@ -1545,7 +1593,8 @@ public:
 		// the corresponding 
 		// element is multiplied.
 		// uses eltrk1, eltrk2
-	void element_from_path_inv(int *elt);
+	void element_from_path_inv(
+			int *elt);
 	void element_unrank(
 			ring_theory::longinteger_object &a, int *elt,
 		int verbose_level);
@@ -1605,9 +1654,12 @@ public:
 		int verbose_level);
 	int least_moved_point_at_level(
 			int lvl, int verbose_level);
-	int get_orbit(int i, int j);
-	int get_orbit_inv(int i, int j);
-	int get_orbit_length(int i);
+	int get_orbit(
+			int i, int j);
+	int get_orbit_inv(
+			int i, int j);
+	int get_orbit_length(
+			int i);
 	void get_orbit(
 			int orbit_idx, std::vector<int> &Orb,
 			int verbose_level);
@@ -1621,7 +1673,8 @@ public:
 
 
 	// sims_main.cpp:
-	void compute_base_orbits(int verbose_level);
+	void compute_base_orbits(
+			int verbose_level);
 	void compute_base_orbits_known_length(
 			int *tl,
 		int verbose_level);
@@ -1861,16 +1914,21 @@ public:
 	void print_orbit_len();
 	void print(int verbose_level);
 	void print_generators();
-	void print_generators_tex(std::ostream &ost);
+	void print_generators_tex(
+			std::ostream &ost);
 	void print_generators_as_permutations();
 	void print_generators_as_permutations_override_action(
 			actions::action *A);
 	void print_basic_orbits();
-	void print_basic_orbit(int i);
+	void print_basic_orbit(
+			int i);
 	void print_generator_depth_and_perm();
-	void print_group_order(std::ostream &ost);
-	void print_group_order_factored(std::ostream &ost);
-	void print_generators_at_level_or_below(int lvl);
+	void print_group_order(
+			std::ostream &ost);
+	void print_group_order_factored(
+			std::ostream &ost);
+	void print_generators_at_level_or_below(
+			int lvl);
 	void write_all_group_elements(
 			std::string &fname, int verbose_level);
 	void print_all_group_elements_to_file(
@@ -1928,7 +1986,8 @@ public:
 
 	strong_generators();
 	~strong_generators();
-	void swap_with(strong_generators *SG);
+	void swap_with(
+			strong_generators *SG);
 	void init(
 			actions::action *A);
 	void init(
@@ -1938,7 +1997,8 @@ public:
 	void init_from_ascii_coding(
 			actions::action *A,
 			std::string &ascii_coding, int verbose_level);
-	strong_generators *create_copy(int verbose_level);
+	strong_generators *create_copy(
+			int verbose_level);
 	void init_copy(
 			strong_generators *S,
 		int verbose_level);
@@ -2038,7 +2098,8 @@ public:
 			ring_theory::longinteger_object &go);
 	std::string group_order_stringify();
 	long int group_order_as_lint();
-	void print_group_order(std::ostream &ost);
+	void print_group_order(
+			std::ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
 			std::string &fname);
@@ -2058,7 +2119,8 @@ public:
 	void canonical_image_orbiter(
 			std::string &input_set_text,
 			int verbose_level);
-	void print_generators_gap(std::ostream &ost);
+	void print_generators_gap(
+			std::ostream &ost);
 	void print_generators_gap_in_different_action(
 			std::ostream &ost, actions::action *A2);
 	void print_generators_compact(
@@ -2417,8 +2479,10 @@ public:
 			int *Elements, int group_order,
 			int *gens, int nb_gens);
 	void print();
-	int contains_this_element(int elt);
-	void report(std::ostream &ost);
+	int contains_this_element(
+			int elt);
+	void report(
+			std::ostream &ost);
 };
 
 // #############################################################################
@@ -2439,8 +2503,10 @@ public:
 
 	sylow_structure();
 	~sylow_structure();
-	void init(sims *S, int verbose_level);
-	void report(std::ostream &ost);
+	void init(
+			sims *S, int verbose_level);
+	void report(
+			std::ostream &ost);
 };
 
 
@@ -2530,53 +2596,87 @@ public:
 			algebra::matrix_group *M,
 			actions::action *A_mtx, int nb_factors,
 			int verbose_level);
-	void compute_tensor_ranks(int verbose_level);
-	void unrank_point(long int a, int *v, int verbose_level);
-	long int rank_point(int *v, int verbose_level);
-	long int element_image_of(int *Elt, long int a, int verbose_level);
-	void element_image_of_low_level(int *Elt,
+	void compute_tensor_ranks(
+			int verbose_level);
+	void unrank_point(
+			long int a, int *v, int verbose_level);
+	long int rank_point(
+			int *v, int verbose_level);
+	long int element_image_of(
+			int *Elt, long int a, int verbose_level);
+	void element_image_of_low_level(
+			int *Elt,
 			int *input, int *output, int verbose_level);
 		// we assume that we are in the tensor product domain
-	void element_one(int *Elt);
-	int element_is_one(int *Elt);
-	void element_mult(int *A, int *B, int *AB, int verbose_level);
-	void element_move(int *A, int *B, int verbose_level);
-	void element_invert(int *A, int *Av, int verbose_level);
-	void compute_induced_permutation(int *Elt, int *perm);
-	void apply_permutation(int *Elt,
+	void element_one(
+			int *Elt);
+	int element_is_one(
+			int *Elt);
+	void element_mult(
+			int *A, int *B, int *AB, int verbose_level);
+	void element_move(
+			int *A, int *B, int verbose_level);
+	void element_invert(
+			int *A, int *Av, int verbose_level);
+	void compute_induced_permutation(
+			int *Elt, int *perm);
+	void apply_permutation(
+			int *Elt,
 			int *v_in, int *v_out, int verbose_level);
-	int offset_i(int i);
-	void create_matrix(int *Elt, int *A, int verbose_level);
+	int offset_i(
+			int i);
+	void create_matrix(
+			int *Elt, int *A, int verbose_level);
 		// uses A1, A2
-	void element_pack(int *Elt, uchar *elt);
-	void element_unpack(uchar *elt, int *Elt);
-	void put_digit(uchar *elt, int f, int i, int j, int d);
-	int get_digit(uchar *elt, int f, int i, int j);
-	void make_element_from_one_component(int *Elt,
+	void element_pack(
+			int *Elt, uchar *elt);
+	void element_unpack(
+			uchar *elt, int *Elt);
+	void put_digit(
+			uchar *elt, int f, int i, int j, int d);
+	int get_digit(
+			uchar *elt, int f, int i, int j);
+	void make_element_from_one_component(
+			int *Elt,
 			int f, int *Elt_component);
-	void make_element_from_permutation(int *Elt, int *perm);
-	void make_element(int *Elt, int *data, int verbose_level);
-	void element_print_for_make_element(int *Elt, std::ostream &ost);
-	void element_print_easy(int *Elt, std::ostream &ost);
-	void element_print_latex(int *Elt, std::ostream &ost);
-	void compute_base_and_transversals(int verbose_level);
-	void make_strong_generators_data(int *&data,
+	void make_element_from_permutation(
+			int *Elt, int *perm);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void element_print_for_make_element(
+			int *Elt, std::ostream &ost);
+	void element_print_easy(
+			int *Elt, std::ostream &ost);
+	void element_print_latex(
+			int *Elt, std::ostream &ost);
+	void compute_base_and_transversals(
+			int verbose_level);
+	void make_strong_generators_data(
+			int *&data,
 			int &size, int &nb_gens, int verbose_level);
 	void report_rank_one_tensors(
 			std::ostream &ost, int verbose_level);
 	void create_all_rank_one_tensors(
 			uint32_t *&rank_one_tensors,
 			int &nb_rank_one_tensors, int verbose_level);
-	uint32_t tensor_affine_rank(int *tensor);
-	void tensor_affine_unrank(int *tensor, uint32_t rk);
-	long int tensor_PG_rank(int *tensor);
-	void tensor_PG_unrank(int *tensor, long int PG_rk);
-	long int affine_rank_to_PG_rank(uint32_t affine_rk);
-	uint32_t PG_rank_to_affine_rank(long int PG_rk);
-	void save_rank_one_tensors(int verbose_level);
+	uint32_t tensor_affine_rank(
+			int *tensor);
+	void tensor_affine_unrank(
+			int *tensor, uint32_t rk);
+	long int tensor_PG_rank(
+			int *tensor);
+	void tensor_PG_unrank(
+			int *tensor, long int PG_rk);
+	long int affine_rank_to_PG_rank(
+			uint32_t affine_rk);
+	uint32_t PG_rank_to_affine_rank(
+			long int PG_rk);
+	void save_rank_one_tensors(
+			int verbose_level);
 	void compute_tensor_ranks(
 			char *&TR, uint32_t *&Prev, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
 	void compute_permutations_and_write_to_file(
 			strong_generators* SG,
 			actions::action* A,
@@ -2586,7 +2686,8 @@ public:
 			int verbose_level);
 	void make_fname(
 			std::string &fname, int nb_factors, int h, int b);
-	int test_if_file_exists(int nb_factors, int h, int b);
+	int test_if_file_exists(
+			int nb_factors, int h, int b);
 	void orbits_using_files_and_union_find(
 			strong_generators* SG,
 			actions::action* A,

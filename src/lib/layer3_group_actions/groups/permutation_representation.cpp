@@ -145,7 +145,8 @@ long int permutation_representation::element_image_of(
 	return b;
 }
 
-void permutation_representation::element_one(int *Elt)
+void permutation_representation::element_one(
+		int *Elt)
 {
 	int verbose_level = 0;
 
@@ -153,7 +154,8 @@ void permutation_representation::element_one(int *Elt)
 	P->one(Elt + perm_offset);
 }
 
-int permutation_representation::element_is_one(int *Elt)
+int permutation_representation::element_is_one(
+		int *Elt)
 {
 		if (!P->is_one(Elt)) {
 			return false;
@@ -161,7 +163,8 @@ int permutation_representation::element_is_one(int *Elt)
 		return true;
 }
 
-void permutation_representation::element_mult(int *A, int *B, int *AB,
+void permutation_representation::element_mult(
+		int *A, int *B, int *AB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -177,7 +180,8 @@ void permutation_representation::element_mult(int *A, int *B, int *AB,
 	}
 }
 
-void permutation_representation::element_move(int *A, int *B, int verbose_level)
+void permutation_representation::element_move(
+		int *A, int *B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -190,7 +194,8 @@ void permutation_representation::element_move(int *A, int *B, int verbose_level)
 	}
 }
 
-void permutation_representation::element_invert(int *A, int *Av, int verbose_level)
+void permutation_representation::element_invert(
+		int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;
@@ -205,27 +210,32 @@ void permutation_representation::element_invert(int *A, int *Av, int verbose_lev
 	}
 }
 
-void permutation_representation::element_pack(int *Elt, uchar *elt)
+void permutation_representation::element_pack(
+		int *Elt, uchar *elt)
 {
 	cout << "permutation_representation::element_pack not yet implemented" << endl;
 }
 
-void permutation_representation::element_unpack(uchar *elt, int *Elt)
+void permutation_representation::element_unpack(
+		uchar *elt, int *Elt)
 {
 	cout << "permutation_representation::element_unpack not yet implemented" << endl;
 }
 
-void permutation_representation::element_print_for_make_element(int *Elt, std::ostream &ost)
+void permutation_representation::element_print_for_make_element(
+		int *Elt, std::ostream &ost)
 {
 	A_original->Group_element->element_print_for_make_element(Elt, ost);
 }
 
-void permutation_representation::element_print_easy(int *Elt, std::ostream &ost)
+void permutation_representation::element_print_easy(
+		int *Elt, std::ostream &ost)
 {
 	A_original->Group_element->element_print_quick(Elt, ost);
 }
 
-void permutation_representation::element_print_latex(int *Elt, std::ostream &ost)
+void permutation_representation::element_print_latex(
+		int *Elt, std::ostream &ost)
 {
 	A_original->Group_element->element_print_latex(Elt, ost);
 }

@@ -61,6 +61,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_test_distinguishing_property = false;
 	//test_distinguishing_property_graph
 
+	f_compute_frequency = false;
+	//std::string compute_frequency_graph;
+
 	f_unpack_from_restricted_action = false;
 	//std::string unpack_from_restricted_action_prefix;
 	//std::string unpack_from_restricted_action_group_label;
@@ -208,6 +211,12 @@ int combinatorial_object_activity_description::read_arguments(
 			test_distinguishing_property_graph.assign(argv[++i]);
 			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
 		}
+		else if (ST.stringcmp(argv[i], "-compute_frequency") == 0) {
+			f_compute_frequency = true;
+			compute_frequency_graph.assign(argv[++i]);
+			cout << "-compute_frequency " << compute_frequency_graph << endl;
+		}
+
 		else if (ST.stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
 			f_unpack_from_restricted_action = true;
 			unpack_from_restricted_action_prefix.assign(argv[++i]);
@@ -287,6 +296,9 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+	}
+	if (f_compute_frequency) {
+		cout << "-compute_frequency " << compute_frequency_graph << endl;
 	}
 	if (f_unpack_from_restricted_action) {
 		cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix

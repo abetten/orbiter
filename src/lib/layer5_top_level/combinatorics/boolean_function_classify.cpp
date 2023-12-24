@@ -17,8 +17,10 @@ namespace layer5_applications {
 namespace apps_combinatorics {
 
 
-static void boolean_function_classify_print_function(int *poly, int sz, void *data);
-static void boolean_function_classify_reduction_function(int *poly, void *data);
+static void boolean_function_classify_print_function(
+		int *poly, int sz, void *data);
+static void boolean_function_classify_reduction_function(
+		int *poly, void *data);
 
 
 boolean_function_classify::boolean_function_classify()
@@ -411,7 +413,8 @@ void boolean_function_classify::search_for_bent_functions(
 
 
 
-static void boolean_function_classify_print_function(int *poly, int sz, void *data)
+static void boolean_function_classify_print_function(
+		int *poly, int sz, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
 	geometry::geometry_global Gg;
@@ -427,7 +430,8 @@ static void boolean_function_classify_print_function(int *poly, int sz, void *da
 
 }
 
-static void boolean_function_classify_reduction_function(int *poly, void *data)
+static void boolean_function_classify_reduction_function(
+		int *poly, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
 

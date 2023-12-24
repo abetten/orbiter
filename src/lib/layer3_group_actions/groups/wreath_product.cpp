@@ -385,7 +385,8 @@ void wreath_product::init_tensor_wreath_product(
 	}
 }
 
-void wreath_product::compute_tensor_ranks(int verbose_level)
+void wreath_product::compute_tensor_ranks(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -395,7 +396,8 @@ void wreath_product::compute_tensor_ranks(int verbose_level)
 	compute_tensor_ranks(TR, Prev, verbose_level);
 }
 
-void wreath_product::unrank_point(long int a, int *v, int verbose_level)
+void wreath_product::unrank_point(
+		long int a, int *v, int verbose_level)
 {
 	if (a < nb_factors) {
 		cout << "wreath_product::unrank_point "
@@ -414,7 +416,8 @@ void wreath_product::unrank_point(long int a, int *v, int verbose_level)
 			dimension_of_tensor_action, a);
 }
 
-long int wreath_product::rank_point(int *v, int verbose_level)
+long int wreath_product::rank_point(
+		int *v, int verbose_level)
 {
 	long int a, b;
 
@@ -426,7 +429,8 @@ long int wreath_product::rank_point(int *v, int verbose_level)
 	return a;
 }
 
-long int wreath_product::element_image_of(int *Elt, long int a, int verbose_level)
+long int wreath_product::element_image_of(
+		int *Elt, long int a, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int f, a0, b, c;
@@ -533,7 +537,8 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 	return b;
 }
 
-void wreath_product::element_image_of_low_level(int *Elt,
+void wreath_product::element_image_of_low_level(
+		int *Elt,
 		int *input, int *output, int verbose_level)
 // we assume that we are in the tensor product domain
 {
@@ -577,7 +582,8 @@ void wreath_product::element_image_of_low_level(int *Elt,
 	}
 }
 
-void wreath_product::element_one(int *Elt)
+void wreath_product::element_one(
+		int *Elt)
 {
 	int f;
 
@@ -587,7 +593,8 @@ void wreath_product::element_one(int *Elt)
 	}
 }
 
-int wreath_product::element_is_one(int *Elt)
+int wreath_product::element_is_one(
+		int *Elt)
 {
 		int f; //, scalar;
 
@@ -610,7 +617,8 @@ int wreath_product::element_is_one(int *Elt)
 		return true;
 }
 
-void wreath_product::element_mult(int *A, int *B, int *AB,
+void wreath_product::element_mult(
+		int *A, int *B, int *AB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -633,7 +641,8 @@ void wreath_product::element_mult(int *A, int *B, int *AB,
 	}
 }
 
-void wreath_product::element_move(int *A, int *B, int verbose_level)
+void wreath_product::element_move(
+		int *A, int *B, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -653,7 +662,8 @@ void wreath_product::element_move(int *A, int *B, int verbose_level)
 	}
 }
 
-void wreath_product::element_invert(int *A, int *Av, int verbose_level)
+void wreath_product::element_invert(
+		int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
@@ -672,7 +682,8 @@ void wreath_product::element_invert(int *A, int *Av, int verbose_level)
 	}
 }
 
-void wreath_product::compute_induced_permutation(int *Elt, int *perm)
+void wreath_product::compute_induced_permutation(
+		int *Elt, int *perm)
 {
 	int i, j, h, k, a;
 	geometry::geometry_global Gg;
@@ -692,7 +703,8 @@ void wreath_product::compute_induced_permutation(int *Elt, int *perm)
 }
 
 
-void wreath_product::apply_permutation(int *Elt,
+void wreath_product::apply_permutation(
+		int *Elt,
 		int *v_in, int *v_out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -747,12 +759,14 @@ void wreath_product::apply_permutation(int *Elt,
 	}
 }
 
-int wreath_product::offset_i(int f)
+int wreath_product::offset_i(
+		int f)
 {
 	return P->elt_size_int + f * M->elt_size_int;
 }
 
-void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
+void wreath_product::create_matrix(
+		int *Elt, int *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, N;
@@ -786,7 +800,8 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 	}
 }
 
-void wreath_product::element_pack(int *Elt, uchar *elt)
+void wreath_product::element_pack(
+		int *Elt, uchar *elt)
 {
 	int i, j, f;
 
@@ -803,7 +818,8 @@ void wreath_product::element_pack(int *Elt, uchar *elt)
 	}
 }
 
-void wreath_product::element_unpack(uchar *elt, int *Elt)
+void wreath_product::element_unpack(
+		uchar *elt, int *Elt)
 {
 	int i, j, f;
 	int *m;
@@ -824,7 +840,8 @@ void wreath_product::element_unpack(uchar *elt, int *Elt)
 	}
 }
 
-void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
+void wreath_product::put_digit(
+		uchar *elt, int f, int i, int j, int d)
 {
 	data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
@@ -845,7 +862,8 @@ void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 	}
 }
 
-int wreath_product::get_digit(uchar *elt, int f, int i, int j)
+int wreath_product::get_digit(
+		uchar *elt, int f, int i, int j)
 {
 	data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
@@ -865,7 +883,8 @@ int wreath_product::get_digit(uchar *elt, int f, int i, int j)
 	return d;
 }
 
-void wreath_product::make_element_from_one_component(int *Elt,
+void wreath_product::make_element_from_one_component(
+		int *Elt,
 		int f, int *Elt_component)
 {
 		int g;
@@ -881,7 +900,8 @@ void wreath_product::make_element_from_one_component(int *Elt,
 		}
 }
 
-void wreath_product::make_element_from_permutation(int *Elt, int *perm)
+void wreath_product::make_element_from_permutation(
+		int *Elt, int *perm)
 {
 		int f;
 
@@ -893,7 +913,8 @@ void wreath_product::make_element_from_permutation(int *Elt, int *perm)
 		}
 }
 
-void wreath_product::make_element(int *Elt, int *data, int verbose_level)
+void wreath_product::make_element(
+		int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, offset;
@@ -924,7 +945,8 @@ void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 }
 
-void wreath_product::element_print_for_make_element(int *Elt, std::ostream &ost)
+void wreath_product::element_print_for_make_element(
+		int *Elt, std::ostream &ost)
 {
 	int f;
 
@@ -936,7 +958,8 @@ void wreath_product::element_print_for_make_element(int *Elt, std::ostream &ost)
 	}
 }
 
-void wreath_product::element_print_easy(int *Elt, std::ostream &ost)
+void wreath_product::element_print_easy(
+		int *Elt, std::ostream &ost)
 {
 	int f;
 
@@ -956,7 +979,8 @@ void wreath_product::element_print_easy(int *Elt, std::ostream &ost)
 	ost << "end element of wreath product" << endl;
 }
 
-void wreath_product::element_print_latex(int *Elt, std::ostream &ost)
+void wreath_product::element_print_latex(
+		int *Elt, std::ostream &ost)
 {
 	int f;
 	combinatorics::combinatorics_domain Combi;
@@ -980,7 +1004,8 @@ void wreath_product::element_print_latex(int *Elt, std::ostream &ost)
 	ost << "\\right)" << endl;
 }
 
-void wreath_product::compute_base_and_transversals(int verbose_level)
+void wreath_product::compute_base_and_transversals(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, f, h;
@@ -1027,7 +1052,8 @@ void wreath_product::compute_base_and_transversals(int verbose_level)
 		}
 }
 
-void wreath_product::make_strong_generators_data(int *&data,
+void wreath_product::make_strong_generators_data(
+		int *&data,
 		int &size, int &nb_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1260,7 +1286,8 @@ void wreath_product::report_rank_one_tensors(
 }
 
 
-static void dimensions(int n, int &nb_rows, int &nb_cols)
+static void dimensions(
+		int n, int &nb_rows, int &nb_cols)
 {
 	int i, j;
 
@@ -1269,7 +1296,8 @@ static void dimensions(int n, int &nb_rows, int &nb_cols)
 	nb_cols = j + 1;
 }
 
-static void place_binary(long int h, int &i, int &j)
+static void place_binary(
+		long int h, int &i, int &j)
 {
 	int o[2];
 	int c;
@@ -1395,7 +1423,8 @@ void wreath_product::create_all_rank_one_tensors(
 	}
 }
 
-uint32_t wreath_product::tensor_affine_rank(int *tensor)
+uint32_t wreath_product::tensor_affine_rank(
+		int *tensor)
 {
 	uint32_t b;
 	int i;
@@ -1410,7 +1439,8 @@ uint32_t wreath_product::tensor_affine_rank(int *tensor)
 	return b;
 }
 
-void wreath_product::tensor_affine_unrank(int *tensor, uint32_t rk)
+void wreath_product::tensor_affine_unrank(
+		int *tensor, uint32_t rk)
 {
 	uint32_t b;
 	int i;
@@ -1426,7 +1456,8 @@ void wreath_product::tensor_affine_unrank(int *tensor, uint32_t rk)
 	}
 }
 
-long int wreath_product::tensor_PG_rank(int *tensor)
+long int wreath_product::tensor_PG_rank(
+		int *tensor)
 {
 	long int b;
 
@@ -1435,13 +1466,15 @@ long int wreath_product::tensor_PG_rank(int *tensor)
 	return b;
 }
 
-void wreath_product::tensor_PG_unrank(int *tensor, long int PG_rk)
+void wreath_product::tensor_PG_unrank(
+		int *tensor, long int PG_rk)
 {
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			tensor, 1, dimension_of_tensor_action, PG_rk);
 }
 
-long int wreath_product::affine_rank_to_PG_rank(uint32_t affine_rk)
+long int wreath_product::affine_rank_to_PG_rank(
+		uint32_t affine_rk)
 {
 	long int b;
 
@@ -1451,7 +1484,8 @@ long int wreath_product::affine_rank_to_PG_rank(uint32_t affine_rk)
 	return b;
 }
 
-uint32_t wreath_product::PG_rank_to_affine_rank(long int PG_rk)
+uint32_t wreath_product::PG_rank_to_affine_rank(
+		long int PG_rk)
 {
 	uint32_t b;
 
@@ -1461,7 +1495,8 @@ uint32_t wreath_product::PG_rank_to_affine_rank(long int PG_rk)
 	return b;
 }
 
-void wreath_product::save_rank_one_tensors(int verbose_level)
+void wreath_product::save_rank_one_tensors(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1905,7 +1940,8 @@ void wreath_product::compute_tensor_ranks(
 	}
 }
 
-void wreath_product::report(std::ostream &ost, int verbose_level)
+void wreath_product::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2387,7 +2423,8 @@ void wreath_product::make_fname(
 	fname = "w" + std::to_string(nb_factors) + "_h" + std::to_string(h) + "_b" + std::to_string(b) + ".bin";
 }
 
-int wreath_product::test_if_file_exists(int nb_factors, int h, int b)
+int wreath_product::test_if_file_exists(
+		int nb_factors, int h, int b)
 {
 	std::string fname;
 	orbiter_kernel_system::file_io Fio;

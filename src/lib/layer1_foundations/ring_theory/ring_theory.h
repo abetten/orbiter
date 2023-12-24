@@ -194,6 +194,8 @@ public:
 			int *&Kernel, int &dim_kernel, int verbose_level);
 	void get_quadratic_form_matrix(
 			int *eqn, int *M);
+	void print_symbols(
+			std::ostream &ost);
 	void print_monomial(
 			std::ostream &ost, int i);
 	void print_monomial(

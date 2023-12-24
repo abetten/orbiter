@@ -31,7 +31,8 @@ orbiter_session::orbiter_session()
 	cout << "orbiter_session::orbiter_session" << endl;
 
 	if (Orbiter) {
-		cout << "orbiter_session::orbiter_session The_Orbiter_session is non NULL" << endl;
+		cout << "orbiter_session::orbiter_session "
+				"The_Orbiter_session is non NULL" << endl;
 		exit(1);
 	}
 	Orbiter = this;
@@ -127,7 +128,8 @@ orbiter_session::~orbiter_session()
 }
 
 
-void orbiter_session::print_help(int argc,
+void orbiter_session::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	string_tools ST;
@@ -164,7 +166,8 @@ void orbiter_session::print_help(int argc,
 	}
 }
 
-int orbiter_session::recognize_keyword(int argc,
+int orbiter_session::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	string_tools ST;
@@ -202,7 +205,8 @@ int orbiter_session::recognize_keyword(int argc,
 	return false;
 }
 
-int orbiter_session::read_arguments(int argc,
+int orbiter_session::read_arguments(
+		int argc,
 		std::string *argv, int i0)
 {
 	int i;
@@ -398,12 +402,14 @@ void orbiter_session::fork(
 }
 
 
-void *orbiter_session::get_object(int idx)
+void *orbiter_session::get_object(
+		int idx)
 {
 	return Orbiter_symbol_table->get_object(idx);
 }
 
-symbol_table_object_type orbiter_session::get_object_type(int idx)
+symbol_table_object_type orbiter_session::get_object_type(
+		int idx)
 {
 	return Orbiter_symbol_table->get_object_type(idx);
 }

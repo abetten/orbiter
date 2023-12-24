@@ -130,7 +130,7 @@ void diophant_create::init(
 				Covering_matrix,
 				nb_rows, nb_cols, verbose_level);
 
-		int nb_t_orbits = Descr->problem_of_Steiner_type_nb_t_orbits;
+		int nb_t_orbits = Descr->problem_of_Steiner_type_N;
 		int nb_k_orbits = nb_rows;
 
 		D = NEW_OBJECT(diophant);

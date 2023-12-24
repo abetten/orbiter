@@ -233,14 +233,14 @@ void surface_polynomial_domains::init(
 	}
 
 
-	label_variables_3(Poly1, 0 /* verbose_level */);
-	label_variables_3(Poly2, 0 /* verbose_level */);
-	label_variables_3(Poly3, 0 /* verbose_level */);
+	label_variables_3(Poly1, verbose_level);
+	label_variables_3(Poly2, verbose_level);
+	label_variables_3(Poly3, verbose_level);
 
-	label_variables_x123(Poly1_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly2_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly3_x123, 0 /* verbose_level */);
-	label_variables_x123(Poly4_x123, 0 /* verbose_level */);
+	label_variables_x123(Poly1_x123, verbose_level);
+	label_variables_x123(Poly2_x123, verbose_level);
+	label_variables_x123(Poly3_x123, verbose_level);
+	label_variables_x123(Poly4_x123, verbose_level);
 
 	Poly1_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 	Poly2_4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);

@@ -33,7 +33,8 @@ strong_generators::~strong_generators()
 	}
 }
 
-void strong_generators::swap_with(strong_generators *SG)
+void strong_generators::swap_with(
+		strong_generators *SG)
 {
 	actions::action *my_A;
 	int *my_tl;
@@ -147,7 +148,8 @@ void strong_generators::init_from_ascii_coding(
 }
 
 
-strong_generators *strong_generators::create_copy(int verbose_level)
+strong_generators *strong_generators::create_copy(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1334,7 +1336,8 @@ long int strong_generators::group_order_as_lint()
 	return go.as_lint();
 }
 
-void strong_generators::print_group_order(std::ostream &ost)
+void strong_generators::print_group_order(
+		std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 
@@ -1342,7 +1345,8 @@ void strong_generators::print_group_order(std::ostream &ost)
 	ost << go;
 }
 
-void strong_generators::print_generators_gap(std::ostream &ost)
+void strong_generators::print_generators_gap(
+		std::ostream &ost)
 {
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);

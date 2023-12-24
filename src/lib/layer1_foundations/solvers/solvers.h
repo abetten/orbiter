@@ -161,7 +161,7 @@ public:
 	int has_sum;
 
 	int f_problem_of_Steiner_type;
-	int problem_of_Steiner_type_nb_t_orbits;
+	int problem_of_Steiner_type_N;
 	std::string problem_of_Steiner_type_covering_matrix_fname;
 
 	int f_maximal_arc;

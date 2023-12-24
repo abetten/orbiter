@@ -365,10 +365,10 @@ void orbits_activity::do_export(
 		cout << "orbits_activity::do_export" << endl;
 	}
 
+	string fname;
 
 	if (OC->f_has_Orb) {
 
-		string fname;
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -385,17 +385,21 @@ void orbits_activity::do_export(
 					"after OC->Orb->export_something" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "orbits_activity::do_export "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
 
 	}
 
+	else if (OC->f_has_On_subsets) {
+
+		//poset_classification::poset_classification *On_subsets;
+
+		OC->On_subsets->export_something_worker(
+				Descr->export_something_what,
+				Descr->export_something_data1, fname,
+				verbose_level);
+
+	}
 	else if (OC->f_has_On_polynomials) {
 
-		string fname;
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -412,11 +416,6 @@ void orbits_activity::do_export(
 					"after OC->On_polynomials->export_something" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "orbits_activity::do_export "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
 
 
 	}
@@ -426,6 +425,12 @@ void orbits_activity::do_export(
 				"no suitable data structure found" << endl;
 		exit(1);
 	}
+	orbiter_kernel_system::file_io Fio;
+
+	cout << "orbits_activity::do_export "
+			"Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
 
 
 	if (f_v) {

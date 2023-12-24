@@ -219,6 +219,9 @@ public:
 			std::string *Col_headings,
 			int verbose_level);
 
+	int read_column_and_count_nb_sets(
+			std::string &fname, std::string &col_label,
+			int verbose_level);
 	void read_column_and_parse(
 			std::string &fname, std::string &col_label,
 			data_structures::set_of_sets *&SoS,
@@ -981,7 +984,8 @@ public:
 	
 	orbiter_data_file();
 	~orbiter_data_file();
-	void load(std::string &fname, int verbose_level);
+	void load(
+			std::string &fname, int verbose_level);
 };
 
 
@@ -1055,17 +1059,22 @@ public:
 
 	orbiter_session();
 	~orbiter_session();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc,
+	int read_arguments(
+			int argc,
 			std::string *argv, int i0);
 	void fork(
 			int argc, std::string *argv, int verbose_level);
 
-	void *get_object(int idx);
-	enum symbol_table_object_type get_object_type(int idx);
+	void *get_object(
+			int idx);
+	enum symbol_table_object_type get_object_type(
+			int idx);
 	int find_symbol(std::string &label);
 	void get_vector_from_label(
 			std::string &label, long int *&v, int &sz,

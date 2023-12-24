@@ -89,7 +89,8 @@ void algebra_global_with_action::orbits_under_conjugation(
 		cout << "algebra_global_with_action::orbits_under_conjugation "
 				"before create_subgroups" << endl;
 	}
-	create_subgroups(SG,
+	create_subgroups(
+			SG,
 			the_set, set_size, S, A_conj,
 			&Classes,
 			Transporter,
@@ -205,8 +206,12 @@ void algebra_global_with_action::create_subgroups(
 		rk1 = the_set[rep];
 		rk2 = S->mult_by_rank(rk0, rk1, 0 /*verbose_level*/);
 
-		if (Sorting.lint_vec_search(the_set_sorted, set_size, rk2, idx, 0 /*verbose_level*/)) {
-			cout << "flag orbit " << nb_flag_orbits << " : " << j << " l=" << l << " : " << rk0 << "," << rk1 << "," << rk2 << endl;
+		if (Sorting.lint_vec_search(
+				the_set_sorted, set_size, rk2, idx,
+				0 /*verbose_level*/)) {
+			cout << "flag orbit " << nb_flag_orbits << " : "
+					<< j << " l=" << l << " : "
+					<< rk0 << "," << rk1 << "," << rk2 << endl;
 
 			S->element_unrank_lint(rk1, Elt1);
 			S->element_unrank_lint(rk2, Elt2);
@@ -261,7 +266,9 @@ void algebra_global_with_action::create_subgroups(
 			S->element_unrank_lint(rk0, Elt0);
 			S->element_unrank_lint(rk1, Elt1);
 			S->element_unrank_lint(rk2, Elt2);
-			cout << h << " : " << SO[h] << " : " << SOL[h] << " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
+			cout << h << " : " << SO[h] << " : " << SOL[h]
+				<< " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1
+				<< endl;
 			cout << "The subgroup consists of the following three "
 					"non-identity elements:" << endl;
 			S->A->Group_element->element_print_quick(Elt0, cout);
@@ -393,14 +400,16 @@ void algebra_global_with_action::create_subgroups(
 				S->A->Group_element->element_print_quick(Elt2, cout);
 
 				for (int u = 0; u < 3; u++) {
-					cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(cur_flag[u], Elt2, 0);
+					cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(
+							cur_flag[u], Elt2, 0);
 				}
 				cout << "which maps as follows:" << endl;
 				for (int u = 0; u < 3; u++) {
 					cout << cur_flag[u] << " -> " << cur_flag_mapped1[u] << endl;
 				}
 
-				S->A->Group_element->element_move(Elt2, transversal->ith(upstep_transversal_size[nb_iso]), 0);
+				S->A->Group_element->element_move(Elt2, transversal->ith(
+						upstep_transversal_size[nb_iso]), 0);
 
 				upstep_transversal_size[nb_iso]++;
 			}
@@ -409,7 +418,8 @@ void algebra_global_with_action::create_subgroups(
 					cout << "cannot find j in SO" << endl;
 					exit(1);
 				}
-				cout << "flag " << flag << " coset " << h << ", fusing with flag " << idx << endl;
+				cout << "flag " << flag << " coset " << h
+						<< ", fusing with flag " << idx << endl;
 				f_fused[idx] = true;
 			}
 
@@ -420,8 +430,10 @@ void algebra_global_with_action::create_subgroups(
 		aut = NEW_OBJECT(groups::strong_generators);
 
 		if (f_v) {
-			cout << "flag " << flag << " stab order = " << Flag_stab[flag]->group_order_as_lint()
-					<< " upstep ransversal length = " << upstep_transversal_size[nb_iso] << endl;
+			cout << "flag " << flag << " stab order = "
+					<< Flag_stab[flag]->group_order_as_lint()
+					<< " upstep ransversal length = "
+					<< upstep_transversal_size[nb_iso] << endl;
 			cout << "before aut->init_group_extension" << endl;
 		}
 		aut->init(S->A);
@@ -487,7 +499,8 @@ void algebra_global_with_action::create_subgroups(
 
 
 			if (f_v) {
-				cout << "algebra_global_with_action::create_subgroups before report" << endl;
+				cout << "algebra_global_with_action::create_subgroups "
+						"before report" << endl;
 			}
 #if 1
 			int h;
@@ -520,7 +533,8 @@ void algebra_global_with_action::create_subgroups(
 			ost << "\\bigskip" << endl;
 #endif
 
-			ost << "We found " << nb_iso << " conjugacy classes of subgroups\\\\" << endl;
+			ost << "We found " << nb_iso
+					<< " conjugacy classes of subgroups\\\\" << endl;
 			ost << "Subgroup  : Order of normalizer\\\\" << endl;
 			for (i = 0; i < nb_iso; i++) {
 				ost << i << " : " << Aut[i]->group_order_as_lint() << "\\\\" << endl;
@@ -534,9 +548,11 @@ void algebra_global_with_action::create_subgroups(
 				rk0 = Flags[flag * 3 + 0];
 				rk1 = Flags[flag * 3 + 1];
 				rk2 = Flags[flag * 3 + 2];
-				cout << i << " : " << flag << " : " <<  " : " << SO[flag] << " l=" << SOL[flag]
+				cout << i << " : " << flag << " : "
+						<<  " : " << SO[flag] << " l=" << SOL[flag]
 						<< " : " << rk0 << "," << rk1 << "," << rk2 << " : "
-						<< upstep_transversal_size[i] << " : " << Aut[i]->group_order_as_lint() << endl;
+						<< upstep_transversal_size[i] << " : "
+						<< Aut[i]->group_order_as_lint() << endl;
 
 				S->element_unrank_lint(rk0, Elt0);
 				S->element_unrank_lint(rk1, Elt1);
@@ -786,8 +802,10 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 	F = A->matrix_group_finite_field();
 
 	if (f_v) {
-		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms d=" << d << endl;
-		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms q=" << F->q << endl;
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"d=" << d << endl;
+		cout << "algebra_global_with_action::conjugacy_classes_based_on_normal_forms "
+				"q=" << F->q << endl;
 	}
 
 	algebra::gl_classes C;
@@ -799,14 +817,17 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 	long int a;
 
 
-	fname_output += "_classes_based_on_normal_forms_" + std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
+	fname_output += "_classes_based_on_normal_forms_"
+			+ std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
 
 	C.init(d, F, verbose_level);
 
 	if (f_v) {
 		cout << "before C.make_classes" << endl;
 	}
-	C.make_classes(R, nb_classes, false /*f_no_eigenvalue_one*/, verbose_level);
+	C.make_classes(
+			R, nb_classes, false /*f_no_eigenvalue_one*/,
+			verbose_level);
 	if (f_v) {
 		cout << "after C.make_classes" << endl;
 	}
@@ -825,7 +846,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 		}
 
 		Int_vec_zero(Mtx, d * d + 1);
-		C.make_matrix_from_class_rep(Mtx, R + i, verbose_level - 1);
+		C.make_matrix_from_class_rep(
+				Mtx, R + i, verbose_level - 1);
 
 		A->Group_element->make_element(Elt, Mtx, 0);
 
@@ -908,7 +930,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 			ost << "\\section{The Classes of Elements of Order $" << a << "$}" << endl;
 
 
-			ost << "There are " << l << " classes of elements of order " << a << "\\\\" << endl;
+			ost << "There are " << l << " classes of elements of order "
+					<< a << "\\\\" << endl;
 
 			for (h = 0; h < l; h++) {
 
@@ -917,7 +940,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 				i = T_order.sorting_perm_inv[c];
 
 				if (f_v) {
-					cout << "class " << h << " / " << l << " of elements of order " << a << ":" << endl;
+					cout << "class " << h << " / " << l
+							<< " of elements of order " << a << ":" << endl;
 				}
 
 				Int_vec_zero(Mtx, d * d + 1);
@@ -1022,7 +1046,8 @@ void algebra_global_with_action::classes_GL(
 
 	for (i = 0; i < nb_classes; i++) {
 
-		C.make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
+		C.make_matrix_from_class_rep(
+				Mtx, R + i, 0 /*verbose_level - 1 */);
 
 		A->Group_element->make_element(Elt, Mtx, 0);
 
@@ -1040,7 +1065,8 @@ void algebra_global_with_action::classes_GL(
 
 	string fname;
 
-	fname = "Class_reps_GL_" + std::to_string(d) + "_" + std::to_string(F->q) + ".tex";
+	fname = "Class_reps_GL_" + std::to_string(d)
+			+ "_" + std::to_string(F->q) + ".tex";
 	{
 		ofstream fp(fname);
 		l1_interfaces::latex_interface L;
@@ -1065,6 +1091,7 @@ void algebra_global_with_action::do_normal_form(
 		int q, int d,
 		int f_no_eigenvalue_one, int *data, int data_sz,
 		int verbose_level)
+// ToDo: move this
 // not called from anywhere at all
 {
 	int f_v = (verbose_level >= 1);
@@ -1113,8 +1140,11 @@ void algebra_global_with_action::do_normal_form(
 
 
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_projective_group(d /* n */, F,
-			false /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
+	A->Known_groups->init_projective_group(
+			d /* n */, F,
+			false /* f_semilinear */,
+			true /* f_basis */,
+			true /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
 	FREE_OBJECT(nice_gens);
@@ -1173,6 +1203,7 @@ void algebra_global_with_action::do_identify_one(
 		int q, int d,
 		int f_no_eigenvalue_one, int elt_idx,
 		int verbose_level)
+// ToDo: move this
 // not called at all
 {
 	int f_v = (verbose_level >= 1);
@@ -1240,7 +1271,9 @@ void algebra_global_with_action::do_identify_one(
 
 	C.identify_matrix(Elt, R1, Basis, verbose_level);
 
-	class_rep = C.find_class_rep(Reps, nb_classes, R1, 0 /* verbose_level */);
+	class_rep = C.find_class_rep(
+			Reps, nb_classes, R1,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "class = " << class_rep << endl;
@@ -1264,6 +1297,7 @@ void algebra_global_with_action::do_identify_one(
 void algebra_global_with_action::do_identify_all(
 		int q, int d,
 		int f_no_eigenvalue_one, int verbose_level)
+// ToDo: move this
 // not called at all
 {
 	int f_v = (verbose_level >= 1);
@@ -1295,9 +1329,11 @@ void algebra_global_with_action::do_identify_all(
 
 
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(
+			d /* n */, F,
 			false /* f_semilinear */,
-			true /* f_basis */, true /* f_init_sims */,
+			true /* f_basis */,
+			true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1361,6 +1397,7 @@ void algebra_global_with_action::do_identify_all(
 void algebra_global_with_action::do_random(
 		int q, int d,
 		int f_no_eigenvalue_one, int verbose_level)
+// ToDo: move this
 // not called at all
 {
 	int f_v = (verbose_level >= 1);
@@ -1382,7 +1419,9 @@ void algebra_global_with_action::do_random(
 			0);
 	C.init(d, F, verbose_level);
 
-	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
+	C.make_classes(
+			Reps, nb_classes, f_no_eigenvalue_one,
+			verbose_level);
 
 	int *Mtx;
 	int *Basis;
@@ -1392,16 +1431,19 @@ void algebra_global_with_action::do_random(
 	Mtx = NEW_int(d * d);
 	Basis = NEW_int(d * d);
 
-	C.F->Linear_algebra->random_invertible_matrix(Mtx, d, verbose_level - 2);
+	C.F->Linear_algebra->random_invertible_matrix(
+			Mtx, d, verbose_level - 2);
 
 
 	algebra::gl_class_rep *R1;
 
 	R1 = NEW_OBJECT(algebra::gl_class_rep);
 
-	C.identify_matrix(Mtx, R1, Basis, verbose_level);
+	C.identify_matrix(
+			Mtx, R1, Basis, verbose_level);
 
-	class_rep = C.find_class_rep(Reps, nb_classes,
+	class_rep = C.find_class_rep(
+			Reps, nb_classes,
 			R1, 0 /* verbose_level */);
 
 	cout << "class = " << class_rep << endl;
@@ -1438,13 +1480,15 @@ void algebra_global_with_action::group_table(
 
 	F = NEW_OBJECT(field_theory::finite_field);
 	if (f_poly) {
-		F->init_override_polynomial_small_order(q, poly,
+		F->init_override_polynomial_small_order(
+				q, poly,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
 	}
 	else {
-		F->finite_field_init_small_order(q,
+		F->finite_field_init_small_order(
+				q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
@@ -1452,7 +1496,9 @@ void algebra_global_with_action::group_table(
 
 	C.init(d, F, verbose_level);
 
-	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
+	C.make_classes(
+			Reps, nb_classes, f_no_eigenvalue_one,
+			verbose_level);
 
 
 	actions::action *A;
@@ -1461,7 +1507,8 @@ void algebra_global_with_action::group_table(
 
 
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_projective_group(d /* n */,
+	A->Known_groups->init_projective_group(
+			d /* n */,
 			F,
 			false /* f_semilinear */,
 			true /* f_basis */, true /* f_init_sims */,
@@ -1506,16 +1553,19 @@ void algebra_global_with_action::group_table(
 
 
 
-			U.create_object_by_rank(char_poly, 0, verbose_level);
+			U.create_object_by_rank(
+					char_poly, 0, verbose_level);
 
-			U.characteristic_polynomial(Elt,
+			U.characteristic_polynomial(
+					Elt,
 					d, char_poly, verbose_level - 2);
 
 			cout << "The characteristic polynomial is ";
 			U.print_object(char_poly, cout);
 			cout << endl;
 
-			eval = U.substitute_scalar_in_polynomial(char_poly,
+			eval = U.substitute_scalar_in_polynomial(
+					char_poly,
 					1 /* scalar */, 0 /* verbose_level */);
 			U.delete_object(char_poly);
 
@@ -1638,6 +1688,7 @@ void algebra_global_with_action::group_table(
 void algebra_global_with_action::centralizer_brute_force(
 		int q, int d,
 		int elt_idx, int verbose_level)
+// ToDo: move this
 // problem elt_idx does not describe the group element uniquely.
 // Reason: the sims chain is not canonical.
 // creates a finite_field object and an action object
@@ -1659,9 +1710,11 @@ void algebra_global_with_action::centralizer_brute_force(
 			0);
 
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(
+			d /* n */, F,
 			false /* f_semilinear */,
-			true /* f_basis */, true /* f_init_sims */,
+			true /* f_basis */,
+			true /* f_init_sims */,
 			nice_gens,
 			verbose_level);
 	FREE_OBJECT(nice_gens);
@@ -1781,6 +1834,7 @@ void algebra_global_with_action::centralizer_brute_force(
 void algebra_global_with_action::centralizer(
 		int q, int d,
 		int elt_idx, int verbose_level)
+// ToDo: move this
 // creates a finite_field, and two actions
 // using init_projective_group and init_general_linear_group
 {
@@ -1802,7 +1856,8 @@ void algebra_global_with_action::centralizer(
 			0);
 
 	A_PGL = NEW_OBJECT(actions::action);
-	A_PGL->Known_groups->init_projective_group(d /* n */, F,
+	A_PGL->Known_groups->init_projective_group(
+			d /* n */, F,
 		false /* f_semilinear */,
 		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
@@ -1812,7 +1867,8 @@ void algebra_global_with_action::centralizer(
 	A_PGL->group_order(Go);
 
 	A_GL = NEW_OBJECT(actions::action);
-	A_GL->Known_groups->init_general_linear_group(d /* n */, F,
+	A_GL->Known_groups->init_general_linear_group(
+			d /* n */, F,
 		false /* f_semilinear */,
 		true /* f_basis */, true /* f_init_sims */,
 		nice_gens,
@@ -1869,6 +1925,7 @@ void algebra_global_with_action::centralizer(
 
 void algebra_global_with_action::centralizer(
 		int q, int d, int verbose_level)
+// ToDo: move this
 // creates a finite_field, and an action
 // using init_projective_group
 {
@@ -1884,12 +1941,14 @@ void algebra_global_with_action::centralizer(
 	int go, i;
 
 	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(q,
+	F->finite_field_init_small_order(
+			q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
 			0);
 	A = NEW_OBJECT(actions::action);
-	A->Known_groups->init_projective_group(d /* n */, F,
+	A->Known_groups->init_projective_group(
+			d /* n */, F,
 			false /* f_semilinear */,
 			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
@@ -1925,7 +1984,7 @@ void algebra_global_with_action::centralizer(
 
 		FREE_OBJECT(Cent);
 
-		}
+	}
 
 
 
@@ -1964,7 +2023,8 @@ void algebra_global_with_action::compute_regular_representation(
 	}
 	cout << endl;
 	for (i = 0; i < SG->len; i++) {
-		Combi.perm_print_offset(cout,
+		Combi.perm_print_offset(
+				cout,
 			perm + i * goi, goi, 1 /* offset */,
 			false /* f_print_cycles_of_length_one */,
 			false /* f_cycle_length */, false, 0,
@@ -2003,10 +2063,12 @@ void algebra_global_with_action::presentation(
 
 	l = gens->len;
 
-	cout << "presentation of length " << l << endl;
-	cout << "primes: ";
-	Int_vec_print(cout, primes, l);
-	cout << endl;
+	if (f_v) {
+		cout << "presentation of length " << l << endl;
+		cout << "primes: ";
+		Int_vec_print(cout, primes, l);
+		cout << endl;
+	}
 
 #if 0
 	// replace g5 by  g5 * g3:
@@ -2040,37 +2102,44 @@ void algebra_global_with_action::presentation(
 				b--;
 			}
 		}
+
 		A->Group_element->move(Elt1, Elt2);
 		a = S->element_rank_lint(Elt2);
 		word_list[i] = a;
 		inverse_word_list[a] = i;
-		cout << "word " << i << " = ";
-		Int_vec_print(cout, word, 9);
-		cout << " gives " << endl;
-		A->Group_element->print(cout, Elt1);
-		cout << "which is element " << word_list[i] << endl;
-		cout << endl;
+
+		if (f_v) {
+			cout << "word " << i << " = ";
+			Int_vec_print(cout, word, 9);
+			cout << " gives " << endl;
+			A->Group_element->print(cout, Elt1);
+			cout << "which is element " << word_list[i] << endl;
+			cout << endl;
+		}
 	}
-	cout << "i : word_list[i] : inverse_word_list[i]" << endl;
-	for (i = 0; i < goi; i++) {
-		cout << setw(5) << i << " : " << setw(5) << word_list[i]
-			<< " : " << setw(5) << inverse_word_list[i] << endl;
+	if (f_v) {
+		cout << "i : word_list[i] : inverse_word_list[i]" << endl;
+		for (i = 0; i < goi; i++) {
+			cout << setw(5) << i << " : " << setw(5) << word_list[i]
+				<< " : " << setw(5) << inverse_word_list[i] << endl;
+		}
 	}
 
 
 
-	for (i = 0; i < l; i++) {
-		cout << "generator " << i << ":" << endl;
-		A->Group_element->print(cout, gens->ith(i));
-		cout << endl;
+	if (f_v) {
+		for (i = 0; i < l; i++) {
+			cout << "generator " << i << ":" << endl;
+			A->Group_element->print(cout, gens->ith(i));
+			cout << endl;
+		}
 	}
 	for (i = 0; i < l; i++) {
 		A->Group_element->move(gens->ith(i), Elt1);
 		A->Group_element->element_power_int_in_place(Elt1, primes[i], 0);
+
 		a = S->element_rank_lint(Elt1);
-		cout << "generator " << i << " to the power " << primes[i]
-			<< " is elt " << a << " which is word "
-			<< inverse_word_list[a];
+
 		j = inverse_word_list[a];
 		for (k = 0; k < l; k++) {
 			b = j % primes[k];
@@ -2078,10 +2147,16 @@ void algebra_global_with_action::presentation(
 			j = j - b;
 			j = j / primes[k];
 		}
-		Int_vec_print(cout, word, l);
-		cout << " :" << endl;
-		A->Group_element->print(cout, Elt1);
-		cout << endl;
+
+		if (f_v) {
+			cout << "generator " << i << " to the power " << primes[i]
+				<< " is elt " << a << " which is word "
+				<< inverse_word_list[a];
+			Int_vec_print(cout, word, l);
+			cout << " :" << endl;
+			A->Group_element->print(cout, Elt1);
+			cout << endl;
+		}
 	}
 
 
@@ -2091,10 +2166,8 @@ void algebra_global_with_action::presentation(
 		for (j = 0; j < i; j++) {
 			A->Group_element->mult(Elt2, gens->ith(j), Elt3);
 			A->Group_element->mult(Elt3, Elt1, Elt4);
-			cout << "g_" << j << "^{g_" << i << "} =" << endl;
+
 			a = S->element_rank_lint(Elt4);
-			cout << "which is element " << a << " which is word "
-				<< inverse_word_list[a] << " = ";
 			jj = inverse_word_list[a];
 			for (k = 0; k < l; k++) {
 				b = jj % primes[k];
@@ -2102,12 +2175,20 @@ void algebra_global_with_action::presentation(
 				jj = jj - b;
 				jj = jj / primes[k];
 			}
-			Int_vec_print(cout, word, l);
-			cout << endl;
-			A->Group_element->print(cout, Elt4);
+
+			if (f_v) {
+				cout << "g_" << j << "^{g_" << i << "} =" << endl;
+				cout << "which is element " << a << " which is word "
+					<< inverse_word_list[a] << " = ";
+				Int_vec_print(cout, word, l);
+				cout << endl;
+				A->Group_element->print(cout, Elt4);
+				cout << endl;
+			}
+		}
+		if (f_v) {
 			cout << endl;
 		}
-		cout << endl;
 	}
 
 	FREE_int(Elt1);
@@ -2174,32 +2255,49 @@ void algebra_global_with_action::do_eigenstuff(
 	M.elements_to_unipoly();
 	M.minus_X_times_id();
 	M1 = M;
-	cout << "M - x * Id has been computed" << endl;
-	//cout << "M - x * Id =" << endl << M << endl;
-
+	if (f_v) {
+		cout << "M - x * Id has been computed" << endl;
+		//cout << "M - x * Id =" << endl << M << endl;
+	}
 	if (f_v) {
 		cout << "M - x * Id = " << endl;
 		cout << M << endl;
 	}
 
 
-	cout << "before M.smith_normal_form" << endl;
-	M.smith_normal_form(P, Pv, Q, Qv, verbose_level);
-	cout << "after M.smith_normal_form" << endl;
+	if (f_v) {
+		cout << "before M.smith_normal_form" << endl;
+	}
+	M.smith_normal_form(
+			P, Pv, Q, Qv, verbose_level);
+	if (f_v) {
+		cout << "after M.smith_normal_form" << endl;
+	}
 
-	cout << "the Smith normal form is:" << endl;
-	cout << M << endl;
+	if (f_v) {
+		cout << "the Smith normal form is:" << endl;
+		cout << M << endl;
+	}
 
 	S.mult(P, Pv, verbose_level);
-	cout << "P * Pv=" << endl << S << endl;
+
+	if (f_v) {
+		cout << "P * Pv=" << endl << S << endl;
+	}
 
 	S.mult(Q, Qv, verbose_level);
-	cout << "Q * Qv=" << endl << S << endl;
+
+	if (f_v) {
+		cout << "Q * Qv=" << endl << S << endl;
+	}
 
 	S.mult(P, M1, verbose_level);
-	cout << "T.mult(S, Q):" << endl;
 	T.mult(S, Q, verbose_level);
-	cout << "T=" << endl << T << endl;
+
+	if (f_v) {
+		cout << "T.mult(S, Q):" << endl;
+		cout << "T=" << endl << T << endl;
+	}
 
 
 	typed_objects::unipoly charpoly;
@@ -2208,19 +2306,29 @@ void algebra_global_with_action::do_eigenstuff(
 
 	charpoly = M.s_ij(size - 1, size - 1);
 
-	cout << "characteristic polynomial:" << charpoly << endl;
+	if (f_v) {
+		cout << "characteristic polynomial:" << charpoly << endl;
+	}
 	deg = charpoly.degree();
-	cout << "has degree " << deg << endl;
+	if (f_v) {
+		cout << "has degree " << deg << endl;
+	}
 	l = charpoly.s_ii(deg);
-	cout << "leading coefficient " << l << endl;
+	if (f_v) {
+		cout << "leading coefficient " << l << endl;
+	}
 	lv = F->inverse(l);
-	cout << "leading coefficient inverse " << lv << endl;
+	if (f_v) {
+		cout << "leading coefficient inverse " << lv << endl;
+	}
 	for (i = 0; i <= deg; i++) {
 		b = charpoly.s_ii(i);
 		c = F->mult(b, lv);
 		charpoly.m_ii(i, c);
 	}
-	cout << "monic characteristic polynomial:" << charpoly << endl;
+	if (f_v) {
+		cout << "monic characteristic polynomial:" << charpoly << endl;
+	}
 
 	typed_objects::integer x, y;
 	int *roots;
@@ -2232,19 +2340,25 @@ void algebra_global_with_action::do_eigenstuff(
 		x.m_i(a);
 		charpoly.evaluate_at(x, y);
 		if (y.s_i() == 0) {
-			cout << "root " << a << endl;
+			if (f_v) {
+				cout << "root " << a << endl;
+			}
 			roots[nb_roots++] = a;
 		}
 	}
-	cout << "we found the following eigenvalues: ";
-	Int_vec_print(cout, roots, nb_roots);
-	cout << endl;
+	if (f_v) {
+		cout << "we found the following eigenvalues: ";
+		Int_vec_print(cout, roots, nb_roots);
+		cout << endl;
+	}
 
 	int eigenvalue, eigenvalue_negative;
 
 	for (h = 0; h < nb_roots; h++) {
 		eigenvalue = roots[h];
-		cout << "looking at eigenvalue " << eigenvalue << endl;
+		if (f_v) {
+			cout << "looking at eigenvalue " << eigenvalue << endl;
+		}
 		int *A, *B, *Bt;
 		eigenvalue_negative = F->negate(eigenvalue);
 		A = new int[size * size];
@@ -2255,9 +2369,12 @@ void algebra_global_with_action::do_eigenstuff(
 				A[i * size + j] = Data[i * size + j];
 			}
 		}
-		cout << "A:" << endl;
-		Int_vec_print_integer_matrix_width(cout, A,
-				size, size, size, F->log10_of_q);
+		if (f_v) {
+			cout << "A:" << endl;
+			Int_vec_print_integer_matrix_width(
+					cout, A,
+					size, size, size, F->log10_of_q);
+		}
 		for (i = 0; i < size; i++) {
 			for (j = 0; j < size; j++) {
 				a = A[i * size + j];
@@ -2267,14 +2384,22 @@ void algebra_global_with_action::do_eigenstuff(
 				B[i * size + j] = a;
 			}
 		}
-		cout << "B = A - eigenvalue * I:" << endl;
-		Int_vec_print_integer_matrix_width(cout, B,
-				size, size, size, F->log10_of_q);
+		if (f_v) {
+			cout << "B = A - eigenvalue * I:" << endl;
+			Int_vec_print_integer_matrix_width(
+					cout, B,
+					size, size, size, F->log10_of_q);
+		}
 
-		cout << "B transposed:" << endl;
-		F->Linear_algebra->transpose_matrix(B, Bt, size, size);
-		Int_vec_print_integer_matrix_width(cout, Bt,
-				size, size, size, F->log10_of_q);
+		F->Linear_algebra->transpose_matrix(
+				B, Bt, size, size);
+
+		if (f_v) {
+			cout << "B transposed:" << endl;
+			Int_vec_print_integer_matrix_width(
+					cout, Bt,
+					size, size, size, F->log10_of_q);
+		}
 
 		int f_special = false;
 		int f_complete = true;
@@ -2286,47 +2411,93 @@ void algebra_global_with_action::do_eigenstuff(
 		base_cols = new int[size];
 		kernel = new int[size * size];
 
-		nb_base_cols = F->Linear_algebra->Gauss_int(Bt,
+		nb_base_cols = F->Linear_algebra->Gauss_int(
+				Bt,
 			f_special, f_complete, base_cols,
 			f_P, NULL, size, size, size,
 			verbose_level - 1);
-		cout << "rank = " << nb_base_cols << endl;
 
-		F->Linear_algebra->matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
-			kernel_m, kernel_n, kernel, 0 /* verbose_level */);
-		cout << "kernel = left eigenvectors:" << endl;
-		Int_vec_print_integer_matrix_width(cout, kernel,
-				size, kernel_n, kernel_n, F->log10_of_q);
+
+		if (f_v) {
+			cout << "rank = " << nb_base_cols << endl;
+		}
+
+		F->Linear_algebra->matrix_get_kernel(
+				Bt, size, size, base_cols, nb_base_cols,
+			kernel_m, kernel_n, kernel,
+			0 /* verbose_level */);
+
+		if (f_v) {
+			cout << "kernel = left eigenvectors:" << endl;
+			Int_vec_print_integer_matrix_width(
+					cout, kernel,
+					size, kernel_n, kernel_n, F->log10_of_q);
+		}
 
 		int *vec1, *vec2;
 		vec1 = new int[size];
 		vec2 = new int[size];
 		for (i = 0; i < size; i++) {
 			vec1[i] = kernel[i * kernel_n + 0];
-			}
-		Int_vec_print(cout, vec1, size);
-		cout << endl;
+
+
+		}
+		if (f_v) {
+			Int_vec_print(cout, vec1, size);
+			cout << endl;
+		}
+
+
 		F->Projective_space_basic->PG_element_normalize_from_front(
 				vec1, 1, size);
-		Int_vec_print(cout, vec1, size);
-		cout << endl;
+
+
+		if (f_v) {
+			Int_vec_print(cout, vec1, size);
+			cout << endl;
+		}
+
+
 		F->Projective_space_basic->PG_element_rank_modified(
 				vec1, 1, size, a);
-		cout << "has rank " << a << endl;
 
 
-		cout << "computing xA" << endl;
+		if (f_v) {
+			cout << "has rank " << a << endl;
+		}
 
-		F->Linear_algebra->mult_vector_from_the_left(vec1, A, vec2, size, size);
-		Int_vec_print(cout, vec2, size);
-		cout << endl;
+
+		if (f_v) {
+			cout << "computing xA" << endl;
+		}
+
+		F->Linear_algebra->mult_vector_from_the_left(
+				vec1, A, vec2, size, size);
+
+
+		if (f_v) {
+			Int_vec_print(cout, vec2, size);
+			cout << endl;
+		}
+
+
 		F->Projective_space_basic->PG_element_normalize_from_front(
 				vec2, 1, size);
-		Int_vec_print(cout, vec2, size);
-		cout << endl;
+
+
+		if (f_v) {
+			Int_vec_print(cout, vec2, size);
+			cout << endl;
+		}
+
+
 		F->Projective_space_basic->PG_element_rank_modified(
 				vec2, 1, size, a);
-		cout << "has rank " << a << endl;
+
+
+		if (f_v) {
+			cout << "has rank " << a << endl;
+		}
 
 		delete [] vec1;
 		delete [] vec2;
@@ -2766,7 +2937,8 @@ void algebra_global_with_action::trace(
 }
 
 void algebra_global_with_action::elementwise_power_int(
-		layer2_discreta::typed_objects::discreta_matrix &A, int k,
+		layer2_discreta::typed_objects::discreta_matrix &A,
+		int k,
 		int verbose_level)
 {
 	int i, j, m, n;
@@ -3239,7 +3411,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
-	Poset->init_subset_lattice(LG->A_linear, LG->A_linear,
+	Poset->init_subset_lattice(
+			LG->A_linear, LG->A_linear,
 			LG->Strong_gens,
 			verbose_level);
 
@@ -3559,7 +3732,8 @@ void algebra_global_with_action::representation_on_polynomials(
 
 
 void algebra_global_with_action::do_eigenstuff_with_coefficients(
-		field_theory::finite_field *F, int n, std::string &coeffs_text, int verbose_level)
+		field_theory::finite_field *F, int n, std::string &coeffs_text,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3647,7 +3821,8 @@ void algebra_global_with_action::orbits_on_points(
 	Orb = NEW_OBJECT(groups::orbits_on_something);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_points before Orb->init" << endl;
+		cout << "algebra_global_with_action::orbits_on_points "
+				"before Orb->init" << endl;
 	}
 	Orb->init(
 			A2,
@@ -3656,7 +3831,8 @@ void algebra_global_with_action::orbits_on_points(
 			prefix,
 			verbose_level);
 	if (f_v) {
-		cout << "algebra_global_with_action::orbits_on_points after Orb->init" << endl;
+		cout << "algebra_global_with_action::orbits_on_points "
+				"after Orb->init" << endl;
 	}
 
 
@@ -3740,7 +3916,8 @@ void algebra_global_with_action::find_singer_cycle(
 	number_theory::number_theory_domain NT;
 
 	if (!A1->is_matrix_group()) {
-		cout << "group_theoretic_activity::find_singer_cycle needs matrix group" << endl;
+		cout << "group_theoretic_activity::find_singer_cycle "
+				"needs matrix group" << endl;
 		exit(1);
 	}
 	algebra::matrix_group *M;
@@ -3756,7 +3933,8 @@ void algebra_global_with_action::find_singer_cycle(
 		order = NT.i_power_j(q, d) - 1;
 	}
 	if (f_v) {
-		cout << "algebra_global_with_action::find_singer_cycle looking for an "
+		cout << "algebra_global_with_action::find_singer_cycle "
+				"looking for an "
 				"element of order " << order << endl;
 	}
 
@@ -3796,7 +3974,8 @@ void algebra_global_with_action::find_singer_cycle(
 		cnt++;
 	}
 	if (f_v) {
-		cout << "we found " << cnt << " group elements of order " << order << endl;
+		cout << "we found " << cnt
+				<< " group elements of order " << order << endl;
 	}
 
 	FREE_int(Elt);
@@ -3942,7 +4121,9 @@ void algebra_global_with_action::find_standard_generators(
 			}
 
 			if (f_v) {
-				cout << "algebra_global_with_action::find_standard_generators a = " << setw(5) << i << ", b=" << setw(5) << j << " : " << cnt << ":" << endl;
+				cout << "algebra_global_with_action::find_standard_generators "
+						"a = " << setw(5) << i << ", b=" << setw(5) << j
+						<< " : " << cnt << ":" << endl;
 				cout << "a=" << endl;
 				A2->Group_element->element_print(Elt_a, cout);
 				cout << endl;
@@ -3965,7 +4146,8 @@ void algebra_global_with_action::find_standard_generators(
 	if (f_v) {
 		cout << "algebra_global_with_action::find_standard_generators "
 				"we found " << cnt << " group elements with "
-				"ord_a = " << order_a << " ord_b  = " << order_b << " and ord_ab = " << order_ab << endl;
+				"ord_a = " << order_a << " ord_b  = " << order_b
+				<< " and ord_ab = " << order_ab << endl;
 	}
 
 	FREE_int(Elt_a);

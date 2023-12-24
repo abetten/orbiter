@@ -1618,8 +1618,10 @@ int domino_assignment::modify_matching(
 	if (f_v) {
 		cout << "post processing" << endl;
 	}
-	u = prec1[u];
-	p = list1[u];
+	// ToDo:  u is -1, this is a problem:
+	// No, this is unfounded
+	u = prec1[u]; // ToDo: note: at offset -4 into object of size [0, 8589934588]
+	p = list1[u]; // ToDo: note: at offset -4 into object of size [0, 8589934588]
 	if (f_v) {
 		cout << "u=" << u << " p=" << p << endl;
 	}

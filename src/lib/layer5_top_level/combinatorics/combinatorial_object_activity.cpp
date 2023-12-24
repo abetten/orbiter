@@ -404,8 +404,6 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 
-		Combo->Classification_CO;
-
 		Combo->Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
 		if (!Combo->Data_input_stream_description) {
@@ -649,32 +647,11 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_test_distinguishing_property" << endl;
 		}
 
-		int idx;
-
-		idx = orbiter_kernel_system::Orbiter->find_symbol(
-				Descr->test_distinguishing_property_graph);
-
-		layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
-
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-		if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_graph) {
-			cout << "combinatorial_object_activity::perform_activity_input_stream "
-				<< Descr->test_distinguishing_property_graph << " is not of type graph" << endl;
-			exit(1);
-		}
-
-		//create_graph *Gr;
 		graph_theory::colored_graph *CG;
 
-		//Gr = (create_graph *) Orbiter->get_object(idx);
-		CG = (graph_theory::colored_graph *) orbiter_kernel_system::Orbiter->get_object(idx);
 
-#if 0
-		if (!Gr->f_has_CG) {
-			cout << "combinatorial_object_activity::perform_activity_combo !Gr->f_has_CG" << endl;
-			exit(1);
-		}
-#endif
+		CG = Get_object_of_type_graph(Descr->test_distinguishing_property_graph);
+
 		int input_idx;
 		int *F_distinguishing;
 
@@ -723,6 +700,67 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 		FREE_int(F_distinguishing);
+
+	}
+	else if (Descr->f_compute_frequency) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_compute_frequency" << endl;
+		}
+
+		graph_theory::colored_graph *CG;
+
+
+		CG = Get_object_of_type_graph(Descr->compute_frequency_graph);
+
+		int input_idx;
+		int N;
+		int *code = NULL;
+		int sz = 0;
+
+
+		code = NEW_int(CG->nb_points);
+
+		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
+
+			geometry::object_with_canonical_form *OwCF;
+
+			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+
+#if 0
+			if (input_idx == 0) {
+
+				sz = OwCF->sz;
+				N = 1 << OwCF->sz;
+				frequency = NEW_int(N);
+			}
+			else {
+				if (OwCF->sz != sz) {
+					cout << "the size of the sets must be constant" << endl;
+					exit(1);
+				}
+			}
+#endif
+
+			CG->all_distinguishing_codes(
+					OwCF->set, OwCF->sz, code, verbose_level);
+			//CG->distinguishing_code_frequency(
+			//		OwCF->set, OwCF->sz, frequency, N, verbose_level);
+
+			data_structures::tally T;
+
+			T.init(code, CG->nb_points, false, 0);
+			cout << "frequency tally : ";
+			T.print_first(true /* f_backwards*/);
+			cout << endl;
+			T.print_types();
+
+		}
+
+
+		FREE_int(code);
+
 
 	}
 	if (Descr->f_ideal) {
@@ -873,12 +911,14 @@ void combinatorial_object_activity::do_save(
 
 		if (false) {
 			cout << "combinatorial_object_activity::perform_activity_IS "
-					"input_idx = " << input_idx << " / " << Combo->IS->Objects.size() << endl;
+					"input_idx = " << input_idx
+					<< " / " << Combo->IS->Objects.size() << endl;
 		}
 
 		geometry::object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+		OwCF = (geometry::object_with_canonical_form *)
+				Combo->IS->Objects[input_idx];
 
 		//OwCF->set;
 		if (OwCF->sz != sz) {

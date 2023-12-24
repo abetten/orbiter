@@ -95,7 +95,8 @@ colored_graph::~colored_graph()
 	}
 }
 
-void colored_graph::compute_edges(int verbose_level)
+void colored_graph::compute_edges(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, nb, a;
@@ -139,7 +140,8 @@ void colored_graph::compute_edges(int verbose_level)
 }
 
 
-int colored_graph::is_adjacent(int i, int j)
+int colored_graph::is_adjacent(
+		int i, int j)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -155,7 +157,8 @@ int colored_graph::is_adjacent(int i, int j)
 	return Bitvec->s_i(k);
 }
 
-void colored_graph::set_adjacency(int i, int j, int a)
+void colored_graph::set_adjacency(
+		int i, int j, int a)
 {
 	combinatorics::combinatorics_domain Combi;
 	long int k;
@@ -164,7 +167,8 @@ void colored_graph::set_adjacency(int i, int j, int a)
 	Bitvec->m_i(k, a);
 }
 
-void colored_graph::set_adjacency_k(long int k, int a)
+void colored_graph::set_adjacency_k(
+		long int k, int a)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -209,7 +213,8 @@ void colored_graph::partition_by_color_classes(
 	}
 }
 
-colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
+colored_graph *colored_graph::sort_by_color_classes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3394,7 +3399,8 @@ void colored_graph::all_rainbow_cliques(
 }
 
 
-void colored_graph::complement(int verbose_level)
+void colored_graph::complement(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -3431,7 +3437,8 @@ void colored_graph::complement(int verbose_level)
 	}
 }
 
-void colored_graph::distance_2(int verbose_level)
+void colored_graph::distance_2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k;
@@ -3498,7 +3505,8 @@ void colored_graph::distance_2(int verbose_level)
 	}
 }
 
-void colored_graph::properties(int verbose_level)
+void colored_graph::properties(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3539,39 +3547,32 @@ int colored_graph::test_distinguishing_property(
 {
 	int f_v = (verbose_level >= 1);
 	int f_distinguishing = false;
-	int *neighbor_set;
+	int *f_code_taken;
 
 	if (f_v) {
 		cout << "colored_graph::test_distinguishing_property" << endl;
 	}
 
 	int N;
-	int i, j, n, h;
+	int i, n;
 
 	N = 1 << sz;
 
-	neighbor_set = NEW_int(N);
-	Int_vec_zero(neighbor_set, N);
+	f_code_taken = NEW_int(N);
+	Int_vec_zero(f_code_taken, N);
+
 	for (i = 0; i < nb_points; i++) {
-		n = 0;
-		for (h = 0; h < sz; h++) {
-			n <<= 1;
-			j = set[h];
-			if (is_adjacent(i, j)) {
-				n++;
-			}
+		n = distinguishing_code_wrt_set(set, sz, i);
+
+		if (f_code_taken[n]) {
+			goto done;
 		}
-		if (n == 0) {
-			FREE_int(neighbor_set);
-			return false;
-		}
-		if (neighbor_set[n]) {
-			FREE_int(neighbor_set);
-			return false;
-		}
-		neighbor_set[n] = true;
+		f_code_taken[n] = true;
 	}
 	f_distinguishing = true;
+
+done:
+	FREE_int(f_code_taken);
 
 	if (f_v) {
 		cout << "colored_graph::test_distinguishing_property done" << endl;
@@ -3579,6 +3580,74 @@ int colored_graph::test_distinguishing_property(
 	return f_distinguishing;
 }
 
+void colored_graph::all_distinguishing_codes(
+		long int *set, int sz,
+		int *code,
+		int verbose_level)
+// code[nb_points], where nb_points = number of vertices
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::all_distinguishing_codes" << endl;
+	}
+
+	int i, c;
+
+
+	for (i = 0; i < nb_points; i++) {
+		c = distinguishing_code_wrt_set(set, sz, i);
+		code[i] = c;
+	}
+
+	if (f_v) {
+		cout << "colored_graph::all_distinguishing_codes done" << endl;
+	}
+}
+
+
+void colored_graph::distinguishing_code_frequency(
+		long int *set, int sz,
+		int *frequency, int N,
+		int verbose_level)
+// frequency[N], where N = 1 << sz
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::distinguishing_code_frequency" << endl;
+	}
+
+	int i, n;
+
+	Int_vec_zero(frequency, N);
+
+	for (i = 0; i < nb_points; i++) {
+		n = distinguishing_code_wrt_set(set, sz, i);
+		frequency[n]++;
+	}
+
+	if (f_v) {
+		cout << "colored_graph::test_distinguishing_property done" << endl;
+	}
+}
+
+int colored_graph::distinguishing_code_wrt_set(
+		long int *set, int sz, int i)
+{
+	int n, j, h;
+
+	n = 0;
+	for (h = 0; h < sz; h++) {
+		n <<= 1;
+		j = set[h];
+		if (is_adjacent(i, j)) {
+			n++;
+		}
+	}
+	return n;
+
+}
 void colored_graph::eigenvalues(
 		double *&E, int verbose_level)
 {

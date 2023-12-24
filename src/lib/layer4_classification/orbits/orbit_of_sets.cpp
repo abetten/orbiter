@@ -88,7 +88,8 @@ void orbit_of_sets::init(
 	}
 }
 
-void orbit_of_sets::compute(int verbose_level)
+void orbit_of_sets::compute(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -496,7 +497,8 @@ void orbit_of_sets::make_table_of_coset_reps(
 	}
 }
 
-void orbit_of_sets::coset_rep(int j)
+void orbit_of_sets::coset_rep(
+		int j)
 // result is in cosetrep
 // determines an element in the group
 // that moves the orbit representative

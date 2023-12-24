@@ -325,14 +325,6 @@ public:
 
 class interface_combinatorics {
 
-#if 0
-	int f_diophant;
-	solvers::diophant_description *Diophant_description;
-
-	int f_diophant_activity;
-	solvers::diophant_activity_description *Diophant_activity_description;
-#endif
-
 	int f_random_permutation;
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
@@ -1046,6 +1038,9 @@ public:
 				std::string &label);
 	apps_coding_theory::create_code
 		*get_object_of_type_code(
+				std::string &label);
+	graph_theory::colored_graph
+		*get_object_of_type_graph(
 				std::string &label);
 	orthogonal_geometry_applications::orthogonal_space_with_action
 		*get_orthogonal_space(

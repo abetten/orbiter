@@ -364,6 +364,8 @@ public:
 			std::string &a, int q);
 	void init_file_of_points(
 			std::string &a);
+	void init_file_of_points_csv(
+			std::string &a, std::string &b);
 	void init_file_of_lines(
 			std::string &a);
 	void init_file_of_packings(
@@ -2068,6 +2070,7 @@ public:
 	void init(
 			int *data, int data_length,
 		int f_second, int verbose_level);
+	void print_types();
 	void init_lint(
 			long int *data, int data_length,
 		int f_second, int verbose_level);

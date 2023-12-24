@@ -282,7 +282,8 @@ public:
 			layer2_discreta::typed_objects::discreta_matrix &A,
 			layer2_discreta::typed_objects::discreta_base &tr);
 	void elementwise_power_int(
-			layer2_discreta::typed_objects::discreta_matrix &A, int k, int verbose_level);
+			layer2_discreta::typed_objects::discreta_matrix &A,
+			int k, int verbose_level);
 	int is_in_center(
 			layer2_discreta::typed_objects::discreta_matrix &B);
 	void matrix_convert_to_numerical(
@@ -292,7 +293,8 @@ public:
 
 	void young_symmetrizer(
 			int n, int verbose_level);
-	void young_symmetrizer_sym_4(int verbose_level);
+	void young_symmetrizer_sym_4(
+			int verbose_level);
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification::poset_classification_control *Control,
 			groups::linear_group *LG,
@@ -312,7 +314,8 @@ public:
 
 	void do_eigenstuff_with_coefficients(
 			field_theory::finite_field *F,
-			int n, std::string &coeffs_text, int verbose_level);
+			int n, std::string &coeffs_text,
+			int verbose_level);
 	void do_eigenstuff_from_file(
 			field_theory::finite_field *F,
 			int n, std::string &fname, int verbose_level);

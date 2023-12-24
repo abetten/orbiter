@@ -117,6 +117,9 @@ public:
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
 
+	int f_compute_frequency;
+	std::string compute_frequency_graph;
+
 	int f_unpack_from_restricted_action;
 	std::string unpack_from_restricted_action_prefix;
 	std::string unpack_from_restricted_action_group_label;
@@ -318,8 +321,10 @@ public:
 class delandtsheer_doyen_description {
 public:
 
+#if 0
 	int f_depth;
 	int depth;
+#endif
 
 	int f_d1;
 	int d1;
@@ -346,16 +351,17 @@ public:
 
 	int DELANDTSHEER_DOYEN_X;
 	int DELANDTSHEER_DOYEN_Y;
+
 	int f_K;
 	int K;
 
 	int f_pair_search_control;
-	poset_classification::poset_classification_control
-		*Pair_search_control;
+	std::string pair_search_control_label;
+	//poset_classification::poset_classification_control *Pair_search_control;
 
 	int f_search_control;
-	poset_classification::poset_classification_control
-		*Search_control;
+	std::string search_control_label;
+	//poset_classification::poset_classification_control *Search_control;
 
 	// row intersection type
 	int f_R;
@@ -386,7 +392,11 @@ public:
 		// 3 = le
 	int mask_test_value[MAX_MASK_TESTS];
 
+	int f_search_partial_base_lines;
+
 	int f_singletons;
+	int singletons_starter_size;
+
 	int f_subgroup;
 	std::string subgroup_gens;
 	std::string subgroup_order;
@@ -423,6 +433,8 @@ public:
 	field_theory::finite_field *F1;
 	field_theory::finite_field *F2;
 
+	std::string label;
+
 	int Xsize; // = D = q1 = # of rows
 	int Ysize; // = C = q2 = # of cols
 
@@ -432,6 +444,8 @@ public:
 	int *row_sum; // [Xsize]
 	int *col_sum; // [Ysize]
 
+	poset_classification::poset_classification_control *Pair_search_control;
+	poset_classification::poset_classification_control *Search_control;
 
 	algebra::matrix_group *M1;
 	algebra::matrix_group *M2;
@@ -456,6 +470,7 @@ public:
 	int *tmp_Elt;
 	int *orbit_length; // [nb_orbits]
 	int *orbit_covered; // [nb_orbits]
+	int *orbit_covered2; // [nb_orbits]
 	int *orbit_covered_max; // [nb_orbits]
 		// orbit_covered_max[i] = orbit_length[i] / b;
 	int *orbits_covered; // [K * K]
@@ -499,7 +514,28 @@ public:
 			int verbose_level);
 	void search_singletons(
 			int verbose_level);
-	void search_starter(
+	void search_case_singletons(
+			orbiter_kernel_system::orbiter_data_file *ODF,
+			int orbit_idx, long int &nb_sol, int verbose_level);
+	void search_case_singletons_recursion(
+			orbiter_kernel_system::orbiter_data_file *ODF,
+			int orbit_idx, int target_depth, int level,
+			data_structures::set_of_sets *Live_points,
+			long int *chosen_set, int *index, long int &nb_nodes, long int &nb_sol,
+			int verbose_level);
+	int try_to_increase_orbit_covering_based_on_two_sets(
+			long int *pts1, int sz1, long int *pts2, int sz2, long int pt0);
+	void increase_orbit_covering_firm(
+			long int *pts, int sz, long int pt0);
+	// firm means that an excess in the orbit covering raises an error
+	void decrease_orbit_covering(
+			long int *pts, int sz, long int pt0);
+	void search_partial_base_lines(
+			int verbose_level);
+	void create_graph(
+			int case_number, long int *line, int s, int s2, int *Covered_orbits,
+			int &nb_live_points,
+			std::string &fname,
 			int verbose_level);
 	void compute_orbits_on_pairs(
 			groups::strong_generators *Strong_gens,
@@ -510,7 +546,7 @@ public:
 			int verbose_level);
 	void create_action(
 			int verbose_level);
-	void create_graph(
+	void compute_live_points(
 			long int *line0, int len, int verbose_level);
 	int find_pair_orbit(
 			int i, int j, int verbose_level);

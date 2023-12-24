@@ -151,6 +151,26 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 
 		}
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points_csv) {
+			if (f_v) {
+				cout << "input sets of points from csv-file "
+						<< Descr->Input[input_idx].input_string
+						<< " column " << Descr->Input[input_idx].input_string2 << ":" << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+			int nb_sets;
+
+			nb_sets = Fio.Csv_file_support->read_column_and_count_nb_sets(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_string2 /* col_label */,
+					0 /*verbose_level*/);
+
+			nb_objects_to_test += nb_sets;
+
+		}
+
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_lines) {
 			if (f_v) {
 				cout << "input sets of lines from file "
@@ -875,6 +895,42 @@ void data_input_stream::read_objects(int verbose_level)
 
 			FREE_OBJECT(SoS);
 
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points_csv) {
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+			set_of_sets *SoS;
+
+			SoS = NEW_OBJECT(set_of_sets);
+
+			Fio.Csv_file_support->read_column_and_parse(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_string2 /* col_label */,
+					SoS,
+					0 /*verbose_level*/);
+
+			int h;
+
+			for (h = 0; h < SoS->nb_sets; h++) {
+
+
+				geometry::object_with_canonical_form *OwCF;
+
+
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+
+				OwCF->init_point_set(
+						SoS->Sets[h], SoS->Set_size[h], verbose_level);
+
+
+				Objects.push_back(OwCF);
+			}
+
+			FREE_OBJECT(SoS);
 		}
 
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_from_parallel_search) {

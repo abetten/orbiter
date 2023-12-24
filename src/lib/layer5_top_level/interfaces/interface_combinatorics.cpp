@@ -24,14 +24,6 @@ namespace user_interface {
 interface_combinatorics::interface_combinatorics()
 {
 
-#if 0
-	f_diophant = false;
-	Diophant_description = NULL;
-
-	f_diophant_activity = false;
-	Diophant_activity_description = NULL;
-#endif
-
 	f_random_permutation = false;
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
@@ -139,14 +131,7 @@ void interface_combinatorics::print_help(
 {
 	data_structures::string_tools ST;
 
-#if 0
-	if (ST.stringcmp(argv[i], "-diophant") == 0) {
-		cout << "-diophant <description> " << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		cout << "-diophant_activity <description> " << endl;
-	}
-#endif
+
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <int : degree> <string : <fname_csv>" << endl;
 	}
@@ -235,14 +220,6 @@ int interface_combinatorics::recognize_keyword(
 	if (i >= argc) {
 		return false;
 	}
-#if 0
-	if (ST.stringcmp(argv[i], "-diophant") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		return true;
-	}
-#endif
 
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
@@ -341,47 +318,6 @@ void interface_combinatorics::read_arguments(
 		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-#if 0
-	if (ST.stringcmp(argv[i], "-diophant") == 0) {
-		f_diophant = true;
-		if (f_v) {
-			cout << "-diophant " << endl;
-		}
-		Diophant_description = NEW_OBJECT(solvers::diophant_description);
-		i += Diophant_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -diophant" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
-		f_diophant_activity = true;
-		if (f_v) {
-			cout << "-diophant_activity " << endl;
-		}
-		Diophant_activity_description = NEW_OBJECT(solvers::diophant_activity_description);
-		i += Diophant_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -diophant_activity" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
-#endif
-
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		f_random_permutation = true;
 		random_permutation_degree = ST.strtoi(argv[++i]);
@@ -442,8 +378,8 @@ void interface_combinatorics::read_arguments(
 	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		f_Delandtsheer_Doyen = true;
 		Delandtsheer_Doyen_description = NEW_OBJECT(apps_combinatorics::delandtsheer_doyen_description);
-		i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
-				argv + i, verbose_level);
+		i += Delandtsheer_Doyen_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
 
 		if (f_v) {
 			cout << "-Delandtsheer_Doyen" << endl;
@@ -676,16 +612,6 @@ void interface_combinatorics::read_arguments(
 
 void interface_combinatorics::print()
 {
-#if 0
-	if (f_diophant) {
-		cout << "-diophant " << endl;
-		Diophant_description->print();
-	}
-	if (f_diophant_activity) {
-		cout << "-diophant_activity " << endl;
-		Diophant_activity_description->print();
-	}
-#endif
 
 	if (f_random_permutation) {
 		cout << "-random_permutation " << random_permutation_degree << endl;
@@ -816,15 +742,9 @@ void interface_combinatorics::worker(
 	if (f_v) {
 		cout << "interface_combinatorics::worker" << endl;
 	}
-#if 0
-	if (f_diophant) {
-		do_diophant(Diophant_description, verbose_level);
-	}
-	else if (f_diophant_activity) {
-		do_diophant_activity(Diophant_activity_description, verbose_level);
-	}
-#endif
-	else if (f_random_permutation) {
+
+
+	if (f_random_permutation) {
 
 		combinatorics::combinatorics_domain Combi;
 
@@ -1099,51 +1019,6 @@ void interface_combinatorics::worker(
 
 }
 
-#if 0
-void interface_combinatorics::do_diophant(
-		solvers::diophant_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_diophant" << endl;
-	}
-
-	solvers::diophant_create *DC;
-
-	DC = NEW_OBJECT(solvers::diophant_create);
-
-	DC->init(Descr, verbose_level);
-
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_diophant done" << endl;
-	}
-}
-
-void interface_combinatorics::do_diophant_activity(
-		solvers::diophant_activity_description *Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_diophant_activity" << endl;
-	}
-
-	solvers::diophant_activity *DA;
-
-	DA = NEW_OBJECT(solvers::diophant_activity);
-
-	DA->init_from_file(Descr, verbose_level);
-
-	FREE_OBJECT(DA);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_diophant_activity done" << endl;
-	}
-}
-#endif
 
 #if 0
 void interface_combinatorics::do_bent(int n, int verbose_level)

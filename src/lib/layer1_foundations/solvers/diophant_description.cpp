@@ -55,7 +55,7 @@ diophant_description::diophant_description()
 	has_sum = 0;
 
 	f_problem_of_Steiner_type = false;
-	problem_of_Steiner_type_nb_t_orbits = 0;
+	problem_of_Steiner_type_N = 0;
 	//std::string problem_of_Steiner_type_covering_matrix_fname;
 
 	f_maximal_arc = false;
@@ -168,10 +168,10 @@ int diophant_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
 			f_problem_of_Steiner_type = true;
-			problem_of_Steiner_type_nb_t_orbits = ST.strtoi(argv[++i]);
+			problem_of_Steiner_type_N = ST.strtoi(argv[++i]);
 			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+				cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_N
 					<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
 			}
 		}
@@ -250,7 +250,7 @@ void diophant_description::print()
 		cout << "-has_sum " << has_sum << endl;
 	}
 	if (f_problem_of_Steiner_type) {
-		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_N
 				<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
 	}
 	if (f_maximal_arc) {

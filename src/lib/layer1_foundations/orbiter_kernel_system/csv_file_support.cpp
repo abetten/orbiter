@@ -1911,6 +1911,42 @@ void csv_file_support::write_table_of_strings_with_headings(
 	}
 }
 
+int csv_file_support::read_column_and_count_nb_sets(
+		std::string &fname, std::string &col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::count_nb_sets "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::count_nb_sets file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+	int nb_sets;
+	{
+		data_structures::spreadsheet S;
+		int idx;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		idx = S.find_column(col_label);
+		if (idx == -1) {
+			cout << "csv_file_support::count_nb_sets "
+					"cannot find column " << col_label << endl;
+			exit(1);
+		}
+		nb_sets = S.nb_rows - 1;
+
+	}
+
+	return nb_sets;
+}
+
 
 void csv_file_support::read_column_and_parse(
 		std::string &fname, std::string &col_label,

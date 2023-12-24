@@ -1024,20 +1024,31 @@ public:
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
-	long int count_Sbar(int n, int q);
-	long int count_S(int n, int q);
-	long int count_N1(int n, int q);
-	long int count_T1(int epsilon, int n, int q);
-	long int count_T2(int n, int q);
-	long int nb_pts_Qepsilon(int epsilon, int k, int q);
+	long int count_Sbar(
+			int n, int q);
+	long int count_S(
+			int n, int q);
+	long int count_N1(
+			int n, int q);
+	long int count_T1(
+			int epsilon, int n, int q);
+	long int count_T2(
+			int n, int q);
+	long int nb_pts_Qepsilon(
+			int epsilon, int k, int q);
 	// number of singular points on Q^epsilon(k,q)
-	int dimension_given_Witt_index(int epsilon, int n);
-	int Witt_index(int epsilon, int k);
-	long int nb_pts_Q(int k, int q);
+	int dimension_given_Witt_index(
+			int epsilon, int n);
+	int Witt_index(
+			int epsilon, int k);
+	long int nb_pts_Q(
+			int k, int q);
 	// number of singular points on Q(k,q)
-	long int nb_pts_Qplus(int k, int q);
+	long int nb_pts_Qplus(
+			int k, int q);
 	// number of singular points on Q^+(k,q)
-	long int nb_pts_Qminus(int k, int q);
+	long int nb_pts_Qminus(
+			int k, int q);
 	// number of singular points on Q^-(k,q)
 	long int nb_pts_S(
 			int n, int q);

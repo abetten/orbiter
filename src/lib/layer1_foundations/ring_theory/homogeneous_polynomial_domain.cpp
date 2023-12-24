@@ -231,7 +231,7 @@ void homogeneous_polynomial_domain::init(
 			F, nb_vars, degree,
 			Monomial_ordering_type,
 			false, NULL, NULL,
-			0 /* verbose_level */);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init "
 				"after init_with_or_without_variables" << endl;
@@ -395,6 +395,11 @@ void homogeneous_polynomial_domain::remake_symbols(
 		cout << "homogeneous_polynomial_domain::remake_symbols" << endl;
 	}
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::remake_symbols symbol_mask = " << symbol_mask << endl;
+		cout << "homogeneous_polynomial_domain::remake_symbols symbol_mask_latex = " << symbol_mask_latex << endl;
+	}
+
 	data_structures::string_tools ST;
 
 	int i;
@@ -417,6 +422,11 @@ void homogeneous_polynomial_domain::remake_symbols(
 		label = ST.printf_d(symbol_mask_latex, i + symbol_offset);
 
 		symbols_latex.push_back(label);
+	}
+
+
+	if (f_v) {
+		print_symbols(cout);
 	}
 
 	if (f_v) {
@@ -564,6 +574,9 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials making symbols" << endl;
+	}
 
 	symbols.clear();
 	for (i = 0; i < nb_variables; i++) {
@@ -589,6 +602,15 @@ void homogeneous_polynomial_domain::make_monomials(
 			s.assign(str);
 		}
 		symbols.push_back(s);
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials after making symbols" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials making symbols_latex" << endl;
 	}
 
 
@@ -619,6 +641,11 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 		symbols_latex.push_back(s);
 	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials after making symbols_latex" << endl;
+	}
+
 
 	int f_first = false;
 
@@ -956,6 +983,24 @@ void homogeneous_polynomial_domain::get_quadratic_form_matrix(
 	}
 }
 
+
+void homogeneous_polynomial_domain::print_symbols(
+		std::ostream &ost)
+{
+	int i;
+
+	cout << "homogeneous_polynomial_domain::print_symbols symbols:" << endl;
+	for (i = 0; i < nb_variables; i++) {
+
+		cout << i << " : " << symbols[i] << endl;
+	}
+	cout << "homogeneous_polynomial_domain::print_symbols symbols_latex:" << endl;
+	for (i = 0; i < nb_variables; i++) {
+
+		cout << i << " : " << symbols_latex[i] << endl;
+	}
+
+}
 
 void homogeneous_polynomial_domain::print_monomial(
 		std::ostream &ost, int i)

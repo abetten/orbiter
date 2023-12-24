@@ -90,7 +90,8 @@ void permutation_representation_domain::allocate()
 	Elts = NEW_OBJECT(data_structures::page_storage);
 }
 
-void permutation_representation_domain::init_product_action(int m, int n,
+void permutation_representation_domain::init_product_action(
+		int m, int n,
 		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -138,7 +139,8 @@ void permutation_representation_domain::init(int degree,
 	}
 }
 
-void permutation_representation_domain::init_data(int page_length_log, int verbose_level)
+void permutation_representation_domain::init_data(
+		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -197,7 +199,8 @@ void permutation_representation_domain::init_data(int page_length_log, int verbo
 	FREE_int(tmp3);
 }
 
-void permutation_representation_domain::init_with_base(int degree,
+void permutation_representation_domain::init_with_base(
+		int degree,
 	int base_length, int *base, int page_length_log, 
 	actions::action &A, int verbose_level)
 {
@@ -301,7 +304,8 @@ void permutation_representation_domain::init_with_base(int degree,
 	FREE_int(tmp3);
 }
 
-void permutation_representation_domain::transversal_rep(int i, int j,
+void permutation_representation_domain::transversal_rep(
+		int i, int j,
 		int *Elt, int verbose_level)
 {
 	int j1, j2;
@@ -313,7 +317,8 @@ void permutation_representation_domain::transversal_rep(int i, int j,
 	Elt[j2] = j1;
 }
 
-void permutation_representation_domain::one(int *Elt)
+void permutation_representation_domain::one(
+		int *Elt)
 {
 	int i;
 	
@@ -322,7 +327,8 @@ void permutation_representation_domain::one(int *Elt)
 	}
 }
 
-int permutation_representation_domain::is_one(int *Elt)
+int permutation_representation_domain::is_one(
+		int *Elt)
 {
 	int i;
 	
@@ -334,7 +340,8 @@ int permutation_representation_domain::is_one(int *Elt)
 	return true;
 }
 
-void permutation_representation_domain::mult(int *A, int *B, int *AB)
+void permutation_representation_domain::mult(
+		int *A, int *B, int *AB)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -344,7 +351,8 @@ void permutation_representation_domain::mult(int *A, int *B, int *AB)
 	// finished with perm_mult" << endl;
 }
 
-void permutation_representation_domain::copy(int *A, int *B)
+void permutation_representation_domain::copy(
+		int *A, int *B)
 {
 	int i;
 	
@@ -353,14 +361,16 @@ void permutation_representation_domain::copy(int *A, int *B)
 	}
 }
 
-void permutation_representation_domain::invert(int *A, int *Ainv)
+void permutation_representation_domain::invert(
+		int *A, int *Ainv)
 {
 	combinatorics::combinatorics_domain Combi;
 
 	Combi.perm_inverse(A, Ainv, degree);
 }
 
-void permutation_representation_domain::unpack(uchar *elt, int *Elt)
+void permutation_representation_domain::unpack(
+		uchar *elt, int *Elt)
 {
 	int i, j;
 	
@@ -374,7 +384,8 @@ void permutation_representation_domain::unpack(uchar *elt, int *Elt)
 	}
 }
 
-void permutation_representation_domain::pack(int *Elt, uchar *elt)
+void permutation_representation_domain::pack(
+		int *Elt, uchar *elt)
 {
 	int i, j;
 	
@@ -388,7 +399,8 @@ void permutation_representation_domain::pack(int *Elt, uchar *elt)
 	}
 }
 
-void permutation_representation_domain::print(int *Elt, std::ostream &ost)
+void permutation_representation_domain::print(
+		int *Elt, std::ostream &ost)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -398,7 +410,8 @@ void permutation_representation_domain::print(int *Elt, std::ostream &ost)
 	//cout << "perm_group::print done" << endl;
 }
 
-void permutation_representation_domain::print_with_print_point_function(int *Elt,
+void permutation_representation_domain::print_with_print_point_function(
+		int *Elt,
 		ostream &ost,
 		void (*point_label)(
 				std::stringstream &sstr, long int pt, void *data),
@@ -412,12 +425,14 @@ void permutation_representation_domain::print_with_print_point_function(int *Elt
 	//cout << "perm_group::print done" << endl;
 }
 
-void permutation_representation_domain::code_for_make_element(int *Elt, int *data)
+void permutation_representation_domain::code_for_make_element(
+		int *Elt, int *data)
 {
 	Int_vec_copy(Elt, data, degree);
 }
 
-void permutation_representation_domain::print_for_make_element(int *Elt, std::ostream &ost)
+void permutation_representation_domain::print_for_make_element(
+		int *Elt, std::ostream &ost)
 {
 	int i;
 	
@@ -436,7 +451,8 @@ void permutation_representation_domain::print_for_make_element_no_commas(
 	}
 }
 
-void permutation_representation_domain::print_with_action(actions::action *A, int *Elt, std::ostream &ost)
+void permutation_representation_domain::print_with_action(
+		actions::action *A, int *Elt, std::ostream &ost)
 {
 	//perm_print(ost, Elt, degree);
 	//ost << endl;
@@ -489,7 +505,8 @@ void permutation_representation_domain::print_with_action(actions::action *A, in
 	ost << endl;
 }
 
-void permutation_representation_domain::make_element(int *Elt, int *data, int verbose_level)
+void permutation_representation_domain::make_element(
+		int *Elt, int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

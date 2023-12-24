@@ -390,6 +390,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_object_of_projective_space(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_projective_space(label)
 #define Get_object_of_cubic_surface(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_cubic_surface(label)
 #define Get_object_of_type_code(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_code(label)
+#define Get_object_of_type_graph(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_graph(label)
 #define Get_orthogonal_space(label) user_interface::The_Orbiter_top_level_session->get_orthogonal_space(label)
 
 
