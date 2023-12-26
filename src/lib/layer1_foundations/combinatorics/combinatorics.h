@@ -671,6 +671,9 @@ public:
 	void compute_incidence_matrix_from_blocks(
 			int v, int b, int k, int *Blocks,
 			int *&M, int verbose_level);
+	void compute_incidence_matrix_from_blocks_lint(
+			int v, int b, int k, long int *Blocks,
+			int *&M, int verbose_level);
 	void compute_incidence_matrix_from_sets(
 			int v, int b, long int *Sets_coded,
 			int *&M,

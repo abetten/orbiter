@@ -721,6 +721,11 @@ public:
 	int f_family;
 	std::string family_name;
 
+	int f_list_of_base_blocks;
+	std::string list_of_base_blocks_group_label;
+	std::string list_of_base_blocks_fname;
+	std::string list_of_base_blocks_col;
+
 	int f_list_of_blocks_coded;
 	int list_of_blocks_coded_v;
 	int list_of_blocks_coded_k;
@@ -817,6 +822,7 @@ public:
 			field_theory::finite_field *F,
 			long int *&set, int &sz, int &k,
 			int verbose_level);
+	// creates a projective_space_with_action object
 	void unrank_block_in_PG_2_q(
 			int *block,
 			int rk, int verbose_level);

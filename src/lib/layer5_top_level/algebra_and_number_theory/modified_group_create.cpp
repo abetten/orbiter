@@ -194,11 +194,32 @@ void modified_group_create::modified_group_init(
 					"after create_action_on_self_by_right_multiplication" << endl;
 		}
 	}
+	else if (Descr->f_direct_product) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_direct_product" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_product_action" << endl;
+		}
+		create_product_action(
+					description,
+					verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_product_action" << endl;
+		}
+	}
 
 
 	else {
 		cout << "modified_group_create::modified_group_init "
 				"unknown operation" << endl;
+		exit(1);
 
 	}
 
@@ -1027,6 +1048,219 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 	}
 }
 
+void modified_group_create::create_product_action(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action" << endl;
+	}
+#if 0
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_product_action "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+#endif
+
+	data_structures::string_tools ST;
+	std::vector<std::string> Input;
+
+	ST.parse_comma_separated_strings(
+			description->direct_product_input, Input);
+
+
+	if (Input.size() != 2) {
+		cout << "modified_group_create::create_product_action "
+				"need exactly two input actions" << endl;
+		exit(1);
+	}
+
+
+	any_group *AG1, *AG2;
+
+	AG1 = Get_object_of_type_any_group(Input[0]);
+	AG2 = Get_object_of_type_any_group(Input[1]);
+
+	algebra::matrix_group *M1;
+	algebra::matrix_group *M2;
+
+
+	if (!AG1->A->is_matrix_group()) {
+		cout << "modified_group_create::create_product_action "
+				"group 1 is not a matrix group" << endl;
+		exit(1);
+	}
+	M1 = AG1->A->get_matrix_group();
+
+	if (!AG2->A->is_matrix_group()) {
+		cout << "modified_group_create::create_product_action "
+				"group 2 is not a matrix group" << endl;
+		exit(1);
+	}
+	M2 = AG2->A->get_matrix_group();
+
+	actions::action_global AG;
+
+	//actions::action *A;
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before AG.init_direct_product_group_and_restrict" << endl;
+	}
+	A_modified = AG.init_direct_product_group_and_restrict(
+			M1, M2,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"after AG.init_direct_product_group_and_restrict" << endl;
+	}
+
+	A_modified->f_is_linear = false;
+	f_has_strong_generators = false;
+
+	actions::action *A0;
+	//groups::direct_product *P;
+
+	A0 = A_modified->subaction;
+
+	//P = A0->G.direct_product_group;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before AG.scan_generators" << endl;
+	}
+	Strong_gens = AG.scan_generators(
+			A0,
+			Descr->direct_product_subgroup_gens,
+			Descr->direct_product_subgroup_order,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"after AG.scan_generators" << endl;
+	}
+
+
+	f_has_strong_generators = true;
+
+
+
+
+#if 0
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+
+
+	if (!A_previous->f_is_linear) {
+		cout << "modified_group_create::create_product_action "
+				"previous action is not linear" << endl;
+		exit(1);
+	}
+
+
+	algebra::matrix_group *M;
+	field_theory::finite_field *Fq;
+	int n;
+
+	M = A_previous->get_matrix_group();
+
+	n = M->n;
+	Fq = M->GFq;
+
+	induced_actions::action_on_grassmannian *AonG;
+	geometry::grassmann *Grass;
+
+	AonG = NEW_OBJECT(induced_actions::action_on_grassmannian);
+
+	Grass = NEW_OBJECT(geometry::grassmann);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before Grass->init" << endl;
+	}
+
+	Grass->init(n,
+			description->on_k_subspaces_k,
+			Fq, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"after Grass->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before AonG->init" << endl;
+	}
+
+	AonG->init(*A_previous, Grass, verbose_level - 2);
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"after AonG->init" << endl;
+	}
+
+
+	//A_modified = NEW_OBJECT(actions::action);
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before induced_action_on_grassmannian_preloaded" << endl;
+	}
+
+	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
+		false /* f_induce_action */, NULL /*sims *old_G */,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"after induced_action_on_grassmannian_preloaded" << endl;
+	}
+
+
+	A_modified->f_is_linear = true;
+
+	f_has_strong_generators = true;
+
+	A_modified->f_is_linear = A_previous->f_is_linear;
+	A_modified->dimension = A_previous->dimension;
+
+	f_has_strong_generators = true;
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+	Strong_gens = AG->Subgroup_gens;
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	label += "_OnGr_" + std::to_string(n) + "_" + std::to_string(description->on_k_subspaces_k) + "_" + std::to_string(Fq->q);
+	label_tex += " {\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(description->on_k_subspaces_k) + "}(" + std::to_string(Fq->q) + ")";
+#endif
+
+	label += "product_" + AG1->label + "_" + AG2->label;
+	label_tex += "product(" + AG1->label_tex + "," + AG2->label_tex + ")";
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_product_action "
+				"done" << endl;
+	}
+}
 
 
 

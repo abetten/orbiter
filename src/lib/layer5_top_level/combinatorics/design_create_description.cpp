@@ -27,6 +27,11 @@ design_create_description::design_create_description()
 	f_family = false;
 	//family_name;
 
+	f_list_of_base_blocks = false;
+	//std::string list_of_base_blocks_group_label;
+	//std::string list_of_base_blocks_fname;
+	//std::string list_of_base_blocks_col;
+
 	f_list_of_blocks_coded = false;
 	list_of_blocks_coded_v = 0;
 	list_of_blocks_coded_k = 0;
@@ -87,6 +92,20 @@ int design_create_description::read_arguments(
 				cout << "-family " << family_name << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-list_of_base_blocks") == 0) {
+			f_list_of_base_blocks = true;
+			list_of_base_blocks_group_label.assign(argv[++i]);
+			list_of_base_blocks_fname.assign(argv[++i]);
+			list_of_base_blocks_col.assign(argv[++i]);
+			if (f_v) {
+				cout << "-list_of_base_blocks " << list_of_base_blocks_group_label
+						<< " " << list_of_base_blocks_fname
+						<< " " << list_of_base_blocks_col
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-list_of_blocks_coded") == 0) {
 			f_list_of_blocks_coded = true;
 			list_of_blocks_coded_v = ST.strtoi(argv[++i]);
@@ -173,6 +192,12 @@ void design_create_description::print()
 	}
 	if (f_family) {
 		cout << "-family " << family_name << endl;
+	}
+	if (f_list_of_base_blocks) {
+		cout << "-list_of_base_blocks " << list_of_base_blocks_group_label
+				<< " " << list_of_base_blocks_fname
+				<< " " << list_of_base_blocks_col
+				<< endl;
 	}
 	if (f_list_of_blocks_coded) {
 		cout << "-list_of_blocks " << list_of_blocks_coded_v

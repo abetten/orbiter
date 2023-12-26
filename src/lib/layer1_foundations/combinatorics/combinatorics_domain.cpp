@@ -3488,7 +3488,7 @@ void combinatorics_domain::compute_incidence_matrix_from_blocks(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
+		cout << "combinatorics_domain::compute_incidence_matrix_from_blocks" << endl;
 	}
 	int i, j, h;
 
@@ -3502,9 +3502,35 @@ void combinatorics_domain::compute_incidence_matrix_from_blocks(
 	}
 
 	if (f_v) {
-		cout << "combinatorics_domain::compute_incidence_matrix done" << endl;
+		cout << "combinatorics_domain::compute_incidence_matrix_from_blocks done" << endl;
 	}
 }
+
+void combinatorics_domain::compute_incidence_matrix_from_blocks_lint(
+		int v, int b, int k, long int *Blocks,
+		int *&M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix_from_blocks_lint" << endl;
+	}
+	int i, j, h;
+
+	M = NEW_int(v * b);
+	Int_vec_zero(M, v * b);
+	for (j = 0; j < b; j++) {
+		for (h = 0; h < k; h++) {
+			i = Blocks[j * k + h];
+			M[i * b + j] = 1;
+		}
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix_from_blocks_lint done" << endl;
+	}
+}
+
 
 
 void combinatorics_domain::compute_incidence_matrix_from_sets(

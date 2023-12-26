@@ -429,9 +429,9 @@ static void direct_product_group_element_print_for_make_element(
 	int *Elt = (int *) elt;
 
 	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
-	ost << ",";
+	//ost << ",";
 	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
-	ost << ",";
+	//ost << ",";
 	//cout << "direct_product_group_element_print_for_make_element "
 	//		"not yet implemented" << endl;
 }
@@ -443,9 +443,9 @@ static void direct_product_group_element_print_for_make_element_no_commas(
 	int *Elt = (int *) elt;
 
 	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
-	ost << ",";
+	//ost << ",";
 	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
-	ost << ",";
+	//ost << ",";
 	//cout << "direct_product_group_element_print_for_make_element_no_commas "
 	//		"not yet implemented" << endl;
 }
@@ -463,9 +463,10 @@ static void direct_product_group_element_print_quick(
 static void direct_product_group_element_print_latex(
 		action &A, void *elt, std::ostream &ost)
 {
-	cout << "direct_product_group_element_print_latex "
-			"not yet implemented" << endl;
-	exit(1);
+	groups::direct_product &P = *A.G.direct_product_group;
+	int *Elt = (int *) elt;
+
+	P.element_print_easy_latex(Elt, ost);
 }
 
 

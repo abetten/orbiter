@@ -172,9 +172,9 @@ void arc_generator::init(
 					"point " << a << " is forbidden" << endl;
 		}
 	}
-	if (PA->P->Subspaces->Implementation->Lines_on_point == NULL) {
+	if (!PA->P->Subspaces->Implementation->has_lines_on_point()) {
 		cout << "arc_generator::init "
-				"P->Lines_on_point == NULL" << endl;
+				"has_lines_on_point() is false" << endl;
 		exit(1);
 	}
 
@@ -444,7 +444,9 @@ void arc_generator::early_test_func(
 		if (f_survive && Descr->f_d) {
 			// test that there are no more than d points per line:
 			for (j = 0; j < PA->P->Subspaces->r; j++) {
-				b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
+
+				b = PA->P->Subspaces->Implementation->lines_on_point(a, j);
+
 				if (line_type[b] == Descr->d) {
 					if (Descr->f_affine && b < nb_affine_lines) {
 						f_survive = false;
@@ -610,16 +612,16 @@ void arc_generator::compute_line_type(
 		cout << "arc_generator::compute_line_type" << endl;
 	}
 
-	if (PA->P->Subspaces->Implementation->Lines_on_point == 0) {
+	if (!PA->P->Subspaces->Implementation->has_lines_on_point()) {
 		cout << "arc_generator::compute_line_type "
-				"P->Lines_on_point == 0" << endl;
+				"has_lines_on_point() is false" << endl;
 		exit(1);
 	}
 	Int_vec_zero(line_type, PA->P->Subspaces->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
 		for (j = 0; j < PA->P->Subspaces->r; j++) {
-			b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
+			b = PA->P->Subspaces->Implementation->lines_on_point(a, j);
 			line_type[b]++;
 		}
 	}
@@ -810,7 +812,7 @@ void arc_generator::lifting_prepare_function_new(
 	for (i = 0; i < nb_candidates; i++) {
 		a = col_labels[i];
 		for (j = 0; j < PA->P->Subspaces->r; j++) {
-			b = PA->P->Subspaces->Implementation->Lines_on_point[a * PA->P->Subspaces->r + j];
+			b = PA->P->Subspaces->Implementation->lines_on_point(a, j);
 			if (line_type[b] == 2) {
 				cout << "arc_generator::lifting_prepare_function "
 						"candidate lies on a secant" << endl;

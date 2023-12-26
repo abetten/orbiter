@@ -1681,7 +1681,7 @@ void projective_space_plane::find_nucleus(
 		exit(1);
 	}
 
-	if (P->Subspaces->Implementation->Lines_on_point == NULL) {
+	if (!P->Subspaces->Implementation->has_lines()) {
 		if (f_v) {
 			cout << "projective_space_plane::find_nucleus "
 					"before P->init_incidence_structure" << endl;
@@ -1696,7 +1696,7 @@ void projective_space_plane::find_nucleus(
 	Lines = NEW_int(P->Subspaces->r);
 	a = set[0];
 	for (i = 0; i < P->Subspaces->r; i++) {
-		Lines[i] = P->Subspaces->Implementation->Lines_on_point[a * P->Subspaces->r + i];
+		Lines[i] = P->Subspaces->Implementation->lines_on_point(a, i);
 	}
 	sz = P->Subspaces->r;
 	Sorting.int_vec_heapsort(Lines, P->Subspaces->r);
@@ -1729,7 +1729,7 @@ void projective_space_plane::find_nucleus(
 
 	a = set[1];
 	for (i = 0; i < P->Subspaces->r; i++) {
-		Lines[i] = P->Subspaces->Implementation->Lines_on_point[a * P->Subspaces->r + i];
+		Lines[i] = P->Subspaces->Implementation->lines_on_point(a, i);
 	}
 	sz = P->Subspaces->r;
 	Sorting.int_vec_heapsort(Lines, P->Subspaces->r);

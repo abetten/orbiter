@@ -152,7 +152,92 @@ void design_create::init(
 
 		exit(1);
 
+	}
+
+	else if (Descr->f_list_of_base_blocks) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"list of base blocks" << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_group_label=" << Descr->list_of_base_blocks_group_label << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_fname=" << Descr->list_of_base_blocks_fname << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_col=" << Descr->list_of_base_blocks_col << endl;
 		}
+
+
+		apps_algebra::any_group *AG;
+
+		AG = Get_object_of_type_any_group(Descr->list_of_base_blocks_group_label);
+
+		A = A2 = AG->A; // ToDo!
+
+
+		orbiter_kernel_system::file_io Fio;
+		data_structures::set_of_sets *SoS;
+
+		Fio.Csv_file_support->read_column_and_parse(
+				Descr->list_of_base_blocks_fname, Descr->list_of_base_blocks_col,
+				SoS,
+				verbose_level);
+		if (f_v) {
+			cout << "design_create::init "
+					"number of base blocks = " << SoS->nb_sets << endl;
+		}
+
+
+		data_structures::string_tools ST;
+		string label_set;
+
+		label_set = Descr->list_of_base_blocks_fname;
+		ST.chop_off_extension(label_set);
+
+		long int *Table;
+		int size;
+
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before AG->orbits_of_one_subset" << endl;
+		}
+		AG->orbits_of_one_subset(
+				SoS->Sets[0], SoS->Set_size[0],
+				label_set,
+				AG->A, AG->A,
+				Table, size,
+				verbose_level);
+		if (f_v) {
+			cout << "design_create::init "
+					"after AG->orbits_of_one_subset" << endl;
+			cout << "design_create::init "
+					"found an orbit of size " << size << endl;
+		}
+
+		combinatorics::combinatorics_domain Combi;
+
+		//int v, b, k;
+
+		v = A->degree;
+		b = size;
+		k = SoS->Set_size[0];
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before Combi.compute_incidence_matrix_from_blocks_lint" << endl;
+		}
+		Combi.compute_incidence_matrix_from_blocks_lint(
+				v, b, k, Table /* Blocks */,
+				incma, verbose_level - 2);
+		if (f_v) {
+			cout << "design_create::init "
+					"after Combi.compute_incidence_matrix_from_blocks_lint" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_list_of_blocks_coded) {
 
 		if (f_v) {
@@ -493,6 +578,7 @@ void design_create::init(
 void design_create::create_design_PG_2_q(
 		field_theory::finite_field *F,
 		long int *&set, int &sz, int &k, int verbose_level)
+// creates a projective_space_with_action object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -527,7 +613,15 @@ void design_create::create_design_PG_2_q(
 	sz = P->Subspaces->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
+
+		int h;
+
+		for (h = 0; h < k; h++) {
+			block[h] = P->Subspaces->Implementation->lines(j, h);
+		}
+#if 0
 		Int_vec_copy(P->Subspaces->Implementation->Lines + j * k, block, k);
+#endif
 		Sorting.int_vec_heapsort(block, k);
 		set[j] = Combi.rank_k_subset(block, P->Subspaces->N_points, k);
 		if (f_v) {

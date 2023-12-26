@@ -4243,7 +4243,7 @@ void geometry_global::do_blocking_set_family_3(int n,
 	for (i = 4; i < set_size; i++) {
 		pt = set_in[idx[i]];
 		for (j = 0; j < P->Subspaces->r; j++) {
-			h = P->Subspaces->Implementation->Lines_on_point[pt * P->Subspaces->r + j];
+			h = P->Subspaces->Implementation->lines_on_point(pt, j);
 			if (!S->is_contained(h)) {
 				S->add_element(h);
 			}

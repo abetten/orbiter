@@ -99,6 +99,52 @@ void any_group::orbits_on_subsets(
 }
 
 
+void any_group::orbits_of_one_subset(
+		long int *set, int sz,
+		std::string &label_set,
+		actions::action *A_base, actions::action *A,
+		long int *&Table,
+		int &size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::orbits_of_one_subset" << endl;
+	}
+
+
+	algebra_global_with_action Algebra;
+
+	if (f_v) {
+		cout << "any_group::orbits_of_one_subset "
+				"before Algebra.compute_orbit_of_set" << endl;
+	}
+
+	Algebra.compute_orbit_of_set(
+			set, sz,
+			A_base, A,
+			Subgroup_gens->gens,
+			label_set,
+			label,
+			Table, size,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::orbits_of_one_subset "
+				"after Algebra.compute_orbit_of_set" << endl;
+	}
+
+
+
+	//FREE_lint(Table);
+	if (f_v) {
+		cout << "any_group::orbits_of_one_subset" << endl;
+	}
+
+}
+
+
 void any_group::orbits_on_poset_post_processing(
 		poset_classification::poset_classification *PC,
 		int depth,

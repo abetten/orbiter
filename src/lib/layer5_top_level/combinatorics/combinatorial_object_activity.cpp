@@ -177,7 +177,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 		}
 
 		if (f_v) {
-			cout << "packing_classify::compute_and_save_klein_invariants: "
+			cout << "combinatorial_object_activity::perform_activity_geometric_object: "
 					"We found " << Int_type->len << " intersection types." << endl;
 
 			int i;

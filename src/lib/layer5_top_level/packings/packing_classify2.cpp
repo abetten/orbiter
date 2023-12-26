@@ -932,7 +932,7 @@ void packing_classify::report_extra_stuff(
 			ost << "\\right]" << endl;
 			ost << " = \\{" << endl;
 			for (i = 0; i < P3->Subspaces->k; i++) {
-				ost << P3->Subspaces->Implementation->Lines[u * P3->Subspaces->k + i];
+				ost << P3->Subspaces->Implementation->lines(u, i);
 				if (i < P3->Subspaces->k - 1) {
 					ost << ", ";
 				}
@@ -951,7 +951,8 @@ void packing_classify::report_extra_stuff(
 		for (u = 0; u < Spread_table_with_selection->Spread_tables->nb_spreads; u++) {
 			ost << "Spread " << u << " is $";
 			Lint_vec_print_fully(ost,
-					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size, spread_size);
+					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size,
+					spread_size);
 			ost << "$ isomorphism type "
 					<< Spread_table_with_selection->Spread_tables->spread_iso_type[u] << "\\\\" << endl;
 

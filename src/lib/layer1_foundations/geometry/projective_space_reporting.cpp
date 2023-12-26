@@ -580,14 +580,17 @@ void projective_space_reporting::cheat_sheet_points_on_lines(
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_lines
 			<< " lines, each with " << P->Subspaces->k << " points:\\\\" << endl;
-	if (P->Subspaces->Implementation->Lines == NULL) {
+	if (!P->Subspaces->Implementation->has_lines()) {
 		f << "Don't have Lines table\\\\" << endl;
 	}
 	else {
 		int *row_labels;
 		int *col_labels;
-		int i, nb;
+		int i, j, h, nb;
+		int row_block_size = 40;
+		int *v;
 
+		v = NEW_int(row_block_size * P->Subspaces->k);
 		row_labels = NEW_int(P->Subspaces->N_lines);
 		col_labels = NEW_int(P->Subspaces->k);
 		for (i = 0; i < P->Subspaces->N_lines; i++) {
@@ -597,15 +600,22 @@ void projective_space_reporting::cheat_sheet_points_on_lines(
 			col_labels[i] = i;
 		}
 		//int_matrix_print_tex(f, Lines, N_lines, k);
-		for (i = 0; i < P->Subspaces->N_lines; i += 40) {
-			nb = MINIMUM(P->Subspaces->N_lines - i, 40);
+		for (i = 0; i < P->Subspaces->N_lines; i += row_block_size) {
+			nb = MINIMUM(P->Subspaces->N_lines - i, row_block_size);
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
+
+			for (h = 0; h < nb; h++) {
+				for (j = 0; j < P->Subspaces->k; j++) {
+					v[h * P->Subspaces->k + j] = P->Subspaces->Implementation->lines(i + h, j);
+				}
+			}
 			L.print_integer_matrix_with_labels(f,
-					P->Subspaces->Implementation->Lines + i * P->Subspaces->k, nb, P->Subspaces->k, row_labels + i,
+					v, nb, P->Subspaces->k, row_labels + i,
 					col_labels, true /* f_tex */);
 			f << "$$" << endl;
 		}
+		FREE_int(v);
 		FREE_int(row_labels);
 		FREE_int(col_labels);
 	}
@@ -626,14 +636,17 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_points
 			<< " points, each with " << P->Subspaces->r << " lines:\\\\" << endl;
-	if (P->Subspaces->Implementation->Lines_on_point == NULL) {
+	if (!P->Subspaces->Implementation->has_lines_on_point()) {
 		f << "Don't have Lines\\_on\\_point table\\\\" << endl;
 	}
 	else {
 		int *row_labels;
 		int *col_labels;
-		int i, nb;
+		int i, h, j, nb;
+		int block_size = 40;
+		int *v;
 
+		v = NEW_int(block_size * P->Subspaces->r);
 		row_labels = NEW_int(P->Subspaces->N_points);
 		col_labels = NEW_int(P->Subspaces->r);
 		for (i = 0; i < P->Subspaces->N_points; i++) {
@@ -642,15 +655,22 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 		for (i = 0; i < P->Subspaces->r; i++) {
 			col_labels[i] = i;
 		}
-		for (i = 0; i < P->Subspaces->N_points; i += 40) {
-			nb = MINIMUM(P->Subspaces->N_points - i, 40);
+		for (i = 0; i < P->Subspaces->N_points; i += block_size) {
+			nb = MINIMUM(P->Subspaces->N_points - i, block_size);
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
+
+			for (h = 0; h < nb; h++) {
+				for (j = 0; j < P->Subspaces->k; j++) {
+					v[h * P->Subspaces->r + j] = P->Subspaces->Implementation->lines_on_point(i + h, j);
+				}
+			}
 			L.print_integer_matrix_with_labels(f,
-					P->Subspaces->Implementation->Lines_on_point + i * P->Subspaces->r, nb, P->Subspaces->r,
+					v, nb, P->Subspaces->r,
 				row_labels + i, col_labels, true /* f_tex */);
 			f << "$$" << endl;
 		}
+		FREE_int(v);
 		FREE_int(row_labels);
 		FREE_int(col_labels);
 
@@ -690,7 +710,7 @@ void projective_space_reporting::cheat_sheet_line_intersection(
 	for (i = 0; i < P->Subspaces->N_points; i++) {
 		f << i;
 		for (j = 0; j < P->Subspaces->N_points; j++) {
-			a = P->Subspaces->Implementation->Line_intersection[i * P->Subspaces->N_lines + j];
+			a = P->Subspaces->Implementation->line_intersection(i, j);
 			f << " & ";
 			if (i != j) {
 				f << a;
@@ -734,7 +754,7 @@ void projective_space_reporting::cheat_sheet_line_through_pairs_of_points(
 		f << i;
 		for (j = 0; j < P->Subspaces->N_points; j++) {
 
-			a = P->Subspaces->Implementation->Line_through_two_points[i * P->Subspaces->N_points + j];
+			a = P->Subspaces->Implementation->line_through_two_points(i, j);
 			f << " & ";
 			if (i != j) {
 				f << a;

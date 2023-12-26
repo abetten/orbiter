@@ -572,6 +572,33 @@ void direct_product::element_print_easy(
 	ost << "end element of direct product" << endl;
 }
 
+void direct_product::element_print_easy_latex(
+		int *Elt, std::ostream &ost)
+{
+	int f;
+
+	//ost << "begin element of direct product: " << endl;
+	if (M1->n == 1 && M2->n == 1) {
+		ost << "(" << Elt[0] << "," << Elt[1] << ","
+				<< Elt[4] << "," << Elt[5] << ")" << endl;
+	}
+	else {
+		for (f = 0; f < 2; f++) {
+			//ost << "component " << f << ":" << endl;
+			if (f == 0) {
+				M1->GL_print_latex(Elt + offset_i(f), ost);
+				ost << ",";
+			}
+			else {
+				M2->GL_print_latex(Elt + offset_i(f), ost);
+				//cout << endl;
+			}
+		}
+	}
+	//ost << "end element of direct product" << endl;
+}
+
+
 void direct_product::compute_base_and_transversals(
 		int verbose_level)
 {

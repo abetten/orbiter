@@ -4464,6 +4464,60 @@ void action_global::reverse_engineer_semilinear_group(
 }
 
 
+groups::strong_generators *action_global::scan_generators(
+		action *A0,
+		std::string &gens_text,
+		std::string &group_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	groups::strong_generators *Strong_gens;
+
+	if (f_v) {
+		cout << "action_global::scan_generators" << endl;
+	}
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+	int *data;
+	int sz;
+	int nb_gens;
+	data_structures_groups::vector_ge *nice_gens;
+
+	Int_vec_scan(gens_text, data, sz);
+
+	nb_gens = sz / A0->make_element_size;
+
+	if (f_v) {
+		cout << "action_global::scan_generators "
+				"before Strong_gens->init_from_data_with_target_go_ascii" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::scan_generators "
+				"nb_gens=" << nb_gens << endl;
+	}
+
+	Strong_gens->init_from_data_with_target_go_ascii(
+			A0,
+			data,
+			nb_gens, A0->make_element_size,
+			group_order,
+			nice_gens,
+			verbose_level + 2);
+
+	FREE_OBJECT(nice_gens);
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "action_global::scan_generators "
+				"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::scan_generators done" << endl;
+	}
+	return Strong_gens;
+}
+
+
 
 
 

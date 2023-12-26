@@ -335,11 +335,13 @@ int delandtsheer_doyen_description::read_arguments(
 
 
 	if (!f_group_label) {
-		cout << "please use -group_label <label> to specify a label for the group used";
+		cout << "please use -group_label <label> "
+				"to specify a label for the group used";
 		exit(1);
 	}
 	if (!f_mask_label) {
-		cout << "please use -mask_label <label> to specify a label for the mask used";
+		cout << "please use -mask_label <label> "
+				"to specify a label for the mask used";
 		exit(1);
 	}
 

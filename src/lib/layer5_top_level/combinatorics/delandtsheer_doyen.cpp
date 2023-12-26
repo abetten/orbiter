@@ -1530,7 +1530,10 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
 	groups::strong_generators *Strong_gens;
+
+	#if 0
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::scan_subgroup_generators" << endl;
@@ -1559,6 +1562,15 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 		cout << "delandtsheer_doyen "
 				"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
 	}
+#endif
+
+	actions::action_global AG;
+
+	Strong_gens = AG.scan_generators(
+			A0,
+			Descr->subgroup_gens,
+			Descr->subgroup_order,
+			verbose_level);
 	if (f_v) {
 		cout << "delandtsheer_doyen::scan_subgroup_generators done" << endl;
 	}

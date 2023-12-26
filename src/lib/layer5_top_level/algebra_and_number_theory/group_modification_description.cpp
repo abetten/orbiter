@@ -43,6 +43,11 @@ group_modification_description::group_modification_description()
 
 	f_action_on_self_by_right_multiplication = false;
 
+	f_direct_product = false;
+	//std::string direct_product_input;
+	//std::string direct_product_subgroup_order;
+	//std::string direct_product_subgroup_gens;
+
 	//std::vector<std::string> from;
 
 }
@@ -125,6 +130,19 @@ int group_modification_description::read_arguments(
 				cout << "-action_on_self_by_right_multiplication" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-direct_product") == 0) {
+			f_direct_product = true;
+			direct_product_input.assign(argv[++i]);
+			direct_product_subgroup_order.assign(argv[++i]);
+			direct_product_subgroup_gens.assign(argv[++i]);
+			if (f_v) {
+				cout << "-direct_product "
+						<< direct_product_input
+						<< " " << direct_product_subgroup_order
+						<< " " << direct_product_subgroup_gens
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
@@ -182,6 +200,13 @@ void group_modification_description::print()
 	}
 	if (f_action_on_self_by_right_multiplication) {
 		cout << "-action_on_self_by_right_multiplication" << endl;
+	}
+	if (f_direct_product) {
+		cout << "-direct_product "
+				<< direct_product_input
+				<< " " << direct_product_subgroup_order
+				<< " " << direct_product_subgroup_gens
+				<< endl;
 	}
 
 	if (from.size()) {

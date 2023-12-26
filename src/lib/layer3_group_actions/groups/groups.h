@@ -147,6 +147,8 @@ public:
 			int *Elt, int *data, int verbose_level);
 	void element_print_easy(
 			int *Elt, std::ostream &ost);
+	void element_print_easy_latex(
+			int *Elt, std::ostream &ost);
 	void compute_base_and_transversals(
 			int verbose_level);
 	void make_strong_generators_data(

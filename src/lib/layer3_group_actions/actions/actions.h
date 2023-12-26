@@ -832,6 +832,11 @@ public:
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 			int verbose_level);
+	groups::strong_generators *scan_generators(
+			action *A0,
+			std::string &gens_text,
+			std::string &group_order,
+			int verbose_level);
 
 };
 

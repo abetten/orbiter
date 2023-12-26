@@ -566,6 +566,13 @@ public:
 			poset_classification::poset_classification *&PC,
 			int subset_size,
 			int verbose_level);
+	void orbits_of_one_subset(
+			long int *set, int sz,
+			std::string &label_set,
+			actions::action *A_base, actions::action *A,
+			long int *&Table,
+			int &size,
+			int verbose_level);
 	void orbits_on_poset_post_processing(
 			poset_classification::poset_classification *PC,
 			int depth,
@@ -735,6 +742,11 @@ public:
 	int subfield_subgroup_index;
 
 	int f_action_on_self_by_right_multiplication;
+
+	int f_direct_product;
+	std::string direct_product_input;
+	std::string direct_product_subgroup_order;
+	std::string direct_product_subgroup_gens;
 
 	std::vector<std::string> from;
 
@@ -1043,6 +1055,9 @@ public:
 	void create_action_on_self_by_right_multiplication(
 			group_modification_description *description,
 			int verbose_level);
+	void create_product_action(
+			group_modification_description *description,
+			int verbose_level);
 
 };
 
@@ -1247,6 +1262,9 @@ public:
 	int f_on_subsets;
 	int on_subsets_size;
 	std::string on_subsets_poset_classification_control_label;
+
+	int f_of_one_subset;
+	std::string of_one_subset_label;
 
 	int f_on_subspaces;
 	int on_subspaces_dimension;

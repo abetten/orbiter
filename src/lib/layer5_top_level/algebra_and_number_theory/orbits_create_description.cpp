@@ -32,6 +32,9 @@ orbits_create_description::orbits_create_description()
 	on_subsets_size = 0;
 	//std::string on_subsets_poset_classification_control_label;
 
+	f_of_one_subset = false;
+	//std::string of_one_subset_label;
+
 	f_on_subspaces = false;
 	on_subspaces_dimension = 0;
 	//std::string on_subspaces_poset_classification_control_label;
@@ -104,6 +107,14 @@ int orbits_create_description::read_arguments(
 						<< on_subsets_poset_classification_control_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-of_one_subset") == 0) {
+			f_of_one_subset = true;
+			of_one_subset_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-of_one_subset " << of_one_subset_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-on_subspaces") == 0) {
 			f_on_subspaces = true;
 			on_subspaces_dimension = ST.strtoi(argv[++i]);
@@ -223,6 +234,9 @@ void orbits_create_description::print()
 	if (f_on_subsets) {
 		cout << "-on_subsets " << on_subsets_size << " "
 				<< on_subsets_poset_classification_control_label << endl;
+	}
+	if (f_of_one_subset) {
+		cout << "-of_one_subset " << of_one_subset_label << endl;
 	}
 	if (f_on_subspaces) {
 		cout << "-on_subspaces " << on_subspaces_dimension << " "

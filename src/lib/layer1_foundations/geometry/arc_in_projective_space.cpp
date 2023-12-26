@@ -78,9 +78,9 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		cout << endl;
 	}
 
-	L[0] = P->Subspaces->Implementation->Line_through_two_points[frame[0] * P->Subspaces->N_points + frame[1]];
-	L[1] = P->Subspaces->Implementation->Line_through_two_points[frame[1] * P->Subspaces->N_points + frame[2]];
-	L[2] = P->Subspaces->Implementation->Line_through_two_points[frame[2] * P->Subspaces->N_points + frame[0]];
+	L[0] = P->Subspaces->Implementation->line_through_two_points(frame[0], frame[1]);
+	L[1] = P->Subspaces->Implementation->line_through_two_points(frame[1], frame[2]);
+	L[2] = P->Subspaces->Implementation->line_through_two_points(frame[2], frame[0]);
 
 	if (f_v) {
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
@@ -89,7 +89,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	size = 0;
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
-			b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+			b = P->Subspaces->Implementation->lines(L[h], i);
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -124,7 +124,8 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	}
 
 	if (f_v) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1: after adding the rest of the "
+		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1: "
+				"after adding the rest of the "
 				"conic, there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
@@ -143,13 +144,13 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	data_structures::sorting Sorting;
 
 	if (P->Subspaces->n != 2) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_"
-				"nucleus_arc_2 P->n != 2" << endl;
+		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2 "
+				"P->n != 2" << endl;
 		exit(1);
 	}
 	if (P->Subspaces->q != 8) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_"
-				"nucleus_arc_2 P->q != 8" << endl;
+		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2 "
+				"P->q != 8" << endl;
 		exit(1);
 	}
 	for (i = 0; i < 4; i++) {
@@ -162,9 +163,9 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		cout << endl;
 	}
 
-	L[0] = P->Subspaces->Implementation->Line_through_two_points[frame[0] * P->Subspaces->N_points + frame[2]];
-	L[1] = P->Subspaces->Implementation->Line_through_two_points[frame[2] * P->Subspaces->N_points + frame[3]];
-	L[2] = P->Subspaces->Implementation->Line_through_two_points[frame[3] * P->Subspaces->N_points + frame[0]];
+	L[0] = P->Subspaces->Implementation->line_through_two_points(frame[0], frame[2]);
+	L[1] = P->Subspaces->Implementation->line_through_two_points(frame[2], frame[3]);
+	L[2] = P->Subspaces->Implementation->line_through_two_points(frame[3], frame[0]);
 
 	if (f_v) {
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
@@ -173,7 +174,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	size = 0;
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
-			b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+			b = P->Subspaces->Implementation->lines(L[h], i);
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -263,10 +264,10 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 		cout << endl;
 	}
 
-	L[0] = P->Subspaces->Implementation->Line_through_two_points[1 * P->Subspaces->N_points + 2];
-	L[1] = P->Subspaces->Implementation->Line_through_two_points[0 * P->Subspaces->N_points + 2];
-	L[2] = P->Subspaces->Implementation->Line_through_two_points[0 * P->Subspaces->N_points + 1];
-	L[3] = P->Subspaces->Implementation->Line_through_two_points[points[20] * P->Subspaces->N_points + points[21]];
+	L[0] = P->Subspaces->Implementation->line_through_two_points(1, 2);
+	L[1] = P->Subspaces->Implementation->line_through_two_points(0, 2);
+	L[2] = P->Subspaces->Implementation->line_through_two_points(0, 1);
+	L[3] = P->Subspaces->Implementation->line_through_two_points(points[20], points[21]);
 
 	if (f_v) {
 		cout << "L:";
@@ -278,7 +279,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 		for (h = 0; h < 4; h++) {
 			cout << "h=" << h << " : L[h]=" << L[h] << " : " << endl;
 			for (i = 0; i < P->Subspaces->r; i++) {
-				b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+				b = P->Subspaces->Implementation->lines(L[h], i);
 					cout << "point " << b << " = ";
 					P->unrank_point(v, b);
 					P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
@@ -292,7 +293,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	size = 0;
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
-			b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+			b = P->Subspaces->Implementation->lines(L[h], i);
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -438,10 +439,10 @@ void arc_in_projective_space::create_pasch_arc(
 		cout << endl;
 	}
 
-	L[0] = P->Subspaces->Implementation->Line_through_two_points[points[0] * P->Subspaces->N_points + points[1]];
-	L[1] = P->Subspaces->Implementation->Line_through_two_points[points[0] * P->Subspaces->N_points + points[3]];
-	L[2] = P->Subspaces->Implementation->Line_through_two_points[points[2] * P->Subspaces->N_points + points[3]];
-	L[3] = P->Subspaces->Implementation->Line_through_two_points[points[1] * P->Subspaces->N_points + points[4]];
+	L[0] = P->Subspaces->Implementation->line_through_two_points(points[0], points[1]);
+	L[1] = P->Subspaces->Implementation->line_through_two_points(points[0], points[3]);
+	L[2] = P->Subspaces->Implementation->line_through_two_points(points[2], points[3]);
+	L[3] = P->Subspaces->Implementation->line_through_two_points(points[1], points[4]);
 
 	if (f_v) {
 		cout << "L:";
@@ -452,7 +453,7 @@ void arc_in_projective_space::create_pasch_arc(
 	size = 0;
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
-			b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+			b = P->Subspaces->Implementation->lines(L[h], i);
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -531,9 +532,9 @@ void arc_in_projective_space::create_Cheon_arc(
 		cout << endl;
 	}
 
-	L[0] = P->Subspaces->Implementation->Line_through_two_points[points[0] * P->Subspaces->N_points + points[1]];
-	L[1] = P->Subspaces->Implementation->Line_through_two_points[points[1] * P->Subspaces->N_points + points[2]];
-	L[2] = P->Subspaces->Implementation->Line_through_two_points[points[2] * P->Subspaces->N_points + points[0]];
+	L[0] = P->Subspaces->Implementation->line_through_two_points(points[0], points[1]);
+	L[1] = P->Subspaces->Implementation->line_through_two_points(points[1], points[2]);
+	L[2] = P->Subspaces->Implementation->line_through_two_points(points[2], points[0]);
 
 	if (f_v) {
 		cout << "L:";
@@ -544,7 +545,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	size = 0;
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
-			b = P->Subspaces->Implementation->Lines[L[h] * P->Subspaces->r + i];
+			b = P->Subspaces->Implementation->lines(L[h], i);
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -574,7 +575,7 @@ void arc_in_projective_space::create_Cheon_arc(
 
 		for (i = 0; i < P->Subspaces->r; i++) {
 			pencil[i] =
-					P->Subspaces->Implementation->Lines_on_point[points[h] * P->Subspaces->r + i];
+					P->Subspaces->Implementation->lines_on_point(points[h], i);
 		}
 
 
@@ -604,7 +605,7 @@ void arc_in_projective_space::create_Cheon_arc(
 				cout << "i=" << i << " a=" << a << " j="
 						<< j << " b=" << b << endl;
 			}
-			c = P->Subspaces->Implementation->Line_intersection[a * P->Subspaces->N_lines + b];
+			c = P->Subspaces->Implementation->line_intersection(a, b);
 			if (f_v) {
 				cout << "c=" << c << endl;
 			}

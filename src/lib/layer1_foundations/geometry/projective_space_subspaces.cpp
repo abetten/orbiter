@@ -47,8 +47,6 @@ projective_space_subspaces::projective_space_subspaces()
 
 	v = NULL;
 	w = NULL;
-	Mtx = NULL;
-	Mtx2 = NULL;
 
 	Implementation = NULL;
 
@@ -109,12 +107,6 @@ projective_space_subspaces::~projective_space_subspaces()
 	if (w) {
 		FREE_int(w);
 	}
-	if (Mtx) {
-		FREE_int(Mtx);
-	}
-	if (Mtx2) {
-		FREE_int(Mtx2);
-	}
 	if (Implementation) {
 		FREE_OBJECT(Implementation);
 	}
@@ -161,8 +153,6 @@ void projective_space_subspaces::init(
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
-	Mtx = NEW_int(3 * (n + 1));
-	Mtx2 = NEW_int(3 * (n + 1));
 
 
 	if (f_v) {
@@ -454,15 +444,15 @@ void projective_space_subspaces::intersect_with_line(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, b, idx;
+	int i, b; //, idx;
 	long int a;
-	int *L;
-	data_structures::sorting Sorting;
+	//int *L;
+	//data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::intersect_with_line" << endl;
 	}
-	L = Implementation->Lines + line_rk * k;
+	//L = Implementation->Lines + line_rk * k;
 	sz = 0;
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
@@ -471,9 +461,14 @@ void projective_space_subspaces::intersect_with_line(
 			cout << "projective_space_subspaces::intersect_with_line data loss" << endl;
 			exit(1);
 		}
+		if (Implementation->find_point_on_line(line_rk, b)) {
+			intersection[sz++] = a;
+		}
+#if 0
 		if (Sorting.int_vec_search(L, k, b, idx)) {
 			intersection[sz++] = a;
 		}
+#endif
 	}
 	if (f_v) {
 		cout << "projective_space_subspaces::intersect_with_line done" << endl;
@@ -630,7 +625,8 @@ void projective_space_subspaces::create_lines_on_point_but_inside_a_plane(
 		}
 	}
 	if (idx == n + 1) {
-		cout << "projective_space_subspaces::create_lines_on_point_but_inside_a_plane zero vector" << endl;
+		cout << "projective_space_subspaces::create_lines_on_point_but_inside_a_plane "
+				"zero vector" << endl;
 		exit(1);
 	}
 	i = 0;
@@ -725,7 +721,7 @@ void projective_space_subspaces::make_incidence_matrix(
 	Int_vec_zero(Inc, m * n);
 	for (i = 0; i < N_points; i++) {
 		for (h = 0; h < r; h++) {
-			j = Implementation->Lines_on_point[i * r + h];
+			j = Implementation->lines_on_point(i, h);
 			Inc[i * n + j] = 1;
 		}
 	}
@@ -765,9 +761,12 @@ void projective_space_subspaces::make_incidence_matrix(
 	}
 }
 
+
 int projective_space_subspaces::is_incident(
 		int pt, int line)
 {
+	return Implementation->is_incident(pt, line);
+#if 0
 	int f_v = false;
 	long int rk;
 
@@ -808,11 +807,14 @@ int projective_space_subspaces::is_incident(
 		//return bitvector_s_i(incidence_bitvec, a);
 		return Implementation->Bitmatrix->s_ij(pt, line);
 	}
+#endif
 }
 
 void projective_space_subspaces::incidence_m_ii(
 		int pt, int line, int a)
 {
+	return Implementation->incidence_m_ii(pt, line, a);
+#if 0
 	//long int b;
 
 	if (Implementation->Bitmatrix == NULL) {
@@ -824,7 +826,9 @@ void projective_space_subspaces::incidence_m_ii(
 	//bitvector_m_ii(incidence_bitvec, b, a);
 
 	Implementation->Bitmatrix->m_ij(pt, N_lines, a);
+#endif
 }
+
 
 void projective_space_subspaces::make_incidence_structure_and_partition(
 	incidence_structure *&Inc,
@@ -857,14 +861,16 @@ void projective_space_subspaces::make_incidence_structure_and_partition(
 	}
 	Int_vec_zero(M, N_points * N_lines);
 
+#if 0
 	if (Implementation->Lines_on_point == NULL) {
 		cout << "projective_space_subspaces::make_incidence_structure_and_partition "
 				"Lines_on_point == NULL" << endl;
 		exit(1);
 	}
+#endif
 	for (i = 0; i < N_points; i++) {
 		for (h = 0; h < r; h++) {
-			j = Implementation->Lines_on_point[i * r + h];
+			j = Implementation->lines_on_point(i, h);
 			M[i * N_lines + j] = 1;
 		}
 	}
@@ -1293,6 +1299,8 @@ long int projective_space_subspaces::line_through_two_points(
 int projective_space_subspaces::test_if_lines_are_disjoint(
 		long int l1, long int l2)
 {
+	return Implementation->test_if_lines_are_disjoint(l1, l2);
+#if 0
 	data_structures::sorting Sorting;
 
 	if (Implementation->Lines) {
@@ -1303,11 +1311,15 @@ int projective_space_subspaces::test_if_lines_are_disjoint(
 	else {
 		return test_if_lines_are_disjoint_from_scratch(l1, l2);
 	}
+#endif
 }
+
 
 int projective_space_subspaces::test_if_lines_are_disjoint_from_scratch(
 		long int l1, long int l2)
 {
+	return Implementation->test_if_lines_are_disjoint_from_scratch(l1, l2);
+#if 0
 	int *Mtx;
 	int m, rk;
 
@@ -1325,7 +1337,9 @@ int projective_space_subspaces::test_if_lines_are_disjoint_from_scratch(
 	else {
 		return false;
 	}
+#endif
 }
+
 
 int projective_space_subspaces::intersection_of_two_lines(
 		long int l1, long int l2)
@@ -1382,18 +1396,7 @@ void projective_space_subspaces::line_intersection_type(
 	if (f_v) {
 		cout << "projective_space_subspaces::line_intersection_type" << endl;
 	}
-	if (Implementation->Lines_on_point == NULL) {
-		if (f_v) {
-			cout << "projective_space_subspaces::line_intersection_type "
-					"before line_intersection_type_basic" << endl;
-		}
-		line_intersection_type_basic(set, set_size, type, verbose_level);
-		if (f_v) {
-			cout << "projective_space_subspaces::line_intersection_type "
-					"after line_intersection_type_basic" << endl;
-		}
-	}
-	else {
+	if (Implementation->has_lines_on_point()) {
 
 		if (f_v) {
 			cout << "projective_space_subspaces::line_intersection_type "
@@ -1404,6 +1407,18 @@ void projective_space_subspaces::line_intersection_type(
 		if (f_v) {
 			cout << "projective_space_subspaces::line_intersection_type "
 					"after Implementation->line_intersection_type" << endl;
+		}
+	}
+	else {
+
+		if (f_v) {
+			cout << "projective_space_subspaces::line_intersection_type "
+					"before line_intersection_type_basic" << endl;
+		}
+		line_intersection_type_basic(set, set_size, type, verbose_level);
+		if (f_v) {
+			cout << "projective_space_subspaces::line_intersection_type "
+					"after line_intersection_type_basic" << endl;
 		}
 
 	}

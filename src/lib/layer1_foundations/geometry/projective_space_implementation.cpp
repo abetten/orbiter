@@ -38,6 +38,9 @@ projective_space_implementation::projective_space_implementation()
 	v = NULL;
 	w = NULL;
 
+	Mtx = NULL;
+	Mtx2 = NULL;
+
 }
 
 projective_space_implementation::~projective_space_implementation()
@@ -62,6 +65,12 @@ projective_space_implementation::~projective_space_implementation()
 	}
 	if (w) {
 		FREE_int(w);
+	}
+	if (Mtx) {
+		FREE_int(Mtx);
+	}
+	if (Mtx2) {
+		FREE_int(Mtx2);
 	}
 }
 
@@ -91,6 +100,8 @@ void projective_space_implementation::init(
 
 	v = NEW_int(n + 1);
 	w = NEW_int(n + 1);
+	Mtx = NEW_int(3 * (n + 1));
+	Mtx2 = NEW_int(3 * (n + 1));
 
 	if (N_lines < MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX) {
 		if (f_v) {
@@ -448,6 +459,94 @@ void projective_space_implementation::init(
 	}
 }
 
+data_structures::bitmatrix *projective_space_implementation::get_Bitmatrix()
+{
+	return Bitmatrix;
+}
+
+int projective_space_implementation::has_lines()
+{
+	if (Lines) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int projective_space_implementation::has_lines_on_point()
+{
+	if (Lines_on_point) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+int projective_space_implementation::find_point_on_line(int line_rk, int pt)
+{
+	data_structures::sorting Sorting;
+	int *L;
+	int k;
+	int idx;
+
+	k = P->Subspaces->k;
+
+	L = Lines + line_rk * k;
+	if (Sorting.int_vec_search(L, k, pt, idx)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int projective_space_implementation::lines(int i, int j)
+{
+	int k;
+
+
+	k = P->Subspaces->k;
+
+	return Lines[i * k + j];
+}
+
+int projective_space_implementation::lines_on_point(int i, int j)
+{
+	int r;
+
+
+	r = P->Subspaces->r;
+
+	return Lines_on_point[i * r + j];
+}
+
+int projective_space_implementation::line_through_two_points(int i, int j)
+{
+
+	int N_points;
+
+
+	N_points = P->Subspaces->N_points;
+	//N_lines = P->Subspaces->N_lines;
+
+	return Line_through_two_points[i * N_points + j];
+}
+
+int projective_space_implementation::line_intersection(int i, int j)
+{
+
+	int N_lines;
+
+
+	//N_points = P->Subspaces->N_points;
+	N_lines = P->Subspaces->N_lines;
+
+	return Line_intersection[i * N_lines + j];
+}
+
 void projective_space_implementation::line_intersection_type(
 		long int *set, int set_size, int *type,
 		int verbose_level)
@@ -529,7 +628,108 @@ void projective_space_implementation::point_types_of_line_set_int(
 	}
 }
 
+int projective_space_implementation::is_incident(
+		int pt, int line)
+{
+	int f_v = false;
+	long int rk;
+	int n;
 
+	n = P->Subspaces->n;
+
+	if (true /*incidence_bitvec == NULL*/) {
+		P->Subspaces->Grass_lines->unrank_lint(line, 0/*verbose_level - 4*/);
+
+		if (f_v) {
+			cout << "projective_space_implementation::is_incident "
+					"line=" << endl;
+			Int_matrix_print(P->Subspaces->Grass_lines->M, 2, n + 1);
+		}
+		Int_vec_copy(P->Subspaces->Grass_lines->M, Mtx, 2 * (n + 1));
+		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+				Mtx + 2 * (n + 1), 1, n + 1, pt);
+		if (f_v) {
+			cout << "point:" << endl;
+			Int_vec_print(cout, Mtx + 2 * (n + 1), n + 1);
+			cout << endl;
+		}
+
+		rk = P->Subspaces->F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
+				Mtx,
+				3, n + 1, Mtx2, v /* base_cols */,
+				false /* f_complete */,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "rk = " << rk << endl;
+		}
+		if (rk == 3) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		//a = (long int) pt * (long int) N_lines + (long int) line;
+		//return bitvector_s_i(incidence_bitvec, a);
+		return Bitmatrix->s_ij(pt, line);
+	}
+}
+
+void projective_space_implementation::incidence_m_ii(
+		int pt, int line, int a)
+{
+	//long int b;
+
+	if (Bitmatrix == NULL) {
+		cout << "projective_space_implementation::incidence_m_ii "
+				"Bitmatrix == NULL" << endl;
+		exit(1);
+		}
+	//b = (long int) pt * (long int) N_lines + (long int) line;
+	//bitvector_m_ii(incidence_bitvec, b, a);
+
+	Bitmatrix->m_ij(pt, P->Subspaces->N_lines, a);
+}
+
+int projective_space_implementation::test_if_lines_are_disjoint(
+		long int l1, long int l2)
+{
+	data_structures::sorting Sorting;
+
+	if (Lines) {
+		int k;
+		k = P->Subspaces->k;
+		return Sorting.test_if_sets_are_disjoint_assuming_sorted(
+				Lines + l1 * k,
+				Lines + l2 * k, k, k);
+	}
+	else {
+		return test_if_lines_are_disjoint_from_scratch(l1, l2);
+	}
+}
+
+int projective_space_implementation::test_if_lines_are_disjoint_from_scratch(
+		long int l1, long int l2)
+{
+	int *Mtx;
+	int m, rk;
+
+	m = P->Subspaces->n + 1;
+	Mtx = NEW_int(4 * m);
+	P->Subspaces->Grass_lines->unrank_lint_here(
+			Mtx, l1, 0/*verbose_level - 4*/);
+	P->Subspaces->Grass_lines->unrank_lint_here(
+			Mtx + 2 * m, l2, 0/*verbose_level - 4*/);
+	rk = P->Subspaces->F->Linear_algebra->Gauss_easy(Mtx, 4, m);
+	FREE_int(Mtx);
+	if (rk == 4) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 
 

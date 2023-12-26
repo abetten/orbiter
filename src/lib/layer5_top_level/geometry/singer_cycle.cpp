@@ -251,13 +251,13 @@ void singer_cycle::init_lines(
 	if (f_v) {
 		cout << "Lines on point P_0:" << endl;
 		for (i = 0; i < P->Subspaces->r; i++) {
-			a = P->Subspaces->Implementation->Lines_on_point[0 * P->Subspaces->r + i];
+			a = P->Subspaces->Implementation->lines_on_point(0, i);
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
 			P->Subspaces->Grass_lines->unrank_lint(a, 0);
 			Int_matrix_print(P->Subspaces->Grass_lines->M, 2, n);
 			h = 0;
 			for (j = 0; j < P->Subspaces->k; j++) {
-				b = P->Subspaces->Implementation->Lines[a * P->Subspaces->k + j];
+				b = P->Subspaces->Implementation->lines(a, j);
 				c = singer_point_list_inv[b];
 				if (c != 0) {
 					line[h++] = c;
@@ -344,7 +344,11 @@ void singer_cycle::init_lines(
 
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
-	Inc->init_by_matrix_as_bitmatrix(P->Subspaces->N_points, P->Subspaces->N_lines, P->Subspaces->Implementation->Bitmatrix, 0);
+	Inc->init_by_matrix_as_bitmatrix(
+			P->Subspaces->N_points,
+			P->Subspaces->N_lines,
+			P->Subspaces->Implementation->get_Bitmatrix(),
+			0);
 
 	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
 	T->init(P->Subspaces->N_points, P->Subspaces->N_lines,

@@ -235,6 +235,46 @@ void orbits_create::init(
 		}
 
 	}
+	if (Descr->f_of_one_subset) {
+
+		if (f_v) {
+			cout << "orbits_create::init f_of_one_subset" << endl;
+		}
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
+
+		long int *set;
+		int sz;
+		std::string label_set;
+
+		Get_lint_vector_from_label(Descr->of_one_subset_label, set, sz, verbose_level - 2);
+
+		label_set = Descr->of_one_subset_label;
+
+		long int *Table;
+		int size;
+
+		if (f_v) {
+			cout << "orbits_create::init before Group->orbits_of_one_subset" << endl;
+		}
+		Group->orbits_of_one_subset(
+				set, sz,
+				label_set,
+				Group->A, Group->A,
+				Table, size,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init after Group->orbits_of_one_subset" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "orbits_create::init after f_of_one_subset" << endl;
+		}
+	}
+
 	if (Descr->f_on_subspaces) {
 
 		if (f_v) {

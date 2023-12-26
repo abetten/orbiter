@@ -2521,6 +2521,7 @@ public:
 
 	projective_space *P;
 
+private:
 	data_structures::bitmatrix *Bitmatrix;
 
 	int *Lines; // [N_lines * k]
@@ -2531,11 +2532,23 @@ public:
 	int *v; // [n + 1]
 	int *w; // [n + 1]
 
+	int *Mtx; // [3 * (n + 1)], used in is_incident
+	int *Mtx2; // [3 * (n + 1)], used in is_incident
+
+public:
 
 	projective_space_implementation();
 	~projective_space_implementation();
 	void init(
 			projective_space *P, int verbose_level);
+	data_structures::bitmatrix *get_Bitmatrix();
+	int has_lines();
+	int has_lines_on_point();
+	int find_point_on_line(int line_rk, int pt);
+	int lines(int i, int j);
+	int lines_on_point(int i, int j);
+	int line_through_two_points(int i, int j);
+	int line_intersection(int i, int j);
 	void line_intersection_type(
 			long int *set, int set_size, int *type,
 			int verbose_level);
@@ -2545,6 +2558,14 @@ public:
 	void point_types_of_line_set_int(
 		int *set_of_lines, int set_size,
 		int *type, int verbose_level);
+	int is_incident(
+			int pt, int line);
+	void incidence_m_ii(
+			int pt, int line, int a);
+	int test_if_lines_are_disjoint(
+			long int l1, long int l2);
+	int test_if_lines_are_disjoint_from_scratch(
+			long int l1, long int l2);
 
 };
 
@@ -2806,8 +2827,6 @@ public:
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
-	int *Mtx; // [3 * (n + 1)], used in is_incident
-	int *Mtx2; // [3 * (n + 1)], used in is_incident
 
 	projective_space_implementation *Implementation;
 
