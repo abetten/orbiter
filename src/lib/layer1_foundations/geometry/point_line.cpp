@@ -16,7 +16,8 @@ namespace layer1_foundations {
 namespace geometry {
 
 
-int point_line::is_desarguesian_plane(int verbose_level)
+int point_line::is_desarguesian_plane(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -161,7 +162,8 @@ int point_line::is_desarguesian_plane(int verbose_level)
 	return true;
 }
 
-int point_line::identify_field_not_of_prime_order(int verbose_level)
+int point_line::identify_field_not_of_prime_order(
+		int verbose_level)
 {
 	cout << "point_line::identify_field_not_of_prime_order "
 			"not yet implemented" << endl;
@@ -379,7 +381,8 @@ finish:
 #endif
 }
 
-void point_line::init_projective_plane(int order, int verbose_level)
+void point_line::init_projective_plane(
+		int order, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h;
@@ -464,7 +467,8 @@ void point_line::free_projective_plane()
 	}
 }
 
-void point_line::plane_report(std::ostream &ost)
+void point_line::plane_report(
+		std::ostream &ost)
 {
 	int i, j, h;
 	
@@ -510,7 +514,8 @@ void point_line::plane_report(std::ostream &ost)
 	
 }
 
-int point_line::plane_line_through_two_points(int pt1, int pt2)
+int point_line::plane_line_through_two_points(
+		int pt1, int pt2)
 {
 	if (pt1 == pt2) {
 		cout << "point_line::plane_line_through_two_points "
@@ -534,7 +539,8 @@ int point_line::plane_line_through_two_points(int pt1, int pt2)
 		}
 }
 
-int point_line::plane_line_intersection(int line1, int line2)
+int point_line::plane_line_intersection(
+		int line1, int line2)
 {
 	if (line1 == line2) {
 		cout << "point_line::plane_line_intersection "
@@ -558,7 +564,8 @@ int point_line::plane_line_intersection(int line1, int line2)
 		}
 }
 
-void point_line::plane_get_points_on_line(int line, int *pts)
+void point_line::plane_get_points_on_line(
+		int line, int *pts)
 {
 	if (f_plane_data_computed) {
 		int j;
@@ -584,7 +591,8 @@ void point_line::plane_get_points_on_line(int line, int *pts)
 		}
 }
 
-void point_line::plane_get_lines_through_point(int pt, int *lines)
+void point_line::plane_get_lines_through_point(
+		int pt, int *lines)
 {
 	if (f_plane_data_computed) {
 		int j;
@@ -610,7 +618,8 @@ void point_line::plane_get_lines_through_point(int pt, int *lines)
 		}
 }
 
-int point_line::plane_points_collinear(int pt1, int pt2, int pt3)
+int point_line::plane_points_collinear(
+		int pt1, int pt2, int pt3)
 {
 	int line;
 	line = plane_line_through_two_points(pt1, pt2);
@@ -620,7 +629,8 @@ int point_line::plane_points_collinear(int pt1, int pt2, int pt3)
 		return false;
 }
 
-int point_line::plane_lines_concurrent(int line1, int line2, int line3)
+int point_line::plane_lines_concurrent(
+		int line1, int line2, int line3)
 {
 	int pt;
 	pt = plane_line_intersection(line1, line2);
@@ -630,7 +640,8 @@ int point_line::plane_lines_concurrent(int line1, int line2, int line3)
 		return false;
 }
 
-int point_line::plane_first_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
+int point_line::plane_first_quadrangle(
+		int &pt1, int &pt2, int &pt3, int &pt4)
 {
 	// int v = m;
 	int pts[4];
@@ -653,7 +664,8 @@ int point_line::plane_first_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 		}
 }
 
-int point_line::plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
+int point_line::plane_next_quadrangle(
+		int &pt1, int &pt2, int &pt3, int &pt4)
 {
 	// int v = m;
 	int pts[4];
@@ -674,7 +686,8 @@ int point_line::plane_next_quadrangle(int &pt1, int &pt2, int &pt3, int &pt4)
 		}
 }
 
-int point_line::plane_quadrangle_first_i(int *pt, int i)
+int point_line::plane_quadrangle_first_i(
+		int *pt, int i)
 {
 	int v = m, pt0;
 	
@@ -708,7 +721,8 @@ int point_line::plane_quadrangle_first_i(int *pt, int i)
 	return false;
 }
 
-int point_line::plane_quadrangle_next_i(int *pt, int i)
+int point_line::plane_quadrangle_next_i(
+		int *pt, int i)
 {
 	int v = m;
 	
@@ -947,22 +961,26 @@ void point_line::coordinatize_plane(
 		}
 }
 
-int &point_line::MOLSsxb(int s, int x, int b)
+int &point_line::MOLSsxb(
+		int s, int x, int b)
 {
 	return MOLS[s * plane_order * plane_order + x * plane_order + b];
 }
 
-int &point_line::MOLSaddition(int a, int b)
+int &point_line::MOLSaddition(
+		int a, int b)
 {
 	return MOLSsxb(0, a, b);
 }
 
-int &point_line::MOLSmultiplication(int a, int b)
+int &point_line::MOLSmultiplication(
+		int a, int b)
 {
 	return MOLSsxb(plane_order, a, b);
 }
 
-int point_line::ternary_field_is_linear(int *MOLS, int verbose_level)
+int point_line::ternary_field_is_linear(
+		int *MOLS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int x, m, b, y1, mx, y2;
@@ -993,7 +1011,8 @@ int point_line::ternary_field_is_linear(int *MOLS, int verbose_level)
 	return true;
 }
 
-void point_line::print_MOLS(std::ostream &ost)
+void point_line::print_MOLS(
+		std::ostream &ost)
 {
 	int *M, slope, i, j;
 		
@@ -1341,7 +1360,8 @@ int point_line::count_pairs_CCR_representative(
 }
 
 
-void point_line::get_MOLm(int *MOLS, int order, int m, int *&M)
+void point_line::get_MOLm(
+		int *MOLS, int order, int m, int *&M)
 {
 	int x, b, y, *mol = MOLS + m * order * order;
 	

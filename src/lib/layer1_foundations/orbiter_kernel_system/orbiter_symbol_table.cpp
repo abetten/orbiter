@@ -264,6 +264,9 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_poset_classification_control) {
 		cout << "t_poset_classification_control" << endl;
 	}
+	else if (t == t_arc_generator_control) {
+		cout << "t_arc_generator_control" << endl;
+	}
 	else if (t == t_poset_classification_activity) {
 		cout << "t_poset_classification_activity" << endl;
 	}

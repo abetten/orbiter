@@ -1266,6 +1266,9 @@ public:
 	void init_poset_classification_control(
 			std::string &label,
 			void *PCC, int verbose_level);
+	void init_arc_generator_control(
+			std::string &label,
+			void *AGC, int verbose_level);
 	void init_poset_classification_activity(
 			std::string &label,
 			void *PCA, int verbose_level);

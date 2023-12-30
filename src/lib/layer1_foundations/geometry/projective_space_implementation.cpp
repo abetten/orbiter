@@ -485,7 +485,8 @@ int projective_space_implementation::has_lines_on_point()
 }
 
 
-int projective_space_implementation::find_point_on_line(int line_rk, int pt)
+int projective_space_implementation::find_point_on_line(
+		int line_rk, int pt)
 {
 	data_structures::sorting Sorting;
 	int *L;
@@ -503,7 +504,8 @@ int projective_space_implementation::find_point_on_line(int line_rk, int pt)
 	}
 }
 
-int projective_space_implementation::lines(int i, int j)
+int projective_space_implementation::lines(
+		int i, int j)
 {
 	int k;
 
@@ -513,7 +515,8 @@ int projective_space_implementation::lines(int i, int j)
 	return Lines[i * k + j];
 }
 
-int projective_space_implementation::lines_on_point(int i, int j)
+int projective_space_implementation::lines_on_point(
+		int i, int j)
 {
 	int r;
 
@@ -523,7 +526,8 @@ int projective_space_implementation::lines_on_point(int i, int j)
 	return Lines_on_point[i * r + j];
 }
 
-int projective_space_implementation::line_through_two_points(int i, int j)
+int projective_space_implementation::line_through_two_points(
+		int i, int j)
 {
 
 	int N_points;
@@ -535,7 +539,8 @@ int projective_space_implementation::line_through_two_points(int i, int j)
 	return Line_through_two_points[i * N_points + j];
 }
 
-int projective_space_implementation::line_intersection(int i, int j)
+int projective_space_implementation::line_intersection(
+		int i, int j)
 {
 
 	int N_lines;

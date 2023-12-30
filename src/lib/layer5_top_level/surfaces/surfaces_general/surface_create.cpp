@@ -146,7 +146,7 @@ void surface_create::create_cubic_surface(
 				"before PG_element_normalize_from_front" << endl;
 	}
 	F->Projective_space_basic->PG_element_normalize_from_front(
-			SO->eqn, 1, 20);
+			SO->Variety_object->eqn, 1, 20);
 
 
 	if (f_has_group) {
@@ -158,7 +158,7 @@ void surface_create::create_cubic_surface(
 					"before Sg->test_if_they_stabilize_the_equation" << endl;
 		}
 		ret = Sg->test_if_they_stabilize_the_equation(
-				SO->eqn,
+				SO->Variety_object->eqn,
 				Surf->PolynomialDomains->Poly3_4,
 				verbose_level);
 
@@ -711,14 +711,14 @@ int surface_create::create_surface_from_description(int verbose_level)
 	if (f_v) {
 		cout << "surface_create::create_surface_from_description "
 				"coeffs = ";
-		Int_vec_print(cout, SO->eqn, 20);
+		Int_vec_print(cout, SO->Variety_object->eqn, 20);
 		cout << endl;
 	}
 
 	if (f_v) {
 		cout << "surface_create::create_surface_from_description "
 				"Lines = ";
-		Lint_vec_print(cout, SO->Lines, SO->nb_lines);
+		Lint_vec_print(cout, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0]);
 		cout << endl;
 	}
 
@@ -2448,7 +2448,7 @@ void surface_create::apply_single_transformation(
 	M = A->G.matrix_grp;
 	M->substitute_surface_equation(
 			Elt3,
-			SO->eqn, coeffs_out, Surf,
+			SO->Variety_object->eqn, coeffs_out, Surf,
 			verbose_level - 1);
 
 	if (f_v) {
@@ -2461,7 +2461,7 @@ void surface_create::apply_single_transformation(
 		cout << "$$" << endl;
 	}
 
-	Int_vec_copy(coeffs_out, SO->eqn, 20);
+	Int_vec_copy(coeffs_out, SO->Variety_object->eqn, 20);
 
 
 
@@ -2494,7 +2494,7 @@ void surface_create::apply_single_transformation(
 
 	if (f_vv) {
 		cout << "surface_create::apply_single_transformation Lines = ";
-		Lint_vec_print(cout, SO->Lines, SO->nb_lines);
+		Lint_vec_print(cout, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0]);
 		cout << endl;
 	}
 	int i;
@@ -2502,37 +2502,37 @@ void surface_create::apply_single_transformation(
 	// apply the transformation to the set of lines:
 
 
-	for (i = 0; i < SO->nb_lines; i++) {
+	for (i = 0; i < SO->Variety_object->Line_sets->Set_size[0]; i++) {
 		if (f_vv) {
 			cout << "line " << i << ":" << endl;
 			Surf_A->Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
-					cout, SO->Lines[i]);
+					cout, SO->Variety_object->Line_sets->Sets[0][i]);
 		}
-		SO->Lines[i] = Surf_A->A2->Group_element->element_image_of(
-				SO->Lines[i], Elt2,
+		SO->Variety_object->Line_sets->Sets[0][i] = Surf_A->A2->Group_element->element_image_of(
+				SO->Variety_object->Line_sets->Sets[0][i], Elt2,
 				0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "maps to " << endl;
 			Surf_A->Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(
-					cout, SO->Lines[i]);
+					cout, SO->Variety_object->Line_sets->Sets[0][i]);
 		}
 	}
 
 	// apply the transformation to the set of points:
 
-	for (i = 0; i < SO->nb_pts; i++) {
+	for (i = 0; i < SO->Variety_object->Point_sets->Set_size[0]; i++) {
 		if (f_vv) {
-			cout << "point" << i << " = " << SO->Pts[i] << endl;
+			cout << "point" << i << " = " << SO->Variety_object->Point_sets->Sets[0][i] << endl;
 		}
-		SO->Pts[i] = Surf_A->A->Group_element->element_image_of(
-				SO->Pts[i], Elt2, 0 /*verbose_level*/);
+		SO->Variety_object->Point_sets->Sets[0][i] = Surf_A->A->Group_element->element_image_of(
+				SO->Variety_object->Point_sets->Sets[0][i], Elt2, 0 /*verbose_level*/);
 		if (f_vv) {
-			cout << "maps to " << SO->Pts[i] << endl;
+			cout << "maps to " << SO->Variety_object->Point_sets->Sets[0][i] << endl;
 		}
 		int a;
 
 		a = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
-				coeffs_out, SO->Pts[i]);
+				coeffs_out, SO->Variety_object->Point_sets->Sets[0][i]);
 		if (a) {
 			cout << "surface_create::apply_single_transformation "
 					"something is wrong, the image point does not "
@@ -2543,7 +2543,7 @@ void surface_create::apply_single_transformation(
 	}
 	data_structures::sorting Sorting;
 
-	Sorting.lint_vec_heapsort(SO->Pts, SO->nb_pts);
+	Sorting.lint_vec_heapsort(SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0]);
 
 	FREE_int(Elt1);
 	FREE_int(Elt2);
@@ -2932,7 +2932,7 @@ void surface_create::export_gap(
 				f_has_group,
 				Sg,
 				SO->Surf->PolynomialDomains->Poly3_4,
-				SO->eqn,
+				SO->Variety_object->eqn,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_create::export_gap "
@@ -3373,17 +3373,17 @@ void surface_create::test_group(
 
 		M = Surf_A->A->G.matrix_grp;
 		M->substitute_surface_equation(Elt2,
-				SO->eqn, coeffs_out, Surf,
+				SO->Variety_object->eqn, coeffs_out, Surf,
 				verbose_level - 1);
 
 
 		if (!PA->F->Projective_space_basic->test_if_vectors_are_projectively_equal(
-				SO->eqn, coeffs_out, 20)) {
+				SO->Variety_object->eqn, coeffs_out, 20)) {
 			cout << "surface_create::test_group error, "
 					"the transformation does not preserve "
 					"the equation of the surface" << endl;
 			cout << "SC->SO->eqn:" << endl;
-			Int_vec_print(cout, SO->eqn, 20);
+			Int_vec_print(cout, SO->Variety_object->eqn, 20);
 			cout << endl;
 			cout << "coeffs_out" << endl;
 			Int_vec_print(cout, coeffs_out, 20);

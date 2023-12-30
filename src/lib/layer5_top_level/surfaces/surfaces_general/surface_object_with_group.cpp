@@ -302,7 +302,7 @@ void surface_object_with_group::init_with_surface_object(
 				"testing Aut_gens" << endl;
 	}
 	Aut_gens->test_if_set_is_invariant_under_given_action(
-			Surf_A->A2, SO->Lines, SO->nb_lines, verbose_level - 2);
+			Surf_A->A2, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0], verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
 				"testing Aut_gens done" << endl;
@@ -489,7 +489,7 @@ void surface_object_with_group::compute_orbits_of_automorphism_group(
 
 
 
-	if (SO->nb_lines == 27) {
+	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
 
 		// orbits on half double sixes:
 
@@ -613,7 +613,7 @@ void surface_object_with_group::init_orbits_on_points(
 	}
 
 	A_on_points = Surf_A->A->Induced_action->restricted_action(
-			SO->Pts, SO->nb_pts, label_of_set,
+			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0], label_of_set,
 			0 /*verbose_level*/);
 
 	if (f_v) {
@@ -824,7 +824,7 @@ void surface_object_with_group::init_orbits_on_lines(
 				"on the lines:" << endl;
 	}
 	A_on_the_lines = Surf_A->A2->Induced_action->restricted_action(
-			SO->Lines, SO->nb_lines, label_of_set,
+			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0], label_of_set,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating restricted action "
@@ -1324,7 +1324,7 @@ void surface_object_with_group::print_automorphism_group(
 	nb = Orbits_on_lines->nb_orbits;
 
 	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
-			SO->SOP->Adj_line_intersection_graph, SO->nb_lines, Decomp_scheme,
+			SO->SOP->Adj_line_intersection_graph, SO->Variety_object->Line_sets->Set_size[0], Decomp_scheme,
 			0 /*verbose_level*/);
 
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
@@ -1334,7 +1334,7 @@ void surface_object_with_group::print_automorphism_group(
 	FREE_int(Decomp_scheme);
 	
 
-	if (SO->nb_lines == 27) {
+	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
 		ost << "\\subsection*{Orbits on single sixes}" << endl;
 		Orbits_on_single_sixes->print_and_list_orbits_tex(ost);
 
@@ -1437,7 +1437,7 @@ void surface_object_with_group::cheat_sheet_basic(
 
 	ost << "\\bigskip" << endl;
 
-	if (SO->nb_lines == 27) {
+	if (SO->Variety_object->Line_sets->Set_size[0] == 27) {
 		ost << "Orbits on half double-sixes:\\\\" << endl;
 		int i, idx;
 
@@ -2800,10 +2800,10 @@ void surface_object_with_group::print_summary(
 	ost << "\\mbox{Object} & \\mbox{Number}  & \\mbox{Orbit type} \\\\";
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Lines} & " << SO->nb_lines << " & " << s_orbits_lines;
+	ost << "\\mbox{Lines} & " << SO->Variety_object->Line_sets->Set_size[0] << " & " << s_orbits_lines;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Points on surface} & " << SO->nb_pts << " & " << s_orbits_points;
+	ost << "\\mbox{Points on surface} & " << SO->Variety_object->Point_sets->Set_size[0] << " & " << s_orbits_points;
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
@@ -3031,7 +3031,7 @@ void surface_object_with_group::print_double_sixes(std::ostream &ost)
 
 	ost << "\\subsection*{Double sixes}" << endl;
 
-	SO->Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(ost, SO->Lines);
+	SO->Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(ost, SO->Variety_object->Line_sets->Sets[0]);
 
 #if 0
 	//SO->Surf->Schlaefli->latex_table_of_double_sixes(ost);
@@ -3172,8 +3172,8 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 	}
 	Decomposition_scheme = GG.compute_TDO_decomposition_of_projective_space(
 			Surf_A->PA->P,
-			SO->Pts, SO->nb_pts,
-			SO->Lines, SO->nb_lines,
+			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
+			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
@@ -3217,13 +3217,29 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 
 	ost << endl << endl;
 
+	int nb_row, nb_col;
 
-	ost << "$$" << endl;
-	ost << "\\input " << fname1_tex << endl;
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "\\input " << fname2_tex << endl;
-	ost << "$$" << endl;
+	nb_row = Decomposition_scheme->RC->nb_row_classes;
+	nb_col = Decomposition_scheme->RC->nb_col_classes;
+
+
+	if (nb_row + nb_col < 100) {
+		ost << "TDO scheme of size " << nb_row << " x " << nb_col << ":" << endl;
+
+		ost << "$$" << endl;
+		ost << "\\input " << fname1_tex << endl;
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname2_tex << endl;
+		ost << "$$" << endl;
+	}
+	else {
+		ost << "TDO scheme of size " << nb_row << " x " << nb_col << " is too big to print.\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+	}
 
 
 	string fname1_csv;
@@ -3283,6 +3299,10 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 	}
 
 
+	nb_row = Decomposition_scheme_TDA->RC->nb_row_classes;
+	nb_col = Decomposition_scheme_TDA->RC->nb_col_classes;
+
+
 	fname1 = "surface_" + SO->label_txt + "_TDA_row";
 	fname2 = "surface_" + SO->label_txt + "_TDA_col";
 
@@ -3314,13 +3334,21 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 	ost << endl << endl;
 
 
-	ost << "TDA:" << endl;
-	ost << "$$" << endl;
-	ost << "\\input " << fname1_tex << endl;
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "\\input " << fname2_tex << endl;
-	ost << "$$" << endl;
+	if (nb_row + nb_col < 100) {
+		ost << "TDA scheme of size " << nb_row << " x " << nb_col << ":" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname1_tex << endl;
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname2_tex << endl;
+		ost << "$$" << endl;
+	}
+	else {
+		ost << "TDA scheme of size " << nb_row << " x " << nb_col << " is too big to print.\\\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+	}
 
 
 	algebraic_geometry::variety_object *V;
@@ -3333,7 +3361,7 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 	V->init_set_of_sets(
 			Surf_A->PA->P,
 			Surf_A->Surf->PolynomialDomains->Poly3_4,
-			SO->eqn,
+			SO->Variety_object->eqn,
 			Decomposition_scheme->SoS_points,
 			Decomposition_scheme->SoS_lines,
 			verbose_level);

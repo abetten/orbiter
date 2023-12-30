@@ -547,6 +547,7 @@ void projective_space_global::do_classify_arcs(
 }
 
 
+#if 0
 void projective_space_global::do_classify_cubic_curves(
 		projective_space_with_action *PA,
 		apps_geometry::arc_generator_description
@@ -700,6 +701,7 @@ void projective_space_global::do_classify_cubic_curves(
 		cout << "projective_space_global::do_classify_cubic_curves done" << endl;
 	}
 }
+#endif
 
 
 void projective_space_global::set_stabilizer(

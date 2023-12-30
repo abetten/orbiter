@@ -88,7 +88,8 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	}
 }
 
-void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
+void del_pezzo_surface_of_degree_two_domain::enumerate_points(
+		int *coeff,
 		std::vector<long int> &Pts,
 		int verbose_level)
 {
@@ -176,12 +177,14 @@ void del_pezzo_surface_of_degree_two_domain::print_equation_with_line_breaks_tex
 	ost << "$$}" << endl;
 }
 
-void del_pezzo_surface_of_degree_two_domain::unrank_point(int *v, long int rk)
+void del_pezzo_surface_of_degree_two_domain::unrank_point(
+		int *v, long int rk)
 {
 	P3->unrank_point(v, rk);
 }
 
-long int del_pezzo_surface_of_degree_two_domain::rank_point(int *v)
+long int del_pezzo_surface_of_degree_two_domain::rank_point(
+		int *v)
 {
 	long int rk;
 

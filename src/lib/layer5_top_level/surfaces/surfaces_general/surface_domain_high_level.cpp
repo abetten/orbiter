@@ -453,7 +453,7 @@ void surface_domain_high_level::do_six_arcs(
 
 		algebraic_geometry::eckardt_point_info *E;
 
-		geometry::geometry_global Gg;
+		algebraic_geometry::algebraic_geometry_global Gg;
 
 		E = Gg.compute_eckardt_point_info(
 				PA->Surf_A->Surf->P2, Arc6,
@@ -673,18 +673,18 @@ void surface_domain_high_level::do_cubic_surface_properties(
 #endif
 
 		SC->F->Projective_space_basic->PG_element_normalize(
-				SC->SO->eqn, 1, 20);
+				SC->SO->Variety_object->eqn, 1, 20);
 
 		if (f_v) {
 			cout << "surface_domain_high_level::do_cubic_surface_properties "
 					"We have created the following surface:" << endl;
 			cout << "$$" << endl;
-			SC->Surf->print_equation_tex(cout, SC->SO->eqn);
+			SC->Surf->print_equation_tex(cout, SC->SO->Variety_object->eqn);
 			cout << endl;
 			cout << "$$" << endl;
 
 			cout << "$$" << endl;
-			Int_vec_print(cout, SC->SO->eqn, 20);
+			Int_vec_print(cout, SC->SO->Variety_object->eqn, 20);
 			cout << endl;
 			cout << "$$" << endl;
 		}
@@ -715,8 +715,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		}
 
 
-		Nb_pts[orbit_idx] = SC->SO->nb_pts;
-		Nb_lines[orbit_idx] = SC->SO->nb_lines;
+		Nb_pts[orbit_idx] = SC->SO->Variety_object->Point_sets->Set_size[0];
+		Nb_lines[orbit_idx] = SC->SO->Variety_object->Line_sets->Set_size[0];
 		Nb_Eckardt_points[orbit_idx] = SC->SO->SOP->nb_Eckardt_points;
 		Nb_singular_pts[orbit_idx] = SC->SO->SOP->nb_singular_pts;
 		Nb_Double_points[orbit_idx] = SC->SO->SOP->nb_Double_points;

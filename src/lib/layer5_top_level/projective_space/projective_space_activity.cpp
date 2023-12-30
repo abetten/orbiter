@@ -937,7 +937,7 @@ void projective_space_activity::perform_activity(
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
 
 
-		geometry::geometry_global Geo;
+		algebraic_geometry::algebraic_geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -954,7 +954,7 @@ void projective_space_activity::perform_activity(
 	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
 
-		geometry::geometry_global Geo;
+		algebraic_geometry::algebraic_geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -1354,6 +1354,8 @@ void projective_space_activity::perform_activity(
 					"after G.do_classify_arcs" << endl;
 		}
 	}
+
+#if 0
 	else if (Descr->f_classify_cubic_curves) {
 		projective_space_global G;
 
@@ -1370,7 +1372,7 @@ void projective_space_activity::perform_activity(
 					"after G.do_classify_cubic_curves" << endl;
 		}
 	}
-
+#endif
 
 	else if (Descr->f_classify_semifields) {
 

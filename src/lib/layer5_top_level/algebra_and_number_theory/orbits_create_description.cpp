@@ -54,6 +54,9 @@ orbits_create_description::orbits_create_description()
 	//std::string of_one_polynomial_ring;
 	//std::string of_one_polynomial_equation;
 
+	f_on_cubic_curves = false;
+	//std::string on_cubic_curves_control;
+
 	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
 
@@ -158,7 +161,13 @@ int orbits_create_description::read_arguments(
 						<< " " << of_one_polynomial_equation << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-on_cubic_curves") == 0) {
+			f_on_cubic_curves = true;
+			on_cubic_curves_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_cubic_curves " << on_cubic_curves_control << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
 			f_classification_by_canonical_form = true;
@@ -256,6 +265,9 @@ void orbits_create_description::print()
 	if (f_of_one_polynomial) {
 		cout << "-of_one_polynomial " << of_one_polynomial_ring
 				<< " " << of_one_polynomial_equation << endl;
+	}
+	if (f_on_cubic_curves) {
+		cout << "-on_cubic_curves " << on_cubic_curves_control << endl;
 	}
 	if (f_classification_by_canonical_form) {
 		cout << "-classification_by_canonical_form " << endl;

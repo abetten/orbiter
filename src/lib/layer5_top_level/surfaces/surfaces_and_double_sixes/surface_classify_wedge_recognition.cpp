@@ -103,8 +103,8 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 	int *coeff1;
 	int *coeff2;
 
-	coeff1 = SC1->SO->eqn;
-	coeff2 = SC2->SO->eqn;
+	coeff1 = SC1->SO->Variety_object->eqn;
+	coeff2 = SC2->SO->Variety_object->eqn;
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
@@ -236,7 +236,7 @@ void surface_classify_wedge::recognition(
 				"before identify_surface" << endl;
 	}
 	identify_surface(
-		SC->SO->eqn,
+		SC->SO->Variety_object->eqn,
 		isomorphic_to, Elt_isomorphism,
 		verbose_level);
 	if (f_v) {
@@ -835,10 +835,10 @@ void surface_classify_wedge::sweep_Cayley(
 						cout << "after SC->init" << endl;
 					}
 
-					if (SC->SO->nb_lines == 27) {
+					if (SC->SO->Variety_object->Line_sets->Set_size[0] == 27) {
 
 						identify_surface(
-							SC->SO->eqn,
+							SC->SO->Variety_object->eqn,
 							isomorphic_to, Elt_isomorphism,
 							verbose_level);
 						if (f_v) {
@@ -1109,7 +1109,7 @@ void surface_classify_wedge::identify_general_abcd(
 							a, b, c, d, verbose_level);
 
 
-					identify_surface(SO->eqn,
+					identify_surface(SO->Variety_object->eqn,
 						iso_type, Elt,
 						verbose_level);
 
@@ -1120,7 +1120,7 @@ void surface_classify_wedge::identify_general_abcd(
 					A->Group_element->element_print_quick(Elt, cout);
 
 					Iso_type[a * q3 + b * q2 + c * q + d] = iso_type;
-					Nb_lines[a * q3 + b * q2 + c * q + d] = SO->nb_lines;
+					Nb_lines[a * q3 + b * q2 + c * q + d] = SO->Variety_object->Line_sets->Set_size[0];
 					//Nb_E[a * q3 + b * q2 + c * q + d] = nb_E;
 				}
 			}
@@ -1482,7 +1482,7 @@ void surface_classify_wedge::identify_Eckardt(
 				alpha, beta,
 				verbose_level);
 
-		identify_surface(SO->eqn,
+		identify_surface(SO->Variety_object->eqn,
 			iso_type, Elt,
 			verbose_level);
 
@@ -1492,7 +1492,7 @@ void surface_classify_wedge::identify_Eckardt(
 		A->Group_element->element_print_quick(Elt, cout);
 
 		Iso_type[a] = iso_type;
-		Nb_lines[a] = SO->nb_lines;
+		Nb_lines[a] = SO->Variety_object->Line_sets->Set_size[0];
 		//Nb_E[a] = nb_E;
 
 		FREE_OBJECT(SO);
@@ -1533,7 +1533,7 @@ void surface_classify_wedge::identify_F13(
 		SO = Surf->create_surface_F13(a, verbose_level);
 
 
-		identify_surface(SO->eqn,
+		identify_surface(SO->Variety_object->eqn,
 			iso_type, Elt,
 			verbose_level);
 
@@ -1543,7 +1543,7 @@ void surface_classify_wedge::identify_F13(
 		A->Group_element->element_print_quick(Elt, cout);
 
 		Iso_type[a] = iso_type;
-		Nb_lines[a] = SO->nb_lines;
+		Nb_lines[a] = SO->Variety_object->Line_sets->Set_size[0];
 		//Nb_E[a] = nb_E;
 		FREE_OBJECT(SO);
 
@@ -1593,9 +1593,9 @@ void surface_classify_wedge::identify_Bes(
 			SO = Surf->create_surface_bes(a, c, verbose_level);
 
 			cout << "surface_classify_wedge::identify_Bes "
-					"nb_lines = " << SO->nb_lines << endl;
+					"nb_lines = " << SO->Variety_object->Line_sets->Set_size[0] << endl;
 
-			identify_surface(SO->eqn,
+			identify_surface(SO->Variety_object->eqn,
 				iso_type, Elt,
 				verbose_level);
 
@@ -1605,7 +1605,7 @@ void surface_classify_wedge::identify_Bes(
 			A->Group_element->element_print_quick(Elt, cout);
 
 			Iso_type[a * q + c] = iso_type;
-			Nb_lines[a * q + c] = SO->nb_lines;
+			Nb_lines[a * q + c] = SO->Variety_object->Line_sets->Set_size[0];
 			//Nb_E[a * q + c] = nb_E;
 			FREE_OBJECT(SO);
 		}

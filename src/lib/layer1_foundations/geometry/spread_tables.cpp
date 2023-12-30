@@ -161,7 +161,8 @@ void spread_tables::init(
 	}
 }
 
-void spread_tables::create_file_names(int verbose_level)
+void spread_tables::create_file_names(
+		int verbose_level)
 {
 	fname_dual_line_idx = prefix + "_dual_line_idx.csv";
 
@@ -349,7 +350,8 @@ void spread_tables::init_reduced(
 	}
 }
 
-long int *spread_tables::get_spread(int spread_idx)
+long int *spread_tables::get_spread(
+		int spread_idx)
 {
 	return spread_table + spread_idx * spread_size;
 }
@@ -431,7 +433,8 @@ void spread_tables::classify_self_dual_spreads(
 	}
 }
 
-int spread_tables::files_exist(int verbose_level)
+int spread_tables::files_exist(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -447,7 +450,8 @@ int spread_tables::files_exist(int verbose_level)
 	}
 }
 
-void spread_tables::save(int verbose_level)
+void spread_tables::save(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -543,7 +547,8 @@ void spread_tables::save(int verbose_level)
 	}
 }
 
-void spread_tables::load(int verbose_level)
+void spread_tables::load(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a, b;
@@ -742,7 +747,8 @@ void spread_tables::compute_adjacency_matrix(
 	}
 }
 
-int spread_tables::test_if_spreads_are_disjoint(int a, int b)
+int spread_tables::test_if_spreads_are_disjoint(
+		int a, int b)
 {
 	long int *p, *q;
 	data_structures::sorting Sorting;

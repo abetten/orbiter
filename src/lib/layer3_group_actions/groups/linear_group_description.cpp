@@ -40,6 +40,9 @@ linear_group_description::linear_group_description()
 	// induced actions and subgroups:
 	f_wedge_action = false;
 	f_wedge_action_detached = false;
+
+	f_lex_least_base = false;
+
 	f_PGL2OnConic = false;
 	f_monomial_group = false;
 	f_diagonal_group = false;
@@ -354,6 +357,12 @@ int linear_group_description::read_arguments(
 				cout << "-wedge_detached" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-lex_least_base") == 0) {
+			f_lex_least_base = true;
+			if (f_v) {
+				cout << "-lex_least_base" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-PGL2OnConic") == 0) {
 			f_PGL2OnConic = true;
 			if (f_v) {
@@ -634,6 +643,9 @@ void linear_group_description::print()
 		}
 		if (f_wedge_action_detached) {
 			cout << "-wedge_detached" << endl;
+		}
+		if (f_lex_least_base) {
+			cout << "-lex_least_base" << endl;
 		}
 		if (f_PGL2OnConic) {
 			cout << "-PGL2OnConic" << endl;

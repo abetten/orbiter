@@ -31,6 +31,9 @@ public:
 	int f_control;
 	std::string control_label;
 
+	int f_projective_space;
+	std::string projective_space_label;
+
 	int f_d;
 	int d;
 	// d is the maximum number of points per line

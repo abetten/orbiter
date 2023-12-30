@@ -72,7 +72,7 @@ void orbits_activity::perform_activity(
 			cout << "orbits_activity::perform_activity after do_report" << endl;
 		}
 	}
-	if (Descr->f_export_something) {
+	else if (Descr->f_export_something) {
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_export_something" << endl;
 		}
@@ -198,6 +198,11 @@ void orbits_activity::perform_activity(
 		}
 
 	}
+	else {
+		cout << "orbits_activity::perform_activity "
+				"no activity found" << endl;
+		exit(1);
+	}
 
 
 
@@ -233,24 +238,7 @@ void orbits_activity::do_report(
 					"after OC->Orb->create_latex_report" << endl;
 		}
 	}
-	else if (OC->f_has_On_polynomials) {
 
-		if (f_v) {
-			cout << "orbits_activity::do_report f_has_On_polynomials" << endl;
-		}
-
-		if (f_v) {
-			cout << "orbits_activity::do_report "
-					"before OC->On_polynomials->report" << endl;
-		}
-		OC->On_polynomials->report(verbose_level);
-		if (f_v) {
-			cout << "orbits_activity::do_report "
-					"after OC->On_polynomials->report" << endl;
-		}
-
-
-	}
 	else if (OC->f_has_On_subsets) {
 
 		if (f_v) {
@@ -312,6 +300,104 @@ void orbits_activity::do_report(
 
 	}
 
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_On_tensors" << endl;
+		}
+
+	}
+
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_Cascade" << endl;
+		}
+
+	}
+
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_On_polynomials" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->On_polynomials->report" << endl;
+		}
+		OC->On_polynomials->report(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->On_polynomials->report" << endl;
+		}
+
+
+	}
+
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_Of_One_polynomial" << endl;
+		}
+
+
+
+	}
+
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_on_cubic_curves" << endl;
+		}
+
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"creating cheat sheet" << endl;
+		}
+		string fname, title, author, extra_praeamble;
+		int q;
+
+		q = OC->CCC->CCA->F->q;
+		title = "Cubic Curves in PG$(2," + std::to_string(q) + ")$";
+		author = "";
+		fname = "Cubic_curves_q" + std::to_string(q) + ".tex";
+
+		{
+			ofstream fp(fname);
+			l1_interfaces::latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(fp,
+				false /* f_book */,
+				true /* f_title */,
+				title, author,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
+
+			fp << "\\subsection*{" << title << "}" << endl;
+
+			if (f_v) {
+				cout << "orbits_activity::do_report "
+						"before OC->CCC->report" << endl;
+			}
+			OC->CCC->report(fp, verbose_level);
+			if (f_v) {
+				cout << "orbits_activity::do_report "
+						"after OC->CCC->report" << endl;
+			}
+
+			L.foot(fp);
+		}
+
+	}
+
 	else if (OC->f_has_classification_by_canonical_form) {
 
 		if (f_v) {
@@ -369,6 +455,9 @@ void orbits_activity::do_export(
 
 	if (OC->f_has_Orb) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_Orb" << endl;
+		}
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -390,6 +479,10 @@ void orbits_activity::do_export(
 
 	else if (OC->f_has_On_subsets) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_On_subsets" << endl;
+		}
+
 		//poset_classification::poset_classification *On_subsets;
 
 		OC->On_subsets->export_something_worker(
@@ -398,8 +491,38 @@ void orbits_activity::do_export(
 				verbose_level);
 
 	}
+
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_On_tensors" << endl;
+		}
+
+
+	}
+
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_Cascade" << endl;
+		}
+
+	}
+
 	else if (OC->f_has_On_polynomials) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_On_polynomials" << endl;
+		}
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -420,16 +543,50 @@ void orbits_activity::do_export(
 
 	}
 
+	else if (OC->f_has_Of_One_polynomial) {
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_Of_One_polynomial" << endl;
+		}
+
+	}
+
+	else if (OC->f_has_on_cubic_curves) {
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_on_cubic_curves" << endl;
+		}
+
+	}
+
+	else if (OC->f_has_classification_by_canonical_form) {
+
+
+		if (f_v) {
+			cout << "orbits_activity::do_export f_has_classification_by_canonical_form" << endl;
+		}
+
+	}
+
 	else {
 		cout << "orbits_activity::do_export "
 				"no suitable data structure found" << endl;
 		exit(1);
 	}
-	orbiter_kernel_system::file_io Fio;
 
-	cout << "orbits_activity::do_export "
-			"Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (fname.length()) {
+
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+	}
 
 
 
@@ -449,6 +606,11 @@ void orbits_activity::do_export_trees(
 	}
 
 	if (OC->f_has_Orb) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_Orb" << endl;
+		}
+
 		string fname_tree_mask;
 		int orbit_idx;
 
@@ -466,11 +628,87 @@ void orbits_activity::do_export_trees(
 		}
 
 	}
+
+	if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_On_subsets" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_On_tensors" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_Cascade" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_On_polynomials" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+
+	if (OC->f_has_classification_by_canonical_form) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_trees f_has_classification_by_canonical_form" << endl;
+		}
+
+
+	}
+
 	else {
 		cout << "orbits_activity::do_export_trees "
 				"no suitable data structure found" << endl;
 		exit(1);
 	}
+
+
+
 
 	if (f_v) {
 		cout << "orbits_activity::do_export_trees done" << endl;
@@ -488,26 +726,71 @@ void orbits_activity::do_export_source_code(
 		cout << "orbits_activity::do_export_source_code" << endl;
 	}
 
-#if 0
 	if (OC->f_has_Orb) {
-		string fname_tree_mask;
-		int orbit_idx;
 
-		fname_tree_mask = "orbit_" + OC->Group->A->label + "_%d.layered_graph";
-
-		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->nb_orbits; orbit_idx++) {
-
-			cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
-					<< " before Sch->export_tree_as_layered_graph" << endl;
-
-			OC->Orb->Sch->export_tree_as_layered_graph(orbit_idx,
-					fname_tree_mask,
-					verbose_level - 1);
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_Orb" << endl;
 		}
 
+
 	}
-#endif
-	if (OC->f_has_classification_by_canonical_form) {
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_source_code f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
 		if (f_v) {
 			cout << "orbits_activity::do_export_source_code "
 					"f_has_classification_by_canonical_form" << endl;
@@ -634,6 +917,68 @@ void orbits_activity::do_export_levels(
 
 		}
 	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+	}
 	else {
 		cout << "orbits_activity::do_export_levels "
 				"no suitable data structure found" << endl;
@@ -663,6 +1008,10 @@ void orbits_activity::do_draw_tree(
 
 
 	if (OC->f_has_Orb) {
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"f_has_Orb" << endl;
+		}
 		string fname;
 
 		fname = OC->Orb->prefix + "_orbit_" + std::to_string(Descr->draw_tree_idx) + "_tree";
@@ -711,6 +1060,52 @@ void orbits_activity::do_draw_tree(
 		}
 
 	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_On_Subspaces" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree before draw_poset" << endl;
+		}
+		OC->On_Subspaces->orbits_on_subspaces_PC->draw_poset(
+				OC->On_Subspaces->orbits_on_subspaces_PC->get_problem_label_with_path(),
+				OC->On_Subspaces->orbits_on_subspaces_PC->get_control()->depth,
+				0 /* data1 */,
+				orbiter_kernel_system::Orbiter->draw_options,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree after draw_poset" << endl;
+		}
+
+
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_Cascade" << endl;
+		}
+
+
+	}
 	else if (OC->f_has_On_polynomials) {
 
 		string fname;
@@ -726,6 +1121,40 @@ void orbits_activity::do_draw_tree(
 				verbose_level);
 
 
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree f_has_on_cubic_curves" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree before draw_poset" << endl;
+		}
+		OC->CCC->Arc_gen->gen->draw_poset(
+				OC->CCC->Arc_gen->gen->get_problem_label_with_path(),
+				OC->Arc_generator_description->target_size,
+			0 /* data1 */,
+			orbiter_kernel_system::Orbiter->draw_options,
+			verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree after draw_poset" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_draw_tree "
+					"f_has_classification_by_canonical_form" << endl;
+		}
 	}
 	else {
 		cout << "orbits_activity::do_draw_tree "
@@ -810,6 +1239,69 @@ void orbits_activity::do_stabilizer(
 		FREE_OBJECT(Stab);
 
 	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+
+	}
 	else {
 		cout << "orbits_activity::do_stabilizer "
 				"no suitable data structure found" << endl;
@@ -833,14 +1325,77 @@ void orbits_activity::do_stabilizer_of_orbit_rep(
 
 	if (OC->f_has_Orb) {
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep "
 					"before OC->Orb->stabilizer_of" << endl;
 		}
 		OC->Orb->stabilizer_of(Descr->stabilizer_of_orbit_rep_orbit_idx, verbose_level);
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep "
 					"after OC->Orb->stabilizer_of" << endl;
 		}
+	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer_of_orbit_rep f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_stabilizer "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+
 	}
 	else {
 		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
@@ -972,6 +1527,12 @@ void orbits_activity::do_recognize(
 		cout << "orbits_activity::do_recognize" << endl;
 	}
 
+	if (OC->f_has_Orb) {
+		if (f_v) {
+			cout << "orbits_activity::do_recognize "
+					"f_has_Orb" << endl;
+		}
+	}
 	if (OC->f_has_On_subsets) {
 
 		int h;
@@ -1028,8 +1589,56 @@ void orbits_activity::do_recognize(
 
 	}
 
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_recognize f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_recognize f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_recognize f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_recognize f_has_Of_One_polynomial" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_recognize f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_recognize "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+
+	}
+
 	else {
-		cout << "orbits_activity::do_stabilizer_of_orbit_rep "
+		cout << "orbits_activity::do_recognize "
 				"no suitable data structure found" << endl;
 		exit(1);
 	}
@@ -1054,8 +1663,55 @@ void orbits_activity::do_transporter(
 
 	Get_lint_vector_from_label(label_of_set, the_set, set_size, 0 /* verbose_level */);
 
+	if (OC->f_has_Orb) {
 
-	if (OC->f_has_Of_One_polynomial) {
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_Orb" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_subsets) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_On_subsets" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_Subspaces) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_On_Subspaces" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_tensors) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_On_tensors" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Cascade) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_Cascade" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_On_polynomials) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_On_polynomials" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_Of_One_polynomial) {
 
 		string fname;
 
@@ -1079,7 +1735,7 @@ void orbits_activity::do_transporter(
 		for (i = 0; i < Nb; i++) {
 
 			if (f_v) {
-				cout << "orbits_on_polynomials::orbit_of_one_polynomial "
+				cout << "orbits_activity::do_transporter "
 						"before OC->Of_One_polynomial->Orb->get_transporter" << endl;
 
 			}
@@ -1088,7 +1744,7 @@ void orbits_activity::do_transporter(
 					transporter, verbose_level);
 
 			if (f_v) {
-				cout << "orbits_on_polynomials::orbit_of_one_polynomial "
+				cout << "orbits_activity::do_transporter "
 						"after OC->Of_One_polynomial->Orb->get_transporter" << endl;
 
 			}
@@ -1114,6 +1770,28 @@ void orbits_activity::do_transporter(
 
 
 	}
+	else if (OC->f_has_on_cubic_curves) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_transporter f_has_on_cubic_curves" << endl;
+		}
+
+
+	}
+	else if (OC->f_has_classification_by_canonical_form) {
+		if (f_v) {
+			cout << "orbits_activity::do_transporter "
+					"f_has_classification_by_canonical_form" << endl;
+		}
+
+	}
+	else {
+		cout << "orbits_activity::do_transporter "
+				"no suitable data structure found" << endl;
+		exit(1);
+	}
+
+
 
 
 	if (f_v) {

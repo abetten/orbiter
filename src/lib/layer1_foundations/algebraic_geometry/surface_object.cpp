@@ -31,6 +31,7 @@ surface_object::surface_object()
 	//std::string label_txt;
 	//std::string label_tex;
 
+#if 0
 	//int Lines[27];
 	//int eqn[20];
 
@@ -39,7 +40,9 @@ surface_object::surface_object()
 
 	Lines = NULL;
 	nb_lines = 0;
-
+#else
+	Variety_object = NULL;
+#endif
 	SOP = NULL;
 
 	//null();
@@ -55,12 +58,18 @@ surface_object::~surface_object()
 	if (f_v) {
 		cout << "surface_object::~surface_object" << endl;
 	}
+#if 0
 	if (Pts) {
 		FREE_lint(Pts);
 	}
 	if (Lines) {
 		FREE_lint(Lines);
 	}
+#else
+	if (Variety_object) {
+		FREE_OBJECT(Variety_object);
+	}
+#endif
 	if (SOP) {
 		FREE_OBJECT(SOP);
 	}
@@ -91,6 +100,19 @@ void surface_object::init_equation_points_and_lines_only(
 	surface_object::label_txt = label_txt;
 	surface_object::label_txt = label_tex;
 
+	Variety_object = NEW_OBJECT(variety_object);
+
+	Variety_object->init_equation_only(
+			Surf->P,
+			Surf->PolynomialDomains->Poly3_4,
+			eqn,
+			verbose_level);
+
+	// does not enumerate the points and lines
+
+
+
+#if 0
 	//int_vec_copy(Lines, surface_object::Lines, 27);
 	Int_vec_copy(eqn, surface_object::eqn, 20);
 
@@ -102,6 +124,7 @@ void surface_object::init_equation_points_and_lines_only(
 
 	//Points = NEW_lint(Surf->P->N_points /* Surf->nb_pts_on_surface*/);
 		// allocate enough space in case we have a surface with too many points
+#endif
 
 	if (f_v) {
 		cout << "surface_object::init_equation_points_and_lines_only "
@@ -112,6 +135,7 @@ void surface_object::init_equation_points_and_lines_only(
 		cout << "surface_object::init_equation_points_and_lines_only "
 				"after enumerate_points_and_lines" << endl;
 	}
+
 
 #if 0
 	if (nb_points != Surf->nb_pts_on_surface) {
@@ -154,24 +178,25 @@ void surface_object::init_equation(
 	}
 
 	
-	if (nb_lines == 27) {
+	if (Variety_object->Line_sets->Set_size[0] == 27) {
 		if (f_v) {
 			cout << "surface_object::init_equation before "
 					"find_double_six_and_rearrange_lines" << endl;
 		}
 		find_double_six_and_rearrange_lines(
-				Lines, 0/*verbose_level - 2*/);
+				Variety_object->Line_sets->Sets[0], 0/*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "surface_object::init_equation after "
 					"find_double_six_and_rearrange_lines" << endl;
 			cout << "surface_object::init_equation Lines:";
-			Lint_vec_print(cout, Lines, 27);
+			Lint_vec_print(cout, Variety_object->Line_sets->Sets[0], 27);
 			cout << endl;
 		}
 	}
 	else {
-		cout << "The surface does not have 27 lines. nb_lines=" << nb_lines
+		cout << "The surface does not have 27 lines. "
+				"nb_lines=" << Variety_object->Line_sets->Set_size[0]
 				<< " A double six has not been computed" << endl;
 	}
 
@@ -212,7 +237,7 @@ void surface_object::enumerate_points(
 				"Surf->enumerate_points" << endl;
 	}
 	Surf->enumerate_points(
-			surface_object::eqn,
+			Variety_object->eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -225,11 +250,24 @@ void surface_object::enumerate_points(
 	}
 	int i;
 
+	int nb_pts;
+	long int *Pts;
+
 	nb_pts = Points.size();
 	Pts = NEW_lint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = Points[i];
 	}
+	if (Variety_object->Point_sets) {
+		FREE_OBJECT(Variety_object->Point_sets);
+	}
+	Variety_object->Point_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Variety_object->Point_sets->init_single(
+			Variety_object->Projective_space->Subspaces->N_points /* underlying_set_size */,
+			Pts, nb_pts, 0 /* verbose_level */);
+
+	FREE_lint(Pts);
 
 
 	if (f_v) {
@@ -257,7 +295,7 @@ void surface_object::enumerate_points_and_lines(
 				"before Surf->enumerate_points" << endl;
 	}
 	Surf->enumerate_points(
-			eqn,
+			Variety_object->eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -267,13 +305,6 @@ void surface_object::enumerate_points_and_lines(
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines "
 				"The surface has " << Points.size() << " points" << endl;
-	}
-	int i;
-
-	nb_pts = Points.size();
-	Pts = NEW_lint(nb_pts);
-	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Points[i];
 	}
 
 
@@ -320,6 +351,18 @@ void surface_object::enumerate_points_and_lines(
 	}
 #endif
 
+	int i;
+	long int *Pts;
+	int nb_pts;
+	long int *Lines;
+	int nb_lines;
+
+	nb_pts = Points.size();
+	Pts = NEW_lint(nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Points[i];
+	}
+
 	nb_lines = The_Lines.size();
 	Lines = NEW_lint(nb_lines);
 	for (i = 0; i < nb_lines; i++) {
@@ -335,6 +378,27 @@ void surface_object::enumerate_points_and_lines(
 	}
 
 
+	if (Variety_object->Point_sets) {
+		FREE_OBJECT(Variety_object->Point_sets);
+	}
+	Variety_object->Point_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Variety_object->Point_sets->init_single(
+			Variety_object->Projective_space->Subspaces->N_points /* underlying_set_size */,
+			Pts, nb_pts, 0 /* verbose_level */);
+
+	FREE_lint(Pts);
+
+	if (Variety_object->Line_sets) {
+		FREE_OBJECT(Variety_object->Line_sets);
+	}
+	Variety_object->Line_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Variety_object->Line_sets->init_single(
+			Variety_object->Projective_space->Subspaces->N_lines /* underlying_set_size */,
+			Lines, nb_lines, 0 /* verbose_level */);
+
+	FREE_lint(Lines);
 
 
 	if (f_v) {
@@ -365,7 +429,8 @@ void surface_object::find_real_lines(
 		}
 
 		Surf->PolynomialDomains->Poly3_4->substitute_line(
-			eqn /* coeff_in */, coeff_out,
+			Variety_object->eqn /* coeff_in */,
+			coeff_out,
 			M /* Pt1_coeff */, M + 4 /* Pt2_coeff */,
 			verbose_level - 3);
 		// coeff_in[nb_monomials], coeff_out[degree + 1]
@@ -409,42 +474,19 @@ void surface_object::init_with_27_lines(
 	q = F->q;
 
 	surface_object::label_txt = label_txt;
-	surface_object::label_txt = label_tex;
+	surface_object::label_tex = label_tex;
 
 
-	nb_lines = 27;
-	surface_object::Lines = NEW_lint(27);
-	Lint_vec_copy(Lines27, surface_object::Lines, 27);
+	//Int_vec_copy(eqn, surface_object::eqn, 20);
+	Variety_object = NEW_OBJECT(variety_object);
 
-	if (f_v) {
-		cout << "surface_object::init_with_27_lines Lines:";
-		Lint_vec_print(cout, surface_object::Lines, 27);
-		cout << endl;
-	}
-
-	if (f_find_double_six_and_rearrange_lines) {
-		if (f_v) {
-			cout << "surface_object::init_with_27_lines before "
-					"find_double_six_and_rearrange_lines" << endl;
-		}
-		find_double_six_and_rearrange_lines(
-				surface_object::Lines,
-				verbose_level);
-		if (f_v) {
-			cout << "surface_object::init_with_27_lines after "
-					"find_double_six_and_rearrange_lines" << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "surface_object::init_with_27_lines Lines:";
-		Lint_vec_print(cout, surface_object::Lines, 27);
-		cout << endl;
-	}
+	Variety_object->init_equation_only(
+			Surf->P,
+			Surf->PolynomialDomains->Poly3_4,
+			eqn,
+			verbose_level);
 
 
-	Int_vec_copy(eqn, surface_object::eqn, 20);
-	
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines "
@@ -455,6 +497,49 @@ void surface_object::init_with_27_lines(
 		cout << "surface_object::init_with_27_lines "
 				"after enumerate_points" << endl;
 	}
+
+
+	//nb_lines = 27;
+	//surface_object::Lines = NEW_lint(27);
+	//Lint_vec_copy(Lines27, surface_object::Lines, 27);
+
+	if (Variety_object->Line_sets) {
+		FREE_OBJECT(Variety_object->Line_sets);
+	}
+	Variety_object->Line_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Variety_object->Line_sets->init_single(
+			Variety_object->Projective_space->Subspaces->N_lines /* underlying_set_size */,
+			Lines27, 27, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "surface_object::init_with_27_lines Lines:";
+		Lint_vec_print(cout, Variety_object->Line_sets->Sets[0], 27);
+		cout << endl;
+	}
+
+	if (f_find_double_six_and_rearrange_lines) {
+		if (f_v) {
+			cout << "surface_object::init_with_27_lines before "
+					"find_double_six_and_rearrange_lines" << endl;
+		}
+		find_double_six_and_rearrange_lines(
+				Variety_object->Line_sets->Sets[0],
+				verbose_level);
+		if (f_v) {
+			cout << "surface_object::init_with_27_lines after "
+					"find_double_six_and_rearrange_lines" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "surface_object::init_with_27_lines Lines:";
+		Lint_vec_print(cout, Variety_object->Line_sets->Sets[0], 27);
+		cout << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines "
@@ -1709,15 +1794,16 @@ void surface_object::identify_lines(
 	int *line_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, idx;
-	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_object::identify_lines" << endl;
 	}
+#if 0
+	int i, idx;
+	data_structures::sorting Sorting;
 	for (i = 0; i < nb_lines; i++) {
 		if (!Sorting.lint_vec_search_linear(
-				Lines, 27, lines[i], idx)) {
+				Variety_object->Line_sets->Sets[0], 27, lines[i], idx)) {
 			cout << "surface_object::identify_lines could "
 					"not find lines[" << i << "]=" << lines[i]
 					<< " in Lines[]" << endl;
@@ -1725,6 +1811,10 @@ void surface_object::identify_lines(
 		}
 		line_idx[i] = idx;
 	}
+#else
+	Variety_object->identify_lines(lines, nb_lines,
+			line_idx, verbose_level);
+#endif
 	if (f_v) {
 		cout << "surface_object::identify_lines done" << endl;
 	}
@@ -1896,15 +1986,19 @@ void surface_object::compute_clebsch_maps(int verbose_level)
 int surface_object::find_point(
 		long int P, int &idx)
 {
+
+	return Variety_object->find_point(P, idx);
+#if 0
 	data_structures::sorting Sorting;
 
-	if (Sorting.lint_vec_search(Pts, nb_pts, P,
+	if (Sorting.lint_vec_search(Variety_object->Point_sets->Sets[0], Variety_object->Point_sets->Set_size[0], P,
 			idx, 0 /* verbose_level */)) {
 		return true;
 	}
 	else {
 		return false;
 	}
+#endif
 }
 
 void surface_object::export_something(
@@ -1927,7 +2021,7 @@ void surface_object::export_something(
 		fname = fname_base + "_points.csv";
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
-				fname, Pts, 1, nb_pts);
+				fname, Variety_object->Point_sets->Sets[0], 1, Variety_object->Point_sets->Set_size[0]);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -1940,11 +2034,11 @@ void surface_object::export_something(
 		long int *Pts_off;
 		int nb_pts_off;
 
-		nb_pts_off = Surf->P->Subspaces->N_points - nb_pts;
+		nb_pts_off = Surf->P->Subspaces->N_points - Variety_object->Point_sets->Set_size[0];
 
 		Pts_off = NEW_lint(Surf->P->Subspaces->N_points);
 
-		Lint_vec_complement_to(Pts, Pts_off, Surf->P->Subspaces->N_points, nb_pts);
+		Lint_vec_complement_to(Variety_object->Point_sets->Sets[0], Pts_off, Surf->P->Subspaces->N_points, Variety_object->Point_sets->Set_size[0]);
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, Pts_off, 1, nb_pts_off);
@@ -2016,7 +2110,8 @@ void surface_object::export_something(
 		fname = fname_base + "_lines.csv";
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
-				fname, Lines, nb_lines, 1);
+				fname, Variety_object->Line_sets->Sets[0],
+				Variety_object->Line_sets->Set_size[0], 1);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2028,7 +2123,8 @@ void surface_object::export_something(
 		fname = fname_base + "_lines_Pluecker.csv";
 
 		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, SOP->Pluecker_coordinates, nb_lines, 6);
+				fname, SOP->Pluecker_coordinates,
+				Variety_object->Line_sets->Set_size[0], 6);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2152,7 +2248,7 @@ void surface_object::export_something(
 
 		fname = fname_base + "_roots.csv";
 
-		if (nb_lines != 27) {
+		if (Variety_object->Line_sets->Set_size[0] != 27) {
 			cout << "surface must have 27 lines to be able to export roots" << endl;
 			exit(1);
 		}
@@ -2186,7 +2282,9 @@ void surface_object::print_lines_tex(
 		std::ostream &ost)
 {
 
-	Surf->print_lines_tex(ost, Lines, nb_lines);
+	Surf->print_lines_tex(ost,
+			Variety_object->Line_sets->Sets[0],
+			Variety_object->Line_sets->Set_size[0]);
 
 }
 
@@ -2194,7 +2292,9 @@ void surface_object::print_one_line_tex(
 		std::ostream &ost, int idx)
 {
 
-	Surf->print_one_line_tex(ost, Lines, nb_lines, idx);
+	Surf->print_one_line_tex(ost,
+			Variety_object->Line_sets->Sets[0],
+			Variety_object->Line_sets->Set_size[0], idx);
 
 }
 
@@ -2240,8 +2340,8 @@ void surface_object::Clebsch_map_up(
 	Line_b_point_list = NEW_lint(Surf->P->Subspaces->k);
 
 	// get generator matrices for the two skew lines:
-	Surf->Gr->unrank_lint_here(Line_a, Lines[line_1_idx], 0 /*verbose_level*/);
-	Surf->Gr->unrank_lint_here(Line_b, Lines[line_2_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(Line_a, Variety_object->Line_sets->Sets[0][line_1_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(Line_b, Variety_object->Line_sets->Sets[0][line_2_idx], 0 /*verbose_level*/);
 
 
 	Surf->P->Subspaces->create_points_on_line_with_line_given(
@@ -2507,8 +2607,8 @@ long int surface_object::Clebsch_map_up_single_point(
 	Line_b_point_list = NEW_lint(Surf->P->Subspaces->k);
 
 	// get generator matrices for the two skew lines:
-	Surf->Gr->unrank_lint_here(Line_a, Lines[line_1_idx], 0 /*verbose_level*/);
-	Surf->Gr->unrank_lint_here(Line_b, Lines[line_2_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(Line_a, Variety_object->Line_sets->Sets[0][line_1_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(Line_b, Variety_object->Line_sets->Sets[0][line_2_idx], 0 /*verbose_level*/);
 
 
 	if (f_vv) {
@@ -2769,28 +2869,41 @@ the_end:
 
 std::string surface_object::stringify_eqn()
 {
+	return Variety_object->stringify_eqn();
+#if 0
 	string s;
 
-	s = Int_vec_stringify(eqn, 20);
+	s = Int_vec_stringify(Variety_object->eqn, 20);
 	return s;
+#endif
 }
 
 
 
 std::string surface_object::stringify_Pts()
 {
+	return Variety_object->stringify_Pts();
+#if 0
 	string s;
 
-	s = Lint_vec_stringify(Pts, nb_pts);
+	s = Lint_vec_stringify(
+			Variety_object->Point_sets->Sets[0],
+			Variety_object->Point_sets->Set_size[0]);
 	return s;
+#endif
 }
 
 std::string surface_object::stringify_Lines()
 {
+	return Variety_object->stringify_Lines();
+#if 0
 	string s;
 
-	s = Lint_vec_stringify(Lines, nb_lines);
+	s = Lint_vec_stringify(
+			Variety_object->Line_sets->Sets[0],
+			Variety_object->Line_sets->Set_size[0]);
 	return s;
+#endif
 }
 
 

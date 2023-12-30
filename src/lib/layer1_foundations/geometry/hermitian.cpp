@@ -150,12 +150,14 @@ int hermitian::nb_points()
 	return cnt_Sbar[k];
 }
 
-void hermitian::unrank_point(int *v, int rk)
+void hermitian::unrank_point(
+		int *v, int rk)
 {
 	Sbar_unrank(v, k, rk, 0 /*verbose_level*/);
 }
 
-int hermitian::rank_point(int *v)
+int hermitian::rank_point(
+		int *v)
 {
 	int rk;
 
@@ -180,7 +182,8 @@ void hermitian::list_of_points_embedded_in_PG(
 	}
 }
 
-void hermitian::list_all_N(int verbose_level)
+void hermitian::list_all_N(
+		int verbose_level)
 {
 	int *v;
 	int i, j, val0, val;
@@ -209,7 +212,8 @@ void hermitian::list_all_N(int verbose_level)
 	}
 }
 
-void hermitian::list_all_N1(int verbose_level)
+void hermitian::list_all_N1(
+		int verbose_level)
 {
 	int *v;
 	int i, j, val0, val;
@@ -238,7 +242,8 @@ void hermitian::list_all_N1(int verbose_level)
 	}
 }
 
-void hermitian::list_all_S(int verbose_level)
+void hermitian::list_all_S(
+		int verbose_level)
 {
 	int *v;
 	int i, j, val0, val;
@@ -267,7 +272,8 @@ void hermitian::list_all_S(int verbose_level)
 	}
 }
 
-void hermitian::list_all_Sbar(int verbose_level)
+void hermitian::list_all_Sbar(
+		int verbose_level)
 {
 	int *v;
 	int i, j, a, h, val0, val;
@@ -310,7 +316,8 @@ void hermitian::list_all_Sbar(int verbose_level)
 }
 
 
-int hermitian::evaluate_hermitian_form(int *v, int len)
+int hermitian::evaluate_hermitian_form(
+		int *v, int len)
 // \sum_{i=0}^{len-1} X_i^{q+1}
 {
 	int i, a, b;
@@ -327,7 +334,8 @@ int hermitian::evaluate_hermitian_form(int *v, int len)
 	return a;
 }
 
-void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
+void hermitian::N_unrank(
+		int *v, int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk1, coset, rk0, coset0, A, val, m_val, log;
@@ -417,7 +425,8 @@ void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 	}
 }
 
-int hermitian::N_rank(int *v, int len, int verbose_level)
+int hermitian::N_rank(
+		int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, rk1, coset, rk0, coset0, val, m_val, log, a;
@@ -503,7 +512,8 @@ int hermitian::N_rank(int *v, int len, int verbose_level)
 	return rk;
 }
 
-void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
+void hermitian::N1_unrank(
+		int *v, int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, i;
@@ -620,7 +630,8 @@ void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 	}
 }
 
-int hermitian::N1_rank(int *v, int len, int verbose_level)
+int hermitian::N1_rank(
+		int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, coset, rk2, coset2, rk1, coset1, val;
@@ -730,7 +741,8 @@ int hermitian::N1_rank(int *v, int len, int verbose_level)
 	return rk;
 }
 
-void hermitian::S_unrank(int *v,
+void hermitian::S_unrank(
+		int *v,
 		int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -791,7 +803,8 @@ void hermitian::S_unrank(int *v,
 	
 }
 
-int hermitian::S_rank(int *v, int len, int verbose_level)
+int hermitian::S_rank(
+		int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, rk1, coset, log, val, m_val, a, log1;
@@ -853,7 +866,8 @@ int hermitian::S_rank(int *v, int len, int verbose_level)
 }
 
 
-void hermitian::Sbar_unrank(int *v,
+void hermitian::Sbar_unrank(
+		int *v,
 		int len, int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -909,7 +923,8 @@ void hermitian::Sbar_unrank(int *v,
 	
 }
 
-int hermitian::Sbar_rank(int *v, int len, int verbose_level)
+int hermitian::Sbar_rank(
+		int *v, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int rk, val, a, b, bv, log, i;
@@ -966,7 +981,8 @@ int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 	return rk;
 }
 
-void hermitian::create_latex_report(int verbose_level)
+void hermitian::create_latex_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1006,11 +1022,13 @@ void hermitian::create_latex_report(int verbose_level)
 
 
 			if (f_v) {
-				cout << "hermitian::create_latex_report before report" << endl;
+				cout << "hermitian::create_latex_report "
+						"before report" << endl;
 			}
 			report(ost, verbose_level);
 			if (f_v) {
-				cout << "hermitian::create_latex_report after report" << endl;
+				cout << "hermitian::create_latex_report "
+						"after report" << endl;
 			}
 
 
@@ -1028,7 +1046,8 @@ void hermitian::create_latex_report(int verbose_level)
 	}
 }
 
-void hermitian::report(std::ostream &ost, int verbose_level)
+void hermitian::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1049,7 +1068,8 @@ void hermitian::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void hermitian::report_points(std::ostream &ost, int verbose_level)
+void hermitian::report_points(
+		std::ostream &ost, int verbose_level)
 {
 	long int rk;
 	long int *rk_in_PG;

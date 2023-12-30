@@ -1049,12 +1049,16 @@ public:
 	
 	action_on_wedge_product();
 	~action_on_wedge_product();
-	void init(actions::action *A, int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
+	void init(
+			actions::action *A, int verbose_level);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
 	long int compute_image_int(
 			int *Elt, long int a, int verbose_level);
-	int element_entry_frobenius(int *Elt,
+	int element_entry_frobenius(
+			int *Elt,
 		int verbose_level);
 	//int element_entry_ij(int *Elt, int I, int J,
 	//	int verbose_level);
@@ -1065,7 +1069,8 @@ public:
 		int verbose_level);
 	//void create_induced_matrix(
 	//		int *Elt, int *Mtx2, int verbose_level);
-	void element_print_latex(int *A, std::ostream &ost);
+	void element_print_latex(
+			int *A, std::ostream &ost);
 };
 
 

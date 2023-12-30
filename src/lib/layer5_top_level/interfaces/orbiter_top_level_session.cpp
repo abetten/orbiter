@@ -420,6 +420,27 @@ poset_classification::poset_classification_control
 }
 
 
+apps_geometry::arc_generator_description
+	*orbiter_top_level_session::get_object_of_type_arc_generator_control(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_arc_generator_control "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_arc_generator_control) {
+		cout << "orbiter_top_level_session::get_object_of_type_arc_generator_control "
+				"object type != t_arc_generator_control" << endl;
+		exit(1);
+	}
+	return (apps_geometry::arc_generator_description *) get_object(idx);
+}
+
+
 poset_classification::poset_classification_activity_description
 	*orbiter_top_level_session::get_object_of_type_poset_classification_activity(
 			std::string &label)

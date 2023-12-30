@@ -780,6 +780,24 @@ void orbiter_symbol_table_entry::init_poset_classification_control(
 	}
 }
 
+void orbiter_symbol_table_entry::init_arc_generator_control(
+		std::string &label,
+		void *AGC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_arc_generator_control" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_arc_generator_control;
+	ptr = AGC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_arc_generator_control done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_poset_classification_activity(
 		std::string &label,
 		void *PCA, int verbose_level)
@@ -974,6 +992,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_poset_classification_control) {
 			cout << "poset_classification_control" << endl;
+		}
+		else if (object_type == t_arc_generator_control) {
+			cout << "arc_generator_control" << endl;
 		}
 		else if (object_type == t_poset_classification_activity) {
 			cout << "poset_classification_activity" << endl;

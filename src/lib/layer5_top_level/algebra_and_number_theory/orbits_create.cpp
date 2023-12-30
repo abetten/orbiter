@@ -42,6 +42,12 @@ orbits_create::orbits_create()
 	f_has_Of_One_polynomial = false;
 	Of_One_polynomial = NULL;
 
+	f_has_on_cubic_curves = false;
+	Arc_generator_description = NULL;
+	CC = NULL;
+	CCA = NULL;
+	CCC = NULL;
+
 	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
@@ -476,6 +482,141 @@ void orbits_create::init(
 	}
 
 
+	if (Descr->f_on_cubic_curves) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_cubic_curves" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init control = " << Descr->on_cubic_curves_control << endl;
+		}
+
+#if 0
+		if (!Descr->f_group) {
+			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			exit(1);
+		}
+
+		if (!Group->f_linear_group) {
+			cout << "orbits_create::init group must be linear" << endl;
+			exit(1);
+		}
+#endif
+		//apps_geometry::arc_generator_description *Arc_generator_description;
+		//apps_geometry::classify_cubic_curves *CCC;
+
+
+		Arc_generator_description = Get_object_of_type_arc_generator_control(
+				Descr->on_cubic_curves_control);
+
+#if 0
+		projective_geometry::projective_space_global G;
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before G.do_classify_cubic_curves" << endl;
+		}
+		G.do_classify_cubic_curves(
+				//PA,
+				Arc_generator_description,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after G.do_classify_cubic_curves" << endl;
+		}
+#endif
+
+		projective_geometry::projective_space_with_action *PA;
+
+		if (!Arc_generator_description->f_projective_space) {
+			cout << "Please use option -projective_space in arc_generator" << endl;
+			exit(1);
+		}
+		PA = Get_object_of_projective_space(Arc_generator_description->projective_space_label);
+
+		CC = NEW_OBJECT(algebraic_geometry::cubic_curve);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CC->init" << endl;
+		}
+		CC->init(PA->F, verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CC->init" << endl;
+		}
+
+
+
+		CCA = NEW_OBJECT(apps_geometry::cubic_curve_with_action);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CCA->init" << endl;
+		}
+		CCA->init(CC, PA->A, verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CCA->init" << endl;
+		}
+
+
+
+		CCC = NEW_OBJECT(apps_geometry::classify_cubic_curves);
+
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CCC->init" << endl;
+		}
+		CCC->init(
+				PA,
+				CCA,
+				Arc_generator_description,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CCC->init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CCC->compute_starter" << endl;
+		}
+		CCC->compute_starter(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CCC->compute_starter" << endl;
+		}
+
+	#if 0
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CCC->test_orbits" << endl;
+		}
+		CCC->test_orbits(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CCC->test_orbits" << endl;
+		}
+	#endif
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before CCC->do_classify" << endl;
+		}
+		CCC->do_classify(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after CCC->do_classify" << endl;
+		}
+
+
+		f_has_on_cubic_curves = true;
+
+
+	}
 
 
 	if (Descr->f_classification_by_canonical_form) {

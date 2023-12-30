@@ -41,7 +41,10 @@ poset_classification_control::poset_classification_control()
 	f_depth = false;
 	depth = 0;
 
+	f_verbose_level = false;
 	verbose_level = 0;
+
+	f_verbose_level_group_theory = false;
 	verbose_level_group_theory = 0;
 
 	f_recover = false;
@@ -136,6 +139,7 @@ int poset_classification_control::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-v") == 0) {
 			i++;
+			f_verbose_level = true;
 			poset_classification_control::verbose_level = ST.strtoi(argv[i]);
 			if (f_v) {
 				cout << "-v " << poset_classification_control::verbose_level << endl;
@@ -143,6 +147,7 @@ int poset_classification_control::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-gv") == 0) {
 			i++;
+			f_verbose_level_group_theory = true;
 			verbose_level_group_theory = ST.strtoi(argv[i]);
 			if (f_v) {
 				cout << "-gv " << verbose_level_group_theory << endl;
@@ -293,8 +298,12 @@ void poset_classification_control::print()
 	if (f_path) {
 		cout << "-path" << path << endl;
 	}
-	cout << "v=" << verbose_level << endl;
-	cout << "gv=" << verbose_level_group_theory << endl;
+	if (f_verbose_level) {
+		cout << "-v " << verbose_level << endl;
+	}
+	if (f_verbose_level_group_theory) {
+		cout << "-vg " << verbose_level_group_theory << endl;
+	}
 
 	if (f_recover) {
 		cout << "-recover " << recover_fname << endl;

@@ -413,10 +413,16 @@ void any_group::do_orbits_on_subspaces(
 
 
 
-
-	if (!f_linear_group) {
-		cout << "any_group::do_orbits_on_subspaces !f_linear_group" << endl;
+	if (!A->f_is_linear) {
+		cout << "any_group::do_orbits_on_subspaces !A->f_is_linear" << endl;
+		cout << "group:" << endl;
+		print();
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "group:" << endl;
+		print();
 	}
 
 
@@ -629,20 +635,31 @@ int any_group::subspace_orbits_test_set(
 		cout << "any_group::subspace_orbits_test_set" << endl;
 	}
 
-	if (!f_linear_group) {
-		cout << "any_group::subspace_orbits_test_set !f_linear_group" << endl;
+	if (!A->f_is_linear) {
+		cout << "any_group::subspace_orbits_test_set !A->f_is_linear" << endl;
 		exit(1);
 	}
+
+	n = A->matrix_group_dimension();
+	//n = Group->LG->n;
+	if (f_v) {
+		cout << "orbits_on_subspaces::init n = " << n << endl;
+	}
+
+	F = A->matrix_group_finite_field();
+	//q = F->q;
+
+
 
 	if (f_v) {
 		cout << "Testing set ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		cout << "LG->n=" << LG->n << endl;
+		cout << "n=" << n << endl;
 	}
 
-	n = LG->n;
-	F = LG->F;
+	//n = LG->n;
+	//F = LG->F;
 
 	orbits_on_subspaces_M = NEW_int(len * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);

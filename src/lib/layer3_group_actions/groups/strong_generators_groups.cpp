@@ -4058,7 +4058,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	int i;
 	int f_semilinear = false;
 	int frobenius = 0;
-	geometry::geometry_global Gg;
+	algebraic_geometry::algebraic_geometry_global Gg;
 
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {

@@ -71,7 +71,8 @@ incidence_structure::~incidence_structure()
 	}
 }
 
-void incidence_structure::check_point_pairs(int verbose_level)
+void incidence_structure::check_point_pairs(
+		int verbose_level)
 {
 	int *Mtx;
 	int i, j, nb;
@@ -399,7 +400,8 @@ void incidence_structure::init_by_matrix_as_bitmatrix(
 	}
 }
 
-void incidence_structure::init_by_matrix2(int verbose_level)
+void incidence_structure::init_by_matrix2(
+		int verbose_level)
 {
 	int i, j, h;
 	int f_v = (verbose_level >= 1);
@@ -525,7 +527,8 @@ int incidence_structure::nb_lines()
 	return nb_cols;
 }
 
-int incidence_structure::get_ij(int i, int j)
+int incidence_structure::get_ij(
+		int i, int j)
 {
 	if (realization_type == INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX || 
 		realization_type == INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV) {
@@ -699,52 +702,9 @@ int incidence_structure::get_nb_inc()
 	}
 }
 
-void incidence_structure::save_inc_file(char *fname)
-{
-	int i, j, nb_inc;
 
-	nb_inc = get_nb_inc();
-	
-	ofstream f(fname);
-	f << nb_rows << " " << nb_cols << " " << nb_inc << endl;
-	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < nb_cols; j++) {
-			if (get_ij(i, j)) {
-				f << i * nb_cols + j << " ";
-			}
-		}
-	}
-	f << "0" << endl; // ago not known
-	f << "-1" << endl;
-}
-
-void incidence_structure::save_row_by_row_file(char *fname)
-{
-    int i, j; //, nb_inc;
-    int w;
-    number_theory::number_theory_domain NT;
-
-	//nb_inc = get_nb_inc();
-	
-	if (!f_rowsums_constant) {
-		cout << "incidence_structure::save_row_by_row_file "
-				"rowsums are not constant" << endl;
-		exit(1);
-	}
-	ofstream f(fname);
-	w = NT.int_log10(nb_cols) + 1;
-	f << nb_rows << " " << nb_cols << " " << r << endl;
-	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < r; j++) {
-			f << setw(w) << lines_on_point[i * r + j] << " ";
-		}
-		f << endl;
-	}
-	f << "-1" << endl;
-}
-
-
-void incidence_structure::print(std::ostream &ost)
+void incidence_structure::print(
+		std::ostream &ost)
 {
 	int i, j;
 

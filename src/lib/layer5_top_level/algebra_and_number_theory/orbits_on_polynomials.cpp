@@ -603,7 +603,7 @@ void orbits_on_polynomials::report(
 
 		// summary table:
 
-		ost << "\\section{The Varieties of degree $" << degree_of_poly
+		ost << "\\section*{The Varieties of degree $" << degree_of_poly
 				<< "$ in $PG(" << n - 1 << ", " << F->q << ")$, summary}" << endl;
 
 #if 0
@@ -667,7 +667,7 @@ void orbits_on_polynomials::report(
 			l = T_nb_pts.type_len[h];
 			a = T_nb_pts.data_sorted[f];
 
-			ost << "\\subsection{Objects with " << a << " Points}" << endl;
+			ost << "\\subsection*{Objects with " << a << " Points}" << endl;
 
 			ost << "There are " << l << " objects with " << a << " Points: \\\\" << endl;
 

@@ -243,7 +243,7 @@ void quartic_curve_from_surface::quartic(
 	}
 
 
-	nb_pts_on_surface = SOA->SO->nb_pts;
+	nb_pts_on_surface = SOA->SO->Variety_object->Point_sets->Set_size[0];
 	Pts_on_surface = NEW_lint(nb_pts_on_surface);
 
 
@@ -252,7 +252,7 @@ void quartic_curve_from_surface::quartic(
 			"before Surf_A->A->Group_element->map_a_set_and_reorder" << endl;
 	}
 	SOA->Surf_A->A->Group_element->map_a_set_and_reorder(
-			SOA->SO->Pts, Pts_on_surface,
+			SOA->SO->Variety_object->Point_sets->Sets[0], Pts_on_surface,
 			nb_pts_on_surface,
 			transporter,
 			0 /* verbose_level */);
@@ -542,7 +542,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 
 	SOA->Surf_A->AonHPD_3_4->compute_image_int_low_level(
 			transporter,
-			SOA->SO->eqn /*int *input*/,
+			SOA->SO->Variety_object->eqn /*int *input*/,
 			equation_nice /* int *output */,
 			0 /*verbose_level*/);
 
@@ -571,7 +571,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
 				"mapping the lines" << endl;
 	}
-	nb_lines = SOA->SO->nb_lines;
+	nb_lines = SOA->SO->Variety_object->Line_sets->Set_size[0];
 	Lines_nice = NEW_lint(nb_lines);
 
 	for (i = 0; i < nb_lines; i++) {
@@ -583,7 +583,7 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 		}
 
 		Lines_nice[i] = SOA->Surf_A->A2->Group_element->element_image_of(
-				SOA->SO->Lines[i], transporter, 0);
+				SOA->SO->Variety_object->Line_sets->Sets[0][i], transporter, 0);
 	}
 
 	if (f_v) {
@@ -908,7 +908,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
 	SOA->Surf->PolynomialDomains->Poly3_4->print_equation_with_line_breaks_tex(
 			ost,
-			SOA->SO->eqn,
+			SOA->SO->Variety_object->eqn,
 			9 /* nb_terms_per_line */,
 			"\\\\\n&");
 	ost << ")" << endl;

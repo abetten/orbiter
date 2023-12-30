@@ -552,6 +552,17 @@ void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)
 	str.assign(s.str());
 }
 
+int lint_vec::compare(long int *p, long int *q, int len)
+{
+	data_structures::sorting Sorting;
+	int cmp;
+
+	cmp = Sorting.lint_vec_compare(
+			p, q, len);
+	return cmp;
+}
+
+
 std::string lint_vec::stringify(long int *v, int len)
 {
 	string output;

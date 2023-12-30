@@ -2826,20 +2826,6 @@ int sorting::integer_vec_std_compare(
 
 
 
-int sorting::lint_vec_compare(
-		long int *p, long int *q, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
-			return -1;
-		if (p[i] > q[i])
-			return 1;
-		}
-	return 0;
-}
-
 void sorting::schreier_vector_compute_depth_and_ancestor(
 	int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
 	int *&depth, int *&ancestor, int verbose_level)
@@ -3394,6 +3380,20 @@ int sorting::test_if_sets_are_disjoint_not_assuming_sorted(
 
 int sorting::int_vec_compare(
 		int *p, int *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+int sorting::lint_vec_compare(
+		long int *p, long int *q, int len)
 {
 	int i;
 

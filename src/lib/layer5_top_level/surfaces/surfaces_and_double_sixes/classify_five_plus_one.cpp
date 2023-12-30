@@ -81,8 +81,6 @@ classify_five_plus_one::~classify_five_plus_one()
 
 void classify_five_plus_one::init(
 		projective_geometry::projective_space_with_action *PA,
-		//cubic_surfaces_in_general::surface_with_action
-		//	*Surf_A,
 	poset_classification::poset_classification_control
 		*Control,
 	int verbose_level)

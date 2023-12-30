@@ -22,6 +22,9 @@ arc_generator_description::arc_generator_description()
 	f_control = false;
 	//std::string control_label;
 
+	f_projective_space = false;
+	//std::string projective_space_label;
+
 	//f_poset_classification_control = false;
 	//Control = NULL;
 
@@ -72,6 +75,15 @@ int arc_generator_description::read_arguments(
 				cout << "-control " << control_label << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-projective_space") == 0) {
+			f_projective_space = true;
+			projective_space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-projective_space " << projective_space_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-d") == 0) {
 			f_d = true;
 			d = ST.strtoi(argv[++i]);
@@ -149,6 +161,9 @@ void arc_generator_description::print()
 {
 	if (f_control) {
 		cout << "-control " << control_label << endl;
+	}
+	if (f_projective_space) {
+		cout << "-projective_space " << projective_space_label << endl;
 	}
 
 	if (f_d) {

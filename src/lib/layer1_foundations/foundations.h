@@ -655,6 +655,7 @@ namespace orbiter_kernel_system {
 		t_action_on_forms,
 		t_orbits,
 		t_poset_classification_control,
+		t_arc_generator_control,
 		t_poset_classification_activity,
 		t_crc_code,
 		t_mapping,
@@ -898,6 +899,7 @@ namespace solvers {
 
 
 #define Int_vec_compare(p, q, len) orbiter_kernel_system::Orbiter->Int_vec->compare(p, q, len)
+#define Lint_vec_compare(p, q, len) orbiter_kernel_system::Orbiter->Lint_vec->compare(p, q, len)
 
 #define Int_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, len)
 #define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)

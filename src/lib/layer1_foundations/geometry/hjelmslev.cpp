@@ -80,7 +80,8 @@ long int hjelmslev::number_of_submodules()
 	return n_choose_k_p * NT.i_power_j_lint(R->get_p(), (R->get_e() - 1) * k * (n - k));
 }
 
-void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
+void hjelmslev::unrank_lint(
+		int *M, long int rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -121,7 +122,8 @@ void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
 	}
 }
 
-long int hjelmslev::rank_lint(int *M, int verbose_level)
+long int hjelmslev::rank_lint(
+		int *M, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -333,12 +333,14 @@ groups::sims *action::create_sims_from_generators_randomized(
 		if (f_target_go) {
 			cout << "creating a group of order " << target_go << endl;
 			if (target_go.is_zero()) {
-				cout << "action::create_sims_from_generators_randomized target_go is zero" << endl;
+				cout << "action::create_sims_from_generators_randomized "
+						"target_go is zero" << endl;
 				exit(1);
 			}
 		}
 		else {
-			cout << "action::create_sims_from_generators_randomized no target group order given" << endl;
+			cout << "action::create_sims_from_generators_randomized "
+					"target group order is not given" << endl;
 		}
 	}
 

@@ -417,7 +417,10 @@ public:
 	int f_depth;
 	int depth;
 
+	int f_verbose_level;
 	int verbose_level;
+
+	int f_verbose_level_group_theory;
 	int verbose_level_group_theory;
 
 	int f_recover;

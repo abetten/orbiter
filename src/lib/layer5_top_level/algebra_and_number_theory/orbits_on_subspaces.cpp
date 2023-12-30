@@ -59,13 +59,21 @@ void orbits_on_subspaces::init(
 	//orbits_on_subspaces::GTA = GTA;
 	orbits_on_subspaces::Group = Group;
 
-	if (!Group->f_linear_group) {
+	if (!Group->A->f_is_linear) {
 		cout << "orbits_on_subspaces::init group must be linear" << endl;
 		exit(1);
 	}
-	int n;
+	int n, q;
 
-	n = Group->LG->n;
+	n = Group->A->matrix_group_dimension();
+	//n = Group->LG->n;
+	if (f_v) {
+		cout << "orbits_on_subspaces::init n = " << n << endl;
+	}
+	q = Group->A->matrix_group_finite_field()->q;
+	if (f_v) {
+		cout << "orbits_on_subspaces::init q = " << q << endl;
+	}
 
 	Control->f_depth = true;
 	Control->depth = depth;
@@ -84,7 +92,10 @@ void orbits_on_subspaces::init(
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
 	orbits_on_subspaces_VS = NEW_OBJECT(linear_algebra::vector_space);
-	orbits_on_subspaces_VS->init(Group->LG->F, n /* dimension */, verbose_level - 1);
+	orbits_on_subspaces_VS->init(
+			Group->A->matrix_group_finite_field(),
+			n /* dimension */,
+			verbose_level - 1);
 	orbits_on_subspaces_VS->init_rank_functions(
 			orbits_on_subspaces_rank_point_func,
 			orbits_on_subspaces_unrank_point_func,
@@ -112,8 +123,10 @@ void orbits_on_subspaces::init(
 #endif
 
 	orbits_on_subspaces_Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
-	orbits_on_subspaces_Poset->init_subspace_lattice(Group->A_base /*LG->A_linear*/,
-			Group->A /* LG->A2 */, Group->Subgroup_gens /* ->LG->Strong_gens */,
+	orbits_on_subspaces_Poset->init_subspace_lattice(
+			Group->A_base /*LG->A_linear*/,
+			Group->A /* LG->A2 */,
+			Group->Subgroup_gens /* ->LG->Strong_gens */,
 			orbits_on_subspaces_VS,
 			verbose_level);
 	orbits_on_subspaces_Poset->add_testing_without_group(
@@ -125,10 +138,10 @@ void orbits_on_subspaces::init(
 
 	if (f_v) {
 		cout << "orbits_on_subspaces::init "
-				"GTA->AG->LG->label=" << Group->LG->label << endl;
+				"Group->label=" << Group->label << endl;
 	}
 
-	Control->problem_label.assign(Group->LG->label);
+	Control->problem_label.assign(Group->label);
 	Control->f_problem_label = true;
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(

@@ -911,7 +911,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 
 			pick_double_six(
 					select_double_six_string[i],
-					SO->Lines,
+					SO->Variety_object->Line_sets->Sets[0],
 					verbose_level);
 
 
@@ -1141,7 +1141,8 @@ void surface_domain::pick_double_six(
 }
 
 
-std::string surface_domain::stringify_eqn_maple(int *eqn)
+std::string surface_domain::stringify_eqn_maple(
+		int *eqn)
 {
 	stringstream sstr;
 	string str;

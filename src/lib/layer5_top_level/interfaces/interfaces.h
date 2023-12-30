@@ -1019,6 +1019,9 @@ public:
 	poset_classification::poset_classification_control
 		*get_object_of_type_poset_classification_control(
 				std::string &label);
+	apps_geometry::arc_generator_description
+		*get_object_of_type_arc_generator_control(
+				std::string &label);
 	poset_classification::poset_classification_activity_description
 		*get_object_of_type_poset_classification_activity(
 				std::string &label);
@@ -1235,6 +1238,10 @@ public:
 	poset_classification::poset_classification_control
 		*Poset_classification_control;
 
+	int f_arc_generator_control;
+	apps_geometry::arc_generator_description
+		*Arc_generator_control;
+
 	int f_poset_classification_activity;
 	poset_classification::poset_classification_activity_description
 		*Poset_classification_activity;
@@ -1306,6 +1313,7 @@ public:
 	void definition_of_action_on_forms(int verbose_level);
 	void definition_of_orbits(int verbose_level);
 	void definition_of_poset_classification_control(int verbose_level);
+	void definition_of_arc_generator_control(int verbose_level);
 	void definition_of_poset_classification_activity(int verbose_level);
 	void definition_of_crc_code(int verbose_level);
 	void definition_of_mapping(int verbose_level);

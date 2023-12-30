@@ -15,9 +15,10 @@ namespace actions {
 
 
 int action::least_moved_point_at_level(
+		groups::sims *old_Sims,
 		int level, int verbose_level)
 {
-	return Sims->least_moved_point_at_level(level, verbose_level);
+	return old_Sims->least_moved_point_at_level(level, verbose_level);
 }
 
 void action::lex_least_base_in_place(
@@ -31,9 +32,9 @@ void action::lex_least_base_in_place(
 
 	if (f_v) {
 		cout << "action::lex_least_base_in_place action "
-				<< label << " base=";
+				<< label << " degree=" << degree << " base_len()=" << base_len() << endl;
 		//int_vec_print(cout, Stabilizer_chain->base, base_len());
-		cout << endl;
+		//cout << endl;
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
@@ -49,12 +50,18 @@ void action::lex_least_base_in_place(
 
 
 	for (i = 0; i < base_len(); i++) {
+		if (f_v) {
+			cout << "action::lex_least_base_in_place i=" << i << " / " << base_len() << endl;
+		}
 		set[i] = base_i(i);
+		if (f_v) {
+			cout << "action::lex_least_base_in_place i=" << i << " / " << base_len() << " set[i]=" << set[i] << endl;
+		}
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " computing the least moved point" << endl;
 		}
-		lmp = least_moved_point_at_level(i, verbose_level - 2);
+		lmp = least_moved_point_at_level(old_Sims, i, verbose_level - 2);
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " the least moved point is " << lmp << endl;
@@ -153,7 +160,8 @@ void action::lex_least_base(
 			cout << "action::lex_least_base "
 					"calling least_moved_point_at_level " << i << endl;
 		}
-		lmp = old_A->least_moved_point_at_level(i, verbose_level - 2);
+		lmp = old_A->least_moved_point_at_level(
+				old_A->Sims, i, verbose_level - 2);
 		if (lmp < old_A->base_i(i)) {
 			if (f_v) {
 				cout << "action::lex_least_base least moved point = " << lmp

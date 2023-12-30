@@ -235,11 +235,31 @@ void classification_of_combinatorial_objects::classification_report(
 		cout << "classification_of_combinatorial_objects::classification_report" << endl;
 	}
 
+	if (CO == NULL) {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"CO == NULL" << endl;
+		exit(1);
+	}
+	else {
+		cout << "CO != NULL" << endl;
+	}
+
+	if (CO->Descr == NULL) {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"CO->Descr == NULL" << endl;
+		exit(1);
+	}
+
 
 	if (CO->Descr->f_classification_prefix == false) {
 		cout << "please use option -classification_prefix <prefix> to set the "
 				"prefix for the output file" << endl;
 		exit(1);
+	}
+	else {
+		cout << "classification_of_combinatorial_objects::classification_report "
+				"prefix = " << CO->Descr->classification_prefix << endl;
+
 	}
 
 
@@ -255,6 +275,9 @@ void classification_of_combinatorial_objects::classification_report(
 				"after latex_report" << endl;
 	}
 
+	if (f_v) {
+		cout << "classification_of_combinatorial_objects::classification_report done" << endl;
+	}
 }
 
 void classification_of_combinatorial_objects::latex_report(

@@ -153,7 +153,7 @@ void clebsch_map::init_half_double_six(
 			cout << "surface_with_action::arc_lifting_and_classify u="
 					<< u << " / 6" << endl;
 		}
-		a = SO->Lines[Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes[hds * 6 + u]];
+		a = SO->Variety_object->Line_sets->Sets[0][Surf->Schlaefli->Schlaefli_double_six->Half_double_sixes[hds * 6 + u]];
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"intersecting line " << a << " and plane "
@@ -210,8 +210,8 @@ void clebsch_map::compute_Clebsch_map_down(
 	}
 
 
-	Clebsch_map = NEW_lint(SO->nb_pts);
-	Clebsch_coeff = NEW_int(SO->nb_pts * 4);
+	Clebsch_map = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
+	Clebsch_coeff = NEW_int(SO->Variety_object->Point_sets->Set_size[0] * 4);
 
 	if (f_v) {
 		cout << "clebsch_map::compute_Clebsch_map_down "
@@ -298,10 +298,10 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 
 	// test line_a:
 	Surf->P->Subspaces->Grass_lines->unrank_lint_here(Line_a,
-			SO->Lines[line_idx[0]], 0 /* verbose_level */);
+			SO->Variety_object->Line_sets->Sets[0][line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Line a = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[0]]
-			<< " = " << SO->Lines[line_idx[0]] << ":" << endl;
+			<< " = " << SO->Variety_object->Line_sets->Sets[0][line_idx[0]] << ":" << endl;
 		Int_matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
@@ -318,10 +318,10 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 
 	// test line_b:
 	Surf->P->Subspaces->Grass_lines->unrank_lint_here(Line_b,
-			SO->Lines[line_idx[1]], 0 /* verbose_level */);
+			SO->Variety_object->Line_sets->Sets[0][line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Line b = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[1]]
-			<< " = " << SO->Lines[line_idx[1]] << ":" << endl;
+			<< " = " << SO->Variety_object->Line_sets->Sets[0][line_idx[1]] << ":" << endl;
 		Int_matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
@@ -337,15 +337,15 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	}
 
 	// and now, map all surface points:
-	for (h = 0; h < SO->nb_pts; h++) {
-		pt = SO->Pts[h];
+	for (h = 0; h < SO->Variety_object->Point_sets->Set_size[0]; h++) {
+		pt = SO->Variety_object->Point_sets->Sets[0][h];
 
 		Surf->unrank_point(v, pt);
 
 		Int_vec_zero(Image_coeff + h * 4, 4);
 		if (f_v) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
-					"pt " << h << " / " << SO->nb_pts << " is " << pt << " = ";
+					"pt " << h << " / " << SO->Variety_object->Point_sets->Set_size[0] << " is " << pt << " = ";
 			Int_vec_print(cout, v, 4);
 			cout << ":" << endl;
 		}
@@ -450,7 +450,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Image_rk[h] = Surf->P2->rank_point(coefficients);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
-					"pt " << h << " / " << SO->nb_pts
+					"pt " << h << " / " << SO->Variety_object->Point_sets->Set_size[0]
 				<< " is " << pt << " : image = ";
 			Int_vec_print(cout, Image_coeff + h * 4, 4);
 			cout << " image = " << Image_rk[h] << endl;
@@ -471,7 +471,7 @@ void clebsch_map::clebsch_map_print_fibers()
 	{
 		data_structures::tally_lint C2;
 
-		C2.init(Clebsch_map, SO->nb_pts, true, 0);
+		C2.init(Clebsch_map, SO->Variety_object->Point_sets->Set_size[0], true, 0);
 		cout << "clebsch_map::clebsch_map_print_fibers The fibers "
 				"have the following sizes: ";
 		C2.print_bare(true);
@@ -532,7 +532,7 @@ void clebsch_map::clebsch_map_find_arc_and_lines(
 	{
 		data_structures::tally_lint C2;
 
-		C2.init(Clebsch_map, SO->nb_pts, true, 0);
+		C2.init(Clebsch_map, SO->Variety_object->Point_sets->Set_size[0], true, 0);
 		if (f_v) {
 			cout << "clebsch_map::clebsch_map_find_arc_and_lines "
 					"The fibers have the following sizes: ";

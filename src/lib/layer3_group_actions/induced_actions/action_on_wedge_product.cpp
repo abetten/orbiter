@@ -45,7 +45,8 @@ action_on_wedge_product::~action_on_wedge_product()
 	}
 }
 
-void action_on_wedge_product::init(actions::action *A, int verbose_level)
+void action_on_wedge_product::init(
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry::geometry_global Gg;
@@ -77,13 +78,15 @@ void action_on_wedge_product::init(actions::action *A, int verbose_level)
 	}
 }
 
-void action_on_wedge_product::unrank_point(int *v, long int rk)
+void action_on_wedge_product::unrank_point(
+		int *v, long int rk)
 {
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			v, 1, wedge_dimension, rk);
 }
 
-long int action_on_wedge_product::rank_point(int *v)
+long int action_on_wedge_product::rank_point(
+		int *v)
 {
 	long int rk;
 
@@ -112,7 +115,8 @@ long int action_on_wedge_product::compute_image_int(
 		cout << endl;
 	}
 	
-	compute_image_int_low_level(Elt, wedge_v1, wedge_v2, verbose_level);
+	compute_image_int_low_level(
+			Elt, wedge_v1, wedge_v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
 		Int_vec_print(cout, wedge_v2, wedge_dimension);
@@ -248,10 +252,12 @@ void action_on_wedge_product::compute_image_int_low_level(
 	//create_induced_matrix(Elt, Mtx_wedge, verbose_level - 2);
 
 	F->Linear_algebra->wedge_product(
-			Elt, Mtx_wedge, n, wedge_dimension, verbose_level - 2);
+			Elt, Mtx_wedge, n, wedge_dimension,
+			verbose_level - 2);
 
 
-	F->Linear_algebra->mult_vector_from_the_right(Mtx_wedge, x,
+	F->Linear_algebra->mult_vector_from_the_right(
+			Mtx_wedge, x,
 			xA, wedge_dimension, wedge_dimension);
 
 #endif
@@ -271,7 +277,8 @@ void action_on_wedge_product::compute_image_int_low_level(
 			xA[i] = F->frobenius_power(xA[i], f);
 		}
 #else
-		F->Linear_algebra->vector_frobenius_power_in_place(xA, wedge_dimension, f);
+		F->Linear_algebra->vector_frobenius_power_in_place(
+				xA, wedge_dimension, f);
 #endif
 
 		if (f_vv) {
@@ -343,7 +350,8 @@ void action_on_wedge_product::create_induced_matrix(
 }
 #endif
 
-void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
+void action_on_wedge_product::element_print_latex(
+		int *Elt, std::ostream &ost)
 {
 	ost << "\\left(" << endl;
 	F->Io->print_matrix_latex(ost, Elt, n, n);
@@ -357,7 +365,8 @@ void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 			Elt, Mtx_wedge, n, wedge_dimension, 0 /* verbose_level */);
 
 
-	F->Io->print_matrix_latex(ost, Mtx_wedge, wedge_dimension, wedge_dimension);
+	F->Io->print_matrix_latex(
+			ost, Mtx_wedge, wedge_dimension, wedge_dimension);
 	if (M->f_semilinear) {
 		ost << "_{" << Elt[n * n] << "}" << endl;
 	}
@@ -365,7 +374,8 @@ void action_on_wedge_product::element_print_latex(int *Elt, std::ostream &ost)
 
 	int f;
 
-	f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
+	f = A->Group_element->count_fixed_points(
+			Elt, 0 /* verbose_level */);
 
 	ost << "f=" << f << endl;
 }

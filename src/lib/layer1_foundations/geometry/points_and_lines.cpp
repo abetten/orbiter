@@ -7,7 +7,6 @@
 
 
 
-
 #include "foundations.h"
 
 
@@ -82,7 +81,8 @@ void points_and_lines::init(
 		cout << "points_and_lines::init before "
 				"Geo.find_lines_which_are_contained" << endl;
 	}
-	Geo.find_lines_which_are_contained(P, Points, The_Lines, 0 /*verbose_level - 1*/);
+	Geo.find_lines_which_are_contained(
+			P, Points, The_Lines, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "points_and_lines::init after "
 				"Geo.find_lines_which_are_contained" << endl;
@@ -116,7 +116,8 @@ void points_and_lines::init(
 			cout << "points_and_lines::init "
 					"before Quadratic_form->init" << endl;
 		}
-		Quadratic_form->init(1 /* epsilon */, 4, P->Subspaces->F, verbose_level);
+		Quadratic_form->init(
+				1 /* epsilon */, 4, P->Subspaces->F, verbose_level);
 		if (f_v) {
 			cout << "points_and_lines::init "
 					"after Quadratic_form->init" << endl;
@@ -129,12 +130,14 @@ void points_and_lines::init(
 
 }
 
-void points_and_lines::unrank_point(int *v, long int rk)
+void points_and_lines::unrank_point(
+		int *v, long int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-long int points_and_lines::rank_point(int *v)
+long int points_and_lines::rank_point(
+		int *v)
 {
 	long int rk;
 
@@ -144,7 +147,8 @@ long int points_and_lines::rank_point(int *v)
 
 
 
-void points_and_lines::print_all_points(std::ostream &ost)
+void points_and_lines::print_all_points(
+		std::ostream &ost)
 {
 	//latex_interface L;
 	//int i;
@@ -179,13 +183,15 @@ void points_and_lines::print_all_points(std::ostream &ost)
 	}
 }
 
-void points_and_lines::print_all_lines(std::ostream &ost)
+void points_and_lines::print_all_lines(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{The " << nb_lines << " Lines}" << endl;
 	print_lines_tex(ost);
 }
 
-void points_and_lines::print_lines_tex(std::ostream &ost)
+void points_and_lines::print_lines_tex(
+		std::ostream &ost)
 {
 	int i;
 	l1_interfaces::latex_interface L;
@@ -197,7 +203,8 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		P->Subspaces->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		P->Subspaces->Grass_lines->unrank_lint(
+				Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 		ost << "\\ell_{" << i << "}";
 
@@ -209,22 +216,26 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
 		// Gr->M, k, n, n, F->log10_of_q + 1);
-		P->Subspaces->Grass_lines->latex_matrix(ost, P->Subspaces->Grass_lines->M);
+		P->Subspaces->Grass_lines->latex_matrix(
+				ost, P->Subspaces->Grass_lines->M);
 		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
 		//ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "_{" << Lines[i] << "}" << endl;
 		ost << "=" << endl;
 		ost << "\\left[" << endl;
-		L.print_integer_matrix_tex(ost, P->Subspaces->Grass_lines->M, 2, 4);
+		L.print_integer_matrix_tex(
+				ost, P->Subspaces->Grass_lines->M, 2, 4);
 		ost << "\\right]_{" << Lines[i] << "}" << endl;
 
 		int v6[6];
 
-		P->Subspaces->Grass_lines->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
+		P->Subspaces->Grass_lines->Pluecker_coordinates(
+				Lines[i], v6, 0 /* verbose_level */);
 
 
 
-		Rk[i] = Quadratic_form->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
+		Rk[i] = Quadratic_form->Orthogonal_indexing->Qplus_rank(
+				v6, 1, 5, 0 /* verbose_level*/);
 
 		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]
@@ -243,6 +254,7 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 }
 
+#if 0
 void points_and_lines::write_points_to_txt_file(
 		std::string &label, int verbose_level)
 {
@@ -266,13 +278,14 @@ void points_and_lines::write_points_to_txt_file(
 		ost << endl;
 		ost << -1 << endl;
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	cout << "Written file " << fname
+			<< " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "points_and_lines::write_points_to_txt_file done" << endl;
 	}
 }
-
+#endif
 
 }}}
 

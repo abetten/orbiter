@@ -468,7 +468,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
-	geometry::geometry_global Gg;
+	algebraic_geometry::algebraic_geometry_global Gg;
 
 
 	if (f_v) {

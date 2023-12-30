@@ -958,7 +958,7 @@ void decomposition::get_row_decomposition_scheme(
 			x = Stack->pointList[f1 + i];
 			Int_vec_zero(data1, RC->nb_col_classes);
 			nb = Inc->get_lines_on_point(
-					neighbors, x, verbose_level - 2);
+					neighbors, x, 0 /*verbose_level - 2*/);
 
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
@@ -1022,7 +1022,7 @@ void decomposition::get_row_decomposition_scheme_if_possible(
 			Int_vec_zero(data1, RC->nb_col_classes);
 
 			nb = Inc->get_lines_on_point(
-					neighbors, x, verbose_level - 2);
+					neighbors, x, 0 /*verbose_level - 2*/);
 
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
@@ -1082,7 +1082,7 @@ void decomposition::get_col_decomposition_scheme(
 			Int_vec_zero(data1, RC->nb_row_classes);
 
 			nb = Inc->get_points_on_line(
-					neighbors, y, verbose_level - 2);
+					neighbors, y, 0 /*verbose_level - 2*/);
 
 			for (u = 0; u < nb; u++) {
 				x = neighbors[u];

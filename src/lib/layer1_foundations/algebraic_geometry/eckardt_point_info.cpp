@@ -13,7 +13,8 @@ namespace layer1_foundations {
 namespace algebraic_geometry {
 
 
-static void intersection_matrix_entry_print(int *p,
+static void intersection_matrix_entry_print(
+		int *p,
 	int m, int n, int i, int j, int val,
 	std::string &output, void *data);
 
@@ -60,7 +61,8 @@ eckardt_point_info::~eckardt_point_info()
 		}
 }
 
-void eckardt_point_info::init(geometry::projective_space *P2,
+void eckardt_point_info::init(
+		geometry::projective_space *P2,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -357,7 +359,8 @@ void eckardt_point_info::init(geometry::projective_space *P2,
 }
 
 
-void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
+void eckardt_point_info::print_bisecants(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a;
@@ -424,7 +427,8 @@ void eckardt_point_info::print_bisecants(std::ostream &ost, int verbose_level)
 	}
 }
 
-void eckardt_point_info::print_intersections(std::ostream &ost, int verbose_level)
+void eckardt_point_info::print_intersections(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	l1_interfaces::latex_interface L;
@@ -457,7 +461,8 @@ void eckardt_point_info::print_intersections(std::ostream &ost, int verbose_leve
 	}
 }
 
-void eckardt_point_info::print_conics(std::ostream &ost, int verbose_level)
+void eckardt_point_info::print_conics(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h;
@@ -536,7 +541,8 @@ void eckardt_point_info::print_Eckardt_points(
 }
 
 
-static void intersection_matrix_entry_print(int *p,
+static void intersection_matrix_entry_print(
+		int *p,
 	int m, int n, int i, int j, int val,
 	std::string &output, void *data)
 {

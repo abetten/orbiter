@@ -2205,7 +2205,8 @@ void known_groups::init_BLT(
 		cout << "known_groups::init_BLT "
 				"before init_orthogonal_group" << endl;
 	}
-	init_orthogonal_group(epsilon, n, F,
+	init_orthogonal_group(
+			epsilon, n, F,
 		true /* f_on_points */,
 		false /* f_on_lines */,
 		false /* f_on_points_and_lines */,

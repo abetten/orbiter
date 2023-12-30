@@ -1139,14 +1139,14 @@ void surface_with_action::sweep_4_15_lines(
 						}
 #endif
 
-						cout << "the number of lines is " << SC->SO->nb_lines << endl;
+						cout << "the number of lines is " << SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
 
 						SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
-						if (SC->SO->nb_lines != 15) {
+						if (SC->SO->Variety_object->Line_sets->Set_size[0] != 15) {
 							cout << "the number of lines is "
-									<< SC->SO->nb_lines << " skipping" << endl;
+									<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
 							continue;
 						}
 						if (SC->SO->SOP->nb_singular_pts) {
@@ -1164,8 +1164,8 @@ void surface_with_action::sweep_4_15_lines(
 						Props.push_back(beta);
 						Props.push_back(gamma);
 						Props.push_back(delta);
-						Props.push_back(SC->SO->nb_lines);
-						Props.push_back(SC->SO->nb_pts);
+						Props.push_back(SC->SO->Variety_object->Line_sets->Set_size[0]);
+						Props.push_back(SC->SO->Variety_object->Point_sets->Set_size[0]);
 						Props.push_back(SC->SO->SOP->nb_singular_pts);
 						Props.push_back(SC->SO->SOP->nb_Eckardt_points);
 						Props.push_back(SC->SO->SOP->nb_Double_points);
@@ -1176,8 +1176,8 @@ void surface_with_action::sweep_4_15_lines(
 						Properties.push_back(Props);
 
 						int i;
-						for (i = 0; i < SC->SO->nb_pts; i++) {
-							Pts.push_back(SC->SO->Pts[i]);
+						for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
+							Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
 						}
 						Points.push_back(Pts);
 
@@ -1218,7 +1218,7 @@ void surface_with_action::sweep_4_15_lines(
 
 						ost_csv << ",";
 
-						ost_csv << SC->SO->nb_lines;
+						ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
 						ost_csv << ",";
 
 						ost_csv << SC->SO->SOP->nb_singular_pts;
@@ -1378,14 +1378,14 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 
 
-			cout << "the number of lines is " << SC->SO->nb_lines << endl;
+			cout << "the number of lines is " << SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
 
 			//SC->SO->SOP->print_everything(cout, verbose_level);
 
 #if 1
-			if (SC->SO->nb_lines != 9) {
+			if (SC->SO->Variety_object->Line_sets->Set_size[0] != 9) {
 				cout << "the number of lines is "
-						<< SC->SO->nb_lines << " skipping" << endl;
+						<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
 				continue;
 			}
 			if (SC->SO->SOP->nb_singular_pts) {
@@ -1404,8 +1404,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 			Props.push_back(b);
 			Props.push_back(c);
 			Props.push_back(d);
-			Props.push_back(SC->SO->nb_lines);
-			Props.push_back(SC->SO->nb_pts);
+			Props.push_back(SC->SO->Variety_object->Line_sets->Set_size[0]);
+			Props.push_back(SC->SO->Variety_object->Point_sets->Set_size[0]);
 			Props.push_back(SC->SO->SOP->nb_singular_pts);
 			Props.push_back(SC->SO->SOP->nb_Eckardt_points);
 			Props.push_back(SC->SO->SOP->nb_Double_points);
@@ -1416,8 +1416,8 @@ void surface_with_action::sweep_F_beta_9_lines(
 			Properties.push_back(Props);
 
 			int i;
-			for (i = 0; i < SC->SO->nb_pts; i++) {
-				Pts.push_back(SC->SO->Pts[i]);
+			for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
+				Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
 			}
 			Points.push_back(Pts);
 
@@ -1456,7 +1456,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 
 			ost_csv << ",";
 
-			ost_csv << SC->SO->nb_lines;
+			ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
 			ost_csv << ",";
 
 			ost_csv << SC->SO->SOP->nb_singular_pts;
@@ -1710,14 +1710,14 @@ void surface_with_action::sweep_6_9_lines(
 
 
 								cout << "the number of lines is "
-										<< SC->SO->nb_lines << endl;
+										<< SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
 
 								SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
-								if (SC->SO->nb_lines != 9) {
+								if (SC->SO->Variety_object->Line_sets->Set_size[0] != 9) {
 									cout << "the number of lines is "
-											<< SC->SO->nb_lines << " skipping" << endl;
+											<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
 									continue;
 								}
 								if (SC->SO->SOP->nb_singular_pts) {
@@ -1737,8 +1737,8 @@ void surface_with_action::sweep_6_9_lines(
 								Props.push_back(d);
 								Props.push_back(f);
 								Props.push_back(g);
-								Props.push_back(SC->SO->nb_lines);
-								Props.push_back(SC->SO->nb_pts);
+								Props.push_back(SC->SO->Variety_object->Line_sets->Set_size[0]);
+								Props.push_back(SC->SO->Variety_object->Point_sets->Set_size[0]);
 								Props.push_back(SC->SO->SOP->nb_singular_pts);
 								Props.push_back(SC->SO->SOP->nb_Eckardt_points);
 								Props.push_back(SC->SO->SOP->nb_Double_points);
@@ -1749,8 +1749,8 @@ void surface_with_action::sweep_6_9_lines(
 								Properties.push_back(Props);
 
 								int i;
-								for (i = 0; i < SC->SO->nb_pts; i++) {
-									Pts.push_back(SC->SO->Pts[i]);
+								for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
+									Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
 								}
 								Points.push_back(Pts);
 
@@ -1791,7 +1791,7 @@ void surface_with_action::sweep_6_9_lines(
 
 								ost_csv << ",";
 
-								ost_csv << SC->SO->nb_lines;
+								ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
 								ost_csv << ",";
 
 								ost_csv << SC->SO->SOP->nb_singular_pts;
@@ -2042,8 +2042,8 @@ void surface_with_action::sweep_4_27(
 					Props.push_back(delta);
 					Props.push_back(epsilon);
 					Props.push_back(gamma);
-					Props.push_back(SC->SO->nb_lines);
-					Props.push_back(SC->SO->nb_pts);
+					Props.push_back(SC->SO->Variety_object->Line_sets->Set_size[0]);
+					Props.push_back(SC->SO->Variety_object->Point_sets->Set_size[0]);
 					Props.push_back(SC->SO->SOP->nb_singular_pts);
 					Props.push_back(SC->SO->SOP->nb_Eckardt_points);
 					Props.push_back(SC->SO->SOP->nb_Double_points);
@@ -2054,8 +2054,8 @@ void surface_with_action::sweep_4_27(
 					Properties.push_back(Props);
 
 					int i;
-					for (i = 0; i < SC->SO->nb_pts; i++) {
-						Pts.push_back(SC->SO->Pts[i]);
+					for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
+						Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
 					}
 					Points.push_back(Pts);
 
@@ -2211,14 +2211,14 @@ void surface_with_action::sweep_4_L9_E4(
 								<< " delta=" << delta
 								<< " lambda=" << lambda
 								<< " : the number of lines is "
-								<< SC->SO->nb_lines << endl;
+								<< SC->SO->Variety_object->Line_sets->Set_size[0] << endl;
 
 						SC->SOG->print_everything(cout, verbose_level);
 
 #if 1
-						if (SC->SO->nb_lines != 9) {
+						if (SC->SO->Variety_object->Line_sets->Set_size[0] != 9) {
 							cout << "the number of lines is "
-									<< SC->SO->nb_lines << " skipping" << endl;
+									<< SC->SO->Variety_object->Line_sets->Set_size[0] << " skipping" << endl;
 							continue;
 						}
 						if (SC->SO->SOP->nb_singular_pts) {
@@ -2236,8 +2236,8 @@ void surface_with_action::sweep_4_L9_E4(
 						Props.push_back(beta);
 						Props.push_back(delta);
 						Props.push_back(lambda);
-						Props.push_back(SC->SO->nb_lines);
-						Props.push_back(SC->SO->nb_pts);
+						Props.push_back(SC->SO->Variety_object->Line_sets->Set_size[0]);
+						Props.push_back(SC->SO->Variety_object->Point_sets->Set_size[0]);
 						Props.push_back(SC->SO->SOP->nb_singular_pts);
 						Props.push_back(SC->SO->SOP->nb_Eckardt_points);
 						Props.push_back(SC->SO->SOP->nb_Double_points);
@@ -2248,8 +2248,8 @@ void surface_with_action::sweep_4_L9_E4(
 						Properties.push_back(Props);
 
 						int i;
-						for (i = 0; i < SC->SO->nb_pts; i++) {
-							Pts.push_back(SC->SO->Pts[i]);
+						for (i = 0; i < SC->SO->Variety_object->Point_sets->Set_size[0]; i++) {
+							Pts.push_back(SC->SO->Variety_object->Point_sets->Sets[0][i]);
 						}
 						Points.push_back(Pts);
 
@@ -2288,7 +2288,7 @@ void surface_with_action::sweep_4_L9_E4(
 
 						ost_csv << ",";
 
-						ost_csv << SC->SO->nb_lines;
+						ost_csv << SC->SO->Variety_object->Line_sets->Set_size[0];
 						ost_csv << ",";
 
 						ost_csv << SC->SO->SOP->nb_singular_pts;

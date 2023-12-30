@@ -295,6 +295,9 @@ void linear_group::linear_group_create(
 	}
 
 
+
+
+
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;
 
@@ -340,6 +343,128 @@ int linear_group::linear_group_apply_modification(
 		cout << "linear_group::linear_group_apply_modification" << endl;
 	}
 	int f_OK = false;
+
+
+	if (description->f_lex_least_base) {
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
+					"computing lex least base" << endl;
+		}
+
+		groups::sims *Sims;
+
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
+					"before initial_strong_gens->create_sims" << endl;
+		}
+		Sims = initial_strong_gens->create_sims(0 /*verbose_level*/);
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
+					"after initial_strong_gens->create_sims" << endl;
+			//cout << "linear_group::linear_group_apply_modification "
+			//		"Sims = " << Sims << endl;
+			//Sims->print(verbose_level);
+
+		}
+
+		long int *old_base;
+		int old_base_len;
+
+		old_base_len = A_linear->base_len();
+		old_base = NEW_lint(old_base_len);
+		Lint_vec_copy(A_linear->get_base(), old_base, old_base_len);
+
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
+					"before A_linear->lex_least_base_in_place" << endl;
+		}
+		A_linear->lex_least_base_in_place(Sims, verbose_level - 2);
+		if (f_v) {
+			cout << "linear_group::linear_group_apply_modification "
+					"computing lex least base done" << endl;
+			cout << "base: ";
+			Lint_vec_print(cout, A_linear->get_base(), A_linear->base_len());
+			cout << endl;
+		}
+
+		long int *new_base;
+		int new_base_len;
+
+		new_base_len = A_linear->base_len();
+		new_base = NEW_lint(new_base_len);
+		Lint_vec_copy(A_linear->get_base(), new_base, new_base_len);
+
+		int f_base_has_changed = false;
+
+		if (new_base_len != old_base_len) {
+			cout << "linear_group::linear_group_apply_modification new_base_len != old_base_len" << endl;
+			cout << "linear_group::linear_group_apply_modification new_base_len = " << new_base_len << endl;
+			cout << "linear_group::linear_group_apply_modification old_base_len = " << old_base_len << endl;
+			f_base_has_changed = true;
+		}
+		if (!f_base_has_changed) {
+			if (Lint_vec_compare(old_base, new_base, old_base_len)) {
+				f_base_has_changed = true;
+			}
+		}
+
+		if (f_base_has_changed) {
+			cout << "linear_group::linear_group_apply_modification "
+					"The base has changed" << endl;
+			cout << "old base: ";
+			Lint_vec_print(cout, old_base, old_base_len);
+			cout << endl;
+			cout << "new base: ";
+			Lint_vec_print(cout, new_base, new_base_len);
+			cout << endl;
+
+			sims *Sims2;
+
+			if (f_v) {
+				cout << "linear_group::linear_group_apply_modification "
+						"before A_linear->create_sims_from_generators_with_target_group_order_factorized" << endl;
+			}
+			Sims2 = A_linear->create_sims_from_generators_with_target_group_order_factorized(
+					initial_strong_gens->gens, initial_strong_gens->tl, old_base_len,
+					0 /* verbose_level */);
+			if (f_v) {
+				cout << "linear_group::linear_group_apply_modification "
+						"after A_linear->create_sims_from_generators_with_target_group_order_factorized" << endl;
+			}
+
+			strong_generators *new_strong_generators;
+
+			new_strong_generators = NEW_OBJECT(strong_generators);
+			if (f_v) {
+				cout << "linear_group::linear_group_apply_modification "
+						"before new_strong_generators->init_from_sims" << endl;
+			}
+			new_strong_generators->init_from_sims(
+					Sims2, verbose_level);
+			if (f_v) {
+				cout << "linear_group::linear_group_apply_modification "
+						"after new_strong_generators->init_from_sims" << endl;
+			}
+
+			FREE_OBJECT(initial_strong_gens);
+			FREE_OBJECT(Sims2);
+			initial_strong_gens = new_strong_generators;
+
+		}
+		else {
+			cout << "linear_group::linear_group_apply_modification "
+					"The base did not change." << endl;
+		}
+
+		if (f_v) {
+			A_linear->print_base();
+		}
+
+		FREE_lint(old_base);
+		FREE_lint(new_base);
+
+		FREE_OBJECT(Sims);
+	}
 
 	if (description->f_PGL2OnConic) {
 		if (f_v) {

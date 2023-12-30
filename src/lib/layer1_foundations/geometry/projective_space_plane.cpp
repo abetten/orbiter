@@ -1240,7 +1240,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 	int nb, j, nb_E;
 	int *Nb_E;
 	long int Arc6[6];
-	geometry_global Geo;
+	algebraic_geometry::algebraic_geometry_global Geo;
 
 	nb = Rk.size();
 	Nb_E = NEW_int(nb);

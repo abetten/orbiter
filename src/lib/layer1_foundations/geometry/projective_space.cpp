@@ -164,7 +164,8 @@ void projective_space::projective_space_init(
 
 
 
-long int projective_space::rank_point(int *v)
+long int projective_space::rank_point(
+		int *v)
 {
 	long int b;
 
@@ -172,17 +173,20 @@ long int projective_space::rank_point(int *v)
 	return b;
 }
 
-void projective_space::unrank_point(int *v, long int rk)
+void projective_space::unrank_point(
+		int *v, long int rk)
 {	
 	Subspaces->unrank_point(v, rk);
 }
 
-void projective_space::unrank_points(int *v, long int *Rk, int sz)
+void projective_space::unrank_points(
+		int *v, long int *Rk, int sz)
 {
 	Subspaces->unrank_points(v, Rk, sz);
 }
 
-long int projective_space::rank_line(int *basis)
+long int projective_space::rank_line(
+		int *basis)
 {
 	long int b;
 	
@@ -190,17 +194,20 @@ long int projective_space::rank_line(int *basis)
 	return b;
 }
 
-void projective_space::unrank_line(int *basis, long int rk)
+void projective_space::unrank_line(
+		int *basis, long int rk)
 {	
 	Subspaces->unrank_line(basis, rk);
 }
 
-void projective_space::unrank_lines(int *v, long int *Rk, int nb)
+void projective_space::unrank_lines(
+		int *v, long int *Rk, int nb)
 {
 	Subspaces->unrank_lines(v, Rk, nb);
 }
 
-long int projective_space::rank_plane(int *basis)
+long int projective_space::rank_plane(
+		int *basis)
 {
 	long int b;
 
@@ -208,7 +215,8 @@ long int projective_space::rank_plane(int *basis)
 	return b;
 }
 
-void projective_space::unrank_plane(int *basis, long int rk)
+void projective_space::unrank_plane(
+		int *basis, long int rk)
 {	
 	Subspaces->unrank_plane(basis, rk);
 }

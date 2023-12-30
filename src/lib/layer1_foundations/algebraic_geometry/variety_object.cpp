@@ -203,6 +203,32 @@ void variety_object::parse_equation(
 	}
 }
 
+void variety_object::init_equation_only(
+		geometry::projective_space *Projective_space,
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		int *equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::init_equation_only" << endl;
+	}
+
+	variety_object::Projective_space = Projective_space;
+	variety_object::Ring = Ring;
+
+
+	eqn = NEW_int(Ring->get_nb_monomials());
+	Int_vec_copy(
+			equation, eqn, Ring->get_nb_monomials());
+
+
+	if (f_v) {
+		cout << "variety_object::init_equation_only done" << endl;
+	}
+}
+
 void variety_object::init_equation(
 		geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
@@ -215,6 +241,9 @@ void variety_object::init_equation(
 		cout << "variety_object::init_equation" << endl;
 	}
 
+	init_equation_only(Projective_space, Ring, equation, verbose_level);
+
+#if 0
 	variety_object::Projective_space = Projective_space;
 	variety_object::Ring = Ring;
 
@@ -222,6 +251,7 @@ void variety_object::init_equation(
 	eqn = NEW_int(Ring->get_nb_monomials());
 	Int_vec_copy(
 			equation, eqn, Ring->get_nb_monomials());
+#endif
 
 	if (f_v) {
 		cout << "variety_object::init_equation "
@@ -325,6 +355,64 @@ void variety_object::enumerate_points(
 	}
 }
 
+void variety_object::enumerate_lines(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::enumerate_lines" << endl;
+	}
+
+	geometry::geometry_global Geo;
+	vector<long int> Points;
+	vector<long int> The_Lines;
+	int i;
+
+	for (i = 0; i < Point_sets->Set_size[0]; i++) {
+		Points.push_back(Point_sets->Sets[0][i]);
+	}
+
+	if (f_v) {
+		cout << "surface_object::enumerate_lines before "
+				"Geo.find_lines_which_are_contained" << endl;
+	}
+	Geo.find_lines_which_are_contained(
+			Projective_space,
+			Points, The_Lines, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "surface_object::enumerate_lines after "
+				"Geo.find_lines_which_are_contained" << endl;
+	}
+
+	long int *Lines;
+	int nb_lines;
+
+	nb_lines = The_Lines.size();
+	Lines = NEW_lint(nb_lines);
+	for (i = 0; i < nb_lines; i++) {
+		Lines[i] = The_Lines[i];
+	}
+
+	if (f_v) {
+		cout << "variety_object::enumerate_lines The variety "
+				"has " << nb_lines << " lines" << endl;
+	}
+
+	Line_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Line_sets->init_single(
+			Projective_space->Subspaces->N_lines /* underlying_set_size */,
+			Lines, nb_lines, 0 /* verbose_level */);
+
+	FREE_lint(Lines);
+
+
+	if (f_v) {
+		cout << "variety_object::enumerate_lines done" << endl;
+	}
+}
+
 void variety_object::print(
 		std::ostream &ost)
 {
@@ -372,7 +460,8 @@ void variety_object::stringify(
 
 }
 
-void variety_object::report_equations(std::ostream &ost)
+void variety_object::report_equations(
+		std::ostream &ost)
 {
 	report_equation(ost);
 	if (f_second_equation) {
@@ -380,7 +469,8 @@ void variety_object::report_equations(std::ostream &ost)
 	}
 }
 
-void variety_object::report_equation(std::ostream &ost)
+void variety_object::report_equation(
+		std::ostream &ost)
 {
 	ost << "Equation ";
 	ost << "\\verb'";
@@ -395,7 +485,8 @@ void variety_object::report_equation(std::ostream &ost)
 
 }
 
-void variety_object::report_equation2(std::ostream &ost)
+void variety_object::report_equation2(
+		std::ostream &ost)
 {
 	ost << "Equation2 ";
 	ost << "\\verb'";
@@ -410,6 +501,76 @@ void variety_object::report_equation2(std::ostream &ost)
 
 }
 
+int variety_object::find_point(
+		long int P, int &idx)
+{
+	data_structures::sorting Sorting;
+
+	if (Sorting.lint_vec_search(Point_sets->Sets[0], Point_sets->Set_size[0], P,
+			idx, 0 /* verbose_level */)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+std::string variety_object::stringify_eqn()
+{
+	string s;
+
+	s = Int_vec_stringify(eqn, Ring->get_nb_monomials());
+	return s;
+}
+
+
+
+std::string variety_object::stringify_Pts()
+{
+	string s;
+
+	s = Lint_vec_stringify(
+			Point_sets->Sets[0],
+			Point_sets->Set_size[0]);
+	return s;
+}
+
+std::string variety_object::stringify_Lines()
+{
+	string s;
+
+	s = Lint_vec_stringify(
+			Line_sets->Sets[0],
+			Line_sets->Set_size[0]);
+	return s;
+}
+
+void variety_object::identify_lines(
+		long int *lines, int nb_lines,
+	int *line_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, idx;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "variety_object::identify_lines" << endl;
+	}
+	for (i = 0; i < nb_lines; i++) {
+		if (!Sorting.lint_vec_search_linear(
+				Line_sets->Sets[0], Line_sets->Set_size[0], lines[i], idx)) {
+			cout << "variety_object::identify_lines could "
+					"not find lines[" << i << "]=" << lines[i]
+					<< " in Lines[]" << endl;
+			exit(1);
+		}
+		line_idx[i] = idx;
+	}
+	if (f_v) {
+		cout << "variety_object::identify_lines done" << endl;
+	}
+}
 
 
 

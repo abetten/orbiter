@@ -3030,6 +3030,15 @@ void any_group::element_processing(
 	}
 }
 
+void any_group::print()
+{
+	cout << "any_group: " << label << " : " << label_tex << endl;
+	cout << "A_base:" << endl;
+	A_base->print_info();
+	cout << "A:" << endl;
+	A->print_info();
+}
+
 
 
 

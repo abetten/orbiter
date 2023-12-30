@@ -249,7 +249,7 @@ projective_space_activity_description::projective_space_activity_description()
 	f_classify_arcs = false;
 	Arc_generator_description = NULL;
 
-	f_classify_cubic_curves = false;
+	//f_classify_cubic_curves = false;
 
 
 
@@ -990,6 +990,7 @@ int projective_space_activity_description::read_arguments(
 				}
 			}
 		}
+#if 0
 		// cubic curves
 		else if (ST.stringcmp(argv[i], "-classify_cubic_curves") == 0) {
 			f_classify_cubic_curves = true;
@@ -1011,6 +1012,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "-classify_cubic_curves " << endl;
 			}
 		}
+#endif
 
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
@@ -1376,12 +1378,13 @@ void projective_space_activity_description::print()
 		cout << "-classify_arcs " << endl;
 		Arc_generator_description->print();
 	}
+#if 0
 	// cubic curves
 	if (f_classify_cubic_curves) {
 		cout << "-classify_cubic_curves" << endl;
 		Arc_generator_description->print();
 	}
-
+#endif
 	// semifields
 	if (f_classify_semifields) {
 		cout << "-classify_semifields " << endl;

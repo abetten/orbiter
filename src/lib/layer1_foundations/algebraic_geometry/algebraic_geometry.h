@@ -98,6 +98,46 @@ public:
 		int a,
 		int *&gens, int &nb_gens, int &data_size,
 		int &group_order, int verbose_level);
+	int nonconical_six_arc_get_nb_Eckardt_points(
+			geometry::projective_space *P2,
+			long int *Arc6, int verbose_level);
+	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
+			geometry::projective_space *P2,
+		long int *arc6,
+		int verbose_level);
+	int test_nb_Eckardt_points(
+			geometry::projective_space *P2,
+			long int *S, int len, int pt, int nb_E, int verbose_level);
+	void rearrange_arc_for_lifting(
+			long int *Arc6,
+			long int P1, long int P2, int partition_rk, long int *arc,
+			int verbose_level);
+	void find_two_lines_for_arc_lifting(
+			geometry::projective_space *P,
+			long int P1, long int P2, long int &line1, long int &line2,
+			int verbose_level);
+	void hyperplane_lifting_with_two_lines_fixed(
+			geometry::projective_space *P,
+			int *A3, int f_semilinear, int frobenius,
+			long int line1, long int line2,
+			int *A4,
+			int verbose_level);
+	void hyperplane_lifting_with_two_lines_moved(
+			geometry::projective_space *P,
+			long int line1_from, long int line1_to,
+			long int line2_from, long int line2_to,
+			int *A4,
+			int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer(
+			geometry::projective_space *P3,
+			long int line1_from, long int line2_from,
+			long int line1_to, long int line2_to,
+			int verbose_level);
+	void do_move_two_lines_in_hyperplane_stabilizer_text(
+			geometry::projective_space *P3,
+			std::string &line1_from_text, std::string &line2_from_text,
+			std::string &line1_to_text, std::string &line2_to_text,
+			int verbose_level);
 
 
 };
@@ -292,13 +332,16 @@ public:
 			geometry::projective_space *P3,
 			ring_theory::homogeneous_polynomial_domain *Poly4_3,
 			int verbose_level);
-	void enumerate_points(int *coeff,
+	void enumerate_points(
+			int *coeff,
 			std::vector<long int> &Pts,
 			int verbose_level);
 	void print_equation_with_line_breaks_tex(
 			std::ostream &ost, int *coeffs);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
 
 };
 
@@ -330,15 +373,21 @@ public:
 			expression_parser::syntax_tree_node **Subtrees,
 			int *Coefficient_vector,
 			int verbose_level);
-	void enumerate_points_and_lines(int verbose_level);
-	void create_latex_report(std::string &label,
+	void enumerate_points_and_lines(
+			int verbose_level);
+	void create_latex_report(
+			std::string &label,
 			std::string &label_tex, int verbose_level);
 	void report_properties(
 			std::ostream &ost, int verbose_level);
-	void print_equation(std::ostream &ost);
-	void print_points(std::ostream &ost);
-	void print_all_points_on_surface(std::ostream &ost);
-	void print_lines(std::ostream &ost);
+	void print_equation(
+			std::ostream &ost);
+	void print_points(
+			std::ostream &ost);
+	void print_all_points_on_surface(
+			std::ostream &ost);
+	void print_lines(
+			std::ostream &ost);
 
 };
 
@@ -372,11 +421,15 @@ public:
 
 	eckardt_point_info();
 	~eckardt_point_info();
-	void init(geometry::projective_space *P2,
+	void init(
+			geometry::projective_space *P2,
 			long int *arc6, int verbose_level);
-	void print_bisecants(std::ostream &ost, int verbose_level);
-	void print_intersections(std::ostream &ost, int verbose_level);
-	void print_conics(std::ostream &ost, int verbose_level);
+	void print_bisecants(
+			std::ostream &ost, int verbose_level);
+	void print_intersections(
+			std::ostream &ost, int verbose_level);
+	void print_conics(
+			std::ostream &ost, int verbose_level);
 	void print_Eckardt_points(
 			std::ostream &ost, int verbose_level);
 
@@ -1425,7 +1478,8 @@ public:
 			std::string &select_double_six_string,
 			long int *Lines27,
 			int verbose_level);
-	std::string stringify_eqn_maple(int *eqn);
+	std::string stringify_eqn_maple(
+			int *eqn);
 
 
 	// surface_domain2.cpp:
@@ -1881,6 +1935,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+#if 0
 	long int *Pts; // in increasing order
 	int nb_pts;
 
@@ -1889,6 +1944,9 @@ public:
 	int nb_lines;
 
 	int eqn[20];
+#else
+	variety_object *Variety_object;
+#endif
 
 	surface_object_properties *SOP;
 
@@ -2150,6 +2208,11 @@ public:
 			std::string &equation_txt,
 			int *&equation,
 			int verbose_level);
+	void init_equation_only(
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			int *equation,
+			int verbose_level);
 	void init_equation(
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
@@ -2164,14 +2227,27 @@ public:
 			int verbose_level);
 	void enumerate_points(
 			int verbose_level);
+	void enumerate_lines(
+			int verbose_level);
 	void print(
 			std::ostream &ost);
 	void stringify(
 			std::string &s_Eqn, std::string &s_Eqn2,
 			std::string &s_Pts, std::string &s_Bitangents);
-	void report_equations(std::ostream &ost);
-	void report_equation(std::ostream &ost);
-	void report_equation2(std::ostream &ost);
+	void report_equations(
+			std::ostream &ost);
+	void report_equation(
+			std::ostream &ost);
+	void report_equation2(
+			std::ostream &ost);
+	int find_point(
+			long int P, int &idx);
+	std::string stringify_eqn();
+	std::string stringify_Pts();
+	std::string stringify_Lines();
+	void identify_lines(
+			long int *lines, int nb_lines,
+		int *line_idx, int verbose_level);
 
 
 };
@@ -2217,7 +2293,8 @@ public:
 
 	web_of_cubic_curves();
 	~web_of_cubic_curves();
-	void init(surface_domain *Surf,
+	void init(
+			surface_domain *Surf,
 			long int *arc6, int verbose_level);
 	void compute_web_of_cubic_curves(
 			long int *arc6, int verbose_level);
@@ -2226,8 +2303,10 @@ public:
 	void create_web_and_equations_based_on_four_tritangent_planes(
 			long int *arc6, int *base_curves4,
 			int verbose_level);
-	void find_Eckardt_points(int verbose_level);
-	void find_trihedral_pairs(int verbose_level);
+	void find_Eckardt_points(
+			int verbose_level);
+	void find_trihedral_pairs(
+			int verbose_level);
 	void extract_six_curves_from_web(
 		int verbose_level);
 	void create_surface_equation_from_trihedral_pair(

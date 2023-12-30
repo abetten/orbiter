@@ -35,7 +35,8 @@ del_pezzo_surface_of_degree_two_object::~del_pezzo_surface_of_degree_two_object(
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::init(del_pezzo_surface_of_degree_two_domain *Dom,
+void del_pezzo_surface_of_degree_two_object::init(
+		del_pezzo_surface_of_degree_two_domain *Dom,
 		expression_parser::formula *RHS,
 		expression_parser::syntax_tree_node **Subtrees,
 		int *Coefficient_vector,
@@ -56,7 +57,8 @@ void del_pezzo_surface_of_degree_two_object::init(del_pezzo_surface_of_degree_tw
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verbose_level)
+void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -102,7 +104,8 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::create_latex_report(std::string &label,
+void del_pezzo_surface_of_degree_two_object::create_latex_report(
+		std::string &label,
 		std::string &label_tex, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -240,7 +243,8 @@ void del_pezzo_surface_of_degree_two_object::report_properties(
 	}
 }
 
-void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
+void del_pezzo_surface_of_degree_two_object::print_equation(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{The equation}" << endl;
 	ost << "The equation of the surface ";
@@ -263,7 +267,8 @@ void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
 
 }
 
-void del_pezzo_surface_of_degree_two_object::print_points(std::ostream &ost)
+void del_pezzo_surface_of_degree_two_object::print_points(
+		std::ostream &ost)
 {
 	ost << "\\subsection*{All Points on surface}" << endl;
 

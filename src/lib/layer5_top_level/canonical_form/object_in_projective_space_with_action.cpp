@@ -286,22 +286,14 @@ void object_in_projective_space_with_action::report(
 					"h=" << h << " after refine" << endl;
 		}
 		if (EVEN(h)) {
-			//int f_list_incidences = false;
 			Decomposition->get_and_print_column_tactical_decomposition_scheme_tex(
 				fp, true /* f_enter_math */,
 				f_print_subscripts);
-			//get_and_print_col_decomposition_scheme(
-			//PStack, f_list_incidences, false);
-			//PStack.print_classes_points_and_lines(cout);
 		}
 		else {
-			//int f_list_incidences = false;
 			Decomposition->get_and_print_row_tactical_decomposition_scheme_tex(
 				fp, true /* f_enter_math */,
 				f_print_subscripts);
-			//get_and_print_row_decomposition_scheme(
-			//PStack, f_list_incidences, false);
-			//PStack.print_classes_points_and_lines(cout);
 		}
 
 		if (!f_refine_prev && !f_refine) {

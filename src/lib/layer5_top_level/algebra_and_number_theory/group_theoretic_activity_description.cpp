@@ -162,6 +162,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string evaluate_word_word;
 	//std::string evaluate_word_gens;
 
+	f_multiply_all_elements_in_lex_order = false;
 
 	// orbit stuff:
 
@@ -596,6 +597,15 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-multiply_all_elements_in_lex_order") == 0) {
+			f_multiply_all_elements_in_lex_order = true;
+			if (f_v) {
+				cout << "-multiply_all_elements_in_lex_order " << endl;
+			}
+		}
+
+
+
 
 
 		// orbit stuff:
@@ -898,6 +908,9 @@ void group_theoretic_activity_description::print()
 				<< " " << evaluate_word_word
 				<< " " << evaluate_word_gens
 				<< endl;
+	}
+	if (f_multiply_all_elements_in_lex_order) {
+		cout << "-multiply_all_elements_in_lex_order " << endl;
 	}
 
 

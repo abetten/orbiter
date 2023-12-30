@@ -248,8 +248,8 @@ void table_of_surfaces::create_table(
 			Table[h * nb_cols + 2] = SC[h].Sg->group_order_stringify();
 		}
 
-		Table[h * nb_cols + 3] = std::to_string(SC[h].SO->nb_pts);
-		Table[h * nb_cols + 4] = std::to_string(SC[h].SO->nb_lines);
+		Table[h * nb_cols + 3] = std::to_string(SC[h].SO->Variety_object->Point_sets->Set_size[0]);
+		Table[h * nb_cols + 4] = std::to_string(SC[h].SO->Variety_object->Line_sets->Set_size[0]);
 		Table[h * nb_cols + 5] = std::to_string(SC[h].SO->SOP->nb_Eckardt_points);
 		Table[h * nb_cols + 6] = std::to_string(SC[h].SO->SOP->nb_Double_points);
 		Table[h * nb_cols + 7] = std::to_string(SC[h].SO->SOP->nb_Single_points);
@@ -268,7 +268,7 @@ void table_of_surfaces::create_table(
 
 		Table[h * nb_cols + 19] = "\"" + SC[h].SO->stringify_eqn() + "\"";
 
-		Table[h * nb_cols + 20] = "\"" + SC[h].Surf->stringify_eqn_maple(SC[h].SO->eqn) + "\"";
+		Table[h * nb_cols + 20] = "\"" + SC[h].Surf->stringify_eqn_maple(SC[h].SO->Variety_object->eqn) + "\"";
 
 		Table[h * nb_cols + 21] = "\"" + SC[h].SO->stringify_Lines() + "\"";
 

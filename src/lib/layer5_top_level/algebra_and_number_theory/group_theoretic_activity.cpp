@@ -944,10 +944,43 @@ void group_theoretic_activity::perform_activity(
 		FREE_int(Elt);
 	}
 
+	else if (Descr->f_multiply_all_elements_in_lex_order) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_multiply_all_elements_in_lex_order" << endl;
+		}
+
+		actions::action_global AGlobal;
+		int *Elt;
+
+		Elt = NEW_int(AG->A->elt_size_in_int);
 
 
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity AG->Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		AGlobal.multiply_all_elements_in_lex_order(
+				AG->Subgroup_sims,
+				Elt,
+				verbose_level);
+
+		if (f_v) {
+			cout << "The lex product evaluates to" << endl;
+			AG->A->Group_element->element_print_quick(Elt, cout);
+			cout << endl;
+			cout << "in latex:" << endl;
+			AG->A->Group_element->element_print_latex(Elt, cout);
+			cout << endl;
+		}
 
 
+		FREE_int(Elt);
+
+
+	}
 
 
 	// orbit stuff:

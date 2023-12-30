@@ -4517,7 +4517,68 @@ groups::strong_generators *action_global::scan_generators(
 	return Strong_gens;
 }
 
+void action_global::multiply_all_elements_in_lex_order(
+		groups::sims *Sims, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "action_global::multiply_all_elements_in_lex_order" << endl;
+	}
+
+	long int go, go100;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	action *A;
+
+	A = Sims->A;
+
+	go = Sims->group_order_lint();
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+
+	int rk;
+
+	A->Group_element->element_one(Elt1, 0 /*verbose_level*/);
+
+	cout << "action_global::multiply_all_elements_in_lex_order go=" << go << endl;
+
+	go100 = go / 100;
+	if (go100 == 0) {
+		go100++;
+	}
+	for (rk = 0; rk < go; rk++) {
+
+		if ((rk % go100) == 0) {
+			cout << "action_global::multiply_all_elements_in_lex_order " << rk / go100 << "%" << endl;
+		}
+		Sims->element_unrank_lint(
+				rk, Elt2, 0 /*verbose_level*/);
+
+		A->Group_element->element_mult(Elt1, Elt2, Elt3, 0 /*verbose_level*/);
+
+		A->Group_element->element_move(Elt3, Elt1, 0 /*verbose_level*/);
+
+	}
+
+	A->Group_element->element_move(Elt1, Elt, 0 /*verbose_level*/);
+
+#if 0
+	void sims::element_unrank_lint(
+			long int rk, int *Elt)
+	long int sims::element_rank_lint(
+			int *Elt)
+#endif
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	if (f_v) {
+		cout << "action_global::multiply_all_elements_in_lex_order done" << endl;
+	}
+}
 
 
 

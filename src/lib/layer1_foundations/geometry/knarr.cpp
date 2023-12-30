@@ -122,11 +122,6 @@ void knarr::init(
 
 	if (f_v) {
 		cout << "knarr::init q=" << q << " BLT_no=" << BLT_no << endl;
-#if 0
-		if (f_poly) {
-			cout << "poly = " << poly << endl;
-		}
-#endif
 	}
 
 	W = NEW_OBJECT(W3q);
@@ -175,7 +170,8 @@ void knarr::init(
 			cout << setw(4) << i << " : " << setw(4) << a << " : "
 					<< setw(5) << W->Lines[a] << ":" << endl;
 			W->P3->unrank_line(Basis, W->Lines[a]);
-			Int_vec_print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
+			Int_vec_print_integer_matrix_width(
+					cout, Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 		}
 	}
@@ -352,10 +348,12 @@ void knarr::points_and_lines(
 		if (f_v4) {
 			cout << "Subspace i=" << i << " / "
 					<< six_choose_three_q_int << endl;
-			Int_vec_print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
+			Int_vec_print_integer_matrix_width(
+					cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 		}
-		if (!F->Linear_algebra->is_totally_isotropic_wrt_symplectic_form(3, 6, Basis)) {
+		if (!F->Linear_algebra->is_totally_isotropic_wrt_symplectic_form(
+				3, 6, Basis)) {
 			if (f_v4) {
 				cout << "is not totally isotropic" << endl;
 			}
@@ -364,7 +362,8 @@ void knarr::points_and_lines(
 
 		// check if P is not contained:
 		P5->unrank_point(Basis2, 0);
-		c = F->Linear_algebra->is_subspace(6, 1, Basis2, 3, Basis, 0 /*verbose_level*/);
+		c = F->Linear_algebra->is_subspace(
+				6, 1, Basis2, 3, Basis, 0 /*verbose_level*/);
 		if (c) {
 			if (f_v4) {
 				cout << "contains the point P" << endl;
@@ -396,7 +395,8 @@ void knarr::points_and_lines(
 		//cout << endl;
 
 
-		F->Linear_algebra->intersect_subspaces(6, 5, Basis_Pperp, 3, Basis,
+		F->Linear_algebra->intersect_subspaces(
+				6, 5, Basis_Pperp, 3, Basis,
 			dim_intersection, Basis_intersection,
 			0 /* verbose_level */);
 

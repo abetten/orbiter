@@ -2189,9 +2189,11 @@ int sims::least_moved_point_at_level(
 	if (f_v) {
 		cout << "sims::least_moved_point_at_level "
 				"lvl=" << lvl << endl;
+		//cout << "sims::least_moved_point_at_level "
+		//		"this=" << this << endl;
 	}
 	nbg = nb_gen[lvl];
-	if (f_v) {
+	if (false) {
 		cout << "sims::least_moved_point_at_level "
 				"nbg=" << nbg << endl;
 	}

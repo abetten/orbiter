@@ -193,13 +193,15 @@ void spread_domain::init_spread_domain(
 }
 
 
-void spread_domain::unrank_point(int *v, long int a)
+void spread_domain::unrank_point(
+		int *v, long int a)
 {
 	F->Projective_space_basic->PG_element_unrank_modified_lint(
 			v, 1, n, a);
 }
 
-long int spread_domain::rank_point(int *v)
+long int spread_domain::rank_point(
+		int *v)
 {
 	long int a;
 
@@ -208,12 +210,14 @@ long int spread_domain::rank_point(int *v)
 	return a;
 }
 
-void spread_domain::unrank_subspace(int *M, long int a)
+void spread_domain::unrank_subspace(
+		int *M, long int a)
 {
 	Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
 }
 
-long int spread_domain::rank_subspace(int *M)
+long int spread_domain::rank_subspace(
+		int *M)
 {
 	long int a;
 
@@ -237,7 +241,8 @@ void spread_domain::print_points()
 	FREE_int(v);
 }
 
-void spread_domain::print_points(long int *pts, int len)
+void spread_domain::print_points(
+		long int *pts, int len)
 {
 	int *v;
 	int h;

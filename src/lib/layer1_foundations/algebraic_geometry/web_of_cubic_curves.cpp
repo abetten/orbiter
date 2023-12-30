@@ -84,7 +84,8 @@ web_of_cubic_curves::~web_of_cubic_curves()
 	}
 }
 
-void web_of_cubic_curves::init(surface_domain *Surf,
+void web_of_cubic_curves::init(
+		surface_domain *Surf,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -548,7 +549,8 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 
 
 
-void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
+void web_of_cubic_curves::find_Eckardt_points(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -556,7 +558,7 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 		cout << "web_of_cubic_curves::find_Eckardt_points" << endl;
 	}
 	int s;
-	geometry::geometry_global Gg;
+	algebraic_geometry::algebraic_geometry_global Gg;
 
 	if (f_v) {
 		cout << "web_of_cubic_curves::find_Eckardt_points "
@@ -594,7 +596,8 @@ void web_of_cubic_curves::find_Eckardt_points(int verbose_level)
 	}
 }
 
-void web_of_cubic_curves::find_trihedral_pairs(int verbose_level)
+void web_of_cubic_curves::find_trihedral_pairs(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

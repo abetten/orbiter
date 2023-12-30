@@ -163,7 +163,7 @@ void smooth_surface_object_properties::compute_tritangent_planes_by_rank(
 	}
 
 
-	if (SO->nb_lines != 27) {
+	if (SO->Variety_object->Line_sets->Set_size[0] != 27) {
 		cout << "smooth_surface_object_properties::compute_tritangent_planes_by_rank "
 				"SO->nb_lines != 27 we should not be here" << endl;
 		//nb_tritangent_planes = 0;
@@ -190,7 +190,7 @@ void smooth_surface_object_properties::compute_tritangent_planes_by_rank(
 
 		for (i = 0; i < 3; i++) {
 
-			three_lines[i] = SO->Lines[three_lines_idx[i]];
+			three_lines[i] = SO->Variety_object->Line_sets->Sets[0][three_lines_idx[i]];
 
 			SO->Surf->Gr->unrank_lint_here(Basis + i * 8,
 					three_lines[i], 0 /* verbose_level */);
@@ -235,7 +235,7 @@ void smooth_surface_object_properties::compute_Lines_in_tritangent_planes(
 			tritangent_plane_idx++) {
 		for (j = 0; j < 3; j++) {
 			Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j] =
-				SO->Lines[SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j]];
+					SO->Variety_object->Line_sets->Sets[0][SO->Surf->Schlaefli->Schlaefli_tritangent_planes->Lines_in_tritangent_planes[tritangent_plane_idx * 3 + j]];
 		}
 	}
 
@@ -282,7 +282,7 @@ void smooth_surface_object_properties::compute_planes_and_dual_point_ranks(
 
 
 	SO->Surf->Trihedral_pairs_to_planes(
-			SO->Lines, All_Planes, 0 /*verbose_level*/);
+			SO->Variety_object->Line_sets->Sets[0], All_Planes, 0 /*verbose_level*/);
 
 
 	for (i = 0; i < SO->Surf->Schlaefli->Schlaefli_trihedral_pairs->nb_trihedral_pairs; i++) {
@@ -523,7 +523,7 @@ void smooth_surface_object_properties::latex_trihedral_pair(
 			a = SO->Surf->Schlaefli->Schlaefli_trihedral_pairs->Trihedral_pairs[t_idx * 9 + i * 3 + j];
 			ost << " & {" << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << "=\\atop";
 			ost << "\\left[" << endl;
-			SO->Surf->Gr->print_single_generator_matrix_tex(ost, SO->Lines[a]);
+			SO->Surf->Gr->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][a]);
 			ost << "\\right]}" << endl;
 		}
 		e = SO->Surf->Schlaefli->Schlaefli_trihedral_pairs->Axes[t_idx * 6 + i];
@@ -620,8 +620,8 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(
 	int eqn_G[20];
 	int eqn_G2[20];
 
-	for (h = 0; h < SO->nb_pts; h++) {
-		pt = SO->Pts[h];
+	for (h = 0; h < SO->Variety_object->Point_sets->Set_size[0]; h++) {
+		pt = SO->Variety_object->Point_sets->Sets[0][h];
 		SO->F->Projective_space_basic->PG_element_unrank_modified(
 				pt_on_surface, 1, 4, pt);
 		for (i = 0; i < 3; i++) {
@@ -641,7 +641,7 @@ void smooth_surface_object_properties::make_equation_in_trihedral_form(
 			break;
 		}
 	}
-	if (h == SO->nb_pts) {
+	if (h == SO->Variety_object->Point_sets->Set_size[0]) {
 		cout << "smooth_surface_object_properties::make_equation_in_trihedral_form could "
 				"not determine lambda" << endl;
 		exit(1);

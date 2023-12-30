@@ -388,6 +388,7 @@ public:
 	
 	// action_induce.cpp
 	int least_moved_point_at_level(
+			groups::sims *old_Sims,
 			int level,
 		int verbose_level);
 	void lex_least_base_in_place(
@@ -837,6 +838,8 @@ public:
 			std::string &gens_text,
 			std::string &group_order,
 			int verbose_level);
+	void multiply_all_elements_in_lex_order(
+			groups::sims *Sims, int *Elt, int verbose_level);
 
 };
 

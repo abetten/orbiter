@@ -251,7 +251,7 @@ public:
 	apps_geometry::arc_generator_description
 		*Arc_generator_description;
 
-	int f_classify_cubic_curves;
+	//int f_classify_cubic_curves;
 
 
 
@@ -334,11 +334,13 @@ public:
 			apps_geometry::arc_generator_description
 				*Arc_generator_description,
 			int verbose_level);
+#if 0
 	void do_classify_cubic_curves(
 			projective_space_with_action *PA,
 			apps_geometry::arc_generator_description
 				*Arc_generator_description,
 			int verbose_level);
+#endif
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,

@@ -715,9 +715,9 @@ void combinatorial_object_activity::perform_activity_combo(
 		CG = Get_object_of_type_graph(Descr->compute_frequency_graph);
 
 		int input_idx;
-		int N;
+		//int N;
 		int *code = NULL;
-		int sz = 0;
+		//int sz = 0;
 
 
 		code = NEW_int(CG->nb_points);

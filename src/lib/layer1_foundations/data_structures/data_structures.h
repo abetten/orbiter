@@ -775,6 +775,7 @@ public:
 	void print_to_str(std::string &s, long int *data, int len);
 	void print_to_str_bare(std::string &s, long int *data, int len);
 	void create_string_with_quotes(std::string &str, long int *v, int len);
+	int compare(long int *p, long int *q, int len);
 	std::string stringify(long int *v, int len);
 
 
@@ -1620,8 +1621,6 @@ public:
 	int integer_vec_std_compare(
 			const std::vector<unsigned int> &p,
 			const std::vector<unsigned int> &q);
-	int lint_vec_compare(
-			long int *p, long int *q, int len);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
@@ -1656,6 +1655,8 @@ public:
 			long int *v, long int *w, int len);
 	int int_vec_compare(
 			int *p, int *q, int len);
+	int lint_vec_compare(
+			long int *p, long int *q, int len);
 	int uint_vec_compare(
 			unsigned int *p, unsigned int *q, int len);
 	int int_vec_compare_stride(

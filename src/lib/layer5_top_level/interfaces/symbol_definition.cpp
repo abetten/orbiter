@@ -163,6 +163,9 @@ symbol_definition::symbol_definition()
 	f_poset_classification_control = false;
 	Poset_classification_control = NULL;
 
+	f_arc_generator_control = false;
+	Arc_generator_control = NULL;
+
 	f_poset_classification_activity = false;
 	Poset_classification_activity = NULL;
 
@@ -1094,6 +1097,33 @@ void symbol_definition::read_definition(
 			Poset_classification_control->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-arc_generator_control") == 0) {
+		f_arc_generator_control = true;
+
+		Arc_generator_control =
+				NEW_OBJECT(apps_geometry::arc_generator_description);
+		if (f_v) {
+			cout << "reading -arc_generator_control" << endl;
+		}
+		i += Arc_generator_control->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-arc_generator_control" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-arc_generator_control " << endl;
+			Arc_generator_control->print();
+		}
+	}
+
+
+
 	else if (ST.stringcmp(argv[i], "-poset_classification_activity") == 0) {
 		f_poset_classification_activity = true;
 
@@ -1612,6 +1642,25 @@ void symbol_definition::perform_definition(int verbose_level)
 					"after definition_of_poset_classification_control" << endl;
 		}
 	}
+	else if (f_arc_generator_control) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"f_arc_generator_control" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_arc_generator_control" << endl;
+		}
+		definition_of_arc_generator_control(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_arc_generator_control" << endl;
+		}
+	}
+
+
+
+
 	else if (f_poset_classification_activity) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1826,6 +1875,12 @@ void symbol_definition::print()
 		cout << "-poset_classification_control ";
 		Poset_classification_control->print();
 	}
+
+	if (f_arc_generator_control) {
+		cout << "-arc_generator_control" << endl;
+		Arc_generator_control->print();
+	}
+
 	if (f_poset_classification_activity) {
 		cout << "-poset_classification_activity ";
 		Poset_classification_activity->print();
@@ -4044,6 +4099,37 @@ void symbol_definition::definition_of_poset_classification_control(int verbose_l
 		cout << "symbol_definition::definition_of_poset_classification_control done" << endl;
 	}
 }
+
+void symbol_definition::definition_of_arc_generator_control(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_arc_generator_control" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_arc_generator_control(
+			define_label, Arc_generator_control, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_arc_generator_control "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_arc_generator_control done" << endl;
+	}
+}
+
 
 void symbol_definition::definition_of_poset_classification_activity(int verbose_level)
 {

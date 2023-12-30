@@ -521,6 +521,7 @@ public:
 	void element_processing(
 			element_processing_description *element_processing_descr,
 			int verbose_level);
+	void print();
 
 	// any_group_linear.cpp:
 	void classes_based_on_normal_form(
@@ -914,6 +915,9 @@ public:
 	std::string evaluate_word_word;
 	std::string evaluate_word_gens;
 
+	int f_multiply_all_elements_in_lex_order;
+
+
 
 
 
@@ -1285,6 +1289,9 @@ public:
 	std::string of_one_polynomial_ring;
 	std::string of_one_polynomial_equation;
 
+	int f_on_cubic_curves;
+	std::string on_cubic_curves_control;
+
 	int f_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
@@ -1341,6 +1348,14 @@ public:
 
 	int f_has_Of_One_polynomial;
 	orbits_on_polynomials *Of_One_polynomial;
+
+	int f_has_on_cubic_curves;
+	apps_geometry::arc_generator_description
+				*Arc_generator_description;
+	algebraic_geometry::cubic_curve *CC;
+	apps_geometry::cubic_curve_with_action *CCA;
+	apps_geometry::classify_cubic_curves *CCC;
+
 
 	int f_has_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier *Canonical_form_classifier;

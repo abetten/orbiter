@@ -61,6 +61,9 @@ cubic_curve::~cubic_curve()
 
 void cubic_curve::init(
 		field_theory::finite_field *F, int verbose_level)
+// allocates a projective_space for PG(2,q)
+// and a homogeneous_polynomial_domain for cubic and quadratic polynomials
+// and one partial_derivative
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -77,13 +80,15 @@ void cubic_curve::init(
 
 	P = NEW_OBJECT(geometry::projective_space);
 	if (f_v) {
-		cout << "cubic_curve::init before P->projective_space_init" << endl;
+		cout << "cubic_curve::init "
+				"before P->projective_space_init" << endl;
 	}
 	P->projective_space_init(2, F,
 		true /*f_init_incidence_structure */,
 		verbose_level - 2);
 	if (f_v) {
-		cout << "cubic_curve::init after P->projective_space_init" << endl;
+		cout << "cubic_curve::init "
+				"after P->projective_space_init" << endl;
 	}
 
 	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
@@ -120,6 +125,10 @@ void cubic_curve::init(
 
 int cubic_curve::compute_system_in_RREF(
 		int nb_pts, long int *pt_list, int verbose_level)
+// computes the linear system for the given points
+// w.r.t. the polynomial domain Poly
+// returns the rank of the system
+// Assumes that we are in a plane.
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
@@ -160,7 +169,8 @@ int cubic_curve::compute_system_in_RREF(
 				"The system:" << endl;
 		Int_matrix_print(System, nb_pts, nb_monomials);
 	}
-	r = F->Linear_algebra->Gauss_simple(System, nb_pts, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(
+			System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (false) {
 		cout << "cubic_curve::compute_system_in_RREF "
@@ -177,7 +187,10 @@ int cubic_curve::compute_system_in_RREF(
 	return r;
 }
 
-void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
+void cubic_curve::compute_gradient(
+		int *eqn_in, int verbose_level)
+// compute the gradient of eqn_in
+// to gradient[3 * Poly2->get_nb_monomials()]
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -191,12 +204,14 @@ void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
 		}
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient eqn_in=";
-			Int_vec_print(cout, eqn_in, Poly->get_nb_monomials());
+			Int_vec_print(
+					cout, eqn_in, Poly->get_nb_monomials());
 			cout << " = ";
 			Poly->print_equation(cout, eqn_in);
 			cout << endl;
 		}
-		Partials[i].apply(eqn_in,
+		Partials[i].apply(
+				eqn_in,
 				gradient + i * Poly2->get_nb_monomials(),
 				verbose_level - 2);
 		if (f_v) {
@@ -204,7 +219,8 @@ void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
 			Int_vec_print(cout, gradient + i * Poly2->get_nb_monomials(),
 					Poly2->get_nb_monomials());
 			cout << " = ";
-			Poly2->print_equation(cout, gradient + i * Poly2->get_nb_monomials());
+			Poly2->print_equation(
+					cout, gradient + i * Poly2->get_nb_monomials());
 			cout << endl;
 		}
 	}
@@ -259,7 +275,8 @@ void cubic_curve::compute_singular_points(
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"gradient " << i << " = ";
-				Int_vec_print(cout,
+				Int_vec_print(
+						cout,
 						gradient + i * Poly2->get_nb_monomials(),
 						Poly2->get_nb_monomials());
 				cout << endl;
@@ -335,7 +352,8 @@ void cubic_curve::compute_inflexion_points(
 						"before F->perp_standard:" << endl;
 				Int_matrix_print(Basis, 1, 3);
 			}
-			F->Linear_algebra->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
+			F->Linear_algebra->perp_standard(
+					3, 1, Basis, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"after F->perp_standard:" << endl;
@@ -344,7 +362,8 @@ void cubic_curve::compute_inflexion_points(
 			// test if the first basis vector is a multiple of v:
 			Int_vec_copy(v, Basis2, 3);
 			Int_vec_copy(Basis + 3, Basis2 + 3, 3);
-			if (F->Linear_algebra->rank_of_rectangular_matrix(Basis2,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(
+					Basis2,
 					2, 3, 0 /*verbose_level*/) == 1) {
 				Int_vec_copy(Basis + 6, w, 3);
 			}
@@ -353,7 +372,8 @@ void cubic_curve::compute_inflexion_points(
 			}
 			Int_vec_copy(v, Basis2, 3);
 			Int_vec_copy(w, Basis2 + 3, 3);
-			if (F->Linear_algebra->rank_of_rectangular_matrix(Basis,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(
+					Basis,
 					2, 3, 0 /*verbose_level*/) != 2) {
 				cout << "cubic_curve::compute_inflexion_points rank of "
 						"line spanned by v and w is not two" << endl;

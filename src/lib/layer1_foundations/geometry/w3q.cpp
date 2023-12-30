@@ -56,8 +56,8 @@ W3q::~W3q()
 
 void W3q::init(
 		field_theory::finite_field *F, int verbose_level)
-// allocates a projective_space PG(3,q)
-// and an orthogonal space Q(4,q)
+// allocates a projective_space P3 = PG(3,q)
+// and an orthogonal space Q4 = Q(4,q)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -75,7 +75,8 @@ void W3q::init(
 	Q4 = NEW_OBJECT(orthogonal_geometry::orthogonal);
 	//Basis = NEW_int(2 * 4);
 	
-	P3->projective_space_init(3, F,
+	P3->projective_space_init(
+			3, F,
 		false /* f_init_incidence_structure */, 
 		verbose_level - 1  /*MINIMUM(verbose_level - 1, 3)*/);
 	F = P3->Subspaces->F;
@@ -183,7 +184,8 @@ void W3q::print_lines()
 	}
 }
 
-int W3q::evaluate_symplectic_form(int *x4, int *y4)
+int W3q::evaluate_symplectic_form(
+		int *x4, int *y4)
 {
 	return F->Linear_algebra->evaluate_symplectic_form(4, x4, y4);
 
@@ -195,7 +197,8 @@ int W3q::evaluate_symplectic_form(int *x4, int *y4)
 		);*/
 }
 
-void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
+void W3q::isomorphism_Q4q(
+		int *x4, int *y4, int *v)
 // Let x4 and y4 be the coordinates of two points on a line.
 // Then v[] = (Pl_12, -Pl_13, Pl_42, -Pl_14, Pl_23)
 {

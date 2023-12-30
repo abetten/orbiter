@@ -41,13 +41,15 @@ void vector_ge_builder::init(
 	vector_ge_builder::Descr = Descr;
 
 	if (!Descr->f_action) {
-		cout << "vector_ge_builder::init please use option -action to specify the group action" << endl;
+		cout << "vector_ge_builder::init "
+				"please use option -action to specify the group action" << endl;
 		exit(1);
 	}
 
 
 	if (f_v) {
-		cout << "vector_ge_builder::init f_action action = " << Descr->action_label << endl;
+		cout << "vector_ge_builder::init "
+				"f_action action = " << Descr->action_label << endl;
 	}
 
 	apps_algebra::any_group *AG;
@@ -62,7 +64,8 @@ void vector_ge_builder::init(
 
 	if (Descr->f_read_csv) {
 		if (f_v) {
-			cout << "vector_ge_builder::init f_read_csv fname = " << Descr->read_csv_fname << " column = "
+			cout << "vector_ge_builder::init "
+					"f_read_csv fname = " << Descr->read_csv_fname << " column = "
 					<< Descr->read_csv_column_label << endl;
 		}
 		V = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -73,13 +76,16 @@ void vector_ge_builder::init(
 				Descr->read_csv_column_label, verbose_level);
 
 		if (f_v) {
-			cout << "vector_ge_builder::init we read the following vector:" << endl;
+			cout << "vector_ge_builder::init "
+					"we read the following vector:" << endl;
 			V->print(cout);
-			cout << "vector_ge_builder::init The vector has length " << V->len << endl;
+			cout << "vector_ge_builder::init "
+					"The vector has length " << V->len << endl;
 			int i;
 			for (i = 0; i < V->len; i++) {
 				if (f_v) {
-					cout << "polynomial_ring_activity::perform_activity i=" << i << " / " << V->len << endl;
+					cout << "polynomial_ring_activity::perform_activity "
+							"i=" << i << " / " << V->len << endl;
 					cout << "Group element:" << endl;
 					A->Group_element->element_print_quick(V->ith(i), cout);
 				}
@@ -105,7 +111,8 @@ void vector_ge_builder::init(
 		nb_elements = sz / A->make_element_size;
 
 		if (A->make_element_size * nb_elements != sz) {
-			cout << "vector_ge_builder::init size of vector must be a multiple of make_element_size" << endl;
+			cout << "vector_ge_builder::init "
+					"size of vector must be a multiple of make_element_size" << endl;
 			cout << "make_element_size = " << A->make_element_size << endl;
 			cout << "sz = " << sz << endl;
 			exit(1);
@@ -116,12 +123,14 @@ void vector_ge_builder::init(
 
 	}
 	else {
-		cout << "vector_ge_builder::init unrecognized command to create the vector of group elements" << endl;
+		cout << "vector_ge_builder::init "
+				"unrecognized command to create the vector of group elements" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "vector_ge_builder::init created vector of size " << V->len << endl;
+		cout << "vector_ge_builder::init "
+				"We have created a vector of group elements of size " << V->len << endl;
 		//Lint_vec_print(cout, set, sz);
 		//cout << endl;
 	}

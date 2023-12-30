@@ -189,8 +189,8 @@ void seventytwo_cases::compute_arc(
 
 
 
-	P6[0] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Lines[l1], SO->Lines[m1]);
-	P6[1] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Lines[l2], SO->Lines[m1]);
+	P6[0] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Variety_object->Line_sets->Sets[0][l1], SO->Variety_object->Line_sets->Sets[0][m1]);
+	P6[1] = SO->Surf->P->Subspaces->intersection_of_two_lines(SO->Variety_object->Line_sets->Sets[0][l2], SO->Variety_object->Line_sets->Sets[0][m1]);
 	nb_t = 4;
 	nb = 2;
 	for (i = 0; i < nb_t; i++) {
@@ -202,7 +202,7 @@ void seventytwo_cases::compute_arc(
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m2)) {
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
-					SO->Lines[transversals4[i]], SO->Lines[m2]);
+					SO->Variety_object->Line_sets->Sets[0][transversals4[i]], SO->Variety_object->Line_sets->Sets[0][m2]);
 			f_taken[i] = true;
 		}
 	}
@@ -216,7 +216,7 @@ void seventytwo_cases::compute_arc(
 		}
 		if (SO->SOP->Adj_ij(transversals4[i], m3)) {
 			P6[nb++] = SO->Surf->P->Subspaces->intersection_of_two_lines(
-					SO->Lines[transversals4[i]], SO->Lines[m3]);
+					SO->Variety_object->Line_sets->Sets[0][transversals4[i]], SO->Variety_object->Line_sets->Sets[0][m3]);
 			f_taken[i] = true;
 		}
 	}
@@ -380,26 +380,26 @@ void seventytwo_cases::report_Clebsch_map_details(
 
 	ost << "\\bigskip" << endl << endl;
 
-	ost << "$\\ell_1=" << Surf->Schlaefli->Labels->Line_label_tex[l1] << " = " << SO->Lines[l1] << " = ";
-	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l1]);
+	ost << "$\\ell_1=" << Surf->Schlaefli->Labels->Line_label_tex[l1] << " = " << SO->Variety_object->Line_sets->Sets[0][l1] << " = ";
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][l1]);
 	ost << "$\\\\" << endl;
 
-	ost << "$\\ell_2=" << Surf->Schlaefli->Labels->Line_label_tex[l2] << " = " << SO->Lines[l2] << " = ";
-	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
+	ost << "$\\ell_2=" << Surf->Schlaefli->Labels->Line_label_tex[l2] << " = " << SO->Variety_object->Line_sets->Sets[0][l2] << " = ";
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][l2]);
 	ost << "$\\\\" << endl;
 
 	SO->SOP->SmoothProperties->print_single_tritangent_plane(ost, tritangent_plane_idx);
 
-	ost << "$m_1=" << Surf->Schlaefli->Labels->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
-	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);
+	ost << "$m_1=" << Surf->Schlaefli->Labels->Line_label_tex[m1] << " = " << SO->Variety_object->Line_sets->Sets[0][m1] << " = ";
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][m1]);
 	ost << "$\\\\" << endl;
 
-	ost << "$m_2=" << Surf->Schlaefli->Labels->Line_label_tex[m2] << " = " << SO->Lines[m2] << " = ";
-	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m2]);
+	ost << "$m_2=" << Surf->Schlaefli->Labels->Line_label_tex[m2] << " = " << SO->Variety_object->Line_sets->Sets[0][m2] << " = ";
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][m2]);
 	ost << "$\\\\" << endl;
 
-	ost << "$m_3=" << Surf->Schlaefli->Labels->Line_label_tex[m3] << " = " << SO->Lines[m3] << " = ";
-	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m3]);
+	ost << "$m_3=" << Surf->Schlaefli->Labels->Line_label_tex[m3] << " = " << SO->Variety_object->Line_sets->Sets[0][m3] << " = ";
+	Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][m3]);
 	ost << "$\\\\" << endl;
 
 
@@ -417,8 +417,8 @@ void seventytwo_cases::report_Clebsch_map_details(
 	for (i = 0; i < 6; i++) {
 		ost << "$";
 		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
-		ost << " = " << SO->Lines[H[i]] << " = ";
-		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[H[i]]);
+		ost << " = " << SO->Variety_object->Line_sets->Sets[0][H[i]] << " = ";
+		Surf->P->Subspaces->Grass_lines->print_single_generator_matrix_tex(ost, SO->Variety_object->Line_sets->Sets[0][H[i]]);
 		ost << "$\\\\" << endl;
 	}
 
