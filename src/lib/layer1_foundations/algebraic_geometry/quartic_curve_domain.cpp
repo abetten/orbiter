@@ -877,6 +877,144 @@ void quartic_curve_domain::compute_gradient(
 	}
 }
 
+int quartic_curve_domain::create_quartic_curve_by_symbolic_object(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &name_of_formula,
+		quartic_curve_object *&QO,
+		int verbose_level)
+// returns false if the equation is zero
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object" << endl;
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object "
+				"name_of_formula=" << name_of_formula << endl;
+	}
+
+
+
+	expression_parser::symbolic_object_builder *Symbol;
+
+	Symbol = Get_symbol(name_of_formula);
+
+	// assemble the equation as a vector of coefficients
+	// in the ordering of the polynomial ring:
+
+	int *coeffs;
+	int nb_coeffs;
+
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object "
+				"before Symbol->Formula_vector->V[0].collect_coefficients_of_equation" << endl;
+	}
+	Symbol->Formula_vector->V[0].collect_coefficients_of_equation(
+			Poly,
+			coeffs, nb_coeffs,
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object "
+				"after Symbol->Formula_vector->V[0].collect_coefficients_of_equation" << endl;
+	}
+
+	if (nb_coeffs != 15) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object nb_coeffs != 15" << endl;
+		exit(1);
+	}
+	// build a surface_object and compute properties of the surface:
+
+
+	if (Int_vec_is_zero(coeffs, nb_coeffs)) {
+		return false;
+	}
+
+
+
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object "
+				"before create_surface_by_coefficient_vector" << endl;
+	}
+
+	create_quartic_curve_by_coefficient_vector(
+			coeffs,
+			name_of_formula,
+			name_of_formula,
+			QO,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object "
+				"after create_surface_by_coefficient_vector" << endl;
+	}
+
+	FREE_int(coeffs);
+
+	if (f_v) {
+		cout << "quartic_curve_domain::create_quartic_curve_by_symbolic_object done" << endl;
+	}
+	return true;
+}
+
+
+void quartic_curve_domain::create_quartic_curve_by_coefficient_vector(
+		int *coeffs15,
+		std::string &label_txt,
+		std::string &label_tex,
+		quartic_curve_object *&QO,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+				"surface is given by the coefficients" << endl;
+	}
+
+
+
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+				"before SO->init_equation" << endl;
+	}
+	QO->init_equation_but_no_bitangents(
+			this,
+			coeffs15,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+				"after SO->init_equation" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+				"before compute_properties" << endl;
+	}
+	QO->compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector "
+				"after compute_properties" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_domain::create_quartic_curve_by_coefficient_vector done" << endl;
+	}
+
+}
 
 
 }}}

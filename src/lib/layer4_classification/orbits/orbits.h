@@ -72,6 +72,7 @@ public:
 			int *object_in, int *object_out,
 		int *Elt, int verbose_level);
 	void print_orbit();
+	void print_orbit_as_equations_tex(std::ostream &ost);
 	void compute_orbit(
 			int *coeff, int verbose_level);
 	void reallocate(

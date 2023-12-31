@@ -262,7 +262,12 @@ void quartic_curve_object_properties::report_properties_simple(
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"before Kovalevski->print_lines_with_points_on_them" << endl;
 	}
-	Kovalevski->print_lines_with_points_on_them(ost);
+	if (Kovalevski) {
+		Kovalevski->print_lines_with_points_on_them(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
 	if (f_v) {
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"after Kovalevski->print_lines_with_points_on_them" << endl;
@@ -297,7 +302,12 @@ void quartic_curve_object_properties::report_properties_simple(
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"before Kovalevski->report_bitangent_line_type" << endl;
 	}
-	Kovalevski->report_bitangent_line_type(ost);
+	if (Kovalevski) {
+		Kovalevski->report_bitangent_line_type(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
 	if (f_v) {
 		cout << "quartic_curve_object_properties::report_properties_simple "
 				"after Kovalevski->report_bitangent_line_type" << endl;
@@ -411,7 +421,12 @@ void quartic_curve_object_properties::print_general(
 	ost << "\\mbox{Number of points} & " << QO->nb_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	Kovalevski->print_general(ost);
+	if (Kovalevski) {
+		Kovalevski->print_general(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
 
 	ost << "\\mbox{Number of singular points} & " << nb_singular_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
@@ -471,8 +486,9 @@ void quartic_curve_object_properties::print_all_points(
 
 
 
-
-		Kovalevski->print_all_points(ost);
+		if (Kovalevski) {
+			Kovalevski->print_all_points(ost);
+		}
 
 
 

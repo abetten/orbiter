@@ -658,6 +658,18 @@ public:
 	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
 	void compute_gradient(
 			int *equation15, int *&gradient, int verbose_level);
+	int create_quartic_curve_by_symbolic_object(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			quartic_curve_object *&QO,
+			int verbose_level);
+	// returns false if the equation is zero
+	void create_quartic_curve_by_coefficient_vector(
+			int *coeffs15,
+			std::string &label_txt,
+			std::string &label_tex,
+			quartic_curve_object *&QO,
+			int verbose_level);
 
 };
 

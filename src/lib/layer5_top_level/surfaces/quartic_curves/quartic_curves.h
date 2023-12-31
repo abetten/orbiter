@@ -129,6 +129,10 @@ public:
 	std::string equation_parameters_tex;
 	std::string equation_parameter_values;
 
+	int f_by_symbolic_object;
+	std::string by_symbolic_object_ring_label;
+	std::string by_symbolic_object_name_of_formula;
+
 	int f_from_cubic_surface;
 	std::string from_cubic_surface_label;
 	int from_cubic_surface_point_orbit_idx;
@@ -240,6 +244,11 @@ public:
 			std::string &equation_parameters_tex,
 			std::string &equation_parameter_values,
 			int verbose_level);
+	int create_quartic_curve_by_symbolic_object(
+			std::string &ring_label,
+			std::string &name_of_formula,
+			int verbose_level);
+	// returns false if the equation is zero
 	void create_quartic_curve_from_cubic_surface(
 			std::string &cubic_surface_label,
 			int pt_orbit_idx,

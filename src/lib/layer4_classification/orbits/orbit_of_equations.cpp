@@ -209,6 +209,26 @@ void orbit_of_equations::print_orbit()
 	}
 }
 
+
+void orbit_of_equations::print_orbit_as_equations_tex(std::ostream &ost)
+{
+	int i;
+
+	ost << "We found an orbit of "
+			"length " << used_length << "\\\\" << endl;
+	for (i = 0; i < used_length; i++) {
+		ost << i << " : ";
+		//Int_vec_print(ost, Equations[i] + 1, nb_monomials);
+		//ost << " : ";
+		ost << "$";
+		AonHPD->HPD->print_equation_tex(ost, Equations[i] + 1);
+		ost << "$";
+		ost << "\\\\";
+		ost << endl;
+	}
+}
+
+
 void orbit_of_equations::compute_orbit(
 		int *coeff, int verbose_level)
 {

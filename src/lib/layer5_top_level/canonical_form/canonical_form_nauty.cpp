@@ -251,6 +251,12 @@ void canonical_form_nauty::report(std::ostream &ost)
 	ost << "\\bigskip" << endl;
 	ost << endl;
 
+	Orb->print_orbit_as_equations_tex(ost);
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
 
 
 	ost << "Automorphism group: \\\\" << endl;

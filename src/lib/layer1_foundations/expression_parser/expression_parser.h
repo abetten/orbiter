@@ -487,6 +487,10 @@ public:
 	std::string collect_source;
 	std::string collect_by;
 
+	int f_collect_by;
+	std::string collect_by_source;
+	std::string collect_by_ring;
+
 	int f_encode_CRC;
 	int encode_CRC_block_length;
 	std::string encode_CRC_data_polynomial;
@@ -600,6 +604,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_collect(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_collect_by(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);

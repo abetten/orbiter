@@ -332,6 +332,18 @@ void quartic_curve_create::create_quartic_curve_from_description(
 				Descr->equation_parameter_values,
 				verbose_level);
 	}
+	else if (Descr->f_by_symbolic_object) {
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"f_by_symbolic_object" << endl;
+		}
+		create_quartic_curve_by_symbolic_object(
+				Descr->by_symbolic_object_ring_label,
+				Descr->by_symbolic_object_name_of_formula,
+				verbose_level);
+	}
+
 	else if (Descr->f_from_cubic_surface) {
 
 		if (f_v) {
@@ -747,228 +759,6 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		cout << "quartic_curve_create::create_quartic_curve_by_equation" << endl;
 	}
 
-#if 0
-
-
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation" << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"name_of_formula=" << name_of_formula << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"name_of_formula_tex=" << name_of_formula_tex << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"managed_variables=" << managed_variables << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"equation_text=" << equation_text << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"equation_parameters=" << equation_parameters << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"equation_parameters_tex=" << equation_parameters_tex << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"equation_parameter_values=" << equation_parameter_values << endl;
-	}
-
-
-	// create a symbolic object containing the general formula:
-
-	data_structures::symbolic_object_builder_description *Descr1;
-
-
-	Descr1 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
-	Descr1->f_field_pointer = true;
-	Descr1->field_pointer = F;
-	Descr1->f_text = true;
-	Descr1->text_txt = equation_text;
-
-
-
-
-	data_structures::symbolic_object_builder *SB1;
-
-	SB1 = NEW_OBJECT(data_structures::symbolic_object_builder);
-
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before SB1->init" << endl;
-	}
-
-	string s1;
-
-	s1 = name_of_formula + "_raw";
-
-	SB1->init(Descr1, s1, verbose_level);
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after SB1->init" << endl;
-	}
-
-
-
-	// create a second symbolic object containing the specific values
-	// to be substituted.
-
-	data_structures::symbolic_object_builder_description *Descr2;
-
-
-	Descr2 = NEW_OBJECT(data_structures::symbolic_object_builder_description);
-	Descr2->f_field_pointer = true;
-	Descr2->field_pointer = F;
-	Descr2->f_text = true;
-	Descr2->text_txt = equation_parameter_values;
-
-
-
-	data_structures::symbolic_object_builder *SB2;
-
-	SB2 = NEW_OBJECT(data_structures::symbolic_object_builder);
-
-	string s2;
-
-	s2 = name_of_formula + "_param_values";
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before SB2->init" << endl;
-	}
-
-	SB2->init(Descr2, s2, verbose_level);
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after SB2->init" << endl;
-	}
-
-
-	// Perform the substitution.
-	// Create temporary object Formula_vector_after_sub
-
-	data_structures::symbolic_object_builder *O_target = SB1;
-	data_structures::symbolic_object_builder *O_source = SB2;
-
-	//O_target = Get_symbol(Descr->substitute_target);
-	//O_source = Get_symbol(Descr->substitute_source);
-
-
-	expression_parser::formula_vector *Formula_vector_after_sub;
-
-
-	Formula_vector_after_sub = NEW_OBJECT(expression_parser::formula_vector);
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Formula_vector_after_sub->substitute" << endl;
-	}
-	Formula_vector_after_sub->substitute(
-			O_source->Formula_vector,
-			O_target->Formula_vector,
-			equation_parameters /*Descr->substitute_variables*/,
-			name_of_formula, name_of_formula_tex,
-			managed_variables,
-			verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Formula_vector_after_sub->substitute" << endl;
-	}
-
-
-	// Perform simplification
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Formula_vector_after_sub->V[0].simplify" << endl;
-	}
-	Formula_vector_after_sub->V[0].simplify(verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Formula_vector_after_sub->V[0].simplify" << endl;
-	}
-
-	// Perform expansion.
-	// The result will be in the temporary object Formula_vector_after_expand
-
-
-	expression_parser::formula_vector *Formula_vector_after_expand;
-
-	Formula_vector_after_expand = NEW_OBJECT(expression_parser::formula_vector);
-
-	int f_write_trees_during_expand = false;
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Formula_vector->expand" << endl;
-	}
-	Formula_vector_after_expand->expand(
-			Formula_vector_after_sub,
-			F,
-			name_of_formula, name_of_formula_tex,
-			managed_variables,
-			f_write_trees_during_expand,
-			verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Formula_vector->expand" << endl;
-	}
-
-	// Perform simplification
-
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Formula_vector_after_expand->V[0].simplify" << endl;
-	}
-	Formula_vector_after_expand->V[0].simplify(verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Formula_vector_after_expand->V[0].simplify" << endl;
-	}
-
-
-	// collect the coefficients of the monomials:
-
-
-	data_structures::int_matrix *I;
-	int *Coeff;
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before collect_monomial_terms" << endl;
-	}
-	Formula_vector_after_expand->V[0].collect_monomial_terms(
-			I, Coeff,
-			verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after collect_monomial_terms" << endl;
-	}
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"data collected:" << endl;
-		int i;
-
-		for (i = 0; i < I->m; i++) {
-			cout << Coeff[i] << " : ";
-			Int_vec_print(cout, I->M + i * I->n, I->n);
-			cout << endl;
-		}
-		cout << "variables: ";
-		Formula_vector_after_expand->V[0].tree->print_variables_in_line(cout);
-		cout << endl;
-	}
-
-	if (I->n != 3) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"we need exactly 3 variables" << endl;
-		exit(1);
-	}
-#endif
 
 	// create the polynomial ring:
 
@@ -982,25 +772,9 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	ring_theory::homogeneous_polynomial_domain *Poly;
 
-	//Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
 
 	Poly = QCDA->Dom->Poly4_3;
-
-#if 0
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Poly->init" << endl;
-	}
-	Poly->init(F,
-			nb_vars /* nb_vars */, degree,
-			t_PART,
-			0/*verbose_level*/);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Poly->init" << endl;
-	}
-#endif
 
 	int nb_monomials;
 
@@ -1039,23 +813,6 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 		exit(1);
 	}
 
-#if 0
-	// build the equation of the quartic curve from the table of coefficients
-	// and monomials:
-
-	int i, index;
-	//int coeffs15[15];
-
-	Int_vec_zero(coeffs15, 15);
-
-	for (i = 0; i < I->m; i++) {
-		index = Poly->index_of_monomial(I->M + i * I->n);
-		coeffs15[index] = Coeff[i];
-	}
-
-	FREE_OBJECT(Poly);
-
-#endif
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_equation "
@@ -1065,237 +822,6 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	}
 
 
-
-#if 0
-	if (Int_vec_is_zero(coeffs15, 15)) {
-		return false;
-	}
-#endif
-
-#if 0
-	int coeffs15[15];
-	data_structures::string_tools ST;
-
-
-
-
-	expression_parser::expression_parser Parser;
-	expression_parser::syntax_tree *tree;
-	int i;
-
-	tree = NEW_OBJECT(expression_parser::syntax_tree);
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before tree->init" << endl;
-	}
-	tree->init(F, verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after tree->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"formula " << name_of_formula << " is " << equation_text << endl;
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"managed variables: " << managed_variables << endl;
-	}
-
-	ST.parse_comma_separated_strings(managed_variables, tree->managed_variables);
-	if (tree->managed_variables.size() > 0) {
-		tree->f_has_managed_variables = true;
-	}
-
-	int nb_vars;
-
-	nb_vars = tree->managed_variables.size();
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"managed variables: " << endl;
-		for (i = 0; i < nb_vars; i++) {
-			cout << i << " : " << tree->managed_variables[i] << endl;
-		}
-	}
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"starting to parse " << name_of_formula << endl;
-	}
-	Parser.parse(tree, equation_text, 0/*verbose_level*/);
-	if (f_v) {
-		cout << "Parsing " << name_of_formula << " finished" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"syntax tree:" << endl;
-		//tree->print(cout);
-	}
-
-	std::string fname;
-	fname = name_of_formula + ".gv";
-
-	{
-		std::ofstream ost(fname);
-		tree->Root->export_graphviz(name_of_formula, ost);
-	}
-
-	int ret, degree;
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before is_homogeneous" << endl;
-	}
-	ret = tree->is_homogeneous(degree, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after is_homogeneous" << endl;
-	}
-	if (!ret) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"The given equation is not homogeneous" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"homogeneous of degree " << degree << endl;
-	}
-
-	if (degree != 3) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"The given equation is homogeneous, but not of degree 3" << endl;
-		exit(1);
-	}
-
-	ring_theory::homogeneous_polynomial_domain *Poly;
-
-	Poly = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before Poly->init" << endl;
-	}
-	Poly->init(F,
-			nb_vars /* nb_vars */, degree,
-			t_PART,
-			0/*verbose_level*/);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after Poly->init" << endl;
-	}
-
-	expression_parser::syntax_tree_node **Subtrees;
-	int nb_monomials;
-
-
-	nb_monomials = Poly->get_nb_monomials();
-
-	if (nb_monomials != 15) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"nb_monomials != 15" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before tree->split_by_monomials" << endl;
-	}
-	tree->split_by_monomials(Poly, Subtrees, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"after tree->split_by_monomials" << endl;
-	}
-
-	if (f_v) {
-		for (i = 0; i < nb_monomials; i++) {
-			cout << "quartic_curve_create::create_quartic_curve_by_equation "
-					"Monomial " << i << " : ";
-			if (Subtrees[i]) {
-				Subtrees[i]->print_expression(cout);
-				cout << " * ";
-				Poly->print_monomial(cout, i);
-				cout << endl;
-			}
-			else {
-				cout << "quartic_curve_create::create_quartic_curve_by_equation "
-						"no subtree" << endl;
-			}
-		}
-	}
-
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"before evaluate" << endl;
-	}
-
-
-	std::map<std::string, std::string> symbol_table;
-
-	ST.parse_value_pairs(
-			symbol_table,
-			equation_parameters, 0 /* verbose_level */);
-
-
-
-#if 0
-	cout << "quartic_curve_create::create_quartic_curve_by_equation "
-			"symbol table:" << endl;
-	for (i = 0; i < symbol_table.size(); i++) {
-		cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
-	}
-#endif
-	int a;
-
-	for (i = 0; i < nb_monomials; i++) {
-		if (f_v) {
-			cout << "quartic_curve_create::create_quartic_curve_by_equation "
-					"Monomial " << i << " : ";
-		}
-		if (Subtrees[i]) {
-			//Subtrees[i]->print_expression(cout);
-			a = Subtrees[i]->evaluate(symbol_table, 0/*verbose_level*/);
-			coeffs15[i] = a;
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_by_equation "
-						"Monomial " << i << " : ";
-				cout << a << " * ";
-				Poly->print_monomial(cout, i);
-				cout << endl;
-			}
-		}
-		else {
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_by_equation "
-						"no subtree" << endl;
-			}
-			coeffs15[i] = 0;
-		}
-	}
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"evaluated polynomial:" << endl;
-		for (i = 0; i < nb_monomials; i++) {
-			cout << coeffs15[i] << " * ";
-			Poly->print_monomial(cout, i);
-			cout << endl;
-		}
-		cout << "quartic_curve_create::create_quartic_curve_by_equation "
-				"coefficient vector: ";
-		Int_vec_print(cout, coeffs15, nb_monomials);
-		cout << endl;
-	}
-
-
-
-	FREE_OBJECT(Poly);
-
-
-
-
-#endif
 
 
 	// build a quartic_curve_object and compute properties of the surface:
@@ -1351,6 +877,92 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	}
 }
 
+
+int quartic_curve_create::create_quartic_curve_by_symbolic_object(
+		std::string &ring_label,
+		std::string &name_of_formula,
+		int verbose_level)
+// returns false if the equation is zero
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object" << endl;
+	}
+
+	int ret;
+
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+
+	//Ring = QCDA->Dom->Poly4_3;
+
+	Ring = Get_ring(ring_label);
+
+	int nb_monomials;
+
+
+	nb_monomials = Ring->get_nb_monomials();
+
+	if (nb_monomials != 15) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object "
+				"nb_monomials != 15" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object "
+				"before QCDA->Dom->create_quartic_curve_by_symbolic_object" << endl;
+	}
+
+	ret = QCDA->Dom->create_quartic_curve_by_symbolic_object(
+			Ring,
+			name_of_formula,
+			QO,
+			verbose_level);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object "
+				"after QCDA->Dom->create_quartic_curve_by_symbolic_object" << endl;
+	}
+
+
+	if (!ret) {
+		return false;
+	}
+
+	data_structures::string_tools ST;
+
+	f_has_group = false;
+
+
+	prefix = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+	label_txt = "equation_" + name_of_formula + "_q" + std::to_string(F->q);
+
+
+	label_tex = name_of_formula;
+	ST.fix_escape_characters(label_tex);
+	ST.remove_specific_character(label_tex, '_');
+
+
+
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object " << endl;
+		cout << "prefix = " << prefix << endl;
+		cout << "label_txt = " << label_txt << endl;
+		cout << "label_tex = " << label_tex << endl;
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object done" << endl;
+	}
+	return true;
+
+}
 
 void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 		std::string &cubic_surface_label,
@@ -2027,7 +1639,12 @@ void quartic_curve_create::report(
 		cout << "quartic_curve_create::report "
 				"before QO->QP->Kovalevski->print_lines_with_points_on_them" << endl;
 	}
-	QO->QP->Kovalevski->print_lines_with_points_on_them(ost);
+	if (QO->QP->Kovalevski) {
+		QO->QP->Kovalevski->print_lines_with_points_on_them(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
 	if (f_v) {
 		cout << "quartic_curve_create::report "
 				"after QO->QP->Kovalevski->print_lines_with_points_on_them" << endl;
@@ -2038,7 +1655,12 @@ void quartic_curve_create::report(
 		cout << "quartic_curve_create::report "
 				"before QO->QP->Kovalevski->report_bitangent_line_type" << endl;
 	}
-	QO->QP->Kovalevski->report_bitangent_line_type(ost);
+	if (QO->QP->Kovalevski) {
+		QO->QP->Kovalevski->report_bitangent_line_type(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
 	if (f_v) {
 		cout << "quartic_curve_create::report "
 				"after QO->QP->Kovalevski->report_bitangent_line_type" << endl;
@@ -2114,7 +1736,20 @@ void quartic_curve_create::print_general(
 	ost << "\\mbox{Number of points} & " << QO->nb_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
-	QO->QP->Kovalevski->print_general(ost);
+	if (f_v) {
+		cout << "quartic_curve_create::print_general "
+				"before QO->QP->Kovalevski->print_general" << endl;
+	}
+	if (QO->QP->Kovalevski) {
+		QO->QP->Kovalevski->print_general(ost);
+	}
+	else {
+		cout << "no Kovalevski" << endl;
+	}
+	if (f_v) {
+		cout << "quartic_curve_create::print_general "
+				"after QO->QP->Kovalevski->print_general" << endl;
+	}
 
 	//ost << "\\hline" << endl;
 	ost << "\\mbox{Number of singular points} & "

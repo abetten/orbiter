@@ -3674,12 +3674,13 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 		cout << endl;
 	}
 
+#if 0
 	if (I->n != 3) {
 		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters "
 				"we need exactly 3 variables" << endl;
 		exit(1);
 	}
-
+#endif
 
 	eqn = NEW_int(nb_monomials);
 	eqn_size = nb_monomials;
