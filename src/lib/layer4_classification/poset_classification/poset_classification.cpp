@@ -34,12 +34,14 @@ std::string &poset_classification::get_problem_label()
 	return problem_label;
 }
 
-int poset_classification::first_node_at_level(int i)
+int poset_classification::first_node_at_level(
+		int i)
 {
 	return Poo->first_node_at_level(i);
 }
 
-poset_orbit_node *poset_classification::get_node(int node_idx)
+poset_orbit_node *poset_classification::get_node(
+		int node_idx)
 {
 	return Poo->get_node(node_idx);
 }
@@ -49,7 +51,8 @@ data_structures_groups::vector_ge *poset_classification::get_transporter()
 	return Orbit_tracer->get_transporter();
 }
 
-int *poset_classification::get_transporter_i(int i)
+int *poset_classification::get_transporter_i(
+		int i)
 {
 	return Orbit_tracer->get_transporter()->ith(i);
 }
@@ -69,7 +72,8 @@ long int *poset_classification::get_S()
 	return set_S;
 }
 
-long int *poset_classification::get_set_i(int i)
+long int *poset_classification::get_set_i(
+		int i)
 {
 	return Orbit_tracer->get_set_i(i);
 }
@@ -161,7 +165,8 @@ classification_base_case *poset_classification::get_Base_case()
 	return Base_case;
 }
 
-int poset_classification::node_has_schreier_vector(int node_idx)
+int poset_classification::node_has_schreier_vector(
+		int node_idx)
 {
 	if (Poo->get_node(node_idx)->has_Schreier_vector()) {
 		return true;
@@ -1676,7 +1681,8 @@ void poset_classification::get_whole_orbit(
 			cout << "poset_classification::get_whole_orbit "
 					"element " << rank << " / " << orbit_length << endl;
 		}
-		orbit_element_unrank(depth, orbit_idx,
+		orbit_element_unrank(
+				depth, orbit_idx,
 				rank,
 				Orbit + rank * depth,
 				0 /* verbose_level */);
@@ -2097,12 +2103,14 @@ void poset_classification::get_orbit_representatives(
 	}
 }
 
-void poset_classification::unrank_point(int *v, long int rk)
+void poset_classification::unrank_point(
+		int *v, long int rk)
 {
 	Poset->unrank_point(v, rk);
 }
 
-long int poset_classification::rank_point(int *v)
+long int poset_classification::rank_point(
+		int *v)
 {
 	long int rk;
 

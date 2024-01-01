@@ -109,7 +109,8 @@ void poset_classification::compute_orbits_on_subsets(
 
 
 
-int poset_classification::main(int t0, 
+int poset_classification::main(
+		int t0,
 	int schreier_depth, 
 	int f_use_invariant_subset_if_available, 
 	int f_debug, 

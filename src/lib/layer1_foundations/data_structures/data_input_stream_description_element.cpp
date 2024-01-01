@@ -74,6 +74,15 @@ void data_input_stream_description_element::print()
 			<< " " << input_data1
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_file_of_designs_through_block_orbits) {
+		cout << "-file_of_designs_through_block_orbits "
+			<< input_string
+			<< " " << input_string2
+			<< " " << input_data1
+			<< " " << input_data2
+			<< endl;
+	}
+
 	else if (input_type == t_data_input_stream_file_of_point_set) {
 		cout << "-file_of_point_set " << input_string << " " << input_string2 << endl;
 	}
@@ -211,6 +220,18 @@ void data_input_stream_description_element::init_file_of_packings_through_spread
 	input_string2.assign(b);
 	input_data1 = q;
 }
+
+void data_input_stream_description_element::init_file_of_designs_through_block_orbits(
+		std::string &a, std::string &b, int v, int k)
+{
+	input_type = t_data_input_stream_file_of_designs_through_block_orbits;
+
+	input_string.assign(a);
+	input_string2.assign(b);
+	input_data1 = v;
+	input_data2 = k;
+}
+
 
 void data_input_stream_description_element::init_file_of_point_set(
 		std::string &a)

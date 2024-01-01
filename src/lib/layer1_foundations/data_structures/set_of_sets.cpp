@@ -323,6 +323,7 @@ void set_of_sets::init_from_file(
 	}
 }
 
+
 void set_of_sets::init_from_csv_file(
 		int underlying_set_size,
 		std::string &fname, int verbose_level)
@@ -1417,7 +1418,7 @@ int set_of_sets::largest_set_size()
 
 void set_of_sets::save_csv(
 		std::string &fname,
-		int f_make_heading, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

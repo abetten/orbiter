@@ -372,6 +372,8 @@ public:
 			std::string &a);
 	void init_file_of_packings_through_spread_table(
 			std::string &a, std::string &b, int q);
+	void init_file_of_designs_through_block_orbits(
+			std::string &a, std::string &b, int v, int k);
 	void init_file_of_point_set(
 			std::string &a);
 	void init_file_of_designs(
@@ -1257,7 +1259,7 @@ public:
 	int get_constant_size();
 	int largest_set_size();
 	void save_csv(std::string &fname,
-		int f_make_heading, int verbose_level);
+		int verbose_level);
 	void save_constant_size_csv(std::string &fname,
 			int verbose_level);
 	int find_common_element_in_two_sets(
@@ -1919,6 +1921,9 @@ public:
 			std::string &in, std::string &out, int verbose_level);
 	std::string printf_d(std::string &format, int value);
 	std::string printf_dd(std::string &format, int value1, int value2);
+	void parse_RHS_command(std::string &command,
+			int &mult, diophant_equation_type &type,
+			int &data1, int &data2, int verbose_level);
 
 
 };

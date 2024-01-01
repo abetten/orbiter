@@ -210,7 +210,8 @@ void orbit_of_equations::print_orbit()
 }
 
 
-void orbit_of_equations::print_orbit_as_equations_tex(std::ostream &ost)
+void orbit_of_equations::print_orbit_as_equations_tex(
+		std::ostream &ost)
 {
 	int i;
 

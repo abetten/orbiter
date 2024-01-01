@@ -91,7 +91,7 @@ void pentomino_puzzle::main(
 
 	fname.assign("solutions.csv");
 
-	L->save_csv(fname, true /* f_make_heading */, verbose_level);
+	L->save_csv(fname, verbose_level);
 	}
 
 	cout << "Solution 8:" << endl;

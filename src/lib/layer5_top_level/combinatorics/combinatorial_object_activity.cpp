@@ -511,7 +511,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
-					"before CO->perform_classification" << endl;
+					"before Combo->Classification->perform_classification" << endl;
 		}
 		Combo->Classification->perform_classification(
 				Descr->Canonical_form_Descr,
@@ -520,7 +520,7 @@ void combinatorial_object_activity::perform_activity_combo(
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
-					"after CO->perform_classification" << endl;
+					"after Combo->Classification->perform_classification" << endl;
 		}
 
 #if 0

@@ -19,12 +19,14 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-void poset_classification::print_set_verbose(int node)
+void poset_classification::print_set_verbose(
+		int node)
 {
 	Poo->get_node(node)->print_set_verbose(this);
 }
 
-void poset_classification::print_set_verbose(int level, int orbit)
+void poset_classification::print_set_verbose(
+		int level, int orbit)
 {
 	int node;
 
@@ -32,12 +34,14 @@ void poset_classification::print_set_verbose(int level, int orbit)
 	Poo->get_node(node)->print_set_verbose(this);
 }
 
-void poset_classification::print_set(int node)
+void poset_classification::print_set(
+		int node)
 {
 	Poo->get_node(node)->print_set(this);
 }
 
-void poset_classification::print_set(int level, int orbit)
+void poset_classification::print_set(
+		int level, int orbit)
 {
 	int node;
 
@@ -89,7 +93,8 @@ void poset_classification::print_progress(
 	print_progress_by_level(size);
 }
 
-void poset_classification::print_progress(double progress)
+void poset_classification::print_progress(
+		double progress)
 {
 	double progress0;
 	long int progress1, progress2;
@@ -102,13 +107,15 @@ void poset_classification::print_progress(double progress)
 			<< setw(2) << progress2 << " % " << endl;
 }
 
-void poset_classification::print_progress_by_level(int lvl)
+void poset_classification::print_progress_by_level(
+		int lvl)
 {
 
 	Poo->print_progress_by_level(lvl);
 }
 
-void poset_classification::print_orbit_numbers(int depth)
+void poset_classification::print_orbit_numbers(
+		int depth)
 {
 	int nb_nodes, j;
 
@@ -170,7 +177,8 @@ void poset_classification::prepare_fname_data_file(
 	fname = fname_base + "_" + std::to_string(depth_completed) + ".data";
 }
 
-void poset_classification::print_representatives_at_level(int lvl)
+void poset_classification::print_representatives_at_level(
+		int lvl)
 {
 	int i, l;
 
@@ -184,7 +192,8 @@ void poset_classification::print_representatives_at_level(int lvl)
 	}
 }
 
-void poset_classification::print_lex_rank(long int *set, int sz)
+void poset_classification::print_lex_rank(
+		long int *set, int sz)
 {
 #if 0
 	int r1, r2;
@@ -260,7 +269,8 @@ void poset_classification::print_level_extension_coset_info(
 		<< "Coset " << coset << " / " << nb_cosets << " : ";
 }
 
-void poset_classification::print_node(int node)
+void poset_classification::print_node(
+		int node)
 {
 	cout << "poset_classification::print_node "
 			"node " << node << ":" << endl;
@@ -286,7 +296,8 @@ void poset_classification::print_extensions_at_level(
 	}
 }
 
-void poset_classification::print_fusion_nodes(int depth)
+void poset_classification::print_fusion_nodes(
+		int depth)
 {
 	int i, f, l, j, h;
 
@@ -1801,6 +1812,26 @@ void poset_classification::export_something_worker(
 
 		write_reps_csv(
 				data1 /* lvl */, verbose_level);
+
+
+	}
+	else if (ST.stringcmp(what, "set_orbits") == 0) {
+
+		if (f_v) {
+			cout << "poset_classification::export_something_worker set_orbits" << endl;
+		}
+
+		fname = problem_label_with_path + "_set_orbits" + "_level_" + std::to_string(data1) + ".csv";
+
+		data_structures::set_of_sets *SoS;
+
+		Poo->get_set_orbits_at_level(
+				data1, SoS,
+				verbose_level);
+
+		SoS->save_csv(fname, verbose_level);
+
+		FREE_OBJECT(SoS);
 
 
 	}

@@ -43,7 +43,8 @@ void diophant_activity::init_from_file(
 	data_structures::string_tools ST;
 
 	if (!Descr->f_input_file) {
-		cout << "diophant_activity::init_from_file please use option -q <q>" << endl;
+		cout << "diophant_activity::init_from_file "
+				"please use option -q <q>" << endl;
 		exit(1);
 	}
 
@@ -83,7 +84,7 @@ void diophant_activity::perform_activity(
 			string output_file;
 
 			output_file.assign(Dio->label);
-			ST.replace_extension_with(output_file, ".sol");
+			ST.replace_extension_with(output_file, "_sol.csv");
 
 
 			Dio->write_solutions(output_file, verbose_level);
@@ -103,7 +104,7 @@ void diophant_activity::perform_activity(
 			string output_file;
 
 			output_file.assign(Dio->label);
-			ST.replace_extension_with(output_file, ".sol");
+			ST.replace_extension_with(output_file, "_sol.csv");
 
 
 			Dio->write_solutions(output_file, verbose_level);
@@ -123,7 +124,7 @@ void diophant_activity::perform_activity(
 			string output_file;
 
 			output_file.assign(Dio->label);
-			ST.replace_extension_with(output_file, ".sol");
+			ST.replace_extension_with(output_file, "_sol.csv");
 
 
 			Dio->write_solutions(output_file, verbose_level);

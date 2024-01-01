@@ -2062,6 +2062,11 @@ public:
 		long int *Spread_table, int nb_spreads, int spread_size,
 		int q,
 		int verbose_level);
+	void init_design_from_block_orbits(
+			data_structures::set_of_sets *Block_orbits,
+			long int *Solution, int width,
+			int k,
+			int verbose_level);
 	void init_incidence_geometry(
 		long int *data, int data_sz, int v, int b, int nb_flags,
 		int verbose_level);

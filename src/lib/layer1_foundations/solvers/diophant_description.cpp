@@ -112,9 +112,12 @@ int diophant_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-RHS") == 0) {
 			f_RHS = true;
-			RHS_text.assign(argv[++i]);
+			string s;
+
+			s.assign(argv[++i]);
+			RHS_text.push_back(s);
 			if (f_v) {
-				cout << "-RHS " << RHS_text << endl;
+				cout << "-RHS " << s << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-RHS_csv") == 0) {
@@ -226,7 +229,11 @@ void diophant_description::print()
 		cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
 	}
 	if (f_RHS) {
-		cout << "-RHS " << RHS_text << endl;
+		int i;
+
+		for (i = 0; i < RHS_text.size(); i++) {
+			cout << "-RHS " << RHS_text[i] << endl;
+		}
 	}
 	if (f_RHS_csv) {
 		cout << "-RHS_csv " << RHS_csv_text << endl;

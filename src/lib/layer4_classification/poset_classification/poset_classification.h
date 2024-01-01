@@ -571,14 +571,18 @@ public:
 	orbit_tracer *get_Orbit_tracer();
 	std::string &get_problem_label_with_path();
 	std::string &get_problem_label();
-	int first_node_at_level(int i);
-	poset_orbit_node *get_node(int node_idx);
+	int first_node_at_level(
+			int i);
+	poset_orbit_node *get_node(
+			int node_idx);
 	data_structures_groups::vector_ge *get_transporter();
-	int *get_transporter_i(int i);
+	int *get_transporter_i(
+			int i);
 	int get_sz();
 	int get_max_set_size();
 	long int *get_S();
-	long int *get_set_i(int i);
+	long int *get_set_i(
+			int i);
 	long int *get_set0();
 	long int *get_set1();
 	long int *get_set3();
@@ -597,7 +601,8 @@ public:
 	int size_of_invariant_subset_for_root_node();
 	int *get_invariant_subset_for_root_node();
 	classification_base_case *get_Base_case();
-	int node_has_schreier_vector(int node_idx);
+	int node_has_schreier_vector(
+			int node_idx);
 	int max_number_of_orbits_to_print();
 	int max_number_of_points_to_print_in_orbit();
 	void invoke_early_test_func(
@@ -622,7 +627,8 @@ public:
 	int test_if_stabilizer_is_trivial(
 			int level, int orbit_at_level, int verbose_level);
 	data_structures_groups::set_and_stabilizer
-		*get_set_and_stabilizer(int level,
+		*get_set_and_stabilizer(
+				int level,
 		int orbit_at_level, int verbose_level);
 	void get_set_by_level(
 			int level, int node, long int *set);
@@ -774,8 +780,10 @@ public:
 	void get_orbit_representatives(
 			int level, int &nb_orbits,
 		long int *&Orbit_reps, int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
 	void unrank_basis(
 			int *Basis, long int *S, int len);
 	void rank_basis(
@@ -811,7 +819,8 @@ public:
 		poset_classification_control *PC_control,
 		poset_with_group_action *Poset,
 		int verbose_level);
-	int main(int t0, 
+	int main(
+			int t0,
 		int schreier_depth, 
 		int f_use_invariant_subset_if_available, 
 		int f_debug, 
@@ -971,27 +980,36 @@ public:
 
 
 	// in poset_classification_io.cpp:
-	void print_set_verbose(int node);
-	void print_set_verbose(int level, int orbit);
-	void print_set(int node);
-	void print_set(int level, int orbit);
+	void print_set_verbose(
+			int node);
+	void print_set_verbose(
+			int level, int orbit);
+	void print_set(
+			int node);
+	void print_set(
+			int level, int orbit);
 	void print_progress_by_extension(
 			int size, int cur,
 		int prev, int cur_ex, int nb_ext_cur, int nb_fuse_cur);
 	void print_progress(
 			int size, int cur, int prev,
 		int nb_ext_cur, int nb_fuse_cur);
-	void print_progress(double progress);
-	void print_progress_by_level(int lvl);
-	void print_orbit_numbers(int depth);
+	void print_progress(
+			double progress);
+	void print_progress_by_level(
+			int lvl);
+	void print_orbit_numbers(
+			int depth);
 	void print();
 	void print_statistic_on_callbacks_bare();
 	void print_statistic_on_callbacks();
 	void prepare_fname_data_file(
 			std::string &fname,
 			std::string &fname_base, int depth_completed);
-	void print_representatives_at_level(int lvl);
-	void print_lex_rank(long int *set, int sz);
+	void print_representatives_at_level(
+			int lvl);
+	void print_lex_rank(
+			long int *set, int sz);
 	void print_problem_label();
 	void print_level_info(
 			int prev_level, int prev);
@@ -1001,10 +1019,12 @@ public:
 	void print_level_extension_coset_info(
 			int prev_level,
 		int prev, int cur_extension, int coset, int nb_cosets);
-	void print_node(int node);
+	void print_node(
+			int node);
 	void print_extensions_at_level(
 			std::ostream &ost, int lvl);
-	void print_fusion_nodes(int depth);
+	void print_fusion_nodes(
+			int depth);
 	void read_data_file(
 			int &depth_completed,
 		std::string &fname, int verbose_level);
@@ -1357,6 +1377,9 @@ public:
 	void save_representatives_at_level_to_csv(
 			std::string &fname,
 			int lvl, int verbose_level);
+	void get_set_orbits_at_level(
+			int lvl, data_structures::set_of_sets *&SoS,
+			int verbose_level);
 
 };
 

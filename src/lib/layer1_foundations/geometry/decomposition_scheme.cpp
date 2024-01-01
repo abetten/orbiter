@@ -704,15 +704,13 @@ void decomposition_scheme::write_csv(
 	delete [] T_row;
 	delete [] T_col;
 
-	int f_make_heading = true;
-
 	SoS_points->save_csv(
 			fname_row_classes,
-			f_make_heading, verbose_level);
+			verbose_level);
 
 	SoS_lines->save_csv(
 			fname_col_classes,
-			f_make_heading, verbose_level);
+			verbose_level);
 
 	if (f_v) {
 		cout << "decomposition_scheme::write_csv done" << endl;

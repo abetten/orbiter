@@ -665,6 +665,113 @@ void object_with_canonical_form::init_packing_from_spread_table(
 		}
 }
 
+void object_with_canonical_form::init_design_from_block_orbits(
+		data_structures::set_of_sets *Block_orbits,
+		long int *Solution, int width,
+		int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits" << endl;
+	}
+
+	if (width != Block_orbits->nb_sets) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits "
+				"width != Block_orbits->nb_sets" << endl;
+		exit(1);
+	}
+	int h, len, nb_flags;
+
+	nb_flags = 0;
+	for (h = 0; h < width; h++) {
+		if (Solution[h] == 0) {
+			continue;
+		}
+		len = Block_orbits->Set_size[h];
+		nb_flags += len;
+		if (f_v) {
+			cout << "block orbit " << h << ", number of flags = " << len << endl;
+		}
+	}
+
+	v = Block_orbits->underlying_set_size;
+	b = nb_flags / k;
+
+	if (b * k != nb_flags) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits "
+				"k does not divide the number of flags" << endl;
+		cout << "nb_flags=" << nb_flags << endl;
+		cout << "k=" << k << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits v = " << v << endl;
+		cout << "object_with_canonical_form::init_design_from_block_orbits b = " << b << endl;
+		cout << "object_with_canonical_form::init_design_from_block_orbits nb_flags = " << nb_flags << endl;
+	}
+
+	object_with_canonical_form::P = NULL;
+
+	type = t_INC;
+
+	object_with_canonical_form::set = NEW_lint(nb_flags);
+
+	int *incma;
+	int i, j, l, u, a;
+
+	incma = NEW_int(v * b);
+	Int_vec_zero(incma, v * b);
+
+	j = 0;
+	for (h = 0; h < width; h++) {
+		if (Solution[h] == 0) {
+			continue;
+		}
+		len = Block_orbits->Set_size[h];
+		l = len / k;
+		if (l * k != len) {
+			cout << "object_with_canonical_form::init_design_from_block_orbits l * k != len" << endl;
+			exit(1);
+		}
+		for (a = 0; a < l; a++, j++) {
+			for (u = 0; u < k; u++) {
+				i = Block_orbits->Sets[h][a * k + u];
+				if (i < 0 || i >= v) {
+					cout << "object_with_canonical_form::init_design_from_block_orbits "
+							"i is out of range" << endl;
+					exit(1);
+				}
+				incma[i * b + j] = 1;
+			}
+		}
+	}
+	int f;
+
+	f = 0;
+	for (i = 0; i < v * b; i++) {
+		if (incma[i]) {
+			set[f++] = i;
+		}
+	}
+	if (f != nb_flags) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits "
+				"f != nb_flags" << endl;
+		exit(1);
+	}
+	FREE_int(incma);
+	object_with_canonical_form::sz = nb_flags;
+	object_with_canonical_form::v = v;
+	object_with_canonical_form::b = b;
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_orbits done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_incidence_geometry(
 	long int *data, int data_sz, int v, int b, int nb_flags,
 	int verbose_level)

@@ -206,6 +206,27 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i],
+				"-file_of_designs_through_block_orbits") == 0) {
+
+			data_input_stream_description_element E;
+			string a, b;
+			int v, k;
+
+			a.assign(argv[++i]); // the solution file
+			b.assign(argv[++i]); // the orbits as sets of sets
+			v = ST.strtoi(argv[++i]);
+			k = ST.strtoi(argv[++i]);
+
+			E.init_file_of_designs_through_block_orbits(a, b, v, k);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-file_of_point_set") == 0) {
 
 			data_input_stream_description_element E;

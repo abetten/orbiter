@@ -1466,6 +1466,7 @@ void any_group::conjugacy_class_of(
 		std::string &label,
 		std::string &elt_data,
 		int verbose_level)
+// uses orbits_schreier::orbit_of_sets
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1578,15 +1579,18 @@ void any_group::conjugacy_class_of(
 	}
 
 	int *M;
-	int i, j;
+	int i;
 
 	M = NEW_int(Orbit.size() * A->make_element_size);
 	for (i = 0; i < Orbit.size(); i++) {
 		Subgroup_sims->element_unrank_lint(Orbit[i], Elt);
+		Int_vec_copy(Elt, M + i * A->make_element_size, A->make_element_size);
+#if 0
 		for (j = 0; j < A->make_element_size; j++) {
 			M[i * A->make_element_size + j] = Elt[j];
 		}
 		//M[i] = Orbit[i];
+#endif
 	}
 	string fname;
 

@@ -930,7 +930,7 @@ int spreadsheet::find_by_column(
 				}
 			}
 		}
-	cout << "by column not found, join_by='" << join_by << "'" << endl;
+	cout << "by column not found, label='" << join_by << "'" << endl;
 	cout << "The first row of the table is:" << endl;
 	print_table_row_detailed(0, cout);
 	//print_table(cout);

@@ -181,47 +181,131 @@ void diophant_create::init(
 	}
 
 	if (Descr->f_RHS) {
-		int *RHS;
-		int sz;
-		int i;
 
 		if (D == NULL) {
 			cout << "-RHS please specify the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Int_vec_scan(Descr->RHS_text, RHS, sz);
-		if (sz != 3 * D->m) {
-			cout << "number of values for RHS must be "
-					"3 times the number of rows of the system" << endl;
+
+		int h;
+		data_structures::string_tools ST;
+
+
+		int pos = 0;
+
+		for (h = 0; h < Descr->RHS_text.size(); h++) {
+			if (f_v) {
+				cout << "RHS " << Descr->RHS_text[h] << endl;
+			}
+			string command;
+
+			command = Descr->RHS_text[h];
+
+
+			int mult = 1;
+			diophant_equation_type type;
+			int data1;
+			int data2;
+
+			ST.parse_RHS_command(command,
+					mult, type,
+					data1, data2, verbose_level - 1);
+
+#if 0
+			std::map<std::string, std::string> symbol_table;
+
+			ST.parse_value_pairs(symbol_table,
+						evaluate_text, verbose_level - 1);
+
+
+			{
+				std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+				// Iterate through the map and print the elements
+				while (it != symbol_table.end()) {
+					int a;
+					string label;
+					string val;
+
+					label = it->first;
+					val = it->second;
+					a = stoi(val);
+					//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+					//assignment.insert(std::make_pair(label, a));
+					if (ST.stringcmp(label, "mult") == 0) {
+						mult = ST.strtoi(val);
+					}
+					else if (ST.stringcmp(label, "EQ") == 0) {
+						type = t_EQ;
+						data1 = ST.strtoi(val);
+						data2 = data1;
+					}
+					else if (ST.stringcmp(label, "LE") == 0) {
+						type = t_LE;
+						data1 = 0;
+						data2 = ST.strtoi(val);
+					}
+					else if (ST.stringcmp(label, "INT") == 0) {
+						type = t_INT;
+						string delim;
+
+						delim = "to";
+						std::size_t loc_delim = val.find(delim);
+						if (loc_delim != std::string::npos) {
+							string s1, s2;
+							s1 = val.substr(0, loc_delim);
+							s2 = val.substr(loc_delim + 2);
+							data1 = ST.strtoi(s1);
+							data2 = ST.strtoi(s2);
+						}
+						else {
+							cout << "please specify the interval in the form \"1 to 2\" where 1 is the lower bound and 2 is the upper bound" << endl;
+							exit(1);
+						}
+					}
+					else if (ST.stringcmp(label, "ZOR") == 0) {
+						type = t_ZOR;
+						data1 = 0;
+						data2 = ST.strtoi(val);
+					}
+					++it;
+				}
+			}
+#endif
+			int u;
+
+			for (u = 0; u < mult; u++, pos++) {
+				if (pos >= D->m) {
+					cout << "too many RHS conditions" << endl;
+					exit(1);
+				}
+				if (type == t_EQ) {
+					D->RHS_low[pos] = data1;
+					D->RHS[pos] = data2;
+					D->type[pos] = t_EQ;
+				}
+				else if (type == t_LE) {
+					D->RHS_low[pos] = 0;
+					D->RHS[pos] = data2;
+					D->type[pos] = t_LE;
+				}
+				else if (type == t_INT) {
+					D->RHS_low[pos] = data1;
+					D->RHS[pos] = data2;
+					D->type[pos] = t_INT;
+				}
+				else if (type == t_ZOR) {
+					D->RHS_low[pos] = data1;
+					D->RHS[pos] = data2;
+					D->type[pos] = t_ZOR;
+				}
+			}
+		} // h
+		if (pos != D->m) {
+			cout << "not enough RHS conditions" << endl;
 			exit(1);
 		}
-		for (i = 0; i < D->m; i++) {
-			if (RHS[3 * i + 2] == 1) {
-				D->RHS_low[i] = RHS[3 * i + 0];
-				D->RHS[i] = RHS[3 * i + 1];
-				D->type[i] = t_EQ;
-			}
-			else if (RHS[3 * i + 2] == 2) {
-				D->RHS_low[i] = 0;
-				D->RHS[i] = RHS[3 * i + 1];
-				D->type[i] = t_LE;
-			}
-			else if (RHS[3 * i + 2] == 3) {
-				D->RHS_low[i] = RHS[3 * i + 0];
-				D->RHS[i] = RHS[3 * i + 1];
-				D->type[i] = t_INT;
-			}
-			else if (RHS[3 * i + 2] == 4) {
-				D->RHS_low[i] = 0;
-				D->RHS[i] = RHS[3 * i + 1];
-				D->type[i] = t_ZOR;
-			}
-			else {
-				cout << "type of RHS not recognized" << endl;
-				exit(1);
-			}
-		}
-		FREE_int(RHS);
 
 	}
 
@@ -280,15 +364,30 @@ void diophant_create::init(
 	}
 
 	if (Descr->f_RHS_constant) {
-		int *RHS;
-		int sz;
-		int i;
 
 		if (D == NULL) {
 			cout << "-RHS_constant please specify "
 					"the coefficient matrix first" << endl;
 			exit(1);
 		}
+
+		data_structures::string_tools ST;
+
+		int mult = 1;
+		diophant_equation_type type;
+		int data1;
+		int data2;
+
+		ST.parse_RHS_command(Descr->RHS_constant_text,
+				mult, type,
+				data1, data2, verbose_level - 1);
+
+		// mult is not needed
+#if 0
+		int *RHS;
+		int sz;
+		int i;
+
 		Int_vec_scan(Descr->RHS_constant_text, RHS, sz);
 		if (sz != 3) {
 			cout << "sz != 3" << endl;
@@ -321,6 +420,33 @@ void diophant_create::init(
 			}
 		}
 		FREE_int(RHS);
+#endif
+
+		int i;
+
+		for (i = 0; i < D->m; i++) {
+
+			if (type == t_EQ) {
+				D->RHS_low[i] = data1;
+				D->RHS[i] = data2;
+				D->type[i] = t_EQ;
+			}
+			else if (type == t_LE) {
+				D->RHS_low[i] = 0;
+				D->RHS[i] = data2;
+				D->type[i] = t_LE;
+			}
+			else if (type == t_INT) {
+				D->RHS_low[i] = data1;
+				D->RHS[i] = data2;
+				D->type[i] = t_INT;
+			}
+			else if (type == t_ZOR) {
+				D->RHS_low[i] = data1;
+				D->RHS[i] = data2;
+				D->type[i] = t_ZOR;
+			}
+		}
 
 	}
 

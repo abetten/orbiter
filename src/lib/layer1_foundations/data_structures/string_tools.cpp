@@ -1927,7 +1927,81 @@ std::string string_tools::printf_dd(std::string &format, int value1, int value2)
 	return s2;
 }
 
+void string_tools::parse_RHS_command(std::string &command,
+		int &mult, diophant_equation_type &type,
+		int &data1, int &data2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "string_tools::parse_RHS_command" << endl;
+	}
+
+
+	std::map<std::string, std::string> symbol_table;
+
+	parse_value_pairs(symbol_table,
+			command, verbose_level - 1);
+
+	//int mult = 1;
+	//diophant_equation_type type;
+	//int data1;
+	//int data2;
+
+	{
+		std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+		// Iterate through the map and print the elements
+		while (it != symbol_table.end()) {
+			string label;
+			string val;
+
+			label = it->first;
+			val = it->second;
+			//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+			//assignment.insert(std::make_pair(label, a));
+			if (stringcmp(label, "mult") == 0) {
+				mult = strtoi(val);
+			}
+			else if (stringcmp(label, "EQ") == 0) {
+				type = t_EQ;
+				data1 = strtoi(val);
+				data2 = data1;
+			}
+			else if (stringcmp(label, "LE") == 0) {
+				type = t_LE;
+				data1 = 0;
+				data2 = strtoi(val);
+			}
+			else if (stringcmp(label, "INT") == 0) {
+				type = t_INT;
+				string delim;
+
+				delim = "to";
+				std::size_t loc_delim = val.find(delim);
+				if (loc_delim != std::string::npos) {
+					string s1, s2;
+					s1 = val.substr(0, loc_delim);
+					s2 = val.substr(loc_delim + 2);
+					data1 = strtoi(s1);
+					data2 = strtoi(s2);
+				}
+				else {
+					cout << "please specify the interval in the form \"1 to 2\" where 1 is the lower bound and 2 is the upper bound" << endl;
+					exit(1);
+				}
+			}
+			else if (stringcmp(label, "ZOR") == 0) {
+				type = t_ZOR;
+				data1 = 0;
+				data2 = strtoi(val);
+			}
+			++it;
+		}
+	}
+
+}
 
 //#############################################################################
 

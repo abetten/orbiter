@@ -966,6 +966,7 @@ enum data_input_stream_type {
 	t_data_input_stream_file_of_lines,
 	t_data_input_stream_file_of_packings,
 	t_data_input_stream_file_of_packings_through_spread_table,
+	t_data_input_stream_file_of_designs_through_block_orbits,
 	t_data_input_stream_file_of_point_set,
 	t_data_input_stream_file_of_designs,
 	t_data_input_stream_file_of_incidence_geometries,

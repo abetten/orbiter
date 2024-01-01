@@ -106,11 +106,14 @@ void orbit_of_subspaces::init(
 	int *subspace_by_rank, int k, int n, 
 	int f_has_desired_pivots, int *desired_pivots, 
 	int f_has_rank_functions, void *rank_unrank_data, 
-	int (*rank_vector_callback)(int *v, int n,
+	int (*rank_vector_callback)(
+			int *v, int n,
 			void *data, int verbose_level),
-	void (*unrank_vector_callback)(int rk, int *v, int n,
+	void (*unrank_vector_callback)(
+			int rk, int *v, int n,
 			void *data, int verbose_level),
-	void (*compute_image_of_vector_callback)(int *v, int *w,
+	void (*compute_image_of_vector_callback)(
+			int *v, int *w,
 			int *Elt, void *data, int verbose_level),
 	void *compute_image_of_vector_callback_data, 
 	data_structures_groups::vector_ge *gens,
@@ -174,11 +177,14 @@ void orbit_of_subspaces::init_lint(
 	long int *subspace_by_rank, int k, int n,
 	int f_has_desired_pivots, int *desired_pivots,
 	int f_has_rank_functions, void *rank_unrank_data,
-	long int (*rank_vector_lint_callback)(int *v, int n,
+	long int (*rank_vector_lint_callback)(
+			int *v, int n,
 			void *data, int verbose_level),
-	void (*unrank_vector_lint_callback)(long int rk, int *v, int n,
+	void (*unrank_vector_lint_callback)(
+			long int rk, int *v, int n,
 			void *data, int verbose_level),
-	void (*compute_image_of_vector_callback)(int *v, int *w,
+	void (*compute_image_of_vector_callback)(
+			int *v, int *w,
 			int *Elt, void *data, int verbose_level),
 	void *compute_image_of_vector_callback_data,
 	data_structures_groups::vector_ge *gens,

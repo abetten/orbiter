@@ -97,7 +97,7 @@ test_problem:
 
 
 
-# Section 2.8
+# Section 2.8 Symbolic Objects
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
@@ -127,10 +127,11 @@ F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3^2"
 
 
+# Chapter 3 Basic algebra
 
 
 
-# Section 3.4
+# Section 3.4 Linear algebra over finite fields
 
 
 
@@ -154,9 +155,10 @@ CODE_RS_6_4_7="\
 
 
 
+# Chapter 4 Geometry
 
 
-# Section 4.5
+# Section 4.5 Algebraic sets
 
 
 SURFACE_F9_1_EQN="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+\
@@ -173,9 +175,10 @@ HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
 HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
 
 #X_0^2*X_3 + X_1^2*X_2 + X_1*X_2^2 + X_0*X_3^2
+#X^2*W+X*W^2+Y^2*Z+Y*Z^2
 
 
-# Section 4.10
+# Section 4.10 Geometric objects
 
 
 DOILY="Row,C0,C1,C2\
@@ -226,10 +229,9 @@ EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, \
 
 
 
-# Chapter 5
+# Chapter 5 Ring Theory
 
-
-# Section 5.1
+# Section 5.1 polynomials over finite fields
 
 
 
@@ -244,7 +246,7 @@ INVERSE_SPARSE="1,31,1,25,1,22,1,21,1,15,\
 
 
 
-# Section 5.2
+# Section 5.2 multivariate polynomial rings
 
 
 
@@ -264,6 +266,8 @@ CREMONA_MAP_Y3="0"
 
 
 
+
+
 PTS_OF_SURFACE_ORBIT211_Q3_L9_E4="\
 0,1,2,5,7,8,10,14,9,12, \
 15,3,16,37,31,34,20,19,17,32,36,33"
@@ -278,13 +282,28 @@ ENDRASS_SPARSE="\
 
 
 
-# Section 6.1
+
+# Section 5.3 Algebraic geometry
+
+FILE_HERMITIAN_CURVE="Line,equation\n0,\"X^4+Y^4+Z^4\"\nEND\n\n"
+
+FILE_HERMITIAN_SURFACE="Line,equation\n0,\"X^4+Y^4+Z^4+W^4\"\nEND\n\n"
+
+
+# Chapter 6 Group Theory
+
+
+
+# Section 6.1 generic permutation groups
 
 
 
 GENERATORS_M12="3,1,9,0,10,11,6,7,8,2,4,5, 7,2,3,1,11,9,5,8,0,6,4,10"
 
-# Section 6.3
+# Section 6.2 Matrix groups
+
+
+# Section 6.3 Subgroups
 
 GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
 # (0,1,2,3,4,5,6,7,8,9,10,11,12)
@@ -341,7 +360,7 @@ PGOp_6_2_GENS="\
 
 
 
-# Section 6.4
+# Section 6.4 Linear groups, advanced topics
 
 
 
@@ -412,7 +431,7 @@ Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
 24,15,2,13,11,14,24"
 
 
-# Section 6.5
+# Section 6.5 New groups from old
 
 
 SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
@@ -422,7 +441,7 @@ SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
 
 
 
-# Section 6.7
+# Section 6.7 Group theoretic activities based on Magma
 
 # large sets of PG(2,3):
 
@@ -463,13 +482,13 @@ PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
 
 
 
-# Chapter 7
+# Chapter 7 Orbit Algorithms
 
-# Chapter 8
+# Chapter 8 Cubic Surfaces
 
 
 
-# Section 8.1
+# Section 8.1 Creation
 
 # points:
 #0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
@@ -489,7 +508,7 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 63,64,65,66,68,69,73,75,77,78,81,82"
 
 
-# Section 8.2
+# Section 8.2 Quartic Curves
 
 
 
@@ -504,21 +523,24 @@ NB_CUBIC_SURFACES_Q19=10
 NB_QUARTIC_CURVES_Q19=14
 
 
+# Section 8.3 Classification
+
+# Section 8.4 Interface to GAP
 
 
 
-# Section 9.3
-
-FILE_HERMITIAN_CURVE="Line,equation\n0,\"X^4+Y^4+Z^4\"\nEND\n\n"
-
-FILE_HERMITIAN_SURFACE="Line,equation\n0,\"X^4+Y^4+Z^4+W^4\"\nEND\n\n"
 
 
 
-# Chapter 9
+# Chapter 9 Applications
 
 
-# Section 9.3
+# Section 9.1 Number Theory
+
+# Section 9.2 Representation Theory
+
+
+# Section 9.3 Cryptography
 
 
 NTRU_N=7
@@ -572,14 +594,14 @@ ALICE_C4="1,2,1,1,0,2"
 
 
 
-# Chapter 10
+# Chapter 10 Coding Theory
 
-# Section 10.1
+# Section 10.1 Introduction
 
 CODE_5_2_3_CODEWORDS="0,7,25,30"
 
 
-# Section 10.2
+# Section 10.2 Linear codes
 
 
 SIMPLEX_CODE_GENERATOR="\
@@ -632,7 +654,7 @@ GOLAY23_CODE_GENERATOR="\
 
 
 
-# Section 10.3
+# Section 10.3 Golay codes
 
 
 
@@ -715,7 +737,7 @@ GOLAY24_2B_FIX_SUBCODE="1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, \
 
 
 
-# Section 10.4
+# Section 10.4 CRC codes
 
 
 CRC4="1,4,1,2,1,1,1,0"
@@ -786,7 +808,7 @@ CRC_ERROR_POLY_BRAVO="104*X^5+118*X^6+27*X^7+39*X^8+51*X^10+245*X^11+91*X^12+247
 
 
 
-# Section 10.5
+# Section 10.5 Reed-Muller codes
 
 
 
@@ -816,7 +838,7 @@ RM_6_GENERATOR_7="32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,\
 
 
 
-# Section 10.6
+# Section 10.6 BCH-codes
 
 
 #CODE_BCH_F8_N21_D5_GENMA
@@ -887,7 +909,7 @@ BCH_21_15_GENERATOR_MATRIX="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 BCH_21_6_GENERATOR_MATRIX=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
 
-# Section 10.7
+# Section 10.7 Reed-Solomon codes
 
 
 
@@ -985,7 +1007,7 @@ CODE_15_6_6_E="\
 
 
 
-# Section 10.9
+# Section 10.9 Bounds
 
 
 CODE_GV_N15_K6="\
@@ -1010,9 +1032,26 @@ CODE_GV_N15_K6_CHECK="\
 
 
 
-# Chapter 11
+# Chapter 11 Combinatorics
 
-# Section 11.2
+
+
+# Section 11.2 Combinatorial Objects
+
+HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,\
+10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,\
+53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82"
+
+
+HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, \
+141, 159, 176, 184, 199, 220, 235, 245, 262"
+
+HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
+139, 156, 174, 186, 199, 217, 229, 256, 264"
+
+
+
+# Section 11.2 Diophantine systems
 
 
 TEST_SYSTEM="\
@@ -1024,13 +1063,22 @@ TEST_SYSTEM="\
 1,0,1,0,0,0, \
 0,1,0,0,1,1"
 
-TEST_RHS="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
+
+# Section 11.5 Classification of Configurations and Geometries
+
+
+DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
 
 
 
+# Section 11.7 Assumed symmetry
 
 
-# Section 11.7 Design Theory - Large sets
+GEN_C5="1,2,3,4,0,6,7,8,9,5,11,12,13,14,10"
+
+
+
+# Section 11.8 Design Theory - Large sets
 
 
 
@@ -1103,14 +1151,20 @@ DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1=-subgroup \
 DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1= -mask_label "mask1" -depth 5
 
 
+# Chapter 12 Graph theory
 
-# Chapter 12
+# Section 12.1 Creating graphs
 
-# Section 12.1
+TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"
 
 
 
-# Spreads, section 12.1
+
+
+# Chapter 13 Finite geometry
+
+# Section 13.1 Spreads
+
 
 SPREAD_SET_27_RAO_RAO="\
 0,0,0,0,0,0,0,0,0, \
@@ -1188,7 +1242,7 @@ SPREADS_27_ISO_6="\
 
 
 
-# Section 12.3 Packings
+# Section 13.3 Packings
 
 
 
@@ -1227,7 +1281,7 @@ PGL_4_5_SUBGROUP_31_ME_NORMALIZER=-PGL 4 5 \
 
 
 
-# Section 12.4 BLT-Sets
+# Section 13.4 BLT-Sets
 
 
 BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,\
@@ -1238,34 +1292,14 @@ BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,\
 
 
 
-# Section 13.1
-
-TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"
+# Chapter 14 Empty
 
 
 
 
+# Chapter 15 Canonical Forms with Nauty
 
-# Chapter 14 Combinatorial Objects
-
-# Section 14.1 Combinatorial Objects
-
-HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,\
-10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,\
-53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82"
-
-
-HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, \
-141, 159, 176, 184, 199, 220, 235, 245, 262"
-
-HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
-139, 156, 174, 186, 199, 217, 229, 256, 264"
-
-
-
-# Chapter 15 Canonical Forms
-
-# Section 15.2 
+# Section 15.2 Canonical forms of objects in projective space
 
 
 
@@ -1315,7 +1349,7 @@ FILE_24_3_TFC_INC="24 24 72\
 \n-1 3"
 
 
-# Section 15.5 
+# Section 15.5 Canonical forms of linear codes
 
 # consider the binary code with generator matrix:
 # 1 0 1
@@ -1330,10 +1364,10 @@ CODE_N6_K3_Q2_GENMA="\
 
 
 
+# Chapter 16 Interfaces
 
 
-
-# Section 16.2 Poyvray
+# Section 16.2 Poyvray interface
 
 # povray colors:
 POLISHED_CHROME_WHITE=\
@@ -1609,9 +1643,21 @@ CLEBSCH_CUBICS=\
 	store n122 
 
 
-# Section 18.1 Miscellaneous
+
+# Section 16.5 The Gnuplot interface
 
 GNUPLOT_TEST_INPUT="Row,Curve-1,Curve-2\n1,2,4\n2,6,8\n3,9,10\n4,13,17\n5,17,20\n6,19,25\n7,23,30\nEND\n"
+
+# Chapter 17 Mathematical Data in Orbiter
+
+
+# Section 17.1 Mathematical on Cubic Surfaces
+
+# Section 17.2 Mathematical on BLT-sets
+
+BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
+
+BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 
 
@@ -5667,6 +5713,9 @@ Fermat_cubic_F9_c:
 				-save_ago \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Fermat_cubic_F9 \
 				-export_flag_orbits \
@@ -5852,6 +5901,7 @@ line_type_in_PG_2_11:
 		-with C -do \
 		-combinatorial_object_activity \
 			-line_type P random_sets \
+		-end
 
 
 # the second one is an arc: 3,33,40,83,102
@@ -5916,13 +5966,13 @@ octic_prepare:
 		-define D -diophant \
 			-label octic_monomials \
 			-coefficient_matrix A \
-			-RHS "8,8,1" \
+			-RHS "mult=1,EQ=8" \
 			-x_min_global 0 -x_max_global 8 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
 		-end
-	sort -r octic_monomials.sol >octic_monomials_sorted.txt
+	sort -r octic_monomials_sol.csv >octic_monomials_sorted.txt
 
 #Found 165 solutions with 210 backtrack steps
 # 165=binomial(11,3)
@@ -6454,8 +6504,12 @@ SECTION_LINEAR_GROUPS:
 test_6_2:
 	make PGL_3_2
 	make PGL_4_2
+	make PGL_4_2_multiply_all_elements
 	make PGL_4_2_export
+	make PGL_4_2_export_GAP
 	make PGL_4_2_generated
+	make PGL_5_2
+	make PGL_5_2_multiply_all_elements
 	make L_5_3
 	make L_4_5
 	make PGL_4_5
@@ -10757,6 +10811,7 @@ test_8_2:
 	make quartic_curve_13_1_report
 	make quartic_curves_19_report
 	make quartic_curve_q9_1
+	make quartic_curve_edge_q9
 	make quartic_curves_q7
 	make quartic_curves_q13
 	make quartic_curves_q13_combine
@@ -10912,6 +10967,48 @@ quartic_curve_q9_1:
 
 
 
+# the coefficient 1 is actually 4 mod 3:
+
+
+quartic_curve_edge_q9:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P2 -projective_space -n 2 -field F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-define Edge -symbolic_object \
+			-field F \
+			-managed_variables "X,Y,Z" \
+			-text "X^4-Y^4-Z^4+2*f^2*Y^2*Z^2+1*f*X^2*Y*Z" \
+		-end \
+		-define f -symbolic_object \
+			-field F \
+			-text "3" \
+		-end \
+		-define Edge_f3 -symbolic_object \
+			-field F \
+			-managed_variables "X,Y,Z" \
+			-substitute "f" Edge f \
+		-end \
+		-define C -quartic_curve \
+			-space P2 \
+			-by_symbolic_object R Edge_f3 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_equation_Edge_f3_q9_report.tex
+	open quartic_curve_equation_Edge_f3_q9_report.pdf
+
+
+
+
+
 quartic_curves_q7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
@@ -11059,7 +11156,6 @@ quartic_curves_q19_classify:
 	-end
 	pdflatex quartics_q19_orbits.tex
 	$(OPEN) quartics_q19_orbits.pdf
-
 
 
 
@@ -12849,6 +12945,9 @@ Golay24_2A_fix_weight12_c:
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Golay24_2A_fix_weight12 \
 				-export_flag_orbits \
@@ -14768,9 +14867,11 @@ test_11:
 	make test_11_3
 	make test_11_4 # slow
 	make test_11_5 # slow
-	#make test_11_6
+	make test_11_6
 	make test_11_7
 	make test_11_8
+	make test_11_9
+	make test_11_10
 
 
 
@@ -15034,7 +15135,7 @@ part10:
 		-define D -diophant \
 			-label part10 \
 			-coefficient_matrix A \
-			-RHS "10,10,1" \
+			-RHS "mult=1,EQ=10" \
 			-x_min_global 0 -x_max_global 10 \
 		-end \
 		-with D -do \
@@ -15053,13 +15154,13 @@ octic_monomials:
 		-define D -diophant \
 			-label octic_monomials \
 			-coefficient_matrix A \
-			-RHS "8,8,1" \
+			-RHS "mult=1,EQ=9" \
 			-x_min_global 0 -x_max_global 8 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
 		-end
-	sort -r octic_monomials.sol >octic_monomials_sorted.txt
+	sort -r octic_monomials_sol.csv >octic_monomials_sorted.csv
 
 #Found 165 solutions with 210 backtrack steps
 # 165=binomial(11,3)
@@ -15071,7 +15172,7 @@ solve_test_system:
 		-define D -diophant \
 			-label test_system \
 			-coefficient_matrix A \
-			-RHS $(TEST_RHS) \
+			-RHS "mult=7,EQ=1" \
 			-x_min_global 0 -x_max_global 1 \
 		-end
 
@@ -15082,7 +15183,7 @@ McKay_test:
 		-define D -diophant \
 			-label test_system \
 			-coefficient_matrix A \
-			-RHS $(TEST_RHS) \
+			-RHS "mult=7,EQ=1" \
 			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
@@ -15095,7 +15196,7 @@ DLX_test:
 		-define D \
 		-diophant -label test_system \
 			-coefficient_matrix A \
-			-RHS $(TEST_RHS) \
+			-RHS "mult=7,EQ=1" \
 			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
@@ -15126,7 +15227,7 @@ linsp6:
 		-define A -vector -format 1 -dense "15,10,6,3,1" -end \
 		-define D -diophant -label linsp6 \
 		-coefficient_matrix A \
-		-RHS "15,15,1" \
+		-RHS "mult=1,EQ=15" \
 		-x_min_global 0 \
 		-x_max_global 15 \
 		-end \
@@ -15144,7 +15245,7 @@ linsp7:
 		-define A -vector -format 1 -dense "21,15,10,6,3,1" -end \
 		-define D -diophant -label linsp7 \
 		-coefficient_matrix A \
-		-RHS "21,21,1" \
+		-RHS "mult=1,EQ=21" \
 		-x_min_global 0 \
 		-x_max_global 21 \
 		-end \
@@ -15167,7 +15268,7 @@ linsp30_pt_types:
 		-define D -diophant \
 			-label linsp30_pt_types \
 			-coefficient_matrix A \
-			-RHS "29,29,1" -x_bounds "0,1,0,27,0,24" \
+			-RHS "mult=1,EQ=29" -x_bounds "0,1,0,27,0,24" \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
@@ -15181,7 +15282,12 @@ linsp30_pt_distribution:
 		-define D -diophant \
 			-label linsp30_pt_distribution \
 			-coefficient_matrix A \
-			-RHS "30,30,1,7,7,1,135,135,1,96,96,1,0,351,2,0,276,2" \
+			-RHS "mult=1,EQ=30" \
+			-RHS "mult=1,EQ=7" \
+			-RHS "mult=1,EQ=135" \
+			-RHS "mult=1,EQ=96" \
+			-RHS "mult=1,LE=351" \
+			-RHS "mult=1,LE=276" \
 			-x_min_global 0 -x_max_global 30 \
 		-end \
 		-with D -do \
@@ -15502,7 +15608,6 @@ Desargues_path_lex_least_draw:
 	pdflatex Desargues_path_lex_least_incma.tex
 	$(OPEN) Desargues_path_lex_least_incma.pdf
 
-DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
 
 Desargues_path_can_anc_draw:
 	echo $(DESARGUES_PATH_CANONICAL_ANCESTOR) >Desargues_path_can_anc.inc
@@ -15872,6 +15977,9 @@ geo_LSQ6.inc:
 
 #LSQ6.inc
 
+
+
+
 ###############################################################################
 # Section 11.6: Design Theory
 
@@ -15883,10 +15991,6 @@ test_11_6:
 	make design_PG_2_4
 	make wreath_product_designs_n4_k2_inc.txt
 	make wreath_product_designs_n8_k6_inc.txt
-	make KM_cyclic_7
-	make KM_PGGL_2_32
-	#make KM_PGGL_2_32_solve
-	#make KM_PSL_3_5
 
 
 
@@ -15937,6 +16041,29 @@ wreath_product_designs_n8_k6_inc.txt:
 
 
 
+###############################################################################
+# Section 11.7: Assuming Symmetry
+
+SECTION_ASSUMING_SYMMETRY:
+
+test_11_7:
+
+	make KM_cyclic_7
+	make KM_PGGL_2_32
+	#make KM_PGGL_2_32_solve
+	#make KM_PSL_3_5
+	make C5_KM_2_3
+	make C5_KM_1_3
+	make C5_concatenate
+	make C5_solve
+	make C5_design_classify
+	
+
+
+
+
+
+
 KM_cyclic_7:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
@@ -15964,7 +16091,7 @@ KM_cyclic_7:
 		-define D -diophant \
 		-label "C7_KM_2_3_system" \
 		-coefficient_matrix A \
-		-RHS_constant "1,1,1" \
+		-RHS_constant "EQ=1" \
 		-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
@@ -16008,12 +16135,13 @@ KM_PGGL_2_32_solve:
 		-define D -diophant \
 		-label "KM_PGGL_2_32_KM_7_8_system" \
 		-coefficient_matrix A \
-		-RHS_constant "10,10,1" \
+		-RHS_constant "EQ=10" \
 		-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
 			-diophant_activity -solve_mckay \
 		-end
+
 
 
 
@@ -16046,7 +16174,7 @@ KM_PSL_3_5:
 		-define D -diophant \
 			-label "KM_PSL_3_5_KM_8_10_system" \
 			-coefficient_matrix A \
-			-RHS_constant "93,93,1" \
+			-RHS_constant "EQ=93" \
 			-x_min_global 0 -x_max_global 1 \
 		-end \
 		-with D -do \
@@ -16056,12 +16184,131 @@ KM_PSL_3_5:
 
 
 
+
+C5_KM_2_3:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define gens -vector -dense $(GEN_C5) -end \
+		-define G -permutation_group -symmetric_group 15 \
+			-subgroup_by_generators "C5" 5 1 gens \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label C5 -W -depth 3 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define Orb -orbits -group G \
+			-on_subsets 3 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 2 3 \
+		-end
+
+#C5_KM_2_3.csv
+
+
+C5_KM_1_3:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define gens -vector -dense $(GEN_C5) -end \
+		-define G -permutation_group -symmetric_group 15 \
+			-subgroup_by_generators "C5" 5 1 gens \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label C5 -W -depth 3 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define Orb -orbits -group G \
+			-on_subsets 3 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 1 3 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something set_orbits 3 \
+		-end \
+
+
+# 91 orbits at level 3
+
+#C5_KM_1_3.csv
+#C5_set_orbits_level_3.csv
+
+
+C5_concatenate:
+	$(ORBITER) -v 3 \
+		-csv_file_concatenate C5_KM_combined.csv 2 C5_KM_1_3.csv C5_KM_2_3.csv
+
+#C5_KM_combined.csv
+# in the combined system, there are three rows 
+# from the first system and 21 rows from the second system
+
+
+C5_solve:
+	$(ORBITER) -v 4 \
+		-define A -vector -file C5_KM_combined.csv -end \
+		-define D -diophant \
+			-label "C5_KM_combined_system" \
+			-coefficient_matrix A \
+			-x_min_global 0 \
+			-x_max_global 1 \
+			-RHS "mult=3,EQ=5" \
+			-RHS "mult=21,LE=1" \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+
+#diophant::solve_all_mckay found 21540 solutions in 61001 backtrack nodes
+#Found 21540 solutions with 61001 backtrack steps
+
+#C5_KM_combined_system_sol.csv
+
+
+C5_design_classify:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-file_of_designs_through_block_orbits \
+				C5_KM_combined_system_sol.csv \
+				C5_set_orbits_level_3.csv \
+				15 3 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-classification_prefix C5_config \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-prefix C5_config \
+				-show_incidence_matrices \
+			-end \
+		-end
+	pdflatex C5_config_classification.tex
+	open C5_config_classification.pdf
+
+
+# finds 42 isomorphism types
+
+# number 0 has group order 600
+# it is flag transitive and anti flag transitive
+# number 14 has group order 120
+# flag orbits: 15+60
+# anti flag orbits: 60+120
+
+
+
+
+
 ###############################################################################
-# Section 11.7: Design Theory - Large Sets
+# Section 11.8: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
-test_11_7:
+test_11_8:
 	make AG_2_3.inc
 	make LS_AG_2_3_design_table_create
 	make AG_2_3_on_designs
@@ -16283,11 +16530,11 @@ design_PG_2_3_group_5_sol_0:
 
 
 ###############################################################################
-# Section 11.8: Design Theory - Delandtsheer Doyen
+# Section 11.9: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
-test_11_8:
+test_11_9:
 	make DD_PP4
 	make DD_PP4_span_design
 	make DD_PP4_design_orbit
@@ -16427,9 +16674,16 @@ PG_2_27_special:
 
 
 ###############################################################################
-# Section 11.9: Tactical Decompositions
+# Section 11.10: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
+
+test_11_10:
+	make max_arc_16_4_start
+	make max_arc_16_4_convert_stack_tdo
+	make max_arc_16_4_convert_stack_tdo
+	make max_arc_16_4r_print
+
 
 max_arc_16_4_start:
 	$(ORBITER) -v 4 -maximal_arc_parameters 16 4
@@ -16438,7 +16692,7 @@ max_arc_16_4_start:
 max_arc_16_4_convert_stack_tdo:
 	$(ORBITER) -v 4 -convert_stack_to_tdo max_arc_q16_r4.stack
 
-max_arc_16_4_refine:
+max_arc_16_4_convert_stack_tdo:
 	$(ORBITER) -v 4 -tdo_refinement \
 		-input_file max_arc_q16_r4.tdo -dual_is_linear_space -end
 	
@@ -19037,6 +19291,9 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix EC \
 				-export_flag_orbits \
@@ -19072,6 +19329,9 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 				-save_ago \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Hirschfeld_surface_q4 \
 				-export_flag_orbits \
@@ -19160,6 +19420,9 @@ Hirschfeld_q4_set_c:
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Hirschfeld_surface_q4 \
 				-show_TDO \
@@ -19198,6 +19461,9 @@ Dickson_sets_stabilizer:
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Dickson_sets \
 				-show_TDO \
@@ -19224,6 +19490,9 @@ Endrass_7c: Endrass_F7.txt
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Endrass_F7 \
 				-show_TDO \
@@ -19255,6 +19524,9 @@ hyperoval_16_canonical_form:
 				-save_transversal \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix hyperoval_q16 \
 				-export_flag_orbits \
@@ -19297,6 +19569,9 @@ cubic_curves_PG_2_8_canon:
 				-save_ago \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix cc_8 \
 				-export_flag_orbits \
@@ -19327,6 +19602,9 @@ ovoid_q8_canon: ovoid_q8.txt
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix ovoid \
 				-show_TDO \
@@ -19360,6 +19638,9 @@ ovoid_ST_q8_canon: ovoid_ST_q8.txt
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix ovoid_ST \
 				-show_TDO \
@@ -19412,6 +19693,9 @@ quartic_curve_25_0_0_canonical:
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix quartic_25_0_0 \
 				-show_TDO \
@@ -19440,6 +19724,9 @@ CRC_BCH_Q16_N51_D3_canonical:
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix BCH_Q16_N51 \
 				-show_TDO \
@@ -19471,6 +19758,9 @@ Veronese_1_3_q7_c:
 				-save_ago \
 				-max_TDO_depth 4 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix veronese_1_3_q7 \
 				-show_TDO \
@@ -19519,6 +19809,9 @@ geo_7_3_c:
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 7_3 \
 				-export_flag_orbits \
@@ -19557,6 +19850,9 @@ geo_10_3_c:
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 10_3 \
 				-export_flag_orbits \
@@ -19602,6 +19898,9 @@ geo_10_3_c_lex_least:
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 10_3 \
 				-export_flag_orbits \
@@ -19669,7 +19968,7 @@ geo_15_3_c:
 
 TFC_24_3_c:
 	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
-	$(ORBITER) -v 6 \
+	$(ORBITER) -v 20 \
 		-define C -combinatorial_object \
 			-file_of_incidence_geometries 24_3_TFC.inc 24 24 72 \
 		-end \
@@ -19680,6 +19979,9 @@ TFC_24_3_c:
 			-label 24_3_TFC \
 			-save_ago \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 24_3_TFC \
 				-export_flag_orbits \
@@ -19713,6 +20015,9 @@ geo_40_4_g4_c:
 				-label 40_4_g4 \
 				-save_ago \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 40_4_g4 \
 				-export_flag_orbits \
@@ -19749,6 +20054,9 @@ geo_17_3_g4_c:
 				-label 17_3_g4 \
 				-save_ago \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix 17_3_g4 \
 				-export_flag_orbits \
@@ -19775,6 +20083,9 @@ AG_2_3_c: AG_2_3.inc
 				-save_ago \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix AG_2_3 \
 				-export_flag_orbits \
@@ -19811,6 +20122,9 @@ geo_LSQ6_c: LSQ6.inc
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix LSQ6 \
 				-export_flag_orbits \
@@ -19885,6 +20199,9 @@ LS_AG_2_3_solutions_classify:
 				-label LS_AG_2_3 \
 				-max_TDO_depth 10 \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix LS_AG_2_3 \
 				-export_flag_orbits \
@@ -19924,6 +20241,9 @@ design_27c:
 			-canonical_form_PG P \
 			-classification_prefix design \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 		-end
 	pdflatex design_classification.tex
@@ -19955,6 +20275,9 @@ design_PG_2_3_canonical:
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix PG_2_3 \
 				-export_flag_orbits \
@@ -19990,6 +20313,9 @@ wreath_product_designs_n4_k2_c: wreath_product_designs_n4_k2_inc.txt
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix wreath_4_2 \
 				-export_flag_orbits \
@@ -20018,6 +20344,9 @@ wreath_product_designs_n8_k6_c: wreath_product_designs_n8_k6_inc.txt
 				-save_ago \
 				-save_transversal \
 			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix wreath_8_6 \
 				-export_flag_orbits \
@@ -20576,6 +20905,9 @@ Edge_curve_17_nauty:
 				-save_transversal \
 				-max_TDO_depth 10 \
 				-end \
+			-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-report \
 				-prefix Edge_curve_q17 \
 				-export_flag_orbits \
@@ -20639,6 +20971,7 @@ test_16:
 	make test_16_2
 	make test_16_3
 	make test_16_4
+	make test_16_5
 
 
 ###############################################################################
@@ -21761,6 +22094,39 @@ finish { diffuse 0.9 phong 1}}" \
 	mv makefile_animation POV
 
 
+###############################################################################
+# Section 16.5: Gnuplot interface
+
+
+
+SECTION_GNUPLOT_INTERFACE:
+
+
+
+test_16_5:
+	make gnuplot_test_data
+	make gnuplot_Eulerfunction_50
+
+gnuplot_test_data:
+	echo $(GNUPLOT_TEST_INPUT) >gnuplot_test_data.csv
+	$(ORBITER) -v 3 \
+		-gnuplot gnuplot_test_data.csv \
+		"Gnuplot test data" \
+		"Input" \
+		"Output"
+	$(OPEN) gnuplot_test_data_gnuplot.png
+
+
+gnuplot_Eulerfunction_50:
+	$(ORBITER) -v 1 -eulerfunction_interval 1 50
+	$(ORBITER) -v 3 \
+		-gnuplot table_eulerfunction_1_50.csv \
+		"Euler function" \
+		"Input" \
+		"Output"
+
+
+#Row,N,PHI,NBPF,NBDPF
 
 
 ###############################################################################
@@ -21770,10 +22136,11 @@ finish { diffuse 0.9 phong 1}}" \
 
 test_17:
 	make test_17_1
+	make test_17_2
 
 
 ###############################################################################
-# Section 17.1: Mathematical Data in Orbiter
+# Section 17.1: Mathematical Data on Cubic Surfaces
 
 SECTION_MATHEMATICAL_DATA:
 
@@ -21783,13 +22150,6 @@ test_17_1:
 	make make_table_of_quartic_curves
 	make cubic_surfaces_table_q17
 	make quartic_curves_table_q17
-	make blt_set_table_q7
-	make blt_set_table_q9
-	make blt_set_table_q13
-	make blt_set_table
-	#BLT_ORDER_Q
-	#BLT_NUMBER_ISO
-	make blt_set_export_gap
 
 
 make_table_of_surfaces:
@@ -21830,6 +22190,22 @@ quartic_curves_table_q17:
 		-end
 
 # quartic_curves_q17_info.csv
+
+
+
+###############################################################################
+# Section 17.2: Mathematical Data on BLT-Sets
+
+SECTION_MATHEMATICAL_DATA:
+
+
+test_17_2:
+	make blt_set_table_q7
+	make blt_set_table_q9
+	make blt_set_table_q13
+	make blt_set_table
+	make blt_set_export_gap
+
 
 
 blt_set_table_q7: 
@@ -21876,9 +22252,6 @@ blt_set_table:
 		-end_loop_over i \
 		-print_symbols
 
-BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
-
-BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 blt_set_export_gap: 
 	$(ORBITER) -v 30 \
@@ -21925,8 +22298,6 @@ test_18_1:
 	make misc_select
 	make misc_join
 	make table_mod_12
-	make gnuplot_test_data
-	make gnuplot_Eulerfunction_50
 
 
 
@@ -21962,27 +22333,6 @@ table_mod_12:
 		-end
 
 
-
-gnuplot_test_data:
-	echo $(GNUPLOT_TEST_INPUT) >gnuplot_test_data.csv
-	$(ORBITER) -v 3 \
-		-gnuplot gnuplot_test_data.csv \
-		"Gnuplot test data" \
-		"Input" \
-		"Output"
-	$(OPEN) gnuplot_test_data_gnuplot.png
-
-
-gnuplot_Eulerfunction_50:
-	$(ORBITER) -v 1 -eulerfunction_interval 1 50
-	$(ORBITER) -v 3 \
-		-gnuplot table_eulerfunction_1_50.csv \
-		"Euler function" \
-		"Input" \
-		"Output"
-
-
-#Row,N,PHI,NBPF,NBDPF
 
 
 ###############################################################################

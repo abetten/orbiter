@@ -137,7 +137,7 @@ public:
 
 
 	int f_RHS;
-	std::string RHS_text;
+	std::vector<std::string> RHS_text;
 
 	int f_RHS_csv;
 	std::string RHS_csv_text;

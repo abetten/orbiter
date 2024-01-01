@@ -1618,6 +1618,102 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 	}
 }
 
+void poset_of_orbits::get_set_orbits_at_level(
+		int lvl, data_structures::set_of_sets *&SoS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::get_set_orbits_at_level" << endl;
+	}
+
+	int i, nb_orbits;
+	long int *set;
+	groups::strong_generators *Strong_gens;
+	long int *Length;
+	long int *Length_expanded;
+
+	set = NEW_lint(lvl);
+
+	nb_orbits = PC->nb_orbits_at_level(lvl);
+	Length = NEW_lint(nb_orbits);
+	Length_expanded = NEW_lint(nb_orbits);
+
+
+	Strong_gens = PC->get_poset()->Strong_gens;
+
+	orbits_schreier::orbit_of_sets **Orb;
+
+	Orb = (orbits_schreier::orbit_of_sets **) NEW_pvoid(nb_orbits);
+
+	for (i = 0; i < nb_orbits; i++) {
+
+		get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
+
+		orbiter_kernel_system::file_io Fio;
+
+
+		Orb[i] = NEW_OBJECT(orbits_schreier::orbit_of_sets);
+
+		Orb[i]->init(PC->get_poset()->A, PC->get_poset()->A2,
+				set, lvl /* sz */,
+				Strong_gens->gens,
+				verbose_level);
+
+		if (f_v) {
+			cout << "poset_classification::get_set_orbits_at_level "
+					"orbit " << i << " / " << nb_orbits
+					<< " Found an orbit of size " << Orb[i]->used_length << endl;
+		}
+
+		Length[i] = Orb[i]->used_length;
+		Length_expanded[i] = Length[i] * lvl;
+
+	}
+
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
+
+	SoS->init_basic(
+			PC->get_poset()->A2->degree,
+			nb_orbits /* nb_sets */,
+			Length_expanded,
+			verbose_level);
+	for (i = 0; i < nb_orbits; i++) {
+
+		long int *Table;
+		int orbit_length;
+
+		Orb[i]->get_table_of_orbits(
+				Table,
+				orbit_length, lvl,
+				verbose_level);
+
+		if (orbit_length * lvl != Length_expanded[i]) {
+			cout << "poset_classification::get_set_orbits_at_level "
+					"orbit length is wrong" << endl;
+			exit(1);
+		}
+
+		Lint_vec_copy(Table, SoS->Sets[i], Length_expanded[i]);
+
+		FREE_lint(Table);
+	}
+
+
+	FREE_lint(set);
+	FREE_lint(Length);
+	FREE_lint(Length_expanded);
+
+	for (i = 0; i < nb_orbits; i++) {
+		FREE_OBJECT(Orb[i]);
+	}
+	FREE_pvoid((void **) Orb);
+
+	if (f_v) {
+		cout << "poset_classification::get_set_orbits_at_level done" << endl;
+	}
+}
 
 
 

@@ -876,16 +876,31 @@ void diophant::write_solutions(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, h;
-	vector<int> res;
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "diophant::write_solutions" << endl;
 	}
 
+
+	int *Sol;
+	int nb_sol, width;
+
+	width = n;
+
+	get_solutions_full_length(
+			Sol,
+			nb_sol, 0 /*verbose_level*/);
+
+	Fio.Csv_file_support->int_matrix_write_csv(fname, Sol, nb_sol, width);
+
+
+#if 0
+
 	{
 		ofstream fp(fname);
+		int i, j, h;
+		vector<int> res;
 
 		fp << _resultanz << " " << n << endl;
 		for (i = 0; i < _resultanz; i++) {
@@ -919,6 +934,8 @@ void diophant::write_solutions(
 		}
 		fp << "-1" << endl;
 	}
+#endif
+
 	if (f_v) {
 		cout << "diophant::write_solutions written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;

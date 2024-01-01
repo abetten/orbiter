@@ -60,6 +60,8 @@ void data_input_stream::init(
 	if (f_v) {
 		cout << "data_input_stream::init "
 				"after read_objects" << endl;
+		cout << "data_input_stream::init "
+				"nb_objects_to_test=" << nb_objects_to_test << endl;
 	}
 
 	if (f_v) {
@@ -134,14 +136,15 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			int underlying_set_size = 0;
 
 			if (f_v) {
-				cout << "data_input_stream::read_objects "
+				cout << "data_input_stream::count_number_of_objects_to_test "
 						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 				cout << "number of sets = " << SoS->nb_sets << endl;
 			}
 
@@ -222,7 +225,8 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			nb_obj = SoS->nb_sets;
@@ -237,6 +241,61 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 			nb_objects_to_test += nb_obj;
 		}
+		else if (Descr->Input[input_idx].input_type ==
+				t_data_input_stream_file_of_designs_through_block_orbits) {
+
+			string fname_solutions; // the solution file
+			string fname_block_orbits; // the orbits as sets of sets
+			int v;
+			int k;
+
+			fname_solutions = Descr->Input[input_idx].input_string;
+			fname_block_orbits = Descr->Input[input_idx].input_string2;
+			v = Descr->Input[input_idx].input_data1;
+			k = Descr->Input[input_idx].input_data2;
+
+			if (f_v) {
+				cout << "data_input_stream::count_number_of_objects_to_test "
+						"t_data_input_stream_file_of_designs_through_block_orbits" << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test "
+						"v = " << v << " k = " << k << endl;
+			}
+
+			long int *Solutions;
+			int nb_solutions;
+			int width;
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading solutions from file "
+					<< fname_solutions << endl;
+			}
+
+			Fio.Csv_file_support->lint_matrix_read_csv(
+					fname_solutions,
+					Solutions, nb_solutions, width,
+					0 /* verbose_level */);
+
+			if (f_v) {
+				cout << "Reading spread table from file "
+						<< fname_solutions << " done" << endl;
+				cout << "The file contains " << nb_solutions
+						<< " solutions" << endl;
+			}
+
+			nb_obj = nb_solutions;
+
+
+			FREE_lint(Solutions);
+			if (f_v) {
+				cout << "The file " << Descr->Input[input_idx].input_string
+					<< " has " << nb_obj << " objects" << endl;
+			}
+
+			nb_objects_to_test += nb_obj;
+
+
+		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
 			if (f_v) {
 				cout << "input set of points from file "
@@ -249,6 +308,8 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			}
 
 			nb_objects_to_test += nb_obj;
+
+
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs) {
 			if (f_v) {
@@ -263,8 +324,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				nck = Combi.int_n_choose_k(Descr->Input[input_idx].input_data1, Descr->Input[input_idx].input_data3);
 				SoS = NEW_OBJECT(set_of_sets);
 
-				cout << "classify_objects_using_nauty Reading the file " << Descr->Input[input_idx].input_string
-					<<  " which contains designs on " << Descr->Input[input_idx].input_data1 << " points, nck=" << nck << endl;
+				cout << "classify_objects_using_nauty "
+						"Reading the file " << Descr->Input[input_idx].input_string
+					<<  " which contains designs on " << Descr->Input[input_idx].input_data1
+					<< " points, nck=" << nck << endl;
 				SoS->init_from_file(
 						nck /* underlying_set_size */,
 						Descr->Input[input_idx].input_string, verbose_level);
@@ -289,7 +352,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 			std::vector<std::vector<int> > Geos;
 
-			Fio.read_incidence_file(Geos, m, n, nb_flags, Descr->Input[input_idx].input_string, verbose_level);
+			Fio.read_incidence_file(
+					Geos, m, n, nb_flags,
+					Descr->Input[input_idx].input_string,
+					verbose_level);
 			if (f_v) {
 				cout << "input incidence geometries from file "
 						"the file contains " << Geos.size() << "incidence geometries" << endl;
@@ -319,7 +385,9 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			std::vector<std::vector<int> > Geos;
 
 			Fio.read_incidence_by_row_ranks_file(
-					Geos, m, n, r, Descr->Input[input_idx].input_string, verbose_level);
+					Geos, m, n, r,
+					Descr->Input[input_idx].input_string,
+					verbose_level);
 			if (f_v) {
 				cout << "input incidence geometries from file "
 						"the file contains " << Geos.size() << "incidence geometries" << endl;
@@ -762,6 +830,109 @@ void data_input_stream::read_objects(int verbose_level)
 
 		}
 
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs_through_block_orbits) {
+
+			string fname_solutions; // the solution file
+			string fname_block_orbits; // the orbits as sets of sets
+			int v;
+			int k;
+
+			fname_solutions = Descr->Input[input_idx].input_string;
+			fname_block_orbits = Descr->Input[input_idx].input_string2;
+			v = Descr->Input[input_idx].input_data1;
+			k = Descr->Input[input_idx].input_data2;
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs_through_block_orbits" << endl;
+				cout << "data_input_stream::read_objects v = " << v << endl;
+				cout << "data_input_stream::read_objects k = " << k << endl;
+			}
+
+
+			orbiter_kernel_system::file_io Fio;
+			data_structures::set_of_sets *SoS;
+
+			string col_label;
+
+			col_label = "C1";
+
+
+			Fio.Csv_file_support->read_column_and_parse(
+					fname_block_orbits, col_label,
+					SoS,
+					verbose_level);
+
+			SoS->underlying_set_size = v;
+
+#if 0
+			SoS = NEW_OBJECT(data_structures::set_of_sets);
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading the file " << fname_block_orbits << endl;
+			}
+			SoS->init_from_file(
+					underlying_set_size,
+					fname_block_orbits, verbose_level);
+#endif
+
+			if (f_v) {
+				cout << "Read the file " << fname_block_orbits
+						<< ", underlying_set_size=" << SoS->underlying_set_size << endl;
+				SoS->print_table();
+			}
+
+
+			long int *Solutions;
+			int nb_solutions;
+			int width;
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading solutions from file "
+					<< fname_solutions << endl;
+			}
+
+			Fio.Csv_file_support->lint_matrix_read_csv(
+					fname_solutions,
+					Solutions, nb_solutions, width,
+					0 /* verbose_level */);
+
+			if (f_v) {
+				cout << "Reading spread table from file "
+						<< fname_solutions << " done" << endl;
+				cout << "The file contains " << nb_solutions
+						<< " solutions" << endl;
+			}
+
+
+			int h;
+
+			for (h = 0; h < nb_solutions; h++) {
+
+
+				geometry::object_with_canonical_form *OwCF;
+
+
+				OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+
+				OwCF->init_design_from_block_orbits(
+						SoS,
+						Solutions + h * width, width,
+						k,
+						verbose_level);
+
+				Objects.push_back(OwCF);
+			}
+			FREE_lint(Solutions);
+
+			FREE_OBJECT(SoS);
+
+		}
+
+
+
 
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_packings) {
 
@@ -779,7 +950,8 @@ void data_input_stream::read_objects(int verbose_level)
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", "
+						"underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			if (f_v) {
