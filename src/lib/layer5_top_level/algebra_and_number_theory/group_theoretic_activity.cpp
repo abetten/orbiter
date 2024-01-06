@@ -1122,13 +1122,19 @@ void group_theoretic_activity::perform_activity(
 			exit(1);
 		}
 
+
+		ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		HPD = Get_ring(Descr->representation_on_polynomials_ring);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before Algebra.representation_on_polynomials" << endl;
 		}
 		Algebra.representation_on_polynomials(
 				AG->LG,
-				Descr->representation_on_polynomials_degree,
+				HPD,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "

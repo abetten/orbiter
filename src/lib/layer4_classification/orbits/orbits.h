@@ -80,6 +80,10 @@ public:
 			int *coeff, int verbose_level);
 	void reallocate(
 			int *&Q, int Q_len, int verbose_level);
+	void get_table(
+			std::string *&Table, std::string *&Headings,
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
 	void get_transporter(
 			int idx, int *transporter, int verbose_level);
 		// transporter is an element which maps 

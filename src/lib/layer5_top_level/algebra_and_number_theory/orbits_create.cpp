@@ -92,9 +92,6 @@ void orbits_create::init(
 			exit(1);
 		}
 
-		//f_override_generators = false;
-		//std::string override_generators_label;
-
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity before AG->orbits_on_points" << endl;
 		}
@@ -110,73 +107,6 @@ void orbits_create::init(
 			cout << "group_theoretic_activity::perform_activity after AG->orbits_on_points" << endl;
 		}
 
-#if 0
-		if (Descr->f_stabilizer) {
-
-			int orbit_idx = 0;
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity before Orb->stabilizer_of" << endl;
-			}
-			Orb->stabilizer_of(orbit_idx, verbose_level);
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity after Orb->stabilizer_of" << endl;
-			}
-		}
-
-		if (Descr->f_stabilizer_of_orbit_rep) {
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity f_stabilizer_of_orbit_rep" << endl;
-			}
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity f_stabilizer_of_orbit_rep "
-						"stabilizer_of_orbit_rep_orbit_idx=" << Descr->stabilizer_of_orbit_rep_orbit_idx << endl;
-			}
-
-			int orbit_idx = Descr->stabilizer_of_orbit_rep_orbit_idx;
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity f_stabilizer_of_orbit_rep "
-						"orbit_idx=" << orbit_idx << endl;
-			}
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity before Orb->stabilizer_of" << endl;
-			}
-			Orb->stabilizer_of(orbit_idx, verbose_level);
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity after Orb->stabilizer_of" << endl;
-			}
-		}
-
-
-		if (Descr->f_report) {
-
-			Orb->create_latex_report(verbose_level);
-
-		}
-
-		if (Descr->f_export_trees) {
-
-			string fname_tree_mask;
-			int orbit_idx;
-
-			fname_tree_mask = "orbit_" + Group->A->label + "_%d.layered_graph";
-
-			for (orbit_idx = 0; orbit_idx < Orb->Sch->nb_orbits; orbit_idx++) {
-
-				cout << "orbit " << orbit_idx << " / " <<  Orb->Sch->nb_orbits
-						<< " before Sch->export_tree_as_layered_graph" << endl;
-
-				Orb->Sch->export_tree_as_layered_graph(orbit_idx,
-						fname_tree_mask,
-						verbose_level - 1);
-			}
-		}
-#endif
-
-		//FREE_OBJECT(Orb);
 
 	}
 
@@ -224,7 +154,8 @@ void orbits_create::init(
 		}
 
 		poset_classification::poset_classification_control *Control =
-				Get_object_of_type_poset_classification_control(Descr->on_subsets_poset_classification_control_label);
+				Get_object_of_type_poset_classification_control(
+						Descr->on_subsets_poset_classification_control_label);
 
 
 		if (f_v) {
@@ -292,7 +223,8 @@ void orbits_create::init(
 		}
 
 		poset_classification::poset_classification_control *Control =
-				Get_object_of_type_poset_classification_control(Descr->on_subspaces_poset_classification_control_label);
+				Get_object_of_type_poset_classification_control(
+						Descr->on_subspaces_poset_classification_control_label);
 
 
 		if (f_v) {
@@ -449,8 +381,6 @@ void orbits_create::init(
 			exit(1);
 		}
 
-		Of_One_polynomial = NEW_OBJECT(orbits_on_polynomials);
-
 
 
 		ring_theory::homogeneous_polynomial_domain *HPD;
@@ -462,6 +392,9 @@ void orbits_create::init(
 		expression_parser::symbolic_object_builder *Symbol;
 
 		Symbol = Get_symbol(Descr->of_one_polynomial_equation);
+
+
+		Of_One_polynomial = NEW_OBJECT(orbits_on_polynomials);
 
 		if (f_v) {
 			cout << "orbits_create::init "
@@ -492,40 +425,11 @@ void orbits_create::init(
 			cout << "orbits_create::init control = " << Descr->on_cubic_curves_control << endl;
 		}
 
-#if 0
-		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
-			exit(1);
-		}
-
-		if (!Group->f_linear_group) {
-			cout << "orbits_create::init group must be linear" << endl;
-			exit(1);
-		}
-#endif
-		//apps_geometry::arc_generator_description *Arc_generator_description;
-		//apps_geometry::classify_cubic_curves *CCC;
 
 
 		Arc_generator_description = Get_object_of_type_arc_generator_control(
 				Descr->on_cubic_curves_control);
 
-#if 0
-		projective_geometry::projective_space_global G;
-
-		if (f_v) {
-			cout << "orbits_create::init "
-					"before G.do_classify_cubic_curves" << endl;
-		}
-		G.do_classify_cubic_curves(
-				//PA,
-				Arc_generator_description,
-				verbose_level);
-		if (f_v) {
-			cout << "orbits_create::init "
-					"after G.do_classify_cubic_curves" << endl;
-		}
-#endif
 
 		projective_geometry::projective_space_with_action *PA;
 
@@ -638,11 +542,6 @@ void orbits_create::init(
 					<< Descr->Canonical_form_classifier_description->space_label << endl;
 		}
 
-#if 0
-		Descr->Canonical_form_classifier_description->PA =
-				Get_object_of_projective_space(
-						Descr->Canonical_form_classifier_description->space_label);
-#endif
 
 		if (Descr->Canonical_form_classifier_description->f_algorithm_substructure) {
 
@@ -675,19 +574,6 @@ void orbits_create::init(
 
 			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
 
-#if 0
-			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
-						"before Classifier.report" << endl;
-			}
-			Canonical_form_classifier->report(
-					Descr->Canonical_form_classifier_description->fname_base_out,
-					verbose_level);
-			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
-						"after Classifier.report" << endl;
-			}
-#endif
 
 			f_has_classification_by_canonical_form = true;
 
@@ -723,19 +609,6 @@ void orbits_create::init(
 
 			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
 
-#if 0
-			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
-						"before Classifier.report" << endl;
-			}
-			Canonical_form_classifier->report(
-					Descr->Canonical_form_classifier_description->fname_base_out,
-					verbose_level);
-			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
-						"after Classifier.report" << endl;
-			}
-#endif
 
 			f_has_classification_by_canonical_form = true;
 

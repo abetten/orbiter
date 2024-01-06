@@ -218,6 +218,11 @@ public:
 			std::string *Row_headings,
 			std::string *Col_headings,
 			int verbose_level);
+	void write_table_of_strings_with_col_headings(
+			std::string &fname,
+			int nb_rows, int nb_cols, std::string *Table,
+			std::string *Col_headings,
+			int verbose_level);
 
 	int read_column_and_count_nb_sets(
 			std::string &fname, std::string &col_label,

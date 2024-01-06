@@ -309,7 +309,7 @@ public:
 			int *&relative_order_table, int verbose_level);
 	void representation_on_polynomials(
 			groups::linear_group *LG,
-			int degree_of_poly,
+			ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 
 	void do_eigenstuff_with_coefficients(
@@ -952,7 +952,7 @@ public:
 	//int f_classify_cubic_curves;
 
 	int f_representation_on_polynomials;
-	int representation_on_polynomials_degree;
+	std::string representation_on_polynomials_ring;
 
 
 
@@ -1393,15 +1393,19 @@ public:
 
 	//geometry::projective_space *P;
 
-	actions::action *A2;
+	actions::action *A2; // induced_action_on_homogeneous_polynomials
 
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
 
+	// initialized by init:
+	int f_has_Sch;
 	groups::schreier *Sch;
 	ring_theory::longinteger_object full_go;
 
+	// initialized by orbit_of_one_polynomial:
+	int f_has_Orb;
 	orbits_schreier::orbit_of_equations *Orb;
 
 	std::string fname_base;

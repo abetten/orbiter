@@ -84,7 +84,7 @@ int graph_theoretic_activity_description::read_arguments(
 		if (ST.stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = true;
 			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
-			i += Clique_finder_control->parse_arguments(argc - i - 1, argv + i + 1);
+			i += Clique_finder_control->parse_arguments(argc - i - 1, argv + i + 1) + 1;
 		}
 		else if (ST.stringcmp(argv[i], "-find_subgraph") == 0) {
 			f_find_subgraph = true;

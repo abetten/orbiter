@@ -360,7 +360,61 @@ PGOp_6_2_GENS="\
 
 
 
-# Section 6.4 Linear groups, advanced topics
+
+
+# Section 6.4 New groups from old
+
+
+SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
+1,0,0,0,0,12,12,6,6,0,0,7,1,0,2,0, \
+0,1,1,7,3,9,9,11,2,10,10,3,9,9,1,11"
+
+
+
+
+# Section 6.6 Group theoretic activities based on Magma
+
+# large sets of PG(2,3):
+
+GENERATORS_H5="1,2,3,4,0,6,7,8,9,5,10,11,12"
+# (0, 1, 2, 3, 4)(5, 6, 7, 8, 9)
+
+GENERATORS_N5="\
+0,1,2,3,4,9,5,6,7,8,10,11,12, \
+0,1,2,3,4,5,6,7,8,9,10,12,11, \
+0,4,3,2,1,5,9,8,7,6,10,11,12, \
+0,2,4,1,3,5,7,9,6,8,10,11,12, \
+0,1,2,3,4,5,6,7,8,9,11,10,12, \
+1,2,3,4,0,6,7,8,9,5,10,11,12, \
+5,9,8,7,6,0,4,3,2,1,10,11,12"
+
+
+PGOM_6_2_CLASS_2A_REP="1,0,0,0,0,0,0,1,0,0,\
+0,0,0,0,1,0,0,0,0,0,1,1,1,1,0,0,1,0,0,1,0,0,1,0,1,0"
+
+FILE_NAME_PGOM_6_2_CLASS_2A="PGOm_6_2_class_of_2A.csv"
+
+PGOM_6_2_CLASS_2A_REP_CLEAN="1,0,0,0,0,0,0,1,0,0,\
+0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1"
+
+PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0, \
+1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1, \
+1,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,1, \
+1,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1,1, \
+1,0,0,0,0,0,1,1,1,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1, \
+0,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1,0,0,0,0,0,1,0,1,1,1,1,1,1, \
+1,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1, \
+0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1"
+
+
+
+# Section 6.7 Group theoretic activities based on GAP
+
+
+
+# Section 6.8 Linear groups, advanced topics
 
 
 
@@ -431,58 +485,14 @@ Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
 24,15,2,13,11,14,24"
 
 
-# Section 6.5 New groups from old
-
-
-SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
-1,0,0,0,0,12,12,6,6,0,0,7,1,0,2,0, \
-0,1,1,7,3,9,9,11,2,10,10,3,9,9,1,11"
-
-
-
-
-# Section 6.7 Group theoretic activities based on Magma
-
-# large sets of PG(2,3):
-
-GENERATORS_H5="1,2,3,4,0,6,7,8,9,5,10,11,12"
-# (0, 1, 2, 3, 4)(5, 6, 7, 8, 9)
-
-GENERATORS_N5="\
-0,1,2,3,4,9,5,6,7,8,10,11,12, \
-0,1,2,3,4,5,6,7,8,9,10,12,11, \
-0,4,3,2,1,5,9,8,7,6,10,11,12, \
-0,2,4,1,3,5,7,9,6,8,10,11,12, \
-0,1,2,3,4,5,6,7,8,9,11,10,12, \
-1,2,3,4,0,6,7,8,9,5,10,11,12, \
-5,9,8,7,6,0,4,3,2,1,10,11,12"
-
-
-PGOM_6_2_CLASS_2A_REP="1,0,0,0,0,0,0,1,0,0,\
-0,0,0,0,1,0,0,0,0,0,1,1,1,1,0,0,1,0,0,1,0,0,1,0,1,0"
-
-FILE_NAME_PGOM_6_2_CLASS_2A="PGOm_6_2_class_of_2A.csv"
-
-PGOM_6_2_CLASS_2A_REP_CLEAN="1,0,0,0,0,0,0,1,0,0,\
-0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1"
-
-PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
-1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1, \
-1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0, \
-1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1, \
-1,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,1, \
-1,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1,1, \
-1,0,0,0,0,0,1,1,1,1,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1, \
-0,1,1,1,1,0,1,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1,0,0,0,0,0,1,0,1,1,1,1,1,1, \
-1,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1, \
-0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1"
-
-
-
-
-
 
 # Chapter 7 Orbit Algorithms
+
+
+# Section 7.7
+
+SURFACE_F9_1_EQN_RESTRICTED="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+3*X1*X2^2+3*X0*X1*X2"
+
 
 # Chapter 8 Cubic Surfaces
 
@@ -885,23 +895,6 @@ CODE_BCH_F8_N63_K9_D43_GENMA="\
 0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,0,\
 0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1,0,\
 0,0,0,0,0,0,0,0,4,5,2,2,4,5,6,2,4,2,6,0,0,7,1,5,3,7,1,0,0,5,6,4,7,6,7,7,1,2,6,3,1,6,0,0,6,6,6,4,7,7,0,0,3,4,7,5,6,2,5,1,4,4,1"
-
-# created in the combinatorics section, not needed any longer
-ELEMENTARY_SYMMETRIC_8_1="x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7"
-
-ELEMENTARY_SYMMETRIC_8_2="x0*x1 + x0*x2 + x0*x3 + x0*x4 + x0*x5 + x0*x6 + x0*x7 + x1*x2 + x1*x3 + x1*x4 + x1*x5 + x1*x6 + x1*x7 + x2*x3 + x2*x4 + x2*x5 + x2*x6 + x2*x7 + x3*x4 + x3*x5 + x3*x6 + x3*x7 + x4*x5 + x4*x6 + x4*x7 + x5*x6 + x5*x7 + x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_3="x0*x1*x2 + x0*x1*x3 + x0*x1*x4 + x0*x1*x5 + x0*x1*x6 + x0*x1*x7 + x0*x2*x3 + x0*x2*x4 + x0*x2*x5 + x0*x2*x6 + x0*x2*x7 + x0*x3*x4 + x0*x3*x5 + x0*x3*x6 + x0*x3*x7 + x0*x4*x5 + x0*x4*x6 + x0*x4*x7 + x0*x5*x6 + x0*x5*x7 + x0*x6*x7 + x1*x2*x3 + x1*x2*x4 + x1*x2*x5 + x1*x2*x6 + x1*x2*x7 + x1*x3*x4 + x1*x3*x5 + x1*x3*x6 + x1*x3*x7 + x1*x4*x5 + x1*x4*x6 + x1*x4*x7 + x1*x5*x6 + x1*x5*x7 + x1*x6*x7 + x2*x3*x4 + x2*x3*x5 + x2*x3*x6 + x2*x3*x7 + x2*x4*x5 + x2*x4*x6 + x2*x4*x7 + x2*x5*x6 + x2*x5*x7 + x2*x6*x7 + x3*x4*x5 + x3*x4*x6 + x3*x4*x7 + x3*x5*x6 + x3*x5*x7 + x3*x6*x7 + x4*x5*x6 + x4*x5*x7 + x4*x6*x7 + x5*x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_4="x0*x1*x2*x3 + x0*x1*x2*x4 + x0*x1*x2*x5 + x0*x1*x2*x6 + x0*x1*x2*x7 + x0*x1*x3*x4 + x0*x1*x3*x5 + x0*x1*x3*x6 + x0*x1*x3*x7 + x0*x1*x4*x5 + x0*x1*x4*x6 + x0*x1*x4*x7 + x0*x1*x5*x6 + x0*x1*x5*x7 + x0*x1*x6*x7 + x0*x2*x3*x4 + x0*x2*x3*x5 + x0*x2*x3*x6 + x0*x2*x3*x7 + x0*x2*x4*x5 + x0*x2*x4*x6 + x0*x2*x4*x7 + x0*x2*x5*x6 + x0*x2*x5*x7 + x0*x2*x6*x7 + x0*x3*x4*x5 + x0*x3*x4*x6 + x0*x3*x4*x7 + x0*x3*x5*x6 + x0*x3*x5*x7 + x0*x3*x6*x7 + x0*x4*x5*x6 + x0*x4*x5*x7 + x0*x4*x6*x7 + x0*x5*x6*x7 + x1*x2*x3*x4 + x1*x2*x3*x5 + x1*x2*x3*x6 + x1*x2*x3*x7 + x1*x2*x4*x5 + x1*x2*x4*x6 + x1*x2*x4*x7 + x1*x2*x5*x6 + x1*x2*x5*x7 + x1*x2*x6*x7 + x1*x3*x4*x5 + x1*x3*x4*x6 + x1*x3*x4*x7 + x1*x3*x5*x6 + x1*x3*x5*x7 + x1*x3*x6*x7 + x1*x4*x5*x6 + x1*x4*x5*x7 + x1*x4*x6*x7 + x1*x5*x6*x7 + x2*x3*x4*x5 + x2*x3*x4*x6 + x2*x3*x4*x7 + x2*x3*x5*x6 + x2*x3*x5*x7 + x2*x3*x6*x7 + x2*x4*x5*x6 + x2*x4*x5*x7 + x2*x4*x6*x7 + x2*x5*x6*x7 + x3*x4*x5*x6 + x3*x4*x5*x7 + x3*x4*x6*x7 + x3*x5*x6*x7 + x4*x5*x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_5="x0*x1*x2*x3*x4 + x0*x1*x2*x3*x5 + x0*x1*x2*x3*x6 + x0*x1*x2*x3*x7 + x0*x1*x2*x4*x5 + x0*x1*x2*x4*x6 + x0*x1*x2*x4*x7 + x0*x1*x2*x5*x6 + x0*x1*x2*x5*x7 + x0*x1*x2*x6*x7 + x0*x1*x3*x4*x5 + x0*x1*x3*x4*x6 + x0*x1*x3*x4*x7 + x0*x1*x3*x5*x6 + x0*x1*x3*x5*x7 + x0*x1*x3*x6*x7 + x0*x1*x4*x5*x6 + x0*x1*x4*x5*x7 + x0*x1*x4*x6*x7 + x0*x1*x5*x6*x7 + x0*x2*x3*x4*x5 + x0*x2*x3*x4*x6 + x0*x2*x3*x4*x7 + x0*x2*x3*x5*x6 + x0*x2*x3*x5*x7 + x0*x2*x3*x6*x7 + x0*x2*x4*x5*x6 + x0*x2*x4*x5*x7 + x0*x2*x4*x6*x7 + x0*x2*x5*x6*x7 + x0*x3*x4*x5*x6 + x0*x3*x4*x5*x7 + x0*x3*x4*x6*x7 + x0*x3*x5*x6*x7 + x0*x4*x5*x6*x7 + x1*x2*x3*x4*x5 + x1*x2*x3*x4*x6 + x1*x2*x3*x4*x7 + x1*x2*x3*x5*x6 + x1*x2*x3*x5*x7 + x1*x2*x3*x6*x7 + x1*x2*x4*x5*x6 + x1*x2*x4*x5*x7 + x1*x2*x4*x6*x7 + x1*x2*x5*x6*x7 + x1*x3*x4*x5*x6 + x1*x3*x4*x5*x7 + x1*x3*x4*x6*x7 + x1*x3*x5*x6*x7 + x1*x4*x5*x6*x7 + x2*x3*x4*x5*x6 + x2*x3*x4*x5*x7 + x2*x3*x4*x6*x7 + x2*x3*x5*x6*x7 + x2*x4*x5*x6*x7 + x3*x4*x5*x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_6="x0*x1*x2*x3*x4*x5 + x0*x1*x2*x3*x4*x6 + x0*x1*x2*x3*x4*x7 + x0*x1*x2*x3*x5*x6 + x0*x1*x2*x3*x5*x7 + x0*x1*x2*x3*x6*x7 + x0*x1*x2*x4*x5*x6 + x0*x1*x2*x4*x5*x7 + x0*x1*x2*x4*x6*x7 + x0*x1*x2*x5*x6*x7 + x0*x1*x3*x4*x5*x6 + x0*x1*x3*x4*x5*x7 + x0*x1*x3*x4*x6*x7 + x0*x1*x3*x5*x6*x7 + x0*x1*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6 + x0*x2*x3*x4*x5*x7 + x0*x2*x3*x4*x6*x7 + x0*x2*x3*x5*x6*x7 + x0*x2*x4*x5*x6*x7 + x0*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6 + x1*x2*x3*x4*x5*x7 + x1*x2*x3*x4*x6*x7 + x1*x2*x3*x5*x6*x7 + x1*x2*x4*x5*x6*x7 + x1*x3*x4*x5*x6*x7 + x2*x3*x4*x5*x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_7="x0*x1*x2*x3*x4*x5*x6 + x0*x1*x2*x3*x4*x5*x7 + x0*x1*x2*x3*x4*x6*x7 + x0*x1*x2*x3*x5*x6*x7 + x0*x1*x2*x4*x5*x6*x7 + x0*x1*x3*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6*x7"
-
-ELEMENTARY_SYMMETRIC_8_8="x0*x1*x2*x3*x4*x5*x6*x7"
 
 
 BCH_21_15_GENERATOR_MATRIX="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1"
@@ -7269,110 +7262,15 @@ PGOp_6_2_linear_stab_6:
 
 
 
-###############################################################################
-# Section 6.4: Linear Groups, Advanced Topics
-
-
-SECTION_LINEAR_GROUPS_ADVANCED_TOPICS:
-
-test_6_4:
-	make U_3_3
-	make PGL_2_3
-	make Co3
-	#make Ree_27
-
-
-U_3_3:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 9 \
-			-override_polynomial "17" \
-		-end \
-		-define G -linear_group -PGL 3 F \
-			-subgroup_by_generators \
-			"U_3_3" "6048" 2 \
-			"1,6,4, 5,0,6, 8,5,1, \
-			6,2,1, 7,8,4, 0,6,6" \
-			-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end
-	pdflatex PGL_3_9_Subgroup_U_3_3_6048_report.tex
-	#$(OPEN) PGL_3_9_Subgroup_U_3_3_6048_report.pdf
-
-
-
-
-
-PGL_2_3:
-	$(ORBITER) -v 3 \
-		-define G -linear_group -PGL 2 3 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-			-report_group_table \
-		-end
-	pdflatex PGL_2_3_report.tex
-	$(OPEN) PGL_2_3_report.pdf
-	#pdflatex PGL_2_3_group_table_order_24.tex
-	#$(OPEN) PGL_2_3_group_table_order_24.pdf
-	#$(OPEN) PGL_2_3_report.pdf
-
-
-
-
-
-
-#Co3 from Conway et al., 1985 (ATLAS)
-#order = 495766656000
-#Co3 from the paper by Suleiman and Wilson 1997
-
-
-Co3:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define g1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
-		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
-		-define gens -vector -concatenate g1 -concatenate g2 -end \
-		-define G -linear_group -PGL 22 2 \
-			-subgroup_by_generators "Co3" "495766656000" 2 gens \
-			-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end
-	pdflatex PGL_22_2_Subgroup_Co3_495766656000_report.tex
-	#$(OPEN) PGL_22_2_Subgroup_Co3_495766656000_report.pdf
-
-# needs a lot of memory to run!
-
-Ree_27:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 27 \
-			-override_polynomial "34" \
-		-end \
-		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
-		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
-		-define gens -vector -concatenate g1 -concatenate g2 -end \
-		-define G -linear_group -PGL 7 F \
-			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
-			-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end
-
-# needs a lot of memory to run!
-
 
 ###############################################################################
-# Section 6.5: New Actions from Old
+# Section 6.4: New Actions from Old
 
 
 SECTION_NEW_ACTIONS_FROM_OLD:
 
 
-test_6_5:
+test_6_4:
 	make Symmetric_4_on_pairs
 	make direct_product_AGL
 	make Group_M11
@@ -7717,13 +7615,13 @@ PGL_4_2_wd_reverse:
 
 
 ###############################################################################
-# Section 6.6: Group Theoretic Activities
+# Section 6.5: Group Theoretic Activities
 
 
 SECTION_GROUP_THEORETIC_ACTIVITIES:
 
 
-test_6_6:
+test_6_5:
 	make PGL_3_2_elements
 	make Sym_3_elements
 	make Cycle_13_power
@@ -7995,13 +7893,13 @@ PGL_4_2_random_element:
 
 
 ###############################################################################
-# Section 6.7: Group Theoretic Activities Based on Magma
+# Section 6.6: Group Theoretic Activities Based on Magma
 
 
 SECTION_GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
 
 
-test_6_7:
+test_6_6:
 	make PSP_4_4_export_magma
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
@@ -8422,12 +8320,12 @@ PGOm_6_2_Class_2A_centralizer_recover:
 
 
 ###############################################################################
-# Section 6.8: The GAP Interface
+# Section 6.7: The GAP Interface
 
 
 SECTION_GAP_INTERFACE:
 
-test_6_8:
+test_6_7:
 	make Hirschfeld_stab_export_gap
 	make Cyclic_6_canonical_image
 	make Edge_qurve_q17_canonical_image
@@ -8464,6 +8362,106 @@ Edge_qurve_q17_canonical_image:
 		-end
 
 #PGL_3_17_canonical_image.gap
+
+
+
+###############################################################################
+# Section 6.8: Linear Groups, Advanced Topics
+
+
+SECTION_LINEAR_GROUPS_ADVANCED_TOPICS:
+
+test_6_8:
+	make U_3_3
+	make PGL_2_3
+	make Co3
+	#make Ree_27
+
+
+U_3_3:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 \
+			-override_polynomial "17" \
+		-end \
+		-define G -linear_group -PGL 3 F \
+			-subgroup_by_generators \
+			"U_3_3" "6048" 2 \
+			"1,6,4, 5,0,6, 8,5,1, \
+			6,2,1, 7,8,4, 0,6,6" \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_3_9_Subgroup_U_3_3_6048_report.tex
+	#$(OPEN) PGL_3_9_Subgroup_U_3_3_6048_report.pdf
+
+
+
+
+
+PGL_2_3:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 2 3 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+			-report_group_table \
+		-end
+	pdflatex PGL_2_3_report.tex
+	$(OPEN) PGL_2_3_report.pdf
+	#pdflatex PGL_2_3_group_table_order_24.tex
+	#$(OPEN) PGL_2_3_group_table_order_24.pdf
+	#$(OPEN) PGL_2_3_report.pdf
+
+
+
+
+
+
+#Co3 from Conway et al., 1985 (ATLAS)
+#order = 495766656000
+#Co3 from the paper by Suleiman and Wilson 1997
+
+
+Co3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define g1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
+		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
+		-define gens -vector -concatenate g1 -concatenate g2 -end \
+		-define G -linear_group -PGL 22 2 \
+			-subgroup_by_generators "Co3" "495766656000" 2 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_22_2_Subgroup_Co3_495766656000_report.tex
+	#$(OPEN) PGL_22_2_Subgroup_Co3_495766656000_report.pdf
+
+# needs a lot of memory to run!
+
+Ree_27:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 27 \
+			-override_polynomial "34" \
+		-end \
+		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
+		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
+		-define gens -vector -concatenate g1 -concatenate g2 -end \
+		-define G -linear_group -PGL 7 F \
+			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+
+# needs a lot of memory to run!
+
+
+
 
 
 ###############################################################################
@@ -8630,9 +8628,17 @@ T3r1_orbits_draw:
 
 orbits_on_conics_q13:
 	$(ORBITER) -v 4 \
-		-define G -linear_group -PGL 3 13 -end \
+		-define F -finite_field -q 13 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
 		-define Orb -orbits -group G \
-			-on_polynomials 2 \
+			-on_polynomials R \
 		-end
 	#pdflatex poly_orbits_d2_n2_q13.tex
 	#$(OPEN) poly_orbits_d2_n2_q13.pdf
@@ -8640,9 +8646,17 @@ orbits_on_conics_q13:
 
 orbits_cubic_curves_q2:
 	$(ORBITER) -v 4 \
-		-define G -linear_group -PGL 3 2 -end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
 		-define Orb -orbits -group G \
-			-on_polynomials 3 \
+			-on_polynomials R \
 		-end
 	#pdflatex poly_orbits_d3_n3_q2.tex
 	#$(OPEN) poly_orbits_d3_n3_q2.pdf
@@ -8652,9 +8666,17 @@ orbits_cubic_curves_q2_with_draw_tree:
 	$(ORBITER) -v 4 \
 		-draw_options -yout 500000 -radius 150 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
-		-define G -linear_group -PGL 3 2 -end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 3 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
 		-define Orb -orbits -group G \
-			-on_polynomials 3 \
+			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
 			-draw_tree 6 \
@@ -8669,9 +8691,17 @@ poly_orbits_d3_n3_q2.csv:
 	$(ORBITER) -v 4 \
 		-draw_options -yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
-		-define G -linear_group -PGL 4 2 -end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
 		-define Orb -orbits -group G \
-			-on_polynomials 3 \
+			-on_polynomials R \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -9821,6 +9851,7 @@ test_7_7:
 	make cubic_curves_PG_2_4_draw
 	make poly_orbits_q4
 	make cubic_curves_PG_2_9
+	make curve_orbit
 
 
 
@@ -9884,10 +9915,14 @@ poly_orbits_q4:
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something "orbit" 0 \
 		-end
 	pdflatex poly_orbits_d3_n2_q4.tex
 	$(OPEN) poly_orbits_d3_n2_q4.pdf
 
+#orbits_PGGL_3_4_orbit_0.csv
 
 
 # ToDo: error in cubic_curve::compute_inflexion_points
@@ -9932,6 +9967,59 @@ cubic_curves_PG_2_9_draw:
 	#pdflatex cc_9_poset_lvl_9_draw.tex
 	#$(OPEN) cc_9_poset_lvl_9_draw.pdf
 
+
+curve_orbit_mini:
+	$(ORBITER) -v 4 \
+		-draw_options -yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded -end \
+		-define F -finite_field -q 3 -print_numerically -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+			-end \
+		-define cubic -symbolic_object \
+			-field F \
+			-text "X0^3+X1^3+X2^3" \
+			-end \
+		-define G -linear_group -PGL 3 F -end \
+		-define Orb -orbits -group G \
+			-of_one_polynomial R cubic \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something "orbit" 0 \
+		-end
+
+
+curve_orbit:
+	$(ORBITER) -v 4 \
+		-draw_options -yout 500000 -radius 15 -nodes_empty \
+			-line_width 0.5 -y_stretch 0.25 -embedded -end \
+		-define F -finite_field -q 9 -print_numerically -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+			-end \
+		-define cubic -symbolic_object \
+			-field F \
+			-text $(SURFACE_F9_1_EQN_RESTRICTED) \
+			-end \
+		-define G -linear_group -PGL 3 F -end \
+		-define Orb -orbits -group G \
+			-of_one_polynomial R cubic \
+		-end \
+		-with Orb -do -orbits_activity \
+			-export_something "orbit" 0 \
+		-end
+
+
+#orbits_on_polynomials::orbit_of_one_polynomial found an orbit of length 589680
+#7:15
 
 
 
@@ -11468,10 +11556,18 @@ test_9_2:
 
 representation_on_polynomials_of_degree_3:
 	$(ORBITER) -v 4 \
-		-define G -linear_group -PGL 4 3 -end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-representation_on_polynomials 3 \
+			-representation_on_polynomials R \
 		-end 
 	$(ORBITER) -v 2 \
 		-loop L 0 9 1 -draw_matrix \
@@ -11484,13 +11580,21 @@ representation_on_polynomials_of_degree_3:
 
 representation_tetrahedral_group_on_polynomials_of_degree_3:
 	$(ORBITER) -v 4 \
-		-define G -linear_group -GL 3 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 3 F \
 		-subgroup_by_generators "tetra" "12" 2 \
 		"0,1,0,0,0,1,1,0,0, 0,0,1,2,0,0,0,2,0" \
 		-end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-representation_on_polynomials 3 \
+			-representation_on_polynomials R \
 		-end 
 	$(ORBITER) -v 2 -loop L 0 2 1 -draw_matrix \
 		-input_csv_file GL_3_3_Subgroup_tetra_12_rep_3_%L.csv \
@@ -11682,8 +11786,10 @@ NTRU_encrypt:
 		-define F -finite_field -q $(NTRU_Q) -end \
 		-with F -do \
 		-finite_field_activity \
-		-NTRU_encrypt $(NTRU_N) $(NTRU_P) $(ALICE_PUBLIC_KEY) \
-		$(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) -end
+		-NTRU_encrypt \
+		$(NTRU_N) $(NTRU_P) $(ALICE_PUBLIC_KEY) \
+		$(BOB_ONE_TIME_KEY) $(BOB_MESSAGE) \
+		-end
 
 
 
@@ -16681,7 +16787,7 @@ SECTION_TACTICAL_DECOMPOSITIONS:
 test_11_10:
 	make max_arc_16_4_start
 	make max_arc_16_4_convert_stack_tdo
-	make max_arc_16_4_convert_stack_tdo
+	make max_arc_16_4_refine
 	make max_arc_16_4r_print
 
 
@@ -16692,7 +16798,7 @@ max_arc_16_4_start:
 max_arc_16_4_convert_stack_tdo:
 	$(ORBITER) -v 4 -convert_stack_to_tdo max_arc_q16_r4.stack
 
-max_arc_16_4_convert_stack_tdo:
+max_arc_16_4_refine:
 	$(ORBITER) -v 4 -tdo_refinement \
 		-input_file max_arc_q16_r4.tdo -dual_is_linear_space -end
 	

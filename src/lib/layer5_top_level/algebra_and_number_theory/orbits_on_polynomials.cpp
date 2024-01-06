@@ -31,9 +31,11 @@ orbits_on_polynomials::orbits_on_polynomials()
 	HPD = NULL;
 	A2 = NULL;
 	Elt1 = Elt2 = Elt3 = NULL;
+	f_has_Sch = false;
 	Sch = NULL;
 	// full_go
 
+	f_has_Orb = false;
 	Orb = NULL;
 
 	//fname_base
@@ -119,6 +121,7 @@ void orbits_on_polynomials::init(
 				"before A->Strong_gens->compute_all_point_orbits_schreier" << endl;
 	}
 
+	f_has_Sch = true;
 
 	Sch = A->Strong_gens->compute_all_point_orbits_schreier(A2, verbose_level - 2);
 
@@ -133,7 +136,8 @@ void orbits_on_polynomials::init(
 		cout << "orbits_on_polynomials::init "
 				"before Sch->write_orbit_summary" << endl;
 	}
-	Sch->write_orbit_summary(fname_csv,
+	Sch->write_orbit_summary(
+			fname_csv,
 			A /*default_action*/,
 			go,
 			verbose_level);
@@ -326,76 +330,12 @@ void orbits_on_polynomials::orbit_of_one_polynomial(
 	}
 
 
-#if 0
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"before A->Strong_gens->compute_all_point_orbits_schreier" << endl;
-	}
-
-
-	Sch = A->Strong_gens->compute_all_point_orbits_schreier(A2, verbose_level - 2);
-
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"after A->Strong_gens->compute_all_point_orbits_schreier" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"before Sch->write_orbit_summary" << endl;
-	}
-	Sch->write_orbit_summary(fname_csv,
-			A /*default_action*/,
-			go,
-			verbose_level);
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"after Sch->write_orbit_summary" << endl;
-	}
-
-
-
-	A->group_order(full_go);
-	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
-
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"before T->init_from_schreier" << endl;
-	}
-
-	T->init_from_schreier(
-			Sch,
-			A,
-			full_go,
-			verbose_level);
-
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"after T->init_from_schreier" << endl;
-	}
-
-
-
-	Sch->print_orbit_reps(cout);
-
-
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"before compute_points" << endl;
-	}
-	compute_points(verbose_level);
-	if (f_v) {
-		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
-				"after compute_points" << endl;
-	}
-#else
 
 
 	// compute the orbit of the equation under the stabilizer of the set of points:
 
 
+	f_has_Orb = true;
 
 	Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
@@ -466,7 +406,6 @@ void orbits_on_polynomials::orbit_of_one_polynomial(
 #endif
 
 
-#endif
 
 
 #if 0
@@ -508,9 +447,9 @@ void orbits_on_polynomials::orbit_of_one_polynomial(
 
 
 
-	FREE_int(Elt1);
-	FREE_int(Elt2);
-	FREE_int(Elt3);
+	//FREE_int(Elt1);
+	//FREE_int(Elt2);
+	//FREE_int(Elt3);
 
 
 
@@ -900,13 +839,14 @@ void orbits_on_polynomials::export_something(
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::export_something" << endl;
+		cout << "orbits_on_polynomials::export_something this = " << this << endl;
 	}
 
 	data_structures::string_tools ST;
 
 	string fname_base;
 
-	fname_base = "orbits_" + LG->label;
+	fname_base = "orbits_" + A2->label;
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::export_something "
@@ -942,28 +882,65 @@ void orbits_on_polynomials::export_something_worker(
 
 	if (ST.stringcmp(what, "orbit") == 0) {
 
-
-		fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
-
-		int orbit_idx = data1;
-		std::vector<int> Orb;
-		int *Pts;
-		int i;
-
-		Sch->get_orbit_in_order(Orb,
-				orbit_idx, verbose_level);
-
-		Pts = NEW_int(Orb.size());
-		for (i = 0; i < Orb.size(); i++) {
-			Pts[i] = Orb[i];
+		if (f_v) {
+			cout << "orbits_on_polynomials::export_something_worker orbit" << endl;
 		}
 
+		if (f_has_Sch) {
+
+			if (f_v) {
+				cout << "orbits_on_polynomials::export_something_worker f_has_Sch" << endl;
+			}
+
+			fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
+
+			int orbit_idx = data1;
+			std::vector<int> Orb;
+			int *Pts;
+			int i;
+
+			Sch->get_orbit_in_order(Orb,
+					orbit_idx, verbose_level);
+
+			Pts = NEW_int(Orb.size());
+			for (i = 0; i < Orb.size(); i++) {
+				Pts[i] = Orb[i];
+			}
 
 
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, Pts, 1, Orb.size());
 
-		FREE_int(Pts);
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, Pts, 1, Orb.size());
+
+			FREE_int(Pts);
+		}
+		else if (f_has_Orb) {
+
+			if (f_v) {
+				cout << "orbits_on_polynomials::export_something_worker f_has_Orb" << endl;
+			}
+
+			fname = fname_base + "_orbit_" + std::to_string(data1) + ".csv";
+
+			std::string *Table;
+			std::string *Headings;
+			int nb_rows, nb_cols;
+
+			Orb->get_table(
+					Table, Headings,
+					nb_rows, nb_cols,
+					verbose_level);
+
+			Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+					fname,
+					nb_rows, nb_cols, Table,
+					Headings,
+					verbose_level);
+		}
+		else {
+			cout << "orbits_on_polynomials::export_something_worker neither f_has_Sch nor f_has_Orb" << endl;
+			exit(1);
+		}
 
 		cout << "orbits_on_polynomials::export_something_worker "
 				"Written file " << fname << " of size "

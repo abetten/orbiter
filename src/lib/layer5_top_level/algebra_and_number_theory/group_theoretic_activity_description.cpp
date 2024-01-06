@@ -197,7 +197,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//f_classify_cubic_curves = false;
 
 	f_representation_on_polynomials = false;
-	representation_on_polynomials_degree = 0;
+	//std::string representation_on_polynomials_ring;
 
 
 }
@@ -698,10 +698,10 @@ int group_theoretic_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-representation_on_polynomials") == 0) {
 			f_representation_on_polynomials = true;
-			representation_on_polynomials_degree = ST.strtoi(argv[++i]);
+			representation_on_polynomials_ring.assign(argv[++i]);
 			if (f_v) {
 				cout << "-representation_on_polynomials "
-						<< representation_on_polynomials_degree << endl;
+						<< representation_on_polynomials_ring << endl;
 			}
 		}
 
@@ -960,7 +960,8 @@ void group_theoretic_activity_description::print()
 
 
 	if (f_representation_on_polynomials) {
-		cout << "-representation_on_polynomials " << representation_on_polynomials_degree << endl;
+		cout << "-representation_on_polynomials "
+				<< representation_on_polynomials_ring << endl;
 	}
 
 

@@ -550,6 +550,23 @@ void orbits_activity::do_export(
 			cout << "orbits_activity::do_export f_has_Of_One_polynomial" << endl;
 		}
 
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"before OC->Of_One_polynomial->export_something" << endl;
+		}
+
+		OC->Of_One_polynomial->export_something(
+				Descr->export_something_what,
+				Descr->export_something_data1, fname,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_export "
+					"after OC->Of_One_polynomial->export_something" << endl;
+		}
+
+
+
 	}
 
 	else if (OC->f_has_on_cubic_curves) {

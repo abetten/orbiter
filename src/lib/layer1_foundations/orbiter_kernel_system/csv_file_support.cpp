@@ -1911,6 +1911,52 @@ void csv_file_support::write_table_of_strings_with_headings(
 	}
 }
 
+void csv_file_support::write_table_of_strings_with_col_headings(
+		std::string &fname,
+		int nb_rows, int nb_cols, std::string *Table,
+		std::string *Col_headings,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_col_headings "
+				"fname = "<< fname << endl;
+	}
+
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row";
+		for (j = 0; j < nb_cols; j++) {
+			f << "," << Col_headings[j];
+		}
+		f << endl;
+
+
+		for (i = 0; i < nb_rows; i++) {
+			f << i;
+
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio->file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_table_of_strings_with_col_headings done" << endl;
+	}
+}
+
 int csv_file_support::read_column_and_count_nb_sets(
 		std::string &fname, std::string &col_label,
 		int verbose_level)

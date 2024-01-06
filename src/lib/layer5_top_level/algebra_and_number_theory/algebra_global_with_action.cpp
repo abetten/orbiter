@@ -3440,7 +3440,8 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance before PC->main" << endl;
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance "
+				"before PC->main" << endl;
 	}
 
 	depth = PC->main(t0,
@@ -3450,15 +3451,18 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		verbose_level);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance after PC->main" << endl;
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance "
+				"after PC->main" << endl;
 	}
 
 	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance depth = " << depth << endl;
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance "
+				"depth = " << depth << endl;
 	}
 
 	if (f_v) {
-		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance done" << endl;
+		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance "
+				"done" << endl;
 	}
 }
 
@@ -3615,8 +3619,9 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 
 void algebra_global_with_action::representation_on_polynomials(
 		groups::linear_group *LG,
-		int degree_of_poly,
+		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
+// creates an action object for the induced action on polynomials
 {
 	int f_v = (verbose_level >= 1);
 	//int f_stabilizer = true;
@@ -3628,7 +3633,7 @@ void algebra_global_with_action::representation_on_polynomials(
 	}
 
 
-	field_theory::finite_field *F;
+	//field_theory::finite_field *F;
 	actions::action *A;
 	//matrix_group *M;
 	int n;
@@ -3636,13 +3641,17 @@ void algebra_global_with_action::representation_on_polynomials(
 	ring_theory::longinteger_object go;
 
 	A = LG->A_linear;
-	F = A->matrix_group_finite_field();
+	//F = A->matrix_group_finite_field();
 	A->group_order(go);
 
 	n = A->matrix_group_dimension();
+	int degree_of_poly;
+
+	degree_of_poly = HPD->degree;
 
 	if (f_v) {
 		cout << "n = " << n << endl;
+		cout << "degree_of_poly = " << degree_of_poly << endl;
 	}
 
 	if (f_v) {
@@ -3651,7 +3660,8 @@ void algebra_global_with_action::representation_on_polynomials(
 		A->Strong_gens->print_generators_tex();
 	}
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+#if 0
+	//ring_theory::homogeneous_polynomial_domain *HPD;
 
 	HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
 
@@ -3662,6 +3672,7 @@ void algebra_global_with_action::representation_on_polynomials(
 	HPD->init(F, n /* nb_var */, degree_of_poly,
 			Monomial_ordering_type,
 			verbose_level);
+#endif
 
 	actions::action *A2;
 
@@ -3697,19 +3708,22 @@ void algebra_global_with_action::representation_on_polynomials(
 			cout << "algebra_global_with_action::representation_on_polynomials "
 					"using nice generators" << endl;
 		}
-		LG->nice_gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
+		LG->nice_gens->matrix_representation(
+				A_on_HPD, M, nb_gens, verbose_level);
 	}
 	else {
 		if (f_v) {
 			cout << "algebra_global_with_action::representation_on_polynomials "
 					"using strong generators" << endl;
 		}
-		LG->Strong_gens->gens->matrix_representation(A_on_HPD, M, nb_gens, verbose_level);
+		LG->Strong_gens->gens->matrix_representation(
+				A_on_HPD, M, nb_gens, verbose_level);
 	}
 
 	for (i = 0; i < nb_gens; i++) {
 		cout << "matrix " << i << " / " << nb_gens << ":" << endl;
-		Int_matrix_print(M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+		Int_matrix_print(
+				M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
 	}
 
