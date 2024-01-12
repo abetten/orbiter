@@ -178,6 +178,19 @@ HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^
 #X^2*W+X*W^2+Y^2*Z+Y*Z^2
 
 
+# Section 4.9 Advanced topics
+
+H1_LABEL="H1"
+
+H1_GENS=-PGGL 4 4 \
+	-subgroup_by_generators "H1" 4 2 \
+	"1,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,0, \
+	1,0,0,0,0,1,0,0,1,0,1,0,0,1,0,1,0" \
+	-end
+
+
+
+
 # Section 4.10 Geometric objects
 
 
@@ -1044,18 +1057,6 @@ HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
 
 
 
-# Section 11.2 Diophantine systems
-
-
-TEST_SYSTEM="\
-0,1,0,1,0,0, \
-0,0,1,0,1,0, \
-1,0,1,0,0,0, \
-0,1,0,1,0,1, \
-1,0,0,0,0,1, \
-1,0,1,0,0,0, \
-0,1,0,0,1,1"
-
 
 # Section 11.5 Classification of Configurations and Geometries
 
@@ -1285,7 +1286,19 @@ BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,\
 
 
 
-# Chapter 14 Empty
+# Chapter 14 Computer Science Primitives
+
+# Section 14.2 Diophantine systems
+
+
+TEST_SYSTEM="\
+0,1,0,1,0,0, \
+0,0,1,0,1,0, \
+1,0,1,0,0,0, \
+0,1,0,1,0,1, \
+1,0,0,0,0,1, \
+1,0,1,0,0,0, \
+0,1,0,0,1,1"
 
 
 
@@ -1844,7 +1857,8 @@ vector_concatenate:
 	$(ORBITER) -v 2 \
 		-define a -vector -compact "1,2,3" -end \
 		-define b -vector -compact "4,5,6" -end \
-		-define ab -vector -concatenate a -concatenate b -end
+		-define c -vector -compact "7,8,9" -end \
+		-define abc -vector -concatenate a,b,c -end
 
 
 matrix_example1:
@@ -1928,12 +1942,6 @@ test_2_8:
 	make symbolic_matrix_nullspace_2
 	make symbolic_Clebsch
 	make Clebsch_map_up_Fabcd
-	make affine_map_F5_0
-	make affine_map_F5_1
-	make affine_map_F5_2
-	make affine_map_F5_3
-	make affine_map_F5_4
-	make affine_map_F5_map_30412
 
 
 
@@ -2720,171 +2728,6 @@ Clebsch_map_up_Fabcd:
 			-collect M t \
 		-end
 
-
-
-affine_map_F5_0:
-	$(ORBITER) -v 8 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-x^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 1, 0, 0, 0, 0 )
-
-affine_map_F5_1:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-1)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 0, 1, 0, 0, 0 )
-
-affine_map_F5_2:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-2)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 0, 0, 1, 0, 0 )
-
-affine_map_F5_3:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-3)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-
-#( 0, 0, 0, 1, 0 )
-
-
-
-affine_map_F5_4:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-4)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-
-#( 0, 0, 0, 0, 1 )
-
-
-
-affine_map_F5_map_30412:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end \
-		-define Yx -symbolic_object \
-			-field F \
-			-expand Y \
-			-end \
 
 
 
@@ -4731,6 +4574,7 @@ test_4_9:
 	make fixed_objects_2A
 	make fixed_objects_2B
 	make fixed_objects_2C
+	make fix_structure_G1
 	make trans
 
 
@@ -4775,6 +4619,21 @@ fixed_objects_2C:
 		-end 
 	pdflatex fix_structure_2C.tex
 	$(OPEN) fix_structure_2C.pdf
+
+
+
+
+fix_structure_G1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-decomposition_by_subgroup \
+				$(H1_LABEL) $(H1_GENS)  \
+		-end 
+	pdflatex PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.tex
+	open PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.pdf
 
 
 
@@ -5633,6 +5492,9 @@ F2_get_primitive_poly_range_2_10:
 
 
 
+
+
+
 ###############################################################################
 # Section 5.2: Multivariate Polynomials
 
@@ -5655,6 +5517,14 @@ test_5_2:
 	make random_arc_5_2_q11_ideal
 	make Endrass_F7.txt
 	make octic_prepare
+	make affine_map_F5_0
+	make affine_map_F5_1
+	make affine_map_F5_2
+	make affine_map_F5_3
+	make affine_map_F5_4
+	make permutation_polynomial_F5
+
+
 
 parse_algebraic_formula:
 	$(ORBITER) -v 6 \
@@ -5969,6 +5839,177 @@ octic_prepare:
 
 #Found 165 solutions with 210 backtrack steps
 # 165=binomial(11,3)
+
+
+
+affine_map_F5_0:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-x^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 1, 0, 0, 0, 0 )
+
+affine_map_F5_1:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-1)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 1, 0, 0, 0 )
+
+affine_map_F5_2:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-2)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 0, 1, 0, 0 )
+
+affine_map_F5_3:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-3)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 1, 0 )
+
+
+
+affine_map_F5_4:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-4)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 0, 1 )
+
+
+
+permutation_polynomial_F5:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end \
+		-define Yx -symbolic_object \
+			-field F \
+			-expand Y \
+			-end \
+
+
+
+
+
 
 ###############################################################################
 # Section 5.3: Algebraic Geometry
@@ -8429,7 +8470,7 @@ Co3:
 		-define F -finite_field -q 2 -end \
 		-define g1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
 		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
-		-define gens -vector -concatenate g1 -concatenate g2 -end \
+		-define gens -vector -concatenate g1,g2 -end \
 		-define G -linear_group -PGL 22 2 \
 			-subgroup_by_generators "Co3" "495766656000" 2 gens \
 			-end \
@@ -8449,7 +8490,7 @@ Ree_27:
 		-end \
 		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
 		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
-		-define gens -vector -concatenate g1 -concatenate g2 -end \
+		-define gens -vector -concatenate g1,g2 -end \
 		-define G -linear_group -PGL 7 F \
 			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
 			-end \
@@ -9851,6 +9892,8 @@ test_7_7:
 	make cubic_curves_PG_2_4_draw
 	make poly_orbits_q4
 	make cubic_curves_PG_2_9
+	make cubic_curves_PG_2_9_draw
+	make curve_orbit_mini
 	make curve_orbit
 
 
@@ -15221,107 +15264,12 @@ geo_pasch_given:
 
 
 ###############################################################################
-# Section 11.3: Diophantine Systems
-
-SECTION_DIOPHANT:
-
-
-test_11_3:
-	make part10
-	make octic_monomials
-	make solve_test_system
-	make McKay_test
-	make DLX_test
-
-
-
-part10:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 1 -dense "10,9,8,7,6,5,4,3,2,1" -end \
-		-define D -diophant \
-			-label part10 \
-			-coefficient_matrix A \
-			-RHS "mult=1,EQ=10" \
-			-x_min_global 0 -x_max_global 10 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_mckay \
-		-end
-		
-
-
-	
-# Finds 42 solutions with 67 backtrack steps
-
-
-octic_monomials:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 1 -dense "1,1,1,1" -end \
-		-define D -diophant \
-			-label octic_monomials \
-			-coefficient_matrix A \
-			-RHS "mult=1,EQ=9" \
-			-x_min_global 0 -x_max_global 8 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_mckay \
-		-end
-	sort -r octic_monomials_sol.csv >octic_monomials_sorted.csv
-
-#Found 165 solutions with 210 backtrack steps
-# 165=binomial(11,3)
-
-
-solve_test_system:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
-		-define D -diophant \
-			-label test_system \
-			-coefficient_matrix A \
-			-RHS "mult=7,EQ=1" \
-			-x_min_global 0 -x_max_global 1 \
-		-end
-
-
-McKay_test:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
-		-define D -diophant \
-			-label test_system \
-			-coefficient_matrix A \
-			-RHS "mult=7,EQ=1" \
-			-x_min_global 0 -x_max_global 1 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_mckay \
-		-end
-
-DLX_test:
-	$(ORBITER) -v 4 \
-		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
-		-define D \
-		-diophant -label test_system \
-			-coefficient_matrix A \
-			-RHS "mult=7,EQ=1" \
-			-x_min_global 0 -x_max_global 1 \
-		-end \
-		-with D -do \
-			-diophant_activity -solve_DLX \
-		-end
-
-#DLX_test.sol
-# 1 solution in 6 backtrack steps
-
-
-
-
-###############################################################################
-# Section 11.4: Combinatorial Linear Spaces
+# Section 11.3: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 
-test_11_4:
+test_11_3:
 	make linsp6
 	make linsp7
 	make linsp30_pt_types
@@ -15406,9 +15354,9 @@ linsp30_pt_distribution:
 
 
 ###############################################################################
-# Section 11.5: Combinatorial Linear Spaces
+# Section 11.4: Combinatorial Linear Spaces
 
-test_11_5:
+test_11_4:
 	make geo_pasch
 	make geo_petersen
 	make geo_7_3
@@ -16087,12 +16035,12 @@ geo_LSQ6.inc:
 
 
 ###############################################################################
-# Section 11.6: Design Theory
+# Section 11.5: Design Theory
 
 SECTION_DESIGN_THEORY:
 
 
-test_11_6:
+test_11_5:
 	make design_PG_2_3
 	make design_PG_2_4
 	make wreath_product_designs_n4_k2_inc.txt
@@ -16148,11 +16096,11 @@ wreath_product_designs_n8_k6_inc.txt:
 
 
 ###############################################################################
-# Section 11.7: Assuming Symmetry
+# Section 11.6: Assuming Symmetry
 
 SECTION_ASSUMING_SYMMETRY:
 
-test_11_7:
+test_11_6:
 
 	make KM_cyclic_7
 	make KM_PGGL_2_32
@@ -16410,11 +16358,11 @@ C5_design_classify:
 
 
 ###############################################################################
-# Section 11.8: Design Theory - Large Sets
+# Section 11.7: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
-test_11_8:
+test_11_7:
 	make AG_2_3.inc
 	make LS_AG_2_3_design_table_create
 	make AG_2_3_on_designs
@@ -16636,19 +16584,14 @@ design_PG_2_3_group_5_sol_0:
 
 
 ###############################################################################
-# Section 11.9: Design Theory - Delandtsheer Doyen
+# Section 11.8: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
-test_11_9:
+test_11_8:
 	make DD_PP4
 	make DD_PP4_span_design
 	make DD_PP4_design_orbit
-	#make DD_CC
-	#make DD_CC_system
-	#make DD_M1_G1
-	#make DD_M1_G1_S
-	#make DD_PG_2_4_M1_G1
 	#make PG_2_27_special
 
 
@@ -16703,64 +16646,7 @@ DD_PP4_design_orbit:
 
 
 
-DD_CC:
-	$(ORBITER) -v 6 \
-		-Delandtsheer_Doyen -search_wrt_subgroup \
-			$(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_GROUP1) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_MASK1) \
-		-end 
 
-#target level: 6
-#k2: 15
-#number of k-orbits at target level: 1774964
-
-# creates DD_CC_7_13_pair_covering.csv
-
-
-DD_CC_system:
-	$(ORBITER) -v 4 \
-		-define D -diophant -label DD_CC_7_13 \
-		-problem_of_Steiner_type 45 DD_CC_7_13_pair_covering.csv \
-		-has_sum 3 \
-		-end \
-		-with D -do \
-		-diophant_activity -solve_mckay \
-		-end
-	
-
-
-# no solution
-
-
-
-# 18603 = 27 * 53 * 13
-
-DD_M1_G1:
-	$(ORBITER) -v 4 \
-		-Delandtsheer_Doyen \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53_GROUP1) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53_MASK1) \
-			-end 
-
-DD_M1_G1_S:
-	$(ORBITER) -v 4 \
-		-Delandtsheer_Doyen \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53_GROUP1) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_27_53_MASK1) \
-			-singletons \
-			-end 
-
-
-DD_PG_2_4_M1_G1:
-	$(ORBITER) -v 4 \
-		-Delandtsheer_Doyen \
-			$(DELANDTSHEER_DOYEN_PROBLEM_3_7) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1) \
-			$(DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1) \
-			-end 
 
 PG_2_27_special:
 	$(ORBITER) -v 2 \
@@ -16780,11 +16666,11 @@ PG_2_27_special:
 
 
 ###############################################################################
-# Section 11.10: Tactical Decompositions
+# Section 11.9: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
-test_11_10:
+test_11_9:
 	make max_arc_16_4_start
 	make max_arc_16_4_convert_stack_tdo
 	make max_arc_16_4_refine
@@ -17563,257 +17449,6 @@ Symmetric_5_inversion_graph_recognize:
 	#pdflatex graphs_v5_poset.tex
 	#$(OPEN) graphs_v5_poset.pdf
 
-
-
-###############################################################################
-# Section 12.4: Graph Theory: Clique finding
-
-
-SECTION_GRAPH_THEORY_CLIQUE_FINDING:
-
-
-test_12_4:
-	make small_graph_cliques
-	make BLT_q13_graph_5_0_cliques_bw
-	make BLT_q13_graph_5_0_cliques_rainbow
-	make small_graph_cliques_Sajeeb
-	make Paley_13_aut
-	make Paley_13
-	make Paley_13_cliques_classify
-	make Paley_13_cliques_all
-	make tritangent_planes_graph_aut
-	make tritangent_planes_graph_cliques_classify
-	make tritangent_planes_graph_cliques_all
-	make PGO_5_2_cliques
-	make HJ_d2_c5
-	make HJ64_cliques5
-	make HJ64_cliques5_classify
-
-
-
-small_graph_cliques: graph_v5_e7.colored_graph
-	$(ORBITER) -v 2 \
-		-define G -graph -load graph_v5_e7.colored_graph -end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 3 \
-		-end
-
-# nb_sol = 3
-
-
-
-
-BLT_q13_graph_5_0_cliques_bw:
-	$(ORBITER) -v 2 \
-		-define G -graph -load BLT_q13_graph_5_0.bin -end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 9 \
-		-end
-
-# all_cliques_black_and_white
-
-
-BLT_q13_graph_5_0_cliques_rainbow:
-	$(ORBITER) -v 2 \
-		-define G -graph -load BLT_q13_graph_5_0.bin -end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -rainbow -target_size 9 \
-		-end
-
-# all_rainbow_cliques
-
-
-small_graph_cliques_Sajeeb:
-	$(ORBITER) -v 2 \
-		-define G -graph -load graph_v5_e7.colored_graph -end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -Sajeeb -target_size 3 \
-		-end
-
-# nb_sol = 3
-
-Paley_13_aut:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 13 -end \
-		-define Gamma -graph -Paley F -end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-automorphism_group \
-		-end 
-
-# writes Paley_13_group.makefile
-#User time: 0 of a second, dt=0 tps = 100
-#nb_calls_to_densenauty=1
-
-
-
-Paley_13:
-	$(ORBITER) -v 2 \
-		-define gens -vector -file Paley_13_gens.csv -end \
-		-define G -permutation_group \
-		-bsgs Paley_13 "Paley\_13" 13 78 "0,1" 3 gens -end \
-
-
-Paley_13_cliques_classify:
-	$(ORBITER) -v 4 \
-		-define Control -poset_classification_control \
-			-W \
-			-problem_label Paley13_cliques \
-			-clique_test Gamma \
-			-depth 5 \
-		-end \
-		-define F -finite_field -q 13 -end \
-		-define gens -vector -file Paley_13_gens.csv -end \
-		-define G -permutation_group \
-			-bsgs Paley_13 "Paley\_13" 13 78 "0,1" 3 gens -end \
-		-define Gamma -graph -Paley F -end \
-		-define Orb -orbits -group G \
-			-on_subsets 5 Control \
-		-end 
-
-#User time: 0.01 of a second, dt=1 tps = 100
-
-
-Paley_13_cliques_all:
-	$(ORBITER) -v 10 \
-		-define F -finite_field -q 13 -end \
-		-define Gamma -graph -Paley F -end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 3 \
-		-end
-
-
-tritangent_planes_graph_aut:
-	$(ORBITER) -v 2 \
-		-define Gamma \
-			-graph -tritangent_planes_disjointness_graph \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-automorphism_group \
-		-end 
-	pdflatex tritangent_planes_disjointness_report.tex
-	open tritangent_planes_disjointness_report.pdf
-
-#tritangent_planes_disjointness_report.tex
-#tritangent_planes_disjointness_gens.csv
-#tritangent_planes_disjointness_group.makefile
-
-tritangent_planes_graph_cliques_classify:
-	$(ORBITER) -v 4 \
-		-define Control -poset_classification_control \
-			-W \
-			-problem_label tri \
-			-clique_test Gamma \
-			-depth 9 \
-		-end \
-		-define gens -vector -file tritangent_planes_disjointness_gens.csv -end \
-		-define G -permutation_group \
-		-bsgs tritangent_planes_disjointness "tritangent\_planes\_disjointness" 45 51840 "0,3,12,24" 6 gens -end \
-		-define Gamma \
-			-graph -tritangent_planes_disjointness_graph \
-		-end \
-		-define Orb -orbits -group G \
-			-on_subsets 9 Control \
-		-end \
-		-with Orb -do -orbits_activity \
-			-recognize "4,9,11,14,21,26,30,35,40" \
-		-end
-
-#tri_reps_lvl_9.csv
-
-
-tritangent_planes_graph_cliques_all:
-	$(ORBITER) -v 2 \
-		-define Gamma \
-			-graph -tritangent_planes_disjointness_graph \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 9 \
-		-end
-
-
-#tritangent_planes_disjointness_sol.csv
-
-
-
-PGO_5_2_cliques: O_5_2_incidence_matrix.csv 
-	$(ORBITER) -v 3 \
-		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
-		-define Gamma -graph -collinearity_graph Inc -end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 3 -end \
-		-end
-
-
-HJ_d2_c5:
-	$(ORBITER) -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			halljanko315.csv \
-			-distance_2 \
-		-end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 5 -end \
-		-end
-
-
-
-#graph_theoretic_activity::perform_activity Gr->label=halljanko315 nb_sol = 262080
-
-
-HJ64_cliques5:
-	$(ORBITER) -v 6 \
-		-define Gamma -graph \
-			-load \
-			Group_Perm315_Orbital_3.colored_graph \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 5 -end \
-		-end
-
-#graph_theoretic_activity::perform_activity Gr->label=Group_Perm315_Orbital_3 nb_sol = 1008
-#Group_Perm315_Orbital_3_sol.csv
-
-
-
-HJ64_cliques5_classify:
-	$(ORBITER) -v 6 \
-		-define Control -poset_classification_control \
-			-W \
-			-problem_label HJ64_cliques \
-			-clique_test Gamma \
-			-depth 5 \
-		-end \
-		-define Gamma -graph \
-			-load \
-			Group_Perm315_Orbital_3.colored_graph \
-		-end \
-		-define gens -vector \
-			-file halljanko315_gens.csv \
-		-end \
-		-define G -permutation_group \
-		-bsgs halljanko315 "File\_halljanko315" \
-			315 1209600 "0,1,42,95" 5 gens -end \
-		-define Orb -orbits -group G \
-			-on_subsets 5 Control \
-		-end
-
-#HJ64_cliques_reps_lvl_5.csv
-
-# 1 orbit
-#ROW,REP,AGO,OL
-#0,"0,8,31,110,283",1200,1008
-#END
 
 
 
@@ -18784,7 +18419,7 @@ SECTION_PACKINGS:
 
 
 test_13_3:
-	#make spread_table_PG_3_4
+	#make spread_table_PG_3_4 # slow
 	make spread_table_PG_3_5_regular
 	make PG_3_5_element_of_order_31_GL_normalizer
 	make PG_3_5_element_of_order_31_ME_normalizer
@@ -18792,35 +18427,64 @@ test_13_3:
 
 
 
-# ToDo
 
 spread_table_PG_3_4:
 	- mkdir SPREAD_TABLES_4
 	$(ORBITER) -v 6 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_4 \
+		-end \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define T -spread_table P 2 "0,1,2" "SPREAD_TABLES_4/"
+		-define T -spread_table P 2 "0,1,2" "SPREAD_TABLES_4/" Control 
 
 
 # 5096448 spreads
 # 1020 self dual spreads
 # User time: 56:38 on Mac
+# User time: 17:53 on Mac 1/11/2024
+
+#spread_tables::save writing file SPREAD_TABLES_4/spread_16_spreads.csv
+#spread_tables::save written file SPREAD_TABLES_4/spread_16_spreads.csv
+#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_spreads_iso.csv
+#spread_tables::save, written file SPREAD_TABLES_4/spread_16_spreads_iso.csv
+#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_dual_spread_idx.csv
+#spread_tables::save, written file SPREAD_TABLES_4/spread_16_dual_spread_idx.csv
+#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_self_dual_spreads.csv
+#spread_tables::save, written file SPREAD_TABLES_4/spread_16_self_dual_spreads.csv
+#spread_tables::save writing file SPREAD_TABLES_4/spread_16_schreier_table.csv
+#spread_tables::save written file SPREAD_TABLES_4/spread_16_schreier_table.csv
+
 
 
 spread_table_PG_3_5_regular:
 	- mkdir SPREAD_TABLES_5_REG
 	$(ORBITER) -v 6 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_5 \
+		-end \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space -n 3 -field F -end \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
+		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" Control \
 		-print_symbols
 
-# error.
 
 # 21 isomorphism types of spreads in PG(3,5)
 # 12 is the index of the regular spread in the classification of spreads
 # 12/9/2020: 34 sec on Mac
+# time: 0:19  1/11/2024 on Mac
 # 155000 spreads
+
+#spread_tables::save writing file SPREAD_TABLES_5_REG/spread_25_spreads.csv
+#spread_tables::save written file SPREAD_TABLES_5_REG/spread_25_spreads.csv
+#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_spreads_iso.csv
+#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_spreads_iso.csv
+#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_dual_spread_idx.csv
+#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_dual_spread_idx.csv
+#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_self_dual_spreads.csv
+#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_self_dual_spreads.csv
+#spread_tables::save writing file SPREAD_TABLES_5_REG/spread_25_schreier_table.csv
+#spread_tables::save written file SPREAD_TABLES_5_REG/spread_25_schreier_table.csv
 
 
 PG_3_5_element_of_order_31_GL_normalizer:
@@ -18829,9 +18493,8 @@ PG_3_5_element_of_order_31_GL_normalizer:
 		-with G -do \
 		-group_theoretic_activity \
 			-normalizer_of_cyclic_subgroup "124" \
-			"2,0,0,0, 0,0,1,0, 0,0,0,1, 0,3,0,4" \
+			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
 		-end
-	#mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_AB_in_PGL_4_5.tex
 	pdflatex normalizer_of_124_in_GL_4_5.tex
 	$(OPEN) normalizer_of_124_in_GL_4_5.pdf
 
@@ -18860,17 +18523,26 @@ PG_3_5_element_of_order_31_ME_normalizer:
 
 PG_3_5_assume_31_graph:
 	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_5 \
+		-end \
 		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-define PW -packing_with_symmetry_assumption T \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "12" "SPREAD_TABLES_5_REG/" Control \
+		-define PC -packing_classify P3 P5 T \
+		-define PW -packing_with_symmetry_assumption PC \
 				-H "H31" $(PGL_4_5_SUBGROUP_31_ME) -end \
 				-N "N31" $(PGL_4_5_SUBGROUP_31_ME_NORMALIZER) -end \
 			-end \
 		-define PWF -packing_choose_fixed_points PW 0 -end \
 		-define L -packing_long_orbits PWF \
-			-orbit_length 31 -clique_size 1 -create_graphs -end \
+			-orbit_length 31 -create_graphs \
+			-end \
 		-print_symbols
+
+
+no:
 	pdflatex H31_reduced_spread_orbits_orbits_report.tex
 	$(OPEN) H31_reduced_spread_orbits_orbits_report.pdf
 	pdflatex H31_line_orbits_orbits_report.tex
@@ -18894,6 +18566,62 @@ PG_3_5_assume_31_graph:
 #H31_spread_types_reduced_orbit_types_report.tex
 #H31_reduced_spread_orbits_orbits.bin
 #H31_fpc0_lo.graph
+
+
+# number of points = 156
+# number of lines = 856
+#spread_classify::init The order of PGGL(4,5) is 29016000000
+#spread orbit 12 has group order 187200 orbit_length = 155000
+#spread_tables::init nb_lines=806
+#spread_tables::init spread_size=26
+#spread_tables::init nb_iso_types_of_spreads=21
+#spread_tables::init prefix=SPREAD_TABLES_5_REG/spread_25
+#packing_classify::init_P3_and_P5_and_Gr P3->N_points=156
+#packing_classify::init_P3_and_P5_and_Gr P3->N_lines=806
+#packing_classify::init_P3_and_P5_and_Gr P5->N_points=3906
+#packing_classify::init_P3_and_P5_and_Gr P5->N_lines=508431
+#-H H31
+#-PGL 4 5
+#-subgroup_by_generators 31 1 1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3
+#-N N31
+#-PGL 4 5
+#-subgroup_by_generators normalizer_31 4 1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, 1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3, 1,0,0,0,0,4,0,0,0,0,2,1,0,3,2,4, 1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,3,
+#packing_was::init_H H_goi=31
+#packing_was::init_N N_goi=372
+#orbits_on_something::init after reading orbits from file H31_point_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#1, 31^5
+#orbits_on_something::init after reading orbits from file N31_point_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#1, 31, 124
+#orbits_on_something::init after reading orbits from file H31_line_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#31^{26}
+#orbits_on_something::init after reading orbits from file H31_spread_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#31^{5000}
+#packing_was::reduce_spreads nb_good_spreads = 248
+#packing_was::compute_H_orbits_on_lines after reduced_spread_orbits_under_H->create_latex_report
+#orbits_on_something::classify_orbits_by_length
+#orbits_on_something::classify_orbits_by_length The distribution of orbit lengths is: 31^8
+#orbits_on_something::init after reading orbits from file N31_line_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#31^2, 372^2
+
+
+
+#packing_was::compute_reduced_spread_types_wrt_H
+#orbit_type_repository::init nb_sets = 248 goi=31
+
+
+#orbits_on_something::init after reading orbits from file H31_reduced_spread_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#31^8
+
+
+#orbits_on_something::init after reading orbits from file N31_line_orbits_orbits.bin
+#orbits_on_something::init orbit length distribution:
+#31^2, 372^2
 
 
 ###############################################################################
@@ -19326,6 +19054,458 @@ blt_set_export_gap_all:
 
 
 
+
+###############################################################################
+# Chapter 14 - Computer Science Primitives
+###############################################################################
+
+
+
+test_14:
+	make test_14_1
+	make test_14_2
+	make test_14_3
+
+
+
+
+###############################################################################
+# Section 14.1: Clique finding
+
+
+SECTION_GRAPH_THEORY_CLIQUE_FINDING:
+
+
+test_14_1:
+	make small_graph_cliques
+	make BLT_q13_graph_5_0_cliques_bw
+	make BLT_q13_graph_5_0_cliques_rainbow
+	make small_graph_cliques_Sajeeb
+	make Paley_13_aut
+	make Paley_13
+	make Paley_13_cliques_classify
+	make Paley_13_cliques_all
+	make tritangent_planes_graph_aut
+	make tritangent_planes_graph_cliques_classify
+	make tritangent_planes_graph_cliques_all
+	make PGO_5_2_cliques
+	make HJ_d2_c5
+	make HJ64_cliques5
+	make HJ64_cliques5_classify
+
+
+
+small_graph_cliques: graph_v5_e7.colored_graph
+	$(ORBITER) -v 2 \
+		-define G -graph -load graph_v5_e7.colored_graph -end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end
+
+# nb_sol = 3
+
+
+
+
+BLT_q13_graph_5_0_cliques_bw:
+	$(ORBITER) -v 2 \
+		-define G -graph -load BLT_q13_graph_5_0.bin -end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 9 \
+		-end
+
+# all_cliques_black_and_white
+
+
+BLT_q13_graph_5_0_cliques_rainbow:
+	$(ORBITER) -v 2 \
+		-define G -graph -load BLT_q13_graph_5_0.bin -end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -rainbow -target_size 9 \
+		-end
+
+# all_rainbow_cliques
+
+
+small_graph_cliques_Sajeeb:
+	$(ORBITER) -v 2 \
+		-define G -graph -load graph_v5_e7.colored_graph -end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -Sajeeb -target_size 3 \
+		-end
+
+# nb_sol = 3
+
+Paley_13_aut:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end 
+
+# writes Paley_13_group.makefile
+#User time: 0 of a second, dt=0 tps = 100
+#nb_calls_to_densenauty=1
+
+
+
+Paley_13:
+	$(ORBITER) -v 2 \
+		-define gens -vector -file Paley_13_gens.csv -end \
+		-define G -permutation_group \
+		-bsgs Paley_13 "Paley\_13" 13 78 "0,1" 3 gens -end \
+
+
+Paley_13_cliques_classify:
+	$(ORBITER) -v 4 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label Paley13_cliques \
+			-clique_test Gamma \
+			-depth 5 \
+		-end \
+		-define F -finite_field -q 13 -end \
+		-define gens -vector -file Paley_13_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs Paley_13 "Paley\_13" 13 78 "0,1" 3 gens -end \
+		-define Gamma -graph -Paley F -end \
+		-define Orb -orbits -group G \
+			-on_subsets 5 Control \
+		-end 
+
+#User time: 0.01 of a second, dt=1 tps = 100
+
+
+Paley_13_cliques_all:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 13 -end \
+		-define Gamma -graph -Paley F -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end
+
+
+tritangent_planes_graph_aut:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end 
+	pdflatex tritangent_planes_disjointness_report.tex
+	open tritangent_planes_disjointness_report.pdf
+
+#tritangent_planes_disjointness_report.tex
+#tritangent_planes_disjointness_gens.csv
+#tritangent_planes_disjointness_group.makefile
+
+tritangent_planes_graph_cliques_classify:
+	$(ORBITER) -v 4 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label tri \
+			-clique_test Gamma \
+			-depth 9 \
+		-end \
+		-define gens -vector -file \
+			tritangent_planes_disjointness_gens.csv \
+		-end \
+		-define G -permutation_group \
+		-bsgs tritangent_planes_disjointness \
+			"tritangent\_planes\_disjointness" 45 51840 \
+			"0,3,12,24" 6 gens -end \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-define Orb -orbits -group G \
+			-on_subsets 9 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-recognize "4,9,11,14,21,26,30,35,40" \
+		-end
+
+#tri_reps_lvl_9.csv
+
+
+tritangent_planes_graph_cliques_all:
+	$(ORBITER) -v 2 \
+		-define Gamma \
+			-graph -tritangent_planes_disjointness_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 9 \
+		-end
+
+
+#tritangent_planes_disjointness_sol.csv
+
+
+
+PGO_5_2_cliques: O_5_2_incidence_matrix.csv 
+	$(ORBITER) -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 -end \
+		-end
+
+
+HJ_d2_c5:
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+			-distance_2 \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end
+
+
+
+#graph_theoretic_activity::perform_activity Gr->label=halljanko315 nb_sol = 262080
+
+
+HJ64_cliques5:
+	$(ORBITER) -v 6 \
+		-define Gamma -graph \
+			-load \
+			Group_Perm315_Orbital_3.colored_graph \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end
+
+#graph_theoretic_activity::perform_activity Gr->label=Group_Perm315_Orbital_3 nb_sol = 1008
+#Group_Perm315_Orbital_3_sol.csv
+
+
+
+HJ64_cliques5_classify:
+	$(ORBITER) -v 6 \
+		-define Control -poset_classification_control \
+			-W \
+			-problem_label HJ64_cliques \
+			-clique_test Gamma \
+			-depth 5 \
+		-end \
+		-define Gamma -graph \
+			-load \
+			Group_Perm315_Orbital_3.colored_graph \
+		-end \
+		-define gens -vector \
+			-file halljanko315_gens.csv \
+		-end \
+		-define G -permutation_group \
+		-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,42,95" 5 gens -end \
+		-define Orb -orbits -group G \
+			-on_subsets 5 Control \
+		-end
+
+#HJ64_cliques_reps_lvl_5.csv
+
+# 1 orbit
+#ROW,REP,AGO,OL
+#0,"0,8,31,110,283",1200,1008
+#END
+
+
+###############################################################################
+# Section 14.2: Rainbow cliques
+
+
+SECTION_GRAPH_THEORY_RAINBOW_CLIQUES:
+
+
+test_14_2:
+	make BLT_11_classify_starter
+	make BLT_11_clique_0
+	make BLT_11_clique_0_Sajeeb
+	make BLT_11_0_sort
+	make BLT_11_0_sorted_draw
+
+
+BLT_11_classify_starter:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define O -orthogonal_space 0 5 F -end \
+		-define C -BLT_set_classifier O -starter_size 5 -end \
+		-with C -do -BLT_set_classify_activity \
+			-compute_starter \
+				-problem_label BLT_q11 \
+				-W -depth 5 \
+			-end \
+		-end \
+		-with C -do -BLT_set_classify_activity \
+			-create_graphs \
+		-end
+
+#NB_CASES_Q11=
+
+
+BLT_11_clique_0:
+	$(ORBITER) -v 2 \
+		-define G -graph \
+			-load BLT_q11_graph_5_0.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -rainbow -target_size 12 -end \
+		-end
+
+# nb_sol = 3
+
+BLT_11_clique_0_Sajeeb:
+	$(ORBITER) -v 2 \
+		-define G -graph \
+			-load BLT_q11_graph_5_0.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-find_cliques -rainbow -Sajeeb -end \
+		-end
+
+# nb_sol = 3
+
+
+BLT_11_0_sort:
+	$(ORBITER) -v 2 \
+		-define G -graph \
+			-load BLT_q11_graph_5_0.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-sort_by_colors \
+		-end
+
+#BLT_q11_graph_5_0_sorted.bin
+
+
+BLT_11_0_sorted_draw:
+	$(ORBITER) -v 2 \
+		-draw_options \
+			-radius 100 \
+			-scale 0.4 \
+			-line_width 1.0 -embedded \
+		-end \
+		-define G -graph \
+			-load BLT_q11_graph_5_0_sorted.bin \
+		-end \
+		-with G -do \
+		-graph_theoretic_activity \
+			-draw \
+		-end
+	pdflatex BLT_q11_graph_5_0_sorted_draw.tex
+	open BLT_q11_graph_5_0_sorted_draw.pdf
+
+
+
+
+###############################################################################
+# Section 14.3: Diophantine Systems
+
+SECTION_DIOPHANT:
+
+
+test_14_3:
+	make part10
+	make octic_monomials
+	make solve_test_system
+	make McKay_test
+	make DLX_test
+
+
+
+part10:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "10,9,8,7,6,5,4,3,2,1" -end \
+		-define D -diophant \
+			-label part10 \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=10" \
+			-x_min_global 0 -x_max_global 10 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+		
+
+
+	
+# Finds 42 solutions with 67 backtrack steps
+
+
+octic_monomials:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 1 -dense "1,1,1,1" -end \
+		-define D -diophant \
+			-label octic_monomials \
+			-coefficient_matrix A \
+			-RHS "mult=1,EQ=9" \
+			-x_min_global 0 -x_max_global 8 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+	sort -r octic_monomials_sol.csv >octic_monomials_sorted.csv
+
+#Found 165 solutions with 210 backtrack steps
+# 165=binomial(11,3)
+
+
+solve_test_system:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
+			-RHS "mult=7,EQ=1" \
+			-x_min_global 0 -x_max_global 1 \
+		-end
+
+
+McKay_test:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
+			-RHS "mult=7,EQ=1" \
+			-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+
+DLX_test:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 7 -dense $(TEST_SYSTEM) -end \
+		-define D \
+		-diophant -label test_system \
+			-coefficient_matrix A \
+			-RHS "mult=7,EQ=1" \
+			-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_DLX \
+		-end
+
+#DLX_test.sol
+# 1 solution in 6 backtrack steps
 
 
 
