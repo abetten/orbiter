@@ -429,6 +429,7 @@ void ovoid_classify::make_graphs(
 	int level;
 	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
+	actions::action_global AG;
 
 
 	if (f_v) {
@@ -521,7 +522,7 @@ void ovoid_classify::make_graphs(
 							<< ODF->nb_cases
 							<< " Before lexorder_test" << endl;
 				}
-				A->lexorder_test(candidates, nb_candidates,
+				AG.lexorder_test(A, candidates, nb_candidates,
 					nb_candidates2,
 					SG->gens, max_starter, 0 /*verbose_level - 3*/);
 				if (f_v) {
@@ -576,6 +577,7 @@ void ovoid_classify::make_one_graph(
 	int f_v = (verbose_level >= 1);
 	int level;
 	orbiter_kernel_system::file_io Fio;
+	actions::action_global AG;
 
 	if (f_v) {
 		cout << "ovoid_classify::make_one_graph" << endl;
@@ -644,8 +646,10 @@ void ovoid_classify::make_one_graph(
 						<< " / " << ODF->nb_cases
 						<< " Before lexorder_test" << endl;
 			}
-			A->lexorder_test(candidates, nb_candidates, nb_candidates2,
-				SG->gens, max_starter, 0 /*verbose_level - 3*/);
+			AG.lexorder_test(
+					A, candidates, nb_candidates, nb_candidates2,
+				SG->gens, max_starter,
+				0 /*verbose_level - 3*/);
 			if (f_v) {
 				cout << "ovoid_classify::make_graphs After "
 						"lexorder_test nb_candidates=" << nb_candidates2

@@ -763,8 +763,8 @@ void object_with_canonical_form::init_design_from_block_orbits(
 	}
 	FREE_int(incma);
 	object_with_canonical_form::sz = nb_flags;
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = b;
+	//object_with_canonical_form::v = v;
+	//object_with_canonical_form::b = b;
 
 
 	if (f_v) {

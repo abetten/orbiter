@@ -58,15 +58,18 @@ void linear_group::linear_group_init(
 	if (description->f_import_group_of_plane) {
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init f_import_group_of_plane" << endl;
+			cout << "linear_group::linear_group_init "
+					"f_import_group_of_plane" << endl;
 		}
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init before linear_group_import" << endl;
+			cout << "linear_group::linear_group_init "
+					"before linear_group_import" << endl;
 		}
 		linear_group_import(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init after linear_group_import" << endl;
+			cout << "linear_group::linear_group_init "
+					"after linear_group_import" << endl;
 		}
 
 
@@ -74,18 +77,21 @@ void linear_group::linear_group_init(
 	else {
 
 		if (f_v) {
-			cout << "linear_group::linear_group_init before linear_group_create" << endl;
+			cout << "linear_group::linear_group_init "
+					"before linear_group_create" << endl;
 		}
 		linear_group_create(verbose_level);
 		if (f_v) {
-			cout << "linear_group::linear_group_init after linear_group_create" << endl;
+			cout << "linear_group::linear_group_init "
+					"after linear_group_create" << endl;
 		}
 
 	}
 
 	if (description->f_export_magma) {
 		if (f_v) {
-			cout << "linear_group::linear_group_init f_export_magma" << endl;
+			cout << "linear_group::linear_group_init "
+					"f_export_magma" << endl;
 		}
 		Strong_gens->export_magma(A_linear, cout, verbose_level);
 	}
@@ -229,7 +235,8 @@ void linear_group::linear_group_create(
 		cout << "linear_group::linear_group_create" << endl;
 	}
 	if (description->F == NULL) {
-		cout << "linear_group::linear_group_create please specify a finite field" << endl;
+		cout << "linear_group::linear_group_create "
+				"please specify a finite field" << endl;
 		exit(1);
 	}
 
@@ -246,7 +253,8 @@ void linear_group::linear_group_create(
 
 
 	if (f_v) {
-		cout << "linear_group::linear_group_create initializing projective group" << endl;
+		cout << "linear_group::linear_group_create "
+				"initializing projective group" << endl;
 	}
 
 

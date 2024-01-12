@@ -58,7 +58,8 @@ interface_projective::interface_projective()
 }
 
 
-void interface_projective::print_help(int argc,
+void interface_projective::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -91,7 +92,8 @@ void interface_projective::print_help(int argc,
 
 
 
-int interface_projective::recognize_keyword(int argc,
+int interface_projective::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -126,7 +128,8 @@ int interface_projective::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_projective::read_arguments(int argc,
+void interface_projective::read_arguments(
+		int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -260,7 +263,8 @@ void interface_projective::print()
 
 
 
-void interface_projective::worker(int verbose_level)
+void interface_projective::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

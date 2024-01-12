@@ -480,16 +480,19 @@ void orbit_of_equations::get_table(
 
 	Table = new string [nb_rows * nb_cols];
 	Headings = new string [nb_cols];
+
 	for (i = 0; i < nb_rows; i++) {
 		Table[i * nb_cols + 0] = std::to_string(i);
 		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(Equations[i] + 1, sz - 1) + "\"";
-		Table[i * nb_cols + 3] = std::to_string(label[i]);
 		Table[i * nb_cols + 2] = std::to_string(prev[i]);
+		Table[i * nb_cols + 3] = std::to_string(label[i]);
 	}
+
 	Headings[0] = "Row";
 	Headings[1] = "Equation";
-	Headings[2] = "Label";
-	Headings[3] = "Parent";
+	Headings[2] = "Parent";
+	Headings[3] = "Label";
+
 	if (f_v) {
 		cout << "orbit_of_equations::get_table done" << endl;
 	}

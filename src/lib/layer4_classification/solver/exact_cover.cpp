@@ -169,7 +169,8 @@ void exact_cover::init_prepare_function_new(
 	exact_cover::prepare_function_new = prepare_function_new;
 }
 
-void exact_cover::set_split(int split_r, int split_m, int verbose_level)
+void exact_cover::set_split(
+		int split_r, int split_m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -195,7 +196,8 @@ void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 	}
 }
 
-void exact_cover::set_single_case(int single_case, int verbose_level)
+void exact_cover::set_single_case(
+		int single_case, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -874,7 +876,8 @@ void exact_cover::compute_liftings_single_case_new(
 
 }
 
-void exact_cover::lexorder_test(long int *live_blocks2,
+void exact_cover::lexorder_test(
+		long int *live_blocks2,
 		int &nb_live_blocks2,
 		data_structures_groups::vector_ge *stab_gens,
 	int verbose_level)
@@ -885,6 +888,7 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 		cout << "exact_cover::lexorder_test" << endl;
 		}
 	int nb_accepted, max_starter;
+	actions::action_global AG;
 
 	if (starter_size) {
 		max_starter = starter[starter_size - 1];
@@ -894,8 +898,10 @@ void exact_cover::lexorder_test(long int *live_blocks2,
 					"Before lexorder_test, "
 					"nb_live_blocks2=" << nb_live_blocks2 << endl;
 			}
-		A_on_blocks->lexorder_test(live_blocks2, nb_live_blocks2, nb_accepted, 
-			stab_gens /*starter_stabilizer_gens */, max_starter, verbose_level);
+		AG.lexorder_test(
+				A_on_blocks, live_blocks2, nb_live_blocks2, nb_accepted,
+			stab_gens /*starter_stabilizer_gens */, max_starter,
+			verbose_level);
 
 		if (f_v) {
 			cout << "exact_cover::lexorder_test "

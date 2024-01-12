@@ -1047,7 +1047,8 @@ void activity_description::print()
 
 
 
-void activity_description::do_finite_field_activity(int verbose_level)
+void activity_description::do_finite_field_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1101,7 +1102,8 @@ void activity_description::do_finite_field_activity(int verbose_level)
 }
 
 
-void activity_description::do_ring_theoretic_activity(int verbose_level)
+void activity_description::do_ring_theoretic_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1150,7 +1152,8 @@ void activity_description::do_ring_theoretic_activity(int verbose_level)
 }
 
 
-void activity_description::do_projective_space_activity(int verbose_level)
+void activity_description::do_projective_space_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1199,7 +1202,8 @@ void activity_description::do_projective_space_activity(int verbose_level)
 
 }
 
-void activity_description::do_orthogonal_space_activity(int verbose_level)
+void activity_description::do_orthogonal_space_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1251,7 +1255,8 @@ void activity_description::do_orthogonal_space_activity(int verbose_level)
 
 }
 
-void activity_description::do_group_theoretic_activity(int verbose_level)
+void activity_description::do_group_theoretic_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1335,7 +1340,8 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 
 }
 
-void activity_description::do_coding_theoretic_activity(int verbose_level)
+void activity_description::do_coding_theoretic_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1414,7 +1420,8 @@ void activity_description::do_coding_theoretic_activity(int verbose_level)
 
 }
 
-void activity_description::do_cubic_surface_activity(int verbose_level)
+void activity_description::do_cubic_surface_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1464,7 +1471,8 @@ void activity_description::do_cubic_surface_activity(int verbose_level)
 }
 
 
-void activity_description::do_quartic_curve_activity(int verbose_level)
+void activity_description::do_quartic_curve_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1514,7 +1522,8 @@ void activity_description::do_quartic_curve_activity(int verbose_level)
 }
 
 
-void activity_description::do_blt_set_activity(int verbose_level)
+void activity_description::do_blt_set_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1564,7 +1573,8 @@ void activity_description::do_blt_set_activity(int verbose_level)
 }
 
 
-void activity_description::do_combinatorial_object_activity(int verbose_level)
+void activity_description::do_combinatorial_object_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1639,7 +1649,8 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 
 }
 
-void activity_description::do_graph_theoretic_activity(int verbose_level)
+void activity_description::do_graph_theoretic_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1693,7 +1704,8 @@ void activity_description::do_graph_theoretic_activity(int verbose_level)
 
 }
 
-void activity_description::do_classification_of_cubic_surfaces_with_double_sixes_activity(int verbose_level)
+void activity_description::do_classification_of_cubic_surfaces_with_double_sixes_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1742,7 +1754,8 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 
 }
 
-void activity_description::do_spread_table_activity(int verbose_level)
+void activity_description::do_spread_table_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1791,7 +1804,8 @@ void activity_description::do_spread_table_activity(int verbose_level)
 
 }
 
-void activity_description::do_packing_was_activity(int verbose_level)
+void activity_description::do_packing_was_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1842,7 +1856,8 @@ void activity_description::do_packing_was_activity(int verbose_level)
 
 
 
-void activity_description::do_packing_fixed_points_activity(int verbose_level)
+void activity_description::do_packing_fixed_points_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1892,7 +1907,8 @@ void activity_description::do_packing_fixed_points_activity(int verbose_level)
 }
 
 
-void activity_description::do_graph_classification_activity(int verbose_level)
+void activity_description::do_graph_classification_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1941,7 +1957,8 @@ void activity_description::do_graph_classification_activity(int verbose_level)
 
 }
 
-void activity_description::do_diophant_activity(int verbose_level)
+void activity_description::do_diophant_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1989,7 +2006,8 @@ void activity_description::do_diophant_activity(int verbose_level)
 
 }
 
-void activity_description::do_design_activity(int verbose_level)
+void activity_description::do_design_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2037,7 +2055,8 @@ void activity_description::do_design_activity(int verbose_level)
 
 }
 
-void activity_description::do_large_set_was_activity(int verbose_level)
+void activity_description::do_large_set_was_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2085,7 +2104,8 @@ void activity_description::do_large_set_was_activity(int verbose_level)
 
 }
 
-void activity_description::do_symbolic_object_activity(int verbose_level)
+void activity_description::do_symbolic_object_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2138,7 +2158,8 @@ void activity_description::do_symbolic_object_activity(int verbose_level)
 
 }
 
-void activity_description::do_BLT_set_classify_activity(int verbose_level)
+void activity_description::do_BLT_set_classify_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2192,7 +2213,8 @@ void activity_description::do_BLT_set_classify_activity(int verbose_level)
 
 }
 
-void activity_description::do_spread_classify_activity(int verbose_level)
+void activity_description::do_spread_classify_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2246,7 +2268,8 @@ void activity_description::do_spread_classify_activity(int verbose_level)
 
 }
 
-void activity_description::do_spread_activity(int verbose_level)
+void activity_description::do_spread_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2301,7 +2324,8 @@ void activity_description::do_spread_activity(int verbose_level)
 }
 
 
-void activity_description::do_translation_plane_activity(int verbose_level)
+void activity_description::do_translation_plane_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2356,7 +2380,8 @@ void activity_description::do_translation_plane_activity(int verbose_level)
 }
 
 
-void activity_description::do_action_on_forms_activity(int verbose_level)
+void activity_description::do_action_on_forms_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2411,7 +2436,8 @@ void activity_description::do_action_on_forms_activity(int verbose_level)
 }
 
 
-void activity_description::do_orbits_activity(int verbose_level)
+void activity_description::do_orbits_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

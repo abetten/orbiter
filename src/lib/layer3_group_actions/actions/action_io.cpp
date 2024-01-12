@@ -567,8 +567,8 @@ void action::read_representatives(
 	for (i = 0; i < nb_cases; i++) {
 		for (j = 0; j < size; j++) {
 			Reps[i * size + j] = Sets[i][j];
-			}
 		}
+	}
 	Fio.free_data_fancy(nb_cases,
 		Set_sizes, Sets,
 		Ago_ascii, Aut_ascii,
@@ -838,17 +838,18 @@ void action::print_symmetry_group_type(
 	if (f_has_subaction) {
 		ost << "->";
 		subaction->print_symmetry_group_type(ost);
-		}
+	}
 	//else {
 		//ost << "no subaction";
-		//}
+	//}
 
 }
 
 
 void action::print_info()
 {
-	cout << "ACTION " << label << " degree=" << degree << " of type ";
+	cout << "ACTION " << label << " : " << label_tex
+			<< " degree=" << degree << " of type ";
 	print_symmetry_group_type(cout);
 	cout << endl;
 	cout << "low_level_point_size=" << low_level_point_size;
@@ -1096,7 +1097,7 @@ void action::print_group_order_long(
 	if (Stabilizer_chain) {
 		for (i = 0; i < base_len(); i++) {
 			cout << " " << transversal_length_i(i);
-			}
+		}
 	}
 	else {
 		cout << "action " << label << " does not have a base" << endl;
@@ -1115,7 +1116,7 @@ void action::print_vector(
 		cout << i << " : " << endl;
 		Group_element->element_print_quick(v.ith(i), cout);
 		cout << endl;
-		}
+	}
 }
 
 void action::print_vector_as_permutation(
@@ -1129,7 +1130,7 @@ void action::print_vector_as_permutation(
 		cout << i << " : ";
 		Group_element->element_print_as_permutation(v.ith(i), cout);
 		cout << endl;
-		}
+	}
 }
 
 

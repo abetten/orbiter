@@ -1237,9 +1237,9 @@ void arc_generator::report_decompositions(
 	Stab = Iso.Folding->Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
-	actions::action_global Action_global;
+	actions::combinatorics_with_action CombiA;
 	
-	Action_global.report_TDA_projective_space(
+	CombiA.report_TDA_projective_space(
 			ost, PA->P,
 			PA->A /* A_on_points */, PA->A_on_lines,
 			gens, 25 /* size_limit_for_printing */,

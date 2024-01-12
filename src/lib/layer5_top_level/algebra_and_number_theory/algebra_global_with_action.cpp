@@ -4172,6 +4172,180 @@ void algebra_global_with_action::find_standard_generators(
 	}
 }
 
+void algebra_global_with_action::do_character_table_symmetric_group(
+		int deg, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "algebra_global_with_action::do_character_table_symmetric_group" << endl;
+		cout << "deg=" << deg << endl;
+	}
+
+	apps_algebra::character_table_burnside *CTB;
+
+	CTB = NEW_OBJECT(apps_algebra::character_table_burnside);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_character_table_symmetric_group "
+				"before CTB->do_it" << endl;
+	}
+	CTB->do_it(deg, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::do_character_table_symmetric_group "
+				"after CTB->do_it" << endl;
+	}
+
+	FREE_OBJECT(CTB);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::do_character_table_symmetric_group done" << endl;
+	}
+}
+
+void algebra_global_with_action::smith_normal_form(
+		int *A, int m, int n, std::string &label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form" << endl;
+	}
+
+	data_structures::int_matrix *M;
+	data_structures::int_matrix *P;
+	data_structures::int_matrix *Pv;
+	data_structures::int_matrix *Q;
+	data_structures::int_matrix *Qv;
+	linear_algebra::module Mod;
+
+	M = NEW_OBJECT(data_structures::int_matrix);
+	M->allocate_and_init(m, n, A);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form M=" << endl;
+		M->print();
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = label + "_SNF_M_original.csv";
+
+	M->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "M:" << endl;
+		Int_matrix_print(M->M, M->m, M->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form "
+				"before Mod.smith_normal_form" << endl;
+	}
+
+	Mod.smith_normal_form(
+			M, P, Pv, Q, Qv, verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form "
+				"after Mod.smith_normal_form" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form M=" << endl;
+		M->print();
+	}
+
+
+
+	fname = label + "_SNF.csv";
+
+	M->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF:" << endl;
+		Int_matrix_print(M->M, M->m, M->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	// write P and Pv:
+
+	fname = label + "_SNF_P.csv";
+
+	P->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_P:" << endl;
+		Int_matrix_print(P->M, P->m, P->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	fname = label + "_SNF_Pv.csv";
+
+	Pv->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_Pv:" << endl;
+		Int_matrix_print(Pv->M, Pv->m, Pv->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	// write Q and Qv:
+
+	fname = label + "_SNF_Q.csv";
+
+	Q->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_Q:" << endl;
+		Int_matrix_print(Q->M, Q->m, Q->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	fname = label + "_SNF_Qv.csv";
+
+	Qv->write_csv(fname, verbose_level);
+
+	if (f_v) {
+		cout << "SNF_Qv:" << endl;
+		Int_matrix_print(Qv->M, Qv->m, Qv->n);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::smith_normal_form" << endl;
+	}
+
+
+}
 }}}
 

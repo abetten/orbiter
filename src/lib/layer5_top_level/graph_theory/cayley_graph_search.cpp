@@ -238,17 +238,20 @@ void cayley_graph_search::init_group2(
 	generators = NEW_int(nb_generators);
 	for (i = 0; i < nb_generators; i++) {
 		generators[i] = S->element_rank_lint(Strong_gens->gens->ith(i));
-		}
+	}
 
 	S->create_group_table(Table, go, verbose_level);
 
 
 	fname_base = "Ferdinand" + std::to_string(level) + "_" + std::to_string(group);
 
-	Aut = NEW_OBJECT(actions::action);
+	//Aut = NEW_OBJECT(actions::action);
+	interfaces::magma_interface Magma;
 
-	Aut->init_automorphism_group_from_group_table(fname_base,
+	Magma.init_automorphism_group_from_group_table(
+			fname_base,
 		Table, go, generators, nb_generators,
+		Aut,
 		Aut_gens,
 		verbose_level);
 		// ACTION/action_global.cpp

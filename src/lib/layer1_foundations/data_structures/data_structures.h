@@ -1016,12 +1016,12 @@ class partitionstack {
 		int verbose_level);
 
 	void get_row_and_col_permutation(
-			geometry::row_and_col_partition *RC,
+			combinatorics::row_and_col_partition *RC,
 		int *row_perm, int *row_perm_inv,
 		int *col_perm, int *col_perm_inv,
 		int verbose_level);
 	void get_row_and_col_classes(
-			geometry::row_and_col_partition *&RC,
+			combinatorics::row_and_col_partition *&RC,
 			int verbose_level);
 	void get_row_and_col_classes_old_fashioned(
 			int *row_classes, int &nb_row_classes,
@@ -1239,9 +1239,9 @@ public:
 		int verbose_level);
 #endif
 	void init_decomposition(
-			geometry::decomposition *&D, int verbose_level);
+			combinatorics::decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(
-			geometry::decomposition &D,
+			combinatorics::decomposition &D,
 		int verbose_level);
 	int is_member(
 			int i, int a, int verbose_level);
@@ -2248,7 +2248,7 @@ public:
 	std::string sparse_pairs;
 
 	int f_concatenate;
-	std::vector<std::string> concatenate_list;
+	std::string concatenate_list;
 
 	int f_loop;
 	int loop_start;

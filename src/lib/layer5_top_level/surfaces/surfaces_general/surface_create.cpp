@@ -103,7 +103,7 @@ void surface_create::create_cubic_surface(
 					"to specify the projective space" << endl;
 			exit(1);
 		}
-		PA = Get_object_of_projective_space(Descr->space_label);
+		PA = Get_projective_space(Descr->space_label);
 	}
 
 

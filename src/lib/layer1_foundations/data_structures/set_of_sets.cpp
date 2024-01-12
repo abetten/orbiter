@@ -333,7 +333,7 @@ void set_of_sets::init_from_csv_file(
 	
 	if (f_v) {
 		cout << "set_of_sets::init_from_csv_file fname=" << fname << endl;
-		}
+	}
 
 	long int *Data;
 	int m, n;
@@ -342,10 +342,11 @@ void set_of_sets::init_from_csv_file(
 	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname, Data, m, n, verbose_level);
 
+
 	if (f_v) {
 		cout << "set_of_sets::init_from_csv_file "
 				"m=" << m << " n=" << n << endl;
-		}
+	}
 
 	init_basic_constant_size(underlying_set_size, 
 		m /* nb_sets */, 
@@ -354,13 +355,13 @@ void set_of_sets::init_from_csv_file(
 
 	for (i = 0; i < m; i++) {
 		Lint_vec_copy(Data + i * n, Sets[i], n);
-		}
+	}
 
 	
 	FREE_lint(Data);
 	if (f_v) {
 		cout << "set_of_sets::init_from_csv_file done" << endl;
-		}
+	}
 }
 
 void set_of_sets::init_from_orbiter_file(
@@ -1130,7 +1131,7 @@ void set_of_sets::compute_and_print_tdo_col_scheme(
 #endif
 
 void set_of_sets::init_decomposition(
-		geometry::decomposition *&D, int verbose_level)
+		combinatorics::decomposition *&D, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1141,7 +1142,7 @@ void set_of_sets::init_decomposition(
 	}
 	compute_incidence_matrix(Inc, m, n, verbose_level - 2);
 
-	D = NEW_OBJECT(geometry::decomposition);
+	D = NEW_OBJECT(combinatorics::decomposition);
 
 	D->init_incidence_matrix(underlying_set_size,
 			nb_sets, Inc, verbose_level - 1);
@@ -1154,7 +1155,7 @@ void set_of_sets::init_decomposition(
 }
 
 void set_of_sets::compute_tdo_decomposition(
-		geometry::decomposition &D, int verbose_level)
+		combinatorics::decomposition &D, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -1689,9 +1690,9 @@ void set_of_sets::get_eckardt_points(
 
 	Inc->init_by_set_of_sets(this, false);
 
-	geometry::decomposition *Decomposition;
+	combinatorics::decomposition *Decomposition;
 
-	Decomposition = NEW_OBJECT(geometry::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 	Decomposition->init_incidence_structure(
 			Inc,
@@ -1703,9 +1704,9 @@ void set_of_sets::get_eckardt_points(
 
 	int *col_scheme;
 
-	geometry::row_and_col_partition *RC;
+	combinatorics::row_and_col_partition *RC;
 
-	RC = NEW_OBJECT(geometry::row_and_col_partition);
+	RC = NEW_OBJECT(combinatorics::row_and_col_partition);
 
 	RC->init_from_partitionstack(
 			Decomposition->Stack,

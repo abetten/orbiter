@@ -189,7 +189,8 @@ interface_toolkit::interface_toolkit()
 }
 
 
-void interface_toolkit::print_help(int argc,
+void interface_toolkit::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -306,7 +307,8 @@ void interface_toolkit::print_help(int argc,
 
 }
 
-int interface_toolkit::recognize_keyword(int argc,
+int interface_toolkit::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -426,7 +428,8 @@ int interface_toolkit::recognize_keyword(int argc,
 	return false;
 }
 
-void interface_toolkit::read_arguments(int argc,
+void interface_toolkit::read_arguments(
+		int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1160,7 +1163,8 @@ void interface_toolkit::print()
 	}
 }
 
-void interface_toolkit::worker(int verbose_level)
+void interface_toolkit::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

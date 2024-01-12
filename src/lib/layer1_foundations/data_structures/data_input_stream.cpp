@@ -320,13 +320,19 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				set_of_sets *SoS;
 				int nck;
 				combinatorics::combinatorics_domain Combi;
+				int N_points, b, k, partition_class_size;
 
-				nck = Combi.int_n_choose_k(Descr->Input[input_idx].input_data1, Descr->Input[input_idx].input_data3);
+				N_points = Descr->Input[input_idx].input_data1;
+				b = Descr->Input[input_idx].input_data2;
+				k = Descr->Input[input_idx].input_data3;
+				partition_class_size = Descr->Input[input_idx].input_data4;
+
+				nck = Combi.int_n_choose_k(N_points, k);
 				SoS = NEW_OBJECT(set_of_sets);
 
 				cout << "classify_objects_using_nauty "
 						"Reading the file " << Descr->Input[input_idx].input_string
-					<<  " which contains designs on " << Descr->Input[input_idx].input_data1
+					<<  " which contains designs on " << N_points
 					<< " points, nck=" << nck << endl;
 				SoS->init_from_file(
 						nck /* underlying_set_size */,

@@ -273,7 +273,8 @@ void orbiter_command::parse(
 
 }
 
-void orbiter_command::execute(int verbose_level)
+void orbiter_command::execute(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

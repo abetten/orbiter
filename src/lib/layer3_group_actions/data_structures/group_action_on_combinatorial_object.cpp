@@ -183,7 +183,7 @@ void group_action_on_combinatorial_object::init(
 	}
 
 
-	Decomposition = NEW_OBJECT(geometry::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "

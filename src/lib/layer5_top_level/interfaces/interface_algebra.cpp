@@ -70,7 +70,8 @@ interface_algebra::interface_algebra()
 }
 
 
-void interface_algebra::print_help(int argc,
+void interface_algebra::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -113,7 +114,8 @@ void interface_algebra::print_help(int argc,
 	}
 }
 
-int interface_algebra::recognize_keyword(int argc,
+int interface_algebra::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -168,7 +170,8 @@ int interface_algebra::recognize_keyword(int argc,
 }
 
 
-void interface_algebra::read_arguments(int argc,
+void interface_algebra::read_arguments(
+		int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -350,7 +353,8 @@ void interface_algebra::print()
 }
 
 
-void interface_algebra::worker(int verbose_level)
+void interface_algebra::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -359,14 +363,21 @@ void interface_algebra::worker(int verbose_level)
 	}
 
 	if (f_character_table_symmetric_group) {
-		do_character_table_symmetric_group(character_table_symmetric_group_n, verbose_level);
+
+		apps_algebra::algebra_global_with_action A;
+
+		A.do_character_table_symmetric_group(
+				character_table_symmetric_group_n,
+				verbose_level);
+
 	}
 
 	else if (f_make_A5_in_PSL_2_q) {
 
 		apps_algebra::algebra_global_with_action A;
 
-		A.A5_in_PSL_(make_A5_in_PSL_2_q_q, verbose_level);
+		A.A5_in_PSL_(
+				make_A5_in_PSL_2_q_q, verbose_level);
 
 	}
 
@@ -374,7 +385,8 @@ void interface_algebra::worker(int verbose_level)
 
 		algebra::algebra_global Algebra;
 
-		Algebra.count_subprimitive(count_subprimitive_Q_max,
+		Algebra.count_subprimitive(
+				count_subprimitive_Q_max,
 				count_subprimitive_H_max);
 	}
 #if 0
@@ -499,10 +511,16 @@ void interface_algebra::worker(int verbose_level)
 			cout << "interface_algebra::worker f_smith_normal_form" << endl;
 		}
 
+		apps_algebra::algebra_global_with_action Algebra;
 		int *A;
 		int m, n;
 
 		Get_matrix(smith_normal_form_matrix, A, m, n);
+
+
+		Algebra.smith_normal_form(
+					A, m, n, smith_normal_form_matrix, verbose_level);
+
 
 #if 0
 		typed_objects::discreta_matrix M;
@@ -541,137 +559,6 @@ void interface_algebra::worker(int verbose_level)
 		}
 #endif
 
-		data_structures::int_matrix *M;
-		data_structures::int_matrix *P;
-		data_structures::int_matrix *Pv;
-		data_structures::int_matrix *Q;
-		data_structures::int_matrix *Qv;
-		linear_algebra::module Mod;
-
-		M = NEW_OBJECT(data_structures::int_matrix);
-		M->allocate_and_init(m, n, A);
-
-
-		if (f_v) {
-			cout << "interface_algebra::worker M=" << endl;
-			M->print();
-		}
-
-
-		orbiter_kernel_system::file_io Fio;
-		string fname;
-
-		fname = smith_normal_form_matrix + "_SNF_M_original.csv";
-
-		M->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "M:" << endl;
-			Int_matrix_print(M->M, M->m, M->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-
-
-		if (f_v) {
-			cout << "interface_algebra::worker before Mod.smith_normal_form" << endl;
-		}
-
-		Mod.smith_normal_form(
-				M, P, Pv, Q, Qv, verbose_level);
-
-		if (f_v) {
-			cout << "interface_algebra::worker after Mod.smith_normal_form" << endl;
-		}
-
-		if (f_v) {
-			cout << "interface_algebra::worker M=" << endl;
-			M->print();
-		}
-
-
-
-		fname = smith_normal_form_matrix + "_SNF.csv";
-
-		M->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "SNF:" << endl;
-			Int_matrix_print(M->M, M->m, M->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-
-
-		// write P and Pv:
-
-		fname = smith_normal_form_matrix + "_SNF_P.csv";
-
-		P->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "SNF_P:" << endl;
-			Int_matrix_print(P->M, P->m, P->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		fname = smith_normal_form_matrix + "_SNF_Pv.csv";
-
-		Pv->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "SNF_Pv:" << endl;
-			Int_matrix_print(Pv->M, Pv->m, Pv->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-
-
-
-		// write Q and Qv:
-
-		fname = smith_normal_form_matrix + "_SNF_Q.csv";
-
-		Q->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "SNF_Q:" << endl;
-			Int_matrix_print(Q->M, Q->m, Q->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-		fname = smith_normal_form_matrix + "_SNF_Qv.csv";
-
-		Qv->write_csv(fname, verbose_level);
-
-		if (f_v) {
-			cout << "SNF_Qv:" << endl;
-			Int_matrix_print(Qv->M, Qv->m, Qv->n);
-		}
-
-		if (f_v) {
-			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-		}
-
-
-
-
-
 	}
 
 
@@ -684,35 +571,6 @@ void interface_algebra::worker(int verbose_level)
 
 
 
-void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_character_table_symmetric_group" << endl;
-		cout << "deg=" << deg << endl;
-	}
-
-	apps_algebra::character_table_burnside *CTB;
-
-	CTB = NEW_OBJECT(apps_algebra::character_table_burnside);
-
-	if (f_v) {
-		cout << "interface_algebra::do_character_table_symmetric_group "
-				"before CTB->do_it" << endl;
-	}
-	CTB->do_it(deg, verbose_level);
-	if (f_v) {
-		cout << "interface_algebra::do_character_table_symmetric_group "
-				"after CTB->do_it" << endl;
-	}
-
-	FREE_OBJECT(CTB);
-
-	if (f_v) {
-		cout << "interface_algebra::do_character_table_symmetric_group done" << endl;
-	}
-}
 
 
 

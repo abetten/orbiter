@@ -44,7 +44,8 @@ combinatorics_domain::~combinatorics_domain()
 }
 
 
-int combinatorics_domain::int_factorial(int a)
+int combinatorics_domain::int_factorial(
+		int a)
 {
 	int n, i;
 
@@ -295,11 +296,6 @@ int combinatorics_domain::int_vec_first_regular_word(
 #else
 	//int i;
 	Int_vec_zero(v, len);
-#if 0
-	for (i = 0; i < len; i++) {
-		v[i] = 0;
-	}
-#endif
 	while (true) {
 		if (int_vec_is_regular_word(v, len, q)) {
 			return true;
@@ -395,7 +391,8 @@ int combinatorics_domain::set_find(
 	int idx;
 	data_structures::sorting Sorting;
 	
-	if (!Sorting.int_vec_search(elts, size, a, idx)) {
+	if (!Sorting.int_vec_search(
+			elts, size, a, idx)) {
 		cout << "set_find fatal: did not find" << endl;
 		cout << "a=" << a << endl;
 		Int_vec_print(cout, elts, size);
@@ -576,7 +573,8 @@ void combinatorics_domain::make_t_k_incidence_matrix(
 		}
 	}
 	if (f_v) {
-		cout << "make_t_k_incidence_matrix computed " << m << " x " << n
+		cout << "combinatorics_domain::make_t_k_incidence_matrix "
+				"computed " << m << " x " << n
 			<< " KM matrix" << endl;
 	}
 	if (f_vv) {
@@ -852,7 +850,8 @@ int combinatorics_domain::ordered_pair_rank(
 	int a;
 	
 	if (i == j) {
-		cout << "ordered_pair_rank i == j" << endl;
+		cout << "combinatorics_domain::ordered_pair_rank "
+				"i == j" << endl;
 		exit(1);
 	}
 	if (i < j) {
@@ -934,7 +933,8 @@ int combinatorics_domain::set_partition_4_into_2_rank(
 		v[3] = b;
 	}
 	if (v[0] != 0) {
-		cout << "set_partition_4_into_2_rank v[0] != 0";
+		cout << "combinatorics_domain::set_partition_4_into_2_rank "
+				"v[0] != 0";
 	}
 	if (v[1] == 1) {
 		return 0;
@@ -946,7 +946,7 @@ int combinatorics_domain::set_partition_4_into_2_rank(
 		return 2;
 	}
 	else {
-		cout << "set_partition_4_into_2_rank "
+		cout << "combinatorics_domain::set_partition_4_into_2_rank "
 				"something is wrong" << endl;
 		exit(1);
 	}
@@ -1132,7 +1132,8 @@ void combinatorics_domain::k2ij_lint(
 		}
 		k -= (n - ii - 1);
 	}
-	cout << "combinatorics_domain::k2ij_lint k too large: k = " << k_save
+	cout << "combinatorics_domain::k2ij_lint "
+			"k too large: k = " << k_save
 			<< " n = " << n << endl;
 	exit(1);
 }
@@ -1141,7 +1142,8 @@ int combinatorics_domain::ij2k(
 		int i, int j, int n)
 {
 	if (i == j) {
-		cout << "ij2k() i == j" << endl;
+		cout << "combinatorics_domain::ij2k "
+				"i == j" << endl;
 		exit(1);
 	}
 	if (i > j) {
@@ -1165,7 +1167,8 @@ void combinatorics_domain::k2ij(
 		}
 		k -= (n - ii - 1);
 	}
-	cout << "k2ij: k too large: k = " << k_save
+	cout << "combinatorics_domain::k2ij "
+			"k too large: k = " << k_save
 			<< " n = " << n << endl;
 	exit(1);
 }
@@ -1217,7 +1220,8 @@ void combinatorics_domain::random_permutation(
 	l = n;
 	for (i = 0; i < n; i++) {
 		if ((i % 1000) == 0) {
-			cout << "random_permutation " << i << " / " << n << endl;
+			cout << "combinatorics_domain::random_permutation "
+					<< i << " / " << n << endl;
 		}
 		a = Os.random_integer(l);
 		random_permutation[i] = available_digits[a];
@@ -1272,7 +1276,8 @@ void combinatorics_domain::perm_elementary_transposition(
 	long int i;
 
 	if (f >= n - 1) {
-		cout << "perm_elementary_transposition f >= n - 1" << endl;
+		cout << "combinatorics_domain::perm_elementary_transposition "
+				"f >= n - 1" << endl;
 		exit(1);
 	}
 	for (i = 0; i < n; i++) {
@@ -1596,7 +1601,8 @@ void combinatorics_domain::perm_cycle_type(
 		len = 1;
 		while (true) {
 			if (l1 >= degree) {
-				cout << "perm_cycle_type cycle starting with "
+				cout << "combinatorics_domain::perm_cycle_type "
+						"cycle starting with "
 						<< first << endl;
 				cout << "l1 = " << l1 << " >= degree" << endl;
 				exit(1);
@@ -1604,7 +1610,8 @@ void combinatorics_domain::perm_cycle_type(
 			have_seen[l1] = true;
 			next = perm[l1];
 			if (next >= degree) {
-				cout << "perm_cycle_type next = " << next
+				cout << "combinatorics_domain::perm_cycle_type "
+						"next = " << next
 						<< " >= degree = " << degree << endl;
 				// print_list(ost);
 				exit(1);
@@ -1613,7 +1620,8 @@ void combinatorics_domain::perm_cycle_type(
 				break;
 			}
 			if (have_seen[next]) {
-				cout << "perm_cycle_type have_seen[next]" << endl;
+				cout << "combinatorics_domain::perm_cycle_type "
+						"have_seen[next]" << endl;
 				cout << "first=" << first << endl;
 				cout << "len=" << len << endl;
 				cout << "l1=" << l1 << endl;
@@ -1659,7 +1667,8 @@ int combinatorics_domain::perm_order(
 			have_seen[l1] = true;
 			next = a[l1];
 			if (next > n) {
-				cout << "perm_order: next = " << next
+				cout << "combinatorics_domain::perm_order "
+						"next = " << next
 						<< " > n = " << n << endl;
 				// print_list(ost);
 				exit(1);
@@ -1668,7 +1677,8 @@ int combinatorics_domain::perm_order(
 				break;
 			}
 			if (have_seen[next]) {
-				cout << "perm_order: have_seen[next]" << endl; 
+				cout << "combinatorics_domain::perm_order "
+						"have_seen[next]" << endl;
 				for (i = 0; i < n; i++) {
 					cout << i << " : " << a[i] << endl;
 				}
@@ -2480,8 +2490,8 @@ void combinatorics_domain::binomial_with_table(
 			NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_binomials[i * tab_binomials_size +
-					j].swap_with(tab_binomials2[i * (n + 1) + j]);
+				tab_binomials[i * tab_binomials_size + j].swap_with(
+						tab_binomials2[i * (n + 1) + j]);
 			}
 		}
 		for ( ; i <= n; i++) {
@@ -2600,12 +2610,14 @@ void combinatorics_domain::q_binomial_with_table(
 		}
 		//cout << "binomial_with_table
 		// reallocating table to size " << n + 1 << endl;
+
 		ring_theory::longinteger_object *tab_q_binomials2 =
 			NEW_OBJECTS(ring_theory::longinteger_object, (n + 1) * (n + 1));
+
 		for (i = 0; i < tab_q_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
-				tab_q_binomials[i * tab_q_binomials_size +
-					j].swap_with(tab_q_binomials2[i * (n + 1) + j]);
+				tab_q_binomials[i * tab_q_binomials_size + j].swap_with(
+						tab_q_binomials2[i * (n + 1) + j]);
 			}
 		}
 		for ( ; i <= n; i++) {
@@ -2753,8 +2765,10 @@ void combinatorics_domain::krawtchouk_with_table(
 		kx++;
 		//cout << "krawtchouk_with_table
 		//reallocating table to size " << kx << endl;
+
 		ring_theory::longinteger_object *tab_krawtchouk2 =
 				NEW_OBJECTS(ring_theory::longinteger_object, kx * kx);
+
 		int *tab_krawtchouk_entry_computed2 = NEW_int(kx * kx);
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
@@ -2764,8 +2778,8 @@ void combinatorics_domain::krawtchouk_with_table(
 		}
 		for (i = 0; i < tab_krawtchouk_size; i++) {
 			for (j = 0; j < tab_krawtchouk_size; j++) {
-				tab_krawtchouk[i * tab_krawtchouk_size + j
-					].swap_with(tab_krawtchouk2[i * kx + j]);
+				tab_krawtchouk[i * tab_krawtchouk_size + j].swap_with(
+						tab_krawtchouk2[i * kx + j]);
 				tab_krawtchouk_entry_computed2[i * kx + j] =
 					tab_krawtchouk_entry_computed[
 						i * tab_krawtchouk_size + j];
@@ -3676,10 +3690,10 @@ void combinatorics_domain::refine_the_partition(
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 
-		geometry::decomposition *Decomposition;
+		combinatorics::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(geometry::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 		Decomposition->init_incidence_structure(
 				Inc,
@@ -3811,6 +3825,134 @@ void combinatorics_domain::refine_the_partition(
 	}
 
 }
+
+
+
+
+void combinatorics_domain::compute_TDO_decomposition_of_projective_space_old(
+		std::string &fname_base,
+		geometry::projective_space *P,
+		long int *points, int nb_points,
+		long int *lines, int nb_lines,
+		std::vector<std::string> &file_names,
+		int verbose_level)
+// creates incidence_structure and data_structures::partitionstack objects
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space_old" << endl;
+	}
+	{
+
+		geometry::incidence_structure *Inc;
+
+		Inc = NEW_OBJECT(geometry::incidence_structure);
+
+		Inc->init_projective_space(P, verbose_level);
+
+
+		combinatorics::decomposition *Decomp;
+
+		Decomp = NEW_OBJECT(combinatorics::decomposition);
+		Decomp->init_incidence_structure(
+				Inc,
+				verbose_level);
+
+
+		Decomp->Stack->split_cell_front_or_back_lint(
+				points, nb_points, true /* f_front*/,
+				verbose_level);
+
+		Decomp->Stack->split_line_cell_front_or_back_lint(
+				lines, nb_lines, true /* f_front*/,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space_old "
+					"before Decomp->compute_TDO_safe_and_write_files" << endl;
+		}
+		Decomp->compute_TDO_safe_and_write_files(
+				Decomp->N /* depth */,
+				fname_base, file_names,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space_old "
+					"after Decomp->compute_TDO_safe_and_write_files" << endl;
+		}
+
+
+
+		//FREE_OBJECT(Stack);
+		FREE_OBJECT(Decomp);
+		FREE_OBJECT(Inc);
+	}
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space_old done" << endl;
+	}
+
+}
+
+combinatorics::decomposition_scheme *combinatorics_domain::compute_TDO_decomposition_of_projective_space(
+		geometry::projective_space *P,
+		long int *points, int nb_points,
+		long int *lines, int nb_lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space" << endl;
+	}
+
+	combinatorics::decomposition *Decomposition;
+
+	Decomposition = NEW_OBJECT(combinatorics::decomposition);
+
+
+	Decomposition->init_decomposition_of_projective_space(
+			P,
+			points, nb_points,
+			lines, nb_lines,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space "
+				"before Decomposition_scheme->compute_TDO" << endl;
+	}
+	Decomposition->compute_TDO(
+			verbose_level - 1);
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space "
+				"after Decomposition_scheme->compute_TDO" << endl;
+	}
+
+
+
+	combinatorics::decomposition_scheme *Decomposition_scheme;
+
+	Decomposition_scheme = NEW_OBJECT(combinatorics::decomposition_scheme);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space "
+				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+	Decomposition_scheme->init_row_and_col_schemes(
+			Decomposition,
+		verbose_level);
+	if (f_v) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space "
+				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+
+	return Decomposition_scheme;
+
+}
+
+
 
 void combinatorics_domain::create_incidence_matrix_of_graph(
 		int *Adj, int n,

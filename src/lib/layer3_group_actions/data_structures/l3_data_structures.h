@@ -93,7 +93,7 @@ public:
 	long int *points;
 	long int *lines;
 
-	geometry::decomposition *Decomposition;
+	combinatorics::decomposition *Decomposition;
 	//geometry::incidence_structure *Inc;
 	//data_structures::partitionstack *S;
 

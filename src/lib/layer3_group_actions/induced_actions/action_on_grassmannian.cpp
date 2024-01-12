@@ -48,37 +48,37 @@ action_on_grassmannian::~action_on_grassmannian()
 		if (f_v) {
 			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free M1" << endl;
-			}
-		FREE_int(M1);
 		}
+		FREE_int(M1);
+	}
 	if (M2) {
 		if (f_v) {
 			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free M2" << endl;
-			}
-		FREE_int(M2);
 		}
+		FREE_int(M2);
+	}
 	if (GE) {
 		if (f_v) {
 			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free GE" << endl;
-			}
-		FREE_OBJECT(GE);
 		}
+		FREE_OBJECT(GE);
+	}
 	if (subspace_basis) {
 		if (f_v) {
 			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free subspace_basis" << endl;
-			}
-		FREE_int(subspace_basis);
 		}
+		FREE_int(subspace_basis);
+	}
 	if (subspace_basis2) {
 		if (f_v) {
 			cout << "action_on_grassmannian::~action_on_grassmannian "
 					"before free subspace_basis2" << endl;
-			}
-		FREE_int(subspace_basis2);
 		}
+		FREE_int(subspace_basis2);
+	}
 }
 
 void action_on_grassmannian::init(
@@ -170,7 +170,7 @@ void action_on_grassmannian::init_embedding(
 		cout << "ambient space:" << endl;
 		Int_vec_print_integer_matrix_width(cout, ambient_space,
 				n, big_n, big_n, F->log10_of_q);
-		}
+	}
 	action_on_grassmannian::big_n = big_n;
 	f_embedding = true;
 	GE = NEW_OBJECT(geometry::grassmann_embedded);
@@ -285,25 +285,27 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 		cout << "A->low_level_point_size="
 				<< A->low_level_point_size << endl;
 		cout << "using action " << A->label << endl;
-		}
+	}
 	G->unrank_lint(i, verbose_level - 1);
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"after G->unrank_int" << endl;
-		Int_vec_print_integer_matrix_width(cout, G->M,
+		Int_vec_print_integer_matrix_width(
+				cout, G->M,
 				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
-		}
+	}
 	for (h = 0; h < k; h++) {
-		A->Group_element->element_image_of_low_level(G->M + h * n,
+		A->Group_element->element_image_of_low_level(
+				G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
-		}
+	}
 #if 0
 	F->mult_matrix_matrix(G->M, Elt, M1, k, n, n);
 	
 	if (M->f_semilinear) {
 		f = Elt[n * n];
 		F->vector_frobenius_power_in_place(M1, k * n, f);
-		}
+	}
 #endif
 	
 	Int_vec_copy(M1, G->M, k * n);
@@ -311,7 +313,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 	return j;
 }
 
@@ -327,7 +329,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"i = " << i << endl;
 		cout << "calling GE->unrank_int" << endl;
-		}
+	}
 	GE->unrank_lint(subspace_basis, i, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
@@ -336,13 +338,13 @@ long int action_on_grassmannian::compute_image_int_embedded(
 		cout << "big_n=" << big_n << endl;
 		Int_vec_print_integer_matrix_width(cout, subspace_basis,
 				k, big_n, big_n, F->log10_of_q);
-		}
+	}
 	for (h = 0; h < k; h++) {
 		A->Group_element->element_image_of_low_level(
 			subspace_basis + h * big_n,
 			subspace_basis2 + h * big_n,
 			Elt, verbose_level - 1);
-		}
+	}
 	
 	//A->element_image_of_low_level(subspace_basis,
 	// subspace_basis2, Elt, verbose_level - 1);
@@ -354,15 +356,15 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				"after mult_matrix_matrix:" << endl;
 		print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
-		}
+	}
 	
 	if (M->f_semilinear) {
 		f = Elt[big_n * big_n];
 		if (f_v) {
 			cout << "f_semilinear is true, f=" << f << endl;
-			}
-		F->vector_frobenius_power_in_place(subspace_basis2, k * big_n, f);
 		}
+		F->vector_frobenius_power_in_place(subspace_basis2, k * big_n, f);
+	}
 #endif
 	
 	if (f_vv) {
@@ -370,17 +372,18 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				"subspace_basis after the action:" << endl;
 		Int_vec_print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
-		}
+	}
 	j = GE->rank_lint(subspace_basis2,
 			0 /*verbose_level - 1 */);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 	return j;
 }
 
-void action_on_grassmannian::print_point(long int a, std::ostream &ost)
+void action_on_grassmannian::print_point(
+		long int a, std::ostream &ost)
 {
 	//cout << "action_on_grassmannian::print_point k=" << G->k << " n=" << G->n << endl;
 	G->unrank_lint(a, 0);

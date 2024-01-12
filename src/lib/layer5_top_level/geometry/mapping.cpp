@@ -68,7 +68,7 @@ void mapping::init(
 	mapping::Descr = Descr;
 
 	if (Descr->f_domain) {
-		Domain = Get_object_of_projective_space(Descr->domain_label);
+		Domain = Get_projective_space(Descr->domain_label);
 	}
 	else {
 		cout << "mapping::init need option -domain to specify the domain" << endl;
@@ -76,7 +76,7 @@ void mapping::init(
 	}
 
 	if (Descr->f_codomain) {
-		Codomain = Get_object_of_projective_space(Descr->codomain_label);
+		Codomain = Get_projective_space(Descr->codomain_label);
 	}
 	else {
 		cout << "mapping::init need option -codomain to specify the codomain" << endl;
@@ -168,7 +168,7 @@ void mapping::evaluate_regular_map(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "mapping::evaluate_regular_map" << endl;

@@ -689,7 +689,7 @@ void classification_of_varieties::report_nauty(
 			ost << endl;
 
 
-			actions::action_global Action_global;
+			actions::combinatorics_with_action CombiA;
 			int size_limit_for_printing = 50;
 			groups::strong_generators *gens;
 
@@ -698,9 +698,9 @@ void classification_of_varieties::report_nauty(
 
 			if (f_v) {
 				cout << "classification_of_varieties::report_nauty "
-						"before Action_global.report_TDO_and_TDA_projective_space" << endl;
+						"before CombiA.report_TDO_and_TDA_projective_space" << endl;
 			}
-			Action_global.report_TDO_and_TDA_projective_space(
+			CombiA.report_TDO_and_TDA_projective_space(
 					ost,
 					Classifier->PA->P,
 					Vo->Variety_object->Point_sets->Sets[0],
@@ -710,7 +710,7 @@ void classification_of_varieties::report_nauty(
 					verbose_level);
 			if (f_v) {
 				cout << "classification_of_varieties::report_nauty "
-						"after Action_global.report_TDO_and_TDA_projective_space" << endl;
+						"after CombiA.report_TDO_and_TDA_projective_space" << endl;
 			}
 
 

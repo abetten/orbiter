@@ -309,6 +309,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 				"orbit_length=" << orbit_length << endl;
 	}
 
+	actions::action_global AG;
 	groups::schreier *Sch;
 
 	if (f_v) {
@@ -317,8 +318,10 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 				"on the good orbits" << endl;
 	}
 
-	A_on_orbits_restricted->compute_orbits_on_points(
-			Sch, N_gens->gens, verbose_level - 1);
+	AG.compute_orbits_on_points(
+			A_on_orbits_restricted,
+			Sch, N_gens->gens,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length "

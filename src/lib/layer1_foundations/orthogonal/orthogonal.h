@@ -173,8 +173,8 @@ public:
 	data_structures::set_of_sets *Sos2;
 	data_structures::set_of_sets *Sos3;
 
-	geometry::decomposition *D2;
-	geometry::decomposition *D3;
+	combinatorics::decomposition *D2;
+	combinatorics::decomposition *D3;
 
 	int *Sos2_idx;
 	int *Sos3_idx;

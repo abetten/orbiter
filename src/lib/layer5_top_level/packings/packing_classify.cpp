@@ -108,11 +108,14 @@ packing_classify::~packing_classify()
 	}
 }
 
+#if 0
 void packing_classify::spread_table_init(
-		projective_geometry::projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA3,
+		projective_geometry::projective_space_with_action *PA5,
 		int dimension_of_spread_elements,
 		int f_select_spread, std::string &select_spread_text,
 		std::string &path_to_spread_tables,
+		std::string &poset_classification_control_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -127,7 +130,7 @@ void packing_classify::spread_table_init(
 	spreads::spread_classify *T;
 
 
-	packing_classify::PA = PA;
+	packing_classify::PA = PA3;
 	packing_classify::path_to_spread_tables.assign(path_to_spread_tables);
 	n = PA->A->matrix_group_dimension();
 	Mtx = PA->A->get_matrix_group();
@@ -160,7 +163,18 @@ void packing_classify::spread_table_init(
 	}
 
 
+	spreads::spread_classify_description *Descr;
+
+	Descr = NEW_OBJECT(spreads::spread_classify_description);
+
 	T = NEW_OBJECT(spreads::spread_classify);
+
+
+	Descr->f_poset_classification_control = true;
+	Descr->poset_classification_control_label = poset_classification_control_label;
+
+	Descr->f_projective_space = false;
+	Descr->f_recoordinatize = true;
 
 
 	if (f_v) {
@@ -169,7 +183,7 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T->init(SD, PA, verbose_level - 1);
+	T->init(Descr, SD, PA, verbose_level - 1);
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init "
@@ -217,7 +231,8 @@ void packing_classify::spread_table_init(
 				"before init" << endl;
 	}
 	init(
-		PA,
+			PA3,
+			PA5,
 		Spread_table_with_selection,
 		true,
 		verbose_level);
@@ -253,10 +268,11 @@ void packing_classify::spread_table_init(
 
 
 }
-
+#endif
 
 void packing_classify::init(
-		projective_geometry::projective_space_with_action *PA,
+		projective_geometry::projective_space_with_action *PA3,
+		projective_geometry::projective_space_with_action *PA5,
 		spreads::spread_table_with_selection
 			*Spread_table_with_selection,
 		int f_lexorder_test,
@@ -295,7 +311,7 @@ void packing_classify::init(
 	if (f_v) {
 		cout << "packing_classify::init before init_P3_and_P5_and_Gr" << endl;
 	}
-	init_P3_and_P5_and_Gr(verbose_level - 1);
+	init_P3_and_P5_and_Gr(PA3->P, PA5->P, verbose_level - 1);
 	if (f_v) {
 		cout << "packing_classify::init after init_P3_and_P5_and_Gr" << endl;
 	}
@@ -346,23 +362,27 @@ void packing_classify::init2(
 
 
 void packing_classify::init_P3_and_P5_and_Gr(
+		geometry::projective_space *P3,
+		geometry::projective_space *P5,
 		int verbose_level)
+// creates a Grassmann 6,3
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "packing_classify::init_P3_and_P5_and_Gr" << endl;
 	}
+
+	packing_classify::P3 = P3;
+	packing_classify::P5 = P5;
+
+#if 0
 	P3 = NEW_OBJECT(geometry::projective_space);
 	
 	P3->projective_space_init(3, F,
 		true /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
-	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->Subspaces->N_points << endl;
-		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->Subspaces->N_lines << endl;
-	}
 
 	P5 = NEW_OBJECT(geometry::projective_space);
 
@@ -370,7 +390,10 @@ void packing_classify::init_P3_and_P5_and_Gr(
 		true /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
+#endif
 	if (f_v) {
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->Subspaces->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->Subspaces->N_lines << endl;
 		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_points=" << P5->Subspaces->N_points << endl;
 		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_lines=" << P5->Subspaces->N_lines << endl;
 	}
@@ -657,7 +680,8 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 }
 
 
-int packing_classify::find_spread(long int *set, int verbose_level)
+int packing_classify::find_spread(
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;

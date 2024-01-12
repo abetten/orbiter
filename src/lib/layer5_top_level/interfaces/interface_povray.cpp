@@ -30,7 +30,8 @@ interface_povray::interface_povray()
 }
 
 
-void interface_povray::print_help(int argc, std::string *argv, int i, int verbose_level)
+void interface_povray::print_help(
+		int argc, std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
 
@@ -42,7 +43,8 @@ void interface_povray::print_help(int argc, std::string *argv, int i, int verbos
 	}
 }
 
-int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int verbose_level)
+int interface_povray::recognize_keyword(
+		int argc, std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
 
@@ -58,7 +60,8 @@ int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int 
 	return false;
 }
 
-void interface_povray::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
+void interface_povray::read_arguments(
+		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -118,7 +121,8 @@ void interface_povray::print()
 	}
 }
 
-void interface_povray::worker(int verbose_level)
+void interface_povray::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

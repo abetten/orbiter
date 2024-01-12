@@ -59,12 +59,16 @@ void action::init_group_from_generators(
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
 		}
-		Int_vec_print(cout, group_generator_data +
+		Int_vec_print(
+				cout, group_generator_data +
 			i * make_element_size, make_element_size);
 		cout << endl;
-		Group_element->make_element(Elt,
-			group_generator_data + i * make_element_size, verbose_level - 2);
-		Group_element->element_move(Elt, gens->ith(i), 0);
+		Group_element->make_element(
+				Elt,
+			group_generator_data + i * make_element_size,
+			verbose_level - 2);
+		Group_element->element_move(
+				Elt, gens->ith(i), 0);
 	}
 	if (f_v) {
 		cout << "done parsing generators" << endl;
@@ -182,7 +186,8 @@ void action::init_group_from_generators_by_base_images(
 
 void action::build_up_automorphism_group_from_aut_data(
 	int nb_auts, int *aut_data,
-	groups::sims &S, int verbose_level)
+	groups::sims &S,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, coset;
@@ -199,7 +204,8 @@ void action::build_up_automorphism_group_from_aut_data(
 	S.init_trivial_group(verbose_level - 1);
 	for (h = 0; h < nb_auts; h++) {
 		if (f_v) {
-			cout << "aut_data[" << h << "]=";
+			cout << "action::build_up_automorphism_group_from_aut_data "
+					"aut_data[" << h << "]=";
 			Int_vec_print(cout, aut_data + h * base_len(), base_len());
 			cout << endl;
 		}
@@ -210,15 +216,18 @@ void action::build_up_automorphism_group_from_aut_data(
 				//Sims->orbit_inv[i][aut_data[h * base_len + i]];
 		}
 		if (f_v) {
-			cout << "path=";
+			cout << "action::build_up_automorphism_group_from_aut_data "
+					"path=";
 			Int_vec_print(cout, Sims->path, base_len());
 			cout << endl;
 		}
 		Sims->element_from_path_inv(Elt1);
-		if (S.strip_and_add(Elt1, Elt2, 0/*verbose_level*/)) {
+		if (S.strip_and_add(Elt1, Elt2,
+				0/*verbose_level*/)) {
 			S.group_order(go);
 			if (f_v) {
-				cout << "generator " << h
+				cout << "action::build_up_automorphism_group_from_aut_data "
+						"generator " << h
 						<< " added, group order has been updated to " << go << endl;
 				S.print_transversal_lengths();
 				S.print_transversals_short();
@@ -226,19 +235,24 @@ void action::build_up_automorphism_group_from_aut_data(
 		}
 		else {
 			if (f_v) {
-				cout << "generator " << h << " strips through" << endl;
+				cout << "action::build_up_automorphism_group_from_aut_data "
+						"generator " << h << " strips through" << endl;
 			}
 		}
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);
+	if (f_v) {
+		cout << "action::build_up_automorphism_group_from_aut_data done" << endl;
+	}
 }
 
 
 
 groups::sims *action::create_sims_from_generators_with_target_group_order_factorized(
 		data_structures_groups::vector_ge *gens,
-		int *tl, int len, int verbose_level)
+		int *tl, int len,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
@@ -257,7 +271,8 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_factor
 				"before create_sims_from_generators_randomized" << endl;
 	}
 	S = create_sims_from_generators_randomized(
-		gens, true /* f_target_go */, go, verbose_level - 3);
+		gens, true /* f_target_go */, go,
+		verbose_level - 3);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_with_target_group_order_factorized done" << endl;
 	}
@@ -266,13 +281,15 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_factor
 
 groups::sims *action::create_sims_from_generators_with_target_group_order_lint(
 		data_structures_groups::vector_ge *gens,
-		long int target_go, int verbose_level)
+		long int target_go,
+		int verbose_level)
 {
 	ring_theory::longinteger_object tgo;
 
 	tgo.create(target_go);
 	return create_sims_from_generators_with_target_group_order(
-			gens, tgo, verbose_level - 3);
+			gens, tgo,
+			verbose_level - 3);
 }
 
 groups::sims *action::create_sims_from_generators_with_target_group_order(
@@ -281,16 +298,19 @@ groups::sims *action::create_sims_from_generators_with_target_group_order(
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
-		gens, true /* f_target_go */, target_go, verbose_level - 3);
+		gens, true /* f_target_go */, target_go,
+		verbose_level - 3);
 }
 
 groups::sims *action::create_sims_from_generators_without_target_group_order(
-		data_structures_groups::vector_ge *gens, int verbose_level)
+		data_structures_groups::vector_ge *gens,
+		int verbose_level)
 {
 	ring_theory::longinteger_object dummy;
 
 	return create_sims_from_generators_randomized(
-		gens, false /* f_target_go */, dummy, verbose_level - 3);
+		gens, false /* f_target_go */, dummy,
+		verbose_level - 3);
 }
 
 groups::sims *action::create_sims_from_single_generator_without_target_group_order(
@@ -306,10 +326,12 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 				"without_target_group_order" << endl;
 	}
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens->init_single(this, Elt, verbose_level - 2);
+	gens->init_single(
+			this, Elt, verbose_level - 2);
 
 	S = create_sims_from_generators_randomized(
-		gens, false /* f_target_go */, dummy, verbose_level - 3);
+		gens, false /* f_target_go */, dummy,
+		verbose_level - 3);
 
 	FREE_OBJECT(gens);
 	if (f_v) {
@@ -496,7 +518,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"before generators_for_centralizer" << endl;
 	}
-	C->generators_for_centralizer(Mtx, R1, Basis, Gens,
+	C->generators_for_centralizer(
+			Mtx, R1, Basis, Gens,
 			nb_gens, nb_alloc, verbose_level - 2);
 
 	if (f_v) {
@@ -519,7 +542,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	for (i = 0; i < nb_gens; i++) {
 		if (!F->Linear_algebra->test_if_commute(Mtx, Gens[i], d,
 				0/*verbose_level*/)) {
-			cout << "The matrices do not commute" << endl;
+			cout << "action::create_sims_for_centralizer_of_matrix "
+					"The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;
 			Int_matrix_print(Mtx, d, d);
 			cout << "Gens[i]=" << endl;
@@ -531,7 +555,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	//C.identify_matrix(Elt, R1, verbose_level);
 
 	if (f_v) {
-		cout << "The type of the matrix under "
+		cout << "action::create_sims_for_centralizer_of_matrix "
+				"The type of the matrix under "
 				"consideration is:" << endl;
 		Int_matrix_print(R1->type_coding->M,
 				R1->type_coding->m, R1->type_coding->n);
@@ -543,7 +568,8 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 			R1, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "The index of the class of the "
+		cout << "action::create_sims_for_centralizer_of_matrix "
+				"The index of the class of the "
 				"matrix is = " << class_rep << endl;
 	}
 #endif
@@ -570,11 +596,13 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 
 
 	if (f_v) {
-		cout << "before centralizer_order_Kung" << endl;
+		cout << "action::create_sims_for_centralizer_of_matrix "
+				"before centralizer_order_Kung" << endl;
 	}
 	R1->centralizer_order_Kung(C, centralizer_order, verbose_level);
 	if (f_v) {
-		cout << "after centralizer_order_Kung, "
+		cout << "action::create_sims_for_centralizer_of_matrix "
+				"after centralizer_order_Kung, "
 				"centralizer_order=" << centralizer_order << endl;
 	}
 
@@ -614,107 +642,6 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 }
 
 
-void action::init_automorphism_group_from_group_table(
-	std::string &fname_base,
-	int *Table, int group_order, int *gens, int nb_gens,
-	groups::strong_generators *&Aut_gens,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *N_gens;
-	int N_nb_gens;
-	int N_go;
-	ring_theory::longinteger_object go;
-	//int i;
-	interfaces::magma_interface Magma;
-
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table" << endl;
-	}
-
-	Magma.normalizer_in_Sym_n(fname_base,
-		group_order, Table, gens, nb_gens,
-		N_gens, N_nb_gens, N_go, verbose_level);
-
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table "
-				"The holomorph has order " << N_go
-				<< " and is generated by " << N_nb_gens << " elements" << endl;
-	}
-	go.create(N_go);
-
-#if 0
-	for (i = 0; i < N_nb_gens; i++) {
-		cout << "holomorph generator " << i << " / "
-				<< N_nb_gens << ":" << endl;
-
-		ord = perm_order(N_gens + i * H->group_order, H->group_order);
-		cout << "an element of order " << ord << endl;
-		for (j = 0; j < nb_gens; j++) {
-			a = gens[j];
-			b = N_gens[i * H->group_order + a];
-			cout << a << " -> " << b << " : ";
-			H->unrank_element(H->Elt1, a);
-			H->unrank_element(H->Elt2, b);
-			int_vec_print(cout, H->Elt1, H->len);
-			cout << " -> ";
-			int_vec_print(cout, H->Elt2, H->len);
-			cout << endl;
-			}
-		}
-	given_base_length = H->len;
-	given_base = NEW_int(given_base_length);
-	for (i = 0; i < given_base_length; i++) {
-		given_base[i] = i_power_j(q, i);
-		}
-	cout << "given base: ";
-	int_vec_print(cout, given_base, given_base_length);
-	cout << endl;
-#endif
-
-
-
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table "
-				"creating holomorph" << endl;
-	}
-
-	long int *gens1;
-	int i;
-	gens1 = NEW_lint(nb_gens);
-	for (i = 0; i < nb_gens; i++) {
-		gens1[i] = gens[i];
-	}
-
-	Known_groups->init_permutation_group_from_generators(
-		group_order /* degree */,
-		true, go,
-		N_nb_gens, N_gens,
-		nb_gens /* given_base_length */, gens1 /* given_base */,
-		false /* f_no_base */,
-		verbose_level);
-	{
-		ring_theory::longinteger_object go;
-		action::group_order(go);
-		if (f_v) {
-			cout << "action::init_automorphism_group_from_group_table "
-					"The order of the holomorph is " << go << endl;
-		}
-	}
-
-	ring_theory::longinteger_object Aut_order;
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table "
-				"creating automorphism group" << endl;
-	}
-	Aut_gens = Strong_gens->point_stabilizer(0 /* pt */, verbose_level);
-	Aut_gens->group_order(Aut_order);
-	if (f_v) {
-		cout << "action::init_automorphism_group_from_group_table "
-				"The automorphism group has order " << Aut_order << endl;
-	}
-
-}
 
 
 

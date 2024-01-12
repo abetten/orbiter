@@ -108,14 +108,19 @@ public:
 
 	packing_classify();
 	~packing_classify();
+#if 0
 	void spread_table_init(
-			projective_geometry::projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA3,
+			projective_geometry::projective_space_with_action *PA5,
 			int dimension_of_spread_elements,
 			int f_select_spread, std::string &select_spread_text,
 			std::string &path_to_spread_tables,
+			std::string &poset_classification_control_label,
 			int verbose_level);
+#endif
 	void init(
-			projective_geometry::projective_space_with_action *PA,
+			projective_geometry::projective_space_with_action *PA3,
+			projective_geometry::projective_space_with_action *PA5,
 			spreads::spread_table_with_selection
 				*Spread_table_with_selection,
 			int f_lexorder_test,
@@ -124,6 +129,8 @@ public:
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void init_P3_and_P5_and_Gr(
+			geometry::projective_space *P3,
+			geometry::projective_space *P5,
 			int verbose_level);
 	void prepare_generator(
 			poset_classification::poset_classification_control *Control,
@@ -146,7 +153,8 @@ public:
 		long int *orbit1, long int *orbit2, int verbose_level);
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
-	int find_spread(long int *set, int verbose_level);
+	int find_spread(
+			long int *set, int verbose_level);
 
 	// packing2.cpp
 	void compute_klein_invariants(

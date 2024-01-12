@@ -314,12 +314,15 @@ void orbiter_top_level_session::parse(
 	}
 }
 
-void *orbiter_top_level_session::get_object(int idx)
+void *orbiter_top_level_session::get_object(
+		int idx)
 {
 	return Orbiter_session->get_object(idx);
 }
 
-layer1_foundations::orbiter_kernel_system::symbol_table_object_type orbiter_top_level_session::get_object_type(int idx)
+layer1_foundations::orbiter_kernel_system::symbol_table_object_type
+	orbiter_top_level_session::get_object_type(
+		int idx)
 {
 	return Orbiter_session->get_object_type(idx);
 }
@@ -399,6 +402,47 @@ projective_geometry::projective_space_with_action
 	return (projective_geometry::projective_space_with_action *) get_object(idx);
 }
 
+spreads::spread_table_with_selection
+	*orbiter_top_level_session::get_object_of_type_spread_table(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_object_of_type_spread_table "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_spread_table) {
+		cout << "orbiter_top_level_session::get_object_of_type_spread_table "
+				"object type != t_spread_table" << endl;
+		exit(1);
+	}
+	return (spreads::spread_table_with_selection *) get_object(idx);
+}
+
+
+packings::packing_classify
+	*orbiter_top_level_session::get_packing_classify(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_packing_classify "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_packing_classify) {
+		cout << "orbiter_top_level_session::get_packing_classify "
+				"object type != t_packing_classify" << endl;
+		exit(1);
+	}
+	return (packings::packing_classify *) get_object(idx);
+}
+
 poset_classification::poset_classification_control
 	*orbiter_top_level_session::get_object_of_type_poset_classification_control(
 			std::string &label)
@@ -464,7 +508,8 @@ poset_classification::poset_classification_activity_description
 
 
 
-void orbiter_top_level_session::get_vector_or_set(std::string &label,
+void orbiter_top_level_session::get_vector_or_set(
+		std::string &label,
 		long int *&Pts, int &nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -831,6 +876,11 @@ void free_symbol_table_entry_callback(
 	else if (t == orbiter_kernel_system::t_spread_table) {
 		if (f_v) {
 			cout << "t_spread_table" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_packing_classify) {
+		if (f_v) {
+			cout << "t_packing_classify" << endl;
 		}
 	}
 	else if (t == orbiter_kernel_system::t_packing_was) {

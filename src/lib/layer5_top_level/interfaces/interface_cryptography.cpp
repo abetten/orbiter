@@ -177,7 +177,8 @@ interface_cryptography::interface_cryptography()
 
 
 
-void interface_cryptography::print_help(int argc, std::string *argv, int i, int verbose_level)
+void interface_cryptography::print_help(
+		int argc, std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
 
@@ -294,7 +295,8 @@ void interface_cryptography::print_help(int argc, std::string *argv, int i, int 
 	}
 }
 
-int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i, int verbose_level)
+int interface_cryptography::recognize_keyword(
+		int argc, std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -419,7 +421,8 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 	return false;
 }
 
-void interface_cryptography::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
+void interface_cryptography::read_arguments(
+		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -902,7 +905,8 @@ void interface_cryptography::print()
 	}
 }
 
-void interface_cryptography::worker(int verbose_level)
+void interface_cryptography::worker(
+		int verbose_level)
 {
 	if (f_cipher) {
 

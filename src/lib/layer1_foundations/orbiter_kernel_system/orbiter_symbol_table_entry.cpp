@@ -456,7 +456,7 @@ void orbiter_symbol_table_entry::init_translation_plane(
 
 void orbiter_symbol_table_entry::init_spread_table(
 		std::string &label,
-		void *P, int verbose_level)
+		void *Spread_table_with_selection, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -466,11 +466,31 @@ void orbiter_symbol_table_entry::init_spread_table(
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
 	object_type = t_spread_table;
-	ptr = P;
+	ptr = Spread_table_with_selection;
 	if (f_v) {
 		cout << "orbiter_symbol_table_entry::init_spread_table done" << endl;
 	}
 }
+
+void orbiter_symbol_table_entry::init_packing_classify(
+		std::string &label,
+		void *Packing_classify, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_classify" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_packing_classify;
+	ptr = Packing_classify;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_classify done" << endl;
+	}
+}
+
+
 
 void orbiter_symbol_table_entry::init_packing_was(
 		std::string &label,

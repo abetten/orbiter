@@ -227,7 +227,8 @@ void design_activity::do_extract_solutions_by_index(
 
 		if (nb_sol) {
 			if (!SoS->has_constant_size_property()) {
-				cout << "design_activity::do_extract_solutions_by_index the sets have different sizes" << endl;
+				cout << "design_activity::do_extract_solutions_by_index "
+						"the sets have different sizes" << endl;
 				exit(1);
 			}
 			sol_width = SoS->Set_size[0];
@@ -251,7 +252,8 @@ void design_activity::do_extract_solutions_by_index(
 
 
 	if (f_v) {
-		cout << "design_activity::do_extract_solutions_by_index before T->extract_solutions_by_index" << endl;
+		cout << "design_activity::do_extract_solutions_by_index "
+				"before T->extract_solutions_by_index" << endl;
 	}
 
 	T->extract_solutions_by_index(
@@ -260,7 +262,8 @@ void design_activity::do_extract_solutions_by_index(
 			verbose_level);
 
 	if (f_v) {
-		cout << "design_activity::do_extract_solutions_by_index after T->extract_solutions_by_index" << endl;
+		cout << "design_activity::do_extract_solutions_by_index "
+				"after T->extract_solutions_by_index" << endl;
 	}
 
 
@@ -293,7 +296,8 @@ void design_activity::do_create_table(
 	AG = Get_object_of_type_any_group(group_label);
 
 	if (f_v) {
-		cout << "design_activity::do_create_table before Combi.create_design_table" << endl;
+		cout << "design_activity::do_create_table "
+				"before Combi.create_design_table" << endl;
 	}
 
 	Combi.create_design_table(DC,
@@ -303,7 +307,8 @@ void design_activity::do_create_table(
 			verbose_level);
 
 	if (f_v) {
-		cout << "design_activity::do_create_table after Combi.create_design_table" << endl;
+		cout << "design_activity::do_create_table "
+				"after Combi.create_design_table" << endl;
 	}
 
 	if (f_v) {
@@ -357,13 +362,15 @@ void design_activity::do_load_table(
 	LS = NEW_OBJECT(large_set_classify);
 
 	if (f_v) {
-		cout << "design_activity::do_create_table before LS->init" << endl;
+		cout << "design_activity::do_create_table "
+				"before LS->init" << endl;
 	}
 	LS->init(DC,
 			T,
 			verbose_level);
 	if (f_v) {
-		cout << "design_activity::do_create_table after LS->init" << endl;
+		cout << "design_activity::do_create_table "
+				"after LS->init" << endl;
 	}
 
 
@@ -372,14 +379,16 @@ void design_activity::do_load_table(
 	H_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "design_activity::do_load_table before H_gens->init_from_data_with_go" << endl;
+		cout << "design_activity::do_load_table "
+				"before H_gens->init_from_data_with_go" << endl;
 	}
 	H_gens->init_from_data_with_go(
 			DC->A, H_generators_data,
 			H_go_text,
 			verbose_level);
 	if (f_v) {
-		cout << "design_activity::do_load_table after H_gens->init_from_data_with_go" << endl;
+		cout << "design_activity::do_load_table "
+				"after H_gens->init_from_data_with_go" << endl;
 	}
 
 
@@ -390,14 +399,16 @@ void design_activity::do_load_table(
 
 
 	if (f_v) {
-		cout << "design_activity::do_load_table before LSW->init" << endl;
+		cout << "design_activity::do_load_table "
+				"before LSW->init" << endl;
 	}
 	LSW->init(LS,
 			H_gens, H_label,
 			selected_orbit_length,
 			verbose_level);
 	if (f_v) {
-		cout << "design_activity::do_load_table after LSW->init" << endl;
+		cout << "design_activity::do_load_table "
+				"after LSW->init" << endl;
 	}
 
 #endif
@@ -429,7 +440,8 @@ void design_activity::do_canonical_form(
 	OC = NEW_OBJECT(classification_of_objects);
 
 	if (f_v) {
-		cout << "design_activity::do_canonical_form before OC->do_the_work" << endl;
+		cout << "design_activity::do_canonical_form "
+				"before OC->do_the_work" << endl;
 	}
 	OC->do_the_work(
 			Canonical_form_Descr,
@@ -437,7 +449,8 @@ void design_activity::do_canonical_form(
 			NULL,
 			verbose_level);
 	if (f_v) {
-		cout << "design_activity::do_canonical_form after OC->do_the_work" << endl;
+		cout << "design_activity::do_canonical_form "
+				"after OC->do_the_work" << endl;
 	}
 
 	FREE_OBJECT(OC);
@@ -486,7 +499,8 @@ void design_activity::do_export_inc(
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 	//8 8 24
@@ -549,7 +563,8 @@ void design_activity::do_intersection_matrix(
 	}
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -602,7 +617,8 @@ void design_activity::do_export_blocks(
 			cout << "design_activity::do_export_blocks "
 					"before Combi.compute_blocks_from_coding" << endl;
 		}
-		Combi.compute_blocks_from_coding(v, b, k, DC->set, Blocks, verbose_level);
+		Combi.compute_blocks_from_coding(
+				v, b, k, DC->set, Blocks, verbose_level);
 		if (f_v) {
 			cout << "design_activity::do_export_blocks "
 					"after Combi.compute_blocks_from_coding" << endl;
@@ -613,7 +629,8 @@ void design_activity::do_export_blocks(
 			cout << "design_activity::do_export_blocks "
 					"before Combi.compute_blocks_from_incma" << endl;
 		}
-		Combi.compute_blocks_from_incma(v, b, k, DC->incma,
+		Combi.compute_blocks_from_incma(
+				v, b, k, DC->incma,
 					Blocks, verbose_level);
 		if (f_v) {
 			cout << "design_activity::do_export_blocks "
@@ -695,6 +712,7 @@ void design_activity::do_row_sums(
 void design_activity::do_tactical_decomposition(
 		design_create *DC,
 		int verbose_level)
+// Computes the TDO and prints it in latex to cout
 {
 	int f_v = (verbose_level >= 1);
 
@@ -720,10 +738,10 @@ void design_activity::do_tactical_decomposition(
 				DC->v, DC->b, DC->incma,
 				0 /* verbose_level */);
 
-		geometry::decomposition *Decomposition;
+		combinatorics::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(geometry::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 		Decomposition->init_incidence_structure(
 				Inc,
@@ -800,6 +818,7 @@ void design_activity::do_tactical_decomposition(
 		cout << "Col classes:\\\\" << endl;
 		Col_classes->print_table_tex(cout);
 
+#if 0
 		if (Row_classes->nb_sets > 1) {
 			cout << "The row partition splits" << endl;
 		}
@@ -807,6 +826,7 @@ void design_activity::do_tactical_decomposition(
 		if (Col_classes->nb_sets > 1) {
 			cout << "The col partition splits" << endl;
 		}
+#endif
 
 
 		FREE_OBJECT(Inc);

@@ -1341,6 +1341,13 @@ void projective_space_with_action::do_spread_classify(
 				"after SD->init_spread_domain" << endl;
 	}
 
+	spreads::spread_classify_description *Descr;
+
+	Descr = NEW_OBJECT(spreads::spread_classify_description);
+
+
+	Descr->f_recoordinatize = true;
+
 
 	spreads::spread_classify *SC;
 
@@ -1352,6 +1359,7 @@ void projective_space_with_action::do_spread_classify(
 	}
 
 	SC->init(
+			Descr,
 			SD,
 			this,
 			verbose_level - 1);
@@ -1381,11 +1389,11 @@ void projective_space_with_action::do_spread_classify(
 	}
 }
 
-
 void projective_space_with_action::report_decomposition_by_group(
 		groups::strong_generators *SG,
 		std::ostream &ost, std::string &fname_base,
 	int verbose_level)
+// used by projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1492,7 +1500,6 @@ void projective_space_with_action::report_fixed_objects(
 		cout << "projective_space_with_action::report_fixed_objects done" << endl;
 	}
 }
-
 
 
 

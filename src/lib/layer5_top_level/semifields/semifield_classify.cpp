@@ -15,15 +15,20 @@ namespace layer5_applications {
 namespace semifields {
 
 
-static void semifield_classify_early_test_func(long int *S, int len,
+static void semifield_classify_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-static long int semifield_classify_rank_point_func(int *v, void *data);
-static void semifield_classify_unrank_point_func(int *v, long int rk, void *data);
-static long int canonial_form_rank_vector_callback(int *v,
+static long int semifield_classify_rank_point_func(
+		int *v, void *data);
+static void semifield_classify_unrank_point_func(
+		int *v, long int rk, void *data);
+static long int canonial_form_rank_vector_callback(
+		int *v,
 		int n, void *data, int verbose_level);
-static void canonial_form_unrank_vector_callback(long int rk,
+static void canonial_form_unrank_vector_callback(
+		long int rk,
 		int *v, int n, void *data, int verbose_level);
 static void canonial_form_compute_image_of_vector_callback(
 		int *v, int *w, int *Elt, void *data,
@@ -100,43 +105,50 @@ semifield_classify::~semifield_classify()
 	}
 
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before A0_linear" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before A0_linear" << endl;
 	}
 	if (A0_linear) {
 		FREE_OBJECT(A0_linear);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before T" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before T" << endl;
 	}
 	if (T) {
 		FREE_OBJECT(T);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before Elt1" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before Elt1" << endl;
 	}
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before Symmetry_group" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before Symmetry_group" << endl;
 	}
 	if (Symmetry_group) {
 		FREE_OBJECT(Symmetry_group);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before Poset" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before Poset" << endl;
 	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before Gen" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before Gen" << endl;
 	}
 	if (Gen) {
 		FREE_OBJECT(Gen);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before test_base_cols" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before test_base_cols" << endl;
 	}
 	if (test_base_cols) {
 		FREE_int(test_base_cols);
@@ -151,7 +163,8 @@ semifield_classify::~semifield_classify()
 		FREE_int(test_Basis);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before Basis1" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before Basis1" << endl;
 	}
 	if (Basis1) {
 		FREE_int(Basis1);
@@ -160,7 +173,8 @@ semifield_classify::~semifield_classify()
 		FREE_int(Basis2);
 	}
 	if (f_v) {
-		cout << "semifield_classify::~semifield_classify before desired_pivots" << endl;
+		cout << "semifield_classify::~semifield_classify "
+				"before desired_pivots" << endl;
 	}
 	if (desired_pivots) {
 		FREE_int(desired_pivots);
@@ -269,6 +283,13 @@ void semifield_classify::init(
 				"after SD->init_spread_domain" << endl;
 	}
 
+	spreads::spread_classify_description *Descr;
+
+	Descr = NEW_OBJECT(spreads::spread_classify_description);
+
+
+	Descr->f_recoordinatize = true;
+
 
 
 	T = NEW_OBJECT(spreads::spread_classify);
@@ -282,7 +303,7 @@ void semifield_classify::init(
 
 	//int max_depth = k + 1;
 
-	T->init(SD, PA, 0 /*verbose_level - 2*/);
+	T->init(Descr, SD, PA, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -338,7 +359,8 @@ void semifield_classify::init(
 		A0->print_info();
 	}
 
-	A0_linear->Known_groups->init_projective_group(k,
+	A0_linear->Known_groups->init_projective_group(
+			k,
 			Mtx->GFq, false /*f_semilinear */,
 			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
@@ -703,7 +725,8 @@ void semifield_classify::init_poset_classification(
 	if (f_v) {
 		cout << "semifield_classify::init before Gen->init" << endl;
 	}
-	Gen->initialize_and_allocate_root_node(Control, Poset,
+	Gen->initialize_and_allocate_root_node(
+			Control, Poset,
 			k /* sz */,
 			verbose_level - 2);
 	if (f_v) {
@@ -929,7 +952,8 @@ void semifield_classify::early_test_func(
 				Gg.AG_element_unrank(q, v, 1, len, j);
 			}
 			v[len] = 1;
-			Mtx->GFq->Linear_algebra->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
+			Mtx->GFq->Linear_algebra->mult_matrix_matrix(
+					v, M, w, 1, len + 1, k2,
 					0 /* verbose_level */);
 			r = A_on_S->F->Linear_algebra->Gauss_easy(w, k, k);
 			if (r != k) {
@@ -1102,7 +1126,8 @@ int semifield_classify::test_partial_semifield(
 			}
 			w[i] = c;
 		}
-		r = Mtx->GFq->Linear_algebra->Gauss_easy_memory_given(w, k, k, base_cols);
+		r = Mtx->GFq->Linear_algebra->Gauss_easy_memory_given(
+				w, k, k, base_cols);
 		if (r != k) {
 			ret = false;
 			if (true) {
@@ -1573,7 +1598,8 @@ void semifield_classify::knuth_operation(
 // global function:
 //##############################################################################
 
-static void semifield_classify_early_test_func(long int *S, int len,
+static void semifield_classify_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -1602,7 +1628,8 @@ static void semifield_classify_early_test_func(long int *S, int len,
 
 
 
-static long int semifield_classify_rank_point_func(int *v, void *data)
+static long int semifield_classify_rank_point_func(
+		int *v, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1620,7 +1647,8 @@ static long int semifield_classify_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-static void semifield_classify_unrank_point_func(int *v, long int rk, void *data)
+static void semifield_classify_unrank_point_func(
+		int *v, long int rk, void *data)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -1639,7 +1667,8 @@ static void semifield_classify_unrank_point_func(int *v, long int rk, void *data
 }
 
 
-static long int canonial_form_rank_vector_callback(int *v,
+static long int canonial_form_rank_vector_callback(
+		int *v,
 		int n, void *data, int verbose_level)
 {
 	semifield_classify *SC = (semifield_classify *) data;
@@ -1649,7 +1678,8 @@ static long int canonial_form_rank_vector_callback(int *v,
 	return r;
 }
 
-static void canonial_form_unrank_vector_callback(long int rk,
+static void canonial_form_unrank_vector_callback(
+		long int rk,
 		int *v, int n, void *data, int verbose_level)
 {
 	semifield_classify *SC = (semifield_classify *) data;

@@ -382,7 +382,7 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 		else {
 
-			PA = Get_object_of_projective_space(Descr->canonical_form_PG_PG_label);
+			PA = Get_projective_space(Descr->canonical_form_PG_PG_label);
 		}
 
 
@@ -1598,7 +1598,7 @@ void combinatorial_object_activity::line_covering_type(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = Get_object_of_projective_space(projective_space_label);
+	PA = Get_projective_space(projective_space_label);
 
 	geometry::projective_space *P;
 
@@ -1688,7 +1688,7 @@ void combinatorial_object_activity::line_type(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = Get_object_of_projective_space(projective_space_label);
+	PA = Get_projective_space(projective_space_label);
 
 	geometry::projective_space *P;
 

@@ -54,11 +54,14 @@ struct action_is_minimal_data {
 		// under the (i-1)-th group in the stabilizer chain.
 };
 
-void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D);
-int action_is_minimal_recursion(action_is_minimal_data *D,
+void action_is_minimal_reallocate_aut_data(
+		action_is_minimal_data &D);
+int action_is_minimal_recursion(
+		action_is_minimal_data *D,
 		int depth, int verbose_level);
 
-void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
+void action_is_minimal_reallocate_aut_data(
+		action_is_minimal_data &D)
 {
 	int nb_auts_allocated2;
 	int *aut_data2;
@@ -74,7 +77,8 @@ void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
 	D.nb_auts_allocated = nb_auts_allocated2;
 }
 
-int action_is_minimal_recursion(action_is_minimal_data *D,
+int action_is_minimal_recursion(
+		action_is_minimal_data *D,
 		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -105,7 +109,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		cout << endl;
 	}
 	if (depth == A->base_len()) {
-		cmp = Sorting.lint_vec_compare(current_set, D->the_set, D->size);
+		cmp = Sorting.lint_vec_compare(
+				current_set, D->the_set, D->size);
 		if (cmp == 0) {
 			D->f_automorphism_seen = true;
 			if (D->nb_auts == D->nb_auts_allocated) {
@@ -268,7 +273,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			A->Group_element->element_print_as_permutation(D->coset_rep, cout);
 			cout << endl;
 		}
-		A->Group_element->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
+		A->Group_element->map_a_set(
+				current_set, next_set, D->size, D->coset_rep, 0);
 		if (false /*f_vv*/) {
 			cout << "image set: ";
 			Lint_vec_print(cout, next_set, D->size);
@@ -344,7 +350,8 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 	return true;
 }
 
-int action::is_minimal(int size, long int *set, groups::sims *old_Sims,
+int action::is_minimal(
+		int size, long int *set, groups::sims *old_Sims,
 	int &backtrack_level, int verbose_level)
 {
 	long int *witness;
@@ -357,7 +364,8 @@ int action::is_minimal(int size, long int *set, groups::sims *old_Sims,
 	witness = NEW_lint(size);
 	transporter_witness = NEW_int(elt_size_in_int);
 	
-	ret = is_minimal_witness(size, set, old_Sims,
+	ret = is_minimal_witness(
+			size, set, old_Sims,
 			backtrack_level,
 		witness, transporter_witness, backtrack_nodes, 
 		f_get_automorphism_group, Aut, 
@@ -411,7 +419,8 @@ int action::is_minimal_witness(
 		cout << "action::is_minimal_witness "
 				"before Induced_action->base_change" << endl;
 	}
-	A = Induced_action->base_change(size, set, old_Sims, verbose_level - 1);
+	A = Induced_action->base_change(
+			size, set, old_Sims, verbose_level - 1);
 	if (f_v) {
 		cout << "action::is_minimal_witness "
 				"after Induced_action->base_change" << endl;
@@ -592,7 +601,8 @@ finish:
 					"computing witness" << endl;
 		}
 		for (i = 0; i < size; i++) {
-			witness[i] = A->Group_element->image_of(transporter_witness, set[i]);
+			witness[i] = A->Group_element->image_of(
+					transporter_witness, set[i]);
 		}
 		//int_vec_sort(size, witness);
 		Sorting.lint_vec_heapsort(witness, size);
@@ -653,7 +663,8 @@ finish:
 			cout << "action::is_minimal_witness "
 					"before Aut.build_up_group_random_process" << endl;
 		}
-		Aut.build_up_group_random_process(&K, &Aut2, go2, 
+		Aut.build_up_group_random_process(
+				&K, &Aut2, go2,
 			false /* f_override_choose_next_base_point */,
 			NULL, 
 			verbose_level - 4);	

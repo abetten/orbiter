@@ -335,6 +335,7 @@ public:
 			spread_classify_description *Descr,
 			int verbose_level);
 	void init(
+			spreads::spread_classify_description *Descr,
 			geometry::spread_domain *SD,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
@@ -716,6 +717,13 @@ public:
 
 	spread_table_with_selection();
 	~spread_table_with_selection();
+	void do_spread_table_init(
+			projective_geometry::projective_space_with_action *PA,
+			int dimension_of_spread_elements,
+			int f_select_spread, std::string &select_spread_text,
+			std::string &path_to_spread_tables,
+			std::string &poset_classification_control_label,
+			int verbose_level);
 	void init(
 			spread_classify *T,
 		int f_select_spread,

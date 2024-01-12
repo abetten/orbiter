@@ -55,7 +55,8 @@ void interface_symbol_table::init(
 	}
 }
 
-void interface_symbol_table::print_help(int argc,
+void interface_symbol_table::print_help(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -71,7 +72,8 @@ void interface_symbol_table::print_help(int argc,
 	}
 }
 
-int interface_symbol_table::recognize_keyword(int argc,
+int interface_symbol_table::recognize_keyword(
+		int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	data_structures::string_tools ST;
@@ -205,7 +207,8 @@ void interface_symbol_table::read_with(
 }
 
 
-void interface_symbol_table::worker(int verbose_level)
+void interface_symbol_table::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

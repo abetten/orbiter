@@ -122,8 +122,10 @@ public:
 			int &f_ruled_out, 
 			int verbose_level),
 		int verbose_level);
-	void set_split(int split_r, int split_m, int verbose_level);
-	void set_single_case(int single_case, int verbose_level);
+	void set_split(
+			int split_r, int split_m, int verbose_level);
+	void set_single_case(
+			int single_case, int verbose_level);
 	void randomize(
 			std::string &random_permutation_fname,
 			int verbose_level);

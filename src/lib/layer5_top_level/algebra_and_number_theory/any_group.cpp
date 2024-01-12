@@ -1703,13 +1703,15 @@ void any_group::orbits_on_set_system_from_file(
 			set_size, Table,
 			verbose_level);
 
+	actions::action_global AG;
 	groups::schreier *Sch;
 	int first, a;
 
 	if (f_v) {
 		cout << "computing orbits on sets:" << endl;
 	}
-	A_on_sets->compute_orbits_on_points(Sch,
+	AG.compute_orbits_on_points(
+			A_on_sets, Sch,
 			LG->Strong_gens->gens, verbose_level);
 
 	if (f_v) {

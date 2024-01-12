@@ -489,9 +489,13 @@ void linear_set_classify::init(
 
 
 
+		spreads::spread_classify_description *Descr;
+
+		Descr = NEW_OBJECT(spreads::spread_classify_description);
+
 		T = NEW_OBJECT(spreads::spread_classify);
 
-		//int f_recoordinatize = true;
+		Descr->f_recoordinatize = true;
 
 		k = n >> 1;
 		order = NT.i_power_j(q, k);
@@ -501,7 +505,7 @@ void linear_set_classify::init(
 		}
 
 
-		T->init(SD, PA, verbose_level - 2);
+		T->init(Descr, SD, PA, verbose_level - 2);
 
 		// ToDo:
 		//T->init2(Control, verbose_level);

@@ -3163,21 +3163,21 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 
 
 
-	geometry::geometry_global GG;
-	geometry::decomposition_scheme *Decomposition_scheme;
+	combinatorics::combinatorics_domain Combi;
+	combinatorics::decomposition_scheme *Decomposition_scheme;
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before GG.compute_TDO_decomposition_of_projective_space" << endl;
+				"before Combi.compute_TDO_decomposition_of_projective_space" << endl;
 	}
-	Decomposition_scheme = GG.compute_TDO_decomposition_of_projective_space(
+	Decomposition_scheme = Combi.compute_TDO_decomposition_of_projective_space(
 			Surf_A->PA->P,
 			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
 			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after GG.compute_TDO_decomposition_of_projective_space" << endl;
+				"after Combi.compute_TDO_decomposition_of_projective_space" << endl;
 	}
 
 
@@ -3266,25 +3266,25 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 				"after Decomposition_scheme->write_csv" << endl;
 	}
 
-	actions::action_global AG;
+	actions::combinatorics_with_action CombiA;
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before AG.refine_decomposition_by_group_orbits" << endl;
+				"before CombiA.refine_decomposition_by_group_orbits" << endl;
 	}
-	AG.refine_decomposition_by_group_orbits(
+	CombiA.refine_decomposition_by_group_orbits(
 			Decomposition_scheme->Decomposition,
 			Surf_A->A /* A_on_points */, Surf_A->A2 /* A_on_lines */,
 			Aut_gens,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after AG.refine_decomposition_by_group_orbits" << endl;
+				"after CombiA.refine_decomposition_by_group_orbits" << endl;
 	}
 
-	geometry::decomposition_scheme *Decomposition_scheme_TDA;
+	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
 
-	Decomposition_scheme_TDA = NEW_OBJECT(geometry::decomposition_scheme);
+	Decomposition_scheme_TDA = NEW_OBJECT(combinatorics::decomposition_scheme);
 
 	if (f_v) {
 		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "

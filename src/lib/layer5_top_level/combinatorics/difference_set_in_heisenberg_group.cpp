@@ -138,9 +138,12 @@ void difference_set_in_heisenberg_group::init(
 #endif
 
 	A = NEW_OBJECT(actions::action);
+	interfaces::magma_interface Magma;
 
-	A->init_automorphism_group_from_group_table(fname_base,
+	Magma.init_automorphism_group_from_group_table(
+			fname_base,
 		Table, H->group_order, gens, nb_gens,
+		A,
 		Aut_gens,
 		verbose_level);
 

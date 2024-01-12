@@ -274,31 +274,8 @@ public:
 			ring_theory::longinteger_object &go);
 	long int group_order_lint();
 	std::string group_order_as_string();
-	void get_generators_from_ascii_coding(
-			std::string &ascii_coding,
-			data_structures_groups::vector_ge *&gens,
-			int *&tl, int verbose_level);
-	void lexorder_test(
-			long int *set, int set_sz, int &set_sz_after_test,
-			data_structures_groups::vector_ge *gens,
-			int max_starter,
-		int verbose_level);
-	void compute_orbits_on_points(
-			groups::schreier *&Sch,
-			data_structures_groups::vector_ge *gens,
-			int verbose_level);
 
-	void point_stabilizer_any_point(
-			int &pt,
-			groups::schreier *&Sch, groups::sims *&Stab,
-			groups::strong_generators *&stab_gens,
-		int verbose_level);
-	void point_stabilizer_any_point_with_given_group(
-			groups::strong_generators *input_gens,
-		int &pt,
-		groups::schreier *&Sch, groups::sims *&Stab,
-		groups::strong_generators *&stab_gens,
-		int verbose_level);
+
 	int matrix_group_dimension();
 	field_theory::finite_field *matrix_group_finite_field();
 	int is_semilinear_matrix_group();
@@ -379,11 +356,6 @@ public:
 		int verbose_level);
 	groups::sims *create_sims_for_centralizer_of_matrix(
 			int *Mtx, int verbose_level);
-	void init_automorphism_group_from_group_table(
-			std::string &fname_base,
-		int *Table, int group_order, int *gens, int nb_gens,
-		groups::strong_generators *&Aut_gens,
-		int verbose_level);
 
 	
 	// action_induce.cpp
@@ -400,17 +372,6 @@ public:
 			int verbose_level);
 	void base_change_in_place(
 			int size, long int *set, groups::sims *old_Sims,
-			int verbose_level);
-	void create_orbits_on_subset_using_restricted_action(
-			action *&A_by_restriction,
-			groups::schreier *&Orbits, groups::sims *S,
-			int size, long int *set,
-			std::string &label_of_set,
-			int verbose_level);
-	void create_orbits_on_sets_using_action_on_sets(
-			action *&A_on_sets,
-			groups::schreier *&Orbits, groups::sims *S,
-			int nb_sets, int set_size, long int *sets,
 			int verbose_level);
 	int choose_next_base_point_default_method(
 			int *Elt, int verbose_level);
@@ -609,18 +570,6 @@ public:
 			algebra::matrix_group *M1,
 			algebra::matrix_group *M2,
 			int verbose_level);
-	void compute_decomposition_based_on_orbits(
-			geometry::projective_space *P,
-			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
-	void compute_decomposition_based_on_orbit_length(
-			geometry::projective_space *P,
-			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
 	void orbits_on_equations(
 			action *A,
 			ring_theory::homogeneous_polynomial_domain *HPD,
@@ -773,60 +722,14 @@ public:
 			int *Elt,
 			int *input, int *output,
 			int verbose_level);
-	void report_TDO_and_TDA_projective_space(
-			std::ostream &ost,
-			geometry::projective_space *P,
-			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA_projective_space(
-			std::ostream &ost,
-			geometry::projective_space *P,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA_combinatorial_object(
-			std::ostream &ost,
-			combinatorics::encoded_combinatorial_object *Enc,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDO_and_TDA(
-			std::ostream &ost,
-			geometry::incidence_structure *Inc,
-			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA(
-			std::ostream &ost,
-			geometry::incidence_structure *Inc,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void get_and_report_classes(
-			std::ostream &ost,
-			geometry::decomposition *Decomposition,
-			int verbose_level);
-	void refine_decomposition_by_group_orbits(
-			geometry::decomposition *Decomposition,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens,
-			int verbose_level);
-	void refine_decomposition_by_group_orbits_one_side(
-			geometry::decomposition *Decomposition,
-			actions::action *A_on_points_or_lines,
-			int f_lines,
-			groups::strong_generators *gens,
-			int verbose_level);
 	void test_if_two_actions_agree_vector(
 			action *A1, action *A2,
 			data_structures_groups::vector_ge *gens1,
 			data_structures_groups::vector_ge *gens2,
 			int verbose_level);
 	void test_if_two_actions_agree(
-			action *A1, action *A2, int *Elt1, int *Elt2, int verbose_level);
+			action *A1, action *A2, int *Elt1, int *Elt2,
+			int verbose_level);
 	void reverse_engineer_semilinear_group(
 			action *A_perm, action *A_linear,
 			geometry::projective_space *P,
@@ -840,10 +743,41 @@ public:
 			int verbose_level);
 	void multiply_all_elements_in_lex_order(
 			groups::sims *Sims, int *Elt, int verbose_level);
+	void get_generators_from_ascii_coding(
+			action *A,
+			std::string &ascii_coding,
+			data_structures_groups::vector_ge *&gens,
+			int *&tl, int verbose_level);
+	void lexorder_test(
+			action *A,
+			long int *set, int set_sz, int &set_sz_after_test,
+			data_structures_groups::vector_ge *gens,
+			int max_starter,
+		int verbose_level);
+	void compute_orbits_on_points(
+			action *A,
+			groups::schreier *&Sch,
+			data_structures_groups::vector_ge *gens,
+			int verbose_level);
+
+	void point_stabilizer_any_point(
+			action *A,
+			int &pt,
+			groups::schreier *&Sch, groups::sims *&Stab,
+			groups::strong_generators *&stab_gens,
+		int verbose_level);
+	void point_stabilizer_any_point_with_given_group(
+			action *A,
+			groups::strong_generators *input_gens,
+		int &pt,
+		groups::schreier *&Sch, groups::sims *&Stab,
+		groups::strong_generators *&stab_gens,
+		int verbose_level);
 
 };
 
-void callback_choose_random_generator_orthogonal(int iteration,
+void callback_choose_random_generator_orthogonal(
+		int iteration,
 	int *Elt, void *data, int verbose_level);
 	// for use in action_init.cpp
 
@@ -941,7 +875,74 @@ public:
 };
 
 
+// #############################################################################
+// combinatorics_with_action.cpp
+// #############################################################################
 
+//! Combinatorial functions requiring a group action
+
+class combinatorics_with_action {
+public:
+
+	combinatorics_with_action();
+	~combinatorics_with_action();
+	void report_TDO_and_TDA_projective_space(
+			std::ostream &ost,
+			geometry::projective_space *P,
+			long int *points, int nb_points,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDA_projective_space(
+			std::ostream &ost,
+			geometry::projective_space *P,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDA_combinatorial_object(
+			std::ostream &ost,
+			combinatorics::encoded_combinatorial_object *Enc,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDO_and_TDA(
+			std::ostream &ost,
+			geometry::incidence_structure *Inc,
+			long int *points, int nb_points,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void report_TDA(
+			std::ostream &ost,
+			geometry::incidence_structure *Inc,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens, int size_limit_for_printing,
+			int verbose_level);
+	void refine_decomposition_by_group_orbits(
+			combinatorics::decomposition *Decomposition,
+			actions::action *A_on_points, actions::action *A_on_lines,
+			groups::strong_generators *gens,
+			int verbose_level);
+	void refine_decomposition_by_group_orbits_one_side(
+			combinatorics::decomposition *Decomposition,
+			actions::action *A_on_points_or_lines,
+			int f_lines,
+			groups::strong_generators *gens,
+			int verbose_level);
+	void compute_decomposition_based_on_orbits(
+			geometry::projective_space *P,
+			groups::schreier *Sch1, groups::schreier *Sch2,
+			geometry::incidence_structure *&Inc,
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
+	void compute_decomposition_based_on_orbit_length(
+			geometry::projective_space *P,
+			groups::schreier *Sch1, groups::schreier *Sch2,
+			geometry::incidence_structure *&Inc,
+			data_structures::partitionstack *&Stack,
+			int verbose_level);
+
+};
 
 
 // #############################################################################

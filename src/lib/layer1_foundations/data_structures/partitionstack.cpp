@@ -1754,7 +1754,7 @@ void partitionstack::split_by_orbit_partition(
 
 
 void partitionstack::get_row_and_col_permutation(
-		geometry::row_and_col_partition *RC,
+		combinatorics::row_and_col_partition *RC,
 	int *row_perm, int *row_perm_inv,
 	int *col_perm, int *col_perm_inv,
 	int verbose_level)
@@ -1797,7 +1797,7 @@ void partitionstack::get_row_and_col_permutation(
 }
 
 void partitionstack::get_row_and_col_classes(
-		geometry::row_and_col_partition *&RC,
+		combinatorics::row_and_col_partition *&RC,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1807,7 +1807,7 @@ void partitionstack::get_row_and_col_classes(
 	}
 
 
-	RC = NEW_OBJECT(geometry::row_and_col_partition);
+	RC = NEW_OBJECT(combinatorics::row_and_col_partition);
 
 	RC->init_from_partitionstack(
 			this,
@@ -1911,9 +1911,9 @@ void partitionstack::get_row_classes(
 		cout << "partitionstack::get_row_classes" << endl;
 	}
 
-	geometry::row_and_col_partition *RC;
+	combinatorics::row_and_col_partition *RC;
 
-	RC = NEW_OBJECT(geometry::row_and_col_partition);
+	RC = NEW_OBJECT(combinatorics::row_and_col_partition);
 
 	RC->init_from_partitionstack(
 			this,
@@ -1961,9 +1961,9 @@ void partitionstack::get_column_classes(
 		cout << "partitionstack::get_column_classes" << endl;
 	}
 
-	geometry::row_and_col_partition *RC;
+	combinatorics::row_and_col_partition *RC;
 
-	RC = NEW_OBJECT(geometry::row_and_col_partition);
+	RC = NEW_OBJECT(combinatorics::row_and_col_partition);
 
 	RC->init_from_partitionstack(
 			this,

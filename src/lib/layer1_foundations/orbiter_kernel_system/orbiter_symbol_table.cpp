@@ -213,6 +213,9 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_spread_table) {
 		cout << "t_spread_table" << endl;
 	}
+	else if (t == t_packing_classify) {
+		cout << "t_packing_classify" << endl;
+	}
 	else if (t == t_packing_was) {
 		cout << "t_packing_was" << endl;
 	}

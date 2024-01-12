@@ -346,6 +346,10 @@ public:
 			any_group *Any_group,
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
+	void do_character_table_symmetric_group(
+			int deg, int verbose_level);
+	void smith_normal_form(
+			int *A, int m, int n, std::string &label, int verbose_level);
 
 };
 

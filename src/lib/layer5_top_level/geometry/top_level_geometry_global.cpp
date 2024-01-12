@@ -173,26 +173,26 @@ void top_level_geometry_global::report_decomposition_by_group(
 		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		actions::action_global AG;
+		actions::combinatorics_with_action CombiA;
 
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "
-					"before AG.compute_decomposition_based_on_orbit_length" << endl;
+					"before CombiA.compute_decomposition_based_on_orbit_length" << endl;
 		}
-		AG.compute_decomposition_based_on_orbit_length(PA->P,
+		CombiA.compute_decomposition_based_on_orbit_length(PA->P,
 					Sch1, Sch2,
 					Inc, Stack, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "
-					"after AG.compute_decomposition_based_on_orbit_length" << endl;
+					"after CombiA.compute_decomposition_based_on_orbit_length" << endl;
 		}
 
 
 
-		geometry::decomposition *Decomposition;
+		combinatorics::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(geometry::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 		Decomposition->init_inc_and_stack(
 				Inc, Stack,
@@ -264,25 +264,25 @@ void top_level_geometry_global::report_decomposition_by_group(
 		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		actions::action_global AG;
+		actions::combinatorics_with_action CombiA;
 
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "
-					"before AG.compute_decomposition_based_on_orbits" << endl;
+					"before CombiA.compute_decomposition_based_on_orbits" << endl;
 		}
-		AG.compute_decomposition_based_on_orbits(PA->P,
+		CombiA.compute_decomposition_based_on_orbits(PA->P,
 					Sch1, Sch2,
 					Inc, Stack, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "
-					"after AG.compute_decomposition_based_on_orbits" << endl;
+					"after CombiA.compute_decomposition_based_on_orbits" << endl;
 		}
 
 
-		geometry::decomposition *Decomposition;
+		combinatorics::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(geometry::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 		Decomposition->init_inc_and_stack(
 				Inc, Stack,
@@ -552,10 +552,10 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	}
 
 
-	geometry::decomposition *Decomposition;
+	combinatorics::decomposition *Decomposition;
 
 
-	Decomposition = NEW_OBJECT(geometry::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 	Decomposition->init_inc_and_stack(
 			Inc, Stack,

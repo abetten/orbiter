@@ -329,12 +329,15 @@ namespace combinatorics {
 	class classification_of_objects_report_options;
 	class classification_of_objects;
 	class combinatorics_domain;
+	class decomposition_scheme;
+	class decomposition;
 	class domino_assignment;
 	class domino_change;
 	class encoded_combinatorial_object;
 	class geo_parameter;
 	class pentomino_puzzle;
 	class polynomial_function_domain;
+	class row_and_col_partition;
 	class tdo_data;
 	class tdo_refinement_description;
 	class tdo_refinement;
@@ -442,8 +445,6 @@ namespace geometry {
 	class arc_basic;
 	class arc_in_projective_space;
 	class buekenhout_metz;
-	class decomposition_scheme;
-	class decomposition;
 	class desarguesian_spread;
 	class flag;
 	class geometric_object_create;
@@ -468,7 +469,6 @@ namespace geometry {
 	class projective_space_reporting;
 	class projective_space_subspaces;
 	class projective_space;
-	class row_and_col_partition;
 	class spread_domain;
 	class spread_tables;
 	class three_skew_subspaces;
@@ -638,6 +638,7 @@ namespace orbiter_kernel_system {
 		t_spread,
 		t_translation_plane,
 		t_spread_table,
+		t_packing_classify,
 		t_packing_was,
 		t_packing_was_choose_fixed_points,
 		t_packing_long_orbits,

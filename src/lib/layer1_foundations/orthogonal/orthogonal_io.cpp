@@ -601,7 +601,7 @@ void orthogonal::report_schemes(
 		FREE_int(set);
 
 
-		geometry::row_and_col_partition *RC;
+		combinatorics::row_and_col_partition *RC;
 
 
 		Stack->get_row_and_col_classes(

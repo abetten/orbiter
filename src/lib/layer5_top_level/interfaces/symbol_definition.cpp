@@ -97,11 +97,20 @@ symbol_definition::symbol_definition()
 	//std::string spread_table_label_PA;
 	dimension_of_spread_elements = 0;
 	//std::string spread_selection_text;
-	//std::string spread_tables_prefix;
+	//std::string spread_table_prefix;
+	//std::string spread_table_control;
+
+
+
+
+	f_packing_classify = false;
+	//std::string packing_classify_label_PA3;
+	//std::string packing_classify_label_PA5;
+	//std::string packing_classify_label_spread_table;
 
 
 	f_packing_was = false;
-	//std::string packing_was_label_spread_table;
+	//std::string packing_was_label_packing_classify;
 	packing_was_descr = NULL;
 
 	f_packing_was_choose_fixed_points = false;
@@ -650,14 +659,18 @@ void symbol_definition::read_definition(
 		spread_table_label_PA.assign(argv[++i]);
 		dimension_of_spread_elements = ST.strtoi(argv[++i]);
 		spread_selection_text.assign(argv[++i]);
-		spread_tables_prefix.assign(argv[++i]);
+		spread_table_prefix.assign(argv[++i]);
+		spread_table_control.assign(argv[++i]);
+
 
 		i++;
 
 		if (f_v) {
 			cout << "dimension_of_spread_elements = " << dimension_of_spread_elements
 					<< " " << spread_selection_text
-					<< " " << spread_tables_prefix << endl;
+					<< " " << spread_table_prefix
+					<< " " << spread_table_control
+					<< endl;
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
@@ -668,14 +681,35 @@ void symbol_definition::read_definition(
 			cout << "-spread_table " << spread_table_label_PA
 					<< " " << dimension_of_spread_elements
 					<< " " << spread_selection_text
-					<< " " << spread_tables_prefix
+					<< " " << spread_table_prefix
+					<< " " << spread_table_control
 					<< endl;
 		}
 	}
+
+	else if (ST.stringcmp(argv[i], "-packing_classify") == 0) {
+		f_packing_classify = true;
+
+		packing_classify_label_PA3.assign(argv[++i]);
+		packing_classify_label_PA5.assign(argv[++i]);
+		packing_classify_label_spread_table.assign(argv[++i]);
+
+		i++;
+
+		if (f_v) {
+			cout << "-packing_classify "
+					<< " " << packing_classify_label_PA3
+					<< " " << packing_classify_label_PA5
+					<< " " << packing_classify_label_spread_table
+					<< endl;
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption") == 0) {
 		f_packing_was = true;
 
-		packing_was_label_spread_table.assign(argv[++i]);
+		packing_was_label_packing_classify.assign(argv[++i]);
 
 		packing_was_descr =
 				NEW_OBJECT(packings::packing_was_description);
@@ -694,8 +728,9 @@ void symbol_definition::read_definition(
 			if (i < argc) {
 				cout << "next argument is " << argv[i] << endl;
 			}
-			cout << "-packing_with_symmetry_assumption " << packing_was_label_spread_table
+			cout << "-packing_with_symmetry_assumption " << packing_was_label_packing_classify
 					<< endl;
+			packing_was_descr->print();
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_choose_fixed_points") == 0) {
@@ -1209,7 +1244,8 @@ void symbol_definition::read_definition(
 }
 
 
-void symbol_definition::perform_definition(int verbose_level)
+void symbol_definition::perform_definition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1441,6 +1477,17 @@ void symbol_definition::perform_definition(int verbose_level)
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
 					"after definition_of_projective_space" << endl;
+		}
+	}
+	else if (f_packing_classify) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_packing_classify" << endl;
+		}
+		definition_of_packing_classify(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_packing_classify" << endl;
 		}
 	}
 	else if (f_packing_was) {
@@ -1797,11 +1844,23 @@ void symbol_definition::print()
 				<< endl;
 	}
 	if (f_spread_table) {
-		cout << "-spread_table ";
-		cout << spread_table_label_PA << " " << dimension_of_spread_elements << " " << spread_selection_text << " " << spread_tables_prefix << endl;
+		cout << "-spread_table " << spread_table_label_PA
+				<< " " << dimension_of_spread_elements
+				<< " " << spread_selection_text
+				<< " " << spread_table_prefix
+				<< " " << spread_table_control
+				<< endl;
+	}
+	if (f_packing_classify) {
+		cout << "-packing_classify "
+				<< " " << packing_classify_label_PA3
+				<< " " << packing_classify_label_PA5
+				<< " " << packing_classify_label_spread_table
+				<< endl;
 	}
 	if (f_packing_was) {
-		cout << "-packing_was " << packing_was_label_spread_table << endl;
+		cout << "-packing_with_symmetry_assumption " << packing_was_label_packing_classify
+				<< endl;
 		packing_was_descr->print();
 	}
 	if (f_packing_was_choose_fixed_points) {
@@ -1899,7 +1958,8 @@ void symbol_definition::print()
 
 
 
-void symbol_definition::definition_of_finite_field(int verbose_level)
+void symbol_definition::definition_of_finite_field(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1937,7 +1997,8 @@ void symbol_definition::definition_of_finite_field(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_polynomial_ring(int verbose_level)
+void symbol_definition::definition_of_polynomial_ring(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1978,7 +2039,8 @@ void symbol_definition::definition_of_polynomial_ring(int verbose_level)
 
 
 
-void symbol_definition::definition_of_projective_space(int verbose_level)
+void symbol_definition::definition_of_projective_space(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2057,7 +2119,8 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	}
 }
 
-void symbol_definition::print_definition_of_projective_space(int verbose_level)
+void symbol_definition::print_definition_of_projective_space(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2067,7 +2130,8 @@ void symbol_definition::print_definition_of_projective_space(int verbose_level)
 	Projective_space_with_action_description->print();
 }
 
-void symbol_definition::definition_of_orthogonal_space(int verbose_level)
+void symbol_definition::definition_of_orthogonal_space(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2132,7 +2196,8 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
+void symbol_definition::definition_of_BLT_set_classifier(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2205,7 +2270,8 @@ void symbol_definition::definition_of_BLT_set_classifier(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_spread_classifier(int verbose_level)
+void symbol_definition::definition_of_spread_classifier(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2248,7 +2314,8 @@ void symbol_definition::definition_of_spread_classifier(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_linear_group(int verbose_level)
+void symbol_definition::definition_of_linear_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2326,7 +2393,8 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_permutation_group(int verbose_level)
+void symbol_definition::definition_of_permutation_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2377,7 +2445,8 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_modified_group(int verbose_level)
+void symbol_definition::definition_of_modified_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2424,7 +2493,8 @@ void symbol_definition::definition_of_modified_group(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_geometric_object(int verbose_level)
+void symbol_definition::definition_of_geometric_object(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2440,8 +2510,7 @@ void symbol_definition::definition_of_geometric_object(int verbose_level)
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(
-			geometric_object_projective_space_label);
+	PA = Get_projective_space(geometric_object_projective_space_label);
 
 	geometry::geometric_object_create *GeoObj;
 
@@ -2512,7 +2581,8 @@ void symbol_definition::definition_of_formula(
 }
 #endif
 
-void symbol_definition::definition_of_collection(std::string &list_of_objects,
+void symbol_definition::definition_of_collection(
+		std::string &list_of_objects,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2538,7 +2608,8 @@ void symbol_definition::definition_of_collection(std::string &list_of_objects,
 	}
 }
 
-void symbol_definition::definition_of_graph(int verbose_level)
+void symbol_definition::definition_of_graph(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2606,7 +2677,8 @@ void symbol_definition::definition_of_graph(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_code(int verbose_level)
+void symbol_definition::definition_of_code(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2661,7 +2733,8 @@ void symbol_definition::definition_of_code(int verbose_level)
 
 
 
-void symbol_definition::definition_of_spread(int verbose_level)
+void symbol_definition::definition_of_spread(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2712,7 +2785,8 @@ void symbol_definition::definition_of_spread(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_cubic_surface(int verbose_level)
+void symbol_definition::definition_of_cubic_surface(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2758,7 +2832,8 @@ void symbol_definition::definition_of_cubic_surface(int verbose_level)
 
 
 
-void symbol_definition::definition_of_quartic_curve(int verbose_level)
+void symbol_definition::definition_of_quartic_curve(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2814,7 +2889,8 @@ void symbol_definition::definition_of_quartic_curve(int verbose_level)
 
 
 
-void symbol_definition::definition_of_BLT_set(int verbose_level)
+void symbol_definition::definition_of_BLT_set(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2881,7 +2957,8 @@ void symbol_definition::definition_of_BLT_set(int verbose_level)
 
 
 
-void symbol_definition::definition_of_translation_plane(int verbose_level)
+void symbol_definition::definition_of_translation_plane(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2982,7 +3059,8 @@ void symbol_definition::definition_of_translation_plane(int verbose_level)
 
 
 
-void symbol_definition::definition_of_spread_table(int verbose_level)
+void symbol_definition::definition_of_spread_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2995,17 +3073,13 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 				"using existing PA "
 				<< spread_table_label_PA << endl;
 	}
-	int idx;
 	projective_geometry::projective_space_with_action *PA;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(
-			spread_table_label_PA);
-	PA = (projective_geometry::projective_space_with_action *)
-			Sym->Orbiter_top_level_session->get_object(idx);
+	PA = Get_projective_space(spread_table_label_PA);
 
 
 
-
+#if 0
 	packings::packing_classify *P;
 
 	if (f_v) {
@@ -3020,21 +3094,34 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 			dimension_of_spread_elements,
 			true /* f_select_spread */, spread_selection_text,
 			spread_tables_prefix,
+			spread_table_control,
 			verbose_level);
 
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_spread_table "
-				"after do_spread_table_init" << endl;
+				"after P->spread_table_init" << endl;
 	}
+#endif
 
+	spreads::spread_table_with_selection *Spread_table_with_selection;
+
+	Spread_table_with_selection = NEW_OBJECT(spreads::spread_table_with_selection);
+
+	Spread_table_with_selection->do_spread_table_init(
+			PA,
+			dimension_of_spread_elements,
+			true /* f_select_spread */, spread_selection_text,
+			spread_table_prefix,
+			spread_table_control,
+			verbose_level);
 
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
 	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-	Symb->init_spread_table(define_label, P, verbose_level);
+	Symb->init_spread_table(define_label, Spread_table_with_selection, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_spread_table "
 				"before add_symbol_table_entry" << endl;
@@ -3050,7 +3137,77 @@ void symbol_definition::definition_of_spread_table(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_packing_was(int verbose_level)
+
+void symbol_definition::definition_of_packing_classify(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify" << endl;
+	}
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify "
+				"using existing PA "
+				<< spread_table_label_PA << endl;
+	}
+	projective_geometry::projective_space_with_action *PA3;
+	projective_geometry::projective_space_with_action *PA5;
+
+	PA3 = Get_projective_space(packing_classify_label_PA3);
+	PA5 = Get_projective_space(packing_classify_label_PA5);
+
+	spreads::spread_table_with_selection *Spread_table;
+	Spread_table = Get_spread_table(packing_classify_label_spread_table);
+
+
+	packings::packing_classify *PC;
+
+
+	PC = NEW_OBJECT(packings::packing_classify);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify "
+				"before PC->init" << endl;
+	}
+	PC->init(
+			PA3,
+			PA5,
+		Spread_table,
+		true,
+		verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify "
+				"after PC->init" << endl;
+	}
+
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_packing_classify(define_label, PC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_packing_classify done" << endl;
+	}
+}
+
+
+
+void symbol_definition::definition_of_packing_was(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3061,17 +3218,12 @@ void symbol_definition::definition_of_packing_was(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_was "
 				"using existing spread table "
-				<< packing_was_label_spread_table << endl;
+				<< packing_was_label_packing_classify << endl;
 	}
-	int idx;
+
 	packings::packing_classify *P;
 
-	idx = Sym->Orbiter_top_level_session->find_symbol(
-			packing_was_label_spread_table);
-	P = (packings::packing_classify *)
-			Sym->Orbiter_top_level_session->get_object(idx);
-
-
+	P = Get_packing_classify(packing_was_label_packing_classify);
 
 
 
@@ -3195,7 +3347,8 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 
 
 
-void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
+void symbol_definition::definition_of_packing_long_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3257,7 +3410,8 @@ void symbol_definition::definition_of_packing_long_orbits(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_graph_classification(int verbose_level)
+void symbol_definition::definition_of_graph_classification(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3312,7 +3466,8 @@ void symbol_definition::definition_of_graph_classification(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_diophant(int verbose_level)
+void symbol_definition::definition_of_diophant(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3369,7 +3524,8 @@ void symbol_definition::definition_of_diophant(int verbose_level)
 
 
 
-void symbol_definition::definition_of_design(int verbose_level)
+void symbol_definition::definition_of_design(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3419,7 +3575,8 @@ void symbol_definition::definition_of_design(int verbose_level)
 
 
 
-void symbol_definition::definition_of_design_table(int verbose_level)
+void symbol_definition::definition_of_design_table(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3522,7 +3679,8 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_large_set_was(int verbose_level)
+void symbol_definition::definition_of_large_set_was(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3533,7 +3691,7 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_large_set_was "
 				"using existing spread table "
-				<< packing_was_label_spread_table << endl;
+				<< large_set_was_label_design_table << endl;
 	}
 	int idx;
 	apps_combinatorics::large_set_classify *LS;
@@ -3585,7 +3743,8 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_set(int verbose_level)
+void symbol_definition::definition_of_set(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3748,7 +3907,8 @@ void symbol_definition::definition_of_symbolic_object(
 }
 
 
-void symbol_definition::definition_of_combinatorial_object(int verbose_level)
+void symbol_definition::definition_of_combinatorial_object(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3784,7 +3944,8 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 	}
 }
 
-void symbol_definition::do_geometry_builder(int verbose_level)
+void symbol_definition::do_geometry_builder(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3820,7 +3981,8 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 	}
 }
 
-void symbol_definition::load_finite_field_PG(int verbose_level)
+void symbol_definition::load_finite_field_PG(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3931,7 +4093,8 @@ field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 }
 
 
-void symbol_definition::definition_of_vector_ge(int verbose_level)
+void symbol_definition::definition_of_vector_ge(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3976,7 +4139,8 @@ void symbol_definition::definition_of_vector_ge(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_action_on_forms(int verbose_level)
+void symbol_definition::definition_of_action_on_forms(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4023,7 +4187,8 @@ void symbol_definition::definition_of_action_on_forms(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_orbits(int verbose_level)
+void symbol_definition::definition_of_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4070,7 +4235,8 @@ void symbol_definition::definition_of_orbits(int verbose_level)
 	}
 }
 
-void symbol_definition::definition_of_poset_classification_control(int verbose_level)
+void symbol_definition::definition_of_poset_classification_control(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4100,7 +4266,8 @@ void symbol_definition::definition_of_poset_classification_control(int verbose_l
 	}
 }
 
-void symbol_definition::definition_of_arc_generator_control(int verbose_level)
+void symbol_definition::definition_of_arc_generator_control(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4131,7 +4298,8 @@ void symbol_definition::definition_of_arc_generator_control(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_poset_classification_activity(int verbose_level)
+void symbol_definition::definition_of_poset_classification_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4161,7 +4329,8 @@ void symbol_definition::definition_of_poset_classification_activity(int verbose_
 	}
 }
 
-void symbol_definition::definition_of_crc_code(int verbose_level)
+void symbol_definition::definition_of_crc_code(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4215,7 +4384,8 @@ void symbol_definition::definition_of_crc_code(int verbose_level)
 }
 
 
-void symbol_definition::definition_of_mapping(int verbose_level)
+void symbol_definition::definition_of_mapping(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -42,7 +42,7 @@ void tdo_scheme_compute::init(
 
 	tdo_scheme_compute::Enc = Enc;
 
-	Decomp = NEW_OBJECT(geometry::decomposition);
+	Decomp = NEW_OBJECT(decomposition);
 
 	if (f_v) {
 		cout << "tdo_scheme_compute::init "

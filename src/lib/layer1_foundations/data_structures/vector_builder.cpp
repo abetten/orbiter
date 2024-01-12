@@ -204,24 +204,32 @@ void vector_builder::init(
 		}
 
 	}
-	else if (Descr->concatenate_list.size()) {
+	else if (Descr->f_concatenate) {
 
 		int i, j;
+		string_tools ST;
+
+
+		std::vector<std::string> values;
+
+		ST.parse_comma_separated_list(
+				Descr->concatenate_list, values,
+				0 /*verbose_level*/);
 
 		len = 0;
 
-		for (i = 0; i < Descr->concatenate_list.size(); i++) {
+		for (i = 0; i < values.size(); i++) {
 			vector_builder *VB;
 
-			VB = Get_vector(Descr->concatenate_list[i]);
+			VB = Get_vector(values[i]);
 			len += VB->len;
 		}
 		v = NEW_lint(len);
 		j = 0;
-		for (i = 0; i < Descr->concatenate_list.size(); i++) {
+		for (i = 0; i < values.size(); i++) {
 			vector_builder *VB;
 
-			VB = Get_vector(Descr->concatenate_list[i]);
+			VB = Get_vector(values[i]);
 			Lint_vec_copy(VB->v, v + j, VB->len);
 			j += VB->len;
 		}

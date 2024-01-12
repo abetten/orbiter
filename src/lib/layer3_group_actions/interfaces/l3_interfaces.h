@@ -127,6 +127,12 @@ class magma_interface {
 public:
 	magma_interface();
 	~magma_interface();
+	void init_automorphism_group_from_group_table(
+		std::string &fname_base,
+		int *Table, int group_order, int *gens, int nb_gens,
+		actions::action *&A_perm,
+		groups::strong_generators *&Aut_gens,
+		int verbose_level);
 	void centralizer_of_element(
 			actions::action *A,
 			groups::sims *S,

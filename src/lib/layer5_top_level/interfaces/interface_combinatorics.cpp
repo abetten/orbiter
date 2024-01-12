@@ -1021,7 +1021,8 @@ void interface_combinatorics::worker(
 
 
 #if 0
-void interface_combinatorics::do_bent(int n, int verbose_level)
+void interface_combinatorics::do_bent(
+		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

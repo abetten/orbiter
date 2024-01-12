@@ -389,7 +389,8 @@ class combinatorics_domain {
 public:
 	combinatorics_domain();
 	~combinatorics_domain();
-	int int_factorial(int a);
+	int int_factorial(
+			int a);
 	int Kung_mue_i(
 			int *part, int i, int m);
 	void partition_dual(
@@ -688,6 +689,18 @@ public:
 			int v, int k, int b, long int *Blocks_coded,
 			int &b_reduced,
 			int verbose_level);
+	void compute_TDO_decomposition_of_projective_space_old(
+			std::string &fname_base,
+			geometry::projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			std::vector<std::string> &file_names,
+			int verbose_level);
+	combinatorics::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
+			geometry::projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			int verbose_level);
 	void create_incidence_matrix_of_graph(
 			int *Adj, int n,
 			int *&M, int &nb_rows, int &nb_cols,
@@ -700,6 +713,245 @@ public:
 			int verbose_level);
 
 };
+
+
+
+
+
+// #############################################################################
+// decomposition_scheme.cpp
+// #############################################################################
+
+
+//! a decomposition scheme of an incidence structure
+
+
+class decomposition_scheme {
+
+public:
+
+	decomposition *Decomposition;
+
+	row_and_col_partition *RC;
+
+	int f_has_row_scheme;
+	int *row_scheme;
+	int f_has_col_scheme;
+	int *col_scheme;
+
+	data_structures::set_of_sets *SoS_points;
+	data_structures::set_of_sets *SoS_lines;
+
+	decomposition_scheme();
+	~decomposition_scheme();
+	void init_row_and_col_schemes(
+			decomposition *Decomposition,
+			int verbose_level);
+	void get_classes(
+			int verbose_level);
+	void init_row_scheme(
+			decomposition *Decomposition,
+			int verbose_level);
+	void init_col_scheme(
+			decomposition *Decomposition,
+			int verbose_level);
+	void get_row_scheme(
+			int verbose_level);
+	void get_col_scheme(
+			int verbose_level);
+	void print_row_decomposition_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts,
+		int verbose_level);
+	void print_column_decomposition_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts,
+		int verbose_level);
+	void print_decomposition_scheme_tex(
+			std::ostream &ost,
+		int *scheme);
+	void print_tactical_decomposition_scheme_tex(
+			std::ostream &ost,
+		int f_print_subscripts);
+	void print_tactical_decomposition_scheme_tex_internal(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void print_non_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		int f_print_subscripts);
+	void stringify_row_scheme(
+			std::string *&Table, int f_print_subscripts);
+		// Table[(nb_row_classes + 1) * (nb_col_classes + 1)]
+	void stringify_col_scheme(
+			std::string *&Table, int f_print_subscripts);
+		// Table[(nb_row_classes + 1) * (nb_col_classes + 1)]
+	void write_csv(
+			std::string &fname_row, std::string &fname_col,
+			std::string &fname_row_classes, std::string &fname_col_classes,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
+// decomposition.cpp
+// #############################################################################
+
+
+//! decomposition of an incidence matrix
+
+
+class decomposition {
+
+public:
+
+	int nb_points;
+	int nb_blocks;
+	int N;
+	int *Incma;
+
+	geometry::incidence_structure *Inc;
+	data_structures::partitionstack *Stack;
+
+	int f_has_decomposition;
+	decomposition_scheme *Scheme;
+
+
+	decomposition();
+	~decomposition();
+	void init_incidence_structure(
+			geometry::incidence_structure *Inc,
+			int verbose_level);
+	void init_inc_and_stack(
+			geometry::incidence_structure *Inc,
+			data_structures::partitionstack *Stack,
+		int verbose_level);
+	void init_decomposition_of_projective_space(
+			geometry::projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			int verbose_level);
+	void init_incidence_matrix(
+			int m, int n, int *M,
+		int verbose_level);
+		// copies the incidence matrix
+	void compute_TDO_deep(
+			int verbose_level);
+	void compute_the_decomposition(
+			int verbose_level);
+	void setup_default_partition(
+			int verbose_level);
+	void compute_TDO_old(
+			int max_depth, int verbose_level);
+	void get_row_scheme(
+			int verbose_level);
+	void get_col_scheme(
+			int verbose_level);
+	void compute_TDO_safe(
+		int depth, int verbose_level);
+	void compute_TDO_safe_and_write_files(
+		int depth,
+		std::string &fname_base,
+		std::vector<std::string> &file_names,
+		int verbose_level);
+	int refine_column_partition_safe(
+			int verbose_level);
+	int refine_row_partition_safe(
+			int verbose_level);
+	void get_and_print_row_decomposition_scheme(
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
+	void get_and_print_col_decomposition_scheme(
+		int f_list_incidences,
+		int f_local_coordinates, int verbose_level);
+	void get_row_decomposition_scheme(
+			row_and_col_partition *RC,
+		int *row_scheme, int verbose_level);
+	void get_row_decomposition_scheme_if_possible(
+			row_and_col_partition *RC,
+		int *row_scheme, int verbose_level);
+	void get_col_decomposition_scheme(
+			row_and_col_partition *RC,
+		int *col_scheme, int verbose_level);
+	void row_scheme_to_col_scheme(
+			row_and_col_partition *RC,
+		int *row_scheme, int *col_scheme,
+		int verbose_level);
+	void print_row_tactical_decomposition_scheme_incidences_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		row_and_col_partition *RC,
+		int f_local_coordinates, int verbose_level);
+	void print_col_tactical_decomposition_scheme_incidences_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		row_and_col_partition *RC,
+		int f_local_coordinates, int verbose_level);
+	void get_incidences_by_row_scheme(
+			row_and_col_partition *RC,
+		int row_class_idx, int col_class_idx,
+		int rij, int *&incidences, int verbose_level);
+	void get_incidences_by_col_scheme(
+			row_and_col_partition *RC,
+		int row_class_idx, int col_class_idx,
+		int kij, int *&incidences, int verbose_level);
+	void get_and_print_decomposition_schemes();
+	void get_and_print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts);
+	void get_and_print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost,
+		int f_enter_math, int f_print_subscripts);
+	void print_partitioned(
+		std::ostream &ost,
+		int f_labeled);
+	void print_column_labels(
+		std::ostream &ost,
+		int *col_classes, int nb_col_classes, int width);
+	void print_hline(
+		std::ostream &ost,
+		row_and_col_partition *RC,
+		int width, int f_labeled);
+	void print_line(
+		std::ostream &ost,
+		row_and_col_partition *RC,
+		int row_cell, int i,
+		int width, int f_labeled);
+	void stringify_decomposition(
+			row_and_col_partition *RC,
+			std::string *&T,
+			int *the_scheme,
+			int f_print_subscripts);
+	void prepare_col_labels(
+			row_and_col_partition *RC,
+			std::vector<std::string> &col_labels, int f_print_subscripts);
+	void prepare_row_labels(
+			row_and_col_partition *RC,
+			std::vector<std::string> &row_labels, int f_print_subscripts);
+	void prepare_matrix(
+			row_and_col_partition *RC,
+			std::vector<std::string> &matrix_labels,
+			int *the_scheme);
+	void print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		row_and_col_partition *RC,
+		int *row_scheme, int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		row_and_col_partition *RC,
+		int *col_scheme, int f_print_subscripts);
+	void compute_TDO(int verbose_level);
+	void get_and_report_classes(
+			std::ostream &ost,
+			int verbose_level);
+
+};
+
+
 
 
 // #############################################################################
@@ -1276,6 +1528,51 @@ public:
 
 
 // #############################################################################
+// row_and_col_partition.cpp
+// #############################################################################
+
+
+//! the partition associated with a decomposition of an incidence matrix
+
+
+class row_and_col_partition {
+
+public:
+
+	data_structures::partitionstack *Stack;
+
+	int *row_classes;
+	int *row_class_idx;
+	int nb_row_classes;
+
+	int *col_classes;
+	int *col_class_idx;
+	int nb_col_classes;
+
+	row_and_col_partition();
+	~row_and_col_partition();
+	void init_from_partitionstack(
+			data_structures::partitionstack *Stack,
+			int verbose_level);
+	void print_classes_of_decomposition_tex(
+			std::ostream &ost);
+	void print_decomposition_scheme(
+			std::ostream &ost,
+		int *scheme);
+	void print_row_tactical_decomposition_scheme_tex(
+			std::ostream &ost, int f_enter_math_mode,
+		int *row_scheme, int f_print_subscripts);
+	void print_column_tactical_decomposition_scheme_tex(
+			std::ostream &ost, int f_enter_math_mode,
+		int *col_scheme, int f_print_subscripts);
+
+
+};
+
+
+
+
+// #############################################################################
 // tdo_data.cpp TDO parameter refinement
 // #############################################################################
 
@@ -1470,7 +1767,7 @@ class tdo_scheme_compute {
 public:
 
 	encoded_combinatorial_object *Enc;
-	geometry::decomposition *Decomp;
+	decomposition *Decomp;
 
 
 

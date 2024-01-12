@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace geometry {
+namespace combinatorics {
 
 
 row_and_col_partition::row_and_col_partition()

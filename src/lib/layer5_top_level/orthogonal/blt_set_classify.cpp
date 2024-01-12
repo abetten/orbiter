@@ -722,6 +722,7 @@ int blt_set_classify::create_graph(
 	int ret;
 
 	data_structures_groups::orbit_rep *R;
+	actions::action_global AG;
 
 
 
@@ -787,7 +788,7 @@ int blt_set_classify::create_graph(
 					<< " / " << R->nb_cases
 					<< " Before lexorder_test" << endl;
 		}
-		A->lexorder_test(R->candidates,
+		AG.lexorder_test(A, R->candidates,
 			R->nb_candidates, nb_candidates2,
 			R->Strong_gens->gens, max_starter, 0 /*verbose_level - 3*/);
 		if (f_vv) {

@@ -55,14 +55,16 @@ void packing_classify::compute_klein_invariants(
 		}
 		id = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[Iso->Folding->Reps->rep[orbit]]];
 	
-		Iso->Lifting->load_solution(id, the_packing, verbose_level - 1);
+		Iso->Lifting->load_solution(
+				id, the_packing, verbose_level - 1);
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
 			Lint_vec_print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
-		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(
+				list_of_lines,
 				the_packing, size_of_packing, verbose_level - 2);
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
@@ -77,7 +79,8 @@ void packing_classify::compute_klein_invariants(
 					<< orbit << " / " << Iso->Folding->Reps->count
 					<< " before compute_and_save_klein_invariants" << endl;
 		}
-		compute_and_save_klein_invariants(Iso->prefix_invariants,
+		compute_and_save_klein_invariants(
+				Iso->prefix_invariants,
 			orbit, 
 			list_of_lines,
 			size_of_packing * spread_size,
@@ -130,8 +133,10 @@ void packing_classify::compute_and_save_klein_invariants(
 		cout << "packing_classify::compute_and_save_klein_invariants "
 				"before P3->Grass_lines->klein_correspondence" << endl;
 	}
-	P3->Subspaces->Grass_lines->klein_correspondence(P3, //P5,
-		data, data_size, list_of_lines_klein_image, 0/*verbose_level*/);
+	P3->Subspaces->Grass_lines->klein_correspondence(
+			P3, //P5,
+		data, data_size, list_of_lines_klein_image,
+		0/*verbose_level*/);
 
 	if (f_v) {
 		cout << "packing_classify::compute_and_save_klein_invariants "
@@ -466,7 +471,8 @@ void packing_classify::report_isomorphism_type(
 	}
 
 
-	Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
+	Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(
+			list_of_lines,
 			the_packing, size_of_packing, verbose_level - 2);
 
 
@@ -540,7 +546,8 @@ void packing_classify::report_isomorphism_type(
 		cout << "packing_classify::report computing induced "
 				"action on the set (in data)" << endl;
 	}
-	Iso->Folding->induced_action_on_set_basic(Stab, the_packing, verbose_level - 2);
+	Iso->Folding->induced_action_on_set_basic(
+			Stab, the_packing, verbose_level - 2);
 
 	if (f_v) {
 		ring_theory::longinteger_object go;
@@ -550,16 +557,19 @@ void packing_classify::report_isomorphism_type(
 				"group order is " << go << endl;
 	}
 
-	report_stabilizer_in_action(*Iso, ost, orbit, verbose_level);
+	report_stabilizer_in_action(
+			*Iso, ost, orbit, verbose_level);
 
 	if (go.as_int() > 2) {
-		report_stabilizer_in_action_gap(*Iso, orbit, verbose_level);
-		}
+		report_stabilizer_in_action_gap(
+				*Iso, orbit, verbose_level);
+	}
 
 	groups::schreier Orb;
 	//longinteger_object go;
 		
-	Iso->Folding->AA->compute_all_point_orbits(Orb,
+	Iso->Folding->AA->compute_all_point_orbits(
+			Orb,
 			Stab->gens, verbose_level - 2);
 	//cout << "Computed all orbits on the set, "
 	//"found " << Orb.nb_orbits << " orbits" << endl;
@@ -582,11 +592,13 @@ void packing_classify::report_isomorphism_type(
 	ost << " $]$\\\\" << endl;
 	ost << "\\bigskip" << endl;
 	
-	report_klein_invariants(Iso,
+	report_klein_invariants(
+			Iso,
 			ost, orbit, inv, verbose_level);
 		
 
-	report_packing_as_table(Iso,
+	report_packing_as_table(
+			Iso,
 			ost, orbit, inv, list_of_lines, verbose_level);
 
 
@@ -712,7 +724,7 @@ void packing_classify::report_klein_invariants(
 			if (f_vv) {
 				cout << "packing::report loading "
 						"file " << fname_klein << endl;
-				}
+			}
 			V.load_file(fname_klein);
 			inv->Inv[orbit].init_klein_invariants(
 					V, verbose_level - 1);

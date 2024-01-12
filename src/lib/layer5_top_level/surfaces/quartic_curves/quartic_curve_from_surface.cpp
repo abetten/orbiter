@@ -1145,7 +1145,7 @@ void quartic_curve_from_surface::TDO_decomposition(
 	}
 
 
-	geometry::geometry_global GG;
+	combinatorics::combinatorics_domain Combi;
 	string fname_base;
 
 	fname_base = label + "_orb" + std::to_string(pt_orbit) + "_quartic";
@@ -1157,12 +1157,12 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"before GG.compute_TDO_decomposition_of_projective_space_old" << endl;
+			"before Combi.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	std::vector<std::string> file_names;
 
-	GG.compute_TDO_decomposition_of_projective_space_old(
+	Combi.compute_TDO_decomposition_of_projective_space_old(
 			fname_base,
 			SOA->Surf_A->PA->PA2->P,
 			Pts_on_curve, sz_curve,
@@ -1172,7 +1172,7 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"after GG.compute_TDO_decomposition_of_projective_space_old" << endl;
+			"after Combi.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	ost << endl << endl;

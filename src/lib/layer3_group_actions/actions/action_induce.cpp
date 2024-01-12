@@ -51,17 +51,20 @@ void action::lex_least_base_in_place(
 
 	for (i = 0; i < base_len(); i++) {
 		if (f_v) {
-			cout << "action::lex_least_base_in_place i=" << i << " / " << base_len() << endl;
+			cout << "action::lex_least_base_in_place "
+					"i=" << i << " / " << base_len() << endl;
 		}
 		set[i] = base_i(i);
 		if (f_v) {
-			cout << "action::lex_least_base_in_place i=" << i << " / " << base_len() << " set[i]=" << set[i] << endl;
+			cout << "action::lex_least_base_in_place "
+					"i=" << i << " / " << base_len() << " set[i]=" << set[i] << endl;
 		}
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " computing the least moved point" << endl;
 		}
-		lmp = least_moved_point_at_level(old_Sims, i, verbose_level - 2);
+		lmp = least_moved_point_at_level(
+				old_Sims, i, verbose_level - 2);
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " the least moved point is " << lmp << endl;
@@ -150,18 +153,23 @@ void action::lex_least_base(
 	old_A = old_action;
 
 	if (!old_action->f_has_sims) {
-		cout << "action::lex_least_base does not have Sims" << endl;
+		cout << "action::lex_least_base "
+				"does not have Sims" << endl;
 		exit(1);
 	}
 
 	for (i = 0; i < old_A->base_len(); i++) {
+
 		set[i] = old_A->base_i(i);
+
 		if (f_v) {
 			cout << "action::lex_least_base "
 					"calling least_moved_point_at_level " << i << endl;
 		}
+
 		lmp = old_A->least_moved_point_at_level(
 				old_A->Sims, i, verbose_level - 2);
+
 		if (lmp < old_A->base_i(i)) {
 			if (f_v) {
 				cout << "action::lex_least_base least moved point = " << lmp
@@ -306,7 +314,8 @@ void action::base_change_in_place(
 	if (f_v) {
 		cout << "action::base_change_in_place before init_sims_only" << endl;
 	}
-	init_sims_only(A->Sims, verbose_level);
+	init_sims_only(
+			A->Sims, verbose_level);
 	if (f_v) {
 		cout << "action::base_change_in_place after init_sims_only" << endl;
 	}
@@ -347,62 +356,6 @@ void action::base_change_in_place(
 }
 
 
-void action::create_orbits_on_subset_using_restricted_action(
-		action *&A_by_restriction,
-		groups::schreier *&Orbits, groups::sims *S,
-		int size, long int *set,
-		std::string &label_of_set,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_induce = false;
-
-	if (f_v) {
-		cout << "action::create_orbits_on_subset_using_restricted_action" << endl;
-	}
-	A_by_restriction = Induced_action->create_induced_action_by_restriction(
-			S,
-			size, set,
-			label_of_set,
-			f_induce,
-			verbose_level - 1);
-	Orbits = NEW_OBJECT(groups::schreier);
-
-	A_by_restriction->compute_all_point_orbits(*Orbits,
-			S->gens, verbose_level - 2);
-	if (f_v) {
-		cout << "action::create_orbits_on_subset_using_restricted_action "
-				"done" << endl;
-	}
-}
-
-void action::create_orbits_on_sets_using_action_on_sets(
-		action *&A_on_sets,
-		groups::schreier *&Orbits, groups::sims *S,
-		int nb_sets, int set_size, long int *sets,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_induce = false;
-
-	if (f_v) {
-		cout << "action::create_orbits_on_sets_using_action_on_sets" << endl;
-	}
-
-	A_on_sets = Induced_action->create_induced_action_on_sets(
-			nb_sets, set_size, sets,
-			verbose_level);
-
-	Orbits = NEW_OBJECT(groups::schreier);
-
-	A_on_sets->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
-	if (f_v) {
-		cout << "action::create_orbits_on_sets_using_action_on_sets "
-				"done" << endl;
-	}
-}
-
-
 
 
 int action::choose_next_base_point_default_method(
@@ -415,7 +368,8 @@ int action::choose_next_base_point_default_method(
 		cout << "action::choose_next_base_point_default_method" << endl;
 		cout << "calling Group_element->find_non_fixed_point" << endl;
 	}
-	b = Group_element->find_non_fixed_point(Elt, verbose_level - 1);
+	b = Group_element->find_non_fixed_point(
+			Elt, verbose_level - 1);
 	if (b == -1) {
 		if (f_v) {
 			cout << "action::choose_next_base_point_default_method "
@@ -424,7 +378,8 @@ int action::choose_next_base_point_default_method(
 		return -1;
 	}
 	if (f_v) {
-		cout << "action::choose_next_base_point_default_method current base: ";
+		cout << "action::choose_next_base_point_default_method "
+				"current base: ";
 		//int_vec_print(cout, Stabilizer_chain->base, base_len());
 		cout << " choosing next base point to be " << b << endl;
 	}
@@ -457,7 +412,8 @@ void action::generators_to_strong_generators(
 
 	S = create_sims_from_generators_randomized(
 		gens, f_target_go,
-		target_go, verbose_level - 2);
+		target_go,
+		verbose_level - 2);
 
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
@@ -469,7 +425,8 @@ void action::generators_to_strong_generators(
 		cout << "action::generators_to_strong_generators "
 				"before Strong_gens->init_from_sims" << endl;
 	}
-	Strong_gens->init_from_sims(S, verbose_level - 5);
+	Strong_gens->init_from_sims(
+			S, verbose_level - 5);
 
 	FREE_OBJECT(S);
 

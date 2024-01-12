@@ -617,7 +617,7 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_Gr_" + std::to_string(AG->n) + "_" + std::to_string(AG->k);
-	A->label_tex = A_old->label + " {\\rm OnGr}_{" + std::to_string(AG->n) + "," + std::to_string(AG->k) + "}";
+	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(AG->n) + "," + std::to_string(AG->k) + "}";
 
 
 	if (f_v) {

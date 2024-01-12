@@ -67,12 +67,15 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/classification_of_objects_report_options.o \
 		layer1_foundations/combinatorics/classification_of_objects.o \
 		layer1_foundations/combinatorics/combinatorics_domain.o \
+		layer1_foundations/combinatorics/decomposition_scheme.o \
+		layer1_foundations/combinatorics/decomposition.o \
 		layer1_foundations/combinatorics/domino_assignment.o \
 		layer1_foundations/combinatorics/domino_change.o \
 		layer1_foundations/combinatorics/encoded_combinatorial_object.o \
 		layer1_foundations/combinatorics/geo_parameter.o \
 		layer1_foundations/combinatorics/pentomino_puzzle.o \
 		layer1_foundations/combinatorics/polynomial_function_domain.o \
+		layer1_foundations/combinatorics/row_and_col_partition.o \
 		layer1_foundations/combinatorics/tdo_data.o \
 		layer1_foundations/combinatorics/tdo_refinement_description.o \
 		layer1_foundations/combinatorics/tdo_refinement.o \
@@ -152,8 +155,6 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/arc_basic.o \
 		layer1_foundations/geometry/arc_in_projective_space.o \
 		layer1_foundations/geometry/buekenhout_metz.o \
-		layer1_foundations/geometry/decomposition_scheme.o \
-		layer1_foundations/geometry/decomposition.o \
 		layer1_foundations/geometry/desarguesian_spread.o \
 		layer1_foundations/geometry/flag.o \
 		layer1_foundations/geometry/geometric_object_create.o \
@@ -179,7 +180,6 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/projective_space_subspaces.o \
 		layer1_foundations/geometry/projective_space.o \
 		layer1_foundations/geometry/projective_space2.o \
-		layer1_foundations/geometry/row_and_col_partition.o \
 		layer1_foundations/geometry/spread_domain.o \
 		layer1_foundations/geometry/spread_tables.o \
 		layer1_foundations/geometry/three_skew_subspaces.o \
@@ -347,6 +347,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/action_io.o \
 		layer3_group_actions/actions/action_pointer_table.o \
 		layer3_group_actions/actions/backtrack.o \
+		layer3_group_actions/actions/combinatorics_with_action.o \
 		layer3_group_actions/actions/group_element.o \
 		layer3_group_actions/actions/interface_direct_product.o \
 		layer3_group_actions/actions/interface_induced_action.o \

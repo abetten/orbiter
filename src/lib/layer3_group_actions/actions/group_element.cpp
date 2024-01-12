@@ -776,6 +776,7 @@ void group_element::element_read_file_fp(
 void group_element::element_write_file(
 		int *Elt,
 		std::string &fname, int verbose_level)
+// opens and closes the file
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -802,6 +803,7 @@ void group_element::element_write_file(
 void group_element::element_read_file(
 		int *Elt,
 		std::string &fname, int verbose_level)
+// opens and closes the file
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;

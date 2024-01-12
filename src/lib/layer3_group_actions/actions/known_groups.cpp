@@ -277,6 +277,8 @@ void known_groups::init_projective_group(
 	if (f_v) {
 		cout << "known_groups::init_projective_group "
 				"label=" << A->label << endl;
+		cout << "known_groups::init_projective_group "
+				"label_tex=" << A->label_tex << endl;
 	}
 
 	A->degree = M->degree;

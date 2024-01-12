@@ -437,7 +437,7 @@ void orbits_create::init(
 			cout << "Please use option -projective_space in arc_generator" << endl;
 			exit(1);
 		}
-		PA = Get_object_of_projective_space(Arc_generator_description->projective_space_label);
+		PA = Get_projective_space(Arc_generator_description->projective_space_label);
 
 		CC = NEW_OBJECT(algebraic_geometry::cubic_curve);
 

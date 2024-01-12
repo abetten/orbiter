@@ -1678,127 +1678,6 @@ void geometry_global::do_create_desarguesian_spread(
 }
 
 
-void geometry_global::compute_TDO_decomposition_of_projective_space_old(
-		std::string &fname_base,
-		projective_space *P,
-		long int *points, int nb_points,
-		long int *lines, int nb_lines,
-		std::vector<std::string> &file_names,
-		int verbose_level)
-// creates incidence_structure and data_structures::partitionstack objects
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old" << endl;
-	}
-	{
-
-		incidence_structure *Inc;
-		Inc = NEW_OBJECT(incidence_structure);
-		Inc->init_projective_space(P, verbose_level);
-
-
-		decomposition *Decomp;
-
-		Decomp = NEW_OBJECT(decomposition);
-		Decomp->init_incidence_structure(
-				Inc,
-				verbose_level);
-
-
-		Decomp->Stack->split_cell_front_or_back_lint(
-				points, nb_points, true /* f_front*/,
-				verbose_level);
-
-		Decomp->Stack->split_line_cell_front_or_back_lint(
-				lines, nb_lines, true /* f_front*/,
-				verbose_level);
-
-
-
-		if (f_v) {
-			cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old "
-					"before Decomp->compute_TDO_safe_and_write_files" << endl;
-		}
-		Decomp->compute_TDO_safe_and_write_files(
-				Decomp->N /* depth */,
-				fname_base, file_names,
-				verbose_level);
-		if (f_v) {
-			cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old "
-					"after Decomp->compute_TDO_safe_and_write_files" << endl;
-		}
-
-
-
-		//FREE_OBJECT(Stack);
-		FREE_OBJECT(Decomp);
-		FREE_OBJECT(Inc);
-	}
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space_old done" << endl;
-	}
-
-}
-
-geometry::decomposition_scheme *geometry_global::compute_TDO_decomposition_of_projective_space(
-		projective_space *P,
-		long int *points, int nb_points,
-		long int *lines, int nb_lines,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space" << endl;
-	}
-
-	geometry::decomposition *Decomposition;
-
-	Decomposition = NEW_OBJECT(geometry::decomposition);
-
-
-	Decomposition->init_decomposition_of_projective_space(
-			P,
-			points, nb_points,
-			lines, nb_lines,
-			verbose_level);
-
-
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"before Decomposition_scheme->compute_TDO" << endl;
-	}
-	Decomposition->compute_TDO(
-			verbose_level - 1);
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"after Decomposition_scheme->compute_TDO" << endl;
-	}
-
-
-
-	geometry::decomposition_scheme *Decomposition_scheme;
-
-	Decomposition_scheme = NEW_OBJECT(geometry::decomposition_scheme);
-
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
-	}
-	Decomposition_scheme->init_row_and_col_schemes(
-			Decomposition,
-		verbose_level);
-	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
-	}
-
-	return Decomposition_scheme;
-
-}
-
 void geometry_global::create_BLT_point(
 		field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
@@ -2716,6 +2595,7 @@ void geometry_global::conic_type2(
 		geometry::projective_space *P,
 		long int *Pts, int nb_pts, int threshold,
 		int verbose_level)
+// this function is too specialized. It assumes 11 points
 {
 	int f_v = (verbose_level >= 1);
 

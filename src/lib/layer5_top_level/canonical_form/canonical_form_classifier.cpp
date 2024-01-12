@@ -91,7 +91,7 @@ void canonical_form_classifier::init(
 				"please use -space <label>  to specify the space" << endl;
 		exit(1);
 	}
-	PA = Get_object_of_projective_space(
+	PA = Get_projective_space(
 					Descr->space_label);
 
 

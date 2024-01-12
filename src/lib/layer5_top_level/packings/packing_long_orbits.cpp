@@ -360,7 +360,7 @@ void packing_long_orbits::list_of_cases_from_file(
 
 	if (f_v) {
 		cout << "written file " << fname_out << " of size "
-				<< Fio.file_size(fname_out.c_str()) << endl;
+				<< Fio.file_size(fname_out) << endl;
 	}
 
 
@@ -437,7 +437,7 @@ void packing_long_orbits::save_packings_by_case(
 			fname_packings,
 			The_Packings, h, PWF->PW->P->size_of_packing);
 	cout << "written file " << fname_packings << " of size "
-			<< Fio.file_size(fname_packings.c_str()) << endl;
+			<< Fio.file_size(fname_packings) << endl;
 
 
 	FREE_int(The_Packings);
@@ -595,7 +595,8 @@ void packing_long_orbits::filter_orbits(
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
 
-			PWF->PW->reduced_spread_orbits_under_H->Sch->get_orbit(b,
+			PWF->PW->reduced_spread_orbits_under_H->Sch->get_orbit(
+					b,
 					set, len1, 0 /* verbose_level*/);
 			if (len1 != orbit_length) {
 				cout << "packing_long_orbits::filter_orbits "
@@ -846,7 +847,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				//packing[i] = fixpoint_clique[i];
 				a = PWF->Cliques[fixpoints_clique_case_number * PWF->fixpoint_clique_size + i];
 
-				b = PWF->fixpoint_to_reduced_spread(a, 0 /* verbose_level*/);
+				b = PWF->fixpoint_to_reduced_spread(
+						a, 0 /* verbose_level*/);
 
 
 
@@ -896,13 +898,15 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				cout << endl;
 			}
 
-			if (!PWF->PW->Spread_tables_reduced->test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(packing, PWF->PW->P->size_of_packing)) {
+			if (!PWF->PW->Spread_tables_reduced->test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
+					packing, PWF->PW->P->size_of_packing)) {
 				cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 						"The packing is not line disjoint" << endl;
 				exit(1);
 			}
 
-			Lint_vec_copy(packing,
+			Lint_vec_copy(
+					packing,
 					Packings_table + sol_idx * PWF->PW->P->size_of_packing,
 					PWF->PW->P->size_of_packing);
 
@@ -948,7 +952,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 					"before Ar_On_Packings->all_point_orbits_from_generators" << endl;
 		}
-		AcGl.all_point_orbits_from_generators(Ar_On_Packings,
+		AcGl.all_point_orbits_from_generators(
+				Ar_On_Packings,
 				*Orbits,
 				fixpoint_clique_stabilizer_gens,
 				0 /*verbose_level*/);
@@ -978,7 +983,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
 			}
 			for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
-				if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
+				if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j]
+							 == PWF->PW->P->size_of_packing) {
 					//nb_uniform++;
 					break;
 				}
@@ -1007,7 +1013,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 					iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
 				}
 				for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
-					if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
+					if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j]
+								 == PWF->PW->P->size_of_packing) {
 						//nb_uniform++;
 						break;
 					}
@@ -1022,7 +1029,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		data_structures::tally_vector_data T;
 
-		T.init(iso_type,
+		T.init(
+				iso_type,
 				Orbits->nb_orbits,
 				PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads,
 				verbose_level);
@@ -1122,7 +1130,8 @@ void packing_long_orbits::create_graph_and_save_to_file(
 		}
 		int type_idx;
 
-		PWF->PW->reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+		PWF->PW->reduced_spread_orbits_under_H->
+			create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
 			CG,
 			fname,
 			Descr->orbit_length,

@@ -138,35 +138,61 @@ public:
 	void read_arguments(
 			interface_symbol_table *Sym,
 			int argc, std::string *argv, int &i, int verbose_level);
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 	void print();
-	void do_finite_field_activity(int verbose_level);
-	void do_ring_theoretic_activity(int verbose_level);
-	void do_projective_space_activity(int verbose_level);
-	void do_orthogonal_space_activity(int verbose_level);
-	void do_group_theoretic_activity(int verbose_level);
-	void do_coding_theoretic_activity(int verbose_level);
-	void do_cubic_surface_activity(int verbose_level);
-	void do_quartic_curve_activity(int verbose_level);
-	void do_blt_set_activity(int verbose_level);
-	void do_combinatorial_object_activity(int verbose_level);
-	void do_graph_theoretic_activity(int verbose_level);
+	void do_finite_field_activity(
+			int verbose_level);
+	void do_ring_theoretic_activity(
+			int verbose_level);
+	void do_projective_space_activity(
+			int verbose_level);
+	void do_orthogonal_space_activity(
+			int verbose_level);
+	void do_group_theoretic_activity(
+			int verbose_level);
+	void do_coding_theoretic_activity(
+			int verbose_level);
+	void do_cubic_surface_activity(
+			int verbose_level);
+	void do_quartic_curve_activity(
+			int verbose_level);
+	void do_blt_set_activity(
+			int verbose_level);
+	void do_combinatorial_object_activity(
+			int verbose_level);
+	void do_graph_theoretic_activity(
+			int verbose_level);
 	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
 			int verbose_level);
-	void do_spread_table_activity(int verbose_level);
-	void do_packing_was_activity(int verbose_level);
-	void do_packing_fixed_points_activity(int verbose_level);
-	void do_graph_classification_activity(int verbose_level);
-	void do_diophant_activity(int verbose_level);
-	void do_design_activity(int verbose_level);
-	void do_large_set_was_activity(int verbose_level);
-	void do_symbolic_object_activity(int verbose_level);
-	void do_BLT_set_classify_activity(int verbose_level);
-	void do_spread_classify_activity(int verbose_level);
-	void do_spread_activity(int verbose_level);
-	void do_translation_plane_activity(int verbose_level);
-	void do_action_on_forms_activity(int verbose_level);
-	void do_orbits_activity(int verbose_level);
+	void do_spread_table_activity(
+			int verbose_level);
+	void do_packing_was_activity(
+			int verbose_level);
+	void do_packing_fixed_points_activity(
+			int verbose_level);
+	void do_graph_classification_activity(
+			int verbose_level);
+	void do_diophant_activity(
+			int verbose_level);
+	void do_design_activity(
+			int verbose_level);
+	void do_large_set_was_activity(
+			int verbose_level);
+	void do_symbolic_object_activity(
+			int verbose_level);
+	void do_BLT_set_classify_activity(
+			int verbose_level);
+	void do_spread_classify_activity(
+			int verbose_level);
+	void do_spread_activity(
+			int verbose_level);
+	void do_translation_plane_activity(
+			int verbose_level);
+	void do_action_on_forms_activity(
+			int verbose_level);
+	void do_orbits_activity(
+			int verbose_level);
 
 };
 
@@ -234,15 +260,18 @@ class interface_algebra {
 
 public:
 	interface_algebra();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
-	void do_character_table_symmetric_group(int deg, int verbose_level);
+	void worker(
+			int verbose_level);
 
 };
 
@@ -307,12 +336,16 @@ class interface_coding_theory {
 
 public:
 	interface_coding_theory();
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void print_help(
+			int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(
+			int argc, std::string *argv, int i, int verbose_level);
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 };
 
 
@@ -588,14 +621,18 @@ class interface_cryptography {
 
 public:
 	interface_cryptography();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 
 
 };
@@ -617,14 +654,18 @@ class interface_povray {
 
 public:
 	interface_povray();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 };
 
 
@@ -676,14 +717,18 @@ public:
 
 
 	interface_projective();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 
 };
 
@@ -718,14 +763,17 @@ public:
 	void init(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
-	void print_help(int argc, std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	void print_help(
+			int argc, std::string *argv, int i, int verbose_level);
+	int recognize_keyword(
+			int argc,
 			std::string *argv, int i, int verbose_level);
 	void read_arguments(
 			int argc, std::string *argv, int &i, int verbose_level);
 	void read_with(
 			int argc, std::string *argv, int &i, int verbose_level);
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 	void print();
 	void print_with();
 
@@ -911,15 +959,19 @@ public:
 
 
 	interface_toolkit();
-	void print_help(int argc,
+	void print_help(
+			int argc,
 			std::string *argv, int i, int verbose_level);
-	int recognize_keyword(int argc,
+	int recognize_keyword(
+			int argc,
 			std::string *argv,
 			int i, int verbose_level);
-	void read_arguments(int argc,
+	void read_arguments(
+			int argc,
 			std::string *argv, int &i, int verbose_level);
 	void print();
-	void worker(int verbose_level);
+	void worker(
+			int verbose_level);
 
 };
 
@@ -968,7 +1020,8 @@ public:
 	void parse(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *Argv, int &i, int verbose_level);
-	void execute(int verbose_level);
+	void execute(
+			int verbose_level);
 	void print();
 
 };
@@ -991,7 +1044,8 @@ public:
 
 	orbiter_top_level_session();
 	~orbiter_top_level_session();
-	int startup_and_read_arguments(int argc,
+	int startup_and_read_arguments(
+			int argc,
 			std::string *argv, int i0);
 	void handle_everything(
 			int argc, std::string *Argv, int i, int verbose_level);
@@ -1000,8 +1054,10 @@ public:
 	void parse(
 			int argc, std::string *Argv, int &i,
 			std::vector<void * > &program, int verbose_level);
-	void *get_object(int idx);
-	layer1_foundations::orbiter_kernel_system::symbol_table_object_type get_object_type(int idx);
+	void *get_object(
+			int idx);
+	layer1_foundations::orbiter_kernel_system::symbol_table_object_type get_object_type(
+			int idx);
 	int find_symbol(
 			std::string &label);
 	void find_symbols(
@@ -1016,6 +1072,12 @@ public:
 	projective_geometry::projective_space_with_action
 		*get_object_of_type_projective_space(
 			std::string &label);
+	spreads::spread_table_with_selection
+		*get_object_of_type_spread_table(
+				std::string &label);
+	packings::packing_classify
+		*get_packing_classify(
+				std::string &label);
 	poset_classification::poset_classification_control
 		*get_object_of_type_poset_classification_control(
 				std::string &label);
@@ -1161,10 +1223,17 @@ public:
 	std::string spread_table_label_PA;
 	int dimension_of_spread_elements;
 	std::string spread_selection_text;
-	std::string spread_tables_prefix;
+	std::string spread_table_prefix;
+	std::string spread_table_control;
+
+	int f_packing_classify;
+	std::string packing_classify_label_PA3;
+	std::string packing_classify_label_PA5;
+	std::string packing_classify_label_spread_table;
+
 
 	int f_packing_was;
-	std::string packing_was_label_spread_table;
+	std::string packing_was_label_packing_classify;
 	packings::packing_was_description * packing_was_descr;
 
 	int f_packing_was_choose_fixed_points;
@@ -1257,44 +1326,75 @@ public:
 	void read_definition(
 			interface_symbol_table *Sym,
 			int argc, std::string *argv, int &i, int verbose_level);
-	void perform_definition(int verbose_level);
+	void perform_definition(
+			int verbose_level);
 	void print();
-	void definition_of_finite_field(int verbose_level);
-	void definition_of_polynomial_ring(int verbose_level);
-	void definition_of_projective_space(int verbose_level);
-	void print_definition_of_projective_space(int verbose_level);
-	void definition_of_orthogonal_space(int verbose_level);
-	void definition_of_BLT_set_classifier(int verbose_level);
-	void definition_of_spread_classifier(int verbose_level);
-	void definition_of_linear_group(int verbose_level);
-	void definition_of_permutation_group(int verbose_level);
-	void definition_of_modified_group(int verbose_level);
-	void definition_of_geometric_object(int verbose_level);
+	void definition_of_finite_field(
+			int verbose_level);
+	void definition_of_polynomial_ring(
+			int verbose_level);
+	void definition_of_projective_space(
+			int verbose_level);
+	void print_definition_of_projective_space(
+			int verbose_level);
+	void definition_of_orthogonal_space(
+			int verbose_level);
+	void definition_of_BLT_set_classifier(
+			int verbose_level);
+	void definition_of_spread_classifier(
+			int verbose_level);
+	void definition_of_linear_group(
+			int verbose_level);
+	void definition_of_permutation_group(
+			int verbose_level);
+	void definition_of_modified_group(
+			int verbose_level);
+	void definition_of_geometric_object(
+			int verbose_level);
 #if 0
 	void definition_of_formula(
 			expression_parser::formula *Formula,
 			int verbose_level);
 #endif
-	void definition_of_collection(std::string &list_of_objects,
+	void definition_of_collection(
+			std::string &list_of_objects,
 			int verbose_level);
-	void definition_of_graph(int verbose_level);
-	void definition_of_code(int verbose_level);
-	void definition_of_spread(int verbose_level);
-	void definition_of_cubic_surface(int verbose_level);
-	void definition_of_quartic_curve(int verbose_level);
-	void definition_of_BLT_set(int verbose_level);
-	void definition_of_translation_plane(int verbose_level);
-	void definition_of_spread_table(int verbose_level);
-	void definition_of_packing_was(int verbose_level);
+	void definition_of_graph(
+			int verbose_level);
+	void definition_of_code(
+			int verbose_level);
+	void definition_of_spread(
+			int verbose_level);
+	void definition_of_cubic_surface(
+			int verbose_level);
+	void definition_of_quartic_curve(
+			int verbose_level);
+	void definition_of_BLT_set(
+			int verbose_level);
+	void definition_of_translation_plane(
+			int verbose_level);
+	void definition_of_spread_table(
+			int verbose_level);
+	void definition_of_packing_classify(
+			int verbose_level);
+	void definition_of_packing_was(
+			int verbose_level);
 	void definition_of_packing_was_choose_fixed_points(
 			int verbose_level);
-	void definition_of_packing_long_orbits(int verbose_level);
-	void definition_of_graph_classification(int verbose_level);
-	void definition_of_diophant(int verbose_level);
-	void definition_of_design(int verbose_level);
-	void definition_of_design_table(int verbose_level);
-	void definition_of_large_set_was(int verbose_level);
-	void definition_of_set(int verbose_level);
+	void definition_of_packing_long_orbits(
+			int verbose_level);
+	void definition_of_graph_classification(
+			int verbose_level);
+	void definition_of_diophant(
+			int verbose_level);
+	void definition_of_design(
+			int verbose_level);
+	void definition_of_design_table(
+			int verbose_level);
+	void definition_of_large_set_was(
+			int verbose_level);
+	void definition_of_set(
+			int verbose_level);
 	void definition_of_vector(
 			std::string &label,
 			data_structures::vector_builder_description *Descr,
@@ -1303,20 +1403,31 @@ public:
 			std::string &label,
 			expression_parser::symbolic_object_builder_description *Descr,
 			int verbose_level);
-	void definition_of_combinatorial_object(int verbose_level);
-	void do_geometry_builder(int verbose_level);
-	void load_finite_field_PG(int verbose_level);
+	void definition_of_combinatorial_object(
+			int verbose_level);
+	void do_geometry_builder(
+			int verbose_level);
+	void load_finite_field_PG(
+			int verbose_level);
 	field_theory::finite_field *get_or_create_finite_field(
 			std::string &input_q,
 			int verbose_level);
-	void definition_of_vector_ge(int verbose_level);
-	void definition_of_action_on_forms(int verbose_level);
-	void definition_of_orbits(int verbose_level);
-	void definition_of_poset_classification_control(int verbose_level);
-	void definition_of_arc_generator_control(int verbose_level);
-	void definition_of_poset_classification_activity(int verbose_level);
-	void definition_of_crc_code(int verbose_level);
-	void definition_of_mapping(int verbose_level);
+	void definition_of_vector_ge(
+			int verbose_level);
+	void definition_of_action_on_forms(
+			int verbose_level);
+	void definition_of_orbits(
+			int verbose_level);
+	void definition_of_poset_classification_control(
+			int verbose_level);
+	void definition_of_arc_generator_control(
+			int verbose_level);
+	void definition_of_poset_classification_activity(
+			int verbose_level);
+	void definition_of_crc_code(
+			int verbose_level);
+	void definition_of_mapping(
+			int verbose_level);
 
 
 };

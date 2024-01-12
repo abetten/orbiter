@@ -518,7 +518,6 @@ public:
 			std::string &Elt_text,
 			std::string &fname_latex, int verbose_level);
 
-
 };
 
 

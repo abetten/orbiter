@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace geometry {
+namespace combinatorics {
 
 
 decomposition_scheme::decomposition_scheme()

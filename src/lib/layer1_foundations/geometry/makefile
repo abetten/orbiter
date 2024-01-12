@@ -12,8 +12,6 @@ MODULES = \
 	arc_basic.o \
 	arc_in_projective_space.o \
 	buekenhout_metz.o \
-	decomposition_scheme.o \
-	decomposition.o \
 	desarguesian_spread.o \
 	flag.o \
 	geometric_object_create.o \
@@ -39,7 +37,6 @@ MODULES = \
 	projective_space_subspaces.o \
 	projective_space.o \
 	projective_space2.o \
-	row_and_col_partition.o \
 	spread_domain.o \
 	spread_tables.o \
 	three_skew_subspaces.o \

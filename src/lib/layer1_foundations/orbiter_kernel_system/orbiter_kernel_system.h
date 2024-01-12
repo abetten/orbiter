@@ -1219,7 +1219,10 @@ public:
 			void *Tp, int verbose_level);
 	void init_spread_table(
 			std::string &label,
-			void *P, int verbose_level);
+			void *Spread_table_with_selection, int verbose_level);
+	void init_packing_classify(
+			std::string &label,
+			void *Packing_classify, int verbose_level);
 	void init_packing_was(
 			std::string &label,
 			void *P, int verbose_level);

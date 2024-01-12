@@ -251,10 +251,10 @@ void object_in_projective_space_with_action::report(
 #endif
 #endif
 
-	geometry::decomposition *Decomposition;
+	combinatorics::decomposition *Decomposition;
 
 
-	Decomposition = NEW_OBJECT(geometry::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::decomposition);
 
 	Decomposition->init_inc_and_stack(
 			Inc, Stack,
