@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace data_structures_groups {
+namespace combinatorics_with_groups {
 
 
 #if 0
@@ -890,7 +890,8 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 }
 
 
-void translation_plane_via_andre_model::create_latex_report(int verbose_level)
+void translation_plane_via_andre_model::create_latex_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -982,7 +983,8 @@ void translation_plane_via_andre_model::report(
 }
 
 
-void translation_plane_via_andre_model::export_incma(int verbose_level)
+void translation_plane_via_andre_model::export_incma(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1006,7 +1008,8 @@ void translation_plane_via_andre_model::export_incma(int verbose_level)
 }
 
 
-void translation_plane_via_andre_model::p_rank(int p, int verbose_level)
+void translation_plane_via_andre_model::p_rank(
+		int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

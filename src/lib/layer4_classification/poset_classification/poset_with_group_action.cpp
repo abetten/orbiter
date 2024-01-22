@@ -103,6 +103,7 @@ void poset_with_group_action::init_subspace_lattice(
 	}
 }
 
+#if 0
 void poset_with_group_action::init(
 		poset_description *description,
 		actions::action *A, // the action in which the group is given
@@ -158,6 +159,7 @@ void poset_with_group_action::init(
 		cout << "poset_with_group_action::init done" << endl;
 	}
 }
+#endif
 
 void poset_with_group_action::add_independence_condition(
 		int independence_value,

@@ -116,15 +116,16 @@ int os_interface::os_memory_usage()
 	return 0;
 }
 
-int os_interface::os_ticks()
+long int os_interface::os_ticks()
 {
 #ifdef SYSTEMUNIX
 #ifndef SYSTEMWINDOWS
 	struct tms tms_buffer;
-	int t;
+	long int t;
 
-	if (-1 == (int) times(&tms_buffer))
+	if (-1 == (int) times(&tms_buffer)) {
 		return(-1);
+	}
 	t = tms_buffer.tms_utime;
 	//cout << "os_ticks " << t << endl;
 	return t;
@@ -135,7 +136,7 @@ int os_interface::os_ticks()
 	clock_t t;
 
 	t = clock();
-	return((int)t);
+	return((long int)t);
 #endif
 #endif
 #ifdef SYSTEMWINDOWS
@@ -154,7 +155,7 @@ int os_interface::os_ticks_system()
 	if (!f_system_time_set) {
 		f_system_time_set = true;
 		system_time0 = t;
-		}
+	}
 	//t -= system_time0;
 	//t *= os_ticks_per_second();
 	return t;
@@ -168,15 +169,16 @@ int os_interface::os_ticks_per_second()
 #ifndef SYSTEMWINDOWS
 	int clk_tck = 1;
 
-	if (f_tps_computed)
+	if (f_tps_computed) {
 		return tps;
+	}
 	else {
 		clk_tck = sysconf(_SC_CLK_TCK);
 		tps = clk_tck;
 		f_tps_computed = true;
 		//cout << endl << "clock ticks per second = " << tps << endl;
 		return(clk_tck);
-		}
+	}
 #endif
 #endif
 #ifdef SYSTEMWINDOWS
@@ -184,45 +186,54 @@ int os_interface::os_ticks_per_second()
 #endif
 }
 
-void os_interface::os_ticks_to_dhms(int ticks,
+void os_interface::os_ticks_to_dhms(
+		long int ticks,
 		int tps, int &d, int &h, int &m, int &s)
 {
-	int l1;
+	long int l1;
 	int f_v = false;
 
 	if (f_v) {
-		cout << "os_ticks_to_dhms ticks = " << ticks << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"ticks = " << ticks << endl;
+	}
 	l1 = ticks / tps;
 	if (f_v) {
-		cout << "os_ticks_to_dhms l1 = " << l1 << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"l1 = " << l1 << endl;
+	}
 	s = l1 % 60;
 	if (f_v) {
-		cout << "os_ticks_to_dhms s = " << s << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"s = " << s << endl;
+	}
 	l1 /= 60;
 	m = l1 % 60;
 	if (f_v) {
-		cout << "os_ticks_to_dhms m = " << m << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"m = " << m << endl;
+	}
 	l1 /= 60;
 	h = l1;
 	if (f_v) {
-		cout << "os_ticks_to_dhms h = " << h << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"h = " << h << endl;
+	}
 	if (h >= 24) {
 		d = h / 24;
 		h = h % 24;
-		}
-	else
+	}
+	else {
 		d = 0;
+	}
 	if (f_v) {
-		cout << "os_ticks_to_dhms d = " << d << endl;
-		}
+		cout << "os_interface::os_ticks_to_dhms "
+				"d = " << d << endl;
+	}
 }
 
-void os_interface::time_check_delta(std::ostream &ost, int dt)
+void os_interface::time_check_delta(
+		std::ostream &ost, long int dt)
 {
 	int tps, d, h, min, s;
 
@@ -230,7 +241,8 @@ void os_interface::time_check_delta(std::ostream &ost, int dt)
 	//cout << "time_check_delta tps=" << tps << endl;
 	os_ticks_to_dhms(dt, tps, d, h, min, s);
 	if (d == 0 && h == 0 && min == 0 && s == 0) {
-		ost << (double) dt / (double) tps << " of a second, dt=" << dt << " tps = " << tps << endl;
+		ost << (double) dt / (double) tps << " of a second, "
+				"dt=" << dt << " tps = " << tps << endl;
 	}
 	else {
 		if ((dt / tps) >= 1) {
@@ -242,24 +254,80 @@ void os_interface::time_check_delta(std::ostream &ost, int dt)
 	}
 }
 
+std::string os_interface::stringify_time_difference(
+		long int t0)
+{
+	long int t1, dt;
+	string str;
+
+	t1 = os_ticks();
+	dt = t1 - t0;
+	str = stringify_delta_t(dt);
+	return str;
+}
+
+std::string os_interface::stringify_delta_t(
+		long int dt)
+{
+	int tps, d, h, min, s;
+	string str;
+
+	tps = os_ticks_per_second();
+	//cout << "time_check_delta tps=" << tps << endl;
+	os_ticks_to_dhms(dt, tps, d, h, min, s);
+	if (d == 0 && h == 0 && min == 0 && s == 0) {
+		str = std::to_string((double) dt / (double) tps)
+				+ " of a second, dt=" + std::to_string(dt)
+				+ " tps = " + std::to_string(tps);
+	}
+	else {
+		if ((dt / tps) >= 1) {
+			str = stringify_elapsed_time(d, h, min, s);
+		}
+		else {
+			str = "0:00";
+		}
+	}
+	return str;
+}
+
 void os_interface::print_elapsed_time(
 		std::ostream &ost, int d, int h, int m, int s)
 {
 	if (d > 0) {
 		ost << d << "-" << h << ":" << m << ":" << s;
-		}
+	}
 	else if (h > 0) {
 		ost << h << ":" << m << ":" << s;
-		}
+	}
 	else  {
 		ost << m << ":" << s;
-		}
+	}
 
 }
 
-void os_interface::time_check(std::ostream &ost, int t0)
+std::string os_interface::stringify_elapsed_time(
+		int d, int h, int m, int s)
 {
-	int t1, dt;
+	string str;
+
+
+	if (d > 0) {
+		str = std::to_string(d) + "-" + std::to_string(h) + ":" + std::to_string(m) + ":" + std::to_string(s);
+	}
+	else if (h > 0) {
+		str = std::to_string(h) + ":" + std::to_string(m) + ":" + std::to_string(s);
+	}
+	else  {
+		str = std::to_string(m) + ":" + std::to_string(s);
+	}
+	return str;
+}
+
+void os_interface::time_check(
+		std::ostream &ost, long int t0)
+{
+	long int t1, dt;
 
 	t1 = os_ticks();
 	dt = t1 - t0;
@@ -269,9 +337,10 @@ void os_interface::time_check(std::ostream &ost, int t0)
 	time_check_delta(ost, dt);
 }
 
-int os_interface::delta_time(int t0)
+long int os_interface::delta_time(
+		long int t0)
 {
-	int t1, dt;
+	long int t1, dt;
 
 	t1 = os_ticks();
 	dt = t1 - t0;
@@ -284,20 +353,22 @@ void os_interface::seed_random_generator_with_system_time()
 	srand((unsigned int) time(0));
 }
 
-void os_interface::seed_random_generator(int seed)
+void os_interface::seed_random_generator(
+		int seed)
 {
 	srand((unsigned int) seed);
 }
 
-int os_interface::random_integer(int p)
+int os_interface::random_integer(
+		int p)
 // computes a random integer r with $0 \le r < p.$
 {
 	int n;
 
 	if (p == 0) {
-		cout << "random_integer p = 0" << endl;
+		cout << "os_interface::random_integer p = 0" << endl;
 		exit(1);
-		}
+	}
 	n = (int)(((double)rand() * (double)p / RAND_MAX)) % p;
 	return n;
 }
@@ -307,18 +378,18 @@ int os_interface::os_seconds_past_1970()
 	int a;
 
 	{
-	ofstream fp("b");
-	fp << "#!/bin/bash" << endl;
-	fp << "echo $(date +%s)" << endl;
+		ofstream fp("b");
+		fp << "#!/bin/bash" << endl;
+		fp << "echo $(date +%s)" << endl;
 	}
 	system("chmod ugo+x b");
 	system("./b >a");
 	{
-	char str[1000];
+		char str[1000];
 
-	ifstream f1("a");
-	f1.getline(str, sizeof(str));
-	sscanf(str, "%d", &a);
+		ifstream f1("a");
+		f1.getline(str, sizeof(str));
+		sscanf(str, "%d", &a);
 	}
 	return a;
 }
@@ -381,7 +452,8 @@ void os_interface::test_swap()
 // There are "no" intervals of size "size".
 // This routine is due to Roland Grund
 
-void os_interface::block_swap_chars(char *ptr, int size, int no)
+void os_interface::block_swap_chars(
+		char *ptr, int size, int no)
 {
 	char *ptr_end, *ptr_start;
 	char chr;
@@ -406,7 +478,8 @@ void os_interface::block_swap_chars(char *ptr, int size, int no)
 	}
 }
 
-void os_interface::code_int4(char *&p, int_4 i)
+void os_interface::code_int4(
+		char *&p, int_4 i)
 {
 	int_4 ii = i;
 
@@ -419,7 +492,8 @@ void os_interface::code_int4(char *&p, int_4 i)
 	code_uchar(p, q[3]);
 }
 
-int_4 os_interface::decode_int4(const char *&p)
+int_4 os_interface::decode_int4(
+		const char *&p)
 {
 	int_4 ii;
 	unsigned char *q = (unsigned char *) &ii;
@@ -432,7 +506,8 @@ int_4 os_interface::decode_int4(const char *&p)
 	return ii;
 }
 
-void os_interface::code_uchar(char *&p, unsigned char a)
+void os_interface::code_uchar(
+		char *&p, unsigned char a)
 {
 	//cout << "code_uchar " << (int) a << endl;
 	int a_high = a >> 4;
@@ -441,7 +516,8 @@ void os_interface::code_uchar(char *&p, unsigned char a)
 	*p++ = ascii_code[a_low];
 }
 
-void os_interface::decode_uchar(const char *&p, unsigned char &a)
+void os_interface::decode_uchar(
+		const char *&p, unsigned char &a)
 {
 	int a_high = (int)(*p++ - 'a');
 	int a_low = (int)(*p++ - 'a');
@@ -455,15 +531,16 @@ void os_interface::decode_uchar(const char *&p, unsigned char &a)
 }
 
 
-void os_interface::get_date(std::string &str)
+void os_interface::get_date(
+		std::string &str)
 {
 #ifndef SYSTEMWINDOWS
 	char s[1024];
 
 	system("date >a");
 	{
-	ifstream f1("a");
-	f1.getline(s, sizeof(s));
+		ifstream f1("a");
+		f1.getline(s, sizeof(s));
 	}
 	str.assign(s);
 #else

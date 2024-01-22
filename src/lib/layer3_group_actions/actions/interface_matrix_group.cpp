@@ -98,11 +98,11 @@ static void matrix_group_element_print_verbose(
 	void *elt, std::ostream &ost);
 static void matrix_group_print_point(
 		action &A,
-	long int a, std::ostream &ost);
+	long int a, std::ostream &ost, int verbose_level);
 static void matrix_group_unrank_point(
-		action &A, long int rk, int *v);
+		action &A, long int rk, int *v, int verbose_level);
 static long int matrix_group_rank_point(
-		action &A, int *v);
+		action &A, int *v, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_matrix_group()
@@ -155,7 +155,7 @@ static long int matrix_group_element_image_of(
 		cout << "matrix_group_element_image_of "
 				"computing image of " << a << endl;
 		}
-	b = G.image_of_element(Elt, a, verbose_level - 1);
+	b = G.Element->image_of_element(Elt, a, verbose_level - 1);
 
 	if (f_v) {
 		cout << "matrix_group_element_image_of "
@@ -178,7 +178,7 @@ static void matrix_group_element_image_of_low_level(
 		Int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
-	G.action_from_the_right_all_types(input,
+	G.Element->action_from_the_right_all_types(input,
 			Elt, output, verbose_level - 1);
 
 
@@ -204,7 +204,7 @@ static int matrix_group_element_linear_entry_ij(
 		cout << "matrix_group_element_linear_entry_ij "
 				"i=" << i << " j=" << j << endl;
 		}
-	w = G.GL_element_entry_ij(Elt, i, j);
+	w = G.Element->GL_element_entry_ij(Elt, i, j);
 	return w;
 }
 
@@ -220,7 +220,7 @@ static int matrix_group_element_linear_entry_frobenius(
 	if (f_v) {
 		cout << "matrix_group_element_linear_entry_frobenius" << endl;
 		}
-	w = G.GL_element_entry_frobenius(Elt);
+	w = G.Element->GL_element_entry_frobenius(Elt);
 	return w;
 }
 
@@ -234,7 +234,7 @@ static void matrix_group_element_one(
 	if (f_v) {
 		cout << "matrix_group_element_one calling GL_one" << endl;
 		}
-	G.GL_one(Elt);
+	G.Element->GL_one(Elt);
 }
 
 static int matrix_group_element_is_one(
@@ -249,10 +249,10 @@ static int matrix_group_element_is_one(
 		cout << "matrix_group_element_is_one" << endl;
 		}
 	if (G.f_kernel_is_diagonal_matrices) {
-		f_is_one = G.GL_is_one(Elt);
+		f_is_one = G.Element->GL_is_one(Elt);
 		}
 	else if (!G.f_projective) {
-		f_is_one = G.GL_is_one(Elt);
+		f_is_one = G.Element->GL_is_one(Elt);
 		}
 	else {
 		cout << "matrix_group_element_is_one: warning: "
@@ -291,7 +291,7 @@ static void matrix_group_element_unpack(
 	if (f_v) {
 		cout << "matrix_group_element_unpack" << endl;
 		}
-	G.GL_unpack(elt1, Elt1, verbose_level - 1);
+	G.Element->GL_unpack(elt1, Elt1, verbose_level - 1);
 }
 
 static void matrix_group_element_pack(
@@ -309,7 +309,7 @@ static void matrix_group_element_pack(
 	if (f_v) {
 		cout << "matrix_group_element_pack before G.GL_pack" << endl;
 	}
-	G.GL_pack(Elt1, elt1, verbose_level);
+	G.Element->GL_pack(Elt1, elt1, verbose_level);
 	if (f_v) {
 		cout << "matrix_group_element_pack after G.GL_pack" << endl;
 	}
@@ -319,11 +319,16 @@ static void matrix_group_element_retrieve(
 		action &A,
 		int hdl, void *elt, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	algebra::matrix_group &G = *A.G.matrix_grp;
-	int *Elt = (int *) elt;
-	uchar *p_elt;
+	//int *Elt = (int *) elt;
+	//uchar *p_elt;
+
+
+	G.Element->retrieve(
+			hdl, elt, verbose_level);
 	
+#if 0
 	if (f_v) {
 		cout << "matrix_group_element_retrieve "
 				"hdl = " << hdl << endl;
@@ -335,24 +340,25 @@ static void matrix_group_element_retrieve(
 	}
 	if (f_v) {
 		cout << "matrix_group_element_retrieve "
-				"overall_length = " << G.Elts->overall_length << endl;
+				"overall_length = " << G.Element->Elts->overall_length << endl;
 	}
-	if (hdl >= G.Elts->overall_length) {
+	if (hdl >= G.Element->Elts->overall_length) {
 		cout << "matrix_group_element_retrieve "
 				"hdl = " << hdl << endl;
 		cout << "matrix_group_element_retrieve "
-				"overall_length = " << G.Elts->overall_length << endl;
+				"overall_length = " << G.Element->Elts->overall_length << endl;
 		exit(1);
 	}
 
-	p_elt = G.Elts->s_i(hdl);
+	p_elt = G.Element->Elts->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);
 	//	}
-	G.GL_unpack(p_elt, Elt, verbose_level);
+	G.Element->GL_unpack(p_elt, Elt, verbose_level);
 	if (f_v) {
-		G.GL_print_easy(Elt, cout);
-		}
+		G.Element->GL_print_easy(Elt, cout);
+	}
+#endif
 }
 
 static int matrix_group_element_store(
@@ -361,18 +367,22 @@ static int matrix_group_element_store(
 {
 	int f_v = (verbose_level >= 1);
 	algebra::matrix_group &G = *A.G.matrix_grp;
-	int *Elt = (int *) elt;
+	//int *Elt = (int *) elt;
 	int hdl;
 	
 	if (f_v) {
 		cout << "matrix_group_element_store" << endl;
-		}
-	G.GL_pack(Elt, G.elt1, verbose_level);
-	hdl = G.Elts->store(G.elt1);
+	}
+	hdl = G.Element->store(
+			elt, verbose_level);
+#if 0
+	G.Element->GL_pack(Elt, G.Element->elt1, verbose_level);
+	hdl = G.Element->Elts->store(G.Element->elt1);
 	if (f_v) {
 		cout << "matrix_group_element_store "
 				"hdl = " << hdl << endl;
-		}
+	}
+#endif
 	return hdl;
 }
 
@@ -392,17 +402,17 @@ static void matrix_group_element_mult(
 	}
 	if (f_vv) {
 		cout << "A=" << endl;
-		G.GL_print_easy(AA, cout);
+		G.Element->GL_print_easy(AA, cout);
 		cout << "B=" << endl;
-		G.GL_print_easy(BB, cout);
+		G.Element->GL_print_easy(BB, cout);
 	}
-	G.GL_mult(AA, BB, AB, verbose_level - 2);
+	G.Element->GL_mult(AA, BB, AB, verbose_level - 2);
 	if (f_v) {
 		cout << "matrix_group_element_mult done" << endl;
 	}
 	if (f_vv) {
 		cout << "AB=" << endl;
-		G.GL_print_easy(AB, cout);
+		G.Element->GL_print_easy(AB, cout);
 	}
 }
 
@@ -418,19 +428,19 @@ static void matrix_group_element_invert(
 
 	if (f_v) {
 		cout << "matrix_group_element_invert" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
-		G.GL_print_easy(AA, cout);
+		G.Element->GL_print_easy(AA, cout);
 		}
-	G.GL_invert(AA, AAv);
+	G.Element->GL_invert(AA, AAv);
 	if (f_v) {
 		cout << "matrix_group_element_invert done" << endl;
 		}
 	if (f_vv) {
 		cout << "Av=" << endl;
-		G.GL_print_easy(AAv, cout);
-		}
+		G.Element->GL_print_easy(AAv, cout);
+	}
 }
 
 static void matrix_group_element_transpose(
@@ -445,19 +455,19 @@ static void matrix_group_element_transpose(
 
 	if (f_v) {
 		cout << "matrix_group_element_transpose" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
-		G.GL_print_easy(AA, cout);
-		}
-	G.GL_transpose(AA, Atv, verbose_level);
+		G.Element->GL_print_easy(AA, cout);
+	}
+	G.Element->GL_transpose(AA, Atv, verbose_level);
 	if (f_v) {
 		cout << "matrix_group_element_transpose done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "At=" << endl;
-		G.GL_print_easy(Atv, cout);
-		}
+		G.Element->GL_print_easy(Atv, cout);
+	}
 }
 
 static void matrix_group_element_move(
@@ -471,8 +481,8 @@ static void matrix_group_element_move(
 
 	if (f_v) {
 		cout << "matrix_group_element_move" << endl;
-		}
-	G.GL_copy(AA, BB);
+	}
+	G.Element->GL_copy(AA, BB);
 }
 
 static void matrix_group_element_dispose(
@@ -485,8 +495,9 @@ static void matrix_group_element_dispose(
 	if (f_v) {
 		cout << "matrix_group_element_dispose "
 				"hdl = " << hdl << endl;
-		}
-	G.Elts->dispose(hdl);
+	}
+	G.Element->dispose(
+			hdl, verbose_level);
 }
 
 static void matrix_group_element_print(
@@ -497,13 +508,13 @@ static void matrix_group_element_print(
 	int *Elt = (int *) elt;
 	
 
-	G.GL_print_easy(Elt, ost);
+	G.Element->GL_print_easy(Elt, ost);
 	ost << endl;
 	if (G.GFq->q > 2) {
 		ost << "=" << endl;
-		G.GL_print_easy_normalized(Elt, ost);
+		G.Element->GL_print_easy_normalized(Elt, ost);
 		ost << endl;
-		}
+	}
 
 #if 0
 	int *fp, n;
@@ -535,7 +546,7 @@ static void matrix_group_element_code_for_make_element(
 
 	//cout << "matrix_group_element_code_for_make_element
 	//calling GL_print_for_make_element" << endl;
-	G.GL_code_for_make_element(Elt, data);
+	G.Element->GL_code_for_make_element(Elt, data);
 	//cout << "matrix_group_element_code_for_make_element
 	//after GL_print_for_make_element" << endl;
 }
@@ -549,7 +560,7 @@ static void matrix_group_element_print_for_make_element(
 
 	//cout << "matrix_group_element_print_for_make_element
 	//calling GL_print_for_make_element" << endl;
-	G.GL_print_for_make_element(Elt, ost);
+	G.Element->GL_print_for_make_element(Elt, ost);
 	//cout << "matrix_group_element_print_for_make_element
 	//after GL_print_for_make_element" << endl;
 }
@@ -562,7 +573,7 @@ static void matrix_group_element_print_for_make_element_no_commas(
 
 	//cout << "matrix_group_element_print_for_make_element_
 	//no_commas calling GL_print_for_make_element_no_commas" << endl;
-	G.GL_print_for_make_element_no_commas(Elt, ost);
+	G.Element->GL_print_for_make_element_no_commas(Elt, ost);
 	//cout << "matrix_group_element_print_for_make_element_
 	//no_commas after GL_print_for_make_element_no_commas" << endl;
 }
@@ -576,7 +587,7 @@ static void matrix_group_element_print_quick(
 	//int *fp; //, n;
 	
 
-	G.GL_print_easy(Elt, ost);
+	G.Element->GL_print_easy(Elt, ost);
 
 
 #if 0
@@ -599,7 +610,7 @@ static void matrix_group_element_print_quick(
 		//printing element as permutation" << endl;
 		matrix_group_element_print_as_permutation(A, elt, ost);
 		ost << endl;
-		}
+	}
 }
 
 static void matrix_group_element_print_latex(
@@ -609,7 +620,7 @@ static void matrix_group_element_print_latex(
 	algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
-	G.GL_print_latex(Elt, ost);
+	G.Element->GL_print_latex(Elt, ost);
 #if 0
 	ost << "=" << endl;
 	//G.GL_print_easy_normalized(Elt, ost);
@@ -626,7 +637,7 @@ static void matrix_group_element_print_latex_with_print_point_function(
 	algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
-	G.GL_print_latex(Elt, ost);
+	G.Element->GL_print_latex(Elt, ost);
 	//G.GL_print_easy_latex(Elt, ost);
 }
 
@@ -643,7 +654,7 @@ static void matrix_group_element_print_as_permutation(
 	if (f_v) {
 		cout << "matrix_group_element_print_as_permutation "
 				"degree = " << A.degree << endl;
-		}
+	}
 	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation
@@ -654,7 +665,7 @@ static void matrix_group_element_print_as_permutation(
 			//f_v = false;
 		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
-		}
+	}
 	Combi.perm_print(ost, p, A.degree);
 	FREE_int(p);
 }
@@ -667,7 +678,7 @@ static void matrix_group_element_print_verbose(
 	int *Elt = (int *) elt;
 	combinatorics::combinatorics_domain Combi;
 
-	G.GL_print_easy(Elt, ost);
+	G.Element->GL_print_easy(Elt, ost);
 	ost << "\n";
 	int i, j;
 	
@@ -676,73 +687,89 @@ static void matrix_group_element_print_verbose(
 		for (i = 0; i < A.degree; i++) {
 			j = A.Group_element->element_image_of(i, Elt, false);
 			p[i] = j;
-			}
+		}
 		Combi.perm_print(ost, p, A.degree);
 		FREE_int(p);
-		}
+	}
 	else {
 #if 0
 		cout << "i : image" << endl;
 		for (i = 0; i < MINIMUM(40, G.degree); i++) {
 			j = A.element_image_of(i, Elt, false);
 			cout << i << " : " << j << endl;
-			}
-#endif
 		}
+#endif
+	}
 
 }
 
 static void matrix_group_print_point(
-		action &A, long int a, std::ostream &ost)
+		action &A, long int a, std::ostream &ost, int verbose_level)
 {
 	algebra::matrix_group *G = A.G.matrix_grp;
+
+
+	G->Element->print_point(
+			a, ost, verbose_level);
+#if 0
 	geometry::geometry_global Gg;
 	
 	cout << "matrix_group_print_point" << endl;
 	if (G->f_projective) {
 		G->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
-				G->v1, 1, G->n, a);
-		}
+				G->Element->v1, 1, G->n, a);
+	}
 	else if (G->f_affine) {
-		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
-		}
+		Gg.AG_element_unrank(G->GFq->q, G->Element->v1, 1, G->n, a);
+	}
 	else if (G->f_general_linear) {
-		Gg.AG_element_unrank(G->GFq->q, G->v1, 1, G->n, a);
-		}
+		Gg.AG_element_unrank(G->GFq->q, G->Element->v1, 1, G->n, a);
+	}
 	else {
 		cout << "matrix_group_print_point unknown group type" << endl;
 		exit(1);
-		}
-	Int_vec_print(ost, G->v1, G->n);
+	}
+	Int_vec_print(ost, G->Element->v1, G->n);
+#endif
 }
 
 static void matrix_group_unrank_point(
-		action &A, long int rk, int *v)
+		action &A, long int rk, int *v, int verbose_level)
 {
 	algebra::matrix_group *G = A.G.matrix_grp;
+
+	G->Element->unrank_point(rk, v, verbose_level);
+
+#if 0
 	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
 		G->GFq->Projective_space_basic->PG_element_unrank_modified(
 				v, 1 /* stride */, G->n, rk);
-		}
+	}
 	else if (G->f_affine) {
 		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
-		}
+	}
 	else if (G->f_general_linear) {
 		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
-		}
+	}
 	else {
 		cout << "matrix_group_unrank_point unknown group type" << endl;
 		exit(1);
-		}
+	}
+#endif
 }
 
 static long int matrix_group_rank_point(
-		action &A, int *v)
+		action &A, int *v, int verbose_level)
 {
 	algebra::matrix_group *G = A.G.matrix_grp;
 	long int rk;
+
+
+	rk = G->Element->rank_point(v, verbose_level);
+
+#if 0
 	geometry::geometry_global Gg;
 
 	if (G->f_projective) {
@@ -759,6 +786,7 @@ static long int matrix_group_rank_point(
 		cout << "matrix_group_unrank_point unknown group type" << endl;
 		exit(1);
 		}
+#endif
 	return rk;
 }
 

@@ -226,8 +226,46 @@ public:
 class number_theory_domain {
 
 public:
+
 	number_theory_domain();
 	~number_theory_domain();
+
+	void do_discrete_log(
+			long int y,
+			long int a, long int p, int verbose_level);
+	void do_primitive_root(
+			long int p, int verbose_level);
+	void do_primitive_root_longinteger(
+			ring_theory::longinteger_object &p,
+			int verbose_level);
+	void do_smallest_primitive_root(
+			long int p, int verbose_level);
+	void do_smallest_primitive_root_interval(
+			long int p_min, long int p_max, int verbose_level);
+	void do_number_of_primitive_roots_interval(
+			long int p_min, long int p_max,
+			int verbose_level);
+	void do_inverse_mod(
+			long int a, long int n, int verbose_level);
+	void do_extended_gcd(
+			int a, int b, int verbose_level);
+	void do_power_mod(
+			ring_theory::longinteger_object &a,
+			ring_theory::longinteger_object &k,
+			ring_theory::longinteger_object &n,
+			int verbose_level);
+	void square_root(
+			std::string &square_root_number,
+			int verbose_level);
+	void square_root_mod(
+			std::string &square_root_number,
+			std::string &mod_number, int verbose_level);
+	void all_square_roots_mod_n_by_exhaustive_search_lint(
+			std::string &square_root_a,
+			std::string &square_root_mod_n,
+			std::vector<long int> &S,
+			int verbose_level);
+
 	long int mod(
 			long int a, long int p);
 	long int int_negate(

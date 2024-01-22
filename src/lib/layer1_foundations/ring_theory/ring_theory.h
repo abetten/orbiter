@@ -991,6 +991,36 @@ public:
 			expression_parser::symbolic_object_builder *SB1,
 			expression_parser::formula_vector *&Formula_vector_after_sub,
 			int verbose_level);
+	void test_unipoly(
+			field_theory::finite_field *F);
+	void test_unipoly2(
+			field_theory::finite_field *F);
+	void test_longinteger();
+	void test_longinteger2();
+	void test_longinteger3();
+	void test_longinteger4();
+	void test_longinteger5();
+	void test_longinteger6();
+	void test_longinteger7();
+	void test_longinteger8();
+	void longinteger_collect_setup(
+			int &nb_agos,
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
+	void longinteger_collect_free(
+			int &nb_agos,
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
+	void longinteger_collect_add(
+			int &nb_agos,
+			ring_theory::longinteger_object *&agos,
+			int *&multiplicities,
+			ring_theory::longinteger_object &ago);
+	void longinteger_collect_print(
+			std::ostream &ost,
+			int &nb_agos, ring_theory::longinteger_object *&agos,
+			int *&multiplicities);
+
 
 };
 

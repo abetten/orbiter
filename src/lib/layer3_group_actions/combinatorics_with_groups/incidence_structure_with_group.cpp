@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace data_structures_groups {
+namespace combinatorics_with_groups {
 
 
 incidence_structure_with_group::incidence_structure_with_group()

@@ -404,8 +404,8 @@ void semifield_level_two::init(
 	Basis1 = NEW_int(k * k);
 	Basis2 = NEW_int(k * k);
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
-	R2 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	init_desired_pivots(verbose_level - 1);
 
@@ -694,9 +694,9 @@ void semifield_level_two::downstep(
 
 		class_rep_plus_I_rank[i] = SC->matrix_rank(Mtx_2);
 
-		algebra::gl_class_rep *R2;
+		linear_algebra::gl_class_rep *R2;
 
-		R2 = NEW_OBJECT(algebra::gl_class_rep);
+		R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 		class_rep_plus_I_Basis[i] = NEW_int(k * k);
 		class_rep_plus_I_Basis_inv[i] = NEW_int(k * k);
@@ -864,9 +864,9 @@ void semifield_level_two::compute_stabilizers_downstep(
 						<< " a == b, extending Flag_orbit_stabilizer[i]" << endl;
 			}
 
-			algebra::gl_class_rep *R2;
+			linear_algebra::gl_class_rep *R2;
 
-			R2 = NEW_OBJECT(algebra::gl_class_rep);
+			R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 			F->Linear_algebra->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
 

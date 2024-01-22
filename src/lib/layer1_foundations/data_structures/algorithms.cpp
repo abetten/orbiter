@@ -888,7 +888,7 @@ void algorithms::matrix_multiply_over_Z(
 	n3 = n2;
 	A3 = NEW_int(m3 * n3);
 
-	linear_algebra::module Mod;
+	algebra::module Mod;
 
 	Mod.matrix_multiply_over_Z_low_level(
 			A1, A2, m1, n1, m2, n2,

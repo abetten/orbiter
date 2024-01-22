@@ -744,7 +744,7 @@ public:
 	int q;
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
-	int low_level_point_size;
+	int low_level_point_size; // = module_dimension_m
 	//long int degree;
 
 	algebraic_geometry::surface_object *SO;
@@ -759,6 +759,7 @@ public:
 
 	int *v1; // [module_dimension_n]
 	int *v2; // [module_dimension_n]
+	int *perm; // [module_dimension_n]
 
 	actions::action *A_on_the_lines;
 	actions::action *A_on_module;

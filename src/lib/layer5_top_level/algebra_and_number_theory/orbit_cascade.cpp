@@ -71,7 +71,7 @@ void orbit_cascade::init(
 
 	orbit_cascade::G = G;
 
-	Control = Get_object_of_type_poset_classification_control(Control_label);
+	Control = Get_poset_classification_control(Control_label);
 
 
 	Primary_poset = NEW_OBJECT(poset_classification::poset_with_group_action);

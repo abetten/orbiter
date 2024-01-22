@@ -83,7 +83,7 @@ void action::report(
 	}
 
 	if (type_G == wreath_product_t) {
-		groups::wreath_product *W;
+		group_constructions::wreath_product *W;
 
 		W = G.wreath_product_group;
 		if (f_v) {

@@ -2346,9 +2346,10 @@ void activity_description::do_translation_plane_activity(
 		exit(1);
 	}
 
-	data_structures_groups::translation_plane_via_andre_model *TP;
+	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
-	TP = (data_structures_groups::translation_plane_via_andre_model *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	TP = (combinatorics_with_groups::translation_plane_via_andre_model *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		spreads::translation_plane_activity Activity;

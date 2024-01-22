@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace actions {
+namespace combinatorics_with_groups {
 
 
 combinatorics_with_action::combinatorics_with_action()

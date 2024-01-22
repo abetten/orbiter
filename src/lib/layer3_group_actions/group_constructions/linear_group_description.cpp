@@ -11,7 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 
 linear_group_description::linear_group_description()
@@ -287,6 +287,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -297,6 +298,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal_p = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -307,6 +309,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal_m = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -317,6 +320,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal = true;
 			f_semilinear = true;
 			if (f_v) {
@@ -327,6 +331,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal_p = true;
 			f_semilinear = true;
 			if (f_v) {
@@ -337,6 +342,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
+			f_projective = true;
 			f_orthogonal_m = true;
 			f_semilinear = true;
 			if (f_v) {
@@ -618,13 +624,13 @@ void linear_group_description::print()
 
 		// the orthogonal groups:
 		// PGO0, PGOp, PGOm
-		if (f_orthogonal) {
+		if (f_orthogonal && !f_semilinear) {
 			cout << "-PGO " << n << " " << input_q << endl;
 		}
-		if (f_orthogonal_p) {
+		if (f_orthogonal_p && !f_semilinear) {
 			cout << "-PGOp " << n << " " << input_q << endl;
 		}
-		if (f_orthogonal_m) {
+		if (f_orthogonal_m && !f_semilinear) {
 			cout << "-PGOm " << n << " " << input_q << endl;
 		}
 		if (f_orthogonal && f_semilinear) {

@@ -143,7 +143,8 @@ void poset_classification_report_options::print()
 	}
 }
 
-int poset_classification_report_options::is_selected_by_group_order(long int so)
+int poset_classification_report_options::is_selected_by_group_order(
+		long int so)
 {
 	if (f_select_orbits_by_stabilizer_order) {
 		if (select_orbits_by_stabilizer_order_so == so) {

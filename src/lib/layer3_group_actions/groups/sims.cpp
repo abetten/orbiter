@@ -202,7 +202,8 @@ void sims::delete_images()
 	}
 }
 
-void sims::init_images(int nb_images)
+void sims::init_images(
+		int nb_images)
 {
 #if 0
 	int i, j; //, a;

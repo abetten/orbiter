@@ -37,40 +37,73 @@ public:
 	a_domain();
 	~a_domain();
 	
-	void init_integers(int verbose_level);
-	void init_integer_fractions(int verbose_level);
-	int as_int(int *elt, int verbose_level);
-	void make_integer(int *elt, int n, int verbose_level);
-	void make_zero(int *elt, int verbose_level);
-	void make_zero_vector(int *elt, int len, int verbose_level);
-	int is_zero_vector(int *elt, int len, int verbose_level);
-	int is_zero(int *elt, int verbose_level);
-	void make_one(int *elt, int verbose_level);
-	int is_one(int *elt, int verbose_level);
-	void copy(int *elt_from, int *elt_to, int verbose_level);
-	void copy_vector(int *elt_from, int *elt_to, 
+	void init_integers(
+			int verbose_level);
+	void init_integer_fractions(
+			int verbose_level);
+	int as_int(
+			int *elt, int verbose_level);
+	void make_integer(
+			int *elt, int n, int verbose_level);
+	void make_zero(
+			int *elt, int verbose_level);
+	void make_zero_vector(
+			int *elt, int len, int verbose_level);
+	int is_zero_vector(
+			int *elt, int len, int verbose_level);
+	int is_zero(
+			int *elt, int verbose_level);
+	void make_one(
+			int *elt, int verbose_level);
+	int is_one(
+			int *elt, int verbose_level);
+	void copy(
+			int *elt_from, int *elt_to, int verbose_level);
+	void copy_vector(
+			int *elt_from, int *elt_to,
 		int len, int verbose_level);
-	void swap_vector(int *elt1, int *elt2, int n, int verbose_level);
-	void swap(int *elt1, int *elt2, int verbose_level);
-	void add(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
-	void add_apply(int *elt_a, int *elt_b, int verbose_level);
-	void subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
-	void negate(int *elt, int verbose_level);
-	void negate_vector(int *elt, int len, int verbose_level);
-	void mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
-	void mult_apply(int *elt_a, int *elt_b, int verbose_level);
-	void power(int *elt_a, int *elt_b, int n, int verbose_level);
-	void divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
-	void inverse(int *elt_a, int *elt_b, int verbose_level);
-	void print(int *elt);
-	void print_vector(int *elt, int n);
-	void print_matrix(int *A, int m, int n);
-	void print_matrix_for_maple(int *A, int m, int n);
-	void make_element_from_integer(int *elt, int n, int verbose_level);
-	void mult_by_integer(int *elt, int n, int verbose_level);
-	void divide_by_integer(int *elt, int n, int verbose_level);
-	int *offset(int *A, int i);
-	int Gauss_echelon_form(int *A, int f_special, int f_complete, 
+	void swap_vector(
+			int *elt1, int *elt2, int n, int verbose_level);
+	void swap(
+			int *elt1, int *elt2, int verbose_level);
+	void add(
+			int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void add_apply(
+			int *elt_a, int *elt_b, int verbose_level);
+	void subtract(
+			int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void negate(
+			int *elt, int verbose_level);
+	void negate_vector(
+			int *elt, int len, int verbose_level);
+	void mult(
+			int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void mult_apply(
+			int *elt_a, int *elt_b, int verbose_level);
+	void power(
+			int *elt_a, int *elt_b, int n, int verbose_level);
+	void divide(
+			int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void inverse(
+			int *elt_a, int *elt_b, int verbose_level);
+	void print(
+			int *elt);
+	void print_vector(
+			int *elt, int n);
+	void print_matrix(
+			int *A, int m, int n);
+	void print_matrix_for_maple(
+			int *A, int m, int n);
+	void make_element_from_integer(
+			int *elt, int n, int verbose_level);
+	void mult_by_integer(
+			int *elt, int n, int verbose_level);
+	void divide_by_integer(
+			int *elt, int n, int verbose_level);
+	int *offset(
+			int *A, int i);
+	int Gauss_echelon_form(
+			int *A, int f_special, int f_complete,
 		int *base_cols, 
 		int f_P, int *P, int m, int n, int Pn, int verbose_level);
 		// returns the rank which is the number 
@@ -140,47 +173,29 @@ public:
 
 class algebra_global {
 public:
-	void count_subprimitive(int Q_max, int H_max);
-	void formula_subprimitive(int d, int q,
+
+	void count_subprimitive(
+			int Q_max, int H_max);
+	void formula_subprimitive(
+			int d, int q,
 			ring_theory::longinteger_object &Rdq,
 			int &g, int verbose_level);
-	void formula(int d, int q,
+	void formula(
+			int d, int q,
 			ring_theory::longinteger_object &Rdq,
 			int verbose_level);
-	int subprimitive(int q, int h);
-	int period_of_sequence(int *v, int l);
+	int subprimitive(
+			int q, int h);
+	int period_of_sequence(
+			int *v, int l);
 	void subexponent(
 			int q, int Q, int h, int f, int j, int k, int &s, int &c);
-	std::string plus_minus_string(int epsilon);
-	void display_all_PHG_elements(int n, int q);
-	void test_unipoly(field_theory::finite_field *F);
-	void test_unipoly2(field_theory::finite_field *F);
-	int is_diagonal_matrix(int *A, int n);
-
-
-	void test_longinteger();
-	void test_longinteger2();
-	void test_longinteger3();
-	void test_longinteger4();
-	void test_longinteger5();
-	void test_longinteger6();
-	void test_longinteger7();
-	void test_longinteger8();
-	void longinteger_collect_setup(int &nb_agos,
-			ring_theory::longinteger_object *&agos,
-			int *&multiplicities);
-	void longinteger_collect_free(int &nb_agos,
-			ring_theory::longinteger_object *&agos,
-			int *&multiplicities);
-	void longinteger_collect_add(int &nb_agos,
-			ring_theory::longinteger_object *&agos,
-			int *&multiplicities,
-			ring_theory::longinteger_object &ago);
-	void longinteger_collect_print(std::ostream &ost,
-			int &nb_agos, ring_theory::longinteger_object *&agos,
-			int *&multiplicities);
-
-
+	std::string plus_minus_string(
+			int epsilon);
+	void display_all_PHG_elements(
+			int n, int q);
+	int is_diagonal_matrix(
+			int *A, int n);
 
 
 
@@ -252,6 +267,8 @@ public:
 	void create_Nth_roots_and_write_report(
 			field_theory::finite_field *F,
 			int n, int verbose_level);
+	void smith_normal_form(
+			int *A, int m, int n, std::string &label, int verbose_level);
 
 };
 
@@ -298,41 +315,15 @@ public:
 	int get_strong_generators(
 			int *Data, int &nb, int &first_moved,
 		int depth, int verbose_level);
-	void create_first_candidate_set(int verbose_level);
-	void create_next_candidate_set(int level, int verbose_level);
-	int dot_product(int *u1, int *u2);
+	void create_first_candidate_set(
+			int verbose_level);
+	void create_next_candidate_set(
+			int level, int verbose_level);
+	int dot_product(
+			int *u1, int *u2);
 };
 
-// #############################################################################
-// gl_class_rep.cpp
-// #############################################################################
 
-//! description of a conjugacy class in GL(n,q) using the rational normal form
-
-class gl_class_rep {
-
-public:
-	data_structures::int_matrix *type_coding;
-	ring_theory::longinteger_object *centralizer_order;
-	ring_theory::longinteger_object *class_length;
-
-	gl_class_rep();
-	~gl_class_rep();
-	void init(
-			int nb_irred, int *Select_polynomial,
-		int *Select_partition, int verbose_level);
-	void print(
-			int nb_irred,  int *Select_polynomial,
-			int *Select_partition, int verbose_level);
-	void compute_vector_coding(
-			gl_classes *C, int &nb_irred,
-		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx, 
-		int verbose_level);
-	void centralizer_order_Kung(
-			gl_classes *C,
-			ring_theory::longinteger_object &co,
-		int verbose_level);
-};
 
 // #############################################################################
 // group_generators_domain.cpp
@@ -548,117 +539,6 @@ public:
 };
 
 
-// #############################################################################
-// gl_classes.cpp
-// #############################################################################
-
-//! conjugacy classes in GL(n,q)
-
-class gl_classes {
-public:
-	int k;
-	int q;
-	field_theory::finite_field *F;
-	ring_theory::table_of_irreducible_polynomials *Table_of_polynomials;
-	int *Nb_part;
-	int **Partitions;
-	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
-
-	gl_classes();
-	~gl_classes();
-	void init(int k,
-			field_theory::finite_field *F, int verbose_level);
-	int select_partition_first(
-			int *Select, int *Select_partition,
-		int verbose_level);
-	int select_partition_next(
-			int *Select, int *Select_partition,
-		int verbose_level);
-	int first(
-			int *Select, int *Select_partition, int verbose_level);
-	int next(
-			int *Select, int *Select_partition, int verbose_level);
-	void make_matrix_from_class_rep(
-			int *Mtx, gl_class_rep *R,
-		int verbose_level);
-	void make_matrix_in_rational_normal_form(
-			int *Mtx, int *Select, int *Select_Partition,
-			int verbose_level);
-	void centralizer_order_Kung_basic(
-			int nb_irreds,
-		int *poly_degree, int *poly_mult, int *partition_idx,
-		ring_theory::longinteger_object &co,
-		int verbose_level);
-	void centralizer_order_Kung(
-			int *Select_polynomial,
-		int *Select_partition,
-		ring_theory::longinteger_object &co,
-		int verbose_level);
-		// Computes the centralizer order of a matrix in GL(k,q)
-		// according to Kung's formula~\cite{Kung81}.
-	void make_classes(
-			gl_class_rep *&R, int &nb_classes,
-		int f_no_eigenvalue_one,
-		int verbose_level);
-	void identify_matrix(
-			int *Mtx, gl_class_rep *R, int *Basis,
-		int verbose_level);
-	void identify2(
-			int *Mtx,
-			ring_theory::unipoly_object &poly, int *Mult,
-		int *Select_partition, int *Basis,
-		int verbose_level);
-	void compute_generalized_kernels_for_each_block(
-		int *Mtx, int *Irreds, int nb_irreds,
-		int *Degree, int *Mult, matrix_block_data *Data,
-		int verbose_level);
-	void compute_generalized_kernels(
-			matrix_block_data *Data, int *M2,
-		int d, int b0, int m, int *poly_coeffs,
-		int verbose_level);
-	int identify_partition(
-			int *part, int m, int verbose_level);
-	void choose_basis_for_rational_normal_form(
-			int *Mtx,
-		matrix_block_data *Data, int nb_irreds,
-		int *Basis,
-		int verbose_level);
-	void choose_basis_for_rational_normal_form_block(
-			int *Mtx,
-		matrix_block_data *Data,
-		int *Basis, int &b,
-		int verbose_level);
-	void generators_for_centralizer(
-			int *Mtx, gl_class_rep *R,
-		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
-		int verbose_level);
-	void centralizer_generators(
-			int *Mtx,
-			ring_theory::unipoly_object &poly,
-		int *Mult, int *Select_partition,
-		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
-		int verbose_level);
-	void centralizer_generators_block(
-			int *Mtx,
-			matrix_block_data *Data,
-		int nb_irreds, int h,
-		int **&Gens, int &nb_gens, int &nb_alloc,
-		int verbose_level);
-	int choose_basis_for_rational_normal_form_coset(
-			int level1,
-		int level2, int &coset,
-		int *Mtx, matrix_block_data *Data, int &b, int *Basis,
-		int verbose_level);
-	int find_class_rep(
-			gl_class_rep *Reps, int nb_reps,
-		gl_class_rep *R, int verbose_level);
-	void report(
-			std::ostream &ost, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(
-			std::ostream &ost,
-		gl_class_rep *R);
-};
-
 
 
 // #############################################################################
@@ -709,92 +589,21 @@ public:
 };
 
 
-// #############################################################################
-// matrix_block_data.cpp
-// #############################################################################
-
-//! rational normal form of a matrix in GL(n,q) for gl_class_rep
-
-class matrix_block_data {
-public:
-	int d;
-	int m;
-	int *poly_coeffs;
-	int b0;
-	int b1;
-
-	data_structures::int_matrix *K;
-	int cnt;
-	int *dual_part;
-	int *part;
-	int height;
-	int part_idx;
-
-	matrix_block_data();
-	~matrix_block_data();
-	void allocate(int k);
-};
-
 
 // #############################################################################
-// matrix_group.cpp
+// matrix_group_element.cpp
 // #############################################################################
 
-//! a matrix group over a finite field in action on a projective space, an affine space, or a vector space
+//! implementation of a matrix group over a finite field
 
-class matrix_group {
+class matrix_group_element {
 
 public:
-	int f_projective;
-		// n x n matrices (possibly with Frobenius)
-		// acting on PG(n - 1, q)
-	int f_affine;
-		// n x n matrices plus translations
-		// (possibly with Frobenius)
-		// acting on F_q^n
-	int f_general_linear;
-		// n x n matrices (possibly with Frobenius)
-		// acting on F_q^n
 
-	int n;
-		// the size of the matrices
+	matrix_group *Matrix_group;
 
-	int degree;
-		// the degree of the action:
-		// (q^(n-1)-1) / (q - 1) if f_projective
-		// q^n if f_affine or f_general_linear
+private:
 
-	int f_semilinear;
-		// use Frobenius automorphism
-
-	int f_kernel_is_diagonal_matrices;
-
-	int bits_per_digit;
-	int bits_per_elt;
-	int bits_extension_degree;
-	int char_per_elt;
-	int elt_size_int;
-	int elt_size_int_half;
-	int low_level_point_size; // added Jan 26, 2010
-		// = n, the size of the vectors on which we act
-	int make_element_size;
-
-
-	std::string label;
-	std::string label_tex;
-
-	int f_GFq_is_allocated;
-		// if true, GFq will be destroyed in the destructor
-		// if false, it is the responsibility
-		// of someone else to destroy GFq
-
-	field_theory::finite_field *GFq;
-	void *data;
-
-	algebra::gl_classes *C; // added Dec 2, 2013
-
-
-	// temporary variables, do not use!
 	int *Elt1, *Elt2, *Elt3;
 		// used for mult, invert
 	int *Elt4;
@@ -813,36 +622,19 @@ public:
 
 	data_structures::page_storage *Elts;
 
+public:
 
-	matrix_group();
-	~matrix_group();
-
-	void init_projective_group(
-			int n,
-			field_theory::finite_field *F,
-		int f_semilinear,
-		int verbose_level);
-	void init_affine_group(
-			int n,
-			field_theory::finite_field *F,
-		int f_semilinear,
-		int verbose_level);
-	void init_general_linear_group(
-			int n,
-			field_theory::finite_field *F,
-		int f_semilinear,
-		int verbose_level);
+	matrix_group_element();
+	~matrix_group_element();
+	void init(
+			matrix_group *Matrix_group,
+			int verbose_level);
 	void allocate_data(
 			int verbose_level);
 	void free_data(
 			int verbose_level);
 	void setup_page_storage(
 			int page_length_log, int verbose_level);
-	void compute_elt_size(
-			int verbose_level);
-	void init_gl_classes(
-			int verbose_level);
-
 	int GL_element_entry_ij(
 			int *Elt, int i, int j);
 	int GL_element_entry_frobenius(
@@ -931,9 +723,112 @@ public:
 			int *Elt, int *data, int verbose_level);
 	void make_GL_element(
 			int *Elt, int *A, int f);
+	int has_shape_of_singer_cycle(
+			int *Elt);
 	void matrix_minor(
 			int *Elt, int *Elt1,
 		matrix_group *mtx1, int f, int verbose_level);
+	void retrieve(
+			int hdl, void *elt, int verbose_level);
+	int store(
+			void *elt, int verbose_level);
+	void dispose(
+			int hdl, int verbose_level);
+	void print_point(
+			long int a, std::ostream &ost, int verbose_level);
+	void unrank_point(
+			long int rk, int *v, int verbose_level);
+	long int rank_point(
+			int *v, int verbose_level);
+
+};
+
+
+// #############################################################################
+// matrix_group.cpp
+// #############################################################################
+
+//! a matrix group over a finite field in action on a projective space, an affine space, or a vector space
+
+class matrix_group {
+
+public:
+	int f_projective;
+		// n x n matrices (possibly with Frobenius)
+		// acting on PG(n - 1, q)
+	int f_affine;
+		// n x n matrices plus translations
+		// (possibly with Frobenius)
+		// acting on F_q^n
+	int f_general_linear;
+		// n x n matrices (possibly with Frobenius)
+		// acting on F_q^n
+
+	int n;
+		// the size of the matrices
+
+	int degree;
+		// the degree of the action:
+		// (q^(n-1)-1) / (q - 1) if f_projective
+		// q^n if f_affine or f_general_linear
+
+	int f_semilinear;
+		// use Frobenius automorphism
+
+	int f_kernel_is_diagonal_matrices;
+
+	int bits_per_digit;
+	int bits_per_elt;
+	int bits_extension_degree;
+	int char_per_elt;
+	int elt_size_int;
+	int elt_size_int_half;
+	int low_level_point_size; // added Jan 26, 2010
+		// = n, the size of the vectors on which we act
+	int make_element_size;
+
+
+	std::string label;
+	std::string label_tex;
+
+	int f_GFq_is_allocated;
+		// if true, GFq will be destroyed in the destructor
+		// if false, it is the responsibility
+		// of someone else to destroy GFq
+
+	field_theory::finite_field *GFq;
+	void *data;
+
+	linear_algebra::gl_classes *C; // added Dec 2, 2013
+
+
+	matrix_group_element *Element;
+
+
+	matrix_group();
+	~matrix_group();
+
+	void init_projective_group(
+			int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+	void init_affine_group(
+			int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+	void init_general_linear_group(
+			int n,
+			field_theory::finite_field *F,
+		int f_semilinear,
+		int verbose_level);
+
+	void compute_elt_size(
+			int verbose_level);
+	void init_gl_classes(
+			int verbose_level);
+
 	int base_len(
 			int verbose_level);
 	void base_and_transversal_length(
@@ -943,10 +838,56 @@ public:
 	void strong_generators_low_level(
 			int *&data,
 			int &size, int &nb_gens, int verbose_level);
-	int has_shape_of_singer_cycle(
-			int *Elt);
 };
 
+
+
+// #############################################################################
+// module.cpp:
+// #############################################################################
+
+//! a Z module
+
+class module {
+public:
+
+
+	module();
+	~module();
+	void matrix_multiply_over_Z_low_level(
+			int *A1, int *A2, int m1, int n1, int m2, int n2,
+			int *A3, int verbose_level);
+	void multiply_2by2_from_the_left(
+			data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	void multiply_2by2_from_the_right(
+			data_structures::int_matrix *M,
+			int i, int j,
+		int aii, int aij,
+		int aji, int ajj, int verbose_level);
+	int clean_column(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *P,
+			data_structures::int_matrix *Pv, int i, int verbose_level);
+	int clean_row(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *Q,
+			data_structures::int_matrix *Qv,
+			int i, int verbose_level);
+	void smith_normal_form(
+			data_structures::int_matrix *M,
+			data_structures::int_matrix *&P,
+			data_structures::int_matrix *&Pv,
+			data_structures::int_matrix *&Q,
+			data_structures::int_matrix *&Qv,
+			int verbose_level);
+	void apply(int *input, int *output, int *perm,
+			int module_dimension_m, int module_dimension_n, int *module_basis,
+			int *v1, int *v2, int verbose_level);
+
+};
 
 
 

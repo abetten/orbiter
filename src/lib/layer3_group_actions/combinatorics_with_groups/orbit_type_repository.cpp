@@ -16,14 +16,17 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace data_structures_groups {
+namespace combinatorics_with_groups {
 
 
-static int orbit_type_repository_compare_types(void *data,
+static int orbit_type_repository_compare_types(
+		void *data,
 		int i, int j, void *extra_data);
-static int orbit_type_repository_compare_type_with(void *data,
+static int orbit_type_repository_compare_type_with(
+		void *data,
 		int i, void *type, void *extra_data);
-static void orbit_type_repository_swap_types(void *data,
+static void orbit_type_repository_swap_types(
+		void *data,
 			int i, int j, void *extra_data);
 
 
@@ -296,7 +299,8 @@ void orbit_type_repository::create_latex_report(
 
 
 
-void orbit_type_repository::report(std::ostream &ost, int verbose_level)
+void orbit_type_repository::report(
+		std::ostream &ost, int verbose_level)
 {
 	int type_idx;
 
@@ -316,7 +320,8 @@ void orbit_type_repository::report(std::ostream &ost, int verbose_level)
 
 }
 
-void orbit_type_repository::report_one_type(std::ostream &ost,
+void orbit_type_repository::report_one_type(
+		std::ostream &ost,
 		int type_idx, int verbose_level)
 {
 	int /*f,*/ l;
@@ -452,7 +457,8 @@ void orbit_type_repository::report_one_type(std::ostream &ost,
 // #############################################################################
 
 
-static int orbit_type_repository_compare_types(void *data,
+static int orbit_type_repository_compare_types(
+		void *data,
 		int i, int j, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
@@ -464,7 +470,8 @@ static int orbit_type_repository_compare_types(void *data,
 }
 
 
-static int orbit_type_repository_compare_type_with(void *data,
+static int orbit_type_repository_compare_type_with(
+		void *data,
 		int i, void *type, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
@@ -477,7 +484,8 @@ static int orbit_type_repository_compare_type_with(void *data,
 
 
 
-static void orbit_type_repository_swap_types(void *data,
+static void orbit_type_repository_swap_types(
+		void *data,
 			int i, int j, void *extra_data)
 {
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;

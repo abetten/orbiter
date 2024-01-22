@@ -1049,7 +1049,7 @@ action *action_global::init_direct_product_group_and_restrict(
 	int f_v = (verbose_level >= 1);
 	action *A_direct_product;
 	action *Adp;
-	groups::direct_product *P;
+	group_constructions::direct_product *P;
 	long int *points;
 	int nb_points;
 	int i;
@@ -1105,7 +1105,7 @@ action *action_global::init_direct_product_group(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product *P;
+	group_constructions::direct_product *P;
 	action *A;
 
 	if (f_v) {
@@ -1115,7 +1115,7 @@ action *action_global::init_direct_product_group(
 	}
 
 	A = NEW_OBJECT(action);
-	P = NEW_OBJECT(groups::direct_product);
+	P = NEW_OBJECT(group_constructions::direct_product);
 
 
 

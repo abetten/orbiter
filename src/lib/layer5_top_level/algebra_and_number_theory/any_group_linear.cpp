@@ -467,7 +467,7 @@ void any_group::do_tensor_classify(
 	F = LG->F;
 
 	poset_classification::poset_classification_control *Control =
-			Get_object_of_type_poset_classification_control(control_label);
+			Get_poset_classification_control(control_label);
 
 
 
@@ -553,7 +553,7 @@ void any_group::do_linear_codes(
 	}
 
 	poset_classification::poset_classification_control *Control =
-			Get_object_of_type_poset_classification_control(control_label);
+			Get_poset_classification_control(control_label);
 
 	algebra_global_with_action Algebra;
 

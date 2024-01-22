@@ -85,7 +85,7 @@ public:
 
 	int f_decomposition_by_subgroup;
 	std::string decomposition_by_subgroup_label;
-	groups::linear_group_description
+	group_constructions::linear_group_description
 		* decomposition_by_subgroup_Descr;
 
 	int f_table_of_quartic_curves;
@@ -490,7 +490,7 @@ public:
 			int verbose_level);
 	void do_cheat_sheet_for_decomposition_by_subgroup(
 			std::string &label,
-			groups::linear_group_description * subgroup_Descr,
+			group_constructions::linear_group_description * subgroup_Descr,
 			int verbose_level);
 	void report(
 		std::ostream &ost,

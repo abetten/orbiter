@@ -29,10 +29,23 @@ namespace actions {
 	class action;
 	class action_global;
 	class action_pointer_table;
+	class known_groups;
 	class group_element;
 	class induced_action;
-	class known_groups;
 	class stabilizer_chain_base_data;
+
+}
+
+//! combinatorial objects with groups and group actions.
+
+namespace combinatorics_with_groups {
+
+	class combinatorics_with_action;
+	class flag_orbits_incidence_structure;
+	class group_action_on_combinatorial_object;
+	class incidence_structure_with_group;
+	class orbit_type_repository;
+	class translation_plane_via_andre_model;
 
 }
 
@@ -40,17 +53,12 @@ namespace actions {
 
 namespace data_structures_groups {
 
-	class flag_orbits_incidence_structure;
-	class group_action_on_combinatorial_object;
 	class group_container;
-	class incidence_structure_with_group;
 	class orbit_rep;
 	class orbit_transversal;
-	class orbit_type_repository;
 	class schreier_vector_handler;
 	class schreier_vector;
 	class set_and_stabilizer;
-	class translation_plane_via_andre_model;
 	class union_find_on_k_subsets;
 	class union_find;
 	class vector_ge_description;
@@ -59,28 +67,37 @@ namespace data_structures_groups {
 
 }
 
-//! an implementation of various types of permutation groups using stabilizer chains
+
+//! various types of permutation groups using stabilizer chains
+
+namespace group_constructions {
+
+	class direct_product;
+	class linear_group_description;
+	class linear_group;
+	class permutation_group_create;
+	class permutation_group_description;
+	class permutation_representation_domain;
+	class permutation_representation;
+	class wreath_product;
+
+}
+
+
+//! computational group theory
 
 namespace groups {
 
 
 	class conjugacy_class_of_elements;
-	class direct_product;
 	class exceptional_isomorphism_O4;
-	class linear_group_description;
-	class linear_group;
 	class orbits_on_something;
-	class permutation_group_create;
-	class permutation_group_description;
-	class permutation_representation_domain;
-	class permutation_representation;
 	class schreier;
 	class schreier_sims;
 	class sims;
 	class strong_generators;
 	class subgroup;
 	class sylow_structure;
-	class wreath_product;
 
 	typedef class sims *p_sims;
 	typedef sims *psims;
@@ -209,10 +226,10 @@ enum permutation_group_type {
 
 union symmetry_group {
 	algebra::matrix_group *matrix_grp;
-	groups::permutation_representation_domain *perm_grp;
-	groups::wreath_product *wreath_product_group;
-	groups::direct_product *direct_product_group;
-	groups::permutation_representation *Permutation_representation;
+	group_constructions::permutation_representation_domain *perm_grp;
+	group_constructions::wreath_product *wreath_product_group;
+	group_constructions::direct_product *direct_product_group;
+	group_constructions::permutation_representation *Permutation_representation;
 	induced_actions::action_on_sets *on_sets;
 	induced_actions::action_on_subgroups *on_subgroups;
 	induced_actions::action_on_k_subsets *on_k_subsets;
@@ -248,10 +265,12 @@ union symmetry_group {
 
 
 #include "./actions/actions.h"
-#include "data_structures/l3_data_structures.h"
+#include "./combinatorics_with_groups/combinatorics_with_groups.h"
+#include "./data_structures/l3_data_structures.h"
+#include "./group_constructions/group_constructions.h"
 #include "./groups/groups.h"
 #include "./induced_actions/induced_actions.h"
-#include "interfaces/l3_interfaces.h"
+#include "./interfaces/l3_interfaces.h"
 
 
 

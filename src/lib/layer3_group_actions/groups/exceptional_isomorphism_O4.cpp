@@ -419,7 +419,8 @@ void exceptional_isomorphism_O4::apply_2_to_4(
 		}
 }
 
-void exceptional_isomorphism_O4::print_as_2x2(int *mtx4x4)
+void exceptional_isomorphism_O4::print_as_2x2(
+		int *mtx4x4)
 {
 	int small[8], f_switch, r, order;
 	int *elt1;

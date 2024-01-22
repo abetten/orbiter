@@ -48,6 +48,9 @@ orbits_create::orbits_create()
 	CCA = NULL;
 	CCC = NULL;
 
+	f_has_cubic_surfaces = false;
+	SCW = NULL;
+
 	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
@@ -154,7 +157,7 @@ void orbits_create::init(
 		}
 
 		poset_classification::poset_classification_control *Control =
-				Get_object_of_type_poset_classification_control(
+				Get_poset_classification_control(
 						Descr->on_subsets_poset_classification_control_label);
 
 
@@ -223,7 +226,7 @@ void orbits_create::init(
 		}
 
 		poset_classification::poset_classification_control *Control =
-				Get_object_of_type_poset_classification_control(
+				Get_poset_classification_control(
 						Descr->on_subspaces_poset_classification_control_label);
 
 
@@ -522,6 +525,77 @@ void orbits_create::init(
 
 	}
 
+	if (Descr->f_on_cubic_surfaces) {
+
+
+		if (f_v) {
+			cout << "orbits_create::init f_on_cubic_surfaces" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init control = " << Descr->on_cubic_surfaces_control << endl;
+		}
+		projective_geometry::projective_space_with_action *PA;
+
+		PA = Get_projective_space(Descr->on_cubic_surfaces_PA);
+
+		poset_classification::poset_classification_control *Control =
+				Get_poset_classification_control(
+						Descr->on_cubic_surfaces_control);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before classify_surfaces, control=" << endl;
+			Control->print();
+		}
+
+
+		SCW = NEW_OBJECT(applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before SCW->init" << endl;
+		}
+
+		SCW->init(PA,
+				Control,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after SCW->init" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before SCW->do_classify_double_sixes" << endl;
+		}
+		SCW->do_classify_double_sixes(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after SCW->do_classify_double_sixes" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before SCW->do_classify_surfaces" << endl;
+		}
+		SCW->do_classify_surfaces(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after SCW->do_classify_surfaces" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after classify_surfaces" << endl;
+		}
+
+
+		f_has_cubic_surfaces = true;
+
+
+	}
 
 	if (Descr->f_classification_by_canonical_form) {
 

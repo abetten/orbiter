@@ -8,12 +8,11 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/a_domain.o \
 		layer1_foundations/algebra/algebra_global.o \
 		layer1_foundations/algebra/generators_symplectic_group.o \
-		layer1_foundations/algebra/gl_class_rep.o \
-		layer1_foundations/algebra/gl_classes.o \
 		layer1_foundations/algebra/group_generators_domain.o \
 		layer1_foundations/algebra/heisenberg.o \
-		layer1_foundations/algebra/matrix_block_data.o \
+		layer1_foundations/algebra/matrix_group_element.o \
 		layer1_foundations/algebra/matrix_group.o \
+		layer1_foundations/algebra/module.o \
 		layer1_foundations/algebra/null_polarity_generator.o \
 		layer1_foundations/algebra/rank_checker.o \
 		layer1_foundations/algebraic_geometry/algebraic_geometry_global.o \
@@ -236,12 +235,14 @@ ORBITER_MODULES= \
 		layer1_foundations/graphics/tree_node.o \
 		layer1_foundations/graphics/tree.o \
 		layer1_foundations/graphics/video_draw_options.o \
+		layer1_foundations/linear_algebra/gl_class_rep.o \
+		layer1_foundations/linear_algebra/gl_classes.o \
 		layer1_foundations/linear_algebra/linear_algebra_global.o \
 		layer1_foundations/linear_algebra/linear_algebra_RREF.o \
 		layer1_foundations/linear_algebra/linear_algebra.o \
 		layer1_foundations/linear_algebra/linear_algebra2.o \
 		layer1_foundations/linear_algebra/linear_algebra3.o \
-		layer1_foundations/linear_algebra/module.o \
+		layer1_foundations/linear_algebra/matrix_block_data.o \
 		layer1_foundations/linear_algebra/representation_theory_domain.o \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
@@ -347,7 +348,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/action_io.o \
 		layer3_group_actions/actions/action_pointer_table.o \
 		layer3_group_actions/actions/backtrack.o \
-		layer3_group_actions/actions/combinatorics_with_action.o \
 		layer3_group_actions/actions/group_element.o \
 		layer3_group_actions/actions/interface_direct_product.o \
 		layer3_group_actions/actions/interface_induced_action.o \
@@ -358,31 +358,33 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/known_groups.o \
 		layer3_group_actions/actions/induced_action.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
-		layer3_group_actions/data_structures/flag_orbits_incidence_structure.o \
-		layer3_group_actions/data_structures/group_action_on_combinatorial_object.o \
+		layer3_group_actions/combinatorics_with_groups/combinatorics_with_action.o \
+		layer3_group_actions/combinatorics_with_groups/flag_orbits_incidence_structure.o \
+		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
+		layer3_group_actions/combinatorics_with_groups/incidence_structure_with_group.o \
+		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
+		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/group_container.o \
-		layer3_group_actions/data_structures/incidence_structure_with_group.o \
 		layer3_group_actions/data_structures/orbit_rep.o \
 		layer3_group_actions/data_structures/orbit_transversal.o \
-		layer3_group_actions/data_structures/orbit_type_repository.o \
 		layer3_group_actions/data_structures/schreier_vector_handler.o \
 		layer3_group_actions/data_structures/schreier_vector.o \
 		layer3_group_actions/data_structures/set_and_stabilizer.o \
-		layer3_group_actions/data_structures/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/union_find.o \
 		layer3_group_actions/data_structures/union_find_on_k_subsets.o \
 		layer3_group_actions/data_structures/vector_ge_description.o \
 		layer3_group_actions/data_structures/vector_ge.o \
+		layer3_group_actions/group_constructions/direct_product.o \
+		layer3_group_actions/group_constructions/linear_group.o \
+		layer3_group_actions/group_constructions/linear_group_description.o \
+		layer3_group_actions/group_constructions/permutation_group_create.o \
+		layer3_group_actions/group_constructions/permutation_group_description.o \
+		layer3_group_actions/group_constructions/permutation_representation_domain.o \
+		layer3_group_actions/group_constructions/permutation_representation.o \
+		layer3_group_actions/group_constructions/wreath_product.o \
 		layer3_group_actions/groups/conjugacy_class_of_elements.o \
-		layer3_group_actions/groups/direct_product.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
-		layer3_group_actions/groups/linear_group.o \
-		layer3_group_actions/groups/linear_group_description.o \
 		layer3_group_actions/groups/orbits_on_something.o \
-		layer3_group_actions/groups/permutation_group_create.o \
-		layer3_group_actions/groups/permutation_group_description.o \
-		layer3_group_actions/groups/permutation_representation_domain.o \
-		layer3_group_actions/groups/permutation_representation.o \
 		layer3_group_actions/groups/schreier.o \
 		layer3_group_actions/groups/schreier_io.o \
 		layer3_group_actions/groups/schreier_sims.o \
@@ -396,7 +398,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/strong_generators_groups.o \
 		layer3_group_actions/groups/subgroup.o \
 		layer3_group_actions/groups/sylow_structure.o \
-		layer3_group_actions/groups/wreath_product.o \
 		layer3_group_actions/groups/shallow_schreier_ai.o \
 		layer3_group_actions/induced_actions/action_by_conjugation.o \
 		layer3_group_actions/induced_actions/action_by_representation.o \

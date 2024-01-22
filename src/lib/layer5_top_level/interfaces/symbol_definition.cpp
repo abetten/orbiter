@@ -172,11 +172,15 @@ symbol_definition::symbol_definition()
 	f_poset_classification_control = false;
 	Poset_classification_control = NULL;
 
+	f_poset_classification_report_options = false;
+	Poset_classification_report_options = NULL;
+
 	f_arc_generator_control = false;
 	Arc_generator_control = NULL;
 
 	f_poset_classification_activity = false;
 	Poset_classification_activity = NULL;
+
 
 	f_crc_code = false;
 	Crc_code_description = NULL;
@@ -348,7 +352,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = true;
 		Linear_group_description =
-				NEW_OBJECT(groups::linear_group_description);
+				NEW_OBJECT(group_constructions::linear_group_description);
 		if (f_v) {
 			cout << "reading -linear_group" << endl;
 		}
@@ -370,7 +374,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-permutation_group") == 0) {
 		f_permutation_group = true;
 		Permutation_group_description =
-				NEW_OBJECT(groups::permutation_group_description);
+				NEW_OBJECT(group_constructions::permutation_group_description);
 		if (f_v) {
 			cout << "reading -permutation_group" << endl;
 		}
@@ -1132,6 +1136,32 @@ void symbol_definition::read_definition(
 			Poset_classification_control->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-poset_classification_report_options") == 0) {
+		f_poset_classification_report_options = true;
+
+		Poset_classification_report_options =
+				NEW_OBJECT(poset_classification::poset_classification_report_options);
+		if (f_v) {
+			cout << "reading -poset_classification_report_options" << endl;
+		}
+		i += Poset_classification_report_options->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-poset_classification_report_options" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-poset_classification_report_options " << endl;
+			Poset_classification_report_options->print();
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-arc_generator_control") == 0) {
 		f_arc_generator_control = true;
 
@@ -1689,6 +1719,21 @@ void symbol_definition::perform_definition(
 					"after definition_of_poset_classification_control" << endl;
 		}
 	}
+	else if (f_poset_classification_report_options) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"f_poset_classification_report_options" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_poset_classification_report_options" << endl;
+		}
+		definition_of_poset_classification_report_options(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_poset_classification_report_options" << endl;
+		}
+	}
 	else if (f_arc_generator_control) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1933,6 +1978,10 @@ void symbol_definition::print()
 	if (f_poset_classification_control) {
 		cout << "-poset_classification_control ";
 		Poset_classification_control->print();
+	}
+	if (f_poset_classification_report_options) {
+		cout << "-poset_classification_report_options ";
+		Poset_classification_report_options->print();
 	}
 
 	if (f_arc_generator_control) {
@@ -2340,9 +2389,9 @@ void symbol_definition::definition_of_linear_group(
 	}
 
 
-	groups::linear_group *LG;
+	group_constructions::linear_group *LG;
 
-	LG = NEW_OBJECT(groups::linear_group);
+	LG = NEW_OBJECT(group_constructions::linear_group);
 	if (f_v) {
 		cout << "symbol_definition::definition "
 				"before LG->linear_group_init, "
@@ -2403,9 +2452,9 @@ void symbol_definition::definition_of_permutation_group(
 	}
 
 
-	groups::permutation_group_create *PGC;
+	group_constructions::permutation_group_create *PGC;
 
-	PGC = NEW_OBJECT(groups::permutation_group_create);
+	PGC = NEW_OBJECT(group_constructions::permutation_group_create);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_permutation_group "
 				"before PGC->permutation_group_init" << endl;
@@ -2974,7 +3023,7 @@ void symbol_definition::definition_of_translation_plane(
 	spreads::spread_create *Spread;
 	apps_algebra::any_group *Gn;
 	apps_algebra::any_group *Gnp1;
-	data_structures_groups::translation_plane_via_andre_model *TP;
+	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
 
 	Spread = Get_object_of_type_spread(translation_plane_spread_label);
@@ -2998,7 +3047,7 @@ void symbol_definition::definition_of_translation_plane(
 				"found group Gnp1 " << Gnp1->label << endl;
 	}
 
-	TP = NEW_OBJECT(data_structures_groups::translation_plane_via_andre_model);
+	TP = NEW_OBJECT(combinatorics_with_groups::translation_plane_via_andre_model);
 
 	actions::action *An1;
 
@@ -4263,6 +4312,37 @@ void symbol_definition::definition_of_poset_classification_control(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_poset_classification_control done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_poset_classification_report_options(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_report_options" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_poset_classification_report_options(
+			define_label, Poset_classification_report_options, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_report_options "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_poset_classification_report_options done" << endl;
 	}
 }
 

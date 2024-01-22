@@ -45,7 +45,7 @@ any_group::~any_group()
 
 
 void any_group::init_linear_group(
-		groups::linear_group *LG, int verbose_level)
+		group_constructions::linear_group *LG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -88,7 +88,7 @@ void any_group::init_linear_group(
 }
 
 void any_group::init_permutation_group(
-		groups::permutation_group_create *PGC,
+		group_constructions::permutation_group_create *PGC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

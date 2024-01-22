@@ -306,7 +306,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 
 schreier_vector *schreier_vector_handler::sv_read_file(
 		int gen_hdl_first, int nb_gen,
-		ifstream &fp, int verbose_level)
+		std::ifstream &fp, int verbose_level)
 {
 	int i, len;
 	int I, n;
@@ -358,8 +358,9 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	return Sv;
 }
 
-void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
-		ofstream &fp, int verbose_level)
+void schreier_vector_handler::sv_write_file(
+		schreier_vector *Sv,
+		std::ofstream &fp, int verbose_level)
 {
 	int i, len, tmp;
 	int f_v = (verbose_level >= 1);

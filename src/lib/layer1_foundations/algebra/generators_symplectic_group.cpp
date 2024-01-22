@@ -328,7 +328,8 @@ void generators_symplectic_group::create_next_candidate_set(
 }
 
 
-int generators_symplectic_group::dot_product(int *u1, int *u2)
+int generators_symplectic_group::dot_product(
+		int *u1, int *u2)
 {
 	int c;
 	int i;

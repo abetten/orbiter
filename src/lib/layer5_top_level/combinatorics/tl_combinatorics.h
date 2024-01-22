@@ -457,7 +457,7 @@ public:
 
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
-	groups::direct_product *P;
+	group_constructions::direct_product *P;
 	poset_classification::poset_with_group_action *Poset_pairs;
 	poset_classification::poset_with_group_action *Poset_search;
 	poset_classification::poset_classification *Pairs;

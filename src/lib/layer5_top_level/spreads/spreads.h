@@ -830,14 +830,14 @@ class translation_plane_activity {
 public:
 
 	translation_plane_activity_description *Descr;
-	data_structures_groups::translation_plane_via_andre_model *TP;
+	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
 
 	translation_plane_activity();
 	~translation_plane_activity();
 	void init(
 			translation_plane_activity_description *Descr,
-			data_structures_groups::translation_plane_via_andre_model *TP,
+			combinatorics_with_groups::translation_plane_via_andre_model *TP,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);

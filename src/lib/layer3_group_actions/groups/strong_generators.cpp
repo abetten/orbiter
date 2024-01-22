@@ -1981,7 +1981,8 @@ void strong_generators::print_with_given_action(
 	}
 }
 
-void strong_generators::print_elements_ost(std::ostream &ost)
+void strong_generators::print_elements_ost(
+		std::ostream &ost)
 {
 	long int i;
 	ring_theory::longinteger_object go;

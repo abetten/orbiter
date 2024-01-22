@@ -14,6 +14,151 @@ namespace layer1_foundations {
 namespace linear_algebra {
 
 
+
+// #############################################################################
+// gl_class_rep.cpp
+// #############################################################################
+
+//! description of a conjugacy class in GL(n,q) using the rational normal form
+
+class gl_class_rep {
+
+public:
+	data_structures::int_matrix *type_coding;
+	ring_theory::longinteger_object *centralizer_order;
+	ring_theory::longinteger_object *class_length;
+
+	gl_class_rep();
+	~gl_class_rep();
+	void init(
+			int nb_irred, int *Select_polynomial,
+		int *Select_partition, int verbose_level);
+	void print(
+			int nb_irred,  int *Select_polynomial,
+			int *Select_partition, int verbose_level);
+	void compute_vector_coding(
+			gl_classes *C, int &nb_irred,
+		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx,
+		int verbose_level);
+	void centralizer_order_Kung(
+			gl_classes *C,
+			ring_theory::longinteger_object &co,
+		int verbose_level);
+};
+
+// #############################################################################
+// gl_classes.cpp
+// #############################################################################
+
+//! conjugacy classes in GL(n,q)
+
+class gl_classes {
+public:
+	int k;
+	int q;
+	field_theory::finite_field *F;
+	ring_theory::table_of_irreducible_polynomials *Table_of_polynomials;
+	int *Nb_part;
+	int **Partitions;
+	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
+
+	gl_classes();
+	~gl_classes();
+	void init(int k,
+			field_theory::finite_field *F, int verbose_level);
+	int select_partition_first(
+			int *Select, int *Select_partition,
+		int verbose_level);
+	int select_partition_next(
+			int *Select, int *Select_partition,
+		int verbose_level);
+	int first(
+			int *Select, int *Select_partition, int verbose_level);
+	int next(
+			int *Select, int *Select_partition, int verbose_level);
+	void make_matrix_from_class_rep(
+			int *Mtx, gl_class_rep *R,
+		int verbose_level);
+	void make_matrix_in_rational_normal_form(
+			int *Mtx, int *Select, int *Select_Partition,
+			int verbose_level);
+	void centralizer_order_Kung_basic(
+			int nb_irreds,
+		int *poly_degree, int *poly_mult, int *partition_idx,
+		ring_theory::longinteger_object &co,
+		int verbose_level);
+	void centralizer_order_Kung(
+			int *Select_polynomial,
+		int *Select_partition,
+		ring_theory::longinteger_object &co,
+		int verbose_level);
+		// Computes the centralizer order of a matrix in GL(k,q)
+		// according to Kung's formula~\cite{Kung81}.
+	void make_classes(
+			gl_class_rep *&R, int &nb_classes,
+		int f_no_eigenvalue_one,
+		int verbose_level);
+	void identify_matrix(
+			int *Mtx, gl_class_rep *R, int *Basis,
+		int verbose_level);
+	void identify2(
+			int *Mtx,
+			ring_theory::unipoly_object &poly, int *Mult,
+		int *Select_partition, int *Basis,
+		int verbose_level);
+	void compute_generalized_kernels_for_each_block(
+		int *Mtx, int *Irreds, int nb_irreds,
+		int *Degree, int *Mult, matrix_block_data *Data,
+		int verbose_level);
+	void compute_generalized_kernels(
+			matrix_block_data *Data, int *M2,
+		int d, int b0, int m, int *poly_coeffs,
+		int verbose_level);
+	int identify_partition(
+			int *part, int m, int verbose_level);
+	void choose_basis_for_rational_normal_form(
+			int *Mtx,
+		matrix_block_data *Data, int nb_irreds,
+		int *Basis,
+		int verbose_level);
+	void choose_basis_for_rational_normal_form_block(
+			int *Mtx,
+		matrix_block_data *Data,
+		int *Basis, int &b,
+		int verbose_level);
+	void generators_for_centralizer(
+			int *Mtx, gl_class_rep *R,
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	void centralizer_generators(
+			int *Mtx,
+			ring_theory::unipoly_object &poly,
+		int *Mult, int *Select_partition,
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	void centralizer_generators_block(
+			int *Mtx,
+			matrix_block_data *Data,
+		int nb_irreds, int h,
+		int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	int choose_basis_for_rational_normal_form_coset(
+			int level1,
+		int level2, int &coset,
+		int *Mtx, matrix_block_data *Data, int &b, int *Basis,
+		int verbose_level);
+	int find_class_rep(
+			gl_class_rep *Reps, int nb_reps,
+		gl_class_rep *R, int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void print_matrix_and_centralizer_order_latex(
+			std::ostream &ost,
+		gl_class_rep *R);
+};
+
+
+
 // #############################################################################
 // linear_algebra_global.cpp:
 // #############################################################################
@@ -598,47 +743,29 @@ public:
 
 
 // #############################################################################
-// module.cpp:
+// matrix_block_data.cpp
 // #############################################################################
 
-//! a Z module
+//! rational normal form of a matrix in GL(n,q) for gl_class_rep
 
-class module {
+class matrix_block_data {
 public:
+	int d;
+	int m;
+	int *poly_coeffs;
+	int b0;
+	int b1;
 
+	data_structures::int_matrix *K;
+	int cnt;
+	int *dual_part;
+	int *part;
+	int height;
+	int part_idx;
 
-	module();
-	~module();
-	void matrix_multiply_over_Z_low_level(
-			int *A1, int *A2, int m1, int n1, int m2, int n2,
-			int *A3, int verbose_level);
-	void multiply_2by2_from_the_left(
-			data_structures::int_matrix *M,
-			int i, int j,
-		int aii, int aij,
-		int aji, int ajj, int verbose_level);
-	void multiply_2by2_from_the_right(
-			data_structures::int_matrix *M,
-			int i, int j,
-		int aii, int aij,
-		int aji, int ajj, int verbose_level);
-	int clean_column(
-			data_structures::int_matrix *M,
-			data_structures::int_matrix *P,
-			data_structures::int_matrix *Pv, int i, int verbose_level);
-	int clean_row(
-			data_structures::int_matrix *M,
-			data_structures::int_matrix *Q,
-			data_structures::int_matrix *Qv,
-			int i, int verbose_level);
-	void smith_normal_form(
-			data_structures::int_matrix *M,
-			data_structures::int_matrix *&P,
-			data_structures::int_matrix *&Pv,
-			data_structures::int_matrix *&Q,
-			data_structures::int_matrix *&Qv,
-			int verbose_level);
-
+	matrix_block_data();
+	~matrix_block_data();
+	void allocate(int k);
 };
 
 

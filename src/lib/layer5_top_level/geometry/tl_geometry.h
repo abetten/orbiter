@@ -784,7 +784,7 @@ public:
 
 	ovoid_classify_description *Descr;
 	poset_classification::poset_classification_control *Control;
-	groups::linear_group *LG;
+	group_constructions::linear_group *LG;
 
 	int m; // Witt index
 
@@ -817,7 +817,7 @@ public:
 	~ovoid_classify();
 	void init(
 			ovoid_classify_description *Descr,
-			groups::linear_group *LG,
+			group_constructions::linear_group *LG,
 			int &verbose_level);
 	void early_test_func(
 			long int *S, int len,
@@ -1105,7 +1105,7 @@ public:
 
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
-	groups::wreath_product *W;
+	group_constructions::wreath_product *W;
 	linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
@@ -1116,7 +1116,7 @@ public:
 	tensor_classify();
 	~tensor_classify();
 	void init(
-			field_theory::finite_field *F, groups::linear_group *LG,
+			field_theory::finite_field *F, group_constructions::linear_group *LG,
 			int verbose_level);
 	void classify_poset(
 			int depth,

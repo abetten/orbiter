@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace data_structures_groups {
+namespace combinatorics_with_groups {
 
 
 
@@ -153,7 +153,8 @@ void flag_orbits_incidence_structure::init(
 	}
 }
 
-int flag_orbits_incidence_structure::find_flag(int i, int j)
+int flag_orbits_incidence_structure::find_flag(
+		int i, int j)
 {
 	long int flag[2];
 	int idx;

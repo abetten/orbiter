@@ -35,7 +35,8 @@ group_container::~group_container()
 	delete_sims();
 }
 
-void group_container::init(actions::action *A,
+void group_container::init(
+		actions::action *A,
 		int verbose_level)
 {
 	//null();
@@ -74,7 +75,8 @@ void group_container::delete_ascii_coding()
 {
 }
 
-void group_container::init_strong_generators_empty_set(int verbose_level)
+void group_container::init_strong_generators_empty_set(
+		int verbose_level)
 {
 	int i;
 	
@@ -90,7 +92,8 @@ void group_container::init_strong_generators_empty_set(int verbose_level)
 	f_has_strong_generators = true;
 }
 
-void group_container::init_strong_generators(vector_ge &SG,
+void group_container::init_strong_generators(
+		vector_ge &SG,
 		int *tl, int verbose_level)
 {
 	int i;
@@ -254,7 +257,8 @@ void group_container::require_sims()
 	}
 }
 
-void group_container::group_order(ring_theory::longinteger_object &go)
+void group_container::group_order(
+		ring_theory::longinteger_object &go)
 {
 	ring_theory::longinteger_domain D;
 	
@@ -271,7 +275,8 @@ void group_container::group_order(ring_theory::longinteger_object &go)
 	}
 }
 
-void group_container::print_group_order(std::ostream &ost)
+void group_container::print_group_order(
+		std::ostream &ost)
 {
 	ring_theory::longinteger_object go;
 	group_order(go);
@@ -290,7 +295,8 @@ void group_container::print_tl()
 	}
 }
 
-void group_container::code_ascii(int verbose_level)
+void group_container::code_ascii(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
@@ -338,7 +344,8 @@ void group_container::code_ascii(int verbose_level)
 	}
 }
 
-void group_container::decode_ascii(int verbose_level)
+void group_container::decode_ascii(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -403,7 +410,8 @@ void group_container::decode_ascii(int verbose_level)
 	}
 }
 
-void group_container::schreier_sims(int verbose_level)
+void group_container::schreier_sims(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -458,7 +466,8 @@ void group_container::schreier_sims(int verbose_level)
 	f_has_sims = true;
 }
 
-void group_container::get_strong_generators(int verbose_level)
+void group_container::get_strong_generators(
+		int verbose_level)
 {
 	require_sims();
 	delete_strong_generators();
@@ -511,7 +520,8 @@ void group_container::point_stabilizer(
 	}
 }
 
-void group_container::point_stabilizer_with_action(actions::action *A2,
+void group_container::point_stabilizer_with_action(
+		actions::action *A2,
 		group_container &stab, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -722,7 +732,8 @@ void group_container::induced_action(
 	}
 }
 
-void group_container::extension(group_container &N,
+void group_container::extension(
+		group_container &N,
 		group_container &H, int verbose_level)
 	// N needs to have strong generators, 
 	// H needs to have sims
@@ -828,7 +839,8 @@ void group_container::extension(group_container &N,
 	FREE_int(tl);
 }
 
-void group_container::print_strong_generators(std::ostream &ost,
+void group_container::print_strong_generators(
+		std::ostream &ost,
 		int f_print_as_permutation)
 {
 	int i, l;
@@ -871,8 +883,7 @@ void group_container::print_strong_generators_with_different_action_verbose(
 	int *Elt;
 	
 	if (f_v) {
-		cout << "group_container::print_strong_generators_with_different_"
-				"action_verbose" << endl;
+		cout << "group_container::print_strong_generators_with_different_action_verbose" << endl;
 	}
 	if (!f_has_strong_generators) {
 		cout << "group_container::print_strong_generators_with_different_"

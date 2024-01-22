@@ -280,7 +280,8 @@ void union_find_on_k_subsets::init(
 }
 
 
-int union_find_on_k_subsets::is_minimal(int rk, int verbose_level)
+int union_find_on_k_subsets::is_minimal(
+		int rk, int verbose_level)
 {
 	int rk0;
 	

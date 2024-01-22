@@ -468,7 +468,7 @@ void schreier::init_generators(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "schreier::init_generators, nb=" << nb << endl;
+		cout << "schreier::init_generators nb=" << nb << endl;
 	}
 	
 	gens.allocate(nb, verbose_level - 2);
@@ -483,11 +483,11 @@ void schreier::init_generators(
 				gens_inv.ith(i), 0);
 	}
 	if (f_v) {
-		cout << "schreier::init_generators, before init_images" << endl;
+		cout << "schreier::init_generators before init_images" << endl;
 	}
 	init_images(nb, 0 /* verbose_level */);	
 	if (f_v) {
-		cout << "schreier::init_generators, after init_images" << endl;
+		cout << "schreier::init_generators after init_images" << endl;
 	}
 	if (f_v) {
 		cout << "schreier::init_generators done" << endl;
@@ -1141,19 +1141,20 @@ void schreier::compute_all_point_orbits(
 	}
 }
 
-void schreier::compute_all_point_orbits_with_prefered_reps(
-	int *prefered_reps, int nb_prefered_reps, 
+#if 0
+void schreier::compute_all_point_orbits_with_preferred_reps(
+	int *preferred_reps, int nb_preferred_reps,
 	int verbose_level)
 {
 	int i, pt, pt_loc, cur;
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_prefered_reps" << endl;
+		cout << "schreier::compute_all_point_orbits_with_preferred_reps" << endl;
 	}
 	initialize_tables();
-	for (i = 0; i < nb_prefered_reps; i++) {
-		pt = prefered_reps[i];
+	for (i = 0; i < nb_preferred_reps; i++) {
+		pt = preferred_reps[i];
 		pt_loc = orbit_inv[pt];
 		cur = orbit_first[nb_orbits];
 		if (pt_loc < cur) {
@@ -1176,6 +1177,7 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 		cout << " on points" << endl;
 	}
 }
+#endif
 
 void schreier::compute_all_point_orbits_with_preferred_labels(
 	long int *preferred_labels, int verbose_level)

@@ -39,7 +39,8 @@ set_and_stabilizer::~set_and_stabilizer()
 	}
 }
 
-void set_and_stabilizer::init(actions::action *A,
+void set_and_stabilizer::init(
+		actions::action *A,
 		actions::action *A2,
 		int verbose_level)
 {
@@ -55,7 +56,8 @@ void set_and_stabilizer::init(actions::action *A,
 	}
 }
 
-void set_and_stabilizer::group_order(ring_theory::longinteger_object &go)
+void set_and_stabilizer::group_order(
+		ring_theory::longinteger_object &go)
 {
 	if (Strong_gens == NULL) {
 		cout << "set_and_stabilizer::group_order "
@@ -99,7 +101,8 @@ void set_and_stabilizer::init_everything(
 	}
 }
 
-set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
+set_and_stabilizer *set_and_stabilizer::create_copy(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
@@ -272,7 +275,8 @@ void set_and_stabilizer::init_stab_from_file(
 	}
 }
 
-void set_and_stabilizer::print_set_tex(std::ostream &ost)
+void set_and_stabilizer::print_set_tex(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 
@@ -282,7 +286,8 @@ void set_and_stabilizer::print_set_tex(std::ostream &ost)
 	ost << "}";
 }
 
-void set_and_stabilizer::print_set_tex_for_inline_text(std::ostream &ost)
+void set_and_stabilizer::print_set_tex_for_inline_text(
+		std::ostream &ost)
 {
 	l1_interfaces::latex_interface L;
 
@@ -292,7 +297,8 @@ void set_and_stabilizer::print_set_tex_for_inline_text(std::ostream &ost)
 	ost << "}";
 }
 
-void set_and_stabilizer::print_generators_tex(std::ostream &ost)
+void set_and_stabilizer::print_generators_tex(
+		std::ostream &ost)
 {
 	Strong_gens->print_generators_tex();
 }
@@ -588,7 +594,8 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 	FREE_OBJECT(A_on_set);
 }
 
-void set_and_stabilizer::test_if_group_acts(int verbose_level)
+void set_and_stabilizer::test_if_group_acts(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -601,7 +608,8 @@ void set_and_stabilizer::test_if_group_acts(int verbose_level)
 	}
 }
 
-int set_and_stabilizer::find(long int pt)
+int set_and_stabilizer::find(
+		long int pt)
 {
 	data_structures::sorting Sorting;
 	int idx;

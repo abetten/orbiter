@@ -398,6 +398,41 @@ void orbits_activity::do_report(
 
 	}
 
+	else if (OC->f_has_cubic_surfaces) {
+
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
+			cout << "for a report of the surfaces, please use -draw_options ... -end" << endl;
+			exit(1);
+		}
+
+		poset_classification::poset_classification_report_options
+					*report_options;
+
+		string report_options_label;
+
+		report_options_label = "report_options";
+
+		report_options = Get_poset_classification_report_options(report_options_label);
+
+		int f_with_stabilizers = true;
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->SCW->create_report" << endl;
+			cout << "OC->SCW->Surf->n = " << OC->SCW->Surf->n << endl;
+		}
+		OC->SCW->create_report(
+				f_with_stabilizers,
+				orbiter_kernel_system::Orbiter->draw_options,
+				report_options,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->SCW->create_report" << endl;
+		}
+
+	}
+
 	else if (OC->f_has_classification_by_canonical_form) {
 
 		if (f_v) {

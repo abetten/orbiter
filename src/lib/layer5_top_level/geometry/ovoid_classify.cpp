@@ -102,7 +102,7 @@ ovoid_classify::~ovoid_classify()
 
 void ovoid_classify::init(
 		ovoid_classify_description *Descr,
-		groups::linear_group *LG,
+		group_constructions::linear_group *LG,
 		int &verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -116,7 +116,7 @@ void ovoid_classify::init(
 
 	ovoid_classify::Descr = Descr;
 
-	Control = Get_object_of_type_poset_classification_control(Descr->control_label);
+	Control = Get_poset_classification_control(Descr->control_label);
 
 	ovoid_classify::LG = LG;
 

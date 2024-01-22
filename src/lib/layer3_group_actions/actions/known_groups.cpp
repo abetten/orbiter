@@ -788,7 +788,7 @@ void known_groups::init_permutation_group(
 	int page_length_log = PAGE_LENGTH_LOG;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::permutation_representation_domain *P;
+	group_constructions::permutation_representation_domain *P;
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group, "
@@ -801,7 +801,7 @@ void known_groups::init_permutation_group(
 	A->label = "Perm_" + std::to_string(degree);
 	A->label_tex = "Perm\\_" + std::to_string(degree);
 
-	P = NEW_OBJECT(groups::permutation_representation_domain);
+	P = NEW_OBJECT(group_constructions::permutation_representation_domain);
 	A->type_G = perm_group_t;
 	A->G.perm_grp = P;
 	A->f_allocated = true;
@@ -1602,7 +1602,7 @@ void known_groups::init_wreath_product_group_and_restrict(
 	int f_v = (verbose_level >= 1);
 	action *A_wreath;
 	action *Awr;
-	groups::wreath_product *W;
+	group_constructions::wreath_product *W;
 	long int *points;
 	int nb_points;
 	int i;
@@ -1664,7 +1664,7 @@ void known_groups::init_wreath_product_group(
 {
 	int f_v = (verbose_level >= 1);
 	action *A_mtx;
-	groups::wreath_product *W;
+	group_constructions::wreath_product *W;
 	algebra::matrix_group *M;
 
 	if (f_v) {
@@ -1675,7 +1675,7 @@ void known_groups::init_wreath_product_group(
 
 	A_mtx = NEW_OBJECT(action);
 	M = NEW_OBJECT(algebra::matrix_group);
-	W = NEW_OBJECT(groups::wreath_product);
+	W = NEW_OBJECT(group_constructions::wreath_product);
 
 
 
@@ -1874,7 +1874,7 @@ void known_groups::init_permutation_representation(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation *P;
+	group_constructions::permutation_representation *P;
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_representation" << endl;
@@ -1883,7 +1883,7 @@ void known_groups::init_permutation_representation(
 		cout << "f_stay_in_the_old_action=" << f_stay_in_the_old_action << endl;
 	}
 
-	P = NEW_OBJECT(groups::permutation_representation);
+	P = NEW_OBJECT(group_constructions::permutation_representation);
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_representation "
@@ -1909,7 +1909,7 @@ void known_groups::init_permutation_representation(
 		A->low_level_point_size = A_original->low_level_point_size;
 		A->degree = A_original->degree;
 
-		groups::wreath_product *W;
+		group_constructions::wreath_product *W;
 		if (A_original->type_G != wreath_product_t) {
 			cout << "known_groups::init_permutation_representation "
 					"A_original->type_G != wreath_product_t" << endl;

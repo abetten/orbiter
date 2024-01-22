@@ -595,7 +595,7 @@ void spread_classify::init2(
 
 	poset_classification::poset_classification_control *Control;
 
-	Control = Get_object_of_type_poset_classification_control(
+	Control = Get_poset_classification_control(
 			Descr->poset_classification_control_label);
 
 

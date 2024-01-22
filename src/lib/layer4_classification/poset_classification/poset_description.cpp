@@ -30,6 +30,7 @@ poset_description::~poset_description()
 {
 }
 
+#if 0
 void poset_description::read_arguments_from_string(
 		const char *str, int verbose_level)
 {
@@ -68,7 +69,6 @@ void poset_description::read_arguments_from_string(
 	}
 }
 
-
 int poset_description::read_arguments(
 	int argc, const char **argv,
 	int verbose_level)
@@ -83,6 +83,7 @@ int poset_description::read_arguments(
 			continue;
 			}
 #endif
+
 
 		if (strcmp(argv[i], "-subset_lattice") == 0) {
 			f_subset_lattice = true;
@@ -111,6 +112,7 @@ int poset_description::read_arguments(
 	cout << "poset_description::read_arguments done" << endl;
 	return i;
 }
+#endif
 
 }}}
 

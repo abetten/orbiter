@@ -666,7 +666,7 @@ class surfaces_arc_lifting {
 public:
 	field_theory::finite_field *F;
 	int q;
-	groups::linear_group *LG4; // PGL(4,q)
+	group_constructions::linear_group *LG4; // PGL(4,q)
 
 	int f_semilinear;
 

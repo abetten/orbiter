@@ -57,6 +57,10 @@ orbits_create_description::orbits_create_description()
 	f_on_cubic_curves = false;
 	//std::string on_cubic_curves_control;
 
+	f_on_cubic_surfaces = false;
+	//std::string on_cubic_surfaces_PA;
+	//std::string on_cubic_surfaces_control;
+
 	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
 
@@ -168,6 +172,15 @@ int orbits_create_description::read_arguments(
 				cout << "-on_cubic_curves " << on_cubic_curves_control << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-on_cubic_surfaces") == 0) {
+			f_on_cubic_surfaces = true;
+			on_cubic_surfaces_PA.assign(argv[++i]);
+			on_cubic_surfaces_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_cubic_surfaces " << on_cubic_surfaces_PA
+						<< " " << on_cubic_surfaces_control << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
 			f_classification_by_canonical_form = true;
@@ -268,6 +281,10 @@ void orbits_create_description::print()
 	}
 	if (f_on_cubic_curves) {
 		cout << "-on_cubic_curves " << on_cubic_curves_control << endl;
+	}
+	if (f_on_cubic_surfaces) {
+		cout << "-on_cubic_surfaces " << on_cubic_surfaces_PA
+				<< " " << on_cubic_surfaces_control << endl;
 	}
 	if (f_classification_by_canonical_form) {
 		cout << "-classification_by_canonical_form " << endl;

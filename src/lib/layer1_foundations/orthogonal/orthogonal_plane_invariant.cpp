@@ -79,8 +79,8 @@ void orthogonal_plane_invariant::init(
 	int rk, H, log2_of_q, n_choose_k;
 	int f_special = false;
 	int f_complete = true;
-	int base_col[1000];
-	int subset[1000];
+	int *base_col;
+	int *subset;
 	int level = 3;
 	int n = 5;
 	int cnt;
@@ -92,6 +92,8 @@ void orthogonal_plane_invariant::init(
 	data_structures::algorithms Algo;
 
 
+	base_col = NEW_int(n);
+	subset = NEW_int(level);
 
 	q = O->F->q;
 	n_choose_k = Combi.int_n_choose_k(size, level);
@@ -125,6 +127,9 @@ void orthogonal_plane_invariant::init(
 			Int_vec_print(cout, subset, level);
 			cout << " : "; // << endl;
 		}
+
+		// Mtx[level * n]
+
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 		rk = O->F->Linear_algebra->Gauss_int(
 				Mtx, f_special, f_complete,
@@ -409,6 +414,9 @@ void orthogonal_plane_invariant::init(
 
 	}
 #endif
+
+	FREE_int(base_col);
+	FREE_int(subset);
 
 	FREE_int(Mtx);
 	FREE_int(Hash);

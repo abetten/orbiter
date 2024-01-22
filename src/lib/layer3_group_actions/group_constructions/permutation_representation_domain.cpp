@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 
 permutation_representation_domain::permutation_representation_domain()

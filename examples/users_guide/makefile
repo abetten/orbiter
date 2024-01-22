@@ -511,7 +511,7 @@ SURFACE_F9_1_EQN_RESTRICTED="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+3*X1*X2^2+3*X0*X1*X2"
 
 
 
-# Section 8.1 Creation
+# Section 8.2 Creation
 
 # points:
 #0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
@@ -531,7 +531,7 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 63,64,65,66,68,69,73,75,77,78,81,82"
 
 
-# Section 8.2 Quartic Curves
+# Section 8.3 Quartic Curves
 
 
 
@@ -546,9 +546,9 @@ NB_CUBIC_SURFACES_Q19=10
 NB_QUARTIC_CURVES_Q19=14
 
 
-# Section 8.3 Classification
+# Section 8.4 Classification
 
-# Section 8.4 Interface to GAP
+# Section 8.5 Interface to GAP
 
 
 
@@ -1673,6 +1673,8 @@ BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 ###############################################################################
 
 test_2:
+	make test_2_2
+	make test_2_3
 	make test_2_4
 	make test_2_5
 	make test_2_6
@@ -1685,7 +1687,11 @@ test_2:
 	
 	
 SECTION_ORBITER_SESSION:
-	
+
+test_2_2:
+	make test_orbiter_session
+
+
 test_orbiter_session:
 	$(ORBITER)
 
@@ -1696,6 +1702,7 @@ test_orbiter_session:
 
 SECTION_MAKEFILES_AND_SHELL_SCRIPTS:
 
+test_2_3:
 
 
 ###############################################################################
@@ -2752,18 +2759,23 @@ test_3:
 SECTION_BASIC_NUMBER_THEORY:
 
 test_3_1:
+	make PR101
+	make PR101_smallest
 	make PR29
 	make PR31
 	make PR37
-	make PR_100
-	make PR_915839
-	make PR_915839_check
-	make DL_915839
-	make IM_723
+	make PR_2_100
+	make PR_2_1000
+	make PE_number_2_1000
+	make number_of_primitive_roots_10000
 	make IM_3_19
+	make IM_723
 	make IM
 	make IM_gcd
 	make PM3a
+	make PR_915839
+	make PR_915839_check
+	make DL_915839
 	make sqrt_mod
 	make sqrt_5_mod_11
 	make sqrt_5_mod_19
@@ -2772,16 +2784,29 @@ test_3_1:
 	make Eulerfunction_150
 	make Eulerfunction_900
 	make Eulerfunction_10000
-	make PR_1000
-	make PE_number_1000
-	make number_of_primitive_roots_10000
 	make power_function_2_mod_11
 	make draw_mod_13
+	make inverse_mod_a
+	make smith_normal_form_1
+	make smith_normal_form_2
+	make jacobi_35_41
+	make jacobi_33_41
+	make jacobi_a
+	make jacobi_5_19
+	make sqrt_mod_7817
 	make Chinese_remainders_A
 	make Chinese_remainders_B
 	make Chinese_remainders_C2
 	make Chinese_remainders_C3
 
+
+
+PR101:
+	$(ORBITER) -v 5 -primitive_root 101
+
+
+PR101_smallest:
+	$(ORBITER) -v 5 -smallest_primitive_root 101
 
 
 PR29:
@@ -2793,11 +2818,49 @@ PR31:
 PR37:
 	$(ORBITER) -v 1 -smallest_primitive_root 37
 
-PR_100:
+PR_2_100:
 	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 100
 
 
 
+
+PR_2_1000:
+	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		primitive_element_table_2_1000.csv
+	pdflatex primitive_element_table_2_1000.tex
+	$(OPEN) primitive_element_table_2_1000.pdf
+
+PE_number_2_1000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
+	pdflatex table_number_of_pe_2_1000.tex
+	$(OPEN) table_number_of_pe_2_1000.pdf
+
+number_of_primitive_roots_10000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001
+
+
+
+IM_3_19:
+	$(ORBITER) -v 5 -inverse_mod 3 19
+
+
+IM_723:
+	$(ORBITER) -v 5 -inverse_mod 723 4060
+
+
+
+IM:
+	$(ORBITER) -v 5 -inverse_mod 1865025205 2147483647
+
+
+IM_gcd:
+	$(ORBITER) -v 5 -extended_gcd 1865025205 2147483647
+
+
+PM3a:
+	$(ORBITER) -v 5 -power_mod 16807 1073741823 2147483647
 
 # randomized algo:
 
@@ -2816,25 +2879,6 @@ DL_915839:
 
 
 #The discrete log is 49842 since 487320 = 43085^49842 mod 915839, time: 0:22
-
-IM_723:
-	$(ORBITER) -v 5 -inverse_mod 723 4060
-
-
-
-IM_3_19:
-	$(ORBITER) -v 5 -inverse_mod 3 19
-
-
-IM:
-	$(ORBITER) -v 5 -inverse_mod 1865025205 2147483647
-
-IM_gcd:
-	$(ORBITER) -v 5 -extended_gcd 1865025205 2147483647
-
-
-PM3a:
-	$(ORBITER) -v 5 -power_mod 16807 1073741823 2147483647
 
 sqrt_mod:
 	$(ORBITER) -v 2 -square_root_mod 33 41
@@ -2884,21 +2928,6 @@ Eulerfunction_10000:
 	pdflatex table_eulerfunction_10000_10150.tex
 	$(OPEN) table_eulerfunction_10000_10150.pdf
 
-PR_1000:
-	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		primitive_element_table_2_1000.csv
-	pdflatex primitive_element_table_2_1000.tex
-	$(OPEN) primitive_element_table_2_1000.pdf
-
-PE_number_1000:
-	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
-	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
-	pdflatex table_number_of_pe_2_1000.tex
-	$(OPEN) table_number_of_pe_2_1000.pdf
-
-number_of_primitive_roots_10000:
-	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001
 
 
 power_function_2_mod_11:
@@ -2918,6 +2947,61 @@ draw_mod_13:
 		-end
 	pdflatex mod_13_draw.tex
 	$(OPEN) mod_13_draw.pdf
+
+
+
+
+inverse_mod_26_99:
+	$(ORBITER) -v 2 -inverse_mod 26 99
+
+
+inverse_mod_a:
+	$(ORBITER) -v 2 -inverse_mod 18059241 58014043
+
+
+
+smith_normal_form_1:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-dense "1,2,3,4,5,6,7,8,9" \
+			-format 3 \
+		-end \
+		-smith_normal_form M
+
+
+smith_normal_form_2:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-dense "9,8,7,6,5,4,3,2,1" \
+			-format 3 \
+		-end \
+		-smith_normal_form M
+
+
+
+jacobi_35_41:
+	$(ORBITER) -v 5 -jacobi 35 41
+	pdflatex jacobi_35_41.tex
+	$(OPEN) jacobi_35_41.pdf
+
+
+jacobi_33_41:
+	$(ORBITER) -v 5 -jacobi 33 41
+	pdflatex jacobi_33_41.tex
+	$(OPEN) jacobi_33_41.pdf
+
+
+jacobi_a:
+	$(ORBITER) -v 5 -jacobi 2221 7817
+
+jacobi_5_19:
+	$(ORBITER) -v 5 -jacobi 5 19
+
+sqrt_mod_7817:
+		$(ORBITER) -v 2 -square_root_mod 2221 7817
+
+
+
 
 
 Chinese_remainders_A:
@@ -2972,9 +3056,9 @@ Chinese_remainders_C3:
 
 
 ###############################################################################
-# Section 3.2: Prime Fields
+# Section 3.2: Finite Fields
 
-SECTION_PRIME_FIELDS:
+SECTION_FINITE_FIELDS:
 
 
 test_3_2:
@@ -4576,6 +4660,7 @@ test_4_9:
 	make fixed_objects_2C
 	make fix_structure_G1
 	make trans
+	make PG_2_3_plane_pencil
 
 
 
@@ -10076,23 +10161,21 @@ test_8:
 	make test_8_1
 	make test_8_2
 	make test_8_3
+	make test_8_4
+
 
 
 
 
 ###############################################################################
-# Section 8.1: Cubic Surfaces Creation
+# Section 8.1: Global Commands for Cubic Surfaces 
 
 
-SECTION_CUBIC_SURFACES_CREATION:
+SECTION_CUBIC_SURFACES_GLOBAL:
 
 
 
 test_8_1:
-	make surface_4_0
-	make Hirschfeld_surface_get_incidence_matrix_40_40
-	make Hirschfeld_surface_incma_40_40_c
-	make surface_4_0_plane_type_of_lines_on_Klein_quadric
 	make surface_4_0_lines_vs_lines
 	make surface_4_0_lines_vs_tritangent_planes
 	make surface_4_0_dot_products_columns
@@ -10102,6 +10185,135 @@ test_8_1:
 	make surface_4_0_dot_products_rows
 	make surface_4_0_dot_products_rowspan
 	make surface_4_0_single_six_times_lines_vs_lines_rowspan
+
+
+surface_4_0_lines_vs_lines:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_cubic_surface_line_vs_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file PG_3_4_lines_vs_lines_incma.csv \
+		-box_width 32 -bit_depth 24 \
+		-partition 3 27 27 \
+		-end
+	convert PG_3_4_lines_vs_lines_incma_draw.bmp PG_3_4_lines_vs_lines_incma_draw.png
+
+
+# PG_3_4_lines_vs_lines_incma.csv
+
+
+surface_4_0_lines_vs_tritangent_planes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_cubic_surface_line_tritangent_plane_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file PG_3_4_lines_tritplanes_incma.csv \
+		-box_width 32 -bit_depth 24 \
+		-partition 3 27 45 \
+		-end
+	convert PG_3_4_lines_tritplanes_incma_draw.bmp PG_3_4_lines_tritplanes_incma_draw.png
+
+
+
+
+surface_4_0_dot_products_columns:
+	$(ORBITER) -v 3 \
+		-define line_vs_trit -vector \
+			-file PG_3_4_lines_tritplanes_incma.csv \
+		-end \
+		-dot_product_of_columns line_vs_trit
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file line_vs_trit_dot_products_columns.csv \
+		-box_width 32 -bit_depth 24 \
+		-partition 3 45 45 \
+		-end
+	convert line_vs_trit_dot_products_columns_draw.bmp line_vs_trit_dot_products_columns_draw.png
+
+
+
+surface_4_0_export_double_sixes:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-with P -do \
+		-projective_space_activity \
+			-export_double_sixes \
+		-end \
+
+
+surface_4_0_multiply_half_double_six_vs_lines:
+	$(ORBITER) -v 3 \
+		-define lines_vs_lines -vector \
+			-file PG_3_4_lines_vs_lines_incma.csv \
+		-end \
+		-define single_six -vector \
+			-file PG_3_4_single_sixes_char_vec.csv \
+		-end \
+		-matrix_multiply_over_Z single_six lines_vs_lines
+
+# single_six_times_lines_vs_lines.csv
+
+surface_4_0_multiply_half_double_six_vs_incma:
+	$(ORBITER) -v 3 \
+		-define line_vs_trit -vector \
+			-file PG_3_4_lines_tritplanes_incma.csv \
+		-end \
+		-define single_six -vector \
+			-file PG_3_4_single_sixes_char_vec.csv \
+		-end \
+		-matrix_multiply_over_Z single_six line_vs_trit
+
+# 72 x 45:
+#single_six_times_line_vs_trit.csv
+
+surface_4_0_dot_products_rows:
+	$(ORBITER) -v 3 \
+		-define single_six_vs_trit_planes -vector \
+			-file single_six_times_line_vs_trit.csv \
+		-end \
+		-dot_product_of_rows single_six_vs_trit_planes
+
+# 72 x 72:
+#single_six_vs_trit_planes_dot_products_rows.csv
+
+surface_4_0_dot_products_rowspan:
+	$(ORBITER) -v 3 \
+		-define single_six_vs_trit_planes -vector \
+			-file single_six_times_line_vs_trit.csv \
+		-end \
+		-rowspan_over_R single_six_vs_trit_planes
+
+surface_4_0_single_six_times_lines_vs_lines_rowspan:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-file single_six_times_lines_vs_lines.csv \
+		-end \
+		-rowspan_over_R M
+
+
+
+
+###############################################################################
+# Section 8.2: Cubic Surfaces Creation
+
+
+SECTION_CUBIC_SURFACES_CREATION:
+
+
+
+test_8_2:
+	make surface_4_0
+	make Hirschfeld_surface_get_incidence_matrix_40_40
+	make Hirschfeld_surface_incma_40_40_c
+	make surface_4_0_plane_type_of_lines_on_Klein_quadric
 	make surface_4_0_roots
 	make surface_7_0
 	make surface_7_0_roots
@@ -10180,7 +10392,7 @@ Hirschfeld_surface_get_incidence_matrix_40_40:
 		-with P -do \
 		-projective_space_activity \
 			-restricted_incidence_matrix 1 3 points planes "H_incma_40_40" \
-		-end \
+		-end
 
 
 
@@ -10231,90 +10443,6 @@ surface_4_0_plane_type_of_lines_on_Klein_quadric:
 #The plane intersection type is (5^270)
 #L_highest_weight_objects.csv
 
-
-surface_4_0_lines_vs_lines:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-with P -do \
-		-projective_space_activity \
-			-export_cubic_surface_line_vs_line_incidence_matrix \
-		-end
-
-
-# PG_3_4_lines_vs_lines_incma.csv
-
-
-surface_4_0_lines_vs_tritangent_planes:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-with P -do \
-		-projective_space_activity \
-			-export_cubic_surface_line_tritangent_plane_incidence_matrix \
-		-end \
-
-surface_4_0_dot_products_columns:
-	$(ORBITER) -v 3 \
-		-define line_vs_trit -vector \
-			-file PG_3_4_lines_tritplanes_incma.csv \
-		-end \
-		-dot_product_of_columns line_vs_trit
-
-
-surface_4_0_export_double_sixes:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-with P -do \
-		-projective_space_activity \
-			-export_double_sixes \
-		-end \
-
-
-surface_4_0_multiply_half_double_six_vs_lines:
-	$(ORBITER) -v 3 \
-		-define lines_vs_lines -vector \
-			-file PG_3_4_lines_vs_lines_incma.csv \
-		-end \
-		-define single_six -vector \
-			-file PG_3_4_single_sixes_char_vec.csv \
-		-end \
-		-matrix_multiply_over_Z single_six lines_vs_lines
-
-# single_six_times_lines_vs_lines.csv
-
-surface_4_0_multiply_half_double_six_vs_incma:
-	$(ORBITER) -v 3 \
-		-define line_vs_trit -vector \
-			-file PG_3_4_lines_tritplanes_incma.csv \
-		-end \
-		-define single_six -vector \
-			-file PG_3_4_single_sixes_char_vec.csv \
-		-end \
-		-matrix_multiply_over_Z single_six line_vs_trit
-
-surface_4_0_dot_products_rows:
-	$(ORBITER) -v 3 \
-		-define single_six_vs_trit_planes -vector \
-			-file single_six_times_line_vs_trit.csv \
-		-end \
-		-dot_product_of_rows single_six_vs_trit_planes
-
-
-surface_4_0_dot_products_rowspan:
-	$(ORBITER) -v 3 \
-		-define single_six_vs_trit_planes -vector \
-			-file single_six_times_line_vs_trit.csv \
-		-end \
-		-rowspan_over_R single_six_vs_trit_planes
-
-surface_4_0_single_six_times_lines_vs_lines_rowspan:
-	$(ORBITER) -v 3 \
-		-define M -vector \
-			-file single_six_times_lines_vs_lines.csv \
-		-end \
-		-rowspan_over_R M
 
 
 
@@ -10928,13 +11056,13 @@ surface_11_1:
 
 
 ###############################################################################
-# Section 8.2: Cubic Surfaces and Quartic Curves 
+# Section 8.3: Cubic Surfaces and Quartic Curves 
 
 
 SECTION_CUBIC_SURFACES_AND_QUARTIC_CURVES:
 
 
-test_8_2:
+test_8_3:
 	make quartic_curve_9_0_report
 	make quartic_curve_13_0_report
 	make PG_2_13_rank_lines
@@ -11293,13 +11421,13 @@ quartic_curves_q19_classify:
 
 
 ###############################################################################
-# Section 8.3: Classification of Cubic Surfaces with 27 lines
+# Section 8.4: Classification of Cubic Surfaces with 27 lines
 
 
 SECTION_CLASSIFICATION_OF_CUBIC_SURFACES_WITH_27_LINES:
 
 
-test_8_3:
+test_8_4:
 	make surface_classify_q4
 	make surface_classify_q4_arc_lifting_two_lines
 	make surface_classify_q7
@@ -11311,7 +11439,30 @@ test_8_3:
 	make Family_general_F11_iso_test
 
 
+
 surface_classify_q4:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q4" \
+		-end \
+		-define report_options -poset_classification_report_options \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_surfaces P Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end
+	pdflatex Surfaces_q4.tex 
+	open Surfaces_q4.pdf
+
+#			-draw_poset \
+
+
+surface_classify_q4_old:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -11356,8 +11507,28 @@ surface_classify_q4_arc_lifting_two_lines:
 
 
 
-
 surface_classify_q7:
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q7" \
+		-end \
+		-define report_options -poset_classification_report_options \
+		-end \
+		-define Orb -orbits \
+			-on_cubic_surfaces P Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end
+	pdflatex Surfaces_q7.tex 
+	open Surfaces_q7.pdf
+
+
+
+surface_classify_q7_old:
 	$(ORBITER) -v 5 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space -n 3 -field F -end \
@@ -11376,63 +11547,66 @@ surface_classify_q7:
 
 #neighbors_7.csv
 
+
 surface_classify_q9:
-	$(ORBITER) -v 15 \
+	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 9 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes Surf27 Control \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q9" \
 		-end \
-		-with Surf27 -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
+		-define report_options -poset_classification_report_options \
 		-end \
-		-print_symbols
-	pdflatex Surfaces_q9.tex
-	$(OPEN) Surfaces_q9.pdf
+		-define Orb -orbits \
+			-on_cubic_surfaces P Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end
+	pdflatex Surfaces_q9.tex 
+	open Surfaces_q9.pdf
 
 
 surface_classify_q11:
 	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 3 -field F -end \
-		-define Control -poset_classification_control -W -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes C Control \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q11" \
 		-end \
-		-with C -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
+		-define report_options -poset_classification_report_options \
 		-end \
-		-with C -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-create_source_code \
+		-define Orb -orbits \
+			-on_cubic_surfaces P Control \
 		-end \
-		-print_symbols
-	pdflatex Surfaces_q11.tex
-	$(OPEN) Surfaces_q11.pdf
-
+		-with Orb -do -orbits_activity \
+			-report \
+		-end
+	pdflatex Surfaces_q11.tex 
+	open Surfaces_q11.pdf
 
 
 surface_classify_q13:
 	$(ORBITER) -v 5 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define Control -poset_classification_control -W -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_surfaces_with_double_sixes C Control \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q13" \
 		-end \
-		-with C -do \
-		-classification_of_cubic_surfaces_with_double_sixes_activity \
-			-report -end \
+		-define report_options -poset_classification_report_options \
 		-end \
-		-print_symbols
-	pdflatex Surfaces_q13.tex
-	$(OPEN) Surfaces_q13.pdf
+		-define Orb -orbits \
+			-on_cubic_surfaces P Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+		-end
+	pdflatex Surfaces_q13.tex 
+	open Surfaces_q13.pdf
+
 
 
 
@@ -11501,12 +11675,12 @@ Family_general_F11_iso_test:
 
 
 ###############################################################################
-# Section 8.4: Interfaces
+# Section 8.5: Interfaces
 
 SECTION_CUBIC_SURFACES_INTERFACES:
 
 
-test_8_4:
+test_8_5:
 	make surface_4_0_export_gap
 
 surface_4_0_export_gap:
@@ -11542,43 +11716,6 @@ SECTION_NUMBER_THEORY:
 
 
 test_9_1:
-	make inverse_mod_a
-	make jacobi_35_41
-	make jacobi_33_41
-	make jacobi_a
-	make jacobi_5_19
-	make sqrt_mod_7817
-
-
-inverse_mod_26_99:
-	$(ORBITER) -v 2 -inverse_mod 26 99
-
-
-inverse_mod_a:
-	$(ORBITER) -v 2 -inverse_mod 18059241 58014043
-
-
-jacobi_35_41:
-	$(ORBITER) -v 5 -jacobi 35 41
-	pdflatex jacobi_35_41.tex
-	$(OPEN) jacobi_35_41.pdf
-
-
-jacobi_33_41:
-	$(ORBITER) -v 5 -jacobi 33 41
-	pdflatex jacobi_33_41.tex
-	$(OPEN) jacobi_33_41.pdf
-
-
-jacobi_a:
-	$(ORBITER) -v 5 -jacobi 2221 7817
-
-jacobi_5_19:
-	$(ORBITER) -v 5 -jacobi 5 19
-
-sqrt_mod_7817:
-		$(ORBITER) -v 2 -square_root_mod 2221 7817
-
 
 
 
@@ -11714,7 +11851,7 @@ test_9_3:
 	make pseudoprime34
 	make pseudoprime35
 	make pseudoprime36
-	make MATH360_hw2
+	#make MATH360_hw2
 	make F_256_Rijndahl
 	make all_square_roots_mod_n_1549411
 	make power_mod_211
@@ -12208,6 +12345,8 @@ pseudoprime36:
 # 13226193383093105242537919350220354135219441323641636665484262532145217
 # factoring takes 46 seconds
 
+
+#ToDo:
 
 MATH360_hw2:
 	$(ORBITER) -v 3 \

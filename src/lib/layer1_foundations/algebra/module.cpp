@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace linear_algebra {
+namespace algebra {
 
 
 module::module()
@@ -565,6 +565,133 @@ void module::smith_normal_form(
 
 }
 
+void module::apply(int *input, int *output, int *perm,
+		int module_dimension_m, int module_dimension_n, int *module_basis,
+		int *v1, int *v2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "module::apply" << endl;
+	}
+
+	if (f_vv) {
+		cout << "module::apply input=";
+		Int_vec_print(cout, input, module_dimension_m);
+		cout << endl;
+	}
+
+
+	matrix_multiply_over_Z_low_level(
+			input, module_basis,
+			1, module_dimension_m, module_dimension_m, module_dimension_n,
+			v1, verbose_level - 2);
+
+	if (f_vv) {
+		cout << "module::apply v1=";
+		Int_vec_print(cout, v1, module_dimension_n);
+		cout << endl;
+	}
+
+	int i, a;
+
+	for (i = 0; i < module_dimension_n; i++) {
+		a = v1[i];
+		v2[perm[i]] = a;
+	}
+	if (f_vv) {
+		cout << "module::apply v2=";
+		Int_vec_print(cout, v2, module_dimension_n);
+		cout << endl;
+	}
+
+#if 1
+	double *D;
+	int j;
+
+	D = new double [module_dimension_n * (module_dimension_m + 1)];
+
+	for (i = 0; i < module_dimension_n; i++) {
+		for (j = 0; j < module_dimension_m; j++) {
+
+			D[i * (module_dimension_m + 1) + j] = module_basis[j * module_dimension_m + i];
+		}
+		D[i * (module_dimension_m + 1) + module_dimension_m] = v2[i];
+	}
+
+
+
+
+	orbiter_kernel_system::numerics Num;
+	int *base_cols;
+	int f_complete = true;
+	int r;
+
+	base_cols = NEW_int(module_dimension_m + 1);
+
+	r = Num.Gauss_elimination(
+				D, module_dimension_n, module_dimension_m + 1,
+			base_cols, f_complete,
+			verbose_level - 5);
+
+	if (r != module_dimension_m) {
+		cout << "something is wrong, r = " << r << endl;
+		cout << "should be = " << module_dimension_m << endl;
+		exit(1);
+	}
+
+	int kernel_m, kernel_n;
+	double *kernel;
+
+	kernel = new double [module_dimension_n * (module_dimension_m + 1)];
+
+	Num.get_kernel(D, module_dimension_n, module_dimension_m + 1,
+		base_cols, r /* nb_base_cols */,
+		kernel_m, kernel_n,
+		kernel);
+
+	cout << "kernel_m = " << kernel_m << endl;
+	cout << "kernel_n = " << kernel_n << endl;
+
+	if (kernel_m != module_dimension_m + 1)	{
+		cout << "module::apply "
+				"kernel_m != module_dimension_m + 1" << endl;
+		exit(1);
+	}
+	if (kernel_n != 1)	{
+		cout << "module::apply "
+				"kernel_n != 1" << endl;
+		exit(1);
+	}
+	double d, dv;
+
+	d = kernel[module_dimension_m];
+
+	if (ABS(d) < 0.001) {
+		cout << "module::apply "
+				"ABS(d) < 0.001" << endl;
+		exit(1);
+	}
+	dv = -1. / d;
+	for (i = 0; i < module_dimension_m + 1; i++) {
+		kernel[i] *= dv;
+	}
+
+	for (i = 0; i < module_dimension_m; i++) {
+		output[i] = kernel[i];
+	}
+
+	FREE_int(base_cols);
+
+	if (f_vv) {
+		cout << "module::apply output=";
+		Int_vec_print(cout, output, module_dimension_n);
+		cout << endl;
+	}
+#endif
+
+}
 
 
 

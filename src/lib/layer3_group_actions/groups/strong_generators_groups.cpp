@@ -103,7 +103,7 @@ void strong_generators::prepare_from_generator_data(
 void strong_generators::init_linear_group_from_scratch(
 		actions::action *&A,
 	field_theory::finite_field *F, int n,
-	linear_group_description *Descr,
+	group_constructions::linear_group_description *Descr,
 	data_structures_groups::vector_ge *&nice_gens,
 	std::string &label,
 	std::string &label_tex,

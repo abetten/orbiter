@@ -32,7 +32,7 @@ translation_plane_activity::~translation_plane_activity()
 
 void translation_plane_activity::init(
 		translation_plane_activity_description *Descr,
-		data_structures_groups::translation_plane_via_andre_model *TP,
+		combinatorics_with_groups::translation_plane_via_andre_model *TP,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

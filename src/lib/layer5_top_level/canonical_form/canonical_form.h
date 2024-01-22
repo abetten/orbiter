@@ -609,7 +609,7 @@ public:
 
 	combinatorics::tdo_scheme_compute *TDO;
 
-	data_structures_groups::group_action_on_combinatorial_object *GA_on_CO;
+	combinatorics_with_groups::group_action_on_combinatorial_object *GA_on_CO;
 
 	object_with_properties();
 	~object_with_properties();

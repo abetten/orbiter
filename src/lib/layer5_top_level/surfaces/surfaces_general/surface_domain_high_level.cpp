@@ -44,7 +44,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	poset_classification::poset_classification_control *Control;
 
 	Control =
-			Get_object_of_type_poset_classification_control(control_label);
+			Get_poset_classification_control(control_label);
 
 
 	if (f_v) {

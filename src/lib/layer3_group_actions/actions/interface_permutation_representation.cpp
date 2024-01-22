@@ -96,7 +96,7 @@ static void permutation_representation_group_element_print_verbose(
 	void *elt, std::ostream &ost);
 static void permutation_representation_group_print_point(
 		action &A,
-	long int a, std::ostream &ost);
+	long int a, std::ostream &ost, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_permutation_representation_group()
@@ -141,7 +141,7 @@ static long int permutation_representation_group_element_image_of(
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 	long int b;
 
@@ -204,7 +204,7 @@ static void permutation_representation_group_element_one(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 	if (f_v) {
@@ -219,7 +219,7 @@ static int permutation_representation_group_element_is_one(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 	int ret;
 
@@ -246,7 +246,7 @@ static void permutation_representation_group_element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -261,7 +261,7 @@ static void permutation_representation_group_element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -276,7 +276,7 @@ static void permutation_representation_group_element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 	uchar *p_elt;
 
@@ -296,7 +296,7 @@ static int permutation_representation_group_element_store(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 	int hdl;
 
@@ -318,7 +318,7 @@ static void permutation_representation_group_element_mult(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -348,7 +348,7 @@ static void permutation_representation_group_element_invert(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -389,7 +389,7 @@ static void permutation_representation_group_element_move(
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -404,7 +404,7 @@ static void permutation_representation_group_element_dispose(
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_dispose "
@@ -417,7 +417,7 @@ static void permutation_representation_group_element_print(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 
@@ -441,7 +441,7 @@ static void permutation_representation_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 
@@ -462,7 +462,7 @@ static void permutation_representation_group_element_print_for_make_element_no_c
 static void permutation_representation_group_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 
@@ -472,7 +472,7 @@ static void permutation_representation_group_element_print_quick(
 static void permutation_representation_group_element_print_latex(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 
@@ -493,7 +493,7 @@ static void permutation_representation_group_element_print_latex_with_print_poin
 static void permutation_representation_group_element_print_verbose(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::permutation_representation &P = *A.G.Permutation_representation;
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
@@ -501,7 +501,7 @@ static void permutation_representation_group_element_print_verbose(
 }
 
 static void permutation_representation_group_print_point(
-		action &A, long int a, std::ostream &ost)
+		action &A, long int a, std::ostream &ost, int verbose_level)
 {
 	//permutation_representation &P = *A.G.Permutation_representation;
 

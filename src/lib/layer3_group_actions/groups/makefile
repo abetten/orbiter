@@ -7,15 +7,8 @@ LFLAGS = -lm
 
 MODULES = \
 	conjugacy_class_of_elements.o \
-	direct_product.o \
 	exceptional_isomorphism_O4.o \
-	linear_group.o \
-	linear_group_description.o \
 	orbits_on_something.o \
-	permutation_group_create.o \
-	permutation_group_description.o \
-	permutation_representation_domain.o \
-	permutation_representation.o \
 	schreier.o \
 	schreier_io.o \
 	schreier_sims.o \
@@ -29,7 +22,6 @@ MODULES = \
 	strong_generators_groups.o \
 	subgroup.o \
 	sylow_structure.o \
-	wreath_product.o \
 	linalg.o \
 	shallow_schreier_ai.o
 

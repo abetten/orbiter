@@ -137,7 +137,8 @@ public:
 	~activity_description();
 	void read_arguments(
 			interface_symbol_table *Sym,
-			int argc, std::string *argv, int &i, int verbose_level);
+			int argc, std::string *argv, int &i,
+			int verbose_level);
 	void worker(
 			int verbose_level);
 	void print();
@@ -207,6 +208,47 @@ public:
 
 class interface_algebra {
 
+	int f_primitive_root;
+	std::string primitive_root_p;
+
+	int f_smallest_primitive_root;
+	int smallest_primitive_root_p;
+
+	int f_smallest_primitive_root_interval;
+	int smallest_primitive_root_interval_min;
+	int smallest_primitive_root_interval_max;
+
+	int f_number_of_primitive_roots_interval;
+
+	int f_inverse_mod;
+	int inverse_mod_a;
+	int inverse_mod_n;
+
+	int f_extended_gcd;
+	int extended_gcd_a;
+	int extended_gcd_b;
+
+	int f_power_mod;
+	std::string power_mod_a;
+	std::string power_mod_k;
+	std::string power_mod_n;
+
+	int f_discrete_log;
+	long int discrete_log_y;
+	long int discrete_log_a;
+	long int discrete_log_m;
+
+	int f_square_root;
+	std::string square_root_number;
+
+	int f_square_root_mod;
+	std::string square_root_mod_a;
+	std::string square_root_mod_m;
+
+	int f_all_square_roots_mod_n;
+	std::string all_square_roots_mod_n_a;
+	std::string all_square_roots_mod_n_n;
+
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
@@ -228,6 +270,7 @@ class interface_algebra {
 
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
+
 	int f_young_symmetrizer_sym_4;
 
 	int f_draw_mod_n;
@@ -256,6 +299,14 @@ class interface_algebra {
 
 	int f_smith_normal_form;
 	std::string smith_normal_form_matrix;
+
+	int f_jacobi;
+	long int jacobi_top;
+	long int jacobi_bottom;
+
+	int f_Chinese_remainders;
+	std::string Chinese_remainders_R;
+	std::string Chinese_remainders_M;
 
 
 public:
@@ -514,36 +565,6 @@ class interface_cryptography {
 	long int RSA_m;
 	std::string RSA_text;
 
-	int f_primitive_root;
-	std::string primitive_root_p;
-
-	int f_smallest_primitive_root;
-	int smallest_primitive_root_p;
-
-	int f_smallest_primitive_root_interval;
-	int smallest_primitive_root_interval_min;
-	int smallest_primitive_root_interval_max;
-
-	int f_number_of_primitive_roots_interval;
-
-	int f_inverse_mod;
-	int inverse_mod_a;
-	int inverse_mod_n;
-
-	int f_extended_gcd;
-	int extended_gcd_a;
-	int extended_gcd_b;
-
-	int f_power_mod;
-	std::string power_mod_a;
-	std::string power_mod_k;
-	std::string power_mod_n;
-
-	int f_discrete_log;
-	long int discrete_log_y;
-	long int discrete_log_a;
-	long int discrete_log_m;
-
 	int f_RSA_setup;
 	int RSA_setup_nb_bits;
 	int RSA_setup_nb_tests_solovay_strassen;
@@ -558,25 +579,10 @@ class interface_cryptography {
 	int sift_smooth_len;
 	std::string sift_smooth_factor_base;
 
-	int f_square_root;
-	std::string square_root_number;
-
-	int f_square_root_mod;
-	std::string square_root_mod_a;
-	std::string square_root_mod_m;
-
-	int f_all_square_roots_mod_n;
-	std::string all_square_roots_mod_n_a;
-	std::string all_square_roots_mod_n_n;
-
 	int f_quadratic_sieve;
 	int quadratic_sieve_n;
 	int quadratic_sieve_factorbase;
 	int quadratic_sieve_x0;
-
-	int f_jacobi;
-	long int jacobi_top;
-	long int jacobi_bottom;
 
 	int f_solovay_strassen;
 	int solovay_strassen_p;
@@ -614,9 +620,6 @@ class interface_cryptography {
 	int affine_sequence_c;
 	int affine_sequence_m;
 
-	int f_Chinese_remainders;
-	std::string Chinese_remainders_R;
-	std::string Chinese_remainders_M;
 
 
 public:
@@ -1044,9 +1047,11 @@ public:
 
 	orbiter_top_level_session();
 	~orbiter_top_level_session();
+	void execute_command_line(
+			int argc, const char **argv, int verbose_level);
 	int startup_and_read_arguments(
 			int argc,
-			std::string *argv, int i0);
+			std::string *argv, int i0, int verbose_level);
 	void handle_everything(
 			int argc, std::string *Argv, int i, int verbose_level);
 	void parse_and_execute(
@@ -1079,7 +1084,10 @@ public:
 		*get_packing_classify(
 				std::string &label);
 	poset_classification::poset_classification_control
-		*get_object_of_type_poset_classification_control(
+		*get_poset_classification_control(
+				std::string &label);
+	poset_classification::poset_classification_report_options
+		*get_poset_classification_report_options(
 				std::string &label);
 	apps_geometry::arc_generator_description
 		*get_object_of_type_arc_generator_control(
@@ -1160,11 +1168,11 @@ public:
 		*Spread_classify_description;
 
 	int f_linear_group;
-	groups::linear_group_description
+	group_constructions::linear_group_description
 		*Linear_group_description;
 
 	int f_permutation_group;
-	groups::permutation_group_description
+	group_constructions::permutation_group_description
 		*Permutation_group_description;
 
 	int f_group_modification;
@@ -1307,6 +1315,10 @@ public:
 	poset_classification::poset_classification_control
 		*Poset_classification_control;
 
+	int f_poset_classification_report_options;
+	poset_classification::poset_classification_report_options
+		*Poset_classification_report_options;
+
 	int f_arc_generator_control;
 	apps_geometry::arc_generator_description
 		*Arc_generator_control;
@@ -1419,6 +1431,8 @@ public:
 	void definition_of_orbits(
 			int verbose_level);
 	void definition_of_poset_classification_control(
+			int verbose_level);
+	void definition_of_poset_classification_report_options(
 			int verbose_level);
 	void definition_of_arc_generator_control(
 			int verbose_level);

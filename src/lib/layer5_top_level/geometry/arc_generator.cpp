@@ -192,7 +192,7 @@ void arc_generator::init(
 	}
 
 
-	Control = Get_object_of_type_poset_classification_control(Descr->control_label);
+	Control = Get_poset_classification_control(Descr->control_label);
 
 	if (f_v) {
 		cout << "arc_generator::init "
@@ -1237,7 +1237,7 @@ void arc_generator::report_decompositions(
 	Stab = Iso.Folding->Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
 
-	actions::combinatorics_with_action CombiA;
+	combinatorics_with_groups::combinatorics_with_action CombiA;
 	
 	CombiA.report_TDA_projective_space(
 			ost, PA->P,

@@ -297,7 +297,7 @@ public:
 			int verbose_level);
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification::poset_classification_control *Control,
-			groups::linear_group *LG,
+			group_constructions::linear_group *LG,
 			int d, int target_depth, int verbose_level);
 	void permutation_representation_of_element(
 			actions::action *A,
@@ -308,7 +308,7 @@ public:
 			data_structures_groups::vector_ge *cosets,
 			int *&relative_order_table, int verbose_level);
 	void representation_on_polynomials(
-			groups::linear_group *LG,
+			group_constructions::linear_group *LG,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 
@@ -348,8 +348,6 @@ public:
 			int order_a, int order_b, int order_ab, int verbose_level);
 	void do_character_table_symmetric_group(
 			int deg, int verbose_level);
-	void smith_normal_form(
-			int *A, int m, int n, std::string &label, int verbose_level);
 
 };
 
@@ -366,10 +364,10 @@ class any_group {
 public:
 
 	int f_linear_group;
-	groups::linear_group *LG;
+	group_constructions::linear_group *LG;
 
 	int f_permutation_group;
-	groups::permutation_group_create *PGC;
+	group_constructions::permutation_group_create *PGC;
 
 	int f_modified_group;
 	modified_group_create *MGC;
@@ -386,9 +384,9 @@ public:
 	any_group();
 	~any_group();
 	void init_linear_group(
-			groups::linear_group *LG, int verbose_level);
+			group_constructions::linear_group *LG, int verbose_level);
 	void init_permutation_group(
-			groups::permutation_group_create *PGC,
+			group_constructions::permutation_group_create *PGC,
 			int verbose_level);
 	void init_modified_group(
 			modified_group_create *MGC, int verbose_level);
@@ -1296,6 +1294,10 @@ public:
 	int f_on_cubic_curves;
 	std::string on_cubic_curves_control;
 
+	int f_on_cubic_surfaces;
+	std::string on_cubic_surfaces_PA;
+	std::string on_cubic_surfaces_control;
+
 	int f_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
@@ -1361,6 +1363,10 @@ public:
 	apps_geometry::classify_cubic_curves *CCC;
 
 
+	int f_has_cubic_surfaces;
+	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
+
+
 	int f_has_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier *Canonical_form_classifier;
 
@@ -1385,7 +1391,7 @@ public:
 class orbits_on_polynomials {
 public:
 
-	groups::linear_group *LG;
+	group_constructions::linear_group *LG;
 	int degree_of_poly;
 
 	field_theory::finite_field *F;
@@ -1424,11 +1430,11 @@ public:
 	orbits_on_polynomials();
 	~orbits_on_polynomials();
 	void init(
-			groups::linear_group *LG,
+			group_constructions::linear_group *LG,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 	void orbit_of_one_polynomial(
-			groups::linear_group *LG,
+			group_constructions::linear_group *LG,
 			ring_theory::homogeneous_polynomial_domain *HPD,
 			expression_parser::symbolic_object_builder *Symbol,
 			int verbose_level);

@@ -3377,6 +3377,327 @@ void ring_theory_global::perform_substitution(
 	}
 }
 
+void ring_theory_global::test_unipoly(
+		field_theory::finite_field *F)
+{
+	ring_theory::unipoly_object m, a, b, c;
+	ring_theory::unipoly_object elts[4];
+	int i, j;
+	int verbose_level = 0;
+
+	ring_theory::unipoly_domain FX(F);
+
+	FX.create_object_by_rank(m, 7, 0);
+	FX.create_object_by_rank(a, 5, 0);
+	FX.create_object_by_rank(b, 55, 0);
+	FX.print_object(a, cout); cout << endl;
+	FX.print_object(b, cout); cout << endl;
+
+	ring_theory::unipoly_domain Fq(F, m, verbose_level);
+	Fq.create_object_by_rank(c, 2, 0);
+	for (i = 0; i < 4; i++) {
+		Fq.create_object_by_rank(elts[i], i, 0);
+		cout << "elt_" << i << " = ";
+		Fq.print_object(elts[i], cout); cout << endl;
+	}
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			Fq.print_object(elts[i], cout);
+			cout << " * ";
+			Fq.print_object(elts[j], cout);
+			cout << " = ";
+			Fq.mult(elts[i], elts[j], c, verbose_level);
+			Fq.print_object(c, cout); cout << endl;
+
+			FX.mult(elts[i], elts[j], a, verbose_level);
+			FX.print_object(a, cout); cout << endl;
+		}
+	}
+
+}
+
+void ring_theory_global::test_unipoly2(
+		field_theory::finite_field *F)
+{
+	int i;
+
+	ring_theory::unipoly_domain FX(F);
+
+	ring_theory::unipoly_object a;
+
+	FX.create_object_by_rank(a, 0, 0);
+	for (i = 1; i < F->q; i++) {
+		FX.minimum_polynomial(a, i, F->p, true);
+		//cout << "minpoly_" << i << " = ";
+		//FX.print_object(a, cout); cout << endl;
+		}
+
+}
+
+void ring_theory_global::test_longinteger()
+{
+	ring_theory::longinteger_domain D;
+	int x[] = {15, 14, 12, 8};
+	ring_theory::longinteger_object a, b, q, r;
+	int verbose_level = 0;
+
+	D.multiply_up(a, x, 4, verbose_level);
+	cout << "a=" << a << endl;
+	b.create(2);
+	while (!a.is_zero()) {
+		D.integral_division(a, b, q, r, verbose_level);
+		//cout << a << " = " << q << " * " << b << " + " << r << endl;
+		cout << r << endl;
+		q.assign_to(a);
+	}
+
+	D.multiply_up(a, x, 4, verbose_level);
+	cout << "a=" << a << endl;
+
+	int *rep, len;
+	D.base_b_representation(a, 2, rep, len);
+	b.create_from_base_b_representation(2, rep, len);
+	cout << "b=" << b << endl;
+	FREE_int(rep);
+}
+
+void ring_theory_global::test_longinteger2()
+{
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, c, d, e;
+	int r;
+	int verbose_level = 0;
+
+	a.create_from_base_10_string("562949953421311", verbose_level);
+	D.integral_division_by_int(a, 127, b, r);
+	cout << a << " = " << b << " * 127 + " << r << endl;
+	c.create_from_base_10_string("270549121", verbose_level);
+	D.integral_division(b, c, d, e, verbose_level);
+	cout << b << " = " << d << " * " << c << " + " << e << endl;
+}
+
+void ring_theory_global::test_longinteger3()
+{
+	int i, j;
+	combinatorics::combinatorics_domain D;
+	ring_theory::longinteger_object a, b, c, d, e;
+
+	for (i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
+			D.binomial(a, i, j, false);
+			a.print(cout);
+			cout << " ";
+		}
+		cout << endl;
+	}
+}
+
+void ring_theory_global::test_longinteger4()
+{
+	int n = 6, q = 2, k, x, d = 3;
+	combinatorics::combinatorics_domain D;
+	ring_theory::longinteger_object a;
+
+	for (k = 0; k <= n; k++) {
+		for (x = 0; x <= n; x++) {
+			if (x > 0 && x < d) {
+				continue;
+			}
+			if (q == 2 && EVEN(d) && ODD(x)) {
+				continue;
+			}
+			D.krawtchouk(a, n, q, k, x);
+			a.print(cout);
+			cout << " ";
+		}
+		cout << endl;
+	}
+}
+
+void ring_theory_global::test_longinteger5()
+{
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b, u, v, g;
+	int verbose_level = 2;
+
+	a.create(9548);
+	b.create(254774);
+	D.extended_gcd(a, b, g, u, v, verbose_level);
+
+	g.print(cout);
+	cout << " = ";
+	u.print(cout);
+	cout << " * ";
+	a.print(cout);
+	cout << " + ";
+	v.print(cout);
+	cout << " * ";
+	b.print(cout);
+	cout << endl;
+
+}
+
+void ring_theory_global::test_longinteger6()
+{
+	int verbose_level = 2;
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
+
+	a.create(7411);
+	b.create(9283);
+	D.jacobi(a, b, verbose_level);
+
+
+}
+
+void ring_theory_global::test_longinteger7()
+{
+	ring_theory::longinteger_domain D;
+	ring_theory::longinteger_object a, b;
+	int i, j;
+	int mult[15];
+
+	a.create(15);
+	for (i = 0; i < 15; i++) {
+		mult[i] = 0;
+	}
+	for (i = 0; i < 10000; i++) {
+		D.random_number_less_than_n(a, b);
+		j = b.as_int();
+		mult[j]++;
+		//cout << b << endl;
+	}
+	for (i = 0; i < 15; i++) {
+		cout << i << " : " << mult[i] << endl;
+	}
+
+}
+
+void ring_theory_global::test_longinteger8()
+{
+	int verbose_level = 2;
+	cryptography::cryptography_domain Crypto;
+	ring_theory::longinteger_object a, b, one;
+	int nb_solovay_strassen_tests = 100;
+	int f_miller_rabin_test = true;
+
+	one.create(1);
+	a.create(197659);
+	Crypto.find_probable_prime_above(a, nb_solovay_strassen_tests,
+		f_miller_rabin_test, verbose_level);
+}
+
+void ring_theory_global::longinteger_collect_setup(
+		int &nb_agos,
+		ring_theory::longinteger_object *&agos, int *&multiplicities)
+{
+	nb_agos = 0;
+	agos = NULL;
+	multiplicities = NULL;
+}
+
+void ring_theory_global::longinteger_collect_free(
+		int &nb_agos,
+		ring_theory::longinteger_object *&agos, int *&multiplicities)
+{
+	if (nb_agos) {
+		FREE_OBJECTS(agos);
+		FREE_int(multiplicities);
+	}
+}
+
+void ring_theory_global::longinteger_collect_add(
+		int &nb_agos,
+		ring_theory::longinteger_object *&agos, int *&multiplicities,
+		ring_theory::longinteger_object &ago)
+{
+	int j, c, h, f_added;
+	ring_theory::longinteger_object *tmp_agos;
+	int *tmp_multiplicities;
+	ring_theory::longinteger_domain D;
+
+	f_added = false;
+	for (j = 0; j < nb_agos; j++) {
+		c = D.compare_unsigned(ago, agos[j]);
+		//cout << "comparing " << ago << " with "
+		//<< agos[j] << " yields " << c << endl;
+		if (c >= 0) {
+			if (c == 0) {
+				multiplicities[j]++;
+			}
+			else {
+				tmp_agos = agos;
+				tmp_multiplicities = multiplicities;
+				agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
+				multiplicities = NEW_int(nb_agos + 1);
+				for (h = 0; h < j; h++) {
+					tmp_agos[h].swap_with(agos[h]);
+					multiplicities[h] = tmp_multiplicities[h];
+				}
+				ago.swap_with(agos[j]);
+				multiplicities[j] = 1;
+				for (h = j; h < nb_agos; h++) {
+					tmp_agos[h].swap_with(agos[h + 1]);
+					multiplicities[h + 1] = tmp_multiplicities[h];
+				}
+				nb_agos++;
+				if (tmp_agos) {
+					FREE_OBJECTS(tmp_agos);
+					FREE_int(tmp_multiplicities);
+				}
+			}
+			f_added = true;
+			break;
+		}
+	}
+	if (!f_added) {
+		// add at the end (including the case that the list is empty)
+		tmp_agos = agos;
+		tmp_multiplicities = multiplicities;
+		agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
+		multiplicities = NEW_int(nb_agos + 1);
+		for (h = 0; h < nb_agos; h++) {
+			tmp_agos[h].swap_with(agos[h]);
+			multiplicities[h] = tmp_multiplicities[h];
+		}
+		ago.swap_with(agos[nb_agos]);
+		multiplicities[nb_agos] = 1;
+		nb_agos++;
+		if (tmp_agos) {
+			FREE_OBJECTS(tmp_agos);
+			FREE_int(tmp_multiplicities);
+		}
+	}
+}
+
+void ring_theory_global::longinteger_collect_print(
+		std::ostream &ost,
+		int &nb_agos,
+		ring_theory::longinteger_object *&agos,
+		int *&multiplicities)
+{
+	int j;
+
+	ost << "(";
+	for (j = 0; j < nb_agos; j++) {
+		ost << agos[j];
+		if (multiplicities[j] == 1) {
+		}
+		else if (multiplicities[j] >= 10) {
+			ost << "^{" << multiplicities[j] << "}";
+		}
+		else  {
+			ost << "^" << multiplicities[j];
+		}
+		if (j < nb_agos - 1) {
+			ost << ", ";
+		}
+	}
+	ost << ")" << endl;
+}
+
+
+
 
 }}}
 

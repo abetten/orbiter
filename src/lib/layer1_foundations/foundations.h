@@ -254,12 +254,11 @@ namespace algebra {
 	class a_domain;
 	class algebra_global;
 	class generators_symplectic_group;
-	class gl_class_rep;
-	class gl_classes;
 	class group_generators_domain;
 	class heisenberg;
-	class matrix_block_data;
+	class matrix_group_element;
 	class matrix_group;
+	class module;
 	class null_polarity_generator;
 	class rank_checker;
 
@@ -583,8 +582,10 @@ namespace l1_interfaces {
 namespace linear_algebra {
 
 	// linear_algebra:
+	class gl_class_rep;
+	class gl_classes;
 	class linear_algebra;
-	class module;
+	class matrix_block_data;
 	class representation_theory_domain;
 	class vector_space;
 
@@ -656,6 +657,7 @@ namespace orbiter_kernel_system {
 		t_action_on_forms,
 		t_orbits,
 		t_poset_classification_control,
+		t_poset_classification_report_options,
 		t_arc_generator_control,
 		t_poset_classification_activity,
 		t_crc_code,

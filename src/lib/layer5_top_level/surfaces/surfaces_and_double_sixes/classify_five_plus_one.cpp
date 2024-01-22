@@ -406,7 +406,8 @@ void classify_five_plus_one::identify_five_plus_one(
 	actions::action_global AG;
 
 
-	AG.make_element_which_moves_a_line_in_PG3q(A,
+	AG.make_element_which_moves_a_line_in_PG3q(
+			A,
 		Surf->P->Solid,
 		//Surf->Gr,
 		transversal_line,

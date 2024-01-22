@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace data_structures_groups {
+namespace combinatorics_with_groups {
 
 
 group_action_on_combinatorial_object::group_action_on_combinatorial_object()
@@ -423,7 +423,8 @@ void group_action_on_combinatorial_object::init(
 }
 
 
-void group_action_on_combinatorial_object::compute_flag_orbits(int verbose_level)
+void group_action_on_combinatorial_object::compute_flag_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

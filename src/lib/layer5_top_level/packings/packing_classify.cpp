@@ -285,7 +285,7 @@ void packing_classify::init(
 	}
 
 
-	packing_classify::PA = PA;
+	packing_classify::PA = PA3;
 	packing_classify::Spread_table_with_selection = Spread_table_with_selection;
 
 

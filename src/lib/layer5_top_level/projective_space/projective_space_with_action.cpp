@@ -926,7 +926,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 		std::string &label,
-		groups::linear_group_description * subgroup_Descr,
+		group_constructions::linear_group_description * subgroup_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -936,9 +936,9 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 	}
 
 
-	groups::linear_group *H_LG;
+	group_constructions::linear_group *H_LG;
 
-	H_LG = NEW_OBJECT(groups::linear_group);
+	H_LG = NEW_OBJECT(group_constructions::linear_group);
 
 	subgroup_Descr->F = P->Subspaces->F;
 

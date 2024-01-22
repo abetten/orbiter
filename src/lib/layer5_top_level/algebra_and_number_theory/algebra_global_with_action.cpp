@@ -808,8 +808,8 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(
 				"q=" << F->q << endl;
 	}
 
-	algebra::gl_classes C;
-	algebra::gl_class_rep *R;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *R;
 	int nb_classes;
 	int *Mtx;
 	int *Elt;
@@ -1011,8 +1011,8 @@ void algebra_global_with_action::classes_GL(
 		cout << "algebra_global_with_action::classes_GL" << endl;
 	}
 
-	algebra::gl_classes C;
-	algebra::gl_class_rep *R;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *R;
 	int nb_classes;
 	int i;
 
@@ -1100,8 +1100,8 @@ void algebra_global_with_action::do_normal_form(
 		cout << "algebra_global_with_action::do_normal_form" << endl;
 	}
 
-	algebra::gl_classes C;
-	algebra::gl_class_rep *Reps;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
 	field_theory::finite_field *F;
 
@@ -1172,9 +1172,9 @@ void algebra_global_with_action::do_normal_form(
 	Int_matrix_print(Elt, d, d);
 
 
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -1211,8 +1211,8 @@ void algebra_global_with_action::do_identify_one(
 	if (f_v) {
 		cout << "algebra_global_with_action::do_identify_one" << endl;
 	}
-	algebra::gl_classes C;
-	algebra::gl_class_rep *Reps;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
 	field_theory::finite_field *F;
 
@@ -1265,9 +1265,9 @@ void algebra_global_with_action::do_identify_one(
 	}
 
 
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -1305,8 +1305,8 @@ void algebra_global_with_action::do_identify_all(
 	if (f_v) {
 		cout << "algebra_global_with_action::do_identify_all" << endl;
 	}
-	algebra::gl_classes C;
-	algebra::gl_class_rep *Reps;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
 	field_theory::finite_field *F;
 
@@ -1359,9 +1359,9 @@ void algebra_global_with_action::do_identify_all(
 		Int_matrix_print(Elt, d, d);
 
 
-		algebra::gl_class_rep *R1;
+		linear_algebra::gl_class_rep *R1;
 
-		R1 = NEW_OBJECT(algebra::gl_class_rep);
+		R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 		C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -1407,8 +1407,8 @@ void algebra_global_with_action::do_random(
 	}
 	//gl_random_matrix(d, q, verbose_level);
 
-	algebra::gl_classes C;
-	algebra::gl_class_rep *Reps;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
 	field_theory::finite_field *F;
 
@@ -1435,9 +1435,9 @@ void algebra_global_with_action::do_random(
 			Mtx, d, verbose_level - 2);
 
 
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	C.identify_matrix(
 			Mtx, R1, Basis, verbose_level);
@@ -1470,8 +1470,8 @@ void algebra_global_with_action::group_table(
 	if (f_v) {
 		cout << "algebra_global_with_action::group_table" << endl;
 	}
-	algebra::gl_classes C;
-	algebra::gl_class_rep *Reps;
+	linear_algebra::gl_classes C;
+	linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
 	int *Class_rep;
 	int *List;
@@ -1593,9 +1593,9 @@ void algebra_global_with_action::group_table(
 		Int_matrix_print(Elt, d, d);
 
 
-		algebra::gl_class_rep *R1;
+		linear_algebra::gl_class_rep *R1;
 
-		R1 = NEW_OBJECT(algebra::gl_class_rep);
+		R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 		C.identify_matrix(Elt, R1, Basis, verbose_level);
 
@@ -3385,7 +3385,7 @@ void algebra_global_with_action::young_symmetrizer_sym_4(
 
 void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		poset_classification::poset_classification_control *Control,
-		groups::linear_group *LG,
+		group_constructions::linear_group *LG,
 		int d, int target_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3618,7 +3618,7 @@ void algebra_global_with_action::relative_order_vector_of_cosets(
 
 
 void algebra_global_with_action::representation_on_polynomials(
-		groups::linear_group *LG,
+		group_constructions::linear_group *LG,
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 // creates an action object for the induced action on polynomials
@@ -3974,7 +3974,7 @@ void algebra_global_with_action::find_singer_cycle(
 		if (ord != order) {
 			continue;
 		}
-		if (!M->has_shape_of_singer_cycle(Elt)) {
+		if (!M->Element->has_shape_of_singer_cycle(Elt)) {
 			continue;
 		}
 		if (f_v) {
@@ -4203,149 +4203,7 @@ void algebra_global_with_action::do_character_table_symmetric_group(
 	}
 }
 
-void algebra_global_with_action::smith_normal_form(
-		int *A, int m, int n, std::string &label, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form" << endl;
-	}
-
-	data_structures::int_matrix *M;
-	data_structures::int_matrix *P;
-	data_structures::int_matrix *Pv;
-	data_structures::int_matrix *Q;
-	data_structures::int_matrix *Qv;
-	linear_algebra::module Mod;
-
-	M = NEW_OBJECT(data_structures::int_matrix);
-	M->allocate_and_init(m, n, A);
 
 
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form M=" << endl;
-		M->print();
-	}
-
-
-	orbiter_kernel_system::file_io Fio;
-	string fname;
-
-	fname = label + "_SNF_M_original.csv";
-
-	M->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "M:" << endl;
-		Int_matrix_print(M->M, M->m, M->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form "
-				"before Mod.smith_normal_form" << endl;
-	}
-
-	Mod.smith_normal_form(
-			M, P, Pv, Q, Qv, verbose_level);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form "
-				"after Mod.smith_normal_form" << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form M=" << endl;
-		M->print();
-	}
-
-
-
-	fname = label + "_SNF.csv";
-
-	M->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "SNF:" << endl;
-		Int_matrix_print(M->M, M->m, M->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-
-
-	// write P and Pv:
-
-	fname = label + "_SNF_P.csv";
-
-	P->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "SNF_P:" << endl;
-		Int_matrix_print(P->M, P->m, P->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-	fname = label + "_SNF_Pv.csv";
-
-	Pv->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "SNF_Pv:" << endl;
-		Int_matrix_print(Pv->M, Pv->m, Pv->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-
-
-
-	// write Q and Qv:
-
-	fname = label + "_SNF_Q.csv";
-
-	Q->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "SNF_Q:" << endl;
-		Int_matrix_print(Q->M, Q->m, Q->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-	fname = label + "_SNF_Qv.csv";
-
-	Qv->write_csv(fname, verbose_level);
-
-	if (f_v) {
-		cout << "SNF_Qv:" << endl;
-		Int_matrix_print(Qv->M, Qv->m, Qv->n);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::smith_normal_form" << endl;
-	}
-
-
-}
 }}}
 

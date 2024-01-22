@@ -1012,7 +1012,7 @@ public:
 
 	int verbose_level;
 
-	int t0;
+	long int t0;
 
 	int f_draw_options;
 	graphics::layered_graph_draw_options *draw_options;
@@ -1072,7 +1072,7 @@ public:
 			std::string *argv, int i, int verbose_level);
 	int read_arguments(
 			int argc,
-			std::string *argv, int i0);
+			std::string *argv, int i0, int verbose_level);
 	void fork(
 			int argc, std::string *argv, int verbose_level);
 
@@ -1274,6 +1274,9 @@ public:
 	void init_poset_classification_control(
 			std::string &label,
 			void *PCC, int verbose_level);
+	void init_poset_classification_report_options(
+			std::string &label,
+			void *PCRO, int verbose_level);
 	void init_arc_generator_control(
 			std::string &label,
 			void *AGC, int verbose_level);
@@ -1309,14 +1312,22 @@ public:
 
 	orbiter_symbol_table();
 	~orbiter_symbol_table();
-	int find_symbol(std::string &str);
-	void add_symbol_table_entry(std::string &str,
+	int find_symbol(
+			std::string &str);
+	void add_symbol_table_entry(
+			std::string &str,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
-	void free_table_entry(int idx, int verbose_level);
+	void free_table_entry(
+			int idx, int verbose_level);
 	void print_symbol_table();
-	void *get_object(int idx);
-	symbol_table_object_type get_object_type(int idx);
-	void print_type(symbol_table_object_type t);
+	void *get_object(
+			int idx);
+	symbol_table_object_type get_object_type(
+			int idx);
+	void print_type(
+			symbol_table_object_type t);
+	std::string stringify_type(
+			symbol_table_object_type t);
 
 };
 
@@ -1335,30 +1346,47 @@ public:
 
 	void runtime(long *l);
 	int os_memory_usage();
-	int os_ticks();
+	long int os_ticks();
 	int os_ticks_system();
 	int os_ticks_per_second();
-	void os_ticks_to_dhms(int ticks, int tps,
+	void os_ticks_to_dhms(
+			long int ticks, int tps,
 			int &d, int &h, int &m, int &s);
-	void time_check_delta(std::ostream &ost, int dt);
+	void time_check_delta(
+			std::ostream &ost, long int dt);
+	std::string stringify_time_difference(
+			long int t0);
+	std::string stringify_delta_t(
+			long int dt);
 	void print_elapsed_time(
 			std::ostream &ost, int d, int h, int m, int s);
-	void time_check(std::ostream &ost, int t0);
-	int delta_time(int t0);
+	std::string stringify_elapsed_time(
+			int d, int h, int m, int s);
+	void time_check(
+			std::ostream &ost, long int t0);
+	long int delta_time(long int t0);
 	void seed_random_generator_with_system_time();
-	void seed_random_generator(int seed);
-	int random_integer(int p);
+	void seed_random_generator(
+			int seed);
+	int random_integer(
+			int p);
 	int os_seconds_past_1970();
 	void get_string_from_command_line(
 			std::string &p, int argc, std::string *argv,
 			int &i, int verbose_level);
 	void test_swap();
-	void block_swap_chars(char *ptr, int size, int no);
-	void code_int4(char *&p, int_4 i);
-	int_4 decode_int4(const char *&p);
-	void code_uchar(char *&p, unsigned char a);
-	void decode_uchar(const char *&p, unsigned char &a);
-	void get_date(std::string &str);
+	void block_swap_chars(
+			char *ptr, int size, int no);
+	void code_int4(
+			char *&p, int_4 i);
+	int_4 decode_int4(
+			const char *&p);
+	void code_uchar(
+			char *&p, unsigned char a);
+	void decode_uchar(
+			const char *&p, unsigned char &a);
+	void get_date(
+			std::string &str);
 	void test_typedefs();
 
 };

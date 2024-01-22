@@ -89,11 +89,11 @@ static void induced_action_element_print_for_make_element(
 static void induced_action_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
 static void induced_action_print_point(
-		action &A, long int a, std::ostream &ost);
+		action &A, long int a, std::ostream &ost, int verbose_level);
 static void induced_action_unrank_point(
-		action &A, long int rk, int *v);
+		action &A, long int rk, int *v, int verbose_level);
 static long int induced_action_rank_point(
-		action &A, int *v);
+		action &A, int *v, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_induced_action()
@@ -1506,7 +1506,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 
 static void induced_action_print_point(
 		action &A,
-		long int a, std::ostream &ost)
+		long int a, std::ostream &ost, int verbose_level)
 {
 	action_global AG;
 
@@ -1794,7 +1794,7 @@ static void induced_action_print_point(
 
 
 static void induced_action_unrank_point(
-		action &A, long int rk, int *v)
+		action &A, long int rk, int *v, int verbose_level)
 {
 	action_global AG;
 	//cout << "induced_action_unrank_point" << endl;
@@ -2039,7 +2039,7 @@ static void induced_action_unrank_point(
 }
 
 static long int induced_action_rank_point(
-		action &A, int *v)
+		action &A, int *v, int verbose_level)
 {
 	action_global AG;
 	//cout << "induced_action_rank_point" << endl;

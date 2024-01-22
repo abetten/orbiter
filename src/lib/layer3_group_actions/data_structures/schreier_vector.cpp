@@ -784,7 +784,8 @@ void schreier_vector::orbit_of_point(
 	FREE_int(orbit_elt_idx);
 }
 
-void schreier_vector::init_from_schreier(groups::schreier *S,
+void schreier_vector::init_from_schreier(
+		groups::schreier *S,
 	int f_trivial_group, int verbose_level)
 // allocated and creates array sv[size] using NEW_int
 // where size is n + 1 if  f_trivial_group is true
@@ -836,7 +837,8 @@ void schreier_vector::init_from_schreier(groups::schreier *S,
 	}
 }
 
-void schreier_vector::init_shallow_schreier_forest(groups::schreier *S,
+void schreier_vector::init_shallow_schreier_forest(
+		groups::schreier *S,
 	int f_trivial_group, int f_randomized,
 	int verbose_level)
 // initializes local_gens
@@ -1182,7 +1184,8 @@ void schreier_vector::export_tree_as_layered_graph(
 	}
 }
 
-void schreier_vector::trace_back(int pt, int &depth)
+void schreier_vector::trace_back(
+		int pt, int &depth)
 {
 	int pr, n, pos;
 	int *points;

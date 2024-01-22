@@ -207,13 +207,15 @@ int orbiter_session::recognize_keyword(
 
 int orbiter_session::read_arguments(
 		int argc,
-		std::string *argv, int i0)
+		std::string *argv, int i0, int verbose_level)
 {
 	int i;
-	int f_v = false;
+	int f_v = (verbose_level >= 1);
 	string_tools ST;
 
-	cout << "orbiter_session::read_arguments" << endl;
+	if (f_v) {
+		cout << "orbiter_session::read_arguments" << endl;
+	}
 
 	os_interface Os;
 
@@ -223,9 +225,11 @@ int orbiter_session::read_arguments(
 
 	for (i = i0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-v") == 0) {
-			verbose_level = ST.strtoi(argv[++i]);
-			f_v = (verbose_level >= 1);
-			//cout << "-v " << verbose_level << endl;
+			orbiter_session::verbose_level = ST.strtoi(argv[++i]);
+			//f_v = (verbose_level >= 1);
+			if (f_v) {
+				cout << "-v " << verbose_level << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
@@ -325,6 +329,10 @@ int orbiter_session::read_arguments(
 			}
 		}
 		else {
+			if (f_v) {
+				cout << "unrecognized command " << argv[i]
+					<< " finished scanning global Orbiter options" << endl;
+			}
 			break;
 		}
 	}
@@ -339,15 +347,17 @@ void orbiter_session::fork(
 		int argc, std::string *argv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
 
 	if (f_v) {
 		cout << "orbiter_session::fork" << endl;
 	}
 
-	cout << "forking with respect to " << fork_variable << endl;
+	if (f_v) {
+		cout << "forking with respect to " << fork_variable << endl;
+	}
 	int j, h, case_number;
 	vector<int> places;
+	string_tools ST;
 
 	for (j = 1; j < argc; j++) {
 		if (ST.stringcmp(argv[j], fork_variable.c_str()) == 0) {
@@ -356,15 +366,19 @@ void orbiter_session::fork(
 			}
 		}
 	}
-	cout << "the variable appears in " << places.size() << " many places:" << endl;
-	for (j = 0; j < places.size(); j++) {
-		cout << "argument " << places[j] << " is " << argv[places[j]] << endl;
+	if (f_v) {
+		cout << "the variable appears in " << places.size() << " many places:" << endl;
+		for (j = 0; j < places.size(); j++) {
+			cout << "argument " << places[j] << " is " << argv[places[j]] << endl;
+		}
 	}
 
 
 	for (case_number = fork_from; case_number < fork_to; case_number += fork_step) {
 
-		cout << "forking case " << case_number << endl;
+		if (f_v) {
+			cout << "forking case " << case_number << endl;
+		}
 
 		string cmd;
 
@@ -480,40 +494,28 @@ void orbiter_session::get_int_vector_from_label(
 	if (f_v) {
 		cout << "orbiter_session::get_int_vector_from_label" << endl;
 	}
-	if (isalpha(label[0])) {
-		if (f_v) {
-			cout << "orbiter_session::get_int_vector_from_label "
-					"searching label " << label << endl;
-		}
-		int idx;
 
-		idx = Orbiter->find_symbol(label);
+	long int *vl;
 
-		if (Orbiter->get_object_type(idx) == t_vector) {
-
-			vector_builder *VB;
-
-			VB = (vector_builder *) Orbiter->get_object(idx);
-
-			sz = VB->len;
-			v = NEW_int(sz);
-			Lint_vec_copy_to_int(VB->v, v, sz);
-		}
-		else if (Orbiter->get_object_type(idx) == t_set) {
-
-			set_builder *SB;
-
-			SB = (set_builder *) Orbiter->get_object(idx);
-
-			sz = SB->sz;
-			v = NEW_int(sz);
-			Lint_vec_copy_to_int(SB->set, v, sz);
-		}
+	if (f_v) {
+		cout << "orbiter_session::get_int_vector_from_label "
+				"before get_lint_vector_from_label" << endl;
 	}
-	else {
-
-		Int_vec_scan(label, v, sz);
+	get_lint_vector_from_label(
+			label,
+			vl, sz,
+			verbose_level);
+	if (f_v) {
+		cout << "orbiter_session::get_int_vector_from_label "
+				"after get_lint_vector_from_label" << endl;
 	}
+
+	v = NEW_int(sz);
+
+	Lint_vec_copy_to_int(vl, v, sz);
+
+	FREE_lint(vl);
+
 
 	if (f_v) {
 		cout << "orbiter_session::get_int_vector_from_label done" << endl;

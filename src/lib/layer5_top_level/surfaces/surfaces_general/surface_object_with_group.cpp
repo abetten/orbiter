@@ -3266,7 +3266,7 @@ void surface_object_with_group::tactical_decomposition_inside_projective_space(
 				"after Decomposition_scheme->write_csv" << endl;
 	}
 
-	actions::combinatorics_with_action CombiA;
+	combinatorics_with_groups::combinatorics_with_action CombiA;
 
 	if (f_v) {
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "

@@ -689,7 +689,7 @@ void classification_of_varieties::report_nauty(
 			ost << endl;
 
 
-			actions::combinatorics_with_action CombiA;
+			combinatorics_with_groups::combinatorics_with_action CombiA;
 			int size_limit_for_printing = 50;
 			groups::strong_generators *gens;
 

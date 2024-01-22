@@ -65,20 +65,105 @@ orbiter_top_level_session::~orbiter_top_level_session()
 	}
 }
 
-int orbiter_top_level_session::startup_and_read_arguments(
-		int argc,
-		std::string *argv, int i0)
+void orbiter_top_level_session::execute_command_line(
+		int argc, const char **argv, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::execute_command_line" << endl;
+		cout << "A user's guide is available here: " << endl;
+		cout << "https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf" << endl;
+		cout << "The sources are available here: " << endl;
+		cout << "https://github.com/abetten/orbiter" << endl;
+		cout << "An example makefile with many commands from the user's guide is here: " << endl;
+		cout << "https://github.com/abetten/orbiter/tree/master/examples/users_guide/makefile" << endl;
+#ifdef SYSTEMUNIX
+		cout << "SYSTEMUNIX is defined" << endl;
+#endif
+#ifdef SYSTEMWINDOWS
+		cout << "SYSTEMWINDOWS is defined" << endl;
+#endif
+#ifdef SYSTEM_IS_MACINTOSH
+		cout << "SYSTEM_IS_MACINTOSH is defined" << endl;
+#endif
+		cout << "sizeof(int)=" << sizeof(int) << endl;
+		cout << "sizeof(long int)=" << sizeof(long int) << endl;
+	}
+
+	std::string *Argv;
+	data_structures::string_tools ST;
 	int i;
 
-	cout << "orbiter_top_level_session::startup_and_read_arguments "
+	//cout << "before ST.convert_arguments, argc=" << argc << endl;
+
+	ST.convert_arguments(argc, argv, Argv);
+		// argc has changed!
+
+	//cout << "after ST.convert_arguments, argc=" << argc << endl;
+
+	//cout << "before Top_level_session.startup_and_read_arguments" << endl;
+	i = startup_and_read_arguments(
+			argc, Argv, 1, verbose_level - 1);
+	//cout << "after Top_level_session.startup_and_read_arguments" << endl;
+
+
+
+	int session_verbose_level;
+
+	session_verbose_level = Orbiter_session->verbose_level;
+
+	if (f_v) {
+		cout << "session_verbose_level = " << session_verbose_level << endl;
+	}
+
+
+	//int f_v = (verbose_level > 1);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::execute_command_line "
+				"before handle_everything" << endl;
+		//cout << "argc=" << argc << endl;
+	}
+
+
+	handle_everything(
+			argc, Argv, i, session_verbose_level);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::execute_command_line "
+				"after handle_everything" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::execute_command_line "
+				"done" << endl;
+	}
+}
+
+int orbiter_top_level_session::startup_and_read_arguments(
+		int argc,
+		std::string *argv, int i0, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::startup_and_read_arguments" << endl;
+	}
+
+	int i;
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::startup_and_read_arguments "
 			"before Orbiter_session->read_arguments" << endl;
+	}
 
-	i = Orbiter_session->read_arguments(argc, argv, i0);
+	i = Orbiter_session->read_arguments(argc, argv, i0, verbose_level);
 
 
-
-	cout << "orbiter_top_level_session::startup_and_read_arguments done" << endl;
+	if (f_v) {
+		cout << "orbiter_top_level_session::startup_and_read_arguments done" << endl;
+	}
 	return i;
 }
 
@@ -102,11 +187,11 @@ void orbiter_top_level_session::handle_everything(
 
 	if (Orbiter_session->f_fork) {
 		if (f_v) {
-			cout << "before Top_level_session.Orbiter_session->fork" << endl;
+			cout << "before Orbiter_session->fork" << endl;
 		}
 		Orbiter_session->fork(argc, Argv, verbose_level);
 		if (f_v) {
-			cout << "after Session.fork" << endl;
+			cout << "after Orbiter_session->fork" << endl;
 		}
 	}
 	else {
@@ -444,23 +529,43 @@ packings::packing_classify
 }
 
 poset_classification::poset_classification_control
-	*orbiter_top_level_session::get_object_of_type_poset_classification_control(
+	*orbiter_top_level_session::get_poset_classification_control(
 			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_control "
+		cout << "orbiter_top_level_session::get_poset_classification_control "
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_poset_classification_control) {
-		cout << "orbiter_top_level_session::get_object_of_type_poset_classification_control "
+		cout << "orbiter_top_level_session::get_poset_classification_control "
 				"object type != t_poset_classification_control" << endl;
 		exit(1);
 	}
 	return (poset_classification::poset_classification_control *) get_object(idx);
+}
+
+poset_classification::poset_classification_report_options
+	*orbiter_top_level_session::get_poset_classification_report_options(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_poset_classification_report_options "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_poset_classification_report_options) {
+		cout << "orbiter_top_level_session::get_poset_classification_report_options "
+				"object type != t_poset_classification_report_options" << endl;
+		exit(1);
+	}
+	return (poset_classification::poset_classification_report_options *) get_object(idx);
 }
 
 
@@ -775,6 +880,12 @@ void free_symbol_table_entry_callback(
 
 	t = Symb->object_type;
 
+	string s;
+
+	s = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->stringify_type(t);
+	if (f_v) {
+		cout << "free_symbol_table_entry_callback object of type " << s << endl;
+	}
 
 	if (t == orbiter_kernel_system::t_nothing_object) {
 		if (f_v) {
@@ -979,6 +1090,11 @@ void free_symbol_table_entry_callback(
 	else if (t == orbiter_kernel_system::t_poset_classification_control) {
 		if (f_v) {
 			cout << "t_poset_classification_control" << endl;
+		}
+	}
+	else if (t == orbiter_kernel_system::t_poset_classification_report_options) {
+		if (f_v) {
+			cout << "t_poset_classification_report_options" << endl;
 		}
 	}
 	else if (t == orbiter_kernel_system::t_poset_classification_activity) {

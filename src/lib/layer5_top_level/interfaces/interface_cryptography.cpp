@@ -52,39 +52,6 @@ interface_cryptography::interface_cryptography()
 	//RSA_text = NULL;
 	//cout << "interface_cryptography::interface_cryptography 00f" << endl;
 
-	f_primitive_root = false;
-	//std::string primitive_root_p;
-
-	f_smallest_primitive_root = false;
-	smallest_primitive_root_p = 0;
-
-	f_smallest_primitive_root_interval = false;
-	smallest_primitive_root_interval_min = 0;
-	smallest_primitive_root_interval_max = 0;
-
-	f_number_of_primitive_roots_interval = false;
-
-	f_inverse_mod = false;
-	inverse_mod_a = 0;
-	inverse_mod_n = 0;
-	//cout << "interface_cryptography::interface_cryptography 00g" << endl;
-
-	f_extended_gcd = false;
-	extended_gcd_a = 0;
-	extended_gcd_b = 0;
-
-	f_power_mod = false;
-	//std::string power_mod_a;
-	//std::string power_mod_k;
-	//std::string power_mod_n;
-	//cout << "interface_cryptography::interface_cryptography 00h" << endl;
-
-	f_discrete_log = false;
-	//cout << "interface_cryptography::interface_cryptography 0b" << endl;
-	discrete_log_y = 0;
-	discrete_log_a = 0;
-	discrete_log_m = 0;
-
 	f_RSA_setup = false;
 	RSA_setup_nb_bits = 0;
 	RSA_setup_nb_tests_solovay_strassen = 0;
@@ -100,28 +67,11 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography 1" << endl;
 	//sift_smooth_factor_base = NULL;
 
-	f_square_root = false;
-	//square_root_number = NULL;
-
-	f_square_root_mod = false;
-	//square_root_mod_a = NULL;
-	//square_root_mod_m = NULL;
-	//cout << "interface_cryptography::interface_cryptography 1a" << endl;
-
-	f_all_square_roots_mod_n = false;
-	//std::string f_all_square_roots_mod_n_a;
-	//std::string f_all_square_roots_mod_n_n;
-
 	f_quadratic_sieve = false;
 	quadratic_sieve_n = 0;
 	quadratic_sieve_factorbase = 0;
 	quadratic_sieve_x0 = 0;
 	//cout << "interface_cryptography::interface_cryptography 1b" << endl;
-
-	f_jacobi = false;
-	jacobi_top = 0;
-	jacobi_bottom = 0;
-	//cout << "interface_cryptography::interface_cryptography 1c" << endl;
 
 	f_solovay_strassen = false;
 	solovay_strassen_p = 0;
@@ -165,10 +115,6 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography 2" << endl;
 	affine_sequence_c = 0;
 	affine_sequence_m = 0;
-
-	f_Chinese_remainders = false;
-	//std::string Chinese_remainders_R;
-	//std::string Chinese_remainders_M;
 
 }
 
@@ -221,47 +167,11 @@ void interface_cryptography::print_help(
 	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
 		cout << "-RSA_setup <int : nb_bits> <int : nb_tests_solovay_strassen> <int : f_miller_rabin_test>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-primitive_root") == 0) {
-		cout << "-primitive_root <int : p>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root") == 0) {
-		cout << "-smallest_primitive_root <int : p>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
-		cout << "-smallest_primitive_root_interval <int : p_min> <int : p_max>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
-		cout << "-number_of_primitive_roots_interval <int : p_min> <int : p_max>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-inverse_mod") == 0) {
-		cout << "-primitive_root <int : a> <int : n>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-extended_gcd") == 0) {
-		cout << "-extended_gcd <int : a> <int : b>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-power_mod") == 0) {
-		cout << "-power_mod <int : a> <int : k> <int : n>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-discrete_log") == 0) {
-		cout << "-discrete_log <int : y> <int : a> <int : m>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
 		cout << "-sift_smooth <int : from> <int : ken> <string : factor_base>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-square_root") == 0) {
-		cout << "-square_root <int : number>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-square_root_mod") == 0) {
-		cout << "-square_root_mod <int : a> <int : m>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
-		cout << "-all_square_roots_mod_n <int : a> <int : n>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		cout << "-quadratic_sieve <int : n> <string : factor_base> <int : x0>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
-		cout << "-jacobi <int : top> <int : bottom>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
 		cout << "-solovay_strassen <int : a> <int : p>" << endl;
@@ -289,9 +199,6 @@ void interface_cryptography::print_help(
 	}
 	else if (ST.stringcmp(argv[i], "-affine_sequence") == 0) {
 		cout << "-affine_sequence <int : a> <int : c> <int : m>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
-		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
 	}
 }
 
@@ -346,46 +253,10 @@ int interface_cryptography::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-primitive_root") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-inverse_mod") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-extended_gcd") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-power_mod") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-discrete_log") == 0) {
-		return true;
-	}
 	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-square_root") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-square_root_mod") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
-		return true;
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
@@ -413,9 +284,6 @@ int interface_cryptography::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-affine_sequence") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
 		return true;
 	}
 	return false;
@@ -548,73 +416,6 @@ void interface_cryptography::read_arguments(
 					<< RSA_setup_f_miller_rabin_test << endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-primitive_root") == 0) {
-		f_primitive_root = true;
-		primitive_root_p.assign(argv[++i]);
-		if (f_v) {
-			cout << "-primitive_root " << primitive_root_p << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root") == 0) {
-		f_smallest_primitive_root = true;
-		smallest_primitive_root_p = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
-		f_smallest_primitive_root_interval = true;
-		smallest_primitive_root_interval_min = ST.strtoi(argv[++i]);
-		smallest_primitive_root_interval_max = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
-					<< " " << smallest_primitive_root_interval_max << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
-		f_number_of_primitive_roots_interval = true;
-		smallest_primitive_root_interval_min = ST.strtoi(argv[++i]);
-		smallest_primitive_root_interval_max = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
-					<< " " << smallest_primitive_root_interval_max << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-inverse_mod") == 0) {
-		f_inverse_mod = true;
-		inverse_mod_a = ST.strtoi(argv[++i]);
-		inverse_mod_n = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-extended_gcd") == 0) {
-		f_extended_gcd = true;
-		extended_gcd_a = ST.strtoi(argv[++i]);
-		extended_gcd_b = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-power_mod") == 0) {
-		f_power_mod = true;
-		power_mod_a.assign(argv[++i]);
-		power_mod_k.assign(argv[++i]);
-		power_mod_n.assign(argv[++i]);
-		if (f_v) {
-			cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-discrete_log") == 0) {
-		f_discrete_log = true;
-		discrete_log_y = ST.strtoi(argv[++i]);
-		discrete_log_a = ST.strtoi(argv[++i]);
-		discrete_log_m = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-discrete_log " << discrete_log_y << " "
-					<< discrete_log_a << " " << discrete_log_m << endl;
-		}
-	}
 	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
 		f_sift_smooth = true;
 		sift_smooth_from = ST.strtoi(argv[++i]);
@@ -625,31 +426,6 @@ void interface_cryptography::read_arguments(
 					<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-square_root") == 0) {
-		f_square_root = true;
-		square_root_number.assign(argv[++i]);
-		if (f_v) {
-			cout << "-square_root " << square_root_number << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-square_root_mod") == 0) {
-		f_square_root_mod = true;
-		square_root_mod_a.assign(argv[++i]);
-		square_root_mod_m.assign(argv[++i]);
-		if (f_v) {
-			cout << "-square_root_mod " << square_root_mod_a << " "
-					<< square_root_mod_m << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
-		f_all_square_roots_mod_n = true;
-		all_square_roots_mod_n_a.assign(argv[++i]);
-		all_square_roots_mod_n_n.assign(argv[++i]);
-		if (f_v) {
-			cout << "-all_square_roots_mod_n " << all_square_roots_mod_n_a << " "
-					<< all_square_roots_mod_n_n << endl;
-		}
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		f_quadratic_sieve = true;
 		quadratic_sieve_n = ST.strtoi(argv[++i]);
@@ -658,15 +434,6 @@ void interface_cryptography::read_arguments(
 		if (f_v) {
 			cout << "-quadratic_sieve " << quadratic_sieve_n << " "
 					<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
-		f_jacobi = true;
-		jacobi_top = ST.strtoi(argv[++i]);
-		jacobi_bottom = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-jacobi " << jacobi_top << " "
-					<< jacobi_bottom << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
@@ -754,15 +521,6 @@ void interface_cryptography::read_arguments(
 					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
-		f_Chinese_remainders = true;
-		Chinese_remainders_R.assign(argv[++i]);
-		Chinese_remainders_M.assign(argv[++i]);
-		if (f_v) {
-			cout << "-Chinese_remainders " << Chinese_remainders_R
-					<< " " << Chinese_remainders_M << endl;
-		}
-	}
 	if (f_v) {
 		cout << "interface_cryptography::read_arguments done" << endl;
 	}
@@ -812,55 +570,13 @@ void interface_cryptography::print()
 				<< RSA_setup_nb_tests_solovay_strassen << " "
 				<< RSA_setup_f_miller_rabin_test << endl;
 	}
-	if (f_primitive_root) {
-		cout << "-primitive_root " << primitive_root_p << endl;
-	}
-	if (f_smallest_primitive_root) {
-		cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
-	}
-	if (f_smallest_primitive_root_interval) {
-		cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
-				<< " " << smallest_primitive_root_interval_max << endl;
-	}
-	if (f_number_of_primitive_roots_interval) {
-		cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
-				<< " " << smallest_primitive_root_interval_max << endl;
-	}
-	if (f_inverse_mod) {
-		cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
-	}
-	if (f_extended_gcd) {
-		cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
-	}
-	if (f_power_mod) {
-		cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
-	}
-	if (f_discrete_log) {
-		cout << "-discrete_log " << discrete_log_y << " "
-				<< discrete_log_a << " " << discrete_log_m << endl;
-	}
 	if (f_sift_smooth) {
 		cout << "-sift_smooth " << sift_smooth_from << " "
 				<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 	}
-	if (f_square_root) {
-		cout << "-square_root " << square_root_number << endl;
-	}
-	if (f_square_root_mod) {
-		cout << "-square_root_mod " << square_root_mod_a << " "
-				<< square_root_mod_m << endl;
-	}
-	if (f_all_square_roots_mod_n) {
-		cout << "-all_square_roots_mod_n " << all_square_roots_mod_n_a << " "
-				<< all_square_roots_mod_n_n << endl;
-	}
 	if (f_quadratic_sieve) {
 		cout << "-quadratic_sieve " << quadratic_sieve_n << " "
 				<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
-	}
-	if (f_jacobi) {
-		cout << "-jacobi " << jacobi_top << " "
-				<< jacobi_bottom << endl;
 	}
 	if (f_solovay_strassen) {
 		cout << "-solovay_strassen " << solovay_strassen_p << " "
@@ -898,10 +614,6 @@ void interface_cryptography::print()
 	if (f_affine_sequence) {
 		cout << "-affine_sequence " << affine_sequence_a
 				<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
-	}
-	if (f_Chinese_remainders) {
-		cout << "-Chinese_remainders " << Chinese_remainders_R
-				<< " " << Chinese_remainders_M << endl;
 	}
 }
 
@@ -989,69 +701,6 @@ void interface_cryptography::worker(
 			//print_on_top(ptext, ctext);
 		}
 	}
-	else if (f_discrete_log) {
-
-		cryptography::cryptography_domain Crypto;
-
-
-		Crypto.do_discrete_log(discrete_log_y, discrete_log_a, discrete_log_m, verbose_level);
-	}
-	else if (f_primitive_root) {
-
-		cryptography::cryptography_domain Crypto;
-
-		//longinteger_domain D;
-		ring_theory::longinteger_object p;
-
-		p.create_from_base_10_string(primitive_root_p);
-		Crypto.do_primitive_root_longinteger(p, verbose_level);
-	}
-	else if (f_smallest_primitive_root) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.do_smallest_primitive_root(smallest_primitive_root_p, verbose_level);
-	}
-	else if (f_smallest_primitive_root_interval) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.do_smallest_primitive_root_interval(smallest_primitive_root_interval_min,
-				smallest_primitive_root_interval_max, verbose_level);
-	}
-	else if (f_number_of_primitive_roots_interval) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.do_number_of_primitive_roots_interval(smallest_primitive_root_interval_min,
-				smallest_primitive_root_interval_max, verbose_level);
-	}
-	else if (f_inverse_mod) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.do_inverse_mod(inverse_mod_a, inverse_mod_n, verbose_level);
-	}
-	else if (f_extended_gcd) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.do_extended_gcd(extended_gcd_a, extended_gcd_b, verbose_level);
-	}
-	else if (f_power_mod) {
-
-		cryptography::cryptography_domain Crypto;
-
-		ring_theory::longinteger_object a;
-		ring_theory::longinteger_object k;
-		ring_theory::longinteger_object n;
-
-		a.create_from_base_10_string(power_mod_a);
-		k.create_from_base_10_string(power_mod_k);
-		n.create_from_base_10_string(power_mod_n);
-
-		Crypto.do_power_mod(a, k, n, verbose_level);
-	}
 	else if (f_RSA) {
 
 		cryptography::cryptography_domain Crypto;
@@ -1083,35 +732,6 @@ void interface_cryptography::worker(
 				sift_smooth_len,
 				sift_smooth_factor_base, verbose_level);
 	}
-	else if (f_square_root) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.square_root(square_root_number, verbose_level);
-	}
-	else if (f_square_root_mod) {
-
-		cryptography::cryptography_domain Crypto;
-
-		Crypto.square_root_mod(square_root_mod_a, square_root_mod_m, verbose_level);
-	}
-
-	else if (f_all_square_roots_mod_n) {
-
-		cryptography::cryptography_domain Crypto;
-		vector<long int> S;
-		int i;
-
-		Crypto.all_square_roots_mod_n_by_exhaustive_search_lint(
-				all_square_roots_mod_n_a, all_square_roots_mod_n_n, S, verbose_level);
-
-		cout << "We found " << S.size() << " square roots of "
-				<< all_square_roots_mod_n_a << " mod " << all_square_roots_mod_n_n << endl;
-		cout << "They are:" << endl;
-		for (i = 0; i < S.size(); i++) {
-			cout << i << " : " << S[i] << endl;
-		}
-	}
 
 
 	else if (f_quadratic_sieve) {
@@ -1122,12 +742,6 @@ void interface_cryptography::worker(
 				quadratic_sieve_factorbase,
 				quadratic_sieve_x0,
 				verbose_level);
-	}
-	else if (f_jacobi) {
-
-		number_theory::number_theory_domain NT;
-
-		NT.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
 	}
 	else if (f_solovay_strassen) {
 
@@ -1198,53 +812,6 @@ void interface_cryptography::worker(
 
 		Crypto.make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);
-	}
-	else if (f_Chinese_remainders) {
-
-		long int *R;
-		int sz1;
-		long int *M;
-		int sz2;
-
-		Get_vector_or_set(Chinese_remainders_R, R, sz1);
-		Get_vector_or_set(Chinese_remainders_M, M, sz2);
-
-		number_theory::number_theory_domain NT;
-		std::vector<long int> Remainders;
-		std::vector<long int> Moduli;
-		int i;
-		long int x, Modulus;
-
-		if (sz1 != sz2) {
-			cout << "remainders and moduli must have the same length" << endl;
-			exit(1);
-		}
-
-		for (i = 0; i < sz1; i++) {
-			Remainders.push_back(R[i]);
-			Moduli.push_back(M[i]);
-		}
-
-		x = NT.Chinese_Remainders(
-				Remainders,
-				Moduli, Modulus, verbose_level);
-
-
-		cout << "The solution is " << x << " modulo " << Modulus << endl;
-
-		ring_theory::longinteger_domain D;
-		ring_theory::longinteger_object xl, Ml;
-
-		D.Chinese_Remainders(
-				Remainders,
-				Moduli,
-				xl, Ml, verbose_level);
-
-		cout << "The solution is " << xl << " modulo " << Ml << " (computed in longinteger)" << endl;
-
-		FREE_lint(R);
-		FREE_lint(M);
-
 	}
 
 

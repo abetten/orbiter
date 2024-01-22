@@ -798,7 +798,7 @@ void surfaces_arc_lifting::report(
 
 	poset_classification::poset_classification_control *Control;
 
-	Control = Get_object_of_type_poset_classification_control(Control_six_arcs_label);
+	Control = Get_poset_classification_control(Control_six_arcs_label);
 
 	if (!Control->f_draw_options) {
 		cout << "surfaces_arc_lifting::report please use "

@@ -6,16 +6,12 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	group_container.o \
-	orbit_rep.o \
-	orbit_transversal.o \
-	schreier_vector_handler.o \
-	schreier_vector.o \
-	set_and_stabilizer.o \
-	union_find.o \
-	union_find_on_k_subsets.o \
-	vector_ge_description.o \
-	vector_ge.o
+	combinatorics_with_action.o \
+	flag_orbits_incidence_structure.o \
+	group_action_on_combinatorial_object.o \
+	incidence_structure_with_group.o \
+	orbit_type_repository.o \
+	translation_plane_via_andre_model.o
 
 
 all : $(MODULES)

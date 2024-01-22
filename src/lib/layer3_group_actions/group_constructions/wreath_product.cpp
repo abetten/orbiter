@@ -15,11 +15,13 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 
-static void dimensions(int n, int &nb_rows, int &nb_cols);
-static void place_binary(long int h, int &i, int &j);
+static void dimensions(
+		int n, int &nb_rows, int &nb_cols);
+static void place_binary(
+		long int h, int &i, int &j);
 
 
 wreath_product::wreath_product()
@@ -589,7 +591,7 @@ void wreath_product::element_one(
 
 	P->one(Elt);
 	for (f = 0; f < nb_factors; f++) {
-		M->GL_one(Elt + offset_i(f));
+		M->Element->GL_one(Elt + offset_i(f));
 	}
 }
 
@@ -631,7 +633,8 @@ void wreath_product::element_mult(
 	Combi.perm_mult(A, B, AB, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
 		g = A[f];
-		M->GL_mult(A + offset_i(f),
+		M->Element->GL_mult(
+				A + offset_i(f),
 				B + offset_i(g),
 				AB + offset_i(f),
 				0 /* verbose_level */);
@@ -675,7 +678,8 @@ void wreath_product::element_invert(
 	Combi.perm_inverse(A, Av, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
 		g = A[f];
-		M->GL_invert(A + offset_i(f), Av + offset_i(g));
+		M->Element->GL_invert(
+				A + offset_i(f), Av + offset_i(g));
 	}
 	if (f_v) {
 		cout << "wreath_product::element_invert done" << endl;
@@ -835,7 +839,8 @@ void wreath_product::element_unpack(
 						get_digit(elt, f, i, j);
 			}
 		}
-		M->GL_invert_internal(m, m + M->elt_size_int_half,
+		M->Element->GL_invert_internal(
+				m, m + M->elt_size_int_half,
 				0 /*verbose_level - 2*/);
 	}
 }
@@ -892,10 +897,10 @@ void wreath_product::make_element_from_one_component(
 		P->one(Elt);
 		for (g = 0; g < nb_factors; g++) {
 			if (g == f) {
-				M->GL_copy(Elt_component, Elt + offset_i(g));
+				M->Element->GL_copy(Elt_component, Elt + offset_i(g));
 			}
 			else {
-				M->GL_one(Elt + offset_i(g));
+				M->Element->GL_one(Elt + offset_i(g));
 			}
 		}
 }
@@ -909,7 +914,7 @@ void wreath_product::make_element_from_permutation(
 			Elt[f] = perm[f];
 		}
 		for (f = 0; f < nb_factors; f++) {
-			M->GL_one(Elt + offset_i(f));
+			M->Element->GL_one(Elt + offset_i(f));
 		}
 }
 
@@ -932,7 +937,7 @@ void wreath_product::make_element(
 	}
 	offset = nb_factors;
 	for (f = 0; f < nb_factors; f++) {
-		M->make_element(Elt + offset_i(f), data + offset,
+		M->Element->make_element(Elt + offset_i(f), data + offset,
 				0 /* verbose_level */);
 		offset += M->elt_size_int_half;
 	}
@@ -954,7 +959,7 @@ void wreath_product::element_print_for_make_element(
 		ost << Elt[f] << ",";
 	}
 	for (f = 0; f < nb_factors; f++) {
-		M->GL_print_for_make_element(Elt + offset_i(f), ost);
+		M->Element->GL_print_for_make_element(Elt + offset_i(f), ost);
 	}
 }
 
@@ -974,7 +979,7 @@ void wreath_product::element_print_easy(
 	ost << "]" << endl;
 	for (f = 0; f < nb_factors; f++) {
 		ost << "factor " << f << ":" << endl;
-		M->GL_print_easy(Elt + offset_i(f), ost);
+		M->Element->GL_print_easy(Elt + offset_i(f), ost);
 	}
 	ost << "end element of wreath product" << endl;
 }
@@ -987,7 +992,7 @@ void wreath_product::element_print_latex(
 
 	ost << "\\left(";
 	for (f = 0; f < nb_factors; f++) {
-		M->GL_print_latex(Elt + offset_i(f), ost);
+		M->Element->GL_print_latex(Elt + offset_i(f), ost);
 	}
 	ost << "; \\;" << endl;
 	Combi.perm_print(ost, Elt, nb_factors);
@@ -2001,7 +2006,7 @@ void wreath_product::report(
 }
 
 void wreath_product::compute_permutations_and_write_to_file(
-		strong_generators* SG,
+		groups::strong_generators* SG,
 		actions::action *A,
 		int*& result,
 		int &nb_gens, int &degree,
@@ -2439,7 +2444,7 @@ int wreath_product::test_if_file_exists(
 }
 
 void wreath_product::orbits_using_files_and_union_find(
-		strong_generators* SG,
+		groups::strong_generators* SG,
 		actions::action *A,
 		int *&result,
 		int &nb_gens, int &degree,
@@ -2720,7 +2725,7 @@ void wreath_product::orbits_using_files_and_union_find(
 
 
 void wreath_product::orbits_restricted(
-		strong_generators* SG,
+		groups::strong_generators* SG,
 		actions::action *A,
 		int *&result,
 		int &nb_gens, int &degree,
@@ -2959,7 +2964,7 @@ void wreath_product::orbits_restricted(
 }
 
 void wreath_product::orbits_restricted_compute(
-		strong_generators* SG,
+		groups::strong_generators* SG,
 		actions::action *A,
 		int *&result,
 		int &nb_gens, int &degree,
@@ -3087,11 +3092,11 @@ void wreath_product::orbits_restricted_compute(
 				verbose_level);
 	}
 
-	schreier *Sch;
+	groups::schreier *Sch;
 	ring_theory::longinteger_object go;
 	int orbit_idx;
 
-	Sch = NEW_OBJECT(schreier);
+	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(A_perm, verbose_level - 2);
 	Sch->initialize_tables();
@@ -3154,7 +3159,7 @@ void wreath_product::orbits_restricted_compute(
 			Int_vec_print(cout, tensor, dimension_of_tensor_action);
 			cout << endl;
 		}
-		sims *Stab;
+		groups::sims *Stab;
 
 		if (f_v) {
 			cout << "before Sch->point_stabilizer in action "
@@ -3167,9 +3172,9 @@ void wreath_product::orbits_restricted_compute(
 					<< A_perm_matrix->label << endl;
 		}
 
-		strong_generators *gens;
+		groups::strong_generators *gens;
 
-		gens = NEW_OBJECT(strong_generators);
+		gens = NEW_OBJECT(groups::strong_generators);
 		gens->init(A_perm_matrix);
 		gens->init_from_sims(Stab, verbose_level);
 
@@ -3200,10 +3205,10 @@ void wreath_product::orbits_restricted_compute(
 		}
 
 
-		sims *derived_group;
+		groups::sims *derived_group;
 		ring_theory::longinteger_object d_go;
 
-		derived_group = NEW_OBJECT(sims);
+		derived_group = NEW_OBJECT(groups::sims);
 
 		if (f_v) {
 			cout << "computing the derived subgroup:" << endl;
@@ -3212,7 +3217,7 @@ void wreath_product::orbits_restricted_compute(
 		derived_group->init(A_perm_matrix, verbose_level - 2);
 		derived_group->init_trivial_group(verbose_level - 1);
 		derived_group->build_up_subgroup_random_process(Stab,
-				choose_random_generator_derived_group,
+				groups::choose_random_generator_derived_group,
 				0 /*verbose_level*/);
 
 		derived_group->group_order(d_go);
@@ -3220,18 +3225,18 @@ void wreath_product::orbits_restricted_compute(
 			cout << "the derived subgroup has order: " << d_go << endl;
 		}
 
-		strong_generators *d_gens;
+		groups::strong_generators *d_gens;
 
-		d_gens = NEW_OBJECT(strong_generators);
+		d_gens = NEW_OBJECT(groups::strong_generators);
 		d_gens->init(A_perm_matrix);
 		d_gens->init_from_sims(derived_group, 0 /*verbose_level*/);
 
 
 		d_gens->print_generators_tex(cout);
 
-		schreier *Sch_orbit;
+		groups::schreier *Sch_orbit;
 
-		Sch_orbit = NEW_OBJECT(schreier);
+		Sch_orbit = NEW_OBJECT(groups::schreier);
 		if (f_v) {
 			cout << "computing orbits of stabilizer on "
 					"the rest of the orbit:" << endl;

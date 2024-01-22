@@ -1188,8 +1188,10 @@ public:
 };
 
 
-const char *trace_result_as_text(trace_result r);
-int trace_result_is_no_result(trace_result r);
+const char *trace_result_as_text(
+		trace_result r);
+int trace_result_is_no_result(
+		trace_result r);
 
 
 
@@ -1227,7 +1229,8 @@ public:
 		int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	int is_selected_by_group_order(long int so);
+	int is_selected_by_group_order(
+			long int so);
 
 };
 
@@ -1391,6 +1394,7 @@ public:
 
 //! description of a poset from the command line
 
+// this class is not used anywhere
 
 class poset_description {
 public:
@@ -1407,10 +1411,12 @@ public:
 
 	poset_description();
 	~poset_description();
+#if 0
 	void read_arguments_from_string(
 			const char *str, int verbose_level);
 	int read_arguments(int argc, const char **argv,
 		int verbose_level);
+#endif
 };
 
 
@@ -1975,12 +1981,14 @@ public:
 			groups::strong_generators *Strong_gens,
 			linear_algebra::vector_space *VS,
 			int verbose_level);
+#if 0
 	void init(
 			poset_description *description,
 			actions::action *A, // the action in which the group is given
 			actions::action *A2, // the action in which we do the search
 			groups::strong_generators *Strong_gens,
 		int verbose_level);
+#endif
 	void add_independence_condition(
 			int independence_value,
 			int verbose_level);

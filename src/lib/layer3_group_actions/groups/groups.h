@@ -60,108 +60,6 @@ public:
 
 
 
-// #############################################################################
-// direct_product.cpp
-// #############################################################################
-
-//! the direct product of two matrix groups in product action
-
-class direct_product {
-
-public:
-	algebra::matrix_group *M1;
-	algebra::matrix_group *M2;
-	field_theory::finite_field *F1;
-	field_theory::finite_field *F2;
-	int q1;
-	int q2;
-
-	std::string label;
-	std::string label_tex;
-
-
-	int degree_of_matrix_group1;
-	int dimension_of_matrix_group1;
-	int degree_of_matrix_group2;
-	int dimension_of_matrix_group2;
-	int degree_of_product_action;
-	int degree_overall;
-	int low_level_point_size;
-	int make_element_size;
-	int elt_size_int;
-
-	int *perm_offset_i;
-	int *tmp_Elt1;
-
-	int bits_per_digit1;
-	int bits_per_digit2;
-
-	int bits_per_elt;
-	int char_per_elt;
-
-	uchar *elt1;
-
-	int base_len_in_component1;
-	long int *base_for_component1;
-	int *tl_for_component1;
-
-	int base_len_in_component2;
-	long int *base_for_component2;
-	int *tl_for_component2;
-
-	int base_length;
-	long int *the_base;
-	int *the_transversal_length;
-
-	data_structures::page_storage *Elts;
-
-	direct_product();
-	~direct_product();
-	void init(
-			algebra::matrix_group *M1,
-			algebra::matrix_group *M2,
-			int verbose_level);
-	long int element_image_of(
-			int *Elt, long int a, int verbose_level);
-	void element_one(
-			int *Elt);
-	int element_is_one(
-			int *Elt);
-	void element_mult(
-			int *A, int *B, int *AB, int verbose_level);
-	void element_move(
-			int *A, int *B, int verbose_level);
-	void element_invert(
-			int *A, int *Av, int verbose_level);
-	int offset_i(
-			int i);
-	void element_pack(
-			int *Elt, uchar *elt);
-	void element_unpack(
-			uchar *elt, int *Elt);
-	void put_digit(
-			uchar *elt, int f, int i, int d);
-	int get_digit(
-			uchar *elt, int f, int i);
-	void make_element(
-			int *Elt, int *data, int verbose_level);
-	void element_print_easy(
-			int *Elt, std::ostream &ost);
-	void element_print_easy_latex(
-			int *Elt, std::ostream &ost);
-	void compute_base_and_transversals(
-			int verbose_level);
-	void make_strong_generators_data(
-			int *&data,
-			int &size, int &nb_gens, int verbose_level);
-	void lift_generators(
-			strong_generators *SG1,
-			strong_generators *SG2,
-			actions::action *A,
-			strong_generators *&SG3,
-			int verbose_level);
-};
-
 
 // #############################################################################
 // exceptional_isomorphism_O4.cpp
@@ -202,193 +100,10 @@ public:
 	void apply_2_to_4(
 		int &f_switch, int *E2_a, int *E2_b, int *E4,
 		int verbose_level);
-	void print_as_2x2(int *mtx4x4);
+	void print_as_2x2(
+			int *mtx4x4);
 };
 
-
-
-
-// #############################################################################
-// linear_group_description.cpp
-// #############################################################################
-
-//! description of a linear group from the command line
-
-
-class linear_group_description {
-public:
-	int f_projective;
-	int f_general;
-	int f_affine;
-	int f_GL_d_q_wr_Sym_n;
-	int f_orthogonal;
-	int f_orthogonal_p;
-	int f_orthogonal_m;
-	int GL_wreath_Sym_d;
-	int GL_wreath_Sym_n;
-
-
-	int f_n;
-	int n;
-
-	std::string input_q;
-
-	field_theory::finite_field *F;
-
-
-	int f_semilinear;
-	int f_special;
-
-	// induced actions and subgroups:
-
-
-	int f_wedge_action;
-	int f_wedge_action_detached;
-
-	int f_lex_least_base;
-
-	int f_PGL2OnConic;
-	int f_monomial_group;
-	int f_diagonal_group;
-	int f_null_polarity_group;
-	int f_symplectic_group;
-	int f_singer_group;
-	int f_singer_group_and_frobenius;
-	int singer_power;
-	int f_subfield_structure_action;
-	int s;
-	int f_subgroup_from_file;
-	int f_borel_subgroup_upper;
-	int f_borel_subgroup_lower;
-	int f_identity_group;
-	std::string subgroup_fname;
-	std::string subgroup_label;
-	int f_orthogonal_group;
-	int orthogonal_group_epsilon;
-
-	int f_on_tensors;
-	int f_on_rank_one_tensors;
-
-	int f_subgroup_by_generators;
-	std::string subgroup_order_text;
-	int nb_subgroup_generators;
-	std::string subgroup_generators_label;
-
-	int f_Janko1;
-
-	int f_export_magma;
-
-
-	int f_import_group_of_plane;
-	std::string import_group_of_plane_label;
-
-
-	linear_group_description();
-	~linear_group_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// linear_group.cpp
-// #############################################################################
-
-//! creates a linear group from command line arguments using linear_group_description
-
-class linear_group {
-public:
-	linear_group_description *description;
-	int n;
-	int input_q;
-	field_theory::finite_field *F;
-	int f_semilinear;
-
-	std::string label;
-	std::string label_tex;
-
-	strong_generators *initial_strong_gens;
-	actions::action *A_linear;
-	algebra::matrix_group *Mtx;
-
-	int f_has_strong_generators;
-	strong_generators *Strong_gens;
-	actions::action *A2;
-	int vector_space_dimension;
-	int q;
-
-	int f_has_nice_gens;
-	data_structures_groups::vector_ge *nice_gens;
-
-	linear_group();
-	~linear_group();
-	void linear_group_init(
-			linear_group_description *description,
-		int verbose_level);
-	void linear_group_import(
-			int verbose_level);
-	void linear_group_import_group_of_plane(
-			int verbose_level);
-	void linear_group_create(
-			int verbose_level);
-	int linear_group_apply_modification(
-			linear_group_description *description,
-			int verbose_level);
-
-	void init_PGL2q_OnConic(
-			int verbose_level);
-	void init_wedge_action(
-			int verbose_level);
-	void init_wedge_action_detached(
-			int verbose_level);
-	void init_monomial_group(
-			int verbose_level);
-	void init_diagonal_group(
-			int verbose_level);
-	void init_singer_group(
-			int singer_power, int verbose_level);
-	void init_singer_group_and_frobenius(
-			int singer_power, int verbose_level);
-	void init_null_polarity_group(
-			int verbose_level);
-	void init_borel_subgroup_upper(
-			int verbose_level);
-	void init_identity_subgroup(
-			int verbose_level);
-	void init_symplectic_group(
-			int verbose_level);
-	void init_subfield_structure_action(
-			int s, int verbose_level);
-	void init_orthogonal_group(
-			int epsilon, int verbose_level);
-	void init_subgroup_from_file(
-			std::string &subgroup_fname,
-			std::string &subgroup_label,
-			int verbose_level);
-	void init_subgroup_by_generators(
-			std::string &subgroup_label,
-			std::string &subgroup_order_text,
-			int nb_subgroup_generators,
-			int *subgroup_generators_data,
-			int verbose_level);
-	void init_subgroup_Janko1(
-			int verbose_level);
-	void report(
-			std::ostream &fp,
-			int f_sylow, int f_group_table,
-			int f_conjugacy_classes_and_normalizers,
-			graphics::layered_graph_draw_options *LG_Draw_options,
-			int verbose_level);
-	void create_latex_report(
-			graphics::layered_graph_draw_options *O,
-			int f_sylow, int f_group_table, int f_classes,
-			int verbose_level);
-
-};
 
 
 
@@ -590,237 +305,6 @@ public:
 };
 
 
-// #############################################################################
-// permutation_group_create.cpp
-// #############################################################################
-
-//! a domain for permutation groups whose elements are given in the permutation representation
-
-class permutation_group_create {
-
-public:
-	permutation_group_description *Descr;
-
-	std::string label;
-	std::string label_tex;
-
-	actions::action *A_initial;
-
-	int f_has_strong_generators;
-	strong_generators *Strong_gens;
-	actions::action *A2;
-
-	int f_has_nice_gens;
-	data_structures_groups::vector_ge *nice_gens;
-
-
-	permutation_group_create();
-	~permutation_group_create();
-	void permutation_group_init(
-			permutation_group_description *description,
-			int verbose_level);
-	void init_subgroup_by_generators(
-			std::string &subgroup_label,
-			std::string &subgroup_order_text,
-			int nb_subgroup_generators,
-			std::string &subgroup_generators_label,
-			int verbose_level);
-
-
-};
-
-
-// #############################################################################
-// permutation_group_description.cpp
-// #############################################################################
-
-//! a domain for permutation groups whose elements are given in the permutation representation
-
-class permutation_group_description {
-
-public:
-	int degree;
-	permutation_group_type type;
-
-	int f_bsgs;
-	std::string bsgs_label;
-	std::string bsgs_label_tex;
-	std::string bsgs_order_text;
-	std::string bsgs_base;
-	int bsgs_nb_generators;
-	std::string bsgs_generators;
-
-
-	int f_subgroup_by_generators;
-	std::string subgroup_label;
-	std::string subgroup_order_text;
-	int nb_subgroup_generators;
-	std::string subgroup_generators_label;
-
-	permutation_group_description();
-	~permutation_group_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-
-};
-
-
-// #############################################################################
-// permutation_representation_domain.cpp
-// #############################################################################
-
-//! a domain for permutation groups whose elements are given in the permutation representation
-
-class permutation_representation_domain {
-
-public:
-	int degree;
-	
-	int f_induced_action;
-	
-	
-	int f_product_action;
-	int m;
-	int n;
-	int mn;
-	int offset;
-	
-	int char_per_elt;
-	int elt_size_int;
-	
-	int *Elt1, *Elt2, *Elt3, *Elt4;
-	uchar *elt1, *elt2, *elt3;
-		// temporary storage, used in element_store()
-	int *Eltrk1, *Eltrk2, *Eltrk3;
-		// used in store / retrieve
-	
-	data_structures::page_storage *Elts;
-
-	permutation_representation_domain();
-	~permutation_representation_domain();
-	void allocate();
-	void init_product_action(
-			int m, int n,
-		int page_length_log, int verbose_level);
-	void init(
-			int degree, int page_length_log, int verbose_level);
-	void init_data(
-			int page_length_log, int verbose_level);
-	void init_with_base(
-			int degree,
-		int base_length, int *base, int page_length_log, 
-		actions::action &A, int verbose_level);
-	void transversal_rep(
-			int i, int j, int *Elt, int verbose_level);
-	void one(
-			int *Elt);
-	int is_one(
-			int *Elt);
-	void mult(
-			int *A, int *B, int *AB);
-	void copy(
-			int *A, int *B);
-	void invert(
-			int *A, int *Ainv);
-	void unpack(
-			uchar *elt, int *Elt);
-	void pack(
-			int *Elt, uchar *elt);
-	void print(
-			int *Elt, std::ostream &ost);
-	void print_with_print_point_function(
-			int *Elt,
-			std::ostream &ost,
-			void (*point_label)(
-					std::stringstream &sstr, long int pt, void *data),
-			void *point_label_data);
-	void code_for_make_element(
-			int *Elt, int *data);
-	void print_for_make_element(
-			int *Elt, std::ostream &ost);
-	void print_for_make_element_no_commas(
-			int *Elt, std::ostream &ost);
-	void print_with_action(
-			actions::action *A, int *Elt, std::ostream &ost);
-	void make_element(
-			int *Elt, int *data, int verbose_level);
-
-};
-
-
-// #############################################################################
-// permutation_representation.cpp
-// #############################################################################
-
-//! homomorphism to a permutation group
-
-class permutation_representation {
-
-public:
-	actions::action *A_original;
-	int f_stay_in_the_old_action;
-	int nb_gens;
-	data_structures_groups::vector_ge *gens;
-		// the original generators in action A_original
-	int *Perms; // [nb_gens * degree]
-	int degree;
-	//longinteger_object target_go;
-
-	permutation_representation_domain *P;
-	int perm_offset;
-	int elt_size_int;
-		// A_original->elt_size_int + P->elt_size_int
-	int make_element_size;
-
-	int char_per_elt;
-	uchar *elt1; // [char_per_elt]
-
-
-	std::string label;
-	std::string label_tex;
-
-	data_structures::page_storage *PS;
-
-	int *Elts;
-		// [nb_gens * elt_size_int], the generators in the induced action
-
-
-	permutation_representation();
-	~permutation_representation();
-	void init(actions::action *A_original,
-			int f_stay_in_the_old_action,
-			data_structures_groups::vector_ge *gens,
-			int *Perms, int degree,
-			int verbose_level);
-		// Perms is degree x nb_gens
-	long int element_image_of(
-			int *Elt, long int a, int verbose_level);
-	void element_one(
-			int *Elt);
-	int element_is_one(
-			int *Elt);
-	void element_mult(
-			int *A, int *B, int *AB, int verbose_level);
-	void element_move(
-			int *A, int *B, int verbose_level);
-	void element_invert(
-			int *A, int *Av, int verbose_level);
-	void element_pack(
-			int *Elt, uchar *elt);
-	void element_unpack(
-			uchar *elt, int *Elt);
-	void element_print_for_make_element(
-			int *Elt, std::ostream &ost);
-	void element_print_easy(
-			int *Elt, std::ostream &ost);
-	void element_print_latex(
-			int *Elt, std::ostream &ost);
-};
-
-
 
 // #############################################################################
 // schreier.cpp
@@ -978,9 +462,11 @@ public:
 			int *elt, int verbose_level);
 	void compute_all_point_orbits(
 			int verbose_level);
-	void compute_all_point_orbits_with_prefered_reps(
-		int *prefered_reps, int nb_prefered_reps, 
+#if 0
+	void compute_all_point_orbits_with_preferred_reps(
+		int *preferrd_reps, int nb_preferred_reps,
 		int verbose_level);
+#endif
 	void compute_all_point_orbits_with_preferred_labels(
 		long int *preferred_labels, int verbose_level);
 	void compute_all_orbits_on_invariant_subset(
@@ -1520,7 +1006,8 @@ public:
 			actions::action *A, int verbose_level);
 
 	void delete_images();
-	void init_images(int nb_images);
+	void init_images(
+			int nb_images);
 	void images_append();
 	void init(
 			actions::action *A, int verbose_level);
@@ -1619,7 +1106,8 @@ public:
 			long int rk, int *Elt, int verbose_level);
 	void element_unrank_lint(
 			long int rk, int *Elt);
-	long int element_rank_lint(int *Elt);
+	long int element_rank_lint(
+			int *Elt);
 	int is_element_of(
 			int *elt, int verbose_level);
 	void test_element_rank_unrank();
@@ -1917,7 +1405,8 @@ public:
 	void print_transversals_short();
 	void print_transversal_lengths();
 	void print_orbit_len();
-	void print(int verbose_level);
+	void print(
+			int verbose_level);
 	void print_generators();
 	void print_generators_tex(
 			std::ostream &ost);
@@ -2154,7 +1643,8 @@ public:
 			std::ostream &ost, actions::action *A2);
 	void print_with_given_action(
 			std::ostream &ost, actions::action *A2);
-	void print_elements_ost(std::ostream &ost);
+	void print_elements_ost(
+			std::ostream &ost);
 	void print_elements_with_special_orthogonal_action_ost(
 			std::ostream &ost);
 	void print_elements_with_given_action(
@@ -2238,7 +1728,8 @@ public:
 	void compute_and_print_orbits_on_a_given_set(
 			actions::action *A_given,
 		long int *set, int len, int verbose_level);
-	void compute_and_print_orbits(actions::action *A_given,
+	void compute_and_print_orbits(
+			actions::action *A_given,
 		int verbose_level);
 	int test_if_normalizing(
 			sims *S, int verbose_level);
@@ -2306,7 +1797,7 @@ public:
 	void init_linear_group_from_scratch(
 			actions::action *&A,
 			field_theory::finite_field *F, int n,
-		linear_group_description *Descr,
+		group_constructions::linear_group_description *Descr,
 		data_structures_groups::vector_ge *&nice_gens,
 		std::string &label,
 		std::string &label_tex,
@@ -2515,208 +2006,6 @@ public:
 };
 
 
-// #############################################################################
-// wreath_product.cpp
-// #############################################################################
-
-//! the wreath product group GL(d,q) wreath Sym(n)
-
-class wreath_product {
-
-public:
-	algebra::matrix_group *M;
-	actions::action *A_mtx;
-	field_theory::finite_field *F;
-	int q;
-	int nb_factors;
-
-	std::string label;
-	std::string label_tex;
-
-	int degree_of_matrix_group;
-		// = M->degree;
-	int dimension_of_matrix_group;
-		// = M->n
-	int dimension_of_tensor_action;
-		// = i_power_j(dimension_of_matrix_group, nb_factors);
-	long int degree_of_tensor_action;
-		// = (i_power_j_safe(q, dimension_of_tensor_action) - 1) / (q - 1);
-	long int degree_overall;
-		// = nb_factors + nb_factors *
-		// degree_of_matrix_group + degree_of_tensor_action;
-	int low_level_point_size;
-		// = dimension_of_tensor_action
-	int make_element_size;
-		// = nb_factors + nb_factors *
-		// dimension_of_matrix_group * dimension_of_matrix_group;
-	permutation_representation_domain *P;
-	int elt_size_int;
-		// = M->elt_size_int * nb_factors + P->elt_size_int;
-
-	int *perm_offset_i; // [nb_factors + 1]
-		// perm_offset_i[0] = nb_factors
-		// perm_offset_i[nb_factors] = beginning of tensor domain
-	int *mtx_size;
-	int *index_set1;
-	int *index_set2;
-	int *u; // [dimension_of_tensor_action]
-	int *v; // [dimension_of_tensor_action]
-	int *w; // [dimension_of_tensor_action]
-	int *A1; // [dimension_of_tensor_action * dimension_of_tensor_action]
-	int *A2; // [dimension_of_tensor_action * dimension_of_tensor_action]
-	int *A3; // [dimension_of_tensor_action * dimension_of_tensor_action]
-	int *tmp_Elt1; // [elt_size_int]
-	int *tmp_perm1; // [P->elt_size_int]
-	int *tmp_perm2; // [P->elt_size_int]
-	int *induced_perm; // [dimension_of_tensor_action]
-
-	int bits_per_digit;
-	int bits_per_elt;
-	int char_per_elt;
-
-	uchar *elt1;
-
-	int base_len_in_component;
-	long int *base_for_component;
-	int *tl_for_component;
-
-	int base_length;
-	long int *the_base;
-	int *the_transversal_length;
-
-	data_structures::page_storage *Elts;
-
-	uint32_t *rank_one_tensors; // [nb_rank_one_tensors]
-	long int *rank_one_tensors_in_PG; // [nb_rank_one_tensors]
-		// rank_one_tensors_in_PG[i] = affine_rank_to_PG_rank(rank_one_tensors[i]);
-	long int *rank_one_tensors_in_PG_sorted; // [nb_rank_one_tensors]
-	int nb_rank_one_tensors;
-
-	char *TR; // [degree_of_tensor_action + 1]
-	uint32_t *Prev; // [degree_of_tensor_action + 1]
-
-	wreath_product();
-	~wreath_product();
-	void init_tensor_wreath_product(
-			algebra::matrix_group *M,
-			actions::action *A_mtx, int nb_factors,
-			int verbose_level);
-	void compute_tensor_ranks(
-			int verbose_level);
-	void unrank_point(
-			long int a, int *v, int verbose_level);
-	long int rank_point(
-			int *v, int verbose_level);
-	long int element_image_of(
-			int *Elt, long int a, int verbose_level);
-	void element_image_of_low_level(
-			int *Elt,
-			int *input, int *output, int verbose_level);
-		// we assume that we are in the tensor product domain
-	void element_one(
-			int *Elt);
-	int element_is_one(
-			int *Elt);
-	void element_mult(
-			int *A, int *B, int *AB, int verbose_level);
-	void element_move(
-			int *A, int *B, int verbose_level);
-	void element_invert(
-			int *A, int *Av, int verbose_level);
-	void compute_induced_permutation(
-			int *Elt, int *perm);
-	void apply_permutation(
-			int *Elt,
-			int *v_in, int *v_out, int verbose_level);
-	int offset_i(
-			int i);
-	void create_matrix(
-			int *Elt, int *A, int verbose_level);
-		// uses A1, A2
-	void element_pack(
-			int *Elt, uchar *elt);
-	void element_unpack(
-			uchar *elt, int *Elt);
-	void put_digit(
-			uchar *elt, int f, int i, int j, int d);
-	int get_digit(
-			uchar *elt, int f, int i, int j);
-	void make_element_from_one_component(
-			int *Elt,
-			int f, int *Elt_component);
-	void make_element_from_permutation(
-			int *Elt, int *perm);
-	void make_element(
-			int *Elt, int *data, int verbose_level);
-	void element_print_for_make_element(
-			int *Elt, std::ostream &ost);
-	void element_print_easy(
-			int *Elt, std::ostream &ost);
-	void element_print_latex(
-			int *Elt, std::ostream &ost);
-	void compute_base_and_transversals(
-			int verbose_level);
-	void make_strong_generators_data(
-			int *&data,
-			int &size, int &nb_gens, int verbose_level);
-	void report_rank_one_tensors(
-			std::ostream &ost, int verbose_level);
-	void create_all_rank_one_tensors(
-			uint32_t *&rank_one_tensors,
-			int &nb_rank_one_tensors, int verbose_level);
-	uint32_t tensor_affine_rank(
-			int *tensor);
-	void tensor_affine_unrank(
-			int *tensor, uint32_t rk);
-	long int tensor_PG_rank(
-			int *tensor);
-	void tensor_PG_unrank(
-			int *tensor, long int PG_rk);
-	long int affine_rank_to_PG_rank(
-			uint32_t affine_rk);
-	uint32_t PG_rank_to_affine_rank(
-			long int PG_rk);
-	void save_rank_one_tensors(
-			int verbose_level);
-	void compute_tensor_ranks(
-			char *&TR, uint32_t *&Prev, int verbose_level);
-	void report(
-			std::ostream &ost, int verbose_level);
-	void compute_permutations_and_write_to_file(
-			strong_generators* SG,
-			actions::action* A,
-			int*& result,
-			int &nb_gens, int &degree,
-			int nb_factors,
-			int verbose_level);
-	void make_fname(
-			std::string &fname, int nb_factors, int h, int b);
-	int test_if_file_exists(
-			int nb_factors, int h, int b);
-	void orbits_using_files_and_union_find(
-			strong_generators* SG,
-			actions::action* A,
-			int *&result,
-			int &nb_gens, int &degree,
-			int nb_factors,
-			int verbosity);
-	void orbits_restricted(
-			strong_generators* SG,
-			actions::action* A,
-			int *&result,
-			int &nb_gens, int &degree,
-			int nb_factors,
-			std::string &orbits_restricted_fname,
-			int verbose_level);
-	void orbits_restricted_compute(
-			strong_generators* SG,
-			actions::action* A,
-			int *&result,
-			int &nb_gens, int &degree,
-			int nb_factors,
-			std::string &orbits_restricted_fname,
-			int verbose_level);
-};
 
 }}}
 

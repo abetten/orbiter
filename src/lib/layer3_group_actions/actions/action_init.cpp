@@ -432,7 +432,7 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	int d, q, i;
-	algebra::gl_classes *C;
+	linear_algebra::gl_classes *C;
 
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix" << endl;
@@ -501,9 +501,9 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 
 	Elt = NEW_int(elt_size_in_int);
 
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	int *Basis;
 	int **Gens;

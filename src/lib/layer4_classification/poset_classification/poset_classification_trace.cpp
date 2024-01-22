@@ -756,7 +756,8 @@ long int poset_classification::find_node_for_subspace_by_rank(
 
 
 
-const char *trace_result_as_text(trace_result r)
+const char *trace_result_as_text(
+		trace_result r)
 {
 	if (r == found_automorphism) {
 		return "found_automorphism";
@@ -778,7 +779,8 @@ const char *trace_result_as_text(trace_result r)
 	}
 }
 
-int trace_result_is_no_result(trace_result r)
+int trace_result_is_no_result(
+		trace_result r)
 {
 	if (r == no_result_extension_not_found ||
 		r == no_result_fusion_node_installed ||

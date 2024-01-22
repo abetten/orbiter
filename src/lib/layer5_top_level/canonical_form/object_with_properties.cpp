@@ -122,7 +122,7 @@ void object_with_properties::init(
 	}
 
 
-	GA_on_CO = NEW_OBJECT(data_structures_groups::group_action_on_combinatorial_object);
+	GA_on_CO = NEW_OBJECT(combinatorics_with_groups::group_action_on_combinatorial_object);
 
 
 	if (f_v) {

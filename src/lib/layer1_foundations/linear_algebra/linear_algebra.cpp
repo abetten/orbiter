@@ -304,7 +304,7 @@ void linear_algebra::mult_matrix_matrix(
 
 void linear_algebra::semilinear_matrix_mult(
 		int *A, int *B, int *AB, int n)
-// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
+// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2 mod F->e)
 {
 	int i, j, k, a, b, ab, c, f1, f2, f1inv;
 	int *B2;
@@ -472,6 +472,7 @@ void linear_algebra::semilinear_matrix_mult_affine(
 
 int linear_algebra::matrix_determinant(
 		int *A, int n, int verbose_level)
+// too many memory allocations
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -673,6 +674,7 @@ void linear_algebra::general_linear_action_from_the_right(
 		int f_semilinear,
 	int *v, int *A, int *vA, int n,
 	int verbose_level)
+// same as projective_action_from_the_right
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1329,16 +1331,16 @@ void linear_algebra::complete_hyperbolic_pair(
 		cout << "linear_algebra::complete_hyperbolic_pair" << endl;
 	}
 	if (f_vv) {
-		cout << "vec1=";
+		cout << "linear_algebra::complete_hyperbolic_pair vec1=";
 		Int_vec_print(cout, vec1, n);
 		cout << endl;
-		cout << "Gram=" << endl;
+		cout << "linear_algebra::complete_hyperbolic_pair Gram=" << endl;
 		Int_vec_print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
 	}
 	mult_matrix_matrix(vec1, Gram, v0, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
-		cout << "v0=";
+		cout << "linear_algebra::complete_hyperbolic_pair v0=";
 		Int_vec_print(cout, v0, n);
 		cout << endl;
 	}
@@ -1392,7 +1394,7 @@ void linear_algebra::complete_hyperbolic_pair(
 		scalar_multiply_vector_in_place(F->inverse(a), v1, n);
 	}
 	if (f_vv) {
-		cout << "normalized ";
+		cout << "linear_algebra::complete_hyperbolic_pair normalized ";
 		Int_vec_print(cout, v1, n);
 		cout << endl;
 	}
@@ -1410,7 +1412,8 @@ void linear_algebra::complete_hyperbolic_pair(
 	}
 	c = dot_product(n, v0, vec2);
 	if (c != 1) {
-		cout << "dot product is not 1, error" << endl;
+		cout << "linear_algebra::complete_hyperbolic_pair "
+				"dot product is not 1, error" << endl;
 		cout << "c=" << c << endl;
 		cout << "vec1=";
 		Int_vec_print(cout, vec1, n);
@@ -1560,7 +1563,7 @@ void linear_algebra::restrict_quadratic_form(
 		Int_vec_print_integer_matrix_width(cout, D, k, k, k, 2);
 	}
 	if (f_v) {
-		cout << "linear_algebra::restrict_quadratic_form" << endl;
+		cout << "linear_algebra::restrict_quadratic_form done" << endl;
 	}
 }
 
@@ -1670,7 +1673,7 @@ void linear_algebra::lift_to_Klein_quadric(
 		Geo.wedge_to_klein(F, Image + i * 6, A6 + i * 6);
 	}
 	if (f_v) {
-		cout << "linear_algebra::lift_to_Klein_quadric" << endl;
+		cout << "linear_algebra::lift_to_Klein_quadric done" << endl;
 	}
 
 }

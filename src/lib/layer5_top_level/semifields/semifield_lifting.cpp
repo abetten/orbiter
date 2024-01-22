@@ -159,7 +159,7 @@ void semifield_lifting::init_level_three(
 	basis_tmp = NEW_int(k * k2);
 	base_cols = NEW_int(k2);
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 
 	if (f_v) {
 		cout << "semifield_lifting::init_level_three done" << endl;

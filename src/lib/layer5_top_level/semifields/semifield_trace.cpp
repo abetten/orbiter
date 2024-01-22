@@ -86,7 +86,7 @@ void semifield_trace::init(
 	basis_tmp = NEW_int(k /* basis_sz */ * k2);
 	base_cols = NEW_int(k2);
 
-	R1 = NEW_OBJECT(algebra::gl_class_rep);
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
 }
 
 void semifield_trace::trace_very_general(

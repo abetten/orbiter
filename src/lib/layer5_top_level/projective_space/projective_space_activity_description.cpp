@@ -447,7 +447,7 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-decomposition_by_subgroup") == 0) {
 			f_decomposition_by_subgroup = true;
 			decomposition_by_subgroup_label.assign(argv[++i]);
-			decomposition_by_subgroup_Descr = NEW_OBJECT(groups::linear_group_description);
+			decomposition_by_subgroup_Descr = NEW_OBJECT(group_constructions::linear_group_description);
 			i += decomposition_by_subgroup_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 

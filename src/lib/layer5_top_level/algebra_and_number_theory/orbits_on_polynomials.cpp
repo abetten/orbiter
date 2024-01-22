@@ -51,7 +51,7 @@ orbits_on_polynomials::~orbits_on_polynomials()
 }
 
 void orbits_on_polynomials::init(
-		groups::linear_group *LG,
+		group_constructions::linear_group *LG,
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
@@ -235,7 +235,7 @@ void orbits_on_polynomials::init(
 
 
 void orbits_on_polynomials::orbit_of_one_polynomial(
-		groups::linear_group *LG,
+		group_constructions::linear_group *LG,
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		expression_parser::symbolic_object_builder *Symbol,
 		int verbose_level)

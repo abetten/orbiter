@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 
 direct_product::direct_product()
@@ -276,7 +276,7 @@ long int direct_product::element_image_of(
 					"we are in component " << 0
 					<< " reduced input a=" << a << endl;
 		}
-		c = M1->image_of_element(Elt + offset_i(0), a, 0 /* verbose_level */);
+		c = M1->Element->image_of_element(Elt + offset_i(0), a, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "direct_product::element_image_of "
 					"we are in component " << 0
@@ -293,7 +293,7 @@ long int direct_product::element_image_of(
 						"we are in component " << 1
 						<< " reduced input a=" << a << endl;
 			}
-			c = M2->image_of_element(Elt + offset_i(1), a, 0 /* verbose_level */);
+			c = M2->Element->image_of_element(Elt + offset_i(1), a, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "direct_product::element_image_of "
 						"we are in component " << 1
@@ -313,8 +313,8 @@ long int direct_product::element_image_of(
 						"reduced input a = " << a
 						<< " i=" << i << " j=" << j << endl;
 			}
-			c1 = M1->image_of_element(Elt + offset_i(0), i, 0 /* verbose_level */);
-			c2 = M2->image_of_element(Elt + offset_i(1), j, 0 /* verbose_level */);
+			c1 = M1->Element->image_of_element(Elt + offset_i(0), i, 0 /* verbose_level */);
+			c2 = M2->Element->image_of_element(Elt + offset_i(1), j, 0 /* verbose_level */);
 			c = c1 * M2->degree + c2;
 			if (f_v) {
 				cout << "direct_product::element_image_of "
@@ -338,17 +338,17 @@ long int direct_product::element_image_of(
 void direct_product::element_one(
 		int *Elt)
 {
-	M1->GL_one(Elt + offset_i(0));
-	M2->GL_one(Elt + offset_i(1));
+	M1->Element->GL_one(Elt + offset_i(0));
+	M2->Element->GL_one(Elt + offset_i(1));
 }
 
 int direct_product::element_is_one(
 		int *Elt)
 {
-	if (!M1->GL_is_one(Elt + offset_i(0))) {
+	if (!M1->Element->GL_is_one(Elt + offset_i(0))) {
 		return false;
 	}
-	if (!M2->GL_is_one(Elt + offset_i(1))) {
+	if (!M2->Element->GL_is_one(Elt + offset_i(1))) {
 		return false;
 	}
 	return true;
@@ -363,11 +363,11 @@ void direct_product::element_mult(
 	if (f_v) {
 		cout << "direct_product::element_mult" << endl;
 	}
-	M1->GL_mult(A + offset_i(0),
+	M1->Element->GL_mult(A + offset_i(0),
 				B + offset_i(0),
 				AB + offset_i(0),
 				0 /* verbose_level */);
-	M2->GL_mult(A + offset_i(1),
+	M2->Element->GL_mult(A + offset_i(1),
 				B + offset_i(1),
 				AB + offset_i(1),
 				0 /* verbose_level */);
@@ -399,8 +399,8 @@ void direct_product::element_invert(
 	if (f_v) {
 		cout << "direct_product::element_invert" << endl;
 	}
-	M1->GL_invert(A + offset_i(0), Av + offset_i(0));
-	M2->GL_invert(A + offset_i(1), Av + offset_i(1));
+	M1->Element->GL_invert(A + offset_i(0), Av + offset_i(0));
+	M2->Element->GL_invert(A + offset_i(1), Av + offset_i(1));
 	if (f_v) {
 		cout << "direct_product::element_invert done" << endl;
 	}
@@ -446,13 +446,13 @@ void direct_product::element_unpack(
 	for (i = 0; i < M1->make_element_size; i++) {
 		m[i] = get_digit(elt, 0, i);
 	}
-	M1->GL_invert_internal(m, m + M1->elt_size_int_half,
+	M1->Element->GL_invert_internal(m, m + M1->elt_size_int_half,
 			0 /*verbose_level - 2*/);
 	m = Elt + offset_i(1);
 	for (i = 0; i < M2->make_element_size; i++) {
 		m[i] = get_digit(elt, 1, i);
 	}
-	M2->GL_invert_internal(m, m + M2->elt_size_int_half,
+	M2->Element->GL_invert_internal(m, m + M2->elt_size_int_half,
 			0 /*verbose_level - 2*/);
 	//cout << "after direct_product::element_unpack: " << endl;
 	//element_print_easy(Elt, cout);
@@ -530,10 +530,10 @@ void direct_product::make_element(
 		Int_vec_print(cout, data, make_element_size);
 		cout << endl;
 	}
-	M1->make_element(Elt + offset_i(0),
+	M1->Element->make_element(Elt + offset_i(0),
 			data,
 			0 /* verbose_level */);
-	M2->make_element(Elt + offset_i(1),
+	M2->Element->make_element(Elt + offset_i(1),
 			data + M1->make_element_size,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -560,11 +560,11 @@ void direct_product::element_print_easy(
 		for (f = 0; f < 2; f++) {
 			ost << "component " << f << ":" << endl;
 			if (f == 0) {
-				M1->GL_print_easy(Elt + offset_i(f), ost);
+				M1->Element->GL_print_easy(Elt + offset_i(f), ost);
 				cout << endl;
 			}
 			else {
-				M2->GL_print_easy(Elt + offset_i(f), ost);
+				M2->Element->GL_print_easy(Elt + offset_i(f), ost);
 				cout << endl;
 			}
 		}
@@ -586,11 +586,11 @@ void direct_product::element_print_easy_latex(
 		for (f = 0; f < 2; f++) {
 			//ost << "component " << f << ":" << endl;
 			if (f == 0) {
-				M1->GL_print_latex(Elt + offset_i(f), ost);
+				M1->Element->GL_print_latex(Elt + offset_i(f), ost);
 				ost << ",";
 			}
 			else {
-				M2->GL_print_latex(Elt + offset_i(f), ost);
+				M2->Element->GL_print_latex(Elt + offset_i(f), ost);
 				//cout << endl;
 			}
 		}
@@ -718,10 +718,10 @@ void direct_product::make_strong_generators_data(
 }
 
 void direct_product::lift_generators(
-		strong_generators *SG1,
-		strong_generators *SG2,
+		groups::strong_generators *SG1,
+		groups::strong_generators *SG2,
 		actions::action *A,
-		strong_generators *&SG3,
+		groups::strong_generators *&SG3,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

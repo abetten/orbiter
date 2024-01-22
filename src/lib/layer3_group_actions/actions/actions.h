@@ -840,7 +840,7 @@ public:
 	void (*ptr_element_print_verbose)(
 			action &A, void *elt, std::ostream &ost);
 	void (*ptr_print_point)(
-			action &A, long int i, std::ostream &ost);
+			action &A, long int i, std::ostream &ost, int verbose_level);
 	void (*ptr_element_code_for_make_element)(
 			action &A, void *elt, int *data);
 	void (*ptr_element_print_for_make_element)(
@@ -849,9 +849,9 @@ public:
 			action &A,
 		void *elt, std::ostream &ost);
 	void (*ptr_unrank_point)(
-			action &A, long int rk, int *v);
+			action &A, long int rk, int *v, int verbose_level);
 	long int (*ptr_rank_point)(
-			action &A, int *v);
+			action &A, int *v, int verbose_level);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -874,75 +874,6 @@ public:
 	void init_function_pointers_induced_action();
 };
 
-
-// #############################################################################
-// combinatorics_with_action.cpp
-// #############################################################################
-
-//! Combinatorial functions requiring a group action
-
-class combinatorics_with_action {
-public:
-
-	combinatorics_with_action();
-	~combinatorics_with_action();
-	void report_TDO_and_TDA_projective_space(
-			std::ostream &ost,
-			geometry::projective_space *P,
-			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA_projective_space(
-			std::ostream &ost,
-			geometry::projective_space *P,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA_combinatorial_object(
-			std::ostream &ost,
-			combinatorics::encoded_combinatorial_object *Enc,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDO_and_TDA(
-			std::ostream &ost,
-			geometry::incidence_structure *Inc,
-			long int *points, int nb_points,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void report_TDA(
-			std::ostream &ost,
-			geometry::incidence_structure *Inc,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens, int size_limit_for_printing,
-			int verbose_level);
-	void refine_decomposition_by_group_orbits(
-			combinatorics::decomposition *Decomposition,
-			actions::action *A_on_points, actions::action *A_on_lines,
-			groups::strong_generators *gens,
-			int verbose_level);
-	void refine_decomposition_by_group_orbits_one_side(
-			combinatorics::decomposition *Decomposition,
-			actions::action *A_on_points_or_lines,
-			int f_lines,
-			groups::strong_generators *gens,
-			int verbose_level);
-	void compute_decomposition_based_on_orbits(
-			geometry::projective_space *P,
-			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
-	void compute_decomposition_based_on_orbit_length(
-			geometry::projective_space *P,
-			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
-
-};
 
 
 // #############################################################################
@@ -1609,18 +1540,18 @@ private:
 
 
 	/** the base (b_0,\ldots,b_{l-1}) */
-	long int *base;
+	long int *base; // [base_len]
 
 
 
 	/** the length of the orbit of $G^{(i)}$ on $b_i$ */
-	int *transversal_length;
+	int *transversal_length; // [base_len]
 
 	/** the orbit of b_i as a permutation of the points of the set we act on */
-	long int **orbit;
+	long int **orbit; // [base_len][A->degree]
 
 	/** the inverse orbit permutation associated with the orbit of b_i */
-	long int **orbit_inv;
+	long int **orbit_inv; // [base_len][A->degree]
 
 	int *path;
 public:

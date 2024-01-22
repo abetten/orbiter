@@ -174,7 +174,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 		}
 		int coeff3[20];
 		int coeff4[20];
-		mtx->substitute_surface_equation(Elt1,
+		mtx->Element->substitute_surface_equation(Elt1,
 				coeff1, coeff3, Surf,
 				verbose_level - 1);
 

@@ -245,7 +245,7 @@ void delandtsheer_doyen::init(
 		exit(1);
 	}
 	else {
-		Pair_search_control = Get_object_of_type_poset_classification_control(
+		Pair_search_control = Get_poset_classification_control(
 				Descr->pair_search_control_label);
 
 	}
@@ -254,7 +254,7 @@ void delandtsheer_doyen::init(
 		exit(1);
 	}
 	else {
-		Search_control = Get_object_of_type_poset_classification_control(
+		Search_control = Get_poset_classification_control(
 				Descr->search_control_label);
 	}
 

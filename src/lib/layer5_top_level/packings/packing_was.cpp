@@ -426,7 +426,7 @@ void packing_was::init_N(
 		// set up the group N:
 		actions::action *N_A;
 
-		N_LG = NEW_OBJECT(groups::linear_group);
+		N_LG = NEW_OBJECT(group_constructions::linear_group);
 
 
 		if (f_v) {
@@ -506,7 +506,7 @@ void packing_was::init_H(
 	if (f_v) {
 		cout << "packing_was::init_H" << endl;
 	}
-	H_LG = NEW_OBJECT(groups::linear_group);
+	H_LG = NEW_OBJECT(group_constructions::linear_group);
 
 	Descr->H_Descr->F = P->F;
 
@@ -767,7 +767,7 @@ void packing_was::compute_spread_types_wrt_H(
 	if (f_v) {
 		cout << "packing_was::compute_spread_types_wrt_H" << endl;
 	}
-	Spread_type = NEW_OBJECT(data_structures_groups::orbit_type_repository);
+	Spread_type = NEW_OBJECT(combinatorics_with_groups::orbit_type_repository);
 	Spread_type->init(
 			Line_orbits_under_H,
 			P->Spread_table_with_selection->Spread_tables->nb_spreads,
@@ -1063,7 +1063,7 @@ void packing_was::compute_reduced_spread_types_wrt_H(
 	if (f_v) {
 		cout << "packing_was::compute_reduced_spread_types_wrt_H" << endl;
 	}
-	Spread_type_reduced = NEW_OBJECT(data_structures_groups::orbit_type_repository);
+	Spread_type_reduced = NEW_OBJECT(combinatorics_with_groups::orbit_type_repository);
 	Spread_type_reduced->init(
 			Line_orbits_under_H,
 			Spread_tables_reduced->nb_spreads,

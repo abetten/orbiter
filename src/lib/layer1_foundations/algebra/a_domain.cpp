@@ -30,7 +30,8 @@ a_domain::~a_domain()
 	
 }
 
-void a_domain::init_integers(int verbose_level)
+void a_domain::init_integers(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -41,7 +42,8 @@ void a_domain::init_integers(int verbose_level)
 	size_of_instance_in_int = 1;
 }
 
-void a_domain::init_integer_fractions(int verbose_level)
+void a_domain::init_integer_fractions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -53,7 +55,8 @@ void a_domain::init_integer_fractions(int verbose_level)
 }
 
 
-int a_domain::as_int(int *elt, int verbose_level)
+int a_domain::as_int(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -90,7 +93,8 @@ int a_domain::as_int(int *elt, int verbose_level)
 	}
 }
 
-void a_domain::make_integer(int *elt, int n, int verbose_level)
+void a_domain::make_integer(
+		int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -110,7 +114,8 @@ void a_domain::make_integer(int *elt, int n, int verbose_level)
 	}
 }
 
-void a_domain::make_zero(int *elt, int verbose_level)
+void a_domain::make_zero(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -130,7 +135,8 @@ void a_domain::make_zero(int *elt, int verbose_level)
 	}
 }
 
-void a_domain::make_zero_vector(int *elt, int len, int verbose_level)
+void a_domain::make_zero_vector(
+		int *elt, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -143,7 +149,8 @@ void a_domain::make_zero_vector(int *elt, int len, int verbose_level)
 	}
 }
 
-int a_domain::is_zero_vector(int *elt, int len, int verbose_level)
+int a_domain::is_zero_vector(
+		int *elt, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -164,7 +171,8 @@ int a_domain::is_zero_vector(int *elt, int len, int verbose_level)
 }
 
 
-int a_domain::is_zero(int *elt, int verbose_level)
+int a_domain::is_zero(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
@@ -195,7 +203,8 @@ int a_domain::is_zero(int *elt, int verbose_level)
 	return ret;
 }
 
-void a_domain::make_one(int *elt, int verbose_level)
+void a_domain::make_one(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -215,7 +224,8 @@ void a_domain::make_one(int *elt, int verbose_level)
 	}
 }
 
-int a_domain::is_one(int *elt, int verbose_level)
+int a_domain::is_one(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int ret = false;
@@ -263,7 +273,8 @@ int a_domain::is_one(int *elt, int verbose_level)
 	return ret;
 }
 
-void a_domain::copy(int *elt_from, int *elt_to, int verbose_level)
+void a_domain::copy(
+		int *elt_from, int *elt_to, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -283,7 +294,8 @@ void a_domain::copy(int *elt_from, int *elt_to, int verbose_level)
 	}
 }
 
-void a_domain::copy_vector(int *elt_from, int *elt_to,
+void a_domain::copy_vector(
+		int *elt_from, int *elt_to,
 		int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -298,7 +310,8 @@ void a_domain::copy_vector(int *elt_from, int *elt_to,
 }
 
 
-void a_domain::swap_vector(int *elt1, int *elt2,
+void a_domain::swap_vector(
+		int *elt1, int *elt2,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -313,7 +326,8 @@ void a_domain::swap_vector(int *elt1, int *elt2,
 	}
 }
 
-void a_domain::swap(int *elt1, int *elt2, int verbose_level)
+void a_domain::swap(
+		int *elt1, int *elt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -341,7 +355,8 @@ void a_domain::swap(int *elt1, int *elt2, int verbose_level)
 	}
 }
 
-void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
+void a_domain::add(
+		int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -371,7 +386,8 @@ void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 	}
 }
 
-void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
+void a_domain::add_apply(
+		int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -401,7 +417,8 @@ void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 	}
 }
 
-void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
+void a_domain::subtract(
+		int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -433,7 +450,8 @@ void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 	}
 }
 
-void a_domain::negate(int *elt, int verbose_level)
+void a_domain::negate(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -452,7 +470,8 @@ void a_domain::negate(int *elt, int verbose_level)
 	}
 }
 
-void a_domain::negate_vector(int *elt, int len, int verbose_level)
+void a_domain::negate_vector(
+		int *elt, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -465,7 +484,8 @@ void a_domain::negate_vector(int *elt, int len, int verbose_level)
 	}
 }
 
-void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
+void a_domain::mult(
+		int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -496,7 +516,8 @@ void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 	}
 }
 
-void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
+void a_domain::mult_apply(
+		int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -530,7 +551,8 @@ void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 	}
 }
 
-void a_domain::power(int *elt_a, int *elt_b, int n, int verbose_level)
+void a_domain::power(
+		int *elt_a, int *elt_b, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *tmp1;
@@ -572,7 +594,8 @@ void a_domain::power(int *elt_a, int *elt_b, int n, int verbose_level)
 	}
 }
 
-void a_domain::mult_by_integer(int *elt, int n, int verbose_level)
+void a_domain::mult_by_integer(
+		int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -591,7 +614,8 @@ void a_domain::mult_by_integer(int *elt, int n, int verbose_level)
 	}
 }
 
-void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
+void a_domain::divide_by_integer(
+		int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -628,7 +652,8 @@ void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 }
 
 
-void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
+void a_domain::divide(
+		int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -670,7 +695,8 @@ void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 	}
 }
 
-void a_domain::inverse(int *elt_a, int *elt_b, int verbose_level)
+void a_domain::inverse(
+		int *elt_a, int *elt_b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -713,7 +739,8 @@ void a_domain::inverse(int *elt_a, int *elt_b, int verbose_level)
 }
 
 
-void a_domain::print(int *elt)
+void a_domain::print(
+		int *elt)
 {
 	if (kind == domain_the_integers) {
 		cout << elt[0];
@@ -748,7 +775,8 @@ void a_domain::print(int *elt)
 	}
 }
 
-void a_domain::print_vector(int *elt, int n)
+void a_domain::print_vector(
+		int *elt, int n)
 {
 	int i;
 	
@@ -762,7 +790,8 @@ void a_domain::print_vector(int *elt, int n)
 	cout << ")";
 }
 
-void a_domain::print_matrix(int *A, int m, int n)
+void a_domain::print_matrix(
+		int *A, int m, int n)
 {
 	int i, j;
 	
@@ -777,7 +806,8 @@ void a_domain::print_matrix(int *A, int m, int n)
 	}
 }
 
-void a_domain::print_matrix_for_maple(int *A, int m, int n)
+void a_domain::print_matrix_for_maple(
+		int *A, int m, int n)
 {
 	int i, j;
 	
@@ -800,7 +830,8 @@ void a_domain::print_matrix_for_maple(int *A, int m, int n)
 	}
 }
 
-void a_domain::make_element_from_integer(int *elt, int n, int verbose_level)
+void a_domain::make_element_from_integer(
+		int *elt, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -825,12 +856,14 @@ void a_domain::make_element_from_integer(int *elt, int n, int verbose_level)
 	}
 }
 
-int *a_domain::offset(int *A, int i)
+int *a_domain::offset(
+		int *A, int i)
 {
 	return A + i * size_of_instance_in_int;
 }
 
-int a_domain::Gauss_echelon_form(int *A,
+int a_domain::Gauss_echelon_form(
+		int *A,
 	int f_special, int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
@@ -1117,7 +1150,8 @@ int a_domain::Gauss_echelon_form(int *A,
 }
 
 
-void a_domain::Gauss_step(int *v1, int *v2,
+void a_domain::Gauss_step(
+		int *v1, int *v2,
 		int len, int idx, int verbose_level)
 // afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 // v1 is not changed if v1[idx] is nonzero
@@ -1165,7 +1199,8 @@ after:
 	FREE_int(tmp2);
 }
 
-void a_domain::matrix_get_kernel(int *M,
+void a_domain::matrix_get_kernel(
+		int *M,
 	int m, int n, int *base_cols, int nb_base_cols,
 	int &kernel_m, int &kernel_n, int *kernel, int verbose_level)
 // kernel must point to the appropriate amount of memory!
@@ -1427,7 +1462,8 @@ void a_domain::mult_matrix(
 	}
 }
 
-void a_domain::mult_matrix3(int *A, int *B, int *C, int *D,
+void a_domain::mult_matrix3(
+		int *A, int *B, int *C, int *D,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1445,7 +1481,8 @@ void a_domain::mult_matrix3(int *A, int *B, int *C, int *D,
 	}
 }
 
-void a_domain::add_apply_matrix(int *A, int *B,
+void a_domain::add_apply_matrix(
+		int *A, int *B,
 		int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1464,7 +1501,8 @@ void a_domain::add_apply_matrix(int *A, int *B,
 	}
 }
 
-void a_domain::matrix_mult_apply_scalar(int *A,
+void a_domain::matrix_mult_apply_scalar(
+		int *A,
 		int *s, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1483,7 +1521,8 @@ void a_domain::matrix_mult_apply_scalar(int *A,
 	}
 }
 
-void a_domain::make_block_matrix_2x2(int *Mtx,
+void a_domain::make_block_matrix_2x2(
+		int *Mtx,
 		int n, int k, int *A, int *B, int *C, int *D,
 		int verbose_level)
 // A is k x k,
@@ -1525,7 +1564,8 @@ void a_domain::make_block_matrix_2x2(int *Mtx,
 	}
 }
 
-void a_domain::make_identity_matrix(int *A,
+void a_domain::make_identity_matrix(
+		int *A,
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1543,7 +1583,8 @@ void a_domain::make_identity_matrix(int *A,
 	}
 }
 
-void a_domain::matrix_inverse(int *A, int *Ainv,
+void a_domain::matrix_inverse(
+		int *A, int *Ainv,
 		int n, int verbose_level)
 {
 	int *T, *basecols;
@@ -1557,7 +1598,8 @@ void a_domain::matrix_inverse(int *A, int *Ainv,
 	FREE_int(basecols);
 }
 
-void a_domain::matrix_invert(int *A,
+void a_domain::matrix_invert(
+		int *A,
 	int *T, int *basecols, int *Ainv, int n,
 	int verbose_level)
 // T[n * n]

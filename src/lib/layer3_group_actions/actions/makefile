@@ -16,7 +16,6 @@ MODULES = \
 	action_io.o \
 	action_pointer_table.o \
 	backtrack.o \
-	combinatorics_with_action.o \
 	group_element.o \
 	induced_action.o \
 	interface_direct_product.o \

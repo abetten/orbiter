@@ -1511,7 +1511,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
-	int set[1000];
+	int *set;
 	int J, L1, L2, len, max, cur, u, D, d, c;
 	int nb_inc, e, f, nb_ordererd_pairs;
 	combinatorics_domain Combi;
@@ -1523,6 +1523,10 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 		cout << "level too deep" << endl;
 		exit(1);
 	}
+
+	set = NEW_int(s);
+
+
 	row_refinement_L1_L2(P, f_omit1, omit1, L1, L2, verbose_level - 3);
 	Combi.first_k_subset(set, nb_non_zero_blocks, s);
 	while (true) {
@@ -1563,6 +1567,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 					cout << "nb_ordererd_pairs=" << nb_ordererd_pairs << endl;
 					cout << "cur=" << cur << endl;
 				}
+				FREE_int(set);
 				return false;
 			}
 		} // next J
@@ -1570,6 +1575,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 			break;
 		}
 	}
+	FREE_int(set);
 	return true;
 }
 

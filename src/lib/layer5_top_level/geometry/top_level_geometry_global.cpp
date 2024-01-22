@@ -173,7 +173,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		actions::combinatorics_with_action CombiA;
+		combinatorics_with_groups::combinatorics_with_action CombiA;
 
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "
@@ -264,7 +264,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
-		actions::combinatorics_with_action CombiA;
+		combinatorics_with_groups::combinatorics_with_action CombiA;
 
 		if (f_v) {
 			cout << "top_level_geometry_global::report_decomposition_by_group "

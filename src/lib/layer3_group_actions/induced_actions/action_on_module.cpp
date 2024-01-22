@@ -39,6 +39,7 @@ action_on_module::action_on_module()
 
 	v1 = NULL;
 	v2 = NULL;
+	perm = NULL;
 
 	A_on_the_lines = NULL;
 	A_on_module = NULL;
@@ -72,6 +73,9 @@ action_on_module::~action_on_module()
 	}
 	if (v2) {
 		FREE_int(v2);
+	}
+	if (perm) {
+		FREE_int(perm);
 	}
 }
 
@@ -108,6 +112,7 @@ void action_on_module::init_action_on_module(
 
 	v1 = NEW_int(module_dimension_n);
 	v2 = NEW_int(module_dimension_n);
+	perm = NEW_int(module_dimension_n);
 
 	int i, j;
 
@@ -164,8 +169,10 @@ void action_on_module::init_action_on_module(
 #endif
 
 
+	data_structures::string_tools ST;
 
-	if (strcmp(module_type.c_str(), "on_tritangent_planes") == 0) {
+
+	if (ST.stringcmp(module_type, "on_tritangent_planes") == 0) {
 		A_on_module =
 				A_on_the_lines->Induced_action->create_induced_action_on_sets(
 				SO->SOP->SmoothProperties->nb_tritangent_planes, 3,
@@ -177,7 +184,7 @@ void action_on_module::init_action_on_module(
 
 		}
 	}
-	else if (strcmp(module_type.c_str(), "on_double_sixes") == 0) {
+	else if (ST.stringcmp(module_type, "on_double_sixes") == 0) {
 
 
 		actions::action *A_single_sixes;
@@ -214,7 +221,7 @@ void action_on_module::init_action_on_module(
 
 		}
 	}
-	else if (strcmp(module_type.c_str(), "on_lines") == 0) {
+	else if (ST.stringcmp(module_type, "on_lines") == 0) {
 		A_on_module = A_on_the_lines;
 		if (module_dimension_n != 27) {
 			cout << "module_dimension_n should be 27" << endl;
@@ -244,8 +251,30 @@ void action_on_module::compute_image_int_low_level(
 		cout << endl;
 	}
 
-	linear_algebra::module Module;
+	long int i, j;
 
+	for (i = 0; i < module_dimension_n; i++) {
+		j = A_on_module->Group_element->element_image_of(
+				i, Elt, 0 /*verbose_level*/);
+		perm[i] = j;
+	}
+
+
+	algebra::module Module;
+
+	Module.apply(input, output, perm,
+			module_dimension_m, module_dimension_n, module_basis,
+			v1, v2, verbose_level);
+
+
+	if (f_vv) {
+		cout << "action_on_module::compute_image_int_low_level v2=";
+		Int_vec_print(cout, v2, module_dimension_n);
+		cout << endl;
+	}
+
+#if 0
+	int a;
 	//int m3, n3;
 
 	//m3 = 1;
@@ -267,14 +296,9 @@ void action_on_module::compute_image_int_low_level(
 		cout << endl;
 	}
 
-	long int i, j;
-	int a;
-
 	for (i = 0; i < module_dimension_n; i++) {
 		a = v1[i];
-		j = A_on_module->Group_element->element_image_of(
-				i, Elt, 0 /*verbose_level*/);
-		v2[j] = a;
+		v2[perm[i]] = a;
 	}
 	if (f_vv) {
 		cout << "action_on_module::compute_image_int_low_level v2=";
@@ -362,6 +386,8 @@ void action_on_module::compute_image_int_low_level(
 		cout << endl;
 	}
 #endif
+#endif
+
 
 	if (f_v) {
 		cout << "action_on_module::compute_image_int_low_level done" << endl;

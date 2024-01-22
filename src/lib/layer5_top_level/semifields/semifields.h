@@ -326,12 +326,12 @@ public:
 	actions::action *A_PGLk; // PGL(k,q)
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
-	algebra::gl_classes *C;
+	linear_algebra::gl_classes *C;
 	int *desired_pivots; // [k]
 
 
 	// Level one:
-	algebra::gl_class_rep *R; // [nb_classes]
+	linear_algebra::gl_class_rep *R; // [nb_classes]
 		// conjugacy class reps,
 		// allocated and computed in C->make_classes,
 		// which is called from downstep()
@@ -417,7 +417,7 @@ public:
 	int *M1;
 	int *Basis1, *Basis2;
 
-	algebra::gl_class_rep *R1, *R2;
+	linear_algebra::gl_class_rep *R1, *R2;
 
 	long int **Candidates;
 		// candidates for the generator matrix,
@@ -559,7 +559,7 @@ public:
 	int *base_cols;
 	int *M1;
 	int *Basis;
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
 
 
@@ -900,7 +900,7 @@ public:
 	int *Basis;
 	int *basis_tmp;
 	int *base_cols;
-	algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R1;
 
 	semifield_trace();
 	~semifield_trace();

@@ -96,7 +96,7 @@ static void direct_product_group_element_print_verbose(
 	void *elt, std::ostream &ost);
 static void direct_product_group_print_point(
 		action &A,
-	long int a, std::ostream &ost);
+	long int a, std::ostream &ost, int verbose_level);
 
 
 
@@ -144,7 +144,7 @@ static long int direct_product_group_element_image_of(
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	long int b;
 
@@ -194,7 +194,7 @@ static void direct_product_group_element_one(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	if (f_v) {
@@ -209,7 +209,7 @@ static int direct_product_group_element_is_one(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	int ret;
 
@@ -236,7 +236,7 @@ static void direct_product_group_element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -251,7 +251,7 @@ static void direct_product_group_element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
@@ -266,7 +266,7 @@ static void direct_product_group_element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	uchar *p_elt;
 
@@ -289,7 +289,7 @@ static int direct_product_group_element_store(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 	int hdl;
 
@@ -311,7 +311,7 @@ static void direct_product_group_element_mult(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -341,7 +341,7 @@ static void direct_product_group_element_invert(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -376,7 +376,7 @@ static void direct_product_group_element_move(
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -391,7 +391,7 @@ static void direct_product_group_element_dispose(
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 
 	if (f_v) {
 		cout << "direct_product_group_element_dispose "
@@ -404,7 +404,7 @@ static void direct_product_group_element_print(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 
@@ -425,12 +425,12 @@ static void direct_product_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	groups::direct_product *P = A.G.direct_product_group;
+	group_constructions::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
-	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
+	P->M1->Element->GL_print_for_make_element(Elt + P->offset_i(0), ost);
 	//ost << ",";
-	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
+	P->M2->Element->GL_print_for_make_element(Elt + P->offset_i(1), ost);
 	//ost << ",";
 	//cout << "direct_product_group_element_print_for_make_element "
 	//		"not yet implemented" << endl;
@@ -439,12 +439,12 @@ static void direct_product_group_element_print_for_make_element(
 static void direct_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::direct_product *P = A.G.direct_product_group;
+	group_constructions::direct_product *P = A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
-	P->M1->GL_print_for_make_element(Elt + P->offset_i(0), ost);
+	P->M1->Element->GL_print_for_make_element(Elt + P->offset_i(0), ost);
 	//ost << ",";
-	P->M2->GL_print_for_make_element(Elt + P->offset_i(1), ost);
+	P->M2->Element->GL_print_for_make_element(Elt + P->offset_i(1), ost);
 	//ost << ",";
 	//cout << "direct_product_group_element_print_for_make_element_no_commas "
 	//		"not yet implemented" << endl;
@@ -453,7 +453,7 @@ static void direct_product_group_element_print_for_make_element_no_commas(
 static void direct_product_group_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
@@ -463,7 +463,7 @@ static void direct_product_group_element_print_quick(
 static void direct_product_group_element_print_latex(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy_latex(Elt, ost);
@@ -515,14 +515,14 @@ static void direct_product_group_element_print_as_permutation(
 static void direct_product_group_element_print_verbose(
 		action &A, void *elt, std::ostream &ost)
 {
-	groups::direct_product &P = *A.G.direct_product_group;
+	group_constructions::direct_product &P = *A.G.direct_product_group;
 	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
 }
 
 static void direct_product_group_print_point(
-		action &A, long int a, std::ostream &ost)
+		action &A, long int a, std::ostream &ost, int verbose_level)
 {
 	cout << "direct_product_group_print_point "
 			"not yet implemented" << endl;

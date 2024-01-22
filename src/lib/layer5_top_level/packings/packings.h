@@ -467,11 +467,11 @@ public:
 
 	int f_H;
 	std::string H_label;
-	groups::linear_group_description *H_Descr;
+	group_constructions::linear_group_description *H_Descr;
 
 	int f_N;
 	std::string N_label;
-	groups::linear_group_description *N_Descr;
+	group_constructions::linear_group_description *N_Descr;
 
 	int f_report;
 
@@ -640,9 +640,9 @@ class packing_was {
 public:
 	packing_was_description *Descr;
 
-	groups::linear_group *H_LG;
+	group_constructions::linear_group *H_LG;
 
-	groups::linear_group *N_LG;
+	group_constructions::linear_group *N_LG;
 
 	packing_classify *P;
 
@@ -680,7 +680,7 @@ public:
 		// using H_gens in action P->T->A2
 
 	std::string prefix_spread_types;
-	data_structures_groups::orbit_type_repository *Spread_type;
+	combinatorics_with_groups::orbit_type_repository *Spread_type;
 
 	std::string prefix_spread_orbits;
 	groups::orbits_on_something *Spread_orbits_under_H;
@@ -714,7 +714,7 @@ public:
 
 
 	std::string prefix_spread_types_reduced;
-	data_structures_groups::orbit_type_repository
+	combinatorics_with_groups::orbit_type_repository
 		*Spread_type_reduced;
 
 	actions::action *A_on_reduced_spreads;

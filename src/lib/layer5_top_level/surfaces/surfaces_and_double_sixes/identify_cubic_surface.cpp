@@ -482,7 +482,7 @@ void identify_cubic_surface::identify(
 
 	mtx = Wedge->A->G.matrix_grp;
 
-	mtx->substitute_surface_equation(
+	mtx->Element->substitute_surface_equation(
 			Elt_isomorphism_inv,
 			coeff_of_given_surface,
 			coeffs_transformed,

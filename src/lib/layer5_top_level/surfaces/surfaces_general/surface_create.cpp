@@ -2446,7 +2446,7 @@ void surface_create::apply_single_transformation(
 	algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
-	M->substitute_surface_equation(
+	M->Element->substitute_surface_equation(
 			Elt3,
 			SO->Variety_object->eqn, coeffs_out, Surf,
 			verbose_level - 1);
@@ -3372,7 +3372,7 @@ void surface_create::test_group(
 		algebra::matrix_group *M;
 
 		M = Surf_A->A->G.matrix_grp;
-		M->substitute_surface_equation(Elt2,
+		M->Element->substitute_surface_equation(Elt2,
 				SO->Variety_object->eqn, coeffs_out, Surf,
 				verbose_level - 1);
 

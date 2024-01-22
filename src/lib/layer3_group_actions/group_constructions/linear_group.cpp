@@ -12,7 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 
 
@@ -159,9 +159,9 @@ void linear_group::linear_group_import_group_of_plane(
 
 	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(description->import_group_of_plane_label);
 
-	data_structures_groups::translation_plane_via_andre_model *TP;
+	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
-	TP = (data_structures_groups::translation_plane_via_andre_model *)
+	TP = (combinatorics_with_groups::translation_plane_via_andre_model *)
 		orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
 
 #if 0
@@ -259,7 +259,7 @@ void linear_group::linear_group_create(
 
 
 
-	initial_strong_gens = NEW_OBJECT(strong_generators);
+	initial_strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
 		cout << "linear_group::linear_group_create before "
@@ -426,7 +426,7 @@ int linear_group::linear_group_apply_modification(
 			Lint_vec_print(cout, new_base, new_base_len);
 			cout << endl;
 
-			sims *Sims2;
+			groups::sims *Sims2;
 
 			if (f_v) {
 				cout << "linear_group::linear_group_apply_modification "
@@ -440,9 +440,9 @@ int linear_group::linear_group_apply_modification(
 						"after A_linear->create_sims_from_generators_with_target_group_order_factorized" << endl;
 			}
 
-			strong_generators *new_strong_generators;
+			groups::strong_generators *new_strong_generators;
 
-			new_strong_generators = NEW_OBJECT(strong_generators);
+			new_strong_generators = NEW_OBJECT(groups::strong_generators);
 			if (f_v) {
 				cout << "linear_group::linear_group_apply_modification "
 						"before new_strong_generators->init_from_sims" << endl;
@@ -939,7 +939,7 @@ void linear_group::init_wedge_action_detached(
 	}
 
 
-	strong_generators *secondary_strong_gens;
+	groups::strong_generators *secondary_strong_gens;
 	//strong_generators *exterior_square_strong_gens;
 	data_structures_groups::vector_ge *secondary_nice_gens;
 	int n2;
@@ -948,7 +948,7 @@ void linear_group::init_wedge_action_detached(
 
 	n2 = Combi.binomial2(n);
 
-	secondary_strong_gens = NEW_OBJECT(strong_generators);
+	secondary_strong_gens = NEW_OBJECT(groups::strong_generators);
 	//exterior_square_strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_v) {
@@ -973,7 +973,7 @@ void linear_group::init_wedge_action_detached(
 
 	q = F->q;
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->init(A2, verbose_level);
 	Strong_gens->exterior_square(
 				A2,
@@ -1022,7 +1022,7 @@ void linear_group::init_monomial_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_monomial_group(A_linear, 
 		Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
@@ -1053,7 +1053,7 @@ void linear_group::init_diagonal_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_diagonal_group(A_linear, 
 		Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
@@ -1083,7 +1083,7 @@ void linear_group::init_singer_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_singer_cycle(
 			A_linear, Mtx, singer_power, nice_gens,
 			verbose_level - 1);
@@ -1116,7 +1116,7 @@ void linear_group::init_singer_group_and_frobenius(
 	vector_space_dimension = n;
 	q = input_q;
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_singer_cycle_and_the_Frobenius(
 			A_linear, Mtx, singer_power, nice_gens,
 			verbose_level - 1);
@@ -1150,7 +1150,7 @@ void linear_group::init_null_polarity_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_null_polarity_group(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
@@ -1181,7 +1181,7 @@ void linear_group::init_borel_subgroup_upper(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_borel_subgroup_upper(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
@@ -1212,7 +1212,7 @@ void linear_group::init_identity_subgroup(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_identity_subgroup(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
@@ -1242,7 +1242,7 @@ void linear_group::init_symplectic_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "linear_group::init_symplectic_group "
 				"before Strong_gens->generators_for_symplectic_group" << endl;
@@ -1290,7 +1290,7 @@ void linear_group::init_subfield_structure_action(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->field_reduction(A_linear,
 			n, s, F, verbose_level - 1);
 	//lift_generators_to_subfield_structure(A_linear,
@@ -1329,7 +1329,7 @@ void linear_group::init_orthogonal_group(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_orthogonal_group(A_linear, 
 		F, n, 
 		epsilon, 
@@ -1377,7 +1377,7 @@ void linear_group::init_subgroup_from_file(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file "
 				"reading generators from file " << subgroup_fname << endl;
@@ -1421,7 +1421,7 @@ void linear_group::init_subgroup_by_generators(
 		cout << "label=" << subgroup_label << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_by_generators before "
 				"Strong_gens->init_subgroup_by_generators" << endl;
@@ -1487,7 +1487,7 @@ void linear_group::init_subgroup_Janko1(
 		cout << "linear_group::init_subgroup_Janko1" << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_Janko1 before "
 				"Strong_gens->init_subgroup_by_generators" << endl;
@@ -1530,7 +1530,7 @@ void linear_group::report(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sims *H;
+	groups::sims *H;
 	actions::action *A;
 
 	A = A2;
@@ -1761,9 +1761,9 @@ void linear_group::report(
 				cout << "linear_group::report f_sylow is true" << endl;
 			}
 
-			sylow_structure *Syl;
+			groups::sylow_structure *Syl;
 
-			Syl = NEW_OBJECT(sylow_structure);
+			Syl = NEW_OBJECT(groups::sylow_structure);
 			Syl->init(H, verbose_level);
 			Syl->report(ost);
 

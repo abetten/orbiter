@@ -68,7 +68,7 @@ int packing_was_description::read_arguments(
 			f_H = true;
 			cout << "reading -H" << endl;
 			H_label.assign(argv[++i]);
-			H_Descr = NEW_OBJECT(groups::linear_group_description);
+			H_Descr = NEW_OBJECT(group_constructions::linear_group_description);
 			i += H_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -85,7 +85,7 @@ int packing_was_description::read_arguments(
 			f_N = true;
 			cout << "reading -N" << endl;
 			N_label.assign(argv[++i]);
-			N_Descr = NEW_OBJECT(groups::linear_group_description);
+			N_Descr = NEW_OBJECT(group_constructions::linear_group_description);
 			i += N_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 

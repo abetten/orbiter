@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace algebra {
+namespace linear_algebra {
 
 
 

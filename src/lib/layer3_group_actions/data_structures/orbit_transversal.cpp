@@ -93,7 +93,8 @@ void orbit_transversal::read_from_file(
 		cout << "orbit_transversal::read_from_file "
 				"before read_and_parse_data_file_fancy" << endl;
 	}
-	Fio.read_and_parse_data_file_fancy(fname,
+	Fio.read_and_parse_data_file_fancy(
+			fname,
 		false /*f_casenumbers */, 
 		nb_cases, 
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
@@ -242,7 +243,8 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 }
 
-data_structures::tally *orbit_transversal::get_ago_distribution(long int *&ago,
+data_structures::tally *orbit_transversal::get_ago_distribution(
+		long int *&ago,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -268,7 +270,8 @@ data_structures::tally *orbit_transversal::get_ago_distribution(long int *&ago,
 	return C;
 }
 
-void orbit_transversal::report_ago_distribution(std::ostream &ost)
+void orbit_transversal::report_ago_distribution(
+		std::ostream &ost)
 {
 	data_structures::tally *C;
 	long int *Ago;

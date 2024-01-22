@@ -548,12 +548,12 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
-						"before M->substitute_surface_equation" << endl;
+						"before M->Element->substitute_surface_equation" << endl;
 			}
 
 			M = AL->Surf_A->A->G.matrix_grp;
 
-			M->substitute_surface_equation(Elt4,
+			M->Element->substitute_surface_equation(Elt4,
 					AL->the_equation, coeff_out, AL->Surf,
 					verbose_level - 6);
 

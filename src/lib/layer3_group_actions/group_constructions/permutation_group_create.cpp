@@ -18,7 +18,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
-namespace groups {
+namespace group_constructions {
 
 permutation_group_create::permutation_group_create()
 {
@@ -269,7 +269,7 @@ void permutation_group_create::init_subgroup_by_generators(
 		cout << "label=" << subgroup_label << endl;
 	}
 
-	Strong_gens = NEW_OBJECT(strong_generators);
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	int *gens;
 	int sz;

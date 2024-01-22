@@ -56,7 +56,7 @@ tensor_classify::~tensor_classify()
 }
 
 void tensor_classify::init(
-		field_theory::finite_field *F, groups::linear_group *LG,
+		field_theory::finite_field *F, group_constructions::linear_group *LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

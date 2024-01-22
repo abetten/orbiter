@@ -42,7 +42,8 @@ void vector_ge::null()
 
 
 
-void vector_ge::init(actions::action *A, int verbose_level)
+void vector_ge::init(
+		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -57,7 +58,8 @@ void vector_ge::init(actions::action *A, int verbose_level)
 	}
 }
 
-void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
+void vector_ge::copy(
+		vector_ge *&vector_copy, int verbose_level)
 {
 	int i;
 	int f_v = (verbose_level >= 1);
@@ -88,7 +90,8 @@ void vector_ge::copy(vector_ge *&vector_copy, int verbose_level)
 	}
 }
 
-void vector_ge::init_by_hdl(actions::action *A,
+void vector_ge::init_by_hdl(
+		actions::action *A,
 		int *gen_hdl, int nb_gen, int verbose_level)
 {
 	int i;
@@ -107,7 +110,8 @@ void vector_ge::init_by_hdl(actions::action *A,
 	}
 }
 
-void vector_ge::init_by_hdl(actions::action *A,
+void vector_ge::init_by_hdl(
+		actions::action *A,
 		std::vector<int> &gen_hdl, int verbose_level)
 {
 	int i;
@@ -127,7 +131,8 @@ void vector_ge::init_by_hdl(actions::action *A,
 }
 
 
-void vector_ge::init_single(actions::action *A,
+void vector_ge::init_single(
+		actions::action *A,
 		int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -143,7 +148,8 @@ void vector_ge::init_single(actions::action *A,
 	}
 }
 
-void vector_ge::init_double(actions::action *A,
+void vector_ge::init_double(
+		actions::action *A,
 		int *Elt1, int *Elt2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -194,7 +200,8 @@ void vector_ge::init_from_permutation_representation(
 	}
 }
 
-void vector_ge::init_from_data(actions::action *A, int *data,
+void vector_ge::init_from_data(
+		actions::action *A, int *data,
 	int nb_elements, int elt_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -330,7 +337,8 @@ void vector_ge::init_conjugate_sasv_of(
 	}
 }
 
-int *vector_ge::ith(int i)
+int *vector_ge::ith(
+		int i)
 {
 #ifdef RANGE_CHECKING
 	if (i < 0 || i >= len) {
@@ -342,7 +350,8 @@ int *vector_ge::ith(int i)
 	return data + i * A->elt_size_in_int; 
 }
 
-void vector_ge::print(std::ostream &ost)
+void vector_ge::print(
+		std::ostream &ost)
 {
 	int i;
 
@@ -353,7 +362,8 @@ void vector_ge::print(std::ostream &ost)
 	}
 }
 
-void vector_ge::print_quick(std::ostream& ost)
+void vector_ge::print_quick(
+		std::ostream& ost)
 {
 	int i;
 	
@@ -372,7 +382,8 @@ void vector_ge::print_quick(std::ostream& ost)
 	ost << ")" << endl;
 }
 
-void vector_ge::print_tex(std::ostream &ost)
+void vector_ge::print_tex(
+		std::ostream &ost)
 {
 	int i;
 
@@ -417,7 +428,8 @@ void vector_ge::print_generators_tex(
 	}
 }
 
-void vector_ge::print_as_permutation(std::ostream& ost)
+void vector_ge::print_as_permutation(
+		std::ostream& ost)
 {
 	int i;
 	
@@ -440,7 +452,8 @@ void vector_ge::print_as_permutation(std::ostream& ost)
 	ost << ")" << endl;
 }
 
-void vector_ge::allocate(int length, int verbose_level)
+void vector_ge::allocate(
+		int length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -464,7 +477,8 @@ void vector_ge::allocate(int length, int verbose_level)
 	}
 }
 
-void vector_ge::reallocate(int new_length, int verbose_level)
+void vector_ge::reallocate(
+		int new_length, int verbose_level)
 {
 	int *data2;
 	int *elt, *elt2, i, l;
@@ -536,7 +550,8 @@ void vector_ge::reallocate_and_insert_at(
 	}
 }
 
-void vector_ge::insert_at(int length_before,
+void vector_ge::insert_at(
+		int length_before,
 		int position, int *elt, int verbose_level)
 // does not reallocate, but shifts elements up to make space.
 // the last element might be lost if there is no space.
@@ -563,7 +578,8 @@ void vector_ge::insert_at(int length_before,
 	}
 }
 
-void vector_ge::append(int *elt, int verbose_level)
+void vector_ge::append(
+		int *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -576,19 +592,22 @@ void vector_ge::append(int *elt, int verbose_level)
 	}
 }
 
-void vector_ge::copy_in(int i, int *elt)
+void vector_ge::copy_in(
+		int i, int *elt)
 {
 	int *elt2 = ith(i);
 	A->Group_element->element_move(elt, elt2, false);
 };
 
-void vector_ge::copy_out(int i, int *elt)
+void vector_ge::copy_out(
+		int i, int *elt)
 {
 	int *elt2 = ith(i);
 	A->Group_element->element_move(elt2, elt, false);
 }
 
-void vector_ge::conjugate_svas(int *Elt)
+void vector_ge::conjugate_svas(
+		int *Elt)
 {
 	int i;
 	int *Elt1, *Elt2, *Elt3;
@@ -607,7 +626,8 @@ void vector_ge::conjugate_svas(int *Elt)
 	FREE_int(Elt3);
 }
 
-void vector_ge::conjugate_sasv(int *Elt)
+void vector_ge::conjugate_sasv(
+		int *Elt)
 {
 	int i;
 	int *Elt1, *Elt2, *Elt3;
@@ -641,7 +661,8 @@ void vector_ge::print_with_given_action(
 	}
 }
 
-void vector_ge::print(std::ostream &ost,
+void vector_ge::print(
+		std::ostream &ost,
 		int f_print_as_permutation,
 	int f_offset, int offset,
 	int f_do_it_anyway_even_for_big_degree,
@@ -670,7 +691,8 @@ void vector_ge::print(std::ostream &ost,
 	}
 }
 
-void vector_ge::print_for_make_element(std::ostream &ost)
+void vector_ge::print_for_make_element(
+		std::ostream &ost)
 {
 	int i, l;
 
@@ -714,7 +736,8 @@ void vector_ge::read_from_memory_object(
 	}
 }
 
-void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
+void vector_ge::write_to_file_binary(
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -731,7 +754,8 @@ void vector_ge::write_to_file_binary(ofstream &fp, int verbose_level)
 	}
 }
 
-void vector_ge::read_from_file_binary(ifstream &fp, int verbose_level)
+void vector_ge::read_from_file_binary(
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;
@@ -893,7 +917,8 @@ void vector_ge::export_inversion_graphs(
 }
 
 
-void vector_ge::read_column_csv(std::string &fname,
+void vector_ge::read_column_csv(
+		std::string &fname,
 		actions::action *A, int col_idx,
 		int verbose_level)
 {
@@ -1153,7 +1178,8 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 	return Sch;
 }
 
-void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
+void vector_ge::reverse_isomorphism_exterior_square(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
