@@ -98,21 +98,30 @@ public:
 
 	cperm();
 	~cperm();
-	void init_and_identity(int l);
+	void init_and_identity(
+			int l);
 	void free();
-	void move_to(cperm *q);
+	void move_to(
+			cperm *q);
 	void identity();
-	void mult(cperm *b, cperm *c);
-	void inverse(cperm *b);
-	void power(cperm *res, int exp);
+	void mult(
+			cperm *b, cperm *c);
+	void inverse(
+			cperm *b);
+	void power(
+			cperm *res, int exp);
 	void print();
-	void mult_apply_forwc_r(int i, int l);
+	void mult_apply_forwc_r(
+			int i, int l);
 	/* a := a (i i+1 ... i+l-1). */
-	void mult_apply_tau_r(int i, int j);
+	void mult_apply_tau_r(
+			int i, int j);
 	/* a := a (i j). */
-	void mult_apply_tau_l(int i, int j);
+	void mult_apply_tau_l(
+			int i, int j);
 	/* a := (i j) a. */
-	void mult_apply_backwc_l(int i, int l);
+	void mult_apply_backwc_l(
+			int i, int l);
 	/* a := (i+l-1 i+l-2 ... i+1 i) a. */
 
 };
@@ -176,10 +185,14 @@ public:
 			int fuse_idx,
 			int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
-	void init_fuse(int verbose_level);
-	void init_k(int verbose_level);
-	void conf_init_last_non_zero_flag(int verbose_level);
-	void init_partition(int verbose_level);
+	void init_fuse(
+			int verbose_level);
+	void init_k(
+			int verbose_level);
+	void conf_init_last_non_zero_flag(
+			int verbose_level);
+	void init_partition(
+			int verbose_level);
 
 
 };
@@ -250,25 +263,44 @@ public:
 
 	gen_geo();
 	~gen_geo();
-	void init(geometry_builder *GB, int verbose_level);
-	void init_semicanonical(int verbose_level);
-	void print_pairs(int line);
-	void main2(int verbose_level);
-	void generate_all(int verbose_level);
-	void setup_output_files(int verbose_level);
-	void close_output_files(int verbose_level);
-	void record_tree(int i1, int f_already_there);
-	void print_I_m(int I, int m);
-	void print(int v);
-	void increment_pairs_point(int i1, int col, int k);
-	void decrement_pairs_point(int i1, int col, int k);
-	void girth_test_add_incidence(int i, int j_idx, int j);
-	void girth_test_delete_incidence(int i, int j_idx, int j);
-	void girth_Floyd(int i, int verbose_level);
-	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
-	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
-	void print(std::ostream &ost, int v, int v_cut);
-	void print_override_theX(std::ostream &ost,
+	void init(
+			geometry_builder *GB, int verbose_level);
+	void init_semicanonical(
+			int verbose_level);
+	void print_pairs(
+			int line);
+	void main2(
+			int verbose_level);
+	void generate_all(
+			int verbose_level);
+	void setup_output_files(
+			int verbose_level);
+	void close_output_files(
+			int verbose_level);
+	void record_tree(
+			int i1, int f_already_there);
+	void print_I_m(
+			int I, int m);
+	void print(
+			int v);
+	void increment_pairs_point(
+			int i1, int col, int k);
+	void decrement_pairs_point(
+			int i1, int col, int k);
+	void girth_test_add_incidence(
+			int i, int j_idx, int j);
+	void girth_test_delete_incidence(
+			int i, int j_idx, int j);
+	void girth_Floyd(
+			int i, int verbose_level);
+	int check_girth_condition(
+			int i, int j_idx, int j, int verbose_level);
+	int apply_tests(
+			int I, int m, int J, int n, int j, int verbose_level);
+	void print(
+			std::ostream &ost, int v, int v_cut);
+	void print_override_theX(
+			std::ostream &ost,
 			int *theX, int v, int v_cut);
 
 };
@@ -291,33 +323,59 @@ public:
 
 	geometric_backtrack_search();
 	~geometric_backtrack_search();
-	void init(gen_geo *gg, int verbose_level);
+	void init(
+			gen_geo *gg, int verbose_level);
 
-	int First(int verbose_level);
-	int Next(int verbose_level);
-	int BlockFirst(int I, int verbose_level);
-	int BlockNext(int I, int verbose_level);
-	int RowFirstSplit(int I, int m, int verbose_level);
-	int RowNextSplit(int I, int m, int verbose_level);
-	int geo_back_test(int I, int verbose_level);
-	int RowFirst0(int I, int m, int verbose_level);
-	int RowNext0(int I, int m, int verbose_level);
-	int RowFirst(int I, int m, int verbose_level);
-	int RowNext(int I, int m, int verbose_level);
-	int RowFirstLexLeast(int I, int m, int verbose_level);
-	int RowNextLexLeast(int I, int m, int verbose_level);
-	int RowFirstOrderly(int I, int m, int verbose_level);
-	void place_row(int I, int m, int idx, int verbose_level);
-	int RowNextOrderly(int I, int m, int verbose_level);
-	void RowClear(int I, int m);
-	int ConfFirst(int I, int m, int J, int verbose_level);
-	int ConfNext(int I, int m, int J, int verbose_level);
-	void ConfClear(int I, int m, int J);
-	int XFirst(int I, int m, int J, int n, int verbose_level);
-	int XNext(int I, int m, int J, int n, int verbose_level);
-	void XClear(int I, int m, int J, int n);
-	int X_First(int I, int m, int J, int n, int j, int verbose_level);
-	int TryToPlace(int I, int m, int J, int n, int j, int verbose_level);
+	int First(
+			int verbose_level);
+	int Next(
+			int verbose_level);
+	int BlockFirst(
+			int I, int verbose_level);
+	int BlockNext(
+			int I, int verbose_level);
+	int RowFirstSplit(
+			int I, int m, int verbose_level);
+	int RowNextSplit(
+			int I, int m, int verbose_level);
+	int geo_back_test(
+			int I, int verbose_level);
+	int RowFirst0(
+			int I, int m, int verbose_level);
+	int RowNext0(
+			int I, int m, int verbose_level);
+	int RowFirst(
+			int I, int m, int verbose_level);
+	int RowNext(
+			int I, int m, int verbose_level);
+	int RowFirstLexLeast(
+			int I, int m, int verbose_level);
+	int RowNextLexLeast(
+			int I, int m, int verbose_level);
+	int RowFirstOrderly(
+			int I, int m, int verbose_level);
+	void place_row(
+			int I, int m, int idx, int verbose_level);
+	int RowNextOrderly(
+			int I, int m, int verbose_level);
+	void RowClear(
+			int I, int m);
+	int ConfFirst(
+			int I, int m, int J, int verbose_level);
+	int ConfNext(
+			int I, int m, int J, int verbose_level);
+	void ConfClear(
+			int I, int m, int J);
+	int XFirst(
+			int I, int m, int J, int n, int verbose_level);
+	int XNext(
+			int I, int m, int J, int n, int verbose_level);
+	void XClear(
+			int I, int m, int J, int n);
+	int X_First(
+			int I, int m, int J, int n, int j, int verbose_level);
+	int TryToPlace(
+			int I, int m, int J, int n, int j, int verbose_level);
 
 };
 
@@ -447,12 +505,17 @@ public:
 	void init_description(
 			geometry_builder_description *Descr,
 			int verbose_level);
-	void compute_VBR(int verbose_level);
+	void compute_VBR(
+			int verbose_level);
 	void print_tdo();
-	void isot(int line, int verbose_level);
-	void isot_no_vhbars(int verbose_level);
-	void isot2(int line, int verbose_level);
-	void set_split(int line, int remainder, int modulo);
+	void isot(
+			int line, int verbose_level);
+	void isot_no_vhbars(
+			int verbose_level);
+	void isot2(
+			int line, int verbose_level);
+	void set_split(
+			int line, int remainder, int modulo);
 
 };
 
@@ -484,14 +547,20 @@ public:
 
 	girth_test();
 	~girth_test();
-	void init(gen_geo *gg, int girth, int verbose_level);
-	void Floyd(int row, int verbose_level);
-	void add_incidence(int i, int j_idx, int j);
-	void delete_incidence(int i, int j_idx, int j);
+	void init(
+			gen_geo *gg, int girth, int verbose_level);
+	void Floyd(
+			int row, int verbose_level);
+	void add_incidence(
+			int i, int j_idx, int j);
+	void delete_incidence(
+			int i, int j_idx, int j);
 	int check_girth_condition(
 			int i, int j_idx, int j, int verbose_level);
-	void print_Si(int i);
-	void print_Di(int i);
+	void print_Si(
+			int i);
+	void print_Di(
+			int i);
 
 };
 
@@ -516,13 +585,16 @@ public:
 
 	inc_encoding();
 	~inc_encoding();
-	int &theX_ir(int i, int r);
+	int &theX_ir(
+			int i, int r);
 	void init(
 			int v, int b, int *R, int verbose_level);
-	long int rank_row(int row);
+	long int rank_row(
+			int row);
 	void get_flags(
 			int row, std::vector<int> &flags);
-	int find_square(int m, int n);
+	int find_square(
+			int m, int n);
 	void print_horizontal_bar(
 		std::ostream &ost,
 		gen_geo *gg, int f_print_isot, iso_type *it);
@@ -582,21 +654,27 @@ public:
 
 	incidence();
 	~incidence();
-	void init(gen_geo *gg,
+	void init(
+			gen_geo *gg,
 			int v, int b, int *R, int verbose_level);
-	void init_pairs(int verbose_level);
-	void print_pairs(int v);
-	int find_square(int m, int n);
+	void init_pairs(
+			int verbose_level);
+	void print_pairs(
+			int v);
+	int find_square(
+			int m, int n);
 	void print_param();
 	void free_isot();
-	void print_R(int v, cperm *p, cperm *q);
+	void print_R(
+			int v, cperm *p, cperm *q);
 	void install_isomorphism_test_after_a_given_row(
 			int i,
 			int f_orderly, int verbose_level);
 	void install_isomorphism_test_of_second_kind_after_a_given_row(
 			int i,
 			int f_orderly, int verbose_level);
-	void set_split(int row, int remainder, int modulo);
+	void set_split(
+			int row, int remainder, int modulo);
 	void print_geo(
 			std::ostream &ost, int v, int *theGEO);
 	void print_inc(
@@ -609,8 +687,10 @@ public:
 			long int *&Blocks, int *&K, int v, long int *theInc);
 	void compute_blocks_ranked(
 			long int *&Blocks, int v, long int *theInc);
-	int compute_k(int v, long int *theInc);
-	int is_block_tactical(int v, long int *theInc);
+	int compute_k(
+			int v, long int *theInc);
+	int is_block_tactical(
+			int v, long int *theInc);
 	void geo_to_inc(
 			int v, int *theGEO, long int *theInc, int nb_flags);
 	void inc_to_geo(
@@ -654,14 +734,15 @@ public:
 
 	std::string fname;
 
-	data_structures::classify_using_canonical_forms *Canonical_forms;
+	canonical_form_classification::classify_using_canonical_forms *Canonical_forms;
 
 	int f_print_mod;
 	int print_mod;
 
 	iso_type();
 	~iso_type();
-	void init(gen_geo *gg, int v,
+	void init(
+			gen_geo *gg, int v,
 			int f_orderly, int verbose_level);
 	void add_geometry(
 		inc_encoding *Encoding,
@@ -673,15 +754,24 @@ public:
 		int f_partition_fixing_last,
 		int &f_new_object, int verbose_level);
 	void second();
-	void set_split(int remainder, int modulo);
-	void print_geos(int verbose_level);
-	void write_inc_file(std::string &fname, int verbose_level);
-	void write_sage_file(std::string &fname, int verbose_level);
-	void write_blocks_file(std::string &fname, int verbose_level);
-	void write_blocks_file_long(std::string &fname, int verbose_level);
-	void print_GEO(int *pc, int v, incidence *inc);
-	void print_status(std::ostream &ost, int f_with_flags);
-	void print_flags(std::ostream &ost);
+	void set_split(
+			int remainder, int modulo);
+	void print_geos(
+			int verbose_level);
+	void write_inc_file(
+			std::string &fname, int verbose_level);
+	void write_sage_file(
+			std::string &fname, int verbose_level);
+	void write_blocks_file(
+			std::string &fname, int verbose_level);
+	void write_blocks_file_long(
+			std::string &fname, int verbose_level);
+	void print_GEO(
+			int *pc, int v, incidence *inc);
+	void print_status(
+			std::ostream &ost, int f_with_flags);
+	void print_flags(
+			std::ostream &ost);
 	void print_geometry(
 			inc_encoding *Encoding, int v, incidence *inc);
 
@@ -725,7 +815,8 @@ public:
 	~test_semicanonical();
 	void init(
 			gen_geo *gg, int MAX_V, int verbose_level);
-	void init_bars(int verbose_level);
+	void init_bars(
+			int verbose_level);
 	void print();
 	void markers_update(
 			int I, int m, int J, int n, int j,

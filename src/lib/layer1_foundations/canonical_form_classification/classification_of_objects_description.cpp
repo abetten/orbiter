@@ -13,7 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace combinatorics {
+namespace canonical_form_classification {
 
 
 

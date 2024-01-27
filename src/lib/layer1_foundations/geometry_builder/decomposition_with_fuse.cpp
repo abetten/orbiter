@@ -287,7 +287,8 @@ void decomposition_with_fuse::print_conf()
 	}
 }
 
-void decomposition_with_fuse::init_fuse(int verbose_level)
+void decomposition_with_fuse::init_fuse(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -312,7 +313,8 @@ void decomposition_with_fuse::init_fuse(int verbose_level)
 
 }
 
-void decomposition_with_fuse::init_k(int verbose_level)
+void decomposition_with_fuse::init_k(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -405,7 +407,8 @@ void decomposition_with_fuse::init_k(int verbose_level)
 	}
 }
 
-void decomposition_with_fuse::conf_init_last_non_zero_flag(int verbose_level)
+void decomposition_with_fuse::conf_init_last_non_zero_flag(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -444,7 +447,8 @@ void decomposition_with_fuse::conf_init_last_non_zero_flag(int verbose_level)
 	}
 }
 
-void decomposition_with_fuse::init_partition(int verbose_level)
+void decomposition_with_fuse::init_partition(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, I, J;

@@ -288,6 +288,9 @@ void semifield_classify::init(
 	Descr = NEW_OBJECT(spreads::spread_classify_description);
 
 
+	Descr->f_poset_classification_control_pointer = true;
+	Descr->Control = Control;
+
 	Descr->f_recoordinatize = true;
 
 
@@ -405,7 +408,8 @@ void semifield_classify::init(
 		cout << "semifield_classify::init "
 				"before A_on_S->init" << endl;
 	}
-	A_on_S->init(T->A /* A_PGL_n_q */,
+	A_on_S->init(
+			T->A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		A0_linear->Sims /* G_PGL_k_q */,
 		k, Mtx->GFq,

@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace canonical_form_classification {
 
 
 classify_using_canonical_forms::classify_using_canonical_forms()
@@ -29,7 +29,7 @@ classify_using_canonical_forms::~classify_using_canonical_forms()
 }
 
 void classify_using_canonical_forms::orderly_test(
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 		int &f_accept, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -96,10 +96,10 @@ void classify_using_canonical_forms::orderly_test(
 }
 
 void classify_using_canonical_forms::find_object(
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 		int &f_found, int &idx,
 		l1_interfaces::nauty_output *&NO,
-		bitvector *&Canonical_form,
+		data_structures::bitvector *&Canonical_form,
 		int verbose_level)
 // if f_found is true, B[idx] agrees with the given object
 {
@@ -109,7 +109,7 @@ void classify_using_canonical_forms::find_object(
 		cout << "classify_using_canonical_forms::find_object" << endl;
 	}
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	encoded_combinatorial_object *Enc;
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
@@ -129,7 +129,7 @@ void classify_using_canonical_forms::find_object(
 
 	uint32_t h;
 	int c;
-	sorting sorting;
+	data_structures::sorting sorting;
 
 	h = Canonical_form->compute_hash();
 
@@ -159,7 +159,7 @@ void classify_using_canonical_forms::find_object(
 }
 
 void classify_using_canonical_forms::add_object(
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 		int &f_new_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -169,7 +169,7 @@ void classify_using_canonical_forms::add_object(
 	}
 
 	l1_interfaces::nauty_output *NO;
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 
 #if 0
 	if (f_v) {

@@ -157,6 +157,15 @@ public:
 			std::string &fname,
 			std::string &rows_text,
 			int verbose_level);
+	void do_csv_file_select_rows_complement(
+			std::string &fname,
+			std::string &rows_text,
+			int verbose_level);
+	void do_csv_file_select_rows_worker(
+			std::string &fname,
+			std::string &rows_text,
+			int f_complement,
+			int verbose_level);
 	void do_csv_file_split_rows_modulo(
 			std::string &fname,
 			int split_modulo,

@@ -80,7 +80,7 @@ group_action_on_combinatorial_object::~group_action_on_combinatorial_object()
 void group_action_on_combinatorial_object::init(
 		std::string &label_txt,
 		std::string &label_tex,
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 		actions::action *A_perm,
 		int verbose_level)
 {

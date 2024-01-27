@@ -1361,7 +1361,8 @@ void string_tools::parse_comma_separated_strings(
 }
 
 
-int string_tools::read_schlaefli_label(const char *p)
+int string_tools::read_schlaefli_label(
+		const char *p)
 {
 	if (strcmp(p, "a1") == 0) {
 		return 0;
@@ -1887,7 +1888,8 @@ void string_tools::make_latex_friendly_string(
 }
 
 
-std::string string_tools::printf_d(std::string &format, int value)
+std::string string_tools::printf_d(
+		std::string &format, int value)
 {
 	string percent, d, info, pre, post, output, insert;
 	int len;
@@ -1919,7 +1921,8 @@ std::string string_tools::printf_d(std::string &format, int value)
 	return output;
 }
 
-std::string string_tools::printf_dd(std::string &format, int value1, int value2)
+std::string string_tools::printf_dd(
+		std::string &format, int value1, int value2)
 {
 	string s1, s2;
 	s1 = printf_d(format, value1);
@@ -1927,7 +1930,8 @@ std::string string_tools::printf_dd(std::string &format, int value1, int value2)
 	return s2;
 }
 
-void string_tools::parse_RHS_command(std::string &command,
+void string_tools::parse_RHS_command(
+		std::string &command,
 		int &mult, diophant_equation_type &type,
 		int &data1, int &data2, int verbose_level)
 {

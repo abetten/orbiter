@@ -31,7 +31,8 @@ bitvector::~bitvector()
 	}
 }
 
-void bitvector::allocate(long int length)
+void bitvector::allocate(
+		long int length)
 {
 	long int i;
 
@@ -67,7 +68,8 @@ uchar *bitvector::get_data()
 	return data;
 }
 
-void bitvector::m_i(long int i, int a)
+void bitvector::m_i(
+		long int i, int a)
 {
 	long int ii, bit;
 	uchar mask;
@@ -88,7 +90,8 @@ void bitvector::m_i(long int i, int a)
 	//cout << "after: x = " << (int) x << endl;
 }
 
-void bitvector::set_bit(long int i)
+void bitvector::set_bit(
+		long int i)
 {
 	long int ii, bit;
 	uchar mask;
@@ -100,7 +103,8 @@ void bitvector::set_bit(long int i)
 	x |= mask;
 }
 
-int bitvector::s_i(long int i)
+int bitvector::s_i(
+		long int i)
 // returns 0 or 1
 {
 	long int ii, bit;
@@ -118,14 +122,16 @@ int bitvector::s_i(long int i)
 	}
 }
 
-void bitvector::save(ofstream &fp)
+void bitvector::save(
+		std::ofstream &fp)
 {
 	fp.write((char*) &length, sizeof(long int));
 	fp.write((char*) &allocated_length, sizeof(long int));
 	fp.write((char*) data, allocated_length);
 }
 
-void bitvector::load(ifstream &fp)
+void bitvector::load(
+		std::ifstream &fp)
 {
 	fp.read((char*) &length, sizeof(long int));
 	fp.read((char*) &allocated_length, sizeof(long int));

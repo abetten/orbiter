@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace combinatorics {
+namespace canonical_form_classification {
 
 
 encoded_combinatorial_object::encoded_combinatorial_object()
@@ -586,7 +586,7 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 	int *B;
 	int sz;
 	long int rk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	B = NEW_int(nb_cols);
 

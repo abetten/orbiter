@@ -51,6 +51,13 @@ orbits_create::orbits_create()
 	f_has_cubic_surfaces = false;
 	SCW = NULL;
 
+	f_has_semifields = false;
+	Semifields = NULL;
+
+	f_has_boolean_functions = false;
+	BF = NULL;
+	BFC = NULL;
+
 	f_has_classification_by_canonical_form = false;
 	Canonical_form_classifier = NULL;
 
@@ -79,7 +86,7 @@ void orbits_create::init(
 
 	if (Descr->f_group) {
 
-		Group = Get_object_of_type_any_group(Descr->group_label);
+		Group = Get_any_group(Descr->group_label);
 		prefix.assign(Group->label);
 	}
 
@@ -593,6 +600,112 @@ void orbits_create::init(
 
 
 		f_has_cubic_surfaces = true;
+
+
+	}
+
+	if (Descr->f_classify_semifields) {
+		if (f_v) {
+			cout << "orbits_create::init f_classify_semifields" << endl;
+		}
+		projective_geometry::projective_space_with_action *PA;
+
+		PA = Get_projective_space(Descr->classify_semifields_PA);
+
+		poset_classification::poset_classification_control *Control =
+				Get_poset_classification_control(
+						Descr->classify_semifields_control);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before classify_surfaces, control=" << endl;
+			Control->print();
+		}
+
+		Semifields = NEW_OBJECT(semifields::semifield_classify_with_substructure);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Semifields->init" << endl;
+		}
+		Semifields->init(
+				Descr->Classify_semifields_description,
+				PA,
+				Control,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after Semifields->init" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Semifields->classify_semifields" << endl;
+		}
+		Semifields->classify_semifields(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after Semifields->classify_semifields" << endl;
+		}
+
+		f_has_semifields = true;
+	}
+
+
+	if (Descr->f_on_boolean_functions) {
+		if (f_v) {
+			cout << "orbits_create::init f_on_boolean_functions" << endl;
+		}
+		projective_geometry::projective_space_with_action *PA;
+
+		PA = Get_projective_space(Descr->on_boolean_functions_PA);
+
+		if (PA->P->Subspaces->F->q != 2) {
+			cout << "orbits_create::init "
+					"the field must have order 2" << endl;
+			exit(1);
+		}
+		if (PA->A->matrix_group_dimension() != PA->n + 1) {
+			cout << "orbits_create::init "
+					"the dimension of the matrix group must be PA->n + 1" << endl;
+			exit(1);
+		}
+
+
+		BF = NEW_OBJECT(combinatorics::boolean_function_domain);
+
+		if (f_v) {
+			cout << "orbits_create::init before BF->init" << endl;
+		}
+		BF->init(PA->P->Subspaces->F, PA->n, verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init after BF->init" << endl;
+		}
+
+
+		BFC = NEW_OBJECT(apps_combinatorics::boolean_function_classify);
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before BFC->init_group" << endl;
+		}
+		BFC->init_group(BF, PA->A, verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after BFC->init_group" << endl;
+		}
+
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before BFC->search_for_bent_functions" << endl;
+		}
+		BFC->search_for_bent_functions(verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after BFC->search_for_bent_functions" << endl;
+		}
+
+		f_has_boolean_functions = true;
 
 
 	}

@@ -79,6 +79,7 @@ namespace group_constructions {
 	class permutation_group_description;
 	class permutation_representation_domain;
 	class permutation_representation;
+	class polarity_extension;
 	class wreath_product;
 
 }
@@ -160,6 +161,7 @@ enum symmetry_group_type {
 	perm_group_t, 
 	wreath_product_t,
 	direct_product_t,
+	polarity_extension_t,
 	permutation_representation_t,
 	action_on_sets_t,
 	action_on_subgroups_t,
@@ -188,7 +190,7 @@ enum symmetry_group_type {
 	action_on_flags_t,
 	action_on_homogeneous_polynomials_t,
 	action_on_set_partitions_t,
-	action_on_interior_direct_product_t
+	action_on_interior_direct_product_t,
 };
 
 //! enumeration specific to action_by_representation
@@ -229,6 +231,7 @@ union symmetry_group {
 	group_constructions::permutation_representation_domain *perm_grp;
 	group_constructions::wreath_product *wreath_product_group;
 	group_constructions::direct_product *direct_product_group;
+	group_constructions::polarity_extension *Polarity_extension;
 	group_constructions::permutation_representation *Permutation_representation;
 	induced_actions::action_on_sets *on_sets;
 	induced_actions::action_on_subgroups *on_subgroups;

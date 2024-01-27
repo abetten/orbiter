@@ -382,7 +382,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_vector_or_set(label, set, sz) user_interface::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
 
 
-#define Get_object_of_type_any_group(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(label)
+#define Get_any_group(label) user_interface::The_Orbiter_top_level_session->get_any_group(label)
 #define Get_object_of_type_spread(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_spread(label)
 #define Get_poset_classification_control(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_control(label)
 #define Get_poset_classification_report_options(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_report_options(label)

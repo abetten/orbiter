@@ -570,6 +570,16 @@ public:
 			algebra::matrix_group *M1,
 			algebra::matrix_group *M2,
 			int verbose_level);
+	action *init_polarity_extension_group_and_restrict(
+			algebra::matrix_group *M,
+			geometry::projective_space *P,
+			geometry::polarity *Polarity,
+			int verbose_level);
+	action *init_polarity_extension_group(
+			algebra::matrix_group *M,
+			geometry::projective_space *P,
+			geometry::polarity *Polarity,
+			int verbose_level);
 	void orbits_on_equations(
 			action *A,
 			ring_theory::homogeneous_polynomial_domain *HPD,
@@ -869,6 +879,7 @@ public:
 	void init_function_pointers_matrix_group();
 	void init_function_pointers_wreath_product_group();
 	void init_function_pointers_direct_product_group();
+	void init_function_pointers_polarity_extension();
 	void init_function_pointers_permutation_group();
 	void init_function_pointers_permutation_representation_group();
 	void init_function_pointers_induced_action();

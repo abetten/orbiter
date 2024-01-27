@@ -474,10 +474,11 @@ void projective_space_global::do_classify_arcs(
 			cout << "projective_space_global::do_classify_arcs "
 					"f_override_group label = " << Arc_generator_description->override_group_label << endl;
 		}
-		int idx;
+		//int idx;
 		apps_algebra::any_group *AG;
 		//linear_group *LG;
 
+#if 0
 		idx = orbiter_kernel_system::Orbiter->find_symbol(Arc_generator_description->override_group_label);
 		if (orbiter_kernel_system::Orbiter->get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 			cout << "projective_space_global::do_classify_arcs "
@@ -485,6 +486,9 @@ void projective_space_global::do_classify_arcs(
 			exit(1);
 		}
 		AG = (apps_algebra::any_group *) orbiter_kernel_system::Orbiter->get_object(idx);
+#endif
+
+		AG = Get_any_group(Arc_generator_description->override_group_label);
 
 #if 0
 		if (!LG->f_has_strong_generators) {
@@ -961,6 +965,7 @@ void projective_space_global::make_relation(
 #endif
 
 
+#if 0
 void projective_space_global::classify_bent_functions(
 		projective_space_with_action *PA,
 		int n,
@@ -1021,7 +1026,7 @@ void projective_space_global::classify_bent_functions(
 	}
 
 }
-
+#endif
 
 
 }}}

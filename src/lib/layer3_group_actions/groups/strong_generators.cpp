@@ -341,6 +341,7 @@ void strong_generators::init_from_data(
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data" << endl;
+		cout << "strong_generators::init_from_data A = " << A->label << endl;
 	}
 	init(A, verbose_level - 2);
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -351,7 +352,7 @@ void strong_generators::init_from_data(
 	}
 	gens->init_from_data(
 			A, data,
-		nb_elements, elt_size, verbose_level - 2);
+		nb_elements, elt_size, verbose_level - 1);
 	if (f_v) {
 		cout << "strong_generators::init_from_data after gens->init_from_data" << endl;
 	}
@@ -1517,6 +1518,7 @@ void strong_generators::print_generators_in_latex_individually(
 		//ost << "\\\\" << endl;
 
 
+#if 0
 		int n, ord;
 
 		ord = A->Group_element->element_order(gens->ith(i));
@@ -1525,7 +1527,7 @@ void strong_generators::print_generators_in_latex_individually(
 
 		n = A->Group_element->count_fixed_points(gens->ith(i), 0 /* verbose_level */);
 		ost << " and with " << n << " fixed points.\\\\" << endl;
-
+#endif
 		}
 	ost << endl << "\\bigskip" << endl;
 

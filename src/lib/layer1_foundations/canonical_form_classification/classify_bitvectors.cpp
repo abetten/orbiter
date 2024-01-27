@@ -13,10 +13,11 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace canonical_form_classification {
 
 
-static int compare_func_for_bitvectors(void *a, void *b, void *data);
+static int compare_func_for_bitvectors(
+		void *a, void *b, void *data);
 
 
 classify_bitvectors::classify_bitvectors()
@@ -108,7 +109,7 @@ int classify_bitvectors::search(
 {
 	int f_v = (verbose_level >= 1);
 	int ret;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_bitvectors::search" << endl;
@@ -135,7 +136,7 @@ void classify_bitvectors::search_and_add_if_new(
 // if f_found is false: idx is where the new canonical form was added.
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::add rep_len=" << rep_len << endl;
@@ -196,7 +197,7 @@ void classify_bitvectors::add_at_idx(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_bitvectors::add_at_idx" << endl;
@@ -228,12 +229,12 @@ void classify_bitvectors::finalize(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
 	}
-	C_type_of = NEW_OBJECT(tally);
+	C_type_of = NEW_OBJECT(data_structures::tally);
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize type_of=";
@@ -425,7 +426,8 @@ void classify_bitvectors::save(
 	}
 }
 
-static int compare_func_for_bitvectors(void *a, void *b, void *data)
+static int compare_func_for_bitvectors(
+		void *a, void *b, void *data)
 {
 	classify_bitvectors *CB = (classify_bitvectors *) data;
 	uchar *A = (uchar *) a;

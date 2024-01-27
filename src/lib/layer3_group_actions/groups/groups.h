@@ -611,13 +611,13 @@ public:
 			int verbose_level);
 	void print_TDA(
 			std::ostream &ost,
-			geometry::object_with_canonical_form *OwCF,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void latex_TDA(
 			std::ostream &ost,
-			combinatorics::encoded_combinatorial_object *Enc,
+			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int verbose_level);
 
 	// schreier_io.cpp:
@@ -1044,10 +1044,11 @@ public:
 		// updates the arrays gen_depth and gen_perm accordingly
 		// does not change the transversals
 	int generator_depth(
-			int gen_idx);
+			int gen_idx, int verbose_level);
 		// returns the index of the first base point 
 		// which is moved by a given generator. 
-	int generator_depth(int *elt);
+	int generator_depth(
+			int *elt, int verbose_level);
 		// returns the index of the first base point 
 		// which is moved by the given element
 	void group_order(

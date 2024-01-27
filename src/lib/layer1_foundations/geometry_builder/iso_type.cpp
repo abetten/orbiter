@@ -52,7 +52,8 @@ iso_type::~iso_type()
 {
 }
 
-void iso_type::init(gen_geo *gg,
+void iso_type::init(
+		gen_geo *gg,
 		int v, int f_orderly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -85,7 +86,7 @@ void iso_type::init(gen_geo *gg,
 				<< endl;
 	}
 
-	Canonical_forms = NEW_OBJECT(data_structures::classify_using_canonical_forms);
+	Canonical_forms = NEW_OBJECT(canonical_form_classification::classify_using_canonical_forms);
 
 	if (f_v) {
 		cout << "iso_type::init done" << endl;
@@ -172,7 +173,7 @@ void iso_type::find_and_add_geo(
 	}
 
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 	int nb_flags;
 
 	nb_flags = sum_R;
@@ -183,7 +184,7 @@ void iso_type::find_and_add_geo(
 
 		gg->inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-		OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+		OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
 
 		OwCF->init_incidence_geometry(
 			theInc, nb_flags, v, gg->inc->Encoding->b, nb_flags,
@@ -254,7 +255,8 @@ void iso_type::second()
 	f_beginning_checked = false;
 }
 
-void iso_type::set_split(int remainder, int modulo)
+void iso_type::set_split(
+		int remainder, int modulo)
 {
 	f_split = true;
 	split_remainder = remainder;
@@ -262,7 +264,8 @@ void iso_type::set_split(int remainder, int modulo)
 }
 
 
-void iso_type::print_geos(int verbose_level)
+void iso_type::print_geos(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -280,9 +283,9 @@ void iso_type::print_geos(int verbose_level)
 
 			cout << h << " / " << nb_geo << ":" << endl;
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
 
 
 			gg->inc->print_inc(cout, v, OwCF->set);
@@ -316,7 +319,8 @@ void iso_type::print_geos(int verbose_level)
 }
 
 
-void iso_type::write_inc_file(std::string &fname, int verbose_level)
+void iso_type::write_inc_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -335,9 +339,9 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
 			gg->inc->print_inc(ost, v, OwCF->set);
 
 			ost << endl;
@@ -361,7 +365,8 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 	}
 }
 
-void iso_type::write_sage_file(std::string &fname, int verbose_level)
+void iso_type::write_sage_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -397,9 +402,9 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
 			gg->inc->print_sage(ost, v, OwCF->set);
 			if (h < nb_geo - 1) {
 				ost << ", " << endl;
@@ -429,7 +434,8 @@ void iso_type::write_sage_file(std::string &fname, int verbose_level)
 	}
 }
 
-void iso_type::write_blocks_file(std::string &fname, int verbose_level)
+void iso_type::write_blocks_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -447,9 +453,9 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 
 
 		if (nb_geo) {
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[0];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[0];
 
 			k = gg->inc->compute_k(v, OwCF->set);
 
@@ -462,7 +468,7 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 				//inc->print_geo(ost, v, theGEO1[h]);
 
 
-				OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
 				gg->inc->print_blocks(ost, v, OwCF->set);
 
 				ost << endl;
@@ -487,7 +493,8 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 	}
 }
 
-void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
+void iso_type::write_blocks_file_long(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -518,9 +525,9 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 				int *K;
 				int i, j, a;
 
-				geometry::object_with_canonical_form *OwCF;
+				canonical_form_classification::object_with_canonical_form *OwCF;
 
-				OwCF = (geometry::object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
 
 				theInc = OwCF->set;
 
@@ -533,6 +540,7 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 					for (j = 0; j < K[i]; j++) {
 						a = Blocks[i * v + j];
 
+#if 0
 						if (v == 18 && b == 39) {
 							if (i >= 3) {
 								if (a >= 12) {
@@ -544,6 +552,8 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 							}
 							a++;
 						}
+#endif
+
 						ost << a;
 						if (j < K[i] - 1) {
 							ost << ", ";
@@ -579,7 +589,8 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 
 
 
-void iso_type::print_GEO(int *theY, int v, incidence *inc)
+void iso_type::print_GEO(
+		int *theY, int v, incidence *inc)
 {
 	//int aut_group_order;
 
@@ -588,7 +599,8 @@ void iso_type::print_GEO(int *theY, int v, incidence *inc)
 	//cout << "automorphism group order = " << aut_group_order << endl;
 }
 
-void iso_type::print_status(std::ostream &ost, int f_with_flags)
+void iso_type::print_status(
+		std::ostream &ost, int f_with_flags)
 {
 #if 1
 	ost << setw(7) << Canonical_forms->B.size();
@@ -621,7 +633,8 @@ void iso_type::print_status(std::ostream &ost, int f_with_flags)
 #endif
 }
 
-void iso_type::print_flags(std::ostream &ost)
+void iso_type::print_flags(
+		std::ostream &ost)
 {
 	ost << " ";
 	if (f_split) {

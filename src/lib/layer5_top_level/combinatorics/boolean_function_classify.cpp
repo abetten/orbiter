@@ -31,6 +31,16 @@ boolean_function_classify::boolean_function_classify()
 	AonHPD = NULL;
 	SG = NULL;
 	A_affine = NULL;
+
+	nb_sol = 0;
+	nb_orbits = 0;
+	//std::vector<int> orbit_first;
+	//std::vector<int> orbit_length;
+	//std::vector<std::vector<int> > Bent_function_table;
+	//std::vector<std::vector<int> > Equation_table;
+
+	//std::multimap<uint32_t, int> Hashing;
+
 }
 
 boolean_function_classify::~boolean_function_classify()
@@ -160,15 +170,14 @@ void boolean_function_classify::search_for_bent_functions(
 	int *poly;
 	int i, j;
 	ring_theory::longinteger_object a;
-	int nb_sol = 0;
-	int nb_orbits = 0;
 	uint32_t h;
 	geometry::geometry_global Gg;
 	ring_theory::longinteger_domain D;
 	data_structures::data_structures_global Data;
+
+#if 0
 	vector<int> orbit_first;
 	vector<int> orbit_length;
-
 	vector<vector<int> > Bent_function_table;
 	vector<vector<int> > Equation_table;
 
@@ -180,7 +189,10 @@ void boolean_function_classify::search_for_bent_functions(
 		// we use a multimap because the hash values are not unique
 		// it happens that two sets have the same hash value.
 		// map cannot handle that.
+#endif
 
+	nb_sol = 0;
+	nb_orbits = 0;
 
 	if (f_v) {
 		cout << "boolean_function_classify::search_for_bent_functions" << endl;
@@ -195,7 +207,7 @@ void boolean_function_classify::search_for_bent_functions(
 
 		Gg.AG_element_unrank_longinteger(2, BF->f, 1, BF->Q, a);
 		//Gg.AG_element_unrank(2, f, 1, Q, a);
-		cout << a << " / " << BF->NN << " : ";
+		cout << a << " / " << *BF->NN << " : ";
 		Int_vec_print(cout, BF->f, BF->Q);
 		//cout << endl;
 
@@ -295,6 +307,7 @@ void boolean_function_classify::search_for_bent_functions(
 					Equation_table.push_back(w);
 				}
 
+#if 0
 				//int idx = 3;
 				int idx = 0;
 
@@ -332,9 +345,13 @@ void boolean_function_classify::search_for_bent_functions(
 
 					FREE_OBJECT(Stab_gens_clean);
 				}
+#endif
 
-				FREE_OBJECT(Stab_gens);
-				FREE_OBJECT(Orb);
+				Orb_vector.push_back(Orb);
+				Stab_gens_vector.push_back(Stab_gens);
+
+				//FREE_OBJECT(Stab_gens);
+				//FREE_OBJECT(Orb);
 
 				nb_orbits++;
 
@@ -349,17 +366,40 @@ void boolean_function_classify::search_for_bent_functions(
 		a.increment();
 		cout << "after increment: a=" << a << endl;
 	}
+
+	FREE_int(poly);
+
+	if (f_v) {
+		cout << "boolean_function_classify::search_for_bent_functions done" << endl;
+	}
+}
+
+void boolean_function_classify::print()
+{
+
+	//print_orbits_sorted();
+
+	print_orbit_reps_with_minimum_weight();
+
+#if 0
 	cout << "We found " << nb_sol << " bent functions" << endl;
 	cout << "We have " << Bent_function_table.size() << " bent functions in the table" << endl;
 	cout << "They fall into " << orbit_first.size() << " orbits:" << endl;
 
 	int fst, len, t;
+	int h, i, j;
+	int *poly;
+	geometry::geometry_global Gg;
+	ring_theory::longinteger_object a;
+
+	poly = NEW_int(BF->Poly[BF->n].get_nb_monomials());
+
 
 	for (h = 0; h < orbit_first.size(); h++) {
 		fst = orbit_first[h];
 		len = orbit_length[h];
 		cout << "Orbit " << h << " / " << orbit_first.size() << " has length " << len << ":" << endl;
-		for (t = 0; t < len; t++) {
+		for (t = 0; t < 1 /*len*/; t++) {
 			i = fst + t;
 			cout << i << " : " << t << " / " << len << " : ";
 			for (j = 0; j < BF->Q; j++) {
@@ -379,7 +419,16 @@ void boolean_function_classify::search_for_bent_functions(
 			BF->Poly[BF->n].print_equation(cout, poly);
 			cout << endl;
 		}
+		groups::strong_generators *Stab_gens;
+
+		Stab_gens = (groups::strong_generators *) Stab_gens_vector[h];
+
+		Stab_gens->print_generators_tex(cout);
 	}
+
+	FREE_int(poly);
+
+
 #if 0
 	for (i = 0; i < Bent_function_table.size(); i++) {
 		cout << i << " : ";
@@ -403,15 +452,239 @@ void boolean_function_classify::search_for_bent_functions(
 	for (h = 0; h < orbit_first.size(); h++) {
 		cout << "orbit " << h << " / " << orbit_first.size() << " has length " << orbit_length[h] << endl;
 	}
+#endif
+
+}
+
+void boolean_function_classify::print_orbits_sorted()
+{
+	cout << "We have " << Bent_function_table.size() << " bent functions in the table" << endl;
+	cout << "They fall into " << orbit_first.size() << " orbits:" << endl;
+
+	int verbose_level = 0;
+	int fst, len, t, t0;
+	int h, i, j;
+	int *poly;
+	geometry::geometry_global Gg;
+	ring_theory::longinteger_object a;
+
+
+	int nb_monomials;
+
+	nb_monomials = BF->Poly[BF->n].get_nb_monomials();
+
+	cout << "nb_monomials = " << nb_monomials << endl;
+
+	poly = NEW_int(nb_monomials);
+
+	for (h = 0; h < orbit_first.size(); h++) {
+		fst = orbit_first[h];
+		len = orbit_length[h];
+		cout << "Orbit " << h << " / " << orbit_first.size() << " has length " << len << ":" << endl;
+		groups::strong_generators *Stab_gens;
+
+		data_structures::int_matrix *M;
+
+		export_orbit(h,
+				M,
+				verbose_level);
+
+		for (t = 0; t < len; t++) {
+			t0 = M->perm_inv[t];
+
+			i = fst + t0;
+			cout << h << " : " << t << " / " << len << " : ";
+			for (j = 0; j < BF->Q; j++) {
+				BF->f[j] = Bent_function_table[i][j];
+			}
+			for (j = 0; j < nb_monomials; j++) {
+				poly[j] = M->M[t * nb_monomials + j];
+			}
+
+			Int_vec_copy(BF->f, BF->f2, BF->Q);
+			Gg.AG_element_rank_longinteger(2, BF->f2, 1, BF->Q, a);
+
+			//Int_vec_print(cout, BF->f, BF->Q);
+			//cout << " : " << a << " : ";
+			Int_vec_print_fully(cout, poly, nb_monomials);
+			cout << " : ";
+			BF->Poly[BF->n].print_equation(cout, poly);
+			cout << endl;
+		}
+
+		Stab_gens = (groups::strong_generators *) Stab_gens_vector[h];
+
+		Stab_gens->print_generators_tex(cout);
+
+		FREE_OBJECT(M);
+	}
 
 	FREE_int(poly);
-
-	if (f_v) {
-		cout << "boolean_function_classify::search_for_bent_functions done" << endl;
-	}
 }
 
 
+void boolean_function_classify::print_orbit_reps_with_minimum_weight()
+{
+	cout << "We have " << Bent_function_table.size() << " bent functions in the table" << endl;
+	cout << "They fall into " << orbit_first.size() << " orbits:" << endl;
+
+	int verbose_level = 0;
+	int fst, len, t, t0;
+	int h, i, j;
+	int *poly;
+	geometry::geometry_global Gg;
+	ring_theory::longinteger_object a;
+
+
+	int nb_monomials;
+
+	nb_monomials = BF->Poly[BF->n].get_nb_monomials();
+
+	cout << "nb_monomials = " << nb_monomials << endl;
+
+	poly = NEW_int(nb_monomials);
+
+	for (h = 0; h < orbit_first.size(); h++) {
+		fst = orbit_first[h];
+		len = orbit_length[h];
+		cout << "Orbit " << h << " / " << orbit_first.size() << " has length " << len << ":" << endl;
+		groups::strong_generators *Stab_gens;
+
+		data_structures::int_matrix *M;
+
+		export_orbit(h,
+				M,
+				verbose_level);
+
+		int *W;
+		int w;
+		int w_min = INT_MAX;
+
+		W = NEW_int(len);
+
+		for (t = 0; t < len; t++) {
+			w = 0;
+			for (j = 0; j < nb_monomials; j++) {
+				if (M->M[t * nb_monomials + j]) {
+					w++;
+				}
+			}
+			W[t] = w;
+			w_min = MINIMUM(w_min, w);
+		}
+
+		cout << "w_min = " << w_min << endl;
+
+		for (t = 0; t < len; t++) {
+			if (W[t] != w_min) {
+				continue;
+			}
+			t0 = M->perm_inv[t];
+
+			i = fst + t0;
+			cout << h << " : " << t << " / " << len << " : ";
+			for (j = 0; j < BF->Q; j++) {
+				BF->f[j] = Bent_function_table[i][j];
+			}
+			for (j = 0; j < nb_monomials; j++) {
+				poly[j] = M->M[t * nb_monomials + j];
+			}
+
+			Int_vec_copy(BF->f, BF->f2, BF->Q);
+			Gg.AG_element_rank_longinteger(2, BF->f2, 1, BF->Q, a);
+
+			//Int_vec_print(cout, BF->f, BF->Q);
+			//cout << " : " << a << " : ";
+			Int_vec_print_fully(cout, poly, nb_monomials);
+			cout << " : ";
+			BF->Poly[BF->n].print_equation(cout, poly);
+			cout << endl;
+		}
+
+
+
+		Stab_gens = (groups::strong_generators *) Stab_gens_vector[h];
+
+		Stab_gens->print_generators_tex(cout);
+
+		FREE_int(W);
+		FREE_OBJECT(M);
+	}
+
+	FREE_int(poly);
+}
+
+
+void boolean_function_classify::export_orbit(int idx,
+		data_structures::int_matrix *&M,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "boolean_function_classify::export_orbit" << endl;
+	}
+	int fst, len, t;
+	int i, j;
+	int *poly;
+	geometry::geometry_global Gg;
+	ring_theory::longinteger_object a;
+
+	poly = NEW_int(BF->Poly[BF->n].get_nb_monomials());
+
+	fst = orbit_first[idx];
+	len = orbit_length[idx];
+	if (f_v) {
+		cout << "boolean_function_classify::export_orbit "
+				"Orbit " << idx << " / " << orbit_first.size()
+				<< " has length " << len << ":" << endl;
+	}
+
+	M = NEW_OBJECT(data_structures::int_matrix);
+
+	int nb_monomials;
+
+	nb_monomials = BF->Poly[BF->n].get_nb_monomials();
+
+	M->allocate(len, nb_monomials);
+
+	for (t = 0; t < len; t++) {
+		i = fst + t;
+		//cout << i << " : " << t << " / " << len << " : ";
+#if 0
+		for (j = 0; j < BF->Q; j++) {
+			BF->f[j] = Bent_function_table[i][j];
+		}
+#endif
+		for (j = 0; j < BF->Poly[BF->n].get_nb_monomials(); j++) {
+			poly[j] = Equation_table[i][j];
+		}
+		Int_vec_copy(poly, M->M + t * nb_monomials, nb_monomials);
+
+#if 0
+		Int_vec_copy(BF->f, BF->f2, BF->Q);
+		Gg.AG_element_rank_longinteger(2, BF->f2, 1, BF->Q, a);
+
+		Int_vec_print(cout, BF->f, BF->Q);
+		cout << " : " << a << " : ";
+		Int_vec_print(cout, poly, BF->Poly[BF->n].get_nb_monomials());
+		cout << " : ";
+		BF->Poly[BF->n].print_equation(cout, poly);
+		cout << endl;
+#endif
+	}
+	if (f_v) {
+		cout << "boolean_function_classify::export_orbit "
+				"before M->sort_rows" << endl;
+	}
+	M->sort_rows(verbose_level - 2);
+	if (f_v) {
+		cout << "boolean_function_classify::export_orbit "
+				"after M->sort_rows" << endl;
+	}
+	FREE_int(poly);
+
+}
 
 static void boolean_function_classify_print_function(
 		int *poly, int sz, void *data)

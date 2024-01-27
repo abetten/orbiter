@@ -1339,7 +1339,8 @@ void spreadsheet::get_string(
 	//return s;
 }
 
-long int spreadsheet::get_lint(int i, int j)
+long int spreadsheet::get_lint(
+		int i, int j)
 {
 	string str;
 	long int a;
@@ -1352,7 +1353,8 @@ long int spreadsheet::get_lint(int i, int j)
 	return a;
 }
 
-double spreadsheet::get_double(int i, int j)
+double spreadsheet::get_double(
+		int i, int j)
 {
 	string str;
 	double a;

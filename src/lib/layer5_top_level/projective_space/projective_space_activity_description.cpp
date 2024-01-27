@@ -253,13 +253,14 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 
+#if 0
 	f_classify_semifields = false;
 	Semifield_classify_description = NULL;
 	Semifield_classify_Control = NULL;
 
-
 	f_classify_bent_functions = false;
 	classify_bent_functions_n = 0;
+#endif
 
 }
 
@@ -326,7 +327,8 @@ int projective_space_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-table_of_cubic_surfaces_compute_properties") == 0) {
 			f_table_of_cubic_surfaces_compute_properties = true;
 			if (f_v) {
-				cout << "-table_of_cubic_surfaces_compute_properties next argument is " << argv[i + 1] << endl;
+				cout << "-table_of_cubic_surfaces_compute_properties "
+						"next argument is " << argv[i + 1] << endl;
 				table_of_cubic_surfaces_compute_fname_csv.assign(argv[++i]);
 				table_of_cubic_surfaces_compute_defining_q = ST.strtoi(argv[++i]);
 				table_of_cubic_surfaces_compute_column_offset = ST.strtoi(argv[++i]);
@@ -354,7 +356,7 @@ int projective_space_activity_description::read_arguments(
 			canonical_form_of_code_label.assign(argv[++i]);
 			canonical_form_of_code_generator_matrix.assign(argv[++i]);
 
-			Canonical_form_codes_Descr = NEW_OBJECT(combinatorics::classification_of_objects_description);
+			Canonical_form_codes_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_codes_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -667,7 +669,8 @@ int projective_space_activity_description::read_arguments(
 			arc_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-arc_with_given_set_as_s_lines_after_dualizing "
-						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low
+						<< " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
 			}
 		}
 
@@ -683,7 +686,9 @@ int projective_space_activity_description::read_arguments(
 			arc_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
-						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << " " << arc_input_set << " " << arc_label << endl;
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low
+						<< " s=" << arc_s << " t=" << arc_t << " "
+						<< t_lines_string << " " << arc_input_set << " " << arc_label << endl;
 			}
 		}
 
@@ -701,7 +706,8 @@ int projective_space_activity_description::read_arguments(
 			arc_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
-						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low
+						<< " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
 				cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
 				cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
 			}
@@ -1014,6 +1020,7 @@ int projective_space_activity_description::read_arguments(
 		}
 #endif
 
+#if 0
 		// semifields
 		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
 			f_classify_semifields = true;
@@ -1046,7 +1053,8 @@ int projective_space_activity_description::read_arguments(
 				cout << "-classify_semifields " << endl;
 			}
 		}
-
+#endif
+#if 0
 		else if (ST.stringcmp(argv[i], "-classify_bent_functions") == 0) {
 			f_classify_bent_functions = true;
 			classify_bent_functions_n = ST.strtoi(argv[++i]);
@@ -1056,7 +1064,7 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
+#endif
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -1384,18 +1392,18 @@ void projective_space_activity_description::print()
 		cout << "-classify_cubic_curves" << endl;
 		Arc_generator_description->print();
 	}
-#endif
 	// semifields
 	if (f_classify_semifields) {
 		cout << "-classify_semifields " << endl;
+		Semifield_classify_description->print();
 		Semifield_classify_Control->print();
 	}
-
 	if (f_classify_bent_functions) {
 		cout << "-classify_bent_functions "
 				<< classify_bent_functions_n
 				<< endl;
 	}
+#endif
 
 
 

@@ -68,20 +68,20 @@ void semifield_flag_orbit_node::group_order(
 {
 	if (f_long_orbit) {
 		go.create(1);
-		}
+	}
 	else {
 		semifield_flag_orbit_node::go.assign_to(go);
-		}
+	}
 }
 
 int semifield_flag_orbit_node::group_order_as_int()
 {
 	if (f_long_orbit) {
 		return 1;
-		}
+	}
 	else {
 		return go.as_int();;
-		}
+	}
 }
 
 void semifield_flag_orbit_node::write_to_file_binary(
@@ -92,7 +92,7 @@ void semifield_flag_orbit_node::write_to_file_binary(
 
 	if (f_v) {
 		cout << "semifield_flag_orbit_node::write_to_file_binary" << endl;
-		}
+	}
 	fp.write((char *) &downstep_primary_orbit, sizeof(int));
 	fp.write((char *) &downstep_secondary_orbit, sizeof(int));
 	fp.write((char *) &pt_local, sizeof(int));
@@ -103,16 +103,16 @@ void semifield_flag_orbit_node::write_to_file_binary(
 	if (f_fusion_node) {
 		fp.write((char *) &fusion_with, sizeof(int));
 		SL->SC->A->Group_element->element_write_to_file_binary(fusion_elt, fp, 0);
-		}
+	}
 	else {
 		fp.write((char *) &upstep_orbit, sizeof(int));
-		}
+	}
 	if (!f_long_orbit) {
 		gens->write_to_file_binary(fp, verbose_level - 1);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_flag_orbit_node::write_to_file_binary done" << endl;
-		}
+	}
 }
 
 void semifield_flag_orbit_node::read_from_file_binary(
@@ -135,17 +135,17 @@ void semifield_flag_orbit_node::read_from_file_binary(
 		fp.read((char *) &fusion_with, sizeof(int));
 		fusion_elt = NEW_int(SL->SC->A->elt_size_in_int);
 		SL->SC->A->Group_element->element_read_from_file_binary(fusion_elt, fp, 0);
-		}
+	}
 	else {
 		fp.read((char *) &upstep_orbit, sizeof(int));
-		}
+	}
 	if (!f_long_orbit) {
 		gens = NEW_OBJECT(groups::strong_generators);
 		gens->read_from_file_binary(SL->SC->A, fp, verbose_level - 1);
-		}
+	}
 	if (f_v) {
 		cout << "semifield_flag_orbit_node::read_from_file_binary done" << endl;
-		}
+	}
 }
 
 

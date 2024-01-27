@@ -730,13 +730,13 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 	groups::strong_generators *SG_pt_stab = NULL;
 	ring_theory::longinteger_object pt_stab_order;
-	geometry::object_with_canonical_form *OwCF = NULL;
+	canonical_form_classification::object_with_canonical_form *OwCF = NULL;
 
 	int f_compute_canonical_form = false;
 	data_structures::bitvector *Canonical_form;
 
 
-	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
@@ -771,7 +771,7 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 	interfaces::nauty_interface_with_group Nau;
 	l1_interfaces::nauty_output *NO;
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 

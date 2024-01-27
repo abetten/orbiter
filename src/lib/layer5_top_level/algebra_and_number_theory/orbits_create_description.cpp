@@ -61,6 +61,14 @@ orbits_create_description::orbits_create_description()
 	//std::string on_cubic_surfaces_PA;
 	//std::string on_cubic_surfaces_control;
 
+	f_classify_semifields = false;
+	//std::string classify_semifields_PA;
+	//std::string classify_semifields_control;
+	Classify_semifields_description = NULL;
+
+	f_on_boolean_functions = false;
+	//std::string on_boolean_functions_PA;
+
 	f_classification_by_canonical_form = false;
 	Canonical_form_classifier_description = NULL;
 
@@ -181,6 +189,40 @@ int orbits_create_description::read_arguments(
 						<< " " << on_cubic_surfaces_control << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-classify_semifields") == 0) {
+			f_classify_semifields = true;
+			classify_semifields_PA.assign(argv[++i]);
+			classify_semifields_control.assign(argv[++i]);
+			Classify_semifields_description = NEW_OBJECT(semifields::semifield_classify_description);
+			if (f_v) {
+				cout << "-classify_semifields" << endl;
+			}
+			i += Classify_semifields_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -classify_semifields " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			if (f_v) {
+				cout << "-classify_semifields " << " " << classify_semifields_PA << " " << classify_semifields_control << endl;
+				Classify_semifields_description->print();
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-on_boolean_functions") == 0) {
+			f_on_boolean_functions = true;
+			on_boolean_functions_PA.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_boolean_functions " << on_boolean_functions_PA << endl;
+			}
+		}
+
+
 
 		else if (ST.stringcmp(argv[i], "-classification_by_canonical_form") == 0) {
 			f_classification_by_canonical_form = true;
@@ -285,6 +327,13 @@ void orbits_create_description::print()
 	if (f_on_cubic_surfaces) {
 		cout << "-on_cubic_surfaces " << on_cubic_surfaces_PA
 				<< " " << on_cubic_surfaces_control << endl;
+	}
+	if (f_classify_semifields) {
+		cout << "-classify_semifields " << " " << classify_semifields_PA << " " << classify_semifields_control << endl;
+		Classify_semifields_description->print();
+	}
+	if (f_on_boolean_functions) {
+		cout << "-on_boolean_functions " << on_boolean_functions_PA << endl;
 	}
 	if (f_classification_by_canonical_form) {
 		cout << "-classification_by_canonical_form " << endl;

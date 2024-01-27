@@ -33,12 +33,12 @@ nauty_interface_with_group::~nauty_interface_with_group()
 
 
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 		actions::action *A_linear,
 	int f_compute_canonical_form,
 	data_structures::bitvector *&Canonical_form,
 	l1_interfaces::nauty_output *&NO,
-	combinatorics::encoded_combinatorial_object *&Enc,
+	canonical_form_classification::encoded_combinatorial_object *&Enc,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -861,10 +861,10 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	geometry::object_with_canonical_form *OwCF = NULL;
+	canonical_form_classification::object_with_canonical_form *OwCF = NULL;
 
 
-	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
+	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
@@ -894,7 +894,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 
 	l1_interfaces::nauty_output *NO;
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->nauty_output_allocate(nb_rows + nb_cols,

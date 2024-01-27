@@ -13,6 +13,7 @@ MODULES = \
 	permutation_group_description.o \
 	permutation_representation_domain.o \
 	permutation_representation.o \
+	polarity_extension.o \
 	wreath_product.o
 
 

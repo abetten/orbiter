@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace combinatorics {
+namespace canonical_form_classification {
 
 
 static void print_summary_table_entry(int *Table,
@@ -84,7 +84,7 @@ void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
 		geometry::projective_space *P,
-		data_structures::data_input_stream *IS,
+		data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -102,7 +102,7 @@ void classification_of_objects::perform_classification(
 
 	//int i;
 
-	CB = NEW_OBJECT(data_structures::classify_bitvectors);
+	CB = NEW_OBJECT(classify_bitvectors);
 
 
 
@@ -163,7 +163,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	F_reject = NEW_int(IS->Objects.size());
 
-	OWCF_transversal = (geometry::object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
+	OWCF_transversal = (object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
 
 	NO_transversal = (l1_interfaces::nauty_output **) NEW_pvoid(IS->Objects.size());
 
@@ -176,9 +176,9 @@ void classification_of_objects::classify_objects_using_nauty(
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
 
-		geometry::object_with_canonical_form *OwCF;
+		object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
 		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
@@ -194,7 +194,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 
 		l1_interfaces::nauty_output *NO;
-		combinatorics::encoded_combinatorial_object *Enc;
+		encoded_combinatorial_object *Enc;
 
 		process_any_object(OwCF,
 					input_idx,
@@ -214,7 +214,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 		if (!F_reject[input_idx]) {
 			OWCF_transversal[nb_orbits] =
-					(geometry::object_with_canonical_form *) IS->Objects[input_idx];
+					(object_with_canonical_form *) IS->Objects[input_idx];
 			NO_transversal[nb_orbits] = NO;
 			nb_orbits++;
 		}
@@ -397,10 +397,10 @@ void classification_of_objects::save_transversal(
 }
 
 void classification_of_objects::process_any_object(
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 		int input_idx, long int &ago, int &f_reject,
 		l1_interfaces::nauty_output *&NO,
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -499,11 +499,11 @@ void classification_of_objects::process_any_object(
 
 
 int classification_of_objects::process_object(
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 	long int &ago,
 	int &iso_idx_if_found,
 	l1_interfaces::nauty_output *&NO,
-	combinatorics::encoded_combinatorial_object *&Enc,
+	encoded_combinatorial_object *&Enc,
 	int verbose_level)
 // returns f_found, which is true if the object is rejected
 {
@@ -1013,7 +1013,7 @@ void classification_of_objects::report_isomorphism_type(
 		FREE_int(Input_objects);
 	}
 
-	geometry::object_with_canonical_form *OwCF;
+	object_with_canonical_form *OwCF;
 
 	OwCF = OWCF_transversal[i];
 
@@ -1036,7 +1036,7 @@ void classification_of_objects::report_isomorphism_type(
 
 void classification_of_objects::report_object(
 		std::ostream &ost,
-		geometry::object_with_canonical_form *OwCF,
+		object_with_canonical_form *OwCF,
 		int object_idx,
 		int max_TDO_depth,
 		int f_show_incma,
@@ -1059,7 +1059,7 @@ static void print_summary_table_entry(int *Table,
 		std::string &output, void *data)
 {
 	int f_v = true;
-	data_structures::classify_bitvectors *CB;
+	classify_bitvectors *CB;
 	//object_in_projective_space_with_action *OiPA;
 	//void *extra_data;
 	int h;
@@ -1138,7 +1138,7 @@ static void print_summary_table_entry(int *Table,
 				cout << "print_summary_table_entry before CB->C_type_of->get_class_by_value" << endl;
 			}
 			CB->C_type_of->get_class_by_value(Input_objects,
-				nb_input_objects, i /*CB->perm[i]*/, 0 /*verbose_level */);
+				nb_input_objects, CB->perm[i], 0 /*verbose_level */);
 			if (f_v) {
 				cout << "print_summary_table_entry after CB->C_type_of->get_class_by_value" << endl;
 			}

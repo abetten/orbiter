@@ -3658,8 +3658,8 @@ void schreier::compute_orbit_invariant(
 
 void schreier::print_TDA(
 		std::ostream &ost,
-		geometry::object_with_canonical_form *OwCF,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -3672,7 +3672,7 @@ void schreier::print_TDA(
 	//print_tex(ost);
 
 	if (Report_options->f_show_incidence_matrices) {
-		combinatorics::encoded_combinatorial_object *Enc;
+		canonical_form_classification::encoded_combinatorial_object *Enc;
 
 		OwCF->encode_incma(Enc, verbose_level);
 
@@ -3689,7 +3689,7 @@ void schreier::print_TDA(
 
 void schreier::latex_TDA(
 		std::ostream &ost,
-		combinatorics::encoded_combinatorial_object *Enc,
+		canonical_form_classification::encoded_combinatorial_object *Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

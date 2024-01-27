@@ -62,7 +62,7 @@ object_with_properties::~object_with_properties()
 
 
 void object_with_properties::init(
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 		l1_interfaces::nauty_output *NO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -209,7 +209,7 @@ void object_with_properties::lift_generators_to_matrix_group(
 }
 
 void object_with_properties::init_object_in_projective_space(
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 		l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
@@ -256,7 +256,7 @@ void object_with_properties::init_object_in_projective_space(
 
 void object_with_properties::latex_report(
 		std::ostream &ost,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -434,7 +434,7 @@ void object_with_properties::latex_report(
 	}
 	if (Report_options->f_export_labels) {
 
-		combinatorics::encoded_combinatorial_object *Enc;
+		canonical_form_classification::encoded_combinatorial_object *Enc;
 
 		OwCF->encode_incma(Enc, verbose_level);
 
@@ -476,8 +476,8 @@ void object_with_properties::latex_report(
 	}
 
 	ost << "Canonical labeling:\\\\" << endl;
-	combinatorics::encoded_combinatorial_object *Enc;
-	combinatorics::encoded_combinatorial_object *Enc2;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc2;
 
 	if (f_v) {
 		cout << "object_with_properties::latex_report "
@@ -490,7 +490,7 @@ void object_with_properties::latex_report(
 	}
 
 
-	Enc2 = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc2 = NEW_OBJECT(canonical_form_classification::encoded_combinatorial_object);
 
 	Enc2->init_canonical_form(Enc, NO, verbose_level);
 
@@ -615,8 +615,8 @@ void object_with_properties::latex_report(
 			exit(1);
 		}
 
-		geometry::object_with_canonical_form *OwCF2 =
-				(geometry::object_with_canonical_form *)
+		canonical_form_classification::object_with_canonical_form *OwCF2 =
+				(canonical_form_classification::object_with_canonical_form *)
 				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {
@@ -657,7 +657,7 @@ void object_with_properties::compute_TDO(
 	if (f_v) {
 		cout << "object_with_properties::compute_TDO" << endl;
 	}
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	OwCF->encode_incma(Enc, verbose_level);
 
@@ -679,7 +679,7 @@ void object_with_properties::compute_TDO(
 
 void object_with_properties::print_TDO(
 		std::ostream &ost,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options)
 {
 

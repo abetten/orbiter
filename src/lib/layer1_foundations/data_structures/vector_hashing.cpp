@@ -68,7 +68,8 @@ vector_hashing::~vector_hashing()
 		}
 }
 
-void vector_hashing::allocate(int data_size, int N, int bit_length)
+void vector_hashing::allocate(
+		int data_size, int N, int bit_length)
 {
 	vector_hashing::data_size = data_size;
 	vector_hashing::N = N;
@@ -77,7 +78,8 @@ void vector_hashing::allocate(int data_size, int N, int bit_length)
 	H = NEW_int(N);
 }
 
-void vector_hashing::compute_tables(int verbose_level)
+void vector_hashing::compute_tables(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -188,7 +190,8 @@ void vector_hashing::print()
 		}
 }
 
-int vector_hashing::rank(int *data)
+int vector_hashing::rank(
+		int *data)
 {
 	int h, idx, f, l, i, I;
 	sorting Sorting;
@@ -231,7 +234,8 @@ int vector_hashing::rank(int *data)
 	
 }
 
-void vector_hashing::unrank(int rk, int *data)
+void vector_hashing::unrank(
+		int rk, int *data)
 {
 	int i;
 	

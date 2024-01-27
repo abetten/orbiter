@@ -43,7 +43,8 @@ girth_test::~girth_test()
 	}
 }
 
-void girth_test::init(gen_geo *gg, int girth, int verbose_level)
+void girth_test::init(
+		gen_geo *gg, int girth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -69,7 +70,8 @@ void girth_test::init(gen_geo *gg, int girth, int verbose_level)
 	}
 }
 
-void girth_test::Floyd(int row, int verbose_level)
+void girth_test::Floyd(
+		int row, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, k, a;
@@ -124,7 +126,8 @@ void girth_test::Floyd(int row, int verbose_level)
 
 }
 
-void girth_test::add_incidence(int i, int j_idx, int j)
+void girth_test::add_incidence(
+		int i, int j_idx, int j)
 {
 	int h, a;
 
@@ -136,7 +139,8 @@ void girth_test::add_incidence(int i, int j_idx, int j)
 	}
 }
 
-void girth_test::delete_incidence(int i, int j_idx, int j)
+void girth_test::delete_incidence(
+		int i, int j_idx, int j)
 {
 	int h, a;
 
@@ -189,13 +193,15 @@ int girth_test::check_girth_condition(
 	return true;
 }
 
-void girth_test::print_Si(int i)
+void girth_test::print_Si(
+		int i)
 {
 	cout << "S[" << i << "]:" << endl;
 	Int_matrix_print(S[i], V, V);
 }
 
-void girth_test::print_Di(int i)
+void girth_test::print_Di(
+		int i)
 {
 	cout << "D[" << i << "]:" << endl;
 	Int_matrix_print(D[i], V, V);

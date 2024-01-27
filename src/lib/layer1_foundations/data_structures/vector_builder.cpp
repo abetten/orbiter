@@ -325,7 +325,8 @@ void vector_builder::init(
 }
 
 
-void vector_builder::print(std::ostream &ost)
+void vector_builder::print(
+		std::ostream &ost)
 {
 
 	Lint_vec_print(ost, v, len);

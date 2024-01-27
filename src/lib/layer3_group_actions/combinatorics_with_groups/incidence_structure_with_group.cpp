@@ -119,7 +119,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	N = Inc->nb_rows + Inc->nb_cols;
 
 
-	combinatorics::encoded_combinatorial_object Enc;
+	canonical_form_classification::encoded_combinatorial_object Enc;
 
 	Enc.init_everything(Inc->nb_rows, Inc->nb_cols,
 			Inc->M, partition,

@@ -169,7 +169,7 @@ void design_activity::do_extract_solutions_by_index(
 
 	apps_algebra::any_group *AG;
 
-	AG = Get_object_of_type_any_group(group_label);
+	AG = Get_any_group(group_label);
 
 	if (f_v) {
 		cout << "design_activity::do_extract_solutions_by_index "
@@ -293,7 +293,7 @@ void design_activity::do_create_table(
 
 	apps_algebra::any_group *AG;
 
-	AG = Get_object_of_type_any_group(group_label);
+	AG = Get_any_group(group_label);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table "
@@ -335,7 +335,7 @@ void design_activity::do_load_table(
 
 	apps_algebra::any_group *AG;
 
-	AG = Get_object_of_type_any_group(group_label);
+	AG = Get_any_group(group_label);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table "
@@ -419,7 +419,7 @@ void design_activity::do_load_table(
 }
 
 void design_activity::do_canonical_form(
-		combinatorics::classification_of_objects_description
+		canonical_form_classification::classification_of_objects_description
 			*Canonical_form_Descr,
 		int verbose_level)
 {

@@ -812,9 +812,10 @@ void sims::init_generator_depth_and_perm(
 	gen_perm = NEW_int(gens.len);
 	for (i = 0; i < gens.len; i++) {
 		gen_perm[i] = i;
-		gen_depth[i] = generator_depth(i);
+		gen_depth[i] = generator_depth(i, verbose_level);
 		if (f_vv) {
-			cout << "generator " << i
+			cout << "sims::init_generator_depth_and_perm "
+					"generator " << i
 					<< " has depth " << gen_depth[i] << endl;
 		}
 		if (i) {
@@ -939,7 +940,7 @@ void sims::add_generator(
 		cout << "sims::add_generator "
 				"before generator_depth(idx)" << endl;
 	}
-	depth = generator_depth(idx);
+	depth = generator_depth(idx, verbose_level);
 	if (f_v) {
 		cout << "sims::add_generator "
 				"depth = " << depth << endl;
@@ -968,34 +969,63 @@ void sims::add_generator(
 
 
 int sims::generator_depth(
-		int gen_idx)
+		int gen_idx, int verbose_level)
 // returns the index of the first base point 
 // which is moved by a given generator. 
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::generator_depth" << endl;
+		cout << "sims::generator_depth A = " << A->label << endl;
+	}
 	int i, bi, j;
 	
 	for (i = 0; i < A->base_len(); i++) {
 		bi = A->base_i(i);
 		j = get_image(bi, gen_idx);
+		if (f_v) {
+			cout << "sims::generator_depth i = " << i << " : bi = " << bi << " : j = " << j << endl;
+		}
 		if (j != bi) {
+			if (f_v) {
+				cout << "sims::generator_depth depth is equal to " << i << endl;
+			}
 			return i;
 		}
+	}
+	if (f_v) {
+		cout << "sims::generator_depth depth is equal to " << A->base_len() << endl;
 	}
 	return A->base_len();
 }
 
-int sims::generator_depth(int *elt)
+int sims::generator_depth(int *elt, int verbose_level)
 // returns the index of the first base point 
 // which is moved by the given element
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::generator_depth" << endl;
+	}
 	int i, bi, j;
 	
 	for (i = 0; i < A->base_len(); i++) {
 		bi = A->base_i(i);
 		j = get_image(bi, elt);
+		if (f_v) {
+			cout << "sims::generator_depth i = " << i << " : bi = " << bi << " : j = " << j << endl;
+		}
 		if (j != bi) {
+			if (f_v) {
+				cout << "sims::generator_depth depth is equal to " << i << endl;
+			}
 			return i;
 		}
+	}
+	if (f_v) {
+		cout << "sims::generator_depth depth is equal to " << A->base_len() << endl;
 	}
 	return A->base_len();
 }

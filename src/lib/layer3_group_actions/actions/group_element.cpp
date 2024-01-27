@@ -1889,6 +1889,13 @@ void group_element::make_element(
 		A->G.direct_product_group->make_element(
 				Elt, data, verbose_level);
 	}
+	else if (A->type_G == polarity_extension_t) {
+		if (f_v) {
+			cout << "group_element::make_element polarity_extension_t" << endl;
+		}
+		A->G.Polarity_extension->make_element(
+				Elt, data, verbose_level);
+	}
 	else if (A->f_has_subaction) {
 		if (f_v) {
 			cout << "group_element::make_element subaction" << endl;

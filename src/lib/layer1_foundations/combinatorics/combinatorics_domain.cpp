@@ -819,6 +819,48 @@ int combinatorics_domain::next_k_subset_at_level(
 	return false;
 }
 
+void combinatorics_domain::rank_k_subsets(
+		int *Mtx, int nb_rows, int n, int k, int *&Ranks,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::rank_k_subsets" << endl;
+	}
+
+	int i, r;
+
+	Ranks = NEW_int(nb_rows);
+	i = 0;
+	for (i = 0; i < nb_rows; i++) {
+
+
+		r = rank_k_subset(Mtx + i * k, n, k);
+
+		cout << "The rank of ";
+		Int_vec_print(cout, Mtx + i * k, k);
+		cout << " is " << r << endl;
+		Ranks[i] = r;
+	}
+
+	cout << "the ranks of all subsets are: ";
+	Int_vec_print(cout, Ranks, nb_rows);
+	cout << endl;
+
+	data_structures::sorting Sorting;
+
+	Sorting.int_vec_heapsort(Ranks, nb_rows);
+
+	cout << "the sorted ranks of all subsets are: ";
+	Int_vec_print(cout, Ranks, nb_rows);
+	cout << endl;
+
+	if (f_v) {
+		cout << "combinatorics_domain::rank_k_subsets done" << endl;
+	}
+}
+
 void combinatorics_domain::subset_permute_up_front(
 		int n, int k,
 		int *set, int *k_subset_idx, int *permuted_set)
@@ -3101,26 +3143,6 @@ void combinatorics_domain::Dedekind_numbers(
 
 
 
-#if 0
-			ost << "ROW";
-			for (q = q_min; q <= q_max; q++) {
-				ost << "," << q;
-			}
-			ost << endl;
-			for (n = n_min; n <= n_max; n++) {
-				ost << n;
-				for (q = q_min; q <= q_max; q++) {
-					ring_theory::longinteger_object Dnk;
-
-					cout << "computing n=" << n << " q=" << q << endl;
-					D.Dedekind_number(Dnq, n, q, verbose_level);
-					ost << "," << Dnq;
-				}
-				ost << endl;
-			}
-			ost << "END" << endl;
-#endif
-
 			orbiter_kernel_system::file_io Fio;
 
 			Fio.Csv_file_support->write_table_of_strings_with_headings(
@@ -4116,6 +4138,58 @@ void combinatorics_domain::create_wreath_product_design(
 	}
 }
 
+void combinatorics_domain::create_linear_space_from_latin_square(
+		int *Mtx, int s,
+		int &v, int &k,
+		long int *&Blocks, long int &nb_blocks,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_linear_space_from_latin_square" << endl;
+	}
+
+	int i, j, a, rk, cnt;
+	int block[3];
+
+	v = 3 * s;
+	k = 3;
+
+	nb_blocks = s * s;
+
+	Blocks = NEW_lint(nb_blocks);
+
+	cnt = 0;
+	for (i = 0; i < s; i++) {
+		for (j = 0; j < s; j++) {
+			a = Mtx[i * s + j];
+			block[0] = i;
+			block[1] = s + j;
+			block[2] = 2 * s + a;
+			rk = rank_k_subset(block, v, k);
+			block[0] = i;
+			block[1] = s + j;
+			block[2] = 2 * s + a;
+			if (f_v) {
+				cout << "block " << cnt << " : ";
+				Int_vec_print(cout, block, k);
+				cout << " rk=" << rk;
+				cout << endl;
+			}
+
+			Blocks[cnt++] = rk;
+		}
+	}
+	if (cnt != nb_blocks) {
+		cout << "combinatorics_domain::create_linear_space_from_latin_square cnt != nb_blocks" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_linear_space_from_latin_square done" << endl;
+	}
+}
 
 
 }}}

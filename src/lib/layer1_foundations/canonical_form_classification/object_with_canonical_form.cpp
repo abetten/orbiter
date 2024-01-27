@@ -17,7 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace geometry {
+namespace canonical_form_classification {
 
 
 object_with_canonical_form::object_with_canonical_form()
@@ -126,7 +126,7 @@ void object_with_canonical_form::print_rows(
 
 	if (f_show_incma) {
 
-		combinatorics::encoded_combinatorial_object *Enc;
+		encoded_combinatorial_object *Enc;
 
 		encode_incma(Enc, verbose_level);
 
@@ -171,7 +171,7 @@ void object_with_canonical_form::print_tex_detailed(
 			cout << "object_with_canonical_form::print_tex_detailed f_show_incma" << endl;
 		}
 
-		combinatorics::encoded_combinatorial_object *Enc;
+		encoded_combinatorial_object *Enc;
 
 		if (f_v) {
 			cout << "object_with_canonical_form::print_tex_detailed "
@@ -1207,7 +1207,7 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 		cout << "object_with_canonical_form::canonical_form_given_canonical_labeling" << endl;
 	}
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	encoded_combinatorial_object *Enc;
 
 	encode_incma(Enc, verbose_level - 1);
 	if (f_v) {
@@ -1229,7 +1229,7 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 }
 
 void object_with_canonical_form::encode_incma(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1296,7 +1296,7 @@ void object_with_canonical_form::encode_incma(
 }
 
 void object_with_canonical_form::encode_point_set(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1345,7 +1345,7 @@ void object_with_canonical_form::encode_point_set(
 	nb_rows = nb_rows0 + 1;
 	nb_cols = nb_cols0 + C->second_nb_types;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 
@@ -1427,7 +1427,7 @@ void object_with_canonical_form::encode_point_set(
 }
 
 void object_with_canonical_form::encode_line_set(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1451,7 +1451,7 @@ void object_with_canonical_form::encode_line_set(
 	
 	//N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1486,7 +1486,7 @@ void object_with_canonical_form::encode_line_set(
 }
 
 void object_with_canonical_form::encode_points_and_lines(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1510,7 +1510,7 @@ void object_with_canonical_form::encode_points_and_lines(
 
 	//N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1553,7 +1553,7 @@ void object_with_canonical_form::encode_points_and_lines(
 
 
 void object_with_canonical_form::encode_packing(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1574,7 +1574,7 @@ void object_with_canonical_form::encode_packing(
 	nb_rows = nb_rows0 + SoS->nb_sets;
 	nb_cols = nb_cols0 + 1;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1609,7 +1609,7 @@ void object_with_canonical_form::encode_packing(
 }
 
 void object_with_canonical_form::encode_large_set(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1635,7 +1635,7 @@ void object_with_canonical_form::encode_large_set(
 	//N = nb_rows + nb_cols;
 	//L = nb_rows * nb_cols;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 
@@ -1685,7 +1685,7 @@ void object_with_canonical_form::encode_large_set(
 }
 
 void object_with_canonical_form::encode_incidence_geometry(
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1705,7 +1705,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 
 	N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	for (i = 0; i < sz; i++) {
@@ -1742,8 +1742,8 @@ void object_with_canonical_form::encode_incidence_geometry(
 }
 
 void object_with_canonical_form::encode_incma_and_make_decomposition(
-		combinatorics::encoded_combinatorial_object *&Enc,
-		incidence_structure *&Inc,
+		encoded_combinatorial_object *&Enc,
+		geometry::incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
@@ -1787,7 +1787,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		exit(1);
 	}
 
-	Inc = NEW_OBJECT(incidence_structure);
+	Inc = NEW_OBJECT(geometry::incidence_structure);
 	Inc->init_by_matrix(Enc->nb_rows, Enc->nb_cols,
 			Enc->get_Incma(), verbose_level - 2);
 
@@ -2176,7 +2176,7 @@ void object_with_canonical_form::run_nauty(
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
-		combinatorics::encoded_combinatorial_object *&Enc,
+		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2310,7 +2310,7 @@ void object_with_canonical_form::canonical_labeling(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	encoded_combinatorial_object *Enc;
 	l1_interfaces::nauty_interface Nau;
 
 
@@ -2412,7 +2412,7 @@ void object_with_canonical_form::run_nauty_basic(
 
 	data_structures::bitvector *Canonical_form;
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	encoded_combinatorial_object *Enc;
 
 
 	if (f_v) {

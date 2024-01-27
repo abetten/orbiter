@@ -102,7 +102,7 @@ void create_graph::init(
 
 		apps_algebra::any_group *G;
 
-		G = Get_object_of_type_any_group(description->Cayley_graph_group);
+		G = Get_any_group(description->Cayley_graph_group);
 
 
 		groups::strong_generators *SG;
@@ -669,7 +669,7 @@ void create_graph::init(
 
 		apps_algebra::any_group *AG;
 
-		AG = Get_object_of_type_any_group(description->orbital_graph_group);
+		AG = Get_any_group(description->orbital_graph_group);
 
 
 		if (f_v) {

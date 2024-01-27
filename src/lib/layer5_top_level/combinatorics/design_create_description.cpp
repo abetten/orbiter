@@ -53,6 +53,9 @@ design_create_description::design_create_description()
 	wreath_product_designs_n = 0;
 	wreath_product_designs_k = 0;
 
+	f_linear_space_from_latin_square = false;
+	//std::string linear_space_from_latin_square_name;
+
 	f_no_group = false;
 }
 
@@ -162,12 +165,22 @@ int design_create_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-linear_space_from_latin_square") == 0) {
+			f_linear_space_from_latin_square = true;
+			linear_space_from_latin_square_name.assign(argv[++i]);
+			if (f_v) {
+				cout << "-linear_space_from_latin_square "
+						<< " " << linear_space_from_latin_square_name
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-no_group") == 0) {
 			f_no_group = true;
 			if (f_v) {
 				cout << "-no_group " << endl;
 			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -225,6 +238,11 @@ void design_create_description::print()
 		cout << "-wreath_product_designs "
 				<< " " << wreath_product_designs_n
 				<< " " << wreath_product_designs_k
+				<< endl;
+	}
+	if (f_linear_space_from_latin_square) {
+		cout << "-linear_space_from_latin_square "
+				<< " " << linear_space_from_latin_square_name
 				<< endl;
 	}
 	if (f_no_group) {

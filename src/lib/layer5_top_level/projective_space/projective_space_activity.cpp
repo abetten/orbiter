@@ -1372,7 +1372,6 @@ void projective_space_activity::perform_activity(
 					"after G.do_classify_cubic_curves" << endl;
 		}
 	}
-#endif
 
 	else if (Descr->f_classify_semifields) {
 
@@ -1411,7 +1410,7 @@ void projective_space_activity::perform_activity(
 					"after G.classify_bent_functions" << endl;
 		}
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;

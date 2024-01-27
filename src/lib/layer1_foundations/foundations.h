@@ -297,6 +297,24 @@ namespace algebraic_geometry {
 
 }
 
+
+//! classification of combinatorial objects using canonical forms and Nauty
+
+namespace canonical_form_classification {
+
+	class classification_of_objects_description;
+	class classification_of_objects_report_options;
+	class classification_of_objects;
+	class classify_bitvectors;
+	class classify_using_canonical_forms;
+	class data_input_stream_description_element;
+	class data_input_stream_description;
+	class data_input_stream;
+	class encoded_combinatorial_object;
+	class object_with_canonical_form;
+
+}
+
 //! coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
 
 namespace coding_theory {
@@ -324,15 +342,11 @@ namespace combinatorics {
 	class apn_functions;
 	class boolean_function_domain;
 	class brick_domain;
-	class classification_of_objects_description;
-	class classification_of_objects_report_options;
-	class classification_of_objects;
 	class combinatorics_domain;
 	class decomposition_scheme;
 	class decomposition;
 	class domino_assignment;
 	class domino_change;
-	class encoded_combinatorial_object;
 	class geo_parameter;
 	class pentomino_puzzle;
 	class polynomial_function_domain;
@@ -364,11 +378,7 @@ namespace data_structures {
 	class algorithms;
 	class bitmatrix;
 	class bitvector;
-	class classify_bitvectors;
-	class classify_using_canonical_forms;
 	class data_file;
-	class data_input_stream_description;
-	class data_input_stream;
 	class data_structures_global;
 	class fancy_set;
 	class int_matrix;
@@ -457,7 +467,6 @@ namespace geometry {
 	class intersection_type;
 	class klein_correspondence;
 	class knarr;
-	class object_with_canonical_form;
 	class point_line;
 	class points_and_lines;
 	class polarity;
@@ -996,6 +1005,7 @@ enum CRC_type {
 
 #include "algebra/algebra.h"
 #include "algebraic_geometry/algebraic_geometry.h"
+#include "canonical_form_classification/canonical_form_classification.h"
 #include "coding_theory/coding_theory.h"
 #include "combinatorics/combinatorics.h"
 #include "cryptography/cryptography.h"

@@ -163,7 +163,7 @@ int combinatorial_object_activity_description::read_arguments(
 
 			canonical_form_PG_PG_label.assign(argv[++i]);
 
-			Canonical_form_PG_Descr = NEW_OBJECT(combinatorics::classification_of_objects_description);
+			Canonical_form_PG_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -183,7 +183,7 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
 
-			Canonical_form_Descr = NEW_OBJECT(combinatorics::classification_of_objects_description);
+			Canonical_form_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -198,7 +198,7 @@ int combinatorial_object_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 
-			Classification_of_objects_report_options = NEW_OBJECT(combinatorics::classification_of_objects_report_options);
+			Classification_of_objects_report_options = NEW_OBJECT(canonical_form_classification::classification_of_objects_report_options);
 			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
 		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {

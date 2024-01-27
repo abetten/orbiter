@@ -44,6 +44,16 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/surface_polynomial_domains.o \
 		layer1_foundations/algebraic_geometry/variety_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
+		layer1_foundations/canonical_form_classification/classification_of_objects_description.o \
+		layer1_foundations/canonical_form_classification/classification_of_objects_report_options.o \
+		layer1_foundations/canonical_form_classification/classification_of_objects.o \
+		layer1_foundations/canonical_form_classification/classify_bitvectors.o \
+		layer1_foundations/canonical_form_classification/classify_using_canonical_forms.o \
+		layer1_foundations/canonical_form_classification/data_input_stream_description_element.o \
+		layer1_foundations/canonical_form_classification/data_input_stream_description.o \
+		layer1_foundations/canonical_form_classification/data_input_stream.o \
+		layer1_foundations/canonical_form_classification/encoded_combinatorial_object.o \
+		layer1_foundations/canonical_form_classification/object_with_canonical_form.o \
 		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
@@ -62,15 +72,11 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/apn_functions.o \
 		layer1_foundations/combinatorics/boolean_function_domain.o \
 		layer1_foundations/combinatorics/brick_domain.o \
-		layer1_foundations/combinatorics/classification_of_objects_description.o \
-		layer1_foundations/combinatorics/classification_of_objects_report_options.o \
-		layer1_foundations/combinatorics/classification_of_objects.o \
 		layer1_foundations/combinatorics/combinatorics_domain.o \
 		layer1_foundations/combinatorics/decomposition_scheme.o \
 		layer1_foundations/combinatorics/decomposition.o \
 		layer1_foundations/combinatorics/domino_assignment.o \
 		layer1_foundations/combinatorics/domino_change.o \
-		layer1_foundations/combinatorics/encoded_combinatorial_object.o \
 		layer1_foundations/combinatorics/geo_parameter.o \
 		layer1_foundations/combinatorics/pentomino_puzzle.o \
 		layer1_foundations/combinatorics/polynomial_function_domain.o \
@@ -84,12 +90,7 @@ ORBITER_MODULES= \
 		layer1_foundations/data_structures/algorithms.o \
 		layer1_foundations/data_structures/bitmatrix.o \
 		layer1_foundations/data_structures/bitvector.o \
-		layer1_foundations/data_structures/classify_bitvectors.o \
-		layer1_foundations/data_structures/classify_using_canonical_forms.o \
 		layer1_foundations/data_structures/data_file.o \
-		layer1_foundations/data_structures/data_input_stream_description_element.o \
-		layer1_foundations/data_structures/data_input_stream_description.o \
-		layer1_foundations/data_structures/data_input_stream.o \
 		layer1_foundations/data_structures/data_structures_global.o \
 		layer1_foundations/data_structures/fancy_set.o \
 		layer1_foundations/data_structures/int_matrix.o \
@@ -167,7 +168,6 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry/intersection_type.o \
 		layer1_foundations/geometry/klein_correspondence.o \
 		layer1_foundations/geometry/knarr.o \
-		layer1_foundations/geometry/object_with_canonical_form.o \
 		layer1_foundations/geometry/point_line.o \
 		layer1_foundations/geometry/points_and_lines.o \
 		layer1_foundations/geometry/polarity.o \
@@ -354,6 +354,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/interface_matrix_group.o \
 		layer3_group_actions/actions/interface_perm_group.o \
 		layer3_group_actions/actions/interface_permutation_representation.o \
+		layer3_group_actions/actions/interface_polarity_extension.o \
 		layer3_group_actions/actions/interface_wreath_product.o \
 		layer3_group_actions/actions/known_groups.o \
 		layer3_group_actions/actions/induced_action.o \
@@ -381,6 +382,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/group_constructions/permutation_group_description.o \
 		layer3_group_actions/group_constructions/permutation_representation_domain.o \
 		layer3_group_actions/group_constructions/permutation_representation.o \
+		layer3_group_actions/group_constructions/polarity_extension.o \
 		layer3_group_actions/group_constructions/wreath_product.o \
 		layer3_group_actions/groups/conjugacy_class_of_elements.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \

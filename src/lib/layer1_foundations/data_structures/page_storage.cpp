@@ -188,7 +188,8 @@ void page_storage::print()
 	print_storage_used();
 }
 
-uchar *page_storage::s_i_and_allocate(long int i)
+uchar *page_storage::s_i_and_allocate(
+		long int i)
 {
 	uchar *p, *q;
 	int j;
@@ -276,7 +277,8 @@ uchar *page_storage::s_i_and_allocate(long int i)
 	return p;
 }
 
-uchar *page_storage::s_i_and_deallocate(long int i)
+uchar *page_storage::s_i_and_deallocate(
+		long int i)
 {
 	uchar *p;
 	
@@ -314,7 +316,8 @@ uchar *page_storage::s_i_and_deallocate(long int i)
 	return p;
 }
 
-uchar *page_storage::s_i(long int i)
+uchar *page_storage::s_i(
+		long int i)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -348,7 +351,8 @@ uchar *page_storage::s_i(long int i)
 	return pages[page] + page_idx * entry_size;
 }
 
-uchar *page_storage::s_i_and_allocation_bit(long int i, int &f_allocated)
+uchar *page_storage::s_i_and_allocation_bit(
+		long int i, int &f_allocated)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -419,7 +423,8 @@ void page_storage::check_allocation_table()
 		}
 }
 
-long int page_storage::store(uchar *elt)
+long int page_storage::store(
+		uchar *elt)
 {
 	long int i, hdl;
 	uchar *p, *q;
@@ -523,7 +528,8 @@ long int page_storage::store(uchar *elt)
 	return hdl;
 }
 
-void page_storage::dispose(long int hdl)
+void page_storage::dispose(
+		long int hdl)
 {
 #if 1
 	uchar *p = s_i_and_deallocate(hdl);

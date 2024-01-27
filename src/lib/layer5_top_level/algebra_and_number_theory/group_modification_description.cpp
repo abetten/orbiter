@@ -48,6 +48,12 @@ group_modification_description::group_modification_description()
 	//std::string direct_product_subgroup_order;
 	//std::string direct_product_subgroup_gens;
 
+	f_polarity_extension = false;
+	//std::string polarity_extension_input;
+	//std::string polarity_extension_PA;
+
+
+
 	//std::vector<std::string> from;
 
 }
@@ -143,6 +149,17 @@ int group_modification_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-polarity_extension") == 0) {
+			f_polarity_extension = true;
+			polarity_extension_input.assign(argv[++i]);
+			polarity_extension_PA.assign(argv[++i]);
+			if (f_v) {
+				cout << "-polarity_extension "
+						<< polarity_extension_input
+						<< " " << polarity_extension_PA
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
@@ -208,6 +225,13 @@ void group_modification_description::print()
 				<< " " << direct_product_subgroup_gens
 				<< endl;
 	}
+	if (f_polarity_extension) {
+		cout << "-polarity_extension "
+				<< polarity_extension_input
+				<< " " << polarity_extension_PA
+				<< endl;
+	}
+
 
 	if (from.size()) {
 		int i;

@@ -448,19 +448,19 @@ void orbiter_top_level_session::add_symbol_table_entry(
 }
 
 apps_algebra::any_group
-	*orbiter_top_level_session::get_object_of_type_any_group(
+	*orbiter_top_level_session::get_any_group(
 			std::string &label)
 {
 	int idx;
 
 	idx = Orbiter_session->find_symbol(label);
 	if (idx == -1) {
-		cout << "orbiter_top_level_session::get_object_of_type_any_group "
+		cout << "orbiter_top_level_session::get_any_group "
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
 	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
-		cout << "orbiter_top_level_session::get_object_of_type_any_group "
+		cout << "orbiter_top_level_session::get_any_group "
 				"object type != t_any_group" << endl;
 		exit(1);
 	}

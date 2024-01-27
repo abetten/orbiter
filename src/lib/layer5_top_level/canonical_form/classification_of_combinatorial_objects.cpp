@@ -39,7 +39,7 @@ classification_of_combinatorial_objects::~classification_of_combinatorial_object
 
 void classification_of_combinatorial_objects::init_after_nauty(
 		std::string &prefix,
-		combinatorics::classification_of_objects *CO,
+		canonical_form_classification::classification_of_objects *CO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
@@ -110,9 +110,9 @@ void classification_of_combinatorial_objects::classification_write_file(
 	l1_interfaces::latex_interface L;
 	int iso;
 
-	combinatorics::encoded_combinatorial_object **Enc;
+	canonical_form_classification::encoded_combinatorial_object **Enc;
 
-	Enc = (combinatorics::encoded_combinatorial_object **) NEW_pvoid(CO->CB->nb_types);
+	Enc = (canonical_form_classification::encoded_combinatorial_object **) NEW_pvoid(CO->CB->nb_types);
 
 	for (iso = 0; iso < CO->CB->nb_types; iso++) {
 
@@ -153,7 +153,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 		}
 
 		//object_idx = Input_objects[0];
-		geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[iso];
+		canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[iso];
 
 
 		if (f_v) {
@@ -225,7 +225,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 }
 
 void classification_of_combinatorial_objects::classification_report(
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 					*Report_options,
 		int verbose_level)
 {
@@ -281,7 +281,7 @@ void classification_of_combinatorial_objects::classification_report(
 }
 
 void classification_of_combinatorial_objects::latex_report(
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -348,7 +348,7 @@ void classification_of_combinatorial_objects::latex_report(
 
 void classification_of_combinatorial_objects::report_all_isomorphism_types(
 		std::ostream &ost,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -422,7 +422,7 @@ void classification_of_combinatorial_objects::report_all_isomorphism_types(
 
 void classification_of_combinatorial_objects::report_isomorphism_type(
 		std::ostream &ost,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int i, int verbose_level)
 {
@@ -495,7 +495,7 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 
 void classification_of_combinatorial_objects::report_object(
 		std::ostream &ost,
-		combinatorics::classification_of_objects_report_options
+		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
 		int object_idx,
 		int verbose_level)
@@ -508,7 +508,7 @@ void classification_of_combinatorial_objects::report_object(
 	}
 
 
-	geometry::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
+	canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_object "

@@ -55,7 +55,7 @@ void vector_ge_builder::init(
 	apps_algebra::any_group *AG;
 
 
-	AG = Get_object_of_type_any_group(Descr->action_label);
+	AG = Get_any_group(Descr->action_label);
 
 
 	actions::action *A;

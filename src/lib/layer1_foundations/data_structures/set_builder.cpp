@@ -34,7 +34,8 @@ set_builder::~set_builder()
 	}
 }
 
-void set_builder::init(set_builder_description *Descr,
+void set_builder::init(
+		set_builder_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -199,7 +200,8 @@ void set_builder::init(set_builder_description *Descr,
 }
 
 
-long int set_builder::process_transformations(long int x)
+long int set_builder::process_transformations(
+		long int x)
 {
 	long int y;
 
@@ -212,7 +214,8 @@ long int set_builder::process_transformations(long int x)
 	return y;
 }
 
-long int set_builder::clone_with_affine_function(long int x)
+long int set_builder::clone_with_affine_function(
+		long int x)
 {
 	long int y;
 

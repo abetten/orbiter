@@ -52,20 +52,33 @@ public:
 			unsigned char *in1, unsigned char *in2, int len);
 	int uchar_is_zero(
 			unsigned char *in, int len);
-	void int_swap(int& x, int& y);
-	void lint_swap(long int & x, long int & y);
-	void print_pointer_hex(std::ostream &ost, void *p);
-	void print_uint32_hex(std::ostream &ost, uint32_t val);
-	void print_hex(std::ostream &ost, unsigned char *p, int len);
-	void print_binary(std::ostream &ost, unsigned char *p, int len);
-	void print_uint32_binary(std::ostream &ost, uint32_t val);
-	void print_hex_digit(std::ostream &ost, int digit);
-	void print_bits(std::ostream &ost, char *data, int data_size);
-	void read_hex_data(std::string &str,
+	void int_swap(
+			int& x, int& y);
+	void lint_swap(
+			long int & x, long int & y);
+	void print_pointer_hex(
+			std::ostream &ost, void *p);
+	void print_uint32_hex(
+			std::ostream &ost, uint32_t val);
+	void print_hex(
+			std::ostream &ost, unsigned char *p, int len);
+	void print_binary(
+			std::ostream &ost, unsigned char *p, int len);
+	void print_uint32_binary(
+			std::ostream &ost, uint32_t val);
+	void print_hex_digit(
+			std::ostream &ost, int digit);
+	void print_bits(
+			std::ostream &ost, char *data, int data_size);
+	void read_hex_data(
+			std::string &str,
 			char *&data, int &data_size, int verbose_level);
-	unsigned char read_hex_digit(char digit);
-	void print_repeated_character(std::ostream &ost, char c, int n);
-	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
+	unsigned char read_hex_digit(
+			char digit);
+	void print_repeated_character(
+			std::ostream &ost, char c, int n);
+	uint32_t root_of_tree_uint32_t(
+			uint32_t* S, uint32_t i);
 	void solve_diophant(
 			int *Inc,
 		int nb_rows, int nb_cols, int nb_needed,
@@ -75,8 +88,10 @@ public:
 		int f_DLX,
 		int verbose_level);
 	// allocates Solutions[nb_sol * nb_needed]
-	uint32_t SuperFastHash(const char * data, int len);
-	uint32_t SuperFastHash_uint(const unsigned int * p, int sz);
+	uint32_t SuperFastHash(
+			const char * data, int len);
+	uint32_t SuperFastHash_uint(
+			const unsigned int * p, int sz);
 	void union_of_sets(
 			std::string &fname_set_of_sets,
 			std::string &fname_input,
@@ -89,8 +104,10 @@ public:
 			std::string &label1, std::string &label2, int verbose_level);
 	void matrix_rowspan_over_R(
 			std::string &label, int verbose_level);
-	int binary_logarithm(int m);
-	char make_single_hex_digit(int c);
+	int binary_logarithm(
+			int m);
+	char make_single_hex_digit(
+			int c);
 
 };
 
@@ -109,7 +126,8 @@ public:
 
 	bitmatrix();
 	~bitmatrix();
-	void init(int m, int n, int verbose_level);
+	void init(
+			int m, int n, int verbose_level);
 	void unrank_PG_elements_in_columns_consecutively(
 			field_theory::finite_field *F,
 			long int start_value, int verbose_level);
@@ -119,8 +137,10 @@ public:
 			int verbose_level);
 	void print();
 	void zero_out();
-	int s_ij(int i, int j);
-	void m_ij(int i, int j, int a);
+	int s_ij(
+			int i, int j);
+	void m_ij(
+			int i, int j, int a);
 	void mult_int_matrix_from_the_left(
 			int *A, int Am, int An,
 			bitmatrix *Out, int verbose_level);
@@ -145,158 +165,27 @@ public:
 
 	bitvector();
 	~bitvector();
-	void allocate(long int length);
+	void allocate(
+			long int length);
 	void zero();
 	long int get_length();
 	long int get_allocated_length();
 	unsigned char *get_data();
-	void m_i(long int i, int a);
-	void set_bit(long int i);
-	int s_i(long int i);
-	void save(std::ofstream &fp);
-	void load(std::ifstream &fp);
+	void m_i(
+			long int i, int a);
+	void set_bit(
+			long int i);
+	int s_i(
+			long int i);
+	void save(
+			std::ofstream &fp);
+	void load(
+			std::ifstream &fp);
 	uint32_t compute_hash();
 	void print();
 
 };
 
-// #############################################################################
-// classify_bitvectors.cpp
-// #############################################################################
-
-//! classification of 0/1 matrices using canonical forms
-
-class classify_bitvectors {
-public:
-
-	int nb_types;
-		// the number of isomorphism types
-
-	int rep_len;
-		// the number of char we need to store the canonical form of
-		// one object
-
-
-	uchar **Type_data;
-		// Type_data[nb_types][rep_len]
-		// the canonical form of the i-th representative is
-		// Type_data[i][rep_len]
-	int *Type_rep;
-		// Type_rep[nb_types]
-		// Type_rep[i] is the index of the candidate which
-		// has been chosen as representative
-		// for the i-th isomorphism type
-	int *Type_mult;
-		// Type_mult[nb_types]
-		// Type_mult[i] gives the number of candidates which
-		// are isomorphic to the i-th isomorphism class representative
-	void **Type_extra_data;
-		// Type_extra_data[nb_types]
-		// Type_extra_data[i] is a pointer that is stored with the
-		// i-th isomorphism class representative
-
-	int N;
-		// number of candidates (or objects) that we will test
-	int n;
-		// number of candidates that we have already tested
-
-	int *type_of;
-		// type_of[nb_types]
-		// type_of[i] is the isomorphism type of the i-th candidate
-
-	tally *C_type_of;
-		// the classification of type_of[nb_types]
-		// this will be computed in finalize()
-
-	int *perm;
-		// the permutation which lists the orbit
-		// representative in the order
-		// in which they appear in the list of candidates
-
-	classify_bitvectors();
-	~classify_bitvectors();
-	void init(
-			int N, int rep_len, int verbose_level);
-	int search(
-			uchar *data, int &idx, int verbose_level);
-	void search_and_add_if_new(
-			uchar *data,
-			void *extra_data, int &f_found, int &idx,
-			int verbose_level);
-	// if f_found is true: idx is where the canonical form was found.
-	// if f_found is false: idx is where the new canonical form was added.
-	int compare_at(
-			uchar *data, int idx);
-	void add_at_idx(
-			uchar *data,
-			void *extra_data, int idx, int verbose_level);
-	void finalize(
-			int verbose_level);
-	void print_reps();
-	void print_table();
-	void save(
-			std::string &prefix,
-		void (*encode_function)(void *extra_data,
-			long int *&encoding, int &encoding_sz, void *global_data),
-		void (*get_group_order_or_NULL)(void *extra_data,
-				ring_theory::longinteger_object &go, void *global_data),
-		void *global_data,
-		int verbose_level);
-
-};
-
-
-
-
-// #############################################################################
-// classify_using_canonical_forms.cpp
-// #############################################################################
-
-//! classification of objects using canonical forms
-
-class classify_using_canonical_forms {
-public:
-
-
-	int nb_input_objects;
-
-
-	std::vector<bitvector *> B;
-	std::vector<void *> Objects;
-	std::vector<long int> Ago;
-	std::vector<int> input_index;
-
-	std::multimap<uint32_t, int> Hashing;
-		// we store the pair (hash, idx)
-		// where hash is the hash value of the set and idx is the
-		// index in the table Sets where the set is stored.
-		//
-		// we use a multimap because the hash values are not unique
-		// it happens that two sets have the same hash value.
-		// map cannot handle that.
-
-
-	//std::vector<void *> Input_objects;
-	//std::vector<int> orbit_rep_of_input_object;
-
-	classify_using_canonical_forms();
-	~classify_using_canonical_forms();
-	void orderly_test(
-			geometry::object_with_canonical_form *OwCF,
-			int &f_accept, int verbose_level);
-	void find_object(
-			geometry::object_with_canonical_form *OwCF,
-			int &f_found, int &idx,
-			l1_interfaces::nauty_output *&NO,
-			bitvector *&Canonical_form,
-			int verbose_level);
-		// if f_found is true, B[idx] agrees with the given object
-	void add_object(
-			geometry::object_with_canonical_form *OwCF,
-			int &f_new_object,
-			int verbose_level);
-
-};
 
 // #############################################################################
 // data_file.cpp
@@ -331,132 +220,6 @@ class data_file {
 			int verbose_level);
 };
 
-// #############################################################################
-// data_input_stream_description_element.cpp:
-// #############################################################################
-
-
-//! describes one element in an input stream of combinatorial objects
-
-
-class data_input_stream_description_element {
-public:
-	enum data_input_stream_type input_type;
-	std::string input_string;
-	std::string input_string2;
-
-	// for t_data_input_stream_file_of_designs:
-	int input_data1; // N_points
-	int input_data2; // b = number of blocks
-	int input_data3; // k = block size
-	int input_data4; // partition class size
-
-	data_input_stream_description_element();
-	~data_input_stream_description_element();
-	void print();
-	void init_set_of_points(
-			std::string &a);
-	void init_set_of_lines(
-			std::string &a);
-	void init_set_of_points_and_lines(
-			std::string &a, std::string &b);
-	void init_packing(
-			std::string &a, int q);
-	void init_file_of_points(
-			std::string &a);
-	void init_file_of_points_csv(
-			std::string &a, std::string &b);
-	void init_file_of_lines(
-			std::string &a);
-	void init_file_of_packings(
-			std::string &a);
-	void init_file_of_packings_through_spread_table(
-			std::string &a, std::string &b, int q);
-	void init_file_of_designs_through_block_orbits(
-			std::string &a, std::string &b, int v, int k);
-	void init_file_of_point_set(
-			std::string &a);
-	void init_file_of_designs(
-			std::string &a,
-				int N_points, int b, int k, int partition_class_size);
-	void init_file_of_incidence_geometries(
-			std::string &a,
-				int v, int b, int f);
-	void init_file_of_incidence_geometries_by_row_ranks(
-			std::string &a,
-				int v, int b, int r);
-	void init_incidence_geometry(
-			std::string &a,
-				int v, int b, int f);
-	void init_incidence_geometry_by_row_ranks(
-			std::string &a,
-				int v, int b, int r);
-	void init_from_parallel_search(
-			std::string &fname_mask,
-			int nb_cases, std::string &cases_fname);
-
-};
-
-
-// #############################################################################
-// data_input_stream_description.cpp:
-// #############################################################################
-
-
-//! description of input data for classification of geometric objects from the command line
-
-
-class data_input_stream_description {
-public:
-
-	int f_label;
-	std::string label_txt;
-	std::string label_tex;
-
-	int nb_inputs;
-
-	std::vector<data_input_stream_description_element> Input;
-
-	data_input_stream_description();
-	~data_input_stream_description();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
-	void print_item(
-			int i);
-
-
-};
-
-
-// #############################################################################
-// data_input_stream.cpp:
-// #############################################################################
-
-
-//! input data for classification of geometric objects from the command line
-
-
-class data_input_stream {
-public:
-
-	data_input_stream_description *Descr;
-
-	int nb_objects_to_test;
-
-	std::vector<void *> Objects;
-
-	data_input_stream();
-	~data_input_stream();
-	void init(
-			data_input_stream_description *Descr, int verbose_level);
-	int count_number_of_objects_to_test(
-		int verbose_level);
-	void read_objects(int verbose_level);
-
-
-};
 
 
 // #############################################################################
@@ -517,22 +280,37 @@ class fancy_set {
 			int n, int k, int *subset, int verbose_level);
 	void print();
 	void println();
-	void swap(int pos, int a);
-	int is_contained(int a);
-	void copy_to(fancy_set *to);
-	void add_element(int elt);
-	void add_elements(int *elts, int nb);
-	void delete_elements(int *elts, int nb);
-	void delete_element(int elt);
-	void select_subset(int *elts, int nb);
-	void intersect_with(int *elts, int nb);
-	void subtract_set(fancy_set *set_to_subtract);
+	void swap(
+			int pos, int a);
+	int is_contained(
+			int a);
+	void copy_to(
+			fancy_set *to);
+	void add_element(
+			int elt);
+	void add_elements(
+			int *elts, int nb);
+	void delete_elements(
+			int *elts, int nb);
+	void delete_element(
+			int elt);
+	void select_subset(
+			int *elts, int nb);
+	void intersect_with(
+			int *elts, int nb);
+	void subtract_set(
+			fancy_set *set_to_subtract);
 	void sort();
-	int compare_lexicographically(fancy_set *second_set);
-	void complement(fancy_set *compl_set);
-	int is_subset(fancy_set *set2);
-	int is_equal(fancy_set *set2);
-	void save(std::string &fname, int verbose_level);
+	int compare_lexicographically(
+			fancy_set *second_set);
+	void complement(
+			fancy_set *compl_set);
+	int is_subset(
+			fancy_set *set2);
+	int is_equal(
+			fancy_set *set2);
+	void save(
+			std::string &fname, int verbose_level);
 
 };
 
@@ -556,19 +334,25 @@ public:
 
 	int_matrix();
 	~int_matrix();
-	void null();
-	void freeself();
-	void allocate(int m, int n);
-	void allocate_and_init(int m, int n, int *Mtx);
-	int &s_ij(int i, int j);
+	void allocate(
+			int m, int n);
+	void allocate_and_init(
+			int m, int n, int *Mtx);
+	int &s_ij(
+			int i, int j);
 	int &s_m();
 	int &s_n();
 	void print();
-	void sort_rows(int verbose_level);
-	void remove_duplicates(int verbose_level);
-	void check_that_entries_are_distinct(int verbose_level);
-	int search(int *entry, int &idx, int verbose_level);
-	void write_csv(std::string &fname, int verbose_level);
+	void sort_rows(
+			int verbose_level);
+	void remove_duplicates(
+			int verbose_level);
+	void check_that_entries_are_distinct(
+			int verbose_level);
+	int search(
+			int *entry, int &idx, int verbose_level);
+	void write_csv(
+			std::string &fname, int verbose_level);
 
 };
 
@@ -826,13 +610,19 @@ public:
 		void (* elt_print)(void *p, void *data, std::ostream &ost),
 		void *elt_print_data);
 	void print();
-	uchar *s_i_and_allocate(long int i);
-	uchar *s_i_and_deallocate(long int i);
-	uchar *s_i(long int i);
-	uchar *s_i_and_allocation_bit(long int i, int &f_allocated);
+	uchar *s_i_and_allocate(
+			long int i);
+	uchar *s_i_and_deallocate(
+			long int i);
+	uchar *s_i(
+			long int i);
+	uchar *s_i_and_allocation_bit(
+			long int i, int &f_allocated);
 	void check_allocation_table();
-	long int store(uchar *elt);
-	void dispose(long int hdl);
+	long int store(
+			uchar *elt);
+	void dispose(
+			long int hdl);
 	void check_free_list();
 	page_storage();
 	~page_storage();
@@ -1100,9 +890,12 @@ public:
 
 	set_builder();
 	~set_builder();
-	void init(set_builder_description *Descr, int verbose_level);
-	long int process_transformations(long int x);
-	long int clone_with_affine_function(long int x);
+	void init(
+			set_builder_description *Descr, int verbose_level);
+	long int process_transformations(
+			long int x);
+	long int clone_with_affine_function(
+			long int x);
 };
 
 
@@ -1125,18 +918,22 @@ public:
 
 	set_of_sets_lint();
 	~set_of_sets_lint();
-	void init_simple(long int underlying_set_size,
+	void init_simple(
+			long int underlying_set_size,
 			int nb_sets, int verbose_level);
-	void init(long int underlying_set_size,
+	void init(
+			long int underlying_set_size,
 			int nb_sets, long int **Pts, int *Sz, int verbose_level);
 	void init_from_set_of_sets(
 			set_of_sets *SoS, int verbose_level);
 	void init_single(
 			long int underlying_set_size,
 			long int *Pts, int sz, int verbose_level);
-	void init_basic(long int underlying_set_size,
+	void init_basic(
+			long int underlying_set_size,
 			int nb_sets, int *Sz, int verbose_level);
-	void init_set(int idx_of_set,
+	void init_set(
+			int idx_of_set,
 			long int *set, int sz, int verbose_level);
 };
 
@@ -1218,10 +1015,12 @@ public:
 			std::ostream &ost, int *Selection, int nb_sel);
 	void dualize(
 			set_of_sets *&S, int verbose_level);
-	void remove_sets_of_given_size(int k, 
+	void remove_sets_of_given_size(
+			int k,
 		set_of_sets &S, int *&Idx, 
 		int verbose_level);
-	void extract_largest_sets(set_of_sets &S, 
+	void extract_largest_sets(
+			set_of_sets &S,
 		int *&Idx, int verbose_level);
 	void intersection_matrix(
 		int *&intersection_type, int &highest_intersection_number, 
@@ -1258,9 +1057,11 @@ public:
 	int has_constant_size_property();
 	int get_constant_size();
 	int largest_set_size();
-	void save_csv(std::string &fname,
+	void save_csv(
+			std::string &fname,
 		int verbose_level);
-	void save_constant_size_csv(std::string &fname,
+	void save_constant_size_csv(
+			std::string &fname,
 			int verbose_level);
 	int find_common_element_in_two_sets(
 			int idx1, int idx2,
@@ -1788,8 +1589,10 @@ public:
 			int i, int j);
 	void get_string(
 			std::string &str, int i, int j);
-	long int get_lint(int i, int j);
-	double get_double(int i, int j);
+	long int get_lint(
+			int i, int j);
+	double get_double(
+			int i, int j);
 	void join_with(
 			spreadsheet *S2, int by1, int by2,
 		int verbose_level);
@@ -1882,10 +1685,12 @@ public:
 	void parse_comma_separated_values(
 			std::vector<std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);
-	void drop_quotes(std::string &in, std::string &out);
+	void drop_quotes(
+			std::string &in, std::string &out);
 	void parse_comma_separated_strings(
 			std::string &in, std::vector<std::string> &out);
-	int read_schlaefli_label(const char *p);
+	int read_schlaefli_label(
+			const char *p);
 	void read_string_of_schlaefli_labels(
 			std::string &str, int *&v, int &sz, int verbose_level);
 	void name_of_group_projective(
@@ -1919,9 +1724,12 @@ public:
 			std::vector<std::string> &S, int verbose_level);
 	void make_latex_friendly_string(
 			std::string &in, std::string &out, int verbose_level);
-	std::string printf_d(std::string &format, int value);
-	std::string printf_dd(std::string &format, int value1, int value2);
-	void parse_RHS_command(std::string &command,
+	std::string printf_d(
+			std::string &format, int value);
+	std::string printf_dd(
+			std::string &format, int value1, int value2);
+	void parse_RHS_command(
+			std::string &command,
 			int &mult, diophant_equation_type &type,
 			int &data1, int &data2, int verbose_level);
 
@@ -2082,22 +1890,34 @@ public:
 		int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();
-	int class_of(int pt_idx);
-	void print(int f_backwards);
-	void print_no_lf(int f_backwards);
-	void print_tex_no_lf(int f_backwards);
-	void print_first(int f_backwards);
-	void print_second(int f_backwards);
-	void print_first_tex(int f_backwards);
-	void print_second_tex(int f_backwards);
-	void print_file(std::ostream &ost, int f_backwards);
-	void print_file_tex(std::ostream &ost, int f_backwards);
+	int class_of(
+			int pt_idx);
+	void print(
+			int f_backwards);
+	void print_no_lf(
+			int f_backwards);
+	void print_tex_no_lf(
+			int f_backwards);
+	void print_first(
+			int f_backwards);
+	void print_second(
+			int f_backwards);
+	void print_first_tex(
+			int f_backwards);
+	void print_second_tex(
+			int f_backwards);
+	void print_file(
+			std::ostream &ost, int f_backwards);
+	void print_file_tex(
+			std::ostream &ost, int f_backwards);
 	void print_file_tex_we_are_in_math_mode(
 			std::ostream &ost, int f_backwards);
 	void print_bare_stringstream(
 			std::stringstream &sstr, int f_backwards);
-	void print_bare(int f_backwards);
-	std::string stringify_bare(int f_backwards);
+	void print_bare(
+			int f_backwards);
+	std::string stringify_bare(
+			int f_backwards);
 	void print_bare_tex(
 			std::ostream &ost, int f_backwards);
 	std::string stringify_bare_tex(int f_backwards);
@@ -2118,8 +1938,10 @@ public:
 	void get_data_by_multiplicity_as_lint(
 			long int *&Pts, int &nb_pts,
 			int multiplicity, int verbose_level);
-	int determine_class_by_value(int value);
-	int get_value_of_class(int class_idx);
+	int determine_class_by_value(
+			int value);
+	int get_value_of_class(
+			int class_idx);
 	int get_largest_value();
 	void get_class_by_value(
 			int *&Pts, int &nb_pts, int value,
@@ -2129,7 +1951,8 @@ public:
 	data_structures::set_of_sets *get_set_partition_and_types(
 			int *&types,
 		int &nb_types, int verbose_level);
-	void save_classes_individually(std::string &fname);
+	void save_classes_individually(
+			std::string &fname);
 };
 
 
@@ -2289,10 +2112,12 @@ public:
 
 	vector_builder();
 	~vector_builder();
-	void init(vector_builder_description *Descr,
+	void init(
+			vector_builder_description *Descr,
 			field_theory::finite_field *F,
 			int verbose_level);
-	void print(std::ostream &ost);
+	void print(
+			std::ostream &ost);
 
 };
 
@@ -2324,11 +2149,15 @@ public:
 
 	vector_hashing();
 	~vector_hashing();
-	void allocate(int data_size, int N, int bit_length);
-	void compute_tables(int verbose_level);
+	void allocate(
+			int data_size, int N, int bit_length);
+	void compute_tables(
+			int verbose_level);
 	void print();
-	int rank(int *data);
-	void unrank(int rk, int *data);
+	int rank(
+			int *data);
+	void unrank(
+			int rk, int *data);
 };
 
 }}}

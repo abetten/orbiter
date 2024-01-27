@@ -231,7 +231,7 @@ void classification_of_varieties::classify_nauty(
 	}
 
 
-	CB = NEW_OBJECT(data_structures::classify_bitvectors);
+	CB = NEW_OBJECT(canonical_form_classification::classify_bitvectors);
 
 
 

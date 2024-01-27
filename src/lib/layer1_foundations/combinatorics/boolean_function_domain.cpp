@@ -112,6 +112,7 @@ void boolean_function_domain::init(
 
 	if (f_v) {
 		cout << "boolean_function_domain::init n=" << n << endl;
+		cout << "boolean_function_domain::init q=" << F2->q << endl;
 	}
 #if 0
 	if (ODD(n)) {
@@ -156,8 +157,8 @@ void boolean_function_domain::init(
 
 	affine_points = NEW_lint(Q);
 
-	v = NEW_int(n);
-	v1 = NEW_int(n);
+	v = NEW_int(n + 1);
+	v1 = NEW_int(n + 1);
 	w = NEW_int(n);
 	f = NEW_int(Q);
 	f2 = NEW_int(Q);
@@ -246,11 +247,35 @@ void boolean_function_domain::setup_polynomial_rings(
 			cout << "boolean_function_domain::setup_polynomial_rings "
 					"setting up polynomial ring of degree " << degree << endl;
 		}
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"before Poly[degree].init" << endl;
+		}
 		Poly[degree].init(Fq, nb_vars, degree,
 				t_PART,
 				0 /* verbose_level */);
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"after Poly[degree].init" << endl;
+		}
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"before allocating A_poly" << endl;
+		}
 		A_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"after allocating A_poly" << endl;
+		}
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"before allocating B_poly" << endl;
+		}
 		B_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"after allocating B_poly" << endl;
+		}
 	}
 
 	if (f_v) {

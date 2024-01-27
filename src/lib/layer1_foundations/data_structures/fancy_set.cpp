@@ -93,7 +93,8 @@ void fancy_set::println()
 	cout << endl;
 }
 
-void fancy_set::swap(int pos, int a)
+void fancy_set::swap(
+		int pos, int a)
 {
 	int b, pos_a;
 
@@ -107,7 +108,8 @@ void fancy_set::swap(int pos, int a)
 	set_inv[b] = pos_a;
 }
 
-int fancy_set::is_contained(int a)
+int fancy_set::is_contained(
+		int a)
 {
 	int pos_a;
 
@@ -120,7 +122,8 @@ int fancy_set::is_contained(int a)
 		}
 }
 
-void fancy_set::copy_to(fancy_set *to)
+void fancy_set::copy_to(
+		fancy_set *to)
 {
 	int i;
 	
@@ -137,7 +140,8 @@ void fancy_set::copy_to(fancy_set *to)
 		}
 }
 
-void fancy_set::add_element(int elt)
+void fancy_set::add_element(
+		int elt)
 {
 	if (!is_contained(elt)) {
 		swap(k, elt);
@@ -145,7 +149,8 @@ void fancy_set::add_element(int elt)
 		}
 }
 
-void fancy_set::add_elements(int *elts, int nb)
+void fancy_set::add_elements(
+		int *elts, int nb)
 {
 	int i;
 	
@@ -154,7 +159,8 @@ void fancy_set::add_elements(int *elts, int nb)
 		}
 }
 
-void fancy_set::delete_elements(int *elts, int nb)
+void fancy_set::delete_elements(
+		int *elts, int nb)
 {
 	int i;
 	
@@ -166,7 +172,8 @@ void fancy_set::delete_elements(int *elts, int nb)
 		}
 }
 
-void fancy_set::delete_element(int elt)
+void fancy_set::delete_element(
+		int elt)
 {
 	if (is_contained(elt)) {
 		swap(k - 1, elt);
@@ -174,7 +181,8 @@ void fancy_set::delete_element(int elt)
 		}
 }
 
-void fancy_set::select_subset(int *elts, int nb)
+void fancy_set::select_subset(
+		int *elts, int nb)
 {
 	int i;
 	
@@ -189,7 +197,8 @@ void fancy_set::select_subset(int *elts, int nb)
 	k = nb;
 }
 
-void fancy_set::intersect_with(int *elts, int nb)
+void fancy_set::intersect_with(
+		int *elts, int nb)
 {
 	int i, l;
 	
@@ -203,7 +212,8 @@ void fancy_set::intersect_with(int *elts, int nb)
 	k = l;
 }
 
-void fancy_set::subtract_set(fancy_set *set_to_subtract)
+void fancy_set::subtract_set(
+		fancy_set *set_to_subtract)
 {
 	int i, a;
 	
@@ -240,7 +250,8 @@ void fancy_set::sort()
 		}
 }
 	
-int fancy_set::compare_lexicographically(fancy_set *second_set)
+int fancy_set::compare_lexicographically(
+		fancy_set *second_set)
 {
 	combinatorics::combinatorics_domain Combi;
 
@@ -251,7 +262,8 @@ int fancy_set::compare_lexicographically(fancy_set *second_set)
 	
 }
 
-void fancy_set::complement(fancy_set *compl_set)
+void fancy_set::complement(
+		fancy_set *compl_set)
 {
 	int i, a;
 	
@@ -272,7 +284,8 @@ void fancy_set::complement(fancy_set *compl_set)
 		}
 }
 
-int fancy_set::is_subset(fancy_set *set2)
+int fancy_set::is_subset(
+		fancy_set *set2)
 {
 	int i, a;
 	
@@ -286,7 +299,8 @@ int fancy_set::is_subset(fancy_set *set2)
 	return true;
 }
 
-int fancy_set::is_equal(fancy_set *set2)
+int fancy_set::is_equal(
+		fancy_set *set2)
 {
 	if (is_subset(set2) && k == set2->k) {
 		return true;
@@ -294,7 +308,8 @@ int fancy_set::is_equal(fancy_set *set2)
 	return false;
 }
 
-void fancy_set::save(std::string &fname, int verbose_level)
+void fancy_set::save(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

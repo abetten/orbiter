@@ -13,7 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace canonical_form_classification {
 
 
 data_input_stream_description::data_input_stream_description()
@@ -37,7 +37,7 @@ int data_input_stream_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "data_input_stream::read_arguments" << endl;

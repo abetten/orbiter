@@ -48,7 +48,8 @@ int_matrix::~int_matrix()
 	}
 }
 
-void int_matrix::allocate(int m, int n)
+void int_matrix::allocate(
+		int m, int n)
 {
 	if (M) {
 		FREE_int(M);
@@ -58,7 +59,8 @@ void int_matrix::allocate(int m, int n)
 	int_matrix::n = n;
 }
 
-void int_matrix::allocate_and_init(int m, int n, int *Mtx)
+void int_matrix::allocate_and_init(
+		int m, int n, int *Mtx)
 {
 	//if (M) {
 	//	FREE_int(M);
@@ -69,7 +71,8 @@ void int_matrix::allocate_and_init(int m, int n, int *Mtx)
 	Int_vec_copy(Mtx, M, m * n);
 }
 
-int &int_matrix::s_ij(int i, int j)
+int &int_matrix::s_ij(
+		int i, int j)
 {
 	return M[i * n + j];
 }
@@ -89,7 +92,8 @@ void int_matrix::print()
 	Int_matrix_print(M, m, n);
 }
 
-void int_matrix::sort_rows(int verbose_level)
+void int_matrix::sort_rows(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -139,7 +143,8 @@ void int_matrix::sort_rows(int verbose_level)
 	}
 }
 
-void int_matrix::remove_duplicates(int verbose_level)
+void int_matrix::remove_duplicates(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -172,7 +177,8 @@ void int_matrix::remove_duplicates(int verbose_level)
 	}
 }
 
-void int_matrix::check_that_entries_are_distinct(int verbose_level)
+void int_matrix::check_that_entries_are_distinct(
+		int verbose_level)
 {
 	int i;
 
@@ -185,7 +191,8 @@ void int_matrix::check_that_entries_are_distinct(int verbose_level)
 	}
 }
 
-int int_matrix::search(int *entry, int &idx, int verbose_level)
+int int_matrix::search(
+		int *entry, int &idx, int verbose_level)
 {
 	int ret;
 
@@ -207,7 +214,8 @@ int int_matrix::search(int *entry, int &idx, int verbose_level)
 	return ret;
 }
 
-void int_matrix::write_csv(std::string &fname, int verbose_level)
+void int_matrix::write_csv(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

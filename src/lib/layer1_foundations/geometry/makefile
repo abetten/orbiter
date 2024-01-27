@@ -25,7 +25,6 @@ MODULES = \
 	intersection_type.o \
 	klein_correspondence.o \
 	knarr.o \
-	object_with_canonical_form.o \
 	point_line.o \
 	points_and_lines.o \
 	polarity.o \

@@ -207,6 +207,8 @@ void homogeneous_polynomial_domain::init(
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init" << endl;
+		cout << "homogeneous_polynomial_domain::init nb_vars = " << nb_vars << endl;
+		cout << "homogeneous_polynomial_domain::init degree = " << degree << endl;
 	}
 
 

@@ -49,6 +49,10 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("direct_product_t");
 		tex.assign("direct product");
 	}
+	else if (a == polarity_extension_t) {
+		txt.assign("polarity_extension_t");
+		tex.assign("polarity extension");
+	}
 	else if (a == permutation_representation_t) {
 		txt.assign("permutation_representation_t");
 		tex.assign("permutation representation");
@@ -1281,6 +1285,252 @@ action *action_global::init_direct_product_group(
 }
 
 
+action *action_global::init_polarity_extension_group_and_restrict(
+		algebra::matrix_group *M,
+		geometry::projective_space *P,
+		geometry::polarity *Polarity,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A_new;
+	action *A_new_r;
+	group_constructions::polarity_extension *Polarity_extension;
+	long int *points;
+	int nb_points;
+	int i;
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict" << endl;
+		cout << "M=" << M->label << endl;
+	}
+	A_new = NEW_OBJECT(action);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"before init_polarity_extension_group" << endl;
+	}
+	A_new = init_polarity_extension_group(M, P, Polarity, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"after init_polarity_extension_group" << endl;
+	}
+
+	Polarity_extension = A_new->G.Polarity_extension;
+	nb_points = Polarity_extension->Polarity->total_degree;
+	points = NEW_lint(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = Polarity_extension->perm_offset_i[1] + i;
+	}
+
+
+	std::string label_of_set;
+
+	label_of_set.assign("polarity_extension");
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"before A_new->Induced_action->restricted_action" << endl;
+	}
+	A_new_r = A_new->Induced_action->restricted_action(
+			points, nb_points, label_of_set,
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"after A_new->Induced_action->restricted_action" << endl;
+	}
+	A_new_r->f_is_linear = false;
+
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"after A_direct_product->restricted_action" << endl;
+	}
+	return A_new_r;
+}
+
+
+
+action *action_global::init_polarity_extension_group(
+		algebra::matrix_group *M,
+		geometry::projective_space *P,
+		geometry::polarity *Polarity,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	group_constructions::polarity_extension *Polarity_extension;
+	action *A;
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group" << endl;
+		cout << "M=" << M->label << endl;
+	}
+
+	A = NEW_OBJECT(action);
+	Polarity_extension = NEW_OBJECT(group_constructions::polarity_extension);
+
+
+
+	A->type_G = polarity_extension_t;
+	A->G.Polarity_extension = Polarity_extension;
+	A->f_allocated = true;
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before P->init" << endl;
+	}
+	Polarity_extension->init(M, P, Polarity, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after P->init" << endl;
+	}
+
+	A->f_is_linear = false;
+	A->dimension = 0;
+
+
+	A->low_level_point_size = 0;
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"low_level_point_size="
+			<< A->low_level_point_size<< endl;
+	}
+
+	A->label.assign(Polarity_extension->label);
+	A->label_tex.assign(Polarity_extension->label_tex);
+
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"label=" << A->label << endl;
+	}
+
+	A->degree = Polarity_extension->degree_overall;
+	A->make_element_size = Polarity_extension->make_element_size;
+
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_polarity_extension();
+
+	A->elt_size_in_int = Polarity_extension->elt_size_int;
+	A->coded_elt_size_in_char = Polarity_extension->char_per_elt;
+	A->allocate_element_data();
+
+
+
+
+	A->degree = Polarity_extension->degree_overall;
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"degree=" << A->degree << endl;
+	}
+
+	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(
+			A, Polarity_extension->base_length, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"base_len=" << A->base_len() << endl;
+	}
+
+
+	Lint_vec_copy(Polarity_extension->the_base, A->get_base(), A->base_len());
+	Int_vec_copy(Polarity_extension->the_transversal_length,
+			A->get_transversal_length(), A->base_len());
+
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before Polarity_extension->make_strong_generators_data" << endl;
+	}
+	Polarity_extension->make_strong_generators_data(
+			gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after Polarity_extension->make_strong_generators_data" << endl;
+	}
+	A->Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	data_structures_groups::vector_ge *nice_gens;
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before A->Strong_gens->init_from_data" << endl;
+	}
+	A->Strong_gens->init_from_data(
+			A,
+			gens_data, gens_nb, gens_size,
+			A->get_transversal_length(),
+			nice_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after A->Strong_gens->init_from_data" << endl;
+	}
+	FREE_OBJECT(nice_gens);
+	A->f_has_strong_generators = true;
+	FREE_int(gens_data);
+
+
+
+	groups::sims *S;
+
+	S = NEW_OBJECT(groups::sims);
+
+	S->init(A, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before S->init_generators" << endl;
+	}
+	S->init_generators(
+			*A->Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after S->init_generators" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before S->compute_base_orbits_known_length" << endl;
+	}
+	S->compute_base_orbits_known_length(
+			A->get_transversal_length(), verbose_level);
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after S->compute_base_orbits_known_length" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"before init_sims_only" << endl;
+	}
+
+	A->init_sims_only(
+			S, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group "
+				"after init_sims_only" << endl;
+	}
+
+	A->compute_strong_generators_from_sims(
+			0/*verbose_level - 2*/);
+
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group, "
+				"finished setting up " << A->label;
+		cout << ", a permutation group of degree " << A->degree << " ";
+		cout << "and of order ";
+		A->print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+	}
+	return A;
+}
 
 
 

@@ -27,7 +27,8 @@ projective_space_plane::~projective_space_plane()
 {
 }
 
-void projective_space_plane::init(projective_space *P, int verbose_level)
+void projective_space_plane::init(
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

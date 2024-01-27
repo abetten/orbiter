@@ -433,6 +433,27 @@ void orbits_activity::do_report(
 
 	}
 
+	else if (OC->f_has_semifields) {
+
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"before OC->Semifields->latex_report" << endl;
+		}
+		OC->Semifields->latex_report(verbose_level);
+		if (f_v) {
+			cout << "orbits_activity::do_report "
+					"after OC->Semifields->latex_report" << endl;
+		}
+
+	}
+
+
+	else if (OC->f_has_boolean_functions) {
+
+		OC->BFC->print();
+
+	}
+
 	else if (OC->f_has_classification_by_canonical_form) {
 
 		if (f_v) {

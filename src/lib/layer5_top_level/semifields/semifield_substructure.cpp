@@ -498,7 +498,7 @@ void semifield_substructure::do_classify(
 
 	if (f_v) {
 		cout << "semifield_substructure::do_classify" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "Computing classification:" << endl;
 	}
@@ -529,12 +529,32 @@ void semifield_substructure::do_classify(
 
 	SC->A->group_order(go);
 
+	if (f_v) {
+		cout << "semifield_substructure::do_classify "
+				"before SCWS->Semifields->init" << endl;
+	}
 	SCWS->Semifields->init(SC->A, SC->AS,
 			nb_flag_orbits, SC->k, go, verbose_level);
+	if (f_v) {
+		cout << "semifield_substructure::do_classify "
+				"after SCWS->Semifields->init" << endl;
+	}
 
+	if (Flag_orbits == NULL) {
+		cout << "semifield_substructure::do_classify Flag_orbits == NULL" << endl;
+		exit(1);
+	}
 
 	Flag_orbits->nb_primary_orbits_upper = 0;
 
+	if (f_v) {
+		cout << "semifield_substructure::do_classify "
+				"looping over flag orbits." << endl;
+	}
+	if (f_v) {
+		cout << "semifield_substructure::do_classify "
+				"nb_flag_orbits = " << nb_flag_orbits << endl;
+	}
 	for (f = 0; f < nb_flag_orbits; f++) {
 
 
@@ -722,7 +742,7 @@ void semifield_substructure::do_classify(
 	}
 	if (f_v) {
 		cout << "semifield_substructure::do_classify done" << endl;
-		}
+	}
 }
 
 void semifield_substructure::loop_over_all_subspaces(

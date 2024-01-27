@@ -137,7 +137,7 @@ void combinatorics_with_action::report_TDA_projective_space(
 
 void combinatorics_with_action::report_TDA_combinatorial_object(
 		std::ostream &ost,
-		combinatorics::encoded_combinatorial_object *Enc,
+		canonical_form_classification::encoded_combinatorial_object *Enc,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)

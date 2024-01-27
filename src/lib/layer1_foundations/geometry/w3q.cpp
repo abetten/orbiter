@@ -263,7 +263,8 @@ void W3q::print_by_points()
 	}
 }
 
-int W3q::find_line(int line)
+int W3q::find_line(
+		int line)
 {
 	int idx;
 	data_structures::sorting Sorting;

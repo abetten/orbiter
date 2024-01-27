@@ -72,7 +72,8 @@ gen_geo::~gen_geo()
 	}
 }
 
-void gen_geo::init(geometry_builder *GB, int verbose_level)
+void gen_geo::init(
+		geometry_builder *GB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -139,7 +140,8 @@ void gen_geo::init(geometry_builder *GB, int verbose_level)
 }
 
 
-void gen_geo::init_semicanonical(int verbose_level)
+void gen_geo::init_semicanonical(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -163,7 +165,8 @@ void gen_geo::init_semicanonical(int verbose_level)
 }
 
 
-void gen_geo::print_pairs(int line)
+void gen_geo::print_pairs(
+		int line)
 {
 	int i1, i2, a;
 
@@ -177,7 +180,8 @@ void gen_geo::print_pairs(int line)
 	}
 }
 
-void gen_geo::main2(int verbose_level)
+void gen_geo::main2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -256,9 +260,9 @@ void gen_geo::main2(int verbose_level)
 
 		}
 
-		geometry::object_with_canonical_form *OiP;
+		canonical_form_classification::object_with_canonical_form *OiP;
 
-		OiP = (geometry::object_with_canonical_form *) it->Canonical_forms->Objects[0];
+		OiP = (canonical_form_classification::object_with_canonical_form *) it->Canonical_forms->Objects[0];
 
 		if (inc->is_block_tactical(V, OiP->set)) {
 
@@ -302,7 +306,8 @@ void gen_geo::main2(int verbose_level)
 
 }
 
-void gen_geo::generate_all(int verbose_level)
+void gen_geo::generate_all(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
@@ -475,7 +480,8 @@ l_exit:
 	}
 }
 
-void gen_geo::setup_output_files(int verbose_level)
+void gen_geo::setup_output_files(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -510,7 +516,8 @@ void gen_geo::setup_output_files(int verbose_level)
 
 }
 
-void gen_geo::close_output_files(int verbose_level)
+void gen_geo::close_output_files(
+		int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 
@@ -526,7 +533,8 @@ void gen_geo::close_output_files(int verbose_level)
 
 }
 
-void gen_geo::record_tree(int i1, int f_already_there)
+void gen_geo::record_tree(
+		int i1, int f_already_there)
 {
 	int color;
 
@@ -573,7 +581,8 @@ void gen_geo::record_tree(int i1, int f_already_there)
 }
 
 
-void gen_geo::print_I_m(int I, int m)
+void gen_geo::print_I_m(
+		int I, int m)
 {
 	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
@@ -582,13 +591,15 @@ void gen_geo::print_I_m(int I, int m)
 	print(cout, i1 + 1, i1 + 1);
 }
 
-void gen_geo::print(int v)
+void gen_geo::print(
+		int v)
 {
 	print(cout, v, v);
 }
 
 
-void gen_geo::increment_pairs_point(int i1, int col, int k)
+void gen_geo::increment_pairs_point(
+		int i1, int col, int k)
 {
 	int ii, ii1;
 
@@ -598,7 +609,8 @@ void gen_geo::increment_pairs_point(int i1, int col, int k)
 	}
 }
 
-void gen_geo::decrement_pairs_point(int i1, int col, int k)
+void gen_geo::decrement_pairs_point(
+		int i1, int col, int k)
 {
 	int ii, ii1;
 
@@ -608,28 +620,32 @@ void gen_geo::decrement_pairs_point(int i1, int col, int k)
 	}
 }
 
-void gen_geo::girth_test_add_incidence(int i, int j_idx, int j)
+void gen_geo::girth_test_add_incidence(
+		int i, int j_idx, int j)
 {
 	if (Girth_test) {
 		Girth_test->add_incidence(i, j_idx, j);
 	}
 }
 
-void gen_geo::girth_test_delete_incidence(int i, int j_idx, int j)
+void gen_geo::girth_test_delete_incidence(
+		int i, int j_idx, int j)
 {
 	if (Girth_test) {
 		Girth_test->delete_incidence(i, j_idx, j);
 	}
 }
 
-void gen_geo::girth_Floyd(int i, int verbose_level)
+void gen_geo::girth_Floyd(
+		int i, int verbose_level)
 {
 	if (Girth_test) {
 		Girth_test->Floyd(i, verbose_level);
 	}
 }
 
-int gen_geo::check_girth_condition(int i, int j_idx, int j, int verbose_level)
+int gen_geo::check_girth_condition(
+		int i, int j_idx, int j, int verbose_level)
 {
 	if (Girth_test) {
 #if 0
@@ -645,7 +661,8 @@ int gen_geo::check_girth_condition(int i, int j_idx, int j, int verbose_level)
 }
 
 
-int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
+int gen_geo::apply_tests(
+		int I, int m, int J, int n, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int fuse_idx;
@@ -842,14 +859,16 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 	return true;
 }
 
-void gen_geo::print(std::ostream &ost, int v, int v_cut)
+void gen_geo::print(
+		std::ostream &ost, int v, int v_cut)
 {
 	inc->Encoding->print_partitioned(ost,
 			v, v_cut, this, true /* f_print_isot */);
 }
 
 
-void gen_geo::print_override_theX(std::ostream &ost,
+void gen_geo::print_override_theX(
+		std::ostream &ost,
 		int *theX, int v, int v_cut)
 {
 	inc->Encoding->print_partitioned_override_theX(ost,

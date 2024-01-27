@@ -310,12 +310,12 @@ public:
 	~nauty_interface_with_group();
 
 	groups::strong_generators *set_stabilizer_of_object(
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			actions::action *A_linear,
 		int f_compute_canonical_form,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
-		combinatorics::encoded_combinatorial_object *&Enc,
+		canonical_form_classification::encoded_combinatorial_object *&Enc,
 		int verbose_level);
 	void automorphism_group_as_permutation_group(
 			l1_interfaces::nauty_output *NO,

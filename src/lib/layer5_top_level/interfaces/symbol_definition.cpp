@@ -994,7 +994,7 @@ void symbol_definition::read_definition(
 
 
 		Data_input_stream_description =
-				NEW_OBJECT(data_structures::data_input_stream_description);
+				NEW_OBJECT(canonical_form_classification::data_input_stream_description);
 		if (f_v) {
 			cout << "reading -combinatorial_objects" << endl;
 		}
@@ -3033,14 +3033,14 @@ void symbol_definition::definition_of_translation_plane(
 				"found spread " << Spread->label_txt << endl;
 	}
 
-	Gn = Get_object_of_type_any_group(translation_plane_group_n_label);
+	Gn = Get_any_group(translation_plane_group_n_label);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_translation_plane "
 				"found group Gn " << Gn->label << endl;
 	}
 
-	Gnp1 = Get_object_of_type_any_group(translation_plane_group_np1_label);
+	Gnp1 = Get_any_group(translation_plane_group_np1_label);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_translation_plane "

@@ -259,7 +259,7 @@ void nauty_interface::nauty_interface_graph_int(
 
 
 void nauty_interface::nauty_interface_matrix_int(
-		combinatorics::encoded_combinatorial_object *Enc,
+		canonical_form_classification::encoded_combinatorial_object *Enc,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 {

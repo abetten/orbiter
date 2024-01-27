@@ -189,191 +189,6 @@ public:
 
 
 
-// #############################################################################
-// classification_of_objects_description.cpp
-// #############################################################################
-
-
-
-
-//! description of a classification of objects using class classification_of_objects
-
-
-
-class classification_of_objects_description {
-
-public:
-
-	int f_label;
-	std::string label;
-
-	int f_save_classification;
-	std::string save_prefix;
-
-	int f_max_TDO_depth;
-	int max_TDO_depth;
-
-	int f_classification_prefix;
-	std::string classification_prefix;
-
-	int f_save_canonical_labeling;
-
-	int f_save_ago;
-
-	int f_save_transversal;
-
-
-	classification_of_objects_description();
-	~classification_of_objects_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-// #############################################################################
-// classification_of_objects_report_options.cpp
-// #############################################################################
-
-
-
-
-//! options for the report for a classification of combinatorial objects
-
-
-
-class classification_of_objects_report_options {
-
-public:
-
-	int f_prefix;
-	std::string prefix;
-
-	int f_export_flag_orbits;
-
-	int f_show_incidence_matrices;
-
-	int f_show_TDO;
-
-	int f_show_TDA;
-
-	int f_export_labels;
-
-	int f_export_group_orbiter;
-	int f_export_group_GAP;
-
-	int f_lex_least;
-	std::string lex_least_geometry_builder;
-
-	classification_of_objects_report_options();
-	~classification_of_objects_report_options();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// classification_of_objects.cpp
-// #############################################################################
-
-
-
-
-//! classification of combinatorial objects using a graph-theoretic approach
-
-
-
-class classification_of_objects {
-
-public:
-
-	classification_of_objects_description *Descr;
-
-	int f_projective_space;
-	//projective_space_with_action *PA;
-	geometry::projective_space *P;
-
-	data_structures::data_input_stream *IS;
-
-
-	data_structures::classify_bitvectors *CB;
-
-	long int *Ago; // [IS->nb_objects_to_test]
-	int *F_reject; // [IS->nb_objects_to_test]
-
-
-	// the classification:
-
-	int nb_orbits; // number of isomorphism types
-
-	int *Idx_transversal; // [nb_orbits]
-
-	long int *Ago_transversal; // [nb_orbits]
-
-	geometry::object_with_canonical_form **OWCF_transversal; // [nb_orbits]
-
-	l1_interfaces::nauty_output **NO_transversal; // [nb_orbits]
-
-
-	data_structures::tally *T_Ago;
-
-
-
-	classification_of_objects();
-	~classification_of_objects();
-	void perform_classification(
-			classification_of_objects_description *Descr,
-			int f_projective_space,
-			geometry::projective_space *P,
-			data_structures::data_input_stream *IS,
-			int verbose_level);
-	void classify_objects_using_nauty(
-		int verbose_level);
-	void save_automorphism_group_order(
-			int verbose_level);
-	void save_transversal(
-			int verbose_level);
-	void process_any_object(
-			geometry::object_with_canonical_form *OwCF,
-			int input_idx, long int &ago, int &f_reject,
-			l1_interfaces::nauty_output *&NO,
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	int process_object(
-			geometry::object_with_canonical_form *OwCF,
-		long int &ago,
-		int &iso_idx_if_found,
-		l1_interfaces::nauty_output *&NO,
-		combinatorics::encoded_combinatorial_object *&Enc,
-		int verbose_level);
-	// returns f_found, which is true if the object is already in the list
-	void report_summary_of_orbits(
-			std::ostream &ost, int verbose_level);
-	void report_all_isomorphism_types(
-			std::ostream &ost, int max_TDO_depth,
-			int f_show_incma,
-			int verbose_level);
-	void report_isomorphism_type(
-			std::ostream &ost, int i, int max_TDO_depth,
-			int f_show_incma,
-			int verbose_level);
-	void report_object(
-			std::ostream &ost,
-			geometry::object_with_canonical_form *OwCF,
-			int object_idx,
-			int max_TDO_depth,
-			int f_show_incma,
-			int verbose_level);
-
-
-};
-
-
-
 
 
 
@@ -474,6 +289,9 @@ public:
 			int *set, int n, int k);
 	int next_k_subset_at_level(
 			int *set, int n, int k, int backtrack_level);
+	void rank_k_subsets(
+			int *Mtx, int nb_rows, int n, int k, int *&Ranks,
+			int verbose_level);
 	void subset_permute_up_front(
 			int n, int k, int *set, int *k_subset_idx,
 		int *permuted_set);
@@ -709,6 +527,11 @@ public:
 	void free_tab_q_binomials();
 	void create_wreath_product_design(
 			int n, int k,
+			long int *&Blocks, long int &nb_blocks,
+			int verbose_level);
+	void create_linear_space_from_latin_square(
+			int *Mtx, int s,
+			int &v, int &k,
 			long int *&Blocks, long int &nb_blocks,
 			int verbose_level);
 
@@ -1144,122 +967,6 @@ public:
 			int type_of_change, int verbose_level);
 };
 
-
-
-
-// #############################################################################
-// encoded_combinatorial_object.cpp
-// #############################################################################
-
-//! encoding of combinatorial object for use with nauty
-
-
-class encoded_combinatorial_object {
-
-private:
-	int *Incma; // [nb_rows * nb_cols]
-
-public:
-	int nb_rows0;
-	int nb_cols0;
-
-	int nb_flags;
-	int nb_rows;
-	int nb_cols;
-	int *partition; // [canonical_labeling_len]
-
-	int canonical_labeling_len; // = nb_rows + nb_cols
-
-	// the permutation representation
-	// will be on invariant set:
-	int invariant_set_start;
-	int invariant_set_size;
-
-	encoded_combinatorial_object();
-	~encoded_combinatorial_object();
-	void init_everything(
-			int nb_rows, int nb_cols,
-			int *Incma, int *partition,
-			int verbose_level);
-	void init_with_matrix(
-			int nb_rows, int nb_cols, int *incma,
-			int verbose_level);
-	void init_row_and_col_partition(
-			int *V, int nb_V, int *B, int nb_B,
-			int verbose_level);
-	void init(
-			int nb_rows, int nb_cols,
-			int verbose_level);
-	std::string stringify_incma();
-	int get_nb_flags();
-	int *get_Incma();
-	void set_incidence_ij(
-			int i, int j);
-	int get_incidence_ij(
-			int i, int j);
-	void set_incidence(
-			int a);
-	void init_canonical_form(
-			encoded_combinatorial_object *Enc,
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-	void print_incma();
-	void save_incma(
-			std::string &fname_base, int verbose_level);
-	void print_partition();
-	void compute_canonical_incma(
-			int *canonical_labeling,
-			int *&Incma_out, int verbose_level);
-	void compute_canonical_form(
-			data_structures::bitvector *&Canonical_form,
-			int *canonical_labeling, int verbose_level);
-	void incidence_matrix_projective_space_top_left(
-			geometry::projective_space *P, int verbose_level);
-	void extended_incidence_matrix_projective_space_top_left(
-			geometry::projective_space *P, int verbose_level);
-	void canonical_form_given_canonical_labeling(
-			int *canonical_labeling,
-			data_structures::bitvector *&B,
-			int verbose_level);
-	void latex_set_system_by_columns(
-			std::ostream &ost,
-			int verbose_level);
-	void latex_set_system_by_rows(
-			std::ostream &ost,
-			int verbose_level);
-	void latex_incma(
-			std::ostream &ost, int verbose_level);
-	void latex_TDA(
-			std::ostream &ost,
-			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
-			int verbose_level);
-	void compute_labels(
-			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
-			int *&point_labels, int *&block_labels,
-			int verbose_level);
-	void latex_TDA_with_labels(
-			std::ostream &ost,
-			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
-			int verbose_level);
-	void latex_canonical_form(
-			std::ostream &ost,
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-	void apply_canonical_labeling(
-			int *&Inc2,
-			l1_interfaces::nauty_output *NO);
-	void apply_canonical_labeling_and_get_flags(
-			int *&Inc2,
-			int *&Flags, int &nb_flags_counted,
-			l1_interfaces::nauty_output *NO);
-	void latex_canonical_form_with_labels(
-			std::ostream &ost,
-			l1_interfaces::nauty_output *NO,
-			std::string *row_labels,
-			std::string *col_labels,
-			int verbose_level);
-
-};
 
 
 
@@ -1766,7 +1473,7 @@ class tdo_scheme_compute {
 
 public:
 
-	encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 	decomposition *Decomp;
 
 
@@ -1774,7 +1481,7 @@ public:
 	tdo_scheme_compute();
 	~tdo_scheme_compute();
 	void init(
-			encoded_combinatorial_object *Enc,
+			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int max_depth,
 			int verbose_level);
 	void print_schemes(

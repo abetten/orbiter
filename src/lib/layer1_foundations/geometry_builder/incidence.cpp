@@ -76,7 +76,8 @@ incidence::~incidence()
 
 }
 
-void incidence::init(gen_geo *gg,
+void incidence::init(
+		gen_geo *gg,
 		int v, int b, int *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -137,7 +138,8 @@ void incidence::init(gen_geo *gg,
 
 
 
-void incidence::init_pairs(int verbose_level)
+void incidence::init_pairs(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i1, i2;
@@ -159,7 +161,8 @@ void incidence::init_pairs(int verbose_level)
 	}
 }
 
-void incidence::print_pairs(int v)
+void incidence::print_pairs(
+		int v)
 {
 	int i1, i2, a;
 	int *M;
@@ -185,7 +188,8 @@ void incidence::print_pairs(int v)
 }
 
 
-int incidence::find_square(int m, int n)
+int incidence::find_square(
+		int m, int n)
 {
 	return Encoding->find_square(m, n);
 }
@@ -236,7 +240,8 @@ void incidence::free_isot()
 	iso_type_no_vhbars = NULL;
 }
 
-void incidence::print_R(int v, cperm *p, cperm *q)
+void incidence::print_R(
+		int v, cperm *p, cperm *q)
 {
 	int i;
 
@@ -304,7 +309,8 @@ void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(
 	}
 }
 
-void incidence::set_split(int row, int remainder, int modulo)
+void incidence::set_split(
+		int row, int remainder, int modulo)
 {
 	if (row > 0 && row < Encoding->v) {
 		iso_type_at_line[row - 1]->set_split(remainder, modulo);
@@ -487,7 +493,8 @@ void incidence::compute_blocks_ranked(
 	FREE_int(Incma);
 }
 
-int incidence::compute_k(int v, long int *theInc)
+int incidence::compute_k(
+		int v, long int *theInc)
 {
 	int i, j, s, b, k, h;
 	long int a;
@@ -531,7 +538,8 @@ int incidence::compute_k(int v, long int *theInc)
 	return k;
 }
 
-int incidence::is_block_tactical(int v, long int *theInc)
+int incidence::is_block_tactical(
+		int v, long int *theInc)
 {
 	int i, j, s, b, k, h, ret;
 	long int a;

@@ -26,23 +26,33 @@ public:
 
 	int f_order;
 	int order;
+
 	int f_dim_over_kernel;
 	int dim_over_kernel;
+
 	int f_prefix;
 	std::string prefix;
+
 	int f_orbits_light;
+
 	int f_test_semifield;
 	std::string test_semifield_data;
+
 	int f_identify_semifield;
 	std::string identify_semifield_data;
+
 	int f_identify_semifields_from_file;
 	std::string identify_semifields_from_file_fname;
+
 	int f_load_classification;
+
 	int f_report;
+
 	int f_decomposition_matrix_level_3;
 
 	int f_level_two_prefix;
 	std::string level_two_prefix;
+
 	int f_level_three_prefix;
 	std::string level_three_prefix;
 
@@ -52,6 +62,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 
@@ -344,7 +355,7 @@ public:
 	long int *class_rep_plus_I_rank;
 	int **class_rep_plus_I_Basis;
 		// computed via C->identify_matrix
-		// aplied to the matrix representing the conjugacy class
+		// applied to the matrix representing the conjugacy class
 		// plus the identity matrix
 		// if the two matrices A and A + I belong to the same conjugacy class,
 		// then the matrix class_rep_plus_I_Basis will be added to the

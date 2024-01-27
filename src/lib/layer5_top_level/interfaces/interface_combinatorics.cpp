@@ -896,42 +896,24 @@ void interface_combinatorics::worker(
 
 		combinatorics::combinatorics_domain Combi;
 
+		int *Mtx;
+		int nb_rows, nb_cols;
 
-		int *set;
-		int sz;
-		int i, j, r, N;
-		int *Rk;
+		Get_matrix(rank_k_subset_text, Mtx, nb_rows, nb_cols);
 
-		Int_vec_scan(rank_k_subset_text, set, sz);
-
-		N = (sz + rank_k_subset_k - 1) / rank_k_subset_k;
-		Rk = NEW_int(N);
-		i = 0;
-		j = 0;
-		while (i < sz) {
-
-
-			r = Combi.rank_k_subset(set + i, rank_k_subset_n, rank_k_subset_k);
-
-			cout << "The rank of ";
-			Int_vec_print(cout, set + i, rank_k_subset_k);
-			cout << " is " << r << endl;
-			Rk[j] = r;
-
-			i += rank_k_subset_k;
-			j++;
+		if (nb_cols != rank_k_subset_k) {
+			cout << "interface_combinatorics::worker nb_cols != rank_k_subset_k" << endl;
+			exit(1);
 		}
 
-		cout << "the ranks of all subsets are: ";
-		Int_vec_print(cout, Rk, N);
-		cout << endl;
+		int *Ranks;
 
-		data_structures::sorting Sorting;
+		Combi.rank_k_subsets(
+				Mtx, nb_rows, rank_k_subset_n, rank_k_subset_k, Ranks,
+				verbose_level);
 
-		Sorting.int_vec_heapsort(Rk, N);
-
-		cout << "the sorted ranks of all subsets are: ";
-		Int_vec_print(cout, Rk, N);
+		cout << "the sorted ranks of all subsets are: " << endl;
+		Int_vec_print(cout, Ranks, nb_rows);
 		cout << endl;
 
 	}

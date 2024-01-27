@@ -4321,7 +4321,7 @@ void strong_generators::diagonally_repeat(
 // from the original generators of the centralizer.
 {
 	int f_v = (verbose_level >= 1);
-	data_structures_groups::vector_ge *gens;
+	data_structures_groups::vector_ge *new_gens;
 	int h, l, i, j, a, n, k;
 	int *M;
 	int *Elt;
@@ -4335,15 +4335,15 @@ void strong_generators::diagonally_repeat(
 	k = A->matrix_group_dimension();
 	n = An->matrix_group_dimension();
 	M = NEW_int(n * n);
-	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+	new_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	gens->init(An, verbose_level - 2);
+	new_gens->init(An, verbose_level - 2);
 	l = gens->len;
 	if (f_v) {
 		cout << "strong_generators::diagonally_repeat "
 				"l=" << l << endl;
 	}
-	gens->allocate(l, verbose_level - 2);
+	new_gens->allocate(l, verbose_level - 2);
 	for (h = 0; h < l; h++) {
 		Elt = gens->ith(h);
 		Int_vec_zero(M, n * n);
@@ -4354,7 +4354,7 @@ void strong_generators::diagonally_repeat(
 				M[(k + i) * n + k + j] = a;
 			}
 		}
-		An->Group_element->make_element(gens->ith(h), M, 0);
+		An->Group_element->make_element(new_gens->ith(h), M, 0);
 	}
 	group_order(go);
 
@@ -4367,7 +4367,7 @@ void strong_generators::diagonally_repeat(
 	}
 
 	Sims = An->create_sims_from_generators_with_target_group_order(
-		gens, go, verbose_level);
+			new_gens, go, verbose_level);
 	if (f_v) {
 		cout << "strong_generators::diagonally_repeat "
 				"after A->create_sims_from_generators_"
@@ -4384,7 +4384,7 @@ void strong_generators::diagonally_repeat(
 				"after Sn->init_from_sims" << endl;
 	}
 
-	FREE_OBJECT(gens);
+	FREE_OBJECT(new_gens);
 	FREE_OBJECT(Sims);
 
 	if (f_v) {

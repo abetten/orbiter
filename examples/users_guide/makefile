@@ -1063,6 +1063,38 @@ HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
 
 DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
 
+GEO_BLOCKS_600="Row,C0,C1,C2\n\
+0, 0, 5, 14, \n\
+1, 1, 6, 10, \n\
+2, 2, 7, 11, \n\
+3, 3, 8, 12, \n\
+4, 4, 9, 13, \n\
+5, 0, 6, 13, \n\
+6, 1, 7, 14, \n\
+7, 2, 8, 10, \n\
+8, 3, 9, 11, \n\
+9, 4, 5, 12, \n\
+10, 0, 7, 12, \n\
+11, 1, 8, 13, \n\
+12, 2, 9, 14, \n\
+13, 3, 5, 10, \n\
+14, 4, 6, 11, \n\
+15, 0, 8, 11, \n\
+16, 1, 9, 12, \n\
+17, 2, 5, 13, \n\
+18, 3, 6, 14, \n\
+19, 4, 7, 10, \n\
+20, 0, 9, 10, \n\
+21, 1, 5, 11, \n\
+22, 2, 6, 12, \n\
+23, 3, 7, 13, \n\
+24, 4, 8, 14, \n\
+END\n"
+
+
+LSQ_5A_TABLE="0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3"
+
+LSQ_5B_TABLE="0,1,2,3,4,1,0,4,2,3,2,4,3,1,0,3,2,0,4,1,4,3,1,0,2"
 
 
 # Section 11.7 Assumed symmetry
@@ -6638,6 +6670,7 @@ test_6_2:
 	make AGGL_2_27
 	make SP_4_2
 	make PSP_4_4
+	make PGOp_4_2
 	make PGO_5_2
 	make PGGO_5_4
 	make PGOp_6_2
@@ -6885,7 +6918,18 @@ PSP_4_4:
 #order 979200
 
 
+PGOp_4_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGOp 4 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGOp_4_2_report.tex
+	$(OPEN) PGOp_4_2_report.pdf
 
+# order 72
 
 
 PGO_5_2:
@@ -7399,6 +7443,7 @@ SECTION_NEW_ACTIONS_FROM_OLD:
 test_6_4:
 	make Symmetric_4_on_pairs
 	make direct_product_AGL
+	make PGGLstar_3_4
 	make Group_M11
 	make surface_q13_Eckardt
 	make surface_q13_Eckardt_on_tritangent_planes
@@ -7451,6 +7496,20 @@ direct_product_AGL:
 	pdflatex product_AGL_1_3_AGL_1_7_report.tex
 	open product_AGL_1_3_AGL_1_7_report.pdf
 
+PGGLstar_3_4:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G0 -linear_group -PGGL 3 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGGL_3_4_polarity_ext_report.tex
+	open PGGL_3_4_polarity_ext_report.pdf
 
 
 
@@ -16184,6 +16243,11 @@ test_11_5:
 	make design_PG_2_4
 	make wreath_product_designs_n4_k2_inc.txt
 	make wreath_product_designs_n8_k6_inc.txt
+	make design_20
+	make design_600
+	make LSQ_5A
+	make LSQ_5B
+	make LSQ_5_c
 
 
 
@@ -16230,6 +16294,91 @@ wreath_product_designs_n8_k6_inc.txt:
 
 # wreath_product_designs_n8_k6_inc.txt
 # The design has 16 points and 3920 blocks of size 6.
+
+
+design_20:
+	$(ORBITER) -v 8 \
+		-define D -design -list_of_blocks_coded 15 3 \
+		"61, 67, 72, 76, 129, 147, 152, 156, 197, 204, 215, 224, 249, 261, 267, 276, 296, 303, 309, 319" \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end
+
+
+design_600:
+	echo $(GEO_BLOCKS_600) >geo_600_blocks.csv
+	$(ORBITER) -v 8 \
+		-define LSQ_5B -design -list_of_blocks_from_file \
+			15 geo_600_blocks.csv \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end \
+		-with D -do \
+			-design_activity \
+				-intersection_matrix \
+		-end
+
+
+
+
+LSQ_5A:
+	$(ORBITER) -v 8 \
+		-define LSQ5A -vector -format 5 -dense $(LSQ_5A_TABLE) -end \
+		-define D -design -linear_space_from_latin_square \
+			LSQ5A \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end
+
+LSQ_5B:
+	$(ORBITER) -v 8 \
+		-define LSQ5B -vector -format 5 -dense $(LSQ_5B_TABLE) -end \
+		-define D -design -linear_space_from_latin_square \
+			LSQ5B \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end
+
+
+#latin_square_order5_LSQ5B_inc.txt
+
+
+LSQ_5_c:
+	$(ORBITER) -v 3 \
+		-define C -combinatorial_object \
+			-file_of_incidence_geometries latin_square_order5_LSQ5A_inc.txt 15 28 90 \
+			-file_of_incidence_geometries latin_square_order5_LSQ5B_inc.txt 15 28 90 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix LSQ_5 \
+				-label LSQ_5 \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-prefix LSQ_5 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+			-end \
+		-end
+	pdflatex LSQ_5_classification.tex
+	open LSQ_5_classification.pdf
+
 
 
 

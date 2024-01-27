@@ -105,7 +105,8 @@ void test_semicanonical::init(
 	}
 }
 
-void test_semicanonical::init_bars(int verbose_level)
+void test_semicanonical::init_bars(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j;

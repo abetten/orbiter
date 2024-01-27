@@ -164,7 +164,8 @@ void algorithms::uchar_compress_4(
 	}
 }
 
-void algorithms::uchar_zero(unsigned char *p, int len)
+void algorithms::uchar_zero(
+		unsigned char *p, int len)
 {
 	int i;
 
@@ -213,7 +214,8 @@ int algorithms::uchar_is_zero(
 }
 
 
-void algorithms::int_swap(int& x, int& y)
+void algorithms::int_swap(
+		int& x, int& y)
 {
 	int z;
 
@@ -222,7 +224,8 @@ void algorithms::int_swap(int& x, int& y)
 	y = z;
 }
 
-void algorithms::lint_swap(long int & x, long int & y)
+void algorithms::lint_swap(
+		long int & x, long int & y)
 {
 	long int z;
 
@@ -231,7 +234,8 @@ void algorithms::lint_swap(long int & x, long int & y)
 	y = z;
 }
 
-void algorithms::print_pointer_hex(std::ostream &ost, void *p)
+void algorithms::print_pointer_hex(
+		std::ostream &ost, void *p)
 {
 	void *q = p;
 	uchar *pp = (uchar *)&q;
@@ -248,7 +252,8 @@ void algorithms::print_pointer_hex(std::ostream &ost, void *p)
 	}
 }
 
-void algorithms::print_uint32_hex(std::ostream &ost, uint32_t val)
+void algorithms::print_uint32_hex(
+		std::ostream &ost, uint32_t val)
 {
 	uchar *pp = (uchar *)&val;
 	int i, a, low, high;
@@ -264,7 +269,8 @@ void algorithms::print_uint32_hex(std::ostream &ost, uint32_t val)
 	}
 }
 
-void algorithms::print_hex(std::ostream &ost, unsigned char *p, int len)
+void algorithms::print_hex(
+		std::ostream &ost, unsigned char *p, int len)
 {
 	int i, j, h, a, low, high;
 	int nb_rows;
@@ -288,7 +294,8 @@ void algorithms::print_hex(std::ostream &ost, unsigned char *p, int len)
 	}
 }
 
-void algorithms::print_binary(std::ostream &ost, unsigned char *p, int len)
+void algorithms::print_binary(
+		std::ostream &ost, unsigned char *p, int len)
 {
 	int i, j, h, a, low;
 	int nb_rows;
@@ -317,7 +324,8 @@ void algorithms::print_binary(std::ostream &ost, unsigned char *p, int len)
 
 
 
-void algorithms::print_uint32_binary(std::ostream &ost, uint32_t val)
+void algorithms::print_uint32_binary(
+		std::ostream &ost, uint32_t val)
 {
 	//uchar *pp = (uchar *)&val;
 	int i, a;
@@ -343,7 +351,8 @@ void algorithms::print_uint32_binary(std::ostream &ost, uint32_t val)
 }
 
 
-void algorithms::print_hex_digit(std::ostream &ost, int digit)
+void algorithms::print_hex_digit(
+		std::ostream &ost, int digit)
 {
 	if (digit < 10) {
 		ost << (char)('0' + digit);
@@ -357,7 +366,8 @@ void algorithms::print_hex_digit(std::ostream &ost, int digit)
 	}
 }
 
-void algorithms::print_bits(std::ostream &ost, char *data, int data_size)
+void algorithms::print_bits(
+		std::ostream &ost, char *data, int data_size)
 {
 	int i, j;
 	unsigned char c;
@@ -378,7 +388,8 @@ void algorithms::print_bits(std::ostream &ost, char *data, int data_size)
 
 
 
-void algorithms::read_hex_data(std::string &str,
+void algorithms::read_hex_data(
+		std::string &str,
 		char *&data, int &data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -417,7 +428,8 @@ void algorithms::read_hex_data(std::string &str,
 	}
 }
 
-unsigned char algorithms::read_hex_digit(char digit)
+unsigned char algorithms::read_hex_digit(
+		char digit)
 {
 	char val;
 	int f_v = true;
@@ -441,7 +453,8 @@ unsigned char algorithms::read_hex_digit(char digit)
 	return val;
 }
 
-void algorithms::print_repeated_character(std::ostream &ost, char c, int n)
+void algorithms::print_repeated_character(
+		std::ostream &ost, char c, int n)
 {
 	int i;
 
@@ -450,7 +463,8 @@ void algorithms::print_repeated_character(std::ostream &ost, char c, int n)
 	}
 }
 
-uint32_t algorithms::root_of_tree_uint32_t (uint32_t* S, uint32_t i)
+uint32_t algorithms::root_of_tree_uint32_t(
+		uint32_t* S, uint32_t i)
 {
 	while (S[i] != i) {
 		i = S[i];
@@ -540,7 +554,8 @@ void algorithms::solve_diophant(
 #endif
 
 
-uint32_t algorithms::SuperFastHash (const char * data, int len)
+uint32_t algorithms::SuperFastHash(
+		const char * data, int len)
 {
 	uint32_t hash = len, tmp;
 	int rem;
@@ -586,7 +601,8 @@ uint32_t algorithms::SuperFastHash (const char * data, int len)
     return hash;
 }
 
-uint32_t algorithms::SuperFastHash_uint(const unsigned int * p, int sz)
+uint32_t algorithms::SuperFastHash_uint(
+		const unsigned int * p, int sz)
 {
 	uint32_t hash = 0, tmp;
 	int rem;
@@ -681,7 +697,8 @@ void algorithms::union_of_sets(
 	}
 
 
-	Fio.read_solutions_from_file_size_is_known(fname_input,
+	Fio.read_solutions_from_file_size_is_known(
+			fname_input,
 		Solutions, solution_size,
 		verbose_level);
 
@@ -995,7 +1012,8 @@ void algorithms::matrix_rowspan_over_R(
 	}
 }
 
-int algorithms::binary_logarithm(int m)
+int algorithms::binary_logarithm(
+		int m)
 {
 	int i = 0;
 
@@ -1006,7 +1024,8 @@ int algorithms::binary_logarithm(int m)
 	return i;
 }
 
-char algorithms::make_single_hex_digit(int c)
+char algorithms::make_single_hex_digit(
+		int c)
 {
 	if (c < 10) {
 		return '0' + c;

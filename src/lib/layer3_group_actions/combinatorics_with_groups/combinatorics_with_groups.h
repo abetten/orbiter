@@ -44,7 +44,7 @@ public:
 			int verbose_level);
 	void report_TDA_combinatorial_object(
 			std::ostream &ost,
-			combinatorics::encoded_combinatorial_object *Enc,
+			canonical_form_classification::encoded_combinatorial_object *Enc,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -103,7 +103,7 @@ class flag_orbits_incidence_structure {
 public:
 
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 
 	//object_with_properties *OwP;
 
@@ -122,7 +122,7 @@ public:
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
 	void init(
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			int f_anti_flags, actions::action *A_perm,
 			groups::strong_generators *SG, int verbose_level);
 	int find_flag(
@@ -151,12 +151,12 @@ class group_action_on_combinatorial_object {
 
 public:
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 
 	std::string label_txt;
 	std::string label_tex;
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	actions::action *A_perm;
 
@@ -194,7 +194,7 @@ public:
 	void init(
 			std::string &label_txt,
 			std::string &label_tex,
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			actions::action *A_perm,
 			int verbose_level);
 	void compute_flag_orbits(

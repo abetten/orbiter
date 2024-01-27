@@ -29,6 +29,17 @@ polarity::polarity()
 	f_absolute_line = NULL;
 	nb_absolute_lines = 0;
 	nb_self_dual_lines = 0;
+
+	nb_ranks = 0;
+	rank_sequence = NULL;
+	rank_sequence_opposite = NULL;
+	nb_objects = NULL;
+	offset = NULL;
+	total_degree = 0;
+
+	Mtx = NULL;
+
+
 }
 
 polarity::~polarity()
@@ -47,6 +58,21 @@ polarity::~polarity()
 	}
 	if (f_absolute_line) {
 		FREE_int(f_absolute_line);
+	}
+	if (rank_sequence) {
+		FREE_int(rank_sequence);
+	}
+	if (rank_sequence_opposite) {
+		FREE_int(rank_sequence_opposite);
+	}
+	if (nb_objects) {
+		FREE_lint(nb_objects);
+	}
+	if (offset) {
+		FREE_lint(offset);
+	}
+	if (Mtx) {
+		FREE_int(Mtx);
 	}
 }
 
@@ -77,8 +103,18 @@ void polarity::init_standard_polarity(
 	}
 	A = NEW_int(d * d);
 
+
+	if (f_v) {
+		cout << "polarity::init_standard_polarity before init_ranks" << endl;
+	}
+	init_ranks(verbose_level);
+	if (f_v) {
+		cout << "polarity::init_standard_polarity after init_ranks" << endl;
+	}
+
 	for (i = 0; i < P->Subspaces->N_points; i++) {
-		P->Subspaces->Grass_hyperplanes->unrank_lint(i, 0 /*verbose_level - 4*/);
+		P->Subspaces->Grass_hyperplanes->unrank_lint(
+				i, 0 /*verbose_level - 4*/);
 		for (j = 0; j < n * d; j++) {
 			A[j] = P->Subspaces->Grass_hyperplanes->M[j];
 		}
@@ -116,7 +152,8 @@ void polarity::init_standard_polarity(
 
 	if (d == 4) {
 		for (i = 0; i < P->Subspaces->N_lines; i++) {
-			P->Subspaces->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+			P->Subspaces->Grass_lines->unrank_lint_here(
+					A, i, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
 				Int_vec_print_integer_matrix_width(cout,
@@ -129,7 +166,8 @@ void polarity::init_standard_polarity(
 					A, d, d, d,
 					P->Subspaces->F->log10_of_q + 1);
 			}
-			a = P->Subspaces->Grass_lines->rank_lint_here(A + 2 * d, 0 /*verbose_level - 4*/);
+			a = P->Subspaces->Grass_lines->rank_lint_here(
+					A + 2 * d, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "perp of line " << i << " is " << a << ":";
 				Int_vec_print(cout, A + 2 * d, d);
@@ -169,6 +207,7 @@ void polarity::init_standard_polarity(
 	}
 }
 
+
 void polarity::init_general_polarity(
 		projective_space *P, int *Mtx, int verbose_level)
 {
@@ -201,13 +240,23 @@ void polarity::init_general_polarity(
 	A = NEW_int(d * d);
 	B = NEW_int(d * d);
 
+	if (f_v) {
+		cout << "polarity::init_general_polarity before init_ranks" << endl;
+	}
+	init_ranks(verbose_level);
+	if (f_v) {
+		cout << "polarity::init_general_polarity after init_ranks" << endl;
+	}
+
+
 	for (i = 0; i < P->Subspaces->N_points; i++) {
 
 		P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
 				v, 1, d, i);
 
 
-		P->Subspaces->F->Linear_algebra->mult_matrix_matrix(v, Mtx,
+		P->Subspaces->F->Linear_algebra->mult_matrix_matrix(
+				v, Mtx,
 				A, 1, d, d, 0 /* verbose_level*/);
 
 
@@ -223,7 +272,8 @@ void polarity::init_general_polarity(
 				A, d, d, d,
 				P->Subspaces->F->log10_of_q + 1);
 		}
-		a = P->Subspaces->Grass_hyperplanes->rank_lint_here(A + d, 0 /*verbose_level - 4*/);
+		a = P->Subspaces->Grass_hyperplanes->rank_lint_here(
+				A + d, 0 /*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Int_vec_print(cout, A + 2 * d, d);
@@ -244,7 +294,8 @@ void polarity::init_general_polarity(
 
 	if (d == 4) {
 		for (i = 0; i < P->Subspaces->N_lines; i++) {
-			P->Subspaces->Grass_lines->unrank_lint_here(A, i, 0 /*verbose_level - 4*/);
+			P->Subspaces->Grass_lines->unrank_lint_here(
+					A, i, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
 				Int_vec_print_integer_matrix_width(cout,
@@ -252,16 +303,19 @@ void polarity::init_general_polarity(
 					P->Subspaces->F->log10_of_q + 1);
 			}
 
-			P->Subspaces->F->Linear_algebra->mult_matrix_matrix(A, Mtx,
+			P->Subspaces->F->Linear_algebra->mult_matrix_matrix(
+					A, Mtx,
 					B, 2, d, d, 0 /* verbose_level*/);
 
-			P->Subspaces->F->Linear_algebra->perp_standard(d, 2, B, 0);
+			P->Subspaces->F->Linear_algebra->perp_standard(
+					d, 2, B, 0);
 			if (false) {
 				Int_vec_print_integer_matrix_width(cout,
 					B, d, d, d,
 					P->Subspaces->F->log10_of_q + 1);
 			}
-			a = P->Subspaces->Grass_lines->rank_lint_here(B + 2 * d, 0 /*verbose_level - 4*/);
+			a = P->Subspaces->Grass_lines->rank_lint_here(
+					B + 2 * d, 0 /*verbose_level - 4*/);
 			if (f_vv) {
 				cout << "perp of line " << i << " is " << a << ":";
 				Int_vec_print(cout, B + 2 * d, d);
@@ -303,6 +357,73 @@ void polarity::init_general_polarity(
 
 	if (f_v) {
 		cout << "polarity::init_general_polarity done" << endl;
+	}
+}
+
+void polarity::init_ranks(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity::init_ranks" << endl;
+	}
+	int n, d;
+	long int N_points;
+
+	n = P->Subspaces->n;
+	d = n + 1;
+	N_points = P->Subspaces->N_points;
+
+	Mtx = NEW_int(d * d);
+
+	if (d == 4) {
+		int i;
+
+		nb_ranks = 3;
+		rank_sequence = NEW_int(nb_ranks);
+		rank_sequence_opposite = NEW_int(nb_ranks);
+		nb_objects = NEW_lint(nb_ranks);
+		offset = NEW_lint(nb_ranks);
+		rank_sequence[0] = 1;
+		rank_sequence[1] = 2;
+		rank_sequence[2] = 3; // = d - 1;
+		for (i = 0; i < nb_ranks; i++) {
+			rank_sequence_opposite[i] = n - rank_sequence[i];
+		}
+		nb_objects[0] = N_points;
+		nb_objects[1] = P->Subspaces->N_lines;
+		nb_objects[2] = N_points;
+		offset[0] = 0;
+		for (i = 1; i < nb_ranks; i++) {
+			offset[i] = offset[i - 1] + nb_objects[i - 1];
+		}
+		total_degree = offset[nb_ranks - 1] + nb_objects[nb_ranks - 1];
+
+	}
+	else {
+		int i;
+
+		nb_ranks = 2;
+		rank_sequence = NEW_int(nb_ranks);
+		rank_sequence_opposite = NEW_int(nb_ranks);
+		nb_objects = NEW_lint(nb_ranks);
+		offset = NEW_lint(nb_ranks);
+		rank_sequence[0] = 1;
+		rank_sequence[1] = d - 1;
+		for (i = 0; i < nb_ranks; i++) {
+			rank_sequence_opposite[i] = n - rank_sequence[i];
+		}
+		nb_objects[0] = N_points;
+		nb_objects[1] = N_points;
+		offset[0] = 0;
+		for (i = 1; i < nb_ranks; i++) {
+			offset[i] = offset[i - 1] + nb_objects[i - 1];
+		}
+		total_degree = offset[nb_ranks - 1] + nb_objects[nb_ranks - 1];
+	}
+	if (f_v) {
+		cout << "polarity::init_ranks done" << endl;
 	}
 }
 
@@ -439,6 +560,117 @@ void polarity::init_reversal_polarity(
 		cout << "polarity::init_reversal_polarity done" << endl;
 	}
 }
+
+long int polarity::image_of_element(
+		int *Elt, int rho, long int a,
+		projective_space *P,
+		algebra::matrix_group *M,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int b;
+	int r_idx, r, h, d;
+	int *v;
+	int *vA;
+
+	if (f_v) {
+		cout << "polarity::image_of_element" << endl;
+	}
+	d = P->Subspaces->n + 1;
+
+	if (f_v) {
+		cout << "polarity::image_of_element Elt = " << endl;
+		M->Element->GL_print_easy(Elt, cout);
+	}
+
+	for (r_idx = 0; r_idx < nb_ranks; r_idx++) {
+		if (a < nb_objects[r_idx]) {
+
+			r = rank_sequence[r_idx];
+			if (f_v) {
+				cout << "polarity::image_of_element r = " << r << endl;
+			}
+
+
+			// for points, we use a different ranking
+			// than the one provided by grassmann.
+
+			if (r == 1) {
+				// point
+				M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(P->Subspaces->Grass_stack[r]->M, 1, d, a);
+			}
+			else {
+				// subspace of dimension at least 2
+				P->Subspaces->Grass_stack[r]->unrank_lint(a, 0 /*verbose_level*/);
+			}
+
+			for (h = 0; h < r; h++) {
+				v = P->Subspaces->Grass_stack[r]->M + h * d;
+				vA = Mtx + h * d;
+				M->GFq->Linear_algebra->projective_action_from_the_right(
+						M->f_semilinear,
+						v, Elt, vA, M->n,
+						0 /*verbose_level - 1*/);
+			}
+			// vA = (v * A)^{p^f}  if f_semilinear
+			// (where f = A[n * n]),
+			// vA = v * A otherwise
+
+
+			// Again, take care of points separately:
+
+			if (r == 1) {
+				// point
+				M->GFq->Projective_space_basic->PG_element_rank_modified_lint(Mtx, 1, d, b);
+
+			}
+			else {
+				b = P->Subspaces->Grass_stack[r]->rank_lint_here(Mtx, 0 /*verbose_level*/);
+			}
+
+			// test if polarity is present:
+
+			if (rho) {
+
+				// polarity is present, so apply the polarity:
+
+				int r2;
+				int b2;
+
+				r2 = rank_sequence_opposite[r_idx];
+				if (r == 1) {
+					b2 = Point_to_hyperplane[b];
+				}
+				else if (d == r + 1) {
+					b2 = Hyperplane_to_point[b];
+				}
+				else if (d == 4 && r == 2) {
+					b2 = Line_to_line[b];
+				}
+				else {
+					cout << "polarity::image_of_element rank not yet implemented" << endl;
+					cout << "d = " << d << endl;
+					cout << "r = " << r << endl;
+					exit(1);
+				}
+				b = offset[r2] + b2;
+			}
+			break;
+		}
+		a -= nb_objects[r_idx];
+	}
+	if (r_idx == nb_ranks) {
+		cout << "polarity::image_of_element illegal input value" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "polarity::image_of_element done" << endl;
+	}
+	return b;
+}
+
+
 
 void polarity::report(
 		std::ostream &f)

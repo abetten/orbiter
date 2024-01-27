@@ -56,7 +56,7 @@ public:
 	int f_canonical_form_of_code;
 	std::string canonical_form_of_code_label;
 	std::string canonical_form_of_code_generator_matrix;
-	combinatorics::classification_of_objects_description
+	canonical_form_classification::classification_of_objects_description
 		*Canonical_form_codes_Descr;
 
 	int f_map;
@@ -255,6 +255,7 @@ public:
 
 
 
+#if 0
 	int f_classify_semifields;
 	semifields::semifield_classify_description
 		*Semifield_classify_description;
@@ -263,7 +264,7 @@ public:
 
 	int f_classify_bent_functions;
 	int classify_bent_functions_n;
-
+#endif
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
@@ -352,11 +353,11 @@ public:
 			projective_space_with_action *PA,
 			long int plane_rk,
 			int verbose_level);
-#endif
 	void classify_bent_functions(
 			projective_space_with_action *PA,
 			int n,
 			int verbose_level);
+#endif
 
 };
 
@@ -466,7 +467,7 @@ public:
 	void init_group(
 			int f_semilinear, int verbose_level);
 	void canonical_labeling(
-			geometry::object_with_canonical_form *OiP,
+			canonical_form_classification::object_with_canonical_form *OiP,
 		int *canonical_labeling,
 		int verbose_level);
 #if 0
@@ -499,7 +500,7 @@ public:
 	void canonical_form_of_code(
 			std::string &label,
 			int *genma, int m, int n,
-			combinatorics::classification_of_objects_description
+			canonical_form_classification::classification_of_objects_description
 				*Canonical_form_codes_Descr,
 			int verbose_level);
 	void cheat_sheet(

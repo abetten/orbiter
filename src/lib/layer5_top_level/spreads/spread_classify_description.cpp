@@ -27,7 +27,9 @@ spread_classify_description::spread_classify_description()
 
 	f_poset_classification_control = false;
 	//std::string poset_classification_control_label;
-	//Control = NULL;
+
+	f_poset_classification_control_pointer = false;
+	Control = NULL;
 
 	f_output_prefix = false;
 	//std::string output_prefix;

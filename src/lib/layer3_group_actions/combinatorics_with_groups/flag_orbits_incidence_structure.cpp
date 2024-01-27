@@ -52,7 +52,7 @@ flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 }
 
 void flag_orbits_incidence_structure::init(
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 		int f_anti_flags, actions::action *A_perm,
 		groups::strong_generators *SG, int verbose_level)
 {
@@ -64,7 +64,7 @@ void flag_orbits_incidence_structure::init(
 
 	flag_orbits_incidence_structure::OwCF = OwCF;
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 
 	if (f_v) {

@@ -36,6 +36,10 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
 
+	f_csv_file_select_rows_complement = false;
+	//std::string csv_file_select_rows_complement_fname;
+	//std::string csv_file_select_rows_complement_text;
+
 	f_csv_file_split_rows_modulo = false;
 	//std::string csv_file_split_rows_modulo_fname;
 	csv_file_split_rows_modulo_n = 0;
@@ -207,6 +211,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
+		cout << "-csv_file_select_rows_complement <string : csv_file_name> <string : list of rows>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		cout << "-csv_file_split_rows_modulo <string : csv_file_name> <int : n>" << endl;
 	}
@@ -326,6 +333,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
@@ -488,6 +498,16 @@ void interface_toolkit::read_arguments(
 			cout << "-csv_file_select_rows "
 					<< csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
+		f_csv_file_select_rows_complement = true;
+		csv_file_select_rows_complement_fname.assign(argv[++i]);
+		csv_file_select_rows_complement_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_select_rows_complement "
+					<< csv_file_select_rows_complement_fname
+				<< " " << csv_file_select_rows_complement_text << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
@@ -1227,7 +1247,21 @@ void interface_toolkit::worker(
 
 		Fio.Csv_file_support->do_csv_file_select_rows(
 				csv_file_select_rows_fname,
-				csv_file_select_rows_text, verbose_level);
+				csv_file_select_rows_text,
+				verbose_level);
+	}
+	else if (f_csv_file_select_rows_complement) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_rows" << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->do_csv_file_select_rows_complement(
+				csv_file_select_rows_complement_fname,
+				csv_file_select_rows_complement_text,
+				verbose_level);
 	}
 	else if (f_csv_file_split_rows_modulo) {
 

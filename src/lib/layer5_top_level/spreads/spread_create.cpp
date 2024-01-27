@@ -104,7 +104,7 @@ void spread_create::init(
 		exit(1);
 	}
 
-	G = Get_object_of_type_any_group(Descr->group_label);
+	G = Get_any_group(Descr->group_label);
 
 	if (!G->f_linear_group) {
 		cout << "spread_create::init the group must be a linear group" << endl;
@@ -122,7 +122,7 @@ void spread_create::init(
 
 
 	if (Descr->f_group_on_subspaces) {
-		G_on_subspaces = Get_object_of_type_any_group(Descr->group_on_subspaces_label);
+		G_on_subspaces = Get_any_group(Descr->group_on_subspaces_label);
 	}
 
 	if (f_v) {

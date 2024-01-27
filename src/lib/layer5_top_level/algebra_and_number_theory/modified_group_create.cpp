@@ -214,6 +214,26 @@ void modified_group_create::modified_group_init(
 					"after create_product_action" << endl;
 		}
 	}
+	else if (Descr->f_polarity_extension) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_polarity_extension" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_polarity_extension" << endl;
+		}
+		create_polarity_extension(
+					description,
+					verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_polarity_extension" << endl;
+		}
+	}
 
 
 	else {
@@ -249,7 +269,7 @@ void modified_group_create::create_restricted_action(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 
 	A_base = AG->A_base;
@@ -321,7 +341,7 @@ void modified_group_create::create_action_on_k_subspaces(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -449,7 +469,7 @@ void modified_group_create::create_action_on_k_subsets(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -528,7 +548,7 @@ void modified_group_create::create_action_on_wedge_product(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -607,7 +627,7 @@ void modified_group_create::create_special_subgroup(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -708,7 +728,7 @@ void modified_group_create::create_point_stabilizer_subgroup(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -794,7 +814,7 @@ void modified_group_create::create_projectivity_subgroup(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -876,7 +896,7 @@ void modified_group_create::create_subfield_subgroup(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -972,7 +992,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 
 	any_group *AG;
 
-	AG = Get_object_of_type_any_group(Descr->from[0]);
+	AG = Get_any_group(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1081,8 +1101,8 @@ void modified_group_create::create_product_action(
 
 	any_group *AG1, *AG2;
 
-	AG1 = Get_object_of_type_any_group(Input[0]);
-	AG2 = Get_object_of_type_any_group(Input[1]);
+	AG1 = Get_any_group(Input[0]);
+	AG2 = Get_any_group(Input[1]);
 
 	algebra::matrix_group *M1;
 	algebra::matrix_group *M2;
@@ -1149,108 +1169,6 @@ void modified_group_create::create_product_action(
 
 
 
-#if 0
-	A_base = AG->A_base;
-	A_previous = AG->A;
-
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
-
-
-
-	if (!A_previous->f_is_linear) {
-		cout << "modified_group_create::create_product_action "
-				"previous action is not linear" << endl;
-		exit(1);
-	}
-
-
-	algebra::matrix_group *M;
-	field_theory::finite_field *Fq;
-	int n;
-
-	M = A_previous->get_matrix_group();
-
-	n = M->n;
-	Fq = M->GFq;
-
-	induced_actions::action_on_grassmannian *AonG;
-	geometry::grassmann *Grass;
-
-	AonG = NEW_OBJECT(induced_actions::action_on_grassmannian);
-
-	Grass = NEW_OBJECT(geometry::grassmann);
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"before Grass->init" << endl;
-	}
-
-	Grass->init(n,
-			description->on_k_subspaces_k,
-			Fq, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"after Grass->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"before AonG->init" << endl;
-	}
-
-	AonG->init(*A_previous, Grass, verbose_level - 2);
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"after AonG->init" << endl;
-	}
-
-
-	//A_modified = NEW_OBJECT(actions::action);
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"before induced_action_on_grassmannian_preloaded" << endl;
-	}
-
-	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
-		false /* f_induce_action */, NULL /*sims *old_G */,
-		verbose_level - 2);
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"after induced_action_on_grassmannian_preloaded" << endl;
-	}
-
-
-	A_modified->f_is_linear = true;
-
-	f_has_strong_generators = true;
-
-	A_modified->f_is_linear = A_previous->f_is_linear;
-	A_modified->dimension = A_previous->dimension;
-
-	f_has_strong_generators = true;
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"before Strong_gens = AG->Subgroup_gens" << endl;
-	}
-	Strong_gens = AG->Subgroup_gens;
-
-	if (f_v) {
-		cout << "modified_group_create::create_product_action "
-				"action A_modified created: ";
-		A_modified->print_info();
-	}
-
-
-	label += "_OnGr_" + std::to_string(n) + "_" + std::to_string(description->on_k_subspaces_k) + "_" + std::to_string(Fq->q);
-	label_tex += " {\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(description->on_k_subspaces_k) + "}(" + std::to_string(Fq->q) + ")";
-#endif
 
 	label += "product_" + AG1->label + "_" + AG2->label;
 	label_tex += "product(" + AG1->label_tex + "," + AG2->label_tex + ")";
@@ -1263,6 +1181,118 @@ void modified_group_create::create_product_action(
 }
 
 
+
+void modified_group_create::create_polarity_extension(
+		group_modification_description *description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension" << endl;
+	}
+#if 0
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_polarity_extension "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+#endif
+
+	//std::string polarity_extension_input;
+	//std::string polarity_extension_PA;
+
+	any_group *AG;
+
+	AG = Get_any_group(description->polarity_extension_input);
+
+	algebra::matrix_group *M;
+
+
+	if (!AG->A->is_matrix_group()) {
+		cout << "modified_group_create::create_polarity_extension "
+				"group 1 is not a matrix group" << endl;
+		exit(1);
+	}
+	M = AG->A->get_matrix_group();
+
+	actions::action_global AGlobal;
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	PA = Get_projective_space(description->polarity_extension_PA);
+
+	geometry::polarity *Standard_polarity;
+
+	Standard_polarity = PA->P->Subspaces->Standard_polarity;
+
+	//actions::action *A;
+
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension "
+				"before AGlobal.init_polarity_extension_group" << endl;
+	}
+	A_modified = AGlobal.init_polarity_extension_group(
+			M,
+			PA->P,
+			Standard_polarity,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension "
+				"after AGlobal.init_polarity_extension_group" << endl;
+	}
+
+	// it has strong generators
+
+
+
+	A_modified->f_is_linear = false;
+
+
+	Strong_gens = A_modified->Strong_gens;
+	f_has_strong_generators = true;
+
+#if 0
+	actions::action *A0;
+	//groups::direct_product *P;
+
+	A0 = A_modified->subaction;
+
+	//P = A0->G.direct_product_group;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension "
+				"before AG.scan_generators" << endl;
+	}
+	Strong_gens = AGlobal.scan_generators(
+			A0,
+			Descr->direct_product_subgroup_gens,
+			Descr->direct_product_subgroup_order,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension "
+				"after AG.scan_generators" << endl;
+	}
+
+
+	f_has_strong_generators = true;
+
+#endif
+
+
+
+
+	label += AG->label + "_polarity_ext";
+	label_tex += AG->label_tex + " {\\rm polarity extension}";
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_polarity_extension "
+				"done" << endl;
+	}
+}
 
 
 

@@ -386,7 +386,7 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 
-		Combo->Classification = NEW_OBJECT(combinatorics::classification_of_objects);
+		Combo->Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -507,7 +507,7 @@ void combinatorial_object_activity::perform_activity_combo(
 #endif
 
 
-		Combo->Classification = NEW_OBJECT(combinatorics::classification_of_objects);
+		Combo->Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -660,9 +660,9 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			F_distinguishing[input_idx] = CG->test_distinguishing_property(
 					OwCF->set, OwCF->sz, verbose_level);
@@ -689,9 +689,9 @@ void combinatorial_object_activity::perform_activity_combo(
 				continue;
 			}
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			OwCF->print(cout);
 
@@ -724,9 +724,9 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 #if 0
 			if (input_idx == 0) {
@@ -780,9 +780,9 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		for (input_idx = 0; input_idx < Combo->IS->Objects.size(); input_idx++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 			HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
 
@@ -900,9 +900,9 @@ void combinatorial_object_activity::do_save(
 
 	N = Combo->IS->Objects.size();
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 
-	OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[0];
+	OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[0];
 
 	//OwCF->set;
 	sz = OwCF->sz;
@@ -915,9 +915,9 @@ void combinatorial_object_activity::do_save(
 					<< " / " << Combo->IS->Objects.size() << endl;
 		}
 
-		geometry::object_with_canonical_form *OwCF;
+		canonical_form_classification::object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *)
+		OwCF = (canonical_form_classification::object_with_canonical_form *)
 				Combo->IS->Objects[input_idx];
 
 		//OwCF->set;
@@ -934,9 +934,9 @@ void combinatorial_object_activity::do_save(
 	Sets = NEW_lint(N * sz);
 
 	for (input_idx = 0; input_idx < N; input_idx++) {
-		geometry::object_with_canonical_form *OwCF;
+		canonical_form_classification::object_with_canonical_form *OwCF;
 
-		OwCF = (geometry::object_with_canonical_form *) Combo->IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::object_with_canonical_form *) Combo->IS->Objects[input_idx];
 
 		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
@@ -1365,7 +1365,7 @@ void combinatorial_object_activity::report_object(
 
 void combinatorial_object_activity::draw_incidence_matrices(
 		std::string &prefix,
-		data_structures::data_input_stream *IS,
+		canonical_form_classification::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1416,12 +1416,12 @@ void combinatorial_object_activity::draw_incidence_matrices(
 				cout << "combinatorial_object_activity::draw_incidence_matrices "
 						"object " << i << " / " << N << endl;
 			}
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
 
 
-			combinatorics::encoded_combinatorial_object *Enc;
+			canonical_form_classification::encoded_combinatorial_object *Enc;
 
 			if (f_v) {
 				cout << "combinatorial_object_activity::draw_incidence_matrices "
@@ -1469,7 +1469,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 void combinatorial_object_activity::unpack_from_restricted_action(
 		std::string &prefix,
 		std::string &group_label,
-		data_structures::data_input_stream *IS,
+		canonical_form_classification::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1483,7 +1483,7 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 	apps_algebra::any_group *G;
 
-	G = Get_object_of_type_any_group(group_label);
+	G = Get_any_group(group_label);
 
 #if 0
 	groups::linear_group *LG;
@@ -1538,9 +1538,9 @@ void combinatorial_object_activity::unpack_from_restricted_action(
 
 		for (i = 0; i < N; i++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
 
 
 			//encoded_combinatorial_object *Enc;
@@ -1585,7 +1585,7 @@ void combinatorial_object_activity::line_covering_type(
 		std::string &prefix,
 		std::string &projective_space_label,
 		std::string &lines,
-		data_structures::data_input_stream *IS,
+		canonical_form_classification::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1641,9 +1641,9 @@ void combinatorial_object_activity::line_covering_type(
 
 		for (i = 0; i < N; i++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type_basic_given_a_set_of_lines(
@@ -1675,7 +1675,7 @@ void combinatorial_object_activity::line_covering_type(
 void combinatorial_object_activity::line_type(
 		std::string &prefix,
 		std::string &projective_space_label,
-		data_structures::data_input_stream *IS,
+		canonical_form_classification::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1726,9 +1726,9 @@ void combinatorial_object_activity::line_type(
 
 		for (i = 0; i < N; i++) {
 
-			geometry::object_with_canonical_form *OwCF;
+			canonical_form_classification::object_with_canonical_form *OwCF;
 
-			OwCF = (geometry::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type(

@@ -91,7 +91,7 @@ int design_activity_description::read_arguments(
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
 
-			Canonical_form_Descr = NEW_OBJECT(combinatorics::classification_of_objects_description);
+			Canonical_form_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {

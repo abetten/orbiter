@@ -35,7 +35,8 @@ inc_encoding::~inc_encoding()
 	}
 }
 
-int &inc_encoding::theX_ir(int i, int r)
+int &inc_encoding::theX_ir(
+		int i, int r)
 {
 	return theX[i * dim_n + r];
 }
@@ -70,7 +71,8 @@ void inc_encoding::init(
 	}
 }
 
-long int inc_encoding::rank_row(int row)
+long int inc_encoding::rank_row(
+		int row)
 {
 	int *S;
 	int k, i;
@@ -107,7 +109,8 @@ void inc_encoding::get_flags(
 }
 
 
-int inc_encoding::find_square(int m, int n)
+int inc_encoding::find_square(
+		int m, int n)
 {
 	int i, j, l, u, v;
 	int f_found_u;

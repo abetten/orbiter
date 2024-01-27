@@ -87,9 +87,12 @@ public:
 
 	andre_construction_point_element();
 	~andre_construction_point_element();
-	void init(andre_construction *Andre, int verbose_level);
-	void unrank(int point_rank, int verbose_level);
-	int rank(int verbose_level);
+	void init(
+			andre_construction *Andre, int verbose_level);
+	void unrank(
+			int point_rank, int verbose_level);
+	int rank(
+			int verbose_level);
 };
 
 
@@ -120,9 +123,12 @@ public:
 	~andre_construction_line_element();
 	void init(
 			andre_construction *Andre, int verbose_level);
-	void unrank(int line_rank, int verbose_level);
-	int rank(int verbose_level);
-	int make_affine_point(int idx, int verbose_level);
+	void unrank(
+			int line_rank, int verbose_level);
+	int rank(
+			int verbose_level);
+	int make_affine_point(
+			int idx, int verbose_level);
 		// 0 \le idx \le order
 };
 
@@ -158,14 +164,21 @@ public:
 		// formula (53)
 	void Subiaco_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
-	int OKeefe_Penttila_32(int t);
-	int Subiaco64_1(int t);
-	int Subiaco64_2(int t);
-	int Adelaide64(int t);
-	void LunelliSce(int *pts18, int verbose_level);
-	int LunelliSce_evaluate_cubic1(int *v);
+	int OKeefe_Penttila_32(
+			int t);
+	int Subiaco64_1(
+			int t);
+	int Subiaco64_2(
+			int t);
+	int Adelaide64(
+			int t);
+	void LunelliSce(
+			int *pts18, int verbose_level);
+	int LunelliSce_evaluate_cubic1(
+			int *v);
 		// computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
-	int LunelliSce_evaluate_cubic2(int *v);
+	int LunelliSce_evaluate_cubic2(
+			int *v);
 		// computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
 
 };
@@ -404,7 +417,8 @@ public:
 	void compute_the_design(
 			int verbose_level);
 	void write_unital_to_file();
-	void get_name(std::string &name);
+	void get_name(
+			std::string &name);
 
 };
 
@@ -1708,225 +1722,6 @@ public:
 };
 
 
-// #############################################################################
-// object_with_canonical_form.cpp
-// #############################################################################
-
-
-//! a combinatorial object for which a canonical form can be computed using Nauty
-
-
-
-class object_with_canonical_form {
-public:
-	projective_space *P;
-
-
-
-	object_with_canonical_form_type type;
-		// t_PTS = a multiset of points
-		// t_LNS = a set of lines 
-		// t_PNL = a set of points and a set of lines
-		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
-		// t_INC = incidence geometry
-		// t_LS = large set
-
-	std::string input_fname;
-	int input_idx;
-	int f_has_known_ago;
-	long int known_ago;
-
-	std::string set_as_string;
-
-	long int *set;
-	int sz;
-		// set[sz] is used by t_PTS, t_LNS, t_INC
-
-	// for t_PNL:
-	long int *set2;
-	int sz2;
-
-
-		// if t_INC or t_LS
-	int v;
-	int b;
-	int f_partition;
-	int *partition; // [v + b], do not free !
-
-		// if t_LS
-		int design_k;
-		int design_sz;
-
-		// t_PAC = packing, uses SoS
-		data_structures::set_of_sets *SoS;
-		// SoS is used by t_PAC
-
-		int f_extended_incma;
-
-		data_structures::tally *C;
-		// used to determine multiplicities in the set of points
-
-	object_with_canonical_form();
-	~object_with_canonical_form();
-	void print(
-			std::ostream &ost);
-	void print_rows(
-			std::ostream &ost,
-			int f_show_incma, int verbose_level);
-	void print_tex_detailed(
-			std::ostream &ost,
-			int f_show_incma, int verbose_level);
-	void print_tex(
-			std::ostream &ost, int verbose_level);
-	void get_packing_as_set_system(
-			long int *&Sets,
-			int &nb_sets, int &set_size, int verbose_level);
-	void init_point_set(
-			long int *set, int sz,
-		int verbose_level);
-	void init_point_set_from_string(
-			std::string &set_text,
-			int verbose_level);
-	void init_line_set(
-			long int *set, int sz,
-		int verbose_level);
-	void init_line_set_from_string(
-			std::string &set_text,
-			int verbose_level);
-	void init_points_and_lines(
-		long int *set, int sz,
-		long int *set2, int sz2,
-		int verbose_level);
-	void init_points_and_lines_from_string(
-		std::string &set_text,
-		std::string &set2_text,
-		int verbose_level);
-	void init_packing_from_set(
-		long int *packing, int sz,
-		int verbose_level);
-	void init_packing_from_string(
-			std::string &packing_text,
-			int q,
-			int verbose_level);
-	void init_packing_from_set_of_sets(
-			data_structures::set_of_sets *SoS,
-			int verbose_level);
-	void init_packing_from_spread_table(
-		long int *data,
-		long int *Spread_table, int nb_spreads, int spread_size,
-		int q,
-		int verbose_level);
-	void init_design_from_block_orbits(
-			data_structures::set_of_sets *Block_orbits,
-			long int *Solution, int width,
-			int k,
-			int verbose_level);
-	void init_incidence_geometry(
-		long int *data, int data_sz, int v, int b, int nb_flags,
-		int verbose_level);
-	void init_incidence_geometry_from_vector(
-		std::vector<int> &Flags, int v, int b, int nb_flags,
-		int verbose_level);
-	void init_incidence_geometry_from_string(
-		std::string &data,
-		int v, int b, int nb_flags,
-		int verbose_level);
-	void init_incidence_geometry_from_string_of_row_ranks(
-		std::string &data,
-		int v, int b, int r,
-		int verbose_level);
-	void init_large_set(
-		long int *data, int data_sz, int v, int b, int k, int design_sz,
-		int verbose_level);
-	void init_large_set_from_string(
-		std::string &data_text, int v, int k, int design_sz,
-		int verbose_level);
-	void encoding_size(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_point_set(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_line_set(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_points_and_lines(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_packing(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_large_set(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void encoding_size_incidence_geometry(
-			int &nb_rows, int &nb_cols,
-			int verbose_level);
-	void canonical_form_given_canonical_labeling(
-			int *canonical_labeling,
-			data_structures::bitvector *&B,
-			int verbose_level);
-	void encode_incma(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_point_set(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_line_set(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_points_and_lines(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_packing(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_large_set(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_incidence_geometry(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void encode_incma_and_make_decomposition(
-			combinatorics::encoded_combinatorial_object *&Enc,
-			incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
-	void encode_object(
-			long int *&encoding, int &encoding_sz,
-		int verbose_level);
-	void encode_object_points(
-			long int *&encoding, int &encoding_sz,
-		int verbose_level);
-	void encode_object_lines(
-			long int *&encoding, int &encoding_sz,
-		int verbose_level);
-	void encode_object_points_and_lines(
-			long int *&encoding, int &encoding_sz,
-			int verbose_level);
-	void encode_object_packing(
-			long int *&encoding, int &encoding_sz,
-		int verbose_level);
-	void encode_object_incidence_geometry(
-			long int *&encoding, int &encoding_sz, int verbose_level);
-	void encode_object_large_set(
-			long int *&encoding, int &encoding_sz, int verbose_level);
-	void run_nauty(
-			int f_compute_canonical_form,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
-			combinatorics::encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void canonical_labeling(
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-	void run_nauty_basic(
-			l1_interfaces::nauty_output *&NO,
-			int verbose_level);
-
-};
-
-
 
 // #############################################################################
 // point_line.cpp
@@ -2042,10 +1837,14 @@ public:
 			int *MOLS, int verbose_level);
 	// needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 	// lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
-	int &MOLSsxb(int s, int x, int b);
-	int &MOLSaddition(int a, int b);
-	int &MOLSmultiplication(int a, int b);
-	int ternary_field_is_linear(int *MOLS, int verbose_level);
+	int &MOLSsxb(
+			int s, int x, int b);
+	int &MOLSaddition(
+			int a, int b);
+	int &MOLSmultiplication(
+			int a, int b);
+	int ternary_field_is_linear(
+			int *MOLS, int verbose_level);
 	void print_MOLS(
 			std::ostream &ost);
 
@@ -2168,6 +1967,15 @@ public:
 	int nb_absolute_lines;
 	int nb_self_dual_lines;
 
+	int nb_ranks;
+	int *rank_sequence;
+	int *rank_sequence_opposite;
+	long int *nb_objects;
+	long int *offset;
+	int total_degree;
+
+	int *Mtx; // [d * d]
+
 
 	polarity();
 	~polarity();
@@ -2175,13 +1983,21 @@ public:
 			projective_space *P, int verbose_level);
 	void init_general_polarity(
 			projective_space *P, int *Mtx, int verbose_level);
+	void init_ranks(
+			int verbose_level);
 	void determine_absolute_points(
 			int *&f_absolute, int verbose_level);
 	void determine_absolute_lines(
 			int verbose_level);
 	void init_reversal_polarity(
 			projective_space *P, int verbose_level);
-	void report(std::ostream &f);
+	long int image_of_element(
+			int *Elt, int rho, long int a,
+			projective_space *P,
+			algebra::matrix_group *M,
+			int verbose_level);
+	void report(
+			std::ostream &f);
 
 };
 
@@ -2422,7 +2238,8 @@ public:
 
 	projective_space_plane();
 	~projective_space_plane();
-	void init(projective_space *P, int verbose_level);
+	void init(
+			projective_space *P, int verbose_level);
 	int determine_line_in_plane(
 			long int *two_input_pts,
 		int *three_coeffs,
@@ -3269,7 +3086,8 @@ public:
 			int *x4, int *y4, int *v);
 	void print_by_lines();
 	void print_by_points();
-	int find_line(int line);
+	int find_line(
+			int line);
 };
 
 

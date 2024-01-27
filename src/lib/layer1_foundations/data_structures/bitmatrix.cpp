@@ -31,7 +31,8 @@ bitmatrix::~bitmatrix()
 	}
 }
 
-void bitmatrix::init(int m, int n, int verbose_level)
+void bitmatrix::init(
+		int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int n1, sz, i;
@@ -172,7 +173,8 @@ void bitmatrix::zero_out()
 	}
 }
 
-int bitmatrix::s_ij(int i, int j)
+int bitmatrix::s_ij(
+		int i, int j)
 {
 	int jj, bit;
 	uint32_t mask;
@@ -195,7 +197,8 @@ int bitmatrix::s_ij(int i, int j)
 		return 0;
 }
 
-void bitmatrix::m_ij(int i, int j, int a)
+void bitmatrix::m_ij(
+		int i, int j, int a)
 {
 	int jj, bit;
 	uint32_t mask;

@@ -140,6 +140,7 @@ void design_create::init(
 		}
 
 
+
 	}
 	else if (Descr->f_catalogue) {
 
@@ -170,7 +171,7 @@ void design_create::init(
 
 		apps_algebra::any_group *AG;
 
-		AG = Get_object_of_type_any_group(Descr->list_of_base_blocks_group_label);
+		AG = Get_any_group(Descr->list_of_base_blocks_group_label);
 
 		A = A2 = AG->A; // ToDo!
 
@@ -431,16 +432,22 @@ void design_create::init(
 				blocks, m, k, verbose_level);
 
 
+		if (f_v) {
+			cout << "design_create::init "
+					"blocks:" << endl;
+			Int_matrix_print(blocks, m, k);
+		}
+
 
 		f_has_set = false;
 		v = degree;
-		b = sz;
+		b = m;
 
 		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
 		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
 		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
-
+#if 0
 		A = NEW_OBJECT(actions::action);
 
 #if 0
@@ -450,6 +457,7 @@ void design_create::init(
 			f_no_base = true;
 		}
 #endif
+
 		A->Known_groups->init_symmetric_group(degree, verbose_level);
 
 		//A2 = NEW_OBJECT(actions::action);
@@ -459,7 +467,8 @@ void design_create::init(
 		Aut_on_lines = NULL;
 		f_has_group = false;
 		Sg = NULL;
-
+#endif
+		f_has_group = false;
 
 		if (f_v) {
 			cout << "design_create::init before compute_incidence_matrix_from_blocks" << endl;
@@ -549,6 +558,124 @@ void design_create::init(
 
 
 	}
+	else if (Descr->f_linear_space_from_latin_square) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_linear_space_from_latin_square" << endl;
+		}
+
+		int *Mtx;
+		int m1, m2, s;
+
+
+
+		Get_matrix(Descr->linear_space_from_latin_square_name, Mtx, m1, m2);
+
+		if (m1 != m2) {
+			cout << "design_create::init the matrix must be square" << endl;
+			exit(1);
+		}
+
+		s = m1;
+
+
+		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		degree = 3 * s;
+
+		combinatorics::combinatorics_domain Combi;
+		long int nb_blocks;
+
+
+		Combi.create_linear_space_from_latin_square(
+				Mtx, s,
+				v, k,
+				set /* Blocks */, nb_blocks,
+				verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_linear_space_from_latin_square nb_blocks=" << nb_blocks << endl;
+		}
+
+		sz = nb_blocks;
+		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		f_has_set = true;
+		v = degree;
+		b = sz;
+
+		prefix = "latin_square_order" + std::to_string(s) + "_" + Descr->linear_space_from_latin_square_name;
+		label_txt = "latin_square_order" + std::to_string(s) + "_" + Descr->linear_space_from_latin_square_name;
+		label_tex = "latin\\_square\\_order" + std::to_string(s) + "\\_" + Descr->linear_space_from_latin_square_name;
+
+#if 0
+		A = NEW_OBJECT(actions::action);
+
+#if 0
+		int f_no_base = false;
+
+		if (Descr->f_no_group) {
+			f_no_base = true;
+		}
+#endif
+
+		A->Known_groups->init_symmetric_group(degree, verbose_level);
+
+		//A2 = NEW_OBJECT(actions::action);
+		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = false;
+		Sg = NULL;
+#endif
+		f_has_group = false;
+
+
+		if (f_v) {
+			cout << "design_create::init before compute_incidence_matrix" << endl;
+		}
+
+		compute_incidence_matrix(verbose_level);
+
+		if (f_v) {
+			cout << "design_create::init after compute_incidence_matrix" << endl;
+		}
+
+		// extend the incidence matrix by three blocks in the beginning to separate the parts:
+
+		int *incma0;
+		int b0, h, u, i, j;
+
+		incma0 = incma;
+		b0 = b;
+
+		b += 3;
+		incma = NEW_int(v * b);
+		Int_vec_zero(incma, v * b);
+		for (h = 0; h < 3; h++) {
+			for (u = 0; u < s; u++) {
+				i = h * s + u;
+				incma[i * b + h] = 1;
+				nb_inc++;
+			}
+		}
+		for (j = 0; j < b0; j++) {
+			for (i = 0; i < v; i++) {
+				incma[i * b + 3 + j] = incma0[i * b0 + j];
+			}
+		}
+		FREE_int(incma0);
+		f_has_set = false;
+
+		FREE_int(Mtx);
+
+
+	}
+
+
 	else {
 		cout << "design_create::init no design created" << endl;
 		sz = 0;
@@ -903,6 +1030,8 @@ void design_create::compute_incidence_matrix_from_blocks(
 			incma[i * b + j] = 1;
 		}
 	}
+
+	nb_inc = nb_blocks * k;
 
 	f_has_incma = true;
 

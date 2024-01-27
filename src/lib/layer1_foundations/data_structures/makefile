@@ -9,12 +9,7 @@ MODULES = \
 	algorithms.o \
 	bitmatrix.o \
 	bitvector.o \
-	classify_bitvectors.o \
-	classify_using_canonical_forms.o \
 	data_file.o \
-	data_input_stream_description_element.o \
-	data_input_stream_description.o \
-	data_input_stream.o \
 	data_structures_global.o \
 	fancy_set.o \
 	int_matrix.o \

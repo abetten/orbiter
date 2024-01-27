@@ -16,6 +16,7 @@ all: \
   expression_parser_sajeeb \
 	algebra \
 	algebraic_geometry \
+	canonical_form_classification \
 	coding_theory \
 	combinatorics \
 	cryptography \
@@ -41,8 +42,10 @@ all: \
   
 
 
+
 algebra : algebra2 
 algebraic_geometry : algebraic_geometry2
+canonical_form_classification : canonical_form_classification2
 coding_theory : coding_theory2 
 combinatorics : combinatorics2  
 cryptography : cryptography2
@@ -69,6 +72,7 @@ expression_parser_sajeeb : expression_parser_sajeeb2
 
 algebra2 : ; cd algebra; $(MAKE)
 algebraic_geometry2 : ; cd algebraic_geometry; $(MAKE)
+canonical_form_classification2 : ; cd canonical_form_classification; $(MAKE)
 coding_theory2 : ; cd coding_theory; $(MAKE)
 combinatorics2 : ; cd combinatorics; $(MAKE)
 cryptography2 : ; cd cryptography; $(MAKE)
@@ -97,6 +101,7 @@ expression_parser_sajeeb2:
 clean:
 	cd algebra; $(MAKE) clean
 	cd algebraic_geometry; $(MAKE) clean
+	cd canonical_form_classification; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
 	cd cryptography; $(MAKE) clean

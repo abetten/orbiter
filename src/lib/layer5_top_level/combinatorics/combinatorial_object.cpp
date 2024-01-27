@@ -41,7 +41,7 @@ combinatorial_object::~combinatorial_object()
 
 
 void combinatorial_object::init(
-		data_structures::data_input_stream_description
+		canonical_form_classification::data_input_stream_description
 				*Data_input_stream_description,
 		int verbose_level)
 {
@@ -53,7 +53,7 @@ void combinatorial_object::init(
 	combinatorial_object::Data_input_stream_description = Data_input_stream_description;
 
 
-	IS = NEW_OBJECT(data_structures::data_input_stream);
+	IS = NEW_OBJECT(canonical_form_classification::data_input_stream);
 
 	if (f_v) {
 		cout << "combinatorial_object::init "

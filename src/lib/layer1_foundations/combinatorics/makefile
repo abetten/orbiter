@@ -10,15 +10,11 @@ MODULES = \
 		apn_functions.o \
 		boolean_function_domain.o \
 		brick_domain.o \
-		classification_of_objects_description.o \
-		classification_of_objects_report_options.o \
-		classification_of_objects.o \
 		combinatorics_domain.o \
 		decomposition_scheme.o \
 		decomposition.o \
 		domino_assignment.o \
 		domino_change.o \
-		encoded_combinatorial_object.o \
 		geo_parameter.o \
 		pentomino_puzzle.o \
 		polynomial_function_domain.o \

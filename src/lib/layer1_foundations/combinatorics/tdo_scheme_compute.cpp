@@ -30,7 +30,7 @@ tdo_scheme_compute::~tdo_scheme_compute()
 }
 
 void tdo_scheme_compute::init(
-		encoded_combinatorial_object *Enc,
+		canonical_form_classification::encoded_combinatorial_object *Enc,
 		int max_depth,
 		int verbose_level)
 {

@@ -39,6 +39,29 @@ public:
 	actions::action *A_affine;
 		// restricted action on affine points
 
+	int nb_sol; // before isomorphism test
+	int nb_orbits; // after isomorphism test
+	std::vector<int> orbit_first;
+	std::vector<int> orbit_length;
+	std::vector<std::vector<int> > Bent_function_table;
+	std::vector<std::vector<int> > Equation_table;
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// it happens that two sets have the same hash value.
+		// map cannot handle that.
+
+	std::vector<void *> Orb_vector; // [nb_orbits]
+	std::vector<void *> Stab_gens_vector; // [nb_orbits]
+
+	//orbits_schreier::orbit_of_equations *Orb;
+	//groups::strong_generators *Stab_gens;
+
+
 	boolean_function_classify();
 	~boolean_function_classify();
 
@@ -47,6 +70,12 @@ public:
 			actions::action *A,
 			int verbose_level);
 	void search_for_bent_functions(
+			int verbose_level);
+	void print();
+	void print_orbits_sorted();
+	void print_orbit_reps_with_minimum_weight();
+	void export_orbit(int idx,
+			data_structures::int_matrix *&M,
 			int verbose_level);
 
 };
@@ -100,15 +129,15 @@ public:
 	int f_canonical_form_PG_has_PA;
 	projective_geometry::projective_space_with_action
 		*Canonical_form_PG_PA;
-	combinatorics::classification_of_objects_description
+	canonical_form_classification::classification_of_objects_description
 		*Canonical_form_PG_Descr;
 
 	int f_canonical_form;
-	combinatorics::classification_of_objects_description
+	canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
 
 	int f_report;
-	combinatorics::classification_of_objects_report_options
+	canonical_form_classification::classification_of_objects_report_options
 		*Classification_of_objects_report_options;
 
 	int f_draw_incidence_matrices;
@@ -220,23 +249,23 @@ public:
 #endif
 	void draw_incidence_matrices(
 			std::string &prefix,
-			data_structures::data_input_stream *IS,
+			canonical_form_classification::data_input_stream *IS,
 			int verbose_level);
 	void unpack_from_restricted_action(
 			std::string &prefix,
 			std::string &group_label,
-			data_structures::data_input_stream *IS,
+			canonical_form_classification::data_input_stream *IS,
 			int verbose_level);
 	void line_covering_type(
 			std::string &prefix,
 			std::string &projective_space_label,
 			std::string &lines,
-			data_structures::data_input_stream *IS,
+			canonical_form_classification::data_input_stream *IS,
 			int verbose_level);
 	void line_type(
 			std::string &prefix,
 			std::string &projective_space_label,
-			data_structures::data_input_stream *IS,
+			canonical_form_classification::data_input_stream *IS,
 			int verbose_level);
 
 };
@@ -253,18 +282,18 @@ public:
 
 class combinatorial_object {
 public:
-	data_structures::data_input_stream_description
+	canonical_form_classification::data_input_stream_description
 		*Data_input_stream_description;
 
-	data_structures::data_input_stream *IS;
+	canonical_form_classification::data_input_stream *IS;
 
-	combinatorics::classification_of_objects *Classification;
+	canonical_form_classification::classification_of_objects *Classification;
 	canonical_form::classification_of_combinatorial_objects *Classification_CO;
 
 	combinatorial_object();
 	~combinatorial_object();
 	void init(
-			data_structures::data_input_stream_description
+			canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
 
@@ -607,7 +636,7 @@ public:
 
 
 	int f_canonical_form;
-	combinatorics::classification_of_objects_description
+	canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
 
 	int f_extract_solutions_by_index_csv;
@@ -677,7 +706,7 @@ public:
 			int selected_orbit_length,
 			int verbose_level);
 	void do_canonical_form(
-			combinatorics::classification_of_objects_description
+			canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
@@ -745,6 +774,9 @@ public:
 	int f_wreath_product_designs;
 	int wreath_product_designs_n;
 	int wreath_product_designs_k;
+
+	int f_linear_space_from_latin_square;
+	std::string linear_space_from_latin_square_name;
 
 	int f_no_group;
 

@@ -588,15 +588,22 @@ void spread_classify::init2(
 		cout << "spread_classify::init2" << endl;
 	}
 
-	if (!Descr->f_poset_classification_control) {
-		cout << "spread_classify::init2 need -poset_classification_control <options> -end" << endl;
+	poset_classification::poset_classification_control *Control;
+
+	if (Descr->f_poset_classification_control) {
+		Control = Get_poset_classification_control(
+				Descr->poset_classification_control_label);
+
+	}
+	else if (Descr->f_poset_classification_control_pointer) {
+		Control = Descr->Control;
+	}
+	else {
+		cout << "spread_classify::init2 need -poset_classification_control <options> or pointer" << endl;
 		exit(1);
 	}
 
-	poset_classification::poset_classification_control *Control;
 
-	Control = Get_poset_classification_control(
-			Descr->poset_classification_control_label);
 
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);

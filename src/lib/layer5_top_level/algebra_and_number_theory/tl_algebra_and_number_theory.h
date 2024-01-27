@@ -751,6 +751,10 @@ public:
 	std::string direct_product_subgroup_order;
 	std::string direct_product_subgroup_gens;
 
+	int f_polarity_extension;
+	std::string polarity_extension_input;
+	std::string polarity_extension_PA;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -1064,6 +1068,9 @@ public:
 	void create_product_action(
 			group_modification_description *description,
 			int verbose_level);
+	void create_polarity_extension(
+			group_modification_description *description,
+			int verbose_level);
 
 };
 
@@ -1298,6 +1305,16 @@ public:
 	std::string on_cubic_surfaces_PA;
 	std::string on_cubic_surfaces_control;
 
+	int f_classify_semifields;
+	std::string classify_semifields_PA;
+	std::string classify_semifields_control;
+	semifields::semifield_classify_description
+		*Classify_semifields_description;
+
+	int f_on_boolean_functions;
+	std::string on_boolean_functions_PA;
+
+
 	int f_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier_description
 		*Canonical_form_classifier_description;
@@ -1366,6 +1383,12 @@ public:
 	int f_has_cubic_surfaces;
 	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
 
+	int f_has_semifields;
+	semifields::semifield_classify_with_substructure *Semifields;
+
+	int f_has_boolean_functions;
+	combinatorics::boolean_function_domain *BF;
+	apps_combinatorics::boolean_function_classify *BFC;
 
 	int f_has_classification_by_canonical_form;
 	canonical_form::canonical_form_classifier *Canonical_form_classifier;

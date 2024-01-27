@@ -140,7 +140,8 @@ void semifield_classify_with_substructure::init(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init before Sub->SC->init" << endl;
 	}
-	Sub->SC->init(PA, k, Control,
+	Sub->SC->init(
+			PA, k, Control,
 			Descr->level_two_prefix,
 			Descr->level_three_prefix,
 			verbose_level - 1);
@@ -176,21 +177,25 @@ void semifield_classify_with_substructure::init(
 	L2 = NEW_OBJECT(semifield_level_two);
 
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init before L2->init" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"before L2->init" << endl;
 	}
 	L2->init(Sub->SC, verbose_level);
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init after L2->init" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"after L2->init" << endl;
 	}
 
 
 #if 1
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init before L2->compute_level_two" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"before L2->compute_level_two" << endl;
 	}
 	L2->compute_level_two(4, verbose_level);
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init after L2->compute_level_two" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"after L2->compute_level_two" << endl;
 	}
 #else
 	L2->read_level_info_file(verbose_level);
@@ -199,13 +204,15 @@ void semifield_classify_with_substructure::init(
 	Sub->L3 = NEW_OBJECT(semifield_lifting);
 
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init before L3->init_level_three" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"before L3->init_level_three" << endl;
 	}
 	Sub->L3->init_level_three(L2,
 			true /* f_prefix */, Sub->SC->level_three_prefix,
 			verbose_level);
 	if (f_v) {
-		cout << "semifield_classify_with_substructure::init after L3->init_level_three" << endl;
+		cout << "semifield_classify_with_substructure::init "
+				"after L3->init_level_three" << endl;
 	}
 
 
@@ -248,14 +255,16 @@ void semifield_classify_with_substructure::read_data(
 	}
 	Fio.Csv_file_support->int_matrix_read_csv(
 			fname_FstLen,
-		Sub->FstLen, Sub->nb_orbits_at_level_3, mtx_n, verbose_level);
+			Sub->FstLen, Sub->nb_orbits_at_level_3, mtx_n,
+			verbose_level);
 	Sub->Len = NEW_int(Sub->nb_orbits_at_level_3);
 	for (i = 0; i < Sub->nb_orbits_at_level_3; i++) {
 		Sub->Len[i] = Sub->FstLen[i * 2 + 1];
 	}
 	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname_Data, Sub->Data,
-			Sub->nb_solutions, Sub->data_size, verbose_level);
+			Sub->nb_solutions, Sub->data_size,
+			verbose_level);
 
 
 	if (f_v) {
@@ -675,12 +684,13 @@ void semifield_classify_with_substructure::latex_report(
 		}
 
 	{
-		ofstream fp(fname);
+		ofstream ost(fname);
 		l1_interfaces::latex_interface L;
 
 
-		//latex_head_easy(fp);
-		L.head(fp,
+		//latex_head_easy(ost);
+		L.head(
+				ost,
 			false /* f_book */,
 			true /* f_title */,
 			title,
@@ -693,6 +703,11 @@ void semifield_classify_with_substructure::latex_report(
 			extra_praeamble /* extra_praeamble */);
 
 
+		if (Semifields == NULL) {
+			cout << "semifield_classify_with_substructure::latex_report "
+					"Semifields == NULL" << endl;
+			exit(1);
+		}
 		long int *Go;
 
 
@@ -705,18 +720,18 @@ void semifield_classify_with_substructure::latex_report(
 
 		C.init_lint(Go, Semifields->nb_orbits, false, 0);
 
-		fp << "\\section*{Summary}" << endl;
-		fp << "Classification by stabilizer order:\\\\" << endl;
-		fp << "$$" << endl;
-		C.print_array_tex(fp, true /*f_backwards */);
-		fp << "$$" << endl;
+		ost << "\\section*{Summary}" << endl;
+		ost << "Classification by stabilizer order:\\\\" << endl;
+		ost << "$$" << endl;
+		C.print_array_tex(ost, true /*f_backwards */);
+		ost << "$$" << endl;
 
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
 					"before L2->print_representatives" << endl;
 			}
 
-		L2->report(fp, verbose_level);
+		L2->report(ost, verbose_level);
 
 		if (f_v) {
 			cout << "semifield_classify_with_substructure::latex_report "
@@ -728,7 +743,8 @@ void semifield_classify_with_substructure::latex_report(
 					"before Semifields->print_latex" << endl;
 			}
 
-		Semifields->print_latex(fp,
+		Semifields->print_latex(
+				ost,
 			title,
 			true /* f_print_stabilizer_gens */,
 			true,
@@ -742,14 +758,15 @@ void semifield_classify_with_substructure::latex_report(
 			}
 
 		if (Descr->f_identify_semifields_from_file) {
-			fp << "\\clearpage" << endl;
-			fp << "\\section*{Identification of Rua types}" << endl;
-			fp << "The $i$-th row, $j$-th column of the table is the number $c$ "
+			ost << "\\clearpage" << endl;
+			ost << "\\section*{Identification of Rua types}" << endl;
+			ost << "The $i$-th row, $j$-th column of the table is the number $c$ "
 					"of the isotopy class in the list above which corresponds "
 					"to the $j$-th element in the Knuth orbit of the $i$-th "
 					"class in the R\\'ua labeling.\\\\" << endl;
 			//fp << "$$" << endl;
-			L.print_integer_matrix_tex_block_by_block(fp,
+			L.print_integer_matrix_tex_block_by_block(
+					ost,
 					identify_semifields_from_file_Po,
 					identify_semifields_from_file_m, 6, 40 /* block_width */);
 
@@ -772,9 +789,9 @@ void semifield_classify_with_substructure::latex_report(
 		Po2 = NEW_int(Sub->N2);
 		PO2 = NEW_int(Semifields->nb_orbits * Sub->N2);
 
-		fp << "\\clearpage" << endl;
-		fp << "\\section*{Substructures of dimension two}" << endl;
-		fp << "\\begin{enumerate}" << endl;
+		ost << "\\clearpage" << endl;
+		ost << "\\section*{Substructures of dimension two}" << endl;
+		ost << "\\begin{enumerate}" << endl;
 		for (orbit_idx = 0; orbit_idx < Semifields->nb_orbits; orbit_idx++) {
 
 
@@ -793,18 +810,18 @@ void semifield_classify_with_substructure::latex_report(
 			}
 
 			Int_vec_copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
-			fp << "\\item" << endl;
-			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
-			fp << " has  type ";
+			ost << "\\item" << endl;
+			ost << orbit_idx << " / " << Semifields->nb_orbits << endl;
+			ost << " has  type ";
 			data_structures::tally C;
 
 			C.init(Po2, Sub->N2, false, 0);
-			fp << "$";
-			C.print_bare_tex(fp, false /* f_backwards */);
-			fp << "$";
-			fp << "\\\\" << endl;
+			ost << "$";
+			C.print_bare_tex(ost, false /* f_backwards */);
+			ost << "$";
+			ost << "\\\\" << endl;
 		}
-		fp << "\\end{enumerate}" << endl;
+		ost << "\\end{enumerate}" << endl;
 
 		{
 		string fname;
@@ -816,7 +833,7 @@ void semifield_classify_with_substructure::latex_report(
 		FREE_int(Po2);
 		FREE_int(PO2);
 
-		L.foot(fp);
+		L.foot(ost);
 	}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;

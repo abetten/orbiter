@@ -287,7 +287,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -298,7 +298,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal_p = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -309,7 +309,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal_m = true;
 			f_semilinear = false;
 			if (f_v) {
@@ -320,7 +320,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal = true;
 			f_semilinear = true;
 			if (f_v) {
@@ -331,7 +331,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal_p = true;
 			f_semilinear = true;
 			if (f_v) {
@@ -342,7 +342,7 @@ int linear_group_description::read_arguments(
 			f_n = true;
 			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			f_projective = true;
+			//f_projective = true;
 			f_orthogonal_m = true;
 			f_semilinear = true;
 			if (f_v) {

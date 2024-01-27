@@ -252,6 +252,9 @@ public:
 	int f_poset_classification_control;
 	std::string poset_classification_control_label;
 
+	int f_poset_classification_control_pointer;
+	poset_classification::poset_classification_control *Control;
+
 	int f_output_prefix;
 	std::string output_prefix;
 

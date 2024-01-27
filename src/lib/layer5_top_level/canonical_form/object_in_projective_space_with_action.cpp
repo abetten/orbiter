@@ -36,7 +36,7 @@ object_in_projective_space_with_action::~object_in_projective_space_with_action(
 }
 
 void object_in_projective_space_with_action::init(
-		geometry::object_with_canonical_form *OwCF,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 	long int ago,
 	groups::strong_generators *Aut_gens,
 	int *canonical_labeling,
@@ -119,7 +119,7 @@ void object_in_projective_space_with_action::report(
 	{
 		interfaces::nauty_interface_with_group Nau;
 		l1_interfaces::nauty_output *NO;
-		combinatorics::encoded_combinatorial_object *Enc;
+		canonical_form_classification::encoded_combinatorial_object *Enc;
 
 		NO = NEW_OBJECT(l1_interfaces::nauty_output);
 		NO->nauty_output_allocate(nb_r + nb_c,
@@ -197,7 +197,7 @@ void object_in_projective_space_with_action::report(
 
 
 
-	combinatorics::encoded_combinatorial_object *Enc;
+	canonical_form_classification::encoded_combinatorial_object *Enc;
 	geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 

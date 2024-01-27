@@ -23,6 +23,7 @@ MODULES = \
 	interface_matrix_group.o \
 	interface_perm_group.o \
 	interface_permutation_representation.o \
+	interface_polarity_extension.o \
 	interface_wreath_product.o \
 	known_groups.o \
 	stabilizer_chain_base_data.o 

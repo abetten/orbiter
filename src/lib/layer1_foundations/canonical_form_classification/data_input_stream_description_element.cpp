@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer1_foundations {
-namespace data_structures {
+namespace canonical_form_classification {
 
 
 data_input_stream_description_element::data_input_stream_description_element()

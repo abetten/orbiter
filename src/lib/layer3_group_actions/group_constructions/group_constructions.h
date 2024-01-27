@@ -32,18 +32,32 @@ public:
 	std::string label;
 	std::string label_tex;
 
+	// The new permutation domain is partitioned into three parts:
+	// A) the domain of M1,
+	// B) the domain of M2,
+	// C) the cartesian product of domain 1 with domain 2
 
-	int degree_of_matrix_group1;
+	// a group element is represented as a pair (a,b)
+	// with a in M1 and b in M2.
+	// a and b are stored consecutively
+
+
+	int degree_of_matrix_group1; // |A|
 	int dimension_of_matrix_group1;
-	int degree_of_matrix_group2;
+
+	int degree_of_matrix_group2; // |B|
 	int dimension_of_matrix_group2;
-	int degree_of_product_action;
-	int degree_overall;
-	int low_level_point_size;
-	int make_element_size;
-	int elt_size_int;
+
+	int degree_of_product_action; // = |C| = |A| * |B|
+
+	int degree_overall; // = |A| + |B| + |C|
+
+	int low_level_point_size; // = dimension_of_matrix_group1 + dimension_of_matrix_group2
+	int make_element_size; // = M1->make_element_size + M2->make_element_size
+	int elt_size_int; // = M1->elt_size_int + M2->elt_size_int
 
 	int *perm_offset_i; // [3]
+	// perm_offset_i[] is the start of A, B, C respectively.
 	int *tmp_Elt1;
 
 	int bits_per_digit1;
@@ -62,8 +76,8 @@ public:
 	long int *base_for_component2;
 	int *tl_for_component2;
 
-	int base_length;
-	long int *the_base;
+	int base_length; // = base_len_in_component1 + base_len_in_component2
+	long int *the_base; // the union of the two bases, as a subset of A \cup B.
 	int *the_transversal_length;
 
 	data_structures::page_storage *Elts;
@@ -88,6 +102,8 @@ public:
 			int *A, int *Av, int verbose_level);
 	int offset_i(
 			int i);
+	// offset_i[] is the beginning of the i-th component
+	// in the element representation
 	void element_pack(
 			int *Elt, uchar *elt);
 	void element_unpack(
@@ -530,6 +546,126 @@ public:
 	void element_print_latex(
 			int *Elt, std::ostream &ost);
 };
+
+
+// #############################################################################
+// polarity_extension.cpp
+// #############################################################################
+
+//! the extension of a matrix group by a polarity
+
+class polarity_extension {
+
+public:
+	algebra::matrix_group *M;
+	field_theory::finite_field *F;
+
+	geometry::projective_space *P;
+	geometry::polarity *Polarity;
+
+	std::string label;
+	std::string label_tex;
+
+	// The new permutation domain is partitioned into three parts:
+	// A) the two element set {0,1},
+	// B) the new domain obtained from P,
+	// the projective space on which M acts.
+
+	// a group element is represented as a pair (a,b)
+	// with a in M1 and b in {0,1}.
+	// a and b are stored consecutively
+
+
+	int degree_of_matrix_group; // |B|
+	int dimension_of_matrix_group;
+
+
+	int degree_overall; // = 2 + |B|
+
+	//int low_level_point_size; // = dimension_of_matrix_group
+	int make_element_size; // = M->make_element_size + 1
+	int elt_size_int; // = M->elt_size_int + 1
+
+	int *element_coding_offset; // [2]
+	int *perm_offset_i; // [2]
+	// perm_offset_i[] is the start of A, B respectively.
+	int *tmp_Elt1;
+
+	int bits_per_digit;
+
+	int bits_per_elt;
+	int char_per_elt;
+
+	uchar *elt1;
+
+	int base_len_in_component1;
+	long int *base_for_component1;
+	int *tl_for_component1;
+
+	int base_len_in_component2;
+	long int *base_for_component2;
+	int *tl_for_component2;
+
+	int base_length;
+	long int *the_base;
+	int *the_transversal_length;
+
+	data_structures::page_storage *Elts;
+
+	polarity_extension();
+	~polarity_extension();
+	void init(
+			algebra::matrix_group *M,
+			geometry::projective_space *P,
+			geometry::polarity *Polarity,
+			int verbose_level);
+	long int element_image_of(
+			int *Elt, long int a, int verbose_level);
+	void element_one(
+			int *Elt);
+	int element_is_one(
+			int *Elt);
+	void element_mult(
+			int *A, int *B, int *AB, int verbose_level);
+	void element_move(
+			int *A, int *B, int verbose_level);
+	void element_invert(
+			int *A, int *Av, int verbose_level);
+	void element_pack(
+			int *Elt, uchar *elt);
+	void element_unpack(
+			uchar *elt, int *Elt);
+	void put_digit(
+			uchar *elt, int f, int i, int d);
+	int get_digit(
+			uchar *elt, int f, int i);
+	void make_element(
+			int *Elt, int *data, int verbose_level);
+	void element_print_easy(
+			int *Elt, std::ostream &ost);
+	void element_print_easy_latex(
+			int *Elt, std::ostream &ost);
+	void element_print_for_make_element(
+			int *Elt, std::ostream &ost);
+	void element_print_for_make_element_no_commas(
+			int *Elt, std::ostream &ost);
+	void compute_base_and_transversals(
+			int verbose_level);
+	void make_strong_generators_data(
+			int *&data,
+			int &size, int &nb_gens, int verbose_level);
+#if 0
+	void lift_generators(
+			groups::strong_generators *SG1,
+			groups::strong_generators *SG2,
+			actions::action *A,
+			groups::strong_generators *&SG3,
+			int verbose_level);
+#endif
+
+};
+
+
 
 
 // #############################################################################

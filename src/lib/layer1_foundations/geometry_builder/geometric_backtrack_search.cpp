@@ -33,7 +33,8 @@ geometric_backtrack_search::~geometric_backtrack_search()
 	}
 }
 
-void geometric_backtrack_search::init(gen_geo *gg, int verbose_level)
+void geometric_backtrack_search::init(
+		gen_geo *gg, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -57,7 +58,8 @@ void geometric_backtrack_search::init(gen_geo *gg, int verbose_level)
 }
 
 
-int geometric_backtrack_search::First(int verbose_level)
+int geometric_backtrack_search::First(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -92,7 +94,8 @@ int geometric_backtrack_search::First(int verbose_level)
 	}
 }
 
-int geometric_backtrack_search::Next(int verbose_level)
+int geometric_backtrack_search::Next(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -127,7 +130,8 @@ int geometric_backtrack_search::Next(int verbose_level)
 	}
 }
 
-int geometric_backtrack_search::BlockFirst(int I, int verbose_level)
+int geometric_backtrack_search::BlockFirst(
+		int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -164,7 +168,8 @@ int geometric_backtrack_search::BlockFirst(int I, int verbose_level)
 	}
 }
 
-int geometric_backtrack_search::BlockNext(int I, int verbose_level)
+int geometric_backtrack_search::BlockNext(
+		int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -203,7 +208,8 @@ int geometric_backtrack_search::BlockNext(int I, int verbose_level)
 
 #define GEO_LINE_SPLIT
 
-int geometric_backtrack_search::RowFirstSplit(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowFirstSplit(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -233,7 +239,8 @@ int geometric_backtrack_search::RowFirstSplit(int I, int m, int verbose_level)
 #endif
 }
 
-int geometric_backtrack_search::RowNextSplit(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowNextSplit(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -262,7 +269,8 @@ int geometric_backtrack_search::RowNextSplit(int I, int m, int verbose_level)
 #endif
 }
 
-int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
+int geometric_backtrack_search::geo_back_test(
+		int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -304,7 +312,8 @@ int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
 }
 
 
-int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowFirst0(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -382,7 +391,8 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 	return true;
 }
 
-int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowNext0(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -450,7 +460,8 @@ int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
 }
 
 
-int geometric_backtrack_search::RowFirst(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowFirst(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -483,7 +494,8 @@ int geometric_backtrack_search::RowFirst(int I, int m, int verbose_level)
 
 }
 
-int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowNext(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -517,7 +529,8 @@ int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
 	return ret;
 }
 
-int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowFirstLexLeast(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -562,7 +575,8 @@ int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level
 	}
 }
 
-int geometric_backtrack_search::RowNextLexLeast(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowNextLexLeast(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -606,7 +620,8 @@ int geometric_backtrack_search::RowNextLexLeast(int I, int m, int verbose_level)
 	}
 }
 
-int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowFirstOrderly(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -672,7 +687,8 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 	return ret;
 }
 
-void geometric_backtrack_search::place_row(int I, int m, int idx, int verbose_level)
+void geometric_backtrack_search::place_row(
+		int I, int m, int idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -694,10 +710,10 @@ void geometric_backtrack_search::place_row(int I, int m, int idx, int verbose_le
 	iso_type *It;
 	It = Row_stabilizer_orbits[i1];
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 	int J, r, j, n, j0;
 
-	OwCF = (geometry::object_with_canonical_form *) It->Canonical_forms->Objects[idx];
+	OwCF = (canonical_form_classification::object_with_canonical_form *) It->Canonical_forms->Objects[idx];
 
 
 	r = 0;
@@ -740,7 +756,8 @@ void geometric_backtrack_search::place_row(int I, int m, int idx, int verbose_le
 	}
 }
 
-int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
+int geometric_backtrack_search::RowNextOrderly(
+		int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -794,7 +811,8 @@ int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
 	return ret;
 }
 
-void geometric_backtrack_search::RowClear(int I, int m)
+void geometric_backtrack_search::RowClear(
+		int I, int m)
 {
 	int J;
 
@@ -803,7 +821,8 @@ void geometric_backtrack_search::RowClear(int I, int m)
 	}
 }
 
-int geometric_backtrack_search::ConfFirst(int I, int m, int J, int verbose_level)
+int geometric_backtrack_search::ConfFirst(
+		int I, int m, int J, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -863,7 +882,8 @@ int geometric_backtrack_search::ConfFirst(int I, int m, int J, int verbose_level
 	}
 }
 
-int geometric_backtrack_search::ConfNext(int I, int m, int J, int verbose_level)
+int geometric_backtrack_search::ConfNext(
+		int I, int m, int J, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -919,7 +939,8 @@ int geometric_backtrack_search::ConfNext(int I, int m, int J, int verbose_level)
 	}
 }
 
-void geometric_backtrack_search::ConfClear(int I, int m, int J)
+void geometric_backtrack_search::ConfClear(
+		int I, int m, int J)
 {
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, J);
 	int n;
@@ -932,7 +953,8 @@ void geometric_backtrack_search::ConfClear(int I, int m, int J)
 	}
 }
 
-int geometric_backtrack_search::XFirst(int I, int m, int J, int n, int verbose_level)
+int geometric_backtrack_search::XFirst(
+		int I, int m, int J, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -967,7 +989,8 @@ int geometric_backtrack_search::XFirst(int I, int m, int J, int n, int verbose_l
 	return ret;
 }
 
-int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_level)
+int geometric_backtrack_search::XNext(
+		int I, int m, int J, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1045,7 +1068,8 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 	return false;
 }
 
-void geometric_backtrack_search::XClear(int I, int m, int J, int n)
+void geometric_backtrack_search::XClear(
+		int I, int m, int J, int n)
 {
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, J);
 	int old_x;
@@ -1079,7 +1103,8 @@ void geometric_backtrack_search::XClear(int I, int m, int J, int n)
 	}
 }
 
-int geometric_backtrack_search::X_First(int I, int m, int J, int n, int j,
+int geometric_backtrack_search::X_First(
+		int I, int m, int J, int n, int j,
 		int verbose_level)
 // Try placing an incidence, starting from column j and moving to the right
 // j is local coordinate
@@ -1134,7 +1159,8 @@ int geometric_backtrack_search::X_First(int I, int m, int J, int n, int j,
 }
 
 
-int geometric_backtrack_search::TryToPlace(int I, int m, int J, int n, int j,
+int geometric_backtrack_search::TryToPlace(
+		int I, int m, int J, int n, int j,
 		int verbose_level)
 // Try placing an incidence in column j
 // j is local coordinate

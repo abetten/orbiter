@@ -807,6 +807,10 @@ class interface_toolkit {
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;
 
+	int f_csv_file_select_rows_complement;
+	std::string csv_file_select_rows_complement_fname;
+	std::string csv_file_select_rows_complement_text;
+
 	int f_csv_file_split_rows_modulo;
 	std::string csv_file_split_rows_modulo_fname;
 	int csv_file_split_rows_modulo_n;
@@ -1072,7 +1076,7 @@ public:
 			std::string &label,
 			orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
 			int verbose_level);
-	apps_algebra::any_group *get_object_of_type_any_group(
+	apps_algebra::any_group *get_any_group(
 			std::string &label);
 	projective_geometry::projective_space_with_action
 		*get_object_of_type_projective_space(
@@ -1292,7 +1296,7 @@ public:
 		*Symbolic_object_builder_description;
 
 	int f_combinatorial_object;
-	data_structures::data_input_stream_description
+	canonical_form_classification::data_input_stream_description
 		*Data_input_stream_description;
 
 	int f_geometry_builder;

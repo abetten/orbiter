@@ -299,7 +299,8 @@ void geometry_builder::init_description(
 
 
 
-void geometry_builder::compute_VBR(int verbose_level)
+void geometry_builder::compute_VBR(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, row, h;
@@ -361,25 +362,29 @@ void geometry_builder::print_tdo()
 	}
 }
 
-void geometry_builder::isot(int line, int verbose_level)
+void geometry_builder::isot(
+		int line, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_after_a_given_row(
 			line, Descr->f_orderly, verbose_level);
 }
 
-void geometry_builder::isot_no_vhbars(int verbose_level)
+void geometry_builder::isot_no_vhbars(
+		int verbose_level)
 {
 	gg->inc->iso_type_no_vhbars = new iso_type;
 	gg->inc->iso_type_no_vhbars->init(gg, V, Descr->f_orderly, verbose_level);
 }
 
-void geometry_builder::isot2(int line, int verbose_level)
+void geometry_builder::isot2(
+		int line, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_of_second_kind_after_a_given_row(
 			line, Descr->f_orderly, verbose_level);
 }
 
-void geometry_builder::set_split(int line, int remainder, int modulo)
+void geometry_builder::set_split(
+		int line, int remainder, int modulo)
 {
 	gg->inc->set_split(line, remainder, modulo);
 }

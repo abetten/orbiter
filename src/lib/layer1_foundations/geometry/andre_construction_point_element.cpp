@@ -89,7 +89,8 @@ void andre_construction_point_element::unrank(
 	}
 }
 
-int andre_construction_point_element::rank(int verbose_level)
+int andre_construction_point_element::rank(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int a;

@@ -792,17 +792,80 @@ void csv_file_support::do_csv_file_select_rows(
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_rows" << endl;
 	}
-	int *Rows;
-	int nb_rows;
-	data_structures::string_tools ST;
 
-	Int_vec_scan(rows_text, Rows, nb_rows);
+	do_csv_file_select_rows_worker(fname, rows_text, false, verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows done" << endl;
+	}
+}
+
+void csv_file_support::do_csv_file_select_rows_complement(
+		std::string &fname,
+		std::string &rows_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows" << endl;
+	}
+
+	do_csv_file_select_rows_worker(fname, rows_text, true, verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows done" << endl;
+	}
+}
+
+void csv_file_support::do_csv_file_select_rows_worker(
+		std::string &fname,
+		std::string &rows_text,
+		int f_complement,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_worker" << endl;
+	}
 
 	data_structures::spreadsheet S;
 
 	S.read_spreadsheet(fname, verbose_level);
+	int nb_rows_in_file;
+
+	nb_rows_in_file = S.nb_rows - 1;
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_worker nb_rows_in_file = " << nb_rows_in_file << endl;
+	}
 
 
+	int *Rows0;
+	int nb_rows0;
+	int *Rows;
+	int nb_rows;
+	data_structures::string_tools ST;
+
+	Int_vec_scan(rows_text, Rows0, nb_rows0);
+
+	Rows = NEW_int(nb_rows_in_file);
+
+	if (f_complement) {
+		Int_vec_complement_to(Rows0, Rows, nb_rows_in_file, nb_rows0);
+		nb_rows = nb_rows_in_file - nb_rows0;
+	}
+	else {
+		Int_vec_copy(Rows0, Rows, nb_rows0);
+		nb_rows = nb_rows0;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_worker restricting to the rows:" << endl;
+		Int_vec_print(cout, Rows, nb_rows);
+		cout << endl;
+	}
 
 	int i;
 
@@ -828,12 +891,15 @@ void csv_file_support::do_csv_file_select_rows(
 			<< " of size " << Fio->file_size(fname_out) << endl;
 #endif
 
+	FREE_int(Rows0);
 	FREE_int(Rows);
 
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_select_rows done" << endl;
+		cout << "csv_file_support::do_csv_file_select_rows_worker done" << endl;
 	}
 }
+
+
 
 void csv_file_support::do_csv_file_split_rows_modulo(
 		std::string &fname,
@@ -852,10 +918,6 @@ void csv_file_support::do_csv_file_split_rows_modulo(
 
 
 	int i, I;
-
-
-
-
 
 	for (I = 0; I < split_modulo; I++) {
 

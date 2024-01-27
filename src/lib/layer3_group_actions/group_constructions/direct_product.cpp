@@ -74,7 +74,7 @@ direct_product::~direct_product()
 
 	if (f_v) {
 		cout << "direct_product::~direct_product" << endl;
-		}
+	}
 	if (perm_offset_i) {
 		FREE_int(perm_offset_i);
 	}
@@ -107,7 +107,7 @@ direct_product::~direct_product()
 	}
 	if (f_v) {
 		cout << "direct_product::~direct_product finished" << endl;
-		}
+	}
 }
 
 void direct_product::init(
@@ -271,6 +271,9 @@ long int direct_product::element_image_of(
 	a0 = a;
 	b = 0;
 	if (a < M1->degree) {
+
+		// we are in A:
+
 		if (f_v) {
 			cout << "direct_product::element_image_of "
 					"we are in component " << 0
@@ -288,6 +291,10 @@ long int direct_product::element_image_of(
 		a -= M1->degree;
 		b += M1->degree;
 		if (a < M2->degree) {
+
+			// we are in B:
+
+
 			if (f_v) {
 				cout << "direct_product::element_image_of "
 						"we are in component " << 1
@@ -302,6 +309,9 @@ long int direct_product::element_image_of(
 			b += c;
 		}
 		else {
+
+			// we are in C:
+
 			a -= M2->degree;
 			b += M2->degree;
 
@@ -363,11 +373,13 @@ void direct_product::element_mult(
 	if (f_v) {
 		cout << "direct_product::element_mult" << endl;
 	}
-	M1->Element->GL_mult(A + offset_i(0),
+	M1->Element->GL_mult(
+			A + offset_i(0),
 				B + offset_i(0),
 				AB + offset_i(0),
 				0 /* verbose_level */);
-	M2->Element->GL_mult(A + offset_i(1),
+	M2->Element->GL_mult(
+			A + offset_i(1),
 				B + offset_i(1),
 				AB + offset_i(1),
 				0 /* verbose_level */);

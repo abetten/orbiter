@@ -27,7 +27,8 @@ cperm::~cperm()
 
 }
 
-void cperm::init_and_identity(int l)
+void cperm::init_and_identity(
+		int l)
 {
 	//cp_free(p);
 	data = new int[l];
@@ -44,7 +45,8 @@ void cperm::free()
 	l = 0;
 }
 
-void cperm::move_to(cperm *q)
+void cperm::move_to(
+		cperm *q)
 {
 	int i;
 	
@@ -66,7 +68,8 @@ void cperm::identity()
 	}
 }
 
-void cperm::mult(cperm *b, cperm *c)
+void cperm::mult(
+		cperm *b, cperm *c)
 /* erst a, dann b; Ergebnis nach c */
 {
 	int i, j;
@@ -82,7 +85,8 @@ void cperm::mult(cperm *b, cperm *c)
 	}
 }
 
-void cperm::inverse(cperm *b)
+void cperm::inverse(
+		cperm *b)
 /* b:= a^-1 */
 {
 	int i, j;
@@ -94,7 +98,8 @@ void cperm::inverse(cperm *b)
 	}
 }
 
-void cperm::power(cperm *res, int exp)
+void cperm::power(
+		cperm *res, int exp)
 {
 	cperm *b = NULL;
 	cperm *c = NULL;
@@ -152,7 +157,8 @@ void cperm::print()
 	cout << "]";
 }
 
-void cperm::mult_apply_forwc_r(int i, int l)
+void cperm::mult_apply_forwc_r(
+		int i, int l)
 /* a := a (i i+1 ... i+l-1). */
 {
 	int m, j, k;
@@ -177,7 +183,8 @@ void cperm::mult_apply_forwc_r(int i, int l)
 }
 
 
-void cperm::mult_apply_tau_r(int i, int j)
+void cperm::mult_apply_tau_r(
+		int i, int j)
 /* a := a (i j). */
 {
 	int k, i1, j1;
@@ -195,7 +202,8 @@ void cperm::mult_apply_tau_r(int i, int j)
 	data[j1] = i;
 }
 
-void cperm::mult_apply_tau_l(int i, int j)
+void cperm::mult_apply_tau_l(
+		int i, int j)
 /* a := (i j) a. */
 {
 	int i1, j1;
@@ -207,7 +215,8 @@ void cperm::mult_apply_tau_l(int i, int j)
 	data[j] = i1;
 }
 
-void cperm::mult_apply_backwc_l(int i, int l)
+void cperm::mult_apply_backwc_l(
+		int i, int l)
 /* a := (i+l-1 i+l-2 ... i+1 i) a. */
 {
 	int t, m;
@@ -223,76 +232,6 @@ void cperm::mult_apply_backwc_l(int i, int l)
 
 
 
-#if 0
-
-
-int cp_mult_apply_backwc_r(
-	CPERM *a, int i, int l)
-/* a := a (i+l-1 i+l-2 ... i+1 i). */
-{
-	int t[256], m, j, k;
-	
-	if (l > 256) {
-		Srfs("cp_mult_apply_backwc_r", "l > 256");
-		return ERROR;
-		}
-	for (m = 0; m < a->l; m++) {
-		j = a->a[m];
-		if (j >= i && (k = j - i) < l)
-			t[k] = m;
-		}
-	/* now: t[k] -> i+k -> i+k-1 for 1 < k < l
-	 *      t[0] -> i -> i+l-1 */
-	for (k = 1; k < l; k++)
-		a->a[t[k]] = (i + k - 1);
-	a->a[t[0]] = (i + l - 1);
-	return OK;
-}
-
-int cp_mult_apply_forwc_l(
-	CPERM *a, int i, int l)
-/* a := (i i+1 ... i+l-1) a. */
-{
-	int t, m;
-	
-	/* i+m -> i+m+1 -> a[i+m+1]  for m < l - 1 
-	 * i+l-1 -> i -> a[i] */
-	t = a->a[i];
-	for (m = 0; m < l - 1; m++)
-		a->a[i + m] = a->a[i + m + 1];
-	a->a[i+l-1] = t;
-	return OK;
-}
-
-int cp_onep(CPERM *p)
-{
-	int i;
-	
-	for (i = 0; i < p->l; i++)
-		if (p->a[i] != i)
-			return false;
-	return true;
-}
-
-int cp_cmp(CPERM *a, CPERM *b)
-{
-	int i;
-	
-	if (a->l != b->l) {
-		Srfs("cp_cmp", "a->l != b->l");
-		return 0;
-		}
-	for (i = 0; i < a->l; i++) {
-		if (a->a[i] < b->a[i])
-			return -1;
-		if (a->a[i] > b->a[i])
-			return 1;
-		}
-	return 0;
-}
-
-
-#endif
 
 
 }}}

@@ -339,7 +339,7 @@ public:
 
 	// nauty stuff:
 
-	data_structures::classify_bitvectors *CB;
+	canonical_form_classification::classify_bitvectors *CB;
 	int canonical_labeling_len;
 
 	// substructure stuff:
@@ -495,7 +495,7 @@ public:
 
 	std::string prefix;
 
-	combinatorics::classification_of_objects *CO;
+	canonical_form_classification::classification_of_objects *CO;
 
 	object_with_properties *OwP; // [CO->nb_orbits]
 
@@ -507,7 +507,7 @@ public:
 	~classification_of_combinatorial_objects();
 	void init_after_nauty(
 			std::string &prefix,
-			combinatorics::classification_of_objects *CO,
+			canonical_form_classification::classification_of_objects *CO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
@@ -515,26 +515,26 @@ public:
 			std::string &fname_base,
 			int verbose_level);
 	void classification_report(
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 						*Report_options,
 			int verbose_level);
 	void latex_report(
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_all_isomorphism_types(
 			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int i, int verbose_level);
 	void report_object(
 			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int object_idx,
 			int verbose_level);
@@ -555,7 +555,7 @@ class object_in_projective_space_with_action {
 
 public:
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 		// do not free
 
 	groups::strong_generators *Aut_gens;
@@ -569,7 +569,7 @@ public:
 	object_in_projective_space_with_action();
 	~object_in_projective_space_with_action();
 	void init(
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			long int ago,
 			groups::strong_generators *Aut_gens,
 			int *canonical_labeling,
@@ -594,7 +594,7 @@ public:
 class object_with_properties {
 public:
 
-	geometry::object_with_canonical_form *OwCF;
+	canonical_form_classification::object_with_canonical_form *OwCF;
 
 	std::string label;
 
@@ -614,7 +614,7 @@ public:
 	object_with_properties();
 	~object_with_properties();
 	void init(
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			l1_interfaces::nauty_output *NO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
@@ -624,21 +624,21 @@ public:
 	void lift_generators_to_matrix_group(
 			int verbose_level);
 	void init_object_in_projective_space(
-			geometry::object_with_canonical_form *OwCF,
+			canonical_form_classification::object_with_canonical_form *OwCF,
 			l1_interfaces::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
 	void latex_report(
 			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void compute_TDO(
 			int max_TDO_depth, int verbose_level);
 	void print_TDO(
 			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
+			canonical_form_classification::classification_of_objects_report_options
 				*Report_options);
 #if 0
 	void export_TDA_with_flag_orbits(

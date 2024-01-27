@@ -456,7 +456,7 @@ void projective_space_with_action::canonical_form(
 #endif
 
 void projective_space_with_action::canonical_labeling(
-		geometry::object_with_canonical_form *OiP,
+		canonical_form_classification::object_with_canonical_form *OiP,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -1040,7 +1040,7 @@ void projective_space_with_action::report(
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label,
 		int *genma, int m, int n,
-		combinatorics::classification_of_objects_description
+		canonical_form_classification::classification_of_objects_description
 			*Canonical_form_codes_Descr,
 		int verbose_level)
 {
@@ -1091,8 +1091,8 @@ void projective_space_with_action::canonical_form_of_code(
 				"points_as_string=" << points_as_string << endl;
 	}
 
-	data_structures::data_input_stream_description ISD;
-	data_structures::data_input_stream_description_element E;
+	canonical_form_classification::data_input_stream_description ISD;
+	canonical_form_classification::data_input_stream_description_element E;
 
 	E.init_set_of_points(points_as_string);
 	ISD.Input.push_back(E);
@@ -1148,7 +1148,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 	COAD.f_report = true;
 	COAD.Classification_of_objects_report_options =
-			NEW_OBJECT(combinatorics::classification_of_objects_report_options);
+			NEW_OBJECT(canonical_form_classification::classification_of_objects_report_options);
 	COAD.Classification_of_objects_report_options->f_prefix = true;
 	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
 	COAD.Classification_of_objects_report_options->f_export_flag_orbits = true;
