@@ -60,12 +60,14 @@ public:
 			std::string managed_variables_text,
 			int len, int verbose_level);
 	int is_integer_matrix();
-	void get_integer_matrix(int *&M, int verbose_level);
+	void get_integer_matrix(
+			int *&M, int verbose_level);
 	void get_string_representation_Sajeeb(
 			std::vector<std::string> &S);
 	void get_string_representation_formula(
 			std::vector<std::string> &S, int verbose_level);
-	void print_Sajeeb(std::ostream &ost);
+	void print_Sajeeb(
+			std::ostream &ost);
 	void print_formula_size(
 			std::ostream &ost, int verbose_level);
 	void print_formula(
@@ -87,7 +89,8 @@ public:
 			int f_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
-	void substitute(formula_vector *Source,
+	void substitute(
+			formula_vector *Source,
 			formula_vector *Target,
 			std::string &substitution_variables,
 			std::string &label_txt,
@@ -162,10 +165,14 @@ public:
 			int f_has_managed_variables,
 			std::string &managed_variables_text,
 			int verbose_level);
-	void latex_tree(int verbose_level);
-	void export_tree(int verbose_level);
-	void collect_variables(int verbose_level);
-	void print_variables(std::ostream &ost);
+	void latex_tree(
+			int verbose_level);
+	void export_tree(
+			int verbose_level);
+	void collect_variables(
+			int verbose_level);
+	void print_variables(
+			std::ostream &ost);
 
 };
 
@@ -211,7 +218,8 @@ public:
 	std::string string_representation_Sajeeb();
 	std::string string_representation_formula(
 			int f_latex, int verbose_level);
-	void print(std::ostream &ost);
+	void print(
+			std::ostream &ost);
 	void init_empty_plus_node(
 			std::string &label, std::string &label_tex,
 			int f_has_managed_variables,
@@ -653,10 +661,14 @@ public:
 	~syntax_tree_node_terminal();
 	void print_to_vector(
 			std::vector<std::string> &rep, int verbose_level);
-	void print(std::ostream &ost);
-	void print_easy(std::ostream &ost);
-	void print_expression(std::ostream &ost);
-	void print_graphviz(std::ostream &ost);
+	void print(
+			std::ostream &ost);
+	void print_easy(
+			std::ostream &ost);
+	void print_expression(
+			std::ostream &ost);
+	void print_graphviz(
+			std::ostream &ost);
 	int evaluate(
 			std::map<std::string, std::string> &symbol_table,
 			field_theory::finite_field *F,
@@ -706,7 +718,8 @@ public:
 			int value, int verbose_level);
 	void add_numerical_summand(
 			int value, int verbose_level);
-	int text_value_match(std::string &factor);
+	int text_value_match(
+			std::string &factor);
 	void add_factor(
 			std::string &factor, int exponent,
 			int verbose_level);
@@ -808,9 +821,12 @@ public:
 			int verbose_level);
 	void expand_in_place_handle_exponents(
 			int verbose_level);
-	void simplify_exponents(int verbose_level);
-	void sort_terms(int verbose_level);
-	void collect_like_terms(int verbose_level);
+	void simplify_exponents(
+			int verbose_level);
+	void sort_terms(
+			int verbose_level);
+	void collect_like_terms(
+			int verbose_level);
 	void collect_like_terms_addition(
 			int verbose_level);
 	void collect_monomial_terms(
@@ -819,21 +835,28 @@ public:
 	void collect_terms_and_coefficients(
 			data_structures::int_matrix *&I, int *&Coeff,
 			int verbose_level);
-	void simplify_constants(int verbose_level);
+	void simplify_constants(
+			int verbose_level);
 	void flatten(
 			int verbose_level);
-	void flatten_with_depth(int depth,
+	void flatten_with_depth(
+			int depth,
 			int verbose_level);
-	void flatten_post_process(int depth,
+	void flatten_post_process(
+			int depth,
 			int verbose_level);
-	void flatten_at(int i, int depth, int verbose_level);
+	void flatten_at(
+			int i, int depth, int verbose_level);
 	void delete_all_but_one_child(
 			int i, int verbose_level);
 	void delete_one_child(
 			int i, int verbose_level);
-	int is_constant_one(int verbose_level);
-	int is_constant_zero(int verbose_level);
-	void collect_variables(int verbose_level);
+	int is_constant_one(
+			int verbose_level);
+	int is_constant_zero(
+			int verbose_level);
+	void collect_variables(
+			int verbose_level);
 	int terminal_node_get_variable_index();
 	void count_nodes(
 			int &nb_add, int &nb_mult, int &nb_int,
@@ -917,7 +940,8 @@ public:
 			field_theory::finite_field *Fq,
 			int f_managed_variables, std::string &managed_variables_text,
 			int verbose_level);
-	void init_root_node(int verbose_level);
+	void init_root_node(
+			int verbose_level);
 	void init_int(
 			field_theory::finite_field *Fq, int value,
 			int verbose_level);
@@ -933,8 +957,10 @@ public:
 			int &nb_add, int &nb_mult, int &nb_int,
 			int &nb_text, int &max_degree);
 	int nb_nodes_total();
-	void print(std::ostream &ost);
-	void print_easy(std::ostream &ost);
+	void print(
+			std::ostream &ost);
+	void print_easy(
+			std::ostream &ost);
 	void print_monomial(
 			std::ostream &ost, int *monomial);
 	void export_graphviz(
@@ -1014,7 +1040,8 @@ public:
 	void add_variable(
 			std::string &var, int verbose_level);
 	int get_number_of_variables();
-	std::string &get_variable_name(int index);
+	std::string &get_variable_name(
+			int index);
 	int needs_to_be_expanded();
 	long int evaluate(
 			std::map<std::string, std::string> &symbol_table,
@@ -1022,6 +1049,11 @@ public:
 
 };
 
+// #############################################################################
+// syntax_tree_latex.cpp
+// #############################################################################
+
+//! auxiliary class to latex print syntax tree nodes
 
 
 class syntax_tree_latex {

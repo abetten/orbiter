@@ -565,7 +565,8 @@ void module::smith_normal_form(
 
 }
 
-void module::apply(int *input, int *output, int *perm,
+void module::apply(
+		int *input, int *output, int *perm,
 		int module_dimension_m, int module_dimension_n, int *module_basis,
 		int *v1, int *v2, int verbose_level)
 {

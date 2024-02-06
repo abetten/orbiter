@@ -50,7 +50,8 @@ error_pattern_generator::~error_pattern_generator()
 	}
 }
 
-void error_pattern_generator::init(crc_object *Crc_object,
+void error_pattern_generator::init(
+		crc_object *Crc_object,
 		int k, int verbose_level)
 {
 	error_pattern_generator::Crc_object = Crc_object;

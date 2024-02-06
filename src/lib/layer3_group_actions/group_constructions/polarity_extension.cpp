@@ -337,7 +337,7 @@ int polarity_extension::element_is_one(
 	if (!M->Element->GL_is_one(Elt + element_coding_offset[0])) {
 		return false;
 	}
-	if (Elt + element_coding_offset[1]) {
+	if (Elt[element_coding_offset[1]]) {
 		return false;
 	}
 	return true;

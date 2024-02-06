@@ -128,7 +128,8 @@ void int_vec::take_away(
 	}
 }
 
-int int_vec::count_number_of_nonzero_entries(int *v, int len)
+int int_vec::count_number_of_nonzero_entries(
+		int *v, int len)
 {
 	int i, n;
 
@@ -141,7 +142,8 @@ int int_vec::count_number_of_nonzero_entries(int *v, int len)
 	return n;
 }
 
-int int_vec::find_first_nonzero_entry(int *v, int len)
+int int_vec::find_first_nonzero_entry(
+		int *v, int len)
 {
 	int i;
 
@@ -154,7 +156,8 @@ int int_vec::find_first_nonzero_entry(int *v, int len)
 	exit(1);
 }
 
-void int_vec::zero(int *v, long int len)
+void int_vec::zero(
+		int *v, long int len)
 {
 	int i;
 	int *p;
@@ -164,7 +167,8 @@ void int_vec::zero(int *v, long int len)
 	}
 }
 
-int int_vec::is_zero(int *v, long int len)
+int int_vec::is_zero(
+		int *v, long int len)
 {
 	int i;
 
@@ -176,7 +180,8 @@ int int_vec::is_zero(int *v, long int len)
 	return true;
 }
 
-void int_vec::one(int *v, long int len)
+void int_vec::one(
+		int *v, long int len)
 {
 	int i;
 	int *p;
@@ -187,7 +192,8 @@ void int_vec::one(int *v, long int len)
 }
 
 
-void int_vec::mone(int *v, long int len)
+void int_vec::mone(
+		int *v, long int len)
 {
 	int i;
 	int *p;
@@ -197,7 +203,8 @@ void int_vec::mone(int *v, long int len)
 	}
 }
 
-void int_vec::copy(int *from, int *to, long int len)
+void int_vec::copy(
+		int *from, int *to, long int len)
 {
 	int i;
 	int *p, *q;
@@ -207,7 +214,8 @@ void int_vec::copy(int *from, int *to, long int len)
 	}
 }
 
-void int_vec::copy_to_lint(int *from, long int *to, long int len)
+void int_vec::copy_to_lint(
+		int *from, long int *to, long int len)
 {
 	int i;
 	int *p;
@@ -218,7 +226,8 @@ void int_vec::copy_to_lint(int *from, long int *to, long int len)
 	}
 }
 
-void int_vec::swap(int *v1, int *v2, long int len)
+void int_vec::swap(
+		int *v1, int *v2, long int len)
 {
 	int i, a;
 	int *p, *q;
@@ -230,7 +239,8 @@ void int_vec::swap(int *v1, int *v2, long int len)
 	}
 }
 
-void int_vec::delete_element_assume_sorted(int *v,
+void int_vec::delete_element_assume_sorted(
+		int *v,
 	int &len, int a)
 {
 	int idx, i;
@@ -249,7 +259,8 @@ void int_vec::delete_element_assume_sorted(int *v,
 
 
 
-void int_vec::complement(int *v, int n, int k)
+void int_vec::complement(
+		int *v, int n, int k)
 // computes the complement to v + k (v must be allocated to n elements)
 // the first k elements of v[] must be in increasing order.
 {
@@ -273,7 +284,8 @@ void int_vec::complement(int *v, int n, int k)
 	}
 }
 
-void int_vec::complement(int *v, int *w, int n, int k)
+void int_vec::complement(
+		int *v, int *w, int n, int k)
 // computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
 {
 	int j1, j2, i;
@@ -294,7 +306,8 @@ void int_vec::complement(int *v, int *w, int n, int k)
 	}
 }
 
-void int_vec::init5(int *v, int a0, int a1, int a2, int a3, int a4)
+void int_vec::init5(
+		int *v, int a0, int a1, int a2, int a3, int a4)
 {
 	v[0] = a0;
 	v[1] = a1;
@@ -303,7 +316,8 @@ void int_vec::init5(int *v, int a0, int a1, int a2, int a3, int a4)
 	v[4] = a4;
 }
 
-int int_vec::minimum(int *v, int len)
+int int_vec::minimum(
+		int *v, int len)
 {
 	int i, m;
 
@@ -320,7 +334,8 @@ int int_vec::minimum(int *v, int len)
 	return m;
 }
 
-int int_vec::maximum(int *v, int len)
+int int_vec::maximum(
+		int *v, int len)
 {
 	int m, i;
 
@@ -337,7 +352,8 @@ int int_vec::maximum(int *v, int len)
 	return m;
 }
 
-void int_vec::copy(int len, int *from, int *to)
+void int_vec::copy(
+		int len, int *from, int *to)
 {
 	int i;
 
@@ -346,7 +362,8 @@ void int_vec::copy(int len, int *from, int *to)
 	}
 }
 
-int int_vec::first_difference(int *p, int *q, int len)
+int int_vec::first_difference(
+		int *p, int *q, int len)
 {
 	int i;
 
@@ -358,7 +375,8 @@ int int_vec::first_difference(int *p, int *q, int len)
 	return i;
 }
 
-int int_vec::vec_max_log_of_entries(std::vector<std::vector<int>> &p)
+int int_vec::vec_max_log_of_entries(
+		std::vector<std::vector<int>> &p)
 {
 	int i, j, a, w = 1, w1;
 	number_theory::number_theory_domain NT;
@@ -381,7 +399,8 @@ int int_vec::vec_max_log_of_entries(std::vector<std::vector<int>> &p)
 	return w;
 }
 
-void int_vec::vec_print(std::vector<std::vector<int>> &p)
+void int_vec::vec_print(
+		std::vector<std::vector<int>> &p)
 {
 	int w;
 
@@ -389,7 +408,8 @@ void int_vec::vec_print(std::vector<std::vector<int>> &p)
 	vec_print(p, w);
 }
 
-void int_vec::vec_print(std::vector<std::vector<int>> &p, int w)
+void int_vec::vec_print(
+		std::vector<std::vector<int>> &p, int w)
 {
 	int i, j;
 
@@ -404,7 +424,8 @@ void int_vec::vec_print(std::vector<std::vector<int>> &p, int w)
 	}
 }
 
-void int_vec::distribution_compute_and_print(std::ostream &ost,
+void int_vec::distribution_compute_and_print(
+		std::ostream &ost,
 	int *v, int v_len)
 {
 	int *val, *mult, len;
@@ -417,7 +438,8 @@ void int_vec::distribution_compute_and_print(std::ostream &ost,
 	FREE_int(mult);
 }
 
-void int_vec::distribution(int *v,
+void int_vec::distribution(
+		int *v,
 	int len_v, int *&val, int *&mult, int &len)
 {
 	sorting Sorting;
@@ -443,7 +465,8 @@ void int_vec::distribution(int *v,
 	}
 }
 
-void int_vec::print(std::ostream &ost, std::vector<int> &v)
+void int_vec::print(
+		std::ostream &ost, std::vector<int> &v)
 {
 	int i;
 	int len;
@@ -471,7 +494,8 @@ void int_vec::print(std::ostream &ost, std::vector<int> &v)
 	}
 }
 
-void int_vec::print(std::ostream &ost, int *v, int len)
+void int_vec::print(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -497,7 +521,8 @@ void int_vec::print(std::ostream &ost, int *v, int len)
 	}
 }
 
-void int_vec::print_str(std::stringstream &ost, int *v, int len)
+void int_vec::print_str(
+		std::stringstream &ost, int *v, int len)
 {
 	int i;
 
@@ -511,7 +536,8 @@ void int_vec::print_str(std::stringstream &ost, int *v, int len)
 	ost << ")";
 }
 
-void int_vec::print_bare_str(std::stringstream &ost, int *v, int len)
+void int_vec::print_bare_str(
+		std::stringstream &ost, int *v, int len)
 {
 	int i;
 
@@ -527,7 +553,8 @@ void int_vec::print_bare_str(std::stringstream &ost, int *v, int len)
 
 
 
-void int_vec::print_as_table(std::ostream &ost, int *v, int len, int width)
+void int_vec::print_as_table(
+		std::ostream &ost, int *v, int len, int width)
 {
 	int i;
 
@@ -543,7 +570,8 @@ void int_vec::print_as_table(std::ostream &ost, int *v, int len, int width)
 	ost << endl;
 }
 
-void int_vec::print_fully(std::ostream &ost, std::vector<int> &v)
+void int_vec::print_fully(
+		std::ostream &ost, std::vector<int> &v)
 {
 	int i;
 	int len;
@@ -560,7 +588,8 @@ void int_vec::print_fully(std::ostream &ost, std::vector<int> &v)
 	ost << " )";
 }
 
-void int_vec::print_fully(std::ostream &ost, int *v, int len)
+void int_vec::print_fully(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -574,7 +603,8 @@ void int_vec::print_fully(std::ostream &ost, int *v, int len)
 	ost << " )";
 }
 
-void int_vec::print_bare_fully(std::ostream &ost, int *v, int len)
+void int_vec::print_bare_fully(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -588,7 +618,8 @@ void int_vec::print_bare_fully(std::ostream &ost, int *v, int len)
 	//ost << " )";
 }
 
-void int_vec::print_dense(std::ostream &ost, int *v, int len)
+void int_vec::print_dense(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -600,7 +631,8 @@ void int_vec::print_dense(std::ostream &ost, int *v, int len)
 }
 
 
-void int_vec::print_Cpp(std::ostream &ost, int *v, int len)
+void int_vec::print_Cpp(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -619,7 +651,8 @@ void int_vec::print_Cpp(std::ostream &ost, int *v, int len)
 	ost << " }";
 }
 
-void int_vec::print_GAP(std::ostream &ost, int *v, int len)
+void int_vec::print_GAP(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -633,7 +666,8 @@ void int_vec::print_GAP(std::ostream &ost, int *v, int len)
 	ost << " ]";
 }
 
-void int_vec::print_classified(int *v, int len)
+void int_vec::print_classified(
+		int *v, int len)
 {
 	tally C;
 
@@ -642,7 +676,8 @@ void int_vec::print_classified(int *v, int len)
 	cout << endl;
 }
 
-void int_vec::print_classified_str(stringstream &sstr,
+void int_vec::print_classified_str(
+		std::stringstream &sstr,
 		int *v, int len, int f_backwards)
 {
 	tally C;
@@ -652,7 +687,8 @@ void int_vec::print_classified_str(stringstream &sstr,
 	C.print_bare_stringstream(sstr, f_backwards);
 }
 
-void int_vec::scan(std::string &s, int *&v, int &len)
+void int_vec::scan(
+		std::string &s, int *&v, int &len)
 {
 	int verbose_level = 0;
 
@@ -671,7 +707,8 @@ void int_vec::scan(std::string &s, int *&v, int &len)
 }
 
 
-void int_vec::scan_from_stream(istream & is, int *&v, int &len)
+void int_vec::scan_from_stream(
+		std::istream & is, int *&v, int &len)
 {
 	int verbose_level = 0;
 	int a;
@@ -827,7 +864,8 @@ void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 	}
 }
 
-void int_vec::print_to_str(std::string &s, int *data, int len)
+void int_vec::print_to_str(
+		std::string &s, int *data, int len)
 {
 	string s1;
 
@@ -837,7 +875,8 @@ void int_vec::print_to_str(std::string &s, int *data, int len)
 	s = "\" " + s1 + "\"";
 }
 
-void int_vec::print_to_str_bare(std::string &s, int *data, int len)
+void int_vec::print_to_str_bare(
+		std::string &s, int *data, int len)
 {
 	int i, a;
 
@@ -851,7 +890,8 @@ void int_vec::print_to_str_bare(std::string &s, int *data, int len)
 	}
 }
 
-void int_vec::print(int *v, int len)
+void int_vec::print(
+		int *v, int len)
 {
 	int i;
 
@@ -861,7 +901,8 @@ void int_vec::print(int *v, int len)
 }
 
 
-void int_vec::print_integer_matrix(std::ostream &ost,
+void int_vec::print_integer_matrix(
+		std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -874,7 +915,8 @@ void int_vec::print_integer_matrix(std::ostream &ost,
 	}
 }
 
-void int_vec::print_integer_matrix_width(std::ostream &ost,
+void int_vec::print_integer_matrix_width(
+		std::ostream &ost,
 	int *p, int m, int n, int dim_n, int w)
 {
 	int i, j;
@@ -890,7 +932,8 @@ void int_vec::print_integer_matrix_width(std::ostream &ost,
 	}
 }
 
-void int_vec::print_integer_matrix_in_C_source(std::ostream &ost,
+void int_vec::print_integer_matrix_in_C_source(
+		std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -907,7 +950,8 @@ void int_vec::print_integer_matrix_in_C_source(std::ostream &ost,
 }
 
 
-void int_vec::matrix_make_block_matrix_2x2(int *Mtx,
+void int_vec::matrix_make_block_matrix_2x2(
+		int *Mtx,
 	int k, int *A, int *B, int *C, int *D)
 // makes the 2k x 2k block matrix
 // (A B)
@@ -938,7 +982,8 @@ void int_vec::matrix_make_block_matrix_2x2(int *Mtx,
 	}
 }
 
-void int_vec::matrix_delete_column_in_place(int *Mtx,
+void int_vec::matrix_delete_column_in_place(
+		int *Mtx,
 	int k, int n, int pivot)
 // afterwards, the matrix is k x (n - 1)
 {
@@ -957,7 +1002,8 @@ void int_vec::matrix_delete_column_in_place(int *Mtx,
 }
 
 
-int int_vec::matrix_max_log_of_entries(int *p, int m, int n)
+int int_vec::matrix_max_log_of_entries(
+		int *p, int m, int n)
 {
 	int i, j, a, w = 1, w1;
 	number_theory::number_theory_domain NT;
@@ -980,7 +1026,8 @@ int int_vec::matrix_max_log_of_entries(int *p, int m, int n)
 	return w;
 }
 
-void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n)
+void int_vec::matrix_print_ost(
+		std::ostream &ost, int *p, int m, int n)
 {
 	int w;
 
@@ -997,7 +1044,8 @@ void int_vec::matrix_print_makefile_style_ost(
 	matrix_print_makefile_style_ost(ost, p, m, n, w);
 }
 
-void int_vec::matrix_print(int *p, int m, int n)
+void int_vec::matrix_print(
+		int *p, int m, int n)
 {
 	int w;
 
@@ -1005,7 +1053,8 @@ void int_vec::matrix_print(int *p, int m, int n)
 	matrix_print(p, m, n, w);
 }
 
-void int_vec::matrix_print_tight(int *p, int m, int n)
+void int_vec::matrix_print_tight(
+		int *p, int m, int n)
 {
 	matrix_print(p, m, n, 0);
 }
@@ -1048,7 +1097,8 @@ void int_vec::matrix_print_makefile_style_ost(
 	}
 }
 
-void int_vec::matrix_print(int *p, int m, int n, int w)
+void int_vec::matrix_print(
+		int *p, int m, int n, int w)
 {
 	int i, j;
 
@@ -1063,7 +1113,8 @@ void int_vec::matrix_print(int *p, int m, int n, int w)
 	}
 }
 
-void int_vec::matrix_print_bitwise(int *p, int m, int n)
+void int_vec::matrix_print_bitwise(
+		int *p, int m, int n)
 {
 	int i, j;
 
@@ -1075,7 +1126,8 @@ void int_vec::matrix_print_bitwise(int *p, int m, int n)
 	}
 }
 
-void int_vec::distribution_print(std::ostream &ost,
+void int_vec::distribution_print(
+		std::ostream &ost,
 	int *val, int *mult, int len)
 {
 	int i;
@@ -1123,7 +1175,8 @@ void int_vec::distribution_print_to_string(
 
 
 
-void int_vec::set_print(std::ostream &ost, int *v, int len)
+void int_vec::set_print(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -1138,7 +1191,8 @@ void int_vec::set_print(std::ostream &ost, int *v, int len)
 }
 
 
-void int_vec::integer_vec_print(std::ostream &ost, int *v, int len)
+void int_vec::integer_vec_print(
+		std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -1154,7 +1208,8 @@ void int_vec::integer_vec_print(std::ostream &ost, int *v, int len)
 
 
 
-int int_vec::hash(int *v, int len, int bit_length)
+int int_vec::hash(
+		int *v, int len, int bit_length)
 {
 	int h = 0;
 	int i;
@@ -1185,7 +1240,8 @@ void int_vec::create_string_with_quotes(
 	str.assign(s.str());
 }
 
-void int_vec::transpose(int *M, int m, int n, int *Mt)
+void int_vec::transpose(
+		int *M, int m, int n, int *Mt)
 // Mt must point to the right amount of memory (n * m int's)
 {
 	int i, j;
@@ -1225,7 +1281,8 @@ void int_vec::print_as_polynomial_in_algebraic_notation(
 
 }
 
-int int_vec::compare(int *p, int *q, int len)
+int int_vec::compare(
+		int *p, int *q, int len)
 {
 	data_structures::sorting Sorting;
 	int cmp;
@@ -1235,7 +1292,8 @@ int int_vec::compare(int *p, int *q, int len)
 	return cmp;
 }
 
-std::string int_vec::stringify(int *v, int len)
+std::string int_vec::stringify(
+		int *v, int len)
 {
 	string output;
 	ostringstream s;

@@ -600,7 +600,8 @@ void surface_polynomial_domains::label_variables_24(
 }
 
 
-int surface_polynomial_domains::index_of_monomial(int *v)
+int surface_polynomial_domains::index_of_monomial(
+		int *v)
 {
 	return Poly3_4->index_of_monomial(v);
 }
@@ -829,7 +830,8 @@ void surface_polynomial_domains::multiply_Poly1_3_times_Poly3_3(
 	}
 }
 
-void surface_polynomial_domains::clebsch_cubics(int verbose_level)
+void surface_polynomial_domains::clebsch_cubics(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

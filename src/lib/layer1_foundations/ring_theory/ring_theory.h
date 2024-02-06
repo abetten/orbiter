@@ -52,13 +52,20 @@ public:
 	field_theory::finite_field *get_Fp();
 	int zero();
 	int one();
-	int is_zero(int i);
-	int is_one(int i);
-	int is_unit(int i);
-	int add(int i, int j);
-	int mult(int i, int j);
-	int negate(int i);
-	int inverse(int i);
+	int is_zero(
+			int i);
+	int is_one(
+			int i);
+	int is_unit(
+			int i);
+	int add(
+			int i, int j);
+	int mult(
+			int i, int j);
+	int negate(
+			int i);
+	int inverse(
+			int i);
 	int Gauss_int(
 			int *A, int f_special,
 		int f_complete, int *base_cols,
@@ -79,7 +86,8 @@ public:
 			int *v, int stride, int len);
 	void PHG_element_unrank(
 			int *v, int stride, int len, int rk);
-	int nb_PHG_elements(int n);
+	int nb_PHG_elements(
+			int n);
 };
 
 // #############################################################################
@@ -189,7 +197,8 @@ public:
 			int verbose_level);
 	void rearrange_monomials_by_partition_type(
 			int verbose_level);
-	int index_of_monomial(int *v);
+	int index_of_monomial(
+			int *v);
 	void affine_evaluation_kernel(
 			int *&Kernel, int &dim_kernel, int verbose_level);
 	void get_quadratic_form_matrix(
@@ -642,9 +651,12 @@ public:
 	void one();
 	void increment();
 	void decrement();
-	void add_int(int a);
-	void create_i_power_j(int i, int j);
-	int compare_with_int(int a);
+	void add_int(
+			int a);
+	void create_i_power_j(
+			int i, int j);
+	int compare_with_int(
+			int a);
 	std::string stringify();
 
 };
@@ -681,7 +693,8 @@ public:
 			homogeneous_polynomial_domain *Hd,
 			int variable_idx,
 			int verbose_level);
-	void apply(int *eqn_in,
+	void apply(
+			int *eqn_in,
 			int *eqn_out,
 			int verbose_level);
 };
@@ -701,24 +714,30 @@ public:
 	int alloc_length;
 	polynomial_double_domain();
 	~polynomial_double_domain();
-	void init(int alloc_length);
+	void init(
+			int alloc_length);
 	ring_theory::polynomial_double *create_object();
-	void mult(polynomial_double *A,
+	void mult(
+			polynomial_double *A,
 			polynomial_double *B, polynomial_double *C);
-	void add(polynomial_double *A,
+	void add(
+			polynomial_double *A,
 			polynomial_double *B, polynomial_double *C);
 	void mult_by_scalar_in_place(
 			polynomial_double *A,
 			double lambda);
-	void copy(polynomial_double *A,
+	void copy(
+			polynomial_double *A,
 			polynomial_double *B);
 	void determinant_over_polynomial_ring(
 			polynomial_double *P,
 			polynomial_double *det, int n,
 			int verbose_level);
-	void find_all_roots(polynomial_double *p,
+	void find_all_roots(
+			polynomial_double *p,
 			double *lambda, int verbose_level);
-	double divide_linear_factor(polynomial_double *p,
+	double divide_linear_factor(
+			polynomial_double *p,
 			polynomial_double *q,
 			double lambda, int verbose_level);
 };
@@ -739,10 +758,14 @@ public:
 	double *coeff; // [alloc_length]
 	polynomial_double();
 	~polynomial_double();
-	void init(int alloc_length);
-	void print(std::ostream &ost);
-	double root_finder(int verbose_level);
-	double evaluate_at(double t);
+	void init(
+			int alloc_length);
+	void print(
+			std::ostream &ost);
+	double root_finder(
+			int verbose_level);
+	double evaluate_at(
+			double t);
 };
 
 
@@ -1105,7 +1128,8 @@ public:
 			unipoly_object m,
 			int verbose_level);
 	field_theory::finite_field *get_F();
-	int &s_i(unipoly_object p, int i)
+	int &s_i(
+			unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };
 	void create_object_of_degree(
 			unipoly_object &p, int d);
@@ -1131,8 +1155,10 @@ public:
 		unipoly_object &p, std::string &rk, int verbose_level);
 	void create_Dickson_polynomial(
 			unipoly_object &p, int *map);
-	void delete_object(unipoly_object &p);
-	void unrank(unipoly_object p, int rk);
+	void delete_object(
+			unipoly_object &p);
+	void unrank(
+			unipoly_object p, int rk);
 	void unrank_longinteger(
 			unipoly_object p, longinteger_object &rank);
 	int rank(
@@ -1160,13 +1186,20 @@ public:
 	void assign(
 			unipoly_object a, unipoly_object &b,
 			int verbose_level);
-	void one(unipoly_object p);
-	void m_one(unipoly_object p);
-	void zero(unipoly_object p);
-	int is_one(unipoly_object p);
-	int is_zero(unipoly_object p);
-	void negate(unipoly_object a);
-	void make_monic(unipoly_object &a);
+	void one(
+			unipoly_object p);
+	void m_one(
+			unipoly_object p);
+	void zero(
+			unipoly_object p);
+	int is_one(
+			unipoly_object p);
+	int is_zero(
+			unipoly_object p);
+	void negate(
+			unipoly_object a);
+	void make_monic(
+			unipoly_object &a);
 	void add(
 			unipoly_object a,
 			unipoly_object b,

@@ -189,7 +189,8 @@ void tally_lint::sort_and_classify_second()
 
 }
 
-int tally_lint::class_of(int pt_idx)
+int tally_lint::class_of(
+		int pt_idx)
 {
 	int a, i;
 
@@ -204,7 +205,8 @@ int tally_lint::class_of(int pt_idx)
 	exit(1);
 }
 
-void tally_lint::print(int f_backwards)
+void tally_lint::print(
+		int f_backwards)
 {
 	if (f_second) {
 		print_second(f_backwards);
@@ -215,7 +217,8 @@ void tally_lint::print(int f_backwards)
 	cout << endl;
 }
 
-void tally_lint::print_no_lf(int f_backwards)
+void tally_lint::print_no_lf(
+		int f_backwards)
 {
 	if (f_second) {
 		print_second(f_backwards);
@@ -225,7 +228,8 @@ void tally_lint::print_no_lf(int f_backwards)
 		}
 }
 
-void tally_lint::print_tex_no_lf(int f_backwards)
+void tally_lint::print_tex_no_lf(
+		int f_backwards)
 {
 	if (f_second) {
 		print_second_tex(f_backwards);
@@ -235,7 +239,8 @@ void tally_lint::print_tex_no_lf(int f_backwards)
 		}
 }
 
-void tally_lint::print_first(int f_backwards)
+void tally_lint::print_first(
+		int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -244,7 +249,8 @@ void tally_lint::print_first(int f_backwards)
 	//cout << endl;
 }
 
-void tally_lint::print_second(int f_backwards)
+void tally_lint::print_second(
+		int f_backwards)
 {
 	if (f_second) {
 		data_structures::sorting Sorting;
@@ -256,7 +262,8 @@ void tally_lint::print_second(int f_backwards)
 
 }
 
-void tally_lint::print_first_tex(int f_backwards)
+void tally_lint::print_first_tex(
+		int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -267,7 +274,8 @@ void tally_lint::print_first_tex(int f_backwards)
 	//cout << endl;
 }
 
-void tally_lint::print_second_tex(int f_backwards)
+void tally_lint::print_second_tex(
+		int f_backwards)
 {
 	if (f_second) {
 		data_structures::sorting Sorting;
@@ -280,7 +288,8 @@ void tally_lint::print_second_tex(int f_backwards)
 
 }
 
-void tally_lint::print_file(std::ostream &ost, int f_backwards)
+void tally_lint::print_file(
+		std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -296,7 +305,8 @@ void tally_lint::print_file(std::ostream &ost, int f_backwards)
 		}
 }
 
-void tally_lint::print_file_tex(std::ostream &ost, int f_backwards)
+void tally_lint::print_file_tex(
+		std::ostream &ost, int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -357,7 +367,8 @@ void tally_lint::print_bare_stringstream(
 
 }
 
-void tally_lint::print_bare(int f_backwards)
+void tally_lint::print_bare(
+		int f_backwards)
 {
 	data_structures::sorting Sorting;
 
@@ -373,7 +384,8 @@ void tally_lint::print_bare(int f_backwards)
 		}
 }
 
-void tally_lint::print_bare_tex(std::ostream &ost, int f_backwards)
+void tally_lint::print_bare_tex(
+		std::ostream &ost, int f_backwards)
 {
 	if (f_second) {
 		print_types_bare_tex(ost, f_backwards, second_data_sorted,
@@ -476,7 +488,8 @@ void tally_lint::print_lint_types_bare_tex(
 		}
 }
 
-void tally_lint::print_array_tex(std::ostream &ost, int f_backwards)
+void tally_lint::print_array_tex(
+		std::ostream &ost, int f_backwards)
 {
 	int i, j, f, l, a;
 
@@ -619,7 +632,8 @@ void tally_lint::get_data_by_multiplicity_as_lint(
 		}
 }
 
-int tally_lint::determine_class_by_value(int value)
+int tally_lint::determine_class_by_value(
+		int value)
 {
 	int i, f;
 
@@ -632,7 +646,8 @@ int tally_lint::determine_class_by_value(int value)
 	return -1;
 }
 
-int tally_lint::get_value_of_class(int class_idx)
+int tally_lint::get_value_of_class(
+		int class_idx)
 {
 	int f, a;
 
@@ -739,7 +754,8 @@ data_structures::set_of_sets *tally_lint::get_set_partition_and_types(
 	return SoS;
 }
 
-void tally_lint::save_classes_individually(std::string &fname)
+void tally_lint::save_classes_individually(
+		std::string &fname)
 {
 	int i, f, l;
 	long int t;

@@ -7,6 +7,9 @@ LFLAGS = -lm
 
 MODULES = \
 	algorithms.o \
+	ancestry_family.o \
+	ancestry_indi.o \
+	ancestry_tree.o \
 	bitmatrix.o \
 	bitvector.o \
 	data_file.o \

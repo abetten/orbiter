@@ -515,7 +515,8 @@ void longinteger_object::decrement()
 	swap_with(c);
 }
 
-void longinteger_object::add_int(int a)
+void longinteger_object::add_int(
+		int a)
 {
 	longinteger_object b, c;
 	longinteger_domain D;
@@ -525,7 +526,8 @@ void longinteger_object::add_int(int a)
 	swap_with(c);
 }
 
-void longinteger_object::create_i_power_j(int i, int j)
+void longinteger_object::create_i_power_j(
+		int i, int j)
 {
 	longinteger_domain D;
 	
@@ -543,7 +545,8 @@ ostream& operator<<(
 	return ost;
 }
 
-int longinteger_object::compare_with_int(int a)
+int longinteger_object::compare_with_int(
+		int a)
 {
 	longinteger_domain D;
 	longinteger_object b;

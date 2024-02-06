@@ -883,7 +883,8 @@ public:
 			data_structures::int_matrix *&Q,
 			data_structures::int_matrix *&Qv,
 			int verbose_level);
-	void apply(int *input, int *output, int *perm,
+	void apply(
+			int *input, int *output, int *perm,
 			int module_dimension_m, int module_dimension_n, int *module_basis,
 			int *v1, int *v2, int verbose_level);
 

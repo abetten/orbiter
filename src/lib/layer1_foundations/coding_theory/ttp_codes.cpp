@@ -708,7 +708,8 @@ void ttp_codes::make_tensor_code_9dimensional_as_point_set(
 	}
 }
 
-void ttp_codes::make_tensor_code_9_dimensional(int q,
+void ttp_codes::make_tensor_code_9_dimensional(
+		int q,
 	std::string &override_poly_Q,
 	std::string &override_poly,
 	int f_hyperoval,

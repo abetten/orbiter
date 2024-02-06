@@ -35,7 +35,8 @@ polynomial_double::~polynomial_double()
 	}
 }
 
-void polynomial_double::init(int alloc_length)
+void polynomial_double::init(
+		int alloc_length)
 {
 	int i;
 
@@ -47,7 +48,8 @@ void polynomial_double::init(int alloc_length)
 	}
 }
 
-void polynomial_double::print(std::ostream &ost)
+void polynomial_double::print(
+		std::ostream &ost)
 {
 	int i;
 
@@ -65,7 +67,8 @@ void polynomial_double::print(std::ostream &ost)
 	}
 }
 
-double polynomial_double::root_finder(int verbose_level)
+double polynomial_double::root_finder(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double l, r, m;
@@ -169,7 +172,8 @@ double polynomial_double::root_finder(int verbose_level)
 
 }
 
-double polynomial_double::evaluate_at(double t)
+double polynomial_double::evaluate_at(
+		double t)
 {
 	int i;
 	double a;

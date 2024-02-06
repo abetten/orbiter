@@ -432,7 +432,8 @@ void cryptography_domain::print_candidates(
 	}
 }
 
-void cryptography_domain::print_set(int l, int *s)
+void cryptography_domain::print_set(
+		int l, int *s)
 {
 	int i;
 
@@ -551,7 +552,8 @@ double cryptography_domain::friedman_index_shifted(
 	return d;
 }
 
-void cryptography_domain::print_frequencies(int *mult)
+void cryptography_domain::print_frequencies(
+		int *mult)
 {
 	int i, j = 0, k = 0, h, l = 0, f_first = true;
 	char c;
@@ -673,7 +675,8 @@ void cryptography_domain::substition_cipher(
 	FREE_char(str);
 }
 
-char cryptography_domain::lower_case(char c)
+char cryptography_domain::lower_case(
+		char c)
 {
 	if (c >= 'A' && c <= 'Z') {
 		c = c - ('A' - 'a');
@@ -689,7 +692,8 @@ char cryptography_domain::lower_case(char c)
 	}
 }
 
-char cryptography_domain::upper_case(char c)
+char cryptography_domain::upper_case(
+		char c)
 {
 	if (c >= 'a' && c <= 'z') {
 		c = c + ('A' - 'a');
@@ -705,7 +709,8 @@ char cryptography_domain::upper_case(char c)
 	}
 }
 
-char cryptography_domain::is_alnum(char c)
+char cryptography_domain::is_alnum(
+		char c)
 {
 	if (c >= 'A' && c <= 'Z') {
 		return true;
@@ -716,7 +721,8 @@ char cryptography_domain::is_alnum(char c)
 	return false;
 }
 
-void cryptography_domain::get_random_permutation(std::string &p)
+void cryptography_domain::get_random_permutation(
+		std::string &p)
 {
 	char digits[100];
 	int i, j, k, l;
@@ -838,7 +844,8 @@ void cryptography_domain::make_2D_plot(
 
 
 
-void cryptography_domain::do_random_last(int random_nb, int verbose_level)
+void cryptography_domain::do_random_last(
+		int random_nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2708,7 +2715,8 @@ void cryptography_domain::do_find_strong_pseudoprime(
 }
 
 
-void cryptography_domain::do_miller_rabin_text(std::string &number_text,
+void cryptography_domain::do_miller_rabin_text(
+		std::string &number_text,
 		int nb_miller_rabin, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2783,7 +2791,8 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 
 }
 
-void cryptography_domain::quadratic_sieve(int n,
+void cryptography_domain::quadratic_sieve(
+		int n,
 		int factorbase, int x0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

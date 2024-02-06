@@ -27,7 +27,8 @@ scene_element_of_type_line::~scene_element_of_type_line()
 {
 }
 
-void scene_element_of_type_line::init(double *coord6)
+void scene_element_of_type_line::init(
+		double *coord6)
 {
 	Line_coords[0] = coord6[0];
 	Line_coords[1] = coord6[1];

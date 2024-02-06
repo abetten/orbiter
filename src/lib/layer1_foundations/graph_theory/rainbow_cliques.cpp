@@ -370,7 +370,8 @@ void call_back_colored_graph_clique_found(
 	}
 }
 
-void call_back_colored_graph_add_point(clique_finder *CF, 
+void call_back_colored_graph_add_point(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int pt, int verbose_level)
 {
@@ -395,7 +396,8 @@ void call_back_colored_graph_add_point(clique_finder *CF,
 	}
 }
 
-void call_back_colored_graph_delete_point(clique_finder *CF, 
+void call_back_colored_graph_delete_point(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int pt, int verbose_level)
 {
@@ -420,7 +422,8 @@ void call_back_colored_graph_delete_point(clique_finder *CF,
 	}
 }
 
-int call_back_colored_graph_find_candidates(clique_finder *CF, 
+int call_back_colored_graph_find_candidates(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int nb_pts, int &reduced_nb_pts, 
 	int *pt_list, int *pt_list_inv, 

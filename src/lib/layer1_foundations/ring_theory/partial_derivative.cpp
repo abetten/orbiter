@@ -93,7 +93,8 @@ void partial_derivative::init(
 
 }
 
-void partial_derivative::apply(int *eqn_in,
+void partial_derivative::apply(
+		int *eqn_in,
 		int *eqn_out,
 		int verbose_level)
 {

@@ -27,7 +27,8 @@ scene_element_of_type_edge::~scene_element_of_type_edge()
 {
 }
 
-void scene_element_of_type_edge::init(std::string &pt1, std::string &pt2)
+void scene_element_of_type_edge::init(
+		std::string &pt1, std::string &pt2)
 {
 	Idx.push_back(pt1);
 	Idx.push_back(pt2);

@@ -46,9 +46,12 @@ public:
 
 	function_command();
 	~function_command();
-	void init_with_argument(int type, int arg);
-	void init_push_immediate_constant(double val);
-	void init_simple(int type);
+	void init_with_argument(
+			int type, int arg);
+	void init_push_immediate_constant(
+			double val);
+	void init_simple(
+			int type);
 
 };
 
@@ -71,7 +74,8 @@ public:
 
 	function_polish_description();
 	~function_polish_description();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
 };

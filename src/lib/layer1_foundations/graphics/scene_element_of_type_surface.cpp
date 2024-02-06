@@ -35,7 +35,8 @@ scene_element_of_type_surface::~scene_element_of_type_surface()
 	}
 }
 
-void scene_element_of_type_surface::init(int d, int nb_coeffs, double *coords)
+void scene_element_of_type_surface::init(
+		int d, int nb_coeffs, double *coords)
 {
 	int i;
 

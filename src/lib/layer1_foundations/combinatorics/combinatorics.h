@@ -767,7 +767,8 @@ public:
 		std::ostream &ost, int f_enter_math_mode,
 		row_and_col_partition *RC,
 		int *col_scheme, int f_print_subscripts);
-	void compute_TDO(int verbose_level);
+	void compute_TDO(
+			int verbose_level);
 	void get_and_report_classes(
 			std::ostream &ost,
 			int verbose_level);
@@ -1031,7 +1032,8 @@ public:
 			int a);
 	void append_to_entries(
 			int a1, int a2, int a3, int a4);
-	void write(std::ofstream &aStream, std::string &label);
+	void write(
+			std::ofstream &aStream, std::string &label);
 	void write_mode_single(
 			std::ofstream &aStream,
 			std::string &label);
@@ -1415,7 +1417,8 @@ class tdo_refinement {
 	void init(
 			tdo_refinement_description *Descr,
 			int verbose_level);
-	void main_loop(int verbose_level);
+	void main_loop(
+			int verbose_level);
 	void do_it(
 			std::ofstream &g, int verbose_level);
 	void do_row_refinement(

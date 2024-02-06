@@ -376,6 +376,9 @@ namespace data_structures {
 
 	// data_structures:
 	class algorithms;
+	class ancestry_family;
+	class ancestry_indi;
+	class ancestry_tree;
 	class bitmatrix;
 	class bitvector;
 	class data_file;

@@ -834,7 +834,8 @@ void homogeneous_polynomial_domain::rearrange_monomials_by_partition_type(
 	}
 }
 
-int homogeneous_polynomial_domain::index_of_monomial(int *v)
+int homogeneous_polynomial_domain::index_of_monomial(
+		int *v)
 {
 	data_structures::sorting Sorting;
 

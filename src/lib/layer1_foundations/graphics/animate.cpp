@@ -2031,7 +2031,8 @@ void animate::draw_frame_Hilbert(
 }
 
 
-void animate::draw_surface_13_1(std::ostream &fp)
+void animate::draw_surface_13_1(
+		std::ostream &fp)
 {
 	int Pts[] = {
 		0, 0, 0, 1,

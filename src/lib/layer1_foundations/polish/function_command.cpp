@@ -32,21 +32,24 @@ function_command::~function_command()
 
 }
 
-void function_command::init_with_argument(int type, int arg)
+void function_command::init_with_argument(
+		int type, int arg)
 {
 	function_command::type = type;
 	function_command::f_has_argument = true;
 	function_command::arg = arg;
 }
 
-void function_command::init_push_immediate_constant(double val)
+void function_command::init_push_immediate_constant(
+		double val)
 {
 	function_command::type = 2;
 	function_command::val = val;
 
 }
 
-void function_command::init_simple(int type)
+void function_command::init_simple(
+		int type)
 {
 	function_command::type = type;
 	function_command::f_has_argument = true;

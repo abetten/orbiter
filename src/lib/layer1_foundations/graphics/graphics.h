@@ -70,19 +70,27 @@ public:
 			std::ostream &fp);
 	void draw_Hilbert_blue_line(int idx_one_based,
 			std::ostream &fp);
-	void draw_Hilbert_red_lines(std::ostream &fp);
-	void draw_Hilbert_blue_lines(std::ostream &fp);
-	void draw_Hilbert_cube_extended_edges(std::ostream &fp);
-	void draw_Hilbert_cube_faces(std::ostream &fp);
-	void draw_Hilbert_cube_boxed(std::ostream &fp);
-	void draw_Hilbert_tetrahedron_boxed(std::ostream &fp);
-	void draw_Hilbert_tetrahedron_faces(std::ostream &fp);
+	void draw_Hilbert_red_lines(
+			std::ostream &fp);
+	void draw_Hilbert_blue_lines(
+			std::ostream &fp);
+	void draw_Hilbert_cube_extended_edges(
+			std::ostream &fp);
+	void draw_Hilbert_cube_faces(
+			std::ostream &fp);
+	void draw_Hilbert_cube_boxed(
+			std::ostream &fp);
+	void draw_Hilbert_tetrahedron_boxed(
+			std::ostream &fp);
+	void draw_Hilbert_tetrahedron_faces(
+			std::ostream &fp);
 	void draw_frame_Hilbert(
 		int h, int nb_frames, int round,
 		double clipping_radius,
 		std::ostream &fp,
 		int verbose_level);
-	void draw_surface_13_1(std::ostream &fp);
+	void draw_surface_13_1(
+			std::ostream &fp);
 	void draw_frame_Hilbert_round_76(
 			video_draw_options *Opt,
 			int h, int nb_frames, int round,
@@ -439,10 +447,12 @@ public:
 
 	graphical_output();
 	~graphical_output();
-	void draw_layered_graph_from_file(std::string &fname,
+	void draw_layered_graph_from_file(
+			std::string &fname,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
-	void do_domino_portrait(int D, int s,
+	void do_domino_portrait(
+			int D, int s,
 			std::string &photo_label,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
@@ -451,7 +461,8 @@ public:
 	void do_create_points_on_parabola(
 			double desired_distance, int N,
 			double a, double b, double c, int verbose_level);
-	void do_smooth_curve(std::string &curve_label,
+	void do_smooth_curve(
+			std::string &curve_label,
 			double desired_distance, int N,
 			double t_min, double t_max, double boundary,
 			polish::function_polish_description *FP_descr,
@@ -459,7 +470,8 @@ public:
 	void draw_projective_curve(
 			draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
-	void draw_projective(mp_graphics &G,
+	void draw_projective(
+			mp_graphics &G,
 			int number, int animate_step, int animate_nb_of_steps,
 		int f_transition, int transition_step, int transition_nb_steps,
 		int f_title_page, int title_page_step,
@@ -848,25 +860,35 @@ public:
 	// output commands:
 	void header();
 	void footer();
-	void begin_figure(int factor_1000);
+	void begin_figure(
+			int factor_1000);
 	void end_figure();
 
-	void comment(std::string &s);
-	void text(int x, int y, std::string &s);
-	void circle(int x, int y, int rad);
-	void circle_text(int x, int y, int rad, std::string &s);
-	void polygon_idx2(int *Px, int *Py, int *Idx, int n,
+	void comment(
+			std::string &s);
+	void text(
+			int x, int y, std::string &s);
+	void circle(
+			int x, int y, int rad);
+	void circle_text(
+			int x, int y, int rad, std::string &s);
+	void polygon_idx2(
+			int *Px, int *Py, int *Idx, int n,
 			int f_cycle);
-	void bezier_idx2(int *Px, int *Py, int *Idx, int n,
+	void bezier_idx2(
+			int *Px, int *Py, int *Idx, int n,
 			int f_cycle);
-	void fill_idx(int *Px, int *Py, int *Idx, int n, 
+	void fill_idx(
+			int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle);
 
 
 	// output commands log file:
-	void header_log(std::string &str_date);
+	void header_log(
+			std::string &str_date);
 	void footer_log();
-	void comment_log(std::string &s);
+	void comment_log(
+			std::string &s);
 	void st_alignment_log();
 	void sl_udsty_log();
 	void sl_ends_log();
@@ -880,21 +902,31 @@ public:
 	void st_boxed_log();
 	void st_overwrite_log();
 	void st_rotate_log();
-	void bezier_idx_log(int *Px, int *Py, int *Idx, int n);
-	void polygon_log(int *Px, int *Py, int n);
-	void polygon_idx_log(int *Px, int *Py, int *Idx, int n);
-	void text_log(int x1, int y1, std::string &s);
-	void circle_log(int x1, int y1, int rad);
+	void bezier_idx_log(
+			int *Px, int *Py, int *Idx, int n);
+	void polygon_log(
+			int *Px, int *Py, int n);
+	void polygon_idx_log(
+			int *Px, int *Py, int *Idx, int n);
+	void text_log(
+			int x1, int y1, std::string &s);
+	void circle_log(
+			int x1, int y1, int rad);
 
 
 	// output commands metapost:
-	void header_mp(std::string &str_date);
+	void header_mp(
+			std::string &str_date);
 	void footer_mp();
-	void comment_mp(std::string &s);
-	void text_mp(int x1, int y1, std::string &s);
-	void begin_figure_mp(int factor_1000);
+	void comment_mp(
+			std::string &s);
+	void text_mp(
+			int x1, int y1, std::string &s);
+	void begin_figure_mp(
+			int factor_1000);
 	void end_figure_mp();
-	void circle_mp(int x, int y, int rad);
+	void circle_mp(
+			int x, int y, int rad);
 	void output_circle_text_mp(
 			int x, int y, int idx, std::string &s);
 	void polygon_idx_mp(
@@ -908,11 +940,16 @@ public:
 	void fill_idx_mp(
 			int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle);
-	void output_xy_metapost(int x, int y);
-	void output_x_metapost(int x);
-	void output_y_metapost(int y);
-	int get_label(int x, int y);
-	void get_alignment_mp(char *align);
+	void output_xy_metapost(
+			int x, int y);
+	void output_x_metapost(
+			int x);
+	void output_y_metapost(
+			int y);
+	int get_label(
+			int x, int y);
+	void get_alignment_mp(
+			char *align);
 	void line_thickness_mp();
 
 	// output commands tikz:
@@ -940,8 +977,10 @@ public:
 		const char *symbol, int f_cycle);
 	void output_xy_tikz(
 			int x, int y);
-	void output_x_tikz(int x);
-	void output_y_tikz(int y);
+	void output_x_tikz(
+			int x);
+	void output_y_tikz(
+			int y);
 
 	void polygon3D(
 			int *Px, int *Py,
@@ -1246,7 +1285,8 @@ private:
 public:
 	scene_element_of_type_edge();
 	~scene_element_of_type_edge();
-	void init(std::string &pt1, std::string &pt2);
+	void init(
+			std::string &pt1, std::string &pt2);
 	void print();
 
 };
@@ -1274,7 +1314,8 @@ private:
 public:
 	scene_element_of_type_face();
 	~scene_element_of_type_face();
-	void init(std::vector<std::string> &pts);
+	void init(
+			std::vector<std::string> &pts);
 	void print();
 
 };
@@ -1303,7 +1344,8 @@ private:
 public:
 	scene_element_of_type_line();
 	~scene_element_of_type_line();
-	void init(double *coord6);
+	void init(
+			double *coord6);
 	void print();
 
 };
@@ -1329,7 +1371,8 @@ private:
 public:
 	scene_element_of_type_plane();
 	~scene_element_of_type_plane();
-	void init(double *coord4);
+	void init(
+			double *coord4);
 	void print();
 
 };
@@ -1358,7 +1401,8 @@ private:
 public:
 	scene_element_of_type_point();
 	~scene_element_of_type_point();
-	void init(double *coord3);
+	void init(
+			double *coord3);
 	void print();
 
 };
@@ -1385,7 +1429,8 @@ private:
 public:
 	scene_element_of_type_surface();
 	~scene_element_of_type_surface();
-	void init(int d, int nb_coeffs, double *coords);
+	void init(
+			int d, int nb_coeffs, double *coords);
 	void print();
 
 };
@@ -1496,19 +1541,25 @@ public:
 	int affine_space_starting_point;
 
 	// scene_init.cpp:
-	int line6(double *x6);
-	int line(double x1, double x2, double x3,
+	int line6(
+			double *x6);
+	int line(
+			double x1, double x2, double x3,
 		double y1, double y2, double y3);
-	int point(double x1, double x2, double x3);
-	int edge(int pt1, int pt2);
-	int plane(double x1, double x2, double x3, double a);
+	int point(
+			double x1, double x2, double x3);
+	int edge(
+			int pt1, int pt2);
+	int plane(
+			double x1, double x2, double x3, double a);
 		// A plane is called a polynomial shape because
 		// it is defined by a first order polynomial equation.
 		// Given a plane: plane { <A, B, C>, D }
 		// it can be represented by the equation
 		// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
 		// see http://www.povray.org/documentation/view/3.6.1/297/
-	int quadric(double *coeff10);
+	int quadric(
+			double *coeff10);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
 	// 1: x^2
@@ -1521,7 +1572,8 @@ public:
 	// 8: z^2
 	// 9: z
 	// 10: 1
-	int cubic(double *coeff20);
+	int cubic(
+			double *coeff20);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
 	// 1: x^3
@@ -1544,34 +1596,51 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
-	int quartic(double *coeff35);
-	int quintic(double *coeff_56);
-	int octic(double *coeff_165);
-	int face(int *pts, int nb_pts);
-	int face3(int pt1, int pt2, int pt3);
-	int face4(int pt1, int pt2, int pt3, int pt4);
-	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
+	int quartic(
+			double *coeff35);
+	int quintic(
+			double *coeff_56);
+	int octic(
+			double *coeff_165);
+	int face(
+			int *pts, int nb_pts);
+	int face3(
+			int pt1, int pt2, int pt3);
+	int face4(
+			int pt1, int pt2, int pt3, int pt4);
+	int face5(
+			int pt1, int pt2, int pt3, int pt4, int pt5);
 
 
 
-	int line_pt_and_dir(double *x6, double rad, int verbose_level);
+	int line_pt_and_dir(
+			double *x6, double rad, int verbose_level);
 	int line_pt_and_dir_and_copy_points(
 			double *x6, double rad, int verbose_level);
-	int line_through_two_pts(double *x6, double rad);
-	int line_after_recentering(double x1, double x2, double x3,
+	int line_through_two_pts(
+			double *x6, double rad);
+	int line_after_recentering(
+			double x1, double x2, double x3,
 		double y1, double y2, double y3, double rad);
-	int line_through_two_points(int pt1, int pt2,
+	int line_through_two_points(
+			int pt1, int pt2,
 		double rad);
-	int plane_through_three_points(int pt1, int pt2, int pt3);
-	int quadric_through_three_lines(int line_idx1,
+	int plane_through_three_points(
+			int pt1, int pt2, int pt3);
+	int quadric_through_three_lines(
+			int line_idx1,
 		int line_idx2, int line_idx3, int verbose_level);
-	int cubic_in_orbiter_ordering(double *coeff);
-	void deformation_of_cubic_lex(int nb_frames,
+	int cubic_in_orbiter_ordering(
+			double *coeff);
+	void deformation_of_cubic_lex(
+			int nb_frames,
 			double angle_start, double angle_max, double angle_min,
 			double *coeff1, double *coeff2,
 			int verbose_level);
-	int cubic_Goursat_ABC(double A, double B, double C);
-	int line_extended(double x1, double x2, double x3,
+	int cubic_Goursat_ABC(
+			double A, double B, double C);
+	int line_extended(
+			double x1, double x2, double x3,
 		double y1, double y2, double y3,
 		double r);
 
@@ -1864,7 +1933,8 @@ public:
 		int verbose_level);
 	void print_path();
 	void print_depth_first();
-	void compute_DFS_rank(int &rk);
+	void compute_DFS_rank(
+			int &rk);
 	int find_node(
 			int &DFS_rk, int *path, int sz, int verbose_level);
 	int find_node_and_path(

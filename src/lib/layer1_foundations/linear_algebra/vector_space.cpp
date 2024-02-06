@@ -18,8 +18,10 @@ namespace layer1_foundations {
 namespace linear_algebra {
 
 
-static void vector_space_unrank_point_callback(int *v, long int rk, void *data);
-static long int vector_space_rank_point_callback(int *v, void *data);
+static void vector_space_unrank_point_callback(
+		int *v, long int rk, void *data);
+static long int vector_space_rank_point_callback(
+		int *v, void *data);
 
 
 vector_space::vector_space()
@@ -101,7 +103,8 @@ void vector_space::init_rank_functions(
 		}
 }
 
-void vector_space::unrank_basis(int *Mtx, long int *set, int len)
+void vector_space::unrank_basis(
+		int *Mtx, long int *set, int len)
 {
 	int i;
 
@@ -110,7 +113,8 @@ void vector_space::unrank_basis(int *Mtx, long int *set, int len)
 	}
 }
 
-void vector_space::rank_basis(int *Mtx, long int *set, int len)
+void vector_space::rank_basis(
+		int *Mtx, long int *set, int len)
 {
 	int i;
 
@@ -119,7 +123,8 @@ void vector_space::rank_basis(int *Mtx, long int *set, int len)
 	}
 }
 
-void vector_space::unrank_point(int *v, long int rk)
+void vector_space::unrank_point(
+		int *v, long int rk)
 {
 	if (unrank_point_func) {
 		(*unrank_point_func)(v, rk, rank_point_data);
@@ -130,7 +135,8 @@ void vector_space::unrank_point(int *v, long int rk)
 	}
 }
 
-long int vector_space::rank_point(int *v)
+long int vector_space::rank_point(
+		int *v)
 {
 	long int rk;
 
@@ -145,7 +151,8 @@ long int vector_space::rank_point(int *v)
 }
 
 
-int vector_space::RREF_and_rank(int *basis, int k)
+int vector_space::RREF_and_rank(
+		int *basis, int k)
 {
 	int rk;
 
@@ -155,7 +162,8 @@ int vector_space::RREF_and_rank(int *basis, int k)
 	return rk;
 }
 
-int vector_space::is_contained_in_subspace(int *v, int *basis, int k)
+int vector_space::is_contained_in_subspace(
+		int *v, int *basis, int k)
 {
 	int ret;
 
@@ -277,7 +285,8 @@ ret:
 // #############################################################################
 
 
-static void vector_space_unrank_point_callback(int *v, long int rk, void *data)
+static void vector_space_unrank_point_callback(
+		int *v, long int rk, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 
@@ -286,7 +295,8 @@ static void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 
 }
 
-static long int vector_space_rank_point_callback(int *v, void *data)
+static long int vector_space_rank_point_callback(
+		int *v, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 	long int rk;

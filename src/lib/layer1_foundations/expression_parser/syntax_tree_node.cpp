@@ -159,7 +159,8 @@ void syntax_tree_node::add_numerical_summand(
 	}
 }
 
-int syntax_tree_node::text_value_match(std::string &factor)
+int syntax_tree_node::text_value_match(
+		std::string &factor)
 {
 	data_structures::string_tools ST;
 
@@ -2531,7 +2532,8 @@ void syntax_tree_node::expand_in_place_handle_exponents(
 
 
 
-void syntax_tree_node::simplify_exponents(int verbose_level)
+void syntax_tree_node::simplify_exponents(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2634,7 +2636,8 @@ void syntax_tree_node::simplify_exponents(int verbose_level)
 
 }
 
-void syntax_tree_node::sort_terms(int verbose_level)
+void syntax_tree_node::sort_terms(
+		int verbose_level)
 // called from formula::simplify
 {
 	int f_v = (verbose_level >= 1);
@@ -2745,7 +2748,8 @@ void syntax_tree_node::sort_terms(int verbose_level)
 
 
 
-void syntax_tree_node::collect_like_terms(int verbose_level)
+void syntax_tree_node::collect_like_terms(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3156,7 +3160,8 @@ void syntax_tree_node::collect_terms_and_coefficients(
 	}
 }
 
-void syntax_tree_node::simplify_constants(int verbose_level)
+void syntax_tree_node::simplify_constants(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3259,7 +3264,8 @@ void syntax_tree_node::flatten(
 }
 
 
-void syntax_tree_node::flatten_with_depth(int depth,
+void syntax_tree_node::flatten_with_depth(
+		int depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3438,7 +3444,8 @@ void syntax_tree_node::flatten_with_depth(int depth,
 	}
 }
 
-void syntax_tree_node::flatten_post_process(int depth,
+void syntax_tree_node::flatten_post_process(
+		int depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3500,7 +3507,8 @@ void syntax_tree_node::flatten_post_process(int depth,
 }
 
 
-void syntax_tree_node::flatten_at(int i, int depth, int verbose_level)
+void syntax_tree_node::flatten_at(
+		int i, int depth, int verbose_level)
 // we are assuming the child is a multiplication node
 {
 	int f_v = (verbose_level >= 1);
@@ -3715,7 +3723,8 @@ void syntax_tree_node::delete_one_child(
 
 }
 
-int syntax_tree_node::is_constant_one(int verbose_level)
+int syntax_tree_node::is_constant_one(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3747,7 +3756,8 @@ int syntax_tree_node::is_constant_one(int verbose_level)
 	}
 }
 
-int syntax_tree_node::is_constant_zero(int verbose_level)
+int syntax_tree_node::is_constant_zero(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3799,7 +3809,8 @@ int syntax_tree_node::is_constant_zero(int verbose_level)
 
 
 
-void syntax_tree_node::collect_variables(int verbose_level)
+void syntax_tree_node::collect_variables(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

@@ -283,7 +283,7 @@ void object_with_canonical_form::print_tex(
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
-		Lint_vec_print(ost, set, sz);
+		Lint_vec_print_fully(ost, set, sz);
 		ost << "\\\\" << endl;
 #if 0
 		object_with_canonical_form::set = NEW_lint(data_sz);
@@ -496,7 +496,8 @@ void object_with_canonical_form::init_packing_from_set(
 	}
 	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-	SoS->init_basic_constant_size(P->Subspaces->N_lines,
+	SoS->init_basic_constant_size(
+			P->Subspaces->N_lines,
 		size_of_packing /* nb_sets */, 
 		size_of_spread /* constant_size */, 
 		0 /* verbose_level */);
@@ -550,7 +551,8 @@ void object_with_canonical_form::init_packing_from_string(
 	}
 	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-	SoS->init_basic_constant_size(N_lines,
+	SoS->init_basic_constant_size(
+			N_lines,
 		size_of_packing /* nb_sets */,
 		size_of_spread /* constant_size */,
 		0 /* verbose_level */);
@@ -624,7 +626,8 @@ void object_with_canonical_form::init_packing_from_spread_table(
 
 	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-	SoS->init_basic_constant_size(N_lines,
+	SoS->init_basic_constant_size(
+			N_lines,
 		size_of_packing /* nb_sets */,
 		size_of_spread /* constant_size */,
 		0 /* verbose_level */);
@@ -844,7 +847,8 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	Lint_vec_scan(data, flags, data_sz);
 
 	if (nb_flags != data_sz) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string nb_flags != data_sz" << endl;
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string "
+				"nb_flags != data_sz" << endl;
 	}
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
@@ -1381,7 +1385,8 @@ void object_with_canonical_form::encode_point_set(
 						<< " l=" << l << " i=" << i << endl;
 			}
 			if (i > P->Subspaces->N_points) {
-				cout << "object_with_canonical_form::encode_point_set i > P->N_points" << endl;
+				cout << "object_with_canonical_form::encode_point_set "
+						"i > P->N_points" << endl;
 				cout << "i = " << i << endl;
 				cout << "P->N_points = " << P->Subspaces->N_points << endl;
 				cout << "h=" << h << " idx=" << idx << " f=" << f
@@ -1393,7 +1398,8 @@ void object_with_canonical_form::encode_point_set(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set bottom right entries" << endl;
+		cout << "object_with_canonical_form::encode_point_set "
+				"bottom right entries" << endl;
 	}
 	// bottom right entries:
 	for (j = 0; j < C->second_nb_types; j++) {

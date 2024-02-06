@@ -88,6 +88,9 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/tdo_scheme_synthetic.o \
 		layer1_foundations/cryptography/cryptography_domain.o \
 		layer1_foundations/data_structures/algorithms.o \
+		layer1_foundations/data_structures/ancestry_family.o \
+		layer1_foundations/data_structures/ancestry_indi.o \
+		layer1_foundations/data_structures/ancestry_tree.o \
 		layer1_foundations/data_structures/bitmatrix.o \
 		layer1_foundations/data_structures/bitvector.o \
 		layer1_foundations/data_structures/data_file.o \

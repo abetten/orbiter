@@ -1826,7 +1826,8 @@ void mp_graphics::footer()
 	footer_tikz();
 }
 
-void mp_graphics::begin_figure(int factor_1000)
+void mp_graphics::begin_figure(
+		int factor_1000)
 {
 	begin_figure_mp(factor_1000);
 }
@@ -1836,7 +1837,8 @@ void mp_graphics::end_figure()
 	end_figure_mp();
 }
 
-void mp_graphics::comment(std::string &s)
+void mp_graphics::comment(
+		std::string &s)
 {
 	comment_log(s);
 	comment_mp(s);
@@ -1846,7 +1848,8 @@ void mp_graphics::comment(std::string &s)
 
 
 
-void mp_graphics::text(int x, int y, std::string &s)
+void mp_graphics::text(
+		int x, int y, std::string &s)
 {
 	int x1, y1;
 	
@@ -1862,7 +1865,8 @@ void mp_graphics::text(int x, int y, std::string &s)
 	text_tikz(x1, y1, s);
 }
 
-void mp_graphics::circle(int x, int y, int rad)
+void mp_graphics::circle(
+		int x, int y, int rad)
 {
 	//fp_log << "Circle " << x << " " << y << " " << rad << endl;
 
@@ -1878,7 +1882,8 @@ void mp_graphics::circle(int x, int y, int rad)
 	circle_tikz(x, y, rad);
 }
 
-void mp_graphics::circle_text(int x, int y, int rad, std::string &s)
+void mp_graphics::circle_text(
+		int x, int y, int rad, std::string &s)
 {
 	//fp_log << "CircleText " << x << " " << y << " \"" << s << "\"" << endl;
 
@@ -1895,7 +1900,8 @@ void mp_graphics::circle_text(int x, int y, int rad, std::string &s)
 }
 
 #if 0
-void mp_graphics::polygon_or_bezier_idx(int *Px, int *Py, int *Idx, int n,
+void mp_graphics::polygon_or_bezier_idx(
+		int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle)
 {
 	polygon_or_bezier_idx_mp(Px, Py, Idx, n, symbol, f_cycle);
@@ -1903,21 +1909,24 @@ void mp_graphics::polygon_or_bezier_idx(int *Px, int *Py, int *Idx, int n,
 }
 #endif
 
-void mp_graphics::polygon_idx2(int *Px, int *Py, int *Idx, int n,
+void mp_graphics::polygon_idx2(
+		int *Px, int *Py, int *Idx, int n,
 		int f_cycle)
 {
 	polygon_idx_mp(Px, Py, Idx, n, f_cycle);
 	polygon_idx_tikz(Px, Py, Idx, n, f_cycle);
 }
 
-void mp_graphics::bezier_idx2(int *Px, int *Py, int *Idx, int n,
+void mp_graphics::bezier_idx2(
+		int *Px, int *Py, int *Idx, int n,
 		int f_cycle)
 {
 	bezier_idx_mp(Px, Py, Idx, n, f_cycle);
 	bezier_idx_tikz(Px, Py, Idx, n, f_cycle);
 }
 
-void mp_graphics::fill_idx(int *Px, int *Py, int *Idx, int n,
+void mp_graphics::fill_idx(
+		int *Px, int *Py, int *Idx, int n,
 		const char *symbol, int f_cycle)
 {
 	fill_idx_mp(Px, Py, Idx, n, symbol, f_cycle);
@@ -1930,7 +1939,8 @@ void mp_graphics::fill_idx(int *Px, int *Py, int *Idx, int n,
 // device specific output commands: log file
 // #############################################################################
 
-void mp_graphics::header_log(std::string &str_date)
+void mp_graphics::header_log(
+		std::string &str_date)
 {
 	fp_log << "% file: " << fname_log << endl;
 	fp_log << "% created by Orbiter graphics interface" << endl;
@@ -1945,7 +1955,8 @@ void mp_graphics::footer_log()
 	fp_log << "END_OF_FILE" << endl << endl;
 }
 
-void mp_graphics::comment_log(std::string &s)
+void mp_graphics::comment_log(
+		std::string &s)
 {
 	fp_log << "Comment " << s << endl;
 }
@@ -2015,7 +2026,8 @@ void mp_graphics::st_rotate_log()
 	fp_log << "st_rotate " << txt_rotate << endl;
 }
 
-void mp_graphics::bezier_idx_log(int *Px, int *Py, int *Idx, int n)
+void mp_graphics::bezier_idx_log(
+		int *Px, int *Py, int *Idx, int n)
 {
 	int i;
 	
@@ -2026,7 +2038,8 @@ void mp_graphics::bezier_idx_log(int *Px, int *Py, int *Idx, int n)
 	fp_log << endl;
 }
 
-void mp_graphics::polygon_log(int *Px, int *Py, int n)
+void mp_graphics::polygon_log(
+		int *Px, int *Py, int n)
 {
 	int i;
 	
@@ -2037,7 +2050,8 @@ void mp_graphics::polygon_log(int *Px, int *Py, int n)
 	fp_log << endl;
 }
 
-void mp_graphics::polygon_idx_log(int *Px, int *Py, int *Idx, int n)
+void mp_graphics::polygon_idx_log(
+		int *Px, int *Py, int *Idx, int n)
 {
 	int i;
 	
@@ -2048,12 +2062,14 @@ void mp_graphics::polygon_idx_log(int *Px, int *Py, int *Idx, int n)
 	fp_log << endl;
 }
 
-void mp_graphics::text_log(int x1, int y1, std::string &s)
+void mp_graphics::text_log(
+		int x1, int y1, std::string &s)
 {
 	fp_log << "Text " << x1 << ", " << y1 << ", \"" << s << "\"" << endl;
 }
 
-void mp_graphics::circle_log(int x1, int y1, int rad)
+void mp_graphics::circle_log(
+		int x1, int y1, int rad)
 {
 	fp_log << "Circle " << x1 << ", " << y1 << ", " << rad << endl;
 }
@@ -2064,7 +2080,8 @@ void mp_graphics::circle_log(int x1, int y1, int rad)
 // #############################################################################
 
 
-void mp_graphics::header_mp(std::string &str_date)
+void mp_graphics::header_mp(
+		std::string &str_date)
 {
 	fp_mp << "% file: " << fname_mp << endl;
 	fp_mp << "% created by Orbiter metapost interface" << endl;
@@ -2086,7 +2103,8 @@ void mp_graphics::footer_mp()
 	fp_mp << "end" << endl << endl;
 }
 
-void mp_graphics::begin_figure_mp(int factor_1000)
+void mp_graphics::begin_figure_mp(
+		int factor_1000)
 {
 	double d;
 	char str[1000];
@@ -2112,12 +2130,14 @@ void mp_graphics::end_figure_mp()
 	fp_mp << "endfig;" << endl << endl;
 }
 
-void mp_graphics::comment_mp(std::string &s)
+void mp_graphics::comment_mp(
+		std::string &s)
 {
 	fp_mp << "% " << s << endl;
 }
 
-void mp_graphics::text_mp(int x1, int y1, std::string &s)
+void mp_graphics::text_mp(
+		int x1, int y1, std::string &s)
 {
 	char align[64];
 	int lab;
@@ -2146,7 +2166,8 @@ void mp_graphics::text_mp(int x1, int y1, std::string &s)
 	}
 }
 
-void mp_graphics::circle_mp(int x, int y, int rad)
+void mp_graphics::circle_mp(
+		int x, int y, int rad)
 {
 	int X[10], Y[10], i;
 
@@ -2324,7 +2345,8 @@ void mp_graphics::fill_idx_mp(
 	
 }
 
-void mp_graphics::output_xy_metapost(int x, int y)
+void mp_graphics::output_xy_metapost(
+		int x, int y)
 {
 	fp_mp << "(";
 	output_x_metapost(x);
@@ -2333,7 +2355,8 @@ void mp_graphics::output_xy_metapost(int x, int y)
 	fp_mp << ")";
 }
 
-void mp_graphics::output_x_metapost(int x)
+void mp_graphics::output_x_metapost(
+		int x)
 {
 	double d;
 
@@ -2342,7 +2365,8 @@ void mp_graphics::output_x_metapost(int x)
 	fp_mp << d << "u ";
 }
 
-void mp_graphics::output_y_metapost(int y)
+void mp_graphics::output_y_metapost(
+		int y)
 {
 	double d;
 
@@ -2351,14 +2375,16 @@ void mp_graphics::output_y_metapost(int y)
 	fp_mp << d << "u ";
 }
 
-int mp_graphics::get_label(int x, int y)
+int mp_graphics::get_label(
+		int x, int y)
 {
 	static int i = 0;
 	
 	return i++;
 }
 
-void mp_graphics::get_alignment_mp(char *align)
+void mp_graphics::get_alignment_mp(
+		char *align)
 {
 	if (txt_halign == 2) {
 			// right aligned, text to the
@@ -2827,7 +2853,8 @@ void mp_graphics::output_xy_tikz(int x, int y)
 }
 #endif
 
-void mp_graphics::output_x_tikz(int x)
+void mp_graphics::output_x_tikz(
+		int x)
 {
 	double d;
 
@@ -2841,7 +2868,8 @@ void mp_graphics::output_x_tikz(int x)
 	}
 }
 
-void mp_graphics::output_y_tikz(int y)
+void mp_graphics::output_y_tikz(
+		int y)
 {
 	double d;
 

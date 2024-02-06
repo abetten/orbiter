@@ -1949,7 +1949,8 @@ void decomposition::print_column_tactical_decomposition_scheme_tex(
 	ost << "%}" << endl;
 }
 
-void decomposition::compute_TDO(int verbose_level)
+void decomposition::compute_TDO(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

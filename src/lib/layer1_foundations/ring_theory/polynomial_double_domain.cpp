@@ -29,7 +29,8 @@ polynomial_double_domain::~polynomial_double_domain()
 	alloc_length = 0;
 }
 
-void polynomial_double_domain::init(int alloc_length)
+void polynomial_double_domain::init(
+		int alloc_length)
 {
 	polynomial_double_domain::alloc_length = alloc_length;
 }
@@ -43,7 +44,8 @@ ring_theory::polynomial_double *polynomial_double_domain::create_object()
 	return p;
 }
 
-void polynomial_double_domain::mult(polynomial_double *A,
+void polynomial_double_domain::mult(
+		polynomial_double *A,
 		polynomial_double *B, polynomial_double *C)
 {
 	int i, j;
@@ -60,7 +62,8 @@ void polynomial_double_domain::mult(polynomial_double *A,
 	}
 }
 
-void polynomial_double_domain::add(polynomial_double *A,
+void polynomial_double_domain::add(
+		polynomial_double *A,
 		polynomial_double *B, polynomial_double *C)
 {
 	int i;
@@ -102,7 +105,8 @@ void polynomial_double_domain::mult_by_scalar_in_place(
 	}
 }
 
-void polynomial_double_domain::copy(polynomial_double *A,
+void polynomial_double_domain::copy(
+		polynomial_double *A,
 		polynomial_double *B)
 {
 	int i;
@@ -217,7 +221,8 @@ void polynomial_double_domain::determinant_over_polynomial_ring(
 
 }
 
-void polynomial_double_domain::find_all_roots(polynomial_double *p,
+void polynomial_double_domain::find_all_roots(
+		polynomial_double *p,
 		double *lambda, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

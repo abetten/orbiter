@@ -265,6 +265,16 @@ public:
 			std::string &input_values,
 			std::string &output_values,
 			int verbose_level);
+	void write_gedcom_file_as_csv(
+			std::string &fname,
+			std::vector<std::vector<std::string> > &Data,
+		int verbose_level);
+	void write_ancestry_indi(
+			std::string &fname,
+			std::vector<std::vector<std::string> > &Data,
+			int nb_indi,
+			data_structures::ancestry_indi **Individual,
+		int verbose_level);
 
 
 };
@@ -535,6 +545,10 @@ public:
 			int nb_lines,
 			std::vector<std::vector<int> > &Error1,
 			std::vector<std::vector<int> > &Error2,
+		int verbose_level);
+	void read_gedcom_file(
+			std::string &fname,
+			std::vector<std::vector<std::string> > &Data,
 		int verbose_level);
 
 
@@ -1089,7 +1103,8 @@ public:
 			int idx);
 	enum symbol_table_object_type get_object_type(
 			int idx);
-	int find_symbol(std::string &label);
+	int find_symbol(
+			std::string &label);
 	void get_vector_from_label(
 			std::string &label, long int *&v, int &sz,
 			int verbose_level);
@@ -1414,7 +1429,8 @@ public:
 	double original_value;
 	double new_value;
 
-	override_double(double *p, double value);
+	override_double(
+			double *p, double value);
 	~override_double();
 };
 
@@ -1445,8 +1461,10 @@ public:
 	int parse_arguments(
 			int argc, std::string *argv, int verbose_level);
 	void print();
-	void print_item(int i);
-	void do_the_work(int verbose_level);
+	void print_item(
+			int i);
+	void do_the_work(
+			int verbose_level);
 };
 
 

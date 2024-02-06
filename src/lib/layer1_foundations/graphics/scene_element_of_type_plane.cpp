@@ -26,7 +26,8 @@ scene_element_of_type_plane::~scene_element_of_type_plane()
 {
 }
 
-void scene_element_of_type_plane::init(double *coord4)
+void scene_element_of_type_plane::init(
+		double *coord4)
 {
 	Plane_coords[0] = coord4[0];
 	Plane_coords[1] = coord4[1];

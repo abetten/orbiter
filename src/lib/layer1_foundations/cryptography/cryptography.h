@@ -49,7 +49,8 @@ public:
 	void print_candidates(
 			std::string &ctext,
 			int i, int h, int nb_candidates, int *candidates);
-	void print_set(int l, int *s);
+	void print_set(
+			int l, int *s);
 	void print_on_top(
 			std::string &text1,
 			std::string &text2);
@@ -62,7 +63,8 @@ public:
 			int *mult, int n);
 	double friedman_index_shifted(
 			int *mult, int n, int shift);
-	void print_frequencies(int *mult);
+	void print_frequencies(
+			int *mult);
 	void single_frequencies(
 			std::string &text, int *mult);
 	void single_frequencies2(
@@ -72,17 +74,22 @@ public:
 	void substition_cipher(
 			std::string &ptext,
 			std::string &ctext, std::string &key);
-	char lower_case(char c);
-	char upper_case(char c);
-	char is_alnum(char c);
-	void get_random_permutation(std::string &p);
+	char lower_case(
+			char c);
+	char upper_case(
+			char c);
+	char is_alnum(
+			char c);
+	void get_random_permutation(
+			std::string &p);
 
 	void make_affine_sequence(
 			int a, int c, int m, int verbose_level);
 	void make_2D_plot(
 			int *orbit, int orbit_len, int cnt,
 			int m, int a, int c, int verbose_level);
-	void do_random_last(int random_nb, int verbose_level);
+	void do_random_last(
+			int random_nb, int verbose_level);
 	void do_random(
 			int random_nb,
 			std::string &fname_csv, int verbose_level);
@@ -168,14 +175,18 @@ public:
 			int nb_miller_rabin,
 			int nb_solovay_strassen,
 			int verbose_level);
-	void do_find_strong_pseudoprime(int nb_digits,
+	void do_find_strong_pseudoprime(
+			int nb_digits,
 			int nb_fermat, int nb_miller_rabin,
 			int verbose_level);
-	void do_miller_rabin_text(std::string &number_text,
+	void do_miller_rabin_text(
+			std::string &number_text,
 			int nb_miller_rabin, int verbose_level);
-	void quadratic_sieve(int n, int factorbase,
+	void quadratic_sieve(
+			int n, int factorbase,
 			int x0, int verbose_level);
-	void calc_log2(std::vector<int> &primes,
+	void calc_log2(
+			std::vector<int> &primes,
 			std::vector<int> &primes_log2,
 			int verbose_level);
 	void reduce_primes(

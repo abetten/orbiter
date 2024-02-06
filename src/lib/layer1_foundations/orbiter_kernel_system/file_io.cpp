@@ -4057,6 +4057,87 @@ void file_io::read_error_pattern_from_output_file(
 }
 
 
+void file_io::read_gedcom_file(
+		std::string &fname,
+		std::vector<std::vector<std::string> > &Data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures::string_tools ST;
+	long int N;
+
+	if (f_v) {
+		cout << "file_io::read_gedcom_file" << endl;
+		cout << "file_io::read_gedcom_file trying to read file "
+			<< fname << " of size " << file_size(fname) << endl;
+	}
+
+	N = file_size(fname);
+	if (N < 0) {
+		cout << "file_io::read_gedcom_file "
+				"the file " << fname << " does not exist" << endl;
+		return;
+	}
+
+	{
+		ifstream f(fname);
+
+		int line_cnt;
+
+		line_cnt = 0;
+		while (!f.eof()) {
+			string s;
+			std::string part1;
+			std::string part2;
+			std::string part3;
+			std::vector<std::string> data;
+			getline(f, s);
+
+			//l = s.length();
+			line_cnt++;
+
+
+
+			int len;
+
+			len = s.length();
+			if (len < 1) {
+				continue;
+			}
+			std::size_t found;
+
+			found = s.find(' ');
+			if (found == std::string::npos) {
+
+				cout << "parse error in line " << line_cnt << " : " << s << endl;
+				exit(1);
+			}
+			part1 = s.substr (0, found);
+			std::string rest = s.substr (found + 1, len - found - 1);
+
+
+
+			found = rest.find(' ');
+			if (found == std::string::npos) {
+
+				part2 = rest;
+			}
+			else {
+				part2 = rest.substr (0, found);
+				part3 = rest.substr (found + 1, len - found - 1);
+			}
+			data.push_back(part1);
+			data.push_back(part2);
+			data.push_back(part3);
+			Data.push_back(data);
+
+		}
+	}
+	if (f_v) {
+		cout << "file_io::read_gedcom_file done" << endl;
+	}
+}
+
 
 }}}
 

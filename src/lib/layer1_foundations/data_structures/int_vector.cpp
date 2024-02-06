@@ -32,7 +32,8 @@ int_vector::~int_vector()
 	}
 }
 
-void int_vector::allocate(int len)
+void int_vector::allocate(
+		int len)
 {
 	if (M) {
 		FREE_lint(M);
@@ -42,7 +43,8 @@ void int_vector::allocate(int len)
 	alloc_length = len;
 }
 
-void int_vector::allocate_and_init(int len, long int *V)
+void int_vector::allocate_and_init(
+		int len, long int *V)
 {
 	if (M) {
 		FREE_lint(M);
@@ -53,7 +55,8 @@ void int_vector::allocate_and_init(int len, long int *V)
 	Lint_vec_copy(V, M, len);
 }
 
-void int_vector::allocate_and_init_int(int len, int *V)
+void int_vector::allocate_and_init_int(
+		int len, int *V)
 {
 	int i;
 
@@ -68,7 +71,8 @@ void int_vector::allocate_and_init_int(int len, int *V)
 	}
 }
 
-void int_vector::init_permutation_from_string(std::string &s)
+void int_vector::init_permutation_from_string(
+		std::string &s)
 {
 	int verbose_level = 0;
 	int *perm;
@@ -80,7 +84,8 @@ void int_vector::init_permutation_from_string(std::string &s)
 	FREE_int(perm);
 }
 
-void int_vector::read_ascii_file(std::string &fname)
+void int_vector::read_ascii_file(
+		std::string &fname)
 {
 	int verbose_level = 0;
 	long int *the_set;
@@ -92,7 +97,8 @@ void int_vector::read_ascii_file(std::string &fname)
 	FREE_lint(the_set);
 }
 
-void int_vector::read_binary_file_int4(std::string &fname)
+void int_vector::read_binary_file_int4(
+		std::string &fname)
 {
 	int verbose_level = 0;
 	long int *the_set;
@@ -104,7 +110,8 @@ void int_vector::read_binary_file_int4(std::string &fname)
 	FREE_lint(the_set);
 }
 
-long int &int_vector::s_i(int i)
+long int &int_vector::s_i(
+		int i)
 {
 	return M[i];
 }
@@ -114,7 +121,8 @@ int &int_vector::length()
 	return m;
 }
 
-void int_vector::print(std::ostream &ost)
+void int_vector::print(
+		std::ostream &ost)
 {
 	Lint_vec_print(ost, M, m);
 }
@@ -124,7 +132,8 @@ void int_vector::zero()
 	Lint_vec_zero(M, m);
 }
 
-int int_vector::search(int a, int &idx)
+int int_vector::search(
+		int a, int &idx)
 {
 	sorting Sorting;
 
@@ -158,7 +167,8 @@ void int_vector::make_space()
 	alloc_length = new_alloc_length;
 }
 
-void int_vector::append(int a)
+void int_vector::append(
+		int a)
 {
 	if (m == alloc_length) {
 		make_space();
@@ -167,7 +177,8 @@ void int_vector::append(int a)
 	m++;
 }
 
-void int_vector::insert_at(int a, int idx)
+void int_vector::insert_at(
+		int a, int idx)
 {
 	int i;
 	
@@ -181,7 +192,8 @@ void int_vector::insert_at(int a, int idx)
 	m++;
 }
 
-void int_vector::insert_if_not_yet_there(int a)
+void int_vector::insert_if_not_yet_there(
+		int a)
 {
 	int idx;
 
@@ -197,21 +209,24 @@ void int_vector::sort_and_remove_duplicates()
 	Sorting.lint_vec_sort_and_remove_duplicates(M, m);
 }
 
-void int_vector::write_to_ascii_file(std::string &fname)
+void int_vector::write_to_ascii_file(
+		std::string &fname)
 {
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.write_set_to_file(fname, M, m, 0 /*verbose_level*/);
 }
 
-void int_vector::write_to_binary_file_int4(std::string &fname)
+void int_vector::write_to_binary_file_int4(
+		std::string &fname)
 {
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.write_set_to_file_as_int4(fname, M, m, 0 /*verbose_level*/);
 }
 
-void int_vector::write_to_csv_file(std::string &fname, std::string &label)
+void int_vector::write_to_csv_file(
+		std::string &fname, std::string &label)
 {
 	orbiter_kernel_system::file_io Fio;
 

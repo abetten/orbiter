@@ -23,7 +23,8 @@ namespace layer1_foundations {
 namespace graphics {
 
 
-int scene::line6(double *x6)
+int scene::line6(
+		double *x6)
 {
 	Line_coords[nb_lines * 6 + 0] = x6[0];
 	Line_coords[nb_lines * 6 + 1] = x6[1];
@@ -39,7 +40,8 @@ int scene::line6(double *x6)
 	return nb_lines - 1;
 }
 
-int scene::line(double x1, double x2, double x3,
+int scene::line(
+		double x1, double x2, double x3,
 	double y1, double y2, double y3)
 {
 	double coords[6];
@@ -70,7 +72,8 @@ int scene::line(double x1, double x2, double x3,
 }
 
 
-int scene::point(double x1, double x2, double x3)
+int scene::point(
+		double x1, double x2, double x3)
 {
 	Point_coords[nb_points * 3 + 0] = x1;
 	Point_coords[nb_points * 3 + 1] = x2;
@@ -83,7 +86,8 @@ int scene::point(double x1, double x2, double x3)
 	return nb_points - 1;
 }
 
-int scene::edge(int pt1, int pt2)
+int scene::edge(
+		int pt1, int pt2)
 {
 	Edge_points[nb_edges * 2 + 0] = pt1;
 	Edge_points[nb_edges * 2 + 1] = pt2;
@@ -95,7 +99,8 @@ int scene::edge(int pt1, int pt2)
 	return nb_edges - 1;
 }
 
-int scene::plane(double x1, double x2, double x3, double a)
+int scene::plane(
+		double x1, double x2, double x3, double a)
 // A plane is called a polynomial shape because
 // it is defined by a first order polynomial equation.
 // Given a plane: plane { <A, B, C>, D }
@@ -130,7 +135,8 @@ int scene::plane(double x1, double x2, double x3, double a)
 }
 
 
-int scene::quadric(double *coeff10)
+int scene::quadric(
+		double *coeff10)
 // povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 1: x^2
@@ -163,7 +169,8 @@ int scene::quadric(double *coeff10)
 }
 
 
-int scene::cubic(double *coeff20)
+int scene::cubic(
+		double *coeff20)
 // povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 0: x^3
@@ -206,7 +213,8 @@ int scene::cubic(double *coeff20)
 	return nb_cubics - 1;
 }
 
-int scene::quartic(double *coeff35)
+int scene::quartic(
+		double *coeff35)
 // povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 {
@@ -229,7 +237,8 @@ int scene::quartic(double *coeff35)
 }
 
 
-int scene::quintic(double *coeff_56)
+int scene::quintic(
+		double *coeff_56)
 // povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 {
@@ -252,7 +261,8 @@ int scene::quintic(double *coeff_56)
 
 }
 
-int scene::octic(double *coeff_165)
+int scene::octic(
+		double *coeff_165)
 {
 	int i;
 
@@ -274,7 +284,8 @@ int scene::octic(double *coeff_165)
 }
 
 
-int scene::face(int *pts, int nb_pts)
+int scene::face(
+		int *pts, int nb_pts)
 {
 	Face_points[nb_faces] = NEW_int(nb_pts);
 	Nb_face_points[nb_faces] = nb_pts;
@@ -287,7 +298,8 @@ int scene::face(int *pts, int nb_pts)
 	return nb_faces - 1;
 }
 
-int scene::face3(int pt1, int pt2, int pt3)
+int scene::face3(
+		int pt1, int pt2, int pt3)
 {
 	int pts[3];
 
@@ -297,7 +309,8 @@ int scene::face3(int pt1, int pt2, int pt3)
 	return face(pts, 3);
 }
 
-int scene::face4(int pt1, int pt2, int pt3, int pt4)
+int scene::face4(
+		int pt1, int pt2, int pt3, int pt4)
 {
 	int pts[4];
 
@@ -308,7 +321,8 @@ int scene::face4(int pt1, int pt2, int pt3, int pt4)
 	return face(pts, 4);
 }
 
-int scene::face5(int pt1, int pt2, int pt3, int pt4, int pt5)
+int scene::face5(
+		int pt1, int pt2, int pt3, int pt4, int pt5)
 {
 	int pts[5];
 
@@ -323,7 +337,8 @@ int scene::face5(int pt1, int pt2, int pt3, int pt4, int pt5)
 
 
 
-int scene::line_pt_and_dir(double *x6, double rad, int verbose_level)
+int scene::line_pt_and_dir(
+		double *x6, double rad, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double pt[6];
@@ -420,7 +435,8 @@ int scene::line_pt_and_dir_and_copy_points(
 }
 
 
-int scene::line_through_two_pts(double *x6, double rad)
+int scene::line_through_two_pts(
+		double *x6, double rad)
 {
 	double pt[6];
 	double pt2[6];
@@ -461,7 +477,8 @@ int scene::line_through_two_pts(double *x6, double rad)
 
 
 
-int scene::line_after_recentering(double x1, double x2, double x3,
+int scene::line_after_recentering(
+		double x1, double x2, double x3,
 	double y1, double y2, double y3, double rad)
 {
 	double x[3], y[3];
@@ -505,7 +522,8 @@ int scene::line_after_recentering(double x1, double x2, double x3,
 	return nb_lines - 1;
 }
 
-int scene::line_through_two_points(int pt1, int pt2, double rad)
+int scene::line_through_two_points(
+		int pt1, int pt2, double rad)
 {
 	double x[3], y[3];
 	double xx[3], yy[3];
@@ -546,7 +564,8 @@ int scene::line_through_two_points(int pt1, int pt2, double rad)
 
 
 
-int scene::plane_through_three_points(int pt1, int pt2, int pt3)
+int scene::plane_through_three_points(
+		int pt1, int pt2, int pt3)
 {
 	double p1[3], p2[3], p3[3], n[3], d;
 	orbiter_kernel_system::numerics N;
@@ -638,7 +657,8 @@ int scene::quadric_through_three_lines(
 }
 
 
-int scene::cubic_in_orbiter_ordering(double *coeff)
+int scene::cubic_in_orbiter_ordering(
+		double *coeff)
 {
 	double eqn[20];
 
@@ -665,7 +685,8 @@ int scene::cubic_in_orbiter_ordering(double *coeff)
 	return cubic(eqn);
 }
 
-void scene::deformation_of_cubic_lex(int nb_frames,
+void scene::deformation_of_cubic_lex(
+		int nb_frames,
 		double angle_start, double angle_max, double angle_min,
 		double *coeff1, double *coeff2,
 		int verbose_level)
@@ -716,7 +737,8 @@ void scene::deformation_of_cubic_lex(int nb_frames,
 	}
 }
 
-int scene::cubic_Goursat_ABC(double A, double B, double C)
+int scene::cubic_Goursat_ABC(
+		double A, double B, double C)
 {
 	double coeffs[20];
 	int i;

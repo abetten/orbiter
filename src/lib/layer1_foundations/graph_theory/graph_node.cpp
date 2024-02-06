@@ -66,7 +66,8 @@ graph_node::~graph_node()
 	}
 }
 
-void graph_node::add_neighbor(int l, int n, int id)
+void graph_node::add_neighbor(
+		int l, int n, int id)
 {
 	int i;
 	
@@ -94,13 +95,15 @@ void graph_node::add_neighbor(int l, int n, int id)
 	nb_neighbors++;
 }
 
-void graph_node::add_text(std::string &text)
+void graph_node::add_text(
+		std::string &text)
 {
 
 	label.assign(text);
 }
 
-void graph_node::add_vec_data(long int *v, int len)
+void graph_node::add_vec_data(
+		long int *v, int len)
 {
 	vec_data = NEW_lint(len);
 	vec_data_len = len;
@@ -108,26 +111,30 @@ void graph_node::add_vec_data(long int *v, int len)
 	f_has_vec_data = true;
 }
 
-void graph_node::set_distinguished_element(int idx)
+void graph_node::set_distinguished_element(
+		int idx)
 {
 	f_has_distinguished_element = true;
 	distinguished_element_index = idx;
 }
 
 
-void graph_node::add_data1(int data)
+void graph_node::add_data1(
+		int data)
 {
 	f_has_data1 = true;
 	data1 = data;
 }
 
-void graph_node::add_data2(int data)
+void graph_node::add_data2(
+		int data)
 {
 	f_has_data2 = true;
 	data2 = data;
 }
 
-void graph_node::add_data3(int data)
+void graph_node::add_data3(
+		int data)
 {
 	f_has_data3 = true;
 	data3 = data;
@@ -222,7 +229,8 @@ void graph_node::read_memory_object(
 		}
 }
 
-void graph_node::allocate_tree_structure(int verbose_level)
+void graph_node::allocate_tree_structure(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

@@ -842,20 +842,33 @@ public:
 			int n, int q);
 	//void test_Orthogonal(int epsilon, int k, int q);
 	//void test_orthogonal(int n, int q);
-	int &TDO_upper_bound(int i, int j);
-	int &TDO_upper_bound_internal(int i, int j);
-	int &TDO_upper_bound_source(int i, int j);
-	int braun_test_single_type(int v, int k, int ak);
-	int braun_test_upper_bound(int v, int k);
-	void TDO_refine_init_upper_bounds(int v_max);
-	void TDO_refine_extend_upper_bounds(int new_v_max);
-	int braun_test_on_line_type(int v, int *type);
-	int &maxfit(int i, int j);
-	int &maxfit_internal(int i, int j);
-	void maxfit_table_init(int v_max);
-	void maxfit_table_reallocate(int v_max);
+	int &TDO_upper_bound(
+			int i, int j);
+	int &TDO_upper_bound_internal(
+			int i, int j);
+	int &TDO_upper_bound_source(
+			int i, int j);
+	int braun_test_single_type(
+			int v, int k, int ak);
+	int braun_test_upper_bound(
+			int v, int k);
+	void TDO_refine_init_upper_bounds(
+			int v_max);
+	void TDO_refine_extend_upper_bounds(
+			int new_v_max);
+	int braun_test_on_line_type(
+			int v, int *type);
+	int &maxfit(
+			int i, int j);
+	int &maxfit_internal(
+			int i, int j);
+	void maxfit_table_init(
+			int v_max);
+	void maxfit_table_reallocate(
+			int v_max);
 	void maxfit_table_compute();
-	int packing_number_via_maxfit(int n, int k);
+	int packing_number_via_maxfit(
+			int n, int k);
 	void do_inverse_isomorphism_klein_quadric(
 			field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,

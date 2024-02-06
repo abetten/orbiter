@@ -1101,9 +1101,12 @@ public:
 	~schlaefli();
 	void init(
 			surface_domain *Surf, int verbose_level);
-	int line_ai(int i);
-	int line_bi(int i);
-	int line_cij(int i, int j);
+	int line_ai(
+			int i);
+	int line_bi(
+			int i);
+	int line_cij(
+			int i, int j);
 	int type_of_line(
 			int line);
 		// 0 = a_i, 1 = b_i, 2 = c_ij
@@ -2107,7 +2110,8 @@ public:
 	void label_variables_24(
 			ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
-	int index_of_monomial(int *v);
+	int index_of_monomial(
+			int *v);
 	void multiply_conic_times_linear(
 			int *six_coeff, int *three_coeff,
 		int *ten_coeff, int verbose_level);
@@ -2124,7 +2128,8 @@ public:
 	void multiply_Poly1_3_times_Poly3_3(
 			int *input1, int *input2,
 		int *result, int verbose_level);
-	void clebsch_cubics(int verbose_level);
+	void clebsch_cubics(
+			int verbose_level);
 	void multiply_222_27_and_add(
 			int *M1, int *M2, int *M3,
 		int scalar, int *MM, int verbose_level);

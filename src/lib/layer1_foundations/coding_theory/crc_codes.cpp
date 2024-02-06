@@ -87,7 +87,8 @@ uint16_t crc_codes::crc16(const uint8_t *data, size_t size)
 }
 #endif
 
-uint32_t crc_codes::crc32(const uint8_t *s, size_t n)
+uint32_t crc_codes::crc32(
+		const uint8_t *s, size_t n)
 // polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 // + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
 {
@@ -111,7 +112,8 @@ uint32_t crc_codes::crc32(const uint8_t *s, size_t n)
 
 
 
-void crc_codes::crc32_test(int block_length, int verbose_level)
+void crc_codes::crc32_test(
+		int block_length, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -159,7 +161,8 @@ void crc_codes::crc32_test(int block_length, int verbose_level)
 
 
 
-void crc_codes::test_crc_object(crc_object *Crc,
+void crc_codes::test_crc_object(
+		crc_object *Crc,
 		long int Nb_test, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -333,7 +336,8 @@ void crc_codes::test_crc_object(crc_object *Crc,
 }
 
 
-void crc_codes::char_vec_zero(unsigned char *p, int len)
+void crc_codes::char_vec_zero(
+		unsigned char *p, int len)
 {
 	int i;
 
@@ -1465,7 +1469,8 @@ void crc_codes::split_binary_file_to_ascii_polynomials_256(
 
 
 
-enum CRC_type crc_codes::detect_type_of_CRC(std::string &crc_type, int verbose_level)
+enum CRC_type crc_codes::detect_type_of_CRC(
+		std::string &crc_type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -1520,7 +1525,8 @@ enum CRC_type crc_codes::detect_type_of_CRC(std::string &crc_type, int verbose_l
 
 }
 
-int crc_codes::get_check_size_in_bytes(enum CRC_type type)
+int crc_codes::get_check_size_in_bytes(
+		enum CRC_type type)
 {
 	int check_size_in_byte = 0;
 
@@ -2131,7 +2137,8 @@ uint16_t gen_crc16(const uint8_t *data, uint16_t size)
 
 // from: https://barrgroup.com/embedded-systems/how-to/additive-checksums
 
-uint16_t crc_codes::NetIpChecksum(uint16_t const *ipHeader, int nWords)
+uint16_t crc_codes::NetIpChecksum(
+		uint16_t const *ipHeader, int nWords)
 {
     uint32_t  sum = 0;
 

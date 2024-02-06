@@ -853,7 +853,8 @@ void representation_theory_domain::representing_matrix8b(
 #endif
 }
 
-int representation_theory_domain::Term1(int a1, int e1)
+int representation_theory_domain::Term1(
+		int a1, int e1)
 {
 	int x;
 
@@ -993,7 +994,8 @@ int representation_theory_domain::term5(
 	return x;
 }
 
-int representation_theory_domain::m_term(int q, int a1, int a2, int a3)
+int representation_theory_domain::m_term(
+		int q, int a1, int a2, int a3)
 {
 	int x;
 
@@ -1016,7 +1018,8 @@ int representation_theory_domain::beta_trinomial(
 	return x;
 }
 
-int representation_theory_domain::T3product2(int a1, int a2)
+int representation_theory_domain::T3product2(
+		int a1, int a2)
 {
 	int x;
 
@@ -1024,60 +1027,71 @@ int representation_theory_domain::T3product2(int a1, int a2)
 	return T3(x);
 }
 
-int representation_theory_domain::add(int a, int b)
+int representation_theory_domain::add(
+		int a, int b)
 {
 	return F->add(a, b);
 }
 
-int representation_theory_domain::add3(int a, int b, int c)
+int representation_theory_domain::add3(
+		int a, int b, int c)
 {
 	return F->add3(a, b, c);
 }
 
-int representation_theory_domain::negate(int a)
+int representation_theory_domain::negate(
+		int a)
 {
 	return F->negate(a);
 }
 
-int representation_theory_domain::twice(int a)
+int representation_theory_domain::twice(
+		int a)
 {
 	return F->twice(a);
 }
 
 
 
-int representation_theory_domain::mult(int a, int b)
+int representation_theory_domain::mult(
+		int a, int b)
 {
 	return F->mult(a, b);
 }
 
-int representation_theory_domain::inverse(int a)
+int representation_theory_domain::inverse(
+		int a)
 {
 	return F->inverse(a);
 }
 
 
-int representation_theory_domain::power(int a, int n)
+int representation_theory_domain::power(
+		int a, int n)
 {
 	return F->power(a, n);
 }
 
-int representation_theory_domain::T2(int a)
+int representation_theory_domain::T2(
+		int a)
 {
 	return F->T2(a);
 }
 
-int representation_theory_domain::T3(int a)
+int representation_theory_domain::T3(
+		int a)
 {
 	return F->T3(a);
 }
 
-int representation_theory_domain::N2(int a)
+int representation_theory_domain::N2(
+		int a)
 {
 	return F->N2(a);
 }
 
-int representation_theory_domain::N3(int a)
+int representation_theory_domain::N3(
+		int a)
 {
 	return F->N3(a);
 }

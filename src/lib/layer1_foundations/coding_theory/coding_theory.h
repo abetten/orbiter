@@ -48,23 +48,36 @@ public:
 	code_diagram();
 	~code_diagram();
 
-	void init(std::string &label,
+	void init(
+			std::string &label,
 			long int *Words, int nb_words,
 			int n, int verbose_level);
-	void place_codewords(int verbose_level);
+	void place_codewords(
+			int verbose_level);
 	void place_metric_balls(
 			int radius_of_metric_ball, int verbose_level);
-	void compute_distances(int verbose_level);
-	void dimensions(int n, int &nb_rows, int &nb_cols);
-	void place_binary(long int h, int &i, int &j);
-	void place_binary(int *v, int n, int &i, int &j);
-	void convert_to_binary(int n, long int h, int *v);
-	void print_binary(int n, int *v);
-	void save_distance(int verbose_level);
-	void save_distance_H(int verbose_level);
-	void save_diagram(int verbose_level);
-	void save_char_func(int verbose_level);
-	void report(int verbose_level);
+	void compute_distances(
+			int verbose_level);
+	void dimensions(
+			int n, int &nb_rows, int &nb_cols);
+	void place_binary(
+			long int h, int &i, int &j);
+	void place_binary(
+			int *v, int n, int &i, int &j);
+	void convert_to_binary(
+			int n, long int h, int *v);
+	void print_binary(
+			int n, int *v);
+	void save_distance(
+			int verbose_level);
+	void save_distance_H(
+			int verbose_level);
+	void save_diagram(
+			int verbose_level);
+	void save_char_func(
+			int verbose_level);
+	void report(
+			int verbose_level);
 
 };
 
@@ -145,7 +158,8 @@ public:
 		int *code, // [k * n]
 		long int *codewords, // q^k
 		int verbose_level);
-	void codewords_table(field_theory::finite_field *F,
+	void codewords_table(
+			field_theory::finite_field *F,
 			int n, int k,
 		int *code, // [k * n]
 		int *&codewords, // [q^k * n]
@@ -365,10 +379,14 @@ public:
 
 	// crc_codes.cpp:
 	//uint16_t crc16(const uint8_t *data, size_t size);
-	uint32_t crc32(const uint8_t *s, size_t n);
-	void crc32_test(int block_length, int verbose_level);
-	void test_crc_object(crc_object *Crc, long int Nb_test, int k, int verbose_level);
-	void char_vec_zero(unsigned char *p, int len);
+	uint32_t crc32(
+			const uint8_t *s, size_t n);
+	void crc32_test(
+			int block_length, int verbose_level);
+	void test_crc_object(
+			crc_object *Crc, long int Nb_test, int k, int verbose_level);
+	void char_vec_zero(
+			unsigned char *p, int len);
 #if 0
 	void crc256_test_k_subsets(
 			int message_length, int R, int k, int verbose_level);
@@ -397,15 +415,18 @@ public:
 	void split_binary_file_to_ascii_polynomials_256(
 			std::string &fname_in, std::string &fname_out,
 			int block_length, int verbose_level);
-	enum CRC_type detect_type_of_CRC(std::string &crc_type, int verbose_level);
-	int get_check_size_in_bytes(enum CRC_type type);
+	enum CRC_type detect_type_of_CRC(
+			std::string &crc_type, int verbose_level);
+	int get_check_size_in_bytes(
+			enum CRC_type type);
 	void check_errors(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
 	void extract_block(
 			crc_options_description *Crc_options_description,
 			int verbose_level);
-	uint16_t NetIpChecksum(uint16_t const *ipHeader, int nWords);
+	uint16_t NetIpChecksum(
+			uint16_t const *ipHeader, int nWords);
 	void CRC_encode_text(
 			field_theory::nth_roots *Nth,
 			ring_theory::unipoly_object &CRC_poly,
@@ -477,23 +498,38 @@ public:
 	// block_length is needed for crc32
 	//void encode_as_bitvector();
 	void print();
-	long int get_nb_blocks(long int N);
-	long int get_this_block_size(long int N, long int cnt);
-	void expand(const unsigned char *in, unsigned char *out);
-	void compress(const unsigned char *in, unsigned char *out);
-	void compress_check(const unsigned char *in, unsigned char *out);
-	void divide(const unsigned char *in, unsigned char *out);
-	void divide_alfa(const unsigned char *in771, unsigned char *out2);
-	void divide_bravo(const unsigned char *in771, unsigned char *out4);
-	void divide_charlie(const unsigned char *in771, unsigned char *out12);
-	void divide_Delta(const unsigned char *in51, unsigned char *out4);
-	void divide_Echo(const unsigned char *in51, unsigned char *out8);
-	void divide_Foxtrot(const unsigned char *in15, unsigned char *out4);
-	void divide_crc32(const uint8_t *s, size_t n, unsigned char *out4);
+	long int get_nb_blocks(
+			long int N);
+	long int get_this_block_size(
+			long int N, long int cnt);
+	void expand(
+			const unsigned char *in, unsigned char *out);
+	void compress(
+			const unsigned char *in, unsigned char *out);
+	void compress_check(
+			const unsigned char *in, unsigned char *out);
+	void divide(
+			const unsigned char *in, unsigned char *out);
+	void divide_alfa(
+			const unsigned char *in771, unsigned char *out2);
+	void divide_bravo(
+			const unsigned char *in771, unsigned char *out4);
+	void divide_charlie(
+			const unsigned char *in771, unsigned char *out12);
+	void divide_Delta(
+			const unsigned char *in51, unsigned char *out4);
+	void divide_Echo(
+			const unsigned char *in51, unsigned char *out8);
+	void divide_Foxtrot(
+			const unsigned char *in15, unsigned char *out4);
+	void divide_crc32(
+			const uint8_t *s, size_t n, unsigned char *out4);
 		// polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 		// + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
-	void SuperFastHash32(const unsigned char * data, int len, unsigned char *out4);
-	void divide_crc16(const uint8_t *data, size_t size, unsigned char *out2);
+	void SuperFastHash32(
+			const unsigned char * data, int len, unsigned char *out4);
+	void divide_crc16(
+			const uint8_t *data, size_t size, unsigned char *out2);
 
 };
 
@@ -713,7 +749,8 @@ public:
 
 	error_pattern_generator();
 	~error_pattern_generator();
-	void init(crc_object *Crc_object,
+	void init(
+			crc_object *Crc_object,
 			int k, int verbose_level);
 	long int number_of_bit_error_patters(
 			int wt,
@@ -756,10 +793,13 @@ public:
 
 	error_repository();
 	~error_repository();
-	void init(int verbose_level);
-	void add_error(int offset,
+	void init(
+			int verbose_level);
+	void add_error(
+			int offset,
 			int error_pattern, int verbose_level);
-	int search(int offset, int error_pattern,
+	int search(
+			int offset, int error_pattern,
 		int &idx, int verbose_level);
 
 };
@@ -815,7 +855,8 @@ public:
 			field_theory::finite_field *F,
 		int *&the_set, int &length,
 		int verbose_level);
-	void make_tensor_code_9_dimensional(int q,
+	void make_tensor_code_9_dimensional(
+			int q,
 			std::string &override_poly_Q,
 			std::string &override_poly,
 			int f_hyperoval,
@@ -823,7 +864,8 @@ public:
 			int verbose_level);
 
 
-	void do_tensor(int q,
+	void do_tensor(
+			int q,
 			std::string &override_poly_Q,
 			std::string &override_poly_q,
 		int f_construction_A, int f_hyperoval,

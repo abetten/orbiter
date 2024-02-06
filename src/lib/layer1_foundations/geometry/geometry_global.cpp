@@ -825,7 +825,8 @@ static int TDO_upper_bounds_initial_data[] = {
 -1
 };
 
-int &geometry_global::TDO_upper_bound(int i, int j)
+int &geometry_global::TDO_upper_bound(
+		int i, int j)
 {
 	int m, bound;
 
@@ -857,7 +858,8 @@ int &geometry_global::TDO_upper_bound(int i, int j)
 	return TDO_upper_bound_internal(i, j);
 }
 
-int &geometry_global::TDO_upper_bound_internal(int i, int j)
+int &geometry_global::TDO_upper_bound_internal(
+		int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
 		cout << "geometry_global::TDO_upper_bound_internal "
@@ -879,7 +881,8 @@ int &geometry_global::TDO_upper_bound_internal(int i, int j)
 	return TDO_upper_bounds_table[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
-int &geometry_global::TDO_upper_bound_source(int i, int j)
+int &geometry_global::TDO_upper_bound_source(
+		int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
 		cout << "geometry_global::TDO_upper_bound_source "
@@ -901,7 +904,8 @@ int &geometry_global::TDO_upper_bound_source(int i, int j)
 	return TDO_upper_bounds_table_source[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
-int geometry_global::braun_test_single_type(int v, int k, int ak)
+int geometry_global::braun_test_single_type(
+		int v, int k, int ak)
 {
 	int i, l, s, m;
 
@@ -918,7 +922,8 @@ int geometry_global::braun_test_single_type(int v, int k, int ak)
 	return true;
 }
 
-int geometry_global::braun_test_upper_bound(int v, int k)
+int geometry_global::braun_test_upper_bound(
+		int v, int k)
 {
 	int n, bound, v2, k2;
 
@@ -948,7 +953,8 @@ int geometry_global::braun_test_upper_bound(int v, int k)
 	return bound;
 }
 
-void geometry_global::TDO_refine_init_upper_bounds(int v_max)
+void geometry_global::TDO_refine_init_upper_bounds(
+		int v_max)
 {
 	int i, j, bound, bound_braun, bound_maxfit, u;
 	//cout << "TDO_refine_init_upper_bounds v_max=" << v_max << endl;
@@ -999,7 +1005,8 @@ void geometry_global::TDO_refine_init_upper_bounds(int v_max)
 	//TDO_upper_bounds_table_source, v_max, v_max, v_max, 3);
 }
 
-void geometry_global::TDO_refine_extend_upper_bounds(int new_v_max)
+void geometry_global::TDO_refine_extend_upper_bounds(
+		int new_v_max)
 {
 	int *new_upper_bounds;
 	int *new_upper_bounds_source;
@@ -1050,7 +1057,8 @@ void geometry_global::TDO_refine_extend_upper_bounds(int new_v_max)
 
 }
 
-int geometry_global::braun_test_on_line_type(int v, int *type)
+int geometry_global::braun_test_on_line_type(
+		int v, int *type)
 {
 	int i, k, ak, l, s, m;
 
@@ -1073,7 +1081,8 @@ int geometry_global::braun_test_on_line_type(int v, int *type)
 static int maxfit_table_v_max = -1;
 static int *maxfit_table = NULL;
 
-int &geometry_global::maxfit(int i, int j)
+int &geometry_global::maxfit(
+		int i, int j)
 {
 	int m;
 
@@ -1087,7 +1096,8 @@ int &geometry_global::maxfit(int i, int j)
 	return maxfit_internal(i, j);
 }
 
-int &geometry_global::maxfit_internal(int i, int j)
+int &geometry_global::maxfit_internal(
+		int i, int j)
 {
 	if (i > maxfit_table_v_max) {
 		cout << "maxfit_table_v_max i > v_max" << endl;
@@ -1112,7 +1122,8 @@ int &geometry_global::maxfit_internal(int i, int j)
 	return maxfit_table[(i - 1) * maxfit_table_v_max + j - 1];
 }
 
-void geometry_global::maxfit_table_init(int v_max)
+void geometry_global::maxfit_table_init(
+		int v_max)
 {
 	//cout << "maxfit_table_init v_max=" << v_max << endl;
 
@@ -1122,7 +1133,8 @@ void geometry_global::maxfit_table_init(int v_max)
 	//print_integer_matrix_width(cout, maxfit_table, v_max, v_max, v_max, 3);
 }
 
-void geometry_global::maxfit_table_reallocate(int v_max)
+void geometry_global::maxfit_table_reallocate(
+		int v_max)
 {
 	cout << "geometry_global::maxfit_table_reallocate "
 			"v_max=" << v_max << endl;
@@ -1168,7 +1180,8 @@ void geometry_global::maxfit_table_compute()
 	} // next i
 }
 
-int geometry_global::packing_number_via_maxfit(int n, int k)
+int geometry_global::packing_number_via_maxfit(
+		int n, int k)
 {
 	int m;
 

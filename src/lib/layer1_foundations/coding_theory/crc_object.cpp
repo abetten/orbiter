@@ -309,7 +309,8 @@ void crc_object::print()
 }
 
 
-long int crc_object::get_nb_blocks(long int N)
+long int crc_object::get_nb_blocks(
+		long int N)
 {
 	long int nb_blocks;
 
@@ -318,7 +319,8 @@ long int crc_object::get_nb_blocks(long int N)
 	return nb_blocks;
 }
 
-long int crc_object::get_this_block_size(long int N, long int cnt)
+long int crc_object::get_this_block_size(
+		long int N, long int cnt)
 {
 	long int L;
 
@@ -333,7 +335,8 @@ long int crc_object::get_this_block_size(long int N, long int cnt)
 }
 
 
-void crc_object::divide(const unsigned char *in, unsigned char *out)
+void crc_object::divide(
+		const unsigned char *in, unsigned char *out)
 {
 	if (Crc_object_type == t_crc_alfa) {
 		divide_alfa(in, out);
@@ -369,7 +372,8 @@ void crc_object::divide(const unsigned char *in, unsigned char *out)
 
 }
 
-void crc_object::expand(const unsigned char *in, unsigned char *out)
+void crc_object::expand(
+		const unsigned char *in, unsigned char *out)
 {
 	data_structures::algorithms Algo;
 
@@ -407,7 +411,8 @@ void crc_object::expand(const unsigned char *in, unsigned char *out)
 
 }
 
-void crc_object::compress(const unsigned char *in, unsigned char *out)
+void crc_object::compress(
+		const unsigned char *in, unsigned char *out)
 {
 	data_structures::algorithms Algo;
 
@@ -445,7 +450,8 @@ void crc_object::compress(const unsigned char *in, unsigned char *out)
 
 }
 
-void crc_object::compress_check(const unsigned char *in, unsigned char *out)
+void crc_object::compress_check(
+		const unsigned char *in, unsigned char *out)
 {
 	data_structures::algorithms Algo;
 
@@ -749,7 +755,8 @@ const unsigned char crc_poly_table_alfa[] = {
  32, 51,255,
 };
 
-void crc_object::divide_alfa(const unsigned char *in771, unsigned char *out2)
+void crc_object::divide_alfa(
+		const unsigned char *in771, unsigned char *out2)
 {
 	unsigned char R[771];
 	int i, ii, jj;
@@ -1038,7 +1045,8 @@ const unsigned char crc_poly_table_bravo[] = {
 255,140,252, 60,255,
 };
 
-void crc_object::divide_bravo(const unsigned char *in771, unsigned char *out4)
+void crc_object::divide_bravo(
+		const unsigned char *in771, unsigned char *out4)
 {
 	unsigned char R[771];
 	int i, ii, jj;
@@ -1329,7 +1337,8 @@ const unsigned char crc_poly_table_charlie[] = {
 255,127, 31,255,136,231, 85, 28,184,127,138,206,255,
 };
 
-void crc_object::divide_charlie(const unsigned char *in771, unsigned char *out12)
+void crc_object::divide_charlie(
+		const unsigned char *in771, unsigned char *out12)
 {
 	unsigned char R[771];
 	int i, ii, jj;
@@ -1377,7 +1386,8 @@ const unsigned char crc_poly_table_Delta[] = {
 15,13, 7, 6,15,
 };
 
-void crc_object::divide_Delta(const unsigned char *in51, unsigned char *out4)
+void crc_object::divide_Delta(
+		const unsigned char *in51, unsigned char *out4)
 {
 	unsigned char R[51];
 	int i, j, ii, jj;
@@ -1445,7 +1455,8 @@ const unsigned char crc_poly_table_Echo[] = {
  4,15,12, 4, 7, 5, 4, 6,15,
 };
 
-void crc_object::divide_Echo(const unsigned char *in51, unsigned char *out8)
+void crc_object::divide_Echo(
+		const unsigned char *in51, unsigned char *out8)
 {
 	unsigned char R[51];
 	int i, j, ii, jj;
@@ -1497,7 +1508,8 @@ const unsigned char crc_poly_table_foxtrot[] = {
 11, 1, 8, 7,15,
 };
 
-void crc_object::divide_Foxtrot(const unsigned char *in15, unsigned char *out4)
+void crc_object::divide_Foxtrot(
+		const unsigned char *in15, unsigned char *out4)
 {
 	unsigned char R[15];
 	int i, j, ii, jj;
@@ -1525,7 +1537,8 @@ void crc_object::divide_Foxtrot(const unsigned char *in15, unsigned char *out4)
 
 
 
-void crc_object::divide_crc32(const uint8_t *s, size_t n, unsigned char *out4)
+void crc_object::divide_crc32(
+		const uint8_t *s, size_t n, unsigned char *out4)
 // polynomial x^32 + x^26 + x^23 + x^22 + x^16 + x^12 + x^11
 // + x^10 + x^8 + x^7 + x^5 + x^4 + x^2 + x + 1
 {
@@ -1550,7 +1563,8 @@ void crc_object::divide_crc32(const uint8_t *s, size_t n, unsigned char *out4)
 	out4[3] = p[3];
 }
 
-void crc_object::SuperFastHash32(const unsigned char * data, int len, unsigned char *out4)
+void crc_object::SuperFastHash32(
+		const unsigned char * data, int len, unsigned char *out4)
 {
 
 	data_structures::algorithms Algo;
@@ -1567,7 +1581,8 @@ void crc_object::SuperFastHash32(const unsigned char * data, int len, unsigned c
 
 #define CRC16 0x8005
 
-void crc_object::divide_crc16(const uint8_t *data, size_t size, unsigned char *out2)
+void crc_object::divide_crc16(
+		const uint8_t *data, size_t size, unsigned char *out2)
 {
     uint16_t out = 0;
     int bits_read = 0, bit_flag;

@@ -59,7 +59,8 @@ void lint_vec::take_away(
 }
 
 
-void lint_vec::zero(long int *v, long int len)
+void lint_vec::zero(
+		long int *v, long int len)
 {
 	int i;
 	long int *p;
@@ -69,7 +70,8 @@ void lint_vec::zero(long int *v, long int len)
 	}
 }
 
-void lint_vec::one(long int *v, long int len)
+void lint_vec::one(
+		long int *v, long int len)
 {
 	int i;
 	long int *p;
@@ -80,7 +82,8 @@ void lint_vec::one(long int *v, long int len)
 }
 
 
-void lint_vec::mone(long int *v, long int len)
+void lint_vec::mone(
+		long int *v, long int len)
 {
 	int i;
 	long int *p;
@@ -90,7 +93,8 @@ void lint_vec::mone(long int *v, long int len)
 	}
 }
 
-void lint_vec::copy(long int *from, long int *to, long int len)
+void lint_vec::copy(
+		long int *from, long int *to, long int len)
 {
 	int i;
 	long int *p, *q;
@@ -100,7 +104,8 @@ void lint_vec::copy(long int *from, long int *to, long int len)
 	}
 }
 
-void lint_vec::copy_to_int(long int *from, int *to, long int len)
+void lint_vec::copy_to_int(
+		long int *from, int *to, long int len)
 {
 	int i;
 	long int *p;
@@ -111,7 +116,8 @@ void lint_vec::copy_to_int(long int *from, int *to, long int len)
 	}
 }
 
-void lint_vec::complement(long int *v, long int *w, int n, int k)
+void lint_vec::complement(
+		long int *v, long int *w, int n, int k)
 // computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
 {
 	long int j1, j2, i;
@@ -134,7 +140,8 @@ void lint_vec::complement(long int *v, long int *w, int n, int k)
 
 
 
-long int lint_vec::minimum(long int *v, int len)
+long int lint_vec::minimum(
+		long int *v, int len)
 {
 	long int i, m;
 
@@ -151,7 +158,8 @@ long int lint_vec::minimum(long int *v, int len)
 	return m;
 }
 
-long int lint_vec::maximum(long int *v, int len)
+long int lint_vec::maximum(
+		long int *v, int len)
 {
 	long int m, i;
 
@@ -169,7 +177,8 @@ long int lint_vec::maximum(long int *v, int len)
 }
 
 
-void lint_vec::matrix_print_width(std::ostream &ost,
+void lint_vec::matrix_print_width(
+		std::ostream &ost,
 	long int *p, int m, int n, int dim_n, int w)
 {
 	int i, j;
@@ -186,7 +195,8 @@ void lint_vec::matrix_print_width(std::ostream &ost,
 }
 
 
-int lint_vec::matrix_max_log_of_entries(long int *p, int m, int n)
+int lint_vec::matrix_max_log_of_entries(
+		long int *p, int m, int n)
 {
 	int i, j;
 	long a, w = 1, w1;
@@ -213,7 +223,8 @@ int lint_vec::matrix_max_log_of_entries(long int *p, int m, int n)
 
 
 
-void lint_vec::matrix_print(long int *p, int m, int n)
+void lint_vec::matrix_print(
+		long int *p, int m, int n)
 {
 	int w;
 
@@ -221,7 +232,8 @@ void lint_vec::matrix_print(long int *p, int m, int n)
 	matrix_print(p, m, n, w);
 }
 
-void lint_vec::matrix_print(long int *p, int m, int n, int w)
+void lint_vec::matrix_print(
+		long int *p, int m, int n, int w)
 {
 	int i, j;
 
@@ -236,13 +248,15 @@ void lint_vec::matrix_print(long int *p, int m, int n, int w)
 	}
 }
 
-void lint_vec::set_print(long int *v, int len)
+void lint_vec::set_print(
+		long int *v, int len)
 {
 	set_print(cout, v, len);
 }
 
 
-void lint_vec::set_print(std::ostream &ost, long int *v, int len)
+void lint_vec::set_print(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -256,7 +270,8 @@ void lint_vec::set_print(std::ostream &ost, long int *v, int len)
 	ost << " }";
 }
 
-void lint_vec::print(std::ostream &ost, long int *v, int len)
+void lint_vec::print(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -282,7 +297,8 @@ void lint_vec::print(std::ostream &ost, long int *v, int len)
 	}
 }
 
-void lint_vec::print(std::ostream &ost, std::vector<long int> &v)
+void lint_vec::print(
+		std::ostream &ost, std::vector<long int> &v)
 {
 	int i, len;
 
@@ -309,7 +325,8 @@ void lint_vec::print(std::ostream &ost, std::vector<long int> &v)
 	}
 }
 
-void lint_vec::print_as_table(std::ostream &ost, long int *v, int len, int width)
+void lint_vec::print_as_table(
+		std::ostream &ost, long int *v, int len, int width)
 {
 	int i;
 
@@ -325,7 +342,8 @@ void lint_vec::print_as_table(std::ostream &ost, long int *v, int len, int width
 	ost << endl;
 }
 
-void lint_vec::print_bare_fully(std::ostream &ost, long int *v, int len)
+void lint_vec::print_bare_fully(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -339,7 +357,8 @@ void lint_vec::print_bare_fully(std::ostream &ost, long int *v, int len)
 	//ost << " )";
 }
 
-void lint_vec::print_fully(std::ostream &ost, long int *v, int len)
+void lint_vec::print_fully(
+		std::ostream &ost, long int *v, int len)
 {
 	int i;
 
@@ -353,7 +372,8 @@ void lint_vec::print_fully(std::ostream &ost, long int *v, int len)
 	ost << " )";
 }
 
-void lint_vec::print_fully(std::ostream &ost, std::vector<long int> &v)
+void lint_vec::print_fully(
+		std::ostream &ost, std::vector<long int> &v)
 {
 	int i, len;
 
@@ -369,14 +389,16 @@ void lint_vec::print_fully(std::ostream &ost, std::vector<long int> &v)
 }
 
 
-void lint_vec::scan(std::string &s, long int *&v, int &len)
+void lint_vec::scan(
+		std::string &s, long int *&v, int &len)
 {
 	istringstream ins(s);
 	scan_from_stream(ins, v, len);
 }
 
 
-void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
+void lint_vec::scan_from_stream(
+		std::istream & is, long int *&v, int &len)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -507,7 +529,8 @@ void lint_vec::scan_from_stream(std::istream & is, long int *&v, int &len)
 }
 
 
-void lint_vec::print_to_str(std::string &s, long int *data, int len)
+void lint_vec::print_to_str(
+		std::string &s, long int *data, int len)
 {
 	string s1;
 
@@ -517,7 +540,8 @@ void lint_vec::print_to_str(std::string &s, long int *data, int len)
 
 }
 
-void lint_vec::print_to_str_bare(std::string &s, long int *data, int len)
+void lint_vec::print_to_str_bare(
+		std::string &s, long int *data, int len)
 {
 	int i;
 	long int a;
@@ -536,7 +560,8 @@ void lint_vec::print_to_str_bare(std::string &s, long int *data, int len)
 
 
 
-void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)
+void lint_vec::create_string_with_quotes(
+		std::string &str, long int *v, int len)
 {
 	ostringstream s;
 	int i;
@@ -552,7 +577,8 @@ void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)
 	str.assign(s.str());
 }
 
-int lint_vec::compare(long int *p, long int *q, int len)
+int lint_vec::compare(
+		long int *p, long int *q, int len)
 {
 	data_structures::sorting Sorting;
 	int cmp;
@@ -563,7 +589,8 @@ int lint_vec::compare(long int *p, long int *q, int len)
 }
 
 
-std::string lint_vec::stringify(long int *v, int len)
+std::string lint_vec::stringify(
+		long int *v, int len)
 {
 	string output;
 	ostringstream s;

@@ -28,7 +28,8 @@ scene_element_of_type_point::~scene_element_of_type_point()
 {
 }
 
-void scene_element_of_type_point::init(double *coord3)
+void scene_element_of_type_point::init(
+		double *coord3)
 {
 	Point_coords[0] = coord3[0];
 	Point_coords[1] = coord3[1];

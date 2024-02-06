@@ -189,6 +189,8 @@ interface_toolkit::interface_toolkit()
 	//draw_layered_graph_fname;
 	Layered_graph_draw_options = NULL;
 
+	f_read_gedcom = false;
+	//std::string read_gedcom_fname;
 
 }
 
@@ -310,6 +312,9 @@ void interface_toolkit::print_help(
 	}
 	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-read_gedcom") == 0) {
+		cout << "-read_gedcom <string : fname>" << endl;
 	}
 
 }
@@ -433,6 +438,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-read_gedcom") == 0) {
 		return true;
 	}
 	return false;
@@ -973,6 +981,16 @@ void interface_toolkit::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-read_gedcom") == 0) {
+		f_read_gedcom = true;
+		read_gedcom_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-read_gedcom "
+					<< " " << read_gedcom_fname
+					<< endl;
+		}
+	}
+
 
 
 	if (f_v) {
@@ -1180,6 +1198,11 @@ void interface_toolkit::print()
 	if (f_draw_layered_graph) {
 		cout << "-draw_layered_graph " << endl;
 		Layered_graph_draw_options->print();
+	}
+	if (f_read_gedcom) {
+		cout << "-read_gedcom "
+				<< " " << read_gedcom_fname
+				<< endl;
 	}
 }
 
@@ -1987,11 +2010,29 @@ void interface_toolkit::worker(
 	else if (f_draw_layered_graph) {
 		graphics::graphical_output GO;
 
-		GO.draw_layered_graph_from_file(draw_layered_graph_fname,
+
+
+		GO.draw_layered_graph_from_file(
+				draw_layered_graph_fname,
 				Layered_graph_draw_options,
 				verbose_level);
 
 	}
+	else if (f_read_gedcom) {
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_read_gedcom " << read_gedcom_fname << endl;
+		}
+
+
+		data_structures::ancestry_tree *AT;
+
+		AT = NEW_OBJECT(data_structures::ancestry_tree);
+
+		AT->read_gedcom(read_gedcom_fname, verbose_level);
+
+	}
+
 
 
 	if (f_v) {

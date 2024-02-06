@@ -272,7 +272,8 @@ int formula_vector::is_integer_matrix()
 
 }
 
-void formula_vector::get_integer_matrix(int *&M, int verbose_level)
+void formula_vector::get_integer_matrix(
+		int *&M, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -363,7 +364,8 @@ void formula_vector::get_string_representation_formula(
 }
 
 
-void formula_vector::print_Sajeeb(std::ostream &ost)
+void formula_vector::print_Sajeeb(
+		std::ostream &ost)
 {
 
 	if (f_matrix) {
@@ -1950,7 +1952,8 @@ void formula_vector::multiply_2by2_from_the_left(
 
 }
 
-void formula_vector::latex_tree(int verbose_level)
+void formula_vector::latex_tree(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1991,7 +1994,8 @@ void formula_vector::latex_tree(int verbose_level)
 	}
 }
 
-void formula_vector::export_tree(int verbose_level)
+void formula_vector::export_tree(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2017,7 +2021,8 @@ void formula_vector::export_tree(int verbose_level)
 	}
 }
 
-void formula_vector::collect_variables(int verbose_level)
+void formula_vector::collect_variables(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2050,7 +2055,8 @@ void formula_vector::collect_variables(int verbose_level)
 
 }
 
-void formula_vector::print_variables(std::ostream &ost)
+void formula_vector::print_variables(
+		std::ostream &ost)
 {
 	int i;
 

@@ -19,7 +19,8 @@ namespace orbiter_kernel_system {
 
 
 
-override_double::override_double(double *p, double value)
+override_double::override_double(
+		double *p, double value)
 {
 	override_double::p = p;
 	original_value = *p;

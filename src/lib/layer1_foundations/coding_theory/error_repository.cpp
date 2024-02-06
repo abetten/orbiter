@@ -29,7 +29,8 @@ error_repository::~error_repository()
 {
 }
 
-void error_repository::init(int verbose_level)
+void error_repository::init(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -48,7 +49,8 @@ void error_repository::init(int verbose_level)
 	}
 }
 
-void error_repository::add_error(int offset, int error_pattern, int verbose_level)
+void error_repository::add_error(
+		int offset, int error_pattern, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -98,7 +100,8 @@ void error_repository::add_error(int offset, int error_pattern, int verbose_leve
 	}
 }
 
-int error_repository::search(int offset, int error_pattern,
+int error_repository::search(
+		int offset, int error_pattern,
 	int &idx, int verbose_level)
 {
 	int l, r, m, res;

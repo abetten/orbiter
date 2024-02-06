@@ -109,7 +109,8 @@ double layered_graph::average_word_length()
 	return avg;
 }
 
-void layered_graph::place(int verbose_level)
+void layered_graph::place(
+		int verbose_level)
 {
 	double dy, dy2;
 	int i;
@@ -326,12 +327,8 @@ void layered_graph::draw_with_options(
 {
 	int f_v = (verbose_level >= 1);
 
-	//int x_min = 0; //, x_max = 10000;
-	//int y_min = 0; //, y_max = 10000;
 	int factor_1000 = 1000;
 	string fname_full;
-	double move_out = 0.01;
-	int edge_label = 1;
 	orbiter_kernel_system::file_io Fio;
 	
 	fname_full = fname + ".mp";
@@ -361,40 +358,10 @@ void layered_graph::draw_with_options(
 
 		G.init(fname_full, O, verbose_level - 1);
 
-#if 0
-		mp_graphics G(fname_full, x_min, y_min,
-				O->xin, O->yin,
-				O->f_embedded, O->f_sideways, verbose_level - 1);
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = O->xout;
-		G.out_ymax() = O->yout;
-		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-
-		G.tikz_global_scale = O->scale;
-		G.tikz_global_line_width = O->line_width;
-#endif
 
 		G.header();
 		G.begin_figure(factor_1000);
 
-		int i, j, h, id, n, l;
-		//int rad = 50;
-		int rad_x_twice, rad_y_twice;
-		int x, y, x2, y2;
-		int Px[10], Py[10];
-		int threshold = 50000;
-		int xoffset = 3 * O->rad / 2;
-		int yoffset = 0;
-		int own_id;
-		orbiter_kernel_system::numerics Num;
-		data_structures::sorting Sorting;
-	
-		rad_x_twice = O->rad >> 3;
-		rad_y_twice = O->rad >> 3;
-		G.user2dev_dist_x(rad_x_twice);
-		G.user2dev_dist_y(rad_y_twice);
-	
 		//G.sl_thickness(30); // 100 is normal
 
 	
@@ -413,399 +380,29 @@ void layered_graph::draw_with_options(
 
 
 		
-		// draw the edges first:
-		for (i = 0; i < nb_layers; i++) {
 
-			if (O->f_select_layers) {
-				int idx;
+		// draw edges:
 
-				if (!Sorting.int_vec_search_linear(
-						O->layer_select,
-						O->nb_layer_select, i, idx)) {
-					continue;
-				}
-
-			}
-
-			if (f_v) {
-				cout << "layered_graph::draw drawing edges in "
-						"layer " << i << "  with " << L[i].nb_nodes
-						<< " nodes:" << endl;
-			}
-
-			for (j = 0; j < L[i].nb_nodes; j++) {
-				if (f_v) {
-					cout << "layered_graph::draw drawing edges in "
-							"layer " << i << " node " << j
-							<< " neighbors = "
-							<< L[i].Nodes[j].nb_neighbors << endl;
-				}
-				if (f_v) {
-					cout << "Vertex " << i << " " << j << " at ("
-							<< L[i].Nodes[j].x_coordinate << ","
-							<< L[i].y_coordinate << ")" << endl;
-				}
-
-				if (L[i].nb_nodes > threshold) {
-					if (j > 0 && j < L[i].nb_nodes - 1) {
-						if (f_v) {
-							cout << "skipping node " << j << " in layer " << i << endl;
-						}
-						continue;
-					}
-				}
-				coordinates(
-						L[i].Nodes[j].id, O->xin, O->yin,
-						O->f_rotated, x, y);
-				//G.circle(x, y, rad);
-
-
-				own_id = L[i].Nodes[j].id;
-
-				int *up;
-				int *down;
-				int nb_up, nb_down;
-
-				up = NEW_int(L[i].Nodes[j].nb_neighbors);
-				down = NEW_int(L[i].Nodes[j].nb_neighbors);
-				nb_up = 0;
-				nb_down = 0;
-
-				for (h = 0; h < L[i].Nodes[j].nb_neighbors; h++) {
-					id = L[i].Nodes[j].neighbor_list[h];
-					if (f_v) {
-						cout << "layered_graph::draw drawing edges in "
-							"layer " << i << " node " << j << " neighbor = "
-							<< h << " / " << L[i].Nodes[j].nb_neighbors
-							<< " own_id=" << own_id << " id=" << id << endl;
-					}
-					if (id < own_id) {
-						continue;
-					}
-					find_node_by_id(id, l, n);
-					if (f_v) {
-						cout << "is in layer " << l << " mode " << n << endl;
-					}
-					if (O->f_select_layers) {
-						int idx;
-
-						if (!Sorting.int_vec_search_linear(
-								O->layer_select,
-								O->nb_layer_select, l, idx)) {
-							continue;
-						}
-					}
-					if (l < i) {
-						up[nb_up++] = id;
-						if (f_v) {
-							cout << "added an up link" << endl;
-						}
-					}
-					else {
-						down[nb_down++] = id;
-						if (f_v) {
-							cout << "added a down link" << endl;
-						}
-					}
-				}
-
-
-				if (f_v) {
-					cout << "layered_graph::draw drawing edges, node "
-							<< j << ", nb_up = " << nb_up << endl;
-				}
-				if (nb_up > threshold) {
-					if (f_v) {
-						cout << "layered_graph::draw drawing "
-								"edges nb_up > threshold" << endl;
-					}
-					for (h = 0; h < nb_up; h++) {
-						id = up[h];
-						find_node_by_id(id, l, n);
-						coordinates(
-								id, O->xin, O->yin,
-								O->f_rotated, x2, y2);
-						if (h > 0 && h < nb_up - 1) {
-#if 1
-							Px[0] = x;
-							Px[1] = (int)(x + ((double)(x2 - x)) /
-									Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice);
-							Py[0] = y;
-							Py[1] = (int)(y + ((double)(y2 - y)) /
-									Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice);
-#endif
-						}
-						else {
-							Px[0] = x;
-							Px[1] = x2;
-							Py[0] = y;
-							Py[1] = y2;
-						}
-						G.polygon2(Px, Py, 0, 1);
-
-						if (O->f_label_edges) {
-							Px[2] = (Px[0] + Px[1]) >> 1;
-							Py[2] = (Py[0] + Py[1]) >> 1;
-							string s;
-							s = std::to_string(edge_label);
-							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", s);
-							edge_label++;
-						}
-					}
-				}
-				else {
-					for (h = 0; h < nb_up; h++) {
-						id = up[h];
-						find_node_by_id(id, l, n);
-						coordinates(
-								id, O->xin, O->yin,
-								O->f_rotated, x2, y2);
-						Px[0] = x;
-						Px[1] = x2;
-						Py[0] = y;
-						Py[1] = y2;
-						G.polygon2(Px, Py, 0, 1);
-						if (O->f_label_edges) {
-							Px[2] = (Px[0] + Px[1]) >> 1;
-							Py[2] = (Py[0] + Py[1]) >> 1;
-							string s;
-							s = std::to_string(edge_label);
-							G.aligned_text_with_offset(Px[2], Py[2],
-									xoffset, yoffset, "", s);
-							edge_label++;
-						}
-						if (l > i) {
-							if (f_v) {
-								cout << "edge " << i << " " << j
-										<< " to " << l << " " << n << endl;
-							}
-						}
-					}
-				}
-
-				if (f_v) {
-					cout << "layered_graph::draw drawing edges, node "
-							<< j << ", nb_down = " << nb_down << endl;
-				}
-				if (nb_down > threshold) {
-					if (f_v) {
-						cout << "layered_graph::draw drawing edges "
-								"nb_down > threshold" << endl;
-					}
-					for (h = 0; h < nb_down; h++) {
-						id = down[h];
-						find_node_by_id(id, l, n);
-						coordinates(
-								id, O->xin, O->yin, O->f_rotated, x2, y2);
-						if (h > 0 && h < nb_down - 1) {
-#if 1
-							Px[0] = x;
-							Px[1] = x + ((double)(x2 - x)) /
-									Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice;
-							Py[0] = y;
-							Py[1] = y + ((double)(y2 - y)) /
-									Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice;
-#endif
-						}
-						else {
-							Px[0] = x;
-							Px[1] = x2;
-							Py[0] = y;
-							Py[1] = y2;
-						}
-						G.polygon2(Px, Py, 0, 1);
-						if (O->f_label_edges) {
-							Px[2] = (Px[0] + Px[1]) >> 1;
-							Py[2] = (Py[0] + Py[1]) >> 1;
-							string s;
-							s = std::to_string(edge_label);
-							G.aligned_text_with_offset(
-									Px[2], Py[2],
-									xoffset, yoffset, "", s);
-							edge_label++;
-						}
-						if (l > i) {
-							if (f_v) {
-								cout << "edge " << i << " " << j
-										<< " to " << l << " " << n << endl;
-							}
-						}
-					}
-				}
-				else {
-					for (h = 0; h < nb_down; h++) {
-						id = down[h];
-						find_node_by_id(id, l, n);
-						coordinates(
-								id, O->xin, O->yin,
-								O->f_rotated, x2, y2);
-						Px[0] = x;
-						Px[1] = x2;
-						Py[0] = y;
-						Py[1] = y2;
-						G.polygon2(Px, Py, 0, 1);
-						if (O->f_label_edges) {
-							Px[2] = (Px[0] + Px[1]) >> 1;
-							Py[2] = (Py[0] + Py[1]) >> 1;
-							string s;
-							s = std::to_string(edge_label);
-							G.aligned_text_with_offset(
-									Px[2], Py[2],
-									xoffset, yoffset, "", s);
-							edge_label++;
-						}
-						if (l > i) {
-							if (f_v) {
-								cout << "edge " << i << " " << j
-										<< " to " << l << " " << n << endl;
-							}
-						}
-					}
-				}
-
-				FREE_int(up);
-				FREE_int(down);
-
-
-#if 0
-				for (h = 0; h < L[i].Nodes[j].nb_neighbors; h++) {
-					id = L[i].Nodes[j].neighbor_list[h];
-					find_node_by_id(id, l, n);
-					coordinates(id, x_max, y_max, x2, y2);
-					Px[0] = x;
-					Px[1] = x2;
-					Py[0] = y;
-					Py[1] = y2;
-					G.polygon2(Px, Py, 0, 1);
-					if (l > i) {
-						if (f_v) {
-							cout << "edge " << i << " " << j
-									<< " to " << l << " " << n << endl;
-						}
-					}
-				}
-#endif
-
-			}
+		if (f_v) {
+			cout << "layered_graph::draw before draw_edges" << endl;
 		}
 
+		draw_edges(O, &G, verbose_level - 2);
+
+		if (f_v) {
+			cout << "layered_graph::draw after draw_edges" << endl;
+		}
+
+
 		// now draw the vertices:
-		for (i = 0; i < nb_layers; i++) {
+		if (f_v) {
+			cout << "layered_graph::draw before draw_vertices" << endl;
+		}
 
-			if (O->f_select_layers) {
-				int idx;
+		draw_vertices(O, &G, verbose_level - 2);
 
-				if (!Sorting.int_vec_search_linear(
-						O->layer_select,
-						O->nb_layer_select, i, idx)) {
-					continue;
-				}
-
-			}
-
-			if (f_v) {
-				cout << "layered_graph::draw drawing nodes in layer "
-						<< i << "  with " << L[i].nb_nodes << " nodes:" << endl;
-			}
-
-			if (L[i].nb_nodes > threshold) {
-				coordinates(L[i].Nodes[0].id, O->xin, O->yin,
-						O->f_rotated, x, y);
-				Px[0] = x;
-				Py[0] = y;
-				coordinates(L[i].Nodes[L[i].nb_nodes - 1].id,
-						O->xin, O->yin, O->f_rotated, x, y);
-				Px[1] = x;
-				Py[1] = y;
-				G.polygon2(Px, Py, 0, 1);
-			}
-			for (j = 0; j < L[i].nb_nodes; j++) {
-				if (f_v) {
-					cout << "Vertex " << i << " " << j << " at ("
-							<< L[i].Nodes[j].x_coordinate << ","
-							<< L[i].y_coordinate << ")" << endl;
-				}
-				if (L[i].nb_nodes > threshold) {
-					if (j > 0 && j < L[i].nb_nodes - 1) {
-						continue;
-					}
-				}
-				coordinates(
-						L[i].Nodes[j].id, O->xin, O->yin,
-						O->f_rotated, x, y);
-
-
-				string label;
-
-
-				if (L[i].Nodes[j].label.length()) {
-					if (f_v) {
-						cout << "Vertex " << i << " " << j
-								<< " has the following label: "
-								<< L[i].Nodes[j].label << endl;
-					}
-					label.assign(L[i].Nodes[j].label);
-				}
-				else {
-					if (f_v) {
-						cout << "Vertex " << i << " " << j
-								<< " does not have a label" << endl;
-					}
-					//G.circle(x, y, rad);
-				}
-
-
-				if (L[i].Nodes[j].f_has_data1) {
-					if (f_v) {
-						cout << "Vertex " << i << " " << j
-								<< " has the following data1 value: "
-								<< L[i].Nodes[j].data1 << " radius_factor="
-								<< L[i].Nodes[j].radius_factor << endl;
-					}
-
-					if (L[i].Nodes[j].radius_factor >= 1.) {
-						label = "{\\scriptsize " + std::to_string(L[i].Nodes[j].data1) + "}";
-					}
-					else {
-						label.assign("");
-					}
-				}
-				else {
-					label.assign("");
-				}
-
-				G.nice_circle(
-						x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
-
-				if (O->f_nodes_empty) {
-					if (f_v) {
-						cout << "Vertex " << i << " " << j
-								<< " f_nodes_empty is true" << endl;
-					}
-				}
-				else {
-					if (O->f_has_draw_vertex_callback) {
-						//cout << "Vertex " << i << " " << j
-						//<< " before (*O->draw_vertex_callback)" << endl;
-						(*O->draw_vertex_callback)(this, &G, i, j, x, y,
-								O->rad * /* 4 * */ L[i].Nodes[j].radius_factor,
-								O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
-					}
-					else {
-						if (f_v) {
-							cout << "layer " << i << " node " << j
-									<< " label=" << label << endl;
-						}
-
-						if (label.length() /* L[i].Nodes[j].radius_factor >= 1.*/) {
-							//G.circle_text(x, y, L[i].Nodes[j].label);
-							G.aligned_text(x, y, "", label);
-							//G.aligned_text(x, y, "", L[i].Nodes[j].label);
-						}
-					}
-				}
-			}
+		if (f_v) {
+			cout << "layered_graph::draw after draw_vertices" << endl;
 		}
 
 
@@ -815,50 +412,17 @@ void layered_graph::draw_with_options(
 		}
 
 
-		if (O->f_show_level_info) {
-			// draw depth labels at the side:
-			coordinates(L[0].Nodes[0].id,
-					O->xin, O->yin, O->f_rotated, x, y);
-			Px[0] = 1 * O->rad;
-			Py[0] = y + 4 * O->rad;
-			string s;
-			s.assign("Level");
-			G.aligned_text(Px[0], Py[0], "", s);
-			for (i = 0; i < nb_layers - 1; i++) {
-				coordinates(L[i].Nodes[0].id,
-						O->xin, O->yin, O->f_rotated, x, y);
-				Px[0] = 2 * O->rad;
-				Py[0] = y;
-				coordinates(L[i + 1].Nodes[0].id,
-						O->xin, O->yin, O->f_rotated, x, y);
-				Px[1] = 2 * O->rad;
-				Py[1] = y;
-				G.polygon2(Px, Py, 0, 1);
-			}
-			for (i = 0; i < nb_layers; i++) {
-				coordinates(L[i].Nodes[0].id,
-						O->xin, O->yin, O->f_rotated, x, y);
-				Px[0] = 1 * O->rad;
-				Py[0] = y;
-				Px[1] = 3 * O->rad;
-				Py[1] = y;
-				G.polygon2(Px, Py, 0, 1);
-			}
-			for (i = 0; i < nb_layers; i++) {
-
-				coordinates(L[i].Nodes[0].id,
-						O->xin, O->yin, O->f_rotated, x, y);
-				Px[0] = 0;
-				Py[0] = y;
-				//G.nice_circle(Px[0], Py[0], rad * 4);
-				string s;
-				s = std::to_string(i);
-				G.aligned_text(Px[0], Py[0], "", s);
-			}
+		if (f_v) {
+			cout << "layered_graph::draw before draw_level_info" << endl;
+		}
+		draw_level_info(O, &G, verbose_level - 2);
+		if (f_v) {
+			cout << "layered_graph::draw after draw_level_info" << endl;
 		}
 
-
 		if (O->f_corners) {
+			double move_out = 0.01;
+
 			G.frame(move_out);
 		}
 
@@ -870,9 +434,523 @@ void layered_graph::draw_with_options(
 	if (f_v) {
 		cout << "layered_graph::draw written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
-		}
+	}
 	
 }
+
+void layered_graph::draw_edges(
+		graphics::layered_graph_draw_options *O,
+		graphics::mp_graphics *G,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::draw_edges" << endl;
+	}
+	orbiter_kernel_system::numerics Num;
+	data_structures::sorting Sorting;
+	int threshold = 50000;
+	int own_id;
+	int x, y, x2, y2;
+	int h, id, l, n;
+	int i, j;
+	int Px[10], Py[10];
+	int edge_label = 1;
+	int xoffset = 3 * O->rad / 2;
+	int yoffset = 0;
+	int rad_x_twice, rad_y_twice;
+
+
+
+	rad_x_twice = O->rad >> 3;
+	rad_y_twice = O->rad >> 3;
+
+	// draw the edges first:
+	for (i = 0; i < nb_layers; i++) {
+
+		if (O->f_select_layers) {
+			int idx;
+
+			if (!Sorting.int_vec_search_linear(
+					O->layer_select,
+					O->nb_layer_select, i, idx)) {
+				continue;
+			}
+
+		}
+
+		if (f_v) {
+			cout << "layered_graph::draw drawing edges in "
+					"layer " << i << "  with " << L[i].nb_nodes
+					<< " nodes:" << endl;
+		}
+
+		for (j = 0; j < L[i].nb_nodes; j++) {
+			if (f_v) {
+				cout << "layered_graph::draw drawing edges in "
+						"layer " << i << " node " << j
+						<< " neighbors = "
+						<< L[i].Nodes[j].nb_neighbors << endl;
+			}
+			if (f_v) {
+				cout << "Vertex " << i << " " << j << " at ("
+						<< L[i].Nodes[j].x_coordinate << ","
+						<< L[i].y_coordinate << ")" << endl;
+			}
+
+			if (L[i].nb_nodes > threshold) {
+				if (j > 0 && j < L[i].nb_nodes - 1) {
+					if (f_v) {
+						cout << "skipping node " << j << " in layer " << i << endl;
+					}
+					continue;
+				}
+			}
+			coordinates(
+					L[i].Nodes[j].id, O->xin, O->yin,
+					O->f_rotated, x, y);
+			//G.circle(x, y, rad);
+
+
+			own_id = L[i].Nodes[j].id;
+
+			int *up;
+			int *down;
+			int nb_up, nb_down;
+
+			up = NEW_int(L[i].Nodes[j].nb_neighbors);
+			down = NEW_int(L[i].Nodes[j].nb_neighbors);
+			nb_up = 0;
+			nb_down = 0;
+
+			for (h = 0; h < L[i].Nodes[j].nb_neighbors; h++) {
+				id = L[i].Nodes[j].neighbor_list[h];
+				if (f_v) {
+					cout << "layered_graph::draw drawing edges in "
+						"layer " << i << " node " << j << " neighbor = "
+						<< h << " / " << L[i].Nodes[j].nb_neighbors
+						<< " own_id=" << own_id << " id=" << id << endl;
+				}
+				if (id < own_id) {
+					continue;
+				}
+				find_node_by_id(id, l, n);
+				if (f_v) {
+					cout << "is in layer " << l << " mode " << n << endl;
+				}
+				if (O->f_select_layers) {
+					int idx;
+
+					if (!Sorting.int_vec_search_linear(
+							O->layer_select,
+							O->nb_layer_select, l, idx)) {
+						continue;
+					}
+				}
+				if (l < i) {
+					up[nb_up++] = id;
+					if (f_v) {
+						cout << "added an up link" << endl;
+					}
+				}
+				else {
+					down[nb_down++] = id;
+					if (f_v) {
+						cout << "added a down link" << endl;
+					}
+				}
+			}
+
+
+			if (f_v) {
+				cout << "layered_graph::draw drawing edges, node "
+						<< j << ", nb_up = " << nb_up << endl;
+			}
+			if (nb_up > threshold) {
+				if (f_v) {
+					cout << "layered_graph::draw drawing "
+							"edges nb_up > threshold" << endl;
+				}
+				for (h = 0; h < nb_up; h++) {
+					id = up[h];
+					find_node_by_id(id, l, n);
+					coordinates(
+							id, O->xin, O->yin,
+							O->f_rotated, x2, y2);
+					if (h > 0 && h < nb_up - 1) {
+#if 1
+						Px[0] = x;
+						Px[1] = (int)(x + ((double)(x2 - x)) /
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice);
+						Py[0] = y;
+						Py[1] = (int)(y + ((double)(y2 - y)) /
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice);
+#endif
+					}
+					else {
+						Px[0] = x;
+						Px[1] = x2;
+						Py[0] = y;
+						Py[1] = y2;
+					}
+					G->polygon2(Px, Py, 0, 1);
+
+					if (O->f_label_edges) {
+						Px[2] = (Px[0] + Px[1]) >> 1;
+						Py[2] = (Py[0] + Py[1]) >> 1;
+						string s;
+						s = std::to_string(edge_label);
+						G->aligned_text_with_offset(Px[2], Py[2],
+								xoffset, yoffset, "", s);
+						edge_label++;
+					}
+				}
+			}
+			else {
+				for (h = 0; h < nb_up; h++) {
+					id = up[h];
+					find_node_by_id(id, l, n);
+					coordinates(
+							id, O->xin, O->yin,
+							O->f_rotated, x2, y2);
+					Px[0] = x;
+					Px[1] = x2;
+					Py[0] = y;
+					Py[1] = y2;
+					G->polygon2(Px, Py, 0, 1);
+					if (O->f_label_edges) {
+						Px[2] = (Px[0] + Px[1]) >> 1;
+						Py[2] = (Py[0] + Py[1]) >> 1;
+						string s;
+						s = std::to_string(edge_label);
+						G->aligned_text_with_offset(Px[2], Py[2],
+								xoffset, yoffset, "", s);
+						edge_label++;
+					}
+					if (l > i) {
+						if (f_v) {
+							cout << "edge " << i << " " << j
+									<< " to " << l << " " << n << endl;
+						}
+					}
+				}
+			}
+
+			if (f_v) {
+				cout << "layered_graph::draw drawing edges, node "
+						<< j << ", nb_down = " << nb_down << endl;
+			}
+			if (nb_down > threshold) {
+				if (f_v) {
+					cout << "layered_graph::draw drawing edges "
+							"nb_down > threshold" << endl;
+				}
+				for (h = 0; h < nb_down; h++) {
+					id = down[h];
+					find_node_by_id(id, l, n);
+					coordinates(
+							id, O->xin, O->yin, O->f_rotated, x2, y2);
+					if (h > 0 && h < nb_down - 1) {
+#if 1
+						Px[0] = x;
+						Px[1] = x + ((double)(x2 - x)) /
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_x_twice;
+						Py[0] = y;
+						Py[1] = y + ((double)(y2 - y)) /
+								Num.norm_of_vector_2D(x, x2, y, y2) * rad_y_twice;
+#endif
+					}
+					else {
+						Px[0] = x;
+						Px[1] = x2;
+						Py[0] = y;
+						Py[1] = y2;
+					}
+					G->polygon2(Px, Py, 0, 1);
+					if (O->f_label_edges) {
+						Px[2] = (Px[0] + Px[1]) >> 1;
+						Py[2] = (Py[0] + Py[1]) >> 1;
+						string s;
+						s = std::to_string(edge_label);
+						G->aligned_text_with_offset(
+								Px[2], Py[2],
+								xoffset, yoffset, "", s);
+						edge_label++;
+					}
+					if (l > i) {
+						if (f_v) {
+							cout << "edge " << i << " " << j
+									<< " to " << l << " " << n << endl;
+						}
+					}
+				}
+			}
+			else {
+				for (h = 0; h < nb_down; h++) {
+					id = down[h];
+					find_node_by_id(id, l, n);
+					coordinates(
+							id, O->xin, O->yin,
+							O->f_rotated, x2, y2);
+					Px[0] = x;
+					Px[1] = x2;
+					Py[0] = y;
+					Py[1] = y2;
+					G->polygon2(Px, Py, 0, 1);
+					if (O->f_label_edges) {
+						Px[2] = (Px[0] + Px[1]) >> 1;
+						Py[2] = (Py[0] + Py[1]) >> 1;
+						string s;
+						s = std::to_string(edge_label);
+						G->aligned_text_with_offset(
+								Px[2], Py[2],
+								xoffset, yoffset, "", s);
+						edge_label++;
+					}
+					if (l > i) {
+						if (f_v) {
+							cout << "edge " << i << " " << j
+									<< " to " << l << " " << n << endl;
+						}
+					}
+				}
+			}
+
+			FREE_int(up);
+			FREE_int(down);
+
+
+#if 0
+			for (h = 0; h < L[i].Nodes[j].nb_neighbors; h++) {
+				id = L[i].Nodes[j].neighbor_list[h];
+				find_node_by_id(id, l, n);
+				coordinates(id, x_max, y_max, x2, y2);
+				Px[0] = x;
+				Px[1] = x2;
+				Py[0] = y;
+				Py[1] = y2;
+				G.polygon2(Px, Py, 0, 1);
+				if (l > i) {
+					if (f_v) {
+						cout << "edge " << i << " " << j
+								<< " to " << l << " " << n << endl;
+					}
+				}
+			}
+#endif
+
+		}
+	}
+	if (f_v) {
+		cout << "layered_graph::draw_edges done" << endl;
+	}
+
+}
+
+
+void layered_graph::draw_vertices(
+		graphics::layered_graph_draw_options *O,
+		graphics::mp_graphics *G,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::draw_vertices" << endl;
+	}
+
+	data_structures::sorting Sorting;
+	int i, j;
+	int x, y;
+	int Px[10], Py[10];
+	int threshold = 50000;
+
+	for (i = 0; i < nb_layers; i++) {
+
+		if (O->f_select_layers) {
+			int idx;
+
+			if (!Sorting.int_vec_search_linear(
+					O->layer_select,
+					O->nb_layer_select, i, idx)) {
+				continue;
+			}
+
+		}
+
+		if (f_v) {
+			cout << "layered_graph::draw_vertices drawing nodes in layer "
+					<< i << "  with " << L[i].nb_nodes << " nodes:" << endl;
+		}
+
+		if (L[i].nb_nodes > threshold) {
+			coordinates(L[i].Nodes[0].id, O->xin, O->yin,
+					O->f_rotated, x, y);
+			Px[0] = x;
+			Py[0] = y;
+			coordinates(L[i].Nodes[L[i].nb_nodes - 1].id,
+					O->xin, O->yin, O->f_rotated, x, y);
+			Px[1] = x;
+			Py[1] = y;
+			G->polygon2(Px, Py, 0, 1);
+		}
+		for (j = 0; j < L[i].nb_nodes; j++) {
+			if (f_v) {
+				cout << "Vertex " << i << " " << j << " at ("
+						<< L[i].Nodes[j].x_coordinate << ","
+						<< L[i].y_coordinate << ")" << endl;
+			}
+			if (L[i].nb_nodes > threshold) {
+				if (j > 0 && j < L[i].nb_nodes - 1) {
+					continue;
+				}
+			}
+			coordinates(
+					L[i].Nodes[j].id, O->xin, O->yin,
+					O->f_rotated, x, y);
+
+
+			string label;
+
+
+			if (L[i].Nodes[j].label.length()) {
+				if (f_v) {
+					cout << "Vertex " << i << " " << j
+							<< " has the following label: "
+							<< L[i].Nodes[j].label << endl;
+				}
+				label.assign(L[i].Nodes[j].label);
+			}
+			else {
+				if (f_v) {
+					cout << "Vertex " << i << " " << j
+							<< " does not have a label" << endl;
+				}
+				//G.circle(x, y, rad);
+			}
+
+
+			if (L[i].Nodes[j].f_has_data1) {
+				if (f_v) {
+					cout << "Vertex " << i << " " << j
+							<< " has the following data1 value: "
+							<< L[i].Nodes[j].data1 << " radius_factor="
+							<< L[i].Nodes[j].radius_factor << endl;
+				}
+
+				if (L[i].Nodes[j].radius_factor >= 1.) {
+					label = "{\\scriptsize " + std::to_string(L[i].Nodes[j].data1) + "}";
+				}
+				else {
+					label.assign("");
+				}
+			}
+			else {
+				//label.assign("");
+			}
+
+			G->nice_circle(
+					x, y, O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+
+			if (O->f_nodes_empty) {
+				if (f_v) {
+					cout << "Vertex " << i << " " << j
+							<< " f_nodes_empty is true" << endl;
+				}
+			}
+			else {
+				if (O->f_has_draw_vertex_callback) {
+					//cout << "Vertex " << i << " " << j
+					//<< " before (*O->draw_vertex_callback)" << endl;
+					(*O->draw_vertex_callback)(this, G, i, j, x, y,
+							O->rad * /* 4 * */ L[i].Nodes[j].radius_factor,
+							O->rad * /*4 * */ L[i].Nodes[j].radius_factor);
+				}
+				else {
+					if (f_v) {
+						cout << "layer " << i << " node " << j
+								<< " label=" << label << endl;
+					}
+
+					if (label.length() /* L[i].Nodes[j].radius_factor >= 1.*/) {
+						//G.circle_text(x, y, L[i].Nodes[j].label);
+						G->aligned_text(x, y, "", label);
+						//G.aligned_text(x, y, "", L[i].Nodes[j].label);
+					}
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "layered_graph::draw_vertices done" << endl;
+	}
+}
+
+void layered_graph::draw_level_info(
+		graphics::layered_graph_draw_options *O,
+		graphics::mp_graphics *G,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "layered_graph::draw_level_info" << endl;
+	}
+
+	int i;
+	int x, y;
+	int Px[10], Py[10];
+
+	if (O->f_show_level_info) {
+		// draw depth labels at the side:
+		coordinates(L[0].Nodes[0].id,
+				O->xin, O->yin, O->f_rotated, x, y);
+		Px[0] = 1 * O->rad;
+		Py[0] = y + 4 * O->rad;
+		string s;
+		s.assign("Level");
+		G->aligned_text(Px[0], Py[0], "", s);
+		for (i = 0; i < nb_layers - 1; i++) {
+			coordinates(L[i].Nodes[0].id,
+					O->xin, O->yin, O->f_rotated, x, y);
+			Px[0] = 2 * O->rad;
+			Py[0] = y;
+			coordinates(L[i + 1].Nodes[0].id,
+					O->xin, O->yin, O->f_rotated, x, y);
+			Px[1] = 2 * O->rad;
+			Py[1] = y;
+			G->polygon2(Px, Py, 0, 1);
+		}
+		for (i = 0; i < nb_layers; i++) {
+			coordinates(L[i].Nodes[0].id,
+					O->xin, O->yin, O->f_rotated, x, y);
+			Px[0] = 1 * O->rad;
+			Py[0] = y;
+			Px[1] = 3 * O->rad;
+			Py[1] = y;
+			G->polygon2(Px, Py, 0, 1);
+		}
+		for (i = 0; i < nb_layers; i++) {
+
+			coordinates(L[i].Nodes[0].id,
+					O->xin, O->yin, O->f_rotated, x, y);
+			Px[0] = 0;
+			Py[0] = y;
+			//G.nice_circle(Px[0], Py[0], rad * 4);
+			string s;
+			s = std::to_string(i);
+			G->aligned_text(Px[0], Py[0], "", s);
+		}
+	}
+
+	if (f_v) {
+		cout << "layered_graph::draw_level_info done" << endl;
+	}
+
+}
+
 
 void layered_graph::coordinates_direct(
 		double x_in, double y_in,
@@ -1280,7 +1358,8 @@ void layered_graph::create_spanning_tree(
 }
 
 
-void layered_graph::compute_depth_first_ranks(int verbose_level)
+void layered_graph::compute_depth_first_ranks(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int r = 0;

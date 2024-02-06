@@ -18,11 +18,14 @@ namespace graphics {
 
 
 
-static int do_create_points_on_quartic_compute_point_function(double t,
+static int do_create_points_on_quartic_compute_point_function(
+		double t,
 		double *pt, void *extra_data, int verbose_level);
-static int do_create_points_on_parabola_compute_point_function(double t,
+static int do_create_points_on_parabola_compute_point_function(
+		double t,
 		double *pt, void *extra_data, int verbose_level);
-static int do_create_points_smooth_curve_compute_point_function(double t,
+static int do_create_points_smooth_curve_compute_point_function(
+		double t,
 		double *output, void *extra_data, int verbose_level);
 
 static void interface_povray_draw_frame(
@@ -47,27 +50,31 @@ graphical_output::~graphical_output()
 
 }
 
-void graphical_output::draw_layered_graph_from_file(std::string &fname,
+void graphical_output::draw_layered_graph_from_file(
+		std::string &fname,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graphical_output::draw_layered_graph_from_file fname=" << fname << endl;
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"fname=" << fname << endl;
 	}
 	graph_theory::layered_graph *LG;
 	orbiter_kernel_system::file_io Fio;
 
 	LG = NEW_OBJECT(graph_theory::layered_graph);
 	if (Fio.file_size(fname) <= 0) {
-		cout << "graphical_output::draw_layered_graph_from_file file " << fname << " does not exist" << endl;
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"file " << fname << " does not exist" << endl;
 		exit(1);
-		}
+	}
 	LG->read_file(fname, verbose_level - 1);
 
 	if (f_v) {
-		cout << "graphical_output::draw_layered_graph_from_file Layered graph read from file" << endl;
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"Layered graph read from file" << endl;
 	}
 
 	LG->print_nb_nodes_per_level();
@@ -78,25 +85,30 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 	data1 = LG->data1;
 
 	if (f_v) {
-		cout << "graphical_output::draw_layered_graph_from_file data1=" << data1 << endl;
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"data1=" << data1 << endl;
 	}
 
 	if (Opt->f_y_stretch) {
-		LG->place_with_y_stretch(Opt->y_stretch, verbose_level - 1);
-		}
+		LG->place_with_y_stretch(
+				Opt->y_stretch, verbose_level - 1);
+	}
 	if (Opt->f_spanning_tree) {
 		// create updated x coordinates
-		LG->create_spanning_tree(true /* f_place_x */, verbose_level);
-		}
+		LG->create_spanning_tree(
+				true /* f_place_x */, verbose_level);
+	}
 #if 0
 	if (Opt->f_numbering_on) {
 		// create depth first ranks at each node:
-		LG->create_spanning_tree(false /* f_place_x */, verbose_level);
-		}
+		LG->create_spanning_tree(
+				false /* f_place_x */, verbose_level);
+	}
 #endif
 
 	if (Opt->f_x_stretch) {
-		LG->scale_x_coordinates(Opt->x_stretch, verbose_level);
+		LG->scale_x_coordinates(
+				Opt->x_stretch, verbose_level);
 	}
 
 
@@ -116,23 +128,27 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 		std::vector<std::vector<int> > All_Paths;
 
 		if (f_v) {
-			cout << "graphical_output::draw_layered_graph_from_file before LG->find_all_paths_between" << endl;
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"before LG->find_all_paths_between" << endl;
 		}
 		LG->find_all_paths_between(Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
 				All_Paths,
 				verbose_level - 2);
 		if (f_v) {
-			cout << "graphical_output::draw_layered_graph_from_file after LG->find_all_paths_between" << endl;
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"after LG->find_all_paths_between" << endl;
 		}
 
 		if (f_v) {
-			cout << "graphical_output::draw_layered_graph_from_file before LG->remove_edges" << endl;
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"before LG->remove_edges" << endl;
 		}
 		LG->remove_edges(Opt->layer1, Opt->node1, Opt->layer2, Opt->node2,
 				All_Paths,
 				verbose_level - 2);
 		if (f_v) {
-			cout << "graphical_output::draw_layered_graph_from_file after LG->remove_edges" << endl;
+			cout << "graphical_output::draw_layered_graph_from_file "
+					"after LG->remove_edges" << endl;
 		}
 
 
@@ -142,7 +158,17 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	fname_full = fname_out + ".mp";
 
-	LG->draw_with_options(fname_out, Opt, verbose_level - 10);
+	if (f_v) {
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"before LG->draw_with_options" << endl;
+	}
+	LG->draw_with_options(
+			fname_out, Opt,
+			verbose_level - 10);
+	if (f_v) {
+		cout << "graphical_output::draw_layered_graph_from_file "
+				"after LG->draw_with_options" << endl;
+	}
 
 	int n;
 	double avg;
@@ -158,7 +184,8 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 	if (f_v) {
 		cout << "graphical_output::draw_layered_graph_from_file "
-				"Written file " << fname_full << " of size " << Fio.file_size(fname_full) << endl;
+				"Written file " << fname_full
+				<< " of size " << Fio.file_size(fname_full) << endl;
 	}
 
 	FREE_OBJECT(LG);
@@ -168,7 +195,8 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 	}
 }
 
-void graphical_output::do_domino_portrait(int D, int s,
+void graphical_output::do_domino_portrait(
+		int D, int s,
 		std::string &photo_label,
 		layered_graph_draw_options *Opt,
 		int verbose_level)
@@ -661,7 +689,8 @@ void graphical_output::do_create_points_on_parabola(
 	}
 }
 
-void graphical_output::do_smooth_curve(std::string &curve_label,
+void graphical_output::do_smooth_curve(
+		std::string &curve_label,
 		double desired_distance, int N,
 		double t_min, double t_max, double boundary,
 		polish::function_polish_description *FP_descr, int verbose_level)
@@ -791,7 +820,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 
 //
 
-static int do_create_points_on_quartic_compute_point_function(double t,
+static int do_create_points_on_quartic_compute_point_function(
+		double t,
 		double *pt, void *extra_data, int verbose_level)
 {
 	double num, denom, b;
@@ -816,7 +846,8 @@ static int do_create_points_on_quartic_compute_point_function(double t,
 	return true;
 }
 
-static int do_create_points_on_parabola_compute_point_function(double t,
+static int do_create_points_on_parabola_compute_point_function(
+		double t,
 		double *pt, void *extra_data, int verbose_level)
 {
 	graphical_output *I = (graphical_output *) extra_data;
@@ -831,7 +862,8 @@ static int do_create_points_on_parabola_compute_point_function(double t,
 }
 
 
-static int do_create_points_smooth_curve_compute_point_function(double t,
+static int do_create_points_smooth_curve_compute_point_function(
+		double t,
 		double *output, void *extra_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -878,7 +910,8 @@ static int do_create_points_smooth_curve_compute_point_function(double t,
 }
 
 
-void graphical_output::draw_projective_curve(draw_projective_curve_description *Descr,
+void graphical_output::draw_projective_curve(
+		draw_projective_curve_description *Descr,
 		layered_graph_draw_options *Opt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1062,7 +1095,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 
 
 
-void graphical_output::draw_projective(mp_graphics &G,
+void graphical_output::draw_projective(
+		mp_graphics &G,
 		int number, int animate_step, int animate_nb_of_steps,
 	int f_transition, int transition_step, int transition_nb_steps,
 	int f_title_page, int title_page_step,

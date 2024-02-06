@@ -464,14 +464,16 @@ void unipoly_domain::create_Dickson_polynomial(
 	degree(p);
 }
 
-void unipoly_domain::delete_object(unipoly_object &p)
+void unipoly_domain::delete_object(
+		unipoly_object &p)
 {
 	int *rep = (int *) p;
 	FREE_int(rep);
 	p = NULL;
 }
 
-void unipoly_domain::unrank(unipoly_object p, int rk)
+void unipoly_domain::unrank(
+		unipoly_object p, int rk)
 {
 	int *rep = (int *) p;
 	int *coeff = rep + 1;
@@ -854,7 +856,8 @@ void unipoly_domain::assign(
 	}
 }
 
-void unipoly_domain::one(unipoly_object p)
+void unipoly_domain::one(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
@@ -868,7 +871,8 @@ void unipoly_domain::one(unipoly_object p)
 	rep[0] = 0;
 }
 
-void unipoly_domain::m_one(unipoly_object p)
+void unipoly_domain::m_one(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
@@ -882,7 +886,8 @@ void unipoly_domain::m_one(unipoly_object p)
 	rep[0] = 0;
 }
 
-void unipoly_domain::zero(unipoly_object p)
+void unipoly_domain::zero(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
@@ -896,7 +901,8 @@ void unipoly_domain::zero(unipoly_object p)
 	rep[0] = 0;
 }
 
-int unipoly_domain::is_one(unipoly_object p)
+int unipoly_domain::is_one(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	if (rep == NULL) {
@@ -918,7 +924,8 @@ int unipoly_domain::is_one(unipoly_object p)
 	return true;
 }
 
-int unipoly_domain::is_zero(unipoly_object p)
+int unipoly_domain::is_zero(
+		unipoly_object p)
 {
 	int *rep = (int *) p;
 	if (rep == NULL) {
@@ -937,7 +944,8 @@ int unipoly_domain::is_zero(unipoly_object p)
 	return true;
 }
 
-void unipoly_domain::negate(unipoly_object a)
+void unipoly_domain::negate(
+		unipoly_object a)
 {
 	int *ra = (int *) a;
 	if (ra == NULL) {
@@ -953,7 +961,8 @@ void unipoly_domain::negate(unipoly_object a)
 	}
 }
 
-void unipoly_domain::make_monic(unipoly_object &a)
+void unipoly_domain::make_monic(
+		unipoly_object &a)
 {
 	int *ra = (int *) a;
 	if (ra == NULL) {

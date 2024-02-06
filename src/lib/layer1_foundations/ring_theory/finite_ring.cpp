@@ -132,7 +132,8 @@ int finite_ring::one()
 	return 1;
 }
 
-int finite_ring::is_zero(int i)
+int finite_ring::is_zero(
+		int i)
 {
 	if (i == 0)
 		return true;
@@ -140,7 +141,8 @@ int finite_ring::is_zero(int i)
 		return false;
 }
 
-int finite_ring::is_one(int i)
+int finite_ring::is_one(
+		int i)
 {
 	if (i == 1)
 		return true;
@@ -148,12 +150,14 @@ int finite_ring::is_one(int i)
 		return false;
 }
 
-int finite_ring::is_unit(int i)
+int finite_ring::is_unit(
+		int i)
 {
 	return f_is_unit_table[i];
 }
 
-int finite_ring::add(int i, int j)
+int finite_ring::add(
+		int i, int j)
 {
 	//cout << "finite_field::add i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
@@ -167,7 +171,8 @@ int finite_ring::add(int i, int j)
 	return add_table[i * q + j];
 }
 
-int finite_ring::mult(int i, int j)
+int finite_ring::mult(
+		int i, int j)
 {
 	//cout << "finite_field::mult i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
@@ -181,7 +186,8 @@ int finite_ring::mult(int i, int j)
 	return mult_table[i * q + j];
 }
 
-int finite_ring::negate(int i)
+int finite_ring::negate(
+		int i)
 {
 	if (i < 0 || i >= q) {
 		cout << "finite_ring::negate() i = " << i << endl;
@@ -190,7 +196,8 @@ int finite_ring::negate(int i)
 	return negate_table[i];
 }
 
-int finite_ring::inverse(int i)
+int finite_ring::inverse(
+		int i)
 {
 	if (i <= 0 || i >= q) {
 		cout << "finite_ring::inverse() i = " << i << endl;
@@ -601,7 +608,8 @@ void finite_ring::PHG_element_unrank(
 
 }
 
-int finite_ring::nb_PHG_elements(int n)
+int finite_ring::nb_PHG_elements(
+		int n)
 {
 	int N1, N2;
 	geometry::geometry_global Gg;

@@ -926,7 +926,8 @@ int linear_algebra::rank_of_rectangular_matrix_memory_given(
 	return rk;
 }
 
-int linear_algebra::rank_and_basecols(int *A, int m,
+int linear_algebra::rank_and_basecols(
+		int *A, int m,
 		int *base_cols, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

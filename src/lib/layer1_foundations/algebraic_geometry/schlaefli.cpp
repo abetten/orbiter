@@ -157,7 +157,8 @@ void schlaefli::init(
 
 
 
-int schlaefli::line_ai(int i)
+int schlaefli::line_ai(
+		int i)
 {
 	if (i >= 6) {
 		cout << "schlaefli::line_ai i >= 6" << endl;
@@ -166,7 +167,8 @@ int schlaefli::line_ai(int i)
 	return i;
 }
 
-int schlaefli::line_bi(int i)
+int schlaefli::line_bi(
+		int i)
 {
 	if (i >= 6) {
 		cout << "schlaefli::line_bi i >= 6" << endl;
@@ -175,7 +177,8 @@ int schlaefli::line_bi(int i)
 	return 6 + i;
 }
 
-int schlaefli::line_cij(int i, int j)
+int schlaefli::line_cij(
+		int i, int j)
 {
 	int a;
 	combinatorics::combinatorics_domain Combi;

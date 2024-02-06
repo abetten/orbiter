@@ -106,7 +106,8 @@ std::string formula::string_representation_formula(
 }
 
 
-void formula::print(std::ostream &ost)
+void formula::print(
+		std::ostream &ost)
 {
 #if 0
 	cout << "formula: " << name_of_formula << endl;

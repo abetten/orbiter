@@ -111,7 +111,8 @@ void tree_node::print_depth_first()
 		}
 }
 
-void tree_node::compute_DFS_rank(int &rk)
+void tree_node::compute_DFS_rank(
+		int &rk)
 {
 	int i;
 	

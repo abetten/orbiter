@@ -18,7 +18,8 @@ namespace layer1_foundations {
 namespace canonical_form_classification {
 
 
-static void print_summary_table_entry(int *Table,
+static void print_summary_table_entry(
+		int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data);
 
 
@@ -850,8 +851,8 @@ void classification_of_objects::report_summary_of_orbits(
 			cout << "classification_of_objects::latex_report, "
 					"i=" << i << endl;
 		}
-		//j = CB->perm[i];
-		j = i;
+		j = CB->perm[i];
+		//j = i;
 		if (f_v) {
 			cout << "classification_of_objects::latex_report, "
 					"i=" << i << " j=" << j << endl;
@@ -920,8 +921,10 @@ void classification_of_objects::report_all_isomorphism_types(
 			data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
-			CB->C_type_of->get_class_by_value(Input_objects,
+			CB->C_type_of->get_class_by_value(
+					Input_objects,
 					nb_input_objects, i, 0 /*verbose_level */);
+
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 			ost << "This isomorphism type appears " << nb_input_objects
@@ -1054,7 +1057,8 @@ void classification_of_objects::report_object(
 
 
 
-static void print_summary_table_entry(int *Table,
+static void print_summary_table_entry(
+		int *Table,
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {

@@ -644,7 +644,8 @@ int graph_theory_domain::is_association_scheme(
 	return ret;
 }
 
-void graph_theory_domain::print_Pijk(int *Pijk, int nb_colors) {
+void graph_theory_domain::print_Pijk(
+		int *Pijk, int nb_colors) {
 	int i, j, k;
 	int C = nb_colors;
 
@@ -758,7 +759,8 @@ void graph_theory_domain::draw_bitmatrix(
 }
 
 
-void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
+void graph_theory_domain::list_parameters_of_SRG(
+		int v_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1503,7 +1505,8 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 	}
 }
 
-void graph_theory_domain::all_cliques_of_given_size(int *Adj,
+void graph_theory_domain::all_cliques_of_given_size(
+		int *Adj,
 		int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
 		int verbose_level)
 {

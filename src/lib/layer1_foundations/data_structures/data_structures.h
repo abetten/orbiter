@@ -111,6 +111,157 @@ public:
 
 };
 
+
+// #############################################################################
+// ancestry_family.cpp
+// #############################################################################
+
+
+
+//! genealogy family record
+
+
+class ancestry_family {
+public:
+
+	ancestry_tree *Tree;
+	int idx;
+
+	int start;
+	int length;
+	std::string id;
+
+	std::string husband;
+	int husband_index;
+	int husband_family_index;
+
+	std::string wife;
+	int wife_index;
+	int wife_family_index;
+
+	std::vector<std::string> child;
+	std::vector<int> child_index;
+	std::vector<std::vector<int> > child_family_index;
+
+	std::vector<int> topo_downlink;
+
+
+	ancestry_family();
+	~ancestry_family();
+	void init(
+			ancestry_tree *Tree,
+			int idx,
+			int start, int length,
+			std::vector<std::vector<std::string> > &Data,
+			int verbose_level);
+	void get_connnections(
+			int verbose_level);
+	std::string get_initials(
+			int verbose_level);
+	void topo_sort_prepare(
+			int verbose_level);
+	int topo_rank_of_parents(
+			int *topo_rank, int verbose_level);
+
+};
+
+
+// #############################################################################
+// ancestry_indi.cpp
+// #############################################################################
+
+
+
+//! genealogy individual record
+
+
+class ancestry_indi {
+public:
+
+	ancestry_tree *Tree;
+	int idx;
+
+	int start;
+	int length;
+	std::string id;
+	std::string name;
+	std::string given_name;
+	std::string sur_name;
+	std::string sex;
+	std::string famc;
+	std::string fams;
+	std::string birth_date;
+	std::string death_date;
+
+	std::vector<int> family_index;
+
+	ancestry_indi();
+	~ancestry_indi();
+	void init(
+			ancestry_tree *Tree,
+			int idx,
+			int start, int length,
+			std::vector<std::vector<std::string> > &Data,
+			int verbose_level);
+	std::string initials(
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// ancestry_tree.cpp
+// #############################################################################
+
+
+
+//! genealogy family tree
+
+
+class ancestry_tree {
+public:
+
+	std::string fname_gedcom;
+	std::string fname_base;
+
+	std::vector<std::vector<std::string> > Data;
+	std::vector<std::vector<int> > Indi;
+	std::vector<std::vector<int> > Fam;
+
+	int nb_indi, nb_fam;
+	data_structures::ancestry_family **Family;
+	data_structures::ancestry_indi **Individual;
+
+	ancestry_tree();
+	~ancestry_tree();
+	void read_gedcom(
+			std::string &fname_gedcom, int verbose_level);
+	void topo_sort(
+			int *&topo_rank, int &rk_max, int verbose_level);
+	void create_poset(
+			graph_theory::layered_graph *&L, int verbose_level);
+	void topo_sort_prepare(
+			int verbose_level);
+	void get_connnections(
+			int verbose_level);
+	int find_individual(
+			std::string &id, int verbose_level);
+	int find_in_family_as_child(
+			int indi_idx);
+	std::vector<int> find_in_family_as_parent(
+			int indi_idx);
+	void register_individual(
+			int individual_index, int family_idx,
+			int verbose_level);
+
+};
+
+
+
+
+
+
 // #############################################################################
 // bitmatrix.cpp
 // #############################################################################
@@ -386,89 +537,147 @@ public:
 			int *v, int &len,
 			int *take_away, int nb_take_away);
 		// v must be sorted
-	int count_number_of_nonzero_entries(int *v, int len);
-	int find_first_nonzero_entry(int *v, int len);
-	void zero(int *v, long int len);
-	int is_zero(int *v, long int len);
-	void one(int *v, long int len);
-	void mone(int *v, long int len);
-	void copy(int *from, int *to, long int len);
-	void copy_to_lint(int *from, long int *to, long int len);
-	void swap(int *v1, int *v2, long int len);
-	void delete_element_assume_sorted(int *v,
+	int count_number_of_nonzero_entries(
+			int *v, int len);
+	int find_first_nonzero_entry(
+			int *v, int len);
+	void zero(
+			int *v, long int len);
+	int is_zero(
+			int *v, long int len);
+	void one(
+			int *v, long int len);
+	void mone(
+			int *v, long int len);
+	void copy(
+			int *from, int *to, long int len);
+	void copy_to_lint(
+			int *from, long int *to, long int len);
+	void swap(
+			int *v1, int *v2, long int len);
+	void delete_element_assume_sorted(
+			int *v,
 		int &len, int a);
-	void complement(int *v, int n, int k);
+	void complement(
+			int *v, int n, int k);
 	// computes the complement to v + k (v must be allocated to n elements)
 	// the first k elements of v[] must be in increasing order.
-	void complement(int *v, int *w, int n, int k);
+	void complement(
+			int *v, int *w, int n, int k);
 	// computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
-	void init5(int *v, int a0, int a1, int a2, int a3, int a4);
-	int minimum(int *v, int len);
-	int maximum(int *v, int len);
-	void copy(int len, int *from, int *to);
-	int first_difference(int *p, int *q, int len);
-	int vec_max_log_of_entries(std::vector<std::vector<int> > &p);
-	void vec_print(std::vector<std::vector<int> > &p);
-	void vec_print(std::vector<std::vector<int> > &p, int w);
-	void distribution_compute_and_print(std::ostream &ost,
+	void init5(
+			int *v, int a0, int a1, int a2, int a3, int a4);
+	int minimum(
+			int *v, int len);
+	int maximum(
+			int *v, int len);
+	void copy(
+			int len, int *from, int *to);
+	int first_difference(
+			int *p, int *q, int len);
+	int vec_max_log_of_entries(
+			std::vector<std::vector<int> > &p);
+	void vec_print(
+			std::vector<std::vector<int> > &p);
+	void vec_print(
+			std::vector<std::vector<int> > &p, int w);
+	void distribution_compute_and_print(
+			std::ostream &ost,
 		int *v, int v_len);
-	void distribution(int *v,
+	void distribution(
+			int *v,
 		int len_v, int *&val, int *&mult, int &len);
-	void print(std::ostream &ost, std::vector<int> &v);
-	void print(std::ostream &ost, int *v, int len);
-	void print_str(std::stringstream &ost, int *v, int len);
-	void print_bare_str(std::stringstream &ost, int *v, int len);
-	void print_as_table(std::ostream &ost, int *v, int len, int width);
-	void print_fully(std::ostream &ost, std::vector<int> &v);
-	void print_fully(std::ostream &ost, int *v, int len);
-	void print_bare_fully(std::ostream &ost, int *v, int len);
-	void print_dense(std::ostream &ost, int *v, int len);
-	void print_Cpp(std::ostream &ost, int *v, int len);
-	void print_GAP(std::ostream &ost, int *v, int len);
-	void print_classified(int *v, int len);
-	void print_classified_str(std::stringstream &sstr,
+	void print(
+			std::ostream &ost, std::vector<int> &v);
+	void print(
+			std::ostream &ost, int *v, int len);
+	void print_str(
+			std::stringstream &ost, int *v, int len);
+	void print_bare_str(
+			std::stringstream &ost, int *v, int len);
+	void print_as_table(
+			std::ostream &ost, int *v, int len, int width);
+	void print_fully(
+			std::ostream &ost, std::vector<int> &v);
+	void print_fully(
+			std::ostream &ost, int *v, int len);
+	void print_bare_fully(
+			std::ostream &ost, int *v, int len);
+	void print_dense(
+			std::ostream &ost, int *v, int len);
+	void print_Cpp(
+			std::ostream &ost, int *v, int len);
+	void print_GAP(
+			std::ostream &ost, int *v, int len);
+	void print_classified(
+			int *v, int len);
+	void print_classified_str(
+			std::stringstream &sstr,
 			int *v, int len, int f_backwards);
-	void scan(std::string &s, int *&v, int &len);
-	void scan_from_stream(std::istream & is, int *&v, int &len);
-	void print_to_str(std::string &s, int *data, int len);
-	void print_to_str_bare(std::string &s, int *data, int len);
-	void print(int *v, int len);
-	void print_integer_matrix(std::ostream &ost,
+	void scan(
+			std::string &s, int *&v, int &len);
+	void scan_from_stream(
+			std::istream & is, int *&v, int &len);
+	void print_to_str(
+			std::string &s, int *data, int len);
+	void print_to_str_bare(
+			std::string &s, int *data, int len);
+	void print(
+			int *v, int len);
+	void print_integer_matrix(
+			std::ostream &ost,
 		int *p, int m, int n);
-	void print_integer_matrix_width(std::ostream &ost,
+	void print_integer_matrix_width(
+			std::ostream &ost,
 		int *p, int m, int n, int dim_n, int w);
-	void print_integer_matrix_in_C_source(std::ostream &ost,
+	void print_integer_matrix_in_C_source(
+			std::ostream &ost,
 		int *p, int m, int n);
-	void matrix_make_block_matrix_2x2(int *Mtx,
+	void matrix_make_block_matrix_2x2(
+			int *Mtx,
 		int k, int *A, int *B, int *C, int *D);
-	void matrix_delete_column_in_place(int *Mtx,
+	void matrix_delete_column_in_place(
+			int *Mtx,
 		int k, int n, int pivot);
-	int matrix_max_log_of_entries(int *p, int m, int n);
-	void matrix_print_ost(std::ostream &ost, int *p, int m, int n);
+	int matrix_max_log_of_entries(
+			int *p, int m, int n);
+	void matrix_print_ost(
+			std::ostream &ost, int *p, int m, int n);
 	void matrix_print_makefile_style_ost(
 			std::ostream &ost, int *p, int m, int n);
-	void matrix_print(int *p, int m, int n);
-	void matrix_print_tight(int *p, int m, int n);
+	void matrix_print(
+			int *p, int m, int n);
+	void matrix_print_tight(
+			int *p, int m, int n);
 	void matrix_print_ost(
 			std::ostream &ost, int *p, int m, int n, int w);
 	void matrix_print_makefile_style_ost(
 			std::ostream &ost, int *p, int m, int n, int w);
-	void matrix_print(int *p, int m, int n, int w);
-	void matrix_print_bitwise(int *p, int m, int n);
-	void distribution_print(std::ostream &ost,
+	void matrix_print(
+			int *p, int m, int n, int w);
+	void matrix_print_bitwise(
+			int *p, int m, int n);
+	void distribution_print(
+			std::ostream &ost,
 		int *val, int *mult, int len);
 	void distribution_print_to_string(
 			std::string &str, int *val, int *mult, int len);
-	void set_print(std::ostream &ost, int *v, int len);
-	void integer_vec_print(std::ostream &ost, int *v, int len);
-	int hash(int *v, int len, int bit_length);
+	void set_print(
+			std::ostream &ost, int *v, int len);
+	void integer_vec_print(
+			std::ostream &ost, int *v, int len);
+	int hash(
+			int *v, int len, int bit_length);
 	void create_string_with_quotes(
 			std::string &str, int *v, int len);
-	void transpose(int *M, int m, int n, int *Mt);
+	void transpose(
+			int *M, int m, int n, int *Mt);
 	void print_as_polynomial_in_algebraic_notation(
 			std::ostream &ost, int *coeff_vector, int len);
-	int compare(int *p, int *q, int len);
-	std::string stringify(int *v, int len);
+	int compare(
+			int *p, int *q, int len);
+	std::string stringify(
+			int *v, int len);
 
 };
 
@@ -489,26 +698,41 @@ public:
 
 	int_vector();
 	~int_vector();
-	void allocate(int len);
-	void allocate_and_init(int len, long int *V);
-	void allocate_and_init_int(int len, int *V);
-	void init_permutation_from_string(std::string &s);
-	void read_ascii_file(std::string &fname);
-	void read_binary_file_int4(std::string &fname);
-	long int &s_i(int i);
+	void allocate(
+			int len);
+	void allocate_and_init(
+			int len, long int *V);
+	void allocate_and_init_int(
+			int len, int *V);
+	void init_permutation_from_string(
+			std::string &s);
+	void read_ascii_file(
+			std::string &fname);
+	void read_binary_file_int4(
+			std::string &fname);
+	long int &s_i(
+			int i);
 	int &length();
-	void print(std::ostream &ost);
+	void print(
+			std::ostream &ost);
 	void zero();
-	int search(int a, int &idx);
+	int search(
+			int a, int &idx);
 	void sort();
 	void make_space();
-	void append(int a);
-	void insert_at(int a, int idx);
-	void insert_if_not_yet_there(int a);
+	void append(
+			int a);
+	void insert_at(
+			int a, int idx);
+	void insert_if_not_yet_there(
+			int a);
 	void sort_and_remove_duplicates();
-	void write_to_ascii_file(std::string &fname);
-	void write_to_binary_file_int4(std::string &fname);
-	void write_to_csv_file(std::string &fname, std::string &label);
+	void write_to_ascii_file(
+			std::string &fname);
+	void write_to_binary_file_int4(
+			std::string &fname);
+	void write_to_csv_file(
+			std::string &fname, std::string &label);
 	uint32_t hash();
 	int minimum();
 	int maximum();
@@ -535,34 +759,61 @@ public:
 	void take_away(
 			long int *v, int &len,
 			long int *take_away, int nb_take_away);
-	void zero(long int *v, long int len);
-	void one(long int *v, long int len);
-	void mone(long int *v, long int len);
-	void copy(long int *from, long int *to, long int len);
-	void copy_to_int(long int *from, int *to, long int len);
-	void complement(long int *v, long int *w, int n, int k);
-	long int minimum(long int *v, int len);
-	long int maximum(long int *v, int len);
-	void matrix_print_width(std::ostream &ost,
+	void zero(
+			long int *v, long int len);
+	void one(
+			long int *v, long int len);
+	void mone(
+			long int *v, long int len);
+	void copy(
+			long int *from, long int *to, long int len);
+	void copy_to_int(
+			long int *from, int *to, long int len);
+	void complement(
+			long int *v, long int *w, int n, int k);
+	long int minimum(
+			long int *v, int len);
+	long int maximum(
+			long int *v, int len);
+	void matrix_print_width(
+			std::ostream &ost,
 		long int *p, int m, int n, int dim_n, int w);
-	void set_print(long int *v, int len);
-	void set_print(std::ostream &ost, long int *v, int len);
-	void print(std::ostream &ost, long int *v, int len);
-	void print(std::ostream &ost, std::vector<long int> &v);
-	void print_as_table(std::ostream &ost, long int *v, int len, int width);
-	void print_bare_fully(std::ostream &ost, long int *v, int len);
-	void print_fully(std::ostream &ost, long int *v, int len);
-	void print_fully(std::ostream &ost, std::vector<long int> &v);
-	int matrix_max_log_of_entries(long int *p, int m, int n);
-	void matrix_print(long int *p, int m, int n);
-	void matrix_print(long int *p, int m, int n, int w);
-	void scan(std::string &s, long int *&v, int &len);
-	void scan_from_stream(std::istream & is, long int *&v, int &len);
-	void print_to_str(std::string &s, long int *data, int len);
-	void print_to_str_bare(std::string &s, long int *data, int len);
-	void create_string_with_quotes(std::string &str, long int *v, int len);
-	int compare(long int *p, long int *q, int len);
-	std::string stringify(long int *v, int len);
+	void set_print(
+			long int *v, int len);
+	void set_print(
+			std::ostream &ost, long int *v, int len);
+	void print(
+			std::ostream &ost, long int *v, int len);
+	void print(
+			std::ostream &ost, std::vector<long int> &v);
+	void print_as_table(
+			std::ostream &ost, long int *v, int len, int width);
+	void print_bare_fully(
+			std::ostream &ost, long int *v, int len);
+	void print_fully(
+			std::ostream &ost, long int *v, int len);
+	void print_fully(
+			std::ostream &ost, std::vector<long int> &v);
+	int matrix_max_log_of_entries(
+			long int *p, int m, int n);
+	void matrix_print(
+			long int *p, int m, int n);
+	void matrix_print(
+			long int *p, int m, int n, int w);
+	void scan(
+			std::string &s, long int *&v, int &len);
+	void scan_from_stream(
+			std::istream & is, long int *&v, int &len);
+	void print_to_str(
+			std::string &s, long int *data, int len);
+	void print_to_str_bare(
+			std::string &s, long int *data, int len);
+	void create_string_with_quotes(
+			std::string &str, long int *v, int len);
+	int compare(
+			long int *p, long int *q, int len);
+	std::string stringify(
+			long int *v, int len);
 
 
 };
@@ -1736,7 +1987,8 @@ public:
 
 };
 
-int string_tools_compare_strings(void *a, void *b, void *data);
+int string_tools_compare_strings(
+		void *a, void *b, void *data);
 
 
 
@@ -1787,38 +2039,55 @@ public:
 			int f_second, int verbose_level);
 	void sort_and_classify();
 	void sort_and_classify_second();
-	int class_of(int pt_idx);
-	void print(int f_backwards);
-	void print_no_lf(int f_backwards);
-	void print_tex_no_lf(int f_backwards);
-	void print_first(int f_backwards);
-	void print_second(int f_backwards);
-	void print_first_tex(int f_backwards);
-	void print_second_tex(int f_backwards);
-	void print_file(std::ostream &ost, int f_backwards);
-	void print_file_tex(std::ostream &ost, int f_backwards);
+	int class_of(
+			int pt_idx);
+	void print(
+			int f_backwards);
+	void print_no_lf(
+			int f_backwards);
+	void print_tex_no_lf(
+			int f_backwards);
+	void print_first(
+			int f_backwards);
+	void print_second(
+			int f_backwards);
+	void print_first_tex(
+			int f_backwards);
+	void print_second_tex(
+			int f_backwards);
+	void print_file(
+			std::ostream &ost, int f_backwards);
+	void print_file_tex(
+			std::ostream &ost, int f_backwards);
 	void print_file_tex_we_are_in_math_mode(
 			std::ostream &ost, int f_backwards);
 	void print_bare_stringstream(
 			std::stringstream &sstr, int f_backwards);
-	void print_bare(int f_backwards);
-	void print_bare_tex(std::ostream &ost, int f_backwards);
-	void print_types_bare_tex(std::ostream &ost, int f_backwards,
+	void print_bare(
+			int f_backwards);
+	void print_bare_tex(
+			std::ostream &ost, int f_backwards);
+	void print_types_bare_tex(
+			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
 	void print_lint_types_bare_tex(
 		std::ostream &ost, int f_backwards, long int *the_vec_sorted,
 		int nb_types, int *type_first, int *type_len);
-	void print_array_tex(std::ostream &ost, int f_backwards);
+	void print_array_tex(
+			std::ostream &ost, int f_backwards);
 	double average();
 	double average_of_non_zero_values();
-	void get_data_by_multiplicity(int *&Pts, int &nb_pts,
+	void get_data_by_multiplicity(
+			int *&Pts, int &nb_pts,
 		int multiplicity, int verbose_level);
 	void get_data_by_multiplicity_as_lint(
 			long int *&Pts, int &nb_pts,
 			int multiplicity, int verbose_level);
-	int determine_class_by_value(int value);
-	int get_value_of_class(int class_idx);
+	int determine_class_by_value(
+			int value);
+	int get_value_of_class(
+			int class_idx);
 	int get_largest_value();
 	void get_class_by_value(
 			int *&Pts, int &nb_pts, int value,
@@ -1828,7 +2097,8 @@ public:
 	data_structures::set_of_sets *get_set_partition_and_types(
 			int *&types,
 		int &nb_types, int verbose_level);
-	void save_classes_individually(std::string &fname);
+	void save_classes_individually(
+			std::string &fname);
 };
 
 
@@ -1920,7 +2190,8 @@ public:
 			int f_backwards);
 	void print_bare_tex(
 			std::ostream &ost, int f_backwards);
-	std::string stringify_bare_tex(int f_backwards);
+	std::string stringify_bare_tex(
+			int f_backwards);
 	void print_types_bare_tex(
 			std::ostream &ost, int f_backwards,
 		int *the_vec_sorted,

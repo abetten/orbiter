@@ -53,7 +53,8 @@ void graph_layer::init(
 	}
 }
 
-void graph_layer::place(int verbose_level)
+void graph_layer::place(
+		int verbose_level)
 {
 	double dx, dx2;
 	int i;

@@ -2530,8 +2530,74 @@ void csv_file_support::change_values(
 	}
 }
 
+void csv_file_support::write_gedcom_file_as_csv(
+		std::string &fname,
+		std::vector<std::vector<std::string> > &Data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "csv_file_support::write_gedcom_file_as_csv" << endl;
+	}
+	{
+		ofstream f(fname);
+		int len;
+		int i;
 
+		len = Data.size();
+		f << "Row,C1,C2,C3" << endl;
+		for (i = 0; i < len; i++) {
+			f << i << "," << Data[i][0] << "," << "\"" << Data[i][1] << "\"" << "," << "\"" << Data[i][2] << "\"" << endl;
+		}
+		f << "END" << endl;
+	}
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio->file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "csv_file_support::write_gedcom_file_as_csv done" << endl;
+	}
+
+}
+
+void csv_file_support::write_ancestry_indi(
+		std::string &fname,
+		std::vector<std::vector<std::string> > &Data,
+		int nb_indi,
+		data_structures::ancestry_indi **Individual,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_ancestry_indi" << endl;
+	}
+	{
+		int i;
+
+		ofstream f(fname);
+
+		f << "Row,ID,SEX,NAME,FAMC,FAMS,BIRTHDATE,DEATHDATE" << endl;
+		for (i = 0; i < nb_indi; i++) {
+			f << i
+					<< "," << "\"" << Individual[i]->id << "\""
+					<< "," << "\"" << Individual[i]->sex << "\""
+					<< "," << "\"" << Individual[i]->name << "\""
+					<< "," << "\"" << Individual[i]->famc << "\""
+					<< "," << "\"" << Individual[i]->fams << "\""
+					<< "," << "\"" << Individual[i]->birth_date << "\""
+					<< "," << "\"" << Individual[i]->death_date << "\""
+				<< endl;
+		}
+		f << "END" << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_ancestry_indi done" << endl;
+	}
+}
 
 }}}
 

@@ -236,7 +236,8 @@ void clique_finder::init(
 	}
 }
 
-void clique_finder::init_restrictions(int *restrictions,
+void clique_finder::init_restrictions(
+		int *restrictions,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -268,13 +269,15 @@ void clique_finder::init_restrictions(int *restrictions,
 	}
 }
 
-void clique_finder::init_point_labels(int *pt_labels)
+void clique_finder::init_point_labels(
+		int *pt_labels)
 {
 	point_labels = NEW_int(n);
 	Int_vec_copy(pt_labels, point_labels, n);
 }
 
-void clique_finder::init_suspicious_points(int nb, int *point_list)
+void clique_finder::init_suspicious_points(
+		int nb, int *point_list)
 {
 	int i, j, idx;
 	int *point_list_ordered;
@@ -303,7 +306,8 @@ void clique_finder::init_suspicious_points(int nb, int *point_list)
 	FREE_int(point_list_ordered);
 }
 
-void clique_finder::backtrack_search(int depth, int verbose_level)
+void clique_finder::backtrack_search(
+		int depth, int verbose_level)
 {
 	int nb_old, i, nb_new;
 	int pt1, pt2, pt, pass, f_go;
@@ -688,7 +692,8 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 	}
 }
 
-int clique_finder::solve_decision_problem(int depth, int verbose_level)
+int clique_finder::solve_decision_problem(
+		int depth, int verbose_level)
 // returns true if we found a solution
 {
 	int nb_old, i, nb_new;
@@ -1402,7 +1407,8 @@ continuation_point:
 }
 #endif
 
-void clique_finder::open_tree_file(std::string &fname_base)
+void clique_finder::open_tree_file(
+		std::string &fname_base)
 {
 	f_write_tree = true;
 	fname_tree = fname_base + ".tree";
@@ -1477,7 +1483,8 @@ void clique_finder::print_suspicious_points()
 	cout << endl;
 }
 
-void clique_finder::print_set(int size, int *set)
+void clique_finder::print_set(
+		int size, int *set)
 {
 	int i, a, b;
 
@@ -1493,7 +1500,8 @@ void clique_finder::print_set(int size, int *set)
 	cout << ")";
 }
 
-void clique_finder::print_suspicious_point_subset(int size, int *set)
+void clique_finder::print_suspicious_point_subset(
+		int size, int *set)
 {
 	int i, a, b, cnt = 0;
 
@@ -1521,7 +1529,8 @@ void clique_finder::print_suspicious_point_subset(int size, int *set)
 	cout << ")";
 }
 
-void clique_finder::log_position_and_choice(int depth,
+void clique_finder::log_position_and_choice(
+		int depth,
 		unsigned long int counter_save,
 		unsigned long int counter)
 {
@@ -1534,7 +1543,8 @@ void clique_finder::log_position_and_choice(int depth,
 	}
 }
 
-void clique_finder::log_position(int depth,
+void clique_finder::log_position(
+		int depth,
 		unsigned long int counter_save,
 		unsigned long int counter)
 {
@@ -1546,7 +1556,8 @@ void clique_finder::log_position(int depth,
 	}
 }
 
-void clique_finder::log_choice(int depth)
+void clique_finder::log_choice(
+		int depth)
 {
 	int i;
 
@@ -1562,7 +1573,8 @@ void clique_finder::log_choice(int depth)
 	cout << " ";
 }
 
-void clique_finder::swap_point(int idx1, int idx2)
+void clique_finder::swap_point(
+		int idx1, int idx2)
 {
 	data_structures::sorting Sorting;
 
@@ -1608,7 +1620,8 @@ int clique_finder::degree_of_point(
 	return d;
 }
 
-int clique_finder::is_suspicious(int i)
+int clique_finder::is_suspicious(
+		int i)
 {
 	if (point_is_suspicious == NULL) {
 		return false;
@@ -1616,7 +1629,8 @@ int clique_finder::is_suspicious(int i)
 	return point_is_suspicious[i];
 }
 
-int clique_finder::point_label(int i)
+int clique_finder::point_label(
+		int i)
 {
 	if (point_labels) {
 		return point_labels[i];
@@ -1626,7 +1640,8 @@ int clique_finder::point_label(int i)
 	}
 }
 
-int clique_finder::is_adjacent(int depth, int i, int j)
+int clique_finder::is_adjacent(
+		int depth, int i, int j)
 {
 	int a;
 
@@ -1707,7 +1722,8 @@ void clique_finder::write_entry_to_tree_file(
 }
 
 
-int clique_finder::s_ij(int i, int j)
+int clique_finder::s_ij(
+		int i, int j)
 {
 	long int k;
 	int aij;
@@ -1758,7 +1774,8 @@ int clique_finder::s_ij(int i, int j)
 
 }
 
-void clique_finder::delinearize_adjacency_list(int verbose_level)
+void clique_finder::delinearize_adjacency_list(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;

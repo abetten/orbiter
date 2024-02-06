@@ -64,7 +64,8 @@ public:
 
 	gl_classes();
 	~gl_classes();
-	void init(int k,
+	void init(
+			int k,
 			field_theory::finite_field *F, int verbose_level);
 	int select_partition_first(
 			int *Select, int *Select_partition,
@@ -564,7 +565,8 @@ public:
 			int *A,
 		int m, int n, int *B, int *base_cols, int f_complete,
 		int verbose_level);
-	int rank_and_basecols(int *A, int m,
+	int rank_and_basecols(
+			int *A, int m,
 		int *base_cols, int verbose_level);
 	void Gauss_step(
 			int *v1, int *v2, int len,
@@ -807,7 +809,8 @@ public:
 		int a, int b, int c, int d, int beta);
 	void representing_matrix8b(
 			int *A, int beta);
-	int Term1(int a1, int e1);
+	int Term1(
+			int a1, int e1);
 	int Term2(
 			int a1, int a2,
 			int e1, int e2);
@@ -832,21 +835,34 @@ public:
 	int term5(
 			int a1, int a2, int a3, int a4, int a5,
 			int e1, int e2, int e3, int e4, int e5);
-	int m_term(int q, int a1, int a2, int a3);
+	int m_term(
+			int q, int a1, int a2, int a3);
 	int beta_trinomial(
 			int q, int beta, int a1, int a2, int a3);
-	int T3product2(int a1, int a2);
-	int add(int a, int b);
-	int add3(int a, int b, int c);
-	int negate(int a);
-	int twice(int a);
-	int mult(int a, int b);
-	int inverse(int a);
-	int power(int a, int n);
-	int T2(int a);
-	int T3(int a);
-	int N2(int a);
-	int N3(int a);
+	int T3product2(
+			int a1, int a2);
+	int add(
+			int a, int b);
+	int add3(
+			int a, int b, int c);
+	int negate(
+			int a);
+	int twice(
+			int a);
+	int mult(
+			int a, int b);
+	int inverse(
+			int a);
+	int power(
+			int a, int n);
+	int T2(
+			int a);
+	int T3(
+			int a);
+	int N2(
+			int a);
+	int N3(
+			int a);
 
 };
 
@@ -884,12 +900,18 @@ public:
 		void (*unrank_point_func)(int *v, long int rk, void *data),
 		void *data,
 		int verbose_level);
-	void unrank_basis(int *Mtx, long int *set, int len);
-	void rank_basis(int *Mtx, long int *set, int len);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	int RREF_and_rank(int *basis, int k);
-	int is_contained_in_subspace(int *v, int *basis, int k);
+	void unrank_basis(
+			int *Mtx, long int *set, int len);
+	void rank_basis(
+			int *Mtx, long int *set, int len);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
+	int RREF_and_rank(
+			int *basis, int k);
+	int is_contained_in_subspace(
+			int *v, int *basis, int k);
 	int compare_subspaces_ranked(
 			long int *set1, long int *set2, int k, int verbose_level);
 		// equality test for subspaces given by ranks of basis elements

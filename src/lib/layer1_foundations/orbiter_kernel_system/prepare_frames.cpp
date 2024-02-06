@@ -114,13 +114,15 @@ void prepare_frames::print()
 	}
 }
 
-void prepare_frames::print_item(int i)
+void prepare_frames::print_item(
+		int i)
 {
 	cout << "-i " << input_first[i] << " " << input_len[i] << " " << input_mask[i] << endl;
 }
 
 
-void prepare_frames::do_the_work(int verbose_level)
+void prepare_frames::do_the_work(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_frames;

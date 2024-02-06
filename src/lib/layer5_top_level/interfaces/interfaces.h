@@ -960,6 +960,8 @@ class interface_toolkit {
 	std::string draw_layered_graph_fname;
 	graphics::layered_graph_draw_options *Layered_graph_draw_options;
 
+	int f_read_gedcom;
+	std::string read_gedcom_fname;
 
 
 public:

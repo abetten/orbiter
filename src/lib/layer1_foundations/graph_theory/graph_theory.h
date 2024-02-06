@@ -208,42 +208,60 @@ public:
 			int f_has_bitvector,
 			data_structures::bitvector *Bitvec_adjacency,
 			int verbose_level);
-	void init_restrictions(int *restrictions, int verbose_level);
-	void init_point_labels(int *pt_labels);
-	void init_suspicious_points(int nb, int *point_list);
-	void backtrack_search(int depth, int verbose_level);
-	int solve_decision_problem(int depth, int verbose_level);
+	void init_restrictions(
+			int *restrictions, int verbose_level);
+	void init_point_labels(
+			int *pt_labels);
+	void init_suspicious_points(
+			int nb, int *point_list);
+	void backtrack_search(
+			int depth, int verbose_level);
+	int solve_decision_problem(
+			int depth, int verbose_level);
 		// returns true if we found a solution
 	//void backtrack_search_not_recursive(int verbose_level);
-	void open_tree_file(std::string &fname_base);
+	void open_tree_file(
+			std::string &fname_base);
 	void close_tree_file();
 	void get_solutions(
 			int *&Sol, long int &nb_solutions, int &clique_sz,
 		int verbose_level);
 	void print_suspicious_points();
-	void print_set(int size, int *set);
-	void print_suspicious_point_subset(int size, int *set);
-	void log_position_and_choice(int depth,
+	void print_set(
+			int size, int *set);
+	void print_suspicious_point_subset(
+			int size, int *set);
+	void log_position_and_choice(
+			int depth,
 			unsigned long int  counter_save,
 			unsigned long int counter);
-	void log_position(int depth,
+	void log_position(
+			int depth,
 			unsigned long int  counter_save,
 			unsigned long int counter);
-	void log_choice(int depth);
-	void swap_point(int idx1, int idx2);
+	void log_choice(
+			int depth);
+	void swap_point(
+			int idx1, int idx2);
 	void degree_of_point_statistic(
 			int depth, int nb_points,
 		int verbose_level);
 	int degree_of_point(
 			int depth, int i, int nb_points);
-	int is_suspicious(int i);
-	int point_label(int i);
-	int is_adjacent(int depth, int i, int j);
-	int is_viable(int depth, int pt);
+	int is_suspicious(
+			int i);
+	int point_label(
+			int i);
+	int is_adjacent(
+			int depth, int i, int j);
+	int is_viable(
+			int depth, int pt);
 	void write_entry_to_tree_file(
 			int depth, int verbose_level);
-	int s_ij(int i, int j);
-	void delinearize_adjacency_list(int verbose_level);
+	int s_ij(
+			int i, int j);
+	void delinearize_adjacency_list(
+			int verbose_level);
 
 private:
 	void parallel_delinearize_adjacency_list();
@@ -527,7 +545,8 @@ public:
 	void init(
 			int nb_nodes,
 			int id_of_first_node, int verbose_level);
-	void place(int verbose_level);
+	void place(
+			int verbose_level);
 	void place_with_grouping(
 			int *group_size, int nb_groups,
 		double x_stretch, int verbose_level);
@@ -588,20 +607,28 @@ public:
 
 	graph_node();
 	~graph_node();
-	void add_neighbor(int l, int n, int id);
-	void add_text(std::string &text);
-	void add_vec_data(long int *v, int len);
-	void set_distinguished_element(int idx);
-	void add_data1(int data);
-	void add_data2(int data);
-	void add_data3(int data);
+	void add_neighbor(
+			int l, int n, int id);
+	void add_text(
+			std::string &text);
+	void add_vec_data(
+			long int *v, int len);
+	void set_distinguished_element(
+			int idx);
+	void add_data1(
+			int data);
+	void add_data2(
+			int data);
+	void add_data3(
+			int data);
 	void write_memory_object(
 			orbiter_kernel_system::memory_object *m,
 			int verbose_level);
 	void read_memory_object(
 			orbiter_kernel_system::memory_object *m,
 			int verbose_level);
-	void allocate_tree_structure(int verbose_level);
+	void allocate_tree_structure(
+			int verbose_level);
 	int remove_neighbor(
 			layered_graph *G, int id, int verbose_level);
 	void find_all_parents(
@@ -682,7 +709,8 @@ public:
 			int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors,
 		int verbose_level);
-	void print_Pijk(int *Pijk, int nb_colors);
+	void print_Pijk(
+			int *Pijk, int nb_colors);
 	void compute_decomposition_of_graph_wrt_partition(
 			int *Adj, int N,
 		int *first, int *len, int nb_parts, int *&R,
@@ -698,7 +726,8 @@ public:
 			int *M, int m, int n,
 			int f_has_labels, int *labels,
 			int verbose_level);
-	void list_parameters_of_SRG(int v_max, int verbose_level);
+	void list_parameters_of_SRG(
+			int v_max, int verbose_level);
 	void make_cycle_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);
@@ -718,7 +747,8 @@ public:
 			int *&Adj, int &N,
 			field_theory::finite_field *F,
 			int verbose_level);
-	void make_Winnie_Li_graph(int *&Adj, int &N,
+	void make_Winnie_Li_graph(
+			int *&Adj, int &N,
 			field_theory::finite_field *Fq,
 			int index, int verbose_level);
 	void make_Grassmann_graph(
@@ -740,7 +770,8 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
-	void all_cliques_of_given_size(int *Adj,
+	void all_cliques_of_given_size(
+			int *Adj,
 			int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
 			int verbose_level);
 	void eigenvalues(
@@ -777,7 +808,8 @@ public:
 	int nb_nodes();
 	void print_nb_nodes_per_level();
 	double average_word_length();
-	void place(int verbose_level);
+	void place(
+			int verbose_level);
 	void place_with_y_stretch(
 			double y_stretch, int verbose_level);
 	void scale_x_coordinates(
@@ -809,8 +841,21 @@ public:
 	void add_node_data3(
 			int l, int n, int data,
 			int verbose_level);
-	void draw_with_options(std::string &fname,
+	void draw_with_options(
+			std::string &fname,
 			graphics::layered_graph_draw_options *O,
+			int verbose_level);
+	void draw_edges(
+			graphics::layered_graph_draw_options *O,
+			graphics::mp_graphics *G,
+			int verbose_level);
+	void draw_vertices(
+			graphics::layered_graph_draw_options *O,
+			graphics::mp_graphics *G,
+			int verbose_level);
+	void draw_level_info(
+			graphics::layered_graph_draw_options *O,
+			graphics::mp_graphics *G,
 			int verbose_level);
 	void coordinates_direct(
 			double x_in, double y_in,
@@ -820,7 +865,8 @@ public:
 			int id, int x_max, int y_max,
 		int f_rotated,
 		int &x, int &y);
-	void find_node_by_id(int id, int &l, int &n);
+	void find_node_by_id(
+			int id, int &l, int &n);
 	void write_file(
 			std::string &fname, int verbose_level);
 	void read_file(
@@ -854,8 +900,10 @@ public:
 			int verbose_level);
 	void create_spanning_tree(
 			int f_place_x, int verbose_level);
-	void compute_depth_first_ranks(int verbose_level);
-	void set_radius_factor_for_all_nodes_at_level(int lvl, 
+	void compute_depth_first_ranks(
+			int verbose_level);
+	void set_radius_factor_for_all_nodes_at_level(
+			int lvl,
 		double radius_factor, int verbose_level);
 	void make_subset_lattice(
 			int n, int depth, int f_tree,
@@ -895,7 +943,8 @@ public:
 	rainbow_cliques();
 	~rainbow_cliques();
 
-	void search(clique_finder_control *Control,
+	void search(
+			clique_finder_control *Control,
 			colored_graph *graph,
 			std::ostream &ost_sol,
 			int verbose_level);
@@ -904,7 +953,8 @@ public:
 		int nb_pts, int &reduced_nb_pts, 
 		int *pt_list, int *pt_list_inv, 
 		int *candidates, int verbose_level);
-	void clique_found(int *current_clique,
+	void clique_found(
+			int *current_clique,
 			int verbose_level);
 	void clique_found_record_in_original_labels(
 			int *current_clique,
@@ -912,15 +962,19 @@ public:
 
 };
 
-void call_back_colored_graph_clique_found(clique_finder *CF, 
+void call_back_colored_graph_clique_found(
+		clique_finder *CF,
 	int verbose_level);
-void call_back_colored_graph_add_point(clique_finder *CF, 
+void call_back_colored_graph_add_point(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int pt, int verbose_level);
-void call_back_colored_graph_delete_point(clique_finder *CF, 
+void call_back_colored_graph_delete_point(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int pt, int verbose_level);
-int call_back_colored_graph_find_candidates(clique_finder *CF, 
+int call_back_colored_graph_find_candidates(
+		clique_finder *CF,
 	int current_clique_size, int *current_clique, 
 	int nb_pts, int &reduced_nb_pts, 
 	int *pt_list, int *pt_list_inv, 

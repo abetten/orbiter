@@ -2010,7 +2010,8 @@ void string_tools::parse_RHS_command(
 //#############################################################################
 
 
-int string_tools_compare_strings(void *a, void *b, void *data)
+int string_tools_compare_strings(
+		void *a, void *b, void *data)
 {
 	char *A = (char *) a;
 	char *B = (char *) b;

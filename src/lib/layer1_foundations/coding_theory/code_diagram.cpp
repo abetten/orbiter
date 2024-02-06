@@ -46,7 +46,8 @@ code_diagram::~code_diagram()
 
 }
 
-void code_diagram::init(std::string &label,
+void code_diagram::init(
+		std::string &label,
 		long int *Words, int nb_words,
 		int n, int verbose_level)
 {
@@ -114,7 +115,8 @@ void code_diagram::init(std::string &label,
 	}
 }
 
-void code_diagram::place_codewords(int verbose_level)
+void code_diagram::place_codewords(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -247,7 +249,8 @@ void code_diagram::place_metric_balls(
 	FREE_int(set_of_errors);
 }
 
-void code_diagram::compute_distances(int verbose_level)
+void code_diagram::compute_distances(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -313,7 +316,8 @@ void code_diagram::compute_distances(int verbose_level)
 	}
 }
 
-void code_diagram::dimensions(int n, int &nb_rows, int &nb_cols)
+void code_diagram::dimensions(
+		int n, int &nb_rows, int &nb_cols)
 {
 	int i, j;
 
@@ -322,7 +326,8 @@ void code_diagram::dimensions(int n, int &nb_rows, int &nb_cols)
 	nb_cols = j + 1;
 }
 
-void code_diagram::place_binary(long int h, int &i, int &j)
+void code_diagram::place_binary(
+		long int h, int &i, int &j)
 {
 	int o[2];
 	int c;
@@ -348,7 +353,8 @@ void code_diagram::place_binary(long int h, int &i, int &j)
 	}
 }
 
-void code_diagram::place_binary(int *v, int n, int &i, int &j)
+void code_diagram::place_binary(
+		int *v, int n, int &i, int &j)
 {
 	int o[2];
 	int c;
@@ -373,7 +379,8 @@ void code_diagram::place_binary(int *v, int n, int &i, int &j)
 	}
 }
 
-void code_diagram::convert_to_binary(int n, long int h, int *v)
+void code_diagram::convert_to_binary(
+		int n, long int h, int *v)
 {
 	int c;
 
@@ -388,7 +395,8 @@ void code_diagram::convert_to_binary(int n, long int h, int *v)
 	}
 }
 
-void code_diagram::print_binary(int n, int *v)
+void code_diagram::print_binary(
+		int n, int *v)
 {
 	int c;
 
@@ -398,7 +406,8 @@ void code_diagram::print_binary(int n, int *v)
 }
 
 
-void code_diagram::save_distance(int verbose_level)
+void code_diagram::save_distance(
+		int verbose_level)
 {
 
 	string fname;
@@ -415,7 +424,8 @@ void code_diagram::save_distance(int verbose_level)
 }
 
 
-void code_diagram::save_distance_H(int verbose_level)
+void code_diagram::save_distance_H(
+		int verbose_level)
 {
 	string fname;
 
@@ -430,7 +440,8 @@ void code_diagram::save_distance_H(int verbose_level)
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
-void code_diagram::save_diagram(int verbose_level)
+void code_diagram::save_diagram(
+		int verbose_level)
 {
 	string fname;
 
@@ -444,7 +455,8 @@ void code_diagram::save_diagram(int verbose_level)
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 }
 
-void code_diagram::save_char_func(int verbose_level)
+void code_diagram::save_char_func(
+		int verbose_level)
 {
 	string fname;
 
@@ -461,7 +473,8 @@ void code_diagram::save_char_func(int verbose_level)
 }
 
 
-void code_diagram::report(int verbose_level)
+void code_diagram::report(
+		int verbose_level)
 {
 	orbiter_kernel_system::file_io Fio;
 

@@ -266,7 +266,8 @@ public:
 		// maps the favorite rep to the canonical rep 
 
 
-	int (*check_function)(int len,
+	int (*check_function)(
+			int len,
 			long int *S, void *data, int verbose_level);
 
 	poset_classification::poset_classification *gen;
@@ -323,7 +324,8 @@ public:
 		int verbose_level);
 	void print_rep();
 	void print_stab();
-	int is_in_rep(int a);
+	int is_in_rep(
+			int a);
 	
 };
 

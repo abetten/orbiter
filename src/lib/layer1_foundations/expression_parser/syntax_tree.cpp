@@ -89,7 +89,8 @@ void syntax_tree::init(
 	}
 }
 
-void syntax_tree::init_root_node(int verbose_level)
+void syntax_tree::init_root_node(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -202,13 +203,15 @@ int syntax_tree::nb_nodes_total()
 	return nb_total;
 }
 
-void syntax_tree::print(std::ostream &ost)
+void syntax_tree::print(
+		std::ostream &ost)
 {
 	Root->print_subtree(ost);
 }
 
 
-void syntax_tree::print_easy(std::ostream &ost)
+void syntax_tree::print_easy(
+		std::ostream &ost)
 {
 	Root->print_subtree_easy(ost);
 }
@@ -1098,7 +1101,8 @@ int syntax_tree::get_number_of_variables()
 
 }
 
-std::string &syntax_tree::get_variable_name(int index)
+std::string &syntax_tree::get_variable_name(
+		int index)
 {
 	if (index < managed_variables.size()) {
 		return managed_variables[index];

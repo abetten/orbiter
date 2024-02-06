@@ -129,7 +129,8 @@ int arc_generator_description::read_arguments(
 
 			i++;
 
-			Os.get_string_from_command_line(forbidden_point_set_string, argc, argv, i, verbose_level);
+			Os.get_string_from_command_line(
+					forbidden_point_set_string, argc, argv, i, verbose_level);
 			i--;
 			if (f_v) {
 				cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;

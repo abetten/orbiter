@@ -29,7 +29,8 @@ scene_element_of_type_face::~scene_element_of_type_face()
 {
 }
 
-void scene_element_of_type_face::init(std::vector<std::string> &pts)
+void scene_element_of_type_face::init(
+		std::vector<std::string> &pts)
 {
 	int i;
 

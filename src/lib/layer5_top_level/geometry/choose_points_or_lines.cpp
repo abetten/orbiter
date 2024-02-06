@@ -543,7 +543,8 @@ void choose_points_or_lines::print_stab()
 	}
 }
 
-int choose_points_or_lines::is_in_rep(int a)
+int choose_points_or_lines::is_in_rep(
+		int a)
 {
 	int i;
 

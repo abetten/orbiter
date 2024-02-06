@@ -70,7 +70,8 @@ void syntax_tree_node_terminal::print_to_vector(
 	}
 }
 
-void syntax_tree_node_terminal::print(std::ostream &ost)
+void syntax_tree_node_terminal::print(
+		std::ostream &ost)
 {
 	ost << "terminal node, ";
 	if (f_int) {
@@ -87,7 +88,8 @@ void syntax_tree_node_terminal::print(std::ostream &ost)
 	}
 }
 
-void syntax_tree_node_terminal::print_easy(std::ostream &ost)
+void syntax_tree_node_terminal::print_easy(
+		std::ostream &ost)
 {
 	//ost << "terminal node, ";
 	if (f_int) {
@@ -105,7 +107,8 @@ void syntax_tree_node_terminal::print_easy(std::ostream &ost)
 }
 
 
-void syntax_tree_node_terminal::print_expression(std::ostream &ost)
+void syntax_tree_node_terminal::print_expression(
+		std::ostream &ost)
 {
 	if (f_int) {
 		ost << value_int;
@@ -121,7 +124,8 @@ void syntax_tree_node_terminal::print_expression(std::ostream &ost)
 	}
 }
 
-void syntax_tree_node_terminal::print_graphviz(std::ostream &ost)
+void syntax_tree_node_terminal::print_graphviz(
+		std::ostream &ost)
 {
 	if (f_int) {
 		ost << value_int;
