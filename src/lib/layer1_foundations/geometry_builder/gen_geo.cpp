@@ -87,7 +87,7 @@ void gen_geo::init(
 	if (f_v) {
 		cout << "gen_geo::init before inc->init" << endl;
 	}
-	inc->init(this, GB->V, GB->B, GB->R, verbose_level);
+	inc->init(this, GB->V, GB->B, GB->R, verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::init after inc->init" << endl;
 	}
@@ -100,7 +100,7 @@ void gen_geo::init(
 	if (f_v) {
 		cout << "gen_geo::init before Decomposition_with_fuse->init" << endl;
 	}
-	Decomposition_with_fuse->init(this, verbose_level);
+	Decomposition_with_fuse->init(this, verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::init after Decomposition_with_fuse->init" << endl;
 	}
@@ -109,7 +109,7 @@ void gen_geo::init(
 	if (f_v) {
 		cout << "gen_geo::init before init_semicanonical" << endl;
 	}
-	init_semicanonical(verbose_level);
+	init_semicanonical(verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::init before init_semicanonical done" << endl;
 	}
@@ -128,7 +128,7 @@ void gen_geo::init(
 	if (f_v) {
 		cout << "gen_geo::init before Geometric_backtrack_search->init" << endl;
 	}
-	Geometric_backtrack_search->init(this, verbose_level);
+	Geometric_backtrack_search->init(this, verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::init after Geometric_backtrack_search->init" << endl;
 	}
@@ -194,7 +194,7 @@ void gen_geo::main2(
 	if (f_v) {
 		cout << "gen_geo::main2 before generate_all" << endl;
 	}
-	generate_all(verbose_level);
+	generate_all(verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::main2 after generate_all" << endl;
 	}
@@ -328,7 +328,7 @@ void gen_geo::generate_all(
 	}
 
 
-	setup_output_files(verbose_level);
+	setup_output_files(verbose_level - 1);
 
 	if (f_v) {
 		cout << "gen_geo::generate_all before it0 = ..." << endl;
@@ -369,6 +369,8 @@ void gen_geo::generate_all(
 		inc->gl_nb_GEN++;
 		if (f_v) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
+		}
+		if (f_vv) {
 			print(cout, inc->Encoding->v, inc->Encoding->v);
 			//cout << "pairs:" << endl;
 			//inc->print_pairs(inc->Encoding->v);
@@ -406,10 +408,11 @@ void gen_geo::generate_all(
 		it0->add_geometry(inc->Encoding,
 				false /* f_partition_fixing_last */,
 				f_already_there,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
-			cout << "gen_geo::generate_all it0->add_geometry, f_already_there=" << f_already_there << endl;
+			cout << "gen_geo::generate_all it0->add_geometry, "
+					"f_already_there=" << f_already_there << endl;
 		}
 
 
