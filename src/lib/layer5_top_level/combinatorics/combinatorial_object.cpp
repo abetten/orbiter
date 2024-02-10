@@ -20,7 +20,7 @@ namespace apps_combinatorics {
 
 combinatorial_object::combinatorial_object()
 {
-	Data_input_stream_description = NULL;
+	//Data_input_stream_description = NULL;
 
 	IS = NULL;
 
@@ -50,7 +50,7 @@ void combinatorial_object::init(
 	if (f_v) {
 		cout << "combinatorial_object::init" << endl;
 	}
-	combinatorial_object::Data_input_stream_description = Data_input_stream_description;
+	//combinatorial_object::Data_input_stream_description = Data_input_stream_description;
 
 
 	IS = NEW_OBJECT(canonical_form_classification::data_input_stream);

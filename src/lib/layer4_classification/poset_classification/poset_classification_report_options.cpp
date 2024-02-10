@@ -35,6 +35,10 @@ poset_classification_report_options::poset_classification_report_options()
 	f_include_projective_stabilizer = false;
 
 	f_draw_poset = false;
+	f_type_aux = false;
+	f_type_ordinary = false;
+	f_type_tree = false;
+	f_type_detailed = false;
 
 	f_fname = false;
 	//std::string fname;
@@ -94,6 +98,30 @@ int poset_classification_report_options::read_arguments(
 				cout << "-draw_poset" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-type_aux") == 0) {
+			f_type_aux = true;
+			if (f_v) {
+				cout << "-type_aux" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-type_ordinary") == 0) {
+			f_type_ordinary = true;
+			if (f_v) {
+				cout << "-type_ordinary" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-type_tree") == 0) {
+			f_type_tree = true;
+			if (f_v) {
+				cout << "-type_tree" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-type_detailed") == 0) {
+			f_type_detailed = true;
+			if (f_v) {
+				cout << "-type_detailed" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-fname") == 0) {
 			f_fname = true;
 			fname.assign(argv[++i]);
@@ -137,6 +165,18 @@ void poset_classification_report_options::print()
 	}
 	if (f_draw_poset) {
 		cout << "-draw_poset" << endl;
+	}
+	if (f_type_aux) {
+		cout << "-type_aux" << endl;
+	}
+	if (f_type_ordinary) {
+		cout << "-type_ordinary" << endl;
+	}
+	if (f_type_tree) {
+		cout << "-type_tree" << endl;
+	}
+	if (f_type_detailed) {
+		cout << "-type_detailed" << endl;
 	}
 	if (f_fname) {
 		cout << "-fname" << fname << endl;

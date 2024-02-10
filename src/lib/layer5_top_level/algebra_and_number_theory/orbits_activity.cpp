@@ -691,18 +691,23 @@ void orbits_activity::do_export_trees(
 
 		for (orbit_idx = 0; orbit_idx < OC->Orb->Sch->nb_orbits; orbit_idx++) {
 
-			cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
-					<< " before Sch->export_tree_as_layered_graph" << endl;
+			if (f_v) {
+				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
+						<< " before Sch->export_tree_as_layered_graph" << endl;
+			}
 
 			OC->Orb->Sch->export_tree_as_layered_graph(
 					orbit_idx,
 					fname_tree_mask,
 					verbose_level - 1);
+			if (f_v) {
+				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
+						<< " after Sch->export_tree_as_layered_graph" << endl;
+			}
 		}
 
 	}
-
-	if (OC->f_has_On_subsets) {
+	else if (OC->f_has_On_subsets) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_subsets" << endl;
@@ -710,8 +715,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_On_Subspaces) {
+	else if (OC->f_has_On_Subspaces) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_Subspaces" << endl;
@@ -719,8 +723,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_On_tensors) {
+	else if (OC->f_has_On_tensors) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_tensors" << endl;
@@ -728,8 +731,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_Cascade) {
+	else if (OC->f_has_Cascade) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_Cascade" << endl;
@@ -737,8 +739,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_On_polynomials) {
+	else if (OC->f_has_On_polynomials) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_polynomials" << endl;
@@ -746,8 +747,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_Of_One_polynomial) {
+	else if (OC->f_has_Of_One_polynomial) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_Of_One_polynomial" << endl;
@@ -755,8 +755,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_on_cubic_curves) {
+	else if (OC->f_has_on_cubic_curves) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_on_cubic_curves" << endl;
@@ -764,8 +763,7 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
-	if (OC->f_has_classification_by_canonical_form) {
+	else if (OC->f_has_classification_by_canonical_form) {
 
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_classification_by_canonical_form" << endl;
@@ -773,7 +771,6 @@ void orbits_activity::do_export_trees(
 
 
 	}
-
 	else {
 		cout << "orbits_activity::do_export_trees "
 				"no suitable data structure found" << endl;

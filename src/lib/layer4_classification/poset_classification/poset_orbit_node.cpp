@@ -171,7 +171,8 @@ int poset_orbit_node::get_node()
 	return node;
 }
 
-void poset_orbit_node::set_node(int node)
+void poset_orbit_node::set_node(
+		int node)
 {
 	poset_orbit_node::node = node;
 }
@@ -183,13 +184,15 @@ void poset_orbit_node::delete_Schreier_vector()
 }
 
 
-void poset_orbit_node::allocate_E(int nb_extensions, int verbose_level)
+void poset_orbit_node::allocate_E(
+		int nb_extensions, int verbose_level)
 {
 	E = NEW_OBJECTS(extension, 1);
 	nb_extensions = 1;
 }
 
-int poset_orbit_node::get_level(poset_classification *gen)
+int poset_orbit_node::get_level(
+		poset_classification *gen)
 {
 	int l;
 
@@ -197,7 +200,8 @@ int poset_orbit_node::get_level(poset_classification *gen)
 	return l;
 }
 
-int poset_orbit_node::get_node_in_level(poset_classification *gen)
+int poset_orbit_node::get_node_in_level(
+		poset_classification *gen)
 {
 	int l, n;
 
@@ -252,7 +256,8 @@ void poset_orbit_node::get_tl(
 	}
 }
 
-int poset_orbit_node::get_tl(int i)
+int poset_orbit_node::get_tl(
+		int i)
 {
 	return tl[i];
 }
@@ -322,7 +327,8 @@ int poset_orbit_node::get_nb_of_extensions()
 }
 
 
-extension *poset_orbit_node::get_E(int idx)
+extension *poset_orbit_node::get_E(
+		int idx)
 {
 	return E + idx;
 }
@@ -332,7 +338,8 @@ long int poset_orbit_node::get_pt()
 	return pt;
 }
 
-void poset_orbit_node::set_pt(long int pt)
+void poset_orbit_node::set_pt(
+		long int pt)
 {
 	poset_orbit_node::pt = pt;
 }
@@ -342,7 +349,8 @@ int poset_orbit_node::get_prev()
 	return prev;
 }
 
-void poset_orbit_node::set_prev(int prev)
+void poset_orbit_node::set_prev(
+		int prev)
 {
 	poset_orbit_node::prev = prev;
 }
@@ -757,7 +765,8 @@ void poset_orbit_node::log_current_node_with_candidates(
 }
 
 
-int poset_orbit_node::depth_of_node(poset_classification *gen)
+int poset_orbit_node::depth_of_node(
+		poset_classification *gen)
 {
 	if (prev == -1) {
 		return 0;
@@ -767,7 +776,8 @@ int poset_orbit_node::depth_of_node(poset_classification *gen)
 		}
 }
 
-void poset_orbit_node::store_set(poset_classification *gen, int i)
+void poset_orbit_node::store_set(
+		poset_classification *gen, int i)
 // stores a set of size i + 1 to gen->S[]
 {
 	if (i < 0) {
@@ -871,7 +881,8 @@ void poset_orbit_node::print_set_verbose(poset_classification *gen)
 	//cout << "poset_orbit_node::print_set_verbose done" << endl;
 }
 
-void poset_orbit_node::print_set(poset_classification *gen)
+void poset_orbit_node::print_set(
+		poset_classification *gen)
 {
 	int depth, size, i;
 	ring_theory::longinteger_object go;
@@ -905,7 +916,8 @@ void poset_orbit_node::print_set(poset_classification *gen)
 	FREE_lint(set);
 }
 
-void poset_orbit_node::print_node(poset_classification *gen)
+void poset_orbit_node::print_node(
+		poset_classification *gen)
 {
 	int depth;
 	long int *set;
@@ -980,7 +992,8 @@ void poset_orbit_node::print_node(poset_classification *gen)
 #endif	
 }
 
-void poset_orbit_node::print_extensions(poset_classification *gen)
+void poset_orbit_node::print_extensions(
+		poset_classification *gen)
 {
 	//int i, depth, /*node2,*/ len;
 	int depth;

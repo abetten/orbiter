@@ -27,30 +27,6 @@ void poset_classification::report(
 		cout << "poset_classification::report" << endl;
 	}
 
-#if 1
-	if (Opt->f_draw_poset) {
-		if (f_v) {
-			cout << "poset_classification::report "
-					"before draw_poset" << endl;
-		}
-		if (!Control->f_draw_options) {
-			cout << "poset_classification::report "
-					"Control->f_draw_poset && !Control->f_draw_options" << endl;
-			exit(1);
-		}
-		draw_poset(get_problem_label_with_path(), depth /*actual_size*/,
-			0 /* data1 */,
-			Control->draw_options,
-			verbose_level);
-		if (f_v) {
-			cout << "poset_classification::report "
-					"after draw_poset" << endl;
-		}
-	}
-
-
-#endif
-
 
 	string fname_report;
 	fname_report = problem_label + "_poset.tex";
@@ -63,7 +39,7 @@ void poset_classification::report(
 
 		if (f_v) {
 			cout << "poset_classification::report "
-					"before get_A()->report" << endl;
+					"before get_A2()->report" << endl;
 		}
 
 		get_A2()->report(ost,
@@ -74,7 +50,7 @@ void poset_classification::report(
 
 		if (f_v) {
 			cout << "poset_classification::report "
-					"after LG->A_linear->report" << endl;
+					"after get_A2()->report" << endl;
 		}
 
 		if (f_v) {
@@ -108,6 +84,43 @@ void poset_classification::report2(
 	if (f_v) {
 		cout << "poset_classification::report2" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "poset_classification::report2 Opt:" << endl;
+		Opt->print();
+		cout << "poset_classification::report2 draw_options:" << endl;
+		Control->draw_options->print();
+	}
+
+#if 1
+	if (Opt->f_draw_poset) {
+		if (f_v) {
+			cout << "poset_classification::report2 "
+					"before draw_poset" << endl;
+		}
+		if (!Control->f_draw_options) {
+			cout << "poset_classification::report2 "
+					"Control->f_draw_poset && !Control->f_draw_options" << endl;
+			exit(1);
+		}
+		draw_poset(
+				get_problem_label_with_path(),
+				depth /*actual_size*/,
+			0 /* data1 */,
+			Control->draw_options,
+			verbose_level);
+		if (f_v) {
+			cout << "poset_classification::report2 "
+					"after draw_poset" << endl;
+		}
+	}
+
+
+#endif
+
+
+
 
 	if (f_v) {
 		cout << "poset_classification::report2 Orbits" << endl;
@@ -177,7 +190,7 @@ void poset_classification::report2(
 		}
 		ost << "\\section*{The Poset of Orbits: Diagram}" << endl;
 
-		report_poset_of_orbits(ost, verbose_level);
+		report_poset_of_orbits(ost, Opt, verbose_level);
 
 	}
 	else {
@@ -572,13 +585,19 @@ void poset_classification::report_orbits_summary(
 
 
 void poset_classification::report_poset_of_orbits(
-		std::ostream &ost, int verbose_level)
+		std::ostream &ost,
+		poset_classification_report_options *Opt,
+		int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "poset_classification::report_poset_of_orbits depth=" << depth << endl;
+		cout << "poset_classification::report_poset_of_orbits "
+				"depth=" << depth << endl;
+		cout << "poset_classification::report_poset_of_orbits "
+				"Opt:" << endl;
+		Opt->print();
 	}
 
 
@@ -586,20 +605,34 @@ void poset_classification::report_poset_of_orbits(
 	string fname_poset;
 	string fname_out_base;
 
-	draw_poset_fname_base_poset_lvl(fname_base, depth);
-	draw_poset_fname_poset(fname_poset, depth);
-	draw_poset_fname_base_poset_lvl(fname_out_base, depth);
+	//draw_poset_fname_base_poset_lvl(fname_base, depth);
+
+	if (Opt->f_type_aux) {
+		draw_poset_fname_base_aux_poset(fname_base, depth);
+	}
+	else if (Opt->f_type_ordinary) {
+		draw_poset_fname_base_poset_lvl(fname_base, depth);
+	}
+	else if (Opt->f_type_tree) {
+		draw_poset_fname_base_tree_lvl(fname_base, depth);
+	}
+	else if (Opt->f_type_detailed) {
+		draw_poset_fname_base_poset_detailed_lvl(fname_base, depth);
+	}
+	else {
+		cout << "please specify the type of drawing of the poset" << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "poset_classification::report_poset_of_orbits "
-				"fname_base=" << fname_base << endl;
+				"fname_base = " << fname_base << endl;
 	}
+	fname_poset = fname_base + ".layered_graph";
+	fname_out_base = fname_base + "_draw";
+
 	if (f_v) {
 		cout << "poset_classification::report_poset_of_orbits "
 				"fname_poset=" << fname_poset << endl;
-	}
-
-	fname_out_base += "_draw";
-	if (f_v) {
 		cout << "poset_classification::report_poset_of_orbits "
 				"fname_out_base=" << fname_out_base << endl;
 	}
@@ -619,7 +652,7 @@ void poset_classification::report_poset_of_orbits(
 
 	}
 
-	cmd += "/orbiter.out -v 3 -draw_layered_graph " + fname_poset + " ";
+	cmd += "orbiter.out -v 3 -draw_layered_graph " + fname_poset + " ";
 
 	if (!Control->f_draw_options) {
 		cout << "poset_classification::report_poset_of_orbits "
@@ -656,6 +689,12 @@ void poset_classification::report_poset_of_orbits(
 
 
 	ost << "\\input " << fname_out_base << ".tex" << endl;
+#if 0
+	ost << "\\clearpage" << endl;
+	ost << "$$" << endl;
+	ost << "\\includegraphics[width=120mm]{" << fname_out_base << "}" << endl;
+	ost << "$$" << endl;
+#endif
 	//ost << "\\includegraphics[width=160mm]{" << fname_mp << ".1}\\\\" << endl;
 
 	if (f_v) {
@@ -731,7 +770,8 @@ void poset_classification::report_orbit(
 	}
 #endif
 
-	get_orbit_length_and_stabilizer_order(orbit_at_level, level,
+	get_orbit_length_and_stabilizer_order(
+			orbit_at_level, level,
 		stab_order, orbit_length);
 
 
@@ -770,7 +810,8 @@ void poset_classification::report_orbit(
 		cout << "poset_classification::report_orbit "
 				"before Poset->A2->latex_point_set" << endl;
 	}
-	Poset->A2->latex_point_set(ost, rep, level, 0 /* verbose_level*/);
+	Poset->A2->latex_point_set(
+			ost, rep, level, 0 /* verbose_level*/);
 	if (f_v) {
 		cout << "poset_classification::report_orbit "
 				"after Poset->A2->latex_point_set" << endl;
@@ -976,7 +1017,8 @@ void poset_classification::report_orbit(
 	FREE_lint(rep);
 	if (f_v) {
 		cout << "poset_classification::report_orbit "
-				"level = " << level << " orbit_at_level = " << orbit_at_level << " done" << endl;
+				"level = " << level
+				<< " orbit_at_level = " << orbit_at_level << " done" << endl;
 	}
 }
 

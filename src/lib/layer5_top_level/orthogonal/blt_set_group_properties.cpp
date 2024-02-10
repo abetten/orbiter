@@ -91,9 +91,11 @@ void blt_set_group_properties::init_orbits_on_points(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_points");
+	label_of_set.assign("_on_points");
+	label_of_set.assign("\\_on\\_points");
 
 
 	if (f_v) {
@@ -103,7 +105,7 @@ void blt_set_group_properties::init_orbits_on_points(
 	A_on_points = Blt_set_with_action->A->Induced_action->restricted_action(
 			Blt_set_with_action->Inv->the_set_in_orthogonal,
 			Blt_set_with_action->Blt_set_domain_with_action->Blt_set_domain->target_size,
-			label_of_set,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "blt_set_with_action::init_orbits_on_points action "

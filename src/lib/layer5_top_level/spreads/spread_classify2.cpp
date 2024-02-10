@@ -924,13 +924,15 @@ void spread_classify::report3(
 
 
 			std::string label_of_set;
+			std::string label_of_set_tex;
 
-			label_of_set = "spread";
+			label_of_set = "_spread";
+			label_of_set_tex = "\\_spread";
 
 
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set, label_of_set,
+					len, set, label_of_set, label_of_set_tex,
 					true,
 					0/*verbose_level*/);
 			if (f_v) {
@@ -976,12 +978,14 @@ void spread_classify::report3(
 			}
 
 			std::string label_of_set;
+			std::string label_of_set_tex;
 
-			label_of_set = "spread";
+			label_of_set = "_spread";
+			label_of_set_tex = "\\_spread";
 
 			A1 = Iso.A->Induced_action->create_induced_action_by_restriction(
 					Stab,
-					len, set, label_of_set,
+					len, set, label_of_set, label_of_set_tex,
 					true,
 					0/*verbose_level*/);
 			if (f_v) {

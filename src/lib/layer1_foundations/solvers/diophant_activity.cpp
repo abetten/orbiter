@@ -81,13 +81,21 @@ void diophant_activity::perform_activity(
 				<< Dio->nb_steps_betten << " backtrack steps" << endl;
 
 		if (true) {
-			string output_file;
+			string output_file1;
 
-			output_file.assign(Dio->label);
-			ST.replace_extension_with(output_file, "_sol.csv");
+			output_file1.assign(Dio->label);
+			ST.replace_extension_with(output_file1, "_sol.csv");
 
 
-			Dio->write_solutions(output_file, verbose_level);
+			Dio->write_solutions_full_length(output_file1, verbose_level);
+
+
+			if (Dio->f_has_sum) {
+				string output_file2;
+				output_file2.assign(Dio->label);
+				ST.replace_extension_with(output_file2, "_sol_index_set.txt");
+				Dio->write_solutions_index_set(output_file2, verbose_level);
+			}
 		}
 	}
 	else if (Descr->f_solve_standard) {
@@ -107,7 +115,7 @@ void diophant_activity::perform_activity(
 			ST.replace_extension_with(output_file, "_sol.csv");
 
 
-			Dio->write_solutions(output_file, verbose_level);
+			Dio->write_solutions_full_length(output_file, verbose_level);
 		}
 	}
 	else if (Descr->f_solve_DLX) {
@@ -127,7 +135,7 @@ void diophant_activity::perform_activity(
 			ST.replace_extension_with(output_file, "_sol.csv");
 
 
-			Dio->write_solutions(output_file, verbose_level);
+			Dio->write_solutions_full_length(output_file, verbose_level);
 		}
 	}
 	else if (Descr->f_draw_as_bitmap) {

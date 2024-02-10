@@ -1359,7 +1359,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int i, j, k, cnt, N2, N2_100;
+	long int i, j, k, N2, N2_100;
 
 	if (f_v) {
 		cout << "graph_theory_domain::compute_adjacency_matrix" << endl;
@@ -1381,7 +1381,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 		cout << "computing adjacency matrix:" << endl;
 	}
 	k = 0;
-	cnt = 0;
+	//cnt = 0;
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
 
@@ -1414,7 +1414,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 			}
 			else {
 				B->m_i(k, 1);
-				cnt++;
+				//cnt++;
 			}
 
 			k++;

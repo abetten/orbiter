@@ -17,7 +17,8 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-int upstep_work::upstep_subspace_action(int verbose_level)
+int upstep_work::upstep_subspace_action(
+		int verbose_level)
 // This routine is called from upstep_work::init_extension_node
 // It computes coset_table.
 // It is testing a set of size 'size'. 

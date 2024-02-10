@@ -3186,16 +3186,18 @@ void wreath_product::orbits_restricted_compute(
 #if 1
 		actions::action *A_on_orbit;
 		std::string label_of_set;
+		std::string label_of_set_tex;
 
 
-		label_of_set.assign("on_orbit");
+		label_of_set.assign("_on_orbit");
+		label_of_set_tex.assign("\\_on\\_orbit");
 
 		if (f_v) {
 			cout << "computing restricted action on the orbit:" << endl;
 		}
 		A_on_orbit = A_perm->Induced_action->restricted_action(
 				Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
-				label_of_set,
+				label_of_set, label_of_set_tex,
 				verbose_level);
 
 		if (f_v) {

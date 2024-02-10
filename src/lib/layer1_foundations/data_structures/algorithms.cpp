@@ -476,11 +476,11 @@ void algorithms::solve_diophant(
 		int *Inc,
 	int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs,
-	long int *&Solutions, int &nb_sol,
+	int *&Solutions, int &nb_sol,
 	long int &nb_backtrack, int &dt,
 	int f_DLX,
 	int verbose_level)
-// allocates Solutions[nb_sol * nb_needed]
+// allocates Solutions[nb_sol * nb_cols]
 {
 	int f_v = (verbose_level >= 1);
 	solvers::diophant *Dio;
@@ -524,10 +524,10 @@ void algorithms::solve_diophant(
 
 	nb_sol = Dio->_resultanz;
 	if (nb_sol) {
-		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
+		Dio->get_solutions_index_set(Solutions, nb_sol, 1 /* verbose_level */);
 		if (false /*f_v4*/) {
 			cout << "Solutions:" << endl;
-			Lint_matrix_print(Solutions, nb_sol, nb_needed);
+			Int_matrix_print(Solutions, nb_sol, nb_needed);
 		}
 	}
 	else {

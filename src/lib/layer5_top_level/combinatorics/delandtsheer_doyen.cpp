@@ -1654,12 +1654,15 @@ void delandtsheer_doyen::create_monomial_group(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("points");
+	label_of_set.assign("_points");
+	label_of_set_tex.assign("\\_points");
 
 	Ar = A->Induced_action->restricted_action(
-			points, nb_points, label_of_set,
+			points, nb_points,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 
 	A = Ar;

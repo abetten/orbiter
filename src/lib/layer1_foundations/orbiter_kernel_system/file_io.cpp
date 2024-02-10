@@ -4138,6 +4138,51 @@ void file_io::read_gedcom_file(
 	}
 }
 
+void file_io::write_solutions_as_index_set(
+		std::string &fname_solutions, int *Sol, int nb_sol, int width, int sum,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::write_solutions_as_index_set" << endl;
+	}
+
+	{
+		ofstream fp(fname_solutions);
+		int i, j;
+		int a, cnt;
+
+		for (i = 0; i < nb_sol; i++) {
+			fp << sum;
+			cnt = 0;
+			for (j = 0; j < width; j++) {
+				a = Sol[i * width + j];
+				if (a) {
+					cnt++;
+					fp << " " << j;
+				}
+			}
+			if (cnt != sum) {
+				cout << "file_io::write_solutions_as_index_set cnt != sum" << endl;
+				exit(1);
+			}
+			fp << endl;
+		}
+		fp << -1 << " " << nb_sol << endl;
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname_solutions << " of size "
+				<< file_size(fname_solutions) << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::write_solutions_as_index_set done" << endl;
+	}
+}
+
+
 
 }}}
 

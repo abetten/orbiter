@@ -30,8 +30,10 @@ class classification_of_objects_description {
 
 public:
 
+#if 0
 	int f_label;
 	std::string label;
+#endif
 
 	int f_save_classification;
 	std::string save_prefix;
@@ -39,8 +41,10 @@ public:
 	int f_max_TDO_depth;
 	int max_TDO_depth;
 
+#if 0
 	int f_classification_prefix;
 	std::string classification_prefix;
+#endif
 
 	int f_save_canonical_labeling;
 
@@ -73,8 +77,10 @@ class classification_of_objects_report_options {
 
 public:
 
+#if 0
 	int f_prefix;
 	std::string prefix;
+#endif
 
 	int f_export_flag_orbits;
 
@@ -151,6 +157,8 @@ public:
 
 	classification_of_objects();
 	~classification_of_objects();
+	std::string get_label();
+	std::string get_label_tex();
 	void perform_classification(
 			classification_of_objects_description *Descr,
 			int f_projective_space,

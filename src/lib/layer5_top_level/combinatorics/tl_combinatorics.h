@@ -282,8 +282,8 @@ public:
 
 class combinatorial_object {
 public:
-	canonical_form_classification::data_input_stream_description
-		*Data_input_stream_description;
+	//canonical_form_classification::data_input_stream_description
+	//	*Data_input_stream_description;
 
 	canonical_form_classification::data_input_stream *IS;
 

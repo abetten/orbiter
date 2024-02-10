@@ -530,7 +530,7 @@ void homogeneous_polynomial_domain::make_monomials(
 
 	int nb_sol;
 
-	D->get_solutions_full_length(Monomials, nb_sol, 0 /* verbose_level */);
+	D->get_solutions(Monomials, nb_sol, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"There are " << nb_sol << " monomials." << endl;

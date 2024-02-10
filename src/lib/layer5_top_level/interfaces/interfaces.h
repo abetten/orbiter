@@ -1130,6 +1130,7 @@ public:
 
 void free_symbol_table_entry_callback(
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
+geometry::projective_space *get_projective_space_low_level_function(void *ptr);
 
 
 

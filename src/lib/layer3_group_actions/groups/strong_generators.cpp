@@ -2330,15 +2330,19 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 	std::string prefix;
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_set");
+	label_of_set.assign("_on_set");
+	label_of_set_tex.assign("\\_on\\_set");
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
-	Ar = A_given->Induced_action->restricted_action(Set, set_sz, label_of_set, verbose_level);
+	Ar = A_given->Induced_action->restricted_action(
+			Set, set_sz, label_of_set, label_of_set_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"after A_given->Induced_action->restricted_action" << endl;
@@ -2400,15 +2404,18 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 	orbits_on_something *Orb;
 	std::string prefix;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("on_set");
+	label_of_set.assign("_on_set");
+	label_of_set_tex.assign("\\_on\\_set");
 
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
 	Ar = A_given->Induced_action->restricted_action(
-			Set, set_sz, label_of_set,
+			Set, set_sz,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
@@ -2511,9 +2518,11 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 	orbits_on_something *Orb;
 	std::string prefix;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_set");
+	label_of_set.assign("_on_set");
+	label_of_set_tex.assign("\\_on\\_set");
 
 
 	if (f_v) {
@@ -2521,7 +2530,8 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 				"before A_given->Induced_action->restricted_action" << endl;
 	}
 	Ar = A_given->Induced_action->restricted_action(
-			Set, set_sz, label_of_set,
+			Set, set_sz,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "

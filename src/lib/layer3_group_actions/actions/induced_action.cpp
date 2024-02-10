@@ -1694,6 +1694,7 @@ void induced_action::original_point_labels(
 action *induced_action::restricted_action(
 		long int *points, int nb_points,
 		std::string &label_of_set,
+		std::string &label_of_set_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1710,7 +1711,7 @@ action *induced_action::restricted_action(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_res_" + label_of_set;
-	A->label_tex = A_old->label_tex + " {\\rm res}" + label_of_set;
+	A->label_tex = A_old->label_tex + " {\\rm res}" + label_of_set_tex;
 
 
 	A->f_has_subaction = true;
@@ -1755,6 +1756,7 @@ action *induced_action::create_induced_action_by_restriction(
 		groups::sims *old_G, int size,
 		long int *set,
 		std::string &label_of_set,
+		std::string &label_of_set_tex,
 		int f_induce,
 		int verbose_level)
 {
@@ -1765,7 +1767,8 @@ action *induced_action::create_induced_action_by_restriction(
 		cout << "induced_action::create_induced_action_by_restriction" << endl;
 	}
 	A = induced_action_by_restriction(A_old,
-			f_induce, old_G, size, set, label_of_set, verbose_level - 1);
+			f_induce, old_G, size, set, label_of_set, label_of_set_tex,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "induced_action::create_induced_action_by_restriction done" << endl;
 	}
@@ -1777,6 +1780,7 @@ action *induced_action::induced_action_by_restriction(
 	int f_induce_action, groups::sims *old_G,
 	int nb_points, long int *points,
 	std::string &label_of_set,
+	std::string &label_of_set_tex,
 	int verbose_level)
 // uses action_by_restriction data type
 {
@@ -1799,7 +1803,7 @@ action *induced_action::induced_action_by_restriction(
 
 
 	A->label = old_action->label + "_res_" + label_of_set;
-	A->label_tex = old_action->label_tex + " {\\rm res}" + label_of_set;
+	A->label_tex = old_action->label_tex + " {\\rm res}" + label_of_set_tex;
 
 
 	A->f_has_subaction = true;

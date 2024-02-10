@@ -124,19 +124,22 @@ void design_create::init(
 
 		}
 		else {
-			cout << "design_create::init family name is not recognized" << endl;
+			cout << "design_create::init "
+					"family name is not recognized" << endl;
 			exit(1);
 		}
 
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 
@@ -252,7 +255,8 @@ void design_create::init(
 
 
 
-		Get_lint_vector_from_label(Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
+		Get_lint_vector_from_label(
+				Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
 
 		f_has_set = true;
 		v = degree;
@@ -283,13 +287,15 @@ void design_create::init(
 		Sg = NULL;
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 	}
@@ -302,7 +308,9 @@ void design_create::init(
 
 		degree = Descr->list_of_sets_coded_v;
 
-		Get_lint_vector_from_label(Descr->list_of_sets_coded_label, set, sz, 0 /* verbose_level */);
+		Get_lint_vector_from_label(
+				Descr->list_of_sets_coded_label, set, sz,
+				0 /* verbose_level */);
 		//Lint_vec_scan(Descr->list_of_blocks_text, set, sz);
 
 		f_has_set = true;
@@ -335,13 +343,15 @@ void design_create::init(
 
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 
@@ -350,7 +360,8 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"list of blocks from file " << Descr->list_of_blocks_coded_from_file_fname << endl;
+					"list of blocks from file "
+					<< Descr->list_of_blocks_coded_from_file_fname << endl;
 		}
 
 		degree = Descr->list_of_blocks_coded_v;
@@ -365,7 +376,8 @@ void design_create::init(
 
 
 		if (n != 1) {
-			cout << "design_create::init f_list_of_blocks_from_file n != 1" << endl;
+			cout << "design_create::init "
+					"f_list_of_blocks_from_file n != 1" << endl;
 			exit(1);
 		}
 		sz = m;
@@ -401,13 +413,15 @@ void design_create::init(
 
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 
@@ -418,7 +432,8 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"f_list_of_blocks_from_file " << Descr->list_of_blocks_from_file_fname << endl;
+					"f_list_of_blocks_from_file "
+					<< Descr->list_of_blocks_from_file_fname << endl;
 		}
 
 		degree = Descr->list_of_blocks_from_file_v;
@@ -471,13 +486,15 @@ void design_create::init(
 		f_has_group = false;
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix_from_blocks" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix_from_blocks" << endl;
 		}
 
 		compute_incidence_matrix_from_blocks(blocks, b, k, verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix_from_blocks" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix_from_blocks" << endl;
 		}
 
 
@@ -546,13 +563,15 @@ void design_create::init(
 
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 
@@ -596,7 +615,8 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"f_linear_space_from_latin_square nb_blocks=" << nb_blocks << endl;
+					"f_linear_space_from_latin_square "
+					"nb_blocks=" << nb_blocks << endl;
 		}
 
 		sz = nb_blocks;
@@ -635,13 +655,15 @@ void design_create::init(
 
 
 		if (f_v) {
-			cout << "design_create::init before compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"before compute_incidence_matrix" << endl;
 		}
 
 		compute_incidence_matrix(verbose_level);
 
 		if (f_v) {
-			cout << "design_create::init after compute_incidence_matrix" << endl;
+			cout << "design_create::init "
+					"after compute_incidence_matrix" << endl;
 		}
 
 		// extend the incidence matrix by three blocks in the beginning to separate the parts:
@@ -765,7 +787,8 @@ void design_create::create_design_PG_2_q(
 	}
 
 	if (f_v) {
-		cout << "design_create::create_design_PG_2_q creating actions" << endl;
+		cout << "design_create::create_design_PG_2_q "
+				"creating actions" << endl;
 	}
 	A = NEW_OBJECT(actions::action);
 
@@ -784,7 +807,8 @@ void design_create::create_design_PG_2_q(
 	//Aonk = A2->G.on_k_subsets;
 
 	if (f_v) {
-		cout << "design_create::create_design_PG_2_q creating actions done" << endl;
+		cout << "design_create::create_design_PG_2_q "
+				"creating actions done" << endl;
 	}
 
 	if (f_v) {
@@ -944,7 +968,8 @@ void design_create::compute_incidence_matrix(
 #endif
 
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix Blocks:" << endl;
+				cout << "design_create::compute_incidence_matrix "
+						"Blocks:" << endl;
 				cout << "v = " << v << endl;
 				cout << "b = " << b << endl;
 				cout << "k = " << Descr->list_of_blocks_coded_k << endl;
@@ -1036,7 +1061,8 @@ void design_create::compute_incidence_matrix_from_blocks(
 	f_has_incma = true;
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks The incidence matrix is:" << endl;
+		cout << "design_create::compute_incidence_matrix_from_blocks "
+				"The incidence matrix is:" << endl;
 		Int_matrix_print(incma, v, b);
 	}
 

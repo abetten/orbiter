@@ -1309,7 +1309,8 @@ void interface_toolkit::worker(
 		Fio.Csv_file_support->do_csv_file_select_cols(
 				csv_file_select_cols_fname,
 				csv_file_select_cols_fname_append,
-				csv_file_select_cols_text, verbose_level);
+				csv_file_select_cols_text,
+				verbose_level);
 	}
 	else if (f_csv_file_select_rows_and_cols) {
 

@@ -134,9 +134,12 @@ void group_action_on_combinatorial_object::init(
 	}
 
 	std::string label1, label2;
+	std::string label1_tex, label2_tex;
 
-	label1 = label_txt + "points";
-	label2 = label_txt + "lines";
+	label1 = label_txt + "_points";
+	label2 = label_txt + "_lines";
+	label1_tex = label_tex + "\\_points";
+	label2_tex = label_tex + "\\_lines";
 
 
 	if (f_v) {
@@ -145,7 +148,7 @@ void group_action_on_combinatorial_object::init(
 	}
 	A_on_points = A_perm->Induced_action->restricted_action(
 			points, Enc->nb_rows,
-			label1,
+			label1, label1_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
@@ -158,7 +161,7 @@ void group_action_on_combinatorial_object::init(
 	}
 	A_on_lines = A_perm->Induced_action->restricted_action(
 			lines, Enc->nb_cols,
-			label2,
+			label2, label2_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "

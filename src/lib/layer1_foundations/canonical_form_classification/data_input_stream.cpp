@@ -127,7 +127,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
-
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
 
 			data_structures::set_of_sets *SoS;
 
@@ -162,7 +165,12 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 						<< " column " << Descr->Input[input_idx].input_string2 << ":" << endl;
 			}
 
-			orbiter_kernel_system::file_io Fio;
+
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+
 			int nb_sets;
 
 			nb_sets = Fio.Csv_file_support->read_column_and_count_nb_sets(
@@ -179,6 +187,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input sets of lines from file "
 					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
 			if (f_v) {
@@ -192,6 +204,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			if (f_v) {
 				cout << "input sets of packings from file "
 					<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
 			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
@@ -211,6 +227,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 					<< Descr->Input[input_idx].input_string2 << " :" << endl;
 			}
 
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
 			data_structures::set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(data_structures::set_of_sets);
@@ -244,6 +264,14 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 		else if (Descr->Input[input_idx].input_type ==
 				t_data_input_stream_file_of_designs_through_block_orbits) {
 
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+			if (Fio.file_size(Descr->Input[input_idx].input_string2) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string2 << " does not exist" << endl;
+				exit(1);
+			}
 			string fname_solutions; // the solution file
 			string fname_block_orbits; // the orbits as sets of sets
 			int v;
@@ -301,6 +329,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input set of points from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
 			nb_obj = 1;
 			if (f_v) {
 				cout << "The file " << Descr->Input[input_idx].input_string
@@ -315,6 +347,10 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			if (f_v) {
 				cout << "input designs from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
 			}
 			{
 				data_structures::set_of_sets *SoS;
@@ -353,7 +389,12 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input incidence geometries from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
-			orbiter_kernel_system::file_io Fio;
+
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+
 			int m, n, nb_flags;
 
 			std::vector<std::vector<int> > Geos;
@@ -385,7 +426,12 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "input incidence geometries by row ranks from file "
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
-			orbiter_kernel_system::file_io Fio;
+
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+
 			int m, n, r;
 
 			std::vector<std::vector<int> > Geos;
@@ -457,6 +503,11 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				string fname;
 
 				fname = ST.printf_d(mask, i);
+
+				if (Fio.file_size(fname) <= 0) {
+					cout << "The file " << fname << " does not exist" << endl;
+					exit(1);
+				}
 
 				data_structures::set_of_sets *SoS;
 				int underlying_set_size = 0;

@@ -465,7 +465,6 @@ ORBITER_MODULES= \
 		layer4_classification/poset_classification/poset_classification_report_options.o \
 		layer4_classification/poset_classification/poset_classification_report.o \
 		layer4_classification/poset_classification/poset_classification_trace.o \
-		layer4_classification/poset_classification/poset_description.o \
 		layer4_classification/poset_classification/poset_of_orbits.o \
 		layer4_classification/poset_classification/poset_orbit_node.o \
 		layer4_classification/poset_classification/poset_orbit_node_downstep.o \

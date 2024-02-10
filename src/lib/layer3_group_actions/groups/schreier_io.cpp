@@ -1460,7 +1460,7 @@ void schreier::export_tree_as_layered_graph(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int fst, len;
 	int *depth;
 	int *horizontal_position;
@@ -1469,13 +1469,33 @@ void schreier::export_tree_as_layered_graph(
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph" << endl;
 		cout << "schreier::export_tree_as_layered_graph "
+				"degree = " << degree << endl;
+		cout << "schreier::export_tree_as_layered_graph "
+				"orbit_no = " << orbit_no << endl;
+		cout << "schreier::export_tree_as_layered_graph "
 				"nb_gen = " << gens.len << endl;
 	}
 
+
+	if (f_v) {
+		cout << "    i : orbit : o_inv :  prev : label" << endl;
+		for (i = 0; i < degree; i++) {
+			cout << setw(5) << i << " : " << setw(5) << orbit[i] << " : " << setw(5) << orbit_inv[i] << " : " << setw(5) << prev[i] << " : " << setw(5) << label[i] << endl;
+		}
+
+	}
 	fst = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
 	depth = NEW_int(len);
 	horizontal_position = NEW_int(len);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph fst = " << fst << endl;
+		cout << "schreier::export_tree_as_layered_graph len = " << len << endl;
+	}
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph computing max_depth" << endl;
+	}
 	max_depth = 0;
 	for (j = 0; j < len; j++) {
 		trace_back(NULL, orbit[fst + j], l);
@@ -1483,6 +1503,10 @@ void schreier::export_tree_as_layered_graph(
 		depth[j] = l;
 		max_depth = MAX(max_depth, l);
 	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph max_depth = " << max_depth << endl;
+	}
+
 	int nb_layers;
 	nb_layers = max_depth + 1;
 	int *Nb;
@@ -1496,9 +1520,15 @@ void schreier::export_tree_as_layered_graph(
 	Nb1 = NEW_int(nb_layers);
 	Int_vec_zero(Nb, nb_layers);
 	Int_vec_zero(Nb1, nb_layers);
+
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"computing number of nodes per level" << endl;
+	}
+
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
-		l--;
+		l = depth[j];
 		horizontal_position[j] = Nb[l];
 		Nb[l]++;
 	}
@@ -1509,39 +1539,77 @@ void schreier::export_tree_as_layered_graph(
 			cout << i << " : " << Nb[i] << endl;
 		}
 	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"collecting nodes by level" << endl;
+	}
 	Node = NEW_pint(nb_layers);
 	for (i = 0; i <= max_depth; i++) {
 		Node[i] = NEW_int(Nb[i]);
 	}
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
-		l--;
+		l = depth[j];
 		Node[l][Nb1[l]] = j;
 		Nb1[l]++;
 	}
+	for (i = 0; i <= max_depth; i++) {
+		if (Nb[i] != Nb1[i]) {
+			cout << "Nb[i] != Nb1[i]" << endl;
+			exit(1);
+		}
+	}
 
+	if (f_v) {
+		cout << "i : depth" << endl;
+		for (i = 0; i < len; i++) {
+			cout << i << " : " << depth[i] << endl;
+		}
+		cout << "depth : number of nodes" << endl;
+		for (i = 0; i <= max_depth; i++) {
+			cout << i << " : " << Nb[i] << endl;
+		}
+		cout << "j : depth : horizontal_position" << endl;
+		for (j = 0; j < len; j++) {
+			cout << j << " : " << depth[j] << " : " << horizontal_position[j] << endl;
+		}
+		cout << "depth : j : node" << endl;
+		for (i = 0; i <= max_depth; i++) {
+			for (j = 0; j < Nb[i]; j++) {
+				cout << i << " : " << j << " : " << Node[i][j] << endl;
+			}
+		}
+	}
+	//data_structures::sorting Sorting;
 	graph_theory::layered_graph *LG;
-	int n1, n2, j2;
+	int n1, j2, N2;
 
 	LG = NEW_OBJECT(graph_theory::layered_graph);
+
+	string dummy;
+	dummy.assign("");
+
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"before LG->init" << endl;
 	}
 	//LG->add_data1(data1, 0/*verbose_level*/);
-
-	string dummy;
-	dummy.assign("");
-
 	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->init" << endl;
 	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before LG->place" << endl;
+	}
 	LG->place(verbose_level);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->place" << endl;
+	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before adding edges" << endl;
 	}
 	for (i = 0; i <= max_depth; i++) {
 		if (f_vv) {
@@ -1552,30 +1620,49 @@ void schreier::export_tree_as_layered_graph(
 		}
 		for (j = 0; j < Nb[i]; j++) {
 			n1 = Node[i][j];
-			if (f_vvv) {
+			if (f_vv) {
 				cout << "schreier::export_tree_as_layered_graph "
 						"adding edges "
 						"i=" << i << " / " << max_depth
-						<< " j=" << j << " n1=" << n1 << endl;
+						<< " j=" << j
+						<< " n1=" << n1
+						<< " prev=" << prev[fst + n1]
+						<< endl;
 			}
 			if (prev[fst + n1] != -1) {
-				n2 = orbit_inv[prev[fst + n1]] - fst;
-				j2 = horizontal_position[n2];
-				if (f_vvv) {
+				N2 = orbit_inv[prev[fst + n1]] - fst;
+#if 0
+				if (!Sorting.int_vec_search_linear(
+						Node[i - 1], Nb[i - 1], N2, n2)) {
+					cout << "cannot find ancestor node in level i - 1" << endl;
+					exit(1);
+				}
+#endif
+				j2 = horizontal_position[N2];
+				if (f_vv) {
 					cout << "schreier::export_tree_as_layered_graph "
 							"adding edges "
 							"i=" << i << " / " << max_depth
 							<< " j=" << j << " n1=" << n1
-							<< " n2=" << n2 << " j2=" << j2 << endl;
+							<< " N2=" << N2 << " j2=" << j2 << endl;
 				}
-				if (f_vvv) {
+				if (f_vv) {
 					cout << "adding edge ("<< i - 1 << "," << j2 << ") "
 							"-> (" << i << "," << j << ")" << endl;
 				}
 				LG->add_edge(i - 1, j2, i, j,
 						0 /*verbose_level*/);
+				//int l1, int n1, int l2, int n2,
 			}
 		}
+	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after adding edges" << endl;
+	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before adding node text" << endl;
 	}
 	for (j = 0; j < len; j++) {
 		int a;
@@ -1591,6 +1678,10 @@ void schreier::export_tree_as_layered_graph(
 		LG->add_text(l, horizontal_position[j], text2, 0/*verbose_level*/);
 		LG->add_node_data1(l, horizontal_position[j], a, 0/*verbose_level*/);
 	}
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after adding node text" << endl;
+	}
 
 	data_structures::string_tools ST;
 
@@ -1601,13 +1692,39 @@ void schreier::export_tree_as_layered_graph(
 	fname = ST.printf_d(fname_mask, orbit_no);
 
 
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before LG->write_file" << endl;
+	}
 	LG->write_file(fname, 0 /*verbose_level*/);
-	FREE_OBJECT(LG);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after LG->write_file" << endl;
+	}
 
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before FREE_OBJECT(LG)" << endl;
+	}
+	FREE_OBJECT(LG);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after FREE_OBJECT(LG)" << endl;
+	}
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before FREE_int" << endl;
+	}
 	FREE_int(Nb);
 	FREE_int(Nb1);
 	FREE_int(depth);
 	FREE_int(horizontal_position);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after FREE_int" << endl;
+	}
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph done" << endl;
@@ -2189,6 +2306,7 @@ void schreier::read_from_file_binary(
 	if (deg != A->degree) {
 		cout << "schreier::read_from_file_binary "
 				"deg != A->degree" << endl;
+		exit(1);
 	}
 	orbit_first = NEW_int(nb_orbits);
 	orbit_len = NEW_int(nb_orbits);

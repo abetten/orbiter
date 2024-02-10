@@ -624,13 +624,16 @@ void surface_study::study_orbits_on_lines(
 		}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("lines");
+	label_of_set.assign("_lines");
+	label_of_set_tex.assign("\\_lines");
 
 	cout << "creating restricted action on the set of lines" << endl;
 	A_on_lines = A2->Induced_action->restricted_action(
-			SaS->data, 27, label_of_set,
+			SaS->data, 27,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	cout << "creating restricted action on the set of lines done" << endl;
 
@@ -870,12 +873,15 @@ void surface_study::study_surface_with_6_eckardt_points(
 	string fname_stab;
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set = "triangle";
+	label_of_set = "_triangle";
+	label_of_set_tex = "\\_triangle";
 
 	A_triangle = A->Induced_action->restricted_action(
-			triangle, nb_pts_triangle, label_of_set,
+			triangle, nb_pts_triangle,
+			label_of_set, label_of_set_tex,
 			0 /* verbose_level */);
 	Triangle = NEW_OBJECT(data_structures_groups::set_and_stabilizer);
 	Triangle->init(A, A, 0 /* verbose_level */);
@@ -983,11 +989,13 @@ void surface_study::study_surface_with_6_eckardt_points(
 	//std::string label_of_set;
 
 
-	label_of_set.assign("Double_pts");
+	label_of_set.assign("_Double_pts");
+	label_of_set_tex.assign("\\_Double\\_pts");
 
 	cout << "Creating restricted action on Double_pts:" << endl;
 	A_on_double_pts = A->Induced_action->restricted_action(
-			Double_pts, nb_double_pts, label_of_set,
+			Double_pts, nb_double_pts,
+			label_of_set, label_of_set_tex,
 			0 /* verbose_level */);
 
 	groups::schreier *Orb2;

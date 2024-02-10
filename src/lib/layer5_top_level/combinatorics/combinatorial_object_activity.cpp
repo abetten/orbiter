@@ -406,7 +406,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		Combo->Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
-		if (!Combo->Data_input_stream_description) {
+		if (!Combo->IS->Descr->f_label) {
 			cout << "please use -label <label_txt> <label_tex> "
 					"when defining the input stream for the combinatorial object" << endl;
 			exit(1);
@@ -416,7 +416,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"before Combo->Classification_CO->init_after_nauty" << endl;
 		}
 		Combo->Classification_CO->init_after_nauty(
-				Combo->Data_input_stream_description->label_txt,
+				//Combo->IS->Descr->label_txt,
 				Combo->Classification,
 				true /* f_projective_space */, PA,
 				verbose_level);
@@ -552,7 +552,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"before C->init_after_nauty" << endl;
 		}
 		Combo->Classification_CO->init_after_nauty(
-				Combo->Classification->Descr->label,
+				//Combo->Classification->Descr->label,
 				Combo->Classification,
 				false /* f_projective_space */, NULL,
 				verbose_level);
@@ -863,7 +863,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
-					"f_line_type" << endl;
+					"f_line_type is currently disabled" << endl;
 		}
 
 		exit(1);

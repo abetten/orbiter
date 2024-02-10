@@ -1478,11 +1478,13 @@ public:
 	action *restricted_action(
 			long int *points, int nb_points,
 			std::string &label_of_set,
+			std::string &label_of_set_tex,
 		int verbose_level);
 	action *create_induced_action_by_restriction(
 			groups::sims *old_G, int size,
 			long int *set,
 			std::string &label_of_set,
+			std::string &label_of_set_tex,
 			int f_induce,
 			int verbose_level);
 	action *induced_action_by_restriction(
@@ -1490,6 +1492,7 @@ public:
 		int f_induce_action, groups::sims *old_G,
 		int nb_points, long int *points,
 		std::string &label_of_set,
+		std::string &label_of_set_tex,
 		int verbose_level);
 	action *induced_action_on_pairs(
 		int verbose_level);

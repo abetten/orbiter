@@ -150,7 +150,7 @@ public:
 			int starter_case,
 		int f_solve, int f_save, int f_read_instead, 
 		int &nb_col, 
-		long int *&Solutions, int &sol_length, int &nb_sol,
+		int *&Solutions, int &sol_length, int &nb_sol,
 		int &nb_backtrack, int &dt, 
 		int f_draw_system, std::string &fname_system,
 		int f_write_tree, std::string &fname_tree,

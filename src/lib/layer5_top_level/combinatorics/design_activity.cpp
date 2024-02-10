@@ -479,7 +479,8 @@ void design_activity::do_export_inc(
 	fname = DC->label_txt + "_inc.txt";
 
 	if (f_v) {
-		cout << "design_activity::do_export_inc fname=" << fname << endl;
+		cout << "design_activity::do_export_inc "
+				"fname=" << fname << endl;
 	}
 
 
@@ -551,7 +552,8 @@ void design_activity::do_intersection_matrix(
 	fname = DC->label_txt + "_AAt.csv";
 
 	if (f_v) {
-		cout << "design_activity::do_intersection_matrix fname=" << fname << endl;
+		cout << "design_activity::do_intersection_matrix "
+				"fname=" << fname << endl;
 	}
 
 	{
@@ -670,10 +672,6 @@ void design_activity::do_row_sums(
 		cout << "design_activity::do_row_sums" << endl;
 	}
 
-	string fname;
-
-	fname = DC->label_txt + "_inc.txt";
-
 	combinatorics::combinatorics_domain Combi;
 
 
@@ -719,10 +717,6 @@ void design_activity::do_tactical_decomposition(
 	if (f_v) {
 		cout << "design_activity::do_tactical_decomposition" << endl;
 	}
-
-	string fname;
-
-	fname = DC->label_txt + "_inc.txt";
 
 	combinatorics::combinatorics_domain Combi;
 

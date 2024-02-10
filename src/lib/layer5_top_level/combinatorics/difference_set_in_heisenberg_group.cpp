@@ -434,13 +434,16 @@ void difference_set_in_heisenberg_group::do_n2q3(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set = "short_orbits";
+	label_of_set = "_short_orbits";
+	label_of_set_tex = "\\_short\\_orbits";
 
 	cout << "creating restricted action on short orbits:" << endl;
 	A_on_short_orbits = N_on_orbits->Induced_action->restricted_action(
-			Short_pairs, nb_short_orbits, label_of_set,
+			Short_pairs, nb_short_orbits,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 
 

@@ -361,13 +361,16 @@ void arc_lifting_simeon::do_covering_problem(
 #if 1
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("filtered_lines");
+	label_of_set.assign("_filtered_lines");
+	label_of_set_tex.assign("\\_filtered\\_lines");
 
 	A2 = A->Induced_action->induced_action_on_grassmannian(2, verbose_level);
 	A3 = A2->Induced_action->restricted_action(
-			filtered_lines, nb_filtered_lines, label_of_set,
+			filtered_lines, nb_filtered_lines,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 
 

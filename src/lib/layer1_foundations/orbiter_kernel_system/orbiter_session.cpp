@@ -95,6 +95,9 @@ orbiter_session::orbiter_session()
 	longinteger_f_print_scientific = false;
 	syntax_tree_node_index = 0;
 
+	f_has_get_projective_space_low_level_function = false;
+	get_projective_space_low_level_function = NULL;
+
 	cout << "orbiter_session::orbiter_session done" << endl;
 
 }
@@ -819,6 +822,31 @@ coding_theory::crc_object *orbiter_session::get_object_of_type_crc_code(
 
 
 }
+
+
+geometry::projective_space *orbiter_session::get_projective_space_low_level(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_projective_space_low_level cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_projective_space) {
+		cout << "orbiter_session::get_projective_space_low_level object type != t_projective_space" << endl;
+		exit(1);
+	}
+
+	if (!f_has_get_projective_space_low_level_function) {
+		cout << "orbiter_session::get_projective_space_low_level !f_has_get_projective_space_low_level_function" << endl;
+		exit(1);
+	}
+	return (* get_projective_space_low_level_function)(get_object(idx));
+
+}
+
 
 
 

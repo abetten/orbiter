@@ -64,10 +64,10 @@ void pentomino_puzzle::main(
 	D->solve_all_DLX_with_RHS(f_write_tree, fname_tree, verbose_level);
 	cout << "After solve, we found " << D->_resultanz << " solutions" << endl;
 
-	long int *Sol;
+	int *Sol;
 	int nb_sol, sol_length = 5;
 
-	D->get_solutions(Sol, nb_sol, verbose_level);
+	D->get_solutions_index_set(Sol, nb_sol, verbose_level);
 
 
 	data_structures::set_of_sets *L;
@@ -78,8 +78,8 @@ void pentomino_puzzle::main(
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		Lint_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
-		}
+		Int_vec_copy_to_lint(Sol + l * sol_length, L->Sets[l], sol_length);
+	}
 
 	L->sort_all(0);
 

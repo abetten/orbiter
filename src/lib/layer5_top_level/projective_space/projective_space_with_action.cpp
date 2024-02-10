@@ -1149,8 +1149,12 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.f_report = true;
 	COAD.Classification_of_objects_report_options =
 			NEW_OBJECT(canonical_form_classification::classification_of_objects_report_options);
+
+#if 0
 	COAD.Classification_of_objects_report_options->f_prefix = true;
 	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
+#endif
+
 	COAD.Classification_of_objects_report_options->f_export_flag_orbits = true;
 	COAD.Classification_of_objects_report_options->f_show_incidence_matrices = true;
 	COAD.Classification_of_objects_report_options->f_show_TDO = true;

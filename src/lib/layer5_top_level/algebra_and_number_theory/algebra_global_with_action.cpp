@@ -50,9 +50,11 @@ void algebra_global_with_action::orbits_under_conjugation(
 
 	actions::action *A_conj_restricted;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_group");
+	label_of_set.assign("_on_group");
+	label_of_set_tex.assign("\\_on\\_group");
 
 	if (f_v) {
 		cout << "algebra_global_with_action::orbits_under_conjugation "
@@ -60,7 +62,8 @@ void algebra_global_with_action::orbits_under_conjugation(
 	}
 
 	A_conj_restricted = A_conj->Induced_action->restricted_action(
-			the_set, set_size, label_of_set,
+			the_set, set_size,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 
 	if (f_v) {

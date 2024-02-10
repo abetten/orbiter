@@ -38,7 +38,7 @@ classification_of_combinatorial_objects::~classification_of_combinatorial_object
 
 
 void classification_of_combinatorial_objects::init_after_nauty(
-		std::string &prefix,
+		//std::string &prefix,
 		canonical_form_classification::classification_of_objects *CO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -50,10 +50,24 @@ void classification_of_combinatorial_objects::init_after_nauty(
 		cout << "classification_of_combinatorial_objects::init_after_nauty" << endl;
 	}
 
-	classification_of_combinatorial_objects::prefix = prefix;
+	//classification_of_combinatorial_objects::prefix = prefix;
 	classification_of_combinatorial_objects::CO = CO;
 	classification_of_combinatorial_objects::f_projective_space = f_projective_space;
 	classification_of_combinatorial_objects::PA = PA;
+
+	if (!CO->IS) {
+		cout << "classification_of_combinatorial_objects::init_after_nauty "
+				"no input stream" << endl;
+		exit(1);
+	}
+
+
+	if (!CO->IS->Descr->f_label) {
+		cout << "classification_of_combinatorial_objects::init_after_nauty "
+				"input stream does not have a label" << endl;
+		exit(1);
+	}
+
 
 	OwP = NEW_OBJECTS(object_with_properties, CO->nb_orbits);
 
@@ -71,7 +85,7 @@ void classification_of_combinatorial_objects::init_after_nauty(
 
 		std::string label;
 
-		label = prefix + "_object" + std::to_string(iso_type);
+		label = CO->IS->Descr->label_txt + "_object" + std::to_string(iso_type);
 
 		if (f_v) {
 			cout << "classification_of_combinatorial_objects::init_after_nauty "
@@ -129,9 +143,11 @@ void classification_of_combinatorial_objects::classification_write_file(
 		int nb_input_objects;
 		//int object_idx;
 
-		CO->CB->C_type_of->get_class_by_value(Input_objects,
+		CO->CB->C_type_of->get_class_by_value(
+				Input_objects,
 				nb_input_objects, iso, 0 /*verbose_level */);
-		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
+		Sorting.int_vec_heapsort(
+				Input_objects, nb_input_objects);
 
 		cout << "This isomorphism type appears " << nb_input_objects
 				<< " times, namely for the following "
@@ -213,7 +229,8 @@ void classification_of_combinatorial_objects::classification_write_file(
 
 	fname = fname_base + "_classification_data.csv";
 
-	Fio.Csv_file_support->write_table_of_strings(fname,
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
 			CO->CB->nb_types, nb_c, Table,
 			headings,
 			verbose_level);
@@ -240,9 +257,6 @@ void classification_of_combinatorial_objects::classification_report(
 				"CO == NULL" << endl;
 		exit(1);
 	}
-	else {
-		cout << "CO != NULL" << endl;
-	}
 
 	if (CO->Descr == NULL) {
 		cout << "classification_of_combinatorial_objects::classification_report "
@@ -251,6 +265,7 @@ void classification_of_combinatorial_objects::classification_report(
 	}
 
 
+#if 0
 	if (CO->Descr->f_classification_prefix == false) {
 		cout << "please use option -classification_prefix <prefix> to set the "
 				"prefix for the output file" << endl;
@@ -261,6 +276,7 @@ void classification_of_combinatorial_objects::classification_report(
 				"prefix = " << CO->Descr->classification_prefix << endl;
 
 	}
+#endif
 
 
 	if (f_v) {
@@ -294,10 +310,18 @@ void classification_of_combinatorial_objects::latex_report(
 	}
 
 
-
 	string fname;
 
-	fname = Report_options->prefix + "_classification.tex";
+	fname = CO->get_label() + "_classification.tex";
+
+#if 0
+	if (Report_options->f_prefix) {
+		fname = Report_options->prefix + "_classification.tex";
+	}
+	else if (CO->Descr->f_classification_prefix) {
+		fname = CO->Descr->classification_prefix + "_classification.tex";
+	}
+#endif
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::classification_report "

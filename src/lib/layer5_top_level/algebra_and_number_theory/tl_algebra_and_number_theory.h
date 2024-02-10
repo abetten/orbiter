@@ -725,6 +725,7 @@ public:
 
 	int f_restricted_action;
 	std::string restricted_action_set_text;
+	std::string restricted_action_set_text_tex;
 
 	int f_on_k_subspaces;
 	int on_k_subspaces_k;

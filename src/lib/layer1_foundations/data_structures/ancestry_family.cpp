@@ -133,10 +133,11 @@ void ancestry_family::get_connnections(
 	if (f_v) {
 		cout << "ancestry_family::get_connnections" << endl;
 	}
-	int i, index;
+	int i;
 
 	if (f_v) {
-		cout << "ancestry_family::get_connnections family idx = " << idx << " number of children = " << child_index.size() << endl;
+		cout << "ancestry_family::get_connnections family idx = " << idx
+				<< " number of children = " << child_index.size() << endl;
 	}
 	husband_family_index = Tree->find_in_family_as_child(husband_index);
 
@@ -154,9 +155,6 @@ void ancestry_family::get_connnections(
 		vector<int> parenting;
 		parenting = Tree->find_in_family_as_parent(child_index[i]);
 		child_family_index.push_back(parenting);
-		if (f_v) {
-			cout << "ancestry_family::get_connnections idx = " << idx << " child_family_index = " << index << endl;
-		}
 	}
 }
 

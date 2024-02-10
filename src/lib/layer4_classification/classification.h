@@ -82,7 +82,6 @@ namespace poset_classification {
 	class poset_classification_control;
 	class poset_classification_report_options;
 	class poset_of_orbits;
-	class poset_description;
 	class poset_orbit_node;
 	class poset_with_group_action;
 	class upstep_work;

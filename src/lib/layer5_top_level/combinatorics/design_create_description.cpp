@@ -24,6 +24,7 @@ design_create_description::design_create_description()
 
 	f_catalogue = false;
 	iso = 0;
+
 	f_family = false;
 	//family_name;
 

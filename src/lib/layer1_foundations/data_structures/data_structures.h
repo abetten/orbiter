@@ -83,7 +83,7 @@ public:
 			int *Inc,
 		int nb_rows, int nb_cols, int nb_needed,
 		int f_has_Rhs, int *Rhs,
-		long int *&Solutions, int &nb_sol,
+		int *&Solutions, int &nb_sol,
 		long int &nb_backtrack, int &dt,
 		int f_DLX,
 		int verbose_level);

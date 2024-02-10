@@ -1018,7 +1018,7 @@ void ring_theory_global::mult_polynomials(
 		string extra_praeamble;
 
 
-		fname = "polynomial_mult_" + std::to_string(rk0) + "_" + std::to_string(rk1);
+		fname = "polynomial_mult_" + std::to_string(rk0) + "_" + std::to_string(rk1) + ".tex";
 		title = "Polynomial Mult";
 
 
@@ -1214,7 +1214,7 @@ void ring_theory_global::polynomial_division_with_report(
 		string extra_praeamble;
 
 
-		fname = "polynomial_division_" + std::to_string(rk0) + "_" + std::to_string(rk1);
+		fname = "polynomial_division_" + std::to_string(rk0) + "_" + std::to_string(rk1) + ".tex";
 		title = "Polynomial Division";
 
 

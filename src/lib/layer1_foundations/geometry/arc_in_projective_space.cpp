@@ -216,8 +216,8 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	}
 
 	if (f_v) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_"
-				"nucleus_arc_2: after adding the rest of the conic, "
+		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2: "
+				"after adding the rest of the conic, "
 				"there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
@@ -417,6 +417,9 @@ void arc_in_projective_space::create_pasch_arc(
 	int L[4];
 	data_structures::sorting Sorting;
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_pasch_arc" << endl;
+	}
 	if (P->Subspaces->n != 2) {
 		cout << "arc_in_projective_space::create_pasch_arc "
 				"P->n != 2" << endl;
@@ -434,7 +437,7 @@ void arc_in_projective_space::create_pasch_arc(
 	}
 
 	if (f_v) {
-		cout << "arc_in_projective_space::create_pasch_arc() points: ";
+		cout << "arc_in_projective_space::create_pasch_arc points: ";
 		Int_vec_print(cout, points, 5);
 		cout << endl;
 	}
@@ -492,6 +495,9 @@ void arc_in_projective_space::create_pasch_arc(
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_pasch_arc done" << endl;
+	}
 }
 
 void arc_in_projective_space::create_Cheon_arc(
@@ -506,6 +512,9 @@ void arc_in_projective_space::create_Cheon_arc(
 	int Pencil[21];
 	data_structures::sorting Sorting;
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Cheon_arc" << endl;
+	}
 	if (P->Subspaces->n != 2) {
 		cout << "arc_in_projective_space::create_Cheon_arc P->n != 2" << endl;
 		exit(1);
@@ -630,6 +639,9 @@ void arc_in_projective_space::create_Cheon_arc(
 		cout << endl;
 	}
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Cheon_arc done" << endl;
+	}
 
 }
 
@@ -641,6 +653,9 @@ void arc_in_projective_space::create_regular_hyperoval(
 	int i;
 	int v[3];
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_regular_hyperoval" << endl;
+	}
 	if (P->Subspaces->n != 2) {
 		cout << "arc_in_projective_space::create_regular_hyperoval "
 				"P->n != 2" << endl;
@@ -670,6 +685,9 @@ void arc_in_projective_space::create_regular_hyperoval(
 				"there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_regular_hyperoval done" << endl;
 	}
 }
 
@@ -728,6 +746,9 @@ void arc_in_projective_space::create_Segre_hyperoval(
 	int i;
 	int v[3];
 
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Segre_hyperoval" << endl;
+	}
 	if (P->Subspaces->n != 2) {
 		cout << "arc_in_projective_space::create_Segre_hyperoval "
 				"n != 2" << endl;
@@ -757,6 +778,9 @@ void arc_in_projective_space::create_Segre_hyperoval(
 				"there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Segre_hyperoval done" << endl;
 	}
 }
 
@@ -833,6 +857,9 @@ void arc_in_projective_space::create_Payne_hyperoval(
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Payne_hyperoval done" << endl;
+	}
 }
 
 void arc_in_projective_space::create_Cherowitzo_hyperoval(
@@ -899,6 +926,9 @@ void arc_in_projective_space::create_Cherowitzo_hyperoval(
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Cherowitzo_hyperoval done" << endl;
+	}
 }
 
 void arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32(
@@ -954,6 +984,10 @@ void arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32(
 				"there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32 done"
+				<< endl;
 	}
 }
 
@@ -1083,7 +1117,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 
 }
 
-void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
+void arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines(
 	long int *s_lines, int nb_s_lines,
 	int target_sz, int arc_d, int arc_d_low, int arc_s,
 	int f_dualize,
@@ -1098,18 +1132,20 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "arc_in_projective_space::arc_with_given_set_of_s_lines_diophant" << endl;
+		cout << "arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
 	}
 
 	other_lines = NEW_lint(P->Subspaces->N_points);
 
-	Combi.set_complement_lint(s_lines, nb_s_lines,
-			other_lines, nb_other_lines, P->Subspaces->N_lines);
+	Combi.set_complement_lint(
+			s_lines, nb_s_lines,
+			other_lines, nb_other_lines,
+			P->Subspaces->N_lines);
 
 
 	if (f_dualize) {
 		if (P->Subspaces->Standard_polarity == NULL) {
-			cout << "arc_in_projective_space::arc_with_given_set_of_s_lines_diophant "
+			cout << "arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines "
 					"Standard_polarity == NULL" << endl;
 			exit(1);
 		}
@@ -1184,7 +1220,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	//D->init_var_labels(N_points, verbose_level);
 
 	if (f_vv) {
-		cout << "arc_in_projective_space::arc_with_given_set_of_s_lines_diophant "
+		cout << "arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines "
 				"The system is:" << endl;
 		D->print_tight();
 	}
@@ -1204,7 +1240,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	FREE_lint(other_lines);
 
 	if (f_v) {
-		cout << "arc_in_projective_space::arc_with_given_set_of_s_lines_diophant done" << endl;
+		cout << "arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines done" << endl;
 	}
 
 }
@@ -1771,6 +1807,46 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	}
 }
 
+#if 0
+void arc_in_projective_space::write_solutions_as_index_set(
+		std::string &fname_solutions, long int *Sol, int nb_sol, int sum,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "arc_in_projective_space::write_solutions_as_index_set" << endl;
+	}
+
+	{
+		ofstream fp(fname_solutions);
+		int i, j;
+		long int a;
+
+		for (i = 0; i < nb_sol; i++) {
+			fp << sum;
+			for (j = 0; j < sum; j++) {
+				a = Sol[i * sum + j];
+				fp << " " << a;
+			}
+			fp << endl;
+		}
+		fp << -1 << " " << nb_sol << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+	}
+
+	if (f_v) {
+		cout << "arc_in_projective_space::write_solutions_as_index_set done" << endl;
+	}
+}
+#endif
+
+
 void arc_in_projective_space::arc_lifting1(
 		int arc_size,
 		int arc_d,
@@ -1793,13 +1869,21 @@ void arc_in_projective_space::arc_lifting1(
 
 	Lint_vec_scan(arc_input_set, the_set_in, set_size_in);
 
-	arc_with_given_set_of_s_lines_diophant(
+	if (f_v) {
+		cout << "arc_in_projective_space::arc_lifting1 "
+				"before create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
+	}
+	create_diophant_for_arc_lifting_with_given_set_of_s_lines(
 			the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
 			arc_size /*target_sz*/, arc_d /* target_d */,
 			arc_d_low, arc_s /* target_s */,
 			true /* f_dualize */,
 			D,
-			verbose_level);
+			verbose_level - 1);
+	if (f_v) {
+		cout << "arc_in_projective_space::arc_lifting1 "
+				"after create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
+	}
 
 	if (false) {
 		D->print_tight();
@@ -1820,7 +1904,7 @@ void arc_in_projective_space::arc_lifting1(
 	}
 
 	long int nb_backtrack_nodes;
-	long int *Sol;
+	int *Sol;
 	int nb_sol;
 
 	D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
@@ -1836,25 +1920,12 @@ void arc_in_projective_space::arc_lifting1(
 
 	fname_solutions = arc_label + ".solutions";
 
-	{
-		ofstream fp(fname_solutions);
-		int i, j, a;
-
-		for (i = 0; i < nb_sol; i++) {
-			fp << D->sum;
-			for (j = 0; j < D->sum; j++) {
-				a = Sol[i * D->sum + j];
-				fp << " " << a;
-				}
-			fp << endl;
-			}
-		fp << -1 << " " << nb_sol << endl;
-	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname_solutions << " of size "
-			<< Fio.file_size(fname_solutions) << endl;
-	FREE_lint(Sol);
+	Fio.write_solutions_as_index_set(
+			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
+
+	FREE_int(Sol);
 	FREE_lint(the_set_in);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting1 done" << endl;
@@ -1923,7 +1994,7 @@ void arc_in_projective_space::arc_lifting2(
 	}
 
 	long int nb_backtrack_nodes;
-	long int *Sol;
+	int *Sol;
 	int nb_sol;
 
 	D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
@@ -1939,26 +2010,12 @@ void arc_in_projective_space::arc_lifting2(
 
 	fname_solutions = arc_label + ".solutions";
 
-	{
-		ofstream fp(fname_solutions);
-		int i, j, a;
-
-		for (i = 0; i < nb_sol; i++) {
-			fp << D->sum;
-			for (j = 0; j < D->sum; j++) {
-				a = Sol[i * D->sum + j];
-				fp << " " << a;
-			}
-			fp << endl;
-		}
-		fp << -1 << " " << nb_sol << endl;
-	}
-
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname_solutions << " of size "
-			<< Fio.file_size(fname_solutions) << endl;
-	FREE_lint(Sol);
+	Fio.write_solutions_as_index_set(
+			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
+
+	FREE_int(Sol);
 	FREE_lint(the_set_in);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting2 done" << endl;
@@ -2042,7 +2099,7 @@ void arc_in_projective_space::arc_lifting3(
 	}
 
 	long int nb_backtrack_nodes;
-	long int *Sol;
+	int *Sol;
 	int nb_sol;
 
 	D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
@@ -2058,25 +2115,12 @@ void arc_in_projective_space::arc_lifting3(
 
 	fname_solutions = arc_label + ".solutions";
 
-	{
-		ofstream fp(fname_solutions);
-		int i, j, a;
-
-		for (i = 0; i < nb_sol; i++) {
-			fp << D->sum;
-			for (j = 0; j < D->sum; j++) {
-				a = Sol[i * D->sum + j];
-				fp << " " << a;
-			}
-			fp << endl;
-		}
-		fp << -1 << " " << nb_sol << endl;
-	}
 	orbiter_kernel_system::file_io Fio;
 
-	cout << "Written file " << fname_solutions << " of size "
-			<< Fio.file_size(fname_solutions) << endl;
-	FREE_lint(Sol);
+	Fio.write_solutions_as_index_set(
+			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
+
+	FREE_int(Sol);
 	FREE_lint(the_set_in);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting3 done" << endl;
@@ -2110,34 +2154,40 @@ void arc_in_projective_space::create_hyperoval(
 
 
 	if (f_translation) {
-		P->Arc_in_projective_space->create_translation_hyperoval(Pts, nb_pts,
+		P->Arc_in_projective_space->create_translation_hyperoval(
+				Pts, nb_pts,
 				translation_exponent, verbose_level - 0);
 		label_txt = "hyperoval_translation_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_translation\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Segre) {
-		P->Arc_in_projective_space->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
+		P->Arc_in_projective_space->create_Segre_hyperoval(
+				Pts, nb_pts, verbose_level - 2);
 		label_txt = "hyperoval_Segre_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_Segre\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Payne) {
-		P->Arc_in_projective_space->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
+		P->Arc_in_projective_space->create_Payne_hyperoval(
+				Pts, nb_pts, verbose_level - 2);
 		label_txt = "hyperoval_Payne_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_Payne\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_Cherowitzo) {
-		P->Arc_in_projective_space->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
+		P->Arc_in_projective_space->create_Cherowitzo_hyperoval(
+				Pts, nb_pts, verbose_level - 2);
 		label_txt = "hyperoval_Cherowitzo_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_Cherowitzo\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else if (f_OKeefe_Penttila) {
-		P->Arc_in_projective_space->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
+		P->Arc_in_projective_space->create_OKeefe_Penttila_hyperoval_32(
+				Pts, nb_pts,
 				verbose_level - 2);
 		label_txt = "hyperoval_OKeefe_Penttila_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_OKeefe\\_Penttila\\_q" + std::to_string(P->Subspaces->F->q);
 	}
 	else {
-		P->Arc_in_projective_space->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
+		P->Arc_in_projective_space->create_regular_hyperoval(
+				Pts, nb_pts, verbose_level - 2);
 		label_txt = "hyperoval_regular_q" + std::to_string(P->Subspaces->F->q);
 		label_tex = "hyperoval\\_regular\\_q" + std::to_string(P->Subspaces->F->q);
 	}
@@ -2154,7 +2204,8 @@ void arc_in_projective_space::create_hyperoval(
 		}
 	}
 
-	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
+	if (!Sorting.test_if_set_with_return_value_lint(
+			Pts, nb_pts)) {
 		cout << "arc_in_projective_space::create_hyperoval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
@@ -2289,7 +2340,8 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc" << endl;
 	}
 	if (P->Subspaces->n != 2) {
-		cout << "arc_in_projective_space::create_Maruta_Hamada_arc P->n != 2" << endl;
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
+				"P->n != 2" << endl;
 		exit(1);
 	}
 
@@ -2341,7 +2393,8 @@ int arc_in_projective_space::arc_test(
 		Int_vec_copy(Pts + set[0] * 3, Mtx, 3);
 		Int_vec_copy(Pts + set[1] * 3, Mtx + 3, 3);
 		Int_vec_copy(Pts + set[2] * 3, Mtx + 6, 3);
-		if (P->Subspaces->F->Linear_algebra->rank_of_matrix(Mtx, 3, 0 /* verbose_level */) < 3) {
+		if (P->Subspaces->F->Linear_algebra->rank_of_matrix(
+				Mtx, 3, 0 /* verbose_level */) < 3) {
 			if (f_v) {
 				cout << "Points P_" << set[0] << ", P_" << set[1]
 					<< " and P_" << set[2] << " are collinear" << endl;
@@ -2382,7 +2435,8 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 			pj = arc6[j];
 			Line[0] = pi;
 			Line[1] = pj;
-			P->Plane->determine_line_in_plane(Line,
+			P->Plane->determine_line_in_plane(
+					Line,
 				bisecants + h * 3,
 				0 /* verbose_level */);
 			P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
@@ -2408,7 +2462,8 @@ void arc_in_projective_space::compute_bisecants_and_conics(
 		cout << endl;
 #endif
 
-		P->Plane->determine_conic_in_plane(arc5, 5,
+		P->Plane->determine_conic_in_plane(
+				arc5, 5,
 				six_coeffs, 0 /* verbose_level */);
 		P->Subspaces->F->Projective_space_basic->PG_element_normalize_from_front(
 				six_coeffs, 1, 6);

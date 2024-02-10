@@ -15,7 +15,8 @@ namespace orbiter {
 namespace layer5_applications {
 namespace apps_geometry {
 
-static void HS_early_test_func_callback(long int *S, int len,
+static void HS_early_test_func_callback(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -295,14 +296,16 @@ void hermitian_spreads_classify::init(
 	//A2r = NEW_OBJECT(action);
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("secants");
+	label_of_set.assign("_secants");
+	label_of_set_tex.assign("\\_secants");
 
 
 	cout << "Creating restricted action on secants:" << endl;
 	A2r = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
-		nb_secants, secants, label_of_set,
+		nb_secants, secants, label_of_set, label_of_set_tex,
 		false /* f_induce_action */,
 		0 /* verbose_level */);
 	cout << "Creating restricted action on secants done." << endl;

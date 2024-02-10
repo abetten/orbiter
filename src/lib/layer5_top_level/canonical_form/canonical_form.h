@@ -493,7 +493,7 @@ class classification_of_combinatorial_objects {
 public:
 
 
-	std::string prefix;
+	//std::string prefix;
 
 	canonical_form_classification::classification_of_objects *CO;
 
@@ -506,7 +506,7 @@ public:
 	classification_of_combinatorial_objects();
 	~classification_of_combinatorial_objects();
 	void init_after_nauty(
-			std::string &prefix,
+			//std::string &prefix,
 			canonical_form_classification::classification_of_objects *CO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,

@@ -112,6 +112,7 @@ public:
 	void init(
 			diophant_description *Descr,
 			int verbose_level);
+	void arc_lifting1(int verbose_level);
 
 };
 
@@ -170,8 +171,20 @@ public:
 	std::string maximal_arc_secants_text;
 	std::string external_lines_as_subset_of_secants_text;
 
+	int f_arc_lifting1;
+	int arc_lifting1_size;
+	int arc_lifting1_d;
+	int arc_lifting1_d_low;
+	int arc_lifting1_s;
+	std::string arc_lifting1_input_set;
+
+	int f_dualize;
+
 	int f_field;
 	std::string field_label;
+
+	int f_space;
+	std::string space_label;
 
 
 	diophant_description();
@@ -237,7 +250,7 @@ public:
 	int *X; // [n]
 	int *Y; // [m]
 	
-	std::deque<std::vector<int> > _results;
+	std::vector<std::vector<int> > _results;
 	long int _maxresults;
 	long int _resultanz;
 	long int _cur_result;
@@ -315,16 +328,24 @@ public:
 	int solve_next();
 	int solve_first_mckay(
 			int f_once, int verbose_level);
-	void write_solutions(
+	void write_solutions_full_length(
+			std::string &fname, int verbose_level);
+	void write_solutions_index_set(
 			std::string &fname, int verbose_level);
 	void read_solutions_from_file(
 			std::string &fname_sol,
 		int verbose_level);
+	void get_solutions_index_set(
+			int *&Sol, int &nb_sol, int verbose_level);
+	// allocates Sol[nb_sol * sum]
 	void get_solutions(
-			long int *&Sol, int &nb_sol, int verbose_level);
+			int *&Sol, int &nb_sol, int verbose_level);
+	// allocates Sol[nb_sol * n]
+#if 0
 	void get_solutions_full_length(
 			int *&Sol, int &nb_sol,
 		int verbose_level);
+#endif
 	void test_solution_full_length(
 			int *sol, int verbose_level);
 	int solve_all_DLX(
@@ -461,10 +482,8 @@ public:
 		int verbose_level);
 	void test_if_the_last_solution_is_unique();
 
-
 	int solve_first_mckay_once_option(
 			int f_once, int verbose_level);
-
 
 };
 

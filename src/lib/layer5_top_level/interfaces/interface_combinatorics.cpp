@@ -756,9 +756,14 @@ void interface_combinatorics::worker(
 		combinatorics::combinatorics_domain Combi;
 		string fname;
 
-		fname = "random_k_subsets_n" + std::to_string(create_random_k_subsets_n)+ "_k" + std::to_string(create_random_k_subsets_k)+ "_nb" + std::to_string(create_random_k_subsets_nb)+ ".csv";
+		fname = "random_k_subsets_n"
+				+ std::to_string(create_random_k_subsets_n)
+				+ "_k" + std::to_string(create_random_k_subsets_k)
+				+ "_nb" + std::to_string(create_random_k_subsets_nb)
+				+ ".csv";
 
-		Combi.create_random_k_subsets(create_random_k_subsets_n,
+		Combi.create_random_k_subsets(
+				create_random_k_subsets_n,
 				create_random_k_subsets_k,
 				create_random_k_subsets_nb,
 				fname, verbose_level);

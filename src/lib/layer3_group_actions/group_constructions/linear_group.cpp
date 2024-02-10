@@ -127,13 +127,15 @@ void linear_group::linear_group_import(
 	if (description->f_import_group_of_plane) {
 
 		if (f_v) {
-			cout << "linear_group::linear_group_import before linear_group_import_group_of_plane" << endl;
+			cout << "linear_group::linear_group_import "
+					"before linear_group_import_group_of_plane" << endl;
 		}
 
 		linear_group_import_group_of_plane(verbose_level);
 
 		if (f_v) {
-			cout << "linear_group::linear_group_import after linear_group_import_group_of_plane" << endl;
+			cout << "linear_group::linear_group_import "
+					"after linear_group_import_group_of_plane" << endl;
 		}
 	}
 	if (f_v) {
@@ -715,6 +717,7 @@ int linear_group::linear_group_apply_modification(
 		int nb_points;
 		int i;
 		std::string label_of_set;
+		std::string label_of_set_tex;
 
 		W = A_linear->G.wreath_product_group;
 		nb_points = W->degree_of_tensor_action;
@@ -723,7 +726,8 @@ int linear_group::linear_group_apply_modification(
 			points[i] = W->perm_offset_i[W->nb_factors] + i;
 		}
 
-		label_of_set.assign("on_tensors");
+		label_of_set.assign("_on_tensors");
+		label_of_set_tex.assign("\\_on\\_tensors");
 
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
@@ -732,6 +736,7 @@ int linear_group::linear_group_apply_modification(
 		A2 = A_linear->Induced_action->restricted_action(
 				points, nb_points,
 				label_of_set,
+				label_of_set_tex,
 				verbose_level);
 		A2->f_is_linear = true;
 		A2->dimension = W->dimension_of_tensor_action;
@@ -757,6 +762,7 @@ int linear_group::linear_group_apply_modification(
 		int nb_points;
 		int i;
 		std::string label_of_set;
+		std::string label_of_set_tex;
 
 		W = A_linear->G.wreath_product_group;
 		nb_points = W->nb_rank_one_tensors;
@@ -765,15 +771,16 @@ int linear_group::linear_group_apply_modification(
 			points[i] = W->perm_offset_i[W->nb_factors] + W->rank_one_tensors_in_PG[i];
 		}
 
-		label_of_set.assign("on_rank_one_tensors");
-
+		label_of_set.assign("_on_rank_one_tensors");
+		label_of_set_tex.assign("\\_on\\_rank\\_one\\_tensors");
 
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
 					"before A_wreath->restricted_action" << endl;
 		}
 		A2 = A_linear->Induced_action->restricted_action(
-				points, nb_points, label_of_set,
+				points, nb_points,
+				label_of_set, label_of_set_tex,
 				verbose_level);
 		A2->f_is_linear = true;
 		A2->dimension = W->dimension_of_tensor_action;
@@ -1513,8 +1520,8 @@ void linear_group::init_subgroup_Janko1(
 	A2 = A_linear;
 
 
-	label + "_Subgroup_Janko1";
-	label_tex += "{\\rm Subgroup Janko1}";
+	label = "Janko1";
+	label_tex = "{\\rm Janko1}";
 
 	if (f_v) {
 		cout << "linear_group::init_subgroup_Janko1 "

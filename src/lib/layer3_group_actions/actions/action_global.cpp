@@ -1079,15 +1079,18 @@ action *action_global::init_direct_product_group_and_restrict(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("direct_product");
+	label_of_set.assign("_direct_product");
+	label_of_set_tex.assign("\\_direct\\_product");
 
 	if (f_v) {
 		cout << "action_global::init_direct_product_group_and_restrict "
 				"before A_direct_product->Induced_action->restricted_action" << endl;
 	}
 	Adp = A_direct_product->Induced_action->restricted_action(
-			points, nb_points, label_of_set,
+			points, nb_points,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "action_global::init_direct_product_group_and_restrict "
@@ -1323,15 +1326,18 @@ action *action_global::init_polarity_extension_group_and_restrict(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("polarity_extension");
+	label_of_set.assign("_polarity_extension");
+	label_of_set_tex.assign("\\_polarity\\_extension");
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "
 				"before A_new->Induced_action->restricted_action" << endl;
 	}
 	A_new_r = A_new->Induced_action->restricted_action(
-			points, nb_points, label_of_set,
+			points, nb_points,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "

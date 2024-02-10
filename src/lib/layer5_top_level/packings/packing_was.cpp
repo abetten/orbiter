@@ -1213,8 +1213,10 @@ actions::action *packing_was::restricted_action(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("reduced_spreads");
+	label_of_set.assign("_reduced_spreads");
+	label_of_set_tex.assign("\\_reduced\\_spreads");
 
 
 	if (f_v) {
@@ -1226,7 +1228,7 @@ actions::action *packing_was::restricted_action(
 		NULL,
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Set_size[orbit_idx],
 		reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->Sets[orbit_idx],
-		label_of_set,
+		label_of_set, label_of_set_tex,
 		false /* f_induce_action */,
 		verbose_level);
 

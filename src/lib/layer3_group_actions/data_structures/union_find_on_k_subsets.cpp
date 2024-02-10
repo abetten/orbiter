@@ -94,9 +94,11 @@ void union_find_on_k_subsets::init(
 	
 	
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("union_find_on_k_subsets");
+	label_of_set.assign("_union_find_on_k_subsets");
+	label_of_set_tex.assign("\\_union\\_find\\_on\\_k\\_subsets");
 
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
@@ -104,7 +106,7 @@ void union_find_on_k_subsets::init(
 				"create_induced_action_by_restriction" << endl;
 	}
 	Ar = A_original->Induced_action->create_induced_action_by_restriction(
-			S, set_sz, set, label_of_set,
+			S, set_sz, set, label_of_set, label_of_set_tex,
 			true, 0/*verbose_level*/);
 	//action *create_induced_action_by_restriction(
 	//		sims *S, int size, int *set, int f_induce,
@@ -183,7 +185,8 @@ void union_find_on_k_subsets::init(
 		Ark->print_info();
 	}
 
-	label_of_set.assign("interesting_k_subsets");
+	label_of_set.assign("_interesting_k_subsets");
+	label_of_set_tex.assign("\\_interesting\\_k\\_subsets");
 
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "
@@ -191,7 +194,7 @@ void union_find_on_k_subsets::init(
 	}
 	Arkr = Ark->Induced_action->create_induced_action_by_restriction(
 			NULL /* sims *S */,
-			nb_interesting_k_subsets, interesting_k_subsets, label_of_set,
+			nb_interesting_k_subsets, interesting_k_subsets, label_of_set, label_of_set_tex,
 			false, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init "

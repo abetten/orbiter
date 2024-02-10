@@ -244,8 +244,10 @@ void poset_orbit_node::compute_schreier_vector(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("live_points");
+	label_of_set.assign("_live_points");
+	label_of_set_tex.assign("\\_live\\_points");
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_schreier_vector: "
@@ -253,7 +255,7 @@ void poset_orbit_node::compute_schreier_vector(
 	}
 	AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 		NULL /*sims *old_G*/,
-		nb_live_points, live_points, label_of_set,
+		nb_live_points, live_points, label_of_set, label_of_set_tex,
 		false /*f_induce_action*/,
 		verbose_level - 2);
 	if (f_v) {
@@ -621,8 +623,10 @@ void poset_orbit_node::schreier_forest(
 		}
 
 		std::string label_of_set;
+		std::string label_of_set_tex;
 
-		label_of_set.assign("candidates");
+		label_of_set.assign("_candidates");
+		label_of_set_tex.assign("\\_candidates");
 
 
 		if (f_v) {
@@ -631,7 +635,7 @@ void poset_orbit_node::schreier_forest(
 		}
 		AR = gen->get_A2()->Induced_action->create_induced_action_by_restriction(
 			NULL /*sims *old_G*/,
-			nb_candidates, candidates, label_of_set,
+			nb_candidates, candidates, label_of_set, label_of_set_tex,
 			false /*f_induce_action*/,
 			verbose_level - 2);
 		if (f_v) {

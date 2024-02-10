@@ -242,7 +242,7 @@ public:
 		int target_sz, int target_d,
 		solvers::diophant *&D,
 		int verbose_level);
-	void arc_with_given_set_of_s_lines_diophant(
+	void create_diophant_for_arc_lifting_with_given_set_of_s_lines(
 			long int *s_lines, int nb_s_lines,
 			int target_sz, int arc_d, int arc_d_low, int arc_s,
 			int f_dualize,

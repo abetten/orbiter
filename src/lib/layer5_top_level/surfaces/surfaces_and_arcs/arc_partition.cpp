@@ -97,9 +97,11 @@ void arc_partition::init(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set = "remaining4";
+	label_of_set = "_remaining4";
+	label_of_set_tex = "\\_remaining4";
 
 
 	if (f_v) {
@@ -108,7 +110,8 @@ void arc_partition::init(
 	}
 
 	A_on_rest = A_on_arc->Induced_action->restricted_action(
-			arc_remainder, 4 /* nb_points */, label_of_set,
+			arc_remainder, 4 /* nb_points */,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 
 	if (f_v) {

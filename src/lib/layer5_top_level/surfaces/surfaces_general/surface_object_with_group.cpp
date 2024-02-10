@@ -603,9 +603,11 @@ void surface_object_with_group::init_orbits_on_points(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Pts");
+	label_of_set.assign("_Pts");
+	label_of_set_tex.assign("\\_Pts");
 
 	if (f_v) {
 		cout << "surface_object_with_group::init_orbits_on_points "
@@ -613,7 +615,8 @@ void surface_object_with_group::init_orbits_on_points(
 	}
 
 	A_on_points = Surf_A->A->Induced_action->restricted_action(
-			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0], label_of_set,
+			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 
 	if (f_v) {
@@ -673,15 +676,18 @@ void surface_object_with_group::init_orbits_on_Eckardt_points(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Eckardt");
+	label_of_set.assign("_Eckardt");
+	label_of_set_tex.assign("\\_Eckardt");
 
 	if (f_v) {
 		cout << "creating action on Eckardt points:" << endl;
 	}
 	A_on_Eckardt_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points, label_of_set,
+			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Eckardt points done" << endl;
@@ -723,15 +729,18 @@ void surface_object_with_group::init_orbits_on_Double_points(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Double_pts");
+	label_of_set.assign("_Double_pts");
+	label_of_set_tex.assign("\\_Double\\_pts");
 
 	if (f_v) {
 		cout << "creating action on Double points:" << endl;
 	}
 	A_on_Double_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Double_points, SO->SOP->nb_Double_points, label_of_set,
+			SO->SOP->Double_points, SO->SOP->nb_Double_points,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Double points done" << endl;
@@ -769,15 +778,18 @@ void surface_object_with_group::init_orbits_on_Single_points(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Single_pts");
+	label_of_set.assign("_Single_pts");
+	label_of_set_tex.assign("\\_Single\\_pts");
 
 	if (f_v) {
 		cout << "creating action on Single points:" << endl;
 	}
 	A_on_Single_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Single_points, SO->SOP->nb_Single_points, label_of_set,
+			SO->SOP->Single_points, SO->SOP->nb_Single_points,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Single points done" << endl;
@@ -815,16 +827,19 @@ void surface_object_with_group::init_orbits_on_lines(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Lines");
+	label_of_set.assign("_Lines");
+	label_of_set_tex.assign("\\_Lines");
 
 	if (f_v) {
 		cout << "creating restricted action "
 				"on the lines:" << endl;
 	}
 	A_on_the_lines = Surf_A->A2->Induced_action->restricted_action(
-			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0], label_of_set,
+			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating restricted action "
@@ -1008,9 +1023,11 @@ void surface_object_with_group::init_orbits_on_Hesse_planes(int verbose_level)
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("Hesse_planes");
+	label_of_set.assign("_Hesse_planes");
+	label_of_set_tex.assign("\\_Hesse\\_planes");
 
 	if (f_v) {
 		cout << "creating action on Hesse planes:" << endl;
@@ -1018,7 +1035,8 @@ void surface_object_with_group::init_orbits_on_Hesse_planes(int verbose_level)
 				<< SO->SOP->nb_Hesse_planes << endl;
 	}
 	A_on_Hesse_planes = Surf_A->A_on_planes->Induced_action->restricted_action(
-			SO->SOP->Hesse_planes, SO->SOP->nb_Hesse_planes, label_of_set,
+			SO->SOP->Hesse_planes, SO->SOP->nb_Hesse_planes,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on Hesse planes done" << endl;
@@ -1057,9 +1075,11 @@ void surface_object_with_group::init_orbits_on_axes(int verbose_level)
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set = "axes";
+	label_of_set = "_axes";
+	label_of_set_tex = "\\_axes";
 
 	if (f_v) {
 		cout << "creating action on axes:" << endl;
@@ -1074,7 +1094,8 @@ void surface_object_with_group::init_orbits_on_axes(int verbose_level)
 				"before Surf_A->A2->restricted_action" << endl;
 	}
 	A_on_axes = Surf_A->A2->Induced_action->restricted_action(
-			SO->SOP->Axes_line_rank, SO->SOP->nb_axes, label_of_set,
+			SO->SOP->Axes_line_rank, SO->SOP->nb_axes,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface_object_with_group::init_orbits_on_axes "
@@ -1161,15 +1182,18 @@ void surface_object_with_group::init_orbits_on_points_not_on_lines(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set = "pts_not_on_lines";
+	label_of_set = "_pts_not_on_lines";
+	label_of_set_tex = "\\_pts\\_not\\_on\\_lines";
 
 	if (f_v) {
 		cout << "creating action on points not on lines:" << endl;
 	}
 	A_on_pts_not_on_lines = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Pts_not_on_lines, SO->SOP->nb_pts_not_on_lines, label_of_set,
+			SO->SOP->Pts_not_on_lines, SO->SOP->nb_pts_not_on_lines,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on points not on lines done" << endl;

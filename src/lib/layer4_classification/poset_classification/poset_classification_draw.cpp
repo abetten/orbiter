@@ -18,11 +18,16 @@ namespace layer4_classification {
 namespace poset_classification {
 
 
-static void print_table1_top(ostream &fp);
-static void print_table1_bottom(ostream &fp);
-static void print_table_top(ostream &fp, int f_permutation_degree_is_small);
-static void print_table_bottom(ostream &fp);
-static void print_set_special(ostream &fp, long int *set, int sz);
+static void print_table1_top(
+		std::ostream &fp);
+static void print_table1_bottom(
+		std::ostream &fp);
+static void print_table_top(
+		std::ostream &fp, int f_permutation_degree_is_small);
+static void print_table_bottom(
+		std::ostream &fp);
+static void print_set_special(
+		std::ostream &fp, long int *set, int sz);
 
 void poset_classification::draw_poset_fname_base_aux_poset(
 		std::string &fname, int depth)
@@ -207,7 +212,8 @@ void poset_classification::draw_tree(
 		Tree_draw_options->f_file = true;
 		Tree_draw_options->file_name.assign(fname1);
 
-		T.init(Tree_draw_options, xmax, ymax, verbose_level - 1);
+		T.init(
+				Tree_draw_options, xmax, ymax, verbose_level - 1);
 			
 		nb_nodes = T.nb_nodes;
 		if (f_vv) {
@@ -281,7 +287,8 @@ void poset_classification::draw_tree(
 			cout << "poset_classification::draw_tree "
 					"before draw_tree_low_level" << endl;
 		}
-		draw_tree_low_level(fname, Tree_draw_options, Draw_options,
+		draw_tree_low_level(
+				fname, Tree_draw_options, Draw_options,
 				nb_nodes,
 			coord_xyw, perm_inv, perm, 
 			f_draw_points, f_draw_extension_points,
@@ -376,24 +383,26 @@ void poset_classification::draw_tree_low_level1(
 	int x, y;
 	int i, j;
 	int y_offset2 = 200;
-	//int y_offset3 = -590;
-	//int y_offset4 = -350;
-	//int delta_x = 1000;
-	//int delta_y = 1000;
-	int nb_e, Nb_e, pt, dx, dx0, /*Dx, Dx0,*/ nxt, hdl, depth, hdl2;
-	long int set0[100]; // ToDo
-	long int set1[100]; // ToDo
+	int nb_e, Nb_e, pt, dx, dx0, nxt, hdl, depth, hdl2;
 	int rad = 200 >> 3;
 	data_structures::sorting Sorting;
+	int max_set_size;
+	long int *set0;
+	long int *set1;
 	
+
+	max_set_size = Poo->get_max_set_size();
+
 	Px = NEW_int(nb_nodes);
 	Py = NEW_int(nb_nodes);
 	Width = NEW_int(nb_nodes);
 	Qx = NEW_int(100);
 	Qy = NEW_int(100);
+	set0 = NEW_lint(max_set_size);
+	set1 = NEW_lint(max_set_size);
 	
 	if (f_v) {	
-		cout << "draw_tree_low_level1" << endl;
+		cout << "poset_classification::draw_tree_low_level1" << endl;
 		cout << "nb_nodes = " << nb_nodes << endl;
 		cout << "rad = " << rad << endl;
 		cout << "verbose_level = " << verbose_level << endl;
@@ -406,7 +415,7 @@ void poset_classification::draw_tree_low_level1(
 	
 	for (i = 0; i < nb_nodes; i++) {
 		if (f_vv) {
-			cout << "draw_tree_low_level1: i=" << i << endl;
+			cout << "poset_classification::draw_tree_low_level1 i=" << i << endl;
 		}
 		nb_e = Poo->node_get_nb_of_extensions(i);
 		if (f_vv) {
@@ -423,7 +432,8 @@ void poset_classification::draw_tree_low_level1(
 		for (j = 0; j < nb_e; j++) {
 			Nb_e = Poo->node_get_nb_of_extensions(j);
 			if (f_vv) {
-				cout << "draw_tree_low_level1: i=" << i
+				cout << "poset_classification::draw_tree_low_level1 "
+						"i=" << i
 						<< " j=" << j << " nb_e=" << nb_e <<
 					" Nb_e=" << Nb_e << endl;
 				cout << "root[i].get_E(j)->get_type()=" << Poo->get_node(i)->get_E(j)->get_type() << endl;
@@ -445,7 +455,8 @@ void poset_classification::draw_tree_low_level1(
 				pt = Poo->get_node(i)->get_E(j)->get_pt();
 				nxt = Poo->get_node(i)->get_E(j)->get_data();
 				if (f_vv) {
-					cout << "extension node: pt=" << pt
+					cout << "poset_classification::draw_tree_low_level1 "
+							"extension node: pt=" << pt
 							<< " nxt=" << nxt << endl;
 				}
 				if (nxt >= 0) {
@@ -455,8 +466,10 @@ void poset_classification::draw_tree_low_level1(
 					Qx[1] = Px[perm[nxt]];
 					Qy[1] = Py[perm[nxt]];
 					if (false) {
-						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
+						cout << "poset_classification::draw_tree_low_level1 "
+								"Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
+						cout << "poset_classification::draw_tree_low_level1 "
+								"Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
 					}
 				
 					if (f_draw_points) {
@@ -468,20 +481,24 @@ void poset_classification::draw_tree_low_level1(
 						Qy[1] += y_offset2;
 					}
 					if (false) {
-						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
+						cout << "poset_classification::draw_tree_low_level1 "
+								"Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
+						cout << "poset_classification::draw_tree_low_level1 "
+								"Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
 					}
 				
 					G.polygon2(Qx, Qy, 0, 1);
 					if (false) {
-						cout << "after G.polygon2" << endl;
+						cout << "poset_classification::draw_tree_low_level1 "
+								"after G.polygon2" << endl;
 					}
 				}
 			}
 			else if (Poo->get_node(i)->get_E(j)->get_type() == EXTENSION_TYPE_FUSION) {
 				// fusion node
 				if (f_vv) {
-					cout << "fusion node" << endl;
+					cout << "poset_classification::draw_tree_low_level1 "
+							"fusion node" << endl;
 				}
 				if (true /*root[i].E[j].get_pt() > root[i].get_pt()*/) {
 					pt = Poo->get_node(i)->get_E(j)->get_pt();
@@ -490,7 +507,8 @@ void poset_classification::draw_tree_low_level1(
 					Poo->get_node(i)->store_set_to(this, depth - 1, set0);
 					set0[depth] = pt;
 					if (f_vvv) {
-						cout << "fusion node i=" << i
+						cout << "poset_classification::draw_tree_low_level1 "
+								"fusion node i=" << i
 								<< " j=" << j << " set = ";
 						Lint_vec_print(cout, set0, depth + 1);
 						cout << endl;
@@ -503,7 +521,8 @@ void poset_classification::draw_tree_low_level1(
 					Sorting.lint_vec_heapsort(set1, depth + 1);
 				
 					if (f_vvv) {
-						cout << "mapping the set to = ";
+						cout << "poset_classification::draw_tree_low_level1 "
+								"mapping the set to = ";
 						Lint_vec_print(cout, set1, depth + 1);
 						cout << endl;
 					}
@@ -513,7 +532,8 @@ void poset_classification::draw_tree_low_level1(
 							0 /* verbose_level */);
 					if (hdl2 >= 0) {
 						if (f_vvv) {
-							cout << "which is node " << hdl2 << endl;
+							cout << "poset_classification::draw_tree_low_level1 "
+									"which is node " << hdl2 << endl;
 						}
 
 						Qx[0] = Px[perm[i]];
@@ -582,7 +602,8 @@ void poset_classification::draw_tree_low_level1(
 #endif
 
 	if (f_v) {
-		cout << "now drawing node labels" << endl;
+		cout << "poset_classification::draw_tree_low_level1 "
+				"now drawing node labels" << endl;
 	}
 	
 	G.sf_interior(100 /* fill_interior */);
@@ -609,7 +630,8 @@ void poset_classification::draw_tree_low_level1(
 
 	if (f_draw_points) {
 		if (f_v) {
-			cout << "now drawing connections" << endl;
+			cout << "poset_classification::draw_tree_low_level1 "
+					"now drawing connections" << endl;
 		}
 		for (i = 0; i < nb_nodes; i++) {
 			nb_e = Poo->node_get_nb_of_extensions(i);
@@ -648,6 +670,11 @@ void poset_classification::draw_tree_low_level1(
 	FREE_int(Width);
 	FREE_int(Qx);
 	FREE_int(Qy);
+	FREE_lint(set0);
+	FREE_lint(set1);
+	if (f_v) {
+		cout << "poset_classification::draw_tree_low_level1 done" << endl;
+	}
 }
 
 void poset_classification::draw_poset_full(
@@ -664,7 +691,8 @@ void poset_classification::draw_poset_full(
 		cout << "poset_classification::draw_poset_full "
 				"fname_base=" << fname_base << " data=" << data << endl;
 	}
-	make_full_poset_graph(depth, LG, data, x_stretch, verbose_level);
+	make_full_poset_graph(
+			depth, LG, data, x_stretch, verbose_level);
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
 				"after make_full_poset_graph" << endl;
@@ -683,7 +711,8 @@ void poset_classification::draw_poset_full(
 
 	fname2 = fname_base + "_poset_full_lvl_" + std::to_string(depth);
 
-	LG->draw_with_options(fname2, LG_Draw_options, 0 /* verbose_level */);
+	LG->draw_with_options(
+			fname2, LG_Draw_options, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -719,25 +748,29 @@ void poset_classification::draw_poset(
 		cout << "poset_classification::draw_poset "
 				"before make_auxiliary_graph" << endl;
 	}
-	make_auxiliary_graph(depth, LG1, data,
+	make_auxiliary_graph(
+			depth, LG1, data,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
 				"before make_graph" << endl;
 	}
-	make_graph(depth, LG2, data, false /* f_tree */,
+	make_graph(
+			depth, LG2, data, false /* f_tree */,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
 				"before make_graph" << endl;
 	}
-	make_graph(depth, LG3, data, true /* f_tree */,
+	make_graph(
+			depth, LG3, data, true /* f_tree */,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
 				"before make_poset_graph_detailed" << endl;
 	}
-	make_poset_graph_detailed(LG4, data, depth,
+	make_poset_graph_detailed(
+			LG4, data, depth,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
@@ -771,7 +804,8 @@ void poset_classification::draw_poset(
 
 	
 	LG1->write_file(fname1, 0 /*verbose_level*/);
-	LG1->draw_with_options(fname_base1, LG_Draw_options,
+	LG1->draw_with_options(
+			fname_base1, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -780,7 +814,8 @@ void poset_classification::draw_poset(
 	}
 
 	LG2->write_file(fname2, 0 /*verbose_level*/);
-	LG2->draw_with_options(fname_base2, LG_Draw_options,
+	LG2->draw_with_options(
+			fname_base2, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -789,7 +824,8 @@ void poset_classification::draw_poset(
 	}
 
 	LG3->write_file(fname3, 0 /*verbose_level*/);
-	LG3->draw_with_options(fname_base3, LG_Draw_options,
+	LG3->draw_with_options(
+			fname_base3, LG_Draw_options,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -798,7 +834,8 @@ void poset_classification::draw_poset(
 	}
 
 	LG4->write_file(fname4, 0 /*verbose_level*/);
-	LG4->draw_with_options(fname_base4, LG_Draw_options,
+	LG4->draw_with_options(
+			fname_base4, LG_Draw_options,
 			0 /* verbose_level */);
 
 	FREE_OBJECT(LG1);
@@ -839,7 +876,8 @@ void poset_classification::draw_level_graph(
 	LG->write_file(fname, 0 /*verbose_level*/);
 
 	
-	LG->draw_with_options(fname_base1, LG_Draw_options, 0 /* verbose_level */);
+	LG->draw_with_options(
+			fname_base1, LG_Draw_options, 0 /* verbose_level */);
 
 	FREE_OBJECT(LG);
 
@@ -882,6 +920,7 @@ void poset_classification::make_flag_orbits_on_relations(
 	Fst = NEW_int(nb_layers + 1);
 	Fst_element_per_orbit = NEW_pint(nb_layers);
 	Orbit_len = NEW_pint(nb_layers);
+
 	Fst[0] = 0;
 	for (i = 0; i <= depth; i++) {
 		Nb_orbits[i] = nb_orbits_at_level(i);
@@ -1198,6 +1237,7 @@ void poset_classification::make_full_poset_graph(
 	Fst = NEW_int(nb_layers + 1);
 	Fst_element_per_orbit = NEW_pint(nb_layers);
 	Orbit_len = NEW_pint(nb_layers);
+
 	Fst[0] = 0;
 	for (i = 0; i <= depth; i++) {
 		Nb_orbits[i] = nb_orbits_at_level(i);
@@ -1214,6 +1254,7 @@ void poset_classification::make_full_poset_graph(
 		}
 		Fst[i + 1] = Fst[i] + Nb_elements[i];
 	}
+
 	LG = NEW_OBJECT(graph_theory::layered_graph);
 	LG->add_data1(data1, 0/*verbose_level*/);
 
@@ -1526,6 +1567,7 @@ void poset_classification::make_auxiliary_graph(
 	nb_layers = 2 * depth + 1;
 	Nb = NEW_int(nb_layers);
 	Fst = NEW_int(nb_layers);
+
 	Fst[0] = 0;
 	for (i = 0; i < depth; i++) {
 		Nb[2 * i] = nb_orbits_at_level(i);
@@ -1766,6 +1808,7 @@ void poset_classification::make_graph(
 	nb_layers = depth + 1;
 	Nb = NEW_int(nb_layers);
 	Fst = NEW_int(nb_layers);
+
 	Fst[0] = 0;
 	for (i = 0; i < depth; i++) {
 		Nb[i] = nb_orbits_at_level(i);
@@ -1997,6 +2040,7 @@ void poset_classification::make_level_graph(
 	the_set2 = NEW_lint(depth);
 	Nb = NEW_int(4);
 	Fst = NEW_int(2);
+
 	Fst[0] = 0;
 	for (i = 0; i < level; i++) {
 		Fst[0] += nb_orbits_at_level(i);
@@ -2260,6 +2304,7 @@ void poset_classification::make_poset_graph_detailed(
 	the_set2 = NEW_lint(max_depth);
 	Nb = NEW_int(nb_layers);
 	Nb_middle = NEW_int(max_depth);
+
 	for (i = 0; i < max_depth; i++) {
 		Nb_middle[i] = count_extension_nodes_at_level(i);
 	}
@@ -2763,7 +2808,8 @@ void poset_classification::print_data_structure_tex(
 	}
 }
 
-static void print_table1_top(std::ostream &fp)
+static void print_table1_top(
+		std::ostream &fp)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|}" << endl;
 	fp << "\\hline" << endl;
@@ -2772,13 +2818,15 @@ static void print_table1_top(std::ostream &fp)
 	fp << "\\hline" << endl;
 }
 
-static void print_table1_bottom(std::ostream &fp)
+static void print_table1_bottom(
+		std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_table_top(std::ostream &fp, int f_permutation_degree_is_small)
+static void print_table_top(
+		std::ostream &fp, int f_permutation_degree_is_small)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|r";
 	if (f_permutation_degree_is_small) {
@@ -2795,13 +2843,15 @@ static void print_table_top(std::ostream &fp, int f_permutation_degree_is_small)
 	fp << "\\hline" << endl;
 }
 
-static void print_table_bottom(std::ostream &fp)
+static void print_table_bottom(
+		std::ostream &fp)
 {
 	fp << "\\hline" << endl;
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_set_special(std::ostream &fp, long int *set, int sz)
+static void print_set_special(
+		std::ostream &fp, long int *set, int sz)
 {
 	int i;
 

@@ -1633,8 +1633,10 @@ void known_groups::init_wreath_product_group_and_restrict(
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("wreath_product");
+	label_of_set.assign("_wreath_product");
+	label_of_set_tex.assign("\\_wreath\\_product");
 
 
 	if (f_v) {
@@ -1642,7 +1644,8 @@ void known_groups::init_wreath_product_group_and_restrict(
 				"before A_wreath->Induced_action->restricted_action" << endl;
 	}
 	Awr = A_wreath->Induced_action->restricted_action(
-			points, nb_points, label_of_set,
+			points, nb_points,
+			label_of_set, label_of_set_tex,
 			verbose_level);
 	Awr->f_is_linear = true;
 	if (f_v) {

@@ -56,6 +56,9 @@ void diophant_create::init(
 
 	if (Descr->f_maximal_arc) {
 
+		if (f_v) {
+			cout << "diophant_create::init f_maximal_arc" << endl;
+		}
 		field_theory::finite_field *F = NULL;
 
 		if (Descr->f_field) {
@@ -96,6 +99,15 @@ void diophant_create::init(
 
 		FREE_OBJECT(P);
 	}
+	else if (Descr->f_arc_lifting1) {
+
+		if (f_v) {
+			cout << "diophant_create::init f_arc_lifting1" << endl;
+		}
+		arc_lifting1(verbose_level);
+	}
+
+
 	if (Descr->f_coefficient_matrix) {
 		int *A;
 		int m, n;
@@ -460,6 +472,70 @@ void diophant_create::init(
 		cout << "diophant_create::init done" << endl;
 	}
 }
+
+void diophant_create::arc_lifting1(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "diophant_create::arc_lifting1" << endl;
+	}
+
+	if (!Descr->f_space) {
+		cout << "Please use -space <P> option to set the projective space P" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "diophant_create::arc_lifting1 using projective space = " << Descr->space_label << endl;
+	}
+
+
+	geometry::projective_space *P;
+
+	P = Get_projective_space_low_level(Descr->space_label);
+
+
+	if (P->Subspaces->n != 2) {
+		cout << "diophant_create::arc_lifting1 we need a projective space of dimension 2" << endl;
+		exit(1);
+	}
+
+	long int *the_set_in;
+	int set_size_in;
+
+	Get_lint_vector_from_label(
+			Descr->arc_lifting1_input_set, the_set_in, set_size_in,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "diophant_create::arc_lifting1 "
+				"before create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
+	}
+
+	P->Arc_in_projective_space->create_diophant_for_arc_lifting_with_given_set_of_s_lines(
+			the_set_in /*s_lines*/,
+			set_size_in /* nb_s_lines */,
+			Descr->arc_lifting1_size /*target_sz*/,
+			Descr->arc_lifting1_d /* target_d */,
+			Descr->arc_lifting1_d_low,
+			Descr->arc_lifting1_s /* target_s */,
+			Descr->f_dualize,
+			D,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "diophant_create::arc_lifting1 "
+				"after create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
+	}
+	if (f_v) {
+		cout << "diophant_create::arc_lifting1 done" << endl;
+	}
+
+}
+
+
 
 
 }}}

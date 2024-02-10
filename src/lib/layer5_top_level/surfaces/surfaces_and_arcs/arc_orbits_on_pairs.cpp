@@ -96,9 +96,11 @@ void arc_orbits_on_pairs::init(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set= "on_6arc";
+	label_of_set= "_on_6arc";
+	label_of_set_tex= "\\_on\\_6arc";
 
 
 	if (f_v) {
@@ -108,7 +110,7 @@ void arc_orbits_on_pairs::init(
 
 	A_on_arc = A->Induced_action->restricted_action(
 			The_arc->data, 6 /* nb_points */,
-			label_of_set,
+			label_of_set, label_of_set_tex,
 			verbose_level - 2);
 
 	if (f_v) {

@@ -550,6 +550,9 @@ public:
 			std::string &fname,
 			std::vector<std::vector<std::string> > &Data,
 		int verbose_level);
+	void write_solutions_as_index_set(
+			std::string &fname_solutions, int *Sol, int nb_sol, int width, int sum,
+			int verbose_level);
 
 
 
@@ -1085,6 +1088,10 @@ public:
 	int longinteger_f_print_scientific;
 	int syntax_tree_node_index;
 
+	int f_has_get_projective_space_low_level_function;
+	geometry::projective_space *(* get_projective_space_low_level_function)(void *ptr);
+
+
 	orbiter_session();
 	~orbiter_session();
 	void print_help(
@@ -1139,6 +1146,8 @@ public:
 	expression_parser::symbolic_object_builder *get_object_of_type_symbolic_object(
 			std::string &label);
 	coding_theory::crc_object *get_object_of_type_crc_code(
+			std::string &label);
+	geometry::projective_space *get_projective_space_low_level(
 			std::string &label);
 	int find_object_of_type_symbolic_object(
 			std::string &label);

@@ -22,6 +22,7 @@ group_modification_description::group_modification_description()
 {
 	f_restricted_action = false;
 	//std::string restricted_action_set_text;
+	//std::string restricted_action_set_text_tex;
 
 	f_on_k_subspaces = false;
 	on_k_subspaces_k = 0;
@@ -80,8 +81,12 @@ int group_modification_description::read_arguments(
 		if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
 			f_restricted_action = true;
 			restricted_action_set_text.assign(argv[++i]);
+			restricted_action_set_text_tex.assign(argv[++i]);
 			if (f_v) {
-				cout << "-restricted_action " << restricted_action_set_text << endl;
+				cout << "-restricted_action "
+						<< " " << restricted_action_set_text
+						<< " " << restricted_action_set_text_tex
+						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
@@ -192,7 +197,10 @@ int group_modification_description::read_arguments(
 void group_modification_description::print()
 {
 	if (f_restricted_action) {
-		cout << "-restricted_action " << restricted_action_set_text << endl;
+		cout << "-restricted_action "
+				<< " " << restricted_action_set_text
+				<< " " << restricted_action_set_text_tex
+				<< endl;
 	}
 	if (f_on_k_subspaces) {
 		cout << "-on_k_subspaces " << on_k_subspaces_k << endl;

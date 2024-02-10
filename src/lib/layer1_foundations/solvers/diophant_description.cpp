@@ -64,8 +64,21 @@ diophant_description::diophant_description()
 	//maximal_arc_secants_text;
 	//external_lines_as_subset_of_secants_text;
 
+	f_arc_lifting1 = false;
+	arc_lifting1_size = 0;
+	arc_lifting1_d = 0;
+	arc_lifting1_d_low = 0;
+	arc_lifting1_s = 0;
+	//std::string arc_lifting1_input_set;
+
+	f_dualize = false;
+
 	f_field = false;
 	//std::string field_label;
+
+	f_space = false;
+	//std::string space_label;
+
 
 }
 
@@ -185,16 +198,49 @@ int diophant_description::read_arguments(
 			maximal_arc_secants_text.assign(argv[++i]);
 			external_lines_as_subset_of_secants_text.assign(argv[++i]);
 			if (f_v) {
-				cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
+				cout << "-maximal_arc "
+						<< maximal_arc_sz
+						<< " " << maximal_arc_d
 					<< " " << maximal_arc_secants_text
 					<< " " << external_lines_as_subset_of_secants_text << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-arc_lifting1") == 0) {
+			f_arc_lifting1 = true;
+			arc_lifting1_size = ST.strtoi(argv[++i]);
+			arc_lifting1_d = ST.strtoi(argv[++i]);
+			arc_lifting1_d_low = ST.strtoi(argv[++i]);
+			arc_lifting1_s = ST.strtoi(argv[++i]);
+			arc_lifting1_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-arc_lifting1 "
+						<< " " << arc_lifting1_size
+						<< " " << arc_lifting1_d
+						<< " " << arc_lifting1_d_low
+						<< " " << arc_lifting1_s
+					<< " " << arc_lifting1_input_set
+					<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-dualize") == 0) {
+			f_dualize = true;
+			if (f_v) {
+				cout << "-dualize " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-field") == 0) {
 			f_field = true;
 			field_label = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-field" << field_label << endl;
+				cout << "-field " << field_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-space") == 0) {
+			f_space = true;
+			space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-space " << space_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -265,8 +311,14 @@ void diophant_description::print()
 				<< " " << maximal_arc_secants_text
 				<< " " << external_lines_as_subset_of_secants_text << endl;
 	}
+	if (f_dualize) {
+		cout << "-dualize" << endl;
+	}
 	if (f_field) {
 		cout << "-field" << field_label << endl;
+	}
+	if (f_space) {
+		cout << "-space" << space_label << endl;
 	}
 }
 

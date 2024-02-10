@@ -204,9 +204,11 @@ void compute_stabilizer::init(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_set");
+	label_of_set.assign("_on_set");
+	label_of_set_tex.assign("\\_on\\_set");
 
 	if (f_v) {
 		cout << "compute_stabilizer::init "
@@ -215,7 +217,7 @@ void compute_stabilizer::init(
 	A_on_the_set = SubSt->SubC->A2->Induced_action->restricted_action(
 			SubSt->Pts,
 			SubSt->nb_pts,
-			label_of_set,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::init "
@@ -788,9 +790,11 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 	}
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
-	label_of_set.assign("on_interesting_points");
+	label_of_set.assign("_on_interesting_points");
+	label_of_set_tex.assign("\\_on\\_interesting\\_points");
 
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "
@@ -800,7 +804,7 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 	A_induced = SubSt->SubC->A2->Induced_action->restricted_action(
 			Stab_orbits->interesting_points,
 			Stab_orbits->nb_interesting_points,
-			label_of_set,
+			label_of_set, label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points "

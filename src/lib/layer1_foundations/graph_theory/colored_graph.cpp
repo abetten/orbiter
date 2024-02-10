@@ -3182,12 +3182,12 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 	Sol_weights = NEW_int(nb_sol * nb_weights);
 
 	for (i = 0; i < D._resultanz; i++) {
-		res = D._results.front();
+		res = D._results[i]; //.front();
 		for (j = 0; j < nb_weights; j++) {
 			Sol_weights[i * nb_weights + j] = res[j];
-			}
-		D._results.pop_front();
 		}
+		//D._results.pop_front();
+	}
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques_weighted_with_two_colors "

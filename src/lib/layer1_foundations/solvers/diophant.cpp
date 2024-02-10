@@ -791,6 +791,7 @@ int diophant::RHS_ge_zero()
 	return true;
 }
 
+
 int diophant::solve_first(
 		int verbose_level)
 {
@@ -817,6 +818,7 @@ int diophant::solve_next()
 	//return solve_next_mckay();
 }
 
+
 #if 0
 int diophant::solve_first_wassermann(int verbose_level)
 {
@@ -824,6 +826,7 @@ int diophant::solve_first_wassermann(int verbose_level)
 	exit(1);
 }
 #endif
+
 
 int diophant::solve_first_mckay(
 		int f_once, int verbose_level)
@@ -859,11 +862,11 @@ int diophant::solve_first_mckay(
 	if (_resultanz == 0) {
 		return false;
 	}
-	res = _results.front();
+	res = _results[_cur_result]; //.front();
 	for (j = 0; j < n; j++) {
 		x[j] = res[j];
 	}
-	_results.pop_front();
+	//_results.pop_front();
 	_cur_result++;
 	if (f_v) {
 		cout << "diophant::solve_first_mckay done" << endl;
@@ -872,14 +875,14 @@ int diophant::solve_first_mckay(
 }
 
 
-void diophant::write_solutions(
+void diophant::write_solutions_full_length(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "diophant::write_solutions" << endl;
+		cout << "diophant::write_solutions_full_length" << endl;
 	}
 
 
@@ -888,59 +891,59 @@ void diophant::write_solutions(
 
 	width = n;
 
-	get_solutions_full_length(
+	get_solutions(
 			Sol,
 			nb_sol, 0 /*verbose_level*/);
 
 	Fio.Csv_file_support->int_matrix_write_csv(fname, Sol, nb_sol, width);
 
 
-#if 0
-
-	{
-		ofstream fp(fname);
-		int i, j, h;
-		vector<int> res;
-
-		fp << _resultanz << " " << n << endl;
-		for (i = 0; i < _resultanz; i++) {
-			res = _results.front();
-			h = 0;
-			for (j = 0; j < n; j++) {
-				fp << res[j] << " ";
-				h += res[j];
-#if 0
-				if (res[j]) {
-					fp << j << " ";
-					h++;
-				}
-#endif
-			}
-			if (f_has_sum) {
-				if (h != sum) {
-					cout << "diophant::write_solutions h != sum" << endl;
-					cout << "nb_sol = " << _resultanz << endl;
-					cout << "sum = " << sum << endl;
-					cout << "h = " << h << endl;
-					cout << "res=" << endl;
-					for (j = 0; j < n; j++) {
-						cout << j << " : " << res[j] << endl;
-					}
-					exit(1);
-				}
-			}
-			fp << endl;
-			_results.pop_front();
-		}
-		fp << "-1" << endl;
-	}
-#endif
-
 	if (f_v) {
-		cout << "diophant::write_solutions written file " << fname
+		cout << "diophant::write_solutions_full_length "
+				"written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
+	if (f_v) {
+		cout << "diophant::write_solutions_full_length done" << endl;
+	}
 }
+
+void diophant::write_solutions_index_set(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "diophant::write_solutions_index_set" << endl;
+	}
+
+
+	int *Sol;
+	int nb_sol, width;
+
+	width = n;
+
+	get_solutions(
+			Sol,
+			nb_sol, 0 /*verbose_level*/);
+
+	//Fio.Csv_file_support->int_matrix_write_csv(fname, Sol, nb_sol, width);
+
+	Fio.write_solutions_as_index_set(
+			fname, Sol, nb_sol, width, sum,
+			verbose_level);
+
+	if (f_v) {
+		cout << "diophant::write_solutions_index_set "
+				"written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "diophant::write_solutions_index_set done" << endl;
+	}
+}
+
 
 void diophant::read_solutions_from_file(
 		std::string &fname_sol,
@@ -995,12 +998,12 @@ void diophant::read_solutions_from_file(
 	}
 }
 
-
-void diophant::get_solutions(
-		long int *&Sol, int &nb_sol, int verbose_level)
+void diophant::get_solutions_index_set(
+		int *&Sol, int &nb_sol, int verbose_level)
+// allocates Sol[nb_sol * sum]
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, h;
+	int i, j, cnt;
 	vector<int> res;
 
 	if (f_v) {
@@ -1013,28 +1016,59 @@ void diophant::get_solutions(
 		exit(1);
 	}
 	nb_sol = _resultanz;
-	Sol = NEW_lint(nb_sol * sum);
+	Sol = NEW_int(nb_sol * sum);
 	for (i = 0; i < _resultanz; i++) {
-		res = _results.front();
-		h = 0;
+		res = _results[i];
+		cnt = 0;
 		for (j = 0; j < n; j++) {
-			//x[j] = res[j];
 			if (res[j]) {
-				Sol[i * sum + h] = j;
-				h++;
+				Sol[i * sum + cnt] = j;
+				cnt++;
 			}
 		}
-		if (h != sum) {
-			cout << "diophant::get_solutions h != sum" << endl;
+		if (cnt != sum) {
+			cout << "diophant::get_solutions_index_set cnt != sum" << endl;
 			exit(1);
 		}
-		_results.pop_front();
 	}
 	if (f_v) {
 		cout << "diophant::get_solutions done" << endl;
 	}
 }
 
+void diophant::get_solutions(
+		int *&Sol, int &nb_sol, int verbose_level)
+// allocates Sol[nb_sol * n]
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	vector<int> res;
+
+	if (f_v) {
+		cout << "diophant::get_solutions" << endl;
+		cout << "nb_sol = " << _resultanz << endl;
+		cout << "sum = " << sum << endl;
+	}
+#if 0
+	if (!f_has_sum) {
+		cout << "diophant::get_solutions !f_has_sum" << endl;
+		exit(1);
+	}
+#endif
+	nb_sol = _resultanz;
+	Sol = NEW_int(nb_sol * n);
+	for (i = 0; i < _resultanz; i++) {
+		res = _results[i];
+		for (j = 0; j < n; j++) {
+			Sol[i * n + j] = res[j];
+		}
+	}
+	if (f_v) {
+		cout << "diophant::get_solutions done" << endl;
+	}
+}
+
+#if 0
 void diophant::get_solutions_full_length(
 		int *&Sol,
 		int &nb_sol, int verbose_level)
@@ -1057,16 +1091,17 @@ void diophant::get_solutions_full_length(
 	nb_sol = _resultanz;
 	Sol = NEW_int(nb_sol * n);
 	for (i = 0; i < _resultanz; i++) {
-		res = _results.front();
+		res = _results[i]; //.front();
 		for (j = 0; j < n; j++) {
 			Sol[i * n + j] = res[j];
 		}
-		_results.pop_front();
+		//_results.pop_front();
 	}
 	if (f_v) {
 		cout << "diophant::get_solutions_full_length done" << endl;
 	}
 }
+#endif
 
 void diophant::test_solution_full_length(
 		int *sol, int verbose_level)
@@ -1713,9 +1748,9 @@ int diophant::solve_next_mckay(
 	int j;
 	if (_cur_result < _resultanz) {
 		for (j = 0; j < n; j++) {
-			x[j] = _results.front()[j];
+			x[j] = _results[_cur_result][j]; //.front()[j];
 		}
-		_results.pop_front();
+		//_results.pop_front();
 		_cur_result++;
 		return true;
 	}
@@ -3346,7 +3381,7 @@ void diophant::split_by_equation(
 	int *Sol;
 	int nb_sol;
 
-	D->get_solutions_full_length(Sol, nb_sol, verbose_level);
+	D->get_solutions(Sol, nb_sol, verbose_level);
 
 	if (f_solve_case) {
 		if (f_v) {
@@ -3419,7 +3454,7 @@ void diophant::split_by_two_equations(
 	int nb_sol;
 	int idx;
 
-	D->get_solutions_full_length(Sol, nb_sol, verbose_level);
+	D->get_solutions(Sol, nb_sol, verbose_level);
 
 	if (f_solve_case) {
 		for (idx = 0; idx < nb_sol; idx++) {
@@ -4533,18 +4568,17 @@ int diophant::solve_first_mckay_once_option(
 	if (_resultanz == 0) {
 		return false;
 	}
-	res = _results.front();
+	res = _results[_cur_result]; //.front();
 	for (j = 0; j < n; j++) {
 		x[j] = res[j];
 	}
-	_results.pop_front();
+	//_results.pop_front();
 	_cur_result++;
 	if (f_v) {
 		cout << "diophant::solve_first_mckay done" << endl;
 	}
 	return true;
 }
-
 
 
 // #############################################################################

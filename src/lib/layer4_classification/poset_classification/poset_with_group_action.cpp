@@ -22,7 +22,6 @@ static int callback_test_independence_condition(
 
 poset_with_group_action::poset_with_group_action()
 {
-	description = NULL;
 	f_subset_lattice = false;
 	n = 0;
 	f_subspace_lattice = false;
@@ -103,63 +102,6 @@ void poset_with_group_action::init_subspace_lattice(
 	}
 }
 
-#if 0
-void poset_with_group_action::init(
-		poset_description *description,
-		actions::action *A, // the action in which the group is given
-		actions::action *A2, // the action in which we do the search
-		groups::strong_generators *Strong_gens,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "poset_with_group_action::init" << endl;
-	}
-	poset_with_group_action::description = description;
-	poset_with_group_action::A = A;
-	poset_with_group_action::A2 = A2;
-	poset_with_group_action::Strong_gens = Strong_gens;
-
-
-	f_subset_lattice = description->f_subset_lattice;
-	n = A2->degree;
-	f_subspace_lattice = description->f_subspace_lattice;
-	VS = NEW_OBJECT(linear_algebra::vector_space);
-	algebra::matrix_group *mtx;
-	field_theory::finite_field *F;
-	mtx = A->get_matrix_group();
-	F = mtx->GFq;
-	if (mtx->n != description->dimension) {
-		cout << "poset_with_group_action::init mtx->n != description->dimension" << endl;
-		exit(1);
-	}
-	VS->init(F, description->dimension, verbose_level);
-	Strong_gens->group_order(go);
-	f_has_orbit_based_testing = false;
-
-	if (description->f_independence_condition) {
-		add_independence_condition(
-				description->independence_condition_value,
-				verbose_level);
-	}
-	if (f_v) {
-		cout << "poset_with_group_action::init action A:" << endl;
-		A->print_info();
-	}
-	if (f_v) {
-		cout << "poset_with_group_action::init action A2:" << endl;
-		A2->print_info();
-	}
-	if (f_v) {
-		cout << "poset_with_group_action::init generators for a group of order " << go
-				<< " and degree " << A2->degree << endl;
-	}
-	if (f_v) {
-		cout << "poset_with_group_action::init done" << endl;
-	}
-}
-#endif
 
 void poset_with_group_action::add_independence_condition(
 		int independence_value,
@@ -349,7 +291,8 @@ void poset_with_group_action::early_test_func(
 	}
 }
 
-void poset_with_group_action::unrank_point(int *v, long int rk)
+void poset_with_group_action::unrank_point(
+		int *v, long int rk)
 {
 	if (!f_subspace_lattice) {
 		cout << "poset_with_group_action::unrank_point !f_subspace_lattice" << endl;
@@ -362,7 +305,8 @@ void poset_with_group_action::unrank_point(int *v, long int rk)
 	VS->unrank_point(v, rk);
 }
 
-long int poset_with_group_action::rank_point(int *v)
+long int poset_with_group_action::rank_point(
+		int *v)
 {
 	long int rk;
 

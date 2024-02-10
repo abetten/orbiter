@@ -931,6 +931,7 @@ namespace solvers {
 #define Get_symbol(label) orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
 #define Find_symbol(label) orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
 #define Get_crc_code(A) orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
+#define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
 
 
 

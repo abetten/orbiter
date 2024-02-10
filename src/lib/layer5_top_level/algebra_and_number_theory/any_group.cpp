@@ -1955,7 +1955,7 @@ void any_group::orbits_on_points(
 	algebra_global_with_action Algebra;
 
 
-	int f_load_save = true;
+	int f_load_save = false;
 	string prefix;
 
 	prefix.assign(label);

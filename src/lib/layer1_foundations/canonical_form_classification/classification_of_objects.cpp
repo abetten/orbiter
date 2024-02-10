@@ -81,6 +81,32 @@ classification_of_objects::~classification_of_objects()
 	}
 }
 
+std::string classification_of_objects::get_label()
+{
+	if (!IS) {
+		cout << "classification_of_objects::get_label !IS" << endl;
+		exit(1);
+	}
+	if (!IS->Descr->f_label) {
+		cout << "classification_of_objects::get_label !IS->Descr->f_label" << endl;
+		exit(1);
+	}
+	return IS->Descr->label_txt;
+}
+
+std::string classification_of_objects::get_label_tex()
+{
+	if (!IS) {
+		cout << "classification_of_objects::get_label_tex !IS" << endl;
+		exit(1);
+	}
+	if (!IS->Descr->f_label) {
+		cout << "classification_of_objects::get_label_tex !IS->Descr->f_label" << endl;
+		exit(1);
+	}
+	return IS->Descr->label_tex;
+}
+
 void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
@@ -340,6 +366,8 @@ void classification_of_objects::save_automorphism_group_order(
 	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
+	ago_fname = get_label();
+#if 0
 	if (Descr->f_label) {
 		ago_fname.assign(Descr->label);
 	}
@@ -347,6 +375,7 @@ void classification_of_objects::save_automorphism_group_order(
 		ago_fname.assign("classification");
 
 	}
+#endif
 	ST.replace_extension_with(ago_fname, "_ago.csv");
 
 	string label;
@@ -375,6 +404,8 @@ void classification_of_objects::save_transversal(
 	orbiter_kernel_system::file_io Fio;
 	data_structures::string_tools ST;
 
+	fname = get_label();
+#if 0
 	if (Descr->f_label) {
 		fname.assign(Descr->label);
 	}
@@ -382,6 +413,8 @@ void classification_of_objects::save_transversal(
 		fname.assign("classification");
 
 	}
+#endif
+
 	ST.replace_extension_with(fname, "_transversal.csv");
 	string label;
 

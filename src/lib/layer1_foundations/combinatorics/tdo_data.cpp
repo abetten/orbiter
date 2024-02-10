@@ -101,7 +101,8 @@ int tdo_data::solve_first_system(
 	int i, nb_sol, nb_vars;
 	
 	if (f_v) {
-		cout << "tdo_data::solve_first_system D1->n=" << D1->n << endl;
+		cout << "tdo_data::solve_first_system "
+				"D1->n=" << D1->n << endl;
 	}
 	nb_vars = D1->n;
 	nb_sol = 0;
@@ -186,7 +187,8 @@ void tdo_data::solve_second_system_omit(
 		cout << "omit=" << omit << endl;
 		cout << "calling D2->project f=" << f << " l=" << l << endl;
 	}
-	D2->project(&D, f, l, eqn_number, nb_eqns_replaced,
+	D2->project(
+			&D, f, l, eqn_number, nb_eqns_replaced,
 			eqns_replaced, verbose_level - 1);
 	D.f_has_sum = true;
 	D.sum = s;
@@ -222,7 +224,7 @@ void tdo_data::solve_second_system_omit(
 			distributions[nb_distributions * nb_line_types + j] = 0;
 		}
 		for (j = 0; j < D.n; j++) {
-			D.x[j] = D._results.front()[j];
+			D.x[j] = D._results[N][j]; //.front()[j];
 		}
 		if (f_v) {
 			cout << "solution " << N << ":" << endl;
@@ -231,7 +233,7 @@ void tdo_data::solve_second_system_omit(
 			}
 			cout << endl;
 		}
-		D._results.pop_front();
+		//D._results.pop_front();
 		D.multiply_A_x_to_RHS1();
 		for (i = 0; i < D2->m; i++) {
 			D2->RHS1[i] = 0;

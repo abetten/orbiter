@@ -21,8 +21,10 @@ namespace canonical_form_classification {
 
 classification_of_objects_report_options::classification_of_objects_report_options()
 {
+#if 0
 	f_prefix = false;
 	//std::string prefix;
+#endif
 
 	f_export_flag_orbits = false;
 
@@ -59,12 +61,14 @@ int classification_of_objects_report_options::read_arguments(
 
 		cout << "classification_of_objects_report_options::read_arguments, next argument is " << argv[i] << endl;
 
+#if 0
 		if (ST.stringcmp(argv[i], "-prefix") == 0) {
 			f_prefix = true;
 			prefix.assign(argv[++i]);
 			cout << "-prefix " << prefix << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-export_flag_orbits") == 0) {
+#endif
+		if (ST.stringcmp(argv[i], "-export_flag_orbits") == 0) {
 			f_export_flag_orbits = true;
 			cout << "-export_flag_orbits" << endl;
 		}
@@ -137,9 +141,11 @@ int classification_of_objects_report_options::read_arguments(
 
 void classification_of_objects_report_options::print()
 {
+#if 0
 	if (f_prefix) {
 		cout << "-prefix " << prefix << endl;
 	}
+#endif
 	if (f_export_flag_orbits) {
 		cout << "-export_flag_orbits " << endl;
 	}

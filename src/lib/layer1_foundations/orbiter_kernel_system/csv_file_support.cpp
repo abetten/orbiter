@@ -960,6 +960,11 @@ void csv_file_support::do_csv_file_select_cols(
 	if (f_v) {
 		cout << "csv_file_support::do_csv_file_select_cols" << endl;
 	}
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols fname = " << fname << endl;
+		cout << "csv_file_support::do_csv_file_select_cols fname_append = " << fname_append << endl;
+		cout << "csv_file_support::do_csv_file_select_cols cols_text = " << cols_text << endl;
+	}
 	long int *Cols;
 	int nb_cols;
 

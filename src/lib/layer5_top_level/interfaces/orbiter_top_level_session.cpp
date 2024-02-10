@@ -38,6 +38,9 @@ orbiter_top_level_session::orbiter_top_level_session()
 	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->f_has_free_entry_callback = true;
 	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->free_entry_callback = free_symbol_table_entry_callback;
 
+	The_Orbiter_top_level_session->Orbiter_session->f_has_get_projective_space_low_level_function = true;
+	The_Orbiter_top_level_session->Orbiter_session->get_projective_space_low_level_function = get_projective_space_low_level_function;
+
 	//Orbiter_session = NULL;
 }
 
@@ -1116,6 +1119,16 @@ void free_symbol_table_entry_callback(
 	if (f_v) {
 		cout << "free_symbol_table_entry_callback done" << endl;
 	}
+}
+
+geometry::projective_space *get_projective_space_low_level_function(void *ptr)
+{
+	projective_geometry::projective_space_with_action *PA;
+
+	PA = (projective_geometry::projective_space_with_action *) ptr;
+
+	return PA->P;
+
 }
 
 

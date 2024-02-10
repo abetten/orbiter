@@ -20,22 +20,21 @@ namespace canonical_form_classification {
 classification_of_objects_description::classification_of_objects_description()
 {
 
+#if 0
 	f_label = false;
 	//std::string label;
+#endif
 
 	f_save_classification = false;
 	//std::string save_prefix;
 
-#if 0
-	fixed_structure_order_list_sz = 0;
-	//fixed_structure_order_list;
-#endif
-
 	f_max_TDO_depth = false;
 	max_TDO_depth = 0;
 
+#if 0
 	f_classification_prefix = false;
 	//std::string classification_prefix;
+#endif
 
 	f_save_canonical_labeling = false;
 
@@ -62,13 +61,15 @@ int classification_of_objects_description::read_arguments(
 
 		cout << "classification_of_objects_description::read_arguments, next argument is " << argv[i] << endl;
 
+#if 0
 		if (ST.stringcmp(argv[i], "-label") == 0) {
 			f_label = true;
 			label.assign(argv[++i]);
 			cout << "-label" << label << endl;
 		}
+#endif
 
-		else if (ST.stringcmp(argv[i], "-save_classification") == 0) {
+		if (ST.stringcmp(argv[i], "-save_classification") == 0) {
 			f_save_classification = true;
 			save_prefix.assign(argv[++i]);
 			cout << "-save_classification" << save_prefix << endl;
@@ -88,11 +89,13 @@ int classification_of_objects_description::read_arguments(
 			cout << "-max_TDO_depth " << max_TDO_depth << endl;
 		}
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-classification_prefix") == 0) {
 			f_classification_prefix = true;
 			classification_prefix.assign(argv[++i]);
 			cout << "-classification_prefix " << classification_prefix << endl;
 		}
+#endif
 
 		else if (ST.stringcmp(argv[i], "-save_canonical_labeling") == 0) {
 			f_save_canonical_labeling = true;
@@ -127,9 +130,11 @@ int classification_of_objects_description::read_arguments(
 void classification_of_objects_description::print()
 {
 
+#if 0
 	if (f_label) {
 		cout << "-label " << label << endl;
 	}
+#endif
 	if (f_save_classification) {
 		cout << "-save_classification " << save_prefix << endl;
 	}
@@ -138,10 +143,11 @@ void classification_of_objects_description::print()
 		cout << "-max_TDO_depth " << max_TDO_depth << endl;
 	}
 
+#if 0
 	if (f_classification_prefix) {
 		cout << "-classification_prefix " << classification_prefix << endl;
 	}
-
+#endif
 
 	if (f_save_canonical_labeling) {
 		cout << "-save_canonical_labeling " << endl;

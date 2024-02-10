@@ -147,8 +147,10 @@ void classify_five_plus_one::init(
 
 
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set.assign("linear_complex");
+	label_of_set.assign("_linear_complex");
+	label_of_set_tex.assign("\\_linear\\_complex");
 
 
 	if (f_v) {
@@ -159,7 +161,8 @@ void classify_five_plus_one::init(
 	A_on_neighbors = NEW_OBJECT(actions::action);
 	A_on_neighbors = A2->Induced_action->create_induced_action_by_restriction(
 		NULL,
-		Linear_complex->nb_neighbors, Linear_complex->Neighbors, label_of_set,
+		Linear_complex->nb_neighbors, Linear_complex->Neighbors,
+		label_of_set, label_of_set_tex,
 		false /* f_induce_action */,
 		0 /* verbose_level */);
 

@@ -100,7 +100,8 @@ poset_of_orbits::~poset_of_orbits()
 }
 
 
-void poset_of_orbits::init(poset_classification *PC,
+void poset_of_orbits::init(
+		poset_classification *PC,
 		int nb_poset_orbit_nodes,
 		int sz, int max_set_size, long int t0,
 		int verbose_level)
@@ -196,7 +197,8 @@ void poset_of_orbits::reallocate()
 
 }
 
-void poset_of_orbits::reallocate_to(long int new_number_of_nodes,
+void poset_of_orbits::reallocate_to(
+		long int new_number_of_nodes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -230,32 +232,43 @@ void poset_of_orbits::reallocate_to(long int new_number_of_nodes,
 	}
 }
 
+int poset_of_orbits::get_max_set_size()
+{
+	return max_set_size;
+}
+
+
 long int poset_of_orbits::get_nb_poset_orbit_nodes_allocated()
 {
 	return nb_poset_orbit_nodes_allocated;
 }
 
-long int poset_of_orbits::get_nb_extension_nodes_at_level_total(int level)
+long int poset_of_orbits::get_nb_extension_nodes_at_level_total(
+		int level)
 {
 	return nb_extension_nodes_at_level_total[level];
 }
 
-void poset_of_orbits::set_nb_poset_orbit_nodes_used(int value)
+void poset_of_orbits::set_nb_poset_orbit_nodes_used(
+		int value)
 {
 	nb_poset_orbit_nodes_used = value;
 }
 
-int poset_of_orbits::first_node_at_level(int i)
+int poset_of_orbits::first_node_at_level(
+		int i)
 {
 	return first_poset_orbit_node_at_level[i];
 }
 
-void poset_of_orbits::set_first_node_at_level(int i, int value)
+void poset_of_orbits::set_first_node_at_level(
+		int i, int value)
 {
 	first_poset_orbit_node_at_level[i] = value;
 }
 
-poset_orbit_node *poset_of_orbits::get_node(int node_idx)
+poset_orbit_node *poset_of_orbits::get_node(
+		int node_idx)
 {
 	return root + node_idx;
 }
@@ -275,7 +288,8 @@ long int *poset_of_orbits::get_set3()
 	return set3;
 }
 
-int poset_of_orbits::nb_orbits_at_level(int level)
+int poset_of_orbits::nb_orbits_at_level(
+		int level)
 {
 	int f, l;
 
@@ -284,7 +298,8 @@ int poset_of_orbits::nb_orbits_at_level(int level)
 	return l;
 }
 
-long int poset_of_orbits::nb_flag_orbits_up_at_level(int level)
+long int poset_of_orbits::nb_flag_orbits_up_at_level(
+		int level)
 {
 	int f, l, i;
 	long int F;
@@ -298,7 +313,8 @@ long int poset_of_orbits::nb_flag_orbits_up_at_level(int level)
 	return F;
 }
 
-poset_orbit_node *poset_of_orbits::get_node_ij(int level, int node)
+poset_orbit_node *poset_of_orbits::get_node_ij(
+		int level, int node)
 {
 	int f;
 
@@ -306,7 +322,8 @@ poset_orbit_node *poset_of_orbits::get_node_ij(int level, int node)
 	return root + f + node;
 }
 
-int poset_of_orbits::node_get_nb_of_extensions(int node)
+int poset_of_orbits::node_get_nb_of_extensions(
+		int node)
 {
 	return root[node].get_nb_of_extensions();
 }
@@ -346,7 +363,8 @@ int poset_of_orbits::find_extension_from_point(
 	return i;
 }
 
-long int poset_of_orbits::count_extension_nodes_at_level(int lvl)
+long int poset_of_orbits::count_extension_nodes_at_level(
+		int lvl)
 {
 	int prev;
 
@@ -366,7 +384,8 @@ long int poset_of_orbits::count_extension_nodes_at_level(int lvl)
 	return nb_extension_nodes_at_level_total[lvl];
 }
 
-double poset_of_orbits::level_progress(int lvl)
+double poset_of_orbits::level_progress(
+		int lvl)
 {
 	return
 		((double)(nb_fusion_nodes_at_level[lvl] +
@@ -374,7 +393,8 @@ double poset_of_orbits::level_progress(int lvl)
 			(double) nb_extension_nodes_at_level_total[lvl];
 }
 
-void poset_of_orbits::change_extension_type(int level,
+void poset_of_orbits::change_extension_type(
+		int level,
 		int node, int cur_ext, int type, int verbose_level)
 {
 	if (type == EXTENSION_TYPE_EXTENSION) {
@@ -409,7 +429,8 @@ void poset_of_orbits::change_extension_type(int level,
 	}
 }
 
-void poset_of_orbits::get_table_of_nodes(long int *&Table,
+void poset_of_orbits::get_table_of_nodes(
+		long int *&Table,
 		int &nb_rows, int &nb_cols, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -468,7 +489,8 @@ int poset_of_orbits::count_live_points(
 	return nb_points;
 }
 
-void poset_of_orbits::print_progress_by_level(int lvl)
+void poset_of_orbits::print_progress_by_level(
+		int lvl)
 {
 	int i;
 
@@ -497,7 +519,8 @@ void poset_of_orbits::print_tree()
 	}
 }
 
-void poset_of_orbits::init_root_node_from_base_case(int verbose_level)
+void poset_of_orbits::init_root_node_from_base_case(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -561,7 +584,8 @@ void poset_of_orbits::init_root_node_from_base_case(int verbose_level)
 	}
 }
 
-void poset_of_orbits::init_root_node(int verbose_level)
+void poset_of_orbits::init_root_node(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -571,21 +595,25 @@ void poset_of_orbits::init_root_node(int verbose_level)
 	if (PC->has_base_case()) {
 
 		if (f_v) {
-			cout << "poset_of_orbits::init_root_node before init_root_node_from_base_case" << endl;
+			cout << "poset_of_orbits::init_root_node "
+					"before init_root_node_from_base_case" << endl;
 		}
 		init_root_node_from_base_case(verbose_level);
 		if (f_v) {
-			cout << "poset_of_orbits::init_root_node after init_root_node_from_base_case" << endl;
+			cout << "poset_of_orbits::init_root_node "
+					"after init_root_node_from_base_case" << endl;
 		}
 
 	}
 	else {
 		if (f_v) {
-			cout << "poset_of_orbits::init_root_node before root[0].init_root_node" << endl;
+			cout << "poset_of_orbits::init_root_node "
+					"before root[0].init_root_node" << endl;
 		}
 		root[0].init_root_node(PC, verbose_level - 1);
 		if (f_v) {
-			cout << "poset_of_orbits::init_root_node after root[0].init_root_node" << endl;
+			cout << "poset_of_orbits::init_root_node "
+					"after root[0].init_root_node" << endl;
 		}
 	}
 	if (f_v) {
@@ -593,7 +621,8 @@ void poset_of_orbits::init_root_node(int verbose_level)
 	}
 }
 
-void poset_of_orbits::make_tabe_of_nodes(int verbose_level)
+void poset_of_orbits::make_tabe_of_nodes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -614,7 +643,8 @@ void poset_of_orbits::make_tabe_of_nodes(int verbose_level)
 			fname, Table, nb_rows, nb_cols);
 
 	if (f_v) {
-		cout << "poset_classification::post_processing written file " << fname
+		cout << "poset_classification::post_processing "
+				"written file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
@@ -859,7 +889,8 @@ void poset_of_orbits::write_memory_object(
 	}
 }
 
-long int poset_of_orbits::calc_size_on_file(int depth_completed,
+long int poset_of_orbits::calc_size_on_file(
+		int depth_completed,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1231,7 +1262,8 @@ void poset_of_orbits::write_candidates_binary_using_sv(
 	}
 }
 
-void poset_of_orbits::read_level_file(int level,
+void poset_of_orbits::read_level_file(
+		int level,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

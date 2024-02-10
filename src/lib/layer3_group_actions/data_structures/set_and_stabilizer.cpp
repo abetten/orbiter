@@ -440,8 +440,10 @@ void set_and_stabilizer::rearrange_by_orbits(
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set = "rearrange_by_orbits";
+	label_of_set = "_rearrange_by_orbits";
+	label_of_set_tex = "\\_rearrange\\_by\\_orbits";
 
 
 	if (f_v) {
@@ -450,7 +452,9 @@ void set_and_stabilizer::rearrange_by_orbits(
 				"of lines" << endl;
 	}
 	A_on_set = A2->Induced_action->restricted_action(
-			data, sz, label_of_set, verbose_level);
+			data, sz,
+			label_of_set, label_of_set_tex,
+			verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"creating restricted action on the set of "
@@ -536,10 +540,12 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
 
 
-	label_of_set = "on_set";
+	label_of_set = "_on_set";
+	label_of_set_tex = "\\_on\\_set";
 
 			
 	if (f_v) {
@@ -548,7 +554,9 @@ actions::action *set_and_stabilizer::create_restricted_action_on_the_set(
 				"action on the set" << endl;
 	}
 	A_on_set = A2->Induced_action->restricted_action(
-			data, sz, label_of_set, verbose_level);
+			data, sz,
+			label_of_set, label_of_set_tex,
+			verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
@@ -573,15 +581,19 @@ void set_and_stabilizer::print_restricted_action_on_the_set(
 	
 	actions::action *A_on_set;
 	std::string label_of_set;
+	std::string label_of_set_tex;
 
-	label_of_set = "on_set";
+	label_of_set = "_on_set";
+	label_of_set_tex = "\\_on\\_set";
 			
 	if (f_v) {
 		cout << "set_and_stabilizer::print_restricted_action_"
 				"on_the_set creating restricted action on the set" << endl;
 	}
 	A_on_set = A2->Induced_action->restricted_action(
-			data, sz, label_of_set, verbose_level);
+			data, sz,
+			label_of_set, label_of_set_tex,
+			verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
