@@ -108,6 +108,7 @@ clean:
 	cd data_structures; $(MAKE) clean
 	cd Eigen_interface; $(MAKE) clean
 	cd expression_parser; $(MAKE) clean
+	cd expression_parser_sajeeb; $(MAKE) clean
 	cd finite_fields; $(MAKE) clean
 	cd geometry; $(MAKE) clean
 	cd geometry_builder; $(MAKE) clean
