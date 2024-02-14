@@ -473,7 +473,8 @@ void diophant_create::init(
 	}
 }
 
-void diophant_create::arc_lifting1(int verbose_level)
+void diophant_create::arc_lifting1(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

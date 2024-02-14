@@ -39,7 +39,7 @@ all: \
 	ring_theory \
 	solvers \
 	BitSet
-  
+
 
 
 

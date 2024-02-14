@@ -112,7 +112,8 @@ public:
 	void init(
 			diophant_description *Descr,
 			int verbose_level);
-	void arc_lifting1(int verbose_level);
+	void arc_lifting1(
+			int verbose_level);
 
 };
 

@@ -1,7 +1,7 @@
 
 #ORBITER_PATH=../orbiter
 
-ORBITER_PATH=~/DEV.23/orbiter
+ORBITER_PATH=~/orbiter
 
 #ORBITER_PATH=/s/hipft-logger/b/nobackup/abetten/orbiter
 #ORBITER_PATH=/scratch/betten/COMPILE/orbiter
