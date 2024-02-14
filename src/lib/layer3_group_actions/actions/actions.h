@@ -973,11 +973,12 @@ public:
 
 	/** Create the affine group AGL(n,q) as abstract permutation group,
 	 * not as matrix group */
-	void init_affine_group(
+	void init_affine_group_in_permutation_representation(
 			int n, int q, int f_translations,
 		int f_semilinear, int frobenius_power,
 		int f_multiplication,
 		int multiplication_order, int verbose_level);
+		// creates finite_field object
 
 
 	/** Create the symmetric group
@@ -999,12 +1000,6 @@ public:
 		void (* callback_choose_random_generator)(int iteration,
 			int *Elt, void *data, int verbose_level),
 		int verbose_level);
-
-	void init_orthogonal_group_with_O(
-			orthogonal_geometry::orthogonal *O,
-		int f_on_points, int f_on_lines, int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
 
 
 	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
@@ -1035,6 +1030,22 @@ public:
 			int *Perms, int degree,
 			int verbose_level);
 
+	/** Create the orthogonal group O^epsilon(n,q) */
+	void init_orthogonal_group(
+			int epsilon,
+		int n, field_theory::finite_field *F,
+		int f_on_points, int f_on_lines,
+		int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+	// creates an object of type orthogonal
+
+	void init_orthogonal_group_with_O(
+			orthogonal_geometry::orthogonal *O,
+		int f_on_points, int f_on_lines, int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
 	/** Create the orthogonal group O(5,q) */
 	void init_BLT(
 			field_theory::finite_field *F, int f_basis,
@@ -1048,15 +1059,6 @@ public:
 		int given_base_length, int *given_base,
 		int verbose_level);
 
-
-	/** Create the orthogonal group O^epsilon(n,q) */
-	void init_orthogonal_group(
-			int epsilon,
-		int n, field_theory::finite_field *F,
-		int f_on_points, int f_on_lines,
-		int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
 
 
 };

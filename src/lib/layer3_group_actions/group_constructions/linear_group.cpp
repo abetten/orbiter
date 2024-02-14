@@ -1337,7 +1337,8 @@ void linear_group::init_orthogonal_group(
 	q = input_q;
 	
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	Strong_gens->generators_for_the_orthogonal_group(A_linear, 
+	Strong_gens->generators_for_the_orthogonal_group(
+			A_linear,
 		F, n, 
 		epsilon, 
 		f_semilinear, 

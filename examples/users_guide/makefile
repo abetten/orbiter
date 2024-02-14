@@ -9737,7 +9737,16 @@ Op_8_2_orbits_on_subspaces:
 		-define G -linear_group -PGL 8 2 -orthogonal 1 -end \
 		-define Orb -orbits -group G \
 			-on_subspaces 8 Control \
-		-end
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+			-report_options \
+				-draw_poset -type_ordinary \
+			-end \
+		-end 
+	pdflatex PGL_8_2_Orthogonal_plus_8_2_poset.tex
+	$(OPEN) PGL_8_2_Orthogonal_plus_8_2_poset.pdf
+
 
 
 PGO_7_2_on_subspaces:

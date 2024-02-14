@@ -2943,7 +2943,8 @@ void strong_generators::generators_for_the_orthogonal_group(
 	A2->Known_groups->init_orthogonal_group(
 			epsilon,
 		n, F, 
-		true /* f_on_points */, false /* f_on_lines */,
+		true /* f_on_points */,
+		false /* f_on_lines */,
 		false /* f_on_points_and_lines */,
 		f_semilinear, 
 		true /* f_basis */, verbose_level - 1);
