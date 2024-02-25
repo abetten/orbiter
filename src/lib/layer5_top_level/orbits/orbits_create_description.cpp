@@ -15,7 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbits_create_description::orbits_create_description()

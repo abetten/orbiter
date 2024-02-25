@@ -1035,6 +1035,185 @@ char algorithms::make_single_hex_digit(
 	}
 }
 
+void algorithms::process_class_list(
+		std::vector<std::vector<std::string> > &Classes_parsed,
+		std::string &fname_cross_ref,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::process_class_list" << endl;
+	}
+
+	int i, j;
+	for (i = 0; i < Classes_parsed.size(); i++) {
+		cout << setw(3) << i << " : ";
+    	for (j = 0; j < Classes_parsed[i].size(); j++) {
+    		cout << Classes_parsed[i][j];
+    		if (j < Classes_parsed[i].size() - 1) {
+    			cout << ", ";
+			}
+    	}
+    	cout << endl;
+	}
+	int maxdepth = 0;
+	for (i = 0; i < Classes_parsed.size(); i++) {
+		maxdepth = MAXIMUM(maxdepth, Classes_parsed[i].size());
+	}
+	//map<string,int> *name;
+	//int *Nb;
+	//name = new map<string,int> [maxdepth];
+	//Nb = NEW_int(maxdepth);
+	//Int_vec_zero(Nb, maxdepth);
+
+	vector<vector<string>> Names;
+
+	for (j = 0; j < maxdepth; j++) {
+
+		vector<string> names;
+		unordered_set<string> Set;
+		for (i = 0; i < Classes_parsed.size(); i++) {
+			if (Classes_parsed[i].size() > j) {
+				string s;
+
+				s = Classes_parsed[i][j];
+				Set.insert(s);
+			}
+		}
+
+		names.assign( Set.begin(), Set.end() );
+		sort( names.begin(), names.end() );
+		Names.push_back(names);
+
+	}
+	for (j = 0; j < maxdepth; j++) {
+		cout << "depth " << j << ":" << endl;
+		for (i = 0; i < Names[j].size(); i++) {
+			cout << i << " : " << Names[j][i] << endl;
+		}
+	}
+
+	map<string,int> *map_name;
+
+	map_name = new map<string,int> [maxdepth];
+	for (j = 0; j < maxdepth; j++) {
+		for (i = 0; i < Names[j].size(); i++) {
+			map_name[j].insert(pair<string, int>(Names[j][i], i));
+		}
+	}
+
+	vector<vector<int>> Tree;
+
+	for (i = 0; i < Classes_parsed.size(); i++) {
+		vector<int> path;
+    	for (j = 0; j < Classes_parsed[i].size(); j++) {
+    		string s;
+
+    		s = Classes_parsed[i][j];
+    		path.push_back(map_name[j][s]);
+    	}
+    	Tree.push_back(path);
+	}
+
+	sort(Tree.begin(), Tree.end());
+
+	for (i = 0; i < Tree.size(); i++) {
+		cout << setw(3) << i << " : ";
+		for (j = 0; j < Tree[i].size(); j++) {
+			cout << Tree[i][j];
+			if (j < Tree[i].size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+	data_structures::string_tools String;
+	orbiter_kernel_system::file_io Fio;
+
+
+	std::string *col_label;
+	std::string *Table;
+	int m, n;
+
+	Fio.Csv_file_support->read_table_of_strings(
+			fname_cross_ref, col_label,
+			Table, m, n,
+			verbose_level);
+
+	if (n != 3) {
+		cout << "algorithms::process_class_list n != 3" << endl;
+		exit(1);
+	}
+
+	for (i = 0; i < m; i++) {
+		cout << "row " << i;
+		for (j = 0; j < n; j++) {
+			cout << " : " << Table[i * 3 + j];
+		}
+		cout << endl;
+	}
+
+	int c;
+	for (i = 0; i < Tree.size(); i++) {
+		cout << setw(3) << i << " : ";
+		for (j = 0; j < Tree[i].size(); j++) {
+			c = Tree[i][j];
+
+			string s1, s2, s3;
+
+			s1 = Names[j][c];
+
+			String.make_latex_friendly_string(
+					s1, s2, 0 /* verbose_level*/);
+
+			if (j == Tree[i].size() - 1) {
+
+				int h;
+				vector<int> Idx;
+
+				for (h = 0; h < m; h++) {
+					if (Table[h * 3 + 0] == s1) {
+						Idx.push_back(h);
+					}
+				}
+
+				s3 = "{\\bf " + s2;
+				for (h = 0; h < Idx.size(); h++) {
+					string s;
+
+					s = " Table~\\ref{" + Table[Idx[h] * 3 + 2] + "}";
+					if (h < Idx.size() - 1) {
+						s += ", ";
+					}
+					s3 += s;
+				}
+				s3 += "}";
+			}
+			else {
+				s3 = s2;
+			}
+			cout << s3;
+			if (j < Tree[i].size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << "\\\\" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algorithms::process_class_list maxdepth = " << maxdepth << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algorithms::process_class_list done" << endl;
+	}
+
+}
 
 
 }}}

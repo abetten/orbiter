@@ -17,7 +17,9 @@ MODULES = \
 	latex_interface.o \
 	nauty_interface.o \
 	nauty_output.o \
-	povray_interface.o
+	povray_interface.o \
+	pugixml_interface.o \
+	pugixml.o
 
 
 all : $(MODULES)

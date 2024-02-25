@@ -17,6 +17,8 @@ using std::unordered_map;
 using std::shared_ptr;
 using std::make_shared;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class ir_tree_latex_visitor_strategy final {
 public:
     enum class type {

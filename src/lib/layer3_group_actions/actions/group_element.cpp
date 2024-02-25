@@ -24,10 +24,59 @@ group_element::group_element()
 {
 	A = NULL;
 
+	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
+	eltrk1 = eltrk2 = eltrk3 = NULL;
+	elt_mult_apply = NULL;
+	elt1 = NULL;
+	element_rw_memory_object = NULL;
+
 }
 
 group_element::~group_element()
 {
+	int f_v = false;
+
+	if (f_v) {
+		cout << "group_element::~group_element" << endl;
+	}
+
+	if (Elt1) {
+		FREE_int(Elt1);
+	}
+	if (Elt2) {
+		FREE_int(Elt2);
+	}
+	if (Elt3) {
+		FREE_int(Elt3);
+	}
+	if (Elt4) {
+		FREE_int(Elt4);
+	}
+	if (Elt5) {
+		FREE_int(Elt5);
+	}
+	if (eltrk1) {
+		FREE_int(eltrk1);
+	}
+	if (eltrk2) {
+		FREE_int(eltrk2);
+	}
+	if (eltrk3) {
+		FREE_int(eltrk3);
+	}
+	if (elt_mult_apply) {
+		FREE_int(elt_mult_apply);
+	}
+	if (elt1) {
+		FREE_uchar(elt1);
+	}
+	if (element_rw_memory_object) {
+		FREE_char(element_rw_memory_object);
+	}
+
+	if (f_v) {
+		cout << "group_element::~group_element done" << endl;
+	}
 }
 
 void group_element::init(
@@ -39,9 +88,42 @@ void group_element::init(
 		cout << "group_element::init" << endl;
 	}
 	group_element::A = A;
+
+
 	if (f_v) {
 		cout << "group_element::init done" << endl;
 	}
+}
+
+void group_element::null_element_data()
+{
+	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
+	eltrk1 = eltrk2 = eltrk3 = NULL;
+	elt_mult_apply = NULL;
+	elt1 = NULL;
+	element_rw_memory_object = NULL;
+
+}
+
+void group_element::allocate_element_data()
+// this cannot go to init because we don't have A->elt_size_in_int yet.
+{
+	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
+	eltrk1 = eltrk2 = eltrk3 = NULL;
+	elt_mult_apply = NULL;
+	elt1 = NULL;
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	Elt5 = NEW_int(A->elt_size_in_int);
+	eltrk1 = NEW_int(A->elt_size_in_int);
+	eltrk2 = NEW_int(A->elt_size_in_int);
+	eltrk3 = NEW_int(A->elt_size_in_int);
+	elt_mult_apply = NEW_int(A->elt_size_in_int);
+	elt1 = NEW_uchar(A->coded_elt_size_in_char);
+	element_rw_memory_object = NEW_char(A->coded_elt_size_in_char);
+
 }
 
 int group_element::image_of(
@@ -126,16 +208,16 @@ void group_element::mult_apply_from_the_right(
 		void *a, void *b)
 // a := a * b
 {
-	(*A->ptr->ptr_element_mult)(*A, a, b, A->elt_mult_apply, 0);
-	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, a, 0);
+	(*A->ptr->ptr_element_mult)(*A, a, b, elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, elt_mult_apply, a, 0);
 }
 
 void group_element::mult_apply_from_the_left(
 		void *a, void *b)
 // b := a * b
 {
-	(*A->ptr->ptr_element_mult)(*A, a, b, A->elt_mult_apply, 0);
-	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, b, 0);
+	(*A->ptr->ptr_element_mult)(*A, a, b, elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, elt_mult_apply, b, 0);
 }
 
 void group_element::invert(
@@ -148,8 +230,8 @@ void group_element::invert(
 void group_element::invert_in_place(
 		void *a)
 {
-	(*A->ptr->ptr_element_invert)(*A, a, A->elt_mult_apply, 0);
-	(*A->ptr->ptr_element_move)(*A, A->elt_mult_apply, a, 0);
+	(*A->ptr->ptr_element_invert)(*A, a, elt_mult_apply, 0);
+	(*A->ptr->ptr_element_move)(*A, elt_mult_apply, a, 0);
 }
 
 void group_element::transpose(
@@ -746,7 +828,7 @@ void group_element::element_write_file_fp(
 	int f_v = (verbose_level >= 1);
 	char *elt;
 
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 	if (elt == NULL) {
 		cout << "group_element::element_write_file_fp elt == NULL" << endl;
 		exit(1);
@@ -768,7 +850,7 @@ void group_element::element_read_file_fp(
 	int f_v = (verbose_level >= 1);
 	char *elt;
 
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 	fp.read(elt, A->coded_elt_size_in_char);
 	//fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 	element_unpack(elt, Elt, false);
@@ -846,7 +928,7 @@ void group_element::element_write_to_memory_object(
 	if (f_v) {
 		cout << "group_element::element_write_to_memory_object" << endl;
 	}
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 
 	element_pack(Elt, elt, false);
 	m->append(A->coded_elt_size_in_char, elt, 0);
@@ -866,7 +948,7 @@ void group_element::element_read_from_memory_object(
 	if (f_v) {
 		cout << "group_element::element_read_from_memory_object" << endl;
 	}
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 
 	for (i = 0; i < A->coded_elt_size_in_char; i++) {
 		m->read_char(elt + i);
@@ -895,7 +977,7 @@ void group_element::element_write_to_file_binary(
 	}
 	//elt = NEW_char(coded_elt_size_in_char);
 		// memory allocation should be avoided in a low-level function
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 	if (elt == NULL) {
 		cout << "group_element::element_write_to_file_binary "
 				"elt == NULL" << endl;
@@ -924,7 +1006,7 @@ void group_element::element_read_from_file_binary(
 	}
 	//elt = NEW_char(coded_elt_size_in_char);
 		// memory allocation should be avoided in a low-level function
-	elt = A->element_rw_memory_object;
+	elt = element_rw_memory_object;
 
 	if (f_v) {
 		cout << "group_element::element_read_from_file_binary "
@@ -964,8 +1046,8 @@ int group_element::element_has_order_two(
 		cout << "group_element::element_has_order_two" << endl;
 	}
 
-	element_mult(E1, E1, A->Elt1, 0);
-	if (is_one(A->Elt1)) {
+	element_mult(E1, E1, Elt1, 0);
+	if (is_one(Elt1)) {
 		ret = true;
 	}
 	else {
@@ -989,9 +1071,9 @@ int group_element::product_has_order_two(
 		cout << "group_element::product_has_order_two" << endl;
 	}
 
-	element_mult(E1, E2, A->Elt1, 0);
-	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
-	if (is_one(A->Elt2)) {
+	element_mult(E1, E2, Elt1, 0);
+	element_mult(Elt1, Elt1, Elt2, 0);
+	if (is_one(Elt2)) {
 		ret = true;
 	}
 	else {
@@ -1015,10 +1097,10 @@ int group_element::product_has_order_three(
 		cout << "group_element::product_has_order_three" << endl;
 	}
 
-	element_mult(E1, E2, A->Elt1, 0);
-	element_mult(A->Elt1, A->Elt1, A->Elt2, 0);
-	element_mult(A->Elt2, A->Elt1, A->Elt3, 0);
-	if (is_one(A->Elt3)) {
+	element_mult(E1, E2, Elt1, 0);
+	element_mult(Elt1, Elt1, Elt2, 0);
+	element_mult(Elt2, Elt1, Elt3, 0);
+	if (is_one(Elt3)) {
 		ret = true;
 	}
 	else {

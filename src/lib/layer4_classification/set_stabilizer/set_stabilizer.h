@@ -91,12 +91,16 @@ public:
 			substructure_stats_and_selection *SubSt,
 			long int *canonical_pts,
 			int verbose_level);
-	void compute_automorphism_group(int verbose_level);
+	void compute_automorphism_group(
+			int verbose_level);
 	void compute_automorphism_group_handle_case(
 			int cnt2, int verbose_level);
-	void setup_stabilizer(groups::sims *Stab0, int verbose_level);
-	void restricted_action_on_interesting_points(int verbose_level);
-	void compute_canonical_form(int verbose_level);
+	void setup_stabilizer(
+			groups::sims *Stab0, int verbose_level);
+	void restricted_action_on_interesting_points(
+			int verbose_level);
+	void compute_canonical_form(
+			int verbose_level);
 	void compute_canonical_form_handle_case(
 			int cnt, int verbose_level);
 	void compute_canonical_set(
@@ -106,11 +110,16 @@ public:
 			long int *set_in, long int *set_out, int sz,
 			int *transporter,
 			groups::sims *&stab, int verbose_level);
-	void update_stabilizer(int verbose_level);
-	void add_automorphism(int verbose_level);
-	void retrieve_automorphism(int verbose_level);
-	void make_canonical_second_set(int verbose_level);
-	void report(std::ostream &ost);
+	void update_stabilizer(
+			int verbose_level);
+	void add_automorphism(
+			int verbose_level);
+	void retrieve_automorphism(
+			int verbose_level);
+	void make_canonical_second_set(
+			int verbose_level);
+	void report(
+			std::ostream &ost);
 	void print_canonical_sets();
 
 };
@@ -201,7 +210,8 @@ public:
 	void find_orbit_pattern(
 			int cnt, int *transp, int verbose_level);
 	// computes transporter to transp
-	void find_interesting_orbits(int verbose_level);
+	void find_interesting_orbits(
+			int verbose_level);
 	void compute_local_labels(
 			long int *set_in, long int *set_out, int sz,
 			int verbose_level);
@@ -212,7 +222,8 @@ public:
 			long int subset_idx, int *transporter, int verbose_level);
 		// computes orbit_count1[]
 	int check_orbit_count();
-	void print_orbit_count(int f_both);
+	void print_orbit_count(
+			int f_both);
 	void print_minimal_orbit_pattern();
 
 };

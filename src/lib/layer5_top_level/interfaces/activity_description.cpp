@@ -674,7 +674,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-orbits_activity") == 0) {
 		f_orbits_activity = true;
 		Orbits_activity_description =
-				NEW_OBJECT(apps_algebra::orbits_activity_description);
+				NEW_OBJECT(orbits::orbits_activity_description);
 		if (f_v) {
 			cout << "reading -orbits_activity" << endl;
 		}
@@ -2459,12 +2459,12 @@ void activity_description::do_orbits_activity(
 		exit(1);
 	}
 
-	apps_algebra::orbits_create *OC;
+	orbits::orbits_create *OC;
 
-	OC = (apps_algebra::orbits_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	OC = (orbits::orbits_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
-		apps_algebra::orbits_activity Activity;
+		orbits::orbits_activity Activity;
 
 		Activity.init(
 				Orbits_activity_description,

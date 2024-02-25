@@ -56,7 +56,8 @@ void schreier::print_orbit_lengths(
 	int *type_len;
 	data_structures::sorting Sorting;
 
-	Sorting.int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+	Sorting.int_vec_classify(
+			nb_orbits, orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
@@ -94,7 +95,8 @@ void schreier::print_orbit_lengths_tex(
 	int *type_len;
 	data_structures::sorting Sorting;
 
-	Sorting.int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+	Sorting.int_vec_classify(
+			nb_orbits, orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv,
 		nb_types, type_first, type_len);
 
@@ -170,8 +172,10 @@ void schreier::print_orbit_length_distribution(
 {
 	int *val, *mult, len;
 
-	orbiter_kernel_system::Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
-	orbiter_kernel_system::Orbiter->Int_vec->distribution_print(ost, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution(
+			orbit_len, nb_orbits, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution_print(
+			ost, val, mult, len);
 	ost << endl;
 
 	FREE_int(val);
@@ -183,8 +187,10 @@ void schreier::print_orbit_length_distribution_to_string(
 {
 	int *val, *mult, len;
 
-	orbiter_kernel_system::Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
-	orbiter_kernel_system::Orbiter->Int_vec->distribution_print_to_string(str, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution(
+			orbit_len, nb_orbits, val, mult, len);
+	orbiter_kernel_system::Orbiter->Int_vec->distribution_print_to_string(
+			str, val, mult, len);
 
 	FREE_int(val);
 	FREE_int(mult);
@@ -1051,7 +1057,8 @@ void schreier::print_orbit_with_original_labels(
 		v[i] = orbit[first + i];
 	}
 
-	A->Induced_action->original_point_labels(v, len, w, 0 /*verbose_level*/);
+	A->Induced_action->original_point_labels(
+			v, len, w, 0 /*verbose_level*/);
 
 
 	//int_vec_print(ost, v, len);
@@ -1151,7 +1158,8 @@ void schreier::print_orbit_sorted_with_original_labels_tex(
 	Sorting.lint_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
 
-	A->Induced_action->original_point_labels(v, len, w, 0 /*verbose_level*/);
+	A->Induced_action->original_point_labels(
+			v, len, w, 0 /*verbose_level*/);
 
 	if (f_truncate && len > max_length) {
 		L.lint_set_print_tex(ost, w, max_length);
@@ -1436,7 +1444,8 @@ void schreier::get_orbit_by_levels(
 	}
 	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-	SoS->init_basic_with_Sz_in_int(A->degree /* underlying_set_size */,
+	SoS->init_basic_with_Sz_in_int(
+			A->degree /* underlying_set_size */,
 			nb_layers /* nb_sets */,
 			Nb, verbose_level);
 
@@ -1480,7 +1489,11 @@ void schreier::export_tree_as_layered_graph(
 	if (f_v) {
 		cout << "    i : orbit : o_inv :  prev : label" << endl;
 		for (i = 0; i < degree; i++) {
-			cout << setw(5) << i << " : " << setw(5) << orbit[i] << " : " << setw(5) << orbit_inv[i] << " : " << setw(5) << prev[i] << " : " << setw(5) << label[i] << endl;
+			cout << setw(5) << i << " : " << setw(5) << orbit[i]
+				<< " : " << setw(5) << orbit_inv[i]
+				<< " : " << setw(5) << prev[i]
+				<< " : " << setw(5) << label[i]
+				<< endl;
 		}
 
 	}
@@ -1494,7 +1507,8 @@ void schreier::export_tree_as_layered_graph(
 	}
 
 	if (f_v) {
-		cout << "schreier::export_tree_as_layered_graph computing max_depth" << endl;
+		cout << "schreier::export_tree_as_layered_graph "
+				"computing max_depth" << endl;
 	}
 	max_depth = 0;
 	for (j = 0; j < len; j++) {
@@ -1504,7 +1518,8 @@ void schreier::export_tree_as_layered_graph(
 		max_depth = MAX(max_depth, l);
 	}
 	if (f_v) {
-		cout << "schreier::export_tree_as_layered_graph max_depth = " << max_depth << endl;
+		cout << "schreier::export_tree_as_layered_graph "
+				"max_depth = " << max_depth << endl;
 	}
 
 	int nb_layers;
@@ -1675,8 +1690,12 @@ void schreier::export_tree_as_layered_graph(
 
 		text2 = std::to_string(a);
 
-		LG->add_text(l, horizontal_position[j], text2, 0/*verbose_level*/);
-		LG->add_node_data1(l, horizontal_position[j], a, 0/*verbose_level*/);
+		LG->add_text(
+				l, horizontal_position[j], text2,
+				0/*verbose_level*/);
+		LG->add_node_data1(
+				l, horizontal_position[j], a,
+				0/*verbose_level*/);
 	}
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
@@ -1775,7 +1794,8 @@ void schreier::draw_tree(
 		weight[j] = 0;
 		placement_x[j] = 0;
 	}
-	subtree_calc_weight(weight, max_depth, i, last);
+	subtree_calc_weight(
+			weight, max_depth, i, last);
 	if (false) {
 		cout << "the weights: " << endl;
 		for (j = i; j < last; j++) {
@@ -1788,7 +1808,8 @@ void schreier::draw_tree(
 	if (f_v) {
 		cout << "max_depth = " << max_depth << endl;
 	}
-	subtree_place(weight, placement_x, 0, Opt->xin, i, last);
+	subtree_place(
+			weight, placement_x, 0, Opt->xin, i, last);
 	if (false) {
 		for (j = i; j < last; j++) {
 			cout << j << " : " << placement_x[j] << endl;
@@ -1804,7 +1825,8 @@ void schreier::draw_tree(
 	if (f_v) {
 		cout << "schreier::draw_tree before draw_tree2" << endl;
 	}
-	draw_tree2(fname,
+	draw_tree2(
+			fname,
 			Opt,
 			weight, placement_x, max_depth, i, last,
 			f_has_point_labels, point_labels,
@@ -1871,7 +1893,8 @@ void schreier::draw_tree2(
 		cout << "schreier::draw_tree2 "
 				"before calc_y_coordinate" << endl;
 	}
-	calc_y_coordinate(y, 0, max_depth, Opt->yin);
+	calc_y_coordinate(
+			y, 0, max_depth, Opt->yin);
 	if (f_v) {
 		cout << "schreier::draw_tree2 "
 				"after calc_y_coordinate" << endl;
@@ -1882,7 +1905,8 @@ void schreier::draw_tree2(
 		cout << "schreier::draw_tree2 "
 				"before subtree_draw_lines" << endl;
 	}
-	subtree_draw_lines(G, Opt,
+	subtree_draw_lines(
+			G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			Opt->yin,
@@ -1896,7 +1920,8 @@ void schreier::draw_tree2(
 		cout << "schreier::draw_tree2 "
 				"before subtree_draw_vertices" << endl;
 	}
-	subtree_draw_vertices(G, Opt,
+	subtree_draw_vertices(
+			G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			f_has_point_labels, point_labels,

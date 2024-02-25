@@ -58,14 +58,16 @@ substructure_classification::~substructure_classification()
 	int f_v = false;
 
 	if (f_v) {
-		cout << "substructure_classification::~substructure_classification before deleting D1" << endl;
+		cout << "substructure_classification::~substructure_classification "
+				"before deleting D1" << endl;
 		}
 	if (D1) {
 		freeobject(D1);
 		D1 = NULL;
 		}
 	if (f_v) {
-		cout << "substructure_classification::~substructure_classification before deleting D2" << endl;
+		cout << "substructure_classification::~substructure_classification "
+				"before deleting D2" << endl;
 		}
 	if (D2) {
 		freeobject(D2);
@@ -104,7 +106,8 @@ void substructure_classification::init(isomorph *Iso,
 	}
 }
 
-void substructure_classification::read_data_files_for_starter(int level,
+void substructure_classification::read_data_files_for_starter(
+		int level,
 	std::string &prefix, int verbose_level)
 // Calls gen->read_level_file_binary for all levels i from 0 to level
 // Uses letter a files for i from 0 to level - 1
@@ -166,7 +169,8 @@ void substructure_classification::read_data_files_for_starter(int level,
 	}
 }
 
-void substructure_classification::compute_nb_starter(int level, int verbose_level)
+void substructure_classification::compute_nb_starter(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -178,7 +182,8 @@ void substructure_classification::compute_nb_starter(int level, int verbose_leve
 
 }
 
-void substructure_classification::print_node_local(int level, int node_local)
+void substructure_classification::print_node_local(
+		int level, int node_local)
 {
 	int n;
 
@@ -186,7 +191,8 @@ void substructure_classification::print_node_local(int level, int node_local)
 	cout << n << "=" << level << "/" << node_local;
 }
 
-void substructure_classification::print_node_global(int level, int node_global)
+void substructure_classification::print_node_global(
+		int level, int node_global)
 {
 	int node_local;
 
@@ -194,7 +200,8 @@ void substructure_classification::print_node_global(int level, int node_global)
 	cout << node_global << "=" << level << "/" << node_local;
 }
 
-void substructure_classification::setup_and_open_level_database(int verbose_level)
+void substructure_classification::setup_and_open_level_database(
+		int verbose_level)
 // Called from do_iso_test, identify and test_hash
 // (Which are all in isomorph_testing.cpp)
 // Calls init_DB_level for D1 and D2 and D1->open and D2->open.
@@ -220,48 +227,58 @@ void substructure_classification::setup_and_open_level_database(int verbose_leve
 	D2->change_to_database();
 
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database before init_DB_level D1" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"before init_DB_level D1" << endl;
 	}
 	init_DB_level(*D1, Iso->level - 1, verbose_level - 1);
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database after init_DB_level D1" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"after init_DB_level D1" << endl;
 	}
 	fname_ge1.assign(fname_db_level_ge);
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database fname_ge1=" << fname_ge1 << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"fname_ge1=" << fname_ge1 << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database before init_DB_level D2" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"before init_DB_level D2" << endl;
 	}
 	init_DB_level(*D2, Iso->level, verbose_level - 1);
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database after init_DB_level D2" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"after init_DB_level D2" << endl;
 	}
 	fname_ge2.assign(fname_db_level_ge);
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database fname_ge2=" << fname_ge2 << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"fname_ge2=" << fname_ge2 << endl;
 	}
 
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database before D1->open" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"before D1->open" << endl;
 	}
 	D1->open(0/*verbose_level - 1*/);
 	D2->open(0/*verbose_level - 1*/);
 
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database before fp_ge1" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"before fp_ge1" << endl;
 	}
 	fp_ge1 = new ifstream(fname_ge1, ios::binary);
 	fp_ge2 = new ifstream(fname_ge2, ios::binary);
 	//fp_ge1 = fopen(fname_ge1, "r");
 	//fp_ge2 = fopen(fname_ge2, "r");
 	if (f_v) {
-		cout << "substructure_classification::setup_and_open_level_database done" << endl;
+		cout << "substructure_classification::setup_and_open_level_database "
+				"done" << endl;
 	}
 }
 
-void substructure_classification::close_level_database(int verbose_level)
+void substructure_classification::close_level_database(
+		int verbose_level)
 // Closes D1, D2, fp_ge1, fp_ge2.
 {
 	int f_v = (verbose_level >= 1);
@@ -368,7 +385,8 @@ void substructure_classification::find_extension_easy(
 	#endif
 }
 
-int substructure_classification::find_extension_search_interval(long int *set,
+int substructure_classification::find_extension_search_interval(
+		long int *set,
 	int first, int len, int &idx,
 	int f_btree_idx, int btree_idx,
 	int f_through_hash, int verbose_level)
@@ -385,7 +403,8 @@ int substructure_classification::find_extension_search_interval(long int *set,
 
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
-			Iso->Lifting->load_solution_by_btree(btree_idx, first + i, id, data);
+			Iso->Lifting->load_solution_by_btree(
+					btree_idx, first + i, id, data);
 		}
 		else {
 			if (f_through_hash) {
@@ -394,10 +413,13 @@ int substructure_classification::find_extension_search_interval(long int *set,
 			else {
 				id = first + i;
 			}
-			Iso->Lifting->load_solution(id, data, verbose_level - 1);
+			Iso->Lifting->load_solution(
+					id, data, verbose_level - 1);
 		}
-		Sorting.lint_vec_heapsort(data + Iso->level, Iso->size - Iso->level);
-		if (Sorting.lint_vec_compare(set + Iso->level, data + Iso->level, Iso->size - Iso->level) == 0) {
+		Sorting.lint_vec_heapsort(
+				data + Iso->level, Iso->size - Iso->level);
+		if (Sorting.lint_vec_compare(
+				set + Iso->level, data + Iso->level, Iso->size - Iso->level) == 0) {
 			break;
 		}
 	}
@@ -414,7 +436,8 @@ int substructure_classification::find_extension_search_interval(long int *set,
 	return true;
 }
 
-int substructure_classification::find_extension_easy_old(long int *set,
+int substructure_classification::find_extension_easy_old(
+		long int *set,
 		int case_nb, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -428,8 +451,10 @@ int substructure_classification::find_extension_easy_old(long int *set,
 	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
 	first = Iso->Lifting->starter_solution_first[case_nb];
 	len = Iso->Lifting->starter_solution_len[case_nb];
-	ret = find_extension_search_interval(set,
-		first, len, idx, false, 0, false, verbose_level);
+	ret = find_extension_search_interval(
+			set,
+		first, len, idx, false, 0, false,
+		verbose_level);
 	if (f_v) {
 		if (ret) {
 			cout << "substructure_classification::find_extension_easy_old "
@@ -443,7 +468,8 @@ int substructure_classification::find_extension_easy_old(long int *set,
 	return ret;
 }
 
-void substructure_classification::find_extension_easy_new(long int *set,
+void substructure_classification::find_extension_easy_new(
+		long int *set,
 		int case_nb, int &idx, int &f_found, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -472,7 +498,8 @@ void substructure_classification::find_extension_easy_new(long int *set,
 	}
 	f_found = Sorting.lint_vec_search_first_occurrence(
 			Iso->Lifting->hash_vs_id_hash,
-			Iso->Lifting->N, h, first, 0 /*verbose_level*/);
+			Iso->Lifting->N, h, first,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new after "
 				"int_vec_search_first_occurrence(h) f_found=" << f_found << endl;
@@ -487,7 +514,8 @@ void substructure_classification::find_extension_easy_new(long int *set,
 	}
 	f_found = Sorting.lint_vec_search_first_occurrence(
 			Iso->Lifting->hash_vs_id_hash,
-			Iso->Lifting->N, h + 1, idx2, 0 /*verbose_level*/);
+			Iso->Lifting->N, h + 1, idx2,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new after "
 				"int_vec_search_first_occurrence(h+1) f_found=" << f_found << endl;
@@ -537,8 +565,10 @@ void substructure_classification::find_extension_easy_new(long int *set,
 					"find_extension_search_interval" << endl;
 		}
 
-		f_found = find_extension_search_interval(set,
-			first, len, idx, false, 3, true, 0 /*verbose_level*/);
+		f_found = find_extension_search_interval(
+				set,
+			first, len, idx, false, 3, true,
+			0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "substructure_classification::find_extension_easy_new after "
@@ -562,7 +592,8 @@ finish:
 
 }
 
-int substructure_classification::open_database_and_identify_object(long int *set,
+int substructure_classification::open_database_and_identify_object(
+		long int *set,
 	int *transporter,
 	int f_implicit_fusion, int verbose_level)
 {
@@ -577,7 +608,8 @@ int substructure_classification::open_database_and_identify_object(long int *set
 	Iso->Lifting->setup_and_open_solution_database(0/*verbose_level - 1*/);
 	setup_and_open_level_database(0/*verbose_level - 1*/);
 
-	r = Iso->Folding->identify_solution(set, transporter,
+	r = Iso->Folding->identify_solution(
+			set, transporter,
 		f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
 
 	if (f_failure_to_find_point) {
@@ -655,7 +687,8 @@ void substructure_classification::init_DB_level(
 		cout << "substructure_classification::init_DB_level "
 				"before D.init" << endl;
 	}
-	D.init(fname_db_level.c_str(), layer2_discreta::typed_objects::VECTOR, f_compress);
+	D.init(
+			fname_db_level.c_str(), layer2_discreta::typed_objects::VECTOR, f_compress);
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level "
 				"after D.init" << endl;
@@ -696,7 +729,8 @@ void substructure_classification::init_DB_level(
 		cout << "substructure_classification::init_DB_level "
 				"before B2.init" << endl;
 	}
-	B2.init(fname_db_level_idx2.c_str(), f_duplicatekeys, 1 /* btree_idx */);
+	B2.init(
+			fname_db_level_idx2.c_str(), f_duplicatekeys, 1 /* btree_idx */);
 		// 2 up to 2+level-1 are the values of the starter (of size level)
 	if (f_v) {
 		cout << "substructure_classification::init_DB_level "
@@ -712,7 +746,8 @@ void substructure_classification::init_DB_level(
 	}
 }
 
-void substructure_classification::create_level_database(int level, int verbose_level)
+void substructure_classification::create_level_database(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false;//(verbose_level >= 2);
@@ -1019,7 +1054,8 @@ void substructure_classification::create_level_database(int level, int verbose_l
 
 }
 
-void substructure_classification::load_strong_generators(int cur_level,
+void substructure_classification::load_strong_generators(
+		int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
@@ -1057,7 +1093,8 @@ void substructure_classification::load_strong_generators(int cur_level,
 	}
 }
 
-void substructure_classification::load_strong_generators_tree(int cur_level,
+void substructure_classification::load_strong_generators_tree(
+		int cur_level,
 	int cur_node_local,
 	data_structures_groups::vector_ge &gens,
 	ring_theory::longinteger_object &go,
@@ -1120,7 +1157,8 @@ void substructure_classification::load_strong_generators_tree(int cur_level,
 	}
 }
 
-void substructure_classification::load_strong_generators_database(int cur_level,
+void substructure_classification::load_strong_generators_database(
+		int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
@@ -1154,7 +1192,8 @@ void substructure_classification::load_strong_generators_database(int cur_level,
 		cout << "substructure_classification::load_strong_generators_database "
 				"loading object " << cur_node_local << endl;
 	}
-	DB_level->ith_object(cur_node_local, 0/* btree_idx*/, v,
+	DB_level->ith_object(
+			cur_node_local, 0/* btree_idx*/, v,
 			0 /*MINIMUM(1, verbose_level - 2)*/);
 
 	if (f_vvv) {

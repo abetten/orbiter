@@ -1647,20 +1647,32 @@ public:
 
 	scene();
 	~scene();
-	double label(int idx, std::string &txt);
-	double point_coords(int idx, int j);
-	double line_coords(int idx, int j);
-	double plane_coords(int idx, int j);
-	double cubic_coords(int idx, int j);
-	double quadric_coords(int idx, int j);
-	int edge_points(int idx, int j);
-	void print_point_coords(int idx);
-	double point_distance_euclidean(int pt_idx, double *y);
-	double point_distance_from_origin(int pt_idx);
+	double label(
+			int idx, std::string &txt);
+	double point_coords(
+			int idx, int j);
+	double line_coords(
+			int idx, int j);
+	double plane_coords(
+			int idx, int j);
+	double cubic_coords(
+			int idx, int j);
+	double quadric_coords(
+			int idx, int j);
+	int edge_points(
+			int idx, int j);
+	void print_point_coords(
+			int idx);
+	double point_distance_euclidean(
+			int pt_idx, double *y);
+	double point_distance_from_origin(
+			int pt_idx);
 	double distance_euclidean_point_to_point(
 			int pt1_idx, int pt2_idx);
-	void init(int verbose_level);
-	scene *transformed_copy(double *A4, double *A4_inv, 
+	void init(
+			int verbose_level);
+	scene *transformed_copy(
+			double *A4, double *A4_inv,
 		double rad, int verbose_level);
 	void print();
 	void transform_lines(
@@ -1692,78 +1704,120 @@ public:
 		int verbose_level);
 	void points(
 			double *Coords, int nb_points);
-	int point_center_of_mass_of_face(int face_idx);
-	int point_center_of_mass_of_edge(int edge_idx);
-	int point_center_of_mass(int *Pt_idx, int nb_pts);
-	int triangle(int line1, int line2, int line3, int verbose_level);
-	int point_as_intersection_of_two_lines(int line1, int line2);
-	int plane_from_dual_coordinates(double *x4);
-	void draw_lines_with_selection(int *selection, int nb_select, 
+	int point_center_of_mass_of_face(
+			int face_idx);
+	int point_center_of_mass_of_edge(
+			int edge_idx);
+	int point_center_of_mass(
+			int *Pt_idx, int nb_pts);
+	int triangle(
+			int line1, int line2, int line3, int verbose_level);
+	int point_as_intersection_of_two_lines(
+			int line1, int line2);
+	int plane_from_dual_coordinates(
+			double *x4);
+	void draw_lines_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_line_with_selection(int line_idx, 
+	void draw_line_with_selection(
+			int line_idx,
 			std::string &options, std::ostream &ost);
-	void draw_lines_cij_with_selection(int *selection, int nb_select, 
+	void draw_lines_cij_with_selection(
+			int *selection, int nb_select,
 			std::ostream &ost);
-	void draw_lines_cij(std::ostream &ost);
-	void draw_lines_cij_with_offset(int offset,
+	void draw_lines_cij(
+			std::ostream &ost);
+	void draw_lines_cij_with_offset(
+			int offset,
 			int number_of_lines, std::ostream &ost);
-	void draw_lines_ai_with_selection(int *selection, int nb_select, 
+	void draw_lines_ai_with_selection(
+			int *selection, int nb_select,
 			std::ostream &ost);
-	void draw_lines_ai(std::ostream &ost);
-	void draw_lines_ai_with_offset(int offset, std::ostream &ost);
-	void draw_lines_bj_with_selection(int *selection, int nb_select, 
+	void draw_lines_ai(
 			std::ostream &ost);
-	void draw_lines_bj(std::ostream &ost);
-	void draw_lines_bj_with_offset(int offset, std::ostream &ost);
-	void draw_edges_with_selection(int *selection, int nb_select, 
+	void draw_lines_ai_with_offset(
+			int offset, std::ostream &ost);
+	void draw_lines_bj_with_selection(
+			int *selection, int nb_select,
+			std::ostream &ost);
+	void draw_lines_bj(
+			std::ostream &ost);
+	void draw_lines_bj_with_offset(
+			int offset, std::ostream &ost);
+	void draw_edges_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_faces_with_selection(int *selection, int nb_select, 
+	void draw_faces_with_selection(
+			int *selection, int nb_select,
 		double thickness_half, std::string &options, std::ostream &ost);
-	void draw_face(int idx, double thickness_half, std::string &options,
+	void draw_face(
+			int idx, double thickness_half, std::string &options,
 			std::ostream &ost);
-	void draw_planes_with_selection(int *selection, int nb_select, 
+	void draw_planes_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_plane(int idx, std::string &options, std::ostream &ost);
-	void draw_points_with_selection(int *selection, int nb_select, 
+	void draw_plane(
+			int idx, std::string &options, std::ostream &ost);
+	void draw_points_with_selection(
+			int *selection, int nb_select,
 		double rad, std::string &options, std::ostream &ost);
-	void draw_cubic_with_selection(int *selection, int nb_select, 
+	void draw_cubic_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_quartic_with_selection(int *selection, int nb_select,
+	void draw_quartic_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_quintic_with_selection(int *selection, int nb_select,
+	void draw_quintic_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_octic_with_selection(int *selection, int nb_select,
+	void draw_octic_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_quadric_with_selection(int *selection, int nb_select, 
+	void draw_quadric_with_selection(
+			int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
-	void draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
+	void draw_quadric_clipped_by_plane(
+			int quadric_idx, int plane_idx,
 			std::string &options, std::ostream &ost);
-	void draw_line_clipped_by_plane(int line_idx, int plane_idx,
+	void draw_line_clipped_by_plane(
+			int line_idx, int plane_idx,
 			std::string &options, std::ostream &ost);
-	int intersect_line_and_plane(int line_idx, int plane_idx, 
+	int intersect_line_and_plane(
+			int line_idx, int plane_idx,
 		int &intersection_point_idx, 
 		int verbose_level);
-	int intersect_line_and_line(int line1_idx, int line2_idx, 
+	int intersect_line_and_line(
+			int line1_idx, int line2_idx,
 		double &lambda, 
 		int verbose_level);
-	void map_a_line(int line1, int line2, 
+	void map_a_line(
+			int line1, int line2,
 		int plane_idx, int line_idx, double spread, 
 		int nb_pts, 
 		int *New_line_idx, int &nb_new_lines, 
 		int *New_pt_idx, int &nb_new_points, int verbose_level);
-	int map_a_point(int line1, int line2, 
+	int map_a_point(
+			int line1, int line2,
 		int plane_idx, double pt_in[3], 
 		int &new_line_idx, int &new_pt_idx, 
 		int verbose_level);
-	void fourD_cube(double rad_desired);
-	void rescale(int first_pt_idx, double rad_desired);
-	double euclidean_distance(int pt1, int pt2);
-	double distance_from_origin(int pt);
-	void fourD_cube_edges(int first_pt_idx);
-	void hypercube(int n, double rad_desired);
+	void fourD_cube(
+			double rad_desired);
+	void rescale(
+			int first_pt_idx, double rad_desired);
+	double euclidean_distance(
+			int pt1, int pt2);
+	double distance_from_origin(
+			int pt);
+	void fourD_cube_edges(
+			int first_pt_idx);
+	void hypercube(
+			int n, double rad_desired);
 	void Dodecahedron_points();
-	void Dodecahedron_edges(int first_pt_idx);
-	void Dodecahedron_planes(int first_pt_idx);
+	void Dodecahedron_edges(
+			int first_pt_idx);
+	void Dodecahedron_planes(
+			int first_pt_idx);
 	void tritangent_planes();
 
 	// Clebsch version 1:
@@ -1780,33 +1834,56 @@ public:
 	void clebsch_cubic_version2_lines_b();
 	void clebsch_cubic_version2_lines_c();
 
-	double distance_between_two_points(int pt1, int pt2);
+	double distance_between_two_points(
+			int pt1, int pt2);
 	void create_five_plus_one();
-	void create_Clebsch_surface(int verbose_level);
+	void create_Clebsch_surface(
+			int verbose_level);
 	// 1 cubic, 27 lines, 7 Eckardt points
-	void create_Hilbert_Cohn_Vossen_surface(int verbose_level);
+	void create_Hilbert_Cohn_Vossen_surface(
+			int verbose_level);
 		// 1 cubic, 27 lines, 54 points, 45 planes
-	void create_Hilbert_model(int verbose_level);
-	void create_Cayleys_nodal_cubic(int verbose_level);
-	void create_Hilbert_cube(int verbose_level);
-	void create_cube(int verbose_level);
-	void create_cube_and_tetrahedra(int verbose_level);
-	void create_affine_space(int q, int verbose_level);
+	void create_Hilbert_model(
+			int verbose_level);
+	void create_Cayleys_nodal_cubic(
+			int verbose_level);
+	void create_Hilbert_cube(
+			int verbose_level);
+	void create_cube(
+			int verbose_level);
+	void create_cube_and_tetrahedra(
+			int verbose_level);
+	void create_affine_space(
+			int q, int verbose_level);
 	//void create_surface_13_1(int verbose_level);
-	void create_Eckardt_surface(int N, int verbose_level);
-	void create_E4_surface(int N, int verbose_level);
-	void create_twisted_cubic(int N, int verbose_level);
-	void create_triangulation_of_cube(int N, int verbose_level);
-	void print_a_line(int line_idx);
-	void print_a_plane(int plane_idx);
-	void print_a_face(int face_idx);
-	void read_obj_file(std::string &fname, int verbose_level);
-	void add_a_group_of_things(int *Idx, int sz, int verbose_level);
-	void create_regulus(int idx, int nb_lines, int verbose_level);
-	void clipping_by_cylinder(int line_idx, double r, std::ostream &ost);
-	int scan1(int argc, std::string *argv, int &i, int verbose_level);
-	int scan2(int argc, std::string *argv, int &i, int verbose_level);
-	int read_scene_objects(int argc, std::string *argv,
+	void create_Eckardt_surface(
+			int N, int verbose_level);
+	void create_E4_surface(
+			int N, int verbose_level);
+	void create_twisted_cubic(
+			int N, int verbose_level);
+	void create_triangulation_of_cube(
+			int N, int verbose_level);
+	void print_a_line(
+			int line_idx);
+	void print_a_plane(
+			int plane_idx);
+	void print_a_face(
+			int face_idx);
+	void read_obj_file(
+			std::string &fname, int verbose_level);
+	void add_a_group_of_things(
+			int *Idx, int sz, int verbose_level);
+	void create_regulus(
+			int idx, int nb_lines, int verbose_level);
+	void clipping_by_cylinder(
+			int line_idx, double r, std::ostream &ost);
+	int scan1(
+			int argc, std::string *argv, int &i, int verbose_level);
+	int scan2(
+			int argc, std::string *argv, int &i, int verbose_level);
+	int read_scene_objects(
+			int argc, std::string *argv,
 			int i0, int verbose_level);
 };
 

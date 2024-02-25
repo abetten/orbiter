@@ -85,6 +85,9 @@
 #include <vector>
 #include <deque>
 #include <string>
+#include <unordered_set>
+#include <algorithm>
+	// for sort
 
 
 
@@ -584,6 +587,7 @@ namespace l1_interfaces {
 	class nauty_interface;
 	class nauty_output;
 	class povray_interface;
+	class pugixml_interface;
 
 }
 
@@ -932,6 +936,7 @@ namespace solvers {
 #define Find_symbol(label) orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
 #define Get_crc_code(A) orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
 #define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
+#define Get_geometry_builder(A) orbiter_kernel_system::Orbiter->get_geometry_builder(A)
 
 
 

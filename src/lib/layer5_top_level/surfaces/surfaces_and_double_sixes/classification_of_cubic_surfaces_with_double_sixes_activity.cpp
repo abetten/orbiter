@@ -56,9 +56,19 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity" << endl;
 	}
 	if (Descr->f_report) {
-		cout << "-report" << endl;
-		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"-report" << endl;
+			cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
+		}
 		report(Descr->report_options, verbose_level);
+	}
+	else if (Descr->f_stats) {
+		if (f_v) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity "
+					"-stats" << endl;
+		}
+		SCW->stats(Descr->stats_prefix);
 	}
 	else if (Descr->f_identify_Eckardt) {
 		if (f_v) {

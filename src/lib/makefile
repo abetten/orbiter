@@ -261,6 +261,8 @@ ORBITER_MODULES= \
 		layer1_foundations/l1_interfaces/nauty_interface.o \
 		layer1_foundations/l1_interfaces/nauty_output.o \
 		layer1_foundations/l1_interfaces/povray_interface.o \
+		layer1_foundations/l1_interfaces/pugixml_interface.o \
+		layer1_foundations/l1_interfaces/pugixml.o \
 		layer1_foundations/number_theory/cyclotomic_sets.o \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \
@@ -446,9 +448,9 @@ ORBITER_MODULES= \
 		layer4_classification/isomorph/representatives.o \
 		layer4_classification/isomorph/substructure_classification.o \
 		layer4_classification/isomorph/substructure_lifting_data.o \
-		layer4_classification/orbits/orbit_of_equations.o \
-		layer4_classification/orbits/orbit_of_sets.o \
-		layer4_classification/orbits/orbit_of_subspaces.o \
+		layer4_classification/orbits_schreier/orbit_of_equations.o \
+		layer4_classification/orbits_schreier/orbit_of_sets.o \
+		layer4_classification/orbits_schreier/orbit_of_subspaces.o \
 		layer4_classification/poset_classification/classification_base_case.o \
 		layer4_classification/poset_classification/extension.o \
 		layer4_classification/poset_classification/orbit_based_testing.o \
@@ -489,7 +491,6 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/action_on_forms.o \
 		layer5_top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		layer5_top_level/algebra_and_number_theory/any_group_linear.o \
-		layer5_top_level/algebra_and_number_theory/any_group_orbits.o \
 		layer5_top_level/algebra_and_number_theory/any_group.o \
 		layer5_top_level/algebra_and_number_theory/character_table_burnside.o \
 		layer5_top_level/algebra_and_number_theory/element_processing_description.o \
@@ -497,13 +498,6 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		layer5_top_level/algebra_and_number_theory/modified_group_create.o \
-		layer5_top_level/algebra_and_number_theory/orbit_cascade.o \
-		layer5_top_level/algebra_and_number_theory/orbits_activity_description.o \
-		layer5_top_level/algebra_and_number_theory/orbits_activity.o \
-		layer5_top_level/algebra_and_number_theory/orbits_create_description.o \
-		layer5_top_level/algebra_and_number_theory/orbits_create.o \
-		layer5_top_level/algebra_and_number_theory/orbits_on_polynomials.o \
-		layer5_top_level/algebra_and_number_theory/orbits_on_subspaces.o \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \
@@ -591,6 +585,14 @@ ORBITER_MODULES= \
 		layer5_top_level/interfaces/orbiter_command.o \
 		layer5_top_level/interfaces/orbiter_top_level_session.o \
 		layer5_top_level/interfaces/symbol_definition.o \
+		layer5_top_level/orbits/orbit_cascade.o \
+		layer5_top_level/orbits/orbits_activity_description.o \
+		layer5_top_level/orbits/orbits_activity.o \
+		layer5_top_level/orbits/orbits_create_description.o \
+		layer5_top_level/orbits/orbits_create.o \
+		layer5_top_level/orbits/orbits_global.o \
+		layer5_top_level/orbits/orbits_on_polynomials.o \
+		layer5_top_level/orbits/orbits_on_subspaces.o \
 		layer5_top_level/orthogonal/blt_set_activity_description.o \
 		layer5_top_level/orthogonal/blt_set_activity.o \
 		layer5_top_level/orthogonal/blt_set_classify_activity_description.o \

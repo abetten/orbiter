@@ -12,6 +12,9 @@
 #ifndef IR_TREE_LATEX_VISITOR_FAMILY_TREE
 #define IR_TREE_LATEX_VISITOR_FAMILY_TREE
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 class ir_tree_latex_visitor_family_tree : public IRTreeVoidReturnTypeVisitorInterface, public ir_tree_latex_visitor {
     void add_epilogue() override;
     void add_prologue() override;

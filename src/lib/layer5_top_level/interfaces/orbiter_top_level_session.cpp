@@ -1121,7 +1121,8 @@ void free_symbol_table_entry_callback(
 	}
 }
 
-geometry::projective_space *get_projective_space_low_level_function(void *ptr)
+geometry::projective_space *get_projective_space_low_level_function(
+		void *ptr)
 {
 	projective_geometry::projective_space_with_action *PA;
 

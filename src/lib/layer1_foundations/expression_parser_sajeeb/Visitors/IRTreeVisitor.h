@@ -18,6 +18,10 @@
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 #endif
 
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 template<class return_t, class... Args>
 class IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface {
 public:
@@ -33,6 +37,9 @@ public:
 };
 
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 template<class return_t, class... Args>
 class IRTreeTemplateReturnTypeVariadicArgumentConstantVisitorInterface {
 public:
@@ -46,6 +53,8 @@ public:
     virtual return_t visit(const number_node* node, Args... args) { /* NO_OP */ }
     virtual return_t visit(const sentinel_node* node, Args... args) = 0;
 };
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
 
 
 template<class... Args>
@@ -63,6 +72,8 @@ public:
 };
 
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 
 template<class... Args>
 class IRTreeVoidReturnTypeVariadicArgumentConstantVisitorInterface {
@@ -78,6 +89,9 @@ public:
     virtual void visit(const sentinel_node* node, Args... args) = 0;
 };
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 
 template<class return_t>
 class IRTreeTemplateReturnTypeVisitorInterface {
@@ -92,6 +106,9 @@ public:
     virtual return_t visit(number_node* node) { return return_t(); }
     virtual return_t visit(sentinel_node* node) = 0;
 };
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 
 
 template<class return_t>
@@ -109,6 +126,8 @@ public:
 };
 
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class IRTreeVoidReturnTypeVisitorInterface {
 public:
     virtual void visit(plus_node* node);
@@ -121,6 +140,8 @@ public:
     virtual void visit(number_node* node);
     virtual void visit(sentinel_node* node);
 };
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
 
 
 class IRTreeVoidReturnTypeConstantVisitorInterface {

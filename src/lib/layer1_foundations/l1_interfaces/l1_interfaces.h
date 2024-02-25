@@ -356,6 +356,14 @@ public:
 			std::string &extra_praeamble,
 			ring_theory::longinteger_object *M, int nb_rows, int nb_cols,
 			int verbose_level);
+	void print_decomposition_matrix(
+			std::ostream &ost,
+			int m, int n,
+			std::string &top_left_entry,
+			std::string *cols_labels,
+			std::string *row_labels,
+			std::string *entries,
+			int f_enter_math_mode);
 
 };
 
@@ -527,6 +535,27 @@ public:
 			std::ostream &ost,
 			const char *fname_pov, int first_frame,
 		int last_frame);
+};
+
+
+// #############################################################################
+// pugixml_interface.cpp
+// #############################################################################
+
+//! interface to pugixml for reading xml files
+
+
+
+class pugixml_interface {
+public:
+	pugixml_interface();
+	~pugixml_interface();
+	void read_file(
+			std::string &fname,
+			std::vector<std::vector<std::string> > &Classes_parsed,
+			int verbose_level);
+
+
 };
 
 

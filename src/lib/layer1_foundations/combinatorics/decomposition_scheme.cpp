@@ -476,39 +476,56 @@ void decomposition_scheme::print_row_tactical_decomposition_scheme_tex(
 {
 	int c, i, j;
 
-	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << RC->nb_col_classes << "}{r}}" << endl;
-	ost << "\\rightarrow ";
+	// prepare data:
+
+	int m, n;
+	string top_left_entry;
+	string *cols_labels;
+	string *row_labels;
+	string *entries;
+
+	m = RC->nb_row_classes;
+	n = RC->nb_col_classes;
+	top_left_entry = "\\rightarrow ";
+	row_labels = new string[m];
+	cols_labels = new string[n];
+	entries = new string[m * n];
 	for (j = 0; j < RC->nb_col_classes; j++) {
-		ost << " & ";
 		c = RC->col_classes[j];
-		ost << setw(6) << Decomposition->Stack->cellSize[c];
+		cols_labels[j] = std::to_string(Decomposition->Stack->cellSize[c]);
 		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
+			cols_labels[j] += "_{" + std::to_string(c) + "}";
 		}
 	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
 	for (i = 0; i < RC->nb_row_classes; i++) {
 		c = RC->row_classes[i];
-		ost << setw(6) << Decomposition->Stack->cellSize[c];
-			if (f_print_subscripts) {
-				ost << "_{" << setw(3) << c << "}";
-			}
-		//f = P.startCell[c];
-		for (j = 0; j < RC->nb_col_classes; j++) {
-			ost << " & " << setw(12) << row_scheme[i * RC->nb_col_classes + j];
+		row_labels[i] = std::to_string(Decomposition->Stack->cellSize[c]);
+		if (f_print_subscripts) {
+			row_labels[i] += "_{" + std::to_string(c) + "}";
 		}
-		ost << "\\\\" << endl;
 	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
+	for (i = 0; i < RC->nb_row_classes; i++) {
+		for (j = 0; j < RC->nb_col_classes; j++) {
+			c = row_scheme[i * n + j];
+			entries[i * n + j] = std::to_string(c);
+		}
 	}
-	ost << "%}" << endl;
+
+	l1_interfaces::latex_interface L;
+
+	L.print_decomposition_matrix(
+			ost,
+			m, n,
+			top_left_entry,
+			cols_labels,
+			row_labels,
+			entries,
+			f_enter_math_mode);
+
+
+	delete [] cols_labels;
+	delete [] row_labels;
+	delete [] entries;
 }
 
 void decomposition_scheme::print_column_tactical_decomposition_scheme_tex(
@@ -517,39 +534,57 @@ void decomposition_scheme::print_column_tactical_decomposition_scheme_tex(
 {
 	int c, i, j;
 
-	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\begin{align*}" << endl;
-	}
-	ost << "\\begin{array}{r|*{" << RC->nb_col_classes << "}{r}}" << endl;
-	ost << "\\downarrow ";
+
+	// prepare data:
+
+	int m, n;
+	string top_left_entry;
+	string *cols_labels;
+	string *row_labels;
+	string *entries;
+
+	m = RC->nb_row_classes;
+	n = RC->nb_col_classes;
+	top_left_entry = "\\downarrow ";
+	row_labels = new string[m];
+	cols_labels = new string[n];
+	entries = new string[m * n];
 	for (j = 0; j < RC->nb_col_classes; j++) {
-		ost << " & ";
 		c = RC->col_classes[j];
-		ost << setw(6) << Decomposition->Stack->cellSize[c];
+		cols_labels[j] = std::to_string(Decomposition->Stack->cellSize[c]);
 		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
+			cols_labels[j] += "_{" + std::to_string(c) + "}";
 		}
 	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
 	for (i = 0; i < RC->nb_row_classes; i++) {
 		c = RC->row_classes[i];
-		ost << setw(6) << Decomposition->Stack->cellSize[c];
+		row_labels[i] = std::to_string(Decomposition->Stack->cellSize[c]);
 		if (f_print_subscripts) {
-			ost << "_{" << setw(3) << c << "}";
+			row_labels[i] += "_{" + std::to_string(c) + "}";
 		}
-		//f = P.startCell[c];
+	}
+	for (i = 0; i < RC->nb_row_classes; i++) {
 		for (j = 0; j < RC->nb_col_classes; j++) {
-			ost << " & " << setw(12) << col_scheme[i * RC->nb_col_classes + j];
+			c = col_scheme[i * n + j];
+			entries[i * n + j] = std::to_string(c);
 		}
-		ost << "\\\\" << endl;
 	}
-	ost << "\\end{array}" << endl;
-	if (f_enter_math_mode) {
-		ost << "\\end{align*}" << endl;
-	}
-	ost << "%}" << endl;
+
+	l1_interfaces::latex_interface L;
+
+	L.print_decomposition_matrix(
+			ost,
+			m, n,
+			top_left_entry,
+			cols_labels,
+			row_labels,
+			entries,
+			f_enter_math_mode);
+
+	delete [] cols_labels;
+	delete [] row_labels;
+	delete [] entries;
+
 }
 
 void decomposition_scheme::print_non_tactical_decomposition_scheme_tex(

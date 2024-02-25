@@ -493,8 +493,6 @@ class classification_of_combinatorial_objects {
 public:
 
 
-	//std::string prefix;
-
 	canonical_form_classification::classification_of_objects *CO;
 
 	object_with_properties *OwP; // [CO->nb_orbits]
@@ -506,7 +504,6 @@ public:
 	classification_of_combinatorial_objects();
 	~classification_of_combinatorial_objects();
 	void init_after_nauty(
-			//std::string &prefix,
 			canonical_form_classification::classification_of_objects *CO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
@@ -536,7 +533,7 @@ public:
 			std::ostream &ost,
 			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
-			int object_idx,
+			int i,
 			int verbose_level);
 
 

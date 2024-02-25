@@ -124,16 +124,19 @@ public:
 		int f_play_back, std::ifstream *play_back_file,
 		int &f_eof, int print_mod,
 		int f_implicit_fusion, int verbose_level);
-	int next_subset(int t0,
+	int next_subset(
+			int t0,
 		int &f_continue, groups::sims *Stab, long int *data,
 		int f_play_back, std::ifstream *play_back_file, int &f_eof,
 		int verbose_level);
 	void process_rearranged_set(
 			groups::sims *Stab, long int *data,
 		int f_implicit_fusion, int verbose_level);
-	int is_minimal(int verbose_level);
+	int is_minimal(
+			int verbose_level);
 	void stabilizer_action_exit();
-	void stabilizer_action_init(int verbose_level);
+	void stabilizer_action_init(
+			int verbose_level);
 		// Computes the permutations of the set
 		// that are induced by the
 		// generators for the stabilizer in AA
@@ -164,7 +167,8 @@ public:
 	int handle_automorphism(
 			long int *set,
 			groups::sims *Stab, int *Elt, int verbose_level);
-	void print_isomorphism_types(int f_select,
+	void print_isomorphism_types(
+			int f_select,
 		int select_first, int select_len,
 		int verbose_level);
 		// Calls print_set_function (if available)
@@ -297,14 +301,17 @@ public:
 			int verbose_level);
 	void write_classification_graph(
 			int verbose_level);
-	void decomposition_matrix(int verbose_level);
+	void decomposition_matrix(
+			int verbose_level);
 	void compute_down_link(
 			int *&down_link, int verbose_level);
 	void probe(
 			int flag_orbit, int subset_rk,
 		int f_implicit_fusion, int verbose_level);
-	void test_compute_stabilizer(int verbose_level);
-	void test_memory(int verbose_level);
+	void test_compute_stabilizer(
+			int verbose_level);
+	void test_memory(
+			int verbose_level);
 	void test_edges(
 			int verbose_level);
 	int test_edge(
@@ -319,8 +326,10 @@ public:
 		int verbose_level);
 	void compute_stabilizer(
 			groups::sims *&Stab, int verbose_level);
-	void iso_test_init(int verbose_level);
-	void iso_test_init2(int verbose_level);
+	void iso_test_init(
+			int verbose_level);
+	void iso_test_init2(
+			int verbose_level);
 
 };
 
@@ -335,7 +344,22 @@ public:
 
 class isomorph_arguments {
 public:
-	int f_init_has_been_called;
+
+	int f_prefix_iso;
+	std::string prefix_iso;
+
+	int f_prefix_with_directory;
+	std::string prefix_with_directory;
+
+	int f_prefix_classify;
+	std::string prefix_classify;
+
+	int f_solution_prefix;
+	std::string solution_prefix;
+
+	int f_base_fname;
+	std::string base_fname;
+
 
 	int f_use_database_for_starter;
 	int f_implicit_fusion;
@@ -377,26 +401,17 @@ public:
 	int f_eliminate_graphs_if_possible;
 	int f_down_orbits;
 
-	int f_prefix_iso;
-	std::string prefix_iso;
+
+
+	// everything below is set in init:
+
+	int f_init_has_been_called;
 
 	actions::action *A;
 	actions::action *A2;
 	poset_classification::poset_classification *gen;
 	int target_size;
 	poset_classification::poset_classification_control *Control;
-
-	int f_prefix_with_directory;
-	std::string prefix_with_directory;
-
-	int f_prefix_classify;
-	std::string prefix_classify;
-
-	int f_solution_prefix;
-	std::string solution_prefix;
-
-	int f_base_fname;
-	std::string base_fname;
 
 	solvers_package::exact_cover_arguments *ECA;
 
@@ -406,6 +421,10 @@ public:
 		int verbose_level);
 	void *callback_data;
 
+	// until here
+
+
+
 	int f_has_final_test_function;
 	int (*final_test_function)(long int *data, int sz,
 		void *final_test_data, int verbose_level);
@@ -413,10 +432,12 @@ public:
 
 	isomorph_arguments();
 	~isomorph_arguments();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
 	void print();
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			actions::action *A2,
 			poset_classification::poset_classification *gen,
 		int target_size,
@@ -470,6 +491,7 @@ public:
 			actions::action *A,
 			poset_classification::poset_classification *gen,
 			int verbose_level);
+#if 0
 	void read_statistic_files(
 		int size, std::string &prefix_classify,
 		std::string &prefix, int level,
@@ -507,6 +529,9 @@ public:
 		std::string &prefix_classify,
 		std::string &prefix,
 		int level, int verbose_level);
+#endif
+
+
 	void compute_down_orbits_for_isomorphism_type(
 		isomorph *Iso, int orbit,
 		int &cnt_orbits, int &cnt_special_orbits,
@@ -558,14 +583,22 @@ public:
 	void execute(
 			isomorph_arguments *Isomorph_arguments,
 			int verbose_level);
-	void build_db(int verbose_level);
-	void read_solutions(int verbose_level);
-	void compute_orbits(int verbose_level);
-	void isomorph_testing(int verbose_level);
-	void isomorph_report(int verbose_level);
-	void export_source_code(int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void recognize(std::string &label, int verbose_level);
+	void build_db(
+			int verbose_level);
+	void read_solutions(
+			int verbose_level);
+	void compute_orbits(
+			int verbose_level);
+	void isomorph_testing(
+			int verbose_level);
+	void isomorph_report(
+			int verbose_level);
+	void export_source_code(
+			int verbose_level);
+	void report(
+			std::ostream &ost, int verbose_level);
+	void recognize(
+			std::string &label, int verbose_level);
 
 };
 
@@ -623,7 +656,8 @@ public:
 
 	isomorph();
 	~isomorph();
-	void init(std::string &prefix,
+	void init(
+			std::string &prefix,
 			actions::action *A_base,
 			actions::action *A,
 			poset_classification::poset_classification *gen,
@@ -797,7 +831,8 @@ public:
 			int f_use_database_for_starter,
 			int f_implicit_fusion,
 			int verbose_level);
-	void read_data_files_for_starter(int level,
+	void read_data_files_for_starter(
+			int level,
 			std::string &prefix, int verbose_level);
 		// Calls gen->read_level_file_binary
 		// for all levels i from 0 to level
@@ -806,17 +841,22 @@ public:
 		// If gen->f_starter is true,
 		// we start from i = gen->starter_size instead.
 		// Finally, it computes nb_starter.
-	void compute_nb_starter(int level, int verbose_level);
-	void print_node_local(int level, int node_local);
-	void print_node_global(int level, int node_global);
+	void compute_nb_starter(
+			int level, int verbose_level);
+	void print_node_local(
+			int level, int node_local);
+	void print_node_global(
+			int level, int node_global);
 
-	void setup_and_open_level_database(int verbose_level);
+	void setup_and_open_level_database(
+			int verbose_level);
 	// Called from do_iso_test, identify and test_hash
 	// (Which are all in isomorph_testing.cpp)
 	// Calls init_DB for D and D.open.
 	// Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 	// Calls fopen for fp_ge1 and fp_ge2.
-	void close_level_database(int verbose_level);
+	void close_level_database(
+			int verbose_level);
 	// Closes D1, D2, fp_ge1, fp_ge2.
 	void prepare_database_access(
 			int cur_level, int verbose_level);
@@ -832,34 +872,42 @@ public:
 		// Linear search through all solutions at a given starter.
 		// calls load solution for each of the solutions
 		// stored with the case and compares the vectors.
-	int find_extension_search_interval(long int *set,
+	int find_extension_search_interval(
+			long int *set,
 		int first, int len, int &idx,
 		int f_btree_idx, int btree_idx,
 		int f_through_hash, int verbose_level);
-	int find_extension_easy_old(long int *set,
+	int find_extension_easy_old(
+			long int *set,
 		int case_nb, int &idx, int verbose_level);
-	void find_extension_easy_new(long int *set,
+	void find_extension_easy_new(
+			long int *set,
 		int case_nb, int &idx, int &f_found, int verbose_level);
-	int open_database_and_identify_object(long int *set,
+	int open_database_and_identify_object(
+			long int *set,
 		int *transporter,
 		int f_implicit_fusion, int verbose_level);
 	void init_DB_level(
 			layer2_discreta::typed_objects::database &D, int level,
 		int verbose_level);
-	void create_level_database(int level, int verbose_level);
-	void load_strong_generators(int cur_level,
+	void create_level_database(
+			int level, int verbose_level);
+	void load_strong_generators(
+			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Called from compute_stabilizer and
 		// from orbit_representative
-	void load_strong_generators_tree(int cur_level,
+	void load_strong_generators_tree(
+			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,
 		int verbose_level);
-	void load_strong_generators_database(int cur_level,
+	void load_strong_generators_database(
+			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
 		ring_theory::longinteger_object &go,

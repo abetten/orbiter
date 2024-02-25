@@ -76,7 +76,8 @@ void classification_base_case::init(
 }
 
 
-int classification_base_case::invoke_recognition(long int *Set, int len,
+int classification_base_case::invoke_recognition(
+		long int *Set, int len,
 			int *Elt, int verbose_level)
 {
 	return (*recognition_function)(Set, len, Elt, recognition_function_data, verbose_level);

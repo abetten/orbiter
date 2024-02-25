@@ -14,6 +14,8 @@ using std::endl;
 using std::vector;
 using std::shared_ptr;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class ir_tree_pretty_print_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
 	void visit(plus_node* op_node) override;

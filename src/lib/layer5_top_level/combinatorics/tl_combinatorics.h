@@ -327,12 +327,14 @@ public:
 			groups::strong_generators *Gens,
 			int verbose_level);
 
+#if 0
 	void Hill_cap56(
 			std::string &fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
 	void append_orbit_and_adjust_size(
 			groups::schreier *Orb,
 			int idx, int *set, int &sz);
+#endif
 
 };
 

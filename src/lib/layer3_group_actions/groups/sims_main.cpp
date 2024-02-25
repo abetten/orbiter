@@ -784,11 +784,11 @@ void sims::build_up_group_random_process(
 						"choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt, verbose_level - 5);
-			A->Group_element->element_move(Elt, GA->Elt1, 0);
+			A->Group_element->element_move(Elt, GA->Group_element->Elt1, 0);
 			if (f_v4) {
 				cout << "sims::build_up_group_random_process "
 						"random element chosen:" << endl;
-				A->Group_element->element_print_quick(GA->Elt1, cout);
+				A->Group_element->element_print_quick(GA->Group_element->Elt1, cout);
 				cout << endl;
 			}
 		}
@@ -798,7 +798,7 @@ void sims::build_up_group_random_process(
 						"choosing random element in the group by "
 						"which we extend" << endl;
 			}
-			old_G->random_element(GA->Elt1, verbose_level - 5);
+			old_G->random_element(GA->Group_element->Elt1, verbose_level - 5);
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process "
 						"random element chosen, path = ";
@@ -806,7 +806,7 @@ void sims::build_up_group_random_process(
 				cout << endl;
 			}
 			if (f_v4) {
-				GA->Group_element->element_print_quick(GA->Elt1, cout);
+				GA->Group_element->element_print_quick(GA->Group_element->Elt1, cout);
 				cout << endl;
 			}
 		}
@@ -814,7 +814,7 @@ void sims::build_up_group_random_process(
 			cout << "sims::build_up_group_random_process "
 					"calling strip:" << endl;
 		}
-		if (strip(GA->Elt1, GA->Elt2, drop_out_level, image,
+		if (strip(GA->Group_element->Elt1, GA->Group_element->Elt2, drop_out_level, image,
 				verbose_level - 5)) {
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process "
@@ -822,12 +822,12 @@ void sims::build_up_group_random_process(
 				if (f_v4) {
 					cout << "sims::build_up_group_random_process "
 							"residue = " << endl;
-					GA->Group_element->element_print_quick(GA->Elt2, cout);
+					GA->Group_element->element_print_quick(GA->Group_element->Elt2, cout);
 					cout << endl;
 				}
 			}
 			//f_added = false;
-			if (!GA->Group_element->element_is_one(GA->Elt2, 0)) {
+			if (!GA->Group_element->element_is_one(GA->Group_element->Elt2, 0)) {
 				if (f_vvv) {
 					cout << "sims::build_up_group_random_process "
 							"the residue is not trivial, we need to "
@@ -835,11 +835,11 @@ void sims::build_up_group_random_process(
 				}
 				if (f_override_choose_next_base_point) {
 					b = (*choose_next_base_point_method)(GA,
-							GA->Elt2, verbose_level - 5);
+							GA->Group_element->Elt2, verbose_level - 5);
 				}
 				else {
 					b = GA->choose_next_base_point_default_method(
-							GA->Elt2, verbose_level - 5);
+							GA->Group_element->Elt2, verbose_level - 5);
 				}
 
 				if (f_vv) {
@@ -851,7 +851,7 @@ void sims::build_up_group_random_process(
 						cout << "sims::build_up_group_random_process "
 								"cannot find next base point" << endl;
 					}
-					if (K->strip(GA->Elt2, GA->Elt3,
+					if (K->strip(GA->Group_element->Elt2, GA->Group_element->Elt3,
 							drop_out_level, image, 0/*verbose_level - 3*/)) {
 						if (f_vv) {
 							cout << "sims::build_up_group_random_process "
@@ -859,27 +859,27 @@ void sims::build_up_group_random_process(
 							if (f_v4) {
 								cout << "sims::build_up_group_random_process "
 										"residue = " << endl;
-								KA->Group_element->element_print_quick(GA->Elt3, cout);
+								KA->Group_element->element_print_quick(GA->Group_element->Elt3, cout);
 								cout << endl;
 								K->print(false);
 								K->print_basic_orbits();
 								cout << "sims::build_up_group_random_process "
 										"residue" << endl;
 								KA->Group_element->element_print_image_of_set(
-										GA->Elt3, KA->base_len(), KA->get_base());
+										GA->Group_element->Elt3, KA->base_len(), KA->get_base());
 								cout << "sims::build_up_group_random_process "
 										"Elt2" << endl;
 								KA->Group_element->element_print_image_of_set(
-										GA->Elt2, KA->base_len(), KA->get_base());
+										GA->Group_element->Elt2, KA->base_len(), KA->get_base());
 							}
 						}
-						if (!KA->Group_element->element_is_one(GA->Elt3, false)) {
+						if (!KA->Group_element->element_is_one(GA->Group_element->Elt3, false)) {
 							cout << "sims::build_up_group_random_process "
 									"element strips through kernel, "
 									"residue = " << endl;
 							cout << "but the element is not the identity, "
 									"something is wrong" << endl;
-							GA->Group_element->element_print(GA->Elt3, cout);
+							GA->Group_element->element_print(GA->Group_element->Elt3, cout);
 							cout << endl;
 
 							cout << "sims::build_up_group_random_process "
@@ -920,7 +920,7 @@ void sims::build_up_group_random_process(
 									"before K->add_generator_at_level "
 									"drop_out_level=" << drop_out_level << endl;
 						}
-						K->add_generator_at_level(GA->Elt3,
+						K->add_generator_at_level(GA->Group_element->Elt3,
 								drop_out_level, 0 /*verbose_level - 10*/);
 						if (f_vvv) {
 							cout << "sims::build_up_group_random_process "
@@ -959,7 +959,7 @@ void sims::build_up_group_random_process(
 						cout << "sims::build_up_group_random_process "
 								"before add_generator_at_level" << endl;
 					}
-					add_generator_at_level(GA->Elt2,
+					add_generator_at_level(GA->Group_element->Elt2,
 							GA->base_len() - 1, 0 /*verbose_level - 10*/);
 					if (f_v) {
 						cout << "sims::build_up_group_random_process "
@@ -997,7 +997,7 @@ void sims::build_up_group_random_process(
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (false) {
-					GA->Group_element->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Group_element->Elt2, cout);
 					cout  << endl;
 				}
 			}
@@ -1005,7 +1005,7 @@ void sims::build_up_group_random_process(
 				cout << "sims::build_up_group_random_process "
 						"before add_generator_at_level" << endl;
 			}
-			add_generator_at_level(GA->Elt2, drop_out_level,
+			add_generator_at_level(GA->Group_element->Elt2, drop_out_level,
 					0/*verbose_level - 3*/);
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process "
@@ -1206,7 +1206,7 @@ void sims::build_up_group_from_generators(
 				GA->Group_element->element_print(O.cosetrep, cout);
 				cout << endl;
 			}
-			if (strip(O.cosetrep, GA->Elt2 /* residue */,
+			if (strip(O.cosetrep, GA->Group_element->Elt2 /* residue */,
 					drop_out_level, image, 0 /*verbose_level - 1*/)) {
 				if (f_vv) {
 					cout << "sims::build_up_group_from_generators "
@@ -1214,7 +1214,7 @@ void sims::build_up_group_from_generators(
 					if (false /*f_vvv */) {
 						cout << "sims::build_up_group_from_generators "
 								"residue=" << endl;
-						GA->Group_element->element_print_quick(GA->Elt2, cout);
+						GA->Group_element->element_print_quick(GA->Group_element->Elt2, cout);
 						cout << endl;
 					}
 				}
@@ -1229,9 +1229,9 @@ void sims::build_up_group_from_generators(
 					cout << "sims::build_up_group_from_generators "
 							"a point which is moved by the residue"
 							<< endl;
-					GA->Group_element->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Group_element->Elt2, cout);
 				}
-				if (!GA->Group_element->element_is_one(GA->Elt2, false)) {
+				if (!GA->Group_element->element_is_one(GA->Group_element->Elt2, false)) {
 					if (f_vvv) {
 						cout << "sims::build_up_group_from_generators "
 								"the residue is not trivial, "
@@ -1240,25 +1240,25 @@ void sims::build_up_group_from_generators(
 					}
 					if (f_override_choose_next_base_point) {
 						b = (*choose_next_base_point_method)(
-								GA, GA->Elt2, verbose_level);
+								GA, GA->Group_element->Elt2, verbose_level);
 					}
 					else {
 						b = GA->choose_next_base_point_default_method(
-								GA->Elt2, verbose_level);
+								GA->Group_element->Elt2, verbose_level);
 					}
 					if (b == -1) {
 						if (f_vv) {
 							cout << "sims::build_up_group_from_generators: "
 									"cannot find next base point" << endl;
 						}
-						if (K->strip(GA->Elt2, GA->Elt3,
+						if (K->strip(GA->Group_element->Elt2, GA->Group_element->Elt3,
 								drop_out_level, image, verbose_level - 3)) {
 							if (f_vv) {
 								cout << "sims::build_up_group_from_generators "
 										"element strips through kernel, "
 										"residue = " << endl;
 								if (f_vv) {
-									KA->Group_element->element_print(GA->Elt3, cout);
+									KA->Group_element->element_print(GA->Group_element->Elt3, cout);
 									cout << endl;
 									}
 								K->print(false);
@@ -1266,21 +1266,21 @@ void sims::build_up_group_from_generators(
 								cout << "sims::build_up_group_from_generators "
 										"residue" << endl;
 								KA->Group_element->element_print_image_of_set(
-										GA->Elt3, KA->base_len(), KA->get_base());
+										GA->Group_element->Elt3, KA->base_len(), KA->get_base());
 								cout << "sims::build_up_group_from_generators Elt2" << endl;
 								KA->Group_element->element_print_image_of_set(
-										GA->Elt2, KA->base_len(), KA->get_base());
+										GA->Group_element->Elt2, KA->base_len(), KA->get_base());
 							}
-							if (!KA->Group_element->element_is_one(GA->Elt3, false)) {
+							if (!KA->Group_element->element_is_one(GA->Group_element->Elt3, false)) {
 								cout << "sims::build_up_group_from_generators "
 										"but the element is not the identity, "
 										"something is wrong" << endl;
-								GA->Group_element->element_print(GA->Elt3, cout);
+								GA->Group_element->element_print(GA->Group_element->Elt3, cout);
 								cout << endl;
 								exit(1);
 							}
 						}
-						K->add_generator_at_level(GA->Elt3,
+						K->add_generator_at_level(GA->Group_element->Elt3,
 								drop_out_level, verbose_level - 3);
 						if (f_vv) {
 							cout << "sims::build_up_group_from_generators "
@@ -1313,7 +1313,7 @@ void sims::build_up_group_from_generators(
 							cout << "sims::build_up_group_from_generators "
 									"calling add_generator_at_level" << endl;
 						}
-						add_generator_at_level(GA->Elt2,
+						add_generator_at_level(GA->Group_element->Elt2,
 								GA->base_len() - 1, verbose_level - 3);
 						if (f_vv) {
 							cout << "sims::build_up_group_from_generators "
@@ -1337,7 +1337,7 @@ void sims::build_up_group_from_generators(
 					cout << "sims::build_up_group_from_generators "
 							"before add_generator_at_level" << endl;
 				}
-				add_generator_at_level(GA->Elt2,
+				add_generator_at_level(GA->Group_element->Elt2,
 						drop_out_level, 0 /*verbose_level - 1*/);
 				if (f_vv) {
 					cout << "sims::build_up_group_from_generators "

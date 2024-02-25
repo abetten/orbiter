@@ -164,6 +164,15 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_multiply_all_elements_in_lex_order = false;
 
+
+	f_stats = false;
+	//std::string stats_fname_base;
+
+
+	f_move_a_to_b = false;
+	move_a_to_b_a = -1;
+	move_a_to_b_b = -1;
+
 	// orbit stuff:
 
 
@@ -603,8 +612,21 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-multiply_all_elements_in_lex_order " << endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-stats") == 0) {
+			f_stats = true;
+			stats_fname_base.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stats " << stats_fname_base << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-move_a_to_b") == 0) {
+			f_move_a_to_b = true;
+			move_a_to_b_a = ST.strtoi(argv[++i]);
+			move_a_to_b_b = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
+			}
+		}
 
 
 
@@ -911,6 +933,12 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_multiply_all_elements_in_lex_order) {
 		cout << "-multiply_all_elements_in_lex_order " << endl;
+	}
+	if (f_stats) {
+		cout << "-stats " << stats_fname_base << endl;
+	}
+	if (f_move_a_to_b) {
+		cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
 	}
 
 

@@ -19,6 +19,8 @@
 
 using std::shared_ptr;
 
+//! auxiliary struct to realize the visitor programming paradigm for Sajeeb's abstract syntax trees
+
 struct dispatcher {
 
     template <typename node_t, typename visitor_t, typename... visitor_args_t>

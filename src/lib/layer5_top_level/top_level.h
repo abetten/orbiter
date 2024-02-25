@@ -45,13 +45,6 @@ namespace apps_algebra {
 	class group_theoretic_activity_description;
 	class group_theoretic_activity;
 	class modified_group_create;
-	class orbit_cascade;
-	class orbits_activity_description;
-	class orbits_activity;
-	class orbits_create_description;
-	class orbits_create;
-	class orbits_on_polynomials;
-	class orbits_on_subspaces;
 	class polynomial_ring_activity;
 	class vector_ge_builder;
 	class young;
@@ -192,6 +185,26 @@ namespace user_interface {
 	class symbol_definition;
 
 }
+
+
+
+//! High level orbit interface
+
+
+namespace orbits {
+
+	class orbit_cascade;
+	class orbits_activity_description;
+	class orbits_activity;
+	class orbits_create_description;
+	class orbits_create;
+	class orbits_global;
+	class orbits_on_polynomials;
+	class orbits_on_subspaces;
+
+}
+
+
 
 
 //! Applications in orthogonal geometry
@@ -409,6 +422,7 @@ namespace applications_in_algebraic_geometry {
 #include "./geometry/tl_geometry.h"
 #include "./graph_theory/tl_graph_theory.h"
 #include "./interfaces/interfaces.h"
+#include "./orbits/orbits.h"
 #include "./orthogonal/tl_orthogonal.h"
 #include "./projective_space/projective_space.h"
 #include "./semifields/semifields.h"

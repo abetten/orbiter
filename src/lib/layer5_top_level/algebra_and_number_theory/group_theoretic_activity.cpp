@@ -506,17 +506,22 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_orbits_on_group_elements_under_conjugation" << endl;
 		}
+
+		orbits::orbits_global Orbits;
+
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_orbits_on_group_elements_under_conjugation" << endl;
+					"before Orbits.do_orbits_on_group_elements_under_conjugation" << endl;
 		}
-		AG->do_orbits_on_group_elements_under_conjugation(
+		Orbits.do_orbits_on_group_elements_under_conjugation(
+				AG,
 				Descr->orbits_on_group_elements_under_conjugation_fname,
 				Descr->orbits_on_group_elements_under_conjugation_transporter_fname,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_orbits_on_group_elements_under_conjugation" << endl;
+					"after Orbits.do_orbits_on_group_elements_under_conjugation" << endl;
 		}
 	}
 
@@ -981,6 +986,71 @@ void group_theoretic_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_stats) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_stats" << endl;
+		}
+
+		AG->A->ptr->save_stats(Descr->stats_fname_base);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_stats done" << endl;
+		}
+	}
+
+	else if (Descr->f_move_a_to_b) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_move_a_to_b" << endl;
+		}
+
+		//cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
+		actions::action_global AGlobal;
+		int *transporter_a_b;
+		groups::strong_generators *Stab_b;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AGlobal.move_a_to_b_and_stabilizer_of_b" << endl;
+		}
+		AGlobal.move_a_to_b_and_stabilizer_of_b(
+				AG->A_base,
+				AG->A,
+					AG->get_strong_generators(),
+					Descr->move_a_to_b_a, Descr->move_a_to_b_b,
+					transporter_a_b,
+					Stab_b,
+					verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AGlobal.move_a_to_b_and_stabilizer_of_b" << endl;
+		}
+
+
+		cout << "transporter from a to b, for "
+				"a = " << Descr->move_a_to_b_a << " and "
+				"b = " << Descr->move_a_to_b_b << endl;
+
+		AG->A->Group_element->element_print_quick(transporter_a_b, cout);
+		cout << endl;
+		AG->A->Group_element->element_print_latex(transporter_a_b, cout);
+		cout << endl;
+
+		cout << "Stabilizer of b:" << endl;
+		Stab_b->print_generators_tex(cout);
+
+		FREE_int(transporter_a_b);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_move_a_to_b done" << endl;
+		}
+	}
+
 
 
 	// orbit stuff:
@@ -992,14 +1062,16 @@ void group_theoretic_activity::perform_activity(
 					"f_orbit_of" << endl;
 		}
 
+		orbits::orbits_global Orbits;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->orbit_of" << endl;
+					"before Orbits.orbit_of" << endl;
 		}
-		AG->orbit_of(Descr->orbit_of_point_idx, verbose_level);
+		Orbits.orbit_of(AG, Descr->orbit_of_point_idx, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->orbit_of" << endl;
+					"after Orbits.orbit_of" << endl;
 		}
 	}
 
@@ -1010,18 +1082,22 @@ void group_theoretic_activity::perform_activity(
 					"f_orbits_on_set_system_from_file" << endl;
 		}
 
+		orbits::orbits_global Orbits;
+
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->orbits_on_set_system_from_file" << endl;
+					"before Orbits.orbits_on_set_system_from_file" << endl;
 		}
-		AG->orbits_on_set_system_from_file(
+		Orbits.orbits_on_set_system_from_file(
+				AG,
 				Descr->orbits_on_set_system_from_file_fname,
 				Descr->orbits_on_set_system_number_of_columns,
 				Descr->orbits_on_set_system_first_column,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->orbits_on_set_system_from_file" << endl;
+					"after Orbits.orbits_on_set_system_from_file" << endl;
 		}
 	}
 
@@ -1032,15 +1108,19 @@ void group_theoretic_activity::perform_activity(
 					"f_orbit_of_set_from_file" << endl;
 		}
 
+		orbits::orbits_global Orbits;
+
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->orbits_on_set_from_file" << endl;
+					"before Orbits.orbits_on_set_from_file" << endl;
 		}
-		AG->orbits_on_set_from_file(
+		Orbits.orbits_on_set_from_file(
+				AG,
 				Descr->orbit_of_set_from_file_fname, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->orbits_on_set_from_file" << endl;
+					"after Orbits.orbits_on_set_from_file" << endl;
 		}
 	}
 
@@ -1149,8 +1229,6 @@ void group_theoretic_activity::perform_activity(
 		cout << "group_theoretic_activity::perform_activity done" << endl;
 	}
 }
-
-
 
 
 

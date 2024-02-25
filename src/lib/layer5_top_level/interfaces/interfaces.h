@@ -129,7 +129,7 @@ class activity_description {
 		*Action_on_forms_activity_description;
 
 	int f_orbits_activity;
-	apps_algebra::orbits_activity_description
+	orbits::orbits_activity_description
 		*Orbits_activity_description;
 
 public:
@@ -963,6 +963,10 @@ class interface_toolkit {
 	int f_read_gedcom;
 	std::string read_gedcom_fname;
 
+	int f_read_xml;
+	std::string read_xml_fname;
+	std::string read_xml_crossref_fname;
+
 
 public:
 
@@ -1130,7 +1134,8 @@ public:
 
 void free_symbol_table_entry_callback(
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
-geometry::projective_space *get_projective_space_low_level_function(void *ptr);
+geometry::projective_space *get_projective_space_low_level_function(
+		void *ptr);
 
 
 
@@ -1315,7 +1320,7 @@ public:
 		*Action_on_forms_descr;
 
 	int f_orbits;
-	apps_algebra::orbits_create_description
+	orbits::orbits_create_description
 		*Orbits_create_description;
 
 	int f_poset_classification_control;

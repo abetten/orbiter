@@ -470,7 +470,8 @@ void projective_space::Baer_subline(
 			cout << "t=" << t << " a=" << a << endl;
 		}
 		for (j = 0; j < 2; j++) {
-			Subspaces->w[j] = Subspaces->F->add(N[0 * 2 + j], Subspaces->F->mult(a, N[1 * 2 + j]));
+			Subspaces->w[j] = Subspaces->F->add(
+					N[0 * 2 + j], Subspaces->F->mult(a, N[1 * 2 + j]));
 		}
 		if (f_vvv) {
 			cout << "w=";

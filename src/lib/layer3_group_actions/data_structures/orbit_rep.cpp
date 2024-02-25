@@ -77,10 +77,14 @@ void orbit_rep::init_from_file(
 	orbit_rep::early_test_func_callback = early_test_func_callback;
 	orbit_rep::early_test_func_callback_data = early_test_func_callback_data;
 
+
+	actions::action_global AGlobal;
 	if (f_v) {
 		cout << "orbit_rep::init_from_file before A->read_orbit_rep_and_candidates_from_files_and_process" << endl;
 	}
-	A->read_orbit_rep_and_candidates_from_files_and_process(prefix,
+	AGlobal.read_orbit_rep_and_candidates_from_files_and_process(
+			A,
+			prefix,
 		level, orbit_at_level, level_of_candidates_file, 
 		early_test_func_callback, 
 		early_test_func_callback_data, 

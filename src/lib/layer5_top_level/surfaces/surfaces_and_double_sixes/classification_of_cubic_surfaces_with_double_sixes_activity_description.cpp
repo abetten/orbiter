@@ -24,6 +24,9 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 	f_report = false;
 	report_options = NULL;
 
+	f_stats = false;
+	//std::string stats_prefix;
+
 	f_identify_Eckardt = false;
 
 	f_identify_F13 = false;
@@ -85,6 +88,13 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 
 			if (f_v) {
 				cout << "-report" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-stats") == 0) {
+			f_stats = true;
+			stats_prefix.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stats " << stats_prefix << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-identify_Eckardt") == 0) {
@@ -170,6 +180,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 		cout << "-report ";
 		report_options->print();
 		cout << endl;
+	}
+	if (f_stats) {
+		cout << "-stats " << stats_prefix << endl;
 	}
 	if (f_identify_Eckardt) {
 		cout << "-identify_Eckardt " << endl;

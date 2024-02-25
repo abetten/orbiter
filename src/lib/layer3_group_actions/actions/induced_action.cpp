@@ -103,7 +103,7 @@ action *induced_action::induced_action_on_interior_direct_product(
 		cout << "induced_action::induced_action_on_interior_direct_product "
 				"before allocate_element_data" << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_v) {
@@ -176,7 +176,7 @@ action *induced_action::induced_action_on_set_partitions(
 		cout << "induced_action::induced_action_on_set_partitions "
 				"before allocate_element_data" << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_v) {
@@ -331,7 +331,7 @@ action *induced_action::induced_action_by_representation_on_conic(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 
@@ -412,7 +412,7 @@ action *induced_action::induced_action_on_cosets(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 
@@ -492,7 +492,7 @@ action *induced_action::induced_action_on_factor_space(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 
@@ -587,7 +587,7 @@ action *induced_action::induced_action_on_grassmannian(
 		cout << "induced_action::induced_action_on_grassmannian "
 				"before A->allocate_element_data" << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_v) {
@@ -677,7 +677,7 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "
 				"before allocate_element_data" << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "
 				"after allocate_element_data" << endl;
@@ -776,7 +776,7 @@ action *induced_action::induced_action_on_spread_set(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 		action_global AG;
@@ -891,7 +891,7 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 		cout << "induced_action::induced_action_on_wedge_product "
 				"before A->allocate_element_data" << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_v) {
@@ -980,7 +980,7 @@ action *induced_action::induced_action_on_Galois_group(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	action_global AGl;
@@ -1081,7 +1081,7 @@ action *induced_action::induced_action_on_determinant(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	action_global AG;
@@ -1157,7 +1157,7 @@ action *induced_action::induced_action_on_sign(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	action_global AG;
 
@@ -1240,7 +1240,7 @@ action *induced_action::create_induced_action_by_conjugation(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_basis) {
 		if (f_v) {
@@ -1326,7 +1326,7 @@ action *induced_action::induced_action_by_right_multiplication(
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 	A->low_level_point_size = A_old->make_element_size;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_basis) {
 		actions::action_global AG;
@@ -1447,7 +1447,7 @@ action *induced_action::induced_action_on_sets(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 		if (f_v) {
@@ -1561,7 +1561,7 @@ action *induced_action::induced_action_on_subgroups(
 	A->elt_size_in_int = old_action->elt_size_in_int;
 	A->coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_subgroups "
@@ -1635,7 +1635,7 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 		if (f_v) {
@@ -1742,7 +1742,7 @@ action *induced_action::restricted_action(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_v) {
 		cout << "induced_action::restricted_action finished, "
@@ -1834,7 +1834,7 @@ action *induced_action::induced_action_by_restriction(
 	A->elt_size_in_int = old_action->elt_size_in_int;
 	A->coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 		if (f_v) {
@@ -1938,7 +1938,7 @@ action *induced_action::induced_action_on_ordered_pairs(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (old_G) {
 
@@ -2010,7 +2010,7 @@ action *induced_action::induced_action_on_k_subsets(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_k_subsets "
@@ -2067,7 +2067,7 @@ action *induced_action::induced_action_on_orbits(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_orbits "
@@ -2127,7 +2127,7 @@ action *induced_action::induced_action_on_andre(
 	A->elt_size_in_int = An1->elt_size_in_int;
 	A->coded_elt_size_in_char = An1->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_andre "
@@ -2211,7 +2211,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 
@@ -2321,7 +2321,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 	A->elt_size_in_int = A_old->elt_size_in_int;
 	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
 
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_induce_action) {
 
@@ -2406,7 +2406,7 @@ action *induced_action::base_change(
 	new_action->low_level_point_size = old_action->low_level_point_size;
 
 
-	new_action->allocate_element_data();
+	new_action->Group_element->allocate_element_data();
 
 	action_global AG;
 

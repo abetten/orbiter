@@ -14,12 +14,15 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
-static long int orbits_on_subspaces_rank_point_func(int *v, void *data);
-static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
-static void orbits_on_subspaces_early_test_func(long int *S, int len,
+static long int orbits_on_subspaces_rank_point_func(
+		int *v, void *data);
+static void orbits_on_subspaces_unrank_point_func(
+		int *v, long int rk, void *data);
+static void orbits_on_subspaces_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -184,8 +187,20 @@ void orbits_on_subspaces::init(
 				<< Control->depth << endl;
 	}
 
-	Group->orbits_on_poset_post_processing(
-			orbits_on_subspaces_PC, Control->depth, verbose_level);
+	orbits::orbits_global Orbits;
+
+	if (f_v) {
+		cout << "orbits_on_subspaces::init "
+				"before Orbits.orbits_on_poset_post_processing" << endl;
+	}
+	Orbits.orbits_on_poset_post_processing(
+			Group,
+			orbits_on_subspaces_PC, Control->depth,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_on_subspaces::init "
+				"after Orbits.orbits_on_poset_post_processing" << endl;
+	}
 
 
 
@@ -202,7 +217,8 @@ void orbits_on_subspaces::init(
 // #############################################################################
 
 
-static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
+static long int orbits_on_subspaces_rank_point_func(
+		int *v, void *data)
 {
 	orbits_on_subspaces *OoS;
 	//group_theoretic_activity *G;
@@ -222,7 +238,8 @@ static long int orbits_on_subspaces_rank_point_func(int *v, void *data)
 	return rk;
 }
 
-static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data)
+static void orbits_on_subspaces_unrank_point_func(
+		int *v, long int rk, void *data)
 {
 	orbits_on_subspaces *OoS;
 	//group_theoretic_activity *G;
@@ -239,7 +256,8 @@ static void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *dat
 			gen->get_VS()->dimension, rk);
 }
 
-static void orbits_on_subspaces_early_test_func(long int *S, int len,
+static void orbits_on_subspaces_early_test_func(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)

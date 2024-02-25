@@ -72,7 +72,8 @@ isomorph::~isomorph()
 	}
 }
 
-void isomorph::init(std::string &prefix,
+void isomorph::init(
+		std::string &prefix,
 		actions::action *A_base,
 		actions::action *A,
 		poset_classification::poset_classification *gen,

@@ -1529,7 +1529,8 @@ void strong_generators::print_generators_in_latex_individually(
 		ost << " and with " << n << " fixed points.\\\\" << endl;
 #endif
 		}
-	ost << endl << "\\bigskip" << endl;
+	ost << "\\\\" << endl;
+	ost << endl << "\\noindent" << endl;
 
 	print_for_make_element(ost);
 
@@ -3145,9 +3146,9 @@ void strong_generators::compute_ascii_coding(
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < gens->len; i++) {
-		A->Group_element->element_pack(gens->ith(i), A->elt1, false);
+		A->Group_element->element_pack(gens->ith(i), A->Group_element->elt1, false);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			Os.code_uchar(p, A->elt1[j]);
+			Os.code_uchar(p, A->Group_element->elt1[j]);
 		}
 	}
 	*p++ = 0;
@@ -3218,9 +3219,9 @@ void strong_generators::decode_ascii_coding(
 	}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			Os.decode_uchar(p, A->elt1[j]);
+			Os.decode_uchar(p, A->Group_element->elt1[j]);
 		}
-		A->Group_element->element_unpack(A->elt1, gens->ith(i), false);
+		A->Group_element->element_unpack(A->Group_element->elt1, gens->ith(i), false);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {

@@ -13,6 +13,8 @@ using std::endl;
 using std::shared_ptr;
 using std::make_shared;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class uminus_distribute_and_reduce_visitor : public IRTreeVoidReturnTypeVisitorInterface,
 											 public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<irtree_node*, 
 											 			list<shared_ptr<irtree_node> >::iterator&> {

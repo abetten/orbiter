@@ -401,7 +401,7 @@ void any_group::isomorphism_Klein_quadric(
 
 void any_group::do_orbits_on_subspaces(
 		poset_classification::poset_classification_control *Control,
-		orbits_on_subspaces *&OoS,
+		orbits::orbits_on_subspaces *&OoS,
 		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -428,7 +428,7 @@ void any_group::do_orbits_on_subspaces(
 
 	//orbits_on_subspaces *OoS;
 
-	OoS = NEW_OBJECT(orbits_on_subspaces);
+	OoS = NEW_OBJECT(orbits::orbits_on_subspaces);
 
 	OoS->init(this, Control, depth, verbose_level);
 

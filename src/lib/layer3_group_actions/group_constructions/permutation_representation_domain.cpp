@@ -290,7 +290,7 @@ void permutation_representation_domain::init_with_base(
 	A.elt_size_in_int = elt_size_int;
 	A.coded_elt_size_in_char = char_per_elt;
 	
-	A.allocate_element_data();
+	A.Group_element->allocate_element_data();
 
 	A.label = "Sym" + std::to_string(degree);
 	A.label_tex = "{\\rm Sym}_{" + std::to_string(degree) + "}";

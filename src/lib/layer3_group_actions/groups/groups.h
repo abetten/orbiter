@@ -156,7 +156,8 @@ public:
 			int pt,
 			strong_generators *&Stab, int verbose_level);
 	void stabilizer_of(
-			int orbit_idx, int verbose_level);
+			int orbit_idx, strong_generators *&Stab,
+			int verbose_level);
 	void idx_of_points_in_orbits_of_length_l(
 			long int *set, int set_sz, int go, int l,
 			std::vector<int> &Idx,
@@ -333,6 +334,9 @@ public:
 		// then the inverse of the generator
 		// in A->degree..2*A->degree-1
 	
+
+	// suggested new class: schreier_forest:
+	// long int degree
 	int *orbit; // [A->degree]
 	int *orbit_inv; // [A->degree]
 
@@ -349,6 +353,10 @@ public:
 	int *orbit_len;  // [A->degree]
 	int nb_orbits;
 	
+	// end schreier_forest
+
+
+
 	int *Elt1, *Elt2, *Elt3;
 	int *schreier_gen, *schreier_gen1;
 		// used in random_schreier_generator
@@ -1882,10 +1890,10 @@ public:
 			algebra::matrix_group *Mtx, int verbose_level);
 	void generators_for_the_orthogonal_group(
 			actions::action *A,
-			field_theory::finite_field *F, int n,
-		int epsilon, 
-		int f_semilinear, 
-		int verbose_level);
+			//field_theory::finite_field *F, int n, int epsilon,
+			orthogonal_geometry::orthogonal *O,
+			int f_semilinear,
+			int verbose_level);
 	void stabilizer_of_cubic_surface_from_catalogue(
 			actions::action *A,
 		field_theory::finite_field *F, int iso,

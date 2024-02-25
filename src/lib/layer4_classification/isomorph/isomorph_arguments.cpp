@@ -17,7 +17,22 @@ namespace isomorph {
 
 isomorph_arguments::isomorph_arguments()
 {
-	f_init_has_been_called = false;
+	f_prefix_iso = false;
+	//std::string prefix_iso;
+	//prefix_iso = "./ISO/";
+
+
+	f_prefix_with_directory = false;
+	//std::string prefix_with_directory;
+
+	f_prefix_classify = false;
+	//std::string prefix_classify;
+
+	f_solution_prefix = false;
+	//std::string solution_prefix;
+
+	f_base_fname = false;
+	//std::string base_fname;
 
 	f_use_database_for_starter = false;
 	f_implicit_fusion = false;
@@ -57,28 +72,17 @@ isomorph_arguments::isomorph_arguments()
 	f_eliminate_graphs_if_possible = false;
 	f_down_orbits = false;
 
-	f_prefix_iso = false;
-	//std::string prefix_iso;
-	//prefix_iso = "./ISO/";
 
+
+	//
+
+	f_init_has_been_called = false;
 
 	A = NULL;
 	A2 = NULL;
 	gen = NULL;
 	target_size = 0;
 	Control = NULL;
-
-	f_prefix_with_directory = false;
-	//std::string prefix_with_directory;
-
-	f_prefix_classify = false;
-	//std::string prefix_classify;
-
-	f_solution_prefix = false;
-	//std::string solution_prefix;
-
-	f_base_fname = false;
-	//std::string base_fname;
 
 	ECA = NULL;
 
@@ -96,14 +100,40 @@ isomorph_arguments::~isomorph_arguments()
 {
 }
 
-int isomorph_arguments::read_arguments(int argc, std::string *argv,
+int isomorph_arguments::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 	data_structures::string_tools ST;
 
 	for (i = 0; i < argc; i++) {
-		if (ST.stringcmp(argv[i], "-use_database_for_starter") == 0) {
+		if (ST.stringcmp(argv[i], "-prefix_iso") == 0) {
+			f_prefix_iso = true;
+			prefix_iso.assign(argv[++i]);
+			cout << "-prefix_iso " << prefix_iso << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-prefix_with_directory") == 0) {
+			f_prefix_with_directory = true;
+			prefix_with_directory.assign(argv[++i]);
+			cout << "-prefix_with_directory " << prefix_with_directory << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-prefix_classify") == 0) {
+			f_prefix_classify = true;
+			prefix_classify.assign(argv[++i]);
+			cout << "-prefix_classify " << prefix_classify << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-solution_prefix") == 0) {
+			f_solution_prefix = true;
+			solution_prefix.assign(argv[++i]);
+			cout << "-solution_prefix " << solution_prefix << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-base_fname") == 0) {
+			f_base_fname = true;
+			base_fname.assign(argv[++i]);
+			cout << "-base_fname " << base_fname << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-use_database_for_starter") == 0) {
 			f_use_database_for_starter = true;
 			cout << "-use_database_for_starter " << endl;
 		}
@@ -185,31 +215,6 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 			f_down_orbits = true;
 			cout << "-down_orbits " << endl;
 		}
-		else if (ST.stringcmp(argv[i], "-prefix_iso") == 0) {
-			f_prefix_iso = true;
-			prefix_iso.assign(argv[++i]);
-			cout << "-prefix_iso " << prefix_iso << endl;
-		}
-		else if (ST.stringcmp(argv[i], "-prefix_with_directory") == 0) {
-			f_prefix_with_directory = true;
-			prefix_with_directory.assign(argv[++i]);
-			cout << "-prefix_with_directory " << prefix_with_directory << endl;
-		}
-		else if (ST.stringcmp(argv[i], "-prefix_classify") == 0) {
-			f_prefix_classify = true;
-			prefix_classify.assign(argv[++i]);
-			cout << "-prefix_classify " << prefix_classify << endl;
-		}
-		else if (ST.stringcmp(argv[i], "-solution_prefix") == 0) {
-			f_solution_prefix = true;
-			solution_prefix.assign(argv[++i]);
-			cout << "-solution_prefix " << solution_prefix << endl;
-		}
-		else if (ST.stringcmp(argv[i], "-base_fname") == 0) {
-			f_base_fname = true;
-			base_fname.assign(argv[++i]);
-			cout << "-base_fname " << base_fname << endl;
-		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -228,6 +233,21 @@ int isomorph_arguments::read_arguments(int argc, std::string *argv,
 
 void isomorph_arguments::print()
 {
+	if (f_prefix_iso) {
+		cout << "-prefix_iso " << prefix_iso << endl;
+	}
+	if (f_prefix_with_directory) {
+		cout << "-prefix_with_directory " << prefix_with_directory << endl;
+	}
+	if (f_prefix_classify) {
+		cout << "-prefix_classify " << prefix_classify << endl;
+	}
+	if (f_solution_prefix) {
+		cout << "-solution_prefix " << solution_prefix << endl;
+	}
+	if (f_base_fname) {
+		cout << "-base_fname " << base_fname << endl;
+	}
 	if (f_use_database_for_starter) {
 		cout << "-use_database_for_starter " << endl;
 	}
@@ -283,21 +303,6 @@ void isomorph_arguments::print()
 	if (f_down_orbits) {
 		cout << "-down_orbits " << endl;
 	}
-	if (f_prefix_iso) {
-		cout << "-prefix_iso " << prefix_iso << endl;
-	}
-	if (f_prefix_with_directory) {
-		cout << "-prefix_with_directory " << prefix_with_directory << endl;
-	}
-	if (f_prefix_classify) {
-		cout << "-prefix_classify " << prefix_classify << endl;
-	}
-	if (f_solution_prefix) {
-		cout << "-solution_prefix " << solution_prefix << endl;
-	}
-	if (f_base_fname) {
-		cout << "-base_fname " << base_fname << endl;
-	}
 
 }
 
@@ -325,7 +330,6 @@ void isomorph_arguments::init(
 	isomorph_arguments::gen = gen;
 	isomorph_arguments::target_size = target_size;
 	isomorph_arguments::Control = Control;
-	//isomorph_arguments::prefix_with_directory = prefix_with_directory;
 	isomorph_arguments::ECA = ECA;
 	isomorph_arguments::callback_report = callback_report;
 	isomorph_arguments::callback_subset_orbits = callback_subset_orbits;

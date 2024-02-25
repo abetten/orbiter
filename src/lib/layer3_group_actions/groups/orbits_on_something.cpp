@@ -343,7 +343,8 @@ void orbits_on_something::stabilizer_any_point(
 
 
 void orbits_on_something::stabilizer_of(
-		int orbit_idx, int verbose_level)
+		int orbit_idx, strong_generators *&Stab,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -351,7 +352,7 @@ void orbits_on_something::stabilizer_of(
 		cout << "orbits_on_something::stabilizer_of" << endl;
 	}
 
-	strong_generators *Stab;
+
 	ring_theory::longinteger_object full_group_order;
 
 	SG->group_order(full_group_order);
@@ -359,7 +360,12 @@ void orbits_on_something::stabilizer_of(
 
 	if (f_v) {
 		cout << "orbits_on_something::init "
-				"computing stabilizer of first orbit rep" << endl;
+				"computing stabilizer of orbit rep" << endl;
+		cout << "orbits_on_something::init "
+				"orbit_idx = " << orbit_idx << endl;
+		cout << "orbits_on_something::init "
+				"orbit length = ";
+		cout << Sch->orbit_len[orbit_idx] << endl;
 	}
 	Stab = Sch->stabilizer_orbit_rep(
 		SG->A,
@@ -406,7 +412,7 @@ void orbits_on_something::stabilizer_of(
 			fname_stab, label_stab, label_stab,
 			verbose_level);
 
-	FREE_OBJECT(Stab);
+	//FREE_OBJECT(Stab);
 
 	if (f_v) {
 		cout << "orbits_on_something::stabilizer_of done" << endl;

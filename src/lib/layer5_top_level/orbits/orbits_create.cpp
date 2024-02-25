@@ -12,7 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbits_create::orbits_create()
@@ -73,7 +73,7 @@ orbits_create::~orbits_create()
 }
 
 void orbits_create::init(
-		apps_algebra::orbits_create_description *Descr,
+		orbits_create_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -102,11 +102,14 @@ void orbits_create::init(
 			exit(1);
 		}
 
+		orbits_global Orbits;
+
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before AG->orbits_on_points" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"before Orbits.orbits_on_points" << endl;
 		}
 
-		Group->orbits_on_points(Orb, verbose_level);
+		Orbits.orbits_on_points(Group, Orb, verbose_level);
 
 
 
@@ -114,7 +117,8 @@ void orbits_create::init(
 
 
 		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after AG->orbits_on_points" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"after Orbits.orbits_on_points" << endl;
 		}
 
 
@@ -135,13 +139,16 @@ void orbits_create::init(
 
 		Gens = Get_object_of_type_vector_ge(Descr->on_points_with_generators_gens_label);
 
+		orbits_global Orbits;
+
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->orbits_on_points_from_generators" << endl;
+					"before Orbits.orbits_on_points_from_generators" << endl;
 		}
 
-		Group->orbits_on_points_from_generators(Gens->V, Orb, verbose_level);
+		Orbits.orbits_on_points_from_generators(
+				Group, Gens->V, Orb, verbose_level);
 
 
 		f_has_Orb = true;
@@ -149,7 +156,7 @@ void orbits_create::init(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->orbits_on_points_from_generators" << endl;
+					"after Orbits.orbits_on_points_from_generators" << endl;
 		}
 	}
 
@@ -168,11 +175,14 @@ void orbits_create::init(
 						Descr->on_subsets_poset_classification_control_label);
 
 
+		orbits::orbits_global Orbits;
+
 		if (f_v) {
-			cout << "orbits_create::init before Group->orbits_on_subsets" << endl;
+			cout << "orbits_create::init before Orbits.orbits_on_subsets" << endl;
 		}
 
-		Group->orbits_on_subsets(Control, On_subsets,
+		Orbits.orbits_on_subsets(
+				Group, Control, On_subsets,
 				Descr->on_subsets_size, verbose_level);
 
 		f_has_On_subsets = true;
@@ -188,7 +198,8 @@ void orbits_create::init(
 			cout << "orbits_create::init f_of_one_subset" << endl;
 		}
 		if (!Descr->f_group) {
-			cout << "orbits_create::init please specify the group using -group <label>" << endl;
+			cout << "orbits_create::init please "
+					"specify the group using -group <label>" << endl;
 			exit(1);
 		}
 
@@ -202,18 +213,21 @@ void orbits_create::init(
 
 		long int *Table;
 		int size;
+		orbits::orbits_global Orbits;
+
 
 		if (f_v) {
-			cout << "orbits_create::init before Group->orbits_of_one_subset" << endl;
+			cout << "orbits_create::init before Orbits.orbits_of_one_subset" << endl;
 		}
-		Group->orbits_of_one_subset(
+		Orbits.orbits_of_one_subset(
+				Group,
 				set, sz,
 				label_set,
 				Group->A, Group->A,
 				Table, size,
 				verbose_level);
 		if (f_v) {
-			cout << "orbits_create::init after Group->orbits_of_one_subset" << endl;
+			cout << "orbits_create::init after Orbits.orbits_of_one_subset" << endl;
 		}
 
 
@@ -241,7 +255,8 @@ void orbits_create::init(
 			cout << "orbits_create::init before Group->do_orbits_on_subspaces" << endl;
 		}
 
-		Group->do_orbits_on_subspaces(Control,
+		Group->do_orbits_on_subspaces(
+				Control,
 				On_Subspaces,
 				Descr->on_subspaces_dimension,
 				verbose_level);

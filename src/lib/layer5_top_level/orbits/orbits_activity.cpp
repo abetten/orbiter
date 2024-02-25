@@ -14,7 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbits_activity::orbits_activity()
@@ -33,7 +33,7 @@ orbits_activity::~orbits_activity()
 
 void orbits_activity::init(
 		orbits_activity_description *Descr,
-		apps_algebra::orbits_create *OC,
+		orbits_create *OC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1394,15 +1394,21 @@ void orbits_activity::do_stabilizer_of_orbit_rep(
 	}
 
 	if (OC->f_has_Orb) {
+
+		groups::strong_generators *Stab;
+
 		if (f_v) {
 			cout << "orbits_activity::do_stabilizer_of_orbit_rep "
 					"before OC->Orb->stabilizer_of" << endl;
 		}
-		OC->Orb->stabilizer_of(Descr->stabilizer_of_orbit_rep_orbit_idx, verbose_level);
+		OC->Orb->stabilizer_of(Descr->stabilizer_of_orbit_rep_orbit_idx, Stab, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_stabilizer_of_orbit_rep "
 					"after OC->Orb->stabilizer_of" << endl;
 		}
+
+		FREE_OBJECT(Stab);
+
 	}
 	else if (OC->f_has_On_subsets) {
 
@@ -1607,6 +1613,10 @@ void orbits_activity::do_recognize(
 
 		int h;
 
+		if (f_v) {
+			cout << "orbits_activity::do_recognize "
+					"number of objects to recognize = " << Descr->recognize.size() << endl;
+		}
 		for (h = 0; h < Descr->recognize.size(); h++) {
 			if (f_v) {
 				cout << "orbits_activity::do_recognize "

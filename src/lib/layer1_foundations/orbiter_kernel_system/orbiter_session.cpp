@@ -847,6 +847,25 @@ geometry::projective_space *orbiter_session::get_projective_space_low_level(
 
 }
 
+geometry_builder::geometry_builder *orbiter_session::get_geometry_builder(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_geometry_builder cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_geometry_builder) {
+		cout << "orbiter_session::get_geometry_builder object type != t_geometry_builder" << endl;
+		exit(1);
+	}
+
+	return (geometry_builder::geometry_builder *) get_object(idx);
+
+}
+
 
 
 

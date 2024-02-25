@@ -139,10 +139,11 @@ void combinatorics_global::load_design_table(
 
 
 
-
+#if 0
 void combinatorics_global::Hill_cap56(
 	std::string &fname, int &nb_Pts, long int *&Pts,
 	int verbose_level)
+// creates a finite_field object and an orthogonal group and a projective group
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -488,7 +489,7 @@ void combinatorics_global::append_orbit_and_adjust_size(
 		set[sz++] = Orb->orbit[f + i];
 	}
 }
-
+#endif
 
 
 

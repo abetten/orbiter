@@ -10,6 +10,7 @@ all: algebra_and_number_theory \
 	geometry \
 	graph_theory \
 	interfaces \
+	orbits \
 	orthogonal \
 	packings \
 	projective_space \
@@ -27,6 +28,7 @@ combinatorics : combinatorics2 ;
 geometry : geometry2 ; 
 graph_theory : graph_theory2 ; 
 interfaces : interfaces2 ; 
+orbits : orbits2 ; 
 orthogonal : orthogonal2 ; 
 packings : packings2 ; 
 projective_space : projective_space2 ; 
@@ -41,6 +43,7 @@ combinatorics2 :  ; cd combinatorics; $(MAKE)
 geometry2 :  ; cd geometry; $(MAKE)
 graph_theory2 :  ; cd graph_theory; $(MAKE)
 interfaces2 :  ; cd interfaces; $(MAKE)
+orbits2 :  ; cd orbits; $(MAKE)
 orthogonal2 :  ; cd orthogonal; $(MAKE)
 packings2 :  ; cd packings; $(MAKE)
 projective_space2 :  ; cd projective_space; $(MAKE)
@@ -66,6 +69,7 @@ clean:
 	cd geometry; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd interfaces; $(MAKE) clean
+	cd orbits; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd semifields; $(MAKE) clean

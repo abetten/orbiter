@@ -190,7 +190,8 @@ void poset_classification_activity::generate_source_code(
 	}
 }
 
-void poset_classification_activity::generate_history(int level, int verbose_level)
+void poset_classification_activity::generate_history(
+		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

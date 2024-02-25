@@ -75,7 +75,8 @@ void isomorph_worker::init(
 	if (f_v) {
 		cout << "isomorph_worker::init before Iso->init" << endl;
 	}
-	Iso->init(Isomorph_arguments->prefix_iso,
+	Iso->init(
+			Isomorph_arguments->prefix_iso,
 			A_base, A, gen, size, level,
 			Isomorph_arguments->f_use_database_for_starter,
 			Isomorph_arguments->f_implicit_fusion,
@@ -118,7 +119,8 @@ void isomorph_worker::execute(
 		cout << "isomorph_worker::execute "
 				"before Iso->Sub->compute_nb_starter" << endl;
 	}
-	Iso->Sub->compute_nb_starter(Iso->level, verbose_level);
+	Iso->Sub->compute_nb_starter(
+			Iso->level, verbose_level);
 	if (f_v) {
 		cout << "isomorph_worker::execute "
 				"after Iso->Sub->compute_nb_starter" << endl;
@@ -334,7 +336,8 @@ void isomorph_worker::execute(
 	}
 }
 
-void isomorph_worker::build_db(int verbose_level)
+void isomorph_worker::build_db(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -359,7 +362,8 @@ void isomorph_worker::build_db(int verbose_level)
 					"creating level database for "
 					"level " << i << " / " << Iso->level << endl;
 		}
-		Iso->Sub->create_level_database(i, 0 /*verbose_level*/);
+		Iso->Sub->create_level_database(
+				i, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "isomorph_worker::build_db "
 					"creating level database for "
@@ -376,7 +380,8 @@ void isomorph_worker::build_db(int verbose_level)
 
 }
 
-void isomorph_worker::read_solutions(int verbose_level)
+void isomorph_worker::read_solutions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -432,7 +437,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 		int i;
 
 
-		nb_files = Iso->Sub->gen->nb_orbits_at_level(Iso->level); // Iso->nb_starter;
+		nb_files = Iso->Sub->gen->nb_orbits_at_level(
+				Iso->level); // Iso->nb_starter;
 		fname_array = new string[nb_files];
 		List_of_cases = NEW_int(nb_files);
 
@@ -515,7 +521,8 @@ void isomorph_worker::read_solutions(int verbose_level)
 }
 
 
-void isomorph_worker::compute_orbits(int verbose_level)
+void isomorph_worker::compute_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -561,7 +568,8 @@ void isomorph_worker::compute_orbits(int verbose_level)
 }
 
 
-void isomorph_worker::isomorph_testing(int verbose_level)
+void isomorph_worker::isomorph_testing(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -660,7 +668,8 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 
 	std::string play_back_file_name;
 
-	Iso->Folding->isomorph_testing(0 /*t0*/,
+	Iso->Folding->isomorph_testing(
+			0 /*t0*/,
 			false /*f_play_back*/, play_back_file_name,
 			f_implicit_fusion, 1 /* print_mod*/,
 			verbose_level);
@@ -697,7 +706,9 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 		for (orbit = 0; orbit < Iso->Folding->Reps->count; orbit++) {
 
 
-			id = Iso->Lifting->orbit_perm[Iso->Lifting->flag_orbit_solution_first[Iso->Folding->Reps->rep[orbit]]];
+			id = Iso->Lifting->orbit_perm[
+					Iso->Lifting->flag_orbit_solution_first[
+						Iso->Folding->Reps->rep[orbit]]];
 
 			Iso->Lifting->load_solution(
 					id, data1, verbose_level - 1);
@@ -755,7 +766,8 @@ void isomorph_worker::isomorph_testing(int verbose_level)
 	}
 }
 
-void isomorph_worker::isomorph_report(int verbose_level)
+void isomorph_worker::isomorph_report(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -821,7 +833,8 @@ void isomorph_worker::isomorph_report(int verbose_level)
 	}
 }
 
-void isomorph_worker::export_source_code(int verbose_level)
+void isomorph_worker::export_source_code(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -902,7 +915,8 @@ void isomorph_worker::export_source_code(int verbose_level)
 	}
 }
 
-void isomorph_worker::report(std::ostream &ost, int verbose_level)
+void isomorph_worker::report(
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -928,7 +942,8 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	int h, i;
 
 	if (f_v) {
-		cout << "isomorph_worker::report count = " << Reps->count << endl;
+		cout << "isomorph_worker::report "
+				"count = " << Reps->count << endl;
 	}
 
 	//ost << "\\clearpage" << endl << endl;
@@ -1045,8 +1060,8 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 			tl = NEW_int(Iso->A_base->base_len());
 
 			if (f_vv) {
-				cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection before extract_strong_"
-						"generators_in_order" << endl;
+				cout << "isomorph_global::report_data_in_source_code_inside_tex_with_selection "
+						"before extract_strong_generators_in_order" << endl;
 			}
 			Iso->Folding->Reps->stab[h]->extract_strong_generators_in_order(
 					*gens, tl, 0);
@@ -1057,13 +1072,14 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 
 			for (j = 0; j < gens->len; j++) {
 				if (f_vv) {
-					cout << "isomorph_worker::isomorph_report before "
-							"extract_strong_generators_in_order "
+					cout << "isomorph_worker::isomorph_report "
+							"before extract_strong_generators_in_order "
 							"generator " << j
 							<< " / " << gens->len << endl;
 				}
 				ost << "";
-				Iso->A_base->Group_element->element_print_for_make_element(gens->ith(j), ost);
+				Iso->A_base->Group_element->element_print_for_make_element(
+						gens->ith(j), ost);
 				ost << endl;
 			}
 
@@ -1097,7 +1113,8 @@ void isomorph_worker::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void isomorph_worker::recognize(std::string &label, int verbose_level)
+void isomorph_worker::recognize(
+		std::string &label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1121,7 +1138,8 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize before Iso->Folding->identify" << endl;
+		cout << "isomorph_worker::recognize "
+				"before Iso->Folding->identify" << endl;
 	}
 
 	idx = Iso->Folding->identify(data,
@@ -1129,16 +1147,20 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 			verbose_level);
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize after Iso->Folding->identify" << endl;
-		cout << "isomorph_worker::recognize transporter:" << endl;
-		Iso->Sub->gen->get_A()->Group_element->element_print(Iso->Folding->transporter, cout);
+		cout << "isomorph_worker::recognize "
+				"after Iso->Folding->identify" << endl;
+		cout << "isomorph_worker::recognize "
+				"transporter:" << endl;
+		Iso->Sub->gen->get_A()->Group_element->element_print(
+				Iso->Folding->transporter, cout);
 	}
 
 	groups::strong_generators *SG;
 	groups::strong_generators *SG_orig;
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize before Iso->Folding->Reps->get_stabilizer" << endl;
+		cout << "isomorph_worker::recognize "
+				"before Iso->Folding->Reps->get_stabilizer" << endl;
 	}
 
 	Iso->Folding->Reps->get_stabilizer(Iso, idx,
@@ -1146,30 +1168,35 @@ void isomorph_worker::recognize(std::string &label, int verbose_level)
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize after Iso->Folding->Reps->get_stabilizer" << endl;
+		cout << "isomorph_worker::recognize "
+				"after Iso->Folding->Reps->get_stabilizer" << endl;
 	}
 
 	SG_orig = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize before init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "isomorph_worker::recognize "
+				"before init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 
 	SG_orig->init_generators_for_the_conjugate_group_aGav(
 			SG, Iso->Folding->transporter, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize after init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "isomorph_worker::recognize "
+				"after init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "isomorph_worker::recognize before test_if_set_is_invariant_under_given_action" << endl;
+		cout << "isomorph_worker::recognize "
+				"before test_if_set_is_invariant_under_given_action" << endl;
 	}
 	SG_orig->test_if_set_is_invariant_under_given_action(Iso->A,
 			data, sz, verbose_level);
 	if (f_v) {
-		cout << "isomorph_worker::recognize after test_if_set_is_invariant_under_given_action" << endl;
+		cout << "isomorph_worker::recognize "
+				"after test_if_set_is_invariant_under_given_action" << endl;
 	}
 
 	{

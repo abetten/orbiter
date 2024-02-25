@@ -56,7 +56,8 @@ public:
 			int (*recognition_function)(long int *Set, int len,
 					int *Elt, void *data, int verbose_level),
 			int verbose_level);
-	int invoke_recognition(long int *Set, int len,
+	int invoke_recognition(
+			long int *Set, int len,
 			int *Elt, int verbose_level);
 };
 
@@ -104,21 +105,28 @@ public:
 	extension();
 	~extension();
 	int get_pt();
-	void set_pt(int pt);
+	void set_pt(
+			int pt);
 	int get_type();
-	void set_type(int type);
+	void set_type(
+			int type);
 	int get_orbit_len();
-	void set_orbit_len(int orbit_len);
+	void set_orbit_len(
+			int orbit_len);
 	int get_data();
-	void set_data(int data);
+	void set_data(
+			int data);
 	int get_data1();
-	void set_data1(int data1);
+	void set_data1(
+			int data1);
 	int get_data2();
-	void set_data2(int data1);
+	void set_data2(
+			int data1);
 };
 
 
-void print_extension_type(std::ostream &ost, int t);
+void print_extension_type(
+		std::ostream &ost, int t);
 
 
 // #############################################################################
@@ -212,9 +220,11 @@ public:
 
 	orbit_tracer();
 	~orbit_tracer();
-	void init(poset_classification *PC, int verbose_level);
+	void init(
+			poset_classification *PC, int verbose_level);
 	data_structures_groups::vector_ge *get_transporter();
-	long int *get_set_i(int i);
+	long int *get_set_i(
+			int i);
 
 	void recognize_start_over(
 		int size,
@@ -235,7 +245,8 @@ public:
 	void recognize(
 		long int *the_set, int size, int *transporter,
 		int &final_node, int verbose_level);
-	void identify(long int *data, int sz,
+	void identify(
+			long int *data, int sz,
 			int *transporter, int &orbit_at_level,
 			int verbose_level);
 
@@ -350,21 +361,29 @@ public:
 	void perform_work(
 			int verbose_level);
 
-	void compute_Kramer_Mesner_matrix(int t, int k,
+	void compute_Kramer_Mesner_matrix(
+			int t, int k,
 			int verbose_level);
-	void Plesken_matrix_up(int depth,
+	void Plesken_matrix_up(
+			int depth,
 		int *&P, int &N, int verbose_level);
-	void Plesken_matrix_down(int depth,
+	void Plesken_matrix_down(
+			int depth,
 		int *&P, int &N, int verbose_level);
-	void Plesken_submatrix_up(int i, int j,
+	void Plesken_submatrix_up(
+			int i, int j,
 		int *&Pij, int &N1, int &N2, int verbose_level);
-	void Plesken_submatrix_down(int i, int j,
+	void Plesken_submatrix_down(
+			int i, int j,
 		int *&Pij, int &N1, int &N2, int verbose_level);
-	int count_incidences_up(int lvl1, int po1,
+	int count_incidences_up(
+			int lvl1, int po1,
 		int lvl2, int po2, int verbose_level);
-	int count_incidences_down(int lvl1,
+	int count_incidences_down(
+			int lvl1,
 		int po1, int lvl2, int po2, int verbose_level);
-	void Asup_to_Ainf(int t, int k,
+	void Asup_to_Ainf(
+			int t, int k,
 		long int *M_sup, long int *&M_inf,
 		int verbose_level);
 	void test_for_multi_edge_in_classification_graph(
@@ -388,8 +407,10 @@ public:
 		int verbose_level);
 
 	// poset_classification_activity_export_source_code.cpp:
-	void generate_source_code(int level, int verbose_level);
-	void generate_history(int level, int verbose_level);
+	void generate_source_code(
+			int level, int verbose_level);
+	void generate_history(
+			int level, int verbose_level);
 
 
 

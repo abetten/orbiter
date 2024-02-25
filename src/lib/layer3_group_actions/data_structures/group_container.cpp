@@ -326,9 +326,9 @@ void group_container::code_ascii(
 		Os.code_int4(p, (int_4) tl[i]);
 	}
 	for (i = 0; i < SG->len; i++) {
-		A->Group_element->element_pack(SG->ith(i), A->elt1, false);
+		A->Group_element->element_pack(SG->ith(i), A->Group_element->elt1, false);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			Os.code_uchar(p, A->elt1[j]);
+			Os.code_uchar(p, A->Group_element->elt1[j]);
 		}
 	}
 	*p++ = 0;
@@ -389,9 +389,9 @@ void group_container::decode_ascii(
 	}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			Os.decode_uchar(p, A->elt1[j]);
+			Os.decode_uchar(p, A->Group_element->elt1[j]);
 		}
-		A->Group_element->element_unpack(A->elt1, SG->ith(i), false);
+		A->Group_element->element_unpack(A->Group_element->elt1, SG->ith(i), false);
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
@@ -627,30 +627,30 @@ void group_container::induced_action(
 				if (f_v) {
 					cout << "step " << n << ":" << endl;
 				}
-				S->random_element(A->Elt1, verbose_level - 1);
+				S->random_element(A->Group_element->Elt1, verbose_level - 1);
 				if (f_v) {
 					cout << "random group element:" << endl;
-					A->Group_element->element_print(A->Elt1, cout);
+					A->Group_element->element_print(A->Group_element->Elt1, cout);
 				}
 
-				if (HH.strip(A->Elt1, A->Elt2 /* residue */,
+				if (HH.strip(A->Group_element->Elt1, A->Group_element->Elt2 /* residue */,
 						drop_out_level, image, verbose_level - 1)) {
 					if (f_vv) {
 						cout << "element strips through H" << endl;
 					}
-					if (KK.strip(A->Elt2, A->Elt3 /* residue */,
+					if (KK.strip(A->Group_element->Elt2, A->Group_element->Elt3 /* residue */,
 							drop_out_level, image, verbose_level - 1)) {
 						if (f_vv) {
 							cout << "element strips through K" << endl;
 						}
 					}
 					else {
-						KK.add_generator_at_level(A->Elt3,
+						KK.add_generator_at_level(A->Group_element->Elt3,
 								drop_out_level, verbose_level - 1);
 					}
 				}
 				else {
-					HH.add_generator_at_level(A->Elt2,
+					HH.add_generator_at_level(A->Group_element->Elt2,
 							drop_out_level, verbose_level - 1);
 				}
 
@@ -779,8 +779,8 @@ void group_container::extension(
 			cout << "step " << n << ":" << endl;
 		}
 		if (n % 2 || G.nb_gen[0] == 0) {
-			H.S->random_element(A->Elt1, verbose_level - 1);
-			p_gen = A->Elt1;
+			H.S->random_element(A->Group_element->Elt1, verbose_level - 1);
+			p_gen = A->Group_element->Elt1;
 			if (f_v) {
 				cout << "random group element:" << endl;
 				A->Group_element->element_print(p_gen, cout);
@@ -796,13 +796,14 @@ void group_container::extension(
 		}
 		
 		
-		if (G.strip(Elt, A->Elt2 /* residue */, drop_out_level, image, verbose_level - 1)) {
+		if (G.strip(Elt, A->Group_element->Elt2 /* residue */,
+				drop_out_level, image, verbose_level - 1)) {
 			if (f_vv) {
 				cout << "element strips through" << endl;
 			}
 		}
 		else {
-			G.add_generator_at_level(A->Elt2,
+			G.add_generator_at_level(A->Group_element->Elt2,
 					drop_out_level, verbose_level - 1);
 		}
 

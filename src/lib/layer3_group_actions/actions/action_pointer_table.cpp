@@ -35,6 +35,31 @@ action_pointer_table::~action_pointer_table()
 
 }
 
+void action_pointer_table::save_stats(
+		std::string &fname_base)
+{
+	long int stats[8];
+
+	stats[0] = nb_times_image_of_called;
+	stats[1] = nb_times_image_of_low_level_called;
+	stats[2] = nb_times_unpack_called;
+	stats[3] = nb_times_pack_called;
+	stats[4] = nb_times_retrieve_called;
+	stats[5] = nb_times_store_called;
+	stats[6] = nb_times_mult_called;
+	stats[7] = nb_times_invert_called;
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = fname_base + "_stats.csv";
+
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname, stats, 1, 8);
+
+}
+
+
 void action_pointer_table::null_function_pointers()
 {
 	label.assign("null");

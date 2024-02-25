@@ -41,8 +41,6 @@ linear_group_description::linear_group_description()
 	f_wedge_action = false;
 	f_wedge_action_detached = false;
 
-	f_lex_least_base = false;
-
 	f_PGL2OnConic = false;
 	f_monomial_group = false;
 	f_diagonal_group = false;
@@ -62,9 +60,6 @@ linear_group_description::linear_group_description()
 	f_orthogonal_group = false;
 	orthogonal_group_epsilon = 0;
 
-	//f_on_k_subspaces = false;
-	//on_k_subspaces_k = 0;
-
 	f_on_tensors = false;
 	f_on_rank_one_tensors = false;
 
@@ -75,13 +70,12 @@ linear_group_description::linear_group_description()
 
 	f_Janko1 = false;
 
-	//f_restricted_action = false;
-	////restricted_action_text;
-
 	f_export_magma = false;
 
 	f_import_group_of_plane = false;
 	//std::string import_group_of_plane_label;
+
+	f_lex_least_base = false;
 
 }
 
@@ -363,12 +357,6 @@ int linear_group_description::read_arguments(
 				cout << "-wedge_detached" << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-lex_least_base") == 0) {
-			f_lex_least_base = true;
-			if (f_v) {
-				cout << "-lex_least_base" << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-PGL2OnConic") == 0) {
 			f_PGL2OnConic = true;
 			if (f_v) {
@@ -447,15 +435,6 @@ int linear_group_description::read_arguments(
 				cout << "-identity_group" << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
-			f_on_k_subspaces = true;
-			on_k_subspaces_k = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-on_tensors") == 0) {
 			f_on_tensors = true;
 			if (f_v) {
@@ -506,7 +485,9 @@ int linear_group_description::read_arguments(
 			subgroup_generators_label.assign(argv[++i]);
 
 			if (f_v) {
-				cout << "-subgroup_by_generators " << subgroup_label
+				cout << "-subgroup_by_generators "
+						<< " " << subgroup_label
+						<< " " << subgroup_order_text
 						<< " " << nb_subgroup_generators
 						<< " " << subgroup_generators_label
 						<< endl;
@@ -518,15 +499,6 @@ int linear_group_description::read_arguments(
 				cout << "-Janko1" << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
-			f_restricted_action = true;
-			restricted_action_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-restricted_action " << restricted_action_text << endl;
-			}
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = true;
 			if (f_v) {
@@ -538,6 +510,12 @@ int linear_group_description::read_arguments(
 			import_group_of_plane_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-import_group_of_plane " << import_group_of_plane_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-lex_least_base") == 0) {
+			f_lex_least_base = true;
+			if (f_v) {
+				cout << "-lex_least_base" << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -560,177 +538,166 @@ int linear_group_description::read_arguments(
 
 void linear_group_description::print()
 {
-	if (f_import_group_of_plane) {
-		cout << "-import_group_of_plane " << import_group_of_plane_label << endl;
+	// the general linear groups:
+	// GL, GGL, SL, SSL
+	if (!f_affine && !f_special && !f_projective && !f_semilinear) {
+		cout << "-GL " << n << " " << input_q << endl;
 	}
-	else {
-		// the general linear groups:
-		// GL, GGL, SL, SSL
-		if (!f_affine && !f_special && !f_projective && !f_semilinear) {
-			cout << "-GL " << n << " " << input_q << endl;
-		}
-		if (!f_affine && !f_special && !f_projective && f_semilinear) {
-			cout << "-GGL " << n << " " << input_q << endl;
-		}
-		if (!f_affine && f_special && !f_projective && !f_semilinear) {
-			cout << "-SL " << n << " " << input_q << endl;
-		}
-		if (!f_affine && f_special && !f_projective && f_semilinear) {
-			cout << "-SSL " << n << " " << input_q << endl;
-		}
+	if (!f_affine && !f_special && !f_projective && f_semilinear) {
+		cout << "-GGL " << n << " " << input_q << endl;
+	}
+	if (!f_affine && f_special && !f_projective && !f_semilinear) {
+		cout << "-SL " << n << " " << input_q << endl;
+	}
+	if (!f_affine && f_special && !f_projective && f_semilinear) {
+		cout << "-SSL " << n << " " << input_q << endl;
+	}
 
 
 
-		// the projective linear groups:
-		// PGL, PGGL, PSL, PSSL
-		if (f_projective && !f_affine && !f_special && !f_semilinear) {
-			cout << "-PGL " << n << " " << input_q << endl;
-		}
-		if (f_projective && !f_affine && !f_special && f_semilinear) {
-			cout << "-PGGL " << n << " " << input_q << endl;
-		}
-		if (f_projective && !f_affine && f_special && !f_semilinear) {
-			cout << "-PSL " << n << " " << input_q << endl;
-		}
-		if (f_projective && !f_affine && f_special && f_semilinear) {
-			cout << "-PSSL " << n << " " << input_q << endl;
-		}
+	// the projective linear groups:
+	// PGL, PGGL, PSL, PSSL
+	if (f_projective && !f_affine && !f_special && !f_semilinear) {
+		cout << "-PGL " << n << " " << input_q << endl;
+	}
+	if (f_projective && !f_affine && !f_special && f_semilinear) {
+		cout << "-PGGL " << n << " " << input_q << endl;
+	}
+	if (f_projective && !f_affine && f_special && !f_semilinear) {
+		cout << "-PSL " << n << " " << input_q << endl;
+	}
+	if (f_projective && !f_affine && f_special && f_semilinear) {
+		cout << "-PSSL " << n << " " << input_q << endl;
+	}
 
 
 
-		// the affine groups:
-		// AGL, AGGL, ASL, ASSL
-		if (f_affine && f_general && !f_special && !f_semilinear) {
-			cout << "-AGL " << n << " " << input_q << endl;
-		}
-		if (f_affine && f_general && !f_special && f_semilinear) {
-			cout << "-AGGL " << n << " " << input_q << endl;
-		}
-		if (f_affine && f_general && f_special && !f_semilinear) {
-			cout << "-ASL " << n << " " << input_q << endl;
-		}
-		if (f_affine && f_general && f_special && f_semilinear) {
-			cout << "-ASSL " << n << " " << input_q << endl;
-		}
-	#if 0
-		if (f_override_polynomial) {
-			cout << "-override_polynomial" << override_polynomial << endl;
-		}
-	#endif
-		if (f_GL_d_q_wr_Sym_n) {
-			cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d
-					<< " " << input_q << " " << GL_wreath_Sym_n << endl;
-		}
+	// the affine groups:
+	// AGL, AGGL, ASL, ASSL
+	if (f_affine && f_general && !f_special && !f_semilinear) {
+		cout << "-AGL " << n << " " << input_q << endl;
+	}
+	if (f_affine && f_general && !f_special && f_semilinear) {
+		cout << "-AGGL " << n << " " << input_q << endl;
+	}
+	if (f_affine && f_general && f_special && !f_semilinear) {
+		cout << "-ASL " << n << " " << input_q << endl;
+	}
+	if (f_affine && f_general && f_special && f_semilinear) {
+		cout << "-ASSL " << n << " " << input_q << endl;
+	}
+#if 0
+	if (f_override_polynomial) {
+		cout << "-override_polynomial" << override_polynomial << endl;
+	}
+#endif
+	if (f_GL_d_q_wr_Sym_n) {
+		cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d
+				<< " " << input_q << " " << GL_wreath_Sym_n << endl;
+	}
 
-		// the orthogonal groups:
-		// PGO0, PGOp, PGOm
-		if (f_orthogonal && !f_semilinear) {
-			cout << "-PGO " << n << " " << input_q << endl;
-		}
-		if (f_orthogonal_p && !f_semilinear) {
-			cout << "-PGOp " << n << " " << input_q << endl;
-		}
-		if (f_orthogonal_m && !f_semilinear) {
-			cout << "-PGOm " << n << " " << input_q << endl;
-		}
-		if (f_orthogonal && f_semilinear) {
-			cout << "-PGGO " << n << " " << input_q << endl;
-		}
-		if (f_orthogonal_p && f_semilinear) {
-			cout << "-PGGOp " << n << " " << input_q << endl;
-		}
-		if (f_orthogonal_m && f_semilinear) {
-			cout << "-PGGOm " << n << " " << input_q << endl;
-		}
+	// the orthogonal groups:
+	// PGO0, PGOp, PGOm
+	if (f_orthogonal && !f_semilinear) {
+		cout << "-PGO " << n << " " << input_q << endl;
+	}
+	if (f_orthogonal_p && !f_semilinear) {
+		cout << "-PGOp " << n << " " << input_q << endl;
+	}
+	if (f_orthogonal_m && !f_semilinear) {
+		cout << "-PGOm " << n << " " << input_q << endl;
+	}
+	if (f_orthogonal && f_semilinear) {
+		cout << "-PGGO " << n << " " << input_q << endl;
+	}
+	if (f_orthogonal_p && f_semilinear) {
+		cout << "-PGGOp " << n << " " << input_q << endl;
+	}
+	if (f_orthogonal_m && f_semilinear) {
+		cout << "-PGGOm " << n << " " << input_q << endl;
+	}
 
 
-		if (f_wedge_action) {
-			cout << "-wedge" << endl;
-		}
-		if (f_wedge_action_detached) {
-			cout << "-wedge_detached" << endl;
-		}
-		if (f_lex_least_base) {
-			cout << "-lex_least_base" << endl;
-		}
-		if (f_PGL2OnConic) {
-			cout << "-PGL2OnConic" << endl;
-		}
-		if (f_monomial_group) {
-			cout << "-monomial " << endl;
-		}
-		if (f_diagonal_group) {
-			cout << "-diagonal " << endl;
-		}
-		if (f_null_polarity_group) {
-			cout << "-null_polarity_group" << endl;
-		}
-		if (f_symplectic_group) {
-			cout << "-symplectic_group" << endl;
-		}
-		if (f_singer_group) {
-			cout << "-singer " << singer_power << endl;
-		}
-		if (f_singer_group_and_frobenius) {
-			cout << "-f_singer_group_and_frobenius " << singer_power << endl;
-		}
-		if (f_subfield_structure_action) {
-			cout << "-subfield_structure_action " << s << endl;
-		}
-		if (f_subgroup_from_file) {
-			cout << "-subgroup_from_file " << subgroup_fname
-					<< " " << subgroup_label << endl;
-		}
-		if (f_borel_subgroup_upper) {
-			cout << "-borel_upper" << endl;
-		}
-		if (f_borel_subgroup_lower) {
-			cout << "-borel_lower" << endl;
-		}
-		if (f_identity_group) {
-			cout << "-identity_group" << endl;
-		}
-	#if 0
-		if (f_on_k_subspaces) {
-			cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
-		}
-	#endif
-		if (f_on_tensors) {
-			cout << "-on_tensors " << endl;
-		}
-		if (f_on_rank_one_tensors) {
-			cout << "-on_rank_one_tensors " << endl;
-		}
-		if (f_orthogonal_group) {
-			cout << "-orthogonal " << orthogonal_group_epsilon << endl;
-		}
-		if (f_orthogonal_group) {
-			cout << "-O" << endl;
-		}
-		if (f_orthogonal_group && orthogonal_group_epsilon == 1) {
-			cout << "-O+" << endl;
-		}
-		if (f_orthogonal_group && orthogonal_group_epsilon == -1) {
-			cout << "-O-" << endl;
-		}
-		if (f_subgroup_by_generators) {
-			cout << "-subgroup_by_generators " << subgroup_label
-					<< " " << nb_subgroup_generators
-					<< " " << subgroup_generators_label
-					<< endl;
-		}
-		if (f_Janko1) {
-			cout << "-Janko1" << endl;
-		}
-	#if 0
-		if (f_restricted_action) {
-			cout << "-restricted_action " << restricted_action_text << endl;
-		}
-	#endif
-
+	if (f_wedge_action) {
+		cout << "-wedge" << endl;
+	}
+	if (f_wedge_action_detached) {
+		cout << "-wedge_detached" << endl;
+	}
+	if (f_PGL2OnConic) {
+		cout << "-PGL2OnConic" << endl;
+	}
+	if (f_monomial_group) {
+		cout << "-monomial " << endl;
+	}
+	if (f_diagonal_group) {
+		cout << "-diagonal " << endl;
+	}
+	if (f_null_polarity_group) {
+		cout << "-null_polarity_group" << endl;
+	}
+	if (f_symplectic_group) {
+		cout << "-symplectic_group" << endl;
+	}
+	if (f_singer_group) {
+		cout << "-singer " << singer_power << endl;
+	}
+	if (f_singer_group_and_frobenius) {
+		cout << "-f_singer_group_and_frobenius " << singer_power << endl;
+	}
+	if (f_subfield_structure_action) {
+		cout << "-subfield_structure_action " << s << endl;
+	}
+	if (f_subgroup_from_file) {
+		cout << "-subgroup_from_file " << subgroup_fname
+				<< " " << subgroup_label << endl;
+	}
+	if (f_borel_subgroup_upper) {
+		cout << "-borel_upper" << endl;
+	}
+	if (f_borel_subgroup_lower) {
+		cout << "-borel_lower" << endl;
+	}
+	if (f_identity_group) {
+		cout << "-identity_group" << endl;
+	}
+	if (f_on_tensors) {
+		cout << "-on_tensors " << endl;
+	}
+	if (f_on_rank_one_tensors) {
+		cout << "-on_rank_one_tensors " << endl;
+	}
+	if (f_orthogonal_group) {
+		cout << "-orthogonal " << orthogonal_group_epsilon << endl;
+	}
+	if (f_orthogonal_group) {
+		cout << "-O" << endl;
+	}
+	if (f_orthogonal_group && orthogonal_group_epsilon == 1) {
+		cout << "-O+" << endl;
+	}
+	if (f_orthogonal_group && orthogonal_group_epsilon == -1) {
+		cout << "-O-" << endl;
+	}
+	if (f_subgroup_by_generators) {
+		cout << "-subgroup_by_generators "
+				<< " " << subgroup_label
+				<< " " << subgroup_order_text
+				<< " " << nb_subgroup_generators
+				<< " " << subgroup_generators_label
+				<< endl;
+	}
+	if (f_Janko1) {
+		cout << "-Janko1" << endl;
 	}
 	if (f_export_magma) {
 		cout << "-export_magma" << endl;
+	}
+	if (f_import_group_of_plane) {
+		cout << "-import_group_of_plane " << import_group_of_plane_label << endl;
+	}
+	if (f_lex_least_base) {
+		cout << "-lex_least_base" << endl;
 	}
 }
 

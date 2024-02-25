@@ -38,7 +38,6 @@ classification_of_combinatorial_objects::~classification_of_combinatorial_object
 
 
 void classification_of_combinatorial_objects::init_after_nauty(
-		//std::string &prefix,
 		canonical_form_classification::classification_of_objects *CO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -50,7 +49,6 @@ void classification_of_combinatorial_objects::init_after_nauty(
 		cout << "classification_of_combinatorial_objects::init_after_nauty" << endl;
 	}
 
-	//classification_of_combinatorial_objects::prefix = prefix;
 	classification_of_combinatorial_objects::CO = CO;
 	classification_of_combinatorial_objects::f_projective_space = f_projective_space;
 	classification_of_combinatorial_objects::PA = PA;
@@ -381,25 +379,27 @@ void classification_of_combinatorial_objects::report_all_isomorphism_types(
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_all_isomorphism_types" << endl;
 	}
-	int i;
+	int i, j;
 
 	l1_interfaces::latex_interface L;
 
 	for (i = 0; i < CO->CB->nb_types; i++) {
 
+		j = CO->CB->perm[i];
+
 		ost << "\\section*{Isomorphism type " << i << " / " << CO->CB->nb_types << "}" << endl;
 		ost << "Isomorphism type " << i << " / " << CO->CB->nb_types
-			//<<  " stored at " << j
+			<<  " stored at " << j
 			<< " is original object "
-			<< CO->CB->Type_rep[i] << " and appears "
-			<< CO->CB->Type_mult[i] << " times: \\\\" << endl;
+			<< CO->CB->Type_rep[j] << " and appears "
+			<< CO->CB->Type_mult[j] << " times: \\\\" << endl;
 
 		{
 			data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
 			CO->CB->C_type_of->get_class_by_value(Input_objects,
-					nb_input_objects, i, 0 /*verbose_level */);
+					nb_input_objects, j, 0 /*verbose_level */);
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 			ost << "This isomorphism type appears " << nb_input_objects
@@ -461,14 +461,15 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
-	j = i;
+	j = CO->CB->perm[i];
+	//j = i;
 
 	cout << "###################################################"
 			"#############################" << endl;
 	cout << "Orbit " << i << " / " << CO->CB->nb_types
 			<< " is canonical form no " << j
-			<< ", original object no " << CO->CB->Type_rep[i]
-			<< ", frequency " << CO->CB->Type_mult[i]
+			<< ", original object no " << CO->CB->Type_rep[j]
+			<< ", frequency " << CO->CB->Type_mult[j]
 			<< " : " << endl;
 
 
@@ -499,7 +500,8 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
 				"i=" << i << " before report_object" << endl;
 	}
-	report_object(ost,
+	report_object(
+			ost,
 			Report_options,
 			i /* object_idx */,
 			verbose_level);
@@ -521,18 +523,21 @@ void classification_of_combinatorial_objects::report_object(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
-		int object_idx,
+		int i,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_object "
-				"object_idx=" << object_idx << endl;
+				"object_idx=" << i << endl;
 	}
 
+	//int j;
 
-	canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
+	//j = CO->CB->perm[i];
+
+	canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[i];
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_object "
@@ -563,7 +568,8 @@ void classification_of_combinatorial_objects::report_object(
 			cout << "classification_of_combinatorial_objects::report_object "
 					"before OwP[object_idx].latex_report" << endl;
 		}
-		OwP[object_idx].latex_report(ost,
+		OwP[i].latex_report(
+				ost,
 				Report_options, verbose_level);
 		if (f_v) {
 			cout << "classification_of_combinatorial_objects::report_object "

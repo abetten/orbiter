@@ -108,6 +108,10 @@ public:
 			int m);
 	char make_single_hex_digit(
 			int c);
+	void process_class_list(
+			std::vector<std::vector<std::string> > &Classes_parsed,
+			std::string &fname_cross_ref,
+			int verbose_level);
 
 };
 
@@ -1874,15 +1878,24 @@ public:
 
 	string_tools();
 	~string_tools();
-	int is_csv_file(const char *fname);
-	int is_inc_file(const char *fname);
-	int is_xml_file(const char *fname);
-	int s_scan_int(char **s, int *i);
-	int s_scan_lint(char **s, long int *i);
-	int s_scan_double(char **s, double *d);
-	int s_scan_token(char **s, char *str);
-	int s_scan_token_arbitrary(char **s, char *str);
-	int s_scan_str(char **s, char *str);
+	int is_csv_file(
+			const char *fname);
+	int is_inc_file(
+			const char *fname);
+	int is_xml_file(
+			const char *fname);
+	int s_scan_int(
+			char **s, int *i);
+	int s_scan_lint(
+			char **s, long int *i);
+	int s_scan_double(
+			char **s, double *d);
+	int s_scan_token(
+			char **s, char *str);
+	int s_scan_token_arbitrary(
+			char **s, char *str);
+	int s_scan_str(
+			char **s, char *str);
 	int s_scan_token_comma_separated(
 			const char **s, char *str, int verbose_level);
 	void scan_permutation_from_string(
@@ -1891,45 +1904,67 @@ public:
 	void scan_permutation_from_stream(
 			std::istream & is,
 		int *&perm, int &degree, int verbose_level);
-	void chop_string(const char *str, int &argc, char **&argv);
+	void chop_string(
+			const char *str, int &argc, char **&argv);
 	void chop_string_comma_separated(
 			const char *str, int &argc, char **&argv);
 	void convert_arguments(
 			int &argc, const char **argv, std::string *&Argv);
-	char get_character(std::istream & is, int verbose_level);
-	void replace_extension_with(char *p, const char *new_ext);
-	void replace_extension_with(std::string &p, const char *new_ext);
-	void chop_off_extension(char *p);
-	void chop_off_extension_and_path(std::string &p);
-	void chop_off_extension(std::string &p);
-	void chop_off_path(std::string &p);
+	char get_character(
+			std::istream & is, int verbose_level);
+	void replace_extension_with(
+			char *p, const char *new_ext);
+	void replace_extension_with(
+			std::string &p, const char *new_ext);
+	void chop_off_extension(
+			char *p);
+	void chop_off_extension_and_path(
+			std::string &p);
+	void chop_off_extension(
+			std::string &p);
+	void chop_off_path(
+			std::string &p);
 	void chop_off_extension_if_present(
 			std::string &p, const char *ext);
 	void chop_off_extension_if_present(
 			char *p, const char *ext);
-	void get_fname_base(const char *p, char *fname_base);
-	void get_extension(std::string &p, std::string &ext);
+	void get_fname_base(
+			const char *p, char *fname_base);
+	void get_extension(
+			std::string &p, std::string &ext);
 	void get_extension_if_present(
 			const char *p, char *ext);
 	void get_extension_if_present_and_chop_off(
 			char *p, char *ext);
-	void fix_escape_characters(std::string &str);
-	void remove_specific_character(std::string &str, char c);
+	void fix_escape_characters(
+			std::string &str);
+	void remove_specific_character(
+			std::string &str, char c);
 	void create_comma_separated_list(
 			std::string &output, long int *input, int input_sz);
 	void parse_comma_separated_list(
 			std::string &input_text, std::vector<std::string> &output,
 			int verbose_level);
-	int is_all_whitespace(const char *str);
-	void text_to_three_double(std::string &text, double *d);
-	int strcmp_with_or_without(char *p, char *q);
-	int starts_with_a_number(std::string &str);
-	int compare_string_string(std::string &str1, std::string &str2);
-	int stringcmp(std::string &str, const char *p);
-	int strtoi(std::string &str);
-	int str2int(std::string &str);
-	long int strtolint(std::string &str);
-	double strtof(std::string &str);
+	int is_all_whitespace(
+			const char *str);
+	void text_to_three_double(
+			std::string &text, double *d);
+	int strcmp_with_or_without(
+			char *p, char *q);
+	int starts_with_a_number(
+			std::string &str);
+	int compare_string_string(
+			std::string &str1, std::string &str2);
+	int stringcmp(
+			std::string &str, const char *p);
+	int strtoi(
+			std::string &str);
+	int str2int(
+			std::string &str);
+	long int strtolint(
+			std::string &str);
+	double strtof(
+			std::string &str);
 	void parse_value_pairs(
 			std::map<std::string, std::string> &symbol_table,
 			std::string &evaluate_text, int verbose_level);

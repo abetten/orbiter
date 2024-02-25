@@ -13,6 +13,9 @@
 
 using std::shared_ptr;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 class deep_copy_visitor : public IRTreeTemplateReturnTypeConstantVisitorInterface<shared_ptr<irtree_node>>,
                           public IRTreeVoidReturnTypeVariadicArgumentConstantVisitorInterface<shared_ptr<irtree_node>> {
     typedef shared_ptr<irtree_node> return_t;

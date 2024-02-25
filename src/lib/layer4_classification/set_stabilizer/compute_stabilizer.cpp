@@ -316,7 +316,8 @@ void compute_stabilizer::init(
 }
 
 
-void compute_stabilizer::compute_automorphism_group(int verbose_level)
+void compute_stabilizer::compute_automorphism_group(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int cnt2;
@@ -767,7 +768,8 @@ void compute_stabilizer::setup_stabilizer(
 
 }
 
-void compute_stabilizer::restricted_action_on_interesting_points(int verbose_level)
+void compute_stabilizer::restricted_action_on_interesting_points(
+		int verbose_level)
 // computes A_induced, induced_go, K_go
 {
 	int f_v = (verbose_level >= 1);
@@ -865,7 +867,8 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 
 
 
-void compute_stabilizer::compute_canonical_form(int verbose_level)
+void compute_stabilizer::compute_canonical_form(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int cnt;
@@ -1173,7 +1176,8 @@ void compute_stabilizer::init_U(int verbose_level)
 
 
 
-void compute_stabilizer::update_stabilizer(int verbose_level)
+void compute_stabilizer::update_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_domain D;
@@ -1217,7 +1221,8 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 }
 
 
-void compute_stabilizer::add_automorphism(int verbose_level)
+void compute_stabilizer::add_automorphism(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
@@ -1273,7 +1278,8 @@ void compute_stabilizer::add_automorphism(int verbose_level)
 	}
 }
 
-void compute_stabilizer::retrieve_automorphism(int verbose_level)
+void compute_stabilizer::retrieve_automorphism(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1316,7 +1322,8 @@ void compute_stabilizer::retrieve_automorphism(int verbose_level)
 	}
 }
 
-void compute_stabilizer::make_canonical_second_set(int verbose_level)
+void compute_stabilizer::make_canonical_second_set(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
@@ -1390,7 +1397,8 @@ void compute_stabilizer::make_canonical_second_set(int verbose_level)
 
 
 
-void compute_stabilizer::report(std::ostream &ost)
+void compute_stabilizer::report(
+		std::ostream &ost)
 {
 	ost << "Input set of size " << SubSt->nb_pts << " : ";
 	ost << "$";

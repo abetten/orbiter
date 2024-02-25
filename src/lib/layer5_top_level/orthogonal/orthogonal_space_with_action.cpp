@@ -128,7 +128,9 @@ void orthogonal_space_with_action::init(
 			cout << "orthogonal_space_with_action::init "
 					"before Blt_set_domain_with_action->init" << endl;
 		}
-		Blt_set_domain_with_action->init(A, P, O, Descr->f_create_extension_fields, verbose_level);
+		Blt_set_domain_with_action->init(
+				A, P, O, Descr->f_create_extension_fields,
+				verbose_level);
 		if (f_v) {
 			cout << "orthogonal_space_with_action::init_blt_set_domain "
 					"after Blt_set_domain_with_action->init" << endl;

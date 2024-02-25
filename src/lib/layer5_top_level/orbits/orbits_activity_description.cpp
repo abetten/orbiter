@@ -14,7 +14,7 @@ using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbits_activity_description::orbits_activity_description()

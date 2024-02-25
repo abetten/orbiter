@@ -16,6 +16,10 @@ using std::list;
 using std::cout;
 using std::endl;
 
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type. Here, we remove a minus in the tree.
+
+
 class ir_tree_remove_minus_node_visitor : public IRTreeVoidReturnTypeVisitorInterface {
 public:
     using IRTreeVoidReturnTypeVisitorInterface::visit;

@@ -9,6 +9,9 @@
 #ifndef REMOVE_MINUS_NODES_VISITOR_H
 #define REMOVE_MINUS_NODES_VISITOR_H
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 class remove_minus_nodes_visitor : public IRTreeChildLinkArgumentVisitor {
 public:
     using IRTreeChildLinkArgumentVisitor::visit;

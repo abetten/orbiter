@@ -60,7 +60,8 @@ void orbiter_symbol_table_entry::init(
 
 void orbiter_symbol_table_entry::init_finite_field(
 		std::string &label,
-		field_theory::finite_field *F, int verbose_level)
+		field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -456,7 +457,8 @@ void orbiter_symbol_table_entry::init_translation_plane(
 
 void orbiter_symbol_table_entry::init_spread_table(
 		std::string &label,
-		void *Spread_table_with_selection, int verbose_level)
+		void *Spread_table_with_selection,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -712,7 +714,8 @@ void orbiter_symbol_table_entry::init_combinatorial_object(
 
 void orbiter_symbol_table_entry::init_geometry_builder_object(
 		std::string &label,
-		geometry_builder::geometry_builder *GB, int verbose_level)
+		geometry_builder::geometry_builder *GB,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

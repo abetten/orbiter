@@ -1632,14 +1632,16 @@ void any_group::do_reverse_isomorphism_exterior_square(
 
 	if (LG->f_has_nice_gens) {
 		if (f_v) {
-			cout << "any_group::do_reverse_isomorphism_exterior_square nice generators are:" << endl;
+			cout << "any_group::do_reverse_isomorphism_exterior_square "
+					"nice generators are:" << endl;
 			LG->nice_gens->print(cout);
 		}
 		LG->nice_gens->reverse_isomorphism_exterior_square(verbose_level);
 	}
 	else {
 		if (f_v) {
-			cout << "any_group::do_reverse_isomorphism_exterior_square strong generators are:" << endl;
+			cout << "any_group::do_reverse_isomorphism_exterior_square "
+					"strong generators are:" << endl;
 			LG->Strong_gens->print_generators_in_latex_individually(cout);
 		}
 		LG->Strong_gens->reverse_isomorphism_exterior_square(verbose_level);
@@ -1652,376 +1654,6 @@ void any_group::do_reverse_isomorphism_exterior_square(
 
 
 
-void any_group::orbits_on_set_system_from_file(
-		std::string &fname_csv,
-		int number_of_columns, int first_column,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_system_from_file" << endl;
-	}
-	if (f_v) {
-		cout << "computing orbits on set system from file "
-			<< fname_csv << ":" << endl;
-	}
-	orbiter_kernel_system::file_io Fio;
-	int *M;
-	int m, n;
-	long int *Table;
-	int i, j;
-
-	Fio.Csv_file_support->int_matrix_read_csv(
-			fname_csv, M,
-			m, n, verbose_level);
-	if (f_v) {
-		cout << "read a matrix of size " << m << " x " << n << endl;
-	}
-
-
-	//orbits_on_set_system_first_column = atoi(argv[++i]);
-	//orbits_on_set_system_number_of_columns = atoi(argv[++i]);
-
-
-	Table = NEW_lint(m * number_of_columns);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < number_of_columns; j++) {
-			Table[i * number_of_columns + j] =
-					M[i * n + first_column + j];
-		}
-	}
-	actions::action *A_on_sets;
-	int set_size;
-
-	set_size = number_of_columns;
-
-	if (f_v) {
-		cout << "creating action on sets:" << endl;
-	}
-	A_on_sets = A->Induced_action->create_induced_action_on_sets(m /* nb_sets */,
-			set_size, Table,
-			verbose_level);
-
-	actions::action_global AG;
-	groups::schreier *Sch;
-	int first, a;
-
-	if (f_v) {
-		cout << "computing orbits on sets:" << endl;
-	}
-	AG.compute_orbits_on_points(
-			A_on_sets, Sch,
-			LG->Strong_gens->gens, verbose_level);
-
-	if (f_v) {
-		cout << "The orbit lengths are:" << endl;
-		Sch->print_orbit_lengths(cout);
-	}
-
-	if (f_v) {
-		cout << "The orbits are:" << endl;
-		//Sch->print_and_list_orbits(cout);
-		for (i = 0; i < Sch->nb_orbits; i++) {
-			cout << " Orbit " << i << " / " << Sch->nb_orbits
-					<< " : " << Sch->orbit_first[i] << " : " << Sch->orbit_len[i];
-			cout << " : ";
-
-			first = Sch->orbit_first[i];
-			a = Sch->orbit[first + 0];
-			cout << a << " : ";
-			Lint_vec_print(cout, Table + a * set_size, set_size);
-			cout << endl;
-			//Sch->print_and_list_orbit_tex(i, ost);
-		}
-	}
-	string fname;
-	data_structures::string_tools ST;
-
-	fname = fname_csv;
-	ST.chop_off_extension(fname);
-	fname += "_orbit_reps.txt";
-
-	{
-		ofstream ost(fname);
-
-		for (i = 0; i < Sch->nb_orbits; i++) {
-
-			first = Sch->orbit_first[i];
-			a = Sch->orbit[first + 0];
-			ost << set_size;
-			for (j = 0; j < set_size; j++) {
-				ost << " " << Table[a * set_size + j];
-			}
-			ost << endl;
-		}
-		ost << -1 << " " << Sch->nb_orbits << endl;
-	}
-	if (f_v) {
-		cout << "any_group::orbits_on_set_system_from_file done" << endl;
-	}
-}
-
-void any_group::orbits_on_set_from_file(
-		std::string &fname_csv, int verbose_level)
-// called from group_theoretic_activity: f_orbit_of_set_from_file
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file" << endl;
-	}
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file "
-				"computing orbit of set from file "
-			<< fname_csv << ":" << endl;
-	}
-	orbiter_kernel_system::file_io Fio;
-	long int *the_set;
-	int set_sz;
-
-	Fio.read_set_from_file(fname_csv,
-			the_set, set_sz, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file "
-				"read a set of size " << set_sz << endl;
-	}
-
-
-	string label_set;
-	data_structures::string_tools ST;
-
-	label_set.assign(fname_csv);
-	ST.chop_off_extension(label_set);
-
-	algebra_global_with_action Algebra;
-	long int *Table;
-	int size;
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file "
-				"before Algebra.compute_orbit_of_set" << endl;
-	}
-
-	Algebra.compute_orbit_of_set(
-			the_set, set_sz,
-			A_base, A,
-			Subgroup_gens->gens,
-			label_set,
-			label,
-			Table, size,
-			verbose_level);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file "
-				"after Algebra.compute_orbit_of_set" << endl;
-	}
-
-	FREE_lint(Table);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_set_from_file done" << endl;
-	}
-}
-
-
-void any_group::orbit_of(
-		int point_idx, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::orbit_of" << endl;
-	}
-	groups::schreier *Sch;
-	Sch = NEW_OBJECT(groups::schreier);
-
-	if (f_v) {
-		cout << "any_group::orbit_of computing orbit of point " << point_idx << ":" << endl;
-	}
-
-	//A->all_point_orbits(*Sch, verbose_level);
-
-	Sch->init(A_base, verbose_level - 2);
-
-#if 0
-	if (!A->f_has_strong_generators) {
-		cout << "any_group::orbit_of !f_has_strong_generators" << endl;
-		exit(1);
-		}
-#endif
-
-	Sch->init_generators(*Subgroup_gens->gens /* *strong_generators */, verbose_level - 2);
-	Sch->initialize_tables();
-	Sch->compute_point_orbit(point_idx, verbose_level);
-
-	int orbit_idx = 0;
-
-	if (f_v) {
-		cout << "any_group::orbit_of computing orbit of point " << point_idx << " done" << endl;
-	}
-
-	string fname_tree_mask;
-
-	fname_tree_mask = label + "_orbit_of_point_" + std::to_string(point_idx) + ".layered_graph";
-
-
-	Sch->export_tree_as_layered_graph(orbit_idx,
-			fname_tree_mask,
-			verbose_level - 1);
-
-	groups::strong_generators *SG_stab;
-	ring_theory::longinteger_object full_group_order;
-
-	Subgroup_gens->group_order(full_group_order);
-
-
-	if (f_v) {
-		cout << "any_group::orbit_of computing the stabilizer "
-				"of the rep of orbit " << orbit_idx << endl;
-		cout << "any_group::orbit_of orbit length = " << Sch->orbit_len[orbit_idx] << endl;
-	}
-
-	if (f_v) {
-		cout << "any_group::orbit_of before Sch->stabilizer_orbit_rep" << endl;
-	}
-
-	SG_stab = Sch->stabilizer_orbit_rep(
-			A_base,
-			full_group_order,
-			0 /* orbit_idx */, 0 /*verbose_level*/);
-
-	if (f_v) {
-		cout << "any_group::orbit_of after Sch->stabilizer_orbit_rep" << endl;
-	}
-
-
-	cout << "any_group::orbit_of "
-			"The stabilizer of the orbit rep has been computed:" << endl;
-	SG_stab->print_generators(cout);
-	SG_stab->print_generators_tex();
-
-#if 0
-
-	groups::schreier *shallow_tree;
-
-	if (f_v) {
-		cout << "any_group::orbit_of "
-				"computing shallow Schreier tree:" << endl;
-	}
-
-	#if 0
-	enum shallow_schreier_tree_strategy Shallow_schreier_tree_strategy =
-			shallow_schreier_tree_standard;
-			//shallow_schreier_tree_Seress_deterministic;
-			//shallow_schreier_tree_Seress_randomized;
-			//shallow_schreier_tree_Sajeeb;
-	#endif
-
-	int orbit_idx = 0;
-	int f_randomized = true;
-
-	Sch->shallow_tree_generators(orbit_idx,
-			f_randomized,
-			shallow_tree,
-			verbose_level);
-
-	if (f_v) {
-		cout << "any_group::orbit_of "
-				"computing shallow Schreier tree done." << endl;
-	}
-
-	fname_tree_mask = label + "_%d_shallow.layered_graph";
-
-	shallow_tree->export_tree_as_layered_graph(0 /* orbit_no */,
-			fname_tree_mask,
-			verbose_level - 1);
-#endif
-
-	if (f_v) {
-		cout << "any_group::orbit_of done" << endl;
-	}
-}
-
-void any_group::orbits_on_points(
-		groups::orbits_on_something *&Orb, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points" << endl;
-	}
-	algebra_global_with_action Algebra;
-
-
-	int f_load_save = false;
-	string prefix;
-
-	prefix.assign(label);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points "
-				"before Algebra.orbits_on_points" << endl;
-	}
-	Algebra.orbits_on_points(
-			A,
-			Subgroup_gens,
-			f_load_save,
-			prefix,
-			Orb,
-			verbose_level);
-	if (f_v) {
-		cout << "any_group::orbits_on_points "
-				"after Algebra.orbits_on_points" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points done" << endl;
-	}
-}
-
-void any_group::orbits_on_points_from_generators(
-		data_structures_groups::vector_ge *gens,
-		groups::orbits_on_something *&Orb,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points_from_generators" << endl;
-	}
-	algebra_global_with_action Algebra;
-
-
-	int f_load_save = true;
-	string prefix;
-
-	prefix.assign(label);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points_from_generators "
-				"before Algebra.orbits_on_points_from_vector_ge" << endl;
-	}
-	Algebra.orbits_on_points_from_vector_ge(
-			A,
-			gens,
-			f_load_save,
-			prefix,
-			Orb,
-			verbose_level);
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points_from_generators "
-				"after Algebra.orbits_on_points_from_vector_ge" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "any_group::orbits_on_points_from_generators done" << endl;
-	}
-}
 
 void any_group::create_latex_report_for_permutation_group(
 		graphics::layered_graph_draw_options *O,
@@ -2716,15 +2348,19 @@ void any_group::order_of_products_of_pairs(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->Group_element->make_element(Elt1, element_data + i * A->make_element_size, verbose_level);
+			A->Group_element->make_element(
+					Elt1, element_data + i * A->make_element_size, verbose_level);
 
 			for (j = 0; j < nb_elements; j++) {
 
-				A->Group_element->make_element(Elt2, element_data + j * A->make_element_size, verbose_level);
+				A->Group_element->make_element(
+						Elt2, element_data + j * A->make_element_size, verbose_level);
 
-				A->Group_element->element_mult(Elt1, Elt2, Elt3, 0);
+				A->Group_element->element_mult(
+						Elt1, Elt2, Elt3, 0);
 
-				Order_table[i * nb_elements + j] = A->Group_element->element_order(Elt3);
+				Order_table[i * nb_elements + j] = A->Group_element->element_order(
+						Elt3);
 
 
 			}
@@ -2790,7 +2426,8 @@ void any_group::conjugate(
 
 	Output_table = NEW_int(nb_elements * A->make_element_size);
 
-	A->Group_element->make_element_from_string(S, conjugate_data, verbose_level);
+	A->Group_element->make_element_from_string(
+			S, conjugate_data, verbose_level);
 
 	A->Group_element->element_invert(S, Sv, verbose_level);
 

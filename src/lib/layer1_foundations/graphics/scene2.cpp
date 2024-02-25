@@ -22,7 +22,8 @@ namespace layer1_foundations {
 namespace graphics {
 
 
-void scene::create_regulus(int idx, int nb_lines, int verbose_level)
+void scene::create_regulus(
+		int idx, int nb_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	double coeff[10];
@@ -312,7 +313,8 @@ void scene::create_regulus(int idx, int nb_lines, int verbose_level)
 	}
 }
 
-void scene::clipping_by_cylinder(int line_idx, double r, std::ostream &ost)
+void scene::clipping_by_cylinder(
+		int line_idx, double r, std::ostream &ost)
 {
 	int h;
 	orbiter_kernel_system::numerics N;
@@ -336,7 +338,8 @@ void scene::clipping_by_cylinder(int line_idx, double r, std::ostream &ost)
 
 }
 
-int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
+int scene::scan1(
+		int argc, std::string *argv, int &i, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -797,7 +800,8 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 	return true;
 }
 
-int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
+int scene::scan2(
+		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -1177,7 +1181,8 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 	return true;
 }
 
-int scene::read_scene_objects(int argc, std::string *argv,
+int scene::read_scene_objects(
+		int argc, std::string *argv,
 		int i0, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

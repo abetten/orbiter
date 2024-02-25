@@ -816,6 +816,7 @@ public:
 class action_on_orthogonal {
 public:
 	actions::action *original_action;
+		// needs original_action->Group_element->element_image_of_low_level
 	orthogonal_geometry::orthogonal *O;
 	int *v1;
 	int *v2;
@@ -835,8 +836,10 @@ public:
 		int f_on_points, int f_on_lines,
 		int f_on_points_and_lines,
 		int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
 	long int map_a_point(
 			int *Elt, long int i, int verbose_level);
 	long int map_a_line(

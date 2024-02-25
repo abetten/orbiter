@@ -981,8 +981,8 @@ void schreier::extend_orbit(
 	}
 
 	gens.append(elt, verbose_level - 2);
-	A->Group_element->element_invert(elt, A->Elt1, false);
-	gens_inv.append(A->Elt1, verbose_level - 2);
+	A->Group_element->element_invert(elt, A->Group_element->Elt1, false);
+	gens_inv.append(A->Group_element->Elt1, verbose_level - 2);
 	images_append(verbose_level - 2);
 	
 	cur = orbit_first[nb_orbits - 1];
@@ -2622,6 +2622,7 @@ strong_generators *schreier::stabilizer_orbit_rep(
 	if (f_v) {
 		cout << "schreier::stabilizer_orbit_rep" << endl;
 		cout << "default_action=" << default_action->label << endl;
+		cout << "orbit_idx=" << orbit_idx << endl;
 	}
 	if (f_images_only) {
 		cout << "schreier::stabilizer_orbit_rep is not "

@@ -544,7 +544,8 @@ void object_with_properties::latex_report(
 			block_labels[j] = std::to_string(NO->canonical_labeling[v + j]);
 		}
 
-		Enc->latex_canonical_form_with_labels(ost, NO,
+		Enc->latex_canonical_form_with_labels(
+				ost, NO,
 				point_labels,
 				block_labels,
 				verbose_level);
@@ -565,27 +566,15 @@ void object_with_properties::latex_report(
 		if (f_v) {
 			cout << "object_with_properties::latex_report f_lex_least" << endl;
 		}
-		int idx;
-
-		idx = orbiter_kernel_system::Orbiter->find_symbol(Report_options->lex_least_geometry_builder);
-
-		layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
-
-		t = orbiter_kernel_system::Orbiter->get_object_type(idx);
-		if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_geometry_builder) {
-			cout << "object_with_properties::latex_report "
-				<< Report_options->lex_least_geometry_builder
-				<< " is not of type geometry_builder" << endl;
-			exit(1);
-		}
-
 		geometry_builder::geometry_builder *GB;
+
+		GB = Get_geometry_builder(Report_options->lex_least_geometry_builder);
+
+
+		int idx;
 		int f_found;
 		l1_interfaces::nauty_output *NO;
 		data_structures::bitvector *Canonical_form;
-
-		GB = (geometry_builder::geometry_builder *)
-				orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 		if (f_v) {

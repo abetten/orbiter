@@ -766,14 +766,16 @@ void modified_group_create::create_point_stabilizer_subgroup(
 
 		if (f_v) {
 			cout << "modified_group_create::create_point_stabilizer_subgroup "
-					"before AG->orbits_on_points" << endl;
+					"before Orbits.orbits_on_points" << endl;
 		}
 
-		AG->orbits_on_points(Orb, verbose_level);
+		orbits::orbits_global Orbits;
+
+		Orbits.orbits_on_points(AG, Orb, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::create_point_stabilizer_subgroup "
-					"after AG->orbits_on_points" << endl;
+					"after Orbits.orbits_on_points" << endl;
 		}
 
 		Orb->stabilizer_any_point(Descr->point_stabilizer_index,

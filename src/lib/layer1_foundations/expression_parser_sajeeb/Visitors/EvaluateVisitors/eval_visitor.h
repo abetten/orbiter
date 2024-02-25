@@ -21,6 +21,8 @@ using finite_field = orbiter::layer1_foundations::field_theory::finite_field;
 using std::unordered_map;
 using std::string;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class eval_visitor final :
         public IRTreeTemplateReturnTypeVariadicArgumentConstantVisitorInterface<int,
                                                                                 finite_field*,

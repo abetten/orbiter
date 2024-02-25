@@ -600,6 +600,7 @@ void latex_interface::incma_latex_with_text_labels(
 	int f_labelling_points, std::string *point_labels,
 	int f_labelling_blocks, std::string *block_labels,
 	int verbose_level)
+// output incidence geometry as a latex picture
 // width for one box in 0.1mm
 // width_10 is 1 10th of width
 // example: width = 40, width_10 = 4
@@ -1980,7 +1981,42 @@ void latex_interface::report_matrix_longinteger(
 	}
 }
 
+void latex_interface::print_decomposition_matrix(
+		std::ostream &ost,
+		int m, int n,
+		std::string &top_left_entry,
+		std::string *cols_labels,
+		std::string *row_labels,
+		std::string *entries,
+		int f_enter_math_mode)
+{
+	int i, j;
 
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\begin{align*}" << endl;
+	}
+	ost << "\\begin{array}{r|*{" << n << "}{r}}" << endl;
+	ost << top_left_entry;
+	for (j = 0; j < n; j++) {
+		ost << " & " << cols_labels[j];
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << row_labels[i];
+		for (j = 0; j < n; j++) {
+			ost << " & " << entries[i * n + j];
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "\\end{align*}" << endl;
+	}
+	ost << "%}" << endl;
+
+}
 
 }}}
 

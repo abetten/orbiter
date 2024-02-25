@@ -215,7 +215,8 @@ void classify_five_plus_one::init(
 
 
 
-void classify_five_plus_one::classify_partial_ovoids(int verbose_level)
+void classify_five_plus_one::classify_partial_ovoids(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int schreier_depth = 10000;
@@ -566,7 +567,8 @@ static void callback_partial_ovoid_test_early(
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	Classify->partial_ovoid_test_early(S, len,
+	Classify->partial_ovoid_test_early(
+			S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);

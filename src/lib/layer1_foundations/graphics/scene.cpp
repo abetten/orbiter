@@ -182,7 +182,8 @@ scene::~scene()
 }
 
 
-double scene::label(int idx, std::string &txt)
+double scene::label(
+		int idx, std::string &txt)
 {
 	if (idx >= nb_points) {
 		cout << "scene::label idx >= nb_points, "
@@ -197,7 +198,8 @@ double scene::label(int idx, std::string &txt)
 	return Labels.size() - 1;
 }
 
-double scene::point_coords(int idx, int j)
+double scene::point_coords(
+		int idx, int j)
 {
 	if (idx >= nb_points) {
 		cout << "scene::point_coords idx >= nb_points, "
@@ -212,7 +214,8 @@ double scene::point_coords(int idx, int j)
 	return Point_coords[idx * 3 + j];
 }
 
-double scene::line_coords(int idx, int j)
+double scene::line_coords(
+		int idx, int j)
 {
 	if (idx >= nb_lines) {
 		cout << "scene::line_coords idx >= nb_lines, "
@@ -227,7 +230,8 @@ double scene::line_coords(int idx, int j)
 	return Line_coords[idx * 6 + j];
 }
 
-double scene::plane_coords(int idx, int j)
+double scene::plane_coords(
+		int idx, int j)
 {
 	if (idx >= nb_planes) {
 		cout << "scene::plane_coords idx >= nb_planes, "
@@ -242,7 +246,8 @@ double scene::plane_coords(int idx, int j)
 	return Plane_coords[idx * 4 + j];
 }
 
-double scene::cubic_coords(int idx, int j)
+double scene::cubic_coords(
+		int idx, int j)
 {
 	if (idx >= nb_cubics) {
 		cout << "scene::cubic_coords idx >= nb_cubics, "
@@ -257,7 +262,8 @@ double scene::cubic_coords(int idx, int j)
 	return Cubic_coords[idx * 20 + j];
 }
 
-double scene::quadric_coords(int idx, int j)
+double scene::quadric_coords(
+		int idx, int j)
 {
 	if (idx >= nb_quadrics) {
 		cout << "scene::quadric_coords idx >= nb_quadrics, "
@@ -272,7 +278,8 @@ double scene::quadric_coords(int idx, int j)
 	return Quadric_coords[idx * 10 + j];
 }
 
-int scene::edge_points(int idx, int j)
+int scene::edge_points(
+		int idx, int j)
 {
 	if (idx >= nb_planes) {
 		cout << "scene::edge_points idx >= nb_edges, "
@@ -287,7 +294,8 @@ int scene::edge_points(int idx, int j)
 	return Edge_points[idx * 2 + j];
 }
 
-void scene::print_point_coords(int idx)
+void scene::print_point_coords(
+		int idx)
 {
 	int j;
 
@@ -297,7 +305,8 @@ void scene::print_point_coords(int idx)
 	cout << endl;
 }
 
-double scene::point_distance_euclidean(int pt_idx, double *y)
+double scene::point_distance_euclidean(
+		int pt_idx, double *y)
 {
 	orbiter_kernel_system::numerics Num;
 	double d;
@@ -306,7 +315,8 @@ double scene::point_distance_euclidean(int pt_idx, double *y)
 	return d;
 }
 
-double scene::point_distance_from_origin(int pt_idx)
+double scene::point_distance_from_origin(
+		int pt_idx)
 {
 	orbiter_kernel_system::numerics Num;
 	double d;
@@ -325,7 +335,8 @@ double scene::distance_euclidean_point_to_point(
 	return d;
 }
 
-void scene::init(int verbose_level)
+void scene::init(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -358,7 +369,8 @@ void scene::init(int verbose_level)
 	}
 }
 
-scene *scene::transformed_copy(double *A4, double *A4_inv, 
+scene *scene::transformed_copy(
+		double *A4, double *A4_inv,
 	double rad, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -744,17 +756,20 @@ void scene::points(
 }
 
 
-int scene::point_center_of_mass_of_face(int face_idx)
+int scene::point_center_of_mass_of_face(
+		int face_idx)
 {
 	return point_center_of_mass(Face_points[face_idx], Nb_face_points[face_idx]);
 }
 
-int scene::point_center_of_mass_of_edge(int edge_idx)
+int scene::point_center_of_mass_of_edge(
+		int edge_idx)
 {
 	return point_center_of_mass(Edge_points + edge_idx * 2, 2);
 }
 
-int scene::point_center_of_mass(int *Pt_idx, int nb_pts)
+int scene::point_center_of_mass(
+		int *Pt_idx, int nb_pts)
 {
 	double x[3];
 	orbiter_kernel_system::numerics N;
@@ -763,7 +778,8 @@ int scene::point_center_of_mass(int *Pt_idx, int nb_pts)
 	return point(x[0], x[1], x[2]);
 }
 
-int scene::triangle(int line1, int line2, int line3, int verbose_level)
+int scene::triangle(
+		int line1, int line2, int line3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int pt[3], idx;
@@ -781,7 +797,8 @@ int scene::triangle(int line1, int line2, int line3, int verbose_level)
 	return idx;
 }
 
-int scene::point_as_intersection_of_two_lines(int line1, int line2)
+int scene::point_as_intersection_of_two_lines(
+		int line1, int line2)
 {
 	double x[3], y[3], z[3], u[3], v[3];
 	double System[9];
@@ -823,7 +840,8 @@ int scene::point_as_intersection_of_two_lines(int line1, int line2)
 	return idx;
 }
 
-int scene::plane_from_dual_coordinates(double *x4)
+int scene::plane_from_dual_coordinates(
+		double *x4)
 {
 	double y[4];
 	double d, dv;
@@ -840,7 +858,8 @@ int scene::plane_from_dual_coordinates(double *x4)
 
 
 
-void scene::draw_lines_with_selection(int *selection, int nb_select, 
+void scene::draw_lines_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -877,7 +896,8 @@ void scene::draw_lines_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_line_with_selection(int line_idx, 
+void scene::draw_line_with_selection(
+		int line_idx,
 		std::string &options, std::ostream &ost)
 {
 	int j, h, s;
@@ -912,7 +932,8 @@ void scene::draw_line_with_selection(int line_idx,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_cij_with_selection(int *selection, int nb_select, 
+void scene::draw_lines_cij_with_selection(
+		int *selection, int nb_select,
 	ostream &ost)
 {
 	int i, j, h, s;
@@ -948,14 +969,16 @@ void scene::draw_lines_cij_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_cij(std::ostream &ost)
+void scene::draw_lines_cij(
+		std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 	
 	draw_lines_cij_with_selection(selection, 15, ost);
 } 
 
-void scene::draw_lines_cij_with_offset(int offset,
+void scene::draw_lines_cij_with_offset(
+		int offset,
 		int number_of_lines, std::ostream &ost)
 {
 	int selection[15];
@@ -967,7 +990,8 @@ void scene::draw_lines_cij_with_offset(int offset,
 	draw_lines_cij_with_selection(selection, number_of_lines, ost);
 }
 
-void scene::draw_lines_ai_with_selection(int *selection, int nb_select, 
+void scene::draw_lines_ai_with_selection(
+		int *selection, int nb_select,
 	std::ostream &ost)
 {
 	int s, i, j, h;
@@ -1003,14 +1027,16 @@ void scene::draw_lines_ai_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_ai(std::ostream &ost)
+void scene::draw_lines_ai(
+		std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_ai_with_selection(selection, 6, ost);
 } 
 
-void scene::draw_lines_ai_with_offset(int offset, std::ostream &ost)
+void scene::draw_lines_ai_with_offset(
+		int offset, std::ostream &ost)
 {
 	int selection[6];
 	int i;
@@ -1021,7 +1047,8 @@ void scene::draw_lines_ai_with_offset(int offset, std::ostream &ost)
 	draw_lines_ai_with_selection(selection, 6, ost);
 }
 
-void scene::draw_lines_bj_with_selection(int *selection, int nb_select, 
+void scene::draw_lines_bj_with_selection(
+		int *selection, int nb_select,
 	std::ostream &ost)
 {
 	int s, i, j, h;
@@ -1057,14 +1084,16 @@ void scene::draw_lines_bj_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_bj(std::ostream &ost)
+void scene::draw_lines_bj(
+		std::ostream &ost)
 {
 	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_bj_with_selection(selection, 6, ost);
 } 
 
-void scene::draw_lines_bj_with_offset(int offset, std::ostream &ost)
+void scene::draw_lines_bj_with_offset(
+		int offset, std::ostream &ost)
 {
 	int selection[6];
 	int i;
@@ -1078,7 +1107,8 @@ void scene::draw_lines_bj_with_offset(int offset, std::ostream &ost)
 
 
 
-void scene::draw_edges_with_selection(int *selection, int nb_select, 
+void scene::draw_edges_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int s, i, j, h, pt1, pt2;
@@ -1116,7 +1146,8 @@ void scene::draw_edges_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_faces_with_selection(int *selection, int nb_select, 
+void scene::draw_faces_with_selection(
+		int *selection, int nb_select,
 	double thickness_half, std::string &options, std::ostream &ost)
 {
 	int s, i, j;
@@ -1138,7 +1169,8 @@ void scene::draw_faces_with_selection(int *selection, int nb_select,
 }
 
 
-void scene::draw_face(int idx, double thickness_half, std::string &options,
+void scene::draw_face(
+		int idx, double thickness_half, std::string &options,
 		std::ostream &ost)
 {
 	int f_v = false;
@@ -1328,7 +1360,8 @@ void scene::draw_points_with_selection(
 	ost << "	}" << endl;
 }
 
-void scene::draw_cubic_with_selection(int *selection, int nb_select, 
+void scene::draw_cubic_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -1365,7 +1398,8 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_quartic_with_selection(int *selection, int nb_select,
+void scene::draw_quartic_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -1402,7 +1436,8 @@ void scene::draw_quartic_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_quintic_with_selection(int *selection, int nb_select,
+void scene::draw_quintic_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -1439,7 +1474,8 @@ void scene::draw_quintic_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_octic_with_selection(int *selection, int nb_select,
+void scene::draw_octic_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -1476,7 +1512,8 @@ void scene::draw_octic_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_quadric_with_selection(int *selection, int nb_select, 
+void scene::draw_quadric_with_selection(
+		int *selection, int nb_select,
 		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
@@ -1507,7 +1544,8 @@ void scene::draw_quadric_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
+void scene::draw_quadric_clipped_by_plane(
+		int quadric_idx, int plane_idx,
 		std::string &options, std::ostream &ost)
 {
 	int h;
@@ -1546,7 +1584,8 @@ void scene::draw_quadric_clipped_by_plane(int quadric_idx, int plane_idx,
 }
 
 
-void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
+void scene::draw_line_clipped_by_plane(
+		int line_idx, int plane_idx,
 		std::string &options, std::ostream &ost)
 {
 	int h;
@@ -1593,7 +1632,8 @@ void scene::draw_line_clipped_by_plane(int line_idx, int plane_idx,
 
 
 
-int scene::intersect_line_and_plane(int line_idx, int plane_idx, 
+int scene::intersect_line_and_plane(
+		int line_idx, int plane_idx,
 	int &intersection_point_idx, 
 	int verbose_level)
 {
@@ -1792,7 +1832,8 @@ int scene::intersect_line_and_plane(int line_idx, int plane_idx,
 	return true;
 }
 
-int scene::intersect_line_and_line(int line1_idx, int line2_idx, 
+int scene::intersect_line_and_line(
+		int line1_idx, int line2_idx,
 	double &lambda, 
 	int verbose_level)
 {
@@ -1823,7 +1864,8 @@ int scene::intersect_line_and_line(int line1_idx, int line2_idx,
 
 
 
-void scene::map_a_line(int line1, int line2, 
+void scene::map_a_line(
+		int line1, int line2,
 	int plane_idx, int line_idx, double spread, 
 	int nb_pts, 
 	int *New_line_idx, int &nb_new_lines, 
@@ -1882,7 +1924,8 @@ void scene::map_a_line(int line1, int line2,
 	}
 }
 
-int scene::map_a_point(int line1, int line2, 
+int scene::map_a_point(
+		int line1, int line2,
 	int plane_idx, double pt_in[3], 
 	int &new_line_idx, int &new_pt_idx, 
 	int verbose_level)
@@ -2007,7 +2050,8 @@ int scene::map_a_point(int line1, int line2,
 	return true;
 }
 
-void scene::fourD_cube(double rad_desired)
+void scene::fourD_cube(
+		double rad_desired)
 {
 	int r, i, j, k, h;
 	int v[3];
@@ -2049,7 +2093,8 @@ void scene::fourD_cube(double rad_desired)
 
 }
 
-void scene::rescale(int first_pt_idx, double rad_desired)
+void scene::rescale(
+		int first_pt_idx, double rad_desired)
 {
 	int i;
 	double rad = 1., a;
@@ -2072,7 +2117,8 @@ void scene::rescale(int first_pt_idx, double rad_desired)
 			a, 3 * (nb_points - first_pt_idx));
 }
 
-double scene::euclidean_distance(int pt1, int pt2)
+double scene::euclidean_distance(
+		int pt1, int pt2)
 {
 	double d;
 	orbiter_kernel_system::numerics N;
@@ -2081,7 +2127,8 @@ double scene::euclidean_distance(int pt1, int pt2)
 	return d;
 }
 
-double scene::distance_from_origin(int pt)
+double scene::distance_from_origin(
+		int pt)
 {
 	double d;
 	orbiter_kernel_system::numerics N;
@@ -2092,7 +2139,8 @@ double scene::distance_from_origin(int pt)
 	return d;
 }
 
-void scene::fourD_cube_edges(int first_pt_idx)
+void scene::fourD_cube_edges(
+		int first_pt_idx)
 {
 	int i, j;
 	double d;
@@ -2123,7 +2171,8 @@ void scene::fourD_cube_edges(int first_pt_idx)
 //v4 = ( 0 , 0 , 1 )
 
 
-void scene::hypercube(int n, double rad_desired)
+void scene::hypercube(
+		int n, double rad_desired)
 {
 	int N, i, j, h, k, d;
 	int *v;
@@ -2268,7 +2317,8 @@ void scene::Dodecahedron_points()
 
 }
 
-void scene::Dodecahedron_edges(int first_pt_idx)
+void scene::Dodecahedron_edges(
+		int first_pt_idx)
 {
 	int i, j;
 	double d;
@@ -2295,7 +2345,8 @@ void scene::Dodecahedron_edges(int first_pt_idx)
 	}
 }
 
-void scene::Dodecahedron_planes(int first_pt_idx)
+void scene::Dodecahedron_planes(
+		int first_pt_idx)
 {
 	int i;
 	
@@ -2707,7 +2758,8 @@ void scene::clebsch_cubic_version2_lines_c()
 
 }
 
-double scene::distance_between_two_points(int pt1, int pt2)
+double scene::distance_between_two_points(
+		int pt1, int pt2)
 {
 	double x1, x2, x3;
 	double y1, y2, y3;
@@ -2741,7 +2793,8 @@ void scene::create_five_plus_one()
 		5. ); // a3'
 }
 
-void scene::create_Clebsch_surface(int verbose_level)
+void scene::create_Clebsch_surface(
+		int verbose_level)
 // 1 cubic, 27 lines, 7 Eckardt points
 {
 	int f_v = (verbose_level >= 1);
@@ -2795,7 +2848,8 @@ void scene::create_Clebsch_surface(int verbose_level)
 	}
 }
 
-void scene::create_Hilbert_Cohn_Vossen_surface(int verbose_level)
+void scene::create_Hilbert_Cohn_Vossen_surface(
+		int verbose_level)
 // 1 cubic, 27 lines, 54 points, 45 planes
 {
 	int f_v = (verbose_level >= 1);
@@ -2840,7 +2894,8 @@ void scene::create_Hilbert_Cohn_Vossen_surface(int verbose_level)
 }
 
 
-void scene::create_Hilbert_model(int verbose_level)
+void scene::create_Hilbert_model(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3328,7 +3383,8 @@ void scene::create_Hilbert_model(int verbose_level)
 	}
 }
 
-void scene::create_Cayleys_nodal_cubic(int verbose_level)
+void scene::create_Cayleys_nodal_cubic(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::numerics Num;
@@ -3433,7 +3489,8 @@ void scene::create_Cayleys_nodal_cubic(int verbose_level)
 	}
 }
 
-void scene::create_Hilbert_cube(int verbose_level)
+void scene::create_Hilbert_cube(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3512,7 +3569,8 @@ void scene::create_Hilbert_cube(int verbose_level)
 	}
 }
 
-void scene::create_cube(int verbose_level)
+void scene::create_cube(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3546,7 +3604,8 @@ void scene::create_cube(int verbose_level)
 	}
 }
 
-void scene::create_cube_and_tetrahedra(int verbose_level)
+void scene::create_cube_and_tetrahedra(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3595,7 +3654,8 @@ void scene::create_cube_and_tetrahedra(int verbose_level)
 	}
 }
 
-void scene::create_affine_space(int q, int verbose_level)
+void scene::create_affine_space(
+		int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3656,7 +3716,8 @@ void scene::create_affine_space(int q, int verbose_level)
 }
 
 
-void scene::create_Eckardt_surface(int N, int verbose_level)
+void scene::create_Eckardt_surface(
+		int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -3903,7 +3964,8 @@ void scene::create_Eckardt_surface(int N, int verbose_level)
 	}
 }
 
-void scene::create_E4_surface(int N, int verbose_level)
+void scene::create_E4_surface(
+		int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3948,7 +4010,8 @@ void scene::create_E4_surface(int N, int verbose_level)
 	}
 }
 
-void scene::create_twisted_cubic(int N, int verbose_level)
+void scene::create_twisted_cubic(
+		int N, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::numerics Num;
@@ -4003,7 +4066,8 @@ void scene::create_twisted_cubic(int N, int verbose_level)
 
 }
 
-void scene::create_triangulation_of_cube(int N, int verbose_level)
+void scene::create_triangulation_of_cube(
+		int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::numerics Num;
@@ -4063,7 +4127,8 @@ void scene::create_triangulation_of_cube(int N, int verbose_level)
 
 }
 
-void scene::print_a_line(int line_idx)
+void scene::print_a_line(
+		int line_idx)
 {
 	orbiter_kernel_system::numerics Num;
 
@@ -4075,7 +4140,8 @@ void scene::print_a_line(int line_idx)
 }
 
 
-void scene::print_a_plane(int plane_idx)
+void scene::print_a_plane(
+		int plane_idx)
 {
 	orbiter_kernel_system::numerics Num;
 
@@ -4084,7 +4150,8 @@ void scene::print_a_plane(int plane_idx)
 	cout << endl;
 }
 
-void scene::print_a_face(int face_idx)
+void scene::print_a_face(
+		int face_idx)
 {
 	cout << "face " << face_idx << " has " << Nb_face_points[face_idx] << " points: ";
 	Int_vec_print(cout, Face_points[face_idx], Nb_face_points[face_idx]);
@@ -4094,7 +4161,8 @@ void scene::print_a_face(int face_idx)
 
 #define MY_OWN_BUFSIZE ONE_MILLION
 
-void scene::read_obj_file(std::string &fname, int verbose_level)
+void scene::read_obj_file(
+		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
@@ -4255,7 +4323,8 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 	}
 }
 
-void scene::add_a_group_of_things(int *Idx, int sz, int verbose_level)
+void scene::add_a_group_of_things(
+		int *Idx, int sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	vector<int> v;

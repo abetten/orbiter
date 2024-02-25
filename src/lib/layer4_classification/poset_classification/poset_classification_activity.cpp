@@ -61,7 +61,8 @@ void poset_classification_activity::perform_work(
 	if (Descr->f_report) {
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work f_report" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"f_report" << endl;
 		}
 
 		PC->report(Descr->report_options, verbose_level);
@@ -71,15 +72,19 @@ void poset_classification_activity::perform_work(
 	if (Descr->f_export_level_to_cpp) {
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work f_export_level_to_cpp" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"f_export_level_to_cpp" << endl;
 		}
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work before generate_source_code" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"before generate_source_code" << endl;
 		}
-		generate_source_code(Descr->export_level_to_cpp_level, verbose_level);
+		generate_source_code(
+				Descr->export_level_to_cpp_level, verbose_level);
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work after generate_source_code" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"after generate_source_code" << endl;
 		}
 
 	}
@@ -87,15 +92,19 @@ void poset_classification_activity::perform_work(
 	if (Descr->f_export_history_to_cpp) {
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work f_export_history_to_cpp" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"f_export_history_to_cpp" << endl;
 		}
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work before generate_history" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"before generate_history" << endl;
 		}
-		generate_history(Descr->export_history_to_cpp_level, verbose_level);
+		generate_history(
+				Descr->export_history_to_cpp_level, verbose_level);
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work after generate_history" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"after generate_history" << endl;
 		}
 
 	}
@@ -119,14 +128,16 @@ void poset_classification_activity::perform_work(
 	}
 	if (Descr->f_table_of_nodes) {
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work f_table_of_nodes" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"f_table_of_nodes" << endl;
 		}
 		PC->get_Poo()->make_tabe_of_nodes(verbose_level);
 	}
 
 	if (Descr->f_list_all) {
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work f_list_all" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"f_list_all" << endl;
 		}
 
 		int d;
@@ -141,7 +152,8 @@ void poset_classification_activity::perform_work(
 			}
 #endif
 
-			PC->list_all_orbits_at_level(d,
+			PC->list_all_orbits_at_level(
+					d,
 					false /* f_has_print_function */,
 					NULL /* void (*print_function)(std::ostream &ost, int len, int *S, void *data)*/,
 					NULL /* void *print_function_data*/,
@@ -163,10 +175,11 @@ void poset_classification_activity::perform_work(
 		//int f_show_whole_orbit = false;
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work before "
-					"list_all_orbits_at_level" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"before list_all_orbits_at_level" << endl;
 		}
-		PC->list_all_orbits_at_level(actual_size,
+		PC->list_all_orbits_at_level(
+				actual_size,
 			false,
 			NULL,
 			this,
@@ -176,8 +189,8 @@ void poset_classification_activity::perform_work(
 			Descr->f_show_whole_orbits);
 
 		if (f_v) {
-			cout << "poset_classification_activity::perform_work after "
-					"list_all_orbits_at_level" << endl;
+			cout << "poset_classification_activity::perform_work "
+					"after list_all_orbits_at_level" << endl;
 		}
 
 #if 0
@@ -196,7 +209,8 @@ void poset_classification_activity::perform_work(
 		}
 		{
 			data_structures::spreadsheet *Sp;
-			PC->make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
+			PC->make_spreadsheet_of_level_info(
+					Sp, actual_size, verbose_level);
 			string fname_csv;
 
 			fname_csv = PC->get_problem_label_with_path() + "_levels_" + std::to_string(actual_size) + ".csv";
@@ -218,7 +232,8 @@ void poset_classification_activity::perform_work(
 		}
 		{
 			data_structures::spreadsheet *Sp;
-			PC->make_spreadsheet_of_orbit_reps(Sp, actual_size);
+			PC->make_spreadsheet_of_orbit_reps(
+					Sp, actual_size);
 			string fname_csv;
 
 			fname_csv = PC->get_problem_label_with_path() + "_orbits_at_level_" + std::to_string(actual_size) + ".csv";
@@ -1188,7 +1203,8 @@ void poset_classification_activity::Mtk_from_MM(
 						"i = " << i << " calling Mtk_via_Mtr_Mrk" << endl;
 			}
 
-			Mtk_via_Mtr_Mrk(t, i - 1, i,
+			Mtk_via_Mtr_Mrk(
+					t, i - 1, i,
 				T, pM[i - 1], T2,
 				Tr, Tc, Nb_rows[i - 1], Nb_cols[i - 1], T2r, T2c,
 				verbose_level - 1);

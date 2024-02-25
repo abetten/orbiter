@@ -130,7 +130,8 @@ void flag_orbit_node::receive_trace_result(
 
 
 
-void flag_orbit_node::write_file(std::ofstream &fp, int verbose_level)
+void flag_orbit_node::write_file(
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -161,7 +162,8 @@ void flag_orbit_node::write_file(std::ofstream &fp, int verbose_level)
 	}
 }
 
-void flag_orbit_node::read_file(std::ifstream &fp, int verbose_level)
+void flag_orbit_node::read_file(
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -196,7 +198,8 @@ void flag_orbit_node::read_file(std::ifstream &fp, int verbose_level)
 	}
 }
 
-void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
+void flag_orbit_node::print_latex(
+		flag_orbits *Flag_orbits,
 		ostream &ost,
 		int f_print_stabilizer_gens)
 {

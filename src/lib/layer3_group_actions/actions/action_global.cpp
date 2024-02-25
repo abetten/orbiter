@@ -1168,7 +1168,7 @@ action *action_global::init_direct_product_group(
 
 	A->elt_size_in_int = P->elt_size_int;
 	A->coded_elt_size_in_char = P->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 
@@ -1417,7 +1417,7 @@ action *action_global::init_polarity_extension_group(
 
 	A->elt_size_in_int = Polarity_extension->elt_size_int;
 	A->coded_elt_size_in_char = Polarity_extension->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 
@@ -4568,6 +4568,649 @@ void action_global::point_stabilizer_any_point_with_given_group(
 }
 
 
+void action_global::move_a_to_b_and_stabilizer_of_b(
+		actions::action *A_base,
+		actions::action *A2,
+		groups::strong_generators *SG,
+		int a, int b,
+		int *&transporter_a_b,
+		groups::strong_generators *&Stab_b,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b A2 = " << endl;
+		A2->print_info();
+	}
+
+	ring_theory::longinteger_object full_group_order;
+
+	SG->group_order(full_group_order);
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"group order = " << full_group_order << endl;
+	}
+
+
+	groups::schreier *Schreier;
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"before compute_all_point_orbits_schreier" << endl;
+	}
+
+	Schreier = SG->gens->compute_all_point_orbits_schreier(
+			A2, verbose_level - 2);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"after compute_all_point_orbits_schreier" << endl;
+		cout << "We found " << Schreier->nb_orbits
+				<< " orbits of the group" << endl;
+	}
+
+	int *Elt1, *Elt2;
+
+	Elt1 = NEW_int(A2->elt_size_in_int);
+	Elt2 = NEW_int(A2->elt_size_in_int);
+	transporter_a_b = NEW_int(A2->elt_size_in_int);
+
+	int idx1, idx2;
+
+	idx1 = Schreier->orbit_number(a);
+	idx2 = Schreier->orbit_number(b);
+	if (idx1 != idx2) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"the two points lie in different orbits" << endl;
+		exit(1);
+	}
+	int orbit_idx;
+	int c;
+
+	Schreier->transporter_from_point_to_orbit_rep(
+			a,
+		orbit_idx, Elt1, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"Elt1:" << endl;
+		A2->Group_element->element_print_latex(
+				Elt1, cout);
+	}
+
+	Schreier->transporter_from_orbit_rep_to_point(
+			b,
+		orbit_idx, Elt2, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"Elt2:" << endl;
+		A2->Group_element->element_print_latex(
+				Elt2, cout);
+	}
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"before element_mult" << endl;
+	}
+
+	A2->Group_element->element_mult(
+			Elt1, Elt2, transporter_a_b, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"transporter_a_b:" << endl;
+		A2->Group_element->element_print_latex(
+				transporter_a_b, cout);
+	}
+
+	c = A2->Group_element->element_image_of(
+			a, transporter_a_b, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"transporter_a_b "
+				"the element maps a to c where a=" << a << " c=" << c << endl;
+	}
+	if (c != b) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"c != b, error" << endl;
+		exit(1);
+
+	}
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"before Schreier->stabilizer_any_point" << endl;
+	}
+
+	Stab_b = Schreier->stabilizer_any_point(
+			A_base,
+		full_group_order,
+		b,
+		0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b_and_stabilizer_of_b "
+				"after Schreier->stabilizer_any_point" << endl;
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_OBJECT(Schreier);
+
+
+	if (f_v) {
+		cout << "action_global::move_a_to_b done" << endl;
+	}
+}
+
+
+
+void action_global::read_orbit_rep_and_candidates_from_files_and_process(
+		action *A,
+		std::string &prefix,
+	int level, int orbit_at_level, int level_of_candidates_file,
+	void (*early_test_func_callback)(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		void *data, int verbose_level),
+	void *early_test_func_callback_data,
+	long int *&starter,
+	int &starter_sz,
+	groups::sims *&Stab,
+	groups::strong_generators *&Strong_gens,
+	long int *&candidates,
+	int &nb_candidates,
+	int &nb_cases,
+	int verbose_level)
+// A needs to be the base action
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	long int *candidates1;
+	int nb_candidates1;
+	int h; //, i;
+
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process "
+				"before read_orbit_rep_and_candidates_from_files" << endl;
+	}
+	read_orbit_rep_and_candidates_from_files(
+			A, prefix,
+		level, orbit_at_level, level_of_candidates_file,
+		starter,
+		starter_sz,
+		Stab,
+		Strong_gens,
+		candidates1,
+		nb_candidates1,
+		nb_cases,
+		verbose_level);
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process "
+				"after read_orbit_rep_and_candidates_from_files" << endl;
+	}
+
+	for (h = level_of_candidates_file; h < level; h++) {
+
+		long int *candidates2;
+		int nb_candidates2;
+
+		if (f_vv) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process "
+					"testing candidates at level " << h
+					<< " number of candidates = " << nb_candidates1 << endl;
+			}
+		candidates2 = NEW_lint(nb_candidates1);
+
+		(*early_test_func_callback)(starter, h + 1,
+			candidates1, nb_candidates1,
+			candidates2, nb_candidates2,
+			early_test_func_callback_data, verbose_level - 1);
+
+		if (f_vv) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process "
+					"number of candidates at level " << h + 1
+					<< " reduced from " << nb_candidates1 << " to "
+					<< nb_candidates2 << " by "
+					<< nb_candidates1 - nb_candidates2 << endl;
+			}
+
+		Lint_vec_copy(candidates2, candidates1, nb_candidates2);
+		nb_candidates1 = nb_candidates2;
+
+		FREE_lint(candidates2);
+		}
+
+	candidates = candidates1;
+	nb_candidates = nb_candidates1;
+
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files_and_process "
+				"done" << endl;
+		}
+}
+
+void action_global::read_orbit_rep_and_candidates_from_files(
+		action *A,
+		std::string &prefix,
+	int level, int orbit_at_level, int level_of_candidates_file,
+	long int *&starter,
+	int &starter_sz,
+	groups::sims *&Stab,
+	groups::strong_generators *&Strong_gens,
+	long int *&candidates,
+	int &nb_candidates,
+	int &nb_cases,
+	int verbose_level)
+// A needs to be the base action
+{
+	int f_v = (verbose_level >= 1);
+	int orbit_at_candidate_level = -1;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files "
+				"prefix=" << prefix << endl;
+	}
+
+	{
+		candidates = NULL;
+		//longinteger_object stab_go;
+
+		string fname1;
+		fname1 = prefix + "_lvl_" + std::to_string(level);
+
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"before read_set_and_stabilizer fname1=" << fname1 << endl;
+		}
+		read_set_and_stabilizer(
+				A,
+				fname1,
+			orbit_at_level, starter, starter_sz, Stab,
+			Strong_gens,
+			nb_cases,
+			verbose_level);
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"after read_set_and_stabilizer" << endl;
+		}
+
+
+
+		//Stab->group_order(stab_go);
+
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"Read starter " << orbit_at_level << " / "
+					<< nb_cases << " : ";
+			Lint_vec_print(cout, starter, starter_sz);
+			cout << endl;
+			//cout << "read_orbit_rep_and_candidates_from_files "
+			//"Group order=" << stab_go << endl;
+		}
+
+		if (level == level_of_candidates_file) {
+			orbit_at_candidate_level = orbit_at_level;
+		}
+		else {
+			// level_of_candidates_file < level
+			// Now, we need to find out the orbit representative
+			// at level_of_candidates_file
+			// that matches with the prefix of starter
+			// so that we can retrieve it's set of candidates.
+			// Once we have the candidates for the prefix, we run it through the
+			// test function to find the candidate set of starter as a subset
+			// of this set.
+
+			orbit_at_candidate_level = Fio.find_orbit_index_in_data_file(
+					prefix,
+					level_of_candidates_file, starter,
+					verbose_level);
+		}
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"Found starter, orbit_at_candidate_level="
+					<< orbit_at_candidate_level << endl;
+		}
+
+
+		// read the set of candidates from the binary file:
+
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"before generator_read_candidates_of_orbit" << endl;
+		}
+		string fname2;
+		fname2 = prefix + "_lvl_" + std::to_string(level_of_candidates_file) + "_candidates.bin";
+
+
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"before Fio.poset_classification_read_candidates_of_orbit" << endl;
+		}
+		Fio.poset_classification_read_candidates_of_orbit(
+			fname2, orbit_at_candidate_level,
+			candidates, nb_candidates, verbose_level - 1);
+
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"after Fio.poset_classification_read_candidates_of_orbit" << endl;
+		}
+
+
+		if (candidates == NULL) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"could not read the candidates" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "action_global::read_orbit_rep_and_candidates_from_files "
+					"Found " << nb_candidates << " candidates at level "
+					<< level_of_candidates_file << endl;
+		}
+	}
+	if (f_v) {
+		cout << "action_global::read_orbit_rep_and_candidates_from_files done" << endl;
+	}
+}
+
+
+void action_global::read_representatives(
+		std::string &fname,
+		int *&Reps, int &nb_reps, int &size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_casenumbers = false;
+	int nb_cases;
+	int *Set_sizes;
+	long int **Sets;
+	char **Ago_ascii;
+	char **Aut_ascii;
+	int *Casenumbers;
+	int i, j;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "action_global::read_representatives "
+			"reading file " << fname << endl;
+	}
+
+	Fio.read_and_parse_data_file_fancy(
+			fname,
+		f_casenumbers,
+		nb_cases,
+		Set_sizes, Sets, Ago_ascii, Aut_ascii,
+		Casenumbers,
+		0/*verbose_level*/);
+	nb_reps = nb_cases;
+	size = Set_sizes[0];
+	Reps = NEW_int(nb_cases * size);
+	for (i = 0; i < nb_cases; i++) {
+		for (j = 0; j < size; j++) {
+			Reps[i * size + j] = Sets[i][j];
+		}
+	}
+	Fio.free_data_fancy(nb_cases,
+		Set_sizes, Sets,
+		Ago_ascii, Aut_ascii,
+		Casenumbers);
+	if (f_v) {
+		cout << "action_global::read_representatives done" << endl;
+	}
+}
+
+void action_global::read_representatives_and_strong_generators(
+	std::string &fname, int *&Reps,
+	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_casenumbers = false;
+	int nb_cases;
+	int *Set_sizes;
+	long int **Sets;
+	char **Ago_ascii;
+	//char **Aut_ascii;
+	int *Casenumbers;
+	int i, j;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "action_global::read_representatives_and_strong_generators "
+			"reading file " << fname << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::read_representatives_and_strong_generators "
+			"before Fio.read_and_parse_data_file_fancy" << endl;
+	}
+	Fio.read_and_parse_data_file_fancy(
+			fname,
+		f_casenumbers,
+		nb_cases,
+		Set_sizes, Sets, Ago_ascii, Aut_ascii,
+		Casenumbers,
+		0/*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::read_representatives_and_strong_generators "
+			"after Fio.read_and_parse_data_file_fancy" << endl;
+	}
+	nb_reps = nb_cases;
+	if (f_v) {
+		cout << "action_global::read_representatives_and_strong_generators "
+			"nb_reps = " << nb_reps << endl;
+	}
+	size = Set_sizes[0];
+	Reps = NEW_int(nb_cases * size);
+	for (i = 0; i < nb_cases; i++) {
+		for (j = 0; j < size; j++) {
+			Reps[i * size + j] = Sets[i][j];
+		}
+	}
+	Fio.free_data_fancy(
+			nb_cases,
+		Set_sizes, Sets,
+		Ago_ascii, NULL /*Aut_ascii*/,
+		Casenumbers);
+	if (f_v) {
+		cout << "action_global::read_representatives_and_strong_generators done" << endl;
+	}
+}
+
+void action_global::read_file_and_print_representatives(
+		action *A,
+		std::string &fname,
+		int f_print_stabilizer_generators, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_casenumbers = false;
+	int nb_cases;
+	int *Set_sizes;
+	long int **Sets;
+	char **Ago_ascii;
+	char **Aut_ascii;
+	int *Casenumbers;
+	int i;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "action_global::read_file_and_print_representatives "
+				"reading file "
+				<< fname << endl;
+	}
+
+	Fio.read_and_parse_data_file_fancy(
+			fname,
+		f_casenumbers,
+		nb_cases,
+		Set_sizes, Sets, Ago_ascii, Aut_ascii,
+		Casenumbers,
+		0/*verbose_level*/);
+
+	for (i = 0; i < nb_cases; i++) {
+		cout << "Orbit " << i << " / " << nb_cases << " representative = ";
+		Lint_vec_print(cout, Sets[i], Set_sizes[i]);
+		cout << endl;
+
+		data_structures_groups::group_container *G;
+		data_structures_groups::vector_ge *gens;
+		int *tl;
+
+		G = NEW_OBJECT(data_structures_groups::group_container);
+		G->init(A, verbose_level - 2);
+
+		string s;
+
+		s.assign(Aut_ascii[i]);
+		G->init_ascii_coding_to_sims(s, verbose_level - 2);
+
+
+		ring_theory::longinteger_object go;
+
+		G->S->group_order(go);
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+		tl = NEW_int(A->base_len());
+		G->S->extract_strong_generators_in_order(
+				*gens, tl,
+				0 /* verbose_level */);
+		cout << "Stabilizer has order " << go << " tl=";
+		Int_vec_print(cout, tl, A->base_len());
+		cout << endl;
+
+		if (f_print_stabilizer_generators) {
+			cout << "The stabilizer is generated by:" << endl;
+			gens->print(cout);
+		}
+
+		FREE_OBJECT(G);
+		FREE_OBJECT(gens);
+		FREE_int(tl);
+
+	}
+	Fio.free_data_fancy(
+			nb_cases,
+		Set_sizes, Sets,
+		Ago_ascii, Aut_ascii,
+		Casenumbers);
+
+}
+
+void action_global::read_set_and_stabilizer(
+		action *A,
+		std::string &fname,
+	int no, long int *&set, int &set_sz, groups::sims *&stab,
+	groups::strong_generators *&Strong_gens,
+	int &nb_cases,
+	int verbose_level)
+{
+	int f_v = (verbose_level  >= 1);
+	int f_vv = (verbose_level  >= 2);
+	int f_casenumbers = false;
+	//int nb_cases;
+	int *Set_sizes;
+	long int **Sets;
+	char **Ago_ascii;
+	char **Aut_ascii;
+	int *Casenumbers;
+	data_structures_groups::group_container *G;
+	int i;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "action_global::read_set_and_stabilizer "
+				"reading file " << fname
+				<< " no=" << no << endl;
+	}
+
+	Fio.read_and_parse_data_file_fancy(
+			fname,
+		f_casenumbers,
+		nb_cases,
+		Set_sizes, Sets, Ago_ascii, Aut_ascii,
+		Casenumbers,
+		verbose_level - 1);
+
+	if (f_vv) {
+		cout << "action_global::read_set_and_stabilizer "
+				"after read_and_parse_data_file_fancy" << endl;
+		cout << "Aut_ascii[no]=" << Aut_ascii[no] << endl;
+		cout << "Set_sizes[no]=" << Set_sizes[no] << endl;
+	}
+
+	set_sz = Set_sizes[no];
+	set = NEW_lint(set_sz);
+	for (i = 0; i < set_sz; i ++) {
+		set[i] = Sets[no][i];
+	}
+
+
+	G = NEW_OBJECT(data_structures_groups::group_container);
+	G->init(A, verbose_level - 2);
+	if (f_vv) {
+		cout << "action_global::read_set_and_stabilizer "
+				"before G->init_ascii_coding_to_sims" << endl;
+	}
+
+	string s;
+
+	s.assign(Aut_ascii[no]);
+	G->init_ascii_coding_to_sims(s, verbose_level - 2);
+	if (f_vv) {
+		cout << "action_global::read_set_and_stabilizer "
+				"after G->init_ascii_coding_to_sims" << endl;
+	}
+
+	stab = G->S;
+	G->S = NULL;
+	G->f_has_sims = false;
+
+	ring_theory::longinteger_object go;
+
+	stab->group_order(go);
+
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+	Strong_gens->init_from_sims(stab, 0);
+	A->f_has_strong_generators = true;
+
+	if (f_vv) {
+		cout << "action_global::read_set_and_stabilizer "
+				"Group order=" << go << endl;
+	}
+
+	FREE_OBJECT(G);
+	if (f_vv) {
+		cout << "action_global::read_set_and_stabilizer "
+				"after FREE_OBJECT  G" << endl;
+	}
+	Fio.free_data_fancy(
+			nb_cases,
+		Set_sizes, Sets,
+		Ago_ascii, Aut_ascii,
+		Casenumbers);
+	if (f_v) {
+		cout << "action_global::read_set_and_stabilizer done" << endl;
+	}
+
+}
+
+
+
+
 
 //#############################################################################
 
@@ -4630,6 +5273,7 @@ void callback_choose_random_generator_orthogonal(
 				"iteration=" << iteration << " done" << endl;
 	}
 }
+
 
 
 

@@ -1333,20 +1333,41 @@ void linear_group::init_orthogonal_group(
 		cout << "epsilon=" << epsilon << endl;
 	}
 		
+	orthogonal_geometry::orthogonal *O;
+
+	if (f_v) {
+		cout << "linear_group::init_orthogonal_group "
+				"verbose_level=" << verbose_level << endl;
+	}
+	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+	if (f_v) {
+		cout << "linear_group::init_orthogonal_group "
+				"before O->init" << endl;
+	}
+	O->init(epsilon, n, F, verbose_level);
+	if (f_v) {
+		cout << "linear_group::init_orthogonal_group "
+				"after O->init" << endl;
+	}
+
 	vector_space_dimension = n;
 	q = input_q;
 	
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_orthogonal_group(
 			A_linear,
-		F, n, 
-		epsilon, 
-		f_semilinear, 
-		verbose_level - 1);
+			//F, n, epsilon,
+			O,
+			f_semilinear,
+			verbose_level - 1);
 	f_has_strong_generators = true;
 	
 	A2 = A_linear;
 
+	label += "G" + O->label_txt;
+	label_tex += "G" + O->label_tex;
+
+#if 0
 	if (EVEN(n)) {
 		if (epsilon == 1) {
 			label += "_Orthogonal_plus_" + std::to_string(n) + "_" + std::to_string(q);
@@ -1361,6 +1382,8 @@ void linear_group::init_orthogonal_group(
 		label += "_Orthogonal_" + std::to_string(n) + "_" + std::to_string(q);
 		label_tex += "{\\rm O}(" + std::to_string(n) + "," + std::to_string(q) + ")";
 	}
+#endif
+
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
 				"created group " << label << endl;

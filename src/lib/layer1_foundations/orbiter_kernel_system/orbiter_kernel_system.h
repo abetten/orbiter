@@ -275,6 +275,10 @@ public:
 			int nb_indi,
 			data_structures::ancestry_indi **Individual,
 		int verbose_level);
+	void read_table_of_strings(
+			std::string &fname, std::string *&col_label,
+			std::string *&Table, int &m, int &n,
+			int verbose_level);
 
 
 };
@@ -1149,6 +1153,8 @@ public:
 			std::string &label);
 	geometry::projective_space *get_projective_space_low_level(
 			std::string &label);
+	geometry_builder::geometry_builder *get_geometry_builder(
+			std::string &label);
 	int find_object_of_type_symbolic_object(
 			std::string &label);
 	void start_memory_debug();
@@ -1185,7 +1191,8 @@ public:
 			std::string &str_label);
 	void init_finite_field(
 			std::string &label,
-			field_theory::finite_field *F, int verbose_level);
+			field_theory::finite_field *F,
+			int verbose_level);
 	void init_polynomial_ring(
 			std::string &label,
 			ring_theory::homogeneous_polynomial_domain *HPD,
@@ -1252,7 +1259,8 @@ public:
 			void *Tp, int verbose_level);
 	void init_spread_table(
 			std::string &label,
-			void *Spread_table_with_selection, int verbose_level);
+			void *Spread_table_with_selection,
+			int verbose_level);
 	void init_packing_classify(
 			std::string &label,
 			void *Packing_classify, int verbose_level);
@@ -1294,7 +1302,8 @@ public:
 			void *Combo, int verbose_level);
 	void init_geometry_builder_object(
 			std::string &label,
-			geometry_builder::geometry_builder *GB, int verbose_level);
+			geometry_builder::geometry_builder *GB,
+			int verbose_level);
 	void init_vector_ge(
 			std::string &label,
 			void *V, int verbose_level);
@@ -1397,7 +1406,8 @@ public:
 			int d, int h, int m, int s);
 	void time_check(
 			std::ostream &ost, long int t0);
-	long int delta_time(long int t0);
+	long int delta_time(
+			long int t0);
 	void seed_random_generator_with_system_time();
 	void seed_random_generator(
 			int seed);

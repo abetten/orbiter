@@ -144,36 +144,6 @@ void ovoid_classify::init(
 
 
 
-#if 0
-	int f_siegel = true;
-	int f_reflection = true;
-	int f_similarity = true;
-	int f_semisimilarity = true;
-	action_global AG;
-	AG.set_orthogonal_group_type(f_siegel, f_reflection,
-			f_similarity, f_semisimilarity);
-
-
-	cout << "ovoid_classify::init "
-			"d=" << Descr->d << endl;
-	cout << "ovoid_classify::init "
-			"f_siegel=" << f_siegel << endl;
-	cout << "ovoid_classify::init "
-			"f_reflection=" << f_reflection << endl;
-	cout << "ovoid_classify::init "
-			"f_similarity=" << f_similarity << endl;
-	cout << "ovoid_classify::init "
-			"f_semisimilarity=" << f_semisimilarity << endl;
-	
-
-	A->init_orthogonal_group(Descr->epsilon, Descr->d, LG->F,
-		true /* f_on_points */, 
-		false /* f_on_lines */, 
-		false /* f_on_points_and_lines */, 
-		f_semilinear, f_basis, verbose_level);
-	
-#endif
-
 	induced_actions::action_on_orthogonal *AO;
 	
 	AO = A->G.AO;
@@ -359,10 +329,12 @@ void ovoid_classify::early_test_func(
 			}
 		}
 	for (i = 0; i < len; i++) {
-		O->Hyperbolic_pair->unrank_point(Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
+		O->Hyperbolic_pair->unrank_point(
+				Pts + i * Descr->d, 1, S[i], 0/*verbose_level - 4*/);
 		}
 	for (i = 0; i < nb_candidates; i++) {
-		O->Hyperbolic_pair->unrank_point(Candidates + i * Descr->d, 1, candidates[i],
+		O->Hyperbolic_pair->unrank_point(
+				Candidates + i * Descr->d, 1, candidates[i],
 				0/*verbose_level - 4*/);
 		}
 
@@ -390,7 +362,8 @@ void ovoid_classify::early_test_func(
 			v2 = Candidates + j * Descr->d;
 
 
-			fxy = O->Quadratic_form->evaluate_bilinear_form(v1, v2, 1);
+			fxy = O->Quadratic_form->evaluate_bilinear_form(
+					v1, v2, 1);
 
 
 			if (fxy) {
@@ -445,11 +418,13 @@ void ovoid_classify::make_graphs(
 				continue;
 			}
 		}
-		cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-		Lint_vec_print(cout, ODF->sets[orbit_idx],
-				ODF->set_sizes[orbit_idx]);
-		cout << " : " << ODF->Ago_ascii[orbit_idx]
-				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
+		if (f_v) {
+			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
+			Lint_vec_print(cout, ODF->sets[orbit_idx],
+					ODF->set_sizes[orbit_idx]);
+			cout << " : " << ODF->Ago_ascii[orbit_idx]
+					<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
+		}
 
 		fname_graph = ST.printf_d(fname_mask, orbit_idx);
 
@@ -463,8 +438,10 @@ void ovoid_classify::make_graphs(
 				candidates, nb_candidates, 0 /* verbose_level */);
 #endif
 
-		cout << "ovoid_classify::make_graphs before read_candidates_"
+		if (f_v) {
+			cout << "ovoid_classify::make_graphs before read_candidates_"
 				"for_one_orbit_from_file prefix=" << prefix << endl;
+		}
 		Fio.read_candidates_for_one_orbit_from_file(prefix,
 				level,
 				orbit_idx,
@@ -478,9 +455,11 @@ void ovoid_classify::make_graphs(
 
 
 
-		cout << "With " << nb_candidates << " live points: ";
-		Lint_vec_print(cout, candidates, nb_candidates);
-		cout << endl;
+		if (f_v) {
+			cout << "With " << nb_candidates << " live points: ";
+			Lint_vec_print(cout, candidates, nb_candidates);
+			cout << endl;
+		}
 
 
 
@@ -522,7 +501,8 @@ void ovoid_classify::make_graphs(
 							<< ODF->nb_cases
 							<< " Before lexorder_test" << endl;
 				}
-				AG.lexorder_test(A, candidates, nb_candidates,
+				AG.lexorder_test(
+						A, candidates, nb_candidates,
 					nb_candidates2,
 					SG->gens, max_starter, 0 /*verbose_level - 3*/);
 				if (f_v) {
@@ -544,7 +524,8 @@ void ovoid_classify::make_graphs(
 
 		graph_theory::colored_graph *CG;
 
-		create_graph(ODF,
+		create_graph(
+				ODF,
 				orbit_idx,
 				candidates, nb_candidates,
 				CG,
@@ -590,9 +571,12 @@ void ovoid_classify::make_one_graph(
 	int nb_candidates;
 
 
-	cout << "ovoid_classify::make_one_graph before read_candidates_"
+	if (f_v) {
+		cout << "ovoid_classify::make_one_graph before read_candidates_"
 			"for_one_orbit_from_file prefix=" << prefix << endl;
-	Fio.read_candidates_for_one_orbit_from_file(prefix,
+	}
+	Fio.read_candidates_for_one_orbit_from_file(
+			prefix,
 			level, orbit_idx, level - 1 /* level_of_candidates_file */,
 			ODF->sets[orbit_idx],
 			ovoid_classify_early_test_func_callback,
@@ -603,7 +587,9 @@ void ovoid_classify::make_one_graph(
 
 
 
-	cout << "With " << nb_candidates << " live points." << endl;
+	if (f_v) {
+		cout << "With " << nb_candidates << " live points." << endl;
+	}
 #if 0
 	if (f_v3) {
 		int_vec_print(cout, candidates, nb_candidates);
@@ -718,7 +704,8 @@ void ovoid_classify::create_graph(
 
 	Pts = NEW_int(nb_points * Descr->d);
 	for (i = 0; i < nb_points; i++) {
-		O->Hyperbolic_pair->unrank_point(Pts + i * Descr->d, 1, candidates[i], 0);
+		O->Hyperbolic_pair->unrank_point(
+				Pts + i * Descr->d, 1, candidates[i], 0);
 	}
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
@@ -743,9 +730,11 @@ void ovoid_classify::create_graph(
 	}
 
 	if (Descr->epsilon == 1 && Descr->d == 6) {
+
 		compute_coloring(ODF->sets[orbit_idx], starter_size,
 				candidates, nb_points, point_color,
 				nb_colors_used, verbose_level);
+
 		// check if coloring is proper:
 		k = 0;
 		for (i = 0; i < nb_points; i++) {
@@ -777,7 +766,8 @@ void ovoid_classify::create_graph(
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	CG->init(nb_points, nb_colors_used, 1,
+	CG->init(
+			nb_points, nb_colors_used, 1,
 		point_color,
 		Bitvec, true /* f_ownership_of_bitvec */,
 		label, label_tex,
@@ -881,14 +871,14 @@ static void ovoid_classify_early_test_func_callback(
 		cout << "ovoid_classify_early_test_func_callback for set ";
 		Lint_vec_print(cout, S, len);
 		cout << endl;
-		}
+	}
 	Gen->early_test_func(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "ovoid_classify_early_test_func_callback done" << endl;
-		}
+	}
 }
 
 static void callback_ovoid_print_set(

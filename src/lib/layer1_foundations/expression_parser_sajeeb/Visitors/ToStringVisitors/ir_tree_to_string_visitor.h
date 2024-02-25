@@ -18,6 +18,8 @@
 using std::string;
 using std::list;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class ir_tree_to_string_visitor : public IRTreeVoidReturnTypeVisitorInterface {
     list<string> rep;
     list<string>::iterator loc;

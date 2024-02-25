@@ -16,6 +16,9 @@
 using std::list;
 using std::shared_ptr;
 
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class IRTreeChildLinkArgumentVisitor : public IRTreeVoidReturnTypeVisitorInterface,
                                        public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<
                                                 list<shared_ptr<irtree_node> >::iterator&> {

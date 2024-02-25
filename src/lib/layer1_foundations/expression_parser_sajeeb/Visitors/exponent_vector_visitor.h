@@ -72,6 +72,7 @@ class monomial_coefficient_table final : public unordered_map<vector<unsigned in
                                                               monomial_coefficient_table_hash_function,
                                                               monomial_coefficient_table_key_equal_function> {};
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type
 
 class exponent_vector_visitor final : public IRTreeVoidReturnTypeVisitorInterface,
                                       public IRTreeVoidReturnTypeVariadicArgumentVisitorInterface<shared_ptr<irtree_node>&>,

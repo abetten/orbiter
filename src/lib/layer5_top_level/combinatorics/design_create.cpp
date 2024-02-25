@@ -201,12 +201,14 @@ void design_create::init(
 		long int *Table;
 		int size;
 
+		orbits::orbits_global Orbits;
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before AG->orbits_of_one_subset" << endl;
+					"before Orbits.orbits_of_one_subset" << endl;
 		}
-		AG->orbits_of_one_subset(
+		Orbits.orbits_of_one_subset(
+				AG,
 				SoS->Sets[0], SoS->Set_size[0],
 				label_set,
 				AG->A, AG->A,
@@ -214,7 +216,7 @@ void design_create::init(
 				verbose_level);
 		if (f_v) {
 			cout << "design_create::init "
-					"after AG->orbits_of_one_subset" << endl;
+					"after Orbits.orbits_of_one_subset" << endl;
 			cout << "design_create::init "
 					"found an orbit of size " << size << endl;
 		}

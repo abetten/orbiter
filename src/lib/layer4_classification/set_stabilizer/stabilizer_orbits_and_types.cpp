@@ -832,7 +832,8 @@ int stabilizer_orbits_and_types::check_orbit_count()
 	}
 }
 
-void stabilizer_orbits_and_types::print_orbit_count(int f_both)
+void stabilizer_orbits_and_types::print_orbit_count(
+		int f_both)
 {
 	int i;
 

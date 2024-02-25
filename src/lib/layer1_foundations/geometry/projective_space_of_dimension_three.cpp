@@ -103,13 +103,16 @@ void projective_space_of_dimension_three::determine_quadric_in_solid(
 	coords = NEW_int(nb_pts * 4);
 	system = NEW_int(nb_pts * 10);
 	for (i = 0; i < nb_pts; i++) {
-		Projective_space->unrank_point(coords + i * 4, nine_pts_or_more[i]);
+		Projective_space->unrank_point(
+				coords + i * 4, nine_pts_or_more[i]);
 	}
 	if (f_vv) {
 		cout << "projective_space_of_dimension_three::determine_quadric_in_solid "
 				"points:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				coords, nb_pts, 4, 4, Projective_space->Subspaces->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout,
+				coords, nb_pts, 4, 4,
+				Projective_space->Subspaces->F->log10_of_q);
 	}
 
 	field_theory::finite_field *F;
@@ -140,7 +143,8 @@ void projective_space_of_dimension_three::determine_quadric_in_solid(
 
 
 
-	rk = Projective_space->Subspaces->F->Linear_algebra->Gauss_simple(system,
+	rk = Projective_space->Subspaces->F->Linear_algebra->Gauss_simple(
+			system,
 			nb_pts, 10, base_cols, verbose_level - 2);
 	if (rk != 9) {
 		cout << "projective_space_of_dimension_three::determine_quadric_in_solid "
@@ -148,13 +152,16 @@ void projective_space_of_dimension_three::determine_quadric_in_solid(
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
-	Projective_space->Subspaces->F->Linear_algebra->matrix_get_kernel(system, 9, 10, base_cols, rk,
+	Projective_space->Subspaces->F->Linear_algebra->matrix_get_kernel(
+			system, 9, 10, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space_of_dimension_three::determine_quadric_in_solid "
 				"conic:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
-				kernel, 1, 10, 10, Projective_space->Subspaces->F->log10_of_q);
+		Int_vec_print_integer_matrix_width(
+				cout,
+				kernel, 1, 10, 10,
+				Projective_space->Subspaces->F->log10_of_q);
 	}
 	for (i = 0; i < 10; i++) {
 		ten_coeffs[i] = kernel[i];
@@ -182,7 +189,8 @@ void projective_space_of_dimension_three::quadric_points_brute_force(
 	nb_points = 0;
 	for (i = 0; i < Projective_space->Subspaces->N_points; i++) {
 		Projective_space->unrank_point(v, i);
-		a = Projective_space->Subspaces->F->Linear_algebra->evaluate_quadric_form_in_PG_three(ten_coeffs, v);
+		a = Projective_space->Subspaces->F->Linear_algebra->evaluate_quadric_form_in_PG_three(
+				ten_coeffs, v);
 		if (f_vv) {
 			cout << "point " << i << " = ";
 			Int_vec_print(cout, v, 3);
@@ -225,7 +233,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_l
 		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space" << endl;
 	}
 	if (Projective_space->Subspaces->n != 3) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space n != 3" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space "
+				"n != 3" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -245,8 +254,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_l
 			4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space intersection "
-				"is not a point" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space "
+				"intersection is not a point" << endl;
 		cout << "line1:" << endl;
 		Int_matrix_print(Basis1, 2, 4);
 		cout << "line2:" << endl;
@@ -263,7 +272,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_l
 		cout << "point rank = " << a << endl;
 	}
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space done" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_line_in_three_space "
+				"done" << endl;
 	}
 	return a;
 }
@@ -282,7 +292,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_p
 		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space" << endl;
 	}
 	if (Projective_space->Subspaces->n != 3) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space n != 3" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space "
+				"n != 3" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -302,8 +313,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_p
 			4, 2, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space intersection "
-				"is not a point" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space "
+				"intersection is not a point" << endl;
 	}
 	if (f_v) {
 		cout << "intersection:" << endl;
@@ -314,7 +325,8 @@ int projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_p
 		cout << "point rank = " << a << endl;
 	}
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space done" << endl;
+		cout << "projective_space_of_dimension_three::point_of_intersection_of_a_line_and_a_plane_in_three_space "
+				"done" << endl;
 	}
 	return a;
 }
@@ -343,11 +355,13 @@ long int projective_space_of_dimension_three::line_of_intersection_of_two_planes
 			4, 3, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 2) {
-		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space intersection is not a line" << endl;
+		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space "
+				"intersection is not a line" << endl;
 	}
 	a = Projective_space->rank_line(M);
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space done" << endl;
+		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space "
+				"done" << endl;
 	}
 	return a;
 }
@@ -381,7 +395,8 @@ long int projective_space_of_dimension_three::line_of_intersection_of_two_planes
 	rk = Projective_space->Subspaces->Grass_lines->rank_lint_here(
 			Basis + 8, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates done" << endl;
+		cout << "projective_space_of_dimension_three::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates "
+				"done" << endl;
 	}
 	return rk;
 }
@@ -452,7 +467,8 @@ void projective_space_of_dimension_three::plane_intersection_matrix_in_three_spa
 	}
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::plane_intersection_matrix_in_three_space done" << endl;
+		cout << "projective_space_of_dimension_three::plane_intersection_matrix_in_three_space "
+				"done" << endl;
 	}
 }
 
@@ -526,15 +542,18 @@ void projective_space_of_dimension_three::plane_equation_from_three_lines_in_thr
 		cout << "projective_space_of_dimension_three::plane_equation_from_three_lines_in_three_space" << endl;
 	}
 	Projective_space->unrank_lines(Basis, three_lines, 3);
-	rk = Projective_space->Subspaces->F->Linear_algebra->RREF_and_kernel(4, 6, Basis, 0 /* verbose_level*/);
+	rk = Projective_space->Subspaces->F->Linear_algebra->RREF_and_kernel(
+			4, 6, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
-		cout << "projective_space_of_dimension_three::plane_equation_from_three_lines_in_three_space rk != 3" << endl;
+		cout << "projective_space_of_dimension_three::plane_equation_from_three_lines_in_three_space "
+				"rk != 3" << endl;
 		exit(1);
 	}
 	Int_vec_copy(Basis + 3 * 4, plane_eqn4, 4);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::plane_equation_from_three_lines_in_three_space done" << endl;
+		cout << "projective_space_of_dimension_three::plane_equation_from_three_lines_in_three_space "
+				"done" << endl;
 	}
 }
 
@@ -550,15 +569,18 @@ long int projective_space_of_dimension_three::plane_from_three_lines(
 		cout << "projective_space_of_dimension_three::plane_from_three_lines" << endl;
 	}
 	Projective_space->unrank_lines(Basis, three_lines, 3);
-	rk = Projective_space->Subspaces->F->Linear_algebra->Gauss_easy(Basis, 6, 4);
+	rk = Projective_space->Subspaces->F->Linear_algebra->Gauss_easy(
+			Basis, 6, 4);
 	if (rk != 3) {
-		cout << "projective_space_of_dimension_three::plane_from_three_lines rk != 3" << endl;
+		cout << "projective_space_of_dimension_three::plane_from_three_lines "
+				"rk != 3" << endl;
 		exit(1);
 	}
 	rk = Projective_space->rank_plane(Basis);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::plane_from_three_lines done" << endl;
+		cout << "projective_space_of_dimension_three::plane_from_three_lines "
+				"done" << endl;
 	}
 	return rk;
 }
@@ -603,7 +625,8 @@ void projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3
 	//A->Group_element->make_element(Elt, N, 0);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3q done" << endl;
+		cout << "projective_space_of_dimension_three::make_element_which_moves_a_line_in_PG3q "
+				"done" << endl;
 	}
 }
 
@@ -637,7 +660,8 @@ int projective_space_of_dimension_three::test_if_lines_are_skew(
 		cout << "line2:" << endl;
 		Int_matrix_print(Basis2, 2, 4);
 	}
-	Projective_space->Subspaces->F->Linear_algebra->intersect_subspaces(4, 2, Basis1, 2, Basis2,
+	Projective_space->Subspaces->F->Linear_algebra->intersect_subspaces(
+			4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -796,7 +820,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				0 /*verbose_level - 2*/);
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"transformation=" << endl;
 			Int_matrix_print(transformation, 4, 4);
 		}
 		//Recoordinatize->do_recoordinatize(
@@ -813,11 +838,13 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				0 /* verbose_level*/);
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation_inv=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"transformation_inv=" << endl;
 			Int_matrix_print(transformation_inv, 4, 4);
 		}
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six transformation=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"transformation=" << endl;
 			Int_matrix_print(transformation, 4, 4);
 		}
 
@@ -829,7 +856,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		//		Recoordinatize->Elt, Elt1, 0);
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six mapping a4=four_lines[3]=" << four_lines[3] << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"mapping a4=four_lines[3]=" << four_lines[3] << endl;
 		}
 
 		ai4image = Projective_space->Subspaces->Grass_lines->map_line_in_PG3q(
@@ -837,7 +865,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six ai4image=" << ai4image << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"ai4image=" << ai4image << endl;
 		}
 
 		//ai4image = A2->Group_element->element_image_of(
@@ -855,14 +884,16 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		//		0 /* verbose_level */);
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six ai4image = " << ai4image << " Q=" << Q << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"ai4image = " << ai4image << " Q=" << Q << endl;
 		}
 		//Surf->unrank_point(Q4, Q);
 		Projective_space->unrank_point(Q4, Q);
 
 		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(Q4);
 		if (b) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six error: The point Q does not "
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"error: The point Q does not "
 					"lie on the quadric" << endl;
 			exit(1);
 		}
@@ -875,7 +906,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 
 
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six before F->adjust_basis" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"before F->adjust_basis" << endl;
 			cout << "L=" << endl;
 			Int_matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
@@ -886,10 +918,13 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 		F->Linear_algebra->adjust_basis(
 				L, Q4, 4, 2, 1, verbose_level - 1);
 		if (f_vv) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six after F->adjust_basis" << endl;
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six L=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"after F->adjust_basis" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"L=" << endl;
 			Int_matrix_print(L, 2, 4);
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six Q4=" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"Q4=" << endl;
 			Int_matrix_print(Q4, 1, 4);
 		}
 
@@ -916,7 +951,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 			// to see if w lies on it:
 			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (f_vv) {
-				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six a=" << a << " v=";
+				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+						"a=" << a << " v=";
 				Int_vec_print(cout, v, 2);
 				cout << " w=";
 				Int_vec_print(cout, w, 4);
@@ -951,7 +987,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 				pt_coord);
 		if (b == 0) {
 			if (f_v) {
-				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six The line lies on the quadric, "
+				cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+						"The line lies on the quadric, "
 						"this five plus one is not good." << endl;
 			}
 			return false;
@@ -1112,8 +1149,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 			}
 		}
 		if (nb_pts != (h + 1) * 2) {
-			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six nb_pts != "
-					"(h + 1) * 2" << endl;
+			cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+					"nb_pts != (h + 1) * 2" << endl;
 			exit(1);
 		}
 	} // next h
@@ -1183,7 +1220,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 	double_six[5] = line4; // fill in a_6
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::five_plus_one_to_double_six done" << endl;
+		cout << "projective_space_of_dimension_three::five_plus_one_to_double_six "
+				"done" << endl;
 	}
 	return true;
 }
@@ -1201,7 +1239,8 @@ long int projective_space_of_dimension_three::map_point(
 	int Basis2[4];
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::map_point transform16 = " << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"transform16 = " << endl;
 		Int_matrix_print(transform16, 4, 4);
 	}
 
@@ -1210,8 +1249,10 @@ long int projective_space_of_dimension_three::map_point(
 			Basis1, point);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::map_point point = " << point << endl;
-		cout << "projective_space_of_dimension_three::map_point Basis1 = " << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"point = " << point << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"Basis1 = " << endl;
 		Int_matrix_print(Basis1, 2, 4);
 	}
 
@@ -1221,18 +1262,21 @@ long int projective_space_of_dimension_three::map_point(
 			1, 4, 4, 0/*verbose_level - 4*/);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::map_point Basis2 = " << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"Basis2 = " << endl;
 		Int_matrix_print(Basis2, 1, 4);
 	}
 
 	b = Projective_space->rank_point(Basis2);
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::map_point image line = " << b << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"image line = " << b << endl;
 	}
 
 	if (f_v) {
-		cout << "projective_space_of_dimension_three::map_point done" << endl;
+		cout << "projective_space_of_dimension_three::map_point "
+				"done" << endl;
 	}
 	return b;
 }

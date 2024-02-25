@@ -30,7 +30,8 @@ string_tools::~string_tools()
 }
 
 
-int string_tools::is_csv_file(const char *fname)
+int string_tools::is_csv_file(
+		const char *fname)
 {
 	char ext[1000];
 
@@ -43,7 +44,8 @@ int string_tools::is_csv_file(const char *fname)
 	}
 }
 
-int string_tools::is_inc_file(const char *fname)
+int string_tools::is_inc_file(
+		const char *fname)
 {
 	char ext[1000];
 
@@ -56,7 +58,8 @@ int string_tools::is_inc_file(const char *fname)
 	}
 }
 
-int string_tools::is_xml_file(const char *fname)
+int string_tools::is_xml_file(
+		const char *fname)
 {
 	char ext[1000];
 
@@ -69,7 +72,8 @@ int string_tools::is_xml_file(const char *fname)
 	}
 }
 
-int string_tools::s_scan_int(char **s, int *i)
+int string_tools::s_scan_int(
+		char **s, int *i)
 {
 	char str1[512];
 
@@ -86,7 +90,8 @@ int string_tools::s_scan_int(char **s, int *i)
 	return true;
 }
 
-int string_tools::s_scan_lint(char **s, long int *i)
+int string_tools::s_scan_lint(
+		char **s, long int *i)
 {
 	char str1[512];
 
@@ -103,7 +108,8 @@ int string_tools::s_scan_lint(char **s, long int *i)
 	return true;
 }
 
-int string_tools::s_scan_double(char **s, double *d)
+int string_tools::s_scan_double(
+		char **s, double *d)
 {
 	char str1[512];
 	char c;
@@ -141,7 +147,8 @@ int string_tools::s_scan_double(char **s, double *d)
 	return true;
 }
 
-int string_tools::s_scan_token(char **s, char *str)
+int string_tools::s_scan_token(
+		char **s, char *str)
 {
 	char c;
 	int len;
@@ -197,7 +204,8 @@ int string_tools::s_scan_token(char **s, char *str)
 	return true;
 }
 
-int string_tools::s_scan_token_arbitrary(char **s, char *str)
+int string_tools::s_scan_token_arbitrary(
+		char **s, char *str)
 {
 	char c;
 	int len;
@@ -231,7 +239,8 @@ int string_tools::s_scan_token_arbitrary(char **s, char *str)
 }
 
 
-int string_tools::s_scan_str(char **s, char *str)
+int string_tools::s_scan_str(
+		char **s, char *str)
 {
 	char c;
 	int len, f_break;
@@ -296,7 +305,8 @@ int string_tools::s_scan_token_comma_separated(
 		return false;
 	}
 	if (f_v) {
-		cout << "string_tools::s_scan_token_comma_separated seeing character " << (int) c << endl;
+		cout << "string_tools::s_scan_token_comma_separated "
+				"seeing character " << (int) c << endl;
 	}
 #if 0
 	if (c == 10 || c == 13) {
@@ -814,7 +824,8 @@ void string_tools::replace_extension_with(
 	p = q;
 }
 
-void string_tools::chop_off_extension(char *p)
+void string_tools::chop_off_extension(
+		char *p)
 {
 	int len = strlen(p);
 	int i;
@@ -830,13 +841,15 @@ void string_tools::chop_off_extension(char *p)
 	}
 }
 
-void string_tools::chop_off_extension_and_path(std::string &p)
+void string_tools::chop_off_extension_and_path(
+		std::string &p)
 {
 	chop_off_path(p);
 	chop_off_extension(p);
 }
 
-void string_tools::chop_off_extension(std::string &p)
+void string_tools::chop_off_extension(
+		std::string &p)
 {
 #if 0
 	int l;
@@ -869,7 +882,8 @@ void string_tools::chop_off_extension(std::string &p)
 #endif
 }
 
-void string_tools::chop_off_path(std::string &p)
+void string_tools::chop_off_path(
+		std::string &p)
 {
 	int l;
 	int i;
@@ -1107,7 +1121,8 @@ void string_tools::parse_comma_separated_list(
 }
 
 
-int string_tools::is_all_whitespace(const char *str)
+int string_tools::is_all_whitespace(
+		const char *str)
 {
 	int i, l;
 
@@ -1210,7 +1225,8 @@ int string_tools::stringcmp(
 	return strcmp(str.c_str(), p);
 }
 
-int string_tools::strtoi(std::string &str)
+int string_tools::strtoi(
+		std::string &str)
 {
 	int i;
 
@@ -1218,7 +1234,8 @@ int string_tools::strtoi(std::string &str)
 	return i;
 }
 
-int string_tools::str2int(std::string &str)
+int string_tools::str2int(
+		std::string &str)
 {
 	int i, res, l;
 
@@ -1230,7 +1247,8 @@ int string_tools::str2int(std::string &str)
 	return res;
 }
 
-long int string_tools::strtolint(std::string &str)
+long int string_tools::strtolint(
+		std::string &str)
 {
 	long int i;
 
@@ -1238,7 +1256,8 @@ long int string_tools::strtolint(std::string &str)
 	return i;
 }
 
-double string_tools::strtof(std::string &str)
+double string_tools::strtof(
+		std::string &str)
 {
 	double f;
 

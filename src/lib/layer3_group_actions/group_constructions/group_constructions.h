@@ -169,8 +169,6 @@ public:
 	int f_wedge_action;
 	int f_wedge_action_detached;
 
-	int f_lex_least_base;
-
 	int f_PGL2OnConic;
 	int f_monomial_group;
 	int f_diagonal_group;
@@ -205,6 +203,8 @@ public:
 
 	int f_import_group_of_plane;
 	std::string import_group_of_plane_label;
+
+	int f_lex_least_base;
 
 
 	linear_group_description();

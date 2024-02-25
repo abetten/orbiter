@@ -682,7 +682,8 @@ void surface_classify_wedge::upstep(
 		} // next i
 
 
-		coset_reps->reallocate(nb_coset_reps, 0/*verbose_level - 2*/);
+		coset_reps->reallocate(
+				nb_coset_reps, 0/*verbose_level - 2*/);
 
 		groups::strong_generators *Aut_gens;
 

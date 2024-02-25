@@ -12,6 +12,8 @@ using std::endl;
 using std::shared_ptr;
 using std::make_shared;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class merge_nodes_visitor final : public IRTreeVoidReturnTypeVisitorInterface {
 public:
     using IRTreeVoidReturnTypeVisitorInterface::visit;

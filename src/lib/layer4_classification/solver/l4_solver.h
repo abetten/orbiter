@@ -230,9 +230,11 @@ public:
 	~exact_cover_arguments();
 	void null();
 	void freeself();
-	int read_arguments(int argc, std::string *argv,
+	int read_arguments(
+			int argc, std::string *argv,
 		int verbose_level);
-	void compute_lifts(int verbose_level);
+	void compute_lifts(
+			int verbose_level);
 };
 
 }}}

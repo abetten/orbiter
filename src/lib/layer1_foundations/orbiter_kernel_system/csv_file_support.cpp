@@ -2604,6 +2604,49 @@ void csv_file_support::write_ancestry_indi(
 	}
 }
 
+
+void csv_file_support::read_table_of_strings(
+		std::string &fname, std::string *&col_label,
+		std::string *&Table, int &m, int &n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_table_of_strings file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		data_structures::spreadsheet S;
+		data_structures::string_tools ST;
+		int i, j;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		m = S.nb_rows - 1;
+		n = S.nb_cols - 1;
+		col_label = new std::string[n];
+		Table = new std::string [m * n];
+		for (j = 0; j < n; j++) {
+			col_label[j] = S.get_entry_ij(
+						0, 1 + j);
+		}
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				Table[i * n + j] = S.get_entry_ij(
+							1 + i, 1 + j);
+			}
+		}
+	}
+}
+
+
 }}}
 
 

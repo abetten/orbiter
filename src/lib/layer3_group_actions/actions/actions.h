@@ -187,14 +187,6 @@ public:
 
 	action_pointer_table *ptr;
 
-	/** temporary elements */
-	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
-	int *eltrk1, *eltrk2, *eltrk3, *elt_mult_apply;
-	uchar *elt1;
-	char *element_rw_memory_object;
-		// [coded_elt_size_in_char]
-		// for element_write_to_memory_object, 
-		// element_read_from_memory_object
 
 	
 
@@ -227,14 +219,12 @@ public:
 	long int &orbit_inv_ij(
 			int i, int j);
 
-	void null_element_data();
-	void allocate_element_data();
-	void free_element_data();
 	
 	void map_a_set_based_on_hdl(
 			long int *set,
 			long int *image_set,
-			int n, action *A_base, int hdl, int verbose_level);
+			int n, action *A_base, int hdl,
+			int verbose_level);
 	void print_all_elements();
 
 	void init_sims_only(
@@ -395,51 +385,6 @@ public:
 			int verbose_level);
 
 
-
-	void read_orbit_rep_and_candidates_from_files_and_process(
-			std::string &prefix,
-		int level, int orbit_at_level, int level_of_candidates_file,
-		void (*early_test_func_callback)(long int *S, int len,
-			long int *candidates, int nb_candidates,
-			long int *good_candidates, int &nb_good_candidates,
-			void *data, int verbose_level),
-		void *early_test_func_callback_data,
-		long int *&starter,
-		int &starter_sz,
-		groups::sims *&Stab,
-		groups::strong_generators *&Strong_gens,
-		long int *&candidates,
-		int &nb_candidates,
-		int &nb_cases,
-		int verbose_level);
-	void read_orbit_rep_and_candidates_from_files(
-			std::string &prefix,
-		int level, int orbit_at_level, int level_of_candidates_file,
-		long int *&starter,
-		int &starter_sz,
-		groups::sims *&Stab,
-		groups::strong_generators *&Strong_gens,
-		long int *&candidates,
-		int &nb_candidates,
-		int &nb_cases,
-		int verbose_level);
-	void read_representatives(
-			std::string &fname,
-		int *&Reps, int &nb_reps, int &size, int verbose_level);
-	void read_representatives_and_strong_generators(
-			std::string &fname,
-		int *&Reps,
-		char **&Aut_ascii, int &nb_reps,
-		int &size, int verbose_level);
-	void read_file_and_print_representatives(
-			std::string &fname,
-		int f_print_stabilizer_generators, int verbose_level);
-	void read_set_and_stabilizer(
-			std::string &fname,
-		int no, long int *&set, int &set_sz, groups::sims *&stab,
-		groups::strong_generators *&Strong_gens,
-		int &nb_cases,
-		int verbose_level);
 	void list_elements_as_permutations_vertically(
 			data_structures_groups::vector_ge *gens,
 			std::ostream &ost);
@@ -783,6 +728,62 @@ public:
 		groups::schreier *&Sch, groups::sims *&Stab,
 		groups::strong_generators *&stab_gens,
 		int verbose_level);
+	void move_a_to_b_and_stabilizer_of_b(
+			actions::action *A_base,
+			actions::action *A2,
+			groups::strong_generators *SG,
+			int a, int b,
+			int *&transporter_a_b,
+			groups::strong_generators *&Stab_b,
+			int verbose_level);
+	void read_orbit_rep_and_candidates_from_files_and_process(
+			action *A,
+			std::string &prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		void (*early_test_func_callback)(long int *S, int len,
+			long int *candidates, int nb_candidates,
+			long int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
+		void *early_test_func_callback_data,
+		long int *&starter,
+		int &starter_sz,
+		groups::sims *&Stab,
+		groups::strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
+	void read_orbit_rep_and_candidates_from_files(
+			action *A,
+			std::string &prefix,
+		int level, int orbit_at_level, int level_of_candidates_file,
+		long int *&starter,
+		int &starter_sz,
+		groups::sims *&Stab,
+		groups::strong_generators *&Strong_gens,
+		long int *&candidates,
+		int &nb_candidates,
+		int &nb_cases,
+		int verbose_level);
+	void read_representatives(
+			std::string &fname,
+		int *&Reps, int &nb_reps, int &size, int verbose_level);
+	void read_representatives_and_strong_generators(
+			std::string &fname,
+		int *&Reps,
+		char **&Aut_ascii, int &nb_reps,
+		int &size, int verbose_level);
+	void read_file_and_print_representatives(
+			action *A,
+			std::string &fname,
+		int f_print_stabilizer_generators, int verbose_level);
+	void read_set_and_stabilizer(
+			action *A,
+			std::string &fname,
+		int no, long int *&set, int &set_sz, groups::sims *&stab,
+		groups::strong_generators *&Strong_gens,
+		int &nb_cases,
+		int verbose_level);
 
 };
 
@@ -875,6 +876,8 @@ public:
 
 	action_pointer_table();
 	~action_pointer_table();
+	void save_stats(
+			std::string &fname_base);
 	void null_function_pointers();
 	void init_function_pointers_matrix_group();
 	void init_function_pointers_wreath_product_group();
@@ -903,7 +906,7 @@ public:
 	void init(
 			action *A, int verbose_level);
 
-	/** Create any linear group */
+	/** Create a linear group */
 	void init_linear_group(
 			field_theory::finite_field *F, int m,
 		int f_projective, int f_general, int f_affine,
@@ -911,15 +914,16 @@ public:
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 
-	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
+	/** Create a projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(
 			int n, field_theory::finite_field *F,
-		int f_semilinear, int f_basis, int f_init_sims,
+		int f_semilinear,
+		int f_basis, int f_init_sims,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 
 
-	/** Create the affine group AGL(n,q) */
+	/** Create an affine group AGL(n,q) */
 	void init_affine_group(
 			int n, field_theory::finite_field *F,
 		int f_semilinear,
@@ -971,15 +975,6 @@ public:
 			int f_given_base,
 			int verbose_level);
 
-	/** Create the affine group AGL(n,q) as abstract permutation group,
-	 * not as matrix group */
-	void init_affine_group_in_permutation_representation(
-			int n, int q, int f_translations,
-		int f_semilinear, int frobenius_power,
-		int f_multiplication,
-		int multiplication_order, int verbose_level);
-		// creates finite_field object
-
 
 	/** Create the symmetric group
 	 * as abstract permutation group */
@@ -993,6 +988,30 @@ public:
 
 	void create_sims(
 			int verbose_level);
+
+#if 0
+	/** Create the orthogonal group O(5,q) */
+	void init_BLT(
+			field_theory::finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level);
+
+	/** Create the orthogonal group O^epsilon(n,q) */
+	void init_orthogonal_group(
+			int epsilon,
+		int n, field_theory::finite_field *F,
+		int f_on_points, int f_on_lines,
+		int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+	// creates an object of type orthogonal
+#endif
+
+	void init_orthogonal_group_with_O(
+			orthogonal_geometry::orthogonal *O,
+		int f_on_points, int f_on_lines, int f_on_points_and_lines,
+		int f_semilinear,
+		int f_basis, int verbose_level);
+
 	void create_orthogonal_group(
 			action *subaction,
 		int f_has_target_group_order,
@@ -1000,6 +1019,7 @@ public:
 		void (* callback_choose_random_generator)(int iteration,
 			int *Elt, void *data, int verbose_level),
 		int verbose_level);
+
 
 
 	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
@@ -1030,27 +1050,6 @@ public:
 			int *Perms, int degree,
 			int verbose_level);
 
-	/** Create the orthogonal group O^epsilon(n,q) */
-	void init_orthogonal_group(
-			int epsilon,
-		int n, field_theory::finite_field *F,
-		int f_on_points, int f_on_lines,
-		int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
-	// creates an object of type orthogonal
-
-	void init_orthogonal_group_with_O(
-			orthogonal_geometry::orthogonal *O,
-		int f_on_points, int f_on_lines, int f_on_points_and_lines,
-		int f_semilinear,
-		int f_basis, int verbose_level);
-
-	/** Create the orthogonal group O(5,q) */
-	void init_BLT(
-			field_theory::finite_field *F, int f_basis,
-		int f_init_hash_table, int verbose_level);
-
 
 	/** Create a group from generators */
 	void init_group_from_strong_generators(
@@ -1078,11 +1077,22 @@ public:
 
 	action *A;
 
+	/** temporary elements */
+	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
+	int *eltrk1, *eltrk2, *eltrk3, *elt_mult_apply;
+	uchar *elt1;
+	char *element_rw_memory_object;
+		// [coded_elt_size_in_char]
+		// for element_write_to_memory_object,
+		// element_read_from_memory_object
+
 
 	group_element();
 	~group_element();
 	void init(
 			action *A, int verbose_level);
+	void null_element_data();
+	void allocate_element_data();
 
 	int image_of(
 			void *elt, int a);

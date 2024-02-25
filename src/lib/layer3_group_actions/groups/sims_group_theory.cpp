@@ -832,30 +832,30 @@ void sims::conjugate(
 				cout << "sims::conjugate choosing random schreier generator" << endl;
 			}
 			random_schreier_generator(Elt1, verbose_level - 3);
-			A->Group_element->element_move(Elt1, A->Elt1, false);
+			A->Group_element->element_move(Elt1, A->Group_element->Elt1, false);
 			if (false) {
 				cout << "sims::conjugate random element chosen:" << endl;
-				A->Group_element->element_print(A->Elt1, cout);
+				A->Group_element->element_print(A->Group_element->Elt1, cout);
 				cout << endl;
 			}
-			A->Group_element->move(A->Elt1, Elt4);
+			A->Group_element->move(A->Group_element->Elt1, Elt4);
 		}
 		else if ((cnt % 2) == 1){
 			if (f_vv) {
 				cout << "sims::conjugate choosing random element in the group "
 						"by which we extend" << endl;
 			}
-			old_G->random_element(A->Elt1, verbose_level - 1);
+			old_G->random_element(A->Group_element->Elt1, verbose_level - 1);
 			if (false) {
 				cout << "sims::conjugate random element chosen, path = ";
 				Int_vec_print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 			}
 			if (false) {
-				A->Group_element->element_print(A->Elt1, cout);
+				A->Group_element->element_print(A->Group_element->Elt1, cout);
 				cout << endl;
 			}
-			A->Group_element->mult(Elt, A->Elt1, Elt3);
+			A->Group_element->mult(Elt, A->Group_element->Elt1, Elt3);
 			A->Group_element->mult(Elt3, Elt2, Elt4);
 			if (f_vv) {
 				cout << "sims::conjugate conjugated" << endl;
@@ -865,13 +865,13 @@ void sims::conjugate(
 				cout << endl;
 			}
 		}
-		if (strip(Elt4, A->Elt2, drop_out_level, image,
+		if (strip(Elt4, A->Group_element->Elt2, drop_out_level, image,
 				verbose_level - 3)) {
 			if (f_vv) {
 				cout << "sims::conjugate element strips through, "
 						"residue = " << endl;
 				if (false) {
-					A->Group_element->element_print_quick(A->Elt2, cout);
+					A->Group_element->element_print_quick(A->Group_element->Elt2, cout);
 					cout << endl;
 				}
 			}
@@ -884,11 +884,11 @@ void sims::conjugate(
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (false) {
-					A->Group_element->element_print(A->Elt2, cout);
+					A->Group_element->element_print(A->Group_element->Elt2, cout);
 					cout  << endl;
 				}
 			}
-			add_generator_at_level(A->Elt2, drop_out_level,
+			add_generator_at_level(A->Group_element->Elt2, drop_out_level,
 					verbose_level - 3);
 		}
 

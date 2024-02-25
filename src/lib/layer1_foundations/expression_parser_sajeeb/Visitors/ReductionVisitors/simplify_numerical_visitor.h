@@ -20,6 +20,8 @@
 
 using std::shared_ptr;
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class simplify_numerical_visitor : public simplify_visitor,
                                    public IRTreeTemplateReturnTypeVariadicArgumentVisitorInterface<decltype(number_node::value),
                                            irtree_node*> {

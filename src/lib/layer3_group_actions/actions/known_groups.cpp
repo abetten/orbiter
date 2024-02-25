@@ -220,7 +220,8 @@ void known_groups::init_linear_group(
 
 void known_groups::init_projective_group(
 		int n, field_theory::finite_field *F,
-	int f_semilinear, int f_basis, int f_init_sims,
+	int f_semilinear,
+	int f_basis, int f_init_sims,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -253,7 +254,7 @@ void known_groups::init_projective_group(
 	}
 	M->init_projective_group(
 			n, F,
-			f_semilinear, /*A,*/
+			f_semilinear,
 			verbose_level - 3);
 	if (f_v) {
 		cout << "known_groups::init_projective_group "
@@ -297,7 +298,7 @@ void known_groups::init_projective_group(
 
 	A->elt_size_in_int = M->elt_size_int;
 	A->coded_elt_size_in_char = M->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_basis) {
@@ -404,7 +405,7 @@ void known_groups::init_affine_group(
 
 	A->elt_size_in_int = M->elt_size_int;
 	A->coded_elt_size_in_char = M->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(
@@ -493,7 +494,7 @@ void known_groups::init_general_linear_group(
 
 	A->elt_size_in_int = M->elt_size_int;
 	A->coded_elt_size_in_char = M->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 	if (f_basis) {
@@ -851,7 +852,7 @@ void known_groups::init_permutation_group(
 		cout << "elt_size_in_int = " << A->elt_size_in_int << endl;
 		cout << "coded_elt_size_in_char = " << A->coded_elt_size_in_char << endl;
 	}
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 	A->degree = degree;
 	A->make_element_size = degree;
 
@@ -1225,83 +1226,6 @@ void known_groups::init_base_and_generators(
 }
 
 
-void known_groups::init_affine_group_in_permutation_representation(
-		int n, int q,
-	int f_translations,
-	int f_semilinear, int frobenius_power,
-	int f_multiplication,
-	int multiplication_order,
-	int verbose_level)
-// creates a finite_field object
-// this function is used nowhere
-{
-	int f_v = (verbose_level >= 1);
-	int nb_gens, degree;
-	int *gens;
-	int given_base_length;
-	long int *given_base;
-	field_theory::finite_field F;
-	ring_theory::longinteger_object go;
-
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation" << endl;
-	}
-
-	F.finite_field_init_small_order(
-			q,
-			false /* f_without_tables */,
-			false /* f_compute_related_fields */,
-			verbose_level - 1);
-
-
-	algebra::group_generators_domain GGD;
-
-
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation "
-				"before GGD.affine_generators" << endl;
-	}
-
-	GGD.affine_generators(
-			n, &F, f_translations,
-		f_semilinear, frobenius_power,
-		f_multiplication, multiplication_order,
-		nb_gens, degree, gens,
-		given_base_length, given_base, verbose_level - 2);
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation "
-				"after GGD.affine_generators" << endl;
-	}
-
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation "
-				"before init_permutation_group_from_generators" << endl;
-	}
-	init_permutation_group_from_generators(
-			degree,
-		false, go,
-		nb_gens, gens,
-		given_base_length, given_base,
-		false /* f_no_base */,
-		verbose_level);
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation "
-				"after init_permutation_group_from_generators" << endl;
-	}
-
-	FREE_int(gens);
-	FREE_lint(given_base);
-
-
-	A->label = "AGL_" + std::to_string(n) + "_" + std::to_string(q);
-	A->label_tex = "AGL(" + std::to_string(n) + "," + std::to_string(n) + ")";
-
-	if (f_v) {
-		cout << "known_groups::init_affine_group_in_permutation_representation done" << endl;
-	}
-}
-
-
 void known_groups::init_symmetric_group(
 		int degree, int verbose_level)
 {
@@ -1342,7 +1266,7 @@ void known_groups::init_symmetric_group(
 				"before init_permutation_group_from_generators" << endl;
 	}
 	init_permutation_group_from_generators(
-			degree,
+		degree,
 		true, go,
 		nb_gens, gens,
 		given_base_length, given_base,
@@ -1357,7 +1281,7 @@ void known_groups::init_symmetric_group(
 
 
 	A->label = "Sym_" + std::to_string(degree);
-	A->label_tex = "Sym(" + std::to_string(degree) + ")";
+	A->label_tex = "{\\rm Sym}_{" + std::to_string(degree) + "}";
 
 	if (f_v) {
 		cout << "known_groups::init_symmetric_group done" << endl;
@@ -1418,7 +1342,7 @@ void known_groups::init_cyclic_group(
 	FREE_lint(given_base);
 
 	A->label = "C_" + std::to_string(degree);
-	A->label_tex = "C(" + std::to_string(degree) + ")";
+	A->label_tex = "{\\rm C}_{" + std::to_string(degree) + "}";
 
 	if (f_v) {
 		cout << "known_groups::init_cyclic_group done" << endl;
@@ -1475,7 +1399,7 @@ void known_groups::init_identity_group(
 	FREE_lint(given_base);
 
 	A->label = "Id_" + std::to_string(degree);
-	A->label_tex = "Id(" + std::to_string(degree) + ")";
+	A->label_tex = "{\\rm Id}_{" + std::to_string(degree) + "}";
 
 
 	if (f_v) {
@@ -1485,6 +1409,7 @@ void known_groups::init_identity_group(
 
 void known_groups::create_sims(
 		int verbose_level)
+// Creates a sims object from the strong_generators
 {
 	int f_v = (verbose_level >= 1);
 	groups::sims *S;
@@ -1507,7 +1432,303 @@ void known_groups::create_sims(
 	}
 }
 
+#if 0
+void known_groups::init_BLT(
+		field_theory::finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p, hh, epsilon, n;
+	int f_semilinear = false;
+	number_theory::number_theory_domain NT;
 
+	if (f_v) {
+		cout << "known_groups::init_BLT q=" << F->q
+				<< " f_init_hash_table=" << f_init_hash_table << endl;
+		cout << "f_basis=" << f_basis << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+	}
+	NT.is_prime_power(F->q, p, hh);
+	if (hh > 1)
+		f_semilinear = true;
+	else
+		f_semilinear = false;
+	epsilon = 0;
+	n = 5;
+
+
+	if (f_v) {
+		cout << "known_groups::init_BLT "
+				"before init_orthogonal_group" << endl;
+	}
+	init_orthogonal_group(
+			epsilon, n, F,
+		true /* f_on_points */,
+		false /* f_on_lines */,
+		false /* f_on_points_and_lines */,
+		f_semilinear,
+		f_basis,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "known_groups::init_BLT "
+				"after init_orthogonal_group" << endl;
+	}
+
+	if (!A->f_has_sims) {
+		cout << "known_groups::init_BLT "
+				"we need a Sims" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "known_groups::init_BLT "
+				"computing lex least base" << endl;
+	}
+	A->lex_least_base_in_place(A->Sims, verbose_level - 2);
+	if (f_v) {
+		cout << "known_groups::init_BLT "
+				"computing lex least base done" << endl;
+		cout << "base: ";
+		Lint_vec_print(cout, A->get_base(), A->base_len());
+		cout << endl;
+	}
+
+	if (f_v) {
+		A->print_base();
+	}
+
+
+	if (A->f_has_strong_generators) {
+		if (f_v) {
+			cout << "known_groups::init_BLT strong "
+					"generators have been computed" << endl;
+		}
+		if (f_vv) {
+			A->Strong_gens->print_generators(cout);
+		}
+	}
+	else {
+		cout << "known_groups::init_BLT we don't have strong generators" << endl;
+		exit(1);
+	}
+
+#if 0
+	if (f_init_hash_table) {
+		matrix_group *M;
+		orthogonal *O;
+
+		M = subaction->G.matrix_grp;
+		O = M->O;
+
+		if (f_v) {
+			cout << "calling init_hash_table_parabolic" << endl;
+		}
+		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
+	}
+#endif
+
+	if (f_v) {
+		A->print_info();
+	}
+	if (f_v) {
+		cout << "known_groups::init_BLT done" << endl;
+	}
+}
+#endif
+
+
+#if 0
+void known_groups::init_orthogonal_group(
+		int epsilon,
+	int n, field_theory::finite_field *F,
+	int f_on_points, int f_on_lines, int f_on_points_and_lines,
+	int f_semilinear,
+	int f_basis, int verbose_level)
+// creates an object of type orthogonal
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	orthogonal_geometry::orthogonal *O;
+
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"verbose_level=" << verbose_level << endl;
+	}
+	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"before O->init" << endl;
+	}
+	O->init(epsilon, n, F, verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"after O->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"before init_orthogonal_group_with_O" << endl;
+	}
+	init_orthogonal_group_with_O(
+			O,
+			f_on_points, f_on_lines, f_on_points_and_lines,
+			f_semilinear,
+			f_basis, verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group "
+				"after init_orthogonal_group_with_O" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group done" << endl;
+	}
+}
+#endif
+
+void known_groups::init_orthogonal_group_with_O(
+	orthogonal_geometry::orthogonal *O,
+	int f_on_points, int f_on_lines, int f_on_points_and_lines,
+	int f_semilinear,
+	int f_basis, int verbose_level)
+// sets up a projective group first.
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	action *A_PGL;
+	induced_actions::action_on_orthogonal *AO;
+	int q = O->F->q;
+	algebra::group_generators_domain GG;
+
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"verbose_level=" << verbose_level << endl;
+	}
+	A_PGL = NEW_OBJECT(action);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"before A_PGL->Known_groups->init_projective_group" << endl;
+	}
+	data_structures_groups::vector_ge *nice_gens = NULL;
+	A_PGL->Known_groups->init_projective_group(
+			O->Quadratic_form->n,
+			O->F,
+			f_semilinear,
+			false /* f_basis */, // we don't need a basis
+			true /* f_init_sims */,
+			nice_gens,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"after A_PGL->Known_groups->init_projective_group" << endl;
+	}
+
+	if (nice_gens) {
+		FREE_OBJECT(nice_gens);
+	}
+
+	AO = NEW_OBJECT(induced_actions::action_on_orthogonal);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"before AO->init" << endl;
+	}
+	AO->init(
+			A_PGL, O, f_on_points, f_on_lines,
+			f_on_points_and_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O "
+				"after AO->init" << endl;
+	}
+
+	A->type_G = action_on_orthogonal_t;
+	A->G.AO = AO;
+
+	A->f_has_subaction = true;
+	A->subaction = A_PGL;
+	A->degree = AO->degree;
+	A->low_level_point_size = A_PGL->low_level_point_size;
+	A->elt_size_in_int = A_PGL->elt_size_in_int;
+	A->coded_elt_size_in_char = A_PGL->coded_elt_size_in_char;
+	A->Group_element->allocate_element_data();
+
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
+	A->make_element_size = A_PGL->make_element_size;
+
+
+	data_structures::string_tools String;
+
+	String.name_of_orthogonal_group(
+			A->label,
+			A->label_tex,
+			O->Quadratic_form->epsilon, O->Quadratic_form->n, q,
+			f_semilinear, verbose_level - 1);
+
+
+	if (f_basis) {
+		ring_theory::longinteger_object target_go;
+
+		if (f_v) {
+			cout << "known_groups::init_orthogonal_group_with_O "
+					"we will create the orthogonal group now" << endl;
+		}
+
+		action_global AG;
+
+		if (AG.get_orthogonal_group_type_f_reflection()) {
+			if (f_v) {
+				cout << "known_groups::init_orthogonal_group_with_O "
+						"with reflections, before order_PO_epsilon" << endl;
+			}
+			GG.order_PO_epsilon(
+					f_semilinear,
+					O->Quadratic_form->epsilon,
+					O->Quadratic_form->n - 1,
+					O->F->q,
+					target_go, verbose_level - 2);
+			if (f_v) {
+				cout << "known_groups::init_orthogonal_group_with_O "
+						"with reflections, after order_PO_epsilon" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "known_groups::init_orthogonal_group_with_O "
+						"without reflections, before order_POmega_epsilon"
+						<< endl;
+			}
+			GG.order_POmega_epsilon(
+					O->Quadratic_form->epsilon, O->Quadratic_form->n - 1,
+					O->F->q, target_go, verbose_level);
+		}
+
+		if (f_v) {
+			cout << "known_groups::init_orthogonal_group_with_O "
+					"the target group order is " << target_go << endl;
+		}
+
+		if (f_v) {
+			cout << "known_groups::init_orthogonal_group_with_O "
+					"before create_orthogonal_group" << endl;
+		}
+		create_orthogonal_group(
+				A_PGL /*subaction*/,
+			true /* f_has_target_go */, target_go,
+			callback_choose_random_generator_orthogonal,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "known_groups::init_orthogonal_group_with_O "
+					"after create_orthogonal_group" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "known_groups::init_orthogonal_group_with_O done" << endl;
+	}
+}
 
 void known_groups::create_orthogonal_group(
 		action *subaction,
@@ -1537,7 +1758,8 @@ void known_groups::create_orthogonal_group(
 		cout << "known_groups::create_orthogonal_group "
 				"before AG.init_base_projective" << endl;
 	}
-	AG.init_base_projective(A, Mtx, verbose_level);
+	AG.init_base_projective(
+			A, Mtx, verbose_level);
 	// initializes base, base_len, degree,
 	// transversal_length, orbit, orbit_inv
 	if (f_v) {
@@ -1620,6 +1842,8 @@ void known_groups::create_orthogonal_group(
 				"done" << endl;
 	}
 }
+
+
 
 
 void known_groups::init_wreath_product_group_and_restrict(
@@ -1780,7 +2004,7 @@ void known_groups::init_wreath_product_group(
 
 	A->elt_size_in_int = W->elt_size_int;
 	A->coded_elt_size_in_char = W->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 
 
@@ -2008,7 +2232,7 @@ void known_groups::init_permutation_representation(
 
 	A->elt_size_in_int = P->elt_size_int;
 	A->coded_elt_size_in_char = P->char_per_elt;
-	A->allocate_element_data();
+	A->Group_element->allocate_element_data();
 
 	//group_prefix.assign(label);
 
@@ -2029,300 +2253,6 @@ void known_groups::init_permutation_representation(
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-	}
-}
-
-void known_groups::init_orthogonal_group(
-		int epsilon,
-	int n, field_theory::finite_field *F,
-	int f_on_points, int f_on_lines, int f_on_points_and_lines,
-	int f_semilinear,
-	int f_basis, int verbose_level)
-// creates an object of type orthogonal
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	orthogonal_geometry::orthogonal *O;
-
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group "
-				"verbose_level=" << verbose_level << endl;
-	}
-	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group "
-				"before O->init" << endl;
-	}
-	O->init(epsilon, n, F, verbose_level);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group "
-				"after O->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group "
-				"before init_orthogonal_group_with_O" << endl;
-	}
-	init_orthogonal_group_with_O(
-			O,
-			f_on_points, f_on_lines, f_on_points_and_lines,
-			f_semilinear,
-			f_basis, verbose_level);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group "
-				"after init_orthogonal_group_with_O" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group done" << endl;
-	}
-}
-
-void known_groups::init_orthogonal_group_with_O(
-	orthogonal_geometry::orthogonal *O,
-	int f_on_points, int f_on_lines, int f_on_points_and_lines,
-	int f_semilinear,
-	int f_basis, int verbose_level)
-// sets up a projective group first.
-// Then calls create_orthogonal_group
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	action *A_PGL;
-	induced_actions::action_on_orthogonal *AO;
-	int q = O->F->q;
-	algebra::group_generators_domain GG;
-
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O "
-				"verbose_level=" << verbose_level << endl;
-	}
-	A_PGL = NEW_OBJECT(action);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O "
-				"before A_PGL->Known_groups->init_projective_group" << endl;
-	}
-	data_structures_groups::vector_ge *nice_gens = NULL;
-	A_PGL->Known_groups->init_projective_group(
-			O->Quadratic_form->n,
-			O->F,
-			f_semilinear,
-			false /* f_basis */, // we don't need a basis
-			true /* f_init_sims */,
-			nice_gens,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O "
-				"after A_PGL->Known_groups->init_projective_group" << endl;
-	}
-
-	if (nice_gens) {
-		FREE_OBJECT(nice_gens);
-	}
-
-	AO = NEW_OBJECT(induced_actions::action_on_orthogonal);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O "
-				"before AO->init" << endl;
-	}
-	AO->init(
-			A_PGL, O, f_on_points, f_on_lines,
-			f_on_points_and_lines,
-			verbose_level);
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O "
-				"after AO->init" << endl;
-	}
-
-	A->type_G = action_on_orthogonal_t;
-	A->G.AO = AO;
-
-	A->f_has_subaction = true;
-	A->subaction = A_PGL;
-	A->degree = AO->degree;
-	A->low_level_point_size = A_PGL->low_level_point_size;
-	A->elt_size_in_int = A_PGL->elt_size_in_int;
-	A->coded_elt_size_in_char = A_PGL->coded_elt_size_in_char;
-	A->allocate_element_data();
-
-	A->ptr = NEW_OBJECT(action_pointer_table);
-	A->ptr->init_function_pointers_induced_action();
-	A->make_element_size = A_PGL->make_element_size;
-
-
-	data_structures::string_tools String;
-
-	String.name_of_orthogonal_group(
-			A->label,
-			A->label_tex,
-			O->Quadratic_form->epsilon, O->Quadratic_form->n, q,
-			f_semilinear, verbose_level - 1);
-
-
-	if (f_basis) {
-		ring_theory::longinteger_object target_go;
-
-		if (f_v) {
-			cout << "known_groups::init_orthogonal_group_with_O "
-					"we will create the orthogonal group now" << endl;
-		}
-
-		action_global AG;
-
-		if (AG.get_orthogonal_group_type_f_reflection()) {
-			if (f_v) {
-				cout << "known_groups::init_orthogonal_group_with_O "
-						"with reflections, before order_PO_epsilon" << endl;
-			}
-			GG.order_PO_epsilon(
-					f_semilinear,
-					O->Quadratic_form->epsilon,
-					O->Quadratic_form->n - 1,
-					O->F->q,
-					target_go, verbose_level - 2);
-			if (f_v) {
-				cout << "known_groups::init_orthogonal_group_with_O "
-						"with reflections, after order_PO_epsilon" << endl;
-			}
-		}
-		else {
-			if (f_v) {
-				cout << "known_groups::init_orthogonal_group_with_O "
-						"without reflections, before order_POmega_epsilon"
-						<< endl;
-			}
-			GG.order_POmega_epsilon(
-					O->Quadratic_form->epsilon, O->Quadratic_form->n - 1,
-					O->F->q, target_go, verbose_level);
-		}
-
-		if (f_v) {
-			cout << "known_groups::init_orthogonal_group_with_O "
-					"the target group order is " << target_go << endl;
-		}
-
-		if (f_v) {
-			cout << "known_groups::init_orthogonal_group_with_O "
-					"before create_orthogonal_group" << endl;
-		}
-		create_orthogonal_group(
-				A_PGL /*subaction*/,
-			true /* f_has_target_go */, target_go,
-			callback_choose_random_generator_orthogonal,
-			verbose_level - 2);
-		if (f_v) {
-			cout << "known_groups::init_orthogonal_group_with_O "
-					"after create_orthogonal_group" << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "known_groups::init_orthogonal_group_with_O done" << endl;
-	}
-}
-
-void known_groups::init_BLT(
-		field_theory::finite_field *F, int f_basis,
-		int f_init_hash_table, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int p, hh, epsilon, n;
-	int f_semilinear = false;
-	number_theory::number_theory_domain NT;
-
-	if (f_v) {
-		cout << "known_groups::init_BLT q=" << F->q
-				<< " f_init_hash_table=" << f_init_hash_table << endl;
-		cout << "f_basis=" << f_basis << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-	}
-	NT.is_prime_power(F->q, p, hh);
-	if (hh > 1)
-		f_semilinear = true;
-	else
-		f_semilinear = false;
-	epsilon = 0;
-	n = 5;
-
-
-	if (f_v) {
-		cout << "known_groups::init_BLT "
-				"before init_orthogonal_group" << endl;
-	}
-	init_orthogonal_group(
-			epsilon, n, F,
-		true /* f_on_points */,
-		false /* f_on_lines */,
-		false /* f_on_points_and_lines */,
-		f_semilinear,
-		f_basis,
-		verbose_level - 2);
-	if (f_v) {
-		cout << "known_groups::init_BLT "
-				"after init_orthogonal_group" << endl;
-	}
-
-	if (!A->f_has_sims) {
-		cout << "known_groups::init_BLT "
-				"we need a Sims" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "known_groups::init_BLT "
-				"computing lex least base" << endl;
-	}
-	A->lex_least_base_in_place(A->Sims, verbose_level - 2);
-	if (f_v) {
-		cout << "known_groups::init_BLT "
-				"computing lex least base done" << endl;
-		cout << "base: ";
-		Lint_vec_print(cout, A->get_base(), A->base_len());
-		cout << endl;
-	}
-
-	if (f_v) {
-		A->print_base();
-	}
-
-
-	if (A->f_has_strong_generators) {
-		if (f_v) {
-			cout << "known_groups::init_BLT strong "
-					"generators have been computed" << endl;
-		}
-		if (f_vv) {
-			A->Strong_gens->print_generators(cout);
-		}
-	}
-	else {
-		cout << "known_groups::init_BLT we don't have strong generators" << endl;
-		exit(1);
-	}
-
-#if 0
-	if (f_init_hash_table) {
-		matrix_group *M;
-		orthogonal *O;
-
-		M = subaction->G.matrix_grp;
-		O = M->O;
-
-		if (f_v) {
-			cout << "calling init_hash_table_parabolic" << endl;
-		}
-		init_hash_table_parabolic(*O->F, 4, 0 /* verbose_level */);
-	}
-#endif
-
-	if (f_v) {
-		A->print_info();
-	}
-	if (f_v) {
-		cout << "known_groups::init_BLT done" << endl;
 	}
 }
 

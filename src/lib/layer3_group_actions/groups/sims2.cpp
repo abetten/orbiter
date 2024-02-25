@@ -105,11 +105,11 @@ void sims::build_up_subgroup_random_process(
 			if (f_vvv) {
 				cout << "sims::build_up_subgroup_random_process choosing random schreier generator" << endl;
 				}
-			random_schreier_generator(GA->Elt1, 0/*verbose_level - 3*/);
+			random_schreier_generator(GA->Group_element->Elt1, 0/*verbose_level - 3*/);
 			//A->element_move(schreier_gen, GA->Elt1, 0);
 			if (false) {
 				cout << "sims::build_up_subgroup_random_process random element chosen:" << endl;
-				A->Group_element->element_print(GA->Elt1, cout);
+				A->Group_element->element_print(GA->Group_element->Elt1, cout);
 				cout << endl;
 				}
 			}
@@ -119,22 +119,22 @@ void sims::build_up_subgroup_random_process(
 						"group by which we extend" << endl;
 				}
 			(*choose_random_generator_for_subgroup)(G,
-					GA->Elt1, verbose_level - 1);
+					GA->Group_element->Elt1, verbose_level - 1);
 			if (false) {
 				cout << "sims::build_up_subgroup_random_process random element chosen" << endl;
 				}
 			if (false) {
-				GA->Group_element->element_print(GA->Elt1, cout);
+				GA->Group_element->element_print(GA->Group_element->Elt1, cout);
 				cout << endl;
 				}
 			}
-		if (strip(GA->Elt1, GA->Elt2, drop_out_level,
+		if (strip(GA->Group_element->Elt1, GA->Group_element->Elt2, drop_out_level,
 				image, 0/*verbose_level*/)) {
 			if (f_vvv) {
 				cout << "sims::build_up_subgroup_random_process element strips through" << endl;
 				if (false) {
 					cout << "sims::build_up_subgroup_random_process residue = " << endl;
-					GA->Group_element->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Group_element->Elt2, cout);
 					cout << endl;
 					}
 				}
@@ -148,11 +148,11 @@ void sims::build_up_subgroup_random_process(
 					<< drop_out_level << " with image "
 					<< image << endl;
 				if (true) {
-					GA->Group_element->element_print(GA->Elt2, cout);
+					GA->Group_element->element_print(GA->Group_element->Elt2, cout);
 					cout  << endl;
 					}
 				}
-			add_generator_at_level(GA->Elt2,
+			add_generator_at_level(GA->Group_element->Elt2,
 					drop_out_level, 0/*verbose_level - 3*/);
 			}
 		

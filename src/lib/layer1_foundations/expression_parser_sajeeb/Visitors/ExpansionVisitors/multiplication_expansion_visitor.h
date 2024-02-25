@@ -13,6 +13,9 @@
 #ifndef MULTIPLICATION_EXPANSION_VISITOR
 #define MULTIPLICATION_EXPANSION_VISITOR
 
+
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
 class multiplication_expansion_visitor : public IRTreeChildLinkArgumentVisitor {
     typedef list<shared_ptr<irtree_node>>::iterator iterator_t;
 

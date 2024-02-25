@@ -1443,14 +1443,17 @@ void create_graph::make_orbital_graph(
 
 	poset_classification::poset_classification *PC;
 
+	orbits::orbits_global Orbits;
+
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph "
-				"before AG->orbits_on_subsets" << endl;
+				"before Orbits.orbits_on_subsets" << endl;
 	}
-	AG->orbits_on_subsets(Control, PC, 2, verbose_level);
+	Orbits.orbits_on_subsets(
+			AG, Control, PC, 2, verbose_level);
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph "
-				"after AG->orbits_on_subsets" << endl;
+				"after Orbits.orbits_on_subsets" << endl;
 	}
 
 	long int set[2];

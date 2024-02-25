@@ -8,6 +8,9 @@
 #ifndef GRAMMAR_TEST_IR_TREE_LATEX_VISITOR_H
 #define GRAMMAR_TEST_IR_TREE_LATEX_VISITOR_H
 
+//! a visitor is a class that realizes an activity for processing an abstract syntax tree of Sajeeb type.
+
+
 class ir_tree_latex_visitor {
 protected:
     std::ostream* output_stream;

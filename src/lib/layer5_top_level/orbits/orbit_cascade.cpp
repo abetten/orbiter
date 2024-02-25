@@ -13,7 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbit_cascade::orbit_cascade()
@@ -51,7 +51,7 @@ orbit_cascade::~orbit_cascade()
 }
 
 void orbit_cascade::init(
-		int N, int k, any_group *G,
+		int N, int k, apps_algebra::any_group *G,
 		std::string &Control_label,
 		int verbose_level)
 {

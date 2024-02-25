@@ -284,17 +284,6 @@ static long int induced_action_element_image_of(
 					"action_on_orthogonal_t" << endl;
 		}
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
-
-#if 0
-		action *sub;
-		
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_element_image_of "
-					"no subaction" << endl;
-			exit(1);
-		}
-#endif
 		b = AO->compute_image_int(Elt, a, verbose_level - 1);
 	}
 	else if (A.type_G == action_on_wedge_product_t) {
@@ -1738,17 +1727,6 @@ static void induced_action_print_point(
 		AO->unrank_point(v, a);
 		Int_vec_print(ost, v, AO->low_level_point_size);
 		FREE_int(v);
-
-#if 0
-		action *sub;
-		
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_print_point no subaction" << endl;
-			exit(1);
-			}
-		ost << a;
-#endif
 	}
 	else if (A.type_G == action_on_interior_direct_product_t) {
 		if (false) {
@@ -1988,18 +1966,6 @@ static void induced_action_unrank_point(
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
 
 		AO->unrank_point(v, rk);
-		//ost << a;
-
-#if 0
-		action *sub;
-
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_unrank_point no subaction" << endl;
-			exit(1);
-			}
-		ost << a;
-#endif
 		}
 	else if (A.type_G == action_on_wedge_product_t) {
 		if (false) {
@@ -2251,18 +2217,6 @@ static long int induced_action_rank_point(
 		induced_actions::action_on_orthogonal *AO = A.G.AO;
 
 		rk = AO->rank_point(v);
-		//ost << a;
-
-#if 0
-		action *sub;
-
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_rank_point no subaction" << endl;
-			exit(1);
-			}
-		ost << a;
-#endif
 		}
 	else if (A.type_G == action_on_wedge_product_t) {
 		if (false) {

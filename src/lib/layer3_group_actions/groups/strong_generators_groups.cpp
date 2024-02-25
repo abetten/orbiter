@@ -201,13 +201,37 @@ void strong_generators::init_linear_group_from_scratch(
 			cout << "cannot reach this" << endl;
 			exit(1);
 		}
-		A->Known_groups->init_orthogonal_group(
-				epsilon,
-			n, F,
+		orthogonal_geometry::orthogonal *O;
+
+		if (f_v) {
+			cout << "known_groups::init_orthogonal_group "
+					"verbose_level=" << verbose_level << endl;
+		}
+		O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"before O->init" << endl;
+		}
+		O->init(epsilon, n, F, verbose_level);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after O->init" << endl;
+		}
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"before A->Known_groups->init_orthogonal_group_with_O" << endl;
+		}
+		A->Known_groups->init_orthogonal_group_with_O(
+				//epsilon, n, F,
+				O,
 			true /* f_on_points */, false /* f_on_lines */,
 			false /* f_on_points_and_lines */,
 			Descr->f_semilinear,
 			true /* f_basis */, verbose_level);
+		if (f_v) {
+			cout << "strong_generators::init_linear_group_from_scratch "
+					"after A->Known_groups->init_orthogonal_group_with_O" << endl;
+		}
 
 
 	}
@@ -2917,8 +2941,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 
 void strong_generators::generators_for_the_orthogonal_group(
 		actions::action *A,
-	field_theory::finite_field *F, int n,
-	int epsilon, 
+	//field_theory::finite_field *F, int n, int epsilon,
+	orthogonal_geometry::orthogonal *O,
 	int f_semilinear, 
 	int verbose_level)
 {
@@ -2926,23 +2950,24 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_orthogonal_group" << endl;
-		cout << "n=" << n << endl;
-		cout << "epsilon=" << epsilon << endl;
-		cout << "q=" << F->q << endl;
+		//cout << "n=" << n << endl;
+		//cout << "epsilon=" << epsilon << endl;
+		//cout << "q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 	}
+
 
 	actions::action *A2;
 
 	A2 = NEW_OBJECT(actions::action);
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_orthogonal_group "
-				"before A2->init_orthogonal_group" << endl;
+				"before A2->init_orthogonal_group_with_O" << endl;
 	}
 
-	A2->Known_groups->init_orthogonal_group(
-			epsilon,
-		n, F, 
+	A2->Known_groups->init_orthogonal_group_with_O(
+		//epsilon, n, F,
+			O,
 		true /* f_on_points */,
 		false /* f_on_lines */,
 		false /* f_on_points_and_lines */,
@@ -2951,7 +2976,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_orthogonal_group "
-				"after A2->init_orthogonal_group" << endl;
+				"after A2->init_orthogonal_group_with_O" << endl;
 	}
 
 	ring_theory::longinteger_object target_go;

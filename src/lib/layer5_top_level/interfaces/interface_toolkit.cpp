@@ -192,6 +192,11 @@ interface_toolkit::interface_toolkit()
 	f_read_gedcom = false;
 	//std::string read_gedcom_fname;
 
+	f_read_xml = false;
+	//std::string read_xml_fname;
+	//std::string read_xml_crossref_fname;
+
+
 }
 
 
@@ -315,6 +320,9 @@ void interface_toolkit::print_help(
 	}
 	else if (ST.stringcmp(argv[i], "-read_gedcom") == 0) {
 		cout << "-read_gedcom <string : fname>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-read_xml") == 0) {
+		cout << "-read_xml <string : fname> <string : crossref_fname>" << endl;
 	}
 
 }
@@ -441,6 +449,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-read_gedcom") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-read_xml") == 0) {
 		return true;
 	}
 	return false;
@@ -990,6 +1001,17 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-read_xml") == 0) {
+		f_read_xml = true;
+		read_xml_fname.assign(argv[++i]);
+		read_xml_crossref_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-read_xml "
+					<< " " << read_xml_fname
+					<< " " << read_xml_crossref_fname
+					<< endl;
+		}
+	}
 
 
 
@@ -1202,6 +1224,12 @@ void interface_toolkit::print()
 	if (f_read_gedcom) {
 		cout << "-read_gedcom "
 				<< " " << read_gedcom_fname
+				<< endl;
+	}
+	if (f_read_xml) {
+		cout << "-read_xml "
+				<< " " << read_xml_fname
+				<< " " << read_xml_crossref_fname
 				<< endl;
 	}
 }
@@ -1994,7 +2022,8 @@ void interface_toolkit::worker(
 
 		data_structures::spreadsheet S;
 
-		S.read_spreadsheet(compare_columns_fname, 0/*verbose_level - 1*/);
+		S.read_spreadsheet(
+				compare_columns_fname, 0/*verbose_level - 1*/);
 		S.compare_columns(
 				compare_columns_column1, compare_columns_column2,
 				verbose_level);
@@ -2031,6 +2060,45 @@ void interface_toolkit::worker(
 		AT = NEW_OBJECT(data_structures::ancestry_tree);
 
 		AT->read_gedcom(read_gedcom_fname, verbose_level);
+
+	}
+	else if (f_read_xml) {
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_read_xml " << read_xml_fname << endl;
+		}
+
+
+		l1_interfaces::pugixml_interface Pugi;
+		std::vector<std::vector<std::string> > Classes_parsed;
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"before Pugi.read_file" << endl;
+		}
+		Pugi.read_file(
+				read_xml_fname, Classes_parsed, verbose_level);
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"after Pugi.read_file" << endl;
+		}
+
+
+		data_structures::algorithms Algo;
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"before Algo.process_class_list" << endl;
+		}
+		Algo.process_class_list(
+				Classes_parsed,
+				read_xml_crossref_fname,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"after Algo.process_class_list" << endl;
+		}
+
 
 	}
 

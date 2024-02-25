@@ -484,7 +484,8 @@ void flag_orbit_folding::do_iso_test(
 }
 
 
-int flag_orbit_folding::next_subset(int t0,
+int flag_orbit_folding::next_subset(
+		int t0,
 	int &f_continue, groups::sims *Stab, long int *data,
 	int f_play_back, ifstream *play_back_file, int &f_eof,
 	int verbose_level)
@@ -777,7 +778,8 @@ void flag_orbit_folding::process_rearranged_set(
 	}
 }
 
-int flag_orbit_folding::is_minimal(int verbose_level)
+int flag_orbit_folding::is_minimal(
+		int verbose_level)
 {
 	int rk, rk0;
 	combinatorics::combinatorics_domain Combi;
@@ -808,7 +810,8 @@ void flag_orbit_folding::stabilizer_action_exit()
 
 
 
-void flag_orbit_folding::stabilizer_action_init(int verbose_level)
+void flag_orbit_folding::stabilizer_action_init(
+		int verbose_level)
 // Computes the permutations of the set that are induced by the
 // generators for the stabilizer in AA
 {
@@ -1456,7 +1459,8 @@ int flag_orbit_folding::handle_automorphism(
 	return ret;
 }
 
-void flag_orbit_folding::print_isomorphism_types(int f_select,
+void flag_orbit_folding::print_isomorphism_types(
+		int f_select,
 		int select_first, int select_len,
 		int verbose_level)
 // Calls print_set_function (if available)
@@ -3758,7 +3762,8 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 	}
 }
 
-void flag_orbit_folding::decomposition_matrix(int verbose_level)
+void flag_orbit_folding::decomposition_matrix(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3977,7 +3982,8 @@ void flag_orbit_folding::probe(
 	stabilizer_action_exit();
 }
 
-void flag_orbit_folding::test_compute_stabilizer(int verbose_level)
+void flag_orbit_folding::test_compute_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -4008,7 +4014,8 @@ void flag_orbit_folding::test_compute_stabilizer(int verbose_level)
 	}
 }
 
-void flag_orbit_folding::test_memory(int verbose_level)
+void flag_orbit_folding::test_memory(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4509,7 +4516,8 @@ void flag_orbit_folding::compute_stabilizer(
 
 
 
-void flag_orbit_folding::iso_test_init(int verbose_level)
+void flag_orbit_folding::iso_test_init(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4549,7 +4557,8 @@ void flag_orbit_folding::iso_test_init(int verbose_level)
 	}
 }
 
-void flag_orbit_folding::iso_test_init2(int verbose_level)
+void flag_orbit_folding::iso_test_init2(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	combinatorics::combinatorics_domain Combi;

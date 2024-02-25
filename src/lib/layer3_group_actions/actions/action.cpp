@@ -56,7 +56,7 @@ void action::null()
 
 	//transversal_reps = NULL;
 
-	null_element_data();
+	//null_element_data();
 
 	degree = 0;
 	f_is_linear = false;
@@ -318,15 +318,6 @@ void action::freeself()
 	}
 
 
-	if (f_v) {
-		cout << "action::freeself after freeing transversal reps" << endl;
-	}
-		
-	free_element_data();
-
-	if (f_v) {
-		cout << "action::freeself after free_element_data" << endl;
-	}
 	
 	if (f_has_strong_generators) {
 		if (f_v) {
@@ -505,71 +496,6 @@ long int &action::orbit_inv_ij(
 
 
 
-void action::null_element_data()
-{
-	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
-	eltrk1 = eltrk2 = eltrk3 = NULL;
-	elt_mult_apply = NULL;
-	elt1 = NULL;
-	element_rw_memory_object = NULL;
-}
-
-void action::allocate_element_data()
-{
-	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
-	eltrk1 = eltrk2 = eltrk3 = NULL;
-	elt_mult_apply = NULL;
-	elt1 = NULL;
-	Elt1 = NEW_int(elt_size_in_int);
-	Elt2 = NEW_int(elt_size_in_int);
-	Elt3 = NEW_int(elt_size_in_int);
-	Elt4 = NEW_int(elt_size_in_int);
-	Elt5 = NEW_int(elt_size_in_int);
-	eltrk1 = NEW_int(elt_size_in_int);
-	eltrk2 = NEW_int(elt_size_in_int);
-	eltrk3 = NEW_int(elt_size_in_int);
-	elt_mult_apply = NEW_int(elt_size_in_int);
-	elt1 = NEW_uchar(coded_elt_size_in_char);
-	element_rw_memory_object = NEW_char(coded_elt_size_in_char);
-}
-
-void action::free_element_data()
-{
-	if (Elt1) {
-		FREE_int(Elt1);
-	}
-	if (Elt2) {
-		FREE_int(Elt2);
-	}
-	if (Elt3) {
-		FREE_int(Elt3);
-	}
-	if (Elt4) {
-		FREE_int(Elt4);
-	}
-	if (Elt5) {
-		FREE_int(Elt5);
-	}
-	if (eltrk1) {
-		FREE_int(eltrk1);
-	}
-	if (eltrk2) {
-		FREE_int(eltrk2);
-	}
-	if (eltrk3) {
-		FREE_int(eltrk3);
-	}
-	if (elt_mult_apply) {
-		FREE_int(elt_mult_apply);
-	}
-	if (elt1) {
-		FREE_uchar(elt1);
-	}
-	if (element_rw_memory_object) {
-		FREE_char(element_rw_memory_object);
-	}
-	null_element_data();
-}
 
 
 
@@ -580,7 +506,8 @@ void action::free_element_data()
 void action::map_a_set_based_on_hdl(
 		long int *set,
 		long int *image_set,
-		int n, action *A_base, int hdl, int verbose_level)
+		int n, action *A_base, int hdl,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
@@ -771,7 +698,8 @@ void action::compute_point_stabilizer_chain(
 			cout << "computing stabilizer of " << i 
 				<< "-th point in the sequence" << endl;
 		}
-		S[i].point_stabilizer_stabchain_with_action(this, 
+		S[i].point_stabilizer_stabchain_with_action(
+				this,
 			S[i + 1], sequence[i], 0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "stabilizer of " << i << "-th point "

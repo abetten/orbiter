@@ -198,7 +198,8 @@ symbol_definition::~symbol_definition()
 
 void symbol_definition::read_definition(
 		interface_symbol_table *Sym,
-		int argc, std::string *argv, int &i, int verbose_level)
+		int argc, std::string *argv, int &i,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::string_tools ST;
@@ -1092,7 +1093,7 @@ void symbol_definition::read_definition(
 		f_orbits = true;
 
 		Orbits_create_description =
-				NEW_OBJECT(apps_algebra::orbits_create_description);
+				NEW_OBJECT(orbits::orbits_create_description);
 		if (f_v) {
 			cout << "reading -orbits" << endl;
 		}
@@ -4246,9 +4247,9 @@ void symbol_definition::definition_of_orbits(
 	}
 
 
-	apps_algebra::orbits_create *OC;
+	orbits::orbits_create *OC;
 
-	OC = NEW_OBJECT(apps_algebra::orbits_create);
+	OC = NEW_OBJECT(orbits::orbits_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_orbits "

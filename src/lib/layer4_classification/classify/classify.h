@@ -62,10 +62,13 @@ public:
 			std::string &fname_base, int verbose_level);
 	void generate_source_code(
 			std::ostream &ost, std::string &prefix, int verbose_level);
-	long int *Rep_ith(int i);
+	long int *Rep_ith(
+			int i);
 	void print_group_orders();
-	void print_summary(std::ostream &ost);
-	void print_latex(std::ostream &ost,
+	void print_summary(
+			std::ostream &ost);
+	void print_latex(
+			std::ostream &ost,
 			std::string &title,
 			int f_print_stabilizer_gens,
 		int f_has_print_function,
@@ -160,7 +163,8 @@ public:
 
 	flag_orbit_node();
 	~flag_orbit_node();
-	void init(flag_orbits *Flag_orbits,
+	void init(
+			flag_orbits *Flag_orbits,
 			int flag_orbit_index,
 			int downstep_primary_orbit, int downstep_secondary_orbit,
 			int downstep_orbit_len,
@@ -170,9 +174,12 @@ public:
 			int verbose_level);
 	void receive_trace_result(
 			void *trace_result, int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp, int verbose_level);
-	void print_latex(flag_orbits *Flag_orbits,
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp, int verbose_level);
+	void print_latex(
+			flag_orbits *Flag_orbits,
 			std::ostream &ost,
 			int f_print_stabilizer_gens);
 
@@ -193,13 +200,16 @@ public:
 
 	orbit_node();
 	~orbit_node();
-	void init(classification_step *C,
+	void init(
+			classification_step *C,
 			int orbit_index,
 			groups::strong_generators *gens,
 			long int *Rep, void *extra_data,
 			int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp, int verbose_level);
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp, int verbose_level);
 };
 
 }}}

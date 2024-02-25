@@ -27,7 +27,8 @@ large_set_activity_description::~large_set_activity_description()
 }
 
 
-int large_set_activity_description::read_arguments(int argc, std::string *argv,
+int large_set_activity_description::read_arguments(
+		int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;

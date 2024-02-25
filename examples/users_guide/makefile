@@ -1,5 +1,4 @@
 
-#ORBITER_PATH=../orbiter
 
 ORBITER_PATH=~/orbiter
 
@@ -95,11 +94,31 @@ test_problem:
 # Makefile Variables
 
 
-# Section 2.7
+# Section 2.7 vectors
 
 
 
-# Section 2.8 Symbolic Objects
+# Section 2.8 vector of group elements
+
+
+HIRSCHFELD_STAB_GENERATORS="\
+1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
+1,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1,0, \
+1,0,0,0,0,3,0,0,0,0,3,0,1,0,0,1,0, \
+1,0,0,0,0,1,0,0,1,1,1,0,0,1,0,1,1, \
+1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0, \
+0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
+
+
+
+
+CLASS_2A_REP="1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1"
+
+FILE_NAME_CLASS_2A="PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_class_of_2A.csv"
+
+
+
+# Section 2.9 Symbolic Objects
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
@@ -178,6 +197,7 @@ HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^
 
 #X_0^2*X_3 + X_1^2*X_2 + X_1*X_2^2 + X_0*X_3^2
 #X^2*W+X*W^2+Y^2*Z+Y*Z^2
+
 
 
 # Section 4.9 Advanced topics
@@ -1358,15 +1378,6 @@ TEST_SYSTEM="\
 
 
 
-HIRSCHFELD_STAB_GENERATORS="\
-1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
-1,0,0,0,0,2,0,0,0,0,2,0,0,0,0,1,0, \
-1,0,0,0,0,3,0,0,0,0,3,0,1,0,0,1,0, \
-1,0,0,0,0,1,0,0,1,1,1,0,0,1,0,1,1, \
-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0, \
-0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0"
-
-
 SUZUKI_8_GENERATORS="\
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1, \
 1,0,0,0,0,6,0,0,0,0,2,0,0,0,0,3,0, \
@@ -1727,6 +1738,8 @@ test_2:
 	make test_2_5
 	make test_2_6
 	make test_2_7
+	make test_2_8
+	make test_2_9
 
 
 
@@ -1801,7 +1814,7 @@ SECTION_MATHEMATICAL_DATA:
 
 
 test_2_5:
-	#make create_BLT_5_1
+	#make create_BLT_5_1 #error in init_group
 	make create_surface_4_0
 
 create_BLT_5_1:
@@ -1949,12 +1962,67 @@ matrix_example_co_1:
 		-print_symbols
 
 
+
+
+
 ###############################################################################
-# Section 2.8: Symbolic Algebra
+# Section 2.8: Vector of Group Elements Builder
+
+SECTION_VECTOR_OF_GROUP_ELEMENTS_BUILDER:
+
+
+test_2_8:
+	make Hirschfeld_Class_2A
+	make surface_4_0_export_action
+
+
+Hirschfeld_Class_2A:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2A" $(CLASS_2A_REP) \
+		-end
+
+
+
+
+
+surface_4_0_export_action:
+	$(ORBITER) -v 3 \
+		-define Class2A -vector -file $(FILE_NAME_CLASS_2A) -end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -catalogue 0 -end \
+		-define G -linear_group -PGGL 4 4 -end \
+		-define gens_ge -vector_ge \
+			-action G \
+			-vector_data Class2A \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element "action_on_tritangent_planes" gens_ge \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element "action_on_double_sixes" gens_ge \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-export_something_with_group_element "action_on_lines" gens_ge \
+		-end \
+
+
+###############################################################################
+# Section 2.9: Symbolic Algebra
 
 SECTION_FORMULA_BUILDER:
 
-test_2_8:
+test_2_9:
 	make symbolic_poly
 	make symbolic_CRC32
 	make symbolic_CRC_alfa
@@ -5027,7 +5095,7 @@ Edge_curve_17_line_type:
 			-end \
 		-with C -do \
 		-combinatorial_object_activity \
-			-line_type \
+			-line_type_old \
 		-end \
 		-print_symbols
 
@@ -5048,7 +5116,7 @@ Edge_curve_q23_line_type:
 		-end \
 		-with E -do \
 		-combinatorial_object_activity \
-			-line_type \
+			-line_type_old \
 		-end \
 		-print_symbols
 
@@ -5901,7 +5969,7 @@ line_type_in_PG_2_11:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
-			-line_type \
+			line_type_old \
 		-end
 
 
@@ -9235,7 +9303,11 @@ PG_2_2_subsets:
 			-report_options \
 				-draw_poset -type_aux \
 			-end \
-		-end 
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-stats "PG_2_2_subsets" \
+		-end
 	pdflatex PGL_3_2_poset_lvl_7.tex
 	$(OPEN) PGL_3_2_poset_lvl_7.pdf
 	pdflatex PGL_3_2_poset.tex
@@ -11336,6 +11408,10 @@ surface_classify_q4_old:
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-create_source_code \
 		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-stats surf_q4 \
+		-end \
 		-print_symbols
 	pdflatex Surfaces_q4.tex
 	$(OPEN) Surfaces_q4.pdf
@@ -11428,6 +11504,25 @@ surface_classify_q9:
 		-end
 	pdflatex Surfaces_q9.tex 
 	$(OPEN) Surfaces_q9.pdf
+
+
+surface_classify_q9_old:
+	$(ORBITER) -v 5 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define Control -poset_classification_control -W -end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes Surf27 Control \
+		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-report -end \
+		-end \
+		-print_symbols
+	pdflatex Surfaces_q9.tex
+	$(OPEN) Surfaces_q9.pdf
+
 
 
 surface_classify_q11:

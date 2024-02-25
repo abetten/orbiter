@@ -16,7 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace layer5_applications {
-namespace apps_algebra {
+namespace orbits {
 
 
 orbits_on_polynomials::orbits_on_polynomials()

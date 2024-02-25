@@ -56,7 +56,8 @@ orbit_tracer::~orbit_tracer()
 	}
 }
 
-void orbit_tracer::init(poset_classification *PC, int verbose_level)
+void orbit_tracer::init(
+		poset_classification *PC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -92,7 +93,8 @@ data_structures_groups::vector_ge *orbit_tracer::get_transporter()
 	return Transporter;
 }
 
-long int *orbit_tracer::get_set_i(int i)
+long int *orbit_tracer::get_set_i(
+		int i)
 {
 	return Set[i];
 }
@@ -560,7 +562,8 @@ void orbit_tracer::recognize(
 }
 
 
-void orbit_tracer::identify(long int *data, int sz,
+void orbit_tracer::identify(
+		long int *data, int sz,
 		int *transporter, int &orbit_at_level,
 		int verbose_level)
 {

@@ -30,6 +30,9 @@ public:
 	poset_classification::poset_classification_report_options
 		*report_options;
 
+	int f_stats;
+	std::string stats_prefix;
+
 	int f_identify_Eckardt;
 
 	int f_identify_F13;
@@ -483,6 +486,8 @@ public:
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(
 		int *Iso_type, int *Nb_lines, int verbose_level);
+	void stats(
+			std::string &stats_prefix);
 
 };
 

@@ -31,7 +31,8 @@ orbit_node::~orbit_node()
 {
 }
 
-void orbit_node::init(classification_step *C,
+void orbit_node::init(
+		classification_step *C,
 		int orbit_index,
 		groups::strong_generators *gens,
 		long int *Rep, void *extra_data,
@@ -55,7 +56,8 @@ void orbit_node::init(classification_step *C,
 }
 
 
-void orbit_node::write_file(ofstream &fp, int verbose_level)
+void orbit_node::write_file(
+		ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -69,7 +71,8 @@ void orbit_node::write_file(ofstream &fp, int verbose_level)
 	}
 }
 
-void orbit_node::read_file(ifstream &fp, int verbose_level)
+void orbit_node::read_file(
+		ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
