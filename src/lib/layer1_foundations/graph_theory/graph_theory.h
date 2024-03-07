@@ -630,7 +630,8 @@ public:
 	void allocate_tree_structure(
 			int verbose_level);
 	int remove_neighbor(
-			layered_graph *G, int id, int verbose_level);
+			layered_graph *G, int id,
+			int verbose_level);
 	void find_all_parents(
 			layered_graph *G, std::vector<int> &All_Parents,
 			int verbose_level);
@@ -962,23 +963,6 @@ public:
 
 };
 
-void call_back_colored_graph_clique_found(
-		clique_finder *CF,
-	int verbose_level);
-void call_back_colored_graph_add_point(
-		clique_finder *CF,
-	int current_clique_size, int *current_clique, 
-	int pt, int verbose_level);
-void call_back_colored_graph_delete_point(
-		clique_finder *CF,
-	int current_clique_size, int *current_clique, 
-	int pt, int verbose_level);
-int call_back_colored_graph_find_candidates(
-		clique_finder *CF,
-	int current_clique_size, int *current_clique, 
-	int nb_pts, int &reduced_nb_pts, 
-	int *pt_list, int *pt_list_inv, 
-	int *candidates, int verbose_level);
 
 
 }}}

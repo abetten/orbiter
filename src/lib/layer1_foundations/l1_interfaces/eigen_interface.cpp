@@ -20,7 +20,8 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
-void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level)
+void orbiter_eigenvalues(
+		int *Mtx, int nb_points, double *E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

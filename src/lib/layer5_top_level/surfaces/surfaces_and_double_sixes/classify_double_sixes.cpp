@@ -428,7 +428,8 @@ void classify_double_sixes::upstep(
 	ring_theory::longinteger_object go;
 	Five_p1->A->group_order(go);
 
-	Double_sixes->init(Five_p1->A,
+	Double_sixes->init(
+			Five_p1->A,
 			Five_p1->A2,
 			Flag_orbits->nb_flag_orbits,
 			12, go,
@@ -568,8 +569,7 @@ void classify_double_sixes::upstep(
 
 				if (Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit
 						!= orbit_index) {
-					cout << "Flag_orbits->Flag_orbit_node[f2].downstep_"
-							"primary_orbit != orbit_index" << endl;
+					cout << "Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit != orbit_index" << endl;
 					exit(1);
 				}
 

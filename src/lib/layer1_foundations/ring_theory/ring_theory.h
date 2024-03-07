@@ -605,16 +605,20 @@ public:
 	~longinteger_object();
 	void freeself();
 
-	char &ith(int i) { return r[i]; };
+	char &ith(
+			int i) { return r[i]; };
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
-	void create(long int i);
+	void create(
+			long int i);
 	void create_product(
 			int nb_factors, int *factors);
-	void create_power(int a, int e);
+	void create_power(
+			int a, int e);
 		// creates a^e
-	void create_power_minus_one(int a, int e);
+	void create_power_minus_one(
+			int a, int e);
 		// creates a^e  - 1
 	void create_from_base_b_representation(
 			int b, int *rep, int len);

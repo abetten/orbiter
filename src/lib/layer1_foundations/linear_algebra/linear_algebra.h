@@ -202,7 +202,8 @@ public:
 			int *A, int m, int n, int verbose_level);
 	void RREF_with_steps_latex(
 			field_theory::finite_field *F,
-			std::ostream &ost, int *A, int m, int n, int verbose_level);
+			std::ostream &ost, int *A, int m, int n,
+			int verbose_level);
 	int reverse_engineer_semilinear_map(
 			field_theory::finite_field *F,
 			int n,

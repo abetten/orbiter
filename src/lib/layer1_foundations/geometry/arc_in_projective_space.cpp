@@ -47,27 +47,191 @@ void arc_in_projective_space::init(
 	}
 }
 
-void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
-		long int *the_arc, int &size, int verbose_level)
+void arc_in_projective_space::create_arc_1_BCKM(
+		long int *&the_arc, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int frame_data[] = {1,0,0, 0,1,0,  0,0,1,  1,1,1 };
-	int frame[4];
-	int i, j, b, h, idx;
-	int L[3];
+	int i;
+	long int b, rk_Q;
 	int v[3];
-	data_structures::sorting Sorting;
+	vector<long int> Pts;
 
 	if (P->Subspaces->n != 2) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1 "
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
 				"P->n != 2" << endl;
 		exit(1);
 	}
-	if (P->Subspaces->q != 8) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1 "
-				"P->q != 8" << endl;
+	if (P->Subspaces->F->p != 2) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"we must be in characteristic 2" << endl;
 		exit(1);
 	}
+
+	long int *Hyperoval;
+	int hyperoval_size;
+	int frob_power;
+	number_theory::number_theory_domain NT;
+
+
+	hyperoval_size = P->Subspaces->q + 2;
+	Hyperoval = NEW_lint(hyperoval_size);
+
+	for (frob_power = 1; frob_power < P->Subspaces->F->e; frob_power++) {
+		if (NT.gcd_lint(frob_power, P->Subspaces->F->e) == 1) {
+			break;
+		}
+	}
+	if (frob_power == P->Subspaces->F->e) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"could not determine the Frobenius power e" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"frob_power = " << frob_power << endl;
+	}
+
+	for (i = 0; i < P->Subspaces->q + 2; i++) {
+		if (i == P->Subspaces->q) {
+			v[0] = 1;
+			v[1] = 0;
+			v[2] = 0;
+		}
+		else if (i == P->Subspaces->q + 1) {
+			v[0] = 0;
+			v[1] = 1;
+			v[2] = 0;
+		}
+		else {
+			v[0] = P->Subspaces->F->frobenius_power(
+					i, frob_power);
+			v[1] = i;
+			v[2] = 1;
+		}
+		b = P->rank_point(v);
+		Hyperoval[i] = b;
+	}
+
+
+	int intersection_number = 0;
+	std::vector<long int> External_lines;
+	std::vector<long int> External_lines_without;
+
+	P->Subspaces->find_lines_by_intersection_number(
+			Hyperoval, hyperoval_size,
+		intersection_number,
+		External_lines,
+		verbose_level);
+
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"number of external lines = " << External_lines.size() << endl;
+	}
+
+	v[0] = 1;
+	v[1] = 1;
+	v[2] = 0;
+	rk_Q = P->rank_point(v);
+
+	long int *line_pencil;
+	int line_pencil_size;
+
+	line_pencil_size = P->Subspaces->q + 1;
+	line_pencil = NEW_lint(line_pencil_size);
+
+
+
+	P->Subspaces->create_lines_on_point(
+			rk_Q,
+			line_pencil, 0 /* verbose_level */);
+
+
+	data_structures::algorithms Algorithms;
+
+	Algorithms.set_minus(
+			External_lines, line_pencil, line_pencil_size,
+			External_lines_without,
+			0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"number of external lines after removing the "
+				"pencil of Q = " << External_lines_without.size() << endl;
+	}
+
+	long int line_at_infinity_rk = 0;
+	long int pt;
+	long int pt_N, pt_Nprime;
+	long int line_rk;
+
+	vector<long int> N1, N2;
+
+	pt_N = 1; // (0,1,0)
+	pt_Nprime = 0; // (1,0,0)
+
+
+	for (i = 0; i < P->Subspaces->q; i++) {
+		pt = Hyperoval[i];
+		if (P->Subspaces->F->absolute_trace(i) == 0) {
+			line_rk = P->Subspaces->line_through_two_points(
+						pt, pt_N);
+			N1.push_back(line_rk);
+		}
+	}
+
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"size of N1 = " << N1.size() << endl;
+	}
+
+	for (i = 0; i < P->Subspaces->q; i++) {
+		pt = Hyperoval[i];
+		if (P->Subspaces->F->absolute_trace(i) == 1) {
+			line_rk = P->Subspaces->line_through_two_points(
+						pt, pt_Nprime);
+			N2.push_back(line_rk);
+		}
+	}
+
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"size of N2 = " << N2.size() << endl;
+	}
+
+	size = 1 + N1.size() + N2.size() + External_lines_without.size();
+	vector<long int> A;
+
+	A.push_back(line_at_infinity_rk);
+	for (i = 0; i < N1.size(); i++) {
+		A.push_back(N1[i]);
+	}
+	for (i = 0; i < N2.size(); i++) {
+		A.push_back(N2[i]);
+	}
+	for (i = 0; i < External_lines_without.size(); i++) {
+		A.push_back(External_lines_without[i]);
+	}
+	if (f_v) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"size of A = " << A.size() << endl;
+	}
+	if (A.size() != size) {
+		cout << "arc_in_projective_space::create_arc_1_BCKM "
+				"A.size() != size" << endl;
+		exit(1);
+	}
+
+	the_arc = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		line_rk = A[i];
+		pt = P->Subspaces->Standard_polarity->Hyperplane_to_point[line_rk];
+		the_arc[i] = pt;
+	}
+
+	FREE_lint(line_pencil);
+
+
+#if 0
 	for (i = 0; i < 4; i++) {
 		frame[i] = P->rank_point(frame_data + i * 3);
 	}
@@ -86,73 +250,72 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
 	}
 
-	size = 0;
+	// collect the 3*q points on the projective triangle:
+
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
 			b = P->Subspaces->Implementation->lines(L[h], i);
-			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
-				continue;
-			}
-			for (j = size; j > idx; j--) {
-				the_arc[j] = the_arc[j - 1];
-			}
-			the_arc[idx] = b;
-			size++;
+			Pts.push_back(b);
 		}
 	}
 	if (f_v) {
-		cout << "there are " << size << " points on the three lines: ";
+		cout << "there are " << Pts.size() << " points on the three lines: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
 
+
+	// add the q points (1,t,t^2), t in F_q
+	// one of them lies on the projective triangle.
 
 	for (i = 1; i < P->Subspaces->q; i++) {
 		v[0] = 1;
 		v[1] = i;
 		v[2] = P->Subspaces->F->mult(i, i);
 		b = P->rank_point(v);
-		if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
-			continue;
-		}
-		for (j = size; j > idx; j--) {
-			the_arc[j] = the_arc[j - 1];
-		}
-		the_arc[idx] = b;
-		size++;
-
+		Pts.push_back(b);
 	}
 
+
+	Algorithms.filter_duplicates_and_make_array_of_long_int(
+			Pts, the_arc, size,
+			0 /*verbose_level */);
+
+#endif
+
+
 	if (f_v) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1: "
-				"after adding the rest of the "
-				"conic, there are " << size << " points on the arc: ";
+		cout << "arc_in_projective_space::create_arc_1_BCKM: "
+				"created arc of size =  " << size << " : ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
 }
 
-void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
-		long int *the_arc, int &size, int verbose_level)
+void arc_in_projective_space::create_arc_2_BCKM(
+		long int *&the_arc, int &size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int frame_data[] = {1,0,0, 0,1,0,  0,0,1,  1,1,1 };
 	int frame[4];
-	int i, j, b, h, idx;
+	int i, h;
+	long int b;
 	int L[3];
 	int v[3];
-	data_structures::sorting Sorting;
+	vector<long int> Pts;
 
 	if (P->Subspaces->n != 2) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2 "
+		cout << "arc_in_projective_space::create_arc_2_BCKM "
 				"P->n != 2" << endl;
 		exit(1);
 	}
+#if 0
 	if (P->Subspaces->q != 8) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2 "
+		cout << "arc_in_projective_space::create_arc_2_BCKM "
 				"P->q != 8" << endl;
 		exit(1);
 	}
+#endif
 	for (i = 0; i < 4; i++) {
 		frame[i] = P->rank_point(frame_data + i * 3);
 	}
@@ -171,22 +334,14 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
 	}
 
-	size = 0;
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < P->Subspaces->r; i++) {
 			b = P->Subspaces->Implementation->lines(L[h], i);
-			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
-				continue;
-			}
-			for (j = size; j > idx; j--) {
-				the_arc[j] = the_arc[j - 1];
-			}
-			the_arc[idx] = b;
-			size++;
+			Pts.push_back(b);
 		}
 	}
 	if (f_v) {
-		cout << "there are " << size << " points on the three lines: ";
+		cout << "there are " << Pts.size() << " points on the three lines: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
@@ -204,25 +359,58 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 			v[2] = P->Subspaces->F->mult(i, i);
 		}
 		b = P->rank_point(v);
-		if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
-			continue;
-		}
-		for (j = size; j > idx; j--) {
-			the_arc[j] = the_arc[j - 1];
-		}
-		the_arc[idx] = b;
-		size++;
+		Pts.push_back(b);
 
 	}
 
+	data_structures::algorithms Algorithms;
+
+	Algorithms.filter_duplicates_and_make_array_of_long_int(
+			Pts, the_arc, size,
+			0 /*verbose_level */);
+
+
 	if (f_v) {
-		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2: "
+		cout << "arc_in_projective_space::create_arc_2_BCKM: "
 				"after adding the rest of the conic, "
 				"there are " << size << " points on the arc: ";
 		Lint_vec_print(cout, the_arc, size);
 		cout << endl;
 	}
 }
+
+void arc_in_projective_space::create_Maruta_Hamada_arc(
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int N;
+
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc" << endl;
+	}
+	if (P->Subspaces->n != 2) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
+				"P->n != 2" << endl;
+		exit(1);
+	}
+
+	N = P->Subspaces->N_points;
+	Pts = NEW_lint(N);
+
+	create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
+
+	label_tex = "Maruta_Hamada_arc2_q" + std::to_string(P->Subspaces->q);
+	label_tex = "Maruta\\_Hamada\\_arc2\\_q" + std::to_string(P->Subspaces->q);
+
+	//FREE_int(Pts);
+	if (f_v) {
+		cout << "arc_in_projective_space::create_Maruta_Hamada_arc done" << endl;
+	}
+}
+
 
 void arc_in_projective_space::create_Maruta_Hamada_arc(
 	long int *the_arc, int &size, int verbose_level)
@@ -1127,8 +1315,11 @@ void arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
 	int i, j, h, a, line;
+
+	// other_lines is the complement of s_lines
 	long int *other_lines;
 	int nb_other_lines;
+
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -1429,7 +1620,8 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 	Lint_vec_copy(u_lines, other_lines + nb_s_lines + nb_t_lines, nb_u_lines);
 	Sorting.lint_vec_heapsort(other_lines, nb_s_lines + nb_t_lines + nb_u_lines);
 
-	Combi.set_complement_lint(other_lines, nb_s_lines + nb_t_lines + nb_u_lines,
+	Combi.set_complement_lint(
+			other_lines, nb_s_lines + nb_t_lines + nb_u_lines,
 			other_lines + nb_s_lines + nb_t_lines + nb_u_lines, nb_other_lines,
 			P->Subspaces->N_lines);
 
@@ -2325,38 +2517,6 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		exit(1);
 	}
 
-}
-
-void arc_in_projective_space::create_Maruta_Hamada_arc(
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int N;
-
-	if (f_v) {
-		cout << "arc_in_projective_space::create_Maruta_Hamada_arc" << endl;
-	}
-	if (P->Subspaces->n != 2) {
-		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
-				"P->n != 2" << endl;
-		exit(1);
-	}
-
-	N = P->Subspaces->N_points;
-	Pts = NEW_lint(N);
-
-	create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
-
-	label_tex = "Maruta_Hamada_arc2_q" + std::to_string(P->Subspaces->q);
-	label_tex = "Maruta\\_Hamada\\_arc2\\_q" + std::to_string(P->Subspaces->q);
-
-	//FREE_int(Pts);
-	if (f_v) {
-		cout << "arc_in_projective_space::create_Maruta_Hamada_arc done" << endl;
-	}
 }
 
 int arc_in_projective_space::arc_test(

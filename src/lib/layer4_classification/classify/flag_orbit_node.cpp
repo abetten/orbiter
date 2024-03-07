@@ -200,7 +200,7 @@ void flag_orbit_node::read_file(
 
 void flag_orbit_node::print_latex(
 		flag_orbits *Flag_orbits,
-		ostream &ost,
+		std::ostream &ost,
 		int f_print_stabilizer_gens)
 {
 	ring_theory::longinteger_object go;
@@ -243,6 +243,52 @@ void flag_orbit_node::print_latex(
 		}
 	}
 }
+
+void flag_orbit_node::print(
+		flag_orbits *Flag_orbits,
+		int f_print_stabilizer_gens)
+{
+	ring_theory::longinteger_object go;
+
+	cout << "Flag orbit " << flag_orbit_index << " / " << Flag_orbits->nb_flag_orbits
+			<< " down=(" << downstep_primary_orbit
+			<< "," << downstep_secondary_orbit
+			<< ")"
+			<< " up=(" << upstep_primary_orbit
+			<< "," << upstep_secondary_orbit
+			<< ")";
+	if (f_fusion_node) {
+		cout << " fuse to " << fusion_with;
+	}
+	cout << " is ";
+
+	Lint_vec_print(cout, Flag_orbits->Pt +
+			flag_orbit_index * Flag_orbits->pt_representation_sz,
+			Flag_orbits->pt_representation_sz);
+
+	cout << " with a stabilizer of order ";
+	gens->group_order(go);
+	cout << go << "\\\\" << endl;
+	if (f_print_stabilizer_gens) {
+		gens->print_generators_tex(cout);
+	}
+	if (f_fusion_node) {
+		cout << "Fusion element:\\\\" << endl;
+		cout << "$$" << endl;
+		Flag_orbits->A->Group_element->element_print_latex(fusion_elt, cout);
+		cout << "$$" << endl;
+	}
+
+	cout << "nb received = " << nb_received << "\\\\" << endl;
+
+	if (nb_received) {
+		if (Flag_orbits->func_latex_report_trace) {
+			(*Flag_orbits->func_latex_report_trace)(cout, Receptacle[0],
+					Flag_orbits->free_received_trace_data, 0 /*verbose_level*/);
+		}
+	}
+}
+
 
 }}}
 

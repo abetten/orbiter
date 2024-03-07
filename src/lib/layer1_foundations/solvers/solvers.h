@@ -601,56 +601,81 @@ public:
 	void init(
 			dlx_problem_description *Descr,
 			int verbose_level);
-	int dataLeft(int i);
-	int dataRight(int i);
-	int dataUp(int i);
-	int dataDown(int i);
+	int dataLeft(
+			int i);
+	int dataRight(
+			int i);
+	int dataUp(
+			int i);
+	int dataDown(
+			int i);
 	void install_callback_solution_found(
 		void (*callback_solution_found)(
 				int *solution, int len, int nb_sol, void *data),
 		void *callback_solution_found_data);
 	void de_install_callback_solution_found();
 	void Test();
-	void TransposeAppendAndSolve(int *Data, int nb_rows, int nb_cols,
+	void TransposeAppendAndSolve(
+			int *Data, int nb_rows, int nb_cols,
 		int verbose_level);
-	void TransposeAndSolveRHS(int *Data, int nb_rows, int nb_cols,
+	void TransposeAndSolveRHS(
+			int *Data, int nb_rows, int nb_cols,
 		int *RHS, int f_has_type, diophant_equation_type *type,
 		int verbose_level);
-	void AppendRowAndSolve(int *Data, int nb_rows, int nb_cols,
+	void AppendRowAndSolve(
+			int *Data, int nb_rows, int nb_cols,
 		int verbose_level);
-	void AppendRowAndSolveRHS(int *Data, int nb_rows, int nb_cols,
+	void AppendRowAndSolveRHS(
+			int *Data, int nb_rows, int nb_cols,
 		int *RHS, int f_has_type, diophant_equation_type *type,
 		int verbose_level);
-	void Solve(int verbose_level);
-	void Solve_with_RHS(int *RHS, int f_has_type,
+	void Solve(
+			int verbose_level);
+	void Solve_with_RHS(
+			int *RHS, int f_has_type,
 			diophant_equation_type *type,
 		int verbose_level);
-	void open_solution_file(int verbose_level);
+	void open_solution_file(
+			int verbose_level);
 	void close_solution_file();
-	void open_tree_file(int verbose_level);
+	void open_tree_file(
+			int verbose_level);
 	void close_tree_file();
-	void Create_RHS(int nb_cols, int *RHS, int f_has_type,
+	void Create_RHS(
+			int nb_cols, int *RHS, int f_has_type,
 			diophant_equation_type *type, int verbose_level);
 	void Delete_RHS();
-	void CreateMatrix(int *Data,
+	void CreateMatrix(
+			int *Data,
 			int nb_rows, int nb_cols, int verbose_level);
 	void DeleteMatrix();
-	dlx_node *get_column_header(int c);
+	dlx_node *get_column_header(
+			int c);
 	dlx_node *ChooseColumnFancy();
 	dlx_node *ChooseColumn();
 	dlx_node *ChooseColumnFancyRHS();
 	dlx_node *ChooseColumnRHS();
-	void write_tree(int k);
-	void print_if_necessary(int k);
-	void process_solution(int k);
-	void count_nb_choices(int k, dlx_node *Column);
+	void write_tree(
+			int k);
+	void print_if_necessary(
+			int k);
+	void process_solution(
+			int k);
+	void count_nb_choices(
+			int k, dlx_node *Column);
 	int IsDone();
-	int IsColumnDone(int c);
-	int IsColumnNotDone(int c);
-	void Search(int k);
-	void SearchRHS(int k, int verbose_level);
-	void Cover(dlx_node *ColNode);
-	void UnCover(dlx_node *ColNode);
+	int IsColumnDone(
+			int c);
+	int IsColumnNotDone(
+			int c);
+	void Search(
+			int k);
+	void SearchRHS(
+			int k, int verbose_level);
+	void Cover(
+			dlx_node *ColNode);
+	void UnCover(
+			dlx_node *ColNode);
 
 
 
@@ -710,10 +735,12 @@ namespace mckay {
 	class tMCKAY {
 	public:
 		tMCKAY();
-		void Init(diophant *lgs,
+		void Init(
+				diophant *lgs,
 				std::string &label,
 			int aEqnAnz, int aVarAnz);
-		void possolve(std::vector<int> &lo, std::vector<int> &hi,
+		void possolve(
+				std::vector<int> &lo, std::vector<int> &hi,
 				std::vector<equation> &eqn,
 				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<int> &neqn, int numeqn, int numvar,
@@ -725,41 +752,50 @@ namespace mckay {
 		std::string problem_label;
 
 	protected:
-		bool subtract(int eqn1, equation &e1, int l1, int lors1, 
+		bool subtract(
+				int eqn1, equation &e1, int l1, int lors1,
 			int hirs1, int eqn2, equation &e2, int *pl2, 
 			int *plors2, int *phirs2, int verbose_level);
-		void pruneqn(std::vector<int> &lo, std::vector<int> &hi,
+		void pruneqn(
+				std::vector<int> &lo, std::vector<int> &hi,
 				int numvar,
 				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 				int numeqn, int verbose_level);
-		void varprune(std::vector<int> &lo, std::vector<int> &hi,
+		void varprune(
+				std::vector<int> &lo, std::vector<int> &hi,
 				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int verbose_level);
-		void puteqns(std::vector<int> &lo, std::vector<int> &hi,
+		void puteqns(
+				std::vector<int> &lo, std::vector<int> &hi,
 			int numvar, 
 			std::vector<int> &lorhs, std::vector<int> &hirhs,
 			std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn);
-		int divideeqns(std::vector<int> &lorhs, std::vector<int> &hirhs,
+		int divideeqns(
+				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn);
-		int gcd(int n1,int n2);
-		void solve(int level, 
+		int gcd(
+				int n1,int n2);
+		void solve(
+				int level,
 				std::vector<int> &alo, std::vector<int> &ahi,
 				std::vector<bool> &aactive, int numvar,
 				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int verbose_level);
-		int restrict_variables(int level, 
+		int restrict_variables(
+				int level,
 				std::vector<int> &lo, std::vector<int> &hi,
 				std::vector<bool> &active, int numvar,
 				std::vector<int> &lorhs, std::vector<int> &hirhs,
 				std::vector<equation> &eqn, std::vector<int> &neqn,
 			int numeqn, int &f_restriction_made, 
 			int verbose_level);
-		void log_12l(long int current_node, int level);
+		void log_12l(
+				long int current_node, int level);
 
 		int _eqnanz;
 		int _varanz;

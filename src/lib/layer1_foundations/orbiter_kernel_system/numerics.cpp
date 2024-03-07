@@ -33,7 +33,8 @@ numerics::~numerics()
 
 }
 
-void numerics::vec_print(double *a, int len)
+void numerics::vec_print(
+		double *a, int len)
 {
 	int i;
 	
@@ -277,7 +278,8 @@ int numerics::Gauss_elimination(
 	return rank;
 }
 
-void numerics::print_system(double *A, int m, int n)
+void numerics::print_system(
+		double *A, int m, int n)
 {
 	int i, j;
 	
@@ -290,7 +292,8 @@ void numerics::print_system(double *A, int m, int n)
 	}
 }
 
-void numerics::get_kernel(double *M, int m, int n,
+void numerics::get_kernel(
+		double *M, int m, int n,
 	int *base_cols, int nb_base_cols, 
 	int &kernel_m, int &kernel_n, 
 	double *kernel)
@@ -379,7 +382,8 @@ void numerics::get_kernel(double *M, int m, int n,
 	FREE_int(kcol);
 }
 
-int numerics::Null_space(double *M, int m, int n, double *K,
+int numerics::Null_space(
+		double *M, int m, int n, double *K,
 	int verbose_level)
 // K will be k x n
 // where k is the return value.
@@ -423,7 +427,8 @@ int numerics::Null_space(double *M, int m, int n, double *K,
 	return kernel_n;
 }
 
-void numerics::vec_normalize_from_back(double *v, int len)
+void numerics::vec_normalize_from_back(
+		double *v, int len)
 {
 	int i, j;
 	double av;
@@ -886,7 +891,8 @@ void numerics::mult_matrix_matrix(
 	}
 }
 
-void numerics::print_matrix_3x3(double *R)
+void numerics::print_matrix_3x3(
+		double *R)
 {
 	int i, j;
 
@@ -898,7 +904,8 @@ void numerics::print_matrix_3x3(double *R)
 		}
 }
 
-void numerics::print_matrix(double *R, int m, int n)
+void numerics::print_matrix(
+		double *R, int m, int n)
 {
 	int i, j;
 
@@ -910,7 +917,8 @@ void numerics::print_matrix(double *R, int m, int n)
 	}
 }
 
-void numerics::make_Rz(double *R, double phi)
+void numerics::make_Rz(
+		double *R, double phi)
 {
 	double c, s;
 	int i;
@@ -2129,7 +2137,8 @@ void numerics::eigenvalues(
 	}
 }
 
-void numerics::eigenvectors(double *A, double *Basis,
+void numerics::eigenvectors(
+		double *A, double *Basis,
 		int n, double *lambda, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2219,12 +2228,14 @@ void numerics::eigenvectors(double *A, double *Basis,
 	}
 }
 
-double numerics::rad2deg(double phi)
+double numerics::rad2deg(
+		double phi)
 {
 	return phi * 180. / M_PI;
 }
 
-void numerics::vec_copy(double *from, double *to, int len)
+void numerics::vec_copy(
+		double *from, double *to, int len)
 {
 	int i;
 	double *p, *q;
@@ -2234,7 +2245,8 @@ void numerics::vec_copy(double *from, double *to, int len)
 		}
 }
 
-void numerics::vec_swap(double *from, double *to, int len)
+void numerics::vec_swap(
+		double *from, double *to, int len)
 {
 	int i;
 	double *p, *q;
@@ -2247,7 +2259,8 @@ void numerics::vec_swap(double *from, double *to, int len)
 		}
 }
 
-void numerics::vec_print(std::ostream &ost, double *v, int len)
+void numerics::vec_print(
+		std::ostream &ost, double *v, int len)
 {
 	int i;
 
@@ -2260,21 +2273,24 @@ void numerics::vec_print(std::ostream &ost, double *v, int len)
 	ost << " )";
 }
 
-void numerics::vec_scan(const char *s, double *&v, int &len)
+void numerics::vec_scan(
+		const char *s, double *&v, int &len)
 {
 
 	istringstream ins(s);
 	vec_scan_from_stream(ins, v, len);
 }
 
-void numerics::vec_scan(std::string &s, double *&v, int &len)
+void numerics::vec_scan(
+		std::string &s, double *&v, int &len)
 {
 
 	istringstream ins(s);
 	vec_scan_from_stream(ins, v, len);
 }
 
-void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
+void numerics::vec_scan_from_stream(
+		std::istream & is, double *&v, int &len)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -2385,7 +2401,8 @@ void numerics::vec_scan_from_stream(istream & is, double *&v, int &len)
 
 #include <math.h>
 
-double numerics::cos_grad(double phi)
+double numerics::cos_grad(
+		double phi)
 {
 	double x;
 
@@ -2393,7 +2410,8 @@ double numerics::cos_grad(double phi)
 	return cos(x);
 }
 
-double numerics::sin_grad(double phi)
+double numerics::sin_grad(
+		double phi)
 {
 	double x;
 
@@ -2401,7 +2419,8 @@ double numerics::sin_grad(double phi)
 	return sin(x);
 }
 
-double numerics::tan_grad(double phi)
+double numerics::tan_grad(
+		double phi)
 {
 	double x;
 
@@ -2409,7 +2428,8 @@ double numerics::tan_grad(double phi)
 	return tan(x);
 }
 
-double numerics::atan_grad(double x)
+double numerics::atan_grad(
+		double x)
 {
 	double y, phi;
 
@@ -2588,7 +2608,8 @@ void numerics::intersect_circle_line(
 	y2 = (-a * x2 - c) / b;
 }
 
-void numerics::affine_combination(double *X, double *Y,
+void numerics::affine_combination(
+		double *X, double *Y,
 		int pt0, int pt1, int pt2, double alpha, int new_pt)
 //X[new_pt] = X[pt0] + alpha * (X[pt2] - X[pt1]);
 //Y[new_pt] = Y[pt0] + alpha * (Y[pt2] - Y[pt1]);

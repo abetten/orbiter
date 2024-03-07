@@ -47,13 +47,15 @@ flag_orbits::~flag_orbits()
 	}
 	if (Flag_orbit_node) {
 		if (f_v) {
-			cout << "flag_orbits::~flag_orbits before FREE_OBJECTS(Flag_orbit_node)" << endl;
+			cout << "flag_orbits::~flag_orbits "
+					"before FREE_OBJECTS(Flag_orbit_node)" << endl;
 		}
 		FREE_OBJECTS(Flag_orbit_node);
 	}
 	if (Pt) {
 		if (f_v) {
-			cout << "flag_orbits::~flag_orbits before FREE_lint(Pt)" << endl;
+			cout << "flag_orbits::~flag_orbits "
+					"before FREE_lint(Pt)" << endl;
 		}
 		FREE_lint(Pt);
 	}
@@ -62,10 +64,12 @@ flag_orbits::~flag_orbits()
 	}
 }
 
-void flag_orbits::init(actions::action *A,
+void flag_orbits::init(
+		actions::action *A,
 		actions::action *A2,
 	int nb_primary_orbits_lower, 
-	int pt_representation_sz, int nb_flag_orbits, 
+	int pt_representation_sz,
+	int nb_flag_orbits,
 	int upper_bound_for_number_of_traces,
 	void (*func_to_free_received_trace)(
 			void *trace_result, void *data, int verbose_level),
@@ -97,7 +101,8 @@ void flag_orbits::init(actions::action *A,
 	}
 }
 
-int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
+int flag_orbits::find_node_by_po_so(
+		int po, int so, int &idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -175,7 +180,8 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 	return f_found;
 }
 
-void flag_orbits::write_file(ofstream &fp, int verbose_level)
+void flag_orbits::write_file(
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 1);
@@ -197,7 +203,8 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 		fp.write((char *) &Pt[i], sizeof(long int));
 	}
 	if (f_v) {
-		cout << "flag_orbits::write_file writing " << nb_flag_orbits << " nodes" << endl;
+		cout << "flag_orbits::write_file writing "
+				<< nb_flag_orbits << " nodes" << endl;
 	}
 	for (i = 0; i < nb_flag_orbits; i++) {
 		Flag_orbit_node[i].write_file(fp, 0 /*verbose_level*/);
@@ -208,7 +215,8 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 	}
 }
 
-void flag_orbits::read_file(ifstream &fp,
+void flag_orbits::read_file(
+		std::ifstream &fp,
 		actions::action *A, actions::action *A2,
 		int verbose_level)
 {
@@ -236,7 +244,8 @@ void flag_orbits::read_file(ifstream &fp,
 	}
 
 	if (f_v) {
-		cout << "flag_orbits::read_file reading " << nb_flag_orbits << " nodes" << endl;
+		cout << "flag_orbits::read_file reading "
+				<< nb_flag_orbits << " nodes" << endl;
 	}
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
@@ -254,8 +263,10 @@ void flag_orbits::read_file(ifstream &fp,
 	}
 }
 
-void flag_orbits::print_latex(std::ostream &ost,
-	std::string &title, int f_print_stabilizer_gens)
+void flag_orbits::print_latex(
+		std::ostream &ost,
+	std::string &title,
+	int f_print_stabilizer_gens)
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
@@ -268,9 +279,12 @@ void flag_orbits::print_latex(std::ostream &ost,
 	ost << "\\subsection*{" << title << "}" << endl;
 
 
-	ost << "The number of primary orbits below is " << nb_primary_orbits_lower << "\\\\" << endl;
-	ost << "The number of primary orbits above is " << nb_primary_orbits_upper << "\\\\" << endl;
-	ost << "The number of flag orbits is " << nb_flag_orbits << "\\\\" << endl;
+	ost << "The number of primary orbits below is "
+			<< nb_primary_orbits_lower << "\\\\" << endl;
+	ost << "The number of primary orbits above is "
+			<< nb_primary_orbits_upper << "\\\\" << endl;
+	ost << "The number of flag orbits is "
+			<< nb_flag_orbits << "\\\\" << endl;
 
 	int i;
 
@@ -286,6 +300,40 @@ void flag_orbits::print_latex(std::ostream &ost,
 	ost << "\\end{enumerate}" << endl;
 
 }
+
+void flag_orbits::print()
+{
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "flag_orbits::print_latex" << endl;
+	}
+
+	cout << "Flag orbits:" << endl;
+
+
+	cout << "The number of primary orbits below is "
+			<< nb_primary_orbits_lower << "\\\\" << endl;
+	cout << "The number of primary orbits above is "
+			<< nb_primary_orbits_upper << "\\\\" << endl;
+	cout << "The number of flag orbits is "
+			<< nb_flag_orbits << "\\\\" << endl;
+
+	int i;
+
+	cout << "The flag orbits are:" << endl;
+	for (i = 0; i < nb_flag_orbits; i++) {
+		flag_orbit_node *F;
+
+		F = &Flag_orbit_node[i];
+		cout << i << " : " << endl;
+		F->print(this, false /* f_print_stabilizer_gens*/);
+	}
+
+}
+
+
 
 
 }}}

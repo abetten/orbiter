@@ -137,7 +137,8 @@ void module::multiply_2by2_from_the_right(
 int module::clean_column(
 		data_structures::int_matrix *M,
 		data_structures::int_matrix *P,
-		data_structures::int_matrix *Pv, int i, int verbose_level)
+		data_structures::int_matrix *Pv,
+		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -567,7 +568,8 @@ void module::smith_normal_form(
 
 void module::apply(
 		int *input, int *output, int *perm,
-		int module_dimension_m, int module_dimension_n, int *module_basis,
+		int module_dimension_m, int module_dimension_n,
+		int *module_basis,
 		int *v1, int *v2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

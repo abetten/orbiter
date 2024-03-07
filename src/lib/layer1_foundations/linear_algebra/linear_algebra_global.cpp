@@ -944,7 +944,8 @@ void linear_algebra_global::RREF_demo(
 
 void linear_algebra_global::RREF_with_steps_latex(
 		field_theory::finite_field *F,
-		std::ostream &ost, int *A, int m, int n, int verbose_level)
+		std::ostream &ost, int *A, int m, int n,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *base_cols;

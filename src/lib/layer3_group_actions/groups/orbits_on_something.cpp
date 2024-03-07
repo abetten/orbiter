@@ -341,6 +341,26 @@ void orbits_on_something::stabilizer_any_point(
 
 }
 
+void orbits_on_something::stabilizer_of_orbit_representative(
+		int orbit_idx, strong_generators *&Stab,
+		int &orbit_rep,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::stabilizer_of_orbit_representative" << endl;
+	}
+
+	orbit_rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+
+	stabilizer_of(orbit_idx, Stab, verbose_level);
+
+	if (f_v) {
+		cout << "orbits_on_something::stabilizer_of_orbit_representative done" << endl;
+	}
+}
+
 
 void orbits_on_something::stabilizer_of(
 		int orbit_idx, strong_generators *&Stab,
@@ -1999,6 +2019,31 @@ void orbits_on_something::get_orbit_number_and_position(
 		cout << "orbits_on_something::get_orbit_number_and_position done" << endl;
 	}
 }
+
+int orbits_on_something::get_orbit_rep(
+		int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rep;
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep" << endl;
+	}
+
+	if (orbit_idx >= Sch->nb_orbits) {
+		cout << "orbits_on_something::get_orbit_rep "
+				"orbit_idx >= Sch->nb_orbits" << endl;
+		exit(1);
+	}
+	rep = Sch->orbit[Sch->orbit_first[orbit_idx]];
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep done" << endl;
+	}
+	return rep;
+
+}
+
 
 
 

@@ -543,6 +543,48 @@ void geometric_object_create::init(
 					"after F->create_segre_variety" << endl;
 		}
 	}
+	else if (Descr->f_arc1_BCKM) {
+		if (f_v) {
+			cout << "geometric_object_create::init f_arc1_BCKM" << endl;
+		}
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_arc_1_BCKM" << endl;
+		}
+		P->Arc_in_projective_space->create_arc_1_BCKM(
+			Pts, nb_pts,
+			verbose_level);
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_arc_1_BCKM" << endl;
+		}
+
+		label_txt = "arc1_BCKM_q" + std::to_string(P->Subspaces->q);
+		label_tex = "arc1\\_BCKM\\_q" + std::to_string(P->Subspaces->q);
+
+
+	}
+	else if (Descr->f_arc2_BCKM) {
+		if (f_v) {
+			cout << "geometric_object_create::init f_arc2_BCKM" << endl;
+		}
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"before P->Arc_in_projective_space->create_arc_2_BCKM" << endl;
+		}
+		P->Arc_in_projective_space->create_arc_2_BCKM(
+			Pts, nb_pts,
+			verbose_level);
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"after P->Arc_in_projective_space->create_arc_2_BCKM" << endl;
+		}
+
+		label_txt = "arc2_BCKM_q" + std::to_string(P->Subspaces->q);
+		label_tex = "arc2\\_BCKM\\_q" + std::to_string(P->Subspaces->q);
+
+
+	}
 	else if (Descr->f_Maruta_Hamada_arc) {
 		if (f_v) {
 			cout << "geometric_object_create::init "

@@ -109,10 +109,12 @@ public:
 
 	flag_orbits();
 	~flag_orbits();
-	void init(actions::action *A,
+	void init(
+			actions::action *A,
 			actions::action *A2,
 			int nb_primary_orbits_lower,
-			int pt_representation_sz, int nb_flag_orbits,
+			int pt_representation_sz,
+			int nb_flag_orbits,
 			int upper_bound_for_number_of_traces,
 			void (*func_to_free_received_trace)(
 					void *trace_result, void *data, int verbose_level),
@@ -121,14 +123,20 @@ public:
 					void *data, int verbose_level),
 			void *free_received_trace_data,
 			int verbose_level);
-	int find_node_by_po_so(int po, int so, int &idx,
+	int find_node_by_po_so(
+			int po, int so, int &idx,
 		int verbose_level);
-	void write_file(std::ofstream &fp, int verbose_level);
-	void read_file(std::ifstream &fp,
+	void write_file(
+			std::ofstream &fp, int verbose_level);
+	void read_file(
+			std::ifstream &fp,
 			actions::action *A, actions::action *A2,
 			int verbose_level);
-	void print_latex(std::ostream &ost,
-			std::string &title, int f_print_stabilizer_gens);
+	void print_latex(
+			std::ostream &ost,
+			std::string &title,
+			int f_print_stabilizer_gens);
+	void print();
 
 };
 
@@ -181,6 +189,9 @@ public:
 	void print_latex(
 			flag_orbits *Flag_orbits,
 			std::ostream &ost,
+			int f_print_stabilizer_gens);
+	void print(
+			flag_orbits *Flag_orbits,
 			int f_print_stabilizer_gens);
 
 };

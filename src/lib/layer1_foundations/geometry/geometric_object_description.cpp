@@ -94,6 +94,8 @@ geometric_object_description::geometric_object_description()
 	segre_variety_a = 0;
 	segre_variety_b = 0;
 
+	f_arc1_BCKM = false;
+	f_arc2_BCKM = false;
 	f_Maruta_Hamada_arc = false;
 
 	f_projective_variety = false;
@@ -309,6 +311,14 @@ int geometric_object_description::read_arguments(
 			segre_variety_b = ST.strtoi(argv[++i]);
 			cout << "-segre_variety " << segre_variety_a
 					<< " " << segre_variety_b << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-arc1_BCKM") == 0) {
+			f_arc1_BCKM = true;
+			cout << "-arc1_BCKM " << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-arc2_BCKM") == 0) {
+			f_arc2_BCKM = true;
+			cout << "-arc2_BCKM " << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-Maruta_Hamada_arc") == 0) {
 			f_Maruta_Hamada_arc = true;

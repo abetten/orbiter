@@ -201,24 +201,43 @@ void ancestry_tree::read_gedcom(
 		cout << "setting up Family[] done" << endl;
 	}
 
+
+
 	if (f_v) {
-		cout << "ancestry_tree::read_gedcom before get_connnections" << endl;
+		cout << "ancestry_tree::read_gedcom "
+				"before get_connnections" << endl;
 	}
 	get_connnections(verbose_level);
 	if (f_v) {
-		cout << "ancestry_tree::read_gedcom after get_connnections" << endl;
+		cout << "ancestry_tree::read_gedcom "
+				"after get_connnections" << endl;
 	}
 
 	graph_theory::layered_graph *L;
 
 	if (f_v) {
-		cout << "ancestry_tree::read_gedcom before create_poset" << endl;
+		cout << "ancestry_tree::read_gedcom "
+				"before create_poset" << endl;
 	}
 	create_poset(L, verbose_level);
 	if (f_v) {
-		cout << "ancestry_tree::read_gedcom after create_poset" << endl;
+		cout << "ancestry_tree::read_gedcom "
+				"after create_poset" << endl;
 	}
 
+
+	string fname_family;
+
+	fname_indi = fname_base + "_family.csv";
+
+	Fio.Csv_file_support->write_ancestry_family(
+			fname_indi,
+			Data,
+			nb_indi,
+			nb_fam,
+			Individual,
+			Family,
+		verbose_level);
 
 
 }
@@ -236,11 +255,13 @@ void ancestry_tree::create_poset(
 	int rk_max;
 
 	if (f_v) {
-		cout << "ancestry_tree::create_poset before topo_sort" << endl;
+		cout << "ancestry_tree::create_poset "
+				"before topo_sort" << endl;
 	}
 	topo_sort(topo_rank, rk_max, verbose_level);
 	if (f_v) {
-		cout << "ancestry_tree::create_poset after topo_sort" << endl;
+		cout << "ancestry_tree::create_poset "
+				"after topo_sort" << endl;
 	}
 
 	int *topo_rank_copy;

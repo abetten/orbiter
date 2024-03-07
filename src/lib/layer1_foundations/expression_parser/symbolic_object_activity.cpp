@@ -48,7 +48,8 @@ void symbolic_object_activity::init(
 	}
 }
 
-void symbolic_object_activity::perform_activity(int verbose_level)
+void symbolic_object_activity::perform_activity(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -150,7 +151,8 @@ void symbolic_object_activity::perform_activity(int verbose_level)
 }
 
 #if 0
-void symbolic_object_activity::do_sweep(int f_affine,
+void symbolic_object_activity::do_sweep(
+		int f_affine,
 		formula *f,
 		std::string &sweep_variables,
 		int verbose_level)

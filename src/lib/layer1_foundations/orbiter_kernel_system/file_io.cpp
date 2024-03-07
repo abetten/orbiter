@@ -1285,7 +1285,8 @@ void file_io::copy_file_to_ostream(
 
 
 void file_io::int_matrix_write_cas_friendly(
-		std::string &fname, int *M, int m, int n)
+		std::string &fname,
+		int *M, int m, int n)
 {
 	int i, j;
 
@@ -1311,7 +1312,8 @@ void file_io::int_matrix_write_cas_friendly(
 }
 
 void file_io::int_matrix_write_text(
-		std::string &fname, int *M, int m, int n)
+		std::string &fname,
+		int *M, int m, int n)
 {
 	int i, j;
 
@@ -1329,7 +1331,8 @@ void file_io::int_matrix_write_text(
 }
 
 void file_io::lint_matrix_write_text(
-		std::string &fname, long int *M, int m, int n)
+		std::string &fname,
+		long int *M, int m, int n)
 {
 	int i, j;
 
@@ -1347,7 +1350,8 @@ void file_io::lint_matrix_write_text(
 }
 
 void file_io::int_matrix_read_text(
-		std::string &fname, int *&M, int &m, int &n)
+		std::string &fname,
+		int *&M, int &m, int &n)
 {
 	int i, j;
 
@@ -4139,7 +4143,8 @@ void file_io::read_gedcom_file(
 }
 
 void file_io::write_solutions_as_index_set(
-		std::string &fname_solutions, int *Sol, int nb_sol, int width, int sum,
+		std::string &fname_solutions,
+		int *Sol, int nb_sol, int width, int sum,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

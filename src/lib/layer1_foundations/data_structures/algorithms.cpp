@@ -1215,6 +1215,73 @@ void algorithms::process_class_list(
 
 }
 
+void algorithms::filter_duplicates_and_make_array_of_long_int(
+		std::vector<long int> &In, long int *&Out, int &size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::filter_duplicates_and_make_array_of_long_int" << endl;
+	}
+
+	// filter out duplicates:
+	unordered_set<long int> Pts_as_set;
+
+	int i;
+
+	for (i = 0; i < In.size(); i++) {
+		Pts_as_set.insert(In[i]);
+	}
+
+	vector<long int> Pts2;
+	Pts2.assign( Pts_as_set.begin(), Pts_as_set.end() );
+	sort( Pts2.begin(), Pts2.end() );
+
+	// convert to array of long int:
+	size = Pts2.size();
+	Out = NEW_lint(size);
+	for (i = 0; i < size; i++) {
+		Out[i] = Pts2[i];
+	}
+
+	if (f_v) {
+		cout << "algorithms::filter_duplicates_and_make_array_of_long_int done" << endl;
+	}
+}
+
+
+void algorithms::set_minus(
+		std::vector<long int> &In, long int *subtract_this, int size,
+		std::vector<long int> &Out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::set_minus" << endl;
+	}
+
+	unordered_set<long int> set;
+
+	int i;
+
+	for (i = 0; i < In.size(); i++) {
+		set.insert(In[i]);
+	}
+
+
+	for (i = 0; i < size; i++) {
+		set.erase(subtract_this[i]);
+	}
+	Out.assign( set.begin(), set.end() );
+	sort( Out.begin(), Out.end() );
+
+	if (f_v) {
+		cout << "algorithms::set_minus done" << endl;
+	}
+
+}
 
 }}}
 

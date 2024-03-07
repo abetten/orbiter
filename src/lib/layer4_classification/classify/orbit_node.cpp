@@ -49,7 +49,8 @@ void orbit_node::init(
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	Lint_vec_copy(Rep,
+	Lint_vec_copy(
+			Rep,
 			C->Rep + orbit_index * C->representation_sz,
 			C->representation_sz);
 	orbit_node::extra_data = extra_data;
@@ -57,7 +58,7 @@ void orbit_node::init(
 
 
 void orbit_node::write_file(
-		ofstream &fp, int verbose_level)
+		std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -72,7 +73,7 @@ void orbit_node::write_file(
 }
 
 void orbit_node::read_file(
-		ifstream &fp, int verbose_level)
+		std::ifstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	

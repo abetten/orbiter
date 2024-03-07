@@ -18,6 +18,26 @@ namespace layer1_foundations {
 namespace graph_theory {
 
 
+static void call_back_colored_graph_clique_found(
+		clique_finder *CF,
+	int verbose_level);
+static void call_back_colored_graph_add_point(
+		clique_finder *CF,
+	int current_clique_size, int *current_clique,
+	int pt, int verbose_level);
+static void call_back_colored_graph_delete_point(
+		clique_finder *CF,
+	int current_clique_size, int *current_clique,
+	int pt, int verbose_level);
+static int call_back_colored_graph_find_candidates(
+		clique_finder *CF,
+	int current_clique_size, int *current_clique,
+	int nb_pts, int &reduced_nb_pts,
+	int *pt_list, int *pt_list_inv,
+	int *candidates, int verbose_level);
+
+
+
 rainbow_cliques::rainbow_cliques()
 {
 	Control = NULL;

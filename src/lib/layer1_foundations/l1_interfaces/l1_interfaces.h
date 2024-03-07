@@ -53,7 +53,8 @@ public:
 
 //! interface to Eigen:
 
-void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level);
+void orbiter_eigenvalues(
+		int *Mtx, int nb_points, double *E, int verbose_level);
 
 
 // #############################################################################
@@ -318,7 +319,9 @@ public:
 			std::ostream &ost, int *v, int len);
 	void int_set_print_masked_tex(
 			std::ostream &ost,
-		int *v, int len, const char *mask_begin, const char *mask_end);
+		int *v, int len,
+		const char *mask_begin,
+		const char *mask_end);
 	void lint_set_print_masked_tex(
 			std::ostream &ost,
 		long int *v, int len,

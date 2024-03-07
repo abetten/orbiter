@@ -38,7 +38,8 @@ mckay::tMCKAY::tMCKAY() {
 #endif
 };
 
-void mckay::tMCKAY::Init(diophant *lgs,
+void mckay::tMCKAY::Init(
+		diophant *lgs,
 		std::string &label,
 		int aEqnAnz, int aVarAnz)
 {
@@ -64,9 +65,12 @@ void mckay::tMCKAY::Init(diophant *lgs,
 #endif
 }
 
-void mckay::tMCKAY::possolve(vector<int> &lo, vector<int> &hi, 
-	vector<equation> &eqn, vector<int> &lorhs, vector<int> &hirhs, 
-	vector<int> &neqn, int numeqn, int numvar, int verbose_level)
+void mckay::tMCKAY::possolve(
+		std::vector<int> &lo, std::vector<int> &hi,
+		std::vector<equation> &eqn,
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<int> &neqn, int numeqn, int numvar,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v4 = (verbose_level >= 4);
@@ -183,10 +187,11 @@ bool mckay::tMCKAY::subtract(
 /* \subsection{pruneqn --- remove equations}
  prune equations by subtraction.
 */
-void mckay::tMCKAY::pruneqn(vector<int> &lo, vector<int> &hi,
+void mckay::tMCKAY::pruneqn(
+		std::vector<int> &lo, std::vector<int> &hi,
 		int numvar,
-		vector<int> &lorhs, vector<int> &hirhs,
-		vector<equation> &eqn, vector<int> &neqn,
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<equation> &eqn, std::vector<int> &neqn,
 		int numeqn, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -233,9 +238,10 @@ void mckay::tMCKAY::pruneqn(vector<int> &lo, vector<int> &hi,
    upper bound.
 */
 
-void mckay::tMCKAY::varprune(vector<int> &lo, vector<int> &hi, 
-	vector<int> &lorhs, vector<int> &hirhs, 
-	vector<equation> &eqn, vector<int> &neqn, 
+void mckay::tMCKAY::varprune(
+		std::vector<int> &lo, std::vector<int> &hi,
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<equation> &eqn, std::vector<int> &neqn,
 	int numeqn, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -273,9 +279,12 @@ void mckay::tMCKAY::varprune(vector<int> &lo, vector<int> &hi,
 }
 
 
-void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi,
-	int numvar, vector<int> &lorhs, vector<int> &hirhs,
-	vector<equation> &eqn, vector<int> &neqn, int numeqn)
+void mckay::tMCKAY::puteqns(
+		std::vector<int> &lo, std::vector<int> &hi,
+	int numvar,
+	std::vector<int> &lorhs, std::vector<int> &hirhs,
+	std::vector<equation> &eqn, std::vector<int> &neqn,
+	int numeqn)
 {
         int i,j;
 
@@ -317,9 +326,10 @@ void mckay::tMCKAY::puteqns(vector<int> &lo, vector<int> &hi,
  take out common factors, return bad eqn number.
  It is only used in the main program.
 */
-int mckay::tMCKAY::divideeqns(vector<int> &lorhs,
-		vector<int> &hirhs, vector<equation> &eqn,
-		vector<int> &neqn, int numeqn)
+int mckay::tMCKAY::divideeqns(
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<equation> &eqn, std::vector<int> &neqn,
+	int numeqn)
 {
     int i,j,g,len;
 
@@ -354,7 +364,8 @@ int mckay::tMCKAY::divideeqns(vector<int> &lorhs,
 \subsection{gcd}
 used in \|divideeqns|.
 */
-int mckay::tMCKAY::gcd(int n1,int n2)
+int mckay::tMCKAY::gcd(
+		int n1,int n2)
 {
         int a,b,c;
 
@@ -376,11 +387,12 @@ int mckay::tMCKAY::gcd(int n1,int n2)
 \section{solve --- brute force recursion}
 This procedure is called recursively.
 */
-void mckay::tMCKAY::solve(int level, 
-	vector<int> &alo, vector<int> &ahi, 
-	vector<bool> &aactive, int numvar, 
-	vector<int> &lorhs, vector<int> &hirhs, 
-	vector<equation> &eqn, vector<int> &neqn, 
+void mckay::tMCKAY::solve(
+		int level,
+		std::vector<int> &alo, std::vector<int> &ahi,
+		std::vector<bool> &aactive, int numvar,
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<equation> &eqn, std::vector<int> &neqn,
 	int numeqn, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -697,12 +709,14 @@ void mckay::tMCKAY::solve(int level,
 #endif
 }
 
-int mckay::tMCKAY::restrict_variables(int level, 
-	vector<int> &lo, vector<int> &hi, 
-	vector<bool> &active, int numvar, 
-	vector<int> &lorhs, vector<int> &hirhs, 
-	vector<equation> &eqn, vector<int> &neqn, 
-	int numeqn, int &f_restriction_made, int verbose_level)
+int mckay::tMCKAY::restrict_variables(
+		int level,
+		std::vector<int> &lo, std::vector<int> &hi,
+		std::vector<bool> &active, int numvar,
+		std::vector<int> &lorhs, std::vector<int> &hirhs,
+		std::vector<equation> &eqn, std::vector<int> &neqn,
+	int numeqn, int &f_restriction_made,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1054,7 +1068,8 @@ int mckay::tMCKAY::restrict_variables(int level,
 	return true;
 }
 
-void mckay::tMCKAY::log_12l(long int current_node, int level)
+void mckay::tMCKAY::log_12l(
+		long int current_node, int level)
 {
 		cout << "solve " << problem_label 
 			<< " node " << current_node 

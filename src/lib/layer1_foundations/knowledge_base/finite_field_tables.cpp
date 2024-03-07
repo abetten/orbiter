@@ -955,7 +955,8 @@ static const char *finitefield_primitive_polynomial[][100] = {
 },
 };
 
-void knowledge_base::get_primitive_polynomial(std::string &poly,
+void knowledge_base::get_primitive_polynomial(
+		std::string &poly,
 		int p, int e, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -779,7 +779,8 @@ int scene::point_center_of_mass(
 }
 
 int scene::triangle(
-		int line1, int line2, int line3, int verbose_level)
+		int line1, int line2, int line3,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int pt[3], idx;

@@ -1384,6 +1384,42 @@ int projective_space_subspaces::intersection_of_two_lines(
 	return b;
 }
 
+void projective_space_subspaces::find_lines_by_intersection_number(
+	long int *set, int set_size,
+	int intersection_number,
+	std::vector<long int> &Lines,
+	int verbose_level)
+// finds all lines which intersect the given set
+// in exactly the given number of points
+// (which is intersection_number).
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::find_lines_by_intersection_number" << endl;
+	}
+	int *type;
+	int i;
+
+	type = NEW_int(N_lines);
+
+	line_intersection_type(
+		set, set_size, type,
+		0 /*verbose_level */);
+
+	for (i = 0; i < N_lines; i++) {
+		if (type[i] == intersection_number) {
+			Lines.push_back(i);
+		}
+	}
+
+
+	FREE_int(type);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::find_lines_by_intersection_number done" << endl;
+	}
+}
 
 
 

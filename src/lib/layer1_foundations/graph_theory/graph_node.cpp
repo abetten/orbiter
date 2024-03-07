@@ -248,7 +248,8 @@ void graph_node::allocate_tree_structure(
 }
 
 int graph_node::remove_neighbor(
-		layered_graph *G, int id, int verbose_level)
+		layered_graph *G, int id,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

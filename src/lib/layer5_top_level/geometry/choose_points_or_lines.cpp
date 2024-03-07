@@ -227,7 +227,8 @@ void choose_points_or_lines::compute_orbits(
 		cout << "choose_points_or_lines::compute_orbits "
 				<< label << " calling generator_main" << endl;
 	}
-	gen->main(t0, 
+	gen->main(
+			t0,
 		Control->depth,
 		f_use_invariant_subset_if_available, 
 		//f_implicit_fusion, 

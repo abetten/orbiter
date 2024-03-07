@@ -112,7 +112,8 @@ public:
 	void int_matrix_write_csv(
 			std::string &fname, int *M, int m, int n);
 	void lint_matrix_write_csv(
-			std::string &fname, long int *M, int m, int n);
+			std::string &fname,
+			long int *M, int m, int n);
 	void lint_matrix_write_csv_override_headers(
 			std::string &fname,
 			std::string *headers, long int *M, int m, int n);
@@ -275,6 +276,14 @@ public:
 			int nb_indi,
 			data_structures::ancestry_indi **Individual,
 		int verbose_level);
+	void write_ancestry_family(
+			std::string &fname,
+			std::vector<std::vector<std::string> > &Data,
+			int nb_indi,
+			int nb_fam,
+			data_structures::ancestry_indi **Individual,
+			data_structures::ancestry_family **Family,
+		int verbose_level);
 	void read_table_of_strings(
 			std::string &fname, std::string *&col_label,
 			std::string *&Table, int &m, int &n,
@@ -382,12 +391,14 @@ public:
 
 
 	void int_matrix_write_cas_friendly(
-			std::string &fname, int *M, int m, int n);
+			std::string &fname,
+			int *M, int m, int n);
 	void int_matrix_write_text(
 			std::string &fname,
 		int *M, int m, int n);
 	void lint_matrix_write_text(
-			std::string &fname, long int *M, int m, int n);
+			std::string &fname,
+			long int *M, int m, int n);
 	void int_matrix_read_text(
 			std::string &fname,
 		int *&M, int &m, int &n);
@@ -555,7 +566,8 @@ public:
 			std::vector<std::vector<std::string> > &Data,
 		int verbose_level);
 	void write_solutions_as_index_set(
-			std::string &fname_solutions, int *Sol, int nb_sol, int width, int sum,
+			std::string &fname_solutions,
+			int *Sol, int nb_sol, int width, int sum,
 			int verbose_level);
 
 
@@ -760,25 +772,44 @@ public:
 	long int cur_pointer;
 
 
-	char & s_i(int i) { return data[i]; };
-	void init(long int length, char *initial_data, int verbose_level);
-	void alloc(long int length, int verbose_level);
-	void append(long int length, char *d, int verbose_level);
-	void realloc(long int &new_length, int verbose_level);
-	void write_char(char c);
-	void read_char(char *c);
-	void write_string(const char *p);
-	void write_string(std::string &p);
-	void read_string(std::string &p);
-	void write_double(double f);
-	void read_double(double *f);
-	void write_lint(long int i);
-	void read_lint(long int *i);
-	void write_int(int i);
-	void read_int(int *i);
-	void read_file(std::string &fname, int verbose_level);
-	void write_file(std::string &fname, int verbose_level);
-	int multiplicity_of_character(char c);
+	char & s_i(
+			int i) { return data[i]; };
+	void init(
+			long int length, char *initial_data, int verbose_level);
+	void alloc(
+			long int length, int verbose_level);
+	void append(
+			long int length, char *d, int verbose_level);
+	void realloc(
+			long int &new_length, int verbose_level);
+	void write_char(
+			char c);
+	void read_char(
+			char *c);
+	void write_string(
+			const char *p);
+	void write_string(
+			std::string &p);
+	void read_string(
+			std::string &p);
+	void write_double(
+			double f);
+	void read_double(
+			double *f);
+	void write_lint(
+			long int i);
+	void read_lint(
+			long int *i);
+	void write_int(
+			int i);
+	void read_int(
+			int *i);
+	void read_file(
+			std::string &fname, int verbose_level);
+	void write_file(
+			std::string &fname, int verbose_level);
+	int multiplicity_of_character(
+			char c);
 };
 
 
@@ -794,7 +825,8 @@ class numerics {
 public:
 	numerics();
 	~numerics();
-	void vec_print(double *a, int len);
+	void vec_print(
+			double *a, int len);
 	void vec_linear_combination1(
 			double c1, double *v1,
 			double *w, int len);
@@ -816,19 +848,23 @@ public:
 			double *A, int m, int n,
 		int *base_cols, int f_complete,
 		int verbose_level);
-	void print_system(double *A, int m, int n);
-	void get_kernel(double *M, int m, int n,
+	void print_system(
+			double *A, int m, int n);
+	void get_kernel(
+			double *M, int m, int n,
 		int *base_cols, int nb_base_cols,
 		int &kernel_m, int &kernel_n,
 		double *kernel);
 	// kernel must point to the appropriate amount of memory!
 	// (at least n * (n - nb_base_cols) doubles)
 	// m is not used!
-	int Null_space(double *M, int m, int n, double *K,
+	int Null_space(
+			double *M, int m, int n, double *K,
 		int verbose_level);
 	// K will be k x n
 	// where k is the return value.
-	void vec_normalize_from_back(double *v, int len);
+	void vec_normalize_from_back(
+			double *v, int len);
 	void vec_normalize_to_minus_one_from_back(
 			double *v, int len);
 	int triangular_prism(
@@ -845,12 +881,18 @@ public:
 			double *A, double *B, double *C,
 			int m, int n, int o);
 	// A is m x n, B is n x o, C is m x o
-	void print_matrix_3x3(double *R);
-	void print_matrix(double *R, int m, int n);
-	void make_Rz(double *R, double phi);
-	void make_Ry(double *R, double psi);
-	void make_Rx(double *R, double chi);
-	double atan_xy(double x, double y);
+	void print_matrix_3x3(
+			double *R);
+	void print_matrix(
+			double *R, int m, int n);
+	void make_Rz(
+			double *R, double phi);
+	void make_Ry(
+			double *R, double psi);
+	void make_Rx(
+			double *R, double chi);
+	double atan_xy(
+			double x, double y);
 	double dot_product(
 			double *u, double *v, int len);
 	void cross_product(
@@ -859,8 +901,10 @@ public:
 			double *x, double *y, int len);
 	double distance_from_origin(
 			double x1, double x2, double x3);
-	double distance_from_origin(double *x, int len);
-	void make_unit_vector(double *v, int len);
+	double distance_from_origin(
+			double *x, int len);
+	void make_unit_vector(
+			double *v, int len);
 	void center_of_mass(
 			double *Pts, int len,
 			int *Pt_idx, int nb_pts, double *c);
@@ -908,22 +952,33 @@ public:
 	void eigenvalues(
 			double *A, int n, double *lambda,
 			int verbose_level);
-	void eigenvectors(double *A, double *Basis,
+	void eigenvectors(
+			double *A, double *Basis,
 			int n, double *lambda, int verbose_level);
-	double rad2deg(double phi);
-	void vec_copy(double *from, double *to, int len);
-	void vec_swap(double *from, double *to, int len);
-	void vec_print(std::ostream &ost, double *v, int len);
-	void vec_scan(const char *s, double *&v, int &len);
-	void vec_scan(std::string &s, double *&v, int &len);
+	double rad2deg(
+			double phi);
+	void vec_copy(
+			double *from, double *to, int len);
+	void vec_swap(
+			double *from, double *to, int len);
+	void vec_print(
+			std::ostream &ost, double *v, int len);
+	void vec_scan(
+			const char *s, double *&v, int &len);
+	void vec_scan(
+			std::string &s, double *&v, int &len);
 	void vec_scan_from_stream(
 			std::istream & is, double *&v, int &len);
 
 
-	double cos_grad(double phi);
-	double sin_grad(double phi);
-	double tan_grad(double phi);
-	double atan_grad(double x);
+	double cos_grad(
+			double phi);
+	double sin_grad(
+			double phi);
+	double tan_grad(
+			double phi);
+	double atan_grad(
+			double x);
 	void adjust_coordinates_double(
 			double *Px, double *Py, int *Qx, int *Qy,
 		int N,
@@ -941,7 +996,8 @@ public:
 			double *X, double *Y,
 		double *a, double *b, double *c,
 		int pt1, int pt2, int line_idx);
-	void line_through_points(double pt1_x, double pt1_y,
+	void line_through_points(
+			double pt1_x, double pt1_y,
 		double pt2_x, double pt2_y,
 		double &a, double &b, double &c);
 	void intersect_circle_line_through(
@@ -953,26 +1009,38 @@ public:
 			double rad, double x0, double y0,
 		double a, double b, double c,
 		double &x1, double &y1, double &x2, double &y2);
-	void affine_combination(double *X, double *Y,
+	void affine_combination(
+			double *X, double *Y,
 		int pt0, int pt1, int pt2, double alpha, int new_pt);
-	void on_circle_double(double *Px, double *Py, int idx,
+	void on_circle_double(
+			double *Px, double *Py, int idx,
 		double angle_in_degree, double rad);
-	void affine_pt1(int *Px, int *Py, int p0, int p1, int p2,
+	void affine_pt1(
+			int *Px, int *Py, int p0, int p1, int p2,
 		double f1, int p3);
-	void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b,
+	void affine_pt2(
+			int *Px, int *Py, int p0, int p1, int p1b,
 		double f1, int p2, int p2b, double f2, int p3);
-	double norm_of_vector_2D(int x1, int x2, int y1, int y2);
-	void transform_llur(int *in, int *out, int &x, int &y);
-	void transform_dist(int *in, int *out, int &x, int &y);
-	void transform_dist_x(int *in, int *out, int &x);
-	void transform_dist_y(int *in, int *out, int &y);
+	double norm_of_vector_2D(
+			int x1, int x2, int y1, int y2);
+	void transform_llur(
+			int *in, int *out, int &x, int &y);
+	void transform_dist(
+			int *in, int *out, int &x, int &y);
+	void transform_dist_x(
+			int *in, int *out, int &x);
+	void transform_dist_y(
+			int *in, int *out, int &y);
 	void transform_llur_double(
 			double *in, double *out, double &x, double &y);
 	void on_circle_int(
 			int *Px, int *Py, int idx, int angle_in_degree, int rad);
-	double power_of(double x, int n);
-	double bernoulli(double p, int n, int k);
-	void local_coordinates_wrt_triangle(double *pt,
+	double power_of(
+			double x, int n);
+	double bernoulli(
+			double p, int n, int k);
+	void local_coordinates_wrt_triangle(
+			double *pt,
 			double *triangle_points, double &x, double &y,
 			int verbose_level);
 	int intersect_line_and_line(

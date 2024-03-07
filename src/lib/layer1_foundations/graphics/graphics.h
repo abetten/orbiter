@@ -1711,7 +1711,8 @@ public:
 	int point_center_of_mass(
 			int *Pt_idx, int nb_pts);
 	int triangle(
-			int line1, int line2, int line3, int verbose_level);
+			int line1, int line2, int line3,
+			int verbose_level);
 	int point_as_intersection_of_two_lines(
 			int line1, int line2);
 	int plane_from_dual_coordinates(

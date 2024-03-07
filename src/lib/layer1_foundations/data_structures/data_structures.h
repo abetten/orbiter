@@ -112,6 +112,13 @@ public:
 			std::vector<std::vector<std::string> > &Classes_parsed,
 			std::string &fname_cross_ref,
 			int verbose_level);
+	void filter_duplicates_and_make_array_of_long_int(
+			std::vector<long int> &In, long int *&Out, int &size,
+			int verbose_level);
+	void set_minus(
+			std::vector<long int> &In, long int *subtract_this, int size,
+			std::vector<long int> &Out,
+			int verbose_level);
 
 };
 
@@ -2325,7 +2332,8 @@ public:
 	void get_transversal(
 			int *&transversal, int *&frequency,
 			int &nb_types, int verbose_level);
-	void print_classes_bigger_than_one(int verbose_level);
+	void print_classes_bigger_than_one(
+			int verbose_level);
 
 };
 

@@ -202,11 +202,16 @@ public:
 	void init(
 			projective_space *P, int verbose_level);
 
-	void PG_2_8_create_conic_plus_nucleus_arc_1(
-			long int *the_arc, int &size,
+	void create_arc_1_BCKM(
+			long int *&the_arc, int &size,
 		int verbose_level);
-	void PG_2_8_create_conic_plus_nucleus_arc_2(
-			long int *the_arc, int &size,
+	void create_arc_2_BCKM(
+			long int *&the_arc, int &size,
+		int verbose_level);
+	void create_Maruta_Hamada_arc(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Maruta_Hamada_arc(
 			long int *the_arc, int &size,
@@ -317,11 +322,6 @@ public:
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,
 			int verbose_level);
-	void create_Maruta_Hamada_arc(
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
-		int verbose_level);
 	int arc_test(
 			long int *input_pts, int nb_pts,
 		int verbose_level);
@@ -713,6 +713,8 @@ public:
 	int segre_variety_a;
 	int segre_variety_b;
 
+	int f_arc1_BCKM;
+	int f_arc2_BCKM;
 	int f_Maruta_Hamada_arc;
 
 	int f_projective_variety;
@@ -1643,7 +1645,8 @@ public:
 	long int apply_polarity(
 		long int a, int *Polarity36, int verbose_level);
 	void compute_line_intersection_graph(
-			long int *Lines, int nb_lines, int *&Adj, int f_complement,
+			long int *Lines, int nb_lines,
+			int *&Adj, int f_complement,
 			int verbose_level);
 
 };
@@ -2533,6 +2536,14 @@ public:
 	int intersection_of_two_lines(
 			long int l1, long int l2);
 
+	void find_lines_by_intersection_number(
+		long int *set, int set_size,
+		int intersection_number,
+		std::vector<long int> &Lines,
+		int verbose_level);
+	// finds all lines which intersect the given set
+	// in exactly the given number of points
+	// (which is intersection_number).
 	void line_intersection_type(
 			long int *set, int set_size, int *type,
 		int verbose_level);

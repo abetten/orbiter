@@ -386,9 +386,11 @@ public:
 			symbolic_object_activity_description *Descr,
 			symbolic_object_builder *f,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 #if 0
-	void do_sweep(int f_affine,
+	void do_sweep(
+			int f_affine,
 			formula *f,
 			std::string &sweep_variables,
 			int verbose_level);

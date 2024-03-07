@@ -308,7 +308,8 @@ public:
 	generators_symplectic_group();
 	~generators_symplectic_group();
 	void init(
-			field_theory::finite_field *F, int n, int verbose_level);
+			field_theory::finite_field *F,
+			int n, int verbose_level);
 	int count_strong_generators(
 			int &nb, int *transversal_length,
 		int &first_moved, int depth, int verbose_level);
@@ -489,7 +490,8 @@ public:
 		int f_semilinear, field_theory::finite_field *F,
 		int *&data, int &size, int &nb_gens,
 		int verbose_level);
-	void builtin_transversal_rep_GLnq(int *A, int n,
+	void builtin_transversal_rep_GLnq(
+			int *A, int n,
 			field_theory::finite_field *F,
 		int f_semilinear, int i, int j, int verbose_level);
 	void affine_translation(
@@ -565,7 +567,8 @@ public:
 	heisenberg();
 	~heisenberg();
 	void init(
-			field_theory::finite_field *F, int n, int verbose_level);
+			field_theory::finite_field *F,
+			int n, int verbose_level);
 	void unrank_element(
 			int *Elt, long int rk);
 	long int rank_element(
@@ -870,7 +873,8 @@ public:
 	int clean_column(
 			data_structures::int_matrix *M,
 			data_structures::int_matrix *P,
-			data_structures::int_matrix *Pv, int i, int verbose_level);
+			data_structures::int_matrix *Pv,
+			int i, int verbose_level);
 	int clean_row(
 			data_structures::int_matrix *M,
 			data_structures::int_matrix *Q,
@@ -885,7 +889,8 @@ public:
 			int verbose_level);
 	void apply(
 			int *input, int *output, int *perm,
-			int module_dimension_m, int module_dimension_n, int *module_basis,
+			int module_dimension_m, int module_dimension_n,
+			int *module_basis,
 			int *v1, int *v2, int verbose_level);
 
 };

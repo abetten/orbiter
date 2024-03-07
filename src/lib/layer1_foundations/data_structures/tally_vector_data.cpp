@@ -328,7 +328,8 @@ void tally_vector_data::get_transversal(
 	}
 }
 
-void tally_vector_data::print_classes_bigger_than_one(int verbose_level)
+void tally_vector_data::print_classes_bigger_than_one(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, f, l;

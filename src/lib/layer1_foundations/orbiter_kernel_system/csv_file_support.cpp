@@ -191,7 +191,8 @@ void csv_file_support::int_matrix_write_csv(
 }
 
 void csv_file_support::lint_matrix_write_csv(
-		std::string &fname, long int *M, int m, int n)
+		std::string &fname,
+		long int *M, int m, int n)
 {
 	int i, j;
 
@@ -2603,6 +2604,96 @@ void csv_file_support::write_ancestry_indi(
 		cout << "csv_file_support::write_ancestry_indi done" << endl;
 	}
 }
+
+
+void csv_file_support::write_ancestry_family(
+		std::string &fname,
+		std::vector<std::vector<std::string> > &Data,
+		int nb_indi,
+		int nb_fam,
+		data_structures::ancestry_indi **Individual,
+		data_structures::ancestry_family **Family,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_ancestry_family" << endl;
+	}
+	{
+		int i;
+
+		ofstream f(fname);
+
+		f << "Row,IDX,ID,HUSB,HUSBIDX,HUSBFAMIDX,WIFE,WIFEIDX,WIFEFAMIDX,HUSBNAME,WIFENAME" << endl;
+		for (i = 0; i < nb_fam; i++) {
+			f << i
+					<< "," << "\"" << Family[i]->idx << "\""
+					<< "," << "\"" << Family[i]->id << "\""
+					<< "," << "\"" << Family[i]->husband << "\""
+					<< "," << "\"" << Family[i]->husband_index << "\""
+					<< "," << "\"" << Family[i]->husband_family_index << "\""
+					<< "," << "\"" << Family[i]->wife << "\""
+					<< "," << "\"" << Family[i]->wife_index << "\""
+					<< "," << "\"" << Family[i]->wife_family_index << "\"";
+					if (Family[i]->husband_index >= 0) {
+						f << "," << "\"" << Individual[Family[i]->husband_index]->name << "\"";
+					}
+					else {
+						f << "," << "\"\"";
+
+					}
+					if (Family[i]->wife_index >= 0) {
+						f << "," << "\"" << Individual[Family[i]->wife_index]->name << "\"";
+					}
+					else {
+						f << "," << "\"\"";
+
+					}
+				f << endl;
+		}
+		f << "END" << endl;
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::write_ancestry_family done" << endl;
+	}
+}
+
+
+#if 0
+std::string id;
+std::string name;
+std::string given_name;
+std::string sur_name;
+std::string sex;
+std::string famc;
+std::string fams;
+std::string birth_date;
+std::string death_date;
+
+
+int idx;
+
+int start;
+int length;
+std::string id;
+
+std::string husband;
+int husband_index;
+int husband_family_index;
+
+std::string wife;
+int wife_index;
+int wife_family_index;
+
+std::vector<std::string> child;
+std::vector<int> child_index;
+std::vector<std::vector<int> > child_family_index;
+
+std::vector<int> topo_downlink;
+#endif
+
 
 
 void csv_file_support::read_table_of_strings(

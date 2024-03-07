@@ -155,6 +155,10 @@ public:
 	void stabilizer_any_point(
 			int pt,
 			strong_generators *&Stab, int verbose_level);
+	void stabilizer_of_orbit_representative(
+			int orbit_idx, strong_generators *&Stab,
+			int &orbit_rep,
+			int verbose_level);
 	void stabilizer_of(
 			int orbit_idx, strong_generators *&Stab,
 			int verbose_level);
@@ -288,6 +292,8 @@ public:
 	void get_orbit_number_and_position(
 			long int a,
 			int &orbit_idx, int &orbit_pos, int verbose_level);
+	int get_orbit_rep(
+			int orbit_idx, int verbose_level);
 	void create_latex_report(
 			int verbose_level);
 	void report(

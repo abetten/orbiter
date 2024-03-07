@@ -130,22 +130,26 @@ void dlx_solver::init(
 
 
 
-int dlx_solver::dataLeft(int i)
+int dlx_solver::dataLeft(
+		int i)
 {
 	return i - 1 < 0 ? nCol - 1 : i - 1;
 }
 
-int dlx_solver::dataRight(int i)
+int dlx_solver::dataRight(
+		int i)
 {
 	return (i + 1) % nCol;
 }
 
-int dlx_solver::dataUp(int i)
+int dlx_solver::dataUp(
+		int i)
 {
 	return i - 1 < 0 ? nRow - 1 : i - 1;
 }
 
-int dlx_solver::dataDown(int i)
+int dlx_solver::dataDown(
+		int i)
 {
 	return (i + 1) % nRow;
 }
@@ -277,7 +281,8 @@ void dlx_solver::AppendRowAndSolveRHS(int *Data, int nb_rows, int nb_cols,
 }
 #endif
 
-void dlx_solver::Solve(int verbose_level)
+void dlx_solver::Solve(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -345,7 +350,8 @@ void dlx_solver::Solve(int verbose_level)
 	}
 }
 
-void dlx_solver::Solve_with_RHS(int *RHS, int f_has_type,
+void dlx_solver::Solve_with_RHS(
+		int *RHS, int f_has_type,
 		diophant_equation_type *type,
 	int verbose_level)
 {
@@ -397,7 +403,8 @@ void dlx_solver::Solve_with_RHS(int *RHS, int f_has_type,
 	}
 }
 
-void dlx_solver::open_solution_file(int verbose_level)
+void dlx_solver::open_solution_file(
+		int verbose_level)
 {
 	if (Descr->f_write_solutions) {
 
@@ -422,7 +429,8 @@ void dlx_solver::close_solution_file()
 	}
 }
 
-void dlx_solver::open_tree_file(int verbose_level)
+void dlx_solver::open_tree_file(
+		int verbose_level)
 {
 	if (Descr->f_write_tree) {
 
@@ -445,7 +453,8 @@ void dlx_solver::close_tree_file()
 }
 
 
-void dlx_solver::Create_RHS(int nb_cols, int *RHS, int f_has_type,
+void dlx_solver::Create_RHS(
+		int nb_cols, int *RHS, int f_has_type,
 		diophant_equation_type *type, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -527,7 +536,8 @@ void dlx_solver::Delete_RHS()
 	}
 }
 
-void dlx_solver::CreateMatrix(int *Data,
+void dlx_solver::CreateMatrix(
+		int *Data,
 		int nb_rows, int nb_cols, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -690,7 +700,8 @@ void dlx_solver::DeleteMatrix()
 	FREE_int(Nb_col_nodes);
 }
 
-dlx_node *dlx_solver::get_column_header(int c)
+dlx_node *dlx_solver::get_column_header(
+		int c)
 {
 	dlx_node *Node;
 
@@ -780,7 +791,8 @@ dlx_node *dlx_solver::ChooseColumnRHS()
 	exit(1);
 }
 
-void dlx_solver::write_tree(int k)
+void dlx_solver::write_tree(
+		int k)
 {
 	if (Descr->f_write_tree) {
 		int i;
@@ -793,7 +805,8 @@ void dlx_solver::write_tree(int k)
 	}
 }
 
-void dlx_solver::print_if_necessary(int k)
+void dlx_solver::print_if_necessary(
+		int k)
 {
 	if ((nb_backtrack_nodes & ((1 << 20) - 1)) == 0) {
 		int a, d;
@@ -814,7 +827,8 @@ void dlx_solver::print_if_necessary(int k)
 	}
 }
 
-void dlx_solver::process_solution(int k)
+void dlx_solver::process_solution(
+		int k)
 {
 #if 0
 	if (f_v) {
@@ -839,7 +853,8 @@ void dlx_solver::process_solution(int k)
 	nb_sol++;
 }
 
-void dlx_solver::count_nb_choices(int k, dlx_node *Column)
+void dlx_solver::count_nb_choices(
+		int k, dlx_node *Column)
 {
 	dlx_node *RowNode;
 	int r, d;
@@ -895,7 +910,8 @@ int dlx_solver::IsDone()
 	}
 }
 
-int dlx_solver::IsColumnDone(int c)
+int dlx_solver::IsColumnDone(
+		int c)
 {
 	if (current_RHS[c] == target_RHS[c]) {
 		return true;
@@ -903,7 +919,8 @@ int dlx_solver::IsColumnDone(int c)
 	return false;
 }
 
-int dlx_solver::IsColumnNotDone(int c)
+int dlx_solver::IsColumnNotDone(
+		int c)
 {
 	if (type[c] == t_EQ && current_RHS[c] < target_RHS[c]) {
 		return true;
@@ -911,7 +928,8 @@ int dlx_solver::IsColumnNotDone(int c)
 	return false;
 }
 
-void dlx_solver::Search(int k)
+void dlx_solver::Search(
+		int k)
 {
 	//cout << "Search k=" << k << endl;
 	//print_root();
@@ -983,7 +1001,8 @@ void dlx_solver::Search(int k)
 	UnCover(Column);
 }
 
-void dlx_solver::SearchRHS(int k, int verbose_level)
+void dlx_solver::SearchRHS(
+		int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1269,7 +1288,8 @@ void dlx_solver::SearchRHS(int k, int verbose_level)
 
 }
 
-void dlx_solver::Cover(dlx_node *ColNode)
+void dlx_solver::Cover(
+		dlx_node *ColNode)
 {
 
 	//cout << "Cover" << endl;
@@ -1313,7 +1333,8 @@ void dlx_solver::Cover(dlx_node *ColNode)
 	//cout << "Cover done" << endl;
 }
 
-void dlx_solver::UnCover(dlx_node *ColNode)
+void dlx_solver::UnCover(
+		dlx_node *ColNode)
 {
 
 	//cout << "dlx_solver::UnCover" << endl;
