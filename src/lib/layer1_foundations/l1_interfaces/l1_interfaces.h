@@ -456,6 +456,7 @@ public:
 			std::string &s_aut, std::string &s_cl,
 			std::string &s_stats,
 			int verbose_level);
+	long int nauty_complexity();
 
 };
 

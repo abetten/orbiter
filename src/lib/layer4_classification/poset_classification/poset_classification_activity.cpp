@@ -344,6 +344,7 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 
 	if (f_v) {
 		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix" << endl;
+		cout << "poset_classification_activity::compute_Kramer_Mesner_matrix verbose_level = " << verbose_level << endl;
 	}
 
 
@@ -943,7 +944,7 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 // we assume that we don't use implicit fusion nodes
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false;//(verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int f1, f2, i, j, k, I, J, len;
 	poset_orbit_node *O;
 
@@ -954,8 +955,30 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 
 	f1 = PC->first_node_at_level(level);
 	f2 = PC->first_node_at_level(level + 1);
+	if (f_v) {
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
+				"f1=" << f1 << endl;
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
+				"f2=" << f2 << endl;
+	}
 	nb_rows = PC->nb_orbits_at_level(level);
+	if (f_v) {
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
+				"nb_rows=" << nb_rows << endl;
+	}
+	if (nb_rows < 0) {
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring nb_rows < 0" << endl;
+		exit(1);
+	}
 	nb_cols = PC->nb_orbits_at_level(level + 1);
+	if (f_v) {
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
+				"nb_cols=" << nb_cols << endl;
+	}
+	if (nb_cols < 0) {
+		cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring nb_cols < 0" << endl;
+		exit(1);
+	}
 
 	M = NEW_lint(nb_rows * nb_cols);
 
@@ -972,20 +995,20 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 	for (i = 0; i < nb_rows; i++) {
 		if (f_vv) {
 			cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
-					"i=" << i << " / " << nb_rows << endl;
+					"row i=" << i << " / " << nb_rows << endl;
 		}
 		I = f1 + i;
 		O = PC->get_node(I);
 		for (k = 0; k < O->get_nb_of_extensions(); k++) {
 			if (f_vv) {
 				cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
-						"i=" << i << " / " << nb_rows << " extension "
+						"row i=" << i << " / " << nb_rows << " extension "
 						<< k << " / " << O->get_nb_of_extensions() << endl;
 			}
 			if (O->get_E(k)->get_type() == EXTENSION_TYPE_EXTENSION) {
 				if (f_vv) {
 					cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
-							"i=" << i << " / " << nb_rows << " extension "
+							"row i=" << i << " / " << nb_rows << " extension "
 							<< k << " / " << O->get_nb_of_extensions()
 							<< " type extension node" << endl;
 				}
@@ -997,7 +1020,7 @@ void poset_classification_activity::Kramer_Mesner_matrix_neighboring(
 			if (O->get_E(k)->get_type() == EXTENSION_TYPE_FUSION) {
 				if (f_vv) {
 					cout << "poset_classification_activity::Kramer_Mesner_matrix_neighboring "
-							"i=" << i << " / " << nb_rows << " extension "
+							"row i=" << i << " / " << nb_rows << " extension "
 							<< k << " / " << O->get_nb_of_extensions()
 							<< " type fusion" << endl;
 				}

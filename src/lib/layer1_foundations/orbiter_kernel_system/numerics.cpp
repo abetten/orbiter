@@ -2619,7 +2619,8 @@ void numerics::affine_combination(
 }
 
 
-void numerics::on_circle_double(double *Px, double *Py,
+void numerics::on_circle_double(
+		double *Px, double *Py,
 		int idx, double angle_in_degree, double rad)
 {
 
@@ -2627,7 +2628,8 @@ void numerics::on_circle_double(double *Px, double *Py,
 	Py[idx] = sin_grad(angle_in_degree) * rad;
 }
 
-void numerics::affine_pt1(int *Px, int *Py,
+void numerics::affine_pt1(
+		int *Px, int *Py,
 		int p0, int p1, int p2, double f1, int p3)
 {
 	int x = Px[p0] + (int)(f1 * (double)(Px[p2] - Px[p1]));
@@ -2636,7 +2638,8 @@ void numerics::affine_pt1(int *Px, int *Py,
 	Py[p3] = y;
 }
 
-void numerics::affine_pt2(int *Px, int *Py,
+void numerics::affine_pt2(
+		int *Px, int *Py,
 		int p0, int p1, int p1b,
 		double f1, int p2, int p2b, double f2, int p3)
 {
@@ -2651,14 +2654,16 @@ void numerics::affine_pt2(int *Px, int *Py,
 }
 
 
-double numerics::norm_of_vector_2D(int x1, int x2, int y1, int y2)
+double numerics::norm_of_vector_2D(
+		int x1, int x2, int y1, int y2)
 {
 	return sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
 #undef DEBUG_TRANSFORM_LLUR
 
-void numerics::transform_llur(int *in, int *out, int &x, int &y)
+void numerics::transform_llur(
+		int *in, int *out, int &x, int &y)
 {
 	int dx, dy; //, rad;
 	double a, b; //, f;
@@ -2698,7 +2703,8 @@ void numerics::transform_llur(int *in, int *out, int &x, int &y)
 #endif
 }
 
-void numerics::transform_dist(int *in, int *out, int &x, int &y)
+void numerics::transform_dist(
+		int *in, int *out, int &x, int &y)
 {
 	int dx, dy;
 	double a, b;
@@ -2711,7 +2717,8 @@ void numerics::transform_dist(int *in, int *out, int &x, int &y)
 	y = dy;
 }
 
-void numerics::transform_dist_x(int *in, int *out, int &x)
+void numerics::transform_dist_x(
+		int *in, int *out, int &x)
 {
 	int dx;
 	double a;
@@ -2721,7 +2728,8 @@ void numerics::transform_dist_x(int *in, int *out, int &x)
 	x = dx;
 }
 
-void numerics::transform_dist_y(int *in, int *out, int &y)
+void numerics::transform_dist_y(
+		int *in, int *out, int &y)
 {
 	int dy;
 	double b;
@@ -2764,7 +2772,8 @@ void numerics::on_circle_int(
 }
 
 
-double numerics::power_of(double x, int n)
+double numerics::power_of(
+		double x, int n)
 {
 	double b, c;
 
@@ -2785,7 +2794,8 @@ double numerics::power_of(double x, int n)
 
 }
 
-double numerics::bernoulli(double p, int n, int k)
+double numerics::bernoulli(
+		double p, int n, int k)
 {
 	double q, P, Q, PQ, c;
 	int nCk;
@@ -2800,7 +2810,8 @@ double numerics::bernoulli(double p, int n, int k)
 	return c;
 }
 
-void numerics::local_coordinates_wrt_triangle(double *pt,
+void numerics::local_coordinates_wrt_triangle(
+		double *pt,
 		double *triangle_points, double &x, double &y,
 		int verbose_level)
 {

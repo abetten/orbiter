@@ -139,11 +139,11 @@ PermGroup *designAutoGroup(
 
    if ( C ) {
       CC = C;
-      pp = codeAutoProperty;
+      pp = (Property *) codeAutoProperty;
    }
    else {
       DD = D;
-      pp = matrix01AutoProperty;
+      pp = (Property *) matrix01AutoProperty;
    }
    
 
@@ -226,12 +226,12 @@ Permutation *designIsomorphism(
    if ( C_L ) {
       CC_L = C_L;
       CC_R = C_R;
-      pp = codeIsoProperty;
+      pp = (Property *) codeIsoProperty;
    }
    else {
       DD_L = D_L;
       DD_R = D_R;
-      pp = matrix01IsoProperty;
+      pp = (Property *) matrix01IsoProperty;
       options.altInformCosetRep = (colInformFlag ? &informDesignIsoPtBlk
                                                  : NULL);
    }

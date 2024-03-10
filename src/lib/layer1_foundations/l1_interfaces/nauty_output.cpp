@@ -246,6 +246,13 @@ void nauty_output::stringify(
 	}
 }
 
+long int nauty_output::nauty_complexity()
+{
+	long int c;
+
+	c = nb_firstpathnode + nb_othernode + nb_processnode + nb_firstterminal;
+	return c;
+}
 
 
 }}}

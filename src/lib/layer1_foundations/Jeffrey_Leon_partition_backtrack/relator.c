@@ -30,7 +30,7 @@ BOOLEAN verifyCosetList(
    Unsigned degree);
 BOOLEAN onFreeList(
    Unsigned coset);
-static callCount = 0;   /*DEBUG*/
+static int callCount = 0;   /*DEBUG*/
 
 
 /*-------------------------- relatorLevel ---------------------------------*/

@@ -801,8 +801,8 @@ void schreier::transporter_from_orbit_rep_to_point(
 	coset_rep(pos, verbose_level - 1);
 	A->Group_element->element_move(cosetrep, Elt, 0);
 	if (f_v) {
-		cout << "schreier::transporter_from_orbit_"
-				"rep_to_point done" << endl;
+		cout << "schreier::transporter_from_orbit_rep_to_point "
+				"done" << endl;
 	}
 }
 

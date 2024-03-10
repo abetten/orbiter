@@ -175,12 +175,12 @@ PermGroup *matrixAutoGroup(
    if ( C ) {
       CC = C;
       checkMonomialProperty = (C->fieldSize > 2);
-      pp = codeAutoProperty;
+      pp = (Property *) codeAutoProperty;
    }
    else {
       MM = M;
       checkMonomialProperty = monomialFlag;
-      pp = matrix01AutoProperty;
+      pp = (Property *) matrix01AutoProperty;
    }
    
 
@@ -292,7 +292,7 @@ Permutation *matrixIsomorphism(
       CC_L = C_L;
       CC_R = C_R;
       checkMonomialProperty = (C_L->fieldSize > 2);
-      pp = codeIsoProperty;
+      pp = (Property *) codeIsoProperty;
       options.altInformCosetRep = (monomialFlag ? &informCodeMonIso 
                                                 : NULL);
    }
@@ -300,7 +300,7 @@ Permutation *matrixIsomorphism(
       MM_L = M_L;
       MM_R = M_R;
       checkMonomialProperty = monomialFlag;
-      pp = matrix01IsoProperty;
+      pp = (Property *) matrix01IsoProperty;
       options.altInformCosetRep = (monomialFlag ? &informMatrixMonIso 
                                                 : &informMatrixIso);
    }

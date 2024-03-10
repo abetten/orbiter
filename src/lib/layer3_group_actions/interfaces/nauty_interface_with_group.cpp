@@ -849,8 +849,9 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		long int *Pts, int sz,
 		groups::strong_generators *&Set_stab,
 		data_structures::bitvector *&Canonical_form,
-		long int *&canonical_labeling, int &canonical_labeling_len,
-		std::vector<std::string> &NO_stringified,
+		l1_interfaces::nauty_output *&NO,
+		//long int *&canonical_labeling, int &canonical_labeling_len,
+		//std::vector<std::string> &NO_stringified,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -893,7 +894,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	l1_interfaces::nauty_output *NO;
+	//l1_interfaces::nauty_output *NO;
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
@@ -928,6 +929,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		NO->print_stats();
 	}
 
+#if 0
 	NO->stringify_as_vector(
 			NO_stringified,
 			verbose_level);
@@ -941,8 +943,9 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 			NO->canonical_labeling,
 			canonical_labeling,
 			canonical_labeling_len);
+#endif
 
-	FREE_OBJECT(NO);
+	//FREE_OBJECT(NO);
 	FREE_OBJECT(Enc);
 	FREE_OBJECT(OwCF);
 

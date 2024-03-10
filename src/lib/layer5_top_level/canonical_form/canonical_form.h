@@ -148,8 +148,12 @@ public:
 
 	int nb_rows, nb_cols;
 	data_structures::bitvector *Canonical_form;
-	long int *canonical_labeling;
-	int canonical_labeling_len;
+
+	l1_interfaces::nauty_output *NO;
+
+	//long int *canonical_labeling;
+	//int canonical_labeling_len;
+	//std::vector<std::string> NO_stringified;
 
 
 	groups::strong_generators *Set_stab;
@@ -167,7 +171,6 @@ public:
 	int idx_equation;
 	int f_found_eqn;
 
-	std::vector<std::string> NO_stringified;
 
 
 	canonical_form_nauty();
@@ -184,7 +187,8 @@ public:
 	// Computes the orbit of the equation under the stabilizer of the set.
 	void orbit_of_equation_under_set_stabilizer(
 			int verbose_level);
-	void report(std::ostream &ost);
+	void report(
+			std::ostream &ost);
 
 };
 
@@ -322,6 +326,69 @@ public:
 
 };
 
+
+
+
+// #############################################################################
+// classification_of_combinatorial_objects.cpp
+// #############################################################################
+
+
+//! classification of combinatorial objects
+
+
+class classification_of_combinatorial_objects {
+
+public:
+
+
+	canonical_form_classification::classification_of_objects *CO;
+
+	object_with_properties *OwP; // [CO->nb_orbits]
+
+	int f_projective_space;
+	projective_geometry::projective_space_with_action *PA;
+
+
+	classification_of_combinatorial_objects();
+	~classification_of_combinatorial_objects();
+	void init_after_nauty(
+			canonical_form_classification::classification_of_objects *CO,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+	void classification_write_file(
+			std::string &fname_base,
+			int verbose_level);
+	void classification_report(
+			canonical_form_classification::classification_of_objects_report_options
+						*Report_options,
+			int verbose_level);
+	void latex_report(
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_all_isomorphism_types(
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int i, int verbose_level);
+	void report_object(
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int i,
+			int verbose_level);
+
+
+};
+
+
 // #############################################################################
 // classification_of_varieties.cpp
 // #############################################################################
@@ -336,6 +403,10 @@ class classification_of_varieties {
 public:
 
 	canonical_form_classifier *Classifier;
+
+
+	// Work data:
+
 
 	// nauty stuff:
 
@@ -353,6 +424,10 @@ public:
 	canonical_form_substructure **CFS_table;
 		// [Input->nb_objects_to_test]
 
+
+
+	// output data:
+
 	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
 
 
@@ -365,17 +440,20 @@ public:
 		// [Input->nb_objects_to_test * Poly_ring->get_nb_monomials()]
 	long int *Goi; // [Input->nb_objects_to_test]
 
-	data_structures::tally_vector_data
-		*Tally;
-		// based on Canonical_forms, nb_objects_to_test
 
-	// transversal of the isomorphism types:
-	int *transversal;
-	int *frequency;
-	int nb_types; // number of isomorphism types
+	// computed in finalize_canonical_forms, only of we don't use nauty:
+
+		data_structures::tally_vector_data
+			*Tally;
+			// based on Canonical_forms, nb_objects_to_test
+
+		// transversal of the isomorphism types:
+		int *transversal;
+		int *frequency;
+		int nb_types; // number of isomorphism types
 
 
-	// nauty specific:
+	// output data, nauty specific:
 	int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
 	int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
 	int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
@@ -474,66 +552,6 @@ public:
 			int *Carry_through,
 			data_structures::spreadsheet *S,
 			variety_object_with_action *&Vo,
-			int verbose_level);
-
-
-};
-
-
-// #############################################################################
-// classification_of_combinatorial_objects.cpp
-// #############################################################################
-
-
-//! classification of combinatorial objects
-
-
-class classification_of_combinatorial_objects {
-
-public:
-
-
-	canonical_form_classification::classification_of_objects *CO;
-
-	object_with_properties *OwP; // [CO->nb_orbits]
-
-	int f_projective_space;
-	projective_geometry::projective_space_with_action *PA;
-
-
-	classification_of_combinatorial_objects();
-	~classification_of_combinatorial_objects();
-	void init_after_nauty(
-			canonical_form_classification::classification_of_objects *CO,
-			int f_projective_space,
-			projective_geometry::projective_space_with_action *PA,
-			int verbose_level);
-	void classification_write_file(
-			std::string &fname_base,
-			int verbose_level);
-	void classification_report(
-			canonical_form_classification::classification_of_objects_report_options
-						*Report_options,
-			int verbose_level);
-	void latex_report(
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int verbose_level);
-	void report_all_isomorphism_types(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int verbose_level);
-	void report_isomorphism_type(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int i, int verbose_level);
-	void report_object(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int i,
 			int verbose_level);
 
 

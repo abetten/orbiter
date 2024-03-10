@@ -162,7 +162,7 @@ void canonical_form_of_variety::classify_using_nauty(
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
 
 	Canonical_form_classifier->Output->canonical_labeling_len =
-			Canonical_form_nauty->canonical_labeling_len;
+			Canonical_form_nauty->NO->N; //canonical_labeling_len;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::classify_using_nauty "
@@ -392,8 +392,8 @@ int canonical_form_of_variety::find_equation(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	long int *alpha_inv;
-	long int *beta_inv;
+	int *alpha_inv;
+	int *beta_inv;
 	int i, j;
 	int f_found = false;
 
@@ -401,21 +401,23 @@ int canonical_form_of_variety::find_equation(
 	C1 = (canonical_form_nauty *)
 			Canonical_form_classifier->Output->CB->Type_extra_data[idx1];
 
-	alpha_inv = C1->canonical_labeling;
+	alpha_inv = C1->NO->canonical_labeling;
+	//alpha_inv = C1->canonical_labeling;
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"alpha_inv = " << endl;
-		Lint_vec_print(cout,
+		Int_vec_print(cout,
 				alpha_inv,
 				Canonical_form_classifier->Output->canonical_labeling_len);
 		cout << endl;
 	}
 
-	beta_inv = C->canonical_labeling;
+	beta_inv = C->NO->canonical_labeling;
+	//beta_inv = C->canonical_labeling;
 	if (f_v) {
 		cout << "canonical_form_of_variety::find_equation "
 				"beta_inv = " << endl;
-		Lint_vec_print(
+		Int_vec_print(
 				cout,
 				beta_inv,
 				Canonical_form_classifier->Output->canonical_labeling_len);
@@ -1052,12 +1054,17 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	}
 
 	int l;
+	std::vector<std::string> NO_stringified;
 
-	l = Canonical_form_nauty->NO_stringified.size();
+	Canonical_form_nauty->NO->stringify_as_vector(
+			NO_stringified,
+			verbose_level);
+
+	l = NO_stringified.size();
 	int j;
 
 	for (j = 0; j < l; j++) {
-		v.push_back("\"" + Canonical_form_nauty->NO_stringified[j] + "\"");
+		v.push_back("\"" + NO_stringified[j] + "\"");
 	}
 	v.push_back("\"" + std::to_string(Canonical_form_nauty->Orb->used_length) + "\"");
 	v.push_back("\"" + Canonical_form_nauty->Stab_gens_variety->group_order_stringify() + "\"");

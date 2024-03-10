@@ -370,8 +370,9 @@ public:
 			long int *Pts, int sz,
 			groups::strong_generators *&Set_stab,
 			data_structures::bitvector *&Canonical_form,
-			long int *&canonical_labeling, int &canonical_labeling_len,
-			std::vector<std::string> &NO_stringified,
+			l1_interfaces::nauty_output *&NO,
+			//long int *&canonical_labeling, int &canonical_labeling_len,
+			//std::vector<std::string> &NO_stringified,
 			int verbose_level);
 
 };

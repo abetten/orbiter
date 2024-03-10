@@ -294,6 +294,12 @@ public:
 			int &orbit_idx, int &orbit_pos, int verbose_level);
 	int get_orbit_rep(
 			int orbit_idx, int verbose_level);
+	void transporter_from_orbit_rep_to_point(
+			int pt,
+		int &orbit_idx, int *Elt, int verbose_level);
+	void transporter_from_point_to_orbit_rep(
+			int pt,
+		int &orbit_idx, int *Elt, int verbose_level);
 	void create_latex_report(
 			int verbose_level);
 	void report(

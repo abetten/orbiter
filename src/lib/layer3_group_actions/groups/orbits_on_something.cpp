@@ -2045,6 +2045,39 @@ int orbits_on_something::get_orbit_rep(
 }
 
 
+void orbits_on_something::transporter_from_orbit_rep_to_point(
+		int pt,
+	int &orbit_idx, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::transporter_from_orbit_rep_to_point" << endl;
+	}
+	Sch->transporter_from_orbit_rep_to_point(
+			pt,
+			orbit_idx, Elt, verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_on_something::transporter_from_orbit_rep_to_point done" << endl;
+	}
+}
+
+void orbits_on_something::transporter_from_point_to_orbit_rep(
+		int pt,
+	int &orbit_idx, int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::transporter_from_point_to_orbit_rep" << endl;
+	}
+	Sch->transporter_from_point_to_orbit_rep(
+			pt,
+			orbit_idx, Elt, verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_on_something::transporter_from_point_to_orbit_rep done" << endl;
+	}
+}
 
 
 void orbits_on_something::create_latex_report(

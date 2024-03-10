@@ -1688,9 +1688,13 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	groups::strong_generators *Set_stab;
 
 	data_structures::bitvector *Canonical_form;
+	l1_interfaces::nauty_output *NO;
+
+#if 0
 	long int *canonical_labeling;
 	int canonical_labeling_len;
 	std::vector<std::string> NO_stringified;
+#endif
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
@@ -1702,8 +1706,9 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 			set, set_size,
 			Set_stab,
 			Canonical_form,
-			canonical_labeling, canonical_labeling_len,
-			NO_stringified,
+			NO,
+			//canonical_labeling, canonical_labeling_len,
+			//NO_stringified,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
@@ -1711,7 +1716,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	}
 
 	FREE_OBJECT(Canonical_form);
-	FREE_lint(canonical_labeling);
+	//FREE_lint(canonical_labeling);
+	FREE_OBJECT(NO);
 #endif
 
 	if (f_v) {

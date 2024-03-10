@@ -28,8 +28,13 @@ canonical_form_nauty::canonical_form_nauty()
 	nb_rows = 0;
 	nb_cols = 0;
 	Canonical_form = NULL;
+	NO = NULL;
+
+#if 0
 	canonical_labeling = NULL;
 	canonical_labeling_len = 0;
+	//std::vector<std::string> NO_stringified;
+#endif
 
 
 	Set_stab = NULL;
@@ -43,14 +48,18 @@ canonical_form_nauty::canonical_form_nauty()
 	idx_equation = 0;
 	f_found_eqn = false;
 
-	//std::vector<std::string> NO_stringified;
 }
 
 canonical_form_nauty::~canonical_form_nauty()
 {
+	if (NO) {
+		FREE_OBJECT(NO);
+	}
+#if 0
 	if (canonical_labeling) {
 		FREE_lint(canonical_labeling);
 	}
+#endif
 	if (Set_stab) {
 		FREE_OBJECT(Set_stab);
 	}
@@ -105,6 +114,7 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 	}
 
 	interfaces::nauty_interface_with_group Nau;
+	//l1_interfaces::nauty_output *NO;
 
 	Nau.set_stabilizer_in_projective_space_using_nauty(
 			Classifier->PA->P,
@@ -113,8 +123,9 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 			Variety->Vo->Variety_object->Point_sets->Set_size[0],
 			Set_stab,
 			Canonical_form,
-			canonical_labeling, canonical_labeling_len,
-			NO_stringified,
+			NO,
+			//canonical_labeling, canonical_labeling_len,
+			//NO_stringified,
 			verbose_level);
 
 	if (f_v) {
@@ -242,10 +253,18 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 	}
 }
 
-void canonical_form_nauty::report(std::ostream &ost)
+void canonical_form_nauty::report(
+		std::ostream &ost)
 {
 	ost << "Number of equations with the same set of points "
 			<< Orb->used_length << "\\\\" << endl;
+
+	long int nauty_complexity;
+
+	nauty_complexity = NO->nauty_complexity();
+
+	ost << "Nauty complexity = "
+			<< nauty_complexity << "\\\\" << endl;
 
 	ost << endl;
 	ost << "\\bigskip" << endl;

@@ -116,6 +116,9 @@ void object_in_projective_space_with_action::report(
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
+	long int nauty_complexity;
+
+
 	{
 		interfaces::nauty_interface_with_group Nau;
 		l1_interfaces::nauty_output *NO;
@@ -140,6 +143,8 @@ void object_in_projective_space_with_action::report(
 					"after Nau.set_stabilizer_of_object" << endl;
 		}
 
+		nauty_complexity = NO->nauty_complexity();
+
 		FREE_OBJECT(NO);
 		FREE_OBJECT(Enc);
 	}
@@ -154,6 +159,8 @@ void object_in_projective_space_with_action::report(
 		fp << "\\bigskip" << endl;
 		fp << endl;
 	//	}
+
+	fp << "Nauty complexity: " << nauty_complexity << "\\\\" << endl;
 
 	if (OwCF->type == t_PAC) {
 		long int *Sets;
