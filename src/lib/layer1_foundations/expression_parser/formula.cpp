@@ -1648,7 +1648,7 @@ void formula::collect_coefficients_of_equation(
 
 	for (i = 0; i < I->m; i++) {
 		index = Poly->index_of_monomial(I->M + i * I->n);
-		coeffs[index] = Coeff[i];
+		coeffs[index] = Fq->add(coeffs[index], Coeff[i]);
 	}
 
 	if (f_v) {

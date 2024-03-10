@@ -2211,8 +2211,8 @@ void object_with_canonical_form::run_nauty(
 				"after encode_incma" << endl;
 	}
 	if (verbose_level > 2) {
-		cout << "object_with_canonical_form::run_nauty Incma:" << endl;
-		Enc->print_incma();
+		cout << "object_with_canonical_form::run_nauty Incma not shown" << endl;
+		//Enc->print_incma();
 	}
 
 
