@@ -321,6 +321,10 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			int *&coeffs, int &nb_coeffs,
 			int verbose_level);
+	void collect_subtrees_by_monomials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			formula_vector *&terms, int &nb_terms,
+			int verbose_level);
 
 };
 
@@ -501,6 +505,10 @@ public:
 	std::string collect_by_source;
 	std::string collect_by_ring;
 
+	int f_collect_by_ring;
+	std::string collect_by_ring_source;
+	std::string collect_by_ring_ring;
+
 	int f_encode_CRC;
 	int encode_CRC_block_length;
 	std::string encode_CRC_data_polynomial;
@@ -618,6 +626,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_collect_by(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_collect_by_ring(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);
@@ -830,6 +842,9 @@ public:
 	void collect_like_terms(
 			int verbose_level);
 	void collect_like_terms_addition(
+			int verbose_level);
+	void append_monomial(
+			int *exponent_vector, int nb_vars, int coeff,
 			int verbose_level);
 	void collect_monomial_terms(
 			data_structures::int_matrix *&I, int *&Coeff,

@@ -423,6 +423,19 @@ void symbolic_object_builder::process_arguments(
 					verbose_level - 1);
 	}
 
+	else if (Descr->f_collect_by_ring) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -collect_by_ring"
+					<< " " << Descr->collect_by_ring_source
+					<< " " << Descr->collect_by_ring_ring
+					<< endl;
+		}
+		do_collect_by_ring(
+					Descr,
+					label,
+					verbose_level - 1);
+	}
+
 	else if (Descr->f_encode_CRC) {
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments -encode_CRC"
@@ -1570,6 +1583,192 @@ void symbolic_object_builder::do_collect_by(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_collect_by done" << endl;
+	}
+}
+
+
+
+void symbolic_object_builder::do_collect_by_ring(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring" << endl;
+	}
+
+	symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->collect_by_ring_source);
+
+#if 1
+	if (O_source->Formula_vector->len != 1) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"input must be a singleton" << endl;
+		exit(1);
+	}
+#endif
+
+	ring_theory::homogeneous_polynomial_domain *Poly;
+
+	Poly = Get_ring(Descr->collect_by_ring_ring);
+
+	int degree = Poly->degree;
+	int nb_var = Poly->nb_variables;
+	int len = Poly->get_nb_monomials();
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"degree = " << degree << endl;
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"nb_var = " << nb_var << endl;
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"number of terms = " << len << endl;
+	}
+
+
+	int nb_terms;
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"before collect_variables" << endl;
+	}
+	O_source->Formula_vector->V[0].collect_variables(verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"after collect_variables" << endl;
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"before collect_subtrees_by_monomials" << endl;
+	}
+	O_source->Formula_vector->V[0].collect_subtrees_by_monomials(
+			Poly,
+			Formula_vector, nb_terms,
+			verbose_level);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"after collect_subtrees_by_monomials" << endl;
+		cout << "symbolic_object_builder::do_collect_by_ring "
+				"nb_terms = " << nb_terms << endl;
+	}
+
+
+#if 0
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	Formula_vector->init_and_allocate(
+				label, label,
+				true,
+				Descr->managed_variables,
+				len, 0 /*verbose_level*/);
+
+	int i, j;//, j1;
+
+	for (i = 0; i < len; i++) {
+		if (f_v) {
+			cout << "symbolic_object_builder::do_collect_by_ring "
+					"init_empty_plus_node " << i << endl;
+		}
+		Formula_vector->V[i].init_empty_plus_node(
+				label, label /*label_tex*/,
+				Descr->f_managed_variables,
+				Descr->managed_variables,
+				Fq, 0 /*verbose_level*/);
+	}
+
+#if 0
+	int *mon;
+
+
+	mon = NEW_int(nb_var);
+
+	if (O_source->Formula_vector->V[0].tree->Root->type != operation_type_add) {
+		cout << "symbolic_object_builder::do_collect_by "
+				"root is not an addition node" << endl;
+		exit(1);
+
+	}
+	else {
+		for (i = 0; i < O_source->Formula_vector->V[0].tree->Root->nb_nodes; i++) {
+
+			int h;
+
+			int d;
+			int idx;
+
+			d = 0;
+			for (h = 0; h < nb_var; h++) {
+
+				j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable_destructive(
+						Poly->get_symbol(h));
+
+				mon[h] = j;
+				d += j;
+
+			}
+
+			if (d != degree) {
+				cout << "symbolic_object_builder::do_collect_by_ring d != degree" << endl;
+				exit(1);
+			}
+
+			idx = Poly->index_of_monomial(mon);
+
+			if (f_v) {
+				cout << "symbolic_object_builder::do_collect_by_ring "
+						"node " << i << " / " << O_source->Formula_vector->V[0].tree->Root->nb_nodes
+						<< " has degree " << d << " and belongs to monomial " << idx << endl;
+			}
+
+
+			expression_parser::syntax_tree_node *Output_node;
+
+			Output_node = NEW_OBJECT(expression_parser::syntax_tree_node);
+
+			O_source->Formula_vector->V[0].tree->Root->Nodes[i]->copy_to(
+					Formula_vector->V[idx].tree,
+					Output_node,
+					0 /*verbose_level*/);
+
+
+
+			Formula_vector->V[idx].tree->Root->append_node(Output_node, 0 /* verbose_level */);
+
+		}
+	}
+
+
+	FREE_int(mon);
+#endif
+#endif
+
+	if (f_v) {
+		int i;
+		for (i = 0; i < len; i++) {
+			cout << "symbolic_object_builder::do_collect_by_ring "
+					"node " << i << " / " << len
+					<< " has " << Formula_vector->V[i].tree->Root->nb_nodes << " terms"
+					<< endl;
+
+		}
+		cout << "symbolic_object_builder::do_collect_by_ring detailed printing:" << endl;
+		for (i = 0; i < len; i++) {
+			cout << "node " << i << " / " << len
+					<< " : ";
+			Formula_vector->V[i].tree->print_easy(cout);
+			cout << endl;
+
+		}
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_collect_by_ring done" << endl;
 	}
 }
 

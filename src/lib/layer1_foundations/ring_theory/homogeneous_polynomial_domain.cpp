@@ -351,6 +351,17 @@ std::string homogeneous_polynomial_domain::list_of_variables()
 	return s;
 }
 
+int homogeneous_polynomial_domain::variable_index(std::string &s)
+{
+	int i;
+
+	for (i = 0; i < nb_variables; i++) {
+		if (symbols[i] == s) {
+			return i;
+		}
+	}
+	return -1;
+}
 
 int homogeneous_polynomial_domain::get_monomial(
 		int i, int j)
@@ -367,6 +378,18 @@ std::string &homogeneous_polynomial_domain::get_monomial_symbol_easy(
 		int i)
 {
 	return monomial_symbols_easy[i];
+}
+
+std::string &homogeneous_polynomial_domain::get_monomial_symbols_latex(
+		int i)
+{
+	return monomial_symbols_latex[i];
+}
+
+std::string &homogeneous_polynomial_domain::get_monomial_symbols(
+		int i)
+{
+	return monomial_symbols[i];
 }
 
 int *homogeneous_polynomial_domain::get_monomial_pointer(
@@ -577,7 +600,8 @@ void homogeneous_polynomial_domain::make_monomials(
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::make_monomials making symbols" << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials "
+				"making symbols" << endl;
 	}
 
 	symbols.clear();
@@ -607,12 +631,14 @@ void homogeneous_polynomial_domain::make_monomials(
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::make_monomials after making symbols" << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials "
+				"after making symbols" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::make_monomials making symbols_latex" << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials "
+				"making symbols_latex" << endl;
 	}
 
 
@@ -645,7 +671,8 @@ void homogeneous_polynomial_domain::make_monomials(
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::make_monomials after making symbols_latex" << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials "
+				"after making symbols_latex" << endl;
 	}
 
 
@@ -654,9 +681,9 @@ void homogeneous_polynomial_domain::make_monomials(
 	string label;
 
 
-	label = "";
 	monomial_symbols.clear();
 	for (i = 0; i < nb_monomials; i++) {
+		label = "";
 		f_first = true;
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
@@ -677,10 +704,10 @@ void homogeneous_polynomial_domain::make_monomials(
 
 	}
 
-	label = "";
 
 	monomial_symbols_latex.clear();
 	for (i = 0; i < nb_monomials; i++) {
+		label = "";
 		for (j = 0; j < nb_variables; j++) {
 			a = Monomials[i * nb_variables + j];
 			if (a) {
@@ -716,9 +743,9 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
-	label = "";
 	monomial_symbols_easy.clear();
 	for (i = 0; i < nb_monomials; i++) {
+		label = "";
 		label += "X";
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
@@ -855,9 +882,10 @@ int homogeneous_polynomial_domain::index_of_monomial(
 #endif
 	int idx;
 	
-	if (!Sorting.search_general(Monomials, nb_monomials, v, idx,
-		homogeneous_polynomial_domain_compare_monomial_with, 
-		this /* extra_data */, 0 /* verbose_level */)) {
+	if (!Sorting.search_general(
+			Monomials, nb_monomials, v, idx,
+			homogeneous_polynomial_domain_compare_monomial_with,
+			this /* extra_data */, 0 /* verbose_level */)) {
 
 		cout << "homogeneous_polynomial_domain::index_of_monomial "
 				"Did not find the monomial v=";
@@ -876,7 +904,8 @@ int homogeneous_polynomial_domain::index_of_monomial(
 				"Did not find the monomial v=";
 		Int_vec_print(cout, v, nb_variables);
 		cout << endl;
-		Sorting.search_general(Monomials, nb_monomials, v, idx,
+		Sorting.search_general(
+				Monomials, nb_monomials, v, idx,
 				homogeneous_polynomial_domain_compare_monomial_with,
 				this /* extra_data */, 3);
 		exit(1);

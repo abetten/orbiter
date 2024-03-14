@@ -298,6 +298,26 @@ void polynomial_ring_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_table_of_monomials_write_csv) {
+		if (f_v) {
+			cout << "-table_of_monomials_write_csv "
+					<< Descr->table_of_monomials_write_csv_label << " "
+					<< endl;
+		}
+
+		ring_theory::ring_theory_global RT;
+
+		RT.make_table_of_monomials(
+				HPD,
+				Descr->table_of_monomials_write_csv_label,
+				verbose_level);
+
+	}
+
+
+	int f_table_of_monomials_write_csv;
+	std::string table_of_monomials_write_csv_label;
+
 
 	if (f_v) {
 		cout << "polynomial_ring_activity::perform_activity done" << endl;

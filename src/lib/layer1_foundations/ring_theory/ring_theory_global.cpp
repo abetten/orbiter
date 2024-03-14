@@ -698,7 +698,8 @@ void ring_theory_global::polynomial_mult_mod(
 
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_mult_mod before FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_mult_mod "
+				"before FX.mult_mod" << endl;
 	}
 
 	{
@@ -706,7 +707,8 @@ void ring_theory_global::polynomial_mult_mod(
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_mult_mod after FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_mult_mod "
+				"after FX.mult_mod" << endl;
 	}
 
 	if (f_v) {
@@ -801,7 +803,8 @@ void ring_theory_global::polynomial_power_mod(
 
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_power_mod before FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_power_mod "
+				"before FX.mult_mod" << endl;
 	}
 
 	{
@@ -809,7 +812,8 @@ void ring_theory_global::polynomial_power_mod(
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_power_mod after FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_power_mod "
+				"after FX.mult_mod" << endl;
 	}
 
 	if (f_v) {
@@ -872,7 +876,8 @@ void ring_theory_global::polynomial_find_roots(
 
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_find_roots before FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_find_roots "
+				"before FX.mult_mod" << endl;
 	}
 
 	{
@@ -888,7 +893,8 @@ void ring_theory_global::polynomial_find_roots(
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::polynomial_find_roots after FX.mult_mod" << endl;
+		cout << "ring_theory_global::polynomial_find_roots "
+				"after FX.mult_mod" << endl;
 	}
 
 
@@ -1389,7 +1395,8 @@ void ring_theory_global::polynomial_division_from_file_with_report(
 
 			long int rk_q, rk_r;
 
-			D.division_with_remainder_from_file_with_report(input_file, rk1,
+			D.division_with_remainder_from_file_with_report(
+					input_file, rk1,
 					rk_q, rk_r, ost, verbose_level);
 
 			ost << "$ / " << rk1 << " = " << rk_q << "$ Remainder $"
@@ -1506,7 +1513,8 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with_report written file " << fname << " of size "
+		cout << "ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with_report "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -1774,18 +1782,21 @@ void ring_theory_global::compute_nth_roots_as_polynomials(
 
 #if 0
 	if (f_v) {
-		cout << "ring_theory_global::compute_nth_roots_as_polynomials choosing the following irreducible "
+		cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+				"choosing the following irreducible "
 				"and primitive polynomial:" << endl;
 		FpX.print_object(M, cout);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "ring_theory_global::compute_nth_roots_as_polynomials creating unipoly_domain Fq modulo M" << endl;
+		cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+				"creating unipoly_domain Fq modulo M" << endl;
 	}
 	//unipoly_domain Fq(this, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
 	if (f_v) {
-		cout << "ring_theory_global::compute_nth_roots_as_polynomials extension field created" << endl;
+		cout << "ring_theory_global::compute_nth_roots_as_polynomials "
+				"extension field created" << endl;
 	}
 #endif
 
@@ -1875,7 +1886,8 @@ void ring_theory_global::compute_powers(
 
 	}
 
-	Fq->create_object_by_rank(beta, F->p, verbose_level); // the element alpha
+	Fq->create_object_by_rank(
+			beta, F->p, verbose_level); // the element alpha
 
 	if (start_idx != 1) {
 
@@ -2247,7 +2259,8 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 			((int *) g)[1 + i] = w[i];
 		}
 
-		FX.minimum_polynomial_extension_field(g, m, minpol, d,
+		FX.minimum_polynomial_extension_field(
+				g, m, minpol, d,
 				Frobenius, verbose_level - 3);
 		if (f_vv) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
@@ -2351,7 +2364,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 
 
 		fname = "Irred_q" + std::to_string(F->q) + "_d" + std::to_string(deg) + ".tex";
-		title = "Irreducible Polynomials of Degree " + std::to_string(deg) + " over F" + std::to_string(F->q);
+		title = "Irreducible Polynomials of Degree "
+				+ std::to_string(deg) + " over F" + std::to_string(F->q);
 
 
 		{
@@ -2410,7 +2424,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 		}
 		orbiter_kernel_system::file_io Fio;
 
-		cout << "ring_theory_global::do_make_table_of_irreducible_polynomials written file " << fname << " of size "
+		cout << "ring_theory_global::do_make_table_of_irreducible_polynomials "
+				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -2614,18 +2629,21 @@ void ring_theory_global::factor_cyclotomic(
 
 
 	if (f_poly) {
-		Fq.init_override_polynomial_small_order(q, poly,
+		Fq.init_override_polynomial_small_order(
+				q, poly,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				verbose_level - 1);
 	}
 	else {
-		Fq.finite_field_init_small_order(q,
+		Fq.finite_field_init_small_order(
+				q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				verbose_level - 2);
 	}
-	FQ.finite_field_init_small_order(Q,
+	FQ.finite_field_init_small_order(
+			Q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
 			verbose_level - 2);
@@ -3108,7 +3126,8 @@ void ring_theory_global::parse_equation(
 	}
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
-				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
+				"Formula_vector_after_sub->f_has_managed_variables = "
+				<< Formula_vector_after_sub->f_has_managed_variables << endl;
 	}
 
 
@@ -3137,7 +3156,8 @@ void ring_theory_global::parse_equation(
 
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
-				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+				"Formula_vector_after_expand->f_has_managed_variables = "
+				<< Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	if (f_v) {
@@ -3153,7 +3173,8 @@ void ring_theory_global::parse_equation(
 
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
-				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+				"Formula_vector_after_expand->f_has_managed_variables = "
+				<< Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	// assemble the equation as a vector of coefficients
@@ -3177,7 +3198,8 @@ void ring_theory_global::parse_equation(
 
 	if (f_v) {
 		cout << "ring_theory_global::parse_equation "
-				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+				"Formula_vector_after_expand->f_has_managed_variables = "
+				<< Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	if (f_v) {
@@ -3205,7 +3227,8 @@ void ring_theory_global::simplify_and_expand(
 	}
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
-				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
+				"Formula_vector_after_sub->f_has_managed_variables = "
+				<< Formula_vector_after_sub->f_has_managed_variables << endl;
 	}
 
 	// Perform simplification
@@ -3222,7 +3245,8 @@ void ring_theory_global::simplify_and_expand(
 
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
-				"Formula_vector_after_sub->f_has_managed_variables = " << Formula_vector_after_sub->f_has_managed_variables << endl;
+				"Formula_vector_after_sub->f_has_managed_variables = "
+				<< Formula_vector_after_sub->f_has_managed_variables << endl;
 	}
 
 
@@ -3255,7 +3279,8 @@ void ring_theory_global::simplify_and_expand(
 
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
-				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+				"Formula_vector_after_expand->f_has_managed_variables = "
+				<< Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 	// Perform simplification
@@ -3274,7 +3299,8 @@ void ring_theory_global::simplify_and_expand(
 
 	if (f_v) {
 		cout << "ring_theory_global::simplify_and_expand "
-				"Formula_vector_after_expand->f_has_managed_variables = " << Formula_vector_after_expand->f_has_managed_variables << endl;
+				"Formula_vector_after_expand->f_has_managed_variables = "
+				<< Formula_vector_after_expand->f_has_managed_variables << endl;
 	}
 
 
@@ -3697,6 +3723,70 @@ void ring_theory_global::longinteger_collect_print(
 }
 
 
+void ring_theory_global::make_table_of_monomials(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &name_of_formula,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::make_table_of_monomials" << endl;
+	}
+
+
+	expression_parser::symbolic_object_builder *Object;
+
+	Object = Get_symbol(name_of_formula);
+
+	if (Object->Formula_vector->len != Poly->get_nb_monomials()) {
+		cout << "ring_theory_global::make_table_of_monomials "
+				"the number of objects must match the number "
+				"of monomials in the polynomial ring." << endl;
+		exit(1);
+	}
+
+	string *Table;
+	int nb_cols;
+	int nb_rows;
+	int i, j;
+	int f_latex = false;
+
+	nb_rows = Poly->get_nb_monomials();
+	nb_cols = 2;
+
+	Table = new string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		Table[i * nb_cols + 0] =
+				Poly->get_monomial_symbols_latex(i);
+		Table[i * nb_cols + 1] =
+				Object->Formula_vector->V[i].string_representation_formula(
+						f_latex, 0 /*verbose_level*/);
+	}
+
+	std::string Col_headings[2];
+
+	Col_headings[0] = "Mono";
+	Col_headings[1] = "Coeff";
+	string fname;
+
+	fname = name_of_formula + "_coefficients.csv";
+
+	orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "ring_theory_global::make_table_of_monomials done" << endl;
+	}
+}
 
 
 }}}

@@ -50,6 +50,9 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 	//std::string parse_equation_equation_parameter_values;
 
 
+	f_table_of_monomials_write_csv = false;
+	//std::string table_of_monomials_write_csv_label;
+
 }
 
 
@@ -145,6 +148,16 @@ int polynomial_ring_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-table_of_monomials_write_csv") == 0) {
+			f_table_of_monomials_write_csv = true;
+			table_of_monomials_write_csv_label.assign(argv[++i]);
+
+			if (f_v) {
+				cout << "-table_of_monomials_write_csv "
+						<< table_of_monomials_write_csv_label << " "
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -200,6 +213,11 @@ void polynomial_ring_activity_description::print()
 				<< parse_equation_equation_text << " "
 				<< parse_equation_equation_parameters << " "
 				<< parse_equation_equation_parameter_values << " "
+				<< endl;
+	}
+	if (f_table_of_monomials_write_csv) {
+		cout << "-table_of_monomials_write_csv "
+				<< table_of_monomials_write_csv_label << " "
 				<< endl;
 	}
 }

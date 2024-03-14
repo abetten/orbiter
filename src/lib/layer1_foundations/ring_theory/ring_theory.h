@@ -108,8 +108,8 @@ private:
 	int *Monomials; // [nb_monomials * nb_variables]
 
 
-	std::vector<std::string> symbols;
-	std::vector<std::string> symbols_latex;
+	std::vector<std::string> symbols; // nb_variables
+	std::vector<std::string> symbols_latex; // nb_variables
 
 	std::vector<std::string> monomial_symbols;
 	std::vector<std::string> monomial_symbols_latex;
@@ -172,9 +172,14 @@ public:
 	std::string &get_symbol(
 			int i);
 	std::string list_of_variables();
+	int variable_index(std::string &s);
 	int get_monomial(
 			int i, int j);
 	std::string &get_monomial_symbol_easy(
+			int i);
+	std::string &get_monomial_symbols_latex(
+			int i);
+	std::string &get_monomial_symbols(
 			int i);
 	int *get_monomial_pointer(
 			int i);
@@ -811,6 +816,9 @@ public:
 	std::string parse_equation_equation_parameters;
 	std::string parse_equation_equation_parameter_values;
 
+	int f_table_of_monomials_write_csv;
+	std::string table_of_monomials_write_csv_label;
+
 
 	polynomial_ring_activity_description();
 	~polynomial_ring_activity_description();
@@ -1047,7 +1055,10 @@ public:
 			std::ostream &ost,
 			int &nb_agos, ring_theory::longinteger_object *&agos,
 			int *&multiplicities);
-
+	void make_table_of_monomials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &name_of_formula,
+			int verbose_level);
 
 };
 

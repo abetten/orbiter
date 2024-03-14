@@ -207,6 +207,17 @@ void formula_vector::init_and_allocate(
 
 	formula_vector::f_has_managed_variables = f_has_managed_variables;
 	formula_vector::managed_variables_text = managed_variables_text;
+	if (f_v) {
+		cout << "formula_vector::init_and_allocate" << endl;
+		if (f_has_managed_variables) {
+			cout << "formula_vector::init_and_allocate "
+					"managed_variables_text=" << managed_variables_text << endl;
+		}
+		else {
+			cout << "formula_vector::init_and_allocate no managed variables" << endl;
+
+		}
+	}
 
 
 	V = NEW_OBJECTS(formula, len);

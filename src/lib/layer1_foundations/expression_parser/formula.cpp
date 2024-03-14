@@ -1389,6 +1389,15 @@ void formula::expand_in_place(
 	}
 
 
+	extension += "c";
+
+	label = name_of_formula + extension;
+
+	if (f_write_trees) {
+		latex_tree(label, 0 /*verbose_level_down*/);
+	}
+
+
 	if (f_v) {
 		cout << "formula::expand_in_place (end) "
 				"variables:" << endl;
@@ -1408,7 +1417,7 @@ void formula::expand_in_place(
 				"after tree->Root->collect_like_terms" << endl;
 	}
 
-	extension += "c";
+	extension += "l";
 
 	label = name_of_formula + extension;
 
@@ -1665,6 +1674,270 @@ void formula::collect_coefficients_of_equation(
 		cout << "formula::collect_coefficients_of_equation done" << endl;
 	}
 }
+
+
+void formula::collect_subtrees_by_monomials(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		formula_vector *&terms, int &nb_terms,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials" << endl;
+	}
+
+	data_structures::int_matrix *I;
+
+	int *Coeff;
+	int nb_vars;
+
+	nb_vars = tree->managed_variables.size() + tree->variables.size();
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"nb_vars = " << nb_vars << endl;
+	}
+
+
+	if (tree->managed_variables.size() != Poly->get_nb_variables()) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"tree->managed_variables.size() != Poly->get_nb_variables()" << endl;
+		cout << "formula::collect_subtrees_by_monomials "
+				"tree->managed_variables.size() = " << tree->managed_variables.size() << endl;
+		cout << "formula::collect_subtrees_by_monomials "
+				"Poly->get_nb_variables() = " << Poly->get_nb_variables() << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"before collect_monomial_terms" << endl;
+	}
+
+	collect_monomial_terms(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"after collect_monomial_terms" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"data collected:" << endl;
+		int i;
+
+		for (i = 0; i < I->m; i++) {
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+		cout << "variables: ";
+		tree->print_variables_in_line(cout);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials I->N = " << I->n << endl;
+		cout << "formula::collect_subtrees_by_monomials nb_vars = " << nb_vars << endl;
+	}
+
+
+
+
+
+	nb_terms = Poly->get_nb_monomials();
+
+
+	// build the equation from the table of coefficients
+	// and monomials:
+
+
+	terms = NEW_OBJECT(formula_vector);
+
+	string label_txt, label_tex, managed_variables_text;
+
+	label_txt = name_of_formula + "_collected";
+	label_tex = name_of_formula + "\\_collected";
+
+
+	//std::vector<std::string> managed_variables;
+
+	int i;
+	int *variable_to_polynomial_variable; // [nb_vars]
+
+	variable_to_polynomial_variable = NEW_int(nb_vars);
+	for (i = 0; i < nb_vars; i++) {
+		if (i < tree->managed_variables.size()) {
+			variable_to_polynomial_variable[i] = Poly->variable_index(tree->managed_variables[i]);
+		}
+		else {
+			variable_to_polynomial_variable[i] = -1;
+		}
+	}
+	int f_has_managed_variables = true;
+	for (i = 0; i < tree->variables.size(); i++) {
+		if (i) {
+			managed_variables_text += ",";
+		}
+		managed_variables_text += tree->variables[i];
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"variable_to_polynomial_variable = ";
+		Int_vec_print(cout, variable_to_polynomial_variable, nb_vars);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"managed_variables_text = " << managed_variables_text << endl;
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"before terms->init_and_allocate" << endl;
+	}
+	terms->init_and_allocate(
+			label_txt, label_tex,
+			f_has_managed_variables, managed_variables_text, nb_terms,
+			verbose_level);
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"after terms->init_and_allocate" << endl;
+	}
+
+	for (i = 0; i < nb_terms; i++) {
+
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"term " << i << " / " << nb_terms << endl;
+		}
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"before initializing empty plus nodes" << endl;
+		}
+		terms->V[i].init_empty_plus_node(
+				label_txt, label_tex,
+				f_has_managed_variables,
+				managed_variables_text,
+				Fq,
+				verbose_level);
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"after initializing empty plus nodes" << endl;
+		}
+	}
+
+
+	int *monomial;
+	int j, idx, idx_of_monomial;
+
+	monomial = NEW_int(Poly->get_nb_variables());
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"before creating terms" << endl;
+	}
+
+
+	for (i = 0; i < I->m; i++) {
+
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"monomial " << i << " / " << I->m << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+
+		Int_vec_zero(monomial, Poly->get_nb_variables());
+
+		for (j = 0; j < I->n; j++) {
+			idx = variable_to_polynomial_variable[j];
+			if (idx >= 0) {
+				monomial[idx] = I->M[i * I->n + j];
+			}
+		}
+
+		idx_of_monomial = Poly->index_of_monomial(monomial);
+
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"i = " << i << " / " << I->m
+					<< " idx_of_monomial = " << idx_of_monomial << endl;
+		}
+		for (j = 0; j < I->n; j++) {
+			idx = variable_to_polynomial_variable[j];
+			if (idx >= 0) {
+				I->M[i * I->n + j] = 0;
+			}
+		}
+
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"reduced monomial " << i << " / " << I->m << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"i = " << i << " / " << I->m
+					<< " before append_monomial" << endl;
+		}
+		terms->V[idx_of_monomial].tree->Root->append_monomial(
+				I->M + i * I->n + tree->managed_variables.size(), tree->variables.size(), Coeff[i],
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"i = " << i << " / " << I->m
+					<< " after append_monomial" << endl;
+		}
+		//cout << Coeff[i] << " : ";
+		//Int_vec_print(cout, I->M + i * I->n, I->n);
+		//cout << endl;
+		if (f_v) {
+			cout << "formula::collect_subtrees_by_monomials "
+					"monomial " << i << " / " << I->m << " done" << endl;
+		}
+	}
+
+	FREE_int(monomial);
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"after creating terms" << endl;
+	}
+
+
+#if 0
+	int i, index;
+
+	Int_vec_zero(coeffs, nb_terms);
+
+	for (i = 0; i < I->m; i++) {
+		index = Poly->index_of_monomial(I->M + i * I->n);
+		coeffs[index] = Fq->add(coeffs[index], Coeff[i]);
+	}
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials "
+				"coeffs: ";
+		Int_vec_print(cout, coeffs, nb_coeffs);
+		cout << endl;
+	}
+#endif
+
+
+
+
+	if (f_v) {
+		cout << "formula::collect_subtrees_by_monomials done" << endl;
+	}
+}
+
 
 
 

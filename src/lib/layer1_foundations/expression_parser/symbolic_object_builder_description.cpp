@@ -109,6 +109,10 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	//std::string collect_by_source;
 	//std::string collect_by_ring;
 
+	f_collect_by_ring = false;
+	//std::string collect_by_ring_source;
+	//std::string collect_by_ring_ring;
+
 	f_encode_CRC = false;
 	encode_CRC_block_length = 0;
 	//std::string encode_CRC_data_polynomial;
@@ -382,6 +386,18 @@ int symbolic_object_builder_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-collect_by_ring") == 0) {
+			f_collect_by_ring = true;
+			collect_by_ring_source.assign(argv[++i]);
+			collect_by_ring_ring.assign(argv[++i]);
+			if (f_v) {
+				cout << "-collect_by_ring "
+						<< " " << collect_by_ring_source
+						<< " " << collect_by_ring_ring
+						<< endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-encode_CRC") == 0) {
 			f_encode_CRC = true;
@@ -585,6 +601,13 @@ void symbolic_object_builder_description::print()
 		cout << "-collect_by "
 				<< " " << collect_by_source
 				<< " " << collect_by_ring
+				<< endl;
+	}
+
+	if (f_collect_by_ring) {
+		cout << "-collect_by_ring "
+				<< " " << collect_by_ring_source
+				<< " " << collect_by_ring_ring
 				<< endl;
 	}
 
