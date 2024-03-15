@@ -3750,25 +3750,28 @@ void ring_theory_global::make_table_of_monomials(
 	string *Table;
 	int nb_cols;
 	int nb_rows;
-	int i, j;
+	int i;
 	int f_latex = false;
 
 	nb_rows = Poly->get_nb_monomials();
-	nb_cols = 2;
+	nb_cols = 3;
 
 	Table = new string[nb_rows * nb_cols];
 	for (i = 0; i < nb_rows; i++) {
 		Table[i * nb_cols + 0] =
 				Poly->get_monomial_symbols_latex(i);
 		Table[i * nb_cols + 1] =
+				Poly->get_monomial_symbols(i);
+		Table[i * nb_cols + 2] =
 				Object->Formula_vector->V[i].string_representation_formula(
 						f_latex, 0 /*verbose_level*/);
 	}
 
-	std::string Col_headings[2];
+	std::string Col_headings[3];
 
 	Col_headings[0] = "Mono";
-	Col_headings[1] = "Coeff";
+	Col_headings[1] = "Mono";
+	Col_headings[2] = "Coeff";
 	string fname;
 
 	fname = name_of_formula + "_coefficients.csv";
