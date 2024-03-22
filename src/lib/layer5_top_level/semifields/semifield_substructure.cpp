@@ -715,6 +715,7 @@ void semifield_substructure::do_classify(
 		SCWS->Semifields->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 				SCWS->Semifields,
 			Flag_orbits->nb_primary_orbits_upper,
+			f,
 			Stab, data1, NULL /* extra_data */, verbose_level);
 
 		FREE_OBJECT(Aut_gens);

@@ -23,6 +23,7 @@ orbit_node::orbit_node()
 {
 	C = NULL;
 	orbit_index = 0;
+	flag_orbit_idx = 0;
 	gens = NULL;
 	extra_data = NULL;
 }
@@ -34,6 +35,7 @@ orbit_node::~orbit_node()
 void orbit_node::init(
 		classification_step *C,
 		int orbit_index,
+		int flag_orbit_idx,
 		groups::strong_generators *gens,
 		long int *Rep, void *extra_data,
 		int verbose_level)
@@ -48,6 +50,7 @@ void orbit_node::init(
 	}
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
+	orbit_node::flag_orbit_idx = flag_orbit_idx;
 	orbit_node::gens = gens;
 	Lint_vec_copy(
 			Rep,

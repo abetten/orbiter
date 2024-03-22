@@ -845,6 +845,7 @@ void orbit_cascade::upstep(
 		Partition_orbits->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 				Partition_orbits,
 				Flag_orbits->nb_primary_orbits_upper,
+				f,
 				Aut_gens,
 				partition1 /*Rep*/,
 				NULL /* extra_data */, verbose_level);

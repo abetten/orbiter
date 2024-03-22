@@ -1129,6 +1129,7 @@ void classify_trihedral_pairs::upstep(
 		Trihedral_pairs->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Trihedral_pairs,
 			Flag_orbits->nb_primary_orbits_upper, 
+			f,
 			S, Rep, NULL /* extra_data */, verbose_level);
 
 		

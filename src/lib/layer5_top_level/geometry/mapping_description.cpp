@@ -36,8 +36,8 @@ mapping_description::mapping_description()
 
 	f_affine = false;
 
-	f_object_in_codomain = false;
-	//std::string object_in_codomain_label;
+	f_object_in_codomain_cubic_surface = false;
+	//std::string object_in_codomain_cubic_surface_label;
 
 }
 
@@ -100,11 +100,11 @@ int mapping_description::read_arguments(
 				cout << "-affine " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-object_in_codomain") == 0) {
-			f_object_in_codomain = true;
-			object_in_codomain_label.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-object_in_codomain_cubic_surface") == 0) {
+			f_object_in_codomain_cubic_surface = true;
+			object_in_codomain_cubic_surface_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-object_in_codomain " << object_in_codomain_label << endl;
+				cout << "-object_in_codomain_cubic_surface " << object_in_codomain_cubic_surface_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -142,8 +142,8 @@ void mapping_description::print()
 	if (f_affine) {
 			cout << "-affine " << endl;
 	}
-	if (f_object_in_codomain) {
-		cout << "-object_in_codomain " << object_in_codomain_label << endl;
+	if (f_object_in_codomain_cubic_surface) {
+		cout << "-object_in_codomain_cubic_surface " << object_in_codomain_cubic_surface_label << endl;
 	}
 }
 

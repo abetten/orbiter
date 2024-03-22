@@ -27,7 +27,9 @@ void surface_classify_wedge::test_isomorphism(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_classify_wedge::test_isomorphism " << surface1_label << " " << surface2_label << endl;
+		cout << "surface_classify_wedge::test_isomorphism "
+				"surface1=" << surface1_label
+				<< " surface2=" << surface2_label << endl;
 	}
 
 
@@ -41,8 +43,10 @@ void surface_classify_wedge::test_isomorphism(
 	int isomorphic_to1;
 	int isomorphic_to2;
 	int *Elt_isomorphism_1to2;
+	int *Elt_isomorphism_1to2_inv;
 
 	Elt_isomorphism_1to2 = NEW_int(A->elt_size_in_int);
+	Elt_isomorphism_1to2_inv = NEW_int(A->elt_size_in_int);
 
 	int c;
 
@@ -60,12 +64,21 @@ void surface_classify_wedge::test_isomorphism(
 				"after isomorphism_test_pairwise" << endl;
 	}
 
+	A->Group_element->element_invert(
+			Elt_isomorphism_1to2,
+			Elt_isomorphism_1to2_inv,
+			0 /* verbose_level */);
+
 	if (c) {
 
 		if (f_v) {
 			cout << "The surfaces are isomorphic, "
-					"an isomorphism is given by" << endl;
+					"an isomorphism from the first surface to the second is given by" << endl;
 			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
+			cout << "The surfaces belongs to iso type "
+					<< isomorphic_to1 << endl;
+			cout << "The inverse isomorphism is given by" << endl;
+			A->Group_element->element_print(Elt_isomorphism_1to2_inv, cout);
 			cout << "The surfaces belongs to iso type "
 					<< isomorphic_to1 << endl;
 		}
@@ -79,6 +92,10 @@ void surface_classify_wedge::test_isomorphism(
 					<< isomorphic_to2 << endl;
 		}
 	}
+
+	FREE_int(Elt_isomorphism_1to2);
+	FREE_int(Elt_isomorphism_1to2_inv);
+
 	if (f_v) {
 		cout << "surface_classify_wedge::test_isomorphism done" << endl;
 	}

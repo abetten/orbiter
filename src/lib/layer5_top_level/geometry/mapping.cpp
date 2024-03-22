@@ -31,11 +31,15 @@ mapping::mapping()
 	object_in_codomain_type = orbiter_kernel_system::symbol_table_object_type::t_nothing_object;
 	object_in_codomain_cubic_surface = NULL;
 
+	f_object_in_codomain = false;
+	Variety_object = NULL;
+
 
 	//std::string label_txt;
 	//std::string label_tex;
 
 	Image_pts = NULL;
+	Image_pts_in_object = NULL;
 	N_points_input = 0;
 
 }
@@ -50,6 +54,9 @@ mapping::~mapping()
 	}
 	if (Image_pts) {
 		FREE_lint(Image_pts);
+	}
+	if (f_object_in_codomain) {
+		FREE_lint(Image_pts_in_object);
 	}
 	if (f_v) {
 		cout << "mapping::~mapping done" << endl;
@@ -100,12 +107,12 @@ void mapping::init(
 	}
 
 
-	if (Descr->f_object_in_codomain) {
+	if (Descr->f_object_in_codomain_cubic_surface) {
 		if (f_v) {
-			cout << "mapping::init -object_in_codomain " << Descr->object_in_codomain_label << endl;
+			cout << "mapping::init -object_in_codomain_cubic_surface " << Descr->object_in_codomain_cubic_surface_label << endl;
 		}
 
-		object_in_codomain_idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->object_in_codomain_label);
+		object_in_codomain_idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->object_in_codomain_cubic_surface_label);
 		if (f_v) {
 			cout << "mapping::init object_in_codomain_idx = " << object_in_codomain_idx << endl;
 		}
@@ -117,8 +124,11 @@ void mapping::init(
 			cout << "mapping::init object in codomain must be of type cubic surface" << endl;
 			exit(1);
 		}
-		object_in_codomain_cubic_surface = Get_object_of_cubic_surface(Descr->object_in_codomain_label);
+		object_in_codomain_cubic_surface = Get_object_of_cubic_surface(Descr->object_in_codomain_cubic_surface_label);
 
+
+		f_object_in_codomain = true;
+		Variety_object = object_in_codomain_cubic_surface->SO->Variety_object;
 
 	}
 	else {
@@ -149,8 +159,76 @@ void mapping::init(
 	fname_map = Descr->formula_label + "_map.csv";
 
 
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname_map, Image_pts, N_points_input, 1);
+	string *Table;
+	std::string *Col_headings;
+	int nb_rows, nb_cols;
+	int i;
+	int *v;
+	int *w;
+
+	int input_len;
+	int output_len;
+
+	output_len = Formula->Formula_vector->len;
+
+	geometry::projective_space *P;
+
+	P = Domain->P;
+
+	input_len = P->Subspaces->n + 1;
+	v = NEW_int(input_len);
+	w = NEW_int(output_len);
+
+	nb_rows = N_points_input;
+	nb_cols = 5;
+
+	Col_headings = new string[nb_cols];
+
+	Table = new string[nb_rows * nb_cols];
+
+	Col_headings[0] = "IN";
+	Col_headings[1] = "INV";
+	Col_headings[2] = "OUT";
+	Col_headings[3] = "OUTV";
+	Col_headings[4] = "SUB";
+
+	for (i = 0; i < N_points_input; i++) {
+
+		long int k;
+		P->unrank_point(v, i);
+
+		if (Image_pts[i] >= 0) {
+			P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified_lint(
+				w, 1 /* stride */, output_len, Image_pts[i]);
+		}
+		else {
+			Int_vec_zero(w, output_len);
+		}
+
+		if (f_object_in_codomain) {
+			k = Image_pts_in_object[i];
+		}
+		else {
+			k = -1;
+		}
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(v, input_len) + "\"";
+		Table[i * nb_cols + 2] = std::to_string(Image_pts[i]);
+		Table[i * nb_cols + 3] = "\"" + Int_vec_stringify(w, output_len) + "\"";
+		Table[i * nb_cols + 4] = std::to_string(k);
+	}
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_map,
+			nb_rows, nb_cols,
+			Table, Col_headings,
+			verbose_level - 2);
+
+	delete [] Table;
+	delete [] Col_headings;
+
 	if (f_v) {
 		cout << "Written file " << fname_map
 				<< " of size " << Fio.file_size(fname_map) << endl;
@@ -178,7 +256,7 @@ void mapping::evaluate_regular_map(
 	int *w;
 	int *w2;
 	int h;
-	long int i, j, k;
+	long int i, j;
 
 	geometry::projective_space *P;
 
@@ -213,6 +291,10 @@ void mapping::evaluate_regular_map(
 
 
 	Image_pts = NEW_lint(N_points_input);
+
+	if (f_object_in_codomain) {
+		Image_pts_in_object = NEW_lint(N_points_input);
+	}
 
 	v = NEW_int(P->Subspaces->n + 1);
 	w = NEW_int(len);
@@ -272,40 +354,46 @@ void mapping::evaluate_regular_map(
 			cout << endl;
 		}
 
+		Image_pts[i] = j;
 
-		if (Descr->f_object_in_codomain) {
+		if (f_v) {
+			cout << "mapping::evaluate_regular_map "
+					"point " << i << " / " << N_points_input << " is ";
+			Int_vec_print(cout, v, P->Subspaces->n + 1);
+			cout << " maps to ";
+			Int_vec_print(cout, w2, len);
+			cout << " image rank = " << Image_pts[i];
+			//cout << " in subobject = " << k;
+			cout << endl;
+		}
+
+		if (f_object_in_codomain) {
 			int idx;
 
 
-			if (j != -1) {
-				if (!object_in_codomain_cubic_surface->SO->find_point(j, idx)) {
-					cout << "connot find point " << j << " in the cubic surface" << endl;
+			if (Image_pts[i] != -1) {
+				if (!Variety_object/*object_in_codomain_cubic_surface->SO*/->find_point(Image_pts[i], idx)) {
+					cout << "mapping::evaluate_regular_map "
+							"cannot find point " << Image_pts[i] << " on the variety" << endl;
 					exit(1);
 				}
-				k = idx;
+				Image_pts_in_object[i] = idx;
+				if (f_v) {
+					cout << "mapping::evaluate_regular_map "
+							"point " << i << " / " << N_points_input << " is ";
+					Int_vec_print(cout, v, P->Subspaces->n + 1);
+					cout << " maps to ";
+					Int_vec_print(cout, w2, len);
+					cout << " image rank = " << Image_pts[i];
+					cout << " in variety = " << Image_pts_in_object[i];
+					cout << endl;
+				}
 			}
 			else {
-				k = -1;
+				Image_pts_in_object[i] = -1;
 			}
-
-			if (f_v) {
-				cout << "mapping::evaluate_regular_map "
-						"point " << i << " / " << N_points_input << " is ";
-				Int_vec_print(cout, v, P->Subspaces->n + 1);
-				cout << " maps to ";
-				Int_vec_print(cout, w2, len);
-				cout << " image rank = " << j;
-				cout << " in subobject = " << k;
-				cout << endl;
-			}
-
-
-		}
-		else {
-			k = j;
 		}
 
-		Image_pts[i] = k;
 	}
 
 	FREE_int(v);

@@ -2045,6 +2045,54 @@ int orbits_on_something::get_orbit_rep(
 }
 
 
+int orbits_on_something::get_orbit_rep_unpacked(
+		int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rep, rep_unpacked;
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked "
+				"before get_orbit_rep" << endl;
+	}
+
+	rep = get_orbit_rep(orbit_idx, verbose_level);
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked "
+				"after get_orbit_rep" << endl;
+	}
+
+	if (A->type_G != action_by_restriction_t) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked "
+				"action is not of restricted type" << endl;
+		exit(1);
+	}
+
+	induced_actions::action_by_restriction *ABR;
+
+	ABR = A->G.ABR;
+	rep_unpacked = ABR->original_point(rep);
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked rep=" << rep << " rep_unpacked=" << rep_unpacked << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_rep_unpacked done" << endl;
+	}
+	return rep_unpacked;
+
+}
+
+
+
 void orbits_on_something::transporter_from_orbit_rep_to_point(
 		int pt,
 	int &orbit_idx, int *Elt, int verbose_level)

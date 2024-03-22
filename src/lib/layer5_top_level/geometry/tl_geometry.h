@@ -678,8 +678,8 @@ public:
 
 	int f_affine;
 
-	int f_object_in_codomain;
-	std::string object_in_codomain_label;
+	int f_object_in_codomain_cubic_surface;
+	std::string object_in_codomain_cubic_surface_label;
 
 	mapping_description();
 	~mapping_description();
@@ -718,13 +718,18 @@ public:
 
 	int object_in_codomain_idx;
 	orbiter_kernel_system::symbol_table_object_type object_in_codomain_type;
+
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
 		*object_in_codomain_cubic_surface;
+
+	int f_object_in_codomain;
+	algebraic_geometry::variety_object *Variety_object;
 
 	std::string label_txt;
 	std::string label_tex;
 
-	long int *Image_pts;
+	long int *Image_pts; // [N_points_input]
+	long int *Image_pts_in_object; // [N_points_input], if f_object_in_codomain is true
 	long int N_points_input;
 
 	mapping();

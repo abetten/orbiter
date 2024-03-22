@@ -723,6 +723,7 @@ void surface_classify_wedge::upstep(
 		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Surfaces,
 			Flag_orbits->nb_primary_orbits_upper, 
+			f,
 			Aut_gens, Lines, NULL /* extra_data */,
 			verbose_level - 4);
 

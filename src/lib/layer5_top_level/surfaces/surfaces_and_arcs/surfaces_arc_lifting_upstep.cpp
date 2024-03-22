@@ -242,6 +242,7 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(
 	Lift->Surfaces->Orbit[Lift->Flag_orbits->nb_primary_orbits_upper].init(
 				Lift->Surfaces,
 				Lift->Flag_orbits->nb_primary_orbits_upper,
+				f,
 				Aut_gens, Lines, D /* extra_data */, verbose_level);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_upstep::process_flag_orbit after init Aut_gens" << endl;

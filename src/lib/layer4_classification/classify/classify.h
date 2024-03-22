@@ -206,6 +206,7 @@ class orbit_node {
 public:
 	classification_step *C;
 	int orbit_index;
+	int flag_orbit_idx;
 	groups::strong_generators *gens;
 	void *extra_data;
 
@@ -214,6 +215,7 @@ public:
 	void init(
 			classification_step *C,
 			int orbit_index,
+			int flag_orbit_idx,
 			groups::strong_generators *gens,
 			long int *Rep, void *extra_data,
 			int verbose_level);
