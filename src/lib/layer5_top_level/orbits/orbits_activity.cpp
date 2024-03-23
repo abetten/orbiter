@@ -693,16 +693,16 @@ void orbits_activity::do_export_trees(
 
 			if (f_v) {
 				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
-						<< " before Sch->export_tree_as_layered_graph" << endl;
+						<< " before Sch->export_tree_as_layered_graph_and_save" << endl;
 			}
 
-			OC->Orb->Sch->export_tree_as_layered_graph(
+			OC->Orb->Sch->export_tree_as_layered_graph_and_save(
 					orbit_idx,
 					fname_tree_mask,
 					verbose_level - 1);
 			if (f_v) {
 				cout << "orbit " << orbit_idx << " / " <<  OC->Orb->Sch->nb_orbits
-						<< " after Sch->export_tree_as_layered_graph" << endl;
+						<< " after Sch->export_tree_as_layered_graph_and_save" << endl;
 			}
 		}
 

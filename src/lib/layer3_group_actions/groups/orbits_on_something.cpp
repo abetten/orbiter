@@ -140,34 +140,34 @@ void orbits_on_something::init(
 
 
 
+		if (f_load_save) {
+			{
+				ofstream fp(fname);
+				if (f_v) {
+					cout << "orbits_on_something::init "
+							"before Sch->write_to_file_binary" << endl;
+				}
+				Sch->write_to_file_binary(fp, verbose_level);
+				if (f_v) {
+					cout << "orbits_on_something::init "
+							"after Sch->write_to_file_binary" << endl;
+				}
+			}
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
 
-		{
-			ofstream fp(fname);
 			if (f_v) {
 				cout << "orbits_on_something::init "
-						"before Sch->write_to_file_binary" << endl;
+						"before Sch->write_to_file_csv" << endl;
 			}
-			Sch->write_to_file_binary(fp, verbose_level);
+			Sch->write_to_file_csv(fname_csv, verbose_level);
 			if (f_v) {
 				cout << "orbits_on_something::init "
-						"after Sch->write_to_file_binary" << endl;
+						"after Sch->write_to_file_csv" << endl;
 			}
+			cout << "Written file " << fname_csv << " of size "
+					<< Fio.file_size(fname_csv) << endl;
 		}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname.c_str()) << endl;
-
-		if (f_v) {
-			cout << "orbits_on_something::init "
-					"before Sch->write_to_file_csv" << endl;
-		}
-		Sch->write_to_file_csv(fname_csv, verbose_level);
-		if (f_v) {
-			cout << "orbits_on_something::init "
-					"after Sch->write_to_file_csv" << endl;
-		}
-		cout << "Written file " << fname_csv << " of size "
-				<< Fio.file_size(fname_csv) << endl;
-
 	}
 
 	if (f_v) {
@@ -263,32 +263,34 @@ void orbits_on_something::init_from_vector_ge(
 
 
 
-		{
-			ofstream fp(fname);
-			if (f_v) {
-				cout << "orbits_on_something::init_from_vector_ge "
-						"before Sch->write_to_file_binary" << endl;
+		if (f_load_save) {
+			{
+				ofstream fp(fname);
+				if (f_v) {
+					cout << "orbits_on_something::init_from_vector_ge "
+							"before Sch->write_to_file_binary" << endl;
+				}
+				Sch->write_to_file_binary(fp, verbose_level);
+				if (f_v) {
+					cout << "orbits_on_something::init_from_vector_ge "
+							"after Sch->write_to_file_binary" << endl;
+				}
 			}
-			Sch->write_to_file_binary(fp, verbose_level);
-			if (f_v) {
-				cout << "orbits_on_something::init_from_vector_ge "
-						"after Sch->write_to_file_binary" << endl;
-			}
-		}
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname.c_str()) << endl;
+			cout << "Written file " << fname << " of size "
+					<< Fio.file_size(fname.c_str()) << endl;
 
-		if (f_v) {
-			cout << "orbits_on_something::init_from_vector_ge "
-					"before Sch->write_to_file_csv" << endl;
+			if (f_v) {
+				cout << "orbits_on_something::init_from_vector_ge "
+						"before Sch->write_to_file_csv" << endl;
+			}
+			Sch->write_to_file_csv(fname_csv, verbose_level);
+			if (f_v) {
+				cout << "orbits_on_something::init_from_vector_ge "
+						"after Sch->write_to_file_csv" << endl;
+			}
+			cout << "Written file " << fname_csv << " of size "
+					<< Fio.file_size(fname_csv) << endl;
 		}
-		Sch->write_to_file_csv(fname_csv, verbose_level);
-		if (f_v) {
-			cout << "orbits_on_something::init_from_vector_ge "
-					"after Sch->write_to_file_csv" << endl;
-		}
-		cout << "Written file " << fname_csv << " of size "
-				<< Fio.file_size(fname_csv) << endl;
 
 	}
 

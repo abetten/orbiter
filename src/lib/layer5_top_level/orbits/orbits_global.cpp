@@ -505,10 +505,18 @@ void orbits_global::orbit_of(
 	fname_tree_mask = AG->label + "_orbit_of_point_" + std::to_string(point_idx) + ".layered_graph";
 
 
-	Sch->export_tree_as_layered_graph(
+	if (f_v) {
+		cout << "orbits_global::orbit_of "
+				"before Sch->export_tree_as_layered_graph_and_save" << endl;
+	}
+	Sch->export_tree_as_layered_graph_and_save(
 			orbit_idx,
 			fname_tree_mask,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_global::orbit_of "
+				"after Sch->export_tree_as_layered_graph_and_save" << endl;
+	}
 
 	groups::strong_generators *SG_stab;
 	ring_theory::longinteger_object full_group_order;

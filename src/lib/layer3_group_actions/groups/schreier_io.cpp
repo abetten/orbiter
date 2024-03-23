@@ -1462,9 +1462,83 @@ void schreier::get_orbit_by_levels(
 
 }
 
-void schreier::export_tree_as_layered_graph(
+void schreier::export_tree_as_layered_graph_and_save(
 		int orbit_no,
 		std::string &fname_mask,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save" << endl;
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"degree = " << degree << endl;
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"orbit_no = " << orbit_no << endl;
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"nb_gen = " << gens.len << endl;
+	}
+
+
+
+	graph_theory::layered_graph *LG;
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"before export_tree_as_layered_graph" << endl;
+	}
+
+	export_tree_as_layered_graph(
+			orbit_no,
+			LG,
+			verbose_level);
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"after export_tree_as_layered_graph" << endl;
+	}
+
+
+	data_structures::string_tools ST;
+
+
+
+	string fname;
+
+	fname = ST.printf_d(fname_mask, orbit_no);
+
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"before LG->write_file" << endl;
+	}
+	LG->write_file(fname, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"after LG->write_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"before FREE_OBJECT(LG)" << endl;
+	}
+	FREE_OBJECT(LG);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save "
+				"after FREE_OBJECT(LG)" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph_and_save done" << endl;
+	}
+}
+
+
+void schreier::export_tree_as_layered_graph(
+		int orbit_no,
+		graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1595,7 +1669,7 @@ void schreier::export_tree_as_layered_graph(
 		}
 	}
 	//data_structures::sorting Sorting;
-	graph_theory::layered_graph *LG;
+	//graph_theory::layered_graph *LG;
 	int n1, j2, N2;
 
 	LG = NEW_OBJECT(graph_theory::layered_graph);
@@ -1705,7 +1779,7 @@ void schreier::export_tree_as_layered_graph(
 	data_structures::string_tools ST;
 
 
-
+#if 0
 	string fname;
 
 	fname = ST.printf_d(fname_mask, orbit_no);
@@ -1720,13 +1794,13 @@ void schreier::export_tree_as_layered_graph(
 		cout << "schreier::export_tree_as_layered_graph "
 				"after LG->write_file" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"before FREE_OBJECT(LG)" << endl;
 	}
-	FREE_OBJECT(LG);
+	//FREE_OBJECT(LG);
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
 				"after FREE_OBJECT(LG)" << endl;

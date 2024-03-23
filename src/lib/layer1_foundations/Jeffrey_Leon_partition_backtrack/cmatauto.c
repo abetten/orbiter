@@ -646,7 +646,7 @@ static RefinementPriorityPair isGRowVsColReducible(
       initializeSeed( initialSeed);
       randBits = 6;
       twoExpRandBits = 64;
-      while ( randBits < INT_SIZE && twoExpRandBits <  
+      while ( randBits < sizeof(int) /*INT_SIZE*/ && twoExpRandBits <
                  (unsigned long) UpsilonStack->degree + M_L->setSize ) {
          ++randBits;
          twoExpRandBits <<=1;

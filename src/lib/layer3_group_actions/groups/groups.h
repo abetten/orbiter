@@ -767,10 +767,6 @@ public:
 			int cur, int last);
 	void print_tree(
 			int orbit_no);
-	void export_tree_as_layered_graph(
-			int orbit_no,
-			std::string &fname_mask,
-			int verbose_level);
 	void draw_forest(
 			std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
@@ -779,6 +775,14 @@ public:
 	void get_orbit_by_levels(
 			int orbit_no,
 			data_structures::set_of_sets *&SoS,
+			int verbose_level);
+	void export_tree_as_layered_graph_and_save(
+			int orbit_no,
+			std::string &fname_mask,
+			int verbose_level);
+	void export_tree_as_layered_graph(
+			int orbit_no,
+			graph_theory::layered_graph *&LG,
 			int verbose_level);
 	void draw_tree(
 			std::string &fname,
