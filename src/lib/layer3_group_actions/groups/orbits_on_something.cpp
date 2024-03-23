@@ -413,6 +413,8 @@ void orbits_on_something::stabilizer_of(
 		cout << gens_str << endl;
 	}
 
+
+#if 0
 	string fname_stab;
 	string label_stab;
 
@@ -433,6 +435,7 @@ void orbits_on_something::stabilizer_of(
 			SG->A,
 			fname_stab, label_stab, label_stab,
 			verbose_level);
+#endif
 
 	//FREE_OBJECT(Stab);
 
