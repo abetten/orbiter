@@ -155,6 +155,7 @@ void canonical_form_of_variety::classify_using_nauty(
 				"after Canonical_form_nauty->compute_canonical_form_of_variety" << endl;
 	}
 
+
 	Canonical_form_nauty->Stab_gens_variety->group_order(go);
 
 	//goi = go.as_int();

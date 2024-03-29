@@ -110,7 +110,7 @@ void strong_generators::init_linear_group_from_scratch(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch" << endl;
@@ -336,17 +336,23 @@ void strong_generators::init_linear_group_from_scratch(
 				"strong generators have been created" << endl;
 	}
 
-	if (f_vv) {
+	if (false) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"we found the following generators:" << endl;
 		print_generators(cout);
 		print_generators_tex();
 	}
-
-
 	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"label=" << label << endl;
+		cout << "strong_generators::init_linear_group_from_scratch go=";
+		ring_theory::longinteger_object go;
+		group_order(go);
+		cout << go << endl;
+	}
+
+
+	if (f_v) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"done" << endl;
 	}

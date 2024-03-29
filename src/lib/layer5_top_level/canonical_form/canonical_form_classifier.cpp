@@ -62,6 +62,11 @@ void canonical_form_classifier::init(
 				"algorithm = ";
 		if (Descr->f_algorithm_nauty) {
 			cout << "nauty";
+
+			if (Descr->f_has_nauty_output) {
+
+				cout << ", has nauty output";
+			}
 		}
 		else if (Descr->f_algorithm_substructure) {
 			cout << "substructure";

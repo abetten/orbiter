@@ -30,12 +30,6 @@ canonical_form_nauty::canonical_form_nauty()
 	Canonical_form = NULL;
 	NO = NULL;
 
-#if 0
-	canonical_labeling = NULL;
-	canonical_labeling_len = 0;
-	//std::vector<std::string> NO_stringified;
-#endif
-
 
 	Set_stab = NULL;
 
@@ -105,32 +99,74 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 
 	if (f_v) {
 		Variety->Vo->Variety_object->print(cout);
+		//NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats
+		//int f_has_nauty_output;
+		//int nauty_output_column_index_start;
+		//std::vector<std::string> Carrying_through;
 	}
 
 
-	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
-				"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
-	}
 
 	interfaces::nauty_interface_with_group Nau;
-	//l1_interfaces::nauty_output *NO;
 
-	Nau.set_stabilizer_in_projective_space_using_nauty(
-			Classifier->PA->P,
-			Classifier->PA->A,
-			Variety->Vo->Variety_object->Point_sets->Sets[0],
-			Variety->Vo->Variety_object->Point_sets->Set_size[0],
-			Set_stab,
-			Canonical_form,
-			NO,
-			//canonical_labeling, canonical_labeling_len,
-			//NO_stringified,
-			verbose_level);
+	if (Variety->Vo->f_has_nauty_output) {
+		if (f_v) {
+			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+					"f_has_nauty_output" << endl;
+		}
+#if 0
+		void set_stabilizer_in_projective_space_using_precomputed_nauty_data(
+				geometry::projective_space *P,
+				actions::action *A,
+				long int *Pts, int sz,
+				int nauty_output_index_start,
+				std::vector<std::string> &Carrying_through,
+				groups::strong_generators *&Set_stab,
+				data_structures::bitvector *&Canonical_form,
+				l1_interfaces::nauty_output *&NO,
+				int verbose_level);
+#endif
 
-	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
-				"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+		if (f_v) {
+			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+					"before Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
+		}
+		Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data(
+				Classifier->PA->P,
+				Classifier->PA->A,
+				Variety->Vo->Variety_object->Point_sets->Sets[0],
+				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				Variety->Vo->nauty_output_index_start,
+				Variety->Vo->Carrying_through,
+				Set_stab,
+				Canonical_form,
+				NO,
+				verbose_level);
+		if (f_v) {
+			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+					"after Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+					"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+		}
+
+		Nau.set_stabilizer_in_projective_space_using_nauty(
+				Classifier->PA->P,
+				Classifier->PA->A,
+				Variety->Vo->Variety_object->Point_sets->Sets[0],
+				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				Set_stab,
+				Canonical_form,
+				NO,
+				verbose_level);
+
+		if (f_v) {
+			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+					"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+		}
 	}
 
 

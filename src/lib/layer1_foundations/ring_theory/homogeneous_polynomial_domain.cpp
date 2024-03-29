@@ -1034,6 +1034,31 @@ void homogeneous_polynomial_domain::print_symbols(
 
 }
 
+std::string homogeneous_polynomial_domain::stringify_monomial(
+		int i)
+{
+	int j, a, f_first = true;
+	string output;
+
+	for (j = 0; j < nb_variables; j++) {
+		a = Monomials[i * nb_variables + j];
+		if (a == 0) {
+			continue;
+		}
+		if (!f_first) {
+			output += "*";
+		}
+		else {
+			f_first = false;
+		}
+		output += symbols[j];
+		if (a > 1) {
+			output += "^" + std::to_string(a);
+		}
+	}
+	return output;
+}
+
 void homogeneous_polynomial_domain::print_monomial(
 		std::ostream &ost, int i)
 {
@@ -3446,16 +3471,50 @@ std::string homogeneous_polynomial_domain::stringify(
 		int *eqn)
 {
 	string output;
-	ostringstream s;
-	int i;
 
-	for (i = 0; i < get_nb_monomials(); i++) {
-		s << eqn[i];
-		if (i < get_nb_monomials() - 1) {
-			s << ",";
+	output = Int_vec_stringify(eqn, get_nb_monomials());
+	return output;
+}
+
+
+std::string homogeneous_polynomial_domain::stringify_algebraic_notation(
+		int *eqn)
+{
+	string output;
+
+	//output = Int_vec_stringify(eqn, get_nb_monomials());
+
+
+	int i, c;
+	int f_first = true;
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		c = eqn[i];
+		if (c == 0) {
+			continue;
 		}
+		if (f_first) {
+			f_first = false;
+		}
+		else {
+			output += " + ";
+		}
+		if (c > 1) {
+			output += std::to_string(c) + "*";
+			//F->Io->print_element(ost, c);
+			//ost << c;
+		}
+
+		output += stringify_monomial(i);
+		//print_monomial_latex(ost, i);
 	}
-	output = s.str();
+
+	if (f_first) {
+		output = "0";
+	}
+
+
 	return output;
 }
 

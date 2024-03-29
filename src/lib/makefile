@@ -501,8 +501,10 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \
+		layer5_top_level/canonical_form/automorphism_group_of_variety.o \
 		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
+		layer5_top_level/canonical_form/canonical_form_global.o \
 		layer5_top_level/canonical_form/canonical_form_nauty.o \
 		layer5_top_level/canonical_form/canonical_form_of_variety.o \
 		layer5_top_level/canonical_form/canonical_form_substructure.o \

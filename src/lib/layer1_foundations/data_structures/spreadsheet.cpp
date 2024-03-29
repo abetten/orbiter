@@ -893,7 +893,8 @@ int spreadsheet::find_by_column(
 	for (j = 0; j < nb_cols; j++) {
 		t = Table[0 * nb_cols + j];
 		if (t >= 0) {
-			c = strncmp(tokens[t], join_by, strlen(join_by));
+			//c = strncmp(tokens[t], join_by, strlen(join_by));
+			c = strcmp(tokens[t], join_by);
 #if 0
 			cout << "comparing '" << tokens[t] << "' with '"
 					<< join_by << "' yields " << c << endl;

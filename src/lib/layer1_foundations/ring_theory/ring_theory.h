@@ -210,6 +210,8 @@ public:
 			int *eqn, int *M);
 	void print_symbols(
 			std::ostream &ost);
+	std::string stringify_monomial(
+			int i);
 	void print_monomial(
 			std::ostream &ost, int i);
 	void print_monomial(
@@ -387,6 +389,8 @@ public:
 			long int *&Image_pts, int &N_points,
 			int verbose_level);
 	std::string stringify(
+			int *eqn);
+	std::string stringify_algebraic_notation(
 			int *eqn);
 	void parse_equation_and_substitute_parameters(
 			std::string &name_of_formula,

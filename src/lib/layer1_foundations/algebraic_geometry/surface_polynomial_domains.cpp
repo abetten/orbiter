@@ -408,7 +408,7 @@ void surface_polynomial_domains::label_variables_3(
 
 	string s1, s2;
 
-	s1.assign("y_%d");
+	s1.assign("y%d");
 	s2.assign("y_{%d}");
 	HPD->remake_symbols(0 /* symbol_offset */,
 			s1, s2, verbose_level);
@@ -436,7 +436,7 @@ void surface_polynomial_domains::label_variables_x123(
 
 	string s1, s2;
 
-	s1.assign("x_%d");
+	s1.assign("x%d");
 	s2.assign("x_{%d}");
 	HPD->remake_symbols(1 /* symbol_offset */,
 			s1, s2, verbose_level);
@@ -463,7 +463,7 @@ void surface_polynomial_domains::label_variables_4(
 
 	string s1, s2;
 
-	s1.assign("X_%d");
+	s1.assign("X%d");
 	s2.assign("X_{%d}");
 
 	HPD->remake_symbols(0 /* symbol_offset */,
@@ -492,7 +492,7 @@ void surface_polynomial_domains::label_variables_27(
 
 	string s1, s2;
 
-	s1.assign("y_%d");
+	s1.assign("y%d");
 	s2.assign("y_{%d}");
 	HPD->remake_symbols_interval(0 /* symbol_offset */,
 			0, 3,

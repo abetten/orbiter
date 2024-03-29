@@ -57,8 +57,10 @@ namespace apps_algebra {
 
 namespace canonical_form {
 
+	class automorphism_group_of_variety;
 	class canonical_form_classifier_description;
 	class canonical_form_classifier;
+	class canonical_form_global;
 	class canonical_form_nauty;
 	class canonical_form_of_variety;
 	class canonical_form_substructure;

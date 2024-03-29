@@ -3449,7 +3449,6 @@ void surface_create::all_quartic_curves(
 	}
 	{
 		ofstream ost(fname_tex);
-		//ofstream ost_quartics(fname_quartics);
 
 		l1_interfaces::latex_interface L;
 
@@ -3466,8 +3465,6 @@ void surface_create::all_quartic_curves(
 			cout << "surface_create::all_quartic_curves "
 					"after SOG->all_quartic_curves" << endl;
 		}
-
-		//ost_curves << -1 << endl;
 
 		L.foot(ost);
 	}
@@ -3514,20 +3511,38 @@ void surface_create::export_all_quartic_curves(
 	}
 
 	{
-		ofstream ost_curves(fname_curves);
+
+		std::string headings;
+		std::string *Table;
+		int nb_rows, nb_cols;
 
 		if (f_v) {
 			cout << "surface_create::export_all_quartic_curves "
 					"before SOG->export_all_quartic_curves" << endl;
 		}
+
 		SOG->export_all_quartic_curves(
-				ost_curves, verbose_level - 1);
+				headings,
+				Table,
+				nb_rows, nb_cols,
+				verbose_level - 1);
+
 		if (f_v) {
 			cout << "surface_create::export_all_quartic_curves "
 					"after SOG->export_all_quartic_curves" << endl;
 		}
 
-		ost_curves << -1 << endl;
+		orbiter_kernel_system::file_io Fio;
+
+
+		Fio.Csv_file_support->write_table_of_strings(
+				fname_curves,
+				nb_rows, nb_cols, Table,
+				headings,
+				verbose_level - 1);
+
+		delete [] Table;
+
 
 	}
 	orbiter_kernel_system::file_io Fio;

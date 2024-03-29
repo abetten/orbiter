@@ -356,8 +356,11 @@ public:
 	int po_index;
 		// orbit length of pt_A
 		// under the stabilizer of the cubic surface
+	int pt_A_coeff[4];
 
-	int equation_nice[20]; // equation after transformation
+	int equation_nice[20];
+		// equation of the surface after transformation
+		// which maps point A to point B.
 	int *gradient; // [4 * Poly2_4->get_nb_monomials()]
 
 	long int *Lines_nice; // surface lines after transformation
@@ -369,20 +372,29 @@ public:
 
 	// computed by split_nice_equation starting
 	// from the equation of the cubic surface:
-	int *f1; // terms involving X0^2, with X0^2 removed (linear)
-	int *f2; // terms involving X0, with X0 removed (quadratic)
-	int *f3; // terms free of X0 (cubic)
+	int *f1; // [Poly1->get_nb_monomials()]
+		// terms involving X0^2, with X0^2 removed (linear)
+	int *f2; // [Poly2->get_nb_monomials()]
+		// terms involving X0, with X0 removed (quadratic)
+	int *f3; // [Poly3->get_nb_monomials()]
+		// terms free of X0 (cubic)
 
 	long int *Pts_on_surface; // points on the transformed cubic surface
 	int nb_pts_on_surface;
 
 	// the equation of the quartic curve:
-	int *curve; // poly1 + poly2 = f2^2 - 4 * f1 * f3
-	int *poly1; // f2 * f2
-	int *poly2; // -4 * f1 * f3
+	int *curve; // [SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials()]
+		// [15] = poly1 + poly2 = f2^2 - 4 * f1 * f3
+	int *poly1; // [SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials()]
+		// f2 * f2
+	int *poly2; // [SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials()]
+		// -4 * f1 * f3
 	int two, four, mfour; // 2, 4, -4 in F
 
-	int *polar_hypersurface; // = 2 * x_0 * f_1 + f_2
+	int *polar_hypersurface; // [SOA->Surf->Poly2_4->get_nb_monomials()]
+		// = 2 * x_0 * f_1 + f_2
+		// computed by surface_polynomial_domains::assemble_polar_hypersurface
+
 	long int *Pts_on_polar_hypersurface;
 		// = SOA->Surf->Poly2_4->enumerate_points(tangent_quadric)
 	int nb_pts_on_polar_hypersurface;
@@ -392,8 +404,29 @@ public:
 		// = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
 
+	// computed by canonical_form_global::compute_stabilizer_of_quartic_curve:
+
+	canonical_form::automorphism_group_of_variety *Aut_of_variety;
+
+#if 0
+	canonical_form_classification::object_with_canonical_form *OwCF;
+
+	data_structures::bitvector *Canonical_form;
+
+	l1_interfaces::nauty_output *NO;
+
+	canonical_form_classification::encoded_combinatorial_object *Enc;
+
+	groups::strong_generators *SG_pt_stab;
+		// the stabilizer of the set of rational points
+	ring_theory::longinteger_object pt_stab_order;
+		// order of stabilizer of the set of rational points
+
+	orbits_schreier::orbit_of_equations *Orb;
 
 	groups::strong_generators *Stab_gens_quartic;
+		// stabilizer of quartic curve obtained by doing an orbit algorithm
+#endif
 
 
 
@@ -412,8 +445,7 @@ public:
 			int pt_orbit, int verbose_level);
 	void map_surface_to_special_form(
 			int pt_orbit,
-		//int *old_equation, long int *old_Lines, int nb_lines,
-		int verbose_level);
+			int verbose_level);
 	void compute_stabilizer_with_nauty(
 			int verbose_level);
 	void cheat_sheet_quartic_curve(

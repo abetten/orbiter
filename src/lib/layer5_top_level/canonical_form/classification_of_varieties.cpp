@@ -24,41 +24,47 @@ classification_of_varieties::classification_of_varieties()
 {
 	Classifier = NULL;
 
-	CB = NULL;
-	canonical_labeling_len = 0;
-	//alpha = NULL;
-	//gamma = NULL;
+	// nauty:
+		CB = NULL;
+		canonical_labeling_len = 0;
+		//alpha = NULL;
+		//gamma = NULL;
+		F_first_time = NULL;
+		Iso_idx = NULL;
+		Idx_canonical_form = NULL;
+		Idx_equation = NULL;
+		nb_iso_orbits = 0;
+		Orbit_input_idx = NULL;
 
-	SubC = NULL;
+		Classification_table_nauty = NULL;
 
-	Elt = NULL;
-	eqn2 = NULL;
+	// substructure classification:
+		SubC = NULL;
 
-	//canonical_equation = NULL;
-	//transporter_to_canonical_form = NULL;
-	//longinteger_object go_eqn;
 
-	CFS_table = NULL;
+		//canonical_equation = NULL;
+		//transporter_to_canonical_form = NULL;
+		//longinteger_object go_eqn;
+
+		CFS_table = NULL;
+
+		Canonical_equation = NULL;
+
+		Tally = NULL;
+
+		transversal = NULL;
+		frequency = NULL;
+		nb_types = 0;
+
+	// stuff common to both algorithms:
 
 	Variety_table = NULL;
 
-	Canonical_equation = NULL;
+	Elt = NULL;
+	eqn2 = NULL;
 	Goi = NULL;
 
-	Tally = NULL;
 
-	transversal = NULL;
-	frequency = NULL;
-	nb_types = 0;
-
-	F_first_time = NULL;
-	Iso_idx = NULL;
-	Idx_canonical_form = NULL;
-	Idx_equation = NULL;
-	nb_iso_orbits = 0;
-	Orbit_input_idx = NULL;
-
-	Classification_table_nauty = NULL;
 
 }
 
@@ -113,12 +119,6 @@ void classification_of_varieties::init(
 
 	Elt = NEW_int(Classifier->PA->A->elt_size_in_int);
 	eqn2 = NEW_int(Classifier->Poly_ring->get_nb_monomials());
-
-
-
-	Canonical_equation = NEW_int(Classifier->Input->nb_objects_to_test
-			* Classifier->Poly_ring->get_nb_monomials());
-
 	Goi = NEW_lint(Classifier->Input->nb_objects_to_test);
 
 
@@ -137,7 +137,6 @@ void classification_of_varieties::init(
 		Idx_canonical_form = NEW_int(Classifier->Input->nb_objects_to_test);
 		Idx_equation = NEW_int(Classifier->Input->nb_objects_to_test);
 		Orbit_input_idx = NEW_int(Classifier->Input->nb_objects_to_test);
-		Goi = NEW_lint(Classifier->Input->nb_objects_to_test);
 		nb_iso_orbits = 0;
 
 
@@ -163,6 +162,19 @@ void classification_of_varieties::init(
 
 	}
 	else if (Classifier->Descr->f_algorithm_substructure) {
+
+
+		if (f_v) {
+			cout << "classification_of_varieties::init "
+					"algorithm substructure" << endl;
+		}
+
+
+
+
+
+		Canonical_equation = NEW_int(Classifier->Input->nb_objects_to_test
+				* Classifier->Poly_ring->get_nb_monomials());
 
 		if (f_v) {
 			cout << "classification_of_varieties::init "
@@ -436,6 +448,8 @@ void classification_of_varieties::main_loop(
 
 				Orbit_input_idx[nb_iso_orbits] = input_counter;
 				nb_iso_orbits++;
+
+				nb_iso++;
 
 			}
 			else {

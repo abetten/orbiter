@@ -456,6 +456,12 @@ public:
 			std::string &s_aut, std::string &s_cl,
 			std::string &s_stats,
 			int verbose_level);
+	void nauty_output_init_from_string(
+			int N,
+			int invariant_set_start, int invariant_set_size,
+			int idx_start,
+			std::vector<std::string> &Carrying_through,
+			int verbose_level);
 	long int nauty_complexity();
 
 };

@@ -62,6 +62,9 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_algorithm_nauty = false;
 	f_algorithm_substructure = false;
 
+
+	f_has_nauty_output = false;
+
 	f_substructure_size = false;
 	substructure_size = 0;
 
@@ -202,6 +205,12 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-algorithm_substructure" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-has_nauty_output") == 0) {
+			f_has_nauty_output = true;
+			if (f_v) {
+				cout << "-has_nauty_output" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-substructure_size") == 0) {
 			f_substructure_size = true;
 			substructure_size = ST.strtoi(argv[++i]);
@@ -286,6 +295,9 @@ void canonical_form_classifier_description::print()
 	}
 	if (f_algorithm_substructure) {
 		cout << "-algorithm_substructure" << endl;
+	}
+	if (f_has_nauty_output) {
+		cout << "-has_nauty_output" << endl;
 	}
 	if (f_substructure_size) {
 		cout << "-substructure_size" << endl;

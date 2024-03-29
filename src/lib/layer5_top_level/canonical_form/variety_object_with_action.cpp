@@ -26,6 +26,9 @@ variety_object_with_action::variety_object_with_action()
 	po = 0;
 	so = 0;
 
+	f_has_nauty_output = false;
+	nauty_output_index_start = 0;
+
 	Variety_object = NULL;
 
 }

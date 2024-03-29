@@ -311,6 +311,7 @@ void linear_group::linear_group_create(
 	Mtx = A_linear->G.matrix_grp;
 	vector_space_dimension = n;
 
+
 	int f_OK = false;
 
 	if (f_v) {
@@ -337,6 +338,18 @@ void linear_group::linear_group_create(
 		f_has_strong_generators = true;
 		Strong_gens = initial_strong_gens;
 	}
+
+	if (f_v) {
+		cout << "linear_group::linear_group_create label=" << label << endl;
+		cout << "linear_group::linear_group_create degree=" << A2->degree << endl;
+		cout << "linear_group::linear_group_create go=";
+		ring_theory::longinteger_object go;
+		Strong_gens->group_order(go);
+		//A_linear->Strong_gens->group_order(go);
+		cout << go << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "linear_group::linear_group_create done" << endl;

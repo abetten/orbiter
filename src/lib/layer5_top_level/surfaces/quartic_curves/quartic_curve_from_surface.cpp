@@ -60,8 +60,27 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	Pts_on_curve = NULL;
 	sz_curve = 0;
 
+	// computed by canonical_form_global:
+
+	Aut_of_variety = NULL;
+
+#if 0
+	OwCF = NULL;
+
+	Canonical_form = NULL;
+
+	NO = NULL;
+
+	Enc = NULL;
+
+	SG_pt_stab = NULL;
+	pt_stab_order = 0;
+
+	Orb = NULL;
 
 	Stab_gens_quartic = NULL;
+#endif
+
 }
 
 
@@ -114,9 +133,33 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (Pts_on_curve) {
 		FREE_lint(Pts_on_curve);
 	}
+	if (Aut_of_variety) {
+		FREE_OBJECT(Aut_of_variety);
+	}
+#if 0
+	if (OwCF) {
+		FREE_OBJECT(OwCF);
+	}
+	if (Canonical_form) {
+		FREE_OBJECT(Canonical_form);
+	}
+	if (NO) {
+		FREE_OBJECT(NO);
+	}
+	if (Enc) {
+		FREE_OBJECT(Enc);
+	}
+	if (SG_pt_stab) {
+		FREE_OBJECT(SG_pt_stab);
+	}
+	if (Orb) {
+		FREE_OBJECT(Orb);
+	}
 	if (Stab_gens_quartic) {
 		FREE_OBJECT(Stab_gens_quartic);
 	}
+#endif
+
 }
 
 void quartic_curve_from_surface::init(
@@ -195,7 +238,6 @@ void quartic_curve_from_surface::quartic(
 	}
 	map_surface_to_special_form(
 			pt_orbit,
-			//SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
 			0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic "
@@ -483,7 +525,6 @@ void quartic_curve_from_surface::quartic(
 
 void quartic_curve_from_surface::map_surface_to_special_form(
 		int pt_orbit,
-	//int *old_equation, long int *old_Lines, int nb_lines,
 	int verbose_level)
 // Bitangents[] are listed in the same order
 // as the lines are listed in Lines[]
@@ -522,6 +563,8 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 	po_index = SOA->Orbits_on_points_not_on_lines->orbit_len[pt_orbit];
 	i = SOA->Orbits_on_points_not_on_lines->orbit[fst];
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
+
+	SOA->Surf->unrank_point(pt_A_coeff, pt_A);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -655,43 +698,6 @@ void quartic_curve_from_surface::map_surface_to_special_form(
 				"after SOA->SO->Surf->PolynomialDomains->compute_special_bitangent" << endl;
 	}
 
-#if 0
-	long int plane_rk;
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::map_surface_to_special_form "
-				"before SOA->SO->Surf->PolynomialDomains->compute_tangent_plane" << endl;
-	}
-
-	plane_rk = SOA->SO->Surf->PolynomialDomains->compute_tangent_plane(
-			v, equation_nice, verbose_level);
-
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::map_surface_to_special_form "
-				"after SOA->SO->Surf->compute_tangent_plane" << endl;
-	}
-	if (f_v) {
-		cout << "quartic_curve_from_surface::map_surface_to_special_form "
-				"plane_rk = " << plane_rk << endl;
-	}
-	int Basis12[12];
-
-	SOA->Surf->unrank_plane(Basis12, plane_rk);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::map_surface_to_special_form Basis12=" << endl;
-		Int_matrix_print(Basis12, 3, 4);
-	}
-	int Basis6[6];
-	int j;
-
-	for (j = 0; j < 2; j++) {
-		Int_vec_copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
-	}
-	Bitangents[nb_lines] =
-			SOA->Surf_A->PA->PA2->P->Subspaces->Grass_lines->rank_lint_here(
-					Basis6, 0);
-#endif
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::map_surface_to_special_form "
@@ -722,6 +728,8 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty" << endl;
 	}
+
+#if 0
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	Surf_A = SOA->Surf_A;
@@ -862,7 +870,24 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 	FREE_OBJECT(SG_pt_stab);
 	FREE_OBJECT(Orb);
+#else
 
+	canonical_form::canonical_form_global Canon;
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
+				"before Canon.compute_stabilizer_of_quartic_curve" << endl;
+	}
+	Canon.compute_stabilizer_of_quartic_curve(
+			this,
+			Aut_of_variety,
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
+				"after Canon.compute_stabilizer_of_quartic_curve" << endl;
+	}
+
+#endif
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty" << endl;
@@ -1106,7 +1131,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 	ost << "The stabilizer of the quartic curve "
 			"is the following group:\\\\" << endl;
-	Stab_gens_quartic->print_generators_tex(ost);
+	Aut_of_variety->Stab_gens_quartic->print_generators_tex(ost);
 
 
 	ost << "The curve has " << nb_bitangents

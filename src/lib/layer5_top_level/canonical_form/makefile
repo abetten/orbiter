@@ -6,8 +6,10 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	automorphism_group_of_variety.o \
 	canonical_form_classifier_description.o \
 	canonical_form_classifier.o \
+	canonical_form_global.o \
 	canonical_form_nauty.o \
 	canonical_form_of_variety.o \
 	canonical_form_substructure.o \

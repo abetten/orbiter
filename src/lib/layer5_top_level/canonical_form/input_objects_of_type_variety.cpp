@@ -184,6 +184,9 @@ void input_objects_of_type_variety::read_input_objects(
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::read_input_objects" << endl;
+		if (Classifier->Descr->f_has_nauty_output) {
+			cout << "input_objects_of_type_variety::read_input_objects f_has_nauty_output" << endl;
+		}
 	}
 
 
@@ -198,6 +201,10 @@ void input_objects_of_type_variety::read_input_objects(
 
 	for (cnt = 0; cnt < Classifier->Descr->nb_files; cnt++) {
 
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects "
+					"file " << cnt << " / " << Classifier->Descr->nb_files << endl;
+		}
 		string fname;
 
 		data_structures::string_tools ST;
@@ -215,18 +222,82 @@ void input_objects_of_type_variety::read_input_objects(
 					"S.nb_cols = " << S.nb_cols << endl;
 		}
 
+		//int f_carry_through = false;
 		int *Carry_through = NULL;
 		int nb_carry_through = 0;
 
 		if (Classifier->Descr->carry_through.size()) {
 			int i;
 
+			//f_carry_through = true;
 			nb_carry_through = Classifier->Descr->carry_through.size();
 			Carry_through = NEW_int(nb_carry_through);
 			for (i = 0; i < nb_carry_through; i++) {
 				Carry_through[i] = S.find_column(Classifier->Descr->carry_through[i]);
 			}
 		}
+
+		if (Classifier->Descr->f_has_nauty_output) {
+
+			//f_carry_through = true;
+			if (f_v) {
+				cout << "input_objects_of_type_variety::read_input_objects f_has_nauty_output" << endl;
+			}
+
+			int nb_ct = nb_carry_through + 9;
+			int *Carry_through2;
+
+			Carry_through2 = NEW_int(nb_ct);
+
+			int i;
+
+			const char *headings[] = {
+						"NO_N",
+						"NO_ago",
+						"NO_base_len",
+						"NO_aut_cnt",
+						"NO_base",
+						"NO_tl",
+						"NO_aut",
+						"NO_cl",
+						"NO_stats"
+			};
+
+			Int_vec_copy(Carry_through, Carry_through2, nb_carry_through);
+			for (i = 0; i < 9; i++) {
+				string s;
+
+				s = headings[i];
+				if (f_v) {
+					cout << "input_objects_of_type_variety::read_input_objects before S.find_column " << s << endl;
+				}
+				Carry_through2[nb_carry_through + i] = S.find_column(s);
+			}
+			FREE_int(Carry_through);
+			Carry_through = Carry_through2;
+			nb_carry_through = nb_ct;
+
+		}
+
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects "
+					"nb_carry_through = " << nb_carry_through << endl;
+		}
+
+#if 0
+		//ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Pts,Bitangents,
+		//NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats,
+		//nb_eqn,ago
+		v.push_back(std::to_string(Vo->cnt));
+		v.push_back(std::to_string(Vo->po));
+		v.push_back(std::to_string(Vo->so));
+		v.push_back(std::to_string(Vo->po_go));
+		v.push_back(std::to_string(Vo->po_index));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Iso_idx[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->F_first_time[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_canonical_form[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_equation[i]));
+#endif
 
 		if (Classifier->Descr->f_label_po_go) {
 			idx_po_go = S.find_column(Classifier->Descr->column_label_po_go);
@@ -309,6 +380,7 @@ void input_objects_of_type_variety::read_input_objects(
 			prepare_input_of_variety_type(
 					row, counter,
 					Carry_through,
+					nb_carry_through,
 					&S,
 					Vo[counter], verbose_level - 2);
 			if (f_v) {
@@ -349,6 +421,7 @@ void input_objects_of_type_variety::read_input_objects(
 void input_objects_of_type_variety::prepare_input_of_variety_type(
 		int row, int counter,
 		int *Carry_through,
+		int nb_carry_trough,
 		data_structures::spreadsheet *S,
 		variety_object_with_action *&Vo,
 		int verbose_level)
@@ -446,7 +519,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 	}
 
 
-	for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
+	for (i = 0; i < nb_carry_trough; i++) {
 
 		string s;
 
@@ -456,6 +529,18 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 
 	}
 
+	if (Classifier->Descr->f_has_nauty_output) {
+
+		Vo->f_has_nauty_output = true;
+		Vo->nauty_output_index_start = nb_carry_trough - 9;
+
+		if (f_v) {
+			cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+					"f_has_nauty_output" << endl;
+			cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+					"nauty_output_index_start=" << Vo->nauty_output_index_start << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::prepare_input_of_variety_type done" << endl;

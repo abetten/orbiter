@@ -346,7 +346,7 @@ void formula::init_formula_Sajeeb(
 	formula::Fq = Fq;
 
 	//expression_parser Parser;
-	data_structures::string_tools ST;
+	//data_structures::string_tools ST;
 	//int i;
 
 	//tree = NEW_OBJECT(syntax_tree);

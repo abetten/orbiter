@@ -13,6 +13,67 @@ namespace layer5_applications {
 namespace canonical_form {
 
 
+// #############################################################################
+// automorphism_group_of_variety.cpp
+// #############################################################################
+
+
+
+//! to classify objects using canonical forms
+
+
+class automorphism_group_of_variety {
+
+public:
+
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	ring_theory::homogeneous_polynomial_domain *HPD;
+
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
+
+	int *equation;
+	long int *Pts_on_object;
+	int nb_pts;
+
+
+	canonical_form_classification::object_with_canonical_form *OwCF;
+
+	int nb_rows, nb_cols;
+
+	data_structures::bitvector *Canonical_form;
+
+	l1_interfaces::nauty_output *NO;
+
+	canonical_form_classification::encoded_combinatorial_object *Enc;
+
+	groups::strong_generators *SG_pt_stab;
+		// the stabilizer of the set of rational points
+	ring_theory::longinteger_object pt_stab_order;
+		// order of stabilizer of the set of rational points
+
+	orbits_schreier::orbit_of_equations *Orb;
+
+	groups::strong_generators *Stab_gens_quartic;
+		// stabilizer of the variety obtained by doing an orbit algorithm
+
+
+	automorphism_group_of_variety();
+	~automorphism_group_of_variety();
+	void init(
+			projective_geometry::projective_space_with_action *PA,
+			induced_actions::action_on_homogeneous_polynomials *AonHPD,
+			int *equation,
+			long int *Pts_on_object,
+			int nb_pts,
+			int verbose_level);
+
+};
+
+
+
 
 // #############################################################################
 // canonical_form_classifier_description.cpp
@@ -69,6 +130,8 @@ public:
 
 	int f_algorithm_nauty;
 	int f_algorithm_substructure;
+
+	int f_has_nauty_output;
 
 	int f_substructure_size;
 	int substructure_size;
@@ -129,6 +192,33 @@ public:
 };
 
 
+
+
+// #############################################################################
+// canonical_form_global.cpp
+// #############################################################################
+
+
+
+//! global functions for computing canonical forms and automorphism groups
+
+
+class canonical_form_global {
+
+public:
+
+	canonical_form_global();
+	~canonical_form_global();
+	void compute_stabilizer_of_quartic_curve(
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
+				*Quartic_curve_from_surface,
+			automorphism_group_of_variety *&Aut_of_variety,
+			int verbose_level);
+
+
+};
+
+
 // #############################################################################
 // canonical_form_nauty.cpp
 // #############################################################################
@@ -150,10 +240,6 @@ public:
 	data_structures::bitvector *Canonical_form;
 
 	l1_interfaces::nauty_output *NO;
-
-	//long int *canonical_labeling;
-	//int canonical_labeling_len;
-	//std::vector<std::string> NO_stringified;
 
 
 	groups::strong_generators *Set_stab;
@@ -410,38 +496,37 @@ public:
 
 	// nauty stuff:
 
-	canonical_form_classification::classify_bitvectors *CB;
-	int canonical_labeling_len;
+		canonical_form_classification::classify_bitvectors *CB;
+		int canonical_labeling_len;
+
+		// output data, nauty specific:
+		int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
+		int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
+		int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
+		int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
+		int nb_iso_orbits;
+		int *Orbit_input_idx; // [nb_iso_orbits]
+
+		int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
+
 
 	// substructure stuff:
 
 
-	// needed once for the whole classification process:
-	set_stabilizer::substructure_classifier *SubC;
+		// needed once for the whole classification process:
+		set_stabilizer::substructure_classifier *SubC;
+
+		// needed once for each object:
+		canonical_form_substructure **CFS_table;
+			// [Input->nb_objects_to_test]
 
 
-	// needed once for each object:
-	canonical_form_substructure **CFS_table;
-		// [Input->nb_objects_to_test]
+		// computed in finalize_canonical_forms, only if we don't use nauty:
 
 
 
-	// output data:
-
-	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
-
-
-	int *Elt; // [Classifier->PA->A->elt_size_in_int]
-	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
-		// used by canonical_form_of_variety::find_equation
-
-
-	int *Canonical_equation;
-		// [Input->nb_objects_to_test * Poly_ring->get_nb_monomials()]
-	long int *Goi; // [Input->nb_objects_to_test]
-
-
-	// computed in finalize_canonical_forms, only of we don't use nauty:
+		int *Canonical_equation;
+			// [Input->nb_objects_to_test * Poly_ring->get_nb_monomials()]
 
 		data_structures::tally_vector_data
 			*Tally;
@@ -453,15 +538,19 @@ public:
 		int nb_types; // number of isomorphism types
 
 
-	// output data, nauty specific:
-	int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
-	int nb_iso_orbits;
-	int *Orbit_input_idx; // [nb_iso_orbits]
 
-	int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
+	// output data for both algorithms:
+
+	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
+
+
+	int *Elt; // [Classifier->PA->A->elt_size_in_int]
+	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
+		// used by canonical_form_of_variety::find_equation
+	long int *Goi; // [Input->nb_objects_to_test]
+
+
+
 
 	classification_of_varieties();
 	~classification_of_varieties();
@@ -550,6 +639,7 @@ public:
 	void prepare_input_of_variety_type(
 			int row, int counter,
 			int *Carry_through,
+			int nb_carry_trough,
 			data_structures::spreadsheet *S,
 			variety_object_with_action *&Vo,
 			int verbose_level);
@@ -740,6 +830,8 @@ public:
 	int po;
 	int so;
 
+	int f_has_nauty_output;
+	int nauty_output_index_start;
 	std::vector<std::string> Carrying_through;
 
 	algebraic_geometry::variety_object *Variety_object;

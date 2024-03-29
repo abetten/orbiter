@@ -2408,7 +2408,9 @@ void surface_object_with_group::all_quartic_curves(
 }
 
 void surface_object_with_group::export_all_quartic_curves(
-		std::ostream &ost_quartics_csv,
+		std::string &headings,
+		std::string *&Table,
+		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2422,7 +2424,11 @@ void surface_object_with_group::export_all_quartic_curves(
 
 	po_go = Aut_gens->group_order_as_lint();
 
-	ost_quartics_csv << "orbit,PO_GO,PO_INDEX,curve,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,go" << endl;
+	nb_cols = 17;
+	nb_rows = Orbits_on_points_not_on_lines->nb_orbits;
+	Table = new string[nb_rows * nb_cols];
+	headings = "SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,go";
+
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
 		if (f_v) {
@@ -2465,35 +2471,106 @@ void surface_object_with_group::export_all_quartic_curves(
 
 #endif
 
-		ost_quartics_csv << pt_orbit;
-		ost_quartics_csv << "," << po_go;
-		ost_quartics_csv << "," << QC->po_index;
 
-		std::string s_eqn, s_Pts, s_Lines;
+		int nb_Kovalevski = -1;
+
+
+		{
+			algebraic_geometry::quartic_curve_object *QO;
+
+			QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+			if (f_v) {
+				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+						"before QO->init_equation_and_bitangents_and_compute_properties" << endl;
+			}
+			QO->init_equation_and_bitangents_and_compute_properties(
+					Surf_A->PA->PA2->QCDA->Dom,
+					QC->curve /* eqn15 */,
+					QC->Bitangents,
+					verbose_level);
+			if (f_v) {
+				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+						"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
+			}
+
+			nb_Kovalevski = QO->QP->Kovalevski->nb_Kovalevski;
+
+#if 0
+			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group *QOG;
+
+			QOG = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group);
+
+			if (f_v) {
+				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+						"before QOG->init" << endl;
+			}
+			QOG->init(
+					Surf_A->PA->PA2->QCDA,
+					QO,
+					QC->Aut_of_variety->Stab_gens_quartic,
+					verbose_level);
+			if (f_v) {
+				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+						"after QOG->init" << endl;
+			}
+
+			string label;
+
+			label = "surface_" + SO->label_txt + "_pt_orb_" + std::to_string(pt_orbit);
+
+			//label_txt = prefix;
+
+			FREE_OBJECT(QOG);
+#endif
+
+			FREE_OBJECT(QO);
+
+		}
+
+		std::string s_eqn_surface;
+		std::string s_eqn_surface_algebraic;
+		std::string pt_coeff;
+
+		s_eqn_surface = Surf->PolynomialDomains->Poly3_4->stringify(SO->Variety_object->eqn);
+
+		s_eqn_surface_algebraic = Surf->PolynomialDomains->Poly3_4->stringify_algebraic_notation(SO->Variety_object->eqn);
+
+
+		pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
+
+		std::string s_eqn, s_eqn_algebraic, s_Pts, s_Lines;
 
 		s_eqn = Surf->PolynomialDomains->Poly4_x123->stringify(QC->curve);
+
+		s_eqn_algebraic = Surf->PolynomialDomains->Poly4_x123->stringify_algebraic_notation(QC->curve);
 
 
 		s_Pts = Lint_vec_stringify(QC->Pts_on_curve, QC->sz_curve);
 
 		s_Lines = Lint_vec_stringify(QC->Bitangents, QC->nb_bitangents);
 
+		Table[pt_orbit * nb_cols + 0] = "\"" + s_eqn_surface + "\"";
+		Table[pt_orbit * nb_cols + 1] = "\"" + s_eqn_surface_algebraic + "\"";
+		Table[pt_orbit * nb_cols + 2] = std::to_string(pt_orbit);
+		Table[pt_orbit * nb_cols + 3] = std::to_string(QC->pt_A);
+		Table[pt_orbit * nb_cols + 4] = "\"" + pt_coeff + "\"";
+		Table[pt_orbit * nb_cols + 5] = std::to_string(po_go);
+		Table[pt_orbit * nb_cols + 6] = std::to_string(QC->po_index);
+		Table[pt_orbit * nb_cols + 7] = "\"" + s_eqn + "\"";
+		Table[pt_orbit * nb_cols + 8] = "\"" + s_eqn_algebraic + "\"";
+		Table[pt_orbit * nb_cols + 9] = "\"" + s_Pts + "\"";
+		Table[pt_orbit * nb_cols + 10] = "\"" + s_Lines + "\"";
+		Table[pt_orbit * nb_cols + 11] = std::to_string(SO->SOP->nb_Eckardt_points);
+		Table[pt_orbit * nb_cols + 12] = std::to_string(SO->SOP->nb_Double_points);
+		Table[pt_orbit * nb_cols + 13] = std::to_string(SO->SOP->nb_Single_points);
+		Table[pt_orbit * nb_cols + 14] = std::to_string(SO->SOP->nb_pts_not_on_lines);
+		Table[pt_orbit * nb_cols + 15] = std::to_string(nb_Kovalevski);
+		Table[pt_orbit * nb_cols + 16] = std::to_string(-1);
 
-		ost_quartics_csv << ",\"" << s_eqn << "\"";
-		ost_quartics_csv << ",\"" << s_Pts << "\"";
-		ost_quartics_csv << ",\"" << s_Lines << "\"";
-		ost_quartics_csv << "," << SO->SOP->nb_Eckardt_points;
-		ost_quartics_csv << "," << SO->SOP->nb_Double_points;
-		ost_quartics_csv << "," << SO->SOP->nb_Single_points;
-		ost_quartics_csv << "," << SO->SOP->nb_pts_not_on_lines;
-		ost_quartics_csv << "," << -1;
-
-
-		ost_quartics_csv << endl;
 
 		FREE_OBJECT(QC);
 	}
-	ost_quartics_csv << "END" << endl;
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves done" << endl;
 	}

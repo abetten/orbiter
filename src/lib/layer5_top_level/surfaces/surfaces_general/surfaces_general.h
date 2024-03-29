@@ -666,7 +666,9 @@ public:
 			std::ostream &ost,
 			int verbose_level);
 	void export_all_quartic_curves(
-			std::ostream &ost_quartics_csv,
+			std::string &headings,
+			std::string *&Table,
+			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void print_full_del_Pezzo(
 			std::ostream &ost, int verbose_level);

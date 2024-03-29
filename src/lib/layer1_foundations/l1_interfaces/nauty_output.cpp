@@ -246,6 +246,175 @@ void nauty_output::stringify(
 	}
 }
 
+void nauty_output::nauty_output_init_from_string(
+		int N,
+		int invariant_set_start, int invariant_set_size,
+		int idx_start,
+		std::vector<std::string> &Carrying_through,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string" << endl;
+	}
+	nauty_output::N = N;
+	nauty_output::invariant_set_start = invariant_set_start;
+	nauty_output::invariant_set_size = invariant_set_size;
+
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string idx_start = " << idx_start << endl;
+		cout << "nauty_output::nauty_output_init_from_string Carrying_through.size() = " << Carrying_through.size() << endl;
+	}
+	if (idx_start + 9 < Carrying_through.size()) {
+		cout << "nauty_output::nauty_output_init_from_string idx_start + 9 < Carrying_through.size()" << endl;
+		exit(1);
+	}
+	string &s_n = Carrying_through[idx_start + 0];
+	string &s_ago = Carrying_through[idx_start + 1];
+	string &s_base_length = Carrying_through[idx_start + 2];
+	string &s_aut_counter = Carrying_through[idx_start + 3];
+	string &s_base = Carrying_through[idx_start + 4];
+	string &s_tl = Carrying_through[idx_start + 5];
+	string &s_aut = Carrying_through[idx_start + 6];
+	string &s_cl = Carrying_through[idx_start + 7];
+	string &s_stats = Carrying_through[idx_start + 8];
+
+	data_structures::string_tools String;
+
+	std::string s;
+
+	String.drop_quotes(s_n, s);
+	s_n = s;
+	String.drop_quotes(s_ago, s);
+	s_ago = s;
+	String.drop_quotes(s_base_length, s);
+	s_base_length = s;
+	String.drop_quotes(s_aut_counter, s);
+	s_aut_counter = s;
+	String.drop_quotes(s_base, s);
+	s_base = s;
+	String.drop_quotes(s_tl, s);
+	s_tl = s;
+	String.drop_quotes(s_aut, s);
+	s_aut = s;
+	String.drop_quotes(s_cl, s);
+	s_cl = s;
+	String.drop_quotes(s_stats, s);
+	s_stats = s;
+
+	int len;
+	int N1;
+
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string s_n = " << s_n << endl;
+	}
+	N1 = std::stoi(s_n);
+	if (N1 != N) {
+		cout << "nauty_output::nauty_output_init_from_string scanning N: N1 != N" << endl;
+		exit(1);
+	}
+	Ago = NEW_OBJECT(ring_theory::longinteger_object);
+	Ago->create_from_base_10_string(s_ago);
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string s_base_length = " << s_base_length << endl;
+	}
+
+	if (Ago->is_one()) {
+		Base_length = 0;
+		Aut_counter = 0;
+		Base = NEW_int(1);
+		Transversal_length = NEW_int(1);
+		Aut = NEW_int(1);
+	}
+	else {
+		Base_length = std::stoi(s_base_length);
+
+		Aut_counter = std::stoi(s_aut_counter);
+		if (f_v) {
+			cout << "nauty_output::nauty_output_init_from_string Aut_counter = " << Aut_counter << endl;
+		}
+
+		if (f_v) {
+			cout << "nauty_output::nauty_output_init_from_string s_base = " << s_base << endl;
+		}
+		Int_vec_scan(s_base, Base, len);
+		if (len != Base_length) {
+			cout << "nauty_output::nauty_output_init_from_string scanning Base: len != Base_length" << endl;
+			cout << "nauty_output::nauty_output_init_from_string len = " << len << endl;
+			cout << "nauty_output::nauty_output_init_from_string Base_length = " << Base_length << endl;
+			exit(1);
+		}
+		Int_vec_scan(s_tl, Transversal_length, len);
+		if (len != Base_length) {
+			cout << "nauty_output::nauty_output_init_from_string scanning Transversal_length: len != Base_length" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "nauty_output::nauty_output_init_from_string s_aut = " << s_aut << endl;
+		}
+		Int_vec_scan(s_aut, Aut, len);
+		if (len != Aut_counter * N) {
+			cout << "nauty_output::nauty_output_init_from_string scanning Aut: len != Aut_counter * N" << endl;
+			cout << "nauty_output::nauty_output_init_from_string len = " << len << endl;
+			cout << "nauty_output::nauty_output_init_from_string Aut_counter = " << Aut_counter << endl;
+			cout << "nauty_output::nauty_output_init_from_string N = " << N << endl;
+			exit(1);
+		}
+	}
+	Int_vec_scan(s_cl, canonical_labeling, len);
+	if (len != N) {
+		cout << "nauty_output::nauty_output_init_from_string scanning canonical_labeling: len != N" << endl;
+		exit(1);
+	}
+	long int *Stats;
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string s_stats = " << s_stats << endl;
+	}
+	Lint_vec_scan(s_stats, Stats, len);
+	if (len != 4) {
+		cout << "nauty_output::nauty_output_init_from_string scanning Stats: len != 4" << endl;
+		exit(1);
+	}
+
+	nb_firstpathnode = Stats[0];
+	nb_othernode = Stats[1];
+	nb_processnode = Stats[2];
+	nb_firstterminal = Stats[3];
+
+	FREE_lint(Stats);
+
+#if 0
+	s_n = std::to_string(N);
+	s_ago = Ago->stringify();
+	s_base_length = std::to_string(Base_length);
+	s_aut_counter = std::to_string(Aut_counter);
+	s_base = Int_vec_stringify(Base, Base_length);
+	s_tl = Int_vec_stringify(Transversal_length, Base_length);
+	s_aut = Int_vec_stringify(Aut, Aut_counter * N);
+	s_cl = Int_vec_stringify(canonical_labeling, N);
+
+
+	Aut = NEW_int(N * N);
+	Base = NEW_int(N);
+	Base_lint = NEW_lint(N);
+	Transversal_length = NEW_int(N);
+	Ago = NEW_OBJECT(ring_theory::longinteger_object);
+	canonical_labeling = NEW_int(N);
+
+	int i;
+
+	for (i = 0; i < N; i++) {
+		canonical_labeling[i] = i;
+	}
+#endif
+
+	if (f_v) {
+		cout << "nauty_output::nauty_output_init_from_string done" << endl;
+	}
+
+}
+
 long int nauty_output::nauty_complexity()
 {
 	long int c;
