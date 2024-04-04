@@ -2420,9 +2420,9 @@ void surface_object_with_group::export_all_quartic_curves(
 		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
 	}
 	int pt_orbit;
-	long int po_go;
+	//long int po_go;
 
-	po_go = Aut_gens->group_order_as_lint();
+	//po_go = Aut_gens->group_order_as_lint();
 
 	nb_cols = 17;
 	nb_rows = Orbits_on_points_not_on_lines->nb_orbits;
@@ -2472,7 +2472,6 @@ void surface_object_with_group::export_all_quartic_curves(
 #endif
 
 
-		int nb_Kovalevski = -1;
 
 
 		{
@@ -2494,7 +2493,8 @@ void surface_object_with_group::export_all_quartic_curves(
 						"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
 			}
 
-			nb_Kovalevski = QO->QP->Kovalevski->nb_Kovalevski;
+			//int nb_Kovalevski = -1;
+			//nb_Kovalevski = QO->QP->Kovalevski->nb_Kovalevski;
 
 #if 0
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group *QOG;
@@ -2524,9 +2524,26 @@ void surface_object_with_group::export_all_quartic_curves(
 			FREE_OBJECT(QOG);
 #endif
 
+
+			std::vector<std::string> v;
+
+			create_vector_of_strings(
+					QC,
+					QO,
+					v, nb_cols,
+					verbose_level - 1);
+
+			int j;
+
+			for (j = 0; j < nb_cols; j++) {
+				Table[pt_orbit * nb_cols + j] = v[j];
+			}
+
 			FREE_OBJECT(QO);
 
 		}
+
+#if 0
 
 		std::string s_eqn_surface;
 		std::string s_eqn_surface_algebraic;
@@ -2568,11 +2585,79 @@ void surface_object_with_group::export_all_quartic_curves(
 		Table[pt_orbit * nb_cols + 15] = std::to_string(nb_Kovalevski);
 		Table[pt_orbit * nb_cols + 16] = std::to_string(-1);
 
+#endif
 
 		FREE_OBJECT(QC);
 	}
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves done" << endl;
+	}
+}
+
+void surface_object_with_group::create_vector_of_strings(
+		quartic_curves::quartic_curve_from_surface *QC,
+		algebraic_geometry::quartic_curve_object *QO,
+		std::vector<std::string> &v, int nb_cols, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::create_vector_of_strings" << endl;
+	}
+
+	std::string s_eqn_surface;
+	std::string s_eqn_surface_algebraic;
+	std::string pt_coeff;
+
+	s_eqn_surface = Surf->PolynomialDomains->Poly3_4->stringify(SO->Variety_object->eqn);
+
+	s_eqn_surface_algebraic = Surf->PolynomialDomains->Poly3_4->stringify_algebraic_notation(SO->Variety_object->eqn);
+
+
+	pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
+
+	std::string s_eqn, s_eqn_algebraic, s_Pts, s_Lines;
+
+	s_eqn = Surf->PolynomialDomains->Poly4_x123->stringify(QC->curve);
+
+	s_eqn_algebraic = Surf->PolynomialDomains->Poly4_x123->stringify_algebraic_notation(QC->curve);
+
+
+	s_Pts = Lint_vec_stringify(QC->Pts_on_curve, QC->sz_curve);
+
+	s_Lines = Lint_vec_stringify(QC->Bitangents, QC->nb_bitangents);
+
+	ring_theory::longinteger_object ago;
+
+	Aut_gens->group_order(ago);
+
+	v.resize(nb_cols);
+
+	if (nb_cols != 17) {
+		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 17" << endl;
+		exit(1);
+	}
+
+	v[0] = "\"" + s_eqn_surface + "\"";
+	v[1] = "\"" + s_eqn_surface_algebraic + "\"";
+	v[2] = std::to_string(QC->pt_orbit);
+	v[3] = std::to_string(QC->pt_A);
+	v[4] = "\"" + pt_coeff + "\"";
+	v[5] = ago.stringify(); //std::to_string(po_go);
+	v[6] = std::to_string(QC->po_index);
+	v[7] = "\"" + s_eqn + "\"";
+	v[8] = "\"" + s_eqn_algebraic + "\"";
+	v[9] = "\"" + s_Pts + "\"";
+	v[10] = "\"" + s_Lines + "\"";
+	v[11] = std::to_string(SO->SOP->nb_Eckardt_points);
+	v[12] = std::to_string(SO->SOP->nb_Double_points);
+	v[13] = std::to_string(SO->SOP->nb_Single_points);
+	v[14] = std::to_string(SO->SOP->nb_pts_not_on_lines);
+	v[15] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
+	v[16] = std::to_string(-1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::create_vector_of_strings done" << endl;
 	}
 }
 

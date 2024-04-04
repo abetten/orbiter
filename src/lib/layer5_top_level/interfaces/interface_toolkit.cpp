@@ -46,7 +46,15 @@ interface_toolkit::interface_toolkit()
 
 	f_csv_file_select_cols = false;
 	//std::string csv_file_select_cols_fname;
+	//std::string csv_file_select_cols_fname_append;
 	//std::string csv_file_select_cols_text;
+
+
+	f_csv_file_select_cols_by_label = false;
+	//std::string csv_file_select_cols_by_label_fname;
+	//std::string csv_file_select_cols_by_label_fname_append;
+	//std::string csv_file_select_cols_by_label_text;
+
 
 	f_csv_file_select_rows_and_cols = false;
 	//csv_file_select_rows_and_cols_fname;
@@ -227,6 +235,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		cout << "-cvs_file_select_cols <string : csv_file_name> <string : list of cols>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols_by_label") == 0) {
+		cout << "-cvs_file_select_cols_by_label <string : csv_file_name> <string : fname_append> <string : list of col-labels>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		cout << "-csv_file_select_rows_and_cols <string : csv_file_name> <string : list of rows> <string : list of cols>" << endl;
 	}
@@ -355,6 +366,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols_by_label") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
@@ -549,6 +563,19 @@ void interface_toolkit::read_arguments(
 					<< csv_file_select_cols_fname
 					<< " " << csv_file_select_cols_fname_append
 					<< " " << csv_file_select_cols_text
+				<< endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols_by_label") == 0) {
+		f_csv_file_select_cols_by_label = true;
+		csv_file_select_cols_by_label_fname.assign(argv[++i]);
+		csv_file_select_cols_by_label_fname_append.assign(argv[++i]);
+		csv_file_select_cols_by_label_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_select_cols_by_label "
+					<< " " << csv_file_select_cols_by_label_fname
+					<< " " << csv_file_select_cols_by_label_fname_append
+					<< " " << csv_file_select_cols_by_label_text
 				<< endl;
 		}
 	}
@@ -1050,6 +1077,13 @@ void interface_toolkit::print()
 				<< " " << csv_file_select_cols_text
 			<< endl;
 	}
+	if (f_csv_file_select_cols_by_label) {
+		cout << "-csv_file_select_cols_by_label "
+				<< " " << csv_file_select_cols_by_label_fname
+				<< " " << csv_file_select_cols_by_label_fname_append
+				<< " " << csv_file_select_cols_by_label_text
+			<< endl;
+	}
 	if (f_csv_file_select_rows_and_cols) {
 		cout << "-csv_file_select_rows_and_cols "
 				<< csv_file_select_rows_and_cols_fname
@@ -1340,6 +1374,23 @@ void interface_toolkit::worker(
 				csv_file_select_cols_text,
 				verbose_level);
 	}
+	else if (f_csv_file_select_cols_by_label) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_cols_by_label" << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->do_csv_file_select_cols_by_label(
+				csv_file_select_cols_by_label_fname,
+				csv_file_select_cols_by_label_fname_append,
+				csv_file_select_cols_by_label_text,
+				verbose_level);
+
+	}
+
+
 	else if (f_csv_file_select_rows_and_cols) {
 
 		if (f_v) {

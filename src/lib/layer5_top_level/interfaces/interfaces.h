@@ -820,6 +820,12 @@ class interface_toolkit {
 	std::string csv_file_select_cols_fname_append;
 	std::string csv_file_select_cols_text;
 
+	int f_csv_file_select_cols_by_label;
+	std::string csv_file_select_cols_by_label_fname;
+	std::string csv_file_select_cols_by_label_fname_append;
+	std::string csv_file_select_cols_by_label_text;
+
+
 	int f_csv_file_select_rows_and_cols;
 	std::string csv_file_select_rows_and_cols_fname;
 	std::string csv_file_select_rows_and_cols_R_text;

@@ -1785,7 +1785,7 @@ void quartic_curve_create::print_general(
 				orbit_type_on_pts,
 				0 /*verbose_level */);
 
-		ost << "\\mbox{Orbits on points} & "
+		ost << "\\mbox{Action on points} & "
 				<< orbit_type_on_pts.str() << "\\\\" << endl;
 		ost << "\\hline" << endl;
 
@@ -1796,7 +1796,7 @@ void quartic_curve_create::print_general(
 				orbit_type_on_bitangents,
 				0 /*verbose_level */);
 
-		ost << "\\mbox{Orbits on bitangents} & "
+		ost << "\\mbox{Action on bitangents} & "
 				<< orbit_type_on_bitangents.str() << "\\\\" << endl;
 		ost << "\\hline" << endl;
 
@@ -1809,7 +1809,7 @@ void quartic_curve_create::print_general(
 					orbit_type_on_Kovelevski,
 					0 /*verbose_level */);
 
-			ost << "\\mbox{Orbits on Kovalevski pts} & "
+			ost << "\\mbox{Action on Kovalevski pts} & "
 					<< orbit_type_on_Kovelevski.str() << "\\\\" << endl;
 			ost << "\\hline" << endl;
 		}

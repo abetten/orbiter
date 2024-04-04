@@ -1094,6 +1094,169 @@ void csv_file_support::do_csv_file_select_cols(
 
 
 
+void csv_file_support::do_csv_file_select_cols_by_label(
+		std::string &fname,
+		std::string &fname_append,
+		std::string &cols_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label" << endl;
+	}
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label fname = " << fname << endl;
+		cout << "csv_file_support::do_csv_file_select_cols_by_label fname_append = " << fname_append << endl;
+		cout << "csv_file_support::do_csv_file_select_cols_by_label cols_label = " << cols_label << endl;
+	}
+
+
+	data_structures::string_tools String;
+	std::vector<std::string> Headings;
+
+	String.parse_comma_separated_list(
+			cols_label, Headings,
+			verbose_level);
+	if (f_v) {
+		int j;
+		cout << "Headings" << endl;
+		for (j = 0; j < Headings.size(); j++) {
+			cout << j << " : " << Headings[j] << endl;
+		}
+	}
+
+
+	data_structures::spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+	int nb_rows;
+
+	nb_rows = S.nb_rows;
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"nb_rows=" << nb_rows << endl;
+	}
+
+
+
+
+	std::string *Header_rows;
+	std::string *Header_cols;
+	std::string *T;
+	int nb_r, nb_c;
+
+	S.stringify(
+			Header_rows, Header_cols, T,
+			nb_r, nb_c,
+			verbose_level - 1);
+
+	int i, j;
+
+	if (false) {
+		cout << "Header_cols" << endl;
+		for (j = 0; j < nb_c; j++) {
+			cout << j << " : " << Header_cols[j] << endl;
+		}
+		cout << "Header_rows" << endl;
+		for (i = 0; i < nb_r; i++) {
+			cout << i << " : " << Header_rows[i] << endl;
+		}
+		cout << "T" << endl;
+		for (i = 0; i < nb_r; i++) {
+			for (j = 0; j < nb_c; j++) {
+				cout << i << "," << j << " : " << T[i * nb_c + j] << endl;
+
+			}
+		}
+	}
+
+	std::string *T2;
+	int nb_selected_cols;
+	int *Col_idx;
+
+	nb_selected_cols = Headings.size();
+
+	Col_idx = NEW_int(nb_selected_cols);
+	for (i = 0; i < nb_selected_cols; i++) {
+		Col_idx[i] = -1;
+		for (j = 0; j < nb_c; j++) {
+			if (String.compare_string_string(Header_cols[j], Headings[i]) == 0) {
+				Col_idx[i] = j;
+				break;
+			}
+		}
+		if (Col_idx[i] == -1) {
+			cout << "Cannot find column with label " << Headings[i] << endl;
+			exit(1);
+		}
+	}
+
+
+
+	T2 = new string [nb_r * nb_selected_cols];
+	for (i = 0; i < nb_r; i++) {
+		for (j = 0; j < nb_selected_cols; j++) {
+			T2[i * nb_selected_cols + j] = T[i * nb_c + Col_idx[j]];
+
+		}
+	}
+
+
+	data_structures::string_tools ST;
+	string fname_out;
+
+	fname_out = fname;
+	ST.chop_off_extension(fname_out);
+	fname_out += fname_append;
+	fname_out += ".csv";
+
+
+	string headings;
+
+
+	for (j = 0; j < nb_selected_cols; j++) {
+		headings += Headings[j];
+		if (j < nb_selected_cols - 1) {
+			headings += ",";
+		}
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio->Csv_file_support->write_table_of_strings(
+			fname_out,
+			nb_r, nb_selected_cols, T2,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+
+
+
+
+	cout << "Written file " << fname_out
+			<< " of size " << Fio->file_size(fname_out) << endl;
+
+	delete [] T;
+	delete [] T2;
+
+	FREE_int(Col_idx);
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_cols_by_label done" << endl;
+	}
+}
+
+
+
+
 void csv_file_support::do_csv_file_select_rows_and_cols(
 		std::string &fname,
 		std::string &rows_text, std::string &cols_text,

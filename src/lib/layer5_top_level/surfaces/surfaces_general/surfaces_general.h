@@ -670,6 +670,10 @@ public:
 			std::string *&Table,
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
+	void create_vector_of_strings(
+			quartic_curves::quartic_curve_from_surface *QC,
+			algebraic_geometry::quartic_curve_object *QO,
+			std::vector<std::string> &v, int nb_cols, int verbose_level);
 	void print_full_del_Pezzo(
 			std::ostream &ost, int verbose_level);
 	void print_everything(

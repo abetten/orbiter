@@ -176,6 +176,11 @@ public:
 			std::string &fname_append,
 			std::string &cols_text,
 			int verbose_level);
+	void do_csv_file_select_cols_by_label(
+			std::string &fname,
+			std::string &fname_append,
+			std::string &cols_label,
+			int verbose_level);
 	void do_csv_file_select_rows_and_cols(
 			std::string &fname,
 			std::string &rows_text, std::string &cols_text,
