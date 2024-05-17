@@ -53,7 +53,356 @@ void graph_theoretic_activity::init(
 	}
 }
 
+void graph_theoretic_activity::feedback_headings(
+		graph_theoretic_activity_description *Descr,
+		std::string &headings,
+		int &nb_cols,
+		int verbose_level)
+// CG is not available
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theoretic_activity::feedback_headings" << endl;
+	}
+
+	graph_theoretic_activity::Descr = Descr;
+
+	nb_cols = 0;
+
+	if (Descr->f_find_cliques) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_find_cliques" << endl;
+		}
+
+		headings = "NB_CLQ_" + std::to_string(Descr->Clique_finder_control->target_size);
+		nb_cols = 1;
+
+	}
+	else if (Descr->f_test_SRG_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_test_SRG_property" << endl;
+		}
+
+		headings = "is_SRG,lambda,mu";
+		nb_cols = 3;
+
+
+	}
+	else if (Descr->f_test_Neumaier_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_Neumaier_property" << endl;
+		}
+
+		headings = "";
+		nb_cols = 0;
+
+	}
+	else if (Descr->f_find_subgraph) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_find_subgraph " << Descr->find_subgraph_label << endl;
+		}
+
+
+	}
+	else if (Descr->f_export_magma) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_export_magma" << endl;
+		}
+
+	}
+	else if (Descr->f_export_maple) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_export_maple" << endl;
+		}
+
+
+	}
+	else if (Descr->f_export_csv) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_export_csv" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_export_graphviz) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_export_graphviz" << endl;
+		}
+
+	}
+
+	else if (Descr->f_print) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_print" << endl;
+		}
+
+	}
+	else if (Descr->f_sort_by_colors) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_sort_by_colors" << endl;
+		}
+
+	}
+
+	else if (Descr->f_split) {
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_file << endl;
+		}
+
+	}
+
+	else if (Descr->f_split_by_starters) {
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_starters_fname_reps
+					<< " column " << Descr->split_by_starters_col_label << endl;
+		}
+	}
+
+
+	else if (Descr->f_combine_by_starters) {
+		if (f_v) {
+			cout << "combining by file " << Descr->combine_by_starters_fname_reps
+					<< " column " << Descr->combine_by_starters_col_label << endl;
+		}
+
+	}
+
+	else if (Descr->f_split_by_clique) {
+		if (f_v) {
+			cout << "splitting by clique " << Descr->split_by_clique_label
+					<< " clique " << Descr->split_by_clique_set << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_save) {
+
+	}
+
+	else if (Descr->f_automorphism_group) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_automorphism_group" << endl;
+		}
+
+
+	}
+	else if (Descr->f_properties) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_properties" << endl;
+		}
+
+	}
+	else if (Descr->f_eigenvalues) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_properties" << endl;
+		}
+
+
+	}
+	else if (Descr->f_draw) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_draw" << endl;
+		}
+	}
+
+}
+
+void graph_theoretic_activity::get_label(
+		graph_theoretic_activity_description *Descr,
+		std::string &description_txt,
+		int verbose_level)
+// CG is not available
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theoretic_activity::get_label" << endl;
+	}
+
+	graph_theoretic_activity::Descr = Descr;
+
+
+	if (Descr->f_find_cliques) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_find_cliques" << endl;
+		}
+
+		description_txt = "cliques_sz" + std::to_string(Descr->Clique_finder_control->target_size);
+
+	}
+	else if (Descr->f_test_SRG_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_SRG_property" << endl;
+		}
+
+		description_txt = "test_SRG";
+
+
+	}
+	else if (Descr->f_test_Neumaier_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_Neumaier_property" << endl;
+		}
+
+		description_txt = "test_Neumaier";
+
+
+	}
+	else if (Descr->f_find_subgraph) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_find_subgraph " << Descr->find_subgraph_label << endl;
+		}
+
+
+
+	}
+	else if (Descr->f_export_magma) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_export_magma" << endl;
+		}
+
+	}
+	else if (Descr->f_export_maple) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_export_maple" << endl;
+		}
+
+
+	}
+	else if (Descr->f_export_csv) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_export_csv" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_export_graphviz) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_export_graphviz" << endl;
+		}
+
+	}
+
+	else if (Descr->f_print) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_print" << endl;
+		}
+
+	}
+	else if (Descr->f_sort_by_colors) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_sort_by_colors" << endl;
+		}
+
+	}
+
+	else if (Descr->f_split) {
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_file << endl;
+		}
+
+	}
+
+	else if (Descr->f_split_by_starters) {
+		if (f_v) {
+			cout << "splitting by file " << Descr->split_by_starters_fname_reps
+					<< " column " << Descr->split_by_starters_col_label << endl;
+		}
+	}
+
+
+	else if (Descr->f_combine_by_starters) {
+		if (f_v) {
+			cout << "combining by file " << Descr->combine_by_starters_fname_reps
+					<< " column " << Descr->combine_by_starters_col_label << endl;
+		}
+
+	}
+
+	else if (Descr->f_split_by_clique) {
+		if (f_v) {
+			cout << "splitting by clique " << Descr->split_by_clique_label
+					<< " clique " << Descr->split_by_clique_set << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_save) {
+
+	}
+
+	else if (Descr->f_automorphism_group) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_automorphism_group" << endl;
+		}
+
+
+	}
+	else if (Descr->f_properties) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_properties" << endl;
+		}
+
+	}
+	else if (Descr->f_eigenvalues) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_properties" << endl;
+		}
+
+
+	}
+	else if (Descr->f_draw) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_draw" << endl;
+		}
+	}
+
+}
+
+
 void graph_theoretic_activity::perform_activity(
+		std::vector<std::string> &feedback,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -70,25 +419,107 @@ void graph_theoretic_activity::perform_activity(
 					"f_find_cliques" << endl;
 		}
 
+		graph_theory::clique_finder *CF;
+
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"before CG->all_cliques" << endl;
 		}
 		CG->all_cliques(
 				Descr->Clique_finder_control,
-				CG->label, verbose_level);
+				CG->label,
+				feedback,
+				CF,
+				verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after CG->all_cliques" << endl;
 		}
 
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"Gr->label=" << CG->label
+					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+		}
 
+		string fname_solution;
+
+		fname_solution = CG->label + "_solutions.csv";
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before CF->write_solutions" << endl;
+		}
+		CF->write_solutions(
+				fname_solution,
+					verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after CF->write_solutions" << endl;
+		}
 
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"Gr->label=" << CG->label
 					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+		}
+
+		FREE_OBJECT(CF);
+
+	}
+	else if (Descr->f_test_SRG_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_SRG_property" << endl;
+		}
+
+		int ret;
+		int lambda, mu;
+		string s1, s2, s3;
+
+		ret = CG->test_SRG_property(
+				lambda,
+				mu,
+				verbose_level);
+		s1 = "\"" + std::to_string(ret) + "\"";
+		s2 = "\"" + std::to_string(lambda) + "\"";
+		s3 = "\"" + std::to_string(mu) + "\"";
+		feedback.push_back(s1);
+		feedback.push_back(s2);
+		feedback.push_back(s3);
+
+
+	}
+
+	else if (Descr->f_test_Neumaier_property) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_Neumaier_property" << endl;
+		}
+
+		int regularity;
+		int lambda_value;
+		int nexus;
+		int ret;
+
+		ret = CG->test_Neumaier_property(
+				regularity,
+				lambda_value,
+				Descr->test_Neumaier_property_clique_size,
+				nexus,
+				verbose_level);
+		if (ret) {
+			cout << "The graph is Neumaier, "
+					"the parameters are NG(" << CG->nb_points << ","
+					<< regularity << ","
+					<< lambda_value << ";"
+					<< nexus << ","
+					<< Descr->test_Neumaier_property_clique_size
+					<< ")" << endl;
+		}
+		else {
+			cout << "The graph is not Neumaier" << endl;
 		}
 
 	}
@@ -605,7 +1036,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"before GTA.automorphism_group" << endl;
 		}
-		GTA.automorphism_group(CG, verbose_level);
+		GTA.automorphism_group(CG, feedback, verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after GTA.automorphism_group" << endl;
@@ -668,6 +1099,18 @@ void graph_theoretic_activity::perform_activity(
 	}
 
 
+	if (f_v) {
+		int i;
+
+		cout << "feedback:";
+		for (i = 0; i < feedback.size(); i++) {
+			cout << feedback[i];
+			if (i < feedback.size() - 1) {
+				cout << ",";
+			}
+		}
+		cout << endl;
+	}
 
 
 	if (f_v) {

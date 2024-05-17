@@ -34,6 +34,14 @@ surface_object_with_group::surface_object_with_group()
 	projectivity_group_gens = NULL;
 	Syl = NULL;
 
+	f_has_TDO_TDA = false;
+
+	Decomposition_scheme_TDO = NULL;
+	Decomposition_scheme_TDA = NULL;
+
+	Variety_with_TDO = NULL;
+	Variety_with_TDA = NULL;
+
 	A_on_points = NULL;
 	A_on_Eckardt_points = NULL;
 	A_on_Double_points = NULL;
@@ -69,6 +77,18 @@ surface_object_with_group::~surface_object_with_group()
 	}
 	if (Syl) {
 		FREE_OBJECT(Syl);
+	}
+	if (Decomposition_scheme_TDO) {
+		FREE_OBJECT(Decomposition_scheme_TDO);
+	}
+	if (Decomposition_scheme_TDA) {
+		FREE_OBJECT(Decomposition_scheme_TDA);
+	}
+	if (Variety_with_TDO) {
+		FREE_OBJECT(Variety_with_TDO);
+	}
+	if (Variety_with_TDA) {
+		FREE_OBJECT(Variety_with_TDA);
 	}
 	if (A_on_points) {
 		FREE_OBJECT(A_on_points);
@@ -166,7 +186,8 @@ void surface_object_with_group::init_equation(
 		cout << "surface_object_with_group::init_equation "
 				"before SO->init_equation" << endl;
 	}
-	SO->init_equation(Surf_A->Surf, eqn,
+	SO->init_equation(
+			Surf_A->Surf, eqn,
 			label_txt, label_tex,
 			verbose_level);
 	if (f_v) {
@@ -302,7 +323,10 @@ void surface_object_with_group::init_with_surface_object(
 				"testing Aut_gens" << endl;
 	}
 	Aut_gens->test_if_set_is_invariant_under_given_action(
-			Surf_A->A2, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0], verbose_level - 2);
+			Surf_A->A2,
+			SO->Variety_object->Line_sets->Sets[0],
+			SO->Variety_object->Line_sets->Set_size[0],
+			verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
 				"testing Aut_gens done" << endl;
@@ -316,6 +340,18 @@ void surface_object_with_group::init_with_surface_object(
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
 				"after compute_projectivity_group" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::init_with_surface_object "
+				"before compute_tactical_decompositions" << endl;
+	}
+	compute_tactical_decompositions(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::init_with_surface_object "
+				"after compute_tactical_decompositions" << endl;
 	}
 
 
@@ -365,6 +401,16 @@ void surface_object_with_group::init_surface_object(
 				"after compute_projectivity_group" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object_with_group::init_surface_object "
+				"before compute_tactical_decompositions" << endl;
+	}
+	compute_tactical_decompositions(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::init_surface_object "
+				"after compute_tactical_decompositions" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "surface_object_with_group::init_surface_object "
@@ -393,9 +439,17 @@ void surface_object_with_group::compute_projectivity_group(
 				"verbose_level=" << verbose_level << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object_with_group::compute_projectivity_group "
+				"before Surf_A->A->compute_projectivity_subgroup" << endl;
+	}
 	Surf_A->A->compute_projectivity_subgroup(
 			projectivity_group_gens,
 			Aut_gens, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object_with_group::compute_projectivity_group "
+				"after Surf_A->A->compute_projectivity_subgroup" << endl;
+	}
 
 
 
@@ -615,8 +669,10 @@ void surface_object_with_group::init_orbits_on_points(
 	}
 
 	A_on_points = Surf_A->A->Induced_action->restricted_action(
-			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
-			label_of_set, label_of_set_tex,
+			SO->Variety_object->Point_sets->Sets[0],
+			SO->Variety_object->Point_sets->Set_size[0],
+			label_of_set,
+			label_of_set_tex,
 			0 /*verbose_level*/);
 
 	if (f_v) {
@@ -686,8 +742,10 @@ void surface_object_with_group::init_orbits_on_Eckardt_points(
 		cout << "creating action on Eckardt points:" << endl;
 	}
 	A_on_Eckardt_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Eckardt_points, SO->SOP->nb_Eckardt_points,
-			label_of_set, label_of_set_tex,
+			SO->SOP->Eckardt_points,
+			SO->SOP->nb_Eckardt_points,
+			label_of_set,
+			label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Eckardt points done" << endl;
@@ -739,8 +797,10 @@ void surface_object_with_group::init_orbits_on_Double_points(
 		cout << "creating action on Double points:" << endl;
 	}
 	A_on_Double_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Double_points, SO->SOP->nb_Double_points,
-			label_of_set, label_of_set_tex,
+			SO->SOP->Double_points,
+			SO->SOP->nb_Double_points,
+			label_of_set,
+			label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Double points done" << endl;
@@ -788,8 +848,10 @@ void surface_object_with_group::init_orbits_on_Single_points(
 		cout << "creating action on Single points:" << endl;
 	}
 	A_on_Single_points = Surf_A->A->Induced_action->restricted_action(
-			SO->SOP->Single_points, SO->SOP->nb_Single_points,
-			label_of_set, label_of_set_tex,
+			SO->SOP->Single_points,
+			SO->SOP->nb_Single_points,
+			label_of_set,
+			label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Single points done" << endl;
@@ -838,8 +900,10 @@ void surface_object_with_group::init_orbits_on_lines(
 				"on the lines:" << endl;
 	}
 	A_on_the_lines = Surf_A->A2->Induced_action->restricted_action(
-			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
-			label_of_set, label_of_set_tex,
+			SO->Variety_object->Line_sets->Sets[0],
+			SO->Variety_object->Line_sets->Set_size[0],
+			label_of_set,
+			label_of_set_tex,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating restricted action "
@@ -880,7 +944,8 @@ void surface_object_with_group::init_orbits_on_half_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_single_sixes = A_on_the_lines->Induced_action->create_induced_action_on_sets(
-			72, 6, Surf->Schlaefli->Schlaefli_double_six->Double_six,
+			72, 6,
+			Surf->Schlaefli->Schlaefli_double_six->Double_six,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
@@ -935,7 +1000,8 @@ void surface_object_with_group::init_orbits_on_double_sixes(
 		cout << "creating action on half double sixes:" << endl;
 	}
 	A_double_sixes = A_single_sixes->Induced_action->create_induced_action_on_sets(
-			36, 2, double_six_sets,
+			36, 2,
+			double_six_sets,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
@@ -1013,7 +1079,8 @@ void surface_object_with_group::init_orbits_on_tritangent_planes(
 	}
 }
 
-void surface_object_with_group::init_orbits_on_Hesse_planes(int verbose_level)
+void surface_object_with_group::init_orbits_on_Hesse_planes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1065,7 +1132,8 @@ void surface_object_with_group::init_orbits_on_Hesse_planes(int verbose_level)
 	}
 }
 
-void surface_object_with_group::init_orbits_on_axes(int verbose_level)
+void surface_object_with_group::init_orbits_on_axes(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1348,7 +1416,9 @@ void surface_object_with_group::print_automorphism_group(
 	nb = Orbits_on_lines->nb_orbits;
 
 	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
-			SO->SOP->Adj_line_intersection_graph, SO->Variety_object->Line_sets->Set_size[0], Decomp_scheme,
+			SO->SOP->Adj_line_intersection_graph,
+			SO->Variety_object->Line_sets->Set_size[0],
+			Decomp_scheme,
 			0 /*verbose_level*/);
 
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
@@ -1368,7 +1438,8 @@ void surface_object_with_group::print_automorphism_group(
 
 			my_fname_mask = fname_mask + "_single_sixes";
 
-			Orbits_on_single_sixes->make_orbit_trees(ost,
+			Orbits_on_single_sixes->make_orbit_trees(
+					ost,
 					my_fname_mask, Opt,
 					verbose_level);
 		}
@@ -1382,7 +1453,8 @@ void surface_object_with_group::print_automorphism_group(
 
 			my_fname_mask = fname_mask + "_double_sixes";
 
-			Orbits_on_double_sixes->make_orbit_trees(ost,
+			Orbits_on_double_sixes->make_orbit_trees(
+					ost,
 					my_fname_mask, Opt,
 					verbose_level);
 		}
@@ -1395,7 +1467,8 @@ void surface_object_with_group::print_automorphism_group(
 
 			my_fname_mask = fname_mask + "_tritangent_planes";
 
-			Orbits_on_tritangent_planes->make_orbit_trees(ost,
+			Orbits_on_tritangent_planes->make_orbit_trees(
+					ost,
 					my_fname_mask, Opt,
 					verbose_level);
 		}
@@ -1408,7 +1481,8 @@ void surface_object_with_group::print_automorphism_group(
 
 			my_fname_mask = fname_mask + "_Hesse_planes";
 
-			Orbits_on_Hesse_planes->make_orbit_trees(ost,
+			Orbits_on_Hesse_planes->make_orbit_trees(
+					ost,
 					my_fname_mask, Opt,
 					verbose_level);
 		}
@@ -1500,8 +1574,6 @@ void surface_object_with_group::cheat_sheet_basic(
 
 void surface_object_with_group::cheat_sheet(
 		std::ostream &ost,
-		std::string &label_txt,
-		std::string &label_tex,
 		int f_print_orbits, std::string &fname_mask,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
@@ -1554,7 +1626,8 @@ void surface_object_with_group::cheat_sheet(
 		cout << "surface_object_with_group::cheat_sheet "
 				"before print_automorphism_group" << endl;
 	}
-	print_automorphism_group(ost, f_print_orbits,
+	print_automorphism_group(
+			ost, f_print_orbits,
 			fname_mask, Opt, verbose_level - 1);
 
 
@@ -1591,8 +1664,10 @@ void surface_object_with_group::cheat_sheet(
 		l1_interfaces::latex_interface L;
 
 		int *Table;
-		Aut_gens->create_group_table(Table, go, verbose_level - 1);
-		L.print_integer_matrix_tex_block_by_block(ost,
+		Aut_gens->create_group_table(
+				Table, go, verbose_level - 1);
+		L.print_integer_matrix_tex_block_by_block(
+				ost,
 				Table, go, go, block_width);
 		FREE_int(Table);
 	}
@@ -1601,7 +1676,8 @@ void surface_object_with_group::cheat_sheet(
 	}
 
 
-	Aut_gens->export_group_and_copy_to_latex(label_txt,
+	Aut_gens->export_group_and_copy_to_latex(
+			SO->label_txt,
 			ost,
 			A_on_the_lines,
 			verbose_level - 2);
@@ -1609,7 +1685,8 @@ void surface_object_with_group::cheat_sheet(
 
 	if (Aut_gens->A->degree < 500) {
 
-		Aut_gens->export_group_and_copy_to_latex(label_txt,
+		Aut_gens->export_group_and_copy_to_latex(
+				SO->label_txt,
 				ost,
 				Aut_gens->A,
 				verbose_level - 2);
@@ -1923,132 +2000,195 @@ void surface_object_with_group::print_automorphism_group_generators(
 
 
 	if (projectivity_group_gens) {
+
 		if (f_v) {
 			cout << "surface_object_with_group::print_automorphism_group_generators "
-					"projectivity stabilizer" << endl;
+					"before print_projectivity_group" << endl;
 		}
-		ring_theory::longinteger_object go;
-		projectivity_group_gens->group_order(go);
-		ost << "The projectivity group has order "
-				<< go << "\\\\" << endl;
-		ost << "The projectivity group is generated by:\\\\" << endl;
+
+		print_projectivity_group(ost, verbose_level - 2);
+
 		if (f_v) {
 			cout << "surface_object_with_group::print_automorphism_group_generators "
-					"before projectivity_group_gens->"
-					"print_generators_tex" << endl;
+					"after print_projectivity_group" << endl;
 		}
-		projectivity_group_gens->print_generators_tex(ost);
-		projectivity_group_gens->print_generators_in_different_action_tex(ost, A_on_the_lines);
+
+		if (Syl) {
+
+			if (f_v) {
+				cout << "surface_object_with_group::print_automorphism_group_generators "
+						"before print_sylow_groups_of_projectivity_group" << endl;
+			}
+
+			print_sylow_groups_of_projectivity_group(ost, verbose_level - 2);
+
+			if (f_v) {
+				cout << "surface_object_with_group::print_automorphism_group_generators "
+						"after print_sylow_groups_of_projectivity_group" << endl;
+			}
+		}
+
+	}
 
 
-		ost << "The projectivity group in the action on the lines:\\\\" << endl;
-		print_generators_on_lines(
-				ost,
-				projectivity_group_gens,
-				verbose_level);
+
+}
+
+void surface_object_with_group::print_projectivity_group(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_projectivity_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_projectivity_group "
+				"projectivity stabilizer" << endl;
+	}
+	ring_theory::longinteger_object go;
+	projectivity_group_gens->group_order(go);
+	ost << "The projectivity group has order "
+			<< go << "\\\\" << endl;
+	ost << "The projectivity group is generated by:\\\\" << endl;
+	if (f_v) {
+		cout << "surface_object_with_group::print_projectivity_group "
+				"before projectivity_group_gens->"
+				"print_generators_tex" << endl;
+	}
+	projectivity_group_gens->print_generators_tex(ost);
+	projectivity_group_gens->print_generators_in_different_action_tex(ost, A_on_the_lines);
+
+
+	ost << "The projectivity group in the action on the lines:\\\\" << endl;
+	print_generators_on_lines(
+			ost,
+			projectivity_group_gens,
+			verbose_level);
 
 #if 1
-		ost << "The elements of the projectivity group "
-				"in the action on the lines:\\\\" << endl;
-		print_elements_on_lines(
-				ost,
-				projectivity_group_gens,
-				verbose_level);
+	ost << "The elements of the projectivity group "
+			"in the action on the lines:\\\\" << endl;
+	print_elements_on_lines(
+			ost,
+			projectivity_group_gens,
+			verbose_level);
 #endif
+
+
+
+	string label_group;
+
+	label_group = SO->label_txt + "_proj_grp";
+	projectivity_group_gens->export_group_and_copy_to_latex(label_group,
+			ost,
+			projectivity_group_gens->A,
+			verbose_level - 2);
+
+	label_group = SO->label_txt + "_proj_grp_on_lines";
+	projectivity_group_gens->export_group_and_copy_to_latex(label_group,
+			ost,
+			A_on_the_lines,
+			verbose_level - 2);
+
+	label_group = SO->label_txt + "_proj_grp_on_tritangent_planes";
+	projectivity_group_gens->export_group_and_copy_to_latex(label_group,
+			ost,
+			A_on_tritangent_planes,
+			verbose_level - 2);
+
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_projectivity_group done" << endl;
+	}
+
+}
+
+
+void surface_object_with_group::print_sylow_groups_of_projectivity_group(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+				"Sylow subgroups" << endl;
+	}
+	int idx;
+
+	for (idx = 0; idx < Syl->nb_primes; idx++) {
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes << endl;
+		}
+		ost << "The " << Syl->primes[idx]
+			<< "-Sylow subgroup is generated by:\\\\" << endl;
+		Syl->Sub[idx].SG->print_generators_tex(ost);
+
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes
+					<< " making label_group" << endl;
+		}
 
 		string label_group;
 
-		label_group = "label_txt_proj_grp";
-		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
+
+		label_group = SO->label_txt + "_proj_grp_syl_" + std::to_string(Syl->primes[idx]);
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes
+					<< " label_group=" << label_group << endl;
+		}
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes
+					<< " before export_group_and_copy_to_latex" << endl;
+		}
+
+		Syl->Sub[idx].SG->export_group_and_copy_to_latex(
+				label_group,
 				ost,
 				projectivity_group_gens->A,
 				verbose_level - 2);
 
-		label_group = "label_txt_proj_grp_on_lines";
-		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
+		label_group = SO->label_txt + "_proj_grp_syl_" + std::to_string(Syl->primes[idx]) + "_on_lines";
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes
+					<< " label_group=" << label_group << endl;
+		}
+
+		if (f_v) {
+			cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group "
+					"idx=" << idx << " / " << Syl->nb_primes
+					<< " before export_group_and_copy_to_latex" << endl;
+		}
+		Syl->Sub[idx].SG->export_group_and_copy_to_latex(
+				label_group,
 				ost,
 				A_on_the_lines,
 				verbose_level - 2);
 
-		label_group = "label_txt_proj_grp_on_tritangent_planes";
-		projectivity_group_gens->export_group_and_copy_to_latex(label_group,
-				ost,
-				A_on_tritangent_planes,
-				verbose_level - 2);
-
-
-
 	}
 
-	if (Syl && projectivity_group_gens) {
-		if (f_v) {
-			cout << "surface_object_with_group::print_automorphism_group_generators "
-					"Sylow subgroups" << endl;
-		}
-		int idx;
-
-		for (idx = 0; idx < Syl->nb_primes; idx++) {
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes << endl;
-			}
-			ost << "The " << Syl->primes[idx]
-				<< "-Sylow subgroup is generated by:\\\\" << endl;
-			Syl->Sub[idx].SG->print_generators_tex(ost);
-
-
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes
-						<< " making label_group" << endl;
-			}
-
-			string label_group;
-
-
-			label_group = "label_txt_proj_grp_syl_" + std::to_string(Syl->primes[idx]);
-
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes
-						<< " label_group=" << label_group << endl;
-			}
-
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes
-						<< " before export_group_and_copy_to_latex" << endl;
-			}
-
-			Syl->Sub[idx].SG->export_group_and_copy_to_latex(
-					label_group,
-					ost,
-					projectivity_group_gens->A,
-					verbose_level - 2);
-
-			label_group = "label_txt_proj_grp_syl_" + std::to_string(Syl->primes[idx]) + "_on_lines";
-
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes
-						<< " label_group=" << label_group << endl;
-			}
-
-			if (f_v) {
-				cout << "surface_object_with_group::print_automorphism_group_generators "
-						"idx=" << idx << " / " << Syl->nb_primes
-						<< " before export_group_and_copy_to_latex" << endl;
-			}
-			Syl->Sub[idx].SG->export_group_and_copy_to_latex(
-					label_group,
-					ost,
-					A_on_the_lines,
-					verbose_level - 2);
-
-		}
+	if (f_v) {
+		cout << "surface_object_with_group::print_sylow_groups_of_projectivity_group done" << endl;
 	}
-
-
 }
 
 
@@ -2068,18 +2208,12 @@ void surface_object_with_group::investigate_surface_and_write_report(
 
 	string fname;
 	string fname_mask;
-	string label;
-	string label_tex;
 
 
-	fname = "surface_" + SC->prefix + "_with_group.tex";
+	fname = "surface_" + SC->SO->label_txt + "_with_group.tex";
 
 
-	label = "surface_" + SC->label_txt;
-
-	label_tex = "surface_" + SC->label_tex;
-
-	fname_mask = "surface_" + SC->prefix + "_orbit_%d";
+	fname_mask = "surface_" + SC->SO->label_txt + "_orbit_%d";
 
 	{
 		ofstream fp(fname);
@@ -2094,8 +2228,6 @@ void surface_object_with_group::investigate_surface_and_write_report(
 					SC,
 					Six_arcs,
 					fname_mask,
-					label,
-					label_tex,
 					verbose_level);
 
 
@@ -2119,8 +2251,6 @@ void surface_object_with_group::investigate_surface_and_write_report2(
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 		std::string &fname_mask,
-		std::string &label,
-		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2134,14 +2264,13 @@ void surface_object_with_group::investigate_surface_and_write_report2(
 		cout << "surface_object_with_group::investigate_surface_and_write_report2 "
 				"before cheat_sheet" << endl;
 	}
-	ost << "\\section{The Cubic Surface " << SC->label_tex
+	ost << "\\section{The Cubic Surface " << SC->SO->label_tex
 			<< " over $\\mathbb F_{" << SC->F->q << "}$}" << endl;
 
-	cheat_sheet(ost,
-		label,
-		label_tex,
+	cheat_sheet(
+			ost,
 		true /* f_print_orbits */,
-		fname_mask /* const char *fname_mask*/,
+		fname_mask,
 		Opt,
 		verbose_level);
 	if (f_v) {
@@ -2414,196 +2543,205 @@ void surface_object_with_group::export_all_quartic_curves(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_TDO = false;
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves" << endl;
+		cout << "surface_object_with_group::export_all_quartic_curves nb_orbits = " << Orbits_on_points_not_on_lines->nb_orbits << endl;
 	}
 	int pt_orbit;
 	//long int po_go;
 
 	//po_go = Aut_gens->group_order_as_lint();
 
-	nb_cols = 17;
 	nb_rows = Orbits_on_points_not_on_lines->nb_orbits;
+
+	create_heading(headings, nb_cols);
+
 	Table = new string[nb_rows * nb_cols];
-	headings = "SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,go";
+
 
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "Quartic curve associated with surface and with orbit counter = " << pt_orbit
 					<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 		}
 
 
-		quartic_curves::quartic_curve_from_surface *QC;
+		std::vector<std::string> v;
 
-		QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
+		export_one_quartic_curve(
+				pt_orbit,
+				v,
+				verbose_level - 3);
 
-		QC->init(this, verbose_level - 2);
 
+		int j;
 
-		if (f_v) {
-			cout << "surface_object_with_group::export_all_quartic_curves "
-					"before QC->quartic" << endl;
-		}
-		QC->quartic(pt_orbit, verbose_level - 2);
-		if (f_v) {
-			cout << "surface_object_with_group::export_all_quartic_curves "
-					"after QC->quartic" << endl;
+		for (j = 0; j < nb_cols; j++) {
+			Table[pt_orbit * nb_cols + j] = v[j];
 		}
 
-
-#if 0
-		// the quartic curve is now in QC->curve
-		// as a Surf->Poly4_x123
-
-		if (f_v) {
-			cout << "surface_object_with_group::export_all_quartic_curves "
-					"before QC->compute_stabilizer" << endl;
-		}
-		QC->compute_stabilizer(verbose_level);
-		if (f_v) {
-			cout << "surface_object_with_group::export_all_quartic_curves "
-					"after QC->compute_stabilizer" << endl;
-		}
-
-#endif
-
-
-
-
-		{
-			algebraic_geometry::quartic_curve_object *QO;
-
-			QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
-
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-						"before QO->init_equation_and_bitangents_and_compute_properties" << endl;
-			}
-			QO->init_equation_and_bitangents_and_compute_properties(
-					Surf_A->PA->PA2->QCDA->Dom,
-					QC->curve /* eqn15 */,
-					QC->Bitangents,
-					verbose_level);
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-						"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
-			}
-
-			//int nb_Kovalevski = -1;
-			//nb_Kovalevski = QO->QP->Kovalevski->nb_Kovalevski;
-
-#if 0
-			applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group *QOG;
-
-			QOG = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group);
-
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-						"before QOG->init" << endl;
-			}
-			QOG->init(
-					Surf_A->PA->PA2->QCDA,
-					QO,
-					QC->Aut_of_variety->Stab_gens_quartic,
-					verbose_level);
-			if (f_v) {
-				cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-						"after QOG->init" << endl;
-			}
-
-			string label;
-
-			label = "surface_" + SO->label_txt + "_pt_orb_" + std::to_string(pt_orbit);
-
-			//label_txt = prefix;
-
-			FREE_OBJECT(QOG);
-#endif
-
-
-			std::vector<std::string> v;
-
-			create_vector_of_strings(
-					QC,
-					QO,
-					v, nb_cols,
-					verbose_level - 1);
-
-			int j;
-
-			for (j = 0; j < nb_cols; j++) {
-				Table[pt_orbit * nb_cols + j] = v[j];
-			}
-
-			FREE_OBJECT(QO);
-
-		}
-
-#if 0
-
-		std::string s_eqn_surface;
-		std::string s_eqn_surface_algebraic;
-		std::string pt_coeff;
-
-		s_eqn_surface = Surf->PolynomialDomains->Poly3_4->stringify(SO->Variety_object->eqn);
-
-		s_eqn_surface_algebraic = Surf->PolynomialDomains->Poly3_4->stringify_algebraic_notation(SO->Variety_object->eqn);
-
-
-		pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
-
-		std::string s_eqn, s_eqn_algebraic, s_Pts, s_Lines;
-
-		s_eqn = Surf->PolynomialDomains->Poly4_x123->stringify(QC->curve);
-
-		s_eqn_algebraic = Surf->PolynomialDomains->Poly4_x123->stringify_algebraic_notation(QC->curve);
-
-
-		s_Pts = Lint_vec_stringify(QC->Pts_on_curve, QC->sz_curve);
-
-		s_Lines = Lint_vec_stringify(QC->Bitangents, QC->nb_bitangents);
-
-		Table[pt_orbit * nb_cols + 0] = "\"" + s_eqn_surface + "\"";
-		Table[pt_orbit * nb_cols + 1] = "\"" + s_eqn_surface_algebraic + "\"";
-		Table[pt_orbit * nb_cols + 2] = std::to_string(pt_orbit);
-		Table[pt_orbit * nb_cols + 3] = std::to_string(QC->pt_A);
-		Table[pt_orbit * nb_cols + 4] = "\"" + pt_coeff + "\"";
-		Table[pt_orbit * nb_cols + 5] = std::to_string(po_go);
-		Table[pt_orbit * nb_cols + 6] = std::to_string(QC->po_index);
-		Table[pt_orbit * nb_cols + 7] = "\"" + s_eqn + "\"";
-		Table[pt_orbit * nb_cols + 8] = "\"" + s_eqn_algebraic + "\"";
-		Table[pt_orbit * nb_cols + 9] = "\"" + s_Pts + "\"";
-		Table[pt_orbit * nb_cols + 10] = "\"" + s_Lines + "\"";
-		Table[pt_orbit * nb_cols + 11] = std::to_string(SO->SOP->nb_Eckardt_points);
-		Table[pt_orbit * nb_cols + 12] = std::to_string(SO->SOP->nb_Double_points);
-		Table[pt_orbit * nb_cols + 13] = std::to_string(SO->SOP->nb_Single_points);
-		Table[pt_orbit * nb_cols + 14] = std::to_string(SO->SOP->nb_pts_not_on_lines);
-		Table[pt_orbit * nb_cols + 15] = std::to_string(nb_Kovalevski);
-		Table[pt_orbit * nb_cols + 16] = std::to_string(-1);
-
-#endif
-
-		FREE_OBJECT(QC);
 	}
 	if (f_v) {
 		cout << "surface_object_with_group::export_all_quartic_curves done" << endl;
 	}
 }
 
+
+void surface_object_with_group::export_one_quartic_curve(
+		int pt_orbit,
+		std::vector<std::string> &v,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_one_quartic_curve "
+				"pt_orbit = " << pt_orbit << endl;
+	}
+
+	quartic_curves::quartic_curve_from_surface *QC;
+
+	QC = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
+
+	QC->init(this, verbose_level - 2);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"before QC->quartic" << endl;
+	}
+	QC->quartic(pt_orbit, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"after QC->quartic" << endl;
+	}
+
+
+#if 0
+	// the quartic curve is now in QC->curve
+	// as a Surf->Poly4_x123
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"before QC->compute_stabilizer" << endl;
+	}
+	QC->compute_stabilizer(verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"after QC->compute_stabilizer" << endl;
+	}
+
+#endif
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"before creating quartic_curve_object" << endl;
+	}
+
+
+	{
+		algebraic_geometry::quartic_curve_object *QO;
+
+		QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"before QO->init_equation_and_bitangents_and_compute_properties" << endl;
+		}
+		QO->init_equation_and_bitangents_and_compute_properties(
+				Surf_A->PA->PA2->QCDA->Dom,
+				QC->curve /* eqn15 */,
+				QC->Bitangents,
+				verbose_level - 3);
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
+		}
+
+		//int nb_Kovalevski = -1;
+		//nb_Kovalevski = QO->QP->Kovalevski->nb_Kovalevski;
+
+#if 0
+		applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group *QOG;
+
+		QOG = NEW_OBJECT(applications_in_algebraic_geometry::quartic_curves::quartic_curve_object_with_group);
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"before QOG->init" << endl;
+		}
+		QOG->init(
+				Surf_A->PA->PA2->QCDA,
+				QO,
+				QC->Aut_of_variety->Stab_gens_quartic,
+				verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
+					"after QOG->init" << endl;
+		}
+
+		string label;
+
+		label = "surface_" + SO->label_txt + "_pt_orb_" + std::to_string(pt_orbit);
+
+		//label_txt = prefix;
+
+		FREE_OBJECT(QOG);
+#endif
+
+
+
+
+		create_vector_of_strings(
+				QC,
+				QO,
+				v,
+				verbose_level - 3);
+
+
+		FREE_OBJECT(QO);
+
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::export_all_quartic_curves "
+				"after creating quartic_curve_object" << endl;
+	}
+
+
+	FREE_OBJECT(QC);
+	if (f_v) {
+		cout << "surface_object_with_group::export_one_quartic_curve "
+				"pt_orbit = " << pt_orbit << " done" << endl;
+	}
+
+}
+
+void surface_object_with_group::create_heading(
+		std::string &heading, int &nb_cols)
+{
+	heading = "SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,"
+			"pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,go";
+	nb_cols = 17;
+
+}
+
 void surface_object_with_group::create_vector_of_strings(
 		quartic_curves::quartic_curve_from_surface *QC,
 		algebraic_geometry::quartic_curve_object *QO,
-		std::vector<std::string> &v, int nb_cols, int verbose_level)
+		std::vector<std::string> &v,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface_object_with_group::create_vector_of_strings" << endl;
 	}
+
+	int nb_cols = 17;
 
 	std::string s_eqn_surface;
 	std::string s_eqn_surface_algebraic;
@@ -2643,7 +2781,7 @@ void surface_object_with_group::create_vector_of_strings(
 	v[2] = std::to_string(QC->pt_orbit);
 	v[3] = std::to_string(QC->pt_A);
 	v[4] = "\"" + pt_coeff + "\"";
-	v[5] = ago.stringify(); //std::to_string(po_go);
+	v[5] = ago.stringify();
 	v[6] = std::to_string(QC->po_index);
 	v[7] = "\"" + s_eqn + "\"";
 	v[8] = "\"" + s_eqn_algebraic + "\"";
@@ -2931,14 +3069,14 @@ void surface_object_with_group::print_everything(
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"before tactical_decomposition_inside_projective_space" << endl;
+				"before report_decomposition_schemes" << endl;
 	}
-	tactical_decomposition_inside_projective_space(
+	report_decomposition_schemes(
 			ost,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"after tactical_decomposition_inside_projective_space" << endl;
+				"after report_decomposition_schemes" << endl;
 	}
 
 	if (f_v) {
@@ -3210,359 +3348,248 @@ void surface_object_with_group::print_action_on_surface(
 }
 
 
-void surface_object_with_group::print_double_sixes(std::ostream &ost)
+void surface_object_with_group::print_double_sixes(
+		std::ostream &ost)
 {
 	//int idx;
 	ost << "\\bigskip" << endl;
 
 	ost << "\\subsection*{Double sixes}" << endl;
 
-	SO->Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(ost, SO->Variety_object->Line_sets->Sets[0]);
-
-#if 0
-	//SO->Surf->Schlaefli->latex_table_of_double_sixes(ost);
-
-	for (idx = 0; idx < 36; idx++) {
-
-		ost << "$D_{" << idx << "} = "
-				<< SO->Surf->Schlaefli->Double_six_label_tex[idx] << endl;
-
-		ost << " = " << endl;
-
-		SO->Surf->Schlaefli->latex_double_six_symbolic(ost, idx);
-
-		ost << " = " << endl;
-
-		SO->Surf->Schlaefli->latex_double_six_index_set(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-
-
-		ost << "$" << endl;
-
-		ost << " = " << endl;
-
-		SO->latex_double_six(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-		ost << "$" << endl;
-
-		ost << " = " << endl;
-
-		SO->latex_double_six_wedge(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-		ost << "$" << endl;
-
-		ost << " = " << endl;
-
-		SO->latex_double_six_Klein(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-		ost << "$" << endl;
-
-		ost << " = " << endl;
-
-		SO->latex_double_six_Pluecker_coordinates_transposed(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-		ost << "$" << endl;
-
-		ost << " = " << endl;
-
-		SO->latex_double_six_Klein_transposed(ost, idx);
-
-		ost << "$\\\\" << endl;
-
-	}
-#endif
+	SO->Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(
+			ost, SO->Variety_object->Line_sets->Sets[0]);
 
 
 }
 
 
-void surface_object_with_group::tactical_decomposition_inside_projective_space(
+void surface_object_with_group::compute_tactical_decompositions(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions" << endl;
+	}
+
+	combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"before Combi.compute_TDO_decomposition_of_projective_space" << endl;
+	}
+	Decomposition_scheme_TDO = Combi.compute_TDO_decomposition_of_projective_space(
+			Surf_A->PA->P,
+			SO->Variety_object->Point_sets->Sets[0],
+			SO->Variety_object->Point_sets->Set_size[0],
+			SO->Variety_object->Line_sets->Sets[0],
+			SO->Variety_object->Line_sets->Set_size[0],
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"after Combi.compute_TDO_decomposition_of_projective_space" << endl;
+	}
+
+
+	if (Decomposition_scheme_TDO == NULL) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"the space is too large, we abort the computation of tactical decompositions" << endl;
+		f_has_TDO_TDA = false;
+		return;
+	}
+
+	f_has_TDO_TDA = true;
+
+	combinatorics_with_groups::combinatorics_with_action CombiA;
+
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"before CombiA.refine_decomposition_by_group_orbits" << endl;
+	}
+	CombiA.refine_decomposition_by_group_orbits(
+			Decomposition_scheme_TDO->Decomposition,
+			Surf_A->A /* A_on_points */,
+			Surf_A->A2 /* A_on_lines */,
+			Aut_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"after CombiA.refine_decomposition_by_group_orbits" << endl;
+	}
+
+	//combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
+
+	Decomposition_scheme_TDA = NEW_OBJECT(combinatorics::decomposition_scheme);
+
+	if (f_v) {
+		cout << "geometry_global::compute_tactical_decompositions "
+				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+	Decomposition_scheme_TDA->init_row_and_col_schemes(
+			Decomposition_scheme_TDO->Decomposition,
+		verbose_level);
+	if (f_v) {
+		cout << "geometry_global::compute_tactical_decompositions "
+				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
+	}
+
+
+	Variety_with_TDO = NEW_OBJECT(algebraic_geometry::variety_object);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before Variety_with_TDO->init_set_of_sets" << endl;
+	}
+	Variety_with_TDO->init_set_of_sets(
+			Surf_A->PA->P,
+			Surf_A->Surf->PolynomialDomains->Poly3_4,
+			SO->Variety_object->eqn,
+			Decomposition_scheme_TDO->SoS_points,
+			Decomposition_scheme_TDO->SoS_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after Variety_with_TDO->init_set_of_sets" << endl;
+	}
+
+	Variety_with_TDA = NEW_OBJECT(algebraic_geometry::variety_object);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"before Variety_with_TDA->init_set_of_sets" << endl;
+	}
+	Variety_with_TDA->init_set_of_sets(
+			Surf_A->PA->P,
+			Surf_A->Surf->PolynomialDomains->Poly3_4,
+			SO->Variety_object->eqn,
+			Decomposition_scheme_TDA->SoS_points,
+			Decomposition_scheme_TDA->SoS_lines,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
+				"after Variety_with_TDA->init_set_of_sets" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions done" << endl;
+	}
+}
+
+void surface_object_with_group::report_decomposition_schemes(
 		std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes" << endl;
 	}
 
-#if 0
-	geometry::geometry_global GG;
-	string fname_base;
+	int upper_bound_on_size_for_printing = 100;
 
-	fname_base = SO->label_txt + "_TDO";
+	std::string label_scheme;
+
+	label_scheme = "TDO";
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-			"fname_base = " << fname_base << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDO->report_latex_with_external_files" << endl;
 	}
-
-
-
+	Decomposition_scheme_TDO->report_latex_with_external_files(
+			ost,
+			label_scheme,
+			SO->label_txt,
+			upper_bound_on_size_for_printing,
+			verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-			"before GG.compute_TDO_decomposition_of_projective_space_old" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDO->report_latex_with_external_files" << endl;
 	}
-
-
-	std::vector<std::string> file_names;
-
-	GG.compute_TDO_decomposition_of_projective_space_old(
-			fname_base,
-			Surf_A->PA->P,
-			SO->Pts, SO->nb_pts,
-			SO->Lines, SO->nb_lines,
-			file_names,
-			verbose_level);
-
 
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-			"after GG.compute_TDO_decomposition_of_projective_space_old" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDO->export_csv" << endl;
+	}
+	Decomposition_scheme_TDO->export_csv(
+			label_scheme,
+			SO->label_txt,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDO->export_csv" << endl;
 	}
 
-	ost << endl << endl;
 
-
-	int i;
-
-	for (i = 0; i < file_names.size(); i++) {
-		ost << "$$" << endl;
-		ost << "\\input " << file_names[i] << endl;
-		ost << "$$" << endl;
-
-	}
-
-#endif
-
-
-
-
-	combinatorics::combinatorics_domain Combi;
-	combinatorics::decomposition_scheme *Decomposition_scheme;
+	label_scheme = "TDA";
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before Combi.compute_TDO_decomposition_of_projective_space" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDA->report_latex_with_external_files" << endl;
 	}
-	Decomposition_scheme = Combi.compute_TDO_decomposition_of_projective_space(
-			Surf_A->PA->P,
-			SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0],
-			SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0],
-			verbose_level);
+	Decomposition_scheme_TDA->report_latex_with_external_files(
+			ost,
+			label_scheme,
+			SO->label_txt,
+			upper_bound_on_size_for_printing,
+			verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after Combi.compute_TDO_decomposition_of_projective_space" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDA->report_latex_with_external_files" << endl;
 	}
 
-
-
-	string fname1;
-	string fname2;
-
-	fname1 = "surface_" + SO->label_txt + "_TDO_row";
-	fname2 = "surface_" + SO->label_txt + "_TDO_col";
-
-	string fname1_tex;
-	string fname2_tex;
-
-	fname1_tex = fname1 + ".tex";
-	fname2_tex = fname2 + ".tex";
-
-	{
-		ofstream ost(fname1_tex);
-
-		int f_enter_math = false;
-		int f_print_subscripts = true;
-
-		Decomposition_scheme->print_row_tactical_decomposition_scheme_tex(
-				ost, f_enter_math, f_print_subscripts);
-
-	}
-	{
-		ofstream ost(fname2_tex);
-
-		int f_enter_math = false;
-		int f_print_subscripts = true;
-
-		Decomposition_scheme->print_column_tactical_decomposition_scheme_tex(
-				ost, f_enter_math, f_print_subscripts);
-
-	}
-
-	ost << endl << endl;
-
-	int nb_row, nb_col;
-
-	nb_row = Decomposition_scheme->RC->nb_row_classes;
-	nb_col = Decomposition_scheme->RC->nb_col_classes;
-
-
-	if (nb_row + nb_col < 100) {
-		ost << "TDO scheme of size " << nb_row << " x " << nb_col << ":" << endl;
-
-		ost << "$$" << endl;
-		ost << "\\input " << fname1_tex << endl;
-		ost << "$$" << endl;
-		ost << "$$" << endl;
-		ost << "\\input " << fname2_tex << endl;
-		ost << "$$" << endl;
-	}
-	else {
-		ost << "TDO scheme of size " << nb_row << " x " << nb_col << " is too big to print.\\" << endl;
-		ost << endl;
-		ost << "\\bigskip" << endl;
-		ost << endl;
-
-	}
-
-
-	string fname1_csv;
-	string fname2_csv;
-
-	string fname1b_csv;
-	string fname2b_csv;
-
-	fname1_csv = fname1 + ".csv";
-	fname2_csv = fname2 + ".csv";
-	fname1b_csv = fname1 + "_sets.csv";
-	fname2b_csv = fname2 + "_sets.csv";
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before Decomposition_scheme->write_csv" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDA->export_csv" << endl;
 	}
-	Decomposition_scheme->write_csv(
-			fname1_csv, fname2_csv,
-			fname1b_csv, fname2b_csv,
-			verbose_level);
+	Decomposition_scheme_TDA->export_csv(
+			label_scheme,
+			SO->label_txt,
+			verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after Decomposition_scheme->write_csv" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDA->export_csv" << endl;
 	}
 
-	combinatorics_with_groups::combinatorics_with_action CombiA;
 
-	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before CombiA.refine_decomposition_by_group_orbits" << endl;
-	}
-	CombiA.refine_decomposition_by_group_orbits(
-			Decomposition_scheme->Decomposition,
-			Surf_A->A /* A_on_points */, Surf_A->A2 /* A_on_lines */,
-			Aut_gens,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after CombiA.refine_decomposition_by_group_orbits" << endl;
-	}
+	ost << "TDO classes:\\\\" << endl;
 
-	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
-
-	Decomposition_scheme_TDA = NEW_OBJECT(combinatorics::decomposition_scheme);
+	label_scheme = "TDO";
 
 	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"before Decomposition_scheme->init_row_and_col_schemes" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDO->report_classes_with_external_files" << endl;
 	}
-	Decomposition_scheme_TDA->init_row_and_col_schemes(
-			Decomposition_scheme->Decomposition,
-		verbose_level);
+	Decomposition_scheme_TDO->report_classes_with_external_files(
+			ost,
+			label_scheme,
+			SO->label_txt,
+			verbose_level - 2);
 	if (f_v) {
-		cout << "geometry_global::compute_TDO_decomposition_of_projective_space "
-				"after Decomposition_scheme->init_row_and_col_schemes" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDO->report_classes_with_external_files" << endl;
 	}
 
+	ost << "TDA classes:\\\\" << endl;
 
-	nb_row = Decomposition_scheme_TDA->RC->nb_row_classes;
-	nb_col = Decomposition_scheme_TDA->RC->nb_col_classes;
-
-
-	fname1 = "surface_" + SO->label_txt + "_TDA_row";
-	fname2 = "surface_" + SO->label_txt + "_TDA_col";
-
-
-	fname1_tex = fname1 + ".tex";
-	fname2_tex = fname2 + ".tex";
-
-	{
-		ofstream ost(fname1_tex);
-
-		int f_enter_math = false;
-		int f_print_subscripts = true;
-
-		Decomposition_scheme_TDA->print_row_tactical_decomposition_scheme_tex(
-				ost, f_enter_math, f_print_subscripts);
-
-	}
-	{
-		ofstream ost(fname2_tex);
-
-		int f_enter_math = false;
-		int f_print_subscripts = true;
-
-		Decomposition_scheme_TDA->print_column_tactical_decomposition_scheme_tex(
-				ost, f_enter_math, f_print_subscripts);
-
-	}
-
-	ost << endl << endl;
-
-
-	if (nb_row + nb_col < 100) {
-		ost << "TDA scheme of size " << nb_row << " x " << nb_col << ":" << endl;
-		ost << "$$" << endl;
-		ost << "\\input " << fname1_tex << endl;
-		ost << "$$" << endl;
-		ost << "$$" << endl;
-		ost << "\\input " << fname2_tex << endl;
-		ost << "$$" << endl;
-	}
-	else {
-		ost << "TDA scheme of size " << nb_row << " x " << nb_col << " is too big to print.\\\\" << endl;
-		ost << endl;
-		ost << "\\bigskip" << endl;
-		ost << endl;
-	}
-
-
-	algebraic_geometry::variety_object *V;
-
-	V = NEW_OBJECT(algebraic_geometry::variety_object);
-	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"before V->init_set_of_sets" << endl;
-	}
-	V->init_set_of_sets(
-			Surf_A->PA->P,
-			Surf_A->Surf->PolynomialDomains->Poly3_4,
-			SO->Variety_object->eqn,
-			Decomposition_scheme->SoS_points,
-			Decomposition_scheme->SoS_lines,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
-				"after V->init_set_of_sets" << endl;
-	}
-
-
-
-	FREE_OBJECT(Decomposition_scheme->Decomposition);
-	FREE_OBJECT(Decomposition_scheme);
+	label_scheme = "TDA";
 
 	if (f_v) {
-		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space done" << endl;
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"before Decomposition_scheme_TDA->report_classes_with_external_files" << endl;
+	}
+	Decomposition_scheme_TDA->report_classes_with_external_files(
+			ost,
+			label_scheme,
+			SO->label_txt,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object_with_group::report_decomposition_schemes "
+				"after Decomposition_scheme_TDA->report_classes_with_external_files" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object_with_group::report_decomposition_schemes done" << endl;
 	}
 }
 

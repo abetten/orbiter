@@ -129,6 +129,24 @@ void data_input_stream_description_element::print()
 				<< " " << input_data1
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_graph_by_adjacency_matrix) {
+		cout << "-graph_by_adjacency_matrix"
+				<< " " << input_string
+				<< " " << input_data1
+			<< endl;
+	}
+	else if (input_type == t_data_input_stream_graph_object) {
+		cout << "-graph_object"
+				<< " " << input_string
+			<< endl;
+	}
+	else if (input_type == t_data_input_stream_graph_by_adjacency_matrix_from_file) {
+		cout << "-graph_by_adjacency_matrix_from_file"
+				<< " " << input_string
+				<< " " << input_string2
+				<< " " << input_data1
+			<< endl;
+	}
 	else {
 		cout << "data_input_stream_description_element::print unknown type" << endl;
 		exit(1);
@@ -308,6 +326,7 @@ void data_input_stream_description_element::init_incidence_geometry_by_row_ranks
 
 }
 
+
 void data_input_stream_description_element::init_from_parallel_search(
 		std::string &fname_mask,
 		int nb_cases, std::string &cases_fname)
@@ -319,6 +338,47 @@ void data_input_stream_description_element::init_from_parallel_search(
 	input_data1 = nb_cases;
 
 }
+
+void data_input_stream_description_element::init_graph_by_adjacency_matrix(
+		std::string &adjacency_matrix,
+			int N)
+{
+	input_type = t_data_input_stream_graph_by_adjacency_matrix;
+
+	input_string.assign(adjacency_matrix);
+	input_data1 = N;
+	input_data2 = 0;
+	input_data3 = 0;
+
+}
+
+void data_input_stream_description_element::init_graph_object(
+		std::string &object_label)
+{
+	input_type = t_data_input_stream_graph_object;
+
+	input_string.assign(object_label);
+	input_data1 = 0;
+	input_data2 = 0;
+	input_data3 = 0;
+
+}
+
+void data_input_stream_description_element::init_graph_by_adjacency_matrix_from_file(
+		std::string &fname,
+		std::string &col_label,
+			int N)
+{
+	input_type = t_data_input_stream_graph_by_adjacency_matrix_from_file;
+
+	input_string.assign(fname);
+	input_string2.assign(col_label);
+	input_data1 = N;
+	input_data2 = 0;
+	input_data3 = 0;
+
+}
+
 
 
 }}}

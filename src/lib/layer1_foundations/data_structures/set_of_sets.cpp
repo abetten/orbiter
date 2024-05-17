@@ -751,9 +751,10 @@ void set_of_sets::print_table_latex_simple(
 	int i;
 
 	//cout << "set of sets with " << nb_sets << " sets :" << endl;
-	ost << "\\noindent ";
+	ost << "\\noindent " << endl;
 	for (i = 0; i < nb_sets; i++) {
 		//ost << "Set " << i << " has size " << Set_size[i] << " : ";
+		ost << "Class " << i << " has size " << Set_size[i] << " : ";
 		L.lint_set_print_tex_text_mode(ost, Sets[i], Set_size[i]);
 		//L.lint_set_print_tex(ost, Sets[i], Set_size[i]);
 		ost << "\\\\" << endl;

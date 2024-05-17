@@ -175,6 +175,54 @@ void colored_graph::set_adjacency_k(
 	Bitvec->m_i(k, a);
 }
 
+long int colored_graph::hash()
+{
+	int *adj;
+	int i, j, k;
+	int N;
+	long int hash;
+
+	N = (nb_points * (nb_points - 1)) >> 1;
+
+	adj = NEW_int(N);
+	Int_vec_zero(adj, N);
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
+			if (is_adjacent(i, j)) {
+				adj[k] = 1;
+			}
+		}
+	}
+	hash = orbiter_kernel_system::Orbiter->Int_vec->hash(adj, N, 1);
+	return hash;
+}
+
+std::string colored_graph::stringify_adjacency_list()
+{
+	combinatorics::combinatorics_domain Combi;
+
+	int *adj;
+	int i, j, k;
+	int N;
+	string s;
+
+	N = (nb_points * (nb_points - 1)) >> 1;
+
+	adj = NEW_int(N);
+	Int_vec_zero(adj, N);
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
+			if (is_adjacent(i, j)) {
+				adj[k] = 1;
+			}
+		}
+	}
+	s = Int_vec_stringify(adj, N);
+	return s;
+}
+
 void colored_graph::partition_by_color_classes(
 	int *&partition, int *&partition_first, 
 	int &partition_length, 
@@ -500,6 +548,14 @@ void colored_graph::print()
 	cout << endl;
 #endif
 	
+
+	string str;
+
+
+	str = stringify_adjacency_list();
+
+	cout << "adjacency list: " << str << endl;
+
 	data_structures::tally C;
 
 	C.init(point_color, nb_points, true, 0);
@@ -2420,16 +2476,22 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 
 void colored_graph::all_cliques(
 		clique_finder_control *Control,
-		std::string &graph_label, int verbose_level)
+		std::string &graph_label,
+		std::vector<std::string> &feedback,
+		clique_finder *&CF,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	string fname_sol;
-	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques" << endl;
 	}
+
+#if 0
+	string fname_sol;
+	data_structures::string_tools ST;
+
 	if (Control->f_output_file) {
 		fname_sol.assign(Control->output_file);
 	}
@@ -2447,9 +2509,11 @@ void colored_graph::all_cliques(
 				"fname_sol=" << fname_sol << endl;
 	}
 
+#endif
 
 
 	{
+#if 0
 		string fname_sol_csv;
 		string fname_sol_txt;
 
@@ -2459,7 +2523,7 @@ void colored_graph::all_cliques(
 
 		ofstream fp(fname_sol_txt);
 		ofstream fp_csv(fname_sol_csv);
-
+#endif
 
 		if (Control->f_rainbow) {
 
@@ -2472,8 +2536,8 @@ void colored_graph::all_cliques(
 			}
 			all_cliques_rainbow(
 					Control,
-					fp,
-					fp_csv,
+					//fp,
+					//fp_csv,
 					verbose_level);
 			if (f_v) {
 				cout << "colored_graph::all_cliques "
@@ -2519,8 +2583,9 @@ void colored_graph::all_cliques(
 			}
 			all_cliques_black_and_white(
 					Control,
-					fp,
-					fp_csv,
+					CF,
+					//fp,
+					//fp_csv,
 					verbose_level);
 			if (f_v) {
 				cout << "colored_graph::all_cliques "
@@ -2528,11 +2593,18 @@ void colored_graph::all_cliques(
 			}
 
 		}
+#if 0
 		fp << -1 << " " << Control->nb_sol << " " << Control->nb_search_steps
 			<< " " << Control->nb_decision_steps << " " << Control->dt << endl;
 		fp_csv << "END" << endl;
+#endif
 	}
 
+	string s;
+
+	s = std::to_string(Control->nb_sol);
+
+	feedback.push_back(s);
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques done" << endl;
@@ -2544,8 +2616,8 @@ void colored_graph::all_cliques(
 
 void colored_graph::all_cliques_rainbow(
 		clique_finder_control *Control,
-		std::ostream &ost_txt,
-		std::ostream &ost_csv,
+		//std::ostream &ost_txt,
+		//std::ostream &ost_csv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2576,6 +2648,7 @@ void colored_graph::all_cliques_rainbow(
 
 			sz = nb_colors;
 
+#if 0
 			ost_csv << "ROW";
 			for (int j = 0; j < sz; ++j) {
 				ost_csv << ",C" << j;
@@ -2607,6 +2680,7 @@ void colored_graph::all_cliques_rainbow(
 				}
 				ost_csv << endl;
 			}
+#endif
 
 			Control->Sol = NEW_int(solutions.size() * sz);
 			Control->nb_sol = solutions.size();
@@ -2631,14 +2705,14 @@ void colored_graph::all_cliques_rainbow(
 					"before CG.all_rainbow_cliques" << endl;
 		}
 		all_rainbow_cliques(Control,
-				ost_txt,
+				//ost_txt,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "colored_graph::all_cliques_rainbow "
 					"after CG.all_rainbow_cliques" << endl;
 		}
 
-
+#if 0
 		if (Control->f_store_solutions) {
 			if (f_v) {
 				cout << "colored_graph::all_cliques_rainbow "
@@ -2650,6 +2724,7 @@ void colored_graph::all_cliques_rainbow(
 						"after write_solutions_to_csv_file" << endl;
 			}
 		}
+#endif
 
 	}
 	if (f_v) {
@@ -2847,8 +2922,9 @@ void colored_graph::find_subgraph_E6(
 
 void colored_graph::all_cliques_black_and_white(
 		clique_finder_control *Control,
-		std::ostream &ost_txt,
-		std::ostream &ost_csv,
+		clique_finder *&CF,
+		//std::ostream &ost_txt,
+		//std::ostream &ost_csv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2879,7 +2955,7 @@ void colored_graph::all_cliques_black_and_white(
 					"Found " << solutions.size() << " solution(s)." << endl;
 		}
 
-
+#if 0
 		if (f_v) {
 			cout << "colored_graph::all_cliques_black_and_white "
 					"before writing solutions to file" << endl;
@@ -2915,6 +2991,8 @@ void colored_graph::all_cliques_black_and_white(
 			cout << "colored_graph::all_cliques_black_and_white "
 					"after writing solutions to file" << endl;
 		}
+#endif
+
 	}
 	else {
 
@@ -2925,6 +3003,7 @@ void colored_graph::all_cliques_black_and_white(
 		}
 		all_cliques_of_size_k_ignore_colors(
 				Control,
+				CF,
 				verbose_level - 2);
 		if (f_v) {
 			cout << "colored_graph::all_cliques_black_and_white "
@@ -2932,6 +3011,7 @@ void colored_graph::all_cliques_black_and_white(
 					"nb_cliques = " << Control->nb_sol << endl;
 		}
 
+#if 0
 		if (f_v) {
 			cout << "colored_graph::all_cliques_black_and_white "
 					"before writing solutions to file" << endl;
@@ -2953,6 +3033,7 @@ void colored_graph::all_cliques_black_and_white(
 			cout << "colored_graph::all_cliques_black_and_white "
 					"after writing solutions to file" << endl;
 		}
+#endif
 
 	}
 
@@ -3167,8 +3248,10 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 		cout << "colored_graph::all_cliques_weighted_with_two_colors "
 				"before D.solve_mckay" << endl;
 	}
-	D.solve_mckay(label, INT_MAX /* maxresults */,
-			nb_backtrack_nodes, nb_sol, 0 /*verbose_level*/);
+	D.solve_mckay(
+			label, INT_MAX /* maxresults */,
+			nb_backtrack_nodes, nb_sol,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_weighted_with_two_colors "
 				"after D.solve_mckay" << endl;
@@ -3236,7 +3319,10 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 		Control1 = NEW_OBJECT(clique_finder_control);
 		Control1->target_size = target_depth1;
 
+		clique_finder *CF;
+
 		subgraph->all_cliques_of_size_k_ignore_colors(Control1,
+				CF,
 				verbose_level);
 
 		if (f_v) {
@@ -3271,11 +3357,16 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 						<< ", subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
 			}
 
+			clique_finder *CF2;
+
 			subgraph2->all_cliques_of_size_k_ignore_colors(
 					Control2,
+					CF2,
 					verbose_level);
 
 			nb_solutions_total += Control2->nb_sol;
+
+			FREE_OBJECT(CF2);
 
 			if (f_v) {
 				cout << "solution " << i << " / " << nb_sol << ", "
@@ -3287,6 +3378,7 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 			FREE_OBJECT(subgraph2);
 			FREE_OBJECT(Control2);
 		}
+		FREE_OBJECT(CF);
 		FREE_OBJECT(Control1);
 	}
 
@@ -3304,10 +3396,11 @@ void colored_graph::all_cliques_weighted_with_two_colors(
 
 void colored_graph::all_cliques_of_size_k_ignore_colors(
 	clique_finder_control *Control,
+	clique_finder *&CF,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	clique_finder *CF;
+	//clique_finder *CF;
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors "
@@ -3335,12 +3428,12 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors "
-				"before CF->backtrack_search" << endl;
+				"before CF->clique_finder_backtrack_search" << endl;
 	}
-	CF->backtrack_search(0 /* depth */, 0 /*verbose_level*/);
+	CF->clique_finder_backtrack_search(0 /* depth */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors "
-				"after CF->backtrack_search, nb_sol = " << CF->solutions.size() << endl;
+				"after CF->clique_finder_backtrack_search, nb_sol = " << CF->solutions.size() << endl;
 	}
 
 	Control->nb_sol = CF->solutions.size();
@@ -3363,7 +3456,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 		exit(1);
 	}
 
-	FREE_OBJECT(CF);
+	//FREE_OBJECT(CF);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors done" << endl;
 	}
@@ -3372,7 +3465,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 
 void colored_graph::all_rainbow_cliques(
 		clique_finder_control *Control,
-		std::ostream &ost,
+		//std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3386,7 +3479,7 @@ void colored_graph::all_rainbow_cliques(
 		cout << "colored_graph::all_rainbow_cliques "
 				"before R->search" << endl;
 	}
-	R->search(Control, this, ost, verbose_level - 1);
+	R->search(Control, this, /*ost,*/ verbose_level - 1);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques "
 				"after R->search" << endl;
@@ -3434,6 +3527,479 @@ void colored_graph::complement(
 		//Bitvec->print();
 		//print_adjacency_list();
 		cout << "colored_graph::complement done" << endl;
+	}
+}
+
+int colored_graph::test_SRG_property(
+		int &lambda_value,
+		int &mu_value,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "colored_graph::test_SRG_property " << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::test_SRG_property graph = " << endl;
+		print();
+	}
+	int ret;
+
+	lambda_value = 0;
+	mu_value = 0;
+
+	if (test_lambda_property(
+			lambda_value,
+			verbose_level) &&
+			test_mu_property(
+						mu_value,
+						verbose_level)) {
+		ret = true;
+		if (f_v) {
+			cout << "colored_graph::test_SRG_property "
+					"the graph is SRG with lambda = " << lambda_value
+					<< " and mu = " << mu_value << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "colored_graph::test_SRG_property "
+					"the graph is not SRG" << endl;
+		}
+		lambda_value = 0;
+		mu_value = 0;
+		ret = false;
+	}
+	if (f_v) {
+		cout << "colored_graph::test_SRG_property ret=" << ret << endl;
+	}
+	return ret;
+}
+
+int colored_graph::test_Neumaier_property(
+		int &regularity,
+		int &lambda_value,
+		int clique_size,
+		int &nexus,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	if (f_v) {
+		cout << "colored_graph::test_Neumaier_property " << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::test_Neumaier_property graph = " << endl;
+		print();
+	}
+	int ret = true;
+
+
+	if (!test_if_regular(
+			regularity,
+			verbose_level)) {
+		ret = false;
+	}
+
+	lambda_value = 0;
+	nexus = -1;
+
+	if (ret) {
+
+		if (test_lambda_property(
+				lambda_value,
+				verbose_level)) {
+			ret = true;
+			if (f_v) {
+				cout << "colored_graph::test_Neumaier_property "
+						"the graph has the lambda property with lambda = " << lambda_value << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "colored_graph::test_Neumaier_property "
+						"the graph is not Neumaier" << endl;
+			}
+			ret = false;
+		}
+	}
+
+	if (ret) {
+
+		clique_finder_control Control;
+		clique_finder *CF;
+
+
+		Control.f_target_size = true;
+		Control.target_size = clique_size;
+		Control.f_Sajeeb = false;
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"searching for all cliques of size " << clique_size << endl;
+			cout << "colored_graph::all_cliques_black_and_white "
+					"before all_cliques_of_size_k_ignore_colors" << endl;
+		}
+		all_cliques_of_size_k_ignore_colors(
+				&Control,
+				CF,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"after all_cliques_of_size_k_ignore_colors, "
+					"nb_cliques = " << Control.nb_sol << endl;
+		}
+
+		int *Sol;
+		long int nb_sol;
+
+		int sz;
+		if (f_v) {
+			cout << "graph_theory_domain::write_solutions "
+					"before CF->get_solutions" << endl;
+		}
+		CF->get_solutions(Sol, nb_sol, sz, verbose_level);
+		if (f_v) {
+			cout << "graph_theory_domain::write_solutions "
+					"after CF->get_solutions" << endl;
+		}
+		if (f_v) {
+			cout << "colored_graph::test_Neumaier_property "
+					"number of cliques of size "
+					<< clique_size << " = " << nb_sol << endl;
+		}
+
+		if (nb_sol == 0) {
+			cout << "colored_graph::test_Neumaier_property "
+					"no cliques of size "
+					<< clique_size << " found" << endl;
+			exit(1);
+		}
+
+		int c;
+		int nx;
+
+		nexus = -1;
+
+		for (c = 0; c < nb_sol; c++) {
+
+			if (f_v) {
+				cout << "colored_graph::test_Neumaier_property "
+						"testing clique "
+						<< c << " / " << nb_sol << endl;
+				Int_vec_print(cout, Sol + c * sz, sz);
+				cout << endl;
+			}
+			if (!test_if_clique_is_regular(
+					Sol + c * sz, sz, nx, verbose_level)) {
+				ret = false;
+				break;
+			}
+			else {
+				if (nexus == -1) {
+					nexus = nx;
+				}
+				else {
+					if (nexus != nx) {
+						ret = false;
+						break;
+					}
+				}
+			}
+
+		}
+
+		FREE_OBJECT(CF);
+		if (ret) {
+			if (f_v) {
+				cout << "colored_graph::test_Neumaier_property "
+						"all cliques are regular with nexus " << nexus << endl;
+			}
+		}
+
+
+
+	}
+	if (f_v) {
+		cout << "colored_graph::test_Neumaier_property ret=" << ret << endl;
+	}
+	return ret;
+}
+
+int colored_graph::test_if_clique_is_regular(
+		int *clique, int sz, int &nexus, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::test_if_clique_is_regular" << endl;
+	}
+	int ret;
+
+	ret = true;
+
+	data_structures::fancy_set *F;
+
+	F = NEW_OBJECT(data_structures::fancy_set);
+
+	F->init_with_set(
+			nb_points, sz, clique, 0 /* verbose_level */);
+
+	int nb_outside;
+	int i, j, nb;
+	int pt1, pt2;
+
+	nb_outside = nb_points - sz;
+	for (i = 0; i < nb_outside; i++) {
+		nb = 0;
+		pt1 = F->set[sz + i];
+		for (j = 0; j < sz; j++) {
+			pt2 = F->set[j];
+			if (is_adjacent(
+					pt1, pt2)) {
+				nb++;
+			}
+		}
+		if (false) {
+			cout << "colored_graph::test_if_clique_is_regular "
+					"i=" << i << " pt1=" << pt1 << " nb=" << nb << endl;
+		}
+		if (i == 0) {
+			nexus = nb;
+		}
+		else {
+			if (nb != nexus) {
+				ret = false;
+				break;
+			}
+		}
+	}
+
+
+
+	FREE_OBJECT(F);
+
+	return ret;
+}
+
+int colored_graph::test_lambda_property(
+		int &lambda_value,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::test_lambda_property" << endl;
+	}
+	int *Lambda;
+
+	compute_lambda_matrix(Lambda, verbose_level - 2);
+
+	if (f_v) {
+		cout << "colored_graph::test_lambda_property" << endl;
+		cout << "Lambda:" << endl;
+		Int_matrix_print(Lambda, nb_points, nb_points);
+	}
+
+	int i, j;
+
+	lambda_value = -1;
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (!is_adjacent(i, j)) {
+				continue;
+			}
+			if (lambda_value == -1) {
+				lambda_value = Lambda[i * nb_points + j];
+			}
+			else {
+				if (Lambda[i * nb_points + j] != lambda_value) {
+					FREE_int(Lambda);
+					return false;
+				}
+			}
+		}
+	}
+	FREE_int(Lambda);
+	return true;
+
+}
+
+int colored_graph::test_mu_property(
+		int &mu_value,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::test_mu_property" << endl;
+	}
+	int *Mu;
+
+	compute_mu_matrix(Mu, verbose_level - 2);
+
+	if (f_v) {
+		cout << "colored_graph::test_mu_property" << endl;
+		cout << "Mu:" << endl;
+		Int_matrix_print(Mu, nb_points, nb_points);
+	}
+
+	int i, j;
+
+	mu_value = -1;
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				continue;
+			}
+			if (mu_value == -1) {
+				mu_value = Mu[i * nb_points + j];
+			}
+			else {
+				if (Mu[i * nb_points + j] != mu_value) {
+					FREE_int(Mu);
+					return false;
+				}
+			}
+		}
+	}
+	FREE_int(Mu);
+	return true;
+
+}
+
+
+int colored_graph::partial_lambda_test(
+		int from, int to, int lambda,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::partial_lambda_test" << endl;
+	}
+	int *Lambda;
+
+	compute_lambda_matrix(Lambda, verbose_level - 2);
+
+	if (f_v) {
+		cout << "colored_graph::partial_lambda_test" << endl;
+		cout << "Lambda:" << endl;
+		Int_matrix_print(Lambda, nb_points, nb_points);
+	}
+
+	int i, j;
+
+	for (i = from; i < to; i++) {
+		for (j = i + 1; j < to; j++) {
+			if (!is_adjacent(i, j)) {
+				continue;
+			}
+			if (Lambda[i * nb_points + j] != lambda) {
+				FREE_int(Lambda);
+				return false;
+			}
+		}
+		for (j = to; j < nb_points; j++) {
+			if (!is_adjacent(i, j)) {
+				continue;
+			}
+			if (Lambda[i * nb_points + j] > lambda) {
+				FREE_int(Lambda);
+				return false;
+			}
+		}
+	}
+
+	FREE_int(Lambda);
+	return true;
+
+}
+
+void colored_graph::compute_lambda_matrix(
+		int *&Lambda,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_lambda_matrix" << endl;
+	}
+
+
+	Lambda = NEW_int(nb_points * nb_points);
+	Int_vec_zero(Lambda, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (!is_adjacent(i, j)) {
+				Lambda[i * nb_points + j] = -1;
+				continue;
+			}
+			for (k = 0; k < nb_points; k++) {
+				if (k == i) {
+					continue;
+				}
+				if (k == j) {
+					continue;
+				}
+				if (is_adjacent(i, k) && is_adjacent(k, j)) {
+					Lambda[i * nb_points + j]++;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::compute_lambda_matrix done" << endl;
+	}
+}
+
+void colored_graph::compute_mu_matrix(
+		int *&Mu,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_mu_matrix" << endl;
+	}
+
+
+	Mu = NEW_int(nb_points * nb_points);
+	Int_vec_zero(Mu, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				Mu[i * nb_points + j] = -1;
+				continue;
+			}
+			for (k = 0; k < nb_points; k++) {
+				if (k == i) {
+					continue;
+				}
+				if (k == j) {
+					continue;
+				}
+				if (is_adjacent(i, k) && is_adjacent(k, j)) {
+					Mu[i * nb_points + j]++;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::compute_mu_matrix done" << endl;
 	}
 }
 
@@ -3505,6 +4071,155 @@ void colored_graph::distance_2(
 	}
 }
 
+void colored_graph::reorder(
+		std::string &perm_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::reorder" << endl;
+	}
+
+	int *perm;
+	int sz;
+
+	Get_int_vector_from_label(perm_label, perm, sz,
+			verbose_level);
+
+	int *M;
+	int i, j, i0, j0;
+
+	M = NEW_int(nb_points * nb_points);
+	Int_vec_zero(M, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		i0 = perm[i];
+		for (j = i + 1; j < nb_points; j++) {
+			j0 = perm[j];
+			if (is_adjacent(i0, j0)) {
+				M[i * nb_points + j] = 1;
+				M[j * nb_points + i] = 1;
+			}
+		}
+	}
+
+	int k;
+
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
+
+			set_adjacency_k(
+					k, M[i * nb_points + j]);
+		}
+	}
+
+
+	FREE_int(M);
+	if (f_v) {
+		cout << "colored_graph::reorder done" << endl;
+	}
+}
+
+int colored_graph::get_nb_edges(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::get_nb_edges" << endl;
+	}
+	int i, j, nb_e;
+
+	nb_e = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				nb_e++;
+			}
+		}
+	}
+	return nb_e;
+}
+
+void colored_graph::compute_degree_sequence(
+		int *Degree,
+		int verbose_level)
+// Degree[nb_points] must be allocated already
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_degree_sequence" << endl;
+	}
+
+	//int *Degree;
+	int i, j;
+
+	//Degree = NEW_int(nb_points);
+	Int_vec_zero(Degree, nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				Degree[i]++;
+				Degree[j]++;
+			}
+		}
+	}
+}
+
+int colored_graph::test_if_regular(
+		int &regularity,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::test_if_regular" << endl;
+	}
+	int *Degree;
+	int ret;
+	int k, i;
+
+	Degree = NEW_int(nb_points);
+
+	compute_degree_sequence(
+			Degree,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "colored_graph::test_if_regular Degree sequence: ";
+		Int_vec_print(cout, Degree, nb_points);
+		cout << endl;
+	}
+
+	if (nb_points < 1) {
+		cout << "colored_graph::test_if_regular nb_points < 1" << endl;
+		exit(1);
+	}
+
+	ret = true;
+	k = Degree[0];
+	for (i = 1; i < nb_points; i++) {
+		if (Degree[i] != k) {
+			ret = false;
+			break;
+		}
+	}
+
+	FREE_int(Degree);
+
+	regularity = k;
+	return ret;
+}
+
+
+
 void colored_graph::properties(
 		int verbose_level)
 {
@@ -3516,9 +4231,15 @@ void colored_graph::properties(
 	}
 
 	int *Degree;
-	int i, j;
 
 	Degree = NEW_int(nb_points);
+
+	compute_degree_sequence(
+			Degree,
+			0 /*verbose_level*/);
+
+#if 0
+	int i, j;
 	Int_vec_zero(Degree, nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -3529,12 +4250,16 @@ void colored_graph::properties(
 			}
 		}
 	}
+#endif
+
 	data_structures::tally T;
 
 	T.init(Degree, nb_points, false, 0);
 	cout << "Degree type: ";
 	T.print_first_tex(true /* f_backwards */);
 	cout << endl;
+
+	FREE_int(Degree);
 
 	if (f_v) {
 		cout << "colored_graph::properties done" << endl;

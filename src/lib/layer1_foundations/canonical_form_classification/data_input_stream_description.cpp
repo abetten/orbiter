@@ -364,6 +364,60 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i], "-graph_by_adjacency_matrix") == 0) {
+
+			data_input_stream_description_element E;
+			string adj;
+			int N;
+
+			adj.assign(argv[++i]);
+			N = ST.strtoi(argv[++i]);
+
+			E.init_graph_by_adjacency_matrix(adj, N);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
+		else if (ST.stringcmp(argv[i], "-graph_by_adjacency_matrix_from_file") == 0) {
+
+			data_input_stream_description_element E;
+			string fname;
+			string col_label;
+			int N;
+
+			fname.assign(argv[++i]);
+			col_label.assign(argv[++i]);
+			N = ST.strtoi(argv[++i]);
+
+			E.init_graph_by_adjacency_matrix_from_file(fname, col_label, N);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
+		else if (ST.stringcmp(argv[i], "-graph_object") == 0) {
+
+			data_input_stream_description_element E;
+			string object_label;
+
+			object_label.assign(argv[++i]);
+
+			E.init_graph_object(object_label);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

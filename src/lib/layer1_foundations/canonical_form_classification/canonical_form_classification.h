@@ -77,11 +77,6 @@ class classification_of_objects_report_options {
 
 public:
 
-#if 0
-	int f_prefix;
-	std::string prefix;
-#endif
-
 	int f_export_flag_orbits;
 
 	int f_show_incidence_matrices;
@@ -188,19 +183,21 @@ public:
 	void report_summary_of_orbits(
 			std::ostream &ost, int verbose_level);
 	void report_all_isomorphism_types(
-			std::ostream &ost, int max_TDO_depth,
-			int f_show_incma,
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
 			int verbose_level);
 	void report_isomorphism_type(
-			std::ostream &ost, int i, int max_TDO_depth,
-			int f_show_incma,
+			std::ostream &ost, int i,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
 			int verbose_level);
 	void report_object(
 			std::ostream &ost,
 			object_with_canonical_form *OwCF,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
 			int object_idx,
-			int max_TDO_depth,
-			int f_show_incma,
 			int verbose_level);
 
 
@@ -410,6 +407,15 @@ public:
 	void init_from_parallel_search(
 			std::string &fname_mask,
 			int nb_cases, std::string &cases_fname);
+	void init_graph_by_adjacency_matrix(
+			std::string &adjacency_matrix,
+				int N);
+	void init_graph_object(
+			std::string &object_label);
+	void init_graph_by_adjacency_matrix_from_file(
+			std::string &fname,
+			std::string &col_label,
+				int N);
 
 };
 
@@ -558,7 +564,7 @@ public:
 			int verbose_level);
 	void latex_incma(
 			std::ostream &ost, int verbose_level);
-	void latex_TDA(
+	void latex_TDA_incidence_matrix(
 			std::ostream &ost,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
@@ -655,10 +661,14 @@ public:
 			std::ostream &ost);
 	void print_rows(
 			std::ostream &ost,
-			int f_show_incma, int verbose_level);
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
 	void print_tex_detailed(
 			std::ostream &ost,
-			int f_show_incma, int verbose_level);
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
 	void print_tex(
 			std::ostream &ost, int verbose_level);
 	void get_packing_as_set_system(
@@ -724,6 +734,15 @@ public:
 	void init_large_set_from_string(
 		std::string &data_text, int v, int k, int design_sz,
 		int verbose_level);
+	void init_graph_by_adjacency_matrix_text(
+			std::string &adjacency_matrix_text, int N,
+			int verbose_level);
+	void init_graph_by_adjacency_matrix(
+			long int *adjacency_matrix, int adj_sz, int N,
+			int verbose_level);
+	void init_graph_by_object(
+			graph_theory::colored_graph *CG,
+			int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -770,6 +789,10 @@ public:
 	void encode_incidence_geometry(
 			encoded_combinatorial_object *&Enc,
 			int verbose_level);
+	void collinearity_graph(
+			int *&Adj, int &N,
+			int verbose_level);
+	void print();
 	void encode_incma_and_make_decomposition(
 			encoded_combinatorial_object *&Enc,
 			geometry::incidence_structure *&Inc,

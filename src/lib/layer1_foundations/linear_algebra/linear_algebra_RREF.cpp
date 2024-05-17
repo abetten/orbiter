@@ -1138,7 +1138,9 @@ int linear_algebra::base_cols_and_embedding(
 	}
 	B = NEW_int(m * n);
 	Int_vec_copy(A, B, m * n);
-	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
+	rk = Gauss_simple(
+			B, m, n, base_cols,
+			verbose_level - 3);
 	j = 0;
 	for (i = 0; i < n; i++) {
 		if (!Sorting.int_vec_search(base_cols, rk, i, idx)) {
@@ -1177,7 +1179,8 @@ int linear_algebra::Gauss_easy(
 
 	base_cols = NEW_int(n);
 	rk = Gauss_int(
-			A, false, true, base_cols, false, NULL, m, n, n, 0);
+			A, false, true, base_cols, false, NULL, m, n, n,
+			0);
 	FREE_int(base_cols);
 	return rk;
 }
@@ -1196,7 +1199,8 @@ int linear_algebra::Gauss_easy_from_the_back(
 
 	base_cols = NEW_int(n);
 	rk = Gauss_int(
-			B, false, true, base_cols, false, NULL, m, n, n, 0);
+			B, false, true, base_cols, false, NULL, m, n, n,
+			0);
 	FREE_int(base_cols);
 
 	reverse_columns_of_matrix(
@@ -1215,7 +1219,9 @@ int linear_algebra::Gauss_easy_memory_given(
 	int rk;
 
 	//base_cols = NEW_int(n);
-	rk = Gauss_int(A, false, true, base_cols, false, NULL, m, n, n, 0);
+	rk = Gauss_int(
+			A, false, true, base_cols, false, NULL, m, n, n,
+			0);
 	//FREE_int(base_cols);
 	return rk;
 }
@@ -1232,8 +1238,10 @@ int linear_algebra::Gauss_simple(
 	if (f_v) {
 		cout << "linear_algebra::Gauss_simple before Gauss_int" << endl;
 	}
-	ret = Gauss_int(A, false, true, base_cols,
-			false, NULL, m, n, n, verbose_level);
+	ret = Gauss_int(
+			A, false, true, base_cols,
+			false, NULL, m, n, n,
+			verbose_level);
 	if (f_v) {
 		cout << "linear_algebra::Gauss_simple after Gauss_int" << endl;
 	}
@@ -1264,8 +1272,10 @@ void linear_algebra::matrix_get_kernel_as_int_matrix(
 		cout << "linear_algebra::matrix_get_kernel_as_int_matrix" << endl;
 	}
 	K = NEW_int(n * (n - nb_base_cols));
-	matrix_get_kernel(M, m, n, base_cols, nb_base_cols,
-		kernel_m, kernel_n, K, verbose_level);
+	matrix_get_kernel(
+			M, m, n, base_cols, nb_base_cols,
+		kernel_m, kernel_n, K,
+		verbose_level);
 	kernel->allocate_and_init(kernel_m, kernel_n, K);
 	FREE_int(K);
 	if (f_v) {
@@ -1387,7 +1397,8 @@ int linear_algebra::perp(
 	base_cols = NEW_int(n);
 	mult_matrix_matrix(A, Gram, B, k, n, n, 0 /* verbose_level */);
 
-	nb_base_cols = Gauss_int(B,
+	nb_base_cols = Gauss_int(
+			B,
 		false /* f_special */, true /* f_complete */, base_cols,
 		false /* f_P */, NULL /*P*/, k, n, n,
 		0 /* verbose_level */);
@@ -1432,14 +1443,6 @@ int linear_algebra::RREF_and_kernel(
 		cout << "linear_algebra::RREF_and_kernel n=" << n
 				<< " k=" << k << endl;
 	}
-#if 0
-	if (k > n) {
-		m = k;
-	}
-	else {
-		m = n;
-	}
-#endif
 	m = MAXIMUM(k, n);
 	B = NEW_int(m * n);
 	K = NEW_int(n * n);
@@ -1450,9 +1453,11 @@ int linear_algebra::RREF_and_kernel(
 		cout << "linear_algebra::RREF_and_kernel "
 				"before Gauss_int" << endl;
 	}
-	nb_base_cols = Gauss_int(B,
+	nb_base_cols = Gauss_int(
+			B,
 		false /* f_special */, true /* f_complete */, base_cols,
-		false /* f_P */, NULL /*P*/, k, n, n, 0 /* verbose_level */);
+		false /* f_P */, NULL /*P*/, k, n, n,
+		0 /* verbose_level */);
 	if (f_v) {
 		cout << "linear_algebra::RREF_and_kernel "
 				"after Gauss_int, "
@@ -1538,7 +1543,8 @@ int linear_algebra::perp_standard_with_temporary_data(
 		cout << "finite_field::perp_standard_temporary_data "
 				"before Gauss_int" << endl;
 	}
-	nb_base_cols = Gauss_int(B,
+	nb_base_cols = Gauss_int(
+			B,
 		false /* f_special */, true /* f_complete */, base_cols,
 		false /* f_P */, NULL /*P*/, k, n, n,
 		0 /*verbose_level*/);
@@ -1546,8 +1552,10 @@ int linear_algebra::perp_standard_with_temporary_data(
 		cout << "linear_algebra::perp_standard_temporary_data "
 				"after Gauss_int" << endl;
 	}
-	matrix_get_kernel(B, k, n, base_cols, nb_base_cols,
-		kernel_m, kernel_n, K, 0 /* verbose_level */);
+	matrix_get_kernel(
+			B, k, n, base_cols, nb_base_cols,
+		kernel_m, kernel_n, K,
+		0 /* verbose_level */);
 	if (f_v) {
 		cout << "linear_algebra::perp_standard_temporary_data "
 				"after matrix_get_kernel" << endl;
@@ -2278,10 +2286,12 @@ void linear_algebra::get_coefficients_in_linear_combination(
 		Int_matrix_print(M, n, k + 1);
 	}
 
-	Gauss_int(M, false /* f_special */,
+	Gauss_int(
+			M, false /* f_special */,
 			true /* f_complete */, base_cols,
 			false /* f_P */, NULL /* P */, n, k + 1,
-			k + 1 /* Pn */, 0 /* verbose_level */);
+			k + 1 /* Pn */,
+			0 /* verbose_level */);
 
 
 	if (f_v) {
@@ -2738,7 +2748,9 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 			Gen[(d1 + i) * n + j] = W2->s_ij(j, i);
 		}
 	}
-	rk = Gauss_simple(Gen, d1 + d2, n, base_cols, 0 /* verbose_level */);
+	rk = Gauss_simple(
+			Gen, d1 + d2, n, base_cols,
+			0 /* verbose_level */);
 
 
 	int a;
@@ -2780,7 +2792,9 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 		// reduce modulo the subspace:
 		for (j = 0; j < rk; j++) {
 			b = base_cols[j];
-			Gauss_step(Gen + j * n, Gen + rk * n, n, b, 0 /* verbose_level */);
+			Gauss_step(
+					Gen + j * n, Gen + rk * n, n, b,
+					0 /* verbose_level */);
 		}
 
 		if (f_vv) {

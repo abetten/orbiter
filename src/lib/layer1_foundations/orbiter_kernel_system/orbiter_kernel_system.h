@@ -158,6 +158,10 @@ public:
 			std::string &fname,
 			std::string &rows_text,
 			int verbose_level);
+	void do_csv_file_select_rows_by_file(
+			std::string &fname,
+			std::string &rows_fname,
+			int verbose_level);
 	void do_csv_file_select_rows_complement(
 			std::string &fname,
 			std::string &rows_text,
@@ -293,6 +297,9 @@ public:
 			std::string &fname, std::string *&col_label,
 			std::string *&Table, int &m, int &n,
 			int verbose_level);
+	void read_csv_file_and_get_column(
+			std::string &fname, std::string &col_header,
+			long int *&Data, int &data_size, int verbose_level);
 
 
 };
@@ -407,10 +414,6 @@ public:
 	void int_matrix_read_text(
 			std::string &fname,
 		int *&M, int &m, int &n);
-	void read_dimacs_graph_format(
-			std::string &fname,
-			int &nb_V, std::vector<std::vector<int> > &Edges,
-			int verbose_level);
 	void parse_sets(
 			int nb_cases, char **data, int f_casenumbers,
 		int *&Set_sizes, long int **&Sets,
@@ -552,8 +555,7 @@ public:
 			int verbose_level);
 	void read_file_as_array_of_strings(
 			std::string &fname,
-		std::string *&Lines,
-		int &nb_lines,
+		std::vector<std::string> &Lines,
 		int verbose_level);
 	void serialize_file_names(
 		std::string &fname_list_of_file,
@@ -573,6 +575,16 @@ public:
 	void write_solutions_as_index_set(
 			std::string &fname_solutions,
 			int *Sol, int nb_sol, int width, int sum,
+			int verbose_level);
+	int count_number_of_data_lines_in_spreadsheet(
+			std::string &fname, int verbose_level);
+	void read_graph_dimacs_format(
+			std::string &fname,
+			int &nb_V, std::vector<std::vector<int> > &Edges,
+			int verbose_level);
+	void read_graph_Brouwer_format(
+			std::string &fname,
+			int &nb_V, int *&Adj,
 			int verbose_level);
 
 
@@ -1230,6 +1242,9 @@ public:
 			std::string &label);
 	int find_object_of_type_symbolic_object(
 			std::string &label);
+	graph_theory::colored_graph
+		*get_object_of_type_graph(
+				std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
 

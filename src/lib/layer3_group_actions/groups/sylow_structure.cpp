@@ -33,13 +33,13 @@ sylow_structure::~sylow_structure()
 {
 	if (primes) {
 		FREE_int(primes);
-		}
+	}
 	if (exponents) {
 		FREE_int(exponents);
-		}
+	}
 	if (Sub) {
 		FREE_OBJECTS(Sub);
-		}
+	}
 }
 
 void sylow_structure::init(

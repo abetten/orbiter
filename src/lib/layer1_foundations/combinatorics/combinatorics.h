@@ -519,6 +519,7 @@ public:
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
+	// returns NULL if the space is too large
 	void create_incidence_matrix_of_graph(
 			int *Adj, int n,
 			int *&M, int &nb_rows, int &nb_cols,
@@ -618,6 +619,21 @@ public:
 			std::string &fname_row, std::string &fname_col,
 			std::string &fname_row_classes, std::string &fname_col_classes,
 			int verbose_level);
+	void report_latex_with_external_files(
+			std::ostream &ost,
+			std::string &label_scheme,
+			std::string &label_txt,
+			int upper_bound_on_size_for_printing,
+			int verbose_level);
+	void report_classes_with_external_files(
+			std::ostream &ost,
+			std::string &label_scheme,
+			std::string &label_txt,
+			int verbose_level);
+	void export_csv(
+			std::string &label_scheme,
+			std::string &label_txt,
+			int verbose_level);
 
 };
 
@@ -693,6 +709,13 @@ public:
 	void get_and_print_col_decomposition_scheme(
 		int f_list_incidences,
 		int f_local_coordinates, int verbose_level);
+	void get_permuted_incidence_matrix(
+			row_and_col_partition *RC,
+		int *&incma, int verbose_level);
+	void latex(
+			std::ostream &ost,
+			row_and_col_partition *RC,
+			int verbose_level);
 	void get_row_decomposition_scheme(
 			row_and_col_partition *RC,
 		int *row_scheme, int verbose_level);
@@ -771,6 +794,11 @@ public:
 			int verbose_level);
 	void get_and_report_classes(
 			std::ostream &ost,
+			int verbose_level);
+	void print_schemes(
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
 			int verbose_level);
 
 };
@@ -1479,7 +1507,11 @@ public:
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 	decomposition *Decomp;
 
-
+	int f_TDA;
+	int nb_orbits;
+	int *orbit_first;
+	int *orbit_len;
+	int *orbit;
 
 	tdo_scheme_compute();
 	~tdo_scheme_compute();
@@ -1487,8 +1519,15 @@ public:
 			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int max_depth,
 			int verbose_level);
+	void init_TDA(
+			canonical_form_classification::encoded_combinatorial_object *Enc,
+			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+			int verbose_level);
 	void print_schemes(
-			std::ostream &ost);
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
 
 };
 

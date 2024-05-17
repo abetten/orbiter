@@ -3922,12 +3922,25 @@ combinatorics::decomposition_scheme *combinatorics_domain::compute_TDO_decomposi
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
+// returns NULL if the space is too large
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space" << endl;
 	}
+
+
+	int nb_rows, nb_cols;
+
+	nb_rows = P->Subspaces->N_points;
+	nb_cols = P->Subspaces->N_lines;
+
+	if (nb_rows + nb_cols > 50000) {
+		cout << "combinatorics_domain::compute_TDO_decomposition_of_projective_space the space is too large" << endl;
+		return NULL;
+	}
+
 
 	combinatorics::decomposition *Decomposition;
 

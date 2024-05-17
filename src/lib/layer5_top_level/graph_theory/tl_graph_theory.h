@@ -130,6 +130,10 @@ public:
 	int load_adjacency_matrix_from_csv_and_select_value_value;
 
 	int f_load_dimacs;
+	std::string load_dimacs_fname;
+
+	int f_load_Brouwer;
+	std::string load_Brouwer_fname;
 
 	int f_edge_list;
 	int n;
@@ -179,6 +183,9 @@ public:
 	std::string coll_orthogonal_space_label;
 	std::string coll_orthogonal_set_of_points_label;
 
+	int f_affine_polar;
+	std::string affine_polar_space_label;
+
 	int f_tritangent_planes_disjointness_graph;
 	int f_trihedral_pair_disjointness_graph;
 
@@ -203,6 +210,15 @@ public:
 	int f_chain_graph;
 	std::string chain_graph_partition_1;
 	std::string chain_graph_partition_2;
+
+	int f_Neumaier_graph_16;
+
+	int f_Neumaier_graph_25;
+
+	int f_adjacency_bitvector;
+	std::string adjacency_bitvector_data_text;
+	int adjacency_bitvector_N;
+
 
 	int f_Cayley_graph;
 	std::string Cayley_graph_group;
@@ -248,6 +264,13 @@ public:
 	void init(
 			create_graph_description *description,
 			int verbose_level);
+	void load(
+			std::string &fname,
+			int verbose_level);
+	void make_Cayley_graph(
+			std::string &group_label,
+			std::string &generators_label,
+			int verbose_level);
 	void create_cycle(
 			int n, int verbose_level);
 	void create_inversion_graph(
@@ -266,13 +289,17 @@ public:
 	void create_Shrikhande(
 			int verbose_level);
 	void create_Winnie_Li(
-			std::string &label_Fq, int index, int verbose_level);
+			std::string &label_Fq, int index,
+			int verbose_level);
 	void create_Grassmann(
 			int n, int k, std::string &label_Fq,
 			int r, int verbose_level);
 	void create_coll_orthogonal(
 			std::string &orthogonal_space_label,
 			std::string &set_of_points_label,
+			int verbose_level);
+	void create_affine_polar(
+			std::string &orthogonal_space_label,
 			int verbose_level);
 	void make_orbital_graph(
 			apps_algebra::any_group *AG, int orbit_idx,
@@ -283,6 +310,13 @@ public:
 	void make_chain_graph(
 			int *part1, int sz1,
 			int *part2, int sz2,
+			int verbose_level);
+	void make_Neumaier_graph_16(
+			int verbose_level);
+	void make_Neumaier_graph_25(
+			int verbose_level);
+	void make_adjacency_bitvector(
+			std::string &data_text, int N,
 			int verbose_level);
 
 };
@@ -495,6 +529,9 @@ public:
 
 	int f_distance_2;
 
+	int f_reorder;
+	std::string reorder_perm_label;
+
 
 	graph_modification_description();
 	~graph_modification_description();
@@ -524,6 +561,11 @@ public:
 
 	int f_find_cliques;
 	graph_theory::clique_finder_control *Clique_finder_control;
+
+	int f_test_SRG_property;
+
+	int f_test_Neumaier_property;
+	int test_Neumaier_property_clique_size;
 
 	int f_find_subgraph;
 	std::string find_subgraph_label;
@@ -591,7 +633,17 @@ public:
 			graph_theoretic_activity_description *Descr,
 			graph_theory::colored_graph *CG,
 			int verbose_level);
+	void feedback_headings(
+			graph_theoretic_activity_description *Descr,
+			std::string &headings,
+			int &nb_cols,
+			int verbose_level);
+	void get_label(
+			graph_theoretic_activity_description *Descr,
+			std::string &description_txt,
+			int verbose_level);
 	void perform_activity(
+			std::vector<std::string> &feedback,
 			int verbose_level);
 
 
@@ -614,7 +666,9 @@ public:
 	graph_theory_apps();
 	~graph_theory_apps();
 	void automorphism_group(
-			graph_theory::colored_graph *CG, int verbose_level);
+			graph_theory::colored_graph *CG,
+			std::vector<std::string> &feedback,
+			int verbose_level);
 	void expander_graph(
 			int p, int q,
 			int f_special,

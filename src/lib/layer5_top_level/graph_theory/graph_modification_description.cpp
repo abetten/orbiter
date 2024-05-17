@@ -23,6 +23,11 @@ graph_modification_description::graph_modification_description()
 	f_complement = false;
 
 	f_distance_2 = false;
+
+	f_reorder = false;
+	//std::string reorder_perm_label;
+
+
 }
 
 graph_modification_description::~graph_modification_description()
@@ -54,6 +59,15 @@ int graph_modification_description::check_and_parse_argument(
 		i++;
 		if (f_v) {
 			cout << "-distance_2 " << endl;
+		}
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-reorder") == 0) {
+		f_reorder = true;
+		reorder_perm_label.assign(argv[++i]);
+		i++;
+		if (f_v) {
+			cout << "-reorder " << reorder_perm_label << endl;
 		}
 		return true;
 	}
@@ -89,6 +103,13 @@ int graph_modification_description::read_arguments(
 				cout << "-distance_2 " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-reorder") == 0) {
+			f_reorder = true;
+			reorder_perm_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-reorder " << reorder_perm_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -116,6 +137,9 @@ void graph_modification_description::print()
 	if (f_distance_2) {
 		cout << "-distance_2 " << endl;
 	}
+	if (f_reorder) {
+		cout << "-reorder " << reorder_perm_label << endl;
+	}
 }
 
 void graph_modification_description::apply(
@@ -131,6 +155,9 @@ void graph_modification_description::apply(
 	}
 	if (f_distance_2) {
 		CG->distance_2(verbose_level);
+	}
+	if (f_reorder) {
+		CG->reorder(reorder_perm_label, verbose_level);
 	}
 	if (f_v) {
 		cout << "graph_modification_description::apply done" << endl;

@@ -41,6 +41,13 @@ file_io::~file_io()
 	}
 }
 
+
+// ToDo: please get rid of all: char *buf; fp.getline(buf, sz, '\n');
+// and replace by: string s; getline(f, s);
+
+
+
+
 void file_io::concatenate_files(
 		std::string &fname_in_mask, int N,
 		std::string &fname_out, std::string &EOF_marker,
@@ -102,7 +109,7 @@ void file_io::concatenate_files(
 						break;
 					}
 
-					fp.getline(buf, sz, '\n');
+					fp.getline(buf, sz, '\n'); // ToDo
 					cout << "Read: " << buf << endl;
 					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
@@ -203,7 +210,7 @@ void file_io::concatenate_files_into(
 						break;
 					}
 
-					fp.getline(buf, sz, '\n');
+					fp.getline(buf, sz, '\n'); // ToDo
 					//cout << "Read: " << buf << endl;
 					if (strncmp(buf, EOF_marker.c_str(), strlen(EOF_marker.c_str())) == 0) {
 						break;
@@ -430,7 +437,7 @@ int file_io::find_orbit_index_in_data_file(
 	S = NEW_lint(level_of_candidates_file);
 
 	cnt = 0;
-	f.getline(buf, sz, '\n'); // skip the first line
+	f.getline(buf, sz, '\n'); // skip the first line  // ToDo
 
 	orbit_idx = 0;
 
@@ -438,7 +445,7 @@ int file_io::find_orbit_index_in_data_file(
 		if (f.eof()) {
 			break;
 		}
-		f.getline(buf, sz, '\n');
+		f.getline(buf, sz, '\n'); // ToDo
 		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 		str_len = strlen(buf);
 		if (str_len == 0) {
@@ -448,8 +455,9 @@ int file_io::find_orbit_index_in_data_file(
 		}
 
 		// check for comment line:
-		if (buf[0] == '#')
+		if (buf[0] == '#') {
 			continue;
+		}
 
 		p_buf = buf;
 		ST.s_scan_int(&p_buf, &a);
@@ -560,7 +568,7 @@ void file_io::read_solution_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			p_buf = buf;
 			if (strlen(buf)) {
 				if (buf[0] == '#') {
@@ -615,7 +623,7 @@ void file_io::read_solution_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			p_buf = buf;
 			if (strlen(buf)) {
 				for (j = 0; j < nb_cols; j++) {
@@ -688,7 +696,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_solutions_in_file_and_get_solution_size "
@@ -773,7 +781,7 @@ void file_io::count_number_of_solutions_in_file(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_solutions_in_file "
@@ -847,7 +855,7 @@ void file_io::count_number_of_solutions_in_file_by_case(
 						"eof, break" << endl;
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_solutions_in_file_by_case "
@@ -956,7 +964,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) && buf[0] == '#') {
 				continue;
 			}
@@ -1040,7 +1048,7 @@ void file_io::read_solutions_from_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			ST.s_scan_lint(&p_buf, &a);
@@ -1111,7 +1119,7 @@ void file_io::read_solutions_from_file_size_is_known(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			ST.s_scan_lint(&p_buf, &a);
@@ -1182,7 +1190,7 @@ void file_io::read_solutions_from_file_by_case(
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			//cout << "read line '" << buf << "'" << endl;
 			if (strlen(buf) == 0) {
 				cout << "file_io::read_solutions_from_file_by_case "
@@ -1373,62 +1381,6 @@ void file_io::int_matrix_read_text(
 	}
 }
 
-void file_io::read_dimacs_graph_format(
-		std::string &fname,
-		int &nb_V, std::vector<std::vector<int>> &Edges,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, a, b;
-	long int sz;
-
-	if (f_v) {
-		cout << "file_io::read_dimacs_graph_format "
-				"fname = " << fname << endl;
-	}
-
-	sz = file_size(fname);
-	if (sz <= 0) {
-		cout << "file_io::read_dimacs_graph_format The file "
-			<< fname << " does not exist" << endl;
-		exit(1);
-	}
-
-	char *buf;
-	int nb_E;
-
-	buf = NEW_char(sz + 1);
-
-	{
-		ifstream f(fname);
-
-		f.getline(buf, sz, '\n');
-		sscanf(buf, "p edge %d %d", &nb_V, &nb_E);
-		if (f_v) {
-			cout << "file_io::read_dimacs_graph_format a graph on "
-					<< nb_V << " vertices with " << nb_E << " edges" << endl;
-		}
-
-		for (i = 0; i < nb_E; i++) {
-
-			f.getline(buf, sz, '\n');
-
-			sscanf(buf, "e %d %d", &a, &b);
-
-			vector<int> v;
-
-			v.push_back(a - 1);
-			v.push_back(b - 1);
-
-			Edges.push_back(v);
-		}
-	}
-
-	FREE_char(buf);
-	if (f_v) {
-		cout << "file_io::read_dimacs_graph_format done" << endl;
-	}
-}
 
 // ToDo please eliminate this:
 
@@ -1572,7 +1524,7 @@ int file_io::count_number_of_orbits_in_file(
 
 			//cout << "count_number_of_orbits_in_file "
 			//"reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				cout << "file_io::count_number_of_orbits_in_file "
 						"reading an empty line" << endl;
@@ -1648,7 +1600,7 @@ int file_io::count_number_of_lines_in_file(
 
 			//cout << "count_number_of_lines_in_file "
 			// "reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			nb_lines++;
 		}
 	}
@@ -1708,7 +1660,7 @@ int file_io::try_to_read_file(
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				goto return_false;
 			}
@@ -1756,7 +1708,7 @@ int file_io::try_to_read_file(
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 			len = strlen(buf);
 			if (len == 0) {
 				goto return_false;
@@ -2502,7 +2454,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, sz, '\n');
+		f.getline(buf, sz, '\n'); // ToDo
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -2518,7 +2470,7 @@ void file_io::read_incidence_matrix_from_inc_file(
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -2614,7 +2566,7 @@ void file_io::read_incidence_file(
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, sz, '\n');
+		f.getline(buf, sz, '\n'); // ToDo
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -2630,7 +2582,7 @@ void file_io::read_incidence_file(
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -2712,7 +2664,7 @@ void file_io::read_incidence_by_row_ranks_file(
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, file_sz, '\n');
+		f.getline(buf, file_sz, '\n'); // ToDo
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -2732,7 +2684,7 @@ void file_io::read_incidence_by_row_ranks_file(
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, file_sz, '\n');
+			f.getline(buf, file_sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -2836,7 +2788,7 @@ int file_io::inc_file_get_number_of_geometries(
 		if (f.eof()) {
 			exit(1);
 		}
-		f.getline(buf, sz, '\n');
+		f.getline(buf, sz, '\n'); // ToDo
 		if (strlen(buf) == 0) {
 			exit(1);
 		}
@@ -2852,7 +2804,7 @@ int file_io::inc_file_get_number_of_geometries(
 			if (f.eof()) {
 				break;
 			}
-			f.getline(buf, sz, '\n');
+			f.getline(buf, sz, '\n'); // ToDo
 			if (strlen(buf) == 0) {
 				continue;
 			}
@@ -3682,7 +3634,7 @@ void file_io::extract_from_makefile(
 
 			//cout << "count_number_of_lines_in_file "
 			// "reading line, nb_sol = " << nb_sol << endl;
-			fp.getline(buf, sz, '\n');
+			fp.getline(buf, sz, '\n'); // ToDo
 
 			f_found = false;
 
@@ -3711,7 +3663,7 @@ void file_io::extract_from_makefile(
 					if (fp.eof()) {
 						break;
 					}
-					fp.getline(buf, sz, '\n');
+					fp.getline(buf, sz, '\n'); // ToDo
 					if (strlen(buf) == 0) {
 						break;
 					}
@@ -3874,63 +3826,37 @@ void file_io::count_solutions_in_list_of_files(
 
 void file_io::read_file_as_array_of_strings(
 		std::string &fname,
-	std::string *&Lines,
-	int &nb_lines,
+	std::vector<std::string> &Lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	char *buf;
 
 	if (f_v) {
 		cout << "file_io::read_file_as_array_of_string " << fname << endl;
 	}
-
-	int N;
-	N = file_size(fname) + 1;
-	buf = NEW_char(N);
-
 
 
 	{
 
 		ifstream fp(fname);
 
+		string str;
 
-		nb_lines = 0;
 		while (true) {
 			if (fp.eof()) {
 				break;
 			}
-			fp.getline(buf, N, '\n');
-			nb_lines++;
+			getline(fp, str);
+			Lines.push_back(str);
 		}
 	}
 
 
 	if (f_v) {
 		cout << "file_io::read_file_as_array_of_string "
-				"nb_lines = " << nb_lines << endl;
+				"nb_lines = " << Lines.size() << endl;
 	}
 
-	Lines = new string[nb_lines];
-	int cnt;
-	{
-
-		ifstream fp(fname);
-
-
-		cnt = 0;
-		while (true) {
-			if (fp.eof()) {
-				break;
-			}
-			fp.getline(buf, N, '\n');
-			Lines[cnt].assign(buf);
-			cnt++;
-		}
-	}
-
-	FREE_char(buf);
 	if (f_v) {
 		cout << "file_io::read_file_as_array_of_string done" << endl;
 	}
@@ -3950,16 +3876,18 @@ void file_io::serialize_file_names(
 	}
 
 
-	std::string *Lines;
+	data_structures::string_tools ST;
+
+	vector<std::string> Lines;
 	int i;
-	char str[1000];
-	char cmd[1000];
 
 	read_file_as_array_of_strings(
 			fname_list_of_file,
 		Lines,
-		nb_files,
 		verbose_level);
+
+
+	nb_files = Lines.size();
 
 	if (f_v) {
 		cout << "interface_toolkit::worker "
@@ -3968,12 +3896,19 @@ void file_io::serialize_file_names(
 	}
 
 	for (i = 0; i < nb_files; i++) {
+
+		string str, cmd;
+
 		cout << "i=" << i << " / " << nb_files << " fname=" << Lines[i] << endl;
-		snprintf(str, sizeof(str), output_mask.c_str(), i);
-		cout << "i=" << i << " / " << nb_files << " output=" << str << endl;
-		snprintf(cmd, sizeof(cmd), "mv %s %s", Lines[i].c_str(), str);
+
+		str = ST.printf_d(
+				output_mask, i);
+
+		cmd = "mv " + Lines[i] + " " + str;
+
+
 		cout << "executing : " << cmd << endl;
-		system(cmd);
+		system(cmd.c_str());
 
 	}
 
@@ -4016,7 +3951,7 @@ void file_io::read_error_pattern_from_output_file(
 		ifstream f(fname);
 
 		while (!f.eof()) {
-			f.getline(buf, N + 1, '\n');
+			f.getline(buf, N + 1, '\n'); // ToDo
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
 			if (strncmp(buf, "undetected error code", 21) == 0) {
 
@@ -4026,7 +3961,7 @@ void file_io::read_error_pattern_from_output_file(
 
 				vector<int> error;
 				for (l = 0; l < nb_lines; l++) {
-					f.getline(buf, N + 1, '\n');
+					f.getline(buf, N + 1, '\n'); // ToDo
 					for (h = 0; h < 2; h++) {
 						for (i = 0; i < 8; i++) {
 							for (j = 0; j < 2; j++) {
@@ -4184,6 +4119,182 @@ void file_io::write_solutions_as_index_set(
 
 	if (f_v) {
 		cout << "file_io::write_solutions_as_index_set done" << endl;
+	}
+}
+
+int file_io::count_number_of_data_lines_in_spreadsheet(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::count_number_of_data_lines_in_spreadsheet" << endl;
+	}
+
+	data_structures::spreadsheet S;
+	int nb_data;
+
+	if (f_v) {
+		cout << "file_io::count_number_of_data_lines_in_spreadsheet fname=" << fname << endl;
+	}
+	S.read_spreadsheet(fname, 0 /*verbose_level*/);
+
+	nb_data = S.nb_rows - 1;
+
+	return nb_data;
+
+}
+
+void file_io::read_graph_dimacs_format(
+		std::string &fname,
+		int &nb_V, std::vector<std::vector<int>> &Edges,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int sz;
+
+	if (f_v) {
+		cout << "file_io::read_graph_dimacs_format "
+				"fname = " << fname << endl;
+	}
+
+	sz = file_size(fname);
+
+	if (sz <= 0) {
+		cout << "file_io::read_graph_dimacs_format The file "
+			<< fname << " does not exist" << endl;
+		exit(1);
+	}
+
+
+	std::vector<std::string> Lines;
+
+	read_file_as_array_of_strings(
+			fname,
+			Lines,
+			verbose_level);
+
+	int nb_E;
+
+	if (Lines.size() < 1) {
+		cout << "file_io::read_graph_dimacs_format the file is empty" << endl;
+		exit(1);
+	}
+	sscanf(Lines[0].c_str(), "p edge %d %d", &nb_V, &nb_E);
+	if (f_v) {
+		cout << "file_io::read_graph_dimacs_format a graph on "
+				<< nb_V << " vertices with " << nb_E << " edges" << endl;
+	}
+	if (Lines.size() < 1 + nb_E) {
+		cout << "file_io::read_graph_dimacs_format the file is too short" << endl;
+		exit(1);
+	}
+
+	int i, a, b;
+
+	for (i = 0; i < nb_E; i++) {
+
+
+		sscanf(Lines[1 + i].c_str(), "e %d %d", &a, &b);
+
+		vector<int> v;
+
+		v.push_back(a - 1);
+		v.push_back(b - 1);
+
+		Edges.push_back(v);
+	}
+
+
+	if (f_v) {
+		cout << "file_io::read_graph_dimacs_format done" << endl;
+	}
+}
+
+void file_io::read_graph_Brouwer_format(
+		std::string &fname,
+		int &nb_V, int *&Adj,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int sz;
+
+	if (f_v) {
+		cout << "file_io::read_graph_Brouwer_format "
+				"fname = " << fname << endl;
+	}
+
+	sz = file_size(fname);
+
+	if (sz <= 0) {
+		cout << "file_io::read_graph_Brouwer_format The file "
+			<< fname << " does not exist" << endl;
+		exit(1);
+	}
+
+
+	std::vector<std::string> Lines;
+
+	read_file_as_array_of_strings(
+			fname,
+			Lines,
+			verbose_level);
+
+	if (Lines.size() < 1) {
+		cout << "file_io::read_graph_Brouwer_format the file is empty" << endl;
+		exit(1);
+	}
+	sscanf(Lines[0].c_str(), "n%d", &nb_V);
+	if (f_v) {
+		cout << "file_io::read_graph_Brouwer_format a graph on "
+				<< nb_V << " vertices" << endl;
+	}
+	if (Lines.size() < 1 + nb_V) {
+		cout << "file_io::read_graph_Brouwer_format the file is too short" << endl;
+		exit(1);
+	}
+
+	Adj = NEW_int(nb_V * nb_V);
+	Int_vec_zero(Adj, nb_V * nb_V);
+
+	int i, j, h;
+
+	data_structures::string_tools ST;
+
+	for (i = 0; i < nb_V; i++) {
+
+		string str;
+
+		str = Lines[1 + i];
+
+
+		std::vector<std::string> adj_list;
+
+		ST.parse_comma_separated_list(
+				str,
+				adj_list,
+				0 /*verbose_level */);
+
+		if (f_v) {
+			cout << "file_io::read_graph_Brouwer_format neighbors of vertex " << i << " : ";
+			for (h = 0; h < adj_list.size(); h++) {
+				sscanf(adj_list[h].c_str(), "%d", &j);
+				cout << j << " ";
+			}
+			cout << endl;
+		}
+
+		for (h = 0; h < adj_list.size(); h++) {
+			sscanf(adj_list[h].c_str(), "%d", &j);
+			Adj[i * nb_V + j] = 1;
+			Adj[j * nb_V + i] = 1;
+		}
+
+	}
+
+
+	if (f_v) {
+		cout << "file_io::read_graph_Brouwer_format done" << endl;
 	}
 }
 

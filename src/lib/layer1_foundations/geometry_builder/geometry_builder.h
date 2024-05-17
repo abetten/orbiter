@@ -830,7 +830,8 @@ public:
 			int I, int m, int J, int n,
 			int i1, int j0, int r,
 			int verbose_level);
-	void row_init(int I, int m, int J,
+	void row_init(
+			int I, int m, int J,
 			int i1,
 			int verbose_level);
 	int col_marker_test(

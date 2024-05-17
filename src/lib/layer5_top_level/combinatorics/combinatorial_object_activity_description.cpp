@@ -73,6 +73,8 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	//std::string line_covering_type_projective_space;
 	//std::string line_covering_type_lines;
 
+	f_activity = false;
+	Activity_description = NULL;
 
 }
 
@@ -233,6 +235,15 @@ int combinatorial_object_activity_description::read_arguments(
 					<< " " << line_covering_type_projective_space
 					<< " " << line_covering_type_lines
 					<< endl;
+		}
+		else if (ST.stringcmp(argv[i], "-activity") == 0) {
+			i++;
+
+			f_activity = true;
+			Activity_description = NEW_OBJECT(user_interface::activity_description);
+
+			Activity_description->read_arguments(argc, argv, i, verbose_level);
+			break;
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {

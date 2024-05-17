@@ -431,15 +431,16 @@ class fancy_set {
 
 	int n;
 	int k;
-	long int *set;
-	long int *set_inv;
+	long int *set; // [n]
+	long int *set_inv; // [n]
 
 	fancy_set();
 	~fancy_set();
 	void init(
 			int n, int verbose_level);
 	void init_with_set(
-			int n, int k, int *subset, int verbose_level);
+			int n, int k, int *subset,
+			int verbose_level);
 	void print();
 	void println();
 	void swap(
@@ -2021,6 +2022,10 @@ public:
 			std::string &format, int value);
 	std::string printf_dd(
 			std::string &format, int value1, int value2);
+	std::string printf_s(
+			std::string &format, std::string &replacement);
+	std::string printf_ss(
+			std::string &format, std::string &replacement1, std::string &replacement2);
 	void parse_RHS_command(
 			std::string &command,
 			int &mult, diophant_equation_type &type,

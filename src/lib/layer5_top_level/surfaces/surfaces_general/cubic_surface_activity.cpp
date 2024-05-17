@@ -206,7 +206,7 @@ void cubic_surface_activity::perform_activity(
 					"before SC->SO->Clebsch_map_up" << endl;
 		}
 		SC->SO->Clebsch_map_up(
-				SC->label_txt,
+				SC->SO->label_txt,
 				Descr->Clebsch_map_up_line_1_idx,
 				Descr->Clebsch_map_up_line_2_idx,
 				verbose_level);

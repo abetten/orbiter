@@ -2856,7 +2856,7 @@ void symbol_definition::definition_of_cubic_surface(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_cubic_surface "
-				"we have created a cubic surface called " << SC->label_txt << endl;
+				"we have created a cubic surface called " << SC->SO->label_txt << endl;
 
 	}
 

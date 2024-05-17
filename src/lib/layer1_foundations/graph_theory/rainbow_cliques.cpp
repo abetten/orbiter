@@ -42,7 +42,7 @@ rainbow_cliques::rainbow_cliques()
 {
 	Control = NULL;
 
-	ost_sol = NULL;
+	//ost_sol = NULL;
 
 	graph = NULL;
 	CF = NULL;
@@ -59,7 +59,7 @@ rainbow_cliques::~rainbow_cliques()
 void rainbow_cliques::search(
 	clique_finder_control *Control,
 	colored_graph *graph,
-	std::ostream &ost_sol,
+	//std::ostream &ost_sol,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -74,7 +74,7 @@ void rainbow_cliques::search(
 	//rainbow_cliques::f_output_solution_raw = f_output_solution_raw;
 
 	rainbow_cliques::graph = graph;
-	rainbow_cliques::ost_sol = &ost_sol;
+	//rainbow_cliques::ost_sol = &ost_sol;
 	f_color_satisfied = NEW_int(graph->nb_colors);
 	color_chosen_at_depth = NEW_int(graph->nb_colors);
 	color_frequency = NEW_int(graph->nb_colors);
@@ -126,15 +126,17 @@ void rainbow_cliques::search(
 	t0 = Os.os_ticks();
 
 	if (f_v) {
-		cout << "rainbow_cliques::search before backtrack_search" << endl;
+		cout << "rainbow_cliques::search "
+				"before CF->clique_finder_backtrack_search" << endl;
 	}
 
 
-	CF->backtrack_search(0, 0 /*verbose_level*/);
+	CF->clique_finder_backtrack_search(0, 0 /*verbose_level*/);
 
 
 	if (f_v) {
-		cout << "rainbow_cliques::search after backtrack_search" << endl;
+		cout << "rainbow_cliques::search "
+				"after CF->clique_finder_backtrack_search" << endl;
 	}
 
 	if (f_v) {
@@ -329,17 +331,20 @@ void rainbow_cliques::clique_found(
 		int *current_clique,
 		int verbose_level)
 {
+#if 0
 	int i;
 	
 	for (i = 0; i < Control->target_size; i++) {
 		*ost_sol << current_clique[i] << " ";
 		}
 	*ost_sol << endl;
+#endif
 }
 
 void rainbow_cliques::clique_found_record_in_original_labels(
 		int *current_clique, int verbose_level)
 {
+#if 0
 	int i;
 	
 	*ost_sol << graph->user_data_size + Control->target_size << " ";
@@ -350,6 +355,7 @@ void rainbow_cliques::clique_found_record_in_original_labels(
 		*ost_sol << graph->points[current_clique[i]] << " ";
 	}
 	*ost_sol << endl;
+#endif
 }
 
 
@@ -360,13 +366,14 @@ void call_back_colored_graph_clique_found(
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
-	rainbow_cliques *R = (rainbow_cliques *)  CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
 
 	if (f_v) {
 		int i, j, pt, c;
 		
 		cout << "call_back_colored_graph_clique_found clique";
-		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, CF->current_clique, CF->Control->target_size);
+		orbiter_kernel_system::Orbiter->Int_vec->set_print(
+				cout, CF->current_clique, CF->Control->target_size);
 		cout << endl;
 		for (i = 0; i < CF->Control->target_size; i++) {
 			pt = CF->current_clique[i];
@@ -462,7 +469,8 @@ int call_back_colored_graph_find_candidates(
 			cout << "call_back_colored_graph_find_candidates "
 					"before call_back_additional_test_function" << endl;
 		}
-		(*R->Control->call_back_additional_test_function)(R, R->Control->additional_test_function_data,
+		(*R->Control->call_back_additional_test_function)(
+				R, R->Control->additional_test_function_data,
 			current_clique_size, current_clique, 
 			nb_pts, tmp_nb_points, 
 			pt_list, pt_list_inv, 
@@ -482,7 +490,8 @@ int call_back_colored_graph_find_candidates(
 		cout << "call_back_colored_graph_find_candidates "
 				"before R->find_candidates" << endl;
 	}
-	ret = R->find_candidates(current_clique_size, current_clique, 
+	ret = R->find_candidates(
+			current_clique_size, current_clique,
 			nb_pts, reduced_nb_pts, 
 			pt_list, pt_list_inv, 
 			candidates, verbose_level);

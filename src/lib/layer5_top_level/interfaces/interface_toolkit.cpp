@@ -36,6 +36,10 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
 
+	f_csv_file_select_rows_by_file = false;
+	//std::string csv_file_select_rows_by_file_fname;
+	//std::string csv_file_select_rows_by_file_select;
+
 	f_csv_file_select_rows_complement = false;
 	//std::string csv_file_select_rows_complement_fname;
 	//std::string csv_file_select_rows_complement_text;
@@ -204,6 +208,11 @@ interface_toolkit::interface_toolkit()
 	//std::string read_xml_fname;
 	//std::string read_xml_crossref_fname;
 
+	f_read_column_and_tally = false;
+	//std::string read_column_and_tally_fname;
+	//std::string read_column_and_tally_col_header;
+
+
 
 }
 
@@ -225,6 +234,9 @@ void interface_toolkit::print_help(
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_by_file") == 0) {
+		cout << "-cvs_file_select_rows_by_file <string : csv_file_name> <string : file with list of rows>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
 		cout << "-csv_file_select_rows_complement <string : csv_file_name> <string : list of rows>" << endl;
@@ -335,6 +347,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-read_xml") == 0) {
 		cout << "-read_xml <string : fname> <string : crossref_fname>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-read_column_and_tally") == 0) {
+		cout << "-read_column_and_tally <string : fname> <string : col_header>" << endl;
+	}
 
 }
 
@@ -357,6 +372,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_by_file") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
@@ -468,6 +486,9 @@ int interface_toolkit::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-read_xml") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-read_column_and_tally") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -531,6 +552,16 @@ void interface_toolkit::read_arguments(
 			cout << "-csv_file_select_rows "
 					<< csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_by_file") == 0) {
+		f_csv_file_select_rows_by_file = true;
+		csv_file_select_rows_by_file_fname.assign(argv[++i]);
+		csv_file_select_rows_by_file_select.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_select_rows_by_file "
+					<< csv_file_select_rows_by_file_fname
+				<< " " << csv_file_select_rows_by_file_select << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_complement") == 0) {
@@ -1039,7 +1070,17 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
-
+	else if (ST.stringcmp(argv[i], "-read_column_and_tally") == 0) {
+		f_read_column_and_tally = true;
+		read_column_and_tally_fname.assign(argv[++i]);
+		read_column_and_tally_col_header.assign(argv[++i]);
+		if (f_v) {
+			cout << "-read_column_and_tally "
+					<< " " << read_column_and_tally_fname
+					<< " " << read_column_and_tally_col_header
+					<< endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -1064,6 +1105,11 @@ void interface_toolkit::print()
 	if (f_csv_file_select_rows) {
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
+	}
+	if (f_csv_file_select_rows_by_file) {
+		cout << "-csv_file_select_rows_by_file "
+				<< csv_file_select_rows_by_file_fname
+			<< " " << csv_file_select_rows_by_file_select << endl;
 	}
 	if (f_csv_file_split_rows_modulo) {
 		cout << "-csv_file_split_rows_modulo "
@@ -1266,6 +1312,12 @@ void interface_toolkit::print()
 				<< " " << read_xml_crossref_fname
 				<< endl;
 	}
+	if (f_read_column_and_tally) {
+		cout << "-read_column_and_tally "
+				<< " " << read_column_and_tally_fname
+				<< " " << read_column_and_tally_col_header
+				<< endl;
+	}
 }
 
 void interface_toolkit::worker(
@@ -1333,6 +1385,19 @@ void interface_toolkit::worker(
 		Fio.Csv_file_support->do_csv_file_select_rows(
 				csv_file_select_rows_fname,
 				csv_file_select_rows_text,
+				verbose_level);
+	}
+	else if (f_csv_file_select_rows_by_file) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_csv_file_select_rows_by_file" << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->do_csv_file_select_rows_by_file(
+				csv_file_select_rows_by_file_fname,
+				csv_file_select_rows_by_file_select,
 				verbose_level);
 	}
 	else if (f_csv_file_select_rows_complement) {
@@ -2150,6 +2215,55 @@ void interface_toolkit::worker(
 					"after Algo.process_class_list" << endl;
 		}
 
+
+	}
+	else if (f_read_column_and_tally) {
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_read_column_and_tally " << read_column_and_tally_fname << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+		long int *Data;
+		int data_size;
+
+		Fio.Csv_file_support->read_csv_file_and_get_column(
+				read_column_and_tally_fname, read_column_and_tally_col_header,
+				Data, data_size, verbose_level);
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"read data of size " << data_size << endl;
+		}
+
+
+		data_structures::tally T;
+
+		T.init_lint(Data, data_size, false, 0);
+		cout << "tally:" << endl;
+		T.print_first_tex(true);
+		cout << endl;
+
+
+		data_structures::set_of_sets *SoS;
+		int *types;
+		int nb_types;
+		int i;
+
+		SoS = T.get_set_partition_and_types(
+				types, nb_types, verbose_level);
+
+		cout << "fibers:" << endl;
+		for (i = 0; i < nb_types; i++) {
+			cout << i << " : " << types[i] << " : ";
+			Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+			cout << endl;
+		}
+
+		//cout << "set partition:" << endl;
+		//SoS->print_table();
+
+		FREE_lint(Data);
 
 	}
 

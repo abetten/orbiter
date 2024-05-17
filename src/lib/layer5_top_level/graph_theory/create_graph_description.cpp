@@ -29,6 +29,10 @@ create_graph_description::create_graph_description()
 	load_adjacency_matrix_from_csv_and_select_value_value = 0;
 
 	f_load_dimacs = false;
+	//std::string load_dimacs_fname;
+
+	f_load_Brouwer = false;
+	//std::string load_Brouwer_fname;
 
 	f_edge_list = false;
 	n = 0;
@@ -78,6 +82,9 @@ create_graph_description::create_graph_description()
 	//std::string coll_orthogonal_space_label;
 	//std::string coll_orthogonal_set_of_points_label;
 
+	f_affine_polar = false;
+	//std::string affine_polar_space_label;
+
 	f_tritangent_planes_disjointness_graph = false;
 	f_trihedral_pair_disjointness_graph = false;
 
@@ -102,6 +109,13 @@ create_graph_description::create_graph_description()
 	f_chain_graph = false;
 	//std::string chain_graph_partition_1;
 	//std::string chain_graph_partition_2;
+
+	f_Neumaier_graph_16 = false;
+	f_Neumaier_graph_25 = false;
+
+	f_adjacency_bitvector = false;
+	//std::string adjacency_bitvector_data_text;
+	adjacency_bitvector_N = 0;
 
 	f_Cayley_graph = false;
 	//std::string Cayley_graph_group;
@@ -156,9 +170,17 @@ int create_graph_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-load_dimacs") == 0) {
 			f_load_dimacs = true;
-			fname.assign(argv[++i]);
+			load_dimacs_fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-load_dimacs " << fname << endl;
+				cout << "-load_dimacs " << load_dimacs_fname << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-load_Brouwer") == 0) {
+			f_load_Brouwer = true;
+			load_Brouwer_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-load_Brouwer " << load_Brouwer_fname << endl;
 			}
 		}
 
@@ -267,6 +289,15 @@ int create_graph_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-affine_polar") == 0) {
+			f_affine_polar = true;
+			affine_polar_space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-affine_polar "
+					<< " " << affine_polar_space_label
+					<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-tritangent_planes_disjointness_graph") == 0) {
 			f_tritangent_planes_disjointness_graph = true;
 			if (f_v) {
@@ -334,6 +365,32 @@ int create_graph_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-Neumaier_graph_16") == 0) {
+			f_Neumaier_graph_16 = true;
+			if (f_v) {
+				cout << "-Neumaier_graph_16 "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-Neumaier_graph_25") == 0) {
+			f_Neumaier_graph_25 = true;
+			if (f_v) {
+				cout << "-Neumaier_graph_25 "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-adjacency_bitvector") == 0) {
+			f_adjacency_bitvector = true;
+			adjacency_bitvector_data_text.assign(argv[++i]);
+			adjacency_bitvector_N = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-adjacency_bitvector "
+						<< " " << adjacency_bitvector_data_text
+						<< " " << adjacency_bitvector_N
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-Cayley_graph") == 0) {
 			f_Cayley_graph = true;
 			Cayley_graph_group.assign(argv[++i]);
@@ -388,7 +445,10 @@ void create_graph_description::print()
 				<< load_adjacency_matrix_from_csv_and_select_value_value << endl;
 	}
 	if (f_load_dimacs) {
-		cout << "-load_dimacs " << fname << endl;
+		cout << "-load_dimacs " << load_dimacs_fname << endl;
+	}
+	if (f_load_Brouwer) {
+		cout << "-load_Brouwer " << load_Brouwer_fname << endl;
 	}
 	if (f_edge_list) {
 		cout << "-edge_list " << n << " " << edge_list_text << endl;
@@ -433,6 +493,11 @@ void create_graph_description::print()
 			<< " " << coll_orthogonal_set_of_points_label
 			<< endl;
 	}
+	if (f_affine_polar) {
+		cout << "-affine_polar "
+			<< " " << affine_polar_space_label
+			<< endl;
+	}
 	if (f_tritangent_planes_disjointness_graph) {
 		cout << "-tritangent_planes_disjointness_graph " << endl;
 	}
@@ -459,6 +524,20 @@ void create_graph_description::print()
 		cout << "-chain_graph "
 				<< " " << chain_graph_partition_1
 				<< " " << chain_graph_partition_2
+				<< endl;
+	}
+	if (f_Neumaier_graph_16) {
+		cout << "-Neumaier_graph_16 "
+				<< endl;
+	}
+	if (f_Neumaier_graph_25) {
+		cout << "-Neumaier_graph_25 "
+				<< endl;
+	}
+	if (f_adjacency_bitvector) {
+		cout << "-adjacency_bitvector "
+				<< " " << adjacency_bitvector_data_text
+				<< " " << adjacency_bitvector_N
 				<< endl;
 	}
 	if (f_Cayley_graph) {

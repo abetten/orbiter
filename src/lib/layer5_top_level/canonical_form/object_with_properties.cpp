@@ -266,6 +266,16 @@ void object_with_properties::latex_report(
 		cout << "object_with_properties::latex_report" << endl;
 	}
 
+	ost << "\\subsection*{object\\_with\\_properties::latex\\_report Automorphism Group as Permutation Group}" << endl;
+
+	{
+		ring_theory::longinteger_object go;
+
+		A_perm->Strong_gens->group_order(go);
+
+		ost << "Automorphism group has order: " << go << "\\\\" << endl;
+	}
+
 	ost << "Generators for the automorphism group: \\\\" << endl;
 	if (A_perm->degree < 100) {
 		A_perm->Strong_gens->print_generators_in_latex_individually(ost);
@@ -281,6 +291,17 @@ void object_with_properties::latex_report(
 	}
 
 	if (f_projective_space) {
+
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Automorphism Group in Projective Space}" << endl;
+
+		{
+			ring_theory::longinteger_object go;
+
+			SG->group_order(go);
+
+			ost << "Automorphism group has order: " << go << "\\\\" << endl;
+		}
+
 
 		ost << "Generators for the automorphism group as matrix group: \\\\" << endl;
 
@@ -378,12 +399,14 @@ void object_with_properties::latex_report(
 					"f_export_flag_orbits" << endl;
 		}
 
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Flag Orbits}" << endl;
+
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
 					"before GA_on_CO->export_INP_with_flag_orbits" << endl;
 		}
-		GA_on_CO->export_INP_with_flag_orbits(ost,
-				//Sch,
+		GA_on_CO->export_INP_with_flag_orbits(
+				ost,
 				verbose_level);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
@@ -394,34 +417,73 @@ void object_with_properties::latex_report(
 			cout << "object_with_properties::latex_report "
 					"before GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
-		GA_on_CO->export_TDA_with_flag_orbits(ost,
-				//Sch,
+		GA_on_CO->export_TDA_with_flag_orbits(
+				ost,
 				verbose_level);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
 					"after GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_export_flag_orbits done" << endl;
+		}
 	}
 
 	if (Report_options->f_show_TDO) {
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_show_TDO" << endl;
+		}
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDO}" << endl;
 
 		ost << "Decomposition by combinatorial refinement:\\\\" << endl;
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"before Sch->print_TDO" << endl;
+					"before print_TDO" << endl;
 		}
-		print_TDO(ost, Report_options);
+		print_TDO(ost, Report_options, verbose_level);
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
-					"after Sch->print_TDO" << endl;
+					"after print_TDO" << endl;
+		}
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_show_TDO done" << endl;
 		}
 	}
 
 	if (Report_options->f_show_TDA) {
 
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_show_TDA" << endl;
+		}
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDA}" << endl;
+
+		{
+			ring_theory::longinteger_object go;
+
+			A_perm->Strong_gens->group_order(go);
+
+			ost << "Automorphism group has order: " << go << "\\\\" << endl;
+		}
+
 		ost << "Decomposition by automorphism group:\\\\" << endl;
 
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"before GA_on_CO->print_schemes" << endl;
+		}
+		GA_on_CO->print_schemes(ost, Report_options, verbose_level);
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"after GA_on_CO->print_schemes" << endl;
+		}
+
+#if 0
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
 					"before Sch->print_TDA" << endl;
@@ -431,8 +493,18 @@ void object_with_properties::latex_report(
 			cout << "object_with_properties::latex_report "
 					"after Sch->print_TDA" << endl;
 		}
+#endif
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report "
+					"f_show_TDA done" << endl;
+		}
+
+
 	}
 	if (Report_options->f_export_labels) {
+
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Labels}" << endl;
 
 		canonical_form_classification::encoded_combinatorial_object *Enc;
 
@@ -475,6 +547,8 @@ void object_with_properties::latex_report(
 		FREE_OBJECT(Enc);
 	}
 
+	ost << "\\subsection*{object\\_with\\_properties::latex\\_report Canonical labeling}" << endl;
+
 	ost << "Canonical labeling:\\\\" << endl;
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 	canonical_form_classification::encoded_combinatorial_object *Enc2;
@@ -512,6 +586,7 @@ void object_with_properties::latex_report(
 
 	if (Report_options->f_show_incidence_matrices) {
 
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Incidence Matrices}" << endl;
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report "
@@ -562,6 +637,8 @@ void object_with_properties::latex_report(
 
 
 	if (Report_options->f_lex_least) {
+
+		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Lex Least Form}" << endl;
 
 		if (f_v) {
 			cout << "object_with_properties::latex_report f_lex_least" << endl;
@@ -626,8 +703,9 @@ void object_with_properties::latex_report(
 		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
 		ost << "Lex-least form is:\\\\" << endl;
 
-		OwCF2->print_tex_detailed(ost,
-				Report_options->f_show_incidence_matrices,
+		OwCF2->print_tex_detailed(
+				ost,
+				Report_options,
 				verbose_level);
 	}
 
@@ -669,10 +747,11 @@ void object_with_properties::compute_TDO(
 void object_with_properties::print_TDO(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
-			*Report_options)
+			*Report_options,
+		int verbose_level)
 {
 
-	TDO->print_schemes(ost);
+	TDO->print_schemes(ost, Report_options, verbose_level);
 
 }
 

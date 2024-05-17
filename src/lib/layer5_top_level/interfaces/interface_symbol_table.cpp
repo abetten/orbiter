@@ -192,7 +192,9 @@ void interface_symbol_table::read_with(
 			f_activity = true;
 			Activity_description = NEW_OBJECT(activity_description);
 
-			Activity_description->read_arguments(this, argc, argv, i, verbose_level);
+			Activity_description->Sym = this;
+
+			Activity_description->read_arguments(argc, argv, i, verbose_level);
 			break;
 		}
 		else {

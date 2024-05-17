@@ -56,35 +56,9 @@ void create_graph::init(
 			cout << "create_graph::init f_load" << endl;
 		}
 
-		f_has_CG = true;
-		CG = NEW_OBJECT(graph_theory::colored_graph);
-		if (f_v) {
-			cout << "create_graph::init "
-					"before CG->load, "
-					"fname=" << description->fname << endl;
-		}
-		CG->load(description->fname, verbose_level);
-		if (f_v) {
-			cout << "create_graph::init "
-					"after CG->load, "
-					"fname=" << description->fname << endl;
-		}
-		f_has_CG = true;
-		N = CG->nb_points;
-		if (f_v) {
-			cout << "create_graph::init "
-					"number of vertices = " << N << endl;
-		}
-		label.assign(description->fname);
-		if (f_v) {
-			cout << "create_graph::init "
-					"label = " << label << endl;
-		}
-
-		data_structures::string_tools String;
-		String.chop_off_extension(label);
-
-		label_tex = "File\\_" + label;
+		load(
+				description->fname,
+				verbose_level);
 
 	}
 
@@ -100,121 +74,11 @@ void create_graph::init(
 					"generators=" << description->Cayley_graph_gens << endl;
 		}
 
-		apps_algebra::any_group *G;
+		make_Cayley_graph(
+				description->Cayley_graph_group,
+				description->Cayley_graph_gens,
+				verbose_level);
 
-		G = Get_any_group(description->Cayley_graph_group);
-
-
-		groups::strong_generators *SG;
-
-		SG = G->get_strong_generators();
-
-
-		groups::sims *Sims;
-
-		Sims = SG->create_sims(verbose_level);
-
-		if (f_v) {
-			cout << "create_graph::init group order "
-					"G = " << Sims->group_order_lint() << endl;
-			cout << "create_graph::init group order "
-					"coded element size = "
-					<< G->A_base->elt_size_in_int << endl;
-		}
-
-		int *v;
-		int sz;
-		int nb_gens;
-
-		Get_int_vector_from_label(description->Cayley_graph_gens,
-				v, sz, verbose_level);
-
-		nb_gens = sz / G->A_base->elt_size_in_int;
-
-		if (f_v) {
-			cout << "create_graph::init "
-					"number of generators = " << nb_gens << endl;
-
-			cout << "create_graph::init generators: ";
-			Int_vec_print(cout, v, sz);
-			cout << endl;
-		}
-
-		data_structures_groups::vector_ge *gens;
-
-		gens = NEW_OBJECT(data_structures_groups::vector_ge);
-
-		gens->init_from_data(G->A, v, nb_gens,
-				G->A_base->elt_size_in_int, verbose_level - 1);
-
-		if (f_v) {
-			cout << "create_graph::init generators:" << endl;
-			gens->print(cout);
-		}
-
-
-
-		int *Elt1;
-		int *Elt2;
-		ring_theory::longinteger_object go;
-		int i, h, j;
-
-		Elt1 = NEW_int(G->A_base->elt_size_in_int);
-		Elt2 = NEW_int(G->A_base->elt_size_in_int);
-		Sims->group_order(go);
-
-
-		N = go.as_lint();
-
-		Adj = NEW_int(N * N);
-		Int_vec_zero(Adj, N * N);
-
-		for (i = 0; i < go.as_lint(); i++) {
-
-
-			Sims->element_unrank_lint(i, Elt1);
-
-			if (f_v) {
-				cout << "create_graph::init "
-						"Element " << setw(5) << i << " / "
-						<< go.as_int() << ":" << endl;
-				G->A->Group_element->element_print(Elt1, cout);
-				cout << endl;
-				G->A->Group_element->element_print_as_permutation(Elt1, cout);
-				cout << endl;
-			}
-			for (h = 0; h < nb_gens; h++) {
-
-				G->A->Group_element->element_mult(
-						Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
-
-				j = Sims->element_rank_lint(Elt2);
-
-				Adj[i * N + j] = 1;
-				Adj[j * N + i] = 1;
-
-			}
-
-
-		}
-		FREE_int(Elt1);
-		FREE_int(Elt2);
-
-
-		f_has_CG = false;
-		if (f_v) {
-			cout << "create_graph::init "
-					"number of vertices = " << N << endl;
-		}
-		label = "Cayley_graph_" + G->A->label;
-		if (f_v) {
-			cout << "create_graph::init label = " << label << endl;
-		}
-
-		data_structures::string_tools String;
-		String.chop_off_extension(label);
-
-		label_tex = "Cayley\\_graph\\_" + G->A->label_tex;
 
 	}
 
@@ -284,7 +148,7 @@ void create_graph::init(
 
 	else if (description->f_load_dimacs) {
 		if (f_v) {
-			cout << "create_graph::init f_load_from_file_dimacs" << endl;
+			cout << "create_graph::init f_load_dimacs" << endl;
 		}
 
 		orbiter_kernel_system::file_io Fio;
@@ -294,13 +158,15 @@ void create_graph::init(
 
 		if (f_v) {
 			cout << "create_graph::init "
-					"before Fio.read_dimacs_graph_format" << endl;
+					"before Fio.read_graph_dimacs_format" << endl;
 		}
-		Fio.read_dimacs_graph_format(description->fname,
-				nb_V, Edges, verbose_level);
+		Fio.read_graph_dimacs_format(
+				description->load_dimacs_fname,
+				nb_V, Edges,
+				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after Fio.read_dimacs_graph_format" << endl;
+					"after Fio.read_graph_dimacs_format" << endl;
 		}
 
 		N = nb_V;
@@ -326,7 +192,7 @@ void create_graph::init(
 			Adj[j * nb_V + i] = 1;
 		}
 
-		label = description->fname;
+		label = description->load_dimacs_fname;
 
 		data_structures::string_tools String;
 		String.chop_off_extension_and_path(label);
@@ -334,6 +200,43 @@ void create_graph::init(
 
 		label_tex = "File\\_" + label;
 	}
+
+	else if (description->f_load_Brouwer) {
+		if (f_v) {
+			cout << "create_graph::init f_load_Brouwer" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+		int nb_V;
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"before Fio.read_graph_Brouwer_format" << endl;
+		}
+		Fio.read_graph_Brouwer_format(
+				description->load_Brouwer_fname,
+				nb_V, Adj,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after Fio.read_graph_Brouwer_format" << endl;
+		}
+
+		N = nb_V;
+		if (f_v) {
+			cout << "create_graph::init "
+					"N=" << N << endl;
+		}
+
+		label = description->load_Brouwer_fname;
+
+		data_structures::string_tools String;
+		String.chop_off_extension_and_path(label);
+
+
+		label_tex = "File\\_" + label;
+	}
+
 	else if (description->f_edge_list) {
 
 		combinatorics::combinatorics_domain Combi;
@@ -559,6 +462,22 @@ void create_graph::init(
 					"after create_coll_orthogonal" << endl;
 		}
 	}
+	else if (description->f_affine_polar) {
+
+		if (f_v) {
+			cout << "create_graph::init f_affine_polar "
+					"before create_affine_polar" << endl;
+		}
+		create_affine_polar(
+				description->affine_polar_space_label,
+				verbose_level);
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"after create_affine_polar" << endl;
+		}
+	}
+
 
 
 	else if (description->f_tritangent_planes_disjointness_graph) {
@@ -575,7 +494,8 @@ void create_graph::init(
 				0);
 		Surf->init_surface_domain(F, verbose_level);
 
-		Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph(Adj, N, verbose_level);
+		Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph(
+				Adj, N, verbose_level);
 
 		label.assign("tritangent_planes_disjointness");
 		label_tex.assign("tritangent\\_planes\\_disjointness");
@@ -598,7 +518,8 @@ void create_graph::init(
 				0);
 		Surf->init_surface_domain(F, verbose_level);
 
-		Surf->Schlaefli->Schlaefli_trihedral_pairs->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
+		Surf->Schlaefli->Schlaefli_trihedral_pairs->make_trihedral_pair_disjointness_graph(
+				Adj, verbose_level);
 		N = 120;
 		label.assign("trihedral_pair_disjointness");
 		label_tex.assign("trihedral\\_pair\\_disjointness");
@@ -715,6 +636,9 @@ void create_graph::init(
 
 
 	}
+
+
+
 	else if (description->f_chain_graph) {
 
 
@@ -749,6 +673,71 @@ void create_graph::init(
 
 	}
 
+	else if (description->f_Neumaier_graph_16) {
+
+
+
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"before make_Neumaier_graph_16" << endl;
+		}
+		make_Neumaier_graph_16(
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_Neumaier_graph_16" << endl;
+		}
+
+
+
+	}
+
+	else if (description->f_Neumaier_graph_25) {
+
+
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"before make_Neumaier_graph_25" << endl;
+		}
+		make_Neumaier_graph_25(
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_Neumaier_graph_25" << endl;
+		}
+
+
+
+	}
+
+	else if (description->f_adjacency_bitvector) {
+
+
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"f_adjacency_bitvector" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "create_graph::init "
+					"before make_adjacency_bitvector" << endl;
+		}
+		make_adjacency_bitvector(
+				description->adjacency_bitvector_data_text,
+				description->adjacency_bitvector_N,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_adjacency_bitvector" << endl;
+		}
+
+
+
+	}
 
 
 	if (description->f_subset) {
@@ -825,6 +814,177 @@ void create_graph::init(
 	}
 }
 
+
+void create_graph::load(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::load" << endl;
+	}
+
+	f_has_CG = true;
+	CG = NEW_OBJECT(graph_theory::colored_graph);
+	if (f_v) {
+		cout << "create_graph::load "
+				"before CG->load, "
+				"fname=" << description->fname << endl;
+	}
+	CG->load(fname, verbose_level);
+	if (f_v) {
+		cout << "create_graph::load "
+				"after CG->load, "
+				"fname=" << fname << endl;
+	}
+	f_has_CG = true;
+	N = CG->nb_points;
+	if (f_v) {
+		cout << "create_graph::load "
+				"number of vertices = " << N << endl;
+	}
+	label.assign(fname);
+	if (f_v) {
+		cout << "create_graph::load "
+				"label = " << label << endl;
+	}
+
+	data_structures::string_tools String;
+	String.chop_off_extension(label);
+
+	label_tex = "File\\_" + label;
+
+}
+
+void create_graph::make_Cayley_graph(
+		std::string &group_label,
+		std::string &generators_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_Cayley_graph" << endl;
+	}
+
+	apps_algebra::any_group *G;
+
+	G = Get_any_group(group_label);
+
+
+	groups::strong_generators *SG;
+
+	SG = G->get_strong_generators();
+
+
+	groups::sims *Sims;
+
+	Sims = SG->create_sims(verbose_level);
+
+	if (f_v) {
+		cout << "create_graph::make_Cayley_graph group order "
+				"G = " << Sims->group_order_lint() << endl;
+		cout << "create_graph::make_Cayley_graph group order "
+				"coded element size = "
+				<< G->A_base->elt_size_in_int << endl;
+	}
+
+	int *v;
+	int sz;
+	int nb_gens;
+
+	Get_int_vector_from_label(generators_label,
+			v, sz, verbose_level);
+
+	nb_gens = sz / G->A_base->elt_size_in_int;
+
+	if (f_v) {
+		cout << "create_graph::make_Cayley_graph "
+				"number of generators = " << nb_gens << endl;
+
+		cout << "create_graph::make_Cayley_graph generators: ";
+		Int_vec_print(cout, v, sz);
+		cout << endl;
+	}
+
+	data_structures_groups::vector_ge *gens;
+
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	gens->init_from_data(G->A, v, nb_gens,
+			G->A_base->elt_size_in_int, verbose_level - 1);
+
+	if (f_v) {
+		cout << "create_graph::make_Cayley_graph generators:" << endl;
+		gens->print(cout);
+	}
+
+
+
+	int *Elt1;
+	int *Elt2;
+	ring_theory::longinteger_object go;
+	int i, h, j;
+
+	Elt1 = NEW_int(G->A_base->elt_size_in_int);
+	Elt2 = NEW_int(G->A_base->elt_size_in_int);
+	Sims->group_order(go);
+
+
+	N = go.as_lint();
+
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+	for (i = 0; i < go.as_lint(); i++) {
+
+
+		Sims->element_unrank_lint(i, Elt1);
+
+		if (f_v) {
+			cout << "create_graph::make_Cayley_graph "
+					"Element " << setw(5) << i << " / "
+					<< go.as_int() << ":" << endl;
+			G->A->Group_element->element_print(Elt1, cout);
+			cout << endl;
+			G->A->Group_element->element_print_as_permutation(Elt1, cout);
+			cout << endl;
+		}
+		for (h = 0; h < nb_gens; h++) {
+
+			G->A->Group_element->element_mult(
+					Elt1, gens->ith(h), Elt2, 0 /*verbose_level*/);
+
+			j = Sims->element_rank_lint(Elt2);
+
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+
+		}
+
+
+	}
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+
+	f_has_CG = false;
+	if (f_v) {
+		cout << "create_graph::make_Cayley_graph "
+				"number of vertices = " << N << endl;
+	}
+	label = "Cayley_graph_" + G->A->label;
+	if (f_v) {
+		cout << "create_graph::init label = " << label << endl;
+	}
+
+	data_structures::string_tools String;
+	String.chop_off_extension(label);
+
+	label_tex = "Cayley\\_graph\\_" + G->A->label_tex;
+
+}
 
 void create_graph::create_cycle(
 		int n, int verbose_level)
@@ -922,8 +1082,10 @@ void create_graph::create_Hamming(
 				"after GT.make_Hamming_graph" << endl;
 	}
 
-	label = "Hamming_" + std::to_string(n) + "_" + std::to_string(q);
-	label_tex = "Hamming\\_" + std::to_string(n) + "\\_" + std::to_string(q);
+	label = "Hamming_" + std::to_string(n)
+			+ "_" + std::to_string(q);
+	label_tex = "Hamming\\_" + std::to_string(n)
+			+ "\\_" + std::to_string(q);
 
 
 	if (f_v) {
@@ -955,8 +1117,12 @@ void create_graph::create_Johnson(
 				"after GT.make_Johnson_graph" << endl;
 	}
 
-	label = "Johnson_" + std::to_string(n) + "_" + std::to_string(k) + "_" + std::to_string(s);
-	label_tex = "Johnson\\_" + std::to_string(n) + "\\_" + std::to_string(k) + "\\_" + std::to_string(s);
+	label = "Johnson_" + std::to_string(n)
+			+ "_" + std::to_string(k)
+			+ "_" + std::to_string(s);
+	label_tex = "Johnson\\_" + std::to_string(n)
+			+ "\\_" + std::to_string(k)
+			+ "\\_" + std::to_string(s);
 
 
 	if (f_v) {
@@ -1028,6 +1194,7 @@ void create_graph::create_Sarnak(
 	int f_basis = true;
 
 	F = NEW_OBJECT(field_theory::finite_field);
+
 	F->finite_field_init_small_order(q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
@@ -1046,7 +1213,8 @@ void create_graph::create_Sarnak(
 			cout << "create_graph::create_Sarnak "
 					"Creating projective special linear group:" << endl;
 		}
-		A->Known_groups->init_projective_special_group(2, F,
+		A->Known_groups->init_projective_special_group(
+				2, F,
 			f_semilinear,
 			f_basis,
 			verbose_level - 2);
@@ -1058,7 +1226,8 @@ void create_graph::create_Sarnak(
 			cout << "create_graph::create_Sarnak "
 					"Creating projective linear group:" << endl;
 		}
-		A->Known_groups->init_projective_group(2, F,
+		A->Known_groups->init_projective_group(
+				2, F,
 			f_semilinear,
 			f_basis, true /* f_init_sims */,
 			nice_gens,
@@ -1117,7 +1286,8 @@ void create_graph::create_Schlaefli(
 		cout << "create_graph::create_Schlaefli "
 				"before GT.make_Schlaefli_graph" << endl;
 	}
-	GT.make_Schlaefli_graph(Adj, N, F, verbose_level);
+	GT.make_Schlaefli_graph(
+			Adj, N, F, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli "
 				"after GT.make_Schlaefli_graph" << endl;
@@ -1191,7 +1361,8 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((j + 1) % 4);
 			}
 		}
-		A->Group_element->make_element(gens_G->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(
+				gens_G->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1252,7 +1423,8 @@ void create_graph::create_Shrikhande(
 				v[4 + j] = 4 + ((4 + j - 1) % 4);
 			}
 		}
-		A->Group_element->make_element(gens_S->ith(i), v, 0 /* verbose_level */);
+		A->Group_element->make_element(
+				gens_S->ith(i), v, 0 /* verbose_level */);
 	}
 
 	if (f_v) {
@@ -1307,7 +1479,8 @@ void create_graph::create_Shrikhande(
 }
 
 void create_graph::create_Winnie_Li(
-		std::string &label_Fq, int index, int verbose_level)
+		std::string &label_Fq, int index,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1332,8 +1505,10 @@ void create_graph::create_Winnie_Li(
 	}
 
 
-	label = "Winnie_Li_" + std::to_string(Fq->q) + "_" + std::to_string(index);
-	label_tex = "Winnie\\_Li\\_" + std::to_string(Fq->q) + "\\_" + std::to_string(index);
+	label = "Winnie_Li_" + std::to_string(Fq->q)
+			+ "_" + std::to_string(index);
+	label_tex = "Winnie\\_Li\\_" + std::to_string(Fq->q)
+			+ "\\_" + std::to_string(index);
 
 
 
@@ -1371,8 +1546,14 @@ void create_graph::create_Grassmann(
 	}
 
 
-	label = "Grassmann_" + std::to_string(n) + "_" + std::to_string(k) + " " + std::to_string(F->q) + "_" + std::to_string(r);
-	label_tex = "Grassmann\\_" + std::to_string(n) + "\\_" + std::to_string(k) + "\\_" + std::to_string(F->q) + "\\_" + std::to_string(r);
+	label = "Grassmann_" + std::to_string(n)
+			+ "_" + std::to_string(k)
+			+ " " + std::to_string(F->q)
+			+ "_" + std::to_string(r);
+	label_tex = "Grassmann\\_" + std::to_string(n)
+			+ "\\_" + std::to_string(k)
+			+ "\\_" + std::to_string(F->q)
+			+ "\\_" + std::to_string(r);
 
 
 	if (f_v) {
@@ -1424,6 +1605,46 @@ void create_graph::create_coll_orthogonal(
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;
+	}
+}
+
+void create_graph::create_affine_polar(
+		std::string &orthogonal_space_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::create_affine_polar" << endl;
+	}
+
+	graph_theory::graph_theory_domain GT;
+
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = Get_orthogonal_space(orthogonal_space_label);
+
+
+
+	if (f_v) {
+		cout << "create_graph::create_affine_polar before "
+				"OA->O->Quadratic_form->make_affine_polar_graph" << endl;
+	}
+	OA->O->Quadratic_form->make_affine_polar_graph(
+			Adj, N,
+			verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_affine_polar after "
+				"OA->O->Quadratic_form->make_affine_polar_graph" << endl;
+	}
+
+	label = "affine_polar_" + OA->O->label_txt;
+
+	label_tex = "\\text{affine\\_polar}\\_" + OA->O->label_tex;
+
+
+	if (f_v) {
+		cout << "create_graph::create_affine_polar done" << endl;
 	}
 }
 
@@ -1614,6 +1835,90 @@ void create_graph::make_chain_graph(
 
 	if (f_v) {
 		cout << "create_graph::make_chain_graph done" << endl;
+	}
+}
+
+void create_graph::make_Neumaier_graph_16(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_Neumaier_graph_16" << endl;
+	}
+
+	graph_theory::graph_theory_domain Graph;
+
+
+	Graph.make_Neumaier_graph_16(
+			Adj, N,
+			verbose_level);
+
+	label = "Neumaier_graph_16";
+	label_tex = "Neumaier\\_graph\\_16";
+
+}
+
+void create_graph::make_Neumaier_graph_25(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_Neumaier_graph_25" << endl;
+	}
+
+	graph_theory::graph_theory_domain Graph;
+
+
+	Graph.make_Neumaier_graph_25(
+			Adj, N,
+			verbose_level);
+
+	label = "Neumaier_graph_25";
+	label_tex = "Neumaier\\_graph\\_25";
+
+}
+
+
+
+void create_graph::make_adjacency_bitvector(
+		std::string &data_text, int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_adjacency_bitvector" << endl;
+		cout << "create_graph::make_adjacency_bitvector n=" << n << endl;
+	}
+
+
+	graph_theory::graph_theory_domain Graph;
+	int *v;
+	int sz;
+
+	Int_vec_scan(data_text, v, sz);
+
+	N = n;
+
+	if (sz != (N * (N - 1)) >> 1) {
+		cout << "the data length is incorrect" << endl;
+		exit(1);
+	}
+
+
+	Graph.make_adjacency_bitvector(
+			Adj, v, N,
+			verbose_level);
+
+	label = "bitvector_" + std::to_string(N);
+	label_tex = "bitvector\\_" + std::to_string(N);
+
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "create_graph::make_adjacency_bitvector done" << endl;
 	}
 }
 

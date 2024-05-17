@@ -197,7 +197,7 @@ public:
 // clebsch_map.cpp
 // #############################################################################
 
-//! records the images of a specific Clebsch map, used by class layer5_applications::applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_clebsch_map
+//! to record the images of a specific Clebsch map, used by class layer5_applications::applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_clebsch_map
 
 
 class clebsch_map {
@@ -2202,7 +2202,8 @@ public:
 
 
 	// the partition into points and lines
-	// must be invariant under the group:
+	// must be invariant under the group.
+	// must be sorted if find_point() or identify_lines() is invoked.
 
 	data_structures::set_of_sets *Point_sets;
 

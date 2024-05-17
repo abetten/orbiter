@@ -506,7 +506,8 @@ int variety_object::find_point(
 {
 	data_structures::sorting Sorting;
 
-	if (Sorting.lint_vec_search(Point_sets->Sets[0], Point_sets->Set_size[0], P,
+	if (Sorting.lint_vec_search(
+			Point_sets->Sets[0], Point_sets->Set_size[0], P,
 			idx, 0 /* verbose_level */)) {
 		return true;
 	}

@@ -3657,6 +3657,7 @@ void schreier::compute_orbit_invariant(
 	}
 }
 
+#if 0
 void schreier::print_TDA(
 		std::ostream &ost,
 		canonical_form_classification::object_with_canonical_form *OwCF,
@@ -3673,6 +3674,7 @@ void schreier::print_TDA(
 	//print_tex(ost);
 
 	if (Report_options->f_show_incidence_matrices) {
+
 		canonical_form_classification::encoded_combinatorial_object *Enc;
 
 		OwCF->encode_incma(Enc, verbose_level);
@@ -3681,6 +3683,11 @@ void schreier::print_TDA(
 		ost << "\\\\" << endl;
 
 		FREE_OBJECT(Enc);
+	}
+	else {
+
+		ost << "skipped, if desired use option \verb'-show_incidence_matrices'" << endl;
+
 	}
 
 	if (f_v) {
@@ -3715,6 +3722,7 @@ void schreier::latex_TDA(
 		cout << "schreier::latex_TDA done" << endl;
 	}
 }
+#endif
 
 
 }}}

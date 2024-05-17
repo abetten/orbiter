@@ -1940,6 +1940,8 @@ std::string string_tools::printf_d(
 	return output;
 }
 
+
+
 std::string string_tools::printf_dd(
 		std::string &format, int value1, int value2)
 {
@@ -1948,6 +1950,42 @@ std::string string_tools::printf_dd(
 	s2 = printf_d(s1, value2);
 	return s2;
 }
+
+std::string string_tools::printf_s(
+		std::string &format, std::string &replacement)
+{
+	string percent, token, info, pre, post, output;
+
+	percent = "%";
+	token = "s";
+
+
+	std::size_t loc_percent = format.find(percent);
+
+	if (loc_percent == std::string::npos) {
+		output = format;
+	}
+	else {
+		std::size_t loc = format.find(token, loc_percent);
+
+		info = format.substr(loc_percent + 1, loc - 1);
+		pre = format.substr(0, loc_percent);
+		post = format.substr(loc + 1);
+		output = pre + replacement + post;
+	}
+	return output;
+}
+
+std::string string_tools::printf_ss(
+		std::string &format, std::string &replacement1, std::string &replacement2)
+{
+	string s1, s2;
+	s1 = printf_s(format, replacement1);
+	s2 = printf_s(s1, replacement2);
+	return s2;
+}
+
+
 
 void string_tools::parse_RHS_command(
 		std::string &command,

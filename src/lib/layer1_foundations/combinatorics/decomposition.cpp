@@ -929,6 +929,173 @@ void decomposition::get_and_print_col_decomposition_scheme(
 	FREE_int(col_scheme);
 }
 
+void decomposition::get_permuted_incidence_matrix(
+		row_and_col_partition *RC,
+	int *&incma, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition::get_permuted_incidence_matrix" << endl;
+	}
+	incma = NEW_int(Inc->nb_points() * Inc->nb_lines());
+
+	Int_vec_zero(incma, Inc->nb_points() * Inc->nb_lines());
+
+
+	int *neighbors;
+
+	neighbors = NEW_int(Inc->max_r);
+
+	int I, i, j, c1, f1, l1, x, y, u, nb, row, col;
+
+	for (I = 0; I < RC->nb_row_classes; I++) {
+
+		c1 = RC->row_classes[I];
+		f1 = Stack->startCell[c1];
+		l1 = Stack->cellSize[c1];
+
+		for (i = 0; i < l1; i++) {
+
+			row = f1 + i;
+			x = Stack->pointList[row];
+
+			//Int_vec_zero(data1, RC->nb_col_classes);
+			nb = Inc->get_lines_on_point(
+					neighbors, x, 0 /*verbose_level - 2*/);
+
+			for (u = 0; u < nb; u++) {
+				y = neighbors[u];
+				j = Inc->nb_points() + y;
+				col = Stack->invPointList[j] - Inc->nb_points();
+
+				incma[row * Inc->nb_lines() + col] = 1;
+				//c = Stack->cellNumber[Stack->invPointList[j]];
+				//J = RC->col_class_idx[c];
+				//data1[J]++;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "decomposition::get_permuted_incidence_matrix done" << endl;
+	}
+}
+
+void decomposition::latex(
+		std::ostream &ost,
+		row_and_col_partition *RC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex" << endl;
+	}
+
+
+	l1_interfaces::latex_interface L;
+	graphics::draw_incidence_structure_description *Descr;
+
+	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
+
+	int *incma;
+	int v = Inc->nb_points();
+	int b = Inc->nb_lines();
+
+	int V, B;
+	int *Vi, *Bj;
+
+	get_permuted_incidence_matrix(
+			RC,
+			incma, verbose_level);
+
+	V = RC->nb_row_classes;
+	Vi = NEW_int(V);
+
+	B = RC->nb_col_classes;
+	Bj = NEW_int(B);
+
+	int I, J, c1, f1, l1;
+
+	for (I = 0; I < RC->nb_row_classes; I++) {
+		c1 = RC->row_classes[I];
+		f1 = Stack->startCell[c1];
+		l1 = Stack->cellSize[c1];
+		Vi[I] = l1;
+	}
+
+	for (J = 0; J < RC->nb_col_classes; J++) {
+		c1 = RC->col_classes[J];
+		f1 = Stack->startCell[c1];
+		l1 = Stack->cellSize[c1];
+		Bj[J] = l1;
+	}
+
+
+	std::string *point_labels;
+	std::string *block_labels;
+
+
+	point_labels = new string [v];
+	block_labels = new string [b];
+
+	int i, j, x, y, row, col;
+
+	row = 0;
+	for (I = 0; I < RC->nb_row_classes; I++) {
+		c1 = RC->row_classes[I];
+		f1 = Stack->startCell[c1];
+		l1 = Stack->cellSize[c1];
+
+		for (i = 0; i < l1; i++) {
+
+			x = Stack->pointList[f1 + i];
+			point_labels[row++] = std::to_string(x);
+		}
+	}
+
+	col = 0;
+	for (J = 0; J < RC->nb_col_classes; J++) {
+		c1 = RC->col_classes[J];
+		f1 = Stack->startCell[c1];
+		l1 = Stack->cellSize[c1];
+
+		for (j = 0; j < l1; j++) {
+			y = Stack->pointList[f1 + j] - Inc->nb_points();
+			block_labels[col++] = std::to_string(y);
+		}
+	}
+
+
+
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex "
+				"before L.incma_latex_with_text_labels" << endl;
+	}
+	L.incma_latex_with_text_labels(
+			ost,
+			Descr,
+			v /*v */,
+			b /*b */,
+			V, B, Vi, Bj,
+			incma,
+			true, point_labels,
+			true, block_labels,
+			verbose_level);
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex "
+				"after L.incma_latex_with_text_labels" << endl;
+	}
+
+	FREE_int(incma);
+	FREE_int(Vi);
+	FREE_int(Bj);
+	delete [] point_labels;
+	delete [] block_labels;
+
+}
+
 void decomposition::get_row_decomposition_scheme(
 		row_and_col_partition *RC,
 	int *row_scheme, int verbose_level)
@@ -2120,6 +2287,103 @@ void decomposition::get_and_report_classes(
 		cout << "decomposition::get_and_report_classes done" << endl;
 	}
 }
+
+void decomposition::print_schemes(
+		std::ostream &ost,
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition::print_schemes" << endl;
+	}
+
+	ost << "\\subsection*{decomposition::print\\_schemes}" << endl;
+
+	int f_enter_math = false;
+	int f_print_subscripts = true;
+
+
+	ost << "$$" << endl;
+
+
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"before Scheme->print_row_decomposition_tex" << endl;
+	}
+
+	Scheme->print_row_decomposition_tex(
+		ost,
+		f_enter_math, f_print_subscripts,
+		verbose_level);
+
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"after Scheme->print_row_decomposition_tex" << endl;
+	}
+
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"before Scheme->print_column_decomposition_tex" << endl;
+	}
+
+	Scheme->print_column_decomposition_tex(
+		ost,
+		f_enter_math, f_print_subscripts,
+		verbose_level);
+
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"after Scheme->print_column_decomposition_tex" << endl;
+	}
+
+	ost << "$$" << endl;
+
+
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"before Scheme->RC->print_classes_of_decomposition_tex" << endl;
+	}
+	Scheme->RC->print_classes_of_decomposition_tex(ost);
+	if (f_v) {
+		cout << "decomposition::print_schemes "
+				"after Scheme->RC->print_classes_of_decomposition_tex" << endl;
+	}
+
+	if (Report_options->f_show_incidence_matrices) {
+
+		if (f_v) {
+			cout << "decomposition::print_schemes "
+					"before latex" << endl;
+		}
+
+		latex(
+				ost,
+				Scheme->RC,
+				verbose_level);
+
+		if (f_v) {
+			cout << "decomposition::print_schemes "
+					"after latex" << endl;
+		}
+	}
+	else {
+		ost << "Incidence matrix not shown. "
+				"Use option \\verb'-show_incidence_matrices' to show incidence matrix.\\\\" << endl;
+
+	}
+
+	if (f_v) {
+		cout << "decomposition::print_schemes done" << endl;
+	}
+}
+
+
 
 
 

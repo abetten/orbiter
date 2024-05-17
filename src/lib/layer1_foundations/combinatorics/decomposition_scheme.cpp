@@ -752,6 +752,188 @@ void decomposition_scheme::write_csv(
 	}
 }
 
+void decomposition_scheme::report_latex_with_external_files(
+		std::ostream &ost,
+		std::string &label_scheme,
+		std::string &label_txt,
+		int upper_bound_on_size_for_printing,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition_scheme::report_latex_with_external_files" << endl;
+	}
+
+
+	string fname1;
+	string fname2;
+
+	fname1 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_row";
+	fname2 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_col";
+
+	string fname1_tex;
+	string fname2_tex;
+
+	fname1_tex = fname1 + ".tex";
+	fname2_tex = fname2 + ".tex";
+
+	{
+		std::ofstream ost(fname1_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		print_row_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+	{
+		std::ofstream ost(fname2_tex);
+
+		int f_enter_math = false;
+		int f_print_subscripts = true;
+
+		print_column_tactical_decomposition_scheme_tex(
+				ost, f_enter_math, f_print_subscripts);
+
+	}
+
+	ost << endl << endl;
+
+	int nb_row, nb_col;
+
+	nb_row = RC->nb_row_classes;
+	nb_col = RC->nb_col_classes;
+
+
+	if (nb_row + nb_col < upper_bound_on_size_for_printing) {
+		ost << label_scheme + " scheme of size " << nb_row << " x " << nb_col << ":" << endl;
+
+		ost << "$$" << endl;
+		ost << "\\input " << fname1_tex << endl;
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname2_tex << endl;
+		ost << "$$" << endl;
+	}
+	else {
+		ost << label_scheme + " scheme of size " << nb_row << " x " << nb_col
+				<< " is too big for printing.\\" << endl;
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+	}
+
+	if (f_v) {
+		cout << "decomposition_scheme::report_latex_with_external_files done" << endl;
+	}
+
+}
+
+void decomposition_scheme::report_classes_with_external_files(
+		std::ostream &ost,
+		std::string &label_scheme,
+		std::string &label_txt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition_scheme::report_classes_with_external_files" << endl;
+	}
+
+
+	string fname1;
+	string fname2;
+
+	fname1 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_row_classes";
+	fname2 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_col_classes";
+
+
+	string fname1_tex;
+	string fname2_tex;
+
+	fname1_tex = fname1 + ".tex";
+	fname2_tex = fname2 + ".tex";
+
+	{
+		std::ofstream ost(fname1_tex);
+
+		SoS_points->print_table_latex_simple(ost);
+
+	}
+	{
+		std::ofstream ost(fname2_tex);
+
+		SoS_lines->print_table_latex_simple(ost);
+
+	}
+
+
+	ost << label_scheme << " point classes:\\\\" << endl;
+	//ost << "$$" << endl;
+	ost << "\\input " << fname1_tex << endl;
+	//ost << "$$" << endl;
+
+	ost << label_scheme << " line classes:\\\\" << endl;
+	//ost << "$$" << endl;
+	ost << "\\input " << fname2_tex << endl;
+	//ost << "$$" << endl;
+
+
+}
+
+void decomposition_scheme::export_csv(
+		std::string &label_scheme,
+		std::string &label_txt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "decomposition_scheme::export_csv" << endl;
+	}
+
+
+	string fname1;
+	string fname2;
+
+	fname1 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_row";
+	fname2 = "decomposition_" + label_scheme + "_" + label_txt + "_" + label_scheme + "_col";
+
+	string fname1_csv;
+	string fname2_csv;
+
+	string fname1b_csv;
+	string fname2b_csv;
+
+	fname1_csv = fname1 + ".csv";
+	fname2_csv = fname2 + ".csv";
+	fname1b_csv = fname1 + "_sets.csv";
+	fname2b_csv = fname2 + "_sets.csv";
+
+	if (f_v) {
+		cout << "decomposition_scheme::export_csv "
+				"before write_csv" << endl;
+	}
+	write_csv(
+			fname1_csv, fname2_csv,
+			fname1b_csv, fname2b_csv,
+			verbose_level);
+	if (f_v) {
+		cout << "decomposition_scheme::export_csv "
+				"after write_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "decomposition_scheme::export_csv done" << endl;
+	}
+
+}
+
+
 
 }}}
 

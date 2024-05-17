@@ -182,9 +182,11 @@ void algebraic_geometry_global::report_grassmannian(
 
 
 	fname = "Gr_" + std::to_string(P->Subspaces->n + 1) + "_"
-			+ std::to_string(k) + "_" + std::to_string(P->Subspaces->F->q) + ".tex";
+			+ std::to_string(k) + "_"
+			+ std::to_string(P->Subspaces->F->q) + ".tex";
 	title = "Cheat Sheet Gr($" + std::to_string(P->Subspaces->n + 1)
-			+ "," + std::to_string(k) + "," + std::to_string(P->Subspaces->F->q) + "$)";
+			+ "," + std::to_string(k) + ","
+			+ std::to_string(P->Subspaces->F->q) + "$)";
 
 
 
@@ -248,7 +250,8 @@ void algebraic_geometry_global::map(
 		cout << "algebraic_geometry_global::map" << endl;
 	}
 	if (f_v) {
-		cout << "algebraic_geometry_global::map n = " << P->Subspaces->n << endl;
+		cout << "algebraic_geometry_global::map "
+				"n = " << P->Subspaces->n << endl;
 	}
 
 
@@ -309,7 +312,8 @@ void algebraic_geometry_global::affine_map(
 		cout << "algebraic_geometry_global::affine_map" << endl;
 	}
 	if (f_v) {
-		cout << "algebraic_geometry_global::affine_map n = " << P->Subspaces->n << endl;
+		cout << "algebraic_geometry_global::affine_map "
+				"n = " << P->Subspaces->n << endl;
 	}
 
 
@@ -465,7 +469,8 @@ void algebraic_geometry_global::evaluate_regular_map(
 	data_structures::string_tools ST;
 	std::map<std::string, std::string> symbol_table;
 
-	ST.parse_value_pairs(symbol_table,
+	ST.parse_value_pairs(
+			symbol_table,
 				evaluate_text, verbose_level - 1);
 
 	for (i = 0; i < N_points_input; i++) {
@@ -899,7 +904,8 @@ void algebraic_geometry_global::cubic_surface_family_G13_generators(
 	for (h = 0; h < nb_gens; h++) {
 		for (i = 0; i < 16; i++) {
 			Int_vec_zero(v, l);
-			Gg.AG_element_unrank(F->p, v, 1, l, data[h * 16 + i]);
+			Gg.AG_element_unrank(
+					F->p, v, 1, l, data[h * 16 + i]);
 			c = 0;
 			for (j = 0; j < l; j++) {
 				c = F->mult(c, a);
@@ -1105,6 +1111,10 @@ algebraic_geometry::eckardt_point_info *algebraic_geometry_global::compute_eckar
 int algebraic_geometry_global::test_nb_Eckardt_points(
 		geometry::projective_space *P2,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
+// input: S[5] and pt, which form a 6-arc.
+// we assume that len = 5.
+// nb_E the predicted number of Eckardt points
+// output true if nb_E is correct, false otherwise.
 {
 	int f_v = (verbose_level >= 1);
 	int ret = true;
@@ -1122,7 +1132,16 @@ int algebraic_geometry_global::test_nb_Eckardt_points(
 
 	algebraic_geometry::eckardt_point_info *E;
 
-	E = compute_eckardt_point_info(P2, Arc6, 0/*verbose_level*/);
+	if (f_v) {
+		cout << "algebraic_geometry_global::test_nb_Eckardt_points "
+				"before compute_eckardt_point_info" << endl;
+	}
+	E = compute_eckardt_point_info(
+			P2, Arc6, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "algebraic_geometry_global::test_nb_Eckardt_points "
+				"after compute_eckardt_point_info" << endl;
+	}
 
 
 	if (E->nb_E != nb_E) {
@@ -1971,7 +1990,8 @@ void algebraic_geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	line2_to = P3->rank_line(line2_to_data);
 
 
-	hyperplane_lifting_with_two_lines_moved(P3,
+	hyperplane_lifting_with_two_lines_moved(
+			P3,
 			line1_from, line1_to,
 			line2_from, line2_to,
 			A4,

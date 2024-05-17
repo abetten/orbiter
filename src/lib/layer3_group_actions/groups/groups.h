@@ -631,6 +631,7 @@ public:
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
 			int verbose_level);
+#if 0
 	void print_TDA(
 			std::ostream &ost,
 			canonical_form_classification::object_with_canonical_form *OwCF,
@@ -641,6 +642,7 @@ public:
 			std::ostream &ost,
 			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int verbose_level);
+#endif
 
 	// schreier_io.cpp:
 	void latex(

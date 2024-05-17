@@ -133,6 +133,8 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 		cout << "input_objects_of_type_variety::count_nb_objects_to_test" << endl;
 	}
 
+	orbiter_kernel_system::file_io Fio;
+
 	nb_objects_to_test = 0;
 
 
@@ -149,21 +151,25 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 
 		fname = ST.printf_d(Classifier->Descr->fname_mask, cnt);
 
-		data_structures::spreadsheet S;
-
 		if (f_v) {
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
 					<< cnt << " / " << Classifier->Descr->nb_files
 					<< " fname=" << fname << endl;
 		}
-		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
-		nb_objects_to_test += S.nb_rows - 1;
+		int nb;
+
+
+		nb = Fio.count_number_of_data_lines_in_spreadsheet(
+				fname, verbose_level - 2);
+
+		nb_objects_to_test += nb;
+
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
 					"file " << cnt << " / " << Classifier->Descr->nb_files << " has  "
-					<< S.nb_rows - 1 << " objects" << endl;
+					<< nb << " objects, total = " << nb_objects_to_test << endl;
 		}
 	}
 
@@ -241,7 +247,8 @@ void input_objects_of_type_variety::read_input_objects(
 
 			//f_carry_through = true;
 			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects f_has_nauty_output" << endl;
+				cout << "input_objects_of_type_variety::read_input_objects "
+						"f_has_nauty_output" << endl;
 			}
 
 			int nb_ct = nb_carry_through + 9;
@@ -269,7 +276,8 @@ void input_objects_of_type_variety::read_input_objects(
 
 				s = headings[i];
 				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects before S.find_column " << s << endl;
+					cout << "input_objects_of_type_variety::read_input_objects "
+							"before S.find_column " << s << endl;
 				}
 				Carry_through2[nb_carry_through + i] = S.find_column(s);
 			}

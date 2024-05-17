@@ -74,6 +74,917 @@ void combinatorial_object::init(
 
 }
 
+void combinatorial_object::do_canonical_form_PG(
+		projective_geometry::projective_space_with_action *PA,
+		canonical_form_classification::classification_of_objects_description
+				*Canonical_form_PG_Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG" << endl;
+	}
+
+
+
+	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG "
+				"before Classification->perform_classification" << endl;
+	}
+	Classification->perform_classification(
+			Canonical_form_PG_Descr,
+			true /* f_projective_space */, PA->P,
+			IS,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG "
+				"after Classification->perform_classification" << endl;
+	}
+
+
+	Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+
+	if (!IS->Descr->f_label) {
+		cout << "please use -label <label_txt> <label_tex> "
+				"when defining the input stream for the combinatorial object" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG "
+				"before Classification_CO->init_after_nauty" << endl;
+	}
+	Classification_CO->init_after_nauty(
+			Classification,
+			true /* f_projective_space */, PA,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG "
+				"after Classification_CO->init_after_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_PG done" << endl;
+	}
+
+}
+
+void combinatorial_object::do_canonical_form_not_PG(
+		canonical_form_classification::classification_of_objects_description
+			*Canonical_form_Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG" << endl;
+	}
+
+	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG "
+				"before Classification->perform_classification" << endl;
+	}
+	Classification->perform_classification(
+			Canonical_form_Descr,
+			false /* f_projective_space */, NULL /* P */,
+			IS,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG "
+				"after Combo->Classification->perform_classification" << endl;
+	}
+
+
+	Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG "
+				"before Classification_CO->init_after_nauty" << endl;
+	}
+	Classification_CO->init_after_nauty(
+			Classification,
+			false /* f_projective_space */, NULL,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG "
+				"after Classification_CO->init_after_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object::do_canonical_form_not_PG done" << endl;
+	}
+
+}
+
+void combinatorial_object::do_test_distinguishing_property(
+		graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_test_distinguishing_property" << endl;
+	}
+
+	int input_idx;
+	int *F_distinguishing;
+
+	F_distinguishing = NEW_int(IS->Objects.size());
+
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+		F_distinguishing[input_idx] = CG->test_distinguishing_property(
+				OwCF->set, OwCF->sz, verbose_level);
+	}
+
+	data_structures::tally T;
+
+	T.init(F_distinguishing, IS->Objects.size(), false, 0);
+	cout << "classification : ";
+	T.print_first(true /* f_backwards*/);
+	cout << endl;
+
+	cout << "distinguishing sets are:";
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		if (F_distinguishing[input_idx]) {
+			cout << input_idx << ", ";
+		}
+	}
+	cout << endl;
+
+	cout << "distinguishing sets are:";
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+		if (!F_distinguishing[input_idx]) {
+			continue;
+		}
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+		OwCF->print(cout);
+
+	}
+	cout << endl;
+
+
+	FREE_int(F_distinguishing);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_test_distinguishing_property done" << endl;
+	}
+
+}
+
+void combinatorial_object::do_compute_frequency_graph(
+		graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_compute_frequency_graph" << endl;
+	}
+
+
+	int input_idx;
+	//int N;
+	int *code = NULL;
+	//int sz = 0;
+
+
+	code = NEW_int(CG->nb_points);
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+#if 0
+		if (input_idx == 0) {
+
+			sz = OwCF->sz;
+			N = 1 << OwCF->sz;
+			frequency = NEW_int(N);
+		}
+		else {
+			if (OwCF->sz != sz) {
+				cout << "the size of the sets must be constant" << endl;
+				exit(1);
+			}
+		}
+#endif
+
+		CG->all_distinguishing_codes(
+				OwCF->set, OwCF->sz, code, verbose_level);
+		//CG->distinguishing_code_frequency(
+		//		OwCF->set, OwCF->sz, frequency, N, verbose_level);
+
+		data_structures::tally T;
+
+		T.init(code, CG->nb_points, false, 0);
+		cout << "frequency tally : ";
+		T.print_first(true /* f_backwards*/);
+		cout << endl;
+		T.print_types();
+
+	}
+
+
+	FREE_int(code);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_compute_frequency_graph done" << endl;
+	}
+}
+
+void combinatorial_object::do_compute_ideal(
+		ring_theory::homogeneous_polynomial_domain *HPD,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_compute_ideal" << endl;
+	}
+
+
+
+
+	int input_idx;
+
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+		HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
+
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object::do_compute_ideal done" << endl;
+	}
+}
+
+void combinatorial_object::do_save(
+		std::string &save_as_fname,
+		int f_extract,
+		long int *extract_idx_set, int extract_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_save" << endl;
+	}
+	int input_idx;
+	int sz;
+	int N;
+
+	N = IS->Objects.size();
+
+	canonical_form_classification::object_with_canonical_form *OwCF;
+
+	OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[0];
+
+	//OwCF->set;
+	sz = OwCF->sz;
+
+	for (input_idx = 0; input_idx < N; input_idx++) {
+
+		if (false) {
+			cout << "combinatorial_object::do_save "
+					"input_idx = " << input_idx
+					<< " / " << IS->Objects.size() << endl;
+		}
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *)
+				IS->Objects[input_idx];
+
+		//OwCF->set;
+		if (OwCF->sz != sz) {
+			cout << "the objects have different sizes, cannot save" << endl;
+			exit(1);
+		}
+
+
+	}
+
+	long int *Sets;
+
+	Sets = NEW_lint(N * sz);
+
+	for (input_idx = 0; input_idx < N; input_idx++) {
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
+	}
+
+	cout << "The combined number of objects is " << N << endl;
+
+
+	if (f_extract) {
+		if (f_v) {
+			cout << "extracting subset of size " << extract_size << endl;
+		}
+		long int *Sets2;
+		int h, i;
+
+		Sets2 = NEW_lint(extract_size * sz);
+		for (h = 0; h < extract_size; h++) {
+			i = extract_idx_set[h];
+			Lint_vec_copy(Sets + i * sz, Sets2 + h * sz, sz);
+		}
+		FREE_lint(Sets);
+		Sets = Sets2;
+		if (f_v) {
+			cout << "number of sets is reduced from "
+					<< N << " to " << extract_size << endl;
+		}
+		N = extract_size;
+	}
+	else {
+
+	}
+	orbiter_kernel_system::file_io Fio;
+
+	string fname_out;
+
+	fname_out.assign(save_as_fname);
+
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_out, Sets, N, sz);
+
+	cout << "Written file " << fname_out
+			<< " of size " << Fio.file_size(fname_out) << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object::do_save done" << endl;
+	}
+}
+
+
+void combinatorial_object::draw_incidence_matrices(
+		std::string &prefix,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object::draw_incidence_matrices" << endl;
+	}
+
+
+
+	string fname;
+
+	fname = prefix + "_incma.tex";
+
+	if (f_v) {
+		cout << "combinatorial_object::draw_incidence_matrices "
+				"before latex_report" << endl;
+	}
+
+
+	{
+		ofstream ost(fname);
+		l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object::draw_incidence_matrices "
+					"before loop" << endl;
+		}
+
+		int i;
+
+		ost << "\\noindent" << endl;
+
+		for (i = 0; i < N; i++) {
+
+			if (f_v) {
+				cout << "combinatorial_object::draw_incidence_matrices "
+						"object " << i << " / " << N << endl;
+			}
+			canonical_form_classification::object_with_canonical_form *OwCF;
+
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+
+
+			canonical_form_classification::encoded_combinatorial_object *Enc;
+
+			if (f_v) {
+				cout << "combinatorial_object::draw_incidence_matrices "
+						"before OwCF->encode_incma" << endl;
+			}
+			OwCF->encode_incma(Enc, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object::draw_incidence_matrices "
+						"after OwCF->encode_incma" << endl;
+			}
+
+			//Enc->latex_set_system_by_columns(ost, verbose_level);
+
+			//Enc->latex_set_system_by_rows(ost, verbose_level);
+
+			if (f_v) {
+				cout << "combinatorial_object::draw_incidence_matrices "
+						"before OwCF->latex_incma" << endl;
+			}
+			Enc->latex_incma(ost, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object::draw_incidence_matrices "
+						"after OwCF->latex_incma" << endl;
+			}
+
+			FREE_OBJECT(Enc);
+
+
+		}
+
+
+
+		L.foot(ost);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object::draw_incidence_matrices done" << endl;
+	}
+}
+
+void combinatorial_object::unpack_from_restricted_action(
+		std::string &prefix,
+		apps_algebra::any_group *G,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object::unpack_from_restricted_action" << endl;
+	}
+
+
+
+	if (G->A->type_G != action_by_restriction_t) {
+		cout << "combinatorial_object::unpack_from_restricted_action "
+				"must be a restricted action" << endl;
+		exit(1);
+	}
+	induced_actions::action_by_restriction *ABR;
+	ABR = G->A->G.ABR;
+
+
+	string fname;
+
+	fname = prefix + "_unpacked.txt";
+
+	if (f_v) {
+		cout << "combinatorial_object::unpack_from_restricted_action "
+				"before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object::unpack_from_restricted_action "
+					"before loop" << endl;
+		}
+
+		int i, h;
+		long int a, b;
+
+
+		for (i = 0; i < N; i++) {
+
+			canonical_form_classification::object_with_canonical_form *OwCF;
+
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+
+
+			//encoded_combinatorial_object *Enc;
+
+			//OwCF->encode_incma(Enc, verbose_level);
+
+			for (h = 0; h < OwCF->sz; h++) {
+
+				a = OwCF->set[h];
+				b = ABR->original_point(a);
+				OwCF->set[h] = b;
+			}
+
+			//Enc->latex_incma(ost, verbose_level);
+
+			//FREE_OBJECT(Enc);
+
+			ost << OwCF->sz;
+			for (h = 0; h < OwCF->sz; h++) {
+				ost << " " << OwCF->set[h];
+			}
+			ost << endl;
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object::unpack_from_restricted_action done" << endl;
+	}
+}
+
+
+void combinatorial_object::line_covering_type(
+		std::string &prefix,
+		projective_geometry::projective_space_with_action *PA,
+		std::string &lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::line_covering_type" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::latex_interface L;
+
+	geometry::projective_space *P;
+
+	P = PA->P;
+
+	long int *the_lines;
+	int nb_lines;
+
+	Get_lint_vector_from_label(lines, the_lines, nb_lines, verbose_level);
+
+	string fname;
+
+	fname = prefix + "_line_covering_type.txt";
+
+	if (f_v) {
+		cout << "combinatorial_object::line_covering_type before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object::line_covering_type before loop" << endl;
+		}
+
+		int i, h;
+
+		int *type;
+
+		type = NEW_int(nb_lines);
+
+
+		for (i = 0; i < N; i++) {
+
+			canonical_form_classification::object_with_canonical_form *OwCF;
+
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+
+
+			P->Subspaces->line_intersection_type_basic_given_a_set_of_lines(
+					the_lines, nb_lines,
+					OwCF->set, OwCF->sz, type, 0 /*verbose_level */);
+
+			ost << OwCF->sz;
+			for (h = 0; h < nb_lines; h++) {
+				ost << " " << type[h];
+			}
+			ost << endl;
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object::line_covering_type done" << endl;
+	}
+}
+
+void combinatorial_object::line_type(
+		std::string &prefix,
+		projective_geometry::projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object::line_type" << endl;
+	}
+
+
+	geometry::projective_space *P;
+
+	P = PA->P;
+
+	string fname;
+
+	fname = prefix + "_line_type.txt";
+
+	if (f_v) {
+		cout << "combinatorial_object::line_type before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object::line_type before loop" << endl;
+		}
+
+		int i, h;
+
+		int *type;
+
+		type = NEW_int(P->Subspaces->N_lines);
+
+
+		for (i = 0; i < N; i++) {
+
+			canonical_form_classification::object_with_canonical_form *OwCF;
+
+			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+
+
+			P->Subspaces->line_intersection_type(
+					OwCF->set, OwCF->sz, type, 0 /* verbose_level */);
+				// type[N_lines]
+
+			ost << OwCF->sz;
+			for (h = 0; h < P->Subspaces->N_lines; h++) {
+				ost << " " << type[h];
+			}
+			ost << endl;
+
+#if 1
+			data_structures::tally T;
+
+			T.init(type, P->Subspaces->N_lines, false, 0);
+
+			if (f_v) {
+				cout << "combinatorial_object::perform_activity_GOC line type:" << endl;
+				T.print(true /* f_backwards*/);
+				cout << endl;
+			}
+
+			std::string fname_line_type;
+
+
+			fname_line_type = prefix + "_line_type_set_partition_" + std::to_string(i) + ".csv";
+
+			T.save_classes_individually(fname_line_type);
+			if (true) {
+				cout << "Written file " << fname_line_type << " of size "
+						<< Fio.file_size(fname_line_type) << endl;
+			}
+
+#endif
+
+
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object::line_type done" << endl;
+	}
+}
+
+
+void combinatorial_object::do_activity(
+		user_interface::activity_description *Activity_description,
+		std::string &description_txt,
+		std::vector<std::vector<std::string> > &Feedback,
+		std::string &headings,
+		int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_activity" << endl;
+	}
+
+
+	//int f_activity;
+	//user_interface::activity_description *Activity_description;
+
+	if (Activity_description->f_graph_theoretic_activity) {
+
+		if (f_v) {
+			cout << "combinatorial_object::do_activity f_graph_theoretic_activity" << endl;
+		}
+		do_graph_theoretic_activity(
+				Activity_description->Graph_theoretic_activity_description,
+				description_txt, Feedback, headings, nb_cols, verbose_level);
+
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object::do_activity done" << endl;
+	}
+}
+
+void combinatorial_object::do_graph_theoretic_activity(
+		apps_graph_theory::graph_theoretic_activity_description
+				*Graph_theoretic_activity_description,
+		std::string &label,
+		std::vector<std::vector<std::string> > &Feedback,
+		std::string &headings,
+		int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_graph_theoretic_activity" << endl;
+	}
+
+
+	{
+	apps_graph_theory::graph_theoretic_activity Activity;
+
+
+	Activity.feedback_headings(
+			Graph_theoretic_activity_description,
+			headings,
+			nb_cols,
+			verbose_level);
+
+
+	Activity.get_label(
+			Graph_theoretic_activity_description,
+			label,
+			verbose_level);
+
+	}
+
+
+	int input_idx;
+
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+		if (OwCF->type != t_INC) {
+			cout << "combinatorial_object::do_graph_theoretic_activity "
+					"expecting an object of type incidence geometry" << endl;
+			exit(1);
+		}
+
+		int *Adj;
+		int N;
+		string label, label_tex;
+
+		label = IS->Descr->label_txt + "_obj" + std::to_string(input_idx);
+		label_tex = IS->Descr->label_tex + "\\_obj" + std::to_string(input_idx);
+
+		OwCF->collinearity_graph(
+				Adj, N,
+				verbose_level);
+
+		graph_theory::colored_graph *CG;
+
+		CG = NEW_OBJECT(graph_theory::colored_graph);
+		if (f_v) {
+			cout << "combinatorial_object::do_graph_theoretic_activity "
+					"before CG->init_adjacency_no_colors" << endl;
+		}
+		CG->init_adjacency_no_colors(N, Adj, label, label_tex,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object::do_graph_theoretic_activity "
+					"after CG->init_adjacency_no_colors" << endl;
+		}
+
+		{
+			apps_graph_theory::graph_theoretic_activity Activity;
+
+			std::vector<std::string> feedback;
+
+			Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
+
+
+			if (f_v) {
+				cout << "combinatorial_object::do_graph_theoretic_activity "
+						"before Activity.perform_activity" << endl;
+			}
+			Activity.perform_activity(feedback, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object::do_graph_theoretic_activity "
+						"after Activity.perform_activity" << endl;
+			}
+
+			Feedback.push_back(feedback);
+
+
+		}
+
+		FREE_int(Adj);
+		FREE_OBJECT(CG);
+
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object::do_graph_theoretic_activity done" << endl;
+	}
+}
+
+
+
+
+
+
 }}}
 
 

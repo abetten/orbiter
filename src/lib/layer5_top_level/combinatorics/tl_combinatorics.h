@@ -158,6 +158,8 @@ public:
 	std::string line_covering_type_projective_space;
 	std::string line_covering_type_lines;
 
+	int f_activity;
+	user_interface::activity_description *Activity_description;
 
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
@@ -202,71 +204,6 @@ public:
 			int verbose_level);
 	void perform_activity_combo(
 			int verbose_level);
-	void do_save(
-			std::string &save_as_fname,
-			int f_extract,
-			long int *extract_idx_set, int extract_size,
-			int verbose_level);
-#if 0
-	void post_process_classification(
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *&OwP,
-			int f_projective_space,
-			projective_geometry::projective_space_with_action *PA,
-			std::string &prefix,
-			int verbose_level);
-	void classification_report(
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *OwP, int verbose_level);
-	void latex_report(
-			combinatorics::classification_of_objects_report_options
-				*Report_options,
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *OwP,
-			int verbose_level);
-	void report_all_isomorphism_types(
-			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
-				*Report_options,
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *OwP,
-			int verbose_level);
-	void report_isomorphism_type(
-			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
-				*Report_options,
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *OwP,
-			int i, int verbose_level);
-	void report_object(
-			std::ostream &ost,
-			combinatorics::classification_of_objects_report_options
-				*Report_options,
-			combinatorics::classification_of_objects *CO,
-			object_with_properties *OwP,
-			int object_idx,
-			int verbose_level);
-#endif
-	void draw_incidence_matrices(
-			std::string &prefix,
-			canonical_form_classification::data_input_stream *IS,
-			int verbose_level);
-	void unpack_from_restricted_action(
-			std::string &prefix,
-			std::string &group_label,
-			canonical_form_classification::data_input_stream *IS,
-			int verbose_level);
-	void line_covering_type(
-			std::string &prefix,
-			std::string &projective_space_label,
-			std::string &lines,
-			canonical_form_classification::data_input_stream *IS,
-			int verbose_level);
-	void line_type(
-			std::string &prefix,
-			std::string &projective_space_label,
-			canonical_form_classification::data_input_stream *IS,
-			int verbose_level);
 
 };
 
@@ -282,8 +219,6 @@ public:
 
 class combinatorial_object {
 public:
-	//canonical_form_classification::data_input_stream_description
-	//	*Data_input_stream_description;
 
 	canonical_form_classification::data_input_stream *IS;
 
@@ -295,6 +230,60 @@ public:
 	void init(
 			canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
+			int verbose_level);
+	void do_canonical_form_PG(
+			projective_geometry::projective_space_with_action *PA,
+			canonical_form_classification::classification_of_objects_description
+					*Canonical_form_PG_Descr,
+			int verbose_level);
+	void do_canonical_form_not_PG(
+			canonical_form_classification::classification_of_objects_description
+				*Canonical_form_Descr,
+			int verbose_level);
+	void do_test_distinguishing_property(
+			graph_theory::colored_graph *CG,
+			int verbose_level);
+	void do_compute_frequency_graph(
+			graph_theory::colored_graph *CG,
+			int verbose_level);
+	void do_compute_ideal(
+			ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+	void do_save(
+			std::string &save_as_fname,
+			int f_extract,
+			long int *extract_idx_set, int extract_size,
+			int verbose_level);
+	void draw_incidence_matrices(
+			std::string &prefix,
+			int verbose_level);
+	void unpack_from_restricted_action(
+			std::string &prefix,
+			apps_algebra::any_group *G,
+			int verbose_level);
+	void line_covering_type(
+			std::string &prefix,
+			projective_geometry::projective_space_with_action *PA,
+			std::string &lines,
+			int verbose_level);
+	void line_type(
+			std::string &prefix,
+			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+	void do_activity(
+			user_interface::activity_description *Activity_description,
+			std::string &description_txt,
+			std::vector<std::vector<std::string> > &Feedback,
+			std::string &headings,
+			int &nb_cols,
+			int verbose_level);
+	void do_graph_theoretic_activity(
+			apps_graph_theory::graph_theoretic_activity_description
+					*Graph_theoretic_activity_description,
+			std::string &label,
+			std::vector<std::vector<std::string> > &Feedback,
+			std::string &headings,
+			int &nb_cols,
 			int verbose_level);
 
 };

@@ -1961,7 +1961,7 @@ int gl_classes::find_class_rep(
 		}
 	}
 	if (i == nb_reps) {
-		//cout << "gl_classes::find_class_rep dould not "
+		//cout << "gl_classes::find_class_rep could not "
 		//"find representative" << endl;
 		//exit(1); 
 		return -1;
@@ -2009,7 +2009,8 @@ void gl_classes::report(
 	for (i = 0; i < nb_classes; i++) {
 
 
-		make_matrix_from_class_rep(M, R + i, 0 /* verbose_level */);
+		make_matrix_from_class_rep(
+				M, R + i, 0 /* verbose_level */);
 
 
 		ost << "\\left[" << endl;

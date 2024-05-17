@@ -421,7 +421,7 @@ void surface_classify_wedge::sweep_Cayley(
 							isomorphic_to, Elt_isomorphism,
 							verbose_level);
 						if (f_v) {
-							cout << "surface " << SC->label_txt
+							cout << "surface " << SC->SO->label_txt
 									<< " belongs to iso type " << isomorphic_to << endl;
 						}
 

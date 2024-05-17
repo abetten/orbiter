@@ -23,6 +23,11 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_find_cliques = false;
 	Clique_finder_control = NULL;
 
+	f_test_SRG_property = false;
+
+	f_test_Neumaier_property = false;
+	test_Neumaier_property_clique_size = 0;
+
 	f_find_subgraph = false;
 	//std::string find_subgraph_label;
 
@@ -86,6 +91,20 @@ int graph_theoretic_activity_description::read_arguments(
 			Clique_finder_control = NEW_OBJECT(graph_theory::clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i - 1, argv + i + 1) + 1;
 		}
+		else if (ST.stringcmp(argv[i], "-test_SRG_property") == 0) {
+			f_test_SRG_property = true;
+			if (f_v) {
+				cout << "-test_SRG_property " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-test_Neumaier_property") == 0) {
+			f_test_Neumaier_property = true;
+			test_Neumaier_property_clique_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-test_Neumaier_property " << test_Neumaier_property_clique_size << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-find_subgraph") == 0) {
 			f_find_subgraph = true;
 			find_subgraph_label.assign(argv[++i]);
@@ -215,6 +234,12 @@ void graph_theoretic_activity_description::print()
 	if (f_find_cliques) {
 		cout << "-find_cliques" << endl;
 		Clique_finder_control->print();
+	}
+	if (f_test_SRG_property) {
+		cout << "-test_SRG_property " << endl;
+	}
+	if (f_test_Neumaier_property) {
+		cout << "-test_Neumaier_property " << test_Neumaier_property_clique_size << endl;
 	}
 	if (f_find_subgraph) {
 		cout << "-find_subgraph " << find_subgraph_label << endl;

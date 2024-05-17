@@ -1628,6 +1628,8 @@ void grassmann::make_spread_set_from_spread(
 void grassmann::make_partition(
 		long int *Spread, int spread_sz,
 		long int *&Part, int &s, int verbose_level)
+// Part[spread_sz * s] is the list of points arranged by spread elements
+// Part[i * s + j] is the j-th point of the i-th spread element
 {
 	int f_v = (verbose_level >= 1);
 

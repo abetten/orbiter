@@ -1385,6 +1385,9 @@ public:
 			int *&Adj, int &N,
 			long int *Set, int sz,
 			int verbose_level);
+	void make_affine_polar_graph(
+			int *&Adj, int &N,
+			int verbose_level);
 
 
 };

@@ -107,7 +107,7 @@ activity_description::~activity_description()
 
 
 void activity_description::read_arguments(
-		interface_symbol_table *Sym,
+		//interface_symbol_table *Sym,
 		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -117,7 +117,7 @@ void activity_description::read_arguments(
 	}
 	data_structures::string_tools ST;
 
-	activity_description::Sym = Sym;
+	//activity_description::Sym = Sym;
 
 	if (ST.stringcmp(argv[i], "-finite_field_activity") == 0) {
 		f_finite_field_activity = true;
@@ -705,7 +705,8 @@ void activity_description::read_arguments(
 }
 
 
-void activity_description::worker(int verbose_level)
+void activity_description::worker(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -933,9 +934,11 @@ void activity_description::worker(int verbose_level)
 void activity_description::print()
 {
 
-	cout << "-with ";
-	Sym->print_with();
-	cout << "-do " << endl;
+	if (Sym) {
+		cout << "-with ";
+		Sym->print_with();
+		cout << "-do " << endl;
+	}
 
 	if (f_finite_field_activity) {
 		cout << "-finite_field_activity ";
@@ -1073,12 +1076,6 @@ void activity_description::do_finite_field_activity(
 
 	field_theory::finite_field_activity FA;
 	FA.init(Finite_field_activity_description, F, verbose_level);
-#if 0
-	Finite_field_activity_description->f_q = true;
-	Finite_field_activity_description->q = F->q;
-	FA.Descr = Finite_field_activity_description;
-	FA.F = F;
-#endif
 
 	if (Sym->with_labels.size() == 2) {
 		cout << "-finite_field_activity has two inputs" << endl;
@@ -1124,7 +1121,8 @@ void activity_description::do_ring_theoretic_activity(
 	}
 	ring_theory::homogeneous_polynomial_domain *HPD;
 
-	HPD = (ring_theory::homogeneous_polynomial_domain *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	HPD = (ring_theory::homogeneous_polynomial_domain *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
 	apps_algebra::polynomial_ring_activity A;
 	A.init(Polynomial_ring_activity_description, HPD, verbose_level);
@@ -1174,7 +1172,8 @@ void activity_description::do_projective_space_activity(
 	}
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = (projective_geometry::projective_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PA = (projective_geometry::projective_space_with_action *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
 	projective_geometry::projective_space_activity Activity;
 	Activity.Descr = Projective_space_activity_description;
@@ -1224,7 +1223,8 @@ void activity_description::do_orthogonal_space_activity(
 	}
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
-	OA = (orthogonal_geometry_applications::orthogonal_space_with_action *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	OA = (orthogonal_geometry_applications::orthogonal_space_with_action *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
 	orthogonal_geometry_applications::orthogonal_space_activity Activity;
 	Activity.Descr = Orthogonal_space_activity_description;
@@ -1309,7 +1309,8 @@ void activity_description::do_group_theoretic_activity(
 
 			apps_algebra::any_group *AG_secondary;
 
-			AG_secondary = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+			AG_secondary = (apps_algebra::any_group *)
+					Sym->Orbiter_top_level_session->get_object(Idx[1]);
 
 			if (f_v) {
 				cout << "activity_description::do_group_theoretic_activity "
@@ -1378,7 +1379,8 @@ void activity_description::do_coding_theoretic_activity(
 
 				field_theory::finite_field *F;
 
-				F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[i]);
+				F = (field_theory::finite_field *)
+						Sym->Orbiter_top_level_session->get_object(Idx[i]);
 
 				Activity.init_field(Coding_theoretic_activity_description, F, verbose_level);
 			}
@@ -1391,7 +1393,8 @@ void activity_description::do_coding_theoretic_activity(
 
 				apps_coding_theory::create_code *Code;
 
-				Code = (apps_coding_theory::create_code *) Sym->Orbiter_top_level_session->get_object(Idx[i]);
+				Code = (apps_coding_theory::create_code *)
+						Sym->Orbiter_top_level_session->get_object(Idx[i]);
 
 				Activity.init_code(Coding_theoretic_activity_description, Code, verbose_level);
 
@@ -1444,7 +1447,8 @@ void activity_description::do_cubic_surface_activity(
 
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *SC;
 
-	SC = (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SC = (applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::cubic_surface_activity Activity;
 
@@ -1495,7 +1499,8 @@ void activity_description::do_quartic_curve_activity(
 
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *QC;
 
-	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	QC = (applications_in_algebraic_geometry::quartic_curves::quartic_curve_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_activity Activity;
 
@@ -1546,7 +1551,8 @@ void activity_description::do_blt_set_activity(
 
 	orthogonal_geometry_applications::BLT_set_create *BC;
 
-	BC = (orthogonal_geometry_applications::BLT_set_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	BC = (orthogonal_geometry_applications::BLT_set_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		orthogonal_geometry_applications::blt_set_activity Activity;
 
@@ -1601,7 +1607,8 @@ void activity_description::do_combinatorial_object_activity(
 	if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_geometric_object) {
 		geometry::geometric_object_create *GOC;
 
-		GOC = (geometry::geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		GOC = (geometry::geometric_object_create *)
+				Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 
@@ -1622,7 +1629,8 @@ void activity_description::do_combinatorial_object_activity(
 	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
 		apps_combinatorics::combinatorial_object *Combo;
 
-		Combo = (apps_combinatorics::combinatorial_object *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		Combo = (apps_combinatorics::combinatorial_object *)
+				Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;
 
@@ -1674,13 +1682,15 @@ void activity_description::do_graph_theoretic_activity(
 	//create_graph *Gr;
 	graph_theory::colored_graph *CG;
 
-	CG = (graph_theory::colored_graph *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	CG = (graph_theory::colored_graph *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	if (f_v) {
 		cout << "activity_description::do_graph_theoretic_activity CG->label = " << CG->label << endl;
 	}
 
 	{
 		apps_graph_theory::graph_theoretic_activity Activity;
+		std::vector<std::string> feedback;
 
 		Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
 
@@ -1688,7 +1698,7 @@ void activity_description::do_graph_theoretic_activity(
 			cout << "activity_description::do_graph_theoretic_activity "
 					"before Activity.perform_activity" << endl;
 		}
-		Activity.perform_activity(verbose_level);
+		Activity.perform_activity(feedback, verbose_level);
 		if (f_v) {
 			cout << "activity_description::do_graph_theoretic_activity "
 					"after Activity.perform_activity" << endl;
@@ -1728,9 +1738,11 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 
 	applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *SCW;
 
-	SCW = (applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SCW = (applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::surface_classify_wedge *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity Activity;
+		applications_in_algebraic_geometry::cubic_surfaces_and_double_sixes::classification_of_cubic_surfaces_with_double_sixes_activity
+			Activity;
 
 		Activity.init(Classification_of_cubic_surfaces_with_double_sixes_activity_description, SCW, verbose_level);
 
@@ -1778,7 +1790,8 @@ void activity_description::do_spread_table_activity(
 
 	packings::packing_classify *P;
 
-	P = (packings::packing_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	P = (packings::packing_classify *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		spreads::spread_table_activity Activity;
 
@@ -1828,7 +1841,8 @@ void activity_description::do_packing_was_activity(
 
 	packings::packing_was *PW;
 
-	PW = (packings::packing_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PW = (packings::packing_was *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		packings::packing_was_activity Activity;
 
@@ -1880,7 +1894,8 @@ void activity_description::do_packing_fixed_points_activity(
 
 	packings::packing_was_fixpoints *PWF;
 
-	PWF = (packings::packing_was_fixpoints *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	PWF = (packings::packing_was_fixpoints *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		packings::packing_was_fixpoints_activity Activity;
 
@@ -1931,7 +1946,8 @@ void activity_description::do_graph_classification_activity(
 
 	apps_graph_theory::graph_classify *GC;
 
-	GC = (apps_graph_theory::graph_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	GC = (apps_graph_theory::graph_classify *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		apps_graph_theory::graph_classification_activity Activity;
 
@@ -1981,7 +1997,8 @@ void activity_description::do_diophant_activity(
 
 	solvers::diophant_create *Dio;
 
-	Dio = (solvers::diophant_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	Dio = (solvers::diophant_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		solvers::diophant_activity Activity;
 
@@ -2030,7 +2047,8 @@ void activity_description::do_design_activity(
 
 	apps_combinatorics::design_create *DC;
 
-	DC = (apps_combinatorics::design_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	DC = (apps_combinatorics::design_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		apps_combinatorics::design_activity Activity;
 
@@ -2079,7 +2097,8 @@ void activity_description::do_large_set_was_activity(
 
 	apps_combinatorics::large_set_was *LSW;
 
-	LSW = (apps_combinatorics::large_set_was *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	LSW = (apps_combinatorics::large_set_was *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		apps_combinatorics::large_set_was_activity Activity;
 
@@ -2128,7 +2147,8 @@ void activity_description::do_symbolic_object_activity(
 
 	expression_parser::symbolic_object_builder *f;
 
-	f = (expression_parser::symbolic_object_builder *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	f = (expression_parser::symbolic_object_builder *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		expression_parser::symbolic_object_activity Activity;
 
@@ -2182,7 +2202,8 @@ void activity_description::do_BLT_set_classify_activity(
 
 	orthogonal_geometry_applications::blt_set_classify *B;
 
-	B = (orthogonal_geometry_applications::blt_set_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	B = (orthogonal_geometry_applications::blt_set_classify *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		orthogonal_geometry_applications::blt_set_classify_activity Activity;
@@ -2237,7 +2258,8 @@ void activity_description::do_spread_classify_activity(
 
 	spreads::spread_classify *SC;
 
-	SC = (spreads::spread_classify *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SC = (spreads::spread_classify *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		spreads::spread_classify_activity Activity;
@@ -2292,7 +2314,8 @@ void activity_description::do_spread_activity(
 
 	spreads::spread_create *SC;
 
-	SC = (spreads::spread_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	SC = (spreads::spread_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		spreads::spread_activity Activity;
@@ -2405,7 +2428,8 @@ void activity_description::do_action_on_forms_activity(
 
 	apps_algebra::action_on_forms *AF;
 
-	AF = (apps_algebra::action_on_forms *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	AF = (apps_algebra::action_on_forms *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		apps_algebra::action_on_forms_activity Activity;
@@ -2461,7 +2485,8 @@ void activity_description::do_orbits_activity(
 
 	orbits::orbits_create *OC;
 
-	OC = (orbits::orbits_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	OC = (orbits::orbits_create *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 
 		orbits::orbits_activity Activity;

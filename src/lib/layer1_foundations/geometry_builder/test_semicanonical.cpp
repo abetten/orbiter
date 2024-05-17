@@ -312,7 +312,8 @@ int test_semicanonical::row_starter(
 	return j;
 }
 
-void test_semicanonical::row_init(int I, int m, int J,
+void test_semicanonical::row_init(
+		int I, int m, int J,
 		int i1,
 		int verbose_level)
 {

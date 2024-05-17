@@ -1104,5 +1104,115 @@ void quadratic_form::make_collinearity_graph(
 }
 
 
+void quadratic_form::make_affine_polar_graph(
+		int *&Adj, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph" << endl;
+	}
+
+	int i, j;
+	int d;
+	int *v1, *v2, *v3;
+	long int Nb_points;
+
+
+	d = n; // algebraic dimension
+
+	v1 = NEW_int(d);
+	v2 = NEW_int(d);
+	v3 = NEW_int(d);
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph" << endl;
+	}
+
+
+	Nb_points = nb_points;
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph "
+				"number of points = " << Nb_points << endl;
+	}
+
+	geometry::geometry_global Geometry;
+
+	N = Geometry.nb_AG_elements(
+			d, q);
+
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph field:" << endl;
+		F->Io->print();
+	}
+
+
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph "
+				"allocating adjacency matrix" << endl;
+	}
+	Adj = NEW_int(N * N);
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph "
+				"allocating adjacency matrix was successful" << endl;
+	}
+	Int_vec_zero(Adj, N * N);
+
+
+	int h, u;
+
+
+	for (i = 0; i < N; i++) {
+
+		Geometry.AG_element_unrank(
+				q, v1, 1, d, i);
+
+		if (f_v) {
+			cout << "vertex " << setw(3) << i << " = ";
+			Int_vec_print(cout, v1, d);
+			cout << " is adjacent to " << endl;
+		}
+
+		for (h = 0; h < nb_points; h++) {
+
+			unrank_point(v2, h, 0 /* verbose_level */);
+
+			for (u = 0; u < d; u++) {
+				v3[u] = F->add(v1[u], v2[u]);
+			}
+
+			j = Geometry.AG_element_rank(
+					q, v3, 1, d);
+
+			if (f_v) {
+				cout << "  vertex " << setw(3) << j << " = ";
+				Int_vec_print(cout, v3, d);
+				cout << endl;
+			}
+
+
+			Adj[i * N + j] = 1;
+			Adj[j * N + i] = 1;
+		}
+	}
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph "
+				"The adjacency matrix of the polar graph has been computed" << endl;
+	}
+
+
+	FREE_int(v1);
+	FREE_int(v2);
+	FREE_int(v3);
+
+	if (f_v) {
+		cout << "quadratic_form::make_affine_polar_graph done" << endl;
+	}
+}
+
 }}}
 

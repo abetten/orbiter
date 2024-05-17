@@ -21,7 +21,6 @@ namespace canonical_form {
 
 classification_of_combinatorial_objects::classification_of_combinatorial_objects()
 {
-	//std::string prefix;
 
 	CO = NULL;
 
@@ -263,19 +262,6 @@ void classification_of_combinatorial_objects::classification_report(
 	}
 
 
-#if 0
-	if (CO->Descr->f_classification_prefix == false) {
-		cout << "please use option -classification_prefix <prefix> to set the "
-				"prefix for the output file" << endl;
-		exit(1);
-	}
-	else {
-		cout << "classification_of_combinatorial_objects::classification_report "
-				"prefix = " << CO->Descr->classification_prefix << endl;
-
-	}
-#endif
-
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::classification_report "
@@ -300,8 +286,6 @@ void classification_of_combinatorial_objects::latex_report(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::latex_report" << endl;
@@ -312,14 +296,6 @@ void classification_of_combinatorial_objects::latex_report(
 
 	fname = CO->get_label() + "_classification.tex";
 
-#if 0
-	if (Report_options->f_prefix) {
-		fname = Report_options->prefix + "_classification.tex";
-	}
-	else if (CO->Descr->f_classification_prefix) {
-		fname = CO->Descr->classification_prefix + "_classification.tex";
-	}
-#endif
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::classification_report "
@@ -332,11 +308,16 @@ void classification_of_combinatorial_objects::latex_report(
 		cout << "classification_of_combinatorial_objects::latex_report, "
 				"CB->nb_types=" << CO->CB->nb_types << endl;
 	}
+
+	orbiter_kernel_system::file_io Fio;
+
 	{
-		ofstream ost(fname);
 		l1_interfaces::latex_interface L;
 
-		L.head_easy(ost);
+		ofstream ost(fname);
+
+		//L.head_easy(ost);
+		L.head_easy_and_enlarged(ost);
 
 
 		CO->report_summary_of_orbits(ost, verbose_level);
@@ -543,8 +524,12 @@ void classification_of_combinatorial_objects::report_object(
 		cout << "classification_of_combinatorial_objects::report_object "
 				"before OwCF->print_tex_detailed" << endl;
 	}
-	OwCF->print_tex_detailed(ost,
-			Report_options->f_show_incidence_matrices,
+
+	ost << "\\subsubsection*{classification\\_of\\_combinatorial\\_objects::report\\_object print\\_tex\\_detailed}" << endl;
+
+	OwCF->print_tex_detailed(
+			ost,
+			Report_options,
 			verbose_level);
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_object "
@@ -568,9 +553,11 @@ void classification_of_combinatorial_objects::report_object(
 			cout << "classification_of_combinatorial_objects::report_object "
 					"before OwP[object_idx].latex_report" << endl;
 		}
+		ost << "\\subsubsection*{classification\\_of\\_combinatorial\\_objects::report\\_object latex\\_report}" << endl;
 		OwP[i].latex_report(
 				ost,
-				Report_options, verbose_level);
+				Report_options,
+				verbose_level);
 		if (f_v) {
 			cout << "classification_of_combinatorial_objects::report_object "
 					"after OwP[object_idx].latex_report" << endl;

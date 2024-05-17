@@ -41,7 +41,8 @@ void graph_theory_domain::colored_graph_draw(
 	fname_draw = CG.fname_base + "_graph";
 
 	if (f_v) {
-		cout << "graph_theory_domain::colored_graph_draw before CG.draw_partitioned" << endl;
+		cout << "graph_theory_domain::colored_graph_draw "
+				"before CG.draw_partitioned" << endl;
 	}
 	CG.draw_partitioned(
 			fname_draw,
@@ -49,7 +50,8 @@ void graph_theory_domain::colored_graph_draw(
 			f_labels,
 			verbose_level);
 	if (f_v) {
-		cout << "graph_theory_domain::colored_graph_draw after CG.draw_partitioned" << endl;
+		cout << "graph_theory_domain::colored_graph_draw "
+				"after CG.draw_partitioned" << endl;
 	}
 	if (f_v) {
 		cout << "graph_theory_domain::colored_graph_draw done" << endl;
@@ -84,19 +86,23 @@ void graph_theory_domain::colored_graph_all_cliques(
 	//CG.print();
 
 	{
-		ofstream fp(fname_sol.c_str());
 
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
 					"before CG.all_rainbow_cliques" << endl;
 		}
-		CG.all_rainbow_cliques(Control,
-				fp,
+		CG.all_rainbow_cliques(
+				Control,
+				//fp,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
 					"after CG.all_rainbow_cliques" << endl;
 		}
+	}
+	{
+		ofstream fp(fname_sol.c_str());
+
 		fp << -1 << " " << Control->nb_sol << " " << Control->nb_search_steps << " "
 				<< Control->nb_decision_steps << " " << Control->dt << endl;
 	}
@@ -109,6 +115,7 @@ void graph_theory_domain::colored_graph_all_cliques(
 	}
 }
 
+#if 0
 void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 		clique_finder_control *Control,
 		long int *list_of_cases, int nb_cases,
@@ -170,7 +177,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 			string dummy;
 
 			CG->all_rainbow_cliques(Control,
-					fp,
+					//fp,
 					verbose_level - 1);
 
 			fp << "# end case " << c << " " << Control->nb_sol << " " << Control->nb_search_steps
@@ -194,6 +201,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 				"done Nb_sol=" << Nb_sol << endl;
 	}
 }
+#endif
 
 
 void graph_theory_domain::save_as_colored_graph_easy(
@@ -212,7 +220,9 @@ void graph_theory_domain::save_as_colored_graph_easy(
 	colored_graph *CG;
 
 	CG = NEW_OBJECT(colored_graph);
-	CG->init_adjacency_no_colors(n, Adj, fname_base, fname_base, 0 /*verbose_level*/);
+	CG->init_adjacency_no_colors(
+			n, Adj, fname_base, fname_base,
+			0 /*verbose_level*/);
 
 	CG->save(fname, verbose_level);
 
@@ -266,7 +276,8 @@ void graph_theory_domain::save_colored_graph(
 		}
 		for (i = 0; i < nb_vertices; i++) {
 			if (false) {
-				cout << "save_colored_graph before writing vertex " << i << " / " << nb_vertices << endl;
+				cout << "save_colored_graph "
+						"before writing vertex " << i << " / " << nb_vertices << endl;
 			}
 			if (points) {
 				fp.write((char*) &points[i], sizeof(long int));
@@ -1349,6 +1360,318 @@ void graph_theory_domain::make_disjoint_sets_graph(
 
 }
 
+#if 0
+static const char *Neumaier_graph_25_blocks =
+		"0,j,j,j,j,z,z,z,z, "
+		"jt,B,E1,E2,E3,E1b,E2b,E3b,Z, "
+		"jt,E1t,B,I,I,IA,A,I,B, "
+		"jt,E2t,I,B,I,I,IA,A,IAt, "
+		"jt,E3t,I,I,B,A,I,IA,IA, "
+		"zt,E1bt,IAt,I,At,B,I,I,IAt, "
+		"zt,E2bt,At,IAt,I,I,B,I,IA, "
+		"zt,E3bt,I,At,IAt,I,I,B,B, "
+		"zt,Z,B,IA,IAt,IA,IAt,B,Z";
+#endif
+
+static const char *Neumaier_graph_25_blocks_reduced =
+		"B,E1,E2,E3,E1b,E2b,E3b,Z,"
+		"E1t,B,I,I,IA,A,I,B,"
+		"E2t,I,B,I,I,IA,A,IAt,"
+		"E3t,I,I,B,A,I,IA,IA,"
+		"E1bt,IAt,I,At,B,I,I,IAt,"
+		"E2bt,At,IAt,I,I,B,I,IA,"
+		"E3bt,I,At,IAt,I,I,B,B,"
+		"Z,B,IA,IAt,IA,IAt,B,Z";
+
+static int example_graph_VOplus_4_2[] = {
+		1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,
+		1,1,0,0,1,0,1,0,1,0,1,1,0,1,
+		1,1,1,0,1,1,0,0,1,0,0,0,1,
+		1,1,1,0,0,1,1,0,0,0,1,0,
+		1,0,1,0,1,0,1,1,1,1,0,
+		1,0,1,0,1,0,1,1,0,1,
+		1,1,1,0,0,1,0,1,1,
+		1,1,0,0,0,1,1,1,
+		1,1,1,0,1,0,0,
+		1,1,1,0,0,0,
+		1,1,0,1,1,
+		0,1,1,1,
+		1,1,0,
+		0,1,
+		1
+
+};
+
+
+void graph_theory_domain::make_Neumaier_graph_16(
+		int *&Adj, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Neumaier_graph_16" << endl;
+	}
+
+
+	int i, j, h, c;
+
+	N = 16;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+	h = 0;
+	for (i = 0; i < N; i++) {
+		for (j = i + 1; j < N; j++) {
+			c = example_graph_VOplus_4_2[h];
+			h++;
+			Adj[i * N + j] = Adj[j * N + i] = c;
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Neumaier_graph_16 done" << endl;
+	}
+
+}
+
+
+void graph_theory_domain::make_Neumaier_graph_25(
+		int *&Adj, int &N,
+		int verbose_level)
+// Abiad, DeBoeck, Zijlemaker: On the existence of small strictly Neumaier graphs
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Neumaier_graph_25" << endl;
+	}
+
+	data_structures::string_tools String;
+
+	string input;
+
+	input = Neumaier_graph_25_blocks_reduced;
+
+	std::vector<std::string> output;
+
+	String.parse_comma_separated_list(
+			input,
+			output,
+			verbose_level);
+
+	int h;
+
+	if (f_v) {
+		for (h = 0; h < output.size(); h++) {
+			cout << output[h];
+			if (h < output.size() - 1) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
+
+	string I, A, IA, At, IAt, B, Z, E1, E2, E3, E1t, E2t, E3t, E1b, E2b, E3b, E1bt, E2bt, E3bt;
+
+	I = "1,0,0,0,1,0,0,0,1";
+	A = "0,1,0,0,0,1,1,0,0";
+	IA = "1,1,0,0,1,1,1,0,1";
+	At = "0,0,1,1,0,0,0,1,0";
+	IAt = "1,0,1,1,1,0,0,1,1";
+	B = "0,1,1,1,0,1,1,1,0";
+	Z = "0,0,0,0,0,0,0,0,0";
+	E1 = "1,1,1,0,0,0,0,0,0";
+	E2 = "0,0,0,1,1,1,0,0,0";
+	E3 = "0,0,0,0,0,0,1,1,1";
+	E1t = "1,0,0,1,0,0,1,0,0";
+	E2t = "0,1,0,0,1,0,0,1,0";
+	E3t = "0,0,1,0,0,1,0,0,1";
+	E1b = "0,0,0,1,1,1,1,1,1";
+	E2b = "1,1,1,0,0,0,1,1,1";
+	E3b = "1,1,1,1,1,1,0,0,0";
+	E1bt = "0,1,1,0,1,1,0,1,1";
+	E2bt = "1,0,1,1,0,1,1,0,1";
+	E3bt = "1,1,0,1,1,0,1,1,0";
+
+
+	int i, j, c, block_size;
+
+	block_size = 8;
+	if (output.size() != block_size * block_size) {
+		cout << "output.size() != block_size * block_size" << endl;
+		exit(1);
+	}
+
+	int N0;
+	int *Adj0;
+
+	N0 = 24;
+	Adj0 = NEW_int(N0 * N0);
+	Int_vec_zero(Adj0, N0 * N0);
+
+	h = 0;
+
+	int u, v;
+
+	for (u = 0; u < block_size; u++) {
+		for (v = 0; v < block_size; v++) {
+			string str;
+			if (output[h] == "I") {
+				str = I;
+			}
+			else if (output[h] == "A") {
+				str = A;
+			}
+			else if (output[h] == "IA") {
+				str = IA;
+			}
+			else if (output[h] == "At") {
+				str = At;
+			}
+			else if (output[h] == "IAt") {
+				str = IAt;
+			}
+			else if (output[h] == "B") {
+				str = B;
+			}
+			else if (output[h] == "Z") {
+				str = Z;
+			}
+			else if (output[h] == "E1") {
+				str = E1;
+			}
+			else if (output[h] == "E2") {
+				str = E2;
+			}
+			else if (output[h] == "E3") {
+				str = E3;
+			}
+			else if (output[h] == "E1t") {
+				str = E1t;
+			}
+			else if (output[h] == "E2t") {
+				str = E2t;
+			}
+			else if (output[h] == "E3t") {
+				str = E3t;
+			}
+			else if (output[h] == "E1b") {
+				str = E1b;
+			}
+			else if (output[h] == "E2b") {
+				str = E2b;
+			}
+			else if (output[h] == "E3b") {
+				str = E3b;
+			}
+			else if (output[h] == "E1bt") {
+				str = E1bt;
+			}
+			else if (output[h] == "E2bt") {
+				str = E2bt;
+			}
+			else if (output[h] == "E3bt") {
+				str = E3bt;
+			}
+			else {
+				cout << "symbol is unrecognized: " << output[h] << endl;
+				exit(1);
+			}
+
+
+			if (f_v) {
+				cout << "entry " << output[h] << " parsing " << str << endl;
+			}
+
+			h++;
+
+			std::vector<std::string> block;
+
+			String.parse_comma_separated_list(
+					str,
+					block,
+					0 /*verbose_level*/);
+
+			int s, t;
+
+			for (s = 0; s < 3; s++) {
+				for (t = 0; t < 3; t++) {
+					if (block[s * 3 + t] == "0") {
+						c = 0;
+					}
+					else if (block[s * 3 + t] == "1") {
+						c = 1;
+					}
+					else {
+						cout << "entry in block is unrecognized" << endl;
+						exit(1);
+					}
+					i = u * 3 + s;
+					j = v * 3 + t;
+					Adj0[i * N0 + j] = Adj0[j * N0 + i] = c;
+				}
+			}
+		}
+	}
+
+	N = 25;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+
+	for (u = 0; u < N0; u++) {
+		for (v = 0; v < N0; v++) {
+			c = Adj0[u * N0 + v];
+			i = u + 1;
+			j = v + 1;
+			Adj[i * N + j] = c;
+		}
+	}
+	for (u = 0; u < 12; u++) {
+		i = 0;
+		j = 1 + u;
+		c = 1;
+		Adj[i * N + j] = c;
+		Adj[j * N + i] = c;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Neumaier_graph_25 done" << endl;
+	}
+
+}
+
+
+void graph_theory_domain::make_adjacency_bitvector(
+		int *&Adj, int *v, int N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_adjacency_bitvector" << endl;
+	}
+
+
+	int i, j, h, c;
+
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+	h = 0;
+	for (i = 0; i < N; i++) {
+		for (j = i + 1; j < N; j++) {
+			c = v[h];
+			h++;
+			Adj[i * N + j] = Adj[j * N + i] = c;
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_adjacency_bitvector done" << endl;
+	}
+
+}
+
 
 
 
@@ -1447,7 +1770,8 @@ void graph_theory_domain::compute_adjacency_matrix(
 		color = NEW_int(nb_sets);
 		Int_vec_zero(color, nb_sets);
 
-		CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+		CG->init(
+				nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 				color, B,
 				false,
 				prefix_for_graph, prefix_for_graph,
@@ -1458,7 +1782,8 @@ void graph_theory_domain::compute_adjacency_matrix(
 		CG->save(fname, verbose_level);
 
 		cout << "Written file " << fname
-				<< " of size " << Fio.file_size(fname) << endl;
+				<< " of size "
+				<< Fio.file_size(fname) << endl;
 
 		FREE_int(color);
 		FREE_OBJECT(CG);
@@ -1505,10 +1830,13 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 	}
 }
 
+#if 0
 void graph_theory_domain::all_cliques_of_given_size(
 		int *Adj,
 		int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
+		int f_write_cliques, std::string &fname_cliques,
 		int verbose_level)
+// this functions is nowhere used
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1581,6 +1909,43 @@ void graph_theory_domain::all_cliques_of_given_size(
 				"sz != clique_sz" << endl;
 		exit(1);
 	}
+
+
+	if (f_write_cliques) {
+
+		if (f_v) {
+			cout << "graph_theory_domain::all_cliques_of_given_size "
+					"writing cliques" << endl;
+		}
+		string *Table;
+		int nb_cols = 1;
+		std::string headings;
+
+		Table = new string[nb_sol * nb_cols];
+
+		headings = "clique";
+
+		for (i = 0; i < nb_sol; i++) {
+			Table[i * nb_cols + 0] = Int_vec_stringify(Sol + i * sz, sz);
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->write_table_of_strings(
+				fname_cliques,
+				nb_sol, nb_cols, Table,
+				headings,
+				verbose_level);
+
+		delete [] Table;
+		if (f_v) {
+			cout << "graph_theory_domain::all_cliques_of_given_size "
+					"Written file " << fname_cliques
+					<< " of size " << Fio.file_size(fname_cliques) << endl;
+		}
+
+	}
+
 	FREE_OBJECT(C);
 	FREE_OBJECT(Control);
 	FREE_int(adj_list_coded);
@@ -1588,9 +1953,11 @@ void graph_theory_domain::all_cliques_of_given_size(
 		cout << "graph_theory_domain::all_cliques_of_given_size done" << endl;
 	}
 }
+#endif
 
 void graph_theory_domain::eigenvalues(
-		graph_theory::colored_graph *CG, int verbose_level)
+		graph_theory::colored_graph *CG,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

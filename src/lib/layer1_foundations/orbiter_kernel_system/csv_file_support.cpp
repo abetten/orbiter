@@ -801,6 +801,76 @@ void csv_file_support::do_csv_file_select_rows(
 	}
 }
 
+void csv_file_support::do_csv_file_select_rows_by_file(
+		std::string &fname,
+		std::string &rows_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_by_file" << endl;
+	}
+
+	int *M;
+	int m, n;
+
+	Fio->Csv_file_support->int_matrix_read_csv(
+			rows_fname,
+			M, m, n, verbose_level);
+
+	int *select;
+	int nb_select;
+	int i;
+
+	nb_select = m;
+	select = NEW_int(nb_select);
+	for (i = 0; i < nb_select; i++) {
+		select[i] = M[i * n + 1];
+	}
+
+
+	data_structures::string_tools ST;
+	string fname_out;
+
+	fname_out = fname;
+	ST.chop_off_extension(fname_out);
+	fname_out += "_transversal.csv";
+
+
+	data_structures::spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+	int nb_rows_in_file;
+
+	nb_rows_in_file = S.nb_rows - 1;
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_by_file "
+				"nb_rows_in_file = " << nb_rows_in_file << endl;
+	}
+
+
+	{
+		ofstream ost(fname_out);
+		//ost << "Row,";
+		S.print_table_row(0, false, ost);
+		for (i = 0; i < nb_select; i++) {
+			//ost << i << ",";
+			S.print_table_row(select[i] + 1, false, ost);
+		}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out
+			<< " of size " << Fio->file_size(fname_out) << endl;
+
+	//do_csv_file_select_rows_worker(fname, rows_text, false, verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::do_csv_file_select_rows_by_file done" << endl;
+	}
+}
+
 void csv_file_support::do_csv_file_select_rows_complement(
 		std::string &fname,
 		std::string &rows_text,
@@ -839,7 +909,8 @@ void csv_file_support::do_csv_file_select_rows_worker(
 	nb_rows_in_file = S.nb_rows - 1;
 
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_select_rows_worker nb_rows_in_file = " << nb_rows_in_file << endl;
+		cout << "csv_file_support::do_csv_file_select_rows_worker "
+				"nb_rows_in_file = " << nb_rows_in_file << endl;
 	}
 
 
@@ -863,7 +934,8 @@ void csv_file_support::do_csv_file_select_rows_worker(
 	}
 
 	if (f_v) {
-		cout << "csv_file_support::do_csv_file_select_rows_worker restricting to the rows:" << endl;
+		cout << "csv_file_support::do_csv_file_select_rows_worker "
+				"restricting to the rows:" << endl;
 		Int_vec_print(cout, Rows, nb_rows);
 		cout << endl;
 	}
@@ -1810,6 +1882,9 @@ void csv_file_support::read_csv_file_and_tally(
 		cout << "csv_file_support::read_csv_file_and_tally done" << endl;
 	}
 }
+
+
+
 
 void csv_file_support::grade_statistic_from_csv(
 		std::string &fname_csv,
@@ -2899,6 +2974,94 @@ void csv_file_support::read_table_of_strings(
 		}
 	}
 }
+
+
+void csv_file_support::read_csv_file_and_get_column(
+		std::string &fname, std::string &col_header,
+		long int *&Data, int &data_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_get_column" << endl;
+		cout << "csv_file_support::read_csv_file_and_get_column fname = " << fname << endl;
+		cout << "csv_file_support::read_csv_file_and_get_column col_header = " << col_header << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	std::string *col_labels;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, col_labels,
+			Table, m, n,
+			verbose_level);
+
+	int i, j;
+
+	for (j = 0; j < n; j++) {
+		if (col_labels[j] == col_header) {
+			break;
+		}
+	}
+	if (j == n) {
+		cout << "csv_file_support::read_csv_file_and_get_column did not find column heading " << col_header << endl;
+		exit(1);
+	}
+
+	data_size = m;
+	Data = NEW_lint(m);
+	for (i = 0; i < m; i++) {
+		cout << "row << " << i << " / " << m << " reading " << Table[i * n + j] << endl;
+
+		std::string s;
+
+		ST.drop_quotes(
+				Table[i * n + j], s);
+
+
+		Data[i] = std::stol(s, NULL, 10);
+	}
+
+#if 0
+	data_structures::tally T;
+
+	T.init_lint(Data, m, true, 0);
+	cout << "tally:" << endl;
+	T.print(true);
+	cout << endl;
+
+
+	data_structures::set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int i;
+
+	SoS = T.get_set_partition_and_types(
+			types, nb_types, verbose_level);
+
+	cout << "fibers:" << endl;
+	for (i = 0; i < nb_types; i++) {
+		cout << i << " : " << types[i] << " : ";
+		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+		cout << endl;
+	}
+
+	//cout << "set partition:" << endl;
+	//SoS->print_table();
+#endif
+
+	delete [] Table;
+
+	if (f_v) {
+		cout << "csv_file_support::read_csv_file_and_get_column done" << endl;
+	}
+}
+
+
+
 
 
 }}}

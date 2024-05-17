@@ -138,10 +138,6 @@ class surface_create {
 public:
 	surface_create_description *Descr;
 
-	std::string prefix;
-	std::string label_txt;
-	std::string label_tex;
-
 	int f_ownership;
 
 	int q;
@@ -279,7 +275,8 @@ public:
 	void do_report2(
 			std::ostream &ost, int verbose_level);
 	void do_report_group_elements2(
-			std::ostream &ost, std::string &fname_csv, std::string &col_heading,
+			std::ostream &ost,
+			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void report_with_group(
 			std::string &Control_six_arcs_label,
@@ -507,12 +504,6 @@ public:
 			int *Q_table, int Q_table_len,
 			int f_quartic_curves,
 			int verbose_level);
-#if 0
-	void table_top(
-			std::ostream &ost);
-	void table_bottom(
-			std::ostream &ost);
-#endif
 
 };
 
@@ -541,6 +532,17 @@ public:
 
 	groups::strong_generators *projectivity_group_gens;
 	groups::sylow_structure *Syl;
+
+
+
+	int f_has_TDO_TDA;
+
+	// these may be NULL, for instance if the projective space is too large:
+	combinatorics::decomposition_scheme *Decomposition_scheme_TDO;
+	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
+
+	algebraic_geometry::variety_object *Variety_with_TDO;
+	algebraic_geometry::variety_object *Variety_with_TDA;
 
 	actions::action *A_on_points;
 	actions::action *A_on_Eckardt_points;
@@ -601,20 +603,34 @@ public:
 			algebraic_geometry::surface_object *SO,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
-	void compute_projectivity_group(int verbose_level);
-	void compute_orbits_of_automorphism_group(int verbose_level);
-	void init_orbits_on_points(int verbose_level);
-	void init_orbits_on_Eckardt_points(int verbose_level);
-	void init_orbits_on_Double_points(int verbose_level);
-	void init_orbits_on_Single_points(int verbose_level);
-	void init_orbits_on_lines(int verbose_level);
-	void init_orbits_on_half_double_sixes(int verbose_level);
-	void init_orbits_on_double_sixes(int verbose_level);
-	void init_orbits_on_tritangent_planes(int verbose_level);
-	void init_orbits_on_Hesse_planes(int verbose_level);
-	void init_orbits_on_axes(int verbose_level);
-	void init_orbits_on_trihedral_pairs(int verbose_level);
-	void init_orbits_on_points_not_on_lines(int verbose_level);
+	void compute_projectivity_group(
+			int verbose_level);
+	void compute_orbits_of_automorphism_group(
+			int verbose_level);
+	void init_orbits_on_points(
+			int verbose_level);
+	void init_orbits_on_Eckardt_points(
+			int verbose_level);
+	void init_orbits_on_Double_points(
+			int verbose_level);
+	void init_orbits_on_Single_points(
+			int verbose_level);
+	void init_orbits_on_lines(
+			int verbose_level);
+	void init_orbits_on_half_double_sixes(
+			int verbose_level);
+	void init_orbits_on_double_sixes(
+			int verbose_level);
+	void init_orbits_on_tritangent_planes(
+			int verbose_level);
+	void init_orbits_on_Hesse_planes(
+			int verbose_level);
+	void init_orbits_on_axes(
+			int verbose_level);
+	void init_orbits_on_trihedral_pairs(
+			int verbose_level);
+	void init_orbits_on_points_not_on_lines(
+			int verbose_level);
 	void print_generators_on_lines(
 			std::ostream &ost,
 			groups::strong_generators *Aut_gens,
@@ -632,8 +648,6 @@ public:
 			std::ostream &ost, int verbose_level);
 	void cheat_sheet(
 			std::ostream &ost,
-			std::string &label_txt,
-			std::string &label_tex,
 			int f_print_orbits, std::string &fname_mask,
 			graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
@@ -644,6 +658,12 @@ public:
 			int verbose_level);
 	void print_automorphism_group_generators(
 			std::ostream &ost, int verbose_level);
+	void print_projectivity_group(
+			std::ostream &ost,
+			int verbose_level);
+	void print_sylow_groups_of_projectivity_group(
+			std::ostream &ost,
+			int verbose_level);
 	void investigate_surface_and_write_report(
 			graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
@@ -657,8 +677,6 @@ public:
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			std::string &fname_mask,
-			std::string &label,
-			std::string &label_tex,
 			int verbose_level);
 	void all_quartic_curves(
 			std::string &surface_label_txt,
@@ -670,10 +688,17 @@ public:
 			std::string *&Table,
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
+	void export_one_quartic_curve(
+			int pt_orbit,
+			std::vector<std::string> &v,
+			int verbose_level);
+	void create_heading(
+			std::string &heading, int &nb_cols);
 	void create_vector_of_strings(
 			quartic_curves::quartic_curve_from_surface *QC,
 			algebraic_geometry::quartic_curve_object *QO,
-			std::vector<std::string> &v, int nb_cols, int verbose_level);
+			std::vector<std::string> &v,
+			int verbose_level);
 	void print_full_del_Pezzo(
 			std::ostream &ost, int verbose_level);
 	void print_everything(
@@ -684,8 +709,11 @@ public:
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
 			int verbose_level);
-	void print_double_sixes(std::ostream &ost);
-	void tactical_decomposition_inside_projective_space(
+	void print_double_sixes(
+			std::ostream &ost);
+	void compute_tactical_decompositions(
+			int verbose_level);
+	void report_decomposition_schemes(
 			std::ostream &ost,
 			int verbose_level);
 

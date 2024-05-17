@@ -928,8 +928,9 @@ void classification_of_objects::report_summary_of_orbits(
 }
 
 void classification_of_objects::report_all_isomorphism_types(
-		std::ostream &ost, int max_TDO_depth,
-		int f_show_incma,
+		std::ostream &ost,
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -986,7 +987,7 @@ void classification_of_objects::report_all_isomorphism_types(
 					"before report_isomorphism_type" << endl;
 		}
 		report_isomorphism_type(
-				ost, i, max_TDO_depth, f_show_incma,
+				ost, i, Report_options,
 				verbose_level);
 		if (f_v) {
 			cout << "classification_of_objects::latex_report "
@@ -1003,8 +1004,11 @@ void classification_of_objects::report_all_isomorphism_types(
 
 
 void classification_of_objects::report_isomorphism_type(
-		std::ostream &ost, int i, int max_TDO_depth,
-		int f_show_incma,
+		std::ostream &ost, int i,
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
+		//int max_TDO_depth,
+		//int f_show_incma,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1056,9 +1060,8 @@ void classification_of_objects::report_isomorphism_type(
 
 	report_object(ost,
 			OwCF,
+			Report_options,
 			i /* object_idx */,
-			max_TDO_depth,
-			f_show_incma,
 			verbose_level);
 
 
@@ -1073,9 +1076,11 @@ void classification_of_objects::report_isomorphism_type(
 void classification_of_objects::report_object(
 		std::ostream &ost,
 		object_with_canonical_form *OwCF,
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
 		int object_idx,
-		int max_TDO_depth,
-		int f_show_incma,
+		//int max_TDO_depth,
+		//int f_show_incma,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1084,7 +1089,7 @@ void classification_of_objects::report_object(
 		cout << "classification_of_objects::report_object" << endl;
 	}
 
-	OwCF->print_tex_detailed(ost, f_show_incma, verbose_level);
+	OwCF->print_tex_detailed(ost, Report_options, verbose_level);
 
 }
 

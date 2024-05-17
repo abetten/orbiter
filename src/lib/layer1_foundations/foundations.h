@@ -937,6 +937,8 @@ namespace solvers {
 #define Get_crc_code(A) orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
 #define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
 #define Get_geometry_builder(A) orbiter_kernel_system::Orbiter->get_geometry_builder(A)
+#define Get_graph(A) orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
+
 
 
 
@@ -995,6 +997,9 @@ enum data_input_stream_type {
 	t_data_input_stream_incidence_geometry,
 	t_data_input_stream_incidence_geometry_by_row_ranks,
 	t_data_input_stream_from_parallel_search,
+	t_data_input_stream_graph_by_adjacency_matrix,
+	t_data_input_stream_graph_object,
+	t_data_input_stream_graph_by_adjacency_matrix_from_file,
 
 };
 

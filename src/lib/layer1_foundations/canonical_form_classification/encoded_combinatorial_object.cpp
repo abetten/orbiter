@@ -449,7 +449,8 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 	for (j = 0; j < P->Subspaces->N_lines; j++) {
 		P->Subspaces->create_points_on_line(
-				j /* line_rk */, Pts_on_line + j * P->Subspaces->k,
+				j /* line_rk */,
+				Pts_on_line + j * P->Subspaces->k,
 				0 /* verbose_level*/);
 	}
 
@@ -465,7 +466,8 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 		std::vector<long int> plane_ranks;
 
 		P->Subspaces->planes_through_a_line(
-				j /* line_rk */, plane_ranks, 0 /*verbose_level*/);
+				j /* line_rk */, plane_ranks,
+				0 /*verbose_level*/);
 
 		Plane_ranks.push_back(plane_ranks);
 
@@ -473,7 +475,9 @@ void encoded_combinatorial_object::extended_incidence_matrix_projective_space_to
 
 			k = plane_ranks[h];
 
-			set_incidence_ij(P->Subspaces->N_points + j, P->Subspaces->N_lines + k);
+			set_incidence_ij(
+					P->Subspaces->N_points + j,
+					P->Subspaces->N_lines + k);
 
 			for (l = 0; l < P->Subspaces->k; l++) {
 
@@ -541,7 +545,10 @@ void encoded_combinatorial_object::latex_set_system_by_columns(
 		cout << "encoded_combinatorial_object::latex_set_system_by_columns" << endl;
 	}
 
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_columns}" << endl;
+
 	if (nb_rows >= 30) {
+		ost << "Too big, number of rows is bigger than 30\\\\" << endl;
 		return;
 	}
 
@@ -561,8 +568,11 @@ void encoded_combinatorial_object::latex_set_system_by_columns(
 			}
 		}
 		L.int_set_print_tex(ost, B, sz);
-		ost << "\\\\" << endl;
+		if (j < nb_cols - 1) {
+			ost << ", " << endl;
+		}
 	}
+	ost << "\\\\" << endl;
 
 	FREE_int(B);
 
@@ -577,6 +587,14 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_set_system_by_rows" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_rows}" << endl;
+
+	if (nb_cols >= 30) {
+		ost << "Too big, number of cols is bigger than 30\\\\" << endl;
+		return;
+	}
+
 	if (nb_cols >= 30) {
 		return;
 	}
@@ -601,8 +619,11 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 		rk = Combi.rank_k_subset(B, nb_cols, sz);
 		L.int_set_print_tex(ost, B, sz);
 		ost << " = " << rk;
-		ost << "\\\\" << endl;
+		if (j < nb_cols - 1) {
+			ost << ", ";
+		}
 	}
+	ost << "\\\\" << endl;
 
 	FREE_int(B);
 
@@ -617,6 +638,8 @@ void encoded_combinatorial_object::latex_incma(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_incma" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_incma}" << endl;
 
 	l1_interfaces::latex_interface L;
 
@@ -659,7 +682,8 @@ void encoded_combinatorial_object::latex_incma(
 		cout << "encoded_combinatorial_object::latex_incma "
 				"before L.incma_latex" << endl;
 	}
-	L.incma_latex(ost,
+	L.incma_latex(
+			ost,
 		nb_rows /*v */,
 		nb_cols /*b */,
 		V, B, Vi, Bj,
@@ -683,7 +707,7 @@ void encoded_combinatorial_object::latex_incma(
 
 
 
-void encoded_combinatorial_object::latex_TDA(
+void encoded_combinatorial_object::latex_TDA_incidence_matrix(
 		std::ostream &ost,
 		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 		int verbose_level)
@@ -691,8 +715,11 @@ void encoded_combinatorial_object::latex_TDA(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA" << endl;
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_TDA\\_incidence\\_matrix}" << endl;
+
 
 	l1_interfaces::latex_interface L;
 
@@ -723,12 +750,12 @@ void encoded_combinatorial_object::latex_TDA(
 
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA Vi=";
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix Vi=";
 		Int_vec_print(cout, Vi, V);
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA Bj=";
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix Bj=";
 		Int_vec_print(cout, Bj, B);
 		cout << endl;
 	}
@@ -750,17 +777,18 @@ void encoded_combinatorial_object::latex_TDA(
 	}
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA "
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix "
 				"before L.incma_latex" << endl;
 	}
-	L.incma_latex(ost,
+	L.incma_latex(
+			ost,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,
 			Inc2,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA "
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix "
 				"after L.incma_latex" << endl;
 	}
 
@@ -770,7 +798,7 @@ void encoded_combinatorial_object::latex_TDA(
 	FREE_int(Bj);
 
 	if (f_v) {
-		cout << "encoded_combinatorial_object::latex_TDA done" << endl;
+		cout << "encoded_combinatorial_object::latex_TDA_incidence_matrix done" << endl;
 	}
 }
 
@@ -784,6 +812,7 @@ void encoded_combinatorial_object::compute_labels(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::compute_labels" << endl;
 	}
+
 
 	point_labels = NEW_int(nb_rows);
 	block_labels = NEW_int(nb_cols);
@@ -813,6 +842,9 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_TDA\\_with\\_labels}" << endl;
+
 
 	l1_interfaces::latex_interface L;
 
@@ -897,7 +929,8 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels "
 				"before L.incma_latex_with_text_labels" << endl;
 	}
-	L.incma_latex_with_text_labels(ost,
+	L.incma_latex_with_text_labels(
+			ost,
 			Descr,
 			nb_rows /*v */,
 			nb_cols /*b */,
@@ -935,6 +968,9 @@ void encoded_combinatorial_object::latex_canonical_form(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_canonical\\_form}" << endl;
+
 
 	l1_interfaces::latex_interface L;
 
@@ -1024,7 +1060,8 @@ void encoded_combinatorial_object::latex_canonical_form(
 		cout << "encoded_combinatorial_object::latex_canonical_form "
 				"before L.incma_latex" << endl;
 	}
-	L.incma_latex_with_labels(ost,
+	L.incma_latex_with_labels(
+			ost,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,
@@ -1110,6 +1147,9 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form" << endl;
 	}
+
+	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_canonical\\_form\\_with\\_labels}" << endl;
+
 
 	l1_interfaces::latex_interface L;
 
@@ -1200,7 +1240,8 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(
 		cout << "encoded_combinatorial_object::latex_canonical_form "
 				"before L.incma_latex_with_text_labels" << endl;
 	}
-	L.incma_latex_with_text_labels(ost,
+	L.incma_latex_with_text_labels(
+			ost,
 			Descr,
 			nb_rows /*v */,
 			nb_cols /*b */,

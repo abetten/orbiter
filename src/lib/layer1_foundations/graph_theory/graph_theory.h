@@ -78,7 +78,8 @@ public:
 	void *additional_test_function_data; // previously user_data
 
 	int f_has_print_current_choice_function;
-	void (*call_back_print_current_choice)(clique_finder *CF,
+	void (*call_back_print_current_choice)(
+			clique_finder *CF,
 		int depth, void *user_data, int verbose_level);
 	void *print_current_choice_data; // previously user_data
 
@@ -169,27 +170,33 @@ public:
 
 
 	// callbacks:
-	void (*call_back_clique_found)(clique_finder *CF, int verbose_level);
+	void (*call_back_clique_found)(
+			clique_finder *CF, int verbose_level);
 	
 	// added May 26, 2009:
-	void (*call_back_add_point)(clique_finder *CF, 
+	void (*call_back_add_point)(
+			clique_finder *CF,
 		int current_clique_size, int *current_clique, 
 		int pt, int verbose_level);
-	void (*call_back_delete_point)(clique_finder *CF, 
+	void (*call_back_delete_point)(
+			clique_finder *CF,
 		int current_clique_size, int *current_clique, 
 		int pt, int verbose_level);
-	int (*call_back_find_candidates)(clique_finder *CF, 
+	int (*call_back_find_candidates)(
+			clique_finder *CF,
 		int current_clique_size, int *current_clique, 
 		int nb_pts, int &reduced_nb_pts, 
 		int *pt_list, int *pt_list_inv, 
 		int *candidates, int verbose_level);
 		// Jan 2, 2012: added reduced_nb_pts and pt_list_inv
 
-	int (*call_back_is_adjacent)(clique_finder *CF, 
+	int (*call_back_is_adjacent)(
+			clique_finder *CF,
 		int pt1, int pt2, int verbose_level);
 
 	// added Oct 2011:
-	void (*call_back_after_reduction)(clique_finder *CF, 
+	void (*call_back_after_reduction)(
+			clique_finder *CF,
 		int depth, int nb_points, int verbose_level);
 
 
@@ -214,7 +221,7 @@ public:
 			int *pt_labels);
 	void init_suspicious_points(
 			int nb, int *point_list);
-	void backtrack_search(
+	void clique_finder_backtrack_search(
 			int depth, int verbose_level);
 	int solve_decision_problem(
 			int depth, int verbose_level);
@@ -261,6 +268,9 @@ public:
 	int s_ij(
 			int i, int j);
 	void delinearize_adjacency_list(
+			int verbose_level);
+	void write_solutions(
+			std::string &fname,
 			int verbose_level);
 
 private:
@@ -320,6 +330,8 @@ public:
 			int i, int j, int a);
 	void set_adjacency_k(
 			long int k, int a);
+	long int hash();
+	std::string stringify_adjacency_list();
 	void partition_by_color_classes(
 		int *&partition, int *&partition_first, 
 		int &partition_length, 
@@ -454,11 +466,14 @@ public:
 			int nb_e, long int *edges, int verbose_level);
 	void all_cliques(
 			clique_finder_control *Control,
-			std::string &graph_label, int verbose_level);
+			std::string &graph_label,
+			std::vector<std::string> &feedback,
+			clique_finder *&CF,
+			int verbose_level);
 	void all_cliques_rainbow(
 			clique_finder_control *Control,
-			std::ostream &ost_txt,
-			std::ostream &ost_csv,
+			//std::ostream &ost_txt,
+			//std::ostream &ost_csv,
 			int verbose_level);
 	void find_subgraph(
 			std::string &subgraph_label, int verbose_level);
@@ -466,8 +481,9 @@ public:
 			int verbose_level);
 	void all_cliques_black_and_white(
 			clique_finder_control *Control,
-			std::ostream &ost_txt,
-			std::ostream &ost_csv,
+			clique_finder *&CF,
+			//std::ostream &ost_txt,
+			//std::ostream &ost_csv,
 			int verbose_level);
 	void write_solutions_to_csv_file(
 			clique_finder_control *Control,
@@ -485,14 +501,53 @@ public:
 			int verbose_level);
 	void all_cliques_of_size_k_ignore_colors(
 			clique_finder_control *Control,
+			clique_finder *&CF,
 			int verbose_level);
 	void all_rainbow_cliques(
 			clique_finder_control *Control,
-			std::ostream &fp,
+			//std::ostream &fp,
 			int verbose_level);
 	void complement(
 			int verbose_level);
+	int test_SRG_property(
+			int &lambda_value,
+			int &mu_value,
+			int verbose_level);
+	int test_Neumaier_property(
+			int &regularity,
+			int &lambda_value,
+			int clique_size,
+			int &nexus,
+			int verbose_level);
+	int test_if_clique_is_regular(
+			int *clique, int sz, int &nexus, int verbose_level);
+	int test_lambda_property(
+			int &lambda_value,
+			int verbose_level);
+	int test_mu_property(
+			int &mu_value,
+			int verbose_level);
+	int partial_lambda_test(
+			int from, int to, int lambda,
+			int verbose_level);
+	void compute_lambda_matrix(
+			int *&Lambda,
+			int verbose_level);
+	void compute_mu_matrix(
+			int *&Mu,
+			int verbose_level);
 	void distance_2(
+			int verbose_level);
+	void reorder(
+			std::string &perm_label,
+			int verbose_level);
+	int get_nb_edges(
+			int verbose_level);
+	void compute_degree_sequence(
+			int *Degree,
+			int verbose_level);
+	int test_if_regular(
+			int &regularity,
 			int verbose_level);
 	void properties(
 			int verbose_level);
@@ -677,6 +732,7 @@ public:
 			int f_output_solution_raw,
 			int f_output_fname, std::string &output_fname,
 			int verbose_level);
+#if 0
 	void colored_graph_all_cliques_list_of_cases(
 			clique_finder_control *Control,
 			long int *list_of_cases, int nb_cases,
@@ -686,6 +742,7 @@ public:
 			int f_split, int split_r, int split_m,
 			int f_prefix, std::string &prefix,
 			int verbose_level);
+#endif
 	void save_as_colored_graph_easy(
 			std::string &fname_base,
 			int n, int *Adj, int verbose_level);
@@ -763,6 +820,15 @@ public:
 	void make_disjoint_sets_graph(
 			int *&Adj, int &N,
 			std::string &fname, int verbose_level);
+	void make_Neumaier_graph_16(
+			int *&Adj, int &N,
+			int verbose_level);
+	void make_Neumaier_graph_25(
+			int *&Adj, int &N,
+			int verbose_level);
+	void make_adjacency_bitvector(
+			int *&Adj, int *v, int N,
+			int verbose_level);
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,
@@ -771,12 +837,16 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
+#if 0
 	void all_cliques_of_given_size(
 			int *Adj,
 			int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
+			int f_write_cliques, std::string &fname_cliques,
 			int verbose_level);
+#endif
 	void eigenvalues(
-			graph_theory::colored_graph *CG, int verbose_level);
+			graph_theory::colored_graph *CG,
+			int verbose_level);
 
 };
 
@@ -933,7 +1003,7 @@ public:
 
 	clique_finder_control *Control;
 
-	std::ostream *ost_sol;
+	//std::ostream *ost_sol;
 	
 	colored_graph *graph;
 	clique_finder *CF;
@@ -947,7 +1017,7 @@ public:
 	void search(
 			clique_finder_control *Control,
 			colored_graph *graph,
-			std::ostream &ost_sol,
+			//std::ostream &ost_sol,
 			int verbose_level);
 	int find_candidates(
 		int current_clique_size, int *current_clique, 

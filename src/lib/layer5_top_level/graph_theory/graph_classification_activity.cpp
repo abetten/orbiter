@@ -63,7 +63,8 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			cout << "please specify -draw_options" << endl;
 			exit(1);
 		}
-		GC->gen->draw_level_graph(GC->gen->get_problem_label_with_path(),
+		GC->gen->draw_level_graph(
+				GC->gen->get_problem_label_with_path(),
 				GC->Descr->Control->depth, GC->Descr->n /* data1 */,
 				Descr->draw_level_graph_level,
 				Descr->draw_options,
@@ -79,7 +80,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 		for (level = 0; level <= GC->Descr->Control->depth; level++) {
-			GC->draw_graphs(level, //Gen.Descr->Control->scale,
+			GC->draw_graphs(level,
 					Descr->draw_options,
 					verbose_level);
 		}

@@ -114,7 +114,9 @@ void object_with_canonical_form::print(
 
 void object_with_canonical_form::print_rows(
 		std::ostream &ost,
-		int f_show_incma, int verbose_level)
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -124,7 +126,7 @@ void object_with_canonical_form::print_rows(
 
 	//print_tex(ost);
 
-	if (f_show_incma) {
+	if (Report_options->f_show_incidence_matrices) {
 
 		encoded_combinatorial_object *Enc;
 
@@ -147,7 +149,9 @@ void object_with_canonical_form::print_rows(
 
 void object_with_canonical_form::print_tex_detailed(
 		std::ostream &ost,
-		int f_show_incma, int verbose_level)
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -165,11 +169,13 @@ void object_with_canonical_form::print_tex_detailed(
 				"after print_tex" << endl;
 	}
 
-	if (f_show_incma) {
+	if (Report_options->f_show_incidence_matrices) {
 
 		if (f_v) {
 			cout << "object_with_canonical_form::print_tex_detailed f_show_incma" << endl;
 		}
+
+		ost << "\\subsubsection*{object\\_with\\_canonical\\_form::print\\_tex\\_detailed show\\_incma}" << endl;
 
 		encoded_combinatorial_object *Enc;
 
@@ -230,6 +236,8 @@ void object_with_canonical_form::print_tex(
 	if (f_v) {
 		cout << "object_with_canonical_form::print_tex" << endl;
 	}
+
+	ost << "\\subsubsection*{object\\_with\\_canonical\\_form::print\\_tex}" << endl;
 
 	if (type == t_PTS) {
 		if (f_v) {
@@ -968,6 +976,193 @@ void object_with_canonical_form::init_large_set_from_string(
 	object_with_canonical_form::design_sz = design_sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_large_set_from_string done" << endl;
+	}
+}
+
+void object_with_canonical_form::init_graph_by_adjacency_matrix_text(
+		std::string &adjacency_matrix_text, int N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text" << endl;
+	}
+
+	int N2;
+
+	N2 = (N * (N - 1)) >> 1;
+
+	long int *adjacency_matrix;
+	int adj_sz;
+	int nb_edges;
+	int i;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+				"N=" << N << " N2=" << N2 << endl;
+	}
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+				"adjacency_matrix_text: " << adjacency_matrix_text << endl;
+	}
+
+	Lint_vec_scan(adjacency_matrix_text, adjacency_matrix, adj_sz);
+
+	if (adj_sz != N2) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+				"size of adjacency matrix is incorrect" << endl;
+		exit(1);
+	}
+
+
+	init_graph_by_adjacency_matrix(
+			adjacency_matrix, adj_sz, N,
+			verbose_level);
+
+
+	FREE_lint(adjacency_matrix);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix done" << endl;
+	}
+
+}
+
+
+
+void object_with_canonical_form::init_graph_by_adjacency_matrix(
+		long int *adjacency_matrix, int adj_sz, int N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix" << endl;
+	}
+
+	int N2;
+
+	N2 = (N * (N - 1)) >> 1;
+
+	int nb_edges;
+	int i;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+				"N=" << N << " N2=" << N2 << endl;
+	}
+
+	if (adj_sz != N2) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+				"size of adjacency matrix is incorrect" << endl;
+		exit(1);
+	}
+
+	nb_edges = 0;
+	for (i = 0; i < N2; i++) {
+		if (adjacency_matrix[i]) {
+			nb_edges++;
+		}
+	}
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+				"nb_edges=" << nb_edges << endl;
+	}
+
+	long int *flags;
+	int data_sz;
+	int j, h, k;
+
+	data_sz = nb_edges * 2;
+	flags = NEW_lint(data_sz);
+	k = 0;
+	h = 0;
+	for (i = 0; i < N; i++) {
+		for (j = i + 1; j < N; j++, h++) {
+			if (adjacency_matrix[h]) {
+				flags[2 * k + 0] = i * nb_edges + k;
+				flags[2 * k + 1] = j * nb_edges + k;
+				k++;
+			}
+		}
+	}
+
+	if (h != N2) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+				"h != N2" << endl;
+		exit(1);
+	}
+	if (k != nb_edges) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+				"k != nb_edges" << endl;
+		exit(1);
+	}
+	object_with_canonical_form::P = NULL;
+	type = t_INC;
+	object_with_canonical_form::set = NEW_lint(data_sz);
+	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
+	object_with_canonical_form::sz = data_sz;
+	object_with_canonical_form::v = N;
+	object_with_canonical_form::b = nb_edges;
+
+	FREE_lint(flags);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix done" << endl;
+	}
+
+}
+
+void object_with_canonical_form::init_graph_by_object(
+		graph_theory::colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_object" << endl;
+	}
+
+	int N, nb_edges;
+
+	N = CG->nb_points;
+
+	nb_edges = CG->get_nb_edges(0 /*verbose_level */);
+
+	long int *flags;
+	int data_sz;
+	int i, j, k;
+
+	data_sz = nb_edges * 2;
+	flags = NEW_lint(data_sz);
+	k = 0;
+	for (i = 0; i < N; i++) {
+		for (j = i + 1; j < N; j++) {
+			if (CG->is_adjacent(i, j)) {
+				flags[2 * k + 0] = i * nb_edges + k;
+				flags[2 * k + 1] = j * nb_edges + k;
+				k++;
+			}
+		}
+	}
+	if (k != nb_edges) {
+		cout << "object_with_canonical_form::init_graph_by_object "
+				"k != nb_edges" << endl;
+		exit(1);
+	}
+	object_with_canonical_form::P = NULL;
+	type = t_INC;
+	object_with_canonical_form::set = NEW_lint(data_sz);
+	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
+	object_with_canonical_form::sz = data_sz;
+	object_with_canonical_form::v = N;
+	object_with_canonical_form::b = nb_edges;
+
+	FREE_lint(flags);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_graph_by_object done" << endl;
 	}
 }
 
@@ -1746,6 +1941,75 @@ void object_with_canonical_form::encode_incidence_geometry(
 				"done" << endl;
 	}
 }
+
+void object_with_canonical_form::collinearity_graph(
+		int *&Adj, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::collinearity_graph" << endl;
+	}
+	int i, j, c;
+
+	encoded_combinatorial_object *Enc;
+
+	encode_incidence_geometry(
+			Enc,
+			verbose_level);
+
+	N = v;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+	for (c = 0; c < Enc->nb_cols; c++) {
+		for (i = 0; i < Enc->nb_rows; i++) {
+			if (!Enc->get_incidence_ij(i, c)) {
+				continue;
+			}
+			for (j = i + 1; j < Enc->nb_rows; j++) {
+				if (!Enc->get_incidence_ij(j, c)) {
+					continue;
+				}
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "object_with_canonical_form::collinearity_graph done" << endl;
+	}
+
+}
+
+void object_with_canonical_form::print()
+{
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print" << endl;
+	}
+	encoded_combinatorial_object *Enc;
+	geometry::incidence_structure *Inc;
+	data_structures::partitionstack *Stack;
+
+	encode_incma_and_make_decomposition(
+			Enc,
+			Inc,
+			Stack,
+			verbose_level);
+
+	Enc->print_incma();
+	FREE_OBJECT(Enc);
+	FREE_OBJECT(Inc);
+	FREE_OBJECT(Stack);
+
+
+}
+
 
 void object_with_canonical_form::encode_incma_and_make_decomposition(
 		encoded_combinatorial_object *&Enc,

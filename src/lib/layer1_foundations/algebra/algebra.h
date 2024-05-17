@@ -269,6 +269,10 @@ public:
 			int n, int verbose_level);
 	void smith_normal_form(
 			int *A, int m, int n, std::string &label, int verbose_level);
+	void scan_equation_in_pairs_in_characteristic_p(
+			int *eqn, int eqn_sz, int characteristic_p,
+			std::string &coefficients_text,
+			int verbose_level);
 
 };
 

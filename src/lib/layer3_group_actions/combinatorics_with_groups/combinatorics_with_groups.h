@@ -105,8 +105,6 @@ public:
 
 	canonical_form_classification::object_with_canonical_form *OwCF;
 
-	//object_with_properties *OwP;
-
 	int nb_rows;
 	int nb_cols;
 
@@ -124,7 +122,8 @@ public:
 	void init(
 			canonical_form_classification::object_with_canonical_form *OwCF,
 			int f_anti_flags, actions::action *A_perm,
-			groups::strong_generators *SG, int verbose_level);
+			groups::strong_generators *SG,
+			int verbose_level);
 	int find_flag(
 			int i, int j);
 	void report(
@@ -169,20 +168,10 @@ public:
 	long int *lines;
 
 	combinatorics::decomposition *Decomposition;
-	//geometry::incidence_structure *Inc;
-	//data_structures::partitionstack *S;
 
 	groups::schreier *Sch_points;
 	groups::schreier *Sch_lines;
 
-	//data_structures::set_of_sets *SoS_points;
-	//data_structures::set_of_sets *SoS_lines;
-
-	//int *row_classes, *row_class_inv, nb_row_classes;
-	//int *col_classes, *col_class_inv, nb_col_classes;
-
-	//int *row_scheme;
-	//int *col_scheme;
 
 
 	flag_orbits_incidence_structure *Flags;
@@ -197,18 +186,21 @@ public:
 			canonical_form_classification::object_with_canonical_form *OwCF,
 			actions::action *A_perm,
 			int verbose_level);
+	void print_schemes(
+			std::ostream &ost,
+			canonical_form_classification::classification_of_objects_report_options
+				*Report_options,
+			int verbose_level);
 	void compute_flag_orbits(
 			int verbose_level);
 	void report_flag_orbits(
 			std::ostream &ost, int verbose_level);
 	void export_TDA_with_flag_orbits(
 			std::ostream &ost,
-			//groups::schreier *Sch,
 			int verbose_level);
 	// TDA = tactical decomposition by automorphism group
 	void export_INP_with_flag_orbits(
 			std::ostream &ost,
-			//groups::schreier *Sch,
 			int verbose_level);
 	// INP = input geometry
 

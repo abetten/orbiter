@@ -252,13 +252,13 @@ public:
 	void create_quartic_curve_from_cubic_surface(
 			std::string &cubic_surface_label,
 			int pt_orbit_idx,
-			//int f_TDO,
 			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
 		int verbose_level);
-	void apply_single_transformation(int f_inverse,
+	void apply_single_transformation(
+			int f_inverse,
 			int *transformation_coeffs,
 			int sz, int verbose_level);
 	void export_something(
@@ -407,26 +407,6 @@ public:
 	// computed by canonical_form_global::compute_stabilizer_of_quartic_curve:
 
 	canonical_form::automorphism_group_of_variety *Aut_of_variety;
-
-#if 0
-	canonical_form_classification::object_with_canonical_form *OwCF;
-
-	data_structures::bitvector *Canonical_form;
-
-	l1_interfaces::nauty_output *NO;
-
-	canonical_form_classification::encoded_combinatorial_object *Enc;
-
-	groups::strong_generators *SG_pt_stab;
-		// the stabilizer of the set of rational points
-	ring_theory::longinteger_object pt_stab_order;
-		// order of stabilizer of the set of rational points
-
-	orbits_schreier::orbit_of_equations *Orb;
-
-	groups::strong_generators *Stab_gens_quartic;
-		// stabilizer of quartic curve obtained by doing an orbit algorithm
-#endif
 
 
 

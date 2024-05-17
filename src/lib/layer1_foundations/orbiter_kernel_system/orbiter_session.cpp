@@ -887,6 +887,30 @@ int orbiter_session::find_object_of_type_symbolic_object(
 }
 
 
+graph_theory::colored_graph
+	*orbiter_session::get_object_of_type_graph(
+			std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_graph "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_graph) {
+		cout << "orbiter_session::get_object_of_type_graph "
+				"object type != t_graph" << endl;
+		exit(1);
+	}
+
+
+	return (graph_theory::colored_graph *) get_object(idx);
+}
+
+
+
 
 
 void orbiter_session::start_memory_debug()

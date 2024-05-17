@@ -39,27 +39,9 @@ group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 
 	Decomposition = NULL;
 
-	//Inc = NULL;
-	//S = NULL;
-
 	Sch_points = NULL;
 	Sch_lines = NULL;
 
-	//SoS_points = NULL;
-	//SoS_lines = NULL;
-
-#if 0
-	row_classes = NULL;
-	row_class_inv = NULL;
-	nb_row_classes = 0;
-
-	col_classes = NULL;
-	col_class_inv = NULL;
-	nb_col_classes = 0;
-
-	row_scheme = NULL;
-	col_scheme = NULL;
-#endif
 
 	Flags = NULL;
 	Anti_Flags = NULL;
@@ -200,30 +182,6 @@ void group_action_on_combinatorial_object::init(
 
 
 
-#if 0
-	S = NEW_OBJECT(data_structures::partitionstack);
-
-	int N;
-
-	if (f_v) {
-		cout << "group_action_on_combinatorial_object::init "
-				"allocating partitionstack" << endl;
-	}
-	N = Inc->nb_points() + Inc->nb_lines();
-
-	S->allocate(N, 0);
-	// split off the column class:
-	S->subset_contiguous(Inc->nb_points(), Inc->nb_lines());
-	S->split_cell(0);
-#endif
-
-	#if 0
-	// ToDo:
-	S->split_cell_front_or_back(data, target_size,
-			true /* f_front */, 0 /* verbose_level*/);
-	#endif
-
-
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
@@ -350,63 +308,29 @@ void group_action_on_combinatorial_object::init(
 				"after Decomposition->compute_the_decomposition" << endl;
 	}
 
-#if 0
-	Decomposition->Stack->get_row_classes(
-			SoS_points, 0 /*verbose_level*/);
-	Decomposition->Stack->get_column_classes(
-			SoS_lines, 0 /*verbose_level*/);
-
-#if 0
-	ost << "Point orbits:\\\\" << endl;
-	SoS_points->print_table_tex(ost);
-
-	ost << "Line orbits:\\\\" << endl;
-	SoS_lines->print_table_tex(ost);
-#endif
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"before S->allocate_and_get_decomposition" << endl;
+				"before Decomposition->get_row_scheme" << endl;
 	}
-	Decomposition->Stack->allocate_and_get_decomposition(
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes,
-		verbose_level - 2);
+	Decomposition->get_row_scheme(verbose_level);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"after S->allocate_and_get_decomposition" << endl;
+				"after Decomposition->get_row_scheme" << endl;
 	}
-
-	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"before Inc->get_col_decomposition_scheme" << endl;
+				"before Decomposition->get_col_scheme" << endl;
 	}
-	Inc->get_col_decomposition_scheme(*S,
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes,
-		col_scheme, verbose_level);
+	Decomposition->get_col_scheme(verbose_level);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"after Inc->get_col_decomposition_scheme" << endl;
+				"after Decomposition->get_col_scheme" << endl;
 	}
 
-	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
-	if (f_v) {
-		cout << "group_action_on_combinatorial_object::init "
-				"before Inc->get_row_decomposition_scheme" << endl;
-	}
-	Inc->get_row_decomposition_scheme(*S,
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes,
-		row_scheme, verbose_level);
-	if (f_v) {
-		cout << "group_action_on_combinatorial_object::init "
-				"after Inc->get_row_decomposition_scheme" << endl;
-	}
-#endif
+
 
 
 	if (f_v) {
@@ -422,6 +346,38 @@ void group_action_on_combinatorial_object::init(
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init done" << endl;
+	}
+}
+
+
+void group_action_on_combinatorial_object::print_schemes(
+		std::ostream &ost,
+		canonical_form_classification::classification_of_objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::print_schemes" << endl;
+	}
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::print_schemes "
+				"before Decomposition->print_schemes" << endl;
+	}
+
+	Decomposition->print_schemes(ost, Report_options, verbose_level);
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::print_schemes "
+				"after Decomposition->print_schemes" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "group_action_on_combinatorial_object::print_schemes done" << endl;
 	}
 }
 
@@ -442,7 +398,9 @@ void group_action_on_combinatorial_object::compute_flag_orbits(
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "
 				"before Flags->init" << endl;
 	}
-	Flags->init(OwCF, false, A_perm, A_perm->Strong_gens, verbose_level - 2);
+	Flags->init(
+			OwCF, false, A_perm, A_perm->Strong_gens,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "
 				"after Flags->init" << endl;
@@ -452,7 +410,9 @@ void group_action_on_combinatorial_object::compute_flag_orbits(
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "
 				"before Anti_Flags->init" << endl;
 	}
-	Anti_Flags->init(OwCF, true, A_perm, A_perm->Strong_gens, verbose_level - 2);
+	Anti_Flags->init(
+			OwCF, true, A_perm, A_perm->Strong_gens,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "
 				"after Anti_Flags->init" << endl;

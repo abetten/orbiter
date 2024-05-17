@@ -2021,7 +2021,9 @@ void surface_object::export_something(
 		fname = fname_base + "_points.csv";
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
-				fname, Variety_object->Point_sets->Sets[0], 1, Variety_object->Point_sets->Set_size[0]);
+				fname,
+				Variety_object->Point_sets->Sets[0],
+				1, Variety_object->Point_sets->Set_size[0]);
 
 		cout << "surface_object::export_something "
 				"Written file " << fname << " of size "
@@ -2038,7 +2040,11 @@ void surface_object::export_something(
 
 		Pts_off = NEW_lint(Surf->P->Subspaces->N_points);
 
-		Lint_vec_complement_to(Variety_object->Point_sets->Sets[0], Pts_off, Surf->P->Subspaces->N_points, Variety_object->Point_sets->Set_size[0]);
+		Lint_vec_complement_to(
+				Variety_object->Point_sets->Sets[0],
+				Pts_off,
+				Surf->P->Subspaces->N_points,
+				Variety_object->Point_sets->Set_size[0]);
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, Pts_off, 1, nb_pts_off);
@@ -2340,8 +2346,14 @@ void surface_object::Clebsch_map_up(
 	Line_b_point_list = NEW_lint(Surf->P->Subspaces->k);
 
 	// get generator matrices for the two skew lines:
-	Surf->Gr->unrank_lint_here(Line_a, Variety_object->Line_sets->Sets[0][line_1_idx], 0 /*verbose_level*/);
-	Surf->Gr->unrank_lint_here(Line_b, Variety_object->Line_sets->Sets[0][line_2_idx], 0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(
+			Line_a,
+			Variety_object->Line_sets->Sets[0][line_1_idx],
+			0 /*verbose_level*/);
+	Surf->Gr->unrank_lint_here(
+			Line_b,
+			Variety_object->Line_sets->Sets[0][line_2_idx],
+			0 /*verbose_level*/);
 
 
 	Surf->P->Subspaces->create_points_on_line_with_line_given(

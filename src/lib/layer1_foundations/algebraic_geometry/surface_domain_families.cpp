@@ -525,7 +525,8 @@ surface_object *surface_domain::create_Eckardt_surface(
 		cout << endl;
 	}
 
-	create_remaining_fifteen_lines(Lines27,
+	create_remaining_fifteen_lines(
+			Lines27,
 		Lines27 + 12, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -544,7 +545,8 @@ surface_object *surface_domain::create_Eckardt_surface(
 
 	long int special_lines[15];
 
-	create_Eckardt_fifteen_lines(special_lines, a, b, verbose_level);
+	create_Eckardt_fifteen_lines(
+			special_lines, a, b, verbose_level);
 	for (i = 0; i < 15; i++) {
 		if (special_lines[i] != Lines27[12 + i]) {
 			cout << "surface_domain::create_Eckardt_surface something is wrong "
@@ -574,7 +576,8 @@ surface_object *surface_domain::create_Eckardt_surface(
 
 	int coeff20[20];
 
-	build_cubic_surface_from_lines(27, Lines27, coeff20,
+	build_cubic_surface_from_lines(
+			27, Lines27, coeff20,
 			0 /* verbose_level */);
 	F->Projective_space_basic->PG_element_normalize_from_front(coeff20, 1, 20);
 
@@ -582,7 +585,8 @@ surface_object *surface_domain::create_Eckardt_surface(
 
 
 
-	if (!test_Eckardt_form_alpha_beta(coeff20, alpha, beta,
+	if (!test_Eckardt_form_alpha_beta(
+			coeff20, alpha, beta,
 		0 /* verbose_level */)) {
 		cout << "surface_domain::create_Eckardt_surface "
 				"not of special form" << endl;

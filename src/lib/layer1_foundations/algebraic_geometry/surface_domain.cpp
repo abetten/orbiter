@@ -135,7 +135,8 @@ void surface_domain::init_surface_domain(
 		cout << "surface::init_surface_domain "
 				"before P->projective_space_init" << endl;
 	}
-	P->projective_space_init(3, F,
+	P->projective_space_init(
+			3, F,
 		true /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
@@ -148,7 +149,8 @@ void surface_domain::init_surface_domain(
 		cout << "surface::init_surface_domain "
 				"before P2->projective_space_init" << endl;
 	}
-	P2->projective_space_init(2, F,
+	P2->projective_space_init(
+			2, F,
 		true /*f_init_incidence_structure */, 
 		verbose_level - 2);
 	if (f_v) {
@@ -275,7 +277,8 @@ void surface_domain::enumerate_points(
 		cout << "surface_domain::enumerate_points" << endl;
 	}
 
-	PolynomialDomains->Poly3_4->enumerate_points(coeff, Pts, verbose_level);
+	PolynomialDomains->Poly3_4->enumerate_points(
+			coeff, Pts, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::enumerate_points done" << endl;
 	}
@@ -321,6 +324,12 @@ void surface_domain::list_starter_configurations(
 	}
 
 	vector<vector<int>> V;
+		// V is a vector whose entries are the pairs
+		// (i, j)
+		// where i is the index of a line on the surface
+		// and j is the rank of a 5 subset of line_intersections->Sets[i]
+		// such that the rank of the system defined by these 5 lines
+		// together with the original line is 19.
 
 	{
 		int subset[5];
@@ -334,11 +343,13 @@ void surface_domain::list_starter_configurations(
 			if (line_intersections->Set_size[i] < 5) {
 				continue;
 			}
-			nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
+			nCk = Combi.int_n_choose_k(
+					line_intersections->Set_size[i], 5);
 
 			for (j = 0; j < nCk; j++) {
 
-				Combi.unrank_k_subset(j, subset,
+				Combi.unrank_k_subset(
+						j, subset,
 					line_intersections->Set_size[i], 5);
 
 				for (h = 0; h < 5; h++) {
@@ -348,7 +359,8 @@ void surface_domain::list_starter_configurations(
 				}
 				S6[5] = Lines[i];
 
-				r = rank_of_system(6, S6, 0 /*verbose_level*/);
+				r = rank_of_system(
+						6, S6, 0 /*verbose_level*/);
 
 				if (r == 19) {
 					vector<int> v;
@@ -369,7 +381,8 @@ void surface_domain::list_starter_configurations(
 	}
 
 	if (N != V.size()) {
-		cout << "surface_domain::list_starter_configurations N != V.size()" << endl;
+		cout << "surface_domain::list_starter_configurations "
+				"N != V.size()" << endl;
 		exit(1);
 	}
 
@@ -380,35 +393,7 @@ void surface_domain::list_starter_configurations(
 		Table[i * 2 + 0] = V[i][0];
 		Table[i * 2 + 1] = V[i][1];
 	}
-#if 0
-	N1 = 0;
-	for (i = 0; i < nb_lines; i++) {
-		if (line_intersections->Set_size[i] < 5) {
-			continue;
-		}
-		nCk = Combi.int_n_choose_k(line_intersections->Set_size[i], 5);
-		for (j = 0; j < nCk; j++) {
-			Combi.unrank_k_subset(j, subset,
-				line_intersections->Set_size[i], 5);
-			for (h = 0; h < 5; h++) {
-				subset2[h] = 
-				line_intersections->Sets[i][subset[h]];
-				S6[h] = Lines[subset2[h]];
-			}
-			S6[5] = Lines[i];
-			r = rank_of_system(6, S6, 0 /*verbose_level*/);
-			if (r == 19) {
-				Table[N1 * 2 + 0] = i;
-				Table[N1 * 2 + 1] = j;
-				N1++;
-			}
-		}
-	}
-	if (N1 != N) {
-		cout << "N1 != N" << endl;
-		exit(1);
-	}
-#endif
+
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations done" << endl;
 	}
@@ -507,7 +492,8 @@ void surface_domain::line_to_klein_vec(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		Klein_rk[i] = Klein->line_to_point_on_quadric(Line_rk[i], 0 /* verbose_level*/);
+		Klein_rk[i] = Klein->line_to_point_on_quadric(
+				Line_rk[i], 0 /* verbose_level*/);
 	}
 }
 
@@ -516,7 +502,8 @@ long int surface_domain::klein_to_wedge(
 {
 	long int b;
 	
-	O->Hyperbolic_pair->unrank_point(w2, 1, klein_rk, 0 /* verbose_level*/);
+	O->Hyperbolic_pair->unrank_point(
+			w2, 1, klein_rk, 0 /* verbose_level*/);
 	klein_to_wedge(w2, v2);
 	F->Projective_space_basic->PG_element_rank_modified_lint(
 			v2, 1, 6 /*wedge_dimension*/, b);
@@ -599,7 +586,8 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
 				"before Surf->create_the_fifteen_other_lines" << endl;
 	}
-	create_the_fifteen_other_lines(Lines27,
+	create_the_fifteen_other_lines(
+			Lines27,
 			Lines27 + 12, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
@@ -617,7 +605,8 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(
 				"before SO->init_with_27_lines" << endl;
 	}
 
-	SO->init_with_27_lines(this,
+	SO->init_with_27_lines(
+			this,
 		Lines27, coeffs20,
 		label_txt, label_tex,
 		false /* f_find_double_six_and_rearrange_lines */,
@@ -672,7 +661,8 @@ void surface_domain::build_surface_from_double_six(
 	}
 
 
-	if (!test_double_six_property(double_six, 0 /* verbose_level*/)) {
+	if (!test_double_six_property(
+			double_six, 0 /* verbose_level*/)) {
 		cout << "surface_domain::build_surface_from_double_six The double six is wrong" << endl;
 		exit(1);
 	}
@@ -715,7 +705,8 @@ void surface_domain::build_surface_from_double_six(
 		cout << "surface_domain::build_surface_from_double_six "
 				"before Surf->create_the_fifteen_other_lines" << endl;
 	}
-	create_the_fifteen_other_lines(Lines27,
+	create_the_fifteen_other_lines(
+			Lines27,
 			Lines27 + 12, verbose_level);
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six "
@@ -898,6 +889,7 @@ void surface_domain::create_surface_by_coefficient_vector(
 	nb_select_double_six = select_double_six_string.size();
 
 	if (nb_select_double_six) {
+
 		int i;
 
 		for (i = 0; i < nb_select_double_six; i++) {
@@ -1024,7 +1016,9 @@ void surface_domain::create_surface_from_catalogue(
 	string label_tex;
 
 	label_txt = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
-	label_tex = "catalogue_q" + std::to_string(q) + "_iso" + std::to_string(iso);
+	label_tex = "catalogue\\_q" + std::to_string(q) + "\\_iso" + std::to_string(iso);
+
+
 
 	SO = NEW_OBJECT(algebraic_geometry::surface_object);
 

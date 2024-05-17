@@ -23,7 +23,6 @@ geometric_object_create::geometric_object_create()
 {
 	Descr = NULL;
 
-	//std::string fname;
 	nb_pts = 0;
 	Pts = NULL;
 

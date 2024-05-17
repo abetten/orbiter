@@ -136,29 +136,6 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (Aut_of_variety) {
 		FREE_OBJECT(Aut_of_variety);
 	}
-#if 0
-	if (OwCF) {
-		FREE_OBJECT(OwCF);
-	}
-	if (Canonical_form) {
-		FREE_OBJECT(Canonical_form);
-	}
-	if (NO) {
-		FREE_OBJECT(NO);
-	}
-	if (Enc) {
-		FREE_OBJECT(Enc);
-	}
-	if (SG_pt_stab) {
-		FREE_OBJECT(SG_pt_stab);
-	}
-	if (Orb) {
-		FREE_OBJECT(Orb);
-	}
-	if (Stab_gens_quartic) {
-		FREE_OBJECT(Stab_gens_quartic);
-	}
-#endif
 
 }
 
@@ -350,7 +327,8 @@ void quartic_curve_from_surface::quartic(
 			mfour, poly2,
 			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
 
-	// curve = poly1 -4 * poly2 = f2^2 - 4 * f1 * f3:
+	// curve = poly1 - 4 * poly2 = f2^2 - 4 * f1 * f3:
+
 	SOA->Surf->F->Linear_algebra->add_vector(
 			poly1, poly2, curve,
 			SOA->Surf->PolynomialDomains->Poly4_x123->get_nb_monomials());
@@ -729,148 +707,6 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty" << endl;
 	}
 
-#if 0
-	cubic_surfaces_in_general::surface_with_action *Surf_A;
-
-	Surf_A = SOA->Surf_A;
-	// compute stabilizer of the set of points:
-
-
-	groups::strong_generators *SG_pt_stab = NULL;
-	ring_theory::longinteger_object pt_stab_order;
-	canonical_form_classification::object_with_canonical_form *OwCF = NULL;
-
-	int f_compute_canonical_form = false;
-	data_structures::bitvector *Canonical_form;
-
-
-	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before OwCF->init_point_set" << endl;
-	}
-	OwCF->init_point_set(
-			Pts_on_curve, sz_curve,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after OwCF->init_point_set" << endl;
-	}
-	OwCF->P = Surf_A->PA->PA2->P;
-
-	int nb_rows, nb_cols;
-
-	OwCF->encoding_size(
-				nb_rows, nb_cols,
-				verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"nb_rows = " << nb_rows << endl;
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"nb_cols = " << nb_cols << endl;
-	}
-
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before Nau.set_stabilizer_of_object" << endl;
-	}
-
-	interfaces::nauty_interface_with_group Nau;
-	l1_interfaces::nauty_output *NO;
-	canonical_form_classification::encoded_combinatorial_object *Enc;
-
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-
-	NO->nauty_output_allocate(nb_rows + nb_cols,
-			0,
-			nb_rows + nb_cols,
-			0 /* verbose_level */);
-
-
-	SG_pt_stab = Nau.set_stabilizer_of_object(
-			OwCF,
-		Surf_A->PA->PA2->A,
-		f_compute_canonical_form, Canonical_form,
-		NO,
-		Enc,
-		verbose_level);
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after Nau.set_stabilizer_of_object" << endl;
-	}
-
-
-	string file_name_encoding;
-
-	file_name_encoding = SOA->SO->label_txt + "_encoding";
-	Enc->save_incma(file_name_encoding, verbose_level);
-
-	if (f_v) {
-		NO->print_stats();
-	}
-
-	FREE_OBJECT(NO);
-	FREE_OBJECT(Enc);
-
-	SG_pt_stab->group_order(pt_stab_order);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"pt_stab_order = " << pt_stab_order << endl;
-	}
-
-	FREE_OBJECT(OwCF);
-
-
-
-	// compute the orbit of the equation under the stabilizer of the set of points:
-
-
-	orbits_schreier::orbit_of_equations *Orb;
-
-	Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
-
-
-#if 1
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before Orb->init" << endl;
-	}
-	Orb->init(
-			Surf_A->PA->PA2->A,
-			Surf_A->PA->F,
-			Surf_A->AonHPD_4_3 /* AonHPD */,
-		SG_pt_stab /* A->Strong_gens*/,
-		curve,
-		verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after Orb->init" << endl;
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"found an orbit of length " << Orb->used_length << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"before Orb->stabilizer_orbit_rep" << endl;
-	}
-	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
-			pt_stab_order, verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
-				"after Orb->stabilizer_orbit_rep" << endl;
-	}
-	Stab_gens_quartic->print_generators_tex(cout);
-#endif
-
-	FREE_OBJECT(SG_pt_stab);
-	FREE_OBJECT(Orb);
-#else
 
 	canonical_form::canonical_form_global Canon;
 
@@ -887,7 +723,6 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 				"after Canon.compute_stabilizer_of_quartic_curve" << endl;
 	}
 
-#endif
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty" << endl;
@@ -912,7 +747,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	if (f_has_SC) {
 		//cubic_surfaces_in_general::surface_create *SC;
 
-		ost << "The original cubic surface is " << SC->label_tex << "\\\\" << endl;
+		ost << "The original cubic surface is " << SC->SO->label_tex << "\\\\" << endl;
 
 		//SC->do_report2(ost, verbose_level);
 	}

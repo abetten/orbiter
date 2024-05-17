@@ -744,7 +744,8 @@ public:
 	void print_TDO(
 			std::ostream &ost,
 			canonical_form_classification::classification_of_objects_report_options
-				*Report_options);
+				*Report_options,
+			int verbose_level);
 #if 0
 	void export_TDA_with_flag_orbits(
 			std::ostream &ost,

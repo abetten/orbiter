@@ -306,7 +306,7 @@ void clique_finder::init_suspicious_points(
 	FREE_int(point_list_ordered);
 }
 
-void clique_finder::backtrack_search(
+void clique_finder::clique_finder_backtrack_search(
 		int depth, int verbose_level)
 {
 	int nb_old, i, nb_new;
@@ -331,7 +331,7 @@ void clique_finder::backtrack_search(
 	//int f_vvv = (my_verbose_level >= 3);
 
 	if (f_v) {
-		cout << "clique_finder::backtrack_search : ";
+		cout << "clique_finder::clique_finder_backtrack_search : ";
 		log_position(depth, counter_save, counter);
 		cout << " nb_sol=" << solutions.size() << " starting" << endl;
 	}
@@ -342,7 +342,7 @@ void clique_finder::backtrack_search(
 		// We found a clique:
 
 		if (f_v) {
-			cout << "clique_finder::backtrack_search "
+			cout << "clique_finder::clique_finder_backtrack_search "
 					"depth == target_depth" << endl;
 		}
 		if (Control->f_store_solutions) {
@@ -414,7 +414,7 @@ void clique_finder::backtrack_search(
 	// that was added to the clique in the previous step from pt_list.
 	
 	if (f_v) {
-		cout << "clique_finder::backtrack_search : ";
+		cout << "clique_finder::clique_finder_backtrack_search : ";
 		log_position(depth, counter_save, counter);
 		cout << " first pass" << endl;
 	}
@@ -661,7 +661,7 @@ void clique_finder::backtrack_search(
 		// and now, let's do the recursion:
 
 		if (f_go) {
-			backtrack_search(depth + 1, verbose_level);
+			clique_finder_backtrack_search(depth + 1, verbose_level);
 		}
 
 
@@ -686,7 +686,7 @@ void clique_finder::backtrack_search(
 
 	
 	if (f_v) {
-		cout << "backtrack_search : ";
+		cout << "clique_finder::clique_finder_backtrack_search : ";
 		log_position(depth, counter_save, counter);
 		cout << " nb_sol=" << solutions.size() << " done" << endl;
 	}
@@ -1435,7 +1435,12 @@ void clique_finder::get_solutions(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "clique_finder::get_solutions nb_sol = " << nb_sol << " clique_sz=" << clique_sz << endl;
+		cout << "clique_finder::get_solutions" << endl;
+	}
+
+	if (f_v) {
+		cout << "clique_finder::get_solutions "
+				"nb_sol = " << nb_sol << " clique_sz=" << Control->target_size << endl;
 	}
 	int i, j;
 
@@ -1816,6 +1821,68 @@ void clique_finder::delinearize_adjacency_list(
 	if (f_v) {
 		cout << "clique_finder::delinearize_adjacency_list done" << endl;
 	}
+}
+
+void clique_finder::write_solutions(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "clique_finder::write_solutions" << endl;
+	}
+
+	int *Sol;
+	long int nb_sol;
+
+	int sz;
+	if (f_v) {
+		cout << "clique_finder::write_solutions "
+				"before C->get_solutions" << endl;
+	}
+	get_solutions(Sol, nb_sol, sz, verbose_level);
+	if (f_v) {
+		cout << "clique_finder::write_solutions "
+				"after C->get_solutions" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "clique_finder::write_solutions "
+				"writing cliques" << endl;
+	}
+	string *Table;
+	int nb_cols = 1;
+	std::string headings;
+	int i;
+
+	Table = new string[nb_sol * nb_cols];
+
+	headings = "clique";
+
+	for (i = 0; i < nb_sol; i++) {
+		Table[i * nb_cols + 0] = "\"" + Int_vec_stringify(Sol + i * sz, sz) + "\"";
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
+			nb_sol, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	delete [] Table;
+	if (f_v) {
+		cout << "clique_finder::all_cliques_of_given_size "
+				"Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(Sol);
+
+
 }
 
 

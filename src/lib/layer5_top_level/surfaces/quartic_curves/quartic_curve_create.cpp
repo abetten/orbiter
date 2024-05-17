@@ -981,7 +981,6 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 	}
 
 	cubic_surfaces_in_general::surface_create *SC;
-	//cubic_surfaces_in_general::surface_object_with_action *SOA;
 
 
 	SC = Get_object_of_cubic_surface(cubic_surface_label);
@@ -991,20 +990,6 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 				"The automorphism group of the surface is missing" << endl;
 		exit(1);
 	}
-
-#if 0
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"before SC->create_surface_object_with_action" << endl;
-	}
-	SC->create_surface_object_with_action(
-			SOA,
-			verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
-				"after SC->create_surface_object_with_action" << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
@@ -1025,13 +1010,12 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 	}
 
 	if (f_v) {
-		cout << "Quartic curve associated with surface " << SC->prefix
+		cout << "Quartic curve associated with surface " << SC->SO->label_txt
 				<< " and with orbit " << pt_orbit_idx
 				<< " / " << SC->SOG->Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 	}
 
 
-	//quartic_curves::quartic_curve_from_surface *QC;
 
 	f_has_quartic_curve_from_surface = true;
 	QC_from_surface = NEW_OBJECT(quartic_curves::quartic_curve_from_surface);
@@ -1063,7 +1047,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 				"before QC_from_surface->init_labels" << endl;
 	}
 	QC_from_surface->init_labels(
-			SC->label_txt, SC->label_tex, verbose_level);
+			SC->SO->label_txt, SC->SO->label_tex, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
 				"after QC_from_surface->init_labels" << endl;
@@ -1153,7 +1137,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 	}
 
 
-	prefix = "surface_" + SC->label_txt + prefix + "_pt_orb_" + std::to_string(pt_orbit_idx);
+	prefix = "surface_" + SC->SO->label_txt + prefix + "_pt_orb_" + std::to_string(pt_orbit_idx);
 
 	label_txt = prefix;
 

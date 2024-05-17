@@ -1258,17 +1258,6 @@ void surface_domain_high_level::do_create_surface_reports(
 
 			make_fname_surface_report_tex(fname, q, ocn);
 
-#if 0
-			$(ORBITER) -v 3 \
-				-define F -finite_field -q 11 -end \
-				-define P -projective_space -n 3 -field F -v 0 -end \
-				-define S -cubic_surface -space P -catalogue 1 -end \
-				-with S -do \
-				-cubic_surface_activity \
-					-report \
-				-end
-#endif
-
 
 
 			cmd = orbiter_kernel_system::Orbiter->orbiter_path

@@ -117,17 +117,22 @@ void arc_lifting_with_two_lines::create_surface(
 
 	if (line1 == 0 && line2 == 0) {
 		if (f_v) {
-			cout << "arc_lifting_with_two_lines::create_surface both lines are zero, "
+			cout << "arc_lifting_with_two_lines::create_surface "
+					"both lines are zero, "
 					"meaning we will pick our own lines" << endl;
 		}
 		if (f_v) {
-			cout << "arc_lifting_with_two_lines::create_surface before Surf->P->find_two_lines_for_arc_lifting" << endl;
+			cout << "arc_lifting_with_two_lines::create_surface "
+					"before Surf->P->find_two_lines_for_arc_lifting" << endl;
 		}
-		Gg.find_two_lines_for_arc_lifting(Surf->P,
-				Arc6[0] /* P1 */, Arc6[1] /* P2 */, line1, line2,
+		Gg.find_two_lines_for_arc_lifting(
+				Surf->P,
+				Arc6[0] /* P1 */, Arc6[1] /* P2 */,
+				line1, line2,
 				verbose_level - 2);
 		if (f_v) {
-			cout << "arc_lifting_with_two_lines::create_surface after Surf->P->find_two_lines_for_arc_lifting" << endl;
+			cout << "arc_lifting_with_two_lines::create_surface "
+					"after Surf->P->find_two_lines_for_arc_lifting" << endl;
 		}
 	}
 
@@ -173,7 +178,7 @@ void arc_lifting_with_two_lines::create_surface(
 
 	// P[0] and P[1] are points on the arc.
 	// Find them and remove them
-	// so we can find the remaining four point of the arc:
+	// so we can find the remaining four points of the arc:
 	int i, a, h;
 
 	h = 2;
@@ -350,7 +355,8 @@ void arc_lifting_with_two_lines::create_surface(
 	for (j1 = 0; j1 <= q; j1++) {
 		pt3 = Surf->P->Subspaces->create_point_on_line(
 				line3, j1 /*pt_rk*/, 0 /* verbose_level */);
-		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt3);
+		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
+				coeff, pt3);
 		//cout << "j1=" << j1 << " pt3=" << pt3 << " val=" << val << endl;
 		if (pt3 == P[1]) {
 			if (f_vv) {
@@ -389,7 +395,8 @@ void arc_lifting_with_two_lines::create_surface(
 			continue;
 		}
 #endif
-		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(coeff, pt4);
+		val = Surf->PolynomialDomains->Poly3_4->evaluate_at_a_point_by_rank(
+				coeff, pt4);
 		//cout << "j2=" << j2 << " pt4=" << pt4 << " val=" << val << endl;
 		if (val == 0) {
 			break;
@@ -500,8 +507,10 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << endl;
 	}
 	Lint_vec_copy(double_six, lines27, 12);
-	Surf->create_the_fifteen_other_lines(double_six,
-			lines27 + 12, verbose_level - 10);
+	Surf->create_the_fifteen_other_lines(
+			double_six,
+			lines27 + 12,
+			verbose_level - 10);
 
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "

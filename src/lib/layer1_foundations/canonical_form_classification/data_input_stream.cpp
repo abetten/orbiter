@@ -69,7 +69,8 @@ void data_input_stream::init(
 	}
 }
 
-int data_input_stream::count_number_of_objects_to_test(int verbose_level)
+int data_input_stream::count_number_of_objects_to_test(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int input_idx, nb_obj;
@@ -524,6 +525,51 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				nb_objects_to_test += nb_sol;
 				FREE_OBJECT(SoS);
 			}
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
+			if (f_v) {
+				cout << "input graph by adjacency matrix on "
+						<< Descr->Input[input_idx].input_data1 << " vertices:" << endl;
+			}
+
+			nb_objects_to_test++;
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix_from_file) {
+			if (f_v) {
+				cout << "t_data_input_stream_graph_by_adjacency_matrix_from_file "
+						<< Descr->Input[input_idx].input_string
+						<< " column " << Descr->Input[input_idx].input_string2 << ":" << endl;
+			}
+
+
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+
+			int nb_sets;
+
+			nb_sets = Fio.Csv_file_support->read_column_and_count_nb_sets(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_string2 /* col_label */,
+					0 /*verbose_level*/);
+
+			nb_objects_to_test += nb_sets;
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_object) {
+			if (f_v) {
+				cout << "t_data_input_stream_graph_object "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+
+			graph_theory::colored_graph *CG;
+
+			CG = Get_graph(Descr->Input[input_idx].input_string);
+
+			nb_objects_to_test++;
+
 		}
 		else {
 			cout << "unknown input type" << endl;
@@ -1270,6 +1316,109 @@ void data_input_stream::read_objects(
 				//nb_objects_to_test += nb_sol;
 				FREE_OBJECT(SoS);
 			}
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"graph by adjacency matrix on "
+					<< Descr->Input[input_idx].input_data1 << " vertices:" << endl;
+			}
+
+			object_with_canonical_form *OwCF;
+
+
+			OwCF = NEW_OBJECT(object_with_canonical_form);
+
+			OwCF->init_graph_by_adjacency_matrix_text(
+					Descr->Input[input_idx].input_string /*adjacency_matrix*/,
+					Descr->Input[input_idx].input_data1 /* N */,
+					verbose_level);
+
+			Objects.push_back(OwCF);
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix_from_file) {
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_graph_by_adjacency_matrix_from_file "
+						<< Descr->Input[input_idx].input_string
+						<< " column " << Descr->Input[input_idx].input_string2 << ":" << endl;
+			}
+
+
+			int N;
+
+			N = Descr->Input[input_idx].input_data1;
+
+			orbiter_kernel_system::file_io Fio;
+
+			if (Fio.file_size(Descr->Input[input_idx].input_string) <= 0) {
+				cout << "The file " << Descr->Input[input_idx].input_string << " does not exist" << endl;
+				exit(1);
+			}
+
+			data_structures::set_of_sets *Reps;
+
+
+			Fio.Csv_file_support->read_column_and_parse(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_string2 /* col_label */,
+					Reps, verbose_level);
+			if (!Reps->has_constant_size_property()) {
+				cout << "data_input_stream::read_objects "
+						"the sets have different sizes" << endl;
+				exit(1);
+			}
+
+			int N2;
+			int sz;
+
+			N2 = (N * (N - 1)) >> 1;
+			sz = Reps->Set_size[0];
+			if (sz != N2) {
+				cout << "data_input_stream::read_objects sz != N2" << endl;
+				exit(1);
+			}
+			int i;
+
+			for (i = 0; i < Reps->nb_sets; i++) {
+				object_with_canonical_form *OwCF;
+
+				OwCF = NEW_OBJECT(object_with_canonical_form);
+
+				OwCF->init_graph_by_adjacency_matrix(
+						Reps->Sets[i],
+						Reps->Set_size[i],
+						N,
+						verbose_level);
+
+
+				Objects.push_back(OwCF);
+			}
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_object) {
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+
+			graph_theory::colored_graph *CG;
+
+			CG = Get_graph(Descr->Input[input_idx].input_string);
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = NEW_OBJECT(object_with_canonical_form);
+
+			OwCF->init_graph_by_object(
+					CG,
+					verbose_level);
+
+
+			Objects.push_back(OwCF);
+
 		}
 
 		else {

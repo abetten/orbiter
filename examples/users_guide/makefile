@@ -94,11 +94,10 @@ test_problem:
 # Makefile Variables
 
 
-# Section 2.7 vectors
 
 
 
-# Section 2.8 vector of group elements
+# Section 2.6 vector of group elements
 
 
 HIRSCHFELD_STAB_GENERATORS="\
@@ -118,7 +117,7 @@ FILE_NAME_CLASS_2A="PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_class_of_2A.csv"
 
 
 
-# Section 2.9 Symbolic Objects
+# Section 2.7 Symbolic Objects
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 
@@ -152,7 +151,7 @@ F_abcd_eqn="-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0^2*X2 \
 
 
 
-# Section 3.4 Linear algebra over finite fields
+# Section 3.3 Linear algebra over finite fields
 
 
 
@@ -397,7 +396,7 @@ PGOp_6_2_GENS="\
 
 
 
-# Section 6.4 New groups from old
+# Section 6.4 New actions from old
 
 
 SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
@@ -558,10 +557,10 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 
 
 
-# Section 8.4 Classification
+# Section 8.4 Classification of cubic surfaces
 
 
-# Section 8.5 Quartic Curves
+# Section 8.6 Classification of quartic curves
 
 
 
@@ -577,7 +576,7 @@ NB_QUARTIC_CURVES_Q19=14
 
 
 
-# Section 8.6 Interface to GAP
+# Section 8.7 Interface to GAP
 
 
 
@@ -1081,6 +1080,10 @@ HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, \
 HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, \
 139, 156, 174, 186, 199, 217, 229, 256, 264"
 
+
+NEUMAIER_GRAPH_16_1_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,1,0,1,0,1,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,1,0,1,0,0,1,1,1,1,1,1,1"
+
+NEUMAIER_GRAPH_16_2_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1,1,1,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,0,1,0,0,1,0,1,0,1,0,1,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,1,0,1,0,0,1,1,1,1,1,1,1"
 
 # Section 11.4 Classification of Configurations and Geometries
 
@@ -1716,40 +1719,43 @@ GNUPLOT_TEST_INPUT="Row,Curve-1,Curve-2\n1,2,4\n2,6,8\n3,9,10\n4,13,17\n5,17,20\
 # Chapter 18 Mathematical Data in Orbiter
 
 
-# Section 18.1 Mathematical on Cubic Surfaces
+# Section 18.1 Mathematical data on Cubic Surfaces
 
-# Section 18.2 Mathematical on BLT-sets
+# Section 18.2 Mathematical data on BLT-sets
 
 BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
 
 BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
 
 
+###############################################################################
+# Chapter 1 - Introduction
+###############################################################################
+
 
 
 ###############################################################################
-# Chapter 2 - Getting Started
+# Chapter 2 - The Orbiter Language
 ###############################################################################
 
 test_2:
+	make test_2_1
 	make test_2_2
 	make test_2_3
 	make test_2_4
 	make test_2_5
 	make test_2_6
 	make test_2_7
-	make test_2_8
-	make test_2_9
 
 
 
 ###############################################################################
-# Section 2.2: Orbiter Session
+# Section 2.1: Orbiter Session
 	
 	
 SECTION_ORBITER_SESSION:
 
-test_2_2:
+test_2_1:
 	make test_orbiter_session
 
 
@@ -1758,20 +1764,13 @@ test_orbiter_session:
 
 
 
-###############################################################################
-# Section 2.3: Makefiles and Shell Scripts
-
-SECTION_MAKEFILES_AND_SHELL_SCRIPTS:
-
-test_2_3:
-
 
 ###############################################################################
-# Section 2.4: Objects and Activities
+# Section 2.2: Objects and Activities
 
 SECTION_OBJECTS_AND_ACTIVITIES:
 
-test_2_4:
+test_2_2:
 	make example_set
 	make object_F_2
 	make object_PG_3_2
@@ -1808,12 +1807,12 @@ vector_ex:
 
 
 ###############################################################################
-# Section 2.5: Mathematical Data
+# Section 2.3: Mathematical Data
 
 SECTION_MATHEMATICAL_DATA:
 
 
-test_2_5:
+test_2_3:
 	#make create_BLT_5_1 #error in init_group
 	make create_surface_4_0
 
@@ -1847,12 +1846,12 @@ create_surface_4_0:
 
 
 ###############################################################################
-# Section 2.6: Set Builder
+# Section 2.4: Set Builder
 
 SECTION_SET_BUILDER:
 
 
-test_2_6:
+test_2_4:
 	make set_of_primes
 	make set_interval
 
@@ -1869,12 +1868,12 @@ set_interval:
 
 
 ###############################################################################
-# Section 2.7: Vector Builder
+# Section 2.5: Vector Builder
 
 SECTION_VECTOR_BUILDER:
 
 
-test_2_7:
+test_2_5:
 	make vector_example1
 	make vector_example2
 	make vector_example_repeat
@@ -1966,12 +1965,12 @@ matrix_example_co_1:
 
 
 ###############################################################################
-# Section 2.8: Vector of Group Elements Builder
+# Section 2.6: Vector of Group Elements Builder
 
 SECTION_VECTOR_OF_GROUP_ELEMENTS_BUILDER:
 
 
-test_2_8:
+test_2_6:
 	make Hirschfeld_Class_2A
 	make surface_4_0_export_action
 
@@ -2018,11 +2017,11 @@ surface_4_0_export_action:
 
 
 ###############################################################################
-# Section 2.9: Symbolic Algebra
+# Section 2.7: Symbolic Algebra
 
 SECTION_FORMULA_BUILDER:
 
-test_2_9:
+test_2_7:
 	make symbolic_poly
 	make symbolic_CRC32
 	make symbolic_CRC_alfa
@@ -2856,7 +2855,7 @@ Clebsch_map_up_Fabcd:
 
 
 ###############################################################################
-# Chapter 3 - Basic Algebra
+# Chapter 3 - Finite Fields
 ###############################################################################
 
 
@@ -2866,318 +2865,17 @@ test_3:
 	make test_3_3
 	make test_3_4
 	make test_3_5
-	make test_3_6
+
+
 
 
 ###############################################################################
-# Section 3.1: Basic Number Theory
+# Section 3.1: Prime Fields
 
-SECTION_BASIC_NUMBER_THEORY:
+SECTION_PRIME_FIELDS:
+
 
 test_3_1:
-	make PR101
-	make PR101_smallest
-	make PR29
-	make PR31
-	make PR37
-	make PR_2_100
-	make PR_2_1000
-	make PE_number_2_1000
-	make number_of_primitive_roots_10000
-	make IM_3_19
-	make IM_723
-	make IM
-	make IM_gcd
-	make PM3a
-	make PR_915839
-	make PR_915839_check
-	make DL_915839
-	make sqrt_mod
-	make sqrt_5_mod_11
-	make sqrt_5_mod_19
-	make sqrt_mod_20_31
-	make order_of_2_mod_n
-	make Eulerfunction_150
-	make Eulerfunction_900
-	make Eulerfunction_10000
-	make power_function_2_mod_11
-	make draw_mod_13
-	make inverse_mod_a
-	make smith_normal_form_1
-	make smith_normal_form_2
-	make jacobi_35_41
-	make jacobi_33_41
-	make jacobi_a
-	make jacobi_5_19
-	make sqrt_mod_7817
-	make Chinese_remainders_A
-	make Chinese_remainders_B
-	make Chinese_remainders_C2
-	make Chinese_remainders_C3
-
-
-
-PR101:
-	$(ORBITER) -v 5 -primitive_root 101
-
-
-PR101_smallest:
-	$(ORBITER) -v 5 -smallest_primitive_root 101
-
-
-PR29:
-	$(ORBITER) -v 1 -smallest_primitive_root 29
-
-PR31:
-	$(ORBITER) -v 1 -smallest_primitive_root 31
-
-PR37:
-	$(ORBITER) -v 1 -smallest_primitive_root 37
-
-PR_2_100:
-	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 100
-
-
-
-
-PR_2_1000:
-	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		primitive_element_table_2_1000.csv
-	pdflatex primitive_element_table_2_1000.tex
-	$(OPEN) primitive_element_table_2_1000.pdf
-
-PE_number_2_1000:
-	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
-	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
-	pdflatex table_number_of_pe_2_1000.tex
-	$(OPEN) table_number_of_pe_2_1000.pdf
-
-number_of_primitive_roots_10000:
-	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001
-
-
-
-IM_3_19:
-	$(ORBITER) -v 5 -inverse_mod 3 19
-
-
-IM_723:
-	$(ORBITER) -v 5 -inverse_mod 723 4060
-
-
-
-IM:
-	$(ORBITER) -v 5 -inverse_mod 1865025205 2147483647
-
-
-IM_gcd:
-	$(ORBITER) -v 5 -extended_gcd 1865025205 2147483647
-
-
-PM3a:
-	$(ORBITER) -v 5 -power_mod 16807 1073741823 2147483647
-
-# randomized algo:
-
-PR_915839:
-	$(ORBITER) -v 5 -primitive_root 915839
-
-#a primitive root modulo 915839 is 43085
-
-PR_915839_check:
-	$(ORBITER) -v 5 -power_mod 43085 49842 915839
-
-#the power of 43085 to the 49842 mod 915839 is 487320
-
-DL_915839:
-	$(ORBITER) -v 5 -discrete_log 487320 43085 915839
-
-
-#The discrete log is 49842 since 487320 = 43085^49842 mod 915839, time: 0:22
-
-sqrt_mod:
-	$(ORBITER) -v 2 -square_root_mod 33 41
-
-
-sqrt_5_mod_11:
-	$(ORBITER) -v 2 -square_root_mod 5 11 
-
-
-sqrt_5_mod_19:
-	$(ORBITER) -v 2 -square_root_mod 5 19 
-
-
-sqrt_mod_20_31:
-	$(ORBITER) -v 2 -square_root_mod 20 31
-
-order_of_2_mod_n:
-	$(ORBITER) -v 3 -order_of_q_mod_n 2 3 51
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		order_of_q_mod_n_q2_3_51.csv
-	pdflatex order_of_q_mod_n_q2_3_51.tex
-	$(OPEN) order_of_q_mod_n_q2_3_51.pdf
-
-
-
-
-
-
-Eulerfunction_150:
-	$(ORBITER) -v 1 -eulerfunction_interval 1 150
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		table_eulerfunction_1_150.csv
-	pdflatex table_eulerfunction_1_150.tex
-	$(OPEN) table_eulerfunction_1_150.pdf
-
-Eulerfunction_900:
-	$(ORBITER) -v 1 -eulerfunction_interval 900 1150
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		table_eulerfunction_900_1150.csv
-	pdflatex table_eulerfunction_900_1150.tex
-	$(OPEN) table_eulerfunction_900_1150.pdf
-
-Eulerfunction_10000:
-	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
-	$(ORBITER) -v 1 -csv_file_latex 1 \
-		table_eulerfunction_10000_10150.csv
-	pdflatex table_eulerfunction_10000_10150.tex
-	$(OPEN) table_eulerfunction_10000_10150.pdf
-
-
-
-power_function_2_mod_11:
-	$(ORBITER) -v 5 -power_function_mod_n 2 11
-	$(ORBITER) -v 1 -csv_file_latex 1 power_function_k2_n11.csv
-	pdflatex power_function_k2_n11.tex
-	$(OPEN) power_function_k2_n11.pdf
-
-
-draw_mod_13:
-	$(ORBITER) -v 2 \
-		-draw_options -embedded -end \
-		-draw_mod_n \
-			-n 13 \
-			-file mod_13 \
-			-power_cycle 2 \
-		-end
-	pdflatex mod_13_draw.tex
-	$(OPEN) mod_13_draw.pdf
-
-
-
-
-inverse_mod_26_99:
-	$(ORBITER) -v 2 -inverse_mod 26 99
-
-
-inverse_mod_a:
-	$(ORBITER) -v 2 -inverse_mod 18059241 58014043
-
-
-
-smith_normal_form_1:
-	$(ORBITER) -v 3 \
-		-define M -vector \
-			-dense "1,2,3,4,5,6,7,8,9" \
-			-format 3 \
-		-end \
-		-smith_normal_form M
-
-
-smith_normal_form_2:
-	$(ORBITER) -v 3 \
-		-define M -vector \
-			-dense "9,8,7,6,5,4,3,2,1" \
-			-format 3 \
-		-end \
-		-smith_normal_form M
-
-
-
-jacobi_35_41:
-	$(ORBITER) -v 5 -jacobi 35 41
-	pdflatex jacobi_35_41.tex
-	$(OPEN) jacobi_35_41.pdf
-
-
-jacobi_33_41:
-	$(ORBITER) -v 5 -jacobi 33 41
-	pdflatex jacobi_33_41.tex
-	$(OPEN) jacobi_33_41.pdf
-
-
-jacobi_a:
-	$(ORBITER) -v 5 -jacobi 2221 7817
-
-jacobi_5_19:
-	$(ORBITER) -v 5 -jacobi 5 19
-
-sqrt_mod_7817:
-		$(ORBITER) -v 2 -square_root_mod 2221 7817
-
-
-
-
-
-Chinese_remainders_A:
-	$(ORBITER) -v 2 \
-		-define R -vector -dense "2,2,5" -end \
-		-define M -vector -dense "5,6,7" -end \
-		-Chinese_remainders R M
-
-Chinese_remainders_B:
-	$(ORBITER) -v 2 \
-		-define R -vector -dense "38,2" -end \
-		-define M -vector -dense "74,27" -end \
-		-Chinese_remainders R M
-
-Chinese_remainders_C2:
-	$(ORBITER) -v 2 \
-		-define R -vector -dense "2,3" -end \
-		-define M -vector -dense "2147483647,5915587277" -end \
-		-Chinese_remainders R M
-
-
-#The solution is 5684294357108828365 modulo 12703626939758759219 (computed in longinteger)
-
-# checking with Maple:
-#5684294357108828365 mod 2147483647;
-#                               2
-
-#5684294357108828365 mod 5915587277;
-#                               3
-
-
-
-Chinese_remainders_C3:
-	$(ORBITER) -v 2 \
-		-define R -vector -dense "2,3,4" -end \
-		-define M -vector -dense "2147483647,5915587277,3267000013" -end \
-		-Chinese_remainders R M
-
-
-#The solution is 31431541759324477327451572539 modulo 41502749377339016585336869847 (computed in longinteger)
-
-# checking with Maple:
-#31431541759324477327451572539 mod 2147483647;
-#                               2
-
-#31431541759324477327451572539 mod 5915587277;
-#                               3
-
-#31431541759324477327451572539 mod 3267000013;
-#                               4
-
-
-
-###############################################################################
-# Section 3.2: Finite Fields
-
-SECTION_FINITE_FIELDS:
-
-
-test_3_2:
 	make F_2
 	make F_3
 	make F_5
@@ -3287,12 +2985,12 @@ F_1021_wo:
 
 
 ###############################################################################
-# Section 3.3: Extension Fields
+# Section 3.2: Extension Fields
 
 SECTION_EXTENSION_FIELDS:
 	
 
-test_3_3:
+test_3_2:
 	make F_4
 	make F_4_tables
 	make F_8
@@ -3477,13 +3175,13 @@ F_2_power_24:
 
 
 ###############################################################################
-# Section 3.4: Linear Algebra over Finite Fields
+# Section 3.3: Linear Algebra over Finite Fields
 
 
 SECTION_LINEAR_ALGEBRA:
 
 
-test_3_4:
+test_3_3:
 	make RREF
 	make RREF_V7
 	make nullspace
@@ -3570,14 +3268,14 @@ classes_GL_4_2:
 
 
 ###############################################################################
-# Section 3.5: Advanced Topics in finite fields
+# Section 3.4: Advanced Topics in finite fields
 
 
 
 SECTION_ADVANCED_TOPICS_IN_FINITE_FIELDS:
 
 
-test_3_5:
+test_3_4:
 	make normal_basis_2_3
 	make normal_basis_2_4
 	make normal_basis_2_4_poly19
@@ -3769,14 +3467,14 @@ F64_1:
 
 
 ###############################################################################
-# Section 3.6: Basic Ring Theory
+# Section 3.5: Basic Ring Theory
 
 
 
 SECTION_BASIC_RING_THEORY:
 
 
-test_3_6:
+test_3_5:
 	make Polynomial_ring
 
 
@@ -5969,7 +5667,7 @@ line_type_in_PG_2_11:
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
-			line_type_old \
+			-line_type_old \
 		-end
 
 
@@ -6743,8 +6441,11 @@ Group_M12:
 SECTION_LINEAR_GROUPS:
 
 test_6_2:
+	make PGL_2_3
 	make PGL_3_2
 	make PGL_4_2
+	make PGL_4_2_with_field
+	make PGL_4_2_report
 	make PGL_4_2_multiply_all_elements
 	make PGL_4_2_export
 	make PGL_4_2_export_GAP
@@ -6770,6 +6471,16 @@ test_6_2:
 	make NullPolarity_6_2
 
 
+PGL_2_3:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_2_3_report.tex
+	$(OPEN) PGL_2_3_report.pdf
 
 PGL_3_2:
 	$(ORBITER) -v 2 \
@@ -6785,8 +6496,17 @@ PGL_3_2:
 
 PGL_4_2:
 	$(ORBITER) -v 2 \
+		-define G -linear_group -PGL 4 2 -end
+
+PGL_4_2_with_field:
+	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define G -linear_group -PGL 4 F -lex_least_base -end \
+		-define G -linear_group -PGL 4 F -end
+
+
+PGL_4_2_report:
+	$(ORBITER) -v 2 \
+		-define G -linear_group -PGL 4 2 -end \
 		-with G -do \
 		-group_theoretic_activity \
 			-report \
@@ -8180,6 +7900,7 @@ test_6_6:
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
 	make PGGL_2_4_classes
+	make PGL_3_11_classes
 	make PGL_7_2_classes
 	make PGL_8_2_classes
 	make Hirschfeld_stab_classes
@@ -8277,6 +7998,45 @@ PGGL_2_4_classes:
 	$(OPEN) PGGL_2_4_classes_out.csv
 
 
+PGL_3_11_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 3 11 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma PGL_3_11_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 3 11 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	pdflatex PGL_3_11_classes_out.tex
+	$(OPEN) PGL_3_11_classes_out.pdf
+
+PGL_7_2_classes:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma PGL_7_2_classes.magma
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 7 2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
 
 PGL_7_2_classes:
 	$(ORBITER) -v 3 \
@@ -10534,7 +10294,9 @@ test_8_2:
 	make Eckardt_13
 	make surface_11_random
 	make surface_F_abcd_Eckardt_q31_by_equation
-	make surface_q13_Eckardt_by_arc_lifting
+	make Eckardt_13_by_arc_lifting
+	make surface_F_abcd_Eckardt_q31_by_symbolic_object:
+	make surface_F_abcd_Eckardt_q31_by_equation:
 
 
 
@@ -10602,16 +10364,74 @@ surface_F_abcd_Eckardt_q31_by_equation:
 			"2,30,30,2" \
 		-end
 
-
-surface_q13_Eckardt_by_arc_lifting:
+Eckardt_13_by_arc_lifting:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
-		-with S -do \
-		-cubic_surface_activity \
-			-report \
+		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end
+
+
+
+
+
+surface_F_abcd_Eckardt_q31_by_symbolic_object:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 31 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-define F_abcd -symbolic_object \
+			-field F \
+			-text $(F_abcd_eqn) \
+			-end \
+		-define abcd_values -symbolic_object \
+			-field F \
+			-text "2,30,30,2" \
+			-end \
+		-define F_abcd_sub -symbolic_object \
+			-field F \
+			-managed_variables "X0,X1,X2,X3" \
+			-substitute "a,b,c,d" F_abcd abcd_values \
+		-end \
+		-define S -cubic_surface -space P \
+			-by_symbolic_object \
+			R \
+			F_abcd_sub \
 		-end
+
+
+
+surface_F_abcd_Eckardt_q31_by_equation:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 31 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-define F_abcd -cubic_surface -space P \
+			-by_equation \
+			R \
+			"F_abcd" \
+			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
+			$(F_abcd_eqn) \
+			"a,b,c,d" \
+			"\D(a,b,c,d)=(2,30,30,2)\D" \
+			"2,30,30,2" \
+		-end
+
+
+# E = 6
+
+
 
 
 ###############################################################################
@@ -10642,6 +10462,7 @@ test_8_3:
 	#make surface_9_1_plane_type_of_lines_on_Klein_quadric # slow
 	make surface_eckardt_13_4_12_report
 	make Eckardt_13_report
+	make Eckardt_13_by_arc_lifting_report
 	make surface_13_0
 	make surface_16_0
 	make G13_8
@@ -10657,7 +10478,7 @@ test_8_3:
 	#make F13_128b
 	#make F13_128c
 	make move_two_lines
-	make surface_F_abcd_Eckardt_q31
+	make surface_F_abcd_Eckardt_q31_by_symbolic_object_report
 	make surface_F_abcd_Eckardt_q31_by_equation_report
 	#make surface_F_abcd_sweep_4_27_q7
 	make surface_11_random_report
@@ -11014,6 +10835,15 @@ Eckardt_13_report:
 		-end
 
 
+Eckardt_13_by_arc_lifting_report:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end
 
 surface_13_0:
 	$(ORBITER) -v 3 \
@@ -11225,7 +11055,7 @@ move_two_lines:
 
 
 
-surface_F_abcd_Eckardt_q31:
+surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 31 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -11334,6 +11164,7 @@ surface_11_random_report:
 		-end
 	pdflatex surface_random_q11_report.tex
 	$(OPEN) surface_random_q11_report.pdf
+
 
 surface_11_1:
 	$(ORBITER) -v 3 \
@@ -11630,7 +11461,6 @@ Family_general_F11_iso_test:
 
 
 
-
 ###############################################################################
 # Section 8.5: Quartic Curves Creation
 
@@ -11861,8 +11691,8 @@ quartic_curve_q9_1:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_surface_surface_pt_orb_0_report.tex
-	$(OPEN) quartic_curve_surface_surface_pt_orb_0_report.pdf
+	pdflatex quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
+	$(OPEN) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.pdf
 
 
 #The points by rank are: ( 5, 18, 25, 36, 39, 40, 42, 43, 47, 50, 51, 54, 55, 58, 59, 62, 68, 69, 70, 71, 76, 77, 79, 81, 85, 87, 89, 90 )
@@ -12093,6 +11923,300 @@ SECTION_NUMBER_THEORY:
 
 
 test_9_1:
+	make PR101
+	make PR101_smallest
+	make PR29
+	make PR31
+	make PR37
+	make PR_2_100
+	make PR_2_1000
+	make PE_number_2_1000
+	make number_of_primitive_roots_10000
+	make IM_3_19
+	make IM_723
+	make IM
+	make IM_gcd
+	make PM3a
+	make PR_915839
+	make PR_915839_check
+	make DL_915839
+	make sqrt_mod
+	make sqrt_5_mod_11
+	make sqrt_5_mod_19
+	make sqrt_mod_20_31
+	make order_of_2_mod_n
+	make Eulerfunction_150
+	make Eulerfunction_900
+	make Eulerfunction_10000
+	make power_function_2_mod_11
+	make draw_mod_13
+	make inverse_mod_a
+	make smith_normal_form_1
+	make smith_normal_form_2
+	make jacobi_35_41
+	make jacobi_33_41
+	make jacobi_a
+	make jacobi_5_19
+	make sqrt_mod_7817
+	make Chinese_remainders_A
+	make Chinese_remainders_B
+	make Chinese_remainders_C2
+	make Chinese_remainders_C3
+
+
+
+PR101:
+	$(ORBITER) -v 5 -primitive_root 101
+
+
+PR101_smallest:
+	$(ORBITER) -v 5 -smallest_primitive_root 101
+
+
+PR29:
+	$(ORBITER) -v 1 -smallest_primitive_root 29
+
+PR31:
+	$(ORBITER) -v 1 -smallest_primitive_root 31
+
+PR37:
+	$(ORBITER) -v 1 -smallest_primitive_root 37
+
+PR_2_100:
+	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 100
+
+
+
+
+PR_2_1000:
+	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		primitive_element_table_2_1000.csv
+	pdflatex primitive_element_table_2_1000.tex
+	$(OPEN) primitive_element_table_2_1000.pdf
+
+PE_number_2_1000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
+	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
+	pdflatex table_number_of_pe_2_1000.tex
+	$(OPEN) table_number_of_pe_2_1000.pdf
+
+number_of_primitive_roots_10000:
+	$(ORBITER) -v 1 -number_of_primitive_roots_interval 10000 10001
+
+
+
+IM_3_19:
+	$(ORBITER) -v 5 -inverse_mod 3 19
+
+
+IM_723:
+	$(ORBITER) -v 5 -inverse_mod 723 4060
+
+
+
+IM:
+	$(ORBITER) -v 5 -inverse_mod 1865025205 2147483647
+
+
+IM_gcd:
+	$(ORBITER) -v 5 -extended_gcd 1865025205 2147483647
+
+
+PM3a:
+	$(ORBITER) -v 5 -power_mod 16807 1073741823 2147483647
+
+# randomized algo:
+
+PR_915839:
+	$(ORBITER) -v 5 -primitive_root 915839
+
+#a primitive root modulo 915839 is 43085
+
+PR_915839_check:
+	$(ORBITER) -v 5 -power_mod 43085 49842 915839
+
+#the power of 43085 to the 49842 mod 915839 is 487320
+
+DL_915839:
+	$(ORBITER) -v 5 -discrete_log 487320 43085 915839
+
+
+#The discrete log is 49842 since 487320 = 43085^49842 mod 915839, time: 0:22
+
+sqrt_mod:
+	$(ORBITER) -v 2 -square_root_mod 33 41
+
+
+sqrt_5_mod_11:
+	$(ORBITER) -v 2 -square_root_mod 5 11 
+
+
+sqrt_5_mod_19:
+	$(ORBITER) -v 2 -square_root_mod 5 19 
+
+
+sqrt_mod_20_31:
+	$(ORBITER) -v 2 -square_root_mod 20 31
+
+order_of_2_mod_n:
+	$(ORBITER) -v 3 -order_of_q_mod_n 2 3 51
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		order_of_q_mod_n_q2_3_51.csv
+	pdflatex order_of_q_mod_n_q2_3_51.tex
+	$(OPEN) order_of_q_mod_n_q2_3_51.pdf
+
+
+
+
+
+
+Eulerfunction_150:
+	$(ORBITER) -v 1 -eulerfunction_interval 1 150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_1_150.csv
+	pdflatex table_eulerfunction_1_150.tex
+	$(OPEN) table_eulerfunction_1_150.pdf
+
+Eulerfunction_900:
+	$(ORBITER) -v 1 -eulerfunction_interval 900 1150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_900_1150.csv
+	pdflatex table_eulerfunction_900_1150.tex
+	$(OPEN) table_eulerfunction_900_1150.pdf
+
+Eulerfunction_10000:
+	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
+	$(ORBITER) -v 1 -csv_file_latex 1 \
+		table_eulerfunction_10000_10150.csv
+	pdflatex table_eulerfunction_10000_10150.tex
+	$(OPEN) table_eulerfunction_10000_10150.pdf
+
+
+
+power_function_2_mod_11:
+	$(ORBITER) -v 5 -power_function_mod_n 2 11
+	$(ORBITER) -v 1 -csv_file_latex 1 power_function_k2_n11.csv
+	pdflatex power_function_k2_n11.tex
+	$(OPEN) power_function_k2_n11.pdf
+
+
+draw_mod_13:
+	$(ORBITER) -v 2 \
+		-draw_options -embedded -end \
+		-draw_mod_n \
+			-n 13 \
+			-file mod_13 \
+			-power_cycle 2 \
+		-end
+	pdflatex mod_13_draw.tex
+	$(OPEN) mod_13_draw.pdf
+
+
+
+
+inverse_mod_26_99:
+	$(ORBITER) -v 2 -inverse_mod 26 99
+
+
+inverse_mod_a:
+	$(ORBITER) -v 2 -inverse_mod 18059241 58014043
+
+
+
+smith_normal_form_1:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-dense "1,2,3,4,5,6,7,8,9" \
+			-format 3 \
+		-end \
+		-smith_normal_form M
+
+
+smith_normal_form_2:
+	$(ORBITER) -v 3 \
+		-define M -vector \
+			-dense "9,8,7,6,5,4,3,2,1" \
+			-format 3 \
+		-end \
+		-smith_normal_form M
+
+
+
+jacobi_35_41:
+	$(ORBITER) -v 5 -jacobi 35 41
+	pdflatex jacobi_35_41.tex
+	$(OPEN) jacobi_35_41.pdf
+
+
+jacobi_33_41:
+	$(ORBITER) -v 5 -jacobi 33 41
+	pdflatex jacobi_33_41.tex
+	$(OPEN) jacobi_33_41.pdf
+
+
+jacobi_a:
+	$(ORBITER) -v 5 -jacobi 2221 7817
+
+jacobi_5_19:
+	$(ORBITER) -v 5 -jacobi 5 19
+
+sqrt_mod_7817:
+		$(ORBITER) -v 2 -square_root_mod 2221 7817
+
+
+
+
+
+Chinese_remainders_A:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,2,5" -end \
+		-define M -vector -dense "5,6,7" -end \
+		-Chinese_remainders R M
+
+Chinese_remainders_B:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "38,2" -end \
+		-define M -vector -dense "74,27" -end \
+		-Chinese_remainders R M
+
+Chinese_remainders_C2:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,3" -end \
+		-define M -vector -dense "2147483647,5915587277" -end \
+		-Chinese_remainders R M
+
+
+#The solution is 5684294357108828365 modulo 12703626939758759219 (computed in longinteger)
+
+# checking with Maple:
+#5684294357108828365 mod 2147483647;
+#                               2
+
+#5684294357108828365 mod 5915587277;
+#                               3
+
+
+
+Chinese_remainders_C3:
+	$(ORBITER) -v 2 \
+		-define R -vector -dense "2,3,4" -end \
+		-define M -vector -dense "2147483647,5915587277,3267000013" -end \
+		-Chinese_remainders R M
+
+
+#The solution is 31431541759324477327451572539 modulo 41502749377339016585336869847 (computed in longinteger)
+
+# checking with Maple:
+#31431541759324477327451572539 mod 2147483647;
+#                               2
+
+#31431541759324477327451572539 mod 5915587277;
+#                               3
+
+#31431541759324477327451572539 mod 3267000013;
+#                               4
+
 
 
 
@@ -15688,6 +15812,10 @@ test_11_2:
 	#make Desargues_path_lex_least_read
 	make geo_pasch_read
 	make geo_pasch_given
+	make Neumaier_graph_16
+	make neumaier_graphs_16
+	make neumaier_graphs_16_from_file
+	make Neumaier_graph_25
 
 
 
@@ -15786,6 +15914,54 @@ geo_pasch_given:
 				6 4 12 \
 		-end
 
+
+Neumaier_graph_16:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+
+neumaier_graphs_16:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label neumaier_graph neumaier\_graph \
+			-graph_by_adjacency_matrix \
+			$(NEUMAIER_GRAPH_16_1_ADJ) 16 \
+			-graph_by_adjacency_matrix \
+			$(NEUMAIER_GRAPH_16_2_ADJ) 16 \
+		-end
+
+
+neumaier_graphs_16_from_file:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label neumaier_graph neumaier\_graph \
+			-graph_by_adjacency_matrix_from_file \
+			NG_16_9_4_2_4.csv ADJ 16 \
+		-end
+
+
+Neumaier_graph_25:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_25 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_Neumaier_property 5 \
+		-end
 
 
 
@@ -16622,6 +16798,8 @@ test_12_1:
 	make Paley_13_graph_complement
 	make Winnie_Li_graph_q16_index2
 	make Sarnak_graph_29_5
+	make Neumaier_graph_16
+	make Neumaier_graph_16_reordered
 	make tritangent_planes_graph
 	make trihedral_pair_graph
 	make small_graph
@@ -16637,7 +16815,8 @@ test_12_1:
 	make Cayley_Sym4_coxeter
 	make Cayley_Sym4_star
 	make Queens_graph
-	
+	make Op_4_2_affine_polar_graph
+
 
 
 Cycle_graph_13:
@@ -16690,6 +16869,16 @@ Winnie_Li_graph_q16_index2:
 Sarnak_graph_29_5:
 	$(ORBITER) -v 2 \
 		-define Gamma -graph -Sarnak 29 5 -end \
+
+
+Neumaier_graph_16:
+	$(ORBITER) -v 2 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+
+Neumaier_graph_16_reordered:
+	$(ORBITER) -v 2 \
+		-define perm -vector -dense "0,1,2,3,4,5,12,13,6,7,8,9,10,11,14,15" -end \
+		-define Gamma -graph -Neumaier_graph_16 -reorder perm -end \
 
 
 tritangent_planes_graph:
@@ -16826,6 +17015,15 @@ Queens_graph:
 	$(ORBITER) -v 2 \
 		-define G -graph -non_attacking_queens_graph 8 -end \
 
+Op_4_2_affine_polar_graph:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-define Gamma -graph -affine_polar O -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end
+
 
 ###############################################################################
 # Section 12.2: Graphs Theoretic Activities
@@ -16857,6 +17055,9 @@ test_12_2:
 	make HJ_d2_properties
 	make PGO_5_2_collinearity_graph
 	make trihedral_pair_graph_draw
+	make Neumaier_graph_16_reordered_export_csv
+	make Op_4_2_affine_polar_graph
+	make Neumaier_16_test_SRG_property
 
 
 triangle_graph_properties:
@@ -17192,6 +17393,51 @@ trihedral_pair_graph_draw:
 
 
 
+Neumaier_graph_16_reordered_export_csv:
+	$(ORBITER) -v 2 \
+		-define perm -vector -dense "0,1,2,3,4,5,12,13,6,7,8,9,10,11,14,15" -end \
+		-define Gamma -graph -Neumaier_graph_16 -reorder perm -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -export_csv -end
+
+
+Op_4_2_affine_polar_graph:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-define Gamma -graph -affine_polar O -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 4 -end \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end
+	pdflatex affine_polar_O_1_4_2_report.tex
+	open affine_polar_O_1_4_2_report.pdf
+
+
+# 24 cliques
+# ago = 1152
+
+
+Neumaier_16_test_SRG_property:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_SRG_property \
+		-end
+
+
+
 
 ###############################################################################
 # Section 12.3: Graph Theory: Classification
@@ -17374,7 +17620,7 @@ test_13:
 SECTION_DESIGN_THEORY:
 
 
-test_11_5:
+test_13_1:
 	make design_PG_2_3
 	make design_PG_2_4
 	make wreath_product_designs_n4_k2_inc.txt
@@ -17526,7 +17772,7 @@ LSQ_5_c:
 
 SECTION_ASSUMING_SYMMETRY:
 
-test_11_6:
+test_13_2:
 
 	make KM_cyclic_7
 	make KM_PGGL_2_32
@@ -17793,7 +18039,7 @@ C5_design_classify:
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
-test_11_7:
+test_13_3:
 	make AG_2_3.inc
 	make LS_AG_2_3_design_table_create
 	make AG_2_3_on_designs
@@ -18019,7 +18265,7 @@ design_PG_2_3_group_5_sol_0:
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
-test_11_8:
+test_13_4:
 	make DD_PP4
 	make DD_PP4_span_design
 	make DD_PP4_design_orbit
@@ -19726,6 +19972,7 @@ test_15_1:
 	make Paley_13
 	make Paley_13_cliques_classify
 	make Paley_13_cliques_all
+	make Neumaier_16_cliques_all
 	make tritangent_planes_graph_aut
 	make tritangent_planes_graph_cliques_classify
 	make tritangent_planes_graph_cliques_all
@@ -19733,6 +19980,7 @@ test_15_1:
 	make HJ_d2_c5
 	make HJ64_cliques5
 	make HJ64_cliques5_classify
+	make Op_4_2_affine_polar_graph_cliques_4
 
 
 
@@ -19831,6 +20079,19 @@ Paley_13_cliques_all:
 		-graph_theoretic_activity \
 			-find_cliques -target_size 3 \
 		-end
+
+
+Neumaier_16_cliques_all:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_16 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 4 \
+		-end
+
+
+# 8 cliques of size 4
+
 
 
 tritangent_planes_graph_aut:
@@ -19963,6 +20224,24 @@ HJ64_cliques5_classify:
 #ROW,REP,AGO,OL
 #0,"0,8,31,110,283",1200,1008
 #END
+
+
+Op_4_2_affine_polar_graph_cliques_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-define Gamma -graph -affine_polar O -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 4 -end \
+		-end \
+
 
 
 ###############################################################################
@@ -21238,7 +21517,35 @@ wreath_product_designs_n8_k6_c: wreath_product_designs_n8_k6_inc.txt
 
 
 
+neumaier_graphs_16_classify:
+	$(ORBITER) -v 2 \
+		-draw_incidence_structure_description \
+			-width 20 -width_10 2 -end \
+		-define C -combinatorial_object \
+			-label neumaier_graph neumaier\_graph \
+			-graph_by_adjacency_matrix_from_file \
+			NG_16_9_4_2_4.csv ADJ 16 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+			-end \
+		-end
+	$(ORBITER) -v 4 -csv_file_select_rows_by_file \
+		NG_16_9_4_2_4.csv neumaier_graph_transversal.csv \
+	#pdflatex neumaier_graph_classification.tex
+	#open neumaier_graph_classification.pdf
 
+
+#NG_16_9_4_2_4_transversal.csv
 
 
 ###############################################################################
@@ -21514,6 +21821,7 @@ SECTION_CANONICAL_FORMS_OF_GRAPHS:
 
 test_16_7:
 	make Cycle_13_aut
+	make Neumaier_16_aut
 	make Queens_graph_aut
 	make Queens_graph_aut_orbits_draw
 	make inversion_graph
@@ -21535,6 +21843,17 @@ Cycle_13_aut:
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end \
+
+
+Neumaier_16_aut:
+	$(ORBITER) -v 2 \
+		-define perm -vector -dense "0,1,2,3,4,5,12,13,6,7,8,9,10,11,14,15" -end \
+		-define Gamma -graph -Neumaier_graph_16 -reorder perm -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+		pdflatex Neumaier_graph_16_report.tex
+		$(OPEN) Neumaier_graph_16_report.pdf
 
 
 Queens_graph_aut:

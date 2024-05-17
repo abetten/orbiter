@@ -25,6 +25,8 @@ namespace user_interface {
 
 class activity_description {
 
+public:
+
 	interface_symbol_table *Sym;
 
 
@@ -132,11 +134,10 @@ class activity_description {
 	orbits::orbits_activity_description
 		*Orbits_activity_description;
 
-public:
 	activity_description();
 	~activity_description();
 	void read_arguments(
-			interface_symbol_table *Sym,
+			//interface_symbol_table *Sym,
 			int argc, std::string *argv, int &i,
 			int verbose_level);
 	void worker(
@@ -807,6 +808,10 @@ class interface_toolkit {
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;
 
+	int f_csv_file_select_rows_by_file;
+	std::string csv_file_select_rows_by_file_fname;
+	std::string csv_file_select_rows_by_file_select;
+
 	int f_csv_file_select_rows_complement;
 	std::string csv_file_select_rows_complement_fname;
 	std::string csv_file_select_rows_complement_text;
@@ -972,6 +977,10 @@ class interface_toolkit {
 	int f_read_xml;
 	std::string read_xml_fname;
 	std::string read_xml_crossref_fname;
+
+	int f_read_column_and_tally;
+	std::string read_column_and_tally_fname;
+	std::string read_column_and_tally_col_header;
 
 
 public:

@@ -2206,8 +2206,58 @@ void algebra_global::smith_normal_form(
 
 }
 
+void algebra_global::scan_equation_in_pairs_in_characteristic_p(
+		int *eqn, int eqn_sz, int characteristic_p,
+		std::string &coefficients_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "algebra_global::scan_equation_in_pairs_in_characteristic_p" << endl;
+	}
+	//int coeffs20[20];
+	int *coeff_pairs;
+	int coeff_pairs_length;
+	int nb_terms;
+	int i, a, b;
+	number_theory::number_theory_domain NT;
 
+	Int_vec_scan(coefficients_text, coeff_pairs, coeff_pairs_length);
+	if (ODD(coeff_pairs_length)) {
+		cout << "algebra_global::scan_equation_in_pairs "
+				"number of coefficients must be even" << endl;
+		exit(1);
+	}
+	Int_vec_zero(eqn, eqn_sz);
+	nb_terms = coeff_pairs_length >> 1;
+	for (i = 0; i < nb_terms; i++) {
+		a = coeff_pairs[2 * i + 0];
+		b = coeff_pairs[2 * i + 1];
+		if (a < 0) {
+			if (true /*F->e == 1*/) {
+
+				a = NT.mod(a, characteristic_p);
+			}
+			else {
+				cout << "algebra_global::scan_equation_in_pairs "
+						"coefficient out of range" << endl;
+				exit(1);
+			}
+		}
+		if (b < 0 || b >= eqn_sz) {
+			cout << "algebra_global::scan_equation_in_pairs "
+					"variable index out of range" << endl;
+			exit(1);
+		}
+		eqn[b] = a;
+	}
+	FREE_int(coeff_pairs);
+
+	if (f_v) {
+		cout << "algebra_global::scan_equation_in_pairs_in_characteristic_p done" << endl;
+	}
+}
 
 
 }}}

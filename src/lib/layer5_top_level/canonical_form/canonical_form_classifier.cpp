@@ -49,6 +49,9 @@ canonical_form_classifier::~canonical_form_classifier()
 void canonical_form_classifier::init(
 		canonical_form_classifier_description *Descr,
 		int verbose_level)
+// Prepare the projective space and the ring,
+// Create the action_on_homogeneous_polynomials
+// Prepare the input input_objects_of_type_variety
 {
 	int f_v = (verbose_level >= 1);
 
