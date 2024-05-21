@@ -101,6 +101,8 @@ namespace apps_combinatorics {
 	class combinatorial_object_activity;
 	class combinatorial_object;
 	class combinatorics_global;
+	class dd_lifting;
+	class dd_search_singletons;
 	class delandtsheer_doyen_description;
 	class delandtsheer_doyen;
 	class design_activity_description;
@@ -201,6 +203,7 @@ namespace orbits {
 	class orbits_create_description;
 	class orbits_create;
 	class orbits_global;
+	class orbits_on_pairs;
 	class orbits_on_polynomials;
 	class orbits_on_subspaces;
 

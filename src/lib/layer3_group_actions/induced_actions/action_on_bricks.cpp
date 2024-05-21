@@ -49,7 +49,8 @@ void action_on_bricks::init(
 		}
 }
 
-long int action_on_bricks::compute_image(int *Elt,
+long int action_on_bricks::compute_image(
+		int *Elt,
 		long int i, int verbose_level)
 {
 	long int j;

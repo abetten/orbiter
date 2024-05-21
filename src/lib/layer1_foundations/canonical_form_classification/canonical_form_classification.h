@@ -121,7 +121,6 @@ public:
 	classification_of_objects_description *Descr;
 
 	int f_projective_space;
-	//projective_space_with_action *PA;
 	geometry::projective_space *P;
 
 	data_input_stream *IS;
@@ -182,22 +181,28 @@ public:
 	// returns f_found, which is true if the object is already in the list
 	void report_summary_of_orbits(
 			std::ostream &ost, int verbose_level);
+#if 0
 	void report_all_isomorphism_types(
 			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
+			classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost, int i,
-			canonical_form_classification::classification_of_objects_report_options
+			classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_object(
 			std::ostream &ost,
 			object_with_canonical_form *OwCF,
-			canonical_form_classification::classification_of_objects_report_options
+			classification_of_objects_report_options
 				*Report_options,
 			int object_idx,
+			int verbose_level);
+#endif
+	void create_summary_table(
+			std::string *&Table,
+			int &nb_rows, int &nb_cols,
 			int verbose_level);
 
 
@@ -221,20 +226,27 @@ public:
 		// one object
 
 
-	uchar **Type_data;
+	uchar **Type_data;   // [nb_types]
+
 		// Type_data[nb_types][rep_len]
 		// the canonical form of the i-th representative is
 		// Type_data[i][rep_len]
-	int *Type_rep;
+
+	int *Type_rep;  // [nb_types]
+
 		// Type_rep[nb_types]
 		// Type_rep[i] is the index of the candidate which
 		// has been chosen as representative
 		// for the i-th isomorphism type
-	int *Type_mult;
+
+	int *Type_mult;  // [nb_types]
+
 		// Type_mult[nb_types]
 		// Type_mult[i] gives the number of candidates which
 		// are isomorphic to the i-th isomorphism class representative
-	void **Type_extra_data;
+
+	void **Type_extra_data;  // [nb_types]
+
 		// Type_extra_data[nb_types]
 		// Type_extra_data[i] is a pointer that is stored with the
 		// i-th isomorphism class representative
@@ -249,13 +261,16 @@ public:
 		// type_of[i] is the isomorphism type of the i-th candidate
 
 	data_structures::tally *C_type_of;
+
 		// the classification of type_of[N]
 		// this will be computed in finalize()
 
-	int *perm;
-		// the permutation which lists the orbit
-		// representative in the order
-		// in which they appear in the list of candidates
+	int *perm; // [nb_types]
+
+		// perm[] can be used to access the isomorphism
+		// types of objects in the order in which they appear in the input stream
+
+		// perm[] is the permutation that sorts Type_rep[]
 
 	classify_bitvectors();
 	~classify_bitvectors();
@@ -277,7 +292,7 @@ public:
 	void finalize(
 			int verbose_level);
 	void print_reps();
-	void print_table();
+	void print_canonical_forms();
 	void save(
 			std::string &prefix,
 		void (*encode_function)(void *extra_data,

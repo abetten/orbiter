@@ -72,7 +72,9 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	// mask related test:
 	nb_mask_tests = 0;
 
-	f_search_partial_base_lines = false;
+	f_create_starter = false;
+
+	f_create_graphs = false;
 
 	f_singletons = false;
 	singletons_starter_size = 0;
@@ -277,10 +279,17 @@ int delandtsheer_doyen_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-search_partial_base_lines") == 0) {
-			f_search_partial_base_lines = true;
+		else if (ST.stringcmp(argv[i], "-create_starter") == 0) {
+			f_create_starter = true;
 			if (f_v) {
-				cout << "-search_partial_base_lines " << endl;
+				cout << "-create_starter " << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-create_graphs") == 0) {
+			f_create_graphs = true;
+			if (f_v) {
+				cout << "-create_graphs " << endl;
 			}
 		}
 
@@ -404,8 +413,11 @@ void delandtsheer_doyen_description::print()
 			<< mask_test_value[i] << endl;
 
 	}
-	if (f_search_partial_base_lines) {
-		cout << "-search_partial_base_lines " << endl;
+	if (f_create_starter) {
+		cout << "-create_starter " << endl;
+	}
+	if (f_create_graphs) {
+		cout << "-create_graphs " << endl;
 	}
 	if (f_singletons) {
 		cout << "-singletons " << singletons_starter_size << endl;

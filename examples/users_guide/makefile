@@ -21537,15 +21537,22 @@ neumaier_graphs_16_classify:
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-show_incidence_matrices \
+				-export_group_GAP \
 			-end \
 		-end
 	$(ORBITER) -v 4 -csv_file_select_rows_by_file \
-		NG_16_9_4_2_4.csv neumaier_graph_transversal.csv \
-	#pdflatex neumaier_graph_classification.tex
-	#open neumaier_graph_classification.pdf
+		NG_16_9_4_2_4.csv neumaier_graph_transversal.csv
+	pdflatex neumaier_graph_classification.tex
+	open neumaier_graph_classification.pdf
 
 
 #NG_16_9_4_2_4_transversal.csv
+
 
 
 ###############################################################################
@@ -21835,6 +21842,8 @@ test_16_7:
 	make HJ_group_and_orbits
 	make HJ_orbital_graph_3
 	make PGO_5_2_graph_group
+	make Paulus_c
+	make Neumaier_graph_25_c
 
 
 Cycle_13_aut:
@@ -22060,6 +22069,106 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 	$(OPEN) collinearity_graph_eigenvalues.pdf
 
 
+Paulus_c:
+	$(ORBITER) -v 6 \
+		-loop L 1 16 1 \
+			-define P25_%L -graph -load_Brouwer \
+				../PAULUS_ROSENFELD/P25_%L.txt \
+			-end \
+		-end_loop L \
+		-define C -combinatorial_object \
+			-label P25 P25 \
+			-graph_object P25_1 \
+			-graph_object P25_2 \
+			-graph_object P25_3 \
+			-graph_object P25_4 \
+			-graph_object P25_5 \
+			-graph_object P25_6 \
+			-graph_object P25_7 \
+			-graph_object P25_8 \
+			-graph_object P25_9 \
+			-graph_object P25_10 \
+			-graph_object P25_11 \
+			-graph_object P25_12 \
+			-graph_object P25_13 \
+			-graph_object P25_14 \
+			-graph_object P25_15 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-show_incidence_matrices \
+				-export_group_GAP \
+			-end \
+		-end
+	pdflatex P25_classification.tex
+	open P25_classification.pdf
+
+
+Neumaier_graph_25_c:
+	$(ORBITER) -v 10 \
+		-define Gamma -graph -Neumaier_graph_25 -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_SRG_property \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 5 -end \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-test_Neumaier_property 5 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-print \
+		-end \
+		-define C -combinatorial_object \
+			-label N25 N25 \
+			-graph_object Gamma \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-export_labels \
+				-show_incidence_matrices \
+				-export_group_GAP \
+			-end \
+		-end
+	pdflatex N25_classification.tex
+	open N25_classification.pdf
 
 
 ###############################################################################

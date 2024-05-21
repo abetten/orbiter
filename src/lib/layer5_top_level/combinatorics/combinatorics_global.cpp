@@ -120,14 +120,16 @@ void combinatorics_global::load_design_table(
 	T = NEW_OBJECT(design_tables);
 
 	if (f_v) {
-		cout << "combinatorics_global::load_design_table before T->init_from_file" << endl;
+		cout << "combinatorics_global::load_design_table "
+				"before T->init_from_file" << endl;
 	}
 	T->init_from_file(DC->A, DC->A2,
 			DC->set, DC->sz,
 			problem_label,
 			Gens, verbose_level);
 	if (f_v) {
-		cout << "combinatorics_global::load_design_table after T->init_from_file" << endl;
+		cout << "combinatorics_global::load_design_table "
+				"after T->init_from_file" << endl;
 	}
 
 	if (f_v) {

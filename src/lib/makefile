@@ -527,6 +527,8 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
 		layer5_top_level/combinatorics/combinatorial_object.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
+		layer5_top_level/combinatorics/dd_lifting.o \
+		layer5_top_level/combinatorics/dd_search_singletons.o \
 		layer5_top_level/combinatorics/delandtsheer_doyen_description.o \
 		layer5_top_level/combinatorics/delandtsheer_doyen.o \
 		layer5_top_level/combinatorics/design_activity_description.o \
@@ -593,6 +595,7 @@ ORBITER_MODULES= \
 		layer5_top_level/orbits/orbits_create_description.o \
 		layer5_top_level/orbits/orbits_create.o \
 		layer5_top_level/orbits/orbits_global.o \
+		layer5_top_level/orbits/orbits_on_pairs.o \
 		layer5_top_level/orbits/orbits_on_polynomials.o \
 		layer5_top_level/orbits/orbits_on_subspaces.o \
 		layer5_top_level/orthogonal/blt_set_activity_description.o \

@@ -45,7 +45,6 @@ delandtsheer_doyen::delandtsheer_doyen()
 	row_sum = NULL;
 	col_sum = NULL;
 
-	Pair_search_control = NULL;
 	Search_control = NULL;
 
 	M1 = NULL;
@@ -59,16 +58,14 @@ delandtsheer_doyen::delandtsheer_doyen()
 	A0 = NULL;
 	P = NULL;
 
-	Poset_pairs = NULL;
-	Poset_search = NULL;
-	Pairs = NULL;
 	Gen = NULL;
+	Poset_search = NULL;
 
-	pair_orbit = NULL;
-	nb_orbits = 0;
-	transporter = NULL;
-	tmp_Elt = NULL;
-	orbit_length = NULL;
+
+	Orbits_on_pairs = NULL;
+
+	DD_Lifting = NULL;
+
 	orbit_covered = NULL;
 	orbit_covered2 = NULL;
 	orbit_covered_max = NULL;
@@ -121,18 +118,6 @@ delandtsheer_doyen::~delandtsheer_doyen()
 	}
 	if (col_sum) {
 		FREE_int(col_sum);
-	}
-	if (pair_orbit) {
-		FREE_int(pair_orbit);
-	}
-	if (transporter) {
-		FREE_int(transporter);
-	}
-	if (tmp_Elt) {
-		FREE_int(tmp_Elt);
-	}
-	if (orbit_length) {
-		FREE_int(orbit_length);
 	}
 	if (orbit_covered) {
 		FREE_int(orbit_covered);
@@ -239,16 +224,11 @@ void delandtsheer_doyen::init(
 
 	V = Xsize * Ysize;
 
-
 	if (!Descr->f_pair_search_control) {
 		cout << "please provide option -pair_search_control" << endl;
 		exit(1);
 	}
-	else {
-		Pair_search_control = Get_poset_classification_control(
-				Descr->pair_search_control_label);
 
-	}
 	if (!Descr->f_search_control) {
 		cout << "please provide option -search_control" << endl;
 		exit(1);
@@ -364,6 +344,35 @@ void delandtsheer_doyen::init(
 		}
 
 
+		Orbits_on_pairs = NEW_OBJECT(orbits::orbits_on_pairs);
+
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"before Orbits_on_pairs->init" << endl;
+		}
+		Orbits_on_pairs->init(
+				Descr->pair_search_control_label,
+				Strong_gens,
+				A, A0,
+				verbose_level);
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"after Orbits_on_pairs->init" << endl;
+		}
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"before setup_orbit_covering" << endl;
+		}
+		setup_orbit_covering(verbose_level);
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"after setup_orbit_covering" << endl;
+		}
+
+
+#if 0
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
 					"before compute_orbits_on_pairs" << endl;
@@ -373,6 +382,7 @@ void delandtsheer_doyen::init(
 			cout << "delandtsheer_doyen::init "
 					"after compute_orbits_on_pairs" << endl;
 		}
+#endif
 
 
 	}
@@ -380,7 +390,7 @@ void delandtsheer_doyen::init(
 		cout << "We don't have -subgroup, "
 				"so orbits on pairs "
 				"are not computed" << endl;
-		//exit(1);
+		exit(1);
 	}
 
 
@@ -402,6 +412,21 @@ void delandtsheer_doyen::init(
 	col_row_idx = NEW_int(Ysize);
 
 
+	if (Descr->f_create_starter) {
+
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"before create_starter" << endl;
+		}
+		create_starter(verbose_level);
+		if (f_v) {
+			cout << "delandtsheer_doyen::init "
+					"after create_starter" << endl;
+		}
+
+
+	}
+
 	if (Descr->f_singletons) {
 
 		if (f_v) {
@@ -416,16 +441,16 @@ void delandtsheer_doyen::init(
 
 
 	}
-	if (Descr->f_search_partial_base_lines) {
+	if (Descr->f_create_graphs) {
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
-					"before search_partial_base_lines" << endl;
+					"before create_graphs" << endl;
 		}
-		search_partial_base_lines(verbose_level);
+		create_graphs(verbose_level);
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
-					"after search_partial_base_lines" << endl;
+					"after create_graphs" << endl;
 		}
 
 
@@ -448,55 +473,6 @@ void delandtsheer_doyen::show_generators(
 		cout << "delandtsheer_doyen::show_generators" << endl;
 	}
 
-#if 0
-	int i, j, a;
-
-	cout << "Generators are:" << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		cout << "generator " << i << " / "
-				<< SG->gens->len << " is: " << endl;
-		A->Group_element->element_print_quick(SG->gens->ith(i), cout);
-		cout << "as permutation: " << endl;
-		A->Group_element->element_print_as_permutation_with_offset(
-				SG->gens->ith(i), cout,
-				0 /* offset*/,
-				true /* f_do_it_anyway_even_for_big_degree*/,
-				true /* f_print_cycles_of_length_one*/,
-				0 /* verbose_level*/);
-		//A->element_print_as_permutation(SG->gens->ith(i), cout);
-		cout << endl;
-	}
-	cout << "Generators are:" << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		A->Group_element->element_print_as_permutation(SG->gens->ith(i), cout);
-		cout << endl;
-	}
-	cout << "Generators in GAP format are:" << endl;
-	cout << "G := Group([";
-	for (i = 0; i < SG->gens->len; i++) {
-		A->Group_element->element_print_as_permutation_with_offset(
-				SG->gens->ith(i), cout,
-				1 /*offset*/,
-				true /* f_do_it_anyway_even_for_big_degree */,
-				false /* f_print_cycles_of_length_one */,
-				0 /* verbose_level*/);
-		if (i < SG->gens->len - 1) {
-			cout << ", " << endl;
-		}
-	}
-	cout << "]);" << endl;
-	cout << "Generators in compact permutation form are:" << endl;
-	cout << SG->gens->len << " " << A->degree << endl;
-	for (i = 0; i < SG->gens->len; i++) {
-		for (j = 0; j < A->degree; j++) {
-			a = A->Group_element->element_image_of(j,
-					SG->gens->ith(i), 0 /* verbose_level */);
-			cout << a << " ";
-		}
-		cout << endl;
-	}
-	cout << "-1" << endl;
-#endif
 
 	SG->print_generators(cout);
 	SG->print_generators_gap(cout);
@@ -517,219 +493,14 @@ void delandtsheer_doyen::search_singletons(
 		cout << "delandtsheer_doyen::search_singletons" << endl;
 	}
 
-	int target_depth;
-	target_depth = Descr->K - Descr->singletons_starter_size;
-	cout << "target_depth=" << target_depth << endl;
-
-	orbiter_kernel_system::orbiter_data_file *ODF;
-	string fname;
-	int level = Descr->singletons_starter_size;
-
-	fname = Search_control->problem_label + "_lvl_" + std::to_string(level);
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_singletons fname = " << fname << endl;
-	}
-
-	ODF = NEW_OBJECT(orbiter_kernel_system::orbiter_data_file);
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_singletons "
-				"before ODF->load" << endl;
-	}
-	ODF->load(fname, verbose_level);
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_singletons "
-				"after ODF->load" << endl;
-	}
-
-	if (f_v) {
-		cout << "found " << ODF->nb_cases << " orbits at level " << level << endl;
-	}
-
-	int *Nb_sol;
-	int *Orbit_idx;
-	int nb_orbits_not_ruled_out;
-	int orbit_idx;
-	int nb_cases = 0;
-	int nb_cases_eliminated = 0;
-	int f_vv;
-
-	Orbit_idx = NEW_int(ODF->nb_cases);
-	Nb_sol = NEW_int(ODF->nb_cases);
-	nb_orbits_not_ruled_out = 0;
-
-	for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
-
-	#if 0
-		if (f_split) {
-			if ((orbit_idx % split_m) == split_r) {
-				continue;
-			}
-		}
-	#endif
-
-		if ((orbit_idx % 100)== 0) {
-			f_vv = true;
-		}
-		else {
-			f_vv = false;
-		}
-		if (f_vv) {
-			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			Lint_vec_print(cout, ODF->sets[orbit_idx],
-					ODF->set_sizes[orbit_idx]);
-			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
-					<< ODF->Aut_ascii[orbit_idx] << endl;
-		}
-
-		long int *line0;
-
-		line0 = ODF->sets[orbit_idx];
-		if (ODF->set_sizes[orbit_idx] != level) {
-			cout << "ODF->set_sizes[orbit_idx] != level" << endl;
-			exit(1);
-		}
-
-		compute_live_points(line0, level, 0 /*verbose_level*/);
-
-		if (f_vv) {
-			cout << "case " << orbit_idx << " / " << ODF->nb_cases
-					<< " we found " << nb_live_points << " live points" << endl;
-		}
-		if (nb_live_points < target_depth) {
-			if (f_vv) {
-				cout << "eliminated!" << endl;
-			}
-			Nb_sol[orbit_idx] = 0;
-			nb_cases_eliminated++;
-		}
-		else {
-			Orbit_idx[nb_orbits_not_ruled_out++] = orbit_idx;
-			nb_cases++;
-		}
-		if (f_vv) {
-			cout << "nb_cases=" << nb_cases << " vs ";
-			cout << "nb_cases_eliminated=" << nb_cases_eliminated << endl;
-		}
-	} // orbit_idx
-	cout << "nb_cases=" << nb_cases << endl;
-	cout << "nb_cases_eliminated=" << nb_cases_eliminated << endl;
-
-	int orbit_not_ruled_out;
-	int nb_sol_total = 0;
-
-	for (orbit_not_ruled_out = 0;
-			orbit_not_ruled_out < nb_orbits_not_ruled_out;
-			orbit_not_ruled_out++) {
-		orbit_idx = Orbit_idx[orbit_not_ruled_out];
 
 
-		if ((orbit_not_ruled_out % 100)== 0) {
-			f_vv = true;
-		}
-		else {
-			f_vv = false;
-		}
+	DD_Lifting = NEW_OBJECT(dd_lifting);
 
+	DD_Lifting->perform_lifting(
+			this,
+			verbose_level);
 
-		if (f_vv) {
-			cout << "orbit_not_ruled_out=" << orbit_not_ruled_out
-					<< " / " << nb_orbits_not_ruled_out
-					<< " is orbit_idx " << orbit_idx << endl;
-		}
-
-		long int *line0;
-
-		line0 = ODF->sets[orbit_idx];
-		if (ODF->set_sizes[orbit_idx] != level) {
-			cout << "ODF->set_sizes[orbit_idx] != level" << endl;
-			exit(1);
-		}
-
-		compute_live_points(
-				line0, level, 0 /*verbose_level*/);
-
-		if (f_vv) {
-			cout << "orbit_not_ruled_out=" << orbit_not_ruled_out << " / "
-					<< nb_orbits_not_ruled_out << " is orbit_idx"
-					<< orbit_idx << " / " << ODF->nb_cases
-					<< " we found " << nb_live_points
-					<< " live points" << endl;
-		}
-		if (nb_live_points == target_depth) {
-			Lint_vec_copy(line0, line, level);
-			Lint_vec_copy(live_points, line + level, target_depth);
-			if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
-				if (f_vv) {
-					cout << "found a solution in orbit " << orbit_idx << endl;
-				}
-				nb_sol_total++;
-				Nb_sol[orbit_idx] = 1;
-			}
-
-
-
-		}
-		else {
-			if (f_vv) {
-				cout << "orbit_not_ruled_out=" << orbit_not_ruled_out << " / "
-						<< nb_orbits_not_ruled_out << " is orbit_idx"
-						<< orbit_idx << " / " << ODF->nb_cases
-						<< " we found " << nb_live_points
-						<< " live points, doing a search; " << endl;
-			}
-
-#if 0
-			int *subset;
-			int nCk, l;
-			combinatorics::combinatorics_domain Combi;
-
-			subset = NEW_int(target_depth);
-			nCk = Combi.int_n_choose_k(
-					nb_live_points, target_depth);
-
-			if (f_vv) {
-				cout << "nb_live_points = " << nb_live_points
-						<< " target_depth = " << target_depth << " nCk = " << nCk << endl;
-			}
-			for (l = 0; l < nCk; l++) {
-
-				Combi.unrank_k_subset(
-						l, subset, nb_live_points, target_depth);
-
-				Lint_vec_copy(
-						line0, line, level);
-
-				Int_vec_apply_lint(
-						subset, live_points, line + level, target_depth);
-
-				if (check_orbit_covering(
-						line, Descr->K, 0 /* verbose_level */)) {
-					cout << "found a solution, subset " << l
-							<< " / " << nCk << " in orbit "
-							<< orbit_idx << endl;
-					nb_sol++;
-				}
-			} // next l
-
-			FREE_int(subset);
-#else
-			long int nb_sol;
-
-			nb_sol = 0;
-			search_case_singletons(
-					ODF,
-					orbit_idx, nb_sol, verbose_level);
-
-			Nb_sol[orbit_idx] = nb_sol;
-			nb_sol_total += nb_sol;
-#endif
-		} // else
-	} // next orbit_not_ruled_out
-
-	cout << "nb_sol_total=" << nb_sol_total << endl;
-	cout << "searching singletons done" << endl;
 
 
 
@@ -738,209 +509,6 @@ void delandtsheer_doyen::search_singletons(
 	}
 }
 
-void delandtsheer_doyen::search_case_singletons(
-		orbiter_kernel_system::orbiter_data_file *ODF,
-		int orbit_idx, long int &nb_sol, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_case_singletons " << orbit_idx << " / " << ODF->nb_cases << endl;
-	}
-	int target_depth;
-	target_depth = Descr->K - Descr->singletons_starter_size;
-	if (f_v) {
-		cout << "target_depth=" << target_depth << endl;
-		cout << "nb_live_points=" << nb_live_points << endl;
-	}
-
-	data_structures::set_of_sets *Live_points;
-
-	Live_points = NEW_OBJECT(data_structures::set_of_sets);
-
-	Live_points->init_basic_constant_size(
-			nb_live_points,
-			target_depth + 1, nb_live_points,
-			0 /*verbose_level*/);
-
-	Lint_vec_copy(live_points, Live_points->Sets[0], nb_live_points);
-	Live_points->Set_size[0] = nb_live_points;
-
-
-
-	long int *chosen_set;
-	int *index;
-	long int nb_nodes = 0;
-
-
-	chosen_set = NEW_lint(target_depth);
-	index = NEW_int(target_depth);
-
-
-	nb_sol = 0;
-
-	search_case_singletons_recursion(
-			ODF, orbit_idx, target_depth, 0 /* level */,
-			Live_points,
-			chosen_set, index, nb_nodes, nb_sol,
-			verbose_level);
-
-	FREE_lint(chosen_set);
-	FREE_int(index);
-	FREE_OBJECT(Live_points);
-	if (f_v) {
-		cout << "delandtsheer_doyen::search_case_singletons done" << endl;
-	}
-}
-
-void delandtsheer_doyen::search_case_singletons_recursion(
-		orbiter_kernel_system::orbiter_data_file *ODF,
-		int orbit_idx, int target_depth, int level,
-		data_structures::set_of_sets *Live_points,
-		long int *chosen_set, int *index, long int &nb_nodes, long int &nb_sol,
-		int verbose_level)
-{
-	if (level == target_depth) {
-		cout << "solution: ";
-		Lint_vec_print(cout, chosen_set, target_depth);
-		cout << endl;
-		nb_sol++;
-		return;
-	}
-
-	nb_nodes++;
-
-	if ((nb_nodes % (1 << 20)) == 0) {
-		cout << "level " << level << " nb_live = " << Live_points->Set_size[level] << " : ";
-		cout << "case " << index[0] << " / " << Live_points->Set_size[0] << endl;
-	}
-
-	//cout << "level " << level << " nb_live = " << Live_points->Set_size[level] << endl;
-
-	for (index[level] = 0; index[level] < Live_points->Set_size[level]; index[level]++) {
-
-		//int i, o;
-		long int c;
-
-		c = Live_points->Sets[level][index[level]];
-
-
-		increase_orbit_covering_firm(ODF->sets[orbit_idx], Descr->singletons_starter_size, c);
-		increase_orbit_covering_firm(chosen_set, level, c);
-
-#if 0
-		for (i = 0; i < Descr->singletons_starter_size; i++) {
-			a = ODF->sets[orbit_idx][i];
-			o = find_pair_orbit(
-					a, c, 0 /*verbose_level - 1*/);
-			orbit_covered[o]++;
-			if (orbit_covered[o] > orbit_covered_max[o]) {
-				cout << "level " << level << " live point is not alive" << endl;
-				exit(1);
-			}
-		}
-		for (i = 0; i < level; i++) {
-			a = chosen_set[i];
-			o = find_pair_orbit(
-					a, c, 0 /*verbose_level - 1*/);
-			orbit_covered[o]++;
-			if (orbit_covered[o] > orbit_covered_max[o]) {
-				cout << "level " << level << " live point is not alive" << endl;
-				exit(1);
-			}
-		}
-#endif
-
-
-		chosen_set[level] = c;
-
-		// compute live points for the next level:
-
-		Live_points->Set_size[level + 1] = 0;
-
-		int h, flag;
-		long int d;
-
-		for (h = index[level] + 1; h < Live_points->Set_size[level]; h++) {
-
-			Int_vec_copy(orbit_covered, orbit_covered2, nb_orbits);
-
-			d = Live_points->Sets[level][h];
-
-			flag = try_to_increase_orbit_covering_based_on_two_sets(
-					ODF->sets[orbit_idx], Descr->singletons_starter_size,
-					chosen_set, level + 1,
-					d);
-			if (flag) {
-				Live_points->Sets[level + 1][Live_points->Set_size[level + 1]++] = d;
-			}
-#if 0
-			for (i = 0; i < Descr->singletons_starter_size; i++) {
-				a = ODF->sets[orbit_idx][i];
-				o = find_pair_orbit(
-						a, d, 0 /*verbose_level - 1*/);
-				orbit_covered2[o]++;
-				if (orbit_covered2[o] > orbit_covered_max[o]) {
-					break;
-				}
-			}
-			if (i < Descr->singletons_starter_size) {
-				continue;
-			}
-
-			for (i = 0; i < level + 1; i++) {
-				a = chosen_set[i];
-				o = find_pair_orbit(
-						a, d, 0 /*verbose_level - 1*/);
-				orbit_covered2[o]++;
-				if (orbit_covered2[o] > orbit_covered_max[o]) {
-					break;
-				}
-			}
-			if (i < level + 1) {
-				continue;
-			}
-			Live_points->Sets[level + 1][Live_points->Set_size[level + 1]++] = d;
-#endif
-
-		}
-
-		search_case_singletons_recursion(
-				ODF, orbit_idx, target_depth, level + 1,
-				Live_points, chosen_set, index, nb_nodes, nb_sol,
-				verbose_level);
-
-		c = chosen_set[level]; // redundant
-
-		decrease_orbit_covering(ODF->sets[orbit_idx], Descr->singletons_starter_size, c);
-		decrease_orbit_covering(chosen_set, level, c);
-
-#if 0
-		for (i = 0; i < Descr->singletons_starter_size; i++) {
-			a = ODF->sets[orbit_idx][i];
-			o = find_pair_orbit(
-					a, c, 0 /*verbose_level - 1*/);
-			orbit_covered[o]--;
-			if (orbit_covered[o] < 0) {
-				cout << "orbit_covered[o] < 0" << endl;
-				exit(1);
-			}
-		}
-		for (i = 0; i < level; i++) {
-			a = chosen_set[i];
-			o = find_pair_orbit(
-					a, c, 0 /*verbose_level - 1*/);
-			orbit_covered[o]--;
-			if (orbit_covered[o] < 0) {
-				cout << "orbit_covered[o] < 0" << endl;
-				exit(1);
-			}
-		}
-#endif
-
-	}
-}
 
 int delandtsheer_doyen::try_to_increase_orbit_covering_based_on_two_sets(
 		long int *pts1, int sz1, long int *pts2, int sz2, long int pt0)
@@ -948,11 +516,11 @@ int delandtsheer_doyen::try_to_increase_orbit_covering_based_on_two_sets(
 	int i, o;
 	long int a;
 
-	Int_vec_copy(orbit_covered, orbit_covered2, nb_orbits);
+	Int_vec_copy(orbit_covered, orbit_covered2, Orbits_on_pairs->nb_orbits);
 
 	for (i = 0; i < sz1; i++) {
 		a = pts1[i];
-		o = find_pair_orbit(
+		o = Orbits_on_pairs->find_pair_orbit(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered2[o]++;
 		if (orbit_covered2[o] > orbit_covered_max[o]) {
@@ -962,7 +530,7 @@ int delandtsheer_doyen::try_to_increase_orbit_covering_based_on_two_sets(
 
 	for (i = 0; i < sz2; i++) {
 		a = pts2[i];
-		o = find_pair_orbit(
+		o = Orbits_on_pairs->find_pair_orbit(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered2[o]++;
 		if (orbit_covered2[o] > orbit_covered_max[o]) {
@@ -972,6 +540,7 @@ int delandtsheer_doyen::try_to_increase_orbit_covering_based_on_two_sets(
 	return true;
 
 }
+
 void delandtsheer_doyen::increase_orbit_covering_firm(
 		long int *pts, int sz, long int pt0)
 // firm means that an excess in the orbit covering raises an error
@@ -981,11 +550,11 @@ void delandtsheer_doyen::increase_orbit_covering_firm(
 
 	for (i = 0; i < sz; i++) {
 		a = pts[i];
-		o = find_pair_orbit(
+		o = Orbits_on_pairs->find_pair_orbit(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered[o]++;
 		if (orbit_covered[o] > orbit_covered_max[o]) {
-			cout << "delandtsheer_doyen::increase_orbit_covering_firm: live point is not alive" << endl;
+			cout << "delandtsheer_doyen::increase_orbit_covering_firm: could not add point" << endl;
 			exit(1);
 		}
 	}
@@ -1000,7 +569,7 @@ void delandtsheer_doyen::decrease_orbit_covering(
 
 	for (i = 0; i < sz; i++) {
 		a = pts[i];
-		o = find_pair_orbit(
+		o = Orbits_on_pairs->find_pair_orbit(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered[o]--;
 		if (orbit_covered[o] < 0) {
@@ -1011,25 +580,25 @@ void delandtsheer_doyen::decrease_orbit_covering(
 
 }
 
-void delandtsheer_doyen::search_partial_base_lines(
+void delandtsheer_doyen::create_starter(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines" << endl;
+		cout << "delandtsheer_doyen::create_starter" << endl;
 	}
 	orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (!Search_control->f_depth) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_starter "
 				"!Search_control->f_depth" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_starter "
 				"depth = " << Search_control->depth << endl;
 	}
 
@@ -1047,7 +616,7 @@ void delandtsheer_doyen::search_partial_base_lines(
 			verbose_level);
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines before "
+		cout << "delandtsheer_doyen::create_starter before "
 				"Poset->add_testing_without_group" << endl;
 	}
 	Poset_search->add_testing_without_group(
@@ -1057,14 +626,14 @@ void delandtsheer_doyen::search_partial_base_lines(
 
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_starter "
 				"before Gen->init" << endl;
 	}
 	Gen->initialize_and_allocate_root_node(
 			Search_control, Poset_search,
 			Search_control->depth /* sz */, verbose_level);
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_masks "
 				"after Gen->init" << endl;
 	}
 
@@ -1073,7 +642,7 @@ void delandtsheer_doyen::search_partial_base_lines(
 	int f_debug = false;
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_starter "
 				"before Gen->main" << endl;
 		cout << "A=";
 		A->print_info();
@@ -1092,10 +661,21 @@ void delandtsheer_doyen::search_partial_base_lines(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_partial_base_lines "
+		cout << "delandtsheer_doyen::create_starter "
 				"after Gen->main" << endl;
 	}
+}
 
+
+void delandtsheer_doyen::create_graphs(
+			int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "delandtsheer_doyen::create_graphs" << endl;
+	}
 	int nb_s_orbits;
 	int sz;
 	int h;
@@ -1125,7 +705,7 @@ void delandtsheer_doyen::search_partial_base_lines(
 
 
 		if (f_v) {
-			cout << "delandtsheer_doyen::search_partial_base_lines "
+			cout << "delandtsheer_doyen::create_graphs "
 					"case " << h << " / " << nb_s_orbits << endl;
 		}
 
@@ -1150,9 +730,9 @@ void delandtsheer_doyen::search_partial_base_lines(
 				pi = line[i];
 				for (j = i + 1; j < s; j++, cnt++) {
 					pj = line[j];
-					o = find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
+					o = Orbits_on_pairs->find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
 					if (pi == pj) {
-						cout << "delandtsheer_doyen::check_orbit_covering "
+						cout << "delandtsheer_doyen::create_graphs "
 								"pi = " << pi << " == pj = " << pj << endl;
 						exit(1);
 					}
@@ -1164,7 +744,8 @@ void delandtsheer_doyen::search_partial_base_lines(
 
 		std::string fname;
 
-		create_graph(h, line, s, s2, Covered_orbits + h * s2,
+		create_graph(
+				h, line, s, s2, Covered_orbits + h * s2,
 				nb_live_points,
 				fname,
 				verbose_level - 2);
@@ -1230,7 +811,7 @@ void delandtsheer_doyen::search_partial_base_lines(
 
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::search_starter done" << endl;
+		cout << "delandtsheer_doyen::create_graphs done" << endl;
 	}
 
 }
@@ -1287,13 +868,13 @@ void delandtsheer_doyen::create_graph(
 			}
 			a = x * Ysize + y;
 
-			Int_vec_copy(orbit_covered, orbit_covered2, nb_orbits);
+			Int_vec_copy(orbit_covered, orbit_covered2, Orbits_on_pairs->nb_orbits);
 
 			//cout << "testing point a=" << a << endl;
 			for (h = 0; h < s; h++) {
 
 				ph = line[h];
-				o = find_pair_orbit(
+				o = Orbits_on_pairs->find_pair_orbit(
 						ph, a, 0 /*verbose_level - 1*/);
 				orbit_covered2[o]++;
 				if (orbit_covered2[o] > orbit_covered_max[o]) {
@@ -1326,7 +907,7 @@ void delandtsheer_doyen::create_graph(
 			xj = pj / Ysize;
 			yj = pj % Ysize;
 
-			Int_vec_copy(orbit_covered, orbit_covered2, nb_orbits);
+			Int_vec_copy(orbit_covered, orbit_covered2, Orbits_on_pairs->nb_orbits);
 
 			adj = 0;
 			if (xi == xj || yi == yj) {
@@ -1337,7 +918,7 @@ void delandtsheer_doyen::create_graph(
 				for (h = 0; h < s; h++) {
 
 					ph = line[h];
-					o = find_pair_orbit(
+					o = Orbits_on_pairs->find_pair_orbit(
 							ph, pi, 0 /*verbose_level - 1*/);
 					orbit_covered2[o]++;
 				} // next h
@@ -1346,7 +927,7 @@ void delandtsheer_doyen::create_graph(
 				for (h = 0; h < s; h++) {
 
 					ph = line[h];
-					o = find_pair_orbit(
+					o = Orbits_on_pairs->find_pair_orbit(
 							ph, pj, 0 /*verbose_level - 1*/);
 					orbit_covered2[o]++;
 					if (orbit_covered2[o] > orbit_covered_max[o]) {
@@ -1358,7 +939,7 @@ void delandtsheer_doyen::create_graph(
 					adj = 0;
 				}
 				else {
-					o = find_pair_orbit(
+					o = Orbits_on_pairs->find_pair_orbit(
 							pi, pj, 0 /*verbose_level - 1*/);
 					orbit_covered2[o]++;
 					if (orbit_covered2[o] > orbit_covered_max[o]) {
@@ -1386,7 +967,8 @@ void delandtsheer_doyen::create_graph(
 		cout << "delandtsheer_doyen::create_graph "
 				"before CG->init_adjacency_no_colors" << endl;
 	}
-	CG->init_adjacency_no_colors(nb_live_points, Adj, label, label,
+	CG->init_adjacency_no_colors(
+			nb_live_points, Adj, label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_graph "
@@ -1406,124 +988,46 @@ void delandtsheer_doyen::create_graph(
 }
 
 
-void delandtsheer_doyen::compute_orbits_on_pairs(
-		groups::strong_generators *Strong_gens,
+
+void delandtsheer_doyen::setup_orbit_covering(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
-	orbiter_kernel_system::os_interface Os;
-	int t0 = Os.os_ticks();
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::compute_orbits_on_pairs" << endl;
 	}
-	Pairs = NEW_OBJECT(poset_classification::poset_classification);
 
-
-	Pair_search_control->f_depth = true;
-	Pair_search_control->depth = 2;
-
-	Poset_pairs = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset_pairs->init_subset_lattice(
-			A0, A, Strong_gens,
-			verbose_level);
-
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"before Pairs->init" << endl;
-	}
-	Pairs->initialize_and_allocate_root_node(
-			Pair_search_control, Poset_pairs,
-			2 /* sz */, verbose_level);
-	if (f_v) {
-		cout << "direct_product_action::compute_orbits_on_pairs "
-				"after Pairs->init" << endl;
-	}
-
-
-
-	int f_use_invariant_subset_if_available;
-	int f_debug;
-
-	f_use_invariant_subset_if_available = true;
-	f_debug = false;
-
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"before Pairs->main" << endl;
-		cout << "A=";
-		A->print_info();
-		cout << "A0=";
-		A0->print_info();
-	}
-
-
-	//Pairs->f_allowed_to_show_group_elements = true;
-
-	Pair_search_control->f_depth = true;
-	Pair_search_control->depth = 2;
-
-	//Pairs->depth = 2;
-	Pairs->main(t0,
-		2 /* schreier_depth */,
-		f_use_invariant_subset_if_available,
-		f_debug,
-		verbose_level - 2);
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"after Pairs->main" << endl;
-	}
-
-
-	nb_orbits = Pairs->nb_orbits_at_level(2);
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs "
-				"nb_orbits = "
-				<< nb_orbits << endl;
-	}
-
-	transporter = NEW_int(A0->elt_size_in_int);
-	tmp_Elt = NEW_int(A0->elt_size_in_int);
-
-	orbit_length = NEW_int(nb_orbits);
-	orbit_covered = NEW_int(nb_orbits);
-	orbit_covered2 = NEW_int(nb_orbits);
-	orbit_covered_max = NEW_int(nb_orbits);
+	orbit_covered = NEW_int(Orbits_on_pairs->nb_orbits);
+	orbit_covered2 = NEW_int(Orbits_on_pairs->nb_orbits);
+	orbit_covered_max = NEW_int(Orbits_on_pairs->nb_orbits);
 	orbits_covered = NEW_int(Descr->K * Descr->K);
 
-	Int_vec_zero(orbit_covered, nb_orbits);
+	Int_vec_zero(orbit_covered, Orbits_on_pairs->nb_orbits);
 
 
 
-	for (i = 0; i < nb_orbits; i++) {
-		orbit_length[i] = Pairs->orbit_length_as_int(
-				i /* orbit_at_level*/, 2 /* level*/);
-		orbit_covered_max[i] = (orbit_length[i] * Descr->nb_orbits_on_blocks) / b;
-		if (orbit_covered_max[i] * b != orbit_length[i] * Descr->nb_orbits_on_blocks) {
+	int i;
+
+	for (i = 0; i < Orbits_on_pairs->nb_orbits; i++) {
+
+		orbit_covered_max[i] = (Orbits_on_pairs->orbit_length[i] * Descr->nb_orbits_on_blocks) / b;
+
+		if (orbit_covered_max[i] * b != Orbits_on_pairs->orbit_length[i] * Descr->nb_orbits_on_blocks) {
 			cout << "integrality conditions violated (2)" << endl;
 			cout << "Descr->nb_orbits_on_blocks = " << Descr->nb_orbits_on_blocks << endl;
-			cout << "pair orbit i=" << i << " / " << nb_orbits << endl;
-			cout << "orbit_length[i]=" << orbit_length[i] << endl;
+			cout << "pair orbit i=" << i << " / " << Orbits_on_pairs->nb_orbits << endl;
+			cout << "orbit_length[i]=" << Orbits_on_pairs->orbit_length[i] << endl;
 			cout << "b=" << b << endl;
 			exit(1);
 		}
 	}
 	cout << "i : orbit_length[i] : orbit_covered_max[i]" << endl;
-	for (i = 0; i < nb_orbits; i++) {
-		cout << i << " : " << orbit_length[i]
+	for (i = 0; i < Orbits_on_pairs->nb_orbits; i++) {
+		cout << i << " : " << Orbits_on_pairs->orbit_length[i]
 			<< " : " << orbit_covered_max[i] << endl;
 	}
 
-	compute_pair_orbit_table(verbose_level);
-	//write_pair_orbit_file(verbose_level);
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_orbits_on_pairs done" << endl;
-	}
 }
 
 groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
@@ -1532,37 +1036,6 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 	int f_v = (verbose_level >= 1);
 
 	groups::strong_generators *Strong_gens;
-
-	#if 0
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::scan_subgroup_generators" << endl;
-	}
-	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	int *data;
-	int sz;
-	int nb_gens;
-	data_structures_groups::vector_ge *nice_gens;
-
-	Int_vec_scan(Descr->subgroup_gens, data, sz);
-	nb_gens = sz / A->make_element_size;
-	if (f_v) {
-		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
-	}
-	cout << "nb_gens=" << nb_gens << endl;
-	Strong_gens->init_from_data_with_target_go_ascii(
-			A0,
-			data,
-			nb_gens, A0->make_element_size,
-			Descr->subgroup_order,
-			nice_gens,
-			verbose_level + 2);
-	FREE_OBJECT(nice_gens);
-	if (f_v) {
-		cout << "delandtsheer_doyen "
-				"after Strong_gens->init_from_data_with_target_go_ascii" << endl;
-	}
-#endif
 
 	actions::action_global AG;
 
@@ -1687,11 +1160,13 @@ void delandtsheer_doyen::create_action(
 
 		data_structures_groups::vector_ge *nice_gens;
 
-		F1->finite_field_init_small_order(2,
+		F1->finite_field_init_small_order(
+				2,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
-		F2->finite_field_init_small_order(2,
+		F2->finite_field_init_small_order(
+				2,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0);
@@ -1703,7 +1178,9 @@ void delandtsheer_doyen::create_action(
 
 		A1->Known_groups->init_projective_group(
 				Descr->d1, F1,
-				false /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
+				false /* f_semilinear */,
+				true /* f_basis */,
+				true /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M1 = A1->G.matrix_grp;
@@ -1711,7 +1188,9 @@ void delandtsheer_doyen::create_action(
 
 		A2->Known_groups->init_projective_group(
 				Descr->d2, F2,
-				false /* f_semilinear */, true /* f_basis */, true /* f_init_sims */,
+				false /* f_semilinear */,
+				true /* f_basis */,
+				true /* f_init_sims */,
 				nice_gens,
 				verbose_level - 1);
 		M2 = A1->G.matrix_grp;
@@ -1727,7 +1206,8 @@ void delandtsheer_doyen::create_action(
 		b = (V * (V - 1)) / (Descr->K * (Descr->K - 1));
 
 		if (b * (Descr->K * (Descr->K - 1)) != (V * (V - 1))) {
-			cout << "delandtsheer_doyen::create_action integrality conditions violated" << endl;
+			cout << "delandtsheer_doyen::create_action "
+					"integrality conditions violated" << endl;
 			exit(1);
 		}
 
@@ -1756,7 +1236,7 @@ void delandtsheer_doyen::create_action(
 
 		M1->init_affine_group(
 				Descr->d1, F1,
-				false /* f_semilinear */, /*A1,*/ verbose_level);
+				false /* f_semilinear */, verbose_level);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
@@ -1772,7 +1252,7 @@ void delandtsheer_doyen::create_action(
 
 		M2->init_affine_group(
 				Descr->d2, F2,
-				false /* f_semilinear */, /*A2,*/ verbose_level);
+				false /* f_semilinear */, verbose_level);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action "
@@ -1814,14 +1294,14 @@ void delandtsheer_doyen::create_action(
 }
 
 
-void delandtsheer_doyen::compute_live_points(
+void delandtsheer_doyen::compute_live_points_for_singleton_search(
 		long int *line0, int len, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a, x, y, h, ph, k, pk, o;
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::compute_live_points" << endl;
+		cout << "delandtsheer_doyen::compute_live_points_for_singleton_search" << endl;
 	}
 
 	Int_vec_zero(row_sum, Xsize);
@@ -1840,7 +1320,7 @@ void delandtsheer_doyen::compute_live_points(
 	if (!check_orbit_covering(
 			line0,
 		len, 0 /* verbose_level */)) {
-		cout << "delandtsheer_doyen::compute_live_points "
+		cout << "delandtsheer_doyen::compute_live_points_for_singleton_search "
 				"line0 is not good (check_orbit_covering)" << endl;
 		check_orbit_covering(line0, len, 2 /* verbose_level */);
 		exit(1);
@@ -1849,10 +1329,12 @@ void delandtsheer_doyen::compute_live_points(
 	nb_live_points = 0;
 	for (x = 0; x < Xsize; x++) {
 		if (row_sum[x]) {
+			// not a singleton, discard
 			continue;
 		}
 		for (y = 0; y < Ysize; y++) {
 			if (col_sum[y]) {
+				// not a singleton, discard
 				continue;
 			}
 			a = x * Ysize + y;
@@ -1860,25 +1342,29 @@ void delandtsheer_doyen::compute_live_points(
 			for (h = 0; h < len; h++) {
 
 				ph = line0[h];
-				o = find_pair_orbit(
+
+				o = Orbits_on_pairs->find_pair_orbit(
 						ph, a, 0 /*verbose_level - 1*/);
+
 				orbit_covered[o]++;
+
 				if (orbit_covered[o] > orbit_covered_max[o]) {
 					for (k = h; k >= 0; k--) {
 						pk = line0[k];
-						o = find_pair_orbit(
+						o = Orbits_on_pairs->find_pair_orbit(
 								pk, a, 0 /*verbose_level - 1*/);
 						orbit_covered[o]--;
 					}
 					break;
 				}
 			} // next h
+
 			if (h == len) {
 				live_points[nb_live_points++] = a;
 				for (h = 0; h < len; h++) {
 
 					ph = line0[h];
-					o = find_pair_orbit(
+					o = Orbits_on_pairs->find_pair_orbit(
 							ph, a, 0 /*verbose_level - 1*/);
 					orbit_covered[o]--;
 				}
@@ -1886,142 +1372,15 @@ void delandtsheer_doyen::compute_live_points(
 		} // next y
 	} // next x
 	if (f_v) {
-		cout << "found " << nb_live_points << " live points" << endl;
+		cout << "found " << nb_live_points << " live points for singleton search" << endl;
 	}
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::compute_live_points done" << endl;
+		cout << "delandtsheer_doyen::compute_live_points_for_singleton_search done" << endl;
 	}
 }
 
 
-int delandtsheer_doyen::find_pair_orbit(
-		int i, int j, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int orbit_no;
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::find_pair_orbit" << endl;
-	}
-	if (i == j) {
-		cout << "delandtsheer_doyen::find_pair_orbit "
-				"i = j = " << j << endl;
-		exit(1);
-	}
-	orbit_no = pair_orbit[i * V + j];
-	if (f_v) {
-		cout << "delandtsheer_doyen::find_pair_orbit done" << endl;
-	}
-	return orbit_no;
-}
-
-int delandtsheer_doyen::find_pair_orbit_by_tracing(
-		int i, int j, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int orbit_no;
-	long int set[2];
-	long int canonical_set[2];
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::find_pair_orbit_by_tracing" << endl;
-	}
-	if (i == j) {
-		cout << "delandtsheer_doyen::find_pair_orbit_by_tracing "
-				"i = j = " << j << endl;
-		exit(1);
-	}
-	set[0] = i;
-	set[1] = j;
-	orbit_no = Pairs->trace_set(
-			set, 2, 2,
-		canonical_set, transporter,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "delandtsheer_doyen::find_pair_orbit_by_tracing "
-				"done" << endl;
-	}
-	return orbit_no;
-}
-
-void delandtsheer_doyen::compute_pair_orbit_table(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, k;
-
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_pair_orbit_table" << endl;
-	}
-	pair_orbit = NEW_int(V * V);
-	Int_vec_zero(pair_orbit, V * V);
-	for (i = 0; i < V; i++) {
-		for (j = i + 1; j < V; j++) {
-			k = find_pair_orbit_by_tracing(i, j, 0 /*verbose_level - 2*/);
-			pair_orbit[i * V + j] = k;
-			pair_orbit[j * V + i] = k;
-		}
-		if ((i % 100) == 0) {
-			cout << "i=" << i << endl;
-		}
-	}
-	if (f_v) {
-		cout << "delandtsheer_doyen::compute_pair_orbit_table done" << endl;
-	}
-}
-
-void delandtsheer_doyen::write_pair_orbit_file(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	string fname;
-	long int set[1000];
-	int i, j, k, n, size, l;
-
-
-	if (f_v) {
-		cout << "delandtsheer_doyen::write_pair_orbit_file" << endl;
-	}
-
-	fname = Descr->group_label + ".2orbits";
-
-	cout << "writing pair-orbit file " << fname << endl;
-	{
-		ofstream f(fname);
-		f << nb_orbits << endl;
-		for (i = 0; i < nb_orbits; i++) {
-			n = Pairs->first_node_at_level(2) + i;
-			Pairs->get_set(n, set, size);
-			if (size != 2) {
-				cout << "delandtsheer_doyen::write_pair_orbit_file "
-						"size != 2" << endl;
-				exit(1);
-			}
-			l = Pairs->orbit_length_as_int(i, 2);
-			f << set[0] << " " << set[1] << " " << l << endl;
-		}
-		for (i = 0; i < V; i++) {
-			for (j = i + 1; j < V; j++) {
-				k = find_pair_orbit(i, j, 0 /*verbose_level - 2*/);
-				f << k << " ";
-			}
-			f << endl;
-			if ((i % 100) == 0) {
-				cout << "i=" << i << endl;
-			}
-		}
-	}
-	orbiter_kernel_system::file_io Fio;
-
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
-	if (f_v) {
-		cout << "delandtsheer_doyen::write_pair_orbit_file done" << endl;
-	}
-
-}
 
 void delandtsheer_doyen::print_mask_test_i(
 		std::ostream &ost, int i)
@@ -2191,13 +1550,13 @@ int delandtsheer_doyen::check_orbit_covering(
 	//int f_vv = (verbose_level >= 2);
 	int i, pi, j, pj, o, f_OK = true;
 
-	Int_vec_zero(orbit_covered, nb_orbits);
+	Int_vec_zero(orbit_covered, Orbits_on_pairs->nb_orbits);
 
 	for (i = 0; i < len; i++) {
 		pi = line[i];
 		for (j = i + 1; j < len; j++) {
 			pj = line[j];
-			o = find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
+			o = Orbits_on_pairs->find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
 			if (pi == pj) {
 				cout << "delandtsheer_doyen::check_orbit_covering "
 						"pi = " << pi << " == pj = " << pj << endl;

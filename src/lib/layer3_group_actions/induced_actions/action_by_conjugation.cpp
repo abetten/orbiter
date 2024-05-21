@@ -99,7 +99,8 @@ long int action_by_conjugation::compute_image(
 	return j;
 }
 
-long int action_by_conjugation::rank(int *Elt)
+long int action_by_conjugation::rank(
+		int *Elt)
 {
 	long int j;
 

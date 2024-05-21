@@ -1504,6 +1504,52 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(
 	}
 }
 
+void latex_interface::print_table_of_strings_with_headers(
+		std::ostream &ost, std::string *headers, std::string *Table, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
+	ost << "\\hline" << endl;
+	for (j = 0; j < n; j++) {
+		ost << headers[j];
+		if (j < n - 1) {
+			ost << " & ";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << Table[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+	}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_table_of_strings(
+		std::ostream &ost, std::string *Table, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << Table[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+}
+
 void latex_interface::int_matrix_print_tex(
 		std::ostream &ost, int *p, int m, int n)
 {

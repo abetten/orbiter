@@ -740,13 +740,15 @@ void algebra_global::do_norm(
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_norm_0.csv";
 	label.assign("Norm_0");
-	Fio.Csv_file_support->int_vec_write_csv(T0, nb_T0, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			T0, nb_T0, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
 	fname_csv = "F_q" + std::to_string(F->q) + "_norm_1.csv";
 	label.assign("Norm_1");
-	Fio.Csv_file_support->int_vec_write_csv(T1, nb_T1, fname_csv, label);
+	Fio.Csv_file_support->int_vec_write_csv(
+			T1, nb_T1, fname_csv, label);
 	cout << "written file " << fname_csv << " of size "
 		<< Fio.file_size(fname_csv) << endl;
 
@@ -1127,6 +1129,14 @@ void algebra_global::algebraic_normal_form(
 	PF->Poly[PF->max_degree].print_equation_numerical(cout, coeff);
 	cout << endl;
 
+
+	cout << "algebraic normal form, coefficient vector:" << endl;
+	Int_vec_print_fully(cout, coeff, nb_coeff);
+	cout << endl;
+	cout << "nb_coeff=" << nb_coeff << endl;
+
+
+
 #if 0
 
 	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
@@ -1207,6 +1217,7 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 				"after BF->compute_polynomial_representation" << endl;
 	}
 
+
 	cout << "algebraic normal form:" << endl;
 	BF->Poly[n].print_equation(cout, coeff);
 	cout << endl;
@@ -1217,6 +1228,10 @@ void algebra_global::algebraic_normal_form_of_boolean_function(
 
 	cout << "algebraic normal form in numerical form:" << endl;
 	BF->Poly[n].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form, coefficient vector:" << endl;
+	Int_vec_print(cout, coeff, nb_coeff);
 	cout << endl;
 
 

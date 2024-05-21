@@ -310,6 +310,100 @@ void l3_interface_gap::export_BLT_set(
 	}
 }
 
+void l3_interface_gap::export_group_to_GAP_and_copy_to_latex(
+		std::ostream &ost,
+		std::string &label_txt,
+		groups::strong_generators *SG,
+		actions::action *A2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_group_to_GAP_and_copy_to_latex" << endl;
+	}
+	string export_fname;
+
+	export_fname = label_txt + "_group.gap";
+
+	export_permutation_group_to_GAP(
+			export_fname, A2, SG, verbose_level - 2);
+
+	if (f_v) {
+		cout << "written file " << export_fname << " of size "
+				<< Fio.file_size(export_fname) << endl;
+	}
+
+	ost << "\\subsection*{GAP Export}" << endl;
+	ost << "To export the group to GAP, "
+			"use the following file\\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+
+	{
+		ifstream fp1(export_fname);
+		char line[100000];
+
+		while (true) {
+			if (fp1.eof()) {
+				break;
+			}
+
+			//cout << "count_number_of_orbits_in_file reading
+			//line, nb_sol = " << nb_sol << endl;
+			fp1.getline(line, 100000, '\n');
+			ost << line << endl;
+		}
+
+	}
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_group_to_GAP_and_copy_to_latex done" << endl;
+	}
+}
+
+void l3_interface_gap::export_permutation_group_to_GAP(
+		std::string &fname,
+		actions::action *A2,
+		groups::strong_generators *SG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_permutation_group_to_GAP" << endl;
+	}
+	{
+		ofstream fp(fname);
+
+		fp << "G := Group([" << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			A2->Group_element->element_print_as_permutation_with_offset(
+				SG->gens->ith(i), fp,
+				1 /* offset */,
+				true /* f_do_it_anyway_even_for_big_degree */,
+				false /* f_print_cycles_of_length_one */,
+				0 /* verbose_level */);
+			if (i < SG->gens->len - 1) {
+				fp << ", " << endl;
+			}
+		}
+		fp << "]);" << endl;
+
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "l3_interface_gap::export_permutation_group_to_GAP done" << endl;
+	}
+}
 
 
 

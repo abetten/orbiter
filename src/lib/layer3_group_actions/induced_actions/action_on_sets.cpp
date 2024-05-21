@@ -13,6 +13,10 @@ namespace orbiter {
 namespace layer3_group_actions {
 namespace induced_actions {
 
+static int action_on_sets_compare(
+		void *a, void *b, void *data);
+static int action_on_sets_compare_inverted(
+		void *a, void *b, void *data);
 
 action_on_sets::action_on_sets()
 {
@@ -47,7 +51,8 @@ action_on_sets::~action_on_sets()
 }
 
 
-void action_on_sets::init(int nb_sets,
+void action_on_sets::init(
+		int nb_sets,
 		int set_size, long int *input_sets,
 		int verbose_level)
 {
@@ -121,7 +126,8 @@ void action_on_sets::init(int nb_sets,
 	}
 }
 
-int action_on_sets::find_set(long int *set, int verbose_level)
+int action_on_sets::find_set(
+		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -313,7 +319,8 @@ void action_on_sets::test_sets()
 
 
 
-int action_on_sets_compare(void *a, void *b, void *data)
+static int action_on_sets_compare(
+		void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
 	long int *A = (long int *)a;
@@ -325,7 +332,8 @@ int action_on_sets_compare(void *a, void *b, void *data)
 	return c;
 }
 
-int action_on_sets_compare_inverted(void *a, void *b, void *data)
+static int action_on_sets_compare_inverted(
+		void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
 	long int *A = (long int *)a;

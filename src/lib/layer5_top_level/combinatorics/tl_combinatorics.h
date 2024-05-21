@@ -329,6 +329,90 @@ public:
 
 
 // #############################################################################
+// dd_lifting.cpp
+// #############################################################################
+
+
+//! search for Delandtsheer-Doyen designs, lifting of starter configurations
+
+
+class dd_lifting {
+
+public:
+
+	delandtsheer_doyen *DD;
+
+	int target_depth;
+	int level;
+
+	std::string starter_file;
+
+	long int *Nb_sol;
+	long int *Nb_nodes;
+	int *Orbit_idx;
+	int nb_orbits_not_ruled_out;
+
+	long int nb_sol_total;
+	long int nb_nodes_total;
+
+
+	orbiter_kernel_system::orbiter_data_file *ODF;
+
+
+	dd_lifting();
+	~dd_lifting();
+	void perform_lifting(
+			delandtsheer_doyen *DD,
+			int verbose_level);
+	void search_case_singletons_and_count(
+			int orbit_idx, long int &nb_sol, long int &nb_nodes,
+			int verbose_level);
+	void search_case_singletons(
+			int orbit_idx, long int &nb_sol, long int &nb_nodes,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
+// dd_search_singletons.cpp
+// #############################################################################
+
+
+//! search for Delandtsheer-Doyen designs, lifting of one specific case
+
+
+class dd_search_singletons {
+
+public:
+
+	dd_lifting *DD_lifting;
+	delandtsheer_doyen *DD;
+
+
+	int orbit_idx;
+	int target_depth;
+	int level;
+	data_structures::set_of_sets *Live_points;
+	long int *chosen_set; // [target_depth]
+	int *index; // [target_depth]
+	long int nb_nodes;
+	std::vector<std::vector<int> > Solutions;
+
+	dd_search_singletons();
+	~dd_search_singletons();
+	void search_case_singletons(
+			dd_lifting *DD_lifting,
+			int orbit_idx, int verbose_level);
+	void search_case_singletons_recursion(
+			int level,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // delandtsheer_doyen_description.cpp
 // #############################################################################
 
@@ -340,11 +424,6 @@ public:
 
 class delandtsheer_doyen_description {
 public:
-
-#if 0
-	int f_depth;
-	int depth;
-#endif
 
 	int f_d1;
 	int d1;
@@ -377,11 +456,9 @@ public:
 
 	int f_pair_search_control;
 	std::string pair_search_control_label;
-	//poset_classification::poset_classification_control *Pair_search_control;
 
 	int f_search_control;
 	std::string search_control_label;
-	//poset_classification::poset_classification_control *Search_control;
 
 	// row intersection type
 	int f_R;
@@ -412,7 +489,9 @@ public:
 		// 3 = le
 	int mask_test_value[MAX_MASK_TESTS];
 
-	int f_search_partial_base_lines;
+	int f_create_starter;
+
+	int f_create_graphs;
 
 	int f_singletons;
 	int singletons_starter_size;
@@ -464,7 +543,6 @@ public:
 	int *row_sum; // [Xsize]
 	int *col_sum; // [Ysize]
 
-	poset_classification::poset_classification_control *Pair_search_control;
 	poset_classification::poset_classification_control *Search_control;
 
 	algebra::matrix_group *M1;
@@ -478,17 +556,20 @@ public:
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object go;
 	group_constructions::direct_product *P;
-	poset_classification::poset_with_group_action *Poset_pairs;
-	poset_classification::poset_with_group_action *Poset_search;
-	poset_classification::poset_classification *Pairs;
-	poset_classification::poset_classification *Gen;
 
-	// orbits on pairs:
-	int *pair_orbit; // [V * V]
-	int nb_orbits;
-	int *transporter;
-	int *tmp_Elt;
-	int *orbit_length; // [nb_orbits]
+	poset_classification::poset_classification *Gen;
+	poset_classification::poset_with_group_action *Poset_search;
+
+
+	orbits::orbits_on_pairs *Orbits_on_pairs;
+		// Orbits_on_pairs->nb_orbits
+		// int *pair_orbit; // [V * V]
+		// int nb_orbits;
+		// int *orbit_length; // [nb_orbits]
+
+
+	dd_lifting *DD_Lifting;
+
 	int *orbit_covered; // [nb_orbits]
 	int *orbit_covered2; // [nb_orbits]
 	int *orbit_covered_max; // [nb_orbits]
@@ -534,15 +615,6 @@ public:
 			int verbose_level);
 	void search_singletons(
 			int verbose_level);
-	void search_case_singletons(
-			orbiter_kernel_system::orbiter_data_file *ODF,
-			int orbit_idx, long int &nb_sol, int verbose_level);
-	void search_case_singletons_recursion(
-			orbiter_kernel_system::orbiter_data_file *ODF,
-			int orbit_idx, int target_depth, int level,
-			data_structures::set_of_sets *Live_points,
-			long int *chosen_set, int *index, long int &nb_nodes, long int &nb_sol,
-			int verbose_level);
 	int try_to_increase_orbit_covering_based_on_two_sets(
 			long int *pts1, int sz1, long int *pts2, int sz2, long int pt0);
 	void increase_orbit_covering_firm(
@@ -550,15 +622,16 @@ public:
 	// firm means that an excess in the orbit covering raises an error
 	void decrease_orbit_covering(
 			long int *pts, int sz, long int pt0);
-	void search_partial_base_lines(
+	void create_starter(
+			int verbose_level);
+	void create_graphs(
 			int verbose_level);
 	void create_graph(
 			int case_number, long int *line, int s, int s2, int *Covered_orbits,
 			int &nb_live_points,
 			std::string &fname,
 			int verbose_level);
-	void compute_orbits_on_pairs(
-			groups::strong_generators *Strong_gens,
+	void setup_orbit_covering(
 			int verbose_level);
 	groups::strong_generators *scan_subgroup_generators(
 			int verbose_level);
@@ -566,16 +639,8 @@ public:
 			int verbose_level);
 	void create_action(
 			int verbose_level);
-	void compute_live_points(
+	void compute_live_points_for_singleton_search(
 			long int *line0, int len, int verbose_level);
-	int find_pair_orbit(
-			int i, int j, int verbose_level);
-	int find_pair_orbit_by_tracing(
-			int i, int j, int verbose_level);
-	void compute_pair_orbit_table(
-			int verbose_level);
-	void write_pair_orbit_file(
-			int verbose_level);
 	void print_mask_test_i(
 			std::ostream &ost, int i);
 	void early_test_func(

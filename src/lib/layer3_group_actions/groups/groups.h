@@ -1748,12 +1748,6 @@ public:
 			std::string &ascii_coding, int verbose_level);
 	void decode_ascii_coding(
 			std::string &ascii_coding, int verbose_level);
-	void export_permutation_group_to_magma(
-			std::string &fname,
-			actions::action *A2, int verbose_level);
-	void export_permutation_group_to_GAP(
-			std::string &fname,
-			actions::action *A2, int verbose_level);
 	void compute_and_print_orbits_on_a_given_set(
 			actions::action *A_given,
 		long int *set, int len, int verbose_level);
@@ -1783,11 +1777,6 @@ public:
 	void make_element_which_moves_a_point_from_A_to_B(
 			actions::action *A_given,
 		int pt_A, int pt_B, int *Elt, int verbose_level);
-	void export_group_to_GAP_and_copy_to_latex(
-			std::string &label_txt,
-			std::ostream &ost,
-			actions::action *A2,
-			int verbose_level);
 	void export_group_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
@@ -1805,7 +1794,8 @@ public:
 			int verbose_level);
 	void export_to_orbiter_as_bsgs(
 			actions::action *A2,
-			std::string &fname, std::string &label, std::string &label_tex,
+			std::string &fname,
+			std::string &label, std::string &label_tex,
 			int verbose_level);
 	void report_group(
 			std::string &prefix, int verbose_level);

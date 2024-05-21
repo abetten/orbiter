@@ -434,8 +434,10 @@ void action_on_factor_space::init_from_coordinate_vectors(
 }
 
 
-void action_on_factor_space::init2(actions::action &A_base,
-		actions::action &A, int f_compute_tables, int verbose_level)
+void action_on_factor_space::init2(
+		actions::action &A_base,
+		actions::action &A, int f_compute_tables,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -652,7 +654,8 @@ void action_on_factor_space::list_all_elements()
 	FREE_int(v);
 }
 
-void action_on_factor_space::reduce_mod_subspace(int *v,
+void action_on_factor_space::reduce_mod_subspace(
+		int *v,
 		int verbose_level)
 {
 	VS->F->Linear_algebra->reduce_mod_subspace(subspace_basis_size, VS->dimension,
@@ -813,7 +816,8 @@ long int action_on_factor_space::project_onto_Gauss_reduced_vector(
 	return rk1;
 }
 
-long int action_on_factor_space::project(long int rk, int verbose_level)
+long int action_on_factor_space::project(
+		long int rk, int verbose_level)
 // returns the rank in the factor space
 // of the vector rk in the large space
 // after reduction modulo the subspace
@@ -896,7 +900,8 @@ long int action_on_factor_space::preimage(
 	return b;
 }
 
-void action_on_factor_space::embed(int *from, int *to)
+void action_on_factor_space::embed(
+		int *from, int *to)
 {
 	int i;
 
@@ -933,7 +938,8 @@ void action_on_factor_space::unrank(
 		}
 }
 
-long int action_on_factor_space::rank(int *v, int verbose_level)
+long int action_on_factor_space::rank(
+		int *v, int verbose_level)
 {
 	data_structures::sorting Sorting;
 
@@ -984,7 +990,8 @@ void action_on_factor_space::unrank_in_large_space(
 	VS->unrank_point(v, rk);
 }
 
-long int action_on_factor_space::rank_in_large_space(int *v)
+long int action_on_factor_space::rank_in_large_space(
+		int *v)
 {
 	long int rk;
 
@@ -999,7 +1006,8 @@ void action_on_factor_space::unrank_in_small_space(
 			v, 1, factor_space_len, rk);
 }
 
-long int action_on_factor_space::rank_in_small_space(int *v)
+long int action_on_factor_space::rank_in_small_space(
+		int *v)
 {
 	long int rk;
 

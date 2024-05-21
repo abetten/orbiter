@@ -171,13 +171,15 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	}
 }
 	
-void action_on_homogeneous_polynomials::unrank_point(int *v, long int rk)
+void action_on_homogeneous_polynomials::unrank_point(
+		int *v, long int rk)
 {
 	HPD->unrank_coeff_vector(v, rk);
 	//PG_element_unrank_modified(*F, v, 1, dimension, rk);
 }
 
-long int action_on_homogeneous_polynomials::rank_point(int *v)
+long int action_on_homogeneous_polynomials::rank_point(
+		int *v)
 {
 #if 0
 	int rk;

@@ -128,12 +128,14 @@ void action_by_restriction::init(
 		}
 }
 
-long int action_by_restriction::original_point(long int pt)
+long int action_by_restriction::original_point(
+		long int pt)
 {
 	return points[pt];
 }
 
-long int action_by_restriction::restricted_point_idx(long int pt)
+long int action_by_restriction::restricted_point_idx(
+		long int pt)
 {
 	int idx;
 	data_structures::sorting Sorting;

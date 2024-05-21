@@ -271,13 +271,6 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-#if 0
-		int f_no_base = false;
-
-		if (Descr->f_no_group) {
-			f_no_base = true;
-		}
-#endif
 		A->Known_groups->init_symmetric_group(degree, verbose_level);
 
 		//A2 = NEW_OBJECT(actions::action);
@@ -326,13 +319,6 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-#if 0
-		int f_no_base = false;
-
-		if (Descr->f_no_group) {
-			f_no_base = true;
-		}
-#endif
 		A->Known_groups->init_symmetric_group(degree, verbose_level);
 
 		//A2 = NEW_OBJECT(actions::action);
@@ -394,14 +380,6 @@ void design_create::init(
 
 
 		A = NEW_OBJECT(actions::action);
-
-#if 0
-		int f_no_base = false;
-
-		if (Descr->f_no_group) {
-			f_no_base = true;
-		}
-#endif
 
 		A->Known_groups->init_symmetric_group(degree, verbose_level);
 
@@ -545,14 +523,6 @@ void design_create::init(
 
 		A = NEW_OBJECT(actions::action);
 
-#if 0
-		int f_no_base = false;
-
-		if (Descr->f_no_group) {
-			f_no_base = true;
-		}
-#endif
-
 		A->Known_groups->init_symmetric_group(degree, verbose_level);
 
 		//A2 = NEW_OBJECT(actions::action);
@@ -628,9 +598,12 @@ void design_create::init(
 		v = degree;
 		b = sz;
 
-		prefix = "latin_square_order" + std::to_string(s) + "_" + Descr->linear_space_from_latin_square_name;
-		label_txt = "latin_square_order" + std::to_string(s) + "_" + Descr->linear_space_from_latin_square_name;
-		label_tex = "latin\\_square\\_order" + std::to_string(s) + "\\_" + Descr->linear_space_from_latin_square_name;
+		prefix = "latin_square_order" + std::to_string(s)
+				+ "_" + Descr->linear_space_from_latin_square_name;
+		label_txt = "latin_square_order" + std::to_string(s)
+				+ "_" + Descr->linear_space_from_latin_square_name;
+		label_tex = "latin\\_square\\_order" + std::to_string(s)
+				+ "\\_" + Descr->linear_space_from_latin_square_name;
 
 #if 0
 		A = NEW_OBJECT(actions::action);
@@ -668,7 +641,8 @@ void design_create::init(
 					"after compute_incidence_matrix" << endl;
 		}
 
-		// extend the incidence matrix by three blocks in the beginning to separate the parts:
+		// extend the incidence matrix by three blocks
+		// in the beginning to distinguish the three parts:
 
 		int *incma0;
 		int b0, h, u, i, j;
@@ -770,10 +744,9 @@ void design_create::create_design_PG_2_q(
 		for (h = 0; h < k; h++) {
 			block[h] = P->Subspaces->Implementation->lines(j, h);
 		}
-#if 0
-		Int_vec_copy(P->Subspaces->Implementation->Lines + j * k, block, k);
-#endif
+
 		Sorting.int_vec_heapsort(block, k);
+
 		set[j] = Combi.rank_k_subset(block, P->Subspaces->N_points, k);
 		if (f_v) {
 			cout << "block " << j << " / " << sz << " : ";
@@ -890,7 +863,8 @@ int design_create::get_color_as_two_design_assume_sorted(
 	}
 	combinatorics::combinatorics_domain Combi;
 
-	Combi.unrank_k_subset(design[0], block, P->Subspaces->N_points, k);
+	Combi.unrank_k_subset(
+			design[0], block, P->Subspaces->N_points, k);
 	if (block[0] != 0) {
 		cout << "block[0] != 0" << endl;
 		exit(1);
@@ -902,7 +876,8 @@ int design_create::get_color_as_two_design_assume_sorted(
 	for (i = 2; i < k; i++) {
 		block[i] -= 2;
 	}
-	c = Combi.rank_k_subset(block + 2, P->Subspaces->N_points - 2, k - 2);
+	c = Combi.rank_k_subset(
+			block + 2, P->Subspaces->N_points - 2, k - 2);
 	if (f_v) {
 		cout << "design_create::get_color_as_two_design_assume_sorted done" << endl;
 	}
@@ -962,12 +937,6 @@ void design_create::compute_incidence_matrix(
 				cout << "design_create::compute_incidence_matrix "
 						"after Combi.compute_blocks_from_coding" << endl;
 			}
-#if 0
-			Combi.compute_incidence_matrix_from_sets(
-						v, b, set,
-						incma,
-						verbose_level);
-#endif
 
 			if (f_v) {
 				cout << "design_create::compute_incidence_matrix "
@@ -1007,19 +976,22 @@ void design_create::compute_incidence_matrix(
 		else {
 
 			nb_inc = k * b;
-			Combi.compute_incidence_matrix(v, b, k, set,
+			Combi.compute_incidence_matrix(
+					v, b, k, set,
 					incma, verbose_level);
 
 		}
 		f_has_incma = true;
 	}
 	else {
-		cout << "design_create::compute_incidence_matrix please give a set" << endl;
+		cout << "design_create::compute_incidence_matrix "
+				"please give a set" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix The incidence matrix is:" << endl;
+		cout << "design_create::compute_incidence_matrix "
+				"The incidence matrix is:" << endl;
 		Int_matrix_print(incma, v, b);
 	}
 

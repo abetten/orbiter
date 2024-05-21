@@ -880,48 +880,6 @@ void schreier::coset_rep(
 	}
 }
 
-#if 0
-void schreier::coset_rep_with_verbosity(
-		int j, int verbose_level)
-// j is a coset, not a point
-// result is in cosetrep
-// determines an element in the group
-// that moves the orbit representative
-// to the j-th point in the orbit.
-{
-	int f_v = (verbose_level >= 1);
-	int *gen;
-	
-	if (f_v) {
-		cout << "schreier::coset_rep_with_verbosity j="
-				<< j << " orbit[j]=" << orbit[j] << endl;
-	}
-	if (f_images_only) {
-		cout << "schreier::coset_rep_with_verbosity is not "
-				"allowed if f_images_only is true" << endl;
-		exit(1);
-	}
-	if (prev[j] != -1) {
-		if (f_v) {
-			cout << "schreier::coset_rep_with_verbosity j=" << j
-					<< " label[j]=" << label[j]
-					<< " orbit_inv[prev[j]]="
-					<< orbit_inv[prev[j]] << endl;
-		}
-		coset_rep_with_verbosity(orbit_inv[prev[j]], verbose_level);
-		gen = gens.ith(label[j]);
-		A->Group_element->element_mult(cosetrep, gen, cosetrep_tmp, 0);
-		A->Group_element->element_move(cosetrep_tmp, cosetrep, 0);
-	}
-	else {
-		A->Group_element->element_one(cosetrep, 0);
-	}
-	if (f_v) {
-		cout << "schreier::coset_rep_with_verbosity "
-				"j=" << j << " done" << endl;
-	}
-}
-#endif
 
 void schreier::coset_rep_inv(
 		int j, int verbose_level)

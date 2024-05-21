@@ -321,7 +321,6 @@ public:
 	void classify_surfaces_through_arcs_and_trihedral_pairs(
 			std::string &Control_six_arcs_label,
 			projective_geometry::projective_space_with_action *PA,
-			//cubic_surfaces_in_general::surface_with_action *Surf_A,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(

@@ -44,7 +44,8 @@ public:
 	long int compute_image(
 			actions::action *A,
 			int *Elt, long int i, int verbose_level);
-	long int rank(int *Elt);
+	long int rank(
+			int *Elt);
 	long int multiply(
 			actions::action *A,
 			long int i, long int j, int verbose_level);
@@ -85,8 +86,10 @@ public:
 			int *Elt,
 			int *input, int *output,
 		int verbose_level);
-	void unrank_point(long int a, int *v, int verbose_level);
-	long int rank_point(int *v, int verbose_level);
+	void unrank_point(
+			long int a, int *v, int verbose_level);
+	long int rank_point(
+			int *v, int verbose_level);
 
 };
 
@@ -119,9 +122,12 @@ public:
 			int nb_points,
 			long int *points, int verbose_level);
 		// the array points must be ordered
-	long int original_point(long int pt);
-	long int restricted_point_idx(long int pt);
-	long int compute_image(actions::action *A,
+	long int original_point(
+			long int pt);
+	long int restricted_point_idx(
+			long int pt);
+	long int compute_image(
+			actions::action *A,
 			int *Elt, long int i, int verbose_level);
 };
 
@@ -264,7 +270,8 @@ public:
 			combinatorics::brick_domain *B,
 			int f_linear_action,
 		int verbose_level);
-	long int compute_image(int *Elt, long int i,
+	long int compute_image(
+			int *Elt, long int i,
 		int verbose_level);
 	long int compute_image_linear_action(
 			int *Elt, long int i,
@@ -309,7 +316,8 @@ public:
 
 	action_on_cosets();
 	~action_on_cosets();
-	void init(int nb_points, int *Points, 
+	void init(
+			int nb_points, int *Points,
 			actions::action *A_linear,
 		field_theory::finite_field *F,
 		int dimension_of_subspace, 
@@ -320,7 +328,8 @@ public:
 		int (*rank_point)(int *v, void *data), 
 		void *rank_unrank_data, 
 		int verbose_level);
-	void init_lint(int nb_points, long int *Points,
+	void init_lint(
+			int nb_points, long int *Points,
 			actions::action *A_linear,
 		field_theory::finite_field *F,
 		int dimension_of_subspace,
@@ -331,7 +340,8 @@ public:
 		long int (*rank_point)(int *v, void *data),
 		void *rank_unrank_data,
 		int verbose_level);
-	void reduce_mod_subspace(int *v, int verbose_level);
+	void reduce_mod_subspace(
+			int *v, int verbose_level);
 	long int compute_image(
 			int *Elt, long int i, int verbose_level);
 
@@ -462,13 +472,17 @@ public:
 			actions::action &A_base, actions::action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
-	void init2(actions::action &A_base, actions::action &A,
-		int f_compute_tables, int verbose_level);
-	void compute_projection_table(int verbose_level);
+	void init2(
+			actions::action &A_base, actions::action &A,
+		int f_compute_tables,
+		int verbose_level);
+	void compute_projection_table(
+			int verbose_level);
 	long int compute_degree();
 	long int compute_large_degree();
 	void list_all_elements();
-	void reduce_mod_subspace(int *v, int verbose_level);
+	void reduce_mod_subspace(
+			int *v, int verbose_level);
 	long int lexleast_element_in_coset(
 			long int rk, int verbose_level);
 		// This function computes the lexleast 
@@ -478,7 +492,8 @@ public:
 		// vector in the large space using rank_in_large_space(v2).
 	long int project_onto_Gauss_reduced_vector(
 			long int rk, int verbose_level);
-	long int project(long int rk, int verbose_level);
+	long int project(
+			long int rk, int verbose_level);
 		// unranks the vector rk, and reduces it 
 		// modulo the subspace basis.
 		// The non-pivot components are considered 
@@ -487,14 +502,22 @@ public:
 		// This rank is returned.
 		// If the vector turns out to lie in the 
 		// subspace, -1 is returned.
-	long int preimage(long int rk, int verbose_level);
-	void embed(int *from, int *to);
-	void unrank(int *v, long int rk, int verbose_level);
-	long int rank(int *v, int verbose_level);
-	void unrank_in_large_space(int *v, long int rk);
-	long int rank_in_large_space(int *v);
-	void unrank_in_small_space(int *v, long int rk);
-	long int rank_in_small_space(int *v);
+	long int preimage(
+			long int rk, int verbose_level);
+	void embed(
+			int *from, int *to);
+	void unrank(
+			int *v, long int rk, int verbose_level);
+	long int rank(
+			int *v, int verbose_level);
+	void unrank_in_large_space(
+			int *v, long int rk);
+	long int rank_in_large_space(
+			int *v);
+	void unrank_in_small_space(
+			int *v, long int rk);
+	long int rank_in_small_space(
+			int *v);
 	long int compute_image(
 			actions::action *A,
 			int *Elt, long int i, int verbose_level);
@@ -552,7 +575,8 @@ public:
 	void init(
 			actions::action *A,
 			int m, int verbose_level);
-	long int compute_image(int *Elt, long int i,
+	long int compute_image(
+			int *Elt, long int i,
 		int verbose_level);
 };
 
@@ -623,7 +647,8 @@ public:
 	long int compute_image_int_embedded(
 			actions::action *A, int *Elt,
 		long int i, int verbose_level);
-	void print_point(long int a, std::ostream &ost);
+	void print_point(
+			long int a, std::ostream &ost);
 };
 
 // #############################################################################
@@ -667,8 +692,10 @@ public:
 	void init_invariant_set_of_equations(
 			int *Equations,
 		int nb_equations, int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
+	void unrank_point(
+			int *v, long int rk);
+	long int rank_point(
+			int *v);
 	long int compute_image_int(
 			int *Elt, long int a, int verbose_level);
 	void compute_image_int_low_level(
@@ -869,7 +896,8 @@ public:
 
 	action_on_set_partitions();
 	~action_on_set_partitions();
-	void init(int partition_size,
+	void init(
+			int partition_size,
 			actions::action *A,
 		int verbose_level);
 	long int compute_image(
@@ -897,9 +925,11 @@ public:
 
 	action_on_sets();
 	~action_on_sets();
-	void init(int nb_sets, int set_size, 
+	void init(
+			int nb_sets, int set_size,
 		long int *input_sets, int verbose_level);
-	int find_set(long int *set, int verbose_level);
+	int find_set(
+			long int *set, int verbose_level);
 	long int compute_image(
 			actions::action *A, int *Elt,
 		long int i, int verbose_level);
@@ -908,8 +938,6 @@ public:
 	void test_sets();
 };
 
-int action_on_sets_compare(void *a, void *b, void *data);
-int action_on_sets_compare_inverted(void *a, void *b, void *data);
 
 // #############################################################################
 // action_on_sign.cpp
@@ -1022,8 +1050,6 @@ public:
 
 };
 
-int action_on_subgroups_compare(void *a, void *b, void *data);
-int action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 
 // #############################################################################
 // action_on_wedge_product.cpp

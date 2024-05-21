@@ -105,9 +105,11 @@ void create_code::init(
 			cout << "create_code::init after create_checkma_from_genma" << endl;
 		}
 
-		label_txt = "by_genma_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "by_genma_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
 
-		label_tex = "by\\_genma\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
+		label_tex = "by\\_genma\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -172,9 +174,11 @@ void create_code::init(
 					"after create_checkma_from_genma" << endl;
 		}
 
-		label_txt = "by_basis_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "by_basis_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
 
-		label_tex = "by\\_basis\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
+		label_tex = "by\\_basis\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -237,9 +241,11 @@ void create_code::init(
 
 		create_genma_from_checkma(verbose_level);
 
-		label_txt = "proj_set_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "proj_set_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
 
-		label_tex = "proj\\_set\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
+		label_tex = "proj\\_set\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 		FREE_int(Col);
@@ -303,6 +309,14 @@ void create_code::init(
 		if (f_v) {
 			cout << "create_code::init after create_checkma_from_genma" << endl;
 		}
+
+
+
+		label_txt = "columns_given_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
+
+		label_tex = "columns\\_given\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -390,9 +404,9 @@ void create_code::init(
 		}
 
 
-		label_txt = "RM_n" + std::to_string(m);
+		label_txt = "RM_m" + std::to_string(m);
 
-		label_txt = "RM\\_n" + std::to_string(m);
+		label_tex = "RM\\_m" + std::to_string(m);
 
 
 
@@ -438,9 +452,11 @@ void create_code::init(
 		}
 
 
-		label_txt = "BCH_n" + std::to_string(n) + "_d" + std::to_string(d);
+		label_txt = "BCH_n" + std::to_string(n)
+				+ "_d" + std::to_string(d);
 
-		label_tex = "BCH\\_n" + std::to_string(n) + "\\_d" + std::to_string(d);
+		label_tex = "BCH\\_n" + std::to_string(n)
+				+ "\\_d" + std::to_string(d);
 
 
 
@@ -486,9 +502,11 @@ void create_code::init(
 		}
 
 
-		label_txt = "RS_n" + std::to_string(n) + "_d" + std::to_string(d);
+		label_txt = "RS_n" + std::to_string(n)
+				+ "_d" + std::to_string(d);
 
-		label_tex = "RS\\_n" + std::to_string(n) + "\\_d" + std::to_string(d);
+		label_tex = "RS\\_n" + std::to_string(n)
+				+ "\\_d" + std::to_string(d);
 
 
 		if (f_v) {
@@ -530,9 +548,13 @@ void create_code::init(
 
 		nmk = n - k;
 
-		label_txt = "GV_n" + std::to_string(n) + "_k" + std::to_string(k) + "_d" + std::to_string(d);
+		label_txt = "GV_n" + std::to_string(n)
+				+ "_k" + std::to_string(k)
+				+ "_d" + std::to_string(d);
 
-		label_tex = "GV\\_n" + std::to_string(n) + "\\_k" + std::to_string(k) + "\\_d" + std::to_string(d);
+		label_tex = "GV\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k)
+				+ "\\_d" + std::to_string(d);
 
 		if (f_v) {
 			cout << "create_code::init f_Gilbert_Varshamov done" << endl;
@@ -612,9 +634,11 @@ void create_code::init(
 			cout << "create_code::init after create_checkma_from_genma" << endl;
 		}
 
-		label_txt = "long_code_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "long_code_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
 
-		label_tex = "long\\_code\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
+		label_tex = "long\\_code\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 		if (f_v) {
@@ -661,9 +685,11 @@ void create_code::init(
 
 		create_genma_from_checkma(verbose_level);
 
-		label_txt = "ttpA_n" + std::to_string(n) + "_k" + std::to_string(k);
+		label_txt = "ttpA_n" + std::to_string(n)
+				+ "_k" + std::to_string(k);
 
-		label_tex = "ttpA\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
+		label_tex = "ttpA\\_n" + std::to_string(n)
+				+ "\\_k" + std::to_string(k);
 
 
 

@@ -287,7 +287,7 @@ void classify_bitvectors::print_reps()
 	}
 }
 
-void classify_bitvectors::print_table()
+void classify_bitvectors::print_canonical_forms()
 {
 	int i, j;
 

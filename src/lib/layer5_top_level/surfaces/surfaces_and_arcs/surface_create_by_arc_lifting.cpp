@@ -114,10 +114,32 @@ void surface_create_by_arc_lifting::init(
 	string magma_fname;
 	orbiter_kernel_system::file_io Fio;
 
-	magma_fname = "surface_q" + std::to_string(SCA->Surf_A->PA->F->q) + "_iso" + std::to_string(SCA->nb_surfaces) + "_group.magma";
+	magma_fname = "surface_q" + std::to_string(SCA->Surf_A->PA->F->q)
+			+ "_iso" + std::to_string(SCA->nb_surfaces)
+			+ "_group.magma";
 
+
+	interfaces::magma_interface M;
+
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::init "
+				"before M.export_permutation_group_to_magma" << endl;
+	}
+	M.export_permutation_group_to_magma(
+			magma_fname,
+			AL->Trihedral_pair->Aut_gens->A,
+			AL->Trihedral_pair->Aut_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_create_by_arc_lifting::init "
+				"after M.export_permutation_group_to_magma" << endl;
+	}
+
+
+#if 0
 	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
 			magma_fname, AL->Trihedral_pair->Aut_gens->A, verbose_level - 2);
+#endif
 
 	if (f_v) {
 		cout << "written file " << magma_fname << " of size "
@@ -407,9 +429,11 @@ void surface_create_by_arc_lifting::report(
 
 	string fname_mask;
 
-	fname_mask = "orbit_half_double_sixes_q" + std::to_string(SCA->Surf_A->PA->F->q) + "_iso_" + std::to_string(SCA->nb_surfaces) + "_%d";
+	fname_mask = "orbit_half_double_sixes_q" + std::to_string(SCA->Surf_A->PA->F->q)
+			+ "_iso_" + std::to_string(SCA->nb_surfaces) + "_%d";
 
-	SOA->print_automorphism_group(ost,
+	SOA->print_automorphism_group(
+			ost,
 		true /* f_print_orbits */,
 		fname_mask, Opt,
 		verbose_level - 1);

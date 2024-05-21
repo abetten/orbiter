@@ -302,8 +302,16 @@ void hadamard_classify::init(
 
 	fname_group = "Hadamard_group_" + std::to_string(n) + ".magma";
 
-	A->Strong_gens->export_permutation_group_to_magma(
-			fname_group, A, 1 /* verbose_level */);
+	interfaces::magma_interface Magma;
+
+	Magma.export_permutation_group_to_magma(
+			fname_group,
+			A,
+			A->Strong_gens,
+			verbose_level);
+
+
+
 
 	string prefix;
 	prefix = "./had_" + std::to_string(n);

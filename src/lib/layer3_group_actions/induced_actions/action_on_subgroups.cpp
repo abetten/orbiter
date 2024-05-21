@@ -14,6 +14,11 @@ namespace layer3_group_actions {
 namespace induced_actions {
 
 
+static int action_on_subgroups_compare(
+		void *a, void *b, void *data);
+static int action_on_subgroups_compare_inverted(
+		void *a, void *b, void *data);
+
 action_on_subgroups::action_on_subgroups()
 {
 	A = NULL;
@@ -201,8 +206,10 @@ long int action_on_subgroups::compute_image(
 		}
 
 
-	if (!Sorting.vec_search((void **)sets, action_on_subgroups_compare_inverted,
-		this, nb_subgroups, image_set, idx, verbose_level)) {
+	if (!Sorting.vec_search(
+			(void **)sets, action_on_subgroups_compare_inverted,
+		this, nb_subgroups, image_set, idx,
+		verbose_level)) {
 
 		int u;
 		cout << "action_on_subgroups::compute_image "
@@ -238,7 +245,8 @@ long int action_on_subgroups::compute_image(
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action_on_subgroups::compute_image idx = " << idx << endl;
+		cout << "action_on_subgroups::compute_image "
+				"idx = " << idx << endl;
 		}
 	res = action_on_subgroups_compare(image_set, sets[idx], this);
 	if (res != 0) {
@@ -260,7 +268,8 @@ long int action_on_subgroups::compute_image(
 
 
 
-int action_on_subgroups_compare(void *a, void *b, void *data)
+static int action_on_subgroups_compare(
+		void *a, void *b, void *data)
 {
 	action_on_subgroups *AOS = (action_on_subgroups *) data;
 	int *A = (int *)a;
@@ -272,7 +281,8 @@ int action_on_subgroups_compare(void *a, void *b, void *data)
 	return c;
 }
 
-int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
+static int action_on_subgroups_compare_inverted(
+		void *a, void *b, void *data)
 {
 	action_on_subgroups *AOS = (action_on_subgroups *) data;
 	int *A = (int *)a;

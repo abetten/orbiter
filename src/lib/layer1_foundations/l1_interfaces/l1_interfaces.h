@@ -300,6 +300,10 @@ public:
 			int i, int j, int val, std::string &output, void *data),
 		void *data,
 		int f_tex);
+	void print_table_of_strings_with_headers(
+			std::ostream &ost, std::string *headers, std::string *Table, int m, int n);
+	void print_table_of_strings(
+			std::ostream &ost, std::string *Table, int m, int n);
 	void int_matrix_print_tex(
 			std::ostream &ost, int *p, int m, int n);
 	void lint_matrix_print_tex(

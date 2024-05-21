@@ -352,7 +352,8 @@ public:
 	std::string stringify_csv_entry_one_line(
 			int i, int verbose_level);
 	void prepare_csv_entry_one_line(
-			std::vector<std::string> &v, int i, int verbose_level);
+			std::vector<std::string> &v, int i,
+			int verbose_level);
 	std::string stringify_csv_entry_one_line_nauty(
 			int i, int verbose_level);
 	void prepare_csv_entry_one_line_nauty(
@@ -746,16 +747,6 @@ public:
 			canonical_form_classification::classification_of_objects_report_options
 				*Report_options,
 			int verbose_level);
-#if 0
-	void export_TDA_with_flag_orbits(
-			std::ostream &ost,
-			groups::schreier *Sch,
-			int verbose_level);
-	void export_INP_with_flag_orbits(
-			std::ostream &ost,
-			groups::schreier *Sch,
-			int verbose_level);
-#endif
 
 };
 

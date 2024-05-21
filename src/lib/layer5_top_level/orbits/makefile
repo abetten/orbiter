@@ -12,6 +12,7 @@ MODULES = \
 	orbits_create_description.o \
 	orbits_create.o \
 	orbits_global.o \
+	orbits_on_pairs.o \
 	orbits_on_polynomials.o \
 	orbits_on_subspaces.o
 

@@ -829,7 +829,8 @@ public:
 	void make_adjacency_bitvector(
 			int *&Adj, int *v, int N,
 			int verbose_level);
-	void compute_adjacency_matrix(
+#if 0
+	void compute_adjacency_matrix_for_disjoint_sets_graph(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,
 			data_structures::bitvector *&B,
@@ -837,7 +838,6 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
-#if 0
 	void all_cliques_of_given_size(
 			int *Adj,
 			int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,

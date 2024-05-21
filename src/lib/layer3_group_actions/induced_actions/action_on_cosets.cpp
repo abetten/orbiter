@@ -57,7 +57,8 @@ action_on_cosets::~action_on_cosets()
 		}
 }
 
-void action_on_cosets::init(int nb_points, int *Points, 
+void action_on_cosets::init(
+		int nb_points, int *Points,
 		actions::action *A_linear,
 	field_theory::finite_field *F,
 	int dimension_of_subspace, 
@@ -103,7 +104,8 @@ void action_on_cosets::init(int nb_points, int *Points,
 		}
 }
 
-void action_on_cosets::init_lint(int nb_points, long int *Points,
+void action_on_cosets::init_lint(
+		int nb_points, long int *Points,
 		actions::action *A_linear,
 	field_theory::finite_field *F,
 	int dimension_of_subspace,
@@ -150,7 +152,8 @@ void action_on_cosets::init_lint(int nb_points, long int *Points,
 		}
 }
 
-void action_on_cosets::reduce_mod_subspace(int *v, int verbose_level)
+void action_on_cosets::reduce_mod_subspace(
+		int *v, int verbose_level)
 {
 	F->Linear_algebra->reduce_mod_subspace(dimension_of_subspace, n,
 		subspace_basis, base_cols, v, verbose_level);

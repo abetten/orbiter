@@ -477,6 +477,7 @@ void design_tables::load(
 			fname_design_table,
 			the_table, nb_designs, b,
 			0 /* verbose_level */);
+
 	if (b != design_size) {
 		cout << "design_tables::load "
 				"b != design_size" << endl;

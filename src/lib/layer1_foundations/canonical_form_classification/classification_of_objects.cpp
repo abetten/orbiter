@@ -17,11 +17,11 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace canonical_form_classification {
 
-
+#if 0
 static void print_summary_table_entry(
 		int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data);
-
+#endif
 
 classification_of_objects::classification_of_objects()
 {
@@ -367,15 +367,6 @@ void classification_of_objects::save_automorphism_group_order(
 	data_structures::string_tools ST;
 
 	ago_fname = get_label();
-#if 0
-	if (Descr->f_label) {
-		ago_fname.assign(Descr->label);
-	}
-	else {
-		ago_fname.assign("classification");
-
-	}
-#endif
 	ST.replace_extension_with(ago_fname, "_ago.csv");
 
 	string label;
@@ -405,15 +396,6 @@ void classification_of_objects::save_transversal(
 	data_structures::string_tools ST;
 
 	fname = get_label();
-#if 0
-	if (Descr->f_label) {
-		fname.assign(Descr->label);
-	}
-	else {
-		fname.assign("classification");
-
-	}
-#endif
 
 	ST.replace_extension_with(fname, "_transversal.csv");
 	string label;
@@ -843,6 +825,8 @@ void classification_of_objects::report_summary_of_orbits(
 		cout << "classification_of_objects::report_summary_of_orbits" << endl;
 	}
 	l1_interfaces::latex_interface L;
+
+#if 0
 	int i, j;
 
 
@@ -895,6 +879,7 @@ void classification_of_objects::report_summary_of_orbits(
 		Table[i * width + 2] = 0; // group order
 		Table[i * width + 3] = 0; // object list
 	}
+#endif
 
 	if (f_v) {
 		cout << "classification_of_objects::latex_report "
@@ -903,6 +888,30 @@ void classification_of_objects::report_summary_of_orbits(
 
 	ost << "\\section*{Summary of Orbits}" << endl;
 
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	create_summary_table(
+			Table,
+			nb_rows, nb_cols,
+			verbose_level);
+
+
+	std::string *headers;
+
+	headers = new string[nb_cols];
+	headers[0] = "Iso";
+	headers[1] = "Rep";
+	headers[2] = "\\#";
+	headers[3] = "Ago";
+	headers[4] = "Objects";
+
+	ost << "$$" << endl;
+	L.print_table_of_strings_with_headers(
+			ost, headers, Table, nb_rows, nb_cols);
+	ost << "$$" << endl;
+
+#if 0
 	ost << "$$" << endl;
 	L.int_matrix_print_with_labels_and_partition(ost,
 			Table, CB->nb_types, 4,
@@ -913,13 +922,16 @@ void classification_of_objects::report_summary_of_orbits(
 		this /*void *data*/,
 		true /* f_tex */);
 	ost << "$$" << endl;
+#endif
 
 	if (f_v) {
 		cout << "classification_of_objects::latex_report "
 				"after Summary of Orbits" << endl;
 	}
 
-	FREE_int(Table);
+	delete [] Table;
+
+	//FREE_int(Table);
 
 	if (f_v) {
 		cout << "classification_of_objects::report_summary_of_orbits done" << endl;
@@ -927,174 +939,97 @@ void classification_of_objects::report_summary_of_orbits(
 
 }
 
-void classification_of_objects::report_all_isomorphism_types(
-		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
-			*Report_options,
+
+void classification_of_objects::create_summary_table(
+		std::string *&Table,
+		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_objects::report_all_isomorphism_types" << endl;
+		cout << "classification_of_objects::create_summary_table" << endl;
 	}
+	data_structures::sorting Sorting;
+
+	nb_rows = nb_orbits;
+	nb_cols = 5;
+
+	Table = new string[nb_rows * nb_cols];
+
 	int i;
 
-	l1_interfaces::latex_interface L;
+	for (i = 0; i < nb_rows; i++) {
 
-	for (i = 0; i < CB->nb_types; i++) {
+		int j = CB->perm[i];
 
-		ost << "\\section*{Isomorphism type " << i << " / " << CB->nb_types << "}" << endl;
-		ost << "Isomorphism type " << i << " / " << CB->nb_types
-			//<<  " stored at " << j
-			<< " is original object "
-			<< CB->Type_rep[i] << " and appears "
-			<< CB->Type_mult[i] << " times: \\\\" << endl;
-
-		{
-			data_structures::sorting Sorting;
-			int *Input_objects;
-			int nb_input_objects;
-			CB->C_type_of->get_class_by_value(
-					Input_objects,
-					nb_input_objects, i, 0 /*verbose_level */);
-
-			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
-
-			ost << "This isomorphism type appears " << nb_input_objects
-					<< " times, namely for the following "
-					<< nb_input_objects << " input objects: " << endl;
-			if (nb_input_objects < 10) {
-				ost << "$" << endl;
-				L.int_set_print_tex(ost, Input_objects, nb_input_objects);
-				ost << "$\\\\" << endl;
-			}
-			else {
-				ost << "Too big to print. \\\\" << endl;
-#if 0
-				fp << "$$" << endl;
-				L.int_vec_print_as_matrix(fp, Input_objects,
-					nb_input_objects, 10 /* width */, true /* f_tex */);
-				fp << "$$" << endl;
-#endif
-			}
-
-			FREE_int(Input_objects);
-		}
-
-		if (f_v) {
-			cout << "classification_of_objects::latex_report "
-					"before report_isomorphism_type" << endl;
-		}
-		report_isomorphism_type(
-				ost, i, Report_options,
-				verbose_level);
-		if (f_v) {
-			cout << "classification_of_objects::latex_report "
-					"after report_isomorphism_type" << endl;
-		}
+		string s_idx;
+		string s_orbit_rep;
+		string s_mult;
+		string s_ago;
+		string s_input_objects;
 
 
-	} // next i
-	if (f_v) {
-		cout << "classification_of_objects::report_all_isomorphism_types done" << endl;
-	}
-
-}
+		s_idx = std::to_string(i);
+		s_orbit_rep = std::to_string(CB->Type_rep[j]);
+		s_mult = std::to_string(CB->Type_mult[j]);
 
 
-void classification_of_objects::report_isomorphism_type(
-		std::ostream &ost, int i,
-		canonical_form_classification::classification_of_objects_report_options
-			*Report_options,
-		//int max_TDO_depth,
-		//int f_show_incma,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "classification_of_objects::report_isomorphism_type i=" << i << endl;
-	}
-	int j;
-	l1_interfaces::latex_interface L;
+		ring_theory::longinteger_object go;
+		go.create(Ago_transversal[i]);
+		//OiPA->Aut_gens->group_order(go);
+		//go.print_to_string(output);
 
-	//j = CB->perm[i];
-	//j = CB->Type_rep[i];
-	j = i;
-
-	cout << "###################################################"
-			"#############################" << endl;
-	cout << "Orbit " << i << " / " << CB->nb_types
-			<< " is canonical form no " << j
-			<< ", original object no " << CB->Type_rep[i]
-			<< ", frequency " << CB->Type_mult[i]
-			<< " : " << endl;
+		s_ago = go.stringify();
 
 
-	{
 		int *Input_objects;
 		int nb_input_objects;
-		CB->C_type_of->get_class_by_value(Input_objects,
-			nb_input_objects, j, 0 /*verbose_level */);
+		if (f_v) {
+			cout << "classification_of_objects::create_summary_table "
+					"before CB->C_type_of->get_class_by_value" << endl;
+		}
+		CB->C_type_of->get_class_by_value(
+				Input_objects,
+			nb_input_objects, j,
+			0 /*verbose_level */);
+		if (f_v) {
+			cout << "classification_of_objects::create_summary_table "
+					"after CB->C_type_of->get_class_by_value" << endl;
+		}
+		Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
-		cout << "This isomorphism type appears " << nb_input_objects
-				<< " times, namely for the following "
-						"input objects:" << endl;
-		if (nb_input_objects < 10) {
-			L.int_vec_print_as_matrix(cout, Input_objects,
-					nb_input_objects, 10 /* width */,
-					false /* f_tex */);
+		s_input_objects = Int_vec_stringify(Input_objects, nb_input_objects);
+
+#if 0
+		output = "";
+		for (h = 0; h < nb_input_objects; h++) {
+			output += std::to_string(Input_objects[h]);
+			if (h < nb_input_objects - 1) {
+				output += ", ";
+			}
+			if (h == 10) {
+				output += "\\ldots";
+				break;
+			}
 		}
-		else {
-			cout << "too many to print" << endl;
-		}
+#endif
 
 		FREE_int(Input_objects);
+
+
+		Table[i * nb_cols + 0] = s_idx;
+		Table[i * nb_cols + 1] = s_orbit_rep;
+		Table[i * nb_cols + 2] = s_mult;
+		Table[i * nb_cols + 3] = s_ago;
+		Table[i * nb_cols + 4] = s_input_objects;
+
 	}
-
-	object_with_canonical_form *OwCF;
-
-	OwCF = OWCF_transversal[i];
-
-
-	report_object(ost,
-			OwCF,
-			Report_options,
-			i /* object_idx */,
-			verbose_level);
-
-
-
-
-	if (f_v) {
-		cout << "classification_of_objects::report_isomorphism_type i=" << i << " done" << endl;
-	}
-}
-
-
-void classification_of_objects::report_object(
-		std::ostream &ost,
-		object_with_canonical_form *OwCF,
-		canonical_form_classification::classification_of_objects_report_options
-			*Report_options,
-		int object_idx,
-		//int max_TDO_depth,
-		//int f_show_incma,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "classification_of_objects::report_object" << endl;
-	}
-
-	OwCF->print_tex_detailed(ost, Report_options, verbose_level);
 
 }
 
-
-
+#if 0
 static void print_summary_table_entry(
 		int *Table,
 		int m, int n, int i, int j, int val,
@@ -1102,8 +1037,6 @@ static void print_summary_table_entry(
 {
 	int f_v = true;
 	classify_bitvectors *CB;
-	//object_in_projective_space_with_action *OiPA;
-	//void *extra_data;
 	int h;
 	data_structures::sorting Sorting;
 
@@ -1111,11 +1044,11 @@ static void print_summary_table_entry(
 		cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 	}
 
-	classification_of_objects *PC;
+	classification_of_objects *Classification_of_objects;
 
-	PC = (classification_of_objects *) data;
+	Classification_of_objects = (classification_of_objects *) data;
 	//CB = (classify_bitvectors *) data;
-	CB = PC->CB;
+	CB = Classification_of_objects->CB;
 
 	if (i == -1) {
 		if (j == -1) {
@@ -1167,7 +1100,7 @@ static void print_summary_table_entry(
 			go.print_to_string(str);
 #else
 			ring_theory::longinteger_object go;
-			go.create(PC->Ago_transversal[i]);
+			go.create(Classification_of_objects->Ago_transversal[i]);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(output);
 #endif
@@ -1208,6 +1141,7 @@ static void print_summary_table_entry(
 		}
 	}
 }
+#endif
 
 
 

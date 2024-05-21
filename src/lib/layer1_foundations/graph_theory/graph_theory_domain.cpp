@@ -1674,8 +1674,8 @@ void graph_theory_domain::make_adjacency_bitvector(
 
 
 
-
-void graph_theory_domain::compute_adjacency_matrix(
+#if 0
+void graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph(
 		int *Table, int nb_sets, int set_size,
 		std::string &prefix_for_graph,
 		data_structures::bitvector *&B,
@@ -1685,12 +1685,12 @@ void graph_theory_domain::compute_adjacency_matrix(
 	long int i, j, k, N2, N2_100;
 
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix" << endl;
+		cout << "graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph" << endl;
 	}
 
 	N2 = (nb_sets * (nb_sets - 1)) >> 1;
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix N2=" << N2 << endl;
+		cout << "graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph N2=" << N2 << endl;
 	}
 	N2_100 = (N2 / 100) + 1;
 
@@ -1699,7 +1699,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 	B->allocate(N2);
 
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix "
+		cout << "graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph "
 				"after allocating adjacency bitvector" << endl;
 		cout << "computing adjacency matrix:" << endl;
 	}
@@ -1755,7 +1755,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix "
+		cout << "graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph "
 				"making a graph" << endl;
 	}
 
@@ -1791,7 +1791,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 
 	if (f_v) {
-		cout << "graph_theory_domain::compute_adjacency_matrix done" << endl;
+		cout << "graph_theory_domain::compute_adjacency_matrix_for_disjoint_sets_graph done" << endl;
 		}
 }
 
@@ -1808,9 +1808,12 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
 	}
 	Adj = NEW_int(m * m);
+	Int_vec_zero(Adj, m * m);
+#if 0
 	for (i = 0; i < m * m; i++) {
 		Adj[i] = 0;
 	}
+#endif
 
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
@@ -1829,6 +1832,7 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix done" << endl;
 	}
 }
+#endif
 
 #if 0
 void graph_theory_domain::all_cliques_of_given_size(

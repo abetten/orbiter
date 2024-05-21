@@ -3497,7 +3497,8 @@ void mp_graphics::draw_density2(
 
 	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
 	for (i = 0; i < outline_sz; i++) {
-		Pt.get_coord(Px, Py, 2, outline_number[i], outline_value[i],
+		Pt.get_coord(
+				Px, Py, 2, outline_number[i], outline_value[i],
 			min_x, min_y, max_x, max_y, false);
 		Px[1] = Px[0];
 		Py[1] = Py[2];
@@ -3505,7 +3506,8 @@ void mp_graphics::draw_density2(
 		Px[0] = Px[2];
 		Py[0] = Py[2];
 	}
-	Pt.get_coord(Px, Py, 2, max_x, max_value,
+	Pt.get_coord(
+			Px, Py, 2, max_x, max_value,
 		min_x, min_y, max_x, max_y, false);
 	polygon2(Px, Py, 0, 2);
 	Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
@@ -3735,22 +3737,26 @@ void mp_graphics::draw_density2_multiple_curves(
 
 	for (curve = 0; curve < nb_curves; curve++) {
 		if (f_v_logarithmic) {
-			Pt.get_coord_log(Px, Py, 0,
+			Pt.get_coord_log(
+					Px, Py, 0,
 					min_x, min_y, min_x, min_y, max_x, max_y,
 					log_base, f_switch_x);
 		}
 		else {
-			Pt.get_coord(Px, Py, 0,
+			Pt.get_coord(
+					Px, Py, 0,
 					min_x, min_y, min_x, min_y, max_x, max_y, f_switch_x);
 		}
 		for (i = 0; i < outline_sz[curve]; i++) {
 			if (f_v_logarithmic) {
-				Pt.get_coord_log(Px, Py, 2,
+				Pt.get_coord_log(
+						Px, Py, 2,
 					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, log_base, f_switch_x);
 			}
 			else {
-				Pt.get_coord(Px, Py, 2,
+				Pt.get_coord(
+						Px, Py, 2,
 					outline_number[curve][i], outline_value[curve][i],
 					min_x, min_y, max_x, max_y, f_switch_x);
 			}
@@ -3761,11 +3767,13 @@ void mp_graphics::draw_density2_multiple_curves(
 			Py[0] = Py[2];
 		}
 		if (f_v_logarithmic) {
-			Pt.get_coord_log(Px, Py, 2, max_x, max_y,
+			Pt.get_coord_log(
+					Px, Py, 2, max_x, max_y,
 				min_x, min_y, max_x, max_y, log_base, f_switch_x);
 		}
 		else {
-			Pt.get_coord(Px, Py, 2, max_x, max_y,
+			Pt.get_coord(
+					Px, Py, 2, max_x, max_y,
 				min_x, min_y, max_x, max_y, f_switch_x);
 		}
 		polygon2(Px, Py, 0, 2);
@@ -3773,20 +3781,32 @@ void mp_graphics::draw_density2_multiple_curves(
 
 
 	if (f_v_logarithmic) {
-		Pt.get_coord_log(Px, Py, 0,
+		Pt.get_coord_log(
+				Px, Py, 0,
 				min_x, min_y, min_x, min_y, max_x, max_y, log_base, false);
-		Pt.get_coord_log(Px, Py, 1,
+		Pt.get_coord_log(
+				Px, Py, 1,
 				max_x, min_y, min_x, min_y, max_x, max_y, log_base, false);
-		Pt.get_coord_log(Px, Py, 2,
+		Pt.get_coord_log(
+				Px, Py, 2,
 				max_x, max_y, min_x, min_y, max_x, max_y, log_base, false);
-		Pt.get_coord_log(Px, Py, 3,
+		Pt.get_coord_log(
+				Px, Py, 3,
 				min_x, max_y, min_x, min_y, max_x, max_y, log_base, false);
 	}
 	else {
-		Pt.get_coord(Px, Py, 0, min_x, min_y, min_x, min_y, max_x, max_y, false);
-		Pt.get_coord(Px, Py, 1, max_x, min_y, min_x, min_y, max_x, max_y, false);
-		Pt.get_coord(Px, Py, 2, max_x, max_y, min_x, min_y, max_x, max_y, false);
-		Pt.get_coord(Px, Py, 3, min_x, max_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(
+				Px, Py, 0,
+				min_x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(
+				Px, Py, 1,
+				max_x, min_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(
+				Px, Py, 2,
+				max_x, max_y, min_x, min_y, max_x, max_y, false);
+		Pt.get_coord(
+				Px, Py, 3,
+				min_x, max_y, min_x, min_y, max_x, max_y, false);
 	}
 	polygon5(Px, Py, 0, 1, 2, 3, 0);
 
@@ -3943,7 +3963,7 @@ void mp_graphics::projective_plane_draw_grid2(
 	if (f_v) {
 		cout << "projective_plane_draw_grid2 "
 				"before G.draw_axes_and_grid" << endl;
-		}
+	}
 
 
 	draw_axes_and_grid(O,
@@ -3961,7 +3981,7 @@ void mp_graphics::projective_plane_draw_grid2(
 	if (f_v) {
 		cout << "projective_plane_draw_grid2 "
 				"after G.draw_axes_and_grid" << endl;
-		}
+	}
 
 	Dx[0] = q;
 	Dy[0] = -1;
@@ -3970,7 +3990,7 @@ void mp_graphics::projective_plane_draw_grid2(
 	for (i = 0; i < 2; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 	s.assign("$x$");
 	text(Px[0], Py[0], s);
 	s.assign("$y$");
@@ -3990,7 +4010,7 @@ void mp_graphics::projective_plane_draw_grid2(
 		Dy[2] = b;
 		Dx[3] = a;
 		Dy[3] = b;
-		}
+	}
 	else {
 		projective_plane_make_affine_point(q, q / 2, 1, 0, a, b);
 		Dx[2] = a;
@@ -3998,12 +4018,12 @@ void mp_graphics::projective_plane_draw_grid2(
 		projective_plane_make_affine_point(q, (q + 1) / 2, 1, 0, a, b);
 		Dx[3] = a;
 		Dy[3] = b;
-		}
+	}
 
 	for (i = 0; i < 4; i++) {
 		Px[i] = Dx[i] * dx;
 		Py[i] = Dy[i] * dy;
-		}
+	}
 	polygon4(Px, Py, 0, 2, 3, 1);
 
 	if (!O->f_nodes_empty) {
@@ -4011,14 +4031,14 @@ void mp_graphics::projective_plane_draw_grid2(
 		if (f_v) {
 			cout << "projective_plane_draw_grid2 "
 					"drawing points, nb=" << nb << endl;
-			}
+		}
 
 		sl_thickness(50);
 
 #if 0
 		if (nb >= 40) {
 			rad = 2000;
-			}
+		}
 #endif
 		for (h = 0; h < nb; h++) {
 			x1 = Table[3 * h + 0];
@@ -4039,7 +4059,7 @@ void mp_graphics::projective_plane_draw_grid2(
 			for (i = 0; i < 1; i++) {
 				Px[i] = Dx[i] * dx;
 				Py[i] = Dy[i] * dy;
-				}
+			}
 
 			//G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
 			nice_circle(Px[0], Py[0], O->rad);
@@ -4067,7 +4087,7 @@ void mp_graphics::projective_plane_draw_grid2(
 
 	if (f_v) {
 		cout << "projective_plane_draw_grid2 done" << endl;
-		}
+	}
 }
 
 
@@ -4124,7 +4144,7 @@ void mp_graphics::draw_matrix_in_color(
 			s = "row_" + std::to_string(i);
 			if (f_has_labels) {
 				s += " label " + std::to_string(labels[i]);
-				}
+			}
 			comment(s);
 			j = 0;
 			grid_fill_polygon5(&F,
@@ -4133,15 +4153,15 @@ void mp_graphics::draw_matrix_in_color(
 				10 * (i + 1) - indent, 10 * n - indent,
 				10 * i + indent, 10 * n - indent,
 				10 * i + indent, 10 * j + indent);
-			}
 		}
+	}
 
 	if (f_col_grid) {
 		for (j = 0; j < n; j++) {
 			s = "col_" + std::to_string(j);
 			if (f_has_labels) {
 				s += " label " + std::to_string(labels[j]);
-				}
+			}
 			comment(s);
 			i = 0;
 			grid_fill_polygon5(&F,
@@ -4150,19 +4170,19 @@ void mp_graphics::draw_matrix_in_color(
 				10 * m - indent, 10 * (j + 1) - indent,
 				10 * i + indent, 10 * (j + 1) - indent,
 				10 * i + indent, 10 * j + indent);
-			}
 		}
+	}
 
 	if (f_has_labels) {
 		for (i = 0; i < m; i++) {
 			s = std::to_string(labels[i]);
 			grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", s);
-			}
+		}
 		for (j = 0; j < n; j++) {
 			s = std::to_string(labels[m + j] - m);
 			grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", s);
-			}
 		}
+	}
 
 
 	sl_thickness(10); // 100 is standard
@@ -4245,30 +4265,30 @@ static void projective_plane_make_affine_point(
 		if (x2 == 0) {
 			a = 3 * q / 2;
 			b = q / 2;
-			}
+		}
 		else {
 			a = q / 2 + x1;
 			b = 3 * q / 2 - x1;
-			}
+		}
 		// make it lie on the rim:
 		// if x1 < q/2, we decrease the y coordinate.
 		// if x1 > q/2, we decrease the x coordinate.
 		if (x2 == 0) {
 			a = q;
-			}
+		}
 		else {
 			if (x1 < (q / 2)) {
 				b = q;
-				}
+			}
 			if (x1 > q / 2) {
 				a = q;
-				}
 			}
 		}
+	}
 	else {
 		a = x1;
 		b = x2;
-		}
+	}
 }
 
 void mp_graphics::domino_draw1(
@@ -4299,13 +4319,13 @@ void mp_graphics::domino_draw2(
 		Py[1] = Py[0] + ddy;
 		Px[2] = Px[0] + ddx;
 		Py[2] = Py[0] - ddy;
-		}
+	}
 	else {
 		Px[1] = Px[0] + ddx;
 		Py[1] = Py[0] + ddy;
 		Px[2] = Px[0] - ddx;
 		Py[2] = Py[0] - ddy;
-		}
+	}
 
 	circle(Px[1], Py[1], rad);
 	circle(Px[2], Py[2], rad);
@@ -4326,13 +4346,13 @@ void mp_graphics::domino_draw3(
 		Py[1] = Py[0] + ddy;
 		Px[2] = Px[0] + ddx;
 		Py[2] = Py[0] - ddy;
-		}
+	}
 	else {
 		Px[1] = Px[0] + ddx;
 		Py[1] = Py[0] + ddy;
 		Px[2] = Px[0] - ddx;
 		Py[2] = Py[0] - ddy;
-		}
+	}
 
 	circle(Px[0], Py[0], rad);
 	circle(Px[1], Py[1], rad);
@@ -4417,13 +4437,13 @@ void mp_graphics::domino_draw6(
 		Py[5] = Py[0] + ddy;
 		Px[6] = Px[0];
 		Py[6] = Py[0] - ddy;
-		}
+	}
 	else {
 		Px[5] = Px[0] - ddx;
 		Py[5] = Py[0];
 		Px[6] = Px[0] + ddx;
 		Py[6] = Py[0];
-		}
+	}
 
 	circle(Px[1], Py[1], rad);
 	circle(Px[2], Py[2], rad);
@@ -4460,7 +4480,7 @@ void mp_graphics::domino_draw7(
 		Py[6] = Py[0] - ddy;
 		Px[7] = Px[0];
 		Py[7] = Py[0];
-		}
+	}
 	else {
 		Px[5] = Px[0] - ddx;
 		Py[5] = Py[0];
@@ -4468,7 +4488,7 @@ void mp_graphics::domino_draw7(
 		Py[6] = Py[0];
 		Px[7] = Px[0];
 		Py[7] = Py[0];
-		}
+	}
 
 	circle(Px[1], Py[1], rad);
 	circle(Px[2], Py[2], rad);
@@ -4510,7 +4530,7 @@ void mp_graphics::domino_draw8(
 		Py[8] = Py[0];
 		Px[9] = Px[0] + ddx;
 		Py[9] = Py[0];
-		}
+	}
 	else {
 		Px[5] = Px[0] - ddx;
 		Py[5] = Py[0];
@@ -4522,7 +4542,7 @@ void mp_graphics::domino_draw8(
 		Py[8] = Py[0] + ddy;
 		Px[9] = Px[0];
 		Py[9] = Py[0] - ddy;
-		}
+	}
 
 	circle(Px[1], Py[1], rad);
 	circle(Px[2], Py[2], rad);
@@ -4566,7 +4586,7 @@ void mp_graphics::domino_draw9(
 		Py[8] = Py[0];
 		Px[9] = Px[0] + ddx;
 		Py[9] = Py[0];
-		}
+	}
 	else {
 		Px[5] = Px[0] - ddx;
 		Py[5] = Py[0];
@@ -4578,7 +4598,7 @@ void mp_graphics::domino_draw9(
 		Py[8] = Py[0] + ddy;
 		Px[9] = Px[0];
 		Py[9] = Py[0] - ddy;
-		}
+	}
 
 	circle(Px[1], Py[1], rad);
 	circle(Px[2], Py[2], rad);

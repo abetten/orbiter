@@ -39,22 +39,28 @@ product_action::~product_action()
 {
 	if (A1) {
 		FREE_OBJECT(A1);
-		}
+	}
 	if (A2) {
 		FREE_OBJECT(A2);
-		}
-	if (Elt1)
+	}
+	if (Elt1) {
 		FREE_int(Elt1);
-	if (Elt2)
+	}
+	if (Elt2) {
 		FREE_int(Elt2);
-	if (Elt3)
+	}
+	if (Elt3) {
 		FREE_int(Elt3);
-	if (elt1)
+	}
+	if (elt1) {
 		FREE_uchar(elt1);
-	if (elt2)
+	}
+	if (elt2) {
 		FREE_uchar(elt1);
-	if (elt3)
+	}
+	if (elt3) {
 		FREE_uchar(elt1);
+	}
 }
 
 
@@ -68,14 +74,16 @@ void product_action::init(
 	
 	if (f_v) {
 		cout << "product_action::init" << endl;
-		}
+	}
 	product_action::f_use_projections = f_use_projections;
 	product_action::A1 = A1;
 	product_action::A2 = A2;
-	if (f_use_projections)
+	if (f_use_projections) {
 		offset = A1->degree + A2->degree;
-	else	
+	}
+	else {
 		offset = 0;
+	}
 	degree = offset + A1->degree * A2->degree;
 	elt_size_in_int = A1->elt_size_in_int + A2->elt_size_in_int;
 	coded_elt_size_in_char =
@@ -92,11 +100,14 @@ void product_action::init(
 	Elts = NEW_OBJECT(data_structures::page_storage);
 	if (f_vv) {
 		cout << "matrix_group::init_linear calling Elts->init" << endl;
-		}
+	}
 	Elts->init(
 			coded_elt_size_in_char /* entry_size */,
 			PAGE_LENGTH_LOG, f_vv);
 	//Elts->add_elt_print_function(elt_print, (void *) this);
+	if (f_v) {
+		cout << "product_action::init done" << endl;
+	}
 }
 
 long int product_action::compute_image(
@@ -110,18 +121,18 @@ long int product_action::compute_image(
 
 	if (f_vv) {
 		cout << "product_action::compute_image i = " << i << endl;
-		}
+	}
 	if (f_use_projections) {
 		if (i < offset) {
 			if (i < A1->degree) {
 				j = A1->Group_element->element_image_of(i, Elt, false);
-				}
+			}
 			else {
 				i -= A1->degree;
 				j = A2->Group_element->element_image_of(i, Elt + A1->elt_size_in_int, false);
 				j += A1->degree;
-				}
 			}
+		}
 		else {
 			i -= offset;
 			x = i / A2->degree;
@@ -130,19 +141,19 @@ long int product_action::compute_image(
 			yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, false);
 			j = xx * A2->degree + yy;
 			j += offset;
-			}
 		}
+	}
 	else {
 		x = i / A2->degree;
 		y = i % A2->degree;
 		xx = A1->Group_element->element_image_of(x, Elt, false);
 		yy = A2->Group_element->element_image_of(y, Elt + A1->elt_size_in_int, false);
 		j = xx * A2->degree + yy;
-		}
+	}
 	if (f_v) {
 		cout << "product_action::compute_image "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 	return j;
 }
 
@@ -158,10 +169,10 @@ int product_action::element_is_one(
 {
 	if (!A1->Group_element->element_is_one(Elt, verbose_level)) {
 		return false;
-		}
+	}
 	if (!A2->Group_element->element_is_one(Elt + A1->elt_size_in_int, verbose_level)) {
 		return false;
-		}
+	}
 	return true;
 }
 
@@ -190,7 +201,7 @@ void product_action::element_retrieve(
 	
 	if (f_v) {
 		cout << "product_action::element_retrieve() hdl = " << hdl << endl;
-		}
+	}
 	p_elt = Elts->s_i(hdl);
 	A1->Group_element->element_unpack(p_elt, Elt, verbose_level);
 	A2->Group_element->element_unpack(p_elt + A1->coded_elt_size_in_char,
@@ -208,7 +219,7 @@ int product_action::element_store(
 	hdl = Elts->store(elt1);
 	if (f_v) {
 		cout << "product_action::element_store() hdl = " << hdl << endl;
-		}
+	}
 	return hdl;
 }
 

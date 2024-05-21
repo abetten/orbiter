@@ -427,6 +427,53 @@ public:
 
 
 
+// #############################################################################
+// orbits_on_pairs.cpp
+// #############################################################################
+
+//! orbits on pairs with an explicit table
+
+
+class orbits_on_pairs {
+public:
+
+	groups::strong_generators *Strong_gens;
+	actions::action *A;
+	actions::action *A0;
+
+	int V; // A0->degree
+
+	poset_classification::poset_classification_control *Control;
+	poset_classification::poset_with_group_action *Poset;
+	poset_classification::poset_classification *Poset_classification;
+
+	// orbits on pairs:
+	int *pair_orbit; // [V * V]
+	int nb_orbits;
+	int *transporter;
+	int *tmp_Elt;
+	int *orbit_length; // [nb_orbits]
+
+	orbits_on_pairs();
+	~orbits_on_pairs();
+	void init(
+			std::string &control_label,
+			groups::strong_generators *Strong_gens,
+			actions::action *A,
+			actions::action *A0,
+			int verbose_level);
+	void compute_orbits_on_pairs(
+			int verbose_level);
+	void compute_pair_orbit_table(
+			int verbose_level);
+	int find_pair_orbit_by_tracing(
+			int i, int j, int verbose_level);
+	int find_pair_orbit(
+			int i, int j, int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // orbits_on_polynomials.cpp

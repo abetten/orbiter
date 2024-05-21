@@ -111,6 +111,17 @@ public:
 			layer1_foundations::orthogonal_geometry::blt_set_domain
 					*Blt_set_domain,
 			long int *set, int verbose_level);
+	void export_group_to_GAP_and_copy_to_latex(
+			std::ostream &ost,
+			std::string &label_txt,
+			groups::strong_generators *SG,
+			actions::action *A2,
+			int verbose_level);
+	void export_permutation_group_to_GAP(
+			std::string &fname,
+			actions::action *A2,
+			groups::strong_generators *SG,
+			int verbose_level);
 
 };
 

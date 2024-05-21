@@ -3433,7 +3433,8 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	CF->clique_finder_backtrack_search(0 /* depth */, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors "
-				"after CF->clique_finder_backtrack_search, nb_sol = " << CF->solutions.size() << endl;
+				"after CF->clique_finder_backtrack_search, "
+				"nb_sol = " << CF->solutions.size() << endl;
 	}
 
 	Control->nb_sol = CF->solutions.size();
@@ -3611,7 +3612,8 @@ int colored_graph::test_Neumaier_property(
 			ret = true;
 			if (f_v) {
 				cout << "colored_graph::test_Neumaier_property "
-						"the graph has the lambda property with lambda = " << lambda_value << endl;
+						"the graph has the lambda property "
+						"with lambda = " << lambda_value << endl;
 			}
 		}
 		else {
