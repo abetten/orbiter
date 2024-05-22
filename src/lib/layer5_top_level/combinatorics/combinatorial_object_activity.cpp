@@ -85,6 +85,7 @@ void combinatorial_object_activity::perform_activity(
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity" << endl;
+		cout << "combinatorial_object_activity::perform_activity verbose_level = " << verbose_level << endl;
 	}
 
 	orbiter_kernel_system::activity_output *AO;
@@ -379,6 +380,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity_combo" << endl;
+		cout << "combinatorial_object_activity::perform_activity_combo verbose_level=" << verbose_level << endl;
 	}
 
 	if (Descr->f_canonical_form_PG) {
@@ -475,6 +477,7 @@ void combinatorial_object_activity::perform_activity_combo(
 		Combo->do_covering_type(
 				Orbits,
 					Descr->covering_type_size,
+					Descr->f_filter_by_Steiner_property,
 					AO,
 					verbose_level);
 

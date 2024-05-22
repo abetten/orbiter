@@ -65,6 +65,8 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	//std::string covering_type_orbits;
 	covering_type_size = 0;
 
+	f_filter_by_Steiner_property = false;
+
 	f_compute_frequency = false;
 	//std::string compute_frequency_graph;
 
@@ -232,6 +234,13 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-covering_type " << covering_type_orbits << " " << covering_type_size << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-filter_by_Steiner_property") == 0) {
+			f_filter_by_Steiner_property = true;
+			if (f_v) {
+				cout << "-filter_by_Steiner_property " << endl;
+			}
+		}
+
 
 
 		else if (ST.stringcmp(argv[i], "-compute_frequency") == 0) {
@@ -337,6 +346,9 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_covering_type) {
 		cout << "-covering_type " << covering_type_orbits << " " << covering_type_size << endl;
+	}
+	if (f_filter_by_Steiner_property) {
+		cout << "-filter_by_Steiner_property " << endl;
 	}
 	if (f_compute_frequency) {
 		cout << "-compute_frequency " << compute_frequency_graph << endl;

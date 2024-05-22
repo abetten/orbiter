@@ -33,7 +33,7 @@ public:
 	std::vector<std::vector<std::string> > Feedback;
 	std::string description_txt;
 	std::string headings;
-	int nb_rows;
+	//int nb_rows; // use Feedback.size() instead as some activities perform filtering.
 	int nb_cols;
 
 	activity_output();

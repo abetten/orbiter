@@ -712,6 +712,7 @@ void activity_description::worker(
 
 	if (f_v) {
 		cout << "activity_description::worker" << endl;
+		cout << "activity_description::worker verbose_level = " << verbose_level << endl;
 	}
 
 	if (f_finite_field_activity) {
@@ -1588,6 +1589,8 @@ void activity_description::do_combinatorial_object_activity(
 		cout << "activity_description::do_combinatorial_object_activity "
 				"activity for the following objects:";
 		Sym->print_with();
+		cout << "activity_description::do_combinatorial_object_activity "
+				"verbose_level = " << verbose_level << endl;
 	}
 
 

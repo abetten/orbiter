@@ -150,6 +150,8 @@ public:
 	std::string covering_type_orbits;
 	int covering_type_size;
 
+	int f_filter_by_Steiner_property;
+
 	int f_compute_frequency;
 	std::string compute_frequency_graph;
 
@@ -251,6 +253,7 @@ public:
 	void do_covering_type(
 			orbits::orbits_create *Orb,
 			int sz,
+			int f_filter_by_Steiner_property,
 			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_compute_frequency_graph(

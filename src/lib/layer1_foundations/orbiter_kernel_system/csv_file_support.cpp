@@ -1067,6 +1067,10 @@ void csv_file_support::do_csv_file_select_cols(
 				"nb_rows=" << nb_rows << endl;
 		cout << "csv_file_support::do_csv_file_select_cols "
 				"nb_cols=" << nb_cols << endl;
+		cout << "csv_file_support::do_csv_file_select_cols "
+				"Cols=";
+		Lint_vec_print(cout, Cols, nb_cols);
+		cout << endl;
 	}
 
 
@@ -1868,7 +1872,7 @@ void csv_file_support::read_csv_file_and_tally(
 
 	cout << "fibers:" << endl;
 	for (i = 0; i < nb_types; i++) {
-		cout << i << " : " << types[i] << " : ";
+		cout << i << " : " << types[i] << " : " << SoS->Set_size[i] << " : ";
 		Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
 		cout << endl;
 	}

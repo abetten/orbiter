@@ -315,8 +315,8 @@ void polynomial_ring_activity::perform_activity(
 	}
 
 
-	int f_table_of_monomials_write_csv;
-	std::string table_of_monomials_write_csv_label;
+	//int f_table_of_monomials_write_csv;
+	//std::string table_of_monomials_write_csv_label;
 
 
 	if (f_v) {

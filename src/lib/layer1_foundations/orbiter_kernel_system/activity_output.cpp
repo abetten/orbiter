@@ -27,7 +27,6 @@ activity_output::activity_output()
 	//std::vector<std::vector<std::string> > Feedback;
 	//std::string description_txt;
 	//std::string headings;
-	nb_rows = 0;
 	nb_cols = 0;
 
 
@@ -49,7 +48,7 @@ void activity_output::save(
 	std::string *Table;
 	int m, n, i, j;
 
-	m = nb_rows;
+	m = Feedback.size();
 	n = nb_cols;
 
 	if (f_v) {

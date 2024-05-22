@@ -251,38 +251,44 @@ void combinatorial_object::do_test_distinguishing_property(
 void combinatorial_object::do_covering_type(
 		orbits::orbits_create *Orb,
 		int subset_sz,
+		int f_filter_by_Steiner_property,
 		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
+		cout << "combinatorial_object::do_covering_type verbose_level = " << verbose_level << endl;
 		cout << "combinatorial_object::do_covering_type subset_sz = " << subset_sz << endl;
+		cout << "combinatorial_object::do_covering_type f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
 	}
 
 	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
-	AO->nb_rows = IS->Objects.size();
+	//AO->nb_rows = IS->Objects.size();
 
-	AO->headings = "covering_wrt" + std::to_string(subset_sz) + ",steiner_p";
-	AO->nb_rows = IS->Objects.size();
-	AO->nb_cols = 2;
+	AO->headings = "set,idx,covering_wrt" + std::to_string(subset_sz) + ",steiner_p";
+	AO->nb_cols = 4;
 	AO->description_txt = "covering_wrt" + std::to_string(subset_sz);
 
 
 	combinatorics::combinatorics_domain Combi;
 
 	int nCk;
-	int sz;
-	int nb_orbits;
 
 	if (IS->Objects.size() == 0) {
 
 		if (f_v) {
 			cout << "combinatorial_object::do_covering_type "
-					"breaking off early because of no input" << endl;
+					"breaking off early because there is no input" << endl;
 		}
 		return;
 	}
+
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type IS->Objects.size() = " << IS->Objects.size() << endl;
+
+	}
+
 
 	canonical_form_classification::object_with_canonical_form *OwCF;
 
@@ -294,7 +300,13 @@ void combinatorial_object::do_covering_type(
 		exit(1);
 	}
 
+	int sz;
 	sz = OwCF->sz;
+
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type sz = " << sz << endl;
+
+	}
 
 
 
@@ -302,11 +314,34 @@ void combinatorial_object::do_covering_type(
 
 	poset_classification::poset_classification *PC;
 
+	if (!Orb->f_has_On_subsets) {
+		cout << "combinatorial_object::do_covering_type "
+				"the orbit structure has no subset orbits" << endl;
+		exit(1);
+	}
 	PC = Orb->On_subsets;
+
+	int nb_orbits;
 
 	nb_orbits = PC->nb_orbits_at_level(subset_sz);
 
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type nb_orbits = " << nb_orbits << endl;
+
+	}
+
+	if (nb_orbits < 0) {
+		cout << "combinatorial_object::do_covering_type "
+				"the orbits on subsets of size " << subset_sz << " are not available" << endl;
+		exit(1);
+	}
+
 	nCk = Combi.int_n_choose_k(sz, subset_sz);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type nCk = " << nCk << endl;
+
+	}
 
 	int *covering;
 	int *index_subset;
@@ -318,7 +353,6 @@ void combinatorial_object::do_covering_type(
 	index_subset = NEW_int(subset_sz);
 	subset = NEW_lint(subset_sz);
 	canonical_subset = NEW_lint(subset_sz);
-
 	Elt = NEW_int(PC->get_poset()->A->elt_size_in_int);
 
 	long int input_idx;
@@ -371,19 +405,40 @@ void combinatorial_object::do_covering_type(
 			f_steiner = false;
 		}
 
-		std::vector<std::string> feedback;
+		int f_keep = true;
 
-		string str;
+		if (f_filter_by_Steiner_property && f_steiner == false) {
+			f_keep = false;
+		}
+		else {
+			f_keep = true;
+		}
 
-		str = "\"" + Int_vec_stringify(covering, nb_orbits) + "\"";
+		if (f_keep) {
+			std::vector<std::string> feedback;
 
-		feedback.push_back(str);
+			string str;
 
-		str = std::to_string(f_steiner);
 
-		feedback.push_back(str);
+			str = "\"" + Lint_vec_stringify(set, sz) + "\"";
 
-		AO->Feedback.push_back(feedback);
+			feedback.push_back(str);
+
+			str = std::to_string(input_idx);
+
+			feedback.push_back(str);
+
+
+			str = "\"" + Int_vec_stringify(covering, nb_orbits) + "\"";
+
+			feedback.push_back(str);
+
+			str = std::to_string(f_steiner);
+
+			feedback.push_back(str);
+
+			AO->Feedback.push_back(feedback);
+		}
 
 	}
 
@@ -1033,7 +1088,7 @@ void combinatorial_object::do_graph_theoretic_activity(
 
 
 	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
-	AO->nb_rows = IS->Objects.size();
+	//AO->nb_rows = IS->Objects.size();
 
 	{
 	apps_graph_theory::graph_theoretic_activity Activity;
