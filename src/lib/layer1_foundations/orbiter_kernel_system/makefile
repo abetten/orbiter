@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	activity_output.o \
 	create_file_description.o \
 	csv_file_support.o \
 	file_io.o \

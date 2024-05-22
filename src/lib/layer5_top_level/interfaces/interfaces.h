@@ -1143,6 +1143,9 @@ public:
 	orthogonal_geometry_applications::orthogonal_space_with_action
 		*get_orthogonal_space(
 				std::string &label);
+	orbits::orbits_create
+		*get_orbits(
+			std::string &label);
 
 };
 

@@ -870,6 +870,32 @@ orthogonal_geometry_applications::orthogonal_space_with_action
 			get_object(idx);
 }
 
+
+orbits::orbits_create
+	*orbiter_top_level_session::get_orbits(
+		std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_orbits "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_orbits) {
+		cout << "orbiter_top_level_session::get_orbits "
+				"object type != t_orbits" << endl;
+		exit(1);
+	}
+
+	return (orbits::orbits_create *)
+			get_object(idx);
+}
+
+
+
+
 void free_symbol_table_entry_callback(
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level)
 {

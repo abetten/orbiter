@@ -146,6 +146,10 @@ public:
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
 
+	int f_covering_type;
+	std::string covering_type_orbits;
+	int covering_type_size;
+
 	int f_compute_frequency;
 	std::string compute_frequency_graph;
 
@@ -203,6 +207,7 @@ public:
 	void perform_activity_geometric_object(
 			int verbose_level);
 	void perform_activity_combo(
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };
@@ -243,6 +248,11 @@ public:
 	void do_test_distinguishing_property(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
+	void do_covering_type(
+			orbits::orbits_create *Orb,
+			int sz,
+			orbiter_kernel_system::activity_output *&AO,
+			int verbose_level);
 	void do_compute_frequency_graph(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
@@ -272,18 +282,12 @@ public:
 			int verbose_level);
 	void do_activity(
 			user_interface::activity_description *Activity_description,
-			std::string &description_txt,
-			std::vector<std::vector<std::string> > &Feedback,
-			std::string &headings,
-			int &nb_cols,
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
 			apps_graph_theory::graph_theoretic_activity_description
 					*Graph_theoretic_activity_description,
-			std::string &label,
-			std::vector<std::vector<std::string> > &Feedback,
-			std::string &headings,
-			int &nb_cols,
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };

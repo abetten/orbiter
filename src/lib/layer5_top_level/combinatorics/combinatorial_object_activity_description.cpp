@@ -61,6 +61,10 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_test_distinguishing_property = false;
 	//test_distinguishing_property_graph
 
+	f_covering_type = 0;
+	//std::string covering_type_orbits;
+	covering_type_size = 0;
+
 	f_compute_frequency = false;
 	//std::string compute_frequency_graph;
 
@@ -203,38 +207,61 @@ int combinatorial_object_activity_description::read_arguments(
 			Classification_of_objects_report_options = NEW_OBJECT(canonical_form_classification::classification_of_objects_report_options);
 			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
+
 		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
 			f_draw_incidence_matrices = true;
 			draw_incidence_matrices_prefix.assign(argv[++i]);
-
+			if (f_v) {
+				cout << "-draw_incidence_matrices " << endl;
+			}
 		}
+
 		else if (ST.stringcmp(argv[i], "-test_distinguishing_property") == 0) {
 			f_test_distinguishing_property = true;
 			test_distinguishing_property_graph.assign(argv[++i]);
-			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+			if (f_v) {
+				cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-covering_type") == 0) {
+			f_covering_type = true;
+			covering_type_orbits.assign(argv[++i]);
+			covering_type_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-covering_type " << covering_type_orbits << " " << covering_type_size << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-compute_frequency") == 0) {
 			f_compute_frequency = true;
 			compute_frequency_graph.assign(argv[++i]);
-			cout << "-compute_frequency " << compute_frequency_graph << endl;
+			if (f_v) {
+				cout << "-compute_frequency " << compute_frequency_graph << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
 			f_unpack_from_restricted_action = true;
 			unpack_from_restricted_action_prefix.assign(argv[++i]);
 			unpack_from_restricted_action_group_label.assign(argv[++i]);
-			cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
-					<< " " << unpack_from_restricted_action_group_label << endl;
+			if (f_v) {
+				cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
+						<< " " << unpack_from_restricted_action_group_label << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-line_covering_type") == 0) {
 			f_line_covering_type = true;
 			line_covering_type_prefix.assign(argv[++i]);
 			line_covering_type_projective_space.assign(argv[++i]);
 			line_covering_type_lines.assign(argv[++i]);
-			cout << "-line_covering_type " << line_covering_type_prefix
-					<< " " << line_covering_type_projective_space
-					<< " " << line_covering_type_lines
-					<< endl;
+			if (f_v) {
+				cout << "-line_covering_type " << line_covering_type_prefix
+						<< " " << line_covering_type_projective_space
+						<< " " << line_covering_type_lines
+						<< endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-activity") == 0) {
 			i++;
@@ -307,6 +334,9 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+	}
+	if (f_covering_type) {
+		cout << "-covering_type " << covering_type_orbits << " " << covering_type_size << endl;
 	}
 	if (f_compute_frequency) {
 		cout << "-compute_frequency " << compute_frequency_graph << endl;

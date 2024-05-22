@@ -681,6 +681,7 @@ namespace orbiter_kernel_system {
 	};
 
 
+	class activity_output;
 	class create_file_description;
 	class csv_file_support;
 	class file_io;
@@ -997,6 +998,7 @@ enum data_input_stream_type {
 	t_data_input_stream_incidence_geometry,
 	t_data_input_stream_incidence_geometry_by_row_ranks,
 	t_data_input_stream_from_parallel_search,
+	t_data_input_stream_orbiter_file,
 	t_data_input_stream_graph_by_adjacency_matrix,
 	t_data_input_stream_graph_object,
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,

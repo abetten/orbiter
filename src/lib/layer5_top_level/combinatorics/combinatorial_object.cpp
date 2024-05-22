@@ -247,6 +247,158 @@ void combinatorial_object::do_test_distinguishing_property(
 
 }
 
+
+void combinatorial_object::do_covering_type(
+		orbits::orbits_create *Orb,
+		int subset_sz,
+		orbiter_kernel_system::activity_output *&AO,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type subset_sz = " << subset_sz << endl;
+	}
+
+	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
+	AO->nb_rows = IS->Objects.size();
+
+	AO->headings = "covering_wrt" + std::to_string(subset_sz) + ",steiner_p";
+	AO->nb_rows = IS->Objects.size();
+	AO->nb_cols = 2;
+	AO->description_txt = "covering_wrt" + std::to_string(subset_sz);
+
+
+	combinatorics::combinatorics_domain Combi;
+
+	int nCk;
+	int sz;
+	int nb_orbits;
+
+	if (IS->Objects.size() == 0) {
+
+		if (f_v) {
+			cout << "combinatorial_object::do_covering_type "
+					"breaking off early because of no input" << endl;
+		}
+		return;
+	}
+
+	canonical_form_classification::object_with_canonical_form *OwCF;
+
+	OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[0];
+
+
+	if (OwCF->type != t_PTS) {
+		cout << "combinatorial_object::do_covering_type OwCF->type != t_PTS" << endl;
+		exit(1);
+	}
+
+	sz = OwCF->sz;
+
+
+
+	//degree = Orb->Group->A->degree;
+
+	poset_classification::poset_classification *PC;
+
+	PC = Orb->On_subsets;
+
+	nb_orbits = PC->nb_orbits_at_level(subset_sz);
+
+	nCk = Combi.int_n_choose_k(sz, subset_sz);
+
+	int *covering;
+	int *index_subset;
+	long int *subset;
+	long int *canonical_subset;
+	int *Elt;
+
+	covering = NEW_int(nb_orbits);
+	index_subset = NEW_int(subset_sz);
+	subset = NEW_lint(subset_sz);
+	canonical_subset = NEW_lint(subset_sz);
+
+	Elt = NEW_int(PC->get_poset()->A->elt_size_in_int);
+
+	long int input_idx;
+
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		canonical_form_classification::object_with_canonical_form *OwCF;
+
+		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+
+
+		if (OwCF->type != t_PTS) {
+			cout << "combinatorial_object::do_covering_type OwCF->type != t_PTS" << endl;
+			exit(1);
+		}
+
+		long int *set;
+
+		set = OwCF->set;
+		if (OwCF->sz != sz) {
+			cout << "the objects must have the same size" << endl;
+			exit(1);
+		}
+
+		int rk, i, local_idx;
+		Int_vec_zero(covering, nb_orbits);
+
+		for (rk = 0; rk < nCk; rk++) {
+			Combi.unrank_k_subset(rk, index_subset, sz, subset_sz);
+			for (i = 0; i < subset_sz; i++) {
+				subset[i] = set[index_subset[i]];
+			}
+
+			local_idx = PC->trace_set(subset, subset_sz, subset_sz,
+				canonical_subset, Elt,
+				0 /*verbose_level - 3*/);
+
+			covering[local_idx]++;
+		}
+
+		int m, f_steiner;
+
+		m = Int_vec_maximum(covering, nb_orbits);
+
+		if (m == 1) {
+			f_steiner = true;
+		}
+		else {
+			f_steiner = false;
+		}
+
+		std::vector<std::string> feedback;
+
+		string str;
+
+		str = "\"" + Int_vec_stringify(covering, nb_orbits) + "\"";
+
+		feedback.push_back(str);
+
+		str = std::to_string(f_steiner);
+
+		feedback.push_back(str);
+
+		AO->Feedback.push_back(feedback);
+
+	}
+
+	FREE_int(covering);
+	FREE_int(index_subset);
+	FREE_lint(subset);
+	FREE_lint(canonical_subset);
+
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "combinatorial_object::do_covering_type done" << endl;
+	}
+}
+
 void combinatorial_object::do_compute_frequency_graph(
 		graph_theory::colored_graph *CG,
 		int verbose_level)
@@ -840,10 +992,7 @@ void combinatorial_object::line_type(
 
 void combinatorial_object::do_activity(
 		user_interface::activity_description *Activity_description,
-		std::string &description_txt,
-		std::vector<std::vector<std::string> > &Feedback,
-		std::string &headings,
-		int &nb_cols,
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -853,9 +1002,6 @@ void combinatorial_object::do_activity(
 	}
 
 
-	//int f_activity;
-	//user_interface::activity_description *Activity_description;
-
 	if (Activity_description->f_graph_theoretic_activity) {
 
 		if (f_v) {
@@ -863,7 +1009,8 @@ void combinatorial_object::do_activity(
 		}
 		do_graph_theoretic_activity(
 				Activity_description->Graph_theoretic_activity_description,
-				description_txt, Feedback, headings, nb_cols, verbose_level);
+				AO,
+				verbose_level);
 
 	}
 
@@ -875,10 +1022,7 @@ void combinatorial_object::do_activity(
 void combinatorial_object::do_graph_theoretic_activity(
 		apps_graph_theory::graph_theoretic_activity_description
 				*Graph_theoretic_activity_description,
-		std::string &label,
-		std::vector<std::vector<std::string> > &Feedback,
-		std::string &headings,
-		int &nb_cols,
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -888,20 +1032,23 @@ void combinatorial_object::do_graph_theoretic_activity(
 	}
 
 
+	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
+	AO->nb_rows = IS->Objects.size();
+
 	{
 	apps_graph_theory::graph_theoretic_activity Activity;
 
 
 	Activity.feedback_headings(
 			Graph_theoretic_activity_description,
-			headings,
-			nb_cols,
+			AO->headings,
+			AO->nb_cols,
 			verbose_level);
 
 
 	Activity.get_label(
 			Graph_theoretic_activity_description,
-			label,
+			AO->description_txt,
 			verbose_level);
 
 	}
@@ -965,7 +1112,7 @@ void combinatorial_object::do_graph_theoretic_activity(
 						"after Activity.perform_activity" << endl;
 			}
 
-			Feedback.push_back(feedback);
+			AO->Feedback.push_back(feedback);
 
 
 		}

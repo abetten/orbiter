@@ -267,6 +267,7 @@ ORBITER_MODULES= \
 		layer1_foundations/number_theory/elliptic_curve.o \
 		layer1_foundations/number_theory/number_theoretic_transform.o \
 		layer1_foundations/number_theory/number_theory_domain.o \
+		layer1_foundations/orbiter_kernel_system/activity_output.o \
 		layer1_foundations/orbiter_kernel_system/create_file_description.o \
 		layer1_foundations/orbiter_kernel_system/csv_file_support.o \
 		layer1_foundations/orbiter_kernel_system/file_io.o \

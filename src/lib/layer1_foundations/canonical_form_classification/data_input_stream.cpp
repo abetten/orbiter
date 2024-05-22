@@ -526,7 +526,43 @@ int data_input_stream::count_number_of_objects_to_test(
 				FREE_OBJECT(SoS);
 			}
 		}
-		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_orbiter_file) {
+			if (f_v) {
+				cout << "t_data_input_stream_orbiter_file" << endl;
+			}
+
+			string fname;
+
+			fname.assign(Descr->Input[input_idx].input_string);
+
+			if (f_v) {
+				cout << "orbiter file, fname=" << fname << endl;
+			}
+
+			data_structures::string_tools ST;
+			orbiter_kernel_system::file_io Fio;
+
+			if (Fio.file_size(fname) <= 0) {
+				cout << "The file " << fname << " does not exist" << endl;
+				exit(1);
+			}
+
+			data_structures::set_of_sets *SoS;
+			int underlying_set_size = 0;
+			int nb_sol;
+
+			SoS = NEW_OBJECT(data_structures::set_of_sets);
+			SoS->init_from_orbiter_file(underlying_set_size,
+					fname, 0 /*verbose_level*/);
+			nb_sol = SoS->nb_sets;
+			if (f_v) {
+				cout << "from file " << fname <<
+						" the file contains " << nb_sol << " sets" << endl;
+			}
+			nb_objects_to_test += nb_sol;
+			FREE_OBJECT(SoS);
+		}
+	else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
 			if (f_v) {
 				cout << "input graph by adjacency matrix on "
 						<< Descr->Input[input_idx].input_data1 << " vertices:" << endl;
@@ -1317,6 +1353,59 @@ void data_input_stream::read_objects(
 				FREE_OBJECT(SoS);
 			}
 		}
+
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_orbiter_file) {
+			if (f_v) {
+				cout << "input from orbiter file" << endl;
+			}
+
+			string fname;
+
+			fname.assign(Descr->Input[input_idx].input_string);
+
+			if (f_v) {
+				cout << "input from orbiter file, fname=" << fname << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+
+
+			data_structures::string_tools ST;
+
+
+
+			data_structures::set_of_sets *SoS;
+			int underlying_set_size = 0;
+			int nb_sol;
+			int sol_width;
+
+			SoS = NEW_OBJECT(data_structures::set_of_sets);
+			SoS->init_from_orbiter_file(underlying_set_size,
+					fname, 0 /*verbose_level*/);
+			nb_sol = SoS->nb_sets;
+			if (f_v) {
+				cout << "objects from file " << fname <<
+						" the file contains " << nb_sol << " sets" << endl;
+			}
+
+			int i;
+
+			for (i = 0; i < nb_sol; i++) {
+				object_with_canonical_form *OwCF;
+
+
+				OwCF = NEW_OBJECT(object_with_canonical_form);
+
+				OwCF->init_point_set(
+						SoS->Sets[i], SoS->Set_size[i],
+						0 /*verbose_level*/);
+
+				Objects.push_back(OwCF);
+			}
+			FREE_OBJECT(SoS);
+		}
+
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
 
 			if (f_v) {

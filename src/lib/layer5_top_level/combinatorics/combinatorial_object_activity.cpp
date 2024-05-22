@@ -86,12 +86,23 @@ void combinatorial_object_activity::perform_activity(
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
+
+	orbiter_kernel_system::activity_output *AO;
+
 	if (f_has_geometric_object) {
 		perform_activity_geometric_object(verbose_level);
 	}
 	else if (f_has_combo) {
-		perform_activity_combo(verbose_level);
+		perform_activity_combo(AO, verbose_level);
 	}
+
+
+	string fname_base;
+
+	fname_base = Combo->IS->Descr->label_txt;
+
+	AO->save(fname_base, verbose_level);
+
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity done" << endl;
 	}
@@ -361,6 +372,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 
 
 void combinatorial_object_activity::perform_activity_combo(
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -447,6 +459,30 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 	}
+	else if (Descr->f_covering_type) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_covering_type" << endl;
+		}
+
+		orbits::orbits_create *Orbits;
+
+
+		Orbits = Get_orbits(Descr->covering_type_orbits);
+
+
+		Combo->do_covering_type(
+				Orbits,
+					Descr->covering_type_size,
+					AO,
+					verbose_level);
+
+
+	}
+
+
+
 	else if (Descr->f_compute_frequency) {
 
 		if (f_v) {
@@ -591,10 +627,6 @@ void combinatorial_object_activity::perform_activity_combo(
 					<< endl;
 		}
 
-		std::vector<std::vector<std::string>> Feedback;
-		std::string label;
-		std::string headings;
-		int nb_cols;
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -603,73 +635,17 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 		Combo->do_activity(
 				Descr->Activity_description,
-				label,
-				Feedback,
-				headings,
-				nb_cols,
+				AO,
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after Combo->do_activity "
 					<< endl;
 			cout << "combinatorial_object_activity::perform_activity_combo "
-					"after Combo->do_activity nb_cols = " << nb_cols
+					"after Combo->do_activity nb_cols = " << AO->nb_cols
 					<< endl;
 		}
 
-		std::string *Table;
-		int m, n, i, j;
-
-		m = Combo->IS->Objects.size();
-		n = nb_cols;
-
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_combo "
-					"m = " << m
-					<< endl;
-		}
-
-		Table = new string[m * n];
-		for (i = 0; i < m; i++) {
-			if (false) {
-				cout << "combinatorial_object_activity::perform_activity_combo "
-						"i = " << i
-						<< endl;
-			}
-			for (j = 0; j < n; j++) {
-				Table[i * n + j] = Feedback[i][j];
-			}
-		}
-
-		orbiter_kernel_system::file_io Fio;
-
-		string fname_out;
-
-		fname_out = Combo->IS->Descr->label_txt + "_" + label + ".csv";
-
-
-
-
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_combo "
-					"fname_out = " << fname_out
-					<< endl;
-		}
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_combo "
-					"before Fio.Csv_file_support->write_table_of_strings "
-					<< endl;
-		}
-		Fio.Csv_file_support->write_table_of_strings(
-				fname_out,
-				m, n, Table,
-				headings,
-				verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_combo "
-					"after Fio.Csv_file_support->write_table_of_strings "
-					<< endl;
-		}
 
 
 	}

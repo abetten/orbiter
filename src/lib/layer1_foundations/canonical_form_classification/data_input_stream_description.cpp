@@ -364,6 +364,21 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i], "-orbiter_file") == 0) {
+
+			data_input_stream_description_element E;
+			string fname;
+
+			fname.assign(argv[++i]);
+			E.init_orbiter_file(fname);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-graph_by_adjacency_matrix") == 0) {
 
 			data_input_stream_description_element E;

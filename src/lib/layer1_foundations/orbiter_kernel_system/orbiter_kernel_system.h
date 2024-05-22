@@ -19,6 +19,30 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace orbiter_kernel_system {
 
+// #############################################################################
+// activity_output.cpp
+// #############################################################################
+
+
+//! collects return data from an object activity
+
+
+class activity_output {
+public:
+
+	std::vector<std::vector<std::string> > Feedback;
+	std::string description_txt;
+	std::string headings;
+	int nb_rows;
+	int nb_cols;
+
+	activity_output();
+	~activity_output();
+	void save(
+			std::string &fname, int verbose_level);
+
+};
+
 
 
 // #############################################################################

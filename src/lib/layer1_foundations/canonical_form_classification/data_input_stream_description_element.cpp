@@ -129,6 +129,11 @@ void data_input_stream_description_element::print()
 				<< " " << input_data1
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_orbiter_file) {
+		cout << "-orbiter_file"
+				<< " " << input_string
+			<< endl;
+	}
 	else if (input_type == t_data_input_stream_graph_by_adjacency_matrix) {
 		cout << "-graph_by_adjacency_matrix"
 				<< " " << input_string
@@ -336,6 +341,15 @@ void data_input_stream_description_element::init_from_parallel_search(
 	input_string.assign(fname_mask);
 	input_string2.assign(cases_fname);
 	input_data1 = nb_cases;
+
+}
+
+void data_input_stream_description_element::init_orbiter_file(
+		std::string &fname)
+{
+	input_type = t_data_input_stream_orbiter_file;
+
+	input_string.assign(fname);
 
 }
 

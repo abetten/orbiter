@@ -422,6 +422,8 @@ public:
 	void init_from_parallel_search(
 			std::string &fname_mask,
 			int nb_cases, std::string &cases_fname);
+	void init_orbiter_file(
+			std::string &fname);
 	void init_graph_by_adjacency_matrix(
 			std::string &adjacency_matrix,
 				int N);
