@@ -386,6 +386,29 @@ void algorithms::print_bits(
 	}
 }
 
+unsigned long int algorithms::make_bitword(
+		char *data, int data_size)
+{
+	int i, c;
+	long int m;
+
+	if (data_size > sizeof(long int) * 8) {
+		cout << "algorithms::make_bitword data_size cannot be larger than " << sizeof(long int) * 8 << endl;
+		cout << "data_size = " << data_size << endl;
+		exit(1);
+	}
+
+	m = 0;
+	for (i = data_size - 1; i >= 0; i--) {
+		m <<= 1;
+		c = data[i];
+		if (c) {
+			m |= 1;
+		}
+	}
+	return m;
+}
+
 
 
 void algorithms::read_hex_data(

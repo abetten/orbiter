@@ -344,18 +344,22 @@ void combinatorial_object::do_covering_type(
 	}
 
 	int *covering;
+	char *covering_char;
 	int *index_subset;
 	long int *subset;
 	long int *canonical_subset;
 	int *Elt;
 
 	covering = NEW_int(nb_orbits);
+	covering_char = NEW_char(nb_orbits);
 	index_subset = NEW_int(subset_sz);
 	subset = NEW_lint(subset_sz);
 	canonical_subset = NEW_lint(subset_sz);
 	Elt = NEW_int(PC->get_poset()->A->elt_size_in_int);
 
 	long int input_idx;
+
+	data_structures::algorithms Algorithms;
 
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
@@ -428,8 +432,17 @@ void combinatorial_object::do_covering_type(
 
 			feedback.push_back(str);
 
+			unsigned long int m;
 
-			str = "\"" + Int_vec_stringify(covering, nb_orbits) + "\"";
+			for (i = 0; i < nb_orbits; i++) {
+				covering_char[i] = covering[i];
+			}
+
+			m = Algorithms.make_bitword(
+					covering_char, nb_orbits);
+
+			str = "\"" + std::to_string(m) + "\"";
+			//str = "\"" + Int_vec_stringify(covering, nb_orbits) + "\"";
 
 			feedback.push_back(str);
 
@@ -443,6 +456,7 @@ void combinatorial_object::do_covering_type(
 	}
 
 	FREE_int(covering);
+	FREE_char(covering_char);
 	FREE_int(index_subset);
 	FREE_lint(subset);
 	FREE_lint(canonical_subset);

@@ -70,6 +70,8 @@ public:
 			std::ostream &ost, int digit);
 	void print_bits(
 			std::ostream &ost, char *data, int data_size);
+	unsigned long int make_bitword(
+			char *data, int data_size);
 	void read_hex_data(
 			std::string &str,
 			char *&data, int &data_size, int verbose_level);
