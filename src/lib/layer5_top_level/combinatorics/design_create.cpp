@@ -1012,7 +1012,7 @@ void design_create::compute_incidence_matrix_from_blocks(
 	}
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix_from_blocks blocks = ";
+		cout << "design_create::compute_incidence_matrix_from_blocks blocks = " << endl;
 		Int_matrix_print(blocks, nb_blocks, k);
 		cout << endl;
 	}
@@ -1037,7 +1037,13 @@ void design_create::compute_incidence_matrix_from_blocks(
 	if (f_v) {
 		cout << "design_create::compute_incidence_matrix_from_blocks "
 				"The incidence matrix is:" << endl;
-		Int_matrix_print(incma, v, b);
+		if (v + b > 50) {
+			cout << "design_create::compute_incidence_matrix_from_blocks "
+					"too large to print" << endl;
+		}
+		else {
+			Int_matrix_print(incma, v, b);
+		}
 	}
 
 	if (f_v) {

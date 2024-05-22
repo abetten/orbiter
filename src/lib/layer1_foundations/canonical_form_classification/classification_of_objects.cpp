@@ -17,11 +17,6 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace canonical_form_classification {
 
-#if 0
-static void print_summary_table_entry(
-		int *Table,
-		int m, int n, int i, int j, int val, std::string &output, void *data);
-#endif
 
 classification_of_objects::classification_of_objects()
 {
@@ -223,7 +218,8 @@ void classification_of_objects::classify_objects_using_nauty(
 		l1_interfaces::nauty_output *NO;
 		encoded_combinatorial_object *Enc;
 
-		process_any_object(OwCF,
+		process_any_object(
+					OwCF,
 					input_idx,
 					Ago[input_idx],
 					F_reject[input_idx],
@@ -464,7 +460,7 @@ void classification_of_objects::process_any_object(
 		}
 #endif
 
-		FREE_OBJECT(NO);
+		FREE_OBJECT(NO); // ToDo ???
 	}
 	else {
 		if (f_v) {
@@ -826,60 +822,6 @@ void classification_of_objects::report_summary_of_orbits(
 	}
 	l1_interfaces::latex_interface L;
 
-#if 0
-	int i, j;
-
-
-	int *Table;
-	int width = 4;
-	int *row_labels;
-	int *col_labels;
-	int row_part_first[2], row_part_len[1];
-	int nb_row_parts = 1;
-	int col_part_first[2], col_part_len[1];
-	int nb_col_parts = 1;
-
-
-
-	row_part_first[0] = 0;
-	row_part_first[1] = CB->nb_types;
-	row_part_len[0] = CB->nb_types;
-
-	col_part_first[0] = 0;
-	col_part_first[1] = width;
-	col_part_len[0] = width;
-
-	Table = NEW_int(CB->nb_types * width);
-	Int_vec_zero(Table, CB->nb_types * width);
-
-	row_labels = NEW_int(CB->nb_types);
-	col_labels = NEW_int(width);
-
-	for (i = 0; i < CB->nb_types; i++) {
-		row_labels[i] = i;
-	}
-
-	for (j = 0; j < width; j++) {
-		col_labels[j] = j;
-	}
-
-	for (i = 0; i < CB->nb_types; i++) {
-		if (f_v) {
-			cout << "classification_of_objects::latex_report, "
-					"i=" << i << endl;
-		}
-		j = CB->perm[i];
-		//j = i;
-		if (f_v) {
-			cout << "classification_of_objects::latex_report, "
-					"i=" << i << " j=" << j << endl;
-		}
-		Table[i * width + 0] = CB->Type_rep[j];
-		Table[i * width + 1] = CB->Type_mult[j];
-		Table[i * width + 2] = 0; // group order
-		Table[i * width + 3] = 0; // object list
-	}
-#endif
 
 	if (f_v) {
 		cout << "classification_of_objects::latex_report "
@@ -1002,19 +944,6 @@ void classification_of_objects::create_summary_table(
 
 		s_input_objects = Int_vec_stringify(Input_objects, nb_input_objects);
 
-#if 0
-		output = "";
-		for (h = 0; h < nb_input_objects; h++) {
-			output += std::to_string(Input_objects[h]);
-			if (h < nb_input_objects - 1) {
-				output += ", ";
-			}
-			if (h == 10) {
-				output += "\\ldots";
-				break;
-			}
-		}
-#endif
 
 		FREE_int(Input_objects);
 
@@ -1028,120 +957,6 @@ void classification_of_objects::create_summary_table(
 	}
 
 }
-
-#if 0
-static void print_summary_table_entry(
-		int *Table,
-		int m, int n, int i, int j, int val,
-		std::string &output, void *data)
-{
-	int f_v = true;
-	classify_bitvectors *CB;
-	int h;
-	data_structures::sorting Sorting;
-
-	if (f_v) {
-		cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
-	}
-
-	classification_of_objects *Classification_of_objects;
-
-	Classification_of_objects = (classification_of_objects *) data;
-	//CB = (classify_bitvectors *) data;
-	CB = Classification_of_objects->CB;
-
-	if (i == -1) {
-		if (j == -1) {
-			output.assign("\\mbox{Orbit}");
-		}
-		else if (j == 0) {
-			output.assign("\\mbox{Rep}");
-		}
-		else if (j == 1) {
-			output.assign("\\#");
-		}
-		else if (j == 2) {
-			output.assign("\\mbox{Ago}");
-		}
-		else if (j == 3) {
-			output.assign("\\mbox{Objects}");
-		}
-	}
-	else {
-		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
-		if (j == -1) {
-			output = std::to_string(i);
-		}
-		else if (j == 2) {
-
-
-			if (f_v) {
-				cout << "print_summary_table_entry getting extra_data" << endl;
-			}
-
-#if 0
-			longinteger_object go;
-			//extra_data = CB->Type_extra_data[CB->perm[i]];
-			extra_data = CB->Type_extra_data[i];
-
-			if (f_v) {
-				cout << "print_summary_table_entry after getting extra_data" << endl;
-			}
-
-			OiPA = (object_in_projective_space_with_action *) extra_data;
-
-
-			if (f_v) {
-				cout << "print_summary_table_entry getting extra_data OiPA=" << endl;
-				OiPA->print();
-			}
-			go.create(OiPA->ago);
-			//OiPA->Aut_gens->group_order(go);
-			go.print_to_string(str);
-#else
-			ring_theory::longinteger_object go;
-			go.create(Classification_of_objects->Ago_transversal[i]);
-			//OiPA->Aut_gens->group_order(go);
-			go.print_to_string(output);
-#endif
-		}
-		else if (j == 3) {
-
-			int *Input_objects;
-			int nb_input_objects;
-			if (f_v) {
-				cout << "print_summary_table_entry before CB->C_type_of->get_class_by_value" << endl;
-			}
-			CB->C_type_of->get_class_by_value(Input_objects,
-				nb_input_objects, CB->perm[i], 0 /*verbose_level */);
-			if (f_v) {
-				cout << "print_summary_table_entry after CB->C_type_of->get_class_by_value" << endl;
-			}
-			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
-
-			output = "";
-			for (h = 0; h < nb_input_objects; h++) {
-				output += std::to_string(Input_objects[h]);
-				if (h < nb_input_objects - 1) {
-					output += ", ";
-				}
-				if (h == 10) {
-					output += "\\ldots";
-					break;
-				}
-			}
-
-			FREE_int(Input_objects);
-		}
-		else {
-			string str;
-
-			str = std::to_string(val);
-			output.assign(str);
-		}
-	}
-}
-#endif
 
 
 
