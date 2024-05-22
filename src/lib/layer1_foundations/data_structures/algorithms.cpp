@@ -399,7 +399,7 @@ unsigned long int algorithms::make_bitword(
 	}
 
 	m = 0;
-	for (i = data_size - 1; i >= 0; i--) {
+	for (i = 0; i < data_size; i++) {
 		m <<= 1;
 		c = data[i];
 		if (c) {
