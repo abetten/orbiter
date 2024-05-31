@@ -132,14 +132,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 
@@ -169,8 +169,13 @@ void design_create::init(
 					"list_of_base_blocks_fname=" << Descr->list_of_base_blocks_fname << endl;
 			cout << "design_create::init "
 					"list_of_base_blocks_col=" << Descr->list_of_base_blocks_col << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_selection_fname=" << Descr->list_of_base_blocks_selection_fname << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_selection_col=" << Descr->list_of_base_blocks_selection_col << endl;
+			cout << "design_create::init "
+					"list_of_base_blocks_selection_idx=" << Descr->list_of_base_blocks_selection_idx << endl;
 		}
-
 
 		apps_algebra::any_group *AG;
 
@@ -180,66 +185,126 @@ void design_create::init(
 
 
 		orbiter_kernel_system::file_io Fio;
-		data_structures::set_of_sets *SoS;
+		data_structures::set_of_sets *SoS_base_blocks;
 
 		Fio.Csv_file_support->read_column_and_parse(
-				Descr->list_of_base_blocks_fname, Descr->list_of_base_blocks_col,
-				SoS,
-				verbose_level);
+				Descr->list_of_base_blocks_fname,
+				Descr->list_of_base_blocks_col,
+				SoS_base_blocks,
+				0 /*verbose_level*/);
 		if (f_v) {
 			cout << "design_create::init "
-					"number of base blocks = " << SoS->nb_sets << endl;
+					"total number of base blocks = " << SoS_base_blocks->nb_sets << endl;
+		}
+
+
+		std::string *Column;
+		int len;
+
+		Fio.Csv_file_support->read_column_of_strings(
+				Descr->list_of_base_blocks_selection_fname,
+				Descr->list_of_base_blocks_selection_col,
+				Column, len,
+				verbose_level);
+
+
+		if (Descr->list_of_base_blocks_selection_idx >= len) {
+			cout << "base block selection is out of range" << endl;
+			exit(1);
 		}
 
 
 		data_structures::string_tools ST;
-		string label_set;
 
-		label_set = Descr->list_of_base_blocks_fname;
-		ST.chop_off_extension(label_set);
+		int *Base_block_selection;
+		int nb_base_blocks;
 
-		long int *Table;
-		int size;
+		string column_entry, column_entry_clean;
 
-		orbits::orbits_global Orbits;
+		column_entry = Column[Descr->list_of_base_blocks_selection_idx];
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before Orbits.orbits_of_one_subset" << endl;
+					"column entry = " << column_entry << endl;
 		}
-		Orbits.orbits_of_one_subset(
+
+		ST.drop_quotes(column_entry, column_entry_clean);
+
+		Int_vec_scan(column_entry_clean, Base_block_selection, nb_base_blocks);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"Descr->list_of_base_blocks_selection_idx = " << Descr->list_of_base_blocks_selection_idx << endl;
+			cout << "design_create::init "
+					"nb_base_blocks = " << nb_base_blocks << endl;
+			cout << "design_create::init "
+					"base block selection base block selection is ";
+			Int_vec_print(cout, Base_block_selection, nb_base_blocks);
+			cout << endl;
+		}
+
+
+		long int *Blocks; // [b * k]
+
+
+		apps_combinatorics::combinatorics_global Apps_Combi;
+
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before Apps_Combi.span_base_blocks" << endl;
+		}
+		Apps_Combi.span_base_blocks(
 				AG,
-				SoS->Sets[0], SoS->Set_size[0],
-				label_set,
-				AG->A, AG->A,
-				Table, size,
+				SoS_base_blocks,
+				Base_block_selection, nb_base_blocks,
+				v, b, k,
+				Blocks,
 				verbose_level);
 		if (f_v) {
 			cout << "design_create::init "
-					"after Orbits.orbits_of_one_subset" << endl;
-			cout << "design_create::init "
-					"found an orbit of size " << size << endl;
+					"after Apps_Combi.span_base_blocks" << endl;
 		}
 
+
+
+
 		combinatorics::combinatorics_domain Combi;
-
-		//int v, b, k;
-
-		v = A->degree;
-		b = size;
-		k = SoS->Set_size[0];
 
 		if (f_v) {
 			cout << "design_create::init "
 					"before Combi.compute_incidence_matrix_from_blocks_lint" << endl;
 		}
 		Combi.compute_incidence_matrix_from_blocks_lint(
-				v, b, k, Table /* Blocks */,
-				incma, verbose_level - 2);
+				v, b, k, Blocks,
+				incma, 0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "design_create::init "
 					"after Combi.compute_incidence_matrix_from_blocks_lint" << endl;
 		}
+
+
+		f_has_incma = true;
+		if (false) {
+			cout << "design_create::init incma:" << endl;
+			Int_matrix_print(incma, v, b);
+		}
+
+
+		FREE_lint(Blocks);
+		FREE_int(Base_block_selection);
+		FREE_OBJECT(SoS_base_blocks);
+		delete [] Column;
+
+		prefix = "blocks_v" + std::to_string(v)
+						+ "_b" + std::to_string(b)
+						+ "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(v)
+								+ "_b" + std::to_string(b)
+								+ "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(v)
+								+ "\\_b" + std::to_string(b)
+								+ "\\_k" + std::to_string(k);
 
 	}
 
@@ -258,7 +323,8 @@ void design_create::init(
 
 
 		Get_lint_vector_from_label(
-				Descr->list_of_blocks_coded_label, set, sz, 0 /* verbose_level */);
+				Descr->list_of_blocks_coded_label, set, sz,
+				0 /* verbose_level */);
 
 		f_has_set = true;
 		v = degree;
@@ -283,14 +349,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 	}
@@ -332,14 +398,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 
@@ -394,14 +460,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 
@@ -442,27 +508,6 @@ void design_create::init(
 		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
 		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
-#if 0
-		A = NEW_OBJECT(actions::action);
-
-#if 0
-		int f_no_base = false;
-
-		if (Descr->f_no_group) {
-			f_no_base = true;
-		}
-#endif
-
-		A->Known_groups->init_symmetric_group(degree, verbose_level);
-
-		//A2 = NEW_OBJECT(actions::action);
-		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
-
-		Aut = NULL;
-		Aut_on_lines = NULL;
-		f_has_group = false;
-		Sg = NULL;
-#endif
 		f_has_group = false;
 
 		if (f_v) {
@@ -470,7 +515,8 @@ void design_create::init(
 					"before compute_incidence_matrix_from_blocks" << endl;
 		}
 
-		compute_incidence_matrix_from_blocks(blocks, b, k, verbose_level);
+		compute_incidence_matrix_from_blocks(
+				blocks, b, k, 0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "design_create::init "
@@ -502,8 +548,17 @@ void design_create::init(
 		long int nb_blocks;
 
 
-		Combi.create_wreath_product_design(n, k,
+		if (f_v) {
+			cout << "design_create::init "
+					"before Combi.create_wreath_product_design" << endl;
+		}
+		Combi.create_wreath_product_design(
+				n, k,
 				set, nb_blocks, verbose_level);
+		if (f_v) {
+			cout << "design_create::init "
+					"after Combi.create_wreath_product_design" << endl;
+		}
 
 		if (f_v) {
 			cout << "design_create::init "
@@ -536,14 +591,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 
@@ -631,14 +686,14 @@ void design_create::init(
 
 		if (f_v) {
 			cout << "design_create::init "
-					"before compute_incidence_matrix" << endl;
+					"before compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
-		compute_incidence_matrix(verbose_level);
+		compute_incidence_matrix_from_set_of_codes(verbose_level);
 
 		if (f_v) {
 			cout << "design_create::init "
-					"after compute_incidence_matrix" << endl;
+					"after compute_incidence_matrix_from_set_of_codes" << endl;
 		}
 
 		// extend the incidence matrix by three blocks
@@ -684,10 +739,16 @@ void design_create::init(
 	}
 
 
+	if (Descr->f_label) {
+		label_txt = Descr->label_txt;
+		label_tex = Descr->label_tex;
+	}
 
 	if (f_has_group) {
-		cout << "design_create::init the stabilizer is:" << endl;
-		Sg->print_generators_tex(cout);
+		if (f_v) {
+			cout << "design_create::init the stabilizer is:" << endl;
+			Sg->print_generators_tex(cout);
+		}
 	}
 	else {
 		cout << "design_create::init stabilizer is not available" << endl;
@@ -702,7 +763,8 @@ void design_create::init(
 
 void design_create::create_design_PG_2_q(
 		field_theory::finite_field *F,
-		long int *&set, int &sz, int &k, int verbose_level)
+		long int *&set, int &sz, int &k,
+		int verbose_level)
 // creates a projective_space_with_action object
 {
 	int f_v = (verbose_level >= 1);
@@ -884,17 +946,17 @@ int design_create::get_color_as_two_design_assume_sorted(
 	return c;
 }
 
-void design_create::compute_incidence_matrix(
+void design_create::compute_incidence_matrix_from_set_of_codes(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix" << endl;
+		cout << "design_create::compute_incidence_matrix_from_set_of_codes" << endl;
 	}
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix set = ";
+		cout << "design_create::compute_incidence_matrix_from_set_of_codes set = ";
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
@@ -927,19 +989,19 @@ void design_create::compute_incidence_matrix(
 			int *Blocks;
 
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"before Combi.compute_blocks_from_coding" << endl;
 			}
 			Combi.compute_blocks_from_coding(
 					v, b, Descr->list_of_blocks_coded_k, set,
 					Blocks, verbose_level);
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"after Combi.compute_blocks_from_coding" << endl;
 			}
 
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"Blocks:" << endl;
 				cout << "v = " << v << endl;
 				cout << "b = " << b << endl;
@@ -948,14 +1010,14 @@ void design_create::compute_incidence_matrix(
 			}
 
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"before Combi.compute_incidence_matrix_from_blocks" << endl;
 			}
 			Combi.compute_incidence_matrix_from_blocks(
 					v, b, Descr->list_of_blocks_coded_k, Blocks,
 					incma, verbose_level);
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"after Combi.compute_incidence_matrix_from_blocks" << endl;
 			}
 
@@ -966,7 +1028,7 @@ void design_create::compute_incidence_matrix(
 				}
 			}
 			if (f_v) {
-				cout << "design_create::compute_incidence_matrix "
+				cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 						"nb_inc = " << nb_inc << endl;
 			}
 
@@ -984,26 +1046,27 @@ void design_create::compute_incidence_matrix(
 		f_has_incma = true;
 	}
 	else {
-		cout << "design_create::compute_incidence_matrix "
+		cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 				"please give a set" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix "
+		cout << "design_create::compute_incidence_matrix_from_set_of_codes "
 				"The incidence matrix is:" << endl;
 		Int_matrix_print(incma, v, b);
 	}
 
 	if (f_v) {
-		cout << "design_create::compute_incidence_matrix done" << endl;
+		cout << "design_create::compute_incidence_matrix_from_set_of_codes done" << endl;
 	}
 
 }
 
 
 void design_create::compute_incidence_matrix_from_blocks(
-		int *blocks, int nb_blocks, int k, int verbose_level)
+		int *blocks, int nb_blocks, int k,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1051,6 +1114,8 @@ void design_create::compute_incidence_matrix_from_blocks(
 	}
 
 }
+
+
 
 
 }}}

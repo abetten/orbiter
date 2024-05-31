@@ -79,6 +79,7 @@ void combinatorial_object_activity::init_combo(
 }
 
 void combinatorial_object_activity::perform_activity(
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,8 +89,6 @@ void combinatorial_object_activity::perform_activity(
 		cout << "combinatorial_object_activity::perform_activity verbose_level = " << verbose_level << endl;
 	}
 
-	orbiter_kernel_system::activity_output *AO;
-
 	if (f_has_geometric_object) {
 		perform_activity_geometric_object(verbose_level);
 	}
@@ -98,11 +97,6 @@ void combinatorial_object_activity::perform_activity(
 	}
 
 
-	string fname_base;
-
-	fname_base = Combo->IS->Descr->label_txt;
-
-	AO->save(fname_base, verbose_level);
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity done" << endl;
@@ -265,7 +259,8 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_geometric_object f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_geometric_object "
+					"f_ideal" << endl;
 		}
 
 		ring_theory::homogeneous_polynomial_domain *HPD;

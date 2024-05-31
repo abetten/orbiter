@@ -120,9 +120,6 @@ namespace apps_combinatorics {
 	class large_set_was_activity;
 	class large_set_was_description;
 	class large_set_was;
-	class regular_linear_space_description;
-	class regular_ls_classify;
-	class tactical_decomposition;
 
 }
 

@@ -30,6 +30,8 @@ namespace orbiter_kernel_system {
 class activity_output {
 public:
 
+	std::string fname_base;
+
 	std::vector<std::vector<std::string> > Feedback;
 	std::string description_txt;
 	std::string headings;
@@ -39,7 +41,7 @@ public:
 	activity_output();
 	~activity_output();
 	void save(
-			std::string &fname, int verbose_level);
+			int verbose_level);
 
 };
 
@@ -320,6 +322,10 @@ public:
 	void read_table_of_strings(
 			std::string &fname, std::string *&col_label,
 			std::string *&Table, int &m, int &n,
+			int verbose_level);
+	void read_column_of_strings(
+			std::string &fname, std::string &col_label,
+			std::string *&Column, int &len,
 			int verbose_level);
 	void read_csv_file_and_get_column(
 			std::string &fname, std::string &col_header,

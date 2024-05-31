@@ -29,8 +29,8 @@
 #include "Visitors/ReductionVisitors/simplify_numerical_visitor.h"
 #include "Visitors/EvaluateVisitors/eval_visitor.h"
 
-#include "orbiter.h"
-//#include "layer1_foundations/foundations.h"
+//#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
 
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 
@@ -146,8 +146,11 @@ int main(int argc, const char** argv) {
 
 
     // orbiter stuff
-    orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
-    orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+    //orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
+    //orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
+
+	orbiter::layer1_foundations::orbiter_kernel_system::orbiter_session Orbiter_session;
+
 
     //std::string *Argv;
     //data_structures::string_tools ST;

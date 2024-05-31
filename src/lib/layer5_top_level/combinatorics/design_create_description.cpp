@@ -19,6 +19,10 @@ namespace apps_combinatorics {
 
 design_create_description::design_create_description()
 {
+	f_label = false;
+	//std::string label_txt;
+	//std::string label_tex;
+
 	f_field = false;
 	//std::string field_label;
 
@@ -32,6 +36,9 @@ design_create_description::design_create_description()
 	//std::string list_of_base_blocks_group_label;
 	//std::string list_of_base_blocks_fname;
 	//std::string list_of_base_blocks_col;
+	//std::string list_of_base_blocks_selection_fname;
+	//std::string list_of_base_blocks_selection_col;
+	list_of_base_blocks_selection_idx = 0;
 
 	f_list_of_blocks_coded = false;
 	list_of_blocks_coded_v = 0;
@@ -75,7 +82,18 @@ int design_create_description::read_arguments(
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-field") == 0) {
+		if (ST.stringcmp(argv[i], "-label") == 0) {
+			f_label = true;
+			label_txt.assign(argv[++i]);
+			label_tex.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label "
+						<< " " << label_txt
+						<< " " << label_tex
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-field") == 0) {
 			f_field = true;
 			field_label.assign(argv[++i]);
 			if (f_v) {
@@ -102,10 +120,17 @@ int design_create_description::read_arguments(
 			list_of_base_blocks_group_label.assign(argv[++i]);
 			list_of_base_blocks_fname.assign(argv[++i]);
 			list_of_base_blocks_col.assign(argv[++i]);
+			list_of_base_blocks_selection_fname.assign(argv[++i]);
+			list_of_base_blocks_selection_col.assign(argv[++i]);
+			list_of_base_blocks_selection_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-list_of_base_blocks " << list_of_base_blocks_group_label
+				cout << "-list_of_base_blocks"
+						<< " " << list_of_base_blocks_group_label
 						<< " " << list_of_base_blocks_fname
 						<< " " << list_of_base_blocks_col
+						<< " " << list_of_base_blocks_selection_fname
+						<< " " << list_of_base_blocks_selection_col
+						<< " " << list_of_base_blocks_selection_idx
 						<< endl;
 			}
 		}
@@ -198,6 +223,12 @@ int design_create_description::read_arguments(
 
 void design_create_description::print()
 {
+	if (f_label) {
+		cout << "-label "
+				<< " " << label_txt
+				<< " " << label_tex
+				<< endl;
+	}
 	if (f_field) {
 		cout << "-field " << field_label << endl;
 	}
@@ -208,9 +239,13 @@ void design_create_description::print()
 		cout << "-family " << family_name << endl;
 	}
 	if (f_list_of_base_blocks) {
-		cout << "-list_of_base_blocks " << list_of_base_blocks_group_label
+		cout << "-list_of_base_blocks"
+				<< " " << list_of_base_blocks_group_label
 				<< " " << list_of_base_blocks_fname
 				<< " " << list_of_base_blocks_col
+				<< " " << list_of_base_blocks_selection_fname
+				<< " " << list_of_base_blocks_selection_col
+				<< " " << list_of_base_blocks_selection_idx
 				<< endl;
 	}
 	if (f_list_of_blocks_coded) {

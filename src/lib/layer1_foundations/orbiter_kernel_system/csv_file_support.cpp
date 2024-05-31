@@ -2980,6 +2980,58 @@ void csv_file_support::read_table_of_strings(
 }
 
 
+void csv_file_support::read_column_of_strings(
+		std::string &fname, std::string &col_label,
+		std::string *&Column, int &len,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings "
+				"reading file " << fname << endl;
+	}
+
+	std::string *Col_label;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, Col_label,
+			Table, m, n,
+			verbose_level);
+
+	int j;
+
+	for (j = 0; j < n; j++) {
+		if (Col_label[j] == col_label) {
+			break;
+		}
+	}
+	if (j == n) {
+		cout << "csv_file_support::read_column_of_strings "
+				"did not find column with label " << col_label << endl;
+		exit(1);
+	}
+
+	int i;
+
+	len = m;
+	Column = new string[len];
+	for (i = 0; i < len; i++) {
+		Column[i] = Table[i * n + j];
+	}
+
+	delete [] Table;
+	delete [] Col_label;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings done" << endl;
+	}
+}
+
+
+
 void csv_file_support::read_csv_file_and_get_column(
 		std::string &fname, std::string &col_header,
 		long int *&Data, int &data_size, int verbose_level)

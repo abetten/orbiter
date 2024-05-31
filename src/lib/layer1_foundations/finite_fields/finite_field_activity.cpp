@@ -51,6 +51,7 @@ void finite_field_activity::init(
 }
 
 void finite_field_activity::perform_activity(
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

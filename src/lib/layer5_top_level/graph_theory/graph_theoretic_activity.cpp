@@ -423,9 +423,9 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"before CG->all_cliques" << endl;
+					"before CG->Colored_graph_cliques->all_cliques" << endl;
 		}
-		CG->all_cliques(
+		CG->Colored_graph_cliques->all_cliques(
 				Descr->Clique_finder_control,
 				CG->label,
 				feedback,
@@ -433,7 +433,7 @@ void graph_theoretic_activity::perform_activity(
 				verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"after CG->all_cliques" << endl;
+					"after CG->Colored_graph_cliques->all_cliques" << endl;
 		}
 
 		if (f_v) {
@@ -503,7 +503,7 @@ void graph_theoretic_activity::perform_activity(
 		int nexus;
 		int ret;
 
-		ret = CG->test_Neumaier_property(
+		ret = CG->Colored_graph_cliques->test_Neumaier_property(
 				regularity,
 				lambda_value,
 				Descr->test_Neumaier_property_clique_size,

@@ -437,7 +437,8 @@ public:
 		// not the projective dimension
 	long int rank_point_in_PG(
 			int *v, int len);
-	long int nb_points_in_PG(int n);
+	long int nb_points_in_PG(
+			int n);
 		// n is projective dimension
 	void Borel_decomposition(
 			int n, int *M, int *B1, int *B2,
@@ -475,18 +476,30 @@ public:
 			int *six_coeffs, int *v3);
 	int evaluate_quadric_form_in_PG_three(
 			int *ten_coeffs, int *v4);
-	int Pluecker_12(int *x4, int *y4);
-	int Pluecker_21(int *x4, int *y4);
-	int Pluecker_13(int *x4, int *y4);
-	int Pluecker_31(int *x4, int *y4);
-	int Pluecker_14(int *x4, int *y4);
-	int Pluecker_41(int *x4, int *y4);
-	int Pluecker_23(int *x4, int *y4);
-	int Pluecker_32(int *x4, int *y4);
-	int Pluecker_24(int *x4, int *y4);
-	int Pluecker_42(int *x4, int *y4);
-	int Pluecker_34(int *x4, int *y4);
-	int Pluecker_43(int *x4, int *y4);
+	int Pluecker_12(
+			int *x4, int *y4);
+	int Pluecker_21(
+			int *x4, int *y4);
+	int Pluecker_13(
+			int *x4, int *y4);
+	int Pluecker_31(
+			int *x4, int *y4);
+	int Pluecker_14(
+			int *x4, int *y4);
+	int Pluecker_41(
+			int *x4, int *y4);
+	int Pluecker_23(
+			int *x4, int *y4);
+	int Pluecker_32(
+			int *x4, int *y4);
+	int Pluecker_24(
+			int *x4, int *y4);
+	int Pluecker_42(
+			int *x4, int *y4);
+	int Pluecker_34(
+			int *x4, int *y4);
+	int Pluecker_43(
+			int *x4, int *y4);
 	int Pluecker_ij(
 			int i, int j, int *x4, int *y4);
 	int evaluate_symplectic_form(
@@ -824,7 +837,8 @@ public:
 	int Term5(
 			int a1, int a2, int a3, int a4, int a5,
 			int e1, int e2, int e3, int e4, int e5);
-	int term1(int a1, int e1);
+	int term1(
+			int a1, int e1);
 	int term2(
 			int a1, int a2, int e1, int e2);
 	int term3(

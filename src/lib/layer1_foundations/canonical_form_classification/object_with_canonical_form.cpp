@@ -783,6 +783,59 @@ void object_with_canonical_form::init_design_from_block_orbits(
 	}
 }
 
+void object_with_canonical_form::init_design_from_block_table(
+		long int *Block_table, int v, int nb_blocks, int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_table" << endl;
+	}
+
+	object_with_canonical_form::v = v;
+	b = nb_blocks;
+	int nb_flags = b * k;
+	sz = nb_flags;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_table v = " << v << endl;
+		cout << "object_with_canonical_form::init_design_from_block_table b = " << b << endl;
+		cout << "object_with_canonical_form::init_design_from_block_table k = " << k << endl;
+		cout << "object_with_canonical_form::init_design_from_block_table nb_flags = " << nb_flags << endl;
+	}
+
+	object_with_canonical_form::P = NULL;
+
+	type = t_INC;
+
+	object_with_canonical_form::set = NEW_lint(nb_flags);
+
+	int i, j, h, f;
+
+	f = 0;
+	for (j = 0; j < b; j++) {
+		for (h = 0; h < k; h++) {
+			f = j * k + h;
+			i = Block_table[f];
+			set[f++] = i * b + j;
+		}
+	}
+	if (f != nb_flags) {
+		cout << "object_with_canonical_form::init_design_from_block_table "
+				"f != nb_flags" << endl;
+		exit(1);
+	}
+	object_with_canonical_form::sz = nb_flags;
+	//object_with_canonical_form::v = v;
+	//object_with_canonical_form::b = b;
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_design_from_block_table done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_incidence_geometry(
 	long int *data, int data_sz, int v, int b, int nb_flags,
 	int verbose_level)

@@ -50,6 +50,12 @@ void orbits_global::compute_orbit_of_set(
 		cout << "orbits_global::compute_orbit_of_set A2=";
 		A2->print_info();
 	}
+	if (f_v) {
+		cout << "orbits_global::compute_orbit_of_set computing orbit of the set: ";
+		Lint_vec_print(cout, the_set, set_size);
+		cout << endl;
+	}
+
 
 	orbits_schreier::orbit_of_sets *OS;
 
@@ -67,29 +73,34 @@ void orbits_global::compute_orbit_of_set(
 	}
 
 	if (f_v) {
-		cout << "Found an orbit of length " << OS->used_length << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"Found an orbit of length " << OS->used_length << endl;
 	}
 
 	int set_size1;
 
 	if (f_v) {
-		cout << "before OS->get_table_of_orbits" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"before OS->get_table_of_orbits" << endl;
 	}
 	OS->get_table_of_orbits_and_hash_values(
 			Table,
 			orbit_length, set_size1, verbose_level - 2);
 	if (f_v) {
-		cout << "after OS->get_table_of_orbits" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"after OS->get_table_of_orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "before OS->get_table_of_orbits" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"before OS->get_table_of_orbits" << endl;
 	}
 	OS->get_table_of_orbits(
 			Table,
 			orbit_length, set_size, verbose_level);
 	if (f_v) {
-		cout << "after OS->get_table_of_orbits" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"after OS->get_table_of_orbits" << endl;
 	}
 
 
@@ -141,14 +152,16 @@ void orbits_global::compute_orbit_of_set(
 	fname = label_set + "_orbit_under_" + label_group + ".csv";
 
 	if (f_v) {
-		cout << "Writing orbit to file " << fname << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"Writing orbit to file " << fname << endl;
 	}
 	orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, Table, orbit_length, set_size);
 	if (f_v) {
-		cout << "Written file " << fname << " of size "
+		cout << "orbits_global::compute_orbit_of_set "
+				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
@@ -160,7 +173,8 @@ void orbits_global::compute_orbit_of_set(
 	fname = label_set + "_orbit_under_" + label_group + ".txt";
 
 	if (f_v) {
-		cout << "Writing table to file " << fname << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"Writing table to file " << fname << endl;
 	}
 	{
 		ofstream ost(fname);
@@ -181,11 +195,13 @@ void orbits_global::compute_orbit_of_set(
 
 
 	if (f_v) {
-		cout << "before FREE_OBJECT(OS)" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"before FREE_OBJECT(OS)" << endl;
 	}
 	FREE_OBJECT(OS);
 	if (f_v) {
-		cout << "after FREE_OBJECT(OS)" << endl;
+		cout << "orbits_global::compute_orbit_of_set "
+				"after FREE_OBJECT(OS)" << endl;
 	}
 	//FREE_OBJECT(Coset_reps);
 	if (f_v) {

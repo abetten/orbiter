@@ -72,8 +72,10 @@ interface_combinatorics::interface_combinatorics()
 
 	f_pentomino_puzzle = false;
 
+#if 0
 	f_regular_linear_space_classify = false;
 	Rls_descr = NULL;
+#endif
 
 	f_domino_portrait = false;
 	domino_portrait_D = 0;
@@ -444,6 +446,7 @@ void interface_combinatorics::read_arguments(
 			cout << "-pentomino_puzzle " << endl;
 		}
 	}
+#if 0
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		f_regular_linear_space_classify = true;
 
@@ -466,6 +469,7 @@ void interface_combinatorics::read_arguments(
 			cout << "-regular_linear_space_classify " <<endl;
 		}
 	}
+#endif
 	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
 		f_domino_portrait = true;
 		if (f_v) {
@@ -665,10 +669,12 @@ void interface_combinatorics::print()
 	if (f_pentomino_puzzle) {
 		cout << "-pentomino_puzzle " <<endl;
 	}
+#if 0
 	if (f_regular_linear_space_classify) {
 		cout << "-regular_linear_space_classify " << endl;
 		//Rls_descr->print();
 	}
+#endif
 	if (f_domino_portrait) {
 		cout << "-draw_layered_graph " << domino_portrait_D
 				<< " " << domino_portrait_s
@@ -844,6 +850,7 @@ void interface_combinatorics::worker(
 		FREE_OBJECT(P);
 
 	}
+#if 0
 	else if (f_regular_linear_space_classify) {
 
 		apps_combinatorics::regular_ls_classify *Rls;
@@ -860,6 +867,7 @@ void interface_combinatorics::worker(
 		FREE_OBJECT(Rls);
 
 	}
+#endif
 	else if (f_domino_portrait) {
 		graphics::graphical_output GO;
 

@@ -1072,7 +1072,7 @@ public:
 	int *line_orbit;
 	int *line_orbit_inv;
 	geometry::incidence_structure *Inc;
-	apps_combinatorics::tactical_decomposition *T;
+	//apps_combinatorics::tactical_decomposition *T;
 
 	singer_cycle();
 	~singer_cycle();

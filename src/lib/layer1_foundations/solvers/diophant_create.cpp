@@ -224,11 +224,18 @@ void diophant_create::init(
 					mult, type,
 					data1, data2, verbose_level - 1);
 
+			if (f_v) {
+				cout << "mult " << mult << endl;
+			}
+
 			int u;
 
 			for (u = 0; u < mult; u++, pos++) {
 				if (pos >= D->m) {
 					cout << "too many RHS conditions" << endl;
+					cout << "mult=" << mult << endl;
+					cout << "pos=" << pos << endl;
+					cout << "D->m=" << D->m << endl;
 					exit(1);
 				}
 				if (type == t_EQ) {
@@ -255,6 +262,8 @@ void diophant_create::init(
 		} // h
 		if (pos != D->m) {
 			cout << "not enough RHS conditions" << endl;
+			cout << "pos=" << pos << endl;
+			cout << "D->m=" << D->m << endl;
 			exit(1);
 		}
 

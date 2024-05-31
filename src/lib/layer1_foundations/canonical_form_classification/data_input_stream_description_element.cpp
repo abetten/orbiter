@@ -82,6 +82,15 @@ void data_input_stream_description_element::print()
 			<< " " << input_data2
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_file_of_designs_through_blocks) {
+		cout << "-file_of_designs_through_blocks "
+				<< input_string
+				<< input_string2
+			<< " " << input_data1
+			<< " " << input_data2
+			<< " " << input_data3
+			<< endl;
+	}
 
 	else if (input_type == t_data_input_stream_file_of_point_set) {
 		cout << "-file_of_point_set " << input_string << " " << input_string2 << endl;
@@ -132,6 +141,12 @@ void data_input_stream_description_element::print()
 	else if (input_type == t_data_input_stream_orbiter_file) {
 		cout << "-orbiter_file"
 				<< " " << input_string
+			<< endl;
+	}
+	else if (input_type == t_data_input_stream_csv_file) {
+		cout << "-csv_file"
+				<< " " << input_string
+				<< " " << input_string2
 			<< endl;
 	}
 	else if (input_type == t_data_input_stream_graph_by_adjacency_matrix) {
@@ -255,6 +270,20 @@ void data_input_stream_description_element::init_file_of_designs_through_block_o
 	input_data2 = k;
 }
 
+void data_input_stream_description_element::init_file_of_designs_through_blocks(
+		std::string &fname_blocks, std::string &col_label, int v, int b, int k)
+{
+	input_type = t_data_input_stream_file_of_designs_through_blocks;
+
+	input_string.assign(fname_blocks);
+	input_string2.assign(col_label);
+	input_data1 = v;
+	input_data2 = b;
+	input_data3 = k;
+}
+
+
+
 
 void data_input_stream_description_element::init_file_of_point_set(
 		std::string &a)
@@ -350,6 +379,16 @@ void data_input_stream_description_element::init_orbiter_file(
 	input_type = t_data_input_stream_orbiter_file;
 
 	input_string.assign(fname);
+
+}
+
+void data_input_stream_description_element::init_csv_file(
+		std::string &fname, std::string &column_heading)
+{
+	input_type = t_data_input_stream_csv_file;
+
+	input_string.assign(fname);
+	input_string2.assign(column_heading);
 
 }
 

@@ -110,6 +110,10 @@ void variety_object::init_from_string(
 
 	Lint_vec_scan(bitangents_txt, Bitangents, nb_bitangents);
 
+	if (f_v) {
+		cout << "variety_object::init_from_string "
+				"nb_pts = " << nb_pts << " nb_bitangents=" << nb_bitangents << endl;
+	}
 
 	Point_sets = NEW_OBJECT(data_structures::set_of_sets);
 	Line_sets = NEW_OBJECT(data_structures::set_of_sets);

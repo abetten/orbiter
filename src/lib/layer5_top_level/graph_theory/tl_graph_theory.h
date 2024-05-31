@@ -124,6 +124,7 @@ public:
 	std::string fname;
 
 	int f_load_csv_no_border;
+	std::string load_csv_no_border_fname;
 
 	int f_load_adjacency_matrix_from_csv_and_select_value;
 	std::string load_adjacency_matrix_from_csv_and_select_value_fname;
@@ -271,6 +272,15 @@ public:
 			std::string &group_label,
 			std::string &generators_label,
 			int verbose_level);
+	void load_csv_without_border(
+			std::string &fname,
+			int verbose_level);
+	void load_dimacs(
+			std::string &fname,
+			int verbose_level);
+	void load_Brouwer(
+			std::string &fname,
+			int verbose_level);
 	void create_cycle(
 			int n, int verbose_level);
 	void create_inversion_graph(
@@ -301,15 +311,21 @@ public:
 	void create_affine_polar(
 			std::string &orthogonal_space_label,
 			int verbose_level);
-	void make_orbital_graph(
-			apps_algebra::any_group *AG, int orbit_idx,
+	void make_tritangent_plane_disjointness_graph(
 			int verbose_level);
+	void make_trihedral_pair_disjointness_graph(
+			int verbose_level);
+	void make_orbital_graph(
+			std::string &group_label, int orbit_idx,
+			int verbose_level);
+	void make_disjoint_sets_graph(
+			std::string &fname, int verbose_level);
 	void make_collinearity_graph(
-			int *Inc, int nb_rows, int nb_cols,
+			std::string &matrix_label,
 			int verbose_level);
 	void make_chain_graph(
-			int *part1, int sz1,
-			int *part2, int sz2,
+			std::string &partition1,
+			std::string &partition2,
 			int verbose_level);
 	void make_Neumaier_graph_16(
 			int verbose_level);

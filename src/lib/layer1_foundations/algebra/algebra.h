@@ -196,6 +196,8 @@ public:
 			int n, int q);
 	int is_diagonal_matrix(
 			int *A, int n);
+	int is_lc_of_I_and_J(
+			int *A, int n, int &coeff_I, int &coeff_J, int verbose_level);
 
 
 

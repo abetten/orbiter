@@ -293,12 +293,12 @@ void delandtsheer_doyen::init(
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
-					"before create_monomial_group" << endl;
+					"before create_product_action_of_monomial_groups" << endl;
 		}
-		create_monomial_group(verbose_level);
+		create_product_action_of_monomial_groups(verbose_level);
 		if (f_v) {
 			cout << "delandtsheer_doyen::init "
-					"after create_monomial_group" << endl;
+					"after create_product_action_of_monomial_groups" << endl;
 		}
 
 	}
@@ -388,8 +388,7 @@ void delandtsheer_doyen::init(
 	}
 	else {
 		cout << "We don't have -subgroup, "
-				"so orbits on pairs "
-				"are not computed" << endl;
+				"so orbits on pairs are not computed" << endl;
 		exit(1);
 	}
 
@@ -511,7 +510,9 @@ void delandtsheer_doyen::search_singletons(
 
 
 int delandtsheer_doyen::try_to_increase_orbit_covering_based_on_two_sets(
-		long int *pts1, int sz1, long int *pts2, int sz2, long int pt0)
+		long int *pts1, int sz1,
+		long int *pts2, int sz2,
+		long int pt0)
 {
 	int i, o;
 	long int a;
@@ -554,7 +555,8 @@ void delandtsheer_doyen::increase_orbit_covering_firm(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered[o]++;
 		if (orbit_covered[o] > orbit_covered_max[o]) {
-			cout << "delandtsheer_doyen::increase_orbit_covering_firm: could not add point" << endl;
+			cout << "delandtsheer_doyen::increase_orbit_covering_firm: "
+					"could not add point" << endl;
 			exit(1);
 		}
 	}
@@ -573,7 +575,8 @@ void delandtsheer_doyen::decrease_orbit_covering(
 				a, pt0, 0 /*verbose_level - 1*/);
 		orbit_covered[o]--;
 		if (orbit_covered[o] < 0) {
-			cout << "delandtsheer_doyen::decrease_orbit_covering: orbit_covered[o] < 0" << endl;
+			cout << "delandtsheer_doyen::decrease_orbit_covering: "
+					"orbit_covered[o] < 0" << endl;
 			exit(1);
 		}
 	}
@@ -960,19 +963,22 @@ void delandtsheer_doyen::create_graph(
 		}
 	}
 
+	// create a graph from Adj and save the graph to file.
+	// Then delete the graph and Adj.
+
 	graph_theory::colored_graph *CG;
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_graph "
-				"before CG->init_adjacency_no_colors" << endl;
+				"before CG->init_from_adjacency_no_colors" << endl;
 	}
-	CG->init_adjacency_no_colors(
+	CG->init_from_adjacency_no_colors(
 			nb_live_points, Adj, label, label,
 			verbose_level);
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_graph "
-				"after CG->init_adjacency_no_colors" << endl;
+				"after CG->init_from_adjacency_no_colors" << endl;
 	}
 
 	fname = label + "_case_" + std::to_string(case_number) + ".graph";
@@ -1050,14 +1056,14 @@ groups::strong_generators *delandtsheer_doyen::scan_subgroup_generators(
 	return Strong_gens;
 }
 
-void delandtsheer_doyen::create_monomial_group(
+void delandtsheer_doyen::create_product_action_of_monomial_groups(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
 
 	if (f_v) {
-		cout << "delandtsheer_doyen::create_monomial_group" << endl;
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups" << endl;
 	}
 	groups::strong_generators *SG1;
 	groups::strong_generators *SG2;
@@ -1067,32 +1073,36 @@ void delandtsheer_doyen::create_monomial_group(
 	SG2 = NEW_OBJECT(groups::strong_generators);
 
 	if (f_v) {
-		cout << "before generators_for_the_monomial_group "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
+				"before SG1->generators_for_the_monomial_group "
 				"action" << A1->label << endl;
 	}
 	SG1->generators_for_the_monomial_group(
 			A1,
 		M1, verbose_level);
 	if (f_v) {
-		cout << "after generators_for_the_monomial_group "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
+				"after SG1->generators_for_the_monomial_group "
 				"action" << A1->label << endl;
 	}
 
 
 	if (f_v) {
-		cout << "before generators_for_the_monomial_group "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
+				"before SG2->generators_for_the_monomial_group "
 				"action" << A2->label << endl;
 	}
 	SG2->generators_for_the_monomial_group(
 			A2,
 		M2, verbose_level);
 	if (f_v) {
-		cout << "after generators_for_the_monomial_group "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
+				"after SG2->generators_for_the_monomial_group "
 				"action" << A2->label << endl;
 	}
 
 	if (f_v) {
-		cout << "direct_product_action::init "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
 				"before lift_generators" << endl;
 	}
 	P->lift_generators(
@@ -1101,14 +1111,15 @@ void delandtsheer_doyen::create_monomial_group(
 			A0, SG3,
 			verbose_level);
 	if (f_v) {
-		cout << "direct_product_action::init "
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
 				"after lift_generators" << endl;
 	}
 
 	SG = SG3;
 	SG->group_order(go);
 
-	cout << "The group has order " << go << endl;
+	cout << "delandtsheer_doyen::create_product_action_of_monomial_groups "
+			"The group has order " << go << endl;
 
 	actions::action *Ar;
 	long int *points;
@@ -1140,7 +1151,7 @@ void delandtsheer_doyen::create_monomial_group(
 
 	A = Ar;
 	if (f_v) {
-		cout << "delandtsheer_doyen::create_monomial_group done" << endl;
+		cout << "delandtsheer_doyen::create_product_action_of_monomial_groups done" << endl;
 	}
 }
 

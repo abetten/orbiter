@@ -159,7 +159,9 @@ void hadamard_classify::init(
 		Int_vec_zero(color, N);
 
 
-		CG->init(N, 1, 1, color, Bitvec, false, label, label_tex, verbose_level);
+		CG->init_from_bitvector(
+				N, 1, 1, color, Bitvec, false, label, label_tex,
+				verbose_level);
 
 		fname = label + ".colored_graph";
 
@@ -184,7 +186,9 @@ void hadamard_classify::init(
 	color = NEW_int(N);
 	Int_vec_zero(color, N);
 
-	CG->init(N, 1, 1, color, Bitvec, false, label, label_tex, verbose_level);
+	CG->init_from_bitvector(
+			N, 1, 1, color, Bitvec, false, label, label_tex,
+			verbose_level);
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;

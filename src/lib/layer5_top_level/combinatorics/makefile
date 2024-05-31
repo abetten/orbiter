@@ -29,10 +29,7 @@ MODULES = \
 	large_set_was_activity_description.o \
 	large_set_was_activity.o \
 	large_set_was_description.o \
-	large_set_was.o \
-	regular_linear_space_description.o \
-	regular_ls_classify.o \
-	tactical_decomposition.o
+	large_set_was.o
 
 
 all : $(MODULES)

@@ -902,7 +902,8 @@ int representation_theory_domain::Term5(
 	return T2(x);
 }
 
-int representation_theory_domain::term1(int a1, int e1)
+int representation_theory_domain::term1(
+		int a1, int e1)
 {
 	int x;
 

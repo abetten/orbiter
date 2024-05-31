@@ -173,6 +173,13 @@ int nauty_output::belong_to_the_same_orbit(
 	return false;
 }
 
+int nauty_output::get_output_size(
+		int verbose_level)
+{
+	int output_size = 0;
+	return output_size;
+}
+
 void nauty_output::stringify_as_vector(
 		std::vector<std::string> &V,
 		int verbose_level)

@@ -110,8 +110,12 @@ void design_activity::perform_activity(
 			cout << "design_activity::perform_activity "
 					"f_intersection_matrix" << endl;
 		}
+
+		int f_save = false;
+
 		do_intersection_matrix(
 				DC,
+				f_save,
 				verbose_level);
 	}
 	else if (Descr->f_export_blocks) {
@@ -519,6 +523,7 @@ void design_activity::do_export_inc(
 
 void design_activity::do_intersection_matrix(
 		design_create *DC,
+		int f_save,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -528,6 +533,11 @@ void design_activity::do_intersection_matrix(
 	}
 
 
+	if (!DC->f_has_incma) {
+		cout << "design_activity::do_intersection_matrix "
+				"the incidence matrix of the design is not available" << endl;
+		exit(1);
+	}
 
 	int *AAt;
 	int i, j, h, cnt;
@@ -546,27 +556,43 @@ void design_activity::do_intersection_matrix(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
-	string fname;
+	algebra::algebra_global Algebra;
+	int coeff_I, coeff_J;
 
-	fname = DC->label_txt + "_AAt.csv";
-
-	if (f_v) {
-		cout << "design_activity::do_intersection_matrix "
-				"fname=" << fname << endl;
+	if (Algebra.is_lc_of_I_and_J(
+			AAt, DC->v, coeff_I, coeff_J, 0 /* verbose_level*/)) {
+		cout << "Is a linear combination of I and J with coefficients "
+				"coeff(I)=" << coeff_I << " and coeff(J-I)=" << coeff_J << endl;
 	}
-
-	{
-		ofstream ost(fname);
-
-		Fio.Csv_file_support->int_matrix_write_csv(
-				fname, AAt, DC->v, DC->v);
+	else {
+		cout << "Is *not* a linear combination of I and J" << endl;
 
 	}
 
-	if (f_v) {
-		cout << "Written file " << fname
-				<< " of size " << Fio.file_size(fname) << endl;
+	if (f_save) {
+
+		orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = DC->label_txt + "_AAt.csv";
+
+		if (f_v) {
+			cout << "design_activity::do_intersection_matrix "
+					"fname=" << fname << endl;
+		}
+
+		{
+			ofstream ost(fname);
+
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname, AAt, DC->v, DC->v);
+
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
 	}
 
 
@@ -589,16 +615,20 @@ void design_activity::do_export_blocks(
 
 	string fname;
 
-	fname = DC->label_txt + "_blocks_coded.csv";
+	fname = DC->label_txt + "_blocks.csv";
 
 	combinatorics::combinatorics_domain Combi;
 
-	int v = DC->degree;
+	int v = DC->v;
 	int k = DC->k;
-	int b = DC->sz;
+	int b = DC->b;
 
 
 	orbiter_kernel_system::file_io Fio;
+
+
+	#if 0
+
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, DC->set, 1, b);
 
@@ -606,7 +636,7 @@ void design_activity::do_export_blocks(
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
-
+#endif
 
 
 	fname = DC->label_txt + "_blocks.csv";
@@ -645,14 +675,45 @@ void design_activity::do_export_blocks(
 		exit(1);
 	}
 
+	if (f_v) {
+		cout << "design_activity::do_export_blocks "
+				"b = " << b << endl;
+		cout << "design_activity::do_export_blocks "
+				"k = " << k << endl;
+	}
+
+#if 0
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Blocks, b, k);
+#endif
+
+	string *Table;
+	string headings;
+	int nb_rows = b;
+	int nb_cols = 2;
+	int i;
+
+	Table = new string [nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Int_vec_stringify(Blocks + i * k, k) + "\"";
+	}
+	headings = "row,block";
+
+
+
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
+				nb_rows, nb_cols, Table,
+				headings,
+				verbose_level);
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size "
+		cout << "design_activity::do_export_blocks Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
 
+	delete [] Table;
 
 	FREE_int(Blocks);
 

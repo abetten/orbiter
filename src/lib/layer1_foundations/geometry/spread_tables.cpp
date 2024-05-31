@@ -724,7 +724,8 @@ void spread_tables::compute_adjacency_matrix(
 		color = NEW_int(nb_spreads);
 		Int_vec_zero(color, nb_spreads);
 
-		CG->init(nb_spreads, 1, 1,
+		CG->init_from_bitvector(
+				nb_spreads, 1, 1,
 				color, Bitvec,
 				false,
 				label, label_tex,

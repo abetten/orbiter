@@ -425,7 +425,7 @@ void poset_classification_control::early_test_func_for_clique_search(
 		exit(1);
 	}
 
-	clique_test_CG->early_test_func_for_clique_search(
+	clique_test_CG->Colored_graph_cliques->early_test_func_for_clique_search(
 			S, len,
 			candidates, nb_candidates,
 			good_candidates, nb_good_candidates,

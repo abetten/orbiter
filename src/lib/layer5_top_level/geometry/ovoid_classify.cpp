@@ -766,7 +766,7 @@ void ovoid_classify::create_graph(
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	CG->init(
+	CG->init_from_bitvector(
 			nb_points, nb_colors_used, 1,
 		point_color,
 		Bitvec, true /* f_ownership_of_bitvec */,

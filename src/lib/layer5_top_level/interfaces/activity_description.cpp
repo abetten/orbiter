@@ -715,12 +715,15 @@ void activity_description::worker(
 		cout << "activity_description::worker verbose_level = " << verbose_level << endl;
 	}
 
+
+	orbiter_kernel_system::activity_output *AO = NULL;
+
 	if (f_finite_field_activity) {
 
 		if (f_v) {
 			cout << "activity_description::worker f_finite_field_activity" << endl;
 		}
-		do_finite_field_activity(verbose_level);
+		do_finite_field_activity(AO, verbose_level);
 
 	}
 
@@ -794,7 +797,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_combinatorial_object_activity" << endl;
 		}
-		do_combinatorial_object_activity(verbose_level);
+		do_combinatorial_object_activity(AO, verbose_level);
 
 	}
 	else if (f_graph_theoretic_activity) {
@@ -927,6 +930,21 @@ void activity_description::worker(
 		do_orbits_activity(verbose_level);
 	}
 
+
+
+	if (AO) {
+
+		if (f_v) {
+			cout << "activity_description::worker before AO->save" << endl;
+		}
+		AO->save(verbose_level);
+		if (f_v) {
+			cout << "activity_description::worker after AO->save" << endl;
+		}
+
+		FREE_OBJECT(AO);
+	}
+
 	if (f_v) {
 		cout << "activity_description::worker done" << endl;
 	}
@@ -1052,6 +1070,7 @@ void activity_description::print()
 
 
 void activity_description::do_finite_field_activity(
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1089,7 +1108,7 @@ void activity_description::do_finite_field_activity(
 		cout << "activity_description::do_finite_field_activity "
 				"before FA.perform_activity" << endl;
 	}
-	FA.perform_activity(verbose_level);
+	FA.perform_activity(AO, verbose_level);
 	if (f_v) {
 		cout << "activity_description::do_finite_field_activity "
 				"after FA.perform_activity" << endl;
@@ -1581,6 +1600,7 @@ void activity_description::do_blt_set_activity(
 
 
 void activity_description::do_combinatorial_object_activity(
+		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1617,15 +1637,21 @@ void activity_description::do_combinatorial_object_activity(
 
 			Activity.init(Combinatorial_object_activity_description, GOC, verbose_level);
 
+
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "
 						"before Activity.perform_activity" << endl;
 			}
-			Activity.perform_activity(verbose_level);
+			Activity.perform_activity(AO, verbose_level);
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "
 						"after Activity.perform_activity" << endl;
 			}
+
+			if (AO) {
+				AO->fname_base = GOC->label_txt;
+			}
+
 
 		}
 	}
@@ -1639,14 +1665,19 @@ void activity_description::do_combinatorial_object_activity(
 
 			Activity.init_combo(Combinatorial_object_activity_description, Combo, verbose_level);
 
+
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "
 						"before Activity.perform_activity" << endl;
 			}
-			Activity.perform_activity(verbose_level);
+			Activity.perform_activity(AO, verbose_level);
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "
 						"after Activity.perform_activity" << endl;
+			}
+
+			if (AO) {
+				AO->fname_base = Combo->IS->Descr->label_txt;
 			}
 
 		}

@@ -522,7 +522,8 @@ long int linear_algebra::rank_point_in_PG(
 	return rk;
 }
 
-long int linear_algebra::nb_points_in_PG(int n)
+long int linear_algebra::nb_points_in_PG(
+		int n)
 // n is projective dimension
 {
 	long int N;

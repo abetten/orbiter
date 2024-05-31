@@ -56,9 +56,17 @@ void create_graph::init(
 			cout << "create_graph::init f_load" << endl;
 		}
 
+		if (f_v) {
+			cout << "create_graph::init "
+					"before load" << endl;
+		}
 		load(
 				description->fname,
 				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after load" << endl;
+		}
 
 	}
 
@@ -67,17 +75,19 @@ void create_graph::init(
 			cout << "create_graph::init f_Cayley_graph" << endl;
 		}
 
+
 		if (f_v) {
 			cout << "create_graph::init "
-					"group=" << description->Cayley_graph_group << endl;
-			cout << "create_graph::init "
-					"generators=" << description->Cayley_graph_gens << endl;
+					"before make_Cayley_graph" << endl;
 		}
-
 		make_Cayley_graph(
 				description->Cayley_graph_group,
 				description->Cayley_graph_gens,
 				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_Cayley_graph" << endl;
+		}
 
 
 	}
@@ -88,22 +98,19 @@ void create_graph::init(
 					"f_load_from_file_csv_no_border" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-		int *M;
-		int m, n;
-
-		Fio.Csv_file_support->int_matrix_read_csv_no_border(
-				description->fname, M, m, n, verbose_level);
-		N = n;
-		Adj = M;
-
-		label = description->fname;
-
-		data_structures::string_tools String;
-		String.chop_off_extension(label);
 
 
-		label_tex = "File\\_" + label;
+		if (f_v) {
+			cout << "create_graph::init "
+					"before load_csv_without_border" << endl;
+		}
+		load_csv_without_border(
+				description->load_csv_no_border_fname,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after load_csv_without_border" << endl;
+		}
 	}
 
 	else if (description->f_load_adjacency_matrix_from_csv_and_select_value) {
@@ -151,54 +158,19 @@ void create_graph::init(
 			cout << "create_graph::init f_load_dimacs" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-		int nb_V;
-		int i, j, h;
-		std::vector<std::vector<int>> Edges;
 
 		if (f_v) {
 			cout << "create_graph::init "
-					"before Fio.read_graph_dimacs_format" << endl;
+					"before load_dimacs" << endl;
 		}
-		Fio.read_graph_dimacs_format(
+		load_dimacs(
 				description->load_dimacs_fname,
-				nb_V, Edges,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after Fio.read_graph_dimacs_format" << endl;
+					"after load_dimacs" << endl;
 		}
 
-		N = nb_V;
-		if (f_v) {
-			cout << "create_graph::init "
-					"N=" << N << endl;
-		}
-		if (f_v) {
-			cout << "create_graph::init "
-					"nb_E=" << Edges.size() << endl;
-		}
-		Adj = NEW_int(nb_V * nb_V);
-		Int_vec_zero(Adj, nb_V * nb_V);
-
-		for (h = 0; h < Edges.size(); h++) {
-			i = Edges[h][0];
-			j = Edges[h][1];
-			if (false) {
-				cout << "create_graph::init "
-						"edge " << h << " is " << i << " to " << j << endl;
-			}
-			Adj[i * nb_V + j] = 1;
-			Adj[j * nb_V + i] = 1;
-		}
-
-		label = description->load_dimacs_fname;
-
-		data_structures::string_tools String;
-		String.chop_off_extension_and_path(label);
-
-
-		label_tex = "File\\_" + label;
 	}
 
 	else if (description->f_load_Brouwer) {
@@ -206,35 +178,19 @@ void create_graph::init(
 			cout << "create_graph::init f_load_Brouwer" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
-		int nb_V;
 
 		if (f_v) {
 			cout << "create_graph::init "
-					"before Fio.read_graph_Brouwer_format" << endl;
+					"before load_Brouwer" << endl;
 		}
-		Fio.read_graph_Brouwer_format(
+		load_Brouwer(
 				description->load_Brouwer_fname,
-				nb_V, Adj,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after Fio.read_graph_Brouwer_format" << endl;
+					"after load_Brouwer" << endl;
 		}
 
-		N = nb_V;
-		if (f_v) {
-			cout << "create_graph::init "
-					"N=" << N << endl;
-		}
-
-		label = description->load_Brouwer_fname;
-
-		data_structures::string_tools String;
-		String.chop_off_extension_and_path(label);
-
-
-		label_tex = "File\\_" + label;
 	}
 
 	else if (description->f_edge_list) {
@@ -482,50 +438,34 @@ void create_graph::init(
 
 	else if (description->f_tritangent_planes_disjointness_graph) {
 
-		algebraic_geometry::surface_domain *Surf;
-		field_theory::finite_field *F;
+		if (f_v) {
+			cout << "create_graph::init f_affine_polar "
+					"before make_tritangent_plane_disjointness_graph" << endl;
+		}
 
-		F = NEW_OBJECT(field_theory::finite_field);
-		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+		make_tritangent_plane_disjointness_graph(
+				verbose_level);
 
-		F->finite_field_init_small_order(5,
-				false /* f_without_tables */,
-				false /* f_compute_related_fields */,
-				0);
-		Surf->init_surface_domain(F, verbose_level);
-
-		Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph(
-				Adj, N, verbose_level);
-
-		label.assign("tritangent_planes_disjointness");
-		label_tex.assign("tritangent\\_planes\\_disjointness");
-
-		FREE_OBJECT(Surf);
-		FREE_OBJECT(F);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_tritangent_plane_disjointness_graph" << endl;
+		}
 	}
 
 	else if (description->f_trihedral_pair_disjointness_graph) {
 
-		algebraic_geometry::surface_domain *Surf;
-		field_theory::finite_field *F;
+		if (f_v) {
+			cout << "create_graph::init f_affine_polar "
+					"before make_trihedral_pair_disjointness_graph" << endl;
+		}
 
-		F = NEW_OBJECT(field_theory::finite_field);
-		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+		make_trihedral_pair_disjointness_graph(
+				verbose_level);
 
-		F->finite_field_init_small_order(5,
-				false /* f_without_tables */,
-				false /* f_compute_related_fields */,
-				0);
-		Surf->init_surface_domain(F, verbose_level);
-
-		Surf->Schlaefli->Schlaefli_trihedral_pairs->make_trihedral_pair_disjointness_graph(
-				Adj, verbose_level);
-		N = 120;
-		label.assign("trihedral_pair_disjointness");
-		label_tex.assign("trihedral\\_pair\\_disjointness");
-
-		FREE_OBJECT(Surf);
-		FREE_OBJECT(F);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after make_trihedral_pair_disjointness_graph" << endl;
+		}
 	}
 	else if (description->f_non_attacking_queens_graph) {
 
@@ -554,43 +494,24 @@ void create_graph::init(
 	}
 	else if (description->f_disjoint_sets_graph) {
 
-		graph_theory::graph_theory_domain GT;
 
 
 		if (f_v) {
 			cout << "create_graph::init "
-					"before GT.make_disjoint_sets_graph" << endl;
+					"before make_disjoint_sets_graph" << endl;
 		}
-		GT.make_disjoint_sets_graph(Adj, N,
+		make_disjoint_sets_graph(
 				description->disjoint_sets_graph_fname,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
-					"after GT.make_disjoint_sets_graph" << endl;
+					"after make_disjoint_sets_graph" << endl;
 		}
 
-		string L;
-		data_structures::string_tools String;
-
-		L = description->disjoint_sets_graph_fname;
-		String.chop_off_extension(L);
-		L += "_disjoint_sets";
-
-		label = L;
-
-		L = description->disjoint_sets_graph_fname;
-		String.chop_off_extension(L);
-		L += "\\_disjoint\\_sets";
-
-		label_tex = L;
 	}
 	else if (description->f_orbital_graph) {
 
 		graph_theory::graph_theory_domain GT;
-
-		apps_algebra::any_group *AG;
-
-		AG = Get_any_group(description->orbital_graph_group);
 
 
 		if (f_v) {
@@ -598,27 +519,18 @@ void create_graph::init(
 					"before GT.make_orbital_graph" << endl;
 		}
 		make_orbital_graph(
-				AG, description->orbital_graph_orbit_idx,
+				description->orbital_graph_group,
+				description->orbital_graph_orbit_idx,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
 					"after GT.make_orbital_graph" << endl;
 		}
-		if (f_v) {
-			cout << "create_graph::init label = " << label << endl;
-			cout << "create_graph::init label_tex = " << label_tex << endl;
-			cout << "create_graph::init done" << endl;
-		}
-
 	}
 	else if (description->f_collinearity_graph) {
 
 
 
-		int *v;
-		int m, n;
-
-		Get_matrix(description->collinearity_graph_matrix, v, m, n);
 
 
 		if (f_v) {
@@ -626,7 +538,7 @@ void create_graph::init(
 					"before make_collinearity_graph" << endl;
 		}
 		make_collinearity_graph(
-				v, m, n,
+				description->collinearity_graph_matrix,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
@@ -643,26 +555,13 @@ void create_graph::init(
 
 
 
-		int *v1;
-		int sz1;
-		int *v2;
-		int sz2;
-
-		Get_int_vector_from_label(
-				description->chain_graph_partition_1,
-				v1, sz1, 0 /* verbose_level*/);
-		Get_int_vector_from_label(
-				description->chain_graph_partition_2,
-				v2, sz2, 0 /* verbose_level*/);
-
-
 		if (f_v) {
 			cout << "create_graph::init "
 					"before make_chain_graph" << endl;
 		}
 		make_chain_graph(
-				v1, sz1,
-				v2, sz2,
+				description->chain_graph_partition_1,
+				description->chain_graph_partition_2,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init "
@@ -745,17 +644,27 @@ void create_graph::init(
 			cout << "create_graph::init the graph has a subset" << endl;
 		}
 		CG = NEW_OBJECT(graph_theory::colored_graph);
-		CG->init_adjacency_no_colors(N, Adj,
+		if (f_v) {
+			cout << "create_graph::init "
+					"before CG->init_from_adjacency_no_colors" << endl;
+		}
+		CG->init_from_adjacency_no_colors(
+				N, Adj,
 				description->subset_label,
 				description->subset_label_tex,
 				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init "
+					"after CG->init_from_adjacency_no_colors" << endl;
+		}
 
 		int *subset;
 		int sz;
 
 		Int_vec_scan(description->subset_text, subset, sz);
 
-		CG->init_adjacency_two_colors(N,
+		CG->init_adjacency_two_colors(
+				N,
 				Adj, subset, sz,
 				description->subset_label,
 				description->subset_label_tex,
@@ -779,13 +688,14 @@ void create_graph::init(
 			CG = NEW_OBJECT(graph_theory::colored_graph);
 			if (f_v) {
 				cout << "create_graph::init "
-						"before CG->init_adjacency_no_colors" << endl;
+						"before CG->init_from_adjacency_no_colors" << endl;
 			}
-			CG->init_adjacency_no_colors(N, Adj, label, label_tex,
+			CG->init_from_adjacency_no_colors(
+					N, Adj, label, label_tex,
 					verbose_level);
 			if (f_v) {
 				cout << "create_graph::init "
-						"after CG->init_adjacency_no_colors" << endl;
+						"after CG->init_from_adjacency_no_colors" << endl;
 			}
 
 			f_has_CG = true;
@@ -866,6 +776,13 @@ void create_graph::make_Cayley_graph(
 
 	if (f_v) {
 		cout << "create_graph::make_Cayley_graph" << endl;
+	}
+
+	if (f_v) {
+		cout << "create_graph::init "
+				"group=" << group_label << endl;
+		cout << "create_graph::init "
+				"generators=" << generators_label << endl;
 	}
 
 	apps_algebra::any_group *G;
@@ -983,6 +900,113 @@ void create_graph::make_Cayley_graph(
 	String.chop_off_extension(label);
 
 	label_tex = "Cayley\\_graph\\_" + G->A->label_tex;
+
+}
+
+void create_graph::load_csv_without_border(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::load_csv_without_border" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	int *M;
+	int m, n;
+
+	Fio.Csv_file_support->int_matrix_read_csv_no_border(
+			fname, M, m, n, verbose_level);
+	N = n;
+	Adj = M;
+
+	label = description->fname;
+
+	data_structures::string_tools String;
+	String.chop_off_extension(label);
+
+
+	label_tex = "File\\_" + label;
+
+}
+
+void create_graph::load_dimacs(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::load_dimaccs" << endl;
+	}
+
+
+	graph_theory::graph_theory_domain GT;
+
+
+	if (f_v) {
+		cout << "create_graph::create_cycle "
+				"before GT.load_dimacs" << endl;
+	}
+	GT.load_dimacs(Adj, N, fname, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_cycle "
+				"after GT.load_dimacs" << endl;
+	}
+
+
+
+	label = fname;
+
+	data_structures::string_tools String;
+	String.chop_off_extension_and_path(label);
+
+
+	label_tex = "File\\_" + label;
+
+}
+
+void create_graph::load_Brouwer(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::load_Brouwer" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	int nb_V;
+
+	if (f_v) {
+		cout << "create_graph::load_Brouwer "
+				"before Fio.read_graph_Brouwer_format" << endl;
+	}
+	Fio.read_graph_Brouwer_format(
+			fname,
+			nb_V, Adj,
+			verbose_level);
+	if (f_v) {
+		cout << "create_graph::load_Brouwer "
+				"after Fio.read_graph_Brouwer_format" << endl;
+	}
+
+	N = nb_V;
+	if (f_v) {
+		cout << "create_graph::load_Brouwer "
+				"N=" << N << endl;
+	}
+
+	label = description->load_Brouwer_fname;
+
+	data_structures::string_tools String;
+	String.chop_off_extension_and_path(label);
+
+
+	label_tex = "File\\_" + label;
 
 }
 
@@ -1648,8 +1672,51 @@ void create_graph::create_affine_polar(
 	}
 }
 
+void create_graph::make_tritangent_plane_disjointness_graph(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_tritangent_plane_disjointness_graph" << endl;
+	}
+
+	graph_theory::graph_theory_domain GT;
+
+	GT.make_tritangent_plane_disjointness_graph(
+			Adj, N,
+			verbose_level);
+
+	label.assign("tritangent_planes_disjointness");
+	label_tex.assign("tritangent\\_planes\\_disjointness");
+
+}
+
+void create_graph::make_trihedral_pair_disjointness_graph(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_trihedral_pair_disjointness_graph" << endl;
+	}
+
+
+	graph_theory::graph_theory_domain GT;
+
+	GT.make_trihedral_pair_disjointness_graph(
+			Adj, N,
+			verbose_level);
+
+
+	label.assign("trihedral_pair_disjointness");
+	label_tex.assign("trihedral\\_pair\\_disjointness");
+
+
+}
+
 void create_graph::make_orbital_graph(
-		apps_algebra::any_group *AG, int orbit_idx,
+		std::string &group_label, int orbit_idx,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1658,9 +1725,15 @@ void create_graph::make_orbital_graph(
 		cout << "create_graph::make_orbital_graph" << endl;
 	}
 
+	apps_algebra::any_group *AG;
+
+	AG = Get_any_group(group_label);
+
+
 	poset_classification::poset_classification_control *Control;
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
+
 
 	poset_classification::poset_classification *PC;
 
@@ -1729,16 +1802,68 @@ void create_graph::make_orbital_graph(
 				"AG->A->label_tex = " << AG->A->label_tex << endl;
 	}
 
-	label = "Group_" + AG->A->label + "Orbital_" + std::to_string(orbit_idx);
-	label_tex = "Group\\_" + AG->A->label_tex + "Orbital\\_" + std::to_string(orbit_idx);
+	label = "Group_" + AG->A->label
+			+ "_Orbital_" + std::to_string(orbit_idx);
+	label_tex = "Group\\_" + AG->A->label_tex
+			+ "\\_Orbital\\_" + std::to_string(orbit_idx);
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph done" << endl;
 	}
 }
 
+void create_graph::make_disjoint_sets_graph(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_disjoint_sets_graph" << endl;
+	}
+
+	graph_theory::graph_theory_domain GT;
+
+
+	if (f_v) {
+		cout << "create_graph::make_disjoint_sets_graph "
+				"before GT.make_disjoint_sets_graph" << endl;
+	}
+	GT.make_disjoint_sets_graph(
+			Adj, N,
+			fname,
+			verbose_level);
+	if (f_v) {
+		cout << "create_graph::make_disjoint_sets_graph "
+				"after GT.make_disjoint_sets_graph" << endl;
+	}
+
+	string L;
+	data_structures::string_tools String;
+
+	L = fname;
+	String.chop_off_extension(L);
+	L += "_disjoint_sets";
+
+	label = L;
+
+	L = fname;
+	String.chop_off_extension(L);
+	L += "\\_disjoint\\_sets";
+
+	label_tex = L;
+
+
+
+	if (f_v) {
+		cout << "create_graph::make_disjoint_sets_graph done" << endl;
+	}
+
+}
+
+
+
 void create_graph::make_collinearity_graph(
-		int *Inc, int nb_rows, int nb_cols,
+		std::string &matrix_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1747,26 +1872,20 @@ void create_graph::make_collinearity_graph(
 		cout << "create_graph::make_collinearity_graph" << endl;
 	}
 
-	N = nb_rows;
-	Adj = NEW_int(N * N);
-	Int_vec_zero(Adj, N * N);
+	int *Inc;
+	int nb_rows, nb_cols;
 
-	int j, i1, i2;
+	Get_matrix(matrix_label, Inc, nb_rows, nb_cols);
 
-	for (j = 0; j < nb_cols; j++) {
-		for (i1 = 0; i1 < nb_rows; i1++) {
-			if (Inc[i1 * nb_cols + j] == 0) {
-				continue;
-			}
-			for (i2 = i1 + 1; i2 < nb_rows; i2++) {
-				if (Inc[i2 * nb_cols + j] == 0) {
-					continue;
-				}
-				Adj[i1 * N + i2] = 1;
-				Adj[i2 * N + i1] = 1;
-			}
-		}
-	}
+	graph_theory::graph_theory_domain Graph;
+
+
+	Graph.make_collinearity_graph(
+			Adj, N,
+			Inc, nb_rows, nb_cols,
+			verbose_level);
+
+	FREE_int(Inc);
 
 	label = "collinearity_graph";
 	label_tex = "collinearity\\_graph";
@@ -1777,8 +1896,8 @@ void create_graph::make_collinearity_graph(
 }
 
 void create_graph::make_chain_graph(
-		int *part1, int sz1,
-		int *part2, int sz2,
+		std::string &partition1,
+		std::string &partition2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1786,49 +1905,31 @@ void create_graph::make_chain_graph(
 	if (f_v) {
 		cout << "create_graph::make_chain_graph" << endl;
 	}
-	if (sz1 != sz2) {
-		cout << "create_graph::make_chain_graph sz1 != sz2" << endl;
-	}
 
-	int i, j;
-	int N1, N2;
-	int *first1;
-	int *first2;
+	int *part1;
+	int sz1;
+	int *part2;
+	int sz2;
 
-	first1 = NEW_int(sz1 + 1);
-	first2 = NEW_int(sz1 + 1);
+	Get_int_vector_from_label(
+			description->chain_graph_partition_1,
+			part1, sz1, 0 /* verbose_level*/);
+	Get_int_vector_from_label(
+			description->chain_graph_partition_2,
+			part2, sz2, 0 /* verbose_level*/);
 
-	N1 = 0;
-	first1[0] = 0;
-	for (i = 0; i < sz1; i++) {
-		N1 += part1[i];
-		first1[i + 1] = first1[i] + part1[i];
-	}
-	N2 = 0;
-	first2[0] = N1;
-	for (i = 0; i < sz2; i++) {
-		N2 += part2[i];
-		first2[i + 1] = first2[i] + part2[i];
-	}
-	N = N1 + N2;
 
-	Adj = NEW_int(N * N);
-	Int_vec_zero(Adj, N * N);
+	graph_theory::graph_theory_domain Graph;
 
-	int I, J, ii, jj;
 
-	for (I = 0; I < sz1; I++) {
-		for (i = 0; i < part1[I]; i++) {
-			ii = first1[I] + i;
-			for (J = 0; J < sz2 - I; J++) {
-				for (j = 0; j < part2[J]; j++) {
-					jj = first2[J] + j;
-					Adj[ii * N + jj] = 1;
-					Adj[jj * N + ii] = 1;
-				}
-			}
-		}
-	}
+	Graph.make_chain_graph(
+			Adj, N,
+			part1, sz1,
+			part2, sz2,
+			verbose_level);
+
+	FREE_int(part1);
+	FREE_int(part2);
 
 	label = "chain_graph";
 	label_tex = "chain\\_graph";

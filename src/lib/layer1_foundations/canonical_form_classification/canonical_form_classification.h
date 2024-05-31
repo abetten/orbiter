@@ -402,6 +402,8 @@ public:
 			std::string &a, std::string &b, int q);
 	void init_file_of_designs_through_block_orbits(
 			std::string &a, std::string &b, int v, int k);
+	void init_file_of_designs_through_blocks(
+			std::string &fname_blocks, std::string &col_label, int v, int b, int k);
 	void init_file_of_point_set(
 			std::string &a);
 	void init_file_of_designs(
@@ -424,6 +426,8 @@ public:
 			int nb_cases, std::string &cases_fname);
 	void init_orbiter_file(
 			std::string &fname);
+	void init_csv_file(
+			std::string &fname, std::string &column_heading);
 	void init_graph_by_adjacency_matrix(
 			std::string &adjacency_matrix,
 				int N);
@@ -730,6 +734,9 @@ public:
 			data_structures::set_of_sets *Block_orbits,
 			long int *Solution, int width,
 			int k,
+			int verbose_level);
+	void init_design_from_block_table(
+			long int *Block_table, int v, int nb_blocks, int k,
 			int verbose_level);
 	void init_incidence_geometry(
 		long int *data, int data_sz, int v, int b, int nb_flags,

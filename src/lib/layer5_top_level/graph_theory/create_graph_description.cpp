@@ -23,6 +23,7 @@ create_graph_description::create_graph_description()
 	//fname = NULL;
 
 	f_load_csv_no_border = false;
+	//std::string load_csv_no_border_fname;
 
 	f_load_adjacency_matrix_from_csv_and_select_value = false;
 	//std::string load_adjacency_matrix_from_csv_and_select_value_fname;
@@ -151,9 +152,9 @@ int create_graph_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
 			f_load_csv_no_border = true;
-			fname.assign(argv[++i]);
+			load_csv_no_border_fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-load_csv_no_border " << fname << endl;
+				cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-load_adjacency_matrix_from_csv_and_select_value") == 0) {
@@ -437,7 +438,7 @@ void create_graph_description::print()
 		cout << "-load " << fname << endl;
 	}
 	if (f_load_csv_no_border) {
-		cout << "-load_csv_no_border " << fname << endl;
+		cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
 	}
 	if (f_load_adjacency_matrix_from_csv_and_select_value) {
 		cout << "-load_adjacency_matrix_from_csv_and_select_value "

@@ -351,14 +351,6 @@ void classification_of_varieties::main_loop(
 
 	for (input_counter = 0; input_counter < Classifier->Input->nb_objects_to_test; input_counter++) {
 
-		if (Classifier->Input->skip_this_one(input_counter)) {
-			if (f_v) {
-				cout << "classification_of_varieties::main_loop "
-						"skipping case input_counter = " << input_counter << endl;
-			}
-			Variety_table[input_counter] = NULL;
-			continue;
-		}
 
 		string fname_case_out;
 
@@ -392,68 +384,86 @@ void classification_of_varieties::main_loop(
 
 			if (f_v) {
 				cout << "classification_of_varieties::main_loop "
-						"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-						<< " before Variety->compute_canonical_form_nauty" << endl;
+						"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test << endl;
 			}
 
-			Variety->compute_canonical_form_nauty(
-					verbose_level);
-
-
-			if (f_v) {
-				cout << "classification_of_varieties::main_loop "
-						"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-						<< " after Variety->compute_canonical_form_nauty" << endl;
-			}
-
-			Goi[input_counter] = Variety->Canonical_form_nauty->Stab_gens_variety->group_order_as_lint();
-
-			if (Variety->Canonical_form_nauty->f_found_canonical_form && Variety->Canonical_form_nauty->f_found_eqn) {
-
+			if (Classifier->Input->skip_this_one(input_counter)) {
+				if (f_v) {
+					cout << "classification_of_varieties::main_loop "
+							"skipping case input_counter = " << input_counter << endl;
+				}
+				//Variety_table[input_counter] = NULL;
+				Iso_idx[input_counter] = -1;
 				F_first_time[input_counter] = false;
-
-			}
-			else if (Variety->Canonical_form_nauty->f_found_canonical_form && !Variety->Canonical_form_nauty->f_found_eqn) {
-
-				F_first_time[input_counter] = true;
-
-			}
-			else if (!Variety->Canonical_form_nauty->f_found_canonical_form) {
-
-				F_first_time[input_counter] = true;
-
+				Goi[input_counter] = -1;
+				//continue;
 			}
 			else {
-				cout << "classification_of_varieties::main_loop illegal combination" << endl;
-				exit(1);
-			}
 
-			Idx_canonical_form[input_counter] = Variety->Canonical_form_nauty->idx_canonical_form;
-			Idx_equation[input_counter] = Variety->Canonical_form_nauty->idx_equation;
-
-			if (F_first_time[input_counter]) {
-
-
-				Iso_idx[input_counter] = nb_iso;
-
-				int idx, i;
+				if (f_v) {
+					cout << "classification_of_varieties::main_loop "
+							"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
+							<< " before Variety->compute_canonical_form_nauty" << endl;
+				}
+				Variety->compute_canonical_form_nauty(
+						verbose_level);
 
 
-				for (i = 0; i < input_counter; i++) {
-					idx = Idx_canonical_form[i];
-					if (idx >= Variety->Canonical_form_nauty->idx_canonical_form) {
-						Idx_canonical_form[i]++;
-					}
+				if (f_v) {
+					cout << "classification_of_varieties::main_loop "
+							"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
+							<< " after Variety->compute_canonical_form_nauty" << endl;
 				}
 
-				Orbit_input_idx[nb_iso_orbits] = input_counter;
-				nb_iso_orbits++;
+				Goi[input_counter] = Variety->Canonical_form_nauty->Stab_gens_variety->group_order_as_lint();
 
-				nb_iso++;
+				if (Variety->Canonical_form_nauty->f_found_canonical_form && Variety->Canonical_form_nauty->f_found_eqn) {
 
-			}
-			else {
-				Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
+					F_first_time[input_counter] = false;
+
+				}
+				else if (Variety->Canonical_form_nauty->f_found_canonical_form && !Variety->Canonical_form_nauty->f_found_eqn) {
+
+					F_first_time[input_counter] = true;
+
+				}
+				else if (!Variety->Canonical_form_nauty->f_found_canonical_form) {
+
+					F_first_time[input_counter] = true;
+
+				}
+				else {
+					cout << "classification_of_varieties::main_loop illegal combination" << endl;
+					exit(1);
+				}
+
+				Idx_canonical_form[input_counter] = Variety->Canonical_form_nauty->idx_canonical_form;
+				Idx_equation[input_counter] = Variety->Canonical_form_nauty->idx_equation;
+
+				if (F_first_time[input_counter]) {
+
+
+					Iso_idx[input_counter] = nb_iso;
+
+					int idx, i;
+
+
+					for (i = 0; i < input_counter; i++) {
+						idx = Idx_canonical_form[i];
+						if (idx >= Variety->Canonical_form_nauty->idx_canonical_form) {
+							Idx_canonical_form[i]++;
+						}
+					}
+
+					Orbit_input_idx[nb_iso_orbits] = input_counter;
+					nb_iso_orbits++;
+
+					nb_iso++;
+
+				}
+				else {
+					Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
+				}
 			}
 
 		}
@@ -1460,7 +1470,6 @@ void classification_of_varieties::write_classification_by_nauty_csv(
 {
 	int f_v = (verbose_level >= 1);
 	std::string fname;
-	int i;
 
 
 	if (f_v) {
@@ -1479,20 +1488,21 @@ void classification_of_varieties::write_classification_by_nauty_csv(
 		header = stringify_csv_header_line_nauty(verbose_level);
 		ost << header << endl;
 
+		int input_counter;
 
-		for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
+		for (input_counter = 0; input_counter < Classifier->Input->nb_objects_to_test; input_counter++) {
 
 			if (f_v) {
 				cout << "classification_of_varieties::write_classification_by_nauty_csv "
-						"i=" << i << " / " << Classifier->Input->nb_objects_to_test << endl;
+						"input_counter=" << input_counter << " / " << Classifier->Input->nb_objects_to_test << endl;
 			}
 
 			string line;
 
-			line = Variety_table[i]->stringify_csv_entry_one_line_nauty(
-					i, verbose_level);
+			line = Variety_table[input_counter]->stringify_csv_entry_one_line_nauty(
+					input_counter, verbose_level);
 
-			ost << i << "," << line << endl;
+			ost << input_counter << "," << line << endl;
 
 
 		}

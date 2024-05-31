@@ -844,7 +844,8 @@ void quadratic_form::Siegel_map_between_singular_points(
 		cout << "the matrix Bv = B^{-1} is:" << endl;
 		Int_vec_print_integer_matrix(cout, B, d, d);
 	}
-	F->Linear_algebra->mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(
+			w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
 		Int_vec_print(cout, z, d);

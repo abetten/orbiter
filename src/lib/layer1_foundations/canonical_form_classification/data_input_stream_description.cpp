@@ -227,6 +227,29 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i],
+				"-file_of_designs_through_blocks") == 0) {
+
+			data_input_stream_description_element E;
+			string fname_blocks;
+			string col_label;
+			int v, b, k;
+
+			fname_blocks.assign(argv[++i]);
+			col_label.assign(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			k = ST.strtoi(argv[++i]);
+
+			E.init_file_of_designs_through_blocks(fname_blocks, col_label, v, b, k);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-file_of_point_set") == 0) {
 
 			data_input_stream_description_element E;
@@ -371,6 +394,23 @@ int data_input_stream_description::read_arguments(
 
 			fname.assign(argv[++i]);
 			E.init_orbiter_file(fname);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
+		else if (ST.stringcmp(argv[i], "-csv_file") == 0) {
+
+			data_input_stream_description_element E;
+			string fname;
+			string column;
+
+			fname.assign(argv[++i]);
+			column.assign(argv[++i]);
+			E.init_csv_file(fname, column);
 			Input.push_back(E);
 
 			if (f_v) {

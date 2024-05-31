@@ -450,6 +450,8 @@ public:
 	void print_stats();
 	int belong_to_the_same_orbit(
 			int a, int b, int verbose_level);
+	int get_output_size(
+			int verbose_level);
 	void stringify_as_vector(
 			std::vector<std::string> &V,
 			int verbose_level);

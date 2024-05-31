@@ -73,62 +73,74 @@ int linear_algebra::evaluate_quadric_form_in_PG_three(
 	return val;
 }
 
-int linear_algebra::Pluecker_12(int *x4, int *y4)
+int linear_algebra::Pluecker_12(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(0, 1, x4, y4);
 }
 
-int linear_algebra::Pluecker_21(int *x4, int *y4)
+int linear_algebra::Pluecker_21(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(1, 0, x4, y4);
 }
 
-int linear_algebra::Pluecker_13(int *x4, int *y4)
+int linear_algebra::Pluecker_13(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(0, 2, x4, y4);
 }
 
-int linear_algebra::Pluecker_31(int *x4, int *y4)
+int linear_algebra::Pluecker_31(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(2, 0, x4, y4);
 }
 
-int linear_algebra::Pluecker_14(int *x4, int *y4)
+int linear_algebra::Pluecker_14(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(0, 3, x4, y4);
 }
 
-int linear_algebra::Pluecker_41(int *x4, int *y4)
+int linear_algebra::Pluecker_41(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(3, 0, x4, y4);
 }
 
-int linear_algebra::Pluecker_23(int *x4, int *y4)
+int linear_algebra::Pluecker_23(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(1, 2, x4, y4);
 }
 
-int linear_algebra::Pluecker_32(int *x4, int *y4)
+int linear_algebra::Pluecker_32(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(2, 1, x4, y4);
 }
 
-int linear_algebra::Pluecker_24(int *x4, int *y4)
+int linear_algebra::Pluecker_24(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(1, 3, x4, y4);
 }
 
-int linear_algebra::Pluecker_42(int *x4, int *y4)
+int linear_algebra::Pluecker_42(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(3, 1, x4, y4);
 }
 
-int linear_algebra::Pluecker_34(int *x4, int *y4)
+int linear_algebra::Pluecker_34(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(2, 3, x4, y4);
 }
 
-int linear_algebra::Pluecker_43(int *x4, int *y4)
+int linear_algebra::Pluecker_43(
+		int *x4, int *y4)
 {
 	return Pluecker_ij(3, 2, x4, y4);
 }

@@ -89,15 +89,15 @@ void graph_theory_domain::colored_graph_all_cliques(
 
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
-					"before CG.all_rainbow_cliques" << endl;
+					"before CG.Colored_graph_cliques->all_rainbow_cliques" << endl;
 		}
-		CG.all_rainbow_cliques(
+		CG.Colored_graph_cliques->all_rainbow_cliques(
 				Control,
 				//fp,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
-					"after CG.all_rainbow_cliques" << endl;
+					"after CG.Colored_graph_cliques->all_rainbow_cliques" << endl;
 		}
 	}
 	{
@@ -220,7 +220,7 @@ void graph_theory_domain::save_as_colored_graph_easy(
 	colored_graph *CG;
 
 	CG = NEW_OBJECT(colored_graph);
-	CG->init_adjacency_no_colors(
+	CG->init_from_adjacency_no_colors(
 			n, Adj, fname_base, fname_base,
 			0 /*verbose_level*/);
 
@@ -873,6 +873,60 @@ void graph_theory_domain::list_parameters_of_SRG(
 	}
 }
 
+void graph_theory_domain::load_dimacs(
+		int *&Adj, int &N,
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::load_dimacs" << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	int nb_V;
+	int i, j, h;
+	std::vector<std::vector<int>> Edges;
+
+	if (f_v) {
+		cout << "graph_theory_domain::load_dimacs "
+				"before Fio.read_graph_dimacs_format" << endl;
+	}
+	Fio.read_graph_dimacs_format(
+			fname,
+			nb_V, Edges,
+			verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::load_dimacs "
+				"after Fio.read_graph_dimacs_format" << endl;
+	}
+
+	N = nb_V;
+	if (f_v) {
+		cout << "graph_theory_domain::load_dimacs "
+				"N=" << N << endl;
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::load_dimacs "
+				"nb_E=" << Edges.size() << endl;
+	}
+	Adj = NEW_int(nb_V * nb_V);
+	Int_vec_zero(Adj, nb_V * nb_V);
+
+	for (h = 0; h < Edges.size(); h++) {
+		i = Edges[h][0];
+		j = Edges[h][1];
+		if (false) {
+			cout << "graph_theory_domain::load_dimacs "
+					"edge " << h << " is " << i << " to " << j << endl;
+		}
+		Adj[i * nb_V + j] = 1;
+		Adj[j * nb_V + i] = 1;
+	}
+
+}
+
 void graph_theory_domain::make_cycle_graph(
 		int *&Adj, int &N,
 		int n, int verbose_level)
@@ -1264,6 +1318,83 @@ void graph_theory_domain::make_Grassmann_graph(
 }
 
 
+void graph_theory_domain::make_tritangent_plane_disjointness_graph(
+		int *&Adj, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_tritangent_plane_disjointness_graph" << endl;
+	}
+
+	algebraic_geometry::surface_domain *Surf;
+	field_theory::finite_field *F;
+
+	F = NEW_OBJECT(field_theory::finite_field);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_tritangent_plane_disjointness_graph "
+				"before F->finite_field_init_small_order" << endl;
+	}
+	F->finite_field_init_small_order(
+			5,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
+			0);
+	if (f_v) {
+		cout << "graph_theory_domain::make_tritangent_plane_disjointness_graph "
+				"after F->finite_field_init_small_order" << endl;
+	}
+	Surf->init_surface_domain(F, verbose_level);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_tritangent_plane_disjointness_graph "
+				"before Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph" << endl;
+	}
+	Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph(
+			Adj, N, verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::make_tritangent_plane_disjointness_graph "
+				"after Surf->Schlaefli->Schlaefli_tritangent_planes->make_tritangent_plane_disjointness_graph" << endl;
+	}
+
+	FREE_OBJECT(Surf);
+	FREE_OBJECT(F);
+
+}
+
+void graph_theory_domain::make_trihedral_pair_disjointness_graph(
+		int *&Adj, int &N,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_trihedral_pair_disjointness_graph" << endl;
+	}
+
+	algebraic_geometry::surface_domain *Surf;
+	field_theory::finite_field *F;
+
+	F = NEW_OBJECT(field_theory::finite_field);
+	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+
+	F->finite_field_init_small_order(5,
+			false /* f_without_tables */,
+			false /* f_compute_related_fields */,
+			0);
+	Surf->init_surface_domain(F, verbose_level);
+
+	Surf->Schlaefli->Schlaefli_trihedral_pairs->make_trihedral_pair_disjointness_graph(
+			Adj, verbose_level);
+	N = 120;
+
+	FREE_OBJECT(Surf);
+	FREE_OBJECT(F);
+
+}
 
 void graph_theory_domain::make_non_attacking_queens_graph(
 		int *&Adj, int &N,
@@ -1641,6 +1772,102 @@ void graph_theory_domain::make_Neumaier_graph_25(
 
 }
 
+void graph_theory_domain::make_chain_graph(
+		int *&Adj, int &N,
+		int *part1, int sz1,
+		int *part2, int sz2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_chain_graph" << endl;
+	}
+	if (sz1 != sz2) {
+		cout << "graph_theory_domain::make_chain_graph sz1 != sz2" << endl;
+	}
+
+	int i, j;
+	int N1, N2;
+	int *first1;
+	int *first2;
+
+	first1 = NEW_int(sz1 + 1);
+	first2 = NEW_int(sz1 + 1);
+
+	N1 = 0;
+	first1[0] = 0;
+	for (i = 0; i < sz1; i++) {
+		N1 += part1[i];
+		first1[i + 1] = first1[i] + part1[i];
+	}
+	N2 = 0;
+	first2[0] = N1;
+	for (i = 0; i < sz2; i++) {
+		N2 += part2[i];
+		first2[i + 1] = first2[i] + part2[i];
+	}
+	N = N1 + N2;
+
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+	int I, J, ii, jj;
+
+	for (I = 0; I < sz1; I++) {
+		for (i = 0; i < part1[I]; i++) {
+			ii = first1[I] + i;
+			for (J = 0; J < sz2 - I; J++) {
+				for (j = 0; j < part2[J]; j++) {
+					jj = first2[J] + j;
+					Adj[ii * N + jj] = 1;
+					Adj[jj * N + ii] = 1;
+				}
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_chain_graph done" << endl;
+	}
+}
+
+void graph_theory_domain::make_collinearity_graph(
+		int *&Adj, int &N,
+		int *Inc, int nb_rows, int nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_collinearity_graph" << endl;
+	}
+
+	N = nb_rows;
+	Adj = NEW_int(N * N);
+	Int_vec_zero(Adj, N * N);
+
+	int j, i1, i2;
+
+	for (j = 0; j < nb_cols; j++) {
+		for (i1 = 0; i1 < nb_rows; i1++) {
+			if (Inc[i1 * nb_cols + j] == 0) {
+				continue;
+			}
+			for (i2 = i1 + 1; i2 < nb_rows; i2++) {
+				if (Inc[i2 * nb_cols + j] == 0) {
+					continue;
+				}
+				Adj[i1 * N + i2] = 1;
+				Adj[i2 * N + i1] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_collinearity_graph done" << endl;
+	}
+}
 
 void graph_theory_domain::make_adjacency_bitvector(
 		int *&Adj, int *v, int N,

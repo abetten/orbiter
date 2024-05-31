@@ -10,7 +10,10 @@
 
 
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "group_actions.h"
+
+
 
 using namespace std;
 

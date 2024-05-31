@@ -325,6 +325,60 @@ int data_input_stream::count_number_of_objects_to_test(
 
 
 		}
+		else if (Descr->Input[input_idx].input_type ==
+				t_data_input_stream_file_of_designs_through_blocks) {
+
+			string fname_blocks, col_label;
+			int v, b, k;
+
+			fname_blocks = Descr->Input[input_idx].input_string;
+			col_label = Descr->Input[input_idx].input_string2;
+			v = Descr->Input[input_idx].input_data1;
+			b = Descr->Input[input_idx].input_data2;
+			k = Descr->Input[input_idx].input_data3;
+
+			if (f_v) {
+				cout << "data_input_stream::count_number_of_objects_to_test "
+						"t_data_input_stream_file_of_designs_through_blocks" << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test fname_blocks = " << fname_blocks << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test col_label = " << col_label << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test v = " << v << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test b = " << b << endl;
+				cout << "data_input_stream::count_number_of_objects_to_test k = " << k << endl;
+			}
+
+
+			orbiter_kernel_system::file_io Fio;
+			data_structures::set_of_sets *SoS_blocks;
+
+
+			Fio.Csv_file_support->read_column_and_parse(
+					fname_blocks, col_label,
+					SoS_blocks,
+					0 /*verbose_level*/);
+
+			SoS_blocks->underlying_set_size = v;
+
+			if (f_v) {
+				cout << "Read the file " << fname_blocks
+						<< ", nb_sets=" << SoS_blocks->nb_sets << endl;
+				SoS_blocks->print_table();
+			}
+
+			int nb_designs;
+
+			nb_designs = SoS_blocks->nb_sets / b;
+			if (f_v) {
+				cout << "data_input_stream::count_number_of_objects_to_test "
+						"nb_designs = " << nb_designs << endl;
+			}
+
+			FREE_OBJECT(SoS_blocks);
+
+			nb_objects_to_test += nb_designs;
+
+
+		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
 			if (f_v) {
 				cout << "input set of points from file "
@@ -357,12 +411,12 @@ int data_input_stream::count_number_of_objects_to_test(
 				data_structures::set_of_sets *SoS;
 				int nck;
 				combinatorics::combinatorics_domain Combi;
-				int N_points, b, k, partition_class_size;
+				int N_points, k; // b, partition_class_size;
 
 				N_points = Descr->Input[input_idx].input_data1;
-				b = Descr->Input[input_idx].input_data2;
+				//b = Descr->Input[input_idx].input_data2;
 				k = Descr->Input[input_idx].input_data3;
-				partition_class_size = Descr->Input[input_idx].input_data4;
+				//partition_class_size = Descr->Input[input_idx].input_data4;
 
 				nck = Combi.int_n_choose_k(N_points, k);
 				SoS = NEW_OBJECT(data_structures::set_of_sets);
@@ -562,7 +616,49 @@ int data_input_stream::count_number_of_objects_to_test(
 			nb_objects_to_test += nb_sol;
 			FREE_OBJECT(SoS);
 		}
-	else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
+        else if (Descr->Input[input_idx].input_type == t_data_input_stream_csv_file) {
+            if (f_v) {
+                cout << "t_data_input_stream_csv_file" << endl;
+            }
+
+            string fname;
+            string col_label;
+
+            fname = Descr->Input[input_idx].input_string;
+            col_label = Descr->Input[input_idx].input_string2;
+
+            if (f_v) {
+                cout << "orbiter file, fname=" << fname << endl;
+            }
+
+            data_structures::string_tools ST;
+            orbiter_kernel_system::file_io Fio;
+
+            if (Fio.file_size(fname) <= 0) {
+                cout << "The file " << fname << " does not exist" << endl;
+                exit(1);
+            }
+
+            //data_structures::string_tools ST;
+
+            data_structures::set_of_sets *SoS;
+            int nb_sol;
+
+
+            Fio.Csv_file_support->read_column_and_parse(
+                    fname, col_label,
+                    SoS,
+                    0 /*verbose_level - 2*/);
+
+            nb_sol = SoS->nb_sets;
+            if (f_v) {
+                cout << "objects from file " << fname <<
+                     " the file contains " << nb_sol << " sets" << endl;
+            }
+             nb_objects_to_test += nb_sol;
+            FREE_OBJECT(SoS);
+        }
+    	else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
 			if (f_v) {
 				cout << "input graph by adjacency matrix on "
 						<< Descr->Input[input_idx].input_data1 << " vertices:" << endl;
@@ -604,11 +700,14 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
+            FREE_OBJECT(CG);
+
 			nb_objects_to_test++;
 
 		}
 		else {
-			cout << "unknown input type" << endl;
+			cout << "data_input_stream::count_number_of_objects_to_test "
+                    "unknown input type" << endl;
 			exit(1);
 		}
 	}
@@ -1001,7 +1100,7 @@ void data_input_stream::read_objects(
 			Fio.Csv_file_support->read_column_and_parse(
 					fname_block_orbits, col_label,
 					SoS,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			SoS->underlying_set_size = v;
 
@@ -1068,6 +1167,87 @@ void data_input_stream::read_objects(
 			FREE_lint(Solutions);
 
 			FREE_OBJECT(SoS);
+
+		}
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs_through_blocks) {
+
+			string fname_blocks;
+			string col_label;
+			int v, b, k;
+
+			fname_blocks = Descr->Input[input_idx].input_string;
+			col_label = Descr->Input[input_idx].input_string2;
+			v = Descr->Input[input_idx].input_data1;
+			b = Descr->Input[input_idx].input_data2;
+			k = Descr->Input[input_idx].input_data3;
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs_through_blocks" << endl;
+				cout << "data_input_stream::read_objects fname_blocks = " << fname_blocks << endl;
+				cout << "data_input_stream::read_objects col_label = " << col_label << endl;
+				cout << "data_input_stream::read_objects v = " << v << endl;
+				cout << "data_input_stream::read_objects b = " << b << endl;
+				cout << "data_input_stream::read_objects k = " << k << endl;
+			}
+
+
+			orbiter_kernel_system::file_io Fio;
+			data_structures::set_of_sets *SoS_blocks;
+
+
+			Fio.Csv_file_support->read_column_and_parse(
+					fname_blocks, col_label,
+					SoS_blocks,
+					0 /*verbose_level*/);
+
+			SoS_blocks->underlying_set_size = v;
+
+			if (f_v) {
+				cout << "Read the file " << fname_blocks
+						<< ", underlying_set_size=" << SoS_blocks->underlying_set_size << endl;
+				SoS_blocks->print_table();
+			}
+
+			int nb_designs;
+
+			nb_designs = SoS_blocks->nb_sets / b;
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"nb_designs = " << nb_designs << endl;
+			}
+
+
+			int h, j, u;
+
+			long int *Block_table;
+
+
+			Block_table = NEW_lint(b * k);
+
+			for (h = 0; h < nb_designs; h++) {
+
+
+				object_with_canonical_form *OwCF;
+
+				for (j = 0; j < b; j++) {
+					for (u = 0; u < k; u++) {
+						Block_table[j * k + u] = SoS_blocks->Sets[h * b + j][u];
+					}
+				}
+
+				OwCF = NEW_OBJECT(object_with_canonical_form);
+
+				OwCF->init_design_from_block_table(
+						Block_table, v, b, k,
+						verbose_level);
+
+				Objects.push_back(OwCF);
+			}
+
+			FREE_lint(Block_table);
+			FREE_OBJECT(SoS_blocks);
 
 		}
 
@@ -1276,7 +1456,7 @@ void data_input_stream::read_objects(
 			Fio.Csv_file_support->read_column_and_parse(
 					cases_fname,
 					col_label,
-					Reps, verbose_level);
+					Reps, 0 /*verbose_level*/);
 			if (!Reps->has_constant_size_property()) {
 				cout << "data_input_stream::read_objects "
 						"the sets have different sizes" << endl;
@@ -1378,7 +1558,7 @@ void data_input_stream::read_objects(
 			data_structures::set_of_sets *SoS;
 			int underlying_set_size = 0;
 			int nb_sol;
-			int sol_width;
+			//int sol_width;
 
 			SoS = NEW_OBJECT(data_structures::set_of_sets);
 			SoS->init_from_orbiter_file(underlying_set_size,
@@ -1405,6 +1585,61 @@ void data_input_stream::read_objects(
 			}
 			FREE_OBJECT(SoS);
 		}
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_csv_file) {
+			if (f_v) {
+				cout << "input from csv file" << endl;
+			}
+
+			string fname;
+			string col_label;
+
+			fname = Descr->Input[input_idx].input_string;
+			col_label = Descr->Input[input_idx].input_string2;
+
+			if (f_v) {
+				cout << "input from csv file, fname=" << fname << " column=" << col_label << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+
+
+			data_structures::string_tools ST;
+
+			data_structures::set_of_sets *SoS;
+			int nb_sol;
+
+
+			Fio.Csv_file_support->read_column_and_parse(
+					fname, col_label,
+					SoS,
+					0 /* verbose_level - 2*/);
+
+			nb_sol = SoS->nb_sets;
+			if (f_v) {
+				cout << "objects from file " << fname <<
+						" the file contains " << nb_sol << " sets" << endl;
+			}
+
+			int i;
+
+			for (i = 0; i < nb_sol; i++) {
+				object_with_canonical_form *OwCF;
+
+
+				OwCF = NEW_OBJECT(object_with_canonical_form);
+
+				OwCF->init_point_set(
+						SoS->Sets[i], SoS->Set_size[i],
+						0 /*verbose_level*/);
+
+				Objects.push_back(OwCF);
+			}
+			FREE_OBJECT(SoS);
+
+
+		}
+
 
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
 
@@ -1453,7 +1688,7 @@ void data_input_stream::read_objects(
 			Fio.Csv_file_support->read_column_and_parse(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_string2 /* col_label */,
-					Reps, verbose_level);
+					Reps, 0 /*verbose_level*/);
 			if (!Reps->has_constant_size_property()) {
 				cout << "data_input_stream::read_objects "
 						"the sets have different sizes" << endl;

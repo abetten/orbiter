@@ -11,6 +11,7 @@ LFLAGS = -lm -lginac -lcln
 MODULES = \
 	clique_finder.o \
 	clique_finder_control.o \
+	colored_graph_cliques.o \
 	colored_graph.o \
 	graph_layer.o \
 	graph_node.o \

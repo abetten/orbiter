@@ -980,18 +980,35 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty(
 		int i, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty" << endl;
+	}
+
 	vector<string> v;
 	int j;
 	string line;
 
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty "
+				"before prepare_csv_entry_one_line_nauty" << endl;
+	}
 	prepare_csv_entry_one_line_nauty(
 			v, i, verbose_level);
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty "
+				"after prepare_csv_entry_one_line_nauty" << endl;
+	}
 
 	for (j = 0; j < v.size(); j++) {
 		line += v[j];
 		if (j < v.size() - 1) {
 			line += ",";
 		}
+	}
+	if (f_v) {
+		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty done" << endl;
 	}
 	return line;
 }
@@ -1005,16 +1022,30 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty" << endl;
 	}
 
+
 	v.push_back(std::to_string(Vo->cnt));
 	v.push_back(std::to_string(Vo->po));
 	v.push_back(std::to_string(Vo->so));
 	v.push_back(std::to_string(Vo->po_go));
 	v.push_back(std::to_string(Vo->po_index));
-	v.push_back(std::to_string(Canonical_form_classifier->Output->Iso_idx[i]));
-	v.push_back(std::to_string(Canonical_form_classifier->Output->F_first_time[i]));
-	v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_canonical_form[i]));
-	v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_equation[i]));
-	//v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
+	if (Canonical_form_classifier->Input->skip_this_one(i)) {
+		if (f_v) {
+			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+					"case input_counter = " << i << " was skipped" << endl;
+		}
+		v.push_back(std::to_string(-1));
+		v.push_back(std::to_string(-1));
+		v.push_back(std::to_string(-1));
+		v.push_back(std::to_string(-1));
+
+	}
+	else {
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Iso_idx[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->F_first_time[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_canonical_form[i]));
+		v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_equation[i]));
+		//v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
+	}
 
 
 
@@ -1030,6 +1061,11 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	string s_Pts;
 	string s_Bitangents;
 
+	if (f_v) {
+		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+				"before Vo->Variety_object->stringify" << endl;
+	}
+
 
 	Vo->Variety_object->stringify(
 			s_Eqn, s_Eqn2, s_Pts, s_Bitangents);
@@ -1038,15 +1074,26 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	if (f_v) {
 		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
-				<< " writing data" << endl;
+				<< " pushing strings" << endl;
 	}
 
 	v.push_back("\"" + s_Eqn + "\"");
 	v.push_back("\"" + s_Eqn2 + "\"");
 	v.push_back("\"" + s_Pts + "\"");
 	v.push_back("\"" + s_Bitangents + "\"");
+	if (f_v) {
+		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty "
+				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
+				<< " after pushing strings" << endl;
+	}
 
 	if (Canonical_form_classifier->Descr->carry_through.size()) {
+
+		if (f_v) {
+			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+					"pushing Carrying_through" << endl;
+		}
+
 		int j;
 
 		for (j = 0; j < Canonical_form_classifier->Descr->carry_through.size(); j++) {
@@ -1054,21 +1101,45 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 		}
 	}
 
-	int l;
-	std::vector<std::string> NO_stringified;
+	if (Canonical_form_classifier->Input->skip_this_one(i)) {
+		if (f_v) {
+			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+					"case input_counter = " << i << " was skipped" << endl;
+		}
 
-	Canonical_form_nauty->NO->stringify_as_vector(
-			NO_stringified,
-			verbose_level);
+		int l;
 
-	l = NO_stringified.size();
-	int j;
+		// we don't have NO, so we create an empty one here:
+		l1_interfaces::nauty_output NO;
 
-	for (j = 0; j < l; j++) {
-		v.push_back("\"" + NO_stringified[j] + "\"");
+		l = NO.get_output_size(verbose_level);
+		int j;
+
+		for (j = 0; j < l; j++) {
+			v.push_back("\"" + std::to_string(-1) + "\"");
+		}
+
 	}
-	v.push_back("\"" + std::to_string(Canonical_form_nauty->Orb->used_length) + "\"");
-	v.push_back("\"" + Canonical_form_nauty->Stab_gens_variety->group_order_stringify() + "\"");
+	else {
+
+		int l;
+		std::vector<std::string> NO_stringified;
+
+		Canonical_form_nauty->NO->stringify_as_vector(
+				NO_stringified,
+				verbose_level);
+
+		l = NO_stringified.size();
+		int j;
+
+		for (j = 0; j < l; j++) {
+			v.push_back("\"" + NO_stringified[j] + "\"");
+		}
+		v.push_back("\"" + std::to_string(Canonical_form_nauty->Orb->used_length) + "\"");
+		v.push_back("\"" + Canonical_form_nauty->Stab_gens_variety->group_order_stringify() + "\"");
+
+
+	}
 
 
 	if (f_v) {

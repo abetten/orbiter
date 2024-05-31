@@ -1105,20 +1105,20 @@ void combinatorial_object::do_graph_theoretic_activity(
 	//AO->nb_rows = IS->Objects.size();
 
 	{
-	apps_graph_theory::graph_theoretic_activity Activity;
+		apps_graph_theory::graph_theoretic_activity Activity;
 
 
-	Activity.feedback_headings(
-			Graph_theoretic_activity_description,
-			AO->headings,
-			AO->nb_cols,
-			verbose_level);
+		Activity.feedback_headings(
+				Graph_theoretic_activity_description,
+				AO->headings,
+				AO->nb_cols,
+				verbose_level);
 
 
-	Activity.get_label(
-			Graph_theoretic_activity_description,
-			AO->description_txt,
-			verbose_level);
+		Activity.get_label(
+				Graph_theoretic_activity_description,
+				AO->description_txt,
+				verbose_level);
 
 	}
 
@@ -1154,13 +1154,14 @@ void combinatorial_object::do_graph_theoretic_activity(
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
 			cout << "combinatorial_object::do_graph_theoretic_activity "
-					"before CG->init_adjacency_no_colors" << endl;
+					"before CG->init_from_adjacency_no_colors" << endl;
 		}
-		CG->init_adjacency_no_colors(N, Adj, label, label_tex,
+		CG->init_from_adjacency_no_colors(
+				N, Adj, label, label_tex,
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object::do_graph_theoretic_activity "
-					"after CG->init_adjacency_no_colors" << endl;
+					"after CG->init_from_adjacency_no_colors" << endl;
 		}
 
 		{

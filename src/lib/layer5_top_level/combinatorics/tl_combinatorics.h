@@ -74,7 +74,8 @@ public:
 	void print();
 	void print_orbits_sorted();
 	void print_orbit_reps_with_minimum_weight();
-	void export_orbit(int idx,
+	void export_orbit(
+			int idx,
 			data_structures::int_matrix *&M,
 			int verbose_level);
 
@@ -205,6 +206,7 @@ public:
 			apps_combinatorics::combinatorial_object *Combo,
 			int verbose_level);
 	void perform_activity(
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void perform_activity_geometric_object(
 			int verbose_level);
@@ -322,6 +324,14 @@ public:
 			design_tables *&T,
 			groups::strong_generators *Gens,
 			int verbose_level);
+	void span_base_blocks(
+			apps_algebra::any_group *AG,
+			data_structures::set_of_sets *SoS_base_blocks,
+			int *Base_block_selection, int nb_base_blocks,
+			int &v, int &b, int &k,
+			long int *&Blocks,
+			int verbose_level);
+	// Blocks[b * k]
 
 #if 0
 	void Hill_cap56(
@@ -623,7 +633,9 @@ public:
 	void search_singletons(
 			int verbose_level);
 	int try_to_increase_orbit_covering_based_on_two_sets(
-			long int *pts1, int sz1, long int *pts2, int sz2, long int pt0);
+			long int *pts1, int sz1,
+			long int *pts2, int sz2,
+			long int pt0);
 	void increase_orbit_covering_firm(
 			long int *pts, int sz, long int pt0);
 	// firm means that an excess in the orbit covering raises an error
@@ -642,7 +654,7 @@ public:
 			int verbose_level);
 	groups::strong_generators *scan_subgroup_generators(
 			int verbose_level);
-	void create_monomial_group(
+	void create_product_action_of_monomial_groups(
 			int verbose_level);
 	void create_action(
 			int verbose_level);
@@ -777,6 +789,7 @@ public:
 			int verbose_level);
 	void do_intersection_matrix(
 			design_create *DC,
+			int f_save,
 			int verbose_level);
 	void do_export_blocks(
 			design_create *DC,
@@ -804,6 +817,10 @@ class design_create_description {
 
 public:
 
+	int f_label;
+	std::string label_txt;
+	std::string label_tex;
+
 	int f_field;
 	std::string field_label;
 
@@ -817,6 +834,9 @@ public:
 	std::string list_of_base_blocks_group_label;
 	std::string list_of_base_blocks_fname;
 	std::string list_of_base_blocks_col;
+	std::string list_of_base_blocks_selection_fname;
+	std::string list_of_base_blocks_selection_col;
+	int list_of_base_blocks_selection_idx;
 
 	int f_list_of_blocks_coded;
 	int list_of_blocks_coded_v;
@@ -874,6 +894,7 @@ public:
 
 	int q;
 	field_theory::finite_field *F;
+
 	int k;
 
 	actions::action *A;
@@ -890,7 +911,8 @@ public:
 	int degree;
 
 	int f_has_set;
-	long int *set;
+	long int *set; // [sz]
+		// The subsets are coded as ranks of k-subsets.
 	int sz; // = b, the number of blocks
 
 	int f_has_group;
@@ -928,7 +950,7 @@ public:
 			int verbose_level);
 	int get_color_as_two_design_assume_sorted(
 			long int *design, int verbose_level);
-	void compute_incidence_matrix(
+	void compute_incidence_matrix_from_set_of_codes(
 			int verbose_level);
 	void compute_incidence_matrix_from_blocks(
 			int *blocks, int nb_blocks, int k, int verbose_level);
@@ -968,7 +990,8 @@ public:
 			std::string &label,
 			groups::strong_generators *Strong_generators,
 			int verbose_level);
-	void create_table(int verbose_level);
+	void create_table(
+			int verbose_level);
 	void create_action(
 			actions::action *&A_on_designs,
 			int verbose_level);
@@ -1603,159 +1626,6 @@ int large_set_was_classify_test_pair_of_orbits(
 		void *extra_data);
 
 
-
-
-
-// #############################################################################
-// regular_linear_space_description.cpp
-// #############################################################################
-
-
-//! a description of a class of regular linear spaces from the command line
-
-
-class regular_linear_space_description {
-public:
-
-	int f_m;
-	int m;
-	int f_n;
-	int n;
-	int f_k;
-	int k;
-	int f_r;
-	int r;
-	int f_target_size;
-	int target_size;
-
-	int starter_size;
-	int *initial_pair_covering;
-
-	int f_has_control;
-	poset_classification::poset_classification_control *Control;
-
-
-
-	regular_linear_space_description();
-	~regular_linear_space_description();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-
-
-};
-
-
-
-// #############################################################################
-// regular_ls_classify.cpp
-// #############################################################################
-
-
-//! classification of regular linear spaces
-
-
-
-
-class regular_ls_classify {
-
-public:
-
-	regular_linear_space_description *Descr;
-
-	int m2;
-	int *v1; // [k]
-
-	poset_classification::poset_with_group_action *Poset;
-	poset_classification::poset_classification *gen;
-	actions::action *A;
-	actions::action *A2;
-	induced_actions::action_on_k_subsets *Aonk;
-		// only a pointer, do not free
-
-	int *row_sum; // [m]
-	int *pairs; // [m2]
-	int *open_rows; // [m]
-	int *open_row_idx; // [m]
-	int *open_pairs; // [m2]
-	int *open_pair_idx; // [m2]
-
-	regular_ls_classify();
-	~regular_ls_classify();
-	void init_and_run(
-			regular_linear_space_description *Descr,
-			int verbose_level);
-	void init_group(
-			int verbose_level);
-	void init_action_on_k_subsets(
-			int onk, int verbose_level);
-	void init_generator(
-			poset_classification::poset_classification_control *Control,
-			groups::strong_generators *Strong_gens,
-			int verbose_level);
-	void early_test_func(
-			long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	void print(
-			std::ostream &ost, long int *S, int len);
-	void lifting_prepare_function_new(
-			solvers_package::exact_cover *E, int starter_case,
-		long int *candidates, int nb_candidates,
-		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_labels,
-		int &f_ruled_out,
-		int verbose_level);
-};
-
-
-
-
-
-
-
-// #############################################################################
-// tactical_decomposition.cpp
-// #############################################################################
-
-//! tactical decomposition of an incidence structure with respect to a given group
-
-
-
-class tactical_decomposition {
-public:
-
-	int set_size;
-	int nb_blocks;
-	geometry::incidence_structure *Inc;
-	int f_combined_action;
-	actions::action *A;
-	actions::action *A_on_points;
-	actions::action *A_on_lines;
-	groups::strong_generators * gens;
-	data_structures::partitionstack *Stack;
-	groups::schreier *Sch;
-	groups::schreier *Sch_points;
-	groups::schreier *Sch_lines;
-
-	tactical_decomposition();
-	~tactical_decomposition();
-	void init(
-			int nb_rows, int nb_cols,
-			geometry::incidence_structure *Inc,
-			int f_combined_action,
-			actions::action *Aut,
-			actions::action *A_on_points,
-			actions::action *A_on_lines,
-			groups::strong_generators * gens,
-			int verbose_level);
-	void report(
-			int f_enter_math, std::ostream &ost);
-
-};
 
 
 

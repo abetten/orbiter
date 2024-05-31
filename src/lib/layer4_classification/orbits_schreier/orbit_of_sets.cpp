@@ -81,7 +81,19 @@ void orbit_of_sets::init(
 	cosetrep = NEW_int(A->elt_size_in_int);
 	cosetrep_tmp = NEW_int(A->elt_size_in_int);
 
+	if (f_v) {
+		cout << "orbit_of_sets::init computing orbit of set ";
+		Lint_vec_print(cout, set, sz);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "orbit_of_sets::init before compute" << endl;
+	}
 	compute(verbose_level);
+	if (f_v) {
+		cout << "orbit_of_sets::init after compute" << endl;
+	}
 
 	if (f_v) {
 		cout << "orbit_of_sets::init done" << endl;

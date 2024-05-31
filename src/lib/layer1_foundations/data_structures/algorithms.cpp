@@ -390,10 +390,11 @@ unsigned long int algorithms::make_bitword(
 		char *data, int data_size)
 {
 	int i, c;
-	long int m;
+	unsigned long int m;
 
 	if (data_size > sizeof(long int) * 8) {
-		cout << "algorithms::make_bitword data_size cannot be larger than " << sizeof(long int) * 8 << endl;
+		cout << "algorithms::make_bitword "
+				"data_size cannot be larger than " << sizeof(long int) * 8 << endl;
 		cout << "data_size = " << data_size << endl;
 		exit(1);
 	}

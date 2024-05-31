@@ -278,19 +278,6 @@ int orbits_on_pairs::find_pair_orbit(
 }
 
 
-#if 0
-poset_classification::poset_classification_control *Control;
-poset_classification::poset_with_group_action *Poset;
-poset_classification::poset_classification *Poset_classification;
-
-// orbits on pairs:
-int *pair_orbit; // [V * V]
-int nb_orbits;
-int *transporter;
-int *tmp_Elt;
-int *orbit_length; // [nb_orbits]
-#endif
-
 
 
 }}}

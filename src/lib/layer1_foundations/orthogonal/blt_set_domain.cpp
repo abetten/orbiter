@@ -1303,7 +1303,7 @@ int blt_set_domain::create_graph(
 		label = "BLT_" + std::to_string(case_number);
 		label_tex = "BLT\\_" + std::to_string(case_number);
 
-		CG->init(
+		CG->init_from_bitvector(
 				nb_candidates /* nb_points */,
 				nb_colors, 1 /* nb_colors_per_vertex */,
 				point_color, Bitvec, true,

@@ -285,6 +285,7 @@ public:
 			finite_field *F,
 			int verbose_level);
 	void perform_activity(
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };

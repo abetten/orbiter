@@ -144,6 +144,7 @@ public:
 			int verbose_level);
 	void print();
 	void do_finite_field_activity(
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_ring_theoretic_activity(
 			int verbose_level);
@@ -162,6 +163,7 @@ public:
 	void do_blt_set_activity(
 			int verbose_level);
 	void do_combinatorial_object_activity(
+			orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
 			int verbose_level);
@@ -457,8 +459,10 @@ class interface_combinatorics {
 
 	int f_pentomino_puzzle;
 
+#if 0
 	int f_regular_linear_space_classify;
 	apps_combinatorics::regular_linear_space_description *Rls_descr;
+#endif
 
 	int f_domino_portrait;
 	int domino_portrait_D;

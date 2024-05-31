@@ -519,6 +519,7 @@ namespace graph_theory {
 	// graph_theory
 	class clique_finder_control;
 	class clique_finder;
+	class colored_graph_cliques;
 	class colored_graph;
 	class graph_layer;
 	class graph_node;
@@ -991,6 +992,7 @@ enum data_input_stream_type {
 	t_data_input_stream_file_of_packings,
 	t_data_input_stream_file_of_packings_through_spread_table,
 	t_data_input_stream_file_of_designs_through_block_orbits,
+	t_data_input_stream_file_of_designs_through_blocks,
 	t_data_input_stream_file_of_point_set,
 	t_data_input_stream_file_of_designs,
 	t_data_input_stream_file_of_incidence_geometries,
@@ -999,6 +1001,7 @@ enum data_input_stream_type {
 	t_data_input_stream_incidence_geometry_by_row_ranks,
 	t_data_input_stream_from_parallel_search,
 	t_data_input_stream_orbiter_file,
+	t_data_input_stream_csv_file,
 	t_data_input_stream_graph_by_adjacency_matrix,
 	t_data_input_stream_graph_object,
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,

@@ -226,7 +226,6 @@ public:
 	int solve_decision_problem(
 			int depth, int verbose_level);
 		// returns true if we found a solution
-	//void backtrack_search_not_recursive(int verbose_level);
 	void open_tree_file(
 			std::string &fname_base);
 	void close_tree_file();
@@ -277,6 +276,81 @@ private:
 	void parallel_delinearize_adjacency_list();
 };
 
+// #############################################################################
+// colored_graph_cliques.cpp
+// #############################################################################
+
+
+//! clique finding activities for graphs
+
+
+class colored_graph_cliques {
+public:
+
+
+	colored_graph *CG;
+
+	colored_graph_cliques();
+	~colored_graph_cliques();
+	void init(
+			colored_graph *CG, int verbose_level);
+
+	void early_test_func_for_clique_search(
+			long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void early_test_func_for_coclique_search(
+			long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void all_cliques(
+			clique_finder_control *Control,
+			std::string &graph_label,
+			std::vector<std::string> &feedback,
+			clique_finder *&CF,
+			int verbose_level);
+	void all_cliques_rainbow(
+			clique_finder_control *Control,
+			//std::ostream &ost_txt,
+			//std::ostream &ost_csv,
+			int verbose_level);
+	void all_cliques_black_and_white(
+			clique_finder_control *Control,
+			clique_finder *&CF,
+			//std::ostream &ost_txt,
+			//std::ostream &ost_csv,
+			int verbose_level);
+	void do_Sajeeb(
+			clique_finder_control *Control,
+			std::vector<std::vector<unsigned int> > &solutions,
+			int verbose_level);
+	void do_Sajeeb_black_and_white(
+			clique_finder_control *Control,
+			std::vector<std::vector<long int> >& solutions,
+			int verbose_level);
+	void all_cliques_weighted_with_two_colors(
+			clique_finder_control *Control,
+			int verbose_level);
+	void all_cliques_of_size_k_ignore_colors(
+			clique_finder_control *Control,
+			clique_finder *&CF,
+			int verbose_level);
+	void all_rainbow_cliques(
+			clique_finder_control *Control,
+			//std::ostream &fp,
+			int verbose_level);
+	int test_Neumaier_property(
+			int &regularity,
+			int &lambda_value,
+			int clique_size,
+			int &nexus,
+			int verbose_level);
+	int test_if_clique_is_regular(
+			int *clique, int sz, int &nexus, int verbose_level);
+
+};
 
 
 
@@ -320,6 +394,8 @@ public:
 	int *list_of_edges;
 		// used in early_test_func_for_path_and_cycle_search
 
+	colored_graph_cliques *Colored_graph_cliques;
+
 	colored_graph();
 	~colored_graph();
 	void compute_edges(
@@ -346,7 +422,7 @@ public:
 	void print();
 	void print_points_and_colors();
 	void print_adjacency_list();
-	void init(
+	void init_from_bitvector(
 			int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, data_structures::bitvector *Bitvec,
 		int f_ownership_of_bitvec,
@@ -374,7 +450,7 @@ public:
 		int *colors, int *Adj,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_adjacency_no_colors(
+	void init_from_adjacency_no_colors(
 			int nb_points, int *Adj,
 			std::string &label, std::string &label_tex,
 		int verbose_level);
@@ -447,16 +523,6 @@ public:
 			std::string &fname, int verbose_level);
 	void export_to_graphviz(
 			std::string &fname, int verbose_level);
-	void early_test_func_for_clique_search(
-			long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	void early_test_func_for_coclique_search(
-			long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
 	void early_test_func_for_path_and_cycle_search(
 			long int *S, int len,
 			long int *candidates, int nb_candidates,
@@ -464,63 +530,19 @@ public:
 		int verbose_level);
 	int is_cycle(
 			int nb_e, long int *edges, int verbose_level);
-	void all_cliques(
-			clique_finder_control *Control,
-			std::string &graph_label,
-			std::vector<std::string> &feedback,
-			clique_finder *&CF,
-			int verbose_level);
-	void all_cliques_rainbow(
-			clique_finder_control *Control,
-			//std::ostream &ost_txt,
-			//std::ostream &ost_csv,
-			int verbose_level);
 	void find_subgraph(
 			std::string &subgraph_label, int verbose_level);
 	void find_subgraph_E6(
 			int verbose_level);
-	void all_cliques_black_and_white(
-			clique_finder_control *Control,
-			clique_finder *&CF,
-			//std::ostream &ost_txt,
-			//std::ostream &ost_csv,
-			int verbose_level);
 	void write_solutions_to_csv_file(
 			clique_finder_control *Control,
 			std::ostream &ost, int verbose_level);
-	void do_Sajeeb(
-			clique_finder_control *Control,
-			std::vector<std::vector<unsigned int> > &solutions,
-			int verbose_level);
-	void do_Sajeeb_black_and_white(
-			clique_finder_control *Control,
-			std::vector<std::vector<long int> >& solutions,
-			int verbose_level);
-	void all_cliques_weighted_with_two_colors(
-			clique_finder_control *Control,
-			int verbose_level);
-	void all_cliques_of_size_k_ignore_colors(
-			clique_finder_control *Control,
-			clique_finder *&CF,
-			int verbose_level);
-	void all_rainbow_cliques(
-			clique_finder_control *Control,
-			//std::ostream &fp,
-			int verbose_level);
 	void complement(
 			int verbose_level);
 	int test_SRG_property(
 			int &lambda_value,
 			int &mu_value,
 			int verbose_level);
-	int test_Neumaier_property(
-			int &regularity,
-			int &lambda_value,
-			int clique_size,
-			int &nexus,
-			int verbose_level);
-	int test_if_clique_is_regular(
-			int *clique, int sz, int &nexus, int verbose_level);
 	int test_lambda_property(
 			int &lambda_value,
 			int verbose_level);
@@ -572,10 +594,6 @@ public:
 			double *&E, int verbose_level);
 
 };
-
-void call_back_clique_found_using_file_output(
-		clique_finder *CF,
-	int verbose_level);
 
 
 
@@ -786,6 +804,10 @@ public:
 			int verbose_level);
 	void list_parameters_of_SRG(
 			int v_max, int verbose_level);
+	void load_dimacs(
+			int *&Adj, int &N,
+			std::string &fname,
+			int verbose_level);
 	void make_cycle_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);
@@ -814,6 +836,12 @@ public:
 			int n, int k,
 			field_theory::finite_field *F,
 			int r, int verbose_level);
+	void make_tritangent_plane_disjointness_graph(
+			int *&Adj, int &N,
+			int verbose_level);
+	void make_trihedral_pair_disjointness_graph(
+			int *&Adj, int &N,
+			int verbose_level);
 	void make_non_attacking_queens_graph(
 			int *&Adj, int &N,
 			int n, int verbose_level);
@@ -825,6 +853,15 @@ public:
 			int verbose_level);
 	void make_Neumaier_graph_25(
 			int *&Adj, int &N,
+			int verbose_level);
+	void make_chain_graph(
+			int *&Adj, int &N,
+			int *part1, int sz1,
+			int *part2, int sz2,
+			int verbose_level);
+	void make_collinearity_graph(
+			int *&Adj, int &N,
+			int *Inc, int nb_rows, int nb_cols,
 			int verbose_level);
 	void make_adjacency_bitvector(
 			int *&Adj, int *v, int N,

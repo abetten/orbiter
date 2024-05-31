@@ -462,6 +462,42 @@ int algebra_global::is_diagonal_matrix(
 }
 
 
+int algebra_global::is_lc_of_I_and_J(
+		int *A, int n, int &coeff_I, int &coeff_J, int verbose_level)
+{
+	int i, j, aij;
+
+	coeff_I = -1;
+	coeff_J = -1;
+	for (i = 0; i < n; i++) {
+		aij = A[i * n + i];
+		if (i == 0) {
+			coeff_I = aij;
+		}
+		else {
+			if (aij != coeff_I) {
+				return false;
+			}
+		}
+	}
+
+	aij = A[0 * n + 1];
+	coeff_J = aij;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (i == j) {
+				continue;
+			}
+			aij = A[i * n + j];
+			if (aij != coeff_J) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+
 
 
 
@@ -479,7 +515,10 @@ void algebra_global::order_of_q_mod_n(
 	{
 		string fname;
 
-		fname = "order_of_q_mod_n_q" + std::to_string(q) + "_" + std::to_string(n_min) + "_" + std::to_string(n_max) + ".csv";
+		fname = "order_of_q_mod_n_q" + std::to_string(q)
+				+ "_" + std::to_string(n_min)
+				+ "_" + std::to_string(n_max)
+				+ ".csv";
 
 
 		{
@@ -553,7 +592,9 @@ void algebra_global::power_function_mod_n(
 	{
 		string fname;
 
-		fname = "power_function_k" + std::to_string(k) + "_n" + std::to_string(n) + ".csv";
+		fname = "power_function_k" + std::to_string(k)
+				+ "_n" + std::to_string(n)
+				+ ".csv";
 
 
 		{

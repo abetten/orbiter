@@ -1178,12 +1178,17 @@ void projective_space_with_action::canonical_form_of_code(
 			verbose_level);
 
 
+	orbiter_kernel_system::activity_output *AO;
+
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code "
 				"before COA.perform_activity" << endl;
 	}
-	COA.perform_activity(verbose_level);
+	COA.perform_activity(AO, verbose_level);
 
+    if (AO) {
+        FREE_OBJECT(AO);
+    }
 
 
 	if (f_v) {

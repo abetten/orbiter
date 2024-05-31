@@ -200,6 +200,7 @@ ORBITER_MODULES= \
 		layer1_foundations/geometry_builder/test_semicanonical.o \
 		layer1_foundations/graph_theory/clique_finder.o \
 		layer1_foundations/graph_theory/clique_finder_control.o \
+		layer1_foundations/graph_theory/colored_graph_cliques.o \
 		layer1_foundations/graph_theory/colored_graph.o \
 		layer1_foundations/graph_theory/graph_layer.o \
 		layer1_foundations/graph_theory/graph_node.o \
@@ -547,9 +548,6 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/large_set_was_activity.o \
 		layer5_top_level/combinatorics/large_set_was_description.o \
 		layer5_top_level/combinatorics/large_set_was.o \
-		layer5_top_level/combinatorics/regular_linear_space_description.o \
-		layer5_top_level/combinatorics/regular_ls_classify.o \
-		layer5_top_level/combinatorics/tactical_decomposition.o \
 		layer5_top_level/geometry/arc_generator_description.o \
 		layer5_top_level/geometry/arc_generator.o \
 		layer5_top_level/geometry/arc_lifting_simeon.o \

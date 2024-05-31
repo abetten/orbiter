@@ -24,6 +24,7 @@ namespace orbiter_kernel_system {
 activity_output::activity_output()
 {
 
+	//std::string fname_base;
 	//std::vector<std::vector<std::string> > Feedback;
 	//std::string description_txt;
 	//std::string headings;
@@ -38,7 +39,7 @@ activity_output::~activity_output()
 }
 
 void activity_output::save(
-		std::string &fname_base, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -73,7 +74,7 @@ void activity_output::save(
 
 	string fname_out;
 
-	fname_out = fname_base + "_" + description_txt + ".csv";
+	fname_out = fname_base + "_" + description_txt + "_out.csv";
 
 	if (f_v) {
 		cout << "activity_output::save "

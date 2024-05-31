@@ -43,7 +43,7 @@ singer_cycle::singer_cycle()
 	line_orbit = NULL;
 	line_orbit_inv = NULL;
 	Inc = NULL;
-	T = NULL;
+	//T = NULL;
 }
 
 singer_cycle::~singer_cycle()
@@ -93,9 +93,11 @@ singer_cycle::~singer_cycle()
 	if (Inc) {
 		FREE_OBJECT(Inc);
 	}
+#if 0
 	if (T) {
 		FREE_OBJECT(T);
 	}
+#endif
 			// P must be deleted last:
 	if (P) {
 		FREE_OBJECT(P);
@@ -340,7 +342,7 @@ void singer_cycle::init_lines(
 		}
 	}
 
-	int f_combined_action = false;
+	//int f_combined_action = false;
 
 	Inc = NEW_OBJECT(geometry::incidence_structure);
 
@@ -350,6 +352,8 @@ void singer_cycle::init_lines(
 			P->Subspaces->Implementation->get_Bitmatrix(),
 			0);
 
+
+#if 0
 	T = NEW_OBJECT(apps_combinatorics::tactical_decomposition);
 	T->init(P->Subspaces->N_points, P->Subspaces->N_lines,
 			Inc,
@@ -359,6 +363,7 @@ void singer_cycle::init_lines(
 			A2 /*A_on_lines*/,
 			SG /* Aut->strong_generators*/,
 			verbose_level - 1);
+#endif
 
 	
 #if 0

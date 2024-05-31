@@ -3673,6 +3673,11 @@ void combinatorics_domain::compute_blocks_from_incma(
 		if (h != k) {
 			cout << "combinatorics_domain::compute_blocks_from_incma "
 					"block size is not equal to k" << endl;
+			cout << "h=" << h << endl;
+			cout << "k=" << k << endl;
+			cout << "j=" << j << endl;
+			cout << "b=" << b << endl;
+			cout << "v=" << v << endl;
 			exit(1);
 		}
 	}

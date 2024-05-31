@@ -618,7 +618,8 @@ void boolean_function_classify::print_orbit_reps_with_minimum_weight()
 }
 
 
-void boolean_function_classify::export_orbit(int idx,
+void boolean_function_classify::export_orbit(
+		int idx,
 		data_structures::int_matrix *&M,
 		int verbose_level)
 {

@@ -139,6 +139,139 @@ void combinatorics_global::load_design_table(
 }
 
 
+void combinatorics_global::span_base_blocks(
+		apps_algebra::any_group *AG,
+		data_structures::set_of_sets *SoS_base_blocks,
+		int *Base_block_selection, int nb_base_blocks,
+		int &v, int &b, int &k,
+		long int *&Blocks,
+		int verbose_level)
+// Blocks[b * k]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_global::span_base_blocks" << endl;
+	}
+
+	int s;
+	int block_size;
+	int nb_blocks, nb_blocks_total;
+	int base_block_idx;
+
+	orbits_schreier::orbit_of_sets **OS;
+
+	OS = (orbits_schreier::orbit_of_sets **) NEW_pvoid(nb_base_blocks);
+
+	nb_blocks_total = 0;
+
+	for (s = 0; s < nb_base_blocks; s++) {
+
+		OS[s] = NEW_OBJECT(orbits_schreier::orbit_of_sets);
+
+		base_block_idx = Base_block_selection[s];
+
+		if (f_v) {
+			cout << "combinatorics_global::span_base_blocks "
+					"s = " << s << " base_block_idx = " << base_block_idx << endl;
+		}
+
+
+		if (s == 0) {
+			block_size = SoS_base_blocks->Set_size[base_block_idx];
+		}
+		else {
+			if (block_size != SoS_base_blocks->Set_size[base_block_idx]) {
+				cout << "base blocks must have the same size" << endl;
+				exit(1);
+			}
+		}
+		if (f_v) {
+			cout << "combinatorics_global::span_base_blocks "
+					"before OS->init" << endl;
+		}
+		OS[s]->init(
+				AG->A, AG->A,
+				SoS_base_blocks->Sets[base_block_idx],
+				SoS_base_blocks->Set_size[base_block_idx],
+				AG->Subgroup_gens->gens,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "combinatorics_global::span_base_blocks "
+					"after OS->init" << endl;
+		}
+
+		nb_blocks = OS[s]->used_length;
+
+		nb_blocks_total += nb_blocks;
+
+		if (f_v) {
+			cout << "combinatorics_global::span_base_blocks "
+					"Found an orbit of length " << OS[s]->used_length << endl;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "combinatorics_global::span_base_blocks nb_blocks_total " << nb_blocks_total << endl;
+		cout << "combinatorics_global::span_base_blocks block_size " << block_size << endl;
+	}
+
+
+	//long int *Blocks;
+	int cur, j, h;
+
+
+	v = AG->A->degree;
+	b = nb_blocks_total;
+	k = block_size;
+
+
+	Blocks = NEW_lint(b * k);
+
+	cur = 0;
+
+	for (s = 0; s < nb_base_blocks; s++) {
+
+		long int *Table;
+		int orbit_length;
+		int set_size;
+
+		OS[s]->get_table_of_orbits(
+				Table,
+				orbit_length, set_size, verbose_level);
+
+		if (set_size != block_size) {
+			cout << "set_size != block_size" << endl;
+			exit(1);
+		}
+		for (j = 0; j < orbit_length; j++) {
+			for (h = 0; h < k; h++) {
+				Blocks[cur * k + h] = Table[j * k + h];
+			}
+			cur++;
+		}
+
+		FREE_lint(Table);
+	}
+
+	if (cur != nb_blocks_total) {
+		cout << "cur != nb_blocks_total" << endl;
+		exit(1);
+	}
+
+	for (s = 0; s < nb_base_blocks; s++) {
+		FREE_OBJECT(OS[s]);
+	}
+	FREE_pvoid((void **) OS);
+
+	if (f_v) {
+		cout << "combinatorics_global::span_base_blocks done" << endl;
+	}
+
+}
+
+
 
 
 #if 0

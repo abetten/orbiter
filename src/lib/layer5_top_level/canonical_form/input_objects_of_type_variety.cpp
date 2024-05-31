@@ -63,6 +63,8 @@ void input_objects_of_type_variety::init(
 	}
 	input_objects_of_type_variety::Classifier = Classifier;
 
+
+#if 1
 	if (Classifier->Descr->f_skip) {
 		if (f_v) {
 			cout << "input_objects_of_type_variety::init "
@@ -82,7 +84,7 @@ void input_objects_of_type_variety::init(
 			cout << endl;
 		}
 	}
-
+#endif
 
 
 	if (f_v) {
@@ -368,6 +370,7 @@ void input_objects_of_type_variety::read_input_objects(
 				cout << "counter = " << counter << " / " << nb_objects_to_test << endl;
 			}
 
+#if 0
 			if (skip_this_one(counter)) {
 				if (f_v) {
 					cout << "input_objects_of_type_variety::read_input_objects "
@@ -376,7 +379,7 @@ void input_objects_of_type_variety::read_input_objects(
 				Vo[counter] = NULL;
 				continue;
 			}
-
+#endif
 
 
 

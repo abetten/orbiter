@@ -863,7 +863,7 @@ static void packing_was_fixpoints_early_test_function_fp_cliques(
 		cout << "packing_was_fixpoints_early_test_function_fp_cliques" << endl;
 	}
 
-	CG->early_test_func_for_clique_search(S, len,
+	CG->Colored_graph_cliques->early_test_func_for_clique_search(S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);
