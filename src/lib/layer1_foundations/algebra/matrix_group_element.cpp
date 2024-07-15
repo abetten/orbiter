@@ -1089,7 +1089,10 @@ void matrix_group_element::GL_code_for_make_element(
 {
 	Int_vec_copy(Elt, data, Matrix_group->n * Matrix_group->n);
 	if (Matrix_group->f_affine) {
-		Int_vec_copy(Elt + Matrix_group->n * Matrix_group->n, data + Matrix_group->n * Matrix_group->n, Matrix_group->n);
+		Int_vec_copy(
+				Elt + Matrix_group->n * Matrix_group->n,
+				data + Matrix_group->n * Matrix_group->n,
+				Matrix_group->n);
 		if (Matrix_group->f_semilinear) {
 			data[Matrix_group->n * Matrix_group->n + Matrix_group->n] = Elt[Matrix_group->n * Matrix_group->n + Matrix_group->n];
 		}

@@ -1558,7 +1558,7 @@ int schreier::sum_up_orbit_lengths()
 	for (i = 0; i < nb_orbits; i++) {
 		l = orbit_len[i];
 		N += l;
-		}
+	}
 	return N;
 }
 
@@ -2020,21 +2020,49 @@ void schreier::get_path_and_labels(
 }
 
 void schreier::trace_back(
-		int *path, int i, int &j)
+		int i, int &j)
 {
 	int ii = orbit_inv[i];
 	
 	if (prev[ii] == -1) {
+
+#if 0
 		if (path) {
 			path[0] = i;
 		}
+#endif
+
 		j = 1;
 	}
 	else {
-		trace_back(path, prev[ii], j);
+		trace_back(prev[ii], j);
+
+#if 0
 		if (path) {
 			path[j] = i;
 		}
+#endif
+
+		j++;
+	}
+}
+
+void schreier::trace_back_and_record_path(
+		int *path, int i, int &j)
+{
+	int ii = orbit_inv[i];
+
+	if (prev[ii] == -1) {
+		//if (path) {
+			path[0] = i;
+		//}
+		j = 1;
+	}
+	else {
+		trace_back_and_record_path(path, prev[ii], j);
+		//if (path) {
+			path[j] = i;
+		//}
 		j++;
 	}
 }
@@ -2046,9 +2074,12 @@ void schreier::intersection_vector(
 {
 	int i, pt, o;
 	
+	Int_vec_zero(intersection_cnt, nb_orbits);
+#if 0
 	for (i = 0; i < nb_orbits; i++) {
 		intersection_cnt[i] = 0;
 	}
+#endif
 	for (i = 0; i < len; i++) {
 		pt = set[i];
 		o = orbit_number(pt);
@@ -3585,7 +3616,7 @@ double schreier::get_average_word_length(
 	int last = orbit_first[orbit_idx + 1];
 	int L = 0, N = last - fst;
 	for (int j = 0; j < last; j++) {
-		trace_back(NULL, orbit[j], l);
+		trace_back(orbit[j], l);
 		L += l;
 	}
 
@@ -3615,72 +3646,6 @@ void schreier::compute_orbit_invariant(
 	}
 }
 
-#if 0
-void schreier::print_TDA(
-		std::ostream &ost,
-		canonical_form_classification::object_with_canonical_form *OwCF,
-		canonical_form_classification::classification_of_objects_report_options
-			*Report_options,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "schreier::print_TDA" << endl;
-	}
-
-	//print_tex(ost);
-
-	if (Report_options->f_show_incidence_matrices) {
-
-		canonical_form_classification::encoded_combinatorial_object *Enc;
-
-		OwCF->encode_incma(Enc, verbose_level);
-
-		latex_TDA(ost, Enc, verbose_level);
-		ost << "\\\\" << endl;
-
-		FREE_OBJECT(Enc);
-	}
-	else {
-
-		ost << "skipped, if desired use option \verb'-show_incidence_matrices'" << endl;
-
-	}
-
-	if (f_v) {
-		cout << "schreier::print_TDA done" << endl;
-	}
-}
-
-void schreier::latex_TDA(
-		std::ostream &ost,
-		canonical_form_classification::encoded_combinatorial_object *Enc,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "schreier::latex_TDA" << endl;
-	}
-
-	if (f_v) {
-		cout << "schreier::latex_TDA before Enc->latex_TDA" << endl;
-	}
-	Enc->latex_TDA_with_labels(ost,
-			nb_orbits, orbit_first, orbit_len, orbit,
-			verbose_level);
-	ost << "\\\\" << endl;
-	if (f_v) {
-		cout << "schreier::latex_TDA after Enc->latex_TDA" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "schreier::latex_TDA done" << endl;
-	}
-}
-#endif
 
 
 }}}

@@ -1051,6 +1051,57 @@ void group_theoretic_activity::perform_activity(
 		}
 	}
 
+	else if (Descr->f_rational_normal_form) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_rational_normal_form" << endl;
+		}
+
+		actions::action_global AGlobal;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AGlobal.rational_normal_form" << endl;
+		}
+		AGlobal.rational_normal_form(
+				AG->A_base,
+				Descr->rational_normal_form_input,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AGlobal.rational_normal_form" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_find_conjugating_element) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_find_conjugating_element" << endl;
+		}
+
+		actions::action_global AGlobal;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AGlobal.find_conjugating_element" << endl;
+		}
+		AGlobal.find_conjugating_element(
+				AG->A_base,
+				Descr->find_conjugating_element_element_from,
+				Descr->find_conjugating_element_element_to,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AGlobal.find_conjugating_element" << endl;
+		}
+
+
+	}
+
 
 
 	// orbit stuff:

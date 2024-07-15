@@ -2064,6 +2064,91 @@ void latex_interface::print_decomposition_matrix(
 
 }
 
+void latex_interface::print_vector_vertically_with_label(
+		std::ostream &ost,
+		std::string &label,
+		std::vector<std::string> &v,
+		int f_brackets,
+		int f_enter_math_mode)
+{
+	int i, len;
+
+	len = v.size();
+
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+	}
+	ost << label << " = " << endl;
+	if (f_brackets) {
+		ost << "\\left[" << endl;
+	}
+	ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
+	for (i = 0; i < len; i++) {
+		if (v[i].length() < 100) {
+			ost << v[i];
+		}
+		else {
+			ost << "latex_interface::print_vector_vertically_with_label "
+					"too large to print v[i].length() = " << v[i].length();
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	if (f_brackets) {
+		ost << "\\right]" << endl;
+	}
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+	}
+
+}
+
+void latex_interface::print_vector_horizontally_with_label(
+		std::ostream &ost,
+		std::string &label,
+		std::vector<std::string> &v,
+		int f_brackets,
+		int f_enter_math_mode)
+{
+	int i, len;
+
+	len = v.size();
+
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+	}
+	ost << label << " = " << endl;
+	if (f_brackets) {
+		ost << "\\left[" << endl;
+	}
+	//ost << "\\begin{array}{*{" << 1 << "}c}" << endl;
+	for (i = 0; i < len; i++) {
+		if (v[i].length() < 100) {
+			ost << v[i];
+		}
+		else {
+			ost << "latex_interface::print_vector_horizontally_with_label "
+					"too large to print v[i].length() = " << v[i].length();
+		}
+		if (i < len - 1) {
+			ost << ", ";
+		}
+		//ost << "\\\\" << endl;
+	}
+	//ost << "\\end{array}" << endl;
+	if (f_brackets) {
+		ost << endl;
+		ost << "\\right]" << endl;
+	}
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+	}
+
+}
+
+
+
+
 }}}
 
 

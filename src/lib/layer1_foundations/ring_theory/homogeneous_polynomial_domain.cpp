@@ -1291,7 +1291,7 @@ void homogeneous_polynomial_domain::print_equation(
 		}
 		if (c > 1) {
 			//F->print_element(ost, c);
-			ost << c;
+			ost << c << "*";
 		}
 		print_monomial(ost, i);
 	}
@@ -3518,6 +3518,213 @@ std::string homogeneous_polynomial_domain::stringify_algebraic_notation(
 	return output;
 }
 
+
+void homogeneous_polynomial_domain::parse_equation_wo_parameters(
+		std::string &name_of_formula,
+		std::string &name_of_formula_tex,
+		std::string &equation_text,
+		int *&eqn, int &eqn_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters" << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters" << endl;
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"name_of_formula=" << name_of_formula << endl;
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"name_of_formula_tex=" << name_of_formula_tex << endl;
+		//cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+		//		"managed_variables=" << managed_variables << endl;
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"equation_text=" << equation_text << endl;
+	}
+
+
+	// create a symbolic object containing the general formula:
+
+	expression_parser::symbolic_object_builder_description *Descr1;
+
+
+	Descr1 = NEW_OBJECT(expression_parser::symbolic_object_builder_description);
+	Descr1->f_field_pointer = true;
+	Descr1->field_pointer = F;
+	Descr1->f_text = true;
+	Descr1->text_txt = equation_text;
+
+
+
+
+	expression_parser::symbolic_object_builder *SB;
+
+	SB = NEW_OBJECT(expression_parser::symbolic_object_builder);
+
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"before SB->init" << endl;
+	}
+
+	string s1;
+
+	s1 = name_of_formula + "_raw";
+
+	SB->init(Descr1, s1, verbose_level);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"after SB->init" << endl;
+	}
+
+
+
+	// Perform simplification
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"before SB->Formula_vector->V[0].simplify" << endl;
+	}
+	SB->Formula_vector->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"after SB->Formula_vector->V[0].simplify" << endl;
+	}
+
+	// Perform expansion.
+	// The result will be in the temporary object Formula_vector_after_expand
+
+
+	expression_parser::formula_vector *Formula_vector_after_expand;
+
+	Formula_vector_after_expand = NEW_OBJECT(expression_parser::formula_vector);
+
+	int f_write_trees_during_expand = false;
+
+	std::string managed_variables;
+
+	managed_variables = list_of_variables();
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"managed_variables=" << managed_variables << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"before Formula_vector->expand" << endl;
+	}
+	Formula_vector_after_expand->expand(
+			SB->Formula_vector,
+			F,
+			name_of_formula, name_of_formula_tex,
+			true /*f_has_managed_variables*/,
+			managed_variables,
+			f_write_trees_during_expand,
+			verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"after Formula_vector->expand" << endl;
+	}
+
+	// Perform simplification
+
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"before Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+	Formula_vector_after_expand->V[0].simplify(verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"after Formula_vector_after_expand->V[0].simplify" << endl;
+	}
+
+
+	// collect the coefficients of the monomials:
+
+
+	data_structures::int_matrix *I;
+	int *Coeff;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"before collect_monomial_terms" << endl;
+	}
+	Formula_vector_after_expand->V[0].collect_monomial_terms(
+			I, Coeff,
+			verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"after collect_monomial_terms" << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"data collected:" << endl;
+		int i;
+
+		for (i = 0; i < I->m; i++) {
+			cout << Coeff[i] << " : ";
+			Int_vec_print(cout, I->M + i * I->n, I->n);
+			cout << endl;
+		}
+		cout << "variables: ";
+		Formula_vector_after_expand->V[0].tree->print_variables_in_line(cout);
+		cout << endl;
+	}
+
+#if 1
+	if (I->n != nb_variables) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"I->n != nb_variables" << endl;
+		exit(1);
+	}
+#endif
+
+	eqn = NEW_int(nb_monomials);
+	eqn_size = nb_monomials;
+	Int_vec_zero(eqn, nb_monomials);
+
+	int i, idx;
+
+	for (i = 0; i < I->m; i++) {
+		idx = index_of_monomial(I->M + i * I->n);
+		eqn[idx] = F->add(eqn[idx], Coeff[i]);
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
+				"equation: ";
+		Int_vec_print(cout, eqn, eqn_size);
+		cout << endl;
+	}
+
+	FREE_OBJECT(I);
+	FREE_int(Coeff);
+	FREE_OBJECT(Formula_vector_after_expand);
+	//FREE_OBJECT(Formula_vector_after_sub);
+	//FREE_OBJECT(SB1);
+	//FREE_OBJECT(SB2);
+	FREE_OBJECT(Descr1);
+	//FREE_OBJECT(Descr2);
+
+
+
+
+
+	FREE_OBJECT(SB);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters done" << endl;
+	}
+}
 
 
 void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(

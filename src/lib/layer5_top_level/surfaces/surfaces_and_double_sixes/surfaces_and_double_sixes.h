@@ -404,8 +404,10 @@ public:
 			int verbose_level);
 	void downstep(
 			int verbose_level);
+	// from double sixes to cubic surfaces
 	void upstep(
 			int verbose_level);
+	// from double sixes to cubic surfaces
 	void derived_arcs(
 			int verbose_level);
 	void starter_configurations_which_are_involved(

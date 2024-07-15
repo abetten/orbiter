@@ -111,17 +111,23 @@ void symbolic_object_builder::init(
 		//print_Sajeeb(cout);
 
 
-		cout << "before Formula_vector->print_formula_size" << endl;
-		Formula_vector->print_formula_size(cout, verbose_level);
-		cout << "after Formula_vector->print_formula_size" << endl;
+		cout << "symbolic_object_builder::init "
+				"before Formula_vector->print_formula_size" << endl;
+		Formula_vector->print_formula_size(cout, verbose_level - 2);
+		cout << "symbolic_object_builder::init "
+				"after Formula_vector->print_formula_size" << endl;
 
-		cout << "before Formula_vector->print_formula" << endl;
-		Formula_vector->print_formula(cout, verbose_level);
-		cout << "after Formula_vector->print_formula" << endl;
+		cout << "symbolic_object_builder::init "
+				"before Formula_vector->print_formula" << endl;
+		Formula_vector->print_formula(cout, verbose_level - 2);
+		cout << "symbolic_object_builder::init "
+				"after Formula_vector->print_formula" << endl;
 
-		cout << "before Formula_vector->print_latex" << endl;
+		cout << "symbolic_object_builder::init "
+				"before Formula_vector->print_latex" << endl;
 		Formula_vector->print_latex(cout, label);
-		cout << "after Formula_vector->print_latex" << endl;
+		cout << "symbolic_object_builder::init "
+				"after Formula_vector->print_latex" << endl;
 
 
 		string fname;
@@ -134,22 +140,28 @@ void symbolic_object_builder::init(
 
 			L.head_easy_and_enlarged(ost);
 
-			cout << "before Formula_vector->print_latex" << endl;
+			cout << "symbolic_object_builder::init "
+					"before Formula_vector->print_latex" << endl;
 			Formula_vector->print_latex(ost, label);
-			cout << "after Formula_vector->print_latex" << endl;
+			cout << "symbolic_object_builder::init "
+					"after Formula_vector->print_latex" << endl;
 
 			L.foot(ost);
 		}
 
 		//latex_split(std::string &name, int split_level, int split_mod, int verbose_level)
 
-		cout << "before Formula_vector->latex_tree" << endl;
-		Formula_vector->latex_tree(verbose_level);
-		cout << "after Formula_vector->latex_tree" << endl;
+		cout << "symbolic_object_builder::init "
+				"before Formula_vector->latex_tree" << endl;
+		Formula_vector->latex_tree(verbose_level - 2);
+		cout << "symbolic_object_builder::init "
+				"after Formula_vector->latex_tree" << endl;
 
-		cout << "before Formula_vector->export_tree" << endl;
-		Formula_vector->export_tree(verbose_level);
-		cout << "after Formula_vector->export_tree" << endl;
+		cout << "symbolic_object_builder::init "
+				"before Formula_vector->export_tree" << endl;
+		Formula_vector->export_tree(verbose_level - 2);
+		cout << "symbolic_object_builder::init "
+				"after Formula_vector->export_tree" << endl;
 	}
 
 
@@ -483,6 +495,11 @@ void symbolic_object_builder::process_arguments(
 	else {
 		cout << "symbolic_object_builder::process_arguments missing argument" << endl;
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "symbolic_object_builder::process_arguments "
+				"finished construction, now doing post processing" << endl;
 	}
 
 
@@ -1636,7 +1653,7 @@ void symbolic_object_builder::do_collect_by_ring(
 		cout << "symbolic_object_builder::do_collect_by_ring "
 				"before collect_variables" << endl;
 	}
-	O_source->Formula_vector->V[0].collect_variables(verbose_level);
+	O_source->Formula_vector->V[0].collect_variables(verbose_level - 2);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_collect_by_ring "
 				"after collect_variables" << endl;
@@ -1649,7 +1666,7 @@ void symbolic_object_builder::do_collect_by_ring(
 	O_source->Formula_vector->V[0].collect_subtrees_by_monomials(
 			Poly,
 			Formula_vector, nb_terms,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "symbolic_object_builder::do_collect_by_ring "
 				"after collect_subtrees_by_monomials" << endl;

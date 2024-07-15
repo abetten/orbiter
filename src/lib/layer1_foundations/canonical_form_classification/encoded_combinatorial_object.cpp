@@ -629,6 +629,20 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 
 }
 
+void encoded_combinatorial_object::latex_incma_as_01_matrix(
+		std::ostream &ost,
+		int verbose_level)
+{
+	l1_interfaces::latex_interface L;
+
+	ost << "$$" << endl;
+	L.print_integer_matrix_tex(
+			ost,
+		Incma, nb_rows, nb_cols);
+	ost << "$$" << endl;
+
+}
+
 void encoded_combinatorial_object::latex_incma(
 		std::ostream &ost,
 		int verbose_level)

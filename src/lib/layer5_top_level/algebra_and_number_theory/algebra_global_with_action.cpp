@@ -1526,9 +1526,10 @@ void algebra_global_with_action::group_table(
 	}
 }
 
-void algebra_global_with_action::centralizer_brute_force(
+void algebra_global_with_action::centralizer_in_PGL_d_q_single_element_brute_force(
 		int q, int d,
 		int elt_idx, int verbose_level)
+// this function is not used anywhere
 // ToDo: move this
 // problem elt_idx does not describe the group element uniquely.
 // Reason: the sims chain is not canonical.
@@ -1537,7 +1538,7 @@ void algebra_global_with_action::centralizer_brute_force(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer_brute_force" << endl;
+		cout << "algebra_global_with_action::centralizer_in_PGL_d_q_single_element_brute_force" << endl;
 	}
 	actions::action *A;
 	ring_theory::longinteger_object Go;
@@ -1667,14 +1668,15 @@ void algebra_global_with_action::centralizer_brute_force(
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer_brute_force done" << endl;
+		cout << "algebra_global_with_action::centralizer_in_PGL_d_q_single_element_brute_force done" << endl;
 	}
 }
 
 
-void algebra_global_with_action::centralizer(
+void algebra_global_with_action::centralizer_in_PGL_d_q_single_element(
 		int q, int d,
 		int elt_idx, int verbose_level)
+// this function is not used anywhere
 // ToDo: move this
 // creates a finite_field, and two actions
 // using init_projective_group and init_general_linear_group
@@ -1682,7 +1684,7 @@ void algebra_global_with_action::centralizer(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer" << endl;
+		cout << "algebra_global_with_action::centralizer_in_PGL_d_q_single_element" << endl;
 	}
 	field_theory::finite_field *F;
 	actions::action *A_PGL;
@@ -1759,13 +1761,14 @@ void algebra_global_with_action::centralizer(
 	FREE_OBJECT(A_PGL);
 	FREE_OBJECT(F);
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer done" << endl;
+		cout << "algebra_global_with_action::centralizer_in_PGL_d_q_single_element done" << endl;
 	}
 
 }
 
-void algebra_global_with_action::centralizer(
+void algebra_global_with_action::compute_centralizer_of_all_elements_in_PGL_d_q(
 		int q, int d, int verbose_level)
+// this function is not used anywhere
 // ToDo: move this
 // creates a finite_field, and an action
 // using init_projective_group
@@ -1773,7 +1776,7 @@ void algebra_global_with_action::centralizer(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer" << endl;
+		cout << "algebra_global_with_action::compute_centralizer_of_all_elements_in_PGL_d_q" << endl;
 	}
 	actions::action *A;
 	field_theory::finite_field *F;
@@ -1833,7 +1836,7 @@ void algebra_global_with_action::centralizer(
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	if (f_v) {
-		cout << "algebra_global_with_action::centralizer done" << endl;
+		cout << "algebra_global_with_action::compute_centralizer_of_all_elements_in_PGL_d_q done" << endl;
 	}
 }
 
@@ -1842,6 +1845,7 @@ void algebra_global_with_action::compute_regular_representation(
 		actions::action *A, groups::sims *S,
 		data_structures_groups::vector_ge *SG, int *&perm,
 		int verbose_level)
+// allocates perm[SG->len * goi]
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3463,6 +3467,7 @@ void algebra_global_with_action::representation_on_polynomials(
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 // creates an action object for the induced action on polynomials
+// assumes a linear group
 {
 	int f_v = (verbose_level >= 1);
 	//int f_stabilizer = true;

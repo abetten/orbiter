@@ -109,12 +109,14 @@ void mapping::init(
 
 	if (Descr->f_object_in_codomain_cubic_surface) {
 		if (f_v) {
-			cout << "mapping::init -object_in_codomain_cubic_surface " << Descr->object_in_codomain_cubic_surface_label << endl;
+			cout << "mapping::init -object_in_codomain_cubic_surface "
+					<< Descr->object_in_codomain_cubic_surface_label << endl;
 		}
 
 		object_in_codomain_idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->object_in_codomain_cubic_surface_label);
 		if (f_v) {
-			cout << "mapping::init object_in_codomain_idx = " << object_in_codomain_idx << endl;
+			cout << "mapping::init object_in_codomain_idx = "
+					<< object_in_codomain_idx << endl;
 		}
 
 		object_in_codomain_type =

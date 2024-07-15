@@ -392,6 +392,12 @@ public:
 			int *eqn);
 	std::string stringify_algebraic_notation(
 			int *eqn);
+	void parse_equation_wo_parameters(
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &equation_text,
+			int *&eqn, int &eqn_size,
+			int verbose_level);
 	void parse_equation_and_substitute_parameters(
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
@@ -812,6 +818,11 @@ public:
 
 	int f_print_equation;
 	std::string print_equation_input;
+
+	int f_parse_equation_wo_parameters;
+	std::string parse_equation_wo_parameters_name_of_formula;
+	std::string parse_equation_wo_parameters_name_of_formula_tex;
+	std::string parse_equation_wo_parameters_equation_text;
 
 	int f_parse_equation;
 	std::string parse_equation_name_of_formula;

@@ -43,9 +43,12 @@ classification_step::~classification_step()
 void classification_step::init(
 		actions::action *A,
 		actions::action *A2,
-	int max_orbits, int representation_sz, 
+	int max_orbits,
+	int representation_sz,
 	ring_theory::longinteger_object &go,
 	int verbose_level)
+// max_orbits is an upper bound on the expected number of orbits.
+// in fact, it is the number of flag orbits in the relation.
 {
 	int f_v = (verbose_level >= 1);
 

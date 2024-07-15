@@ -723,6 +723,8 @@ public:
 	std::string extract_solutions_by_index_prefix;
 
 	int f_export_inc;
+	int f_export_incidence_matrix;
+	int f_export_incidence_matrix_latex;
 	int f_intersection_matrix;
 	int f_export_blocks;
 	int f_row_sums;
@@ -785,6 +787,12 @@ public:
 				*Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
+			design_create *DC,
+			int verbose_level);
+	void do_export_incidence_matrix_csv(
+			design_create *DC,
+			int verbose_level);
+	void do_export_incidence_matrix_latex(
 			design_create *DC,
 			int verbose_level);
 	void do_intersection_matrix(

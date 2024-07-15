@@ -14,7 +14,6 @@ namespace layer3_group_actions {
 namespace groups {
 
 
-
 void sims::subgroup_make_characteristic_vector(
 		sims *Sub, int *C, int verbose_level)
 {

@@ -2724,8 +2724,8 @@ void surface_object_with_group::create_heading(
 		std::string &heading, int &nb_cols)
 {
 	heading = "SEQN,SEQNALG,orbit,PT,PTCOEFF,PO_GO,PO_INDEX,curve,CURVEALG,"
-			"pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,go";
-	nb_cols = 17;
+			"nb_pts_on_curve,pts_on_curve,bitangents,NB_E,NB_DOUBLE,NB_SINGLE,NB_ZERO,NB_K,Kovalevski_pts,go";
+	nb_cols = 19;
 
 }
 
@@ -2741,7 +2741,7 @@ void surface_object_with_group::create_vector_of_strings(
 		cout << "surface_object_with_group::create_vector_of_strings" << endl;
 	}
 
-	int nb_cols = 17;
+	int nb_cols = 19;
 
 	std::string s_eqn_surface;
 	std::string s_eqn_surface_algebraic;
@@ -2754,16 +2754,19 @@ void surface_object_with_group::create_vector_of_strings(
 
 	pt_coeff = Int_vec_stringify(QC->pt_A_coeff, 4);
 
-	std::string s_eqn, s_eqn_algebraic, s_Pts, s_Lines;
+	std::string s_eqn, s_eqn_algebraic, s_nb_Pts, s_Pts, s_Lines, s_Kovalevski;
 
 	s_eqn = Surf->PolynomialDomains->Poly4_x123->stringify(QC->curve);
 
 	s_eqn_algebraic = Surf->PolynomialDomains->Poly4_x123->stringify_algebraic_notation(QC->curve);
 
+	s_nb_Pts = std::to_string(QC->sz_curve);
 
 	s_Pts = Lint_vec_stringify(QC->Pts_on_curve, QC->sz_curve);
 
 	s_Lines = Lint_vec_stringify(QC->Bitangents, QC->nb_bitangents);
+
+	s_Kovalevski = Lint_vec_stringify(QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski);
 
 	ring_theory::longinteger_object ago;
 
@@ -2771,8 +2774,8 @@ void surface_object_with_group::create_vector_of_strings(
 
 	v.resize(nb_cols);
 
-	if (nb_cols != 17) {
-		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 17" << endl;
+	if (nb_cols != 19) {
+		cout << "surface_object_with_group::create_vector_of_strings nb_cols != 19" << endl;
 		exit(1);
 	}
 
@@ -2785,14 +2788,16 @@ void surface_object_with_group::create_vector_of_strings(
 	v[6] = std::to_string(QC->po_index);
 	v[7] = "\"" + s_eqn + "\"";
 	v[8] = "\"" + s_eqn_algebraic + "\"";
-	v[9] = "\"" + s_Pts + "\"";
-	v[10] = "\"" + s_Lines + "\"";
-	v[11] = std::to_string(SO->SOP->nb_Eckardt_points);
-	v[12] = std::to_string(SO->SOP->nb_Double_points);
-	v[13] = std::to_string(SO->SOP->nb_Single_points);
-	v[14] = std::to_string(SO->SOP->nb_pts_not_on_lines);
-	v[15] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
-	v[16] = std::to_string(-1);
+	v[9] = "\"" + s_nb_Pts + "\"";
+	v[10] = "\"" + s_Pts + "\"";
+	v[11] = "\"" + s_Lines + "\"";
+	v[12] = std::to_string(SO->SOP->nb_Eckardt_points);
+	v[13] = std::to_string(SO->SOP->nb_Double_points);
+	v[14] = std::to_string(SO->SOP->nb_Single_points);
+	v[15] = std::to_string(SO->SOP->nb_pts_not_on_lines);
+	v[16] = std::to_string(QO->QP->Kovalevski->nb_Kovalevski);
+	v[17] =  "\"" + s_Kovalevski + "\"";
+	v[18] = std::to_string(-1);
 
 	if (f_v) {
 		cout << "surface_object_with_group::create_vector_of_strings done" << endl;

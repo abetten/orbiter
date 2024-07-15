@@ -113,11 +113,17 @@ public:
 	std::string column_label_so;
 
 
-	int f_label_equation;
-	std::string column_label_eqn;
+	int f_label_equation_algebraic;
+	std::string column_label_eqn_algebraic;
 
-	int f_label_equation2;
-	std::string column_label_eqn2;
+	int f_label_equation_by_coefficients;
+	std::string column_label_eqn_by_coefficients;
+
+	int f_label_equation2_algebraic;
+	std::string column_label_eqn2_algebraic;
+
+	int f_label_equation2_by_coefficients;
+	std::string column_label_eqn2_by_coefficients;
 
 	int f_label_points;
 	std::string column_label_pts;
@@ -620,7 +626,13 @@ public:
 
 
 	int idx_po_go, idx_po_index;
-	int idx_po, idx_so, idx_eqn, idx_eqn2, idx_pts, idx_bitangents;
+	int idx_po, idx_so;
+	int idx_eqn_algebraic;
+	int idx_eqn_by_coefficients;
+	int idx_eqn2_algebraic;
+	int idx_eqn2_by_coefficients;
+	int idx_pts;
+	int idx_bitangents;
 
 	variety_object_with_action **Vo;
 		// [nb_objects_to_test]
@@ -635,7 +647,7 @@ public:
 			int counter);
 	void count_nb_objects_to_test(
 			int verbose_level);
-	void read_input_objects(
+	void read_input_objects_from_list_of_csv_files(
 			int verbose_level);
 	void prepare_input_of_variety_type(
 			int row, int counter,
@@ -833,11 +845,12 @@ public:
 	~variety_object_with_action();
 	void init(
 			int cnt, int po_go, int po_index, int po, int so,
-			geometry::projective_space *Projective_space,
-			ring_theory::homogeneous_polynomial_domain *Poly_ring,
-			std::string &eqn_txt,
-			int f_second_equation, std::string &eqn2_txt,
-			std::string &pts_txt, std::string &bitangents_txt,
+			algebraic_geometry::variety_description *VD,
+			//geometry::projective_space *Projective_space,
+			//ring_theory::homogeneous_polynomial_domain *Poly_ring,
+			//std::string &eqn_txt,
+			//int f_second_equation, std::string &eqn2_txt,
+			//std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
 	void init_image_of(
 			variety_object_with_action *old_one,

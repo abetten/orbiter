@@ -21,7 +21,7 @@ namespace apps_algebra {
 // #############################################################################
 
 
-//! description of an action of forms
+//! description of an action on forms
 
 
 class action_on_forms_activity_description {
@@ -93,7 +93,7 @@ public:
 // #############################################################################
 
 
-//! description of an action of forms
+//! description of an action on forms
 
 
 class action_on_forms_description {
@@ -124,7 +124,7 @@ public:
 // #############################################################################
 
 
-//! an action of forms
+//! an action on forms
 
 
 class action_on_forms {
@@ -224,20 +224,21 @@ public:
 	void group_table(
 			int q, int d, int f_poly, std::string &poly,
 			int f_no_eigenvalue_one, int verbose_level);
-	void centralizer_brute_force(
+	void centralizer_in_PGL_d_q_single_element_brute_force(
 			int q, int d,
 			int elt_idx, int verbose_level);
-	void centralizer(
+	void centralizer_in_PGL_d_q_single_element(
 			int q, int d,
 			int elt_idx, int verbose_level);
 	// creates a finite_field, and two actions
 	// using init_projective_group and init_general_linear_group
-	void centralizer(
+	void compute_centralizer_of_all_elements_in_PGL_d_q(
 			int q, int d, int verbose_level);
 	void compute_regular_representation(
 			actions::action *A, groups::sims *S,
 			data_structures_groups::vector_ge *SG,
 			int *&perm, int verbose_level);
+	// allocates perm[SG->len * goi]
 	void presentation(
 			actions::action *A,
 			groups::sims *S, int goi,
@@ -526,7 +527,6 @@ public:
 			int len, long int *S, int verbose_level);
 
 
-	// any_group_orbits.cpp
 
 };
 
@@ -874,6 +874,14 @@ public:
 	int f_move_a_to_b;
 	int move_a_to_b_a;
 	int move_a_to_b_b;
+
+
+	int f_rational_normal_form;
+	std::string rational_normal_form_input;
+
+	int f_find_conjugating_element;
+	std::string find_conjugating_element_element_from;
+	std::string find_conjugating_element_element_to;
 
 
 	// orbit stuff:

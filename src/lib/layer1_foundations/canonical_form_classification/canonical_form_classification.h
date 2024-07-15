@@ -583,6 +583,9 @@ public:
 	void latex_set_system_by_rows(
 			std::ostream &ost,
 			int verbose_level);
+	void latex_incma_as_01_matrix(
+			std::ostream &ost,
+			int verbose_level);
 	void latex_incma(
 			std::ostream &ost, int verbose_level);
 	void latex_TDA_incidence_matrix(

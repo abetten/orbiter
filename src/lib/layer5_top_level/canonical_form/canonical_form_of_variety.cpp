@@ -908,6 +908,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	}
 	string s_Eqn;
 	string s_Eqn2;
+	string s_nb_Pts;
 	string s_Pts;
 	string s_Bitangents;
 	string s_transporter;
@@ -918,7 +919,9 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 
 
 	Vo->Variety_object->stringify(
-			s_Eqn, s_Eqn2, s_Pts, s_Bitangents);
+			s_Eqn, /*s_Eqn2,*/ s_nb_Pts, s_Pts, s_Bitangents);
+
+	s_Eqn2 = "";
 
 	s_transporter = Canonical_form_classifier->PA->A->Group_element->stringify(
 			transporter_to_canonical_form);
@@ -951,6 +954,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 
 	v.push_back("\"" + s_Eqn + "\"");
 	v.push_back("\"" + s_Eqn2 + "\"");
+	v.push_back("\"" + s_nb_Pts + "\"");
 	v.push_back("\"" + s_Pts + "\"");
 	v.push_back("\"" + s_Bitangents + "\"");
 	v.push_back("\"" + s_transporter + "\"");
@@ -1059,6 +1063,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	string s_Eqn;
 	string s_Eqn2;
 	string s_Pts;
+	string s_nb_Pts;
 	string s_Bitangents;
 
 	if (f_v) {
@@ -1068,7 +1073,9 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 
 	Vo->Variety_object->stringify(
-			s_Eqn, s_Eqn2, s_Pts, s_Bitangents);
+			s_Eqn, /*s_Eqn2,*/ s_nb_Pts, s_Pts, s_Bitangents);
+
+	s_Eqn2 = "";
 
 
 	if (f_v) {
@@ -1079,6 +1086,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 	v.push_back("\"" + s_Eqn + "\"");
 	v.push_back("\"" + s_Eqn2 + "\"");
+	v.push_back(s_nb_Pts);
 	v.push_back("\"" + s_Pts + "\"");
 	v.push_back("\"" + s_Bitangents + "\"");
 	if (f_v) {

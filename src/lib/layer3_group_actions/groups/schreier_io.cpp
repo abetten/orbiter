@@ -1323,7 +1323,7 @@ void schreier::print_tree(
 	path = NEW_int(A->degree);
 	i = orbit_first[orbit_no];
 	while (i < orbit_first[orbit_no + 1]) {
-		trace_back(path, orbit[i], l);
+		trace_back_and_record_path(path, orbit[i], l);
 		// now l is the distance from the root
 		cout << l;
 		for (j = 0; j < l; j++) {
@@ -1401,7 +1401,7 @@ void schreier::get_orbit_by_levels(
 	horizontal_position = NEW_int(len);
 	max_depth = 0;
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
+		trace_back(orbit[fst + j], l);
 		l--;
 		depth[j] = l;
 		max_depth = MAX(max_depth, l);
@@ -1420,7 +1420,7 @@ void schreier::get_orbit_by_levels(
 	Int_vec_zero(Nb, nb_layers);
 	Int_vec_zero(Nb1, nb_layers);
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
+		trace_back(orbit[fst + j], l);
 		l--;
 		horizontal_position[j] = Nb[l];
 		Nb[l]++;
@@ -1437,7 +1437,7 @@ void schreier::get_orbit_by_levels(
 		Node[i] = NEW_int(Nb[i]);
 	}
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
+		trace_back(orbit[fst + j], l);
 		l--;
 		Node[l][Nb1[l]] = j;
 		Nb1[l]++;
@@ -1586,7 +1586,7 @@ void schreier::export_tree_as_layered_graph(
 	}
 	max_depth = 0;
 	for (j = 0; j < len; j++) {
-		trace_back(NULL, orbit[fst + j], l);
+		trace_back(orbit[fst + j], l);
 		l--;
 		depth[j] = l;
 		max_depth = MAX(max_depth, l);
@@ -1757,7 +1757,7 @@ void schreier::export_tree_as_layered_graph(
 		int a;
 
 		a = orbit[fst + j];
-		trace_back(NULL, a, l);
+		trace_back(a, l);
 		l--;
 
 		string text2;
@@ -2012,7 +2012,7 @@ void schreier::draw_tree2(
 	N = last - i;
 	L = 0;
 	for (j = i; j < last; j++) {
-		trace_back(NULL, orbit[j], l);
+		trace_back(orbit[j], l);
 		L += l;
 	}
 	avg = (double) L / (double)N;
@@ -2058,7 +2058,7 @@ void schreier::subtree_draw_lines(
 	if (f_v) {
 		cout << "schreier::subtree_draw_lines" << endl;
 	}
-	trace_back(NULL, pt, l);
+	trace_back(pt, l);
 	// l is 1 if pt is the root.
 	x = placement_x[pt];
 	calc_y_coordinate(y, l, max_depth, y_max);
@@ -2132,7 +2132,7 @@ void schreier::subtree_draw_vertices(
 	if (f_v) {
 		cout << "schreier::subtree_draw_vertices" << endl;
 	}
-	trace_back(NULL, pt, l);
+	trace_back(pt, l);
 	x = placement_x[pt];
 	calc_y_coordinate(y, l, max_depth, y_max);
 
@@ -2197,7 +2197,7 @@ void schreier::subtree_place(
 		// the node itself counts for the weight, so we subtract one
 	w0 = 0;
 
-	trace_back(NULL, pt, l);
+	trace_back(pt, l);
 	for (ii = i + 1; ii < last; ii++) {
 		if (prev[ii] == pt) {
 			w1 = weight[orbit[ii]];
@@ -2216,7 +2216,7 @@ int schreier::subtree_calc_weight(
 	int pt = orbit[i];
 	int ii, l, w = 1, w1;
 
-	trace_back(NULL, pt, l);
+	trace_back(pt, l);
 	if (l > max_depth)
 		max_depth = l;
 	for (ii = i + 1; ii < last; ii++) {
@@ -2240,7 +2240,7 @@ int schreier::subtree_depth_first(
 		if (prev[ii] == pt) {
 
 
-			trace_back(path, orbit[ii], l);
+			trace_back_and_record_path(path, orbit[ii], l);
 			// now l is the distance from the root
 			print_path(ost, path, l);
 

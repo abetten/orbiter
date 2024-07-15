@@ -123,7 +123,8 @@ void orbits_on_polynomials::init(
 
 	f_has_Sch = true;
 
-	Sch = A->Strong_gens->compute_all_point_orbits_schreier(A2, verbose_level - 2);
+	Sch = A->Strong_gens->compute_all_point_orbits_schreier(
+			A2, verbose_level - 2);
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::init "

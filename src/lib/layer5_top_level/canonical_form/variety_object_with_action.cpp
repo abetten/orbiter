@@ -40,14 +40,14 @@ variety_object_with_action::~variety_object_with_action()
 	}
 }
 
-
 void variety_object_with_action::init(
 		int cnt, int po_go, int po_index, int po, int so,
-		geometry::projective_space *Projective_space,
-		ring_theory::homogeneous_polynomial_domain *Poly_ring,
-		std::string &eqn_txt,
-		int f_second_equation, std::string &eqn2_txt,
-		std::string &pts_txt, std::string &bitangents_txt,
+		algebraic_geometry::variety_description *VD,
+		//geometry::projective_space *Projective_space,
+		//ring_theory::homogeneous_polynomial_domain *Poly_ring,
+		//std::string &eqn_txt,
+		//int f_second_equation, std::string &eqn2_txt,
+		//std::string &pts_txt, std::string &bitangents_txt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -58,9 +58,6 @@ void variety_object_with_action::init(
 
 	data_structures::string_tools ST;
 
-	if (false) {
-		cout << "pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
-	}
 
 	variety_object_with_action::cnt = cnt;
 	variety_object_with_action::po_go = po_go;
@@ -73,18 +70,19 @@ void variety_object_with_action::init(
 
 	if (f_v) {
 		cout << "variety_object_with_action::init "
-				"before Variety_object->init_from_string" << endl;
+				"before Variety_object->init" << endl;
 	}
-	Variety_object->init_from_string(
-			Projective_space,
-			Poly_ring,
-			eqn_txt,
-			f_second_equation, eqn2_txt,
-			pts_txt, bitangents_txt,
+	Variety_object->init(
+			VD,
+			//Projective_space,
+			//Poly_ring,
+			//eqn_txt,
+			//f_second_equation, eqn2_txt,
+			//pts_txt, bitangents_txt,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_object_with_action::init "
-				"after Variety_object->init_from_string" << endl;
+				"after Variety_object->init" << endl;
 	}
 
 	if (f_v) {
@@ -103,6 +101,7 @@ void variety_object_with_action::init_image_of(
 		actions::action *A_on_lines,
 		int *eqn2,
 		int verbose_level)
+// ToDo: implement the mapping
 // we are not mapping the equation
 {
 	int f_v = (verbose_level >= 1);

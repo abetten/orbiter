@@ -712,6 +712,8 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_subsets" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_On_subsets not yet implemented" << endl;
+		exit(1);
 
 
 	}
@@ -720,6 +722,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_Subspaces" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_On_Subspaces not yet implemented" << endl;
+		exit(1);
+
 
 
 	}
@@ -728,6 +733,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_tensors" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_On_tensors not yet implemented" << endl;
+		exit(1);
+
 
 
 	}
@@ -736,6 +744,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_Cascade" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_Cascade not yet implemented" << endl;
+		exit(1);
+
 
 
 	}
@@ -744,6 +755,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_On_polynomials" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_On_polynomials not yet implemented" << endl;
+		exit(1);
+
 
 
 	}
@@ -752,6 +766,10 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_Of_One_polynomial" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_Of_One_polynomial not yet implemented" << endl;
+		exit(1);
+
+		orbits_on_polynomials *Of_One_polynomial;
 
 
 	}
@@ -760,6 +778,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_on_cubic_curves" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_on_cubic_curves not yet implemented" << endl;
+		exit(1);
+
 
 
 	}
@@ -768,6 +789,9 @@ void orbits_activity::do_export_trees(
 		if (f_v) {
 			cout << "orbits_activity::do_export_trees f_has_classification_by_canonical_form" << endl;
 		}
+		cout << "orbits_activity::do_export_trees f_has_classification_by_canonical_form not yet implemented" << endl;
+		exit(1);
+
 
 
 	}

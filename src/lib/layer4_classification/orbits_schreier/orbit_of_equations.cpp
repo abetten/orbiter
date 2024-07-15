@@ -201,7 +201,7 @@ void orbit_of_equations::print_orbit()
 				Equations[i] + 1,
 				nb_monomials);
 		cout << " : ";
-		//AonHPD->HPD->print_equation(cout, Equations[i] + 1);
+		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		if (f_has_print_function) {
 			(*print_function)(Equations[i], sz, print_function_data);
 		}
@@ -504,7 +504,7 @@ void orbit_of_equations::get_transporter(
 		int idx,
 		int *transporter, int verbose_level)
 // transporter is an element which maps 
-// the orbit representative to the given subspace.
+// the orbit representative to the given orbit element.
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;

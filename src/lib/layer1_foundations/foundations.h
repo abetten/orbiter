@@ -295,6 +295,7 @@ namespace algebraic_geometry {
 	class surface_object_properties;
 	class surface_object;
 	class surface_polynomial_domains;
+	class veriety_description;
 	class variety_object;
 	class web_of_cubic_curves;
 

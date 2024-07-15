@@ -397,6 +397,7 @@ void surface_classify_wedge::post_process(
 
 void surface_classify_wedge::downstep(
 		int verbose_level)
+// from double sixes to cubic surfaces
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -500,6 +501,7 @@ void surface_classify_wedge::downstep(
 
 void surface_classify_wedge::upstep(
 		int verbose_level)
+// from double sixes to cubic surfaces
 {
 	int f_v = (verbose_level >= 1);
 	int f, po, so, i, j;
@@ -797,8 +799,10 @@ void surface_classify_wedge::derived_arcs(
 					<< Surfaces->nb_orbits << ":" << endl;
 		}
 
-		starter_configurations_which_are_involved(iso_type,
-			Starter_configuration_idx, nb_starter_conf, verbose_level);
+		starter_configurations_which_are_involved(
+				iso_type,
+			Starter_configuration_idx, nb_starter_conf,
+			verbose_level);
 
 		if (f_v) {
 			cout << "surface_classify_wedge::derived_arcs "
@@ -985,6 +989,7 @@ void surface_classify_wedge::starter_configurations_which_are_involved(
 		int iso_type,
 		int *&Starter_configuration_idx, int &nb_starter_conf,
 		int verbose_level)
+// Determines the double sixes which are involved with the giben cubic surface.
 {
 	int f_v = (verbose_level >= 1);
 	int /*k,*/ i, j, cnt, iso;

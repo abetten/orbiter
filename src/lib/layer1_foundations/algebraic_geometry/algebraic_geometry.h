@@ -2176,6 +2176,69 @@ public:
 
 
 // #############################################################################
+// variety_description.cpp
+// #############################################################################
+
+
+
+//! to describe a variety object
+
+
+class variety_description {
+public:
+
+	int f_label_txt;
+	std::string label_txt;
+
+	int f_label_tex;
+	std::string label_tex;
+
+	int f_projective_space;
+	std::string projective_space_label;
+
+	int f_has_projective_space_pointer;
+	geometry::projective_space *Projective_space_pointer;
+
+	int f_ring;
+	std::string ring_label;
+
+	int f_has_ring_pointer;
+	ring_theory::homogeneous_polynomial_domain *Ring_pointer;
+
+	int f_has_equation_in_algebraic_form;
+	std::string equation_in_algebraic_form_text;
+
+	int f_has_equation_by_coefficients;
+	std::string equation_by_coefficients_text;
+
+	int f_has_second_equation_in_algebraic_form;
+	std::string second_equation_in_algebraic_form_text;
+
+	int f_has_second_equation_by_coefficients;
+	std::string second_equation_by_coefficients_text;
+
+	int f_has_points;
+	std::string points_txt;
+
+	int f_has_bitangents;
+	std::string bitangents_txt;
+
+
+	variety_description();
+	~variety_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+
+};
+
+
+
+
+// #############################################################################
 // variety_object.cpp
 // #############################################################################
 
@@ -2186,19 +2249,22 @@ class variety_object {
 
 public:
 
+	variety_description *Descr;
+
 	geometry::projective_space *Projective_space;
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
+#if 0
 	std::string eqn_txt;
 
 	int f_second_equation;
 	std::string eqn2_txt;
-
+#endif
 
 
 	int *eqn; // [Ring->get_nb_monomials()]
-	int *eqn2; // [Ring->get_nb_monomials()]
+	//int *eqn2; // [Ring->get_nb_monomials()]
 
 
 	// the partition into points and lines
@@ -2215,6 +2281,10 @@ public:
 
 	variety_object();
 	~variety_object();
+	void init(
+			variety_description *Descr,
+			int verbose_level);
+#if 0
 	void init_from_string(
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
@@ -2222,7 +2292,12 @@ public:
 			int f_second_equation, std::string &eqn2_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
-	void parse_equation(
+#endif
+	void parse_equation_by_coefficients(
+			std::string &equation_txt,
+			int *&equation,
+			int verbose_level);
+	void parse_equation_in_algebraic_form(
 			std::string &equation_txt,
 			int *&equation,
 			int verbose_level);
@@ -2250,8 +2325,10 @@ public:
 	void print(
 			std::ostream &ost);
 	void stringify(
-			std::string &s_Eqn, std::string &s_Eqn2,
-			std::string &s_Pts, std::string &s_Bitangents);
+			std::string &s_Eqn, //std::string &s_Eqn2,
+			std::string &s_nb_Pts,
+			std::string &s_Pts,
+			std::string &s_Bitangents);
 	void report_equations(
 			std::ostream &ost);
 	void report_equation(

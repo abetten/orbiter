@@ -520,6 +520,8 @@ public:
 			std::vector<int> &path, std::vector<int> &labels,
 			int i, int verbose_level);
 	void trace_back(
+			int i, int &j);
+	void trace_back_and_record_path(
 			int *path, int i, int &j);
 	void intersection_vector(
 			int *set, int len,
@@ -631,18 +633,6 @@ public:
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
 			int verbose_level);
-#if 0
-	void print_TDA(
-			std::ostream &ost,
-			canonical_form_classification::object_with_canonical_form *OwCF,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int verbose_level);
-	void latex_TDA(
-			std::ostream &ost,
-			canonical_form_classification::encoded_combinatorial_object *Enc,
-			int verbose_level);
-#endif
 
 	// schreier_io.cpp:
 	void latex(
@@ -1485,12 +1475,12 @@ public:
 
 };
 
-// sims2.cpp
+
 void choose_random_generator_derived_group(
 		sims *G, int *Elt,
 	int verbose_level);
 
-
+// needed by wreath_product.cpp
 
 
 

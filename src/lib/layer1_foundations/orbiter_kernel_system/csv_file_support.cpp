@@ -306,6 +306,50 @@ void csv_file_support::vector_matrix_write_csv(
 	}
 }
 
+void csv_file_support::vector_matrix_write_csv_compact(
+		std::string &fname,
+		std::vector<std::vector<int> > &V)
+{
+	int i, j;
+	int m, n;
+
+	m = V.size();
+	n = V[0].size();
+	for (i = 0; i < m; i++) {
+		if (V[i].size() != n) {
+			cout << "csv_file_support::int_matrix_write_csv "
+					"the vectors must have the same length" << endl;
+			exit(1);
+		}
+	}
+
+	int *T;
+
+	T = NEW_int(m * n);
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			T[i * n + j] = V[i][j];
+		}
+	}
+
+
+	{
+		ofstream f(fname);
+
+		f << "Row,C0" << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			string str;
+
+			str = Int_vec_stringify(T + i * n, n);
+			f << ",\"" << str << "\"" << endl;
+		}
+		f << "END" << endl;
+	}
+
+	FREE_int(T);
+}
+
 
 
 void csv_file_support::double_matrix_write_csv(

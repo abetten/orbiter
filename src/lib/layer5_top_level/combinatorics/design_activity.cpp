@@ -104,6 +104,19 @@ void design_activity::perform_activity(
 		do_export_inc(
 				DC,
 				verbose_level);
+
+	}
+	else if (Descr->f_export_incidence_matrix) {
+		if (f_v) {
+			cout << "design_activity::perform_activity f_export_incidence_matrix" << endl;
+		}
+		do_export_incidence_matrix_csv(DC, verbose_level);
+	}
+	else if (Descr->f_export_incidence_matrix_latex) {
+		if (f_v) {
+			cout << "design_activity::perform_activity f_export_incidence_matrix_latex" << endl;
+		}
+		do_export_incidence_matrix_latex(DC, verbose_level);
 	}
 	else if (Descr->f_intersection_matrix) {
 		if (f_v) {
@@ -519,6 +532,151 @@ void design_activity::do_export_inc(
 		cout << "design_activity::do_export_inc done" << endl;
 	}
 }
+
+
+void design_activity::do_export_incidence_matrix_csv(
+		design_create *DC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_csv" << endl;
+	}
+
+	string fname;
+
+	fname = DC->label_txt + "_incma.csv";
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_csv "
+				"fname=" << fname << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, DC->incma, DC->v, DC->b);
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_csv done" << endl;
+	}
+}
+
+void design_activity::do_export_incidence_matrix_latex(
+		design_create *DC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_latex" << endl;
+	}
+
+	string fname;
+
+	fname = DC->label_txt + "_incma.tex";
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_latex "
+				"fname=" << fname << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+	nb_rows = DC->v;
+	nb_cols = DC->b;
+
+	canonical_form_classification::encoded_combinatorial_object *Enc;
+
+	Enc = NEW_OBJECT(canonical_form_classification::encoded_combinatorial_object);
+	Enc->init(nb_rows, nb_cols, verbose_level);
+
+	int i, j, f;
+
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < DC->b; j++) {
+			f = i * DC->b + j;
+			if (DC->incma[f]) {
+				Enc->set_incidence(f);
+			}
+		}
+	}
+
+	Enc->partition[nb_rows - 1] = 0;
+	Enc->partition[nb_rows + nb_cols - 1] = 0;
+
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_latex "
+				"partition:" << endl;
+		Enc->print_partition();
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+
+	{
+		ofstream ost(fname);
+		l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+
+
+		Enc->latex_incma(
+				ost,
+				verbose_level);
+
+		ost << endl;
+
+		ost << "\\bigskip" << endl;
+
+		ost << endl;
+
+
+		Enc->latex_incma_as_01_matrix(
+				ost,
+				verbose_level);
+
+		ost << endl;
+
+		ost << "\\bigskip" << endl;
+
+		ost << endl;
+
+
+
+
+		ost << "\\noindent Blocks: \\\\" << endl;
+
+		Enc->latex_set_system_by_columns(
+				ost,
+				verbose_level);
+
+		L.foot(ost);
+	}
+
+
+
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_export_incidence_matrix_latex done" << endl;
+	}
+}
+
 
 
 void design_activity::do_intersection_matrix(

@@ -4717,6 +4717,268 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 
 
 
+void action_global::rational_normal_form(
+		actions::action *A,
+		std::string &element_given,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::rational_normal_form" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::rational_normal_form A = " << endl;
+		A->print_info();
+	}
+
+	algebra::matrix_group *M;
+
+	M = A->G.matrix_grp;
+
+	int n;
+
+	n = M->n;
+
+	linear_algebra::gl_classes *C;
+
+
+#if 0
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"before M->init_gl_classes M->n=" << M->n << endl;
+	}
+	M->init_gl_classes(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"after M->init_gl_classes" << endl;
+	}
+	linear_algebra::gl_classes *C;
+
+	C = M->C;
+#endif
+
+	C = NEW_OBJECT(linear_algebra::gl_classes);
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"before C->init" << endl;
+	}
+	C->init(M->n, M->GFq, verbose_level);
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"after C->init" << endl;
+	}
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *B;
+	int *Bv;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	B = NEW_int(A->elt_size_in_int);
+	Bv = NEW_int(A->elt_size_in_int);
+
+	A->Group_element->make_element_from_string(
+			Elt1, element_given, verbose_level);
+	if (f_v) {
+		cout << "element_given=" << endl;
+		A->Group_element->element_print_quick(Elt1, cout);
+	}
+
+
+
+
+	int *Mtx1;
+	int *Basis1;
+	linear_algebra::gl_class_rep *R1;
+
+	//Mtx1 = NEW_int(n);
+	Mtx1 = Elt1;
+
+
+	Basis1 = NEW_int(n * n);
+
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"before identify_matrix Mtx1" << endl;
+	}
+	C->identify_matrix(Mtx1, R1, Basis1, verbose_level);
+	if (f_v) {
+		cout << "action_global::rational_normal_form "
+				"after identify_matrix Mtx1" << endl;
+	}
+
+	A->Group_element->make_element(
+			B, Basis1, verbose_level);
+	if (f_v) {
+		cout << "B=" << endl;
+		A->Group_element->element_print_quick(B, cout);
+	}
+
+	A->Group_element->element_invert(
+			B, Bv, verbose_level);
+	if (f_v) {
+		cout << "Bv=" << endl;
+		A->Group_element->element_print_quick(Bv, cout);
+	}
+
+
+	A->Group_element->element_mult(
+			Bv, Elt1, Elt2, verbose_level);
+	A->Group_element->element_mult(
+			Elt2, B, Elt3, verbose_level);
+
+	if (f_v) {
+		cout << "Bv * Elt1 * B=" << endl;
+		A->Group_element->element_print_quick(Elt3, cout);
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(B);
+	FREE_int(Bv);
+	FREE_int(Basis1);
+	FREE_OBJECT(R1);
+	FREE_OBJECT(C);
+
+	if (f_v) {
+		cout << "action_global::rational_normal_form done" << endl;
+	}
+}
+
+
+
+
+void action_global::find_conjugating_element(
+		actions::action *A,
+		std::string &element_from,
+		std::string &element_to,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::find_conjugating_element" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::find_conjugating_element A = " << endl;
+		A->print_info();
+	}
+
+	algebra::matrix_group *M;
+
+	M = A->G.matrix_grp;
+
+	int n;
+
+	n = M->n;
+
+	linear_algebra::gl_classes *C;
+
+
+#if 0
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"before M->init_gl_classes M->n=" << M->n << endl;
+	}
+	M->init_gl_classes(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"after M->init_gl_classes" << endl;
+	}
+	linear_algebra::gl_classes *C;
+
+	C = M->C;
+#endif
+
+	C = NEW_OBJECT(linear_algebra::gl_classes);
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"before C->init" << endl;
+	}
+	C->init(M->n, M->GFq, verbose_level);
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"after C->init" << endl;
+	}
+
+	int *Elt1;
+	int *Elt2;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	A->Group_element->make_element_from_string(
+			Elt1, element_from, verbose_level);
+	if (f_v) {
+		cout << "Elt_from=" << endl;
+		A->Group_element->element_print_quick(Elt1, cout);
+	}
+
+	A->Group_element->make_element_from_string(
+			Elt2, element_to, verbose_level);
+	if (f_v) {
+		cout << "Elt_to=" << endl;
+		A->Group_element->element_print_quick(Elt2, cout);
+	}
+
+
+
+	int *Mtx1;
+	int *Mtx2;
+	int *Basis1;
+	int *Basis2;
+	linear_algebra::gl_class_rep *R1;
+	linear_algebra::gl_class_rep *R2;
+
+	//Mtx1 = NEW_int(n);
+	Mtx1 = Elt1;
+	Mtx2 = Elt2;
+
+
+	Basis1 = NEW_int(n * n);
+	Basis2 = NEW_int(n * n);
+
+	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
+
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"before identify_matrix Mtx1" << endl;
+	}
+	C->identify_matrix(Mtx1, R1, Basis1, verbose_level);
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"after identify_matrix Mtx1" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"before identify_matrix Mtx2" << endl;
+	}
+	C->identify_matrix(Mtx2, R2, Basis2, verbose_level);
+	if (f_v) {
+		cout << "action_global::find_conjugating_element "
+				"after identify_matrix Mtx2" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "action_global::find_conjugating_element done" << endl;
+	}
+}
+
+
+
+
 void action_global::read_orbit_rep_and_candidates_from_files_and_process(
 		action *A,
 		std::string &prefix,

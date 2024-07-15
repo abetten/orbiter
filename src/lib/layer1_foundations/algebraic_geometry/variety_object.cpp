@@ -24,17 +24,21 @@ namespace algebraic_geometry {
 
 variety_object::variety_object()
 {
+	Descr = NULL;
+
 	Projective_space = NULL;
 
 	Ring = NULL;
 
+#if 0
 	//std::string eqn_txt;
 
 	f_second_equation = false;
 	//std::string eqn2;
+#endif
 
 	eqn = NULL;
-	eqn2 = NULL;
+	//eqn2 = NULL;
 
 
 	Point_sets = NULL;
@@ -48,6 +52,129 @@ variety_object::~variety_object()
 
 }
 
+void variety_object::init(
+		variety_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::init" << endl;
+	}
+
+	variety_object::Descr = Descr;
+
+
+	if (Descr->f_has_projective_space_pointer) {
+		Projective_space = Descr->Projective_space_pointer;
+	}
+	else {
+		cout << "variety_object::init f_has_projective_space_pointer is false" << endl;
+		exit(1);
+	}
+
+	if (Descr->f_ring) {
+		Ring = Get_ring(Descr->ring_label);
+	}
+	else if (Descr->f_has_ring_pointer) {
+		Ring = Descr->Ring_pointer;
+	}
+	else {
+		cout << "variety_object::init please use option -ring" << endl;
+		exit(1);
+	}
+
+
+
+
+	if (Descr->f_has_equation_in_algebraic_form) {
+		if (f_v) {
+			cout << "variety_object::init "
+					"before parse_equation_in_algebraic_form" << endl;
+			cout << "variety_object::init_from_string "
+					"equation = " << Descr->equation_in_algebraic_form_text << endl;
+		}
+		parse_equation_in_algebraic_form(
+				Descr->equation_in_algebraic_form_text,
+				eqn,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "variety_object::init "
+					"after parse_equation_in_algebraic_form" << endl;
+		}
+	}
+	else if (Descr->f_has_equation_by_coefficients) {
+		if (f_v) {
+			cout << "variety_object::init "
+					"before parse_equation_by_coefficients" << endl;
+			cout << "variety_object::init "
+					"equation = " << Descr->equation_in_algebraic_form_text << endl;
+		}
+		parse_equation_by_coefficients(
+				Descr->equation_by_coefficients_text,
+				eqn,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "variety_object::init "
+					"after parse_equation_by_coefficients" << endl;
+		}
+	}
+	else {
+		cout << "variety_object::init please specify an equation" << endl;
+		exit(1);
+	}
+
+	int nb_pts;
+	int nb_bitangents;
+
+	if (Descr->f_has_points) {
+		long int *Pts;
+
+		Lint_vec_scan(Descr->points_txt, Pts, nb_pts);
+		Point_sets = NEW_OBJECT(data_structures::set_of_sets);
+		Point_sets->init_single(
+				Projective_space->Subspaces->N_points /* underlying_set_size */,
+				Pts, nb_pts, 0 /* verbose_level*/);
+
+		FREE_lint(Pts);
+	}
+	else {
+		cout << "variety_object::init computing the set of rational points" << endl;
+		enumerate_points(verbose_level);
+	}
+
+	if (Descr->f_has_bitangents) {
+		long int *Bitangents;
+
+		Lint_vec_scan(Descr->bitangents_txt, Bitangents, nb_bitangents);
+
+
+		Line_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+		Line_sets->init_single(
+				Projective_space->Subspaces->N_points /* underlying_set_size */,
+				Bitangents, nb_bitangents, 0 /* verbose_level*/);
+
+
+		FREE_lint(Bitangents);
+
+	}
+	else {
+		cout << "variety_object::init please specify the set of bitangents" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "variety_object::init "
+				"nb_pts = " << nb_pts << " nb_bitangents=" << nb_bitangents << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_object::init done" << endl;
+	}
+}
+
+#if 0
 void variety_object::init_from_string(
 		geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
@@ -72,23 +199,23 @@ void variety_object::init_from_string(
 
 	if (f_v) {
 		cout << "variety_object::init_from_string "
-				"before parse_equation" << endl;
+				"before parse_equation_in_algebraic_form" << endl;
 	}
-	parse_equation(
+	parse_equation_in_algebraic_form(
 			eqn_txt,
 			eqn,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_object::init_from_string "
-				"after parse_equation" << endl;
+				"after parse_equation_in_algebraic_form" << endl;
 	}
 
 	if (f_second_equation) {
 		if (f_v) {
 			cout << "variety_object::init_from_string "
-					"before parse_equation (2)" << endl;
+					"before parse_equation_in_algebraic_form (2)" << endl;
 		}
-		parse_equation(
+		parse_equation_in_algebraic_form(
 				eqn2_txt,
 				eqn2,
 				verbose_level - 2);
@@ -135,8 +262,9 @@ void variety_object::init_from_string(
 		cout << "variety_object::init_from_string done" << endl;
 	}
 }
+#endif
 
-void variety_object::parse_equation(
+void variety_object::parse_equation_by_coefficients(
 		std::string &equation_txt,
 		int *&equation,
 		int verbose_level)
@@ -144,49 +272,84 @@ void variety_object::parse_equation(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "variety_object::parse_equation" << endl;
+		cout << "variety_object::parse_equation_by_coefficients" << endl;
 	}
 	if (f_v) {
-		cout << "variety_object::parse_equation equation = " << equation_txt << endl;
+		cout << "variety_object::parse_equation_by_coefficients equation = " << equation_txt << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::parse_equation_by_coefficients "
+				"reading coefficients numerically" << endl;
 	}
 
-	if (std::isalpha(equation_txt[0])) {
+	int sz;
 
-		if (f_v) {
-			cout << "variety_object::parse_equation "
-					"reading formula" << endl;
-		}
+	Int_vec_scan(equation_txt, equation, sz);
 
-		ring_theory::ring_theory_global R;
-		int *coeffs;
+	if (sz != Ring->get_nb_monomials()) {
+		cout << "variety_object::parse_equation_by_coefficients "
+				"the equation does not have the required number of terms" << endl;
+		exit(1);
+	}
 
-		if (f_v) {
-			cout << "variety_object::parse_equation "
-					"before R.parse_equation_easy" << endl;
-		}
+	if (f_v) {
+		cout << "variety_object::parse_equation_by_coefficients done" << endl;
+	}
+}
 
-		R.parse_equation_easy(
-				Ring,
-				equation_txt,
-				coeffs,
-				verbose_level - 1);
 
-		if (f_v) {
-			cout << "variety_object::parse_equation "
-					"after R.parse_equation_easy" << endl;
-		}
+void variety_object::parse_equation_in_algebraic_form(
+		std::string &equation_txt,
+		int *&equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
-		equation = NEW_int(Ring->get_nb_monomials());
-		Int_vec_copy(
-				coeffs, equation, Ring->get_nb_monomials());
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form" << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form equation = " << equation_txt << endl;
+	}
 
-		FREE_int(coeffs);
+	//if (std::isalpha(equation_txt[0])) {
 
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form "
+				"reading formula" << endl;
+	}
+
+	ring_theory::ring_theory_global R;
+	int *coeffs;
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form "
+				"before R.parse_equation_easy" << endl;
+	}
+
+	R.parse_equation_easy(
+			Ring,
+			equation_txt,
+			coeffs,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form "
+				"after R.parse_equation_easy" << endl;
+	}
+
+	equation = NEW_int(Ring->get_nb_monomials());
+	Int_vec_copy(
+			coeffs, equation, Ring->get_nb_monomials());
+
+	FREE_int(coeffs);
+
+#if 0
 	}
 	else {
 
 		if (f_v) {
-			cout << "variety_object::parse_equation "
+			cout << "variety_object::parse_equation_in_algebraic_form "
 					"reading coefficients numerically" << endl;
 		}
 
@@ -195,15 +358,16 @@ void variety_object::parse_equation(
 		Int_vec_scan(equation_txt, equation, sz);
 
 		if (sz != Ring->get_nb_monomials()) {
-			cout << "variety_object::parse_equation "
+			cout << "variety_object::parse_equation_in_algebraic_form "
 					"the equation does not have the required number of terms" << endl;
 			exit(1);
 		}
 
 	}
+#endif
 
 	if (f_v) {
-		cout << "variety_object::parse_equation done" << endl;
+		cout << "variety_object::parse_equation_in_algebraic_form done" << endl;
 	}
 }
 
@@ -310,7 +474,7 @@ void variety_object::enumerate_points(
 	long int *Pts;
 	int nb_pts;
 
-
+#if 0
 	if (f_second_equation) {
 		if (f_v) {
 			cout << "variety_object::enumerate_points before "
@@ -326,6 +490,7 @@ void variety_object::enumerate_points(
 		}
 	}
 	else {
+#endif
 		if (f_v) {
 			cout << "variety_object::enumerate_points before "
 					"Ring->enumerate_points" << endl;
@@ -339,7 +504,7 @@ void variety_object::enumerate_points(
 					"Ring->enumerate_points" << endl;
 		}
 
-	}
+	//}
 	if (f_v) {
 		cout << "variety_object::enumerate_points The variety "
 				"has " << nb_pts << " points" << endl;
@@ -420,19 +585,21 @@ void variety_object::enumerate_lines(
 void variety_object::print(
 		std::ostream &ost)
 {
-	ost << " eqn = " << eqn_txt << " = ";
+	ost << " eqn = ";
 	Int_vec_print(ost, eqn, Ring->get_nb_monomials());
 
-	cout << "equation1 is: " << eqn_txt << " = ";
+	cout << "equation1 is: ";
 	Ring->print_equation_simple(
 			cout, eqn);
 	cout << endl;
+#if 0
 	if (f_second_equation) {
 		cout << "equation2 is: " << eqn2_txt << " = ";
 		Ring->print_equation_simple(
 				cout, eqn2);
 		cout << endl;
 	}
+#endif
 
 	ost << " pts=";
 	Lint_vec_print(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
@@ -443,17 +610,22 @@ void variety_object::print(
 
 
 void variety_object::stringify(
-		std::string &s_Eqn1, std::string &s_Eqn2,
-		std::string &s_Pts, std::string &s_Bitangents)
+		std::string &s_Eqn1, //std::string &s_Eqn2,
+		std::string &s_nb_Pts,
+		std::string &s_Pts,
+		std::string &s_Bitangents)
 {
 	s_Eqn1 = Int_vec_stringify(
 			eqn,
 			Ring->get_nb_monomials());
+#if 0
 	if (f_second_equation) {
 		s_Eqn2 = Int_vec_stringify(
 				eqn2,
 				Ring->get_nb_monomials());
 	}
+#endif
+	s_nb_Pts = std::to_string(Point_sets->Set_size[0]);
 	s_Pts = Lint_vec_stringify(
 			Point_sets->Sets[0],
 			Point_sets->Set_size[0]);
@@ -468,18 +640,22 @@ void variety_object::report_equations(
 		std::ostream &ost)
 {
 	report_equation(ost);
+#if 0
 	if (f_second_equation) {
 		report_equation2(ost);
 	}
+#endif
 }
 
 void variety_object::report_equation(
 		std::ostream &ost)
 {
+#if 0
 	ost << "Equation ";
 	ost << "\\verb'";
 	ost << eqn_txt;
 	ost << "'";
+#endif
 	ost << "\\\\" << endl;
 	ost << "Equation ";
 	Int_vec_print(ost,
@@ -489,6 +665,7 @@ void variety_object::report_equation(
 
 }
 
+#if 0
 void variety_object::report_equation2(
 		std::ostream &ost)
 {
@@ -504,6 +681,7 @@ void variety_object::report_equation2(
 	ost << "\\\\" << endl;
 
 }
+#endif
 
 int variety_object::find_point(
 		long int P, int &idx)

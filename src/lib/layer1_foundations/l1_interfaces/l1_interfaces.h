@@ -371,6 +371,18 @@ public:
 			std::string *row_labels,
 			std::string *entries,
 			int f_enter_math_mode);
+	void print_vector_vertically_with_label(
+			std::ostream &ost,
+			std::string &label,
+			std::vector<std::string> &v,
+			int f_brackets,
+			int f_enter_math_mode);
+	void print_vector_horizontally_with_label(
+			std::ostream &ost,
+			std::string &label,
+			std::vector<std::string> &v,
+			int f_brackets,
+			int f_enter_math_mode);
 
 };
 

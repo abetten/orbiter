@@ -149,6 +149,9 @@ public:
 	void vector_matrix_write_csv(
 			std::string &fname,
 			std::vector<std::vector<int> > &V);
+	void vector_matrix_write_csv_compact(
+			std::string &fname,
+			std::vector<std::vector<int> > &V);
 	void double_matrix_write_csv(
 			std::string &fname,
 		double *M, int m, int n);

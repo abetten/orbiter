@@ -149,7 +149,14 @@ void polynomial_ring_activity::perform_activity(
 		int sz;
 
 
-		Int_vec_scan(Descr->apply_transformation_Eqn_in_label, Eqn_in, sz);
+		Get_int_vector_from_label(Descr->apply_transformation_Eqn_in_label, Eqn_in, sz, 0 /* verbose_level */);
+		//Int_vec_scan(Descr->apply_transformation_Eqn_in_label, Eqn_in, sz);
+
+		if (f_v) {
+			cout << "The input equation is:";
+			Int_vec_print(cout, Eqn_in, sz);
+			cout << endl;
+		}
 
 		if (sz != HPD->get_nb_monomials()) {
 			cout << "polynomial_ring_activity::perform_activity the equation does not have the right amount of coefficients" << endl;
@@ -210,6 +217,12 @@ void polynomial_ring_activity::perform_activity(
 				cout << "The mapped equation is:";
 				HPD->print_equation_simple(cout, Eqn_out);
 				cout << endl;
+				cout << "The mapped equation is:";
+				HPD->print_equation_tex(cout, Eqn_out);
+				cout << endl;
+				cout << "The mapped equation is:";
+				HPD->print_equation_relaxed(cout, Eqn_out);
+				cout << endl;
 			}
 
 			if (HPD->degree == 2) {
@@ -266,6 +279,34 @@ void polynomial_ring_activity::perform_activity(
 		HPD->print_equation_tex(cout, eqn);
 		cout << endl;
 	}
+
+	else if (Descr->f_parse_equation_wo_parameters) {
+		if (f_v) {
+			cout << "-parse_equation_wo_parameters "
+					<< Descr->parse_equation_wo_parameters_name_of_formula << " "
+					<< Descr->parse_equation_wo_parameters_name_of_formula_tex << " "
+					<< Descr->parse_equation_wo_parameters_equation_text << " "
+					<< endl;
+		}
+
+
+		int *eqn;
+		int eqn_size;
+
+		HPD->parse_equation_wo_parameters(
+				Descr->parse_equation_wo_parameters_name_of_formula,
+				Descr->parse_equation_wo_parameters_name_of_formula_tex,
+				Descr->parse_equation_wo_parameters_equation_text,
+				eqn, eqn_size,
+				verbose_level);
+		if (f_v) {
+			cout << "-parse_equation_wo_parameters The equation is:" << endl;
+			Int_vec_print(cout, eqn, eqn_size);
+			cout << endl;
+		}
+
+	}
+
 
 	else if (Descr->f_parse_equation) {
 		if (f_v) {

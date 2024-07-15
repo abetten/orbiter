@@ -50,11 +50,11 @@ void sims::create_group_tree(
 		for (i = 0; i < l; i++) {
 			if (i == 0) {
 				Fst[i] = 0;
-				}
+			}
 			else {
 				Fst[i] = Fst[i - 1] + orbit_len[i - 1];
-				}
 			}
+		}
 		if (f_full) {
 			for (h = 0; h < go; h++) {
 				element_unrank_lint(h, Elt);
@@ -68,16 +68,16 @@ void sims::create_group_tree(
 					coset_rep(Elt2, i, j, 0 /* verbose_level*/);
 					if (i) {
 						//cout << "*" << endl;
-						}
-					//A->element_print_quick(Elt2, cout);
 					}
+					//A->element_print_quick(Elt2, cout);
+				}
 				fp << endl;
 				//cout << "=" << endl;
 				//A->element_print_quick(Elt, cout);
 				//A->element_print_as_permutation(Elt, cout);
 				//cout << endl;
-				}
 			}
+		}
 		else {
 			for (h = l - 1; h >= 0; h--) {
 				for (j = 0; j < orbit_len[h]; j++) {
@@ -90,11 +90,11 @@ void sims::create_group_tree(
 					for (i = 0; i <= h; i++) {
 						j = path[i];
 						fp << " " << orbit[i][j];
-						}
-					fp << endl;
 					}
+					fp << endl;
 				}
 			}
+		}
 		fp << "-1" << endl;
 	}
 	if (f_v) {
@@ -119,16 +119,16 @@ void sims::print_transversals()
 	for (i = 0 ; i <= l; i++) {
 		for (j = 0; j < orbit_len[i]; j++) {
 			cout << orbit[i][j] << " ";
-			}
+		}
 		cout << "(length " << orbit_len[i] << ")" << endl;
 #if 0
 		cout << "printing orbit_inv:" << endl;
 		for (j = 0; j < A->degree; j++) {
 			cout << orbit_inv[i][j] << " ";
-			}
+		}
 #endif
 		cout << endl;
-		}
+	}
 }
 
 void sims::print_transversals_short()
@@ -139,19 +139,21 @@ void sims::print_transversals_short()
 		cout << "sims::print_transversals_short: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
-		}
+	}
 	l = last_moved_base_point();
 	for (i = 0 ; i <= l; i++) {
 		cout << "(";
 		for (j = 0; j < orbit_len[i]; j++) {
 			cout << orbit[i][j];
-			if (j < orbit_len[i] - 1)
+			if (j < orbit_len[i] - 1) {
 				cout << ",";
 			}
+		}
 		cout << ")";
-		if (i < l)
+		if (i < l) {
 			cout << ", ";
 		}
+	}
 	cout << endl;
 }
 
@@ -166,7 +168,7 @@ void sims::print_transversal_lengths()
 	for (i = 0 ; i <= l; i++) {
 		cout << i << " base point " << orbit[i][0]
 			<< " length " << orbit_len[i] << endl;
-		}
+	}
 #endif
 }
 
@@ -176,7 +178,7 @@ void sims::print_orbit_len()
 
 	for (i = 0; i < A->base_len(); i++) {
 		cout << orbit_len[i] << " ";
-		}
+	}
 	cout << endl;
 }
 
@@ -203,16 +205,16 @@ void sims::print(
 			cout << i << " : " << A->base_i(i) << " : "
 					<< orbit_len[i] << " : "
 					<< nb_gen[i] - nb_gen[i + 1] << endl;
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	if (f_vv) {
 		print_generator_depth_and_perm();
-		}
+	}
 	if (f_vvv) {
 		print_generators();
 		print_basic_orbits();
-		}
+	}
 }
 
 void sims::print_generators()
@@ -234,9 +236,9 @@ void sims::print_generators()
 			cout << "generator " << gen_idx << ":" << endl;
 			A->Group_element->element_print(gens.ith(gen_idx), cout);
 			cout << endl;
-			}
-		cout << "orbit_len[" << i << "]=" << orbit_len[i] << endl;
 		}
+		cout << "orbit_len[" << i << "]=" << orbit_len[i] << endl;
+	}
 	cout << endl;
 }
 
@@ -292,7 +294,7 @@ void sims::print_generators_as_permutations()
 		cout << i << " : ";
 		A->Group_element->element_print_as_permutation(gens.ith(i), cout);
 		cout << endl;
-		}
+	}
 	cout << endl;
 }
 
@@ -307,7 +309,7 @@ void sims::print_generators_as_permutations_override_action(
 		cout << i << " : ";
 		A->Group_element->element_print_as_permutation(gens.ith(i), cout);
 		cout << endl;
-		}
+	}
 	cout << endl;
 }
 
@@ -319,10 +321,10 @@ void sims::print_basic_orbits()
 		cout << "sims::print_basic_orbits: "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
-		}
+	}
 	for (i = 0 ; i < A->base_len() /* <= j */; i++) {
 		print_basic_orbit(i);
-		}
+	}
 }
 
 void sims::print_basic_orbit(
@@ -335,14 +337,15 @@ void sims::print_basic_orbit(
 	for (j = 0; j < orbit_len[i] /* A->degree */; j++) {
 		//coset_rep[i][j];
 		//coset_rep_inv(i);
-		if (j == orbit_len[i])
+		if (j == orbit_len[i]) {
 			cout << "======================================" << endl;
+		}
 		cout << setw(5) << j << " : "
 			<< setw(5) << orbit[i][j] << " : "
 			<< setw(5) << prev[i][j] << " : "
 			<< setw(5) << label[i][j];
 		cout << endl;
-		}
+	}
 	cout << endl;
 }
 
@@ -353,7 +356,7 @@ void sims::print_generator_depth_and_perm()
 	cout << "i : gen_depth[i] : gen_perm[i]" << endl;
 	for (i = 0; i < gens.len; i++) {
 		cout << i << " : " << gen_depth[i] << " : " << gen_perm[i] << endl;
-		}
+	}
 	cout << "i : base[i] : nb_gen[i]" << endl;
 	for (i = 0; i <= A->base_len(); i++) {
 		int pt;
@@ -365,7 +368,7 @@ void sims::print_generator_depth_and_perm()
 			pt = -1;
 		}
 		cout << i << " : " << pt << " : " << nb_gen[i] << endl;
-		}
+	}
 }
 
 void sims::print_group_order(
@@ -385,12 +388,12 @@ void sims::print_group_order_factored(
 	for (i = 0; i <= j; i++) {
 		if (f_first) {
 			f_first = false;
-			}
+		}
 		else {
 			cout << " * ";
-			}
-		cout << orbit_len[i];
 		}
+		cout << orbit_len[i];
+	}
 }
 
 void sims::print_generators_at_level_or_below(
@@ -407,7 +410,7 @@ void sims::print_generators_at_level_or_below(
 		A->Group_element->element_print_quick(gens.ith(gen_idx), cout);
 		cout << "as permutation:" << endl;
 		A->Group_element->element_print_as_permutation(gens.ith(gen_idx), cout);
-		}
+	}
 }
 
 void sims::write_all_group_elements(
@@ -430,12 +433,12 @@ void sims::write_all_group_elements(
 		for (i = 0; i < go.as_lint(); i++) {
 			element_unrank_lint(i, Elt);
 			A->Group_element->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
-			}
+		}
 	}
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 	FREE_int(Elt);
 	//FREE_char(elt);
 }
@@ -454,19 +457,19 @@ void sims::print_all_group_elements_to_file(
 	group_order(go);
 
 	{
-	ofstream fp(fname);
-	for (i = 0; i < go.as_lint(); i++) {
-		element_unrank_lint(i, Elt);
-		fp << "Element " << setw(5) << i << " / "
-				<< go.as_int() << endl;
-		A->Group_element->element_print(Elt, fp);
-		fp << endl;
+		ofstream fp(fname);
+		for (i = 0; i < go.as_lint(); i++) {
+			element_unrank_lint(i, Elt);
+			fp << "Element " << setw(5) << i << " / "
+					<< go.as_int() << endl;
+			A->Group_element->element_print(Elt, fp);
+			fp << endl;
 		}
 	}
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 	FREE_int(Elt);
 }
 
@@ -487,7 +490,7 @@ void sims::print_all_group_elements()
 		cout << endl;
 		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
-		}
+	}
 	FREE_int(Elt);
 }
 
@@ -532,7 +535,7 @@ void sims::print_all_group_elements_tex(
 				Elt, f_with_permutation);
 
 		Order[i] = ord;
-}
+	}
 
 	data_structures::tally T;
 
@@ -627,7 +630,7 @@ void sims::print_all_group_elements_with_permutations_tex(
 		ost << "\\end{array}" << endl;
 		ost << "$$" << endl;
 		//cout << endl;
-		}
+	}
 	FREE_int(Elt);
 }
 
@@ -650,7 +653,7 @@ void sims::print_all_group_elements_as_permutations()
 		//cout << endl;
 		A->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
-		}
+	}
 	FREE_int(Elt);
 }
 
@@ -672,7 +675,7 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 		cout << endl;
 		A_special->Group_element->element_print_as_permutation(Elt, cout);
 		cout << endl;
-		}
+	}
 	FREE_int(Elt);
 }
 
@@ -690,22 +693,22 @@ void sims::print_all_transversal_elements()
 			if (j == 0 && i < A->base_len() - 1) {
 				// skip the identity in the upper transversals
 				continue;
-				}
+			}
 			for (ii = 0; ii < A->base_len(); ii++) {
 				path[ii] = 0;
-				}
+			}
 			path[i] = j;
 			element_from_path(Elt, 0 /* verbose_level */);
 			for (ii = 0; ii < A->base_len(); ii++) {
 				cout << setw(5) << path[ii] << " ";
-				}
+			}
 			cout << endl;
 			A->Group_element->element_print(Elt, cout);
 			cout << endl;
 			A->Group_element->element_print_as_permutation(Elt, cout);
 			cout << endl;
-			}
 		}
+	}
 	FREE_int(Elt);
 }
 
@@ -723,7 +726,7 @@ void sims::save_list_of_elements(
 	if (f_v) {
 		cout << "sims::save_list_of_elements saving "
 				<< goi << " elements to file " << fname << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 
 	{
@@ -737,13 +740,13 @@ void sims::save_list_of_elements(
 			//A->element_print_as_permutation(Elt1, cout);
 			//AA.print_as_permutation(cout, Elt1);
 			//cout << endl;
-			}
+		}
 	}
 	FREE_int(Elt1);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 }
 
 void sims::read_list_of_elements(
@@ -760,7 +763,7 @@ void sims::read_list_of_elements(
 	if (f_v) {
 		cout << "sims::read_list_of_elements reading "
 				<< goi << " elements from file " << fname << endl;
-		}
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
@@ -775,7 +778,7 @@ void sims::read_list_of_elements(
 			//cout << "element " << i << ":" << endl;
 			//A->element_print(Elt1, cout);
 			strip_and_add(Elt1, Elt2, verbose_level - 1);
-			}
+		}
 	}
 
 	FREE_int(Elt1);
@@ -783,7 +786,7 @@ void sims::read_list_of_elements(
 	if (f_v) {
 		cout << "read file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 }
 
 

@@ -46,11 +46,27 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_label_so = false;
 	column_label_so.assign("orbit");
 
-
+#if 0
 	f_label_equation = false;
 	column_label_eqn.assign("equation1");
 	f_label_equation2 = false;
 	column_label_eqn2.assign("equation2");
+#endif
+
+	f_label_equation_algebraic = false;
+	//std::string column_label_eqn_algebraic;
+
+	f_label_equation_by_coefficients = false;
+	//std::string column_label_eqn_by_coefficients;
+
+	f_label_equation2_algebraic = false;
+	//std::string column_label_eqn2_algebraic;
+
+	f_label_equation2_by_coefficients = false;
+	//std::string column_label_eqn2_by_coefficients;
+
+
+
 	f_label_points = false;
 	column_label_pts.assign("pts_on_curve");
 	f_label_lines = false;
@@ -156,18 +172,32 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-label_so " << column_label_so << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-label_equation") == 0) {
-			f_label_equation = true;
-			column_label_eqn.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-label_equation_algebraic") == 0) {
+			f_label_equation_algebraic = true;
+			column_label_eqn_algebraic.assign(argv[++i]);
 			if (f_v) {
-				cout << "-label_equation " << column_label_eqn << endl;
+				cout << "-label_equation_algebraic " << column_label_eqn_algebraic << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-label_equation2") == 0) {
-			f_label_equation2 = true;
-			column_label_eqn2.assign(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-label_equation_by_coefficients") == 0) {
+			f_label_equation_by_coefficients = true;
+			column_label_eqn_by_coefficients.assign(argv[++i]);
 			if (f_v) {
-				cout << "-label_equation2 " << column_label_eqn2 << endl;
+				cout << "-label_equation_by_coefficients " << column_label_eqn_by_coefficients << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-label_equation2_algebraic") == 0) {
+			f_label_equation2_algebraic = true;
+			column_label_eqn2_algebraic.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_equation2_algebraic " << column_label_eqn2_algebraic << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-label_equation2_by_coefficients") == 0) {
+			f_label_equation2_by_coefficients = true;
+			column_label_eqn2_by_coefficients.assign(argv[++i]);
+			if (f_v) {
+				cout << "-label_equation2_by_coefficients " << column_label_eqn2_by_coefficients << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-label_points") == 0) {
@@ -271,11 +301,17 @@ void canonical_form_classifier_description::print()
 	if (f_label_so) {
 		cout << "-label_so " << column_label_so << endl;
 	}
-	if (f_label_equation) {
-		cout << "-label_equation " << column_label_eqn << endl;
+	if (f_label_equation_algebraic) {
+		cout << "-label_equation_algebraic " << column_label_eqn_algebraic << endl;
 	}
-	if (f_label_equation2) {
-		cout << "-label_equation2 " << column_label_eqn2 << endl;
+	if (f_label_equation_by_coefficients) {
+		cout << "-label_equation_by_coefficients " << column_label_eqn_by_coefficients << endl;
+	}
+	if (f_label_equation2_algebraic) {
+		cout << "-label_equation2_algebraic " << column_label_eqn2_algebraic << endl;
+	}
+	if (f_label_equation2_by_coefficients) {
+		cout << "-label_equation2_by_coefficients " << column_label_eqn2_by_coefficients << endl;
 	}
 	if (f_label_points) {
 		cout << "-label_points " << column_label_pts << endl;

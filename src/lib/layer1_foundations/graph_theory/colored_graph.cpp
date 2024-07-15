@@ -2432,9 +2432,70 @@ void colored_graph::find_subgraph(
 		}
 	}
 	else {
-		cout << "colored_graph::find_subgraph "
-				"subgraph label not recognized" << endl;
-		exit(1);
+		string first_letter;
+
+		first_letter = subgraph_label.substr(0,1);
+
+		if (ST.stringcmp(first_letter, "A") == 0) {
+			if (f_v) {
+				cout << "colored_graph::find_subgraph "
+						"first letter is A" << endl;
+			}
+			string remainder;
+
+			remainder = subgraph_label.substr(1);
+
+			int n;
+
+			n = ST.strtoi(remainder);
+
+			if (f_v) {
+				cout << "colored_graph::find_subgraph "
+						"n = " << n << endl;
+			}
+
+
+			std::vector<std::vector<int>> Solutions;
+
+			if (f_v) {
+				cout << "colored_graph::find_subgraph "
+						"before find_subgraph_An" << endl;
+			}
+			find_subgraph_An(
+					n,
+					Solutions,
+					verbose_level);
+
+			if (f_v) {
+				cout << "colored_graph::find_subgraph "
+						"after find_subgraph_An" << endl;
+			}
+			if (f_v) {
+				cout << "colored_graph::find_subgraph "
+						"Number of subgraphs of type An = " << Solutions.size() << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+			std::string fname;
+
+			fname = label + "_all_" + subgraph_label + ".csv";
+
+			Fio.Csv_file_support->vector_matrix_write_csv_compact(
+					fname,
+					Solutions);
+
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+
+
+		}
+		else {
+			cout << "colored_graph::find_subgraph "
+					"subgraph label is not recognized" << endl;
+			exit(1);
+		}
 	}
 	if (f_v) {
 		cout << "colored_graph::find_subgraph done" << endl;
@@ -2595,7 +2656,171 @@ void colored_graph::find_subgraph_E6(
 }
 
 
+void colored_graph::find_subgraph_An(
+		int n,
+		std::vector<std::vector<int> > &Solutions,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	data_structures::string_tools ST;
+
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An "
+				"n = " << n
+				<< ", nb_points = " << nb_points
+				<< endl;
+	}
+
+	int i, a, b;
+	int *T;
+
+	T = NEW_int(n * n);
+	Int_vec_zero(T, n * n);
+	for (i = 0; i < n - 1; i++) {
+		a = i;
+		b = i + 1;
+		T[a * n + b] = T[b * n + a] = 1;
+	}
+
+	vector<int> Candidates;
+
+	for (i = 0; i < nb_points; i++) {
+		Candidates.push_back(i);
+	}
+
+	int current_depth = 0;
+	int *subgraph;
+
+	subgraph = NEW_int(n);
+
+	find_subgraph_An_recursion(
+			n,
+			T,
+			Candidates,
+			Solutions,
+			current_depth, subgraph,
+			verbose_level);
+
+	FREE_int(subgraph);
+	FREE_int(T);
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An "
+				"number of solutions = " << Solutions.size()
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An done" << endl;
+	}
+}
+
+
+void colored_graph::find_subgraph_An_recursion(
+		int n,
+		int *T,
+		std::vector<int> &Candidates,
+		std::vector<std::vector<int> > &Solutions,
+		int current_depth, int *subgraph,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An_recursion" << endl;
+	}
+
+	if (current_depth == n) {
+		if (f_v) {
+			cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth);
+			cout << " is solution " << Solutions.size() << endl;
+
+		}
+		vector<int> sol;
+		int i;
+
+		for (i = 0; i < n; i++) {
+			sol.push_back(subgraph[i]);
+		}
+		Solutions.push_back(sol);
+		return;
+	}
+	int cur;
+
+	for (cur = 0; cur < Candidates.size(); cur++) {
+
+		subgraph[current_depth] = Candidates[cur];
+
+		vector<int> Candidates_reduced;
+
+		int i, j, a, b, c1, c2;
+
+		for (i = 0; i < nb_points; i++) {
+			b = i;
+			for (j = 0; j <= current_depth; j++) {
+				a = subgraph[j];
+				if (a == b) {
+					if (f_v) {
+						cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						Int_vec_print(cout, subgraph, current_depth + 1);
+						cout << ", candidate " << b << " is eliminated because it is contained in the subgraph" << endl;
+					}
+					break;
+				}
+				c1 = is_adjacent(a, b);
+				c2 = T[j * n + current_depth + 1];
+				if (c1 != c2) {
+					if (f_v) {
+						cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						Int_vec_print(cout, subgraph, current_depth + 1);
+						cout << ", candidate " << b << " is eliminated by comparing it with vertex j=" << j << " which is " << a << " in the subgraph" << endl;
+					}
+					break;
+				}
+			}
+			if (j == current_depth + 1) {
+				if (f_v) {
+					cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+					Int_vec_print(cout, subgraph, current_depth + 1);
+					cout << ", candidate " << b << " is accepted" << endl;
+				}
+				Candidates_reduced.push_back(b);
+			}
+
+		}
+
+		if (f_v) {
+			cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth + 1);
+			cout << " : Candidates_reduced=";
+			for (j = 0; j < Candidates_reduced.size(); j++) {
+				cout << Candidates_reduced[j];
+				if (j < Candidates_reduced.size() - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+
+		}
+
+		find_subgraph_An_recursion(
+				n,
+				T,
+				Candidates_reduced,
+				Solutions,
+				current_depth + 1, subgraph,
+				verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "colored_graph::find_subgraph_An_recursion done" << endl;
+	}
+}
 
 
 

@@ -173,6 +173,14 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	move_a_to_b_a = -1;
 	move_a_to_b_b = -1;
 
+	f_rational_normal_form = false;
+	//std::string rational_normal_form_input;
+
+
+	f_find_conjugating_element = false;
+	//std::string find_conjugating_element_element_from;
+	//std::string find_conjugating_element_element_to;
+
 	// orbit stuff:
 
 
@@ -627,7 +635,27 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-rational_normal_form") == 0) {
+			f_rational_normal_form = true;
+			rational_normal_form_input.assign(argv[++i]);
+			if (f_v) {
+				cout << "-rational_normal_form "
+						<< rational_normal_form_input
+						<< endl;
+			}
+		}
 
+		else if (ST.stringcmp(argv[i], "-find_conjugating_element") == 0) {
+			f_find_conjugating_element = true;
+			find_conjugating_element_element_from.assign(argv[++i]);
+			find_conjugating_element_element_to.assign(argv[++i]);
+			if (f_v) {
+				cout << "-find_conjugating_element "
+						<< find_conjugating_element_element_from
+						<< " " << find_conjugating_element_element_to
+						<< endl;
+			}
+		}
 
 
 		// orbit stuff:
@@ -939,6 +967,18 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_move_a_to_b) {
 		cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
+	}
+	if (f_rational_normal_form) {
+		cout << "-rational_normal_form "
+				<< rational_normal_form_input
+				<< endl;
+	}
+
+	if (f_find_conjugating_element) {
+		cout << "-find_conjugating_element "
+				<< find_conjugating_element_element_from
+				<< " " << find_conjugating_element_element_to
+				<< endl;
 	}
 
 

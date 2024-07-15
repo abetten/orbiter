@@ -176,8 +176,13 @@ void syntax_tree::print_to_vector(
 	if (f_v) {
 		cout << "syntax_tree::print_to_vector "
 				"after Root->print_subtree_to_vector" << endl;
+		cout << "syntax_tree::print_to_vector "
+				"rep.size()=" << rep.size() << endl;
 	}
-
+	if (rep.size() == 0) {
+		cout << "syntax_tree::print_to_vector rep.size() == 0, adding a zero" << endl;
+		rep.push_back(std::to_string(0));
+	}
 }
 
 void syntax_tree::count_nodes(
@@ -962,7 +967,7 @@ void syntax_tree::print_variables(
 	if (f_has_managed_variables) {
 		if (managed_variables.size() == 0) {
 			cout << "even though there are managed variables, none is listed" << endl;
-			exit(1);
+			//exit(1);
 		}
 		else {
 			for (i = 0; i < managed_variables.size(); i++) {

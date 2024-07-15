@@ -736,6 +736,15 @@ public:
 			int *&transporter_a_b,
 			groups::strong_generators *&Stab_b,
 			int verbose_level);
+	void rational_normal_form(
+			actions::action *A,
+			std::string &element_given,
+			int verbose_level);
+	void find_conjugating_element(
+			actions::action *A,
+			std::string &element_from,
+			std::string &element_to,
+			int verbose_level);
 	void read_orbit_rep_and_candidates_from_files_and_process(
 			action *A,
 			std::string &prefix,

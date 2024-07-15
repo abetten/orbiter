@@ -152,12 +152,12 @@ void classification_of_varieties::init(
 
 		if (f_v) {
 			cout << "classification_of_varieties::init "
-					"before classify_nauty" << endl;
+					"before finalize_classification_by_nauty" << endl;
 		}
 		finalize_classification_by_nauty(verbose_level - 1);
 		if (f_v) {
 			cout << "classification_of_varieties::init "
-					"after classify_nauty" << endl;
+					"after finalize_classification_by_nauty" << endl;
 		}
 
 	}
@@ -417,12 +417,14 @@ void classification_of_varieties::main_loop(
 
 				Goi[input_counter] = Variety->Canonical_form_nauty->Stab_gens_variety->group_order_as_lint();
 
-				if (Variety->Canonical_form_nauty->f_found_canonical_form && Variety->Canonical_form_nauty->f_found_eqn) {
+				if (Variety->Canonical_form_nauty->f_found_canonical_form
+						&& Variety->Canonical_form_nauty->f_found_eqn) {
 
 					F_first_time[input_counter] = false;
 
 				}
-				else if (Variety->Canonical_form_nauty->f_found_canonical_form && !Variety->Canonical_form_nauty->f_found_eqn) {
+				else if (Variety->Canonical_form_nauty->f_found_canonical_form
+						&& !Variety->Canonical_form_nauty->f_found_eqn) {
 
 					F_first_time[input_counter] = true;
 
@@ -1593,7 +1595,7 @@ std::string classification_of_varieties::stringify_csv_header(
 	}
 	string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Eqn2,Pts,Bitangents,"
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Eqn2,NPts,Pts,Bitangents,"
 			"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
 
 	if (Classifier->Descr->carry_through.size()) {
@@ -1618,7 +1620,7 @@ std::string classification_of_varieties::stringify_csv_header_line_nauty(
 
 	std::string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,Pts,Bitangents";
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,NPts,Pts,Bitangents";
 
 	if (Classifier->Descr->carry_through.size()) {
 		int i;

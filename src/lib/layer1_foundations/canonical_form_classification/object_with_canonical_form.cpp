@@ -1048,8 +1048,8 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix_text(
 
 	long int *adjacency_matrix;
 	int adj_sz;
-	int nb_edges;
-	int i;
+	//int nb_edges;
+	//int i;
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "

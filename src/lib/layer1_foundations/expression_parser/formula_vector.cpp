@@ -714,6 +714,26 @@ void formula_vector::print_latex(
 	else {
 
 		if (len > 1) {
+
+			l1_interfaces::latex_interface L;
+			int f_brackets = true;
+			int f_enter_math_mode = true;
+
+			L.print_vector_vertically_with_label(
+					ost,
+					label,
+					v,
+					f_brackets,
+					f_enter_math_mode);
+
+			L.print_vector_horizontally_with_label(
+					ost,
+					label,
+					v,
+					f_brackets,
+					f_enter_math_mode);
+
+#if 0
 			ost << "$$" << endl;
 			ost << label << " = " << endl;
 			ost << "\\left[" << endl;
@@ -731,8 +751,31 @@ void formula_vector::print_latex(
 			ost << "\\end{array}" << endl;
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
+#endif
+
 		}
 		else {
+
+			l1_interfaces::latex_interface L;
+			int f_brackets = false;
+			int f_enter_math_mode = true;
+
+			L.print_vector_vertically_with_label(
+					ost,
+					label,
+					v,
+					f_brackets,
+					f_enter_math_mode);
+
+			L.print_vector_horizontally_with_label(
+					ost,
+					label,
+					v,
+					f_brackets,
+					f_enter_math_mode);
+
+
+#if 0
 			ost << "$$" << endl;
 			//ost << "\\left[" << endl;
 			ost << label << " = " << endl;
@@ -750,6 +793,8 @@ void formula_vector::print_latex(
 			ost << "\\end{array}" << endl;
 			//ost << "\\right]" << endl;
 			ost << "$$" << endl;
+#endif
+
 		}
 	}
 

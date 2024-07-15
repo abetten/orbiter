@@ -34,6 +34,7 @@ MODULES = \
 	surface_object_properties.o \
 	surface_object.o \
 	surface_polynomial_domains.o \
+	variety_description.o \
 	variety_object.o \
 	web_of_cubic_curves.o 
 

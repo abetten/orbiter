@@ -42,6 +42,8 @@ design_activity_description::design_activity_description()
 	//std::string extract_solutions_by_index_prefix;
 
 	f_export_inc = false;
+	f_export_incidence_matrix = false;
+	f_export_incidence_matrix_latex = false;
 	f_intersection_matrix = false;
 	f_export_blocks = false;
 	f_row_sums = false;
@@ -143,6 +145,26 @@ int design_activity_description::read_arguments(
 				cout << "-export_inc " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-export_incidence_matrix") == 0) {
+			f_export_incidence_matrix = true;
+			if (f_v) {
+				cout << "-export_incidence_matrix " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_incidence_matrix_latex") == 0) {
+			f_export_incidence_matrix_latex = true;
+			if (f_v) {
+				cout << "-export_incidence_matrix_latex " << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-export_incidence_matrix_latex") == 0) {
+			f_export_incidence_matrix = true;
+			if (f_v) {
+				cout << "-export_incidence_matrix_latex " << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-intersection_matrix") == 0) {
 			f_intersection_matrix = true;
 			if (f_v) {
@@ -216,6 +238,12 @@ void design_activity_description::print()
 	}
 	if (f_export_inc) {
 		cout << "-export_inc " << endl;
+	}
+	if (f_export_incidence_matrix) {
+		cout << "-export_incidence_matrix " << endl;
+	}
+	if (f_export_incidence_matrix_latex) {
+		cout << "-export_incidence_matrix_latex " << endl;
 	}
 	if (f_intersection_matrix) {
 		cout << "-intersection_matrix " << endl;

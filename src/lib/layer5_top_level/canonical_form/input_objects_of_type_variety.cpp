@@ -32,7 +32,12 @@ input_objects_of_type_variety::input_objects_of_type_variety()
 	idx_po_go = 0;
 	idx_po_index = 0;
 
-	idx_po = idx_so = idx_eqn = idx_eqn2 = idx_pts = idx_bitangents = 0;
+	idx_po = idx_so = 0;
+	idx_eqn_algebraic = 0;
+	idx_eqn_by_coefficients = 0;
+	idx_eqn2_algebraic = 0;
+	idx_eqn2_by_coefficients = 0;
+	idx_pts = idx_bitangents = 0;
 
 	Vo = NULL;
 
@@ -89,12 +94,12 @@ void input_objects_of_type_variety::init(
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::init "
-				"before read_input_objects" << endl;
+				"before read_input_objects_from_list_of_csv_files" << endl;
 	}
-	read_input_objects(verbose_level);
+	read_input_objects_from_list_of_csv_files(verbose_level);
 	if (f_v) {
 		cout << "input_objects_of_type_variety::init "
-				"after read_input_objects" << endl;
+				"after read_input_objects_from_list_of_csv_files" << endl;
 	}
 
 	if (f_v) {
@@ -181,7 +186,7 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 	}
 }
 
-void input_objects_of_type_variety::read_input_objects(
+void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -191,9 +196,9 @@ void input_objects_of_type_variety::read_input_objects(
 
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::read_input_objects" << endl;
+		cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files" << endl;
 		if (Classifier->Descr->f_has_nauty_output) {
-			cout << "input_objects_of_type_variety::read_input_objects f_has_nauty_output" << endl;
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files f_has_nauty_output" << endl;
 		}
 	}
 
@@ -210,7 +215,7 @@ void input_objects_of_type_variety::read_input_objects(
 	for (cnt = 0; cnt < Classifier->Descr->nb_files; cnt++) {
 
 		if (f_v) {
-			cout << "input_objects_of_type_variety::read_input_objects "
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 					"file " << cnt << " / " << Classifier->Descr->nb_files << endl;
 		}
 		string fname;
@@ -224,9 +229,9 @@ void input_objects_of_type_variety::read_input_objects(
 		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
 		if (f_v) {
-			cout << "input_objects_of_type_variety::read_input_objects "
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 					"S.nb_rows = " << S.nb_rows << endl;
-			cout << "input_objects_of_type_variety::read_input_objects "
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 					"S.nb_cols = " << S.nb_cols << endl;
 		}
 
@@ -249,7 +254,7 @@ void input_objects_of_type_variety::read_input_objects(
 
 			//f_carry_through = true;
 			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects "
+				cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 						"f_has_nauty_output" << endl;
 			}
 
@@ -278,7 +283,7 @@ void input_objects_of_type_variety::read_input_objects(
 
 				s = headings[i];
 				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects "
+					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 							"before S.find_column " << s << endl;
 				}
 				Carry_through2[nb_carry_through + i] = S.find_column(s);
@@ -333,17 +338,29 @@ void input_objects_of_type_variety::read_input_objects(
 		else {
 			idx_so = -1;
 		}
-		if (Classifier->Descr->f_label_equation) {
-			idx_eqn = S.find_column(Classifier->Descr->column_label_eqn);
+		if (Classifier->Descr->f_label_equation_algebraic) {
+			idx_eqn_algebraic = S.find_column(Classifier->Descr->column_label_eqn_algebraic);
 		}
 		else {
-			idx_eqn = -1;
+			idx_eqn_algebraic = -1;
 		}
-		if (Classifier->Descr->f_label_equation2) {
-			idx_eqn2 = S.find_column(Classifier->Descr->column_label_eqn2);
+		if (Classifier->Descr->f_label_equation_by_coefficients) {
+			idx_eqn_by_coefficients = S.find_column(Classifier->Descr->column_label_eqn_by_coefficients);
 		}
 		else {
-			idx_eqn2 = -1;
+			idx_eqn_by_coefficients = -1;
+		}
+		if (Classifier->Descr->f_label_equation2_algebraic) {
+			idx_eqn2_algebraic = S.find_column(Classifier->Descr->column_label_eqn2_algebraic);
+		}
+		else {
+			idx_eqn2_algebraic = -1;
+		}
+		if (Classifier->Descr->f_label_equation2_by_coefficients) {
+			idx_eqn2_by_coefficients = S.find_column(Classifier->Descr->column_label_eqn2_by_coefficients);
+		}
+		else {
+			idx_eqn2_by_coefficients = -1;
 		}
 
 		if (Classifier->Descr->f_label_points) {
@@ -373,7 +390,7 @@ void input_objects_of_type_variety::read_input_objects(
 #if 0
 			if (skip_this_one(counter)) {
 				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects "
+					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 							"skipping case counter = " << counter << endl;
 				}
 				Vo[counter] = NULL;
@@ -385,7 +402,7 @@ void input_objects_of_type_variety::read_input_objects(
 
 
 			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects "
+				cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 						"before prepare_input_of_variety_type" << endl;
 			}
 			prepare_input_of_variety_type(
@@ -395,19 +412,19 @@ void input_objects_of_type_variety::read_input_objects(
 					&S,
 					Vo[counter], verbose_level - 2);
 			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects "
+				cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 						"after prepare_input_of_variety_type" << endl;
 			}
 
 			if (idx_pts == -1) {
 				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects "
+					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 							"before enumerate_points" << endl;
 				}
 				Vo[counter]->Variety_object->enumerate_points(
 						verbose_level - 1);
 				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects "
+					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 							"after enumerate_points" << endl;
 				}
 			}
@@ -424,7 +441,7 @@ void input_objects_of_type_variety::read_input_objects(
 	} // next cnt
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::read_input_objects done" << endl;
+		cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files done" << endl;
 	}
 }
 
@@ -456,56 +473,100 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 	po_index = S->get_lint(row + 1, idx_po_index);
 	po = S->get_lint(row + 1, idx_po);
 	so = S->get_lint(row + 1, idx_so);
-	string eqn_txt;
-	string eqn2_txt;
-	string pts_txt;
-	string bitangents_txt;
 
-	eqn_txt = S->get_entry_ij(row + 1, idx_eqn);
-
-	if (idx_eqn2 >= 0) {
-		eqn2_txt = S->get_entry_ij(row + 1, idx_eqn2);
-	}
-	else {
-		eqn2_txt = "";
-	}
-
-	if (idx_pts >= 0) {
-		pts_txt = S->get_entry_ij(row + 1, idx_pts);
-	}
-	else {
-		pts_txt = "";
-	}
-
-	if (idx_bitangents >= 0) {
-		bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
-	}
-	else {
-		bitangents_txt = "";
-	}
 
 	data_structures::string_tools ST;
 
-	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
-				"row = " << row
-				<< " before processing, eqn=" << eqn_txt
-				<< " pts_txt=" << pts_txt
-				<< " =" << bitangents_txt << endl;
+
+
+	algebraic_geometry::variety_description *VD;
+
+	VD = NEW_OBJECT(algebraic_geometry::variety_description);
+
+
+	VD->f_label_txt = true;
+	VD->label_txt = "po" + std::to_string(po) + "_so" + std::to_string(so);
+
+	VD->f_label_tex = false;
+	VD->label_tex = "po" + std::to_string(po) + "\\_so" + std::to_string(so);
+
+	VD->f_projective_space = false;
+	//VD->projective_space_label;
+
+	VD->f_has_projective_space_pointer = true;
+	VD->Projective_space_pointer = Classifier->PA->P;
+
+	VD->f_ring = false;
+	VD->ring_label;
+
+	VD->f_has_ring_pointer = true;
+	VD->Ring_pointer = Classifier->Poly_ring;
+
+	VD->f_has_equation_in_algebraic_form = false;
+	VD->f_has_equation_by_coefficients = false;
+
+	if (idx_eqn_algebraic >= 0) {
+		string eqn_txt;
+
+		eqn_txt = S->get_entry_ij(row + 1, idx_eqn_algebraic);
+		ST.remove_specific_character(eqn_txt, '\"');
+
+		VD->f_has_equation_in_algebraic_form = true;
+		VD->equation_in_algebraic_form_text = eqn_txt;
+	}
+	else if (idx_eqn_by_coefficients >= 0) {
+		string eqn_txt;
+
+		eqn_txt = S->get_entry_ij(row + 1, idx_eqn_by_coefficients);
+		ST.remove_specific_character(eqn_txt, '\"');
+
+		VD->f_has_equation_by_coefficients = true;
+		VD->equation_by_coefficients_text = eqn_txt;
+
 	}
 
 
-	ST.remove_specific_character(eqn_txt, '\"');
-	ST.remove_specific_character(eqn2_txt, '\"');
-	ST.remove_specific_character(pts_txt, '\"');
-	ST.remove_specific_character(bitangents_txt, '\"');
+	VD->f_has_second_equation_in_algebraic_form = false;
+	VD->f_has_second_equation_by_coefficients = false;
 
-	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
-				"row = " << row << " after processing, eqn=" << eqn_txt
-				<< " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
+	if (idx_eqn2_algebraic >= 0) {
+		string eqn_txt;
+		eqn_txt = S->get_entry_ij(row + 1, idx_eqn2_algebraic);
+		ST.remove_specific_character(eqn_txt, '\"');
+		VD->f_has_second_equation_in_algebraic_form = true;
+		VD->second_equation_in_algebraic_form_text = eqn_txt;
+	}
+	else {
+		VD->f_has_second_equation_by_coefficients = true;
+		string eqn_txt;
+		eqn_txt = S->get_entry_ij(row + 1, idx_eqn2_by_coefficients);
+		ST.remove_specific_character(eqn_txt, '\"');
+		VD->second_equation_by_coefficients_text = "";
 	}
 
+
+
+	if (idx_pts >= 0) {
+		string pts_txt;
+		pts_txt = S->get_entry_ij(row + 1, idx_pts);
+		ST.remove_specific_character(pts_txt, '\"');
+		VD->f_has_points = true;
+		VD->points_txt = pts_txt;
+	}
+	else {
+		VD->f_has_points = false;
+	}
+
+	if (idx_bitangents >= 0) {
+		string bitangents_txt;
+		bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
+		ST.remove_specific_character(bitangents_txt, '\"');
+		VD->f_has_bitangents = true;
+		VD->bitangents_txt = bitangents_txt;
+	}
+	else {
+		VD->f_has_bitangents = false;
+	}
 
 
 	Vo = NEW_OBJECT(variety_object_with_action);
@@ -518,11 +579,12 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 
 	Vo->init(
 			counter, po_go, po_index, po, so,
-			Classifier->PA->P,
-			Classifier->Poly_ring,
-			eqn_txt,
-			Classifier->Descr->f_label_equation2, eqn2_txt,
-			pts_txt, bitangents_txt,
+			VD,
+			//Classifier->PA->P,
+			//Classifier->Poly_ring,
+			//eqn_txt,
+			//Classifier->Descr->f_label_equation2, eqn2_txt,
+			//pts_txt, bitangents_txt,
 			verbose_level);
 	if (f_v) {
 		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "

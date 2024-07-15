@@ -42,6 +42,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/surface_object_properties.o \
 		layer1_foundations/algebraic_geometry/surface_object.o \
 		layer1_foundations/algebraic_geometry/surface_polynomial_domains.o \
+		layer1_foundations/algebraic_geometry/variety_description.o \
 		layer1_foundations/algebraic_geometry/variety_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects_description.o \
