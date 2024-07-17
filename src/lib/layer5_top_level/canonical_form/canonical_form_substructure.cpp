@@ -105,7 +105,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 	SubSt->init(
 			Variety->fname_case_out,
-			Variety->Canonical_form_classifier->Output->SubC,
+			Variety->Canonical_form_classifier->Classification_of_varieties->SubC,
 			Variety->Vo->Variety_object->Point_sets->Sets[0],
 			Variety->Vo->Variety_object->Point_sets->Set_size[0],
 			verbose_level);
@@ -313,7 +313,7 @@ void canonical_form_substructure::handle_orbit(
 	}
 
 
-	Variety->Canonical_form_classifier->Output->SubC->A->Group_element->element_move(
+	Variety->Canonical_form_classifier->Classification_of_varieties->SubC->A->Group_element->element_move(
 			CS->T1, transporter_to_canonical_form, 0);
 
 	Gens_stabilizer_original_set = NEW_OBJECT(groups::strong_generators);

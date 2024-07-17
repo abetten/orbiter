@@ -508,15 +508,18 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
 		layer5_top_level/canonical_form/canonical_form_global.o \
-		layer5_top_level/canonical_form/canonical_form_nauty.o \
 		layer5_top_level/canonical_form/canonical_form_of_variety.o \
 		layer5_top_level/canonical_form/canonical_form_substructure.o \
+		layer5_top_level/canonical_form/classification_of_combinatorial_objects.o \
+		layer5_top_level/canonical_form/classification_of_varieties_nauty.o \
 		layer5_top_level/canonical_form/classification_of_varieties.o \
 		layer5_top_level/canonical_form/input_objects_of_type_variety.o \
-		layer5_top_level/canonical_form/classification_of_combinatorial_objects.o \
 		layer5_top_level/canonical_form/object_in_projective_space_with_action.o \
 		layer5_top_level/canonical_form/object_with_properties.o \
 		layer5_top_level/canonical_form/quartic_curve_object_with_action.o \
+		layer5_top_level/canonical_form/stabilizer_of_set_of_rational_points.o \
+		layer5_top_level/canonical_form/variety_activity_description.o \
+		layer5_top_level/canonical_form/variety_activity.o \
 		layer5_top_level/canonical_form/variety_object_with_action.o \
 		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \

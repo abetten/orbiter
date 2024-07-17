@@ -188,6 +188,9 @@ symbol_definition::symbol_definition()
 	f_mapping = false;
 	Mapping_description = NULL;
 
+	f_variety = false;
+	Variety_description = NULL;
+
 }
 
 
@@ -1264,6 +1267,32 @@ void symbol_definition::read_definition(
 			Mapping_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-variety") == 0) {
+
+		f_variety = true;
+		Variety_description =
+				NEW_OBJECT(algebraic_geometry::variety_description);
+		if (f_v) {
+			cout << "reading -variety" << endl;
+		}
+
+		i += Variety_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-variety" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-variety " << endl;
+			Variety_description->print();
+		}
+	}
+
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -1789,6 +1818,17 @@ void symbol_definition::perform_definition(
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
 					"after definition_of_mapping" << endl;
+		}
+	}
+	else if (f_variety) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_variety" << endl;
+		}
+		definition_of_variety(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_variety" << endl;
 		}
 	}
 
@@ -4516,6 +4556,85 @@ void symbol_definition::definition_of_mapping(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_mapping done" << endl;
+	}
+}
+
+
+void symbol_definition::definition_of_variety(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety" << endl;
+	}
+
+	int cnt = 0;
+	int po_go = 0;
+	int po_index = 0;
+	int po = 0;
+	int so = 0;
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety before getting PA" << endl;
+	}
+	if (Variety_description->f_projective_space) {
+		PA = Get_projective_space(Variety_description->projective_space_label);
+	}
+	else {
+		cout << "symbol_definition::definition_of_variety we don't have a projective space" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety after getting PA" << endl;
+	}
+
+
+	canonical_form::variety_object_with_action *Variety;
+
+	Variety = NEW_OBJECT(canonical_form::variety_object_with_action);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety "
+				"before Variety->init" << endl;
+	}
+	Variety->init(PA, cnt, po_go, po_index, po, so, Variety_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety "
+				"after Variety->init" << endl;
+	}
+	if (f_v) {
+		cout << "Variety->Variety_object->label_txt" << Variety->Variety_object->label_txt << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety "
+				"we have created a variety called " << Variety->Variety_object->label_txt << endl;
+
+	}
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_variety(
+			define_label, Variety, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_variety done" << endl;
 	}
 }
 

@@ -1452,6 +1452,9 @@ public:
 	void init_mapping(
 			std::string &label,
 			void *Mapping, int verbose_level);
+	void init_variety(
+			std::string &label,
+			void *variety, int verbose_level);
 	void print();
 };
 

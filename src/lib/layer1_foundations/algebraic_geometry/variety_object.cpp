@@ -30,6 +30,10 @@ variety_object::variety_object()
 
 	Ring = NULL;
 
+	//std::string label_txt;
+	//std::string label_tex;
+
+
 #if 0
 	//std::string eqn_txt;
 
@@ -167,6 +171,21 @@ void variety_object::init(
 		cout << "variety_object::init "
 				"nb_pts = " << nb_pts << " nb_bitangents=" << nb_bitangents << endl;
 	}
+
+	if (Descr->f_label_txt) {
+		label_txt = Descr->label_txt;
+	}
+	else {
+		label_txt = "variety_object";
+	}
+
+	if (Descr->f_label_tex) {
+		label_tex = Descr->label_tex;
+	}
+	else {
+		label_tex = "variety\\_object";
+	}
+
 
 
 	if (f_v) {

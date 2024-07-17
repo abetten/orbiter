@@ -29,7 +29,9 @@ canonical_form_classifier::canonical_form_classifier()
 
 	Input = NULL;
 
-	Output = NULL;
+	Classification_of_varieties = NULL;
+
+	Classification_of_varieties_nauty = NULL;
 
 }
 
@@ -41,9 +43,21 @@ canonical_form_classifier::~canonical_form_classifier()
 	if (Input) {
 		FREE_OBJECT(Input);
 	}
-	if (Output) {
-		FREE_OBJECT(Output);
+	if (Classification_of_varieties) {
+		FREE_OBJECT(Classification_of_varieties);
 	}
+	if (Classification_of_varieties_nauty) {
+		FREE_OBJECT(Classification_of_varieties_nauty);
+	}
+}
+
+canonical_form_classifier_description *canonical_form_classifier::get_description()
+{
+	if (Descr == NULL) {
+		cout << "canonical_form_classifier::get_description Descr == NULL" << endl;
+		exit(1);
+	}
+	return Descr;
 }
 
 void canonical_form_classifier::init(
@@ -60,6 +74,8 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init" << endl;
 	}
 
+	canonical_form_classifier::Descr = Descr;
+
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
 				"algorithm = ";
@@ -69,6 +85,10 @@ void canonical_form_classifier::init(
 			if (Descr->f_has_nauty_output) {
 
 				cout << ", has nauty output";
+			}
+			else {
+				cout << ", needs to apply nauty";
+
 			}
 		}
 		else if (Descr->f_algorithm_substructure) {
@@ -81,7 +101,23 @@ void canonical_form_classifier::init(
 	}
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::init before copying carry_through" << endl;
+	}
+	if (f_v) {
+		cout << "canonical_form_classifier::init Descr->carry_through.size() = " << endl;
+		cout << "canonical_form_classifier::init Descr->carry_through.size() = " << Descr->carry_through.size() << endl;
+	}
+	int i;
 
+	for (i = 0; i < Descr->carry_through.size(); i++) {
+
+		carry_through.push_back(Descr->carry_through[i]);
+
+	}
+	if (f_v) {
+		cout << "canonical_form_classifier::init after copying carry_through" << endl;
+	}
 
 
 
@@ -91,13 +127,15 @@ void canonical_form_classifier::init(
 		exit(1);
 	}
 
-	canonical_form_classifier::Descr = Descr;
 
 
 	if (!Descr->f_space) {
 		cout << "canonical_form_classifier::init "
 				"please use -space <label>  to specify the space" << endl;
 		exit(1);
+	}
+	if (f_v) {
+		cout << "canonical_form_classifier::init before Get_projective_space" << endl;
 	}
 	PA = Get_projective_space(
 					Descr->space_label);
@@ -124,6 +162,9 @@ void canonical_form_classifier::init(
 	}
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::init before Get_ring" << endl;
+	}
 	Poly_ring = Get_ring(Descr->ring_label);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
@@ -145,15 +186,14 @@ void canonical_form_classifier::init(
 
 
 
-	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
-				"before AonHPD->init" << endl;
+				"before create_action_on_polynomials" << endl;
 	}
-	AonHPD->init(PA->A, Poly_ring, verbose_level - 3);
+	create_action_on_polynomials(verbose_level - 3);
 	if (f_v) {
 		cout << "canonical_form_classifier::init "
-				"after AonHPD->init" << endl;
+				"after create_action_on_polynomials" << endl;
 	}
 
 
@@ -178,6 +218,81 @@ void canonical_form_classifier::init(
 }
 
 
+void canonical_form_classifier::init_direct(
+		projective_geometry::projective_space_with_action *PA,
+		ring_theory::homogeneous_polynomial_domain *Poly_ring,
+		int nb_input_Vo,
+		canonical_form::variety_object_with_action *Input_Vo,
+		int verbose_level)
+// Prepare the projective space and the ring,
+// Create the action_on_homogeneous_polynomials
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct" << endl;
+	}
+
+
+	canonical_form_classifier::PA = PA;
+
+	canonical_form_classifier::Poly_ring = Poly_ring;
+
+
+	Input = NULL;
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"before create_action_on_polynomials" << endl;
+	}
+	create_action_on_polynomials(verbose_level - 3);
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"after create_action_on_polynomials" << endl;
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct done" << endl;
+	}
+}
+
+
+
+void canonical_form_classifier::create_action_on_polynomials(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials" << endl;
+	}
+
+	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"before AonHPD->init" << endl;
+	}
+	AonHPD->init(
+			PA->A, Poly_ring, verbose_level - 3);
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"after AonHPD->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials done" << endl;
+	}
+
+
+
+}
 
 
 void canonical_form_classifier::classify(
@@ -191,17 +306,17 @@ void canonical_form_classifier::classify(
 	}
 
 
-	Output = NEW_OBJECT(classification_of_varieties);
+	Classification_of_varieties = NEW_OBJECT(classification_of_varieties);
 
 
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
-				"before Output->init" << endl;
+				"before Classification_of_varieties->init" << endl;
 	}
-	Output->init(this, verbose_level);
+	Classification_of_varieties->init(this, verbose_level);
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
-				"after Output->init" << endl;
+				"after Classification_of_varieties->init" << endl;
 	}
 
 

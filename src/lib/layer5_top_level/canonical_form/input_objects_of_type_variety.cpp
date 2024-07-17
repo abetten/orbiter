@@ -70,14 +70,15 @@ void input_objects_of_type_variety::init(
 
 
 #if 1
-	if (Classifier->Descr->f_skip) {
+	if (Classifier->get_description()->f_skip) {
 		if (f_v) {
 			cout << "input_objects_of_type_variety::init "
 					"f_skip" << endl;
 		}
 		Get_int_vector_from_label(
-				Classifier->Descr->skip_label,
-				skip_vector, skip_sz, 0 /* verbose_level */);
+				Classifier->get_description()->skip_label,
+				skip_vector, skip_sz,
+				0 /* verbose_level */);
 		data_structures::sorting Sorting;
 
 		Sorting.int_vec_heapsort(skip_vector, skip_sz);
@@ -114,7 +115,7 @@ int input_objects_of_type_variety::skip_this_one(
 	data_structures::sorting Sorting;
 	int idx;
 
-	if (Classifier->Descr->f_skip) {
+	if (Classifier->get_description()->f_skip) {
 		if (Sorting.int_vec_search(
 				skip_vector, skip_sz, counter, idx)) {
 			return true;
@@ -145,22 +146,22 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 	nb_objects_to_test = 0;
 
 
-	for (cnt = 0; cnt < Classifier->Descr->nb_files; cnt++) {
+	for (cnt = 0; cnt < Classifier->get_description()->nb_files; cnt++) {
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
-					<< cnt << " / " << Classifier->Descr->nb_files << endl;
+					<< cnt << " / " << Classifier->get_description()->nb_files << endl;
 		}
 		data_structures::string_tools ST;
 
 
 		string fname;
 
-		fname = ST.printf_d(Classifier->Descr->fname_mask, cnt);
+		fname = ST.printf_d(Classifier->get_description()->fname_mask, cnt);
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
-					<< cnt << " / " << Classifier->Descr->nb_files
+					<< cnt << " / " << Classifier->get_description()->nb_files
 					<< " fname=" << fname << endl;
 		}
 
@@ -175,7 +176,7 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
-					"file " << cnt << " / " << Classifier->Descr->nb_files << " has  "
+					"file " << cnt << " / " << Classifier->get_description()->nb_files << " has  "
 					<< nb << " objects, total = " << nb_objects_to_test << endl;
 		}
 	}
@@ -190,14 +191,13 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int cnt;
 
 
 
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files" << endl;
-		if (Classifier->Descr->f_has_nauty_output) {
+		if (Classifier->get_description()->f_has_nauty_output) {
 			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files f_has_nauty_output" << endl;
 		}
 	}
@@ -212,17 +212,19 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 
 	counter = 0;
 
-	for (cnt = 0; cnt < Classifier->Descr->nb_files; cnt++) {
+	int file_cnt;
+
+	for (file_cnt = 0; file_cnt < Classifier->get_description()->nb_files; file_cnt++) {
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-					"file " << cnt << " / " << Classifier->Descr->nb_files << endl;
+					"file " << file_cnt << " / " << Classifier->get_description()->nb_files << endl;
 		}
 		string fname;
 
 		data_structures::string_tools ST;
 
-		fname = ST.printf_d(Classifier->Descr->fname_mask, cnt);
+		fname = ST.printf_d(Classifier->get_description()->fname_mask, file_cnt);
 
 		data_structures::spreadsheet S;
 
@@ -235,22 +237,21 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 					"S.nb_cols = " << S.nb_cols << endl;
 		}
 
-		//int f_carry_through = false;
 		int *Carry_through = NULL;
 		int nb_carry_through = 0;
 
-		if (Classifier->Descr->carry_through.size()) {
+		if (Classifier->get_description()->carry_through.size()) {
 			int i;
 
 			//f_carry_through = true;
-			nb_carry_through = Classifier->Descr->carry_through.size();
+			nb_carry_through = Classifier->get_description()->carry_through.size();
 			Carry_through = NEW_int(nb_carry_through);
 			for (i = 0; i < nb_carry_through; i++) {
-				Carry_through[i] = S.find_column(Classifier->Descr->carry_through[i]);
+				Carry_through[i] = S.find_column(Classifier->get_description()->carry_through[i]);
 			}
 		}
 
-		if (Classifier->Descr->f_has_nauty_output) {
+		if (Classifier->get_description()->f_has_nauty_output) {
 
 			//f_carry_through = true;
 			if (f_v) {
@@ -295,7 +296,7 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		}
 
 		if (f_v) {
-			cout << "input_objects_of_type_variety::read_input_objects "
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
 					"nb_carry_through = " << nb_carry_through << endl;
 		}
 
@@ -314,137 +315,203 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		v.push_back(std::to_string(Canonical_form_classifier->Output->Idx_equation[i]));
 #endif
 
-		if (Classifier->Descr->f_label_po_go) {
-			idx_po_go = S.find_column(Classifier->Descr->column_label_po_go);
-		}
-		else {
-			idx_po_go = -1;
-		}
-		if (Classifier->Descr->f_label_po_index) {
-			idx_po_index = S.find_column(Classifier->Descr->column_label_po_index);
-		}
-		else {
-			idx_po_index = -1;
-		}
-		if (Classifier->Descr->f_label_po) {
-			idx_po = S.find_column(Classifier->Descr->column_label_po);
-		}
-		else {
-			idx_po = -1;
-		}
-		if (Classifier->Descr->f_label_so) {
-			idx_so = S.find_column(Classifier->Descr->column_label_so);
-		}
-		else {
-			idx_so = -1;
-		}
-		if (Classifier->Descr->f_label_equation_algebraic) {
-			idx_eqn_algebraic = S.find_column(Classifier->Descr->column_label_eqn_algebraic);
-		}
-		else {
-			idx_eqn_algebraic = -1;
-		}
-		if (Classifier->Descr->f_label_equation_by_coefficients) {
-			idx_eqn_by_coefficients = S.find_column(Classifier->Descr->column_label_eqn_by_coefficients);
-		}
-		else {
-			idx_eqn_by_coefficients = -1;
-		}
-		if (Classifier->Descr->f_label_equation2_algebraic) {
-			idx_eqn2_algebraic = S.find_column(Classifier->Descr->column_label_eqn2_algebraic);
-		}
-		else {
-			idx_eqn2_algebraic = -1;
-		}
-		if (Classifier->Descr->f_label_equation2_by_coefficients) {
-			idx_eqn2_by_coefficients = S.find_column(Classifier->Descr->column_label_eqn2_by_coefficients);
-		}
-		else {
-			idx_eqn2_by_coefficients = -1;
-		}
 
-		if (Classifier->Descr->f_label_points) {
-			idx_pts = S.find_column(Classifier->Descr->column_label_pts);
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
+					"before find_columns" << endl;
 		}
-		else {
-			idx_pts = -1;
+		find_columns(&S, verbose_level - 2);
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
+					"after find_columns" << endl;
 		}
-
-		if (Classifier->Descr->f_label_lines) {
-			idx_bitangents = S.find_column(Classifier->Descr->column_label_bitangents);
-		}
-		else {
-			idx_bitangents = -1;
-		}
-
-		int row;
-
-		for (row = 0; row < S.nb_rows - 1; row++, counter++) {
-
-			if (f_v) {
-				cout << "cnt = " << cnt << " / " << Classifier->Descr->nb_files
-						<< " row = " << row << " / " << S.nb_rows - 1 << endl;
-				cout << "counter = " << counter << " / " << nb_objects_to_test << endl;
-			}
-
-#if 0
-			if (skip_this_one(counter)) {
-				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-							"skipping case counter = " << counter << endl;
-				}
-				Vo[counter] = NULL;
-				continue;
-			}
-#endif
 
 
 
-
-			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-						"before prepare_input_of_variety_type" << endl;
-			}
-			prepare_input_of_variety_type(
-					row, counter,
-					Carry_through,
-					nb_carry_through,
-					&S,
-					Vo[counter], verbose_level - 2);
-			if (f_v) {
-				cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-						"after prepare_input_of_variety_type" << endl;
-			}
-
-			if (idx_pts == -1) {
-				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-							"before enumerate_points" << endl;
-				}
-				Vo[counter]->Variety_object->enumerate_points(
-						verbose_level - 1);
-				if (f_v) {
-					cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
-							"after enumerate_points" << endl;
-				}
-			}
-
-
-
-		} // next row
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
+					"before read_all_varieties_from_spreadsheet" << endl;
+		}
+		read_all_varieties_from_spreadsheet(
+				&S,
+				Carry_through,
+				nb_carry_through,
+				file_cnt, counter,
+				verbose_level);
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
+					"after read_all_varieties_from_spreadsheet" << endl;
+		}
 
 
 		if (Carry_through) {
 			FREE_int(Carry_through);
 		}
 
-	} // next cnt
+	} // next file_cnt
 
 	if (f_v) {
 		cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files done" << endl;
 	}
 }
 
+
+void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
+		data_structures::spreadsheet *S,
+		int *Carry_through,
+		int nb_carry_through,
+		int file_cnt, int &counter,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet" << endl;
+	}
+	if (f_v) {
+		cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+				"file = " << file_cnt << " / " << Classifier->get_description()->nb_files << endl;
+	}
+
+	int row;
+
+	for (row = 0; row < S->nb_rows - 1; row++, counter++) {
+
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+					"file = " << file_cnt << " / " << Classifier->get_description()->nb_files
+					<< " row = " << row << " / " << S->nb_rows - 1 << endl;
+			cout << "counter = " << counter << " / " << nb_objects_to_test << endl;
+		}
+
+#if 0
+		if (skip_this_one(counter)) {
+			if (f_v) {
+				cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+						"skipping case counter = " << counter << endl;
+			}
+			Vo[counter] = NULL;
+			continue;
+		}
+#endif
+
+
+
+
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+					"before prepare_input_of_variety_type" << endl;
+		}
+		prepare_input_of_variety_type(
+				row, counter,
+				Carry_through,
+				nb_carry_through,
+				S,
+				Vo[counter], verbose_level - 2);
+		if (f_v) {
+			cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+					"after prepare_input_of_variety_type" << endl;
+		}
+
+		if (idx_pts == -1) {
+			if (f_v) {
+				cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+						"before enumerate_points" << endl;
+			}
+			Vo[counter]->Variety_object->enumerate_points(
+					verbose_level - 1);
+			if (f_v) {
+				cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
+						"after enumerate_points" << endl;
+			}
+		}
+
+
+	} // next row
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet done" << endl;
+	}
+
+}
+
+void input_objects_of_type_variety::find_columns(
+		data_structures::spreadsheet *S,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::find_columns" << endl;
+	}
+
+	if (Classifier->get_description()->f_label_po_go) {
+		idx_po_go = S->find_column(Classifier->get_description()->column_label_po_go);
+	}
+	else {
+		idx_po_go = -1;
+	}
+	if (Classifier->get_description()->f_label_po_index) {
+		idx_po_index = S->find_column(Classifier->get_description()->column_label_po_index);
+	}
+	else {
+		idx_po_index = -1;
+	}
+	if (Classifier->get_description()->f_label_po) {
+		idx_po = S->find_column(Classifier->get_description()->column_label_po);
+	}
+	else {
+		idx_po = -1;
+	}
+	if (Classifier->get_description()->f_label_so) {
+		idx_so = S->find_column(Classifier->get_description()->column_label_so);
+	}
+	else {
+		idx_so = -1;
+	}
+	if (Classifier->get_description()->f_label_equation_algebraic) {
+		idx_eqn_algebraic = S->find_column(Classifier->get_description()->column_label_eqn_algebraic);
+	}
+	else {
+		idx_eqn_algebraic = -1;
+	}
+	if (Classifier->get_description()->f_label_equation_by_coefficients) {
+		idx_eqn_by_coefficients = S->find_column(Classifier->get_description()->column_label_eqn_by_coefficients);
+	}
+	else {
+		idx_eqn_by_coefficients = -1;
+	}
+	if (Classifier->get_description()->f_label_equation2_algebraic) {
+		idx_eqn2_algebraic = S->find_column(Classifier->get_description()->column_label_eqn2_algebraic);
+	}
+	else {
+		idx_eqn2_algebraic = -1;
+	}
+	if (Classifier->get_description()->f_label_equation2_by_coefficients) {
+		idx_eqn2_by_coefficients = S->find_column(Classifier->get_description()->column_label_eqn2_by_coefficients);
+	}
+	else {
+		idx_eqn2_by_coefficients = -1;
+	}
+
+	if (Classifier->get_description()->f_label_points) {
+		idx_pts = S->find_column(Classifier->get_description()->column_label_pts);
+	}
+	else {
+		idx_pts = -1;
+	}
+
+	if (Classifier->get_description()->f_label_lines) {
+		idx_bitangents = S->find_column(Classifier->get_description()->column_label_bitangents);
+	}
+	else {
+		idx_bitangents = -1;
+	}
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::find_columns done" << endl;
+	}
+}
 
 void input_objects_of_type_variety::prepare_input_of_variety_type(
 		int row, int counter,
@@ -497,7 +564,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 	VD->Projective_space_pointer = Classifier->PA->P;
 
 	VD->f_ring = false;
-	VD->ring_label;
+	VD->ring_label = "";
 
 	VD->f_has_ring_pointer = true;
 	VD->Ring_pointer = Classifier->Poly_ring;
@@ -575,16 +642,10 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
 				"before Vo->init" << endl;
 	}
-
-
 	Vo->init(
+			Classifier->PA,
 			counter, po_go, po_index, po, so,
 			VD,
-			//Classifier->PA->P,
-			//Classifier->Poly_ring,
-			//eqn_txt,
-			//Classifier->Descr->f_label_equation2, eqn2_txt,
-			//pts_txt, bitangents_txt,
 			verbose_level);
 	if (f_v) {
 		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
@@ -602,7 +663,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 
 	}
 
-	if (Classifier->Descr->f_has_nauty_output) {
+	if (Classifier->get_description()->f_has_nauty_output) {
 
 		Vo->f_has_nauty_output = true;
 		Vo->nauty_output_index_start = nb_carry_trough - 9;

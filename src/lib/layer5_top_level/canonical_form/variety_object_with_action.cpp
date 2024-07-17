@@ -20,6 +20,9 @@ namespace canonical_form {
 
 variety_object_with_action::variety_object_with_action()
 {
+
+	PA = NULL;
+
 	cnt = 0;
 	po_go = 0;
 	po_index = 0;
@@ -41,13 +44,9 @@ variety_object_with_action::~variety_object_with_action()
 }
 
 void variety_object_with_action::init(
+		projective_geometry::projective_space_with_action *PA,
 		int cnt, int po_go, int po_index, int po, int so,
 		algebraic_geometry::variety_description *VD,
-		//geometry::projective_space *Projective_space,
-		//ring_theory::homogeneous_polynomial_domain *Poly_ring,
-		//std::string &eqn_txt,
-		//int f_second_equation, std::string &eqn2_txt,
-		//std::string &pts_txt, std::string &bitangents_txt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -59,11 +58,25 @@ void variety_object_with_action::init(
 	data_structures::string_tools ST;
 
 
+	variety_object_with_action::PA = PA;
 	variety_object_with_action::cnt = cnt;
 	variety_object_with_action::po_go = po_go;
 	variety_object_with_action::po_index = po_index;
 	variety_object_with_action::po = po;
 	variety_object_with_action::so = so;
+
+
+	if (VD->f_projective_space) {
+		VD->f_has_projective_space_pointer = true;
+		VD->Projective_space_pointer = Get_projective_space(VD->projective_space_label)->P;
+	}
+
+	if (VD->f_has_bitangents == false) {
+		VD->f_has_bitangents = true;
+		VD->bitangents_txt = "";
+	}
+
+
 
 	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
 
@@ -74,11 +87,6 @@ void variety_object_with_action::init(
 	}
 	Variety_object->init(
 			VD,
-			//Projective_space,
-			//Poly_ring,
-			//eqn_txt,
-			//f_second_equation, eqn2_txt,
-			//pts_txt, bitangents_txt,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_object_with_action::init "

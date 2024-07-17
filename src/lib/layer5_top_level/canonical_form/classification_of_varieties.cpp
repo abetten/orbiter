@@ -122,7 +122,7 @@ void classification_of_varieties::init(
 	Goi = NEW_lint(Classifier->Input->nb_objects_to_test);
 
 
-	if (Classifier->Descr->f_algorithm_nauty) {
+	if (Classifier->get_description()->f_algorithm_nauty) {
 
 
 		if (f_v) {
@@ -161,7 +161,7 @@ void classification_of_varieties::init(
 		}
 
 	}
-	else if (Classifier->Descr->f_algorithm_substructure) {
+	else if (Classifier->get_description()->f_algorithm_substructure) {
 
 
 		if (f_v) {
@@ -276,7 +276,7 @@ void classification_of_varieties::classify_with_substructure(
 	if (f_v) {
 		cout << "classification_of_varieties::classify_with_substructure, "
 				"Descr->substructure_size="
-				<< Classifier->Descr->substructure_size << endl;
+				<< Classifier->get_description()->substructure_size << endl;
 	}
 
 
@@ -290,11 +290,11 @@ void classification_of_varieties::classify_with_substructure(
 	}
 
 	SubC->classify_substructures(
-			Classifier->Descr->fname_base_out,
+			Classifier->get_description()->fname_base_out,
 			Classifier->PA->A,
 			Classifier->PA->A,
 			Classifier->PA->A->Strong_gens,
-			Classifier->Descr->substructure_size,
+			Classifier->get_description()->substructure_size,
 			verbose_level - 3);
 
 	if (f_v) {
@@ -303,7 +303,7 @@ void classification_of_varieties::classify_with_substructure(
 		cout << "classification_of_varieties::classify_with_substructure "
 				"We found " << SubC->nb_orbits
 				<< " orbits at level "
-				<< Classifier->Descr->substructure_size << ":" << endl;
+				<< Classifier->get_description()->substructure_size << ":" << endl;
 	}
 
 
@@ -354,7 +354,7 @@ void classification_of_varieties::main_loop(
 
 		string fname_case_out;
 
-		fname_case_out = Classifier->Descr->fname_base_out + "_cnt" + std::to_string(input_counter);
+		fname_case_out = Classifier->get_description()->fname_base_out + "_cnt" + std::to_string(input_counter);
 
 		canonical_form_of_variety *Variety;
 
@@ -380,7 +380,7 @@ void classification_of_varieties::main_loop(
 		Variety_table[input_counter] = Variety;
 
 
-		if (Classifier->Descr->f_algorithm_nauty) {
+		if (Classifier->get_description()->f_algorithm_nauty) {
 
 			if (f_v) {
 				cout << "classification_of_varieties::main_loop "
@@ -415,21 +415,21 @@ void classification_of_varieties::main_loop(
 							<< " after Variety->compute_canonical_form_nauty" << endl;
 				}
 
-				Goi[input_counter] = Variety->Canonical_form_nauty->Stab_gens_variety->group_order_as_lint();
+				Goi[input_counter] = Variety->Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order_as_lint();
 
-				if (Variety->Canonical_form_nauty->f_found_canonical_form
-						&& Variety->Canonical_form_nauty->f_found_eqn) {
+				if (Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form
+						&& Variety->Stabilizer_of_set_of_rational_points->f_found_eqn) {
 
 					F_first_time[input_counter] = false;
 
 				}
-				else if (Variety->Canonical_form_nauty->f_found_canonical_form
-						&& !Variety->Canonical_form_nauty->f_found_eqn) {
+				else if (Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form
+						&& !Variety->Stabilizer_of_set_of_rational_points->f_found_eqn) {
 
 					F_first_time[input_counter] = true;
 
 				}
-				else if (!Variety->Canonical_form_nauty->f_found_canonical_form) {
+				else if (!Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form) {
 
 					F_first_time[input_counter] = true;
 
@@ -439,8 +439,8 @@ void classification_of_varieties::main_loop(
 					exit(1);
 				}
 
-				Idx_canonical_form[input_counter] = Variety->Canonical_form_nauty->idx_canonical_form;
-				Idx_equation[input_counter] = Variety->Canonical_form_nauty->idx_equation;
+				Idx_canonical_form[input_counter] = Variety->Stabilizer_of_set_of_rational_points->idx_canonical_form;
+				Idx_equation[input_counter] = Variety->Stabilizer_of_set_of_rational_points->idx_equation;
 
 				if (F_first_time[input_counter]) {
 
@@ -452,7 +452,7 @@ void classification_of_varieties::main_loop(
 
 					for (i = 0; i < input_counter; i++) {
 						idx = Idx_canonical_form[i];
-						if (idx >= Variety->Canonical_form_nauty->idx_canonical_form) {
+						if (idx >= Variety->Stabilizer_of_set_of_rational_points->idx_canonical_form) {
 							Idx_canonical_form[i]++;
 						}
 					}
@@ -469,7 +469,7 @@ void classification_of_varieties::main_loop(
 			}
 
 		}
-		else if (Classifier->Descr->f_algorithm_substructure) {
+		else if (Classifier->get_description()->f_algorithm_substructure) {
 
 			if (f_v) {
 				cout << "classification_of_varieties::main_loop "
@@ -542,7 +542,7 @@ void classification_of_varieties::report(
 		L.head_easy(ost);
 
 
-		if (Classifier->Descr->f_algorithm_nauty) {
+		if (Classifier->get_description()->f_algorithm_nauty) {
 
 			if (f_v) {
 				cout << "classification_of_varieties::report "
@@ -556,7 +556,7 @@ void classification_of_varieties::report(
 			}
 
 		}
-		else if (Classifier->Descr->f_algorithm_substructure) {
+		else if (Classifier->get_description()->f_algorithm_substructure) {
 			if (f_v) {
 				cout << "classification_of_varieties::report "
 						"before report_substructure" << endl;
@@ -707,7 +707,7 @@ void classification_of_varieties::report_nauty(
 					Vo->Variety_object->Point_sets->Sets[0],
 					Vo->Variety_object->Point_sets->Set_size[0]);
 
-			Variety_table[idx]->Canonical_form_nauty->report(ost);
+			Variety_table[idx]->Stabilizer_of_set_of_rational_points->report(ost);
 
 
 			ost << endl;
@@ -719,7 +719,7 @@ void classification_of_varieties::report_nauty(
 			int size_limit_for_printing = 50;
 			groups::strong_generators *gens;
 
-			gens = Variety_table[idx]->Canonical_form_nauty->Stab_gens_variety;
+			gens = Variety_table[idx]->Stabilizer_of_set_of_rational_points->Stab_gens_variety;
 
 
 			if (f_v) {
@@ -937,14 +937,14 @@ void classification_of_varieties::export_canonical_form_data(
 	c = 0;
 	Headers[c++] = "Line";
 	Headers[c++] = "CNT";
-	if (Classifier->Descr->f_label_po) {
+	if (Classifier->get_description()->f_label_po) {
 		idx_po = c;
 		Headers[c++] = "PO";
 	}
 	else {
 		idx_po = -1;
 	}
-	if (Classifier->Descr->f_label_so) {
+	if (Classifier->get_description()->f_label_so) {
 		idx_so = c;
 		Headers[c++] = "SO";
 	}
@@ -975,9 +975,9 @@ void classification_of_varieties::export_canonical_form_data(
 	int idx_eqn;
 
 
-	if (Classifier->Descr->f_algorithm_nauty) {
+	if (Classifier->get_description()->f_algorithm_nauty) {
 	}
-	else if (Classifier->Descr->f_algorithm_substructure) {
+	else if (Classifier->get_description()->f_algorithm_substructure) {
 
 
 		idx_sub = c;
@@ -1027,10 +1027,10 @@ void classification_of_varieties::export_canonical_form_data(
 			}
 			Table[i * nb_cols + idx_nb_pts] = std::to_string(Variety_table[i]->Vo->Variety_object->Point_sets->Set_size[0]);
 
-			if (Classifier->Descr->f_algorithm_nauty) {
+			if (Classifier->get_description()->f_algorithm_nauty) {
 
 			}
-			else if (Classifier->Descr->f_algorithm_substructure) {
+			else if (Classifier->get_description()->f_algorithm_substructure) {
 
 				cout << "test 1" << endl;
 
@@ -1598,11 +1598,11 @@ std::string classification_of_varieties::stringify_csv_header(
 	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Eqn2,NPts,Pts,Bitangents,"
 			"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
 
-	if (Classifier->Descr->carry_through.size()) {
+	if (Classifier->get_description()->carry_through.size()) {
 		int i;
 
-		for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
-			header += "," + Classifier->Descr->carry_through[i];
+		for (i = 0; i < Classifier->get_description()->carry_through.size(); i++) {
+			header += "," + Classifier->get_description()->carry_through[i];
 		}
 	}
 	return header;
@@ -1622,11 +1622,11 @@ std::string classification_of_varieties::stringify_csv_header_line_nauty(
 
 	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,NPts,Pts,Bitangents";
 
-	if (Classifier->Descr->carry_through.size()) {
+	if (Classifier->get_description()->carry_through.size()) {
 		int i;
 
-		for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
-			header += "," + Classifier->Descr->carry_through[i];
+		for (i = 0; i < Classifier->get_description()->carry_through.size(); i++) {
+			header += "," + Classifier->get_description()->carry_through[i];
 		}
 	}
 
@@ -1667,7 +1667,7 @@ void classification_of_varieties::finalize_classification_by_nauty(
 				"before write_classification_by_nauty_csv" << endl;
 	}
 	write_classification_by_nauty_csv(
-			Classifier->Descr->fname_base_out,
+			Classifier->get_description()->fname_base_out,
 			verbose_level);
 	if (f_v) {
 		cout << "classification_of_varieties::finalize_classification_by_nauty "
@@ -1767,7 +1767,7 @@ void classification_of_varieties::finalize_canonical_forms(
 				"before write_canonical_forms_csv" << endl;
 	}
 	write_canonical_forms_csv(
-			Classifier->Descr->fname_base_out,
+			Classifier->get_description()->fname_base_out,
 			verbose_level);
 	if (f_v) {
 		cout << "classification_of_varieties::finalize_canonical_forms "

@@ -134,6 +134,10 @@ public:
 	orbits::orbits_activity_description
 		*Orbits_activity_description;
 
+	int f_variety_activity;
+	canonical_form::variety_activity_description
+		*Variety_activity_description;
+
 	activity_description();
 	~activity_description();
 	void read_arguments(
@@ -196,6 +200,8 @@ public:
 	void do_action_on_forms_activity(
 			int verbose_level);
 	void do_orbits_activity(
+			int verbose_level);
+	void do_variety_activity(
 			int verbose_level);
 
 };
@@ -1367,6 +1373,9 @@ public:
 	int f_mapping;
 	apps_geometry::mapping_description *Mapping_description;
 
+	int f_variety;
+	algebraic_geometry::variety_description *Variety_description;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1475,6 +1484,8 @@ public:
 	void definition_of_crc_code(
 			int verbose_level);
 	void definition_of_mapping(
+			int verbose_level);
+	void definition_of_variety(
 			int verbose_level);
 
 

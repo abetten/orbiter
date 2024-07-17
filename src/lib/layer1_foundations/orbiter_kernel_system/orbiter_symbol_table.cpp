@@ -294,6 +294,12 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_crc_code) {
 		s = "t_crc_code";
 	}
+	else if (t == t_mapping) {
+		s = "t_mapping";
+	}
+	else if (t == t_variety) {
+		s = "t_variety";
+	}
 	else {
 		cout << "orbiter_symbol_table::stringify_type "
 				"type is unknown" << endl;

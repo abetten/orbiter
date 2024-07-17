@@ -470,7 +470,7 @@ void orbits_activity::do_report(
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 		}
 
-		OC->Canonical_form_classifier->Output->report(
+		OC->Canonical_form_classifier->Classification_of_varieties->report(
 				report_options,
 				verbose_level);
 
@@ -769,7 +769,7 @@ void orbits_activity::do_export_trees(
 		cout << "orbits_activity::do_export_trees f_has_Of_One_polynomial not yet implemented" << endl;
 		exit(1);
 
-		orbits_on_polynomials *Of_One_polynomial;
+		//orbits_on_polynomials *Of_One_polynomial;
 
 
 	}
@@ -896,7 +896,7 @@ void orbits_activity::do_export_source_code(
 					"before generate_source_code" << endl;
 		}
 
-		OC->Canonical_form_classifier->Output->generate_source_code(
+		OC->Canonical_form_classifier->Classification_of_varieties->generate_source_code(
 				OC->Descr->Canonical_form_classifier_description->fname_base_out,
 				verbose_level);
 

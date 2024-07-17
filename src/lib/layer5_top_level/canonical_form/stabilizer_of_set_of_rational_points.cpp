@@ -1,5 +1,5 @@
 /*
- * canonical_form_nauty.cpp
+ * stabilizer_of_set_of_rational_points.cpp
  *
  *  Created on: Apr 17, 2021
  *      Author: betten
@@ -18,7 +18,7 @@ namespace canonical_form {
 
 
 
-canonical_form_nauty::canonical_form_nauty()
+stabilizer_of_set_of_rational_points::stabilizer_of_set_of_rational_points()
 {
 
 	Classifier = NULL;
@@ -44,7 +44,7 @@ canonical_form_nauty::canonical_form_nauty()
 
 }
 
-canonical_form_nauty::~canonical_form_nauty()
+stabilizer_of_set_of_rational_points::~stabilizer_of_set_of_rational_points()
 {
 	if (NO) {
 		FREE_OBJECT(NO);
@@ -65,21 +65,21 @@ canonical_form_nauty::~canonical_form_nauty()
 	}
 }
 
-void canonical_form_nauty::init(
+void stabilizer_of_set_of_rational_points::init(
 		canonical_form_classifier *Classifier,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	canonical_form_nauty::Classifier = Classifier;
+	stabilizer_of_set_of_rational_points::Classifier = Classifier;
 
 	if (f_v) {
-		cout << "canonical_form_nauty::init" << endl;
+		cout << "stabilizer_of_set_of_rational_points::init" << endl;
 	}
 }
 
 
-void canonical_form_nauty::compute_canonical_form_of_variety(
+void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 		canonical_form_of_variety *Variety,
 		int verbose_level)
 // Computes the canonical labeling of the graph associated with
@@ -91,11 +91,11 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety" << endl;
+		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety" << endl;
 	}
 
 
-	canonical_form_nauty::Variety = Variety;
+	stabilizer_of_set_of_rational_points::Variety = Variety;
 
 	if (f_v) {
 		Variety->Vo->Variety_object->print(cout);
@@ -111,7 +111,7 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 
 	if (Variety->Vo->f_has_nauty_output) {
 		if (f_v) {
-			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 					"f_has_nauty_output" << endl;
 		}
 #if 0
@@ -128,7 +128,7 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 #endif
 
 		if (f_v) {
-			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 					"before Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 		}
 		Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data(
@@ -143,13 +143,13 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 				NO,
 				verbose_level);
 		if (f_v) {
-			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 					"after Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 					"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 		}
 
@@ -164,7 +164,7 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 				verbose_level);
 
 		if (f_v) {
-			cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 					"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 		}
 	}
@@ -179,7 +179,7 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 
 	Set_stab->group_order(set_stab_order);
 	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 				"set_stab_order = " << set_stab_order << endl;
 	}
 
@@ -191,31 +191,31 @@ void canonical_form_nauty::compute_canonical_form_of_variety(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 				"before orbit_of_equation_under_set_stabilizer" << endl;
 	}
 	orbit_of_equation_under_set_stabilizer(verbose_level - 1);
 	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety "
+		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
 				"after orbit_of_equation_under_set_stabilizer" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::compute_canonical_form_of_variety done" << endl;
+		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety done" << endl;
 	}
 }
 
 
-void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
+void stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer" << endl;
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer" << endl;
 	}
 
 
@@ -227,7 +227,7 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 
 #if 1
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"before Orb->init" << endl;
 	}
 	Orb->init(
@@ -238,9 +238,9 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 			Variety->Vo->Variety_object->eqn,
 		verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"after Orb->init" << endl;
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"found an orbit of length " << Orb->used_length << endl;
 	}
 
@@ -250,7 +250,7 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 	// gens_stab_of_canonical_equation
 
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"before Orb->get_canonical_form" << endl;
 	}
 	Orb->get_canonical_form(
@@ -260,18 +260,18 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 			set_stab_order,
 				verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"after Orb->get_canonical_form" << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_variety = Orb->stabilizer_orbit_rep(
 			set_stab_order, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer "
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	if (f_v) {
@@ -285,11 +285,11 @@ void canonical_form_nauty::orbit_of_equation_under_set_stabilizer(
 
 
 	if (f_v) {
-		cout << "canonical_form_nauty::orbit_of_equation_under_set_stabilizer done" << endl;
+		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer done" << endl;
 	}
 }
 
-void canonical_form_nauty::report(
+void stabilizer_of_set_of_rational_points::report(
 		std::ostream &ost)
 {
 	ost << "Number of equations with the same set of points "

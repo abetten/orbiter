@@ -680,7 +680,9 @@ namespace orbiter_kernel_system {
 		t_poset_classification_activity,
 		t_crc_code,
 		t_mapping,
+		t_variety,
 	};
+	// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
 
 
 	class activity_output;

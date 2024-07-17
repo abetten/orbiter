@@ -893,6 +893,25 @@ void orbiter_symbol_table_entry::init_mapping(
 	}
 }
 
+void orbiter_symbol_table_entry::init_variety(
+		std::string &label,
+		void *variety, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_variety" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_variety;
+	ptr = variety;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_variety done" << endl;
+	}
+}
+
+
 
 
 
@@ -1048,6 +1067,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_mapping) {
 			cout << "mapping" << endl;
+		}
+		else if (object_type == t_variety) {
+			cout << "variety" << endl;
 		}
 
 	}

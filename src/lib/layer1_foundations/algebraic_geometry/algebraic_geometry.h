@@ -2255,6 +2255,11 @@ public:
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
+
+	std::string label_txt;
+	std::string label_tex;
+
+
 #if 0
 	std::string eqn_txt;
 

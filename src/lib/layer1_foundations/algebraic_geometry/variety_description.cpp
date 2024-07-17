@@ -41,7 +41,7 @@ variety_description::variety_description()
 	//std::string ring_label;
 
 	f_has_ring_pointer = false;
-	//ring_theory::homogeneous_polynomial_domain *Ring_pointer;
+	Ring_pointer = NULL;
 
 
 	f_has_equation_in_algebraic_form = false;
@@ -62,6 +62,7 @@ variety_description::variety_description()
 	f_has_bitangents = false;
 	//std::string bitangents_txt;
 }
+
 
 
 variety_description::~variety_description()
