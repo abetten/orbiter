@@ -20,6 +20,7 @@ namespace data_structures {
 
 vector_builder_description::vector_builder_description()
 {
+
 	f_field = false;
 	//std::string field_label;
 

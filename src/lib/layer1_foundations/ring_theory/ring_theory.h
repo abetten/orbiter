@@ -801,6 +801,10 @@ public:
 class polynomial_ring_activity_description {
 public:
 
+
+	// TABLES/polynomial_ring_activity.tex
+
+
 	int f_cheat_sheet;
 
 	int f_ideal;
@@ -853,6 +857,8 @@ public:
 
 class polynomial_ring_description {
 public:
+
+	// TABLES/polynomial_ring.tex
 
 	int f_field;
 	std::string finite_field_label;

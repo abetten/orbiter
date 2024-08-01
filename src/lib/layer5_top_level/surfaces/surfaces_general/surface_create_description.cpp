@@ -22,6 +22,8 @@ namespace cubic_surfaces_in_general {
 surface_create_description::surface_create_description()
 {
 
+	// surface_create_1.tex
+
 	f_space = false;
 	//std::string space_label;
 
@@ -54,6 +56,10 @@ surface_create_description::surface_create_description()
 	family_Eckardt_a = 0;
 	family_Eckardt_b = 0;
 
+
+	// surface_create_2.tex
+
+
 	f_family_G13 = false;
 	family_G13_a = 0;
 
@@ -74,7 +80,14 @@ surface_create_description::surface_create_description()
 	f_arc_lifting = false;
 	//arc_lifting_text = NULL;
 	//arc_lifting_two_lines_text = NULL;
+
+
 	f_arc_lifting_with_two_lines = false;
+
+
+
+	// surface_create_3.tex
+
 
 	f_Cayley_form = false;
 	Cayley_form_k = 0;
@@ -109,8 +122,7 @@ surface_create_description::surface_create_description()
 	//std::string by_skew_hexagon_label;
 	//std::string by_skew_hexagon_label_tex
 
-	//nb_select_double_six = 0;
-	//select_double_six_string[];
+	//std::vector<std::string> select_double_six_string;
 
 	f_override_group = false;
 	//std::string override_group_order;

@@ -469,5 +469,225 @@ std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 }
 
 
+void classification_of_varieties_nauty::report(
+		std::string &fname_base,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::report" << endl;
+	}
+
+	string fname;
+
+
+	fname = fname_base + "_orbits.tex";
+
+
+
+	{
+		ofstream ost(fname);
+		l1_interfaces::latex_interface L;
+
+		L.head_easy(ost);
+
+
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::report "
+					"before report_iso_types" << endl;
+		}
+
+		report_iso_types(ost, verbose_level);
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::report "
+					"after report_iso_types" << endl;
+		}
+
+
+		L.foot(ost);
+	}
+
+
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+	}
+
+#if 0
+	{
+		string fname_data;
+
+		fname_data = label + "_canonical_form_data.csv";
+
+
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::report "
+					"before export_canonical_form_data" << endl;
+		}
+		export_canonical_form_data(
+				fname_data, verbose_level);
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::report "
+					"after export_canonical_form_data" << endl;
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname_data << " of size "
+					<< Fio.file_size(fname_data) << endl;
+		}
+	}
+#endif
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::report done" << endl;
+	}
+
+}
+
+
+void classification_of_varieties_nauty::report_iso_types(
+		std::ostream &ost, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::report_iso_types" << endl;
+	}
+
+
+	int orbit_index;
+	int nb_orbits;
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::report_iso_types" << endl;
+	}
+
+
+	nb_orbits = nb_iso_orbits;
+
+
+	int idx;
+
+	{
+
+
+		ost << "Classification\\\\" << endl;
+		ost << "$q=" << Classifier->PA->F->q << "$\\\\" << endl;
+		ost << "Number of isomorphism classes: " << nb_orbits << "\\\\" << endl;
+
+
+		std::vector<long int> Ago;
+
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+			idx = Orbit_input_idx[orbit_index];
+
+
+			Ago.push_back(Goi[idx]);
+		}
+
+		data_structures::tally_lint T;
+
+		T.init_vector_lint(
+				Ago,
+				false /* f_second */,
+				0 /* verbose_level */);
+		ost << "Automorphism group order statistic: " << endl;
+		//ost << "$";
+		T.print_file_tex(ost, true /* f_backwards */);
+		ost << "\\\\" << endl;
+
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+
+		if (f_v) {
+			cout << "classification_of_varieties_nauty::report "
+					"preparing reps" << endl;
+		}
+		ost << "The isomorphism classes are:\\\\" << endl;
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+			idx = Orbit_input_idx[orbit_index];
+
+			//int *equation;
+
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::report_iso_types "
+						"orbit_index = " << orbit_index << endl;
+			}
+
+			ost << "Isomorphism class " << orbit_index << " / " << nb_orbits << " is input " << idx << ":\\\\" << endl;
+			ost << "Automorphism group order " << Goi[idx] << "\\\\" << endl;
+
+
+			variety_object_with_action *Vo;
+				// [nb_objects_to_test]
+
+
+			Vo = &Input_Vo[idx];
+
+			ost << "Number of points " << Vo->Variety_object->Point_sets->Set_size[0] << "\\\\" << endl;
+
+			Vo->Variety_object->report_equations(ost);
+
+			ost << "Points:\\\\" << endl;
+			Classifier->PA->P->Reporting->print_set_of_points_easy(
+					ost,
+					Vo->Variety_object->Point_sets->Sets[0],
+					Vo->Variety_object->Point_sets->Set_size[0]);
+
+			Variety_table[idx]->Stabilizer_of_set_of_rational_points->report(ost);
+
+
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
+
+
+			combinatorics_with_groups::combinatorics_with_action CombiA;
+			int size_limit_for_printing = 50;
+			groups::strong_generators *gens;
+
+			gens = Variety_table[idx]->Stabilizer_of_set_of_rational_points->Stab_gens_variety;
+
+
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::report_iso_types "
+						"before CombiA.report_TDO_and_TDA_projective_space" << endl;
+			}
+			CombiA.report_TDO_and_TDA_projective_space(
+					ost,
+					Classifier->PA->P,
+					Vo->Variety_object->Point_sets->Sets[0],
+					Vo->Variety_object->Point_sets->Set_size[0],
+					Classifier->PA->A, Classifier->PA->A_on_lines,
+					gens, size_limit_for_printing,
+					verbose_level);
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::report_iso_types "
+						"after CombiA.report_TDO_and_TDA_projective_space" << endl;
+			}
+
+
+		}
+	}
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::report_iso_types done" << endl;
+	}
+}
+
+
+
 }}}
 

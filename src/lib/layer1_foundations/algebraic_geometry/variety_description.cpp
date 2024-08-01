@@ -61,6 +61,8 @@ variety_description::variety_description()
 
 	f_has_bitangents = false;
 	//std::string bitangents_txt;
+
+	//std::vector<std::string> transformations;
 }
 
 
@@ -154,6 +156,16 @@ int variety_description::read_arguments(
 				cout << "-bitangents " << bitangents_txt << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-transform") == 0) {
+
+			string s;
+
+			s.assign(argv[++i]);
+			transformations.push_back(s);
+			if (f_v) {
+				cout << "-transform " << transformations[transformations.size() - 1] << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -204,6 +216,11 @@ void variety_description::print()
 	}
 	if (f_has_bitangents) {
 		cout << "-bitangents " << bitangents_txt << endl;
+	}
+	int i;
+	for (i = 0; i < transformations.size(); i++) {
+		cout << "-transform " << transformations[i] << endl;
+
 	}
 
 }

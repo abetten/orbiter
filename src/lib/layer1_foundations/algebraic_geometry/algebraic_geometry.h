@@ -2223,6 +2223,8 @@ public:
 	int f_has_bitangents;
 	std::string bitangents_txt;
 
+	std::vector<std::string> transformations;
+
 
 	variety_description();
 	~variety_description();

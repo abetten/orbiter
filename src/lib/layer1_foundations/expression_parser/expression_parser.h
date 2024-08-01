@@ -339,6 +339,8 @@ public:
 class symbolic_object_activity_description {
 public:
 
+	// TABLES/symbolic_object_activity.tex
+
 	int f_export;
 
 #if 0

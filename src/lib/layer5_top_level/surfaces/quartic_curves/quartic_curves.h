@@ -27,6 +27,9 @@ namespace quartic_curves {
 class quartic_curve_activity_description {
 public:
 
+
+	// quartic_curve_activity.tex
+
 	int f_report;
 
 	int f_export_something;
@@ -97,6 +100,9 @@ public:
 class quartic_curve_create_description {
 
 public:
+
+	// quartic_curve_create.tex
+
 
 	int f_space;
 	std::string space_label;

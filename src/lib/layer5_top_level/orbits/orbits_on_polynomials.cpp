@@ -344,7 +344,8 @@ void orbits_on_polynomials::orbit_of_one_polynomial(
 		cout << "orbits_on_polynomials::orbit_of_one_polynomial "
 				"before Orb->init" << endl;
 	}
-	Orb->init(A, F,
+	Orb->init(
+			A, F,
 			A2->G.OnHP,
 		LG->Strong_gens /* A->Strong_gens*/, eqn,
 		verbose_level);

@@ -1101,6 +1101,8 @@ class partitionstack {
 class set_builder_description {
 public:
 
+	// TABLES/set_builder.tex
+
 	int f_index_set_loop;
 	int index_set_loop_low;
 	int index_set_loop_upper_bound;
@@ -2358,6 +2360,9 @@ public:
 
 class vector_builder_description {
 public:
+
+	// vector_ge_builder.tex
+
 
 	int f_field;
 	std::string field_label;

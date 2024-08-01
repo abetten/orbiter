@@ -30,6 +30,8 @@ namespace projective_geometry {
 class projective_space_activity_description {
 public:
 
+	// TABLES/projective_space_activity_1.tex
+
 
 	int f_export_point_line_incidence_matrix;
 
@@ -95,6 +97,12 @@ public:
 		// based on knowledge_base
 
 
+
+	// TABLES/projective_space_activity_2.tex
+
+
+
+
 	int f_sweep;
 	std::string sweep_fname;
 
@@ -136,9 +144,11 @@ public:
 	int conic_type_threshold;
 	std::string conic_type_set_text;
 
+	// undocumented:
 	int f_lift_skew_hexagon;
 	std::string lift_skew_hexagon_text;
 
+	// undocumented:
 	int f_lift_skew_hexagon_with_polarity;
 	std::string lift_skew_hexagon_with_polarity_polarity;
 
@@ -164,6 +174,12 @@ public:
 
 	int f_dualize_rank_k_subspaces;
 	int dualize_rank_k_subspaces_k;
+
+
+	// TABLES/projective_space_activity_3.tex
+
+
+
 
 	int f_lines_on_point_but_within_a_plane;
 	long int lines_on_point_but_within_a_plane_point_rk;
@@ -220,6 +236,10 @@ public:
 	std::string report_fixed_objects_label;
 
 
+	// TABLES/projective_space_activity_3.tex
+
+
+
 	// classification stuff:
 
 	int f_classify_surfaces_with_double_sixes;
@@ -240,6 +260,7 @@ public:
 	int f_trihedra2_control;
 	poset_classification::poset_classification_control
 		*Trihedra2_control;
+
 	int f_control_six_arcs;
 	std::string Control_six_arcs_label;
 
@@ -373,6 +394,8 @@ public:
 
 class projective_space_with_action_description {
 public:
+
+	// TABLES/projective_space_with_action.tex
 
 	int f_n;
 	int n;

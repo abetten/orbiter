@@ -23,6 +23,10 @@ namespace expression_parser {
 
 symbolic_object_builder_description::symbolic_object_builder_description()
 {
+
+	// TABLES/symbolic_object_1.tex:
+
+
 	f_label_txt = false;
 	//std::string label_txt;
 
@@ -84,6 +88,10 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_stack_matrices_horizontally = false;
 	f_stack_matrices_z_shape = false;
 	//std::string stack_matrices_label;
+
+
+	// TABLES/symbolic_object_2.tex:
+
 
 	f_multiply_2x2_from_the_left = false;
 	//std::string multiply_2x2_from_the_left_source;

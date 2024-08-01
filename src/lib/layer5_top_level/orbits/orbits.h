@@ -87,6 +87,8 @@ class orbits_activity_description {
 public:
 
 
+	// TABLES/orbits_activity.tex
+
 	int f_report;
 
 	int f_export_something;
@@ -200,6 +202,9 @@ public:
 class orbits_create_description {
 
 public:
+
+	// TABLES/orbits_create.tex
+
 
 	int f_group;
 	std::string group_label;

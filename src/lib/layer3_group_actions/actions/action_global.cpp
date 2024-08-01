@@ -5476,6 +5476,42 @@ void action_global::read_set_and_stabilizer(
 
 }
 
+data_structures::set_of_sets *action_global::set_of_sets_copy_and_apply(
+		action *A,
+		int *Elt,
+		data_structures::set_of_sets *old_one,
+	int verbose_level)
+{
+	int f_v = (verbose_level  >= 1);
+
+	if (f_v) {
+		cout << "action_global::set_of_sets_copy_and_apply" << endl;
+	}
+
+	data_structures::set_of_sets *SoS;
+
+	SoS = old_one->copy();
+
+	int i, j;
+	long int a, b;
+
+	for (i = 0; i < SoS->nb_sets; i++) {
+		for (j = 0; j < SoS->Set_size[i]; j++) {
+			a = SoS->Sets[i][j];
+			b = A->Group_element->image_of(Elt, a);
+			SoS->Sets[i][j] = b;
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "action_global::set_of_sets_copy_and_apply done" << endl;
+	}
+
+	return SoS;
+
+}
 
 
 

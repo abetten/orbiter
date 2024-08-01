@@ -547,6 +547,11 @@ public:
 			int verbose_level);
 	std::string stringify_csv_header_line_nauty(
 			int verbose_level);
+	void report(
+			std::string &fname_base,
+			int verbose_level);
+	void report_iso_types(
+			std::ostream &ost, int verbose_level);
 
 };
 
@@ -1064,12 +1069,10 @@ public:
 			int cnt, int po_go, int po_index, int po, int so,
 			algebraic_geometry::variety_description *VD,
 			int verbose_level);
-	void init_image_of(
-			variety_object_with_action *old_one,
+	void apply_transformation(
 			int *Elt,
 			actions::action *A,
 			actions::action *A_on_lines,
-			int *eqn2,
 			int verbose_level);
 	void print(
 			std::ostream &ost);

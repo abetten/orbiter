@@ -26,6 +26,10 @@ namespace cubic_surfaces_in_general {
 class cubic_surface_activity_description {
 public:
 
+
+	// cubic_surface_activity.tex
+
+
 	int f_report;
 
 	int f_report_group_elements;
@@ -304,6 +308,9 @@ class surface_create_description {
 
 public:
 
+	// surface_create_1.tex
+
+
 	int f_space;
 	std::string space_label;
 
@@ -334,6 +341,9 @@ public:
 	int family_Eckardt_a;
 	int family_Eckardt_b;
 
+	// surface_create_2.tex
+
+
 	int f_family_G13;
 	int family_G13_a;
 
@@ -356,7 +366,9 @@ public:
 
 	int f_arc_lifting_with_two_lines;
 
-	std::vector<std::string> select_double_six_string;
+
+	// surface_create_3.tex
+
 
 	int f_Cayley_form;
 	int Cayley_form_k;
@@ -387,6 +399,9 @@ public:
 	int f_by_skew_hexagon;
 	std::string by_skew_hexagon_label;
 	std::string by_skew_hexagon_label_tex;
+
+	std::vector<std::string> select_double_six_string;
+
 
 	int f_override_group;
 	std::string override_group_order;

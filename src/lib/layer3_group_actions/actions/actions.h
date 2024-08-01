@@ -455,6 +455,7 @@ public:
 
 class action_global {
 public:
+
 	void action_print_symmetry_group_type(
 			std::ostream &ost,
 			symmetry_group_type a);
@@ -792,6 +793,11 @@ public:
 		int no, long int *&set, int &set_sz, groups::sims *&stab,
 		groups::strong_generators *&Strong_gens,
 		int &nb_cases,
+		int verbose_level);
+	data_structures::set_of_sets *set_of_sets_copy_and_apply(
+			action *A,
+			int *Elt,
+			data_structures::set_of_sets *old_one,
 		int verbose_level);
 
 };

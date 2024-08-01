@@ -149,7 +149,8 @@ void variety_activity::do_compute_group(
 	fname_base = Input_Vo[0].Variety_object->label_txt + "_c";
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before Nauty->init" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before Nauty->init" << endl;
 	}
 	Nauty->init(
 			nb_input_Vo,
@@ -158,16 +159,32 @@ void variety_activity::do_compute_group(
 			Classifier,
 			verbose_level);
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after Nauty->init" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after Nauty->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before Nauty->classify_nauty" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before Nauty->classify_nauty" << endl;
 	}
 	Nauty->classify_nauty(verbose_level);
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after Nauty->classify_nauty" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after Nauty->classify_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before Nauty->report" << endl;
+	}
+	Nauty->report(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after Nauty->report" << endl;
 	}
 
 

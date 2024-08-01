@@ -1306,7 +1306,7 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 
 void canonical_form_of_variety::compute_canonical_object(
 		int verbose_level)
-// applies transporter_to_canonical_form to Qco to compute canonical_equation
+// applies transporter_to_canonical_form to Vo to compute canonical_equation
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1324,22 +1324,23 @@ void canonical_form_of_variety::compute_canonical_object(
 	A = Canonical_form_classifier->PA->A;
 	A_on_lines = Canonical_form_classifier->PA->A_on_lines;
 
+	//Canonical_object->Variety_object = Vo;
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::compute_canonical_object "
-				"before Qco_canonical->init_image_of" << endl;
+				"before Vo->apply_transformation" << endl;
 	}
-	Canonical_object->init_image_of(
-			Vo,
+	Vo->apply_transformation(
 			transporter_to_canonical_form,
 			A,
 			A_on_lines,
-			canonical_equation,
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_of_variety::compute_canonical_object "
-				"after Qco_canonical->init_image_of" << endl;
+				"after Vo->apply_transformation" << endl;
 	}
+
+	Canonical_object = NULL; // ToDo
 
 	if (f_v) {
 		cout << "canonical_form_of_variety::compute_canonical_object done" << endl;

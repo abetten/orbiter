@@ -195,18 +195,51 @@ void orbit_of_equations::print_orbit()
 	
 	cout << "orbit_of_equations::print_orbit We found an orbit of "
 			"length " << used_length << endl;
+
+	int *transporter;
+	int *data;
+
+
+	transporter = NEW_int(A->elt_size_in_int);
+	data = NEW_int(A->make_element_size);
+
 	for (i = 0; i < used_length; i++) {
+
 		cout << i << " : ";
+
 		Int_vec_print(cout,
 				Equations[i] + 1,
 				nb_monomials);
+
 		cout << " : ";
+
 		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		if (f_has_print_function) {
 			(*print_function)(Equations[i], sz, print_function_data);
 		}
+
+		cout << " : ";
+
+
+		get_transporter(
+				i,
+				transporter,
+				0 /* verbose_level*/);
+
+		A->Group_element->element_code_for_make_element(
+				transporter, data);
+
+		string s;
+
+		s = Int_vec_stringify(data, A->make_element_size);
+
+		cout << "\"" << s << "\"";
+
 		cout << endl;
 	}
+
+	FREE_int(transporter);
+	FREE_int(data);
 }
 
 
