@@ -85,7 +85,7 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	substructure_size = 0;
 
 	f_skip = false;
-	//std::string skip_label;
+	//std::string skip_vector_label;
 
 
 	Canon_substructure = NULL;
@@ -250,9 +250,9 @@ int canonical_form_classifier_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-skip") == 0) {
 			f_skip = true;
-			skip_label.assign(argv[++i]);
+			skip_vector_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-skip " << skip_label << endl;
+				cout << "-skip " << skip_vector_label << endl;
 			}
 		}
 
@@ -339,7 +339,7 @@ void canonical_form_classifier_description::print()
 		cout << "-substructure_size" << endl;
 	}
 	if (f_skip) {
-		cout << "-skip " << skip_label << endl;
+		cout << "-skip " << skip_vector_label << endl;
 	}
 }
 

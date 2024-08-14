@@ -2601,7 +2601,8 @@ void object_with_canonical_form::run_nauty(
 		}
 
 
-		Enc->compute_canonical_form(Canonical_form,
+		Enc->compute_canonical_form(
+				Canonical_form,
 				NO->canonical_labeling, verbose_level);
 
 		if (f_v) {

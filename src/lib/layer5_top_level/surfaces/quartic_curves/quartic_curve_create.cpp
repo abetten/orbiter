@@ -371,6 +371,34 @@ void quartic_curve_create::create_quartic_curve_from_description(
 
 	}
 
+	else if (Descr->f_from_variety) {
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"f_from_variety" << endl;
+		}
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"before create_quartic_curve_from_cubic_surface" << endl;
+		}
+
+
+		create_quartic_curve_from_variety(
+				Descr->from_variety_label,
+				verbose_level);
+
+		if (f_v) {
+			cout << "quartic_curve_create::create_quartic_curve_from_description "
+					"after create_quartic_curve_from_cubic_surface" << endl;
+		}
+
+
+
+	}
+
+
+
+
 	else {
 		cout << "quartic_curve_create::create_quartic_curve_from_description "
 				"we do not recognize the type of quartic curve" << endl;
@@ -901,6 +929,18 @@ int quartic_curve_create::create_quartic_curve_by_symbolic_object(
 
 	Ring = Get_ring(ring_label);
 
+	if (Ring->degree != 4) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object "
+				"Ring->degree != 4" << endl;
+		exit(1);
+	}
+
+	if (Ring->nb_variables != 3) {
+		cout << "quartic_curve_create::create_quartic_curve_by_symbolic_object "
+				"Ring->nb_variables != 3" << endl;
+		exit(1);
+	}
+
 	int nb_monomials;
 
 
@@ -1079,7 +1119,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 
 #if 0
-	QC has:
+	QC_from_surface has:
 
 	int *curve;
 
@@ -1143,6 +1183,86 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface done" << endl;
+	}
+}
+
+void quartic_curve_create::create_quartic_curve_from_variety(
+		std::string &variety_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety" << endl;
+	}
+
+
+	canonical_form::variety_object_with_action *Variety;
+
+	Variety = Get_variety(variety_label);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"found the variety " << Variety->Variety_object->label_tex << endl;
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"with " << Variety->Variety_object->Point_sets->Set_size[0] << " rational points" << endl;
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"and with " << Variety->Variety_object->Line_sets->Set_size[0] << " special lines" << endl;
+	}
+
+
+	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"before QO->init_equation_and_bitangents_and_compute_properties" << endl;
+	}
+	QO->init_equation_and_bitangents_and_compute_properties(
+			QCDA->Dom,
+			Variety->Variety_object->eqn /* eqn15 */,
+			Variety->Variety_object->Line_sets->Sets[0],
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"after QO->init_equation_and_bitangents_and_compute_properties" << endl;
+	}
+
+
+	// add generators of group if available
+
+	groups::strong_generators *Aut_gens = NULL;
+
+	if (Variety->f_has_automorphism_group) {
+		Aut_gens = Variety->Stab_gens;
+	}
+
+
+	QOG = NEW_OBJECT(quartic_curve_object_with_group);
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"before QOG->init" << endl;
+	}
+	QOG->init(
+			QCDA,
+			QO,
+			Aut_gens,
+			verbose_level);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"after QOG->init" << endl;
+	}
+
+
+	prefix = variety_label;
+
+	label_txt = prefix;
+
+
+
+
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety done" << endl;
 	}
 }
 
@@ -1600,7 +1720,7 @@ void quartic_curve_create::report(
 	}
 
 
-	if (QOG) {
+	if (QOG && QOG->Aut_gens) {
 
 		ost << "Automorphism group:\\\\" << endl;
 		QOG->Aut_gens->print_generators_tex(ost);
@@ -1743,59 +1863,62 @@ void quartic_curve_create::print_general(
 
 	if (QOG) {
 
-		if (f_v) {
-			cout << "quartic_curve_create::print_general "
-					"information about the group:" << endl;
-		}
+		if (QOG->Aut_gens) {
 
-		ring_theory::longinteger_object go;
+			if (f_v) {
+				cout << "quartic_curve_create::print_general "
+						"information about the group:" << endl;
+			}
 
-		if (f_v) {
-			cout << "quartic_curve_create::print_general "
-					"action in QOG->Aut_gens:" << endl;
-			QOG->Aut_gens->A->print_info();
-		}
+			ring_theory::longinteger_object go;
 
-		QOG->Aut_gens->group_order(go);
+			if (f_v) {
+				cout << "quartic_curve_create::print_general "
+						"action in QOG->Aut_gens:" << endl;
+				QOG->Aut_gens->A->print_info();
+			}
 
-		ost << "\\mbox{Stabilizer order} & " << go << "\\\\" << endl;
-		ost << "\\hline" << endl;
+			QOG->Aut_gens->group_order(go);
 
-
-		std::stringstream orbit_type_on_pts;
-
-		QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-				PA->A, QO->Pts, QO->nb_pts,
-				orbit_type_on_pts,
-				0 /*verbose_level */);
-
-		ost << "\\mbox{Action on points} & "
-				<< orbit_type_on_pts.str() << "\\\\" << endl;
-		ost << "\\hline" << endl;
-
-		std::stringstream orbit_type_on_bitangents;
-
-		QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-				PA->A_on_lines, QO->bitangents28, 28,
-				orbit_type_on_bitangents,
-				0 /*verbose_level */);
-
-		ost << "\\mbox{Action on bitangents} & "
-				<< orbit_type_on_bitangents.str() << "\\\\" << endl;
-		ost << "\\hline" << endl;
+			ost << "\\mbox{Stabilizer order} & " << go << "\\\\" << endl;
+			ost << "\\hline" << endl;
 
 
-		if (QO->QP) {
-			std::stringstream orbit_type_on_Kovelevski;
+			std::stringstream orbit_type_on_pts;
 
 			QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
-					PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
-					orbit_type_on_Kovelevski,
+					PA->A, QO->Pts, QO->nb_pts,
+					orbit_type_on_pts,
 					0 /*verbose_level */);
 
-			ost << "\\mbox{Action on Kovalevski pts} & "
-					<< orbit_type_on_Kovelevski.str() << "\\\\" << endl;
+			ost << "\\mbox{Action on points} & "
+					<< orbit_type_on_pts.str() << "\\\\" << endl;
 			ost << "\\hline" << endl;
+
+			std::stringstream orbit_type_on_bitangents;
+
+			QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
+					PA->A_on_lines, QO->bitangents28, 28,
+					orbit_type_on_bitangents,
+					0 /*verbose_level */);
+
+			ost << "\\mbox{Action on bitangents} & "
+					<< orbit_type_on_bitangents.str() << "\\\\" << endl;
+			ost << "\\hline" << endl;
+
+
+			if (QO->QP) {
+				std::stringstream orbit_type_on_Kovelevski;
+
+				QOG->Aut_gens->orbits_on_set_with_given_action_after_restriction(
+						PA->A, QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski,
+						orbit_type_on_Kovelevski,
+						0 /*verbose_level */);
+
+				ost << "\\mbox{Action on Kovalevski pts} & "
+						<< orbit_type_on_Kovelevski.str() << "\\\\" << endl;
+				ost << "\\hline" << endl;
+			}
 		}
 
 	}

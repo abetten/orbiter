@@ -513,9 +513,9 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/classification_of_combinatorial_objects.o \
 		layer5_top_level/canonical_form/classification_of_varieties_nauty.o \
 		layer5_top_level/canonical_form/classification_of_varieties.o \
+		layer5_top_level/canonical_form/combinatorial_object_in_projective_space_with_action.o \
+		layer5_top_level/canonical_form/combinatorial_object_with_properties.o \
 		layer5_top_level/canonical_form/input_objects_of_type_variety.o \
-		layer5_top_level/canonical_form/object_in_projective_space_with_action.o \
-		layer5_top_level/canonical_form/object_with_properties.o \
 		layer5_top_level/canonical_form/quartic_curve_object_with_action.o \
 		layer5_top_level/canonical_form/stabilizer_of_set_of_rational_points.o \
 		layer5_top_level/canonical_form/variety_activity_description.o \

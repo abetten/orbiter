@@ -82,6 +82,11 @@ public:
 			std::string &evaluate_text,
 			long int *&Variety, long int &Variety_nb_points,
 			int verbose_level);
+	void make_evaluation_matrix_wrt_ring(
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			geometry::projective_space *P,
+			int *&M, int &nb_rows, int &nb_cols,
+			int verbose_level);
 	void cubic_surface_family_24_generators(
 			field_theory::finite_field *F,
 		int f_with_normalizer,
@@ -768,11 +773,13 @@ public:
 
 	quartic_curve_object();
 	~quartic_curve_object();
+#if 0
 	void init_from_string(
 			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			std::string &eqn_txt,
 			std::string &pts_txt, std::string &bitangents_txt,
 			int verbose_level);
+#endif
 	void allocate_points(
 			int nb_pts,
 			int verbose_level);
@@ -2208,6 +2215,11 @@ public:
 	int f_has_equation_in_algebraic_form;
 	std::string equation_in_algebraic_form_text;
 
+	int f_set_parameters;
+	std::string set_parameters_label;
+	std::string set_parameters_label_tex;
+	std::string set_parameters_values;
+
 	int f_has_equation_by_coefficients;
 	std::string equation_by_coefficients_text;
 
@@ -2282,6 +2294,8 @@ public:
 
 	data_structures::set_of_sets *Line_sets;
 
+	int f_has_singular_points;
+	std::vector<long int> Singular_points;
 
 
 
@@ -2306,6 +2320,13 @@ public:
 			int verbose_level);
 	void parse_equation_in_algebraic_form(
 			std::string &equation_txt,
+			int *&equation,
+			int verbose_level);
+	void parse_equation_in_algebraic_form_with_parameters(
+			std::string &equation_txt,
+			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
 			int *&equation,
 			int verbose_level);
 	void init_equation_only(

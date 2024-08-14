@@ -143,6 +143,9 @@ public:
 	std::string from_cubic_surface_label;
 	int from_cubic_surface_point_orbit_idx;
 
+	int f_from_variety;
+	std::string from_variety_label;
+
 
 	int f_override_group;
 	std::string override_group_order;
@@ -258,6 +261,9 @@ public:
 	void create_quartic_curve_from_cubic_surface(
 			std::string &cubic_surface_label,
 			int pt_orbit_idx,
+			int verbose_level);
+	void create_quartic_curve_from_variety(
+			std::string &variety_label,
 			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
@@ -463,8 +469,6 @@ class quartic_curve_object_with_group {
 
 public:
 
-	//field_theory::finite_field *F; // do not free
-	// DomA->Dom->F
 
 	quartic_curve_domain_with_action *DomA;
 

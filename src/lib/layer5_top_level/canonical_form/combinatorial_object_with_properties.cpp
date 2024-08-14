@@ -1,5 +1,5 @@
 /*
- * object_with_properties.cpp
+ * combinatorial_object_with_properties.cpp
  *
  *  Created on: Dec 8, 2021
  *      Author: betten
@@ -17,7 +17,7 @@ namespace layer5_applications {
 namespace canonical_form {
 
 
-object_with_properties::object_with_properties()
+combinatorial_object_with_properties::combinatorial_object_with_properties()
 {
 	OwCF = NULL;
 
@@ -41,7 +41,7 @@ object_with_properties::object_with_properties()
 
 }
 
-object_with_properties::~object_with_properties()
+combinatorial_object_with_properties::~combinatorial_object_with_properties()
 {
 
 	if (TDO) {
@@ -61,7 +61,7 @@ object_with_properties::~object_with_properties()
 }
 
 
-void object_with_properties::init(
+void combinatorial_object_with_properties::init(
 		canonical_form_classification::object_with_canonical_form *OwCF,
 		l1_interfaces::nauty_output *NO,
 		int f_projective_space,
@@ -73,19 +73,19 @@ void object_with_properties::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_properties::init" << endl;
+		cout << "combinatorial_object_with_properties::init" << endl;
 	}
 
-	object_with_properties::OwCF = OwCF;
-	object_with_properties::NO = NO;
-	object_with_properties::f_projective_space = f_projective_space;
-	object_with_properties::PA = PA;
-	object_with_properties::label.assign(label);
+	combinatorial_object_with_properties::OwCF = OwCF;
+	combinatorial_object_with_properties::NO = NO;
+	combinatorial_object_with_properties::f_projective_space = f_projective_space;
+	combinatorial_object_with_properties::PA = PA;
+	combinatorial_object_with_properties::label.assign(label);
 
 	interfaces::nauty_interface_with_group Nau;
 
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"before Nau.automorphism_group_as_permutation_group" << endl;
 	}
 	Nau.automorphism_group_as_permutation_group(
@@ -94,12 +94,12 @@ void object_with_properties::init(
 					verbose_level - 2);
 
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"after Nau.automorphism_group_as_permutation_group" << endl;
 	}
 
 	if (false) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"A_perm:" << endl;
 
 		A_perm->Strong_gens->print_generators_in_latex_individually(cout);
@@ -109,14 +109,14 @@ void object_with_properties::init(
 
 	if (f_projective_space) {
 		if (f_v) {
-			cout << "object_with_properties::init "
+			cout << "combinatorial_object_with_properties::init "
 					"before lift_generators_to_matrix_group" << endl;
 		}
 
 		lift_generators_to_matrix_group(verbose_level - 2);
 
 		if (f_v) {
-			cout << "object_with_properties::init "
+			cout << "combinatorial_object_with_properties::init "
 					"after lift_generators_to_matrix_group" << endl;
 		}
 	}
@@ -126,7 +126,7 @@ void object_with_properties::init(
 
 
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"before GA_on_CO->init" << endl;
 	}
 	GA_on_CO->init(
@@ -136,46 +136,46 @@ void object_with_properties::init(
 			A_perm,
 			verbose_level);
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"after GA_on_CO->init" << endl;
 	}
 
 
 #if 0
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"before compute_flag_orbits" << endl;
 	}
 	compute_flag_orbits(verbose_level - 2);
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"after compute_flag_orbits" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"before compute_TDO" << endl;
 	}
 	compute_TDO(max_TDO_depth, verbose_level - 2);
 	if (f_v) {
-		cout << "object_with_properties::init "
+		cout << "combinatorial_object_with_properties::init "
 				"after compute_TDO" << endl;
 	}
 
 	if (f_v) {
-		cout << "object_with_properties::init done" << endl;
+		cout << "combinatorial_object_with_properties::init done" << endl;
 	}
 }
 
 
-void object_with_properties::lift_generators_to_matrix_group(
+void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_properties::lift_generators_to_matrix_group" << endl;
+		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group" << endl;
 	}
 	//strong_generators *SG;
 	actions::action *A_perm;
@@ -183,7 +183,7 @@ void object_with_properties::lift_generators_to_matrix_group(
 	interfaces::nauty_interface_with_group Naug;
 
 	if (f_v) {
-		cout << "object_with_properties::lift_generators_to_matrix_group "
+		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group "
 				"before Naug.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
@@ -196,7 +196,7 @@ void object_with_properties::lift_generators_to_matrix_group(
 			verbose_level);
 
 	if (f_v) {
-		cout << "object_with_properties::lift_generators_to_matrix_group "
+		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group "
 				"after Naug.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
@@ -204,11 +204,11 @@ void object_with_properties::lift_generators_to_matrix_group(
 	FREE_OBJECT(A_perm);
 
 	if (f_v) {
-		cout << "object_with_properties::lift_generators_to_matrix_group done" << endl;
+		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group done" << endl;
 	}
 }
 
-void object_with_properties::init_object_in_projective_space(
+void combinatorial_object_with_properties::init_object_in_projective_space(
 		canonical_form_classification::object_with_canonical_form *OwCF,
 		l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
@@ -218,12 +218,12 @@ void object_with_properties::init_object_in_projective_space(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_properties::init_object_in_projective_space" << endl;
+		cout << "combinatorial_object_with_properties::init_object_in_projective_space" << endl;
 	}
 
-	object_with_properties::OwCF = OwCF;
-	object_with_properties::NO = NO;
-	object_with_properties::label.assign(label);
+	combinatorial_object_with_properties::OwCF = OwCF;
+	combinatorial_object_with_properties::NO = NO;
+	combinatorial_object_with_properties::label.assign(label);
 
 
 	interfaces::nauty_interface_with_group Nau;
@@ -232,7 +232,7 @@ void object_with_properties::init_object_in_projective_space(
 	A_linear = PA->A;
 
 	if (f_v) {
-		cout << "object_with_properties::init_object_in_projective_space "
+		cout << "combinatorial_object_with_properties::init_object_in_projective_space "
 				"before Nau.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 	Nau.reverse_engineer_linear_group_from_permutation_group(
@@ -243,18 +243,18 @@ void object_with_properties::init_object_in_projective_space(
 			NO,
 			verbose_level);
 	if (f_v) {
-		cout << "object_with_properties::init_object_in_projective_space "
+		cout << "combinatorial_object_with_properties::init_object_in_projective_space "
 				"after Nau.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "object_with_properties::init_object_in_projective_space done" << endl;
+		cout << "combinatorial_object_with_properties::init_object_in_projective_space done" << endl;
 	}
 
 }
 
-void object_with_properties::latex_report(
+void combinatorial_object_with_properties::latex_report(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
@@ -263,7 +263,7 @@ void object_with_properties::latex_report(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_properties::latex_report" << endl;
+		cout << "combinatorial_object_with_properties::latex_report" << endl;
 	}
 
 	ost << "\\subsection*{object\\_with\\_properties::latex\\_report Automorphism Group as Permutation Group}" << endl;
@@ -306,12 +306,12 @@ void object_with_properties::latex_report(
 		ost << "Generators for the automorphism group as matrix group: \\\\" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before SG->print_generators_in_latex_individually" << endl;
 		}
 		SG->print_generators_in_latex_individually(ost);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after SG->print_generators_in_latex_individually" << endl;
 		}
 	}
@@ -320,7 +320,7 @@ void object_with_properties::latex_report(
 	if (Report_options->f_export_group_orbiter) {
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_group_orbiter" << endl;
 		}
 
@@ -334,7 +334,7 @@ void object_with_properties::latex_report(
 		label_tex = label + "\\_aut";
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
 		}
 		A_perm->Strong_gens->export_to_orbiter_as_bsgs(
@@ -342,7 +342,7 @@ void object_with_properties::latex_report(
 				fname, label, label_tex,
 				verbose_level);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after A_perm->Strong_gens->export_to_orbiter_as_bsgs" << endl;
 		}
 	}
@@ -350,7 +350,7 @@ void object_with_properties::latex_report(
 	if (Report_options->f_export_group_GAP) {
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_group_GAP" << endl;
 		}
 
@@ -363,7 +363,7 @@ void object_with_properties::latex_report(
 		interfaces::l3_interface_gap GAP;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before GAP.export_permutation_group_to_GAP" << endl;
 		}
 
@@ -386,13 +386,13 @@ void object_with_properties::latex_report(
 
 
 	if (f_v) {
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(A_perm,
 			verbose_level);
 	if (f_v) {
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"after compute_all_point_orbits_schreier" << endl;
 	}
 #endif
@@ -401,37 +401,37 @@ void object_with_properties::latex_report(
 	if (Report_options->f_export_flag_orbits) {
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_flag_orbits" << endl;
 		}
 
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Flag Orbits}" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before GA_on_CO->export_INP_with_flag_orbits" << endl;
 		}
 		GA_on_CO->export_INP_with_flag_orbits(
 				ost,
 				verbose_level);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after GA_on_CO->export_INP_with_flag_orbits" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
 		GA_on_CO->export_TDA_with_flag_orbits(
 				ost,
 				verbose_level);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after GA_on_CO->export_TDA_with_flag_orbits" << endl;
 		}
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_flag_orbits done" << endl;
 		}
 	}
@@ -439,7 +439,7 @@ void object_with_properties::latex_report(
 	if (Report_options->f_show_TDO) {
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDO" << endl;
 		}
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDO}" << endl;
@@ -447,16 +447,16 @@ void object_with_properties::latex_report(
 		ost << "Decomposition by combinatorial refinement:\\\\" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before print_TDO" << endl;
 		}
 		print_TDO(ost, Report_options, verbose_level);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after print_TDO" << endl;
 		}
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDO done" << endl;
 		}
 	}
@@ -464,7 +464,7 @@ void object_with_properties::latex_report(
 	if (Report_options->f_show_TDA) {
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA" << endl;
 		}
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDA}" << endl;
@@ -480,18 +480,18 @@ void object_with_properties::latex_report(
 		ost << "Decomposition by automorphism group:\\\\" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before GA_on_CO->print_schemes" << endl;
 		}
 		GA_on_CO->print_schemes(ost, Report_options, verbose_level);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after GA_on_CO->print_schemes" << endl;
 		}
 
 #if 0
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before Sch->print_TDA" << endl;
 		}
 		Sch->print_TDA(ost, OwCF, Report_options, verbose_level);
@@ -502,7 +502,7 @@ void object_with_properties::latex_report(
 #endif
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA done" << endl;
 		}
 
@@ -535,7 +535,7 @@ void object_with_properties::latex_report(
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, point_labels, Enc->nb_rows, 1);
 
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 
@@ -543,7 +543,7 @@ void object_with_properties::latex_report(
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, block_labels, Enc->nb_cols, 1);
 
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 
@@ -560,12 +560,12 @@ void object_with_properties::latex_report(
 	canonical_form_classification::encoded_combinatorial_object *Enc2;
 
 	if (f_v) {
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"before OwCF->encode_incma" << endl;
 	}
 	OwCF->encode_incma(Enc, verbose_level);
 	if (f_v) {
-		cout << "object_with_properties::latex_report "
+		cout << "combinatorial_object_with_properties::latex_report "
 				"after OwCF->encode_incma" << endl;
 	}
 
@@ -595,7 +595,7 @@ void object_with_properties::latex_report(
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Incidence Matrices}" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_incidence_matrices" << endl;
 		}
 
@@ -647,7 +647,7 @@ void object_with_properties::latex_report(
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Lex Least Form}" << endl;
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report f_lex_least" << endl;
+			cout << "combinatorial_object_with_properties::latex_report f_lex_least" << endl;
 		}
 		geometry_builder::geometry_builder *GB;
 
@@ -661,7 +661,7 @@ void object_with_properties::latex_report(
 
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before find_object, "
 					"OwCF->v=" << OwCF->v << endl;
 		}
@@ -674,7 +674,7 @@ void object_with_properties::latex_report(
 				verbose_level);
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after find_object" << endl;
 		}
 
@@ -682,7 +682,7 @@ void object_with_properties::latex_report(
 
 
 		if (!f_found) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"cannot find object in geometry_builder" << endl;
 			exit(1);
 		}
@@ -692,17 +692,17 @@ void object_with_properties::latex_report(
 				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"before FREE_OBJECT(NO)" << endl;
 		}
 		FREE_OBJECT(NO);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after FREE_OBJECT(NO)" << endl;
 		}
 		FREE_OBJECT(Canonical_form);
 		if (f_v) {
-			cout << "object_with_properties::latex_report "
+			cout << "combinatorial_object_with_properties::latex_report "
 					"after FREE_OBJECT(Canonical_form)" << endl;
 		}
 
@@ -717,18 +717,18 @@ void object_with_properties::latex_report(
 
 
 	if (f_v) {
-		cout << "object_with_properties::latex_report done" << endl;
+		cout << "combinatorial_object_with_properties::latex_report done" << endl;
 	}
 
 }
 
-void object_with_properties::compute_TDO(
+void combinatorial_object_with_properties::compute_TDO(
 		int max_TDO_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_properties::compute_TDO" << endl;
+		cout << "combinatorial_object_with_properties::compute_TDO" << endl;
 	}
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 
@@ -745,12 +745,12 @@ void object_with_properties::compute_TDO(
 
 	FREE_OBJECT(Enc);
 	if (f_v) {
-		cout << "object_with_properties::compute_TDO done" << endl;
+		cout << "combinatorial_object_with_properties::compute_TDO done" << endl;
 	}
 
 }
 
-void object_with_properties::print_TDO(
+void combinatorial_object_with_properties::print_TDO(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,

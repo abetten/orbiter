@@ -1,4 +1,4 @@
-// object_in_projective_space_with_action.cpp
+// combinatorial_object_in_projective_space_with_action.cpp
 // 
 // Anton Betten
 //
@@ -19,7 +19,7 @@ namespace canonical_form {
 
 
 
-object_in_projective_space_with_action::object_in_projective_space_with_action()
+combinatorial_object_in_projective_space_with_action::combinatorial_object_in_projective_space_with_action()
 {
 	OwCF = NULL;
 	Aut_gens = NULL;
@@ -28,14 +28,14 @@ object_in_projective_space_with_action::object_in_projective_space_with_action()
 	canonical_labeling = NULL;
 }
 
-object_in_projective_space_with_action::~object_in_projective_space_with_action()
+combinatorial_object_in_projective_space_with_action::~combinatorial_object_in_projective_space_with_action()
 {
 	if (canonical_labeling) {
 		FREE_int(canonical_labeling);
 	}
 }
 
-void object_in_projective_space_with_action::init(
+void combinatorial_object_in_projective_space_with_action::init(
 		canonical_form_classification::object_with_canonical_form *OwCF,
 	long int ago,
 	groups::strong_generators *Aut_gens,
@@ -45,7 +45,7 @@ void object_in_projective_space_with_action::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_in_projective_space_with_action::init" << endl;
+		cout << "combinatorial_object_in_projective_space_with_action::init" << endl;
 	}
 
 	int nb_rows, nb_cols;
@@ -55,28 +55,28 @@ void object_in_projective_space_with_action::init(
 			verbose_level);
 
 
-	object_in_projective_space_with_action::OwCF = OwCF;
-	object_in_projective_space_with_action::Aut_gens = Aut_gens;
-	object_in_projective_space_with_action::ago = ago;
-	object_in_projective_space_with_action::nb_rows = nb_rows;
-	object_in_projective_space_with_action::nb_cols = nb_cols;
-	object_in_projective_space_with_action::canonical_labeling = canonical_labeling;
+	combinatorial_object_in_projective_space_with_action::OwCF = OwCF;
+	combinatorial_object_in_projective_space_with_action::Aut_gens = Aut_gens;
+	combinatorial_object_in_projective_space_with_action::ago = ago;
+	combinatorial_object_in_projective_space_with_action::nb_rows = nb_rows;
+	combinatorial_object_in_projective_space_with_action::nb_cols = nb_cols;
+	combinatorial_object_in_projective_space_with_action::canonical_labeling = canonical_labeling;
 	OwCF->f_has_known_ago = true;
 	OwCF->known_ago = ago; //Aut_gens->group_order_as_lint();
 	if (f_v) {
-		cout << "object_in_projective_space_with_action::init done" << endl;
+		cout << "combinatorial_object_in_projective_space_with_action::init done" << endl;
 	}
 }
 
-void object_in_projective_space_with_action::print()
+void combinatorial_object_in_projective_space_with_action::print()
 {
-	cout << "object_in_projective_space_with_action" << endl;
+	cout << "combinatorial_object_in_projective_space_with_action" << endl;
 	cout << "nb_rows=" << nb_rows << endl;
 	cout << "nb_cols=" << nb_cols << endl;
 	cout << "ago=" << ago << endl;
 }
 
-void object_in_projective_space_with_action::report(
+void combinatorial_object_in_projective_space_with_action::report(
 		std::ostream &fp,
 		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth, int verbose_level)
@@ -85,7 +85,7 @@ void object_in_projective_space_with_action::report(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_in_projective_space_with_action::report" << endl;
+		cout << "combinatorial_object_in_projective_space_with_action::report" << endl;
 	}
 
 	if (f_v) {
@@ -112,7 +112,7 @@ void object_in_projective_space_with_action::report(
 
 #if 1
 	if (f_v) {
-		cout << "projective_space_object_classifier::latex_report "
+		cout << "combinatorial_object_in_projective_space_with_action::latex_report "
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
@@ -139,7 +139,7 @@ void object_in_projective_space_with_action::report(
 			verbose_level - 2);
 
 		if (f_v) {
-			cout << "projective_space_object_classifier::latex_report "
+			cout << "combinatorial_object_in_projective_space_with_action::latex_report "
 					"after Nau.set_stabilizer_of_object" << endl;
 		}
 
@@ -289,7 +289,7 @@ void object_in_projective_space_with_action::report(
 		}
 
 		if (f_v) {
-			cout << "projective_space_object_classifier::latex_report "
+			cout << "combinatorial_object_in_projective_space_with_action::latex_report "
 					"h=" << h << " after refine" << endl;
 		}
 		if (EVEN(h)) {

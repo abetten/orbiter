@@ -18,7 +18,7 @@ namespace orbiter {
 namespace layer5_applications {
 namespace canonical_form {
 
-
+#if 0
 
 quartic_curve_object_with_action::quartic_curve_object_with_action()
 {
@@ -188,7 +188,7 @@ std::string quartic_curve_object_with_action::stringify_bitangents()
 	return s;
 
 }
-
+#endif
 
 }}}
 

@@ -65,6 +65,7 @@ void polynomial_ring_activity::perform_activity(
 		if (f_v) {
 			cout << "polynomial_ring_activity::perform_activity f_cheat_sheet" << endl;
 		}
+
 		algebra::algebra_global Algebra;
 
 		//Algebra.do_cheat_sheet_GF(F, verbose_level);
@@ -72,6 +73,19 @@ void polynomial_ring_activity::perform_activity(
 
 		Algebra.do_cheat_sheet_ring(HPD, verbose_level);
 
+
+	}
+	else if (Descr->f_export_partials) {
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity f_export_partials" << endl;
+		}
+
+		ring_theory::ring_theory_global RT;
+
+
+
+		RT.do_export_partials(HPD, verbose_level);
 
 	}
 	else if (Descr->f_ideal) {

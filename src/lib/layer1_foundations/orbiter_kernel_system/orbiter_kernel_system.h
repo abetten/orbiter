@@ -146,6 +146,9 @@ public:
 	void vector_write_csv(
 			std::string &fname,
 			std::vector<int > &V);
+	void vector_lint_write_csv(
+			std::string &fname,
+			std::vector<long int > &V);
 	void vector_matrix_write_csv(
 			std::string &fname,
 			std::vector<std::vector<int> > &V);

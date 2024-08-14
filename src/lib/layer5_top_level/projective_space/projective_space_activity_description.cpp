@@ -214,6 +214,9 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string report_fixed_objects_label;
 
 
+	f_evaluation_matrix = false;
+	//std::string evaluation_matrix_ring;
+
 
 
 
@@ -881,6 +884,15 @@ int projective_space_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-evaluation_matrix") == 0) {
+			f_evaluation_matrix = true;
+			evaluation_matrix_ring.assign(argv[++i]);
+			if (f_v) {
+				cout << "-evaluation_matrix"
+						<< " " << evaluation_matrix_ring
+					<< endl;
+			}
+		}
 
 
 
@@ -1342,6 +1354,11 @@ void projective_space_activity_description::print()
 		cout << "-report_fixed_objects"
 				<< " " << report_fixed_objects_Elt
 				<< " " << report_fixed_objects_label
+			<< endl;
+	}
+	if (f_evaluation_matrix) {
+		cout << "-evaluation_matrix"
+				<< " " << evaluation_matrix_ring
 			<< endl;
 	}
 

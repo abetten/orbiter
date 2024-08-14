@@ -47,6 +47,12 @@ variety_description::variety_description()
 	f_has_equation_in_algebraic_form = false;
 	//std::string equation_in_algebraic_form_text;
 
+	f_set_parameters = false;
+	//std::string set_parameters_label;
+	//std::string set_parameters_label_tex;
+	//std::string set_parameters_values;
+
+
 	f_has_equation_by_coefficients = false;
 	//std::string equation_by_coefficients_text;
 
@@ -119,6 +125,19 @@ int variety_description::read_arguments(
 			equation_in_algebraic_form_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-equation_in_algebraic_form " << equation_in_algebraic_form_text << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-set_parameters") == 0) {
+			f_set_parameters = true;
+			set_parameters_label.assign(argv[++i]);
+			set_parameters_label_tex.assign(argv[++i]);
+			set_parameters_values.assign(argv[++i]);
+			if (f_v) {
+				cout << "-set_parameters "
+						<< set_parameters_label
+						<< " " << set_parameters_label_tex
+						<< " " << set_parameters_values
+						<< endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-equation_by_coefficients") == 0) {
@@ -201,6 +220,12 @@ void variety_description::print()
 	}
 	if (f_has_equation_in_algebraic_form) {
 		cout << "-equation_in_algebraic_form " << equation_in_algebraic_form_text << endl;
+	}
+	if (f_set_parameters) {
+		cout << "-set_parameters " << set_parameters_label
+				<< " " << set_parameters_label_tex
+				<< " " << set_parameters_values
+				<< endl;
 	}
 	if (f_has_equation_by_coefficients) {
 		cout << "-equation_by_coefficients " << equation_by_coefficients_text << endl;

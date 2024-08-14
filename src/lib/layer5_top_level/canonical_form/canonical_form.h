@@ -62,7 +62,7 @@ public:
 
 	automorphism_group_of_variety();
 	~automorphism_group_of_variety();
-	void init(
+	void init_and_compute(
 			projective_geometry::projective_space_with_action *PA,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
 			int *equation,
@@ -143,7 +143,7 @@ public:
 	int substructure_size;
 
 	int f_skip;
-	std::string skip_label;
+	std::string skip_vector_label;
 
 	canonical_form_classifier *Canon_substructure;
 
@@ -173,6 +173,7 @@ class canonical_form_classifier {
 private:
 
 	canonical_form_classifier_description *Descr;
+		// may be NULL, namely if we use init_direct
 
 public:
 
@@ -188,6 +189,11 @@ public:
 
 
 	input_objects_of_type_variety *Input;
+
+	int f_has_skip;
+	int *skip_vector; // sorted
+	int skip_sz;
+
 
 	// Output:
 	classification_of_varieties *Classification_of_varieties;
@@ -208,10 +214,14 @@ public:
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action *Input_Vo,
 			int verbose_level);
+	void init_skip(
+			std::string &skip_vector_label, int verbose_level);
 	void create_action_on_polynomials(
 			int verbose_level);
 	void classify(
 			int verbose_level);
+	int skip_this_one(
+			int counter);
 
 };
 
@@ -424,7 +434,7 @@ public:
 
 	canonical_form_classification::classification_of_objects *CO;
 
-	object_with_properties *OwP; // [CO->nb_orbits]
+	combinatorial_object_with_properties *OwP; // [CO->nb_orbits]
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
@@ -493,7 +503,11 @@ public:
 	// Work data:
 
 	int nb_objects_to_test;
+		// number of input varieties that should be tested for isomorphism
+
 	variety_object_with_action *Input_Vo;
+		// the variety currently under consideration.
+		// This is not an array
 
 	std::string fname_base;
 
@@ -744,15 +758,15 @@ public:
 };
 
 // #############################################################################
-// object_in_projective_space_with_action.cpp
+// combinatorial_object_in_projective_space_with_action.cpp
 // #############################################################################
 
 
 
-//! to represent an object in projective space
+//! to represent a combinatorial object in projective space
 
 
-class object_in_projective_space_with_action {
+class combinatorial_object_in_projective_space_with_action {
 
 public:
 
@@ -767,8 +781,8 @@ public:
 	int *canonical_labeling;
 
 
-	object_in_projective_space_with_action();
-	~object_in_projective_space_with_action();
+	combinatorial_object_in_projective_space_with_action();
+	~combinatorial_object_in_projective_space_with_action();
 	void init(
 			canonical_form_classification::object_with_canonical_form *OwCF,
 			long int ago,
@@ -786,13 +800,13 @@ public:
 
 
 // #############################################################################
-// object_with_properties.cpp
+// combinatorial_object_with_properties.cpp
 // #############################################################################
 
-//! object properties which are derived from nauty canonical form
+//! properties of a combinatorial object, derived from nauty canonical form
 
 
-class object_with_properties {
+class combinatorial_object_with_properties {
 public:
 
 	canonical_form_classification::object_with_canonical_form *OwCF;
@@ -812,8 +826,8 @@ public:
 
 	combinatorics_with_groups::group_action_on_combinatorial_object *GA_on_CO;
 
-	object_with_properties();
-	~object_with_properties();
+	combinatorial_object_with_properties();
+	~combinatorial_object_with_properties();
 	void init(
 			canonical_form_classification::object_with_canonical_form *OwCF,
 			l1_interfaces::nauty_output *NO,
@@ -845,6 +859,8 @@ public:
 
 };
 
+
+#if 0
 
 // #############################################################################
 // quartic_curve_object_with_action.cpp
@@ -893,6 +909,7 @@ public:
 	std::string stringify_bitangents();
 
 };
+#endif
 
 
 // #############################################################################
@@ -975,6 +992,8 @@ class variety_activity_description {
 
 public:
 
+	// TABLES/variety_activity.tex
+
 	int f_compute_group;
 
 	int f_report;
@@ -983,6 +1002,8 @@ public:
 
 	int f_apply_transformation;
 	std::string apply_transformation_group_element;
+
+	int f_singular_points;
 
 
 	variety_activity_description();
@@ -1001,7 +1022,7 @@ public:
 // #############################################################################
 
 
-//! perform an activity associated with a variety
+//! performs an activity associated with a variety
 
 class variety_activity {
 public:
@@ -1026,6 +1047,8 @@ public:
 			int verbose_level);
 	void do_report(
 			int verbose_level);
+	void do_singular_points(
+			int verbose_level);
 
 };
 
@@ -1039,7 +1062,7 @@ public:
 
 
 
-//! a variety with an equation.
+//! a variety with a group action by the projective group.
 
 
 
@@ -1060,6 +1083,10 @@ public:
 	std::vector<std::string> Carrying_through;
 
 	algebraic_geometry::variety_object *Variety_object;
+
+	int f_has_automorphism_group;
+	groups::strong_generators *Stab_gens;
+
 
 
 	variety_object_with_action();

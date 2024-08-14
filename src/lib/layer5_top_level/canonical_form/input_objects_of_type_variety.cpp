@@ -76,7 +76,7 @@ void input_objects_of_type_variety::init(
 					"f_skip" << endl;
 		}
 		Get_int_vector_from_label(
-				Classifier->get_description()->skip_label,
+				Classifier->get_description()->skip_vector_label,
 				skip_vector, skip_sz,
 				0 /* verbose_level */);
 		data_structures::sorting Sorting;

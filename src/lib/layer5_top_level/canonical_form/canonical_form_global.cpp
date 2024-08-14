@@ -44,10 +44,10 @@ void canonical_form_global::compute_stabilizer_of_quartic_curve(
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_stabilizer_of_quartic_curve "
-				"before Aut_of_variety->init" << endl;
+				"before Aut_of_variety->init_and_compute" << endl;
 	}
 
-	Aut_of_variety->init(
+	Aut_of_variety->init_and_compute(
 			Quartic_curve_from_surface->SOA->Surf_A->PA->PA2,
 			Quartic_curve_from_surface->SOA->Surf_A->AonHPD_4_3,
 			Quartic_curve_from_surface->curve,
@@ -56,7 +56,7 @@ void canonical_form_global::compute_stabilizer_of_quartic_curve(
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_stabilizer_of_quartic_curve "
-				"after Aut_of_variety->init" << endl;
+				"after Aut_of_variety->init_and_compute" << endl;
 	}
 
 #if 0

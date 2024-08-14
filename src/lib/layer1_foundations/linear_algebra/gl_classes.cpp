@@ -92,7 +92,7 @@ void gl_classes::init(
 		Combi.make_all_partitions_of_n(d,
 				Partitions[d],
 				Nb_part[d],
-				verbose_level);
+				verbose_level - 3);
 
 	}
 	if (f_v) {
@@ -752,7 +752,7 @@ void gl_classes::identify_matrix(
 
 
 		U.create_object_by_rank(
-				char_poly, 0, verbose_level);
+				char_poly, 0, verbose_level - 2);
 
 		U.characteristic_polynomial(
 				Mtx, k, char_poly, verbose_level - 2);
@@ -767,7 +767,7 @@ void gl_classes::identify_matrix(
 		U.substitute_matrix_in_polynomial(
 				char_poly,
 				Mtx, M2, k,
-				verbose_level);
+				verbose_level - 4);
 
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
@@ -782,7 +782,7 @@ void gl_classes::identify_matrix(
 		}
 
 		Table_of_polynomials->factorize_polynomial(
-				char_poly, Mult, verbose_level);
+				char_poly, Mult, verbose_level - 4);
 
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
@@ -792,8 +792,14 @@ void gl_classes::identify_matrix(
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
 					"factorization: ";
-			Int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
+			//Int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
+
+			U.print_factorization_based_off_Mult(
+					Table_of_polynomials, Mult,
+					cout, 0 /* verbose_level*/);
 			cout << endl;
+
+
 		}
 
 		if (f_v) {

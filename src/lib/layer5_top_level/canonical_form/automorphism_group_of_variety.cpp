@@ -108,7 +108,7 @@ automorphism_group_of_variety::~automorphism_group_of_variety()
 
 }
 
-void automorphism_group_of_variety::init(
+void automorphism_group_of_variety::init_and_compute(
 		projective_geometry::projective_space_with_action *PA,
 		induced_actions::action_on_homogeneous_polynomials *AonHPD,
 		int *equation,
@@ -120,7 +120,7 @@ void automorphism_group_of_variety::init(
 
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init" << endl;
+		cout << "automorphism_group_of_variety::init_and_compute" << endl;
 	}
 	automorphism_group_of_variety::PA = PA;
 	automorphism_group_of_variety::AonHPD = AonHPD;
@@ -133,14 +133,14 @@ void automorphism_group_of_variety::init(
 	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"before OwCF->init_point_set" << endl;
 	}
 	OwCF->init_point_set(
 			Pts_on_object, nb_pts,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"after Quartic_curve_from_surface->OwCF->init_point_set" << endl;
 	}
 	OwCF->P = PA->P;
@@ -150,9 +150,9 @@ void automorphism_group_of_variety::init(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"nb_rows = " << nb_rows << endl;
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"nb_cols = " << nb_cols << endl;
 	}
 
@@ -163,7 +163,7 @@ void automorphism_group_of_variety::init(
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"before NO->nauty_output_allocate" << endl;
 	}
 
@@ -173,7 +173,7 @@ void automorphism_group_of_variety::init(
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"after NO->nauty_output_allocate" << endl;
 	}
 
@@ -181,7 +181,7 @@ void automorphism_group_of_variety::init(
 
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"before Nau.set_stabilizer_of_object" << endl;
 	}
 
@@ -194,7 +194,7 @@ void automorphism_group_of_variety::init(
 		verbose_level);
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
@@ -214,7 +214,7 @@ void automorphism_group_of_variety::init(
 
 	SG_pt_stab->group_order(pt_stab_order);
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"pt_stab_order = " << pt_stab_order << endl;
 	}
 
@@ -231,7 +231,7 @@ void automorphism_group_of_variety::init(
 
 #if 1
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"before Orb->init" << endl;
 	}
 	Orb->init(
@@ -242,9 +242,9 @@ void automorphism_group_of_variety::init(
 			equation,
 			verbose_level);
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"after Orb->init" << endl;
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"found an orbit of length " << Orb->used_length << endl;
 	}
 
@@ -252,20 +252,20 @@ void automorphism_group_of_variety::init(
 
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
 			pt_stab_order, verbose_level);
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init "
+		cout << "automorphism_group_of_variety::init_and_compute "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic->print_generators_tex(cout);
 #endif
 
 	if (f_v) {
-		cout << "automorphism_group_of_variety::init done" << endl;
+		cout << "automorphism_group_of_variety::init_and_compute done" << endl;
 	}
 }
 

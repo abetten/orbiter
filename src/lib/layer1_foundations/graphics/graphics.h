@@ -164,6 +164,9 @@ class draw_bitmap_control {
 
 public:
 
+
+	// TABLES/draw_bitmap_control.tex
+
 	int f_input_csv_file;
 	std::string input_csv_file_name;
 
@@ -214,6 +217,9 @@ public:
 
 class draw_incidence_structure_description {
 public:
+
+	// TABLES/draw_incidence_structure_description.tex
+
 	int f_width;
 	int width;
 
@@ -270,6 +276,8 @@ public:
 
 class draw_mod_n_description {
 public:
+
+	// TABLES/draw_mod_n.tex
 
 	int f_n;
 	int n;
@@ -494,15 +502,17 @@ public:
 class layered_graph_draw_options {
 public:
 
+	// TABLES/layered_graph_draw_options_1.tex
+
 	int f_paperheight;
 	int paperheight;
 	int f_paperwidth;
 	int paperwidth;
 
-	int xin;
-	int yin;
-	int xout;
-	int yout;
+	int xin; // Assume input $x$-coordinates are in the interval $[0,xin]$. Default value: 10000.
+	int yin; // Assume input $y$-coordinates are in the interval $[0,yin]$. Default value: 10000.
+	int xout; // Assume output $x$-coordinates are in the interval $[0,xout]$. Default value: 1000000.
+	int yout; // Assume output $y$-coordinates are in the interval $[0,yout]$. Default value: 1000000.
 
 
 	int f_spanning_tree;
@@ -510,34 +520,44 @@ public:
 
 	int f_circle;
 	int f_corners;
-	int rad;
+	int rad; // Default value: 200.
 	int f_embedded;
 	int f_sideways;
-	int f_show_level_info;
+
+	int f_show_level_info; // undocumented
+
 	int f_label_edges;
+
 	int f_x_stretch;
-	double x_stretch;
+	double x_stretch; // Apply $x$-axis scaling by a factor of $s$. Default value: $s=1.0$.
 	int f_y_stretch;
-	double y_stretch;
+	double y_stretch; // Apply $y$-axis scaling by a factor of $s$. Default value: $s=1.0$.
+
+
+	// TABLES/layered_graph_draw_options_2.tex
+
 
 	int f_scale;
-	double scale;
+	double scale; // Use Tikz global scale-factor of $s$. Default value: $s=0.45$.
 
 	int f_line_width;
-	double line_width;
+	double line_width; // Set Tikz line width to $s$. Default value: $s=1.5$.
 
-	int f_rotated;
+	int f_rotated; // Rotate the output.
 
 
-	int f_nodes;
-	int f_nodes_empty;
+	int f_nodes; // Turn on node drawing.
+	int f_nodes_empty; // Do not label the nodes. Default value: off.
 
+	int f_show_colors; // indicate the color in the subscript of the vertex label
 
 	int f_select_layers;
-	std::string select_layers;
+	std::string select_layers; // Draw layers whose index is given in the list $S$ only.
 	int nb_layer_select;
 	int *layer_select;
 
+
+	// undocumented
 
 	int f_has_draw_begining_callback;
 	void (*draw_begining_callback)(
@@ -552,9 +572,15 @@ public:
 			graph_theory::layered_graph *LG, mp_graphics *G,
 		int layer, int node, int x, int y, int dx, int dy);
 
+
 	int f_paths_in_between;
 	int layer1, node1;
 	int layer2, node2;
+
+	//Draw all paths from node $(l_1,i_1)$ to node $(l_2,i_2)$.
+	//Here, $(l,i)$ is the $i$-th node at layer $l$ (counting from zero).
+	//Delete all other edges between layers $l_1$ and $l_2.$
+
 
 	layered_graph_draw_options();
 	~layered_graph_draw_options();
@@ -1946,6 +1972,8 @@ class tree_draw_options {
 
 public:
 
+	// TABLES/tree_draw_options.tex
+
 	int f_file;
 	std::string file_name;
 
@@ -2068,18 +2096,20 @@ public:
 class video_draw_options {
 public:
 
+
+	// TABLES/video_draw_options_1.tex
+
 	int f_rotate;
 	int rotation_axis_type;
 		// 1 = 1,1,1
 		// 2 = 0,0,1
 		// 3 = custom
+
 	double rotation_axis_custom[3];
+
 	int boundary_type;
 		// 1 = sphere
 		// 2 = box
-
-	int f_has_global_picture_scale;
-	double global_picture_scale;
 
 	int f_has_font_size;
 	int font_size;
@@ -2088,28 +2118,31 @@ public:
 	int stroke_width;
 
 
+	int f_omit_bottom_plane;
 
 	int f_W;
 	int W;
 	int f_H;
 	int H;
 
+
+
+	double sky[3];
+	double location[3];
+	int f_look_at;
+	double look_at[3];
+
+
+	int f_has_global_picture_scale;
+	double global_picture_scale;
+
+
+
 	int f_default_angle; // = false;
 	int default_angle; // = 22;
 
 	int f_clipping_radius; // = true;
 	double clipping_radius; // = 0.9;
-
-
-	int nb_clipping;
-	int clipping_round[1000];
-	double clipping_value[1000];
-
-	int nb_camera;
-	int camera_round[1000];
-	double camera_sky[1000 * 3];
-	double camera_location[1000 * 3];
-	double camera_look_at[1000 * 3];
 
 	int nb_zoom;
 	int zoom_round[1000];
@@ -2118,9 +2151,6 @@ public:
 	double zoom_clipping_start[1000];
 	double zoom_clipping_end[1000];
 
-	int nb_zoom_sequence;
-	int zoom_sequence_round[1000];
-	std::string zoom_sequence_text[1000];
 
 	int nb_pan;
 	int pan_round[1000];
@@ -2129,15 +2159,29 @@ public:
 	double pan_to[1000 * 3];
 	double pan_center[1000 * 3];
 
+
+
 	int nb_no_background;
 	int no_background_round[1000];
 
 	int nb_no_bottom_plane;
 	int no_bottom_plane_round[1000];
 
-	int cnt_nb_frames;
-	int nb_frames_round[1000];
-	int nb_frames_value[1000];
+
+	int nb_camera;
+	int camera_round[1000];
+	double camera_sky[1000 * 3];
+	double camera_location[1000 * 3];
+	double camera_look_at[1000 * 3];
+
+
+
+
+	// TABLES/video_draw_options_2.tex
+
+	int nb_clipping;
+	int clipping_round[1000];
+	double clipping_value[1000];
 
 	int nb_round_text;
 	int round_text_round[1000];
@@ -2162,6 +2206,17 @@ public:
 	std::string latex_fname_base[1000];
 
 
+
+	int nb_zoom_sequence;
+	int zoom_sequence_round[1000];
+	std::string zoom_sequence_text[1000];
+
+	int cnt_nb_frames;
+	int nb_frames_round[1000];
+	int nb_frames_value[1000];
+
+
+
 	int nb_picture;
 	int picture_round[1000];
 	double picture_scale[1000];
@@ -2169,12 +2224,6 @@ public:
 	std::string picture_options[1000];
 
 	int latex_file_count;
-	int f_omit_bottom_plane;
-
-	double sky[3];
-	double location[3];
-	int f_look_at;
-	double look_at[3];
 
 	int f_scale_factor;
 	double scale_factor;

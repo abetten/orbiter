@@ -66,7 +66,7 @@ void classification_of_combinatorial_objects::init_after_nauty(
 	}
 
 
-	OwP = NEW_OBJECTS(object_with_properties, CO->nb_orbits);
+	OwP = NEW_OBJECTS(combinatorial_object_with_properties, CO->nb_orbits);
 
 	int iso_type;
 

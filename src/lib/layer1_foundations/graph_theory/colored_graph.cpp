@@ -1159,13 +1159,20 @@ void colored_graph::draw_on_circle_2(
 
 
 
-			if (nb_colors_per_vertex == 1) {
+			if (Draw_options->f_show_colors) {
 
-				s = "$" + std::to_string(i) + "_{" + std::to_string(point_color[i]) + "}$";
+				if (nb_colors_per_vertex == 1) {
 
+					s = "$" + std::to_string(i) + "_{" + std::to_string(point_color[i]) + "}$";
+
+				}
+				else {
+
+					s = std::to_string(i);
+
+				}
 			}
 			else {
-
 				s = std::to_string(i);
 
 			}

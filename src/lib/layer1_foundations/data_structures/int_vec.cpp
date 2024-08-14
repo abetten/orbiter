@@ -468,6 +468,12 @@ void int_vec::distribution(
 void int_vec::print(
 		std::ostream &ost, std::vector<int> &v)
 {
+	print_stl(ost, v);
+}
+
+void int_vec::print_stl(
+		std::ostream &ost, std::vector<int> &v)
+{
 	int i;
 	int len;
 
@@ -571,6 +577,12 @@ void int_vec::print_as_table(
 }
 
 void int_vec::print_fully(
+		std::ostream &ost, std::vector<int> &v)
+{
+	print_stl_fully(ost, v);
+}
+
+void int_vec::print_stl_fully(
 		std::ostream &ost, std::vector<int> &v)
 {
 	int i;

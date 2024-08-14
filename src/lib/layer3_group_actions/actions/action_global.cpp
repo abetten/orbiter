@@ -4763,7 +4763,7 @@ void action_global::rational_normal_form(
 		cout << "action_global::rational_normal_form "
 				"before C->init" << endl;
 	}
-	C->init(M->n, M->GFq, verbose_level);
+	C->init(M->n, M->GFq, verbose_level - 3);
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
 				"after C->init" << endl;
@@ -4782,9 +4782,10 @@ void action_global::rational_normal_form(
 	Bv = NEW_int(A->elt_size_in_int);
 
 	A->Group_element->make_element_from_string(
-			Elt1, element_given, verbose_level);
+			Elt1, element_given, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "element_given=" << endl;
+		cout << "action_global::rational_normal_form "
+				"element_given=" << endl;
 		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
@@ -4814,14 +4815,14 @@ void action_global::rational_normal_form(
 	}
 
 	A->Group_element->make_element(
-			B, Basis1, verbose_level);
+			B, Basis1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "B=" << endl;
 		A->Group_element->element_print_quick(B, cout);
 	}
 
 	A->Group_element->element_invert(
-			B, Bv, verbose_level);
+			B, Bv, verbose_level - 2);
 	if (f_v) {
 		cout << "Bv=" << endl;
 		A->Group_element->element_print_quick(Bv, cout);
@@ -4829,12 +4830,13 @@ void action_global::rational_normal_form(
 
 
 	A->Group_element->element_mult(
-			Bv, Elt1, Elt2, verbose_level);
+			Bv, Elt1, Elt2, 0 /*verbose_level*/);
 	A->Group_element->element_mult(
-			Elt2, B, Elt3, verbose_level);
+			Elt2, B, Elt3, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "Bv * Elt1 * B=" << endl;
+		cout << "action_global::rational_normal_form "
+				"Bv * Elt1 * B=" << endl;
 		A->Group_element->element_print_quick(Elt3, cout);
 	}
 

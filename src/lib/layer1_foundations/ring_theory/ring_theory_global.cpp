@@ -3009,6 +3009,61 @@ void ring_theory_global::parse_equation_easy(
 }
 
 
+void ring_theory_global::parse_equation_with_parameters(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		std::string &equation_text,
+		std::string &equation_parameters,
+		std::string &equation_parameters_tex,
+		std::string &equation_parameter_values,
+		int *&coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation_with_parameters" << endl;
+	}
+
+	std::string name_of_formula;
+	std::string name_of_formula_tex;
+
+	name_of_formula = "formula";
+	name_of_formula_tex = "formula";
+
+	string managed_variables;
+
+	int nb_coeffs;
+	int f_has_managed_variables = true;
+
+	managed_variables = Poly->list_of_variables();
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation_with_parameters "
+				"managed_variables = " << managed_variables << endl;
+	}
+
+	parse_equation(Poly,
+			name_of_formula,
+			name_of_formula_tex,
+			f_has_managed_variables,
+			managed_variables,
+			equation_text,
+			equation_parameters,
+			equation_parameters_tex,
+			equation_parameter_values,
+			coeffs, nb_coeffs,
+			verbose_level - 1);
+
+	if (nb_coeffs != Poly->get_nb_monomials()) {
+		cout << "ring_theory_global::parse_equation_with_parameters "
+				"nb_coeffs != Poly->get_nb_monomials()" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::parse_equation_with_parameters done" << endl;
+	}
+}
+
 void ring_theory_global::parse_equation(
 		ring_theory::homogeneous_polynomial_domain *Poly,
 		std::string &name_of_formula,
@@ -3788,6 +3843,56 @@ void ring_theory_global::make_table_of_monomials(
 
 	if (f_v) {
 		cout << "ring_theory_global::make_table_of_monomials done" << endl;
+	}
+}
+
+
+void ring_theory_global::do_export_partials(
+		ring_theory::homogeneous_polynomial_domain *Poly,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials" << endl;
+	}
+
+	homogeneous_polynomial_domain *Poly_reduced_degree;
+	int *gradient;
+
+	Poly_reduced_degree = NEW_OBJECT(homogeneous_polynomial_domain);
+
+
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials "
+				"before Poly_reduced_degree->init" << endl;
+	}
+	Poly_reduced_degree->init(
+			Poly->get_F(),
+			Poly->nb_variables, Poly->degree - 1,
+			Poly->Monomial_ordering_type,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials "
+				"after Poly_reduced_degree->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials "
+				"before Poly->compute_and_export_partials" << endl;
+	}
+	Poly->compute_and_export_partials(
+			Poly_reduced_degree,
+			verbose_level);
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials "
+				"after Poly->compute_and_export_partials" << endl;
+	}
+
+	FREE_OBJECT(Poly_reduced_degree);
+
+	if (f_v) {
+		cout << "ring_theory_global::do_export_partials done" << endl;
 	}
 }
 

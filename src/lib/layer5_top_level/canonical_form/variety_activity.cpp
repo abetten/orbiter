@@ -73,6 +73,9 @@ void variety_activity::perform_activity(
 	if (Descr->f_report) {
 		do_report(verbose_level);
 	}
+	if (Descr->f_singular_points) {
+		do_singular_points(verbose_level);
+	}
 
 
 	if (f_v) {
@@ -201,6 +204,21 @@ void variety_activity::do_compute_group(
 	}
 
 
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before copying stabilizer generators" << endl;
+	}
+	Input_Vo[0].f_has_automorphism_group = true;
+	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
+
+	Input_Vo[0].Stab_gens->init_copy(Nauty->Variety_table[0]->Stabilizer_of_set_of_rational_points->Stab_gens_variety, verbose_level - 2);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after copying stabilizer generators" << endl;
+	}
+
+
+
 	FREE_OBJECT(Classifier);
 
 	if (f_v) {
@@ -220,6 +238,76 @@ void variety_activity::do_report(
 
 	if (f_v) {
 		cout << "variety_activity::do_report done" << endl;
+	}
+}
+
+
+void variety_activity::do_singular_points(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_activity::do_singular_points" << endl;
+	}
+
+	geometry::projective_space *P;
+
+
+	P = Input_Vo[0].Variety_object->Projective_space;
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group before getting Poly_ring" << endl;
+	}
+	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
+	if (f_v) {
+		cout << "variety_activity::do_compute_group after getting Poly_ring" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before Poly_ring->compute_singular_points_projectively" << endl;
+	}
+	Poly_ring->compute_singular_points_projectively(
+			P,
+			Input_Vo[0].Variety_object->eqn,
+			Input_Vo[0].Variety_object->Singular_points,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after Poly_ring->compute_singular_points_projectively" << endl;
+	}
+
+	Input_Vo[0].Variety_object->f_has_singular_points = true;
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"number of singular points = " << Input_Vo[0].Variety_object->Singular_points.size() << endl;
+	}
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"The singular points are: " << endl;
+		Lint_vec_stl_print_fully(cout, Input_Vo[0].Variety_object->Singular_points);
+		cout << endl;
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = Input_Vo[0].Variety_object->label_txt + "_singular_pts.csv";
+
+	Fio.Csv_file_support->vector_lint_write_csv(
+			fname,
+			Input_Vo[0].Variety_object->Singular_points);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "variety_activity::do_singular_points done" << endl;
 	}
 }
 

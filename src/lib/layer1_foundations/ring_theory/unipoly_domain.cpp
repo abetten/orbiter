@@ -773,6 +773,82 @@ void unipoly_domain::print_object_dense(
 	}
 }
 
+void unipoly_domain::print_factorization_based_off_Mult(
+		table_of_irreducible_polynomials *T, int *Mult,
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "unipoly_domain::print_factorization_based_off_Mult" << endl;
+	}
+	int i, d, tt, nb, f;
+	unipoly_object P;
+	int *Idx;
+	int *Exp;
+	int *Deg;
+
+	create_object_by_rank(P, 0, 0 /*verbose_level*/);
+
+	Idx = NEW_int(T->nb_irred);
+	Exp = NEW_int(T->nb_irred);
+	Deg = NEW_int(T->nb_irred);
+	nb = 0;
+
+	for (i = 0; i < T->nb_irred; i++) {
+
+		if (Mult[i] == 0) {
+			continue;
+		}
+		Idx[nb] = i;
+		Exp[nb] = Mult[i];
+		Deg[nb] = T->Degree[i];
+		nb++;
+	}
+
+	for (f = 0; f < nb; f++) {
+
+		d = Deg[f];
+		i = Idx[f];
+
+		tt = i - T->First_irred[d];
+		if (false) {
+			cout << "unipoly_domain::print_factorization_based_off_Mult "
+					"tt=" << tt << endl;
+		}
+
+
+		if (false) {
+			cout << "unipoly_domain::print_factorization_based_off_Mult "
+					"before create_object_of_degree_with_coefficients" << endl;
+		}
+		create_object_of_degree_with_coefficients(
+				P, d,
+				T->Tables[d] + tt * (d + 1));
+
+		cout << "(";
+		print_object(P, cout);
+		cout << ")";
+		if (Exp[f] > 1) {
+			cout << "^" << Exp[f];
+		}
+		if (f < nb - 1) {
+			cout << " * ";
+		}
+
+	}
+	cout << endl;
+
+	delete_object(P);
+	FREE_int(Idx);
+	FREE_int(Exp);
+	FREE_int(Deg);
+
+}
+
+
+
 
 
 void unipoly_domain::assign(

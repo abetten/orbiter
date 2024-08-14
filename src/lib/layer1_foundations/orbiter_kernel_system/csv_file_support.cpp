@@ -268,6 +268,34 @@ void csv_file_support::vector_write_csv(
 	}
 }
 
+void csv_file_support::vector_lint_write_csv(
+		std::string &fname,
+		std::vector<long int > &V)
+{
+	int i, j;
+	int m, n;
+
+	m = V.size();
+	n = 1;
+
+
+	{
+		ofstream f(fname);
+
+		f << "Row";
+		for (j = 0; j < n; j++) {
+			f << ",C" << j;
+		}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			f << "," << V[i];
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+}
+
 
 void csv_file_support::vector_matrix_write_csv(
 		std::string &fname,

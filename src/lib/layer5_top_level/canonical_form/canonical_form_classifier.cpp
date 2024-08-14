@@ -29,6 +29,10 @@ canonical_form_classifier::canonical_form_classifier()
 
 	Input = NULL;
 
+	f_has_skip = false;
+	skip_vector = NULL;
+	skip_sz = 0;
+
 	Classification_of_varieties = NULL;
 
 	Classification_of_varieties_nauty = NULL;
@@ -48,6 +52,9 @@ canonical_form_classifier::~canonical_form_classifier()
 	}
 	if (Classification_of_varieties_nauty) {
 		FREE_OBJECT(Classification_of_varieties_nauty);
+	}
+	if (skip_vector) {
+		FREE_int(skip_vector);
 	}
 }
 
@@ -211,6 +218,18 @@ void canonical_form_classifier::init(
 				"after Input->init" << endl;
 	}
 
+	if (Descr->f_skip) {
+		if (f_v) {
+			cout << "canonical_form_classifier::init "
+					"before init_skip" << endl;
+		}
+		init_skip(
+				Descr->skip_vector_label, verbose_level);
+		if (f_v) {
+			cout << "canonical_form_classifier::init "
+					"after init_skip" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "canonical_form_classifier::init done" << endl;
@@ -262,6 +281,38 @@ void canonical_form_classifier::init_direct(
 	}
 }
 
+void canonical_form_classifier::init_skip(
+		std::string &skip_vector_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_skip" << endl;
+	}
+
+	f_has_skip = true;
+
+	Get_int_vector_from_label(
+			skip_vector_label,
+			skip_vector, skip_sz,
+			0 /* verbose_level */);
+
+	data_structures::sorting Sorting;
+
+	Sorting.int_vec_heapsort(skip_vector, skip_sz);
+	if (f_v) {
+		cout << "canonical_form_classifier::init_skip "
+				"skip list consists of " << skip_sz << " cases" << endl;
+		cout << "The cases to be skipped are :";
+		Int_vec_print(cout, skip_vector, skip_sz);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_skip done" << endl;
+	}
+}
 
 
 void canonical_form_classifier::create_action_on_polynomials(
@@ -324,6 +375,27 @@ void canonical_form_classifier::classify(
 		cout << "canonical_form_classifier::classify done" << endl;
 	}
 }
+
+int canonical_form_classifier::skip_this_one(
+		int counter)
+{
+	data_structures::sorting Sorting;
+	int idx;
+
+	if (f_has_skip) {
+		if (Sorting.int_vec_search(
+				skip_vector, skip_sz, counter, idx)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
 
 
 

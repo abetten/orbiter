@@ -31,6 +31,8 @@ variety_activity_description::variety_activity_description()
 	f_apply_transformation = false;
 	//std::string apply_transformation_group_element;
 
+	f_singular_points = false;
+
 }
 
 
@@ -77,6 +79,12 @@ int variety_activity_description::read_arguments(
 				cout << "-apply_transformation " << apply_transformation_group_element << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-singular_points") == 0) {
+			f_singular_points = true;
+			if (f_v) {
+				cout << "-singular_points " << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -111,6 +119,9 @@ void variety_activity_description::print()
 	}
 	if (f_apply_transformation) {
 		cout << "-apply_transformation " << apply_transformation_group_element << endl;
+	}
+	if (f_singular_points) {
+		cout << "-singular_points " << endl;
 	}
 }
 

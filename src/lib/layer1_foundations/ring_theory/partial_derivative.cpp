@@ -112,6 +112,55 @@ void partial_derivative::apply(
 	}
 }
 
+void partial_derivative::do_export(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partial_derivative::do_export" << endl;
+	}
+
+	if (f_v) {
+		cout << "partial_derivative::do_export "
+				"size of matrix is " << H->get_nb_monomials() << " x " << Hd->get_nb_monomials() << endl;
+	}
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+
+	fname = fname_base + ".csv";
+
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, mapping,
+			H->get_nb_monomials(), Hd->get_nb_monomials());
+
+
+	if (f_v) {
+		cout << "partial_derivative::do_export "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	fname = fname_base + ".gap";
+
+	Fio.int_matrix_write_cas_friendly(
+			fname, mapping,
+			H->get_nb_monomials(), Hd->get_nb_monomials());
+
+	if (f_v) {
+		cout << "partial_derivative::do_export "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "partial_derivative::do_export done" << endl;
+	}
+}
+
 
 }}}
 

@@ -603,6 +603,8 @@ public:
 		int len_v, int *&val, int *&mult, int &len);
 	void print(
 			std::ostream &ost, std::vector<int> &v);
+	void print_stl(
+			std::ostream &ost, std::vector<int> &v);
 	void print(
 			std::ostream &ost, int *v, int len);
 	void print_str(
@@ -612,6 +614,8 @@ public:
 	void print_as_table(
 			std::ostream &ost, int *v, int len, int width);
 	void print_fully(
+			std::ostream &ost, std::vector<int> &v);
+	void print_stl_fully(
 			std::ostream &ost, std::vector<int> &v);
 	void print_fully(
 			std::ostream &ost, int *v, int len);
@@ -800,6 +804,8 @@ public:
 			std::ostream &ost, long int *v, int len);
 	void print(
 			std::ostream &ost, std::vector<long int> &v);
+	void print_stl(
+			std::ostream &ost, std::vector<long int> &v);
 	void print_as_table(
 			std::ostream &ost, long int *v, int len, int width);
 	void print_bare_fully(
@@ -807,6 +813,8 @@ public:
 	void print_fully(
 			std::ostream &ost, long int *v, int len);
 	void print_fully(
+			std::ostream &ost, std::vector<long int> &v);
+	void print_stl_fully(
 			std::ostream &ost, std::vector<long int> &v);
 	int matrix_max_log_of_entries(
 			long int *p, int m, int n);

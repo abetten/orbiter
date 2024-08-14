@@ -1177,6 +1177,83 @@ void projective_space_activity::perform_activity(
 					"after PA->report_fixed_objects" << endl;
 		}
 	}
+	else if (Descr->f_evaluation_matrix) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_evaluation_matrix" << endl;
+		}
+
+		ring_theory::homogeneous_polynomial_domain *Ring;
+
+		Ring = Get_ring(Descr->evaluation_matrix_ring);
+
+
+
+		algebraic_geometry::algebraic_geometry_global AGG;
+		int *M;
+		int nb_rows, nb_cols;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before AGG.make_evaluation_matrix_wrt_ring" << endl;
+		}
+
+		AGG.make_evaluation_matrix_wrt_ring(
+				Ring,
+				PA->P,
+				M, nb_rows, nb_cols,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after AGG.make_evaluation_matrix_wrt_ring" << endl;
+		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity evaluation-matrix:" << endl;
+			//Int_matrix_print(M, nb_rows, nb_cols);
+			//cout << endl;
+			cout << "projective_space_activity::perform_activity "
+					"nb_rows = " << nb_rows << endl;
+			cout << "projective_space_activity::perform_activity "
+					"nb_cols = " << nb_cols << endl;
+		}
+
+		string fname, fname_base;
+		orbiter_kernel_system::file_io Fio;
+
+		fname_base = "evaluation_matrix_deg" + std::to_string(Ring->degree) + "_vs_PG_" + std::to_string(PA->P->Subspaces->n);
+
+		fname = fname_base + ".csv";
+
+
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, M, nb_rows, nb_cols);
+		if (f_v) {
+			cout << "Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+		fname = fname_base + ".gap";
+
+		Fio.int_matrix_write_cas_friendly(
+				fname, M, nb_rows, nb_cols);
+
+		if (f_v) {
+			cout << "partial_derivative::do_export "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->report_fixed_objects" << endl;
+		}
+	}
+
 
 
 

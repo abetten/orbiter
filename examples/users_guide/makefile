@@ -299,6 +299,16 @@ CREMONA_MAP_Y2="10*y0^6+11*y0^4*y1^2\
 CREMONA_MAP_Y3="0"
 
 
+#-parse_equation_wo_parameters The equation is:
+#( 9, 1, 3, 8, 7, 6, 3, 2, 5, 3, 4, 2, 1, 10, 2 )
+
+QUARTIC_CURVE_Q13_FLAG_0_EQN_COEFFICIENTS="9, 1, 3, 8, 7, 6, 3, 2, 5, 3, 4, 2, 1, 10, 2"
+
+QUARTIC_CURVE_Q13_FLAG_0_TRANS="0,6,8,6,8,10,3,12,1"
+
+# 0  6  8 
+# 6  8 10 
+# 3 12  1 
 
 
 
@@ -319,9 +329,11 @@ ENDRASS_SPARSE="\
 
 # Section 5.3 Algebraic geometry
 
-FILE_HERMITIAN_CURVE="Line,equation\n0,\"X^4+Y^4+Z^4\"\nEND\n\n"
+CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 + 3*X1^2*X2^2"
 
-FILE_HERMITIAN_SURFACE="Line,equation\n0,\"X^4+Y^4+Z^4+W^4\"\nEND\n\n"
+HIRSCHFELD_EQUATION_XYZW="X^2*W+X*W^2+Y^2*Z+Y*Z^2"
+
+
 
 
 # Chapter 6 Group Theory
@@ -558,6 +570,19 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 
 
 # Section 8.4 Classification of cubic surfaces
+
+# Section 8.5 Quartic curves
+
+
+CURVE_Q13_FLAG_1_EQN="10*x1^4 + 12*x2^4 + 9*x3^4 + 8*x1^3*x2 + 2*x1*x2^3 + 5*x2^3*x3 + 3*x2*x3^3 + 4*x1^2*x2^2 + 3*x1^2*x3^2 + x2^2*x3^2 + 12*x1^2*x2*x3 + 10*x1*x2^2*x3 + 9*x1*x2*x3^2"
+
+CURVE_Q13_FLAG_1_POINTS="68,71,75,78"
+
+CURVE_Q13_FLAG_1_BITANGENTS="13,126,121,91,150,105,96,170,18,164,29,0,48,100,81,68,137,69,47,8,162,4,149,31,182,169,19,66"
+
+CURVE_Q13_FLAG_1_TRANS_1="4,12,0,1,11,5,12,10,6"
+
+CURVE_Q13_FLAG_1_TRANS_2="1,0,0,12,3,0,9,7,8"
 
 
 # Section 8.6 Classification of quartic curves
@@ -1371,7 +1396,11 @@ TEST_SYSTEM="\
 1,0,1,0,0,0, \
 0,1,0,0,1,1"
 
-
+PRAEGER_DESIGN_LINE_TYPE="\
+10,4,1,0,0,0, \
+10,6,3,1,0,0, \
+5,4,3,2,1,0, \
+1,1,1,1,1,1"
 
 
 # Chapter 16 Canonical Forms with Nauty
@@ -2023,6 +2052,7 @@ SECTION_FORMULA_BUILDER:
 
 test_2_7:
 	make symbolic_poly
+	make symbolic_poly2
 	make symbolic_CRC32
 	make symbolic_CRC_alfa
 	make symbolic_CRC_alfa_draw_trees
@@ -2078,6 +2108,15 @@ symbolic_poly:
 			-text "-X^2-X+1"\
 		-end \
 
+symbolic_poly2:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define M -symbolic_object \
+			-field F \
+			-text "X*Y*X"\
+		-end
+	pdflatex sajeeb_tree0.tex
+	open sajeeb_tree0.pdf
 
 
 symbolic_CRC32:
@@ -5407,10 +5446,12 @@ SECTION_MULTIVARIATE_POLYNOMIALS:
 
 
 test_5_2:
-	#make parse_algebraic_formula error message
+	make parse_homogeneous_polynomial
 	make Fermat_cubic_F9
+	make Fermat_cubic_F9_monomials
 	make Fermat_cubic_F9_c
 	make Cremona_map
+	make quartic_curve_q13_f0_apply_transformation
 	make arcs_5_2_q11
 	make arcs_5_2_q11_ideal
 	make surface_9lines_4E_ideal
@@ -5429,10 +5470,9 @@ test_5_2:
 
 
 
-parse_algebraic_formula:
+parse_homogeneous_polynomial:
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define R -polynomial_ring \
 			-field F \
 			-number_of_variables 3 \
@@ -5442,8 +5482,8 @@ parse_algebraic_formula:
 		-end \
 		-with R -do \
 			-ring_theoretic_activity \
-			-parse_equation "eqn" "eqn" "y0^3+y1^3+y2^3" "" "" \
-		-end 
+			-parse_equation_wo_parameters "eqn" "eqn" "y0^3+y1^3+y2^3" \
+		-end
 
 Fermat_cubic_F9:
 	$(ORBITER) -v 6 \
@@ -5460,6 +5500,35 @@ Fermat_cubic_F9:
 			-field F \
 			-text "y0^3+y1^3+y2^3" \
 			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Fermat_cubic "" \
+		-end
+
+
+Fermat_cubic_F9_monomials:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Fermat_cubic -symbolic_object \
+			-field F \
+			-managed_variables "y0,y1,y2" \
+			-text "y0^3+y1^3+y2^3" \
+			-end \
+		-define coeff_list -symbolic_object \
+			-field F \
+			-collect_by_ring Fermat_cubic R \
+		-end \
+		-with R -do -ring_theoretic_activity \
+			-table_of_monomials_write_csv coeff_list \
+		-end \
 		-with P -do \
 		-projective_space_activity \
 			-projective_variety R Fermat_cubic "" \
@@ -5526,6 +5595,37 @@ Cremona_map:
 		-projective_space_activity \
 			-map R Cremona "" \
 		-end
+
+
+
+
+
+quartic_curve_q13_f0_apply_transformation:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define eqn -vector -dense \
+			$(QUARTIC_CURVE_Q13_FLAG_0_EQN_COEFFICIENTS) \
+			-end \
+		-define trans_coeffs -vector -dense \
+			$(QUARTIC_CURVE_Q13_FLAG_0_TRANS) \
+			-end \
+		-define G -linear_group -PGL 3 F -end \
+		-define trans -vector_ge \
+			-action G \
+			-vector_data trans_coeffs \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-apply_transformation eqn trans \
+		-end 
 
 
 
@@ -5919,10 +6019,61 @@ permutation_polynomial_F5:
 ###############################################################################
 # Section 5.3: Algebraic Geometry
 
+
+
 test_5_3:
+	make curve_q13_f0_clean2_variety_compute_group
+	make Hirschfeld_q2_group
 	make Veronese_1_3_q7
-	make variety_hermitian_curve
-	make variety_hermitian_surface
+
+
+
+
+
+
+curve_q13_f0_clean2_variety_compute_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(CURVE_Q13_F0_CLEAN2_EQUATION) \
+			-label_txt curve_q13_f0_clean2 \
+			-label_tex curve\_q13\_f0\_clean2 \
+		-end \
+		-with V -do -variety_activity -compute_group -end 
+
+
+Hirschfeld_q2_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define V -variety \
+			-label_txt Hirschfeld_q2 \
+			-label_tex Hirschfeld\_q2 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(HIRSCHFELD_EQUATION_XYZW) \
+		-end \
+		-with V -do -variety_activity -compute_group -end 
+	pdflatex Hirschfeld_q2_c_orbits.tex
+	open Hirschfeld_q2_c_orbits.pdf
+
 
 Veronese_1_3_q7:
 	$(ORBITER) -v 5 \
@@ -5948,74 +6099,6 @@ Veronese_1_3_q7:
 			-formula C \
 			-substitute "" \
 		-end
-
-
-
-variety_hermitian_curve:
-	echo $(FILE_HERMITIAN_CURVE) >input.csv
-	$(ORBITER) -v 8 \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "X,Y,Z" "X,Y,Z" \
-		-end \
-		-define O -orbits -classification_by_canonical_form \
-			-space P \
-			-ring R \
-			-input_fname_mask input.csv \
-			-nb_files 1 \
-			-output_fname hermitian_curve_q9 \
-			-label_equation "equation" \
-			-algorithm_nauty \
-			-end \
-		-end \
-	-with O -do -orbits_activity \
-		-report \
-		-report_options \
-			-fname hermitian_curve_q9 \
-		-end \
-	-end
-	pdflatex hermitian_curve_q9_orbits.tex
-	$(OPEN) hermitian_curve_q9_orbits.pdf
-
-
-
-variety_hermitian_surface:
-	echo $(FILE_HERMITIAN_SURFACE) >input.csv
-	$(ORBITER) -v 8 \
-		-define F -finite_field -q 9 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "X,Y,Z,W" "X,Y,Z,W" \
-		-end \
-		-define O -orbits -classification_by_canonical_form \
-			-space P \
-			-ring R \
-			-input_fname_mask input.csv \
-			-nb_files 1 \
-			-output_fname hermitian_surface_q9 \
-			-label_equation "equation" \
-			-algorithm_nauty \
-			-end \
-		-end \
-	-with O -do -orbits_activity \
-		-report \
-		-report_options \
-			-fname hermitian_surface_q9 \
-		-end \
-	-end
-	pdflatex hermitian_surface_q9_orbits.tex
-	$(OPEN) hermitian_surface_q9_orbits.pdf
-
-
 
 
 
@@ -7289,6 +7372,7 @@ Symmetric_4_on_pairs:
 	$(OPEN) Sym_4_OnSubsets_2_report.pdf
 
 
+# product action:
 
 direct_product_AGL:
 	$(ORBITER) -v 4 \
@@ -11421,6 +11505,28 @@ Family_general_F31_25_5_5_25_recognize:
 			-recognize Surf \
 		-end
 
+
+
+surface_F_abcd_identify_q9:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define Control -poset_classification_control -W \
+			-problem_label "surf_q9" \
+		-end \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes AllSurf Control \
+		-end \
+		-with AllSurf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-identify_general_abcd \
+		-end
+
+
+#User time: 2:14
+#surface_recognize_abcd_q9.csv
+
 surface_F_abcd_identify_q11:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 11 -end \
@@ -11436,6 +11542,7 @@ surface_F_abcd_identify_q11:
 		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-identify_general_abcd \
 		-end
+
 
 Family_general_F11_iso_test:
 	$(ORBITER) -v 3 \
@@ -11480,6 +11587,7 @@ test_8_5:
 	make quartic_curve_13_1_report
 	make quartic_curves_19_report
 	make quartic_curve_q9_1
+	make quartic_curve_q13_f0_from_variety
 
 
 quartic_curve_9_0: 
@@ -11707,6 +11815,39 @@ quartic_curve_q9_1:
 
 
 
+quartic_curve_q13_f1_from_variety:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "x1,x2,x3" "x_1,x_2,x_3" \
+		-end \
+		-define V_q13_f1 -variety \
+			-label_txt curve_q13_f0_clean2 \
+			-label_tex curve\_q13\_f0\_clean2 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(CURVE_Q13_FLAG_1_EQN) \
+			-points $(CURVE_Q13_FLAG_1_POINTS) \
+			-bitangents $(CURVE_Q13_FLAG_1_BITANGENTS) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_1) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_2) \
+		-end \
+		-with V_q13_f1 -do -variety_activity -compute_group -end \
+		-define C -quartic_curve -space P -from_variety V_q13_f1 -end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_V_q13_f1_report.tex
+	open quartic_curve_V_q13_f1_report.pdf
+
+
+
 
 ###############################################################################
 # Section 8.6: Quartic Curve Activities
@@ -11788,7 +11929,7 @@ quartic_curves_q13_classify:
 			-label_po_index "PO_INDEX" \
 			-label_po "PO" \
 			-label_so "orbit" \
-			-label_equation "curve" \
+			-label_equation_by_coefficients "curve" \
 			-label_points "pts_on_curve" \
 			-label_lines "bitangents" \
 			-carry_through "NB_E" \
@@ -11856,7 +11997,7 @@ quartic_curves_q19_classify:
 			-label_po_index "PO_INDEX" \
 			-label_po "PO" \
 			-label_so "orbit" \
-			-label_equation "curve" \
+			-label_equation_by_coefficients "curve" \
 			-label_points "pts_on_curve" \
 			-label_lines "bitangents" \
 			-carry_through "NB_E" \
@@ -17056,7 +17197,7 @@ test_12_2:
 	make PGO_5_2_collinearity_graph
 	make trihedral_pair_graph_draw
 	make Neumaier_graph_16_reordered_export_csv
-	make Op_4_2_affine_polar_graph
+	make Op_4_2_affine_polar_graph_info
 	make Neumaier_16_test_SRG_property
 
 
@@ -17401,7 +17542,7 @@ Neumaier_graph_16_reordered_export_csv:
 		-graph_theoretic_activity -export_csv -end
 
 
-Op_4_2_affine_polar_graph:
+Op_4_2_affine_polar_graph_info:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define O -orthogonal_space 1 4 F -end \
@@ -17420,11 +17561,11 @@ Op_4_2_affine_polar_graph:
 		-graph_theoretic_activity \
 			-automorphism_group \
 		-end
-	pdflatex affine_polar_O_1_4_2_report.tex
-	open affine_polar_O_1_4_2_report.pdf
+	#pdflatex affine_polar_O_1_4_2_report.tex
+	#open affine_polar_O_1_4_2_report.pdf
 
 
-# 24 cliques
+# 24 cliques in affine_polar_O_1_4_2_solutions.csv
 # ago = 1152
 
 
@@ -17632,6 +17773,19 @@ test_13_1:
 	make LSQ_5_c
 
 
+design_PG_2_2:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 2 -end \
+		-define D -design -field F -family PG_2_q -end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end \
+
 
 design_PG_2_3:
 	$(ORBITER) -v 8 \
@@ -17655,6 +17809,10 @@ design_PG_2_4:
 		-with D -do \
 			-design_activity \
 				-export_inc \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
 		-end
 
 
@@ -20429,6 +20587,25 @@ DLX_test:
 
 
 
+
+
+solve_praeger_design_line_type_system:
+	$(ORBITER) -v 4 \
+		-define A -vector -format 4 -dense $(PRAEGER_DESIGN_LINE_TYPE) -end \
+		-define D -diophant \
+			-label test_system \
+			-coefficient_matrix A \
+			-RHS "EQ=18" \
+			-RHS "EQ=55" \
+			-RHS "EQ=88" \
+			-RHS "EQ=57" \
+			-x_min_global 0 -x_max_global 57 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+
+# there are 8 solutions
 
 ###############################################################################
 # Chapter 16 - Canonical Forms with Nauty 

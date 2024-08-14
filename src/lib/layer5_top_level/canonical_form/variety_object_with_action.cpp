@@ -34,12 +34,18 @@ variety_object_with_action::variety_object_with_action()
 
 	Variety_object = NULL;
 
+	f_has_automorphism_group = false;
+	Stab_gens = NULL;
+
 }
 
 variety_object_with_action::~variety_object_with_action()
 {
 	if (Variety_object) {
 		FREE_OBJECT(Variety_object);
+	}
+	if (f_has_automorphism_group && Stab_gens) {
+		FREE_OBJECT(Stab_gens);
 	}
 }
 

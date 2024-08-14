@@ -3582,7 +3582,19 @@ void algebra_global_with_action::representation_on_polynomials(
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
+
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		fname = LG->label + "_rep_" + std::to_string(degree_of_poly) + "_" + std::to_string(i) + ".gap";
+
+		Fio.int_matrix_write_cas_friendly(
+				fname, M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+				A_on_HPD->dimension, A_on_HPD->dimension);
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
 	}
 	if (f_v) {
 		cout << "algebra_global_with_action::representation_on_polynomials done" << endl;

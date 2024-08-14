@@ -26,6 +26,8 @@ polynomial_ring_activity_description::polynomial_ring_activity_description()
 {
 	f_cheat_sheet = false;
 
+	f_export_partials = false;
+
 	f_ideal = false;
 	//ideal_label;
 	//ideal_label_txt
@@ -84,6 +86,12 @@ int polynomial_ring_activity_description::read_arguments(
 			f_cheat_sheet = true;
 			if (f_v) {
 				cout << "-cheat_sheet " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_partials") == 0) {
+			f_export_partials = true;
+			if (f_v) {
+				cout << "-export_partials " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
@@ -202,6 +210,9 @@ void polynomial_ring_activity_description::print()
 {
 	if (f_cheat_sheet) {
 		cout << "-cheat_sheet " << endl;
+	}
+	if (f_export_partials) {
+		cout << "-export_partials " << endl;
 	}
 	if (f_ideal) {
 		cout << "-ideal "

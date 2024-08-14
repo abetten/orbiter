@@ -24,9 +24,12 @@ using namespace std;
 // 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
 
 
-#define MAXN 75000
+#define MAXN 300000
+//#define MAXN 75000
 //#define MAXN 70000
 //#define MAXN 22000
+
+
 
 
 // must be defined before reading nauty.h
@@ -35,6 +38,7 @@ using namespace std;
 #include "../graph_theory_nauty/nauty.h"
 #include "foundations.h"
 
+static nvector *lab; // [MAXN]
 
 
 namespace orbiter {
@@ -52,10 +56,9 @@ namespace l1_interfaces {
 //#define MAX_WORKSPACE 50000
 
 
-static graph g[MAXN * MAXM];
-static graph canong[MAXN * MAXM];
-static nvector lab[MAXN], ptn[MAXN], orbits[MAXN];
-//static setword workspace[MAX_WORKSPACE * MAXM];
+//static graph g[MAXN * MAXM];
+//static graph canong[MAXN * MAXM];
+//static nvector lab[MAXN], ptn[MAXN], orbits[MAXN];
 
 using namespace std;
 
@@ -106,6 +109,21 @@ void nauty_interface::nauty_interface_graph_bitvec(
 		exit(1);
 	}
 	//cout << "nauty_interface_graph_bitvec n = " << n << " m=" << m << endl;
+
+
+	graph *g; // [MAXN * MAXM];
+	graph *canong; // [MAXN * MAXM]
+	nvector *ptn; // [MAXN]
+	nvector *orbits; // [MAXN]
+
+
+	g = new graph[n * m];
+	canong = new graph[n * m];
+	lab = new nvector[n];
+	ptn = new nvector[n];
+	orbits = new nvector[n];
+
+
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
@@ -151,14 +169,6 @@ void nauty_interface::nauty_interface_graph_bitvec(
 		cout << "base_length=" << base_length << endl;
 		cout << "transversal_length=";
 		Int_vec_print(cout, transversal_length, base_length);
-#if 0
-		for (i = 0; i < base_length; i++) {
-			cout << transversal_length[i];
-			if (i < base_length - 1) {
-				cout << ", ";
-			}
-		}
-#endif
 		cout << endl;
 	}
 	//cout << "numnodes=" << stats.numnodes << endl;
@@ -174,6 +184,14 @@ void nauty_interface::nauty_interface_graph_bitvec(
 		cout << "nauty_interface::nauty_interface_graph_bitvec done" << endl;
 	}
 #endif
+
+
+	delete [] g;
+	delete [] canong;
+	delete [] lab;
+	delete [] ptn;
+	delete [] orbits;
+
 }
 
 
@@ -203,11 +221,28 @@ void nauty_interface::nauty_interface_graph_int(
 	nauty_interface_allocate_data(n);
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
+		// m is the number of words needed to encode one row of the adjacency matrix
+
 	if (n >= MAXN) {
 		cout << "nauty_interface::nauty_interface_graph_int n >= MAXN" << endl;
 		exit(1);
 	}
 	//cout << "nauty_interface_graph_int n = " << n << " m=" << m << endl;
+
+
+	graph *g; // [MAXN * MAXM];
+	graph *canong; // [MAXN * MAXM]
+	nvector *ptn; // [MAXN]
+	nvector *orbits; // [MAXN]
+
+
+	g = new graph[n * m];
+	canong = new graph[n * m];
+	lab = new nvector[n];
+	ptn = new nvector[n];
+	orbits = new nvector[n];
+
+
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
@@ -255,6 +290,15 @@ void nauty_interface::nauty_interface_graph_int(
 		cout << "nauty_interface::nauty_interface_graph_int done" << endl;
 	}
 #endif
+
+
+	delete [] g;
+	delete [] canong;
+	delete [] lab;
+	delete [] ptn;
+	delete [] orbits;
+
+
 }
 
 
@@ -310,6 +354,20 @@ void nauty_interface::nauty_interface_matrix_int(
 	if (f_vv) {
 		cout << "nauty_interface::nauty_interface_matrix_int n = " << n << " m=" << m << endl;
 	}
+
+
+	graph *g; // [MAXN * MAXM];
+	graph *canong; // [MAXN * MAXM]
+	nvector *ptn; // [MAXN]
+	nvector *orbits; // [MAXN]
+
+
+	g = new graph[n * m];
+	canong = new graph[n * m];
+	lab = new nvector[n];
+	ptn = new nvector[n];
+	orbits = new nvector[n];
+
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
@@ -371,6 +429,14 @@ void nauty_interface::nauty_interface_matrix_int(
 #endif
 	nauty_interface_free_data();
 #endif
+
+	delete [] g;
+	delete [] canong;
+	delete [] lab;
+	delete [] ptn;
+	delete [] orbits;
+
+
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_matrix_int done" << endl;
 	}
@@ -448,20 +514,8 @@ static void nauty_interface_fill_nauty_output(
 	}
 
 	Int_vec_copy(aut, NO->Aut, aut_counter * n);
-#if 0
-	for (i = 0; i < aut_counter; i++) {
-		for (j = 0; j < n; j++) {
-			NO->Aut[i * n + j] = aut[i * n + j];
-		}
-	}
-#endif
 
 	Int_vec_copy(lab, NO->canonical_labeling, n);
-#if 0
-	for (i = 0; i < n; i++) {
-		NO->canonical_labeling[i] = lab[i];
-	}
-#endif
 
 	NO->Aut_counter = aut_counter;
 	NO->nb_firstpathnode = nb_firstpathnode;

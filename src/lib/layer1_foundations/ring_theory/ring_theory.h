@@ -100,7 +100,6 @@ public:
 class homogeneous_polynomial_domain {
 
 private:
-	enum monomial_ordering_type Monomial_ordering_type;
 	field_theory::finite_field *F;
 	int nb_monomials;
 		// = Combi.int_n_choose_k(
@@ -140,10 +139,12 @@ private:
 	int *type1; // [degree + 1]
 	int *type2; // [degree + 1]
 
+
 public:
 	int q;
 	int nb_variables; // number of variables
 	int degree;
+	enum monomial_ordering_type Monomial_ordering_type;
 
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
@@ -406,6 +407,23 @@ public:
 			std::string &equation_parameter_values,
 			int *&eqn, int &eqn_size,
 			int verbose_level);
+	void compute_singular_points_projectively(
+			geometry::projective_space *P,
+			int *equation,
+			std::vector<long int> &Singular_points,
+			int verbose_level);
+	void compute_partials(
+			homogeneous_polynomial_domain *Poly_reduced_degree,
+			ring_theory::partial_derivative *&Partials,
+			int verbose_level);
+	// Partials[nb_variables]
+	void compute_and_export_partials(
+			homogeneous_polynomial_domain *Poly_reduced_degree,
+			int verbose_level);
+	void compute_gradient(
+			homogeneous_polynomial_domain *Poly_reduced_degree,
+			int *equation, int *&gradient, int verbose_level);
+	// gradient[nb_variables]
 
 
 };
@@ -716,6 +734,10 @@ public:
 			int *eqn_in,
 			int *eqn_out,
 			int verbose_level);
+	void do_export(
+			std::string &fname_base,
+			int verbose_level);
+
 };
 
 
@@ -806,6 +828,8 @@ public:
 
 
 	int f_cheat_sheet;
+
+	int f_export_partials;
 
 	int f_ideal;
 	std::string ideal_label_txt;
@@ -1015,6 +1039,14 @@ public:
 			std::string &equation_text,
 			int *&coeffs,
 			int verbose_level);
+	void parse_equation_with_parameters(
+			ring_theory::homogeneous_polynomial_domain *Poly,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
+			std::string &equation_parameter_values,
+			int *&coeffs,
+			int verbose_level);
 	void parse_equation(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
@@ -1079,6 +1111,9 @@ public:
 	void make_table_of_monomials(
 			ring_theory::homogeneous_polynomial_domain *Poly,
 			std::string &name_of_formula,
+			int verbose_level);
+	void do_export_partials(
+			ring_theory::homogeneous_polynomial_domain *Poly,
 			int verbose_level);
 
 };
@@ -1219,6 +1254,9 @@ public:
 			unipoly_object p, std::ostream &ost);
 	void print_object_dense(
 			unipoly_object p, std::ostream &ost);
+	void print_factorization_based_off_Mult(
+			table_of_irreducible_polynomials *T, int *Mult,
+			std::ostream &ost, int verbose_level);
 	void assign(
 			unipoly_object a, unipoly_object &b,
 			int verbose_level);

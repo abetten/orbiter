@@ -1348,6 +1348,7 @@ void surface_polynomial_domains::assemble_polar_hypersurface(
 
 void surface_polynomial_domains::compute_gradient(
 		int *equation20, int *&gradient, int verbose_level)
+// gradient[4]
 {
 	int f_v = (verbose_level >= 1);
 	int i;

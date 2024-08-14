@@ -777,6 +777,83 @@ void algebraic_geometry_global::compute_projective_variety(
 
 
 
+void algebraic_geometry_global::make_evaluation_matrix_wrt_ring(
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		geometry::projective_space *P,
+		int *&M, int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::make_evaluation_matrix_wrt_ring" << endl;
+	}
+
+	int nb_vars;
+	int c;
+	long int i, j, k;
+	int input_len;
+	int *pt_vec;
+	long int N_points_input;
+
+	k = P->Subspaces->n;
+
+	input_len = k + 1;
+
+
+	//geometry::geometry_global Gg;
+
+	N_points_input = P->Subspaces->N_points;
+	if (f_v) {
+		cout << "algebraic_geometry_global::make_evaluation_matrix_wrt_ring "
+				"There are " << N_points_input
+				<< " elements in the domain" << endl;
+	}
+
+
+	nb_vars = Ring->nb_variables;
+	nb_rows = Ring->get_nb_monomials();
+	nb_cols = N_points_input;
+	M = NEW_int(nb_rows * nb_cols);
+	Int_vec_zero(M, nb_rows * nb_cols);
+
+
+	pt_vec = NEW_int(input_len);
+
+
+	for (j = 0; j < nb_cols; j++) {
+
+		P->unrank_point(pt_vec, j);
+		//Gg.AG_element_unrank(P->Subspaces->F->q, input, 1, k, i);
+
+		if (f_vv) {
+			cout << "algebraic_geometry_global::make_evaluation_matrix_wrt_ring "
+					"point " << j << " is ";
+			Int_vec_print(cout, pt_vec, input_len);
+			cout << endl;
+		}
+
+		for (i = 0; i < nb_rows; i++) {
+
+			c = Ring->get_F()->Linear_algebra->evaluate_monomial(
+					Ring->get_monomial_pointer(i),
+					pt_vec,
+					nb_vars);
+
+			M[i * nb_cols + j] = c;
+		}
+
+
+	}
+
+	FREE_int(pt_vec);
+
+	if (f_v) {
+		cout << "algebraic_geometry_global::make_evaluation_matrix_wrt_ring done" << endl;
+	}
+}
+
 
 
 void algebraic_geometry_global::cubic_surface_family_24_generators(

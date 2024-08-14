@@ -121,7 +121,6 @@ void classification_of_varieties_nauty::init(
 
 
 
-
 #if 0
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::init "
@@ -286,8 +285,8 @@ void classification_of_varieties_nauty::main_loop(
 					"input_counter = " << input_counter << " / " << nb_objects_to_test << endl;
 		}
 
-#if 0
-		if (Classifier->Input->skip_this_one(input_counter)) {
+
+		if (Classifier->skip_this_one(input_counter)) {
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
 						"skipping case input_counter = " << input_counter << endl;
@@ -299,7 +298,7 @@ void classification_of_varieties_nauty::main_loop(
 			//continue;
 		}
 		else {
-#endif
+
 
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
@@ -367,10 +366,7 @@ void classification_of_varieties_nauty::main_loop(
 			else {
 				Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
 			}
-#if 0
 		}
-#endif
-
 
 
 		// Don't free Qco, because it is now stored in Variety_table[]

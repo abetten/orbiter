@@ -63,6 +63,7 @@ quartic_curve_object::~quartic_curve_object()
 	}
 }
 
+#if 0
 void quartic_curve_object::init_from_string(
 		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		std::string &eqn_txt,
@@ -173,6 +174,7 @@ void quartic_curve_object::init_from_string(
 		cout << "quartic_curve_object::init_from_string done" << endl;
 	}
 }
+#endif
 
 void quartic_curve_object::allocate_points(
 		int nb_pts,

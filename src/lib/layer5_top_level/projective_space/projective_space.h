@@ -236,6 +236,10 @@ public:
 	std::string report_fixed_objects_label;
 
 
+	int f_evaluation_matrix;
+	std::string evaluation_matrix_ring;
+
+
 	// TABLES/projective_space_activity_3.tex
 
 

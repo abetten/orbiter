@@ -54,7 +54,6 @@ homogeneous_polynomial_domain::homogeneous_polynomial_domain()
 	type1 = NULL;
 	type2 = NULL;
 
-
 	q = 0;
 	nb_variables = 0;
 	degree = 0;
@@ -293,6 +292,7 @@ void homogeneous_polynomial_domain::init_with_or_without_variables(
 	my_affine = NEW_int(degree);
 	base_cols = NEW_int(nb_monomials);
 	
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init_with_or_without_variables done" << endl;
 	}
@@ -4013,6 +4013,260 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 		cout << "homogeneous_polynomial_domain::parse_equation_and_substitute_parameters done" << endl;
 	}
 }
+
+
+void homogeneous_polynomial_domain::compute_singular_points_projectively(
+		geometry::projective_space *P,
+		int *equation,
+		std::vector<long int> &Singular_points,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively" << endl;
+	}
+
+	homogeneous_polynomial_domain *Poly_reduced_degree;
+	int *gradient;
+
+	Poly_reduced_degree = NEW_OBJECT(homogeneous_polynomial_domain);
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively "
+				"before Poly_reduced_degree->init" << endl;
+	}
+	Poly_reduced_degree->init(
+			F,
+			nb_variables, degree - 1,
+			Monomial_ordering_type,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively "
+				"after Poly_reduced_degree->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively "
+				"before compute_gradient" << endl;
+	}
+	compute_gradient(
+			Poly_reduced_degree,
+			equation, gradient, verbose_level);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively "
+				"after compute_gradient" << endl;
+	}
+
+	long int nb_points;
+	int *v;
+	long int rk;
+	int a;
+
+	v = NEW_int(nb_variables);
+
+	nb_points = P->Subspaces->N_points;
+
+	for (rk = 0; rk < nb_points; rk++) {
+		P->unrank_point(
+			v, rk);
+		for (i = 0; i < nb_variables; i++) {
+			a = Poly_reduced_degree->evaluate_at_a_point(
+					gradient + i * Poly_reduced_degree->get_nb_monomials(),
+					v);
+			if (a) {
+				break;
+			}
+		}
+		if (i == nb_variables) {
+			Singular_points.push_back(rk);
+		}
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively "
+				"number of singular points = " << Singular_points.size() << endl;
+	}
+
+	FREE_int(v);
+	FREE_int(gradient);
+
+	FREE_OBJECT(Poly_reduced_degree);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_singular_points_projectively done" << endl;
+	}
+}
+
+void homogeneous_polynomial_domain::compute_partials(
+		homogeneous_polynomial_domain *Poly_reduced_degree,
+		ring_theory::partial_derivative *&Partials,
+		int verbose_level)
+// Partials[nb_variables]
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_partials" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_partials "
+				"nb_variables = " << nb_variables << endl;
+		cout << "homogeneous_polynomial_domain::compute_partials "
+				"nb_monomials = " << get_nb_monomials() << endl;
+	}
+
+	//ring_theory::partial_derivative *Partials; // [nb_variables]
+
+	Partials = NEW_OBJECTS(ring_theory::partial_derivative, nb_variables);
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_partials "
+				"initializing partials" << endl;
+	}
+	for (i = 0; i < nb_variables; i++) {
+		Partials[i].init(this, Poly_reduced_degree, i, verbose_level);
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_partials "
+				"initializing partials done" << endl;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_partials done" << endl;
+	}
+
+}
+
+void homogeneous_polynomial_domain::compute_and_export_partials(
+		homogeneous_polynomial_domain *Poly_reduced_degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_and_export_partials" << endl;
+	}
+
+
+
+	ring_theory::partial_derivative *Partials; // [nb_variables]
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_and_export_partials "
+				"before compute_partials" << endl;
+	}
+	compute_partials(Poly_reduced_degree, Partials, verbose_level - 2);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_and_export_partials "
+				"after compute_partials" << endl;
+	}
+
+
+	for (i = 0; i < nb_variables; i++) {
+
+		string fname_base;
+
+		fname_base = "partial_" + std::to_string(degree)
+				+ "_" + std::to_string(Poly_reduced_degree->degree)
+				+ "_" + std::to_string(i);
+
+		Partials[i].do_export(fname_base, verbose_level);
+	}
+
+
+	FREE_OBJECTS(Partials);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_and_export_partials done" << endl;
+	}
+
+}
+
+
+
+
+void homogeneous_polynomial_domain::compute_gradient(
+		homogeneous_polynomial_domain *Poly_reduced_degree,
+		int *equation, int *&gradient, int verbose_level)
+// gradient[nb_variables * Poly_reduced_degree->get_nb_monomials()]
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_gradient" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_gradient "
+				"nb_variables = " << nb_variables << endl;
+		cout << "homogeneous_polynomial_domain::compute_gradient "
+				"nb_monomials = " << get_nb_monomials() << endl;
+	}
+
+	ring_theory::partial_derivative *Partials; // [nb_variables]
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_gradient "
+				"before compute_partials" << endl;
+	}
+	compute_partials(Poly_reduced_degree, Partials, verbose_level - 2);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::compute_gradient "
+				"after compute_partials" << endl;
+	}
+
+	gradient = NEW_int(nb_variables * Poly_reduced_degree->get_nb_monomials());
+
+	for (i = 0; i < nb_variables; i++) {
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::compute_gradient i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::compute_gradient "
+					"eqn_in=";
+			Int_vec_print(cout, equation, get_nb_monomials());
+			cout << " = " << endl;
+			print_equation(cout, equation);
+			cout << endl;
+		}
+		Partials[i].apply(
+				equation,
+				gradient + i * Poly_reduced_degree->get_nb_monomials(),
+				verbose_level - 2);
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::compute_gradient "
+					"partial=";
+			Int_vec_print(cout,
+					gradient + i * Poly_reduced_degree->get_nb_monomials(),
+					Poly_reduced_degree->get_nb_monomials());
+			cout << " = ";
+			Poly_reduced_degree->print_equation(cout,
+					gradient + i * Poly_reduced_degree->get_nb_monomials());
+			cout << endl;
+		}
+	}
+
+	FREE_OBJECTS(Partials);
+
+	if (f_v) {
+		cout << "surface_polynomial_domains::compute_gradient done" << endl;
+	}
+}
+
+
 
 
 // #############################################################################

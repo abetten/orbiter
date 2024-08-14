@@ -49,6 +49,9 @@ variety_object::variety_object()
 
 	Line_sets = NULL;
 
+	f_has_singular_points = false;
+	//std::vector<long int> Singular_points;
+
 }
 
 variety_object::~variety_object()
@@ -98,13 +101,37 @@ void variety_object::init(
 			cout << "variety_object::init_from_string "
 					"equation = " << Descr->equation_in_algebraic_form_text << endl;
 		}
-		parse_equation_in_algebraic_form(
-				Descr->equation_in_algebraic_form_text,
-				eqn,
-				verbose_level - 2);
-		if (f_v) {
-			cout << "variety_object::init "
-					"after parse_equation_in_algebraic_form" << endl;
+		if (Descr->f_set_parameters) {
+			if (f_v) {
+				cout << "variety_object::init "
+						"before parse_equation_in_algebraic_form" << endl;
+			}
+			parse_equation_in_algebraic_form_with_parameters(
+					Descr->equation_in_algebraic_form_text,
+					Descr->set_parameters_label,
+					Descr->set_parameters_label_tex,
+					Descr->set_parameters_values,
+					eqn,
+					verbose_level - 2);
+			if (f_v) {
+				cout << "variety_object::init "
+						"after parse_equation_in_algebraic_form" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "variety_object::init "
+						"before parse_equation_in_algebraic_form" << endl;
+			}
+			parse_equation_in_algebraic_form(
+					Descr->equation_in_algebraic_form_text,
+					eqn,
+					verbose_level - 2);
+			if (f_v) {
+				cout << "variety_object::init "
+						"after parse_equation_in_algebraic_form" << endl;
+			}
+
 		}
 	}
 	else if (Descr->f_has_equation_by_coefficients) {
@@ -126,6 +153,13 @@ void variety_object::init(
 	else {
 		cout << "variety_object::init please specify an equation" << endl;
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "variety_object::init "
+				"eqn = ";
+		Int_vec_print_fully(cout, eqn, Ring->get_nb_monomials());
+		cout << endl;
 	}
 
 	int nb_pts;
@@ -387,6 +421,63 @@ void variety_object::parse_equation_in_algebraic_form(
 
 	if (f_v) {
 		cout << "variety_object::parse_equation_in_algebraic_form done" << endl;
+	}
+}
+
+void variety_object::parse_equation_in_algebraic_form_with_parameters(
+		std::string &equation_txt,
+		std::string &equation_parameters,
+		std::string &equation_parameters_tex,
+		std::string &equation_parameter_values,
+		int *&equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters" << endl;
+	}
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters equation = " << equation_txt << endl;
+	}
+
+	//if (std::isalpha(equation_txt[0])) {
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters "
+				"reading formula" << endl;
+	}
+
+	ring_theory::ring_theory_global R;
+	int *coeffs;
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters "
+				"before R.parse_equation_with_parameters" << endl;
+	}
+
+	R.parse_equation_with_parameters(
+			Ring,
+			equation_txt,
+			equation_parameters,
+			equation_parameters_tex,
+			equation_parameter_values,
+			coeffs,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters "
+				"after R.parse_equation_with_parameters" << endl;
+	}
+
+	equation = NEW_int(Ring->get_nb_monomials());
+	Int_vec_copy(
+			coeffs, equation, Ring->get_nb_monomials());
+
+	FREE_int(coeffs);
+
+	if (f_v) {
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters done" << endl;
 	}
 }
 

@@ -1156,6 +1156,9 @@ public:
 	orbits::orbits_create
 		*get_orbits(
 			std::string &label);
+	canonical_form::variety_object_with_action
+		*get_variety(
+				std::string &label);
 
 };
 

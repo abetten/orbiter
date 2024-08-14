@@ -66,9 +66,9 @@ namespace canonical_form {
 	class classification_of_combinatorial_objects;
 	class classification_of_varieties_nauty;
 	class classification_of_varieties;
+	class combinatorial_object_in_projective_space_with_action;
+	class combinatorial_object_with_properties;
 	class input_objects_of_type_variety;
-	class object_in_projective_space_with_action;
-	class object_with_properties;
 	class quartic_curve_object_with_action;
 	class stabilizer_of_set_of_rational_points;
 	class variety_activity_description;
@@ -415,6 +415,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_object_of_type_graph(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_graph(label)
 #define Get_orthogonal_space(label) user_interface::The_Orbiter_top_level_session->get_orthogonal_space(label)
 #define Get_orbits(label) user_interface::The_Orbiter_top_level_session->get_orbits(label)
+#define Get_variety(label) user_interface::The_Orbiter_top_level_session->get_variety(label)
 
 
 

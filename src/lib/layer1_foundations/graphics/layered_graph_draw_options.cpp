@@ -56,6 +56,7 @@ layered_graph_draw_options::layered_graph_draw_options()
 
 	f_nodes = false;
 	f_nodes_empty = false;
+	f_show_colors = false;
 
 	f_select_layers = false;
 	//select_layers = NULL;
@@ -225,6 +226,12 @@ int layered_graph_draw_options::read_arguments(
 				cout << "-nodes_empty " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-show_colors") == 0) {
+			f_show_colors = true;
+			if (f_v) {
+				cout << "-show_colors " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-select_layers") == 0) {
 			f_select_layers = true;
 			select_layers.assign(argv[++i]);
@@ -314,13 +321,16 @@ void layered_graph_draw_options::print()
 		cout << "line_width=" << line_width << endl;
 	}
 	if (f_rotated) {
-		cout << "f_rotated" << endl;
+		cout << "rotated" << endl;
 	}
 	if (f_nodes) {
-		cout << "f_nodes" << endl;
+		cout << "nodes" << endl;
 	}
 	if (f_nodes_empty) {
-		cout << "f_nodes_empty" << endl;
+		cout << "nodes_empty" << endl;
+	}
+	if (f_show_colors) {
+		cout << "show_colors" << endl;
 	}
 	if (f_select_layers) {
 		cout << "select_layers=" << select_layers << endl;

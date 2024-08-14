@@ -300,6 +300,12 @@ void lint_vec::print(
 void lint_vec::print(
 		std::ostream &ost, std::vector<long int> &v)
 {
+	print_stl(ost, v);
+}
+
+void lint_vec::print_stl(
+		std::ostream &ost, std::vector<long int> &v)
+{
 	int i, len;
 
 	len = v.size();
@@ -375,6 +381,12 @@ void lint_vec::print_fully(
 void lint_vec::print_fully(
 		std::ostream &ost, std::vector<long int> &v)
 {
+	print_stl_fully(ost, v);
+}
+
+void lint_vec::print_stl_fully(
+		std::ostream &ost, std::vector<long int> &v)
+{
 	int i, len;
 
 	len = v.size();
@@ -387,7 +399,6 @@ void lint_vec::print_fully(
 	}
 	ost << " )";
 }
-
 
 void lint_vec::scan(
 		std::string &s, long int *&v, int &len)

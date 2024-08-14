@@ -894,6 +894,30 @@ orbits::orbits_create
 }
 
 
+canonical_form::variety_object_with_action
+	*orbiter_top_level_session::get_variety(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_variety "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_variety) {
+		cout << "orbiter_top_level_session::get_variety "
+				"object type != t_variety" << endl;
+		exit(1);
+	}
+
+
+	return (canonical_form::variety_object_with_action *)
+			get_object(idx);
+}
+
+
 
 
 void free_symbol_table_entry_callback(

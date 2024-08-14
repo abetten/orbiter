@@ -841,9 +841,13 @@ namespace solvers {
 #define Int_vec_print_as_polynomial_in_algebraic_notation(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(A, B, C)
 
 #define Int_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print(A, B, C)
+#define Int_vec_stl_print(A, B) orbiter_kernel_system::Orbiter->Int_vec->print_stl(A, B)
 #define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
+#define Lint_vec_stl_print(A, B) orbiter_kernel_system::Orbiter->Lint_vec->print_stl(A, B)
 #define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
+#define Int_vec_stl_print_fully(A, B) orbiter_kernel_system::Orbiter->Int_vec->print_stl_fully(A, B)
 #define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
+#define Lint_vec_stl_print_fully(A, B) orbiter_kernel_system::Orbiter->Lint_vec->print_stl_fully(A, B)
 #define Int_vec_print_bare_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_bare_fully(A, B, C)
 
 #define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
