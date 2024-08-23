@@ -23,6 +23,22 @@ namespace apps_algebra {
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
 
+	f_report = false;
+	f_report_sylow = false;
+	f_report_group_table = false;
+	f_report_classes = false;
+
+	f_export_group_table = false;
+
+
+	f_random_element = false;
+	//std::string random_element_label;
+
+
+	f_permutation_representation_of_element = false;
+	//std::string permutation_representation_element_text;
+
+
 	f_apply = false;
 	//std::string apply_input;
 	//std::string apply_element;
@@ -66,9 +82,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	find_standard_generators_order_b = 0;
 	find_standard_generators_order_ab = 0;
 
-	f_random_element = false;
-	//std::string random_element_label;
-
 
 	f_element_rank = false;
 	// std::string element_rank_data;
@@ -89,8 +102,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string centralizer_of_element_label;
 	//std::string centralizer_of_element_data;
 
-	f_permutation_representation_of_element = false;
-	//std::string permutation_representation_element_text;
 
 	f_orbits_on_group_elements_under_conjugation = false;
 	//std::string orbits_on_group_elements_under_conjugation_fname;
@@ -104,15 +115,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	// Magma:
 	f_classes = false;
 
+
+
+	// undocumented:
 	f_find_subgroup = false;
 	find_subgroup_order = 0;
-
-	f_report = false;
-	f_report_sylow = false;
-	f_report_group_table = false;
-	f_report_classes = false;
-
-	f_export_group_table = false;
 
 
 	//f_test_if_geometric = false;
@@ -133,6 +140,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_export_inversion_graphs = false;
 	//std::string export_inversion_graphs_fname;
+
 
 
 	f_multiply_elements_csv_column_major_ordering = false;
@@ -156,6 +164,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_reverse_isomorphism_exterior_square = false;
 
 	f_is_subgroup_of = false;
+
 	f_coset_reps = false;
 
 	f_evaluate_word = false;
@@ -237,7 +246,53 @@ int group_theoretic_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-apply") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
+			f_report = true;
+			if (f_v) {
+				cout << "-report" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_sylow") == 0) {
+			f_report_sylow = true;
+			if (f_v) {
+				cout << "-report_sylow" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_group_table") == 0) {
+			f_report_group_table = true;
+			if (f_v) {
+				cout << "-report_group_table" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_classes") == 0) {
+			f_report_classes = true;
+			if (f_v) {
+				cout << "-report_classes" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
+			f_export_group_table = true;
+			if (f_v) {
+				cout << "-export_group_table" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-random_element") == 0) {
+			f_random_element = true;
+			random_element_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-random_element " << random_element_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-permutation_representation_of_element") == 0) {
+			f_permutation_representation_of_element = true;
+			permutation_representation_element_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-permutation_representation_of_element "
+						<< permutation_representation_element_text
+						<< " " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply") == 0) {
 			f_apply = true;
 			apply_input.assign(argv[++i]);
 			apply_element.assign(argv[++i]);
@@ -355,13 +410,6 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-random_element") == 0) {
-			f_random_element = true;
-			random_element_label.assign(argv[++i]);
-			if (f_v) {
-				cout << "-random_element " << random_element_label << endl;
-			}
-		}
 
 		else if (ST.stringcmp(argv[i], "-element_rank") == 0) {
 			f_element_rank = true;
@@ -407,15 +455,6 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-permutation_representation_of_element") == 0) {
-			f_permutation_representation_of_element = true;
-			permutation_representation_element_text.assign(argv[++i]);
-			if (f_v) {
-				cout << "-permutation_representation_of_element "
-						<< permutation_representation_element_text
-						<< " " << endl;
-			}
-		}
 		else if (ST.stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
 			f_orbits_on_group_elements_under_conjugation = true;
 			orbits_on_group_elements_under_conjugation_fname.assign(argv[++i]);
@@ -450,36 +489,6 @@ int group_theoretic_activity_description::read_arguments(
 			find_subgroup_order = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-find_subgroup " << find_subgroup_order << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-report") == 0) {
-			f_report = true;
-			if (f_v) {
-				cout << "-report" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-report_sylow") == 0) {
-			f_report_sylow = true;
-			if (f_v) {
-				cout << "-report_sylow" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-report_group_table") == 0) {
-			f_report_group_table = true;
-			if (f_v) {
-				cout << "-report_group_table" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-report_classes") == 0) {
-			f_report_classes = true;
-			if (f_v) {
-				cout << "-report_classes" << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
-			f_export_group_table = true;
-			if (f_v) {
-				cout << "-export_group_table" << endl;
 			}
 		}
 #if 0
@@ -778,6 +787,29 @@ int group_theoretic_activity_description::read_arguments(
 
 void group_theoretic_activity_description::print()
 {
+	if (f_report) {
+		cout << "-report" << endl;
+	}
+	if (f_report_sylow) {
+		cout << "-report_sylow" << endl;
+	}
+	if (f_report_group_table) {
+		cout << "-report_group_table" << endl;
+	}
+	if (f_report_classes) {
+		cout << "-report_classes" << endl;
+	}
+	if (f_export_group_table) {
+		cout << "-export_group_table" << endl;
+	}
+	if (f_random_element) {
+		cout << "-random_element " << random_element_label << endl;
+	}
+	if (f_permutation_representation_of_element) {
+		cout << "-permutation_representation_of_element "
+				<< permutation_representation_element_text
+				<< " " << endl;
+	}
 	if (f_apply) {
 		cout << "-apply " << apply_input << " " << apply_element << endl;
 	}
@@ -829,9 +861,6 @@ void group_theoretic_activity_description::print()
 					<< endl;
 	}
 
-	if (f_random_element) {
-		cout << "-random_element " << random_element_label << endl;
-	}
 	if (f_element_rank) {
 		cout << "-element_rank " << element_rank_data << endl;
 	}
@@ -851,11 +880,6 @@ void group_theoretic_activity_description::print()
 		cout << "-centralizer_of_element " << centralizer_of_element_label
 				<< " " << centralizer_of_element_data << endl;
 	}
-	if (f_permutation_representation_of_element) {
-		cout << "-permutation_representation_of_element "
-				<< permutation_representation_element_text
-				<< " " << endl;
-	}
 	if (f_orbits_on_group_elements_under_conjugation) {
 		cout << "-orbits_on_group_elements_under_conjugation "
 			<< " " << orbits_on_group_elements_under_conjugation_fname
@@ -873,21 +897,6 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_find_subgroup) {
 		cout << "-find_subgroup " << find_subgroup_order << endl;
-	}
-	if (f_report) {
-		cout << "-report" << endl;
-	}
-	if (f_report_sylow) {
-		cout << "-report_sylow" << endl;
-	}
-	if (f_report_group_table) {
-		cout << "-report_group_table" << endl;
-	}
-	if (f_report_classes) {
-		cout << "-report_classes" << endl;
-	}
-	if (f_export_group_table) {
-		cout << "-export_group_table" << endl;
 	}
 #if 0
 	if (f_test_if_geometric) {

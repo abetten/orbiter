@@ -85,7 +85,89 @@ void group_theoretic_activity::perform_activity(
 	}
 
 
-	if (Descr->f_apply) {
+	if (Descr->f_report) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_report" << endl;
+		}
+		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
+			cout << "for a report of the group, please use -draw_options" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->create_latex_report" << endl;
+		}
+		AG->create_latex_report(
+				orbiter_kernel_system::Orbiter->draw_options,
+				Descr->f_report_sylow,
+				Descr->f_report_group_table,
+				Descr->f_report_classes,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->create_latex_report" << endl;
+		}
+
+	}
+
+	else if (Descr->f_export_group_table) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_export_group_table" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->export_group_table" << endl;
+		}
+		AG->export_group_table(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->export_group_table" << endl;
+		}
+
+	}
+
+	else if (Descr->f_random_element) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_random_element" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->random_element" << endl;
+		}
+		AG->random_element(Descr->random_element_label, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->random_element" << endl;
+		}
+	}
+	else if (Descr->f_permutation_representation_of_element) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_permutation_representation_of_element" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->permutation_representation_of_element" << endl;
+		}
+		AG->permutation_representation_of_element(
+				Descr->permutation_representation_element_text,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->permutation_representation_of_element" << endl;
+		}
+	}
+
+	else if (Descr->f_apply) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"f_apply" << endl;
@@ -106,6 +188,7 @@ void group_theoretic_activity::perform_activity(
 					"after AG->A->apply_based_on_text" << endl;
 		}
 	}
+
 	else if (Descr->f_element_processing) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -116,7 +199,9 @@ void group_theoretic_activity::perform_activity(
 					"before AG->element_processing" << endl;
 		}
 
-		AG->element_processing(Descr->element_processing_descr, verbose_level);
+		AG->element_processing(
+				Descr->element_processing_descr,
+				verbose_level);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -138,7 +223,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->multiply_based_on_text" << endl;
 		}
-		AcGl.multiply_based_on_text(AG->A,
+		AcGl.multiply_based_on_text(
+				AG->A,
 				Descr->multiply_a,
 				Descr->multiply_b, verbose_level);
 		if (f_v) {
@@ -276,7 +362,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->do_canonical_image_GAP" << endl;
 		}
-		AG->do_canonical_image_GAP(Descr->canonical_image_GAP_input_set, verbose_level);
+		AG->do_canonical_image_GAP(
+				Descr->canonical_image_GAP_input_set, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_canonical_image_GAP" << endl;
@@ -293,7 +380,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->do_canonical_image_orbiter" << endl;
 		}
-		AG->do_canonical_image_orbiter(Descr->canonical_image_input_set, verbose_level);
+		AG->do_canonical_image_orbiter(
+				Descr->canonical_image_input_set, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_canonical_image_orbiter" << endl;
@@ -311,7 +399,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->search_element_of_order" << endl;
 		}
-		AG->search_element_of_order(Descr->search_element_order, verbose_level);
+		AG->search_element_of_order(
+				Descr->search_element_order, verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->search_element_of_order" << endl;
@@ -338,24 +427,6 @@ void group_theoretic_activity::perform_activity(
 					"after AG->find_standard_generators" << endl;
 		}
 
-	}
-
-	else if (Descr->f_random_element) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_random_element" << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->random_element" << endl;
-		}
-		AG->random_element(Descr->random_element_label, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->random_element" << endl;
-		}
 	}
 
 	else if (Descr->f_element_rank) {
@@ -400,12 +471,12 @@ void group_theoretic_activity::perform_activity(
 		}
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->find_singer_cycle" << endl;
+					"before AG->Any_group_linear->find_singer_cycle" << endl;
 		}
-		AG->find_singer_cycle(verbose_level);
+		AG->Any_group_linear->find_singer_cycle(verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->find_singer_cycle" << endl;
+					"after AG->Any_group_linear->find_singer_cycle" << endl;
 		}
 	}
 
@@ -419,12 +490,13 @@ void group_theoretic_activity::perform_activity(
 		}
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->classes_based_on_normal_form" << endl;
+					"before AG->Any_group_linear->classes_based_on_normal_form" << endl;
 		}
-		AG->classes_based_on_normal_form(verbose_level);
+		AG->Any_group_linear->classes_based_on_normal_form(
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->classes_based_on_normal_form" << endl;
+					"after AG->Any_group_linear->classes_based_on_normal_form" << endl;
 		}
 	}
 
@@ -461,24 +533,6 @@ void group_theoretic_activity::perform_activity(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->centralizer" << endl;
-		}
-	}
-	else if (Descr->f_permutation_representation_of_element) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_permutation_representation_of_element" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->permutation_representation_of_element" << endl;
-		}
-		AG->permutation_representation_of_element(
-				Descr->permutation_representation_element_text,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->permutation_representation_of_element" << endl;
 		}
 	}
 #if 0
@@ -579,52 +633,6 @@ void group_theoretic_activity::perform_activity(
 	}
 
 
-	else if (Descr->f_report) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_report" << endl;
-		}
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "for a report of the group, please use -draw_options" << endl;
-			exit(1);
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->create_latex_report" << endl;
-		}
-		AG->create_latex_report(
-				orbiter_kernel_system::Orbiter->draw_options,
-				Descr->f_report_sylow,
-				Descr->f_report_group_table,
-				Descr->f_report_classes,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->create_latex_report" << endl;
-		}
-
-	}
-
-	else if (Descr->f_export_group_table) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_export_group_table" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->export_group_table" << endl;
-		}
-		AG->export_group_table(verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->export_group_table" << endl;
-		}
-
-	}
-
 	else if (Descr->f_conjugacy_class_of) {
 
 		if (f_v) {
@@ -653,14 +661,14 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->isomorphism_Klein_quadric" << endl;
+					"before AG->Any_group_linear->isomorphism_Klein_quadric" << endl;
 		}
-		AG->isomorphism_Klein_quadric(
+		AG->Any_group_linear->isomorphism_Klein_quadric(
 				Descr->isomorphism_Klein_quadric_fname,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->isomorphism_Klein_quadric" << endl;
+					"after AG->Any_group_linear->isomorphism_Klein_quadric" << endl;
 		}
 	}
 
@@ -877,7 +885,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->set_of_coset_representatives" << endl;
 		}
-		AG->set_of_coset_representatives(AG_secondary, coset_reps, verbose_level);
+		AG->set_of_coset_representatives(
+				AG_secondary, coset_reps, verbose_level);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -897,6 +906,7 @@ void group_theoretic_activity::perform_activity(
 		coset_reps->save_csv(fname_coset_reps, verbose_level);
 
 		FREE_OBJECT(coset_reps);
+
 	}
 	else if (Descr->f_evaluate_word) {
 
@@ -1186,15 +1196,16 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_linear_codes" << endl;
+					"before AG->Any_group_linear->do_linear_codes" << endl;
 		}
-		AG->do_linear_codes(
+		AG->Any_group_linear->do_linear_codes(
 				Descr->linear_codes_control,
 				Descr->linear_codes_minimum_distance,
-				Descr->linear_codes_target_size, verbose_level);
+				Descr->linear_codes_target_size,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_linear_codes" << endl;
+					"after AG->Any_group_linear->do_linear_codes" << endl;
 		}
 	}
 
@@ -1207,12 +1218,13 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_tensor_permutations" << endl;
+					"before AG->Any_group_linear->do_tensor_permutations" << endl;
 		}
-		AG->do_tensor_permutations(verbose_level);
+		AG->Any_group_linear->do_tensor_permutations(
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_tensor_permutations" << endl;
+					"after AG->Any_group_linear->do_tensor_permutations" << endl;
 		}
 	}
 
@@ -1226,13 +1238,14 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_classify_ovoids" << endl;
+					"before AG->Any_group_linear->do_classify_ovoids" << endl;
 		}
-		AG->do_classify_ovoids(
-				Descr->Ovoid_classify_description, verbose_level);
+		AG->Any_group_linear->do_classify_ovoids(
+				Descr->Ovoid_classify_description,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_classify_ovoids" << endl;
+					"after AG->Any_group_linear->do_classify_ovoids" << endl;
 		}
 	}
 

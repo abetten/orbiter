@@ -46,28 +46,29 @@ void set_builder::init(
 
 	set_builder::Descr = Descr;
 
-	if (Descr->f_index_set_loop) {
+	if (Descr->f_loop) {
 		if (f_v) {
-			cout << "set_builder::init using index set through loop, low="
-					<< Descr->index_set_loop_low
-					<< " upper_bound=" <<  Descr->index_set_loop_upper_bound
-					<< " increment=" << Descr->index_set_loop_increment << endl;
+			cout << "set_builder::init using loop, low="
+					<< Descr->loop_low
+					<< " upper_bound=" <<  Descr->loop_upper_bound
+					<< " increment=" << Descr->loop_increment << endl;
 		}
 		int i, cnt;
 		long int x, y;
 		int index_set_size;
 
 		index_set_size = 0;
-		for (i = Descr->index_set_loop_low; i < Descr->index_set_loop_upper_bound;
-				i += Descr->index_set_loop_increment) {
+		for (i = 0; i < Descr->loop_upper_bound;
+				i += Descr->loop_increment) {
 			index_set_size++;
 		}
 		set = NEW_lint(2 * index_set_size);
 		cnt = 0;
-		for (i = Descr->index_set_loop_low; i < Descr->index_set_loop_upper_bound;
-				i += Descr->index_set_loop_increment) {
+		for (i = 0; i < Descr->loop_upper_bound;
+				i += Descr->loop_increment) {
 
-			x = i;
+
+			x =  Descr->loop_low + i;
 			y = process_transformations(x);
 
 			set[cnt] = y;

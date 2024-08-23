@@ -102,8 +102,8 @@ void combinatorial_object_with_properties::init(
 		cout << "combinatorial_object_with_properties::init "
 				"A_perm:" << endl;
 
-		A_perm->Strong_gens->print_generators_in_latex_individually(cout);
-		A_perm->Strong_gens->print_generators_in_source_code();
+		A_perm->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+		A_perm->Strong_gens->print_generators_in_source_code(verbose_level - 1);
 		A_perm->print_base();
 	}
 
@@ -278,10 +278,10 @@ void combinatorial_object_with_properties::latex_report(
 
 	ost << "Generators for the automorphism group: \\\\" << endl;
 	if (A_perm->degree < 100) {
-		A_perm->Strong_gens->print_generators_in_latex_individually(ost);
+		A_perm->Strong_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
 
 		ost << "\\begin{verbatim}" << endl;
-		A_perm->Strong_gens->print_generators_gap(ost);
+		A_perm->Strong_gens->print_generators_gap(ost, verbose_level - 1);
 		ost << "\\end{verbatim}" << endl;
 
 	}
@@ -309,7 +309,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"before SG->print_generators_in_latex_individually" << endl;
 		}
-		SG->print_generators_in_latex_individually(ost);
+		SG->print_generators_in_latex_individually(ost, verbose_level - 1);
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
 					"after SG->print_generators_in_latex_individually" << endl;

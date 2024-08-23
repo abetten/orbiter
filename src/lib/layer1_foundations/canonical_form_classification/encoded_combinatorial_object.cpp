@@ -240,6 +240,64 @@ void encoded_combinatorial_object::set_incidence(
 	}
 }
 
+void encoded_combinatorial_object::create_Levi_graph(
+		graph_theory::colored_graph *&CG,
+		std::string &label,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::create_Levi_graph" << endl;
+	}
+
+	int i, j, p1, p2;
+	int nb_points;
+
+	nb_points = nb_rows + nb_cols;
+
+	std::string label_tex = label;
+
+
+	CG = NEW_OBJECT(graph_theory::colored_graph);
+
+	CG->init_basic(
+			nb_points + 2,
+			label, label_tex,
+			verbose_level);
+
+	// create two special vertices:
+	// the first vertex is adjacent to all points.
+	// The second vertex is adjacent to all columns.
+
+	for (i = 0; i < nb_rows; i++) {
+		CG->set_adjacency(
+				0, 2 + i, 1);
+	}
+	for (i = 0; i < nb_cols; i++) {
+		CG->set_adjacency(
+				1, 2 + nb_rows + i, 1);
+	}
+
+
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (get_incidence_ij(i, j) == 0) {
+				continue;
+			}
+			p1 = i;
+			p2 = nb_rows + j;
+			CG->set_adjacency(
+					2 + p1, 2 + p2, 1);
+		}
+	}
+	if (f_v) {
+		cout << "encoded_combinatorial_object::create_Levi_graph done" << endl;
+	}
+
+}
+
 void encoded_combinatorial_object::init_canonical_form(
 		encoded_combinatorial_object *Enc,
 		l1_interfaces::nauty_output *NO,
@@ -267,6 +325,7 @@ void encoded_combinatorial_object::init_canonical_form(
 
 void encoded_combinatorial_object::print_incma()
 {
+	cout << "encoded_combinatorial_object::print_incma" << endl;
 	orbiter_kernel_system::Orbiter->Int_vec->matrix_print_tight(Incma, nb_rows, nb_cols);
 
 }

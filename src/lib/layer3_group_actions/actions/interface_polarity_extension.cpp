@@ -98,6 +98,10 @@ static void polarity_extension_element_print_verbose(
 static void polarity_extension_print_point(
 		action &A,
 	long int a, std::ostream &ost, int verbose_level);
+static void polarity_extension_unrank_point(
+		action &A, long int rk, int *v, int verbose_level);
+static long int polarity_extension_rank_point(
+		action &A, int *v, int verbose_level);
 
 
 
@@ -136,6 +140,8 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_print_for_make_element_no_commas =
 			polarity_extension_element_print_for_make_element_no_commas;
 	ptr_print_point = polarity_extension_print_point;
+	ptr_unrank_point = polarity_extension_unrank_point;
+	ptr_rank_point = polarity_extension_rank_point;
 }
 
 
@@ -275,7 +281,7 @@ static void polarity_extension_element_retrieve(
 		cout << "polarity_extension_element_"
 				"retrieve hdl = " << hdl << endl;
 		}
-	p_elt = P.Elts->s_i(hdl);
+	p_elt = P.Page_storage->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);
 	//	}
@@ -298,7 +304,7 @@ static int polarity_extension_element_store(
 		cout << "polarity_extension_element_store" << endl;
 		}
 	P.element_pack(Elt, P.elt1);
-	hdl = P.Elts->store(P.elt1);
+	hdl = P.Page_storage->store(P.elt1);
 	if (f_v) {
 		cout << "polarity_extension_element_store "
 				"hdl = " << hdl << endl;
@@ -398,7 +404,7 @@ static void polarity_extension_element_dispose(
 		cout << "polarity_extension_element_dispose "
 				"hdl = " << hdl << endl;
 		}
-	P.Elts->dispose(hdl);
+	P.Page_storage->dispose(hdl);
 }
 
 static void polarity_extension_element_print(
@@ -417,9 +423,12 @@ static void polarity_extension_element_code_for_make_element(
 		action &A,
 		void *elt, int *data)
 {
-	cout << "polarity_extension_element_code_for_make_element "
-			"not yet implemented" << endl;
-	exit(1);
+	group_constructions::polarity_extension *P = A.G.Polarity_extension;
+	int *Elt = (int *) elt;
+
+
+	P->element_code_for_make_element(
+			Elt, data);
 }
 
 static void polarity_extension_element_print_for_make_element(
@@ -522,6 +531,28 @@ static void polarity_extension_print_point(
 			"not yet implemented" << endl;
 	exit(1);
 }
+
+static void polarity_extension_unrank_point(
+		action &A, long int rk, int *v, int verbose_level)
+{
+	group_constructions::polarity_extension &P = *A.G.Polarity_extension;
+
+	P.unrank_point(rk, v, verbose_level);
+
+}
+
+static long int polarity_extension_rank_point(
+		action &A, int *v, int verbose_level)
+{
+	group_constructions::polarity_extension &P = *A.G.Polarity_extension;
+	long int rk;
+
+
+	rk = P.rank_point(v, verbose_level);
+
+	return rk;
+}
+
 
 }}}
 

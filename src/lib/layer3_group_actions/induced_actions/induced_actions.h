@@ -607,9 +607,11 @@ public:
 	int *subspace_basis; // [n * big_n]
 	int *subspace_basis2; // [n * big_n]
 	
-	ring_theory::longinteger_object degree;
+	ring_theory::longinteger_object degree_as_text;
+	long int degree;
 	int max_string_length;
 	
+
 	int f_has_print_function;
 	void (*print_function)(
 			std::ostream &ost, long int a, void *data);

@@ -918,6 +918,18 @@ void linear_algebra::transpose_matrix(
 	}
 }
 
+void linear_algebra::transpose_square_matrix(
+		int *A, int *At, int n)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			At[j * n + i] = A[i * n + j];
+		}
+	}
+}
+
 void linear_algebra::transpose_matrix_in_place(
 		int *A, int m)
 {

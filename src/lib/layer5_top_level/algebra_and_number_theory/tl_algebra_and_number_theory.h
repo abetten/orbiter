@@ -330,12 +330,59 @@ public:
 };
 
 
+// #############################################################################
+// any_group_linear.cpp
+// #############################################################################
+
+//! group theoretic activities specifically for linear groups
+
+class any_group_linear {
+
+public:
+
+	any_group *Any_group;
+
+	any_group_linear();
+	~any_group_linear();
+
+	void init(
+			any_group *Any_group, int verbose_level);
+	void classes_based_on_normal_form(
+			int verbose_level);
+	void find_singer_cycle(
+			int verbose_level);
+	void isomorphism_Klein_quadric(
+			std::string &fname, int verbose_level);
+	void do_orbits_on_subspaces(
+			poset_classification::poset_classification_control *Control,
+			orbits::orbits_on_subspaces *&OoS,
+			int depth, int verbose_level);
+	void do_tensor_classify(
+			std::string &control_label,
+			apps_geometry::tensor_classify *&T,
+			int depth, int verbose_level);
+	void do_tensor_permutations(
+			int verbose_level);
+	void do_linear_codes(
+			std::string &control_label,
+			int minimum_distance,
+			int target_size, int verbose_level);
+	void do_classify_ovoids(
+			apps_geometry::ovoid_classify_description
+				*Ovoid_classify_description,
+			int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // any_group.cpp
 // #############################################################################
 
-//! a wrapper for linear_group and permutation_group_create
+//! front end for group theoretic activities for three kinds of groups: linear groups, permutation groups, modified groups
 
 class any_group {
 
@@ -359,8 +406,12 @@ public:
 	groups::strong_generators *Subgroup_gens;
 	groups::sims *Subgroup_sims;
 
+	any_group_linear *Any_group_linear;
+
 	any_group();
 	~any_group();
+	void init_basic(
+			int verbose_level);
 	void init_linear_group(
 			group_constructions::linear_group *LG, int verbose_level);
 	void init_permutation_group(
@@ -488,43 +539,16 @@ public:
 			element_processing_description *element_processing_descr,
 			int verbose_level);
 	void print();
-
-	// any_group_linear.cpp:
-	void classes_based_on_normal_form(
-			int verbose_level);
 	void classes(
 			int verbose_level);
-	void find_singer_cycle(
-			int verbose_level);
-	void search_element_of_order(
-			int order, int verbose_level);
 	void find_standard_generators(
 			int order_a,
 			int order_b,
 			int order_ab,
 			int verbose_level);
-	void isomorphism_Klein_quadric(
-			std::string &fname, int verbose_level);
-	void do_orbits_on_subspaces(
-			poset_classification::poset_classification_control *Control,
-			orbits::orbits_on_subspaces *&OoS,
-			int depth, int verbose_level);
-	void do_tensor_classify(
-			std::string &control_label,
-			apps_geometry::tensor_classify *&T,
-			int depth, int verbose_level);
-	void do_tensor_permutations(
-			int verbose_level);
-	void do_linear_codes(
-			std::string &control_label,
-			int minimum_distance,
-			int target_size, int verbose_level);
-	void do_classify_ovoids(
-			apps_geometry::ovoid_classify_description
-				*Ovoid_classify_description,
-			int verbose_level);
-	int subspace_orbits_test_set(
-			int len, long int *S, int verbose_level);
+	void search_element_of_order(
+			int order, int verbose_level);
+
 
 
 
@@ -699,6 +723,10 @@ public:
 	std::string polarity_extension_input;
 	std::string polarity_extension_PA;
 
+	int f_on_middle_layer_grassmannian;
+
+	int f_on_points_and_hyperplanes;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -723,6 +751,26 @@ public:
 
 class group_theoretic_activity_description {
 public:
+
+	// TABLES/group_theoretic_activity_1.tex
+
+
+	int f_report;
+
+		// flags that apply to report:
+		int f_report_sylow;
+		int f_report_group_table;
+		int f_report_classes;
+
+
+	int f_export_group_table;
+
+	int f_random_element;
+	std::string random_element_label;
+
+
+	int f_permutation_representation_of_element;
+	std::string permutation_representation_element_text;
 
 	int f_apply;
 	std::string apply_input;
@@ -752,6 +800,7 @@ public:
 
 	int f_export_magma;
 
+
 	// GAP:
 	int f_canonical_image_GAP;
 	std::string canonical_image_GAP_input_set;
@@ -767,30 +816,33 @@ public:
 	int find_standard_generators_order_b;
 	int find_standard_generators_order_ab;
 
-	int f_random_element;
-	std::string random_element_label;
-
 	int f_element_rank;
 	std::string element_rank_data;
 
 	int f_element_unrank;
 	std::string element_unrank_data;
 
+
+
+
+	// TABLES/group_theoretic_activity_2.tex
+
 	int f_find_singer_cycle;
 
 
 	int f_classes_based_on_normal_form;
 
+
 	// Magma:
 	int f_normalizer;
+
 
 	// Magma:
 	int f_centralizer_of_element;
 	std::string centralizer_of_element_label;
 	std::string centralizer_of_element_data;
 
-	int f_permutation_representation_of_element;
-	std::string permutation_representation_element_text;
+
 
 	int f_orbits_on_group_elements_under_conjugation;
 	std::string orbits_on_group_elements_under_conjugation_fname;
@@ -804,18 +856,9 @@ public:
 	// Magma:
 	int f_classes;
 
+	// undocumented:
 	int f_find_subgroup;
 	int find_subgroup_order;
-
-	int f_report;
-
-		// flags that apply to report:
-		int f_report_sylow;
-		int f_report_group_table;
-		int f_report_classes;
-
-
-	int f_export_group_table;
 
 	//int f_test_if_geometric;
 	//int test_if_geometric_depth;
@@ -835,6 +878,11 @@ public:
 
 	int f_export_inversion_graphs;
 	std::string export_inversion_graphs_fname;
+
+
+
+	// TABLES/group_theoretic_activity_3.tex
+
 
 
 	int f_multiply_elements_csv_column_major_ordering;
@@ -898,13 +946,15 @@ public:
 	int f_orbit_of_set_from_file;
 	std::string orbit_of_set_from_file_fname;
 
+
+	// classification stuff:
+
+
 	// classification of optimal linear codes using poset classification
 	int f_linear_codes;
 	std::string linear_codes_control;
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
-
-
 
 
 	int f_tensor_permutations;
@@ -976,7 +1026,6 @@ public:
 	std::string label;
 	std::string label_tex;
 
-	//strong_generators *initial_strong_gens;
 
 	actions::action *A_base;
 	actions::action *A_previous;
@@ -1026,7 +1075,10 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_polarity_extension(
-			group_modification_description *description,
+			std::string &input_group_label,
+			std::string &input_projective_space_label,
+			int f_on_middle_layer_grassmannian,
+			int f_on_points_and_hyperplanes,
 			int verbose_level);
 
 };

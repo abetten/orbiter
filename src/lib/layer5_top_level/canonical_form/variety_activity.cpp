@@ -166,7 +166,6 @@ void variety_activity::do_compute_group(
 				"after Nauty->init" << endl;
 	}
 
-
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"before Nauty->classify_nauty" << endl;

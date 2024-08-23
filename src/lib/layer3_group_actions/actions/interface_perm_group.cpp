@@ -130,11 +130,11 @@ static long int perm_group_element_image_of(
 	if (f_v) {
 		cout << "perm_group_element_image_of "
 				"image of " << a;
-		}
+	}
 	if (G.f_product_action) {
 		if (a < G.offset) {
 			b = Elt[a];
-			}
+		}
 		else {
 			int /*x,*/ y, xx, yy;
 			
@@ -144,14 +144,14 @@ static long int perm_group_element_image_of(
 			xx = Elt[a];
 			yy = Elt[G.m + y] - G.m;
 			b = xx * G.n + yy + G.offset;
-			}
 		}
+	}
 	else {
 		b = Elt[a];
-		}
+	}
 	if (f_v) {
 		cout << " is " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -165,7 +165,7 @@ static void perm_group_element_one(
 	
 	if (f_v) {
 		cout << "perm_group_element_one ";
-		}
+	}
 	G.one(Elt);
 }
 
@@ -179,14 +179,16 @@ static int perm_group_element_is_one(
 	
 	if (f_v) {
 		cout << "perm_group_element_is_one ";
-		}
+	}
 	f_is_one = G.is_one(Elt);
 	if (f_v) {
-		if (f_is_one)
+		if (f_is_one) {
 			cout << " YES" << endl;
-		else
+		}
+		else {
 			cout << " NO" << endl;
 		}
+	}
 	return f_is_one;
 }
 
@@ -201,7 +203,7 @@ static void perm_group_element_unpack(
 	
 	if (f_v) {
 		cout << "perm_group_element_unpack" << endl;
-		}
+	}
 	G.unpack(elt1, Elt1);
 }
 
@@ -216,7 +218,7 @@ static void perm_group_element_pack(
 	
 	if (f_v) {
 		cout << "perm_group_element_pack" << endl;
-		}
+	}
 	G.pack(Elt1, elt1);
 }
 
@@ -231,7 +233,7 @@ static void perm_group_element_retrieve(
 	
 	if (f_v) {
 		cout << "perm_group_element_retrieve hdl = " << hdl << endl;
-		}
+	}
 
 #if 0
 	if (false /* A.f_group_order_is_small */) {
@@ -251,7 +253,7 @@ static void perm_group_element_retrieve(
 		
 			A.path[ii] = r;
 			//cout << r << " ";
-			}
+		}
 		//cout << endl;
 		A.element_one(G.Eltrk1, 0);
 		for (i = 0; i < A.base_len; i++) {
@@ -262,18 +264,18 @@ static void perm_group_element_retrieve(
 			A.element_mult(A.transversal_reps[i] +
 					j * A.elt_size_in_int, G.Eltrk1, G.Eltrk2, 0);
 			A.element_move(G.Eltrk2, G.Eltrk1, 0);
-			}
+		}
 		A.element_move(G.Eltrk1, Elt, 0);
 		
-		}
+	}
 	else {
 #endif
-		p_elt = G.Elts->s_i(hdl);
+		p_elt = G.Page_storage->s_i(hdl);
 		G.unpack(p_elt, Elt);
 		//}
 	if (f_v) {
 		G.print(Elt, cout);
-		}
+	}
 }
 
 static int perm_group_element_store(
@@ -286,7 +288,7 @@ static int perm_group_element_store(
 	
 	if (f_v) {
 		cout << "perm_group_element_store()" << endl;
-		}
+	}
 #if 0
 	if (false /* A.f_group_order_is_small */) {
 		int i, j, bi, jj, l;
@@ -303,7 +305,7 @@ static int perm_group_element_store(
 			
 			if (i > 0) {
 				a *= l;
-				}
+			}
 			
 			jj = A.element_image_of(bi, G.Eltrk1, 0);
 			j = A.orbit_inv[i][jj];
@@ -312,7 +314,7 @@ static int perm_group_element_store(
 			if (j >= l) {
 				cout << "perm_group_element_store() j >= l" << endl;
 				exit(1);
-				}
+			}
 			a += j;
 			
 			//A.element_print(A.transversal_reps[i] +
@@ -340,18 +342,18 @@ static int perm_group_element_store(
 			//cout << "stripped to ";
 			//A.element_print(G.Eltrk1, cout);
 			
-			}
+		}
 		//cout << endl;
 		hdl = a;
-		}
+	}
 	else {
 #endif
 		G.pack(Elt, G.elt1);
-		hdl = G.Elts->store(G.elt1);
+		hdl = G.Page_storage->store(G.elt1);
 		//}
 	if (f_v) {
 		cout << "hdl = " << hdl << endl;
-		}
+	}
 	return hdl;
 }
 
@@ -374,14 +376,14 @@ static void perm_group_element_mult(
 		cout << "B=" << endl;
 		Combi.perm_print_list(cout, BB, G.degree);
 		G.print(BB, cout);
-		}
+	}
 	G.mult(AA, BB, AB);
 	if (f_v) {
 		cout << "degree=" << G.degree << endl;
 		cout << "AB=" << endl;
 		Combi.perm_print_list(cout, AB, G.degree);
 		G.print(AB, cout);
-		}
+	}
 }
 
 static void perm_group_element_invert(
@@ -397,12 +399,12 @@ static void perm_group_element_invert(
 		cout << "perm_group_element_invert" << endl;
 		cout << "A=" << endl;
 		G.print(AA, cout);
-		}
+	}
 	G.invert(AA, AAv);
 	if (f_v) {
 		cout << "Av=" << endl;
 		G.print(AAv, cout);
-		}
+	}
 }
 
 static void perm_group_element_move(
@@ -416,7 +418,7 @@ static void perm_group_element_move(
 
 	if (f_v) {
 		cout << "perm_group_element_move" << endl;
-		}
+	}
 	G.copy(AA, BB);
 }
 
@@ -429,13 +431,13 @@ static void perm_group_element_dispose(
 
 	if (f_v) {
 		cout << "perm_group_element_dispose hdl = " << hdl << endl;
-		}
+	}
 	if (false /* A.f_group_order_is_small */) {
 		// do nothing
-		}
+	}
 	else {
-		G.Elts->dispose(hdl);
-		}
+		G.Page_storage->dispose(hdl);
+	}
 }
 
 static void perm_group_element_print(
@@ -526,7 +528,7 @@ static void perm_group_print_point(
 	if (G.f_product_action) {
 		if (a < G.offset) {
 			cout << "r_{" << a << "}";
-			}
+		}
 		else {
 			int x, y;
 			
@@ -534,11 +536,11 @@ static void perm_group_print_point(
 			x = a / G.n;
 			y = a % G.n;
 			cout << "(" << x << "," << y << ")";
-			}
 		}
+	}
 	else {
 		ost << a;
-		}
+	}
 }
 
 }}}

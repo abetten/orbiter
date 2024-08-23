@@ -118,23 +118,39 @@ void action_on_grassmannian::init(
 		exit(1);
 	}
 
-#if 0
-	if (A.type_G == matrix_group_t) {
-		M = A.G.matrix_grp;
-	}
-	else {
-		action *sub = A.subaction;
-		M = sub->G.matrix_grp;
-	}
-#endif
-	
-	C.q_binomial(degree, n, k, q, 0);
-	max_string_length = degree.len();
+	C.q_binomial(degree_as_text, n, k, q, 0);
+
 	if (f_v) {
-		cout << "degree = " << degree << endl;
-		cout << "max_string_length = " << max_string_length << endl;
-		cout << "low_level_point_size = " << low_level_point_size << endl;
+		cout << "action_on_grassmannian::init degree_as_text = " << degree_as_text << endl;
 	}
+
+	ring_theory::longinteger_domain D;
+
+	if (f_v) {
+		cout << "action_on_grassmannian::init "
+				"before D.check_for_lint_overflow" << endl;
+	}
+
+	D.check_for_lint_overflow(
+			&degree_as_text /*number_to_test*/,
+			verbose_level);
+
+	if (f_v) {
+		cout << "action_on_grassmannian::init "
+				"after D.check_for_lint_overflow" << endl;
+	}
+
+
+	degree = degree_as_text.as_lint();
+
+	max_string_length = degree_as_text.len();
+	if (f_v) {
+		cout << "action_on_grassmannian::init degree_as_text = " << degree_as_text << endl;
+		cout << "action_on_grassmannian::init degree = " << degree << endl;
+		cout << "action_on_grassmannian::init max_string_length = " << max_string_length << endl;
+		cout << "action_on_grassmannian::init low_level_point_size = " << low_level_point_size << endl;
+	}
+
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init done" << endl;

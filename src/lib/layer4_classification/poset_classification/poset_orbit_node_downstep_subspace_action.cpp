@@ -90,7 +90,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		cout << "The stabilizer is a group of order " << go << endl;
 		if (f_vv) {
 			cout << "With the following generators:" << endl;
-			Strong_gens->print_generators(cout);
+			Strong_gens->print_generators(cout, verbose_level - 1);
 		}
 	}
 	

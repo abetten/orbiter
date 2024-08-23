@@ -226,7 +226,10 @@ void modified_group_create::modified_group_init(
 					"before create_polarity_extension" << endl;
 		}
 		create_polarity_extension(
-					description,
+					description->polarity_extension_input,
+					description->polarity_extension_PA,
+					description->f_on_middle_layer_grassmannian,
+					description->f_on_points_and_hyperplanes,
 					verbose_level);
 
 		if (f_v) {
@@ -353,13 +356,24 @@ void modified_group_create::create_action_on_k_subspaces(
 
 
 
-	if (!A_previous->f_is_linear) {
+
+	actions::action_global AGlobal;
+
+	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subspaces "
-				"previous action is not linear" << endl;
-		exit(1);
+				"before AGlobal.create_action_on_k_subspaces" << endl;
+	}
+	A_modified = AGlobal.create_action_on_k_subspaces(
+			A_previous,
+			description->on_k_subspaces_k,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_k_subspaces "
+				"before AGlobal.create_action_on_k_subspaces" << endl;
 	}
 
 
+#if 0
 	algebra::matrix_group *M;
 	field_theory::finite_field *Fq;
 	int n;
@@ -420,16 +434,11 @@ void modified_group_create::create_action_on_k_subspaces(
 		cout << "modified_group_create::create_action_on_k_subspaces "
 				"after induced_action_on_grassmannian_preloaded" << endl;
 	}
+#endif
 
-
-	A_modified->f_is_linear = true;
 
 	f_has_strong_generators = true;
 
-	A_modified->f_is_linear = A_previous->f_is_linear;
-	A_modified->dimension = A_previous->dimension;
-
-	f_has_strong_generators = true;
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_k_subspaces "
 				"before Strong_gens = AG->Subgroup_gens" << endl;
@@ -441,6 +450,15 @@ void modified_group_create::create_action_on_k_subspaces(
 				"action A_modified created: ";
 		A_modified->print_info();
 	}
+
+	algebra::matrix_group *M;
+	field_theory::finite_field *Fq;
+	int n;
+
+	M = A_previous->get_matrix_group();
+
+	n = M->n;
+	Fq = M->GFq;
 
 
 	label += "_OnGr_" + std::to_string(n) + "_" + std::to_string(description->on_k_subspaces_k) + "_" + std::to_string(Fq->q);
@@ -1187,110 +1205,123 @@ void modified_group_create::create_product_action(
 
 
 void modified_group_create::create_polarity_extension(
-		group_modification_description *description,
+		std::string &input_group_label,
+		std::string &input_projective_space_label,
+		int f_on_middle_layer_grassmannian,
+		int f_on_points_and_hyperplanes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "modified_group_create::create_polarity_extension" << endl;
+		cout << "modified_group_create::create_polarity_extension input_group_label = " << input_group_label << endl;
+		cout << "modified_group_create::create_polarity_extension f_on_middle_layer_grassmannian = " << f_on_middle_layer_grassmannian << endl;
+		cout << "modified_group_create::create_polarity_extension f_on_points_and_hyperplanes = " << f_on_points_and_hyperplanes << endl;
 	}
-#if 0
-	if (Descr->from.size() != 1) {
-		cout << "modified_group_create::create_polarity_extension "
-				"need exactly one argument of type -from" << endl;
-		exit(1);
-	}
-#endif
-
-	//std::string polarity_extension_input;
-	//std::string polarity_extension_PA;
 
 	any_group *AG;
 
-	AG = Get_any_group(description->polarity_extension_input);
+	AG = Get_any_group(input_group_label);
 
-	algebra::matrix_group *M;
+	//algebra::matrix_group *M;
 
 
 	if (!AG->A->is_matrix_group()) {
 		cout << "modified_group_create::create_polarity_extension "
-				"group 1 is not a matrix group" << endl;
+				"the given group is not a matrix group" << endl;
 		exit(1);
 	}
-	M = AG->A->get_matrix_group();
+	//M = AG->A->get_matrix_group();
 
 	actions::action_global AGlobal;
 
 
 	projective_geometry::projective_space_with_action *PA;
 
-	PA = Get_projective_space(description->polarity_extension_PA);
+	PA = Get_projective_space(input_projective_space_label);
 
 	geometry::polarity *Standard_polarity;
 
 	Standard_polarity = PA->P->Subspaces->Standard_polarity;
 
-	//actions::action *A;
 
 	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension "
-				"before AGlobal.init_polarity_extension_group" << endl;
+		cout << "modified_group_create::create_polarity_extension before creating extension" << endl;
 	}
-	A_modified = AGlobal.init_polarity_extension_group(
-			M,
-			PA->P,
-			Standard_polarity,
-			verbose_level);
+
+	if (f_on_middle_layer_grassmannian || f_on_points_and_hyperplanes) {
+		if (f_v) {
+			cout << "modified_group_create::create_polarity_extension "
+					"before AGlobal.init_polarity_extension_group_and_restrict" << endl;
+		}
+		A_modified = AGlobal.init_polarity_extension_group_and_restrict(
+				AG->A,
+				PA->P,
+				Standard_polarity,
+				f_on_middle_layer_grassmannian,
+				f_on_points_and_hyperplanes,
+				verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_polarity_extension "
+					"after AGlobal.init_polarity_extension_group_and_restrict" << endl;
+		}
+
+		if (A_modified->subaction->Strong_gens == NULL) {
+			cout << "modified_group_create::create_polarity_extension A_modified->subaction->Strong_gens == NULL" << endl;
+			exit(1);
+		}
+		A_modified->Strong_gens = A_modified->subaction->Strong_gens;
+
+	}
+	else {
+		if (f_v) {
+			cout << "modified_group_create::create_polarity_extension "
+					"before AGlobal.init_polarity_extension_group" << endl;
+		}
+		A_modified = AGlobal.init_polarity_extension_group(
+				AG->A,
+				PA->P,
+				Standard_polarity,
+				verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_polarity_extension "
+					"after AGlobal.init_polarity_extension_group" << endl;
+		}
+	}
+
 	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension "
-				"after AGlobal.init_polarity_extension_group" << endl;
+		cout << "modified_group_create::create_polarity_extension after creating extension" << endl;
 	}
 
-	// it has strong generators
+	// test if it has strong generators
 
 
+	if (A_modified->Strong_gens == NULL) {
+		cout << "modified_group_create::create_polarity_extension A_modified->Strong_gens == NULL" << endl;
+		exit(1);
+	}
 
 	A_modified->f_is_linear = false;
 
 
+	f_has_strong_generators = true;
 	Strong_gens = A_modified->Strong_gens;
-	f_has_strong_generators = true;
 
-#if 0
-	actions::action *A0;
-	//groups::direct_product *P;
-
-	A0 = A_modified->subaction;
-
-	//P = A0->G.direct_product_group;
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension "
-				"before AG.scan_generators" << endl;
-	}
-	Strong_gens = AGlobal.scan_generators(
-			A0,
-			Descr->direct_product_subgroup_gens,
-			Descr->direct_product_subgroup_order,
-			verbose_level);
-	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension "
-				"after AG.scan_generators" << endl;
-	}
-
-
-	f_has_strong_generators = true;
-
-#endif
-
-
+	A_base = A_modified;
+	A_previous = A_modified;
 
 
 	label += AG->label + "_polarity_ext";
 	label_tex += AG->label_tex + " {\\rm polarity extension}";
-
+	if (f_on_middle_layer_grassmannian) {
+		label += "_on_middle_layer_grassmannian";
+		label_tex += "{\\rm \\_on\\_middle\\_layer\\_grassmannian}";
+	}
+	if (f_on_points_and_hyperplanes) {
+		label += "_on_points_and_hyperplanes";
+		label_tex += "{\\rm \\_on\\_points\\_and\\_hyperplanes}";
+	}
 
 	if (f_v) {
 		cout << "modified_group_create::create_polarity_extension "

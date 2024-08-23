@@ -717,7 +717,7 @@ public:
 			int f_without_tables,
 			int f_compute_related_fields,
 			int verbose_level);
-	void check_size(
+	void check_for_int_overflow(
 			int verbose_level);
 	void finite_field_init_small_order(
 			int q,

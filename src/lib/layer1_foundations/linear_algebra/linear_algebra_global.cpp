@@ -1095,8 +1095,6 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	int *w1, *w2, *w1_save;
 	int hh, l, e, frobenius_inv, lambda, rk, c, cv;
 	long int i, j;
-	int *system;
-	int *base_cols;
 	number_theory::number_theory_domain NT;
 
 
@@ -1192,9 +1190,25 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	}
 #endif
 
-	system = NEW_int(d * (d + 1));
-	base_cols = NEW_int(d + 1);
 
+	if (f_v) {
+		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
+				"before adjust_scalars_in_frame" << endl;
+	}
+	adjust_scalars_in_frame(
+			F,
+			d, Mtx /* Image_of_basis_in_rows */,
+			v2 /* image_of_all_one */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
+				"after adjust_scalars_in_frame" << endl;
+	}
+
+
+
+
+#if 0
 	// we will use a system of size d x (d + 1):
 
 	// coefficient matrix:
@@ -1257,14 +1271,21 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 			Mtx[i * d + j] = F->mult(c, Mtx[i * d + j]);
 		}
 	}
+#endif
 
 	if (f_vv) {
-		cout << "Mtx (after scaling):" << endl;
+		cout << "linear_algebra_global::reverse_engineer_semilinear_map "
+				"Mtx (after scaling):" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 	}
 
+	int *system;
+	int *base_cols;
+
+	system = NEW_int(d * (d + 1));
+	base_cols = NEW_int(d + 1);
 
 
 	frobenius = 0;
@@ -1413,7 +1434,134 @@ int linear_algebra_global::reverse_engineer_semilinear_map(
 	return true;
 }
 
+void linear_algebra_global::create_frame(
+		int *&frame, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "linear_algebra_global::create_frame" << endl;
+	}
+
+	frame = NEW_int((n + 1) * n);
+
+	Int_vec_zero(frame, n * n);
+	int i;
+	long int a, b, c, d;
+
+	for (i = 0; i < n; i++) {
+		frame[i * n + i] = 1;
+	}
+	Int_vec_one(frame + n * n, n);
+
+	if (f_v) {
+		cout << "linear_algebra_global::create_frame frame:" << endl;
+		Int_matrix_print(frame, n + 1, n);
+	}
+
+	if (f_v) {
+		cout << "linear_algebra_global::create_frame done" << endl;
+	}
+}
+
+void linear_algebra_global::adjust_scalars_in_frame(
+		field_theory::finite_field *F,
+		int d, int *Image_of_basis_in_rows, int *image_of_all_one,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "linear_algebra_global::adjust_scalars_in_frame" << endl;
+	}
+
+	int i, j, rk;
+
+	int *system;
+	int *base_cols;
+
+	system = NEW_int(d * (d + 1));
+	base_cols = NEW_int(d + 1);
+
+	// we will use a system of size d x (d + 1):
+
+	// coefficient matrix:
+	// the first d columns of system are the rows of Image_of_basis_in_rows.
+	// the RHS is image_of_all_one, the image of the all one vector.
+	// The RHS is stored in column d of system.
+
+	for (i = 0; i < d; i++) {
+		for (j = 0; j < d; j++) {
+			system[i * (d + 1) + j] = Image_of_basis_in_rows[j * d + i];
+		}
+	}
+	// RHS:
+	for (i = 0; i < d; i++) {
+		system[i * (d + 1) + d] = image_of_all_one[i];
+	}
+	if (f_vv) {
+		cout << "linear_algebra_global::adjust_scalars_in_frame "
+				"linear system:" << endl;
+		Int_vec_print_integer_matrix_width(
+				cout, system,
+				d, d + 1, d + 1, F->log10_of_q);
+		cout << endl;
+	}
+	rk = F->Linear_algebra->Gauss_simple(
+			system, d, d + 1, base_cols,
+			verbose_level - 4);
+	if (rk != d) {
+		cout << "linear_algebra_global::adjust_scalars_in_frame "
+				"rk != d, fatal" << endl;
+		exit(1);
+	}
+	if (f_vv) {
+		cout << "linear_algebra_global::adjust_scalars_in_frame "
+				"after Gauss_simple:" << endl;
+		Int_vec_print_integer_matrix_width(
+				cout, system,
+				d, d + 1, d + 1, F->log10_of_q);
+		cout << endl;
+	}
+
+	// multiply the i-th row of Mtx
+	// by the i-th element in the RHS of system.
+
+	// Is is done so that the image
+	// of the all-one vector is the all-one vector
+	// with respect to the new basis.
+
+	// we will use a system of size d x (d + 1):
+
+	int c;
+
+	for (i = 0; i < d; i++) {
+		c = system[i * (d + 1) + d];
+		if (c == 0) {
+			cout << "linear_algebra_global::adjust_scalars_in_frame "
+					"the input matrix does not have full rank" << endl;
+			exit(1);
+		}
+		// multiply row i by c:
+		for (j = 0; j < d; j++) {
+			Image_of_basis_in_rows[i * d + j] = F->mult(c, Image_of_basis_in_rows[i * d + j]);
+		}
+	}
+
+	if (f_vv) {
+		cout << "Image_of_basis_in_rows (after scaling):" << endl;
+		Int_vec_print_integer_matrix_width(
+				cout, Image_of_basis_in_rows, d, d, d, F->log10_of_q);
+		cout << endl;
+	}
+
+	FREE_int(system);
+	FREE_int(base_cols);
+	if (f_v) {
+		cout << "linear_algebra_global::adjust_scalars_in_frame done" << endl;
+	}
+}
 
 
 

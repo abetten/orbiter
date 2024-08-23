@@ -178,13 +178,20 @@ void vector_ge::init_from_permutation_representation(
 
 	if (f_v) {
 		cout << "vector_ge::init_from_permutation_representation" << endl;
+		cout << "vector_ge::init_from_permutation_representation A = ";
+		A->print_info();
+		cout << endl;
 	}
 	Elt = NEW_int(A->elt_size_in_int);
 	init(A, verbose_level);
 	allocate(nb_elements, verbose_level);
 	for (i = 0; i < nb_elements; i++) {
+		if (f_v) {
+			cout << "vector_ge::init_from_permutation_representation "
+					"i = " << i << " / " << nb_elements << endl;
+		}
 		A->Group_element->make_element_from_permutation_representation(
-				Elt, S, data + i * A->degree, 0/*verbose_level*/);
+				Elt, S, data + i * A->degree, verbose_level - 1);
 		if (f_vv) {
 			cout << "vector_ge::init_from_permutation_representation "
 					"generator " << i << ": " << endl;

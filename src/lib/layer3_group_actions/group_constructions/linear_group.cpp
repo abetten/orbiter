@@ -1043,7 +1043,8 @@ void linear_group::init_monomial_group(
 	q = input_q;
 	
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	Strong_gens->generators_for_the_monomial_group(A_linear, 
+	Strong_gens->generators_for_the_monomial_group(
+			A_linear,
 		Mtx, verbose_level - 1);
 	f_has_strong_generators = true;
 	
@@ -1311,7 +1312,8 @@ void linear_group::init_subfield_structure_action(
 	q = input_q;
 	
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
-	Strong_gens->field_reduction(A_linear,
+	Strong_gens->field_reduction(
+			A_linear,
 			n, s, F, verbose_level - 1);
 	//lift_generators_to_subfield_structure(A_linear,
 	//P->n + 1, s, P->F, SGens, verbose_level - 1);
@@ -1369,7 +1371,6 @@ void linear_group::init_orthogonal_group(
 	Strong_gens = NEW_OBJECT(groups::strong_generators);
 	Strong_gens->generators_for_the_orthogonal_group(
 			A_linear,
-			//F, n, epsilon,
 			O,
 			f_semilinear,
 			verbose_level - 1);
@@ -1427,7 +1428,8 @@ void linear_group::init_subgroup_from_file(
 				"reading generators from file " << subgroup_fname << endl;
 	}
 
-	Strong_gens->read_file(A_linear,
+	Strong_gens->read_file(
+			A_linear,
 			subgroup_fname, verbose_level - 1);
 
 	if (f_v) {
@@ -1471,7 +1473,8 @@ void linear_group::init_subgroup_by_generators(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	Strong_gens->init_subgroup_by_generators(A_linear,
+	Strong_gens->init_subgroup_by_generators(
+			A_linear,
 			nb_subgroup_generators, subgroup_generators_data,
 			subgroup_order_text,
 			nice_gens,
@@ -1584,7 +1587,8 @@ void linear_group::report(
 
 	//G = initial_strong_gens->create_sims(verbose_level);
 	if (f_v) {
-		cout << "linear_group::report before Strong_gens->create_sims" << endl;
+		cout << "linear_group::report "
+				"before Strong_gens->create_sims" << endl;
 	}
 	H = Strong_gens->create_sims(0 /*verbose_level*/);
 
@@ -1639,7 +1643,8 @@ void linear_group::report(
 		ost << "\\noindent The group acts on a set of size "
 				<< A2->degree << "\\\\" << endl;
 #endif
-		A2->report_what_we_act_on(ost,
+		A2->report_what_we_act_on(
+				ost,
 				LG_Draw_options,
 				verbose_level);
 
@@ -1887,7 +1892,9 @@ void linear_group::create_latex_report(
 			if (f_v) {
 				cout << "linear_group::create_latex_report before report" << endl;
 			}
-			report(ost, f_sylow, f_group_table,
+			report(
+					ost,
+					f_sylow, f_group_table,
 					f_classes,
 					O,
 					verbose_level);

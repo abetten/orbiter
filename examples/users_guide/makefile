@@ -333,6 +333,8 @@ CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 +
 
 HIRSCHFELD_EQUATION_XYZW="X^2*W+X*W^2+Y^2*Z+Y*Z^2"
 
+BARTH_EQUATION_GENERAL="4*(PHI^2*X^2-Y^2)*(PHI^2*Y^2-Z^2)*(PHI^2*Z^2-X^2)-(1+2*PHI)*(X^2+Y^2+Z^2-W^2)^2*W^2"
+
 
 
 
@@ -1407,6 +1409,11 @@ PRAEGER_DESIGN_LINE_TYPE="\
 
 # Section 16.2 Canonical forms of objects in projective space
 
+
+BARTH_SEXTIC_MOD_11_SINGULAR_POINTS="0, 1, 2, 4, 39, 44, 61, 63, 64, 66, 94, 96, 97, 99, 116, 121, 135, 144, 145, 171, 174, 226, 229, 244, 255, 275, 365, 374, 424, 425, 457, 458, 540, 573, 620, 625, 674, 681, 685, 692, 764, 767, 841, 844, 885, 888, 962, 965, 983, 988, 1037, 1044, 1048, 1055, 1145, 1178, 1271, 1272, 1304, 1305, 1343, 1355, 1364, 1454, 1463"
+
+
+NB_CUBIC_SURFACES_Q13=4
 
 
 
@@ -6024,6 +6031,7 @@ permutation_polynomial_F5:
 test_5_3:
 	make curve_q13_f0_clean2_variety_compute_group
 	make Hirschfeld_q2_group
+	make Barth_sextic_mod_11
 	make Veronese_1_3_q7
 
 
@@ -6075,6 +6083,33 @@ Hirschfeld_q2_group:
 	open Hirschfeld_q2_c_orbits.pdf
 
 
+Barth_sextic_mod_11:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 6 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(BARTH_EQUATION_GENERAL) \
+			-set_parameters "PHI" "\Phi" "8" \
+			-label_txt Barth_q11 \
+			-label_tex Barth\_q11 \
+		-end \
+		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -singular_points -end 
+	pdflatex Barth_q11_c_orbits.tex
+	open Barth_q11_c_orbits.pdf
+
+
+
+
 Veronese_1_3_q7:
 	$(ORBITER) -v 5 \
 		-define Fq -finite_field -q 7 -end \
@@ -6115,9 +6150,9 @@ test_6:
 	make test_6_3
 	make test_6_4
 	make test_6_5
-	make test_6_6
-	#make test_6_7 # magma stuff
-	make test_6_8
+	make test_6_6 # Magma stuff
+	make test_6_7 # gap stuff
+	make test_6_8 # Linear Groups, Advanced Topics
 
 
 ###############################################################################
@@ -7337,7 +7372,10 @@ SECTION_NEW_ACTIONS_FROM_OLD:
 test_6_4:
 	make Symmetric_4_on_pairs
 	make direct_product_AGL
+	make PGLstar_3_2
+	make PGLstar_3_2_restrict
 	make PGGLstar_3_4
+	make PGLstar_4_2
 	make Group_M11
 	make surface_q13_Eckardt
 	make surface_q13_Eckardt_on_tritangent_planes
@@ -7391,6 +7429,42 @@ direct_product_AGL:
 	pdflatex product_AGL_1_3_AGL_1_7_report.tex
 	$(OPEN) product_AGL_1_3_AGL_1_7_report.pdf
 
+
+PGLstar_3_2:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G0 -linear_group -PGL 3 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_3_2_polarity_ext_report.tex
+	$(OPEN) PGL_3_2_polarity_ext_report.pdf
+
+PGLstar_3_2_restrict:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define H -set -loop 2 14 1 -end \
+		-define G0 -linear_group -PGL 3 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-define Gr -modified_group -from G \
+			-restricted_action H points\\_and\\_lines \
+		-end \
+		-with Gr -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_3_2_polarity_extension_res_H_report.tex
+	$(OPEN) PGL_3_2_polarity_extension_res_H_report.pdf
+
+
 PGGLstar_3_4:
 	$(ORBITER) -v 6 \
 		-define F -finite_field -q 4 -end \
@@ -7405,6 +7479,21 @@ PGGLstar_3_4:
 		-end
 	pdflatex PGGL_3_4_polarity_ext_report.tex
 	$(OPEN) PGGL_3_4_polarity_ext_report.pdf
+
+PGLstar_4_2:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define G0 -linear_group -PGL 4 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_4_2_polarity_ext_report.tex
+	$(OPEN) PGL_4_2_polarity_ext_report.pdf
 
 
 
@@ -7984,6 +8073,7 @@ test_6_6:
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
 	make PGGL_2_4_classes
+	make PGLstar_3_2_classes
 	make PGL_3_11_classes
 	make PGL_7_2_classes
 	make PGL_8_2_classes
@@ -8080,6 +8170,22 @@ PGGL_2_4_classes:
 	pdflatex PGGL_2_4_classes_out.tex
 	$(OPEN) PGGL_2_4_classes_out.pdf
 	$(OPEN) PGGL_2_4_classes_out.csv
+
+
+
+PGLstar_3_2_classes:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define G0 -linear_group -PGL 3 F -end \
+		-define G -modified_group -polarity_extension \
+			G0 P \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+
 
 
 PGL_3_11_classes:
@@ -8255,6 +8361,8 @@ classes_PGGL_4_4:
 		-group_theoretic_activity \
 			-classes \
 		-end
+	pdflatex PGGL_4_4_classes_out.tex
+	$(OPEN) PGGL_4_4_classes_out.pdf
 
 # group order 1974067200 = 2^13 * 3^4 * 5^2 * 7 * 17
 
@@ -18288,7 +18396,7 @@ AG_2_3_stab_orb_0:
 		-group_theoretic_activity \
 			-export_orbiter \
 		-end
-		
+
 
 AG_2_3_stab_orb_0_Perm840_res192:
 	$(ORBITER) -v 2 \
@@ -20641,6 +20749,11 @@ SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
 
 
 test_16_2:
+	make quadrangles_PG_2_2
+	make Barth_mod_11_singular_pts_c
+	make quartic_curves_q13
+	make quartic_curves_q13_combine
+	make quartic_curves_q13_classify_nauty
 	make EC_canon
 	make Hirschfeld_q4_c
 	make Hirschfeld_stab_group
@@ -20657,6 +20770,143 @@ test_16_2:
 	make quartic_curve_25_0_0_canonical
 	make CRC_BCH_Q16_N51_D3_canonical
 	make Veronese_1_3_q7_c
+
+
+quadrangles_PG_2_2:
+	$(ORBITER) -v 3 \
+		-define C -combinatorial_object \
+			-label quadrangle quadrangle \
+			-set_of_points "0,1,2,3" \
+			-set_of_points "1,3,4,6" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+			-end \
+		-end
+	pdflatex quadrangle_classification.tex
+	open quadrangle_classification.pdf
+
+
+
+
+
+Barth_mod_11_singular_pts_c:
+	$(ORBITER) -v 4 \
+		-define H -set -here \
+			$(BARTH_SEXTIC_MOD_11_SINGULAR_POINTS) \
+		-end \
+		-define C -combinatorial_object \
+			-label Barth_q11_sing Barth\_q11\_sing \
+			-set_of_points H \
+		-end \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-show_TDO \
+				-show_TDA \
+			-end \
+		-end
+
+
+
+
+
+
+quartic_curves_q13:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q $(Q) -end \
+		-define P -projective_space -n 3 -field F -end \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-define S_%L -cubic_surface -space P -catalogue %L -end \
+		-end_loop L \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
+			-with S_%L -do \
+			-cubic_surface_activity \
+				-export_all_quartic_curves \
+			-end \
+		-end_loop L \
+		-print_symbols
+
+
+#0:6
+
+
+
+
+quartic_curves_q13_combine:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
+			surface_catalogue_q13_iso%ld_quartics.csv \
+			quartics_q$(Q).csv
+
+# quartics_q13.csv
+#  curves
+
+
+
+
+quartic_curves_q13_classify_nauty:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+		-end \
+		-define O -orbits -classification_by_canonical_form \
+			-space P \
+			-ring R \
+			-input_fname_mask quartics_q13.csv \
+			-nb_files 1 \
+			-output_fname quartic_curves_q13_classified \
+			-label_po "PO" \
+			-label_so "orbit" \
+			-carry_through "SEQN" \
+			-carry_through "SEQNALG" \
+			-carry_through "PT" \
+			-carry_through "PTCOEFF" \
+			-carry_through "curve" \
+			-carry_through "CURVEALG" \
+			-carry_through "nb_pts_on_curve" \
+			-label_equation_by_coefficients "curve" \
+			-label_points "pts_on_curve" \
+			-label_lines "bitangents" \
+			-carry_through "NB_E" \
+			-carry_through "NB_K" \
+			-carry_through "Kovalevski_pts" \
+			-carry_through "NB_DOUBLE" \
+			-carry_through "NB_SINGLE" \
+			-carry_through "NB_ZERO" \
+			-algorithm_nauty \
+			-end \
+		-end
+
+
 
 
 EC_canon: elliptic_curve_b1_c3_q11.txt

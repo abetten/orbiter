@@ -30,6 +30,9 @@ polarity_extension::polarity_extension()
 	//std::string label;
 	//std::string label_tex;
 
+	A_on_points = NULL;
+	A_on_hyperplanes = NULL;
+
 	degree_of_matrix_group = 0;
 	dimension_of_matrix_group = 0;
 	degree_overall = 0;
@@ -40,6 +43,9 @@ polarity_extension::polarity_extension()
 	element_coding_offset = NULL;
 	perm_offset_i = NULL;
 	tmp_Elt1 = NULL;
+	tmp_matrix1 = NULL; // [n * n]
+	tmp_matrix2 = NULL; // [n * n]
+	tmp_vector = NULL; // [n]
 
 	bits_per_digit = 0;
 
@@ -60,7 +66,7 @@ polarity_extension::polarity_extension()
 	the_base = NULL;
 	the_transversal_length = NULL;
 
-	Elts = NULL;
+	Page_storage = NULL;
 }
 
 
@@ -81,11 +87,20 @@ polarity_extension::~polarity_extension()
 	if (tmp_Elt1) {
 		FREE_int(tmp_Elt1);
 	}
+	if (tmp_matrix1) {
+		FREE_int(tmp_matrix1);
+	}
+	if (tmp_matrix2) {
+		FREE_int(tmp_matrix2);
+	}
+	if (tmp_vector) {
+		FREE_int(tmp_vector);
+	}
 	if (elt1) {
 		FREE_uchar(elt1);
 	}
-	if (Elts) {
-		FREE_OBJECT(Elts);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 	if (base_for_component1) {
 		FREE_lint(base_for_component1);
@@ -111,7 +126,7 @@ polarity_extension::~polarity_extension()
 }
 
 void polarity_extension::init(
-		algebra::matrix_group *M,
+		actions::action *A,
 		geometry::projective_space *P,
 		geometry::polarity *Polarity,
 		int verbose_level)
@@ -121,6 +136,20 @@ void polarity_extension::init(
 	if (f_v) {
 		cout << "polarity_extension::init" << endl;
 	}
+
+
+	algebra::matrix_group *M;
+
+
+	if (!A->is_matrix_group()) {
+		cout << "polarity_extension::init "
+				"the given group is not a matrix group" << endl;
+		exit(1);
+	}
+	M = A->get_matrix_group();
+
+
+	A_on_points = A;
 	polarity_extension::M = M;
 	polarity_extension::P = P;
 	polarity_extension::Polarity = Polarity;
@@ -133,14 +162,71 @@ void polarity_extension::init(
 	dimension_of_matrix_group = M->n;
 	//low_level_point_size =
 	//		dimension_of_matrix_group; // this does not work!
+
 	make_element_size =
 			M->make_element_size + 1;
+
 	degree_overall =
 			2 + Polarity->total_degree;
+
+
+	//std::string stringify_rank_sequence();
+	//std::string stringify_degree_sequence();
+#if 0
+	//geometry::polarity
+
+
+	projective_space *P;
+
+	int *Point_to_hyperplane; // [P->N_points]
+	int *Hyperplane_to_point; // [P->N_points]
+
+	int *f_absolute;  // [P->N_points]
+
+	long int *Line_to_line; // [P->N_lines] only if n = 3
+	int *f_absolute_line; // [P->N_lines] only if n = 3
+	int nb_absolute_lines;
+	int nb_self_dual_lines;
+
+	int nb_ranks;
+	int *rank_sequence;
+	int *rank_sequence_opposite;
+	long int *nb_objects;
+	long int *offset;
+	int total_degree;
+
+	int *Mtx; // [d * d]
+#endif
+
+
+	actions::action_global AGlobal;
+
 	if (f_v) {
+		cout << "polarity_extension::init "
+				"before AGlobal.create_action_on_k_subspaces" << endl;
+	}
+	A_on_hyperplanes = AGlobal.create_action_on_k_subspaces(
+			A_on_points,
+			M->n - 1 /* k */,
+			verbose_level);
+	if (f_v) {
+		cout << "polarity_extension::init "
+				"after AGlobal.create_action_on_k_subspaces" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "polarity_extension::init "
+				"rank_sequence = " << Polarity->stringify_rank_sequence() << endl;
+		cout << "polarity_extension::init "
+				"degree_sequence = " << Polarity->stringify_degree_sequence() << endl;
+		cout << "polarity_extension::init "
+				"Polarity->total_degree = " << Polarity->total_degree << endl;
 		cout << "polarity_extension::init "
 				"degree_overall = " << degree_overall << endl;
 	}
+
 	element_coding_offset = NEW_int(2);
 	element_coding_offset[0] = 0;
 	element_coding_offset[1] = M->elt_size_int;
@@ -149,14 +235,19 @@ void polarity_extension::init(
 		// one more so it can also be used to indicated
 		// the start of the product action.
 	perm_offset_i[0] = 0;
-	perm_offset_i[1] = perm_offset_i[0] + 2;
+	perm_offset_i[1] = 2;
 	perm_offset_i[2] = perm_offset_i[1] + Polarity->total_degree;
+
 	elt_size_int = M->elt_size_int + 1;
+
 	if (f_v) {
 		cout << "polarity_extension::init "
 				"elt_size_int = " << elt_size_int << endl;
 	}
 	tmp_Elt1 = NEW_int(elt_size_int);
+	tmp_matrix1 = NEW_int(M->n * M->n);
+	tmp_matrix2 = NEW_int(M->n * M->n);
+	tmp_vector = NEW_int(M->n);
 
 	bits_per_digit = M->bits_per_digit;
 	bits_per_elt = M->make_element_size * bits_per_digit;
@@ -227,9 +318,17 @@ void polarity_extension::init(
 		cout << endl;
 	}
 
-	Elts = NEW_OBJECT(data_structures::page_storage);
-	Elts->init(char_per_elt /* entry_size */,
-			10 /* page_length_log */, verbose_level);
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	if (f_v) {
+		cout << "polarity_extension::init "
+				"before Page_storage->init" << endl;
+	}
+	Page_storage->init(char_per_elt /* entry_size */,
+			10 /* page_length_log */, 0 /*verbose_level - 3*/);
+	if (f_v) {
+		cout << "polarity_extension::init "
+				"after Page_storage->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "polarity_extension::init "
@@ -352,11 +451,94 @@ void polarity_extension::element_mult(
 	if (f_v) {
 		cout << "polarity_extension::element_mult" << endl;
 	}
-	M->Element->GL_mult(
-				A + element_coding_offset[0],
-				B + element_coding_offset[0],
-				AB + element_coding_offset[0],
-				0 /* verbose_level */);
+
+	int *A_Elt;
+	int *B_Elt;
+	int *AB_Elt;
+
+	A_Elt = A + element_coding_offset[0];
+	B_Elt = B + element_coding_offset[0];
+	AB_Elt = AB + element_coding_offset[0];
+
+	if (A[element_coding_offset[1]]) {
+
+		int *rho_B_rho;
+
+
+		rho_B_rho = NEW_int(A_on_points->elt_size_in_int);
+
+
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"before element_conjugate_by_polarity" << endl;
+		}
+		element_conjugate_by_polarity(
+				B_Elt,
+				rho_B_rho,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"after element_conjugate_by_polarity" << endl;
+		}
+
+
+		if (f_v) {
+
+			int offset = 0;
+			int f_do_it_anyway_even_for_big_degree = true;
+			int f_print_cycles_of_length_one = true;
+
+			cout << "polarity_extension::element_mult "
+					"A_Elt=" << endl;
+			A_on_points->Group_element->element_print_quick(A_Elt, cout);
+			A_on_points->Group_element->element_print_as_permutation_with_offset(
+					A_Elt, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one,
+				0/*verbose_level*/);
+			cout << endl;
+
+			cout << "polarity_extension::element_mult "
+					"rho_B_rho=" << endl;
+			A_on_points->Group_element->element_print_quick(rho_B_rho, cout);
+			A_on_points->Group_element->element_print_as_permutation_with_offset(
+					rho_B_rho, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one,
+				0/*verbose_level*/);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"before A_on_points->Group_element->element_mult" << endl;
+		}
+		A_on_points->Group_element->element_mult(A_Elt, rho_B_rho, AB_Elt, verbose_level);
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"after A_on_points->Group_element->element_mult" << endl;
+		}
+
+
+
+		FREE_int(rho_B_rho);
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"before A_on_points->Group_element->mult" << endl;
+		}
+		A_on_points->Group_element->mult(A_Elt, B_Elt, AB_Elt);
+		if (f_v) {
+			cout << "polarity_extension::element_mult "
+					"after A_on_points->Group_element->mult" << endl;
+		}
+
+	}
+
 	AB[element_coding_offset[1]] =
 			(A[element_coding_offset[1]] + B[element_coding_offset[1]]) % 2;
 
@@ -379,6 +561,353 @@ void polarity_extension::element_move(
 	}
 }
 
+void polarity_extension::compute_images_rho_A_rho(
+		int *Mtx, int nb_rows, int *A_Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity_extension::compute_images_rho_A_rho" << endl;
+	}
+
+	int i;
+	long int a, b, c, d;
+
+	for (i = 0; i < M->n + 1; i++) {
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"computing image of frame element i=" << i << endl;
+		}
+
+		M->GFq->Projective_space_basic->PG_element_rank_modified_lint(
+				Mtx + i * M->n, 1, M->n, a);
+
+		b = Polarity->Point_to_hyperplane[a];
+
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"computing image of frame element a=" << a
+					<< " -> (rho) " << b << endl;
+		}
+
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"before A_on_hyperplanes->Group_element->element_image_of" << endl;
+		}
+		c = A_on_hyperplanes->Group_element->element_image_of(
+				b, A_Elt, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"after A_on_hyperplanes->Group_element->element_image_of" << endl;
+		}
+
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"computing image of frame element a=" << a
+					<< " -> (rho) " << b << " -> *A " << c << endl;
+		}
+
+		d = Polarity->Hyperplane_to_point[c];
+
+		if (f_v) {
+			cout << "polarity_extension::compute_images_rho_A_rho "
+					"computing image of frame element a=" << a
+					<< " -> (rho) " << b << " -> *A " << c << " -> (rho) " << d << endl;
+		}
+
+		M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+				Mtx + i * M->n, 1, M->n, d);
+
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::compute_images_rho_A_rho "
+				"frame image:" << endl;
+		Int_matrix_print(Mtx, M->n + 1, M->n);
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::compute_images_rho_A_rho done" << endl;
+	}
+}
+
+void polarity_extension::create_rho_A_rho(
+		int *A_Elt, int *data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho" << endl;
+	}
+
+	linear_algebra::linear_algebra_global LA;
+
+
+	int *frame;
+
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"before LA.create_frame" << endl;
+	}
+	LA.create_frame(
+			frame, M->n, verbose_level - 1);
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"after LA.create_frame" << endl;
+	}
+
+
+
+	// compute the image of the frame:
+
+
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"before compute_images_rho_A_rho" << endl;
+	}
+	compute_images_rho_A_rho(
+			frame, M->n + 1 /* nb_rows */, A_Elt,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"after compute_images_rho_A_rho" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"before LA.adjust_scalars_in_frame" << endl;
+	}
+	LA.adjust_scalars_in_frame(
+			F,
+			M->n, frame /* Image_of_basis_in_rows */,
+			frame + M->n * M->n /* image_of_all_one */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho "
+				"after LA.adjust_scalars_in_frame" << endl;
+	}
+
+	Int_vec_copy(frame, data, M->n * M->n);
+
+	FREE_int(frame);
+
+	if (f_v) {
+		cout << "polarity_extension::create_rho_A_rho done" << endl;
+	}
+}
+
+void polarity_extension::element_inverse_conjugate_by_polarity(
+		int *A_Elt, int *rho_Av_rho, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity" << endl;
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"make_element_size = " << A_on_points->make_element_size << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity A_Elt=" << endl;
+		A_on_points->Group_element->element_print_quick(A_Elt, cout);
+	}
+
+	int *data1;
+	int *data2;
+
+	data1 = NEW_int(A_on_points->make_element_size);
+	data2 = NEW_int(A_on_points->make_element_size);
+
+	A_on_points->Group_element->code_for_make_element(
+				data1, A_Elt);
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity element A: ";
+		Int_vec_print(cout, data1, A_on_points->make_element_size);
+		cout << endl;
+	}
+
+	int f_is_semilinear;
+
+	f_is_semilinear = A_on_points->is_semilinear_matrix_group();
+	if (f_is_semilinear) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"f_is_semilinear = " << f_is_semilinear << endl;
+	}
+
+	int save_frobenius = 0;
+
+	if (f_is_semilinear) {
+
+		if (A_on_points->make_element_size != M->n * M->n + 1) {
+			cout << "A_on_points->make_element_size != M->n * M->n + 1" << endl;
+			exit(1);
+		}
+
+		save_frobenius = data1[A_on_points->make_element_size - 1];
+		data1[A_on_points->make_element_size - 1] = 0;
+
+		if (f_v) {
+			cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+					"element A after removing the Frobenius: ";
+			Int_vec_print(cout, data1, A_on_points->make_element_size);
+			cout << endl;
+		}
+	}
+
+
+	int *A_Elt_copy;
+	int *A_Elt_inv;
+
+	A_Elt_copy = NEW_int(A_on_points->elt_size_in_int);
+	A_Elt_inv = NEW_int(A_on_points->elt_size_in_int);
+
+	A_on_points->Group_element->make_element(
+			A_Elt_copy, data1, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity A_Elt_copy=" << endl;
+		A_on_points->Group_element->element_print_quick(A_Elt_copy, cout);
+	}
+
+	A_on_points->Group_element->invert(A_Elt_copy, A_Elt_inv);
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity A_Elt_inv=" << endl;
+		A_on_points->Group_element->element_print_quick(A_Elt_inv, cout);
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"before create_rho_A_rho" << endl;
+	}
+	create_rho_A_rho(
+			A_Elt_inv, data2,
+			verbose_level);
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"after create_rho_A_rho" << endl;
+	}
+
+	if (f_is_semilinear) {
+		data2[M->n * M->n] = save_frobenius;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"before A_on_points->Group_element->make_element" << endl;
+	}
+	A_on_points->Group_element->make_element(
+			rho_Av_rho, data2, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"after A_on_points->Group_element->make_element" << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity "
+				"rho_Av_rho=" << endl;
+		int offset = 0;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = true;
+		A_on_points->Group_element->element_print_quick(rho_Av_rho, cout);
+		A_on_points->Group_element->element_print_as_permutation_with_offset(
+				rho_Av_rho, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
+	}
+
+
+	FREE_int(data1);
+	FREE_int(data2);
+	FREE_int(A_Elt_copy);
+	FREE_int(A_Elt_inv);
+
+
+	if (f_v) {
+		cout << "polarity_extension::element_inverse_conjugate_by_polarity done" << endl;
+	}
+}
+
+
+
+void polarity_extension::element_conjugate_by_polarity(
+		int *A_Elt, int *rho_A_rho, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity" << endl;
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"make_element_size = " << A_on_points->make_element_size << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity A_Elt=" << endl;
+		A_on_points->Group_element->element_print_quick(A_Elt, cout);
+	}
+
+	int *data2;
+
+	data2 = NEW_int(A_on_points->make_element_size);
+
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"before create_rho_A_rho" << endl;
+	}
+	create_rho_A_rho(
+			A_Elt, data2,
+			verbose_level);
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"after create_rho_A_rho" << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"before A_on_points->Group_element->make_element" << endl;
+	}
+	A_on_points->Group_element->make_element(
+			rho_A_rho, data2, verbose_level - 1);
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"after A_on_points->Group_element->make_element" << endl;
+	}
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity "
+				"rho_A_rho=" << endl;
+		int offset = 0;
+		int f_do_it_anyway_even_for_big_degree = true;
+		int f_print_cycles_of_length_one = true;
+		A_on_points->Group_element->element_print_quick(rho_A_rho, cout);
+		A_on_points->Group_element->element_print_as_permutation_with_offset(
+				rho_A_rho, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
+	}
+
+
+	FREE_int(data2);
+
+
+	if (f_v) {
+		cout << "polarity_extension::element_conjugate_by_polarity done" << endl;
+	}
+}
+
+
+
+
 void polarity_extension::element_invert(
 		int *A, int *Av, int verbose_level)
 {
@@ -387,9 +916,53 @@ void polarity_extension::element_invert(
 	if (f_v) {
 		cout << "polarity_extension::element_invert" << endl;
 	}
-	M->Element->GL_invert(
-			A + element_coding_offset[0],
-			Av + element_coding_offset[0]);
+
+	if (A[element_coding_offset[1]]) {
+
+#if 0
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"before M->Element->GL_invert_transpose" << endl;
+		}
+		M->Element->GL_invert_transpose(
+				A + element_coding_offset[0],
+				Av + element_coding_offset[0]);
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"after M->Element->GL_invert_transpose" << endl;
+		}
+#endif
+
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"before element_inverse_conjugate_by_polarity" << endl;
+		}
+		element_inverse_conjugate_by_polarity(
+				A + element_coding_offset[0],
+				Av + element_coding_offset[0],
+				verbose_level);
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"after element_inverse_conjugate_by_polarity" << endl;
+		}
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"before M->Element->GL_invert" << endl;
+		}
+		M->Element->GL_invert(
+				A + element_coding_offset[0],
+				Av + element_coding_offset[0]);
+		if (f_v) {
+			cout << "polarity_extension::element_invert "
+					"after M->Element->GL_invert" << endl;
+		}
+
+	}
+
 	Av[element_coding_offset[1]] = A[element_coding_offset[1]];
 	if (f_v) {
 		cout << "polarity_extension::element_invert done" << endl;
@@ -497,7 +1070,7 @@ void polarity_extension::make_element(
 
 	if (f_v) {
 		cout << "polarity_extension::make_element" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "polarity_extension::make_element data:" << endl;
 		Int_vec_print(cout, data, make_element_size);
@@ -515,7 +1088,7 @@ void polarity_extension::make_element(
 	}
 	if (f_v) {
 		cout << "polarity_extension::make_element done" << endl;
-		}
+	}
 }
 
 void polarity_extension::element_print_easy(
@@ -523,18 +1096,19 @@ void polarity_extension::element_print_easy(
 {
 	int f;
 
-	ost << "begin element of direct product: " << endl;
+	ost << "begin element of type polarity extension: " << endl;
 	for (f = 0; f < 2; f++) {
 		ost << "component " << f << ":" << endl;
 		if (f == 0) {
 			M->Element->GL_print_easy(Elt + element_coding_offset[0], ost);
-			cout << endl;
+			//cout << endl;
 		}
 		else {
-			cout << Elt[element_coding_offset[1]] << endl;
+			ost << Elt[element_coding_offset[1]];
 		}
 	}
-	ost << "end element of direct product" << endl;
+	ost << endl;
+	ost << "end element of type polarity extension" << endl;
 }
 
 void polarity_extension::element_print_easy_latex(
@@ -557,11 +1131,20 @@ void polarity_extension::element_print_easy_latex(
 	ost << "\\\\" << endl;
 }
 
+void polarity_extension::element_code_for_make_element(
+		int *Elt, int *data)
+{
+	M->Element->GL_code_for_make_element(Elt + element_coding_offset[0], data);
+	data[M->elt_size_int - 1] = Elt[element_coding_offset[1]];
+
+}
+
+
 void polarity_extension::element_print_for_make_element(
 		int *Elt, std::ostream &ost)
 {
 	M->Element->GL_print_for_make_element(Elt + element_coding_offset[0], ost);
-	ost << ", " << Elt[element_coding_offset[1]] << endl;
+	ost << Elt[element_coding_offset[1]] << endl;
 }
 
 void polarity_extension::element_print_for_make_element_no_commas(
@@ -690,81 +1273,27 @@ void polarity_extension::make_strong_generators_data(
 	FREE_int(GL_data);
 	FREE_int(dat);
 	if (f_v) {
+		cout << "polarity_extension::make_strong_generators_data data=" << endl;
+		Int_matrix_print(data, nb_gens, size);
+	}
+	if (f_v) {
 		cout << "polarity_extension::make_strong_generators_data done" << endl;
 	}
 }
 
-#if 0
-void polarity_extension::lift_generators(
-		groups::strong_generators *SG1,
-		groups::strong_generators *SG2,
-		actions::action *A,
-		groups::strong_generators *&SG3,
-		int verbose_level)
+void polarity_extension::unrank_point(
+		long int rk, int *v, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
-	actions::action *A1;
-	actions::action *A2;
-	int *Elt1;
-	int *Elt2;
-	int *Elt3;
-	data_structures_groups::vector_ge *gens;
-	int i, len1, len2, len3;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, go2, go3;
-
-	if (f_v) {
-		cout << "polarity_extension::lift_generators" << endl;
-	}
-	A1 = SG1->A;
-	A2 = SG2->A;
-	len1 = SG1->gens->len;
-	len2 = SG2->gens->len;
-	len3 = len1 + len2;
-
-	gens = NEW_OBJECT(data_structures_groups::vector_ge);
-	gens->init(A, verbose_level - 2);
-	gens->allocate(len3, verbose_level - 2);
-	Elt1 = NEW_int(A1->elt_size_in_int);
-	Elt2 = NEW_int(A2->elt_size_in_int);
-	Elt3 = NEW_int(A->elt_size_in_int);
-
-	A1->Group_element->element_one(Elt1, 0 /* verbose_level */);
-	A2->Group_element->element_one(Elt2, 0 /* verbose_level */);
-	for (i = 0; i < len1; i++) {
-		A1->Group_element->element_move(SG1->gens->ith(i),
-				Elt3, 0 /* verbose_level */);
-		A2->Group_element->element_move(Elt2,
-				Elt3 + A1->elt_size_in_int,
-				0 /* verbose_level */);
-		A->Group_element->element_move(Elt3, gens->ith(i), 0);
-	}
-	for (i = 0; i < len2; i++) {
-		A1->Group_element->element_move(Elt1, Elt3,
-				0 /* verbose_level */);
-		A2->Group_element->element_move(SG2->gens->ith(i),
-				Elt3 + A1->elt_size_in_int,
-				0 /* verbose_level */);
-		A->Group_element->element_move(Elt3, gens->ith(len1 + i), 0);
-	}
-	if (f_v) {
-		cout << "polarity_extension::lift_generators "
-				"the generators are:" << endl;
-		gens->print_quick(cout);
-	}
-	SG1->group_order(go1);
-	SG2->group_order(go2);
-	D.mult(go1, go2, go3);
-	A->generators_to_strong_generators(
-		true /* f_target_go */, go3,
-		gens, SG3,
-		verbose_level);
-	FREE_OBJECT(gens);
-	if (f_v) {
-		cout << "polarity_extension::lift_generators done" << endl;
-	}
+	//Int_vec_zero(v, A->low_level_point_size);
+	//P->unrank_point(rk, v, verbose_level);
 }
-#endif
 
+long int polarity_extension::rank_point(
+		int *v, int verbose_level)
+{
+	return 0;
+	//P->unrank_point(rk, v, verbose_level);
+
+}
 
 }}}

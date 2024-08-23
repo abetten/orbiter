@@ -296,7 +296,7 @@ void strong_generators::init_from_permutation_representation(
 	}
 	nice_gens->init_from_permutation_representation(
 			A, parent_group_S, data,
-		nb_elements, verbose_level - 3);
+		nb_elements, verbose_level - 1);
 	if (f_v) {
 		cout << "strong_generators::init_from_permutation_representation "
 				"after nice_gens->init_from_permutation_representation" << endl;
@@ -476,7 +476,7 @@ void strong_generators::init_from_data_with_target_go(
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	if (gens) {
@@ -817,7 +817,7 @@ void strong_generators::init_group_extension(
 	if (false) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	FREE_OBJECT(my_gens);
@@ -906,7 +906,7 @@ void strong_generators::init_group_extension(
 	if (false) {
 		cout << "strong_generators::init_group_extension "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	FREE_OBJECT(my_gens);
@@ -983,7 +983,7 @@ void strong_generators::switch_to_subgroup(
 	if (false) {
 		cout << "strong_generators::switch_to_subgroup "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	FREE_OBJECT(my_gens);
@@ -1052,7 +1052,7 @@ void strong_generators::init_subgroup(
 	if (false) {
 		cout << "strong_generators::init_subgroup "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	FREE_OBJECT(my_gens);
@@ -1136,7 +1136,7 @@ void strong_generators::init_subgroup_by_generators(
 	if (false) {
 		cout << "strong_generators::init_subgroup_by_generators "
 				"strong generators are:" << endl;
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 	//FREE_OBJECT(my_gens);
@@ -1353,9 +1353,8 @@ void strong_generators::print_group_order(
 }
 
 void strong_generators::print_generators_gap(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
-	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int i;
 
@@ -1392,8 +1391,13 @@ void strong_generators::print_generators_gap(
 
 
 void strong_generators::print_generators_gap_in_different_action(
-		std::ostream &ost, actions::action *A2)
+		std::ostream &ost, actions::action *A2, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap_in_different_action" << endl;
+	}
 	int i;
 
 	ost << "Generators in GAP format are:" << endl;
@@ -1415,12 +1419,20 @@ void strong_generators::print_generators_gap_in_different_action(
 	else {
 		ost << "too big to print" << endl;
 	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap_in_different_action done" << endl;
+	}
 }
 
 
 void strong_generators::print_generators_compact(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_compact" << endl;
+	}
 	int i, j, a;
 
 	ost << "Generators in compact permutation form are:" << endl;
@@ -1439,20 +1451,33 @@ void strong_generators::print_generators_compact(
 	else {
 		ost << "too big to print" << endl;
 	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_compact done" << endl;
+	}
 }
 
 void strong_generators::print_generators(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators" << endl;
+	}
 	int i;
 	ring_theory::longinteger_object go;
 
-	cout << "strong_generators::print_generators computing group order" << endl;
+	if (f_v) {
+		cout << "strong_generators::print_generators before group order" << endl;
+	}
 	group_order(go);
-	ost << "Strong generators for a group of order "
-			<< go << " tl=";
-	Int_vec_print(cout, tl, A->base_len());
-	ost << endl;
+	if (f_v) {
+		ost << "strong_generators::print_generators "
+				"Strong generators for a group of order "
+				<< go << " tl=";
+		Int_vec_print(cout, tl, A->base_len());
+		ost << endl;
+	}
 
 	for (i = 0; i < gens->len; i++) {
 		ost << "generator " << i << " / "
@@ -1490,18 +1515,37 @@ void strong_generators::print_generators(
 }
 
 void strong_generators::print_generators_in_latex_individually(
-		std::ostream &ost)
+		std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_latex_individually" << endl;
+	}
+
 	int i;
 	ring_theory::longinteger_object go;
 
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_latex_individually "
+				"before group order" << endl;
+	}
 	group_order(go);
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_latex_individually "
+				"after group order" << endl;
+	}
 
 	ost << "The stabilizer of order $" << go
 			<< "$ is generated by:\\\\" << endl;
 
 	for (i = 0; i < gens->len; i++) {
 
+		if (f_v) {
+			cout << "strong_generators::print_generators_in_latex_individually "
+					"generator " << i << " / " << gens->len << endl;
+		}
 		string label;
 
 		label = "g_{" + std::to_string(i + 1) + "} = ";
@@ -1540,10 +1584,19 @@ void strong_generators::print_generators_in_latex_individually(
 
 	print_for_make_element(ost);
 
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_latex_individually done" << endl;
+	}
 }
 
-void strong_generators::print_generators_in_source_code()
+void strong_generators::print_generators_in_source_code(
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_source_code" << endl;
+	}
 	int i;
 	ring_theory::longinteger_object go;
 
@@ -1559,11 +1612,20 @@ void strong_generators::print_generators_in_source_code()
 		A->Group_element->print_for_make_element(cout, gens->ith(i));
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_source_code done" << endl;
+	}
 }
 
 void strong_generators::print_generators_in_source_code_to_file(
-		std::string &fname)
+		std::string &fname, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_source_code_to_file" << endl;
+	}
+
 	int i;
 	ring_theory::longinteger_object go;
 	orbiter_kernel_system::file_io Fio;
@@ -1579,12 +1641,24 @@ void strong_generators::print_generators_in_source_code_to_file(
 			f << endl;
 		}
 	}
-	cout << "Written file " << fname << " of size "
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_in_source_code_to_file done" << endl;
+	}
 }
 
-void strong_generators::print_generators_even_odd()
+void strong_generators::print_generators_even_odd(
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_even_odd" << endl;
+	}
+
 	int i, sgn;
 	ring_theory::longinteger_object go;
 
@@ -1600,15 +1674,26 @@ void strong_generators::print_generators_even_odd()
 		cout << " sgn=" << sgn;
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_even_odd done" << endl;
+	}
 }
 
 void strong_generators::print_generators_MAGMA(
-		actions::action *A, std::ostream &ost)
+		actions::action *A, std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_MAGMA" << endl;
+	}
 
 	interfaces::magma_interface M;
 
 	M.print_generators_MAGMA(A, this, ost);
+	if (f_v) {
+		cout << "strong_generators::print_generators_MAGMA done" << endl;
+	}
 }
 
 void strong_generators::export_magma(

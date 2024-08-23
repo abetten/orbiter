@@ -43,7 +43,6 @@ namespace combinatorics_with_groups {
 	class combinatorics_with_action;
 	class flag_orbits_incidence_structure;
 	class group_action_on_combinatorial_object;
-	class incidence_structure_with_group;
 	class orbit_type_repository;
 	class translation_plane_via_andre_model;
 

@@ -20,7 +20,8 @@ namespace actions {
 
 
 void action::report(
-		std::ostream &ost, int f_sims, groups::sims *S,
+		std::ostream &ost,
+		int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
@@ -34,12 +35,20 @@ void action::report(
 	ost << "\\section*{The Action}" << endl;
 
 
+	report_group_name_and_degree(
+			ost,
+			LG_Draw_options,
+			verbose_level);
+
+#if 0
 	if (label_tex.length() == 0) {
 		cout << "action::report the group has no tex-name" << endl;
 		exit(1);
 	}
 	ost << "Group action $" << label_tex
 			<< "$ of degree " << degree << "\\\\" << endl;
+#endif
+
 
 	if (f_v) {
 		cout << "action::report before report_what_we_act_on" << endl;
@@ -159,7 +168,7 @@ void action::report(
 			if (f_v) {
 				cout << "action::report before SG->print_generators_gap" << endl;
 			}
-			SG->print_generators_gap(ost);
+			SG->print_generators_gap(ost, verbose_level - 1);
 			if (f_v) {
 				cout << "action::report after SG->print_generators_gap" << endl;
 			}
@@ -193,7 +202,7 @@ void action::report(
 			if (f_v) {
 				cout << "action::report before SG->print_generators_compact" << endl;
 			}
-			SG->print_generators_compact(ost);
+			SG->print_generators_compact(ost, verbose_level - 1);
 			if (f_v) {
 				cout << "action::report after SG->print_generators_compact" << endl;
 			}
@@ -204,6 +213,45 @@ void action::report(
 	if (f_v) {
 		cout << "action::report done" << endl;
 	}
+}
+
+void action::report_group_name_and_degree(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::report_group_name_and_degree" << endl;
+	}
+
+	if (label_tex.length() == 0) {
+		cout << "action::report_group_name_and_degree the group has no tex-name" << endl;
+		exit(1);
+	}
+	ost << "Group action $" << label_tex
+			<< "$ of degree " << degree << "\\\\" << endl;
+
+
+}
+
+void action::report_type_of_action(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *O,
+		int verbose_level)
+{
+	std::string txt;
+	std::string tex;
+	action_global AcGl;
+
+	AcGl.get_symmetry_group_type_text(txt, tex, type_G);
+
+
+	ost << "The action is of type " << tex << "\\\\" << endl;
+
+	ost << "\\bigskip" << endl;
+
 }
 
 void action::report_what_we_act_on(
@@ -218,19 +266,13 @@ void action::report_what_we_act_on(
 	}
 
 
-	std::string txt;
-	std::string tex;
-	action_global AcGl;
-
-	AcGl.get_symmetry_group_type_text(txt, tex, type_G);
-
-
-	ost << "The action is of type " << tex << "\\\\" << endl;
-
-	ost << "\\bigskip" << endl;
+	report_type_of_action(ost, O, verbose_level);
 
 	if (is_matrix_group()) {
 
+		if (f_v) {
+			cout << "action::report_what_we_act_on is_matrix_group is true" << endl;
+		}
 		field_theory::finite_field *F;
 		algebra::matrix_group *M;
 
@@ -315,11 +357,24 @@ void action::report_what_we_act_on(
 
 	}
 
-
+#if 0
 	if (degree < 1000) {
 		ost << "The group acts on the following set of size " << degree << ":\\\\" << endl;
-		latex_all_points(ost);
+
+		if (ptr->ptr_unrank_point) {
+			if (f_v) {
+				cout << "action::report_what_we_act_on before latex_all_points" << endl;
+			}
+			latex_all_points(ost);
+			if (f_v) {
+				cout << "action::report_what_we_act_on after latex_all_points" << endl;
+			}
+		}
+		else {
+			ost << "we don't have an unrank point function\\\\" << endl;
+		}
 	}
+#endif
 
 
 

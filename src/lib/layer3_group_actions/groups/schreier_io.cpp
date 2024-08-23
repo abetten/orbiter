@@ -270,7 +270,7 @@ void schreier::print_and_list_orbits_and_stabilizer(
 		SG = NEW_OBJECT(strong_generators);
 
 		SG->init_from_sims(Stab, 0 /* verbose_level*/);
-		SG->print_generators(ost);
+		SG->print_generators(ost, 0 /* verbose_level*/);
 		FREE_OBJECT(SG);
 		FREE_OBJECT(Stab);
 	}

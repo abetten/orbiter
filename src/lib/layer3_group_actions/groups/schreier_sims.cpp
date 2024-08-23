@@ -505,8 +505,6 @@ void schreier_sims::create_group(
 	int f_vv = (verbose_level >= 3);
 	int f_vvv = (verbose_level >= 4);
 	int f_vvvv = (verbose_level >= 5);
-	ring_theory::longinteger_domain D;
-	int drop_out_level, image, b, c, f_added, old_base_len;
 	
 	if (f_v) {
 		cout << "schreier_sims::create_group "
@@ -519,12 +517,35 @@ void schreier_sims::create_group(
 			cout << "schreier_sims::create_group "
 					"target group order unavailable" << endl;
 		}
+		cout << "schreier_sims::create_group action GA:" << endl;
+		GA->print_info();
+		if (f_interested_in_kernel) {
+			cout << "schreier_sims::create_group action KA:" << endl;
+			KA->print_info();
+		}
+		else {
+			cout << "schreier_sims::create_group not interested in kernel" << endl;
+		}
+		cout << "schreier_sims::create_group action G->A:" << endl;
+		G->A->print_info();
+
 	}
 	if (f_has_target_group_order && tgo.is_zero()) {
 		cout << "schreier_sims::create_group "
 				"target group order is 0" << endl;
 		exit(1);
 	}
+
+
+	ring_theory::longinteger_domain D;
+	int drop_out_level, image, b, c, f_added, old_base_len;
+
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = true;
+	int f_print_cycles_of_length_one = true;
+
+
+
 	compute_group_orders();
 	if (f_v) {
 		print_group_orders();
@@ -571,6 +592,17 @@ void schreier_sims::create_group(
 					"iteration " << iteration
 					<< " generator: " << endl;
 			GA->Group_element->element_print_quick(Elt1, cout);
+
+			GA->Group_element->element_print_for_make_element(Elt1, cout);
+			cout << endl;
+
+			GA->Group_element->element_print_as_permutation_with_offset(
+					Elt1, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one,
+				0/*verbose_level*/);
+			cout << endl;
+
 		}
 
 		if (f_vv) {
@@ -578,7 +610,7 @@ void schreier_sims::create_group(
 					"calling strip:" << endl;
 		}
 		if (G->strip(Elt1, Elt2, drop_out_level,
-				image, 0 /*verbose_level - 2*/)) {
+				image, verbose_level - 2)) {
 			if (f_vv) {
 				cout << "schreier_sims::create_group: "
 						"element strips through" << endl;
@@ -587,6 +619,17 @@ void schreier_sims::create_group(
 							"residue = " << endl;
 					GA->Group_element->element_print_quick(Elt2, cout);
 					cout << endl;
+
+					GA->Group_element->element_print_for_make_element(Elt2, cout);
+					cout << endl;
+
+					GA->Group_element->element_print_as_permutation_with_offset(
+							Elt2, cout,
+						offset, f_do_it_anyway_even_for_big_degree,
+						f_print_cycles_of_length_one,
+						0/*verbose_level*/);
+					cout << endl;
+
 				}
 			}
 			f_added = false;
@@ -716,11 +759,24 @@ void schreier_sims::create_group(
 			f_added = true;
 			if (f_vv) {
 				cout << "schreier_sims::create_group: "
-						"element needs to be inserted at level = "
-					<< drop_out_level << " with image "
+						"residue needs to be inserted at level = "
+					<< drop_out_level << " with base point " << GA->Stabilizer_chain->base_i(drop_out_level) << " mapped to "
 					<< image << endl;
-					GA->Group_element->element_print(Elt2, cout);
-					cout  << endl;
+
+				GA->Group_element->element_print(Elt2, cout);
+				cout  << endl;
+
+				GA->Group_element->element_print_for_make_element(Elt2, cout);
+				cout << endl;
+
+				GA->Group_element->element_print_as_permutation_with_offset(
+						Elt2, cout,
+					offset, f_do_it_anyway_even_for_big_degree,
+					f_print_cycles_of_length_one,
+					0/*verbose_level*/);
+				cout << endl;
+
+
 			}
 			if (f_vv) {
 				cout << "schreier_sims::create_group: "

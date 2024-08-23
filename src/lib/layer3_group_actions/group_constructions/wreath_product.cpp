@@ -73,7 +73,7 @@ wreath_product::wreath_product()
 	the_base = NULL;
 	the_transversal_length = NULL;
 
-	Elts = NULL;
+	Page_storage = NULL;
 
 	rank_one_tensors = NULL;
 	rank_one_tensors_in_PG = NULL;
@@ -144,8 +144,8 @@ wreath_product::~wreath_product()
 	if (elt1) {
 		FREE_uchar(elt1);
 	}
-	if (Elts) {
-		FREE_OBJECT(Elts);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 	if (base_for_component) {
 		FREE_lint(base_for_component);
@@ -340,8 +340,8 @@ void wreath_product::init_tensor_wreath_product(
 		cout << endl;
 	}
 
-	Elts = NEW_OBJECT(data_structures::page_storage);
-	Elts->init(char_per_elt /* entry_size */,
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
 	if (f_v) {
@@ -3203,7 +3203,7 @@ void wreath_product::orbits_restricted_compute(
 		if (f_v) {
 			cout << "generators restricted to the orbit of degree "
 					<< Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
-			gens->print_generators_MAGMA(A_on_orbit, cout);
+			gens->print_generators_MAGMA(A_on_orbit, cout, verbose_level - 1);
 		}
 
 

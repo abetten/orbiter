@@ -422,6 +422,10 @@ public:
 	void print();
 	void print_points_and_colors();
 	void print_adjacency_list();
+	void init_basic(
+			int nb_points,
+		std::string &label, std::string &label_tex,
+		int verbose_level);
 	void init_from_bitvector(
 			int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, data_structures::bitvector *Bitvec,
@@ -462,6 +466,8 @@ public:
 	void init_user_data(
 			long int *data, int data_size, int verbose_level);
 	void save(
+			std::string &fname, int verbose_level);
+	void save_DIMACS(
 			std::string &fname, int verbose_level);
 	void load(
 			std::string &fname, int verbose_level);

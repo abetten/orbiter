@@ -1260,7 +1260,7 @@ void arc_generator::report_stabilizer(
 	SG = NEW_OBJECT(groups::strong_generators);
 	SG->init_from_sims(Stab, verbose_level);
 
-	SG->print_generators_in_latex_individually(ost);
+	SG->print_generators_in_latex_individually(ost, verbose_level - 1);
 
 	FREE_OBJECT(SG);
 }

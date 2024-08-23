@@ -149,13 +149,13 @@ static long int permutation_representation_group_element_image_of(
 		cout << "permutation_representation_group_element_image_of "
 				"computing image of " << a << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	b = P.element_image_of(Elt, a, verbose_level - 1);
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_image_of "
 				"image of " << a << " is " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -210,7 +210,7 @@ static void permutation_representation_group_element_one(
 	if (f_v) {
 		cout << "permutation_representation_group_element_one "
 				"calling element_one" << endl;
-		}
+	}
 	P.element_one(Elt);
 }
 
@@ -226,18 +226,18 @@ static int permutation_representation_group_element_is_one(
 	if (f_v) {
 		cout << "permutation_representation_group_element_one calling "
 				"element_is_one" << endl;
-		}
+	}
 	ret = P.element_is_one(Elt);
 	if (f_v) {
 		if (ret) {
 			cout << "permutation_representation_group_element_is_one "
 					"returns YES" << endl;
-			}
+		}
 		else {
 			cout << "permutation_representation_group_element_is_one "
 					"returns NO" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -252,7 +252,7 @@ static void permutation_representation_group_element_unpack(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_unpack" << endl;
-		}
+	}
 	P.element_unpack(elt1, Elt1);
 }
 
@@ -267,7 +267,7 @@ static void permutation_representation_group_element_pack(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_pack" << endl;
-		}
+	}
 	P.element_pack(Elt1, elt1);
 }
 
@@ -283,12 +283,12 @@ static void permutation_representation_group_element_retrieve(
 	if (f_v) {
 		cout << "permutation_representation_group_element_"
 				"retrieve hdl = " << hdl << endl;
-		}
-	p_elt = P.PS->s_i(hdl);
+	}
+	p_elt = P.Page_storage->s_i(hdl);
 	P.element_unpack(p_elt, Elt);
 	if (f_v) {
 		P.element_print_easy(Elt, cout);
-		}
+	}
 }
 
 static int permutation_representation_group_element_store(
@@ -302,13 +302,13 @@ static int permutation_representation_group_element_store(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_store" << endl;
-		}
+	}
 	P.element_pack(Elt, P.elt1);
-	hdl = P.PS->store(P.elt1);
+	hdl = P.Page_storage->store(P.elt1);
 	if (f_v) {
 		cout << "permutation_representation_group_element_store "
 				"hdl = " << hdl << endl;
-		}
+	}
 	return hdl;
 }
 
@@ -325,21 +325,21 @@ static void permutation_representation_group_element_mult(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_mult" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		P.element_print_easy(AA, cout);
 		cout << "B=" << endl;
 		P.element_print_easy(BB, cout);
-		}
+	}
 	P.element_mult(AA, BB, AB, verbose_level - 2);
 	if (f_v) {
 		cout << "permutation_representation_group_element_mult done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "AB=" << endl;
 		P.element_print_easy(AB, cout);
-		}
+	}
 }
 
 static void permutation_representation_group_element_invert(
@@ -354,19 +354,19 @@ static void permutation_representation_group_element_invert(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_invert" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		P.element_print_easy(AA, cout);
-		}
+	}
 	P.element_invert(AA, AAv, verbose_level - 1);
 	if (f_v) {
 		cout << "permutation_representation_group_element_invert done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "Av=" << endl;
 		P.element_print_easy(AAv, cout);
-		}
+	}
 }
 
 static void permutation_representation_group_element_transpose(
@@ -395,7 +395,7 @@ static void permutation_representation_group_element_move(
 
 	if (f_v) {
 		cout << "permutation_representation_group_element_move" << endl;
-		}
+	}
 	P.element_move(AA, BB, 0 /* verbose_level */);
 }
 
@@ -409,8 +409,8 @@ static void permutation_representation_group_element_dispose(
 	if (f_v) {
 		cout << "permutation_representation_group_element_dispose "
 				"hdl = " << hdl << endl;
-		}
-	P.PS->dispose(hdl);
+	}
+	P.Page_storage->dispose(hdl);
 }
 
 static void permutation_representation_group_element_print(

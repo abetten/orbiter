@@ -38,7 +38,7 @@ matrix_group_element::matrix_group_element()
 	elt2 = NULL;
 	elt3 = NULL;
 
-	Elts = NULL;
+	Page_storage = NULL;
 }
 
 
@@ -56,8 +56,8 @@ matrix_group_element::~matrix_group_element()
 		cout << "matrix_group_element::~matrix_group_element "
 				"destroying Elts" << endl;
 	}
-	if (Elts) {
-		FREE_OBJECT(Elts);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 }
 
@@ -224,18 +224,18 @@ void matrix_group_element::setup_page_storage(
 	if (f_v) {
 		cout << "matrix_group_element::setup_page_storage" << endl;
 	}
-	if (Elts) {
+	if (Page_storage) {
 		cout << "matrix_group_element::setup_page_storage "
-				"Warning: Elts != NULL" << endl;
-		FREE_OBJECT(Elts);
+				"Warning: Page_storage != NULL" << endl;
+		FREE_OBJECT(Page_storage);
 	}
-	Elts = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
 
 	if (f_vv) {
 		cout << "matrix_group_element::setup_page_storage "
-				"calling Elts->init()" << endl;
+				"calling Page_storage->init" << endl;
 	}
-	Elts->init(
+	Page_storage->init(
 			Matrix_group->char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(elt_print, (void *) this);
@@ -249,9 +249,9 @@ void matrix_group_element::setup_page_storage(
 	GL_pack(Elt1, elt1, verbose_level);
 	if (f_vv) {
 		cout << "matrix_group_element::setup_page_storage "
-				"before Elts->store" << endl;
+				"before Page_storage->store" << endl;
 	}
-	hdl = Elts->store(elt1);
+	hdl = Page_storage->store(elt1);
 	if (f_vv) {
 		cout << "matrix_group_element::setup_page_storage "
 				"stored identity element, hdl = " << hdl << endl;
@@ -650,10 +650,14 @@ void matrix_group_element::GL_mult(
 	if (f_v) {
 		cout << "matrix_group_element::GL_mult" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		cout << "A=" << endl;
+		cout << "matrix_group_element::GL_mult A=" << endl;
 		GL_print_easy(A, cout);
-		cout << "B=" << endl;
+		cout << "matrix_group_element::GL_mult A+=" << endl;
+		GL_print_easy(A + Matrix_group->elt_size_int_half, cout);
+		cout << "matrix_group_element::GL_mult B=" << endl;
 		GL_print_easy(B, cout);
+		cout << "matrix_group_element::GL_mult B+=" << endl;
+		GL_print_easy(B + Matrix_group->elt_size_int_half, cout);
 	}
 
 	if (f_v) {
@@ -662,6 +666,11 @@ void matrix_group_element::GL_mult(
 	}
 
 	GL_mult_internal(A, B, AB, verbose_level - 1);
+
+	if (f_v) {
+		cout << "matrix_group_element::GL_mult_verbose "
+				"after GL_mult_internal (1)" << endl;
+	}
 
 	if (f_v) {
 		cout << "matrix_group_element::GL_mult_verbose "
@@ -675,7 +684,12 @@ void matrix_group_element::GL_mult(
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "AB=" << endl;
+		cout << "matrix_group_element::GL_mult_verbose "
+				"after GL_mult_internal (2)" << endl;
+	}
+
+	if (f_v) {
+		cout << "matrix_group_element::GL_mult_verbose AB=" << endl;
 		GL_print_easy(AB, cout);
 		cout << "matrix_group_element::GL_mult done" << endl;
 	}
@@ -778,6 +792,7 @@ void matrix_group_element::GL_copy_internal(
 
 void matrix_group_element::GL_transpose(
 		int *A, int *At, int verbose_level)
+// inverse and transpose
 {
 	int f_v = (verbose_level >= 1);
 
@@ -797,8 +812,45 @@ void matrix_group_element::GL_transpose(
 	}
 }
 
+void matrix_group_element::GL_transpose_only(
+		int *A, int *At, int verbose_level)
+// transpose only. no invert
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group_element::GL_transpose_only" << endl;
+	}
+
+	Matrix_group->GFq->Linear_algebra->transpose_square_matrix(
+			A,
+			At,
+			Matrix_group->n);
+
+	Matrix_group->GFq->Linear_algebra->transpose_square_matrix(
+			A + Matrix_group->elt_size_int_half,
+			At + Matrix_group->elt_size_int_half,
+			Matrix_group->n);
+
+#if 0
+	GL_copy_internal(A, At);
+	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
+			At, Matrix_group->n);
+
+	GL_copy_internal(A + Matrix_group->elt_size_int_half, At + Matrix_group->elt_size_int_half);
+	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
+			At + Matrix_group->elt_size_int_half, Matrix_group->n);
+#endif
+
+	if (f_v) {
+		cout << "matrix_group_element::GL_transpose_only done" << endl;
+	}
+}
+
+
 void matrix_group_element::GL_transpose_internal(
 		int *A, int *At, int verbose_level)
+// inverse and transpose
 {
 	int f_v = (verbose_level >= 1);
 
@@ -831,6 +883,18 @@ void matrix_group_element::GL_invert(
 {
 	GL_copy_internal(A, Ainv + Matrix_group->elt_size_int_half);
 	GL_copy_internal(A + Matrix_group->elt_size_int_half, Ainv);
+}
+
+void matrix_group_element::GL_invert_transpose(
+		int *A, int *Ainv)
+{
+	GL_copy_internal(A, Ainv + Matrix_group->elt_size_int_half);
+	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
+			Ainv + Matrix_group->elt_size_int_half, Matrix_group->n);
+
+	GL_copy_internal(A + Matrix_group->elt_size_int_half, Ainv);
+	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
+			Ainv, Matrix_group->n);
 }
 
 void matrix_group_element::GL_invert_internal(
@@ -1730,17 +1794,17 @@ void matrix_group_element::retrieve(
 
 	if (f_v) {
 		cout << "matrix_group_element::retrieve "
-				"overall_length = " << Elts->overall_length << endl;
+				"overall_length = " << Page_storage->overall_length << endl;
 	}
-	if (hdl >= Elts->overall_length) {
+	if (hdl >= Page_storage->overall_length) {
 		cout << "matrix_group_element::retrieve "
 				"hdl = " << hdl << endl;
 		cout << "matrix_group_element::retrieve "
-				"overall_length = " << Elts->overall_length << endl;
+				"overall_length = " << Page_storage->overall_length << endl;
 		exit(1);
 	}
 
-	p_elt = Elts->s_i(hdl);
+	p_elt = Page_storage->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);
 	//	}
@@ -1767,7 +1831,7 @@ int matrix_group_element::store(
 	int hdl;
 
 	GL_pack(Elt, elt1, verbose_level);
-	hdl = Elts->store(elt1);
+	hdl = Page_storage->store(elt1);
 	if (f_v) {
 		cout << "matrix_group_element::store "
 				"hdl = " << hdl << endl;
@@ -1784,7 +1848,7 @@ void matrix_group_element::dispose(
 		cout << "matrix_group_element::dispose "
 				"hdl = " << hdl << endl;
 	}
-	Elts->dispose(hdl);
+	Page_storage->dispose(hdl);
 }
 
 void matrix_group_element::print_point(

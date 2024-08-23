@@ -80,7 +80,7 @@ public:
 	long int *the_base; // the union of the two bases, as a subset of A \cup B.
 	int *the_transversal_length;
 
-	data_structures::page_storage *Elts;
+	data_structures::page_storage *Page_storage;
 
 	direct_product();
 	~direct_product();
@@ -423,7 +423,7 @@ public:
 	int *Eltrk1, *Eltrk2, *Eltrk3;
 		// used in store / retrieve
 
-	data_structures::page_storage *Elts;
+	data_structures::page_storage *Page_storage;
 
 	permutation_representation_domain();
 	~permutation_representation_domain();
@@ -440,7 +440,8 @@ public:
 		int base_length, int *base, int page_length_log,
 		actions::action &A, int verbose_level);
 	void transversal_rep(
-			int i, int j, int *Elt, int verbose_level);
+			int i, int j, int *Elt,
+			int verbose_level);
 	void one(
 			int *Elt);
 	int is_one(
@@ -508,7 +509,7 @@ public:
 	std::string label;
 	std::string label_tex;
 
-	data_structures::page_storage *PS;
+	data_structures::page_storage *Page_storage;
 
 	int *Elts;
 		// [nb_gens * elt_size_int], the generators in the induced action
@@ -557,6 +558,7 @@ public:
 class polarity_extension {
 
 public:
+
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 
@@ -565,6 +567,11 @@ public:
 
 	std::string label;
 	std::string label_tex;
+
+
+	actions::action *A_on_points;
+	actions::action *A_on_hyperplanes;
+
 
 	// The new permutation domain is partitioned into three parts:
 	// A) the two element set {0,1},
@@ -590,6 +597,9 @@ public:
 	int *perm_offset_i; // [2]
 	// perm_offset_i[] is the start of A, B respectively.
 	int *tmp_Elt1;
+	int *tmp_matrix1; // [n * n]
+	int *tmp_matrix2; // [n * n]
+	int *tmp_vector; // [n]
 
 	int bits_per_digit;
 
@@ -610,12 +620,12 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	data_structures::page_storage *Elts;
+	data_structures::page_storage *Page_storage;
 
 	polarity_extension();
 	~polarity_extension();
 	void init(
-			algebra::matrix_group *M,
+			actions::action *A,
 			geometry::projective_space *P,
 			geometry::polarity *Polarity,
 			int verbose_level);
@@ -629,6 +639,15 @@ public:
 			int *A, int *B, int *AB, int verbose_level);
 	void element_move(
 			int *A, int *B, int verbose_level);
+	void compute_images_rho_A_rho(
+			int *Mtx, int nb_rows, int *A_Elt, int verbose_level);
+	void create_rho_A_rho(
+			int *A_Elt, int *data,
+			int verbose_level);
+	void element_inverse_conjugate_by_polarity(
+			int *A_Elt, int *rho_A_rho, int verbose_level);
+	void element_conjugate_by_polarity(
+			int *A_Elt, int *rho_A_rho, int verbose_level);
 	void element_invert(
 			int *A, int *Av, int verbose_level);
 	void element_pack(
@@ -645,6 +664,8 @@ public:
 			int *Elt, std::ostream &ost);
 	void element_print_easy_latex(
 			int *Elt, std::ostream &ost);
+	void element_code_for_make_element(
+			int *Elt, int *data);
 	void element_print_for_make_element(
 			int *Elt, std::ostream &ost);
 	void element_print_for_make_element_no_commas(
@@ -654,14 +675,10 @@ public:
 	void make_strong_generators_data(
 			int *&data,
 			int &size, int &nb_gens, int verbose_level);
-#if 0
-	void lift_generators(
-			groups::strong_generators *SG1,
-			groups::strong_generators *SG2,
-			actions::action *A,
-			groups::strong_generators *&SG3,
-			int verbose_level);
-#endif
+	void unrank_point(
+			long int rk, int *v, int verbose_level);
+	long int rank_point(
+			int *v, int verbose_level);
 
 };
 
@@ -737,7 +754,7 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	data_structures::page_storage *Elts;
+	data_structures::page_storage *Page_storage;
 
 	uint32_t *rank_one_tensors; // [nb_rank_one_tensors]
 	long int *rank_one_tensors_in_PG; // [nb_rank_one_tensors]

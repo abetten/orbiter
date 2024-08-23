@@ -209,6 +209,12 @@ public:
 			int n,
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
+	void create_frame(
+			int *&frame, int n, int verbose_level);
+	void adjust_scalars_in_frame(
+			field_theory::finite_field *F,
+			int d, int *Image_of_basis_in_rows, int *image_of_all_one,
+			int verbose_level);
 
 };
 
@@ -337,6 +343,8 @@ public:
 			int len, int *v, int *w);
 	void transpose_matrix(
 			int *A, int *At, int ma, int na);
+	void transpose_square_matrix(
+			int *A, int *At, int n);
 	void transpose_matrix_in_place(
 			int *A, int m);
 	void transform_form_matrix(
@@ -712,37 +720,43 @@ public:
 		data_structures::int_matrix *W1,
 		data_structures::int_matrix *W2, int *v,
 		int verbose_level);
+
 	void invert_matrix(
 			int *A, int *A_inv, int n, int verbose_level);
 	void invert_matrix_memory_given(
 			int *A, int *A_inv, int n,
 			int *tmp_A, int *tmp_basecols, int verbose_level);
-
 	void matrix_inverse(
 			int *A, int *Ainv, int n, int verbose_level);
+	void matrix_inverse_transpose(
+			int *A, int *Tmp, int *Tmp_basecols,
+		int *Ainv_t, int n, int verbose_level);
+		// Tmp[n * n]
+		// Tmp_basecols[n]
 	void matrix_invert(
 			int *A, int *Tmp,
-		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
-		// Tmp points to n * n + 1 int's
-		// Tmp_basecols points to n int's
+			int *Tmp_basecols, int *Ainv, int n, int verbose_level);
+			// Tmp[n * n]
+			// Tmp_basecols[n]
 	void semilinear_matrix_invert(
 			int *A, int *Tmp,
 		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
-		// Tmp points to n * n + 1 int's
-		// Tmp_basecols points to n int's
-	// input: (A,f), output: (A^{-1}^{\Phi^f},-f mod e)
+		// Tmp[n * n + 1]
+		// Tmp_basecols[n]
+		// input: (A,f), output: (A^{-1}^{\Phi^f},-f mod e)
 	void semilinear_matrix_invert_affine(
 			int *A, int *Tmp,
 		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
-		// Tmp points to n * n + 1 int's
-		// Tmp_basecols points to n int's
-	// input: (A,v,f),
-	// output: (A^{-1}^{\Phi^f},-(v*A^{-1}^{\Phi^f})^{\Phi^{-f}},-f mod e)
+		// Tmp[n * n + 1]
+		// Tmp_basecols[n]
+		// input: (A,v,f),
+		// output: (A^{-1}^{\Phi^f},-(v*A^{-1}^{\Phi^f})^{\Phi^{-f}},-f mod e)
 	void matrix_invert_affine(
 			int *A, int *Tmp, int *Tmp_basecols,
 		int *Ainv, int n, int verbose_level);
-		// Tmp points to n * n + 1 int's
-		// Tmp_basecols points to n int's
+		// Tmp[n * n]
+		// Tmp_basecols[n]
+
 	void intersect_with_subspace(
 			int *Pt_coords, int nb_pts,
 			int *Basis_save, int *Basis, int m, int n,

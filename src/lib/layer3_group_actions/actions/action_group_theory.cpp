@@ -46,14 +46,14 @@ void action::report_groups_and_normalizers(
 
 		ost << "Generators for $H$:\\\\" << endl;
 
-		H_gens[u].print_generators_in_latex_individually(ost);
+		H_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
 		H_gens[u].print_generators_as_permutations_tex(ost, this);
 
 		ost << "\\bigskip" << endl;
 
 		ost << "Generators for $N(H)$:\\\\" << endl;
 
-		N_gens[u].print_generators_in_latex_individually(ost);
+		N_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
 		N_gens[u].print_generators_as_permutations_tex(ost, this);
 
 	}

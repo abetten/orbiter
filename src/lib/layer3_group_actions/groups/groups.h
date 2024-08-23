@@ -966,6 +966,7 @@ public:
 
 	int *path; // [my_base_len]
 	
+	// not used:
 	int nb_images;
 	int **images;
 	
@@ -1061,14 +1062,16 @@ public:
 		// computes the depth of the element, 
 		// updates the arrays gen_depth and gen_perm accordingly
 		// does not change the transversals
-	int generator_depth(
+	int generator_depth_in_stabilizer_chain(
 			int gen_idx, int verbose_level);
 		// returns the index of the first base point 
 		// which is moved by a given generator. 
-	int generator_depth(
+		// previously called generator_depth
+	int depth_in_stabilizer_chain(
 			int *elt, int verbose_level);
 		// returns the index of the first base point 
 		// which is moved by the given element
+		// previously called generator_depth
 	void group_order(
 			ring_theory::longinteger_object &go);
 	void group_order_verbose(
@@ -1613,12 +1616,14 @@ public:
 	long int group_order_as_lint();
 	void print_group_order(
 			std::ostream &ost);
-	void print_generators_in_source_code();
+	void print_generators_in_source_code(
+			int verbose_level);
 	void print_generators_in_source_code_to_file(
-			std::string &fname);
-	void print_generators_even_odd();
+			std::string &fname, int verbose_level);
+	void print_generators_even_odd(
+			int verbose_level);
 	void print_generators_MAGMA(
-			actions::action *A, std::ostream &ost);
+			actions::action *A, std::ostream &ost, int verbose_level);
 	void export_magma(
 			actions::action *A, std::ostream &ost,
 			int verbose_level);
@@ -1633,15 +1638,15 @@ public:
 			std::string &input_set_text,
 			int verbose_level);
 	void print_generators_gap(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_generators_gap_in_different_action(
-			std::ostream &ost, actions::action *A2);
+			std::ostream &ost, actions::action *A2, int verbose_level);
 	void print_generators_compact(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_generators(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_generators_in_latex_individually(
-			std::ostream &ost);
+			std::ostream &ost, int verbose_level);
 	void print_generators_tex();
 	void print_generators_tex(
 			std::ostream &ost);

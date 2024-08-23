@@ -339,7 +339,7 @@ void strong_generators::init_linear_group_from_scratch(
 	if (false) {
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"we found the following generators:" << endl;
-		print_generators(cout);
+		print_generators(cout, verbose_level - 1);
 		print_generators_tex();
 	}
 	if (f_v) {
@@ -1760,7 +1760,7 @@ void strong_generators::field_reduction(
 	if (f_v) {
 		cout << "strong_generators::field_reduction "
 				"strong generators are:" << endl;
-		print_generators(cout);
+		print_generators(cout, verbose_level - 1);
 	}
 
 	FREE_OBJECT(gens1);
@@ -4097,7 +4097,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 		cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 				"f_semilinear = " << f_semilinear << endl;
 		cout << "generators SG_hyperplane:" << endl;
-		SG_hyperplane->print_generators(cout);
+		SG_hyperplane->print_generators(cout, verbose_level - 1);
 	}
 
 	gens->allocate(SG_hyperplane->gens->len, verbose_level - 2);
@@ -4235,7 +4235,7 @@ void strong_generators::exterior_square(
 		cout << "strong_generators::exterior_square "
 				"f_semilinear = " << f_semilinear << endl;
 		cout << "generators SG_original:" << endl;
-		SG_original->print_generators(cout);
+		SG_original->print_generators(cout, verbose_level - 1);
 	}
 
 	gens->allocate(SG_original->gens->len, verbose_level - 2);

@@ -20,13 +20,25 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
-void orbiter_eigenvalues(
+eigen_interface::eigen_interface()
+{
+
+}
+
+eigen_interface::~eigen_interface()
+{
+
+}
+
+
+
+void eigen_interface::orbiter_eigenvalues(
 		int *Mtx, int nb_points, double *E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbiter_eigenvalues" << endl;
+		cout << "eigen_interface::orbiter_eigenvalues" << endl;
 	}
 
 
@@ -66,7 +78,8 @@ void orbiter_eigenvalues(
 	SelfAdjointEigenSolver<MatrixXd> es(X);
 
 	if (f_v) {
-		cout << "The eigenvalues of X are:" << endl << es.eigenvalues() << endl;
+		cout << "eigen_interface::orbiter_eigenvalues "
+				"The eigenvalues of X are:" << endl << es.eigenvalues() << endl;
 		cout << "The matrix of eigenvectors, V, is:" << endl << es.eigenvectors() << endl << endl;
 	}
 
@@ -77,7 +90,7 @@ void orbiter_eigenvalues(
 #endif
 
 	if (f_v) {
-		cout << "orbiter_eigenvalues done" << endl;
+		cout << "eigen_interface::orbiter_eigenvalues done" << endl;
 	}
 }
 

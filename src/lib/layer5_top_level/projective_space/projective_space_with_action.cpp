@@ -487,7 +487,9 @@ void projective_space_with_action::canonical_labeling(
 			0 /* verbose_level */);
 
 
-	OiP->canonical_labeling(NO, verbose_level);
+	int f_save_nauty_input_graphs = false;
+
+	OiP->canonical_labeling(f_save_nauty_input_graphs, NO, verbose_level);
 
 	int i;
 

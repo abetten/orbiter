@@ -19,7 +19,20 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
-void gnuplot_interface(std::string &data_file_csv,
+gnuplot_interface::gnuplot_interface()
+{
+
+}
+
+gnuplot_interface::~gnuplot_interface()
+{
+
+}
+
+
+
+void gnuplot_interface::gnuplot(
+		std::string &data_file_csv,
 		std::string &title,
 		std::string &label_x,
 		std::string &label_y,
@@ -29,7 +42,8 @@ void gnuplot_interface(std::string &data_file_csv,
 	orbiter_kernel_system::file_io Fio;
 
 
-	cout << "Reading data from file " << data_file_csv << " of size "
+	cout << "gnuplot_interface::gnuplot "
+			"Reading data from file " << data_file_csv << " of size "
 			<< Fio.file_size(data_file_csv) << endl;
 
 
@@ -68,7 +82,8 @@ void gnuplot_interface(std::string &data_file_csv,
 
 	ST.chop_off_extension(prefix);
 
-	cout << "prefix=" << prefix << endl;
+	cout << "gnuplot_interface::gnuplot "
+			"prefix=" << prefix << endl;
 
 
 
@@ -113,7 +128,8 @@ void gnuplot_interface(std::string &data_file_csv,
 		}
 
 	}
-	cout << "Written file " << fname1 << " of size " << Fio.file_size(fname1) << endl;
+	cout << "gnuplot_interface::gnuplot "
+			"Written file " << fname1 << " of size " << Fio.file_size(fname1) << endl;
 
 	{
 		ofstream ost(fname2);

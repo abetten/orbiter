@@ -53,6 +53,9 @@ group_modification_description::group_modification_description()
 	//std::string polarity_extension_input;
 	//std::string polarity_extension_PA;
 
+	f_on_middle_layer_grassmannian = false;
+
+	f_on_points_and_hyperplanes = false;
 
 
 	//std::vector<std::string> from;
@@ -165,7 +168,18 @@ int group_modification_description::read_arguments(
 						<< endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-on_middle_layer_grassmannian") == 0) {
+			f_on_middle_layer_grassmannian = true;
+			if (f_v) {
+				cout << "-on_middle_layer_grassmannian" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-on_points_and_hyperplanes") == 0) {
+			f_on_points_and_hyperplanes = true;
+			if (f_v) {
+				cout << "-on_points_and_hyperplanes" << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
@@ -238,6 +252,12 @@ void group_modification_description::print()
 				<< polarity_extension_input
 				<< " " << polarity_extension_PA
 				<< endl;
+	}
+	if (f_on_middle_layer_grassmannian) {
+		cout << "-on_middle_layer_grassmannian" << endl;
+	}
+	if (f_on_middle_layer_grassmannian) {
+		cout << "-on_points_and_hyperplanes" << endl;
 	}
 
 

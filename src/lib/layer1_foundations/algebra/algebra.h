@@ -629,7 +629,7 @@ private:
 	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 
-	data_structures::page_storage *Elts;
+	data_structures::page_storage *Page_storage;
 
 public:
 
@@ -683,9 +683,14 @@ public:
 			int *A, int *B);
 	void GL_transpose(
 			int *A, int *At, int verbose_level);
+	void GL_transpose_only(
+			int *A, int *At, int verbose_level);
+	// transpose only. no invert
 	void GL_transpose_internal(
 			int *A, int *At, int verbose_level);
 	void GL_invert(
+			int *A, int *Ainv);
+	void GL_invert_transpose(
 			int *A, int *Ainv);
 	void GL_invert_internal(
 			int *A, int *Ainv, int verbose_level);

@@ -184,7 +184,8 @@ void classification_of_varieties_nauty::classify_nauty(
 		cout << "classification_of_varieties_nauty::classify_nauty "
 				"before main_loop" << endl;
 	}
-	main_loop(verbose_level);
+	main_loop(
+			verbose_level);
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::classify_nauty "
 				"after main_loop" << endl;
@@ -306,6 +307,7 @@ void classification_of_varieties_nauty::main_loop(
 						<< " before Variety->compute_canonical_form_nauty_new" << endl;
 			}
 			Variety->compute_canonical_form_nauty_new(
+					Classifier->get_description()->f_save_nauty_input_graphs,
 					verbose_level);
 
 

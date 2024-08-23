@@ -282,7 +282,7 @@ static void orbits_on_subspaces_early_test_func(
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		S[len] = candidates[i];
-		if (OoS->Group->subspace_orbits_test_set(len + 1, S, verbose_level - 1)) {
+		if (OoS->Group->Any_group_linear->subspace_orbits_test_set(len + 1, S, verbose_level - 1)) {
 			good_candidates[nb_good_candidates++] = candidates[i];
 		}
 	}

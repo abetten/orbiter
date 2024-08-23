@@ -624,7 +624,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"stabilizer of the flag:" << endl;
-				SG->print_generators(cout);
+				SG->print_generators(cout, verbose_level - 1);
 			}
 
 
@@ -737,7 +737,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 			}
 			if (f_vv) {
 				cout << "lifted generators are:" << endl;
-				SG_induced->print_generators(cout);
+				SG_induced->print_generators(cout, verbose_level - 1);
 			}
 
 			if (f_v) {

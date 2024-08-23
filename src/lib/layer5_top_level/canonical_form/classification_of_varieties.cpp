@@ -406,6 +406,7 @@ void classification_of_varieties::main_loop(
 							<< " before Variety->compute_canonical_form_nauty" << endl;
 				}
 				Variety->compute_canonical_form_nauty(
+						Classifier->get_description()->f_save_nauty_input_graphs,
 						verbose_level);
 
 

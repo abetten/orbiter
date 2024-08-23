@@ -2372,6 +2372,241 @@ void longinteger_domain::Chinese_Remainders(
 	}
 }
 
+void longinteger_domain::check_for_int_overflow_given_string_and_convert(
+		std::string &number_to_test,
+		ring_theory::longinteger_object *&number_to_test_longinteger,
+		long int &number_to_test_lint, int &number_to_test_int,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string_and_convert" << endl;
+	}
+
+	number_to_test_longinteger = NEW_OBJECT(ring_theory::longinteger_object);
+	number_to_test_longinteger->create_from_base_10_string(number_to_test);
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string_and_convert "
+				"before check_for_int_overflow_given_string" << endl;
+	}
+
+	check_for_int_overflow_given_string(
+			number_to_test, number_to_test_lint, number_to_test_int,
+			verbose_level);
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string_and_convert "
+				"after check_for_int_overflow_given_string" << endl;
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string_and_convert done" << endl;
+	}
+
+}
+
+
+
+void longinteger_domain::check_for_int_overflow_given_string(
+		std::string &number_to_test,
+		long int &number_to_test_lint, int &number_to_test_int,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string" << endl;
+	}
+
+	string s;
+
+	s.assign(number_to_test);
+
+	ring_theory::longinteger_object *number_to_test_longinteger;
+
+	number_to_test_longinteger = NEW_OBJECT(ring_theory::longinteger_object);
+	number_to_test_longinteger->create_from_base_10_string(number_to_test);
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"number_to_test_longinteger = " << *number_to_test_longinteger << endl;
+	}
+
+
+	number_to_test_lint = number_to_test_longinteger->as_lint();
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"number_to_test_lint = " << number_to_test_lint << endl;
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"before check_for_int_overflow" << endl;
+	}
+	check_for_int_overflow(number_to_test_longinteger, verbose_level);
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"after check_for_int_overflow" << endl;
+	}
+
+
+	number_to_test_int = (int) number_to_test_lint;
+
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"number_to_test_int = " << number_to_test_int << endl;
+	}
+
+	if (number_to_test_int != number_to_test_lint) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string "
+				"number_to_test_int != number_to_test_lint" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow_given_string done" << endl;
+	}
+}
+
+void longinteger_domain::check_for_int_overflow(
+		ring_theory::longinteger_object *number_to_test,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow" << endl;
+	}
+
+	if (sizeof(int) == 4) {
+		cout << "longinteger_domain::check_for_int_overflow sizeof(int) == 4" << endl;
+
+		ring_theory::longinteger_object b;
+
+		b.create_from_base_10_string("2147483647"); // 2^31 - 1
+
+		if (compare_unsigned(*number_to_test, b) == 1) {
+			cout << "longinteger_domain::check_for_int_overflow "
+					"The order of the field is too large "
+					"for the word size of the machine. "
+					"Must be less than or equal to 2^31 - 1" << endl;
+			exit(1);
+		}
+		// D.compare_unsigned returns -1 if a < b, 0 if a = b,
+		// and 1 if a > b, treating a and b as unsigned.
+
+	}
+	else if (sizeof(int) == 8) {
+		cout << "longinteger_domain::check_for_int_overflow sizeof(int) == 8" << endl;
+
+		ring_theory::longinteger_object b;
+
+		b.create_from_base_10_string("9223372036854775807"); // 2^63 - 1
+
+		if (compare_unsigned(*number_to_test, b) == 1) {
+			cout << "longinteger_domain::check_for_int_overflow "
+					"The order of the field is too large "
+					"for the word size of the machine. "
+					"Must be less than or equal to 2^63 - 1" << endl;
+			exit(1);
+		}
+		// D.compare_unsigned returns -1 if a < b, 0 if a = b,
+		// and 1 if a > b, treating a and b as unsigned.
+
+	}
+	else if (sizeof(int) == 2) {
+		cout << "longinteger_domain::check_for_int_overflow sizeof(int) == 2" << endl;
+
+		ring_theory::longinteger_object b;
+
+		b.create_from_base_10_string("32767"); // 2^15 - 1
+
+		if (compare_unsigned(*number_to_test, b) == 1) {
+			cout << "longinteger_domain::check_for_int_overflow "
+					"The order of the field is too large "
+					"for the word size of the machine. "
+					"Must be less than or equal to 2^15 - 1" << endl;
+			exit(1);
+		}
+		// D.compare_unsigned returns -1 if a < b, 0 if a = b,
+		// and 1 if a > b, treating a and b as unsigned.
+
+	}
+	else {
+		cout << "longinteger_domain::check_for_int_overflow unknown wordsize." << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_int_overflow done" << endl;
+	}
+}
+
+
+void longinteger_domain::check_for_lint_overflow(
+		ring_theory::longinteger_object *number_to_test,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory::number_theory_domain NT;
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_lint_overflow" << endl;
+	}
+
+	if (sizeof(long int) == 4) {
+		cout << "longinteger_domain::check_for_lint_overflow sizeof(long int) == 4" << endl;
+
+		ring_theory::longinteger_object b;
+
+		b.create_from_base_10_string("2147483647"); // 2^31 - 1
+
+		if (compare_unsigned(*number_to_test, b) == 1) {
+			cout << "longinteger_domain::check_for_lint_overflow "
+					"The order of the field is too large "
+					"for the word size of the machine. "
+					"Must be less than or equal to 2^31 - 1" << endl;
+			exit(1);
+		}
+		// D.compare_unsigned returns -1 if a < b, 0 if a = b,
+		// and 1 if a > b, treating a and b as unsigned.
+
+	}
+	else if (sizeof(long int) == 8) {
+		cout << "longinteger_domain::check_for_lint_overflow sizeof(int) == 8" << endl;
+
+		ring_theory::longinteger_object b;
+
+		b.create_from_base_10_string("9223372036854775807"); // 2^63 - 1
+
+		if (compare_unsigned(*number_to_test, b) == 1) {
+			cout << "longinteger_domain::check_for_lint_overflow "
+					"The order of the field is too large "
+					"for the word size of the machine. "
+					"Must be less than or equal to 2^63 - 1" << endl;
+			exit(1);
+		}
+		// D.compare_unsigned returns -1 if a < b, 0 if a = b,
+		// and 1 if a > b, treating a and b as unsigned.
+
+	}
+	else {
+		cout << "longinteger_domain::check_for_lint_overflow unknown wordsize." << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "longinteger_domain::check_for_lint_overflow done" << endl;
+	}
+}
+
+
+
 
 
 }}}

@@ -81,6 +81,7 @@ void stabilizer_of_set_of_rational_points::init(
 
 void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 		canonical_form_of_variety *Variety,
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 // Computes the canonical labeling of the graph associated with
 // the set of rational points of the curve.
@@ -136,6 +137,7 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 				Classifier->PA->A,
 				Variety->Vo->Variety_object->Point_sets->Sets[0],
 				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				f_save_nauty_input_graphs,
 				Variety->Vo->nauty_output_index_start,
 				Variety->Vo->Carrying_through,
 				Set_stab,
@@ -158,6 +160,7 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 				Classifier->PA->A,
 				Variety->Vo->Variety_object->Point_sets->Sets[0],
 				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				f_save_nauty_input_graphs,
 				Set_stab,
 				Canonical_form,
 				NO,

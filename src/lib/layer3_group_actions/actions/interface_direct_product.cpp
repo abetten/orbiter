@@ -152,13 +152,13 @@ static long int direct_product_group_element_image_of(
 		cout << "direct_product_group_element_image_of "
 				"computing image of " << a << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	b = P.element_image_of(Elt, a, verbose_level - 1);
 
 	if (f_v) {
 		cout << "direct_product_group_element_image_of "
 				"image of " << a << " is " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -200,7 +200,7 @@ static void direct_product_group_element_one(
 	if (f_v) {
 		cout << "direct_product_group_element_one "
 				"calling element_one" << endl;
-		}
+	}
 	P.element_one(Elt);
 }
 
@@ -216,18 +216,18 @@ static int direct_product_group_element_is_one(
 	if (f_v) {
 		cout << "direct_product_group_element_one calling "
 				"element_is_one" << endl;
-		}
+	}
 	ret = P.element_is_one(Elt);
 	if (f_v) {
 		if (ret) {
 			cout << "direct_product_group_element_is_one "
 					"returns YES" << endl;
-			}
+		}
 		else {
 			cout << "direct_product_group_element_is_one "
 					"returns NO" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -242,7 +242,7 @@ static void direct_product_group_element_unpack(
 
 	if (f_v) {
 		cout << "direct_product_group_element_unpack" << endl;
-		}
+	}
 	P.element_unpack(elt1, Elt1);
 }
 
@@ -257,7 +257,7 @@ static void direct_product_group_element_pack(
 
 	if (f_v) {
 		cout << "direct_product_group_element_pack" << endl;
-		}
+	}
 	P.element_pack(Elt1, elt1);
 }
 
@@ -273,15 +273,15 @@ static void direct_product_group_element_retrieve(
 	if (f_v) {
 		cout << "direct_product_group_element_"
 				"retrieve hdl = " << hdl << endl;
-		}
-	p_elt = P.Elts->s_i(hdl);
+	}
+	p_elt = P.Page_storage->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);
 	//	}
 	P.element_unpack(p_elt, Elt);
 	if (f_v) {
 		P.element_print_easy(Elt, cout);
-		}
+	}
 }
 
 static int direct_product_group_element_store(
@@ -295,13 +295,13 @@ static int direct_product_group_element_store(
 
 	if (f_v) {
 		cout << "direct_product_group_element_store" << endl;
-		}
+	}
 	P.element_pack(Elt, P.elt1);
-	hdl = P.Elts->store(P.elt1);
+	hdl = P.Page_storage->store(P.elt1);
 	if (f_v) {
 		cout << "direct_product_group_element_store "
 				"hdl = " << hdl << endl;
-		}
+	}
 	return hdl;
 }
 
@@ -318,21 +318,21 @@ static void direct_product_group_element_mult(
 
 	if (f_v) {
 		cout << "direct_product_group_element_mult" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		P.element_print_easy(AA, cout);
 		cout << "B=" << endl;
 		P.element_print_easy(BB, cout);
-		}
+	}
 	P.element_mult(AA, BB, AB, verbose_level - 2);
 	if (f_v) {
 		cout << "direct_product_group_element_mult done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "AB=" << endl;
 		P.element_print_easy(AB, cout);
-		}
+	}
 }
 
 static void direct_product_group_element_invert(
@@ -347,19 +347,19 @@ static void direct_product_group_element_invert(
 
 	if (f_v) {
 		cout << "direct_product_group_element_invert" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		P.element_print_easy(AA, cout);
-		}
+	}
 	P.element_invert(AA, AAv, verbose_level - 1);
 	if (f_v) {
 		cout << "direct_product_group_element_invert done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "Av=" << endl;
 		P.element_print_easy(AAv, cout);
-		}
+	}
 }
 
 static void direct_product_group_element_transpose(
@@ -382,7 +382,7 @@ static void direct_product_group_element_move(
 
 	if (f_v) {
 		cout << "direct_product_group_element_move" << endl;
-		}
+	}
 	P.element_move(AA, BB, 0 /* verbose_level */);
 }
 
@@ -396,8 +396,8 @@ static void direct_product_group_element_dispose(
 	if (f_v) {
 		cout << "direct_product_group_element_dispose "
 				"hdl = " << hdl << endl;
-		}
-	P.Elts->dispose(hdl);
+	}
+	P.Page_storage->dispose(hdl);
 }
 
 static void direct_product_group_element_print(
@@ -495,7 +495,7 @@ static void direct_product_group_element_print_as_permutation(
 	if (f_v) {
 		cout << "direct_product_group_element_print_as_permutation "
 				"degree = " << A.degree << endl;
-		}
+	}
 	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation "
@@ -506,7 +506,7 @@ static void direct_product_group_element_print_as_permutation(
 			//f_v = false;
 		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
-		}
+	}
 	Combi.perm_print(ost, p, A.degree);
 	FREE_int(p);
 }

@@ -243,7 +243,7 @@ void semifield_substructure::compute_orbits(
 				}
 			if (false) {
 				cout << "The stabilizer is:" << endl;
-				L3->Stabilizer_gens[a].print_generators(cout);
+				L3->Stabilizer_gens[a].print_generators(cout, verbose_level - 1);
 			}
 
 			SC->compute_orbit_of_subspaces(input_data,

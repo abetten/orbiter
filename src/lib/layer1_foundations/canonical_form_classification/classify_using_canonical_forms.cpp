@@ -110,13 +110,16 @@ void classify_using_canonical_forms::find_object(
 	}
 
 	encoded_combinatorial_object *Enc;
+	int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
 				"before OwCF->run_nauty" << endl;
 	}
 	OwCF->run_nauty(
-			true /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */,
+			f_save_nauty_input_graphs,
+			Canonical_form,
 			NO,
 			Enc,
 			verbose_level);

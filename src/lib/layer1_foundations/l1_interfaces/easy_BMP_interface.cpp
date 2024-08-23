@@ -29,6 +29,19 @@ static void fillBitmap(
 
 
 
+easy_BMP_interface::easy_BMP_interface()
+{
+
+}
+
+
+easy_BMP_interface::~easy_BMP_interface()
+{
+
+}
+
+
+
 void easy_BMP_interface::draw_bitmap(
 		graphics::draw_bitmap_control *C, int verbose_level)
 {

@@ -289,9 +289,12 @@ void group_element::unrank_point(
 		cout << "group_element::unrank_point "
 				"ptr_unrank_point == NULL, "
 				"label=" << A->ptr->label << endl;
-		exit(1);
+		//exit(1);
+		Int_vec_zero(v, A->low_level_point_size);
 	}
-	(*A->ptr->ptr_unrank_point)(*A, rk, v, verbose_level);
+	else {
+		(*A->ptr->ptr_unrank_point)(*A, rk, v, verbose_level);
+	}
 }
 
 long int group_element::rank_point(
@@ -304,7 +307,8 @@ long int group_element::rank_point(
 		cout << "group_element::rank_point "
 				"ptr_rank_point == NULL, "
 				"label=" << A->ptr->label << endl;
-		exit(1);
+		//exit(1);
+		return 0;
 	}
 	return (*A->ptr->ptr_rank_point)(*A, v, verbose_level);
 }
@@ -1702,6 +1706,9 @@ void group_element::make_element_from_permutation_representation(
 
 	if (f_v) {
 		cout << "group_element::make_element_from_permutation_representation" << endl;
+		cout << "group_element::make_element_from_permutation_representation A = ";
+		A->print_info();
+		cout << endl;
 	}
 	base_image = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
@@ -1715,8 +1722,16 @@ void group_element::make_element_from_permutation_representation(
 			exit(1);
 		}
 	}
+	if (f_v) {
+		cout << "group_element::make_element_from_permutation_representation "
+				"before make_element_from_base_image" << endl;
+	}
 	make_element_from_base_image(
-			Elt, S, base_image, verbose_level);
+			Elt, S, base_image, verbose_level - 1);
+	if (f_v) {
+		cout << "group_element::make_element_from_permutation_representation "
+				"after make_element_from_base_image" << endl;
+	}
 
 	FREE_int(base_image);
 	if (f_v) {
@@ -1730,8 +1745,9 @@ void group_element::make_element_from_base_image(
 		int *data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
+	int f_vv = (verbose_level >= 2);
 	int *base_image;
+	int *base_image_cur;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -1744,7 +1760,7 @@ void group_element::make_element_from_base_image(
 	int f_print_cycles_of_length_one = false;
 #endif
 
-	int i, j, yi, z, b, c, b_pt;
+	int i, j, yi, z, b, c, bi;
 
 	if (f_v) {
 		cout << "group_element::make_element_from_base_image" << endl;
@@ -1766,10 +1782,11 @@ void group_element::make_element_from_base_image(
 	S = Sims;
 #endif
 	if (f_v) {
-		cout << "action in Sims:" << endl;
+		cout << "group_element::make_element_from_base_image action in Sims:" << endl;
 		S->A->print_info();
 	}
 	base_image = NEW_int(A->base_len());
+	base_image_cur = NEW_int(A->base_len());
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
@@ -1787,57 +1804,131 @@ void group_element::make_element_from_base_image(
 	element_one(Elt3, 0);
 
 	for (i = 0; i < A->base_len(); i++) {
+
+		if (f_v) {
+			cout << "group_element::make_element_from_base_image i = " << i << " / " << A->base_len() << endl;
+		}
+
+
+		compute_base_images(Elt3, base_image_cur, 0);
+
+		if (f_v) {
+			cout << "group_element::make_element_from_base_image wanted:";
+			Int_vec_print(cout, data, A->base_len());
+			cout << endl;
+			cout << "group_element::make_element_from_base_image have  :";
+			Int_vec_print(cout, base_image_cur, A->base_len());
+			cout << endl;
+		}
+
 		element_invert(Elt3, Elt4, 0);
-		b_pt = A->base_i(i);
+
+		bi = A->base_i(i);
+
 		yi = base_image[i];
+
 		z = element_image_of(yi, Elt4, 0);
+
 		j = S->get_orbit_inv(i, z);
 		//j = S->orbit_inv[i][z];
+
 		if (f_vv) {
-			cout << "i=" << i << endl;
-			cout << "Elt3=" << endl;
+			cout << "group_element::make_element_from_base_image i=" << i << endl;
+			cout << "group_element::make_element_from_base_image Elt3=" << endl;
+
 			element_print_quick(Elt3, cout);
-			element_print_as_permutation_with_offset(Elt3, cout,
-				offset, f_do_it_anyway_even_for_big_degree,
-				f_print_cycles_of_length_one, 0/*verbose_level*/);
-			cout << "i=" << i << " b_pt=" << b_pt
-					<< " yi=" << yi << " z="
-					<< z << " j=" << j << endl;
+
+			element_print_base_images(Elt3);
+			cout << endl;
+
+			element_print_as_permutation_with_offset(
+					Elt3, cout,
+					offset, f_do_it_anyway_even_for_big_degree,
+					f_print_cycles_of_length_one,
+					0 /*verbose_level*/);
+			cout << endl;
+
+			cout << "group_element::make_element_from_base_image Elt3^-1=" << endl;
+
+			element_print_quick(Elt4, cout);
+
+			element_print_base_images(Elt4);
+			cout << endl;
+
+			element_print_as_permutation_with_offset(
+					Elt4, cout,
+					offset, f_do_it_anyway_even_for_big_degree,
+					f_print_cycles_of_length_one,
+					0 /*verbose_level*/);
+			cout << endl;
+
+			cout << "group_element::make_element_from_base_image i=" << i << " bi=" << bi
+					<< " desired base image = yi = " << yi << " yi reverse = z = "
+					<< z << " j=orbit_inv(i,z)=" << j << endl;
 		}
+
 		S->coset_rep(Elt5, i, j, 0);
+
 		if (f_vv) {
-			cout << "cosetrep=" << endl;
+			cout << "group_element::make_element_from_base_image cosetrep_i_j_=cosetrep_" << i << "_" << j << "_=" << endl;
+
 			element_print_quick(Elt5, cout);
+
 			element_print_base_images(Elt5);
-			element_print_as_permutation_with_offset(Elt5, cout,
+			cout << endl;
+
+			element_print_as_permutation_with_offset(
+					Elt5, cout,
 				offset, f_do_it_anyway_even_for_big_degree,
-				f_print_cycles_of_length_one, 0/*verbose_level*/);
+				f_print_cycles_of_length_one,
+				0/*verbose_level*/);
+			cout << endl;
 		}
+
 		element_mult(Elt5, Elt3, Elt4, 0);
+
 		element_move(Elt4, Elt3, 0);
 
 		if (f_vv) {
-			cout << "after left multiplying, Elt3=" << endl;
+			cout << "group_element::make_element_from_base_image Elt3 = cosetrep*Elt3 = " << endl;
+		}
+		if (f_vv) {
+			cout << "group_element::make_element_from_base_image after left multiplying, Elt3=" << endl;
 			element_print_quick(Elt3, cout);
-			element_print_as_permutation_with_offset(Elt3, cout,
-				offset, f_do_it_anyway_even_for_big_degree,
-				f_print_cycles_of_length_one, 0/*verbose_level*/);
 
-			cout << "computing image of b_pt=" << b_pt << endl;
+			element_print_base_images(Elt3);
+			cout << endl;
+
+			element_print_as_permutation_with_offset(
+					Elt3, cout,
+				offset, f_do_it_anyway_even_for_big_degree,
+				f_print_cycles_of_length_one,
+				0/*verbose_level*/);
+			cout << endl;
+
+			cout << "group_element::make_element_from_base_image computing image of bi=" << bi << endl;
 		}
 
-		c = element_image_of(b_pt, Elt3, 0);
+		c = element_image_of(bi, Elt3, 0);
 		if (f_vv) {
-			cout << "b_pt=" << b_pt << " -> " << c << endl;
-			}
+			cout << "group_element::make_element_from_base_image bi=" << bi << " -> " << c << endl;
+		}
 		if (c != yi) {
 			cout << "group_element::make_element_from_base_image "
-					"fatal: element_image_of(b_pt, Elt3, 0) "
-					"!= yi" << endl;
+					"fatal: bi does not map to y1, but to c where" << endl;
+			cout << "bi=" << bi << endl;
+			cout << "c=" << c << endl;
+			cout << "yi=" << yi << endl;
 			exit(1);
 		}
 	}
+
+	// finshed
+
 	element_move(Elt3, Elt, 0);
+
+	// final test is the base images of Elt agree:
+
 	for (i = 0; i < A->base_len(); i++) {
 		yi = data[i];
 		b = element_image_of(A->base_i(i), Elt, 0);
@@ -1865,6 +1956,16 @@ void group_element::make_element_from_base_image(
 	FREE_int(Elt5);
 	if (f_v) {
 		cout << "group_element::make_element_from_base_image done" << endl;
+	}
+}
+
+void group_element::compute_base_images(
+		int *Elt, int *base_images, int verbose_level)
+{
+	int i;
+
+	for (i = 0; i < A->base_len(); i++) {
+		base_images[i] = element_image_of(A->base_i(i), Elt, 0);
 	}
 }
 

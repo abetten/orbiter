@@ -1111,10 +1111,10 @@ public:
 
 	// TABLES/set_builder.tex
 
-	int f_index_set_loop;
-	int index_set_loop_low;
-	int index_set_loop_upper_bound;
-	int index_set_loop_increment;
+	int f_loop;
+	int loop_low;
+	int loop_upper_bound;
+	int loop_increment;
 
 	int f_affine_function;
 	int affine_function_a;
@@ -1304,14 +1304,6 @@ public:
 	void compute_incidence_matrix(
 			int *&Inc, int &m, int &n,
 		int verbose_level);
-#if 0
-	void compute_and_print_tdo_row_scheme(
-			std::ostream &file,
-		int verbose_level);
-	void compute_and_print_tdo_col_scheme(
-			std::ostream &file,
-		int verbose_level);
-#endif
 	void init_decomposition(
 			combinatorics::decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(

@@ -152,13 +152,13 @@ static long int wreath_product_group_element_image_of(
 		cout << "wreath_product_group_element_image_of "
 				"computing image of " << a << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	b = W.element_image_of(Elt, a, verbose_level - 1);
 
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of "
 				"image of " << a << " is " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -176,7 +176,7 @@ static void wreath_product_group_element_image_of_low_level(
 				"computing image of ";
 		Int_vec_print(cout, input, W.dimension_of_tensor_action);
 		cout << endl;
-		}
+	}
 	W.element_image_of_low_level(Elt, input, output, verbose_level - 1);
 
 	if (f_v) {
@@ -184,7 +184,7 @@ static void wreath_product_group_element_image_of_low_level(
 				"image of is ";
 		Int_vec_print(cout, output, W.dimension_of_tensor_action);
 		cout << endl;
-		}
+	}
 }
 
 static int wreath_product_group_element_linear_entry_ij(
@@ -226,7 +226,7 @@ static void wreath_product_group_element_one(
 	if (f_v) {
 		cout << "wreath_product_group_element_one "
 				"calling element_one" << endl;
-		}
+	}
 	W.element_one(Elt);
 }
 
@@ -242,18 +242,18 @@ static int wreath_product_group_element_is_one(
 	if (f_v) {
 		cout << "wreath_product_group_element_one calling "
 				"element_is_one" << endl;
-		}
+	}
 	ret = W.element_is_one(Elt);
 	if (f_v) {
 		if (ret) {
 			cout << "wreath_product_group_element_is_one "
 					"returns YES" << endl;
-			}
+		}
 		else {
 			cout << "wreath_product_group_element_is_one "
 					"returns NO" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -268,7 +268,7 @@ static void wreath_product_group_element_unpack(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_unpack" << endl;
-		}
+	}
 	W.element_unpack(elt1, Elt1);
 }
 
@@ -283,7 +283,7 @@ static void wreath_product_group_element_pack(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_pack" << endl;
-		}
+	}
 	W.element_pack(Elt1, elt1);
 }
 
@@ -299,15 +299,15 @@ static void wreath_product_group_element_retrieve(
 	if (f_v) {
 		cout << "wreath_product_group_element_"
 				"retrieve hdl = " << hdl << endl;
-		}
-	p_elt = W.Elts->s_i(hdl);
+	}
+	p_elt = W.Page_storage->s_i(hdl);
 	//if (f_v) {
 	//	element_print_packed(G, p_elt, cout);
 	//	}
 	W.element_unpack(p_elt, Elt);
 	if (f_v) {
 		W.element_print_easy(Elt, cout);
-		}
+	}
 }
 
 static int wreath_product_group_element_store(
@@ -321,13 +321,13 @@ static int wreath_product_group_element_store(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_store" << endl;
-		}
+	}
 	W.element_pack(Elt, W.elt1);
-	hdl = W.Elts->store(W.elt1);
+	hdl = W.Page_storage->store(W.elt1);
 	if (f_v) {
 		cout << "wreath_product_group_element_store "
 				"hdl = " << hdl << endl;
-		}
+	}
 	return hdl;
 }
 
@@ -344,21 +344,21 @@ static void wreath_product_group_element_mult(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_mult" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		W.element_print_easy(AA, cout);
 		cout << "B=" << endl;
 		W.element_print_easy(BB, cout);
-		}
+	}
 	W.element_mult(AA, BB, AB, verbose_level - 2);
 	if (f_v) {
 		cout << "wreath_product_group_element_mult done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "AB=" << endl;
 		W.element_print_easy(AB, cout);
-		}
+	}
 }
 
 static void wreath_product_group_element_invert(
@@ -373,19 +373,19 @@ static void wreath_product_group_element_invert(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_invert" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "A=" << endl;
 		W.element_print_easy(AA, cout);
-		}
+	}
 	W.element_invert(AA, AAv, verbose_level - 1);
 	if (f_v) {
 		cout << "wreath_product_group_element_invert done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "Av=" << endl;
 		W.element_print_easy(AAv, cout);
-		}
+	}
 }
 
 static void wreath_product_group_element_transpose(
@@ -414,7 +414,7 @@ static void wreath_product_group_element_move(
 
 	if (f_v) {
 		cout << "wreath_product_group_element_move" << endl;
-		}
+	}
 	W.element_move(AA, BB, 0 /* verbose_level */);
 }
 
@@ -428,8 +428,8 @@ static void wreath_product_group_element_dispose(
 	if (f_v) {
 		cout << "wreath_product_group_element_dispose "
 				"hdl = " << hdl << endl;
-		}
-	W.Elts->dispose(hdl);
+	}
+	W.Page_storage->dispose(hdl);
 }
 
 static void wreath_product_group_element_print(
@@ -546,13 +546,13 @@ static void wreath_product_group_unrank_point(
 		W->unrank_point(rk, v, 0 /* verbose_level*/);
 
 
-		}
+	}
 	else {
 		cout << "wreath_product_group_unrank_point type_G unknown:: type_G = ";
 		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
-		}
+	}
 
 }
 
@@ -574,7 +574,7 @@ static long int wreath_product_group_rank_point(
 		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
-		}
+	}
 
 	return rk;
 }

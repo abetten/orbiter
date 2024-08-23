@@ -21,6 +21,12 @@ namespace geometry {
 
 polarity::polarity()
 {
+	//std::string label_txt;
+	//std::string label_tex;
+
+	//std::string degree_sequence_txt;
+	//std::string degree_sequence_tex;
+
 	P = NULL;
 	Point_to_hyperplane = NULL;
 	Hyperplane_to_point = NULL;
@@ -111,6 +117,12 @@ void polarity::init_standard_polarity(
 	if (f_v) {
 		cout << "polarity::init_standard_polarity after init_ranks" << endl;
 	}
+
+	label_txt = "standard_polarity_" + stringify_rank_sequence();
+	label_tex = "standard\\_polarity\\_" + stringify_rank_sequence();
+
+	degree_sequence_txt = stringify_degree_sequence();
+	degree_sequence_tex = stringify_degree_sequence();
 
 	for (i = 0; i < P->Subspaces->N_points; i++) {
 		P->Subspaces->Grass_hyperplanes->unrank_lint(
@@ -248,6 +260,11 @@ void polarity::init_general_polarity(
 		cout << "polarity::init_general_polarity after init_ranks" << endl;
 	}
 
+	label_txt = "general_polarity_" + stringify_rank_sequence();
+	label_tex = "general\\_polarity\\_" + stringify_rank_sequence();
+
+	degree_sequence_txt = stringify_degree_sequence();
+	degree_sequence_tex = stringify_degree_sequence();
 
 	for (i = 0; i < P->Subspaces->N_points; i++) {
 
@@ -423,6 +440,9 @@ void polarity::init_ranks(
 		total_degree = offset[nb_ranks - 1] + nb_objects[nb_ranks - 1];
 	}
 	if (f_v) {
+		cout << "polarity::init_ranks total_degree = " << total_degree << endl;
+	}
+	if (f_v) {
 		cout << "polarity::init_ranks done" << endl;
 	}
 }
@@ -550,6 +570,14 @@ void polarity::init_reversal_polarity(
 				"after init_general_polarity" << endl;
 	}
 
+	label_txt = "reversal_polarity_" + stringify_rank_sequence();
+	label_tex = "reversal\\_polarity\\_" + stringify_rank_sequence();
+
+	degree_sequence_txt = stringify_rank_sequence();
+	degree_sequence_tex = stringify_rank_sequence();
+
+
+
 	FREE_int(Mtx);
 
 
@@ -568,13 +596,14 @@ long int polarity::image_of_element(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	long int b;
+	long int b, c;
 	int r_idx, r, h, d;
 	int *v;
 	int *vA;
 
 	if (f_v) {
 		cout << "polarity::image_of_element" << endl;
+		cout << "polarity::image_of_element a=" << a << endl;
 	}
 	d = P->Subspaces->n + 1;
 
@@ -597,11 +626,16 @@ long int polarity::image_of_element(
 
 			if (r == 1) {
 				// point
-				M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(P->Subspaces->Grass_stack[r]->M, 1, d, a);
+				M->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
+						P->Subspaces->Grass_stack[r]->M, 1, d, a);
 			}
 			else {
 				// subspace of dimension at least 2
 				P->Subspaces->Grass_stack[r]->unrank_lint(a, 0 /*verbose_level*/);
+			}
+			if (f_v) {
+				cout << "polarity::image_of_element input = " << endl;
+				Int_matrix_print(P->Subspaces->Grass_stack[r]->M, r, d);
 			}
 
 			for (h = 0; h < r; h++) {
@@ -616,6 +650,11 @@ long int polarity::image_of_element(
 			// (where f = A[n * n]),
 			// vA = v * A otherwise
 
+			if (f_v) {
+				cout << "polarity::image_of_element output = " << endl;
+				Int_matrix_print(Mtx, r, d);
+			}
+
 
 			// Again, take care of points separately:
 
@@ -627,6 +666,11 @@ long int polarity::image_of_element(
 			else {
 				b = P->Subspaces->Grass_stack[r]->rank_lint_here(Mtx, 0 /*verbose_level*/);
 			}
+
+			if (f_v) {
+				cout << "polarity::image_of_element a -> " << b << " (before polarity)" << endl;
+			}
+
 
 			// test if polarity is present:
 
@@ -653,8 +697,24 @@ long int polarity::image_of_element(
 					cout << "r = " << r << endl;
 					exit(1);
 				}
-				b = offset[r2] + b2;
+				c = offset[r2] + b2;
+				if (f_v) {
+					cout << "polarity::image_of_element a -> " << b << " ->  (polarity) " << b2 << " -> (offset) " << c << " (after polarity)" << endl;
+				}
 			}
+			else {
+
+				// polarity is not present:
+
+				int r2 = r_idx;
+				c = offset[r2] + b;
+				if (f_v) {
+					cout << "polarity::image_of_element a -> " << b << " -> " << c << " (no polarity)" << endl;
+				}
+			}
+
+
+
 			break;
 		}
 		a -= nb_objects[r_idx];
@@ -667,7 +727,7 @@ long int polarity::image_of_element(
 	if (f_v) {
 		cout << "polarity::image_of_element done" << endl;
 	}
-	return b;
+	return c;
 }
 
 
@@ -733,6 +793,45 @@ void polarity::report(
 	f << "\\clearpage" << endl << endl;
 
 }
+
+std::string polarity::stringify_rank_sequence()
+{
+	string s;
+
+#if 0
+	int i;
+
+	for (i = 0; i < nb_ranks; i++) {
+		s += std::to_string(rank_sequence[i]);
+		if (i < nb_ranks - 1) {
+			s += ",";
+		}
+	}
+#endif
+	s = Int_vec_stringify(rank_sequence, nb_ranks);
+	return s;
+}
+
+std::string polarity::stringify_degree_sequence()
+{
+	string s;
+
+#if 0
+	int i;
+
+	for (i = 0; i < nb_ranks; i++) {
+		s += std::to_string(nb_objects[i]);
+		if (i < nb_ranks - 1) {
+			s += ",";
+		}
+	}
+#endif
+	s = Lint_vec_stringify(nb_objects, nb_ranks);
+	return s;
+}
+
+
+
 
 }}}
 

@@ -107,6 +107,7 @@ void canonical_form_of_variety::init(
 
 
 void canonical_form_of_variety::compute_canonical_form_nauty(
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -122,6 +123,7 @@ void canonical_form_of_variety::compute_canonical_form_nauty(
 	}
 
 	classify_using_nauty(
+			f_save_nauty_input_graphs,
 			verbose_level);
 
 	if (f_v) {
@@ -145,6 +147,7 @@ void canonical_form_of_variety::compute_canonical_form_nauty(
 }
 
 void canonical_form_of_variety::compute_canonical_form_nauty_new(
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -160,6 +163,7 @@ void canonical_form_of_variety::compute_canonical_form_nauty_new(
 	}
 
 	classify_using_nauty_new(
+			f_save_nauty_input_graphs,
 			verbose_level);
 
 	if (f_v) {
@@ -186,6 +190,7 @@ void canonical_form_of_variety::compute_canonical_form_nauty_new(
 
 
 void canonical_form_of_variety::classify_using_nauty(
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -224,6 +229,7 @@ void canonical_form_of_variety::classify_using_nauty(
 	}
 	Stabilizer_of_set_of_rational_points->compute_canonical_form_of_variety(
 			this,
+			f_save_nauty_input_graphs,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.
@@ -345,6 +351,7 @@ void canonical_form_of_variety::classify_using_nauty(
 
 
 void canonical_form_of_variety::classify_using_nauty_new(
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -383,6 +390,7 @@ void canonical_form_of_variety::classify_using_nauty_new(
 	}
 	Stabilizer_of_set_of_rational_points->compute_canonical_form_of_variety(
 			this,
+			f_save_nauty_input_graphs,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.

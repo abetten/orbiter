@@ -37,10 +37,32 @@ any_group::any_group()
 	Subgroup_gens = NULL;
 	Subgroup_sims = NULL;
 
+	Any_group_linear = NULL;
 }
 
 any_group::~any_group()
 {
+	if (Any_group_linear) {
+		FREE_OBJECT(Any_group_linear);
+	}
+}
+
+
+void any_group::init_basic(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::init_basic" << endl;
+	}
+
+	Any_group_linear = NEW_OBJECT(any_group_linear);
+	Any_group_linear->init(this, verbose_level);
+
+	if (f_v) {
+		cout << "any_group::init_basic done" << endl;
+	}
 }
 
 
@@ -51,6 +73,15 @@ void any_group::init_linear_group(
 
 	if (f_v) {
 		cout << "any_group::init_linear_group" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::init_linear_group before init_basic" << endl;
+	}
+	init_basic(verbose_level);
+	if (f_v) {
+		cout << "any_group::init_linear_group after init_basic" << endl;
 	}
 
 	f_linear_group = true;
@@ -95,6 +126,14 @@ void any_group::init_permutation_group(
 
 	if (f_v) {
 		cout << "any_group::init_permutation_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::init_permutation_group before init_basic" << endl;
+	}
+	init_basic(verbose_level);
+	if (f_v) {
+		cout << "any_group::init_permutation_group after init_basic" << endl;
 	}
 
 	f_permutation_group = true;
@@ -143,6 +182,14 @@ void any_group::init_modified_group(
 		cout << "any_group::init_modified_group" << endl;
 	}
 
+	if (f_v) {
+		cout << "any_group::init_modified_group before init_basic" << endl;
+	}
+	init_basic(verbose_level);
+	if (f_v) {
+		cout << "any_group::init_modified_group after init_basic" << endl;
+	}
+
 	f_modified_group = true;
 	any_group::MGC = MGC;
 
@@ -182,7 +229,8 @@ void any_group::create_latex_report(
 		if (f_v) {
 			cout << "any_group::create_latex_report linear group" << endl;
 		}
-		LG->create_latex_report(O,
+		LG->create_latex_report(
+				O,
 				f_sylow, f_group_table, f_classes,
 				verbose_level);
 	}
@@ -1642,7 +1690,7 @@ void any_group::do_reverse_isomorphism_exterior_square(
 		if (f_v) {
 			cout << "any_group::do_reverse_isomorphism_exterior_square "
 					"strong generators are:" << endl;
-			LG->Strong_gens->print_generators_in_latex_individually(cout);
+			LG->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
 		}
 		LG->Strong_gens->reverse_isomorphism_exterior_square(verbose_level);
 	}
@@ -1713,7 +1761,7 @@ void any_group::create_latex_report_for_permutation_group(
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"before Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
-			Subgroup_gens->print_generators_in_latex_individually(ost);
+			Subgroup_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"after Subgroup_gens->print_generators_in_latex_individually" << endl;
@@ -1790,13 +1838,60 @@ void any_group::create_latex_report_for_modified_group(
 					true /* f_pagenumbers */,
 					extra_praeamble /* extra_praeamble */);
 
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before A->report_group_name_and_degree" << endl;
+			}
+
+			A->report_group_name_and_degree(
+					ost,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after A->report_group_name_and_degree" << endl;
+			}
+
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before A->report_type_of_action" << endl;
+			}
+
+			A->report_type_of_action(
+					ost,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after A->report_type_of_action" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"before A->report_what_we_act_on" << endl;
+			}
+
+			A->report_what_we_act_on(
+					ost,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"after A->report_what_we_act_on" << endl;
+			}
+
+
+
 
 #if 0
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
 						"before A->report" << endl;
 			}
-			A->report(ost, A->f_has_sims, A->Sims,
+			A->report(
+					ost,
+					A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
 					verbose_level);
@@ -1806,12 +1901,17 @@ void any_group::create_latex_report_for_modified_group(
 			}
 #endif
 
+			if (Subgroup_gens == NULL) {
+				cout << "any_group::create_latex_report_for_modified_group "
+						"Subgroup_gens == NULL" << endl;
+				exit(1);
+			}
 
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
 						"before Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
-			Subgroup_gens->print_generators_in_latex_individually(ost);
+			Subgroup_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
 						"after Subgroup_gens->print_generators_in_latex_individually" << endl;
@@ -2682,7 +2782,139 @@ void any_group::print()
 	A->print_info();
 }
 
+void any_group::classes(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "any_group::classes" << endl;
+	}
+
+
+#if 0
+	if (!f_linear_group) {
+		cout << "any_group::classes !f_linear_group" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "any_group::classes before Any_group_linear->classes" << endl;
+	}
+	Any_group_linear->classes(verbose_level);
+	if (f_v) {
+		cout << "any_group::classes after Any_group_linear->classes" << endl;
+	}
+#else
+
+
+	if (Subgroup_gens == NULL) {
+		cout << "any_group::classes Subgroup_gens == NULL" << endl;
+		exit(1);
+	}
+
+	groups::sims *Sims;
+
+	Sims = Subgroup_gens->create_sims(verbose_level);
+
+	interfaces::magma_interface Magma;
+
+	if (f_v) {
+		cout << "any_group::classes "
+				"before Magma.get_conjugacy_classes_and_normalizers" << endl;
+	}
+	Magma.get_conjugacy_classes_and_normalizers(
+			A, Sims,
+			label, label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::classes "
+				"after Magma.get_conjugacy_classes_and_normalizers" << endl;
+	}
+
+	FREE_OBJECT(Sims);
+
+#if 0
+	int f_linear_group;
+	group_constructions::linear_group *LG;
+
+	int f_permutation_group;
+	group_constructions::permutation_group_create *PGC;
+
+	int f_modified_group;
+	modified_group_create *MGC;
+
+	actions::action *A_base;
+	actions::action *A;
+
+	std::string label;
+	std::string label_tex;
+
+	groups::strong_generators *Subgroup_gens;
+	groups::sims *Subgroup_sims;
+
+	any_group_linear *Any_group_linear;
+#endif
+
+
+
+#endif
+	if (f_v) {
+		cout << "any_group::classes done" << endl;
+	}
+}
+
+
+void any_group::find_standard_generators(
+		int order_a,
+		int order_b,
+		int order_ab,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::find_standard_generators" << endl;
+	}
+#if 0
+	if (!Any_group->f_linear_group) {
+		cout << "any_group_linear::find_standard_generators !Any_group->f_linear_group" << endl;
+		exit(1);
+	}
+#endif
+
+	algebra_global_with_action Algebra;
+
+	Algebra.find_standard_generators(
+			this,
+			A, A,
+			order_a, order_b, order_ab, verbose_level);
+
+	if (f_v) {
+		cout << "any_group::find_standard_generators done" << endl;
+	}
+
+}
+
+void any_group::search_element_of_order(
+		int order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::search_element_of_order" << endl;
+	}
+	algebra_global_with_action Algebra;
+
+	Algebra.search_element_of_order(this,
+			A, A,
+			order, verbose_level);
+
+	if (f_v) {
+		cout << "any_group::search_element_of_order done" << endl;
+	}
+}
 
 
 }}}

@@ -612,6 +612,21 @@ public:
 			std::vector<long int> &Moduli,
 			longinteger_object &x, longinteger_object &M,
 			int verbose_level);
+	void check_for_int_overflow_given_string_and_convert(
+			std::string &number_to_test,
+			ring_theory::longinteger_object *&number_to_test_longinteger,
+			long int &number_to_test_lint, int &number_to_test_int,
+			int verbose_level);
+	void check_for_int_overflow_given_string(
+			std::string &number_to_test,
+			long int &number_to_test_lint, int &number_to_test_int,
+			int verbose_level);
+	void check_for_int_overflow(
+			ring_theory::longinteger_object *number_to_test,
+			int verbose_level);
+	void check_for_lint_overflow(
+			ring_theory::longinteger_object *number_to_test,
+			int verbose_level);
 
 };
 

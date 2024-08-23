@@ -565,7 +565,7 @@ void orbits_global::orbit_of(
 
 	cout << "orbits_global::orbit_of "
 			"The stabilizer of the orbit rep has been computed:" << endl;
-	SG_stab->print_generators(cout);
+	SG_stab->print_generators(cout, verbose_level - 1);
 	SG_stab->print_generators_tex();
 
 #if 0

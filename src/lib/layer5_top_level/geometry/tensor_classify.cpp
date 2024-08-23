@@ -141,7 +141,7 @@ void tensor_classify::init(
 #endif
 
 	if (f_v) {
-		SG->print_generators(cout);
+		SG->print_generators(cout, verbose_level - 1);
 	}
 
 #if 0
@@ -156,7 +156,7 @@ void tensor_classify::init(
 #endif
 
 	if (f_v) {
-		SG->print_generators_gap(cout);
+		SG->print_generators_gap(cout, verbose_level - 1);
 	}
 
 

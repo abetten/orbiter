@@ -111,9 +111,12 @@ automorphism_group_of_variety::~automorphism_group_of_variety()
 void automorphism_group_of_variety::init_and_compute(
 		projective_geometry::projective_space_with_action *PA,
 		induced_actions::action_on_homogeneous_polynomials *AonHPD,
+		std::string &input_fname,
+		int input_idx,
 		int *equation,
 		long int *Pts_on_object,
 		int nb_pts,
+		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -131,6 +134,21 @@ void automorphism_group_of_variety::init_and_compute(
 	automorphism_group_of_variety::nb_pts = nb_pts;
 
 	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
+
+
+	if (f_v) {
+		cout << "automorphism_group_of_variety::init_and_compute "
+				"before OwCF->init_input_fname" << endl;
+	}
+	OwCF->init_input_fname(
+			input_fname,
+			input_idx,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "automorphism_group_of_variety::init_and_compute "
+				"after OwCF->init_input_fname" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
@@ -188,7 +206,9 @@ void automorphism_group_of_variety::init_and_compute(
 	SG_pt_stab = Nau.set_stabilizer_of_object(
 			OwCF,
 		PA->A,
-		f_compute_canonical_form, Canonical_form,
+		f_compute_canonical_form,
+		f_save_nauty_input_graphs,
+		Canonical_form,
 		NO,
 		Enc,
 		verbose_level);

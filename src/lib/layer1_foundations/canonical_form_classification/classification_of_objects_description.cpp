@@ -32,6 +32,8 @@ classification_of_objects_description::classification_of_objects_description()
 
 	f_save_transversal = false;
 
+	f_save_nauty_input_graphs = false;
+
 }
 
 classification_of_objects_description::~classification_of_objects_description()
@@ -95,6 +97,14 @@ int classification_of_objects_description::read_arguments(
 				cout << "-save_transversal " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-save_nauty_input_graphs") == 0) {
+			f_save_nauty_input_graphs = true;
+			if (f_v) {
+				cout << "-save_nauty_input_graphs " << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "projective_space_object_classifier_description::read_arguments -end" << endl;
@@ -141,6 +151,9 @@ void classification_of_objects_description::print()
 
 	if (f_save_transversal) {
 		cout << "-save_transversal " << endl;
+	}
+	if (f_save_nauty_input_graphs) {
+		cout << "-save_nauty_input_graphs " << endl;
 	}
 
 }

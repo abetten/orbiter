@@ -76,8 +76,8 @@ void permutation_group_create::permutation_group_init(
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
-			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
-			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
 			A_initial->print_base();
 			A_initial->print_info();
 		}
@@ -105,8 +105,8 @@ void permutation_group_create::permutation_group_init(
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
-			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
-			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
 			A_initial->print_base();
 			A_initial->print_info();
 		}
@@ -134,8 +134,8 @@ void permutation_group_create::permutation_group_init(
 
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init generators:" << endl;
-			A_initial->Strong_gens->print_generators_in_latex_individually(cout);
-			A_initial->Strong_gens->print_generators_in_source_code();
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
 			A_initial->print_base();
 			A_initial->print_info();
 		}
@@ -194,8 +194,8 @@ void permutation_group_create::permutation_group_init(
 					"after init_permutation_group_from_generators" << endl;
 		}
 
-		A_initial->Strong_gens->print_generators_in_latex_individually(cout);
-		A_initial->Strong_gens->print_generators_in_source_code();
+		A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+		A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
 		A_initial->print_base();
 		A_initial->print_info();
 

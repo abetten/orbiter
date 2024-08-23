@@ -19,10 +19,10 @@ namespace data_structures {
 
 set_builder_description::set_builder_description()
 {
-	f_index_set_loop = 0;
-	index_set_loop_low = 0;
-	index_set_loop_upper_bound = 0;
-	index_set_loop_increment = 0;
+	f_loop = 0;
+	loop_low = 0;
+	loop_upper_bound = 0;
+	loop_increment = 0;
 
 	f_clone_with_affine_function = false;
 	clone_with_affine_function_a = false;
@@ -64,13 +64,13 @@ int set_builder_description::read_arguments(
 	cout << "set_builder_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-loop") == 0) {
-			f_index_set_loop = true;
-			index_set_loop_low = ST.strtoi(argv[++i]);
-			index_set_loop_upper_bound = ST.strtoi(argv[++i]);
-			index_set_loop_increment = ST.strtoi(argv[++i]);
-			cout << "-loop " << index_set_loop_low << " "
-					<< index_set_loop_upper_bound << " "
-					<< index_set_loop_increment << endl;
+			f_loop = true;
+			loop_low = ST.strtoi(argv[++i]);
+			loop_upper_bound = ST.strtoi(argv[++i]);
+			loop_increment = ST.strtoi(argv[++i]);
+			cout << "-loop " << loop_low << " "
+					<< loop_upper_bound << " "
+					<< loop_increment << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-affine_function") == 0) {
 			f_affine_function = true;
@@ -132,9 +132,9 @@ int set_builder_description::read_arguments(
 void set_builder_description::print()
 {
 	cout << "set_builder_description:" << endl;
-	if (f_index_set_loop) {
-		cout << "-index_set_loop " << index_set_loop_low << " "
-				<< index_set_loop_upper_bound << " " << index_set_loop_increment << endl;
+	if (f_loop) {
+		cout << "-loop " << loop_low << " "
+				<< loop_upper_bound << " " << loop_increment << endl;
 	}
 	if (f_affine_function) {
 		cout << "-affine_function " << affine_function_a << " " << affine_function_b << endl;

@@ -38,6 +38,7 @@ namespace apps_algebra {
 	class action_on_forms_description;
 	class action_on_forms;
 	class algebra_global_with_action;
+	class any_group_linear;
 	class any_group;
 	class character_table_burnside;
 	class element_processing_description;

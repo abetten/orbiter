@@ -274,10 +274,14 @@ void hermitian_spreads_classify::init(
 
 	actions::action_global AcGl;
 
+	int f_save_nauty_input_graphs = false;
+
+
 	//int canonical_pt;
 
 	sg = AcGl.set_stabilizer_in_projective_space(A, P,
-			Pts, nb_pts, /*canonical_pt,*/ //NULL,
+			Pts, nb_pts, /*canonical_pt,*/
+			f_save_nauty_input_graphs,
 			verbose_level);
 
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);
@@ -289,7 +293,7 @@ void hermitian_spreads_classify::init(
 
 
 	cout << "strong generators are:" << endl;
-	sg->print_generators(cout);
+	sg->print_generators(cout, verbose_level - 1);
 
 
 

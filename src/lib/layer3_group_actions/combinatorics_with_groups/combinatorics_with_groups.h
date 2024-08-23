@@ -206,43 +206,7 @@ public:
 
 };
 
-// #############################################################################
-// incidence_structure_with_group.cpp
-// #############################################################################
 
-
-
-//! to represent an incidence structure and its group
-
-
-class incidence_structure_with_group {
-
-public:
-
-	geometry::incidence_structure *Inc;
-	int N; // Inc->nb_rows + Inc->nb_cols;
-
-	int *partition;
-
-	int f_has_canonical_form;
-	data_structures::bitvector *canonical_form;
-
-	int f_has_canonical_labeling;
-	long int *canonical_labeling;  // [nb_rows + nb_cols]
-
-	actions::action *A_perm; // degree = N
-
-	incidence_structure_with_group();
-	~incidence_structure_with_group();
-	void init(
-			geometry::incidence_structure *Inc,
-		int *partition,
-		int verbose_level);
-	void set_stabilizer_and_canonical_form(
-			int f_compute_canonical_form,
-			geometry::incidence_structure *&Inc_out,
-			int verbose_level);
-};
 
 
 // #############################################################################

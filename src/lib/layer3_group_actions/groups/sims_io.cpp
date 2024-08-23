@@ -353,6 +353,7 @@ void sims::print_generator_depth_and_perm()
 {
 	int i;
 
+	cout << "sims::print_generator_depth_and_perm" << endl;
 	cout << "i : gen_depth[i] : gen_perm[i]" << endl;
 	for (i = 0; i < gens.len; i++) {
 		cout << i << " : " << gen_depth[i] << " : " << gen_perm[i] << endl;
@@ -369,6 +370,7 @@ void sims::print_generator_depth_and_perm()
 		}
 		cout << i << " : " << pt << " : " << nb_gen[i] << endl;
 	}
+	cout << "sims::print_generator_depth_and_perm done" << endl;
 }
 
 void sims::print_group_order(
@@ -406,10 +408,15 @@ void sims::print_generators_at_level_or_below(
 	for (i = 0; i < nb_gen[lvl]; i++) {
 		gen_idx = gen_perm[i];
 		cout << "sims::print_generators_at_level_or_below "
+				"generator " << i << " gen_idx=" << gen_idx << endl;
+		cout << "sims::print_generators_at_level_or_below "
 				"generator " << i << ":" << endl;
 		A->Group_element->element_print_quick(gens.ith(gen_idx), cout);
-		cout << "as permutation:" << endl;
+
+		cout << "sims::print_generators_at_level_or_below "
+				"generator " << i << " as permutation: ";
 		A->Group_element->element_print_as_permutation(gens.ith(gen_idx), cout);
+		cout << endl;
 	}
 }
 

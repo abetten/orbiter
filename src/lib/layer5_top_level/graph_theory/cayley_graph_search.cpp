@@ -330,7 +330,7 @@ void cayley_graph_search::init_group_level_3(
 		true /* f_target_go */, target_go,
 		gens, Strong_gens,
 		verbose_level);
-	Strong_gens->print_generators(cout);
+	Strong_gens->print_generators(cout, verbose_level - 1);
 	if (f_v) {
 		cout << "cayley_graph_search::init_group_level_3 done" << endl;
 		}

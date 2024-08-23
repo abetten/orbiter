@@ -473,9 +473,9 @@ void delandtsheer_doyen::show_generators(
 	}
 
 
-	SG->print_generators(cout);
-	SG->print_generators_gap(cout);
-	SG->print_generators_compact(cout);
+	SG->print_generators(cout, verbose_level - 1);
+	SG->print_generators_gap(cout, verbose_level - 1);
+	SG->print_generators_compact(cout, verbose_level - 1);
 
 
 	if (f_v) {

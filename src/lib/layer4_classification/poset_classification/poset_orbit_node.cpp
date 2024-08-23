@@ -570,7 +570,7 @@ void poset_orbit_node::log_current_node(
 		Strong_gens->group_order(go1);
 		cout << "The stabilizer is a group of order " << go1 << endl;
 		cout << "With the following generators:" << endl;
-		Strong_gens->print_generators(cout);
+		Strong_gens->print_generators(cout, verbose_level - 1);
 		FREE_OBJECT(Strong_gens);
 	}
 

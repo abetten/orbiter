@@ -65,9 +65,12 @@ public:
 	void init_and_compute(
 			projective_geometry::projective_space_with_action *PA,
 			induced_actions::action_on_homogeneous_polynomials *AonHPD,
+			std::string &input_fname,
+			int input_idx,
 			int *equation,
 			long int *Pts_on_object,
 			int nb_pts,
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 
 };
@@ -87,6 +90,8 @@ public:
 class canonical_form_classifier_description {
 
 public:
+
+	// TABLES/canonical_form_classifier.tex
 
 	int f_space;
 	std::string space_label;
@@ -135,6 +140,8 @@ public:
 	std::vector<std::string> carry_through;
 
 	int f_algorithm_nauty;
+	int f_save_nauty_input_graphs;
+
 	int f_algorithm_substructure;
 
 	int f_has_nauty_output;
@@ -146,6 +153,7 @@ public:
 	std::string skip_vector_label;
 
 	canonical_form_classifier *Canon_substructure;
+
 
 
 
@@ -246,8 +254,9 @@ public:
 	void compute_stabilizer_of_quartic_curve(
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
 				*Quartic_curve_from_surface,
-			automorphism_group_of_variety *&Aut_of_variety,
-			int verbose_level);
+				int f_save_nauty_input_graphs,
+				automorphism_group_of_variety *&Aut_of_variety,
+				int verbose_level);
 
 
 };
@@ -299,13 +308,17 @@ public:
 			variety_object_with_action *Vo,
 			int verbose_level);
 	void compute_canonical_form_nauty(
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 	void compute_canonical_form_nauty_new(
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 
 	void classify_using_nauty(
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 	void classify_using_nauty_new(
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 	void handle_repeated_canonical_form_of_set(
 			int idx,
@@ -961,6 +974,7 @@ public:
 			int verbose_level);
 	void compute_canonical_form_of_variety(
 			canonical_form_of_variety *Variety,
+			int f_save_nauty_input_graphs,
 			int verbose_level);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.

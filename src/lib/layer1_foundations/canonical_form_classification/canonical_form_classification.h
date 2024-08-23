@@ -30,10 +30,9 @@ class classification_of_objects_description {
 
 public:
 
-#if 0
-	int f_label;
-	std::string label;
-#endif
+
+	// TABLES/classification_of_objects.tex
+
 
 	int f_save_classification;
 	std::string save_prefix;
@@ -41,16 +40,17 @@ public:
 	int f_max_TDO_depth;
 	int max_TDO_depth;
 
-#if 0
-	int f_classification_prefix;
-	std::string classification_prefix;
-#endif
-
 	int f_save_canonical_labeling;
 
 	int f_save_ago;
 
 	int f_save_transversal;
+
+	// nauty related stuff:
+
+	int f_save_nauty_input_graphs;
+
+
 
 
 	classification_of_objects_description();
@@ -76,6 +76,8 @@ public:
 class classification_of_objects_report_options {
 
 public:
+
+	// TABLES/classification_of_objects_report_options.tex
 
 	int f_export_flag_orbits;
 
@@ -452,6 +454,8 @@ public:
 class data_input_stream_description {
 public:
 
+	// TABLES/data_input_stream.tex
+
 	int f_label;
 	std::string label_txt;
 	std::string label_tex;
@@ -555,6 +559,10 @@ public:
 			int i, int j);
 	void set_incidence(
 			int a);
+	void create_Levi_graph(
+			graph_theory::colored_graph *&CG,
+			std::string &label,
+			int verbose_level);
 	void init_canonical_form(
 			encoded_combinatorial_object *Enc,
 			l1_interfaces::nauty_output *NO,
@@ -626,7 +634,7 @@ public:
 // #############################################################################
 
 
-//! a combinatorial object for which a canonical form can be computed using Nauty
+//! a combinatorial object and its canonical form computed by Nauty
 
 
 
@@ -634,6 +642,10 @@ class object_with_canonical_form {
 public:
 	geometry::projective_space *P;
 
+
+	int f_has_label;
+	std::string label;
+	// can be used for saving the graph during canonization
 
 
 	object_with_canonical_form_type type;
@@ -681,6 +693,8 @@ public:
 
 	object_with_canonical_form();
 	~object_with_canonical_form();
+	void set_label(
+			std::string &object_label);
 	void print(
 			std::ostream &ost);
 	void print_rows(
@@ -698,6 +712,10 @@ public:
 	void get_packing_as_set_system(
 			long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
+	void init_input_fname(
+			std::string &input_fname,
+			int input_idx,
+			int verbose_level);
 	void init_point_set(
 			long int *set, int sz,
 		int verbose_level);
@@ -846,16 +864,19 @@ public:
 			long int *&encoding, int &encoding_sz, int verbose_level);
 	void run_nauty(
 			int f_compute_canonical_form,
+			int f_save_nauty_input_graphs,
 			data_structures::bitvector *&Canonical_form,
 			l1_interfaces::nauty_output *&NO,
 			encoded_combinatorial_object *&Enc,
 			int verbose_level);
-	void canonical_labeling(
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
 	void run_nauty_basic(
 			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
+	void canonical_labeling(
+			int f_save_nauty_input_graphs,
+			l1_interfaces::nauty_output *NO,
+			int verbose_level);
+
 
 };
 

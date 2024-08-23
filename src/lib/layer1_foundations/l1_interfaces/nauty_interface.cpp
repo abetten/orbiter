@@ -38,7 +38,7 @@ using namespace std;
 #include "../graph_theory_nauty/nauty.h"
 #include "foundations.h"
 
-static nvector *lab; // [MAXN]
+static nvector *lab; // [n]
 
 
 namespace orbiter {
@@ -111,10 +111,10 @@ void nauty_interface::nauty_interface_graph_bitvec(
 	//cout << "nauty_interface_graph_bitvec n = " << n << " m=" << m << endl;
 
 
-	graph *g; // [MAXN * MAXM];
-	graph *canong; // [MAXN * MAXM]
-	nvector *ptn; // [MAXN]
-	nvector *orbits; // [MAXN]
+	graph *g; // [n * m];
+	graph *canong; // [n * m]
+	nvector *ptn; // [n]
+	nvector *orbits; // [n]
 
 
 	g = new graph[n * m];
@@ -200,6 +200,10 @@ void nauty_interface::nauty_interface_graph_int(
 	int *partition,
 	l1_interfaces::nauty_output *NO,
 	int verbose_level)
+// called from:
+// nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling
+// nauty_interface_with_group::create_automorphism_group_of_graph
+// nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -306,6 +310,9 @@ void nauty_interface::nauty_interface_matrix_int(
 		canonical_form_classification::encoded_combinatorial_object *Enc,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
+// this is called only from
+// object_with_canonical_form::run_nauty and
+// object_with_canonical_form::canonical_labeling
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);

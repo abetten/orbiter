@@ -698,7 +698,7 @@ void surface_object_with_group::init_orbits_on_points(
 		if (f_v) {
 			cout << "surface_object_with_group::init_orbits_on_points "
 					"computing orbits on points using Aut_gens:" << endl;
-			Aut_gens->print_generators(cout);
+			Aut_gens->print_generators(cout, verbose_level - 1);
 		}
 		if (f_v) {
 			cout << "surface_object_with_group::init_orbits_on_points "

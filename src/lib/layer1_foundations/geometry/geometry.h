@@ -1971,6 +1971,12 @@ class polarity {
 
 public:
 
+	std::string label_txt;
+	std::string label_tex;
+
+	std::string degree_sequence_txt;
+	std::string degree_sequence_tex;
+
 	projective_space *P;
 
 	int *Point_to_hyperplane; // [P->N_points]
@@ -2014,6 +2020,8 @@ public:
 			int verbose_level);
 	void report(
 			std::ostream &f);
+	std::string stringify_rank_sequence();
+	std::string stringify_degree_sequence();
 
 };
 

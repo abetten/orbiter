@@ -370,7 +370,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/combinatorics_with_action.o \
 		layer3_group_actions/combinatorics_with_groups/flag_orbits_incidence_structure.o \
 		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
-		layer3_group_actions/combinatorics_with_groups/incidence_structure_with_group.o \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/group_container.o \

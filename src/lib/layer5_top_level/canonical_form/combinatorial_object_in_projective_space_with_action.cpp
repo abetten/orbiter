@@ -117,6 +117,7 @@ void combinatorial_object_in_projective_space_with_action::report(
 	}
 
 	long int nauty_complexity;
+	int f_save_nauty_input_graphs = false;
 
 
 	{
@@ -133,7 +134,9 @@ void combinatorial_object_in_projective_space_with_action::report(
 		SG = Nau.set_stabilizer_of_object(
 				OwCF,
 			PA->A,
-			true /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */,
+			f_save_nauty_input_graphs,
+			Canonical_form,
 			NO,
 			Enc,
 			verbose_level - 2);

@@ -41,7 +41,7 @@ permutation_representation_domain::permutation_representation_domain()
 	Eltrk2 = NULL;
 	Eltrk3 = NULL;
 
-	Elts = NULL;
+	Page_storage = NULL;
 }
 
 
@@ -63,8 +63,8 @@ permutation_representation_domain::~permutation_representation_domain()
 	if (elt3)
 		FREE_uchar(elt3);
 	//cout << "permutation_representation_domain::free before Elts" << endl;
-	if (Elts) {
-		FREE_OBJECT(Elts);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 	if (Eltrk1)
 		FREE_int(Eltrk1);
@@ -87,7 +87,7 @@ void permutation_representation_domain::allocate()
 	Eltrk2 = NEW_int(elt_size_int);
 	Eltrk3 = NEW_int(elt_size_int);
 
-	Elts = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
 }
 
 void permutation_representation_domain::init_product_action(
@@ -164,9 +164,9 @@ void permutation_representation_domain::init_data(
 	
 	if (f_vv) {
 		cout << "permutation_representation_domain::init_data "
-				"calling Elts->init()" << endl;
+				"calling Page_storage->init" << endl;
 	}
-	Elts->init(char_per_elt /* entry_size */,
+	Page_storage->init(char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
 
@@ -182,7 +182,7 @@ void permutation_representation_domain::init_data(
 		cout << "permutation_representation_domain::init_data "
 				"calling Elts->store()" << endl;
 	}
-	hdl = Elts->store(elt1);
+	hdl = Page_storage->store(elt1);
 	if (f_vv) {
 		cout << "identity element stored, "
 				"hdl = " << hdl << endl;
@@ -232,9 +232,9 @@ void permutation_representation_domain::init_with_base(
 	}
 	if (f_vv) {
 		cout << "perm_group::init "
-				"calling Elts->init" << endl;
+				"calling Page_storage->init" << endl;
 	}
-	Elts->init(char_per_elt /* entry_size */,
+	Page_storage->init(char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(
 	//perm_group_elt_print, (void *) this);
@@ -251,7 +251,7 @@ void permutation_representation_domain::init_with_base(
 		cout << "permutation_representation_domain::init "
 				"calling Elts->store" << endl;
 	}
-	hdl = Elts->store(elt1);
+	hdl = Page_storage->store(elt1);
 	if (f_vv) {
 		cout << "identity element stored, "
 				"hdl = " << hdl << endl;
@@ -305,8 +305,8 @@ void permutation_representation_domain::init_with_base(
 }
 
 void permutation_representation_domain::transversal_rep(
-		int i, int j,
-		int *Elt, int verbose_level)
+		int i, int j, int *Elt,
+		int verbose_level)
 {
 	int j1, j2;
 	

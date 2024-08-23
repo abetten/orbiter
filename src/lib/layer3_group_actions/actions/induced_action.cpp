@@ -569,7 +569,7 @@ action *induced_action::induced_action_on_grassmannian(
 
 	A->f_has_strong_generators = false;
 
-	A->degree = AG->degree.as_int();
+	A->degree = AG->degree_as_text.as_int();
 	//A->base_len = 0;
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian "
@@ -655,7 +655,7 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 
 	A->f_has_strong_generators = false;
 
-	A->degree = AG->degree.as_int();
+	A->degree = AG->degree_as_text.as_int();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "
@@ -1707,7 +1707,7 @@ action *induced_action::restricted_action(
 		A_old->print_info();
 		cout << "nb_points = " << nb_points << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_res_" + label_of_set;
@@ -1766,7 +1766,8 @@ action *induced_action::create_induced_action_by_restriction(
 	if (f_v) {
 		cout << "induced_action::create_induced_action_by_restriction" << endl;
 	}
-	A = induced_action_by_restriction(A_old,
+	A = induced_action_by_restriction(
+			A_old,
 			f_induce, old_G, size, set, label_of_set, label_of_set_tex,
 			verbose_level - 1);
 	if (f_v) {

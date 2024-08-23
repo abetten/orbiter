@@ -208,6 +208,22 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 
+		string object_label;
+
+		if (IS->Descr->f_label) {
+			object_label = IS->Descr->label_txt + "_" + std::to_string(input_idx);
+		}
+		else {
+			object_label = "object_" + std::to_string(input_idx);
+
+		}
+
+
+
+
+		OwCF->set_label(object_label);
+
+
 
 		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
@@ -544,7 +560,9 @@ int classification_of_objects::process_object(
 	}
 
 	OwCF->run_nauty(
-			true /* f_compute_canonical_form */, Canonical_form,
+			true /* f_compute_canonical_form */,
+			Descr->f_save_nauty_input_graphs,
+			Canonical_form,
 			NO,
 			Enc,
 			verbose_level);

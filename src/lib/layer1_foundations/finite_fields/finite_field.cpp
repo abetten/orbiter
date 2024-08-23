@@ -172,7 +172,8 @@ void finite_field::init(
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
 			cout << "finite_field::init before init_override_polynomial" << endl;
 		}
-		init_override_polynomial(Descr->q_text,
+		init_override_polynomial(
+				Descr->q_text,
 				Descr->override_polynomial,
 				Descr->f_without_tables,
 				Descr->f_compute_related_fields,
@@ -187,7 +188,8 @@ void finite_field::init(
 		if (f_v) {
 			cout << "finite_field::init before finite_field_init" << endl;
 		}
-		finite_field_init(Descr->q_text,
+		finite_field_init(
+				Descr->q_text,
 				Descr->f_without_tables,
 				Descr->f_compute_related_fields,
 				verbose_level - 1);
@@ -232,6 +234,36 @@ void finite_field::finite_field_init(
 
 	finite_field::q_text.assign(q_text);
 
+	ring_theory::longinteger_domain D;
+
+	if (f_v) {
+		cout << "finite_field::finite_field_init "
+				"before D.check_for_int_overflow_given_string_and_convert" << endl;
+	}
+
+	D.check_for_int_overflow_given_string_and_convert(
+			q_text,
+			q_longinteger,
+			q_long, q,
+			verbose_level);
+
+	if (f_v) {
+		cout << "finite_field::finite_field_init "
+				"after D.check_for_int_overflow_given_string_and_convert" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::finite_field_init "
+				"q_longinteger = " << *q_longinteger << endl;
+		cout << "finite_field::finite_field_init "
+				"q_long = " << q_long << endl;
+		cout << "finite_field::finite_field_init "
+				"q = " << q << endl;
+	}
+
+
+#if 0
 	q_longinteger = NEW_OBJECT(ring_theory::longinteger_object);
 	q_longinteger->create_from_base_10_string(q_text);
 
@@ -241,32 +273,60 @@ void finite_field::finite_field_init(
 	}
 
 
+	if (f_v) {
+		cout << "finite_field::finite_field_init "
+				"before D.check_for_int_overflow_given_string" << endl;
+	}
+
+	D.check_for_int_overflow_given_string(
+			q_text,
+			q_long, q,
+			verbose_level);
+
+	if (f_v) {
+		cout << "finite_field::finite_field_init "
+				"after D.check_for_int_overflow_given_string" << endl;
+	}
+
+#endif
+
+
+#if 0
 	q_long = q_longinteger->as_lint();
 	if (f_v) {
 		cout << "finite_field::finite_field_init "
 				"q_long = " << q_long << endl;
 	}
 
+#if 0
 	if (f_v) {
-		cout << "finite_field::finite_field_init before check_size" << endl;
+		cout << "finite_field::finite_field_init "
+				"before check_for_int_overflow" << endl;
 	}
-	check_size(verbose_level);
+	check_for_int_overflow(verbose_level);
 	if (f_v) {
-		cout << "finite_field::finite_field_init after check_size" << endl;
+		cout << "finite_field::finite_field_init "
+				"after check_for_int_overflow" << endl;
 	}
+#endif
 
 	q = (int) q_long;
+
+
+
 	if (f_v) {
 		cout << "finite_field::finite_field_init "
 				"q = " << q << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "finite_field::finite_field_init "
 				"before finite_field_init_small_order" << endl;
 	}
 
-	finite_field_init_small_order(q,
+	finite_field_init_small_order(
+			q,
 			f_without_tables, f_compute_related_fields,
 			verbose_level);
 
@@ -285,16 +345,34 @@ void finite_field::finite_field_init(
 	}
 }
 
-void finite_field::check_size(
+void finite_field::check_for_int_overflow(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
 
 	if (f_v) {
-		cout << "finite_field::check_size" << endl;
+		cout << "finite_field::check_for_int_overflow" << endl;
 	}
 
+	ring_theory::longinteger_domain D;
+
+
+	if (f_v) {
+		cout << "finite_field::check_for_int_overflow "
+				"before D.check_for_int_overflow" << endl;
+	}
+	D.check_for_int_overflow(
+			q_longinteger,
+			verbose_level);
+	if (f_v) {
+		cout << "finite_field::check_for_int_overflow "
+				"after D.check_for_int_overflow" << endl;
+	}
+
+
+
+#if 0
 	if (sizeof(int) == 4) {
 		cout << "finite_field::check_size sizeof(int) == 4" << endl;
 
@@ -353,6 +431,8 @@ void finite_field::check_size(
 		cout << "finite_field::check_size unknown wordsize." << endl;
 		exit(1);
 	}
+#endif
+
 
 	if (f_v) {
 		cout << "finite_field::check_size done" << endl;

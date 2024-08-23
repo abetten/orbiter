@@ -151,6 +151,9 @@ void quartic_curve_from_surface::init(
 
 	quartic_curve_from_surface::SOA = SOA;
 
+	label = SOA->SO->label_txt;
+	label_tex = SOA->SO->label_txt;
+
 	if (f_v) {
 		cout << "quartic_curve_from_surface::init done" << endl;
 	}
@@ -709,6 +712,7 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 
 	canonical_form::canonical_form_global Canon;
+	int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
@@ -716,6 +720,7 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 	}
 	Canon.compute_stabilizer_of_quartic_curve(
 			this,
+			f_save_nauty_input_graphs,
 			Aut_of_variety,
 			verbose_level);
 	if (f_v) {

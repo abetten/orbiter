@@ -729,6 +729,54 @@ void colored_graph::init_with_point_labels(
 	}
 }
 
+
+void colored_graph::init_basic(
+		int nb_points,
+	std::string &label, std::string &label_tex,
+	int verbose_level)
+// allocates Bitvec
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "colored_graph::init_basic" << endl;
+		cout << "nb_points=" << nb_points << endl;
+	}
+	colored_graph::nb_points = nb_points;
+	colored_graph::nb_colors = 0;
+	colored_graph::nb_colors_per_vertex = 0;
+	colored_graph::label.assign(label);
+	colored_graph::label_tex.assign(label_tex);
+	if (f_v) {
+		cout << "colored_graph::init_basic colored_graph::label = " << label << endl;
+		cout << "colored_graph::init_basic colored_graph::label_tex = " << label_tex << endl;
+	}
+
+
+	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
+
+	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec->allocate(L);
+	colored_graph::f_ownership_of_bitvec = true;
+
+	user_data_size = 0;
+
+	points = NEW_lint(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = i;
+	}
+
+	point_color = NULL;
+
+
+	if (f_v) {
+		cout << "colored_graph::init_basic" << endl;
+	}
+
+}
+
+
 void colored_graph::init_from_bitvector(
 		int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int *colors, data_structures::bitvector *Bitvec,
@@ -759,6 +807,7 @@ void colored_graph::init_from_bitvector(
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
+
 	user_data_size = 0;
 	
 	points = NEW_lint(nb_points);
@@ -774,7 +823,7 @@ void colored_graph::init_from_bitvector(
 		Int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
 	}
 	
-	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
+	colored_graph::f_ownership_of_bitvec = true;
 	colored_graph::Bitvec = Bitvec;
 
 	if (f_v) {
@@ -1005,6 +1054,60 @@ void colored_graph::save(
 		cout << "colored_graph::save done" << endl;
 	}
 }
+
+void colored_graph::save_DIMACS(
+		std::string &fname_base, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	graph_theory_domain Graph;
+
+	if (f_v) {
+		cout << "colored_graph::save_DIMACS" << endl;
+	}
+
+	string fname;
+
+	fname = fname_base + ".dimacs";
+
+	int nb_edges;
+
+	nb_edges = get_nb_edges(verbose_level);
+
+	{
+		ofstream ost(fname);
+
+		ost << "p edge " << nb_points << " " << nb_edges << endl;
+
+		int i, j;
+
+		for (i = 0; i < nb_points; i++) {
+			for (j = i + 1; j < nb_points; j++) {
+				if (is_adjacent(i, j)) {
+					ost << "e " << i + 1 << " " << j + 1 << endl;
+				}
+			}
+		}
+
+	}
+
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "colored_graph::save_DIMACS written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "colored_graph::save_DIMACS done" << endl;
+	}
+}
+
+#if 0
+p edge 4 3
+e 1 2
+e 2 3
+e 3 4
+#endif
 
 void colored_graph::load(
 		std::string &fname, int verbose_level)
@@ -3579,7 +3682,9 @@ void colored_graph::eigenvalues(
 		Int_matrix_print(Adj, nb_points, nb_points);
 	}
 
-	l1_interfaces::orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+	l1_interfaces::eigen_interface Eigen;
+
+	Eigen.orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
 	FREE_int(Adj);
 
@@ -3628,7 +3733,9 @@ void colored_graph::Laplace_eigenvalues(
 
 	E = new double[nb_points];
 
-	l1_interfaces::orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+	l1_interfaces::eigen_interface Eigen;
+
+	Eigen.orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
 	FREE_int(Adj);
 	FREE_int(D);

@@ -582,7 +582,9 @@ namespace knowledge_base {
 namespace l1_interfaces {
 
 	class easy_BMP_interface;
+	class eigen_interface;
 	class expression_parser_sajeeb;
+	class gnuplot_interface;
 	class interface_gap_low;
 	class interface_magma_low;
 	class latex_interface;

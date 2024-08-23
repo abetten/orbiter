@@ -2915,10 +2915,39 @@ void linear_algebra::matrix_inverse(
 	}
 }
 
+void linear_algebra::matrix_inverse_transpose(
+		int *A, int *Tmp, int *Tmp_basecols,
+	int *Ainv_t, int n, int verbose_level)
+// Tmp[n * n]
+// Tmp_basecols[n]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "linear_algebra::matrix_inverse_transpose" << endl;
+	}
+	if (f_vv) {
+		cout << "linear_algebra::matrix_inverse_transpose before matrix_invert" << endl;
+	}
+	matrix_invert(A, Tmp, Tmp_basecols, Ainv_t, n, verbose_level);
+	if (f_vv) {
+		cout << "linear_algebra::matrix_inverse_transpose after matrix_invert" << endl;
+	}
+
+	transpose_matrix_in_place(Ainv_t, n);
+
+
+	if (f_v) {
+		cout << "linear_algebra::matrix_inverse_transpose done" << endl;
+	}
+}
+
+
 void linear_algebra::matrix_invert(
 		int *A, int *Tmp, int *Tmp_basecols,
 	int *Ainv, int n, int verbose_level)
-// Tmp[n * n + 1]
+// Tmp[n * n]
 // Tmp_basecols[n]
 {
 	int rk;
@@ -3068,7 +3097,7 @@ void linear_algebra::matrix_invert_affine(
 		int *A,
 	int *Tmp, int *Tmp_basecols, int *Ainv, int n,
 	int verbose_level)
-// Tmp[n * n + 1]
+// Tmp[n * n]
 // Tmp_basecols[n]
 {
 	int *b1, *b2;

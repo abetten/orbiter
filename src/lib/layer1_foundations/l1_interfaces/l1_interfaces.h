@@ -29,6 +29,8 @@ namespace l1_interfaces {
 class easy_BMP_interface {
 public:
 
+	easy_BMP_interface();
+	~easy_BMP_interface();
 	void draw_bitmap(
 			graphics::draw_bitmap_control *C, int verbose_level);
 	void random_noise_in_bitmap_file(
@@ -53,8 +55,14 @@ public:
 
 //! interface to Eigen:
 
-void orbiter_eigenvalues(
-		int *Mtx, int nb_points, double *E, int verbose_level);
+class eigen_interface {
+public:
+
+	eigen_interface();
+	~eigen_interface();
+	void orbiter_eigenvalues(
+			int *Mtx, int nb_points, double *E, int verbose_level);
+};
 
 
 // #############################################################################
@@ -109,12 +117,19 @@ public:
 
 //! interface to gnuplot:
 
-void gnuplot_interface(std::string &data_file_csv,
-		std::string &title,
-		std::string &label_x,
-		std::string &label_y,
-		int verbose_level);
+class gnuplot_interface {
+public:
 
+	gnuplot_interface();
+	~gnuplot_interface();
+	void gnuplot(
+			std::string &data_file_csv,
+			std::string &title,
+			std::string &label_x,
+			std::string &label_y,
+			int verbose_level);
+
+};
 
 
 // #############################################################################
@@ -447,6 +462,7 @@ public:
 
 	int *canonical_labeling; // [N]
 
+	// nauty function call stats:
 	long int nb_firstpathnode;
 	long int nb_othernode;
 	long int nb_processnode;

@@ -401,17 +401,25 @@ static void matrix_group_element_mult(
 		cout << "matrix_group_element_mult" << endl;
 	}
 	if (f_vv) {
-		cout << "A=" << endl;
+		cout << "matrix_group_element_mult A=" << endl;
 		G.Element->GL_print_easy(AA, cout);
-		cout << "B=" << endl;
+		cout << "matrix_group_element_mult B=" << endl;
 		G.Element->GL_print_easy(BB, cout);
 	}
+	if (f_v) {
+		cout << "matrix_group_element_mult "
+				"before G.Element->GL_mult" << endl;
+	}
 	G.Element->GL_mult(AA, BB, AB, verbose_level - 2);
+	if (f_v) {
+		cout << "matrix_group_element_mult "
+				"after G.Element->GL_mult" << endl;
+	}
 	if (f_v) {
 		cout << "matrix_group_element_mult done" << endl;
 	}
 	if (f_vv) {
-		cout << "AB=" << endl;
+		cout << "matrix_group_element_mult AB=" << endl;
 		G.Element->GL_print_easy(AB, cout);
 	}
 }
@@ -711,26 +719,6 @@ static void matrix_group_print_point(
 
 	G->Element->print_point(
 			a, ost, verbose_level);
-#if 0
-	geometry::geometry_global Gg;
-	
-	cout << "matrix_group_print_point" << endl;
-	if (G->f_projective) {
-		G->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
-				G->Element->v1, 1, G->n, a);
-	}
-	else if (G->f_affine) {
-		Gg.AG_element_unrank(G->GFq->q, G->Element->v1, 1, G->n, a);
-	}
-	else if (G->f_general_linear) {
-		Gg.AG_element_unrank(G->GFq->q, G->Element->v1, 1, G->n, a);
-	}
-	else {
-		cout << "matrix_group_print_point unknown group type" << endl;
-		exit(1);
-	}
-	Int_vec_print(ost, G->Element->v1, G->n);
-#endif
 }
 
 static void matrix_group_unrank_point(
@@ -740,24 +728,6 @@ static void matrix_group_unrank_point(
 
 	G->Element->unrank_point(rk, v, verbose_level);
 
-#if 0
-	geometry::geometry_global Gg;
-
-	if (G->f_projective) {
-		G->GFq->Projective_space_basic->PG_element_unrank_modified(
-				v, 1 /* stride */, G->n, rk);
-	}
-	else if (G->f_affine) {
-		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
-	}
-	else if (G->f_general_linear) {
-		Gg.AG_element_unrank(G->GFq->q, v, 1, G->n, rk);
-	}
-	else {
-		cout << "matrix_group_unrank_point unknown group type" << endl;
-		exit(1);
-	}
-#endif
 }
 
 static long int matrix_group_rank_point(
@@ -769,24 +739,6 @@ static long int matrix_group_rank_point(
 
 	rk = G->Element->rank_point(v, verbose_level);
 
-#if 0
-	geometry::geometry_global Gg;
-
-	if (G->f_projective) {
-		G->GFq->Projective_space_basic->PG_element_rank_modified_lint(
-				v, 1 /* stride */, G->n, rk);
-		}
-	else if (G->f_affine) {
-		rk = Gg.AG_element_rank(G->GFq->q, v, 1, G->n);
-		}
-	else if (G->f_general_linear) {
-		rk = Gg.AG_element_rank(G->GFq->q, v, 1, G->n);
-		}
-	else {
-		cout << "matrix_group_unrank_point unknown group type" << endl;
-		exit(1);
-		}
-#endif
 	return rk;
 }
 

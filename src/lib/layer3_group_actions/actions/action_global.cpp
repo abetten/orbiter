@@ -61,13 +61,13 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("action_on_sets_t");
 		tex.assign("action on subsets");
 	}
-	else if (a == action_on_set_partitions_t) {
-		txt.assign("action_on_set_partitions_t");
-		tex.assign("action on set partitions");
-	}
 	else if (a == action_on_subgroups_t) {
 		txt.assign("action_on_subgroups_t");
 		tex.assign("action on subgroups");
+	}
+	else if (a == action_on_k_subsets_t) {
+		txt.assign("action_on_k_subsets_t");
+		tex.assign("action on k-subsets");
 	}
 	else if (a == action_on_pairs_t) {
 		txt.assign("action_on_pairs_t");
@@ -97,14 +97,6 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("action_by_conjugation_t");
 		tex.assign("action by conjugation");
 	}
-	else if (a == action_by_representation_t) {
-		txt.assign("action_by_representation_t");
-		tex.assign("action by representation");
-	}
-	else if (a == action_by_subfield_structure_t) {
-		txt.assign("action_by_subfield_structure_t");
-		tex.assign("action by subfield structure");
-	}
 	else if (a == action_on_determinant_t) {
 		txt.assign("action_on_determinant_t");
 		tex.assign("action on determinant");
@@ -125,6 +117,10 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("action_on_spread_set_t");
 		tex.assign("action on spread set");
 	}
+	else if (a == action_on_orthogonal_t) {
+		txt.assign("action_on_orthogonal_t");
+		tex.assign("action on orthogonal");
+	}
 	else if (a == action_on_cosets_t) {
 		txt.assign("action_on_cosets_t");
 		tex.assign("action on cosets");
@@ -137,6 +133,14 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("action_on_wedge_product_t");
 		tex.assign("action on wedge product");
 	}
+	else if (a == action_by_representation_t) {
+		txt.assign("action_by_representation_t");
+		tex.assign("action by representation");
+	}
+	else if (a == action_by_subfield_structure_t) {
+		txt.assign("action_by_subfield_structure_t");
+		tex.assign("action by subfield structure");
+	}
 	else if (a == action_on_bricks_t) {
 		txt.assign("action_on_bricks_t");
 		tex.assign("action on bricks");
@@ -144,10 +148,6 @@ void action_global::get_symmetry_group_type_text(
 	else if (a == action_on_andre_t) {
 		txt.assign("action_on_andre_t");
 		tex.assign("action on andre");
-	}
-	else if (a == action_on_orthogonal_t) {
-		txt.assign("action_on_orthogonal_t");
-		tex.assign("action on orthogonal");
 	}
 	else if (a == action_on_orbits_t) {
 		txt.assign("action_on_orbits_t");
@@ -161,9 +161,9 @@ void action_global::get_symmetry_group_type_text(
 		txt.assign("action_on_homogeneous_polynomials_t");
 		tex.assign("action on homogeneous polynomials");
 	}
-	else if (a == action_on_k_subsets_t) {
-		txt.assign("action_on_k_subsets_t");
-		tex.assign("action on k-subsets");
+	else if (a == action_on_set_partitions_t) {
+		txt.assign("action_on_set_partitions_t");
+		tex.assign("action on set partitions");
 	}
 	else if (a == action_on_interior_direct_product_t) {
 		txt.assign("action_on_interior_direct_product_t");
@@ -255,7 +255,6 @@ void action_global::make_generators_stabilizer_of_two_components(
 	for (h = 0; h < 2 * len; h++) {
 
 		P = gens_PGL_k->gens->ith(h / 2);
-		//P = gens_PGL_k->ith(h / 2);
 
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
@@ -867,7 +866,7 @@ void action_global::lift_generators_to_subfield_structure(
 	if (f_vv) {
 		cout << "action_global::lift_generators_to_subfield_structure "
 				"strong generators are:" << endl;
-		Strong_gens->print_generators(cout);
+		Strong_gens->print_generators(cout, verbose_level - 1);
 	}
 
 
@@ -1230,6 +1229,7 @@ action *action_global::init_direct_product_group(
 	A->f_has_strong_generators = true;
 	FREE_int(gens_data);
 
+#if 0
 	groups::sims *S;
 
 	S = NEW_OBJECT(groups::sims);
@@ -1272,6 +1272,20 @@ action *action_global::init_direct_product_group(
 
 	A->compute_strong_generators_from_sims(
 			0/*verbose_level - 2*/);
+
+#else
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before compute_sims" << endl;
+	}
+	compute_sims(
+			A, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after compute_sims" << endl;
+	}
+
+#endif
 
 	if (f_v) {
 		cout << "action_global::init_direct_product_group, "
@@ -1289,9 +1303,11 @@ action *action_global::init_direct_product_group(
 
 
 action *action_global::init_polarity_extension_group_and_restrict(
-		algebra::matrix_group *M,
+		actions::action *A,
 		geometry::projective_space *P,
 		geometry::polarity *Polarity,
+		int f_on_middle_layer_grassmannian,
+		int f_on_points_and_hyperplanes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1304,32 +1320,122 @@ action *action_global::init_polarity_extension_group_and_restrict(
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict" << endl;
-		cout << "M=" << M->label << endl;
+		cout << "action_global::init_polarity_extension_group_and_restrict A=" << A->label << endl;
+		cout << "action_global::init_polarity_extension_group_and_restrict P=" << P->label_txt << endl;
+		cout << "action_global::init_polarity_extension_group_and_restrict Polarity=" << Polarity->label_txt << ", degree sequence = " << Polarity->degree_sequence_txt << endl;
+		cout << "action_global::init_polarity_extension_group_and_restrict f_on_middle_layer_grassmannian=" << f_on_middle_layer_grassmannian << endl;
+		cout << "action_global::init_polarity_extension_group_and_restrict f_on_points_and_hyperplanes=" << f_on_points_and_hyperplanes << endl;
 	}
 	A_new = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "
 				"before init_polarity_extension_group" << endl;
 	}
-	A_new = init_polarity_extension_group(M, P, Polarity, verbose_level);
+	A_new = init_polarity_extension_group(A, P, Polarity, verbose_level);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "
 				"after init_polarity_extension_group" << endl;
 	}
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"A_new:" << endl;
+		A_new->print_info();
+	}
+	if (A_new->Strong_gens == NULL) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"A_new->Strong_gens == NULL" << endl;
+		exit(1);
+	}
+
 
 	Polarity_extension = A_new->G.Polarity_extension;
-	nb_points = Polarity_extension->Polarity->total_degree;
-	points = NEW_lint(nb_points);
-	for (i = 0; i < nb_points; i++) {
-		points[i] = Polarity_extension->perm_offset_i[1] + i;
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict" << endl;
+		cout << "Polarity_extension->Polarity->total_degree=" << Polarity_extension->Polarity->total_degree << endl;
 	}
+
+	if (f_on_middle_layer_grassmannian) {
+
+#if 0
+		int nb_ranks;
+		int *rank_sequence;
+		int *rank_sequence_opposite;
+		long int *nb_objects;
+		long int *offset;
+		int total_degree;
+#endif
+
+		if (EVEN(Polarity_extension->Polarity->nb_ranks)) {
+			cout << "action_global::init_polarity_extension_group_and_restrict "
+					"error: for on_middle_layer_grassmannian we need an odd number of ranks" << endl;
+			exit(1);
+		}
+
+		int half, middle_rank;
+
+		half = Polarity_extension->Polarity->nb_ranks >> 1;
+		middle_rank = Polarity_extension->Polarity->rank_sequence[half];
+		nb_points = Polarity_extension->Polarity->nb_objects[half];
+
+		if (f_v) {
+			cout << "action_global::init_polarity_extension_group_and_restrict f_on_middle_layer_grassmannian" << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict half = " << half << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict middle_rank = " << middle_rank << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict nb_points = " << nb_points << endl;
+		}
+
+		points = NEW_lint(nb_points);
+		for (i = 0; i < nb_points; i++) {
+			points[i] = Polarity_extension->perm_offset_i[1] + Polarity_extension->Polarity->offset[half] + i;
+		}
+
+	}
+	else if (f_on_points_and_hyperplanes) {
+
+		int point_idx, hyperplane_idx, j;
+
+		point_idx = 0;
+		hyperplane_idx = Polarity_extension->Polarity->nb_ranks - 1;
+		nb_points = Polarity_extension->Polarity->nb_objects[point_idx] + Polarity_extension->Polarity->nb_objects[hyperplane_idx];
+
+		if (f_v) {
+			cout << "action_global::init_polarity_extension_group_and_restrict f_on_points_and_hyperplanes" << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict point_idx = " << point_idx << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict hyperplane_idx = " << hyperplane_idx << endl;
+			cout << "action_global::init_polarity_extension_group_and_restrict nb_points = " << nb_points << endl;
+		}
+
+		points = NEW_lint(nb_points);
+		j = 0;
+		for (i = 0; i < Polarity_extension->Polarity->nb_objects[point_idx]; i++) {
+			points[j++] = Polarity_extension->perm_offset_i[1] + Polarity_extension->Polarity->offset[point_idx] + i;
+		}
+		for (i = 0; i < Polarity_extension->Polarity->nb_objects[hyperplane_idx]; i++) {
+			points[j++] = Polarity_extension->perm_offset_i[1] + Polarity_extension->Polarity->offset[hyperplane_idx] + i;
+		}
+
+
+	}
+	else {
+		nb_points = Polarity_extension->Polarity->total_degree;
+		points = NEW_lint(nb_points);
+		for (i = 0; i < nb_points; i++) {
+			points[i] = Polarity_extension->perm_offset_i[1] + i;
+		}
+
+	}
+
+
+
+
+
 
 
 	std::string label_of_set;
 	std::string label_of_set_tex;
 
 	label_of_set.assign("_polarity_extension");
-	label_of_set_tex.assign("\\_polarity\\_extension");
+	label_of_set_tex.assign("{\\rm \\_polext}");
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group_and_restrict "
@@ -1344,6 +1450,11 @@ action *action_global::init_polarity_extension_group_and_restrict(
 				"after A_new->Induced_action->restricted_action" << endl;
 	}
 	A_new_r->f_is_linear = false;
+	if (f_v) {
+		cout << "action_global::init_polarity_extension_group_and_restrict "
+				"A_new_r:" << endl;
+		A_new_r->print_info();
+	}
 
 
 	if (f_v) {
@@ -1356,91 +1467,106 @@ action *action_global::init_polarity_extension_group_and_restrict(
 
 
 action *action_global::init_polarity_extension_group(
-		algebra::matrix_group *M,
+		actions::action *A,
 		geometry::projective_space *P,
 		geometry::polarity *Polarity,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	group_constructions::polarity_extension *Polarity_extension;
-	action *A;
+	action *A_polarity;
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group" << endl;
-		cout << "M=" << M->label << endl;
+		cout << "action_global::init_polarity_extension_group A=" << A->label << endl;
+		cout << "action_global::init_polarity_extension_group P=" << P->label_txt << endl;
+		cout << "action_global::init_polarity_extension_group Polarity=" << Polarity->label_txt
+				<< ", degree sequence = " << Polarity->degree_sequence_txt << endl;
 	}
 
-	A = NEW_OBJECT(action);
+
+	//algebra::matrix_group *M;
+
+
+	if (!A->is_matrix_group()) {
+		cout << "action_global::init_polarity_extension_group "
+				"the given group is not a matrix group" << endl;
+		exit(1);
+	}
+	//M = A->get_matrix_group();
+
+
+	A_polarity = NEW_OBJECT(action);
 	Polarity_extension = NEW_OBJECT(group_constructions::polarity_extension);
 
 
 
-	A->type_G = polarity_extension_t;
-	A->G.Polarity_extension = Polarity_extension;
-	A->f_allocated = true;
+	A_polarity->type_G = polarity_extension_t;
+	A_polarity->G.Polarity_extension = Polarity_extension;
+	A_polarity->f_allocated = true;
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"before P->init" << endl;
+				"before Polarity_extension->init" << endl;
 	}
-	Polarity_extension->init(M, P, Polarity, verbose_level);
+	Polarity_extension->init(A, P, Polarity, verbose_level);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"after P->init" << endl;
+				"after Polarity_extension->init" << endl;
 	}
 
-	A->f_is_linear = false;
-	A->dimension = 0;
+	A_polarity->f_is_linear = false;
+	A_polarity->dimension = 0;
 
 
-	A->low_level_point_size = 0;
+	A_polarity->low_level_point_size = 0;
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
 				"low_level_point_size="
-			<< A->low_level_point_size<< endl;
+			<< A_polarity->low_level_point_size<< endl;
 	}
 
-	A->label.assign(Polarity_extension->label);
-	A->label_tex.assign(Polarity_extension->label_tex);
+	A_polarity->label.assign(Polarity_extension->label);
+	A_polarity->label_tex.assign(Polarity_extension->label_tex);
 
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"label=" << A->label << endl;
+				"label=" << A_polarity->label << endl;
 	}
 
-	A->degree = Polarity_extension->degree_overall;
-	A->make_element_size = Polarity_extension->make_element_size;
+	A_polarity->degree = Polarity_extension->degree_overall;
+	A_polarity->make_element_size = Polarity_extension->make_element_size;
 
-	A->ptr = NEW_OBJECT(action_pointer_table);
-	A->ptr->init_function_pointers_polarity_extension();
+	A_polarity->ptr = NEW_OBJECT(action_pointer_table);
+	A_polarity->ptr->init_function_pointers_polarity_extension();
 
-	A->elt_size_in_int = Polarity_extension->elt_size_int;
-	A->coded_elt_size_in_char = Polarity_extension->char_per_elt;
-	A->Group_element->allocate_element_data();
-
-
+	A_polarity->elt_size_in_int = Polarity_extension->elt_size_int;
+	A_polarity->coded_elt_size_in_char = Polarity_extension->char_per_elt;
+	A_polarity->Group_element->allocate_element_data();
 
 
-	A->degree = Polarity_extension->degree_overall;
+
+
+	A_polarity->degree = Polarity_extension->degree_overall;
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"degree=" << A->degree << endl;
+				"degree=" << A_polarity->degree << endl;
 	}
 
-	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	A->Stabilizer_chain->allocate_base_data(
-			A, Polarity_extension->base_length, verbose_level);
+	A_polarity->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A_polarity->Stabilizer_chain->allocate_base_data(
+			A_polarity, Polarity_extension->base_length, verbose_level);
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"base_len=" << A->base_len() << endl;
+				"base_len=" << A_polarity->base_len() << endl;
 	}
 
 
-	Lint_vec_copy(Polarity_extension->the_base, A->get_base(), A->base_len());
+	Lint_vec_copy(Polarity_extension->the_base, A_polarity->get_base(), A_polarity->base_len());
 	Int_vec_copy(Polarity_extension->the_transversal_length,
-			A->get_transversal_length(), A->base_len());
+			A_polarity->get_transversal_length(), A_polarity->base_len());
 
 	int *gens_data;
 	int gens_size;
@@ -1457,7 +1583,7 @@ action *action_global::init_polarity_extension_group(
 		cout << "action_global::init_polarity_extension_group "
 				"after Polarity_extension->make_strong_generators_data" << endl;
 	}
-	A->Strong_gens = NEW_OBJECT(groups::strong_generators);
+	A_polarity->Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	data_structures_groups::vector_ge *nice_gens;
 
@@ -1465,10 +1591,10 @@ action *action_global::init_polarity_extension_group(
 		cout << "action_global::init_polarity_extension_group "
 				"before A->Strong_gens->init_from_data" << endl;
 	}
-	A->Strong_gens->init_from_data(
-			A,
+	A_polarity->Strong_gens->init_from_data(
+			A_polarity,
 			gens_data, gens_nb, gens_size,
-			A->get_transversal_length(),
+			A_polarity->get_transversal_length(),
 			nice_gens,
 			verbose_level - 1);
 	if (f_v) {
@@ -1476,68 +1602,103 @@ action *action_global::init_polarity_extension_group(
 				"after A->Strong_gens->init_from_data" << endl;
 	}
 	FREE_OBJECT(nice_gens);
-	A->f_has_strong_generators = true;
+	A_polarity->f_has_strong_generators = true;
 	FREE_int(gens_data);
 
 
-
-	groups::sims *S;
-
-	S = NEW_OBJECT(groups::sims);
-
-	S->init(A, verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"before S->init_generators" << endl;
+				"before compute_sims" << endl;
 	}
-	S->init_generators(
-			*A->Strong_gens->gens, verbose_level);
+	compute_sims(
+			A_polarity, verbose_level - 1);
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group "
-				"after S->init_generators" << endl;
+				"after compute_sims" << endl;
 	}
-	if (f_v) {
-		cout << "action_global::init_polarity_extension_group "
-				"before S->compute_base_orbits_known_length" << endl;
-	}
-	S->compute_base_orbits_known_length(
-			A->get_transversal_length(), verbose_level);
-	if (f_v) {
-		cout << "action_global::init_polarity_extension_group "
-				"after S->compute_base_orbits_known_length" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "action_global::init_polarity_extension_group "
-				"before init_sims_only" << endl;
-	}
-
-	A->init_sims_only(
-			S, verbose_level);
-
-	if (f_v) {
-		cout << "action_global::init_polarity_extension_group "
-				"after init_sims_only" << endl;
-	}
-
-	A->compute_strong_generators_from_sims(
-			0/*verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "action_global::init_polarity_extension_group, "
-				"finished setting up " << A->label;
-		cout << ", a permutation group of degree " << A->degree << " ";
+				"finished setting up " << A_polarity->label;
+		cout << ", a permutation group of degree " << A_polarity->degree << " ";
 		cout << "and of order ";
-		A->print_group_order(cout);
+		A_polarity->print_group_order(cout);
 		cout << endl;
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
 	}
-	return A;
+	return A_polarity;
 }
 
+
+void action_global::compute_sims(
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::compute_sims" << endl;
+		cout << "action_global::compute_sims verbose_level = " << verbose_level << endl;
+	}
+
+	groups::sims *S; // will become part of A
+
+
+	S = NEW_OBJECT(groups::sims);
+
+	S->init(A, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"before S->init_generators" << endl;
+	}
+	S->init_generators(
+			*A->Strong_gens->gens, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"after S->init_generators" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"before S->compute_base_orbits_known_length" << endl;
+	}
+	S->compute_base_orbits_known_length(
+			A->get_transversal_length(), verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"after S->compute_base_orbits_known_length" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"before init_sims_only" << endl;
+	}
+
+	A->init_sims_only(
+			S, verbose_level - 2);
+
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"after init_sims_only" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"before A->compute_strong_generators_from_sims" << endl;
+	}
+	A->compute_strong_generators_from_sims(
+			verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::compute_sims "
+				"after A->compute_strong_generators_from_sims" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::compute_sims done" << endl;
+	}
+}
 
 
 void action_global::orbits_on_equations(
@@ -1602,6 +1763,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		action *A_linear,
 		geometry::projective_space *P,
 	long int *set, int set_size,
+	int f_save_nauty_input_graphs,
 	int verbose_level)
 // used by hermitian_spreads_classify
 // assuming we are in a linear action.
@@ -1618,83 +1780,12 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		cout << "set_size = " << set_size << endl;
 	}
 
-#if 0
-	geometry::object_with_canonical_form *OwCF;
-
-	OwCF = NEW_OBJECT(geometry::object_with_canonical_form);
-
-	OwCF->init_point_set(set, set_size, verbose_level);
-
-	OwCF->P = P;
-
-	int nb_rows, nb_cols;
-	data_structures::bitvector *Canonical_form = NULL;
-
-	OwCF->encoding_size(
-			nb_rows, nb_cols,
-			verbose_level);
-
-
-
-	groups::strong_generators *SG;
-	l1_interfaces::nauty_output *NO;
-	combinatorics::encoded_combinatorial_object *Enc;
-
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-	if (f_v) {
-		cout << "action_global::set_stabilizer_in_projective_space "
-				"before NO->nauty_output_allocate" << endl;
-	}
-	NO->nauty_output_allocate(
-			nb_rows + nb_cols,
-			0,
-			nb_rows + nb_cols,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "action_global::set_stabilizer_in_projective_space "
-				"after NO->nauty_output_allocate" << endl;
-	}
-
-	if (f_v) {
-		cout << "action_global::set_stabilizer_in_projective_space "
-				"before Nau.set_stabilizer_of_object" << endl;
-	}
-
-	SG = Nau.set_stabilizer_of_object(
-			OwCF,
-		A_linear,
-		false /* f_compute_canonical_form */, Canonical_form,
-		NO,
-		Enc,
-		verbose_level - 2);
-
-	if (f_v) {
-		cout << "action_global::set_stabilizer_in_projective_space "
-				"after Nau.set_stabilizer_of_object" << endl;
-	}
-
-	if (f_v) {
-		cout << "action_global::set_stabilizer_in_projective_space "
-				"go = " << *NO->Ago << endl;
-		NO->print_stats();
-	}
-
-	FREE_OBJECT(NO);
-	FREE_OBJECT(Enc);
-
-	FREE_OBJECT(OwCF);
-#else
 
 	groups::strong_generators *Set_stab;
 
 	data_structures::bitvector *Canonical_form;
 	l1_interfaces::nauty_output *NO;
 
-#if 0
-	long int *canonical_labeling;
-	int canonical_labeling_len;
-	std::vector<std::string> NO_stringified;
-#endif
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
@@ -1704,11 +1795,10 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 			P,
 			A_linear,
 			set, set_size,
+			f_save_nauty_input_graphs,
 			Set_stab,
 			Canonical_form,
 			NO,
-			//canonical_labeling, canonical_labeling_len,
-			//NO_stringified,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
@@ -1716,9 +1806,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	}
 
 	FREE_OBJECT(Canonical_form);
-	//FREE_lint(canonical_labeling);
 	FREE_OBJECT(NO);
-#endif
+
 
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space done" << endl;
@@ -1736,7 +1825,6 @@ void action_global::stabilizer_of_dual_hyperoval_representative(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
-	//int i;
 	knowledge_base::knowledge_base K;
 
 	if (f_v) {
@@ -2190,6 +2278,7 @@ void action_global::apply_based_on_text(
 	if (f_v) {
 		cout << "v=" << endl;
 		Lint_vec_print(cout, v, sz);
+		cout << endl;
 	}
 
 	w = NEW_lint(sz);
@@ -2299,9 +2388,9 @@ void action_global::multiply_based_on_text(
 		cout << "action_global::multiply_based_on_text" << endl;
 	}
 	if (f_v) {
-		cout << "multiplying" << endl;
-		cout << "A=" << data_A << endl;
-		cout << "B=" << data_B << endl;
+		cout << "action_global::multiply_based_on_text multiplying" << endl;
+		cout << "action_global::multiply_based_on_text A=" << data_A << endl;
+		cout << "action_global::multiply_based_on_text B=" << data_B << endl;
 	}
 	int *Elt1;
 	int *Elt2;
@@ -2311,28 +2400,75 @@ void action_global::multiply_based_on_text(
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
+
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = true;
+	int f_print_cycles_of_length_one = true;
+
+
+
 	A->Group_element->make_element_from_string(
 			Elt1, data_A, verbose_level);
+
 	if (f_v) {
-		cout << "A=" << endl;
+		cout << "action_global::multiply_based_on_text A=" << endl;
 		A->Group_element->element_print_quick(
 				Elt1, cout);
+
+		A->Group_element->element_print_for_make_element(Elt1, cout);
+		cout << endl;
+
+		A->Group_element->element_print_as_permutation_with_offset(
+				Elt1, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
 	}
 
 	A->Group_element->make_element_from_string(
 			Elt2, data_B, verbose_level);
+
 	if (f_v) {
-		cout << "B=" << endl;
+		cout << "action_global::multiply_based_on_text B=" << endl;
 		A->Group_element->element_print_quick(
 				Elt2, cout);
+
+		A->Group_element->element_print_for_make_element(Elt2, cout);
+		cout << endl;
+
+		A->Group_element->element_print_as_permutation_with_offset(
+				Elt2, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
 	}
 
-	A->Group_element->element_mult(
-			Elt1, Elt2, Elt3, 0);
 	if (f_v) {
-		cout << "A*B=" << endl;
+		cout << "action_global::multiply_based_on_text "
+				"before A->Group_element->element_mult" << endl;
+	}
+	A->Group_element->element_mult(
+			Elt1, Elt2, Elt3, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::multiply_based_on_text "
+				"after A->Group_element->element_mult" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::multiply_based_on_text A*B=" << endl;
 		A->Group_element->element_print_quick(Elt3, cout);
+
 		A->Group_element->element_print_for_make_element(Elt3, cout);
+		cout << endl;
+
+		A->Group_element->element_print_as_permutation_with_offset(
+				Elt3, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
 		cout << endl;
 	}
 
@@ -2419,6 +2555,10 @@ void action_global::inverse_based_on_text(
 	int *Elt1;
 	int *Elt2;
 
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = true;
+	int f_print_cycles_of_length_one = true;
+
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 
@@ -2427,14 +2567,27 @@ void action_global::inverse_based_on_text(
 	if (f_v) {
 		cout << "A=" << endl;
 		A->Group_element->element_print_quick(Elt1, cout);
+		A->Group_element->element_print_as_permutation_with_offset(
+				Elt1, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
 	}
 
 	A->Group_element->element_invert(
 			Elt1, Elt2, 0);
+
 	if (f_v) {
 		cout << "A^-1=" << endl;
 		A->Group_element->element_print_quick(Elt2, cout);
 		A->Group_element->element_print_for_make_element(Elt2, cout);
+		cout << endl;
+		A->Group_element->element_print_as_permutation_with_offset(
+				Elt2, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
 		cout << endl;
 	}
 
@@ -5513,6 +5666,92 @@ data_structures::set_of_sets *action_global::set_of_sets_copy_and_apply(
 
 	return SoS;
 
+}
+
+actions::action *action_global::create_action_on_k_subspaces(
+		actions::action *A_previous,
+		int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level  >= 1);
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces" << endl;
+	}
+
+	if (!A_previous->f_is_linear) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"previous action is not linear" << endl;
+		exit(1);
+	}
+
+	action *A_modified;
+	algebra::matrix_group *M;
+	field_theory::finite_field *Fq;
+	int n;
+
+	M = A_previous->get_matrix_group();
+	n = M->n;
+	Fq = M->GFq;
+
+	induced_actions::action_on_grassmannian *AonG;
+	geometry::grassmann *Grass;
+
+	AonG = NEW_OBJECT(induced_actions::action_on_grassmannian);
+
+	Grass = NEW_OBJECT(geometry::grassmann);
+
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"before Grass->init" << endl;
+	}
+
+	Grass->init(n, k, Fq, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"after Grass->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"before AonG->init" << endl;
+	}
+
+	AonG->init(*A_previous, Grass, verbose_level - 2);
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"after AonG->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"before induced_action_on_grassmannian_preloaded" << endl;
+	}
+
+	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
+		false /* f_induce_action */, NULL /*sims *old_G */,
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces "
+				"after induced_action_on_grassmannian_preloaded" << endl;
+	}
+
+	A_modified->f_is_linear = true;
+
+	A_modified->dimension = A_previous->dimension;
+
+
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces done" << endl;
+	}
+	return A_modified;
 }
 
 

@@ -252,17 +252,17 @@ void orbits_create::init(
 
 
 		if (f_v) {
-			cout << "orbits_create::init before Group->do_orbits_on_subspaces" << endl;
+			cout << "orbits_create::init before Group->Any_group_linear->do_orbits_on_subspaces" << endl;
 		}
 
-		Group->do_orbits_on_subspaces(
+		Group->Any_group_linear->do_orbits_on_subspaces(
 				Control,
 				On_Subspaces,
 				Descr->on_subspaces_dimension,
 				verbose_level);
 
 		if (f_v) {
-			cout << "orbits_create::init after Group->do_orbits_on_subspaces" << endl;
+			cout << "orbits_create::init after Group->Any_group_linear->do_orbits_on_subspaces" << endl;
 		}
 
 		f_has_On_Subspaces = true;
@@ -285,10 +285,10 @@ void orbits_create::init(
 
 
 		if (f_v) {
-			cout << "orbits_create::init before Group->do_tensor_classify" << endl;
+			cout << "orbits_create::init before Group->Any_group_linear->do_tensor_classify" << endl;
 		}
 
-		Group->do_tensor_classify(
+		Group->Any_group_linear->do_tensor_classify(
 				Descr->on_tensors_poset_classification_control_label,
 				On_tensors,
 				Descr->on_tensors_dimension,
@@ -297,7 +297,7 @@ void orbits_create::init(
 		f_has_On_tensors = true;
 
 		if (f_v) {
-			cout << "orbits_create::init after Group->do_tensor_classify" << endl;
+			cout << "orbits_create::init after Group->Any_group_linear->do_tensor_classify" << endl;
 		}
 
 	}

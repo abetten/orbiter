@@ -23,6 +23,8 @@ namespace canonical_form_classification {
 object_with_canonical_form::object_with_canonical_form()
 {
 	P = NULL;
+	f_has_label = false;
+	//std::string label;
 	type = t_PTS;
 	//input_fname = NULL;
 	input_idx = 0;
@@ -71,6 +73,14 @@ object_with_canonical_form::~object_with_canonical_form()
 		FREE_OBJECT(C);
 	}
 }
+
+void object_with_canonical_form::set_label(
+		std::string &object_label)
+{
+	f_has_label = true;
+	label = object_label;
+}
+
 
 void object_with_canonical_form::print(
 		std::ostream &ost)
@@ -356,6 +366,26 @@ void object_with_canonical_form::get_packing_as_set_system(
 	}
 }
 
+
+void object_with_canonical_form::init_input_fname(
+		std::string &input_fname,
+		int input_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_input_fname" << endl;
+	}
+
+	object_with_canonical_form::input_fname = input_fname;
+	object_with_canonical_form::input_idx = input_idx;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_input_fname done" << endl;
+	}
+
+}
 
 void object_with_canonical_form::init_point_set(
 		long int *set, int sz,
@@ -2497,10 +2527,15 @@ void object_with_canonical_form::klein(int verbose_level)
 
 void object_with_canonical_form::run_nauty(
 		int f_compute_canonical_form,
+		int f_save_nauty_input_graphs,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
+// called from
+// classification_of_objects::process_object
+// nauty_interface_with_group::set_stabilizer_of_object
+// classify_using_canonical_forms::find_object
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2532,6 +2567,41 @@ void object_with_canonical_form::run_nauty(
 		//Enc->print_incma();
 	}
 
+
+
+	if (f_save_nauty_input_graphs) {
+
+		// save Levi graph in DIMACS format:
+
+		if (f_v) {
+			cout << "object_with_canonical_form::run_nauty "
+					"saving Levi graph" << endl;
+		}
+
+
+		graph_theory::colored_graph *CG;
+		string graph_label;
+		static int run_nauty_graph_counter = 0;
+
+
+		graph_label = label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
+
+		run_nauty_graph_counter++;
+
+		Enc->create_Levi_graph(CG, graph_label, verbose_level);
+
+		Enc->print_incma();
+
+		CG->save_DIMACS(graph_label, verbose_level);
+
+		FREE_OBJECT(CG);
+
+		if (f_v) {
+			cout << "object_with_canonical_form::run_nauty "
+					"saving Levi graph done" << endl;
+		}
+
+	}
 
 
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
@@ -2612,12 +2682,6 @@ void object_with_canonical_form::run_nauty(
 
 	}
 
-#if 0
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty before FREE_OBJECT(Enc)" << endl;
-	}
-	FREE_OBJECT(Enc);
-#endif
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty done" << endl;
@@ -2626,10 +2690,71 @@ void object_with_canonical_form::run_nauty(
 
 }
 
+void object_with_canonical_form::run_nauty_basic(
+		l1_interfaces::nauty_output *&NO,
+		int verbose_level)
+// called from
+// classify_using_canonical_forms::orderly_test
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic"
+				<< endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic before OiP->encoding_size" << endl;
+	}
+	encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic after OiP->encoding_size" << endl;
+		cout << "object_with_canonical_form::run_nauty_basic nb_rows=" << nb_rows << endl;
+		cout << "object_with_canonical_form::run_nauty_basic nb_cols=" << nb_cols << endl;
+	}
+
+	data_structures::bitvector *Canonical_form;
+
+	encoded_combinatorial_object *Enc;
+
+	int f_save_nauty_input_graphs = false;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic "
+				"before OwCF->run_nauty" << endl;
+	}
+	run_nauty(
+			false /* f_compute_canonical_form */,
+			f_save_nauty_input_graphs,
+			Canonical_form,
+			NO,
+			Enc,
+			verbose_level);
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic "
+				"after OwCF->run_nauty" << endl;
+	}
+
+	FREE_OBJECT(Enc);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic done" << endl;
+	}
+}
+
+
 
 void object_with_canonical_form::canonical_labeling(
+		int f_save_nauty_input_graphs,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level)
+// called from
+// projective_space_with_action::canonical_labeling
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2665,6 +2790,41 @@ void object_with_canonical_form::canonical_labeling(
 				"Transversal_length" << endl;
 	}
 
+
+	if (f_save_nauty_input_graphs) {
+
+		if (f_v) {
+			cout << "object_with_canonical_form::canonical_labeling "
+					"saving Levi graph" << endl;
+		}
+
+		// save Levi graph in DIMACS format:
+
+
+		graph_theory::colored_graph *CG;
+		string label;
+		static int canonical_labeling_graph_counter = 0;
+
+		data_structures::string_tools ST;
+
+
+
+
+		label = input_fname;
+
+		ST.chop_off_extension(label);
+
+		label += "_canonical_labeling_graph_" + std::to_string(canonical_labeling_graph_counter);
+
+		canonical_labeling_graph_counter++;
+
+		Enc->create_Levi_graph(CG, label, verbose_level);
+
+
+		CG->save_DIMACS(label, verbose_level);
+
+		FREE_OBJECT(CG);
+	}
 
 
 	if (f_v) {
@@ -2708,57 +2868,7 @@ void object_with_canonical_form::canonical_labeling(
 	}
 }
 
-void object_with_canonical_form::run_nauty_basic(
-		l1_interfaces::nauty_output *&NO,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
 
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic"
-				<< endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-	int nb_rows, nb_cols;
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic before OiP->encoding_size" << endl;
-	}
-	encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic after OiP->encoding_size" << endl;
-		cout << "object_with_canonical_form::run_nauty_basic nb_rows=" << nb_rows << endl;
-		cout << "object_with_canonical_form::run_nauty_basic nb_cols=" << nb_cols << endl;
-	}
-
-	data_structures::bitvector *Canonical_form;
-
-	encoded_combinatorial_object *Enc;
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic "
-				"before OwCF->run_nauty" << endl;
-	}
-	run_nauty(
-			false /* f_compute_canonical_form */, Canonical_form,
-			NO,
-			Enc,
-			verbose_level);
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic "
-				"after OwCF->run_nauty" << endl;
-	}
-
-	FREE_OBJECT(Enc);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic done" << endl;
-	}
-}
 
 
 

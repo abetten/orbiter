@@ -116,7 +116,7 @@ void arc_lifting_simeon::init(
 	}
 
 	cout << "generating set: " << endl;
-	A->Strong_gens->print_generators(cout);
+	A->Strong_gens->print_generators(cout, verbose_level - 1);
 
 	Sch = A->Strong_gens->compute_all_point_orbits_schreier(A, verbose_level);
 

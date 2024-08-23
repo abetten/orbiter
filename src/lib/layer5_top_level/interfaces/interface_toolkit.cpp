@@ -2117,7 +2117,9 @@ void interface_toolkit::worker(
 					<< endl;
 		}
 
-		l1_interfaces::gnuplot_interface(
+		l1_interfaces::gnuplot_interface Gnuplot;
+
+		Gnuplot.gnuplot(
 				gnuplot_file_fname,
 				gnuplot_title,
 				gnuplot_label_x,

@@ -9,7 +9,6 @@ MODULES = \
 	combinatorics_with_action.o \
 	flag_orbits_incidence_structure.o \
 	group_action_on_combinatorial_object.o \
-	incidence_structure_with_group.o \
 	orbit_type_repository.o \
 	translation_plane_via_andre_model.o
 

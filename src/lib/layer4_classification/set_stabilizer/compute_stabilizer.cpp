@@ -1200,7 +1200,7 @@ void compute_stabilizer::update_stabilizer(
 		Strong_gens->init_from_sims(Stab, 0);
 
 		if (f_v) {
-			Strong_gens->print_generators(cout);
+			Strong_gens->print_generators(cout, verbose_level - 1);
 		}
 		FREE_OBJECT(Strong_gens);
 

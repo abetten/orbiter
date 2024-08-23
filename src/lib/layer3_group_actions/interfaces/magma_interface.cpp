@@ -865,12 +865,12 @@ void magma_interface::normalizer_using_MAGMA(
 		ofstream fp(fname_magma);
 
 		fp << "G := PermutationGroup< " << n << " | " << endl;
-		G_gen->print_generators_MAGMA(A, fp);
+		G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 		fp << ">;" << endl;
 
 
 		fp << "H := sub< G |" << endl;
-		H_gen->print_generators_MAGMA(A, fp);
+		H_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 		fp << ">;" << endl;
 
 		fp << "N := Normalizer(G, H);" << endl;
@@ -998,7 +998,7 @@ void magma_interface::conjugacy_classes_using_MAGMA(
 	ofstream fp(fname_magma);
 
 	fp << "G := PermutationGroup< " << n << " | " << endl;
-	G_gen->print_generators_MAGMA(A, fp);
+	G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 	fp << ">;" << endl;
 
 
@@ -1156,7 +1156,7 @@ void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
 		ofstream fp(fname_magma);
 
 		fp << "G := PermutationGroup< " << n << " | " << endl;
-		G_gen->print_generators_MAGMA(A, fp);
+		G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 		fp << ">;" << endl;
 
 
@@ -1407,7 +1407,7 @@ void magma_interface::read_centralizer_magma(
 			<< " : " << endl;
 		cout << "magma_interface::read_centralizer_magma "
 				"created generators for a group" << endl;
-		gens->print_generators(cout);
+		gens->print_generators(cout, verbose_level - 1);
 		gens->print_generators_as_permutations();
 		gens->group_order(go1);
 		cout << "magma_interface::read_centralizer_magma "
@@ -1450,7 +1450,7 @@ void magma_interface::centralizer_using_magma2(
 		ofstream fp(fname_magma);
 
 		fp << "G := PermutationGroup< " << n << " | " << endl;
-		G_gen->print_generators_MAGMA(A, fp);
+		G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 		fp << ">;" << endl;
 
 		fp << "h := G ! ";
@@ -1608,7 +1608,7 @@ void magma_interface::read_subgroups_magma(
 					<< " : " << endl;
 				cout << "magma_interface::read_centralizer_magma "
 						"created generators for a group" << endl;
-				H_gens[u].print_generators(cout);
+				H_gens[u].print_generators(cout, verbose_level - 1);
 				H_gens[u].print_generators_as_permutations();
 				H_gens[u].group_order(go1);
 				cout << "magma_interface::read_subgroups_magma "
@@ -1659,7 +1659,7 @@ void magma_interface::read_subgroups_magma(
 					<< " : " << endl;
 				cout << "magma_interface::read_centralizer_magma "
 						"created generators for a group" << endl;
-				N_gens[u].print_generators(cout);
+				N_gens[u].print_generators(cout, verbose_level - 1);
 				N_gens[u].print_generators_as_permutations();
 				N_gens[u].group_order(go1);
 				cout << "magma_interface::read_subgroups_magma "
@@ -1712,7 +1712,7 @@ void magma_interface::find_subgroups_using_MAGMA2(
 		ofstream fp(fname_magma);
 
 		fp << "G := PermutationGroup< " << n << " | " << endl;
-		G_gen->print_generators_MAGMA(A, fp);
+		G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
 		fp << ">;" << endl;
 
 
@@ -2104,7 +2104,7 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 			<< " : " << endl;
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers created "
 				"generators for a group" << endl;
-		gens->print_generators(cout);
+		gens->print_generators(cout, verbose_level - 1);
 		gens->print_generators_as_permutations();
 		gens->group_order(go1);
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers "

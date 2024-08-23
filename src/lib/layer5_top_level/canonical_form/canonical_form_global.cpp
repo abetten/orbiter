@@ -30,8 +30,9 @@ canonical_form_global::~canonical_form_global()
 void canonical_form_global::compute_stabilizer_of_quartic_curve(
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
 			*Quartic_curve_from_surface,
-		automorphism_group_of_variety *&Aut_of_variety,
-		int verbose_level)
+			int f_save_nauty_input_graphs,
+			automorphism_group_of_variety *&Aut_of_variety,
+			int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -47,11 +48,21 @@ void canonical_form_global::compute_stabilizer_of_quartic_curve(
 				"before Aut_of_variety->init_and_compute" << endl;
 	}
 
+	string input_fname;
+	int input_idx;
+
+
+	input_fname = Quartic_curve_from_surface->label;
+	input_idx = 0;
+
 	Aut_of_variety->init_and_compute(
 			Quartic_curve_from_surface->SOA->Surf_A->PA->PA2,
 			Quartic_curve_from_surface->SOA->Surf_A->AonHPD_4_3,
+			input_fname,
+			input_idx,
 			Quartic_curve_from_surface->curve,
 			Quartic_curve_from_surface->Pts_on_curve, Quartic_curve_from_surface->sz_curve,
+			f_save_nauty_input_graphs,
 			verbose_level);
 
 	if (f_v) {

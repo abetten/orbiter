@@ -76,6 +76,8 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	//std::vector<std::string> carry_through;
 
 	f_algorithm_nauty = false;
+	f_save_nauty_input_graphs = false;
+
 	f_algorithm_substructure = false;
 
 
@@ -229,6 +231,12 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-algorithm_nauty" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-save_nauty_input_graphs") == 0) {
+			f_save_nauty_input_graphs = true;
+			if (f_v) {
+				cout << "-save_nauty_input_graphs " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-algorithm_substructure") == 0) {
 			f_algorithm_substructure = true;
 			if (f_v) {
@@ -328,6 +336,9 @@ void canonical_form_classifier_description::print()
 	}
 	if (f_algorithm_nauty) {
 		cout << "-algorithm_nauty" << endl;
+	}
+	if (f_save_nauty_input_graphs) {
+		cout << "-save_nauty_input_graphs " << endl;
 	}
 	if (f_algorithm_substructure) {
 		cout << "-algorithm_substructure" << endl;

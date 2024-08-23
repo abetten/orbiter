@@ -38,7 +38,7 @@ permutation_representation::permutation_representation()
 	elt1 = NULL;
 	label[0] = 0;
 	label_tex[0] = 0;
-	PS = NULL;
+	Page_storage = NULL;
 	Elts = NULL;
 	//null();
 }
@@ -51,8 +51,8 @@ permutation_representation::~permutation_representation()
 	if (elt1) {
 		FREE_char((char *) elt1);
 	}
-	if (PS) {
-		FREE_OBJECT(PS);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 	if (Elts) {
 		FREE_int(Elts);
@@ -95,8 +95,8 @@ void permutation_representation::init(
 	char_per_elt = A_original->coded_elt_size_in_char + char_per_elt;
 	elt1 = (uchar *) NEW_char(char_per_elt);
 
-	PS = NEW_OBJECT(data_structures::page_storage);
-	PS->init(char_per_elt /* entry_size */,
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
 	int i, j;

@@ -63,7 +63,7 @@ direct_product::direct_product()
 	the_base = NULL;
 	the_transversal_length = NULL;
 
-	Elts = NULL;
+	Page_storage = NULL;
 }
 
 
@@ -84,8 +84,8 @@ direct_product::~direct_product()
 	if (elt1) {
 		FREE_uchar(elt1);
 	}
-	if (Elts) {
-		FREE_OBJECT(Elts);
+	if (Page_storage) {
+		FREE_OBJECT(Page_storage);
 	}
 	if (base_for_component1) {
 		FREE_lint(base_for_component1);
@@ -231,9 +231,17 @@ void direct_product::init(
 		cout << endl;
 	}
 
-	Elts = NEW_OBJECT(data_structures::page_storage);
-	Elts->init(char_per_elt /* entry_size */,
+	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	if (f_v) {
+		cout << "direct_product::init "
+				"before Page_storage->init" << endl;
+	}
+	Page_storage->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
+	if (f_v) {
+		cout << "direct_product::init "
+				"after Page_storage->init" << endl;
+	}
 
 	if (f_v) {
 		cout << "direct_product::init "

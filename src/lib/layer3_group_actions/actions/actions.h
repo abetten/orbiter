@@ -379,6 +379,14 @@ public:
 			int f_strong_gens, groups::strong_generators *SG,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
+	void report_group_name_and_degree(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report_type_of_action(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *O,
+			int verbose_level);
 	void report_what_we_act_on(
 			std::ostream &ost,
 			graphics::layered_graph_draw_options *O,
@@ -517,14 +525,19 @@ public:
 			algebra::matrix_group *M2,
 			int verbose_level);
 	action *init_polarity_extension_group_and_restrict(
-			algebra::matrix_group *M,
+			actions::action *A,
+			geometry::projective_space *P,
+			geometry::polarity *Polarity,
+			int f_on_middle_layer_grassmannian,
+			int f_on_points_and_hyperplanes,
+			int verbose_level);
+	action *init_polarity_extension_group(
+			actions::action *A,
 			geometry::projective_space *P,
 			geometry::polarity *Polarity,
 			int verbose_level);
-	action *init_polarity_extension_group(
-			algebra::matrix_group *M,
-			geometry::projective_space *P,
-			geometry::polarity *Polarity,
+	void compute_sims(
+			action *A,
 			int verbose_level);
 	void orbits_on_equations(
 			action *A,
@@ -538,6 +551,7 @@ public:
 			action *A_linear,
 			geometry::projective_space *P,
 		long int *set, int set_size,
+		int f_save_nauty_input_graphs,
 		int verbose_level);
 	// assuming we are in a linear action.
 	void stabilizer_of_dual_hyperoval_representative(
@@ -799,6 +813,10 @@ public:
 			int *Elt,
 			data_structures::set_of_sets *old_one,
 		int verbose_level);
+	actions::action *create_action_on_k_subspaces(
+			actions::action *A_previous,
+			int k,
+			int verbose_level);
 
 };
 
@@ -1347,6 +1365,8 @@ public:
 	void make_element_from_base_image(
 			int *Elt, groups::sims *S,
 			int *data, int verbose_level);
+	void compute_base_images(
+			int *Elt, int *base_images, int verbose_level);
 	void make_element_2x2(
 			int *Elt, int a0, int a1, int a2, int a3);
 	void make_element_from_string(

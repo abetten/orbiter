@@ -36,10 +36,16 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		canonical_form_classification::object_with_canonical_form *OwCF,
 		actions::action *A_linear,
 	int f_compute_canonical_form,
+	int f_save_nauty_input_graphs,
 	data_structures::bitvector *&Canonical_form,
 	l1_interfaces::nauty_output *&NO,
 	canonical_form_classification::encoded_combinatorial_object *&Enc,
 	int verbose_level)
+// called from:
+// nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data
+// nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty
+// layer5_applications::canonical_form::automorphism_group_of_variety::init_and_compute
+// layer5_applications::canonical_form::combinatorial_object_in_projective_space_with_action::report
 {
 	int f_v = (verbose_level >= 1);
 
@@ -60,7 +66,9 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 
 	OwCF->run_nauty(
-			f_compute_canonical_form, Canonical_form,
+			f_compute_canonical_form,
+			f_save_nauty_input_graphs,
+			Canonical_form,
 			NO,
 			Enc,
 			verbose_level);
@@ -528,11 +536,7 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 				"creating partition" << endl;
 	}
 	Int_vec_one(partitions, n);
-#if 0
-	for (i = 0; i < n; i++) {
-		partitions[i] = 1;
-	}
-#endif
+
 	u = 0;
 	for (i = 0; i < nb_parts; i++) {
 		a = parts[i];
@@ -564,11 +568,6 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 	}
 
 	Int_vec_copy(NO->canonical_labeling, labeling, n);
-#if 0
-	for (i = 0; i < n; i++) {
-		labeling[i] = NO->canonical_labeling[i];
-	}
-#endif
 
 
 	if (f_v) {
@@ -583,13 +582,6 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph_
 		}
 	}
 
-
-#if 0
-	for (i = 0; i < n; i++) {
-		j = labeling[i];
-		labeling_inv[j] = i;
-	}
-#endif
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: "
@@ -681,12 +673,6 @@ actions::action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph" << endl;
 	}
 	Int_vec_one(partition, n);
-#if 0
-	int i;
-	for (i = 0; i < n; i++) {
-		partition[i] = 1;
-	}
-#endif
 	partition[n - 1] = 0;
 
 	if (f_v) {
@@ -781,11 +767,6 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 				"initializing partition" << endl;
 	}
 	Int_vec_one(partition, n);
-#if 0
-	for (i = 0; i < n; i++) {
-		partition[i] = 1;
-	}
-#endif
 	partition[n - 1] = 0;
 
 	if (f_v) {
@@ -803,11 +784,6 @@ actions::action *nauty_interface_with_group::create_automorphism_group_and_canon
 
 
 	Int_vec_copy(NO->canonical_labeling, labeling, n);
-#if 0
-	for (i = 0; i < n; i++) {
-		labeling[i] = NO->canonical_labeling[i];
-	}
-#endif
 
 
 	actions::action *A;
@@ -846,6 +822,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
+		int f_save_nauty_input_graphs,
 		int nauty_output_index_start,
 		std::vector<std::string> &Carrying_through,
 		groups::strong_generators *&Set_stab,
@@ -929,6 +906,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 			OwCF,
 			A,
 		true /* f_compute_canonical_form */,
+		f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,
@@ -951,10 +929,12 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
+		int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
+// called from action_global::set_stabilizer_in_projective_space
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1013,6 +993,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 			OwCF,
 			A,
 		true /* f_compute_canonical_form */,
+		f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,

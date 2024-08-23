@@ -456,9 +456,11 @@ int sims::strip(
 	int f_vv = (verbose_level >= 2);
 	int i, bi, j, j_coset;
 
+
+
 	if (f_v) {
 		cout << "sims::strip" << endl;
-		cout << "my_base_len=" << my_base_len << endl;
+		cout << "sims::strip my_base_len=" << my_base_len << endl;
 	}
 	if (A == NULL) {
 		cout << "sims::strip A==NULL" << endl;
@@ -466,13 +468,30 @@ int sims::strip(
 	}
 	if (f_v) {
 		cout << "sims::strip A=" << A->label << endl;
-		cout << "A->base_len=" << A->base_len() << endl;
+		cout << "sims::strip A->base_len=" << A->base_len() << endl;
 	}
+
+
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = true;
+	int f_print_cycles_of_length_one = true;
+
 	if (f_vv) {
 		A->Group_element->element_print_quick(elt, cout);
 		cout << endl;
+
+		A->Group_element->element_print_for_make_element(elt, cout);
+		cout << endl;
+
+		A->Group_element->element_print_as_permutation_with_offset(
+				elt, cout,
+			offset, f_do_it_anyway_even_for_big_degree,
+			f_print_cycles_of_length_one,
+			0/*verbose_level*/);
+		cout << endl;
 	}
-	A->Group_element->element_move(elt, strip1, false);
+	A->Group_element->element_move(elt, strip1, 0);
+
 	for (i = 0; i < my_base_len; i++) {
 		if (f_v) {
 			cout << "sims::strip level " << i
@@ -482,8 +501,8 @@ int sims::strip(
 		}
 		bi = A->base_i(i);
 		if (f_vv) {
-			cout << "computing image of " << i
-					<< "-th base element " << bi << endl;
+			cout << "sims::strip computing image of " << i
+					<< "-th base element bi = " << bi << endl;
 		}
 		j = A->Group_element->element_image_of(bi, strip1, verbose_level - 2);
 		if (f_v) {
@@ -507,7 +526,7 @@ int sims::strip(
 			}
 			image = j;
 			drop_out_level = i;
-			A->Group_element->element_move(strip1, residue, false);
+			A->Group_element->element_move(strip1, residue, 0);
 			if (f_v) {
 				cout << "sims::strip returns false, "
 						"drop_out_level=" << drop_out_level << endl;
@@ -518,13 +537,28 @@ int sims::strip(
 			if (f_v) {
 				cout << "sims::strip computing representative "
 						"of coset " << j_coset << endl;
+				cout << "sims::strip before coset_rep_inv" << endl;
 			}
-			coset_rep_inv(eltrk3, i, j_coset, verbose_level);
+
+			coset_rep_inv(eltrk3, i, j_coset, verbose_level - 2);
+
+
 			if (false) {
 				cout << "sims::strip representative "
 						"of coset " << j_coset << " is " << endl;
 				A->Group_element->element_print(eltrk3, cout);
 				cout << endl;
+
+				A->Group_element->element_print_for_make_element(eltrk3, cout);
+				cout << endl;
+
+				A->Group_element->element_print_as_permutation_with_offset(
+						eltrk3, cout,
+					offset, f_do_it_anyway_even_for_big_degree,
+					f_print_cycles_of_length_one,
+					0/*verbose_level*/);
+				cout << endl;
+
 			}
 			if (false) {
 				cout << "sims::strip before element_mult, "
@@ -542,7 +576,7 @@ int sims::strip(
 			if (false) {
 				cout << "sims::strip before element_move" << endl;
 			}
-			A->Group_element->element_move(strip2, strip1, false);
+			A->Group_element->element_move(strip2, strip1, 0);
 			if (false) {
 				cout << "sims::strip after dividing off, "
 						"we have strip1= " << endl;
@@ -554,7 +588,7 @@ int sims::strip(
 	if (f_v) {
 		cout << "sims::strip after loop" << endl;
 	}
-	A->Group_element->element_move(strip1, residue, false);
+	A->Group_element->element_move(strip1, residue, 0);
 	if (f_v) {
 		cout << "sims::strip returns true" << endl;
 	}
