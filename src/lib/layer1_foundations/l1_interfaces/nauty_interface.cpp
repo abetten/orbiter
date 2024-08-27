@@ -306,13 +306,13 @@ void nauty_interface::nauty_interface_graph_int(
 }
 
 
-void nauty_interface::nauty_interface_matrix_int(
+void nauty_interface::Levi_graph(
 		canonical_form_classification::encoded_combinatorial_object *Enc,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level)
 // this is called only from
-// object_with_canonical_form::run_nauty and
-// object_with_canonical_form::canonical_labeling
+// nauty_interface_for_OwCF::run_nauty_for_OwCF and
+// nauty_interface_for_OwCF::run_nauty_for_OwCF_basic
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -323,7 +323,7 @@ void nauty_interface::nauty_interface_matrix_int(
 	int m, n, i, j, p1, p2;
 
 	if (f_v) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"nb_rows=" << Enc->nb_rows
 				<< " nb_cols=" << Enc->nb_cols << endl;
 	}
@@ -337,14 +337,14 @@ void nauty_interface::nauty_interface_matrix_int(
 
 	// global variables in nauty.c:
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"before nauty_interface_allocate_data" << endl;
 	}
 
 	nauty_interface_allocate_data(n);
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"after nauty_interface_allocate_data" << endl;
 	}
 
@@ -353,13 +353,13 @@ void nauty_interface::nauty_interface_matrix_int(
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface::nauty_interface_matrix_int n >= MAXN" << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int n = " << n << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int MAXN = " << (int)MAXN << endl;
+		cout << "nauty_interface::Levi_graph n >= MAXN" << endl;
+		cout << "nauty_interface::Levi_graph n = " << n << endl;
+		cout << "nauty_interface::Levi_graph MAXN = " << (int)MAXN << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int n = " << n << " m=" << m << endl;
+		cout << "nauty_interface::Levi_graph n = " << n << " m=" << m << endl;
 	}
 
 
@@ -381,9 +381,11 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"init adjacency" << endl;
 	}
+
+	// make Levi graph on n vertices:
 
 	for (i = 0; i < Enc->nb_rows; i++) {
 		for (j = 0; j < Enc->nb_cols; j++) {
@@ -400,7 +402,7 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"init lab[] and ptn[]" << endl;
 	}
 
@@ -411,21 +413,23 @@ void nauty_interface::nauty_interface_matrix_int(
 	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
-				"calling densenauty" << endl;
+		cout << "nauty_interface::Levi_graph "
+				"before densenauty" << endl;
 	}
 	//	nauty(g, lab, ptn, NILSET, orbits,
 	//&options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
+	if (f_vv) {
+		cout << "nauty_interface::Levi_graph "
+				"after densenauty" << endl;
+	}
 
 	orbiter_kernel_system::Orbiter->nb_calls_to_densenauty++;
 
 	if (f_vv) {
-		cout << "nauty_interface::nauty_interface_matrix_int "
-				"after densenauty" << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"ago=" << ago << endl;
-		cout << "nauty_interface::nauty_interface_matrix_int "
+		cout << "nauty_interface::Levi_graph "
 				"numnodes=" << stats.numnodes << endl;
 	}
 #if 1
@@ -445,7 +449,7 @@ void nauty_interface::nauty_interface_matrix_int(
 
 
 	if (f_v) {
-		cout << "nauty_interface::nauty_interface_matrix_int done" << endl;
+		cout << "nauty_interface::Levi_graph done" << endl;
 	}
 }
 

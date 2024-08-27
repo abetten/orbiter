@@ -4006,9 +4006,9 @@ void symbol_definition::definition_of_combinatorial_object(
 		cout << "symbol_definition::definition_of_combinatorial_object" << endl;
 	}
 
-	apps_combinatorics::combinatorial_object *Combo;
+	apps_combinatorics::combinatorial_object_stream *Combo;
 
-	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object);
+	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object_stream);
 
 
 	Combo->init(

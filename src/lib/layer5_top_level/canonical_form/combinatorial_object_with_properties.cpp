@@ -32,6 +32,7 @@ combinatorial_object_with_properties::combinatorial_object_with_properties()
 
 	A_perm = NULL;
 
+	f_has_TDO = false;
 	TDO = NULL;
 
 	GA_on_CO = NULL;
@@ -69,6 +70,7 @@ void combinatorial_object_with_properties::init(
 		int max_TDO_depth,
 		std::string &label,
 		int verbose_level)
+// called from classification_of_combinatorial_objects::init_after_nauty
 {
 	int f_v = (verbose_level >= 1);
 
@@ -82,20 +84,20 @@ void combinatorial_object_with_properties::init(
 	combinatorial_object_with_properties::PA = PA;
 	combinatorial_object_with_properties::label.assign(label);
 
-	interfaces::nauty_interface_with_group Nau;
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init "
-				"before Nau.automorphism_group_as_permutation_group" << endl;
+				"before Action_global.automorphism_group_as_permutation_group" << endl;
 	}
-	Nau.automorphism_group_as_permutation_group(
+	Action_global.automorphism_group_as_permutation_group(
 					NO,
 					A_perm,
 					verbose_level - 2);
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init "
-				"after Nau.automorphism_group_as_permutation_group" << endl;
+				"after Action_global.automorphism_group_as_permutation_group" << endl;
 	}
 
 	if (false) {
@@ -177,17 +179,16 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group" << endl;
 	}
-	//strong_generators *SG;
 	actions::action *A_perm;
 
-	interfaces::nauty_interface_with_group Naug;
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group "
-				"before Naug.reverse_engineer_linear_group_from_permutation_group" << endl;
+				"before Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
-	Naug.reverse_engineer_linear_group_from_permutation_group(
+	Action_global.reverse_engineer_linear_group_from_permutation_group(
 			PA->A /* A_linear */,
 			PA->P,
 			SG,
@@ -197,7 +198,7 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::lift_generators_to_matrix_group "
-				"after Naug.reverse_engineer_linear_group_from_permutation_group" << endl;
+				"after Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
 
@@ -226,16 +227,16 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 	combinatorial_object_with_properties::label.assign(label);
 
 
-	interfaces::nauty_interface_with_group Nau;
+	actions::action_global Action_global;
 	actions::action *A_linear;
 
 	A_linear = PA->A;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init_object_in_projective_space "
-				"before Nau.reverse_engineer_linear_group_from_permutation_group" << endl;
+				"before Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
-	Nau.reverse_engineer_linear_group_from_permutation_group(
+	Action_global.reverse_engineer_linear_group_from_permutation_group(
 			A_linear,
 			PA->P,
 			SG,
@@ -244,7 +245,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init_object_in_projective_space "
-				"after Nau.reverse_engineer_linear_group_from_permutation_group" << endl;
+				"after Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
 
@@ -444,7 +445,7 @@ void combinatorial_object_with_properties::latex_report(
 		}
 		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDO}" << endl;
 
-		ost << "Decomposition by combinatorial refinement:\\\\" << endl;
+		ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -738,7 +739,16 @@ void combinatorial_object_with_properties::compute_TDO(
 
 	TDO = NEW_OBJECT(combinatorics::tdo_scheme_compute);
 
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::compute_TDO "
+				"before TDO->init" << endl;
+	}
 	TDO->init(Enc, max_TDO_depth, verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::compute_TDO "
+				"after TDO->init" << endl;
+	}
+	f_has_TDO = true;
 
 
 	//latex_TDA(ost, Enc, verbose_level);
@@ -757,7 +767,13 @@ void combinatorial_object_with_properties::print_TDO(
 		int verbose_level)
 {
 
-	TDO->print_schemes(ost, Report_options, verbose_level);
+	if (f_has_TDO) {
+		TDO->print_schemes(ost, Report_options, verbose_level);
+	}
+	else {
+		cout << "combinatorial_object_with_properties::print_TDO "
+				"TDO has not yet been computed" << endl;
+	}
 
 }
 

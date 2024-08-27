@@ -146,6 +146,7 @@ namespace interfaces {
 	class conjugacy_classes_and_normalizers;
 	class l3_interface_gap;
 	class magma_interface;
+	class nauty_interface_for_graphs;
 	class nauty_interface_with_group;
 
 }

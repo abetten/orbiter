@@ -6058,6 +6058,8 @@ curve_q13_f0_clean2_variety_compute_group:
 			-label_tex curve\_q13\_f0\_clean2 \
 		-end \
 		-with V -do -variety_activity -compute_group -end 
+	pdflatex curve_q13_f0_clean2_c_orbits.tex
+	open curve_q13_f0_clean2_c_orbits.pdf
 
 
 Hirschfeld_q2_group:
@@ -6084,7 +6086,7 @@ Hirschfeld_q2_group:
 
 
 Barth_sextic_mod_11:
-	$(ORBITER) -v 6 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define R -polynomial_ring \
@@ -20827,6 +20829,8 @@ Barth_mod_11_singular_pts_c:
 				-show_TDA \
 			-end \
 		-end
+	pdflatex Barth_q11_sing_classification.tex
+	open Barth_q11_sing_classification.pdf
 
 
 
@@ -21243,7 +21247,15 @@ ovoid_q8_canon: ovoid_q8.txt
 
 # group order 1572480
 
-ovoid_ST_q8_canon: ovoid_ST_q8.txt
+ovoid_ST_q8_canon: 
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define O -geometric_object P \
+			-ovoid_ST \
+		-end \
+		-with O -do -combinatorial_object_activity -save \
+		-end
 	$(ORBITER) -v 6 \
 		-define C -combinatorial_object \
 			-label ovoid_ST ovoid\_ST \
@@ -21267,9 +21279,12 @@ ovoid_ST_q8_canon: ovoid_ST_q8.txt
 				-export_group_GAP \
 			-end \
 		-end
-	#pdflatex ovoid_ST_classification.tex
-	#$(OPEN) ovoid_ST_classification.pdf
+	pdflatex ovoid_ST_classification.tex
+	$(OPEN) ovoid_ST_classification.pdf
 
+#ago = 87360
+
+# not slow any more!
 # very slow
 #136.331u 0.752s 2:17.22 99.8%	0+0k 0+0io 42pf+0w
 

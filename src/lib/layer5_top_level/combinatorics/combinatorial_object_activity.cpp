@@ -59,7 +59,7 @@ void combinatorial_object_activity::init(
 
 void combinatorial_object_activity::init_combo(
 		combinatorial_object_activity_description *Descr,
-		apps_combinatorics::combinatorial_object *Combo,
+		apps_combinatorics::combinatorial_object_stream *Combo,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -90,10 +90,26 @@ void combinatorial_object_activity::perform_activity(
 	}
 
 	if (f_has_geometric_object) {
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"before perform_activity_geometric_object" << endl;
+		}
 		perform_activity_geometric_object(verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"after perform_activity_geometric_object" << endl;
+		}
 	}
 	else if (f_has_combo) {
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"before perform_activity_combo" << endl;
+		}
 		perform_activity_combo(AO, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"after perform_activity_combo" << endl;
+		}
 	}
 
 
@@ -399,6 +415,16 @@ void combinatorial_object_activity::perform_activity_combo(
 		Combo->do_canonical_form_PG(PA, Descr->Canonical_form_PG_Descr, verbose_level);
 
 	}
+	else if (Descr->f_canonical_form) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_canonical_form" << endl;
+		}
+
+		Combo->do_canonical_form_not_PG(Descr->Canonical_form_Descr, verbose_level);
+
+	}
 	if (Descr->f_report) {
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -416,16 +442,6 @@ void combinatorial_object_activity::perform_activity_combo(
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after classification_report" << endl;
 		}
-	}
-	else if (Descr->f_canonical_form) {
-
-		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_combo "
-					"f_canonical_form" << endl;
-		}
-
-		Combo->do_canonical_form_not_PG(Descr->Canonical_form_Descr, verbose_level);
-
 	}
 	else if (Descr->f_draw_incidence_matrices) {
 		if (f_v) {

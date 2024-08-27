@@ -177,6 +177,161 @@ void action_global::get_symmetry_group_type_text(
 }
 
 
+
+void action_global::automorphism_group_as_permutation_group(
+		l1_interfaces::nauty_output *NO,
+		actions::action *&A_perm,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+
+
+	if (f_v) {
+		cout << "action_global::automorphism_group_as_permutation_group" << endl;
+	}
+	A_perm = NEW_OBJECT(actions::action);
+
+
+	if (f_v) {
+		cout << "action_global::automorphism_group_as_permutation_group "
+				"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+	}
+	A_perm->Known_groups->init_permutation_group_from_nauty_output(
+			NO,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::automorphism_group_as_permutation_group "
+				"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+	}
+
+	if (f_vv) {
+		cout << "action_global::automorphism_group_as_permutation_group "
+				"create_automorphism_group_of_incidence_structure: created action ";
+		A_perm->print_info();
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::automorphism_group_as_permutation_group done" << endl;
+	}
+}
+
+void action_global::reverse_engineer_linear_group_from_permutation_group(
+		actions::action *A_linear,
+		geometry::projective_space *P,
+		groups::strong_generators *&SG,
+		actions::action *&A_perm,
+		l1_interfaces::nauty_output *NO,
+		int verbose_level)
+// called from
+// combinatorial_object_with_properties::lift_generators_to_matrix_group
+// combinatorial_object_with_properties::init_object_in_projective_space
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"before automorphism_group_as_permutation_group" << endl;
+	}
+
+	automorphism_group_as_permutation_group(
+				NO,
+				A_perm,
+				verbose_level - 2);
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"after automorphism_group_as_permutation_group" << endl;
+	}
+
+	data_structures_groups::vector_ge *gens_in; // permutations from nauty
+	data_structures_groups::vector_ge *gens_out; // matrices
+
+
+	gens_in = A_perm->Strong_gens->gens;
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"before reverse_engineer_semilinear_group" << endl;
+	}
+	reverse_engineer_semilinear_group(
+			A_perm, A_linear,
+			P,
+			gens_in,
+			gens_out,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"after reverse_engineer_semilinear_group" << endl;
+	}
+
+
+	if (f_vvv) {
+		gens_out->print(cout);
+	}
+
+
+	if (f_vv) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"we are now testing the generators:" << endl;
+	}
+
+
+	test_if_two_actions_agree_vector(
+			A_linear, A_perm,
+			gens_out, gens_in,
+			verbose_level - 2);
+
+
+	if (f_vv) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"the generators are OK" << endl;
+	}
+
+
+
+	ring_theory::longinteger_object target_go;
+
+	NO->Ago->assign_to(target_go);
+
+	if (f_vv) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"before A_linear->generators_to_strong_generators" << endl;
+	}
+	A_linear->generators_to_strong_generators(
+		true /* f_target_go */, target_go,
+		gens_out, SG, 0 /*verbose_level - 3*/);
+	if (f_vv) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group "
+				"after A_linear->generators_to_strong_generators" << endl;
+	}
+
+
+
+
+	// ToDo what about gens_out, should it be freed ?
+
+
+
+
+	if (f_v) {
+		cout << "action_global::reverse_engineer_linear_group_from_permutation_group done" << endl;
+	}
+
+}
+
+
+
 void action_global::make_generators_stabilizer_of_two_components(
 	action *A_PGL_n_q, action *A_PGL_k_q,
 	int k,
@@ -1765,7 +1920,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	long int *set, int set_size,
 	int f_save_nauty_input_graphs,
 	int verbose_level)
-// used by hermitian_spreads_classify
+// used only by hermitian_spreads_classify
 // assuming we are in a linear action.
 // added 2/28/2011, called from analyze.cpp
 // November 17, 2014 moved here from TOP_LEVEL/extra.cpp

@@ -40,7 +40,8 @@ geometric_object_create::~geometric_object_create()
 
 void geometric_object_create::init(
 		geometric_object_description *Descr,
-		projective_space *P, int verbose_level)
+		projective_space *P,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
@@ -274,9 +275,6 @@ void geometric_object_create::init(
 		}
 		create_elliptic_quadric_ovoid(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -290,9 +288,6 @@ void geometric_object_create::init(
 		}
 		create_ovoid_ST(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -309,9 +304,6 @@ void geometric_object_create::init(
 		}
 		create_Baer_substructure(
 				P,
-			Pts, nb_pts,
-			label_txt,
-			label_tex,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -367,9 +359,6 @@ void geometric_object_create::init(
 		}
 		create_cuspidal_cubic(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -383,9 +372,6 @@ void geometric_object_create::init(
 		}
 		create_twisted_cubic(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -401,9 +387,6 @@ void geometric_object_create::init(
 				P,
 				Descr->elliptic_curve_b,
 				Descr->elliptic_curve_c,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -440,9 +423,6 @@ void geometric_object_create::init(
 
 		create_unital_XXq_YZq_ZYq(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 
 		if (f_v) {
@@ -497,9 +477,6 @@ void geometric_object_create::init(
 		}
 		create_whole_space(
 				P,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -514,9 +491,6 @@ void geometric_object_create::init(
 		create_hyperplane(
 				P,
 				Descr->pt,
-				label_txt,
-				label_tex,
-			nb_pts, Pts,
 			verbose_level);
 		if (f_v) {
 			cout << "geometric_object_create::init "
@@ -736,9 +710,6 @@ void geometric_object_create::init(
 
 void geometric_object_create::create_elliptic_quadric_ovoid(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -791,9 +762,12 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 		//		Quadratic_form->form_c3,
 		//		i, 0 /* verbose_level */);
 		Quadratic_form->unrank_point(v, i, 0 /* verbose_level */);
+		Int_vec_copy(v, w, d);
+#if 0
 		for (h = 0; h < d; h++) {
 			w[h] = v[h];
 		}
+#endif
 		j = P->rank_point(w);
 		Pts[i] = j;
 		if (f_v) {
@@ -830,9 +804,6 @@ void geometric_object_create::create_elliptic_quadric_ovoid(
 
 void geometric_object_create::create_ovoid_ST(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 	int verbose_level)
 // Suzuki Tits ovoid in PG(3,2^(2r+1)),
 // following Heinz Lueneburg: Translation planes, 1980, Chapter IV
@@ -922,9 +893,6 @@ void geometric_object_create::create_ovoid_ST(
 
 void geometric_object_create::create_cuspidal_cubic(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1040,9 +1008,6 @@ void geometric_object_create::create_cuspidal_cubic(
 
 void geometric_object_create::create_twisted_cubic(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1110,9 +1075,6 @@ void geometric_object_create::create_twisted_cubic(
 void geometric_object_create::create_elliptic_curve(
 		projective_space *P,
 	int elliptic_curve_b, int elliptic_curve_c,
-	std::string &label_txt,
-	std::string &label_tex,
-	int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1184,9 +1146,6 @@ void geometric_object_create::create_elliptic_curve(
 
 void geometric_object_create::create_unital_XXq_YZq_ZYq(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1237,9 +1196,6 @@ void geometric_object_create::create_unital_XXq_YZq_ZYq(
 
 void geometric_object_create::create_whole_space(
 		projective_space *P,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1267,9 +1223,6 @@ void geometric_object_create::create_whole_space(
 void geometric_object_create::create_hyperplane(
 		projective_space *P,
 	int pt,
-	std::string &label_txt,
-	std::string &label_tex,
-	int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1312,9 +1265,6 @@ void geometric_object_create::create_hyperplane(
 
 void geometric_object_create::create_Baer_substructure(
 		projective_space *P,
-	long int *&Pts, int &nb_pts,
-	std::string &label_txt,
-	std::string &label_tex,
 	int verbose_level)
 // assumes we are in PG(n,Q) where Q = q^2
 {

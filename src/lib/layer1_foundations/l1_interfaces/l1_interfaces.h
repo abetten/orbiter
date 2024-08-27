@@ -15,6 +15,16 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace l1_interfaces {
 
+// #############################################################################
+// dirk_kaempfer.cpp:
+// #############################################################################
+
+//! interface to the refinement program for TDO by Dirk Kaempfer
+
+
+
+int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[]);
+
 
 
 
@@ -23,7 +33,7 @@ namespace l1_interfaces {
 // easy_BMP_interface.cpp:
 // #############################################################################
 
-//! interface to the easy_BMP library for working with bmp files:
+//! interface to the easy_BMP library for working with bmp files
 
 
 class easy_BMP_interface {
@@ -53,7 +63,7 @@ public:
 // eigen_interface.cpp:
 // #############################################################################
 
-//! interface to Eigen:
+//! interface to Eigen
 
 class eigen_interface {
 public:
@@ -115,7 +125,7 @@ public:
 // gnuplot_interface.cpp:
 // #############################################################################
 
-//! interface to gnuplot:
+//! interface to gnuplot
 
 class gnuplot_interface {
 public:
@@ -317,6 +327,8 @@ public:
 		int f_tex);
 	void print_table_of_strings_with_headers(
 			std::ostream &ost, std::string *headers, std::string *Table, int m, int n);
+	void print_table_of_strings_with_headers_rc(
+			std::ostream &ost, std::string *headers_row, std::string *headers_col, std::string *Table, int m, int n);
 	void print_table_of_strings(
 			std::ostream &ost, std::string *Table, int m, int n);
 	void int_matrix_print_tex(
@@ -402,6 +414,40 @@ public:
 };
 
 
+// #############################################################################
+// nauty_interface_for_OwCF.cpp
+// #############################################################################
+
+
+//! interface to nauty, assuming object_with_canonical_form is present
+
+
+
+class nauty_interface_for_OwCF {
+public:
+	nauty_interface_for_OwCF();
+	~nauty_interface_for_OwCF();
+	void run_nauty_for_OwCF(
+			canonical_form_classification::object_with_canonical_form *OwCF,
+			int f_compute_canonical_form,
+			int f_save_nauty_input_graphs,
+			data_structures::bitvector *&Canonical_form,
+			l1_interfaces::nauty_output *&NO,
+			canonical_form_classification::encoded_combinatorial_object *&Enc,
+			int verbose_level);
+	// called from
+	// object_with_canonical_form::run_nauty_basic
+	// object_with_canonical_form::canonical_labeling
+	// classification_of_objects::process_object
+	// nauty_interface_with_group::set_stabilizer_of_object
+	// classify_using_canonical_forms::find_object
+	void run_nauty_for_OwCF_basic(
+			canonical_form_classification::object_with_canonical_form *OwCF,
+			l1_interfaces::nauty_output *&NO,
+			int verbose_level);
+
+};
+
 
 // #############################################################################
 // nauty_interface.cpp
@@ -424,7 +470,7 @@ public:
 		int *partition,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);
-	void nauty_interface_matrix_int(
+	void Levi_graph(
 		canonical_form_classification::encoded_combinatorial_object *Enc,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level);

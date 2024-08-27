@@ -103,7 +103,7 @@ namespace apps_combinatorics {
 	class boolean_function_classify;
 	class combinatorial_object_activity_description;
 	class combinatorial_object_activity;
-	class combinatorial_object;
+	class combinatorial_object_stream;
 	class combinatorics_global;
 	class dd_lifting;
 	class dd_search_singletons;
@@ -124,6 +124,7 @@ namespace apps_combinatorics {
 	class large_set_was_activity;
 	class large_set_was_description;
 	class large_set_was;
+	class variety_with_TDO_and_TDA;
 
 }
 

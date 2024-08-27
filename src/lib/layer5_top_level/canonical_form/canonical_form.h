@@ -56,7 +56,7 @@ public:
 
 	orbits_schreier::orbit_of_equations *Orb;
 
-	groups::strong_generators *Stab_gens_quartic;
+	groups::strong_generators *Stab_gens_variety;
 		// stabilizer of the variety obtained by doing an orbit algorithm
 
 
@@ -213,6 +213,7 @@ public:
 	canonical_form_classifier();
 	~canonical_form_classifier();
 	canonical_form_classifier_description *get_description();
+	int has_description();
 	void init(
 			canonical_form_classifier_description *Descr,
 			int verbose_level);
@@ -770,6 +771,9 @@ public:
 
 };
 
+
+#if 0
+
 // #############################################################################
 // combinatorial_object_in_projective_space_with_action.cpp
 // #############################################################################
@@ -809,14 +813,14 @@ public:
 			int max_TDO_depth, int verbose_level);
 
 };
-
+#endif
 
 
 // #############################################################################
 // combinatorial_object_with_properties.cpp
 // #############################################################################
 
-//! properties of a combinatorial object, derived from nauty canonical form
+//! properties of a combinatorial object, derived from the nauty output
 
 
 class combinatorial_object_with_properties {
@@ -835,6 +839,7 @@ public:
 
 	actions::action *A_perm;
 
+	int f_has_TDO;
 	combinatorics::tdo_scheme_compute *TDO;
 
 	combinatorics_with_groups::group_action_on_combinatorial_object *GA_on_CO;
@@ -951,7 +956,7 @@ public:
 
 
 	groups::strong_generators *Set_stab;
-		// the set stabilizer of the variety
+		// the set stabilizer of the set of rational points of the variety
 		// this is not the stabilizer of the variety!
 
 	orbits_schreier::orbit_of_equations *Orb;
@@ -1101,6 +1106,7 @@ public:
 	int f_has_automorphism_group;
 	groups::strong_generators *Stab_gens;
 
+	apps_combinatorics::variety_with_TDO_and_TDA *TD;
 
 
 	variety_object_with_action();
@@ -1114,6 +1120,8 @@ public:
 			int *Elt,
 			actions::action *A,
 			actions::action *A_on_lines,
+			int verbose_level);
+	void compute_tactical_decompositions(
 			int verbose_level);
 	void print(
 			std::ostream &ost);

@@ -239,6 +239,8 @@ void classification_of_varieties_nauty::main_loop(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::main_loop" << endl;
 		cout << "classification_of_varieties_nauty::main_loop "
+				"verbose_level = " << verbose_level << endl;
+		cout << "classification_of_varieties_nauty::main_loop "
 				"nb_objects_to_test = " << nb_objects_to_test << endl;
 	}
 
@@ -300,14 +302,18 @@ void classification_of_varieties_nauty::main_loop(
 		}
 		else {
 
+			int f_save_nauty_input_graphs = false;
 
+			if (Classifier->has_description()) {
+				f_save_nauty_input_graphs = Classifier->get_description()->f_save_nauty_input_graphs;
+			}
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
 						"input_counter = " << input_counter << " / " << nb_objects_to_test
 						<< " before Variety->compute_canonical_form_nauty_new" << endl;
 			}
 			Variety->compute_canonical_form_nauty_new(
-					Classifier->get_description()->f_save_nauty_input_graphs,
+					f_save_nauty_input_graphs,
 					verbose_level);
 
 

@@ -470,6 +470,17 @@ public:
 	void get_symmetry_group_type_text(
 			std::string &txt, std::string &tex,
 			symmetry_group_type a);
+	void automorphism_group_as_permutation_group(
+			l1_interfaces::nauty_output *NO,
+			actions::action *&A_perm,
+			int verbose_level);
+	void reverse_engineer_linear_group_from_permutation_group(
+			actions::action *A_linear,
+			geometry::projective_space *P,
+			groups::strong_generators *&SG,
+			actions::action *&A_perm,
+			l1_interfaces::nauty_output *NO,
+			int verbose_level);
 	void make_generators_stabilizer_of_three_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
 		int k, data_structures_groups::vector_ge *gens,

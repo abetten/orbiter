@@ -3928,6 +3928,8 @@ combinatorics::decomposition_scheme *combinatorics_domain::compute_TDO_decomposi
 		long int *lines, int nb_lines,
 		int verbose_level)
 // returns NULL if the space is too large
+// called from
+// surface_object_with_group::compute_tactical_decompositions
 {
 	int f_v = (verbose_level >= 1);
 

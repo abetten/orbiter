@@ -705,6 +705,15 @@ int data_input_stream::count_number_of_objects_to_test(
 			nb_objects_to_test++;
 
 		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_multi_matrix) {
+			if (f_v) {
+				cout << "input multi matrix "
+						<< Descr->Input[input_idx].input_string << " " << Descr->Input[input_idx].input_string2 << endl;
+			}
+
+			nb_objects_to_test++;
+
+		}
 		else {
 			cout << "data_input_stream::count_number_of_objects_to_test "
                     "unknown input type" << endl;
@@ -1740,6 +1749,25 @@ void data_input_stream::read_objects(
 					CG,
 					verbose_level);
 
+
+			Objects.push_back(OwCF);
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_multi_matrix) {
+			if (f_v) {
+				cout << "input multi matrix "
+						<< Descr->Input[input_idx].input_string << " " << Descr->Input[input_idx].input_string2 << endl;
+			}
+
+			object_with_canonical_form *OwCF;
+
+
+			OwCF = NEW_OBJECT(object_with_canonical_form);
+
+			OwCF->init_multi_matrix(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_string2,
+					verbose_level);
 
 			Objects.push_back(OwCF);
 

@@ -588,6 +588,7 @@ namespace l1_interfaces {
 	class interface_gap_low;
 	class interface_magma_low;
 	class latex_interface;
+	class nauty_interface_for_OwCF;
 	class nauty_interface;
 	class nauty_output;
 	class povray_interface;
@@ -965,7 +966,8 @@ enum object_with_canonical_form_type {
 	t_PNL, // points and lines
 	t_PAC, // packing
 	t_INC, // incidence geometry
-	t_LS // large set
+	t_LS, // large set
+	t_MMX, // multi matrix: a matrix with entries over small natural numbers
 };
 
 enum diophant_equation_type {
@@ -1014,6 +1016,7 @@ enum data_input_stream_type {
 	t_data_input_stream_graph_by_adjacency_matrix,
 	t_data_input_stream_graph_object,
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,
+	t_data_input_stream_multi_matrix,
 
 };
 

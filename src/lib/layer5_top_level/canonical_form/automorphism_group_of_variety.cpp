@@ -46,7 +46,7 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 
 	Orb = NULL;
 
-	Stab_gens_quartic = NULL;
+	Stab_gens_variety = NULL;
 
 
 #if 0
@@ -73,7 +73,7 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 
 	orbits_schreier::orbit_of_equations *Orb;
 
-	groups::strong_generators *Stab_gens_quartic;
+	groups::strong_generators *Stab_gens_variety;
 		// stabilizer of quartic curve obtained by doing an orbit algorithm
 #endif
 
@@ -102,8 +102,8 @@ automorphism_group_of_variety::~automorphism_group_of_variety()
 	if (Orb) {
 		FREE_OBJECT(Orb);
 	}
-	if (Stab_gens_quartic) {
-		FREE_OBJECT(Stab_gens_quartic);
+	if (Stab_gens_variety) {
+		FREE_OBJECT(Stab_gens_variety);
 	}
 
 }
@@ -178,6 +178,7 @@ void automorphism_group_of_variety::init_and_compute(
 	interfaces::nauty_interface_with_group Nau;
 
 
+#if 0
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 
 	if (f_v) {
@@ -185,7 +186,8 @@ void automorphism_group_of_variety::init_and_compute(
 				"before NO->nauty_output_allocate" << endl;
 	}
 
-	NO->nauty_output_allocate(nb_rows + nb_cols,
+	NO->nauty_output_allocate(
+			nb_rows + nb_cols,
 			0,
 			nb_rows + nb_cols,
 			0 /* verbose_level */);
@@ -194,6 +196,8 @@ void automorphism_group_of_variety::init_and_compute(
 		cout << "automorphism_group_of_variety::init_and_compute "
 				"after NO->nauty_output_allocate" << endl;
 	}
+#endif
+
 
 	int f_compute_canonical_form = false;
 
@@ -275,13 +279,13 @@ void automorphism_group_of_variety::init_and_compute(
 		cout << "automorphism_group_of_variety::init_and_compute "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
-	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
+	Stab_gens_variety = Orb->stabilizer_orbit_rep(
 			pt_stab_order, verbose_level);
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
-	Stab_gens_quartic->print_generators_tex(cout);
+	Stab_gens_variety->print_generators_tex(cout);
 #endif
 
 	if (f_v) {

@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	dirk_kaempfer.o \
 	easy_BMP_interface.o \
 	EasyBMP.o \
 	eigen_interface.o \
@@ -15,6 +16,7 @@ MODULES = \
 	interface_gap_low.o \
 	interface_magma_low.o \
 	latex_interface.o \
+	nauty_interface_for_OwCF.o \
 	nauty_interface.o \
 	nauty_output.o \
 	povray_interface.o \

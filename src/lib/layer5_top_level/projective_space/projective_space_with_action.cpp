@@ -455,8 +455,9 @@ void projective_space_with_action::canonical_form(
 }
 #endif
 
+#if 0
 void projective_space_with_action::canonical_labeling(
-		canonical_form_classification::object_with_canonical_form *OiP,
+		canonical_form_classification::object_with_canonical_form *OwCF,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -469,37 +470,56 @@ void projective_space_with_action::canonical_labeling(
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
-				"before OiP->canonical_labeling" << endl;
+				"before OwCF->encoding_size" << endl;
 	}
 
 	int nb_rows, nb_cols;
 
-	OiP->encoding_size(
+	OwCF->encoding_size(
 			nb_rows, nb_cols,
 			0 /* verbose_level */);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"after OwCF->encoding_size" << endl;
+	}
 
 	l1_interfaces::nauty_output *NO;
 
+#if 0
 	NO = NEW_OBJECT(l1_interfaces::nauty_output);
 	NO->nauty_output_allocate(nb_rows + nb_cols,
 			0,
 			nb_rows + nb_cols,
 			0 /* verbose_level */);
+#endif
+
+	//int f_save_nauty_input_graphs = false;
+
+	//OwCF->canonical_labeling(f_save_nauty_input_graphs, NO, verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"before OwCF->run_nauty_basic" << endl;
+	}
+	OwCF->run_nauty_basic(
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_labeling "
+				"after OwCF->run_nauty_basic" << endl;
+	}
 
 
-	int f_save_nauty_input_graphs = false;
+	Int_vec_copy(NO->canonical_labeling, canonical_labeling, NO->N);
 
-	OiP->canonical_labeling(f_save_nauty_input_graphs, NO, verbose_level);
 
+
+#if 0
 	int i;
 
 	for (i = 0; i < NO->N; i++) {
 		canonical_labeling[i] = NO->canonical_labeling[i];
 	}
-	if (f_v) {
-		cout << "projective_space_with_action::canonical_labeling "
-				"after OiP->canonical_labeling" << endl;
-	}
+#endif
 
 	FREE_OBJECT(NO);
 
@@ -508,6 +528,7 @@ void projective_space_with_action::canonical_labeling(
 		cout << "projective_space_with_action::canonical_labeling done" << endl;
 	}
 }
+#endif
 
 #if 0
 void projective_space_with_action::report_fixed_points_lines_and_planes(
@@ -1165,9 +1186,9 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.Classification_of_objects_report_options->f_export_group_orbiter = true;
 
 
-	apps_combinatorics::combinatorial_object *Combo;
+	apps_combinatorics::combinatorial_object_stream *Combo;
 
-	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object);
+	Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object_stream);
 	Combo->init(
 			&ISD,
 			verbose_level);

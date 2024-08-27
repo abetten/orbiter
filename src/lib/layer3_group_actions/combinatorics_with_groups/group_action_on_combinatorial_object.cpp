@@ -465,12 +465,14 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 
 		int *Inc_flag_orbits;
 		int *Inc_TDA;
+
 		int nb_orbits_on_flags;
 		int idx;
 		int orbit_idx;
 
 		Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
 		Inc_TDA = NEW_int(Enc->nb_rows * Enc->nb_cols);
+
 		nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
 		for (i = 0; i < Enc->nb_rows; i++) {
 			i0 = Sch_points->orbit[i];
@@ -523,6 +525,7 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 		}
 
 		int *Inc2;
+
 		Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
 		Int_vec_zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
@@ -592,6 +595,7 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 
 		int *Inc_flag_orbits;
 		int *Inc;
+
 		int nb_orbits_on_flags;
 		int idx;
 		int orbit_idx;

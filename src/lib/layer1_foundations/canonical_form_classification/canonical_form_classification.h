@@ -405,7 +405,8 @@ public:
 	void init_file_of_designs_through_block_orbits(
 			std::string &a, std::string &b, int v, int k);
 	void init_file_of_designs_through_blocks(
-			std::string &fname_blocks, std::string &col_label, int v, int b, int k);
+			std::string &fname_blocks,
+			std::string &col_label, int v, int b, int k);
 	void init_file_of_point_set(
 			std::string &a);
 	void init_file_of_designs(
@@ -439,6 +440,8 @@ public:
 			std::string &fname,
 			std::string &col_label,
 				int N);
+	void init_multi_matrix(
+			std::string &a, std::string &b);
 
 };
 
@@ -634,7 +637,7 @@ public:
 // #############################################################################
 
 
-//! a combinatorial object and its canonical form computed by Nauty
+//! wrapper for many different types of combinatorial objects that can all be represented by an incidence matrix (i.e. sets of sets).
 
 
 
@@ -687,6 +690,9 @@ public:
 		// SoS is used by t_PAC
 
 		int f_extended_incma;
+
+		// t_MMX = multi matrix
+		int m, n, max_val;
 
 		data_structures::tally *C;
 		// used to determine multiplicities in the set of points
@@ -788,6 +794,10 @@ public:
 	void init_graph_by_object(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
+	void init_multi_matrix(
+			std::string &data1,
+			std::string &data2,
+		int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -807,6 +817,9 @@ public:
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void encoding_size_incidence_geometry(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_multi_matrix(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void canonical_form_given_canonical_labeling(
@@ -834,6 +847,9 @@ public:
 	void encode_incidence_geometry(
 			encoded_combinatorial_object *&Enc,
 			int verbose_level);
+	void encode_multi_matrix(
+			encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void collinearity_graph(
 			int *&Adj, int &N,
 			int verbose_level);
@@ -843,6 +859,7 @@ public:
 			geometry::incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
+#if 0
 	void encode_object(
 			long int *&encoding, int &encoding_sz,
 		int verbose_level);
@@ -862,21 +879,7 @@ public:
 			long int *&encoding, int &encoding_sz, int verbose_level);
 	void encode_object_large_set(
 			long int *&encoding, int &encoding_sz, int verbose_level);
-	void run_nauty(
-			int f_compute_canonical_form,
-			int f_save_nauty_input_graphs,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
-			encoded_combinatorial_object *&Enc,
-			int verbose_level);
-	void run_nauty_basic(
-			l1_interfaces::nauty_output *&NO,
-			int verbose_level);
-	void canonical_labeling(
-			int f_save_nauty_input_graphs,
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-
+#endif
 
 };
 

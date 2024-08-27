@@ -9,7 +9,7 @@ MODULES = \
 	boolean_function_classify.o \
 	combinatorial_object_activity_description.o \
 	combinatorial_object_activity.o \
-	combinatorial_object.o \
+	combinatorial_object_stream.o \
 	combinatorics_global.o \
 	dd_lifting.o \
 	dd_search_singletons.o \
@@ -29,7 +29,8 @@ MODULES = \
 	large_set_was_activity_description.o \
 	large_set_was_activity.o \
 	large_set_was_description.o \
-	large_set_was.o
+	large_set_was.o \
+	variety_with_TDO_and_TDA.o
 
 
 all : $(MODULES)

@@ -37,6 +37,8 @@ variety_object_with_action::variety_object_with_action()
 	f_has_automorphism_group = false;
 	Stab_gens = NULL;
 
+	TD = NULL;
+
 }
 
 variety_object_with_action::~variety_object_with_action()
@@ -46,6 +48,9 @@ variety_object_with_action::~variety_object_with_action()
 	}
 	if (f_has_automorphism_group && Stab_gens) {
 		FREE_OBJECT(Stab_gens);
+	}
+	if (TD) {
+		FREE_OBJECT(TD);
 	}
 }
 
@@ -133,6 +138,15 @@ void variety_object_with_action::init(
 
 	}
 
+
+	if (f_v) {
+		cout << "variety_object_with_action::init before compute_tactical_decompositions" << endl;
+	}
+	compute_tactical_decompositions(
+			verbose_level);
+	if (f_v) {
+		cout << "variety_object_with_action::init after compute_tactical_decompositions" << endl;
+	}
 
 
 	if (f_v) {
@@ -319,6 +333,45 @@ void variety_object_with_action::apply_transformation(
 		cout << "variety_object_with_action::apply_transformation done" << endl;
 	}
 }
+
+void variety_object_with_action::compute_tactical_decompositions(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::compute_tactical_decompositions" << endl;
+	}
+
+
+	if (f_has_automorphism_group && Stab_gens) {
+
+		TD = NEW_OBJECT(apps_combinatorics::variety_with_TDO_and_TDA);
+
+
+		if (f_v) {
+			cout << "variety_object_with_action::compute_tactical_decompositions "
+					"before TD->init_and_compute_tactical_decompositions" << endl;
+		}
+		TD->init_and_compute_tactical_decompositions(PA, Variety_object, Stab_gens, verbose_level);
+		if (f_v) {
+			cout << "variety_object_with_action::compute_tactical_decompositions "
+					"after TD->init_and_compute_tactical_decompositions" << endl;
+		}
+	}
+	else {
+		cout << "variety_object_with_action::compute_tactical_decompositions the automorphism group is not available" << endl;
+		TD = NULL;
+	}
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::compute_tactical_decompositions done" << endl;
+	}
+
+
+}
+
 
 
 void variety_object_with_action::print(

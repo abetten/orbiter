@@ -1693,9 +1693,9 @@ void activity_description::do_combinatorial_object_activity(
 		}
 	}
 	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
-		apps_combinatorics::combinatorial_object *Combo;
+		apps_combinatorics::combinatorial_object_stream *Combo;
 
-		Combo = (apps_combinatorics::combinatorial_object *)
+		Combo = (apps_combinatorics::combinatorial_object_stream *)
 				Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			apps_combinatorics::combinatorial_object_activity Activity;

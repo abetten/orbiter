@@ -1,5 +1,5 @@
 /*
- * combinatorial_object.cpp
+ * combinatorial_object_stream.cpp
  *
  *  Created on: Dec 17, 2023
  *      Author: betten
@@ -18,7 +18,7 @@ namespace apps_combinatorics {
 
 
 
-combinatorial_object::combinatorial_object()
+combinatorial_object_stream::combinatorial_object_stream()
 {
 	//Data_input_stream_description = NULL;
 
@@ -29,7 +29,7 @@ combinatorial_object::combinatorial_object()
 
 }
 
-combinatorial_object::~combinatorial_object()
+combinatorial_object_stream::~combinatorial_object_stream()
 {
 	if (Classification) {
 		FREE_OBJECT(Classification);
@@ -40,7 +40,7 @@ combinatorial_object::~combinatorial_object()
 }
 
 
-void combinatorial_object::init(
+void combinatorial_object_stream::init(
 		canonical_form_classification::data_input_stream_description
 				*Data_input_stream_description,
 		int verbose_level)
@@ -48,7 +48,7 @@ void combinatorial_object::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::init" << endl;
+		cout << "combinatorial_object_stream::init" << endl;
 	}
 	//combinatorial_object::Data_input_stream_description = Data_input_stream_description;
 
@@ -56,34 +56,35 @@ void combinatorial_object::init(
 	IS = NEW_OBJECT(canonical_form_classification::data_input_stream);
 
 	if (f_v) {
-		cout << "combinatorial_object::init "
+		cout << "combinatorial_object_stream::init "
 				"before IS->init" << endl;
 	}
 
 	IS->init(Data_input_stream_description, verbose_level);
 
 	if (f_v) {
-		cout << "combinatorial_object::init "
+		cout << "combinatorial_object_stream::init "
 				"after IS->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object::init done" << endl;
+		cout << "combinatorial_object_stream::init done" << endl;
 	}
 
 }
 
-void combinatorial_object::do_canonical_form_PG(
+void combinatorial_object_stream::do_canonical_form_PG(
 		projective_geometry::projective_space_with_action *PA,
 		canonical_form_classification::classification_of_objects_description
 				*Canonical_form_PG_Descr,
 		int verbose_level)
+// called from combinatorial_object_activity::perform_activity_combo
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form_PG" << endl;
 	}
 
 
@@ -91,7 +92,7 @@ void combinatorial_object::do_canonical_form_PG(
 	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_PG "
 				"before Classification->perform_classification" << endl;
 	}
 	Classification->perform_classification(
@@ -100,7 +101,7 @@ void combinatorial_object::do_canonical_form_PG(
 			IS,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_PG "
 				"after Classification->perform_classification" << endl;
 	}
 
@@ -113,7 +114,7 @@ void combinatorial_object::do_canonical_form_PG(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_PG "
 				"before Classification_CO->init_after_nauty" << endl;
 	}
 	Classification_CO->init_after_nauty(
@@ -121,18 +122,18 @@ void combinatorial_object::do_canonical_form_PG(
 			true /* f_projective_space */, PA,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_PG "
 				"after Classification_CO->init_after_nauty" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_PG done" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form_PG done" << endl;
 	}
 
 }
 
-void combinatorial_object::do_canonical_form_not_PG(
+void combinatorial_object_stream::do_canonical_form_not_PG(
 		canonical_form_classification::classification_of_objects_description
 			*Canonical_form_Descr,
 		int verbose_level)
@@ -140,13 +141,13 @@ void combinatorial_object::do_canonical_form_not_PG(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG" << endl;
 	}
 
 	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
 				"before Classification->perform_classification" << endl;
 	}
 	Classification->perform_classification(
@@ -155,7 +156,7 @@ void combinatorial_object::do_canonical_form_not_PG(
 			IS,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
 				"after Combo->Classification->perform_classification" << endl;
 	}
 
@@ -163,7 +164,7 @@ void combinatorial_object::do_canonical_form_not_PG(
 	Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
 				"before Classification_CO->init_after_nauty" << endl;
 	}
 	Classification_CO->init_after_nauty(
@@ -171,25 +172,25 @@ void combinatorial_object::do_canonical_form_not_PG(
 			false /* f_projective_space */, NULL,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG "
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
 				"after Classification_CO->init_after_nauty" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object::do_canonical_form_not_PG done" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form_not_PG done" << endl;
 	}
 
 }
 
-void combinatorial_object::do_test_distinguishing_property(
+void combinatorial_object_stream::do_test_distinguishing_property(
 		graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_test_distinguishing_property" << endl;
+		cout << "combinatorial_object_stream::do_test_distinguishing_property" << endl;
 	}
 
 	int input_idx;
@@ -242,13 +243,13 @@ void combinatorial_object::do_test_distinguishing_property(
 	FREE_int(F_distinguishing);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_test_distinguishing_property done" << endl;
+		cout << "combinatorial_object_stream::do_test_distinguishing_property done" << endl;
 	}
 
 }
 
 
-void combinatorial_object::do_covering_type(
+void combinatorial_object_stream::do_covering_type(
 		orbits::orbits_create *Orb,
 		int subset_sz,
 		int f_filter_by_Steiner_property,
@@ -258,9 +259,9 @@ void combinatorial_object::do_covering_type(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type verbose_level = " << verbose_level << endl;
-		cout << "combinatorial_object::do_covering_type subset_sz = " << subset_sz << endl;
-		cout << "combinatorial_object::do_covering_type f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
+		cout << "combinatorial_object_stream::do_covering_type verbose_level = " << verbose_level << endl;
+		cout << "combinatorial_object_stream::do_covering_type subset_sz = " << subset_sz << endl;
+		cout << "combinatorial_object_stream::do_covering_type f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
 	}
 
 	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
@@ -278,14 +279,14 @@ void combinatorial_object::do_covering_type(
 	if (IS->Objects.size() == 0) {
 
 		if (f_v) {
-			cout << "combinatorial_object::do_covering_type "
+			cout << "combinatorial_object_stream::do_covering_type "
 					"breaking off early because there is no input" << endl;
 		}
 		return;
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type IS->Objects.size() = " << IS->Objects.size() << endl;
+		cout << "combinatorial_object_stream::do_covering_type IS->Objects.size() = " << IS->Objects.size() << endl;
 
 	}
 
@@ -296,7 +297,7 @@ void combinatorial_object::do_covering_type(
 
 
 	if (OwCF->type != t_PTS) {
-		cout << "combinatorial_object::do_covering_type OwCF->type != t_PTS" << endl;
+		cout << "combinatorial_object_stream::do_covering_type OwCF->type != t_PTS" << endl;
 		exit(1);
 	}
 
@@ -304,7 +305,7 @@ void combinatorial_object::do_covering_type(
 	sz = OwCF->sz;
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type sz = " << sz << endl;
+		cout << "combinatorial_object_stream::do_covering_type sz = " << sz << endl;
 
 	}
 
@@ -315,7 +316,7 @@ void combinatorial_object::do_covering_type(
 	poset_classification::poset_classification *PC;
 
 	if (!Orb->f_has_On_subsets) {
-		cout << "combinatorial_object::do_covering_type "
+		cout << "combinatorial_object_stream::do_covering_type "
 				"the orbit structure has no subset orbits" << endl;
 		exit(1);
 	}
@@ -326,12 +327,12 @@ void combinatorial_object::do_covering_type(
 	nb_orbits = PC->nb_orbits_at_level(subset_sz);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type nb_orbits = " << nb_orbits << endl;
+		cout << "combinatorial_object_stream::do_covering_type nb_orbits = " << nb_orbits << endl;
 
 	}
 
 	if (nb_orbits < 0) {
-		cout << "combinatorial_object::do_covering_type "
+		cout << "combinatorial_object_stream::do_covering_type "
 				"the orbits on subsets of size " << subset_sz << " are not available" << endl;
 		exit(1);
 	}
@@ -339,7 +340,7 @@ void combinatorial_object::do_covering_type(
 	nCk = Combi.int_n_choose_k(sz, subset_sz);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type nCk = " << nCk << endl;
+		cout << "combinatorial_object_stream::do_covering_type nCk = " << nCk << endl;
 
 	}
 
@@ -370,7 +371,7 @@ void combinatorial_object::do_covering_type(
 
 
 		if (OwCF->type != t_PTS) {
-			cout << "combinatorial_object::do_covering_type OwCF->type != t_PTS" << endl;
+			cout << "combinatorial_object_stream::do_covering_type OwCF->type != t_PTS" << endl;
 			exit(1);
 		}
 
@@ -464,18 +465,18 @@ void combinatorial_object::do_covering_type(
 	FREE_int(Elt);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_covering_type done" << endl;
+		cout << "combinatorial_object_stream::do_covering_type done" << endl;
 	}
 }
 
-void combinatorial_object::do_compute_frequency_graph(
+void combinatorial_object_stream::do_compute_frequency_graph(
 		graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_compute_frequency_graph" << endl;
+		cout << "combinatorial_object_stream::do_compute_frequency_graph" << endl;
 	}
 
 
@@ -527,18 +528,18 @@ void combinatorial_object::do_compute_frequency_graph(
 	FREE_int(code);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_compute_frequency_graph done" << endl;
+		cout << "combinatorial_object_stream::do_compute_frequency_graph done" << endl;
 	}
 }
 
-void combinatorial_object::do_compute_ideal(
+void combinatorial_object_stream::do_compute_ideal(
 		ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_compute_ideal" << endl;
+		cout << "combinatorial_object_stream::do_compute_ideal" << endl;
 	}
 
 
@@ -558,11 +559,11 @@ void combinatorial_object::do_compute_ideal(
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object::do_compute_ideal done" << endl;
+		cout << "combinatorial_object_stream::do_compute_ideal done" << endl;
 	}
 }
 
-void combinatorial_object::do_save(
+void combinatorial_object_stream::do_save(
 		std::string &save_as_fname,
 		int f_extract,
 		long int *extract_idx_set, int extract_size,
@@ -571,7 +572,7 @@ void combinatorial_object::do_save(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_save" << endl;
+		cout << "combinatorial_object_stream::do_save" << endl;
 	}
 	int input_idx;
 	int sz;
@@ -589,7 +590,7 @@ void combinatorial_object::do_save(
 	for (input_idx = 0; input_idx < N; input_idx++) {
 
 		if (false) {
-			cout << "combinatorial_object::do_save "
+			cout << "combinatorial_object_stream::do_save "
 					"input_idx = " << input_idx
 					<< " / " << IS->Objects.size() << endl;
 		}
@@ -664,7 +665,7 @@ void combinatorial_object::do_save(
 }
 
 
-void combinatorial_object::draw_incidence_matrices(
+void combinatorial_object_stream::draw_incidence_matrices(
 		std::string &prefix,
 		int verbose_level)
 {
@@ -673,7 +674,7 @@ void combinatorial_object::draw_incidence_matrices(
 	l1_interfaces::latex_interface L;
 
 	if (f_v) {
-		cout << "combinatorial_object::draw_incidence_matrices" << endl;
+		cout << "combinatorial_object_stream::draw_incidence_matrices" << endl;
 	}
 
 
@@ -683,7 +684,7 @@ void combinatorial_object::draw_incidence_matrices(
 	fname = prefix + "_incma.tex";
 
 	if (f_v) {
-		cout << "combinatorial_object::draw_incidence_matrices "
+		cout << "combinatorial_object_stream::draw_incidence_matrices "
 				"before latex_report" << endl;
 	}
 
@@ -702,7 +703,7 @@ void combinatorial_object::draw_incidence_matrices(
 
 
 		if (f_v) {
-			cout << "combinatorial_object::draw_incidence_matrices "
+			cout << "combinatorial_object_stream::draw_incidence_matrices "
 					"before loop" << endl;
 		}
 
@@ -713,7 +714,7 @@ void combinatorial_object::draw_incidence_matrices(
 		for (i = 0; i < N; i++) {
 
 			if (f_v) {
-				cout << "combinatorial_object::draw_incidence_matrices "
+				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"object " << i << " / " << N << endl;
 			}
 			canonical_form_classification::object_with_canonical_form *OwCF;
@@ -724,12 +725,12 @@ void combinatorial_object::draw_incidence_matrices(
 			canonical_form_classification::encoded_combinatorial_object *Enc;
 
 			if (f_v) {
-				cout << "combinatorial_object::draw_incidence_matrices "
+				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"before OwCF->encode_incma" << endl;
 			}
 			OwCF->encode_incma(Enc, verbose_level);
 			if (f_v) {
-				cout << "combinatorial_object::draw_incidence_matrices "
+				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"after OwCF->encode_incma" << endl;
 			}
 
@@ -738,12 +739,12 @@ void combinatorial_object::draw_incidence_matrices(
 			//Enc->latex_set_system_by_rows(ost, verbose_level);
 
 			if (f_v) {
-				cout << "combinatorial_object::draw_incidence_matrices "
+				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"before OwCF->latex_incma" << endl;
 			}
 			Enc->latex_incma(ost, verbose_level);
 			if (f_v) {
-				cout << "combinatorial_object::draw_incidence_matrices "
+				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"after OwCF->latex_incma" << endl;
 			}
 
@@ -762,11 +763,11 @@ void combinatorial_object::draw_incidence_matrices(
 				<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "combinatorial_object::draw_incidence_matrices done" << endl;
+		cout << "combinatorial_object_stream::draw_incidence_matrices done" << endl;
 	}
 }
 
-void combinatorial_object::unpack_from_restricted_action(
+void combinatorial_object_stream::unpack_from_restricted_action(
 		std::string &prefix,
 		apps_algebra::any_group *G,
 		int verbose_level)
@@ -776,13 +777,13 @@ void combinatorial_object::unpack_from_restricted_action(
 	l1_interfaces::latex_interface L;
 
 	if (f_v) {
-		cout << "combinatorial_object::unpack_from_restricted_action" << endl;
+		cout << "combinatorial_object_stream::unpack_from_restricted_action" << endl;
 	}
 
 
 
 	if (G->A->type_G != action_by_restriction_t) {
-		cout << "combinatorial_object::unpack_from_restricted_action "
+		cout << "combinatorial_object_stream::unpack_from_restricted_action "
 				"must be a restricted action" << endl;
 		exit(1);
 	}
@@ -795,7 +796,7 @@ void combinatorial_object::unpack_from_restricted_action(
 	fname = prefix + "_unpacked.txt";
 
 	if (f_v) {
-		cout << "combinatorial_object::unpack_from_restricted_action "
+		cout << "combinatorial_object_stream::unpack_from_restricted_action "
 				"before latex_report" << endl;
 	}
 
@@ -811,7 +812,7 @@ void combinatorial_object::unpack_from_restricted_action(
 
 
 		if (f_v) {
-			cout << "combinatorial_object::unpack_from_restricted_action "
+			cout << "combinatorial_object_stream::unpack_from_restricted_action "
 					"before loop" << endl;
 		}
 
@@ -859,21 +860,22 @@ void combinatorial_object::unpack_from_restricted_action(
 				<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "combinatorial_object::unpack_from_restricted_action done" << endl;
+		cout << "combinatorial_object_stream::unpack_from_restricted_action done" << endl;
 	}
 }
 
 
-void combinatorial_object::line_covering_type(
+void combinatorial_object_stream::line_covering_type(
 		std::string &prefix,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &lines,
 		int verbose_level)
+// calls P->Subspaces->line_intersection_type_basic_given_a_set_of_lines
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::line_covering_type" << endl;
+		cout << "combinatorial_object_stream::line_covering_type" << endl;
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -893,7 +895,7 @@ void combinatorial_object::line_covering_type(
 	fname = prefix + "_line_covering_type.txt";
 
 	if (f_v) {
-		cout << "combinatorial_object::line_covering_type before latex_report" << endl;
+		cout << "combinatorial_object_stream::line_covering_type before latex_report" << endl;
 	}
 
 
@@ -908,7 +910,7 @@ void combinatorial_object::line_covering_type(
 
 
 		if (f_v) {
-			cout << "combinatorial_object::line_covering_type before loop" << endl;
+			cout << "combinatorial_object_stream::line_covering_type before loop" << endl;
 		}
 
 		int i, h;
@@ -947,11 +949,11 @@ void combinatorial_object::line_covering_type(
 				<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "combinatorial_object::line_covering_type done" << endl;
+		cout << "combinatorial_object_stream::line_covering_type done" << endl;
 	}
 }
 
-void combinatorial_object::line_type(
+void combinatorial_object_stream::line_type(
 		std::string &prefix,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
@@ -961,7 +963,7 @@ void combinatorial_object::line_type(
 	l1_interfaces::latex_interface L;
 
 	if (f_v) {
-		cout << "combinatorial_object::line_type" << endl;
+		cout << "combinatorial_object_stream::line_type" << endl;
 	}
 
 
@@ -974,7 +976,7 @@ void combinatorial_object::line_type(
 	fname = prefix + "_line_type.txt";
 
 	if (f_v) {
-		cout << "combinatorial_object::line_type before latex_report" << endl;
+		cout << "combinatorial_object_stream::line_type before latex_report" << endl;
 	}
 
 
@@ -989,7 +991,7 @@ void combinatorial_object::line_type(
 
 
 		if (f_v) {
-			cout << "combinatorial_object::line_type before loop" << endl;
+			cout << "combinatorial_object_stream::line_type before loop" << endl;
 		}
 
 		int i, h;
@@ -1022,7 +1024,7 @@ void combinatorial_object::line_type(
 			T.init(type, P->Subspaces->N_lines, false, 0);
 
 			if (f_v) {
-				cout << "combinatorial_object::perform_activity_GOC line type:" << endl;
+				cout << "combinatorial_object_stream::perform_activity_GOC line type:" << endl;
 				T.print(true /* f_backwards*/);
 				cout << endl;
 			}
@@ -1054,12 +1056,12 @@ void combinatorial_object::line_type(
 				<< Fio.file_size(fname) << endl;
 	}
 	if (f_v) {
-		cout << "combinatorial_object::line_type done" << endl;
+		cout << "combinatorial_object_stream::line_type done" << endl;
 	}
 }
 
 
-void combinatorial_object::do_activity(
+void combinatorial_object_stream::do_activity(
 		user_interface::activity_description *Activity_description,
 		orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
@@ -1067,14 +1069,14 @@ void combinatorial_object::do_activity(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_activity" << endl;
+		cout << "combinatorial_object_stream::do_activity" << endl;
 	}
 
 
 	if (Activity_description->f_graph_theoretic_activity) {
 
 		if (f_v) {
-			cout << "combinatorial_object::do_activity f_graph_theoretic_activity" << endl;
+			cout << "combinatorial_object_stream::do_activity f_graph_theoretic_activity" << endl;
 		}
 		do_graph_theoretic_activity(
 				Activity_description->Graph_theoretic_activity_description,
@@ -1084,11 +1086,11 @@ void combinatorial_object::do_activity(
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object::do_activity done" << endl;
+		cout << "combinatorial_object_stream::do_activity done" << endl;
 	}
 }
 
-void combinatorial_object::do_graph_theoretic_activity(
+void combinatorial_object_stream::do_graph_theoretic_activity(
 		apps_graph_theory::graph_theoretic_activity_description
 				*Graph_theoretic_activity_description,
 		orbiter_kernel_system::activity_output *&AO,
@@ -1097,7 +1099,7 @@ void combinatorial_object::do_graph_theoretic_activity(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object::do_graph_theoretic_activity" << endl;
+		cout << "combinatorial_object_stream::do_graph_theoretic_activity" << endl;
 	}
 
 
@@ -1133,7 +1135,7 @@ void combinatorial_object::do_graph_theoretic_activity(
 		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
 
 		if (OwCF->type != t_INC) {
-			cout << "combinatorial_object::do_graph_theoretic_activity "
+			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 					"expecting an object of type incidence geometry" << endl;
 			exit(1);
 		}
@@ -1153,14 +1155,14 @@ void combinatorial_object::do_graph_theoretic_activity(
 
 		CG = NEW_OBJECT(graph_theory::colored_graph);
 		if (f_v) {
-			cout << "combinatorial_object::do_graph_theoretic_activity "
+			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 					"before CG->init_from_adjacency_no_colors" << endl;
 		}
 		CG->init_from_adjacency_no_colors(
 				N, Adj, label, label_tex,
 				verbose_level);
 		if (f_v) {
-			cout << "combinatorial_object::do_graph_theoretic_activity "
+			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 					"after CG->init_from_adjacency_no_colors" << endl;
 		}
 
@@ -1173,12 +1175,12 @@ void combinatorial_object::do_graph_theoretic_activity(
 
 
 			if (f_v) {
-				cout << "combinatorial_object::do_graph_theoretic_activity "
+				cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 						"before Activity.perform_activity" << endl;
 			}
 			Activity.perform_activity(feedback, verbose_level);
 			if (f_v) {
-				cout << "combinatorial_object::do_graph_theoretic_activity "
+				cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 						"after Activity.perform_activity" << endl;
 			}
 
@@ -1193,7 +1195,7 @@ void combinatorial_object::do_graph_theoretic_activity(
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object::do_graph_theoretic_activity done" << endl;
+		cout << "combinatorial_object_stream::do_graph_theoretic_activity done" << endl;
 	}
 }
 

@@ -493,11 +493,11 @@ public:
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(
 			int f_semilinear, int verbose_level);
+#if 0
 	void canonical_labeling(
 			canonical_form_classification::object_with_canonical_form *OiP,
 		int *canonical_labeling,
 		int verbose_level);
-#if 0
 	void report_fixed_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);

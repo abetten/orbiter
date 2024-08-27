@@ -108,6 +108,7 @@ void classification_of_objects::perform_classification(
 		geometry::projective_space *P,
 		data_input_stream *IS,
 		int verbose_level)
+// called from layer5_applications::apps_combinatorics::combinatorial_object::do_canonical_form_not_PG
 {
 	int f_v = (verbose_level >= 1);
 
@@ -554,12 +555,17 @@ int classification_of_objects::process_object(
 	}
 
 
+	l1_interfaces::nauty_interface_for_OwCF NI;
+
+
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
-				"before OwCF->run_nauty" << endl;
+				"before NI.run_nauty_for_OwCF" << endl;
 	}
 
-	OwCF->run_nauty(
+
+	NI.run_nauty_for_OwCF(
+			OwCF,
 			true /* f_compute_canonical_form */,
 			Descr->f_save_nauty_input_graphs,
 			Canonical_form,
@@ -567,9 +573,10 @@ int classification_of_objects::process_object(
 			Enc,
 			verbose_level);
 
+
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
-				"after OwCF->run_nauty" << endl;
+				"after NI.run_nauty_for_OwCF" << endl;
 	}
 
 

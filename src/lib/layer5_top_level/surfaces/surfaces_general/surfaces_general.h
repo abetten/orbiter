@@ -550,6 +550,9 @@ public:
 
 
 
+	apps_combinatorics::variety_with_TDO_and_TDA *TD;
+
+#if 0
 	int f_has_TDO_TDA;
 
 	// these may be NULL, for instance if the projective space is too large:
@@ -558,6 +561,7 @@ public:
 
 	algebraic_geometry::variety_object *Variety_with_TDO;
 	algebraic_geometry::variety_object *Variety_with_TDA;
+#endif
 
 	actions::action *A_on_points;
 	actions::action *A_on_Eckardt_points;
@@ -728,9 +732,11 @@ public:
 			std::ostream &ost);
 	void compute_tactical_decompositions(
 			int verbose_level);
+#if 0
 	void report_decomposition_schemes(
 			std::ostream &ost,
 			int verbose_level);
+#endif
 
 };
 

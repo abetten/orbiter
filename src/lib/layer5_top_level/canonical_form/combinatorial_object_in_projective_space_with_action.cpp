@@ -17,7 +17,7 @@ namespace orbiter {
 namespace layer5_applications {
 namespace canonical_form {
 
-
+#if 0
 
 combinatorial_object_in_projective_space_with_action::combinatorial_object_in_projective_space_with_action()
 {
@@ -326,6 +326,7 @@ void combinatorial_object_in_projective_space_with_action::report(
 	FREE_OBJECT(Inc);
 
 }
+#endif
 
 }}}
 

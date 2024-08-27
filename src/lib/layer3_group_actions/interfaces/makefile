@@ -9,6 +9,7 @@ MODULES = \
 	conjugacy_classes_and_normalizers.o \
 	l3_interface_gap.o \
 	magma_interface.o \
+	nauty_interface_for_graphs.o \
 	nauty_interface_with_group.o
 	
 

@@ -252,6 +252,7 @@ ORBITER_MODULES= \
 		layer1_foundations/linear_algebra/vector_space.o \
 		layer1_foundations/knowledge_base/finite_field_tables.o \
 		layer1_foundations/knowledge_base/knowledge_base.o \
+		layer1_foundations/l1_interfaces/dirk_kaempfer.o \
 		layer1_foundations/l1_interfaces/easy_BMP_interface.o \
 		layer1_foundations/l1_interfaces/EasyBMP.o \
 		layer1_foundations/l1_interfaces/eigen_interface.o \
@@ -260,6 +261,7 @@ ORBITER_MODULES= \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/l1_interfaces/latex_interface.o \
+		layer1_foundations/l1_interfaces/nauty_interface_for_OwCF.o \
 		layer1_foundations/l1_interfaces/nauty_interface.o \
 		layer1_foundations/l1_interfaces/nauty_output.o \
 		layer1_foundations/l1_interfaces/povray_interface.o \
@@ -437,6 +439,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/interfaces/conjugacy_classes_and_normalizers.o \
 		layer3_group_actions/interfaces/l3_interface_gap.o \
 		layer3_group_actions/interfaces/magma_interface.o \
+		layer3_group_actions/interfaces/nauty_interface_for_graphs.o \
 		layer3_group_actions/interfaces/nauty_interface_with_group.o \
 		layer4_classification/classify/classification_step.o \
 		layer4_classification/classify/flag_orbit_node.o \
@@ -530,7 +533,7 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/boolean_function_classify.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
-		layer5_top_level/combinatorics/combinatorial_object.o \
+		layer5_top_level/combinatorics/combinatorial_object_stream.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
 		layer5_top_level/combinatorics/dd_lifting.o \
 		layer5_top_level/combinatorics/dd_search_singletons.o \
@@ -551,6 +554,7 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/large_set_was_activity.o \
 		layer5_top_level/combinatorics/large_set_was_description.o \
 		layer5_top_level/combinatorics/large_set_was.o \
+		layer5_top_level/combinatorics/variety_with_TDO_and_TDA.o \
 		layer5_top_level/geometry/arc_generator_description.o \
 		layer5_top_level/geometry/arc_generator.o \
 		layer5_top_level/geometry/arc_lifting_simeon.o \

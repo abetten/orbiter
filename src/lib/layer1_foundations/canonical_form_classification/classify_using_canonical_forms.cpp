@@ -38,19 +38,22 @@ void classify_using_canonical_forms::orderly_test(
 		cout << "classify_using_canonical_forms::orderly_test" << endl;
 	}
 
+	l1_interfaces::nauty_interface_for_OwCF NI;
+
 	l1_interfaces::nauty_output *NO;
 
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::orderly_test "
-				"before OwCF->run_nauty_basic" << endl;
+				"before NI.run_nauty_for_OwCF_basic" << endl;
 	}
-	OwCF->run_nauty_basic(
+	NI.run_nauty_for_OwCF_basic(
+			OwCF,
 			NO,
 			verbose_level);
 	if (f_v) {
 		cout << "classify_using_canonical_forms::orderly_test "
-				"after OwCF->run_nauty_basic" << endl;
+				"after NI.run_nauty_for_OwCF_basic" << endl;
 	}
 
 	int nb_rows, nb_cols;
@@ -109,14 +112,19 @@ void classify_using_canonical_forms::find_object(
 		cout << "classify_using_canonical_forms::find_object" << endl;
 	}
 
+
+	l1_interfaces::nauty_interface_for_OwCF NI;
+
+
 	encoded_combinatorial_object *Enc;
 	int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
-				"before OwCF->run_nauty" << endl;
+				"before NI.run_nauty_for_OwCF" << endl;
 	}
-	OwCF->run_nauty(
+	NI.run_nauty_for_OwCF(
+			OwCF,
 			true /* f_compute_canonical_form */,
 			f_save_nauty_input_graphs,
 			Canonical_form,
@@ -125,7 +133,7 @@ void classify_using_canonical_forms::find_object(
 			verbose_level);
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
-				"after OwCF->run_nauty" << endl;
+				"after NI.run_nauty_for_OwCF" << endl;
 	}
 
 	FREE_OBJECT(Enc);

@@ -573,62 +573,36 @@ public:
 	~geometric_object_create();
 	void init(
 			geometric_object_description *Descr,
-			projective_space *P, int verbose_level);
+			projective_space *P,
+			int verbose_level);
 	void create_elliptic_quadric_ovoid(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ovoid_ST(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_cuspidal_cubic(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_twisted_cubic(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_elliptic_curve(
 			projective_space *P,
 		int elliptic_curve_b, int elliptic_curve_c,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_unital_XXq_YZq_ZYq(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_whole_space(
 			projective_space *P,
-			std::string &label_txt,
-			std::string &label_tex,
-			int &nb_pts, long int *&Pts,
 			int verbose_level);
 	void create_hyperplane(
 			projective_space *P,
 		int pt,
-		std::string &label_txt,
-		std::string &label_tex,
-		int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_Baer_substructure(
 			projective_space *P,
-		long int *&Pts, int &nb_pts,
-		std::string &label_txt,
-		std::string &label_tex,
 		int verbose_level);
 	// assumes we are in PG(n,Q) where Q = q^2
 	void create_unital_XXq_YZq_ZYq_brute_force(

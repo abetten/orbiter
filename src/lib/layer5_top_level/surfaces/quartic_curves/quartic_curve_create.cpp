@@ -1134,7 +1134,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 #endif
 
 	f_has_group = true;
-	Sg = QC_from_surface->Aut_of_variety->Stab_gens_quartic;
+	Sg = QC_from_surface->Aut_of_variety->Stab_gens_variety;
 
 	f_has_nice_gens = false;
 
@@ -1169,7 +1169,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 	QOG->init(
 			QCDA,
 			QO,
-			QC_from_surface->Aut_of_variety->Stab_gens_quartic,
+			QC_from_surface->Aut_of_variety->Stab_gens_variety,
 			verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "

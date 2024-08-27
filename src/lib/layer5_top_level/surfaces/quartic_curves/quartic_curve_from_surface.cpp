@@ -971,7 +971,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 	ost << "The stabilizer of the quartic curve "
 			"is the following group:\\\\" << endl;
-	Aut_of_variety->Stab_gens_quartic->print_generators_tex(ost);
+	Aut_of_variety->Stab_gens_variety->print_generators_tex(ost);
 
 
 	ost << "The curve has " << nb_bitangents

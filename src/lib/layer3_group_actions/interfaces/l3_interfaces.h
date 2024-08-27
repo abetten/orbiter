@@ -307,40 +307,17 @@ public:
 };
 
 
-
 // #############################################################################
-// nauty_interface_with_group.cpp:
+// nauty_interface_for_graphs.cpp:
 // #############################################################################
 
 //! Interface to Nauty for computing canonical forms and automorphism groups of graphs
 
 
-class nauty_interface_with_group {
+class nauty_interface_for_graphs {
 public:
-	nauty_interface_with_group();
-	~nauty_interface_with_group();
-
-	groups::strong_generators *set_stabilizer_of_object(
-			canonical_form_classification::object_with_canonical_form *OwCF,
-			actions::action *A_linear,
-		int f_compute_canonical_form,
-		int f_save_nauty_input_graphs,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
-		canonical_form_classification::encoded_combinatorial_object *&Enc,
-		int verbose_level);
-	void automorphism_group_as_permutation_group(
-			l1_interfaces::nauty_output *NO,
-			actions::action *&A_perm,
-			int verbose_level);
-	void reverse_engineer_linear_group_from_permutation_group(
-			actions::action *A_linear,
-			geometry::projective_space *P,
-			groups::strong_generators *&SG,
-			actions::action *&A_perm,
-			l1_interfaces::nauty_output *NO,
-			int verbose_level);
-
+	nauty_interface_for_graphs();
+	~nauty_interface_for_graphs();
 	actions::action *create_automorphism_group_of_colored_graph_object(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
@@ -376,6 +353,34 @@ public:
 		int *Adj, int n, int *labeling,
 		int verbose_level);
 	// labeling[n]
+
+};
+
+
+
+// #############################################################################
+// nauty_interface_with_group.cpp:
+// #############################################################################
+
+//! Interface to Nauty for computing canonical forms and automorphism groups of combinatorial objects
+
+
+class nauty_interface_with_group {
+public:
+	nauty_interface_with_group();
+	~nauty_interface_with_group();
+
+	groups::strong_generators *set_stabilizer_of_object(
+			canonical_form_classification::object_with_canonical_form *OwCF,
+			actions::action *A_linear,
+		int f_compute_canonical_form,
+		int f_save_nauty_input_graphs,
+		data_structures::bitvector *&Canonical_form,
+		l1_interfaces::nauty_output *&NO,
+		canonical_form_classification::encoded_combinatorial_object *&Enc,
+		int verbose_level);
+
+
 	void set_stabilizer_in_projective_space_using_precomputed_nauty_data(
 			geometry::projective_space *P,
 			actions::action *A,

@@ -167,6 +167,12 @@ void data_input_stream_description_element::print()
 				<< " " << input_data1
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_multi_matrix) {
+		cout << "-multi_matrix"
+				<< " " << input_string
+				<< " " << input_string2
+			<< endl;
+	}
 	else {
 		cout << "data_input_stream_description_element::print unknown type" << endl;
 		exit(1);
@@ -271,7 +277,8 @@ void data_input_stream_description_element::init_file_of_designs_through_block_o
 }
 
 void data_input_stream_description_element::init_file_of_designs_through_blocks(
-		std::string &fname_blocks, std::string &col_label, int v, int b, int k)
+		std::string &fname_blocks,
+		std::string &col_label, int v, int b, int k)
 {
 	input_type = t_data_input_stream_file_of_designs_through_blocks;
 
@@ -432,6 +439,14 @@ void data_input_stream_description_element::init_graph_by_adjacency_matrix_from_
 
 }
 
+void data_input_stream_description_element::init_multi_matrix(
+		std::string &a, std::string &b)
+{
+	input_type = t_data_input_stream_multi_matrix;
+
+	input_string.assign(a);
+	input_string2.assign(b);
+}
 
 
 }}}

@@ -820,7 +820,8 @@ void delandtsheer_doyen::create_graphs(
 }
 
 void delandtsheer_doyen::create_graph(
-		int case_number, long int *line, int s, int s2, int *Covered_orbits,
+		int case_number, long int *line,
+		int s, int s2, int *Covered_orbits,
 		int &nb_live_points,
 		std::string &fname,
 		int verbose_level)

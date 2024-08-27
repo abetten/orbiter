@@ -67,6 +67,14 @@ canonical_form_classifier_description *canonical_form_classifier::get_descriptio
 	return Descr;
 }
 
+int canonical_form_classifier::has_description()
+{
+	if (Descr == NULL) {
+		return false;
+	}
+	return true;
+}
+
 void canonical_form_classifier::init(
 		canonical_form_classifier_description *Descr,
 		int verbose_level)

@@ -1532,6 +1532,37 @@ void latex_interface::print_table_of_strings_with_headers(
 	ost << "\\end{array}" << endl;
 }
 
+void latex_interface::print_table_of_strings_with_headers_rc(
+		std::ostream &ost, std::string *headers_row, std::string *headers_col, std::string *Table, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{|r|*{" << n << "}{r}|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "& " << endl;
+	for (j = 0; j < n; j++) {
+		ost << headers_col[j];
+		if (j < n - 1) {
+			ost << " & ";
+		}
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < m; i++) {
+		ost << headers_row[i] << " & ";
+		for (j = 0; j < n; j++) {
+			ost << Table[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+		//ost << "\\hline" << endl;
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+}
+
 void latex_interface::print_table_of_strings(
 		std::ostream &ost, std::string *Table, int m, int n)
 {

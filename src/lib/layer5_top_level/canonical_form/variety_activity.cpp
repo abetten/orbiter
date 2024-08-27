@@ -92,11 +92,13 @@ void variety_activity::do_compute_group(
 		cout << "variety_activity::do_compute_group" << endl;
 	}
 	if (f_v) {
-		cout << "variety_activity::do_compute_group nb_input_Vo = " << nb_input_Vo << endl;
+		cout << "variety_activity::do_compute_group "
+				"nb_input_Vo = " << nb_input_Vo << endl;
 	}
 
 	if (nb_input_Vo == 0) {
-		cout << "variety_activity::do_compute_group nb_input_Vo == 0" << endl;
+		cout << "variety_activity::do_compute_group "
+				"nb_input_Vo == 0" << endl;
 		exit(1);
 	}
 
@@ -105,23 +107,28 @@ void variety_activity::do_compute_group(
 	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before getting PA" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before getting PA" << endl;
 	}
 	projective_geometry::projective_space_with_action *PA = Input_Vo[0].PA;
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after getting PA" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after getting PA" << endl;
 	}
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before getting Poly_ring" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before getting Poly_ring" << endl;
 	}
 	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after getting Poly_ring" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after getting Poly_ring" << endl;
 	}
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before Classifier->init_direct" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before Classifier->init_direct" << endl;
 	}
 
 	Classifier->init_direct(
@@ -132,7 +139,8 @@ void variety_activity::do_compute_group(
 			verbose_level);
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after Classifier->init_direct" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after Classifier->init_direct" << endl;
 	}
 
 
@@ -210,12 +218,24 @@ void variety_activity::do_compute_group(
 	Input_Vo[0].f_has_automorphism_group = true;
 	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
 
-	Input_Vo[0].Stab_gens->init_copy(Nauty->Variety_table[0]->Stabilizer_of_set_of_rational_points->Stab_gens_variety, verbose_level - 2);
+	Input_Vo[0].Stab_gens->init_copy(
+			Nauty->Variety_table[0]->Stabilizer_of_set_of_rational_points->Stab_gens_variety,
+			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"after copying stabilizer generators" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before Input_Vo[0].compute_tactical_decompositions" << endl;
+	}
+	Input_Vo[0].compute_tactical_decompositions(verbose_level);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after Input_Vo[0].compute_tactical_decompositions" << endl;
+	}
 
 
 	FREE_OBJECT(Classifier);
@@ -256,11 +276,13 @@ void variety_activity::do_singular_points(
 	P = Input_Vo[0].Variety_object->Projective_space;
 
 	if (f_v) {
-		cout << "variety_activity::do_compute_group before getting Poly_ring" << endl;
+		cout << "variety_activity::do_compute_group "
+				"before getting Poly_ring" << endl;
 	}
 	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
 	if (f_v) {
-		cout << "variety_activity::do_compute_group after getting Poly_ring" << endl;
+		cout << "variety_activity::do_compute_group "
+				"after getting Poly_ring" << endl;
 	}
 
 

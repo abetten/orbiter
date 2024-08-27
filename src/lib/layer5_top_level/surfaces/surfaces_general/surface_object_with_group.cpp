@@ -34,6 +34,9 @@ surface_object_with_group::surface_object_with_group()
 	projectivity_group_gens = NULL;
 	Syl = NULL;
 
+	TD = NULL;
+
+#if 0
 	f_has_TDO_TDA = false;
 
 	Decomposition_scheme_TDO = NULL;
@@ -41,6 +44,7 @@ surface_object_with_group::surface_object_with_group()
 
 	Variety_with_TDO = NULL;
 	Variety_with_TDA = NULL;
+#endif
 
 	A_on_points = NULL;
 	A_on_Eckardt_points = NULL;
@@ -78,6 +82,10 @@ surface_object_with_group::~surface_object_with_group()
 	if (Syl) {
 		FREE_OBJECT(Syl);
 	}
+	if (TD) {
+		FREE_OBJECT(TD);
+	}
+#if 0
 	if (Decomposition_scheme_TDO) {
 		FREE_OBJECT(Decomposition_scheme_TDO);
 	}
@@ -90,6 +98,8 @@ surface_object_with_group::~surface_object_with_group()
 	if (Variety_with_TDA) {
 		FREE_OBJECT(Variety_with_TDA);
 	}
+#endif
+
 	if (A_on_points) {
 		FREE_OBJECT(A_on_points);
 	}
@@ -3074,14 +3084,14 @@ void surface_object_with_group::print_everything(
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"before report_decomposition_schemes" << endl;
+				"before TD->report_decomposition_schemes" << endl;
 	}
-	report_decomposition_schemes(
+	TD->report_decomposition_schemes(
 			ost,
 			verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::print_everything "
-				"after report_decomposition_schemes" << endl;
+				"after TD->report_decomposition_schemes" << endl;
 	}
 
 	if (f_v) {
@@ -3377,7 +3387,26 @@ void surface_object_with_group::compute_tactical_decompositions(
 		cout << "surface_object_with_group::compute_tactical_decompositions" << endl;
 	}
 
+
+
+	TD = NEW_OBJECT(apps_combinatorics::variety_with_TDO_and_TDA);
+
+
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"before TD->init_and_compute_tactical_decompositions" << endl;
+	}
+	TD->init_and_compute_tactical_decompositions(Surf_A->PA, SO->Variety_object, Aut_gens, verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_group::compute_tactical_decompositions "
+				"after TD->init_and_compute_tactical_decompositions" << endl;
+	}
+
+#if 0
+
 	combinatorics::combinatorics_domain Combi;
+
+
 
 	if (f_v) {
 		cout << "surface_object_with_group::compute_tactical_decompositions "
@@ -3472,6 +3501,7 @@ void surface_object_with_group::compute_tactical_decompositions(
 		cout << "surface_object_with_group::tactical_decomposition_inside_projective_space "
 				"after Variety_with_TDA->init_set_of_sets" << endl;
 	}
+#endif
 
 
 	if (f_v) {
@@ -3479,6 +3509,7 @@ void surface_object_with_group::compute_tactical_decompositions(
 	}
 }
 
+#if 0
 void surface_object_with_group::report_decomposition_schemes(
 		std::ostream &ost,
 		int verbose_level)
@@ -3598,6 +3629,7 @@ void surface_object_with_group::report_decomposition_schemes(
 	}
 }
 
+#endif
 
 
 

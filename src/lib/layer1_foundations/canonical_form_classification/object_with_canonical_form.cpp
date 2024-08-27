@@ -50,6 +50,8 @@ object_with_canonical_form::object_with_canonical_form()
 
 	f_extended_incma = false;
 
+	m = n = max_val = 0;
+
 	C = NULL;
 }
 
@@ -117,6 +119,11 @@ void object_with_canonical_form::print(
 	}
 	else if (type == t_LS) {
 		ost << "large set:" << endl;
+		//SoS->print_table_tex(ost);
+		//ost << endl;
+	}
+	else if (type == t_MMX) {
+		ost << "multi matrix:" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
 	}
@@ -337,6 +344,48 @@ void object_with_canonical_form::print_tex(
 #endif
 
 	}
+	else if (type == t_MMX) {
+		if (f_v) {
+			cout << "object_with_canonical_form::print_tex t_MMX" << endl;
+		}
+		ost << "multi matrix: \\\\" << endl;
+
+
+		l1_interfaces::latex_interface Latex;
+
+
+		std::string *headers_row;
+		std::string *headers_col;
+		std::string *Table;
+
+		headers_row = new std::string[m];
+		headers_col = new std::string[n];
+		Table = new std::string[m * n];
+
+		int i, j;
+
+		for (i = 0; i < m; i++) {
+			headers_row[i] = std::to_string(set[i]);
+		}
+		for (j = 0; j < n; j++) {
+			headers_col[j] = std::to_string(set[m + j]);
+		}
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				Table[i * n + j] = std::to_string(set[m + n + i * n + j]);
+			}
+		}
+		ost << "$$" << endl;
+		Latex.print_table_of_strings_with_headers_rc(
+				ost, headers_row, headers_col, Table, m, n);
+		ost << "$$" << endl;
+
+		delete [] headers_row;
+		delete [] headers_col;
+		delete [] Table;
+
+	}
+
 
 	if (f_v) {
 		cout << "object_with_canonical_form::print_tex done" << endl;
@@ -682,9 +731,12 @@ void object_with_canonical_form::init_packing_from_spread_table(
 
 	// test if the object is a packing:
 	SoS->sort_all(false /*verbose_level*/);
+
 	int *M;
 	int j;
+
 	SoS->pairwise_intersection_matrix(M, 0 /*verbose_level*/);
+
 	for (i = 0; i < SoS->nb_sets; i++) {
 		for (j = i + 1; j < SoS->nb_sets; j++) {
 			if (M[i * SoS->nb_sets + j]) {
@@ -1250,6 +1302,57 @@ void object_with_canonical_form::init_graph_by_object(
 }
 
 
+void object_with_canonical_form::init_multi_matrix(
+		std::string &data1,
+		std::string &data2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_multi_matrix" << endl;
+	}
+	long int *entries1;
+	int nb_entries1;
+	long int *entries2;
+	int nb_entries2;
+
+	Lint_vec_scan(data1, entries1, nb_entries1);
+	Lint_vec_scan(data2, entries2, nb_entries2);
+
+	if (nb_entries1 != 3) {
+		cout << "object_with_canonical_form::init_multi_matrix nb_entries1 != 3" << endl;
+		exit(1);
+	}
+
+	object_with_canonical_form::P = NULL;
+	type = t_MMX;
+	object_with_canonical_form::set = NEW_lint(nb_entries2);
+	Lint_vec_copy(entries2, object_with_canonical_form::set, nb_entries2);
+	object_with_canonical_form::sz = nb_entries2;
+	object_with_canonical_form::m = entries1[0];
+	object_with_canonical_form::n = entries1[1];
+	object_with_canonical_form::max_val = entries1[2];
+	if (f_v) {
+		cout << "object_with_canonical_form::init_multi_matrix m = " << m << endl;
+		cout << "object_with_canonical_form::init_multi_matrix n = " << n << endl;
+		cout << "object_with_canonical_form::init_multi_matrix max_val = " << max_val << endl;
+	}
+
+	if (nb_entries2 != m + n + m * n) {
+		cout << "object_with_canonical_form::init_multi_matrix nb_entries2 != m + n + m * n" << endl;
+		exit(1);
+	}
+
+	FREE_lint(entries1);
+	FREE_lint(entries2);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_multi_matrix done" << endl;
+	}
+}
+
+
 void object_with_canonical_form::encoding_size(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
@@ -1316,6 +1419,16 @@ void object_with_canonical_form::encoding_size(
 					"before encoding_size_large_set" << endl;
 		}
 		encoding_size_large_set(
+				nb_rows, nb_cols, verbose_level);
+
+	}
+	else if (type == t_MMX) {
+
+		if (f_v) {
+			cout << "object_with_canonical_form::encoding_size "
+					"before encoding_size_multi_matrix" << endl;
+		}
+		encoding_size_multi_matrix(
 				nb_rows, nb_cols, verbose_level);
 
 	}
@@ -1463,6 +1576,7 @@ void object_with_canonical_form::encoding_size_large_set(
 
 }
 
+
 void object_with_canonical_form::encoding_size_incidence_geometry(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
@@ -1477,6 +1591,30 @@ void object_with_canonical_form::encoding_size_incidence_geometry(
 	nb_cols = b;
 
 }
+
+void object_with_canonical_form::encoding_size_multi_matrix(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_designs;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::encoding_size_multi_matrix" << endl;
+	}
+
+	nb_designs = b / design_sz;
+	if (nb_designs * design_sz != b) {
+		cout << "object_with_canonical_form::encoding_size_multi_matrix "
+				"design_sz does not divide b" << endl;
+		exit(1);
+	}
+
+	nb_rows = m + n + max_val + 1;
+	nb_cols = m + n + m * n;
+
+}
+
 
 void object_with_canonical_form::canonical_form_given_canonical_labeling(
 		int *canonical_labeling,
@@ -1565,6 +1703,14 @@ void object_with_canonical_form::encode_incma(
 			cout << "object_with_canonical_form::encode_incma type == t_LS" << endl;
 		}
 		encode_large_set(Enc, verbose_level);
+
+	}
+	else if (type == t_MMX) {
+
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma type == t_MMX" << endl;
+		}
+		encode_multi_matrix(Enc, verbose_level);
 
 	}
 	else {
@@ -1968,6 +2114,7 @@ void object_with_canonical_form::encode_large_set(
 	}
 }
 
+
 void object_with_canonical_form::encode_incidence_geometry(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
@@ -2025,6 +2172,111 @@ void object_with_canonical_form::encode_incidence_geometry(
 	}
 }
 
+
+
+void object_with_canonical_form::encode_multi_matrix(
+		encoded_combinatorial_object *&Enc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::encode_multi_matrix" << endl;
+	}
+	int i, a;
+	int f_vvv = (verbose_level >= 3);
+
+
+	int nb_rows, nb_cols;
+	nb_rows = m + n + max_val + 1;
+	nb_cols = m + n + m * n;
+
+	int N;
+
+	N = nb_rows + nb_cols;
+
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc->init(nb_rows, nb_cols, verbose_level);
+
+	// encode row block lengths:
+	for (i = 0; i < m; i++) {
+		a = set[i];
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_multi_matrix i=" << i << " a=" << a << endl;
+		}
+		if (a > max_val) {
+			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			exit(1);
+		}
+		Enc->set_incidence(i * nb_cols + i);
+		Enc->set_incidence((m + n + a) * nb_cols + i);
+	}
+
+	// encode col block lengths:
+	for (i = 0; i < n; i++) {
+		a = set[m + i];
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_multi_matrix i=" << i << " a=" << a << endl;
+		}
+		if (a > max_val) {
+			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			exit(1);
+		}
+		Enc->set_incidence((m + i) * nb_cols + m + i);
+		Enc->set_incidence((m + n + a) * nb_cols + m + i);
+	}
+
+	int h, j;
+
+	// encode matrix entries:
+	for (h = 0; h < m * n; h++) {
+
+		i = h / n;
+		j = h % n;
+
+		a = set[m + n + h];
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_multi_matrix h=" << h << " a=" << a << endl;
+		}
+		if (a > max_val) {
+			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			exit(1);
+		}
+		Enc->set_incidence((i) * nb_cols + m + n + h);
+		Enc->set_incidence((m + j) * nb_cols + m + n + h);
+		Enc->set_incidence((m + n + a) * nb_cols + m + n + h);
+	}
+
+
+
+	Enc->partition[m - 1] = 0;
+	Enc->partition[m + n - 1] = 0;
+	for (i = 0; i <= max_val; i++) {
+		Enc->partition[m + n + i] = 0;
+	}
+	//Enc->partition[nb_rows - 1] = 0;
+	Enc->partition[nb_rows + m - 1] = 0;
+	Enc->partition[nb_rows + m + n - 1] = 0;
+	Enc->partition[N - 1] = 0;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::encode_multi_matrix "
+				"Enc=" << endl;
+		Enc->print_incma();
+	}
+
+	if (f_vvv) {
+		cout << "object_with_canonical_form::encode_multi_matrix "
+				"partition:" << endl;
+		Enc->print_partition();
+	}
+	if (f_v) {
+		cout << "object_with_canonical_form::encode_multi_matrix "
+				"done" << endl;
+	}
+}
+
+
 void object_with_canonical_form::collinearity_graph(
 		int *&Adj, int &N,
 		int verbose_level)
@@ -2076,24 +2328,28 @@ void object_with_canonical_form::print()
 		cout << "object_with_canonical_form::print" << endl;
 	}
 	encoded_combinatorial_object *Enc;
-	geometry::incidence_structure *Inc;
-	data_structures::partitionstack *Stack;
+	//geometry::incidence_structure *Inc;
+	//data_structures::partitionstack *Stack;
 
+	encode_incma(Enc, verbose_level);
+
+#if 0
 	encode_incma_and_make_decomposition(
 			Enc,
 			Inc,
 			Stack,
 			verbose_level);
+#endif
 
 	Enc->print_incma();
 	FREE_OBJECT(Enc);
-	FREE_OBJECT(Inc);
-	FREE_OBJECT(Stack);
+	//FREE_OBJECT(Inc);
+	//FREE_OBJECT(Stack);
 
 
 }
 
-
+#if 0
 void object_with_canonical_form::encode_incma_and_make_decomposition(
 		encoded_combinatorial_object *&Enc,
 		geometry::incidence_structure *&Inc,
@@ -2133,6 +2389,11 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 	else if (type == t_LS) {
 
 		encode_large_set(Enc, verbose_level);
+
+	}
+	else if (type == t_MMX) {
+
+		encode_multi_matrix(Enc, verbose_level);
 
 	}
 	else {
@@ -2245,6 +2506,17 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		Stack->split_cell(0);
 
 	}
+	else if (type == t_MMX) {
+
+		if (f_v) {
+			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
+					"t_INC" << endl;
+		}
+		// ToDo
+		//Stack->subset_contiguous(v, b);
+		//Stack->split_cell(0);
+
+	}
 	else {
 		cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
 				"unknown type " << type << endl;
@@ -2255,7 +2527,10 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 		cout << "object_with_canonical_form::encode_incma_and_make_decomposition done" << endl;
 	}
 }
+#endif
 
+
+#if 0
 void object_with_canonical_form::encode_object(
 		long int *&encoding, int &encoding_sz,
 		int verbose_level)
@@ -2293,6 +2568,12 @@ void object_with_canonical_form::encode_object(
 	else if (type == t_LS) {
 
 		encode_object_large_set(encoding, encoding_sz, verbose_level);
+
+	}
+	else if (type == t_MMX) {
+
+		// ToDo
+		//encode_object_multi_matrix(encoding, encoding_sz, verbose_level);
 
 	}
 	else {
@@ -2402,6 +2683,7 @@ void object_with_canonical_form::encode_object_large_set(
 	encoding = NEW_lint(sz);
 	Lint_vec_copy(set, encoding, sz);
 }
+#endif
 
 #if 0
 void object_with_canonical_form::klein(int verbose_level)
@@ -2524,350 +2806,6 @@ void object_with_canonical_form::klein(int verbose_level)
 	}
 }
 #endif
-
-void object_with_canonical_form::run_nauty(
-		int f_compute_canonical_form,
-		int f_save_nauty_input_graphs,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
-		encoded_combinatorial_object *&Enc,
-		int verbose_level)
-// called from
-// classification_of_objects::process_object
-// nauty_interface_with_group::set_stabilizer_of_object
-// classify_using_canonical_forms::find_object
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty" << endl;
-	}
-	//int L;
-	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::nauty_interface Nau;
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty" << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty "
-				"before encode_incma" << endl;
-	}
-	encode_incma(Enc, verbose_level - 1);
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty "
-				"after encode_incma" << endl;
-	}
-	if (verbose_level > 2) {
-		cout << "object_with_canonical_form::run_nauty Incma not shown" << endl;
-		//Enc->print_incma();
-	}
-
-
-
-	if (f_save_nauty_input_graphs) {
-
-		// save Levi graph in DIMACS format:
-
-		if (f_v) {
-			cout << "object_with_canonical_form::run_nauty "
-					"saving Levi graph" << endl;
-		}
-
-
-		graph_theory::colored_graph *CG;
-		string graph_label;
-		static int run_nauty_graph_counter = 0;
-
-
-		graph_label = label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
-
-		run_nauty_graph_counter++;
-
-		Enc->create_Levi_graph(CG, graph_label, verbose_level);
-
-		Enc->print_incma();
-
-		CG->save_DIMACS(graph_label, verbose_level);
-
-		FREE_OBJECT(CG);
-
-		if (f_v) {
-			cout << "object_with_canonical_form::run_nauty "
-					"saving Levi graph done" << endl;
-		}
-
-	}
-
-
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
-
-
-	//L = Enc->nb_rows * Enc->nb_cols;
-
-	if (verbose_level > 5) {
-		cout << "object_with_canonical_form::run_nauty "
-				"before NO->nauty_output_allocate" << endl;
-	}
-
-	NO->nauty_output_allocate(
-			Enc->canonical_labeling_len,
-			Enc->invariant_set_start,
-			Enc->invariant_set_size,
-			verbose_level - 2);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty "
-				"before Nau.nauty_interface_matrix_int" << endl;
-	}
-	int t0, t1, dt, tps;
-	double delta_t_in_sec;
-	orbiter_kernel_system::os_interface Os;
-
-	tps = Os.os_ticks_per_second();
-	t0 = Os.os_ticks();
-
-
-	Nau.nauty_interface_matrix_int(
-		Enc,
-		NO,
-		verbose_level - 3);
-
-	//Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
-
-	t1 = Os.os_ticks();
-	dt = t1 - t0;
-	delta_t_in_sec = (double) dt / (double) tps;
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty "
-				"after Nau.nauty_interface_matrix_int, "
-				"Ago=" << *NO->Ago << " dt=" << dt
-				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
-	}
-	if (verbose_level > 5) {
-		int h;
-		//int degree = nb_rows +  nb_cols;
-
-		for (h = 0; h < NO->Aut_counter; h++) {
-			cout << "aut generator " << h << " / " << NO->Aut_counter << " : " << endl;
-			//Combi.perm_print(cout, Aut + h * degree, degree);
-			cout << endl;
-		}
-	}
-
-
-
-
-	if (f_compute_canonical_form) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::run_nauty "
-					"before Enc->compute_canonical_form" << endl;
-		}
-
-
-		Enc->compute_canonical_form(
-				Canonical_form,
-				NO->canonical_labeling, verbose_level);
-
-		if (f_v) {
-			cout << "object_with_canonical_form::run_nauty "
-					"after Enc->compute_canonical_form" << endl;
-		}
-
-	}
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty done" << endl;
-	}
-
-
-}
-
-void object_with_canonical_form::run_nauty_basic(
-		l1_interfaces::nauty_output *&NO,
-		int verbose_level)
-// called from
-// classify_using_canonical_forms::orderly_test
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic"
-				<< endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-	int nb_rows, nb_cols;
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic before OiP->encoding_size" << endl;
-	}
-	encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic after OiP->encoding_size" << endl;
-		cout << "object_with_canonical_form::run_nauty_basic nb_rows=" << nb_rows << endl;
-		cout << "object_with_canonical_form::run_nauty_basic nb_cols=" << nb_cols << endl;
-	}
-
-	data_structures::bitvector *Canonical_form;
-
-	encoded_combinatorial_object *Enc;
-
-	int f_save_nauty_input_graphs = false;
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic "
-				"before OwCF->run_nauty" << endl;
-	}
-	run_nauty(
-			false /* f_compute_canonical_form */,
-			f_save_nauty_input_graphs,
-			Canonical_form,
-			NO,
-			Enc,
-			verbose_level);
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic "
-				"after OwCF->run_nauty" << endl;
-	}
-
-	FREE_OBJECT(Enc);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::run_nauty_basic done" << endl;
-	}
-}
-
-
-
-void object_with_canonical_form::canonical_labeling(
-		int f_save_nauty_input_graphs,
-		l1_interfaces::nauty_output *NO,
-		int verbose_level)
-// called from
-// projective_space_with_action::canonical_labeling
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	encoded_combinatorial_object *Enc;
-	l1_interfaces::nauty_interface Nau;
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling"
-				<< endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"before encode_incma" << endl;
-	}
-	encode_incma(Enc, verbose_level - 1);
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"after encode_incma" << endl;
-	}
-	if (verbose_level > 5) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"Incma:" << endl;
-		Enc->print_incma();
-	}
-
-	if (f_vv) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"initializing Aut, Base, "
-				"Transversal_length" << endl;
-	}
-
-
-	if (f_save_nauty_input_graphs) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::canonical_labeling "
-					"saving Levi graph" << endl;
-		}
-
-		// save Levi graph in DIMACS format:
-
-
-		graph_theory::colored_graph *CG;
-		string label;
-		static int canonical_labeling_graph_counter = 0;
-
-		data_structures::string_tools ST;
-
-
-
-
-		label = input_fname;
-
-		ST.chop_off_extension(label);
-
-		label += "_canonical_labeling_graph_" + std::to_string(canonical_labeling_graph_counter);
-
-		canonical_labeling_graph_counter++;
-
-		Enc->create_Levi_graph(CG, label, verbose_level);
-
-
-		CG->save_DIMACS(label, verbose_level);
-
-		FREE_OBJECT(CG);
-	}
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"calling nauty_interface_matrix_int" << endl;
-	}
-
-
-	int t0, t1, dt;
-	double delta_t_in_sec;
-	orbiter_kernel_system::os_interface Os;
-
-	t0 = Os.os_ticks();
-
-	Nau.nauty_interface_matrix_int(
-			Enc,
-			NO,
-			verbose_level - 3);
-
-	t1 = Os.os_ticks();
-	dt = t1 - t0;
-	delta_t_in_sec = (double) t1 / (double) dt;
-
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"done with nauty_interface_matrix_int, "
-				"Ago=" << NO->Ago << " dt=" << dt
-				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
-	}
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling "
-				"done with nauty_interface_matrix_int, "
-				"Ago=" << NO->Ago << endl;
-	}
-	FREE_OBJECT(Enc);
-	if (f_v) {
-		cout << "object_with_canonical_form::canonical_labeling done"
-				<< endl;
-	}
-}
-
 
 
 

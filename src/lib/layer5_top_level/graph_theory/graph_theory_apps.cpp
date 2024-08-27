@@ -44,7 +44,7 @@ void graph_theory_apps::automorphism_group(
 	fname = CG->label + ".colored_graph";
 
 
-	interfaces::nauty_interface_with_group Nauty;
+	interfaces::nauty_interface_for_graphs Nauty;
 	actions::action *Aut;
 
 	if (f_v) {

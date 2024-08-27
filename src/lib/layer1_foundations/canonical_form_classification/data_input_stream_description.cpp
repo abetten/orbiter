@@ -473,6 +473,24 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i],
+				"-multi_matrix") == 0) {
+
+			data_input_stream_description_element E;
+			string a, b;
+
+			a.assign(argv[++i]); // the format: m, n, max_value
+			b.assign(argv[++i]); // the entries: m values for the rows, n values for the columns, and then the m * n entries of the matrix
+
+			E.init_multi_matrix(a, b);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

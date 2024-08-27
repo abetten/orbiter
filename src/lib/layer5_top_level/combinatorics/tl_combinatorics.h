@@ -127,9 +127,11 @@ public:
 
 	int f_canonical_form_PG;
 	std::string canonical_form_PG_PG_label;
+
 	int f_canonical_form_PG_has_PA;
 	projective_geometry::projective_space_with_action
 		*Canonical_form_PG_PA;
+
 	canonical_form_classification::classification_of_objects_description
 		*Canonical_form_PG_Descr;
 
@@ -192,7 +194,7 @@ public:
 	geometry::geometric_object_create *GOC;
 
 	int f_has_combo;
-	apps_combinatorics::combinatorial_object *Combo;
+	apps_combinatorics::combinatorial_object_stream *Combo;
 
 
 	combinatorial_object_activity();
@@ -203,7 +205,7 @@ public:
 			int verbose_level);
 	void init_combo(
 			combinatorial_object_activity_description *Descr,
-			apps_combinatorics::combinatorial_object *Combo,
+			apps_combinatorics::combinatorial_object_stream *Combo,
 			int verbose_level);
 	void perform_activity(
 			orbiter_kernel_system::activity_output *&AO,
@@ -220,13 +222,13 @@ public:
 
 
 // #############################################################################
-// combinatorial_object.cpp
+// combinatorial_object_stream.cpp
 // #############################################################################
 
 
 //! a list of combinatorial objects all of the same type
 
-class combinatorial_object {
+class combinatorial_object_stream {
 public:
 
 	canonical_form_classification::data_input_stream *IS;
@@ -234,8 +236,8 @@ public:
 	canonical_form_classification::classification_of_objects *Classification;
 	canonical_form::classification_of_combinatorial_objects *Classification_CO;
 
-	combinatorial_object();
-	~combinatorial_object();
+	combinatorial_object_stream();
+	~combinatorial_object_stream();
 	void init(
 			canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
@@ -646,7 +648,8 @@ public:
 	void create_graphs(
 			int verbose_level);
 	void create_graph(
-			int case_number, long int *line, int s, int s2, int *Covered_orbits,
+			int case_number, long int *line,
+			int s, int s2, int *Covered_orbits,
 			int &nb_live_points,
 			std::string &fname,
 			int verbose_level);
@@ -1636,6 +1639,52 @@ int large_set_was_classify_test_pair_of_orbits(
 
 
 
+
+// #############################################################################
+// variety_with_TDO_and_TDA.cpp
+// #############################################################################
+
+
+//! a projective variety with a TDO and a TDA
+
+
+class variety_with_TDO_and_TDA {
+
+public:
+
+	projective_geometry::projective_space_with_action *PA;
+
+	algebraic_geometry::variety_object *Variety_object;
+
+	actions::action *A_on_points;
+	actions::action *A_on_lines;
+
+	groups::strong_generators *Aut_gens;
+
+
+	int f_has_TDO_TDA;
+
+	// these may be NULL, for instance if the projective space is too large:
+	combinatorics::decomposition_scheme *Decomposition_scheme_TDO;
+	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
+
+	algebraic_geometry::variety_object *Variety_with_TDO;
+	algebraic_geometry::variety_object *Variety_with_TDA;
+
+
+	variety_with_TDO_and_TDA();
+	~variety_with_TDO_and_TDA();
+	void init_and_compute_tactical_decompositions(
+			projective_geometry::projective_space_with_action *PA,
+			algebraic_geometry::variety_object *Variety_object,
+			groups::strong_generators *Aut_gens,
+			int verbose_level);
+	void report_decomposition_schemes(
+			std::ostream &ost,
+			int verbose_level);
+
+
+};
 
 
 
