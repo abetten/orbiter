@@ -2352,6 +2352,10 @@ public:
 			int verbose_level);
 	void print(
 			std::ostream &ost);
+	void print_equation_with_line_breaks_tex(
+			std::ostream &ost, int *coeffs);
+	void print_equation(
+			std::ostream &ost);
 	void stringify(
 			std::string &s_Eqn, //std::string &s_Eqn2,
 			std::string &s_nb_Pts,

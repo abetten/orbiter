@@ -71,7 +71,7 @@ void variety_activity::perform_activity(
 		do_compute_group(verbose_level);
 	}
 	if (Descr->f_report) {
-		do_report(verbose_level);
+		Input_Vo[0].do_report(verbose_level);
 	}
 	if (Descr->f_singular_points) {
 		do_singular_points(verbose_level);
@@ -245,20 +245,6 @@ void variety_activity::do_compute_group(
 	}
 }
 
-
-void variety_activity::do_report(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "variety_activity::do_report" << endl;
-	}
-
-	if (f_v) {
-		cout << "variety_activity::do_report done" << endl;
-	}
-}
 
 
 void variety_activity::do_singular_points(

@@ -1064,8 +1064,6 @@ public:
 			int verbose_level);
 	void do_compute_group(
 			int verbose_level);
-	void do_report(
-			int verbose_level);
 	void do_singular_points(
 			int verbose_level);
 
@@ -1127,6 +1125,12 @@ public:
 			std::ostream &ost);
 	std::string stringify_Pts();
 	std::string stringify_bitangents();
+	void do_report(
+			int verbose_level);
+	void do_report2(
+			std::ostream &ost, int verbose_level);
+	void print_summary(
+			std::ostream &ost);
 
 };
 

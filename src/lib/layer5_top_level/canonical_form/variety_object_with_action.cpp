@@ -263,67 +263,6 @@ void variety_object_with_action::apply_transformation(
 	FREE_OBJECT(old_Variety_object);
 
 
-#if 0
-	variety_description *Descr;
-
-	geometry::projective_space *Projective_space;
-
-	ring_theory::homogeneous_polynomial_domain *Ring;
-
-
-	std::string label_txt;
-	std::string label_tex;
-
-
-
-	int *eqn; // [Ring->get_nb_monomials()]
-	//int *eqn2; // [Ring->get_nb_monomials()]
-
-
-	// the partition into points and lines
-	// must be invariant under the group.
-	// must be sorted if find_point() or identify_lines() is invoked.
-
-	data_structures::set_of_sets *Point_sets;
-
-	data_structures::set_of_sets *Line_sets;
-
-#endif
-
-
-#if 0
-	Variety_object->allocate_points(
-			old_one->Variety_object->nb_pts,
-			verbose_level);
-
-	Int_vec_copy(eqn2, Quartic_curve_object->eqn15, 15);
-
-	int i;
-
-	for (i = 0; i < old_one->Quartic_curve_object->nb_pts; i++) {
-		Quartic_curve_object->Pts[i] =
-				A->Group_element->element_image_of(
-				old_one->Quartic_curve_object->Pts[i],
-				Elt, 0 /* verbose_level */);
-	}
-
-	// after mapping, the points are not in increasing order
-	// Therefore, we sort the points:
-
-	Sorting.lint_vec_heapsort(
-			Quartic_curve_object->Pts,
-			old_one->Quartic_curve_object->nb_pts);
-
-
-	for (i = 0; i < 28; i++) {
-		Quartic_curve_object->bitangents28[i] =
-				A_on_lines->Group_element->element_image_of(
-				old_one->Quartic_curve_object->bitangents28[i],
-				Elt, 0 /* verbose_level */);
-	}
-
-	// We don't sort the lines because the lines are often in the Schlaefli ordering
-#endif
 
 	if (f_v) {
 		print(cout);
@@ -407,6 +346,152 @@ std::string variety_object_with_action::stringify_bitangents()
 	return s;
 
 }
+
+void variety_object_with_action::do_report(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_report" << endl;
+	}
+
+	int q;
+
+	q = Variety_object->Projective_space->Subspaces->F->q;
+
+	{
+		string fname_report;
+
+		fname_report = "variety_" + Variety_object->label_txt + "_report.tex";
+
+
+		{
+			ofstream ost(fname_report);
+
+
+			string title, author, extra_praeamble;
+
+			title = "Variety $" + Variety_object->label_tex + "$ over GF("
+					+ std::to_string(q) + ")";
+
+
+			l1_interfaces::latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				false /* f_book */,
+				true /* f_title */,
+				title, author,
+				false /*f_toc */,
+				false /* f_landscape */,
+				false /* f_12pt */,
+				true /*f_enlarged_page */,
+				true /* f_pagenumbers*/,
+				extra_praeamble /* extra_praeamble */);
+
+
+
+
+			//ost << "\\subsection*{The surface $" << SC->label_tex << "$}" << endl;
+			if (f_v) {
+				cout << "variety_object_with_action::do_report "
+						"before do_report2" << endl;
+			}
+			do_report2(
+					ost, verbose_level);
+			if (f_v) {
+				cout << "variety_object_with_action::do_report "
+						"after do_report2" << endl;
+			}
+
+
+			L.foot(ost);
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	}
+
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_report done" << endl;
+	}
+}
+
+void variety_object_with_action::do_report2(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_report2" << endl;
+	}
+
+	//int q;
+
+	//q = Variety_object->Projective_space->Subspaces->F->q;
+
+
+	Variety_object->print_equation(ost);
+
+
+	print_summary(ost);
+
+
+	if (f_has_automorphism_group) {
+		Stab_gens->print_generators_in_latex_individually(
+				ost, verbose_level);
+	}
+	else {
+	}
+
+	if (TD) {
+		TD->report_decomposition_schemes(ost, verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "variety_object_with_action::do_report2 done" << endl;
+	}
+}
+
+void variety_object_with_action::print_summary(
+		std::ostream &ost)
+{
+	ost << "\\subsection*{Summary}" << endl;
+
+
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|l|r|}" << endl;
+
+	ring_theory::longinteger_object ago;
+
+	if (f_has_automorphism_group) {
+		Stab_gens->group_order(ago);
+	}
+	else {
+		ago.create(-1);
+	}
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of automorphisms} & " << ago << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of points} & " << Variety_object->Point_sets->Set_size[0] << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of lines} & " << Variety_object->Line_sets->Set_size[0] << " \\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of singular points} & " << Variety_object->Singular_points.size() << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+}
+
+
 
 
 }}}

@@ -718,6 +718,71 @@ void variety_object::print(
 	ost << endl;
 }
 
+void variety_object::print_equation_with_line_breaks_tex(
+		std::ostream &ost, int *coeffs)
+{
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{c}" << endl;
+	Ring->print_equation_with_line_breaks_tex(
+			ost, coeffs, 10 /* nb_terms_per_line*/,
+			"\\\\\n" /* const char *new_line_text*/);
+	ost << "=0" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+}
+
+void variety_object::print_equation(
+		std::ostream &ost)
+{
+	ost << "\\subsection*{The equation}" << endl;
+	ost << "The equation of the variety ";
+	ost << " is :" << endl;
+
+
+	field_theory::finite_field *F;
+	int *coeffs; // [Ring->get_nb_monomials()]
+	int nb_monomials;
+
+
+	F = Projective_space->Subspaces->F;
+
+	nb_monomials = Ring->get_nb_monomials();
+
+	coeffs = NEW_int(nb_monomials);
+
+	Int_vec_copy(eqn, coeffs, nb_monomials);
+	F->Projective_space_basic->PG_element_normalize_from_front(
+			coeffs, 1, nb_monomials);
+
+#if 0
+	ost << "$$" << endl;
+	SO->Surf->print_equation_tex(ost, SO->eqn);
+	ost << endl << "=0\n$$" << endl;
+#else
+	print_equation_with_line_breaks_tex(ost, coeffs);
+#endif
+
+
+	Int_vec_print(ost, coeffs, nb_monomials);
+	ost << "\\\\" << endl;
+
+
+	ost << "\\begin{verbatim}" << endl;
+
+	Ring->print_equation_relaxed(ost, coeffs);
+	ost << endl;
+	ost << "\\end{verbatim}" << endl;
+
+
+	FREE_int(coeffs);
+
+	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
+
+
+}
+
+
 
 void variety_object::stringify(
 		std::string &s_Eqn1, //std::string &s_Eqn2,
