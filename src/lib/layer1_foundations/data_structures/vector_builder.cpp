@@ -59,6 +59,9 @@ void vector_builder::init(
 			f_has_k = true;
 			k = Descr->format_k;
 		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 
 	}
 	else if (Descr->f_compact) {
@@ -91,6 +94,10 @@ void vector_builder::init(
 			k = Descr->format_k;
 		}
 
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
 	}
 	else if (Descr->f_repeat) {
 		if (f_v) {
@@ -118,6 +125,9 @@ void vector_builder::init(
 			f_has_k = true;
 			k = Descr->format_k;
 		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 
 	}
 	else if (Descr->f_file) {
@@ -133,8 +143,60 @@ void vector_builder::init(
 		len = m * n;
 		f_has_k = true;
 		k = m;
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 
 	}
+
+	else if (Descr->f_file_column) {
+		if (f_v) {
+			cout << "vector_builder::init "
+					"-f_file_column " << Descr->file_column_name << " " << Descr->file_column_label << endl;
+		}
+		orbiter_kernel_system::file_io Fio;
+		int m, n;
+		data_structures::set_of_sets *SoS;
+
+
+		//Fio.Csv_file_support->lint_matrix_read_csv(
+		//		Descr->file_name, v, m, n, verbose_level);
+
+		if (f_v) {
+			cout << "vector_builder::init reading file " << Descr->file_column_name << ", column " << Descr->file_column_label << endl;
+		}
+
+		Fio.Csv_file_support->read_column_and_parse(
+				Descr->file_column_name, Descr->file_column_label,
+					SoS,
+					verbose_level);
+
+		if (SoS->nb_sets == 0) {
+			cout << "vector_builder::init the file seems to be empty" << endl;
+			exit(1);
+		}
+
+		m = SoS->nb_sets;
+		n = SoS->Set_size[0];
+		v = NEW_lint(m * n);
+
+		int i;
+
+		for (i = 0; i < m; i++) {
+			Lint_vec_copy(SoS->Sets[i], v + i * n, n);
+		}
+
+		FREE_OBJECT(SoS);
+
+		len = m * n;
+		f_has_k = true;
+		k = m;
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
+
 	else if (Descr->f_load_csv_no_border) {
 		if (f_v) {
 			cout << "vector_builder::init "
@@ -151,6 +213,9 @@ void vector_builder::init(
 		f_has_k = true;
 		k = m;
 
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 	}
 	else if (Descr->f_load_csv_data_column) {
 		if (f_v) {
@@ -170,6 +235,9 @@ void vector_builder::init(
 		f_has_k = true;
 		k = m;
 
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 	}
 	else if (Descr->f_sparse) {
 		if (f_v) {
@@ -201,6 +269,9 @@ void vector_builder::init(
 		if (Descr->f_format) {
 			f_has_k = true;
 			k = Descr->format_k;
+		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
 		}
 
 	}
@@ -237,6 +308,9 @@ void vector_builder::init(
 			f_has_k = true;
 			k = Descr->format_k;
 		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 
 	}
 	else if (Descr->f_loop) {
@@ -262,7 +336,66 @@ void vector_builder::init(
 			v[cnt++] = i;
 
 		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
 	}
+	else if (Descr->f_index_of_support) {
+		if (f_v) {
+			cout << "vector_builder::init "
+					"-index_of_support" << endl;
+		}
+
+		vector_builder *VB;
+
+		VB = Get_vector(Descr->index_of_support_input);
+
+		int i, j, s, c;
+
+		len = 0;
+		for (i = 0; i < VB->len; i++) {
+			if (VB->v[i]) {
+				len++;
+			}
+		}
+
+		v = NEW_lint(len);
+
+		if (VB->f_has_k) {
+			f_has_k = true;
+			k = VB->k;
+			s = VB->len / k;
+			if (f_v) {
+				cout << "vector_builder::init "
+						"reading matrix with k=" << k << " rows and " << s << " columns" << endl;
+			}
+			if (k * s != VB->len) {
+				cout << "vector_builder::init k * s != VB->len" << endl;
+				exit(1);
+			}
+			c = 0;
+			for (i = 0; i < k; i++) {
+				for (j = 0; j < s; j++) {
+					if (VB->v[i * s + j]) {
+						v[c++] = j;
+					}
+				}
+			}
+		}
+		else {
+			j = 0;
+			for (i = 0; i < VB->len; i++) {
+				if (VB->v[i]) {
+					v[j++] = i;
+				}
+			}
+
+		}
+
+	}
+
+
+
 	else {
 		cout << "vector_builder::init please specify "
 				"how the vector should be created" << endl;
@@ -295,6 +428,9 @@ void vector_builder::init(
 						"entry is out of range: value = " << a << endl;
 				exit(1);
 			}
+		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
 		}
 	}
 

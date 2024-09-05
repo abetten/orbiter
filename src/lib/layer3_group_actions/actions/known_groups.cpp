@@ -1042,15 +1042,22 @@ void known_groups::init_permutation_group_from_generators(
 	if (f_vv) {
 		cout << "known_groups::init_permutation_group_from_generators "
 				"the " << nb_gens << " generators are" << endl;
-		for (i = 0; i < nb_gens; i++) {
-			cout << i << " : ";
-			if (degree < 20) {
-				Combi.perm_print(cout, gens + i * degree, degree);
+		if (nb_gens > 20) {
+			cout << "known_groups::init_permutation_group_from_generators "
+					"too many to print" << endl;
+		}
+		else {
+			for (i = 0; i < nb_gens; i++) {
+				cout << i << " : ";
+				if (degree < 20) {
+					Combi.perm_print(cout, gens + i * degree, degree);
+				}
+				else {
+					cout << "known_groups::init_permutation_group_from_generators "
+							"too large to print";
+				}
+				cout << endl;
 			}
-			else {
-				cout << "too large to print";
-			}
-			cout << endl;
 		}
 	}
 

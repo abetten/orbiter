@@ -1030,23 +1030,39 @@ class action_on_subgroups {
 public:
 	
 	actions::action *A;
+
 	groups::sims *S;
+
+
+	data_structures_groups::hash_table_subgroups *Hash_table_subgroups;
+
+#if 0
 	int nb_subgroups;
 	int subgroup_order;
+
 	groups::subgroup **Subgroups;
-	int **sets;
-	int *image_set; // [subgroup_order]
-	int *perm;
-	int *perm_inv;
+
+	int **sets; // [nb_subgroups][subgroup_order]
+
+	int *perm; // inverse of perm_inv
+	int *perm_inv; // for quicksort_array_with_perm
+
+#endif
+
+	int max_subgroup_order;
+
+	int *image_set; // [max_subgroup_order]
+
 	int *Elt1;
 
 	action_on_subgroups();
 	~action_on_subgroups();
 	void init(
 			actions::action *A,
-			groups::sims *S, int nb_subgroups,
-		int subgroup_order, groups::subgroup **Subgroups,
+			groups::sims *S,
+			data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
 		int verbose_level);
+	// Subgroups[nb_subgroups]
 	long int compute_image(
 			int *Elt, long int a, int verbose_level);
 

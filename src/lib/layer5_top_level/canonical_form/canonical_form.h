@@ -39,7 +39,7 @@ public:
 	int nb_pts;
 
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *Any_combo;
 
 	int nb_rows, nb_cols;
 
@@ -826,7 +826,7 @@ public:
 class combinatorial_object_with_properties {
 public:
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *Any_Combo;
 
 	std::string label;
 
@@ -847,7 +847,7 @@ public:
 	combinatorial_object_with_properties();
 	~combinatorial_object_with_properties();
 	void init(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::any_combinatorial_object *Any_Combo,
 			l1_interfaces::nauty_output *NO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
@@ -857,7 +857,7 @@ public:
 	void lift_generators_to_matrix_group(
 			int verbose_level);
 	void init_object_in_projective_space(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::any_combinatorial_object *Any_Combo,
 			l1_interfaces::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,

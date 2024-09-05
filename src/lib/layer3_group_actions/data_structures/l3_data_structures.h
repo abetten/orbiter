@@ -111,6 +111,53 @@ public:
 };
 
 
+// #############################################################################
+// hash_table_subgroups.cpp
+// #############################################################################
+
+
+//! fast access to an array of subgroups using a hash table
+
+
+
+
+class hash_table_subgroups {
+
+public:
+
+	std::vector<void *> Subgroups;
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// two sets may have the same hash value.
+		// map cannot handle that.
+
+
+
+	hash_table_subgroups();
+	~hash_table_subgroups();
+	int nb_groups();
+	int add_subgroup(
+			groups::subgroup *Subgroup,
+			int verbose_level);
+	int find_subgroup(
+			groups::subgroup *Subgroup,
+			int &pos, uint32_t &hash, int verbose_level);
+	int find_subgroup_direct(
+			int *Elements, int group_order,
+			int &pos, uint32_t &hash, int verbose_level);
+	groups::subgroup *get_subgroup(
+			int group_idx);
+
+
+
+
+};
+
 
 // #############################################################################
 // orbit_rep.cpp

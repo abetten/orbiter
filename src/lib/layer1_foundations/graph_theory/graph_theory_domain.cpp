@@ -2296,7 +2296,296 @@ void graph_theory_domain::eigenvalues(
 
 }
 
+void graph_theory_domain::find_subgraph(
+		int nb, colored_graph **CG,
+		std::string &subgraph_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	data_structures::string_tools ST;
+
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph" << endl;
+		cout << "graph_theory_domain::find_subgraph nb = " << nb << endl;
+	}
+
+	if (ST.stringcmp(subgraph_label, "E6") == 0) {
+		if (f_v) {
+			cout << "graph_theory_domain::find_subgraph "
+					"before find_subgraph_E6" << endl;
+		}
+		//find_subgraph_E6(verbose_level);
+		if (f_v) {
+			cout << "graph_theory_domain::find_subgraph "
+					"after find_subgraph_E6" << endl;
+		}
+	}
+	else {
+		string first_letter;
+
+		first_letter = subgraph_label.substr(0,1);
+
+		if (ST.stringcmp(first_letter, "A") == 0) {
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph "
+						"first letter is A" << endl;
+			}
+			if (nb != 2) {
+				cout << "graph_theory_domain::find_subgraph family A requires exactly two input graphs" << endl;
+				exit(1);
+			}
+			string remainder;
+
+			remainder = subgraph_label.substr(1);
+
+			int n;
+
+			n = ST.strtoi(remainder);
+
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph "
+						"n = " << n << endl;
+			}
+
+
+
+			std::vector<std::vector<int>> Solutions;
+
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph "
+						"before find_subgraph_An" << endl;
+			}
+			find_subgraph_An(
+					n,
+					nb, CG,
+					Solutions,
+					verbose_level);
+
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph "
+						"after find_subgraph_An" << endl;
+			}
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph "
+						"Number of subgraphs of type An = " << Solutions.size() << endl;
+			}
+
+			orbiter_kernel_system::file_io Fio;
+			std::string fname;
+
+			fname = CG[0]->label + "_all_" + subgraph_label + ".csv";
+
+			Fio.Csv_file_support->vector_matrix_write_csv_compact(
+					fname,
+					Solutions);
+
+			if (f_v) {
+				cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+
+
+
+		}
+		else {
+			cout << "graph_theory_domain::find_subgraph "
+					"subgraph label is not recognized" << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph done" << endl;
+	}
+}
+
+void graph_theory_domain::find_subgraph_An(
+		int n,
+		int nb, colored_graph **CG,
+		std::vector<std::vector<int> > &Solutions,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	data_structures::string_tools ST;
+
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An" << endl;
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An "
+				"n = " << n
+				<< ", CG[0]->nb_points = " << CG[0]->nb_points
+				<< ", CG[1]->nb_points = " << CG[1]->nb_points
+				<< endl;
+	}
+
+	int i;
+
+	vector<int> Candidates;
+
+	for (i = 0; i < CG[0]->nb_points; i++) {
+		Candidates.push_back(i);
+	}
+
+	int current_depth = 0;
+	int *subgraph;
+
+	subgraph = NEW_int(n);
+
+	find_subgraph_An_recursion(
+			n,
+			nb, CG,
+			Candidates,
+			Solutions,
+			current_depth, subgraph,
+			verbose_level);
+
+	FREE_int(subgraph);
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An "
+				"number of solutions = " << Solutions.size()
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An done" << endl;
+	}
+}
+
+void graph_theory_domain::find_subgraph_An_recursion(
+		int n,
+		int nb, colored_graph **CG,
+		std::vector<int> &Candidates,
+		std::vector<std::vector<int> > &Solutions,
+		int current_depth, int *subgraph,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An_recursion" << endl;
+		cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << endl;
+		cout << "graph_theory_domain::find_subgraph_An_recursion Candidates.size() = " << Candidates.size() << endl;
+	}
+
+	if (current_depth == n) {
+		if (f_v) {
+			cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth);
+			cout << " is solution " << Solutions.size() << endl;
+
+		}
+		vector<int> sol;
+		int i;
+
+		for (i = 0; i < n; i++) {
+			sol.push_back(subgraph[i]);
+		}
+		Solutions.push_back(sol);
+		return;
+	}
+	int cur;
+
+	for (cur = 0; cur < Candidates.size(); cur++) {
+
+		subgraph[current_depth] = Candidates[cur];
+
+		vector<int> Candidates_reduced;
+
+		int j, a, b;
+		int f_fail = false;
+
+		for (b = 0; b < CG[0]->nb_points; b++) {
+
+			f_fail = false;
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+				Int_vec_print(cout, subgraph, current_depth + 1);
+				cout << ", testing whether " << b << " could be a candidate" << endl;
+			}
+
+			for (j = 0; j <= current_depth; j++) {
+				if (b == subgraph[j]) {
+					if (f_v) {
+						cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						Int_vec_print(cout, subgraph, current_depth + 1);
+						cout << ", candidate " << b << " is eliminated because it is contained in the subgraph" << endl;
+					}
+					f_fail = true;
+					break;
+				}
+			}
+
+			if (f_fail) {
+				continue;
+			}
+
+
+			f_fail = false;
+			for (j = 0; j < current_depth; j++) {
+				a = subgraph[j];
+				if (!CG[0]->is_adjacent(a, b)) {
+					if (f_v) {
+						cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						Int_vec_print(cout, subgraph, current_depth + 1);
+						cout << ", candidate " << b << " is eliminated because " << a << "," << b << " does not have order 2" << endl;
+					}
+					f_fail = true;
+					break;
+				}
+			}
+			if (f_fail) {
+				continue;
+			}
+
+			a = subgraph[current_depth];
+			if (!CG[1]->is_adjacent(a, b)) {
+				if (f_v) {
+					cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+					Int_vec_print(cout, subgraph, current_depth + 1);
+					cout << ", candidate " << b << " is eliminated because " << a << "," << b << " does not have order 3" << endl;
+				}
+				f_fail = true;
+			}
+			if (f_fail) {
+				continue;
+			}
+			if (f_v) {
+				cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+				Int_vec_print(cout, subgraph, current_depth + 1);
+				cout << ", candidate " << b << " is accepted" << endl;
+			}
+			Candidates_reduced.push_back(b);
+
+		} // next b
+
+		if (f_v) {
+			cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth + 1);
+			cout << " : Candidates_reduced=";
+			for (j = 0; j < Candidates_reduced.size(); j++) {
+				cout << Candidates_reduced[j];
+				if (j < Candidates_reduced.size() - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+
+		}
+
+		find_subgraph_An_recursion(
+				n,
+				nb, CG,
+				Candidates_reduced,
+				Solutions,
+				current_depth + 1, subgraph,
+				verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::find_subgraph_An_recursion done" << endl;
+	}
+}
 
 
 

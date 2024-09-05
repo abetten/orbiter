@@ -3061,7 +3061,8 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
 
-	label_txt = variety_label + variety_label_tex;
+	label_txt = variety_label;
+	label_tex = variety_label_tex;
 
 	int *coeff;
 	int sz;

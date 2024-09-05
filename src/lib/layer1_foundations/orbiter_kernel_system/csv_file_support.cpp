@@ -504,6 +504,115 @@ void csv_file_support::int_matrix_read_csv(
 	}
 }
 
+void csv_file_support::read_column_as_table_of_int(
+		std::string &fname, std::string &col_label,
+	int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_int "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_column_as_table_of_int file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	data_structures::set_of_sets *SoS;
+
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_int "
+				"reading file " << fname << ", column " << col_label << endl;
+	}
+
+	Fio.Csv_file_support->read_column_and_parse(
+			fname, col_label,
+				SoS,
+				verbose_level);
+
+	if (SoS->nb_sets == 0) {
+		cout << "csv_file_support::read_column_as_table_of_int the file seems to be empty" << endl;
+		exit(1);
+	}
+
+	m = SoS->nb_sets;
+	n = SoS->Set_size[0];
+	M = NEW_int(m * n);
+
+	int i;
+
+	for (i = 0; i < m; i++) {
+		Lint_vec_copy_to_int(SoS->Sets[i], M + i * n, n);
+	}
+
+	FREE_OBJECT(SoS);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_int done" << endl;
+	}
+}
+
+
+
+void csv_file_support::read_column_as_table_of_lint(
+		std::string &fname, std::string &col_label,
+	long int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_lint "
+				"reading file " << fname << endl;
+	}
+	if (Fio->file_size(fname) <= 0) {
+		cout << "csv_file_support::read_column_as_table_of_lint file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << Fio->file_size(fname) << endl;
+		exit(1);
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	data_structures::set_of_sets *SoS;
+
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_lint "
+				"reading file " << fname << ", column " << col_label << endl;
+	}
+
+	Fio.Csv_file_support->read_column_and_parse(
+			fname, col_label,
+				SoS,
+				verbose_level);
+
+	if (SoS->nb_sets == 0) {
+		cout << "csv_file_support::read_column_as_table_of_lint the file seems to be empty" << endl;
+		exit(1);
+	}
+
+	m = SoS->nb_sets;
+	n = SoS->Set_size[0];
+	M = NEW_lint(m * n);
+
+	int i;
+
+	for (i = 0; i < m; i++) {
+		Lint_vec_copy(SoS->Sets[i], M + i * n, n);
+	}
+
+	FREE_OBJECT(SoS);
+
+	if (f_v) {
+		cout << "csv_file_support::read_column_as_table_of_lint done" << endl;
+	}
+}
+
+
 void csv_file_support::int_matrix_read_csv_no_border(
 		std::string &fname,
 	int *&M, int &m, int &n, int verbose_level)
@@ -1706,6 +1815,17 @@ void csv_file_support::do_csv_file_concatenate(
 	S = new data_structures::spreadsheet[nb_files];
 	//identifier_column = NEW_int(nb_files);
 
+	std::string *Header_cols;
+	std::string **T;
+	int *Nb_r;
+	int *Nb_c;
+	int nb_r = 0;
+	int nb_c = 0;
+
+	Nb_r = NEW_int(nb_files);
+	Nb_c = NEW_int(nb_files);
+	T = (std::string **) NEW_pvoid(nb_files);
+
 	for (i = 0; i < nb_files; i++) {
 		cout << "Reading table " << fname_in[i] << endl;
 		S[i].read_spreadsheet(fname_in[i], 0 /*verbose_level*/);
@@ -1716,9 +1836,56 @@ void csv_file_support::do_csv_file_concatenate(
 			S[i].print_table(cout, false);
 		}
 
+		std::string *Header_rows1;
+		std::string *Header_cols1;
+		std::string *T1;
+
+		S[i].stringify(
+				Header_rows1, Header_cols1, T1,
+				Nb_r[i], Nb_c[i],
+				verbose_level);
+
+		if (i == 0) {
+			Header_cols = Header_cols1;
+			nb_c = Nb_c[0];
+		}
+		else {
+			delete [] Header_cols1;
+
+			if (Nb_c[i] != Nb_c[0]) {
+				cout << "The number of columns is not constant, cannot merge" << endl;
+				exit(1);
+			}
+		}
+
+		delete [] Header_rows1;
+
+		T[i] = T1;
+		nb_r += Nb_r[i];
 
 	}
 
+	std::string *Table;
+	int r, j, h;
+
+
+	Table = new std::string [nb_r * nb_c];
+	r = 0;
+	for (h = 0; h < nb_files; h++) {
+		for (i = 0; i < Nb_r[h]; i++, r++) {
+			for (j = 0; j < nb_c; j++) {
+				Table[r * nb_c + j] = T[h][i * nb_c + j];
+			}
+		}
+	}
+
+	write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_r, nb_c, Table,
+			Header_cols,
+			verbose_level);
+
+#if 0
 	{
 		ofstream ost(fname_out);
 		int j;
@@ -1735,8 +1902,21 @@ void csv_file_support::do_csv_file_concatenate(
 		}
 		ost << "END" << endl;
 	}
+#endif
 	cout << "Written file " << fname_out
 			<< " of size " << Fio->file_size(fname_out) << endl;
+
+
+	delete [] Table;
+	for (h = 0; h < nb_files; h++) {
+		delete [] T[h];
+	}
+	delete [] Header_cols;
+
+
+	FREE_int(Nb_r);
+	FREE_int(Nb_c);
+	FREE_pvoid((void **) T);
 
 
 	if (f_v) {

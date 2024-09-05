@@ -42,6 +42,10 @@ vector_builder_description::vector_builder_description()
 	f_file = false;
 	//std::string file_name;
 
+	f_file_column = false;
+	//std::string file_column_name;
+	//std::string file_column_label;
+
 	f_load_csv_no_border = false;
 	//std::string load_csv_no_border_fname;
 
@@ -60,6 +64,10 @@ vector_builder_description::vector_builder_description()
 	loop_start = 0;
 	loop_upper_bound = 0;
 	loop_increment = 0;
+
+	f_index_of_support = false;
+	//std::string index_of_support_input;
+
 }
 
 vector_builder_description::~vector_builder_description()
@@ -130,6 +138,14 @@ int vector_builder_description::read_arguments(
 				cout << "-file " << file_name << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-file_column") == 0) {
+			f_file_column = true;
+			file_column_name.assign(argv[++i]);
+			file_column_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-file_column " << file_column_name << " " << file_column_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
 			f_load_csv_no_border = true;
 			load_csv_no_border_fname.assign(argv[++i]);
@@ -143,7 +159,8 @@ int vector_builder_description::read_arguments(
 			load_csv_data_column_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-load_csv_data_column "
-						<< load_csv_data_column_fname << " " << load_csv_data_column_idx << endl;
+						<< load_csv_data_column_fname
+						<< " " << load_csv_data_column_idx << endl;
 			}
 		}
 
@@ -171,6 +188,13 @@ int vector_builder_description::read_arguments(
 					<< loop_start << " "
 					<< loop_upper_bound << " "
 					<< loop_increment << endl;
+		}
+		else if (ST.stringcmp(argv[i], "-index_of_support") == 0) {
+			f_index_of_support = true;
+			index_of_support_input.assign(argv[++i]);
+			if (f_v) {
+				cout << "-index_of_support " << index_of_support_input << endl;
+			}
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -215,6 +239,9 @@ void vector_builder_description::print()
 	if (f_file) {
 		cout << "-file " << file_name << endl;
 	}
+	if (f_file_column) {
+		cout << "-file_column " << file_column_name << " " << file_column_label << endl;
+	}
 	if (f_load_csv_no_border) {
 		cout << "-load_csv_no_border " << load_csv_no_border_fname << endl;
 	}
@@ -233,6 +260,9 @@ void vector_builder_description::print()
 				<< loop_start << " "
 				<< loop_upper_bound << " "
 				<< loop_increment << endl;
+	}
+	if (f_index_of_support) {
+		cout << "-index_of_support " << index_of_support_input << endl;
 	}
 
 }

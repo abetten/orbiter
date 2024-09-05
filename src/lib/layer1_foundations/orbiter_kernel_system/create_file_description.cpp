@@ -62,54 +62,73 @@ int create_file_description::read_arguments(
 {
 	int i;
 	data_structures::string_tools ST;
+	int f_v = (verbose_level >= 1);
 
-	cout << "create_file_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "create_file_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-file_mask") == 0) {
 			f_file_mask = true;
 			file_mask.assign(argv[++i]);
-			cout << "-file_mask " << file_mask << endl;
+			if (f_v) {
+				cout << "-file_mask " << file_mask << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-N") == 0) {
 			f_N = true;
 			N = ST.strtoi(argv[++i]);
-			cout << "-N " << N << endl;
+			if (f_v) {
+				cout << "-N " << N << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-read_cases") == 0) {
 			f_read_cases = true;
 			read_cases_fname.assign(argv[++i]);
-			cout << "-read_cases " << read_cases_fname << endl;
+			if (f_v) {
+				cout << "-read_cases " << read_cases_fname << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-read_cases_text") == 0) {
 			f_read_cases_text = true;
 			read_cases_fname.assign(argv[++i]);
 			read_cases_column_of_case = ST.strtoi(argv[++i]);
 			read_cases_column_of_fname = ST.strtoi(argv[++i]);
-			cout << "-read_cases_text " << read_cases_fname << " "
-					<< read_cases_column_of_case << " "
-					<< read_cases_column_of_fname << endl;
+			if (f_v) {
+				cout << "-read_cases_text " << read_cases_fname << " "
+						<< read_cases_column_of_case << " "
+						<< read_cases_column_of_fname << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-line") == 0) {
 			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = false;
-			cout << "-line " << lines[nb_lines] << endl;
+			if (f_v) {
+				cout << "-line " << lines[nb_lines] << endl;
+			}
 			nb_lines++;
 		}
 		else if (ST.stringcmp(argv[i], "-line_numeric") == 0) {
 			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = true;
-			cout << "-line_numeric " << lines[nb_lines] << endl;
+			if (f_v) {
+				cout << "-line_numeric " << lines[nb_lines] << endl;
+			}
 			nb_lines++;
 		}
 		else if (ST.stringcmp(argv[i], "-final_line") == 0) {
 			final_lines[nb_final_lines].assign(argv[++i]);
-			cout << "-final_line " << final_lines[nb_final_lines] << endl;
+			if (f_v) {
+				cout << "-final_line " << final_lines[nb_final_lines] << endl;
+			}
 			nb_final_lines++;
 		}
 		else if (ST.stringcmp(argv[i], "-command") == 0) {
 			f_command = true;
 			command.assign(argv[++i]);
-			cout << "-command " << command << endl;
+			if (f_v) {
+				cout << "-command " << command << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-repeat") == 0) {
 			f_repeat = true;
@@ -117,25 +136,33 @@ int create_file_description::read_arguments(
 			repeat_start = ST.strtoi(argv[++i]);
 			repeat_increment = ST.strtoi(argv[++i]);
 			repeat_mask.assign(argv[++i]);
-			cout << "-repeat " << repeat_N
-					<< " " << repeat_start
-					<< " " << repeat_increment
-					<< " " << repeat_mask
-					<< endl;
+			if (f_v) {
+				cout << "-repeat " << repeat_N
+						<< " " << repeat_start
+						<< " " << repeat_increment
+						<< " " << repeat_mask
+						<< endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-split") == 0) {
 			f_split = true;
 			split_m = ST.strtoi(argv[++i]);
-			cout << "-split " << split_m << endl;
+			if (f_v) {
+				cout << "-split " << split_m << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-tasks") == 0) {
 			f_tasks = true;
 			nb_tasks = ST.strtoi(argv[++i]);
 			tasks_line.assign(argv[++i]);
-			cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
+			if (f_v) {
+				cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -143,7 +170,9 @@ int create_file_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 		}
 	} // next i
-	cout << "create_file_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "create_file_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 

@@ -348,6 +348,8 @@ public:
 			int a, int *&primes, int *&exponents);
 	int nb_prime_factors_counting_multiplicities(
 			long int a);
+	void all_divisors(
+			long int a, std::vector<long int> &D);
 	int nb_distinct_prime_factors(
 			long int a);
 	void factor_lint(

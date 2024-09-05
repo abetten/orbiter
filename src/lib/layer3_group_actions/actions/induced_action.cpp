@@ -1479,7 +1479,7 @@ action *induced_action::induced_action_on_sets(
 
 action *induced_action::create_induced_action_on_subgroups(
 		groups::sims *S,
-	int nb_subgroups, int group_order, groups::subgroup **Subgroups,
+		data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1490,7 +1490,7 @@ action *induced_action::create_induced_action_on_subgroups(
 	}
 	A = induced_action_on_subgroups(
 			A_old, S,
-		nb_subgroups, group_order, Subgroups,
+			Hash_table_subgroups,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "induced_action::create_induced_action_on_subgroups done" << endl;
@@ -1501,7 +1501,7 @@ action *induced_action::create_induced_action_on_subgroups(
 
 action *induced_action::induced_action_on_subgroups(
 	action *old_action, groups::sims *S,
-	int nb_subgroups, int group_order, groups::subgroup **Subgroups,
+	data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1521,8 +1521,8 @@ action *induced_action::induced_action_on_subgroups(
 
 	A = NEW_OBJECT(action);
 
-	A->label = A_old->label + "_on_subgroups" + std::to_string(nb_subgroups) + "," + std::to_string(group_order);
-	A->label_tex = A_old->label_tex + " {\\rm OnSubgroups" + std::to_string(nb_subgroups) + "," + std::to_string(group_order) + "}";
+	A->label = A_old->label + "_on_subgroups_nb_" + std::to_string(Hash_table_subgroups->nb_groups());
+	A->label_tex = A_old->label_tex + " {\\rm OnSubgroups" + std::to_string(Hash_table_subgroups->nb_groups()) + "}";
 
 	A->f_has_subaction = true;
 	A->subaction = old_action;
@@ -1531,8 +1531,11 @@ action *induced_action::induced_action_on_subgroups(
 				"allocating action_on_subgroups" << endl;
 	}
 	AOS = NEW_OBJECT(induced_actions::action_on_subgroups);
-	AOS->init(old_action, S, nb_subgroups,
-			group_order, Subgroups, verbose_level - 1);
+	AOS->init(old_action, S,
+			Hash_table_subgroups,
+			//nb_subgroups,
+			//group_order, Subgroups,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "induced_action::induced_action_on_subgroups "
 				"after action_on_subgroups init" << endl;
@@ -1545,7 +1548,7 @@ action *induced_action::induced_action_on_subgroups(
 
 	A->f_has_strong_generators = false;
 
-	A->degree = nb_subgroups;
+	A->degree = Hash_table_subgroups->nb_groups();
 	//base_len = 0;
 	A->ptr = NEW_OBJECT(action_pointer_table);
 	A->ptr->init_function_pointers_induced_action();

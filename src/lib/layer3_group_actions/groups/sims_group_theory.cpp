@@ -1961,6 +1961,7 @@ long int sims::conjugate_by_rank(
 		long int rk_a, long int rk_b,
 		int verbose_level)
 // computes b^{-1} * a * b
+// Uses Elt1, Elt2, Elt3, Elt4
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_c;
@@ -1981,6 +1982,7 @@ long int sims::conjugate_by_rank_b_bv_given(
 		long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level)
 // comutes b^{-1} * a * b
+// Uses Elt1, Elt3, Elt4
 {
 	int f_v = (verbose_level >= 1);
 	long int rk_c;
@@ -2055,12 +2057,12 @@ int sims::identify_group(char *path_t144,
 
 
 void sims::zuppo_list(
-		int *Zuppos, int &nb_zuppos, int verbose_level)
+		std::vector<long int> &Zuppos, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int goi;
 	ring_theory::longinteger_object go;
-	int rk, o, i, j;
+	long int rk, o, i, j;
 	int *Elt1;
 	int *Elt2;
 	int *f_done;
@@ -2079,7 +2081,6 @@ void sims::zuppo_list(
 	if (f_v) {
 		cout << "sims::zuppo_list group of order " << goi << endl;
 	}
-	nb_zuppos = 0;
 	for (rk = 0; rk < goi; rk++) {
 		//cout << "element " << rk << " / " << goi << endl;
 		if (f_done[rk]) {
@@ -2098,9 +2099,9 @@ void sims::zuppo_list(
 		if (f_v) {
 			cout << "sims::zuppo_list element " << rk << " / " << goi << " has order "
 					<< o << " which is a prime power; "
-					"nb_zuppos = " << nb_zuppos << endl;
+					"nb_zuppos = " << Zuppos.size() << endl;
 		}
-		Zuppos[nb_zuppos++] = rk;
+		Zuppos.push_back(rk);
 		f_done[rk] = true;
 		for (i = 1; i < o; i++) {
 			if (NT.gcd_lint(i, o) == 1) {
@@ -2113,7 +2114,7 @@ void sims::zuppo_list(
 		}
 	}
 	if (f_v) {
-		cout << "sims::zuppo_list We found " << nb_zuppos << " zuppo elements" << endl;
+		cout << "sims::zuppo_list We found " << Zuppos.size() << " zuppo elements" << endl;
 	}
 	FREE_int(Elt1);
 	FREE_int(Elt2);

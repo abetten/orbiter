@@ -1,5 +1,5 @@
 /*
- * nauty_interface_for_OwCF.cpp
+ * nauty_interface_for_combo.cpp
  *
  *  Created on: Aug 24, 2024
  *      Author: betten
@@ -19,18 +19,18 @@ namespace layer1_foundations {
 namespace l1_interfaces {
 
 
-nauty_interface_for_OwCF::nauty_interface_for_OwCF()
+nauty_interface_for_combo::nauty_interface_for_combo()
 {
 }
 
-nauty_interface_for_OwCF::~nauty_interface_for_OwCF()
+nauty_interface_for_combo::~nauty_interface_for_combo()
 {
 }
 
 
 
-void nauty_interface_for_OwCF::run_nauty_for_OwCF(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+void nauty_interface_for_combo::run_nauty_for_combo(
+		canonical_form_classification::any_combinatorial_object *Any_combo,
 		int f_compute_canonical_form,
 		int f_save_nauty_input_graphs,
 		data_structures::bitvector *&Canonical_form,
@@ -46,7 +46,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo" << endl;
 	}
 	//int L;
 	combinatorics::combinatorics_domain Combi;
@@ -54,22 +54,22 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 	l1_interfaces::nauty_interface Nau;
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
 
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
-				"before OwCF->encode_incma" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
+				"before Any_combo->encode_incma" << endl;
 	}
-	OwCF->encode_incma(Enc, verbose_level - 1);
+	Any_combo->encode_incma(Enc, verbose_level - 1);
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
-				"after OwCF->encode_incma" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
+				"after Any_combo->encode_incma" << endl;
 	}
 	if (verbose_level > 2) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF Incma not shown" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo Incma not shown" << endl;
 		//Enc->print_incma();
 	}
 
@@ -80,7 +80,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 		// save Levi graph in DIMACS format:
 
 		if (f_v) {
-			cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
 					"saving Levi graph" << endl;
 		}
 
@@ -90,7 +90,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 		static int run_nauty_graph_counter = 0;
 
 
-		graph_label = OwCF->label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
+		graph_label = Any_combo->label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
 
 		run_nauty_graph_counter++;
 
@@ -103,7 +103,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 		FREE_OBJECT(CG);
 
 		if (f_v) {
-			cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
 					"saving Levi graph done" << endl;
 		}
 
@@ -116,7 +116,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 	//L = Enc->nb_rows * Enc->nb_cols;
 
 	if (verbose_level > 5) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
 				"before NO->nauty_output_allocate" << endl;
 	}
 
@@ -127,7 +127,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
 				"before Nau.Levi_graph" << endl;
 	}
 	int t0, t1, dt, tps;
@@ -150,7 +150,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 	delta_t_in_sec = (double) dt / (double) tps;
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
 				"after Nau.Levi_graph, "
 				"Ago=" << *NO->Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
@@ -172,7 +172,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 	if (f_compute_canonical_form) {
 
 		if (f_v) {
-			cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
 					"before Enc->compute_canonical_form" << endl;
 		}
 
@@ -182,7 +182,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 				NO->canonical_labeling, verbose_level);
 
 		if (f_v) {
-			cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF "
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
 					"after Enc->compute_canonical_form" << endl;
 		}
 
@@ -190,14 +190,14 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF(
 
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF done" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo done" << endl;
 	}
 
 
 }
 
-void nauty_interface_for_OwCF::run_nauty_for_OwCF_basic(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+void nauty_interface_for_combo::run_nauty_for_combo_basic(
+		canonical_form_classification::any_combinatorial_object *Any_combo,
 		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // called from
@@ -207,7 +207,7 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF_basic(
 
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF_basic"
+		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic"
 				<< endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
@@ -220,11 +220,11 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF_basic(
 	int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF_basic "
+		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic "
 				"before run_nauty_for_OwCF" << endl;
 	}
-	run_nauty_for_OwCF(
-			OwCF,
+	run_nauty_for_combo(
+			Any_combo,
 			false /* f_compute_canonical_form */,
 			f_save_nauty_input_graphs,
 			Canonical_form,
@@ -232,14 +232,14 @@ void nauty_interface_for_OwCF::run_nauty_for_OwCF_basic(
 			Enc,
 			verbose_level);
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF_basic "
-				"after run_nauty_for_OwCF" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic "
+				"after run_nauty_for_combo" << endl;
 	}
 
 	FREE_OBJECT(Enc);
 
 	if (f_v) {
-		cout << "nauty_interface_for_OwCF::run_nauty_for_OwCF_basic done" << endl;
+		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic done" << endl;
 	}
 }
 

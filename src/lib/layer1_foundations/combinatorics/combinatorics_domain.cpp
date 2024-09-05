@@ -838,15 +838,38 @@ void combinatorics_domain::rank_k_subsets(
 
 		r = rank_k_subset(Mtx + i * k, n, k);
 
-		cout << "The rank of ";
-		Int_vec_print(cout, Mtx + i * k, k);
-		cout << " is " << r << endl;
+		if (f_v) {
+			cout << "combinatorics_domain::rank_k_subsets The rank of ";
+			Int_vec_print(cout, Mtx + i * k, k);
+			cout << " is " << r << endl;
+		}
 		Ranks[i] = r;
 	}
 
-	cout << "the ranks of all subsets are: ";
-	Int_vec_print(cout, Ranks, nb_rows);
-	cout << endl;
+	if (f_v) {
+		cout << "combinatorics_domain::rank_k_subsets the ranks of all subsets are: ";
+		Int_vec_print(cout, Ranks, nb_rows);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::rank_k_subsets done" << endl;
+	}
+}
+
+void combinatorics_domain::rank_k_subsets_and_sort(
+		int *Mtx, int nb_rows, int n, int k, int *&Ranks,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::rank_k_subsets_and_sort" << endl;
+	}
+
+
+	rank_k_subsets(Mtx, nb_rows, n, k, Ranks, verbose_level);
+
 
 	data_structures::sorting Sorting;
 
@@ -857,9 +880,10 @@ void combinatorics_domain::rank_k_subsets(
 	cout << endl;
 
 	if (f_v) {
-		cout << "combinatorics_domain::rank_k_subsets done" << endl;
+		cout << "combinatorics_domain::rank_k_subsets_and_sort done" << endl;
 	}
 }
+
 
 void combinatorics_domain::subset_permute_up_front(
 		int n, int k,

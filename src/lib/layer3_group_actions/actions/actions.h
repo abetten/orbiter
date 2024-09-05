@@ -1518,13 +1518,12 @@ public:
 		int f_induce_action, int verbose_level);
 	action *create_induced_action_on_subgroups(
 			groups::sims *S,
-		int nb_subgroups, int group_order,
-		groups::subgroup **Subgroups, int verbose_level);
+			data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
+		int verbose_level);
 	action *induced_action_on_subgroups(
 			action *old_action,
 			groups::sims *S,
-		int nb_subgroups, int group_order,
-		groups::subgroup **Subgroups,
+			data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
 		int verbose_level);
 	action *induced_action_by_restriction_on_orbit_with_schreier_vector(
 		int f_induce_action, groups::sims *old_G,

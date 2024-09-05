@@ -31,7 +31,7 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 	Pts_on_object = NULL;
 	nb_pts = 0;
 
-	OwCF = NULL;
+	Any_combo = NULL;
 
 	nb_rows = nb_cols = 0;
 
@@ -58,7 +58,7 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 
 	int *equation;
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *OwCF;
 
 	data_structures::bitvector *Canonical_form;
 
@@ -84,8 +84,8 @@ automorphism_group_of_variety::~automorphism_group_of_variety()
 	if (equation) {
 		FREE_int(equation);
 	}
-	if (OwCF) {
-		FREE_OBJECT(OwCF);
+	if (Any_combo) {
+		FREE_OBJECT(Any_combo);
 	}
 	if (Canonical_form) {
 		FREE_OBJECT(Canonical_form);
@@ -133,38 +133,38 @@ void automorphism_group_of_variety::init_and_compute(
 	automorphism_group_of_variety::Pts_on_object = Pts_on_object;
 	automorphism_group_of_variety::nb_pts = nb_pts;
 
-	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
+	Any_combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
-				"before OwCF->init_input_fname" << endl;
+				"before Any_combo->init_input_fname" << endl;
 	}
-	OwCF->init_input_fname(
+	Any_combo->init_input_fname(
 			input_fname,
 			input_idx,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
-				"after OwCF->init_input_fname" << endl;
+				"after Any_combo->init_input_fname" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
-				"before OwCF->init_point_set" << endl;
+				"before Any_combo->init_point_set" << endl;
 	}
-	OwCF->init_point_set(
+	Any_combo->init_point_set(
 			Pts_on_object, nb_pts,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "automorphism_group_of_variety::init_and_compute "
-				"after Quartic_curve_from_surface->OwCF->init_point_set" << endl;
+				"after Any_combo->init_point_set" << endl;
 	}
-	OwCF->P = PA->P;
+	Any_combo->P = PA->P;
 
 
-	OwCF->encoding_size(
+	Any_combo->encoding_size(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
@@ -208,7 +208,7 @@ void automorphism_group_of_variety::init_and_compute(
 	}
 
 	SG_pt_stab = Nau.set_stabilizer_of_object(
-			OwCF,
+			Any_combo,
 		PA->A,
 		f_compute_canonical_form,
 		f_save_nauty_input_graphs,

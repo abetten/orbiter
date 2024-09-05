@@ -729,6 +729,8 @@ int data_input_stream::count_number_of_objects_to_test(
 
 void data_input_stream::read_objects(
 		int verbose_level)
+// the objects will be stored in Objects,
+// which is an array of pointers to any_combinatorial_object
 {
 	int f_v = (verbose_level >= 1);
 	int input_idx;
@@ -753,16 +755,16 @@ void data_input_stream::read_objects(
 					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_point_set_from_string(
+			Any_combo->init_point_set_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
@@ -770,97 +772,97 @@ void data_input_stream::read_objects(
 			orbiter_kernel_system::file_io Fio;
 			long int *the_set;
 			int set_size;
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 			Fio.read_set_from_file(Descr->Input[input_idx].input_string, the_set, set_size, verbose_level);
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_point_set(the_set, set_size, verbose_level);
+			Any_combo->init_point_set(the_set, set_size, verbose_level);
 
 			FREE_lint(the_set);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_lines) {
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_line_set_from_string(
+			Any_combo->init_line_set_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points_and_lines) {
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_points_and_lines_from_string(
+			Any_combo->init_points_and_lines_from_string(
 					Descr->Input[input_idx].input_string /*set_text*/,
 					Descr->Input[input_idx].input_string2 /*set2_text*/,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_packing) {
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 			int q;
 
 			q = Descr->Input[input_idx].input_data1;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_packing_from_string(
+			Any_combo->init_packing_from_string(
 					Descr->Input[input_idx].input_string /*packing_text*/,
 					q,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry) {
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_incidence_geometry_from_string(
+			Any_combo->init_incidence_geometry_from_string(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_data1 /*v*/,
 					Descr->Input[input_idx].input_data2 /*b*/,
 					Descr->Input[input_idx].input_data3 /*nb_flags*/,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry_by_row_ranks) {
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_incidence_geometry_from_string_of_row_ranks(
+			Any_combo->init_incidence_geometry_from_string_of_row_ranks(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_data1 /*v*/,
 					Descr->Input[input_idx].input_data2 /*b*/,
 					Descr->Input[input_idx].input_data3 /*r*/,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries) {
@@ -894,19 +896,19 @@ void data_input_stream::read_objects(
 			}
 
 			for (h = 0; h < Geos.size(); h++) {
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_incidence_geometry_from_vector(
+				Any_combo->init_incidence_geometry_from_vector(
 						Geos[h],
 						Descr->Input[input_idx].input_data1 /*v*/,
 						Descr->Input[input_idx].input_data2 /*b*/,
 						Descr->Input[input_idx].input_data3 /*nb_flags*/,
 						verbose_level);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 
 			}
 		}
@@ -941,19 +943,19 @@ void data_input_stream::read_objects(
 			}
 
 			for (h = 0; h < Geos.size(); h++) {
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_incidence_geometry_from_vector(
+				Any_combo->init_incidence_geometry_from_vector(
 						Geos[h],
 						Descr->Input[input_idx].input_data1 /*v*/,
 						Descr->Input[input_idx].input_data2 /*b*/,
 						Geos[h].size() /*nb_flags*/,
 						verbose_level);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 
 			}
 		}
@@ -980,7 +982,8 @@ void data_input_stream::read_objects(
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			int h;
@@ -991,16 +994,16 @@ void data_input_stream::read_objects(
 					cout << "data_input_stream::read_objects " << h << " / " << SoS->nb_sets << endl;
 				}
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_large_set(
+				Any_combo->init_large_set(
 						SoS->Sets[h], SoS->Set_size[h], v, b, k, design_sz,
 						0 /*verbose_level*/);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_OBJECT(SoS);
@@ -1059,18 +1062,18 @@ void data_input_stream::read_objects(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_packing_from_spread_table(
+				Any_combo->init_packing_from_spread_table(
 						SoS->Sets[h],
 						Spread_table, nb_spreads, spread_size,
 						q,
 						verbose_level);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 			FREE_lint(Spread_table);
 
@@ -1160,18 +1163,18 @@ void data_input_stream::read_objects(
 			for (h = 0; h < nb_solutions; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_design_from_block_orbits(
+				Any_combo->init_design_from_block_orbits(
 						SoS,
 						Solutions + h * width, width,
 						k,
 						verbose_level);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 			FREE_lint(Solutions);
 
@@ -1238,7 +1241,7 @@ void data_input_stream::read_objects(
 			for (h = 0; h < nb_designs; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 				for (j = 0; j < b; j++) {
 					for (u = 0; u < k; u++) {
@@ -1246,13 +1249,13 @@ void data_input_stream::read_objects(
 					}
 				}
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_design_from_block_table(
+				Any_combo->init_design_from_block_table(
 						Block_table, v, b, k,
 						verbose_level);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_lint(Block_table);
@@ -1293,20 +1296,20 @@ void data_input_stream::read_objects(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
 				if (f_v) {
 					cout << "before OwCF->init_packing_from_set " << h << " / " << SoS->nb_sets << endl;
 				}
 
-				OwCF->init_packing_from_set(
+				Any_combo->init_packing_from_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
 
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_OBJECT(SoS);
@@ -1330,7 +1333,8 @@ void data_input_stream::read_objects(
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 
@@ -1339,16 +1343,16 @@ void data_input_stream::read_objects(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_line_set(
+				Any_combo->init_line_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
 
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_OBJECT(SoS);
@@ -1372,7 +1376,8 @@ void data_input_stream::read_objects(
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string
+						<< ", underlying_set_size=" << underlying_set_size << endl;
 				cout << "number of sets = " << SoS->nb_sets << endl;
 			}
 
@@ -1382,16 +1387,16 @@ void data_input_stream::read_objects(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_point_set(
+				Any_combo->init_point_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
 
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_OBJECT(SoS);
@@ -1419,16 +1424,16 @@ void data_input_stream::read_objects(
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_point_set(
+				Any_combo->init_point_set(
 						SoS->Sets[h], SoS->Set_size[h], verbose_level);
 
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 			FREE_OBJECT(SoS);
@@ -1521,19 +1526,19 @@ void data_input_stream::read_objects(
 					}
 
 					for (i = 0; i < nb_sol; i++) {
-						object_with_canonical_form *OwCF;
+						any_combinatorial_object *Any_combo;
 
 
 						Lint_vec_copy(Reps->Sets[c], set, prefix_sz);
 						Lint_vec_copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
 
-						OwCF = NEW_OBJECT(object_with_canonical_form);
+						Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-						OwCF->init_point_set(
+						Any_combo->init_point_set(
 								set, prefix_sz + sol_width,
 								0 /*verbose_level*/);
 
-						Objects.push_back(OwCF);
+						Objects.push_back(Any_combo);
 					}
 					FREE_lint(Sol_idx);
 					FREE_lint(set);
@@ -1581,16 +1586,16 @@ void data_input_stream::read_objects(
 			int i;
 
 			for (i = 0; i < nb_sol; i++) {
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_point_set(
+				Any_combo->init_point_set(
 						SoS->Sets[i], SoS->Set_size[i],
 						0 /*verbose_level*/);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 			FREE_OBJECT(SoS);
 		}
@@ -1633,16 +1638,16 @@ void data_input_stream::read_objects(
 			int i;
 
 			for (i = 0; i < nb_sol; i++) {
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_point_set(
+				Any_combo->init_point_set(
 						SoS->Sets[i], SoS->Set_size[i],
 						0 /*verbose_level*/);
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 			FREE_OBJECT(SoS);
 
@@ -1658,17 +1663,17 @@ void data_input_stream::read_objects(
 					<< Descr->Input[input_idx].input_data1 << " vertices:" << endl;
 			}
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_graph_by_adjacency_matrix_text(
+			Any_combo->init_graph_by_adjacency_matrix_text(
 					Descr->Input[input_idx].input_string /*adjacency_matrix*/,
 					Descr->Input[input_idx].input_data1 /* N */,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix_from_file) {
@@ -1716,18 +1721,18 @@ void data_input_stream::read_objects(
 			int i;
 
 			for (i = 0; i < Reps->nb_sets; i++) {
-				object_with_canonical_form *OwCF;
+				any_combinatorial_object *Any_combo;
 
-				OwCF = NEW_OBJECT(object_with_canonical_form);
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-				OwCF->init_graph_by_adjacency_matrix(
+				Any_combo->init_graph_by_adjacency_matrix(
 						Reps->Sets[i],
 						Reps->Set_size[i],
 						N,
 						verbose_level);
 
 
-				Objects.push_back(OwCF);
+				Objects.push_back(Any_combo);
 			}
 
 		}
@@ -1741,35 +1746,36 @@ void data_input_stream::read_objects(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_graph_by_object(
+			Any_combo->init_graph_by_object(
 					CG,
 					verbose_level);
 
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_multi_matrix) {
 			if (f_v) {
 				cout << "input multi matrix "
-						<< Descr->Input[input_idx].input_string << " " << Descr->Input[input_idx].input_string2 << endl;
+						<< Descr->Input[input_idx].input_string
+						<< " " << Descr->Input[input_idx].input_string2 << endl;
 			}
 
-			object_with_canonical_form *OwCF;
+			any_combinatorial_object *Any_combo;
 
 
-			OwCF = NEW_OBJECT(object_with_canonical_form);
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
 
-			OwCF->init_multi_matrix(
+			Any_combo->init_multi_matrix(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_string2,
 					verbose_level);
 
-			Objects.push_back(OwCF);
+			Objects.push_back(Any_combo);
 
 		}
 

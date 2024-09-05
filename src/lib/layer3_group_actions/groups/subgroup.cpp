@@ -17,34 +17,35 @@ namespace groups {
 
 subgroup::subgroup()
 {
-	A = NULL;
+	Subgroup_lattice = NULL;
+	//A = NULL;
 	Elements = NULL;
 	group_order = 0;
 	gens = NULL;
 	nb_gens = 0;
 	Sub = NULL;
 	SG = NULL;
-	//null();
 }
 
 subgroup::~subgroup()
 {
 	if (Elements) {
 		FREE_int(Elements);
-		}
+	}
 	if (gens) {
 		FREE_int(gens);
-		}
+	}
 	if (Sub) {
 		FREE_OBJECT(Sub);
-		}
+	}
 	if (SG) {
 		FREE_OBJECT(SG);
-		}
+	}
 }
 
 void subgroup::init_from_sims(
-		sims *S, sims *Sub,
+		groups::subgroup_lattice *Subgroup_lattice,
+		sims *Sub,
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -55,7 +56,8 @@ void subgroup::init_from_sims(
 	if (f_v) {
 		cout << "subgroup::init_from_sims" << endl;
 	}
-	A = S->A;
+	//A = S->A;
+	subgroup::Subgroup_lattice = Subgroup_lattice;
 	subgroup::Sub = Sub;
 	subgroup::SG = SG;
 	group_order = SG->group_order_as_lint();
@@ -63,11 +65,11 @@ void subgroup::init_from_sims(
 		cout << "subgroup::init_from_sims "
 				"group_order=" << group_order << endl;
 	}
-	Elt = NEW_int(A->elt_size_in_int);
+	Elt = NEW_int(Subgroup_lattice->A->elt_size_in_int);
 	Elements = NEW_int(group_order);
 	for (i = 0; i < group_order; i++) {
 		Sub->element_unrank_lint(i, Elt);
-		rk = S->element_rank_lint(Elt);
+		rk = Subgroup_lattice->Sims->element_rank_lint(Elt);
 		Elements[i] = rk;
 	}
 	Sorting.int_vec_heapsort(Elements, group_order);
@@ -78,15 +80,38 @@ void subgroup::init_from_sims(
 }
 
 void subgroup::init(
+		groups::subgroup_lattice *Subgroup_lattice,
 		int *Elements,
-		int group_order, int *gens, int nb_gens)
+		int group_order, int *gens, int nb_gens, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup::init" << endl;
+	}
+
+	subgroup::Subgroup_lattice = Subgroup_lattice;
 	subgroup::Elements = NEW_int(group_order);
 	subgroup::gens = NEW_int(nb_gens);
 	subgroup::group_order = group_order;
 	subgroup::nb_gens = nb_gens;
 	Int_vec_copy(Elements, subgroup::Elements, group_order);
 	Int_vec_copy(gens, subgroup::gens, nb_gens);
+	if (f_v) {
+		cout << "subgroup::init done" << endl;
+	}
+}
+
+void subgroup::init_trivial_subgroup(
+		groups::subgroup_lattice *Subgroup_lattice)
+{
+	subgroup::Subgroup_lattice = Subgroup_lattice;
+	group_order = 1;
+	Elements = NEW_int(group_order);
+	Elements[0] = 0;
+	nb_gens = 0;
+	gens = NEW_int(nb_gens);
+	group_order = 1;
 }
 
 void subgroup::print()
@@ -106,10 +131,10 @@ int subgroup::contains_this_element(
 	
 	if (Sorting.int_vec_search(Elements, group_order, elt, idx)) {
 		return true;
-		}
+	}
 	else {
 		return false;
-		}
+	}
 }
 
 void subgroup::report(
@@ -117,6 +142,20 @@ void subgroup::report(
 {
 	SG->print_generators_tex(ost);
 }
+
+uint32_t subgroup::compute_hash()
+{
+	uint32_t hash;
+	data_structures::sorting Sorting;
+	data_structures::data_structures_global Data;
+
+	Sorting.int_vec_heapsort(Elements, group_order);
+	hash = Data.int_vec_hash(Elements, group_order);
+	return hash;
+
+}
+
+
 
 }}}
 

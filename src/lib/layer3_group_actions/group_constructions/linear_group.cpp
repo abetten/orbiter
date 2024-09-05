@@ -1813,7 +1813,11 @@ void linear_group::report(
 			groups::sylow_structure *Syl;
 
 			Syl = NEW_OBJECT(groups::sylow_structure);
-			Syl->init(H, verbose_level);
+			Syl->init(
+					H,
+					label,
+					label_tex,
+					verbose_level);
 			Syl->report(ost);
 
 		}

@@ -21,7 +21,7 @@ namespace combinatorics_with_groups {
 
 group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 {
-	OwCF = NULL;
+	Any_Combo = NULL;
 
 	//std::string label_txt;
 	//std::string label_tex;
@@ -62,7 +62,7 @@ group_action_on_combinatorial_object::~group_action_on_combinatorial_object()
 void group_action_on_combinatorial_object::init(
 		std::string &label_txt,
 		std::string &label_tex,
-		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::any_combinatorial_object *Any_Combo,
 		actions::action *A_perm,
 		int verbose_level)
 {
@@ -75,7 +75,7 @@ void group_action_on_combinatorial_object::init(
 	group_action_on_combinatorial_object::label_txt = label_txt;
 	group_action_on_combinatorial_object::label_tex = label_tex;
 
-	group_action_on_combinatorial_object::OwCF = OwCF;
+	group_action_on_combinatorial_object::Any_Combo = Any_Combo;
 	group_action_on_combinatorial_object::A_perm = A_perm;
 
 
@@ -88,12 +88,12 @@ void group_action_on_combinatorial_object::init(
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"before OwCF->encode_incma" << endl;
+				"before Any_Combo->encode_incma" << endl;
 	}
-	OwCF->encode_incma(Enc, 0 /*verbose_level*/);
+	Any_Combo->encode_incma(Enc, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
-				"after OwCF->encode_incma" << endl;
+				"after Any_Combo->encode_incma" << endl;
 	}
 
 	if (f_v) {
@@ -399,7 +399,7 @@ void group_action_on_combinatorial_object::compute_flag_orbits(
 				"before Flags->init" << endl;
 	}
 	Flags->init(
-			OwCF, false, A_perm, A_perm->Strong_gens,
+			Any_Combo, false, A_perm, A_perm->Strong_gens,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "
@@ -411,7 +411,7 @@ void group_action_on_combinatorial_object::compute_flag_orbits(
 				"before Anti_Flags->init" << endl;
 	}
 	Anti_Flags->init(
-			OwCF, true, A_perm, A_perm->Strong_gens,
+			Any_Combo, true, A_perm, A_perm->Strong_gens,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::compute_flag_orbits "

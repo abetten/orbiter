@@ -710,10 +710,10 @@ void geometric_backtrack_search::place_row(
 	iso_type *It;
 	It = Row_stabilizer_orbits[i1];
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *OwCF;
 	int J, r, j, n, j0;
 
-	OwCF = (canonical_form_classification::object_with_canonical_form *) It->Canonical_forms->Objects[idx];
+	OwCF = (canonical_form_classification::any_combinatorial_object *) It->Canonical_forms->Objects[idx];
 
 
 	r = 0;

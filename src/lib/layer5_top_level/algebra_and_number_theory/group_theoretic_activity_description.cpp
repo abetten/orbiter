@@ -125,6 +125,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//f_test_if_geometric = false;
 	//test_if_geometric_depth = 0;
 
+
+
 	f_conjugacy_class_of = false;
 	//std::string conjugacy_class_of_label;
 	//std::string conjugacy_class_of_data;
@@ -190,7 +192,17 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string find_conjugating_element_element_from;
 	//std::string find_conjugating_element_element_to;
 
+
+	f_group_of_automorphisms_by_images_of_generators = false;
+	//std::string group_of_automorphisms_by_images_of_generators_label;
+	//std::string group_of_automorphisms_by_images_of_generators_elements;
+	//std::string group_of_automorphisms_by_images_of_generators_images;
+
+
 	// orbit stuff:
+
+
+	f_subgroup_lattice = false;
 
 
 	f_orbit_of = false;
@@ -666,9 +678,30 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-group_of_automorphisms_by_images_of_generators") == 0) {
+			f_group_of_automorphisms_by_images_of_generators = true;
+			group_of_automorphisms_by_images_of_generators_label.assign(argv[++i]);
+			group_of_automorphisms_by_images_of_generators_elements.assign(argv[++i]);
+			group_of_automorphisms_by_images_of_generators_images.assign(argv[++i]);
+			if (f_v) {
+				cout << "-group_of_automorphisms_by_images_of_generators "
+						<< " " << group_of_automorphisms_by_images_of_generators_label
+						<< " " << group_of_automorphisms_by_images_of_generators_elements
+						<< " " << group_of_automorphisms_by_images_of_generators_images
+						<< endl;
+			}
+		}
 
 		// orbit stuff:
 
+
+
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice") == 0) {
+			f_subgroup_lattice = true;
+			if (f_v) {
+				cout << "-subgroup_lattice " << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = true;
@@ -990,10 +1023,21 @@ void group_theoretic_activity_description::print()
 				<< endl;
 	}
 
+	if (f_group_of_automorphisms_by_images_of_generators) {
+		cout << "-group_of_automorphisms_by_images_of_generators "
+				<< " " << group_of_automorphisms_by_images_of_generators_label
+				<< " " << group_of_automorphisms_by_images_of_generators_elements
+				<< " " << group_of_automorphisms_by_images_of_generators_images
+				<< endl;
+	}
+
 
 	// orbit stuff:
 
 
+	if (f_subgroup_lattice) {
+		cout << "-subgroup_lattice " << endl;
+	}
 
 
 	if (f_orbit_of) {

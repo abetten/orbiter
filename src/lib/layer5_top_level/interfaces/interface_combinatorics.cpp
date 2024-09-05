@@ -925,8 +925,8 @@ void interface_combinatorics::worker(
 				Mtx, nb_rows, rank_k_subset_n, rank_k_subset_k, Ranks,
 				verbose_level);
 
-		cout << "the sorted ranks of all subsets are: " << endl;
-		Int_vec_print(cout, Ranks, nb_rows);
+		cout << "the ranks of the subsets are (in the same order as given): " << endl;
+		Int_vec_print_fully(cout, Ranks, nb_rows);
 		cout << endl;
 
 	}

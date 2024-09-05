@@ -1575,6 +1575,18 @@ int number_theory_domain::nb_prime_factors_counting_multiplicities(
 	return cnt;
 }
 
+void number_theory_domain::all_divisors(
+		long int a, std::vector<long int> &D)
+{
+	long int d;
+
+	for (d = 1; d <= a; d++) {
+		if ((a % d) == 0) {
+			D.push_back(d);
+		}
+	}
+}
+
 int number_theory_domain::nb_distinct_prime_factors(
 		long int a)
 {

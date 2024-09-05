@@ -20,7 +20,7 @@ namespace groups {
 // conjugacy_class_of_elements.cpp
 // #############################################################################
 
-//! the direct product of two matrix groups in product action
+//! stores the information about the conjugacy classes as computed by magma, for instance
 
 class conjugacy_class_of_elements {
 
@@ -1406,7 +1406,7 @@ public:
 			long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
 	void zuppo_list(
-			int *Zuppos, int &nb_zuppos, int verbose_level);
+			std::vector<long int> &Zuppos, int verbose_level);
 	void dimino(
 		int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
 		int *cosets,
@@ -1964,35 +1964,176 @@ public:
 };
 
 // #############################################################################
+// subgroup_lattice_layer.cpp:
+// #############################################################################
+
+//! one layer in the subgroup lattice of a finite group
+
+class subgroup_lattice_layer {
+
+
+public:
+
+	subgroup_lattice * Subgroup_lattice;
+
+	int layer_idx;
+
+	std::vector<long int> Divisors;
+
+
+	data_structures_groups::hash_table_subgroups *Hash_table_subgroups;
+
+	actions::action *A_on_groups;
+
+	groups::schreier *Sch_on_groups;
+
+
+#if 0
+	std::vector<void *> Subgroups;
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// two sets may have the same hash value.
+		// map cannot handle that.
+#endif
+
+
+	subgroup_lattice_layer();
+	~subgroup_lattice_layer();
+	void init(
+			subgroup_lattice *Subgroup_lattice,
+			int layer_idx,
+			int verbose_level);
+	groups::subgroup *get_subgroup(
+			int group_idx);
+	void print(
+			std::ostream &ost);
+	int add_subgroup(
+			groups::subgroup *Subgroup,
+			int verbose_level);
+	int find_subgroup(
+			groups::subgroup *Subgroup,
+			int &pos, uint32_t &hash, int verbose_level);
+	int nb_subgroups();
+	void orbits_under_conjugation(
+			int verbose_level);
+	int extend_layer(
+			int verbose_level);
+	int extend_group(
+			int group_idx, int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// subgroup_lattice.cpp:
+// #############################################################################
+
+//! subgroup lattice of a finite group
+
+class subgroup_lattice {
+
+
+public:
+	actions::action *A;
+
+	sims *Sims;
+
+	std::string label_txt;
+	std::string label_tex;
+
+	strong_generators *SG;
+	long int group_order;
+
+	int *gens;
+	int nb_gens;
+
+	std::vector<long int> Zuppos;
+
+	int nb_layers;
+
+	std::vector<long int> Divisors;
+
+
+	subgroup_lattice_layer **Subgroup_lattice_layer; // [nb_layers]
+
+	subgroup_lattice();
+	~subgroup_lattice();
+	void init(
+			actions::action *A,
+			sims *Sims,
+			std::string &label_txt,
+			std::string &label_tex,
+			strong_generators *SG,
+			int verbose_level);
+	groups::subgroup *get_subgroup(
+			int layer_idx, int group_idx);
+	void extend_all_layers(
+			int verbose_level);
+	void print();
+	int number_of_groups_total();
+	void save_csv(
+			int verbose_level);
+	int add_subgroup(
+			groups::subgroup *Subgroup,
+			int verbose_level);
+	void print_zuppos(
+			int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // subgroup.cpp:
 // #############################################################################
 
-//! a subgroup of a group using a list of elements
+//! a subgroup of a group using a list of elements, coded by their ranks in a fixed sims object
 
 class subgroup {
 public:
-	actions::action *A;
-	int *Elements;
+
+	subgroup_lattice *Subgroup_lattice;
+
+	//actions::action *A;
+
+	int *Elements; // [group_order]
+		// element ranks in the group (not in Sub), sorted
 	long int group_order;
+
 	int *gens;
 	int nb_gens;
+
 	sims *Sub;
+
 	strong_generators *SG;
 
 
 	subgroup();
 	~subgroup();
 	void init_from_sims(
-			sims *S, sims *Sub,
+			groups::subgroup_lattice *Subgroup_lattice,
+			sims *Sub,
 			strong_generators *SG, int verbose_level);
 	void init(
+			groups::subgroup_lattice *Subgroup_lattice,
 			int *Elements, int group_order,
-			int *gens, int nb_gens);
+			int *gens, int nb_gens, int verbose_level);
+	void init_trivial_subgroup(
+			groups::subgroup_lattice *Subgroup_lattice);
 	void print();
 	int contains_this_element(
 			int elt);
 	void report(
 			std::ostream &ost);
+	uint32_t compute_hash();
+
 };
 
 // #############################################################################
@@ -2009,12 +2150,18 @@ public:
 	int nb_primes;
 
 	sims *S; // the group
+
+	subgroup_lattice *Subgroup_lattice;
+
 	subgroup *Sub; // [nb_primes]
 
 	sylow_structure();
 	~sylow_structure();
 	void init(
-			sims *S, int verbose_level);
+			sims *S,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
 	void report(
 			std::ostream &ost);
 };

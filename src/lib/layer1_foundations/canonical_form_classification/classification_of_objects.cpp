@@ -186,7 +186,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	F_reject = NEW_int(IS->Objects.size());
 
-	OWCF_transversal = (object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
+	OWCF_transversal = (any_combinatorial_object **) NEW_pvoid(IS->Objects.size());
 
 	NO_transversal = (l1_interfaces::nauty_output **) NEW_pvoid(IS->Objects.size());
 
@@ -199,9 +199,9 @@ void classification_of_objects::classify_objects_using_nauty(
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
 
-		object_with_canonical_form *OwCF;
+		any_combinatorial_object *OwCF;
 
-		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (any_combinatorial_object *) IS->Objects[input_idx];
 		if (false) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
@@ -254,7 +254,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 		if (!F_reject[input_idx]) {
 			OWCF_transversal[nb_orbits] =
-					(object_with_canonical_form *) IS->Objects[input_idx];
+					(any_combinatorial_object *) IS->Objects[input_idx];
 			NO_transversal[nb_orbits] = NO;
 			nb_orbits++;
 		}
@@ -426,7 +426,7 @@ void classification_of_objects::save_transversal(
 }
 
 void classification_of_objects::process_any_object(
-		object_with_canonical_form *OwCF,
+		any_combinatorial_object *OwCF,
 		int input_idx, long int &ago, int &f_reject,
 		l1_interfaces::nauty_output *&NO,
 		encoded_combinatorial_object *&Enc,
@@ -528,7 +528,7 @@ void classification_of_objects::process_any_object(
 
 
 int classification_of_objects::process_object(
-		object_with_canonical_form *OwCF,
+		any_combinatorial_object *OwCF,
 	long int &ago,
 	int &iso_idx_if_found,
 	l1_interfaces::nauty_output *&NO,
@@ -555,16 +555,16 @@ int classification_of_objects::process_object(
 	}
 
 
-	l1_interfaces::nauty_interface_for_OwCF NI;
+	l1_interfaces::nauty_interface_for_combo NI;
 
 
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
-				"before NI.run_nauty_for_OwCF" << endl;
+				"before NI.run_nauty_for_combo" << endl;
 	}
 
 
-	NI.run_nauty_for_OwCF(
+	NI.run_nauty_for_combo(
 			OwCF,
 			true /* f_compute_canonical_form */,
 			Descr->f_save_nauty_input_graphs,
@@ -576,7 +576,7 @@ int classification_of_objects::process_object(
 
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
-				"after NI.run_nauty_for_OwCF" << endl;
+				"after NI.run_nauty_for_combo" << endl;
 	}
 
 

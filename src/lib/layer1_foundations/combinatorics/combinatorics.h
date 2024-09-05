@@ -292,6 +292,9 @@ public:
 	void rank_k_subsets(
 			int *Mtx, int nb_rows, int n, int k, int *&Ranks,
 			int verbose_level);
+	void rank_k_subsets_and_sort(
+			int *Mtx, int nb_rows, int n, int k, int *&Ranks,
+			int verbose_level);
 	void subset_permute_up_front(
 			int n, int k, int *set, int *k_subset_idx,
 		int *permuted_set);

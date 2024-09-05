@@ -53,6 +53,7 @@ namespace combinatorics_with_groups {
 namespace data_structures_groups {
 
 	class group_container;
+	class hash_table_subgroups;
 	class orbit_rep;
 	class orbit_transversal;
 	class schreier_vector_handler;
@@ -96,6 +97,8 @@ namespace groups {
 	class schreier_sims;
 	class sims;
 	class strong_generators;
+	class subgroup_lattice_layer;
+	class subgroup_lattice;
 	class subgroup;
 	class sylow_structure;
 

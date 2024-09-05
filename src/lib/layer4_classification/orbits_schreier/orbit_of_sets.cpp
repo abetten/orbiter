@@ -176,23 +176,32 @@ void orbit_of_sets::compute(
 				Lint_vec_print(cout, new_set, sz);
 				cout << endl;
 			}
+
+#if 0
 			Sorting.lint_vec_heapsort(new_set, sz);
 			h = Data.lint_vec_hash(new_set, sz);
 
-		    map<uint32_t, int>::iterator itr, itr1, itr2;
+			map<uint32_t, int>::iterator itr, itr1, itr2;
 		    int pos, f_found;
 
 		    itr1 = Hashing.lower_bound(h);
 		    itr2 = Hashing.upper_bound(h);
 		    f_found = false;
 		    for (itr = itr1; itr != itr2; ++itr) {
-		        pos = itr->second;
-		        if (Sorting.lint_vec_compare(
-		        		new_set, Sets[pos], sz) == 0) {
-		        	f_found = true;
-		        	break;
-		        }
+		    	pos = itr->second;
+		    	if (Sorting.lint_vec_compare(
+		    			new_set, Sets[pos], sz) == 0) {
+		    		f_found = true;
+		    		break;
+		    	}
 		    }
+#else
+		    int pos, f_found;
+
+			f_found = find_set(new_set, pos, h);
+#endif
+
+
 		    if (!f_found) {
 
 				if (f_vv) {
@@ -296,6 +305,32 @@ void orbit_of_sets::compute(
 	if (f_v) {
 		cout << "orbit_of_sets::compute done" << endl;
 	}
+}
+
+int orbit_of_sets::find_set(
+		long int *new_set, int &pos, uint32_t &hash)
+{
+	data_structures::sorting Sorting;
+	data_structures::data_structures_global Data;
+
+	Sorting.lint_vec_heapsort(new_set, sz);
+	hash = Data.lint_vec_hash(new_set, sz);
+
+	map<uint32_t, int>::iterator itr, itr1, itr2;
+	int f_found;
+
+	itr1 = Hashing.lower_bound(hash);
+	itr2 = Hashing.upper_bound(hash);
+	f_found = false;
+	for (itr = itr1; itr != itr2; ++itr) {
+    	pos = itr->second;
+        if (Sorting.lint_vec_compare(
+        		new_set, Sets[pos], sz) == 0) {
+        	f_found = true;
+        	break;
+        }
+	}
+	return f_found;
 }
 
 void orbit_of_sets::setup_root_node(
@@ -509,6 +544,19 @@ void orbit_of_sets::make_table_of_coset_reps(
 	}
 }
 
+void orbit_of_sets::get_path(
+		std::vector<int> &path,
+		int j)
+{
+	if (Extra[2 * j + 0] != -1) {
+		get_path(path, Extra[2 * j + 0]);
+		path.push_back(Extra[2 * j + 1]);
+	}
+	else {
+
+	}
+
+}
 void orbit_of_sets::coset_rep(
 		int j)
 // result is in cosetrep

@@ -260,9 +260,9 @@ void gen_geo::main2(
 
 		}
 
-		canonical_form_classification::object_with_canonical_form *OiP;
+		canonical_form_classification::any_combinatorial_object *OiP;
 
-		OiP = (canonical_form_classification::object_with_canonical_form *) it->Canonical_forms->Objects[0];
+		OiP = (canonical_form_classification::any_combinatorial_object *) it->Canonical_forms->Objects[0];
 
 		if (inc->is_block_tactical(V, OiP->set)) {
 

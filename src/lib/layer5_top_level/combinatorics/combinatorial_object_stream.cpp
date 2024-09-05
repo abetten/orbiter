@@ -201,9 +201,9 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		F_distinguishing[input_idx] = CG->test_distinguishing_property(
 				OwCF->set, OwCF->sz, verbose_level);
@@ -230,9 +230,9 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 			continue;
 		}
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		OwCF->print(cout);
 
@@ -291,9 +291,9 @@ void combinatorial_object_stream::do_covering_type(
 	}
 
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *OwCF;
 
-	OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[0];
+	OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
 
 
 	if (OwCF->type != t_PTS) {
@@ -365,9 +365,9 @@ void combinatorial_object_stream::do_covering_type(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 
 		if (OwCF->type != t_PTS) {
@@ -490,9 +490,9 @@ void combinatorial_object_stream::do_compute_frequency_graph(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 #if 0
 		if (input_idx == 0) {
@@ -550,9 +550,9 @@ void combinatorial_object_stream::do_compute_ideal(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
 
@@ -580,9 +580,9 @@ void combinatorial_object_stream::do_save(
 
 	N = IS->Objects.size();
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *OwCF;
 
-	OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[0];
+	OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
 
 	//OwCF->set;
 	sz = OwCF->sz;
@@ -595,9 +595,9 @@ void combinatorial_object_stream::do_save(
 					<< " / " << IS->Objects.size() << endl;
 		}
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *)
+		OwCF = (canonical_form_classification::any_combinatorial_object *)
 				IS->Objects[input_idx];
 
 		//OwCF->set;
@@ -614,9 +614,9 @@ void combinatorial_object_stream::do_save(
 	Sets = NEW_lint(N * sz);
 
 	for (input_idx = 0; input_idx < N; input_idx++) {
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
@@ -717,9 +717,9 @@ void combinatorial_object_stream::draw_incidence_matrices(
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"object " << i << " / " << N << endl;
 			}
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			canonical_form_classification::encoded_combinatorial_object *Enc;
@@ -822,9 +822,9 @@ void combinatorial_object_stream::unpack_from_restricted_action(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			//encoded_combinatorial_object *Enc;
@@ -922,9 +922,9 @@ void combinatorial_object_stream::line_covering_type(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type_basic_given_a_set_of_lines(
@@ -1003,9 +1003,9 @@ void combinatorial_object_stream::line_type(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[i];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type(
@@ -1130,9 +1130,9 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::object_with_canonical_form *OwCF;
+		canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::object_with_canonical_form *) IS->Objects[input_idx];
+		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		if (OwCF->type != t_INC) {
 			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
@@ -1171,7 +1171,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 
 			std::vector<std::string> feedback;
 
-			Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
+			Activity.init(Graph_theoretic_activity_description, 1, &CG, verbose_level);
 
 
 			if (f_v) {

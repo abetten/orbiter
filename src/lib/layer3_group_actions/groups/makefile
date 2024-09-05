@@ -20,6 +20,8 @@ MODULES = \
 	sims3.o \
 	strong_generators.o \
 	strong_generators_groups.o \
+	subgroup_lattice_layer.o \
+	subgroup_lattice.o \
 	subgroup.o \
 	sylow_structure.o \
 	linalg.o \

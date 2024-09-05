@@ -173,7 +173,7 @@ void iso_type::find_and_add_geo(
 	}
 
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *OwCF;
 	int nb_flags;
 
 	nb_flags = sum_R;
@@ -184,7 +184,7 @@ void iso_type::find_and_add_geo(
 
 		gg->inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-		OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
+		OwCF = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 		OwCF->init_incidence_geometry(
 			theInc, nb_flags, v, gg->inc->Encoding->b, nb_flags,
@@ -283,9 +283,9 @@ void iso_type::print_geos(
 
 			cout << h << " / " << nb_geo << ":" << endl;
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
 
 
 			gg->inc->print_inc(cout, v, OwCF->set);
@@ -339,9 +339,9 @@ void iso_type::write_inc_file(
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
 			gg->inc->print_inc(ost, v, OwCF->set);
 
 			ost << endl;
@@ -402,9 +402,9 @@ void iso_type::write_sage_file(
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
 			gg->inc->print_sage(ost, v, OwCF->set);
 			if (h < nb_geo - 1) {
 				ost << ", " << endl;
@@ -453,9 +453,9 @@ void iso_type::write_blocks_file(
 
 
 		if (nb_geo) {
-			canonical_form_classification::object_with_canonical_form *OwCF;
+			canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[0];
+			OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[0];
 
 			k = gg->inc->compute_k(v, OwCF->set);
 
@@ -468,7 +468,7 @@ void iso_type::write_blocks_file(
 				//inc->print_geo(ost, v, theGEO1[h]);
 
 
-				OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
 				gg->inc->print_blocks(ost, v, OwCF->set);
 
 				ost << endl;
@@ -525,9 +525,9 @@ void iso_type::write_blocks_file_long(
 				int *K;
 				int i, j, a;
 
-				canonical_form_classification::object_with_canonical_form *OwCF;
+				canonical_form_classification::any_combinatorial_object *OwCF;
 
-				OwCF = (canonical_form_classification::object_with_canonical_form *) Canonical_forms->Objects[h];
+				OwCF = (canonical_form_classification::any_combinatorial_object *) Canonical_forms->Objects[h];
 
 				theInc = OwCF->set;
 

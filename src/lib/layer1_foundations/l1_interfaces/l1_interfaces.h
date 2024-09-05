@@ -415,7 +415,7 @@ public:
 
 
 // #############################################################################
-// nauty_interface_for_OwCF.cpp
+// nauty_interface_for_combo.cpp
 // #############################################################################
 
 
@@ -423,12 +423,12 @@ public:
 
 
 
-class nauty_interface_for_OwCF {
+class nauty_interface_for_combo {
 public:
-	nauty_interface_for_OwCF();
-	~nauty_interface_for_OwCF();
-	void run_nauty_for_OwCF(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+	nauty_interface_for_combo();
+	~nauty_interface_for_combo();
+	void run_nauty_for_combo(
+			canonical_form_classification::any_combinatorial_object *Any_combo,
 			int f_compute_canonical_form,
 			int f_save_nauty_input_graphs,
 			data_structures::bitvector *&Canonical_form,
@@ -441,8 +441,8 @@ public:
 	// classification_of_objects::process_object
 	// nauty_interface_with_group::set_stabilizer_of_object
 	// classify_using_canonical_forms::find_object
-	void run_nauty_for_OwCF_basic(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+	void run_nauty_for_combo_basic(
+			canonical_form_classification::any_combinatorial_object *Any_combo,
 			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 

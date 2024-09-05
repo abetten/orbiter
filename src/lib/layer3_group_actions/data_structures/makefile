@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	group_container.o \
+	hash_table_subgroups.o \
 	orbit_rep.o \
 	orbit_transversal.o \
 	schreier_vector_handler.o \

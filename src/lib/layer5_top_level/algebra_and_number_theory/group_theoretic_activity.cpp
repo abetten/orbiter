@@ -644,7 +644,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->conjugacy_class_of" << endl;
 		}
-		AG->conjugacy_class_of(Descr->conjugacy_class_of_label,
+		AG->conjugacy_class_of(
+				Descr->conjugacy_class_of_label,
 				Descr->conjugacy_class_of_data,
 				verbose_level);
 		if (f_v) {
@@ -1112,9 +1113,248 @@ void group_theoretic_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_group_of_automorphisms_by_images_of_generators) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"-group_of_automorphisms_by_images_of_generators" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"label = " << Descr->group_of_automorphisms_by_images_of_generators_label << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"elements = " << Descr->group_of_automorphisms_by_images_of_generators_elements << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"images = " << Descr->group_of_automorphisms_by_images_of_generators_images << endl;
+		}
+
+
+		apps_algebra::vector_ge_builder *VB;
+		data_structures_groups::vector_ge *Elements_ge;
+		int *Images;
+		int m, n;
+		int *Perms;
+		long int go;
+
+		VB = Get_object_of_type_vector_ge(Descr->group_of_automorphisms_by_images_of_generators_elements);
+		Elements_ge = VB->V;
+
+		Get_matrix(
+				Descr->group_of_automorphisms_by_images_of_generators_images, Images, m, n);
+
+		if (f_v) {
+			cout << "m = " << m << endl;
+			cout << "n = " << n << endl;
+			cout << "Images=" << endl;
+			Int_matrix_print(Images, m, n);
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->automorphism_by_generator_images" << endl;
+		}
+
+		AG->automorphism_by_generator_images(
+				Descr->group_of_automorphisms_by_images_of_generators_label,
+				Elements_ge,
+				Images, m, n,
+				Perms, go,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->automorphism_by_generator_images" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"we found " << m << " permutations of degree " << go << endl;
+		}
+
+		actions::action *A_perm;
+
+		A_perm = NEW_OBJECT(actions::action);
+
+
+		ring_theory::longinteger_object target_go;
+		int f_target_go = true;
+
+		target_go.create(m);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before A_perm->Known_groups->init_permutation_group" << endl;
+		}
+		A_perm->Known_groups->init_permutation_group(
+				go /* degree */, false /* f_no_base */, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after A_perm->Known_groups->init_permutation_group" << endl;
+		}
+
+		data_structures_groups::vector_ge *gens;
+
+		gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before gens->init_from_data" << endl;
+		}
+		gens->init_from_data(A_perm, Perms,
+				m /*nb_elements*/, A_perm->make_element_size,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after gens->init_from_data" << endl;
+		}
+
+
+
+#if 0
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+		}
+		A_perm->Known_groups->init_permutation_group_from_generators(
+				go /* degree */,
+			true /* f_target_go */, target_go,
+			m /* nb_gens */, Perms,
+			0 /* given_base_length */, NULL /* long int *given_base */,
+			false /* f_given_base */,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"create_automorphism_group_of_incidence_structure: created action ";
+			A_perm->print_info();
+			cout << endl;
+		}
+#endif
+
+		groups::sims *Sims;
+
+		{
+			groups::schreier_sims *ss;
+
+			ss = NEW_OBJECT(groups::schreier_sims);
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"before ss->init" << endl;
+			}
+			ss->init(A_perm, verbose_level - 1);
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"after ss->init" << endl;
+			}
+
+			//ss->interested_in_kernel(A_subaction, verbose_level - 1);
+
+			if (f_target_go) {
+				if (f_v) {
+					cout << "group_theoretic_activity::perform_activity "
+							"before ss->init_target_group_order" << endl;
+				}
+				ss->init_target_group_order(target_go, verbose_level - 1);
+				if (f_v) {
+					cout << "group_theoretic_activity::perform_activity "
+							"after ss->init_target_group_order" << endl;
+				}
+			}
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"before ss->init_generators" << endl;
+			}
+			ss->init_generators(gens, verbose_level - 2);
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"after ss->init_generators" << endl;
+			}
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"before ss->create_group" << endl;
+			}
+			ss->create_group(verbose_level - 2);
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"after ss->create_group" << endl;
+			}
+			Sims = ss->G;
+			ss->G = NULL;
+			//*this = *ss->G;
+
+			//ss->G->null();
+
+			//cout << "create_sims_from_generators_randomized
+			// before FREE_OBJECT ss" << endl;
+			FREE_OBJECT(ss);
+		}
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"transversal lengths:" << endl;
+			Sims->print_transversal_lengths();
+		}
+
+		groups::strong_generators *Strong_gens;
+
+		Strong_gens = NEW_OBJECT(groups::strong_generators);
+		Strong_gens->init_from_sims(Sims, verbose_level - 1);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"Strong_gens:" << endl;
+			Strong_gens->print_generators_for_make_element(cout);
+
+			std::string fname;
+
+
+			fname = Descr->group_of_automorphisms_by_images_of_generators_label + ".gap";
+
+			{
+				ofstream ost(fname);
+
+				Strong_gens->print_generators_gap(
+						ost, verbose_level);
+			}
+			orbiter_kernel_system::file_io Fio;
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity "
+						"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			}
+		}
+
+	}
 
 
 	// orbit stuff:
+
+
+
+	else if (Descr->f_subgroup_lattice) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice" << endl;
+		}
+		AG->subgroup_lattice(
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice" << endl;
+		}
+	}
 
 	else if (Descr->f_orbit_of) {
 

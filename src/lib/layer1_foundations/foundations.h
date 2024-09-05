@@ -306,6 +306,7 @@ namespace algebraic_geometry {
 
 namespace canonical_form_classification {
 
+	class any_combinatorial_object;
 	class classification_of_objects_description;
 	class classification_of_objects_report_options;
 	class classification_of_objects;
@@ -315,7 +316,6 @@ namespace canonical_form_classification {
 	class data_input_stream_description;
 	class data_input_stream;
 	class encoded_combinatorial_object;
-	class object_with_canonical_form;
 
 }
 
@@ -588,7 +588,7 @@ namespace l1_interfaces {
 	class interface_gap_low;
 	class interface_magma_low;
 	class latex_interface;
-	class nauty_interface_for_OwCF;
+	class nauty_interface_for_combo;
 	class nauty_interface;
 	class nauty_output;
 	class povray_interface;

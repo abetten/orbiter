@@ -26,6 +26,7 @@ sylow_structure::sylow_structure()
 	exponents = NULL;
 	nb_primes = 0;
 	S = NULL;
+	Subgroup_lattice = NULL;
 	Sub = NULL;
 }
 
@@ -37,13 +38,19 @@ sylow_structure::~sylow_structure()
 	if (exponents) {
 		FREE_int(exponents);
 	}
+	if (Subgroup_lattice) {
+		FREE_OBJECTS(Subgroup_lattice);
+	}
 	if (Sub) {
 		FREE_OBJECTS(Sub);
 	}
 }
 
 void sylow_structure::init(
-		sims *S, int verbose_level)
+		sims *S,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx;
@@ -73,6 +80,22 @@ void sylow_structure::init(
 		cout << endl;
 	}
 
+
+	Subgroup_lattice = NEW_OBJECT(subgroup_lattice);
+
+	if (f_v) {
+		cout << "sylow_structure::init before Subgroup_lattice->init" << endl;
+	}
+	Subgroup_lattice->init(
+			S->A, S,
+			label_txt,
+			label_tex,
+			S->A->Strong_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "sylow_structure::init after Subgroup_lattice->init" << endl;
+	}
+
 	Sub = NEW_OBJECTS(subgroup, nb_primes);
 
 	for (idx = 0; idx < nb_primes; idx++) {
@@ -88,7 +111,7 @@ void sylow_structure::init(
 		}
 		S->sylow_subgroup(primes[idx], P, verbose_level);
 		SG->init_from_sims(P, verbose_level);
-		Sub[idx].init_from_sims(S, P, SG, verbose_level);
+		Sub[idx].init_from_sims(Subgroup_lattice, P, SG, verbose_level);
 	}
 
 	if (f_v) {

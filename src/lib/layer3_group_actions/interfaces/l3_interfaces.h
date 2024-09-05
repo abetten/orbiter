@@ -371,7 +371,7 @@ public:
 	~nauty_interface_with_group();
 
 	groups::strong_generators *set_stabilizer_of_object(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::any_combinatorial_object *Any_combo,
 			actions::action *A_linear,
 		int f_compute_canonical_form,
 		int f_save_nauty_input_graphs,

@@ -1,10 +1,10 @@
-// object_with_canonical_form.cpp
+// any_combinatorial_object.cpp
 // 
 // Anton Betten
 //
 // December 23, 2017
 //
-//
+// previously: object_with_canonical_form.
 // 
 //
 //
@@ -20,7 +20,7 @@ namespace layer1_foundations {
 namespace canonical_form_classification {
 
 
-object_with_canonical_form::object_with_canonical_form()
+any_combinatorial_object::any_combinatorial_object()
 {
 	P = NULL;
 	f_has_label = false;
@@ -55,7 +55,7 @@ object_with_canonical_form::object_with_canonical_form()
 	C = NULL;
 }
 
-object_with_canonical_form::~object_with_canonical_form()
+any_combinatorial_object::~any_combinatorial_object()
 {
 	if (set) {
 		FREE_lint(set);
@@ -76,7 +76,7 @@ object_with_canonical_form::~object_with_canonical_form()
 	}
 }
 
-void object_with_canonical_form::set_label(
+void any_combinatorial_object::set_label(
 		std::string &object_label)
 {
 	f_has_label = true;
@@ -84,11 +84,11 @@ void object_with_canonical_form::set_label(
 }
 
 
-void object_with_canonical_form::print(
+void any_combinatorial_object::print(
 		std::ostream &ost)
 {
 
-	cout << "set_as_string: " << set_as_string << endl;
+	cout << "any_combinatorial_object: set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
@@ -129,7 +129,7 @@ void object_with_canonical_form::print(
 	}
 }
 
-void object_with_canonical_form::print_rows(
+void any_combinatorial_object::print_rows(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
@@ -138,7 +138,7 @@ void object_with_canonical_form::print_rows(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_rows" << endl;
+		cout << "any_combinatorial_object::print_rows" << endl;
 	}
 
 	//print_tex(ost);
@@ -159,12 +159,12 @@ void object_with_canonical_form::print_rows(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_rows done" << endl;
+		cout << "any_combinatorial_object::print_rows done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::print_tex_detailed(
+void any_combinatorial_object::print_tex_detailed(
 		std::ostream &ost,
 		canonical_form_classification::classification_of_objects_report_options
 			*Report_options,
@@ -173,66 +173,66 @@ void object_with_canonical_form::print_tex_detailed(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed" << endl;
+		cout << "any_combinatorial_object::print_tex_detailed" << endl;
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed "
+		cout << "any_combinatorial_object::print_tex_detailed "
 				"before print_tex" << endl;
 	}
 	print_tex(ost, verbose_level);
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed "
+		cout << "any_combinatorial_object::print_tex_detailed "
 				"after print_tex" << endl;
 	}
 
 	if (Report_options->f_show_incidence_matrices) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed f_show_incma" << endl;
+			cout << "any_combinatorial_object::print_tex_detailed f_show_incma" << endl;
 		}
 
-		ost << "\\subsubsection*{object\\_with\\_canonical\\_form::print\\_tex\\_detailed show\\_incma}" << endl;
+		ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex\\_detailed show\\_incma}" << endl;
 
 		encoded_combinatorial_object *Enc;
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"before encode_incma" << endl;
 		}
 		encode_incma(Enc, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"after encode_incma" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"before Enc->latex_set_system_by_columns" << endl;
 		}
 		Enc->latex_set_system_by_columns(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"after Enc->latex_set_system_by_columns" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"before Enc->latex_set_system_by_rows" << endl;
 		}
 		Enc->latex_set_system_by_rows(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"after Enc->latex_set_system_by_rows" << endl;
 		}
 
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"before Enc->latex_incma" << endl;
 		}
 		Enc->latex_incma(ost, verbose_level);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex_detailed "
+			cout << "any_combinatorial_object::print_tex_detailed "
 					"after Enc->latex_incma" << endl;
 		}
 		ost << "\\\\" << endl;
@@ -241,42 +241,42 @@ void object_with_canonical_form::print_tex_detailed(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex_detailed done" << endl;
+		cout << "any_combinatorial_object::print_tex_detailed done" << endl;
 	}
 }
 
-void object_with_canonical_form::print_tex(
+void any_combinatorial_object::print_tex(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex" << endl;
+		cout << "any_combinatorial_object::print_tex" << endl;
 	}
 
-	ost << "\\subsubsection*{object\\_with\\_canonical\\_form::print\\_tex}" << endl;
+	ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex}" << endl;
 
 	if (type == t_PTS) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_PTS" << endl;
+			cout << "any_combinatorial_object::print_tex t_PTS" << endl;
 		}
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex "
+			cout << "any_combinatorial_object::print_tex "
 					"before P->Reporting->print_set_of_points" << endl;
 		}
 		P->Reporting->print_set_of_points(ost, set, sz);
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex "
+			cout << "any_combinatorial_object::print_tex "
 					"after P->Reporting->print_set_of_points" << endl;
 		}
 	}
 	else if (type == t_LNS) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_LNS" << endl;
+			cout << "any_combinatorial_object::print_tex t_LNS" << endl;
 		}
 		ost << "set of lines of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
@@ -284,7 +284,7 @@ void object_with_canonical_form::print_tex(
 	}
 	else if (type == t_PNL) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_PNL" << endl;
+			cout << "any_combinatorial_object::print_tex t_PNL" << endl;
 		}
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
@@ -295,7 +295,7 @@ void object_with_canonical_form::print_tex(
 	}
 	else if (type == t_PAC) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_PAC" << endl;
+			cout << "any_combinatorial_object::print_tex t_PAC" << endl;
 		}
 		ost << "packing: \\\\" << endl;
 		SoS->print_table_tex(ost);
@@ -303,7 +303,7 @@ void object_with_canonical_form::print_tex(
 	}
 	else if (type == t_INC) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_INC" << endl;
+			cout << "any_combinatorial_object::print_tex t_INC" << endl;
 		}
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
@@ -320,7 +320,7 @@ void object_with_canonical_form::print_tex(
 	}
 	else if (type == t_LS) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_LS" << endl;
+			cout << "any_combinatorial_object::print_tex t_LS" << endl;
 		}
 		ost << "large set: \\\\" << endl;
 		//SoS->print_table_tex(ost);
@@ -346,7 +346,7 @@ void object_with_canonical_form::print_tex(
 	}
 	else if (type == t_MMX) {
 		if (f_v) {
-			cout << "object_with_canonical_form::print_tex t_MMX" << endl;
+			cout << "any_combinatorial_object::print_tex t_MMX" << endl;
 		}
 		ost << "multi matrix: \\\\" << endl;
 
@@ -388,11 +388,11 @@ void object_with_canonical_form::print_tex(
 
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print_tex done" << endl;
+		cout << "any_combinatorial_object::print_tex done" << endl;
 	}
 }
 
-void object_with_canonical_form::get_packing_as_set_system(
+void any_combinatorial_object::get_packing_as_set_system(
 		long int *&Sets,
 		int &nb_sets, int &set_size, int verbose_level)
 {
@@ -400,7 +400,7 @@ void object_with_canonical_form::get_packing_as_set_system(
 	int i, j;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::get_packing_as_set_system" << endl;
+		cout << "any_combinatorial_object::get_packing_as_set_system" << endl;
 	}
 	nb_sets = SoS->nb_sets;
 	set_size = SoS->Set_size[0];
@@ -411,12 +411,12 @@ void object_with_canonical_form::get_packing_as_set_system(
 		}
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::get_packing_as_set_system done" << endl;
+		cout << "any_combinatorial_object::get_packing_as_set_system done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_input_fname(
+void any_combinatorial_object::init_input_fname(
 		std::string &input_fname,
 		int input_idx,
 		int verbose_level)
@@ -424,45 +424,45 @@ void object_with_canonical_form::init_input_fname(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_input_fname" << endl;
+		cout << "any_combinatorial_object::init_input_fname" << endl;
 	}
 
-	object_with_canonical_form::input_fname = input_fname;
-	object_with_canonical_form::input_idx = input_idx;
+	any_combinatorial_object::input_fname = input_fname;
+	any_combinatorial_object::input_idx = input_idx;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_input_fname done" << endl;
+		cout << "any_combinatorial_object::init_input_fname done" << endl;
 	}
 
 }
 
-void object_with_canonical_form::init_point_set(
+void any_combinatorial_object::init_point_set(
 		long int *set, int sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_point_set" << endl;
+		cout << "any_combinatorial_object::init_point_set" << endl;
 	}
 	//object_with_canonical_form::P = P;
 	type = t_PTS;
-	object_with_canonical_form::set = NEW_lint(sz);
-	Lint_vec_copy(set, object_with_canonical_form::set, sz);
-	object_with_canonical_form::sz = sz;
+	any_combinatorial_object::set = NEW_lint(sz);
+	Lint_vec_copy(set, any_combinatorial_object::set, sz);
+	any_combinatorial_object::sz = sz;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_point_set done" << endl;
+		cout << "any_combinatorial_object::init_point_set done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_point_set_from_string(
+void any_combinatorial_object::init_point_set_from_string(
 		std::string &set_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_point_set_from_string" << endl;
+		cout << "any_combinatorial_object::init_point_set_from_string" << endl;
 	}
 
 	type = t_PTS;
@@ -470,38 +470,38 @@ void object_with_canonical_form::init_point_set_from_string(
 	Get_lint_vector_from_label(set_text, set, sz, verbose_level);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_point_set_from_string done" << endl;
+		cout << "any_combinatorial_object::init_point_set_from_string done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_line_set(
+void any_combinatorial_object::init_line_set(
 		long int *set, int sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_line_set" << endl;
+		cout << "any_combinatorial_object::init_line_set" << endl;
 	}
 	//object_with_canonical_form::P = P;
 	type = t_LNS;
-	object_with_canonical_form::set = NEW_lint(sz);
-	Lint_vec_copy(set, object_with_canonical_form::set, sz);
-	object_with_canonical_form::sz = sz;
+	any_combinatorial_object::set = NEW_lint(sz);
+	Lint_vec_copy(set, any_combinatorial_object::set, sz);
+	any_combinatorial_object::sz = sz;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_line_set done" << endl;
+		cout << "any_combinatorial_object::init_line_set done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_line_set_from_string(
+void any_combinatorial_object::init_line_set_from_string(
 		std::string &set_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_line_set_from_string" << endl;
+		cout << "any_combinatorial_object::init_line_set_from_string" << endl;
 	}
 
 	type = t_LNS;
@@ -509,11 +509,11 @@ void object_with_canonical_form::init_line_set_from_string(
 	Lint_vec_scan(set_text, set, sz);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_line_set_from_string done" << endl;
+		cout << "any_combinatorial_object::init_line_set_from_string done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_points_and_lines(
+void any_combinatorial_object::init_points_and_lines(
 	long int *set, int sz,
 	long int *set2, int sz2,
 	int verbose_level)
@@ -521,25 +521,25 @@ void object_with_canonical_form::init_points_and_lines(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_points_and_lines" << endl;
+		cout << "any_combinatorial_object::init_points_and_lines" << endl;
 	}
 	//object_with_canonical_form::P = P;
 	type = t_PNL;
 
-	object_with_canonical_form::set = NEW_lint(sz);
-	Lint_vec_copy(set, object_with_canonical_form::set, sz);
-	object_with_canonical_form::sz = sz;
+	any_combinatorial_object::set = NEW_lint(sz);
+	Lint_vec_copy(set, any_combinatorial_object::set, sz);
+	any_combinatorial_object::sz = sz;
 
-	object_with_canonical_form::set2 = NEW_lint(sz2);
-	Lint_vec_copy(set2, object_with_canonical_form::set2, sz2);
-	object_with_canonical_form::sz2 = sz2;
+	any_combinatorial_object::set2 = NEW_lint(sz2);
+	Lint_vec_copy(set2, any_combinatorial_object::set2, sz2);
+	any_combinatorial_object::sz2 = sz2;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_points_and_lines done" << endl;
+		cout << "any_combinatorial_object::init_points_and_lines done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_points_and_lines_from_string(
+void any_combinatorial_object::init_points_and_lines_from_string(
 	std::string &set_text,
 	std::string &set2_text,
 	int verbose_level)
@@ -547,7 +547,7 @@ void object_with_canonical_form::init_points_and_lines_from_string(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_points_and_lines_from_string" << endl;
+		cout << "any_combinatorial_object::init_points_and_lines_from_string" << endl;
 	}
 
 	type = t_PNL;
@@ -557,11 +557,11 @@ void object_with_canonical_form::init_points_and_lines_from_string(
 	Lint_vec_scan(set2_text, set2, sz2);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_points_and_lines_from_string done" << endl;
+		cout << "any_combinatorial_object::init_points_and_lines_from_string done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_packing_from_set(
+void any_combinatorial_object::init_packing_from_set(
 		long int *packing, int sz,
 	int verbose_level)
 {
@@ -569,7 +569,7 @@ void object_with_canonical_form::init_packing_from_set(
 	int i, q, size_of_spread, size_of_packing;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_set" << endl;
+		cout << "any_combinatorial_object::init_packing_from_set" << endl;
 	}
 	//object_with_canonical_form::P = P;
 	type = t_PAC;
@@ -577,7 +577,7 @@ void object_with_canonical_form::init_packing_from_set(
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
 	if (sz != size_of_packing * size_of_spread) {
-		cout << "object_with_canonical_form::init_packing_from_set "
+		cout << "any_combinatorial_object::init_packing_from_set "
 			"sz != size_of_packing * size_of_spread" << endl;
 		exit(1);
 	}
@@ -595,19 +595,19 @@ void object_with_canonical_form::init_packing_from_set(
 	}
 #if 0
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_set it is" << endl;
+		cout << "any_combinatorial_object::init_packing_from_set it is" << endl;
 		SoS->print_table();
 	}
 #endif
 	
 	
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_set done" << endl;
+		cout << "any_combinatorial_object::init_packing_from_set done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_packing_from_string(
+void any_combinatorial_object::init_packing_from_string(
 		std::string &packing_text,
 		int q,
 		int verbose_level)
@@ -616,7 +616,7 @@ void object_with_canonical_form::init_packing_from_string(
 	int i, size_of_spread, size_of_packing;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_string" << endl;
+		cout << "any_combinatorial_object::init_packing_from_string" << endl;
 	}
 	type = t_PAC;
 
@@ -632,7 +632,7 @@ void object_with_canonical_form::init_packing_from_string(
 	size_of_packing = q * q + q + 1;
 	N_lines = size_of_spread * size_of_packing;
 	if (sz != N_lines) {
-		cout << "object_with_canonical_form::init_packing_from_string "
+		cout << "any_combinatorial_object::init_packing_from_string "
 			"sz != N_lines" << endl;
 		exit(1);
 	}
@@ -650,7 +650,7 @@ void object_with_canonical_form::init_packing_from_string(
 	}
 #if 0
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_string it is" << endl;
+		cout << "any_combinatorial_object::init_packing_from_string it is" << endl;
 		SoS->print_table();
 	}
 #endif
@@ -659,18 +659,18 @@ void object_with_canonical_form::init_packing_from_string(
 	FREE_lint(packing);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_string done" << endl;
+		cout << "any_combinatorial_object::init_packing_from_string done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_packing_from_set_of_sets(
+void any_combinatorial_object::init_packing_from_set_of_sets(
 		data_structures::set_of_sets *SoS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_set_of_sets" << endl;
+		cout << "any_combinatorial_object::init_packing_from_set_of_sets" << endl;
 	}
 	//object_with_canonical_form::P = P;
 	type = t_PAC;
@@ -678,15 +678,15 @@ void object_with_canonical_form::init_packing_from_set_of_sets(
 	//int_vec_copy(set, object_in_projective_space::set, sz);
 	//object_in_projective_space::sz = sz;
 
-	object_with_canonical_form::SoS = SoS->copy();
+	any_combinatorial_object::SoS = SoS->copy();
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_set_of_sets done" << endl;
+		cout << "any_combinatorial_object::init_packing_from_set_of_sets done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_packing_from_spread_table(
+void any_combinatorial_object::init_packing_from_spread_table(
 	long int *data,
 	long int *Spread_table, int nb_spreads, int spread_size,
 	int q,
@@ -697,7 +697,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	int N_lines;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_packing_from_spread_table" << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table" << endl;
 		}
 	//object_with_canonical_form::P = P;
 	type = t_PAC;
@@ -705,7 +705,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
 	if (spread_size != size_of_spread) {
-		cout << "object_with_canonical_form::init_packing_from_spread_table "
+		cout << "any_combinatorial_object::init_packing_from_spread_table "
 				"spread_size != size_of_spread" << endl;
 		exit(1);
 	}
@@ -725,7 +725,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
-		cout << "object_with_canonical_form::init_packing_from_spread_table Sos:" << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table Sos:" << endl;
 		SoS->print_table();
 	}
 
@@ -740,11 +740,11 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	for (i = 0; i < SoS->nb_sets; i++) {
 		for (j = i + 1; j < SoS->nb_sets; j++) {
 			if (M[i * SoS->nb_sets + j]) {
-				cout << "object_with_canonical_form::init_packing_from_spread_table "
+				cout << "any_combinatorial_object::init_packing_from_spread_table "
 						"not a packing, spreads "
 						<< i << " and " << j << " meet in "
 						<< M[i * SoS->nb_sets + j] << " lines" << endl;
-				cout << "object_with_canonical_form::init_packing_from_spread_table Sos:" << endl;
+				cout << "any_combinatorial_object::init_packing_from_spread_table Sos:" << endl;
 				SoS->print_table();
 				exit(1);
 
@@ -758,7 +758,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 		}
 }
 
-void object_with_canonical_form::init_design_from_block_orbits(
+void any_combinatorial_object::init_design_from_block_orbits(
 		data_structures::set_of_sets *Block_orbits,
 		long int *Solution, int width,
 		int k,
@@ -767,11 +767,11 @@ void object_with_canonical_form::init_design_from_block_orbits(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits" << endl;
+		cout << "any_combinatorial_object::init_design_from_block_orbits" << endl;
 	}
 
 	if (width != Block_orbits->nb_sets) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits "
+		cout << "any_combinatorial_object::init_design_from_block_orbits "
 				"width != Block_orbits->nb_sets" << endl;
 		exit(1);
 	}
@@ -793,7 +793,7 @@ void object_with_canonical_form::init_design_from_block_orbits(
 	b = nb_flags / k;
 
 	if (b * k != nb_flags) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits "
+		cout << "any_combinatorial_object::init_design_from_block_orbits "
 				"k does not divide the number of flags" << endl;
 		cout << "nb_flags=" << nb_flags << endl;
 		cout << "k=" << k << endl;
@@ -801,16 +801,16 @@ void object_with_canonical_form::init_design_from_block_orbits(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits v = " << v << endl;
-		cout << "object_with_canonical_form::init_design_from_block_orbits b = " << b << endl;
-		cout << "object_with_canonical_form::init_design_from_block_orbits nb_flags = " << nb_flags << endl;
+		cout << "any_combinatorial_object::init_design_from_block_orbits v = " << v << endl;
+		cout << "any_combinatorial_object::init_design_from_block_orbits b = " << b << endl;
+		cout << "any_combinatorial_object::init_design_from_block_orbits nb_flags = " << nb_flags << endl;
 	}
 
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 
 	type = t_INC;
 
-	object_with_canonical_form::set = NEW_lint(nb_flags);
+	any_combinatorial_object::set = NEW_lint(nb_flags);
 
 	int *incma;
 	int i, j, l, u, a;
@@ -826,14 +826,14 @@ void object_with_canonical_form::init_design_from_block_orbits(
 		len = Block_orbits->Set_size[h];
 		l = len / k;
 		if (l * k != len) {
-			cout << "object_with_canonical_form::init_design_from_block_orbits l * k != len" << endl;
+			cout << "any_combinatorial_object::init_design_from_block_orbits l * k != len" << endl;
 			exit(1);
 		}
 		for (a = 0; a < l; a++, j++) {
 			for (u = 0; u < k; u++) {
 				i = Block_orbits->Sets[h][a * k + u];
 				if (i < 0 || i >= v) {
-					cout << "object_with_canonical_form::init_design_from_block_orbits "
+					cout << "any_combinatorial_object::init_design_from_block_orbits "
 							"i is out of range" << endl;
 					exit(1);
 				}
@@ -850,48 +850,48 @@ void object_with_canonical_form::init_design_from_block_orbits(
 		}
 	}
 	if (f != nb_flags) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits "
+		cout << "any_combinatorial_object::init_design_from_block_orbits "
 				"f != nb_flags" << endl;
 		exit(1);
 	}
 	FREE_int(incma);
-	object_with_canonical_form::sz = nb_flags;
-	//object_with_canonical_form::v = v;
-	//object_with_canonical_form::b = b;
+	any_combinatorial_object::sz = nb_flags;
+	//any_combinatorial_object::v = v;
+	//any_combinatorial_object::b = b;
 
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_orbits done" << endl;
+		cout << "any_combinatorial_object::init_design_from_block_orbits done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_design_from_block_table(
+void any_combinatorial_object::init_design_from_block_table(
 		long int *Block_table, int v, int nb_blocks, int k,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_table" << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table" << endl;
 	}
 
-	object_with_canonical_form::v = v;
+	any_combinatorial_object::v = v;
 	b = nb_blocks;
 	int nb_flags = b * k;
 	sz = nb_flags;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_table v = " << v << endl;
-		cout << "object_with_canonical_form::init_design_from_block_table b = " << b << endl;
-		cout << "object_with_canonical_form::init_design_from_block_table k = " << k << endl;
-		cout << "object_with_canonical_form::init_design_from_block_table nb_flags = " << nb_flags << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table v = " << v << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table b = " << b << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table k = " << k << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table nb_flags = " << nb_flags << endl;
 	}
 
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 
 	type = t_INC;
 
-	object_with_canonical_form::set = NEW_lint(nb_flags);
+	any_combinatorial_object::set = NEW_lint(nb_flags);
 
 	int i, j, h, f;
 
@@ -904,77 +904,77 @@ void object_with_canonical_form::init_design_from_block_table(
 		}
 	}
 	if (f != nb_flags) {
-		cout << "object_with_canonical_form::init_design_from_block_table "
+		cout << "any_combinatorial_object::init_design_from_block_table "
 				"f != nb_flags" << endl;
 		exit(1);
 	}
-	object_with_canonical_form::sz = nb_flags;
-	//object_with_canonical_form::v = v;
-	//object_with_canonical_form::b = b;
+	any_combinatorial_object::sz = nb_flags;
+	//any_combinatorial_object::v = v;
+	//any_combinatorial_object::b = b;
 
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_design_from_block_table done" << endl;
+		cout << "any_combinatorial_object::init_design_from_block_table done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_incidence_geometry(
+void any_combinatorial_object::init_incidence_geometry(
 	long int *data, int data_sz, int v, int b, int nb_flags,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry" << endl;
 	}
 	if (nb_flags != data_sz) {
-		cout << "object_with_canonical_form::init_incidence_geometry nb_flags != data_sz" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry nb_flags != data_sz" << endl;
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_INC;
-	object_with_canonical_form::set = NEW_lint(data_sz);
-	Lint_vec_copy(data, object_with_canonical_form::set, data_sz);
-	object_with_canonical_form::sz = data_sz;
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = b;
+	any_combinatorial_object::set = NEW_lint(data_sz);
+	Lint_vec_copy(data, any_combinatorial_object::set, data_sz);
+	any_combinatorial_object::sz = data_sz;
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = b;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry done" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_incidence_geometry_from_vector(
+void any_combinatorial_object::init_incidence_geometry_from_vector(
 	std::vector<int> &Flags, int v, int b, int nb_flags,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry" << endl;
 	}
 	if (nb_flags != Flags.size()) {
-		cout << "object_with_canonical_form::init_incidence_geometry nb_flags != Flags.size()" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry nb_flags != Flags.size()" << endl;
 	}
 
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 
 	type = t_INC;
 
-	object_with_canonical_form::set = NEW_lint(Flags.size());
+	any_combinatorial_object::set = NEW_lint(Flags.size());
 
 	int i;
 
 	for (i = 0; i < Flags.size(); i++) {
 		set[i] = Flags[i];
 	}
-	object_with_canonical_form::sz = Flags.size();
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = b;
+	any_combinatorial_object::sz = Flags.size();
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = b;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry done" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_incidence_geometry_from_string(
+void any_combinatorial_object::init_incidence_geometry_from_string(
 	std::string &data,
 	int v, int b, int nb_flags,
 	int verbose_level)
@@ -982,7 +982,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string" << endl;
 	}
 	long int *flags;
 	int data_sz;
@@ -990,25 +990,25 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	Lint_vec_scan(data, flags, data_sz);
 
 	if (nb_flags != data_sz) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string "
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string "
 				"nb_flags != data_sz" << endl;
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_INC;
-	object_with_canonical_form::set = NEW_lint(data_sz);
-	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
-	object_with_canonical_form::sz = data_sz;
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = b;
+	any_combinatorial_object::set = NEW_lint(data_sz);
+	Lint_vec_copy(flags, any_combinatorial_object::set, data_sz);
+	any_combinatorial_object::sz = data_sz;
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = b;
 
 	FREE_lint(flags);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string done" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_incidence_geometry_from_string_of_row_ranks(
+void any_combinatorial_object::init_incidence_geometry_from_string_of_row_ranks(
 	std::string &data,
 	int v, int b, int r,
 	int verbose_level)
@@ -1016,7 +1016,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string" << endl;
 	}
 	long int *row_ranks;
 	long int *flags;
@@ -1029,7 +1029,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	Lint_vec_scan(data, row_ranks, data_sz);
 
 	if (v != data_sz) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string v != data_sz" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string v != data_sz" << endl;
 	}
 
 	flags = NEW_lint(v * r);
@@ -1044,84 +1044,84 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 
 	}
 
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_INC;
-	object_with_canonical_form::set = NEW_lint(nb_flags);
-	Lint_vec_copy(flags, object_with_canonical_form::set, nb_flags);
-	object_with_canonical_form::sz = nb_flags;
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = b;
+	any_combinatorial_object::set = NEW_lint(nb_flags);
+	Lint_vec_copy(flags, any_combinatorial_object::set, nb_flags);
+	any_combinatorial_object::sz = nb_flags;
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = b;
 
 	FREE_int(row_set);
 	FREE_lint(row_ranks);
 	FREE_lint(flags);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_incidence_geometry_from_string done" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_large_set(
+void any_combinatorial_object::init_large_set(
 	long int *data, int data_sz, int v, int b, int k, int design_sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_large_set" << endl;
+		cout << "any_combinatorial_object::init_large_set" << endl;
 	}
 
 	if (data_sz != b) {
-		cout << "object_with_canonical_form::init_large_set data_sz != b" << endl;
+		cout << "any_combinatorial_object::init_large_set data_sz != b" << endl;
 		exit(1);
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_LS;
-	object_with_canonical_form::set = NEW_lint(data_sz);
-	Lint_vec_copy(data, object_with_canonical_form::set, data_sz);
-	object_with_canonical_form::sz = data_sz;
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = data_sz;
-	object_with_canonical_form::design_k = k;
-	object_with_canonical_form::design_sz = design_sz;
+	any_combinatorial_object::set = NEW_lint(data_sz);
+	Lint_vec_copy(data, any_combinatorial_object::set, data_sz);
+	any_combinatorial_object::sz = data_sz;
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = data_sz;
+	any_combinatorial_object::design_k = k;
+	any_combinatorial_object::design_sz = design_sz;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_large_set done" << endl;
+		cout << "any_combinatorial_object::init_large_set done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_large_set_from_string(
+void any_combinatorial_object::init_large_set_from_string(
 	std::string &data_text, int v, int k, int design_sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_large_set_from_string" << endl;
+		cout << "any_combinatorial_object::init_large_set_from_string" << endl;
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 
 	type = t_LS;
 
 	Lint_vec_scan(data_text, set, sz);
 
-	object_with_canonical_form::v = v;
-	object_with_canonical_form::b = sz;
-	object_with_canonical_form::design_k = k;
-	object_with_canonical_form::design_sz = design_sz;
+	any_combinatorial_object::v = v;
+	any_combinatorial_object::b = sz;
+	any_combinatorial_object::design_k = k;
+	any_combinatorial_object::design_sz = design_sz;
 	if (f_v) {
-		cout << "object_with_canonical_form::init_large_set_from_string done" << endl;
+		cout << "any_combinatorial_object::init_large_set_from_string done" << endl;
 	}
 }
 
-void object_with_canonical_form::init_graph_by_adjacency_matrix_text(
+void any_combinatorial_object::init_graph_by_adjacency_matrix_text(
 		std::string &adjacency_matrix_text, int N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text" << endl;
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix_text" << endl;
 	}
 
 	int N2;
@@ -1134,18 +1134,18 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix_text(
 	//int i;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix_text "
 				"N=" << N << " N2=" << N2 << endl;
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix_text "
 				"adjacency_matrix_text: " << adjacency_matrix_text << endl;
 	}
 
 	Lint_vec_scan(adjacency_matrix_text, adjacency_matrix, adj_sz);
 
 	if (adj_sz != N2) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix_text "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix_text "
 				"size of adjacency matrix is incorrect" << endl;
 		exit(1);
 	}
@@ -1159,21 +1159,21 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix_text(
 	FREE_lint(adjacency_matrix);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix done" << endl;
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix done" << endl;
 	}
 
 }
 
 
 
-void object_with_canonical_form::init_graph_by_adjacency_matrix(
+void any_combinatorial_object::init_graph_by_adjacency_matrix(
 		long int *adjacency_matrix, int adj_sz, int N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix" << endl;
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix" << endl;
 	}
 
 	int N2;
@@ -1184,12 +1184,12 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix(
 	int i;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix "
 				"N=" << N << " N2=" << N2 << endl;
 	}
 
 	if (adj_sz != N2) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix "
 				"size of adjacency matrix is incorrect" << endl;
 		exit(1);
 	}
@@ -1201,7 +1201,7 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix(
 		}
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix "
 				"nb_edges=" << nb_edges << endl;
 	}
 
@@ -1224,39 +1224,39 @@ void object_with_canonical_form::init_graph_by_adjacency_matrix(
 	}
 
 	if (h != N2) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix "
 				"h != N2" << endl;
 		exit(1);
 	}
 	if (k != nb_edges) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix "
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix "
 				"k != nb_edges" << endl;
 		exit(1);
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_INC;
-	object_with_canonical_form::set = NEW_lint(data_sz);
-	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
-	object_with_canonical_form::sz = data_sz;
-	object_with_canonical_form::v = N;
-	object_with_canonical_form::b = nb_edges;
+	any_combinatorial_object::set = NEW_lint(data_sz);
+	Lint_vec_copy(flags, any_combinatorial_object::set, data_sz);
+	any_combinatorial_object::sz = data_sz;
+	any_combinatorial_object::v = N;
+	any_combinatorial_object::b = nb_edges;
 
 	FREE_lint(flags);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_adjacency_matrix done" << endl;
+		cout << "any_combinatorial_object::init_graph_by_adjacency_matrix done" << endl;
 	}
 
 }
 
-void object_with_canonical_form::init_graph_by_object(
+void any_combinatorial_object::init_graph_by_object(
 		graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_object" << endl;
+		cout << "any_combinatorial_object::init_graph_by_object" << endl;
 	}
 
 	int N, nb_edges;
@@ -1282,27 +1282,27 @@ void object_with_canonical_form::init_graph_by_object(
 		}
 	}
 	if (k != nb_edges) {
-		cout << "object_with_canonical_form::init_graph_by_object "
+		cout << "any_combinatorial_object::init_graph_by_object "
 				"k != nb_edges" << endl;
 		exit(1);
 	}
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_INC;
-	object_with_canonical_form::set = NEW_lint(data_sz);
-	Lint_vec_copy(flags, object_with_canonical_form::set, data_sz);
-	object_with_canonical_form::sz = data_sz;
-	object_with_canonical_form::v = N;
-	object_with_canonical_form::b = nb_edges;
+	any_combinatorial_object::set = NEW_lint(data_sz);
+	Lint_vec_copy(flags, any_combinatorial_object::set, data_sz);
+	any_combinatorial_object::sz = data_sz;
+	any_combinatorial_object::v = N;
+	any_combinatorial_object::b = nb_edges;
 
 	FREE_lint(flags);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_graph_by_object done" << endl;
+		cout << "any_combinatorial_object::init_graph_by_object done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::init_multi_matrix(
+void any_combinatorial_object::init_multi_matrix(
 		std::string &data1,
 		std::string &data2,
 	int verbose_level)
@@ -1310,7 +1310,7 @@ void object_with_canonical_form::init_multi_matrix(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_multi_matrix" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix" << endl;
 	}
 	long int *entries1;
 	int nb_entries1;
@@ -1321,26 +1321,26 @@ void object_with_canonical_form::init_multi_matrix(
 	Lint_vec_scan(data2, entries2, nb_entries2);
 
 	if (nb_entries1 != 3) {
-		cout << "object_with_canonical_form::init_multi_matrix nb_entries1 != 3" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix nb_entries1 != 3" << endl;
 		exit(1);
 	}
 
-	object_with_canonical_form::P = NULL;
+	any_combinatorial_object::P = NULL;
 	type = t_MMX;
-	object_with_canonical_form::set = NEW_lint(nb_entries2);
-	Lint_vec_copy(entries2, object_with_canonical_form::set, nb_entries2);
-	object_with_canonical_form::sz = nb_entries2;
-	object_with_canonical_form::m = entries1[0];
-	object_with_canonical_form::n = entries1[1];
-	object_with_canonical_form::max_val = entries1[2];
+	any_combinatorial_object::set = NEW_lint(nb_entries2);
+	Lint_vec_copy(entries2, any_combinatorial_object::set, nb_entries2);
+	any_combinatorial_object::sz = nb_entries2;
+	any_combinatorial_object::m = entries1[0];
+	any_combinatorial_object::n = entries1[1];
+	any_combinatorial_object::max_val = entries1[2];
 	if (f_v) {
-		cout << "object_with_canonical_form::init_multi_matrix m = " << m << endl;
-		cout << "object_with_canonical_form::init_multi_matrix n = " << n << endl;
-		cout << "object_with_canonical_form::init_multi_matrix max_val = " << max_val << endl;
+		cout << "any_combinatorial_object::init_multi_matrix m = " << m << endl;
+		cout << "any_combinatorial_object::init_multi_matrix n = " << n << endl;
+		cout << "any_combinatorial_object::init_multi_matrix max_val = " << max_val << endl;
 	}
 
 	if (nb_entries2 != m + n + m * n) {
-		cout << "object_with_canonical_form::init_multi_matrix nb_entries2 != m + n + m * n" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix nb_entries2 != m + n + m * n" << endl;
 		exit(1);
 	}
 
@@ -1348,24 +1348,24 @@ void object_with_canonical_form::init_multi_matrix(
 	FREE_lint(entries2);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::init_multi_matrix done" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::encoding_size(
+void any_combinatorial_object::encoding_size(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size" << endl;
+		cout << "any_combinatorial_object::encoding_size" << endl;
 	}
 	if (type == t_PTS) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_point_set" << endl;
 		}
 		encoding_size_point_set(
@@ -1375,7 +1375,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_LNS) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_line_set" << endl;
 		}
 		encoding_size_line_set(
@@ -1385,7 +1385,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_PNL) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_points_and_lines" << endl;
 		}
 		encoding_size_points_and_lines(
@@ -1395,7 +1395,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_PAC) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_packing" << endl;
 		}
 		encoding_size_packing(
@@ -1405,7 +1405,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_INC) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_packing" << endl;
 		}
 		encoding_size_incidence_geometry(
@@ -1415,7 +1415,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_LS) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_large_set" << endl;
 		}
 		encoding_size_large_set(
@@ -1425,7 +1425,7 @@ void object_with_canonical_form::encoding_size(
 	else if (type == t_MMX) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encoding_size "
+			cout << "any_combinatorial_object::encoding_size "
 					"before encoding_size_multi_matrix" << endl;
 		}
 		encoding_size_multi_matrix(
@@ -1433,23 +1433,23 @@ void object_with_canonical_form::encoding_size(
 
 	}
 	else {
-		cout << "object_with_canonical_form::encoding_size "
+		cout << "any_combinatorial_object::encoding_size "
 				"unknown type" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "object_in_projective_space::encoding_size done" << endl;
+		cout << "any_combinatorial_object::encoding_size done" << endl;
 	}
 }
 
-void object_with_canonical_form::encoding_size_point_set(
+void any_combinatorial_object::encoding_size_point_set(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_point_set" << endl;
+		cout << "any_combinatorial_object::encoding_size_point_set" << endl;
 	}
 
 
@@ -1457,7 +1457,7 @@ void object_with_canonical_form::encoding_size_point_set(
 
 	C->init_lint(set, sz, true, 0);
 	if (C->second_nb_types > 1) {
-		cout << "object_with_canonical_form::encoding_size_point_set "
+		cout << "any_combinatorial_object::encoding_size_point_set "
 				"The set is a multiset:" << endl;
 		C->print(false /*f_backwards*/);
 	}
@@ -1485,35 +1485,35 @@ void object_with_canonical_form::encoding_size_point_set(
 	// for the decoration:
 	nb_rows = nb_rows0 + 1;
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_point_set "
+		cout << "any_combinatorial_object::encoding_size_point_set "
 				"nb_rows=" << nb_rows << endl;
 	}
 	nb_cols = nb_cols0 + C->second_nb_types;
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_point_set "
+		cout << "any_combinatorial_object::encoding_size_point_set "
 				"nb_cols=" << nb_cols << endl;
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_point_set "
+		cout << "any_combinatorial_object::encoding_size_point_set "
 				"before FREE_OBJECT(C)" << endl;
 	}
 	FREE_OBJECT(C);
 	C = NULL;
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_point_set "
+		cout << "any_combinatorial_object::encoding_size_point_set "
 				"done" << endl;
 	}
 
 }
 
-void object_with_canonical_form::encoding_size_line_set(
+void any_combinatorial_object::encoding_size_line_set(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_line_set" << endl;
+		cout << "any_combinatorial_object::encoding_size_line_set" << endl;
 	}
 
 
@@ -1522,14 +1522,14 @@ void object_with_canonical_form::encoding_size_line_set(
 
 }
 
-void object_with_canonical_form::encoding_size_points_and_lines(
+void any_combinatorial_object::encoding_size_points_and_lines(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_points_and_lines" << endl;
+		cout << "any_combinatorial_object::encoding_size_points_and_lines" << endl;
 	}
 
 
@@ -1538,14 +1538,14 @@ void object_with_canonical_form::encoding_size_points_and_lines(
 
 }
 
-void object_with_canonical_form::encoding_size_packing(
+void any_combinatorial_object::encoding_size_packing(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_packing" << endl;
+		cout << "any_combinatorial_object::encoding_size_packing" << endl;
 	}
 
 	nb_rows = P->Subspaces->N_points + SoS->nb_sets;
@@ -1553,7 +1553,7 @@ void object_with_canonical_form::encoding_size_packing(
 
 }
 
-void object_with_canonical_form::encoding_size_large_set(
+void any_combinatorial_object::encoding_size_large_set(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
@@ -1561,12 +1561,12 @@ void object_with_canonical_form::encoding_size_large_set(
 	int nb_designs;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_large_set" << endl;
+		cout << "any_combinatorial_object::encoding_size_large_set" << endl;
 	}
 
 	nb_designs = b / design_sz;
 	if (nb_designs * design_sz != b) {
-		cout << "object_with_canonical_form::encoding_size_large_set "
+		cout << "any_combinatorial_object::encoding_size_large_set "
 				"design_sz does not divide b" << endl;
 		exit(1);
 	}
@@ -1577,14 +1577,14 @@ void object_with_canonical_form::encoding_size_large_set(
 }
 
 
-void object_with_canonical_form::encoding_size_incidence_geometry(
+void any_combinatorial_object::encoding_size_incidence_geometry(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_packing" << endl;
+		cout << "any_combinatorial_object::encoding_size_packing" << endl;
 	}
 
 	nb_rows = v;
@@ -1592,7 +1592,7 @@ void object_with_canonical_form::encoding_size_incidence_geometry(
 
 }
 
-void object_with_canonical_form::encoding_size_multi_matrix(
+void any_combinatorial_object::encoding_size_multi_matrix(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
@@ -1600,12 +1600,12 @@ void object_with_canonical_form::encoding_size_multi_matrix(
 	int nb_designs;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encoding_size_multi_matrix" << endl;
+		cout << "any_combinatorial_object::encoding_size_multi_matrix" << endl;
 	}
 
 	nb_designs = b / design_sz;
 	if (nb_designs * design_sz != b) {
-		cout << "object_with_canonical_form::encoding_size_multi_matrix "
+		cout << "any_combinatorial_object::encoding_size_multi_matrix "
 				"design_sz does not divide b" << endl;
 		exit(1);
 	}
@@ -1616,7 +1616,7 @@ void object_with_canonical_form::encoding_size_multi_matrix(
 }
 
 
-void object_with_canonical_form::canonical_form_given_canonical_labeling(
+void any_combinatorial_object::canonical_form_given_canonical_labeling(
 		int *canonical_labeling,
 		data_structures::bitvector *&B,
 		int verbose_level)
@@ -1624,14 +1624,14 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::canonical_form_given_canonical_labeling" << endl;
+		cout << "any_combinatorial_object::canonical_form_given_canonical_labeling" << endl;
 	}
 
 	encoded_combinatorial_object *Enc;
 
 	encode_incma(Enc, verbose_level - 1);
 	if (f_v) {
-		cout << "object_with_canonical_form::canonical_form_given_canonical_labeling "
+		cout << "any_combinatorial_object::canonical_form_given_canonical_labeling "
 				"after OiP->encode_incma" << endl;
 	}
 
@@ -1644,23 +1644,23 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 
 
 	if (f_v) {
-		cout << "object_with_canonical_form::canonical_form_given_canonical_labeling done" << endl;
+		cout << "any_combinatorial_object::canonical_form_given_canonical_labeling done" << endl;
 	}
 }
 
-void object_with_canonical_form::encode_incma(
+void any_combinatorial_object::encode_incma(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_incma" << endl;
+		cout << "any_combinatorial_object::encode_incma" << endl;
 	}
 	if (type == t_PTS) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_PTS" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_PTS" << endl;
 		}
 		encode_point_set(Enc, verbose_level);
 
@@ -1668,7 +1668,7 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_LNS) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_LNS" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_LNS" << endl;
 		}
 		encode_line_set(Enc, verbose_level);
 
@@ -1676,7 +1676,7 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_PNL) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_PNL" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_PNL" << endl;
 		}
 		encode_points_and_lines(Enc, verbose_level);
 
@@ -1684,7 +1684,7 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_PAC) {
 		
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_PAC" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_PAC" << endl;
 		}
 		encode_packing(Enc, verbose_level);
 
@@ -1692,7 +1692,7 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_INC) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_INC" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_INC" << endl;
 		}
 		encode_incidence_geometry(Enc, verbose_level);
 
@@ -1700,7 +1700,7 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_LS) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_LS" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_LS" << endl;
 		}
 		encode_large_set(Enc, verbose_level);
 
@@ -1708,29 +1708,29 @@ void object_with_canonical_form::encode_incma(
 	else if (type == t_MMX) {
 
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma type == t_MMX" << endl;
+			cout << "any_combinatorial_object::encode_incma type == t_MMX" << endl;
 		}
 		encode_multi_matrix(Enc, verbose_level);
 
 	}
 	else {
-		cout << "object_with_canonical_form::encode_incma "
+		cout << "any_combinatorial_object::encode_incma "
 				"unknown type" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_incma done" << endl;
+		cout << "any_combinatorial_object::encode_incma done" << endl;
 	}
 }
 
-void object_with_canonical_form::encode_point_set(
+void any_combinatorial_object::encode_point_set(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set" << endl;
+		cout << "any_combinatorial_object::encode_point_set" << endl;
 	}
 	int i, j;
 	int f_vvv = false; // (verbose_level >= 3);
@@ -1740,13 +1740,13 @@ void object_with_canonical_form::encode_point_set(
 	C = NEW_OBJECT(data_structures::tally);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set set=";
+		cout << "any_combinatorial_object::encode_point_set set=";
 		Lint_vec_print(cout, set, sz);
 		cout << endl;
 	}
 	C->init_lint(set, sz, true, 0);
 	if (C->second_nb_types > 1) {
-		cout << "object_with_canonical_form::encode_point_set "
+		cout << "any_combinatorial_object::encode_point_set "
 				"The set is a multiset:" << endl;
 		C->print(false /*f_backwards*/);
 	}
@@ -1809,7 +1809,7 @@ void object_with_canonical_form::encode_point_set(
 						<< " l=" << l << " i=" << i << endl;
 			}
 			if (i > P->Subspaces->N_points) {
-				cout << "object_with_canonical_form::encode_point_set "
+				cout << "any_combinatorial_object::encode_point_set "
 						"i > P->N_points" << endl;
 				cout << "i = " << i << endl;
 				cout << "P->N_points = " << P->Subspaces->N_points << endl;
@@ -1822,7 +1822,7 @@ void object_with_canonical_form::encode_point_set(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set "
+		cout << "any_combinatorial_object::encode_point_set "
 				"bottom right entries" << endl;
 	}
 	// bottom right entries:
@@ -1831,7 +1831,7 @@ void object_with_canonical_form::encode_point_set(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set partition" << endl;
+		cout << "any_combinatorial_object::encode_point_set partition" << endl;
 	}
 
 
@@ -1846,24 +1846,24 @@ void object_with_canonical_form::encode_point_set(
 		Enc->partition[nb_rows + Enc->nb_cols0 + j] = 0;
 	}
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_point_set "
+		cout << "any_combinatorial_object::encode_point_set "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_point_set "
+		cout << "any_combinatorial_object::encode_point_set "
 				"done" << endl;
 	}
 }
 
-void object_with_canonical_form::encode_line_set(
+void any_combinatorial_object::encode_line_set(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_line_set" << endl;
+		cout << "any_combinatorial_object::encode_line_set" << endl;
 	}
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
@@ -1905,24 +1905,24 @@ void object_with_canonical_form::encode_line_set(
 	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
 
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_line_set "
+		cout << "any_combinatorial_object::encode_line_set "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_line_set "
+		cout << "any_combinatorial_object::encode_line_set "
 				"done" << endl;
 	}
 }
 
-void object_with_canonical_form::encode_points_and_lines(
+void any_combinatorial_object::encode_points_and_lines(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_points_and_lines" << endl;
+		cout << "any_combinatorial_object::encode_points_and_lines" << endl;
 	}
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
@@ -1971,25 +1971,25 @@ void object_with_canonical_form::encode_points_and_lines(
 	Enc->partition[nb_rows + nb_cols0 - 1] = 0;
 	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_points_and_lines "
+		cout << "any_combinatorial_object::encode_points_and_lines "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_points_and_lines "
+		cout << "any_combinatorial_object::encode_points_and_lines "
 				"done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::encode_packing(
+void any_combinatorial_object::encode_packing(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_packing" << endl;
+		cout << "any_combinatorial_object::encode_packing" << endl;
 	}
 	int i, j;
 	int f_vvv = (verbose_level >= 3);
@@ -2028,24 +2028,24 @@ void object_with_canonical_form::encode_packing(
 	Enc->partition[nb_rows + nb_cols0 - 1] = 0;
 	Enc->partition[nb_rows + nb_cols0 + 1 - 1] = 0;
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_packing "
+		cout << "any_combinatorial_object::encode_packing "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_packing "
+		cout << "any_combinatorial_object::encode_packing "
 				"done" << endl;
 	}
 }
 
-void object_with_canonical_form::encode_large_set(
+void any_combinatorial_object::encode_large_set(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_large_set" << endl;
+		cout << "any_combinatorial_object::encode_large_set" << endl;
 	}
 	int i, j, a, h;
 	int f_vvv = (verbose_level >= 3);
@@ -2101,7 +2101,7 @@ void object_with_canonical_form::encode_large_set(
 	Enc->partition[nb_rows + b - 1] = 0;
 	Enc->partition[nb_rows + b + 1 - 1] = 0;
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_large_set "
+		cout << "any_combinatorial_object::encode_large_set "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
@@ -2109,20 +2109,20 @@ void object_with_canonical_form::encode_large_set(
 	FREE_int(block);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_large_set "
+		cout << "any_combinatorial_object::encode_large_set "
 				"done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::encode_incidence_geometry(
+void any_combinatorial_object::encode_incidence_geometry(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_incidence_geometry" << endl;
+		cout << "any_combinatorial_object::encode_incidence_geometry" << endl;
 	}
 	int i, a;
 	int f_vvv = (verbose_level >= 3);
@@ -2142,7 +2142,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 		if (a >= nb_rows * nb_cols) {
-			cout << "object_with_canonical_form::encode_incidence_geometry "
+			cout << "any_combinatorial_object::encode_incidence_geometry "
 					"a >= nb_rows* nb_cols" << endl;
 			cout << "nb_rows = " << nb_rows << endl;
 			cout << "nb_cols = " << nb_cols << endl;
@@ -2162,26 +2162,26 @@ void object_with_canonical_form::encode_incidence_geometry(
 	}
 
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_incidence_geometry "
+		cout << "any_combinatorial_object::encode_incidence_geometry "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_incidence_geometry "
+		cout << "any_combinatorial_object::encode_incidence_geometry "
 				"done" << endl;
 	}
 }
 
 
 
-void object_with_canonical_form::encode_multi_matrix(
+void any_combinatorial_object::encode_multi_matrix(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_multi_matrix" << endl;
+		cout << "any_combinatorial_object::encode_multi_matrix" << endl;
 	}
 	int i, a;
 	int f_vvv = (verbose_level >= 3);
@@ -2202,10 +2202,10 @@ void object_with_canonical_form::encode_multi_matrix(
 	for (i = 0; i < m; i++) {
 		a = set[i];
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_multi_matrix i=" << i << " a=" << a << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix i=" << i << " a=" << a << endl;
 		}
 		if (a > max_val) {
-			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix a > max_val" << endl;
 			exit(1);
 		}
 		Enc->set_incidence(i * nb_cols + i);
@@ -2216,10 +2216,10 @@ void object_with_canonical_form::encode_multi_matrix(
 	for (i = 0; i < n; i++) {
 		a = set[m + i];
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_multi_matrix i=" << i << " a=" << a << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix i=" << i << " a=" << a << endl;
 		}
 		if (a > max_val) {
-			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix a > max_val" << endl;
 			exit(1);
 		}
 		Enc->set_incidence((m + i) * nb_cols + m + i);
@@ -2236,10 +2236,10 @@ void object_with_canonical_form::encode_multi_matrix(
 
 		a = set[m + n + h];
 		if (f_v) {
-			cout << "object_with_canonical_form::encode_multi_matrix h=" << h << " a=" << a << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix h=" << h << " a=" << a << endl;
 		}
 		if (a > max_val) {
-			cout << "object_with_canonical_form::encode_multi_matrix a > max_val" << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix a > max_val" << endl;
 			exit(1);
 		}
 		Enc->set_incidence((i) * nb_cols + m + n + h);
@@ -2260,31 +2260,31 @@ void object_with_canonical_form::encode_multi_matrix(
 	Enc->partition[N - 1] = 0;
 
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_multi_matrix "
+		cout << "any_combinatorial_object::encode_multi_matrix "
 				"Enc=" << endl;
 		Enc->print_incma();
 	}
 
 	if (f_vvv) {
-		cout << "object_with_canonical_form::encode_multi_matrix "
+		cout << "any_combinatorial_object::encode_multi_matrix "
 				"partition:" << endl;
 		Enc->print_partition();
 	}
 	if (f_v) {
-		cout << "object_with_canonical_form::encode_multi_matrix "
+		cout << "any_combinatorial_object::encode_multi_matrix "
 				"done" << endl;
 	}
 }
 
 
-void object_with_canonical_form::collinearity_graph(
+void any_combinatorial_object::collinearity_graph(
 		int *&Adj, int &N,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::collinearity_graph" << endl;
+		cout << "any_combinatorial_object::collinearity_graph" << endl;
 	}
 	int i, j, c;
 
@@ -2314,18 +2314,18 @@ void object_with_canonical_form::collinearity_graph(
 	}
 
 	if (f_v) {
-		cout << "object_with_canonical_form::collinearity_graph done" << endl;
+		cout << "any_combinatorial_object::collinearity_graph done" << endl;
 	}
 
 }
 
-void object_with_canonical_form::print()
+void any_combinatorial_object::print()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_with_canonical_form::print" << endl;
+		cout << "any_combinatorial_object::print" << endl;
 	}
 	encoded_combinatorial_object *Enc;
 	//geometry::incidence_structure *Inc;
@@ -2349,341 +2349,6 @@ void object_with_canonical_form::print()
 
 }
 
-#if 0
-void object_with_canonical_form::encode_incma_and_make_decomposition(
-		encoded_combinatorial_object *&Enc,
-		geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_incma_and_make_decomposition" << endl;
-	}
-	if (type == t_PTS) {
-		
-		encode_point_set(Enc, verbose_level);
-
-	}
-	else if (type == t_LNS) {
-		
-		encode_line_set(Enc, verbose_level);
-
-	}
-	else if (type == t_PNL) {
-
-		encode_points_and_lines(Enc, verbose_level);
-
-	}
-	else if (type == t_PAC) {
-		
-		encode_packing(Enc, verbose_level);
-
-	}
-	else if (type == t_INC) {
-
-		encode_incidence_geometry(Enc, verbose_level);
-
-	}
-	else if (type == t_LS) {
-
-		encode_large_set(Enc, verbose_level);
-
-	}
-	else if (type == t_MMX) {
-
-		encode_multi_matrix(Enc, verbose_level);
-
-	}
-	else {
-		cout << "object_with_canonical_form::encode_incma_and_make_decomposition unknown type" << endl;
-		exit(1);
-	}
-
-	Inc = NEW_OBJECT(geometry::incidence_structure);
-	Inc->init_by_matrix(Enc->nb_rows, Enc->nb_cols,
-			Enc->get_Incma(), verbose_level - 2);
-
-
-
-
-	Stack = NEW_OBJECT(data_structures::partitionstack);
-	Stack->allocate(Enc->nb_rows + Enc->nb_cols, 0);
-	Stack->subset_contiguous(Inc->nb_points(), Inc->nb_lines());
-	Stack->split_cell(0);
-
-	if (type == t_PTS) {
-		
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_PTS split1" << endl;
-		}
-		Stack->subset_contiguous(
-				Inc->nb_points() + P->Subspaces->N_lines,
-				Enc->nb_cols - P->Subspaces->N_lines);
-		Stack->split_cell(0);
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_PTS split2" << endl;
-		}
-		if (Enc->nb_rows - Inc->nb_points()) {
-			Stack->subset_contiguous(
-					Inc->nb_points(),
-					Enc->nb_rows - Inc->nb_points());
-			Stack->split_cell(0);
-		}
-
-	}
-	
-	else if (type == t_LNS) {
-		
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_LNS" << endl;
-		}
-		Stack->subset_contiguous(P->Subspaces->N_points, 1);
-		Stack->split_cell(0);
-		Stack->subset_contiguous(
-				Inc->nb_points() + P->Subspaces->N_lines,
-				Enc->nb_cols - P->Subspaces->N_lines);
-		Stack->split_cell(0);
-
-	}
-
-	else if (type == t_PNL) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_PNL" << endl;
-		}
-		Stack->subset_contiguous(P->Subspaces->N_points, 1);
-		Stack->split_cell(0);
-		Stack->subset_contiguous(
-				Inc->nb_points() + P->Subspaces->N_lines,
-				Enc->nb_cols - P->Subspaces->N_lines);
-		Stack->split_cell(0);
-
-	}
-
-	else if (type == t_PAC) {
-		
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_PAC" << endl;
-		}
-		Stack->subset_contiguous(
-				P->Subspaces->N_points,
-				Enc->nb_rows - P->Subspaces->N_points);
-		Stack->split_cell(0);
-		Stack->subset_contiguous(
-				Inc->nb_points() + P->Subspaces->N_lines,
-				Enc->nb_cols - P->Subspaces->N_lines);
-		Stack->split_cell(0);
-
-	}
-	else if (type == t_INC) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_INC" << endl;
-		}
-		Stack->subset_contiguous(v, b);
-		Stack->split_cell(0);
-
-	}
-	else if (type == t_LS) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_LS" << endl;
-		}
-		Stack->subset_contiguous(v, Enc->nb_rows - v);
-		Stack->split_cell(0);
-		Stack->subset_contiguous(
-				v + b,
-				Enc->nb_cols - b);
-		Stack->split_cell(0);
-
-	}
-	else if (type == t_MMX) {
-
-		if (f_v) {
-			cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-					"t_INC" << endl;
-		}
-		// ToDo
-		//Stack->subset_contiguous(v, b);
-		//Stack->split_cell(0);
-
-	}
-	else {
-		cout << "object_with_canonical_form::encode_incma_and_make_decomposition "
-				"unknown type " << type << endl;
-		exit(1);
-	}
-	
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_incma_and_make_decomposition done" << endl;
-	}
-}
-#endif
-
-
-#if 0
-void object_with_canonical_form::encode_object(
-		long int *&encoding, int &encoding_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object" << endl;
-	}
-	if (type == t_PTS) {
-		
-		encode_object_points(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_LNS) {
-		
-		encode_object_lines(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_PNL) {
-
-		encode_object_points_and_lines(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_PAC) {
-		
-		encode_object_packing(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_INC) {
-
-		encode_object_incidence_geometry(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_LS) {
-
-		encode_object_large_set(encoding, encoding_sz, verbose_level);
-
-	}
-	else if (type == t_MMX) {
-
-		// ToDo
-		//encode_object_multi_matrix(encoding, encoding_sz, verbose_level);
-
-	}
-	else {
-		cout << "object_with_canonical_form::encode_object "
-				"unknown type" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object "
-				"encoding_sz=" << encoding_sz << endl;
-	}
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object "
-				"done" << endl;
-	}
-}
-
-void object_with_canonical_form::encode_object_points(
-		long int *&encoding, int &encoding_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_points" << endl;
-	}
-	encoding_sz = sz;
-	encoding = NEW_lint(sz);
-	Lint_vec_copy(set, encoding, sz);
-}
-
-void object_with_canonical_form::encode_object_lines(
-		long int *&encoding, int &encoding_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_lines" << endl;
-	}
-	encoding_sz = sz;
-	encoding = NEW_lint(sz);
-	Lint_vec_copy(set, encoding, sz);
-}
-
-void object_with_canonical_form::encode_object_points_and_lines(
-		long int *&encoding, int &encoding_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_points_and_lines" << endl;
-	}
-	encoding_sz = sz;
-	encoding = NEW_lint(sz);
-	Lint_vec_copy(set, encoding, sz);
-}
-
-void object_with_canonical_form::encode_object_packing(
-		long int *&encoding, int &encoding_sz,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_packing" << endl;
-	}
-	int i, h;
-	
-	encoding_sz = SoS->total_size();
-	encoding = NEW_lint(encoding_sz);
-	h = 0;
-	for (i = 0; i < SoS->nb_sets; i++) {
-		Lint_vec_copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
-		h += SoS->Set_size[i];
-	}
-	if (h != encoding_sz) {
-		cout << "object_with_canonical_form::encode_object_packing "
-				"h != encoding_sz" << endl;
-		exit(1);
-	}
-}
-
-void object_with_canonical_form::encode_object_incidence_geometry(
-		long int *&encoding, int &encoding_sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_incidence_geometry" << endl;
-	}
-	encoding_sz = sz;
-	encoding = NEW_lint(sz);
-	Lint_vec_copy(set, encoding, sz);
-}
-
-void object_with_canonical_form::encode_object_large_set(
-		long int *&encoding, int &encoding_sz, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::encode_object_large_set" << endl;
-	}
-	encoding_sz = sz;
-	encoding = NEW_lint(sz);
-	Lint_vec_copy(set, encoding, sz);
-}
-#endif
 
 #if 0
 void object_with_canonical_form::klein(int verbose_level)

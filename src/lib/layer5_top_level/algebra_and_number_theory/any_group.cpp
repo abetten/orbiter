@@ -1515,6 +1515,7 @@ void any_group::conjugacy_class_of(
 		std::string &elt_data,
 		int verbose_level)
 // uses orbits_schreier::orbit_of_sets
+// needs Subgroup_sims to set up action by conjugation
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1573,33 +1574,24 @@ void any_group::conjugacy_class_of(
 	actions::action *A_conj;
 
 	if (f_v) {
-		cout << "before A->Induced_action->create_induced_action_by_conjugation" << endl;
+		cout << "any_group::conjugacy_class_of "
+				"before A->Induced_action->create_induced_action_by_conjugation" << endl;
 	}
 	A_conj = A->Induced_action->create_induced_action_by_conjugation(
 			Subgroup_sims /*Base_group*/, false /* f_ownership */,
 			false /* f_basis */, NULL /* old_G */,
 			verbose_level);
 	if (f_v) {
-		cout << "after A->Induced_action->create_induced_action_by_conjugation" << endl;
+		cout << "any_group::conjugacy_class_of "
+				"after A->Induced_action->create_induced_action_by_conjugation" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "created action A_conj of degree " << A_conj->degree << endl;
+		cout << "any_group::conjugacy_class_of "
+				"created action A_conj of degree " << A_conj->degree << endl;
 	}
 
-#if 0
-	schreier *Sch;
-
-	Sch = LG->Strong_gens->orbit_of_one_point_schreier(
-			A_conj, b.as_lint(), verbose_level);
-
-	cout << "Orbits on itself by conjugation:\\\\" << endl;
-	Sch->print_orbit_reps(cout);
-
-
-	FREE_OBJECT(Sch);
-#else
 
 
 	orbits_schreier::orbit_of_sets Orb;
@@ -1608,31 +1600,57 @@ void any_group::conjugacy_class_of(
 
 	set[0] = b.as_lint();
 
+	if (f_v) {
+		cout << "any_group::conjugacy_class_of "
+				"before Orb.init" << endl;
+	}
 	Orb.init(A, A_conj,
 			set, 1 /* sz */,
 			Subgroup_gens->gens, //LG->Strong_gens->gens,
 			verbose_level);
 	if (f_v) {
-		cout << "Found an orbit of size " << Orb.used_length << endl;
+		cout << "any_group::conjugacy_class_of "
+				"Found an orbit of size " << Orb.used_length << endl;
 	}
 
 	std::vector<long int> Orbit;
 
 	if (f_v) {
-		cout << "before Orb.get_orbit_of_points" << endl;
+		cout << "any_group::conjugacy_class_of "
+				"before Orb.get_orbit_of_points" << endl;
 	}
 	Orb.get_orbit_of_points(Orbit, verbose_level);
 	if (f_v) {
-		cout << "Found an orbit of size " << Orbit.size() << endl;
+		cout << "any_group::conjugacy_class_of "
+				"Found an orbit of size " << Orbit.size() << endl;
 	}
 
-	int *M;
+	int *data;
 	int i;
+	int nb_r, nb_c;
+	std::string *Header_cols;
+	std::string *Table;
 
-	M = NEW_int(Orbit.size() * A->make_element_size);
+	nb_r = Orbit.size();
+	nb_c = 1;
+	data = NEW_int(A->make_element_size);
+	Table = new std::string [nb_r * nb_c];
+	Header_cols = new std::string [nb_c];
+
+	Header_cols[0] = "elements";
+
+	if (f_v) {
+		cout << "any_group::conjugacy_class_of "
+				"collecting orbit elements" << endl;
+	}
+
 	for (i = 0; i < Orbit.size(); i++) {
 		Subgroup_sims->element_unrank_lint(Orbit[i], Elt);
-		Int_vec_copy(Elt, M + i * A->make_element_size, A->make_element_size);
+
+		A->Group_element->element_code_for_make_element(Elt, data);
+
+		//Int_vec_copy(Elt, M + i * A->make_element_size, A->make_element_size);
+		Table[i] = "\"" + Int_vec_stringify(data, A->make_element_size) + "\"";
 #if 0
 		for (j = 0; j < A->make_element_size; j++) {
 			M[i * A->make_element_size + j] = Elt[j];
@@ -1640,20 +1658,37 @@ void any_group::conjugacy_class_of(
 		//M[i] = Orbit[i];
 #endif
 	}
-	string fname;
-
-	fname = LG->label + "_class_of_" + label + ".csv";
-
-	Fio.Csv_file_support->int_matrix_write_csv(
-			fname, M, Orbit.size(), A->make_element_size);
 
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "any_group::conjugacy_class_of "
+				"collecting orbit elements done" << endl;
 	}
 
-	FREE_int(M);
+	string fname;
 
+	fname = label + "_class_of_" + label + ".csv";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_r, nb_c, Table,
+			Header_cols,
+			verbose_level);
+
+	delete [] Header_cols;
+	delete [] Table;
+
+#if 0
+	Fio.Csv_file_support->int_matrix_write_csv(
+			fname, M, Orbit.size(), A->make_element_size);
 #endif
+
+	if (f_v) {
+		cout << "any_group::conjugacy_class_of "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	//FREE_int(M);
+
 
 	FREE_OBJECT(A_conj);
 	//FREE_OBJECT(H);
@@ -1663,6 +1698,248 @@ void any_group::conjugacy_class_of(
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "any_group::conjugacy_class_of done" << endl;
+	}
+}
+
+
+
+void any_group::automorphism_by_generator_images(
+		std::string &label,
+		data_structures_groups::vector_ge *Elements_ge,
+		int *Images, int m, int n,
+		int *&Perms, long int &go,
+		int verbose_level)
+// uses orbits_schreier::orbit_of_sets
+// needs Subgroup_sims to set up action by action
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = false;
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images" << endl;
+	}
+
+	//long int go;
+
+	go = Subgroup_sims->group_order_lint();
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images go = " << go << endl;
+	}
+
+	Perms = NEW_int(m * go);
+
+#if 0
+
+	ring_theory::longinteger_object a, b;
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images creating element " << elt_data << endl;
+	}
+
+	A->Group_element->make_element_from_string(Elt, elt_data, 0);
+
+	Subgroup_sims->element_rank(a, Elt);
+
+	a.assign_to(b);
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images Element :" << endl;
+		A->Group_element->element_print(Elt, cout);
+		cout << endl;
+	}
+#endif
+
+	actions::action *A_rm;
+	// action by right multiplication
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before A->Induced_action->induced_action_by_right_multiplication" << endl;
+	}
+	A_rm = A->Induced_action->induced_action_by_right_multiplication(
+			false /* f_basis */, NULL /* old_G */,
+			Subgroup_sims /*Base_group*/, false /* f_ownership */,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"after A->Induced_action->induced_action_by_right_multiplication" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"generators:" << endl;
+		Subgroup_gens->gens->print_quick(cout);
+		cout << endl;
+	}
+
+	int nb_gens;
+
+	nb_gens = Subgroup_gens->gens->len;
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before Orb.init" << endl;
+	}
+
+
+	orbits_schreier::orbit_of_sets Orb;
+	long int set[1];
+	//orbiter_kernel_system::file_io Fio;
+
+	set[0] = 0;
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before Orb.init" << endl;
+	}
+	Orb.init(A, A_rm,
+			set, 1 /* sz */,
+			Subgroup_gens->gens,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"Found an orbit of size " << Orb.used_length << endl;
+	}
+	if (Orb.used_length != go) {
+		cout << "any_group::automorphism_by_generator_images orbit length != go" << endl;
+		exit(1);
+	}
+
+	int in, out;
+	int h, i, a, b, c;
+	int *Elt;
+	int *perm;
+	long int new_set[1];
+	int pos;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	perm = NEW_int(go);
+
+
+	for (h = 0; h < m; h++) {
+
+		if (f_v) {
+			cout << "any_group::automorphism_by_generator_images h=" << h << " : ";
+			Int_vec_print(cout, Images + h * n, n);
+			cout << endl;
+		}
+
+
+		for (in = 0; in < go; in++) {
+
+			uint32_t hash;
+			std::vector<int> path;
+
+			new_set[0] = in;
+
+			if (!Orb.find_set(
+					new_set, pos, hash)) {
+				cout << "any_group::automorphism_by_generator_images !find_set" << endl;
+				exit(1);
+			}
+			Orb.get_path(
+					path,
+					pos);
+
+			if (f_vv) {
+				cout << "any_group::automorphism_by_generator_images in=" << in << " pos=" << pos << " path=";
+				Int_vec_stl_print(cout, path);
+				cout << endl;
+			}
+
+
+			int *word;
+
+			word = NEW_int(path.size());
+
+			for (i = 0; i < path.size(); i++) {
+				a = path[i];
+				b = nb_gens - 1 - a;
+				c = Images[h * n + b];
+
+				word[i] = c;
+			}
+
+			if (f_vvv) {
+				cout << "any_group::automorphism_by_generator_images in=" << in << " path=";
+				Int_vec_stl_print(cout, path);
+				cout << " -> ";
+				Int_vec_print(cout, word, path.size());
+				cout << endl;
+			}
+
+
+			A->Group_element->evaluate_word(
+					Elt, word, path.size(),
+					Elements_ge,
+					verbose_level - 3);
+
+			if (false) {
+				cout << "The word evaluates to" << endl;
+				A->Group_element->element_print_quick(Elt, cout);
+				cout << endl;
+				cout << "in latex:" << endl;
+				A->Group_element->element_print_latex(Elt, cout);
+				cout << endl;
+			}
+
+			ring_theory::longinteger_object rk_out;
+
+			Subgroup_sims->element_rank(rk_out, Elt);
+
+			out = rk_out.as_int();
+
+			perm[in] = out;
+
+			if (f_vvv) {
+				cout << "any_group::automorphism_by_generator_images in=" << in << " -> " << out << endl;
+			}
+
+
+			FREE_int(word);
+
+		}
+
+		combinatorics::combinatorics_domain Combi;
+
+		int c;
+
+		c = Combi.is_permutation(
+				perm, go);
+		if (c) {
+			cout << "any_group::automorphism_by_generator_images h = " << h << " output is a permutation" << endl;
+		}
+		else {
+			cout << "any_group::automorphism_by_generator_images h = " << h << " output is not a permutation" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "any_group::automorphism_by_generator_images h = " << h << ", perm = ";
+			Combi.perm_print_list(
+						cout, perm, go);
+			cout << endl;
+		}
+
+		Int_vec_copy(perm, Perms + h * go, go);
+
+	}
+
+
+	FREE_int(Elt);
+	FREE_int(perm);
+
+	FREE_OBJECT(A_rm);
+
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images done" << endl;
 	}
 }
 
@@ -2622,6 +2899,63 @@ void any_group::print_action_on_surface(
 	}
 
 }
+
+void any_group::subgroup_lattice(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice" << endl;
+	}
+
+	groups::subgroup_lattice * Subgroup_lattice;
+
+	Subgroup_lattice = NEW_OBJECT(groups::subgroup_lattice);
+
+#if 0
+	groups::strong_generators *SG;
+
+	SG = NEW_OBJECT(groups::strong_generators);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice before init_from_sims" << endl;
+	}
+	SG->init_from_sims(Subgroup_sims, verbose_level);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice after init_from_sims" << endl;
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice "
+				"before Subgroup_lattice->init" << endl;
+	}
+	Subgroup_lattice->init(
+			A_base, Subgroup_sims,
+			label,
+			label_tex,
+			Subgroup_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice "
+				"after Subgroup_lattice->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice "
+				"before Subgroup_lattice->save_csv" << endl;
+	}
+	Subgroup_lattice->save_csv(verbose_level - 1);
+
+	FREE_OBJECT(Subgroup_lattice);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice done" << endl;
+	}
+}
+
+
 
 void any_group::element_processing(
 		element_processing_description *element_processing_descr,

@@ -7,6 +7,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+		any_combinatorial_object.o \
 		classification_of_objects_description.o \
 		classification_of_objects_report_options.o \
 		classification_of_objects.o \
@@ -15,8 +16,7 @@ MODULES = \
 		data_input_stream_description_element.o \
 		data_input_stream_description.o \
 		data_input_stream.o \
-		encoded_combinatorial_object.o \
-		object_with_canonical_form.o
+		encoded_combinatorial_object.o
 
 
 all : $(MODULES)

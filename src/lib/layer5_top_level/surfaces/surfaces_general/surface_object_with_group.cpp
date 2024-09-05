@@ -486,7 +486,11 @@ void surface_object_with_group::compute_projectivity_group(
 					"before Syl->init" << endl;
 		}
 		Syl = NEW_OBJECT(groups::sylow_structure);
-		Syl->init(S, verbose_level - 2);
+		Syl->init(
+				S,
+				SO->label_txt,
+				SO->label_tex,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "surface_object_with_group::compute_projectivity_group "
 					"after Syl->init" << endl;

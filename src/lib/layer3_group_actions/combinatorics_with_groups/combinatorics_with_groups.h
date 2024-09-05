@@ -103,7 +103,7 @@ class flag_orbits_incidence_structure {
 public:
 
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *Any_combo;
 
 	int nb_rows;
 	int nb_cols;
@@ -120,7 +120,7 @@ public:
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
 	void init(
-			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::any_combinatorial_object *Any_combo,
 			int f_anti_flags, actions::action *A_perm,
 			groups::strong_generators *SG,
 			int verbose_level);
@@ -150,7 +150,7 @@ class group_action_on_combinatorial_object {
 
 public:
 
-	canonical_form_classification::object_with_canonical_form *OwCF;
+	canonical_form_classification::any_combinatorial_object *Any_Combo;
 
 	std::string label_txt;
 	std::string label_tex;
@@ -183,7 +183,7 @@ public:
 	void init(
 			std::string &label_txt,
 			std::string &label_tex,
-			canonical_form_classification::object_with_canonical_form *OwCF,
+			canonical_form_classification::any_combinatorial_object *Any_Combo,
 			actions::action *A_perm,
 			int verbose_level);
 	void print_schemes(

@@ -28,7 +28,7 @@ void difference_set_in_heisenberg_group::init(
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::init" << endl;
-		}
+	}
 	difference_set_in_heisenberg_group::n = n;
 	difference_set_in_heisenberg_group::F = F;
 	q = F->q;
@@ -166,7 +166,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
-		}
+	}
 
 	base_image = NEW_int(given_base_length);
 	base_image_elts = NEW_int(given_base_length * H->len);
@@ -189,7 +189,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 
 	for (i = 0; i < 5; i++) {
 		base_image[i] = H->rank_element(base_image_elts + i * 5);
-		}
+	}
 
 	E1 = NEW_int(A->elt_size_in_int);
 
@@ -238,7 +238,8 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	fname_magma_out = prefix + "normalizer.txt";
 
 
-	Magma.read_permutation_group(fname_magma_out,
+	Magma.read_permutation_group(
+			fname_magma_out,
 			H->group_order, N_gens, N_nb_gens, N_go,
 			verbose_level);
 
@@ -463,8 +464,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 
 	if (f_v) {
-		cout << "difference_set_in_heisenberg_group::check_"
-				"overgroups_of_order_nine" << endl;
+		cout << "difference_set_in_heisenberg_group::check_overgroups_of_order_nine" << endl;
 	}
 	int second_gen_idx[] = {
 		731, 353, 381, 379, 46, 357, 700, 359, 698, 721,
@@ -719,24 +719,23 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 	} // next h
 
 	if (f_v) {
-		cout << "difference_set_in_heisenberg_group::check_"
-				"overgroups_of_order_nine done" << endl;
+		cout << "difference_set_in_heisenberg_group::check_overgroups_of_order_nine done" << endl;
 	}
 }
 
 void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		int verbose_level)
+// we work inside the group N
 {
 	int f_v = (verbose_level >= 1);
-	int *Zuppos;
-	int nb_zuppos;
+	std::vector<long int> Zuppos;
+	//int nb_zuppos;
 	int goi;
 	ring_theory::longinteger_object go;
 	int i, j, t;
 
 	if (f_v) {
-		cout << "difference_set_in_heisenberg_group::create_"
-				"minimal_overgroups" << endl;
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups" << endl;
 	}
 
 	N->Sims->group_order(go);
@@ -744,12 +743,15 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	goi = go.as_int();
 
 
-	Zuppos = NEW_int(goi);
-	N->Sims->zuppo_list(Zuppos, nb_zuppos, verbose_level);
+	//Zuppos = NEW_int(goi);
+	N->Sims->zuppo_list(Zuppos, verbose_level);
 
-	cout << "We found " << nb_zuppos << " zuppos." << endl;
-	Int_vec_print(cout, Zuppos, nb_zuppos);
-	cout << endl;
+	if (f_v) {
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+				"We found " << Zuppos.size() << " zuppos." << endl;
+		Lint_vec_stl_print(cout, Zuppos);
+		cout << endl;
+	}
 
 	int *subgroup_elements;
 	int subgroup_sz;
@@ -768,11 +770,31 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	int *Group_order;
 	int z;
 
-	Subs = new groups::psubgroup[nb_zuppos];
 
-	Group_order = NEW_int(nb_zuppos);
+	groups::subgroup_lattice *Subgroup_lattice;
 
-	for (z = 0; z < nb_zuppos; z++) {
+	Subgroup_lattice = NEW_OBJECT(groups::subgroup_lattice);
+
+	if (f_v) {
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+				"before Subgroup_lattice->init" << endl;
+	}
+	Subgroup_lattice->init(
+			N->Sims->A, N->Sims,
+			N->label,
+			N->label_tex,
+			N->Sims->A->Strong_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+				"after Subgroup_lattice->init" << endl;
+	}
+
+	Subs = new groups::psubgroup[Zuppos.size()];
+
+	Group_order = NEW_int(Zuppos.size());
+
+	for (z = 0; z < Zuppos.size(); z++) {
 		//cout << "zuppo " << z << " / " << nb_zuppos << ":" << endl;
 		subgroup_elements[0] = 0;
 		subgroup_sz = 1;
@@ -785,7 +807,8 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 			0 /* verbose_level */);
 
 #if 0
-		cout << "found a group of order " << group_sz << " : ";
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+				"found a group of order " << group_sz << " : ";
 		int_vec_print(cout, group, group_sz);
 		cout << endl;
 #endif
@@ -793,7 +816,12 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		Group_order[z] = group_sz;
 
 		Subs[z] = new groups::subgroup;
-		Subs[z]->init(group, group_sz, gens, nb_gens);
+		Subs[z]->init(
+				Subgroup_lattice,
+				group, group_sz,
+				gens, nb_gens, verbose_level);
+
+
 
 	}
 	data_structures::tally Group_orders;
@@ -801,10 +829,13 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	int nb_subgroups;
 	int o, idx_E1;
 
-	Group_orders.init(Group_order, nb_zuppos, false, 0);
-	cout << "We found the following group orders: ";
-	Group_orders.print_bare(true);
-	cout << endl;
+	Group_orders.init(Group_order, Zuppos.size(), false, 0);
+	if (f_v) {
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+				"We found the following group orders: ";
+		Group_orders.print_bare(true);
+		cout << endl;
+	}
 
 
 	groups::subgroup **Subgroups_of_order;
@@ -814,19 +845,25 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 		Group_orders.get_class_by_value(
 				Idx_subgroup, nb_subgroups,
 				o /* value */, verbose_level);
-		cout << "We have " << nb_subgroups
-				<< " subgroups of order " << o << endl;
+		if (f_v) {
+			cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+					"We have " << nb_subgroups
+					<< " subgroups of order " << o << endl;
+		}
 
 		Subgroups_of_order = new groups::psubgroup[nb_subgroups];
 		for (j = 0; j < nb_subgroups; j++) {
 			Subgroups_of_order[j] = Subs[Idx_subgroup[j]];
 			Subs[Idx_subgroup[j]] = NULL;
-			}
+		}
 
-		cout << "The subgroups of order " << o << " are:" << endl;
-		for (j = 0; j < nb_subgroups; j++) {
-			Subgroups_of_order[j]->print();
+		if (f_v) {
+			cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+					"The subgroups of order " << o << " are:" << endl;
+			for (j = 0; j < nb_subgroups; j++) {
+				Subgroups_of_order[j]->print();
 			}
+		}
 
 		if (o == 3) {
 			// search for the group which contains the element rk_E1:
@@ -837,48 +874,72 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				}
 			}
 			if (j == nb_subgroups) {
-				cout << "We could not find the group containing "
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"We could not find the group containing "
 						"the element rk_E1" << endl;
 				exit(1);
 			}
 			idx_E1 = j;
-			cout << "The subgroup containing the element E1=" << rk_E1
-				<< " has index " << idx_E1 << ":" << endl;
-			Subgroups_of_order[j]->print();
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"The subgroup containing the element E1=" << rk_E1
+					<< " has index " << idx_E1 << ":" << endl;
+				Subgroups_of_order[j]->print();
+			}
 
 			actions::action *A_on_subgroups;
 
-			cout << "creating action on the subgroups:" << endl;
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"creating action on the subgroups:" << endl;
+			}
+#if 0
 			A_on_subgroups = N->Induced_action->create_induced_action_on_subgroups(
 				N->Sims,
 				nb_subgroups, o /* group_order */,
 				Subgroups_of_order,
 				verbose_level);
+#else
+			// ToDo
+			A_on_subgroups = NULL;
+#endif
 
 
-			cout << "action on subgroups created:" << endl;
-			A_on_subgroups->print_info();
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"action on subgroups created:" << endl;
+				A_on_subgroups->print_info();
+			}
 
 
 			groups::schreier *Sch_subgroups;
 
-			cout << "computing orbit of conjugated subgroups:" << endl;
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"computing orbit of conjugate subgroups:" << endl;
+			}
 			Sch_subgroups = N->Strong_gens->orbit_of_one_point_schreier(
 				A_on_subgroups, idx_E1, verbose_level);
 
-			cout << "found an orbit of conjugated subgroups of length "
-					<< Sch_subgroups->orbit_len[0] << endl;
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"found an orbit of conjugate subgroups of length "
+						<< Sch_subgroups->orbit_len[0] << endl;
+			}
 
 			// compute minimal overgroups:
 			groups::subgroup **Overgroups;
 			int *Overgroup_order;
 
-			Overgroups = new groups::psubgroup[nb_zuppos];
+			Overgroups = new groups::psubgroup[Zuppos.size()];
 
-			Overgroup_order = NEW_int(nb_zuppos);
+			Overgroup_order = NEW_int(Zuppos.size());
 
-			for (z = 0; z < nb_zuppos; z++) {
-				cout << "zuppo " << z << " / " << nb_zuppos << ":" << endl;
+			for (z = 0; z < Zuppos.size(); z++) {
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"zuppo " << z << " / " << Zuppos.size() << ":" << endl;
+				}
 				Int_vec_copy(Subgroups_of_order[j]->Elements,
 						subgroup_elements,
 						Subgroups_of_order[j]->group_order);
@@ -894,22 +955,30 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					group, group_sz,
 					0 /* verbose_level */);
 
-				cout << "found a group of order " << group_sz << " : ";
-				Int_vec_print(cout, group, group_sz);
-				cout << endl;
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"found a group of order " << group_sz << " : ";
+					Int_vec_print(cout, group, group_sz);
+					cout << endl;
+				}
 
 				Overgroup_order[z] = group_sz;
 
 				Overgroups[z] = new groups::subgroup;
-				Overgroups[z]->init(group, group_sz, gens, nb_gens);
+				Overgroups[z]->init(Subgroup_lattice,
+						group, group_sz, gens, nb_gens,
+						verbose_level);
 
 			}
 			data_structures::tally Overgroup_orders;
 
-			Overgroup_orders.init(Overgroup_order, nb_zuppos, false, 0);
-			cout << "We found the following overgroup orders: ";
-			Overgroup_orders.print_bare(true);
-			cout << endl;
+			Overgroup_orders.init(Overgroup_order, Zuppos.size(), false, 0);
+			if (f_v) {
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"We found the following overgroup orders: ";
+				Overgroup_orders.print_bare(true);
+				cout << endl;
+			}
 
 			int *Idx_overgroup;
 			int nb_overgroups;
@@ -927,8 +996,11 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 						Idx_overgroup, nb_overgroups,
 						oo /* value */,
 						verbose_level);
-				cout << "We have " << nb_overgroups
-						<< " overgroups of order " << oo << endl;
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"We have " << nb_overgroups
+							<< " overgroups of order " << oo << endl;
+				}
 
 				Overgroups_of_order = new groups::psubgroup[nb_overgroups];
 				for (j = 0; j < nb_overgroups; j++) {
@@ -938,7 +1010,8 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 
 #if 0
-				cout << "The overgroups of order " << oo << " are:" << endl;
+				cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+						"The overgroups of order " << oo << " are:" << endl;
 				for (j = 0; j < nb_overgroups; j++) {
 					cout << j << " / " << nb_overgroups << " : ";
 					Overgroups_of_order[j]->print();
@@ -946,66 +1019,85 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 #endif
 				actions::action *A_on_overgroups;
 
-				cout << "creating action on the overgroups of order "
-						<< oo << ":" << endl;
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"creating action on the overgroups of order "
+							<< oo << ":" << endl;
+				}
+#if 0
 				A_on_overgroups = N->Induced_action->create_induced_action_on_subgroups(
 					N->Sims,
 					nb_overgroups, oo /* group_order */,
 					Overgroups_of_order,
 					0 /*verbose_level*/);
-				cout << "action on overgroups created:" << endl;
-				A_on_overgroups->print_info();
+#else
+				// ToDo
+				A_on_overgroups = NULL;
+#endif
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"action on overgroups created:" << endl;
+					A_on_overgroups->print_info();
+				}
 
 
 				groups::schreier *Sch_overgroups;
 
-				cout << "computing the orbits of conjugated "
-						"overgroups of order " << oo << ":" << endl;
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"computing the orbits of conjugated "
+							"overgroups of order " << oo << ":" << endl;
+				}
 				Sch_overgroups = N->Strong_gens->compute_all_point_orbits_schreier(
 						A_on_overgroups, 0 /*verbose_level*/);
 
-				cout << "The conjugacy classes of overgroups of order "
-						<< oo << " have the following lengths: ";
-				Sch_overgroups->print_orbit_length_distribution(cout);
-				cout << "There are " << Sch_overgroups->nb_orbits
-						<< " classes" << endl;
-				cout << "Representatives of the conjugacy "
-						"classes are:" << endl;
+				if (f_v) {
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"The conjugacy classes of overgroups of order "
+							<< oo << " have the following lengths: ";
+					Sch_overgroups->print_orbit_length_distribution(cout);
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"There are " << Sch_overgroups->nb_orbits
+							<< " classes" << endl;
+					cout << "difference_set_in_heisenberg_group::create_minimal_overgroups "
+							"Representatives of the conjugacy "
+							"classes are:" << endl;
 
-				int *second_generator;
-				second_generator = NEW_int(Sch_overgroups->nb_orbits);
-				for (j = 0; j < Sch_overgroups->nb_orbits; j++) {
-					//cout << "orbit " << j << " / "
-					//<< Sch_overgroups->nb_orbits << ":" << endl;
-					f = Sch_overgroups->orbit_first[j];
-					a = Sch_overgroups->orbit[f];
-					//Overgroups_of_order[a]->print();
-					for (t = 0; t < 2; t++) {
-						if (Overgroups_of_order[a]->gens[t] != rk_E1) {
-							second_generator[j] =
-								Overgroups_of_order[a]->gens[t];
-							break;
+					int *second_generator;
+					second_generator = NEW_int(Sch_overgroups->nb_orbits);
+					for (j = 0; j < Sch_overgroups->nb_orbits; j++) {
+						//cout << "orbit " << j << " / "
+						//<< Sch_overgroups->nb_orbits << ":" << endl;
+						f = Sch_overgroups->orbit_first[j];
+						a = Sch_overgroups->orbit[f];
+						//Overgroups_of_order[a]->print();
+						for (t = 0; t < 2; t++) {
+							if (Overgroups_of_order[a]->gens[t] != rk_E1) {
+								second_generator[j] =
+									Overgroups_of_order[a]->gens[t];
+								break;
+							}
+						}
+						if (t == 2) {
+							cout << "t == 2" << endl;
+							exit(1);
 						}
 					}
-					if (t == 2) {
-						cout << "t == 2" << endl;
-						exit(1);
-					}
+					cout << "the second generators are:" << endl;
+					//print_integer_matrix_with_standard_labels(cout,
+					// second_generator, Sch_overgroups->nb_orbits,
+					// 1, false /* f_tex */);
+					orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
+						second_generator, Sch_overgroups->nb_orbits);
+					cout << endl;
 				}
-				cout << "the second generators are:" << endl;
-				//print_integer_matrix_with_standard_labels(cout,
-				// second_generator, Sch_overgroups->nb_orbits,
-				// 1, false /* f_tex */);
-				orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
-					second_generator, Sch_overgroups->nb_orbits);
-				cout << endl;
 			} // next ii
 			exit(1);
 		}
 	}
 
 	if (f_v) {
-		cout << "difference_set_in_heisenberg_group::do_n2q3 done" << endl;
+		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups done" << endl;
 	}
 }
 

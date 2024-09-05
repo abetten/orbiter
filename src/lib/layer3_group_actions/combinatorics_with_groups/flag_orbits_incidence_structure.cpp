@@ -25,7 +25,7 @@ namespace combinatorics_with_groups {
 
 flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 {
-	OwCF = NULL;
+	Any_combo = NULL;
 	nb_rows = 0;
 	nb_cols = 0;
 	f_flag_orbits_have_been_computed = false;
@@ -38,7 +38,7 @@ flag_orbits_incidence_structure::flag_orbits_incidence_structure()
 
 flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 {
-	OwCF = NULL;
+	Any_combo = NULL;
 
 	if (Flags) {
 		FREE_int(Flags);
@@ -55,7 +55,7 @@ flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 }
 
 void flag_orbits_incidence_structure::init(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::any_combinatorial_object *Any_combo,
 		int f_anti_flags, actions::action *A_perm,
 		groups::strong_generators *SG,
 		int verbose_level)
@@ -66,7 +66,7 @@ void flag_orbits_incidence_structure::init(
 		cout << "flag_orbits_incidence_structure::init" << endl;
 	}
 
-	flag_orbits_incidence_structure::OwCF = OwCF;
+	flag_orbits_incidence_structure::Any_combo = Any_combo;
 
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 
@@ -75,7 +75,7 @@ void flag_orbits_incidence_structure::init(
 		cout << "flag_orbits_incidence_structure::init "
 				"before encode_incma" << endl;
 	}
-	OwCF->encode_incma(Enc, verbose_level - 2);
+	Any_combo->encode_incma(Enc, verbose_level - 2);
 
 	nb_rows = Enc->nb_rows;
 	nb_cols = Enc->nb_cols;

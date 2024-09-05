@@ -487,6 +487,14 @@ public:
 	void conjugacy_class_of(
 			std::string &label, std::string &rank_string,
 			int verbose_level);
+	void automorphism_by_generator_images(
+			std::string &label,
+			data_structures_groups::vector_ge *Elements_ge,
+			int *Images, int m, int n,
+			int *&Perms, long int &go,
+			int verbose_level);
+	// uses orbits_schreier::orbit_of_sets
+	// needs Subgroup_sims to set up action by action
 	void do_reverse_isomorphism_exterior_square(
 			int verbose_level);
 
@@ -534,6 +542,8 @@ public:
 			std::string &surface_label,
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
+			int verbose_level);
+	void subgroup_lattice(
 			int verbose_level);
 	void element_processing(
 			element_processing_description *element_processing_descr,
@@ -932,8 +942,16 @@ public:
 	std::string find_conjugating_element_element_to;
 
 
+	int f_group_of_automorphisms_by_images_of_generators;
+	std::string group_of_automorphisms_by_images_of_generators_label;
+	std::string group_of_automorphisms_by_images_of_generators_elements;
+	std::string group_of_automorphisms_by_images_of_generators_images;
+
+
+
 	// orbit stuff:
 
+	int f_subgroup_lattice;
 
 	int f_orbit_of;
 	int orbit_of_point_idx;

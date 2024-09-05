@@ -640,14 +640,16 @@ class graph_theoretic_activity {
 public:
 
 	graph_theoretic_activity_description *Descr;
-	graph_theory::colored_graph *CG;
+	int nb;
+	graph_theory::colored_graph **CG; // [nb]
 
 
 	graph_theoretic_activity();
 	~graph_theoretic_activity();
 	void init(
 			graph_theoretic_activity_description *Descr,
-			graph_theory::colored_graph *CG,
+			int nb,
+			graph_theory::colored_graph **CG,
 			int verbose_level);
 	void feedback_headings(
 			graph_theoretic_activity_description *Descr,

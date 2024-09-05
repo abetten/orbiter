@@ -78,39 +78,55 @@ int draw_incidence_structure_description::read_arguments(
 		if (ST.stringcmp(argv[i], "-width") == 0) {
 			f_width = true;
 			width = ST.strtoi(argv[++i]);
-			cout << "-width " << width << endl;
+			if (f_v) {
+				cout << "-width " << width << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-width_10") == 0) {
 			f_width_10 = true;
 			width_10 = ST.strtoi(argv[++i]);
-			cout << "-width_10 " << width_10 << endl;
+			if (f_v) {
+				cout << "-width_10 " << width_10 << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-outline_thin") == 0) {
 			f_outline_thin = true;
-			cout << "-outline_thin " << endl;
+			if (f_v) {
+				cout << "-outline_thin " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-unit_length") == 0) {
 			f_unit_length = true;
 			unit_length.assign(argv[++i]);
-			cout << "-unit_length " << unit_length << endl;
+			if (f_v) {
+				cout << "-unit_length " << unit_length << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-thick_lines") == 0) {
 			f_thick_lines = true;
 			thick_lines.assign(argv[++i]);
-			cout << "-thick_lines " << thick_lines << endl;
+			if (f_v) {
+				cout << "-thick_lines " << thick_lines << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-thin_lines") == 0) {
 			f_thin_lines = true;
 			thin_lines.assign(argv[++i]);
-			cout << "-thin_lines " << thin_lines << endl;
+			if (f_v) {
+				cout << "-thin_lines " << thin_lines << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-geo_line_width") == 0) {
 			f_geo_line_width = true;
 			geo_line_width.assign(argv[++i]);
-			cout << "-geo_line_width " << geo_line_width << endl;
+			if (f_v) {
+				cout << "-geo_line_width " << geo_line_width << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {

@@ -138,191 +138,272 @@ int geometric_object_description::read_arguments(
 {
 	int i;
 	data_structures::string_tools ST;
+	int f_v = (verbose_level >= 1);
 
-	cout << "geometric_object_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "geometric_object_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (ST.stringcmp(argv[i], "-hyperoval") == 0) {
 			f_hyperoval = true;
-			cout << "-hyperoval " << endl;
+			if (f_v) {
+				cout << "-hyperoval " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-subiaco_oval") == 0) {
 			f_subiaco_oval = true;
 			f_short = ST.strtoi(argv[++i]);
-			cout << "-subiaco_oval " << f_short << endl;
+			if (f_v) {
+				cout << "-subiaco_oval " << f_short << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-subiaco_hyperoval") == 0) {
 			f_subiaco_hyperoval = true;
-			cout << "-subiaco_hyperoval " << endl;
+			if (f_v) {
+				cout << "-subiaco_hyperoval " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-adelaide_hyperoval") == 0) {
 			f_adelaide_hyperoval = true;
-			cout << "-adelaide_hyperoval " << endl;
+			if (f_v) {
+				cout << "-adelaide_hyperoval " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-translation") == 0) {
 			f_translation = true;
 			translation_exponent = ST.strtoi(argv[++i]);
-			cout << "-translation " << translation_exponent << endl;
+			if (f_v) {
+				cout << "-translation " << translation_exponent << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Segre") == 0) {
 			f_Segre = true;
-			cout << "-segre" << endl;
+			if (f_v) {
+				cout << "-segre" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Payne") == 0) {
 			f_Payne = true;
-			cout << "-Payne" << endl;
+			if (f_v) {
+				cout << "-Payne" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Cherowitzo") == 0) {
 			f_Cherowitzo = true;
-			cout << "-Cherowitzo" << endl;
+			if (f_v) {
+				cout << "-Cherowitzo" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-OKeefe_Penttila") == 0) {
 			f_OKeefe_Penttila = true;
-			cout << "-OKeefe_Penttila" << endl;
+			if (f_v) {
+				cout << "-OKeefe_Penttila" << endl;
+			}
 		}
 
 
 		else if (ST.stringcmp(argv[i], "-BLT_database") == 0) {
 			f_BLT_database = true;
 			BLT_database_k = ST.strtoi(argv[++i]);
-			cout << "-BLT_database " << BLT_database_k << endl;
+			if (f_v) {
+				cout << "-BLT_database " << BLT_database_k << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-BLT_database_embedded") == 0) {
 			f_BLT_database_embedded = true;
 			BLT_database_embedded_k = ST.strtoi(argv[++i]);
-			cout << "-BLT_database_embedded " << BLT_database_embedded_k << endl;
+			if (f_v) {
+				cout << "-BLT_database_embedded " << BLT_database_embedded_k << endl;
+			}
 		}
 
 #if 0
 		else if (stringcmp(argv[i], "-BLT_Linear") == 0) {
 			f_BLT_Linear = true;
-			cout << "-BLT_Linear " << endl;
+			if (f_v) {
+				cout << "-BLT_Linear " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-BLT_Fisher") == 0) {
 			f_BLT_Fisher = true;
-			cout << "-BLT_Fisher " << endl;
+			if (f_v) {
+				cout << "-BLT_Fisher " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-BLT_Mondello") == 0) {
 			f_BLT_Mondello = true;
-			cout << "-BLT_Mondello " << endl;
+			if (f_v) {
+				cout << "-BLT_Mondello " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-BLT_FTWKB") == 0) {
 			f_BLT_FTWKB = true;
-			cout << "-BLT_FTWKB " << endl;
+			if (f_v) {
+				cout << "-BLT_FTWKB " << endl;
+			}
 		}
 #endif
 
 		else if (ST.stringcmp(argv[i], "-elliptic_quadric_ovoid") == 0) {
 			f_elliptic_quadric_ovoid = true;
-			cout << "-elliptic_quadric_ovoid " << endl;
+			if (f_v) {
+				cout << "-elliptic_quadric_ovoid " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-ovoid_ST") == 0) {
 			f_ovoid_ST = true;
-			cout << "-ovoid_ST " << endl;
+			if (f_v) {
+				cout << "-ovoid_ST " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Baer_substructure") == 0) {
 			f_Baer_substructure = true;
-			cout << "-Baer_substructure " << endl;
+			if (f_v) {
+				cout << "-Baer_substructure " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal = true;
 			orthogonal_epsilon = ST.strtoi(argv[++i]);
-			cout << "-orthogonal " << orthogonal_epsilon << endl;
+			if (f_v) {
+				cout << "-orthogonal " << orthogonal_epsilon << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-hermitian") == 0) {
 			f_hermitian = true;
-			cout << "-hermitian" << endl;
+			if (f_v) {
+				cout << "-hermitian" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-cuspidal_cubic") == 0) {
 			f_cuspidal_cubic = true;
-			cout << "-cuspidal_cubic " << endl;
+			if (f_v) {
+				cout << "-cuspidal_cubic " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-twisted_cubic") == 0) {
 			f_twisted_cubic = true;
-			cout << "-twisted_cubic " << endl;
+			if (f_v) {
+				cout << "-twisted_cubic " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-elliptic_curve") == 0) {
 			f_elliptic_curve = true;
 			elliptic_curve_b = ST.strtoi(argv[++i]);
 			elliptic_curve_c = ST.strtoi(argv[++i]);
-			cout << "-elliptic_curve " << elliptic_curve_b
-					<< " " << elliptic_curve_c << endl;
+			if (f_v) {
+				cout << "-elliptic_curve " << elliptic_curve_b
+						<< " " << elliptic_curve_c << endl;
+			}
 		}
 #if 0
 		else if (stringcmp(argv[i], "-Hill_cap_56") == 0) {
 			f_Hill_cap_56 = true;
-			cout << "-Hill_cap_56 " << endl;
+			if (f_v) {
+				cout << "-Hill_cap_56 " << endl;
+			}
 		}
 #endif
 		else if (ST.stringcmp(argv[i], "-ttp_construction_A") == 0) {
 			f_ttp_code = true;
 			f_ttp_construction_A = true;
-			cout << "-ttp_construction_A" << endl;
+			if (f_v) {
+				cout << "-ttp_construction_A" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-ttp_construction_A_hyperoval") == 0) {
 			f_ttp_code = true;
 			f_ttp_construction_A = true;
 			f_ttp_hyperoval = true;
-			cout << "-ttp_construction_A_hyperoval" << endl;
+			if (f_v) {
+				cout << "-ttp_construction_A_hyperoval" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-ttp_construction_B") == 0) {
 			f_ttp_code = true;
 			f_ttp_construction_B = true;
-			cout << "-ttp_construction_B" << endl;
+			if (f_v) {
+				cout << "-ttp_construction_B" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-unital_XXq_YZq_ZYq") == 0) {
 			f_unital_XXq_YZq_ZYq = true;
-			cout << "-unital_XXq_YZq_ZYq" << endl;
+			if (f_v) {
+				cout << "-unital_XXq_YZq_ZYq" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-desarguesian_line_spread_in_PG_3_q") == 0) {
 			f_desarguesian_line_spread_in_PG_3_q = true;
-			cout << "-desarguesian_line_spread_in_PG_3_q" << endl;
+			if (f_v) {
+				cout << "-desarguesian_line_spread_in_PG_3_q" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-embedded_in_PG_4_q") == 0) {
 			f_embedded_in_PG_4_q = true;
-			cout << "-embedded_in_PG_4_q" << endl;
+			if (f_v) {
+				cout << "-embedded_in_PG_4_q" << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Buekenhout_Metz") == 0) {
 			f_Buekenhout_Metz = true;
-			cout << "-Buekenhout_Metz " << endl;
+			if (f_v) {
+				cout << "-Buekenhout_Metz " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-classical") == 0) {
 			f_classical = true;
-			cout << "-classical " << endl;
+			if (f_v) {
+				cout << "-classical " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Uab") == 0) {
 			f_Uab = true;
 			parameter_a = ST.strtoi(argv[++i]);
 			parameter_b = ST.strtoi(argv[++i]);
-			cout << "-Uab " << parameter_a << " " << parameter_b << endl;
+			if (f_v) {
+				cout << "-Uab " << parameter_a << " " << parameter_b << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-whole_space") == 0) {
 			f_whole_space = true;
-			cout << "-whole_space " << endl;
+			if (f_v) {
+				cout << "-whole_space " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-hyperplane") == 0) {
 			f_hyperplane = true;
 			pt = ST.strtoi(argv[++i]);
-			cout << "-hyperplane " << pt << endl;
+			if (f_v) {
+				cout << "-hyperplane " << pt << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-segre_variety") == 0) {
 			f_segre_variety = true;
 			segre_variety_a = ST.strtoi(argv[++i]);
 			segre_variety_b = ST.strtoi(argv[++i]);
-			cout << "-segre_variety " << segre_variety_a
+			if (f_v) {
+				cout << "-segre_variety " << segre_variety_a
 					<< " " << segre_variety_b << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-arc1_BCKM") == 0) {
 			f_arc1_BCKM = true;
-			cout << "-arc1_BCKM " << endl;
+			if (f_v) {
+				cout << "-arc1_BCKM " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-arc2_BCKM") == 0) {
 			f_arc2_BCKM = true;
-			cout << "-arc2_BCKM " << endl;
+			if (f_v) {
+				cout << "-arc2_BCKM " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-Maruta_Hamada_arc") == 0) {
 			f_Maruta_Hamada_arc = true;
-			cout << "-Maruta_Hamada_arc " << endl;
+			if (f_v) {
+				cout << "-Maruta_Hamada_arc " << endl;
+			}
 		}
 		else if (ST.stringcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = true;
@@ -337,10 +418,13 @@ int geometric_object_description::read_arguments(
 			Os.get_string_from_command_line(variety_coeffs, argc, argv, i, verbose_level);
 			i--;
 
-			cout << "-projective_variety "
-					<< variety_label_txt << " "
-					<< variety_label_tex << " "
-					<< variety_coeffs << endl;
+			if (f_v) {
+				cout << "-projective_variety "
+						<< projective_variety_ring_label << " "
+						<< variety_label_txt << " "
+						<< variety_label_tex << " "
+						<< variety_coeffs << endl;
+			}
 		}
 
 
@@ -374,13 +458,15 @@ int geometric_object_description::read_arguments(
 			i--;
 
 
-			cout << "-intersection_of_zariski_open_sets "
-					<< intersection_of_zariski_open_sets_ring_label << " "
-					<< variety_label_txt << " "
-					<< variety_label_tex << " "
-					<< endl;
-			for (j = 0; j < Variety_coeffs.size(); j++) {
-				cout << j << " : " << Variety_coeffs[j] << endl;
+			if (f_v) {
+				cout << "-intersection_of_zariski_open_sets "
+						<< intersection_of_zariski_open_sets_ring_label << " "
+						<< variety_label_txt << " "
+						<< variety_label_tex << " "
+						<< endl;
+				for (j = 0; j < Variety_coeffs.size(); j++) {
+					cout << j << " : " << Variety_coeffs[j] << endl;
+				}
 			}
 		}
 
@@ -414,12 +500,14 @@ int geometric_object_description::read_arguments(
 			i--;
 
 
-			cout << "-number_of_conditions_satisfied "
-					<< number_of_conditions_satisfied_ring_label << " "
-					<< variety_label_txt << " "
-					<< variety_label_tex << endl;
-			for (j = 0; j < Variety_coeffs.size(); j++) {
-				cout << j << " : " << Variety_coeffs[j] << endl;
+			if (f_v) {
+				cout << "-number_of_conditions_satisfied "
+						<< number_of_conditions_satisfied_ring_label << " "
+						<< variety_label_txt << " "
+						<< variety_label_tex << endl;
+				for (j = 0; j < Variety_coeffs.size(); j++) {
+					cout << j << " : " << Variety_coeffs[j] << endl;
+				}
 			}
 		}
 
@@ -433,32 +521,29 @@ int geometric_object_description::read_arguments(
 			//curve_nb_vars = ST.strtoi(argv[++i]);
 			//curve_degree = ST.strtoi(argv[++i]);
 			curve_coeffs.assign(argv[++i]);
-			cout << "-projective_curve "
-					<< projective_curve_ring_label << " "
-					<< curve_label_txt << " "
-					<< curve_label_tex << " "
-					<< curve_coeffs << endl;
+			if (f_v) {
+				cout << "-projective_curve "
+						<< projective_curve_ring_label << " "
+						<< curve_label_txt << " "
+						<< curve_label_tex << " "
+						<< curve_coeffs << endl;
+			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-monomial_type_LEX") == 0) {
-			Monomial_ordering_type = t_LEX;
-			cout << "-monomial_type_LEX " << endl;
-		}
-		else if (ST.stringcmp(argv[i], "-monomial_type_PART") == 0) {
-			Monomial_ordering_type = t_PART;
-			cout << "-monomial_type_PART " << endl;
-		}
-#endif
 		else if (ST.stringcmp(argv[i], "-set") == 0) {
 			f_set = true;
 			set_label_txt.assign(argv[++i]);
 			set_label_tex.assign(argv[++i]);
 			set_text.assign(argv[++i]);
-			cout << "-set " << set_label_txt << " " << set_label_tex << " " << set_text << endl;
+			if (f_v) {
+				cout << "-set " << set_label_txt << " " << set_label_tex << " " << set_text << endl;
+			}
 		}
 		//std::string set_label_txt;
 		//std::string set_label_tex;
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {

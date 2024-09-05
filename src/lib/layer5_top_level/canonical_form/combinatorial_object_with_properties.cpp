@@ -19,7 +19,7 @@ namespace canonical_form {
 
 combinatorial_object_with_properties::combinatorial_object_with_properties()
 {
-	OwCF = NULL;
+	Any_Combo = NULL;
 
 	//std::string label;
 
@@ -63,7 +63,7 @@ combinatorial_object_with_properties::~combinatorial_object_with_properties()
 
 
 void combinatorial_object_with_properties::init(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::any_combinatorial_object *Any_Combo,
 		l1_interfaces::nauty_output *NO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -78,7 +78,7 @@ void combinatorial_object_with_properties::init(
 		cout << "combinatorial_object_with_properties::init" << endl;
 	}
 
-	combinatorial_object_with_properties::OwCF = OwCF;
+	combinatorial_object_with_properties::Any_Combo = Any_Combo;
 	combinatorial_object_with_properties::NO = NO;
 	combinatorial_object_with_properties::f_projective_space = f_projective_space;
 	combinatorial_object_with_properties::PA = PA;
@@ -134,7 +134,7 @@ void combinatorial_object_with_properties::init(
 	GA_on_CO->init(
 			label,
 			label,
-			OwCF,
+			Any_Combo,
 			A_perm,
 			verbose_level);
 	if (f_v) {
@@ -210,7 +210,7 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 }
 
 void combinatorial_object_with_properties::init_object_in_projective_space(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::any_combinatorial_object *Any_Combo,
 		l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
@@ -222,7 +222,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 		cout << "combinatorial_object_with_properties::init_object_in_projective_space" << endl;
 	}
 
-	combinatorial_object_with_properties::OwCF = OwCF;
+	combinatorial_object_with_properties::Any_Combo = Any_Combo;
 	combinatorial_object_with_properties::NO = NO;
 	combinatorial_object_with_properties::label.assign(label);
 
@@ -515,7 +515,7 @@ void combinatorial_object_with_properties::latex_report(
 
 		canonical_form_classification::encoded_combinatorial_object *Enc;
 
-		OwCF->encode_incma(Enc, verbose_level);
+		Any_Combo->encode_incma(Enc, verbose_level);
 
 		//latex_TDA(ost, Enc, verbose_level);
 		//ost << "\\\\" << endl;
@@ -562,12 +562,12 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
-				"before OwCF->encode_incma" << endl;
+				"before Any_Combo->encode_incma" << endl;
 	}
-	OwCF->encode_incma(Enc, verbose_level);
+	Any_Combo->encode_incma(Enc, verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
-				"after OwCF->encode_incma" << endl;
+				"after Any_Combo->encode_incma" << endl;
 	}
 
 
@@ -664,11 +664,11 @@ void combinatorial_object_with_properties::latex_report(
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
 					"before find_object, "
-					"OwCF->v=" << OwCF->v << endl;
+					"OwCF->v=" << Any_Combo->v << endl;
 		}
 
-		GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->find_object(
-				OwCF,
+		GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->find_object(
+				Any_Combo,
 				f_found, idx,
 				NO,
 				Canonical_form,
@@ -688,9 +688,9 @@ void combinatorial_object_with_properties::latex_report(
 			exit(1);
 		}
 
-		canonical_form_classification::object_with_canonical_form *OwCF2 =
-				(canonical_form_classification::object_with_canonical_form *)
-				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
+		canonical_form_classification::any_combinatorial_object *Any_Combo2 =
+				(canonical_form_classification::any_combinatorial_object *)
+				GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -710,7 +710,7 @@ void combinatorial_object_with_properties::latex_report(
 		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
 		ost << "Lex-least form is:\\\\" << endl;
 
-		OwCF2->print_tex_detailed(
+		Any_Combo2->print_tex_detailed(
 				ost,
 				Report_options,
 				verbose_level);
@@ -733,7 +733,7 @@ void combinatorial_object_with_properties::compute_TDO(
 	}
 	canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	OwCF->encode_incma(Enc, verbose_level);
+	Any_Combo->encode_incma(Enc, verbose_level);
 
 
 

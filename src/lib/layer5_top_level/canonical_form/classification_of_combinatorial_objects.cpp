@@ -166,7 +166,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 		}
 
 		//object_idx = Input_objects[0];
-		canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[iso];
+		canonical_form_classification::any_combinatorial_object *OwCF = CO->OWCF_transversal[iso];
 
 
 		if (f_v) {
@@ -518,7 +518,7 @@ void classification_of_combinatorial_objects::report_object(
 
 	//j = CO->CB->perm[i];
 
-	canonical_form_classification::object_with_canonical_form *OwCF = CO->OWCF_transversal[i];
+	canonical_form_classification::any_combinatorial_object *OwCF = CO->OWCF_transversal[i];
 
 	if (f_v) {
 		cout << "classification_of_combinatorial_objects::report_object "

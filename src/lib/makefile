@@ -45,6 +45,7 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/variety_description.o \
 		layer1_foundations/algebraic_geometry/variety_object.o \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
+		layer1_foundations/canonical_form_classification/any_combinatorial_object.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects_description.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects_report_options.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects.o \
@@ -54,7 +55,6 @@ ORBITER_MODULES= \
 		layer1_foundations/canonical_form_classification/data_input_stream_description.o \
 		layer1_foundations/canonical_form_classification/data_input_stream.o \
 		layer1_foundations/canonical_form_classification/encoded_combinatorial_object.o \
-		layer1_foundations/canonical_form_classification/object_with_canonical_form.o \
 		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
@@ -261,7 +261,7 @@ ORBITER_MODULES= \
 		layer1_foundations/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/l1_interfaces/latex_interface.o \
-		layer1_foundations/l1_interfaces/nauty_interface_for_OwCF.o \
+		layer1_foundations/l1_interfaces/nauty_interface_for_combo.o \
 		layer1_foundations/l1_interfaces/nauty_interface.o \
 		layer1_foundations/l1_interfaces/nauty_output.o \
 		layer1_foundations/l1_interfaces/povray_interface.o \
@@ -375,6 +375,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/group_container.o \
+		layer3_group_actions/data_structures/hash_table_subgroups.o \
 		layer3_group_actions/data_structures/orbit_rep.o \
 		layer3_group_actions/data_structures/orbit_transversal.o \
 		layer3_group_actions/data_structures/schreier_vector_handler.o \
@@ -407,6 +408,8 @@ ORBITER_MODULES= \
 		layer3_group_actions/groups/sims3.o \
 		layer3_group_actions/groups/strong_generators.o \
 		layer3_group_actions/groups/strong_generators_groups.o \
+		layer3_group_actions/groups/subgroup_lattice_layer.o \
+		layer3_group_actions/groups/subgroup_lattice.o \
 		layer3_group_actions/groups/subgroup.o \
 		layer3_group_actions/groups/sylow_structure.o \
 		layer3_group_actions/groups/shallow_schreier_ai.o \

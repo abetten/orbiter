@@ -33,7 +33,7 @@ nauty_interface_with_group::~nauty_interface_with_group()
 
 
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-		canonical_form_classification::object_with_canonical_form *OwCF,
+		canonical_form_classification::any_combinatorial_object *Any_combo,
 		actions::action *A_linear,
 	int f_compute_canonical_form,
 	int f_save_nauty_input_graphs,
@@ -57,17 +57,17 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 
 
-	l1_interfaces::nauty_interface_for_OwCF NI;
+	l1_interfaces::nauty_interface_for_combo NI;
 
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"before NI.run_nauty_for_OwCF" << endl;
+				"before NI.run_nauty_for_combo" << endl;
 
 	}
 
-	NI.run_nauty_for_OwCF(
-			OwCF,
+	NI.run_nauty_for_combo(
+			Any_combo,
 			f_compute_canonical_form,
 			f_save_nauty_input_graphs,
 			Canonical_form,
@@ -77,7 +77,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"after NI.run_nauty_for_OwCF" << endl;
+				"after NI.run_nauty_for_combo" << endl;
 
 	}
 
@@ -107,7 +107,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 	Action_global.reverse_engineer_linear_group_from_permutation_group(
 			A_linear,
-			OwCF->P,
+			Any_combo->P,
 			SG,
 			A_perm,
 			NO,
@@ -151,10 +151,10 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 	}
 
-	canonical_form_classification::object_with_canonical_form *OwCF = NULL;
+	canonical_form_classification::any_combinatorial_object *OwCF = NULL;
 
 
-	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
+	OwCF = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data "
@@ -260,10 +260,10 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	canonical_form_classification::object_with_canonical_form *OwCF = NULL;
+	canonical_form_classification::any_combinatorial_object *OwCF = NULL;
 
 
-	OwCF = NEW_OBJECT(canonical_form_classification::object_with_canonical_form);
+	OwCF = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "

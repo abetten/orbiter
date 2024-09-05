@@ -5024,7 +5024,6 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 }
 
 
-
 void action_global::rational_normal_form(
 		actions::action *A,
 		std::string &element_given,

@@ -20,6 +20,7 @@ namespace apps_graph_theory {
 graph_theoretic_activity::graph_theoretic_activity()
 {
 	Descr = NULL;
+	nb = 0;
 	CG = NULL;
 }
 
@@ -30,7 +31,8 @@ graph_theoretic_activity::~graph_theoretic_activity()
 
 void graph_theoretic_activity::init(
 		graph_theoretic_activity_description *Descr,
-		graph_theory::colored_graph *CG,
+		int nb,
+		graph_theory::colored_graph **CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -40,11 +42,21 @@ void graph_theoretic_activity::init(
 	}
 
 	graph_theoretic_activity::Descr = Descr;
+	graph_theoretic_activity::nb = nb;
 	graph_theoretic_activity::CG = CG;
+
+	int i;
 
 	if (f_v) {
 		cout << "graph_theoretic_activity::init, "
-				"label = " << graph_theoretic_activity::CG->label << endl;
+				"labels = ";
+		for (i = 0; i < nb; i++) {
+			cout << graph_theoretic_activity::CG[i]->label;
+			if (i < nb - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
 	}
 
 
@@ -408,8 +420,7 @@ void graph_theoretic_activity::perform_activity(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theoretic_activity::perform_activity, "
-				"CG->label=" << CG->label << endl;
+		cout << "graph_theoretic_activity::perform_activity" << endl;
 	}
 	data_structures::string_tools ST;
 
@@ -425,9 +436,9 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"before CG->Colored_graph_cliques->all_cliques" << endl;
 		}
-		CG->Colored_graph_cliques->all_cliques(
+		CG[0]->Colored_graph_cliques->all_cliques(
 				Descr->Clique_finder_control,
-				CG->label,
+				CG[0]->label,
 				feedback,
 				CF,
 				verbose_level);
@@ -438,13 +449,13 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"Gr->label=" << CG->label
+					"CG[0]->label=" << CG[0]->label
 					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
 		string fname_solution;
 
-		fname_solution = CG->label + "_solutions.csv";
+		fname_solution = CG[0]->label + "_solutions.csv";
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -461,7 +472,7 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"Gr->label=" << CG->label
+					"CG[0]->label=" << CG[0]->label
 					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
@@ -478,7 +489,7 @@ void graph_theoretic_activity::perform_activity(
 		int lambda, mu;
 		string s1, s2, s3;
 
-		ret = CG->test_SRG_property(
+		ret = CG[0]->test_SRG_property(
 				lambda,
 				mu,
 				verbose_level);
@@ -503,7 +514,7 @@ void graph_theoretic_activity::perform_activity(
 		int nexus;
 		int ret;
 
-		ret = CG->Colored_graph_cliques->test_Neumaier_property(
+		ret = CG[0]->Colored_graph_cliques->test_Neumaier_property(
 				regularity,
 				lambda_value,
 				Descr->test_Neumaier_property_clique_size,
@@ -511,7 +522,7 @@ void graph_theoretic_activity::perform_activity(
 				verbose_level);
 		if (ret) {
 			cout << "The graph is Neumaier, "
-					"the parameters are NG(" << CG->nb_points << ","
+					"the parameters are NG(" << CG[0]->nb_points << ","
 					<< regularity << ","
 					<< lambda_value << ";"
 					<< nexus << ","
@@ -529,16 +540,19 @@ void graph_theoretic_activity::perform_activity(
 					"f_find_subgraph " << Descr->find_subgraph_label << endl;
 		}
 
+
+		graph_theory::graph_theory_domain Graph_Domain;
+
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"before CG->find_subgraph" << endl;
+					"before Graph_Domain.find_subgraph" << endl;
 		}
-		CG->find_subgraph(
-				Descr->find_subgraph_label,
-				verbose_level);
+		Graph_Domain.find_subgraph(
+				nb, CG,
+				Descr->find_subgraph_label, verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"after CG->find_subgraph" << endl;
+					"after Graph_Domain.find_subgraph" << endl;
 		}
 
 
@@ -546,7 +560,7 @@ void graph_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"Gr->label=" << CG->label << endl;
+					"CG[0]->label=" << CG[0]->label << endl;
 		}
 
 	}
@@ -559,9 +573,9 @@ void graph_theoretic_activity::perform_activity(
 		string fname_magma;
 		string fname_text;
 
-		fname_magma.assign(CG->label);
+		fname_magma.assign(CG[0]->label);
 
-		fname_text.assign(CG->label);
+		fname_text.assign(CG[0]->label);
 
 
 		ST.replace_extension_with(fname_magma, ".magma");
@@ -572,9 +586,9 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 
-		CG->export_to_magma(fname_magma, verbose_level);
+		CG[0]->export_to_magma(fname_magma, verbose_level);
 
-		CG->export_to_text(fname_text, verbose_level);
+		CG[0]->export_to_text(fname_text, verbose_level);
 
 		if (f_v) {
 			cout << "export_magma done" << endl;
@@ -589,7 +603,7 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname_maple;
 
-		fname_maple.assign(CG->label);
+		fname_maple.assign(CG[0]->label);
 
 
 		ST.replace_extension_with(fname_maple, ".maple");
@@ -599,7 +613,7 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 
-		CG->export_to_maple(fname_maple, verbose_level);
+		CG[0]->export_to_maple(fname_maple, verbose_level);
 
 		if (f_v) {
 			cout << "export_maple done" << endl;
@@ -615,7 +629,7 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname_csv;
 
-		fname_csv.assign(CG->label);
+		fname_csv.assign(CG[0]->label);
 
 
 		ST.replace_extension_with(fname_csv, ".csv");
@@ -623,7 +637,7 @@ void graph_theoretic_activity::perform_activity(
 		cout << "exporting to csv as " << fname_csv << endl;
 
 
-		CG->export_to_csv(fname_csv, verbose_level);
+		CG[0]->export_to_csv(fname_csv, verbose_level);
 
 	}
 
@@ -636,7 +650,7 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname_csv;
 
-		fname_csv.assign(CG->label);
+		fname_csv.assign(CG[0]->label);
 
 
 		ST.replace_extension_with(fname_csv, ".gv");
@@ -646,7 +660,7 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 
-		CG->export_to_graphviz(fname_csv, verbose_level);
+		CG[0]->export_to_graphviz(fname_csv, verbose_level);
 
 	}
 
@@ -655,7 +669,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"f_print" << endl;
 		}
-		CG->print();
+		CG[0]->print();
 
 	}
 	else if (Descr->f_sort_by_colors) {
@@ -666,10 +680,10 @@ void graph_theoretic_activity::perform_activity(
 		graph_theory::colored_graph *CG2;
 		string fname2;
 
-		fname2.assign(CG->label);
+		fname2.assign(CG[0]->label);
 		//strcpy(fname2, fname_graph);
 		ST.replace_extension_with(fname2, "_sorted.bin");
-		CG2 = CG->sort_by_color_classes(verbose_level);
+		CG2 = CG[0]->sort_by_color_classes(verbose_level);
 		CG2->save(fname2, verbose_level);
 		FREE_OBJECT(CG2);
 
@@ -703,7 +717,7 @@ void graph_theoretic_activity::perform_activity(
 			data_structures::fancy_set *color_subset;
 			data_structures::fancy_set *vertex_subset;
 
-			Subgraph = CG->compute_neighborhood_subgraph(a,
+			Subgraph = CG[0]->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset,
 					verbose_level - 2);
 
@@ -751,14 +765,14 @@ void graph_theoretic_activity::perform_activity(
 			data_structures::fancy_set *vertex_subset;
 
 
-			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
 					Reps->Sets[c], Reps->Set_size[c],
 					vertex_subset, color_subset,
 					verbose_level - 2);
 
 			string fname_out;
 
-			fname_out = CG->label + "_case_" + std::to_string(c) + ".bin";
+			fname_out = CG[0]->label + "_case_" + std::to_string(c) + ".bin";
 
 
 			Subgraph->save(fname_out, verbose_level - 2);
@@ -817,7 +831,7 @@ void graph_theoretic_activity::perform_activity(
 			data_structures::fancy_set *vertex_subset;
 
 
-			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
 					Reps->Sets[c], Reps->Set_size[c],
 					vertex_subset, color_subset,
 					verbose_level - 2);
@@ -826,7 +840,7 @@ void graph_theoretic_activity::perform_activity(
 			string fname_sol;
 
 
-			fname_sol = CG->label + "_case_" + std::to_string(c) + "_sol.csv";
+			fname_sol = CG[0]->label + "_case_" + std::to_string(c) + "_sol.csv";
 
 			int *M;
 			int nb_sol, width;
@@ -887,7 +901,7 @@ void graph_theoretic_activity::perform_activity(
 			data_structures::fancy_set *vertex_subset;
 
 
-			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
 					Reps->Sets[c], Reps->Set_size[c],
 					vertex_subset, color_subset,
 					verbose_level - 2);
@@ -896,7 +910,7 @@ void graph_theoretic_activity::perform_activity(
 			string fname_sol;
 
 
-			fname_sol = CG->label + "_case_" + std::to_string(c) + "_sol.csv";
+			fname_sol = CG[0]->label + "_case_" + std::to_string(c) + "_sol.csv";
 
 			int *M;
 			int nb_sol, width;
@@ -942,7 +956,7 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname_out;
 
-		fname_out = CG->label + "_split_" + std::to_string(starter_size) + "_sol.csv";
+		fname_out = CG[0]->label + "_split_" + std::to_string(starter_size) + "_sol.csv";
 
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname_out, Sol,
@@ -973,7 +987,7 @@ void graph_theoretic_activity::perform_activity(
 		data_structures::fancy_set *vertex_subset;
 
 
-		Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+		Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
 				set, sz,
 				vertex_subset, color_subset,
 				verbose_level);
@@ -983,7 +997,7 @@ void graph_theoretic_activity::perform_activity(
 		string fname_base, fname_out, fname_subset;
 
 
-		fname_base = CG->label + "_" + Descr->split_by_clique_label;
+		fname_base = CG[0]->label + "_" + Descr->split_by_clique_label;
 
 		fname_out = fname_base + ".graph";
 
@@ -1003,10 +1017,10 @@ void graph_theoretic_activity::perform_activity(
 		orbiter_kernel_system::file_io Fio;
 		string fname;
 
-		fname = CG->label + ".colored_graph";
+		fname = CG[0]->label + ".colored_graph";
 
 		cout << "before save fname_graph=" << fname << endl;
-		CG->save(fname, verbose_level);
+		CG[0]->save(fname, verbose_level);
 		cout << "after save" << endl;
 
 
@@ -1036,7 +1050,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"before GTA.automorphism_group" << endl;
 		}
-		GTA.automorphism_group(CG, feedback, verbose_level);
+		GTA.automorphism_group(CG[0], feedback, verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after GTA.automorphism_group" << endl;
@@ -1054,7 +1068,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"before CG->properties" << endl;
 		}
-		CG->properties(verbose_level);
+		CG[0]->properties(verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after CG->properties" << endl;
@@ -1073,7 +1087,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"before GT.eigenvalues" << endl;
 		}
-		GT.eigenvalues(CG, verbose_level);
+		GT.eigenvalues(CG[0], verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after GT.eigenvalues" << endl;
@@ -1090,9 +1104,9 @@ void graph_theoretic_activity::perform_activity(
 
 		string fname;
 
-		fname = CG->label + "_draw.mp";
+		fname = CG[0]->label + "_draw.mp";
 
-		CG->draw_on_circle(
+		CG[0]->draw_on_circle(
 				fname,
 				orbiter_kernel_system::Orbiter->draw_options,
 				verbose_level);

@@ -901,6 +901,21 @@ public:
 	void eigenvalues(
 			graph_theory::colored_graph *CG,
 			int verbose_level);
+	void find_subgraph(
+			int nb, colored_graph **CG,
+			std::string &subgraph_label, int verbose_level);
+	void find_subgraph_An(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<std::vector<int> > &Solutions,
+			int verbose_level);
+	void find_subgraph_An_recursion(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<int> &Candidates,
+			std::vector<std::vector<int> > &Solutions,
+			int current_depth, int *subgraph,
+			int verbose_level);
 
 };
 

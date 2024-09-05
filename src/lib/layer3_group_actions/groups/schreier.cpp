@@ -701,7 +701,7 @@ long int schreier::get_image(
 			}
 			a = A->Group_element->element_image_of(
 					i, gens.ith(gen_idx),
-					verbose_level - 2);
+					0 /*verbose_level - 2*/);
 			if (f_v) {
 				cout << "schreier::get_image image of "
 						"i=" << i << " is " << a << endl;
@@ -1014,21 +1014,37 @@ void schreier::extend_orbit(
 void schreier::compute_all_point_orbits(
 		int verbose_level)
 {
-	int pt, pt_loc, cur, pt0;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
-				"verbose_level=" << verbose_level << endl;
+				"verbose_level=" << verbose_level << " degree=" << degree << endl;
 	}
+
+	int pt, pt_loc, cur, pt0;
+
 	if (degree > ONE_MILLION) {
 		f_vv = false;
 	}
+
+	if (f_v) {
+		cout << "schreier::compute_all_point_orbits "
+				"before initialize_tables" << endl;
+	}
 	initialize_tables();
+	if (f_v) {
+		cout << "schreier::compute_all_point_orbits "
+				"after initialize_tables" << endl;
+	}
+
+
 	for (pt0 = 0, pt = 0; pt < degree; pt++) {
+
 		pt_loc = orbit_inv[pt];
+
 		cur = orbit_first[nb_orbits];
+
 		if (pt_loc < cur) {
 			continue;
 		}
@@ -1086,7 +1102,7 @@ void schreier::compute_all_point_orbits(
 							"pt_pref=" << pt_pref << endl;
 			pt0 = pt;
 		}
-		compute_point_orbit(pt_pref, 0 /*verbose_level - 2*/);
+		compute_point_orbit(pt_pref, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
@@ -1297,8 +1313,8 @@ void schreier::compute_point_orbit(
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
 	int f_v = (verbose_level >= 1);
-	int f_vv = false; //(verbose_level >= 2);
-	int f_vvv = false; //(verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	int print_interval = 100000;
 
@@ -1327,14 +1343,22 @@ void schreier::compute_point_orbit(
 				"nb_orbits=" << nb_orbits << endl;
 		cout << "schreier::compute_point_orbit "
 				"pt_loc=" << pt_loc << endl;
+		cout << "schreier::compute_point_orbit "
+				"cur=" << cur << endl;
 	}
 	if (pt_loc > orbit_first[nb_orbits]) {
+		if (f_v) {
+			cout << "schreier::compute_point_orbit before swap_points" << endl;
+		}
 		swap_points(orbit_first[nb_orbits], pt_loc, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "schreier::compute_point_orbit after swap_points" << endl;
+		}
 	}
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
 	while (cur < total) {
-		if (false) {
+		if (f_vv) {
 			cout << "schreier::compute_point_orbit "
 					"cur=" << cur << " total=" << total << endl;
 		}
@@ -1351,8 +1375,13 @@ void schreier::compute_point_orbit(
 						<< " using generator " << i << endl;
 			}
 
-			next_pt = get_image(cur_pt, i, 0 /*verbose_level*/);
+			next_pt = get_image(cur_pt, i, verbose_level - 1);
 
+			if (f_vvv) {
+				cout << "schreier::compute_point_orbit "
+						<< cur_pt
+						<< " -> " << next_pt << endl;
+			}
 
 				// A->element_image_of(cur_pt, gens.ith(i), false);
 			next_pt_loc = orbit_inv[next_pt];

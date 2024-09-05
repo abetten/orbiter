@@ -2385,6 +2385,10 @@ public:
 	int f_file;
 	std::string file_name;
 
+	int f_file_column;
+	std::string file_column_name;
+	std::string file_column_label;
+
 	int f_load_csv_no_border;
 	std::string load_csv_no_border_fname;
 
@@ -2403,6 +2407,9 @@ public:
 	int loop_start;
 	int loop_upper_bound;
 	int loop_increment;
+
+	int f_index_of_support;
+	std::string index_of_support_input;
 
 	vector_builder_description();
 	~vector_builder_description();

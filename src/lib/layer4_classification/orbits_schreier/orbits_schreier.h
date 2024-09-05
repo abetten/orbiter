@@ -180,6 +180,8 @@ public:
 			int verbose_level);
 	void compute(
 			int verbose_level);
+	int find_set(
+			long int *new_set, int &pos, uint32_t &hash);
 	void setup_root_node(
 			long int *Q, int &Q_len, int verbose_level);
 	void reallocate(
@@ -195,6 +197,9 @@ public:
 	void make_table_of_coset_reps(
 			data_structures_groups::vector_ge *&Coset_reps,
 			int verbose_level);
+	void get_path(
+			std::vector<int> &path,
+			int j);
 	void coset_rep(
 			int j);
 		// result is in cosetrep

@@ -1745,25 +1745,42 @@ void activity_description::do_graph_theoretic_activity(
 
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
-	if (Sym->with_labels.size() < 1) {
-		cout << "activity requires at least one input" << endl;
+	int nb = Sym->with_labels.size();
+
+
+	if (nb < 1) {
+		cout << "activity_description::do_graph_theoretic_activity "
+				"this activity requires at least one input" << endl;
 		exit(1);
 	}
 
-	//create_graph *Gr;
-	graph_theory::colored_graph *CG;
 
-	CG = (graph_theory::colored_graph *)
-			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	//create_graph *Gr;
+	graph_theory::colored_graph **CG;
+	int i;
+
+	CG = (graph_theory::colored_graph **) NEW_pvoid(nb);
+
+	for (i = 0; i < nb; i++) {
+		CG[i] = (graph_theory::colored_graph *)
+			Sym->Orbiter_top_level_session->get_object(Idx[i]);
+	}
 	if (f_v) {
-		cout << "activity_description::do_graph_theoretic_activity CG->label = " << CG->label << endl;
+		cout << "activity_description::do_graph_theoretic_activity graphs = ";
+		for (i = 0; i < nb; i++) {
+			cout << CG[i]->label;
+			if (i < nb - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
 	}
 
 	{
 		apps_graph_theory::graph_theoretic_activity Activity;
 		std::vector<std::string> feedback;
 
-		Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
+		Activity.init(Graph_theoretic_activity_description, nb, CG, verbose_level);
 
 		if (f_v) {
 			cout << "activity_description::do_graph_theoretic_activity "
@@ -1777,6 +1794,7 @@ void activity_description::do_graph_theoretic_activity(
 
 	}
 
+	FREE_pvoid((void **) CG);
 	FREE_int(Idx);
 
 	if (f_v) {
