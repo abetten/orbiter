@@ -363,6 +363,8 @@ void schreier::initialize_tables()
 	Combi.perm_identity(orbit, degree);
 	Combi.perm_identity(orbit_inv, degree);
 	orbit_first[0] = 0;
+
+	// initialize prev and label with -1:
 	for (i = 0; i < degree; i++) {
 		prev[i] = -1;
 		label[i] = -1;
@@ -1357,6 +1359,10 @@ void schreier::compute_point_orbit(
 	}
 	//orbit_no[orbit_first[nb_orbits]] = nb_orbits;
 	total = cur + 1;
+
+	prev[cur] = -1; //pt;
+	label[cur] = -1;
+
 	while (cur < total) {
 		if (f_vv) {
 			cout << "schreier::compute_point_orbit "

@@ -213,6 +213,9 @@ void modified_group_create::modified_group_init(
 			cout << "modified_group_create::modified_group_init "
 					"after create_product_action" << endl;
 		}
+
+		// output in A_modified
+
 	}
 	else if (Descr->f_polarity_extension) {
 
@@ -236,6 +239,9 @@ void modified_group_create::modified_group_init(
 			cout << "modified_group_create::modified_group_init "
 					"after create_polarity_extension" << endl;
 		}
+
+		// output in A_modified
+
 	}
 
 
@@ -246,6 +252,17 @@ void modified_group_create::modified_group_init(
 
 	}
 
+	if (f_v) {
+
+		ring_theory::longinteger_object go;
+
+		Strong_gens->group_order(go);
+
+		cout << "modified_group_create::modified_group_init "
+				"created a group of order " << go
+				<< " and degree " << A_modified->degree << endl;
+
+	}
 
 
 
@@ -258,6 +275,7 @@ void modified_group_create::modified_group_init(
 void modified_group_create::create_restricted_action(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -332,6 +350,7 @@ void modified_group_create::create_restricted_action(
 void modified_group_create::create_action_on_k_subspaces(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -475,6 +494,7 @@ void modified_group_create::create_action_on_k_subspaces(
 void modified_group_create::create_action_on_k_subsets(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -554,6 +574,7 @@ void modified_group_create::create_action_on_k_subsets(
 void modified_group_create::create_action_on_wedge_product(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -633,6 +654,7 @@ void modified_group_create::create_action_on_wedge_product(
 void modified_group_create::create_special_subgroup(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -734,6 +756,7 @@ void modified_group_create::create_special_subgroup(
 void modified_group_create::create_point_stabilizer_subgroup(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -827,6 +850,7 @@ void modified_group_create::create_point_stabilizer_subgroup(
 void modified_group_create::create_projectivity_subgroup(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -900,6 +924,9 @@ void modified_group_create::create_projectivity_subgroup(
 void modified_group_create::create_subfield_subgroup(
 		group_modification_description *description,
 		int verbose_level)
+// ToDo
+// output in A_modified but not yet in Strong_gens
+
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1000,6 +1027,7 @@ void modified_group_create::create_subfield_subgroup(
 void modified_group_create::create_action_on_self_by_right_multiplication(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1093,6 +1121,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 void modified_group_create::create_product_action(
 		group_modification_description *description,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1210,6 +1239,7 @@ void modified_group_create::create_polarity_extension(
 		int f_on_middle_layer_grassmannian,
 		int f_on_points_and_hyperplanes,
 		int verbose_level)
+// output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 

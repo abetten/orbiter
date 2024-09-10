@@ -1131,14 +1131,12 @@ void group_theoretic_activity::perform_activity(
 
 		apps_algebra::vector_ge_builder *VB;
 		data_structures_groups::vector_ge *Elements_ge;
-		int *Images;
-		int m, n;
-		int *Perms;
-		long int go;
 
 		VB = Get_object_of_type_vector_ge(Descr->group_of_automorphisms_by_images_of_generators_elements);
 		Elements_ge = VB->V;
 
+		int *Images;
+		int m, n;
 		Get_matrix(
 				Descr->group_of_automorphisms_by_images_of_generators_images, Images, m, n);
 
@@ -1149,186 +1147,26 @@ void group_theoretic_activity::perform_activity(
 			Int_matrix_print(Images, m, n);
 		}
 
+		std::string label;
+		apps_algebra::algebra_global_with_action AGlobal;
+
+		label = Descr->group_of_automorphisms_by_images_of_generators_images;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->automorphism_by_generator_images" << endl;
+					"before AGlobal.group_of_automorphisms_by_images_of_generators" << endl;
 		}
-
-		AG->automorphism_by_generator_images(
-				Descr->group_of_automorphisms_by_images_of_generators_label,
+		AGlobal.group_of_automorphisms_by_images_of_generators(
 				Elements_ge,
 				Images, m, n,
-				Perms, go,
+				AG,
+				label,
 				verbose_level);
-
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->automorphism_by_generator_images" << endl;
-			cout << "group_theoretic_activity::perform_activity "
-					"we found " << m << " permutations of degree " << go << endl;
+					"after AGlobal.group_of_automorphisms_by_images_of_generators" << endl;
 		}
 
-		actions::action *A_perm;
-
-		A_perm = NEW_OBJECT(actions::action);
-
-
-		ring_theory::longinteger_object target_go;
-		int f_target_go = true;
-
-		target_go.create(m);
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before A_perm->Known_groups->init_permutation_group" << endl;
-		}
-		A_perm->Known_groups->init_permutation_group(
-				go /* degree */, false /* f_no_base */, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after A_perm->Known_groups->init_permutation_group" << endl;
-		}
-
-		data_structures_groups::vector_ge *gens;
-
-		gens = NEW_OBJECT(data_structures_groups::vector_ge);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before gens->init_from_data" << endl;
-		}
-		gens->init_from_data(A_perm, Perms,
-				m /*nb_elements*/, A_perm->make_element_size,
-				0 /*verbose_level*/);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after gens->init_from_data" << endl;
-		}
-
-
-
-#if 0
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
-		}
-		A_perm->Known_groups->init_permutation_group_from_generators(
-				go /* degree */,
-			true /* f_target_go */, target_go,
-			m /* nb_gens */, Perms,
-			0 /* given_base_length */, NULL /* long int *given_base */,
-			false /* f_given_base */,
-			verbose_level - 2);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"create_automorphism_group_of_incidence_structure: created action ";
-			A_perm->print_info();
-			cout << endl;
-		}
-#endif
-
-		groups::sims *Sims;
-
-		{
-			groups::schreier_sims *ss;
-
-			ss = NEW_OBJECT(groups::schreier_sims);
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"before ss->init" << endl;
-			}
-			ss->init(A_perm, verbose_level - 1);
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"after ss->init" << endl;
-			}
-
-			//ss->interested_in_kernel(A_subaction, verbose_level - 1);
-
-			if (f_target_go) {
-				if (f_v) {
-					cout << "group_theoretic_activity::perform_activity "
-							"before ss->init_target_group_order" << endl;
-				}
-				ss->init_target_group_order(target_go, verbose_level - 1);
-				if (f_v) {
-					cout << "group_theoretic_activity::perform_activity "
-							"after ss->init_target_group_order" << endl;
-				}
-			}
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"before ss->init_generators" << endl;
-			}
-			ss->init_generators(gens, verbose_level - 2);
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"after ss->init_generators" << endl;
-			}
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"before ss->create_group" << endl;
-			}
-			ss->create_group(verbose_level - 2);
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"after ss->create_group" << endl;
-			}
-			Sims = ss->G;
-			ss->G = NULL;
-			//*this = *ss->G;
-
-			//ss->G->null();
-
-			//cout << "create_sims_from_generators_randomized
-			// before FREE_OBJECT ss" << endl;
-			FREE_OBJECT(ss);
-		}
-
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"transversal lengths:" << endl;
-			Sims->print_transversal_lengths();
-		}
-
-		groups::strong_generators *Strong_gens;
-
-		Strong_gens = NEW_OBJECT(groups::strong_generators);
-		Strong_gens->init_from_sims(Sims, verbose_level - 1);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"Strong_gens:" << endl;
-			Strong_gens->print_generators_for_make_element(cout);
-
-			std::string fname;
-
-
-			fname = Descr->group_of_automorphisms_by_images_of_generators_label + ".gap";
-
-			{
-				ofstream ost(fname);
-
-				Strong_gens->print_generators_gap(
-						ost, verbose_level);
-			}
-			orbiter_kernel_system::file_io Fio;
-
-			if (f_v) {
-				cout << "group_theoretic_activity::perform_activity "
-						"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-			}
-		}
 
 	}
 
@@ -1346,15 +1184,179 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->subgroup_lattice" << endl;
+					"before AG->subgroup_lattice_compute" << endl;
 		}
-		AG->subgroup_lattice(
+		AG->subgroup_lattice_compute(
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->subgroup_lattice" << endl;
+					"after AG->subgroup_lattice_compute" << endl;
 		}
 	}
+
+	else if (Descr->f_subgroup_lattice_load) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_load" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_load" << endl;
+		}
+		AG->subgroup_lattice_load(
+				Descr->subgroup_lattice_load_fname,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_load" << endl;
+		}
+	}
+
+	else if (Descr->f_subgroup_lattice_draw_by_orbits) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_draw_by_orbits" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_draw_by_orbits" << endl;
+		}
+		AG->subgroup_lattice_draw_by_orbits(
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_draw_by_orbits" << endl;
+		}
+
+	}
+
+	else if (Descr->f_subgroup_lattice_draw_by_groups) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_draw_by_groups" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_draw" << endl;
+		}
+		AG->subgroup_lattice_draw(
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_draw" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_subgroup_lattice_intersection_orbit_orbit) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_intersection_orbit_orbit" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_draw" << endl;
+		}
+		AG->subgroup_lattice_intersection_orbit_orbit(
+				Descr->subgroup_lattice_intersection_orbit_orbit_orbit1,
+				Descr->subgroup_lattice_intersection_orbit_orbit_orbit2,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_draw" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_subgroup_lattice_find_overgroup_in_orbit) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_find_overgroup_in_orbit" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_find_overgroup_in_orbit" << endl;
+		}
+		AG->subgroup_lattice_find_overgroup_in_orbit(
+				Descr->subgroup_lattice_find_overgroup_in_orbit_orbit_global1,
+				Descr->subgroup_lattice_find_overgroup_in_orbit_group1,
+				Descr->subgroup_lattice_find_overgroup_in_orbit_orbit_global2,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_find_overgroup_in_orbit" << endl;
+		}
+
+
+	}
+
+	else if (Descr->f_subgroup_lattice_create_flag_transitive_geometry_with_partition) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_create_flag_transitive_geometry_with_partition" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_create_flag_transitive_geometry_with_partition" << endl;
+		}
+		AG->subgroup_lattice_create_flag_transitive_geometry_with_partition(
+				Descr->subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit,
+				Descr->subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit,
+				Descr->subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit,
+				Descr->subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group,
+				Descr->subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_create_flag_transitive_geometry_with_partition" << endl;
+		}
+
+
+	}
+	else if (Descr->f_subgroup_lattice_identify_subgroup) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_identify_subgroup" << endl;
+		}
+
+		int go, layer_idx, orb_idx, group_idx;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_identify_subgroup" << endl;
+		}
+		AG->subgroup_lattice_identify_subgroup(
+				Descr->subgroup_lattice_identify_subgroup_subgroup_label,
+				go, layer_idx, orb_idx, group_idx,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_identify_subgroup" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"found subgroup of order " << go << " in layer " << layer_idx
+					<< " in orbit " << orb_idx << " at position " << group_idx << endl;
+		}
+
+	}
+
 
 	else if (Descr->f_orbit_of) {
 

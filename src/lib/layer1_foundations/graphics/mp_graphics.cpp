@@ -3943,10 +3943,10 @@ void mp_graphics::projective_plane_draw_grid2(
 
 
 	if (f_v) {
-		cout << "projective_plane_draw_grid2" << endl;
-		cout << "projective_plane_draw_grid2 q=" << q << endl;
-		//cout << "projective_plane_draw_grid2 x_stretch=" << x_stretch << " y_stretch" << y_stretch << endl;
-		cout << "projective_plane_draw_grid2 dx=" << dx << " dy=" << dy << endl;
+		cout << "mp_graphics::projective_plane_draw_grid2" << endl;
+		cout << "mp_graphics::projective_plane_draw_grid2 q=" << q << endl;
+		//cout << "mp_graphics::projective_plane_draw_grid2 x_stretch=" << x_stretch << " y_stretch" << y_stretch << endl;
+		cout << "mp_graphics::projective_plane_draw_grid2 dx=" << dx << " dy=" << dy << endl;
 	}
 
 
@@ -3961,7 +3961,7 @@ void mp_graphics::projective_plane_draw_grid2(
 
 
 	if (f_v) {
-		cout << "projective_plane_draw_grid2 "
+		cout << "mp_graphics::projective_plane_draw_grid2 "
 				"before G.draw_axes_and_grid" << endl;
 	}
 
@@ -3979,7 +3979,7 @@ void mp_graphics::projective_plane_draw_grid2(
 
 
 	if (f_v) {
-		cout << "projective_plane_draw_grid2 "
+		cout << "mp_graphics::projective_plane_draw_grid2 "
 				"after G.draw_axes_and_grid" << endl;
 	}
 
@@ -4029,7 +4029,7 @@ void mp_graphics::projective_plane_draw_grid2(
 	if (!O->f_nodes_empty) {
 
 		if (f_v) {
-			cout << "projective_plane_draw_grid2 "
+			cout << "mp_graphics::projective_plane_draw_grid2 "
 					"drawing points, nb=" << nb << endl;
 		}
 
@@ -4048,7 +4048,7 @@ void mp_graphics::projective_plane_draw_grid2(
 			projective_plane_make_affine_point(q, x1, x2, x3, a, b);
 
 			if (f_v) {
-				cout << "projective_plane_draw_grid2 "
+				cout << "mp_graphics::projective_plane_draw_grid2 "
 						"point " << h << " : " << x1 << ", " << x2
 						<< ", " << x3 << " : " << a << ", " << b << endl;
 			}
@@ -4071,7 +4071,7 @@ void mp_graphics::projective_plane_draw_grid2(
 
 	}
 	else {
-		cout << "projective_plane_draw_grid2 not drawing any points" << endl;
+		cout << "mp_graphics::projective_plane_draw_grid2 not drawing any points" << endl;
 	}
 
 
@@ -4086,7 +4086,7 @@ void mp_graphics::projective_plane_draw_grid2(
 
 
 	if (f_v) {
-		cout << "projective_plane_draw_grid2 done" << endl;
+		cout << "mp_graphics::projective_plane_draw_grid2 done" << endl;
 	}
 }
 

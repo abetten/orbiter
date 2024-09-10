@@ -167,7 +167,7 @@ long int action_on_subgroups::compute_image(
 	//int f_vv = (verbose_level >= 2);
 	//long int res, j, b, aa, s, t;
 	//int idx;
-	data_structures::sorting Sorting;
+	//data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_subgroups::compute_image "
@@ -208,6 +208,9 @@ long int action_on_subgroups::compute_image(
 		cout << "action_on_subgroups::compute_image "
 				"group order = " << Hash_table_subgroups->get_subgroup(a)->group_order << endl;
 	}
+
+
+#if 0
 	//r = S->element_rank_int(Elt);
 	if (f_v) {
 		cout << "action_on_subgroups::compute_image "
@@ -246,7 +249,14 @@ long int action_on_subgroups::compute_image(
 	
 
 	Sorting.int_vec_heapsort(image_set, Hash_table_subgroups->get_subgroup(a)->group_order);
+#else
+	S->conjugate_numerical_set(
+			Hash_table_subgroups->get_subgroup(a)->Elements,
+			Hash_table_subgroups->get_subgroup(a)->group_order,
+			Elt, image_set,
+			verbose_level - 2);
 
+#endif
 	int f_found;
 	int pos;
 	uint32_t hash;
@@ -262,6 +272,8 @@ long int action_on_subgroups::compute_image(
 				"a = " << a << " image not found" << endl;
 		exit(1);
 	}
+
+	long int b;
 
 	b = pos;
 

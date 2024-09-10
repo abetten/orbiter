@@ -144,13 +144,16 @@ void create_graph::init(
 		}
 		Adj = M;
 
-		label = description->load_adjacency_matrix_from_csv_and_select_value_fname;
+		std::string fname;
+
+		fname = description->load_adjacency_matrix_from_csv_and_select_value_fname;
 
 		data_structures::string_tools String;
-		String.chop_off_extension(label);
+		String.chop_off_extension(fname);
 
 
-		label_tex = "File\\_" + label;
+		label = "File_" + fname;
+		label_tex = "File_" + fname;
 	}
 
 	else if (description->f_load_dimacs) {

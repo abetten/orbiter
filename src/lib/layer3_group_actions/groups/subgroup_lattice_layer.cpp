@@ -79,6 +79,30 @@ groups::subgroup *subgroup_lattice_layer::get_subgroup(
 	return Subgroup;
 }
 
+groups::subgroup *subgroup_lattice_layer::get_subgroup_by_orbit(
+		int orbit_idx, int group_in_orbit_idx)
+{
+	groups::subgroup *Subgroup;
+	int group_idx;
+
+
+	group_idx = Sch_on_groups->orbit[Sch_on_groups->orbit_first[orbit_idx] + group_in_orbit_idx];
+	Subgroup = Hash_table_subgroups->get_subgroup(group_idx);
+
+	return Subgroup;
+}
+
+int subgroup_lattice_layer::get_orbit_length(
+		int orbit_idx)
+{
+	int len;
+
+
+	len = Sch_on_groups->orbit_len[orbit_idx];
+
+	return len;
+}
+
 
 void subgroup_lattice_layer::print(
 		std::ostream &ost)
@@ -218,22 +242,79 @@ int subgroup_lattice_layer::find_subgroup(
 	return f_found;
 }
 
+
+int subgroup_lattice_layer::find_subgroup_direct(
+		int *Elements, int group_order,
+		int &pos, uint32_t &hash, int verbose_level)
+{
+	int f_found;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice_layer::find_subgroup_direct" << endl;
+	}
+	f_found = Hash_table_subgroups->find_subgroup_direct(
+			Elements, group_order, pos, hash, verbose_level - 1);
+	if (f_v) {
+		cout << "subgroup_lattice_layer::find_subgroup_direct done" << endl;
+	}
+	return f_found;
+}
+
+void subgroup_lattice_layer::group_global_to_orbit_and_group_local(
+		int group_idx_global, int &orb, int &group_idx_local,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice_layer::group_global_to_orbit_and_group_local" << endl;
+	}
+
+	int coset;
+
+	coset = Sch_on_groups->orbit_inv[group_idx_global];
+	for (orb = 0; orb < Sch_on_groups->nb_orbits; orb++) {
+		if (Sch_on_groups->orbit_first[orb] <= coset && Sch_on_groups->orbit_first[orb] + Sch_on_groups->orbit_len[orb] > coset) {
+			break;
+		}
+	}
+	if (orb == Sch_on_groups->nb_orbits) {
+		cout << "subgroup_lattice_layer::group_global_to_orbit_and_group_local not found" << endl;
+		exit(1);
+	}
+
+	group_idx_local = coset - Sch_on_groups->orbit_first[orb];
+
+	if (f_v) {
+		cout << "subgroup_lattice_layer::group_global_to_orbit_and_group_local done" << endl;
+	}
+}
+
+
 int subgroup_lattice_layer::nb_subgroups()
 {
 	return Hash_table_subgroups->Subgroups.size();
+}
+
+int subgroup_lattice_layer::nb_orbits()
+{
+	return Sch_on_groups->nb_orbits;
 }
 
 void subgroup_lattice_layer::orbits_under_conjugation(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
 				"layer = " << layer_idx << endl;
 	}
 
-	if (f_v) {
+	if (f_vv) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
 				"layer = " << layer_idx << " SG=" << endl;
 		Subgroup_lattice->SG->print_generators(cout, verbose_level);
@@ -249,7 +330,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 	A_on_groups = Subgroup_lattice->A->Induced_action->create_induced_action_on_subgroups(
 			Subgroup_lattice->Sims,
 		Hash_table_subgroups,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
 				"layer " << layer_idx << " / " << Subgroup_lattice->nb_layers
@@ -264,7 +345,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 				<< " before SG->compute_all_point_orbits_schreier" << endl;
 	}
 	Sch_on_groups = Subgroup_lattice->SG->compute_all_point_orbits_schreier(
-			A_on_groups, verbose_level);
+			A_on_groups, verbose_level - 2);
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
@@ -300,7 +381,7 @@ int subgroup_lattice_layer::extend_layer(
 				<< " before orbits_under_conjugation" << endl;
 	}
 	orbits_under_conjugation(
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "subgroup_lattice::extend_layer layer = " << layer_idx
 				<< " after orbits_under_conjugation" << endl;
@@ -317,7 +398,7 @@ int subgroup_lattice_layer::extend_layer(
 			cout << "subgroup_lattice::extend_layer layer = " << layer_idx
 					<< " before extend_group " << group_idx << " / " << nb_subgroups() << endl;
 		}
-		Nb_new_groups[group_idx] = extend_group(group_idx, verbose_level);
+		Nb_new_groups[group_idx] = extend_group(group_idx, verbose_level - 2);
 		nb_new_groups_total += Nb_new_groups[group_idx];
 		if (f_v) {
 			cout << "subgroup_lattice::extend_layer layer = " << layer_idx
@@ -327,13 +408,18 @@ int subgroup_lattice_layer::extend_layer(
 			Subgroup_lattice->print();
 		}
 
+		std::string fname;
+
+		fname = Subgroup_lattice->label_txt + "_subgroup_lattice_work.csv";
+
 		if (f_v) {
 			cout << "subgroup_lattice::extend_layer "
 					"layer " << layer_idx << " / " << Subgroup_lattice->nb_layers
 					<< " before save_csv" << endl;
 		}
 		Subgroup_lattice->save_csv(
-				verbose_level);
+				fname,
+				verbose_level - 2);
 		if (f_v) {
 			cout << "subgroup_lattice::extend_layer "
 					"layer " << layer_idx << " / " << Subgroup_lattice->nb_layers
@@ -413,7 +499,7 @@ int subgroup_lattice_layer::extend_group(
 		Subgroup->init(
 				Subgroup_lattice,
 				group, group_sz, gens, nb_gens,
-				verbose_level - 1);
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "subgroup_lattice::extend_group layer " << layer_idx
@@ -423,7 +509,7 @@ int subgroup_lattice_layer::extend_group(
 		}
 		f_new_group = Subgroup_lattice->add_subgroup(
 				Subgroup,
-				verbose_level);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "subgroup_lattice::extend_group layer " << layer_idx
 					<< " group " << group_idx << " / " << nb_subgroups() <<

@@ -213,8 +213,18 @@ void action::compute_projectivity_subgroup(
 	if (f_v) {
 		cout << "action::compute_projectivity_subgroup" << endl;
 	}
+	if (f_v) {
+		cout << "action::compute_projectivity_subgroup computing group order" << endl;
+		ring_theory::longinteger_object go;
+		Aut_gens->group_order(go);
+		cout << "action::compute_projectivity_subgroup group order = " << go << endl;
+	}
 
 	if (is_semilinear_matrix_group()) {
+		if (f_v) {
+			cout << "action::compute_projectivity_subgroup "
+					"the group is a semilinear matrix group, we can compute the projectivity subgroup" << endl;
+		}
 		if (f_v) {
 			cout << "action::compute_projectivity_subgroup "
 					"computing projectivity subgroup" << endl;
@@ -229,7 +239,7 @@ void action::compute_projectivity_subgroup(
 				cout << "action::compute_projectivity_subgroup "
 						"before Aut_gens->create_sims" << endl;
 			}
-			S = Aut_gens->create_sims(0 /*verbose_level */);
+			S = Aut_gens->create_sims(verbose_level - 2);
 			if (f_v) {
 				cout << "action::compute_projectivity_subgroup "
 						"after Aut_gens->create_sims" << endl;
@@ -251,9 +261,20 @@ void action::compute_projectivity_subgroup(
 		}
 	}
 	else {
-		projectivity_gens = NULL;
+		if (f_v) {
+			cout << "action::compute_projectivity_subgroup "
+					"the group is linear, so we simply copy the generators for the linear group" << endl;
+		}
+		projectivity_gens = Aut_gens->create_copy(
+				verbose_level - 2);
 	}
 
+	if (f_v) {
+		cout << "action::compute_projectivity_subgroup computing group order of projectivity group" << endl;
+		ring_theory::longinteger_object go;
+		projectivity_gens->group_order(go);
+		cout << "action::compute_projectivity_subgroup group order of projectivity group = " << go << endl;
+	}
 
 	if (f_v) {
 		cout << "action::compute_projectivity_subgroup done" << endl;

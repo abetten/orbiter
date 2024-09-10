@@ -261,11 +261,17 @@ void orbits_create::init(
 				Descr->on_subspaces_dimension,
 				verbose_level);
 
+
 		if (f_v) {
 			cout << "orbits_create::init after Group->Any_group_linear->do_orbits_on_subspaces" << endl;
 		}
 
 		f_has_On_Subspaces = true;
+		prefix = On_Subspaces->orbits_on_subspaces_PC->get_problem_label();
+		label_txt = prefix;
+		if (f_v) {
+			cout << "orbits_create::init prefix = " << prefix << endl;
+		}
 
 
 		if (f_v) {

@@ -144,31 +144,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string export_inversion_graphs_fname;
 
 
-
-	f_multiply_elements_csv_column_major_ordering = false;
-	//std::string multiply_elements_csv_column_major_ordering_fname1;
-	//std::string multiply_elements_csv_column_major_ordering_fname2;
-	//std::string multiply_elements_csv_column_major_ordering_fname3;
-
-	f_multiply_elements_csv_row_major_ordering = false;
-	//std::string multiply_elements_csv_row_major_ordering_fname1;
-	//std::string multiply_elements_csv_row_major_ordering_fname2;
-	//std::string multiply_elements_csv_row_major_ordering_fname3;
-
-	f_apply_elements_csv_to_set = false;
-	//std::string apply_elements_csv_to_set_fname1;
-	//std::string apply_elements_csv_to_set_fname2;
-	//std::string apply_elements_csv_to_set_set;
-
-	f_order_of_products = false;
-	//order_of_products_elements = NULL;
-
-	f_reverse_isomorphism_exterior_square = false;
-
-	f_is_subgroup_of = false;
-
-	f_coset_reps = false;
-
 	f_evaluate_word = false;
 	//std::string evaluate_word_word;
 	//std::string evaluate_word_gens;
@@ -199,10 +174,72 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string group_of_automorphisms_by_images_of_generators_images;
 
 
+
+
+	//  3:
+
+
+	f_multiply_elements_csv_column_major_ordering = false;
+	//std::string multiply_elements_csv_column_major_ordering_fname1;
+	//std::string multiply_elements_csv_column_major_ordering_fname2;
+	//std::string multiply_elements_csv_column_major_ordering_fname3;
+
+	f_multiply_elements_csv_row_major_ordering = false;
+	//std::string multiply_elements_csv_row_major_ordering_fname1;
+	//std::string multiply_elements_csv_row_major_ordering_fname2;
+	//std::string multiply_elements_csv_row_major_ordering_fname3;
+
+	f_apply_elements_csv_to_set = false;
+	//std::string apply_elements_csv_to_set_fname1;
+	//std::string apply_elements_csv_to_set_fname2;
+	//std::string apply_elements_csv_to_set_set;
+
+	f_order_of_products = false;
+	//order_of_products_elements = NULL;
+
+	f_reverse_isomorphism_exterior_square = false;
+
+	f_is_subgroup_of = false;
+
+	f_coset_reps = false;
+
+
 	// orbit stuff:
 
 
 	f_subgroup_lattice = false;
+
+	f_subgroup_lattice_load = false;
+	//std::string subgroup_lattice_load_fname;
+
+
+	f_subgroup_lattice_draw_by_orbits = false;
+
+	f_subgroup_lattice_draw_by_groups = false;
+
+	f_subgroup_lattice_intersection_orbit_orbit = false;
+	subgroup_lattice_intersection_orbit_orbit_orbit1 = -1;
+	subgroup_lattice_intersection_orbit_orbit_orbit2 = -1;
+
+	f_subgroup_lattice_find_overgroup_in_orbit = false;
+	subgroup_lattice_find_overgroup_in_orbit_orbit_global1 = -1;
+	subgroup_lattice_find_overgroup_in_orbit_group1 = -1;
+	subgroup_lattice_find_overgroup_in_orbit_orbit_global2 = -1;
+
+
+
+	f_subgroup_lattice_create_flag_transitive_geometry_with_partition = false;
+	subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit = -1;
+	subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit = -1;
+	subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit = -1;
+	subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group = -1;
+	subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size = -1;
+
+	f_subgroup_lattice_identify_subgroup = false;
+	//std::string subgroup_lattice_identify_subgroup_subgroup_label;
+
+
+
 
 
 	f_orbit_of = false;
@@ -556,73 +593,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-export_inversion_graphs " << export_inversion_graphs_fname << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
-			f_multiply_elements_csv_column_major_ordering = true;
-			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
-			multiply_elements_csv_column_major_ordering_fname2.assign(argv[++i]);
-			multiply_elements_csv_column_major_ordering_fname3.assign(argv[++i]);
-			if (f_v) {
-				cout << "-multiply_elements_csv_column_major_ordering "
-						<< multiply_elements_csv_column_major_ordering_fname1 << " "
-						<< multiply_elements_csv_column_major_ordering_fname2 << " "
-						<< multiply_elements_csv_column_major_ordering_fname3 << " "
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_row_major_ordering") == 0) {
-			f_multiply_elements_csv_row_major_ordering = true;
-			multiply_elements_csv_row_major_ordering_fname1.assign(argv[++i]);
-			multiply_elements_csv_row_major_ordering_fname2.assign(argv[++i]);
-			multiply_elements_csv_row_major_ordering_fname3.assign(argv[++i]);
-			if (f_v) {
-				cout << "-multiply_elements_csv_row_major_ordering "
-						<< multiply_elements_csv_row_major_ordering_fname1 << " "
-						<< multiply_elements_csv_row_major_ordering_fname2 << " "
-						<< multiply_elements_csv_row_major_ordering_fname3 << " "
-						<< endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-apply_elements_csv_to_set") == 0) {
-			f_apply_elements_csv_to_set = true;
-			apply_elements_csv_to_set_fname1.assign(argv[++i]);
-			apply_elements_csv_to_set_fname2.assign(argv[++i]);
-			apply_elements_csv_to_set_set.assign(argv[++i]);
-			if (f_v) {
-				cout << "-apply_elements_csv_to_set "
-						<< apply_elements_csv_to_set_fname1 << " "
-						<< apply_elements_csv_to_set_fname2 << " "
-						<< apply_elements_csv_to_set_set << " "
-						<< endl;
-			}
-		}
-
-
-
-		else if (ST.stringcmp(argv[i], "-order_of_products") == 0) {
-			f_order_of_products = true;
-			order_of_products_elements.assign(argv[++i]);
-			if (f_v) {
-				cout << "-order_of_products " << order_of_products_elements << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
-			f_reverse_isomorphism_exterior_square = true;
-			if (f_v) {
-				cout << "-reverse_isomorphism_exterior_square " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
-			f_is_subgroup_of = true;
-			if (f_v) {
-				cout << "-is_subgroup_of " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-coset_reps") == 0) {
-			f_coset_reps = true;
-			if (f_v) {
-				cout << "-coset_reps " << endl;
-			}
-		}
 
 		else if (ST.stringcmp(argv[i], "-evaluate_word") == 0) {
 			f_evaluate_word = true;
@@ -692,6 +662,77 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		// 3:
+
+		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
+			f_multiply_elements_csv_column_major_ordering = true;
+			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
+			multiply_elements_csv_column_major_ordering_fname2.assign(argv[++i]);
+			multiply_elements_csv_column_major_ordering_fname3.assign(argv[++i]);
+			if (f_v) {
+				cout << "-multiply_elements_csv_column_major_ordering "
+						<< multiply_elements_csv_column_major_ordering_fname1 << " "
+						<< multiply_elements_csv_column_major_ordering_fname2 << " "
+						<< multiply_elements_csv_column_major_ordering_fname3 << " "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_row_major_ordering") == 0) {
+			f_multiply_elements_csv_row_major_ordering = true;
+			multiply_elements_csv_row_major_ordering_fname1.assign(argv[++i]);
+			multiply_elements_csv_row_major_ordering_fname2.assign(argv[++i]);
+			multiply_elements_csv_row_major_ordering_fname3.assign(argv[++i]);
+			if (f_v) {
+				cout << "-multiply_elements_csv_row_major_ordering "
+						<< multiply_elements_csv_row_major_ordering_fname1 << " "
+						<< multiply_elements_csv_row_major_ordering_fname2 << " "
+						<< multiply_elements_csv_row_major_ordering_fname3 << " "
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-apply_elements_csv_to_set") == 0) {
+			f_apply_elements_csv_to_set = true;
+			apply_elements_csv_to_set_fname1.assign(argv[++i]);
+			apply_elements_csv_to_set_fname2.assign(argv[++i]);
+			apply_elements_csv_to_set_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply_elements_csv_to_set "
+						<< apply_elements_csv_to_set_fname1 << " "
+						<< apply_elements_csv_to_set_fname2 << " "
+						<< apply_elements_csv_to_set_set << " "
+						<< endl;
+			}
+		}
+
+
+
+		else if (ST.stringcmp(argv[i], "-order_of_products") == 0) {
+			f_order_of_products = true;
+			order_of_products_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-order_of_products " << order_of_products_elements << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
+			f_reverse_isomorphism_exterior_square = true;
+			if (f_v) {
+				cout << "-reverse_isomorphism_exterior_square " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
+			f_is_subgroup_of = true;
+			if (f_v) {
+				cout << "-is_subgroup_of " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-coset_reps") == 0) {
+			f_coset_reps = true;
+			if (f_v) {
+				cout << "-coset_reps " << endl;
+			}
+		}
+
+
 		// orbit stuff:
 
 
@@ -702,6 +743,77 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-subgroup_lattice " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_load") == 0) {
+			f_subgroup_lattice_load = true;
+			subgroup_lattice_load_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_load " << subgroup_lattice_load_fname << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_draw_by_orbits") == 0) {
+			f_subgroup_lattice_draw_by_orbits = true;
+			if (f_v) {
+				cout << "-subgroup_lattice_draw_by_orbits " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_draw_by_groups") == 0) {
+			f_subgroup_lattice_draw_by_groups = true;
+			if (f_v) {
+				cout << "-subgroup_lattice_draw_by_groups " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_intersection_orbit_orbit") == 0) {
+			f_subgroup_lattice_intersection_orbit_orbit = true;
+			subgroup_lattice_intersection_orbit_orbit_orbit1 = ST.strtoi(argv[++i]);
+			subgroup_lattice_intersection_orbit_orbit_orbit2 = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_intersection_orbit_orbit "
+						<< subgroup_lattice_intersection_orbit_orbit_orbit1
+						<< " " << subgroup_lattice_intersection_orbit_orbit_orbit2 << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_find_overgroup_in_orbit") == 0) {
+			f_subgroup_lattice_find_overgroup_in_orbit = true;
+			subgroup_lattice_find_overgroup_in_orbit_orbit_global1 = ST.strtoi(argv[++i]);
+			subgroup_lattice_find_overgroup_in_orbit_group1 = ST.strtoi(argv[++i]);
+			subgroup_lattice_find_overgroup_in_orbit_orbit_global2 = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_find_overgroup_in_orbit "
+						<< subgroup_lattice_find_overgroup_in_orbit_orbit_global1
+						<< " " << subgroup_lattice_find_overgroup_in_orbit_group1
+						<< " " << subgroup_lattice_find_overgroup_in_orbit_orbit_global2 << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_create_flag_transitive_geometry_with_partition") == 0) {
+			f_subgroup_lattice_create_flag_transitive_geometry_with_partition = true;
+			subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_create_flag_transitive_geometry_with_partition "
+						<< subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit
+						<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit
+						<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit
+						<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group
+						<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_identify_subgroup") == 0) {
+			f_subgroup_lattice_identify_subgroup = true;
+			subgroup_lattice_identify_subgroup_subgroup_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_identify_subgroup "
+						<< subgroup_lattice_identify_subgroup_subgroup_label
+						<< endl;
+			}
+		}
+
+
+
+
 
 		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = true;
@@ -957,6 +1069,44 @@ void group_theoretic_activity_description::print()
 	if (f_export_inversion_graphs) {
 		cout << "-export_inversion_graphs " << export_inversion_graphs_fname << endl;
 	}
+	if (f_evaluate_word) {
+		cout << "-evaluate_word "
+				<< " " << evaluate_word_word
+				<< " " << evaluate_word_gens
+				<< endl;
+	}
+	if (f_multiply_all_elements_in_lex_order) {
+		cout << "-multiply_all_elements_in_lex_order " << endl;
+	}
+	if (f_stats) {
+		cout << "-stats " << stats_fname_base << endl;
+	}
+	if (f_move_a_to_b) {
+		cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
+	}
+	if (f_rational_normal_form) {
+		cout << "-rational_normal_form "
+				<< rational_normal_form_input
+				<< endl;
+	}
+
+	if (f_find_conjugating_element) {
+		cout << "-find_conjugating_element "
+				<< find_conjugating_element_element_from
+				<< " " << find_conjugating_element_element_to
+				<< endl;
+	}
+
+	if (f_group_of_automorphisms_by_images_of_generators) {
+		cout << "-group_of_automorphisms_by_images_of_generators "
+				<< " " << group_of_automorphisms_by_images_of_generators_label
+				<< " " << group_of_automorphisms_by_images_of_generators_elements
+				<< " " << group_of_automorphisms_by_images_of_generators_images
+				<< endl;
+	}
+
+
+	// 3:
 
 	if (f_multiply_elements_csv_column_major_ordering) {
 		cout << "-multiply_elements_csv_column_major_ordering "
@@ -995,41 +1145,6 @@ void group_theoretic_activity_description::print()
 	if (f_coset_reps) {
 		cout << "-coset_reps " << endl;
 	}
-	if (f_evaluate_word) {
-		cout << "-evaluate_word "
-				<< " " << evaluate_word_word
-				<< " " << evaluate_word_gens
-				<< endl;
-	}
-	if (f_multiply_all_elements_in_lex_order) {
-		cout << "-multiply_all_elements_in_lex_order " << endl;
-	}
-	if (f_stats) {
-		cout << "-stats " << stats_fname_base << endl;
-	}
-	if (f_move_a_to_b) {
-		cout << "-move_a_to_b " << move_a_to_b_a << " " << move_a_to_b_b << endl;
-	}
-	if (f_rational_normal_form) {
-		cout << "-rational_normal_form "
-				<< rational_normal_form_input
-				<< endl;
-	}
-
-	if (f_find_conjugating_element) {
-		cout << "-find_conjugating_element "
-				<< find_conjugating_element_element_from
-				<< " " << find_conjugating_element_element_to
-				<< endl;
-	}
-
-	if (f_group_of_automorphisms_by_images_of_generators) {
-		cout << "-group_of_automorphisms_by_images_of_generators "
-				<< " " << group_of_automorphisms_by_images_of_generators_label
-				<< " " << group_of_automorphisms_by_images_of_generators_elements
-				<< " " << group_of_automorphisms_by_images_of_generators_images
-				<< endl;
-	}
 
 
 	// orbit stuff:
@@ -1039,6 +1154,40 @@ void group_theoretic_activity_description::print()
 		cout << "-subgroup_lattice " << endl;
 	}
 
+	if (f_subgroup_lattice_load) {
+		cout << "-subgroup_lattice_load " << subgroup_lattice_load_fname << endl;
+	}
+	if (f_subgroup_lattice_draw_by_orbits) {
+		cout << "-subgroup_lattice_draw_by_orbits " << endl;
+	}
+	if (f_subgroup_lattice_draw_by_groups) {
+		cout << "-subgroup_lattice_draw_by_groups " << endl;
+	}
+	if (f_subgroup_lattice_intersection_orbit_orbit) {
+		cout << "-subgroup_lattice_intersection_orbit_orbit "
+				<< subgroup_lattice_intersection_orbit_orbit_orbit1
+				<< " " << subgroup_lattice_intersection_orbit_orbit_orbit2 << endl;
+	}
+	if (f_subgroup_lattice_find_overgroup_in_orbit) {
+		cout << "-subgroup_lattice_find_overgroup_in_orbit "
+				<< subgroup_lattice_find_overgroup_in_orbit_orbit_global1
+				<< " " << subgroup_lattice_find_overgroup_in_orbit_group1
+				<< " " << subgroup_lattice_find_overgroup_in_orbit_orbit_global2 << endl;
+	}
+	if (f_subgroup_lattice_create_flag_transitive_geometry_with_partition) {
+		cout << "-subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				<< subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit
+				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit
+				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit
+				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group
+				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size
+				<< endl;
+	}
+	if (f_subgroup_lattice_identify_subgroup) {
+		cout << "-subgroup_lattice_identify_subgroup "
+				<< subgroup_lattice_identify_subgroup_subgroup_label
+				<< endl;
+	}
 
 	if (f_orbit_of) {
 		cout << "-orbit_of " << orbit_of_point_idx << endl;

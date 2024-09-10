@@ -144,8 +144,10 @@ void orbits_on_subspaces::init(
 				"Group->label=" << Group->label << endl;
 	}
 
-	Control->problem_label.assign(Group->label);
-	Control->f_problem_label = true;
+	if (!Control->f_problem_label) {
+		Control->problem_label.assign(Group->label);
+		Control->f_problem_label = true;
+	}
 
 	orbits_on_subspaces_PC->initialize_and_allocate_root_node(
 			Control, orbits_on_subspaces_Poset,

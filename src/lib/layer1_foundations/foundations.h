@@ -873,6 +873,11 @@ namespace solvers {
 #define Int_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print(A, B, C)
 #define Lint_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(A, B, C)
 
+#define Int_matrix_print_comma_separated(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_comma_separated(A, B, C)
+
+#define Int_matrix_print_nonzero_entries(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_nonzero_entries(A, B, C)
+#define Lint_matrix_print_nonzero_entries(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print_nonzero_entries(A, B, C)
+
 #define Int_matrix_print_ost(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(A, B, C, D)
 
 #define Int_matrix_print_bitwise(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)

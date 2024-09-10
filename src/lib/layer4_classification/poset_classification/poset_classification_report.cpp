@@ -27,6 +27,9 @@ void poset_classification::report(
 		cout << "poset_classification::report" << endl;
 	}
 
+	if (f_v) {
+		cout << "poset_classification::report problem_label=" << problem_label << endl;
+	}
 
 	string fname_report;
 	fname_report = problem_label + "_poset.tex";

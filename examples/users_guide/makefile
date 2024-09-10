@@ -1468,10 +1468,49 @@ CODE_N6_K3_Q2_GENMA="\
 
 
 
-# Chapter 17 Interfaces
+
+# Section 17.1 Automorphism group of Sym(6)
 
 
-# Section 17.2 Poyvray interface
+SYM_6_CLASS_2A_REP="1,0,3,2,5,4"
+
+SYM_6_CLASS_2B_REP="1,0,3,2,4,5"
+
+SYM_6_CLASS_2C_REP="1,0,2,3,4,5"
+
+FILE_NAME_SYM_6_CLASS_2A="Sym_6_class_of_2A.csv"
+
+FILE_NAME_SYM_6_CLASS_2B="Sym_6_class_of_2B.csv"
+
+FILE_NAME_SYM_6_CLASS_2C="Sym_6_class_of_2C.csv"
+
+
+AUT_SYM_6_GROUP_ORDER=1440
+
+AUT_SYM_6_DEGREE=720
+
+AUT_SYM_6_BASE="1,2,6,24"
+
+AUT_SYM_6_NB_GENS=6
+
+AUT_SYM_6_GENS="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 414, 415, 416, 417, 418, 419, 408, 409, 410, 411, 412, 413, 422, 423, 420, 421, 425, 424, 428, 429, 426, 427, 431, 430, 534, 535, 536, 537, 538, 539, 528, 529, 530, 531, 532, 533, 542, 543, 540, 541, 545, 544, 548, 549, 546, 547, 551, 550, 654, 655, 656, 657, 658, 659, 648, 649, 650, 651, 652, 653, 662, 663, 660, 661, 665, 664, 668, 669, 666, 667, 671, 670, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 294, 295, 296, 297, 298, 299, 288, 289, 290, 291, 292, 293, 302, 303, 300, 301, 305, 304, 308, 309, 306, 307, 311, 310, 558, 559, 560, 561, 562, 563, 552, 553, 554, 555, 556, 557, 566, 567, 564, 565, 569, 568, 572, 573, 570, 571, 575, 574, 678, 679, 680, 681, 682, 683, 672, 673, 674, 675, 676, 677, 686, 687, 684, 685, 689, 688, 692, 693, 690, 691, 695, 694, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 318, 319, 320, 321, 322, 323, 312, 313, 314, 315, 316, 317, 326, 327, 324, 325, 329, 328, 332, 333, 330, 331, 335, 334, 438, 439, 440, 441, 442, 443, 432, 433, 434, 435, 436, 437, 446, 447, 444, 445, 449, 448, 452, 453, 450, 451, 455, 454, 702, 703, 704, 705, 706, 707, 696, 697, 698, 699, 700, 701, 710, 711, 708, 709, 713, 712, 716, 717, 714, 715, 719, 718, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 342, 343, 344, 345, 346, 347, 336, 337, 338, 339, 340, 341, 350, 351, 348, 349, 353, 352, 356, 357, 354, 355, 359, 358, 462, 463, 464, 465, 466, 467, 456, 457, 458, 459, 460, 461, 470, 471, 468, 469, 473, 472, 476, 477, 474, 475, 479, 478, 582, 583, 584, 585, 586, 587, 576, 577, 578, 579, 580, 581, 590, 591, 588, 589, 593, 592, 596, 597, 594, 595, 599, 598, \
+0, 1, 2, 3, 4, 5, 54, 55, 56, 57, 58, 59, 78, 79, 80, 81, 82, 83, 102, 103, 104, 105, 106, 107, 24, 25, 26, 27, 28, 29, 48, 49, 50, 51, 52, 53, 72, 73, 74, 75, 76, 77, 96, 97, 98, 99, 100, 101, 30, 31, 32, 33, 34, 35, 6, 7, 8, 9, 10, 11, 86, 87, 84, 85, 89, 88, 110, 111, 108, 109, 113, 112, 36, 37, 38, 39, 40, 41, 12, 13, 14, 15, 16, 17, 62, 63, 60, 61, 65, 64, 116, 117, 114, 115, 119, 118, 42, 43, 44, 45, 46, 47, 18, 19, 20, 21, 22, 23, 68, 69, 66, 67, 71, 70, 92, 93, 90, 91, 95, 94, 264, 265, 266, 267, 268, 269, 288, 289, 290, 291, 292, 293, 312, 313, 314, 315, 316, 317, 336, 337, 338, 339, 340, 341, 240, 241, 242, 243, 244, 245, 294, 295, 296, 297, 298, 299, 318, 319, 320, 321, 322, 323, 342, 343, 344, 345, 346, 347, 246, 247, 248, 249, 250, 251, 270, 271, 272, 273, 274, 275, 324, 325, 326, 327, 328, 329, 348, 349, 350, 351, 352, 353, 252, 253, 254, 255, 256, 257, 276, 277, 278, 279, 280, 281, 300, 301, 302, 303, 304, 305, 354, 355, 356, 357, 358, 359, 258, 259, 260, 261, 262, 263, 282, 283, 284, 285, 286, 287, 306, 307, 308, 309, 310, 311, 330, 331, 332, 333, 334, 335, 144, 145, 146, 147, 148, 149, 168, 169, 170, 171, 172, 173, 192, 193, 194, 195, 196, 197, 216, 217, 218, 219, 220, 221, 120, 121, 122, 123, 124, 125, 174, 175, 176, 177, 178, 179, 198, 199, 200, 201, 202, 203, 222, 223, 224, 225, 226, 227, 126, 127, 128, 129, 130, 131, 150, 151, 152, 153, 154, 155, 204, 205, 206, 207, 208, 209, 228, 229, 230, 231, 232, 233, 132, 133, 134, 135, 136, 137, 156, 157, 158, 159, 160, 161, 180, 181, 182, 183, 184, 185, 234, 235, 236, 237, 238, 239, 138, 139, 140, 141, 142, 143, 162, 163, 164, 165, 166, 167, 186, 187, 188, 189, 190, 191, 210, 211, 212, 213, 214, 215, 408, 409, 410, 411, 412, 413, 384, 385, 386, 387, 388, 389, 434, 435, 432, 433, 437, 436, 458, 459, 456, 457, 461, 460, 366, 367, 368, 369, 370, 371, 390, 391, 392, 393, 394, 395, 444, 445, 446, 447, 448, 449, 468, 469, 470, 471, 472, 473, 360, 361, 362, 363, 364, 365, 414, 415, 416, 417, 418, 419, 438, 439, 440, 441, 442, 443, 462, 463, 464, 465, 466, 467, 374, 375, 372, 373, 377, 376, 420, 421, 422, 423, 424, 425, 396, 397, 398, 399, 400, 401, 475, 474, 478, 479, 476, 477, 380, 381, 378, 379, 383, 382, 426, 427, 428, 429, 430, 431, 402, 403, 404, 405, 406, 407, 451, 450, 454, 455, 452, 453, 528, 529, 530, 531, 532, 533, 504, 505, 506, 507, 508, 509, 554, 555, 552, 553, 557, 556, 578, 579, 576, 577, 581, 580, 486, 487, 488, 489, 490, 491, 510, 511, 512, 513, 514, 515, 564, 565, 566, 567, 568, 569, 588, 589, 590, 591, 592, 593, 480, 481, 482, 483, 484, 485, 534, 535, 536, 537, 538, 539, 558, 559, 560, 561, 562, 563, 582, 583, 584, 585, 586, 587, 494, 495, 492, 493, 497, 496, 540, 541, 542, 543, 544, 545, 516, 517, 518, 519, 520, 521, 595, 594, 598, 599, 596, 597, 500, 501, 498, 499, 503, 502, 546, 547, 548, 549, 550, 551, 522, 523, 524, 525, 526, 527, 571, 570, 574, 575, 572, 573, 648, 649, 650, 651, 652, 653, 624, 625, 626, 627, 628, 629, 674, 675, 672, 673, 677, 676, 698, 699, 696, 697, 701, 700, 606, 607, 608, 609, 610, 611, 630, 631, 632, 633, 634, 635, 684, 685, 686, 687, 688, 689, 708, 709, 710, 711, 712, 713, 600, 601, 602, 603, 604, 605, 654, 655, 656, 657, 658, 659, 678, 679, 680, 681, 682, 683, 702, 703, 704, 705, 706, 707, 614, 615, 612, 613, 617, 616, 660, 661, 662, 663, 664, 665, 636, 637, 638, 639, 640, 641, 715, 714, 718, 719, 716, 717, 620, 621, 618, 619, 623, 622, 666, 667, 668, 669, 670, 671, 642, 643, 644, 645, 646, 647, 691, 690, 694, 695, 692, 693, \
+0, 1, 21, 20, 15, 14, 6, 7, 19, 18, 13, 12, 11, 10, 5, 4, 16, 17, 9, 8, 3, 2, 22, 23, 54, 55, 67, 66, 61, 60, 48, 49, 69, 68, 63, 62, 53, 52, 59, 58, 65, 64, 51, 50, 57, 56, 71, 70, 30, 31, 43, 42, 37, 36, 24, 25, 45, 44, 39, 38, 29, 28, 35, 34, 41, 40, 27, 26, 33, 32, 47, 46, 109, 108, 103, 102, 114, 115, 99, 98, 105, 104, 119, 118, 97, 96, 111, 110, 117, 116, 100, 101, 113, 112, 107, 106, 85, 84, 79, 78, 90, 91, 75, 74, 81, 80, 95, 94, 73, 72, 87, 86, 93, 92, 76, 77, 89, 88, 83, 82, 120, 121, 141, 140, 135, 134, 126, 127, 139, 138, 133, 132, 131, 130, 125, 124, 136, 137, 129, 128, 123, 122, 142, 143, 174, 175, 187, 186, 181, 180, 168, 169, 189, 188, 183, 182, 173, 172, 179, 178, 185, 184, 171, 170, 177, 176, 191, 190, 150, 151, 163, 162, 157, 156, 144, 145, 165, 164, 159, 158, 149, 148, 155, 154, 161, 160, 147, 146, 153, 152, 167, 166, 229, 228, 223, 222, 234, 235, 219, 218, 225, 224, 239, 238, 217, 216, 231, 230, 237, 236, 220, 221, 233, 232, 227, 226, 205, 204, 199, 198, 210, 211, 195, 194, 201, 200, 215, 214, 193, 192, 207, 206, 213, 212, 196, 197, 209, 208, 203, 202, 366, 367, 379, 378, 373, 372, 360, 361, 381, 380, 375, 374, 365, 364, 371, 370, 377, 376, 363, 362, 369, 368, 383, 382, 390, 391, 403, 402, 397, 396, 384, 385, 405, 404, 399, 398, 389, 388, 395, 394, 401, 400, 387, 386, 393, 392, 407, 406, 414, 415, 427, 426, 421, 420, 408, 409, 429, 428, 423, 422, 413, 412, 419, 418, 425, 424, 411, 410, 417, 416, 431, 430, 463, 462, 469, 468, 475, 474, 457, 456, 471, 470, 477, 476, 459, 458, 465, 464, 479, 478, 461, 460, 467, 466, 473, 472, 439, 438, 445, 444, 451, 450, 433, 432, 447, 446, 453, 452, 435, 434, 441, 440, 455, 454, 437, 436, 443, 442, 449, 448, 246, 247, 259, 258, 253, 252, 240, 241, 261, 260, 255, 254, 245, 244, 251, 250, 257, 256, 243, 242, 249, 248, 263, 262, 270, 271, 283, 282, 277, 276, 264, 265, 285, 284, 279, 278, 269, 268, 275, 274, 281, 280, 267, 266, 273, 272, 287, 286, 294, 295, 307, 306, 301, 300, 288, 289, 309, 308, 303, 302, 293, 292, 299, 298, 305, 304, 291, 290, 297, 296, 311, 310, 343, 342, 349, 348, 355, 354, 337, 336, 351, 350, 357, 356, 339, 338, 345, 344, 359, 358, 341, 340, 347, 346, 353, 352, 319, 318, 325, 324, 331, 330, 313, 312, 327, 326, 333, 332, 315, 314, 321, 320, 335, 334, 317, 316, 323, 322, 329, 328, 613, 612, 607, 606, 618, 619, 603, 602, 609, 608, 623, 622, 601, 600, 615, 614, 621, 620, 604, 605, 617, 616, 611, 610, 637, 636, 631, 630, 642, 643, 627, 626, 633, 632, 647, 646, 625, 624, 639, 638, 645, 644, 628, 629, 641, 640, 635, 634, 679, 678, 685, 684, 691, 690, 673, 672, 687, 686, 693, 692, 675, 674, 681, 680, 695, 694, 677, 676, 683, 682, 689, 688, 655, 654, 661, 660, 667, 666, 649, 648, 663, 662, 669, 668, 651, 650, 657, 656, 671, 670, 653, 652, 659, 658, 665, 664, 702, 703, 715, 714, 709, 708, 696, 697, 717, 716, 711, 710, 701, 700, 707, 706, 713, 712, 699, 698, 705, 704, 719, 718, 493, 492, 487, 486, 498, 499, 483, 482, 489, 488, 503, 502, 481, 480, 495, 494, 501, 500, 484, 485, 497, 496, 491, 490, 517, 516, 511, 510, 522, 523, 507, 506, 513, 512, 527, 526, 505, 504, 519, 518, 525, 524, 508, 509, 521, 520, 515, 514, 559, 558, 565, 564, 571, 570, 553, 552, 567, 566, 573, 572, 555, 554, 561, 560, 575, 574, 557, 556, 563, 562, 569, 568, 535, 534, 541, 540, 547, 546, 529, 528, 543, 542, 549, 548, 531, 530, 537, 536, 551, 550, 533, 532, 539, 538, 545, 544, 582, 583, 595, 594, 589, 588, 576, 577, 597, 596, 591, 590, 581, 580, 587, 586, 593, 592, 579, 578, 585, 584, 599, 598, \
+0, 143, 475, 680, 543, 316, 659, 339, 496, 79, 398, 186, 212, 516, 289, 425, 107, 603, 58, 373, 702, 598, 165, 266, 450, 566, 25, 257, 220, 639, 356, 660, 168, 407, 77, 489, 515, 195, 617, 97, 428, 300, 381, 50, 279, 148, 588, 716, 557, 441, 634, 229, 260, 36, 127, 16, 333, 530, 685, 466, 414, 310, 118, 606, 505, 209, 577, 713, 152, 283, 364, 63, 246, 46, 237, 626, 559, 448, 676, 471, 538, 325, 134, 18, 95, 480, 391, 184, 353, 649, 274, 157, 699, 587, 67, 368, 643, 224, 35, 243, 432, 575, 320, 547, 458, 693, 9, 125, 177, 389, 498, 86, 670, 342, 620, 108, 299, 411, 198, 526, 341, 657, 518, 210, 376, 55, 141, 2, 423, 292, 595, 704, 678, 478, 82, 493, 264, 167, 313, 545, 188, 396, 605, 105, 561, 437, 262, 30, 632, 235, 10, 133, 709, 586, 309, 410, 457, 689, 158, 282, 484, 87, 534, 334, 112, 607, 385, 185, 446, 570, 218, 645, 27, 251, 666, 350, 53, 369, 192, 527, 501, 74, 273, 149, 468, 692, 395, 171, 623, 96, 548, 324, 41, 241, 637, 226, 455, 552, 201, 509, 378, 62, 664, 343, 296, 427, 578, 717, 15, 124, 114, 614, 174, 406, 323, 531, 231, 628, 252, 44, 568, 439, 71, 360, 511, 208, 359, 648, 700, 591, 418, 301, 128, 19, 151, 280, 91, 488, 675, 467, 662, 354, 197, 513, 48, 383, 564, 452, 100, 615, 145, 281, 255, 28, 405, 170, 714, 590, 641, 217, 491, 75, 302, 426, 136, 7, 687, 460, 331, 536, 435, 563, 284, 156, 610, 109, 32, 259, 583, 712, 183, 388, 238, 630, 408, 311, 89, 481, 23, 120, 541, 322, 477, 674, 345, 653, 374, 66, 520, 199, 178, 397, 696, 599, 45, 242, 92, 492, 295, 424, 227, 627, 464, 691, 314, 549, 5, 129, 522, 206, 57, 365, 336, 671, 619, 104, 155, 267, 438, 574, 417, 293, 502, 78, 644, 228, 532, 327, 682, 469, 138, 14, 367, 64, 215, 504, 655, 352, 270, 166, 117, 602, 553, 449, 581, 705, 392, 187, 250, 37, 13, 130, 307, 416, 711, 580, 443, 555, 608, 115, 286, 150, 232, 631, 528, 335, 65, 361, 38, 258, 463, 688, 207, 508, 348, 668, 72, 503, 173, 393, 572, 444, 147, 275, 98, 621, 647, 216, 371, 51, 326, 546, 249, 29, 525, 194, 690, 470, 651, 347, 400, 175, 494, 90, 122, 21, 597, 698, 421, 298, 319, 544, 68, 372, 629, 225, 672, 479, 202, 517, 240, 47, 487, 88, 191, 384, 654, 358, 412, 303, 706, 589, 139, 8, 111, 604, 276, 164, 569, 433, 512, 211, 461, 681, 31, 256, 402, 182, 81, 485, 337, 665, 584, 715, 290, 429, 4, 135, 161, 265, 613, 106, 454, 558, 382, 54, 537, 317, 234, 638, 473, 673, 482, 93, 160, 271, 43, 248, 181, 394, 585, 701, 624, 239, 328, 535, 366, 70, 445, 562, 20, 132, 652, 351, 507, 203, 430, 294, 612, 116, 244, 39, 719, 576, 403, 176, 223, 640, 60, 380, 533, 321, 554, 453, 346, 661, 121, 17, 204, 524, 102, 622, 291, 419, 694, 462, 269, 153, 80, 499, 551, 312, 363, 59, 230, 642, 131, 3, 669, 338, 571, 440, 305, 409, 601, 113, 214, 510, 85, 490, 162, 278, 683, 459, 386, 189, 592, 703, 253, 34, 355, 656, 6, 142, 436, 567, 99, 611, 420, 308, 521, 193, 287, 144, 495, 76, 476, 684, 710, 594, 172, 399, 26, 261, 49, 377, 330, 542, 633, 221, 550, 318, 387, 179, 110, 618, 222, 646, 84, 500, 413, 297, 245, 33, 695, 456, 523, 200, 573, 434, 123, 11, 344, 667, 362, 69, 593, 697, 277, 154, 625, 233, 304, 415, 486, 94, 42, 254, 205, 514, 465, 677, 442, 565, 650, 357, 22, 126, 61, 370, 163, 272, 707, 579, 329, 529, 600, 119, 190, 390, 472, 679, 506, 213, 40, 247, 12, 140, 349, 658, 447, 556, 718, 582, 268, 159, 56, 379, 180, 404, 103, 616, 315, 539, 483, 83, 431, 288, 636, 236, 663, 340, 137, 1, 560, 451, 146, 285, 596, 708, 375, 52, 609, 101, 401, 169, 540, 332, 306, 422, 73, 497, 219, 635, 196, 519, 686, 474, 263, 24, \
+0, 80, 14, 38, 74, 24, 6, 86, 12, 62, 72, 48, 8, 32, 2, 56, 26, 50, 84, 30, 78, 54, 36, 60, 5, 82, 16, 40, 76, 29, 19, 92, 13, 116, 73, 97, 22, 46, 3, 106, 27, 100, 90, 43, 79, 103, 37, 114, 11, 88, 17, 64, 77, 53, 21, 94, 15, 118, 75, 99, 23, 70, 9, 112, 51, 101, 91, 67, 85, 109, 61, 115, 10, 34, 4, 58, 28, 52, 20, 44, 1, 104, 25, 98, 18, 68, 7, 110, 49, 96, 42, 66, 31, 108, 55, 102, 89, 35, 83, 59, 41, 65, 95, 45, 81, 105, 39, 119, 93, 69, 87, 111, 63, 117, 47, 71, 33, 113, 57, 107, 633, 713, 647, 671, 707, 657, 639, 719, 645, 695, 705, 681, 641, 665, 635, 689, 659, 683, 717, 663, 711, 687, 669, 693, 631, 708, 642, 666, 702, 655, 625, 698, 644, 620, 704, 601, 628, 652, 634, 610, 658, 604, 696, 649, 710, 607, 668, 618, 637, 714, 643, 690, 703, 679, 627, 700, 646, 622, 706, 603, 629, 676, 640, 616, 682, 605, 697, 673, 716, 613, 692, 619, 636, 660, 630, 684, 654, 678, 626, 650, 632, 608, 656, 602, 624, 674, 638, 614, 680, 600, 648, 672, 662, 612, 686, 606, 715, 661, 709, 685, 667, 691, 701, 651, 712, 609, 670, 623, 699, 675, 718, 615, 694, 621, 653, 677, 664, 617, 688, 611, 395, 449, 401, 425, 443, 419, 405, 455, 399, 479, 441, 465, 407, 431, 393, 473, 417, 467, 453, 429, 447, 471, 423, 477, 390, 444, 396, 420, 438, 414, 384, 434, 398, 374, 440, 360, 386, 410, 392, 368, 416, 362, 432, 408, 446, 366, 422, 372, 403, 450, 397, 474, 439, 463, 389, 436, 400, 376, 442, 365, 387, 460, 406, 382, 466, 363, 433, 457, 452, 379, 476, 373, 402, 426, 391, 468, 415, 462, 388, 412, 394, 370, 418, 364, 385, 458, 404, 380, 464, 361, 409, 456, 428, 378, 470, 367, 451, 427, 445, 469, 421, 475, 437, 413, 448, 371, 424, 377, 435, 459, 454, 381, 478, 375, 411, 461, 430, 383, 472, 369, 275, 329, 281, 305, 323, 299, 285, 335, 279, 359, 321, 345, 287, 311, 273, 353, 297, 347, 333, 309, 327, 351, 303, 357, 270, 324, 276, 300, 318, 294, 264, 314, 278, 254, 320, 240, 266, 290, 272, 248, 296, 242, 312, 288, 326, 246, 302, 252, 283, 330, 277, 354, 319, 343, 269, 316, 280, 256, 322, 245, 267, 340, 286, 262, 346, 243, 313, 337, 332, 259, 356, 253, 282, 306, 271, 348, 295, 342, 268, 292, 274, 250, 298, 244, 265, 338, 284, 260, 344, 241, 289, 336, 308, 258, 350, 247, 331, 307, 325, 349, 301, 355, 317, 293, 328, 251, 304, 257, 315, 339, 334, 261, 358, 255, 291, 341, 310, 263, 352, 249, 521, 545, 515, 569, 539, 563, 527, 551, 513, 593, 537, 587, 525, 575, 519, 599, 561, 585, 549, 573, 543, 597, 567, 591, 516, 540, 510, 564, 534, 558, 506, 530, 512, 488, 536, 482, 504, 554, 518, 494, 560, 480, 528, 552, 542, 492, 566, 486, 522, 546, 511, 588, 535, 582, 508, 532, 514, 490, 538, 484, 505, 578, 524, 500, 584, 481, 529, 576, 548, 498, 590, 487, 523, 570, 517, 594, 559, 583, 509, 556, 520, 496, 562, 485, 507, 580, 526, 502, 586, 483, 553, 577, 572, 499, 596, 493, 547, 571, 541, 595, 565, 589, 533, 557, 544, 497, 568, 491, 531, 581, 550, 503, 592, 489, 555, 579, 574, 501, 598, 495, 209, 155, 203, 179, 161, 185, 215, 165, 201, 225, 159, 239, 213, 189, 207, 231, 183, 237, 167, 191, 153, 233, 177, 227, 204, 150, 198, 174, 156, 180, 194, 144, 200, 120, 158, 134, 192, 168, 206, 126, 182, 132, 146, 170, 152, 128, 176, 122, 210, 163, 199, 223, 157, 234, 196, 149, 202, 125, 160, 136, 193, 217, 212, 139, 236, 133, 147, 220, 166, 142, 226, 123, 211, 187, 205, 229, 181, 235, 197, 173, 208, 131, 184, 137, 195, 219, 214, 141, 238, 135, 171, 221, 190, 143, 232, 129, 162, 186, 151, 228, 175, 222, 148, 172, 154, 130, 178, 124, 145, 218, 164, 140, 224, 121, 169, 216, 188, 138, 230, 127, \
+0, 475, 572, 147, 244, 719, 136, 687, 348, 72, 507, 430, 435, 284, 659, 496, 60, 223, 32, 583, 212, 289, 371, 647, 450, 25, 122, 597, 694, 269, 561, 262, 651, 400, 204, 102, 10, 709, 356, 168, 363, 551, 457, 158, 515, 617, 68, 319, 662, 197, 13, 307, 473, 482, 341, 518, 443, 608, 43, 181, 141, 423, 564, 100, 624, 328, 678, 82, 255, 405, 232, 528, 345, 374, 557, 634, 162, 85, 666, 53, 127, 333, 592, 386, 446, 218, 23, 541, 305, 601, 273, 501, 696, 178, 414, 118, 522, 57, 246, 237, 706, 412, 201, 378, 676, 538, 276, 111, 41, 637, 464, 314, 487, 191, 578, 296, 155, 619, 95, 391, 693, 125, 265, 454, 594, 26, 469, 14, 485, 665, 308, 193, 166, 553, 86, 342, 633, 377, 705, 250, 411, 526, 234, 54, 148, 716, 479, 240, 3, 571, 272, 579, 90, 175, 419, 622, 679, 40, 489, 407, 230, 312, 140, 447, 300, 97, 629, 544, 75, 426, 688, 508, 132, 351, 500, 297, 150, 115, 701, 394, 456, 200, 281, 615, 70, 535, 11, 667, 590, 170, 361, 335, 492, 227, 283, 63, 436, 656, 83, 636, 466, 530, 253, 189, 159, 379, 674, 322, 510, 113, 560, 340, 45, 397, 209, 606, 293, 644, 587, 368, 31, 211, 422, 219, 18, 325, 569, 604, 708, 52, 129, 549, 358, 384, 263, 519, 438, 104, 649, 184, 243, 575, 715, 4, 144, 476, 44, 439, 182, 337, 611, 521, 591, 128, 389, 670, 330, 49, 280, 675, 108, 198, 537, 382, 598, 266, 29, 690, 453, 121, 697, 154, 393, 503, 116, 294, 254, 465, 186, 79, 533, 640, 565, 22, 603, 425, 326, 216, 396, 105, 258, 207, 562, 652, 179, 618, 580, 416, 271, 93, 33, 523, 704, 292, 366, 239, 434, 344, 167, 493, 65, 631, 171, 548, 713, 364, 6, 355, 404, 315, 36, 229, 683, 490, 582, 56, 251, 645, 214, 409, 137, 663, 468, 74, 505, 310, 614, 323, 157, 67, 461, 512, 101, 540, 448, 626, 139, 303, 285, 375, 552, 226, 654, 88, 686, 196, 15, 427, 353, 480, 504, 352, 429, 135, 76, 684, 208, 648, 106, 558, 399, 261, 301, 19, 602, 449, 542, 221, 488, 467, 187, 37, 317, 638, 311, 481, 194, 470, 661, 17, 415, 94, 621, 275, 176, 576, 514, 677, 109, 156, 321, 380, 357, 126, 388, 712, 546, 51, 607, 185, 517, 47, 338, 440, 119, 390, 298, 698, 499, 153, 213, 247, 410, 586, 642, 59, 658, 556, 87, 282, 225, 372, 96, 324, 424, 627, 142, 567, 616, 539, 199, 66, 459, 278, 288, 236, 527, 369, 34, 703, 1, 451, 692, 149, 242, 599, 406, 531, 78, 228, 681, 256, 169, 332, 671, 365, 8, 589, 497, 635, 343, 62, 433, 164, 474, 24, 124, 717, 574, 267, 64, 655, 224, 432, 495, 287, 360, 359, 547, 9, 172, 710, 628, 568, 327, 138, 99, 420, 91, 151, 392, 581, 620, 299, 630, 89, 373, 165, 346, 554, 233, 486, 316, 680, 403, 39, 69, 277, 536, 460, 612, 203, 650, 442, 183, 259, 107, 516, 334, 385, 50, 588, 669, 131, 529, 190, 639, 257, 80, 462, 370, 707, 235, 30, 291, 524, 349, 12, 484, 689, 428, 195, 545, 605, 217, 302, 445, 20, 318, 110, 383, 513, 160, 673, 646, 413, 55, 210, 585, 248, 573, 123, 264, 478, 714, 28, 174, 114, 502, 417, 274, 699, 401, 609, 336, 206, 559, 46, 73, 306, 664, 509, 134, 471, 146, 596, 455, 241, 5, 691, 367, 215, 643, 35, 290, 584, 71, 511, 320, 458, 613, 161, 231, 252, 532, 682, 402, 81, 418, 700, 117, 270, 177, 498, 238, 408, 58, 702, 525, 249, 625, 304, 543, 143, 98, 444, 362, 593, 331, 7, 173, 668, 205, 42, 610, 563, 398, 339, 534, 112, 381, 279, 202, 672, 329, 600, 220, 566, 421, 21, 61, 163, 632, 437, 494, 347, 506, 472, 309, 133, 77, 660, 313, 188, 641, 491, 38, 463, 550, 387, 48, 354, 711, 130, 222, 84, 376, 657, 286, 555, 245, 695, 595, 2, 145, 452, 623, 395, 295, 92, 577, 152, 103, 180, 520, 653, 260, 441, 431, 483, 192, 350, 685, 16, 718, 268, 27, 570, 477, 120"
+
+
+
+
+
+
+
+
+# Chapter 18 Interfaces
+
+
+# Section 18.2 Poyvray interface
 
 # povray colors:
 POLISHED_CHROME_WHITE=\
@@ -1748,20 +1787,24 @@ CLEBSCH_CUBICS=\
 
 
 
-# Section 17.5 The Gnuplot interface
+# Section 18.5 The Gnuplot interface
 
 GNUPLOT_TEST_INPUT="Row,Curve-1,Curve-2\n1,2,4\n2,6,8\n3,9,10\n4,13,17\n5,17,20\n6,19,25\n7,23,30\nEND\n"
 
-# Chapter 18 Mathematical Data in Orbiter
+# Chapter 19 Mathematical Data in Orbiter
 
 
-# Section 18.1 Mathematical data on Cubic Surfaces
+# Section 19.1 Mathematical data on Cubic Surfaces
 
-# Section 18.2 Mathematical data on BLT-sets
+# Section 19.2 Mathematical data on BLT-sets
 
 BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
 
 BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,9,8,7,10,6,10,8,8,9,5,6,8,5"
+
+
+
+
 
 
 ###############################################################################
@@ -3951,8 +3994,6 @@ PG_2_8_incidence_matrix:
 
 
 
-# ToDo:
-
 PG_2_4_with_decomposition:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
@@ -5638,7 +5679,7 @@ quartic_curve_q13_f0_apply_transformation:
 
 
 arcs_5_2_q11:
-	$(ORBITER) -v 4 \
+	$(ORBITER) -v 40 \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define Control -poset_classification_control \
@@ -5736,7 +5777,7 @@ F_9_q7:
 			-end \
 		-define F_9 -cubic_surface -space P \
 			-by_equation R "F_9" \
-			"\DF_9\D" "x0,x1,x2,x3" \
+			"F9" "x0,x1,x2,x3" \
 			$(SURFACE_F_9) \
 			"" \
 			"\Dno parameters\D" "" \
@@ -5745,8 +5786,8 @@ F_9_q7:
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_equation_F_9_q7_report.tex
-	$(OPEN) surface_equation_F_9_q7_report.pdf
+	pdflatex surface_F_9_report.tex
+	$(OPEN) surface_F_9_report.pdf
 
 
 
@@ -6031,6 +6072,7 @@ permutation_polynomial_F5:
 test_5_3:
 	make curve_q13_f0_clean2_variety_compute_group
 	make Hirschfeld_q2_group
+	make Hirschfeld_q4_group
 	make Barth_sextic_mod_11
 	make Veronese_1_3_q7
 
@@ -6059,7 +6101,7 @@ curve_q13_f0_clean2_variety_compute_group:
 		-end \
 		-with V -do -variety_activity -compute_group -end 
 	pdflatex curve_q13_f0_clean2_c_orbits.tex
-	open curve_q13_f0_clean2_c_orbits.pdf
+	$(OPEN) curve_q13_f0_clean2_c_orbits.pdf
 
 
 Hirschfeld_q2_group:
@@ -6080,9 +6122,37 @@ Hirschfeld_q2_group:
 			-ring R \
 			-equation_in_algebraic_form $(HIRSCHFELD_EQUATION_XYZW) \
 		-end \
-		-with V -do -variety_activity -compute_group -end 
-	pdflatex Hirschfeld_q2_c_orbits.tex
-	open Hirschfeld_q2_c_orbits.pdf
+		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Hirschfeld_q2_report.tex
+	$(OPEN) variety_Hirschfeld_q2_report.pdf
+
+
+Hirschfeld_q4_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z,W" "X,Y,Z,W" \
+		-end \
+		-define V -variety \
+			-label_txt Hirschfeld_q4 \
+			-label_tex Hirschfeld\_q4 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(HIRSCHFELD_EQUATION_XYZW) \
+		-end \
+		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Hirschfeld_q4_report.tex
+	$(OPEN) variety_Hirschfeld_q4_report.pdf
+
 
 
 Barth_sextic_mod_11:
@@ -6105,9 +6175,10 @@ Barth_sextic_mod_11:
 			-label_tex Barth\_q11 \
 		-end \
 		-with V -do -variety_activity -compute_group -end \
-		-with V -do -variety_activity -singular_points -end 
-	pdflatex Barth_q11_c_orbits.tex
-	open Barth_q11_c_orbits.pdf
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Barth_q11_report.tex
+	$(OPEN) variety_Barth_q11_report.pdf
 
 
 
@@ -7517,7 +7588,7 @@ Group_M11:
 
 
 surface_q13_Eckardt:
-	$(ORBITER) -v 3 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
@@ -7529,8 +7600,8 @@ surface_q13_Eckardt:
 		-cubic_surface_activity \
 			-export_something tritangent_planes \
 		-end
-	pdflatex surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_report.tex
-	$(OPEN) surface_arc_lifting_trihedral_q13_arc0_1_2_3_43_113_report.pdf
+	pdflatex surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
+	$(OPEN) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.pdf
 
 #surface_equation_F_Hirschfeld_q4_tritangent_planes.csv
 
@@ -7702,7 +7773,8 @@ T4r1:
 	$(OPEN) GL_2_2_wreath_Sym4_report.pdf
 
 
-# ToDo
+# ToDo error message:
+#any_group::init_linear_group !LG->f_has_strong_generators
 
 PGGL_2_8_on_conic:
 	$(ORBITER) -v 4 \
@@ -7813,7 +7885,9 @@ test_6_5:
 	make normal_forms_PGL_4_5
 	make on_planes
 	make PGL_4_2_random_element
-
+	make PGL_2_3_subgroup_lattice
+	make PGL_2_3_subgroup_lattice_load_and_draw_by_groups
+	make PGL_2_3_subgroup_lattice_load_and_draw_by_orbits
 
 
 PGL_3_2_elements:
@@ -8063,6 +8137,58 @@ PGL_4_2_random_element:
 #\{0,1,2,3,4\} -> \{13,7,10,6,2\} = \{2,6,7,10,13\}
 
 
+PGL_2_3_subgroup_lattice:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice \
+		-end
+
+
+# writes PGL_2_3_subgroup_lattice.csv
+
+
+PGL_2_3_subgroup_lattice_load_and_draw_by_groups:
+	$(ORBITER) -v 3 \
+		-draw_options -embedded -end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_load PGL_2_3_subgroup_lattice.csv \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_draw_by_groups \
+		-end
+	pdflatex PGL_2_3_drawing.tex
+	$(OPEN) PGL_2_3_drawing.pdf
+
+
+
+PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
+	$(ORBITER) -v 3 \
+		-draw_options -embedded -end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_load PGL_2_3_subgroup_lattice.csv \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_draw_by_orbits \
+		-end
+	pdflatex PGL_2_3_drawing_by_orbits.tex
+	$(OPEN) PGL_2_3_drawing_by_orbits.pdf
+
+
+
+
+
+
 ###############################################################################
 # Section 6.6: Group Theoretic Activities Based on Magma
 
@@ -8080,22 +8206,22 @@ test_6_6:
 	make PGL_7_2_classes
 	make PGL_8_2_classes
 	make Hirschfeld_stab_classes
-	make PGGL_2_4_cent_2A
-	make Normalizer_of_H5
+	#make PGGL_2_4_cent_2A
+	#make Normalizer_of_H5
 	make PGGL_3_4_classes
 	make classes_PGGL_4_4
-	make subgroups_PGL_4_5
+	#make subgroups_PGL_4_5
 	make classes_PGL_4_5
 	#make PGL_4_5_3B_class_again
 	make search_primitive_poly_q5_deg3
 	make GL_3_5_singer_power
-	make PGL_4_5_norm_31
-	make Normalizer_of_Z22_in_PGL_2_9
+	#make PGL_4_5_norm_31
+	#make Normalizer_of_Z22_in_PGL_2_9
 	make PGOm_6_2_classes
 	make PGOm_6_2_Class_2A
-	make PGOm_6_2_Class_2A_print
-	make PGOm_6_2_Class_2A_centralizer
-	make PGOm_6_2_Class_2A_centralizer_recover
+	#make PGOm_6_2_Class_2A_print
+	#make PGOm_6_2_Class_2A_centralizer
+	#make PGOm_6_2_Class_2A_centralizer_recover
 
 
 
@@ -8230,24 +8356,6 @@ PGL_7_2_classes:
 			-classes \
 		-end
 
-PGL_7_2_classes:
-	$(ORBITER) -v 3 \
-		-define G \
-		-linear_group -PGL 7 2 \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-classes \
-		-end
-	$(MAGMA_PATH)magma PGL_7_2_classes.magma
-	$(ORBITER) -v 3 \
-		-define G \
-		-linear_group -PGL 7 2 \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-classes \
-		-end
 
 
 PGL_8_2_classes:
@@ -8298,6 +8406,8 @@ Hirschfeld_stab_classes:
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.pdf
 
 
+
+# ToDo:
 
 PGGL_2_4_cent_2A:
 	$(ORBITER) -v 3 \
@@ -8606,7 +8716,7 @@ SECTION_LINEAR_GROUPS_ADVANCED_TOPICS:
 
 test_6_8:
 	make U_3_3
-	make PGL_2_3
+	make PGL_2_3_group_table
 	make Co3
 	#make Ree_27
 
@@ -8633,7 +8743,7 @@ U_3_3:
 
 
 
-PGL_2_3:
+PGL_2_3_group_table:
 	$(ORBITER) -v 3 \
 		-define G -linear_group -PGL 2 3 -end \
 		-with G -do \
@@ -8994,12 +9104,12 @@ T4r1_orbits:
 T4r1_orbits_draw:
 	$(ORBITER) -v 3 \
 		-draw_layered_graph \
-			orbit_GL_2_2_wreath_Sym4_res_on_rank_one_tensors_0.layered_graph \
+			orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0.layered_graph \
 		-radius 400 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 2.5 -scale 0.15 \
 		-end
-	pdflatex orbit_GL_2_2_wreath_Sym4_res_on_rank_one_tensors_0_draw.tex
-	$(OPEN) orbit_GL_2_2_wreath_Sym4_res_on_rank_one_tensors_0_draw.pdf
+	pdflatex orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.tex
+	$(OPEN) orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.pdf
 
 
 T4r1_orbits_4:
@@ -9605,8 +9715,8 @@ PGL_5_3_wedge_subspace_orbits:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 \
 		-end 
-	pdflatex PGL_5_3_OnWedge_tree_lvl_5.tex
-	$(OPEN) PGL_5_3_OnWedge_tree_lvl_5.pdf
+	pdflatex PGL_5_3_wedge_tree_lvl_5.tex
+	$(OPEN) PGL_5_3_wedge_tree_lvl_5.pdf
 
 
 
@@ -9628,8 +9738,8 @@ subspaces_Op_4_2:
 				-draw_poset -type_ordinary \
 			-end \
 		-end 
-	pdflatex PGL_4_2_Orthogonal_plus_4_2_poset.tex
-	$(OPEN) PGL_4_2_Orthogonal_plus_4_2_poset.pdf
+	pdflatex Op_4_2_poset.tex
+	$(OPEN) Op_4_2_poset.pdf
 
 
 
@@ -9676,8 +9786,8 @@ PGL_4_2_singer_on_subspaces:
 				-draw_poset -type_ordinary \
 			-end \
 		-end 
-	pdflatex PGL_4_2_Singer_4_2_1_poset.tex
-	$(OPEN) PGL_4_2_Singer_4_2_1_poset.pdf
+	pdflatex PGL_4_2_singer_poset.tex
+	$(OPEN) PGL_4_2_singer_poset.pdf
 
 
 
@@ -9700,6 +9810,8 @@ PGL_8_2_singer_on_subspaces:
 				-draw_poset -type_ordinary \
 			-end \
 		-end 
+	#pdflatex PGL_8_2_singer_poset.tex
+	#$(OPEN) PGL_8_2_singer_poset.pdf
 
 # May 7, 2020: 16 sec on Mac
 # 1643 orbits in total
@@ -9770,8 +9882,8 @@ Op_8_2_orbits_on_subspaces:
 				-draw_poset -type_ordinary \
 			-end \
 		-end 
-	pdflatex PGL_8_2_Orthogonal_plus_8_2_poset.tex
-	$(OPEN) PGL_8_2_Orthogonal_plus_8_2_poset.pdf
+	pdflatex Op_8_2_poset.tex
+	$(OPEN) Op_8_2_poset.pdf
 
 
 
@@ -10143,7 +10255,6 @@ SECTION_CUBIC_CURVES:
 
 test_7_7:
 	make cubic_curves_PG_2_4
-	make cubic_curves_PG_2_4_draw
 	make poly_orbits_q4
 	make cubic_curves_PG_2_9
 	make cubic_curves_PG_2_9_draw
@@ -10177,20 +10288,10 @@ cubic_curves_PG_2_4:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 \
 		-end
-	pdflatex cc_4_poset_lvl_9.tex
-	$(OPEN) cc_4_poset_lvl_9.pdf
+	#pdflatex cc_4_poset_lvl_9.tex
+	#$(OPEN) cc_4_poset_lvl_9.pdf
 	pdflatex Cubic_curves_q4.tex
 	$(OPEN) Cubic_curves_q4.pdf
-
-
-cubic_curves_PG_2_4_draw:
-	$(ORBITER) -v 3 \
-		-draw_layered_graph cc_4_poset_lvl_9.layered_graph \
-			-radius 300 -embedded -line_width 1.1 \
-			-y_stretch 0.9 -scale 0.25 \
-		-end
-	pdflatex cc_4_poset_lvl_9_draw.tex
-	$(OPEN) cc_4_poset_lvl_9_draw.pdf
 
 
 
@@ -10223,6 +10324,7 @@ poly_orbits_q4:
 
 
 # ToDo: error in cubic_curve::compute_inflexion_points
+#cubic_curve::compute_inflexion_points rank of line spanned by v and w is not two
 
 cubic_curves_PG_2_9:
 	$(ORBITER) -v 3 \
@@ -10489,8 +10591,7 @@ test_8_2:
 	make surface_11_random
 	make surface_F_abcd_Eckardt_q31_by_equation
 	make Eckardt_13_by_arc_lifting
-	make surface_F_abcd_Eckardt_q31_by_symbolic_object:
-	make surface_F_abcd_Eckardt_q31_by_equation:
+	make surface_F_abcd_Eckardt_q31_by_symbolic_object
 
 
 
@@ -10600,30 +10701,6 @@ surface_F_abcd_Eckardt_q31_by_symbolic_object:
 
 
 
-surface_F_abcd_Eckardt_q31_by_equation:
-	$(ORBITER) -v 10 \
-		-define F -finite_field -q 31 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 3 \
-			-monomial_ordering_partition \
-			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
-			-end \
-		-define F_abcd -cubic_surface -space P \
-			-by_equation \
-			R \
-			"F_abcd" \
-			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
-			$(F_abcd_eqn) \
-			"a,b,c,d" \
-			"\D(a,b,c,d)=(2,30,30,2)\D" \
-			"2,30,30,2" \
-		-end
-
-
-# E = 6
 
 
 
@@ -10825,8 +10902,8 @@ Family_general_F7_report:
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_family_general_abcd_q7_a2_b3_c3_d4_report.tex
-	$(OPEN) surface_family_general_abcd_q7_a2_b3_c3_d4_report.pdf
+	pdflatex surface_F_a2_b3_c4_d4_report.tex
+	$(OPEN) surface_F_a2_b3_c4_d4_report.pdf
 
 
 # Fermat with 18 Eckardt points
@@ -10847,6 +10924,9 @@ surface_8_0:
 		-cubic_surface_activity \
 			-export_something "lines" \
 		-end \
+
+
+# slow:
 
 surface_8_0_plane_type_of_lines_on_Klein_quadric:
 	$(ORBITER) -v 6 \
@@ -10939,6 +11019,9 @@ surface_9_0:
 			-export_something "lines" \
 		-end
 
+
+# slow:
+
 surface_9_0_plane_type_of_lines_on_Klein_quadric:
 	$(ORBITER) -v 6 \
 		-define L_9_0 -vector -file surface_catalogue_q9_iso0_lines.csv -end \
@@ -10972,6 +11055,9 @@ surface_9_1:
 	$(OPEN) surface_catalogue_q9_iso1_report.pdf
 
 
+# slow:
+
+
 surface_9_1_plane_type_of_lines_on_Klein_quadric:
 	$(ORBITER) -v 6 \
 		-define L_9_1 -vector -file surface_catalogue_q9_iso1_lines.csv -end \
@@ -10999,8 +11085,8 @@ surface_eckardt_13_4_12_report:
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_family_Eckardt_q13_a4_b12_report.tex
-	$(OPEN) surface_family_Eckardt_q13_a4_b12_report.pdf
+	pdflatex surface_Eckardt_alpha12_beta12_report.tex
+	$(OPEN) surface_Eckardt_alpha12_beta12_report.pdf
 
 
 
@@ -11027,6 +11113,8 @@ Eckardt_13_report:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_Eckardt_alpha12_beta12_report.tex
+	$(OPEN) surface_Eckardt_alpha12_beta12_report.pdf
 
 
 Eckardt_13_by_arc_lifting_report:
@@ -11038,6 +11126,9 @@ Eckardt_13_by_arc_lifting_report:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
+	$(OPEN) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.pdf
+
 
 surface_13_0:
 	$(ORBITER) -v 3 \
@@ -11048,9 +11139,12 @@ surface_13_0:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_catalogue_q13_iso0_report.tex
+	$(OPEN) surface_catalogue_q13_iso0_report.pdf
 
 
 # clean equation for Tekirdag-2:
+
 
 
 surface_16_0:
@@ -11065,6 +11159,8 @@ surface_16_0:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_catalogue_q16_iso0_report.tex
+	$(OPEN) surface_catalogue_q16_iso0_report.pdf
 
 
 #		-transform_inverse "3,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0" \
@@ -11090,6 +11186,8 @@ G13_8:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_G13_a2_report.tex
+	$(OPEN) surface_G13_a2_report.pdf
 
 
 F13_8:
@@ -11101,6 +11199,8 @@ F13_8:
 		-cubic_surface_activity \
 			-report \
 		-end
+	pdflatex surface_F13_a2_report.tex
+	$(OPEN) surface_F13_a2_report.pdf
 
 
 
@@ -11247,7 +11347,7 @@ move_two_lines:
 
 
 
-
+# ToDo: problem in latex report, $ missing
 
 surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
 	$(ORBITER) -v 10 \
@@ -11282,9 +11382,13 @@ surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_equation_F_abcd_sub_q31_report.tex
-	$(OPEN) surface_equation_F_abcd_sub_q31_report.pdf
+	#pdflatex surface_F_abcd_sub_report.tex
+	#$(OPEN) surface_F_abcd_sub_report.pdf
 
+
+
+
+# ToDo: problem in latex report, \D is not being translated
 
 
 surface_F_abcd_Eckardt_q31_by_equation_report:
@@ -11312,15 +11416,17 @@ surface_F_abcd_Eckardt_q31_by_equation_report:
 		-cubic_surface_activity \
 			-report \
 		-end
-	pdflatex surface_equation_F_abcd_q31_report.tex
-	$(OPEN) surface_equation_F_abcd_q31_report.pdf
+	pdflatex surface_F_abcd_report.tex
+	$(OPEN) surface_F_abcd_report.pdf
 
 
 # E = 6
 
 
 
-
+# ToDo
+#surface_create::create_surface_from_description before create_surface_by_equation
+#libc++abi: terminating due to uncaught exception of type std::invalid_argument: Encountered unidentified token: ['=']
 
 surface_F_abcd_sweep_4_27_q7:
 	$(ORBITER) -v 3 \
@@ -11389,6 +11495,10 @@ test_8_4:
 	make Family_general_F31_25_5_5_25_recognize
 	make surface_F_abcd_identify_q11
 	make Family_general_F11_iso_test
+
+
+# toDo: 
+#surface_repository::report_surface before SO->print_axes orbit_index = 0
 
 
 
@@ -20910,7 +21020,101 @@ quartic_curves_q13_classify_nauty:
 			-end \
 		-end
 
+KLEIN_CUBIC_THREEFOLD_EQN="X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0"
 
+KLEIN_CUBIC_THREEFOLD_EQN_CSV="Line,equation\n0,\"X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0\"\nEND"
+
+Klein_cubic_threefold_q5_old:
+	echo $(KLEIN_CUBIC_THREEFOLD_EQN_CSV) >Klein_cubic_threefold_q5.csv
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 5 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3,X4" "X_0,X_1,X_2,X_3,X_4" \
+		-end \
+		-define O -orbits -classification_by_canonical_form \
+			-space P \
+			-ring R \
+			-input_fname_mask Klein_cubic_threefold_q5.csv \
+			-nb_files 1 \
+			-output_fname Klein_cubic_threefold_q5 \
+			-label_equation "equation" \
+			-algorithm_nauty \
+			-end \
+		-end \
+	-with O -do -orbits_activity \
+		-report \
+		-report_options \
+			-fname Klein_cubic_threefold_q5 \
+		-end \
+	-end
+	pdflatex Klein_cubic_threefold_q5_orbits.tex
+	open Klein_cubic_threefold_q5_orbits.pdf
+
+#User time: 0:45
+
+Klein_cubic_threefold_q3:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 5 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3,X4" "X_0,X_1,X_2,X_3,X_4" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(KLEIN_CUBIC_THREEFOLD_EQN) \
+			-label_txt Klein3_q3 \
+			-label_tex Klein3\_q3 \
+		-end \
+		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Klein3_q3_report.tex
+	open variety_Klein3_q3_report.pdf
+
+# 1 singular point
+#stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer found an orbit of length 1
+
+
+Klein_cubic_threefold_q5:
+	time $(ORBITER) -v 10 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 5 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3,X4" "X_0,X_1,X_2,X_3,X_4" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(KLEIN_CUBIC_THREEFOLD_EQN) \
+			-label_txt Klein3_q5 \
+			-label_tex Klein3\_q5 \
+		-end \
+		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -singular_points -end \
+		-with V -do -variety_activity -report -end
+	pdflatex variety_Klein3_q5_report.tex
+	open variety_Klein3_q5_report.pdf
+
+#user	0m50.437s
+# nonsingular
+# ago=5
+# number of points = 156
+#encoded_combinatorial_object::init nb_rows=782 nb_cols=20307
+#stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer found an orbit of length 1
 
 
 EC_canon: elliptic_curve_b1_c3_q11.txt
@@ -21422,6 +21626,15 @@ test_16_3:
 
 
 geo_7_3_c:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 3 5 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 \
+			-fname_GEO 7_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end
 	$(ORBITER) -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -width_10 6 -end \
@@ -21444,23 +21657,32 @@ geo_7_3_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex 7_3_classification.tex
-	$(OPEN) 7_3_classification.pdf
+	pdflatex geo_7_3_classification.tex
+	$(OPEN) geo_7_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file 7_3_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 7_3_object0_TDA.csv \
+		-input_csv_file geo_7_3_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file geo_7_3_object0_TDA.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file 7_3_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file 7_3_object0_INP.csv \
+		-input_csv_file geo_7_3_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file geo_7_3_object0_INP.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
-	$(OPEN) 7_3_object0_INP_flag_orbits_draw.bmp
+	$(OPEN) geo_7_3_object0_INP_flag_orbits_draw.bmp
 
 
 
 geo_10_3_c:
+	$(ORBITER) -v 2 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 \
+			-fuse 1 \
+			-fname_GEO 10_3 \
+			-output_to_inc_file \
+			-test Test_lines \
+		-end
 	$(ORBITER) -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -width_10 6 -end \
@@ -21483,16 +21705,16 @@ geo_10_3_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex 10_3_classification.tex
-	$(OPEN) 10_3_classification.pdf
+	pdflatex geo_10_3_classification.tex
+	$(OPEN) geo_10_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 10_3_object7_TDA.csv \
+		-input_csv_file geo_10_3_object7_TDA_flag_orbits.csv \
+		-secondary_input_csv_file geo_10_3_object7_TDA.csv \
 		-box_width 16 -bit_depth 24 \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file 10_3_object7_INP_flag_orbits.csv \
-		-secondary_input_csv_file 10_3_object7_INP.csv \
+		-input_csv_file geo_10_3_object7_INP_flag_orbits.csv \
+		-secondary_input_csv_file geo_10_3_object7_INP.csv \
 		-box_width 16 -bit_depth 24 \
 		-end
 
@@ -22293,7 +22515,9 @@ Cycle_13_aut:
 		-define Gamma -graph -cycle 13 -end \
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
-		-end \
+		-end
+	pdflatex Cycle_13_report.tex
+	$(OPEN) Cycle_13_report.pdf
 
 
 Neumaier_16_aut:
@@ -22709,26 +22933,358 @@ Edge_curve_17_group:
 
 
 
+
+
 ###############################################################################
-# Chapter 17 - Interfaces
+# Chapter 17 - Applied Algebra
 ###############################################################################
 
 
 test_17:
 	make test_17_1
-	make test_17_2
-	make test_17_3
-	make test_17_4
-	make test_17_5
+
 
 
 ###############################################################################
-# Section 17.1: Graphical Output
+# Section 17.1: Automorphism group of Sym(6)
+
+SECTION_MISCELLANEOUS:
+
+
+
+test_17_1:
+	make Sym_6
+	make Sym_6_classes
+	make Sym_6_Class_2A
+	make Sym_6_Class_2B
+	make Sym_6_Class_2C
+	make Sym_6_concatenate_classes
+	make Sym_6_class_2ABC_order_of_pairs
+	make Sym_6_order_of_products_change_values
+	make Sym_6_class_2ABC_make_graph_G2
+	make Sym_6_class_2ABC_make_graph_G3
+	make Sym_6_class_2ABC_subgraph_A5
+	make Sym_6_aut_group
+	make Aut_Sym_6_group
+	#make Aut_Sym_6_subgroup_lattice   # too slow
+	#make Aut_Sym_6_subgroup_lattice_load_and_draw
+
+
+
+
+
+
+
+Sym_6:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_6_report.tex
+	$(OPEN) Sym_6_report.pdf
+
+
+Sym_6_classes:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(MAGMA_PATH)magma Sym_6_classes.magma
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	pdflatex Sym_6_classes_out.tex
+	$(OPEN) Sym_6_classes_out.pdf
+
+
+#of order 2 and with 0 fixed points. 1,0,3,2,5,4
+#of order 2 and with 2 fixed points. 1,0,3,2,4,5
+#of order 2 and with 4 fixed points. 1,0,2,3,4,5
+
+
+Sym_6_Class_2A:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2A" $(SYM_6_CLASS_2A_REP) \
+		-end
+
+# writes the file Sym_6_class_of_2A.csv
+# which contains 15 elements in coded (data) form.
+# The coding of one element consists of 6 integers
+
+
+Sym_6_Class_2B:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2B" $(SYM_6_CLASS_2B_REP) \
+		-end
+
+
+# writes the file Sym_6_class_of_2B.csv
+# which contains 45 elements in coded (data) form.
+# The coding of one element consists of 6 integers
+
+
+Sym_6_Class_2C:
+	$(ORBITER) -v 9 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-conjugacy_class_of "2C" $(SYM_6_CLASS_2C_REP) \
+		-end
+
+# writes the file Sym_6_class_of_2C.csv.csv
+# which contains 15 elements in coded (data) form.
+# The coding of one element consists of 6 integers
+
+
+
+
+
+
+Sym_6_concatenate_classes:
+	$(ORBITER) -v 3 \
+		-csv_file_concatenate Sym_6_class_2ABC.csv 3 \
+			$(FILE_NAME_SYM_6_CLASS_2A) \
+			$(FILE_NAME_SYM_6_CLASS_2B) \
+			$(FILE_NAME_SYM_6_CLASS_2C)
+
+
+#Sym_6_class_2ABC.csv
+# 75 = 15+45+15 rows 
+
+Sym_6_class_2ABC_order_of_pairs:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define Sym_6_class_2ABC -vector \
+			-file_column Sym_6_class_2ABC.csv "elements" \
+		-end \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-element_processing \
+				-input Sym_6_class_2ABC \
+				-order_of_products_of_pairs \
+			-end \
+		-end
+
+
+#Sym_6_class_2ABC_order_of_products_of_pairs.csv
+
+Sym_6_order_of_products_change_values:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			Sym_6_class_2ABC_order_of_products_of_pairs.csv \
+			Sym_6_class_2ABC_order_3.csv \
+			1,2,3,4,5,6 \
+			0,0,1,0,0,0
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			Sym_6_class_2ABC_order_of_products_of_pairs.csv \
+			Sym_6_class_2ABC_order_2.csv \
+			1,2,3,4,5,6 \
+			0,1,0,0,0,0
+
+#Sym_6_class_2ABC_order_2.csv
+#Sym_6_class_2ABC_order_3.csv
+
+Sym_6_class_2ABC_make_graph_G2:
+	$(ORBITER) -v 3 \
+		-define G -graph \
+			-load_adjacency_matrix_from_csv_and_select_value \
+			Sym_6_class_2ABC_order_2.csv 1 \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -eigenvalues \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	pdflatex File_Sym_6_class_2ABC_order_2_report.tex
+	$(OPEN) File_Sym_6_class_2ABC_order_2_report.pdf
+
+# ago = 1440
+# degree = 75
+
+
+Sym_6_class_2ABC_make_graph_G3:
+	$(ORBITER) -v 3 \
+		-define G -graph \
+			-load_adjacency_matrix_from_csv_and_select_value \
+			Sym_6_class_2ABC_order_3.csv 1 \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -eigenvalues \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	pdflatex File_Sym_6_class_2ABC_order_3_report.tex
+	$(OPEN) File_Sym_6_class_2ABC_order_3_report.pdf
+
+#ago=3762339840000
+
+
+
+Sym_6_class_2ABC_subgraph_A5:
+	$(ORBITER) -v 3 \
+		-define G2 -graph \
+			-load_adjacency_matrix_from_csv_and_select_value \
+			Sym_6_class_2ABC_order_2.csv 1 \
+		-end \
+		-define G3 -graph \
+			-load_adjacency_matrix_from_csv_and_select_value \
+			Sym_6_class_2ABC_order_3.csv 1 \
+		-end \
+		-with G2 -and G3 -do \
+			-graph_theoretic_activity -find_subgraph "A5" \
+		-end \
+
+#File_Sym_6_class_2ABC_order_2_all_A5.csv
+#1440 solutions
+
+
+
+Sym_6_aut_group:
+	$(ORBITER) -v 3 \
+		-define elements_of_order2 -vector \
+			-file_column Sym_6_class_2ABC.csv "elements" \
+		-end \
+		-define images -vector -file_column \
+			File_Sym_6_class_2ABC_order_2_all_A5.csv "C0" \
+		-end \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-define elements_of_order2_ge -vector_ge \
+			-action G \
+			-vector_data elements_of_order2 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-group_of_automorphisms_by_images_of_generators \
+			sym_6_aut_group \
+			elements_of_order2_ge \
+			images \
+		-end
+
+
+
+
+
+Aut_Sym_6_group:
+	$(ORBITER) -v 3 \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex AutSym6_report.tex
+	open AutSym6_report.pdf
+
+
+Aut_Sym_6_subgroup_lattice:
+	$(ORBITER) -v 3 \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice \
+		-end
+
+# 457 zuppos
+#AutSym6_subgroup_lattice.csv
+
+Aut_Sym_6_subgroup_lattice_load_and_draw:
+	$(ORBITER) -v 3 \
+		-draw_options -embedded \
+			-line_width 0.5 \
+		-end \
+		-define gens -vector -dense $(AUT_SYM_6_GENS) -end \
+		-define G -permutation_group \
+			-bsgs AutSym6 "{\rm AutSym}(6)" \
+			$(AUT_SYM_6_DEGREE) \
+			$(AUT_SYM_6_GROUP_ORDER) \
+			$(AUT_SYM_6_BASE) \
+			$(AUT_SYM_6_NB_GENS) \
+			gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_load AutSym6_subgroup_lattice.csv \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_draw_by_orbits \
+		-end
+	#pdflatex AutSym6_drawing.tex
+	#open AutSym6_drawing.pdf
+	pdflatex AutSym6_drawing_by_orbits.tex
+	open AutSym6_drawing_by_orbits.pdf
+
+
+
+
+
+
+
+
+
+###############################################################################
+# Chapter 18 - Interfaces
+###############################################################################
+
+
+test_18:
+	make test_18_1
+	make test_18_2
+	make test_18_3
+	make test_18_4
+	make test_18_5
+
+
+###############################################################################
+# Section 18.1: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 
 
-test_17_1:
+test_18_1:
 	make PGL_6_2_Wedge_4_2_detached_report.tex
 	make schreier_tree_graphical_output
 	make Queens_graph_again
@@ -22790,12 +23346,12 @@ Queens_graph_again:
 
 
 ###############################################################################
-# Section 17.2: The Povray Interface
+# Section 18.2: The Povray Interface
 
 
 SECTION_POVRAY:
 
-test_17_2:
+test_18_2:
 	make cube
 	make math261_test
 	make plane1
@@ -23277,12 +23833,12 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Section 17.3: Creating Animations
+# Section 18.3: Creating Animations
 
 SECTION_ANIMATIONS:
 
 
-test_17_3:
+test_18_3:
 	make dode
 	make dode_video
 	make monkey_video
@@ -23723,7 +24279,7 @@ McKean_video:
 
 
 ###############################################################################
-# Section 17.4: Continuous Function Plotter
+# Section 18.4: Continuous Function Plotter
 
 
 
@@ -23731,7 +24287,7 @@ SECTION_CONTINUOUS_FUNCTION_PLOTTER:
 
 
 
-test_17_4:
+test_18_4:
 	make lissajous
 	make lissajous_plot
 	make lissajous_3d
@@ -23878,22 +24434,22 @@ gnuplot_Eulerfunction_50:
 
 
 ###############################################################################
-# Chapter 18 - Mathematical Data in Orbiter
+# Chapter 19 - Mathematical Data in Orbiter
 ###############################################################################
 
 
-test_18:
-	make test_18_1
-	make test_18_2
+test_19:
+	make test_19_1
+	make test_19_2
 
 
 ###############################################################################
-# Section 18.1: Mathematical Data on Cubic Surfaces
+# Section 19.1: Mathematical Data on Cubic Surfaces
 
 SECTION_MATHEMATICAL_DATA:
 
 
-test_18_1:
+test_19_1:
 	make make_table_of_surfaces
 	make make_table_of_quartic_curves
 	make cubic_surfaces_table_q17
@@ -23942,12 +24498,12 @@ quartic_curves_table_q17:
 
 
 ###############################################################################
-# Section 18.2: Mathematical Data on BLT-Sets
+# Section 19.2: Mathematical Data on BLT-Sets
 
 SECTION_MATHEMATICAL_DATA:
 
 
-test_18_2:
+test_19_2:
 	make blt_set_table_q7
 	make blt_set_table_q9
 	make blt_set_table_q13
@@ -24025,24 +24581,24 @@ blt_set_export_gap:
 
 
 ###############################################################################
-# Chapter 19 - Miscellaneous
+# Chapter 20 - Miscellaneous
 ###############################################################################
 
 
-test_19:
-	make test_19_1
-	make test_19_2
+test_20:
+	make test_20_1
+	make test_20_2
 
 
 
 ###############################################################################
-# Section 19.1: Miscellaneous
+# Section 20.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
 
 
-test_19_1:
+test_20_1:
 	make misc_select
 	make misc_join
 	make table_mod_12
@@ -24084,11 +24640,11 @@ table_mod_12:
 
 
 ###############################################################################
-# Section 19.2: Limitations
+# Section 20.2: Limitations
 
 SECTION_LIMITATIONS:
 
-test_19_2:
+test_20_2:
 	make F_15bit
 	make F_31bit
 	#make F_32bit
@@ -24148,6 +24704,11 @@ F_64bit:
 
 
 ####
+
+
+
+
+
 
 
 # unclassified:

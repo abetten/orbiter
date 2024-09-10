@@ -2560,7 +2560,9 @@ void longinteger_domain::check_for_lint_overflow(
 	}
 
 	if (sizeof(long int) == 4) {
-		cout << "longinteger_domain::check_for_lint_overflow sizeof(long int) == 4" << endl;
+		if (f_v) {
+			cout << "longinteger_domain::check_for_lint_overflow sizeof(long int) == 4" << endl;
+		}
 
 		ring_theory::longinteger_object b;
 
@@ -2578,7 +2580,9 @@ void longinteger_domain::check_for_lint_overflow(
 
 	}
 	else if (sizeof(long int) == 8) {
-		cout << "longinteger_domain::check_for_lint_overflow sizeof(int) == 8" << endl;
+		if (f_v) {
+			cout << "longinteger_domain::check_for_lint_overflow sizeof(long int) == 8" << endl;
+		}
 
 		ring_theory::longinteger_object b;
 

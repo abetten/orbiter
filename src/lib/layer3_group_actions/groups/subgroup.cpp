@@ -144,6 +144,7 @@ void subgroup::report(
 }
 
 uint32_t subgroup::compute_hash()
+// performs a sort of the group elements before hashing
 {
 	uint32_t hash;
 	data_structures::sorting Sorting;
@@ -153,6 +154,17 @@ uint32_t subgroup::compute_hash()
 	hash = Data.int_vec_hash(Elements, group_order);
 	return hash;
 
+}
+
+int subgroup::is_subgroup_of(
+		subgroup *Subgroup2)
+{
+	data_structures::sorting Sorting;
+	int ret;
+
+	ret = Sorting.int_vec_is_subset_of(
+			Elements, group_order, Subgroup2->Elements, Subgroup2->group_order);
+	return ret;
 }
 
 

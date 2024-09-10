@@ -346,7 +346,7 @@ void surface_object_with_group::init_with_surface_object(
 		cout << "surface_object_with_group::init_with_surface_object "
 				"before compute_projectivity_group" << endl;
 	}
-	compute_projectivity_group(verbose_level - 2);
+	compute_projectivity_group(verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_group::init_with_surface_object "
 				"after compute_projectivity_group" << endl;
@@ -459,6 +459,18 @@ void surface_object_with_group::compute_projectivity_group(
 	if (f_v) {
 		cout << "surface_object_with_group::compute_projectivity_group "
 				"after Surf_A->A->compute_projectivity_subgroup" << endl;
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::compute_projectivity_group "
+				"computing order of projectivity_group " << endl;
+
+		ring_theory::longinteger_object go;
+
+		projectivity_group_gens->group_order(go);
+
+		cout << "surface_object_with_group::compute_projectivity_group "
+				"projectivity_group has order " << go << endl;
+
 	}
 
 

@@ -1065,6 +1065,18 @@ void int_vec::matrix_print(
 	matrix_print(p, m, n, w);
 }
 
+void int_vec::matrix_print_comma_separated(
+		int *p, int m, int n)
+{
+	int w;
+
+	w = matrix_max_log_of_entries(p, m, n);
+	matrix_print_comma_separated(p, m, n, w);
+}
+
+
+
+
 void int_vec::matrix_print_tight(
 		int *p, int m, int n)
 {
@@ -1122,6 +1134,38 @@ void int_vec::matrix_print(
 			}
 		}
 		cout << endl;
+	}
+}
+
+void int_vec::matrix_print_comma_separated(
+		int *p, int m, int n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			cout << setw((int) w) << p[i * n + j] << ",";
+			if (w) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
+}
+
+void int_vec::matrix_print_nonzero_entries(
+		int *p, int m, int n)
+{
+	int i, j, a;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			if (a == 0) {
+				continue;
+			}
+			cout << "entry " << i << ", " << j << " is " << a << endl;
+		}
 	}
 }
 

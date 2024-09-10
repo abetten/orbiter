@@ -38,12 +38,19 @@ any_group::any_group()
 	Subgroup_sims = NULL;
 
 	Any_group_linear = NULL;
+
+	f_has_subgroup_lattice = false;
+	Subgroup_lattice = NULL;
+
 }
 
 any_group::~any_group()
 {
 	if (Any_group_linear) {
 		FREE_OBJECT(Any_group_linear);
+	}
+	if (f_has_subgroup_lattice) {
+		FREE_OBJECT(Subgroup_lattice);
 	}
 }
 
@@ -1511,7 +1518,7 @@ void any_group::element_unrank(
 
 
 void any_group::conjugacy_class_of(
-		std::string &label,
+		std::string &label_of_class,
 		std::string &elt_data,
 		int verbose_level)
 // uses orbits_schreier::orbit_of_sets
@@ -1666,7 +1673,7 @@ void any_group::conjugacy_class_of(
 
 	string fname;
 
-	fname = label + "_class_of_" + label + ".csv";
+	fname = label + "_class_of_" + label_of_class + ".csv";
 
 	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
 			fname,
@@ -1762,7 +1769,7 @@ void any_group::automorphism_by_generator_images(
 	A_rm = A->Induced_action->induced_action_by_right_multiplication(
 			false /* f_basis */, NULL /* old_G */,
 			Subgroup_sims /*Base_group*/, false /* f_ownership */,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images "
@@ -1800,7 +1807,7 @@ void any_group::automorphism_by_generator_images(
 	Orb.init(A, A_rm,
 			set, 1 /* sz */,
 			Subgroup_gens->gens,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images "
 				"Found an orbit of size " << Orb.used_length << endl;
@@ -1823,7 +1830,7 @@ void any_group::automorphism_by_generator_images(
 
 	for (h = 0; h < m; h++) {
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "any_group::automorphism_by_generator_images h=" << h << " : ";
 			Int_vec_print(cout, Images + h * n, n);
 			cout << endl;
@@ -1846,7 +1853,7 @@ void any_group::automorphism_by_generator_images(
 					path,
 					pos);
 
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "any_group::automorphism_by_generator_images in=" << in << " pos=" << pos << " path=";
 				Int_vec_stl_print(cout, path);
 				cout << endl;
@@ -1859,7 +1866,7 @@ void any_group::automorphism_by_generator_images(
 
 			for (i = 0; i < path.size(); i++) {
 				a = path[i];
-				b = nb_gens - 1 - a;
+				b = nb_gens - 1 - a; // reverse ordering because the Coxeter generators are listed in reverse
 				c = Images[h * n + b];
 
 				word[i] = c;
@@ -1912,14 +1919,16 @@ void any_group::automorphism_by_generator_images(
 		c = Combi.is_permutation(
 				perm, go);
 		if (c) {
-			cout << "any_group::automorphism_by_generator_images h = " << h << " output is a permutation" << endl;
+			if (f_vv) {
+				cout << "any_group::automorphism_by_generator_images h = " << h << " output is a permutation" << endl;
+			}
 		}
 		else {
 			cout << "any_group::automorphism_by_generator_images h = " << h << " output is not a permutation" << endl;
 			exit(1);
 		}
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "any_group::automorphism_by_generator_images h = " << h << ", perm = ";
 			Combi.perm_print_list(
 						cout, perm, go);
@@ -2023,8 +2032,12 @@ void any_group::create_latex_report_for_permutation_group(
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"before A->report" << endl;
 			}
-			A->report(ost, A->f_has_sims, A->Sims,
-					A->f_has_strong_generators, A->Strong_gens,
+			A->report(
+					ost,
+					false, // A->f_has_sims,
+					NULL, //A->Sims,
+					false, //A->f_has_strong_generators,
+					NULL, //A->Strong_gens,
 					O,
 					verbose_level);
 			if (f_v) {
@@ -2038,7 +2051,8 @@ void any_group::create_latex_report_for_permutation_group(
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"before Subgroup_gens->print_generators_in_latex_individually" << endl;
 			}
-			Subgroup_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
+			Subgroup_gens->print_generators_in_latex_individually(
+					ost, verbose_level - 1);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"after Subgroup_gens->print_generators_in_latex_individually" << endl;
@@ -2900,16 +2914,14 @@ void any_group::print_action_on_surface(
 
 }
 
-void any_group::subgroup_lattice(
+void any_group::subgroup_lattice_compute(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::subgroup_lattice" << endl;
+		cout << "any_group::subgroup_lattice_compute" << endl;
 	}
-
-	groups::subgroup_lattice * Subgroup_lattice;
 
 	Subgroup_lattice = NEW_OBJECT(groups::subgroup_lattice);
 
@@ -2918,17 +2930,17 @@ void any_group::subgroup_lattice(
 
 	SG = NEW_OBJECT(groups::strong_generators);
 	if (f_v) {
-		cout << "any_group::subgroup_lattice before init_from_sims" << endl;
+		cout << "any_group::subgroup_lattice_compute before init_from_sims" << endl;
 	}
 	SG->init_from_sims(Subgroup_sims, verbose_level);
 	if (f_v) {
-		cout << "any_group::subgroup_lattice after init_from_sims" << endl;
+		cout << "any_group::subgroup_lattice_compute after init_from_sims" << endl;
 	}
 #endif
 
 
 	if (f_v) {
-		cout << "any_group::subgroup_lattice "
+		cout << "any_group::subgroup_lattice_compute "
 				"before Subgroup_lattice->init" << endl;
 	}
 	Subgroup_lattice->init(
@@ -2938,20 +2950,489 @@ void any_group::subgroup_lattice(
 			Subgroup_gens,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "any_group::subgroup_lattice "
+		cout << "any_group::subgroup_lattice_compute "
 				"after Subgroup_lattice->init" << endl;
 	}
 
+
 	if (f_v) {
-		cout << "any_group::subgroup_lattice "
+		cout << "any_group::subgroup_lattice_compute "
+				"before Subgroup_lattice->compute" << endl;
+	}
+	Subgroup_lattice->compute(verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_compute "
+				"after Subgroup_lattice->compute" << endl;
+	}
+	std::string fname2;
+
+	fname2 = Subgroup_lattice->label_txt + "_subgroup_lattice.csv";
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_compute "
+				"before Subgroup_lattice->save_csv" << endl;
+	}
+	Subgroup_lattice->save_csv(fname2, verbose_level - 1);
+
+	//FREE_OBJECT(Subgroup_lattice);
+	f_has_subgroup_lattice = true;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_compute done" << endl;
+	}
+}
+
+void any_group::subgroup_lattice_load(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load" << endl;
+	}
+
+
+	Subgroup_lattice = NEW_OBJECT(groups::subgroup_lattice);
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->init" << endl;
+	}
+	Subgroup_lattice->init(
+			A_base, Subgroup_sims,
+			label,
+			label_tex,
+			Subgroup_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->load_csv" << endl;
+	}
+	Subgroup_lattice->load_csv(fname, verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->load_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->conjugacy_classes" << endl;
+	}
+	Subgroup_lattice->conjugacy_classes(verbose_level);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->conjugacy_classes" << endl;
+	}
+
+	std::string fname2;
+
+	fname2 = Subgroup_lattice->label_txt + "_subgroup_lattice_with_conj_classes.csv";
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->save_csv" << endl;
+	}
+	Subgroup_lattice->save_csv(fname2, verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->save_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"Subgroup_lattice:" << endl;
+		Subgroup_lattice->print();
+	}
+
+	fname2 = Subgroup_lattice->label_txt + "_subgroup_lattice_with_conj_classes_reordered.csv";
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->save_rearranged_by_orbits_csv" << endl;
+	}
+	Subgroup_lattice->save_rearranged_by_orbits_csv(
+			fname2,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->save_rearranged_by_orbits_csv" << endl;
+	}
+
+
+
+#if 0
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
 				"before Subgroup_lattice->save_csv" << endl;
 	}
 	Subgroup_lattice->save_csv(verbose_level - 1);
+#endif
 
-	FREE_OBJECT(Subgroup_lattice);
+	f_has_subgroup_lattice = true;
+	//FREE_OBJECT(Subgroup_lattice);
 
 	if (f_v) {
-		cout << "any_group::subgroup_lattice done" << endl;
+		cout << "any_group::subgroup_lattice_load done" << endl;
+	}
+}
+
+void any_group::subgroup_lattice_draw(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_draw subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	graph_theory::layered_graph *LG;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw "
+				"before Subgroup_lattice->create_drawing" << endl;
+	}
+	Subgroup_lattice->create_drawing(
+			LG,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw "
+				"after Subgroup_lattice->create_drawing" << endl;
+	}
+
+
+	graphics::layered_graph_draw_options *LG_Draw_options;
+
+	LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
+
+
+	std::string fname_base, fname_layered_graph;
+
+	fname_base = Subgroup_lattice->label_txt + "_drawing";
+	fname_layered_graph = fname_base + ".layered_graph";
+
+	LG->write_file(fname_layered_graph, verbose_level);
+	LG->draw_with_options(
+			fname_base, LG_Draw_options,
+			verbose_level);
+
+
+	FREE_OBJECT(LG);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw done" << endl;
+	}
+}
+
+
+
+void any_group::subgroup_lattice_draw_by_orbits(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw_by_orbits" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_draw_by_orbits subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	graph_theory::layered_graph *LG;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw_by_orbits "
+				"before Subgroup_lattice->create_drawing_by_orbits" << endl;
+	}
+	Subgroup_lattice->create_drawing_by_orbits(
+			LG,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw_by_orbits "
+				"after Subgroup_lattice->create_drawing_by_orbits" << endl;
+	}
+
+
+	graphics::layered_graph_draw_options *LG_Draw_options;
+
+	LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
+
+
+	std::string fname_base, fname_layered_graph;
+
+	fname_base = Subgroup_lattice->label_txt + "_drawing_by_orbits";
+	fname_layered_graph = fname_base + ".layered_graph";
+
+	LG->write_file(fname_layered_graph, verbose_level);
+	LG->draw_with_options(
+			fname_base, LG_Draw_options,
+			verbose_level);
+
+
+	FREE_OBJECT(LG);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_draw_by_orbits done" << endl;
+	}
+}
+
+
+void any_group::subgroup_lattice_intersection_orbit_orbit(
+		int orbit1, int orbit2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	int *intersection_matrix;
+	int len1, len2;
+	// intersection_matrix[len1 * len2]
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit "
+				"before Subgroup_lattice->intersection_orbit_orbit" << endl;
+	}
+	Subgroup_lattice->intersection_orbit_orbit(
+			orbit1, orbit2,
+			intersection_matrix,
+			len1, len2,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit "
+				"after Subgroup_lattice->intersection_orbit_orbit" << endl;
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice_intersection_orbit_orbit intersection_matrix=" << endl;
+		Int_matrix_print(intersection_matrix, len1, len2);
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit done" << endl;
+	}
+}
+
+
+void any_group::subgroup_lattice_find_overgroup_in_orbit(
+		int orbit_global1, int group1, int orbit_global2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	int layer1, orb_local1;
+	int layer2, orb_local2, group2;
+
+	Subgroup_lattice->orb_global_to_orb_local(
+			orbit_global1, layer1, orb_local1,
+			verbose_level - 2);
+	Subgroup_lattice->orb_global_to_orb_local(
+			orbit_global2, layer2, orb_local2,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"orbit_global1 = " << orbit_global1 << " = (" << layer1 << "," << orb_local1 << ")" << endl;
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"orbit_global2 = " << orbit_global2 << " = (" << layer2 << "," << orb_local2 << ")" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"before Subgroup_lattice->find_overgroup_in_orbit" << endl;
+	}
+	Subgroup_lattice->find_overgroup_in_orbit(
+			layer1, orb_local1, group1,
+			layer2, orb_local2, group2,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"after Subgroup_lattice->find_overgroup_in_orbit" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit "
+				"group2=" << group2 << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_find_overgroup_in_orbit done" << endl;
+	}
+}
+
+
+void any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition(
+		int P_orbit_global,
+		int Q_orbit_global,
+		int R_orbit_global,
+		int R_group,
+		int intersection_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	int P_layer, P_orb_local;
+	int Q_layer, Q_orb_local;
+	int R_layer, R_orb_local;
+
+	Subgroup_lattice->orb_global_to_orb_local(
+			P_orbit_global, P_layer, P_orb_local,
+			verbose_level - 2);
+	Subgroup_lattice->orb_global_to_orb_local(
+			Q_orbit_global, Q_layer, Q_orb_local,
+			verbose_level - 2);
+	Subgroup_lattice->orb_global_to_orb_local(
+			R_orbit_global, R_layer, R_orb_local,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"P_orbit_global = " << P_orbit_global << " = (" << P_layer << "," << P_orb_local << ")" << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"Q_orbit_global = " << Q_orbit_global << " = (" << Q_layer << "," << Q_orb_local << ")" << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"R_orbit_global = " << R_orbit_global << " = (" << R_layer << "," << R_orb_local << ")" << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"R_group = " << R_group << endl;
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"intersection_size = " << intersection_size << endl;
+	}
+
+	int *intersection_matrix;
+	int nb_r, nb_c;
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"before Subgroup_lattice->create_flag_transitive_geometry_with_partition" << endl;
+	}
+
+	Subgroup_lattice->create_flag_transitive_geometry_with_partition(
+			P_layer, P_orb_local,
+			Q_layer, Q_orb_local,
+			R_layer, R_orb_local, R_group,
+			intersection_size,
+			intersection_matrix,
+			nb_r, nb_c,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition "
+				"after Subgroup_lattice->create_flag_transitive_geometry_with_partition" << endl;
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice_intersection_orbit_orbit intersection_matrix=" << endl;
+		Int_matrix_print_comma_separated(intersection_matrix, nb_r, nb_c);
+	}
+
+	int *intersection_matrix_t;
+	int i, j;
+
+	intersection_matrix_t = NEW_int(nb_c * nb_r);
+	for (i = 0; i < nb_c; i++) {
+		for (j = 0; j < nb_r; j++) {
+			intersection_matrix_t[i * nb_r + j] = intersection_matrix[j * nb_c + i];
+		}
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice_intersection_orbit_orbit intersection_matrix transposed=" << endl;
+		Int_matrix_print_comma_separated(intersection_matrix_t, nb_c, nb_r);
+	}
+
+	FREE_int(intersection_matrix);
+	FREE_int(intersection_matrix_t);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition done" << endl;
+	}
+}
+
+void any_group::subgroup_lattice_identify_subgroup(
+		std::string &group_label,
+		int &go, int &layer_idx, int &orb_idx, int &group_idx,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_identify_subgroup" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_identify_subgroup "
+				"subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+	any_group *Subgroup;
+
+	groups::strong_generators *Subgroup_strong_gens;
+
+	Subgroup = Get_any_group(group_label);
+
+	Subgroup_strong_gens = Subgroup->Subgroup_gens;
+
+	Subgroup_lattice->identify_subgroup(
+			Subgroup_strong_gens,
+			go, layer_idx, orb_idx, group_idx,
+			verbose_level);
+
+	if (f_v) {
+		cout << "subgroup_lattice::identify_subgroup "
+				"found subgroup of order " << go << " in layer " << layer_idx
+				<< " in orbit " << orb_idx << " at position " << group_idx << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_identify_subgroup done" << endl;
 	}
 }
 

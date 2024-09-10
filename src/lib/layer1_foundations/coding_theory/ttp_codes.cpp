@@ -1922,7 +1922,8 @@ void ttp_codes::test_representation(
 	FREE_int(perm4);
 }
 
-void ttp_codes::multiply_abcd(field_theory::finite_field &F,
+void ttp_codes::multiply_abcd(
+		field_theory::finite_field &F,
 	int a1, int b1, int c1, int d1,
 	int a2, int b2, int c2, int d2,
 	int &a3, int &b3, int &c3, int &d3)

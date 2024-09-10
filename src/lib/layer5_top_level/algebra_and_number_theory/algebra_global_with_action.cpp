@@ -3974,7 +3974,206 @@ void algebra_global_with_action::do_character_table_symmetric_group(
 	}
 }
 
+void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
+		data_structures_groups::vector_ge *Elements_ge,
+		int *Images, int m, int n,
+		any_group *AG,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators" << endl;
+	}
+
+	int *Perms;
+	long int go;
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"before AG->automorphism_by_generator_images" << endl;
+	}
+
+	AG->automorphism_by_generator_images(
+			label,
+			Elements_ge,
+			Images, m, n,
+			Perms, go,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"after AG->automorphism_by_generator_images" << endl;
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"we found " << m << " permutations of degree " << go << endl;
+	}
+
+	actions::action *A_perm;
+
+	A_perm = NEW_OBJECT(actions::action);
+
+
+	ring_theory::longinteger_object target_go;
+	int f_target_go = true;
+
+	target_go.create(m);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"before A_perm->Known_groups->init_permutation_group" << endl;
+	}
+	A_perm->Known_groups->init_permutation_group(
+			go /* degree */, false /* f_no_base */, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"after A_perm->Known_groups->init_permutation_group" << endl;
+	}
+
+	data_structures_groups::vector_ge *gens;
+
+	gens = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"before gens->init_from_data" << endl;
+	}
+	gens->init_from_data(A_perm, Perms,
+			m /*nb_elements*/, A_perm->make_element_size,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"after gens->init_from_data" << endl;
+	}
+
+
+
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+	}
+	A_perm->Known_groups->init_permutation_group_from_generators(
+			go /* degree */,
+		true /* f_target_go */, target_go,
+		m /* nb_gens */, Perms,
+		0 /* given_base_length */, NULL /* long int *given_base */,
+		false /* f_given_base */,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"create_automorphism_group_of_incidence_structure: created action ";
+		A_perm->print_info();
+		cout << endl;
+	}
+#endif
+
+	groups::sims *Sims;
+
+	{
+		groups::schreier_sims *ss;
+
+		ss = NEW_OBJECT(groups::schreier_sims);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"before ss->init" << endl;
+		}
+		ss->init(A_perm, verbose_level - 1);
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"after ss->init" << endl;
+		}
+
+		//ss->interested_in_kernel(A_subaction, verbose_level - 1);
+
+		if (f_target_go) {
+			if (f_v) {
+				cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+						"before ss->init_target_group_order" << endl;
+			}
+			ss->init_target_group_order(target_go, verbose_level - 1);
+			if (f_v) {
+				cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+						"after ss->init_target_group_order" << endl;
+			}
+		}
+
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"before ss->init_generators" << endl;
+		}
+		ss->init_generators(gens, verbose_level - 2);
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"after ss->init_generators" << endl;
+		}
+
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"before ss->create_group" << endl;
+		}
+		ss->create_group(verbose_level - 2);
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"after ss->create_group" << endl;
+		}
+		Sims = ss->G;
+		ss->G = NULL;
+		//*this = *ss->G;
+
+		//ss->G->null();
+
+		//cout << "create_sims_from_generators_randomized
+		// before FREE_OBJECT ss" << endl;
+		FREE_OBJECT(ss);
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"transversal lengths:" << endl;
+		Sims->print_transversal_lengths();
+	}
+
+	groups::strong_generators *Strong_gens;
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+	Strong_gens->init_from_sims(Sims, verbose_level - 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"Strong_gens:" << endl;
+		Strong_gens->print_generators_for_make_element(cout);
+
+		std::string fname;
+
+
+		fname = label + ".gap";
+
+		{
+			ofstream ost(fname);
+
+			Strong_gens->print_generators_gap(
+					ost, verbose_level);
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+					"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+	}
+
+}
 
 }}}
 

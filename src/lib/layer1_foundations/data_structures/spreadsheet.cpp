@@ -1668,6 +1668,9 @@ void spreadsheet::stringify(
 		std::string *&Header_rows, std::string *&Header_cols, std::string *&T,
 		int &nb_r, int &nb_c,
 		int verbose_level)
+// Header_rows[nb_r]
+// Header_cols[nb_c]
+// T[nb_r * nb_c]
 {
 	int f_v = (verbose_level >= 1);
 

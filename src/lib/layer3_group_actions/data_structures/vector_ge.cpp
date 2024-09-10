@@ -226,10 +226,10 @@ void vector_ge::init_from_data(
 		exit(1);
 	}
 	Elt = NEW_int(A->elt_size_in_int);
-	init(A, verbose_level);
-	allocate(nb_elements, verbose_level);
+	init(A, verbose_level - 2);
+	allocate(nb_elements, verbose_level - 2);
 	for (i = 0; i < nb_elements; i++) {
-		A->Group_element->make_element(Elt, data + i * elt_size, verbose_level);
+		A->Group_element->make_element(Elt, data + i * elt_size, 0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
@@ -1101,6 +1101,40 @@ void vector_ge::extract_subset_of_elements_by_rank(
 		cout << "vector_ge::extract_subset_of_elements_by_rank done" << endl;
 	}
 }
+
+void vector_ge::compute_rank_vector(
+		long int *&rank_vector, groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i;
+	int *Elt;
+
+	if (f_v) {
+		cout << "vector_ge::compute_rank_vector" << endl;
+	}
+
+	rank_vector = NEW_lint(len);
+	Elt = NEW_int(A->elt_size_in_int);
+	for (i = 0; i < len; i++) {
+
+		A->Group_element->element_move(ith(i), Elt, 0);
+
+		rank_vector[i] = Sims->element_rank_lint(Elt);
+
+		if (f_v) {
+			cout << "vector_ge::compute_rank_vector "
+					"element " << i << " / " << len << " has rank " << rank_vector[i] << endl;
+			A->Group_element->element_print_quick(Elt, cout);
+		}
+	}
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "vector_ge::compute_rank_vector done" << endl;
+	}
+}
+
+
 
 int vector_ge::test_if_all_elements_stabilize_a_point(
 		actions::action *A2, int pt)

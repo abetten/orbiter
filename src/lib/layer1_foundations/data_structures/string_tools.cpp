@@ -2064,6 +2064,19 @@ void string_tools::parse_RHS_command(
 
 }
 
+int string_tools::find_string_in_array(
+		std::string *String_array, int nb_strings,
+		std::string &str_to_find, int &pos)
+{
+	cout << "string_tools::find_string_in_array str_to_find=" << str_to_find << endl;
+	for (pos = 0; pos < nb_strings; pos++) {
+		if (compare_string_string(String_array[pos], str_to_find) == 0) {
+			return true;
+		}
+	}
+	return false;
+
+}
 //#############################################################################
 
 

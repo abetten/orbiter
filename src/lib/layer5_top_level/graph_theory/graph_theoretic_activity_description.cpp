@@ -60,6 +60,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 	f_save = false;
 
+	f_automorphism_group_colored_graph = false;
 	f_automorphism_group = false;
 
 	f_properties = false;
@@ -186,6 +187,12 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-save " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-automorphism_group_colored_graph") == 0) {
+			f_automorphism_group_colored_graph = true;
+			if (f_v) {
+				cout << "-automorphism_group_colored_graph " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-automorphism_group") == 0) {
 			f_automorphism_group = true;
 			if (f_v) {
@@ -276,6 +283,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_save) {
 		cout << "-save " << endl;
+	}
+	if (f_automorphism_group_colored_graph) {
+		cout << "-automorphism_group_colored_graph " << endl;
 	}
 	if (f_automorphism_group) {
 		cout << "-automorphism_group " << endl;

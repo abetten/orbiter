@@ -219,6 +219,44 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 	return A;
 }
 
+
+actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors(
+		graph_theory::colored_graph *CG,
+		int verbose_level)
+// called from
+// graph_theory_apps::automorphism_group
+{
+	int f_v = (verbose_level >= 1);
+	actions::action *A;
+
+	if (f_v) {
+		cout << "nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors "
+				"before create_automorphism_group_of_graph_bitvec" << endl;
+	}
+
+	A = create_automorphism_group_of_graph_bitvec(
+		CG->nb_points,
+		CG->Bitvec,
+		verbose_level);
+
+	if (f_v) {
+		cout << "nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors "
+				"after create_automorphism_group_of_graph_bitvec" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors done" << endl;
+	}
+	return A;
+}
+
+
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec(
 	int n,
 	data_structures::bitvector *Bitvec,
@@ -308,13 +346,15 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 					"partition_and_labeling "
 					"before nauty_interface_graph_bitvec" << endl;
 		}
-		Nau.nauty_interface_graph_bitvec(n, Bitvec,
+		Nau.nauty_interface_graph_bitvec(
+				n, Bitvec,
 			partitions,
 			NO,
 			verbose_level);
 	}
 	else {
-		Nau.nauty_interface_graph_int(n, Adj,
+		Nau.nauty_interface_graph_int(
+				n, Adj,
 			partitions,
 			NO,
 			verbose_level);

@@ -1997,6 +1997,69 @@ long int sims::conjugate_by_rank_b_bv_given(
 	return rk_c;
 }
 
+void sims::conjugate_numerical_set(
+		int *input_set, int set_sz,
+		int *Elt, int *output_set,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::conjugate_numerical_set" << endl;
+	}
+	data_structures::sorting Sorting;
+	int *Eltv;
+
+
+	Eltv = NEW_int(A->elt_size_in_int);
+
+	if (f_v) {
+		cout << "sims::conjugate_numerical_set "
+				"before element_invert" << endl;
+	}
+	A->Group_element->element_invert(Elt, Eltv, verbose_level - 1);
+	if (f_v) {
+		cout << "sims::conjugate_numerical_set "
+				"after element_invert" << endl;
+	}
+
+	int j;
+	long int s, t, b;
+
+	for (j = 0; j < set_sz; j++) {
+		if (f_vv) {
+			cout << "sims::conjugate_numerical_set "
+					"j = " << j << " / " << set_sz << endl;
+		}
+		s = input_set[j];
+
+		if (f_vv) {
+			cout << "sims::conjugate_numerical_set "
+					"j = " << j << " / " << set_sz
+					<< " before S->conjugate_by_rank_b_bv_given" << endl;
+		}
+
+		t = conjugate_by_rank_b_bv_given(s, Elt, Eltv,
+				0 /* verbose_level */);
+
+		if (f_vv) {
+			cout << "sims::conjugate_numerical_set "
+					<< s << " -> " << t << endl;
+		}
+		output_set[j] = t;
+	}
+
+
+	Sorting.int_vec_heapsort(output_set, set_sz);
+
+	FREE_int(Eltv);
+
+	if (f_v) {
+		cout << "sims::conjugate_numerical_set done" << endl;
+	}
+}
+
 #if 0
 int sims::identify_group(char *path_t144,
 		char *discreta_home, int verbose_level)
@@ -2188,6 +2251,79 @@ void sims::dimino(
 		cout << "sims::dimino done" << endl;
 	}
 }
+
+
+void sims::dimino_with_multiple_generators(
+	int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
+	int *cosets, int &nb_cosets,
+	int *new_gens, int nb_new_gens,
+	int *group, int &group_sz,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, c, idx, new_coset_rep;
+	data_structures::sorting Sorting;
+
+	if (f_v) {
+		cout << "sims::dimino_with_multiple_generators "
+				"nb_new_gens = " << nb_new_gens << endl;
+	}
+
+	Int_vec_copy(subgroup, group, subgroup_sz);
+	Sorting.int_vec_heapsort(group, subgroup_sz);
+	group_sz = subgroup_sz;
+
+	cosets[0] = 0;
+	nb_cosets = 1;
+
+	for (i = 0; i < nb_new_gens; i++) {
+		gens[nb_gens++] = new_gens[i];
+	}
+
+	for (i = 0; i < nb_cosets; i++) {
+		for (j = 0; j < nb_gens; j++) {
+			if (f_vv) {
+				cout << "sims::dimino_with_multiple_generators coset rep " << i << " = " << cosets[i] << endl;
+				cout << "sims::dimino_with_multiple_generators generator " << j << " = " << gens[j] << endl;
+			}
+
+			c = mult_by_rank(cosets[i], gens[j]);
+			if (f_vv) {
+				cout << "sims::dimino_with_multiple_generators coset rep " << i << " times generator "
+						<< j << " is " << c << endl;
+			}
+			if (Sorting.int_vec_search(group, group_sz, c, idx)) {
+				if (f_vv) {
+					cout << "sims::dimino_with_multiple_generators already there" << endl;
+				}
+				continue;
+			}
+			if (f_vv) {
+				cout << "sims::dimino_with_multiple_generators new coset rep" << endl;
+			}
+			new_coset_rep = c;
+
+			for (k = 0; k < subgroup_sz; k++) {
+				c = mult_by_rank(subgroup[k], new_coset_rep);
+				group[group_sz++] = c;
+			}
+			Sorting.int_vec_heapsort(group, group_sz);
+			if (f_vv) {
+				cout << "sims::dimino_with_multiple_generators new group size = " << group_sz << endl;
+			}
+			cosets[nb_cosets++] = new_coset_rep;
+		}
+	}
+	if (f_vv) {
+		cout << "sims::dimino_with_multiple_generators, the group order has been updated to " << group_sz << endl;
+	}
+
+	if (f_v) {
+		cout << "sims::dimino_with_multiple_generators done" << endl;
+	}
+}
+
 
 void sims::Cayley_graph(
 		int *&Adj, int &sz,

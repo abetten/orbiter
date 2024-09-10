@@ -959,6 +959,8 @@ int action::is_semilinear_matrix_group()
 	}
 }
 
+
+
 int action::is_projective()
 {
 	if (!is_matrix_group()) {

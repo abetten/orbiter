@@ -665,6 +665,8 @@ public:
 			std::ostream &ost, int *p, int m, int n);
 	void matrix_print(
 			int *p, int m, int n);
+	void matrix_print_comma_separated(
+			int *p, int m, int n);
 	void matrix_print_tight(
 			int *p, int m, int n);
 	void matrix_print_ost(
@@ -673,6 +675,10 @@ public:
 			std::ostream &ost, int *p, int m, int n, int w);
 	void matrix_print(
 			int *p, int m, int n, int w);
+	void matrix_print_comma_separated(
+			int *p, int m, int n, int w);
+	void matrix_print_nonzero_entries(
+			int *p, int m, int n);
 	void matrix_print_bitwise(
 			int *p, int m, int n);
 	void distribution_print(
@@ -796,6 +802,8 @@ public:
 	void matrix_print_width(
 			std::ostream &ost,
 		long int *p, int m, int n, int dim_n, int w);
+	void matrix_print_nonzero_entries(
+			long int *p, int m, int n);
 	void set_print(
 			long int *v, int len);
 	void set_print(
@@ -2034,6 +2042,9 @@ public:
 			std::string &command,
 			int &mult, diophant_equation_type &type,
 			int &data1, int &data2, int verbose_level);
+	int find_string_in_array(
+			std::string *String_array, int nb_strings,
+			std::string &str_to_find, int &pos);
 
 
 };

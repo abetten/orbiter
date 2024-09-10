@@ -2402,6 +2402,11 @@ void graph_theory_domain::find_subgraph_An(
 		int nb, colored_graph **CG,
 		std::vector<std::vector<int> > &Solutions,
 		int verbose_level)
+// CG[2], with
+// GC[0] = graph of pairs whose product has order 2,
+// GC[1] = graph of pairs whose product has order 3.
+// Solutions is all possible ways to assign group elements
+// to the nodes of the A_n Dynkin diagram (n nodes forming a path).
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2437,7 +2442,7 @@ void graph_theory_domain::find_subgraph_An(
 			Candidates,
 			Solutions,
 			current_depth, subgraph,
-			verbose_level);
+			verbose_level - 2);
 
 	FREE_int(subgraph);
 	if (f_v) {
@@ -2458,18 +2463,25 @@ void graph_theory_domain::find_subgraph_An_recursion(
 		std::vector<std::vector<int> > &Solutions,
 		int current_depth, int *subgraph,
 		int verbose_level)
+// CG[2], with
+// GC[0] = graph of pairs whose product has order 2,
+// GC[1] = graph of pairs whose product has order 3.
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "graph_theory_domain::find_subgraph_An_recursion" << endl;
-		cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << endl;
-		cout << "graph_theory_domain::find_subgraph_An_recursion Candidates.size() = " << Candidates.size() << endl;
+		cout << "graph_theory_domain::find_subgraph_An_recursion "
+				"current_depth=" << current_depth << endl;
+		cout << "graph_theory_domain::find_subgraph_An_recursion "
+				"Candidates.size() = " << Candidates.size() << endl;
 	}
 
 	if (current_depth == n) {
 		if (f_v) {
-			cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			cout << "graph_theory_domain::find_subgraph_An_recursion "
+					"current_depth=" << current_depth << " : subgraph = ";
 			Int_vec_print(cout, subgraph, current_depth);
 			cout << " is solution " << Solutions.size() << endl;
 
@@ -2497,18 +2509,21 @@ void graph_theory_domain::find_subgraph_An_recursion(
 		for (b = 0; b < CG[0]->nb_points; b++) {
 
 			f_fail = false;
-			if (f_v) {
-				cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			if (f_vv) {
+				cout << "graph_theory_domain::find_subgraph_An_recursion "
+						"current_depth=" << current_depth << " : subgraph = ";
 				Int_vec_print(cout, subgraph, current_depth + 1);
 				cout << ", testing whether " << b << " could be a candidate" << endl;
 			}
 
 			for (j = 0; j <= current_depth; j++) {
 				if (b == subgraph[j]) {
-					if (f_v) {
-						cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+					if (f_vv) {
+						cout << "graph_theory_domain::find_subgraph_An_recursion "
+								"current_depth=" << current_depth << " : subgraph = ";
 						Int_vec_print(cout, subgraph, current_depth + 1);
-						cout << ", candidate " << b << " is eliminated because it is contained in the subgraph" << endl;
+						cout << ", candidate " << b << " is eliminated "
+								"because it is contained in the subgraph" << endl;
 					}
 					f_fail = true;
 					break;
@@ -2524,10 +2539,12 @@ void graph_theory_domain::find_subgraph_An_recursion(
 			for (j = 0; j < current_depth; j++) {
 				a = subgraph[j];
 				if (!CG[0]->is_adjacent(a, b)) {
-					if (f_v) {
-						cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+					if (f_vv) {
+						cout << "graph_theory_domain::find_subgraph_An_recursion "
+								"current_depth=" << current_depth << " : subgraph = ";
 						Int_vec_print(cout, subgraph, current_depth + 1);
-						cout << ", candidate " << b << " is eliminated because " << a << "," << b << " does not have order 2" << endl;
+						cout << ", candidate " << b << " is eliminated "
+								"because " << a << "," << b << " does not have order 2" << endl;
 					}
 					f_fail = true;
 					break;
@@ -2539,18 +2556,21 @@ void graph_theory_domain::find_subgraph_An_recursion(
 
 			a = subgraph[current_depth];
 			if (!CG[1]->is_adjacent(a, b)) {
-				if (f_v) {
-					cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+				if (f_vv) {
+					cout << "graph_theory_domain::find_subgraph_An_recursion "
+							"current_depth=" << current_depth << " : subgraph = ";
 					Int_vec_print(cout, subgraph, current_depth + 1);
-					cout << ", candidate " << b << " is eliminated because " << a << "," << b << " does not have order 3" << endl;
+					cout << ", candidate " << b << " is eliminated "
+							"because " << a << "," << b << " does not have order 3" << endl;
 				}
 				f_fail = true;
 			}
 			if (f_fail) {
 				continue;
 			}
-			if (f_v) {
-				cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			if (f_vv) {
+				cout << "graph_theory_domain::find_subgraph_An_recursion "
+						"current_depth=" << current_depth << " : subgraph = ";
 				Int_vec_print(cout, subgraph, current_depth + 1);
 				cout << ", candidate " << b << " is accepted" << endl;
 			}
@@ -2558,8 +2578,9 @@ void graph_theory_domain::find_subgraph_An_recursion(
 
 		} // next b
 
-		if (f_v) {
-			cout << "graph_theory_domain::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+		if (f_vv) {
+			cout << "graph_theory_domain::find_subgraph_An_recursion "
+					"current_depth=" << current_depth << " : subgraph = ";
 			Int_vec_print(cout, subgraph, current_depth + 1);
 			cout << " : Candidates_reduced=";
 			for (j = 0; j < Candidates_reduced.size(); j++) {

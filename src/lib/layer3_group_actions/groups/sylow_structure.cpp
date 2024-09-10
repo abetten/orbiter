@@ -64,10 +64,21 @@ void sylow_structure::init(
 
 	sylow_structure::S = S;
 	S->group_order(go);
+	if (f_v) {
+		cout << "sylow_structure::init group_order = " << go << endl;
+	}
 
+	if (f_v) {
+		cout << "sylow_structure::init "
+				"before D.factor" << endl;
+	}
 	D.factor(go, nb_primes,
 			primes, exponents,
 			verbose_level);
+	if (f_v) {
+		cout << "sylow_structure::init "
+				"after D.factor" << endl;
+	}
 
 	if (f_v) {
 		cout << "sylow_structure::init group order = " << go << " = ";
@@ -80,39 +91,49 @@ void sylow_structure::init(
 		cout << endl;
 	}
 
+	groups::strong_generators *SG;
+
+	SG = NEW_OBJECT(groups::strong_generators);
+
+	if (f_v) {
+		cout << "sylow_structure::init before SG->init_from_sims" << endl;
+	}
+	SG->init_from_sims(
+			S, verbose_level - 2);
+	if (f_v) {
+		cout << "sylow_structure::init after SG->init_from_sims" << endl;
+	}
 
 	Subgroup_lattice = NEW_OBJECT(subgroup_lattice);
 
 	if (f_v) {
-		cout << "sylow_structure::init before Subgroup_lattice->init" << endl;
+		cout << "sylow_structure::init before Subgroup_lattice->init_basic" << endl;
 	}
-	Subgroup_lattice->init(
+	Subgroup_lattice->init_basic(
 			S->A, S,
 			label_txt,
 			label_tex,
-			S->A->Strong_gens,
+			SG, //S->A->Strong_gens,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "sylow_structure::init after Subgroup_lattice->init" << endl;
+		cout << "sylow_structure::init after Subgroup_lattice->init_basic" << endl;
 	}
 
 	Sub = NEW_OBJECTS(subgroup, nb_primes);
 
 	for (idx = 0; idx < nb_primes; idx++) {
-		strong_generators *SG;
 		sims *P;
 
 		P = NEW_OBJECT(sims);
-		SG = NEW_OBJECT(strong_generators);
 		if (f_v) {
 			cout << "sylow_structure::init "
 					"computing Sylow subgroup for prime "
 					<< primes[idx] << ": " << endl;
 		}
 		S->sylow_subgroup(primes[idx], P, verbose_level);
-		SG->init_from_sims(P, verbose_level);
 		Sub[idx].init_from_sims(Subgroup_lattice, P, SG, verbose_level);
 	}
+
 
 	if (f_v) {
 		cout << "sylow_structure::init done" << endl;

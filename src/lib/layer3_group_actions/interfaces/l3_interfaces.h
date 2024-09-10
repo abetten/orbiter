@@ -333,6 +333,9 @@ public:
 		int *vertex_colors,
 		int *labeling,
 		int verbose_level);
+	actions::action *create_automorphism_group_of_colored_graph_ignoring_colors(
+			graph_theory::colored_graph *CG,
+			int verbose_level);
 	actions::action *create_automorphism_group_of_graph_bitvec(
 		int n,
 		data_structures::bitvector *Bitvec,

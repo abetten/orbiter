@@ -40,6 +40,15 @@ void action::report(
 			LG_Draw_options,
 			verbose_level);
 
+	if (f_strong_gens) {
+
+		ring_theory::longinteger_object go;
+
+		SG->group_order(go);
+		ost << "Group order = " << go << "\\\\" << endl;
+
+	}
+
 #if 0
 	if (label_tex.length() == 0) {
 		cout << "action::report the group has no tex-name" << endl;

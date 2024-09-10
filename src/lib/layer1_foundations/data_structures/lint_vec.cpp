@@ -248,6 +248,24 @@ void lint_vec::matrix_print(
 	}
 }
 
+void lint_vec::matrix_print_nonzero_entries(
+		long int *p, int m, int n)
+{
+	int i, j;
+	long int a;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			if (a == 0) {
+				continue;
+			}
+			cout << "entry " << i << ", " << j << " is " << a << endl;
+		}
+	}
+}
+
+
 void lint_vec::set_print(
 		long int *v, int len)
 {

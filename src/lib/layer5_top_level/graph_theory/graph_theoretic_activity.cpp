@@ -1037,7 +1037,7 @@ void graph_theoretic_activity::perform_activity(
 
 	}
 
-	else if (Descr->f_automorphism_group) {
+	else if (Descr->f_automorphism_group_colored_graph) {
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -1057,6 +1057,28 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 	}
+
+	else if (Descr->f_automorphism_group) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_automorphism_group" << endl;
+		}
+
+		graph_theory_apps GTA;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before GTA.automorphism_group_bw" << endl;
+		}
+		GTA.automorphism_group_bw(CG[0], feedback, verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after GTA.automorphism_group_bw" << endl;
+		}
+
+	}
+
 	else if (Descr->f_properties) {
 
 		if (f_v) {

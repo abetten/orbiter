@@ -720,6 +720,9 @@ public:
 	void extract_subset_of_elements_by_rank(
 			int *rank_vector,
 		int len, groups::sims *S, int verbose_level);
+	void compute_rank_vector(
+			long int *&rank_vector, groups::sims *Sims,
+			int verbose_level);
 	int test_if_all_elements_stabilize_a_point(
 			actions::action *A2, int pt);
 	int test_if_all_elements_stabilize_a_set(

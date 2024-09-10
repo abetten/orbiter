@@ -159,7 +159,13 @@ strong_generators *strong_generators::create_copy(
 	strong_generators *S;
 
 	S = NEW_OBJECT(strong_generators);
-	S->init_copy(this, 0);
+	if (f_v) {
+		cout << "strong_generators::create_copy before S->init_copy" << endl;
+	}
+	S->init_copy(this, verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::create_copy after S->init_copy" << endl;
+	}
 	if (f_v) {
 		cout << "strong_generators::create_copy done" << endl;
 	}
@@ -4250,6 +4256,35 @@ void strong_generators::stringify(
 	}
 
 }
+
+void strong_generators::compute_rank_vector(
+		long int *&rank_vector, int &len, groups::sims *Sims,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::compute_rank_vector" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "strong_generators::compute_rank_vector "
+				"before gens->compute_rank_vector" << endl;
+	}
+	gens->compute_rank_vector(
+			rank_vector, Sims, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::compute_rank_vector "
+				"after gens->compute_rank_vector" << endl;
+	}
+	len = gens->len;
+
+	if (f_v) {
+		cout << "strong_generators::compute_rank_vector done" << endl;
+	}
+}
+
 
 }}}
 

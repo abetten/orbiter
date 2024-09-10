@@ -246,6 +246,11 @@ void permutation_group_create::permutation_group_init(
 	if (f_v) {
 		cout << "permutation_group_create::permutation_group_init label = " << label << endl;
 		cout << "permutation_group_create::permutation_group_init label_tex = " << label_tex << endl;
+
+		ring_theory::longinteger_object go;
+
+		Strong_gens->group_order(go);
+		cout << "permutation_group_create::permutation_group_init go = " << go << endl;
 	}
 
 
@@ -260,6 +265,7 @@ void permutation_group_create::init_subgroup_by_generators(
 		int nb_subgroup_generators,
 		std::string &subgroup_generators_label,
 		int verbose_level)
+// group will be in Strong_gens
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);

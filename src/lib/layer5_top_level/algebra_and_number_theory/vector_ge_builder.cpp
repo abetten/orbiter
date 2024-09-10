@@ -73,7 +73,7 @@ void vector_ge_builder::init(
 
 		V->read_column_csv_using_column_label(Descr->read_csv_fname,
 				A,
-				Descr->read_csv_column_label, verbose_level);
+				Descr->read_csv_column_label, verbose_level - 2);
 
 		if (f_v) {
 			cout << "vector_ge_builder::init "
@@ -118,7 +118,7 @@ void vector_ge_builder::init(
 			exit(1);
 		}
 		V->init_from_data(A, data,
-				nb_elements, A->make_element_size, verbose_level);
+				nb_elements, A->make_element_size, verbose_level - 2);
 
 
 	}

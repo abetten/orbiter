@@ -213,8 +213,11 @@ void poset_classification::print_lex_rank(
 
 void poset_classification::print_problem_label()
 {
-	if (problem_label[0]) {
+	if (problem_label.length()) {
 		cout << problem_label << " ";
+	}
+	else {
+		cout << "no_problem_label ";
 	}
 }
 

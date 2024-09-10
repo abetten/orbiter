@@ -356,12 +356,20 @@ public:
 
 		// prev and label are indexed
 		// by the points in the order as listed in orbit.
+
 	int *prev; // [A->degree]
 	int *label; // [A->degree]
+
+		// prev[coset] is the point which maps
+		// to orbit[coset] under generator label[coset]
+
 	//int *orbit_no; // [A->degree]
 		// to find out which orbit point a lies in, 
 		// use orbit_number(pt).
 		// It used to be orbit_no[orbit_inv[a]]
+	// from extend_orbits:
+	//prev[total] = cur_pt;
+	//label[total] = i;
 
 	int *orbit_first;  // [A->degree + 1]
 	int *orbit_len;  // [A->degree]
@@ -1405,12 +1413,22 @@ public:
 	long int conjugate_by_rank_b_bv_given(
 			long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
+	void conjugate_numerical_set(
+			int *input_set, int set_sz,
+			int *Elt, int *output_set,
+			int verbose_level);
 	void zuppo_list(
 			std::vector<long int> &Zuppos, int verbose_level);
 	void dimino(
 		int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
 		int *cosets,
 		int new_gen,
+		int *group, int &group_sz,
+		int verbose_level);
+	void dimino_with_multiple_generators(
+		int *subgroup, int subgroup_sz, int *gens, int &nb_gens,
+		int *cosets, int &nb_cosets,
+		int *new_gens, int nb_new_gens,
 		int *group, int &group_sz,
 		int verbose_level);
 	void Cayley_graph(
@@ -1798,6 +1816,9 @@ public:
 			std::ostream &ost, int verbose_level);
 	void stringify(
 			std::string &s_tl, std::string &s_gens, std::string &s_go);
+	void compute_rank_vector(
+			long int *&rank_vector, int &len, groups::sims *Sims,
+			int verbose_level);
 
 
 	// strong_generators_groups.cpp
@@ -2010,6 +2031,10 @@ public:
 			int verbose_level);
 	groups::subgroup *get_subgroup(
 			int group_idx);
+	groups::subgroup *get_subgroup_by_orbit(
+			int orbit_idx, int group_in_orbit_idx);
+	int get_orbit_length(
+			int orbit_idx);
 	void print(
 			std::ostream &ost);
 	int add_subgroup(
@@ -2018,7 +2043,14 @@ public:
 	int find_subgroup(
 			groups::subgroup *Subgroup,
 			int &pos, uint32_t &hash, int verbose_level);
+	int find_subgroup_direct(
+			int *Elements, int group_order,
+			int &pos, uint32_t &hash, int verbose_level);
+	void group_global_to_orbit_and_group_local(
+			int group_idx_global, int &orb, int &group_idx_local,
+			int verbose_level);
 	int nb_subgroups();
+	int nb_orbits();
 	void orbits_under_conjugation(
 			int verbose_level);
 	int extend_layer(
@@ -2072,18 +2104,100 @@ public:
 			std::string &label_tex,
 			strong_generators *SG,
 			int verbose_level);
+	void init_basic(
+			actions::action *A,
+			sims *Sims,
+			std::string &label_txt,
+			std::string &label_tex,
+			strong_generators *SG,
+			int verbose_level);
+	void compute(
+			int verbose_level);
 	groups::subgroup *get_subgroup(
 			int layer_idx, int group_idx);
+	groups::subgroup *get_subgroup_by_orbit(
+			int layer_idx, int orbit_idx, int group_in_orbit_idx);
+	void conjugacy_classes(
+			int verbose_level);
 	void extend_all_layers(
 			int verbose_level);
 	void print();
+	void make_partition_by_layers(
+			int *&first, int *&length, int &nb_parts, int verbose_level);
+	void make_partition_by_orbits(
+			int *&first, int *&length, int &nb_parts, int verbose_level);
 	int number_of_groups_total();
+	int number_of_orbits_total();
 	void save_csv(
+			std::string &fname,
+			int verbose_level);
+	void save_rearranged_by_orbits_csv(
+			std::string &fname,
+			int verbose_level);
+	void load_csv(
+			std::string &fname,
+			int verbose_level);
+	void create_drawing(
+			graph_theory::layered_graph *&LG,
+			int verbose_level);
+	void create_drawing_by_orbits(
+			graph_theory::layered_graph *&LG,
+			int verbose_level);
+	void create_incidence_matrix(
+			int *&incma, int &nb_groups,
+			int verbose_level);
+	// incma[nb_groups * nb_groups]
+	void create_incidence_matrix_for_orbits_Asup(
+			int *&incma, int &nb_orbits,
+			int verbose_level);
+	// incma[nb_orbits * nb_orbits]
+	void reduce_to_maximals(
+			int *incma, int nb_groups,
+			int *&maximals,
+			int verbose_level);
+	// incma[nb_groups * nb_groups]
+	void reduce_to_maximals_for_orbits(
+			int *incma, int nb_orbits,
+			int *&maximals,
+			int verbose_level);
+	// incma[nb_orbits * nb_orbits]
+	void find_overgroup_in_orbit(
+			int layer1, int orb1, int group1,
+			int layer2, int orb2, int &group2,
+			int verbose_level);
+	void create_flag_transitive_geometry_with_partition(
+			int P_layer, int P_orb_local,
+			int Q_layer, int Q_orb_local,
+			int R_layer, int R_orb_local, int R_group,
+			int intersection_size,
+			int *&intersection_matrix,
+			int &nb_r, int &nb_c,
+			int verbose_level);
+	void orb_global_to_orb_local(
+			int orb_global, int &layer, int &orb_local,
+			int verbose_level);
+	void intersection_orbit_orbit(
+			int orb1, int orb2,
+			int *&intersection_matrix,
+			int &len1, int &len2,
+			int verbose_level);
+	// intersection_matrix[len1 * len2]
+	void intersect_subgroups(
+			groups::subgroup *Subgroup1,
+			groups::subgroup *Subgroup2,
+			int &layer_idx, int &orb_idx, int &group_idx,
 			int verbose_level);
 	int add_subgroup(
 			groups::subgroup *Subgroup,
 			int verbose_level);
+	int find_subgroup_direct(
+			int *elements, int group_order,
+			int &layer_idx, int &pos, uint32_t &hash, int verbose_level);
 	void print_zuppos(
+			int verbose_level);
+	void identify_subgroup(
+			groups::strong_generators *Strong_gens,
+			int &go, int &layer_idx, int &orb_idx, int &group_idx,
 			int verbose_level);
 
 };
@@ -2133,6 +2247,9 @@ public:
 	void report(
 			std::ostream &ost);
 	uint32_t compute_hash();
+	// performs a sort of the group elements before hashing
+	int is_subgroup_of(
+			subgroup *Subgroup2);
 
 };
 

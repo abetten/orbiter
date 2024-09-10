@@ -98,7 +98,7 @@ void surface_object::init_equation_points_and_lines_only(
 	q = F->q;
 
 	surface_object::label_txt = label_txt;
-	surface_object::label_txt = label_tex;
+	surface_object::label_tex = label_tex;
 
 	Variety_object = NEW_OBJECT(variety_object);
 

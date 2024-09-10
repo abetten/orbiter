@@ -2562,6 +2562,7 @@ void csv_file_support::read_column_and_parse(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
 
 	if (f_v) {
 		cout << "csv_file_support::read_column_and_parse "
@@ -2599,7 +2600,7 @@ void csv_file_support::read_column_and_parse(
 
 		for (i = 0; i < nb_sets; i++) {
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "csv_file_support::read_column_and_parse "
 						"i= " << i << " / " << nb_sets << endl;
 			}
@@ -2611,7 +2612,7 @@ void csv_file_support::read_column_and_parse(
 
 			S.get_string(str1, i + 1, idx);
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "csv_file_support::read_column_and_parse "
 						"str1 = " << str1 << endl;
 			}
@@ -2619,14 +2620,14 @@ void csv_file_support::read_column_and_parse(
 			ST.drop_quotes(
 				str1, str2);
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "csv_file_support::read_column_and_parse "
 						"str2 = " << str2 << endl;
 			}
 
 			Lint_vec_scan(str2, set, sz);
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "csv_file_support::read_column_and_parse "
 						"str = ";
 				Lint_vec_print(cout, set, sz);

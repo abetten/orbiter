@@ -503,9 +503,11 @@ class layered_graph_draw_options {
 public:
 
 	// TABLES/layered_graph_draw_options_1.tex
+	// Section 17.1
 
 	int f_paperheight;
 	int paperheight;
+
 	int f_paperwidth;
 	int paperwidth;
 

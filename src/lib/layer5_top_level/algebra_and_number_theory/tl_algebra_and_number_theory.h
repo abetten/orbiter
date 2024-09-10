@@ -326,6 +326,12 @@ public:
 			int order_a, int order_b, int order_ab, int verbose_level);
 	void do_character_table_symmetric_group(
 			int deg, int verbose_level);
+	void group_of_automorphisms_by_images_of_generators(
+			data_structures_groups::vector_ge *Elements_ge,
+			int *Images, int m, int n,
+			any_group *AG,
+			std::string &label,
+			int verbose_level);
 
 };
 
@@ -408,6 +414,10 @@ public:
 
 	any_group_linear *Any_group_linear;
 
+	int f_has_subgroup_lattice;
+	groups::subgroup_lattice *Subgroup_lattice;
+
+
 	any_group();
 	~any_group();
 	void init_basic(
@@ -485,7 +495,8 @@ public:
 	void element_unrank(
 			std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(
-			std::string &label, std::string &rank_string,
+			std::string &label_of_class,
+			std::string &rank_string,
 			int verbose_level);
 	void automorphism_by_generator_images(
 			std::string &label,
@@ -543,7 +554,31 @@ public:
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
 			int verbose_level);
-	void subgroup_lattice(
+	void subgroup_lattice_compute(
+			int verbose_level);
+	void subgroup_lattice_load(
+			std::string &fname,
+			int verbose_level);
+	void subgroup_lattice_draw(
+			int verbose_level);
+	void subgroup_lattice_draw_by_orbits(
+			int verbose_level);
+	void subgroup_lattice_intersection_orbit_orbit(
+			int orbit1, int orbit2,
+			int verbose_level);
+	void subgroup_lattice_find_overgroup_in_orbit(
+			int orbit_global1, int group1, int orbit_global2,
+			int verbose_level);
+	void subgroup_lattice_create_flag_transitive_geometry_with_partition(
+			int P_orbit_global,
+			int Q_orbit_global,
+			int R_orbit_global,
+			int R_group,
+			int intersection_size,
+			int verbose_level);
+	void subgroup_lattice_identify_subgroup(
+			std::string &group_label,
+			int &go, int &layer_idx, int &orb_idx, int &group_idx,
 			int verbose_level);
 	void element_processing(
 			element_processing_description *element_processing_descr,
@@ -889,36 +924,6 @@ public:
 	int f_export_inversion_graphs;
 	std::string export_inversion_graphs_fname;
 
-
-
-	// TABLES/group_theoretic_activity_3.tex
-
-
-
-	int f_multiply_elements_csv_column_major_ordering;
-	std::string multiply_elements_csv_column_major_ordering_fname1;
-	std::string multiply_elements_csv_column_major_ordering_fname2;
-	std::string multiply_elements_csv_column_major_ordering_fname3;
-
-	int f_multiply_elements_csv_row_major_ordering;
-	std::string multiply_elements_csv_row_major_ordering_fname1;
-	std::string multiply_elements_csv_row_major_ordering_fname2;
-	std::string multiply_elements_csv_row_major_ordering_fname3;
-
-	int f_apply_elements_csv_to_set;
-	std::string apply_elements_csv_to_set_fname1;
-	std::string apply_elements_csv_to_set_fname2;
-	std::string apply_elements_csv_to_set_set;
-
-
-	int f_order_of_products;
-	std::string order_of_products_elements;
-
-	int f_reverse_isomorphism_exterior_square;
-
-	int f_is_subgroup_of;
-	int f_coset_reps;
-
 	int f_evaluate_word;
 	std::string evaluate_word_word;
 	std::string evaluate_word_gens;
@@ -949,9 +954,67 @@ public:
 
 
 
+
+	// TABLES/group_theoretic_activity_3.tex
+
+
+
+	int f_multiply_elements_csv_column_major_ordering;
+	std::string multiply_elements_csv_column_major_ordering_fname1;
+	std::string multiply_elements_csv_column_major_ordering_fname2;
+	std::string multiply_elements_csv_column_major_ordering_fname3;
+
+	int f_multiply_elements_csv_row_major_ordering;
+	std::string multiply_elements_csv_row_major_ordering_fname1;
+	std::string multiply_elements_csv_row_major_ordering_fname2;
+	std::string multiply_elements_csv_row_major_ordering_fname3;
+
+	int f_apply_elements_csv_to_set;
+	std::string apply_elements_csv_to_set_fname1;
+	std::string apply_elements_csv_to_set_fname2;
+	std::string apply_elements_csv_to_set_set;
+
+
+	int f_order_of_products;
+	std::string order_of_products_elements;
+
+	int f_reverse_isomorphism_exterior_square;
+
+	int f_is_subgroup_of;
+	int f_coset_reps;
+
+
 	// orbit stuff:
 
 	int f_subgroup_lattice;
+
+	int f_subgroup_lattice_load;
+	std::string subgroup_lattice_load_fname;
+
+	int f_subgroup_lattice_draw_by_orbits;
+
+	int f_subgroup_lattice_draw_by_groups;
+
+	int f_subgroup_lattice_intersection_orbit_orbit;
+	int subgroup_lattice_intersection_orbit_orbit_orbit1;
+	int subgroup_lattice_intersection_orbit_orbit_orbit2;
+
+	int f_subgroup_lattice_find_overgroup_in_orbit;
+	int subgroup_lattice_find_overgroup_in_orbit_orbit_global1;
+	int subgroup_lattice_find_overgroup_in_orbit_group1;
+	int subgroup_lattice_find_overgroup_in_orbit_orbit_global2;
+
+	int f_subgroup_lattice_create_flag_transitive_geometry_with_partition;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_Q_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group;
+	int subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size;
+
+
+	int f_subgroup_lattice_identify_subgroup;
+	std::string subgroup_lattice_identify_subgroup_subgroup_label;
+
 
 	int f_orbit_of;
 	int orbit_of_point_idx;

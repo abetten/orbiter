@@ -610,6 +610,7 @@ public:
 	std::string split_by_clique_set;
 
 	int f_save;
+	int f_automorphism_group_colored_graph;
 	int f_automorphism_group;
 
 	int f_properties;
@@ -684,6 +685,10 @@ public:
 	graph_theory_apps();
 	~graph_theory_apps();
 	void automorphism_group(
+			graph_theory::colored_graph *CG,
+			std::vector<std::string> &feedback,
+			int verbose_level);
+	void automorphism_group_bw(
 			graph_theory::colored_graph *CG,
 			std::vector<std::string> &feedback,
 			int verbose_level);

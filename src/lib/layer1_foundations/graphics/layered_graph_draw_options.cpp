@@ -25,6 +25,7 @@ layered_graph_draw_options::layered_graph_draw_options()
 
 	f_paperheight = false;
 	paperheight = 0;
+
 	f_paperwidth = false;
 	paperwidth = 0;
 
