@@ -1954,6 +1954,375 @@ void subgroup_lattice::create_flag_transitive_geometry_with_partition(
 	}
 }
 
+void subgroup_lattice::create_coset_geometry(
+		int P_orb_global, int P_group,
+		int Q_orb_global, int Q_group,
+		int intersection_size,
+		int *&intersection_matrix,
+		int &nb_r, int &nb_c,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry" << endl;
+	}
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry P_orb_global=" << P_orb_global << endl;
+		cout << "subgroup_lattice::create_coset_geometry P_group=" << P_group << endl;
+		cout << "subgroup_lattice::create_coset_geometry Q_orb_global=" << Q_orb_global << endl;
+		cout << "subgroup_lattice::create_coset_geometry Q_group=" << Q_group << endl;
+	}
+
+	groups::subgroup *Subgroup_P;
+	groups::subgroup *Subgroup_Q;
+
+	int P_layer, P_orb_local;
+	int Q_layer, Q_orb_local;
+
+	orb_global_to_orb_local(
+			P_orb_global, P_layer, P_orb_local,
+				verbose_level - 2);
+
+	orb_global_to_orb_local(
+			Q_orb_global, Q_layer, Q_orb_local,
+				verbose_level - 2);
+
+	Subgroup_P = get_subgroup_by_orbit(
+			P_layer, P_orb_local, P_group);
+
+	Subgroup_Q = get_subgroup_by_orbit(
+			Q_layer, Q_orb_local, Q_group);
+
+
+	int *cosets1;
+	int nb_cosets1;
+	int *cosets2;
+	int nb_cosets2;
+
+	int nb_orbits;
+	int G_orb_global;
+	int G_group;
+
+	nb_orbits = number_of_orbits_total();
+	G_orb_global = nb_orbits - 1;
+	G_group = 0;
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry G_orb_global=" << G_orb_global << endl;
+		cout << "subgroup_lattice::create_coset_geometry G_group=" << G_group << endl;
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry "
+				"before right_transversal (1)" << endl;
+	}
+	right_transversal(
+			P_orb_global, P_group,
+			G_orb_global, G_group,
+			cosets1, nb_cosets1,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry "
+				"after right_transversal (1)" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry "
+				"before right_transversal (2)" << endl;
+	}
+	right_transversal(
+			Q_orb_global, Q_group,
+			G_orb_global, G_group,
+			cosets2, nb_cosets2,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry "
+				"after right_transversal (2)" << endl;
+	}
+
+
+	data_structures::sorting Sorting;
+	int i, j;
+	int *Elt1;
+	int *Elt2;
+	int *P_image;
+	int *Q_image;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	P_image = NEW_int(group_order);
+	Q_image = NEW_int(group_order);
+
+	nb_r = nb_cosets1;
+	nb_c = nb_cosets2;
+
+	intersection_matrix = NEW_int(nb_r * nb_c);
+
+	for (i = 0; i < nb_cosets1; i++) {
+
+		Sims->element_unrank_lint(cosets1[i], Elt1);
+
+		if (f_v) {
+			cout << "subgroup_lattice::create_coset_geometry "
+					"before Sims->right_translate_numerical_set (P_image)" << endl;
+		}
+
+		Sims->right_translate_numerical_set(
+				Subgroup_P->Elements, Subgroup_P->group_order,
+				Elt1, P_image,
+				verbose_level - 2);
+
+#if 0
+		Sims->conjugate_numerical_set(
+				Subgroup_P->Elements, Subgroup_P->group_order,
+				Elt1, P_image,
+				verbose_level);
+#endif
+
+		if (f_v) {
+			cout << "subgroup_lattice::create_coset_geometry "
+					"after Sims->right_translate_numerical_set (P_image)" << endl;
+		}
+
+		for (j = 0; j < nb_cosets2; j++) {
+
+			Sims->element_unrank_lint(cosets2[j], Elt2);
+
+			if (f_v) {
+				cout << "subgroup_lattice::create_coset_geometry "
+						"before Sims->right_translate_numerical_set (Q_image)" << endl;
+			}
+
+			Sims->right_translate_numerical_set(
+					Subgroup_Q->Elements, Subgroup_Q->group_order,
+					Elt2, Q_image,
+					verbose_level - 2);
+#if 0
+			Sims->conjugate_numerical_set(
+					Subgroup_Q->Elements, Subgroup_Q->group_order,
+					Elt2, Q_image,
+					verbose_level);
+#endif
+			if (f_v) {
+				cout << "subgroup_lattice::create_coset_geometry "
+						"after Sims->right_translate_numerical_set (Q_image)" << endl;
+			}
+
+			int *intersection;
+			int intersection_sz;
+
+			Sorting.int_vec_intersect(
+					P_image, Subgroup_P->group_order,
+					Q_image, Subgroup_Q->group_order,
+					intersection, intersection_sz);
+
+#if 0
+			int entry;
+
+			if (intersection_sz == intersection_size) {
+				entry = 1;
+			}
+			else {
+				entry = 0;
+			}
+#endif
+
+			intersection_matrix[i * nb_c + j] = intersection_sz;
+
+			FREE_int(intersection);
+
+		}
+	}
+
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(P_image);
+	FREE_int(Q_image);
+	FREE_int(cosets1);
+	FREE_int(cosets2);
+
+	if (f_v) {
+		cout << "subgroup_lattice::create_coset_geometry done" << endl;
+	}
+
+}
+
+
+
+void subgroup_lattice::right_transversal(
+		int P_orb_global, int P_group,
+		int Q_orb_global, int Q_group,
+		int *&cosets, int &nb_cosets,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::right_transversal" << endl;
+	}
+
+	groups::subgroup *Subgroup_P;
+	groups::subgroup *Subgroup_Q;
+
+	int P_layer, P_orb_local;
+	int Q_layer, Q_orb_local;
+
+	orb_global_to_orb_local(
+			P_orb_global, P_layer, P_orb_local,
+				verbose_level - 2);
+
+	orb_global_to_orb_local(
+			Q_orb_global, Q_layer, Q_orb_local,
+				verbose_level - 2);
+
+	Subgroup_P = get_subgroup_by_orbit(
+			P_layer, P_orb_local, P_group);
+
+	Subgroup_Q = get_subgroup_by_orbit(
+			Q_layer, Q_orb_local, Q_group);
+
+
+
+	int *group;
+	int *gens;
+	int group_sz;
+
+	cosets = NEW_int(group_order);
+	group = NEW_int(group_order);
+	gens = NEW_int(group_order);
+
+
+	nb_gens = Subgroup_P->nb_gens;
+	Int_vec_copy(Subgroup_P->gens, gens, Subgroup_P->nb_gens);
+
+	if (f_v) {
+		cout << "subgroup_lattice::right_transversal "
+				"before Sims->dimino_with_multiple_generators" << endl;
+	}
+	Sims->dimino_with_multiple_generators(
+			Subgroup_P->Elements,
+			Subgroup_P->group_order,
+			gens, nb_gens,
+		cosets, nb_cosets,
+		Subgroup_Q->gens /* new_gens*/, Subgroup_Q->nb_gens /* nb_new_gens */,
+		group, group_sz,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "subgroup_lattice::right_transversal "
+				"after Sims->dimino_with_multiple_generators" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "subgroup_lattice::right_transversal nb_cosets=" << nb_cosets << endl;
+	}
+
+	FREE_int(group);
+	FREE_int(gens);
+
+	if (f_v) {
+		cout << "subgroup_lattice::right_transversal done" << endl;
+	}
+}
+
+
+
+void subgroup_lattice::two_step_transversal(
+		int P_layer, int P_orb_local, int P_group,
+		int Q_layer, int Q_orb_local, int Q_group,
+		int R_layer, int R_orb_local, int R_group,
+		int *&cosets1, int &nb_cosets1,
+		int *&cosets2, int &nb_cosets2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal" << endl;
+	}
+
+	groups::subgroup *Subgroup_P;
+	groups::subgroup *Subgroup_Q;
+	groups::subgroup *Subgroup_R;
+
+
+	Subgroup_P = get_subgroup_by_orbit(
+			P_layer, P_orb_local, P_group);
+
+	Subgroup_Q = get_subgroup_by_orbit(
+			Q_layer, Q_orb_local, Q_group);
+
+	Subgroup_R = get_subgroup_by_orbit(
+			R_layer, R_orb_local, R_group);
+
+
+	int *group;
+	int *gens;
+	int group_sz;
+
+	cosets1 = NEW_int(group_order);
+	cosets2 = NEW_int(group_order);
+	group = NEW_int(group_order);
+	gens = NEW_int(group_order);
+
+
+	nb_gens = Subgroup_P->nb_gens;
+	Int_vec_copy(Subgroup_P->gens, gens, Subgroup_P->nb_gens);
+
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal "
+				"before Sims->dimino_with_multiple_generators (1)" << endl;
+	}
+	Sims->dimino_with_multiple_generators(
+			Subgroup_P->Elements,
+			Subgroup_P->group_order,
+			gens, nb_gens,
+		cosets1, nb_cosets1,
+		Subgroup_Q->gens /* new_gens*/, Subgroup_Q->nb_gens /* nb_new_gens */,
+		group, group_sz,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal "
+				"after Sims->dimino_with_multiple_generators (1)" << endl;
+	}
+
+
+	nb_gens = Subgroup_Q->nb_gens;
+	Int_vec_copy(Subgroup_Q->gens, gens, Subgroup_Q->nb_gens);
+
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal "
+				"before Sims->dimino_with_multiple_generators (2)" << endl;
+	}
+	Sims->dimino_with_multiple_generators(
+			Subgroup_Q->Elements,
+			Subgroup_Q->group_order,
+			gens, nb_gens,
+		cosets2, nb_cosets2,
+		Subgroup_R->gens /* new_gens*/, Subgroup_R->nb_gens /* nb_new_gens */,
+		group, group_sz,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal "
+				"after Sims->dimino_with_multiple_generators (2)" << endl;
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal nb_cosets1=" << nb_cosets1 << endl;
+		cout << "subgroup_lattice::two_step_transversal nb_cosets2=" << nb_cosets2 << endl;
+	}
+
+	FREE_int(group);
+	FREE_int(gens);
+
+	if (f_v) {
+		cout << "subgroup_lattice::two_step_transversal done" << endl;
+	}
+}
 
 void subgroup_lattice::orb_global_to_orb_local(
 		int orb_global, int &layer, int &orb_local,
@@ -2025,8 +2394,10 @@ void subgroup_lattice::intersection_orbit_orbit(
 	len2 = Subgroup_lattice_layer[l2]->get_orbit_length(o2);
 
 	if (f_v) {
-		cout << "subgroup_lattice::intersection_orbit_orbit l1 = " << l1 << " o1 = " << o1 << " len1 = " << len1 << endl;
-		cout << "subgroup_lattice::intersection_orbit_orbit l2 = " << l2 << " o2 = " << o2 << " len2 = " << len2 << endl;
+		cout << "subgroup_lattice::intersection_orbit_orbit "
+				"l1 = " << l1 << " o1 = " << o1 << " len1 = " << len1 << endl;
+		cout << "subgroup_lattice::intersection_orbit_orbit "
+				"l2 = " << l2 << " o2 = " << o2 << " len2 = " << len2 << endl;
 	}
 
 	intersection_matrix = NEW_int(len1 * len2);
@@ -2101,7 +2472,8 @@ void subgroup_lattice::intersect_subgroups(
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "subgroup_lattice::intersect_subgroups intersection is (layer,pos) = (" << layer_idx << "," << pos << ")" << endl;
+		cout << "subgroup_lattice::intersect_subgroups "
+				"intersection is (layer,pos) = (" << layer_idx << "," << pos << ")" << endl;
 	}
 
 	Subgroup_lattice_layer[layer_idx]->group_global_to_orbit_and_group_local(
@@ -2109,7 +2481,8 @@ void subgroup_lattice::intersect_subgroups(
 			verbose_level - 2);
 
 	if (f_vv) {
-		cout << "subgroup_lattice::intersect_subgroups intersection is (layer,orb,grp) = (" << layer_idx << "," << orb_idx << "," << group_idx << ")" << endl;
+		cout << "subgroup_lattice::intersect_subgroups "
+				"intersection is (layer,orb,grp) = (" << layer_idx << "," << orb_idx << "," << group_idx << ")" << endl;
 	}
 
 	FREE_int(elements3);

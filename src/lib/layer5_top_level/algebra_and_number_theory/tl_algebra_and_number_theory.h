@@ -576,6 +576,11 @@ public:
 			int R_group,
 			int intersection_size,
 			int verbose_level);
+	void subgroup_lattice_create_coset_geometry(
+			int P_orb_global, int P_group,
+			int Q_orb_global, int Q_group,
+			int intersection_size,
+			int verbose_level);
 	void subgroup_lattice_identify_subgroup(
 			std::string &group_label,
 			int &go, int &layer_idx, int &orb_idx, int &group_idx,
@@ -1010,6 +1015,13 @@ public:
 	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit;
 	int subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group;
 	int subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size;
+
+	int f_subgroup_lattice_create_coset_geometry;
+	int subgroup_lattice_create_coset_geometry_P_orb_global;
+	int subgroup_lattice_create_coset_geometry_P_group;
+	int subgroup_lattice_create_coset_geometry_Q_orb_global;
+	int subgroup_lattice_create_coset_geometry_Q_group;
+	int subgroup_lattice_create_coset_geometry_intersection_size;
 
 
 	int f_subgroup_lattice_identify_subgroup;

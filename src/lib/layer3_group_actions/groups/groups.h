@@ -1413,7 +1413,18 @@ public:
 	long int conjugate_by_rank_b_bv_given(
 			long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level);
+	// computes b^{-1} * a * b
+	// Uses Elt1, Elt3, Elt4
+	long int mult_by_rank_b_given(
+			long int rk_a,
+			int *Elt_b, int verbose_level);
+	// computes a * b
+	// Uses Elt1, Elt3
 	void conjugate_numerical_set(
+			int *input_set, int set_sz,
+			int *Elt, int *output_set,
+			int verbose_level);
+	void right_translate_numerical_set(
 			int *input_set, int set_sz,
 			int *Elt, int *output_set,
 			int verbose_level);
@@ -2172,6 +2183,25 @@ public:
 			int intersection_size,
 			int *&intersection_matrix,
 			int &nb_r, int &nb_c,
+			int verbose_level);
+	void create_coset_geometry(
+			int P_orb_global, int P_group,
+			int Q_orb_global, int Q_group,
+			int intersection_size,
+			int *&intersection_matrix,
+			int &nb_r, int &nb_c,
+			int verbose_level);
+	void right_transversal(
+			int P_orb_global, int P_group,
+			int Q_orb_global, int Q_group,
+			int *&cosets, int &nb_cosets,
+			int verbose_level);
+	void two_step_transversal(
+			int P_layer, int P_orb_local, int P_group,
+			int Q_layer, int Q_orb_local, int Q_group,
+			int R_layer, int R_orb_local, int R_group,
+			int *&cosets1, int &nb_cosets1,
+			int *&cosets2, int &nb_cosets2,
 			int verbose_level);
 	void orb_global_to_orb_local(
 			int orb_global, int &layer, int &orb_local,

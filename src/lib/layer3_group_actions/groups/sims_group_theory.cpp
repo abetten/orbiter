@@ -1981,7 +1981,7 @@ long int sims::conjugate_by_rank(
 long int sims::conjugate_by_rank_b_bv_given(
 		long int rk_a,
 		int *Elt_b, int *Elt_bv, int verbose_level)
-// comutes b^{-1} * a * b
+// computes b^{-1} * a * b
 // Uses Elt1, Elt3, Elt4
 {
 	int f_v = (verbose_level >= 1);
@@ -1996,6 +1996,25 @@ long int sims::conjugate_by_rank_b_bv_given(
 	rk_c = element_rank_lint(Elt3);
 	return rk_c;
 }
+
+long int sims::mult_by_rank_b_given(
+		long int rk_a,
+		int *Elt_b, int verbose_level)
+// computes a * b
+// Uses Elt1, Elt3
+{
+	int f_v = (verbose_level >= 1);
+	long int rk_c;
+
+	if (f_v) {
+		cout << "sims::mult_by_rank_b_given" << endl;
+	}
+	element_unrank_lint(rk_a, Elt1); // Elt1 = a
+	A->Group_element->element_mult(Elt1, Elt_b, Elt3, 0);
+	rk_c = element_rank_lint(Elt3);
+	return rk_c;
+}
+
 
 void sims::conjugate_numerical_set(
 		int *input_set, int set_sz,
@@ -2025,7 +2044,7 @@ void sims::conjugate_numerical_set(
 	}
 
 	int j;
-	long int s, t, b;
+	long int s, t;
 
 	for (j = 0; j < set_sz; j++) {
 		if (f_vv) {
@@ -2059,6 +2078,57 @@ void sims::conjugate_numerical_set(
 		cout << "sims::conjugate_numerical_set done" << endl;
 	}
 }
+
+
+void sims::right_translate_numerical_set(
+		int *input_set, int set_sz,
+		int *Elt, int *output_set,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = false; //(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::right_translate_numerical_set" << endl;
+	}
+	data_structures::sorting Sorting;
+
+
+	int j;
+	long int s, t;
+
+	for (j = 0; j < set_sz; j++) {
+		if (f_vv) {
+			cout << "sims::right_translate_numerical_set "
+					"j = " << j << " / " << set_sz << endl;
+		}
+		s = input_set[j];
+
+		if (f_vv) {
+			cout << "sims::right_translate_numerical_set "
+					"j = " << j << " / " << set_sz
+					<< " before S->mult_by_rank_b_given" << endl;
+		}
+
+		t = mult_by_rank_b_given(s, Elt,
+				0 /* verbose_level */);
+
+		if (f_vv) {
+			cout << "sims::right_translate_numerical_set "
+					<< s << " -> " << t << endl;
+		}
+		output_set[j] = t;
+	}
+
+
+	Sorting.int_vec_heapsort(output_set, set_sz);
+
+	if (f_v) {
+		cout << "sims::right_translate_numerical_set done" << endl;
+	}
+}
+
+
 
 #if 0
 int sims::identify_group(char *path_t144,

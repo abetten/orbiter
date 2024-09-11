@@ -3394,6 +3394,105 @@ void any_group::subgroup_lattice_create_flag_transitive_geometry_with_partition(
 	}
 }
 
+
+
+void any_group::subgroup_lattice_create_coset_geometry(
+		int P_orb_global, int P_group,
+		int Q_orb_global, int Q_group,
+		int intersection_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry" << endl;
+	}
+
+	if (!f_has_subgroup_lattice) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"subgroup lattice is not available" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"P_orbit_global = " << P_orb_global << endl;
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"P_group = " << P_group << endl;
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"Q_orbit_global = " << Q_orb_global << endl;
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"Q_group = " << Q_group << endl;
+	}
+
+	int *intersection_matrix;
+	int nb_r, nb_c;
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"before Subgroup_lattice->create_coset_geometry" << endl;
+	}
+
+	Subgroup_lattice->create_coset_geometry(
+			P_orb_global, P_group,
+			Q_orb_global, Q_group,
+			intersection_size,
+			intersection_matrix,
+			nb_r, nb_c,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry "
+				"after Subgroup_lattice->create_coset_geometry" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry intersection_matrix=" << endl;
+		Int_matrix_print_comma_separated(intersection_matrix, nb_r, nb_c);
+	}
+
+#if 1
+	int *intersection_matrix_t;
+	int i, j;
+
+	intersection_matrix_t = NEW_int(nb_c * nb_r);
+	for (i = 0; i < nb_c; i++) {
+		for (j = 0; j < nb_r; j++) {
+			intersection_matrix_t[i * nb_r + j] = intersection_matrix[j * nb_c + i];
+		}
+	}
+
+
+	cout << "incidences:" << endl;
+	for (i = 0; i < nb_c; i++) {
+		for (j = 0; j < nb_r; j++) {
+			if (intersection_matrix_t[i * nb_r + j]) {
+				cout << i * nb_r + j << " ";
+			}
+		}
+	}
+	cout << endl;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry intersection_matrix transposed=" << endl;
+		Int_matrix_print_comma_separated(intersection_matrix_t, nb_c, nb_r);
+	}
+	FREE_int(intersection_matrix_t);
+#endif
+
+	FREE_int(intersection_matrix);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_create_coset_geometry done" << endl;
+	}
+}
+
+
+
+
+
 void any_group::subgroup_lattice_identify_subgroup(
 		std::string &group_label,
 		int &go, int &layer_idx, int &orb_idx, int &group_idx,

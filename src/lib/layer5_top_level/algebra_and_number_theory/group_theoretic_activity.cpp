@@ -1327,6 +1327,33 @@ void group_theoretic_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_subgroup_lattice_create_coset_geometry) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_create_coset_geometry" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_create_coset_geometry" << endl;
+		}
+		AG->subgroup_lattice_create_coset_geometry(
+				Descr->subgroup_lattice_create_coset_geometry_P_orb_global,
+				Descr->subgroup_lattice_create_coset_geometry_P_group,
+				Descr->subgroup_lattice_create_coset_geometry_Q_orb_global,
+				Descr->subgroup_lattice_create_coset_geometry_Q_group,
+				Descr->subgroup_lattice_create_coset_geometry_intersection_size,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->subgroup_lattice_create_coset_geometry" << endl;
+		}
+
+
+	}
+
+
 	else if (Descr->f_subgroup_lattice_identify_subgroup) {
 
 		if (f_v) {

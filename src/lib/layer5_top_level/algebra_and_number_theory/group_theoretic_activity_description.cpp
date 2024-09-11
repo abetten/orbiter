@@ -235,6 +235,16 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group = -1;
 	subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size = -1;
 
+
+	f_subgroup_lattice_create_coset_geometry = false;
+	subgroup_lattice_create_coset_geometry_P_orb_global = -1;
+	subgroup_lattice_create_coset_geometry_P_group = -1;
+	subgroup_lattice_create_coset_geometry_Q_orb_global = -1;
+	subgroup_lattice_create_coset_geometry_Q_group = -1;
+	subgroup_lattice_create_coset_geometry_intersection_size = -1;
+
+
+
 	f_subgroup_lattice_identify_subgroup = false;
 	//std::string subgroup_lattice_identify_subgroup_subgroup_label;
 
@@ -801,6 +811,26 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_create_coset_geometry") == 0) {
+			f_subgroup_lattice_create_coset_geometry = true;
+			subgroup_lattice_create_coset_geometry_P_orb_global = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_coset_geometry_P_group = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_coset_geometry_Q_orb_global = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_coset_geometry_Q_group = ST.strtoi(argv[++i]);
+			subgroup_lattice_create_coset_geometry_intersection_size = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_lattice_create_coset_geometry "
+						<< subgroup_lattice_create_coset_geometry_P_orb_global
+						<< " " << subgroup_lattice_create_coset_geometry_P_group
+						<< " " << subgroup_lattice_create_coset_geometry_Q_orb_global
+						<< " " << subgroup_lattice_create_coset_geometry_Q_group
+						<< " " << subgroup_lattice_create_coset_geometry_intersection_size
+						<< endl;
+			}
+		}
+
+
+
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_identify_subgroup") == 0) {
 			f_subgroup_lattice_identify_subgroup = true;
 			subgroup_lattice_identify_subgroup_subgroup_label.assign(argv[++i]);
@@ -1181,6 +1211,15 @@ void group_theoretic_activity_description::print()
 				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_orbit
 				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_R_group
 				<< " " << subgroup_lattice_create_flag_transitive_geometry_with_partition_intersection_size
+				<< endl;
+	}
+	if (f_subgroup_lattice_create_coset_geometry) {
+		cout << "-subgroup_lattice_create_coset_geometry "
+				<< subgroup_lattice_create_coset_geometry_P_orb_global
+				<< " " << subgroup_lattice_create_coset_geometry_P_group
+				<< " " << subgroup_lattice_create_coset_geometry_Q_orb_global
+				<< " " << subgroup_lattice_create_coset_geometry_Q_group
+				<< " " << subgroup_lattice_create_coset_geometry_intersection_size
 				<< endl;
 	}
 	if (f_subgroup_lattice_identify_subgroup) {
