@@ -17153,7 +17153,6 @@ test_12:
 	make test_12_1
 	make test_12_2
 	make test_12_3
-	make test_12_4
 
 
 ###############################################################################
@@ -18033,7 +18032,6 @@ test_13:
 	make test_13_2
 	make test_13_3
 	make test_13_4
-	make test_13_5
 
 
 
@@ -18214,7 +18212,6 @@ LSQ_5_c:
 SECTION_ASSUMING_SYMMETRY:
 
 test_13_2:
-
 	make KM_cyclic_7
 	make KM_PGGL_2_32
 	#make KM_PGGL_2_32_solve
@@ -18224,7 +18221,7 @@ test_13_2:
 	make C5_concatenate
 	make C5_solve
 	make C5_design_classify
-	
+
 
 
 
