@@ -700,7 +700,7 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
-            FREE_OBJECT(CG);
+			//FREE_OBJECT(CG);
 
 			nb_objects_to_test++;
 
@@ -744,7 +744,9 @@ void data_input_stream::read_objects(
 		if (f_v) {
 			cout << "data_input_stream::read_objects "
 					"input " << input_idx << " / " << Descr->nb_inputs
-					<< " is:" << endl;
+					<< " is: ";
+			Descr->Input[input_idx].print();
+			cout << endl;
 		}
 
 		if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points) {
@@ -1746,6 +1748,11 @@ void data_input_stream::read_objects(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string << ", a graph on " << CG->nb_points << " vertices" << endl;
+			}
+
 			any_combinatorial_object *Any_combo;
 
 			Any_combo = NEW_OBJECT(any_combinatorial_object);
@@ -1753,6 +1760,12 @@ void data_input_stream::read_objects(
 			Any_combo->init_graph_by_object(
 					CG,
 					verbose_level);
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string << ", we created the following object:" << endl;
+				Any_combo->print();
+			}
 
 
 			Objects.push_back(Any_combo);

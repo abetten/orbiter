@@ -326,7 +326,7 @@ public:
 // schreier_vector.cpp:
 // #############################################################################
 
-//! compact storage of schreier vectors
+//! compact storage of schreier vectors for use in the poset classification data structure
 
 
 class schreier_vector {

@@ -1717,7 +1717,8 @@ void any_group::automorphism_by_generator_images(
 		int *&Perms, long int &go,
 		int verbose_level)
 // uses orbits_schreier::orbit_of_sets
-// needs Subgroup_sims to set up action by action
+// needs Subgroup_sims to set up action by right multiplication
+// output: Perms[m * go]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1817,6 +1818,8 @@ void any_group::automorphism_by_generator_images(
 		exit(1);
 	}
 
+	combinatorics::combinatorics_domain Combi;
+
 	int in, out;
 	int h, i, a, b, c;
 	int *Elt;
@@ -1912,7 +1915,6 @@ void any_group::automorphism_by_generator_images(
 
 		}
 
-		combinatorics::combinatorics_domain Combi;
 
 		int c;
 
@@ -1949,6 +1951,69 @@ void any_group::automorphism_by_generator_images(
 
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images done" << endl;
+	}
+}
+
+void any_group::automorphism_by_generator_images_save(
+		int *Images, int m, int n,
+		int *Perms, long int go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images_save" << endl;
+	}
+
+
+	int nb_r, nb_c;
+	int ord;
+	std::string *Table;
+	std::string *Col_headings;
+
+	nb_r = m;
+	nb_c = 4;
+	Table = new std::string [nb_r * nb_c];
+	Col_headings = new std::string [nb_c];
+
+	Col_headings[0] = "row";
+	Col_headings[1] = "order";
+	Col_headings[2] = "images";
+	Col_headings[3] = "perm";
+
+	int h;
+	combinatorics::combinatorics_domain Combi;
+
+	for (h = 0; h < go; h++) {
+		Table[h * nb_c + 0] = std::to_string(h);
+		ord = Combi.perm_order(
+				Perms + h * go, go);
+		Table[h * nb_c + 1] = std::to_string(ord);
+		Table[h * nb_c + 2] = "\"" + Int_vec_stringify(Images + h * n, n) + "\"";
+		Table[h * nb_c + 3] = "\"" + Int_vec_stringify(Perms + h * go, go) + "\"";
+	}
+
+	orbiter_kernel_system::file_io Fio;
+	string fname;
+
+	fname = label + "_elements.csv";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_r, nb_c, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images_save "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images_save done" << endl;
 	}
 }
 

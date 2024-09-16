@@ -242,6 +242,7 @@ void flock_from_blt_set::init(
 		func_f[i] = Table_of_ABC->M[i * 3 + 1];
 		func_g[i] = Table_of_ABC->M[i * 3 + 2];
 	}
+
 	if (f_v) {
 		cout << "flock_from_blt_set::init Flock:" << endl;
 		BLT_set->Blt_set_domain_with_action->Blt_set_domain->G53->print_set(
@@ -373,14 +374,18 @@ void flock_from_blt_set::report(
 
 	ost << "polynomial function associated with $f$ is" << endl;
 	ost << "$$" << endl;
-	BLT_set->Blt_set_domain_with_action->PF->Poly[BLT_set->Blt_set_domain_with_action->PF->max_degree].print_equation_tex(ost, coeff_f);
+	BLT_set->Blt_set_domain_with_action->PF->Poly[
+				BLT_set->Blt_set_domain_with_action->PF->max_degree
+				].print_equation_tex(ost, coeff_f);
 	ost << endl;
 	ost << "$$" << endl;
 
 
 	ost << "polynomial function associated with $g$ is" << endl;
 	ost << "$$" << endl;
-	BLT_set->Blt_set_domain_with_action->PF->Poly[BLT_set->Blt_set_domain_with_action->PF->max_degree].print_equation_tex(ost, coeff_g);
+	BLT_set->Blt_set_domain_with_action->PF->Poly[
+				BLT_set->Blt_set_domain_with_action->PF->max_degree
+				].print_equation_tex(ost, coeff_g);
 	ost << endl;
 	ost << "$$" << endl;
 

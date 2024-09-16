@@ -132,7 +132,7 @@ int schreier_vector_handler::coset_rep_inv(
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"tracing point pt" << endl;
-		}
+	}
 	nb_calls_to_coset_rep_inv++;
 	A->Group_element->element_one(cosetrep, 0);
 	if (f_vv) {
@@ -146,7 +146,7 @@ int schreier_vector_handler::coset_rep_inv(
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"before coset_rep_inv_recursion" << endl;
-		}
+	}
 	ret = coset_rep_inv_recursion(
 		S, pt, pt0,
 		verbose_level - 2);
@@ -154,17 +154,17 @@ int schreier_vector_handler::coset_rep_inv(
 		cout << "schreier_vector_handler::coset_rep_inv "
 				"after coset_rep_inv_recursion cosetrep:" << endl;
 		A->Group_element->element_print_quick(cosetrep, cout);
-		}
+	}
 	if (f_v) {
 		if (ret) {
 			cout << "schreier_vector_handler::coset_rep_inv "
 					"done " << pt << "->" << pt0 << endl;
-			}
+		}
 		else {
 			cout << "schreier_vector_handler::coset_rep_inv "
 					"failure to find point" << endl;
-			}
 		}
+	}
 	return ret;
 }
 
@@ -181,7 +181,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv_recursion "
 				"tracing point " << pt << endl;
-		}
+	}
 	nb_calls_to_coset_rep_inv_recursion++;
 
 	//cout << "schreier_vector_coset_rep_inv_compact_general "
@@ -196,7 +196,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 						"so we return false" << endl;
 			}
 			return false;
-			}
+		}
 		else {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"did not find pt" << endl;
@@ -205,14 +205,14 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 			Int_vec_print(cout, S->sv + 1, n);
 			cout << endl;
 			exit(1);
-			}
 		}
+	}
 
 	// test if the group is trivial:
 	if (S->nb_gen == 0) {
 		pt0 = pt;
 		return true;
-		}
+	}
 	pr = S->sv[1 + n + pt_loc];
 	la = S->sv[1 + 2 * n + pt_loc];
 	if (pr != -1) {
@@ -220,7 +220,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"prev = " << pr << " label = " << la << endl;
-			}
+		}
 		//hdl = hdl_gen[la];
 		if (S->f_has_local_generators) {
 			if (f_v) {
@@ -265,8 +265,8 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 				cout << "Elt2:" << endl;
 				A->Group_element->element_print_quick(Elt2, cout);
 				exit(1);
-				}
 			}
+		}
 
 		A->Group_element->element_mult(cosetrep, Elt2, Elt3, 0);
 		A->Group_element->element_move(Elt3, cosetrep, 0);
@@ -274,31 +274,31 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"cosetrep:" << endl;
 			A->Group_element->element_print_quick(cosetrep, cout);
-			}
+		}
 
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"before coset_rep_inv_recursion" << endl;
-			}
+		}
 		if (!coset_rep_inv_recursion(
 			S,
 			pr, pt0,
 			verbose_level)) {
 			return false;
-			}
+		}
 		if (f_v) {
 			cout << "schreier_vector_handler::coset_rep_inv_recursion "
 					"after coset_rep_inv_recursion cosetrep" << endl;
 			A->Group_element->element_print_quick(cosetrep, cout);
-			}
-
 		}
+
+	}
 	else {
 		if (f_v) {
 			cout << "prev = -1" << endl;
 			}
 		pt0 = pt;
-		}
+	}
 	return true;
 }
 
@@ -316,14 +316,14 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file" << endl;
-		}
+	}
 	fp.read((char *)&I, sizeof(int));
 	//I = Fio.fread_int4(fp);
 	if (I == 0) {
 		cout << "schreier_vector_handler::sv_read_file, "
 				"no schreier vector" << endl;
 		return NULL;
-		}
+	}
 	fp.read((char *)&f_trivial_group, sizeof(int));
 	//f_trivial_group = Fio.fread_int4(fp);
 	fp.read((char *)&n, sizeof(int));
@@ -335,16 +335,16 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	if (f_trivial_group) {
 		osv = NEW_int(n + 1);
 		len = n;
-		}
+	}
 	else {
 		osv = NEW_int(3 * n + 1);
 		len = 3 * n;
-		}
+	}
 	osv[0] = n;
 	for (i = 0; i < len; i++) {
 		//osv[1 + i] = Fio.fread_int4(fp);
 		fp.read((char *)&osv[1 + i], sizeof(int));
-		}
+	}
 	//sv = osv;
 	Sv = NEW_OBJECT(schreier_vector);
 	Sv->init(gen_hdl_first, nb_gen, osv, verbose_level);
@@ -354,7 +354,7 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	}
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file finished" << endl;
-		}
+	}
 	return Sv;
 }
 
@@ -369,22 +369,22 @@ void schreier_vector_handler::sv_write_file(
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_write_file" << endl;
-		}
+	}
 	if (Sv == NULL) {
 		//Fio.fwrite_int4(fp, 0);
 		tmp = 0;
 		fp.write((char *)&tmp, sizeof(int));
-		}
+	}
 	else {
 		//Fio.fwrite_int4(fp, 1);
 		tmp = 1;
 		fp.write((char *)&tmp, sizeof(int));
 		if (Sv->nb_gen == 0) {
 			f_trivial_group = true;
-			}
+		}
 		else {
 			f_trivial_group = false;
-			}
+		}
 		//Fio.fwrite_int4(fp, f_trivial_group);
 		fp.write((char *)&f_trivial_group, sizeof(int));
 		if (Sv->sv == NULL) {
@@ -398,20 +398,20 @@ void schreier_vector_handler::sv_write_file(
 		fp.write((char *)&n, sizeof(int));
 		if (f_trivial_group) {
 			len = n;
-			}
+		}
 		else {
 			len = 3 * n;
-			}
+		}
 		for (i = 0; i < len; i++) {
 			//Fio.fwrite_int4(fp, osv[1 + i]);
 			fp.write((char *)&osv[1 + i], sizeof(int));
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_write_file "
 				"finished" << endl;
-		}
+	}
 }
 
 data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
@@ -462,11 +462,11 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	for (i = 0; i < n; i++) {
 		depth[i] = -1;
 		ancestor[i] = -1;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		Sorting.schreier_vector_determine_depth_recursion(n,
 				pts, prev, false, depth, ancestor, i);
-		}
+	}
 #else
 	Sorting.schreier_vector_compute_depth_and_ancestor(
 			n, pts, prev, false /* f_prev_is_point_index */, NULL,

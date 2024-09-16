@@ -505,7 +505,12 @@ public:
 			int *&Perms, long int &go,
 			int verbose_level);
 	// uses orbits_schreier::orbit_of_sets
-	// needs Subgroup_sims to set up action by action
+	// needs Subgroup_sims to set up action by right multiplication
+	// output: Perms[m * go]
+	void automorphism_by_generator_images_save(
+			int *Images, int m, int n,
+			int *Perms, long int go,
+			int verbose_level);
 	void do_reverse_isomorphism_exterior_square(
 			int verbose_level);
 

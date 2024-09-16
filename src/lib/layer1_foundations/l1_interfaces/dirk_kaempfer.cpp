@@ -264,7 +264,61 @@ static long      lDbg;
  **
  ******************************************************************
  ******************************************************************/
+
+
+static void oeffneDateien();
+static void schliesseDateien();
+static void LesenGeraden(GERADENFALL *pgf);
+static GERADENFALL gfLesenEingabe();
+static VOID BildeGleichung(GERADENFALL * pgf);
+static BOOL bGibNaechsteGleichungsloesung(GERADENFALL* pgf);
+static BOOL bBraunbedingungErfuellt(GERADENFALL * pgf);
+static VOID AusgabeGeradenwechsel(GERADENFALL * pgf);
+static INT iBerechneZweier( HTDO *phtdo, BOOL bIsTdo);
+static VOID Ausgabe( HTDO *phtdo, BOOL bIsTdo);
+static void DebugHtdo(HTDO *phtdo);
 static void AusgabeTestfall(HTDO *phtdo);
+static BOOL bSuchenStartTestfall(HTDO *phtdo,char sPuffer[80]);
+static BOOL bSuchenNextTestfall(HTDO *phtdo,char sPuffer[80]);
+static BOOL bEinlesenTestfall(HTDO *phtdo,int iNummer);
+static void AusgabeParms(HTDO_PARMS *pparms,HTDO *phtdo);
+static void Ausgabe_Parms(HTDO1_PARMS *pparms,HTDO *phtdo);
+static void Debug_(INT i, INT j,HTDO *phtdo,HTDO1_PARMS *pparms);
+static BOOL bNormalisierteHtdoIstTdo(HTDO* phtdo);
+static void AusgabeMaxfit();
+static void InitMaxfit();
+static BOOL bPruefeMaxfit(HTDO* phtdo);
+static BOOL bPruefeMaxfit2(HTDO* phtdo);
+static BOOL bPruefeInzidenzen(HTDO* phtdo);
+static BOOL bTdoPlausi(HTDO* phtdo, GERADENFALL* pgf);
+static VOID InitialisiereParms(HTDO* phtdo, HTDO *phtdoAlt, HTDO_PARMS *pparms);
+static BOOL bMaximiereInzidenzen(HTDO       * phtdo, HTDO *phtdoAlt,
+                                 HTDO_PARMS * pparms );
+static BOOL bSucheNiedrigereIndices(HTDO       * phtdo,
+                                    HTDO       * phtdoAlt,
+                                    HTDO_PARMS * pparms );
+static void erhoeheIndices(HTDO        * phtdo,
+                           HTDO_PARMS  * pparms );
+static void berechneNaechsteHtdo(HTDO* phtdoAlt);
+static void Initialisiere_Parms(GERADENFALL gf,HTDO* phtdo, HTDO1_PARMS* pparms);
+static BOOL bMaximiereGeradeAufPunkt(INT           i, INT j,
+                                     HTDO        * phtdo,
+                                     HTDO1_PARMS * pparms,
+                                     GERADENTYP    agt[] );
+static BOOL bSuche_NiedrigereIndices(INT         * pi,
+                                     INT         * pj,
+                                     HTDO        * phtdo,
+                                     HTDO1_PARMS * pparms,
+                                     GERADENTYP    agt[]  );
+static void erhoehe_Indices(INT         * pi, INT * pj,
+                           HTDO        * phtdo,
+                           HTDO1_PARMS * pparms );
+static void berechneErsteHtdo(GERADENFALL gf);
+int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[]);
+
+
+
+//static void AusgabeTestfall(HTDO *phtdo);
 
 
 

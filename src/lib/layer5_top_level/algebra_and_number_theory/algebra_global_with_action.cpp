@@ -4011,6 +4011,23 @@ void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
 				"we found " << m << " permutations of degree " << go << endl;
 	}
 
+
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"before AG->automorphism_by_generator_images_save" << endl;
+	}
+
+	AG->automorphism_by_generator_images_save(
+			Images, m, n,
+			Perms, go,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
+				"after AG->automorphism_by_generator_images_save" << endl;
+	}
+
+
+
 	actions::action *A_perm;
 
 	A_perm = NEW_OBJECT(actions::action);

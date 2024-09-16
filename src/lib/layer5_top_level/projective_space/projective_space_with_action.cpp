@@ -1061,7 +1061,7 @@ void projective_space_with_action::report(
 
 
 void projective_space_with_action::canonical_form_of_code(
-		std::string &label,
+		std::string &label_txt,
 		int *genma, int m, int n,
 		canonical_form_classification::classification_of_objects_description
 			*Canonical_form_codes_Descr,
@@ -1120,6 +1120,12 @@ void projective_space_with_action::canonical_form_of_code(
 	E.init_set_of_points(points_as_string);
 	ISD.Input.push_back(E);
 	ISD.nb_inputs++;
+
+
+	ISD.f_label = true;
+	ISD.label_txt = label_txt;
+	ISD.label_tex = label_txt;
+
 
 	//data_structures::data_input_stream IS;
 
@@ -1208,20 +1214,29 @@ void projective_space_with_action::canonical_form_of_code(
 				"before COA.perform_activity" << endl;
 	}
 	COA.perform_activity(AO, verbose_level);
-
-    if (AO) {
-        FREE_OBJECT(AO);
-    }
-
-
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code "
 				"after COA.perform_activity" << endl;
 	}
 
+#if 0
+    if (AO) {
+        FREE_OBJECT(AO);
+    }
+#endif
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code "
+				"before FREE_int(v);FREE_lint(set);" << endl;
+	}
+
 
 	FREE_int(v);
 	FREE_lint(set);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code "
+				"after FREE_int(v);FREE_lint(set);" << endl;
+	}
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code done" << endl;
 	}

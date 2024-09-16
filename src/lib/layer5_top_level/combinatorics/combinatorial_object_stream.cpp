@@ -234,7 +234,7 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 
 		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
-		OwCF->print(cout);
+		OwCF->print_brief(cout);
 
 	}
 	cout << endl;

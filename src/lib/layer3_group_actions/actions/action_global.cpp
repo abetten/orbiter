@@ -3280,7 +3280,7 @@ void action_global::get_orbits_on_points_as_characteristic_vector(
 	}
 	all_point_orbits(
 			A,
-			Schreier, verbose_level - 1);
+			Schreier, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "action_global::get_orbits_on_points_as_characteristic_vector "
 				"after all_point_orbits" << endl;

@@ -86,7 +86,7 @@ public:
 	~any_combinatorial_object();
 	void set_label(
 			std::string &object_label);
-	void print(
+	void print_brief(
 			std::ostream &ost);
 	void print_rows(
 			std::ostream &ost,

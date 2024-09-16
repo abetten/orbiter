@@ -2729,6 +2729,10 @@ void symbol_definition::definition_of_graph(
 	}
 
 
+	if (f_v) {
+		cout << "Gr->CG->nb_points = " << Gr->CG->nb_points << endl;
+	}
+
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_graph "

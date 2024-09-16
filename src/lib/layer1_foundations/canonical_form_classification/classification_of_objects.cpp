@@ -202,10 +202,10 @@ void classification_of_objects::classify_objects_using_nauty(
 		any_combinatorial_object *OwCF;
 
 		OwCF = (any_combinatorial_object *) IS->Objects[input_idx];
-		if (false) {
+		if (f_v) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
-			OwCF->print(cout);
+			OwCF->print_brief(cout);
 		}
 
 
@@ -220,20 +220,24 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 
+		if (f_v) {
+			cout << "classification_of_objects::classify_objects_using_nauty "
+					"object_label = " << object_label << endl;
+		}
 
 
 		OwCF->set_label(object_label);
 
+		l1_interfaces::nauty_output *NO;
+		encoded_combinatorial_object *Enc;
 
 
-		if (false) {
+
+		if (f_v) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"before process_any_object" << endl;
 		}
 
-
-		l1_interfaces::nauty_output *NO;
-		encoded_combinatorial_object *Enc;
 
 		process_any_object(
 					OwCF,
@@ -244,13 +248,13 @@ void classification_of_objects::classify_objects_using_nauty(
 					Enc,
 					verbose_level - 1);
 
-
-		FREE_OBJECT(Enc);
-
-		if (false) {
+		if (f_v) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"after process_any_object" << endl;
 		}
+
+		FREE_OBJECT(Enc);
+
 
 		if (!F_reject[input_idx]) {
 			OWCF_transversal[nb_orbits] =

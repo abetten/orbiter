@@ -219,6 +219,10 @@ void graph_theory_apps::automorphism_group_bw(
 	s = go.stringify();
 	feedback.push_back(s);
 
+	if (f_v) {
+		cout << "graph_theory_apps::automorphism_group_bw "
+				"before creating report" << endl;
+	}
 
 	{
 		string title, author, extra_praeamble;
@@ -250,10 +254,18 @@ void graph_theory_apps::automorphism_group_bw(
 			actions::action_global GL;
 			int *orbit_no;
 
+			if (f_v) {
+				cout << "graph_theory_apps::automorphism_group_bw "
+						"before GL.get_orbits_on_points_as_characteristic_vector" << endl;
+			}
 			GL.get_orbits_on_points_as_characteristic_vector(
 					Aut,
 					orbit_no,
-					verbose_level);
+					verbose_level - 3);
+			if (f_v) {
+				cout << "graph_theory_apps::automorphism_group_bw "
+						"after GL.get_orbits_on_points_as_characteristic_vector" << endl;
+			}
 
 			ost << endl;
 			ost << "\\bigskip" << endl;
@@ -284,20 +296,34 @@ void graph_theory_apps::automorphism_group_bw(
 				<< Fio.file_size(fname_report) << endl;
 	}
 
+	if (f_v) {
+		cout << "graph_theory_apps::automorphism_group_bw "
+				"after creating report" << endl;
+	}
+
+
 	string fname_group;
 
 	fname_group = CG->label + "_group.makefile";
 
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group_bw "
-				"before Aut->export_to_orbiter_as_bsgs "
 				"label = " << CG->label << endl;
 	}
-	Aut->degree--;
+
+	// no need to reduce the degree since we run the automorphism group of the graph in back and white,
+	// so no color information is added
+
+	//Aut->degree--;
+
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group_bw "
-				"before Aut->export_to_orbiter_as_bsgs "
 				"degree = " << Aut->degree << endl;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_apps::automorphism_group_bw "
+				"before Aut->export_to_orbiter_as_bsgs" << endl;
 	}
 	Aut->export_to_orbiter_as_bsgs(
 			fname_group,
@@ -309,8 +335,11 @@ void graph_theory_apps::automorphism_group_bw(
 	}
 	//file_io Fio;
 
-	cout << "written file " << fname_group << " of size "
+	if (f_v) {
+		cout << "graph_theory_apps::automorphism_group_bw "
+				"written file " << fname_group << " of size "
 			<< Fio.file_size(fname_group) << endl;
+	}
 
 	if (f_v) {
 		cout << "graph_theory_apps::automorphism_group_bw done" << endl;

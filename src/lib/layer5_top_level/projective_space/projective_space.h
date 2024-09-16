@@ -525,7 +525,7 @@ public:
 		graphics::layered_graph_draw_options *O,
 		int verbose_level);
 	void canonical_form_of_code(
-			std::string &label,
+			std::string &label_txt,
 			int *genma, int m, int n,
 			canonical_form_classification::classification_of_objects_description
 				*Canonical_form_codes_Descr,

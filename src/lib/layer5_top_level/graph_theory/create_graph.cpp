@@ -111,6 +111,17 @@ void create_graph::init(
 			cout << "create_graph::init "
 					"after load_csv_without_border" << endl;
 		}
+
+		data_structures::string_tools String;
+		string fname_base;
+
+		fname_base = description->load_csv_no_border_fname;
+		String.chop_off_extension_and_path(
+				fname_base);
+
+		label = "File_" + fname_base;
+		label_tex = "File_" + fname_base;
+
 	}
 
 	else if (description->f_load_adjacency_matrix_from_csv_and_select_value) {

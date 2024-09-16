@@ -84,7 +84,7 @@ void any_combinatorial_object::set_label(
 }
 
 
-void any_combinatorial_object::print(
+void any_combinatorial_object::print_brief(
 		std::ostream &ost)
 {
 
@@ -1261,9 +1261,18 @@ void any_combinatorial_object::init_graph_by_object(
 
 	int N, nb_edges;
 
+	if (f_v) {
+		cout << "any_combinatorial_object::init_graph_by_object CG->nb_points = " << CG->nb_points << endl;
+	}
+
+
 	N = CG->nb_points;
 
 	nb_edges = CG->get_nb_edges(0 /*verbose_level */);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_graph_by_object nb_edges = " << nb_edges << endl;
+	}
 
 	long int *flags;
 	int data_sz;
@@ -1293,6 +1302,10 @@ void any_combinatorial_object::init_graph_by_object(
 	any_combinatorial_object::sz = data_sz;
 	any_combinatorial_object::v = N;
 	any_combinatorial_object::b = nb_edges;
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_graph_by_object v=" << v << " b=" << b << endl;
+	}
 
 	FREE_lint(flags);
 
@@ -1584,7 +1597,7 @@ void any_combinatorial_object::encoding_size_incidence_geometry(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_combinatorial_object::encoding_size_packing" << endl;
+		cout << "any_combinatorial_object::encoding_size_incidence_geometry" << endl;
 	}
 
 	nb_rows = v;
@@ -2123,6 +2136,10 @@ void any_combinatorial_object::encode_incidence_geometry(
 
 	if (f_v) {
 		cout << "any_combinatorial_object::encode_incidence_geometry" << endl;
+	}
+	if (f_v) {
+		cout << "any_combinatorial_object::encode_incidence_geometry v=" << v << endl;
+		cout << "any_combinatorial_object::encode_incidence_geometry b=" << b << endl;
 	}
 	int i, a;
 	int f_vvv = (verbose_level >= 3);

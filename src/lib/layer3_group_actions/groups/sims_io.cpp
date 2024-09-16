@@ -83,7 +83,7 @@ void sims::create_group_tree(
 				for (j = 0; j < orbit_len[h]; j++) {
 					if (h < l - 1 && j == 0) {
 						continue;
-						}
+					}
 					Int_vec_zero(path, l);
 					path[h] = j;
 					fp << h + 1;
@@ -439,7 +439,8 @@ void sims::write_all_group_elements(
 
 		for (i = 0; i < go.as_lint(); i++) {
 			element_unrank_lint(i, Elt);
-			A->Group_element->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
+			A->Group_element->element_write_file_fp(
+					Elt, fp, 0/* verbose_level*/);
 		}
 	}
 	if (f_v) {
@@ -701,9 +702,12 @@ void sims::print_all_transversal_elements()
 				// skip the identity in the upper transversals
 				continue;
 			}
+			Int_vec_zero(path, A->base_len());
+#if 0
 			for (ii = 0; ii < A->base_len(); ii++) {
 				path[ii] = 0;
 			}
+#endif
 			path[i] = j;
 			element_from_path(Elt, 0 /* verbose_level */);
 			for (ii = 0; ii < A->base_len(); ii++) {
