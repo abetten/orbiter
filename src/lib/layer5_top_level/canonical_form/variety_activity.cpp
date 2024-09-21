@@ -68,7 +68,7 @@ void variety_activity::perform_activity(
 	}
 
 	if (Descr->f_compute_group) {
-		do_compute_group(verbose_level);
+		do_compute_group(Descr->f_output_fname_base, Descr->output_fname_base, verbose_level);
 	}
 	if (Descr->f_report) {
 		Input_Vo[0].do_report(verbose_level);
@@ -84,6 +84,8 @@ void variety_activity::perform_activity(
 }
 
 void variety_activity::do_compute_group(
+		int f_has_output_fname_base,
+		std::string &output_fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -126,6 +128,7 @@ void variety_activity::do_compute_group(
 				"after getting Poly_ring" << endl;
 	}
 
+
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"before Classifier->init_direct" << endl;
@@ -136,6 +139,7 @@ void variety_activity::do_compute_group(
 			Poly_ring,
 			nb_input_Vo,
 			Input_Vo,
+			output_fname_base,
 			verbose_level);
 
 	if (f_v) {
@@ -144,70 +148,75 @@ void variety_activity::do_compute_group(
 	}
 
 
-	canonical_form::classification_of_varieties_nauty *Nauty;
+	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
-	Nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
+	Classification_of_varieties_nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
 
 
 
-	Classifier->Classification_of_varieties_nauty = Nauty;
+	Classifier->Classification_of_varieties_nauty = Classification_of_varieties_nauty;
 
 	//Classifier->Output_nauty = Nauty;
 
 	std::string fname_base;
 
-
-	fname_base = Input_Vo[0].Variety_object->label_txt + "_c";
+	if (f_has_output_fname_base) {
+		fname_base = output_fname_base;
+	}
+	else {
+		fname_base = Input_Vo[0].Variety_object->label_txt + "_c";
+	}
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"before Nauty->init" << endl;
+				"before Classification_of_varieties_nauty->init" << endl;
 	}
-	Nauty->init(
-			nb_input_Vo,
-			Input_Vo,
-			fname_base,
+	Classification_of_varieties_nauty->init(
+			Classifier->Input,
+			//nb_input_Vo,
+			//Input_Vo,
+			//fname_base,
 			Classifier,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"after Nauty->init" << endl;
+				"after Classification_of_varieties_nauty->init" << endl;
 	}
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"before Nauty->classify_nauty" << endl;
+				"before Classification_of_varieties_nauty->classify_nauty" << endl;
 	}
-	Nauty->classify_nauty(verbose_level);
+	Classification_of_varieties_nauty->classify_nauty(verbose_level);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"after Nauty->classify_nauty" << endl;
+				"after Classification_of_varieties_nauty->classify_nauty" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"before Nauty->report" << endl;
+				"before Classification_of_varieties_nauty->report" << endl;
 	}
-	Nauty->report(
+	Classification_of_varieties_nauty->report(
 			fname_base,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"after Nauty->report" << endl;
+				"after Classification_of_varieties_nauty->report" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"before Nauty->write_classification_by_nauty_csv" << endl;
+				"before Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
 	}
-	Nauty->write_classification_by_nauty_csv(
+	Classification_of_varieties_nauty->write_classification_by_nauty_csv(
 			fname_base,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
-				"after Nauty->write_classification_by_nauty_csv" << endl;
+				"after Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
 	}
 
 
@@ -219,7 +228,7 @@ void variety_activity::do_compute_group(
 	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
 
 	Input_Vo[0].Stab_gens->init_copy(
-			Nauty->Variety_table[0]->Stabilizer_of_set_of_rational_points->Stab_gens_variety,
+			Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Stab_gens_variety,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "

@@ -828,6 +828,12 @@ public:
 			actions::action *A_previous,
 			int k,
 			int verbose_level);
+	void report_strong_generators(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *LG_Draw_options,
+			groups::strong_generators *SG,
+			action *A,
+			int verbose_level);
 
 };
 

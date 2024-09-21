@@ -222,7 +222,7 @@ void any_group::init_modified_group(
 
 void any_group::create_latex_report(
 		graphics::layered_graph_draw_options *O,
-		int f_sylow, int f_group_table, int f_classes,
+		int f_sylow, int f_group_table, //int f_classes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -238,7 +238,7 @@ void any_group::create_latex_report(
 		}
 		LG->create_latex_report(
 				O,
-				f_sylow, f_group_table, f_classes,
+				f_sylow, f_group_table, //f_classes,
 				verbose_level);
 	}
 	else if (f_permutation_group) {

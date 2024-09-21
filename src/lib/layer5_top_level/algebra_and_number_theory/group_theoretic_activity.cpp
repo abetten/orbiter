@@ -104,7 +104,7 @@ void group_theoretic_activity::perform_activity(
 				orbiter_kernel_system::Orbiter->draw_options,
 				Descr->f_report_sylow,
 				Descr->f_report_group_table,
-				Descr->f_report_classes,
+				//Descr->f_report_classes,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "

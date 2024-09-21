@@ -46,6 +46,8 @@ quartic_curve_create::quartic_curve_create()
 
 	f_has_quartic_curve_from_surface = false;
 	QC_from_surface = NULL;
+
+	Variety_object = NULL;
 }
 
 
@@ -64,6 +66,9 @@ quartic_curve_create::~quartic_curve_create()
 	}
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
+	}
+	if (Variety_object) {
+		FREE_OBJECT(Variety_object);
 	}
 }
 
@@ -359,7 +364,6 @@ void quartic_curve_create::create_quartic_curve_from_description(
 		create_quartic_curve_from_cubic_surface(
 				Descr->from_cubic_surface_label,
 				Descr->from_cubic_surface_point_orbit_idx,
-				//true /* f_TDO */,
 				verbose_level);
 
 		if (f_v) {
@@ -440,6 +444,37 @@ void quartic_curve_create::create_quartic_curve_from_description(
 				"bitangents = ";
 		Lint_vec_print(cout, QO->bitangents28, 28);
 		cout << endl;
+	}
+
+
+	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+
+	//std::string label_txt;
+	//std::string label_tex;
+	int nb_bitangents;
+
+	if (QO->f_has_bitangents) {
+		nb_bitangents = 28;
+	}
+	else {
+		nb_bitangents = 0;
+	}
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_description "
+				"before Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
+	}
+	Variety_object->init_equation_and_points_and_lines_and_labels(
+			QCDA->PA->P,
+			QCDA->Dom->Poly4_3,
+			QO->eqn15,
+			QO->Pts, QO->nb_pts,
+			QO->bitangents28, nb_bitangents,
+			label_txt,
+			label_tex,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_description "
+				"after Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
 	}
 
 

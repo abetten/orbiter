@@ -1223,7 +1223,9 @@ void projective_space_activity::perform_activity(
 		string fname, fname_base;
 		orbiter_kernel_system::file_io Fio;
 
-		fname_base = "evaluation_matrix_deg" + std::to_string(Ring->degree) + "_vs_PG_" + std::to_string(PA->P->Subspaces->n);
+		fname_base = "evaluation_matrix_deg"
+				+ std::to_string(Ring->degree)
+				+ "_vs_PG_" + std::to_string(PA->P->Subspaces->n);
 
 		fname = fname_base + ".csv";
 

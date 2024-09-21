@@ -193,6 +193,17 @@ public:
 	void export_colored_graph_to_magma(
 			graph_theory::colored_graph *Gamma,
 			std::string &fname, int verbose_level);
+	void export_linear_code(
+			std::string &fname,
+			field_theory::finite_field *F,
+			int *genma, int n, int k,
+			int verbose_level);
+	void read_permutation_group(
+			std::string &fname,
+		int degree, int *&gens, int &nb_gens, int &go,
+		int verbose_level);
+	void run_magma_file(
+			std::string &fname, int verbose_level);
 
 };
 

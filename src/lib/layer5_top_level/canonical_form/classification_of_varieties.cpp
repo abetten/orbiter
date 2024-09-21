@@ -19,6 +19,7 @@ namespace orbiter {
 namespace layer5_applications {
 namespace canonical_form {
 
+#if 1
 
 classification_of_varieties::classification_of_varieties()
 {
@@ -39,6 +40,7 @@ classification_of_varieties::classification_of_varieties()
 		Classification_table_nauty = NULL;
 
 	// substructure classification:
+#if 0
 		SubC = NULL;
 
 
@@ -47,6 +49,7 @@ classification_of_varieties::classification_of_varieties()
 		//longinteger_object go_eqn;
 
 		CFS_table = NULL;
+#endif
 
 		Canonical_equation = NULL;
 
@@ -114,11 +117,11 @@ void classification_of_varieties::init(
 	}
 
 
-	Variety_table = (canonical_form_of_variety **)
+	Variety_table = (variety_compute_canonical_form **)
 			NEW_pvoid(Classifier->Input->nb_objects_to_test);
 
-	Elt = NEW_int(Classifier->PA->A->elt_size_in_int);
-	eqn2 = NEW_int(Classifier->Poly_ring->get_nb_monomials());
+	Elt = NEW_int(Classifier->Ring_with_action->PA->A->elt_size_in_int);
+	eqn2 = NEW_int(Classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 	Goi = NEW_lint(Classifier->Input->nb_objects_to_test);
 
 
@@ -169,12 +172,15 @@ void classification_of_varieties::init(
 					"algorithm substructure" << endl;
 		}
 
+		cout << "classification_of_varieties::init "
+				"algorithm substructure not available" << endl;
+		exit(1);
 
 
 
-
+#if 0
 		Canonical_equation = NEW_int(Classifier->Input->nb_objects_to_test
-				* Classifier->Poly_ring->get_nb_monomials());
+				* Classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 
 		if (f_v) {
 			cout << "classification_of_varieties::init "
@@ -197,6 +203,7 @@ void classification_of_varieties::init(
 			cout << "classification_of_varieties::init "
 					"after finalize_canonical_forms" << endl;
 		}
+#endif
 
 	}
 	else {
@@ -267,6 +274,7 @@ void classification_of_varieties::classify_nauty(
 
 }
 
+#if 0
 void classification_of_varieties::classify_with_substructure(
 		int verbose_level)
 {
@@ -291,9 +299,9 @@ void classification_of_varieties::classify_with_substructure(
 
 	SubC->classify_substructures(
 			Classifier->get_description()->fname_base_out,
-			Classifier->PA->A,
-			Classifier->PA->A,
-			Classifier->PA->A->Strong_gens,
+			Classifier->Ring_with_action->PA->A,
+			Classifier->Ring_with_action->PA->A,
+			Classifier->Ring_with_action->PA->A->Strong_gens,
 			Classifier->get_description()->substructure_size,
 			verbose_level - 3);
 
@@ -330,7 +338,7 @@ void classification_of_varieties::classify_with_substructure(
 	}
 
 }
-
+#endif
 
 void classification_of_varieties::main_loop(
 		int verbose_level)
@@ -356,9 +364,9 @@ void classification_of_varieties::main_loop(
 
 		fname_case_out = Classifier->get_description()->fname_base_out + "_cnt" + std::to_string(input_counter);
 
-		canonical_form_of_variety *Variety;
+		variety_compute_canonical_form *Variety;
 
-		Variety = NEW_OBJECT(canonical_form_of_variety);
+		Variety = NEW_OBJECT(variety_compute_canonical_form);
 
 		if (f_v) {
 			cout << "classification_of_varieties::main_loop "
@@ -367,10 +375,15 @@ void classification_of_varieties::main_loop(
 		}
 		Variety->init(
 				Classifier,
+				Classifier->Ring_with_action,
+				Classifier->Classification_of_varieties_nauty,
 				fname_case_out,
 				input_counter,
 				Classifier->Input->Vo[input_counter],
 				verbose_level - 2);
+
+
+
 		if (f_v) {
 			cout << "classification_of_varieties::main_loop "
 					"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
@@ -403,9 +416,9 @@ void classification_of_varieties::main_loop(
 				if (f_v) {
 					cout << "classification_of_varieties::main_loop "
 							"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-							<< " before Variety->compute_canonical_form_nauty" << endl;
+							<< " before Variety->compute_canonical_form_nauty_new" << endl;
 				}
-				Variety->compute_canonical_form_nauty(
+				Variety->compute_canonical_form_nauty_new(
 						Classifier->get_description()->f_save_nauty_input_graphs,
 						verbose_level);
 
@@ -413,24 +426,24 @@ void classification_of_varieties::main_loop(
 				if (f_v) {
 					cout << "classification_of_varieties::main_loop "
 							"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-							<< " after Variety->compute_canonical_form_nauty" << endl;
+							<< " after Variety->compute_canonical_form_nauty_new" << endl;
 				}
 
-				Goi[input_counter] = Variety->Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order_as_lint();
+				Goi[input_counter] = Variety->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
 
-				if (Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form
-						&& Variety->Stabilizer_of_set_of_rational_points->f_found_eqn) {
+				if (Variety->Variety_stabilizer_compute->f_found_canonical_form
+						&& Variety->Variety_stabilizer_compute->f_found_eqn) {
 
 					F_first_time[input_counter] = false;
 
 				}
-				else if (Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form
-						&& !Variety->Stabilizer_of_set_of_rational_points->f_found_eqn) {
+				else if (Variety->Variety_stabilizer_compute->f_found_canonical_form
+						&& !Variety->Variety_stabilizer_compute->f_found_eqn) {
 
 					F_first_time[input_counter] = true;
 
 				}
-				else if (!Variety->Stabilizer_of_set_of_rational_points->f_found_canonical_form) {
+				else if (!Variety->Variety_stabilizer_compute->f_found_canonical_form) {
 
 					F_first_time[input_counter] = true;
 
@@ -440,8 +453,8 @@ void classification_of_varieties::main_loop(
 					exit(1);
 				}
 
-				Idx_canonical_form[input_counter] = Variety->Stabilizer_of_set_of_rational_points->idx_canonical_form;
-				Idx_equation[input_counter] = Variety->Stabilizer_of_set_of_rational_points->idx_equation;
+				Idx_canonical_form[input_counter] = Variety->Variety_stabilizer_compute->idx_canonical_form;
+				Idx_equation[input_counter] = Variety->Variety_stabilizer_compute->idx_equation;
 
 				if (F_first_time[input_counter]) {
 
@@ -453,7 +466,7 @@ void classification_of_varieties::main_loop(
 
 					for (i = 0; i < input_counter; i++) {
 						idx = Idx_canonical_form[i];
-						if (idx >= Variety->Stabilizer_of_set_of_rational_points->idx_canonical_form) {
+						if (idx >= Variety->Variety_stabilizer_compute->idx_canonical_form) {
 							Idx_canonical_form[i]++;
 						}
 					}
@@ -478,9 +491,13 @@ void classification_of_varieties::main_loop(
 						<< " before Variety->compute_canonical_form_substructure" << endl;
 			}
 
+			cout << "classification_of_varieties::main_loop algorithm_substructure is no longer supported" << endl;
+			exit(1);
+
+#if 0
 			Variety->compute_canonical_form_substructure(
 					verbose_level - 1);
-
+#endif
 			if (f_v) {
 				cout << "classification_of_varieties::main_loop "
 						"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
@@ -639,7 +656,7 @@ void classification_of_varieties::report_nauty(
 
 
 		ost << "Classification\\\\" << endl;
-		ost << "$q=" << Classifier->PA->F->q << "$\\\\" << endl;
+		ost << "$q=" << Classifier->Ring_with_action->PA->F->q << "$\\\\" << endl;
 		ost << "Number of isomorphism classes: " << nb_orbits << "\\\\" << endl;
 
 
@@ -703,12 +720,12 @@ void classification_of_varieties::report_nauty(
 			Vo->Variety_object->report_equations(ost);
 
 			ost << "Points:\\\\" << endl;
-			Classifier->PA->P->Reporting->print_set_of_points_easy(
+			Classifier->Ring_with_action->PA->P->Reporting->print_set_of_points_easy(
 					ost,
 					Vo->Variety_object->Point_sets->Sets[0],
 					Vo->Variety_object->Point_sets->Set_size[0]);
 
-			Variety_table[idx]->Stabilizer_of_set_of_rational_points->report(ost);
+			Variety_table[idx]->Variety_stabilizer_compute->report(ost);
 
 
 			ost << endl;
@@ -720,7 +737,7 @@ void classification_of_varieties::report_nauty(
 			int size_limit_for_printing = 50;
 			groups::strong_generators *gens;
 
-			gens = Variety_table[idx]->Stabilizer_of_set_of_rational_points->Stab_gens_variety;
+			gens = Variety_table[idx]->Variety_stabilizer_compute->Stab_gens_variety;
 
 
 			if (f_v) {
@@ -729,10 +746,11 @@ void classification_of_varieties::report_nauty(
 			}
 			CombiA.report_TDO_and_TDA_projective_space(
 					ost,
-					Classifier->PA->P,
+					Classifier->Ring_with_action->PA->P,
 					Vo->Variety_object->Point_sets->Sets[0],
 					Vo->Variety_object->Point_sets->Set_size[0],
-					Classifier->PA->A, Classifier->PA->A_on_lines,
+					Classifier->Ring_with_action->PA->A,
+					Classifier->Ring_with_action->PA->A_on_lines,
 					gens, size_limit_for_printing,
 					verbose_level);
 			if (f_v) {
@@ -775,7 +793,7 @@ void classification_of_varieties::report_substructure(
 
 
 	nb_orbits = Tally->nb_types;
-	nb_monomials = Classifier->Poly_ring->get_nb_monomials();
+	nb_monomials = Classifier->Ring_with_action->Poly_ring->get_nb_monomials();
 
 
 	//A = Descr->PA->A;
@@ -788,7 +806,7 @@ void classification_of_varieties::report_substructure(
 
 
 		ost << "Classification\\\\" << endl;
-		ost << "$q=" << Classifier->PA->F->q << "$\\\\" << endl;
+		ost << "$q=" << Classifier->Ring_with_action->PA->F->q << "$\\\\" << endl;
 		ost << "Number of isomorphism classes: " << nb_orbits << "\\\\" << endl;
 
 
@@ -848,7 +866,7 @@ void classification_of_varieties::report_substructure(
 
 
 				ost << "Number of rational points over "
-						"$\\bbF_{" << Classifier->PA->F->q << "}$: ";
+						"$\\bbF_{" << Classifier->Ring_with_action->PA->F->q << "}$: ";
 				ost << Variety_table[idx]->Vo->Variety_object->Point_sets->Set_size[0];
 				ost << "\\\\" << endl;
 
@@ -860,7 +878,7 @@ void classification_of_varieties::report_substructure(
 
 				//Poly_ring->print_equation_tex(ost, equation);
 
-				Classifier->Poly_ring->print_equation_with_line_breaks_tex(
+				Classifier->Ring_with_action->Poly_ring->print_equation_with_line_breaks_tex(
 						ost, equation, 7, "\\\\");
 
 				ost << "\\end{eqnarray*}" << endl;
@@ -956,22 +974,6 @@ void classification_of_varieties::export_canonical_form_data(
 	Headers[c++] = "nb_pts";
 
 
-#if 0
-		int f_label_po_go;
-		std::string column_label_po_go;
-		int f_label_po_index;
-		std::string column_label_po_index;
-		int f_label_po;
-		std::string column_label_po;
-		int f_label_so;
-		std::string column_label_so;
-		int f_label_equation;
-		std::string column_label_eqn;
-		int f_label_points;
-		std::string column_label_pts;
-		int f_label_lines;
-		std::string column_label_bitangents;
-#endif
 
 	int idx_eqn;
 
@@ -1034,7 +1036,7 @@ void classification_of_varieties::export_canonical_form_data(
 			else if (Classifier->get_description()->f_algorithm_substructure) {
 
 				cout << "test 1" << endl;
-
+#if 0
 				if (CFS_table) {
 					Table[i * nb_cols + idx_sub + 0] = std::to_string(SubC->nb_orbits);
 
@@ -1066,6 +1068,7 @@ void classification_of_varieties::export_canonical_form_data(
 					Table[i * nb_cols + idx_sub + 14] = std::to_string(CFS_table[i]->CS->Stab_orbits->nb_interesting_points);
 					Table[i * nb_cols + idx_sub + 15] = std::to_string(CFS_table[i]->Orb->used_length);
 				}
+#endif
 
 			}
 
@@ -1153,10 +1156,10 @@ void classification_of_varieties::generate_source_code(
 
 
 	nb_orbits = Tally->nb_types;
-	nb_monomials = Classifier->Poly_ring->get_nb_monomials();
+	nb_monomials = Classifier->Ring_with_action->Poly_ring->get_nb_monomials();
 
 
-	A = Classifier->PA->A;
+	A = Classifier->Ring_with_action->PA->A;
 	//A_on_lines = Classifier->PA->A_on_lines;
 
 	{
@@ -1539,7 +1542,7 @@ void classification_of_varieties::write_canonical_forms_csv(
 	fname = fname_base + "_canonical_form.csv";
 
 
-	nb_monomials = Classifier->Poly_ring->get_nb_monomials();
+	nb_monomials = Classifier->Ring_with_action->Poly_ring->get_nb_monomials();
 	if (f_v) {
 		cout << "classification_of_varieties::write_canonical_forms_csv "
 				"nb_monomials = " << nb_monomials << endl;
@@ -1708,8 +1711,8 @@ void classification_of_varieties::finalize_canonical_forms(
 	for (i = 0; i < Classifier->Input->nb_objects_to_test; i++) {
 		cout << setw(2) << i << " : ";
 		Int_vec_print(cout,
-				Canonical_equation + i * Classifier->Poly_ring->get_nb_monomials(),
-				Classifier->Poly_ring->get_nb_monomials());
+				Canonical_equation + i * Classifier->Ring_with_action->Poly_ring->get_nb_monomials(),
+				Classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 		cout << " : " << Goi[i] << endl;
 	}
 
@@ -1717,7 +1720,7 @@ void classification_of_varieties::finalize_canonical_forms(
 
 	Tally->init(Canonical_equation,
 			Classifier->Input->nb_objects_to_test,
-			Classifier->Poly_ring->get_nb_monomials(),
+			Classifier->Ring_with_action->Poly_ring->get_nb_monomials(),
 			verbose_level);
 
 
@@ -1809,6 +1812,8 @@ void classification_of_varieties::make_classification_table_nauty(
 	}
 
 }
+
+#endif
 
 
 

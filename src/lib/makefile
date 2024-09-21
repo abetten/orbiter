@@ -47,7 +47,6 @@ ORBITER_MODULES= \
 		layer1_foundations/algebraic_geometry/web_of_cubic_curves.o \
 		layer1_foundations/canonical_form_classification/any_combinatorial_object.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects_description.o \
-		layer1_foundations/canonical_form_classification/classification_of_objects_report_options.o \
 		layer1_foundations/canonical_form_classification/classification_of_objects.o \
 		layer1_foundations/canonical_form_classification/classify_bitvectors.o \
 		layer1_foundations/canonical_form_classification/classify_using_canonical_forms.o \
@@ -55,6 +54,7 @@ ORBITER_MODULES= \
 		layer1_foundations/canonical_form_classification/data_input_stream_description.o \
 		layer1_foundations/canonical_form_classification/data_input_stream.o \
 		layer1_foundations/canonical_form_classification/encoded_combinatorial_object.o \
+		layer1_foundations/canonical_form_classification/objects_report_options.o \
 		layer1_foundations/coding_theory/code_diagram.o \
 		layer1_foundations/coding_theory/coding_theory_domain_crc.o \
 		layer1_foundations/coding_theory/coding_theory_domain.o \
@@ -513,19 +513,17 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
 		layer5_top_level/canonical_form/canonical_form_global.o \
-		layer5_top_level/canonical_form/canonical_form_of_variety.o \
 		layer5_top_level/canonical_form/canonical_form_substructure.o \
-		layer5_top_level/canonical_form/classification_of_combinatorial_objects.o \
 		layer5_top_level/canonical_form/classification_of_varieties_nauty.o \
 		layer5_top_level/canonical_form/classification_of_varieties.o \
-		layer5_top_level/canonical_form/combinatorial_object_in_projective_space_with_action.o \
 		layer5_top_level/canonical_form/combinatorial_object_with_properties.o \
 		layer5_top_level/canonical_form/input_objects_of_type_variety.o \
-		layer5_top_level/canonical_form/quartic_curve_object_with_action.o \
-		layer5_top_level/canonical_form/stabilizer_of_set_of_rational_points.o \
+		layer5_top_level/canonical_form/objects_after_classification.o \
 		layer5_top_level/canonical_form/variety_activity_description.o \
 		layer5_top_level/canonical_form/variety_activity.o \
+		layer5_top_level/canonical_form/variety_compute_canonical_form.o \
 		layer5_top_level/canonical_form/variety_object_with_action.o \
+		layer5_top_level/canonical_form/variety_stabilizer_compute.o \
 		layer5_top_level/coding_theory_apps/code_modification_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
 		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \
@@ -644,6 +642,7 @@ ORBITER_MODULES= \
 		layer5_top_level/projective_space/projective_space_global.o \
 		layer5_top_level/projective_space/projective_space_with_action_description.o \
 		layer5_top_level/projective_space/projective_space_with_action.o \
+		layer5_top_level/projective_space/ring_with_action.o \
 		layer5_top_level/projective_space/summary_of_properties_of_objects.o \
 		layer5_top_level/semifields/semifield_classify_description.o \
 		layer5_top_level/semifields/semifield_classify_with_substructure.o \

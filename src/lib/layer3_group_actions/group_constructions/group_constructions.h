@@ -304,12 +304,12 @@ public:
 	void report(
 			std::ostream &fp,
 			int f_sylow, int f_group_table,
-			int f_conjugacy_classes_and_normalizers,
+			//int f_conjugacy_classes_and_normalizers,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void create_latex_report(
 			graphics::layered_graph_draw_options *O,
-			int f_sylow, int f_group_table, int f_classes,
+			int f_sylow, int f_group_table, //int f_classes,
 			int verbose_level);
 
 };

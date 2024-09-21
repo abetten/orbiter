@@ -155,6 +155,107 @@ void interface_magma_low::export_colored_graph_to_magma(
 	}
 }
 
+void interface_magma_low::export_linear_code(
+		std::string &fname,
+		field_theory::finite_field *F,
+		int *genma, int n, int k,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "interface_magma_low::export_linear_code" << endl;
+	}
+
+	ofstream ost(fname);
+	int i, j, a;
+
+	ost << "K<w> := GF(" << F->q << ");" << endl;
+	ost << "V := VectorSpace(K, " << n << ");" << endl;
+	ost << "C := LinearCode(sub<V |" << endl;
+	for (i = 0; i < k; i++) {
+		ost << "[";
+		for (j = 0; j < n; j++) {
+			a = genma[i * n + j];
+			if (F->e == 1) {
+				ost << a;
+			}
+			else {
+				if (a <= 1) {
+					ost << a;
+				}
+				else {
+					ost << "w^" << F->log_alpha(a);
+				}
+			}
+			if (j < n - 1) {
+				ost << ",";
+			}
+		}
+		ost << "]";
+		if (i < k - 1) {
+			ost << "," << endl;
+		}
+		else {
+			ost << ">);" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "interface_magma_low::export_linear_code done" << endl;
+	}
+}
+
+void interface_magma_low::read_permutation_group(
+		std::string &fname,
+	int degree, int *&gens, int &nb_gens, int &go,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_magma_low::read_permutation_group" << endl;
+	}
+	{
+	ifstream fp(fname);
+	int i, j, a;
+
+
+	fp >> go;
+	fp >> nb_gens;
+	if (f_v) {
+		cout << "interface_magma_low::read_permutation_group "
+				"go = " << go << " nb_gens = " << nb_gens << endl;
+	}
+	gens = NEW_int(nb_gens * degree);
+	for (i = 0; i < nb_gens; i++) {
+		for (j = 0; j < degree; j++) {
+			fp >> a;
+			a--;
+			gens[i * degree + j] = a;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "interface_magma_low::read_permutation_group done" << endl;
+	}
+}
+
+void interface_magma_low::run_magma_file(
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string cmd;
+
+	cmd = orbiter_kernel_system::Orbiter->magma_path + "magma " + fname;
+
+	if (f_v) {
+		cout << "executing: " << cmd << endl;
+	}
+	system(cmd.c_str());
+}
+
+
 
 }}}
 

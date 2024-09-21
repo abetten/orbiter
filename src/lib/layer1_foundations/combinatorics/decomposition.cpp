@@ -2290,7 +2290,7 @@ void decomposition::get_and_report_classes(
 
 void decomposition::print_schemes(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {

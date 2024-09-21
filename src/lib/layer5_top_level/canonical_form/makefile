@@ -10,19 +10,17 @@ MODULES = \
 	canonical_form_classifier_description.o \
 	canonical_form_classifier.o \
 	canonical_form_global.o \
-	canonical_form_of_variety.o \
 	canonical_form_substructure.o \
-	classification_of_combinatorial_objects.o \
 	classification_of_varieties_nauty.o \
 	classification_of_varieties.o \
-	combinatorial_object_in_projective_space_with_action.o \
 	combinatorial_object_with_properties.o \
 	input_objects_of_type_variety.o \
-	quartic_curve_object_with_action.o \
-	stabilizer_of_set_of_rational_points.o \
+	objects_after_classification.o \
 	variety_activity_description.o \
 	variety_activity.o \
-	variety_object_with_action.o
+	variety_compute_canonical_form.o \
+	variety_object_with_action.o \
+	variety_stabilizer_compute.o
 
 
 all : $(MODULES)

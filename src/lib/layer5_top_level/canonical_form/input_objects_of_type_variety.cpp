@@ -23,6 +23,8 @@ input_objects_of_type_variety::input_objects_of_type_variety()
 {
 	Classifier = NULL;
 
+	//std::string fname_base_out;
+
 	skip_vector = NULL;
 	skip_sz = 0;
 
@@ -69,6 +71,20 @@ void input_objects_of_type_variety::init(
 	input_objects_of_type_variety::Classifier = Classifier;
 
 
+
+	if (Classifier->get_description()->f_output_fname) {
+		fname_base_out = Classifier->get_description()->fname_base_out;
+		if (f_v) {
+			cout << "input_objects_of_type_variety::init "
+					"fname_base_out = " << fname_base_out << endl;
+		}
+	}
+	else {
+		cout << "please use option -output_fname <fname> "
+				"to specify a file name for the output files" << endl;
+		exit(1);
+	}
+
 #if 1
 	if (Classifier->get_description()->f_skip) {
 		if (f_v) {
@@ -108,6 +124,35 @@ void input_objects_of_type_variety::init(
 	}
 }
 
+void input_objects_of_type_variety::init_direct(
+		int nb_input_Vo,
+		canonical_form::variety_object_with_action *Input_Vo,
+		std::string &fname_base_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::init_direct" << endl;
+	}
+
+	nb_objects_to_test = nb_input_Vo;
+
+	input_objects_of_type_variety::fname_base_out = fname_base_out;
+
+
+	Vo = (variety_object_with_action **) NEW_pvoid(nb_objects_to_test);
+
+	int i;
+
+	for (i = 0; i < nb_objects_to_test; i++) {
+		Vo[i] = Input_Vo + i;
+	}
+
+	if (f_v) {
+		cout << "input_objects_of_type_variety::init_direct done" << endl;
+	}
+}
 
 int input_objects_of_type_variety::skip_this_one(
 		int counter)
@@ -561,13 +606,13 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 	//VD->projective_space_label;
 
 	VD->f_has_projective_space_pointer = true;
-	VD->Projective_space_pointer = Classifier->PA->P;
+	VD->Projective_space_pointer = Classifier->Ring_with_action->PA->P;
 
 	VD->f_ring = false;
 	VD->ring_label = "";
 
 	VD->f_has_ring_pointer = true;
-	VD->Ring_pointer = Classifier->Poly_ring;
+	VD->Ring_pointer = Classifier->Ring_with_action->Poly_ring;
 
 	VD->f_has_equation_in_algebraic_form = false;
 	VD->f_has_equation_by_coefficients = false;
@@ -643,7 +688,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 				"before Vo->init" << endl;
 	}
 	Vo->init(
-			Classifier->PA,
+			Classifier->Ring_with_action->PA,
 			counter, po_go, po_index, po, so,
 			VD,
 			verbose_level);

@@ -17,7 +17,7 @@ namespace layer5_applications {
 namespace canonical_form {
 
 
-
+#if 0
 canonical_form_substructure::canonical_form_substructure()
 {
 
@@ -52,7 +52,7 @@ canonical_form_substructure::~canonical_form_substructure()
 
 
 void canonical_form_substructure::classify_curve_with_substructure(
-		canonical_form_of_variety *Variety,
+		variety_compute_canonical_form *Variety,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -67,22 +67,23 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	canonical_form_substructure::Variety = Variety;
 
 
-	trans1 = NEW_int(Variety->Canonical_form_classifier->PA->A->elt_size_in_int);
-	trans2 = NEW_int(Variety->Canonical_form_classifier->PA->A->elt_size_in_int);
-	intermediate_equation = NEW_int(Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
+	trans1 = NEW_int(Variety->Canonical_form_classifier->Ring_with_action->PA->A->elt_size_in_int);
+	trans2 = NEW_int(Variety->Canonical_form_classifier->Ring_with_action->PA->A->elt_size_in_int);
+	intermediate_equation = NEW_int(Variety->Canonical_form_classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 
 
 	if (f_v) {
 		cout << "fname_case_out = " << Variety->fname_case_out << endl;
 		cout << "cnt = " << Variety->Vo->cnt << " eqn=";
-		Int_vec_print(cout, Variety->Vo->Variety_object->eqn, Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
+		Int_vec_print(cout, Variety->Vo->Variety_object->eqn,
+				Variety->Canonical_form_classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 		cout << " pts=";
 		Lint_vec_print(cout,
 				Variety->Vo->Variety_object->Point_sets->Sets[0],
 				Variety->Vo->Variety_object->Point_sets->Set_size[0]);
 		cout << endl;
 
-		Variety->Canonical_form_classifier->Poly_ring->print_equation_tex(
+		Variety->Canonical_form_classifier->Ring_with_action->Poly_ring->print_equation_tex(
 				cout, Variety->Vo->Variety_object->eqn);
 		cout << endl;
 
@@ -144,7 +145,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->PA->A->Group_element->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->Ring_with_action->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the original set:" << endl;
 		//Gens_stabilizer_original_set->print_generators_tex();
 	}
@@ -163,7 +164,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 		cout << "transporter to canonical form:" << endl;
-		Variety->Canonical_form_classifier->PA->A->Group_element->element_print(trans1, cout);
+		Variety->Canonical_form_classifier->Ring_with_action->PA->A->Group_element->element_print(trans1, cout);
 		//cout << "Stabilizer of the canonical form:" << endl;
 		//Gens_stabilizer_canonical_form->print_generators_tex();
 	}
@@ -188,7 +189,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"before AonHPD->compute_image_int_low_level" << endl;
 	}
-	Variety->Canonical_form_classifier->AonHPD->compute_image_int_low_level(
+	Variety->Canonical_form_classifier->Ring_with_action->AonHPD->compute_image_int_low_level(
 			trans1,
 			Variety->Vo->Variety_object->eqn,
 			intermediate_equation,
@@ -206,9 +207,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 				"before Orb->init" << endl;
 	}
 	Orb->init(
-			Variety->Canonical_form_classifier->PA->A,
-			Variety->Canonical_form_classifier->PA->F,
-			Variety->Canonical_form_classifier->AonHPD,
+			Variety->Canonical_form_classifier->Ring_with_action->PA->A,
+			Variety->Canonical_form_classifier->Ring_with_action->PA->F,
+			Variety->Canonical_form_classifier->Ring_with_action->AonHPD,
 			Gens_stabilizer_canonical_form /* A->Strong_gens*/,
 			intermediate_equation,
 			verbose_level);
@@ -239,22 +240,22 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 
 
-	Variety->Canonical_form_classifier->PA->A->Group_element->element_mult(
+	Variety->Canonical_form_classifier->Ring_with_action->PA->A->Group_element->element_mult(
 			trans1, trans2, Variety->transporter_to_canonical_form, 0);
 
 
 	Variety->gens_stab_of_canonical_equation->group_order(*Variety->go_eqn);
 
-	Variety->Canonical_form_classifier->PA->F->Projective_space_basic->PG_element_normalize(
+	Variety->Canonical_form_classifier->Ring_with_action->PA->F->Projective_space_basic->PG_element_normalize(
 			Variety->canonical_equation, 1,
-			Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
+			Variety->Canonical_form_classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"canonical equation: ";
 		Int_vec_print(cout,
 				Variety->canonical_equation,
-				Variety->Canonical_form_classifier->Poly_ring->get_nb_monomials());
+				Variety->Canonical_form_classifier->Ring_with_action->Poly_ring->get_nb_monomials());
 		cout << "_{" << Variety->go_eqn << "}" << endl;
 		cout << endl;
 	}
@@ -358,6 +359,7 @@ void canonical_form_substructure::handle_orbit(
 		cout << "canonical_form_substructure::handle_orbit done" << endl;
 	}
 }
+#endif
 
 }}}
 

@@ -18,6 +18,8 @@ namespace canonical_form {
 // #############################################################################
 
 
+// used in quartic_curve_from_surface
+
 
 //! to classify objects using canonical forms
 
@@ -185,11 +187,7 @@ private:
 
 public:
 
-	projective_geometry::projective_space_with_action *PA;
-
-	ring_theory::homogeneous_polynomial_domain *Poly_ring;
-
-	induced_actions::action_on_homogeneous_polynomials *AonHPD;
+	projective_geometry::ring_with_action *Ring_with_action;
 
 
 	// a copy of Descr->carry_through:
@@ -204,7 +202,7 @@ public:
 
 
 	// Output:
-	classification_of_varieties *Classification_of_varieties;
+	//classification_of_varieties *Classification_of_varieties;
 
 	classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
@@ -222,13 +220,16 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action *Input_Vo,
+			std::string &fname_base_out,
 			int verbose_level);
-	void init_skip(
-			std::string &skip_vector_label, int verbose_level);
 	void create_action_on_polynomials(
 			int verbose_level);
 	void classify(
+			input_objects_of_type_variety *Input,
 			int verbose_level);
+	// initializes Classification_of_varieties_nauty
+	void init_skip(
+			std::string &skip_vector_label, int verbose_level);
 	int skip_this_one(
 			int counter);
 
@@ -258,127 +259,20 @@ public:
 				int f_save_nauty_input_graphs,
 				automorphism_group_of_variety *&Aut_of_variety,
 				int verbose_level);
+	void find_isomorphism(
+			variety_stabilizer_compute *C1,
+			variety_stabilizer_compute *C,
+			int *alpha, int *gamma,
+			int verbose_level);
+	// find gamma which maps the points of C1 to the points of C.
 
 
 };
 
 
 
-// #############################################################################
-// canonical_form_of_variety.cpp
-// #############################################################################
 
-
-
-//! to compute the canonical form of a variety
-
-class canonical_form_of_variety {
-
-public:
-
-	canonical_form_classifier *Canonical_form_classifier;
-
-	std::string fname_case_out;
-
-	// input:
-	int counter;
-	variety_object_with_action *Vo;
-
-
-	// substructure output:
-	long int *canonical_pts;
-	int *canonical_equation;
-	int *transporter_to_canonical_form;
-	groups::strong_generators *gens_stab_of_canonical_equation;
-
-	// nauty output:
-	stabilizer_of_set_of_rational_points *Stabilizer_of_set_of_rational_points;
-
-	ring_theory::longinteger_object *go_eqn;
-
-	variety_object_with_action *Canonical_object;
-
-
-
-	canonical_form_of_variety();
-	~canonical_form_of_variety();
-	void init(
-			canonical_form_classifier *Canonical_form_classifier,
-			std::string &fname_case_out,
-			int counter,
-			variety_object_with_action *Vo,
-			int verbose_level);
-	void compute_canonical_form_nauty(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-	void compute_canonical_form_nauty_new(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-
-	void classify_using_nauty(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-	void classify_using_nauty_new(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-	void handle_repeated_canonical_form_of_set(
-			int idx,
-			stabilizer_of_set_of_rational_points *C,
-			long int *alpha, int *gamma,
-			int &idx_canonical_form,
-			int &idx_equation,
-			int &f_found_eqn,
-			int verbose_level);
-	void handle_repeated_canonical_form_of_set_new(
-			int idx,
-			stabilizer_of_set_of_rational_points *C,
-			long int *alpha, int *gamma,
-			int &idx_canonical_form,
-			int &idx_equation,
-			int &f_found_eqn,
-			int verbose_level);
-	int find_equation(
-			stabilizer_of_set_of_rational_points *C,
-			long int *alpha, int *gamma,
-			int idx1, int &found_at,
-			int verbose_level);
-	int find_equation_new(
-			stabilizer_of_set_of_rational_points *C,
-			long int *alpha, int *gamma,
-			int idx1, int &found_at,
-			int verbose_level);
-	// gets the canonical_form_nauty object from
-	// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
-	void add_object_and_compute_canonical_equation(
-			stabilizer_of_set_of_rational_points *C,
-			int idx, int verbose_level);
-	// adds the canonical form at position idx
-	void add_object_and_compute_canonical_equation_new(
-			stabilizer_of_set_of_rational_points *C,
-			int idx, int verbose_level);
-	// adds the canonical form at position idx, using Classification_of_varieties_nauty
-
-	void compute_canonical_form_substructure(
-			int verbose_level);
-	void compute_canonical_object(
-			int verbose_level);
-	std::string stringify_csv_entry_one_line(
-			int i, int verbose_level);
-	void prepare_csv_entry_one_line(
-			std::vector<std::string> &v, int i,
-			int verbose_level);
-	std::string stringify_csv_entry_one_line_nauty(
-			int i, int verbose_level);
-	std::string stringify_csv_entry_one_line_nauty_new(
-			int i, int verbose_level);
-	void prepare_csv_entry_one_line_nauty(
-			std::vector<std::string> &v, int i, int verbose_level);
-	void prepare_csv_entry_one_line_nauty_new(
-			std::vector<std::string> &v, int i, int verbose_level);
-
-};
-
-
+#if 0
 // #############################################################################
 // canonical_form_substructure.cpp
 // #############################################################################
@@ -391,7 +285,7 @@ class canonical_form_substructure {
 
 public:
 
-	canonical_form_of_variety *Variety;
+	variety_compute_canonical_form *Variety;
 
 
 	set_stabilizer::substructure_stats_and_selection *SubSt;
@@ -419,7 +313,7 @@ public:
 	canonical_form_substructure();
 	~canonical_form_substructure();
 	void classify_curve_with_substructure(
-			canonical_form_of_variety *Variety,
+			variety_compute_canonical_form *Variety,
 			int verbose_level);
 	void handle_orbit(
 			int *transporter_to_canonical_form,
@@ -431,66 +325,7 @@ public:
 };
 
 
-
-
-// #############################################################################
-// classification_of_combinatorial_objects.cpp
-// #############################################################################
-
-
-//! classification of combinatorial objects
-
-
-class classification_of_combinatorial_objects {
-
-public:
-
-
-	canonical_form_classification::classification_of_objects *CO;
-
-	combinatorial_object_with_properties *OwP; // [CO->nb_orbits]
-
-	int f_projective_space;
-	projective_geometry::projective_space_with_action *PA;
-
-
-	classification_of_combinatorial_objects();
-	~classification_of_combinatorial_objects();
-	void init_after_nauty(
-			canonical_form_classification::classification_of_objects *CO,
-			int f_projective_space,
-			projective_geometry::projective_space_with_action *PA,
-			int verbose_level);
-	void classification_write_file(
-			std::string &fname_base,
-			int verbose_level);
-	void classification_report(
-			canonical_form_classification::classification_of_objects_report_options
-						*Report_options,
-			int verbose_level);
-	void latex_report(
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int verbose_level);
-	void report_all_isomorphism_types(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int verbose_level);
-	void report_isomorphism_type(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int i, int verbose_level);
-	void report_object(
-			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
-				*Report_options,
-			int i,
-			int verbose_level);
-
-
-};
+#endif
 
 
 
@@ -514,14 +349,9 @@ public:
 		//induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
 
-	// Work data:
+	// Input data:
+	input_objects_of_type_variety *Input;
 
-	int nb_objects_to_test;
-		// number of input varieties that should be tested for isomorphism
-
-	variety_object_with_action *Input_Vo;
-		// the variety currently under consideration.
-		// This is not an array
 
 	std::string fname_base;
 
@@ -543,9 +373,9 @@ public:
 
 
 
-	// output data
+	// input and output data
 
-	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
+	variety_compute_canonical_form **Canonical_forms; // [Canonical_form_classifier->Input->nb_objects_to_test]
 
 
 	int *Elt; // [Classifier->PA->A->elt_size_in_int]
@@ -559,11 +389,13 @@ public:
 	classification_of_varieties_nauty();
 	~classification_of_varieties_nauty();
 	void init(
-			int nb_objects_to_test,
-			variety_object_with_action *Input_Vo,
-			std::string &fname_base,
+			input_objects_of_type_variety *Input,
 			canonical_form_classifier *Classifier,
 			int verbose_level);
+	void prepare_canonical_forms(
+			int verbose_level);
+	// initializes the entries of Variety_table[nb_inputs]
+	// given the data in Vo[]
 	void classify_nauty(
 			int verbose_level);
 	void allocate_tables(
@@ -580,10 +412,13 @@ public:
 			int verbose_level);
 	void report_iso_types(
 			std::ostream &ost, int verbose_level);
+	void generate_source_code(
+			std::string &fname_base,
+			int verbose_level);
 
 };
 
-
+#if 1
 // #############################################################################
 // classification_of_varieties.cpp
 // #############################################################################
@@ -619,16 +454,17 @@ public:
 		int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
 
 
+
 	// substructure stuff:
 
-
+#if 0
 		// needed once for the whole classification process:
 		set_stabilizer::substructure_classifier *SubC;
 
 		// needed once for each object:
 		canonical_form_substructure **CFS_table;
 			// [Input->nb_objects_to_test]
-
+#endif
 
 		// computed in finalize_canonical_forms, only if we don't use nauty:
 
@@ -650,7 +486,7 @@ public:
 
 	// output data for both algorithms:
 
-	canonical_form_of_variety **Variety_table; // [Input->nb_objects_to_test]
+		variety_compute_canonical_form **Variety_table; // [Input->nb_objects_to_test]
 
 
 	int *Elt; // [Classifier->PA->A->elt_size_in_int]
@@ -668,8 +504,10 @@ public:
 			int verbose_level);
 	void classify_nauty(
 			int verbose_level);
+#if 0
 	void classify_with_substructure(
 			int verbose_level);
+#endif
 	void main_loop(
 			int verbose_level);
 	void report(
@@ -703,117 +541,10 @@ public:
 			int verbose_level);
 
 };
-
-
-// #############################################################################
-// input_objects_of_type_variety.cpp
-// #############################################################################
-
-
-
-//! input objects for classification of varieties
-
-
-class input_objects_of_type_variety {
-
-public:
-
-	canonical_form_classifier *Classifier;
-
-
-	int *skip_vector;
-	int skip_sz;
-
-	int nb_objects_to_test;
-
-
-	int idx_po_go, idx_po_index;
-	int idx_po, idx_so;
-	int idx_eqn_algebraic;
-	int idx_eqn_by_coefficients;
-	int idx_eqn2_algebraic;
-	int idx_eqn2_by_coefficients;
-	int idx_pts;
-	int idx_bitangents;
-
-	variety_object_with_action **Vo;
-		// [nb_objects_to_test]
-
-
-	input_objects_of_type_variety();
-	~input_objects_of_type_variety();
-	void init(
-			canonical_form_classifier *Classifier,
-			int verbose_level);
-	int skip_this_one(
-			int counter);
-	void count_nb_objects_to_test(
-			int verbose_level);
-	void read_input_objects_from_list_of_csv_files(
-			int verbose_level);
-	void read_all_varieties_from_spreadsheet(
-			data_structures::spreadsheet *S,
-			int *Carry_through,
-			int nb_carry_through,
-			int file_cnt, int &counter,
-			int verbose_level);
-	void find_columns(
-			data_structures::spreadsheet *S,
-			int verbose_level);
-	void prepare_input_of_variety_type(
-			int row, int counter,
-			int *Carry_through,
-			int nb_carry_trough,
-			data_structures::spreadsheet *S,
-			variety_object_with_action *&Vo,
-			int verbose_level);
-
-
-};
-
-
-#if 0
-
-// #############################################################################
-// combinatorial_object_in_projective_space_with_action.cpp
-// #############################################################################
-
-
-
-//! to represent a combinatorial object in projective space
-
-
-class combinatorial_object_in_projective_space_with_action {
-
-public:
-
-	canonical_form_classification::object_with_canonical_form *OwCF;
-		// do not free
-
-	groups::strong_generators *Aut_gens;
-		// generators for the automorphism group
-
-	long int ago;
-	int nb_rows, nb_cols;
-	int *canonical_labeling;
-
-
-	combinatorial_object_in_projective_space_with_action();
-	~combinatorial_object_in_projective_space_with_action();
-	void init(
-			canonical_form_classification::object_with_canonical_form *OwCF,
-			long int ago,
-			groups::strong_generators *Aut_gens,
-			int *canonical_labeling,
-			int verbose_level);
-	void print();
-	void report(
-			std::ostream &fp,
-			projective_geometry::projective_space_with_action *PA,
-			int max_TDO_depth, int verbose_level);
-
-};
 #endif
+
+
+
 
 
 // #############################################################################
@@ -864,133 +595,156 @@ public:
 			int verbose_level);
 	void latex_report(
 			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
+			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void compute_TDO(
 			int max_TDO_depth, int verbose_level);
 	void print_TDO(
 			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
+			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 
 };
 
 
-#if 0
-
-// #############################################################################
-// quartic_curve_object_with_action.cpp
-// #############################################################################
-
-
-
-
-//! a quartic curve with bitangents and equation.
-
-
-
-class quartic_curve_object_with_action {
-
-public:
-
-	int cnt;
-	int po_go;
-	int po_index;
-	int po;
-	int so;
-
-	std::vector<std::string> Carrying_through;
-
-	algebraic_geometry::quartic_curve_object *Quartic_curve_object;
-
-
-	quartic_curve_object_with_action();
-	~quartic_curve_object_with_action();
-	void init(
-			int cnt, int po_go, int po_index, int po, int so,
-			ring_theory::homogeneous_polynomial_domain *Poly_ring,
-			std::string &eqn_txt,
-			std::string &pts_txt, std::string &bitangents_txt,
-			int verbose_level);
-	void init_image_of(
-			quartic_curve_object_with_action *old_one,
-			int *Elt,
-			actions::action *A,
-			actions::action *A_on_lines,
-			int *eqn2,
-			int verbose_level);
-	void print(
-			std::ostream &ost);
-	std::string stringify_Pts();
-	std::string stringify_bitangents();
-
-};
-#endif
 
 
 // #############################################################################
-// stabilizer_of_set_of_rational_points.cpp
+// input_objects_of_type_variety.cpp
 // #############################################################################
 
-// old name: canonical_form_nauty
-// suggested new name: stabilizer_of_set_of_rational_points.cpp
 
 
-//! to compute the stabilizer of the set of rational points of a variety using nauty
+//! input objects for classification of varieties
 
 
-class stabilizer_of_set_of_rational_points {
+class input_objects_of_type_variety {
 
 public:
 
 	canonical_form_classifier *Classifier;
 
-	canonical_form_of_variety *Variety;
+	std::string fname_base_out;
 
-	int nb_rows, nb_cols;
-	data_structures::bitvector *Canonical_form;
+	int *skip_vector;
+	int skip_sz;
 
-	l1_interfaces::nauty_output *NO;
-
-
-	groups::strong_generators *Set_stab;
-		// the set stabilizer of the set of rational points of the variety
-		// this is not the stabilizer of the variety!
-
-	orbits_schreier::orbit_of_equations *Orb;
-		// orbit under the set stabilizer
-
-	groups::strong_generators *Stab_gens_variety;
-		// the stabilizer of the original variety
-
-	int f_found_canonical_form;
-	int idx_canonical_form;
-	int idx_equation;
-	int f_found_eqn;
+	int nb_objects_to_test;
 
 
+	int idx_po_go, idx_po_index;
+	int idx_po, idx_so;
+	int idx_eqn_algebraic;
+	int idx_eqn_by_coefficients;
+	int idx_eqn2_algebraic;
+	int idx_eqn2_by_coefficients;
+	int idx_pts;
+	int idx_bitangents;
 
-	stabilizer_of_set_of_rational_points();
-	~stabilizer_of_set_of_rational_points();
+	variety_object_with_action **Vo;
+		// [nb_objects_to_test]
+
+
+	input_objects_of_type_variety();
+	~input_objects_of_type_variety();
 	void init(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
-	void compute_canonical_form_of_variety(
-			canonical_form_of_variety *Variety,
-			int f_save_nauty_input_graphs,
+	void init_direct(
+			int nb_input_Vo,
+			canonical_form::variety_object_with_action *Input_Vo,
+			std::string &fname_base_out,
 			int verbose_level);
-	// Computes the canonical labeling of the graph associated with
-	// the set of rational points of the variety.
-	// Computes the stabilizer of the set of rational points of the variety.
-	// Computes the orbit of the equation under the stabilizer of the set.
-	void orbit_of_equation_under_set_stabilizer(
+	int skip_this_one(
+			int counter);
+	void count_nb_objects_to_test(
 			int verbose_level);
-	void report(
-			std::ostream &ost);
+	void read_input_objects_from_list_of_csv_files(
+			int verbose_level);
+	void read_all_varieties_from_spreadsheet(
+			data_structures::spreadsheet *S,
+			int *Carry_through,
+			int nb_carry_through,
+			int file_cnt, int &counter,
+			int verbose_level);
+	void find_columns(
+			data_structures::spreadsheet *S,
+			int verbose_level);
+	void prepare_input_of_variety_type(
+			int row, int counter,
+			int *Carry_through,
+			int nb_carry_trough,
+			data_structures::spreadsheet *S,
+			variety_object_with_action *&Vo,
+			int verbose_level);
+
 
 };
+
+
+
+// #############################################################################
+// objects_after_classification.cpp
+// #############################################################################
+
+
+//! properties of combinatorial objects after the classification has been completed
+
+
+class objects_after_classification {
+
+public:
+
+
+	canonical_form_classification::classification_of_objects *Classification_of_objects;
+
+	combinatorial_object_with_properties *OwP; // [CO->nb_orbits]
+
+	int f_projective_space;
+	projective_geometry::projective_space_with_action *PA;
+
+
+	objects_after_classification();
+	~objects_after_classification();
+	void init_after_nauty(
+			canonical_form_classification::classification_of_objects *Classification_of_objects,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
+			int verbose_level);
+	void classification_write_file(
+			std::string &fname_base,
+			int verbose_level);
+	void classification_report(
+			canonical_form_classification::objects_report_options
+						*Report_options,
+			int verbose_level);
+	void latex_report(
+			canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_all_isomorphism_types(
+			std::ostream &ost,
+			canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &ost,
+			canonical_form_classification::objects_report_options
+				*Report_options,
+			int i, int verbose_level);
+	void report_object(
+			std::ostream &ost,
+			canonical_form_classification::objects_report_options
+				*Report_options,
+			int i,
+			int verbose_level);
+
+
+};
+
+
 
 
 
@@ -1017,12 +771,15 @@ public:
 
 	int f_report;
 
-	int f_classify;
+	int f_classify; // not yet implemented
 
-	int f_apply_transformation;
+	int f_apply_transformation; // not yet implemented
 	std::string apply_transformation_group_element;
 
 	int f_singular_points;
+
+	int f_output_fname_base;
+	std::string output_fname_base;
 
 
 	variety_activity_description();
@@ -1063,6 +820,8 @@ public:
 	void perform_activity(
 			int verbose_level);
 	void do_compute_group(
+			int f_has_output_fname_base,
+			std::string &output_fname_base,
 			int verbose_level);
 	void do_singular_points(
 			int verbose_level);
@@ -1071,6 +830,164 @@ public:
 
 
 
+// #############################################################################
+// variety_compute_canonical_form.cpp
+// #############################################################################
+
+
+
+//! to compute the canonical form of a variety
+
+class variety_compute_canonical_form {
+
+public:
+
+	canonical_form_classifier *Canonical_form_classifier;
+	// used for
+	// Canonical_form_classifier->Poly_ring
+	// Canonical_form_classifier->PA
+	// Canonical_form_classifier->PA->A
+	// Canonical_form_classifier->PA->A_on_lines
+	// Stabilizer_of_set_of_rational_points->init()
+
+	// Canonical_form_classifier->Classification_of_varieties
+	// Canonical_form_classifier->Input
+	// Canonical_form_classifier->Input->nb_objects_to_test
+	// Canonical_form_classifier->CB
+	// Canonical_form_classifier->Classification_of_varieties_nauty
+	// Canonical_form_classifier->carry_through.size
+
+
+	projective_geometry::ring_with_action *Ring_with_action;
+
+	//classification_of_varieties *Classification_of_varieties;
+	classification_of_varieties_nauty *Classification_of_varieties_nauty;
+
+
+	std::string fname_case_out;
+
+	// input:
+	int counter;
+	variety_object_with_action *Vo;
+
+
+	// substructure output:
+	long int *canonical_pts;
+	int *canonical_equation;
+	int *transporter_to_canonical_form;
+	groups::strong_generators *gens_stab_of_canonical_equation;
+
+	// nauty output:
+	variety_stabilizer_compute *Variety_stabilizer_compute;
+
+	ring_theory::longinteger_object *go_eqn;
+
+	variety_object_with_action *Canonical_object;
+
+
+
+	variety_compute_canonical_form();
+	~variety_compute_canonical_form();
+	void init(
+			canonical_form_classifier *Canonical_form_classifier,
+			projective_geometry::ring_with_action *Ring_with_action,
+			classification_of_varieties_nauty *Classification_of_varieties_nauty,
+			std::string &fname_case_out,
+			int counter,
+			variety_object_with_action *Vo,
+			int verbose_level);
+#if 0
+	void compute_canonical_form_nauty(
+			int f_save_nauty_input_graphs,
+			int verbose_level);
+#endif
+#if 1
+	void compute_canonical_form_nauty_new(
+			int f_save_nauty_input_graphs,
+			int verbose_level);
+#endif
+#if 0
+	void classify_using_nauty(
+			int f_save_nauty_input_graphs,
+			int verbose_level);
+#endif
+#if 1
+	void classify_using_nauty_new(
+			int f_save_nauty_input_graphs,
+			int verbose_level);
+#endif
+#if 0
+	void handle_repeated_canonical_form_of_set(
+			int idx,
+			variety_stabilizer_compute *C,
+			long int *alpha, int *gamma,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
+			int verbose_level);
+#endif
+#if 1
+	void handle_repeated_canonical_form_of_set_new(
+			int idx,
+			variety_stabilizer_compute *C,
+			int *alpha, int *gamma,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
+			int verbose_level);
+#endif
+#if 0
+	int find_equation(
+			variety_stabilizer_compute *C,
+			long int *alpha, int *gamma,
+			int idx1, int &found_at,
+			int verbose_level);
+#endif
+	int find_equation_new(
+			variety_stabilizer_compute *C,
+			int *alpha, int *gamma,
+			int idx1, int &found_at,
+			int verbose_level);
+	// gets the canonical_form_nauty object from
+	// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
+#if 0
+	void add_object_and_compute_canonical_equation(
+			variety_stabilizer_compute *C,
+			int idx, int verbose_level);
+	// adds the canonical form at position idx
+#endif
+#if 1
+	void add_object_and_compute_canonical_equation_new(
+			variety_stabilizer_compute *C,
+			int idx, int verbose_level);
+	// adds the canonical form at position idx, using Classification_of_varieties_nauty
+#endif
+#if 0
+	void compute_canonical_form_substructure(
+			int verbose_level);
+#endif
+	void compute_canonical_object(
+			int verbose_level);
+	std::string stringify_csv_entry_one_line(
+			int i, int verbose_level);
+	void prepare_csv_entry_one_line(
+			std::vector<std::string> &v, int i,
+			int verbose_level);
+	std::string stringify_csv_entry_one_line_nauty(
+			int i, int verbose_level);
+#if 1
+	std::string stringify_csv_entry_one_line_nauty_new(
+			int i, int verbose_level);
+#endif
+#if 0
+	void prepare_csv_entry_one_line_nauty(
+			std::vector<std::string> &v, int i, int verbose_level);
+#endif
+#if 1
+	void prepare_csv_entry_one_line_nauty_new(
+			std::vector<std::string> &v, int i, int verbose_level);
+#endif
+};
 
 // #############################################################################
 // veriety_object_with_action.cpp
@@ -1133,6 +1050,82 @@ public:
 			std::ostream &ost);
 
 };
+
+
+
+// #############################################################################
+// variety_stabilizer_compute.cpp
+// #############################################################################
+
+
+
+//! compute the stabilizer of the set of rational points of a variety using nauty
+
+
+class variety_stabilizer_compute {
+
+public:
+
+	//canonical_form_classifier *Classifier;
+		// needed for:
+	// Classifier->PA->P,
+	// Classifier->PA->A
+	// Classifier->PA->F
+	// Classifier->AonHPD
+
+
+	projective_geometry::ring_with_action *Ring_with_action;
+
+	//canonical_form_of_variety *Variety;
+	variety_object_with_action *Variety_object_with_action;
+
+	int nb_rows, nb_cols;
+	data_structures::bitvector *Canonical_form;
+
+	l1_interfaces::nauty_output *NO;
+
+
+	groups::strong_generators *Set_stab;
+		// the set stabilizer of the set of rational points of the variety
+		// this is not the stabilizer of the variety!
+
+	orbits_schreier::orbit_of_equations *Orb;
+		// orbit under the set stabilizer
+
+	groups::strong_generators *Stab_gens_variety;
+		// the stabilizer of the original variety
+
+
+	// not used inside this class:
+	int f_found_canonical_form;
+	int idx_canonical_form;
+	int idx_equation;
+	int f_found_eqn;
+
+
+
+	variety_stabilizer_compute();
+	~variety_stabilizer_compute();
+	void init(
+			projective_geometry::ring_with_action *Ring_with_action,
+			int verbose_level);
+	void compute_canonical_form_of_variety(
+			variety_object_with_action *Variety_object_with_action,
+			int f_save_nauty_input_graphs,
+			int verbose_level);
+	// Computes the canonical labeling of the graph associated with
+	// the set of rational points of the variety.
+	// Computes the stabilizer of the set of rational points of the variety.
+	// Computes the orbit of the equation under the stabilizer of the set.
+	void orbit_of_equation_under_set_stabilizer(
+			int verbose_level);
+	void report(
+			std::ostream &ost);
+
+};
+
+
+
 
 
 

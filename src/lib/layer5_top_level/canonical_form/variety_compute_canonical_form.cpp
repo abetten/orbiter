@@ -1,5 +1,5 @@
 /*
- * canonical_form_of_variety.cpp
+ * variety_compute_canonical_form.cpp
  *
  *  Created on: Jan 26, 2023
  *      Author: betten
@@ -21,9 +21,13 @@ namespace canonical_form {
 
 
 
-canonical_form_of_variety::canonical_form_of_variety()
+variety_compute_canonical_form::variety_compute_canonical_form()
 {
 	Canonical_form_classifier = NULL;
+
+	Ring_with_action = NULL;
+
+	Classification_of_varieties_nauty = NULL;
 
 	//std::string fname_case_out;
 
@@ -35,7 +39,7 @@ canonical_form_of_variety::canonical_form_of_variety()
 	transporter_to_canonical_form = NULL;
 	gens_stab_of_canonical_equation = NULL;
 
-	Stabilizer_of_set_of_rational_points = NULL;
+	Variety_stabilizer_compute = NULL;
 
 	go_eqn = NULL;
 
@@ -44,7 +48,7 @@ canonical_form_of_variety::canonical_form_of_variety()
 
 }
 
-canonical_form_of_variety::~canonical_form_of_variety()
+variety_compute_canonical_form::~variety_compute_canonical_form()
 {
 	if (canonical_equation) {
 		FREE_int(canonical_equation);
@@ -55,8 +59,8 @@ canonical_form_of_variety::~canonical_form_of_variety()
 	if (canonical_pts) {
 		FREE_lint(canonical_pts);
 	}
-	if (Stabilizer_of_set_of_rational_points) {
-		FREE_OBJECT(Stabilizer_of_set_of_rational_points);
+	if (Variety_stabilizer_compute) {
+		FREE_OBJECT(Variety_stabilizer_compute);
 	}
 	if (go_eqn) {
 		FREE_OBJECT(go_eqn);
@@ -67,8 +71,10 @@ canonical_form_of_variety::~canonical_form_of_variety()
 }
 
 
-void canonical_form_of_variety::init(
+void variety_compute_canonical_form::init(
 		canonical_form_classifier *Canonical_form_classifier,
+		projective_geometry::ring_with_action *Ring_with_action,
+		classification_of_varieties_nauty *Classification_of_varieties_nauty,
 		std::string &fname_case_out,
 		int counter,
 		variety_object_with_action *Vo,
@@ -77,21 +83,23 @@ void canonical_form_of_variety::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::init "
+		cout << "variety_compute_canonical_form::init "
 				" counter=" << counter
 				<< " verbose_level=" << verbose_level
 				<< endl;
 	}
 
-	canonical_form_of_variety::Canonical_form_classifier = Canonical_form_classifier;
-	canonical_form_of_variety::fname_case_out.assign(fname_case_out);
-	canonical_form_of_variety::counter = counter;
-	canonical_form_of_variety::Vo = Vo;
+	variety_compute_canonical_form::Canonical_form_classifier = Canonical_form_classifier;
+	variety_compute_canonical_form::Ring_with_action = Ring_with_action;
+	variety_compute_canonical_form::Classification_of_varieties_nauty = Classification_of_varieties_nauty;
+	variety_compute_canonical_form::fname_case_out.assign(fname_case_out);
+	variety_compute_canonical_form::counter = counter;
+	variety_compute_canonical_form::Vo = Vo;
 
 	canonical_equation =
-			NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());
+			NEW_int(Ring_with_action->Poly_ring->get_nb_monomials());
 	transporter_to_canonical_form =
-			NEW_int(Canonical_form_classifier->PA->A->elt_size_in_int);
+			NEW_int(Ring_with_action->PA->A->elt_size_in_int);
 
 
 	canonical_pts = NEW_lint(Vo->Variety_object->Point_sets->Set_size[0]);
@@ -101,64 +109,66 @@ void canonical_form_of_variety::init(
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::init done" << endl;
+		cout << "variety_compute_canonical_form::init done" << endl;
 	}
 }
 
-
-void canonical_form_of_variety::compute_canonical_form_nauty(
+#if 0
+void variety_compute_canonical_form::compute_canonical_form_nauty(
 		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"verbose_level=" << verbose_level << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"before classify_using_nauty" << endl;
 	}
 
-	classify_using_nauty(
+	classify_using_nauty_new(
 			f_save_nauty_input_graphs,
 			verbose_level);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"after classify_using_nauty" << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"f_found_canonical_form=" << Stabilizer_of_set_of_rational_points->f_found_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"idx_canonical_form=" << Stabilizer_of_set_of_rational_points->idx_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"idx_equation=" << Stabilizer_of_set_of_rational_points->idx_equation << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"f_found_eqn=" << Stabilizer_of_set_of_rational_points->f_found_eqn << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty "
 				"group_order=" << Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order_as_lint() << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty done" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty done" << endl;
 	}
 }
+#endif
 
-void canonical_form_of_variety::compute_canonical_form_nauty_new(
+#if 1
+void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"verbose_level=" << verbose_level << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"before classify_using_nauty_new" << endl;
 	}
 
@@ -167,36 +177,38 @@ void canonical_form_of_variety::compute_canonical_form_nauty_new(
 			verbose_level);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
 				"after classify_using_nauty_new" << endl;
 	}
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
-				"f_found_canonical_form=" << Stabilizer_of_set_of_rational_points->f_found_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
-				"idx_canonical_form=" << Stabilizer_of_set_of_rational_points->idx_canonical_form << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
-				"idx_equation=" << Stabilizer_of_set_of_rational_points->idx_equation << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
-				"f_found_eqn=" << Stabilizer_of_set_of_rational_points->f_found_eqn << endl;
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new "
-				"group_order=" << Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order_as_lint() << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"f_found_canonical_form=" << Variety_stabilizer_compute->f_found_canonical_form << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"idx_canonical_form=" << Variety_stabilizer_compute->idx_canonical_form << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"idx_equation=" << Variety_stabilizer_compute->idx_equation << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"f_found_eqn=" << Variety_stabilizer_compute->f_found_eqn << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new "
+				"group_order=" << Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint() << endl;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_nauty_new done" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_nauty_new done" << endl;
 	}
 }
+#endif
 
 
-void canonical_form_of_variety::classify_using_nauty(
+#if 0
+void variety_compute_canonical_form::classify_using_nauty(
 		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"verbose_level=" << verbose_level << endl;
 	}
 
@@ -210,25 +222,25 @@ void canonical_form_of_variety::classify_using_nauty(
 
 
 
-	Stabilizer_of_set_of_rational_points = NEW_OBJECT(stabilizer_of_set_of_rational_points);
+	Stabilizer_of_set_of_rational_points = NEW_OBJECT(variety_stabilizer_compute);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
-				"before Canonical_form_nauty->init" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty "
+				"before Stabilizer_of_set_of_rational_points->init" << endl;
 	}
-	Stabilizer_of_set_of_rational_points->init(Canonical_form_classifier, verbose_level - 2);
+	Stabilizer_of_set_of_rational_points->init(Ring_with_action, verbose_level - 2);
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
-				"after Canonical_form_nauty->init" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty "
+				"after Stabilizer_of_set_of_rational_points->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"before Canonical_form_nauty->compute_canonical_form_of_variety" << endl;
 	}
 	Stabilizer_of_set_of_rational_points->compute_canonical_form_of_variety(
-			this,
+			Vo,
 			f_save_nauty_input_graphs,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
@@ -236,8 +248,36 @@ void canonical_form_of_variety::classify_using_nauty(
 	// Computes the stabilizer of the set of rational points of the variety.
 	// Computes the orbit of the equation under the stabilizer of the set.
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"after Canonical_form_nauty->compute_canonical_form_of_variety" << endl;
+	}
+
+
+	ring_theory::longinteger_object set_stab_order;
+
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty "
+				"before Stabilizer_of_set_of_rational_points->Orb->get_canonical_form" << endl;
+	}
+	Stabilizer_of_set_of_rational_points->Orb->get_canonical_form(
+			canonical_equation,
+			transporter_to_canonical_form,
+			gens_stab_of_canonical_equation,
+			set_stab_order,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty "
+				"after Stabilizer_of_set_of_rational_points->Orb->get_canonical_form" << endl;
+	}
+
+
+	if (f_v) {
+		ring_theory::longinteger_object go;
+
+		gens_stab_of_canonical_equation->group_order(go);
+		cout << "variety_compute_canonical_form::classify_using_nauty "
+				"The stabilizer of the variety is a group of order " << go << endl;
+		//gens_stab_of_canonical_equation->print_generators_tex(cout);
 	}
 
 
@@ -247,25 +287,25 @@ void canonical_form_of_variety::classify_using_nauty(
 
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
 
-	Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len =
+	Classification_of_varieties->canonical_labeling_len =
 			Stabilizer_of_set_of_rational_points->NO->N; //canonical_labeling_len;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"canonical_labeling_len=" <<
-				Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len << endl;
+				Classification_of_varieties->canonical_labeling_len << endl;
 	}
-	if (Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len == 0) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+	if (Classification_of_varieties->canonical_labeling_len == 0) {
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"canonical_labeling_len == 0, error" << endl;
 		exit(1);
 	}
-	alpha = NEW_lint(Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len);
-	gamma = NEW_int(Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len);
+	alpha = NEW_lint(Classification_of_varieties->canonical_labeling_len);
+	gamma = NEW_int(Classification_of_varieties->canonical_labeling_len);
 
 
-	if (Canonical_form_classifier->Classification_of_varieties->CB->n == 0) {
-		Canonical_form_classifier->Classification_of_varieties->CB->init(
+	if (Classification_of_varieties->CB->n == 0) {
+		Classification_of_varieties->CB->init(
 				Canonical_form_classifier->Input->nb_objects_to_test,
 				Stabilizer_of_set_of_rational_points->Canonical_form->get_allocated_length(),
 				verbose_level - 2);
@@ -274,17 +314,17 @@ void canonical_form_of_variety::classify_using_nauty(
 	//int idx;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"before Canonical_form_classifier->CB->search_and_add_if_new" << endl;
 	}
-	Canonical_form_classifier->Classification_of_varieties->CB->search_and_add_if_new(
+	Classification_of_varieties->CB->search_and_add_if_new(
 			Stabilizer_of_set_of_rational_points->Canonical_form->get_data(),
 			Stabilizer_of_set_of_rational_points /* void *extra_data */,
 			Stabilizer_of_set_of_rational_points->f_found_canonical_form,
 			Stabilizer_of_set_of_rational_points->idx_canonical_form,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty "
+		cout << "variety_compute_canonical_form::classify_using_nauty "
 				"after Canonical_form_classifier->CB->search_and_add_if_new" << endl;
 	}
 	// if f_found is true: idx_canonical_form is where the canonical form was found.
@@ -293,7 +333,7 @@ void canonical_form_of_variety::classify_using_nauty(
 
 	if (Stabilizer_of_set_of_rational_points->f_found_canonical_form) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty "
+			cout << "variety_compute_canonical_form::classify_using_nauty "
 					"After search_and_add_if_new, "
 					"cnt = " << Vo->cnt
 					<< " po = " << Vo->po
@@ -306,7 +346,7 @@ void canonical_form_of_variety::classify_using_nauty(
 
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty "
+			cout << "variety_compute_canonical_form::classify_using_nauty "
 					"before handle_repeated_canonical_form_of_set" << endl;
 		}
 		handle_repeated_canonical_form_of_set(
@@ -318,7 +358,7 @@ void canonical_form_of_variety::classify_using_nauty(
 				Stabilizer_of_set_of_rational_points->f_found_eqn,
 				verbose_level);
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty "
+			cout << "variety_compute_canonical_form::classify_using_nauty "
 					"after handle_repeated_canonical_form_of_set" << endl;
 		}
 
@@ -326,7 +366,7 @@ void canonical_form_of_variety::classify_using_nauty(
 	} // if f_found_canonical_form
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty "
+			cout << "variety_compute_canonical_form::classify_using_nauty "
 					"After search_and_add_if_new, "
 					"cnt = " << Vo->cnt
 					<< " po = " << Vo->po
@@ -344,52 +384,54 @@ void canonical_form_of_variety::classify_using_nauty(
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty done" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty done" << endl;
 	}
 }
+#endif
 
 
-
-void canonical_form_of_variety::classify_using_nauty_new(
+#if 1
+void variety_compute_canonical_form::classify_using_nauty_new(
 		int f_save_nauty_input_graphs,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"verbose_level=" << verbose_level << endl;
 	}
 
 	ring_theory::longinteger_object go;
 
 
-	long int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
+	int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
 	int *gamma; // [Canonical_form_classifier->Output->canonical_labeling_len]
 
 
 
 
 
-	Stabilizer_of_set_of_rational_points = NEW_OBJECT(stabilizer_of_set_of_rational_points);
+	Variety_stabilizer_compute = NEW_OBJECT(variety_stabilizer_compute);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"before Canonical_form_nauty->init" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"before Variety_stabilizer_compute->init" << endl;
 	}
-	Stabilizer_of_set_of_rational_points->init(Canonical_form_classifier, verbose_level - 2);
+	Variety_stabilizer_compute->init(
+			Ring_with_action, verbose_level - 2);
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"after Canonical_form_nauty->init" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"after Variety_stabilizer_compute->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"before Canonical_form_nauty->compute_canonical_form_of_variety" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"before Variety_stabilizer_compute->compute_canonical_form_of_variety" << endl;
 	}
-	Stabilizer_of_set_of_rational_points->compute_canonical_form_of_variety(
-			this,
+	Variety_stabilizer_compute->compute_canonical_form_of_variety(
+			Vo,
 			f_save_nauty_input_graphs,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
@@ -397,22 +439,49 @@ void canonical_form_of_variety::classify_using_nauty_new(
 	// Computes the stabilizer of the set of rational points of the variety.
 	// Computes the orbit of the equation under the stabilizer of the set.
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"after Canonical_form_nauty->compute_canonical_form_of_variety" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"after Variety_stabilizer_compute->compute_canonical_form_of_variety" << endl;
+	}
+
+	ring_theory::longinteger_object set_stab_order;
+
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"before Variety_stabilizer_compute->Orb->get_canonical_form" << endl;
+	}
+	Variety_stabilizer_compute->Orb->get_canonical_form(
+			canonical_equation,
+			transporter_to_canonical_form,
+			gens_stab_of_canonical_equation,
+			set_stab_order,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"after Variety_stabilizer_compute->Orb->get_canonical_form" << endl;
 	}
 
 
-	Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order(go);
+	if (f_v) {
+		ring_theory::longinteger_object go;
+
+		gens_stab_of_canonical_equation->group_order(go);
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"The stabilizer of the variety is a group of order " << go << endl;
+		//gens_stab_of_canonical_equation->print_generators_tex(cout);
+	}
+
+
+	Variety_stabilizer_compute->Stab_gens_variety->group_order(go);
 
 	//goi = go.as_int();
 
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
 
 	Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len =
-			Stabilizer_of_set_of_rational_points->NO->N; //canonical_labeling_len;
+			Variety_stabilizer_compute->NO->N; //canonical_labeling_len;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"canonical_labeling_len=" <<
 				Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len << endl;
 	}
@@ -421,66 +490,66 @@ void canonical_form_of_variety::classify_using_nauty_new(
 				"canonical_labeling_len == 0, error" << endl;
 		exit(1);
 	}
-	alpha = NEW_lint(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
+	alpha = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
 	gamma = NEW_int(Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
 
 
 	if (Canonical_form_classifier->Classification_of_varieties_nauty->CB->n == 0) {
 		Canonical_form_classifier->Classification_of_varieties_nauty->CB->init(
-				Canonical_form_classifier->Classification_of_varieties_nauty->nb_objects_to_test,
+				Canonical_form_classifier->Classification_of_varieties_nauty->Input->nb_objects_to_test,
 				/*Canonical_form_classifier->Input->nb_objects_to_test,*/
-				Stabilizer_of_set_of_rational_points->Canonical_form->get_allocated_length(),
+				Variety_stabilizer_compute->Canonical_form->get_allocated_length(),
 				verbose_level - 2);
 	}
 	//int f_found;
 	//int idx;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"before Canonical_form_classifier->CB->search_and_add_if_new" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"before CB->search_and_add_if_new" << endl;
 	}
 	Canonical_form_classifier->Classification_of_varieties_nauty->CB->search_and_add_if_new(
-			Stabilizer_of_set_of_rational_points->Canonical_form->get_data(),
-			Stabilizer_of_set_of_rational_points /* void *extra_data */,
-			Stabilizer_of_set_of_rational_points->f_found_canonical_form,
-			Stabilizer_of_set_of_rational_points->idx_canonical_form,
+			Variety_stabilizer_compute->Canonical_form->get_data(),
+			Variety_stabilizer_compute /* void *extra_data */,
+			Variety_stabilizer_compute->f_found_canonical_form,
+			Variety_stabilizer_compute->idx_canonical_form,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new "
-				"after Canonical_form_classifier->CB->search_and_add_if_new" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"after CB->search_and_add_if_new" << endl;
 	}
 	// if f_found is true: idx_canonical_form is where the canonical form was found.
 	// if f_found is false: idx_canonical_form is where the new canonical form was added.
 
 
-	if (Stabilizer_of_set_of_rational_points->f_found_canonical_form) {
+	if (Variety_stabilizer_compute->f_found_canonical_form) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty_new "
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"After search_and_add_if_new, "
 					"cnt = " << Vo->cnt
 					<< " po = " << Vo->po
 					<< " so = " << Vo->so
 					<< " We found the canonical form at idx_canonical_form = "
-					<< Stabilizer_of_set_of_rational_points->idx_canonical_form << endl;
+					<< Variety_stabilizer_compute->idx_canonical_form << endl;
 		}
 
 
 
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty_new "
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"before handle_repeated_canonical_form_of_set_new" << endl;
 		}
 		handle_repeated_canonical_form_of_set_new(
-				Stabilizer_of_set_of_rational_points->idx_canonical_form,
-				Stabilizer_of_set_of_rational_points,
+				Variety_stabilizer_compute->idx_canonical_form,
+				Variety_stabilizer_compute,
 				alpha, gamma,
-				Stabilizer_of_set_of_rational_points->idx_canonical_form,
-				Stabilizer_of_set_of_rational_points->idx_equation,
-				Stabilizer_of_set_of_rational_points->f_found_eqn,
+				Variety_stabilizer_compute->idx_canonical_form,
+				Variety_stabilizer_compute->idx_equation,
+				Variety_stabilizer_compute->f_found_eqn,
 				verbose_level);
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty_new "
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"after handle_repeated_canonical_form_of_set_new" << endl;
 		}
 
@@ -488,7 +557,7 @@ void canonical_form_of_variety::classify_using_nauty_new(
 	} // if f_found_canonical_form
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::classify_using_nauty_new "
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
 					"After search_and_add_if_new, "
 					"cnt = " << Vo->cnt
 					<< " po = " << Vo->po
@@ -501,20 +570,21 @@ void canonical_form_of_variety::classify_using_nauty_new(
 		// with Canonical_form_nauty as extra_data.
 	}
 
-	FREE_lint(alpha);
+	FREE_int(alpha);
 	FREE_int(gamma);
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::classify_using_nauty_new done" << endl;
+		cout << "variety_compute_canonical_form::classify_using_nauty_new done" << endl;
 	}
 }
 
+#endif
 
-
-void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
+#if 0
+void variety_compute_canonical_form::handle_repeated_canonical_form_of_set(
 		int idx,
-		stabilizer_of_set_of_rational_points *C,
+		variety_stabilizer_compute *C,
 		long int *alpha, int *gamma,
 		int &idx_canonical_form,
 		int &idx_equation,
@@ -524,7 +594,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 				"verbose_level=" << verbose_level << endl;
 	}
 
@@ -532,7 +602,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 	f_found_eqn = false;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 				"starting loop over idx1" << endl;
 	}
 
@@ -544,27 +614,27 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 		// if not, break
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
-					"before Canonical_form_classifier->CB->compare_at "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
+					"before Classification_of_varieties->CB->compare_at "
 					"idx_canonical_form = " << idx_canonical_form << endl;
 		}
-		if (Canonical_form_classifier->Classification_of_varieties->CB->compare_at(
+		if (Classification_of_varieties->CB->compare_at(
 				C->Canonical_form->get_data(), idx_canonical_form) != 0) {
 			if (f_v) {
-				cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+				cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 						"at idx_canonical_form = " << idx_canonical_form
 						<< " is not equal, break" << endl;
 			}
 			break;
 		}
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"canonical form at " << idx_canonical_form << " is equal" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"before find_equation" << endl;
 		}
 
@@ -575,7 +645,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 				verbose_level);
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"after find_equation" << endl;
 			if (f_found_eqn) {
 				cout << "We found the equation" << endl;
@@ -595,13 +665,13 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 
 	if (f_found_eqn) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"we found the equation at index " << idx_equation << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"we found the canonical form but we did "
 					"not find the equation" << endl;
 		}
@@ -609,29 +679,30 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set(
 		// add the canonical form at position idx
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"before add_object_and_compute_canonical_equation" << endl;
 		}
 		add_object_and_compute_canonical_equation(C, idx, verbose_level);
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set "
 					"after add_object_and_compute_canonical_equation" << endl;
 		}
 
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set done" << endl;
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set done" << endl;
 	}
 
 }
+#endif
 
 
-
-void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
+#if 1
+void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 		int idx,
-		stabilizer_of_set_of_rational_points *C,
-		long int *alpha, int *gamma,
+		variety_stabilizer_compute *C,
+		int *alpha, int *gamma,
 		int &idx_canonical_form,
 		int &idx_equation,
 		int &f_found_eqn,
@@ -640,7 +711,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 				"verbose_level=" << verbose_level << endl;
 	}
 
@@ -648,7 +719,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 	f_found_eqn = false;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 				"starting loop over idx1" << endl;
 	}
 
@@ -660,27 +731,27 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 		// if not, break
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"before Canonical_form_classifier->CB->compare_at "
 					"idx_canonical_form = " << idx_canonical_form << endl;
 		}
 		if (Canonical_form_classifier->Classification_of_varieties_nauty->CB->compare_at(
 				C->Canonical_form->get_data(), idx_canonical_form) != 0) {
 			if (f_v) {
-				cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+				cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 						"at idx_canonical_form = " << idx_canonical_form
 						<< " is not equal, break" << endl;
 			}
 			break;
 		}
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"canonical form at " << idx_canonical_form << " is equal" << endl;
 		}
 
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"before find_equation_new" << endl;
 		}
 
@@ -691,7 +762,7 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 				verbose_level);
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"after find_equation_new" << endl;
 			if (f_found_eqn) {
 				cout << "We found the equation" << endl;
@@ -711,13 +782,13 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 
 	if (f_found_eqn) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"we found the equation at index " << idx_equation << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"we found the canonical form but we did "
 					"not find the equation" << endl;
 		}
@@ -725,27 +796,28 @@ void canonical_form_of_variety::handle_repeated_canonical_form_of_set_new(
 		// add the canonical form at position idx
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"before add_object_and_compute_canonical_equation_new" << endl;
 		}
 		add_object_and_compute_canonical_equation_new(C, idx, verbose_level);
 		if (f_v) {
-			cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new "
+			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"after add_object_and_compute_canonical_equation_new" << endl;
 		}
 
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::handle_repeated_canonical_form_of_set_new done" << endl;
+		cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new done" << endl;
 	}
 
 }
+#endif
 
 
-
-int canonical_form_of_variety::find_equation(
-		stabilizer_of_set_of_rational_points *C,
+#if 0
+int variety_compute_canonical_form::find_equation(
+		variety_stabilizer_compute *C,
 		long int *alpha, int *gamma,
 		int idx1, int &found_at,
 		int verbose_level)
@@ -755,7 +827,7 @@ int canonical_form_of_variety::find_equation(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"verbose_level=" << verbose_level << endl;
 	}
 
@@ -764,30 +836,30 @@ int canonical_form_of_variety::find_equation(
 	int i, j;
 	int f_found = false;
 
-	stabilizer_of_set_of_rational_points *C1;
-	C1 = (stabilizer_of_set_of_rational_points *)
-			Canonical_form_classifier->Classification_of_varieties->CB->Type_extra_data[idx1];
+	variety_stabilizer_compute *C1;
+	C1 = (variety_stabilizer_compute *)
+			Classification_of_varieties->CB->Type_extra_data[idx1];
 
 	alpha_inv = C1->NO->canonical_labeling;
 	//alpha_inv = C1->canonical_labeling;
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"alpha_inv = " << endl;
 		Int_vec_print(cout,
 				alpha_inv,
-				Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len);
+				Classification_of_varieties->canonical_labeling_len);
 		cout << endl;
 	}
 
 	beta_inv = C->NO->canonical_labeling;
 	//beta_inv = C->canonical_labeling;
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"beta_inv = " << endl;
 		Int_vec_print(
 				cout,
 				beta_inv,
-				Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len);
+				Classification_of_varieties->canonical_labeling_len);
 		cout << endl;
 	}
 
@@ -796,28 +868,28 @@ int canonical_form_of_variety::find_equation(
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"computing alpha" << endl;
 	}
-	for (i = 0; i < Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len; i++) {
+	for (i = 0; i < Classification_of_varieties->canonical_labeling_len; i++) {
 		j = alpha_inv[i];
 		alpha[j] = i;
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"computing gamma" << endl;
 	}
-	for (i = 0; i < Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len; i++) {
+	for (i = 0; i < Classification_of_varieties->canonical_labeling_len; i++) {
 		gamma[i] = beta_inv[alpha[i]];
 	}
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"gamma = " << endl;
 		Int_vec_print(
 				cout,
 				gamma,
-				Canonical_form_classifier->Classification_of_varieties->canonical_labeling_len);
+				Classification_of_varieties->canonical_labeling_len);
 		cout << endl;
 	}
 
@@ -831,7 +903,7 @@ int canonical_form_of_variety::find_equation(
 
 
 
-	int d = Canonical_form_classifier->PA->P->Subspaces->n + 1;
+	int d = Ring_with_action->PA->P->Subspaces->n + 1;
 	int *Mtx; // [d * d + 1]
 
 
@@ -842,50 +914,50 @@ int canonical_form_of_variety::find_equation(
 	linear_algebra::linear_algebra_global LA;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"before LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	// works for any dimension:
 
 	LA.reverse_engineer_semilinear_map(
-			Canonical_form_classifier->PA->P->Subspaces->F,
-			Canonical_form_classifier->PA->P->Subspaces->n,
+			Ring_with_action->PA->P->Subspaces->F,
+			Ring_with_action->PA->P->Subspaces->n,
 			gamma, Mtx, frobenius,
 		0 /*verbose_level*/);
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"after LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	Mtx[d * d] = frobenius;
 
-	Canonical_form_classifier->PA->A->Group_element->make_element(
-			Canonical_form_classifier->Classification_of_varieties->Elt, Mtx,
+	Ring_with_action->PA->A->Group_element->make_element(
+			Classification_of_varieties->Elt, Mtx,
 			0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "The isomorphism from C to C1 is given by:" << endl;
-		Canonical_form_classifier->PA->A->Group_element->element_print(
-				Canonical_form_classifier->Classification_of_varieties->Elt, cout);
+		Ring_with_action->PA->A->Group_element->element_print(
+				Classification_of_varieties->Elt, cout);
 	}
 
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"before substitute_semilinear" << endl;
 	}
-	Canonical_form_classifier->Poly_ring->substitute_semilinear(
+	Ring_with_action->Poly_ring->substitute_semilinear(
 			Vo->Variety_object->eqn /* coeff_in */,
-			Canonical_form_classifier->Classification_of_varieties->eqn2 /* coeff_out */,
-			Canonical_form_classifier->PA->A->is_semilinear_matrix_group(),
+			Classification_of_varieties->eqn2 /* coeff_out */,
+			Ring_with_action->PA->A->is_semilinear_matrix_group(),
 			frobenius, Mtx,
 			0/*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation "
+		cout << "variety_compute_canonical_form::find_equation "
 				"after substitute_semilinear" << endl;
 	}
 
@@ -894,15 +966,15 @@ int canonical_form_of_variety::find_equation(
 	// now, eqn2 is the image of the curve C
 	// and belongs to the orbit of equations associated with C1.
 
-	Canonical_form_classifier->PA->F->Projective_space_basic->PG_element_normalize_from_front(
-			Canonical_form_classifier->Classification_of_varieties->eqn2, 1,
-			Canonical_form_classifier->Poly_ring->get_nb_monomials());
+	Ring_with_action->PA->F->Projective_space_basic->PG_element_normalize_from_front(
+			Classification_of_varieties->eqn2, 1,
+			Ring_with_action->Poly_ring->get_nb_monomials());
 
 
 	if (f_v) {
 		cout << "The mapped equation is:";
-		Canonical_form_classifier->Poly_ring->print_equation_simple(
-				cout, Canonical_form_classifier->Classification_of_varieties->eqn2);
+		Ring_with_action->Poly_ring->print_equation_simple(
+				cout, Classification_of_varieties->eqn2);
 		cout << endl;
 	}
 
@@ -912,11 +984,11 @@ int canonical_form_of_variety::find_equation(
 	int idx2;
 
 	if (!C1->Orb->search_equation(
-			Canonical_form_classifier->Classification_of_varieties->eqn2 /*new_object */, idx2,
+			Classification_of_varieties->eqn2 /*new_object */, idx2,
 			true)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
-			cout << "canonical_form_of_variety::find_equation "
+			cout << "variety_compute_canonical_form::find_equation "
 					"we found the canonical form but we did not find "
 					"the equation at idx1=" << idx1 << endl;
 		}
@@ -924,7 +996,7 @@ int canonical_form_of_variety::find_equation(
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::find_equation "
+			cout << "variety_compute_canonical_form::find_equation "
 					"After C1->Orb->search_equation, cnt = " << Vo->cnt
 					<< " po = " << Vo->po
 					<< " so = " << Vo->so
@@ -936,17 +1008,17 @@ int canonical_form_of_variety::find_equation(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation done" << endl;
+		cout << "variety_compute_canonical_form::find_equation done" << endl;
 	}
 	return f_found;
 }
+#endif
 
 
-
-
-int canonical_form_of_variety::find_equation_new(
-		stabilizer_of_set_of_rational_points *C,
-		long int *alpha, int *gamma,
+#if 1
+int variety_compute_canonical_form::find_equation_new(
+		variety_stabilizer_compute *C,
+		int *alpha, int *gamma,
 		int idx1, int &found_at,
 		int verbose_level)
 // gets the canonical_form_nauty object from
@@ -955,23 +1027,24 @@ int canonical_form_of_variety::find_equation_new(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"verbose_level=" << verbose_level << endl;
 	}
 
+#if 0
 	int *alpha_inv;
 	int *beta_inv;
 	int i, j;
 	int f_found = false;
 
-	stabilizer_of_set_of_rational_points *C1;
-	C1 = (stabilizer_of_set_of_rational_points *)
+	variety_stabilizer_compute *C1;
+	C1 = (variety_stabilizer_compute *)
 			Canonical_form_classifier->Classification_of_varieties_nauty->CB->Type_extra_data[idx1];
 
 	alpha_inv = C1->NO->canonical_labeling;
 	//alpha_inv = C1->canonical_labeling;
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"alpha_inv = " << endl;
 		Int_vec_print(cout,
 				alpha_inv,
@@ -982,7 +1055,7 @@ int canonical_form_of_variety::find_equation_new(
 	beta_inv = C->NO->canonical_labeling;
 	//beta_inv = C->canonical_labeling;
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"beta_inv = " << endl;
 		Int_vec_print(
 				cout,
@@ -996,7 +1069,7 @@ int canonical_form_of_variety::find_equation_new(
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"computing alpha" << endl;
 	}
 	for (i = 0; i < Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len; i++) {
@@ -1005,14 +1078,14 @@ int canonical_form_of_variety::find_equation_new(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"computing gamma" << endl;
 	}
 	for (i = 0; i < Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len; i++) {
 		gamma[i] = beta_inv[alpha[i]];
 	}
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"gamma = " << endl;
 		Int_vec_print(
 				cout,
@@ -1020,6 +1093,22 @@ int canonical_form_of_variety::find_equation_new(
 				Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len);
 		cout << endl;
 	}
+#endif
+
+
+	variety_stabilizer_compute *C1;
+	C1 = (variety_stabilizer_compute *)
+			Canonical_form_classifier->Classification_of_varieties_nauty->CB->Type_extra_data[idx1];
+
+
+	canonical_form_global Canonical_form_global;
+
+	Canonical_form_global.find_isomorphism(
+			C1,
+			C,
+			alpha, gamma,
+			verbose_level - 2);
+	// find gamma which maps the points of C1 to the points of C.
 
 
 	// gamma maps C1 to C.
@@ -1027,11 +1116,12 @@ int canonical_form_of_variety::find_equation_new(
 	// it maps the equation of C to an equation in the orbit of the equation C1,
 	// which is what we want.
 
+#if 0
 	// turn gamma into a matrix
 
 
 
-	int d = Canonical_form_classifier->PA->P->Subspaces->n + 1;
+	int d = Ring_with_action->PA->P->Subspaces->n + 1;
 	int *Mtx; // [d * d + 1]
 
 
@@ -1042,71 +1132,104 @@ int canonical_form_of_variety::find_equation_new(
 	linear_algebra::linear_algebra_global LA;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"before LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	// works for any dimension:
 
 	LA.reverse_engineer_semilinear_map(
-			Canonical_form_classifier->PA->P->Subspaces->F,
-			Canonical_form_classifier->PA->P->Subspaces->n,
+			Ring_with_action->PA->P->Subspaces->F,
+			Ring_with_action->PA->P->Subspaces->n,
 			gamma, Mtx, frobenius,
 		0 /*verbose_level*/);
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"after LA.reverse_engineer_semilinear_map" << endl;
 	}
 
 	Mtx[d * d] = frobenius;
 
-	Canonical_form_classifier->PA->A->Group_element->make_element(
+	Ring_with_action->PA->A->Group_element->make_element(
 			Canonical_form_classifier->Classification_of_varieties_nauty->Elt, Mtx,
 			0 /* verbose_level*/);
 
+#endif
+
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"before Ring_with_action->lift_mapping" << endl;
+	}
+	Ring_with_action->lift_mapping(
+			gamma,
+			Canonical_form_classifier->Classification_of_varieties_nauty->Elt,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"after Ring_with_action->lift_mapping" << endl;
+	}
+
 	if (f_v) {
 		cout << "The isomorphism from C to C1 is given by:" << endl;
-		Canonical_form_classifier->PA->A->Group_element->element_print(
+		Ring_with_action->PA->A->Group_element->element_print(
 				Canonical_form_classifier->Classification_of_varieties_nauty->Elt, cout);
 	}
 
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"before Ring_with_action->apply" << endl;
+	}
+	Ring_with_action->apply(
+			Canonical_form_classifier->Classification_of_varieties_nauty->Elt,
+			Vo->Variety_object->eqn /* int *eqn_in */,
+			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /* int *eqn_out */,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
+				"after Ring_with_action->apply" << endl;
+	}
+
+#if 0
+	if (f_v) {
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"before substitute_semilinear" << endl;
 	}
-	Canonical_form_classifier->Poly_ring->substitute_semilinear(
+	Ring_with_action->Poly_ring->substitute_semilinear(
 			Vo->Variety_object->eqn /* coeff_in */,
 			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /* coeff_out */,
-			Canonical_form_classifier->PA->A->is_semilinear_matrix_group(),
+			Ring_with_action->PA->A->is_semilinear_matrix_group(),
 			frobenius, Mtx,
 			0/*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new "
+		cout << "variety_compute_canonical_form::find_equation_new "
 				"after substitute_semilinear" << endl;
 	}
+#endif
 
-	FREE_int(Mtx);
+
+	//FREE_int(Mtx);
 
 	// now, eqn2 is the image of the curve C
 	// and belongs to the orbit of equations associated with C1.
 
-	Canonical_form_classifier->PA->F->Projective_space_basic->PG_element_normalize_from_front(
+	Ring_with_action->PA->F->Projective_space_basic->PG_element_normalize_from_front(
 			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2, 1,
-			Canonical_form_classifier->Poly_ring->get_nb_monomials());
+			Ring_with_action->Poly_ring->get_nb_monomials());
 
 
 	if (f_v) {
 		cout << "The mapped equation is:";
-		Canonical_form_classifier->Poly_ring->print_equation_simple(
+		Ring_with_action->Poly_ring->print_equation_simple(
 				cout, Canonical_form_classifier->Classification_of_varieties_nauty->eqn2);
 		cout << endl;
 	}
 
 
+	int f_found = false;
 
 
 	int idx2;
@@ -1116,7 +1239,7 @@ int canonical_form_of_variety::find_equation_new(
 			true)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {
-			cout << "canonical_form_of_variety::find_equation_new "
+			cout << "variety_compute_canonical_form::find_equation_new "
 					"we found the canonical form but we did not find "
 					"the equation at idx1=" << idx1 << endl;
 		}
@@ -1124,7 +1247,7 @@ int canonical_form_of_variety::find_equation_new(
 	}
 	else {
 		if (f_v) {
-			cout << "canonical_form_of_variety::find_equation_new "
+			cout << "variety_compute_canonical_form::find_equation_new "
 					"After C1->Orb->search_equation, cnt = " << Vo->cnt
 					<< " po = " << Vo->po
 					<< " so = " << Vo->so
@@ -1136,93 +1259,93 @@ int canonical_form_of_variety::find_equation_new(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::find_equation_new done" << endl;
+		cout << "variety_compute_canonical_form::find_equation_new done" << endl;
 	}
 	return f_found;
 }
+#endif
 
 
 
-
-
-void canonical_form_of_variety::add_object_and_compute_canonical_equation(
-		stabilizer_of_set_of_rational_points *C,
+#if 0
+void variety_compute_canonical_form::add_object_and_compute_canonical_equation(
+		variety_stabilizer_compute *C,
 		int idx, int verbose_level)
 // adds the canonical form at position idx
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation "
-				"before Canonical_form_classifier->CB->add_at_idx" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation "
+				"before Classification_of_varieties->CB->add_at_idx" << endl;
 	}
-	Canonical_form_classifier->Classification_of_varieties->CB->add_at_idx(
+	Classification_of_varieties->CB->add_at_idx(
 			C->Canonical_form->get_data(),
 			C /* void *extra_data */,
 			idx,
 			0 /* verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation "
-				"after Canonical_form_classifier->CB->add_at_idx" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation "
+				"after Classification_of_varieties->CB->add_at_idx" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation done" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation done" << endl;
 	}
 
 }
-
-
-void canonical_form_of_variety::add_object_and_compute_canonical_equation_new(
-		stabilizer_of_set_of_rational_points *C,
+#endif
+#if 1
+void variety_compute_canonical_form::add_object_and_compute_canonical_equation_new(
+		variety_stabilizer_compute *C,
 		int idx, int verbose_level)
 // adds the canonical form at position idx, using Classification_of_varieties_nauty
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation_new" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation_new" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation_new "
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation_new "
 				"before Canonical_form_classifier->Classification_of_varieties_nauty->CB->add_at_idx" << endl;
 	}
-	Canonical_form_classifier->Classification_of_varieties_nauty->CB->add_at_idx(
+	Classification_of_varieties_nauty->CB->add_at_idx(
 			C->Canonical_form->get_data(),
 			C /* void *extra_data */,
 			idx,
 			0 /* verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation_new "
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation_new "
 				"after Canonical_form_classifier->Classification_of_varieties_nauty->CB->add_at_idx" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::add_object_and_compute_canonical_equation_new done" << endl;
+		cout << "variety_compute_canonical_form::add_object_and_compute_canonical_equation_new done" << endl;
 	}
 
 }
+#endif
 
 
-
-
-void canonical_form_of_variety::compute_canonical_form_substructure(
+#if 0
+void variety_compute_canonical_form::compute_canonical_form_substructure(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_substructure" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_substructure" << endl;
 	}
 
 
@@ -1230,7 +1353,7 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 	if (Vo->Variety_object->Point_sets->Set_size[0] >= Canonical_form_classifier->get_description()->substructure_size) {
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"nb_pts is sufficient" << endl;
 		}
 
@@ -1244,7 +1367,7 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 		CFS = NEW_OBJECT(canonical_form_substructure);
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"before CFS->classify_curve_with_substructure" << endl;
 		}
 
@@ -1253,38 +1376,38 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 				verbose_level);
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"after CFS->classify_curve_with_substructure" << endl;
 		}
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"storing CFS in CFS_table[counter], "
 					"counter = " << counter << endl;
 		}
-		Canonical_form_classifier->Classification_of_varieties->CFS_table[counter] = CFS;
+		Classification_of_varieties->CFS_table[counter] = CFS;
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"storing canonical_equation in "
 					"Canonical_forms[counter], "
 					"counter = " << counter << endl;
 		}
 		Int_vec_copy(canonical_equation,
-				Canonical_form_classifier->Classification_of_varieties->Canonical_equation +
-				counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
-				Canonical_form_classifier->Poly_ring->get_nb_monomials());
+				Classification_of_varieties->Canonical_equation +
+				counter * Ring_with_action->Poly_ring->get_nb_monomials(),
+				Ring_with_action->Poly_ring->get_nb_monomials());
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"storing group order in Goi[]" << endl;
 		}
-		Canonical_form_classifier->Classification_of_varieties->Goi[counter] = go_eqn->as_lint();
+		Classification_of_varieties->Goi[counter] = go_eqn->as_lint();
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
-					"Goi[counter] = " << Canonical_form_classifier->Classification_of_varieties->Goi[counter] << endl;
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
+					"Goi[counter] = " << Classification_of_varieties->Goi[counter] << endl;
 		}
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"after CFS->classify_curve_with_substructure" << endl;
 		}
 	}
@@ -1292,34 +1415,34 @@ void canonical_form_of_variety::compute_canonical_form_substructure(
 
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::compute_canonical_form_substructure "
+			cout << "variety_compute_canonical_form::compute_canonical_form_substructure "
 					"too small for substructure algorithm. "
 					"Skipping" << endl;
 		}
 
-		Canonical_form_classifier->Classification_of_varieties->CFS_table[counter] = NULL;
+		Classification_of_varieties->CFS_table[counter] = NULL;
 		Int_vec_zero(
-				Canonical_form_classifier->Classification_of_varieties->Canonical_equation +
-				counter * Canonical_form_classifier->Poly_ring->get_nb_monomials(),
-				Canonical_form_classifier->Poly_ring->get_nb_monomials());
-		Canonical_form_classifier->Classification_of_varieties->Goi[counter] = -1;
+				Classification_of_varieties->Canonical_equation +
+				counter * Ring_with_action->Poly_ring->get_nb_monomials(),
+				Ring_with_action->Poly_ring->get_nb_monomials());
+		Classification_of_varieties->Goi[counter] = -1;
 
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_form_substructure done" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_form_substructure done" << endl;
 	}
 }
+#endif
 
-
-void canonical_form_of_variety::compute_canonical_object(
+void variety_compute_canonical_form::compute_canonical_object(
 		int verbose_level)
 // applies transporter_to_canonical_form to Vo to compute canonical_equation
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_object" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_object" << endl;
 	}
 
 
@@ -1329,13 +1452,13 @@ void canonical_form_of_variety::compute_canonical_object(
 	actions::action *A;
 	actions::action *A_on_lines;
 
-	A = Canonical_form_classifier->PA->A;
-	A_on_lines = Canonical_form_classifier->PA->A_on_lines;
+	A = Ring_with_action->PA->A;
+	A_on_lines = Ring_with_action->PA->A_on_lines;
 
 	//Canonical_object->Variety_object = Vo;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_object "
+		cout << "variety_compute_canonical_form::compute_canonical_object "
 				"before Vo->apply_transformation" << endl;
 	}
 	Vo->apply_transformation(
@@ -1344,18 +1467,18 @@ void canonical_form_of_variety::compute_canonical_object(
 			A_on_lines,
 			verbose_level);
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_object "
+		cout << "variety_compute_canonical_form::compute_canonical_object "
 				"after Vo->apply_transformation" << endl;
 	}
 
 	Canonical_object = NULL; // ToDo
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::compute_canonical_object done" << endl;
+		cout << "variety_compute_canonical_form::compute_canonical_object done" << endl;
 	}
 }
 
-std::string canonical_form_of_variety::stringify_csv_entry_one_line(
+std::string variety_compute_canonical_form::stringify_csv_entry_one_line(
 		int i, int verbose_level)
 {
 
@@ -1374,14 +1497,15 @@ std::string canonical_form_of_variety::stringify_csv_entry_one_line(
 	return line;
 }
 
-void canonical_form_of_variety::prepare_csv_entry_one_line(
+#if 1
+void variety_compute_canonical_form::prepare_csv_entry_one_line(
 		std::vector<std::string> &v,
 		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line" << endl;
 	}
 
 	v.push_back(std::to_string(Vo->cnt));
@@ -1389,11 +1513,12 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	v.push_back(std::to_string(Vo->so));
 	v.push_back(std::to_string(Vo->po_go));
 	v.push_back(std::to_string(Vo->po_index));
-	v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties->Tally->rep_idx[i]));
+	v.push_back(std::to_string(-1));
+	//v.push_back(std::to_string(Classification_of_varieties->Tally->rep_idx[i]));
 
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 				<< " preparing string data" << endl;
 	}
@@ -1414,7 +1539,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 
 	s_Eqn2 = "";
 
-	s_transporter = Canonical_form_classifier->PA->A->Group_element->stringify(
+	s_transporter = Ring_with_action->PA->A->Group_element->stringify(
 			transporter_to_canonical_form);
 
 	s_Eqn_canonical = Int_vec_stringify(
@@ -1427,7 +1552,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	if (gens_stab_of_canonical_equation) {
 
 		if (false) {
-			cout << "classification_of_varieties::prepare_csv_entry_one_line "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line "
 					"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 					<< " before gens_stab_of_canonical_equation->stringify" << endl;
 		}
@@ -1438,7 +1563,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	}
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 				<< " writing data" << endl;
 	}
@@ -1466,19 +1591,21 @@ void canonical_form_of_variety::prepare_csv_entry_one_line(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line done" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line done" << endl;
 	}
 
 
 }
+#endif
 
-std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty(
+#if 0
+std::string variety_compute_canonical_form::stringify_csv_entry_one_line_nauty(
 		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty" << endl;
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty" << endl;
 	}
 
 	vector<string> v;
@@ -1486,13 +1613,13 @@ std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty(
 	string line;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty "
 				"before prepare_csv_entry_one_line_nauty" << endl;
 	}
 	prepare_csv_entry_one_line_nauty(
 			v, i, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty "
 				"after prepare_csv_entry_one_line_nauty" << endl;
 	}
 
@@ -1503,19 +1630,20 @@ std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty(
 		}
 	}
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty done" << endl;
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty done" << endl;
 	}
 	return line;
 }
+#endif
 
-
-std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new(
+#if 1
+std::string variety_compute_canonical_form::stringify_csv_entry_one_line_nauty_new(
 		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new" << endl;
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty_new" << endl;
 	}
 
 	vector<string> v;
@@ -1523,13 +1651,13 @@ std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new(
 	string line;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new "
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty_new "
 				"before prepare_csv_entry_one_line_nauty" << endl;
 	}
 	prepare_csv_entry_one_line_nauty_new(
 			v, i, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new "
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty_new "
 				"after prepare_csv_entry_one_line_nauty" << endl;
 	}
 
@@ -1540,22 +1668,22 @@ std::string canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new(
 		}
 	}
 	if (f_v) {
-		cout << "canonical_form_of_variety::stringify_csv_entry_one_line_nauty_new done" << endl;
+		cout << "variety_compute_canonical_form::stringify_csv_entry_one_line_nauty_new done" << endl;
 	}
 	return line;
 }
+#endif
 
 
 
-
-
-void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
+#if 0
+void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty(
 		std::vector<std::string> &v, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty" << endl;
 	}
 
 
@@ -1566,7 +1694,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	v.push_back(std::to_string(Vo->po_index));
 	if (Canonical_form_classifier->Input->skip_this_one(i)) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 					"case input_counter = " << i << " was skipped" << endl;
 		}
 		v.push_back(std::to_string(-1));
@@ -1576,10 +1704,10 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 	}
 	else {
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties->Iso_idx[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties->F_first_time[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties->Idx_canonical_form[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties->Idx_equation[i]));
+		v.push_back(std::to_string(Classification_of_varieties->Iso_idx[i]));
+		v.push_back(std::to_string(Classification_of_varieties->F_first_time[i]));
+		v.push_back(std::to_string(Classification_of_varieties->Idx_canonical_form[i]));
+		v.push_back(std::to_string(Classification_of_varieties->Idx_equation[i]));
 		//v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
 	}
 
@@ -1588,7 +1716,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 				<< " preparing string data" << endl;
 	}
@@ -1599,7 +1727,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	string s_Bitangents;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 				"before Vo->Variety_object->stringify" << endl;
 	}
 
@@ -1611,7 +1739,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 				<< " pushing strings" << endl;
 	}
@@ -1622,7 +1750,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	v.push_back("\"" + s_Pts + "\"");
 	v.push_back("\"" + s_Bitangents + "\"");
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 				"i=" << i << " / " << Canonical_form_classifier->Input->nb_objects_to_test
 				<< " after pushing strings" << endl;
 	}
@@ -1630,7 +1758,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 	if (Canonical_form_classifier->carry_through.size()) {
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 					"pushing Carrying_through" << endl;
 		}
 
@@ -1643,7 +1771,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 	if (Canonical_form_classifier->Input->skip_this_one(i)) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty "
 					"case input_counter = " << i << " was skipped" << endl;
 		}
 
@@ -1683,20 +1811,21 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty(
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty done" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty done" << endl;
 	}
 
 
 }
+#endif
 
-
-void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
+#if 1
+void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new(
 		std::vector<std::string> &v, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new" << endl;
 	}
 
 
@@ -1707,7 +1836,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 	v.push_back(std::to_string(Vo->po_index));
 	if (false /* Canonical_form_classifier->Input->skip_this_one(i) */) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
 					"case input_counter = " << i << " was skipped" << endl;
 		}
 		v.push_back(std::to_string(-1));
@@ -1717,10 +1846,10 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 
 	}
 	else {
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties_nauty->Iso_idx[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties_nauty->F_first_time[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties_nauty->Idx_canonical_form[i]));
-		v.push_back(std::to_string(Canonical_form_classifier->Classification_of_varieties_nauty->Idx_equation[i]));
+		v.push_back(std::to_string(Classification_of_varieties_nauty->Iso_idx[i]));
+		v.push_back(std::to_string(Classification_of_varieties_nauty->F_first_time[i]));
+		v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_canonical_form[i]));
+		v.push_back(std::to_string(Classification_of_varieties_nauty->Idx_equation[i]));
 		//v.push_back(std::to_string(Canonical_form_classifier->Output->Tally->rep_idx[i]));
 	}
 
@@ -1729,8 +1858,8 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty_new "
-				"i=" << i << " / " << Canonical_form_classifier->Classification_of_varieties_nauty->nb_objects_to_test
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
+				"i=" << i << " / " << Classification_of_varieties_nauty->Input->nb_objects_to_test
 				<< " preparing string data" << endl;
 	}
 	string s_Eqn;
@@ -1740,7 +1869,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 	string s_Bitangents;
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new "
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
 				"before Vo->Variety_object->stringify" << endl;
 	}
 
@@ -1752,8 +1881,8 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty_new "
-				"i=" << i << " / " << Canonical_form_classifier->Classification_of_varieties_nauty->nb_objects_to_test
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
+				"i=" << i << " / " << Canonical_form_classifier->Classification_of_varieties_nauty->Input->nb_objects_to_test
 				<< " pushing strings" << endl;
 	}
 
@@ -1763,15 +1892,15 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 	v.push_back("\"" + s_Pts + "\"");
 	v.push_back("\"" + s_Bitangents + "\"");
 	if (f_v) {
-		cout << "classification_of_varieties::prepare_csv_entry_one_line_nauty_new "
-				"i=" << i << " / " << Canonical_form_classifier->Classification_of_varieties_nauty->nb_objects_to_test
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
+				"i=" << i << " / " << Canonical_form_classifier->Classification_of_varieties_nauty->Input->nb_objects_to_test
 				<< " after pushing strings" << endl;
 	}
 
 	if (Canonical_form_classifier->carry_through.size()) {
 
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
 					"pushing Carrying_through" << endl;
 		}
 
@@ -1784,7 +1913,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 
 	if (false /* Canonical_form_classifier->Input->skip_this_one(i)*/) {
 		if (f_v) {
-			cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new "
+			cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new "
 					"case input_counter = " << i << " was skipped" << endl;
 		}
 
@@ -1806,7 +1935,7 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 		int l;
 		std::vector<std::string> NO_stringified;
 
-		Stabilizer_of_set_of_rational_points->NO->stringify_as_vector(
+		Variety_stabilizer_compute->NO->stringify_as_vector(
 				NO_stringified,
 				verbose_level);
 
@@ -1816,20 +1945,20 @@ void canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new(
 		for (j = 0; j < l; j++) {
 			v.push_back("\"" + NO_stringified[j] + "\"");
 		}
-		v.push_back("\"" + std::to_string(Stabilizer_of_set_of_rational_points->Orb->used_length) + "\"");
-		v.push_back("\"" + Stabilizer_of_set_of_rational_points->Stab_gens_variety->group_order_stringify() + "\"");
+		v.push_back("\"" + std::to_string(Variety_stabilizer_compute->Orb->used_length) + "\"");
+		v.push_back("\"" + Variety_stabilizer_compute->Stab_gens_variety->group_order_stringify() + "\"");
 
 
 	}
 
 
 	if (f_v) {
-		cout << "canonical_form_of_variety::prepare_csv_entry_one_line_nauty_new done" << endl;
+		cout << "variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new done" << endl;
 	}
 
 
 }
-
+#endif
 
 
 }}}

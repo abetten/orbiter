@@ -202,7 +202,8 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 
 
 	if (Decomposition_scheme_TDO == NULL) {
-		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes Decomposition_scheme_TDO not available" << endl;
+		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes "
+				"Decomposition_scheme_TDO not available" << endl;
 		return;
 	}
 	if (f_v) {
@@ -236,7 +237,8 @@ void variety_with_TDO_and_TDA::report_decomposition_schemes(
 
 
 	if (Decomposition_scheme_TDA == NULL) {
-		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes Decomposition_scheme_TDA not available" << endl;
+		cout << "variety_with_TDO_and_TDA::report_decomposition_schemes "
+				"Decomposition_scheme_TDA not available" << endl;
 		return;
 	}
 

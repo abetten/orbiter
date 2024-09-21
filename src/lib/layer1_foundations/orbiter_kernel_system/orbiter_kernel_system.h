@@ -381,6 +381,7 @@ public:
 		int &cnt_total,
 		std::vector<int> &missing_idx,
 		int verbose_level);
+
 	void poset_classification_read_candidates_of_orbit(
 			std::string &fname, int orbit_at_level,
 		long int *&candidates, int &nb_candidates, int verbose_level);

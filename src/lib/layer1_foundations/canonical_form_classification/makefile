@@ -9,14 +9,14 @@ LFLAGS = -lm
 MODULES = \
 		any_combinatorial_object.o \
 		classification_of_objects_description.o \
-		classification_of_objects_report_options.o \
 		classification_of_objects.o \
 		classify_bitvectors.o \
 		classify_using_canonical_forms.o \
 		data_input_stream_description_element.o \
 		data_input_stream_description.o \
 		data_input_stream.o \
-		encoded_combinatorial_object.o
+		encoded_combinatorial_object.o \
+		objects_report_options.o
 
 
 all : $(MODULES)

@@ -90,12 +90,12 @@ public:
 			std::ostream &ost);
 	void print_rows(
 			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
+			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void print_tex_detailed(
 			std::ostream &ost,
-			canonical_form_classification::classification_of_objects_report_options
+			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void print_tex(
@@ -300,21 +300,21 @@ public:
 };
 
 // #############################################################################
-// classification_of_objects_report_options.cpp
+// objects_report_options.cpp
 // #############################################################################
 
 
 
 
-//! options for the report for a classification of combinatorial objects
+//! options for the report for objects after classification
 
 
 
-class classification_of_objects_report_options {
+class objects_report_options {
 
 public:
 
-	// TABLES/classification_of_objects_report_options.tex
+	// TABLES/objects_report_options.tex
 
 	int f_export_flag_orbits;
 
@@ -332,8 +332,8 @@ public:
 	int f_lex_least;
 	std::string lex_least_geometry_builder;
 
-	classification_of_objects_report_options();
-	~classification_of_objects_report_options();
+	objects_report_options();
+	~objects_report_options();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);

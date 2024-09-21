@@ -308,7 +308,6 @@ namespace canonical_form_classification {
 
 	class any_combinatorial_object;
 	class classification_of_objects_description;
-	class classification_of_objects_report_options;
 	class classification_of_objects;
 	class classify_bitvectors;
 	class classify_using_canonical_forms;
@@ -316,6 +315,7 @@ namespace canonical_form_classification {
 	class data_input_stream_description;
 	class data_input_stream;
 	class encoded_combinatorial_object;
+	class objects_report_options;
 
 }
 

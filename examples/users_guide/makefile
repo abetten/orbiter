@@ -6839,7 +6839,6 @@ PGGL_3_4:
 		-group_theoretic_activity \
 			-report \
 			-report_sylow \
-			-report_classes \
 		-end
 	pdflatex PGGL_3_4_report.tex
 	$(OPEN) PGGL_3_4_report.pdf
@@ -6853,7 +6852,6 @@ PGGL_3_8:
 		-group_theoretic_activity \
 			-report \
 			-report_sylow \
-			-report_classes \
 		-end
 	pdflatex PGGL_3_8_report.tex
 	$(OPEN) PGGL_3_8_report.pdf
@@ -7648,6 +7646,35 @@ surface_q13_Eckardt_on_tritangent_planes:
 		-end
 	pdflatex PGL_4_13_Gr_4_3_res_TriP_orbits_report.tex
 	$(OPEN) PGL_4_13_Gr_4_3_res_TriP_orbits_report.pdf
+
+
+Hirschfeld_group:
+	$(ORBITER) -v 4 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define G -linear_group -PGGL 4 4 \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
+	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.pdf
+
+
+
+#F:=GF(2);
+#G := GeneralLinearGroup(8, F);
+#H := sub< G | [1,0,0,0,0,0,0,0, 1,1,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,1,1,0,0,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,1,1,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,1,1],
+#[1,0,0,0,0,0,0,0, 0,1,0,0,0,0,0,0, 0,0,1,1,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,0,0,1,1,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1],
+#[1,0,0,0,0,0,0,0, 0,1,0,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,1,1,0,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,1,1,0,0, 1,0,0,0,0,0,1,0, 0,1,0,0,0,0,0,1],
+#[1,0,0,0,0,0,0,0, 1,1,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,1,1,0,0,0,0, 1,0,1,0,1,0,0,0, 1,1,1,1,1,1,0,0, 0,0,1,0,0,0,1,0, 0,0,1,1,0,0,1,1],
+#[1,0,0,0,0,0,0,0, 0,1,0,0,0,0,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,1,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1],
+#[0,0,1,0,0,0,0,0, 0,0,0,1,0,0,0,0, 1,0,0,0,0,0,0,0, 0,1,0,0,0,0,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1, 0,0,0,0,1,0,0,0, 0,0,0,0,0,1,0,0] >;
+
+# group order = 155520
+
 
 
 Hirschfeld_stab_projectivity_group:
@@ -20893,6 +20920,8 @@ solve_praeger_design_line_type_system:
 
 # there are 8 solutions
 
+
+
 ###############################################################################
 # Chapter 16 - Canonical Forms with Nauty 
 ###############################################################################
@@ -20903,6 +20932,7 @@ test_16:
 	make test_16_2
 	make test_16_3
 	make test_16_4
+	make test_16_5
 	make test_16_6
 	make test_16_7
 	make test_16_8
@@ -21962,6 +21992,19 @@ TFC_24_3_c:
 
 
 geo_40_4_g4_c:
+	$(ORBITER) -v 5 \
+		-define Test_lines -set -loop 0 41 1 -end \
+		-define Geo -geometry_builder \
+			-V 40 -B 40 -TDO 4 \
+			-fuse 1 \
+			-fname_GEO 40_4_g4 \
+			-girth 4 \
+			-search_tree \
+			-special_test_not_orderly \
+			-test Test_lines \
+			-output_to_sage_file \
+			-output_to_inc_file \
+		-end
 	$(ORBITER) -v 2 \
 		-draw_incidence_structure_description \
 			-width 50 -width_10 5 -end \
@@ -22683,6 +22726,7 @@ Neumaier_16_aut:
 		pdflatex Neumaier_graph_16_report.tex
 		$(OPEN) Neumaier_graph_16_report.pdf
 
+# ago=256
 
 Queens_graph_aut:
 	$(ORBITER) -v 2 \
@@ -22961,7 +23005,7 @@ Paulus_c:
 			-end \
 		-end
 	pdflatex P25_classification.tex
-	open P25_classification.pdf
+	$(OPEN) P25_classification.pdf
 
 
 Neumaier_graph_25_c:
@@ -23015,7 +23059,10 @@ Neumaier_graph_25_c:
 			-end \
 		-end
 	pdflatex N25_classification.tex
-	open N25_classification.pdf
+	$(OPEN) N25_classification.pdf
+
+
+#ago = 18
 
 
 ###############################################################################

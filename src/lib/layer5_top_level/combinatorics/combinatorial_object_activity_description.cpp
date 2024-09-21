@@ -53,7 +53,7 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	Canonical_form_Descr = NULL;
 
 	f_report = false;
-	Classification_of_objects_report_options = NULL;
+	Objects_report_options = NULL;
 
 	f_draw_incidence_matrices = false;
 	//std::string draw_incidence_matrices_prefix;
@@ -206,8 +206,8 @@ int combinatorial_object_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 
-			Classification_of_objects_report_options = NEW_OBJECT(canonical_form_classification::classification_of_objects_report_options);
-			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			Objects_report_options = NEW_OBJECT(canonical_form_classification::objects_report_options);
+			i += Objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
 
 		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
@@ -336,7 +336,7 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_report) {
 		cout << "-report " << endl;
-		Classification_of_objects_report_options->print();
+		Objects_report_options->print();
 	}
 	if (f_draw_incidence_matrices) {
 		cout << "-draw_incidence_matrices " << draw_incidence_matrices_prefix << endl;

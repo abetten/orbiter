@@ -257,7 +257,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 
 void combinatorial_object_with_properties::latex_report(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -762,7 +762,7 @@ void combinatorial_object_with_properties::compute_TDO(
 
 void combinatorial_object_with_properties::print_TDO(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {

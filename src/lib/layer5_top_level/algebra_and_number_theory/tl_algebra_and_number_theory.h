@@ -431,7 +431,7 @@ public:
 			modified_group_create *MGC, int verbose_level);
 	void create_latex_report(
 			graphics::layered_graph_draw_options *O,
-			int f_sylow, int f_group_table, int f_classes,
+			int f_sylow, int f_group_table, //int f_classes,
 			int verbose_level);
 	void export_group_table(
 			int verbose_level);
@@ -815,7 +815,7 @@ public:
 		// flags that apply to report:
 		int f_report_sylow;
 		int f_report_group_table;
-		int f_report_classes;
+		//int f_report_classes;
 
 
 	int f_export_group_table;

@@ -809,20 +809,22 @@ void create_code::export_magma(
 		exit(1);
 	}
 
-	interfaces::magma_interface M;
+	//interfaces::magma_interface M;
+
+	l1_interfaces::interface_magma_low Magma;
 
 	if (f_v) {
 		cout << "create_code::export_magma "
-				"before M.export_linear_code" << endl;
+				"before Magma.export_linear_code" << endl;
 	}
-	M.export_linear_code(
+	Magma.export_linear_code(
 			fname,
 			F,
 			genma, n, k,
 			verbose_level);
 	if (f_v) {
 		cout << "create_code::export_magma "
-				"after M.export_linear_code" << endl;
+				"after Magma.export_linear_code" << endl;
 	}
 
 	if (f_v) {

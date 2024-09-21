@@ -5908,6 +5908,88 @@ actions::action *action_global::create_action_on_k_subspaces(
 	return A_modified;
 }
 
+void action_global::report_strong_generators(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *LG_Draw_options,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators" << endl;
+	}
+
+	// GAP:
+
+	ost << "GAP export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"before SG->print_generators_gap" << endl;
+	}
+	SG->print_generators_gap(ost, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"after SG->print_generators_gap" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+
+	// Fining:
+
+	ost << "Fining export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"before SG->export_fining" << endl;
+	}
+	SG->export_fining(A, ost, verbose_level);
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"after SG->export_fining" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+
+	// Magma:
+
+	ost << "Magma export: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"before SG->export_magma" << endl;
+	}
+	SG->export_magma(A, ost, verbose_level);
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"after SG->export_magma" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+
+	// Orbiter compact form:
+
+	ost << "Compact form: \\\\" << endl;
+	ost << "\\begin{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"before SG->print_generators_compact" << endl;
+	}
+	SG->print_generators_compact(ost, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::report_strong_generators "
+				"after SG->print_generators_compact" << endl;
+	}
+	ost << "\\end{verbatim}" << endl;
+
+
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators done" << endl;
+	}
+}
 
 
 

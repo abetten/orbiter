@@ -292,14 +292,16 @@ void variety_object_with_action::compute_tactical_decompositions(
 			cout << "variety_object_with_action::compute_tactical_decompositions "
 					"before TD->init_and_compute_tactical_decompositions" << endl;
 		}
-		TD->init_and_compute_tactical_decompositions(PA, Variety_object, Stab_gens, verbose_level);
+		TD->init_and_compute_tactical_decompositions(
+				PA, Variety_object, Stab_gens, verbose_level);
 		if (f_v) {
 			cout << "variety_object_with_action::compute_tactical_decompositions "
 					"after TD->init_and_compute_tactical_decompositions" << endl;
 		}
 	}
 	else {
-		cout << "variety_object_with_action::compute_tactical_decompositions the automorphism group is not available" << endl;
+		cout << "variety_object_with_action::compute_tactical_decompositions "
+				"the automorphism group is not available" << endl;
 		TD = NULL;
 	}
 

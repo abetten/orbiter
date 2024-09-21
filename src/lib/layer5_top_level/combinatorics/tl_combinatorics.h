@@ -140,8 +140,8 @@ public:
 		*Canonical_form_Descr;
 
 	int f_report;
-	canonical_form_classification::classification_of_objects_report_options
-		*Classification_of_objects_report_options;
+	canonical_form_classification::objects_report_options
+		*Objects_report_options;
 
 	int f_draw_incidence_matrices;
 	std::string draw_incidence_matrices_prefix;
@@ -231,10 +231,16 @@ public:
 class combinatorial_object_stream {
 public:
 
+	// Input:
 	canonical_form_classification::data_input_stream *IS;
 
+	// Output:
+
+	// layer 1:
 	canonical_form_classification::classification_of_objects *Classification;
-	canonical_form::classification_of_combinatorial_objects *Classification_CO;
+
+	// layer 5:
+	canonical_form::objects_after_classification *Objects_after_classification;
 
 	combinatorial_object_stream();
 	~combinatorial_object_stream();

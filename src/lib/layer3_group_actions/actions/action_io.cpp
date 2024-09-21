@@ -172,50 +172,21 @@ void action::report(
 				cout << "action::report we have f_strong_gens" << endl;
 			}
 
-			ost << "GAP export: \\\\" << endl;
-			ost << "\\begin{verbatim}" << endl;
-			if (f_v) {
-				cout << "action::report before SG->print_generators_gap" << endl;
-			}
-			SG->print_generators_gap(ost, verbose_level - 1);
-			if (f_v) {
-				cout << "action::report after SG->print_generators_gap" << endl;
-			}
-			ost << "\\end{verbatim}" << endl;
+			action_global Global;
 
-			ost << "Fining export: \\\\" << endl;
-			ost << "\\begin{verbatim}" << endl;
 			if (f_v) {
-				cout << "action::report before SG->export_fining" << endl;
+				cout << "action::report before Global.report_strong_generators" << endl;
 			}
-			SG->export_fining(this, ost, verbose_level);
+			Global.report_strong_generators(
+					ost,
+					LG_Draw_options,
+					SG,
+					this,
+					verbose_level);
 			if (f_v) {
-				cout << "action::report after SG->export_fining" << endl;
+				cout << "action::report after Global.report_strong_generators" << endl;
 			}
-			ost << "\\end{verbatim}" << endl;
 
-
-			ost << "Magma export: \\\\" << endl;
-			ost << "\\begin{verbatim}" << endl;
-			if (f_v) {
-				cout << "action::report before SG->export_magma" << endl;
-			}
-			SG->export_magma(this, ost, verbose_level);
-			if (f_v) {
-				cout << "action::report after SG->export_magma" << endl;
-			}
-			ost << "\\end{verbatim}" << endl;
-
-			ost << "Compact form: \\\\" << endl;
-			ost << "\\begin{verbatim}" << endl;
-			if (f_v) {
-				cout << "action::report before SG->print_generators_compact" << endl;
-			}
-			SG->print_generators_compact(ost, verbose_level - 1);
-			if (f_v) {
-				cout << "action::report after SG->print_generators_compact" << endl;
-			}
-			ost << "\\end{verbatim}" << endl;
 
 		}
 	}
@@ -223,6 +194,8 @@ void action::report(
 		cout << "action::report done" << endl;
 	}
 }
+
+
 
 void action::report_group_name_and_degree(
 		std::ostream &ost,

@@ -60,26 +60,13 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	Pts_on_curve = NULL;
 	sz_curve = 0;
 
+
+	Variety_object = NULL;
+
 	// computed by canonical_form_global:
 
 	Aut_of_variety = NULL;
 
-#if 0
-	OwCF = NULL;
-
-	Canonical_form = NULL;
-
-	NO = NULL;
-
-	Enc = NULL;
-
-	SG_pt_stab = NULL;
-	pt_stab_order = 0;
-
-	Orb = NULL;
-
-	Stab_gens_quartic = NULL;
-#endif
 
 }
 
@@ -132,6 +119,9 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	//}
 	if (Pts_on_curve) {
 		FREE_lint(Pts_on_curve);
+	}
+	if (Variety_object) {
+		FREE_OBJECT(Variety_object);
 	}
 	if (Aut_of_variety) {
 		FREE_OBJECT(Aut_of_variety);
@@ -495,6 +485,29 @@ void quartic_curve_from_surface::quartic(
 #endif
 
 
+	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+
+	int nb_bitangents;
+
+	nb_bitangents = 28;
+	if (f_v) {
+		cout << "quartic_curve_from_surface::quartic "
+				"before Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
+	}
+	Variety_object->init_equation_and_points_and_lines_and_labels(
+			SOA->Surf_A->PA->P,
+			SOA->Surf->PolynomialDomains->Poly4_x123,
+			curve,
+			Pts_on_curve, sz_curve,
+			Bitangents, nb_bitangents,
+			label,
+			label_tex,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_from_surface::quartic "
+				"after Variety_object->init_equation_and_points_and_lines_and_labels" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::quartic done" << endl;
@@ -507,6 +520,7 @@ void quartic_curve_from_surface::quartic(
 void quartic_curve_from_surface::map_surface_to_special_form(
 		int pt_orbit,
 	int verbose_level)
+// computes bitangents in Bitangents[]
 // Bitangents[] are listed in the same order
 // as the lines are listed in Lines[]
 // based on SOA->Orbits_on_points_not_on_lines

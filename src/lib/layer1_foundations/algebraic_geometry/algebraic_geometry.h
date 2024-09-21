@@ -2339,6 +2339,15 @@ public:
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			int *equation,
 			int verbose_level);
+	void init_equation_and_points_and_lines_and_labels(
+			geometry::projective_space *Projective_space,
+			ring_theory::homogeneous_polynomial_domain *Ring,
+			int *equation,
+			long int *Pts, int nb_pts,
+			long int *Bitangents, int nb_bitangents,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
 	void init_set_of_sets(
 			geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,

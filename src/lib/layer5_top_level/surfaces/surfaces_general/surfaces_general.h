@@ -552,17 +552,6 @@ public:
 
 	apps_combinatorics::variety_with_TDO_and_TDA *TD;
 
-#if 0
-	int f_has_TDO_TDA;
-
-	// these may be NULL, for instance if the projective space is too large:
-	combinatorics::decomposition_scheme *Decomposition_scheme_TDO;
-	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
-
-	algebraic_geometry::variety_object *Variety_with_TDO;
-	algebraic_geometry::variety_object *Variety_with_TDA;
-#endif
-
 	actions::action *A_on_points;
 	actions::action *A_on_Eckardt_points;
 	actions::action *A_on_Double_points;

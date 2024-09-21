@@ -231,6 +231,8 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	groups::strong_generators *gens_N;
 	interfaces::magma_interface Magma;
 
+	l1_interfaces::interface_magma_low Magma_low;
+
 	Magma.normalizer_using_MAGMA(
 			A, prefix, Aut, U, gens_N, verbose_level);
 		// added gens_N, Oct 12, 2018
@@ -238,7 +240,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	fname_magma_out = prefix + "normalizer.txt";
 
 
-	Magma.read_permutation_group(
+	Magma_low.read_permutation_group(
 			fname_magma_out,
 			H->group_order, N_gens, N_nb_gens, N_go,
 			verbose_level);

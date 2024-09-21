@@ -131,7 +131,7 @@ void any_combinatorial_object::print_brief(
 
 void any_combinatorial_object::print_rows(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -166,7 +166,7 @@ void any_combinatorial_object::print_rows(
 
 void any_combinatorial_object::print_tex_detailed(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {

@@ -11,6 +11,7 @@ MODULES = \
 	projective_space_global.o \
 	projective_space_with_action_description.o \
 	projective_space_with_action.o \
+	ring_with_action.o \
 	summary_of_properties_of_objects.o
 
 all : $(MODULES)

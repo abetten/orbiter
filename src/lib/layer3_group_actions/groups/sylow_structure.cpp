@@ -47,7 +47,7 @@ sylow_structure::~sylow_structure()
 }
 
 void sylow_structure::init(
-		sims *S,
+		sims *Sims,
 		std::string &label_txt,
 		std::string &label_tex,
 		int verbose_level)
@@ -62,10 +62,11 @@ void sylow_structure::init(
 	ring_theory::longinteger_domain D;
 	int i;
 
-	sylow_structure::S = S;
+	sylow_structure::S = Sims;
 	S->group_order(go);
 	if (f_v) {
-		cout << "sylow_structure::init group_order = " << go << endl;
+		cout << "sylow_structure::init "
+				"group_order = " << go << endl;
 	}
 
 	if (f_v) {
@@ -81,7 +82,8 @@ void sylow_structure::init(
 	}
 
 	if (f_v) {
-		cout << "sylow_structure::init group order = " << go << " = ";
+		cout << "sylow_structure::init "
+				"group order = " << go << " = ";
 		for (i = 0; i < nb_primes; i++) {
 			cout << primes[i] << "^" << exponents[i];
 			if (i < nb_primes - 1) {
@@ -107,7 +109,8 @@ void sylow_structure::init(
 	Subgroup_lattice = NEW_OBJECT(subgroup_lattice);
 
 	if (f_v) {
-		cout << "sylow_structure::init before Subgroup_lattice->init_basic" << endl;
+		cout << "sylow_structure::init "
+				"before Subgroup_lattice->init_basic" << endl;
 	}
 	Subgroup_lattice->init_basic(
 			S->A, S,
@@ -116,7 +119,8 @@ void sylow_structure::init(
 			SG, //S->A->Strong_gens,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "sylow_structure::init after Subgroup_lattice->init_basic" << endl;
+		cout << "sylow_structure::init "
+				"after Subgroup_lattice->init_basic" << endl;
 	}
 
 	Sub = NEW_OBJECTS(subgroup, nb_primes);
@@ -130,8 +134,44 @@ void sylow_structure::init(
 					"computing Sylow subgroup for prime "
 					<< primes[idx] << ": " << endl;
 		}
-		S->sylow_subgroup(primes[idx], P, verbose_level);
-		Sub[idx].init_from_sims(Subgroup_lattice, P, SG, verbose_level);
+		S->sylow_subgroup(
+				primes[idx], P, verbose_level);
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"Sylow subgroup for prime "
+					<< primes[idx] << " has order "
+					<< P->group_order_lint() << endl;
+		}
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"before Sub[idx].init_from_sims" << endl;
+		}
+
+		groups::strong_generators *SG1;
+
+		SG1 = NEW_OBJECT(groups::strong_generators);
+
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"before SG1->init_from_sims" << endl;
+		}
+		SG1->init_from_sims(
+				P, verbose_level - 2);
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"after SG1->init_from_sims" << endl;
+		}
+
+		Sub[idx].init_from_sims(
+				Subgroup_lattice, P, SG1, verbose_level);
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"after Sub[idx].init_from_sims" << endl;
+		}
+		// don't free the objects SG1 and P, as they are now part of Sub[idx].
+		//FREE_OBJECT(SG1);
+		//FREE_OBJECT(P);
+
 	}
 
 

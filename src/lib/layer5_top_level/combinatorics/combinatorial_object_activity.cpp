@@ -435,8 +435,8 @@ void combinatorial_object_activity::perform_activity_combo(
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before classification_report" << endl;
 		}
-		Combo->Classification_CO->classification_report(
-				Descr->Classification_of_objects_report_options,
+		Combo->Objects_after_classification->classification_report(
+				Descr->Objects_report_options,
 				verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "

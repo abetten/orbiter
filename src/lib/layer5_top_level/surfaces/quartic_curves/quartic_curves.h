@@ -209,6 +209,8 @@ public:
 	quartic_curves::quartic_curve_from_surface *QC_from_surface;
 
 
+	algebraic_geometry::variety_object *Variety_object;
+
 
 	quartic_curve_create();
 	~quartic_curve_create();
@@ -415,6 +417,10 @@ public:
 	long int *Pts_on_curve; // [sz_curve]
 		// = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
+
+
+	algebraic_geometry::variety_object *Variety_object;
+
 
 	// computed by canonical_form_global::compute_stabilizer_of_quartic_curve:
 

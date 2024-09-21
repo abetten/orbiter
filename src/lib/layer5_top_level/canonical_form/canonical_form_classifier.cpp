@@ -22,10 +22,7 @@ canonical_form_classifier::canonical_form_classifier()
 {
 	Descr = NULL;
 
-	PA = NULL;
-
-	Poly_ring = NULL;
-	AonHPD = NULL;
+	Ring_with_action = NULL;
 
 	Input = NULL;
 
@@ -33,7 +30,7 @@ canonical_form_classifier::canonical_form_classifier()
 	skip_vector = NULL;
 	skip_sz = 0;
 
-	Classification_of_varieties = NULL;
+	//Classification_of_varieties = NULL;
 
 	Classification_of_varieties_nauty = NULL;
 
@@ -41,18 +38,27 @@ canonical_form_classifier::canonical_form_classifier()
 
 canonical_form_classifier::~canonical_form_classifier()
 {
+	if (Ring_with_action) {
+		FREE_OBJECT(Ring_with_action);
+	}
+#if 0
 	if (AonHPD) {
 		FREE_OBJECT(AonHPD);
 	}
+#endif
 	if (Input) {
 		FREE_OBJECT(Input);
 	}
+#if 0
 	if (Classification_of_varieties) {
 		FREE_OBJECT(Classification_of_varieties);
 	}
+#endif
+#if 1
 	if (Classification_of_varieties_nauty) {
 		FREE_OBJECT(Classification_of_varieties_nauty);
 	}
+#endif
 	if (skip_vector) {
 		FREE_int(skip_vector);
 	}
@@ -120,8 +126,10 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init before copying carry_through" << endl;
 	}
 	if (f_v) {
-		cout << "canonical_form_classifier::init Descr->carry_through.size() = " << endl;
-		cout << "canonical_form_classifier::init Descr->carry_through.size() = " << Descr->carry_through.size() << endl;
+		cout << "canonical_form_classifier::init "
+				"Descr->carry_through.size() = " << endl;
+		cout << "canonical_form_classifier::init "
+				"Descr->carry_through.size() = " << Descr->carry_through.size() << endl;
 	}
 	int i;
 
@@ -148,55 +156,6 @@ void canonical_form_classifier::init(
 		cout << "canonical_form_classifier::init "
 				"please use -space <label>  to specify the space" << endl;
 		exit(1);
-	}
-	if (f_v) {
-		cout << "canonical_form_classifier::init before Get_projective_space" << endl;
-	}
-	PA = Get_projective_space(
-					Descr->space_label);
-
-
-#if 0
-	if (!Descr->f_degree) {
-		cout << "canonical_form_classifier::init "
-				"please use -degree <d>  to specify the degree" << endl;
-		exit(1);
-	}
-#endif
-
-	if (!Descr->f_ring) {
-		cout << "canonical_form_classifier::init "
-				"please use -ring <label>  to specify the ring" << endl;
-		exit(1);
-	}
-
-
-	if (!Descr->f_output_fname) {
-		cout << "please use -output_fname" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "canonical_form_classifier::init before Get_ring" << endl;
-	}
-	Poly_ring = Get_ring(Descr->ring_label);
-	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"polynomial degree " << Poly_ring->degree << endl;
-		cout << "canonical_form_classifier::init "
-				"polynomial number of variables " << Poly_ring->nb_variables << endl;
-	}
-
-	if (Poly_ring->nb_variables != PA->n + 1) {
-		cout << "canonical_form_classifier::init "
-				"polynomial number of variables must equal projective dimension plus one" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"nb_monomials = " << Poly_ring->get_nb_monomials() << endl;
 	}
 
 
@@ -250,6 +209,7 @@ void canonical_form_classifier::init_direct(
 		ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		int nb_input_Vo,
 		canonical_form::variety_object_with_action *Input_Vo,
+		std::string &fname_base_out,
 		int verbose_level)
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
@@ -262,14 +222,45 @@ void canonical_form_classifier::init_direct(
 	}
 
 
-	canonical_form_classifier::PA = PA;
+	//canonical_form_classifier::PA = PA;
 
-	canonical_form_classifier::Poly_ring = Poly_ring;
+	//canonical_form_classifier::Poly_ring = Poly_ring;
+
+	//induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
 
-	Input = NULL;
+
+	Ring_with_action = NEW_OBJECT(projective_geometry::ring_with_action);
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"before Ring_with_action->ring_with_action_init" << endl;
+	}
+	Ring_with_action->ring_with_action_init(PA, Poly_ring, verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"after Ring_with_action->ring_with_action_init" << endl;
+	}
+
+	Input = NEW_OBJECT(input_objects_of_type_variety);
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"before Input->init_direct" << endl;
+	}
+	Input->init_direct(
+			nb_input_Vo,
+			Input_Vo,
+			fname_base_out,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"after Input->init_direct" << endl;
+	}
+
+
+#if 0
 	if (f_v) {
 		cout << "canonical_form_classifier::init_direct "
 				"before create_action_on_polynomials" << endl;
@@ -279,6 +270,7 @@ void canonical_form_classifier::init_direct(
 		cout << "canonical_form_classifier::init_direct "
 				"after create_action_on_polynomials" << endl;
 	}
+#endif
 
 
 
@@ -286,6 +278,130 @@ void canonical_form_classifier::init_direct(
 
 	if (f_v) {
 		cout << "canonical_form_classifier::init_direct done" << endl;
+	}
+}
+
+
+
+void canonical_form_classifier::create_action_on_polynomials(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials" << endl;
+	}
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	ring_theory::homogeneous_polynomial_domain *Poly_ring;
+
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"before Get_projective_space" << endl;
+	}
+	PA = Get_projective_space(
+					Descr->space_label);
+
+
+	if (!Descr->f_ring) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"please use -ring <label>  to specify the ring" << endl;
+		exit(1);
+	}
+
+
+	if (!Descr->f_output_fname) {
+		cout << "please use -output_fname" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"before Get_ring" << endl;
+	}
+	Poly_ring = Get_ring(Descr->ring_label);
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"polynomial degree " << Poly_ring->degree << endl;
+		cout << "canonical_form_classifier::init "
+				"polynomial number of variables " << Poly_ring->nb_variables << endl;
+	}
+
+	if (Poly_ring->nb_variables != PA->n + 1) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"polynomial number of variables must equal projective dimension plus one" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init "
+				"nb_monomials = " << Poly_ring->get_nb_monomials() << endl;
+	}
+
+
+	Ring_with_action = NEW_OBJECT(projective_geometry::ring_with_action);
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"before Ring_with_action->ring_with_action_init" << endl;
+	}
+	Ring_with_action->ring_with_action_init(PA, Poly_ring, verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials "
+				"after Ring_with_action->ring_with_action_init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::create_action_on_polynomials done" << endl;
+	}
+
+
+
+}
+
+
+void canonical_form_classifier::classify(
+		input_objects_of_type_variety *Input,
+		int verbose_level)
+// initializes Classification_of_varieties_nauty
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify" << endl;
+	}
+
+
+	Classification_of_varieties_nauty = NEW_OBJECT(classification_of_varieties_nauty);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"before Classification_of_varieties_nauty->init" << endl;
+	}
+
+	Classification_of_varieties_nauty->init(
+			Input,
+			this /*canonical_form_classifier *Classifier*/,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"after Classification_of_varieties_nauty->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify done" << endl;
 	}
 }
 
@@ -319,68 +435,6 @@ void canonical_form_classifier::init_skip(
 
 	if (f_v) {
 		cout << "canonical_form_classifier::init_skip done" << endl;
-	}
-}
-
-
-void canonical_form_classifier::create_action_on_polynomials(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "canonical_form_classifier::create_action_on_polynomials" << endl;
-	}
-
-	AonHPD = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
-	if (f_v) {
-		cout << "canonical_form_classifier::create_action_on_polynomials "
-				"before AonHPD->init" << endl;
-	}
-	AonHPD->init(
-			PA->A, Poly_ring, verbose_level - 3);
-	if (f_v) {
-		cout << "canonical_form_classifier::create_action_on_polynomials "
-				"after AonHPD->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "canonical_form_classifier::create_action_on_polynomials done" << endl;
-	}
-
-
-
-}
-
-
-void canonical_form_classifier::classify(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "canonical_form_classifier::classify" << endl;
-	}
-
-
-	Classification_of_varieties = NEW_OBJECT(classification_of_varieties);
-
-
-	if (f_v) {
-		cout << "canonical_form_classifier::classify "
-				"before Classification_of_varieties->init" << endl;
-	}
-	Classification_of_varieties->init(this, verbose_level);
-	if (f_v) {
-		cout << "canonical_form_classifier::classify "
-				"after Classification_of_varieties->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "canonical_form_classifier::classify done" << endl;
 	}
 }
 

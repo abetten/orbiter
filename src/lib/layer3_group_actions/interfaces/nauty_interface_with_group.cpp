@@ -140,7 +140,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
-// creates a OwCF object. Calls set_stabilizer_of_object
+// creates a any_combinatorial_object object. Calls set_stabilizer_of_object
 // called from
 // stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety
 {
@@ -151,28 +151,28 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 	}
 
-	canonical_form_classification::any_combinatorial_object *OwCF = NULL;
+	canonical_form_classification::any_combinatorial_object *Combo = NULL;
 
 
-	OwCF = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
+	Combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data "
-				"before OwCF->init_point_set" << endl;
+				"before Combo->init_point_set" << endl;
 	}
-	OwCF->init_point_set(
+	Combo->init_point_set(
 			Pts,
 			sz,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data "
-				"after OwCF->init_point_set" << endl;
+				"after Combo->init_point_set" << endl;
 	}
-	OwCF->P = P;
+	Combo->P = P;
 
 	int nb_rows, nb_cols;
 
-	OwCF->encoding_size(
+	Combo->encoding_size(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
@@ -217,7 +217,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 				"before set_stabilizer_of_object" << endl;
 	}
 	Set_stab = set_stabilizer_of_object(
-			OwCF,
+			Combo,
 			A,
 		true /* f_compute_canonical_form */,
 		f_save_nauty_input_graphs,
@@ -232,7 +232,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 
 
 	FREE_OBJECT(Enc);
-	FREE_OBJECT(OwCF);
+	FREE_OBJECT(Combo);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data done" << endl;
@@ -260,28 +260,28 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	canonical_form_classification::any_combinatorial_object *OwCF = NULL;
+	canonical_form_classification::any_combinatorial_object *Combo = NULL;
 
 
-	OwCF = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
+	Combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
-				"before OwCF->init_point_set" << endl;
+				"before Combo->init_point_set" << endl;
 	}
-	OwCF->init_point_set(
+	Combo->init_point_set(
 			Pts,
 			sz,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
-				"after OwCF->init_point_set" << endl;
+				"after Combo->init_point_set" << endl;
 	}
-	OwCF->P = P;
+	Combo->P = P;
 
 	int nb_rows, nb_cols;
 
-	OwCF->encoding_size(
+	Combo->encoding_size(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
@@ -307,7 +307,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 				"before set_stabilizer_of_object" << endl;
 	}
 	Set_stab = set_stabilizer_of_object(
-			OwCF,
+			Combo,
 			A,
 		true /* f_compute_canonical_form */,
 		f_save_nauty_input_graphs,
@@ -346,7 +346,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 	//FREE_OBJECT(NO);
 	FREE_OBJECT(Enc);
-	FREE_OBJECT(OwCF);
+	FREE_OBJECT(Combo);
 
 
 	if (f_v) {

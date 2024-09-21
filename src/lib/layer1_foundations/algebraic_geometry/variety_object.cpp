@@ -546,6 +546,48 @@ void variety_object::init_equation(
 	}
 }
 
+void variety_object::init_equation_and_points_and_lines_and_labels(
+		geometry::projective_space *Projective_space,
+		ring_theory::homogeneous_polynomial_domain *Ring,
+		int *equation,
+		long int *Pts, int nb_pts,
+		long int *Bitangents, int nb_bitangents,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels" << endl;
+	}
+
+	init_equation_only(Projective_space, Ring, equation, verbose_level);
+
+	Point_sets = NEW_OBJECT(data_structures::set_of_sets);
+	Point_sets->init_single(
+			Projective_space->Subspaces->N_points /* underlying_set_size */,
+			Pts, nb_pts, 0 /* verbose_level*/);
+
+
+
+	Line_sets = NEW_OBJECT(data_structures::set_of_sets);
+
+	Line_sets->init_single(
+			Projective_space->Subspaces->N_points /* underlying_set_size */,
+			Bitangents, nb_bitangents, 0 /* verbose_level*/);
+
+	variety_object::label_txt = label_txt;
+	variety_object::label_tex = label_tex;
+
+	if (f_v) {
+		cout << "variety_object::init_equation_and_points_and_lines_and_labels done" << endl;
+	}
+
+}
+
+
+
 void variety_object::init_set_of_sets(
 		geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,

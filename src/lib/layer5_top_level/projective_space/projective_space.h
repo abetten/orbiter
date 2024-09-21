@@ -16,7 +16,6 @@ namespace projective_geometry {
 
 
 
-// #############################################################################
 
 
 
@@ -493,24 +492,9 @@ public:
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(
 			int f_semilinear, int verbose_level);
-#if 0
-	void canonical_labeling(
-			canonical_form_classification::object_with_canonical_form *OiP,
-		int *canonical_labeling,
-		int verbose_level);
-	void report_fixed_points_lines_and_planes(
-		int *Elt, std::ostream &ost,
-		int verbose_level);
-#endif
 	void report_orbits_on_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
-#if 0
-	void compute_group_of_set(
-			long int *set, int set_sz,
-			groups::strong_generators *&Sg,
-			int verbose_level);
-#endif
 	void do_cheat_sheet_for_decomposition_by_element_PG(
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data,
@@ -545,6 +529,46 @@ public:
 	void report_fixed_objects(
 			std::string &Elt_text,
 			std::string &fname_latex, int verbose_level);
+
+};
+
+
+// #############################################################################
+// ring_with_action.cpp
+// #############################################################################
+
+
+
+
+//! a ring with an  associated projective space and a group action
+
+
+
+class ring_with_action {
+
+public:
+
+
+	projective_geometry::projective_space_with_action *PA;
+
+	ring_theory::homogeneous_polynomial_domain *Poly_ring;
+
+	induced_actions::action_on_homogeneous_polynomials *AonHPD;
+
+
+	ring_with_action();
+	~ring_with_action();
+	void ring_with_action_init(
+			projective_geometry::projective_space_with_action *PA,
+			ring_theory::homogeneous_polynomial_domain *Poly_ring,
+			int verbose_level);
+	void lift_mapping(
+			int *gamma, int *Elt, int verbose_level);
+	// turn the permutation gamma into a semilinear mapping
+	void apply(
+			int *Elt, int *eqn_in, int *eqn_out,
+			int verbose_level);
+
 
 };
 

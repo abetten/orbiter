@@ -1,5 +1,5 @@
 /*
- * classification_of_combinatorial_objects.cpp
+ * objects_after_classification.cpp
  *
  *  Created on: Jul 9, 2023
  *      Author: betten
@@ -19,10 +19,10 @@ namespace canonical_form {
 
 
 
-classification_of_combinatorial_objects::classification_of_combinatorial_objects()
+objects_after_classification::objects_after_classification()
 {
 
-	CO = NULL;
+	Classification_of_objects = NULL;
 
 	OwP = NULL; // [CO->nb_orbits]
 
@@ -31,13 +31,13 @@ classification_of_combinatorial_objects::classification_of_combinatorial_objects
 
 }
 
-classification_of_combinatorial_objects::~classification_of_combinatorial_objects()
+objects_after_classification::~objects_after_classification()
 {
 }
 
 
-void classification_of_combinatorial_objects::init_after_nauty(
-		canonical_form_classification::classification_of_objects *CO,
+void objects_after_classification::init_after_nauty(
+		canonical_form_classification::classification_of_objects *Classification_of_objects,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
@@ -45,58 +45,58 @@ void classification_of_combinatorial_objects::init_after_nauty(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::init_after_nauty" << endl;
+		cout << "objects_after_classification::init_after_nauty" << endl;
 	}
 
-	classification_of_combinatorial_objects::CO = CO;
-	classification_of_combinatorial_objects::f_projective_space = f_projective_space;
-	classification_of_combinatorial_objects::PA = PA;
+	objects_after_classification::Classification_of_objects = Classification_of_objects;
+	objects_after_classification::f_projective_space = f_projective_space;
+	objects_after_classification::PA = PA;
 
-	if (!CO->IS) {
-		cout << "classification_of_combinatorial_objects::init_after_nauty "
+	if (!Classification_of_objects->IS) {
+		cout << "objects_after_classification::init_after_nauty "
 				"no input stream" << endl;
 		exit(1);
 	}
 
 
-	if (!CO->IS->Descr->f_label) {
-		cout << "classification_of_combinatorial_objects::init_after_nauty "
+	if (!Classification_of_objects->IS->Descr->f_label) {
+		cout << "objects_after_classification::init_after_nauty "
 				"input stream does not have a label" << endl;
 		exit(1);
 	}
 
 
-	OwP = NEW_OBJECTS(combinatorial_object_with_properties, CO->nb_orbits);
+	OwP = NEW_OBJECTS(combinatorial_object_with_properties, Classification_of_objects->nb_orbits);
 
 	int iso_type;
 
 
-	for (iso_type = 0; iso_type < CO->nb_orbits; iso_type++) {
+	for (iso_type = 0; iso_type < Classification_of_objects->nb_orbits; iso_type++) {
 
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::init_after_nauty "
-					"iso_type = " << iso_type << " / " << CO->nb_orbits << endl;
+			cout << "objects_after_classification::init_after_nauty "
+					"iso_type = " << iso_type << " / " << Classification_of_objects->nb_orbits << endl;
 			cout << "NO=" << endl;
 			//CO->NO_transversal[iso_type]->print();
 		}
 
 		std::string label;
 
-		label = CO->IS->Descr->label_txt + "_object" + std::to_string(iso_type);
+		label = Classification_of_objects->IS->Descr->label_txt + "_object" + std::to_string(iso_type);
 
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::init_after_nauty "
+			cout << "objects_after_classification::init_after_nauty "
 					"before OwP[iso_type].init" << endl;
 		}
 		OwP[iso_type].init(
-				CO->OWCF_transversal[iso_type],
-				CO->NO_transversal[iso_type],
+				Classification_of_objects->OWCF_transversal[iso_type],
+				Classification_of_objects->NO_transversal[iso_type],
 				f_projective_space, PA,
-				CO->Descr->max_TDO_depth,
+				Classification_of_objects->Descr->max_TDO_depth,
 				label,
 				verbose_level);
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::init_after_nauty "
+			cout << "objects_after_classification::init_after_nauty "
 					"after OwP[iso_type].init" << endl;
 		}
 
@@ -104,18 +104,18 @@ void classification_of_combinatorial_objects::init_after_nauty(
 	}
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::init_after_nauty done" << endl;
+		cout << "objects_after_classification::init_after_nauty done" << endl;
 	}
 }
 
-void classification_of_combinatorial_objects::classification_write_file(
+void objects_after_classification::classification_write_file(
 		std::string &fname_base,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_write_file" << endl;
+		cout << "objects_after_classification::classification_write_file" << endl;
 	}
 
 	l1_interfaces::latex_interface L;
@@ -123,16 +123,16 @@ void classification_of_combinatorial_objects::classification_write_file(
 
 	canonical_form_classification::encoded_combinatorial_object **Enc;
 
-	Enc = (canonical_form_classification::encoded_combinatorial_object **) NEW_pvoid(CO->CB->nb_types);
+	Enc = (canonical_form_classification::encoded_combinatorial_object **) NEW_pvoid(Classification_of_objects->CB->nb_types);
 
-	for (iso = 0; iso < CO->CB->nb_types; iso++) {
+	for (iso = 0; iso < Classification_of_objects->CB->nb_types; iso++) {
 
 		if (f_v ) {
-			cout << "Isomorphism type " << iso << " / " << CO->CB->nb_types << endl;
+			cout << "Isomorphism type " << iso << " / " << Classification_of_objects->CB->nb_types << endl;
 		}
 		cout << " is original object "
-			<< CO->CB->Type_rep[iso] << " and appears "
-			<< CO->CB->Type_mult[iso] << " times: \\\\" << endl;
+			<< Classification_of_objects->CB->Type_rep[iso] << " and appears "
+			<< Classification_of_objects->CB->Type_mult[iso] << " times: \\\\" << endl;
 
 
 		data_structures::sorting Sorting;
@@ -140,7 +140,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 		int nb_input_objects;
 		//int object_idx;
 
-		CO->CB->C_type_of->get_class_by_value(
+		Classification_of_objects->CB->C_type_of->get_class_by_value(
 				Input_objects,
 				nb_input_objects, iso, 0 /*verbose_level */);
 		Sorting.int_vec_heapsort(
@@ -166,7 +166,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 		}
 
 		//object_idx = Input_objects[0];
-		canonical_form_classification::any_combinatorial_object *OwCF = CO->OWCF_transversal[iso];
+		canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[iso];
 
 
 		if (f_v) {
@@ -182,9 +182,9 @@ void classification_of_combinatorial_objects::classification_write_file(
 	string *Table;
 	int nb_c = 6;
 
-	Table = new string[CO->CB->nb_types * nb_c];
+	Table = new string[Classification_of_objects->CB->nb_types * nb_c];
 
-	for (iso = 0; iso < CO->CB->nb_types; iso++) {
+	for (iso = 0; iso < Classification_of_objects->CB->nb_types; iso++) {
 
 
 		//int nb_points, nb_blocks;
@@ -201,7 +201,7 @@ void classification_of_combinatorial_objects::classification_write_file(
 		string s_ago;
 		string s_incma;
 
-		s_input_idx = std::to_string(CO->CB->Type_rep[iso]);
+		s_input_idx = std::to_string(Classification_of_objects->CB->Type_rep[iso]);
 		s_nb_rows = std::to_string(Enc[iso]->nb_rows);
 		s_nb_cols = std::to_string(Enc[iso]->nb_cols);
 		s_nb_flags = std::to_string(Enc[iso]->get_nb_flags());
@@ -228,85 +228,85 @@ void classification_of_combinatorial_objects::classification_write_file(
 
 	Fio.Csv_file_support->write_table_of_strings(
 			fname,
-			CO->CB->nb_types, nb_c, Table,
+			Classification_of_objects->CB->nb_types, nb_c, Table,
 			headings,
 			verbose_level);
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_write_file done" << endl;
+		cout << "objects_after_classification::classification_write_file done" << endl;
 	}
 }
 
-void classification_of_combinatorial_objects::classification_report(
-		canonical_form_classification::classification_of_objects_report_options
+void objects_after_classification::classification_report(
+		canonical_form_classification::objects_report_options
 					*Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_report" << endl;
+		cout << "objects_after_classification::classification_report" << endl;
 	}
 
-	if (CO == NULL) {
-		cout << "classification_of_combinatorial_objects::classification_report "
-				"CO == NULL" << endl;
+	if (Classification_of_objects == NULL) {
+		cout << "objects_after_classification::classification_report "
+				"Classification_of_objects == NULL" << endl;
 		exit(1);
 	}
 
-	if (CO->Descr == NULL) {
-		cout << "classification_of_combinatorial_objects::classification_report "
-				"CO->Descr == NULL" << endl;
+	if (Classification_of_objects->Descr == NULL) {
+		cout << "objects_after_classification::classification_report "
+				"Classification_of_objects->Descr == NULL" << endl;
 		exit(1);
 	}
 
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_report "
+		cout << "objects_after_classification::classification_report "
 				"before latex_report" << endl;
 	}
 	latex_report(Report_options,
 			verbose_level);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_report "
+		cout << "objects_after_classification::classification_report "
 				"after latex_report" << endl;
 	}
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_report done" << endl;
+		cout << "objects_after_classification::classification_report done" << endl;
 	}
 }
 
-void classification_of_combinatorial_objects::latex_report(
-		canonical_form_classification::classification_of_objects_report_options
+void objects_after_classification::latex_report(
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::latex_report" << endl;
+		cout << "objects_after_classification::latex_report" << endl;
 	}
 
 
 	string fname;
 
-	fname = CO->get_label() + "_classification.tex";
+	fname = Classification_of_objects->get_label() + "_classification.tex";
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::classification_report "
+		cout << "objects_after_classification::classification_report "
 				"before latex_report" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::latex_report, "
-				"CB->nb_types=" << CO->CB->nb_types << endl;
+		cout << "objects_after_classification::latex_report, "
+				"CB->nb_types=" << Classification_of_objects->CB->nb_types << endl;
 	}
 
 	orbiter_kernel_system::file_io Fio;
@@ -320,15 +320,15 @@ void classification_of_combinatorial_objects::latex_report(
 		L.head_easy_and_enlarged(ost);
 
 
-		CO->report_summary_of_orbits(ost, verbose_level);
+		Classification_of_objects->report_summary_of_orbits(ost, verbose_level);
 
 
 		ost << "Ago : ";
-		CO->T_Ago->print_file_tex(ost, false /* f_backwards*/);
+		Classification_of_objects->T_Ago->print_file_tex(ost, false /* f_backwards*/);
 		ost << "\\\\" << endl;
 
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::latex_report before loop" << endl;
+			cout << "objects_after_classification::latex_report before loop" << endl;
 		}
 
 		report_all_isomorphism_types(
@@ -345,41 +345,41 @@ void classification_of_combinatorial_objects::latex_report(
 	//FREE_int(perm);
 	//FREE_int(v);
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::latex_report done" << endl;
+		cout << "objects_after_classification::latex_report done" << endl;
 	}
 }
 
-void classification_of_combinatorial_objects::report_all_isomorphism_types(
+void objects_after_classification::report_all_isomorphism_types(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_all_isomorphism_types" << endl;
+		cout << "objects_after_classification::report_all_isomorphism_types" << endl;
 	}
 	int i, j;
 
 	l1_interfaces::latex_interface L;
 
-	for (i = 0; i < CO->CB->nb_types; i++) {
+	for (i = 0; i < Classification_of_objects->CB->nb_types; i++) {
 
-		j = CO->CB->perm[i];
+		j = Classification_of_objects->CB->perm[i];
 
-		ost << "\\section*{Isomorphism type " << i << " / " << CO->CB->nb_types << "}" << endl;
-		ost << "Isomorphism type " << i << " / " << CO->CB->nb_types
+		ost << "\\section*{Isomorphism type " << i << " / " << Classification_of_objects->CB->nb_types << "}" << endl;
+		ost << "Isomorphism type " << i << " / " << Classification_of_objects->CB->nb_types
 			<<  " stored at " << j
 			<< " is original object "
-			<< CO->CB->Type_rep[j] << " and appears "
-			<< CO->CB->Type_mult[j] << " times: \\\\" << endl;
+			<< Classification_of_objects->CB->Type_rep[j] << " and appears "
+			<< Classification_of_objects->CB->Type_mult[j] << " times: \\\\" << endl;
 
 		{
 			data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
-			CO->CB->C_type_of->get_class_by_value(Input_objects,
+			Classification_of_objects->CB->C_type_of->get_class_by_value(Input_objects,
 					nb_input_objects, j, 0 /*verbose_level */);
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
@@ -406,35 +406,35 @@ void classification_of_combinatorial_objects::report_all_isomorphism_types(
 		}
 
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::report_all_isomorphism_types "
+			cout << "objects_after_classification::report_all_isomorphism_types "
 					"before report_isomorphism_type" << endl;
 		}
 		report_isomorphism_type(
 				ost, Report_options, i, verbose_level);
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::report_all_isomorphism_types "
+			cout << "objects_after_classification::report_all_isomorphism_types "
 					"after report_isomorphism_type" << endl;
 		}
 
 
 	} // next i
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_all_isomorphism_types done" << endl;
+		cout << "objects_after_classification::report_all_isomorphism_types done" << endl;
 	}
 
 }
 
 
-void classification_of_combinatorial_objects::report_isomorphism_type(
+void objects_after_classification::report_isomorphism_type(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type "
 				"i=" << i << endl;
 	}
 	int j;
@@ -442,22 +442,22 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
-	j = CO->CB->perm[i];
+	j = Classification_of_objects->CB->perm[i];
 	//j = i;
 
 	cout << "###################################################"
 			"#############################" << endl;
-	cout << "Orbit " << i << " / " << CO->CB->nb_types
+	cout << "Orbit " << i << " / " << Classification_of_objects->CB->nb_types
 			<< " is canonical form no " << j
-			<< ", original object no " << CO->CB->Type_rep[j]
-			<< ", frequency " << CO->CB->Type_mult[j]
+			<< ", original object no " << Classification_of_objects->CB->Type_rep[j]
+			<< ", frequency " << Classification_of_objects->CB->Type_mult[j]
 			<< " : " << endl;
 
 
 	{
 		int *Input_objects;
 		int nb_input_objects;
-		CO->CB->C_type_of->get_class_by_value(Input_objects,
+		Classification_of_objects->CB->C_type_of->get_class_by_value(Input_objects,
 			nb_input_objects, j, 0 /*verbose_level */);
 
 		cout << "This isomorphism type appears " << nb_input_objects
@@ -478,7 +478,7 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type "
 				"i=" << i << " before report_object" << endl;
 	}
 	report_object(
@@ -487,7 +487,7 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 			i /* object_idx */,
 			verbose_level);
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type "
 				"i=" << i << " after report_object" << endl;
 	}
 
@@ -495,14 +495,14 @@ void classification_of_combinatorial_objects::report_isomorphism_type(
 
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_isomorphism_type "
+		cout << "objects_after_classification::report_isomorphism_type "
 				"i=" << i << " done" << endl;
 	}
 }
 
-void classification_of_combinatorial_objects::report_object(
+void objects_after_classification::report_object(
 		std::ostream &ost,
-		canonical_form_classification::classification_of_objects_report_options
+		canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
 		int verbose_level)
@@ -510,7 +510,7 @@ void classification_of_combinatorial_objects::report_object(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_object "
+		cout << "objects_after_classification::report_object "
 				"object_idx=" << i << endl;
 	}
 
@@ -518,21 +518,21 @@ void classification_of_combinatorial_objects::report_object(
 
 	//j = CO->CB->perm[i];
 
-	canonical_form_classification::any_combinatorial_object *OwCF = CO->OWCF_transversal[i];
+	canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[i];
 
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_object "
+		cout << "objects_after_classification::report_object "
 				"before OwCF->print_tex_detailed" << endl;
 	}
 
-	ost << "\\subsubsection*{classification\\_of\\_combinatorial\\_objects::report\\_object print\\_tex\\_detailed}" << endl;
+	ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object print\\_tex\\_detailed}" << endl;
 
 	OwCF->print_tex_detailed(
 			ost,
 			Report_options,
 			verbose_level);
 	if (f_v) {
-		cout << "classification_of_combinatorial_objects::report_object "
+		cout << "objects_after_classification::report_object "
 				"after OwCF->print_tex_detailed" << endl;
 	}
 
@@ -550,16 +550,16 @@ void classification_of_combinatorial_objects::report_object(
 	}
 	else {
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::report_object "
+			cout << "objects_after_classification::report_object "
 					"before OwP[object_idx].latex_report" << endl;
 		}
-		ost << "\\subsubsection*{classification\\_of\\_combinatorial\\_objects::report\\_object latex\\_report}" << endl;
+		ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object latex\\_report}" << endl;
 		OwP[i].latex_report(
 				ost,
 				Report_options,
 				verbose_level);
 		if (f_v) {
-			cout << "classification_of_combinatorial_objects::report_object "
+			cout << "objects_after_classification::report_object "
 					"after OwP[object_idx].latex_report" << endl;
 		}
 	}

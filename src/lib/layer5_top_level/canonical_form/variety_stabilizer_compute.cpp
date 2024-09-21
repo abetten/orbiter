@@ -1,5 +1,5 @@
 /*
- * stabilizer_of_set_of_rational_points.cpp
+ * variety_stabilizer_compute.cpp
  *
  *  Created on: Apr 17, 2021
  *      Author: betten
@@ -18,12 +18,14 @@ namespace canonical_form {
 
 
 
-stabilizer_of_set_of_rational_points::stabilizer_of_set_of_rational_points()
+variety_stabilizer_compute::variety_stabilizer_compute()
 {
 
-	Classifier = NULL;
+	//Classifier = NULL;
+	Ring_with_action = NULL;
 
-	Variety = NULL;
+	//Variety = NULL;
+	Variety_object_with_action = NULL;
 
 	nb_rows = 0;
 	nb_cols = 0;
@@ -44,7 +46,7 @@ stabilizer_of_set_of_rational_points::stabilizer_of_set_of_rational_points()
 
 }
 
-stabilizer_of_set_of_rational_points::~stabilizer_of_set_of_rational_points()
+variety_stabilizer_compute::~variety_stabilizer_compute()
 {
 	if (NO) {
 		FREE_OBJECT(NO);
@@ -65,22 +67,23 @@ stabilizer_of_set_of_rational_points::~stabilizer_of_set_of_rational_points()
 	}
 }
 
-void stabilizer_of_set_of_rational_points::init(
-		canonical_form_classifier *Classifier,
+void variety_stabilizer_compute::init(
+		projective_geometry::ring_with_action *Ring_with_action,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	stabilizer_of_set_of_rational_points::Classifier = Classifier;
+	//variety_stabilizer_compute::Classifier = Classifier;
+	variety_stabilizer_compute::Ring_with_action = Ring_with_action;
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::init" << endl;
+		cout << "variety_stabilizer_compute::init" << endl;
 	}
 }
 
 
-void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
-		canonical_form_of_variety *Variety,
+void variety_stabilizer_compute::compute_canonical_form_of_variety(
+		variety_object_with_action *Variety_object_with_action,
 		int f_save_nauty_input_graphs,
 		int verbose_level)
 // Computes the canonical labeling of the graph associated with
@@ -92,14 +95,16 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety" << endl;
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety" << endl;
 	}
 
 
-	stabilizer_of_set_of_rational_points::Variety = Variety;
+	//variety_stabilizer_compute::Variety = Variety;
+	variety_stabilizer_compute::Variety_object_with_action = Variety_object_with_action;
 
 	if (f_v) {
-		Variety->Vo->Variety_object->print(cout);
+		//Variety->Vo->Variety_object->print(cout);
+		Variety_object_with_action->print(cout);
 		//NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats
 		//int f_has_nauty_output;
 		//int nauty_output_column_index_start;
@@ -110,56 +115,44 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 
 	interfaces::nauty_interface_with_group Nau;
 
-	if (Variety->Vo->f_has_nauty_output) {
+	if (Variety_object_with_action->f_has_nauty_output) {
 		if (f_v) {
-			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 					"f_has_nauty_output" << endl;
 		}
-#if 0
-		void set_stabilizer_in_projective_space_using_precomputed_nauty_data(
-				geometry::projective_space *P,
-				actions::action *A,
-				long int *Pts, int sz,
-				int nauty_output_index_start,
-				std::vector<std::string> &Carrying_through,
-				groups::strong_generators *&Set_stab,
-				data_structures::bitvector *&Canonical_form,
-				l1_interfaces::nauty_output *&NO,
-				int verbose_level);
-#endif
 
 		if (f_v) {
-			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 					"before Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 		}
 		Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data(
-				Classifier->PA->P,
-				Classifier->PA->A,
-				Variety->Vo->Variety_object->Point_sets->Sets[0],
-				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				Ring_with_action->PA->P,
+				Ring_with_action->PA->A,
+				Variety_object_with_action->Variety_object->Point_sets->Sets[0],
+				Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
 				f_save_nauty_input_graphs,
-				Variety->Vo->nauty_output_index_start,
-				Variety->Vo->Carrying_through,
+				Variety_object_with_action->nauty_output_index_start,
+				Variety_object_with_action->Carrying_through,
 				Set_stab,
 				Canonical_form,
 				NO,
 				verbose_level);
 		if (f_v) {
-			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 					"after Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 					"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 		}
 
 		Nau.set_stabilizer_in_projective_space_using_nauty(
-				Classifier->PA->P,
-				Classifier->PA->A,
-				Variety->Vo->Variety_object->Point_sets->Sets[0],
-				Variety->Vo->Variety_object->Point_sets->Set_size[0],
+				Ring_with_action->PA->P,
+				Ring_with_action->PA->A,
+				Variety_object_with_action->Variety_object->Point_sets->Sets[0],
+				Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
 				f_save_nauty_input_graphs,
 				Set_stab,
 				Canonical_form,
@@ -167,7 +160,7 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 				verbose_level);
 
 		if (f_v) {
-			cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 					"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
 		}
 	}
@@ -182,7 +175,7 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 
 	Set_stab->group_order(set_stab_order);
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"set_stab_order = " << set_stab_order << endl;
 	}
 
@@ -194,66 +187,68 @@ void stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety(
 
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"before orbit_of_equation_under_set_stabilizer" << endl;
 	}
 	orbit_of_equation_under_set_stabilizer(verbose_level - 1);
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety "
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
 				"after orbit_of_equation_under_set_stabilizer" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety done" << endl;
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety done" << endl;
 	}
 }
 
 
-void stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer(
+void variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer" << endl;
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer" << endl;
 	}
 
 
 	Orb = NEW_OBJECT(orbits_schreier::orbit_of_equations);
 
-	ring_theory::longinteger_object set_stab_order;
-
-	Set_stab->group_order(set_stab_order);
 
 #if 1
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"before Orb->init" << endl;
 	}
 	Orb->init(
-			Classifier->PA->A,
-			Classifier->PA->F,
-			Classifier->AonHPD,
+			Ring_with_action->PA->A,
+			Ring_with_action->PA->F,
+			Ring_with_action->AonHPD,
 			Set_stab /* A->Strong_gens*/,
-			Variety->Vo->Variety_object->eqn,
+			Variety_object_with_action->Variety_object->eqn,
 		verbose_level);
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"after Orb->init" << endl;
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"found an orbit of length " << Orb->used_length << endl;
 	}
 
+
+	ring_theory::longinteger_object set_stab_order;
+
+	Set_stab->group_order(set_stab_order);
 
 	// Compute the canonical form
 	// and get the stabilizer of the canonical form to
 	// gens_stab_of_canonical_equation
 
+#if 0
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"before Orb->get_canonical_form" << endl;
 	}
 	Orb->get_canonical_form(
@@ -263,18 +258,19 @@ void stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilize
 			set_stab_order,
 				verbose_level);
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"after Orb->get_canonical_form" << endl;
 	}
+#endif
 
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_variety = Orb->stabilizer_orbit_rep(
 			set_stab_order, verbose_level);
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer "
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	if (f_v) {
@@ -286,13 +282,12 @@ void stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilize
 	}
 #endif
 
-
 	if (f_v) {
-		cout << "stabilizer_of_set_of_rational_points::orbit_of_equation_under_set_stabilizer done" << endl;
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer done" << endl;
 	}
 }
 
-void stabilizer_of_set_of_rational_points::report(
+void variety_stabilizer_compute::report(
 		std::ostream &ost)
 {
 	ost << "Number of equations with the same set of points "

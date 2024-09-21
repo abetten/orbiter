@@ -49,34 +49,6 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 	Stab_gens_variety = NULL;
 
 
-#if 0
-	projective_geometry::projective_space_with_action *PA;
-
-	ring_theory::homogeneous_polynomial_domain *HPD;
-
-	induced_actions::action_on_homogeneous_polynomials *AonHPD;
-
-	int *equation;
-
-	canonical_form_classification::any_combinatorial_object *OwCF;
-
-	data_structures::bitvector *Canonical_form;
-
-	l1_interfaces::nauty_output *NO;
-
-	canonical_form_classification::encoded_combinatorial_object *Enc;
-
-	groups::strong_generators *SG_pt_stab;
-		// the stabilizer of the set of rational points
-	ring_theory::longinteger_object pt_stab_order;
-		// order of stabilizer of the set of rational points
-
-	orbits_schreier::orbit_of_equations *Orb;
-
-	groups::strong_generators *Stab_gens_variety;
-		// stabilizer of quartic curve obtained by doing an orbit algorithm
-#endif
-
 }
 
 automorphism_group_of_variety::~automorphism_group_of_variety()

@@ -62,19 +62,17 @@ namespace canonical_form {
 	class canonical_form_classifier_description;
 	class canonical_form_classifier;
 	class canonical_form_global;
-	class canonical_form_of_variety;
-	class canonical_form_substructure;
-	class classification_of_combinatorial_objects;
+	//class canonical_form_substructure;
 	class classification_of_varieties_nauty;
 	class classification_of_varieties;
-	class combinatorial_object_in_projective_space_with_action;
 	class combinatorial_object_with_properties;
 	class input_objects_of_type_variety;
-	class quartic_curve_object_with_action;
-	class stabilizer_of_set_of_rational_points;
+	class objects_after_classification;
 	class variety_activity_description;
 	class variety_activity;
+	class variety_compute_canonical_form;
 	class variety_object_with_action;
+	class variety_stabilizer_compute;
 
 }
 
@@ -272,6 +270,7 @@ namespace projective_geometry {
 	class projective_space_globals;
 	class projective_space_with_action_description;
 	class projective_space_with_action;
+	class ring_with_action;
 	class summary_of_properties_of_objects;
 
 }

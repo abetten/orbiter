@@ -1572,7 +1572,7 @@ void linear_group::init_subgroup_Janko1(
 void linear_group::report(
 		std::ostream &ost,
 		int f_sylow, int f_group_table,
-		int f_conjugacy_classes_and_normalizers,
+		//int f_conjugacy_classes_and_normalizers,
 		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
@@ -1829,6 +1829,7 @@ void linear_group::report(
 
 		}
 
+#if 0
 		if (f_conjugacy_classes_and_normalizers) {
 
 
@@ -1846,6 +1847,8 @@ void linear_group::report(
 				cout << "linear_group::report A2->report_conjugacy_classes_and_normalizers" << endl;
 			}
 		}
+#endif
+
 
 		//L.foot(fp);
 	}
@@ -1857,7 +1860,7 @@ void linear_group::report(
 
 void linear_group::create_latex_report(
 		graphics::layered_graph_draw_options *O,
-		int f_sylow, int f_group_table, int f_classes,
+		int f_sylow, int f_group_table, //int f_classes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1899,7 +1902,7 @@ void linear_group::create_latex_report(
 			report(
 					ost,
 					f_sylow, f_group_table,
-					f_classes,
+					//f_classes,
 					O,
 					verbose_level);
 			if (f_v) {

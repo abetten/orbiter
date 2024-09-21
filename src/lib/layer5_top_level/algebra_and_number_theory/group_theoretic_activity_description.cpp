@@ -26,7 +26,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_report = false;
 	f_report_sylow = false;
 	f_report_group_table = false;
-	f_report_classes = false;
+	//f_report_classes = false;
 
 	f_export_group_table = false;
 
@@ -323,12 +323,14 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-report_group_table" << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-report_classes") == 0) {
 			f_report_classes = true;
 			if (f_v) {
 				cout << "-report_classes" << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
 			f_export_group_table = true;
 			if (f_v) {
@@ -971,9 +973,11 @@ void group_theoretic_activity_description::print()
 	if (f_report_group_table) {
 		cout << "-report_group_table" << endl;
 	}
+#if 0
 	if (f_report_classes) {
 		cout << "-report_classes" << endl;
 	}
+#endif
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}

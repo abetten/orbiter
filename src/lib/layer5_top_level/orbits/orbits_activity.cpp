@@ -461,6 +461,7 @@ void orbits_activity::do_report(
 					"f_has_classification_by_canonical_form" << endl;
 		}
 
+#if 0
 		poset_classification::poset_classification_report_options *report_options;
 
 		if (Descr->f_report_options) {
@@ -469,14 +470,22 @@ void orbits_activity::do_report(
 		else {
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 		}
+#endif
 
-		OC->Canonical_form_classifier->Classification_of_varieties->report(
-				report_options,
+		string fname_base;
+
+		fname_base = OC->label_txt;
+
+		OC->Canonical_form_classifier->Classification_of_varieties_nauty->report(
+				fname_base,
 				verbose_level);
 
+#if 0
 		if (!Descr->f_report_options) {
 			FREE_OBJECT(report_options);
 		}
+#endif
+
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"f_has_classification_by_canonical_form done" << endl;
@@ -896,7 +905,7 @@ void orbits_activity::do_export_source_code(
 					"before generate_source_code" << endl;
 		}
 
-		OC->Canonical_form_classifier->Classification_of_varieties->generate_source_code(
+		OC->Canonical_form_classifier->Classification_of_varieties_nauty->generate_source_code(
 				OC->Descr->Canonical_form_classifier_description->fname_base_out,
 				verbose_level);
 

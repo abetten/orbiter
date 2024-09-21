@@ -25,7 +25,7 @@ combinatorial_object_stream::combinatorial_object_stream()
 	IS = NULL;
 
 	Classification = NULL;
-	Classification_CO = NULL;
+	Objects_after_classification = NULL;
 
 }
 
@@ -34,8 +34,8 @@ combinatorial_object_stream::~combinatorial_object_stream()
 	if (Classification) {
 		FREE_OBJECT(Classification);
 	}
-	if (Classification_CO) {
-		FREE_OBJECT(Classification_CO);
+	if (Objects_after_classification) {
+		FREE_OBJECT(Objects_after_classification);
 	}
 }
 
@@ -106,7 +106,7 @@ void combinatorial_object_stream::do_canonical_form_PG(
 	}
 
 
-	Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+	Objects_after_classification = NEW_OBJECT(canonical_form::objects_after_classification);
 
 	if (!IS->Descr->f_label) {
 		cout << "please use -label <label_txt> <label_tex> "
@@ -115,15 +115,15 @@ void combinatorial_object_stream::do_canonical_form_PG(
 	}
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_canonical_form_PG "
-				"before Classification_CO->init_after_nauty" << endl;
+				"before Objects_after_classification->init_after_nauty" << endl;
 	}
-	Classification_CO->init_after_nauty(
+	Objects_after_classification->init_after_nauty(
 			Classification,
 			true /* f_projective_space */, PA,
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_canonical_form_PG "
-				"after Classification_CO->init_after_nauty" << endl;
+				"after Objects_after_classification->init_after_nauty" << endl;
 	}
 
 
@@ -161,19 +161,19 @@ void combinatorial_object_stream::do_canonical_form_not_PG(
 	}
 
 
-	Classification_CO = NEW_OBJECT(canonical_form::classification_of_combinatorial_objects);
+	Objects_after_classification = NEW_OBJECT(canonical_form::objects_after_classification);
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"before Classification_CO->init_after_nauty" << endl;
+				"before Objects_after_classification->init_after_nauty" << endl;
 	}
-	Classification_CO->init_after_nauty(
+	Objects_after_classification->init_after_nauty(
 			Classification,
 			false /* f_projective_space */, NULL,
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_canonical_form_not_PG "
-				"after Classification_CO->init_after_nauty" << endl;
+				"after Objects_after_classification->init_after_nauty" << endl;
 	}
 
 

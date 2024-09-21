@@ -1,5 +1,5 @@
 /*
- * classification_of_objects_report_options.cpp
+ * objects_report_options.cpp
  *
  *  Created on: Dec 16, 2021
  *      Author: betten
@@ -19,7 +19,7 @@ namespace canonical_form_classification {
 
 
 
-classification_of_objects_report_options::classification_of_objects_report_options()
+objects_report_options::objects_report_options()
 {
 
 	f_export_flag_orbits = false;
@@ -40,30 +40,30 @@ classification_of_objects_report_options::classification_of_objects_report_optio
 
 }
 
-classification_of_objects_report_options::~classification_of_objects_report_options()
+objects_report_options::~objects_report_options()
 {
 
 }
 
-int classification_of_objects_report_options::read_arguments(
+int objects_report_options::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_objects_report_options::read_arguments" << endl;
+		cout << "objects_report_options::read_arguments" << endl;
 	}
 	int i;
 	data_structures::string_tools ST;
 
 	if (f_v) {
-		cout << "classification_of_objects_report_options::read_arguments" << endl;
+		cout << "objects_report_options::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
 		if (f_v) {
-			cout << "classification_of_objects_report_options::read_arguments, "
+			cout << "objects_report_options::read_arguments, "
 					"next argument is " << argv[i] << endl;
 		}
 
@@ -150,27 +150,27 @@ int classification_of_objects_report_options::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
-				cout << "classification_of_objects_report_options::read_arguments -end" << endl;
+				cout << "objects_report_options::read_arguments -end" << endl;
 			}
 			break;
 		}
 
 		else {
-			cout << "classification_of_objects_report_options::read_arguments "
+			cout << "objects_report_options::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
 		if (f_v) {
-			cout << "classification_of_objects_report_options::read_arguments looping, i=" << i << endl;
+			cout << "objects_report_options::read_arguments looping, i=" << i << endl;
 		}
 	} // next i
 	if (f_v) {
-		cout << "classification_of_objects_report_options::read_arguments done" << endl;
+		cout << "objects_report_options::read_arguments done" << endl;
 	}
 	return i + 1;
 }
 
-void classification_of_objects_report_options::print()
+void objects_report_options::print()
 {
 	if (f_export_flag_orbits) {
 		cout << "-export_flag_orbits " << endl;

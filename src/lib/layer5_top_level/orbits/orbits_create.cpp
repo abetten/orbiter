@@ -750,6 +750,7 @@ void orbits_create::init(
 					<< Descr->Canonical_form_classifier_description->space_label << endl;
 		}
 
+#if 0
 
 		if (Descr->Canonical_form_classifier_description->f_algorithm_substructure) {
 
@@ -786,7 +787,9 @@ void orbits_create::init(
 			f_has_classification_by_canonical_form = true;
 
 		}
-		else if (Descr->Canonical_form_classifier_description->f_algorithm_nauty) {
+#endif
+
+		if (Descr->Canonical_form_classifier_description->f_algorithm_nauty) {
 
 			if (f_v) {
 				cout << "orbits_create::init f_algorithm_nauty" << endl;
@@ -809,7 +812,7 @@ void orbits_create::init(
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
 						"before Classifier.classify" << endl;
 			}
-			Canonical_form_classifier->classify(verbose_level);
+			Canonical_form_classifier->classify(Canonical_form_classifier->Input, verbose_level);
 			if (f_v) {
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
 						"after Classifier.classify" << endl;
