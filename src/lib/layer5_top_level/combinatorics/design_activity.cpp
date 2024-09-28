@@ -156,7 +156,17 @@ void design_activity::perform_activity(
 				DC,
 				verbose_level);
 	}
-
+	else if (Descr->f_orbits_on_blocks) {
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"f_orbits_on_blocks" << endl;
+		}
+		do_orbits_on_blocks(
+				DC,
+				Descr->orbits_on_blocks_sz,
+				Descr->orbits_on_blocks_control,
+				verbose_level);
+	}
 
 	if (f_v) {
 		cout << "design_activity::perform_activity done" << endl;
@@ -1053,6 +1063,115 @@ void design_activity::do_tactical_decomposition(
 	}
 
 }
+
+void design_activity::do_orbits_on_blocks(
+		design_create *DC,
+		int sz,
+		std::string &control_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks" << endl;
+	}
+
+	actions::action *A_on_blocks;
+
+	long int *blocks;
+	int nb_blocks;
+	int block_sz;
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"before DC->compute_blocks_from_incidence_matrix" << endl;
+	}
+
+
+	DC->compute_blocks_from_incidence_matrix(
+			blocks, nb_blocks, block_sz,
+			verbose_level);
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"after DC->compute_blocks_from_incidence_matrix" << endl;
+	}
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"before DC->A->Induced_action->create_induced_action_on_sets" << endl;
+	}
+
+	A_on_blocks = DC->A->Induced_action->create_induced_action_on_sets(
+			nb_blocks, block_sz, blocks,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"after DC->A->Induced_action->create_induced_action_on_sets" << endl;
+	}
+
+
+
+	orbits::orbits_global Orbits_global;
+	poset_classification::poset_classification_control *Control;
+
+
+
+	Control = Get_poset_classification_control(control_label);
+
+	poset_classification::poset_classification *PC;
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"before creating any_group *AG" << endl;
+	}
+
+	apps_algebra::any_group *AG;
+
+	AG = NEW_OBJECT(apps_algebra::any_group);
+	AG->A_base = DC->A_base;
+	AG->A = A_on_blocks;
+	AG->label = Control->problem_label;
+	AG->Subgroup_gens = DC->Sg;
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"AG->A_base=" << endl;
+		AG->A_base->print_info();
+		cout << "design_activity::do_orbits_on_blocks "
+				"AG->A=" << endl;
+		AG->A->print_info();
+	}
+
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"after creating any_group *AG" << endl;
+	}
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"before Orbits_global.orbits_on_subsets" << endl;
+	}
+	Orbits_global.orbits_on_subsets(
+			AG,
+			Control,
+			PC,
+			sz,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks "
+				"after Orbits_global.orbits_on_subsets" << endl;
+	}
+
+	if (f_v) {
+		cout << "design_activity::do_orbits_on_blocks done" << endl;
+	}
+}
+
+
+
 
 }}}
 

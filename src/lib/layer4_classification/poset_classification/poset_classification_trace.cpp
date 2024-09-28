@@ -613,8 +613,9 @@ int poset_classification::trace_set(
 		int size, int level,
 		long int *canonical_set, int *Elt_transporter,
 		int verbose_level)
-// called by map_set_to_set_BLT in orbits.cpp
-// returns the case number of the canonical set
+// Elt_transporter maps the given set in set[]
+// to the canonical set in canonical_set[]
+// return value is the local orbit index of the canonical set
 {
 	int n, case_nb;
 	int f_v = (verbose_level >= 1);

@@ -5692,6 +5692,7 @@ void action_global::read_set_and_stabilizer(
 	groups::strong_generators *&Strong_gens,
 	int &nb_cases,
 	int verbose_level)
+// reads an orbiter data file
 {
 	int f_v = (verbose_level  >= 1);
 	int f_vv = (verbose_level  >= 2);

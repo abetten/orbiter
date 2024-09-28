@@ -333,6 +333,8 @@ public:
 			int *a, long int n);
 	void perm_elementary_transposition(
 			int *a, long int n, int f);
+	void perm_cycle(
+			int *perm, long int n);
 	void perm_mult(
 			int *a, int *b, int *c, long int n);
 	void perm_conjugate(

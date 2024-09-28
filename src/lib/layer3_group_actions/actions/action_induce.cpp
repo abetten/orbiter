@@ -392,6 +392,7 @@ void action::generators_to_strong_generators(
 	data_structures_groups::vector_ge *gens,
 	groups::strong_generators *&Strong_gens,
 	int verbose_level)
+// calls create_sims_from_generators_randomized
 {
 	int f_v = (verbose_level >= 1);
 

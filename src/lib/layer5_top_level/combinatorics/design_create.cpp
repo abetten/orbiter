@@ -28,6 +28,7 @@ design_create::design_create()
 	F = NULL;
 	k = 0;
 
+	A_base = NULL;
 	A = NULL;
 	A2 = NULL;
 	Aut = NULL;
@@ -181,7 +182,9 @@ void design_create::init(
 
 		AG = Get_any_group(Descr->list_of_base_blocks_group_label);
 
-		A = A2 = AG->A; // ToDo!
+		A_base = AG->A_base;
+		A = AG->A;
+		A2 = AG->A; // ToDo!
 
 
 		orbiter_kernel_system::file_io Fio;
@@ -335,9 +338,10 @@ void design_create::init(
 		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
 
-		A = NEW_OBJECT(actions::action);
+		A_base = NEW_OBJECT(actions::action);
 
-		A->Known_groups->init_symmetric_group(degree, verbose_level);
+		A_base->Known_groups->init_symmetric_group(degree, verbose_level);
+		A = A_base; // ToDo copy object?
 
 		//A2 = NEW_OBJECT(actions::action);
 		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
@@ -383,9 +387,10 @@ void design_create::init(
 		label_txt = "sets_v" + std::to_string(degree);
 		label_tex = "sets\\_v" + std::to_string(degree);
 
-		A = NEW_OBJECT(actions::action);
+		A_base = NEW_OBJECT(actions::action);
 
-		A->Known_groups->init_symmetric_group(degree, verbose_level);
+		A_base->Known_groups->init_symmetric_group(degree, verbose_level);
+		A = A_base; // ToDo copy object?
 
 		//A2 = NEW_OBJECT(actions::action);
 		//A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -445,9 +450,10 @@ void design_create::init(
 		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
 
 
-		A = NEW_OBJECT(actions::action);
+		A_base = NEW_OBJECT(actions::action);
 
-		A->Known_groups->init_symmetric_group(degree, verbose_level);
+		A_base->Known_groups->init_symmetric_group(degree, verbose_level);
+		A = A_base; // ToDo copy object?
 
 		//A2 = NEW_OBJECT(actions::action);
 		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
@@ -479,19 +485,85 @@ void design_create::init(
 		if (f_v) {
 			cout << "design_create::init "
 					"f_list_of_blocks_from_file "
-					<< Descr->list_of_blocks_from_file_fname << endl;
+					<< Descr->list_of_blocks_from_file_fname
+					<< " " << Descr->list_of_blocks_from_file_column
+					<< endl;
 		}
 
 		degree = Descr->list_of_blocks_from_file_v;
 
 		orbiter_kernel_system::file_io Fio;
+
+		std::string *Column;
+		int len;
+
+		Fio.Csv_file_support->read_column_of_strings(
+				Descr->list_of_blocks_from_file_fname,
+				Descr->list_of_blocks_from_file_column,
+				Column, len,
+				verbose_level);
+
+
+
+
+		data_structures::string_tools ST;
+
+		int i;
 		int m, k;
+
+		m = len;
+		for (i = 0; i < m; i++) {
+
+			string s;
+			int *block;
+			int sz;
+
+			ST.drop_quotes(Column[i], s);
+
+			Int_vec_scan(s, block, sz);
+
+			if (i == 0) {
+				k = sz;
+			}
+			else {
+				if (sz != k) {
+					cout << "The blocks do not have the same size" << endl;
+					exit(1);
+				}
+			}
+
+			FREE_int(block);
+		}
+
+
 		int *blocks;
+		blocks = NEW_int(m * k);
+
+		for (i = 0; i < m; i++) {
+
+			string s;
+			int *block;
+			int sz;
+
+			ST.drop_quotes(Column[i], s);
+
+			Int_vec_scan(s, block, sz);
+
+			Int_vec_copy(block, blocks + i * sz, sz);
+
+			FREE_int(block);
+
+		}
+
+
+#if 0
+
+		int m, k;
 
 		Fio.Csv_file_support->int_matrix_read_csv(
 				Descr->list_of_blocks_from_file_fname,
 				blocks, m, k, verbose_level);
-
+#endif
 
 		if (f_v) {
 			cout << "design_create::init "
@@ -576,9 +648,10 @@ void design_create::init(
 		label_txt = "wreath_product_designs_n" + std::to_string(n) + "_k" + std::to_string(k);
 		label_tex = "wreath\\_product\\_designs\\_n" + std::to_string(n) + "\\_k" + std::to_string(k);
 
-		A = NEW_OBJECT(actions::action);
+		A_base = NEW_OBJECT(actions::action);
 
-		A->Known_groups->init_symmetric_group(degree, verbose_level);
+		A_base->Known_groups->init_symmetric_group(degree, verbose_level);
+		A = A_base; // ToDo copy object?
 
 		//A2 = NEW_OBJECT(actions::action);
 		A2 = A->Induced_action->induced_action_on_k_subsets(k, verbose_level);
@@ -727,6 +800,124 @@ void design_create::init(
 
 
 	}
+	else if (Descr->f_orbit_on_sets) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"f_orbit_on_sets" << endl;
+		}
+
+		k = Descr->orbit_on_sets_size;
+		int local_idx = Descr->orbit_on_sets_idx;
+
+		//std::string orbit_on_sets_orbits;
+
+		orbits::orbits_create *OC;
+
+		OC = Get_orbits(Descr->orbit_on_sets_orbits);
+
+		if (!OC->f_has_On_subsets) {
+			cout << "design_create::init f_orbit_on_sets "
+					"but orbit structure has no orbits on sets" << endl;
+			exit(1);
+		}
+
+		poset_classification::poset_classification *PC;
+
+		PC = OC->On_subsets;
+
+		int *blocks;
+		long int *Blocks;
+		int orbit_length;
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before PC->get_whole_orbit" << endl;
+		}
+
+		PC->get_whole_orbit(
+			k, local_idx,
+			Blocks, orbit_length, verbose_level - 2);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"after PC->get_whole_orbit" << endl;
+		}
+
+		if (f_v) {
+			cout << "design_create::init "
+					"blocks:" << endl;
+			Lint_matrix_print(Blocks, orbit_length, k);
+		}
+
+		blocks = NEW_int(orbit_length * k);
+		Lint_vec_copy_to_int(Blocks, blocks, orbit_length * k);
+
+		A_base = PC->get_poset()->A;
+		A = PC->get_poset()->A2;
+
+		if (f_v) {
+			cout << "design_create::init "
+					"A_base=" << endl;
+			A_base->print_info();
+			cout << "design_create::init "
+					"A=" << endl;
+			A->print_info();
+		}
+
+		f_has_set = false;
+		v = A->degree;
+		b = orbit_length;
+
+
+		prefix = "blocks_v" + std::to_string(v) + "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(v) + "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(v) + "\\_k" + std::to_string(k);
+
+		f_has_group = false;
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before compute_incidence_matrix_from_blocks" << endl;
+		}
+
+		compute_incidence_matrix_from_blocks(
+				blocks, b, k,
+				0 /*verbose_level*/);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"after compute_incidence_matrix_from_blocks" << endl;
+		}
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before creating a copy of the group generators" << endl;
+		}
+
+		f_has_group = true;
+
+		//groups::strong_generators *Sg;
+
+		Sg = OC->Group->Subgroup_gens->create_copy(verbose_level - 2);
+
+		if (f_v) {
+			cout << "design_create::init "
+					"after creating a copy of the group generators" << endl;
+		}
+
+		if (f_v) {
+			cout << "design_create::init "
+					"Sg->A=" << endl;
+			A->print_info();
+		}
+
+		FREE_int(blocks);
+		FREE_lint(Blocks);
+
+
+	}
+
 
 
 	else {
@@ -1111,6 +1302,53 @@ void design_create::compute_incidence_matrix_from_blocks(
 
 	if (f_v) {
 		cout << "design_create::compute_incidence_matrix_from_blocks done" << endl;
+	}
+
+
+}
+
+
+void design_create::compute_blocks_from_incidence_matrix(
+		long int *&blocks, int &nb_blocks, int &block_sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_create::compute_blocks_from_incidence_matrix" << endl;
+	}
+
+	nb_blocks = b;
+	block_sz = k;
+	int i, j, h;
+
+	blocks = NEW_lint(b * block_sz);
+
+	for (j = 0; j < b; j++) {
+		h = 0;
+		for (i = 0; i < v; i++) {
+			if (incma[i * b + j]) {
+				blocks[j * k + h++] = i;
+			}
+		}
+		if (h != k) {
+			cout << "the number of entries in the column which are one does not match" << endl;
+			cout << "h = " << h << endl;
+			cout << "k = " << k << endl;
+			exit(1);
+		}
+	}
+
+	if (f_v) {
+		cout << "design_create::compute_blocks_from_incidence_matrix blocks = " << endl;
+		Lint_matrix_print(blocks, nb_blocks, k);
+		cout << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_create::compute_blocks_from_incidence_matrix done" << endl;
 	}
 
 }

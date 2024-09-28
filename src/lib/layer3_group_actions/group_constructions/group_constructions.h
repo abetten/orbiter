@@ -141,6 +141,10 @@ public:
 
 class linear_group_description {
 public:
+
+	// TABLES/linear_group_1.tex
+
+
 	int f_projective;
 	int f_general;
 	int f_affine;
@@ -163,8 +167,11 @@ public:
 	int f_semilinear;
 	int f_special;
 
-	// induced actions and subgroups:
 
+
+	// TABLES/linear_group_2.tex
+
+	// induced actions and subgroups:
 
 	int f_wedge_action;
 	int f_wedge_action_detached;
@@ -365,6 +372,9 @@ public:
 class permutation_group_description {
 
 public:
+
+	// TABLES/permutation_group.tex
+
 	int degree;
 	permutation_group_type type;
 

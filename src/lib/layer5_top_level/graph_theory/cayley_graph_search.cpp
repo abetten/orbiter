@@ -76,6 +76,7 @@ void cayley_graph_search::init(
 		list_of_elements[i] = j;
 		}
 
+#if 0
 	cout << "generators:" << endl;
 	for (i = 0; i < nb_generators; i++) {
 		cout << "generator " << i << " / " << nb_generators
@@ -83,6 +84,7 @@ void cayley_graph_search::init(
 		A->Group_element->element_print_quick(Strong_gens->gens->ith(i), cout);
 		cout << endl;
 		}
+#endif
 
 	for (i = 0; i < go_subgroup; i++) {
 		S->element_unrank_lint(list_of_elements[i], Elt1);
@@ -234,6 +236,25 @@ void cayley_graph_search::init_group2(
 
 #if 1
 
+	Table = NEW_OBJECT(data_structures_groups::group_table_and_generators);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"before Table->init" << endl;
+	}
+
+	Table->init(
+			S,
+			Strong_gens->gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"after Table->init" << endl;
+	}
+
+#if 0
 	nb_generators = Strong_gens->gens->len;
 	generators = NEW_int(nb_generators);
 	for (i = 0; i < nb_generators; i++) {
@@ -241,23 +262,24 @@ void cayley_graph_search::init_group2(
 	}
 
 	S->create_group_table(Table, go, verbose_level);
-
+#endif
 
 	fname_base = "Ferdinand" + std::to_string(level) + "_" + std::to_string(group);
 
 	//Aut = NEW_OBJECT(actions::action);
 	interfaces::magma_interface Magma;
 
-	Magma.init_automorphism_group_from_group_table(
+	Magma.compute_automorphism_group_from_group_table(
 			fname_base,
-		Table, go, generators, nb_generators,
+			Table,
 		Aut,
 		Aut_gens,
 		verbose_level);
-		// ACTION/action_global.cpp
 
 	Aut_gens->group_order(Aut_order);
 #endif
+
+	//FREE_OBJECT(Table);
 
 
 #if 1

@@ -683,7 +683,7 @@ void any_group::centralizer(
 		cout << "any_group::centralizer" << endl;
 	}
 
-	interfaces::magma_interface M;
+	interfaces::magma_interface Magma;
 	groups::sims *S;
 	groups::strong_generators *SG;
 
@@ -693,15 +693,15 @@ void any_group::centralizer(
 
 	if (f_v) {
 		cout << "any_group::centralizer "
-				"before M.centralizer_of_element" << endl;
+				"before Magma.centralizer_of_element" << endl;
 	}
-	M.centralizer_of_element(
+	Magma.centralizer_of_element(
 			A, S,
 			element_description_text,
 			element_label, verbose_level);
 	if (f_v) {
 		cout << "any_group::centralizer "
-				"after M.centralizer_of_element" << endl;
+				"after Magma.centralizer_of_element" << endl;
 	}
 
 	FREE_OBJECT(S);
@@ -3771,22 +3771,6 @@ void any_group::classes(
 	}
 
 
-#if 0
-	if (!f_linear_group) {
-		cout << "any_group::classes !f_linear_group" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "any_group::classes before Any_group_linear->classes" << endl;
-	}
-	Any_group_linear->classes(verbose_level);
-	if (f_v) {
-		cout << "any_group::classes after Any_group_linear->classes" << endl;
-	}
-#else
-
 
 	if (Subgroup_gens == NULL) {
 		cout << "any_group::classes Subgroup_gens == NULL" << endl;
@@ -3814,35 +3798,55 @@ void any_group::classes(
 
 	FREE_OBJECT(Sims);
 
-#if 0
-	int f_linear_group;
-	group_constructions::linear_group *LG;
 
-	int f_permutation_group;
-	group_constructions::permutation_group_create *PGC;
-
-	int f_modified_group;
-	modified_group_create *MGC;
-
-	actions::action *A_base;
-	actions::action *A;
-
-	std::string label;
-	std::string label_tex;
-
-	groups::strong_generators *Subgroup_gens;
-	groups::sims *Subgroup_sims;
-
-	any_group_linear *Any_group_linear;
-#endif
-
-
-
-#endif
 	if (f_v) {
 		cout << "any_group::classes done" << endl;
 	}
 }
+
+void any_group::subgroup_lattice_magma(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma" << endl;
+	}
+
+
+
+	if (Subgroup_gens == NULL) {
+		cout << "any_group::subgroup_lattice_magma Subgroup_gens == NULL" << endl;
+		exit(1);
+	}
+
+	groups::sims *Sims;
+
+	Sims = Subgroup_gens->create_sims(verbose_level);
+
+	interfaces::magma_interface Magma;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"before Magma.get_subgroup_lattice" << endl;
+	}
+	Magma.get_subgroup_lattice(
+			A, Sims,
+			label, label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"after Magma.get_subgroup_lattice" << endl;
+	}
+
+	FREE_OBJECT(Sims);
+
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma done" << endl;
+	}
+}
+
 
 
 void any_group::find_standard_generators(

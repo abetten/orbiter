@@ -56,6 +56,7 @@ design_create_description::design_create_description()
 	f_list_of_blocks_from_file = false;
 	list_of_blocks_from_file_v = 0;
 	//std::string list_of_blocks_from_file_fname;
+	//std::string list_of_blocks_from_file_column;
 
 	f_wreath_product_designs = false;
 	wreath_product_designs_n = 0;
@@ -63,6 +64,11 @@ design_create_description::design_create_description()
 
 	f_linear_space_from_latin_square = false;
 	//std::string linear_space_from_latin_square_name;
+
+	f_orbit_on_sets = false;
+	//std::string orbit_on_sets_orbits;
+	orbit_on_sets_size = -1;
+	orbit_on_sets_idx = -1;
 
 	f_no_group = false;
 }
@@ -173,9 +179,11 @@ int design_create_description::read_arguments(
 			f_list_of_blocks_from_file = true;
 			list_of_blocks_from_file_v = ST.strtoi(argv[++i]);
 			list_of_blocks_from_file_fname.assign(argv[++i]);
+			list_of_blocks_from_file_column.assign(argv[++i]);
 			if (f_v) {
 				cout << "-list_of_blocks_from_file " << list_of_blocks_from_file_v
 						<< " " << list_of_blocks_from_file_fname
+						<< " " << list_of_blocks_from_file_column
 						<< endl;
 			}
 		}
@@ -200,6 +208,20 @@ int design_create_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-orbit_on_sets") == 0) {
+			f_orbit_on_sets = true;
+			orbit_on_sets_orbits.assign(argv[++i]);
+			orbit_on_sets_size = ST.strtoi(argv[++i]);
+			orbit_on_sets_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbit_on_sets "
+						<< " " << orbit_on_sets_orbits
+						<< " " << orbit_on_sets_size
+						<< " " << orbit_on_sets_idx
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-no_group") == 0) {
 			f_no_group = true;
 			if (f_v) {
@@ -268,6 +290,7 @@ void design_create_description::print()
 	if (f_list_of_blocks_from_file) {
 		cout << "-list_of_blocks_from_file " << list_of_blocks_from_file_v
 				<< " " << list_of_blocks_from_file_fname
+				<< " " << list_of_blocks_from_file_column
 				<< endl;
 	}
 	if (f_wreath_product_designs) {
@@ -279,6 +302,13 @@ void design_create_description::print()
 	if (f_linear_space_from_latin_square) {
 		cout << "-linear_space_from_latin_square "
 				<< " " << linear_space_from_latin_square_name
+				<< endl;
+	}
+	if (f_orbit_on_sets) {
+		cout << "-orbit_on_sets "
+				<< " " << orbit_on_sets_orbits
+				<< " " << orbit_on_sets_size
+				<< " " << orbit_on_sets_idx
 				<< endl;
 	}
 	if (f_no_group) {

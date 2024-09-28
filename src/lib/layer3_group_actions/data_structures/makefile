@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	group_container.o \
+	group_table_and_generators.o \
 	hash_table_subgroups.o \
 	orbit_rep.o \
 	orbit_transversal.o \

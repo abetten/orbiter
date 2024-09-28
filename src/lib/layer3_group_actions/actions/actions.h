@@ -325,6 +325,10 @@ public:
 		int *aut_data,
 		groups::sims &S, int verbose_level);
 
+
+	// the following are various entry points
+	// for the randomized schreier sims algorithm:
+
 	groups::sims *create_sims_from_generators_with_target_group_order_factorized(
 			data_structures_groups::vector_ge *gens,
 			int *tl, int len, int verbose_level);
@@ -340,10 +344,13 @@ public:
 			int verbose_level);
 	groups::sims *create_sims_from_single_generator_without_target_group_order(
 		int *Elt, int verbose_level);
+
 	groups::sims *create_sims_from_generators_randomized(
 			data_structures_groups::vector_ge *gens,
 			int f_target_go, ring_theory::longinteger_object &target_go,
 		int verbose_level);
+	// uses groups::schreier_sims
+
 	groups::sims *create_sims_for_centralizer_of_matrix(
 			int *Mtx, int verbose_level);
 
@@ -819,6 +826,7 @@ public:
 		groups::strong_generators *&Strong_gens,
 		int &nb_cases,
 		int verbose_level);
+	// reads an orbiter data file
 	data_structures::set_of_sets *set_of_sets_copy_and_apply(
 			action *A,
 			int *Elt,
@@ -964,6 +972,7 @@ public:
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 
+
 	/** Create a projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(
 			int n, field_theory::finite_field *F,
@@ -988,6 +997,8 @@ public:
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 
+	void compute_special_subgroup(
+			int verbose_level);
 	void setup_linear_group_from_strong_generators(
 			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
@@ -1006,6 +1017,8 @@ public:
 			algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
+
+
 	void init_permutation_group(
 			int degree, int f_no_base, int verbose_level);
 	void init_permutation_group_from_nauty_output(
@@ -1018,6 +1031,7 @@ public:
 		int given_base_length, long int *given_base,
 		int f_given_base,
 		int verbose_level);
+	// calls init_base_and_generators is f_given_base is true, otherwise does not initialize group
 	void init_base_and_generators(
 			int f_target_go, ring_theory::longinteger_object &target_go,
 			int nb_gens, int *gens,
@@ -1032,6 +1046,8 @@ public:
 			int degree, int verbose_level);
 	void init_cyclic_group(
 			int degree, int verbose_level);
+	void init_elementary_abelian_group(
+			int order, int verbose_level);
 	void init_identity_group(
 			int degree, int verbose_level);
 
@@ -1061,14 +1077,6 @@ public:
 		int f_on_points, int f_on_lines, int f_on_points_and_lines,
 		int f_semilinear,
 		int f_basis, int verbose_level);
-
-	void create_orthogonal_group(
-			action *subaction,
-		int f_has_target_group_order,
-		ring_theory::longinteger_object &target_go,
-		void (* callback_choose_random_generator)(int iteration,
-			int *Elt, void *data, int verbose_level),
-		int verbose_level);
 
 
 
@@ -1107,7 +1115,17 @@ public:
 			groups::sims *K,
 		int given_base_length, int *given_base,
 		int verbose_level);
+	// calls sims::build_up_group_from_generators
 
+
+	void create_orthogonal_group(
+			action *subaction,
+		int f_has_target_group_order,
+		ring_theory::longinteger_object &target_go,
+		void (* callback_choose_random_generator)(int iteration,
+			int *Elt, void *data, int verbose_level),
+		int verbose_level);
+	// uses groups::schreier_sims
 
 
 };

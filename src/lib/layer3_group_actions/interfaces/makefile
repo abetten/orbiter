@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	conjugacy_classes_and_normalizers.o \
+	conjugacy_classes_of_subgroups.o \
 	l3_interface_gap.o \
 	magma_interface.o \
 	nauty_interface_for_graphs.o \

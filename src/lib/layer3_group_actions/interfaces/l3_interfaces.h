@@ -66,11 +66,62 @@ public:
 			groups::sims *override_sims,
 			int verbose_level);
 	void report_classes(
-			std::ofstream &fp, int verbose_level);
+			std::ofstream &ost, int verbose_level);
 	void export_csv(
 			int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// conjugacy_classes_of_subgroups.cpp:
+// #############################################################################
+
+//! Magma output for conjugacy classes of subgroups of a group
+
+
+class conjugacy_classes_of_subgroups {
+
+public:
+
+
+	actions::action *A;
+	std::string fname;
+
+	int nb_classes;
+
+	int *Subgroup_order; // [nb_classes]
+	int *Length; // [nb_classes]
+	int *Nb_gens; // [nb_classes]
+	int **subgroup_gens; // [nb_classes]
+
+	groups::conjugacy_class_of_subgroups **Conjugacy_class; // [nb_classes]
+
+	conjugacy_classes_of_subgroups();
+	~conjugacy_classes_of_subgroups();
+	void read_magma_output_file(
+			actions::action *A,
+			std::string &fname,
+			int verbose_level);
+	void create_classes(
+			groups::sims *group_G, int verbose_level);
+	void report(
+			groups::sims *override_sims,
+			std::string &label_latex,
+			int verbose_level);
+	void export_csv(
+			groups::sims *override_sims,
+			int verbose_level);
+	void report_classes(
+			std::ofstream &ost, int verbose_level);
+	void export_csv(
+			int verbose_level);
+
+};
+
+
+
 
 
 // #############################################################################
@@ -196,29 +247,28 @@ public:
 			int verbose_level);
 
 	// #############################################################################
-	// # conjugacy classes (and normalizers)
+	// # all conjugacy classes of a group
 	// #############################################################################
-
 
 	void conjugacy_classes_using_MAGMA(
 			actions::action *A,
 			std::string &prefix,
 			groups::sims *G, int verbose_level);
-	void conjugacy_classes_and_normalizers_using_MAGMA(
-			actions::action *A,
-			std::string &prefix,
-			groups::sims *G, int verbose_level);
-	void read_conjugacy_classes_and_normalizers_from_MAGMA(
-			actions::action *A,
-			std::string &fname,
-			conjugacy_classes_and_normalizers *&class_data,
-			int verbose_level);
+
+	// #############################################################################
+	// # all conjugacy classes and normalizers of the associated groups generated
+	// #############################################################################
+
 	void get_conjugacy_classes_and_normalizers(
 			actions::action *A,
 			groups::sims *override_Sims,
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
+	void conjugacy_classes_and_normalizers_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *G, int verbose_level);
 #if 0
 	void report_conjugacy_classes_and_normalizers(
 			actions::action *A,
@@ -232,6 +282,11 @@ public:
 			groups::sims *override_sims,
 			std::string &label_latex,
 			int verbose_level);
+	void read_conjugacy_classes_and_normalizers_from_MAGMA(
+			actions::action *A,
+			std::string &fname,
+			conjugacy_classes_and_normalizers *&class_data,
+			int verbose_level);
 #if 0
 	void read_and_report_conjugacy_classes_and_normalizers(
 			actions::action *A,
@@ -240,6 +295,33 @@ public:
 			groups::sims *override_Sims,
 			int verbose_level);
 #endif
+
+
+	// #############################################################################
+	// # subgroup lattice
+	// #############################################################################
+
+	void get_subgroup_lattice(
+			actions::action *A,
+			groups::sims *override_Sims,
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
+	void subgroup_lattice_using_MAGMA(
+			actions::action *A,
+			std::string &prefix,
+			groups::sims *G, int verbose_level);
+	void read_subgroup_lattice(
+			actions::action *A,
+			std::string &fname,
+			groups::sims *override_sims,
+			std::string &label_latex,
+			int verbose_level);
+	void read_conjugacy_classes_of_subgroups_from_MAGMA(
+			actions::action *A,
+			std::string &fname,
+			conjugacy_classes_of_subgroups *&class_data,
+			int verbose_level);
 
 	// #############################################################################
 	// # find subgroups
@@ -286,15 +368,15 @@ public:
 	// # automorphism group of a group, normalizer in Sym(n)
 	// #############################################################################
 
-	void init_automorphism_group_from_group_table(
+	void compute_automorphism_group_from_group_table(
 		std::string &fname_base,
-		int *Table, int group_order, int *gens, int nb_gens,
+		data_structures_groups::group_table_and_generators *Table,
 		actions::action *&A_perm,
 		groups::strong_generators *&Aut_gens,
 		int verbose_level);
 	void normalizer_in_Sym_n(
 			std::string &fname_base,
-		int group_order, int *Table, int *gens, int nb_gens,
+			data_structures_groups::group_table_and_generators *Table,
 		int *&N_gens, int &N_nb_gens, int &N_go,
 		int verbose_level);
 

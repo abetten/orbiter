@@ -375,6 +375,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
 		layer3_group_actions/data_structures/group_container.o \
+		layer3_group_actions/data_structures/group_table_and_generators.o \
 		layer3_group_actions/data_structures/hash_table_subgroups.o \
 		layer3_group_actions/data_structures/orbit_rep.o \
 		layer3_group_actions/data_structures/orbit_transversal.o \
@@ -395,7 +396,9 @@ ORBITER_MODULES= \
 		layer3_group_actions/group_constructions/polarity_extension.o \
 		layer3_group_actions/group_constructions/wreath_product.o \
 		layer3_group_actions/groups/conjugacy_class_of_elements.o \
+		layer3_group_actions/groups/conjugacy_class_of_subgroups.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
+		layer3_group_actions/groups/group_theory_global.o \
 		layer3_group_actions/groups/orbits_on_something.o \
 		layer3_group_actions/groups/schreier.o \
 		layer3_group_actions/groups/schreier_io.o \
@@ -440,6 +443,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_on_wedge_product.o \
 		layer3_group_actions/induced_actions/product_action.o \
 		layer3_group_actions/interfaces/conjugacy_classes_and_normalizers.o \
+		layer3_group_actions/interfaces/conjugacy_classes_of_subgroups.o \
 		layer3_group_actions/interfaces/l3_interface_gap.o \
 		layer3_group_actions/interfaces/magma_interface.o \
 		layer3_group_actions/interfaces/nauty_interface_for_graphs.o \

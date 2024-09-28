@@ -1348,9 +1348,25 @@ void combinatorics_domain::perm_elementary_transposition(
 	}
 	for (i = 0; i < n; i++) {
 		a[i] = i;
-		}
+	}
 	a[f] = f + 1;
 	a[f + 1] = f;
+}
+
+void combinatorics_domain::perm_cycle(
+		int *perm, long int n)
+{
+	int j;
+
+	// create the cycle of degree n:
+	for (j = 0; j < n; j++) {
+		if (j < n - 1) {
+			perm[j] = j + 1;
+		}
+		else {
+			perm[j] = 0;
+		}
+	}
 }
 
 void combinatorics_domain::perm_mult(

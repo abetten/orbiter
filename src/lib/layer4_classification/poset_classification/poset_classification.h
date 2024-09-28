@@ -1203,7 +1203,9 @@ public:
 			long int *set, int size, int level,
 		long int *canonical_set, int *Elt_transporter,
 		int verbose_level);
-		// returns the case number of the canonical set
+	// Elt_transporter maps the given set in set[]
+	// to the canonical set in canonical_set[]
+	// return value is the local orbit index of the canonical set
 	long int find_node_for_subspace_by_rank(
 			long int *set, int len,
 		int verbose_level);

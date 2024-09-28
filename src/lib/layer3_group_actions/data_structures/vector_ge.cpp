@@ -223,6 +223,8 @@ void vector_ge::init_from_data(
 	if (elt_size != A->make_element_size) {
 		cout << "vector_ge::init_from_data "
 				"elt_size != A->make_element_size" << endl;
+		cout << "elt_size = " << elt_size << endl;
+		cout << "A->make_element_size = " << A->make_element_size << endl;
 		exit(1);
 	}
 	Elt = NEW_int(A->elt_size_in_int);

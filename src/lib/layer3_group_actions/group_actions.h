@@ -53,6 +53,7 @@ namespace combinatorics_with_groups {
 namespace data_structures_groups {
 
 	class group_container;
+	class group_table_and_generators;
 	class hash_table_subgroups;
 	class orbit_rep;
 	class orbit_transversal;
@@ -91,7 +92,9 @@ namespace groups {
 
 
 	class conjugacy_class_of_elements;
+	class conjugacy_class_of_subgroups;
 	class exceptional_isomorphism_O4;
+	class group_theory_global;
 	class orbits_on_something;
 	class schreier;
 	class schreier_sims;
@@ -147,6 +150,7 @@ namespace induced_actions {
 namespace interfaces {
 
 	class conjugacy_classes_and_normalizers;
+	class conjugacy_classes_of_subgroups;
 	class l3_interface_gap;
 	class magma_interface;
 	class nauty_interface_for_graphs;
@@ -221,6 +225,7 @@ enum permutation_group_type {
 	unknown_permutation_group_t,
 	symmetric_group_t,
 	cyclic_group_t,
+	elementary_abelian_group_t,
 	identity_group_t,
 	dihedral_group_t,
 	bsgs_t,

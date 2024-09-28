@@ -58,9 +58,10 @@ public:
 	groups::sims *S;
 	groups::sims *S_subgroup;
 
-	int *Table;
-	int *generators;
-	int nb_generators;
+	data_structures_groups::group_table_and_generators *Table;
+	//int *Table;
+	//int *generators;
+	//int nb_generators;
 
 	std::string fname_base;
 	std::string prefix;
@@ -119,6 +120,8 @@ public:
 
 class create_graph_description {
 public:
+
+	// TABLES/create_graph_1.tex
 
 	int f_load;
 	std::string fname;
@@ -192,6 +195,8 @@ public:
 
 	int f_non_attacking_queens_graph;
 	int non_attacking_queens_graph_n;
+
+	// TABLES/create_graph_2.tex
 
 	int f_subset;
 	std::string subset_label;
@@ -348,6 +353,9 @@ public:
 class graph_classification_activity_description {
 
 public:
+
+	// TABLES/graph_classification_activity.tex
+
 	int f_draw_level_graph;
 	int draw_level_graph_level;
 
@@ -413,6 +421,9 @@ public:
 class graph_classify_description {
 
 public:
+
+	// TABLES/graph_classify.tex
+
 	int f_n;
 	int n; // number of vertices
 
@@ -541,6 +552,8 @@ class graph_modification_description {
 
 public:
 
+	// TABLES/graph_modification.tex
+
 	int f_complement;
 
 	int f_distance_2;
@@ -574,6 +587,8 @@ public:
 class graph_theoretic_activity_description {
 
 public:
+
+	// TABLES/graph_theoretic_activity.tex
 
 	int f_find_cliques;
 	graph_theory::clique_finder_control *Clique_finder_control;

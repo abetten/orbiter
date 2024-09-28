@@ -132,50 +132,16 @@ void known_groups::init_linear_group(
 
 	if (f_special) {
 
-
 		if (f_v) {
 			cout << "known_groups::init_linear_group "
-					"computing intersection with "
-					"special linear group" << endl;
+					"before compute_special_subgroup" << endl;
 		}
-
-
-		action *A_on_det;
-		ring_theory::longinteger_object go;
-
+		compute_special_subgroup(
+				verbose_level);
 		if (f_v) {
 			cout << "known_groups::init_linear_group "
-					"before A->Induced_action->induced_action_on_determinant" << endl;
+					"after compute_special_subgroup" << endl;
 		}
-		A_on_det = A->Induced_action->induced_action_on_determinant(
-				A->Sims, verbose_level);
-		if (f_v) {
-			cout << "known_groups::init_linear_group "
-					"after A->Induced_action->induced_action_on_determinant" << endl;
-		}
-		A_on_det->Kernel->group_order(go);
-		if (f_v) {
-			cout << "known_groups::init_linear_group "
-					"kernel has order " << go << endl;
-		}
-
-
-		groups::strong_generators *SG;
-
-		SG = NEW_OBJECT(groups::strong_generators);
-		if (f_v) {
-			cout << "known_groups::init_linear_group "
-					"creating strong generators "
-					"for the kernel in the action "
-					"on the determinant" << endl;
-		}
-
-		SG->init_from_sims(
-				A_on_det->Kernel, 0 /* verbose_level */);
-		//S = SG->create_sims(0 /* verbose_level */);
-		FREE_OBJECT(SG);
-
-		FREE_OBJECT(A_on_det);
 
 	}
 
@@ -215,7 +181,6 @@ void known_groups::init_linear_group(
 		cout << "known_groups::init_linear_group finished" << endl;
 	}
 }
-
 
 
 void known_groups::init_projective_group(
@@ -516,6 +481,65 @@ void known_groups::init_general_linear_group(
 	}
 }
 
+void known_groups::compute_special_subgroup(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup" << endl;
+	}
+
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup "
+				"computing intersection with "
+				"special linear group" << endl;
+	}
+
+
+	action *A_on_det;
+	ring_theory::longinteger_object go;
+
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup "
+				"before A->Induced_action->induced_action_on_determinant" << endl;
+	}
+	A_on_det = A->Induced_action->induced_action_on_determinant(
+			A->Sims, verbose_level);
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup "
+				"after A->Induced_action->induced_action_on_determinant" << endl;
+	}
+	A_on_det->Kernel->group_order(go);
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup "
+				"kernel has order " << go << endl;
+	}
+
+
+	groups::strong_generators *SG;
+
+	SG = NEW_OBJECT(groups::strong_generators);
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup "
+				"creating strong generators "
+				"for the kernel in the action "
+				"on the determinant" << endl;
+	}
+
+	SG->init_from_sims(
+			A_on_det->Kernel, 0 /* verbose_level */);
+	//S = SG->create_sims(0 /* verbose_level */);
+	FREE_OBJECT(SG);
+
+	FREE_OBJECT(A_on_det);
+	if (f_v) {
+		cout << "known_groups::compute_special_subgroup done" << endl;
+	}
+
+}
+
+
 void known_groups::setup_linear_group_from_strong_generators(
 		algebra::matrix_group *M,
 		data_structures_groups::vector_ge *&nice_gens,
@@ -807,10 +831,8 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 void known_groups::init_permutation_group(
 		int degree, int f_no_base, int verbose_level)
 {
-	int page_length_log = PAGE_LENGTH_LOG;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	group_constructions::permutation_representation_domain *P;
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group, "
@@ -818,6 +840,10 @@ void known_groups::init_permutation_group(
 				<< " f_no_base=" << f_no_base
 				<< " verbose_level=" << verbose_level << endl;
 	}
+
+
+	int page_length_log = PAGE_LENGTH_LOG;
+	group_constructions::permutation_representation_domain *P;
 
 
 	A->label = "Perm_" + std::to_string(degree);
@@ -835,7 +861,7 @@ void known_groups::init_permutation_group(
 
 	P->init(
 			degree, page_length_log,
-			verbose_level);
+			verbose_level - 2);
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group "
@@ -1016,6 +1042,7 @@ void known_groups::init_permutation_group_from_generators(
 	int given_base_length, long int *given_base,
 	int f_given_base,
 	int verbose_level)
+// calls init_base_and_generators is f_given_base is true, otherwise does not initialize group
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1034,6 +1061,12 @@ void known_groups::init_permutation_group_from_generators(
 			cout << "known_groups::init_permutation_group_from_generators "
 					"no target group order is given" << endl;
 		}
+	}
+	if (f_v) {
+		cout << "known_groups::init_permutation_group_from_generators "
+				"given base: ";
+		Lint_vec_print(cout, given_base, given_base_length);
+		cout << endl;
 	}
 
 	A->label = "Perm_" + std::to_string(degree);
@@ -1079,7 +1112,7 @@ void known_groups::init_permutation_group_from_generators(
 		A->Stabilizer_chain = NULL;
 	}
 
-
+#if 0
 	if (!f_given_base) {
 		if (f_vv) {
 			cout << "known_groups::init_permutation_group_from_generators "
@@ -1087,6 +1120,7 @@ void known_groups::init_permutation_group_from_generators(
 		}
 	}
 	else {
+#endif
 
 		if (f_vv) {
 			cout << "known_groups::init_permutation_group_from_generators "
@@ -1103,7 +1137,7 @@ void known_groups::init_permutation_group_from_generators(
 					"after init_base_and_generators" << endl;
 		}
 
-	}
+	//}
 
 	if (f_v) {
 		A->print_info();
@@ -1119,6 +1153,7 @@ void known_groups::init_base_and_generators(
 		int given_base_length, long int *given_base,
 		int f_given_base,
 		int verbose_level)
+// calls A->generators_to_strong_generators
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1302,7 +1337,7 @@ void known_groups::init_cyclic_group(
 	int nb_gens, *gens;
 	int given_base_length;
 	long int *given_base;
-	int i, j;
+	int i; //, j;
 	ring_theory::longinteger_object go;
 
 	if (f_v) {
@@ -1317,7 +1352,14 @@ void known_groups::init_cyclic_group(
 	gens = NEW_int(nb_gens * degree);
 	given_base = NEW_lint(given_base_length);
 
+
+	combinatorics::combinatorics_domain Combi;
+
 	// create the cycle of degree 'degree':
+	Combi.perm_cycle(
+			gens, degree);
+
+#if 0
 	for (j = 0; j < degree; j++) {
 		if (j < degree - 1) {
 			gens[0 * degree + j] = j + 1;
@@ -1326,6 +1368,7 @@ void known_groups::init_cyclic_group(
 			gens[0 * degree + j] = 0;
 		}
 	}
+#endif
 
 	for (i = 0; i < given_base_length; i++) {
 		given_base[i] = i;
@@ -1355,6 +1398,104 @@ void known_groups::init_cyclic_group(
 		cout << "known_groups::init_cyclic_group done" << endl;
 	}
 }
+
+
+
+
+
+void known_groups::init_elementary_abelian_group(
+		int order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_gens, *gens;
+	int given_base_length;
+	long int *given_base;
+	int i, j, k;
+	int p, h;
+	int offset;
+	ring_theory::longinteger_object go;
+
+	if (f_v) {
+		cout << "known_groups::init_elementary_abelian_group" << endl;
+	}
+
+	number_theory::number_theory_domain NT;
+
+	if (!NT.is_prime_power(
+			order, p, h)) {
+		cout << "known_groups::init_elementary_abelian_group "
+				"group order needs to be a prime power" << endl;
+		exit(1);
+	}
+
+	go.create(order);
+
+	int degree;
+
+	degree = h * p;
+
+	A->make_element_size = degree;
+
+
+	combinatorics::combinatorics_domain Combi;
+
+	// create the generators for the elementary group
+
+	nb_gens = h;
+	given_base_length = h;
+	gens = NEW_int(nb_gens * degree);
+	given_base = NEW_lint(given_base_length);
+
+	for (i = 0; i < nb_gens; i++) {
+
+		for (j = 0; j < h; j++) {
+			if (j == i) {
+				Combi.perm_cycle(
+						gens + i * degree + j * p, p);
+			}
+			else {
+				Combi.perm_identity(
+						gens + i * degree + j * p, p);
+			}
+			offset = j * p;
+			for (k = 0; k < p; k++) {
+				gens[i * degree + j * p + k] += offset;
+			}
+		}
+	}
+
+
+	for (i = 0; i < given_base_length; i++) {
+		given_base[i] = i * p;
+	}
+	if (f_v) {
+		cout << "known_groups::init_elementary_abelian_group "
+				"before init_permutation_group_from_generators" << endl;
+	}
+	init_permutation_group_from_generators(
+			degree,
+		true, go,
+		nb_gens, gens,
+		given_base_length, given_base,
+		true /* f_given_base */,
+		verbose_level);
+	if (f_v) {
+		cout << "known_groups::init_elementary_abelian_group "
+				"after init_permutation_group_from_generators" << endl;
+	}
+	FREE_int(gens);
+	FREE_lint(given_base);
+
+	A->label = "E_" + std::to_string(order);
+	A->label_tex = "{\\rm E}_{" + std::to_string(order) + "}";
+
+	if (f_v) {
+		cout << "known_groups::init_elementary_abelian_group done" << endl;
+	}
+}
+
+
+
 
 void known_groups::init_identity_group(
 		int degree, int verbose_level)
@@ -1734,119 +1875,6 @@ void known_groups::init_orthogonal_group_with_O(
 
 	if (f_v) {
 		cout << "known_groups::init_orthogonal_group_with_O done" << endl;
-	}
-}
-
-void known_groups::create_orthogonal_group(
-		action *subaction,
-	int f_has_target_group_order,
-	ring_theory::longinteger_object &target_go,
-	void (* callback_choose_random_generator)(int iteration,
-		int *Elt, void *data, int verbose_level),
-	int verbose_level)
-{
-	//verbose_level = 10;
-
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-
-	if (f_v) {
-		cout << "known_groups::create_orthogonal_group" << endl;
-	}
-
-	action_global AG;
-	algebra::matrix_group *Mtx;
-	int degree_save;
-
-	Mtx = subaction->get_matrix_group();
-
-	degree_save = A->degree;
-	if (f_v) {
-		cout << "known_groups::create_orthogonal_group "
-				"before AG.init_base_projective" << endl;
-	}
-	AG.init_base_projective(
-			A, Mtx, verbose_level);
-	// initializes base, base_len, degree,
-	// transversal_length, orbit, orbit_inv
-	if (f_v) {
-		cout << "known_groups::create_orthogonal_group "
-				"after AG.init_base_projective" << endl;
-	}
-	A->degree = degree_save;
-
-
-	if (f_v) {
-		cout << "known_groups::create_orthogonal_group "
-				"before allocating a schreier_sims object" << endl;
-	}
-
-	{
-		groups::schreier_sims ss;
-
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"before ss.init" << endl;
-		}
-		ss.init(A, verbose_level - 1);
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"after ss.init" << endl;
-		}
-
-		ss.interested_in_kernel(subaction, verbose_level - 1);
-
-		if (f_has_target_group_order) {
-			ss.init_target_group_order(target_go, verbose_level - 1);
-		}
-
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"before ss.init_random_process" << endl;
-		}
-		ss.init_random_process(
-			callback_choose_random_generator,
-			&ss,
-			verbose_level - 1);
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"after ss.init_random_process" << endl;
-		}
-
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"before ss.create_group" << endl;
-		}
-		ss.create_group(verbose_level - 1);
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group "
-					"after ss.create_group" << endl;
-		}
-
-		A->init_sims_only(ss.G, verbose_level);
-		A->compute_strong_generators_from_sims(0/*verbose_level - 2*/);
-
-		A->f_has_kernel = true;
-		A->Kernel = ss.K;
-
-		ss.K = NULL;
-		ss.G = NULL;
-
-		//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group after init_sims, "
-					"calling compute_strong_generators_from_sims" << endl;
-		}
-		A->compute_strong_generators_from_sims(verbose_level - 2);
-		if (f_v) {
-			cout << "known_groups::create_orthogonal_group done, "
-					"freeing schreier_sims object" << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "known_groups::create_orthogonal_group "
-				"done" << endl;
 	}
 }
 
@@ -2268,6 +2296,7 @@ void known_groups::init_group_from_strong_generators(
 		groups::sims *K,
 	int given_base_length, int *given_base,
 	int verbose_level)
+// calls sims::build_up_group_from_generators
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2366,6 +2395,126 @@ void known_groups::init_group_from_strong_generators(
 		cout << "known_groups::init_group_from_strong_generators done" << endl;
 	}
 }
+
+
+
+void known_groups::create_orthogonal_group(
+		action *subaction,
+	int f_has_target_group_order,
+	ring_theory::longinteger_object &target_go,
+	void (* callback_choose_random_generator)(int iteration,
+		int *Elt, void *data, int verbose_level),
+	int verbose_level)
+// uses groups::schreier_sims
+{
+	//verbose_level = 10;
+
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "known_groups::create_orthogonal_group" << endl;
+	}
+
+	action_global AG;
+	algebra::matrix_group *Mtx;
+	int degree_save;
+
+	Mtx = subaction->get_matrix_group();
+
+	degree_save = A->degree;
+	if (f_v) {
+		cout << "known_groups::create_orthogonal_group "
+				"before AG.init_base_projective" << endl;
+	}
+	AG.init_base_projective(
+			A, Mtx, verbose_level);
+	// initializes base, base_len, degree,
+	// transversal_length, orbit, orbit_inv
+	if (f_v) {
+		cout << "known_groups::create_orthogonal_group "
+				"after AG.init_base_projective" << endl;
+	}
+	A->degree = degree_save;
+
+
+	if (f_v) {
+		cout << "known_groups::create_orthogonal_group "
+				"before allocating a schreier_sims object" << endl;
+	}
+
+	{
+		groups::schreier_sims ss;
+
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"before ss.init" << endl;
+		}
+		ss.init(A, verbose_level - 1);
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"after ss.init" << endl;
+		}
+
+		ss.interested_in_kernel(subaction, verbose_level - 1);
+
+		if (f_has_target_group_order) {
+			ss.init_target_group_order(target_go, verbose_level - 1);
+		}
+
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"before ss.init_random_process" << endl;
+		}
+		ss.init_random_process(
+			callback_choose_random_generator,
+			&ss,
+			verbose_level - 1);
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"after ss.init_random_process" << endl;
+		}
+
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"before ss.create_group" << endl;
+		}
+		ss.create_group(verbose_level - 1);
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group "
+					"after ss.create_group" << endl;
+		}
+
+		A->init_sims_only(ss.G, verbose_level);
+		A->compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+
+		A->f_has_kernel = true;
+		A->Kernel = ss.K;
+
+		ss.K = NULL;
+		ss.G = NULL;
+
+		//init_transversal_reps_from_stabilizer_chain(G, verbose_level - 2);
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group after init_sims, "
+					"calling compute_strong_generators_from_sims" << endl;
+		}
+		A->compute_strong_generators_from_sims(verbose_level - 2);
+		if (f_v) {
+			cout << "known_groups::create_orthogonal_group done, "
+					"freeing schreier_sims object" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "known_groups::create_orthogonal_group "
+				"done" << endl;
+	}
+}
+
+
+
+
 
 }}}
 

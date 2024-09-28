@@ -33,16 +33,16 @@ heisenberg::~heisenberg()
 {
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (Elt2) {
 		FREE_int(Elt2);
-		}
+	}
 	if (Elt3) {
 		FREE_int(Elt3);
-		}
+	}
 	if (Elt4) {
 		FREE_int(Elt4);
-		}
+	}
 }
 
 void heisenberg::init(
@@ -55,7 +55,7 @@ void heisenberg::init(
 
 	if (f_v) {
 		cout << "heisenberg::init n=" << n << " q=" << F->q << endl;
-		}
+	}
 	q = F->q;
 	heisenberg::F = F;
 	heisenberg::n = n;
@@ -68,7 +68,7 @@ void heisenberg::init(
 	Elt4 = NEW_int(len);
 	if (f_v) {
 		cout << "heisenberg::init done" << endl;
-		}
+	}
 }
 
 void heisenberg::unrank_element(
@@ -141,7 +141,7 @@ void heisenberg::group_table(
 
 	if (f_v) {
 		cout << "heisenberg::group_table" << endl;
-		}
+	}
 	Table = NEW_int(group_order * group_order);
 	for (i = 0; i < group_order; i++) {
 		unrank_element(Elt1, i);
@@ -150,11 +150,11 @@ void heisenberg::group_table(
 			element_add(Elt1, Elt2, Elt3, 0 /* verbose_level */);
 			k = rank_element(Elt3);
 			Table[i * group_order + j] = k;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "heisenberg::group_table finished" << endl;
-		}
+	}
 }
 
 void heisenberg::group_table_abv(
@@ -166,7 +166,7 @@ void heisenberg::group_table_abv(
 
 	if (f_v) {
 		cout << "heisenberg::group_table" << endl;
-		}
+	}
 	Table_abv = NEW_int(group_order * group_order);
 	for (i = 0; i < group_order; i++) {
 		unrank_element(Elt1, i);
@@ -176,11 +176,11 @@ void heisenberg::group_table_abv(
 			element_add(Elt1, Elt3, Elt4, 0 /* verbose_level */);
 			k = rank_element(Elt4);
 			Table_abv[i * group_order + j] = k;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "heisenberg::group_table finished" << endl;
-		}
+	}
 }
 
 void heisenberg::generating_set(
@@ -193,7 +193,7 @@ void heisenberg::generating_set(
 
 	if (f_v) {
 		cout << "heisenberg::generating_set" << endl;
-		}
+	}
 	nb_gens = (n * F->e) * 2 + F->e;
 	gens = NEW_int(nb_gens);
 	cnt = 0;
@@ -203,31 +203,31 @@ void heisenberg::generating_set(
 			Elt1[i] = NT.i_power_j(F->p, j);
 			k = rank_element(Elt1);
 			gens[cnt++] = k;
-			}
 		}
+	}
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < F->e; j++) {
 			unrank_element(Elt1, 0);
 			Elt1[n + i] = NT.i_power_j(F->p, j);
 			k = rank_element(Elt1);
 			gens[cnt++] = k;
-			}
 		}
+	}
 
 	for (j = 0; j < F->e; j++) {
 		unrank_element(Elt1, 0);
 		Elt1[2 * n] = NT.i_power_j(F->p, j);
 		k = rank_element(Elt1);
 		gens[cnt++] = k;
-		}
+	}
 
 	if (cnt != nb_gens) {
 		cout << "heisenberg::generating_set cnt != nb_gens" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "heisenberg::generating_set finished" << endl;
-		}
+	}
 }
 
 }}}

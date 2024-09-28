@@ -26,6 +26,8 @@ namespace cubic_surfaces_and_double_sixes {
 class classification_of_cubic_surfaces_with_double_sixes_activity_description {
 public:
 
+	// TABLES/classification_of_cubic_surfaces_with_double_sixes_activity.tex
+
 	int f_report;
 	poset_classification::poset_classification_report_options
 		*report_options;

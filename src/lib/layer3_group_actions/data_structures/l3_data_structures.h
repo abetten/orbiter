@@ -111,6 +111,43 @@ public:
 };
 
 
+
+// #############################################################################
+// group_table_and_generators.cpp
+// #############################################################################
+
+
+//! group table as matrix of integers and generator indices
+
+
+
+
+class group_table_and_generators {
+
+public:
+	int *Table;
+	int group_order;
+	int *gens;
+	int nb_gens;
+
+	group_table_and_generators();
+	~group_table_and_generators();
+	void init(
+			groups::sims *Sims,
+			data_structures_groups::vector_ge *generators,
+			int verbose_level);
+	void init_basic(
+			int *Table,
+			int group_order,
+			int *gens,
+			int nb_gens,
+			int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // hash_table_subgroups.cpp
 // #############################################################################
@@ -572,6 +609,8 @@ public:
 class vector_ge_description {
 
 public:
+
+	// TABLES/vector_ge_builder.tex
 
 	int f_action;
 	std::string action_label;

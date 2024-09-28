@@ -1826,8 +1826,7 @@ void poset_classification::get_representative_of_subset_orbit(
 	fst = Poo->first_node_at_level(size);
 	node = fst + local_orbit_no;
 	if (f_vv) {
-		cout << "poset_classification::get_representative_"
-				"of_subset_orbit "
+		cout << "poset_classification::get_representative_of_subset_orbit "
 				"before get_set" << endl;
 	}
 	get_set(node, set, sz);
@@ -1839,8 +1838,7 @@ void poset_classification::get_representative_of_subset_orbit(
 	//O = root + node;
 	O = get_node_ij(size, local_orbit_no);
 	if (f_vv) {
-		cout << "poset_classification::get_representative_"
-				"of_subset_orbit "
+		cout << "poset_classification::get_representative_of_subset_orbit "
 				"before get_stabilizer_poset_classifications" << endl;
 	}
 	O->get_stabilizer_generators(this, Strong_gens, 0);
@@ -1895,7 +1893,8 @@ void poset_classification::find_interesting_k_subsets(
 				<< " orbit_idx = " << orbit_idx << endl;
 	}
 	if (f_v) {
-		cout << "interesting set of size "
+		cout << "poset_classification::find_interesting_k_subsets "
+				"interesting set of size "
 				<< nb_interesting_sets << " : ";
 		Int_vec_print(cout, interesting_sets, nb_interesting_sets);
 		cout << endl;

@@ -28,6 +28,9 @@ class action_on_forms_activity_description {
 
 public:
 
+	// ToDo: undocumented
+
+
 	int f_algebraic_normal_form;
 	std::string algebraic_normal_form_input;
 
@@ -99,6 +102,8 @@ public:
 class action_on_forms_description {
 
 public:
+
+	// ToDo: undocumented
 
 	int f_space;
 	std::string space_label;
@@ -596,6 +601,8 @@ public:
 	void print();
 	void classes(
 			int verbose_level);
+	void subgroup_lattice_magma(
+			int verbose_level);
 	void find_standard_generators(
 			int order_a,
 			int order_b,
@@ -703,6 +710,8 @@ class element_processing_description {
 
 public:
 
+	// TABLES/element_processing.tex
+
 	int f_input;
 	std::string input_label;
 
@@ -745,6 +754,8 @@ class group_modification_description {
 
 public:
 
+	// TABLES/group_modification.tex
+
 	int f_restricted_action;
 	std::string restricted_action_set_text;
 	std::string restricted_action_set_text_tex;
@@ -760,7 +771,12 @@ public:
 	int f_create_special_subgroup;
 
 	int f_point_stabilizer;
-	int point_stabilizer_index;
+	int point_stabilizer_point;
+
+	int f_set_stabilizer;
+	std::string set_stabilizer_the_set;
+	std::string set_stabilizer_control;
+
 
 	int f_projectivity_subgroup;
 
@@ -781,6 +797,10 @@ public:
 	int f_on_middle_layer_grassmannian;
 
 	int f_on_points_and_hyperplanes;
+
+	int f_holomorph;
+
+	int f_automorphism_group;
 
 	std::vector<std::string> from;
 
@@ -910,6 +930,8 @@ public:
 
 	// Magma:
 	int f_classes;
+
+	int f_subgroup_lattice_magma;
 
 	// undocumented:
 	int f_find_subgroup;
@@ -1160,6 +1182,9 @@ public:
 	void create_point_stabilizer_subgroup(
 			group_modification_description *description,
 			int verbose_level);
+	void create_set_stabilizer_subgroup(
+			group_modification_description *description,
+			int verbose_level);
 	void create_projectivity_subgroup(
 			group_modification_description *description,
 			int verbose_level);
@@ -1178,6 +1203,9 @@ public:
 			int f_on_middle_layer_grassmannian,
 			int f_on_points_and_hyperplanes,
 			int verbose_level);
+	void create_automorphism_group(
+			int verbose_level);
+	// output in A_modified and Strong_gens
 
 };
 

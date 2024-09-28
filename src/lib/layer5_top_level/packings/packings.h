@@ -282,6 +282,9 @@ public:
 
 class packing_long_orbits_description {
 public:
+
+	// TABLES/packing_long_orbits_description.tex
+
 	int f_split;
 	int split_r;
 	int split_m;
@@ -400,6 +403,8 @@ public:
 class packing_was_activity_description {
 public:
 
+	// TABLES/packing_was_activity.tex
+
 	int f_report;
 
 	int f_export_reduced_spread_orbits;
@@ -451,6 +456,8 @@ public:
 class packing_was_description {
 public:
 
+	// TABLES/packing_was.tex
+
 	int f_process_long_orbits;
 	packing_long_orbits_description *Long_Orbits_Descr;
 
@@ -494,6 +501,9 @@ public:
 
 class packing_was_fixpoints_activity_description {
 public:
+
+	// TABLES/packing_was_fixpoints_activity.tex
+
 	int f_report;
 
 	int f_print_packing;

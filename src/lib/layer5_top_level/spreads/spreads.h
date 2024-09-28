@@ -99,6 +99,8 @@ class spread_activity_description {
 
 public:
 
+	// TABLES/spread_activity.tex
+
 	int f_report;
 
 	spread_activity_description();
@@ -173,6 +175,8 @@ class spread_classify_activity_description {
 public:
 
 
+	// TABLES/spread_classify_activity.tex
+
 	int f_compute_starter;
 
 	int f_prepare_lifting_single_case;
@@ -239,6 +243,8 @@ public:
 
 class spread_classify_description {
 public:
+
+	// TABLES/spread_classify.tex
 
 	int f_projective_space;
 	std::string projective_space_label;
@@ -416,6 +422,8 @@ public:
 class spread_create_description {
 
 public:
+
+	// TABLES/spread_create.tex
 
 	int f_kernel_field;
 	std::string kernel_field_label;
@@ -603,6 +611,7 @@ public:
 class spread_table_activity_description {
 public:
 
+	// TABLES/spread_table_activity.tex
 
 	int f_find_spread;
 	std::string find_spread_text;
@@ -802,6 +811,8 @@ public:
 class translation_plane_activity_description {
 
 public:
+
+	// TABLES/translation_plane_activity.tex
 
 	int f_export_incma;
 

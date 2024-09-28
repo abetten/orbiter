@@ -151,6 +151,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_set_stabilizer) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_set_stabilizer_subgroup" << endl;
+		}
+
+		create_set_stabilizer_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_set_stabilizer_subgroup" << endl;
+		}
+	}
+
 	else if (Descr->f_projectivity_subgroup) {
 
 		if (f_v) {
@@ -238,6 +253,55 @@ void modified_group_create::modified_group_init(
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
 					"after create_polarity_extension" << endl;
+		}
+
+		// output in A_modified
+
+	}
+	else if (Descr->f_holomorph) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_holomorph" << endl;
+		}
+
+		cout << "modified_group_create::modified_group_init f_holomorph not yet implemented" << endl;
+		exit(1);
+
+#if 0
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_holomorph" << endl;
+		}
+		create_holomorph(
+					verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_holomorph" << endl;
+		}
+#endif
+
+		// output in A_modified
+
+	}
+	else if (Descr->f_automorphism_group) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_automorphism_group" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_automorphism_group" << endl;
+		}
+		create_automorphism_group(
+					verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_automorphism_group" << endl;
 		}
 
 		// output in A_modified
@@ -819,7 +883,8 @@ void modified_group_create::create_point_stabilizer_subgroup(
 					"after Orbits.orbits_on_points" << endl;
 		}
 
-		Orb->stabilizer_any_point(Descr->point_stabilizer_index,
+		Orb->stabilizer_any_point(
+				Descr->point_stabilizer_point,
 				Strong_gens, verbose_level);
 
 
@@ -835,13 +900,197 @@ void modified_group_create::create_point_stabilizer_subgroup(
 	}
 
 
-	label += "_Stab" + std::to_string(Descr->point_stabilizer_index);
-	label_tex += " {\\rm Stab " + std::to_string(Descr->point_stabilizer_index) + "}";
+	label += "_Stab" + std::to_string(Descr->point_stabilizer_point);
+	label_tex += " {\\rm Stab " + std::to_string(Descr->point_stabilizer_point) + "}";
 
 
 
 	if (f_v) {
 		cout << "modified_group_create::create_point_stabilizer_subgroup "
+				"done" << endl;
+	}
+}
+
+
+void modified_group_create::create_set_stabilizer_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_set_stabilizer_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_set_stabilizer_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+	if (f_v) {
+		cout << "modified_group_create::create_set_stabilizer_subgroup "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_set_stabilizer_subgroup "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	A_modified = A_previous;
+
+
+
+
+#if 0
+	//Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	{
+		groups::orbits_on_something *Orb;
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"before Orbits.orbits_on_points" << endl;
+		}
+
+		orbits::orbits_global Orbits;
+
+		Orbits.orbits_on_points(AG, Orb, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"after Orbits.orbits_on_points" << endl;
+		}
+
+		Orb->stabilizer_any_point(
+				Descr->point_stabilizer_point,
+				Strong_gens, verbose_level);
+
+
+		FREE_OBJECT(Orb);
+	}
+#endif
+	{
+
+		orbits::orbits_global Orbits_global;
+		poset_classification::poset_classification_control *Control;
+		long int *the_set;
+		long int *canonical_set;
+		int *Elt1;
+		int the_set_sz;
+		int local_idx;
+
+		Lint_vec_scan(description->set_stabilizer_the_set, the_set, the_set_sz);
+
+
+		canonical_set = NEW_lint(the_set_sz);
+		Elt1 = NEW_int(A_base->elt_size_in_int);
+
+		Control = Get_poset_classification_control(description->set_stabilizer_control);
+
+		poset_classification::poset_classification *PC;
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"before Orbits_global.orbits_on_subsets" << endl;
+		}
+		Orbits_global.orbits_on_subsets(
+				AG,
+				Control,
+				PC,
+				the_set_sz,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"after Orbits_global.orbits_on_subsets" << endl;
+		}
+
+
+		// trace the subset:
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"before trace_set" << endl;
+		}
+
+
+		local_idx = PC->trace_set(
+				the_set, the_set_sz, the_set_sz,
+				canonical_set, Elt1,
+			verbose_level - 2);
+
+
+		// Elt1 maps the_set to canonical_set.
+
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"after trace_set local_idx=" << local_idx << endl;
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"canonical_set=";
+			Lint_vec_print(cout, canonical_set, the_set_sz);
+			cout << endl;
+		}
+
+		groups::strong_generators *stab_gens_canonical_set;
+
+		PC->get_stabilizer_generators_cleaned_up(
+				stab_gens_canonical_set,
+				the_set_sz, local_idx, verbose_level - 2);
+
+		groups::group_theory_global Group_theory_global;
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"before Group_theory_global.strong_generators_conjugate_aGav" << endl;
+		}
+
+		Group_theory_global.strong_generators_conjugate_aGav(
+				stab_gens_canonical_set,
+				Elt1,
+				Strong_gens,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "modified_group_create::create_set_stabilizer_subgroup "
+					"after Group_theory_global.strong_generators_conjugate_aGav" << endl;
+		}
+
+
+
+		FREE_OBJECT(stab_gens_canonical_set);
+		FREE_OBJECT(PC);
+		FREE_lint(canonical_set);
+		FREE_int(Elt1);
+	}
+
+	f_has_strong_generators = true;
+
+	if (f_v) {
+		cout << "modified_group_create::create_set_stabilizer_subgroup "
+				"strong generators created" << endl;
+	}
+
+
+	label += "_SetStab" + Descr->set_stabilizer_the_set;
+	label_tex += " {\\rm SetStab " + Descr->set_stabilizer_the_set + "}";
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_set_stabilizer_subgroup "
 				"done" << endl;
 	}
 }
@@ -1245,9 +1494,12 @@ void modified_group_create::create_polarity_extension(
 
 	if (f_v) {
 		cout << "modified_group_create::create_polarity_extension" << endl;
-		cout << "modified_group_create::create_polarity_extension input_group_label = " << input_group_label << endl;
-		cout << "modified_group_create::create_polarity_extension f_on_middle_layer_grassmannian = " << f_on_middle_layer_grassmannian << endl;
-		cout << "modified_group_create::create_polarity_extension f_on_points_and_hyperplanes = " << f_on_points_and_hyperplanes << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"input_group_label = " << input_group_label << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"f_on_middle_layer_grassmannian = " << f_on_middle_layer_grassmannian << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"f_on_points_and_hyperplanes = " << f_on_points_and_hyperplanes << endl;
 	}
 
 	any_group *AG;
@@ -1277,7 +1529,8 @@ void modified_group_create::create_polarity_extension(
 
 
 	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension before creating extension" << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"before creating extension" << endl;
 	}
 
 	if (f_on_middle_layer_grassmannian || f_on_points_and_hyperplanes) {
@@ -1298,7 +1551,8 @@ void modified_group_create::create_polarity_extension(
 		}
 
 		if (A_modified->subaction->Strong_gens == NULL) {
-			cout << "modified_group_create::create_polarity_extension A_modified->subaction->Strong_gens == NULL" << endl;
+			cout << "modified_group_create::create_polarity_extension "
+					"A_modified->subaction->Strong_gens == NULL" << endl;
 			exit(1);
 		}
 		A_modified->Strong_gens = A_modified->subaction->Strong_gens;
@@ -1321,14 +1575,16 @@ void modified_group_create::create_polarity_extension(
 	}
 
 	if (f_v) {
-		cout << "modified_group_create::create_polarity_extension after creating extension" << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"after creating extension" << endl;
 	}
 
 	// test if it has strong generators
 
 
 	if (A_modified->Strong_gens == NULL) {
-		cout << "modified_group_create::create_polarity_extension A_modified->Strong_gens == NULL" << endl;
+		cout << "modified_group_create::create_polarity_extension "
+				"A_modified->Strong_gens == NULL" << endl;
 		exit(1);
 	}
 
@@ -1360,6 +1616,136 @@ void modified_group_create::create_polarity_extension(
 }
 
 
+void modified_group_create::create_automorphism_group(
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group" << endl;
+	}
+
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_automorphism_group "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label) + "_aut";
+	label_tex.assign(AG->label_tex) + "\\_aut";
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_automorphism_group "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+
+	//actions::action_global AGlobal;
+
+
+	groups::sims *Sims;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"before AG->Subgroup_gens->create_sims" << endl;
+	}
+	Sims = AG->Subgroup_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"after AG->Subgroup_gens->create_sims" << endl;
+	}
+
+
+
+	A_modified = NEW_OBJECT(actions::action);
+	interfaces::magma_interface Magma;
+
+
+
+	//int *Table, int group_order, int *gens, int nb_gens,
+
+	actions::action *A_perm;
+
+	data_structures_groups::group_table_and_generators *Table;
+
+	Table = NEW_OBJECT(data_structures_groups::group_table_and_generators);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"before Table->init" << endl;
+	}
+
+	Table->init(
+			Sims,
+			AG->Subgroup_gens->gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"after Table->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"before Magma.compute_automorphism_group_from_group_table" << endl;
+	}
+
+
+	Magma.compute_automorphism_group_from_group_table(
+			label,
+		Table,
+		A_perm,
+		Strong_gens /* Aut_gens */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"after Magma.compute_automorphism_group_from_group_table" << endl;
+	}
+
+
+	FREE_OBJECT(Table);
+
+	ring_theory::longinteger_object Aut_order;
+
+	f_has_strong_generators = true;
+	Strong_gens->group_order(Aut_order);
+
+	A_modified = A_perm;
+	A_modified->f_is_linear = false;
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"order of automorphism group = " << Aut_order << endl;
+	}
+
+	A_base = A_modified;
+	A_previous = A_modified;
+
+	FREE_OBJECT(Sims);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group done" << endl;
+	}
+}
 
 
 }}}

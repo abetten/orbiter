@@ -35,7 +35,11 @@ group_modification_description::group_modification_description()
 	f_create_special_subgroup = false;
 
 	f_point_stabilizer = false;
-	point_stabilizer_index = 0;
+	point_stabilizer_point = 0;
+
+	f_set_stabilizer = false;
+	//std::string set_stabilizer_the_set;
+	//std::string set_stabilizer_control;
 
 	f_projectivity_subgroup = false;
 
@@ -57,6 +61,9 @@ group_modification_description::group_modification_description()
 
 	f_on_points_and_hyperplanes = false;
 
+	f_holomorph = false;
+
+	f_automorphism_group = false;
 
 	//std::vector<std::string> from;
 
@@ -120,9 +127,18 @@ int group_modification_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-point_stabilizer") == 0) {
 			f_point_stabilizer = true;
-			point_stabilizer_index = ST.strtoi(argv[++i]);
+			point_stabilizer_point = ST.strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-point_stabilizer " << point_stabilizer_index << endl;
+				cout << "-point_stabilizer " << point_stabilizer_point << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
+			f_set_stabilizer = true;
+			set_stabilizer_the_set.assign(argv[++i]);
+			set_stabilizer_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-set_stabilizer " << set_stabilizer_the_set
+						<< " " << set_stabilizer_control << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-projectivity_subgroup") == 0) {
@@ -180,6 +196,19 @@ int group_modification_description::read_arguments(
 				cout << "-on_points_and_hyperplanes" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-holomorph") == 0) {
+			f_holomorph = true;
+			if (f_v) {
+				cout << "-holomorph" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-automorphism_group") == 0) {
+			f_automorphism_group = true;
+			if (f_v) {
+				cout << "-automorphism_group" << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
@@ -229,7 +258,11 @@ void group_modification_description::print()
 		cout << "-create_special_subgroup " << endl;
 	}
 	if (f_point_stabilizer) {
-		cout << "-point_stabilizer " << point_stabilizer_index << endl;
+		cout << "-point_stabilizer " << point_stabilizer_point << endl;
+	}
+	if (f_set_stabilizer) {
+		cout << "-set_stabilizer " << set_stabilizer_the_set
+				<< " " << set_stabilizer_control << endl;
 	}
 	if (f_projectivity_subgroup) {
 		cout << "-projectivity_subgroup " << endl;
@@ -258,6 +291,12 @@ void group_modification_description::print()
 	}
 	if (f_on_middle_layer_grassmannian) {
 		cout << "-on_points_and_hyperplanes" << endl;
+	}
+	if (f_holomorph) {
+		cout << "-holomorph" << endl;
+	}
+	if (f_automorphism_group) {
+		cout << "-automorphism_group" << endl;
 	}
 
 

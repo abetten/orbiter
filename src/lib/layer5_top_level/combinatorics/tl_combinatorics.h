@@ -99,6 +99,8 @@ class combinatorial_object_activity_description {
 public:
 
 
+	// TABLE/combinatorial_object_activity.tex
+
 	// options that apply to GOC = geometric_object_create
 
 	int f_save;
@@ -450,6 +452,8 @@ public:
 class delandtsheer_doyen_description {
 public:
 
+	// TABLES/delandtsheer_doyen.tex
+
 	int f_d1;
 	int d1;
 
@@ -707,6 +711,7 @@ class design_activity_description {
 
 public:
 
+	// TABLES/design_activity.tex
 
 	int f_load_table;
 	std::string load_table_label;
@@ -738,6 +743,10 @@ public:
 	int f_export_blocks;
 	int f_row_sums;
 	int f_tactical_decomposition;
+
+	int f_orbits_on_blocks;
+	int orbits_on_blocks_sz;
+	std::string orbits_on_blocks_control;
 
 	design_activity_description();
 	~design_activity_description();
@@ -817,6 +826,11 @@ public:
 	void do_tactical_decomposition(
 			design_create *DC,
 			int verbose_level);
+	void do_orbits_on_blocks(
+			design_create *DC,
+			int sz,
+			std::string &control_label,
+			int verbose_level);
 
 };
 
@@ -833,6 +847,9 @@ public:
 class design_create_description {
 
 public:
+
+	// TABLES/design_create.tex
+
 
 	int f_label;
 	std::string label_txt;
@@ -870,6 +887,7 @@ public:
 	int f_list_of_blocks_from_file;
 	int list_of_blocks_from_file_v;
 	std::string list_of_blocks_from_file_fname;
+	std::string list_of_blocks_from_file_column;
 
 	int f_wreath_product_designs;
 	int wreath_product_designs_n;
@@ -877,6 +895,11 @@ public:
 
 	int f_linear_space_from_latin_square;
 	std::string linear_space_from_latin_square_name;
+
+	int f_orbit_on_sets;
+	std::string orbit_on_sets_orbits;
+	int orbit_on_sets_size;
+	int orbit_on_sets_idx;
 
 	int f_no_group;
 
@@ -914,6 +937,7 @@ public:
 
 	int k;
 
+	actions::action *A_base;
 	actions::action *A;
 		// Sym(degree)
 	actions::action *A2;
@@ -971,6 +995,9 @@ public:
 			int verbose_level);
 	void compute_incidence_matrix_from_blocks(
 			int *blocks, int nb_blocks, int k, int verbose_level);
+	void compute_blocks_from_incidence_matrix(
+			long int *&blocks, int &nb_blocks, int &block_sz,
+			int verbose_level);
 
 };
 
@@ -1199,7 +1226,9 @@ public:
 
 
 class hall_system_classify {
+
 public:
+
 	//int e;
 	int n; // 3^e
 	int nm1; // n-1
@@ -1357,7 +1386,9 @@ public:
 //! classification of large sets of designs
 
 class large_set_classify {
+
 public:
+
 	design_create *DC;
 	int design_size;
 		// = DC->sz = b,
@@ -1434,6 +1465,8 @@ public:
 class large_set_was_activity_description {
 public:
 
+	// TABLES/large_set_was_activity.tex
+
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
 	int normalizer_on_orbits_of_a_given_length_nb_orbits;
@@ -1504,6 +1537,8 @@ public:
 class large_set_was_description {
 public:
 
+
+	// TABLSE/large_set_was.tex
 
 	int f_H;
 	std::string H_go;

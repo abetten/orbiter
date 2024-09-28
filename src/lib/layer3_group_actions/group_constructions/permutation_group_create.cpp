@@ -120,6 +120,36 @@ void permutation_group_create::permutation_group_init(
 		}
 	}
 
+	else if (Descr->type == elementary_abelian_group_t) {
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing elementary_abelian_group_t" << endl;
+		}
+
+		A_initial = NEW_OBJECT(actions::action);
+
+		A_initial->Known_groups->init_elementary_abelian_group(
+				Descr->degree, verbose_level);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init generators:" << endl;
+			A_initial->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			A_initial->Strong_gens->print_generators_in_source_code(verbose_level - 1);
+			A_initial->print_base();
+			A_initial->print_info();
+		}
+
+		label.assign(A_initial->label);
+		label_tex.assign(A_initial->label_tex);
+
+		if (f_v) {
+			cout << "permutation_group_create::permutation_group_init "
+					"initializing elementary_abelian_group_t done" << endl;
+		}
+	}
+
+
 	else if (Descr->type == identity_group_t) {
 
 		if (f_v) {

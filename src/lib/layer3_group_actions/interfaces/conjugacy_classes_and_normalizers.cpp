@@ -249,7 +249,7 @@ void conjugacy_classes_and_normalizers::report(
 
 
 	{
-		ofstream fp(fname_latex);
+		ofstream ost(fname_latex);
 		string title, author, extra_praeamble;
 		l1_interfaces::latex_interface L;
 
@@ -257,7 +257,7 @@ void conjugacy_classes_and_normalizers::report(
 
 		author = "computed by Orbiter and MAGMA";
 
-		L.head(fp,
+		L.head(ost,
 			false /* f_book */, true /* f_title */,
 			title, author /* const char *author */,
 			false /* f_toc */, false /* f_landscape */, true /* f_12pt */,
@@ -265,14 +265,14 @@ void conjugacy_classes_and_normalizers::report(
 			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
-		fp << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
+		ost << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
 
 
-		fp << "The group order is " << endl;
-		fp << "$$" << endl;
-		go.print_not_scientific(fp);
-		fp << endl;
-		fp << "$$" << endl;
+		ost << "The group order is " << endl;
+		ost << "$$" << endl;
+		go.print_not_scientific(ost);
+		ost << endl;
+		ost << "$$" << endl;
 
 		cout << "second time" << endl;
 
@@ -287,7 +287,7 @@ void conjugacy_classes_and_normalizers::report(
 			cout << "conjugacy_classes_and_normalizers::report "
 					"before report_classes" << endl;
 		}
-		report_classes(fp, verbose_level - 1);
+		report_classes(ost, verbose_level - 1);
 		if (f_v) {
 			cout << "conjugacy_classes_and_normalizers::report "
 					"after report_classes" << endl;
@@ -295,7 +295,7 @@ void conjugacy_classes_and_normalizers::report(
 
 
 
-		L.foot(fp);
+		L.foot(ost);
 	}
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;
@@ -422,7 +422,7 @@ void conjugacy_classes_and_normalizers::export_csv(
 }
 
 void conjugacy_classes_and_normalizers::report_classes(
-		std::ofstream &fp, int verbose_level)
+		std::ofstream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -435,7 +435,7 @@ void conjugacy_classes_and_normalizers::report_classes(
 	for (idx = 0; idx < nb_classes; idx++) {
 
 
-		Conjugacy_class[idx]->report_single_class(fp, verbose_level - 1);
+		Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
 
 	}
 
@@ -485,18 +485,18 @@ void conjugacy_classes_and_normalizers::export_csv(
 	orbiter_kernel_system::file_io Fio;
 
 
-	string fname;
+	string fname_csv;
 	string headings;
 
 	headings.assign("Rep");
 
-	fname = fname + "_classes.csv";
+	fname_csv = fname + "_classes.csv";
 
 	if (f_v) {
 		cout << "conjugacy_classes_and_normalizers::export_csv "
 				"before Fio.Csv_file_support->write_table_of_strings" << endl;
 	}
-	Fio.Csv_file_support->write_table_of_strings(fname,
+	Fio.Csv_file_support->write_table_of_strings(fname_csv,
 			nb_classes, nb_cols, Table,
 			headings,
 			verbose_level);

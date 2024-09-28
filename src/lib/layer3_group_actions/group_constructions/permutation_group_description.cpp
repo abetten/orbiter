@@ -76,6 +76,13 @@ int permutation_group_description::read_arguments(
 				cout << "-cyclic_group " << degree << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-elementary_abelian_group") == 0) {
+			degree = ST.strtoi(argv[++i]);
+			type = elementary_abelian_group_t;
+			if (f_v) {
+				cout << "-elementary_abelian_group " << degree << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-identity_group") == 0) {
 			degree = ST.strtoi(argv[++i]);
 			type = identity_group_t;
@@ -153,6 +160,9 @@ void permutation_group_description::print()
 	}
 	if (type == cyclic_group_t) {
 		cout << "-cyclic_group " << degree << endl;
+	}
+	if (type == elementary_abelian_group_t) {
+		cout << "-elementary_abelian_group " << degree << endl;
 	}
 	if (type == dihedral_group_t) {
 		cout << "-dihedral_group " << degree << endl;

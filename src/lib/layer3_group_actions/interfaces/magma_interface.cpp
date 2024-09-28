@@ -55,6 +55,10 @@ void magma_interface::centralizer_of_element(
 
 	prefix = A->label + "_elt_" + label;
 
+	if (f_v) {
+		cout << "magma_interface::centralizer_of_element prefix=" << prefix << endl;
+	}
+
 	Elt = NEW_int(A->elt_size_in_int);
 
 	int *data;
@@ -97,7 +101,8 @@ void magma_interface::centralizer_of_element(
 
 	groups::strong_generators *gens;
 
-	centralizer_using_MAGMA(A, prefix,
+	centralizer_using_MAGMA(
+			A, prefix,
 			S, Elt, gens, verbose_level);
 
 
@@ -183,6 +188,7 @@ void magma_interface::centralizer_using_MAGMA(
 
 	if (f_v) {
 		cout << "magma_interface::centralizer_using_MAGMA" << endl;
+		cout << "magma_interface::centralizer_using_MAGMA prefix=" << prefix << endl;
 	}
 
 	fname_magma = prefix + "_centralizer.magma";
@@ -709,7 +715,7 @@ void magma_interface::normalizer_using_MAGMA(
 
 
 // #############################################################################
-// # conjugacy classes (and normalizers)
+// # all conjugacy classes of a group
 // #############################################################################
 
 
@@ -849,6 +855,76 @@ void action::read_conjugacy_classes_from_MAGMA(
 }
 #endif
 
+// #############################################################################
+// # all conjugacy classes and normalizers of the associated groups generated
+// #############################################################################
+
+
+void magma_interface::get_conjugacy_classes_and_normalizers(
+		actions::action *A,
+		groups::sims *override_Sims,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string prefix;
+	string fname_magma;
+	string fname_output;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "magma_interface::get_conjugacy_classes_and_normalizers" << endl;
+	}
+
+	prefix = label;
+	fname_magma = label + "_classes.magma";
+	fname_output = label + "_classes_out.txt";
+
+
+	if (Fio.file_size(fname_output) <= 0) {
+		if (f_v) {
+			cout << "magma_interface::get_conjugacy_classes_and_normalizers before "
+					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
+		}
+		conjugacy_classes_and_normalizers_using_MAGMA(A, prefix,
+				override_Sims, verbose_level);
+		if (f_v) {
+			cout << "magma_interface::get_conjugacy_classes_and_normalizers after "
+					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
+		}
+	}
+
+
+	if (Fio.file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "magma_interface::get_conjugacy_classes_and_normalizers "
+					"before read_conjugacy_classes_and_normalizers" << endl;
+		}
+		read_conjugacy_classes_and_normalizers(A,
+				fname_output, override_Sims, label_tex, verbose_level);
+		if (f_v) {
+			cout << "magma_interface::get_conjugacy_classes_and_normalizers "
+					"after read_conjugacy_classes_and_normalizers" << endl;
+		}
+	}
+	else {
+
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+
+	}
+
+	if (f_v) {
+		cout << "magma_interface::get_conjugacy_classes_and_normalizers done" << endl;
+	}
+}
+
+
+
 void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
 		actions::action *A,
 		std::string &prefix,
@@ -888,7 +964,7 @@ void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
 	}
 	G_gen->init_from_sims(G, verbose_level);
 	if (f_v) {
-		cout << "action::conjugacy_classes_and_normalizers_using_MAGMA "
+		cout << "magma_interface::conjugacy_classes_and_normalizers_using_MAGMA "
 				"after G_gen->init_from_sims" << endl;
 	}
 
@@ -976,109 +1052,8 @@ void magma_interface::conjugacy_classes_and_normalizers_using_MAGMA(
 
 
 
-void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
-		actions::action *A,
-		std::string &fname,
-		conjugacy_classes_and_normalizers *&class_data,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-				"fname=" << fname << endl;
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-				"degree=" << A->degree << endl;
-	}
-
-	class_data = NEW_OBJECT(conjugacy_classes_and_normalizers);
-
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-				"before class_data->read_magma_output_file" << endl;
-	}
-
-	class_data->read_magma_output_file(
-			A,
-			fname,
-			verbose_level - 1);
-
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
-				"after class_data->read_magma_output_file" << endl;
-	}
 
 
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA done" << endl;
-	}
-}
-
-
-
-void magma_interface::get_conjugacy_classes_and_normalizers(
-		actions::action *A,
-		groups::sims *override_Sims,
-		std::string &label,
-		std::string &label_tex,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	string prefix;
-	string fname_magma;
-	string fname_output;
-	orbiter_kernel_system::file_io Fio;
-
-
-	if (f_v) {
-		cout << "magma_interface::get_conjugacy_classes_and_normalizers" << endl;
-	}
-
-	prefix = label;
-	fname_magma = label + "_classes.magma";
-	fname_output = label + "_classes_out.txt";
-
-
-	if (Fio.file_size(fname_output) <= 0) {
-		if (f_v) {
-			cout << "magma_interface::get_conjugacy_classes_and_normalizers before "
-					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
-		}
-		conjugacy_classes_and_normalizers_using_MAGMA(A, prefix,
-				override_Sims, verbose_level);
-		if (f_v) {
-			cout << "magma_interface::get_conjugacy_classes_and_normalizers after "
-					"conjugacy_classes_and_normalizers_using_MAGMA" << endl;
-		}
-	}
-
-
-	if (Fio.file_size(fname_output) > 0) {
-		if (f_v) {
-			cout << "magma_interface::get_conjugacy_classes_and_normalizers "
-					"before read_conjugacy_classes_and_normalizers" << endl;
-		}
-		read_conjugacy_classes_and_normalizers(A,
-				fname_output, override_Sims, label_tex, verbose_level);
-		if (f_v) {
-			cout << "magma_interface::get_conjugacy_classes_and_normalizers "
-					"after read_conjugacy_classes_and_normalizers" << endl;
-		}
-	}
-	else {
-
-		cout << "please run magma on the file " << fname_magma << endl;
-		cout << "for instance, try" << endl;
-		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
-		exit(1);
-
-	}
-
-	if (f_v) {
-		cout << "magma_interface::get_conjugacy_classes_and_normalizers done" << endl;
-	}
-}
 
 #if 0
 void magma_interface::report_conjugacy_classes_and_normalizers(
@@ -1206,6 +1181,49 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers done" << endl;
 	}
 }
+
+
+void magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA(
+		actions::action *A,
+		std::string &fname,
+		conjugacy_classes_and_normalizers *&class_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"fname=" << fname << endl;
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"degree=" << A->degree << endl;
+	}
+
+	class_data = NEW_OBJECT(conjugacy_classes_and_normalizers);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"before class_data->read_magma_output_file" << endl;
+	}
+
+	class_data->read_magma_output_file(
+			A,
+			fname,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA "
+				"after class_data->read_magma_output_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers_from_MAGMA done" << endl;
+	}
+}
+
+
+
 
 #if 0
 void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
@@ -1402,6 +1420,316 @@ void magma_interface::read_and_report_conjugacy_classes_and_normalizers(
 }
 #endif
 
+
+
+
+// #############################################################################
+// # subgroup lattice
+// #############################################################################
+
+
+void magma_interface::get_subgroup_lattice(
+		actions::action *A,
+		groups::sims *override_Sims,
+		std::string &label,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string prefix;
+	string fname_magma;
+	string fname_output;
+	orbiter_kernel_system::file_io Fio;
+
+
+	if (f_v) {
+		cout << "magma_interface::get_subgroup_lattice" << endl;
+	}
+
+	prefix = label;
+	fname_magma = label + "_subgroup_lattice.magma";
+	fname_output = label + "_subgroup_lattice_out.txt";
+
+
+	if (Fio.file_size(fname_output) > 0) {
+		if (f_v) {
+			cout << "magma_interface::get_subgroup_lattice "
+					"before read_subgroup_lattice" << endl;
+		}
+		read_subgroup_lattice(A,
+				fname_output, override_Sims, label_tex, verbose_level);
+		if (f_v) {
+			cout << "magma_interface::get_subgroup_lattice "
+					"after read_subgroup_lattice" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "magma_interface::get_subgroup_lattice before "
+					"subgroup_lattice_using_MAGMA" << endl;
+		}
+		subgroup_lattice_using_MAGMA(A, prefix,
+				override_Sims, verbose_level);
+		if (f_v) {
+			cout << "magma_interface::get_subgroup_lattice after "
+					"subgroup_lattice_using_MAGMA" << endl;
+		}
+
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+
+	}
+
+	if (f_v) {
+		cout << "magma_interface::get_subgroup_lattice done" << endl;
+	}
+}
+
+
+
+void magma_interface::subgroup_lattice_using_MAGMA(
+		actions::action *A,
+		std::string &prefix,
+		groups::sims *G, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_magma;
+	string fname_output;
+
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA" << endl;
+	}
+
+	fname_magma = prefix + "_subgroup_lattice.magma";
+	fname_output = prefix + "_subgroup_lattice_out.txt";
+
+
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA, "
+				"fname_magma = " << fname_magma << endl;
+		cout << "magma_interface::subgroup_lattice_using_MAGMA, "
+				"fname_output = " << fname_output << endl;
+	}
+
+	int n;
+
+	groups::strong_generators *G_gen;
+
+	G_gen = NEW_OBJECT(groups::strong_generators);
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"before G_gen->init_from_sims" << endl;
+	}
+	G_gen->init_from_sims(G, verbose_level);
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"after G_gen->init_from_sims" << endl;
+	}
+
+	n = A->degree;
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"n = " << n << endl;
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"fname_magma = " << fname_magma << endl;
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"fname_output = " << fname_output << endl;
+		}
+	{
+		ofstream fp(fname_magma);
+
+		fp << "G := PermutationGroup< " << n << " | " << endl;
+		G_gen->print_generators_MAGMA(A, fp, verbose_level - 1);
+		fp << ">;" << endl;
+
+
+		//fp << "# compute conjugacy classes of subgroups of G:" << endl;
+		fp << "C := SubgroupClasses(G);" << endl;
+		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
+		fp << "printf \"%o\", #C; printf \"\\n\";" << endl;
+		fp << "for h := 1 to #C do" << endl;
+		fp << "  printf \"%o\", h; printf \" \";" << endl;
+		fp << "  printf \"%o\", C[h]`order; printf \" \";" << endl;
+		fp << "  printf \"%o\", C[h]`length; printf \" \";" << endl;
+		fp << "  printf \"%o\", #Generators(C[h]`subgroup); printf \" \\n\";" << endl;
+		fp << "  for g in Generators(C[h]`subgroup) do " << endl;
+		fp << "    for i := 1 to " << n << " do" << endl;
+		fp << "      printf \"%o\", i^g; printf \" \";" << endl;
+		fp << "    end for; " << endl;
+		fp << "    printf \"\\n\";" << endl;
+		fp << "  end for; " << endl;
+		fp << "end for;" << endl;
+		fp << "printf \"%o\", -1; printf \" \";" << endl;
+		fp << "printf \"\\n\";" << endl;
+
+#if 0
+		//fp << "# compute normalizers of the cyclic subgroups generated by the class reps:" << endl;
+		fp << "for h := 1 to #C do" << endl;
+		fp << "  S := sub< G | C[h][3]>;" << endl;
+		fp << "  N := Normalizer(G, S);";
+		fp << "  printf \"%o\", #N;" << endl;
+		fp << "  printf \"\\n\";" << endl;
+		fp << "  printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
+		fp << "  for g in Generators(N) do " << endl;
+		fp << "    for i := 1 to " << n << " do " << endl;
+		fp << "      printf \"%o\", i^g; printf \" \";" << endl;
+		fp << "    end for;" << endl;
+		fp << "    printf \"\\n\";" << endl;
+		fp << "  end for;" << endl;
+		fp << "end for;" << endl;
+#endif
+		fp << "UnsetOutputFile();" << endl;
+	}
+
+
+	orbiter_kernel_system::file_io Fio;
+	l1_interfaces::interface_magma_low Magma;
+
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"before Magma.run_magma_file" << endl;
+	}
+	Magma.run_magma_file(fname_magma, verbose_level);
+	if (Fio.file_size(fname_output) <= 0) {
+		cout << "please run magma on the file " << fname_magma << endl;
+		cout << "for instance, try" << endl;
+		cout << orbiter_kernel_system::Orbiter->magma_path << "magma " << fname_magma << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA "
+				"after Magma.run_magma_file" << endl;
+	}
+
+	FREE_OBJECT(G_gen);
+
+
+
+
+
+	if (f_v) {
+		cout << "magma_interface::subgroup_lattice_using_MAGMA done" << endl;
+	}
+}
+
+void magma_interface::read_subgroup_lattice(
+		actions::action *A,
+		std::string &fname,
+		groups::sims *override_sims,
+		std::string &label_latex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice" << endl;
+	}
+
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"before read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
+	}
+
+	conjugacy_classes_of_subgroups *class_data;
+
+	read_conjugacy_classes_of_subgroups_from_MAGMA(
+			A,
+			fname,
+			class_data,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"after read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
+	}
+
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"before class_data->create_classes" << endl;
+	}
+	class_data->create_classes(
+			override_sims, verbose_level);
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"after class_data->create_classes" << endl;
+	}
+
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"before class_data->report" << endl;
+	}
+	class_data->report(
+			override_sims,
+			label_latex,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"after class_data->report" << endl;
+	}
+
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"before class_data->export_csv" << endl;
+	}
+	class_data->export_csv(
+			override_sims,
+			verbose_level);
+	if (f_v) {
+		cout << "magma_interface::read_subgroup_lattice "
+				"after class_data->export_csv" << endl;
+	}
+
+
+	FREE_OBJECT(class_data);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_and_normalizers done" << endl;
+	}
+}
+
+
+
+void magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA(
+		actions::action *A,
+		std::string &fname,
+		conjugacy_classes_of_subgroups *&class_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA "
+				"fname=" << fname << endl;
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA "
+				"degree=" << A->degree << endl;
+	}
+
+	class_data = NEW_OBJECT(conjugacy_classes_of_subgroups);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA "
+				"before class_data->read_magma_output_file" << endl;
+	}
+
+	class_data->read_magma_output_file(
+			A,
+			fname,
+			verbose_level - 1);
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA "
+				"after class_data->read_magma_output_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA done" << endl;
+	}
+}
 
 
 
@@ -1780,12 +2108,13 @@ void magma_interface::find_subgroups_using_MAGMA2(
 // #############################################################################
 
 
-void magma_interface::init_automorphism_group_from_group_table(
+void magma_interface::compute_automorphism_group_from_group_table(
 	std::string &fname_base,
-	int *Table, int group_order, int *gens, int nb_gens,
+	data_structures_groups::group_table_and_generators *Table,
 	actions::action *&A_perm,
 	groups::strong_generators *&Aut_gens,
 	int verbose_level)
+// used by difference_set_in_heisenberg_group::init
 {
 	int f_v = (verbose_level >= 1);
 	int *N_gens;
@@ -1794,25 +2123,25 @@ void magma_interface::init_automorphism_group_from_group_table(
 	ring_theory::longinteger_object go;
 
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table" << endl;
+		cout << "magma_interface::compute_automorphism_group_from_group_table" << endl;
 	}
 
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"before normalizer_in_Sym_n" << endl;
 	}
 	normalizer_in_Sym_n(
 			fname_base,
-		group_order, Table, gens, nb_gens,
+		Table,
 		N_gens, N_nb_gens, N_go,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"after normalizer_in_Sym_n" << endl;
 	}
 
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"The holomorph has order " << N_go
 				<< " and is generated by " << N_nb_gens << " elements" << endl;
 	}
@@ -1851,49 +2180,69 @@ void magma_interface::init_automorphism_group_from_group_table(
 
 
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"creating holomorph" << endl;
 	}
 
 	A_perm = NEW_OBJECT(actions::action);
 
 	long int *gens1;
-	int i;
-	gens1 = NEW_lint(nb_gens);
-	for (i = 0; i < nb_gens; i++) {
-		gens1[i] = gens[i];
+	int nb_gens1;
+	//int i;
+	gens1 = NEW_lint(Table->nb_gens);
+	gens1[0] = 0;
+	Int_vec_copy_to_lint(Table->gens, gens1 + 1, Table->nb_gens);
+	nb_gens1 = Table->nb_gens + 1;
+
+	if (f_v) {
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
+				"given base: ";
+		Lint_vec_print(cout, gens1, nb_gens1);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
+				"before A_perm->Known_groups->init_permutation_group_from_generators" << endl;
 	}
 
 	A_perm->Known_groups->init_permutation_group_from_generators(
-		group_order /* degree */,
+			Table->group_order /* degree */,
 		true, go,
 		N_nb_gens, N_gens,
-		nb_gens /* given_base_length */, gens1 /* given_base */,
+		nb_gens1 /* given_base_length */, gens1 /* given_base */,
 		false /* f_no_base */,
-		verbose_level);
+		verbose_level - 2);
+
+	if (f_v) {
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
+				"after A_perm->Known_groups->init_permutation_group_from_generators" << endl;
+	}
+
 	{
 		ring_theory::longinteger_object go;
 		A_perm->group_order(go);
 		if (f_v) {
-			cout << "magma_interface::init_automorphism_group_from_group_table "
+			cout << "magma_interface::compute_automorphism_group_from_group_table "
 					"The order of the holomorph is " << go << endl;
 		}
 	}
 
 	ring_theory::longinteger_object Aut_order;
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"creating automorphism group" << endl;
 	}
-	Aut_gens = A_perm->Strong_gens->point_stabilizer(0 /* pt */, verbose_level);
+	Aut_gens = A_perm->Strong_gens->point_stabilizer(0 /* pt */, 0 /*verbose_level */);
 	Aut_gens->group_order(Aut_order);
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table "
+		cout << "magma_interface::compute_automorphism_group_from_group_table "
 				"The automorphism group has order " << Aut_order << endl;
 	}
 
 	if (f_v) {
-		cout << "magma_interface::init_automorphism_group_from_group_table done" << endl;
+		cout << "magma_interface::compute_automorphism_group_from_group_table done" << endl;
 	}
 }
 
@@ -1901,7 +2250,7 @@ void magma_interface::init_automorphism_group_from_group_table(
 
 void magma_interface::normalizer_in_Sym_n(
 		std::string &fname_base,
-	int group_order, int *Table, int *gens, int nb_gens,
+		data_structures_groups::group_table_and_generators *Table,
 	int *&N_gens, int &N_nb_gens, int &N_go,
 	int verbose_level)
 {
@@ -1923,14 +2272,14 @@ void magma_interface::normalizer_in_Sym_n(
 	{
 		ofstream fp(fname_magma);
 
-		fp << "S := Sym(" << group_order << ");" << endl;
+		fp << "S := Sym(" << Table->group_order << ");" << endl;
 
 
-		fp << "G := PermutationGroup< " << group_order << " | " << endl;
-		for (i = 0; i < nb_gens; i++) {
+		fp << "G := PermutationGroup< " << Table->group_order << " | " << endl;
+		for (i = 0; i < Table->nb_gens; i++) {
 			Combi.perm_print_counting_from_one(fp,
-				Table + gens[i] * group_order, group_order);
-			if (i < nb_gens - 1) {
+					Table->Table + Table->gens[i] * Table->group_order, Table->group_order);
+			if (i < Table->nb_gens - 1) {
 				fp << ", " << endl;
 			}
 		}
@@ -1941,7 +2290,7 @@ void magma_interface::normalizer_in_Sym_n(
 		fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
 		fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
 		fp << "for h := 1 to #Generators(N) do for i := 1 to "
-			<< group_order << " do printf \"%o\", i^N.h; printf \" \"; "
+			<< Table->group_order << " do printf \"%o\", i^N.h; printf \" \"; "
 			"if i mod 25 eq 0 then printf \"\n\"; end if; end for; "
 			"printf \"\\n\"; end for;" << endl;
 		fp << "UnsetOutputFile();" << endl;
@@ -1949,7 +2298,13 @@ void magma_interface::normalizer_in_Sym_n(
 
 	l1_interfaces::interface_magma_low Magma;
 
-	if (Fio.file_size(fname_output) == 0) {
+	if (f_v) {
+		cout << "fname_output = " << fname_output << endl;
+		cout << "Fio.file_size(fname_output) = " << Fio.file_size(fname_output) << endl;
+	}
+
+
+	if (Fio.file_size(fname_output) < 0) {
 
 
 		Magma.run_magma_file(fname_magma, verbose_level);
@@ -1966,10 +2321,17 @@ void magma_interface::normalizer_in_Sym_n(
 				<< fname_output << " of size " << Fio.file_size(fname_output) << endl;
 	}
 
+	if (f_v) {
+		cout << "fname_output = " << fname_output << endl;
+		cout << "Fio.file_size(fname_output) = " << Fio.file_size(fname_output) << endl;
+	}
+
+
+
 
 	Magma.read_permutation_group(
 			fname_output,
-			group_order, N_gens, N_nb_gens, N_go,
+			Table->group_order, N_gens, N_nb_gens, N_go,
 			verbose_level);
 
 

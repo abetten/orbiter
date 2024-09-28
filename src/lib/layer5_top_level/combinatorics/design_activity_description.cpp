@@ -48,6 +48,11 @@ design_activity_description::design_activity_description()
 	f_export_blocks = false;
 	f_row_sums = false;
 	f_tactical_decomposition = false;
+
+	f_orbits_on_blocks = false;
+	orbits_on_blocks_sz = -1;
+	//std::string orbits_on_blocks_control;
+
 }
 
 design_activity_description::~design_activity_description()
@@ -189,6 +194,17 @@ int design_activity_description::read_arguments(
 				cout << "-tactical_decomposition " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-orbits_on_blocks") == 0) {
+			f_orbits_on_blocks = true;
+			orbits_on_blocks_sz = ST.strtoi(argv[++i]);
+			orbits_on_blocks_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-orbits_on_blocks "
+						<< " " << orbits_on_blocks_sz
+						<< " " << orbits_on_blocks_control
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -256,6 +272,12 @@ void design_activity_description::print()
 	}
 	if (f_tactical_decomposition) {
 		cout << "-tactical_decomposition " << endl;
+	}
+	if (f_orbits_on_blocks) {
+		cout << "-orbits_on_blocks "
+				<< " " << orbits_on_blocks_sz
+				<< " " << orbits_on_blocks_control
+				<< endl;
 	}
 }
 

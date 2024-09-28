@@ -27,6 +27,8 @@ class code_modification_description {
 
 public:
 
+	// TABLES/code_modification.tex
+
 	int f_dual;
 
 	code_modification_description();
@@ -54,6 +56,8 @@ public:
 class coding_theoretic_activity_description {
 
 public:
+
+	// TABLSES/coding_theoretic_activity_1.tex
 
 	int f_report;
 
@@ -114,6 +118,10 @@ public:
 	int f_export_checkma_as_projective_set;
 	std::string export_checkma_as_projective_set_fname;
 
+
+	// TABLSES/coding_theoretic_activity_2.tex
+
+
 	int f_make_diagram;
 
 	int f_boolean_function_of_code;
@@ -126,6 +134,9 @@ public:
 
 	int f_Hamming_space_distance_matrix;
 	int Hamming_space_distance_matrix_n;
+
+	// TABLSES/coding_theoretic_activity_2.tex
+
 
 	// CRC stuff:
 	int f_crc32;
@@ -266,6 +277,8 @@ class crc_process_description {
 
 public:
 
+	// TABLSE/crc_process_description.tex
+
 	int f_code;
 	std::string code_label;
 
@@ -336,6 +349,8 @@ public:
 class create_code_description {
 
 public:
+
+	// TABLES/create_code.tex
 
 	int f_field;
 	std::string field_label;

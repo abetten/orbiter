@@ -24,6 +24,8 @@ namespace semifields {
 class semifield_classify_description {
 public:
 
+	// ToDo: undocumented
+
 	int f_order;
 	int order;
 

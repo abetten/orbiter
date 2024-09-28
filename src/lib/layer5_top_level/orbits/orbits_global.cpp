@@ -104,7 +104,7 @@ void orbits_global::compute_orbit_of_set(
 	}
 
 
-	string fname;
+	string fname_csv;
 
 #if 0
 	// write transporter as csv file:
@@ -149,24 +149,60 @@ void orbits_global::compute_orbit_of_set(
 	// write as csv file:
 
 
-	fname = label_set + "_orbit_under_" + label_group + ".csv";
+	fname_csv = label_set + "_orbit_under_" + label_group + ".csv";
 
 	if (f_v) {
 		cout << "orbits_global::compute_orbit_of_set "
-				"Writing orbit to file " << fname << endl;
+				"Writing orbit to file " << fname_csv << endl;
 	}
 	orbiter_kernel_system::file_io Fio;
 
-	Fio.Csv_file_support->lint_matrix_write_csv(
-			fname, Table, orbit_length, set_size);
+
+	std::string *sTable;
+	int idx;
+	int nb_rows = orbit_length;
+	int nb_cols = 1;
+
+
+	sTable = new string[nb_rows * nb_cols];
+
+	for (idx = 0; idx < nb_rows; idx++) {
+
+		string s;
+
+		s = Lint_vec_stringify(Table + idx * set_size, set_size);
+		sTable[idx * nb_cols + 0] = "\"" + s + "\"";
+	}
+
+	string headings;
+
+	headings.assign("Set");
+
+
 	if (f_v) {
 		cout << "orbits_global::compute_orbit_of_set "
-				"Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+				"before Fio.Csv_file_support->write_table_of_strings" << endl;
+	}
+	Fio.Csv_file_support->write_table_of_strings(fname_csv,
+			nb_rows, nb_cols, sTable,
+			headings,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_global::compute_orbit_of_set "
+				"after Fio.Csv_file_support->write_table_of_strings" << endl;
 	}
 
 
+	if (f_v) {
+		cout << "orbits_global::compute_orbit_of_set "
+				"Written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+	}
 
+	delete [] sTable;
+
+
+#if 0
 	// write as txt file:
 
 
@@ -192,7 +228,7 @@ void orbits_global::compute_orbit_of_set(
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "orbits_global::compute_orbit_of_set "

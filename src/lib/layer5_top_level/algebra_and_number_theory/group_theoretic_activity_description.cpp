@@ -115,6 +115,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	// Magma:
 	f_classes = false;
 
+	f_subgroup_lattice_magma = false;
 
 
 	// undocumented:
@@ -545,6 +546,14 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-classes " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_magma") == 0) {
+			f_subgroup_lattice_magma = true;
+			if (f_v) {
+				cout << "-subgroup_lattice_magma " << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-find_subgroup") == 0) {
 			f_find_subgroup = true;
 			find_subgroup_order = ST.strtoi(argv[++i]);
@@ -1074,6 +1083,10 @@ void group_theoretic_activity_description::print()
 	if (f_classes) {
 		cout << "-classes " << endl;
 	}
+	if (f_subgroup_lattice_magma) {
+		cout << "-subgroup_lattice_magma " << endl;
+	}
+
 	if (f_find_subgroup) {
 		cout << "-find_subgroup " << find_subgroup_order << endl;
 	}

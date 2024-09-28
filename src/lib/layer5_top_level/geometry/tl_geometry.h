@@ -28,6 +28,8 @@ class arc_generator_description {
 
 public:
 
+	// TABLSE/arc_generator.tex
+
 	int f_control;
 	std::string control_label;
 
@@ -661,6 +663,8 @@ class mapping_description {
 
 public:
 
+	// TABLSE/mapping.tex
+
 	int f_domain;
 	std::string domain_label;
 
@@ -758,6 +762,8 @@ public:
 class ovoid_classify_description {
 
 public:
+
+	// ToDo: undocumented
 
 	int f_control;
 	std::string control_label;

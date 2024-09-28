@@ -527,8 +527,10 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->centralizer" << endl;
 		}
-		AG->centralizer(Descr->centralizer_of_element_label,
-				Descr->centralizer_of_element_data, verbose_level);
+		AG->centralizer(
+				Descr->centralizer_of_element_label,
+				Descr->centralizer_of_element_data,
+				verbose_level);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -613,6 +615,22 @@ void group_theoretic_activity::perform_activity(
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->classes" << endl;
+		}
+	}
+
+	else if (Descr->f_subgroup_lattice_magma) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_magma" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->subgroup_lattice_magma" << endl;
+		}
+		AG->subgroup_lattice_magma(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->f_subgroup_lattice_magma" << endl;
 		}
 	}
 

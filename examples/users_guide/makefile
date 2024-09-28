@@ -4480,6 +4480,10 @@ BLT_database_7_1_print:
 	pdflatex S_set_report.tex
 	$(OPEN) S_set_report.pdf
 
+
+
+# O(5,2) space:
+
 Doily_W_2:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
@@ -4668,9 +4672,6 @@ test_4_10:
 	make BLT_database_7_0
 	make BLT_database_7_0_print
 	make BLT_database_67_4
-	make Doily_disjoint_sets_graph_cliques_3
-	make Doily_disjoint_sets_graph_cliques_5
-	make PG_3_2_test
 	make Edge_curve_17
 	make Edge_curve_17_line_type
 	make Edge_curve_q23_line_type
@@ -4786,56 +4787,6 @@ BLT_database_67_4:
 
 
 
-
-
-
-Doily_disjoint_sets_graph_cliques_3:
-	echo $(DOILY) >doily.csv
-	$(ORBITER) -v 2 \
-		-define G -graph -disjoint_sets_graph \
-			doily.csv \
-		-end \
-		-with G -do \
-			-graph_theoretic_activity \
-			-find_cliques \
-				-target_size 3 \
-				-output_file doily_cliques \
-			-end \
-		-end \
-		-print_symbols
-	$(ORBITER) -v 2 \
-		-union doily.csv doily_cliques.txt doily_cliques_union.csv
-
-# 80 cliques
-
-Doily_disjoint_sets_graph_cliques_5:
-	echo $(DOILY) >doily.csv
-	$(ORBITER) -v 2 \
-		-define G -graph -disjoint_sets_graph \
-			doily.csv \
-		-end \
-		-with G -do \
-			-graph_theoretic_activity \
-			-find_cliques \
-				-target_size 5 \
-				-output_file doily_cliques_5 \
-			-end \
-		-end \
-		-print_symbols
-
-# 6 cliques
-# doily_cliques_5.csv
-
-
-PG_3_2_test:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do -projective_space_activity \
-			-cheat_sheet \
-		-end
-	pdflatex PG_3_2.tex
-	$(OPEN) PG_3_2.pdf
 
 
 Edge_curve_17:
@@ -6241,6 +6192,7 @@ test_6_1:
 	make Symmetric_3_group_table
 	make Symmetric_3_elements
 	make Symmetric_3_long
+	make Elementary_abelian_8
 	make Symmetric_4
 	make Symmetric_4_group_table
 	make Symmetric_4_long
@@ -6376,6 +6328,17 @@ Symmetric_3_long:
 	$(OPEN) Sym_3_elements_tree_draw.pdf
 	#pdflatex Perm3_report.tex
 	#$(OPEN) Perm3_report.pdf
+
+
+Elementary_abelian_8:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -elementary_abelian_group 8 -end \
+		-with G -do \
+			-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex E_8_report.tex
+	$(OPEN) E_8_report.pdf
 
 
 Symmetric_4:
@@ -7441,6 +7404,8 @@ SECTION_NEW_ACTIONS_FROM_OLD:
 
 
 test_6_4:
+	make Cyclic_6_aut
+	make Elementary_abelian_8_aut
 	make Symmetric_4_on_pairs
 	make direct_product_AGL
 	make PGLstar_3_2
@@ -7464,6 +7429,41 @@ test_6_4:
 	make PGL_5_3_wd
 	make PGL_4_2_wd_reverse
 
+
+
+Cyclic_6_aut:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -cyclic_group 6 -end \
+		-with G -do \
+			-group_theoretic_activity \
+			-report \
+		-end \
+		-define A -modified_group -from G \
+			-automorphism_group \
+		-end \
+		-with A -do \
+			-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex C_6_report.tex
+	$(OPEN) C_6_report.pdf
+
+Elementary_abelian_8_aut:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -elementary_abelian_group 8 -end \
+		-with G -do \
+			-group_theoretic_activity \
+			-report \
+		-end \
+		-define A -modified_group -from G \
+			-automorphism_group \
+		-end \
+		-with A -do \
+			-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex E_8_report.tex
+	$(OPEN) E_8_report.pdf
 
 
 
@@ -8227,13 +8227,14 @@ test_6_6:
 	make PSP_4_4_export_magma
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
+	make Hirschfeld_stab_subgroup_lattice_magma
 	make PGGL_2_4_classes
 	make PGLstar_3_2_classes
 	make PGL_3_11_classes
 	make PGL_7_2_classes
 	make PGL_8_2_classes
 	make Hirschfeld_stab_classes
-	#make PGGL_2_4_cent_2A
+	make PGGL_2_4_cent_2A
 	#make Normalizer_of_H5
 	make PGGL_3_4_classes
 	make classes_PGGL_4_4
@@ -8302,6 +8303,37 @@ Hirschfeld_stab_export_magma:
 		-group_theoretic_activity \
 			-export_magma \
 		-end
+
+
+Hirschfeld_stab_subgroup_lattice_magma:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define F -finite_field -q 4 \
+			-compute_related_fields \
+		-end \
+		-define G -linear_group -PGGL 4 F \
+			-subgroup_by_generators "Hirschfeld_Stab" \
+			51840 6 $(HIRSCHFELD_STAB_GENERATORS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end
+	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
+	open PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf
 
 
 PGGL_2_4_classes:
@@ -8394,7 +8426,6 @@ PGL_8_2_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma PGL_8_2_classes.magma
 	$(ORBITER) -v 3 \
 		-define G \
 		-linear_group -PGL 8 2 \
@@ -8403,8 +8434,11 @@ PGL_8_2_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
+	pdflatex PGL_8_2_classes_out.tex
+	open PGL_8_2_classes_out.pdf
 
 
+	#$(MAGMA_PATH)magma PGL_8_2_classes.magma
 
 
 
@@ -8434,7 +8468,6 @@ Hirschfeld_stab_classes:
 
 
 
-# ToDo:
 
 PGGL_2_4_cent_2A:
 	$(ORBITER) -v 3 \
@@ -8443,16 +8476,13 @@ PGGL_2_4_cent_2A:
 		-with G -do \
 		-group_theoretic_activity \
 			-centralizer_of_element "2A" "1,0, 0,1, 1" \
-			-report \
 		-end
-	$(MAGMA_PATH)magma element_2A_centralizer.magma
-	$(ORBITER) -v 6 \
+	$(ORBITER) -v 3 \
 		-define G \
 		-linear_group -PGGL 2 4 -end \
 		-with G -do \
 		-group_theoretic_activity \
 			-centralizer_of_element "2A" "1,0, 0,1, 1" \
-			-report \
 		-end
 	pdflatex PGGL_2_4_elt_2A_centralizer.tex
 	$(OPEN) PGGL_2_4_elt_2A_centralizer.pdf
@@ -8470,6 +8500,8 @@ Normalizer_of_H5:
 		-end
 	pdflatex Sym_13_Subgroup_H5_5_normalizer.tex
 	$(OPEN) Sym_13_Subgroup_H5_5_normalizer.pdf
+
+# ToDo: ! Missing $ inserted.
 
 
 
@@ -11834,7 +11866,7 @@ test_8_5:
 	make quartic_curve_13_1_report
 	make quartic_curves_19_report
 	make quartic_curve_q9_1
-	make quartic_curve_q13_f0_from_variety
+	make quartic_curve_q13_f1_from_variety
 
 
 quartic_curve_9_0: 
@@ -12106,11 +12138,7 @@ SECTION_QUARTIC_CURVE_ACTIVITIES:
 test_8_6:
 	make quartic_curves_q7
 	make quartic_curves_q13
-	make quartic_curves_q13_combine
-	make quartic_curves_q13_classify
 	make quartic_curves_q19
-	make quartic_curves_q19_combine
-	make quartic_curves_q19_classify
 
 
 
@@ -12148,53 +12176,8 @@ quartic_curves_q13:
 		-end_loop L \
 		-print_symbols
 
-quartic_curves_q13_combine:
-	$(ORBITER) -v 3 \
-		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
-			surface_catalogue_q13_iso%ld_quartics.csv \
-			quartics_q13.csv
 
 
-quartic_curves_q13_classify:
-	$(ORBITER) -v 30 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "y0,y1,y2" "y_0,y_1,y_2" \
-		-end \
-		-define O -orbits -classification_by_canonical_form \
-			-space P \
-			-ring R \
-			-input_fname_mask quartics_q13.csv \
-			-nb_files 1 \
-			-output_fname quartic_curves_q13_classified \
-			-label_po_go "PO_GO" \
-			-label_po_index "PO_INDEX" \
-			-label_po "PO" \
-			-label_so "orbit" \
-			-label_equation_by_coefficients "curve" \
-			-label_points "pts_on_curve" \
-			-label_lines "bitangents" \
-			-carry_through "NB_E" \
-			-carry_through "NB_DOUBLE" \
-			-carry_through "NB_SINGLE" \
-			-carry_through "NB_ZERO" \
-			-algorithm_substructure \
-			-substructure_size 4 \
-			-end \
-		-end \
-	-with O -do -orbits_activity \
-		-report \
-		-report_options \
-			-fname quartics_q13 \
-		-end \
-	-end
-	pdflatex quartics_q13_orbits.tex
-	$(OPEN) quartics_q13_orbits.pdf
 
 
 
@@ -12215,54 +12198,6 @@ quartic_curves_q19:
 		-print_symbols
 
 
-quartic_curves_q19_combine:
-	$(ORBITER) -v 3 \
-		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q19) \
-			surface_catalogue_q19_iso%ld_quartics.csv \
-			quartics_q19.csv
-
-
-
-quartic_curves_q19_classify:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 19 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "y0,y1,y2" "y_0,y_1,y_2" \
-		-end \
-		-define O -orbits -classification_by_canonical_form \
-			-space P \
-			-ring R \
-			-input_fname_mask quartics_q19.csv \
-			-nb_files 1 \
-			-output_fname quartic_curves_q19_classified \
-			-label_po_go "PO_GO" \
-			-label_po_index "PO_INDEX" \
-			-label_po "PO" \
-			-label_so "orbit" \
-			-label_equation_by_coefficients "curve" \
-			-label_points "pts_on_curve" \
-			-label_lines "bitangents" \
-			-carry_through "NB_E" \
-			-carry_through "NB_DOUBLE" \
-			-carry_through "NB_SINGLE" \
-			-carry_through "NB_ZERO" \
-			-algorithm_substructure \
-			-substructure_size 4 \
-			-end \
-		-end \
-	-with O -do -orbits_activity \
-		-report \
-		-report_options \
-			-fname quartics_q19 \
-		-end \
-	-end
-	pdflatex quartics_q19_orbits.tex
-	$(OPEN) quartics_q19_orbits.pdf
 
 
 
@@ -16200,7 +16135,6 @@ test_11_2:
 	#make Desargues_path_lex_least_read
 	make geo_pasch_read
 	make geo_pasch_given
-	make Neumaier_graph_16
 	make neumaier_graphs_16
 	make neumaier_graphs_16_from_file
 	make Neumaier_graph_25
@@ -16303,9 +16237,6 @@ geo_pasch_given:
 		-end
 
 
-Neumaier_graph_16:
-	$(ORBITER) -v 10 \
-		-define Gamma -graph -Neumaier_graph_16 -end \
 
 neumaier_graphs_16:
 	$(ORBITER) -v 2 \
@@ -17555,8 +17486,8 @@ tritangent_planes_graph_eigenvalues:
 
 Cayley_Z11_1mod3_eigenvalues_and_draw:
 	$(ORBITER) -v 2 \
-		-draw_options -xin 2000000 \
-			-yin 2000000 -embedded -radius 20000 -end \
+		-draw_options -xin 20000 \
+			-yin 20000 -embedded -radius 200 -end \
 		-define F -finite_field -q 11 -end \
 		-define S -vector -dense \
 			"1,1, 1,4, 1,7, 1,10" -end \
@@ -18159,7 +18090,7 @@ design_20:
 		-end
 
 
-design_600:
+design_600_old:
 	echo $(GEO_BLOCKS_600) | sed 's/ //' >geo_600_blocks.csv
 	$(ORBITER) -v 8 \
 		-define D -design -list_of_blocks_from_file \
@@ -20442,6 +20373,9 @@ test_15_1:
 	make tritangent_planes_graph_cliques_classify
 	make tritangent_planes_graph_cliques_all
 	make PGO_5_2_cliques
+	make Doily_disjoint_sets_graph_cliques_3
+	make Doily_disjoint_sets_graph_cliques_5
+	make PG_3_2_test
 	make HJ_d2_c5
 	make HJ64_cliques5
 	make HJ64_cliques5_classify
@@ -20632,6 +20566,58 @@ PGO_5_2_cliques:
 		-graph_theoretic_activity \
 			-find_cliques -target_size 3 -end \
 		-end
+
+
+
+
+Doily_disjoint_sets_graph_cliques_3:
+	echo $(DOILY) >doily.csv
+	$(ORBITER) -v 2 \
+		-define G -graph -disjoint_sets_graph \
+			doily.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques \
+				-target_size 3 \
+				-output_file doily_cliques \
+			-end \
+		-end \
+		-print_symbols
+	$(ORBITER) -v 2 \
+		-union doily.csv doily_cliques.txt doily_cliques_union.csv
+
+# 80 cliques
+
+Doily_disjoint_sets_graph_cliques_5:
+	echo $(DOILY) >doily.csv
+	$(ORBITER) -v 2 \
+		-define G -graph -disjoint_sets_graph \
+			doily.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques \
+				-target_size 5 \
+				-output_file doily_cliques_5 \
+			-end \
+		-end \
+		-print_symbols
+
+# 6 cliques
+# doily_cliques_5.csv
+
+
+PG_3_2_test:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do -projective_space_activity \
+			-cheat_sheet \
+		-end
+	pdflatex PG_3_2.tex
+	$(OPEN) PG_3_2.pdf
+
 
 
 HJ_d2_c5:
@@ -20959,8 +20945,6 @@ SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
 test_16_2:
 	make quadrangles_PG_2_2
 	make Barth_mod_11_singular_pts_c
-	make quartic_curves_q13
-	make quartic_curves_q13_combine
 	make quartic_curves_q13_classify_nauty
 	make EC_canon
 	make Hirschfeld_q4_c
@@ -21043,7 +21027,9 @@ Barth_mod_11_singular_pts_c:
 
 
 
-quartic_curves_q13:
+
+
+quartic_curves_q13_classify_nauty:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -end \
@@ -21058,26 +21044,10 @@ quartic_curves_q13:
 			-end \
 		-end_loop L \
 		-print_symbols
-
-
-#0:6
-
-
-
-
-quartic_curves_q13_combine:
 	$(ORBITER) -v 3 \
 		-csv_file_concatenate_from_mask $(NB_CUBIC_SURFACES_Q13) \
 			surface_catalogue_q13_iso%ld_quartics.csv \
 			quartics_q13.csv
-
-# quartics_q13.csv
-#  curves
-
-
-
-
-quartic_curves_q13_classify_nauty:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
@@ -21594,11 +21564,7 @@ ovoid_q8_canon:
 	#pdflatex ovoid_classification.tex
 	#$(OPEN) ovoid_classification.pdf
 
-#15.190u 0.615s 0:15.94 99.1%	0+0k 0+0io 54pf+0w
-
-
-
-
+#User time: 0:3
 # group order 1572480
 
 ovoid_ST_q8_canon: 
@@ -21636,11 +21602,9 @@ ovoid_ST_q8_canon:
 	pdflatex ovoid_ST_classification.tex
 	$(OPEN) ovoid_ST_classification.pdf
 
+#User time: 0:8
 #ago = 87360
 
-# not slow any more!
-# very slow
-#136.331u 0.752s 2:17.22 99.8%	0+0k 0+0io 42pf+0w
 
 
 
@@ -21659,6 +21623,7 @@ Suzuki_8:
 	pdflatex PGGL_4_8_Subgroup_Sz8_87360_report.tex
 	$(OPEN) PGGL_4_8_Subgroup_Sz8_87360_report.pdf
 
+#User time: 0.010000 of a second, dt=1 tps = 100
 
 
 quartic_curve_25_0_0_canonical: 
@@ -21692,6 +21657,7 @@ quartic_curve_25_0_0_canonical:
 	#pdflatex quartic_25_0_0_classification.tex
 	#$(OPEN) quartic_25_0_0_classification.pdf
 
+#User time: 0:1
 
 
 CRC_BCH_Q16_N51_D3_canonical: 

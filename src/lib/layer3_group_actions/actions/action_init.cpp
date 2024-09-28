@@ -345,6 +345,7 @@ groups::sims *action::create_sims_from_generators_randomized(
 		data_structures_groups::vector_ge *gens,
 		int f_target_go, ring_theory::longinteger_object &target_go,
 	int verbose_level)
+// uses groups::schreier_sims
 {
 	int f_v = (verbose_level >= 1);
 	groups::sims *S;

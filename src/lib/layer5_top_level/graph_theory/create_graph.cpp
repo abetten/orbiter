@@ -817,8 +817,8 @@ void create_graph::make_Cayley_graph(
 		cout << "create_graph::make_Cayley_graph group order "
 				"G = " << Sims->group_order_lint() << endl;
 		cout << "create_graph::make_Cayley_graph group order "
-				"coded element size = "
-				<< G->A_base->elt_size_in_int << endl;
+				"coded element size = G->A_base->make_element_size = "
+				<< G->A_base->make_element_size << endl;
 	}
 
 	int *v;
@@ -828,7 +828,7 @@ void create_graph::make_Cayley_graph(
 	Get_int_vector_from_label(generators_label,
 			v, sz, verbose_level);
 
-	nb_gens = sz / G->A_base->elt_size_in_int;
+	nb_gens = sz / G->A_base->make_element_size;
 
 	if (f_v) {
 		cout << "create_graph::make_Cayley_graph "
@@ -844,7 +844,7 @@ void create_graph::make_Cayley_graph(
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
 	gens->init_from_data(G->A, v, nb_gens,
-			G->A_base->elt_size_in_int, verbose_level - 1);
+			G->A_base->make_element_size, verbose_level - 1);
 
 	if (f_v) {
 		cout << "create_graph::make_Cayley_graph generators:" << endl;

@@ -406,6 +406,7 @@ void action::print_symmetry_group_type(
 }
 
 
+
 void action::print_info()
 {
 	cout << "ACTION " << label << " : " << label_tex
@@ -426,6 +427,9 @@ void action::print_info()
 		cout << "the action is not linear" << endl;
 	}
 
+	print_base();
+
+#if 0
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			cout << "base: ";
@@ -436,6 +440,8 @@ void action::print_info()
 	else {
 		cout << "The action does not have a stabilizer chain" << endl;
 	}
+#endif
+
 	if (f_has_sims) {
 		cout << "has sims" << endl;
 		ring_theory::longinteger_object go;
@@ -478,6 +484,8 @@ void action::print_base()
 	if (Stabilizer_chain) {
 		cout << "action " << label << " has base ";
 		Lint_vec_print(cout, get_base(), base_len());
+		cout << " basic orbits have the following length: ";
+		Int_vec_print(cout, get_transversal_length(), base_len());
 		cout << endl;
 	}
 	else {

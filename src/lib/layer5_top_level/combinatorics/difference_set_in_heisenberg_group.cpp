@@ -140,15 +140,37 @@ void difference_set_in_heisenberg_group::init(
 	A = NEW_OBJECT(actions::action);
 	interfaces::magma_interface Magma;
 
-	Magma.init_automorphism_group_from_group_table(
+	data_structures_groups::group_table_and_generators *the_Table;
+
+	the_Table = NEW_OBJECT(data_structures_groups::group_table_and_generators);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"before the_Table->init_basic" << endl;
+	}
+
+
+	the_Table->init_basic(
+			Table, H->group_order, gens, nb_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::create_automorphism_group "
+				"after the_Table->init_basic" << endl;
+	}
+
+
+	Magma.compute_automorphism_group_from_group_table(
 			fname_base,
-		Table, H->group_order, gens, nb_gens,
+			the_Table,
 		A,
 		Aut_gens,
 		verbose_level);
 
 	Aut_gens->group_order(Aut_order);
 
+	FREE_OBJECT(the_Table);
 
 
 	if (f_v) {

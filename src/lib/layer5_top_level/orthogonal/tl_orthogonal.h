@@ -27,6 +27,8 @@ class blt_set_activity_description {
 
 public:
 
+	// TABLES/blt_set_activity.tex
+
 	int f_report;
 
 	int f_export_gap;
@@ -91,6 +93,8 @@ public:
 class blt_set_classify_activity_description {
 
 public:
+
+	// TABLES/blt_set_classify_activity.tex
 
 	int f_compute_starter;
 	poset_classification::poset_classification_control *starter_control;
@@ -161,6 +165,9 @@ public:
 class blt_set_classify_description {
 
 public:
+
+	// TABLES/blt_set_classify.tex
+
 
 	int f_starter_size;
 	int starter_size;
@@ -281,6 +288,8 @@ public:
 class BLT_set_create_description {
 
 public:
+
+	// TABLES/BLT_set_create.tex
 
 	int f_catalogue;
 	int iso;
@@ -560,6 +569,8 @@ public:
 class orthogonal_space_activity_description {
 public:
 
+	// TABLES/orthogonal_space_activity.tex
+
 	int f_cheat_sheet_orthogonal;
 
 	int f_print_points;
@@ -646,6 +657,8 @@ public:
 
 class orthogonal_space_with_action_description {
 public:
+
+	// TABLSE/orthogonal_space_with_action.tex
 
 	int epsilon;
 
