@@ -306,6 +306,7 @@ public:
 			groups::sims *override_Sims,
 			std::string &label,
 			std::string &label_tex,
+			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 	void subgroup_lattice_using_MAGMA(
 			actions::action *A,
@@ -316,11 +317,12 @@ public:
 			std::string &fname,
 			groups::sims *override_sims,
 			std::string &label_latex,
+			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 	void read_conjugacy_classes_of_subgroups_from_MAGMA(
 			actions::action *A,
 			std::string &fname,
-			conjugacy_classes_of_subgroups *&class_data,
+			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 
 	// #############################################################################

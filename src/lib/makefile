@@ -370,6 +370,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/induced_action.o \
 		layer3_group_actions/actions/stabilizer_chain_base_data.o \
 		layer3_group_actions/combinatorics_with_groups/combinatorics_with_action.o \
+		layer3_group_actions/combinatorics_with_groups/fixed_objects_in_PG.o \
 		layer3_group_actions/combinatorics_with_groups/flag_orbits_incidence_structure.o \
 		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \

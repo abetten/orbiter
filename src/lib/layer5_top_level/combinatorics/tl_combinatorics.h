@@ -748,6 +748,10 @@ public:
 	int orbits_on_blocks_sz;
 	std::string orbits_on_blocks_control;
 
+	int f_one_point_extension;
+	int one_point_extension_pair_orbit_idx;
+	std::string one_point_extension_control;
+
 	design_activity_description();
 	~design_activity_description();
 	int read_arguments(
@@ -826,10 +830,10 @@ public:
 	void do_tactical_decomposition(
 			design_create *DC,
 			int verbose_level);
-	void do_orbits_on_blocks(
+	void do_pair_orbits_on_blocks(
 			design_create *DC,
-			int sz,
 			std::string &control_label,
+			int *&Pair_orbits, int &degree,
 			int verbose_level);
 
 };

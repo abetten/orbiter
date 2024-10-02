@@ -236,7 +236,7 @@ public:
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
 	
-	/** the index of the first moved base point */
+	/** the index of the first base point which is moved */
 	int depth_in_stab_chain(
 			int *Elt);
 
@@ -1430,6 +1430,7 @@ public:
 			int size,
 			long int *set1, long int *set2,
 			int verbose_level);
+#if 0
 	void compute_fixed_objects_in_PG(
 			int up_to_which_rank,
 			geometry::projective_space *P,
@@ -1441,6 +1442,7 @@ public:
 		int dimension,
 		std::vector<long int> &fixpoints,
 		int verbose_level);
+#endif
 	void report_fixed_objects_in_PG(
 			std::ostream &ost,
 			geometry::projective_space *P,

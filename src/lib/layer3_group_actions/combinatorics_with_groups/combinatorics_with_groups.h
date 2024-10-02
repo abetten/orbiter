@@ -90,6 +90,52 @@ public:
 
 
 // #############################################################################
+// fixed_objects_in_PG.cpp
+// #############################################################################
+
+//! objects in projective spave which are fix under a collineation
+
+
+
+
+class fixed_objects_in_PG {
+
+public:
+
+	actions::action *A_base;
+	actions::action *A;
+	geometry::projective_space *P;
+	int *Elt;
+
+	int up_to_which_rank;
+	std::vector<std::vector<long int> > Fix;
+
+
+	fixed_objects_in_PG();
+	~fixed_objects_in_PG();
+	void init(
+			actions::action *A_base,
+			actions::action *A,
+			int *Elt,
+			int up_to_which_rank,
+			geometry::projective_space *P,
+			int verbose_level);
+	void compute_fixed_points(
+			std::vector<long int> &fixed_points,
+			int verbose_level);
+	void compute_fixed_points_in_induced_action_on_grassmannian(
+			int dimension,
+			std::vector<long int> &fixed_points,
+			int verbose_level);
+	void report(
+			std::ostream &ost,
+		int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // flag_orbits_incidence_structure.cpp
 // #############################################################################
 

@@ -1165,7 +1165,8 @@ action *induced_action::induced_action_on_sign(
 		cout << "induced_action::induced_action_on_sign "
 				"before AG.induced_action_override_sims" << endl;
 	}
-	AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+	AG.induced_action_override_sims(
+			A_old, A, old_G, verbose_level - 2);
 	if (f_v) {
 		cout << "induced_action::induced_action_on_sign "
 				"after AG.induced_action_override_sims" << endl;

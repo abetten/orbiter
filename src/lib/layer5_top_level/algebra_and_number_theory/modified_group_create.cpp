@@ -136,6 +136,21 @@ void modified_group_create::modified_group_init(
 		}
 	}
 
+	else if (Descr->f_create_even_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_even_subgroup" << endl;
+		}
+
+		create_even_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_even_subgroup" << endl;
+		}
+	}
+
 	else if (Descr->f_point_stabilizer) {
 
 		if (f_v) {
@@ -307,6 +322,31 @@ void modified_group_create::modified_group_init(
 		// output in A_modified
 
 	}
+	else if (Descr->f_subgroup_by_lattice) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_subgroup_by_lattice" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_subgroup_by_lattice" << endl;
+		}
+		create_subgroup_by_lattice(
+				Descr->subgroup_by_lattice_orbit_index,
+				verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_subgroup_by_lattice" << endl;
+		}
+
+		// output in A_modified
+
+	}
+
+
 
 
 	else {
@@ -811,6 +851,107 @@ void modified_group_create::create_special_subgroup(
 
 	if (f_v) {
 		cout << "modified_group_create::create_special_subgroup "
+				"done" << endl;
+	}
+}
+
+
+void modified_group_create::create_even_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_even_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_even_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label.assign(AG->label);
+	label_tex.assign(AG->label_tex);
+
+
+	A_modified = A_previous;
+
+
+
+	f_has_strong_generators = true;
+	if (f_v) {
+		cout << "modified_group_create::create_even_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	{
+		actions::action *A_on_sign;
+		ring_theory::longinteger_object go;
+
+
+		groups::sims *Sims;
+
+
+		if (f_v) {
+			cout << "modified_group_create::create_even_subgroup "
+					"before AG->Subgroup_gens->create_sims" << endl;
+		}
+		Sims = AG->Subgroup_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_even_subgroup "
+					"after AG->Subgroup_gens->create_sims" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::create_even_subgroup "
+					"before Sims->A->Induced_action->induced_action_on_sign" << endl;
+		}
+		A_on_sign = Sims->A->Induced_action->induced_action_on_sign(
+				Sims, verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_even_subgroup "
+					"after Sims->A->Induced_action->induced_action_on_sign" << endl;
+		}
+		A_on_sign->Kernel->group_order(go);
+		if (f_v) {
+			cout << "modified_group_create::create_even_subgroup "
+					"kernel has order " << go << endl;
+		}
+
+
+		Strong_gens->init_from_sims(A_on_sign->Kernel, verbose_level);
+
+		FREE_OBJECT(A_on_sign);
+		FREE_OBJECT(Sims);
+	}
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_even_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	label += "_EvenSub";
+	label_tex += " {\\rm EvenSub}";
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_even_subgroup "
 				"done" << endl;
 	}
 }
@@ -1746,6 +1887,67 @@ void modified_group_create::create_automorphism_group(
 		cout << "modified_group_create::create_automorphism_group done" << endl;
 	}
 }
+
+void modified_group_create::create_subgroup_by_lattice(
+		int orbit_index,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_lattice" << endl;
+	}
+
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+	A_modified = AG->A_base;
+
+	label.assign(AG->label) + "_subgroup_by_lattice_" + std::to_string(orbit_index);
+	label_tex.assign(AG->label_tex) + "\\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	if (!AG->f_has_class_data) {
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"the subgroup lattice has not been computed yet" << endl;
+		exit(1);
+	}
+
+	if (orbit_index >= AG->class_data->nb_classes) {
+		cout << "modified_group_create::create_subgroup_by_lattice orbit_index is out of range" << endl;
+		exit(1);
+	}
+
+	f_has_strong_generators = true;
+	Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_lattice done" << endl;
+	}
+}
+
+
 
 
 }}}

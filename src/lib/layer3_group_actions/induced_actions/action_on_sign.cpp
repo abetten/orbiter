@@ -26,7 +26,7 @@ action_on_sign::~action_on_sign()
 {
 	if (perm) {
 		FREE_int(perm);
-		}
+	}
 	//null();
 }
 
@@ -39,18 +39,18 @@ void action_on_sign::init(
 	
 	if (f_v) {
 		cout << "action_on_sign::init" << endl;
-		}
+	}
 	action_on_sign::A = A;
 	perm_degree = A->degree;
 	if (f_v) {
 		cout << "perm_degree=" << perm_degree << endl;
-		}
+	}
 	perm = NEW_int(perm_degree);
 	degree = 2;
 	
 	if (f_v) {
 		cout << "action_on_sign::init" << endl;
-		}
+	}
 }
 
 long int action_on_sign::compute_image(
@@ -64,28 +64,28 @@ long int action_on_sign::compute_image(
 	if (f_v) {
 		cout << "action_on_sign::compute_image "
 				"i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= degree) {
 		cout << "action_on_sign::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	for (u = 0; u < perm_degree; u++) {
 		v = A->Group_element->element_image_of(u, Elt, false);
 		perm[u] = v;
-		}
+	}
 	sgn = Combi.perm_signum(perm, perm_degree);
 	if (sgn == -1) {
 		j = (i + 1) % 2;
-		}
+	}
 	else {
 		j = i;
-		}
+	}
 	
 	if (f_v) {
 		cout << "action_on_sign::compute_image "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 	return j;
 }
 

@@ -666,7 +666,8 @@ void schreier_sims::create_group(
 						cout << "schreier_sims::create_group "
 								"cannot find next base point" << endl;
 					}
-					if (K->strip(Elt2, Elt3, drop_out_level,
+					if (K->strip(
+							Elt2, Elt3, drop_out_level,
 							image, 0/*verbose_level - 3*/)) {
 						if (f_vv) {
 							cout << "schreier_sims::create_group: "
@@ -760,7 +761,8 @@ void schreier_sims::create_group(
 			if (f_vv) {
 				cout << "schreier_sims::create_group: "
 						"residue needs to be inserted at level = "
-					<< drop_out_level << " with base point " << GA->Stabilizer_chain->base_i(drop_out_level) << " mapped to "
+					<< drop_out_level << " with base point "
+					<< GA->Stabilizer_chain->base_i(drop_out_level) << " mapped to "
 					<< image << endl;
 
 				GA->Group_element->element_print(Elt2, cout);
@@ -827,21 +829,25 @@ void schreier_sims::create_group(
 			}
 			else {
 				if (f_vv) {
-					cout << "schreier_sims::create_group: before closure_group" << endl;
+					cout << "schreier_sims::create_group: "
+							"before closure_group" << endl;
 				}
 				closure_group(0 /*verbose_level - 2*/);
 				if (f_vv) {
-					cout << "schreier_sims::create_group: after closure_group" << endl;
+					cout << "schreier_sims::create_group: "
+							"after closure_group" << endl;
 				}
 			}
 		}
 		else {
 			if (f_vv) {
-				cout << "schreier_sims::create_group: before closure_group" << endl;
+				cout << "schreier_sims::create_group: "
+						"before closure_group" << endl;
 			}
 			closure_group(0 /*verbose_level - 2*/);
 			if (f_vv) {
-				cout << "schreier_sims::create_group: after closure_group" << endl;
+				cout << "schreier_sims::create_group: "
+						"after closure_group" << endl;
 			}
 		}
 	}

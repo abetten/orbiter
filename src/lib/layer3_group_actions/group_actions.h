@@ -41,6 +41,7 @@ namespace actions {
 namespace combinatorics_with_groups {
 
 	class combinatorics_with_action;
+	class fixed_objects_in_PG;
 	class flag_orbits_incidence_structure;
 	class group_action_on_combinatorial_object;
 	class orbit_type_repository;

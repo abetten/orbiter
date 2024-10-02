@@ -7407,6 +7407,7 @@ test_6_4:
 	make Cyclic_6_aut
 	make Elementary_abelian_8_aut
 	make Symmetric_4_on_pairs
+	make Alternating_5
 	make direct_product_AGL
 	make PGLstar_3_2
 	make PGLstar_3_2_restrict
@@ -7479,6 +7480,23 @@ Symmetric_4_on_pairs:
 		-end
 	pdflatex Sym_4_OnSubsets_2_report.tex
 	$(OPEN) Sym_4_OnSubsets_2_report.pdf
+
+
+
+Alternating_5:
+	$(ORBITER) -v 3 \
+		-define Sym5 -permutation_group -symmetric_group 5 -end \
+		-define Alt5 -modified_group -from Sym5 \
+			-create_even_subgroup \
+		-end \
+		-with Alt5 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_5_EvenSub_report.tex
+	$(OPEN) Sym_5_EvenSub_report.pdf
+
+# group order 60
 
 
 # product action:

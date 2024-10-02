@@ -269,6 +269,8 @@ class poset_classification_activity_description {
 
 public:
 
+	// TABLES/poset_classification_activity.tex
+
 	int f_report;
 	poset_classification_report_options *report_options;
 
@@ -428,6 +430,8 @@ public:
 class poset_classification_control {
 
 public:
+
+	// TABLES/poset_classification_control.tex
 
 	int f_problem_label;
 	std::string problem_label;
@@ -1232,6 +1236,8 @@ class poset_classification_report_options {
 
 public:
 
+	// TABLES/poset_classification_report_options.tex
+
 	int f_select_orbits_by_level;
 	int select_orbits_by_level_level;
 
@@ -1529,7 +1535,8 @@ public:
 	void poset_orbit_node_depth_breadth_perm_and_inverse(
 		poset_classification *gen,
 		int max_depth, 
-		int &idx, int hdl, int cur_depth, int *perm, int *perm_inv);
+		int &idx, int hdl, int cur_depth,
+		int *perm, int *perm_inv);
 	int find_extension_from_point(
 			poset_classification *gen, long int pt,
 		int verbose_level);

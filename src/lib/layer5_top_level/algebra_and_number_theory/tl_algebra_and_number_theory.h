@@ -422,6 +422,9 @@ public:
 	int f_has_subgroup_lattice;
 	groups::subgroup_lattice *Subgroup_lattice;
 
+	int f_has_class_data;
+	interfaces::conjugacy_classes_of_subgroups *class_data;
+
 
 	any_group();
 	~any_group();
@@ -770,6 +773,8 @@ public:
 
 	int f_create_special_subgroup;
 
+	int f_create_even_subgroup;
+
 	int f_point_stabilizer;
 	int point_stabilizer_point;
 
@@ -801,6 +806,9 @@ public:
 	int f_holomorph;
 
 	int f_automorphism_group;
+
+	int f_subgroup_by_lattice;
+	int subgroup_by_lattice_orbit_index;
 
 	std::vector<std::string> from;
 
@@ -1179,6 +1187,9 @@ public:
 	void create_special_subgroup(
 			group_modification_description *description,
 			int verbose_level);
+	void create_even_subgroup(
+			group_modification_description *description,
+			int verbose_level);
 	void create_point_stabilizer_subgroup(
 			group_modification_description *description,
 			int verbose_level);
@@ -1205,7 +1216,9 @@ public:
 			int verbose_level);
 	void create_automorphism_group(
 			int verbose_level);
-	// output in A_modified and Strong_gens
+	void create_subgroup_by_lattice(
+			int orbit_index,
+			int verbose_level);
 
 };
 

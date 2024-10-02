@@ -626,7 +626,7 @@ void action::compute_all_point_orbits(
 
 int action::depth_in_stab_chain(
 		int *Elt)
-// the index of the first moved base point
+// the index of the first base point which is moved
 {
 	int i, j, b;
 	

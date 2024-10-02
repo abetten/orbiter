@@ -46,18 +46,6 @@ void strong_generators::prepare_from_generator_data(
 	gens->init_from_data(A, data,
 			nb_gens, data_size, 0 /*verbose_level*/);
 
-#if 0
-	gens->init(A, verbose_level - 2);
-
-
-	gens->allocate(nb_gens, verbose_level - 2);
-
-	int i;
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
-	}
-#endif
-
 	ring_theory::longinteger_object target_go;
 
 	target_go.create_from_base_10_string(ascii_target_go);
@@ -222,7 +210,6 @@ void strong_generators::init_linear_group_from_scratch(
 					"before A->Known_groups->init_orthogonal_group_with_O" << endl;
 		}
 		A->Known_groups->init_orthogonal_group_with_O(
-				//epsilon, n, F,
 				O,
 			true /* f_on_points */, false /* f_on_lines */,
 			false /* f_on_points_and_lines */,
@@ -574,12 +561,6 @@ void strong_generators::init_trivial_group(
 	tl = NEW_int(A->base_len());
 	Int_vec_one(tl, A->base_len());
 
-#if 0
-	int i;
-	for (i = 0; i < A->base_len(); i++) {
-		tl[i] = 1;
-	}
-#endif
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(0, verbose_level - 2);
@@ -1177,7 +1158,9 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	go_factored[0] = go_factored[0] / g;
 	go_factored[1] = n;
 
-	D.multiply_up_lint(target_go, go_factored, 2, 0 /* verbose_level */);
+	D.multiply_up_lint(
+			target_go, go_factored, 2,
+			0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
 		Lint_vec_print(cout, go_factored, 2);
@@ -1214,7 +1197,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			cout << "search_for_primitive_polynomial_of_given_degree "
 					"p=" << q << " degree=" << n << endl;
 		}
-		FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
+		FX.get_a_primitive_polynomial(
+				m, n, verbose_level - 1);
 
 		Int_vec_zero(data1, n * n);
 
@@ -1255,7 +1239,8 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		A->Group_element->element_print_quick(Elt1, cout);
 	}
 
-	A->Group_element->element_power_int_in_place(Elt1,
+	A->Group_element->element_power_int_in_place(
+			Elt1,
 		power_of_singer, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -1359,7 +1344,8 @@ void strong_generators::generators_for_the_null_polarity_group(
 	
 	data_structures_groups::vector_ge *nice_gens;
 
-	init_from_data(A, N->Data, 
+	init_from_data(
+		A, N->Data,
 		N->nb_gens, n * n, N->transversal_length, 
 		nice_gens,
 		verbose_level - 1);
@@ -1378,7 +1364,6 @@ void strong_generators::generators_for_symplectic_group(
 		algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	field_theory::finite_field *F;
 	int n, q;
 	
@@ -1434,7 +1419,7 @@ void strong_generators::generators_for_symplectic_group(
 				"init_from_data" << endl;
 	}
 	init_from_data(
-			A, N->Data,
+		A, N->Data,
 		N->nb_gens, n * n, t_len,
 		nice_gens,
 		verbose_level - 1);
@@ -1557,7 +1542,8 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		A_general_linear->Group_element->make_element(
 				new_gens->ith(i), data, 0);
 	}
-	M->GFq->Linear_algebra->diagonal_matrix(data, n, M->GFq->primitive_root());
+	M->GFq->Linear_algebra->diagonal_matrix(
+			data, n, M->GFq->primitive_root());
 	if (M->f_semilinear) {
 		data[n * n] = 0;
 	}
@@ -2640,7 +2626,8 @@ void strong_generators::generators_for_parabolic_subgroup(
 		cout << "strong_generators::generators_for_parabolic_subgroup "
 				"before GGD.generators_for_parabolic_subgroup" << endl;
 	}
-	GGD.generators_for_parabolic_subgroup(n, F,
+	GGD.generators_for_parabolic_subgroup(
+			n, F,
 		Mtx->f_semilinear, k, 
 		data, size, nb_gens, 
 		verbose_level - 2);
@@ -2654,13 +2641,6 @@ void strong_generators::generators_for_parabolic_subgroup(
 			A_PGL_n_q, data,
 			nb_gens, size,
 			0 /*verbose_level*/);
-#if 0
-	my_gens->init(A_PGL_n_q, verbose_level - 2);
-	my_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A_PGL_n_q->Group_element->make_element(my_gens->ith(i), data + i * size, 0);
-	}
-#endif
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_parabolic_subgroup "
@@ -2770,15 +2750,6 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 			nb_gens, size,
 			0 /*verbose_level*/);
 
-#if 0
-	my_gens->init(A_PGL_4_q, verbose_level - 2);
-	my_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A_PGL_4_q->Group_element->make_element(my_gens->ith(i),
-				data + i * size, 0);
-	}
-#endif
-	
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4 "
@@ -2886,13 +2857,6 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 			nb_gens, size,
 			0 /*verbose_level*/);
 
-#if 0
-	my_gens->init(A_PGL_4_q, verbose_level - 2);
-	my_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A_PGL_4_q->Group_element->make_element(my_gens->ith(i), data + i * size, 0);
-	}
-#endif
 	
 
 	if (f_v) {
@@ -2947,7 +2911,6 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 
 void strong_generators::generators_for_the_orthogonal_group(
 		actions::action *A,
-	//field_theory::finite_field *F, int n, int epsilon,
 	orthogonal_geometry::orthogonal *O,
 	int f_semilinear, 
 	int verbose_level)
@@ -2956,9 +2919,6 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_orthogonal_group" << endl;
-		//cout << "n=" << n << endl;
-		//cout << "epsilon=" << epsilon << endl;
-		//cout << "q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 	}
 
@@ -2972,7 +2932,6 @@ void strong_generators::generators_for_the_orthogonal_group(
 	}
 
 	A2->Known_groups->init_orthogonal_group_with_O(
-		//epsilon, n, F,
 			O,
 		true /* f_on_points */,
 		false /* f_on_lines */,
@@ -3057,7 +3016,8 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 				"gens->init_from_data" << endl;
 	}
 	gens->init_from_data(
-			A, data, nb_gens, data_size,
+			A, data,
+			nb_gens, data_size,
 			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
@@ -3204,7 +3164,8 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 				"before gens->init_from_data" << endl;
 	}
 	gens->init_from_data(
-			A, data, nb_gens, data_size, 0 /*verbose_level*/);
+			A, data, nb_gens, data_size,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue "
 				"after gens->init_from_data" << endl;
@@ -3277,20 +3238,12 @@ strong_generators::stabilizer_of_Eckardt_surface(
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	nice_gens->init_from_data(A, data,
-			nb_gens, data_size, 0 /*verbose_level*/);
+	nice_gens->init_from_data(
+			A, data,
+			nb_gens, data_size,
+			0 /*verbose_level*/);
 
 	target_go.create(group_order);
-
-#if 0
-	nice_gens->init(A, verbose_level - 2);
-
-
-	nice_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
-	}
-#endif
 
 
 
@@ -3355,20 +3308,12 @@ void strong_generators::stabilizer_of_G13_surface(
 
 	nice_gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	nice_gens->init_from_data(A, data,
-			nb_gens, data_size, 0 /*verbose_level*/);
+	nice_gens->init_from_data(
+			A, data,
+			nb_gens, data_size,
+			0 /*verbose_level*/);
 
 	target_go.create(group_order);
-
-#if 0
-	nice_gens->init(A, verbose_level - 2);
-
-
-	nice_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
-	}
-#endif
 
 
 	strong_generators *Strong_gens2;
@@ -3433,18 +3378,10 @@ void strong_generators::stabilizer_of_F13_surface(
 
 	target_go.create(group_order);
 
-	nice_gens->init_from_data(A, data,
-			nb_gens, data_size, 0 /*verbose_level*/);
-
-#if 0
-	nice_gens->init(A, verbose_level - 2);
-
-
-	nice_gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(nice_gens->ith(i), data + i * data_size, 0);
-	}
-#endif
+	nice_gens->init_from_data(
+			A, data,
+			nb_gens, data_size,
+			0 /*verbose_level*/);
 
 
 
@@ -3514,20 +3451,12 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	gens->init_from_data(A, data,
-			nb_gens, data_size, 0 /*verbose_level*/);
+	gens->init_from_data(
+			A, data,
+			nb_gens, data_size,
+			0 /*verbose_level*/);
 
 	target_go.create_from_base_10_string(ascii_target_go);
-
-#if 0
-	gens->init(A, verbose_level - 2);
-
-
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
-	}
-#endif
 
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_catalogue_stabilizer "
@@ -3603,19 +3532,12 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	gens->init_from_data(A, data,
-			nb_gens, data_size, 0 /*verbose_level*/);
+	gens->init_from_data(
+			A, data,
+			nb_gens, data_size,
+			0 /*verbose_level*/);
 
 	target_go.create_from_base_10_string(ascii_target_go);
-#if 0
-	gens->init(A, verbose_level - 2);
-
-
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->Group_element->make_element(gens->ith(i), data + i * data_size, 0);
-	}
-#endif
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_spread_from_catalogue "
@@ -3873,7 +3795,8 @@ void strong_generators::Hall_reflection(
 				"before generators_Hall_reflection" << endl;
 	}
 
-	GG.generators_Hall_reflection(nb_pairs,
+	GG.generators_Hall_reflection(
+			nb_pairs,
 			nb_perms, perms, degree,
 			verbose_level);
 
@@ -3978,7 +3901,8 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"before generators_Hall_reflection_normalizer_group" << endl;
 	}
 
-	GG.generators_Hall_reflection_normalizer_group(nb_pairs,
+	GG.generators_Hall_reflection_normalizer_group(
+			nb_pairs,
 			nb_perms, perms, degree,
 			verbose_level);
 
@@ -4019,7 +3943,8 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	ring_theory::longinteger_object target_go;
 
 
-	GG.order_Hall_reflection_normalizer_factorized(nb_pairs,
+	GG.order_Hall_reflection_normalizer_factorized(
+			nb_pairs,
 			factors, nb_factors);
 
 	target_go.create_product(nb_factors, factors);
@@ -4112,8 +4037,8 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 			if (f_semilinear) {
 				cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
 						" frobenius = " << frobenius << endl;
+			}
 		}
-	}
 
 		if (f_v) {
 			cout << "strong_generators::hyperplane_lifting_with_two_lines_fixed "
@@ -4121,7 +4046,8 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 					<< i << " / " << SG_hyperplane->gens->len
 					<< " before Gg.hyperplane_lifting_with_two_lines_fixed" << endl;
 		}
-		Gg.hyperplane_lifting_with_two_lines_fixed(P,
+		Gg.hyperplane_lifting_with_two_lines_fixed(
+				P,
 				SG_hyperplane->gens->ith(i),
 				f_semilinear, frobenius,
 				line1, line2,
@@ -4244,7 +4170,7 @@ void strong_generators::exterior_square(
 			cout << "strong_generators::exterior_square "
 					"lifting generator "
 					<< i << " / " << SG_original->gens->len << endl;
-			}
+		}
 		if (f_semilinear) {
 			frobenius = SG_original->gens->ith(i)[n * n];
 			if (f_v) {

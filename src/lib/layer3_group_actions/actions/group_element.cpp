@@ -2369,6 +2369,7 @@ int group_element::check_if_transporter_for_set(
 
 }
 
+#if 0
 void group_element::compute_fixed_objects_in_PG(
 		int up_to_which_rank,
 		geometry::projective_space *P,
@@ -2477,6 +2478,7 @@ void group_element::compute_fixed_points_in_induced_action_on_grassmannian(
 		cout << "group_element::compute_fixed_points_in_induced_action_on_grassmannian done" << endl;
 	}
 }
+#endif
 
 void group_element::report_fixed_objects_in_PG(
 		std::ostream &ost,
@@ -2486,14 +2488,43 @@ void group_element::report_fixed_objects_in_PG(
 // creates temporary actions using induced_action_on_grassmannian
 {
 	int f_v = (verbose_level >= 1);
-	int j, h, cnt;
-	int v[4];
-	//field_theory::finite_field *F;
+
 
 	if (f_v) {
 		cout << "group_element::report_fixed_objects_in_PG" << endl;
 	}
 
+
+	combinatorics_with_groups::fixed_objects_in_PG *Fixed_objects_in_PG;
+
+	int up_to_which_rank = P->Subspaces->n;
+
+	Fixed_objects_in_PG = NEW_OBJECT(combinatorics_with_groups::fixed_objects_in_PG);
+
+	if (f_v) {
+		cout << "group_element::report_fixed_objects_in_PG "
+				"before Fixed_objects_in_PG->init" << endl;
+	}
+	Fixed_objects_in_PG->init(
+			A /* actions::action *A_base */,
+			A,
+			Elt,
+			up_to_which_rank,
+			P,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "group_element::report_fixed_objects_in_PG "
+				"after Fixed_objects_in_PG->init" << endl;
+	}
+
+	Fixed_objects_in_PG->report(ost, verbose_level - 2);
+
+	FREE_OBJECT(Fixed_objects_in_PG);
+
+#if 0
+	int j, h, cnt;
+	int v[4];
+	//field_theory::finite_field *F;
 
 	//ost << "\\section{Fixed Objects}" << endl;
 
@@ -2579,6 +2610,7 @@ void group_element::report_fixed_objects_in_PG(
 		}
 		FREE_OBJECT(Ah);
 	}
+#endif
 
 
 	if (f_v) {
@@ -2720,11 +2752,13 @@ void group_element::action_on_polynomial(
 	if (f_semilinear) {
 		HPD->substitute_semilinear(
 				input, output,
-				f_semilinear, Elt[n * n], Elt1, 0 /* verbose_level */);
+				f_semilinear, Elt[n * n], Elt1,
+				0 /* verbose_level */);
 	}
 	else {
 		HPD->substitute_linear(
-				input, output, Elt1, 0 /* verbose_level */);
+				input, output, Elt1,
+				0 /* verbose_level */);
 	}
 
 	if (f_vv) {

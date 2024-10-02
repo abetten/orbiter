@@ -161,11 +161,96 @@ void design_activity::perform_activity(
 			cout << "design_activity::perform_activity "
 					"f_orbits_on_blocks" << endl;
 		}
-		do_orbits_on_blocks(
+		int *Pair_orbits;
+		int degree;
+
+		if (Descr->orbits_on_blocks_sz != 2) {
+			cout << "Descr->orbits_on_blocks_sz != 2" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"before do_pair_orbits_on_blocks" << endl;
+		}
+		do_pair_orbits_on_blocks(
 				DC,
-				Descr->orbits_on_blocks_sz,
 				Descr->orbits_on_blocks_control,
+				Pair_orbits, degree,
 				verbose_level);
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"after do_pair_orbits_on_blocks" << endl;
+		}
+	}
+	else if (Descr->f_one_point_extension) {
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"f_one_point_extension" << endl;
+		}
+		int *Pair_orbits;
+		int degree;
+
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"before do_pair_orbits_on_blocks" << endl;
+		}
+		do_pair_orbits_on_blocks(
+				DC,
+				Descr->one_point_extension_control,
+				Pair_orbits, degree,
+				verbose_level);
+		if (f_v) {
+			cout << "design_activity::perform_activity "
+					"after do_pair_orbits_on_blocks" << endl;
+		}
+
+		int orbit_idx;
+
+		orbit_idx = Descr->one_point_extension_pair_orbit_idx;
+
+		int *Adj;
+		int n;
+		int i, j, u, v;
+
+		n = 1 + DC->v + DC->b;
+		Adj = NEW_int(n * n);
+		Int_vec_zero(Adj, n * n);
+		for (i = 0; i < DC->v; i++) {
+			u = 0;
+			v = 1 + i;
+			Adj[u * n + v] = Adj[v * n + u] = 1;
+		}
+		for (i = 0; i < DC->v; i++) {
+			for (j = 0; j < DC->b; j++) {
+				u = 1 + i;
+				v = 1 + DC->v + j;
+				Adj[u * n + v] = Adj[v * n + u] = DC->incma[i * DC->b + j];
+			}
+		}
+		for (i = 0; i < DC->b; i++) {
+			u = 1 + DC->v + i;
+			for (j = i + 1; j < DC->b; j++) {
+				v = 1 + DC->v + j;
+				if (Pair_orbits[i * degree + j] == orbit_idx) {
+					Adj[u * n + v] = Adj[v * n + u] = 1;
+				}
+			}
+		}
+
+
+		string fname;
+
+		fname = DC->label_txt + "_one_pt_ext_orb" + std::to_string(orbit_idx) + ".csv";
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, Adj, n, n);
+
+		cout << "design_activity::perform_activity "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
 	}
 
 	if (f_v) {
@@ -1064,16 +1149,16 @@ void design_activity::do_tactical_decomposition(
 
 }
 
-void design_activity::do_orbits_on_blocks(
+void design_activity::do_pair_orbits_on_blocks(
 		design_create *DC,
-		int sz,
 		std::string &control_label,
+		int *&Pair_orbits, int &degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks" << endl;
+		cout << "design_activity::do_pair_orbits_on_blocks" << endl;
 	}
 
 	actions::action *A_on_blocks;
@@ -1083,7 +1168,7 @@ void design_activity::do_orbits_on_blocks(
 	int block_sz;
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"before DC->compute_blocks_from_incidence_matrix" << endl;
 	}
 
@@ -1093,12 +1178,12 @@ void design_activity::do_orbits_on_blocks(
 			verbose_level);
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"after DC->compute_blocks_from_incidence_matrix" << endl;
 	}
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"before DC->A->Induced_action->create_induced_action_on_sets" << endl;
 	}
 
@@ -1107,7 +1192,7 @@ void design_activity::do_orbits_on_blocks(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"after DC->A->Induced_action->create_induced_action_on_sets" << endl;
 	}
 
@@ -1123,7 +1208,7 @@ void design_activity::do_orbits_on_blocks(
 	poset_classification::poset_classification *PC;
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"before creating any_group *AG" << endl;
 	}
 
@@ -1136,37 +1221,83 @@ void design_activity::do_orbits_on_blocks(
 	AG->Subgroup_gens = DC->Sg;
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"AG->A_base=" << endl;
 		AG->A_base->print_info();
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"AG->A=" << endl;
 		AG->A->print_info();
 	}
 
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"after creating any_group *AG" << endl;
 	}
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"before Orbits_global.orbits_on_subsets" << endl;
 	}
 	Orbits_global.orbits_on_subsets(
 			AG,
 			Control,
 			PC,
-			sz,
+			2 /* size */,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks "
+		cout << "design_activity::do_pair_orbits_on_blocks "
 				"after Orbits_global.orbits_on_subsets" << endl;
 	}
 
 	if (f_v) {
-		cout << "design_activity::do_orbits_on_blocks done" << endl;
+		cout << "design_activity::do_pair_orbits_on_blocks "
+				"before computing orbits on pairs" << endl;
+	}
+
+	int *transporter;
+
+	degree = AG->A->degree;
+	if (f_v) {
+		cout << "design_activity::do_pair_orbits_on_blocks "
+				"degree == " << degree << endl;
+	}
+
+	transporter = NEW_int(AG->A_base->elt_size_in_int);
+	Pair_orbits = NEW_int(degree * degree);
+	Int_vec_mone(Pair_orbits, degree * degree);
+
+	int i, j;
+	long int set[2];
+	long int canonical_set[2];
+	int orbit_no;
+
+	for (i = 0; i < degree; i++) {
+		for (j = i + 1; j < degree; j++) {
+			set[0] = i;
+			set[1] = j;
+			orbit_no = PC->trace_set(
+					set, 2, 2,
+				canonical_set, transporter,
+				0 /*verbose_level - 1*/);
+			Pair_orbits[i * degree + j] = orbit_no;
+			Pair_orbits[j * degree + i] = orbit_no;
+		}
+	}
+
+	if (f_v) {
+		cout << "design_activity::do_pair_orbits_on_blocks "
+				"after computing orbits on pairs" << endl;
+	}
+	if (f_v) {
+		cout << "design_activity::do_pair_orbits_on_blocks "
+				"Pair_orbits=" << endl;
+		Int_matrix_print(Pair_orbits, degree, degree);
+	}
+
+	FREE_int(transporter);
+	if (f_v) {
+		cout << "design_activity::do_pair_orbits_on_blocks done" << endl;
 	}
 }
 

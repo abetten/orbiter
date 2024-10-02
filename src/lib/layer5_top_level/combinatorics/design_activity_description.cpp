@@ -53,6 +53,10 @@ design_activity_description::design_activity_description()
 	orbits_on_blocks_sz = -1;
 	//std::string orbits_on_blocks_control;
 
+	f_one_point_extension = false;
+	one_point_extension_pair_orbit_idx = -1;
+	//std::string one_point_extension_control;
+
 }
 
 design_activity_description::~design_activity_description()
@@ -205,6 +209,17 @@ int design_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-one_point_extension") == 0) {
+			f_one_point_extension = true;
+			one_point_extension_pair_orbit_idx = ST.strtoi(argv[++i]);
+			one_point_extension_control.assign(argv[++i]);
+			if (f_v) {
+				cout << "-one_point_extension "
+						<< " " << one_point_extension_pair_orbit_idx
+						<< " " << one_point_extension_control
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -277,6 +292,12 @@ void design_activity_description::print()
 		cout << "-orbits_on_blocks "
 				<< " " << orbits_on_blocks_sz
 				<< " " << orbits_on_blocks_control
+				<< endl;
+	}
+	if (f_one_point_extension) {
+		cout << "-one_point_extension "
+				<< " " << one_point_extension_pair_orbit_idx
+				<< " " << one_point_extension_control
 				<< endl;
 	}
 }

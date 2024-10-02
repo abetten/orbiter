@@ -42,6 +42,9 @@ any_group::any_group()
 	f_has_subgroup_lattice = false;
 	Subgroup_lattice = NULL;
 
+	f_has_class_data = false;
+	class_data = NULL;
+
 }
 
 any_group::~any_group()
@@ -51,6 +54,9 @@ any_group::~any_group()
 	}
 	if (f_has_subgroup_lattice) {
 		FREE_OBJECT(Subgroup_lattice);
+	}
+	if (f_has_class_data) {
+		FREE_OBJECT(class_data);
 	}
 }
 
@@ -3826,18 +3832,24 @@ void any_group::subgroup_lattice_magma(
 
 	interfaces::magma_interface Magma;
 
+
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_magma "
 				"before Magma.get_subgroup_lattice" << endl;
 	}
+
 	Magma.get_subgroup_lattice(
 			A, Sims,
 			label, label_tex,
+			class_data,
 			verbose_level);
+
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_magma "
 				"after Magma.get_subgroup_lattice" << endl;
 	}
+
+	f_has_class_data = true;
 
 	FREE_OBJECT(Sims);
 

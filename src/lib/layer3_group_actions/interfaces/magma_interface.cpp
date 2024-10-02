@@ -1433,6 +1433,7 @@ void magma_interface::get_subgroup_lattice(
 		groups::sims *override_Sims,
 		std::string &label,
 		std::string &label_tex,
+		interfaces::conjugacy_classes_of_subgroups *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1457,7 +1458,7 @@ void magma_interface::get_subgroup_lattice(
 					"before read_subgroup_lattice" << endl;
 		}
 		read_subgroup_lattice(A,
-				fname_output, override_Sims, label_tex, verbose_level);
+				fname_output, override_Sims, label_tex, class_data, verbose_level);
 		if (f_v) {
 			cout << "magma_interface::get_subgroup_lattice "
 					"after read_subgroup_lattice" << endl;
@@ -1621,6 +1622,7 @@ void magma_interface::read_subgroup_lattice(
 		std::string &fname,
 		groups::sims *override_sims,
 		std::string &label_latex,
+		interfaces::conjugacy_classes_of_subgroups *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1634,7 +1636,6 @@ void magma_interface::read_subgroup_lattice(
 				"before read_conjugacy_classes_of_subgroups_from_MAGMA" << endl;
 	}
 
-	conjugacy_classes_of_subgroups *class_data;
 
 	read_conjugacy_classes_of_subgroups_from_MAGMA(
 			A,
@@ -1683,7 +1684,7 @@ void magma_interface::read_subgroup_lattice(
 	}
 
 
-	FREE_OBJECT(class_data);
+	//FREE_OBJECT(class_data);
 
 	if (f_v) {
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers done" << endl;
@@ -1695,7 +1696,7 @@ void magma_interface::read_subgroup_lattice(
 void magma_interface::read_conjugacy_classes_of_subgroups_from_MAGMA(
 		actions::action *A,
 		std::string &fname,
-		conjugacy_classes_of_subgroups *&class_data,
+		interfaces::conjugacy_classes_of_subgroups *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -1599,7 +1599,7 @@ class strong_generators {
 public:
 
 	actions::action *A;
-	int *tl;
+	int *tl; //[A->base_len()]
 	data_structures_groups::vector_ge *gens;
 
 	strong_generators();
