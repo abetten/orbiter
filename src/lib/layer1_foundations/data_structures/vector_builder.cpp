@@ -238,6 +238,10 @@ void vector_builder::init(
 		if (f_v) {
 			cout << "vector_builder::init found a vector of length " << len << endl;
 		}
+		if (f_v) {
+			cout << "vector_builder::init matrix of size " << m << " x " << n << endl;
+			Lint_matrix_print(v, m, n);
+		}
 	}
 	else if (Descr->f_sparse) {
 		if (f_v) {

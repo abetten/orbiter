@@ -179,6 +179,12 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 				"set_stab_order = " << set_stab_order << endl;
 	}
 
+	if (set_stab_order.is_zero()) {
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
+				"set_stab_order = " << set_stab_order << " is zero, this cannot be right. " << endl;
+		exit(1);
+	}
+
 
 	// compute the orbit of the equation
 	// under the stabilizer of the set of points:

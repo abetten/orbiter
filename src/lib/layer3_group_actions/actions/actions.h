@@ -409,6 +409,8 @@ public:
 	void report_basic_orbits(
 			std::ostream &ost);
 	void print_base();
+	void print_base(
+			std::ostream &ost);
 	void print_bare_base(
 			std::ofstream &ost);
 	void latex_all_points(
@@ -554,6 +556,11 @@ public:
 			geometry::projective_space *P,
 			geometry::polarity *Polarity,
 			int verbose_level);
+	action *init_subgroup_from_strong_generators(
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
+			int verbose_level);
+	// shortens the base
 	void compute_sims(
 			action *A,
 			int verbose_level);
@@ -842,6 +849,15 @@ public:
 			groups::strong_generators *SG,
 			action *A,
 			int verbose_level);
+	void report(
+			std::ostream &ost,
+			std::string &label,
+			std::string &label_tex,
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
+			int f_sylow, int f_group_table,
+			graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
 
 };
 
@@ -864,7 +880,7 @@ public:
 
 	std::string label;
 
-	/** function pointers for group actions */
+	/** function pointers for group actions. there are 26 of them. */
 	long int (*ptr_element_image_of)(
 			action &A, long int a, void *elt, int verbose_level);
 	void (*ptr_element_image_of_low_level)(
@@ -934,9 +950,12 @@ public:
 
 	action_pointer_table();
 	~action_pointer_table();
+	void reset_counters();
 	void save_stats(
 			std::string &fname_base);
 	void null_function_pointers();
+	void copy_from_but_reset_counters(
+			action_pointer_table *T);
 	void init_function_pointers_matrix_group();
 	void init_function_pointers_wreath_product_group();
 	void init_function_pointers_direct_product_group();
@@ -1661,9 +1680,14 @@ public:
 			int base_len, int verbose_level);
 	void reallocate_base(
 			int new_base_point, int verbose_level);
+	void init_base_from_sims_after_shortening(
+			actions::action *A,
+			groups::sims *Sims, int verbose_level);
 	void init_base_from_sims(
 			groups::sims *G, int verbose_level);
 	actions::action *get_A();
+	void set_A(
+			actions::action *A);
 	int &get_f_has_base();
 	int &get_base_len();
 	long int &base_i(
@@ -1692,6 +1716,9 @@ public:
 			field_theory::finite_field *F,
 			int n, int f_semilinear, int degree,
 			int verbose_level);
+	void report_basic_orbits(
+			std::ostream &ost);
+
 };
 
 

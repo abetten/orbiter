@@ -45,6 +45,7 @@ design_activity_description::design_activity_description()
 	f_export_incidence_matrix = false;
 	f_export_incidence_matrix_latex = false;
 	f_intersection_matrix = false;
+	f_save = false;
 	f_export_blocks = false;
 	f_row_sums = false;
 	f_tactical_decomposition = false;
@@ -180,6 +181,14 @@ int design_activity_description::read_arguments(
 				cout << "-intersection_matrix " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-save") == 0) {
+			f_save = true;
+			if (f_v) {
+				cout << "-save " << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-export_blocks") == 0) {
 			f_export_blocks = true;
 			if (f_v) {
@@ -278,6 +287,9 @@ void design_activity_description::print()
 	}
 	if (f_intersection_matrix) {
 		cout << "-intersection_matrix " << endl;
+	}
+	if (f_save) {
+		cout << "-save " << endl;
 	}
 	if (f_export_blocks) {
 		cout << "-export_blocks " << endl;

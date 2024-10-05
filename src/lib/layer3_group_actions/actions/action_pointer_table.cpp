@@ -35,6 +35,19 @@ action_pointer_table::~action_pointer_table()
 
 }
 
+void action_pointer_table::reset_counters()
+{
+	nb_times_image_of_called = 0;
+	nb_times_image_of_low_level_called = 0;
+	nb_times_unpack_called = 0;
+	nb_times_pack_called = 0;
+	nb_times_retrieve_called = 0;
+	nb_times_store_called = 0;
+	nb_times_mult_called = 0;
+	nb_times_invert_called = 0;
+
+}
+
 void action_pointer_table::save_stats(
 		std::string &fname_base)
 {
@@ -63,6 +76,7 @@ void action_pointer_table::save_stats(
 void action_pointer_table::null_function_pointers()
 {
 	label.assign("null");
+	// 26 function pointers:
 	ptr_element_image_of = NULL;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;
@@ -81,6 +95,7 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_print = NULL;
 	ptr_element_print_quick = NULL;
 	ptr_element_print_latex = NULL;
+	ptr_element_print_latex_with_print_point_function = NULL;
 	ptr_element_print_verbose = NULL;
 	ptr_element_code_for_make_element = NULL;
 	ptr_element_print_for_make_element = NULL;
@@ -91,6 +106,40 @@ void action_pointer_table::null_function_pointers()
 }
 
 
+
+
+void action_pointer_table::copy_from_but_reset_counters(
+		action_pointer_table *T)
+{
+	// copy 26 function pointers:
+	ptr_element_image_of = T->ptr_element_image_of;
+	ptr_element_image_of_low_level = T->ptr_element_image_of_low_level;
+	ptr_element_linear_entry_ij = T->ptr_element_linear_entry_ij;
+	ptr_element_linear_entry_frobenius = T->ptr_element_linear_entry_frobenius;
+	ptr_element_one = T->ptr_element_one;
+	ptr_element_is_one = T->ptr_element_is_one;
+	ptr_element_unpack = T->ptr_element_unpack;
+	ptr_element_pack = T->ptr_element_pack;
+	ptr_element_retrieve = T->ptr_element_retrieve;
+	ptr_element_store = T->ptr_element_store;
+	ptr_element_mult = T->ptr_element_mult;
+	ptr_element_invert = T->ptr_element_invert;
+	ptr_element_transpose = T->ptr_element_transpose;
+	ptr_element_move = T->ptr_element_move;
+	ptr_element_dispose = T->ptr_element_dispose;
+	ptr_element_print = T->ptr_element_print;
+	ptr_element_print_quick = T->ptr_element_print_quick;
+	ptr_element_print_latex = T->ptr_element_print_latex;
+	ptr_element_print_latex_with_print_point_function = T->ptr_element_print_latex_with_print_point_function;
+	ptr_element_print_verbose = T->ptr_element_print_verbose;
+	ptr_element_code_for_make_element = T->ptr_element_code_for_make_element;
+	ptr_element_print_for_make_element = T->ptr_element_print_for_make_element;
+	ptr_element_print_for_make_element_no_commas = T->ptr_element_print_for_make_element_no_commas;
+	ptr_print_point = T->ptr_print_point;
+	ptr_unrank_point = T->ptr_unrank_point;
+	ptr_rank_point = T->ptr_rank_point;
+	reset_counters();
+}
 
 }}}
 

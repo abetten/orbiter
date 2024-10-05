@@ -2915,12 +2915,13 @@ int sorting::schreier_vector_determine_depth_recursion(
 	return d;
 }
 
-void sorting::schreier_vector_tree(
+void sorting::make_layered_graph_for_schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
-	graphics::layered_graph_draw_options *LG_Draw_options,
+	//graphics::layered_graph_draw_options *LG_Draw_options,
 	graph_theory::layered_graph *&LG,
 	int verbose_level)
+// called from sims_io.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -2929,7 +2930,7 @@ void sorting::schreier_vector_tree(
 	int *ancestor;
 
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree, "
+		cout << "sorting::make_layered_graph_for_schreier_vector_tree "
 				"n=" << n << " f_use_pts_inv=" << f_use_pts_inv << endl;
 	}
 
@@ -2937,7 +2938,8 @@ void sorting::schreier_vector_tree(
 		if (f_use_pts_inv) {
 			cout << "i : pts[i] : pts_inv[i] : prev[i]" << endl;
 			for (i = 0; i < n; i++) {
-				cout << i << " : " << pts[i] << " : " << pts_inv[i] << " : " << prev[i] << endl;
+				cout << i << " : " << pts[i] << " : "
+						<< pts_inv[i] << " : " << prev[i] << endl;
 			}
 		}
 		else {
@@ -2950,21 +2952,22 @@ void sorting::schreier_vector_tree(
 	}
 
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree "
+		cout << "sorting::make_layered_graph_for_schreier_vector_tree "
 				"before schreier_vector_compute_depth_and_ancestor" << endl;
 	}
 	schreier_vector_compute_depth_and_ancestor(
 		n, pts, prev, f_use_pts_inv, pts_inv,
 		depth, ancestor, verbose_level - 2);
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree "
+		cout << "sorting::make_layered_graph_for_schreier_vector_tree "
 				"after schreier_vector_compute_depth_and_ancestor" << endl;
 	}
 
 	if (f_vv) {
 		cout << "i : pts[i] : prev[i] : depth[i]" << endl;
 		for (i = 0; i < n; i++) {
-			cout << i << " : " << pts[i] << " : " << prev[i] << " : " << depth[i] << endl;
+			cout << i << " : " << pts[i] << " : "
+					<< prev[i] << " : " << depth[i] << endl;
 		}
 	}
 
@@ -2975,8 +2978,8 @@ void sorting::schreier_vector_tree(
 		}
 		else {
 			if (ancestor[i] != r) {
-				cout << "sorting::schreier_vector_tree "
-						"the tree is not a tree but a forest" << endl;
+				cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+						"the tree has multiple roots. That is not allowed." << endl;
 				exit(1);
 			}
 		}
@@ -2996,7 +2999,8 @@ void sorting::schreier_vector_tree(
 	SoS->sort_all(verbose_level - 2);
 
 	if (f_vv) {
-		cout << "sorting::schreier_vector_tree SoS=" << endl;
+		cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+				"SoS=" << endl;
 		SoS->print_table();
 	}
 
@@ -3008,7 +3012,8 @@ void sorting::schreier_vector_tree(
 		Sz[i] = SoS->Set_size[i];
 	}
 
-	LG->init(C.nb_types /* nb_layers */, Sz /* int *Nb_nodes_layer */,
+	LG->init(
+			C.nb_types /* nb_layers */, Sz /* int *Nb_nodes_layer */,
 			fname_base, verbose_level);
 
 	FREE_int(Sz);
@@ -3019,14 +3024,16 @@ void sorting::schreier_vector_tree(
 	for (i = 0; i < n; i++) {
 
 		if (f_vv) {
-			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << endl;
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"i=" << i << " / " << n << endl;
 		}
 		pos2 = i;
 		if (depth[i] == 0) {
 			continue;
 		}
 		if (f_vv) {
-			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << " pos2=" << pos2 << endl;
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"i=" << i << " / " << n << " pos2=" << pos2 << endl;
 		}
 
 		if (f_use_pts_inv) {
@@ -3039,22 +3046,29 @@ void sorting::schreier_vector_tree(
 			int pt;
 
 			pt = prev[i];
-			if (!int_vec_search(pts, n, pt, pos1)) {
-				cout << "sorting::schreier_vector_tree cannot find point pt" << endl;
+			if (!int_vec_search(
+					pts, n, pt, pos1)) {
+				cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+						"cannot find point pt" << endl;
 				exit(1);
 			}
 		}
 		if (f_vv) {
-			cout << "sorting::schreier_vector_tree i=" << i << " / " << n << " pos2=" << pos2 << " pos1=" << pos1 << endl;
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"i=" << i << " / " << n << " pos2=" << pos2 << " pos1=" << pos1 << endl;
 		}
 		d1 = depth[pos1];
 		d2 = depth[pos2];
-		if (!lint_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
-			cout << "sorting::schreier_vector_tree cannot find point pos1" << endl;
+		if (!lint_vec_search(
+				SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"cannot find point pos1" << endl;
 			exit(1);
 		}
-		if (!lint_vec_search(SoS->Sets[d2], SoS->Set_size[d2], pos2, n2, 0)) {
-			cout << "sorting::schreier_vector_tree cannot find point pos2" << endl;
+		if (!lint_vec_search(
+				SoS->Sets[d2], SoS->Set_size[d2], pos2, n2, 0)) {
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"cannot find point pos2" << endl;
 			exit(1);
 		}
 		LG->add_edge(d1, n1, d2, n2, 0 /*verbose_level*/);
@@ -3063,47 +3077,24 @@ void sorting::schreier_vector_tree(
 	for (i = 0; i < n; i++) {
 		pos1 = i;
 		d1 = depth[pos1];
-		if (!lint_vec_search(SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
-			cout << "sorting::schreier_vector_tree cannot find point pos1" << endl;
+		if (!lint_vec_search(
+				SoS->Sets[d1], SoS->Set_size[d1], pos1, n1, 0)) {
+			cout << "sorting::make_layered_graph_for_schreier_vector_tree "
+					"cannot find point pos1" << endl;
 			exit(1);
 		}
-		LG->add_node_data1(d1, n1, pts[pos1], 0/*verbose_level*/);
+		LG->add_node_data1(
+				d1, n1, pts[pos1], 0/*verbose_level*/);
 	}
 
 	FREE_int(depth);
 	FREE_int(ancestor);
 	FREE_OBJECT(SoS);
 
-	if (f_v) {
-		cout << "sorting::schreier_vector_tree before LG->place" << endl;
-	}
-	LG->place_with_y_stretch(0.5, verbose_level);
-	if (f_v) {
-		cout << "sorting::schreier_vector_tree after LG->place" << endl;
-	}
-	if (f_v) {
-		cout << "sorting::schreier_vector_tree before LG->create_spanning_tree" << endl;
-	}
-	LG->create_spanning_tree(
-			true /* f_place_x */, verbose_level);
-	if (f_v) {
-		cout << "sorting::schreier_vector_tree after LG->create_spanning_tree" << endl;
-	}
-
-
-	string fname;
-
-	fname = fname_base + ".layered_graph";
-
-
-
-	LG->write_file(fname, 0 /*verbose_level*/);
-	LG->draw_with_options(fname_base, LG_Draw_options,
-			0 /* verbose_level */);
 
 
 	if (f_v) {
-		cout << "sorting::schreier_vector_tree done" << endl;
+		cout << "sorting::make_layered_graph_for_schreier_vector_tree done" << endl;
 	}
 
 }

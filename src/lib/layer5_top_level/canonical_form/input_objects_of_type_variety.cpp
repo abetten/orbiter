@@ -135,6 +135,9 @@ void input_objects_of_type_variety::init_direct(
 	if (f_v) {
 		cout << "input_objects_of_type_variety::init_direct" << endl;
 	}
+	if (f_v) {
+		cout << "input_objects_of_type_variety::init_direct nb_input_Vo = " << nb_input_Vo << endl;
+	}
 
 	nb_objects_to_test = nb_input_Vo;
 
@@ -147,6 +150,11 @@ void input_objects_of_type_variety::init_direct(
 
 	for (i = 0; i < nb_objects_to_test; i++) {
 		Vo[i] = Input_Vo + i;
+
+		if (f_v) {
+			cout << "input_objects_of_type_variety::init_direct i = " << i << " / " << nb_objects_to_test << ", Variety_object = ";
+			Vo[i]->Variety_object->print(cout);
+		}
 	}
 
 	if (f_v) {

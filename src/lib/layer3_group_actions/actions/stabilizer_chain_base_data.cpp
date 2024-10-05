@@ -99,7 +99,7 @@ void stabilizer_chain_base_data::allocate_base_data(
 	}
 	if (f_has_base) {
 		free_base_data();
-		}
+	}
 	f_has_base = true;
 
 	stabilizer_chain_base_data::A = A;
@@ -190,7 +190,7 @@ void stabilizer_chain_base_data::reallocate_base(
 		for (j = 0; j < A->degree; j++) {
 			orbit[base_len][j] = -1;
 			orbit_inv[base_len][j] = -1;
-			}
+		}
 		base_len++;
 		if (f_v) {
 			cout << "stabilizer_chain_base_data::reallocate_base step5" << endl;
@@ -213,6 +213,111 @@ void stabilizer_chain_base_data::reallocate_base(
 		cout << "stabilizer_chain_base_data::reallocate_base done" << endl;
 	}
 }
+
+void stabilizer_chain_base_data::init_base_from_sims_after_shortening(
+		actions::action *A,
+		groups::sims *Sims, int verbose_level)
+// calls from action_global::init_subgroup_from_strong_generators
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening" << endl;
+	}
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"A->label = " << A->label << endl;
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"base length " << base_len << endl;
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"A->degree = " << A->degree << endl;
+		//G->print(true);
+	}
+	if (Sims->A->degree >= STABILIZER_CHAIN_DATA_MAX_DEGREE) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"Sims->A->degree >= STABILIZER_CHAIN_DATA_MAX_DEGREE" << endl;
+		exit(1);
+	}
+
+
+	std::vector<int> base_orbit_idx;
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"before Sims->get_non_trivial_base_orbits" << endl;
+	}
+	Sims->get_non_trivial_base_orbits(
+			base_orbit_idx, verbose_level);
+	//Sims->get_all_base_orbits(
+	//		base_orbit_idx, verbose_level);
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+				"after Sims->get_non_trivial_base_orbits" << endl;
+	}
+
+	int shortened_base_length;
+	int i, j, idx, k, a;
+
+	shortened_base_length = base_orbit_idx.size();
+
+	f_has_base = true;
+
+	stabilizer_chain_base_data::A = A; // the new A
+	stabilizer_chain_base_data::base_len = shortened_base_length;
+
+	base = NEW_lint(shortened_base_length);
+	transversal_length = NEW_int(shortened_base_length);
+	path = NEW_int(shortened_base_length);
+
+	orbit = NEW_plint(base_len);
+	orbit_inv = NEW_plint(base_len);
+	for (i = 0; i < shortened_base_length; i++) {
+		idx = base_orbit_idx[i];
+		base[i] = Sims->A->base_i(idx);
+		orbit[i] = NEW_lint(Sims->A->degree);
+		orbit_inv[i] = NEW_lint(Sims->A->degree);
+		for (j = 0; j < Sims->A->degree; j++) {
+			orbit[i][j] = -1;
+			orbit_inv[i][j] = -1;
+		}
+	}
+
+	for (i = 0; i < base_len; i++) {
+		idx = base_orbit_idx[i];
+		k = Sims->get_orbit_length(idx);
+		transversal_length[i] = k;
+		for (j = 0; j < k; j++) {
+			a = Sims->get_orbit(idx, j);
+			if (a >= Sims->A->degree) {
+				cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening "
+						"initializing orbit " << i << " / " << base_len
+						<< " of length " << transversal_length[i] << endl;
+				cout << "a >= Sims->A->degree" << endl;
+				cout << "a=" << a << endl;
+				cout << "Sims->A->degree=" << Sims->A->degree << endl;
+				cout << "level i=" << i << endl;
+				cout << "coset j=" << j << endl;
+				exit(1);
+			}
+			orbit[i][j] = a;
+			orbit_inv[i][a] = j;
+		}
+		for (j = 0; j < Sims->A->degree; j++) {
+			if (orbit_inv[i][j] == -1) {
+				//cout << "adding " << j << " : k=" << k << endl;
+				orbit[i][k] = j;
+				orbit_inv[i][j] = k;
+				k++;
+			}
+		}
+	}
+
+
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::init_base_from_sims_after_shortening done" << endl;
+	}
+}
+
 
 void stabilizer_chain_base_data::init_base_from_sims(
 		groups::sims *G, int verbose_level)
@@ -331,6 +436,12 @@ void stabilizer_chain_base_data::init_base_from_sims(
 actions::action *stabilizer_chain_base_data::get_A()
 {
 	return A;
+}
+
+void stabilizer_chain_base_data::set_A(
+		actions::action *A)
+{
+	stabilizer_chain_base_data::A = A;
 }
 
 int &stabilizer_chain_base_data::get_f_has_base()
@@ -500,7 +611,19 @@ void stabilizer_chain_base_data::init_linear_matrix_group(
 	}
 }
 
+void stabilizer_chain_base_data::report_basic_orbits(
+		std::ostream &ost)
+{
+	int i;
 
+	ost << "The base has length " << base_len << "\\\\" << endl;
+	ost << "The basic orbits are: \\\\" << endl;
+	for (i = 0; i < base_len; i++) {
+		ost << "Basic orbit " << i << " is orbit of " << base_i(i)
+			<< " of length " << transversal_length_i(i) << "\\\\" << endl;
+	}
+
+}
 }}}
 
 

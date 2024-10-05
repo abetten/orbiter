@@ -1569,6 +1569,7 @@ void linear_group::init_subgroup_Janko1(
 	}
 }
 
+#if 0
 void linear_group::report(
 		std::ostream &ost,
 		int f_sylow, int f_group_table,
@@ -1856,10 +1857,10 @@ void linear_group::report(
 	FREE_int(Elt);
 
 }
-
-
+#endif
+#if 0
 void linear_group::create_latex_report(
-		graphics::layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int f_sylow, int f_group_table, //int f_classes,
 		int verbose_level)
 {
@@ -1899,12 +1900,36 @@ void linear_group::create_latex_report(
 			if (f_v) {
 				cout << "linear_group::create_latex_report before report" << endl;
 			}
+#if 0
 			report(
 					ost,
 					f_sylow, f_group_table,
 					//f_classes,
-					O,
+					LG_Draw_options,
 					verbose_level);
+#endif
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "linear_group::create_latex_report "
+						"before Action_global.report" << endl;
+			}
+			Action_global.report(
+					ost,
+					A2,
+					Strong_gens,
+					f_sylow, f_group_table,
+					LG_Draw_options,
+					verbose_level);
+			if (f_v) {
+				cout << "linear_group::create_latex_report "
+						"after Action_global.report" << endl;
+			}
+
+
+
 			if (f_v) {
 				cout << "linear_group::create_latex_report after report" << endl;
 			}
@@ -1926,6 +1951,7 @@ void linear_group::create_latex_report(
 		cout << "linear_group::create_latex_report done" << endl;
 	}
 }
+#endif
 
 }}}
 

@@ -49,11 +49,11 @@ SANDBOX_PATH=$(ORBITER_PATH)/src/apps/sandbox
 
 update:
 	cd $(ORBITER_PATH); make clean;
-	cd $(MY_PATH); make cleana; git pull; make 
+	cd $(ORBITER_PATH); make cleana; git pull; make 
 
 
 update_all:
-	cd $(MY_PATH); make clean; git pull; make 
+	cd $(ORBITER_PATH); make clean; git pull; make 
 
 
 sandbox:
@@ -462,7 +462,7 @@ PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
 
 
 
-# Section 6.8 Linear groups, advanced topics
+# Section 6.8 Group theory, advanced topics
 
 
 
@@ -531,6 +531,25 @@ Ree_gen1="21,5,1,6,17,1,1, 3,13,5,21,6,6,18, 21,3,21,21,22,6,14, \
 Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
 9,7,2,15,17,5,11, 3,3,6,21,4,24,16, 25,8,6,24,21,12,7, \
 24,15,2,13,11,14,24"
+
+
+HIGMAN_SIMS_GENS="0, 1, 2, 3, 4, 5, 10, 16, 17, 19, 6, 11, 18, 20, 21, 22, 7, 8, 12, 9, 13, 14, 15, 23, 27, 26, 25, 24, 30, 31, 28, 29, 33, 32, 35, 34, 36, 37, 38, 39, 41, 40, 43, 42, 44, 45, 46, 47, 50, 51, 48, 49, 55, 54, 53, 52, 57, 56, 59, 58, 63, 62, 61, 60, 65, 64, 67, 66, 70, 71, 68, 69, 72, 73, 74, 75, 79, 78, 77, 76, 83, 82, 81, 80, 89, 95, 99, 94, 97, 84, 92, 96, 90, 98, 87, 85, 91, 88, 93, 86,\
+0, 1, 2, 3, 4, 5, 22, 21, 20, 18, 15, 11, 19, 17, 16, 10, 14, 13, 9, 12, 8, 7, 6, 23, 26, 27, 24, 25, 30, 31, 28, 29, 32, 33, 34, 35, 38, 39, 36, 37, 42, 43, 40, 41, 45, 44, 47, 46, 50, 51, 48, 49, 54, 55, 52, 53, 56, 57, 58, 59, 62, 63, 60, 61, 66, 67, 64, 65, 68, 69, 70, 71, 74, 75, 72, 73, 77, 76, 79, 78, 83, 82, 81, 80, 86, 96, 84, 93, 92, 99, 97, 95, 88, 87, 98, 91, 85, 90, 94, 89,\
+0, 1, 2, 3, 4, 5, 12, 8, 7, 15, 18, 11, 6, 14, 13, 9, 17, 16, 10, 22, 21, 20, 19, 23, 24, 25, 26, 27, 31, 30, 29, 28, 35, 34, 33, 32, 38, 39, 36, 37, 41, 40, 43, 42, 46, 47, 44, 45, 50, 51, 48, 49, 53, 52, 55, 54, 59, 58, 57, 56, 61, 60, 63, 62, 65, 64, 67, 66, 68, 69, 70, 71, 73, 72, 75, 74, 76, 77, 78, 79, 81, 80, 83, 82, 95, 89, 91, 92, 93, 85, 94, 86, 87, 88, 90, 84, 99, 98, 97, 96,\
+0, 1, 2, 3, 4, 5, 20, 19, 22, 16, 13, 11, 21, 10, 18, 17, 9, 15, 14, 7, 6, 12, 8, 23, 26, 27, 24, 25, 28, 29, 30, 31, 34, 35, 32, 33, 39, 38, 37, 36, 41, 40, 43, 42, 46, 47, 44, 45, 49, 48, 51, 50, 52, 53, 54, 55, 57, 56, 59, 58, 63, 62, 61, 60, 66, 67, 64, 65, 69, 68, 71, 70, 74, 75, 72, 73, 76, 77, 78, 79, 82, 83, 80, 81, 88, 98, 92, 91, 84, 97, 99, 87, 86, 95, 96, 93, 94, 89, 85, 90,\
+0, 1, 2, 3, 11, 4, 9, 14, 15, 22, 17, 5, 13, 20, 19, 21, 10, 16, 18, 7, 12, 8, 6, 23, 25, 26, 24, 27, 31, 29, 28, 30, 36, 37, 38, 39, 42, 43, 40, 41, 34, 35, 32, 33, 47, 44, 46, 45, 58, 59, 56, 57, 50, 51, 48, 49, 52, 53, 54, 55, 66, 67, 64, 65, 70, 71, 68, 69, 60, 61, 62, 63, 78, 79, 76, 77, 81, 80, 83, 82, 75, 74, 73, 72, 85, 96, 86, 94, 91, 97, 98, 93, 89, 88, 99, 90, 84, 92, 95, 87,\
+0, 1, 2, 8, 6, 7, 22, 21, 20, 15, 18, 12, 19, 9, 14, 13, 16, 10, 17, 11, 3, 5, 4, 24, 26, 25, 23, 27, 30, 37, 34, 43, 32, 40, 28, 36, 38, 41, 35, 31, 42, 29, 33, 39, 54, 51, 47, 57, 56, 44, 48, 52, 45, 55, 49, 58, 50, 46, 53, 59, 86, 88, 72, 64, 92, 95, 61, 81, 77, 69, 90, 94, 84, 87, 60, 80, 68, 76, 89, 85, 93, 91, 65, 73, 62, 99, 74, 83, 66, 96, 97, 67, 63, 75, 98, 82, 78, 70, 71, 79,\
+0, 1, 2, 4, 3, 11, 17, 18, 10, 22, 7, 5, 16, 21, 20, 19, 6, 12, 8, 9, 13, 14, 15, 23, 27, 26, 25, 24, 35, 34, 33, 32, 28, 29, 30, 31, 42, 41, 43, 40, 37, 39, 38, 36, 49, 48, 51, 50, 47, 46, 45, 44, 56, 59, 57, 58, 53, 55, 54, 52, 62, 63, 61, 60, 72, 73, 74, 75, 78, 79, 77, 76, 65, 64, 67, 66, 71, 70, 68, 69, 82, 83, 81, 80, 90, 92, 99, 85, 97, 87, 95, 96, 89, 98, 84, 94, 86, 93, 88, 91,\
+0, 1, 13, 21, 5, 6, 8, 3, 10, 20, 4, 18, 22, 7, 16, 11, 19, 17, 12, 9, 14, 2, 15, 40, 30, 39, 25, 35, 37, 31, 33, 26, 43, 23, 41, 42, 34, 27, 38, 29, 24, 32, 28, 36, 51, 67, 93, 97, 81, 71, 74, 55, 88, 56, 89, 60, 90, 79, 46, 96, 69, 83, 53, 75, 95, 62, 98, 58, 86, 44, 76, 87, 72, 68, 80, 52, 54, 70, 82, 73, 64, 84, 85, 48, 61, 92, 57, 47, 94, 77, 65, 66, 99, 45, 63, 50, 91, 49, 59, 78,\
+0, 17, 8, 13, 7, 15, 9, 3, 19, 6, 12, 18, 2, 4, 5, 10, 22, 20, 16, 14, 21, 11, 1, 90, 47, 72, 37, 92, 97, 71, 35, 56, 42, 65, 87, 49, 85, 82, 27, 62, 78, 53, 28, 99, 81, 30, 51, 88, 94, 69, 24, 77, 86, 57, 43, 61, 34, 95, 64, 54, 60, 55, 39, 93, 96, 46, 40, 79, 25, 67, 89, 74, 91, 45, 33, 80, 58, 29, 84, 73, 70, 48, 98, 38, 31, 52, 36, 66, 75, 50, 63, 44, 26, 23, 68, 59, 32, 76, 83, 41,\
+0, 7, 20, 3, 5, 8, 16, 13, 1, 17, 19, 21, 11, 14, 4, 2, 12, 15, 9, 6, 22, 10, 18, 69, 39, 49, 84, 91, 45, 60, 29, 65, 73, 55, 42, 80, 87, 33, 58, 93, 94, 77, 90, 24, 63, 46, 66, 28, 52, 74, 82, 41, 92, 57, 34, 88, 98, 26, 97, 76, 71, 23, 70, 68, 31, 67, 62, 44, 64, 30, 47, 61, 43, 81, 54, 72, 83, 40, 53, 75, 51, 37, 86, 95, 96, 78, 27, 89, 32, 59, 25, 56, 38, 79, 35, 36, 85, 99, 50, 48,\
+51, 42, 91, 70, 85, 66, 82, 38, 21, 84, 4, 36, 2, 29, 65, 80, 28, 68, 13, 8, 41, 16, 99, 9, 44, 7, 64, 79, 5, 88, 76, 59, 17, 63, 67, 57, 61, 98, 46, 1, 89, 48, 22, 95, 32, 15, 56, 37, 30, 12, 23, 83, 20, 27, 40, 72, 19, 62, 71, 54, 18, 26, 39, 77, 93, 49, 10, 92, 24, 87, 35, 3, 33, 55, 14, 43, 45, 69, 6, 74, 11, 53, 90, 73, 60, 25, 31, 94, 86, 50, 97, 47, 58, 52, 75, 0, 81, 78, 96, 34,\
+40, 77, 78, 21, 91, 6, 50, 63, 49, 45, 99, 92, 61, 1, 5, 47, 13, 18, 94, 66, 65, 59, 57, 44, 4, 41, 11, 46, 98, 53, 31, 97, 71, 19, 7, 27, 22, 70, 8, 25, 28, 52, 85, 89, 69, 93, 26, 95, 9, 54, 15, 30, 88, 84, 68, 24, 29, 17, 16, 55, 37, 83, 62, 51, 67, 58, 75, 33, 87, 86, 76, 0, 64, 56, 32, 72, 12, 20, 79, 23, 80, 36, 48, 60, 10, 82, 2, 90, 43, 39, 38, 3, 96, 42, 81, 14, 35, 34, 74, 73"
+
+
+HIGMAN_SIMS_NB_GENS=12
+
+HIGMAN_SIMS_GO=44352000
 
 
 
@@ -2166,7 +2185,7 @@ symbolic_poly2:
 			-text "X*Y*X"\
 		-end
 	pdflatex sajeeb_tree0.tex
-	open sajeeb_tree0.pdf
+	$(OPEN) sajeeb_tree0.pdf
 
 
 symbolic_CRC32:
@@ -2991,8 +3010,8 @@ F_3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 3 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	#pdflatex GF_3.tex
-	#$(OPEN) GF_3.pdf
+	pdflatex GF_3.tex
+	$(OPEN) GF_3.pdf
 
 F_5:
 	$(ORBITER) -v 3 \
@@ -3246,9 +3265,9 @@ F_4489:
 	$(ORBITER) -v 4 \
 		-define F -finite_field -q 4489 -without_tables -end \
 
-
 # ToDo error message 
 #finite_field::alpha_power !f_has_table
+
 
 F_2_power_24:
 	$(ORBITER) -v 4 \
@@ -3459,8 +3478,8 @@ F_64_over_F8_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
 	$(OPEN) F64_over_F8_draw.bmp
-	#pdflatex field_reduction_Q64_q8_8_8.tex
-	#$(OPEN) field_reduction_Q64_q8_8_8.pdf
+	pdflatex field_reduction_Q64_q8_8_8.tex
+	$(OPEN) field_reduction_Q64_q8_8_8.pdf
 
 
 F_64_over_F4_field_reduction:
@@ -3475,8 +3494,8 @@ F_64_over_F4_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
 	$(OPEN) F64_over_F4_draw.bmp
-	#pdflatex field_reduction_Q64_q4_8_8.tex
-	#$(OPEN) field_reduction_Q64_q4_8_8.pdf
+	pdflatex field_reduction_Q64_q4_8_8.tex
+	$(OPEN) field_reduction_Q64_q4_8_8.pdf
 
 
 F_64_over_F2_field_reduction:
@@ -3491,8 +3510,8 @@ F_64_over_F2_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6" -end
 	$(OPEN) F64_over_F2_draw.bmp
-	#pdflatex field_reduction_Q64_q2_8_8.tex
-	#$(OPEN) field_reduction_Q64_q2_8_8.pdf
+	pdflatex field_reduction_Q64_q2_8_8.tex
+	$(OPEN) field_reduction_Q64_q2_8_8.pdf
 
 
 
@@ -3525,10 +3544,9 @@ F_1024_vandermonde:
 		-with F -do -finite_field_activity \
 			-Vandermonde_matrix \
 		-end
-	#rm Vandermonde_1024.csv
-	#rm Vandermonde_inv_1024.csv
+	rm Vandermonde_q1024.csv
+	rm Vandermonde_q1024_inv.csv
 
-#User time: 0:46
 
 
 
@@ -6623,6 +6641,7 @@ test_6_2:
 	make PSP_6_2
 	make PGO_7_2
 	make NullPolarity_6_2
+	make M24_matrix_group
 
 
 PGL_2_3:
@@ -7017,6 +7036,23 @@ NullPolarity_6_2:
 	$(OPEN) PGL_6_2_NullPolarity_6_2_report.pdf
 
 # group order 23040, acting on 63 points
+
+
+M24_matrix_group:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_12_2_Subgroup_M24_244823040_report.tex
+	$(OPEN) PGL_12_2_Subgroup_M24_244823040_report.pdf
+
+# see also Section 10.3
 
 
 
@@ -7429,6 +7465,8 @@ test_6_4:
 	make PGL_4_2_wd
 	make PGL_5_3_wd
 	make PGL_4_2_wd_reverse
+	make M24_perm_group
+	make M22_bar
 
 
 
@@ -7898,8 +7936,64 @@ PGL_4_2_wd_reverse:
 		-end
 
 
+M24_perm_group:
+	$(ORBITER) -v 2 \
+		-define v -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group -from G -restricted_action v \\_on\\_code -end \
+		-with M24_perm -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_12_2_res_v_report.tex
+	$(OPEN) PGL_12_2_res_v_report.pdf
 
 
+
+# 2 point set stabilizer in M24:
+
+M22_bar:
+	$(ORBITER) -v 2 \
+		-define code -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define Control2 -poset_classification_control \
+			-problem_label M24_pairs -W -depth 2 \
+			-draw_options -embedded -sideways -radius 50 \
+			-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group \
+			-from G -restricted_action code \\_on\\_code \
+		-end \
+		-define M22_perm -modified_group \
+			-from M24_perm \
+			-set_stabilizer 0,1 Control2 \
+		-end \
+		-define pts -set -loop 2 22 1 -end \
+		-define M22 -modified_group \
+			-from M22_perm \
+			-restricted_action pts M22 \
+		-end \
+		-with M22 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_12_2_res_code_res_pts_report.tex
+	$(OPEN) PGL_12_2_res_code_res_pts_report.pdf
+
+
+# M22_bar has order 887040
 
 
 ###############################################################################
@@ -8351,7 +8445,7 @@ Hirschfeld_stab_subgroup_lattice_magma:
 			-subgroup_lattice_magma \
 		-end
 	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
-	open PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf
+	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf
 
 
 PGGL_2_4_classes:
@@ -8453,7 +8547,7 @@ PGL_8_2_classes:
 			-classes \
 		-end
 	pdflatex PGL_8_2_classes_out.tex
-	open PGL_8_2_classes_out.pdf
+	$(OPEN) PGL_8_2_classes_out.pdf
 
 
 	#$(MAGMA_PATH)magma PGL_8_2_classes.magma
@@ -8786,16 +8880,21 @@ Edge_qurve_q17_canonical_image:
 
 
 ###############################################################################
-# Section 6.8: Linear Groups, Advanced Topics
+# Section 6.8: Group Theory, Advanced Topics
 
 
-SECTION_LINEAR_GROUPS_ADVANCED_TOPICS:
+SECTION_GROUP_THEORY_ADVANCED_TOPICS:
 
 test_6_8:
 	make U_3_3
 	make PGL_2_3_group_table
 	make Co3
 	#make Ree_27
+	make Higman_Sims_group
+	make Higman_Sims_group_classes
+	make Higman_Sims_group_subgroup_lattice
+	make Higman_Sims_subgroup_176a
+	make Higman_Sims_subgroup_176b
 
 
 U_3_3:
@@ -8882,6 +8981,94 @@ Ree_27:
 
 
 
+Higman_Sims_group:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_100_Subgroup_HS_44352000_report.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_report.pdf
+
+
+Higman_Sims_group_classes:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	pdflatex Sym_100_Subgroup_HS_44352000_classes_out.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_classes_out.pdf
+
+
+Higman_Sims_group_subgroup_lattice:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end
+
+
+Higman_Sims_subgroup_176a:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define G176a -modified_group -from G \
+			-subgroup_by_lattice 585 \
+		-end \
+		-with G176a -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.pdf
+
+
+# group order 252000
+
+
+Higman_Sims_subgroup_176b:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define G176b -modified_group -from G \
+			-subgroup_by_lattice 586 \
+		-end \
+		-with G176b -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.pdf
 
 
 ###############################################################################
@@ -8922,7 +9109,7 @@ test_7_1:
 	make T4r1_orbits
 	make T4r1_orbits_draw
 	make T4r1_orbits_4
-	make PGGL_2_8_on_conic_orbits
+	#make PGGL_2_8_on_conic_orbits
 	make PGGL_7_8_orbits
 
 
@@ -10333,10 +10520,10 @@ SECTION_CUBIC_CURVES:
 test_7_7:
 	make cubic_curves_PG_2_4
 	make poly_orbits_q4
-	make cubic_curves_PG_2_9
-	make cubic_curves_PG_2_9_draw
+	#make cubic_curves_PG_2_9
+	#make cubic_curves_PG_2_9_draw
 	make curve_orbit_mini
-	make curve_orbit
+	#make curve_orbit # too slow
 
 
 
@@ -10827,7 +11014,7 @@ test_8_3:
 	#make F13_128c
 	make move_two_lines
 	make surface_F_abcd_Eckardt_q31_by_symbolic_object_report
-	make surface_F_abcd_Eckardt_q31_by_equation_report
+	#make surface_F_abcd_Eckardt_q31_by_equation_report
 	#make surface_F_abcd_sweep_4_27_q7
 	make surface_11_random_report
 	make surface_11_1
@@ -11577,6 +11764,8 @@ test_8_4:
 # toDo: 
 #surface_repository::report_surface before SO->print_axes orbit_index = 0
 
+#surface_repository::report_surface before SO->print_axes orbit_index = 0
+#orbiter.out(53675,0x1f3bf8c00) malloc: *** error for object 0x600003d28130: pointer being freed was not allocated
 
 
 surface_classify_q4:
@@ -12113,7 +12302,7 @@ quartic_curve_q9_1:
 
 
 quartic_curve_q13_f1_from_variety:
-	$(ORBITER) -v 6 \
+	$(ORBITER) -v 10 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define R -polynomial_ring \
@@ -12141,7 +12330,7 @@ quartic_curve_q13_f1_from_variety:
 				-report \
 			-end
 	pdflatex quartic_curve_V_q13_f1_report.tex
-	open quartic_curve_V_q13_f1_report.pdf
+	$(OPEN) quartic_curve_V_q13_f1_report.pdf
 
 
 
@@ -12970,10 +13159,11 @@ RSA_e4:
 #-RSA_encrypt_text 583 62251979 venividivici
 #40513610,53979973,56449676,35068535
 
+
+
 RSA_d4:
 	$(ORBITER) -v 2 \
-		-RSA 32559247 62251979 "40513610,53979973,56449676,35068535"
-
+		-RSA 32559247 62251979 4 "40513610,53979973,56449676,35068535"
 
 
 ######
@@ -12996,12 +13186,12 @@ RSA_e5:
 
 RSA_d5:
 	$(ORBITER) -v 2 \
-		-RSA 173 52518863 "31526751,8962078,51045732,51894467"
+		-RSA 173 52518863 5 "31526751,8962078,51045732,51894467"
 
 
 RSA_d6:
 	$(ORBITER) -v 2 \
-		-RSA 47177497 55040413 "28702119,48926559"
+		-RSA 47177497 55040413 6 "28702119,48926559"
 
 
 smooth:
@@ -13278,7 +13468,7 @@ test_10_1:
 
 
 Allen_Gates_noise_1_percent:
-	cp $(MY_PATH)/examples/users_guide/allen_Gates.bmp .
+	cp $(ORBITER_PATH)/examples/users_guide/allen_Gates.bmp .
 	$(ORBITER) -v 3 \
 		-random_noise_in_bitmap_file \
 		allen_Gates.bmp \
@@ -13391,7 +13581,6 @@ SECTION_CODING_THEORY_LINEAR_CODES:
 test_10_2:
 	make RM_3_1
 	make code_6
-	make Hamming_generator
 	make simplex_code
 	make Hamming_generator
 	make Hamming_code
@@ -13424,8 +13613,8 @@ RM_3_1:
 		-with C -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex RM_3_code_n8_k4_q2.tex
-	$(OPEN) RM_3_code_n8_k4_q2.pdf
+	pdflatex RM_m3_code_n8_k4_q2.tex
+	$(OPEN) RM_m3_code_n8_k4_q2.pdf
 
 
 code_6:
@@ -13484,8 +13673,8 @@ Hamming_generator:
 		-finite_field_activity \
 			-nullspace v \
 		-end
-	pdflatex nullspace_3_7.tex
-	$(OPEN) nullspace_3_7.pdf
+	pdflatex v_nullspace.tex
+	$(OPEN) v_nullspace.pdf
 
 # basis in binary:
 # 67,37,22,15
@@ -13703,7 +13892,6 @@ code_Hamming_systematic:
 # 0 0 0 1 1 1 1 = 15
 
 
-# ToDo
 
 Hamming_RREF:
 	$(ORBITER) -v 2 \
@@ -13715,8 +13903,8 @@ Hamming_RREF:
 		-finite_field_activity \
 			-RREF v \
 		-end
-	pdflatex rref_m4_n7_q2.tex
-	$(OPEN) rref_m4_n7_q2.pdf
+	pdflatex v_rref.tex
+	$(OPEN) v_rref.pdf
 	#pdflatex RREF_example_q2_4_7.tex
 	#gs -sDEVICE=png16 -dFIXEDMEDIA \
 	#	-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
@@ -13735,8 +13923,8 @@ Hamming_nullspace:
 		-finite_field_activity \
 		-nullspace v \
 		-end
-	pdflatex nullspace_4_7.tex
-	$(OPEN) nullspace_4_7.pdf
+	pdflatex v_nullspace.tex
+	$(OPEN) v_nullspace.pdf
 
 
 #check equations of the Hamming code:
@@ -13943,8 +14131,8 @@ M24_2B_restricted:
 			-group_theoretic_activity \
 				-print_elements_tex  \
 		-end
-	pdflatex PGL_12_2_res24_elements.tex
-	$(OPEN) PGL_12_2_res24_elements.pdf
+	pdflatex PGL_12_2_res_v_elements.tex
+	$(OPEN) PGL_12_2_res_v_elements.pdf
 
 # 12 cycles of length 2
 
@@ -14013,6 +14201,11 @@ Golay24_2A_fix_code:
 
 # 112 codewords of weight 12:
 #Golay24_2A_fix_of_weight_12.csv
+#-rw-r--r--  1 betten  staff         79 Oct  5 21:10 Golay24_2A_fix_of_weight_0.csv
+#-rw-r--r--  1 betten  staff       4008 Oct  5 21:10 Golay24_2A_fix_of_weight_8.csv
+#-rw-r--r--  1 betten  staff       6367 Oct  5 21:10 Golay24_2A_fix_of_weight_12.csv
+#-rw-r--r--  1 betten  staff       4052 Oct  5 21:10 Golay24_2A_fix_of_weight_16.csv
+#-rw-r--r--  1 betten  staff         81 Oct  5 21:10 Golay24_2A_fix_of_weight_24.csv
 
 
 Golay24_2B_fix_code:
@@ -14037,15 +14230,18 @@ Golay24_2B_fix_code:
 #1y^{24} + 15x^8y^{16} + 32x^{12}y^{12} + 15x^{16}y^8 + 1x^{24}
 #weight enumerator:
 #( 1, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 32, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 1 )
+#-rw-r--r--  1 betten  staff         79 Oct  5 20:51 Golay24_2B_fix_of_weight_0.csv
+#-rw-r--r--  1 betten  staff        851 Oct  5 20:51 Golay24_2B_fix_of_weight_8.csv
+#-rw-r--r--  1 betten  staff       1802 Oct  5 20:51 Golay24_2B_fix_of_weight_12.csv
+#-rw-r--r--  1 betten  staff        855 Oct  5 20:51 Golay24_2B_fix_of_weight_16.csv
+#-rw-r--r--  1 betten  staff         80 Oct  5 20:51 Golay24_2B_fix_of_weight_24.csv
+
 
 Golay24_2A_fix_weight12:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define v -vector \
-			-load_csv_data_column Golay24_2A_fix_of_weight_12.csv 1 \
-		-end \
-		-define D -design -list_of_blocks_coded \
-			24 12 v \
+		-define D -design -list_of_blocks_from_file \
+			24 Golay24_2A_fix_of_weight_12.csv "codeword" \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -14054,10 +14250,16 @@ Golay24_2A_fix_weight12:
 		-with D -do \
 			-design_activity \
 				-intersection_matrix \
+			-save \
 		-end
 
-#sets_v24_inc.txt
-#sets_v24_AAt.csv
+#		-define v -vector \
+#			-load_csv_data_column Golay24_2A_fix_of_weight_12.csv 2 \
+#		-end \
+# intersection numbers 24 and 28 and 56
+#-rw-r--r--  1 betten  staff       5626 Oct  5 21:02 blocks_v24_k12_inc.txt
+#-rw-r--r--  1 betten  staff       1755 Oct  5 21:02 blocks_v24_k12_AAt.csv
+
 
 
 Golay24_2A_fix_weight12_c:
@@ -14106,6 +14308,8 @@ Golay24_2A_fix_weight12_graph_24:
 	#$(OPEN) _report.pdf
 
 #Degree type: (14^{16},\, 7^8 )
+# go = 416179814400
+
 
 
 ###############################################################################
@@ -16117,11 +16321,11 @@ elementary_symmetric_functions_8:
 
 
 domino_portrait:
-	cp $(MY_PATH)/examples/users_guide/anton_28x32.? .
+	cp $(ORBITER_PATH)/examples/users_guide/anton_28x32.? .
 	$(ORBITER) -v 3 -domino_portrait 7 4 anton_28x32 -end
 
 domino_portrait_input:
-	cp $(MY_PATH)/examples/users_guide/anton_28x32.? .
+	cp $(ORBITER_PATH)/examples/users_guide/anton_28x32.? .
 	$(ORBITER) -v 2 \
 		-define all_one_r -vector -repeat 1 28 -end \
 		-define all_one_c -vector -repeat 1 32 -end \
@@ -17166,6 +17370,7 @@ test_12_1:
 	make Op_4_2_affine_polar_graph
 	make Paulus_1
 	make Paulus_15
+	make Higman_Sims_graph
 
 
 
@@ -17241,7 +17446,7 @@ tritangent_planes_graph:
 trihedral_pair_graph:
 	$(ORBITER) -v 2 \
 		-define Gamma \
-			-graph -trihedral_pair_disjointness_graph \
+			-graph - o \
 		-end
 
 
@@ -17390,8 +17595,85 @@ Paulus_15:
 
 
 
+Higman_Sims_graph:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define code -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define Control2 -poset_classification_control \
+			-problem_label M24_pairs -W -depth 2 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group -from G -restricted_action code \\_on\\_code -end \
+		-define M22_perm -modified_group -from M24_perm \
+			-set_stabilizer 0,1 Control2 \
+		-end \
+		-define pts -set -loop 2 22 1 -end \
+		-define M22 -modified_group -from M22_perm \
+			-restricted_action pts M22 \
+		-end \
+		-with M22 -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label M22 -W -depth 6 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define Orb -orbits -group M22 \
+			-on_subsets 6 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 3 6 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+			-report_options \
+				-draw_poset -type_ordinary \
+			-end \
+		-end \
+		-define D -design -orbit_on_sets \
+			Orb 6 1 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end \
+		-with D -do \
+			-design_activity \
+				-intersection_matrix \
+		-end \
+		-define Control_block_orbits -poset_classification_control \
+			-problem_label M22bar_block_orbits -W -depth 2 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-with D -do \
+			-design_activity \
+				-orbits_on_blocks 2 Control_block_orbits \
+		-end \
+		-with D -do \
+			-design_activity \
+				-one_point_extension 1 Control_block_orbits \
+		-end \
+		-define Gamma -graph \
+			-load_adjacency_matrix_from_csv_and_select_value \
+			blocks_v22_k6_one_pt_ext_orb1.csv 1 \
+		-end
+
+
+
+
 ###############################################################################
-# Section 12.2: Graphs Theoretic Activities
+# Section 12.2: Graph Theoretic Activities
 
 
 SECTION_GRAPH_THEORETIC_ACTIVITIES:
@@ -17794,7 +18076,7 @@ Op_4_2_affine_polar_graph_info:
 			-automorphism_group \
 		-end
 	#pdflatex affine_polar_O_1_4_2_report.tex
-	#open affine_polar_O_1_4_2_report.pdf
+	#$(OPEN) affine_polar_O_1_4_2_report.pdf
 
 
 # 24 cliques in affine_polar_O_1_4_2_solutions.csv
@@ -18197,7 +18479,7 @@ test_13_2:
 	make C5_concatenate
 	make C5_solve
 	make C5_design_classify
-
+	make Witt_design_on_22_points
 
 
 
@@ -18272,6 +18554,7 @@ KM_PGGL_2_32:
 	pdflatex KM_PGGL_2_32_poset_lvl_8.tex
 	$(OPEN) KM_PGGL_2_32_poset_lvl_8.pdf
 	$(OPEN) KM_PGGL_2_32_KM_7_8_draw.bmp
+
 
 KM_PGGL_2_32_solve:
 	$(ORBITER) -v 4 \
@@ -18443,6 +18726,68 @@ C5_design_classify:
 # number 14 has group order 120
 # flag orbits: 15+60
 # anti flag orbits: 60+120
+
+
+
+Witt_design_on_22_points:
+	$(ORBITER) -v 2 \
+		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define code -vector \
+			-dense $(GOLAY_24_CODE_PROJECTIVE) \
+		-end \
+		-define Control2 -poset_classification_control \
+			-problem_label M24_pairs -W -depth 2 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 12 2 \
+		-subgroup_by_generators "M24" "244823040" 12 \
+			$(GOLAY_24_CODE_AUT_GENS) \
+		-end \
+		-define M24_perm -modified_group \
+			-from G -restricted_action code \\_on\\_code \
+		-end \
+		-define M22_perm -modified_group \
+			-from M24_perm \
+			-set_stabilizer 0,1 Control2 \
+		-end \
+		-define pts -set -loop 2 22 1 -end \
+		-define M22 -modified_group -from M22_perm \
+			-restricted_action pts M22 \
+		-end \
+		-with M22 -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-define Control -poset_classification_control \
+			-problem_label M22 -W -depth 6 \
+			-draw_options -embedded -sideways -radius 50 \
+				-scale 0.5 -line_width 0.3 -end \
+		-end \
+		-define Orb -orbits -group M22 \
+			-on_subsets 6 Control \
+		-end \
+		-with Orb -do -orbits_activity \
+			-Kramer_Mesner_matrix 3 6 \
+		-end \
+		-with Orb -do -orbits_activity \
+			-report \
+			-report_options \
+				-draw_poset -type_ordinary \
+			-end \
+		-end \
+		-define D -design -orbit_on_sets \
+			Orb 6 1 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_inc \
+		-end \
+		-with D -do \
+			-design_activity \
+				-intersection_matrix \
+		-end
 
 
 
@@ -23420,7 +23765,7 @@ Aut_Sym_6_group:
 			-report \
 		-end
 	pdflatex AutSym6_report.tex
-	open AutSym6_report.pdf
+	$(OPEN) AutSym6_report.pdf
 
 
 Aut_Sym_6_subgroup_lattice:
@@ -23465,9 +23810,9 @@ Aut_Sym_6_subgroup_lattice_load_and_draw:
 			-subgroup_lattice_draw_by_orbits \
 		-end
 	#pdflatex AutSym6_drawing.tex
-	#open AutSym6_drawing.pdf
+	#$(OPEN) AutSym6_drawing.pdf
 	pdflatex AutSym6_drawing_by_orbits.tex
-	open AutSym6_drawing_by_orbits.pdf
+	$(OPEN) AutSym6_drawing_by_orbits.pdf
 
 
 

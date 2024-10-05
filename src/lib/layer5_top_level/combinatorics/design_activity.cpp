@@ -124,11 +124,11 @@ void design_activity::perform_activity(
 					"f_intersection_matrix" << endl;
 		}
 
-		int f_save = false;
+		//int f_save = false;
 
 		do_intersection_matrix(
 				DC,
-				f_save,
+				Descr->f_save,
 				verbose_level);
 	}
 	else if (Descr->f_export_blocks) {

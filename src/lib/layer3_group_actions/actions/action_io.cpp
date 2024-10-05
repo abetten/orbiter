@@ -140,6 +140,7 @@ void action::report(
 
 	if (Stabilizer_chain) {
 		if (base_len()) {
+			ost << "action::report\\\\" << endl;
 			ost << "Base: $";
 			Lint_vec_print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
@@ -464,15 +465,20 @@ void action::print_info()
 void action::report_basic_orbits(
 		std::ostream &ost)
 {
-	int i;
 
 	if (Stabilizer_chain) {
+#if 0
+		int i;
 		ost << "The base has length " << base_len() << "\\\\" << endl;
 		ost << "The basic orbits are: \\\\" << endl;
 		for (i = 0; i < base_len(); i++) {
 			ost << "Basic orbit " << i << " is orbit of " << base_i(i)
 				<< " of length " << transversal_length_i(i) << "\\\\" << endl;
 		}
+#endif
+		Stabilizer_chain->report_basic_orbits(
+				ost);
+
 	}
 	else {
 		cout << "action " << label << " does not have a base" << endl;
@@ -481,6 +487,9 @@ void action::report_basic_orbits(
 
 void action::print_base()
 {
+
+	print_base(cout);
+#if 0
 	if (Stabilizer_chain) {
 		cout << "action " << label << " has base ";
 		Lint_vec_print(cout, get_base(), base_len());
@@ -491,7 +500,30 @@ void action::print_base()
 	else {
 		cout << "action " << label << " does not have a base" << endl;
 	}
+#endif
 }
+
+void action::print_base(
+		std::ostream &ost)
+{
+	if (Stabilizer_chain) {
+		int i;
+
+		ost << "base: ";
+		for (i = 0; i < base_len(); i++) {
+			ost << ", " << base_i(i);
+		}
+		ost << " and transversal_length: ";
+		for (i = 0; i < base_len(); i++) {
+			ost << ", " << transversal_length_i(i);
+		}
+		ost << endl;
+	}
+	else {
+		cout << "action " << label << " does not have a base" << endl;
+	}
+}
+
 
 void action::print_bare_base(
 		std::ofstream &ost)
@@ -655,6 +687,7 @@ void action::print_group_order(
 	group_order(go);
 	cout << go;
 }
+
 
 void action::print_group_order_long(
 		std::ostream &ost)

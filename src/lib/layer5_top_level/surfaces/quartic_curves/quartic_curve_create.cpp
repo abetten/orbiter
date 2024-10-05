@@ -383,7 +383,7 @@ void quartic_curve_create::create_quartic_curve_from_description(
 		}
 		if (f_v) {
 			cout << "quartic_curve_create::create_quartic_curve_from_description "
-					"before create_quartic_curve_from_cubic_surface" << endl;
+					"before create_quartic_curve_from_variety" << endl;
 		}
 
 
@@ -393,7 +393,7 @@ void quartic_curve_create::create_quartic_curve_from_description(
 
 		if (f_v) {
 			cout << "quartic_curve_create::create_quartic_curve_from_description "
-					"after create_quartic_curve_from_cubic_surface" << endl;
+					"after create_quartic_curve_from_variety" << endl;
 		}
 
 
@@ -1234,8 +1234,21 @@ void quartic_curve_create::create_quartic_curve_from_variety(
 
 	canonical_form::variety_object_with_action *Variety;
 
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"searching for variety object by label " << variety_label << endl;
+	}
 	Variety = Get_variety(variety_label);
+	if (f_v) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety "
+				"found the variety " << variety_label << endl;
+	}
 
+
+	if (Variety->Variety_object == NULL) {
+		cout << "quartic_curve_create::create_quartic_curve_from_variety Variety->Variety_object == NULL" << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_variety "
 				"found the variety " << Variety->Variety_object->label_tex << endl;

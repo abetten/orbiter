@@ -445,6 +445,10 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 
 	ring_theory::longinteger_object set_stab_order;
 
+	Variety_stabilizer_compute->Set_stab->group_order(set_stab_order);
+
+	// set_stab_order needs to be initialized
+
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"before Variety_stabilizer_compute->Orb->get_canonical_form" << endl;
@@ -453,7 +457,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 			canonical_equation,
 			transporter_to_canonical_form,
 			gens_stab_of_canonical_equation,
-			set_stab_order,
+			set_stab_order /* full_group_order */,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "

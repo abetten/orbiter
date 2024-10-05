@@ -68,7 +68,10 @@ void variety_activity::perform_activity(
 	}
 
 	if (Descr->f_compute_group) {
-		do_compute_group(Descr->f_output_fname_base, Descr->output_fname_base, verbose_level);
+		do_compute_group(
+				Descr->f_output_fname_base,
+				Descr->output_fname_base,
+				verbose_level);
 	}
 	if (Descr->f_report) {
 		Input_Vo[0].do_report(verbose_level);
@@ -102,6 +105,15 @@ void variety_activity::do_compute_group(
 		cout << "variety_activity::do_compute_group "
 				"nb_input_Vo == 0" << endl;
 		exit(1);
+	}
+
+	std::string fname_base;
+
+	if (f_has_output_fname_base) {
+		fname_base = output_fname_base;
+	}
+	else {
+		fname_base = Input_Vo[0].Variety_object->label_txt + "_c";
 	}
 
 	canonical_form::canonical_form_classifier *Classifier;
@@ -139,7 +151,7 @@ void variety_activity::do_compute_group(
 			Poly_ring,
 			nb_input_Vo,
 			Input_Vo,
-			output_fname_base,
+			fname_base,
 			verbose_level);
 
 	if (f_v) {
@@ -158,14 +170,6 @@ void variety_activity::do_compute_group(
 
 	//Classifier->Output_nauty = Nauty;
 
-	std::string fname_base;
-
-	if (f_has_output_fname_base) {
-		fname_base = output_fname_base;
-	}
-	else {
-		fname_base = Input_Vo[0].Variety_object->label_txt + "_c";
-	}
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
@@ -173,9 +177,6 @@ void variety_activity::do_compute_group(
 	}
 	Classification_of_varieties_nauty->init(
 			Classifier->Input,
-			//nb_input_Vo,
-			//Input_Vo,
-			//fname_base,
 			Classifier,
 			verbose_level);
 	if (f_v) {

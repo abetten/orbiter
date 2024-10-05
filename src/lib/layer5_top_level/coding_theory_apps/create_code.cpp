@@ -1156,28 +1156,73 @@ void create_code::export_codewords_by_weight(
 		long int nb;
 		int j, a;
 
+		int *v;
+		int *support;
+		int h;
+		long int word;
+		int nb_rows;
+		int nb_cols = 2;
+		std::string *Table;
+
+
 		nb = SoS->Set_size[i];
 		codewords_of_weight = NEW_lint(nb);
+		v = NEW_int(n);
+		support = NEW_int(n);
+		nb_rows = nb;
+		Table = new string [nb_rows * nb_cols];
 
 		for (j = 0; j < nb; j++) {
 			a = SoS->Sets[i][j];
 			codewords_of_weight[j] = codewords[a];
+
+			Int_vec_zero(v, n);
+			word = codewords_of_weight[j];
+			h = 0;
+			while (word) {
+				v[h] = word % 2;
+				word >>= 1;
+				h++;
+			}
+			int l;
+			h = 0;
+			for (l = 0; l < n; l++) {
+				if (v[l]) {
+					support[h++] = l;
+				}
+			}
+
+			Table[j * nb_cols + 0] = std::to_string(a);
+			Table[j * nb_cols + 1] = "\"" + Int_vec_stringify(support, h) + "\"";
+
 		}
 
 
 		orbiter_kernel_system::file_io Fio;
 		string fname;
+		std::string headings;
+
+		headings = "message,codeword";
 
 		fname = fname_base + "_of_weight_" + std::to_string(types[i]) + ".csv";
 
+		Fio.Csv_file_support->write_table_of_strings(
+				fname,
+				nb_rows, nb_cols, Table,
+				headings,
+				verbose_level);
 
+#if 0
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				fname, codewords_of_weight, nb, 1);
-
+#endif
 		if (f_v) {
 			cout << "written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
 		}
+
+		FREE_int(v);
+		delete [] Table;
 
 		FREE_lint(codewords_of_weight);
 

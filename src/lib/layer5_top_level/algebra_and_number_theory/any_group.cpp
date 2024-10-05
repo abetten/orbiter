@@ -226,6 +226,7 @@ void any_group::init_modified_group(
 
 
 
+#if 0
 void any_group::create_latex_report(
 		graphics::layered_graph_draw_options *O,
 		int f_sylow, int f_group_table, //int f_classes,
@@ -268,7 +269,142 @@ void any_group::create_latex_report(
 		cout << "any_group::create_latex_report unknown type of group" << endl;
 		exit(1);
 	}
+
 }
+#endif
+
+
+
+
+void any_group::create_latex_report(
+		graphics::layered_graph_draw_options *LG_Draw_options,
+		int f_sylow, int f_group_table, //int f_classes,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::create_latex_report" << endl;
+	}
+	if (f_v) {
+		cout << "any_group::create_latex_report "
+				"label = " << label << endl;
+		cout << "any_group::create_latex_report "
+				"label_tex = " << label_tex << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author, extra_praeamble;
+
+		fname = label + "_report.tex";
+		title = "The group $" + label_tex + "$";
+		author = "";
+
+
+		{
+			ofstream ost(fname);
+			l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report before report" << endl;
+			}
+#if 0
+			report(
+					ost,
+					f_sylow, f_group_table,
+					//f_classes,
+					LG_Draw_options,
+					verbose_level);
+#endif
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report "
+						"before Action_global.report" << endl;
+			}
+			Action_global.report(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					f_sylow, f_group_table,
+					LG_Draw_options,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report "
+						"after Action_global.report" << endl;
+			}
+
+			ost << endl;
+			ost << "\\subsection*{Strong Generators}" << endl;
+			ost << endl;
+
+			if (f_v) {
+				cout << "any_group::create_latex_report "
+						"before Subgroup_gens->print_generators_tex" << endl;
+			}
+
+			cout << "Strong generators:\\\\" << endl;
+			Subgroup_gens->print_generators_tex(ost);
+
+			if (f_v) {
+				cout << "any_group::create_latex_report "
+						"after Subgroup_gens->print_generators_tex" << endl;
+			}
+
+
+
+#if 0
+			actions::action *A_base;
+			actions::action *A;
+
+			std::string label;
+			std::string label_tex;
+
+			groups::strong_generators *Subgroup_gens;
+			groups::sims *Subgroup_sims;
+#endif
+
+			if (f_v) {
+				cout << "any_group::create_latex_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "any_group::create_latex_report done" << endl;
+	}
+}
+
 
 void any_group::export_group_table(
 		int verbose_level)
@@ -2059,9 +2195,9 @@ void any_group::do_reverse_isomorphism_exterior_square(
 
 
 
-
+#if 0
 void any_group::create_latex_report_for_permutation_group(
-		graphics::layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2109,7 +2245,7 @@ void any_group::create_latex_report_for_permutation_group(
 					NULL, //A->Sims,
 					false, //A->f_has_strong_generators,
 					NULL, //A->Strong_gens,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group "
@@ -2138,13 +2274,35 @@ void any_group::create_latex_report_for_permutation_group(
 			}
 			Subgroup_sims->report(ost,
 					label,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_permutation_group "
 						"after Subgroup_sims->report" << endl;
 			}
 #endif
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"before Action_global.report" << endl;
+			}
+			Action_global.report(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					false /*f_sylow*/, false /*f_group_table*/,
+					LG_Draw_options,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"after Action_global.report" << endl;
+			}
+
 
 			L.foot(ost);
 
@@ -2164,7 +2322,7 @@ void any_group::create_latex_report_for_permutation_group(
 }
 
 void any_group::create_latex_report_for_modified_group(
-		graphics::layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2207,7 +2365,7 @@ void any_group::create_latex_report_for_modified_group(
 
 			A->report_group_name_and_degree(
 					ost,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
@@ -2221,7 +2379,7 @@ void any_group::create_latex_report_for_modified_group(
 
 			A->report_type_of_action(
 					ost,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
@@ -2236,7 +2394,7 @@ void any_group::create_latex_report_for_modified_group(
 
 			A->report_what_we_act_on(
 					ost,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
@@ -2255,7 +2413,7 @@ void any_group::create_latex_report_for_modified_group(
 					ost,
 					A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
@@ -2288,13 +2446,38 @@ void any_group::create_latex_report_for_modified_group(
 			}
 			Subgroup_sims->report(ost,
 					label,
-					O,
+					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
 				cout << "any_group::create_latex_report_for_modified_group "
 						"after Subgroup_sims->report" << endl;
 			}
 #endif
+
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"before Action_global.report" << endl;
+			}
+			Action_global.report(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					false /*f_sylow*/, false /*f_group_table*/,
+					LG_Draw_options,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group "
+						"after Action_global.report" << endl;
+			}
+
+
+
 
 			L.foot(ost);
 
@@ -2312,6 +2495,7 @@ void any_group::create_latex_report_for_modified_group(
 		cout << "any_group::create_latex_report_for_modified_group done" << endl;
 	}
 }
+#endif
 
 groups::strong_generators *any_group::get_strong_generators()
 {
@@ -2407,7 +2591,8 @@ void any_group::set_of_coset_representatives(
 		cout << "any_group::set_of_coset_representatives "
 				"before Subgroup_gens1->set_of_coset_representatives" << endl;
 	}
-	Subgroup_gens1->set_of_coset_representatives(S,
+	Subgroup_gens1->set_of_coset_representatives(
+			S,
 			coset_reps,
 			verbose_level);
 	if (f_v) {

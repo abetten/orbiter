@@ -906,6 +906,7 @@ canonical_form::variety_object_with_action
 				"cannot find symbol " << label << endl;
 		exit(1);
 	}
+
 	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_variety) {
 		cout << "orbiter_top_level_session::get_variety "
 				"object type != t_variety" << endl;

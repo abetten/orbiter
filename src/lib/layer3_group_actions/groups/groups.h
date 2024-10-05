@@ -1266,6 +1266,10 @@ public:
 			std::string &fname, int verbose_level);
 	void all_elements_export_inversion_graphs(
 			std::string &fname, int verbose_level);
+	void get_non_trivial_base_orbits(
+			std::vector<int> &base_orbit_idx, int verbose_level);
+	void get_all_base_orbits(
+			std::vector<int> &base_orbit_idx, int verbose_level);
 
 
 	// sims_main.cpp:
@@ -1576,6 +1580,11 @@ public:
 			std::string &prefix,
 			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
+	void report_basic_orbit(
+			std::ostream &ost,
+			std::string &prefix,
+			graphics::layered_graph_draw_options *LG_Draw_options,
+			int orbit_idx, int verbose_level);
 
 
 };

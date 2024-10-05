@@ -2517,7 +2517,45 @@ void sims::all_elements_export_inversion_graphs(
 	}
 }
 
+void sims::get_non_trivial_base_orbits(
+		std::vector<int> &base_orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "sims::get_non_trivial_base_orbits" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < A->base_len(); i++) {
+		if (orbit_len[i] > 1) {
+			base_orbit_idx.push_back(i);
+		}
+	}
+	if (f_v) {
+		cout << "sims::get_non_trivial_base_orbits done" << endl;
+	}
+}
+
+void sims::get_all_base_orbits(
+		std::vector<int> &base_orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::get_all_base_orbits" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < A->base_len(); i++) {
+		base_orbit_idx.push_back(i);
+	}
+	if (f_v) {
+		cout << "sims::get_all_base_orbits done" << endl;
+	}
+}
 
 
 

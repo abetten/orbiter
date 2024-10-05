@@ -522,13 +522,14 @@ public:
 	void do_reverse_isomorphism_exterior_square(
 			int verbose_level);
 
-
+#if 0
 	void create_latex_report_for_permutation_group(
-			graphics::layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void create_latex_report_for_modified_group(
-			graphics::layered_graph_draw_options *O,
+			graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
+#endif
 	groups::strong_generators *get_strong_generators();
 	int is_subgroup_of(
 			any_group *AG_secondary, int verbose_level);

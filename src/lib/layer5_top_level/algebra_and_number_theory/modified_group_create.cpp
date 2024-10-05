@@ -400,8 +400,8 @@ void modified_group_create::create_restricted_action(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	long int *points;
 	int nb_points;
@@ -442,8 +442,8 @@ void modified_group_create::create_restricted_action(
 		cout << "modified_group_create::create_restricted_action "
 				"before assigning label" << endl;
 	}
-	label.assign(A_modified->label);
-	label_tex.assign(A_modified->label_tex);
+	label = A_modified->label;
+	label_tex = A_modified->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action done" << endl;
@@ -474,9 +474,8 @@ void modified_group_create::create_action_on_k_subspaces(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
-
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 
 
@@ -495,69 +494,6 @@ void modified_group_create::create_action_on_k_subspaces(
 				"before AGlobal.create_action_on_k_subspaces" << endl;
 	}
 
-
-#if 0
-	algebra::matrix_group *M;
-	field_theory::finite_field *Fq;
-	int n;
-
-	M = A_previous->get_matrix_group();
-
-	n = M->n;
-	Fq = M->GFq;
-
-	induced_actions::action_on_grassmannian *AonG;
-	geometry::grassmann *Grass;
-
-	AonG = NEW_OBJECT(induced_actions::action_on_grassmannian);
-
-	Grass = NEW_OBJECT(geometry::grassmann);
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"before Grass->init" << endl;
-	}
-
-	Grass->init(n,
-			description->on_k_subspaces_k,
-			Fq, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"after Grass->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"before AonG->init" << endl;
-	}
-
-	AonG->init(*A_previous, Grass, verbose_level - 2);
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"after AonG->init" << endl;
-	}
-
-
-	//A_modified = NEW_OBJECT(actions::action);
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"before induced_action_on_grassmannian_preloaded" << endl;
-	}
-
-	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
-		false /* f_induce_action */, NULL /*sims *old_G */,
-		verbose_level - 2);
-
-	if (f_v) {
-		cout << "modified_group_create::create_action_on_k_subspaces "
-				"after induced_action_on_grassmannian_preloaded" << endl;
-	}
-#endif
 
 
 	f_has_strong_generators = true;
@@ -619,8 +555,8 @@ void modified_group_create::create_action_on_k_subsets(
 	A_previous = AG->A;
 
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 
 
@@ -699,8 +635,8 @@ void modified_group_create::create_action_on_wedge_product(
 	A_previous = AG->A;
 
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 
 
@@ -778,8 +714,8 @@ void modified_group_create::create_special_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 
 	A_modified = A_previous;
@@ -879,11 +815,11 @@ void modified_group_create::create_even_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 
-	A_modified = A_previous;
+	A_modified = A_previous; // ToDo !!
 
 
 
@@ -981,8 +917,8 @@ void modified_group_create::create_point_stabilizer_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_point_stabilizer_subgroup "
@@ -995,7 +931,7 @@ void modified_group_create::create_point_stabilizer_subgroup(
 		cout << endl;
 	}
 
-	A_modified = A_previous;
+	A_modified = A_previous; // ToDo!
 
 
 
@@ -1076,8 +1012,8 @@ void modified_group_create::create_set_stabilizer_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_set_stabilizer_subgroup "
@@ -1090,7 +1026,7 @@ void modified_group_create::create_set_stabilizer_subgroup(
 		cout << endl;
 	}
 
-	A_modified = A_previous;
+	A_modified = A_previous; // ToDo !!!
 
 
 
@@ -1255,8 +1191,8 @@ void modified_group_create::create_projectivity_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_projectivity_subgroup "
@@ -1269,7 +1205,7 @@ void modified_group_create::create_projectivity_subgroup(
 		cout << endl;
 	}
 
-	A_modified = A_previous;
+	A_modified = A_previous; // ToDo !!
 
 
 
@@ -1340,8 +1276,8 @@ void modified_group_create::create_subfield_subgroup(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_subfield_subgroup "
@@ -1354,7 +1290,7 @@ void modified_group_create::create_subfield_subgroup(
 		cout << endl;
 	}
 
-	A_modified = A_previous;
+	A_modified = A_previous; // ToDo !!
 
 
 
@@ -1437,8 +1373,8 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label);
-	label_tex.assign(AG->label_tex);
+	label = AG->label;
+	label_tex = AG->label_tex;
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
@@ -1780,8 +1716,8 @@ void modified_group_create::create_automorphism_group(
 	A_base = AG->A_base;
 	A_previous = AG->A;
 
-	label.assign(AG->label) + "_aut";
-	label_tex.assign(AG->label_tex) + "\\_aut";
+	label = AG->label + "_aut";
+	label_tex = AG->label_tex + "\\_aut";
 
 	if (f_v) {
 		cout << "modified_group_create::create_automorphism_group "
@@ -1813,7 +1749,7 @@ void modified_group_create::create_automorphism_group(
 
 
 
-	A_modified = NEW_OBJECT(actions::action);
+	//A_modified = NEW_OBJECT(actions::action);
 	interfaces::magma_interface Magma;
 
 
@@ -1911,10 +1847,17 @@ void modified_group_create::create_subgroup_by_lattice(
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
-	A_modified = AG->A_base;
 
-	label.assign(AG->label) + "_subgroup_by_lattice_" + std::to_string(orbit_index);
-	label_tex.assign(AG->label_tex) + "\\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index);
+
+
+
+
+	label = AG->label + "_subgroup_by_lattice_" + std::to_string(orbit_index);
+	label_tex = AG->label_tex + "\\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index);
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_lattice label = " << label << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice label_tex = " << label_tex << endl;
+	}
 
 	if (f_v) {
 		cout << "modified_group_create::create_subgroup_by_lattice "
@@ -1939,8 +1882,31 @@ void modified_group_create::create_subgroup_by_lattice(
 	}
 
 	f_has_strong_generators = true;
-	Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
 
+	groups::strong_generators *Strong_gens_temp;
+	Strong_gens_temp = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
+
+	actions::action_global Action_global;
+
+	A_modified = Action_global.init_subgroup_from_strong_generators(
+			AG->A_base,
+			Strong_gens_temp,
+			verbose_level - 1);
+
+	A_modified->label = label;
+	A_modified->label_tex = label_tex;
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_lattice A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice A_modified->label_tex = " << A_modified->label_tex << endl;
+	}
+
+
+	// Strong_gens should be in the new action.
+
+	f_has_strong_generators = true;
+	Strong_gens = A_modified->Strong_gens->create_copy(verbose_level - 4);
+	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
 
 	if (f_v) {
 		cout << "modified_group_create::create_subgroup_by_lattice done" << endl;

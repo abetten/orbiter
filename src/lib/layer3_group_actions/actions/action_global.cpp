@@ -1787,6 +1787,190 @@ action *action_global::init_polarity_extension_group(
 }
 
 
+
+action *action_global::init_subgroup_from_strong_generators(
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		int verbose_level)
+// shortens the base
+{
+	int f_v = (verbose_level >= 1);
+	action *A_subgroup;
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators" << endl;
+		cout << "action_global::init_subgroup_from_strong_generators A=" << A->label << endl;
+	}
+
+
+
+	A_subgroup = NEW_OBJECT(action);
+
+
+
+	A_subgroup->type_G = A->type_G;
+	A_subgroup->G = A->G;
+	A_subgroup->f_allocated = true;
+
+
+	A_subgroup->f_is_linear = A->f_is_linear;
+	A_subgroup->dimension = A->dimension;
+
+
+	A_subgroup->low_level_point_size = A->low_level_point_size;
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"low_level_point_size="
+			<< A_subgroup->low_level_point_size << endl;
+	}
+
+	A_subgroup->label = A->label + "_subgroup";
+	A_subgroup->label_tex = A->label_tex + "\\_subgroup";
+
+
+	A_subgroup->degree = A->degree;
+	A_subgroup->make_element_size = A->make_element_size;
+
+	A_subgroup->ptr = NEW_OBJECT(action_pointer_table);
+	A_subgroup->ptr->init_function_pointers_polarity_extension();
+	A_subgroup->ptr->copy_from_but_reset_counters(
+			A->ptr);
+
+	A_subgroup->elt_size_in_int = A->elt_size_in_int;
+	A_subgroup->coded_elt_size_in_char = A->coded_elt_size_in_char;
+	A_subgroup->Group_element->allocate_element_data();
+
+
+
+
+	A_subgroup->degree = A->degree;
+
+
+
+#if 0
+	Lint_vec_copy(A->get_base(), A_subgroup->get_base(), A_subgroup->base_len());
+
+	Int_vec_copy(A->get_transversal_length(),
+			A_subgroup->get_transversal_length(), A_subgroup->base_len());
+
+	Int_vec_mone(A->get_transversal_length(), A_subgroup->base_len());
+#endif
+
+	//A_subgroup->Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+
+	groups::sims *Sims;
+
+
+
+	Sims = Strong_gens->create_sims(
+				verbose_level);
+
+	if (f_v) {
+		if (f_v) {
+			cout << "action_global::init_subgroup_from_strong_generators "
+					"Sims=" << endl;
+		}
+		Sims->print(verbose_level);
+	}
+
+	A_subgroup->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"before A_subgroup->Stabilizer_chain->init_base_from_sims_after_shortening" << endl;
+	}
+
+	A_subgroup->Stabilizer_chain->init_base_from_sims_after_shortening(
+			A_subgroup,
+			Sims, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"after A_subgroup->Stabilizer_chain->init_base_from_sims_after_shortening" << endl;
+	}
+
+
+	//A_subgroup->Stabilizer_chain->set_A(A_subgroup);
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"base_len=" << A_subgroup->base_len() << endl;
+	}
+
+	groups::sims *Sims2;
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"before Strong_gens->create_sims_in_different_action" << endl;
+	}
+	Sims2 = Strong_gens->create_sims_in_different_action(
+			A_subgroup, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"after Strong_gens->create_sims_in_different_action" << endl;
+	}
+
+	A_subgroup->f_has_sims = true;
+	A_subgroup->Sims = Sims2;
+
+	// we need to recompute the strong generators with respect to the new (shortened) base:
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"before A_subgroup->compute_strong_generators_from_sims" << endl;
+	}
+	A_subgroup->compute_strong_generators_from_sims(
+			verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"after A_subgroup->compute_strong_generators_from_sims" << endl;
+	}
+
+	//A_subgroup->f_has_strong_generators = true;
+	//A_subgroup->Strong_gens = Sims2;
+
+
+#if 0
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"before A->Strong_gens->init_copy" << endl;
+	}
+	A_subgroup->Strong_gens->init_copy(Strong_gens, verbose_level - 3);
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"after A->Strong_gens->init_copy" << endl;
+	}
+	A_subgroup->f_has_strong_generators = true;
+
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"before compute_sims" << endl;
+	}
+	compute_sims(
+			A_subgroup, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators "
+				"after compute_sims" << endl;
+	}
+#endif
+
+	if (f_v) {
+		cout << "action_global::init_subgroup_from_strong_generators, "
+				"finished setting up " << A_subgroup->label;
+		cout << ", a permutation group of degree " << A_subgroup->degree << " ";
+		cout << "and of order ";
+		A_subgroup->print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+	}
+	return A_subgroup;
+}
+
+
+
 void action_global::compute_sims(
 		action *A,
 		int verbose_level)
@@ -5991,6 +6175,316 @@ void action_global::report_strong_generators(
 		cout << "action_global::report_strong_generators done" << endl;
 	}
 }
+
+
+void action_global::report(
+		std::ostream &ost,
+		std::string &label,
+		std::string &label_tex,
+		actions::action *A,
+		groups::strong_generators *Strong_gens,
+		int f_sylow, int f_group_table,
+		graphics::layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//actions::action *A;
+
+	//A = A2;
+	if (f_v) {
+		cout << "action_global::report" << endl;
+	}
+
+	groups::sims *H;
+
+	if (f_v) {
+		cout << "action_global::report "
+				"creating report for group " << label << endl;
+	}
+
+	//G = initial_strong_gens->create_sims(verbose_level);
+	if (f_v) {
+		cout << "action_global::report "
+				"before Strong_gens->create_sims" << endl;
+	}
+	H = Strong_gens->create_sims(0 /*verbose_level*/);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	ring_theory::longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	H->group_order(go);
+
+
+	{
+
+		//H->print_all_group_elements_tex(fp);
+
+		ring_theory::longinteger_object go;
+		//sims *G;
+		//sims *H;
+
+		//G = initial_strong_gens->create_sims(verbose_level);
+		//H = Strong_gens->create_sims(verbose_level);
+
+
+
+		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
+
+
+		H->group_order(go);
+
+		ost << "\\noindent The order of the group $"
+				<< label_tex
+				<< "$ is " << go << "\\\\" << endl;
+
+
+#if 0
+		void stabilizer_chain_base_data::report_basic_orbits(
+				std::ostream &ost);
+#endif
+
+#if 0
+		fp << "\\noindent The field ${\\mathbb F}_{"
+				<< F->q
+				<< "}$ :\\\\" << endl;
+		if (f_v) {
+			cout << "action_global::report before F->cheat_sheet" << endl;
+		}
+		F->cheat_sheet(fp, verbose_level);
+		if (f_v) {
+			cout << "action_global::report after F->cheat_sheet" << endl;
+		}
+#endif
+
+
+#if 0
+		ost << "\\noindent The group acts on a set of size "
+				<< A->degree << "\\\\" << endl;
+#endif
+		A->report_what_we_act_on(
+				ost,
+				LG_Draw_options,
+				verbose_level);
+
+
+#if 0
+		if (A->degree < 1000) {
+
+			A->print_points(fp);
+		}
+#endif
+
+		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
+
+#if 0
+		if (f_has_nice_gens) {
+			ost << "Nice generators:\\\\" << endl;
+			nice_gens->print_tex(ost);
+		}
+		else {
+		}
+#endif
+
+		cout << "Strong generators:\\\\" << endl;
+		Strong_gens->print_generators_tex(ost);
+
+
+		if (f_v) {
+			cout << "action_global::report before A->report" << endl;
+		}
+
+		A->report(
+				ost, true /*f_sims*/, H,
+				true /* f_strong_gens */, Strong_gens,
+				LG_Draw_options,
+				verbose_level);
+
+		if (f_v) {
+			cout << "action_global::report after A->report" << endl;
+		}
+
+		if (f_v) {
+			cout << "action_global::report before A->report_basic_orbits" << endl;
+		}
+
+		A->report_basic_orbits(ost);
+
+		if (f_v) {
+			cout << "action_global::report after A->report_basic_orbits" << endl;
+		}
+
+		if (f_group_table) {
+			if (f_v) {
+				cout << "action_global::report f_group_table is true" << endl;
+			}
+
+			int *Table;
+			long int n;
+			orbiter_kernel_system::file_io Fio;
+			string fname_group_table;
+			H->create_group_table(Table, n, verbose_level);
+
+			cout << "action_global::report The group table is:" << endl;
+			Int_matrix_print(Table, n, n);
+
+			fname_group_table = A->label + "_group_table.csv";
+			Fio.Csv_file_support->int_matrix_write_csv(
+					fname_group_table, Table, n, n);
+			cout << "Written file " << fname_group_table << " of size "
+					<< Fio.file_size(fname_group_table) << endl;
+
+			{
+				l1_interfaces::latex_interface L;
+
+				ost << "\\begin{sidewaystable}" << endl;
+				ost << "$$" << endl;
+				L.int_matrix_print_tex(ost, Table, n, n);
+				ost << "$$" << endl;
+				ost << "\\end{sidewaystable}" << endl;
+
+				int f_with_permutation = false;
+				int f_override_action = false;
+				actions::action *A_special = NULL;
+
+				H->print_all_group_elements_tex(ost,
+						f_with_permutation, f_override_action, A_special);
+
+			}
+
+			{
+				string fname2;
+				//int x_min = 0, y_min = 0;
+				//int xmax = ONE_MILLION;
+				//int ymax = ONE_MILLION;
+
+				//int f_embedded = true;
+				//int f_sideways = false;
+				int *labels;
+
+				int i;
+
+				labels = NEW_int(2 * n);
+
+				for (i = 0; i < n; i++) {
+					labels[i] = i;
+				}
+				if (n > 100) {
+					for (i = 0; i < n; i++) {
+						labels[n + i] = n + i % 100;
+					}
+				}
+				else {
+					for (i = 0; i < n; i++) {
+						labels[n + i] = n + i;
+					}
+				}
+
+				fname2 = A->label + "_group_table_order_" + std::to_string(n);
+
+				{
+					graphics::mp_graphics G;
+
+					G.init(fname2, LG_Draw_options, verbose_level);
+
+#if 0
+					mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
+					//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
+					G.out_xmin() = 0;
+					G.out_ymin() = 0;
+					G.out_xmax() = xmax;
+					G.out_ymax() = ymax;
+					//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+
+					//G.tikz_global_scale = LG_Draw_options->scale;
+					//G.tikz_global_line_width = LG_Draw_options->line_width;
+#endif
+
+					G.header();
+					G.begin_figure(1000 /* factor_1000*/);
+
+					int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
+					int nb_colors = sizeof(color_scale) / sizeof(int);
+
+					G.draw_matrix_in_color(
+						false /* f_row_grid */, false /* f_col_grid */,
+						Table  /* Table */, n /* nb_colors */,
+						n, n, //xmax, ymax,
+						color_scale, nb_colors,
+						true /* f_has_labels */, labels);
+
+					G.finish(cout, true);
+				}
+				FREE_int(labels);
+
+			}
+
+
+			FREE_int(Table);
+
+
+		}
+
+		if (f_sylow) {
+
+			if (f_v) {
+				cout << "action_global::report f_sylow is true" << endl;
+			}
+
+			groups::sylow_structure *Syl;
+
+			Syl = NEW_OBJECT(groups::sylow_structure);
+			Syl->init(
+					H,
+					label,
+					label_tex,
+					verbose_level);
+			Syl->report(ost);
+
+		}
+		else {
+
+			if (f_v) {
+				cout << "action_global::report f_sylow is false" << endl;
+			}
+
+		}
+
+#if 0
+		if (f_conjugacy_classes_and_normalizers) {
+
+
+			interfaces::magma_interface M;
+
+
+			if (f_v) {
+				cout << "action_global::report f_conjugacy_classes_and_normalizers is true" << endl;
+			}
+
+			M.report_conjugacy_classes_and_normalizers(A2, ost, H,
+					verbose_level);
+
+			if (f_v) {
+				cout << "action_global::report A2->report_conjugacy_classes_and_normalizers" << endl;
+			}
+		}
+#endif
+
+
+		//L.foot(fp);
+	}
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "action_global::report creating report for group " << label << " done" << endl;
+	}
+
+}
+
+
 
 
 

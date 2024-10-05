@@ -815,10 +815,11 @@ void sims::report(
 		cout << "sims::report prefix=" << prefix << endl;
 	}
 	//int i;
-	data_structures::sorting Sorting;
 
 	ost << endl << "\\subsection*{Stabilizer chain}" << endl << endl;
 	ost << endl;
+
+	ost << "sims::report\\\\" << endl;
 
 
 	ost << "$$" << endl;
@@ -845,7 +846,6 @@ void sims::report(
 	ost << "\\end{array}" << endl;
 	ost << "$$" << endl;
 
-	string fname_base;
 
 	int orbit_idx;
 
@@ -854,60 +854,23 @@ void sims::report(
 		if (f_v) {
 			cout << "sims::report tree " << orbit_idx << " / " << my_base_len << endl;
 		}
-		ost << endl << "\\subsection*{Basic Orbit " << orbit_idx << "}" << endl << endl;
 
-		if (orbit_len[orbit_idx] < 1000) {
+		if (orbit_len[orbit_idx] < 1000 && orbit_len[orbit_idx] > 1) {
 
-			fname_base = prefix + "_sims_" + std::to_string(orbit_idx);
+			ost << endl << "\\subsection*{Basic Orbit " << orbit_idx << "}" << endl << endl;
 
-			graph_theory::layered_graph *LG;
-			if (f_v) {
-				cout << "sims::report before Sorting.schreier_vector_tree" << endl;
-			}
-			Sorting.schreier_vector_tree(
-				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx],
-				true /* f_use_pts_inv */, orbit_inv[orbit_idx],
-				fname_base,
-				LG_Draw_options,
-				LG,
-				verbose_level - 3);
-			if (f_v) {
-				cout << "sims::report after Sorting.schreier_vector_tree" << endl;
-			}
-
-			FREE_OBJECT(LG);
-
-			ost << "\\input " << fname_base << ".tex" << endl;
-			ost << endl;
-
-			std::vector<int> Orb;
-			int *Orbit_elements;
-			data_structures::sorting Sorting;
 
 			if (f_v) {
-				cout << "sims::report before get_orbit" << endl;
+				cout << "sims::report before report_basic_orbit" << endl;
 			}
-			get_orbit(orbit_idx, Orb, verbose_level - 2);
+			report_basic_orbit(
+					ost,
+					prefix,
+					LG_Draw_options,
+					orbit_idx, verbose_level - 2);
 			if (f_v) {
-				cout << "sims::report after get_orbit" << endl;
+				cout << "sims::report after report_basic_orbit" << endl;
 			}
-
-			ost << "Basic orbit " << orbit_idx << " has size " << Orb.size() << "\\\\" << endl;
-
-			Orbit_elements = NEW_int(Orb.size());
-			for (int i = 0; i < Orb.size(); i++) {
-				Orbit_elements[i] = Orb[i];
-			}
-			Sorting.int_vec_heapsort(Orbit_elements, Orb.size());
-			for (int i = 0; i < Orb.size(); i++) {
-				ost << Orbit_elements[i];
-				if (i < Orb.size() - 1) {
-					ost << ", ";
-				}
-			}
-			ost << "\\\\" << endl;
-			FREE_int(Orbit_elements);
-
 		}
 		ost << "\\bigskip" << endl;
 		if (f_v) {
@@ -921,7 +884,115 @@ void sims::report(
 	}
 }
 
+void sims::report_basic_orbit(
+		std::ostream &ost,
+		std::string &prefix,
+		graphics::layered_graph_draw_options *LG_Draw_options,
+		int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "sims::report_basic_orbit orbit_idx = " << orbit_idx << endl;
+	}
+
+	data_structures::sorting Sorting;
+
+	string fname_base;
+
+	fname_base = prefix + "_sims_" + std::to_string(orbit_idx);
+
+	{
+		graph_theory::layered_graph *LG;
+
+		if (f_v) {
+			cout << "sims::report_basic_orbit "
+					"before Sorting.make_layered_graph_for_schreier_vector_tree" << endl;
+		}
+		Sorting.make_layered_graph_for_schreier_vector_tree(
+			orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx],
+			true /* f_use_pts_inv */, orbit_inv[orbit_idx],
+			fname_base,
+			//LG_Draw_options,
+			LG,
+			verbose_level - 3);
+		if (f_v) {
+			cout << "sims::report_basic_orbit "
+					"after Sorting.make_layered_graph_for_schreier_vector_tree" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "sims::report_basic_orbit before LG->place" << endl;
+		}
+		LG->place_with_y_stretch(0.5, verbose_level);
+		if (f_v) {
+			cout << "sims::report_basic_orbit after LG->place" << endl;
+		}
+		if (f_v) {
+			cout << "sims::report_basic_orbit before LG->create_spanning_tree" << endl;
+		}
+		LG->create_spanning_tree(
+				true /* f_place_x */, verbose_level);
+		if (f_v) {
+			cout << "sims::report_basic_orbit after LG->create_spanning_tree" << endl;
+		}
+
+
+		string fname;
+
+		fname = fname_base + ".layered_graph";
+
+
+
+		LG->write_file(fname, 0 /*verbose_level*/);
+		LG->draw_with_options(fname_base, LG_Draw_options,
+				0 /* verbose_level */);
+
+
+		FREE_OBJECT(LG);
+	}
+
+	ost << "\\input " << fname_base << ".tex" << endl;
+	ost << endl;
+
+	std::vector<int> Orb;
+	int *Orbit_elements;
+
+	if (f_v) {
+		cout << "sims::report_basic_orbit before get_orbit" << endl;
+	}
+	get_orbit(orbit_idx, Orb, verbose_level - 2);
+	if (f_v) {
+		cout << "sims::report_basic_orbit after get_orbit" << endl;
+	}
+
+	ost << "Basic orbit " << orbit_idx << " has size " << Orb.size() << "\\\\" << endl;
+
+	Orbit_elements = NEW_int(Orb.size());
+
+	int i;
+
+
+	for (i = 0; i < Orb.size(); i++) {
+		Orbit_elements[i] = Orb[i];
+	}
+
+	Sorting.int_vec_heapsort(Orbit_elements, Orb.size());
+
+	for (i = 0; i < Orb.size(); i++) {
+		ost << Orbit_elements[i];
+		if (i < Orb.size() - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "\\\\" << endl;
+	FREE_int(Orbit_elements);
+
+	if (f_v) {
+		cout << "sims::report_basic_orbit orbit_idx = " << orbit_idx << " done" << endl;
+	}
+}
 
 
 }}}

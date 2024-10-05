@@ -99,13 +99,16 @@ void classification_of_varieties_nauty::init(
 
 	classification_of_varieties_nauty::Classifier = Classifier;
 
-	classification_of_varieties_nauty::fname_base.assign(Input->fname_base_out);
+	classification_of_varieties_nauty::Input = Input;
+	classification_of_varieties_nauty::fname_base = Input->fname_base_out;
 
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::init "
 				"nb_objects_to_test=" << Input->nb_objects_to_test << endl;
 		cout << "classification_of_varieties_nauty::init "
 				"fname_base=" << fname_base << endl;
+		cout << "classification_of_varieties_nauty::init "
+				"Input->nb_objects_to_test=" << Input->nb_objects_to_test << endl;
 	}
 
 
@@ -164,6 +167,16 @@ void classification_of_varieties_nauty::prepare_canonical_forms(
 
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::prepare_canonical_forms " << endl;
+	}
+
+	if (Input == NULL) {
+		cout << "classification_of_varieties_nauty::prepare_canonical_forms Input == NULL" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::prepare_canonical_forms "
+				"Input->nb_objects_to_test" << Input->nb_objects_to_test << endl;
 	}
 
 

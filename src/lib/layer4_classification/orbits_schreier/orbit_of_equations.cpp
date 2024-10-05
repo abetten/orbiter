@@ -713,6 +713,7 @@ void orbit_of_equations::get_canonical_form(
 
 	if (f_v) {
 		cout << "orbit_of_equations::get_canonical_form" << endl;
+		cout << "orbit_of_equations::get_canonical_form verbose_level = " << verbose_level << endl;
 	}
 
 	Int_vec_copy(
@@ -727,7 +728,7 @@ void orbit_of_equations::get_canonical_form(
 	gens_stab_of_canonical_equation =
 			stabilizer_any_point(
 		full_group_order, idx,
-		0 /*verbose_level*/);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "orbit_of_equations::get_canonical_form "
 				"after stabilizer_any_point" << endl;
@@ -764,11 +765,17 @@ groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_orbit_rep "
+				"default action = " << A->label << endl;
+		cout << "orbit_of_equations::stabilizer_orbit_rep "
+				"full_group_order = " << full_group_order << endl;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep "
 				"before stabilizer_orbit_rep_work" << endl;
 	}
 	stabilizer_orbit_rep_work(
 			A /* default_action */, full_group_order,
-		Stab, 0 /*verbose_level*/);
+		Stab, verbose_level - 2);
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_orbit_rep "
 				"after stabilizer_orbit_rep_work" << endl;
@@ -931,16 +938,40 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 	transporter = NEW_int(A->elt_size_in_int);
 	transporter_inv = NEW_int(A->elt_size_in_int);
 
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before stabilizer_orbit_rep" << endl;
+	}
 	gens0 = stabilizer_orbit_rep(
-			full_group_order, 0 /* verbose_level */);
+			full_group_order, verbose_level - 2);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after stabilizer_orbit_rep" << endl;
+	}
 
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before get_transporter" << endl;
+	}
 	get_transporter(idx,
 			transporter_inv, 0 /* verbose_level */);
 	// transporter_inv is an element which maps
 	// the orbit representative to the given object.
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after get_transporter" << endl;
+	}
 
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"before A->Group_element->element_invert" << endl;
+	}
 	A->Group_element->element_invert(
 			transporter_inv, transporter, 0);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_any_point "
+				"after A->Group_element->element_invert" << endl;
+	}
 
 
 
@@ -955,7 +986,7 @@ groups::strong_generators *orbit_of_equations::stabilizer_any_point(
 	gens->init_generators_for_the_conjugate_group_aGav(
 			gens0,
 		transporter,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_any_point "
 				"after gens->init_generators_for_the_conjugate_group_aGav" << endl;

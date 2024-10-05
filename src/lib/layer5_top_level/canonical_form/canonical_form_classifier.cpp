@@ -46,9 +46,15 @@ canonical_form_classifier::~canonical_form_classifier()
 		FREE_OBJECT(AonHPD);
 	}
 #endif
+
+
+#if 0
 	if (Input) {
 		FREE_OBJECT(Input);
 	}
+#endif
+
+
 #if 0
 	if (Classification_of_varieties) {
 		FREE_OBJECT(Classification_of_varieties);

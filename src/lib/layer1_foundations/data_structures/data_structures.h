@@ -1699,18 +1699,21 @@ public:
 	int integer_vec_std_compare(
 			const std::vector<unsigned int> &p,
 			const std::vector<unsigned int> &q);
+
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
 	int schreier_vector_determine_depth_recursion(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *depth, int *ancestor, int pos);
-	void schreier_vector_tree(
+	void make_layered_graph_for_schreier_vector_tree(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		std::string &fname_base,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		//graphics::layered_graph_draw_options *LG_Draw_options,
 		graph_theory::layered_graph *&LG,
 		int verbose_level);
+
+
 	int compare_sets(
 			int *set1, int *set2, int sz1, int sz2);
 	int compare_sets_lint(

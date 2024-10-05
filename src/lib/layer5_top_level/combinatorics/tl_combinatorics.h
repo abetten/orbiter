@@ -740,6 +740,7 @@ public:
 	int f_export_incidence_matrix;
 	int f_export_incidence_matrix_latex;
 	int f_intersection_matrix;
+	int f_save;
 	int f_export_blocks;
 	int f_row_sums;
 	int f_tactical_decomposition;
