@@ -1222,6 +1222,7 @@ void create_code::export_codewords_by_weight(
 		}
 
 		FREE_int(v);
+		FREE_int(support);
 		delete [] Table;
 
 		FREE_lint(codewords_of_weight);
@@ -1672,10 +1673,10 @@ void create_code::report2(
 	if (f_has_generator_matrix) {
 
 		if (description->f_BCH) {
-			Create_BCH_code->do_report(verbose_level);
+			Create_BCH_code->report(ost, verbose_level);
 		}
 		else if (description->f_Reed_Solomon) {
-			Create_RS_code->do_report(verbose_level);
+			Create_RS_code->report(ost, verbose_level);
 		}
 		else {
 			l1_interfaces::latex_interface Li;
@@ -1687,6 +1688,11 @@ void create_code::report2(
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 		}
+	}
+	else {
+
+		ost << "The code does not have a generator matrix\\\\" << endl;
+
 	}
 
 	if (f_v) {

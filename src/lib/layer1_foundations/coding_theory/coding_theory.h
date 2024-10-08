@@ -310,6 +310,8 @@ public:
 class crc_code_description {
 public:
 
+	// TABLES/crc_code_description.tex
+
 	int f_type;
 	std::string type;
 
@@ -494,7 +496,8 @@ public:
 
 	crc_object();
 	~crc_object();
-	void init(crc_code_description *Descr, int verbose_level);
+	void init(
+			crc_code_description *Descr, int verbose_level);
 	// block_length is needed for crc32
 	//void encode_as_bitvector();
 	void print();

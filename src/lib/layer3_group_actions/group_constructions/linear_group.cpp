@@ -74,6 +74,27 @@ void linear_group::linear_group_init(
 
 
 	}
+#if 0
+	else if (description->f_stabilizer_of_variety) {
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"f_stabilizer_of_variety" << endl;
+		}
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"before linear_group_import" << endl;
+		}
+		do_stabilizer_of_variety(stabilizer_of_variety_label, verbose_level);
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"after linear_group_import" << endl;
+		}
+
+
+	}
+#endif
 	else {
 
 		if (f_v) {
@@ -226,6 +247,30 @@ void linear_group::linear_group_import_group_of_plane(
 		cout << "linear_group::linear_group_import_group_of_plane done" << endl;
 	}
 }
+
+#if 0
+void linear_group::do_stabilizer_of_variety(
+		std::string &variety_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_group::do_stabilizer_of_variety" << endl;
+	}
+
+	if (f_v) {
+		cout << "linear_group::do_stabilizer_of_variety "
+				"variety_label=" << variety_label << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "linear_group::do_stabilizer_of_variety done" << endl;
+	}
+}
+#endif
 
 
 void linear_group::linear_group_create(
@@ -1569,389 +1614,6 @@ void linear_group::init_subgroup_Janko1(
 	}
 }
 
-#if 0
-void linear_group::report(
-		std::ostream &ost,
-		int f_sylow, int f_group_table,
-		//int f_conjugacy_classes_and_normalizers,
-		graphics::layered_graph_draw_options *LG_Draw_options,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	groups::sims *H;
-	actions::action *A;
-
-	A = A2;
-	if (f_v) {
-		cout << "linear_group::report creating report for group " << label << endl;
-	}
-
-	//G = initial_strong_gens->create_sims(verbose_level);
-	if (f_v) {
-		cout << "linear_group::report "
-				"before Strong_gens->create_sims" << endl;
-	}
-	H = Strong_gens->create_sims(0 /*verbose_level*/);
-
-	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_lint() << endl;
-
-	int *Elt;
-	ring_theory::longinteger_object go;
-
-	Elt = NEW_int(A->elt_size_in_int);
-	H->group_order(go);
-
-
-	{
-
-		//H->print_all_group_elements_tex(fp);
-
-		ring_theory::longinteger_object go;
-		//sims *G;
-		//sims *H;
-
-		//G = initial_strong_gens->create_sims(verbose_level);
-		//H = Strong_gens->create_sims(verbose_level);
-
-
-
-		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
-
-
-		H->group_order(go);
-
-		ost << "\\noindent The order of the group $"
-				<< label_tex
-				<< "$ is " << go << "\\\\" << endl;
-
-
-#if 0
-		fp << "\\noindent The field ${\\mathbb F}_{"
-				<< F->q
-				<< "}$ :\\\\" << endl;
-		if (f_v) {
-			cout << "linear_group::report before F->cheat_sheet" << endl;
-		}
-		F->cheat_sheet(fp, verbose_level);
-		if (f_v) {
-			cout << "linear_group::report after F->cheat_sheet" << endl;
-		}
-#endif
-
-
-#if 0
-		ost << "\\noindent The group acts on a set of size "
-				<< A2->degree << "\\\\" << endl;
-#endif
-		A2->report_what_we_act_on(
-				ost,
-				LG_Draw_options,
-				verbose_level);
-
-
-#if 0
-		if (A->degree < 1000) {
-
-			A->print_points(fp);
-		}
-#endif
-
-		//cout << "Order H = " << H->group_order_int() << "\\\\" << endl;
-
-		if (f_has_nice_gens) {
-			ost << "Nice generators:\\\\" << endl;
-			nice_gens->print_tex(ost);
-		}
-		else {
-		}
-
-		cout << "Strong generators:\\\\" << endl;
-		Strong_gens->print_generators_tex(ost);
-
-
-		if (f_v) {
-			cout << "linear_group::report before A2->report" << endl;
-		}
-
-		A2->report(
-				ost, true /*f_sims*/, H,
-				true /* f_strong_gens */, Strong_gens,
-				LG_Draw_options,
-				verbose_level);
-
-		if (f_v) {
-			cout << "linear_group::report after A2->report" << endl;
-		}
-
-		if (f_v) {
-			cout << "linear_group::report before A2->report_basic_orbits" << endl;
-		}
-
-		A2->report_basic_orbits(ost);
-
-		if (f_v) {
-			cout << "linear_group::report after A2->report_basic_orbits" << endl;
-		}
-
-		if (f_group_table) {
-			if (f_v) {
-				cout << "linear_group::report f_group_table is true" << endl;
-			}
-
-			int *Table;
-			long int n;
-			orbiter_kernel_system::file_io Fio;
-			string fname_group_table;
-			H->create_group_table(Table, n, verbose_level);
-
-			cout << "linear_group::report The group table is:" << endl;
-			Int_matrix_print(Table, n, n);
-
-			fname_group_table = label + "_group_table.csv";
-			Fio.Csv_file_support->int_matrix_write_csv(
-					fname_group_table, Table, n, n);
-			cout << "Written file " << fname_group_table << " of size "
-					<< Fio.file_size(fname_group_table) << endl;
-
-			{
-				l1_interfaces::latex_interface L;
-
-				ost << "\\begin{sidewaystable}" << endl;
-				ost << "$$" << endl;
-				L.int_matrix_print_tex(ost, Table, n, n);
-				ost << "$$" << endl;
-				ost << "\\end{sidewaystable}" << endl;
-
-				int f_with_permutation = false;
-				int f_override_action = false;
-				actions::action *A_special = NULL;
-
-				H->print_all_group_elements_tex(ost,
-						f_with_permutation, f_override_action, A_special);
-
-			}
-
-			{
-				string fname2;
-				//int x_min = 0, y_min = 0;
-				//int xmax = ONE_MILLION;
-				//int ymax = ONE_MILLION;
-
-				//int f_embedded = true;
-				//int f_sideways = false;
-				int *labels;
-
-				int i;
-
-				labels = NEW_int(2 * n);
-
-				for (i = 0; i < n; i++) {
-					labels[i] = i;
-				}
-				if (n > 100) {
-					for (i = 0; i < n; i++) {
-						labels[n + i] = n + i % 100;
-					}
-				}
-				else {
-					for (i = 0; i < n; i++) {
-						labels[n + i] = n + i;
-					}
-				}
-
-				fname2 = label + "_group_table_order_" + std::to_string(n);
-
-				{
-					graphics::mp_graphics G;
-
-					G.init(fname2, LG_Draw_options, verbose_level);
-
-#if 0
-					mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
-					//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
-					G.out_xmin() = 0;
-					G.out_ymin() = 0;
-					G.out_xmax() = xmax;
-					G.out_ymax() = ymax;
-					//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-
-					//G.tikz_global_scale = LG_Draw_options->scale;
-					//G.tikz_global_line_width = LG_Draw_options->line_width;
-#endif
-
-					G.header();
-					G.begin_figure(1000 /* factor_1000*/);
-
-					int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
-					int nb_colors = sizeof(color_scale) / sizeof(int);
-
-					G.draw_matrix_in_color(
-						false /* f_row_grid */, false /* f_col_grid */,
-						Table  /* Table */, n /* nb_colors */,
-						n, n, //xmax, ymax,
-						color_scale, nb_colors,
-						true /* f_has_labels */, labels);
-
-					G.finish(cout, true);
-				}
-				FREE_int(labels);
-
-			}
-
-
-			FREE_int(Table);
-
-
-		}
-
-		if (f_sylow) {
-
-			if (f_v) {
-				cout << "linear_group::report f_sylow is true" << endl;
-			}
-
-			groups::sylow_structure *Syl;
-
-			Syl = NEW_OBJECT(groups::sylow_structure);
-			Syl->init(
-					H,
-					label,
-					label_tex,
-					verbose_level);
-			Syl->report(ost);
-
-		}
-		else {
-
-			if (f_v) {
-				cout << "linear_group::report f_sylow is false" << endl;
-			}
-
-		}
-
-#if 0
-		if (f_conjugacy_classes_and_normalizers) {
-
-
-			interfaces::magma_interface M;
-
-
-			if (f_v) {
-				cout << "linear_group::report f_conjugacy_classes_and_normalizers is true" << endl;
-			}
-
-			M.report_conjugacy_classes_and_normalizers(A2, ost, H,
-					verbose_level);
-
-			if (f_v) {
-				cout << "linear_group::report A2->report_conjugacy_classes_and_normalizers" << endl;
-			}
-		}
-#endif
-
-
-		//L.foot(fp);
-	}
-
-	FREE_int(Elt);
-
-}
-#endif
-#if 0
-void linear_group::create_latex_report(
-		graphics::layered_graph_draw_options *LG_Draw_options,
-		int f_sylow, int f_group_table, //int f_classes,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "linear_group::create_latex_report" << endl;
-	}
-
-	{
-		string fname;
-		string title;
-		string author, extra_praeamble;
-
-		fname = label + "_report.tex";
-		title = "The group $" + label_tex + "$";
-		author = "";
-
-
-		{
-			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
-
-			L.head(ost,
-					false /* f_book*/,
-					true /* f_title */,
-					title, author,
-					false /* f_toc */,
-					false /* f_landscape */,
-					true /* f_12pt */,
-					true /* f_enlarged_page */,
-					true /* f_pagenumbers */,
-					extra_praeamble /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "linear_group::create_latex_report before report" << endl;
-			}
-#if 0
-			report(
-					ost,
-					f_sylow, f_group_table,
-					//f_classes,
-					LG_Draw_options,
-					verbose_level);
-#endif
-
-			actions::action_global Action_global;
-
-
-			if (f_v) {
-				cout << "linear_group::create_latex_report "
-						"before Action_global.report" << endl;
-			}
-			Action_global.report(
-					ost,
-					A2,
-					Strong_gens,
-					f_sylow, f_group_table,
-					LG_Draw_options,
-					verbose_level);
-			if (f_v) {
-				cout << "linear_group::create_latex_report "
-						"after Action_global.report" << endl;
-			}
-
-
-
-			if (f_v) {
-				cout << "linear_group::create_latex_report after report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		orbiter_kernel_system::file_io Fio;
-
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "linear_group::create_latex_report done" << endl;
-	}
-}
-#endif
 
 }}}
 

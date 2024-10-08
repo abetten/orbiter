@@ -264,6 +264,7 @@ public:
 			groups::sims *override_Sims,
 			std::string &label,
 			std::string &label_tex,
+			conjugacy_classes_and_normalizers *&class_data,
 			int verbose_level);
 	void conjugacy_classes_and_normalizers_using_MAGMA(
 			actions::action *A,
@@ -281,6 +282,7 @@ public:
 			std::string &fname,
 			groups::sims *override_sims,
 			std::string &label_latex,
+			conjugacy_classes_and_normalizers *&class_data,
 			int verbose_level);
 	void read_conjugacy_classes_and_normalizers_from_MAGMA(
 			actions::action *A,

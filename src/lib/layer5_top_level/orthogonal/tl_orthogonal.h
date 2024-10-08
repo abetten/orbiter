@@ -589,6 +589,7 @@ public:
 	int f_perp;
 	std::string perp_text;
 
+	// undocumented:
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
 	std::string set_stabilizer_fname_mask;
@@ -658,7 +659,7 @@ public:
 class orthogonal_space_with_action_description {
 public:
 
-	// TABLSE/orthogonal_space_with_action.tex
+	// TABLES/orthogonal_space_with_action.tex
 
 	int epsilon;
 

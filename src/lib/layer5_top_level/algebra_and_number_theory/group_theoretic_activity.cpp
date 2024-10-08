@@ -607,6 +607,7 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_classes" << endl;
 		}
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->classes" << endl;
@@ -616,6 +617,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->classes" << endl;
 		}
+
+
 	}
 
 	else if (Descr->f_subgroup_lattice_magma) {

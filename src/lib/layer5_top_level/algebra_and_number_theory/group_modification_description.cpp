@@ -70,6 +70,9 @@ group_modification_description::group_modification_description()
 	f_subgroup_by_lattice = false;
 	subgroup_by_lattice_orbit_index = -1;
 
+	f_stabilizer_of_variety = false;
+	//std::string stabilizer_of_variety_label;
+
 	//std::vector<std::string> from;
 
 }
@@ -226,6 +229,13 @@ int group_modification_description::read_arguments(
 				cout << "-subgroup_by_lattice " << subgroup_by_lattice_orbit_index << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-stabilizer_of_variety") == 0) {
+			f_stabilizer_of_variety = true;
+			stabilizer_of_variety_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
@@ -321,6 +331,9 @@ void group_modification_description::print()
 	}
 	if (f_subgroup_by_lattice) {
 		cout << "-subgroup_by_lattice " << subgroup_by_lattice_orbit_index << endl;
+	}
+	if (f_stabilizer_of_variety) {
+		cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
 	}
 
 

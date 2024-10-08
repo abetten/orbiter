@@ -19,6 +19,10 @@ namespace apps_graph_theory {
 
 create_graph_description::create_graph_description()
 {
+
+	// TABLES/create_graph_1.tex
+
+
 	f_load = false;
 	//fname = NULL;
 
@@ -91,6 +95,10 @@ create_graph_description::create_graph_description()
 
 	f_non_attacking_queens_graph = false;
 	non_attacking_queens_graph_n = 0;
+
+
+	// TABLES/create_graph_2.tex
+
 
 	f_subset = false;
 	//std::string subset_label;

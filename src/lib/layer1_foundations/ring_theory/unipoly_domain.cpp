@@ -700,9 +700,19 @@ void unipoly_domain::print_object_sstr(
 			}
 		}
 		else if (i > 1) {
-			ost << x;
-			ost << y;
-			ost << i;
+			if (i < 10) {
+				ost << x;
+				ost << y;
+				ost << i;
+			}
+			else {
+				ost << x;
+				ost << y;
+				ost << "{";
+				ost << i;
+				ost << "}";
+
+			}
 		}
 		f_prev = true;
 	}
@@ -778,7 +788,7 @@ void unipoly_domain::print_factorization_based_off_Mult(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "unipoly_domain::print_factorization_based_off_Mult" << endl;

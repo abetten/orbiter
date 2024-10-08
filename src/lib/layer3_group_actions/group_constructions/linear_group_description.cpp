@@ -75,6 +75,7 @@ linear_group_description::linear_group_description()
 	f_import_group_of_plane = false;
 	//std::string import_group_of_plane_label;
 
+
 	f_lex_least_base = false;
 
 }

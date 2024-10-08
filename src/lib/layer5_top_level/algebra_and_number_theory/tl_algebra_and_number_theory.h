@@ -811,6 +811,9 @@ public:
 	int f_subgroup_by_lattice;
 	int subgroup_by_lattice_orbit_index;
 
+	int f_stabilizer_of_variety;
+	std::string stabilizer_of_variety_label;
+
 	std::vector<std::string> from;
 
 	group_modification_description();
@@ -1219,6 +1222,9 @@ public:
 			int verbose_level);
 	void create_subgroup_by_lattice(
 			int orbit_index,
+			int verbose_level);
+	void do_stabilizer_of_variety(
+			std::string &variety_label,
 			int verbose_level);
 
 };

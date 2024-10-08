@@ -865,6 +865,7 @@ void magma_interface::get_conjugacy_classes_and_normalizers(
 		groups::sims *override_Sims,
 		std::string &label,
 		std::string &label_tex,
+		conjugacy_classes_and_normalizers *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -903,7 +904,7 @@ void magma_interface::get_conjugacy_classes_and_normalizers(
 					"before read_conjugacy_classes_and_normalizers" << endl;
 		}
 		read_conjugacy_classes_and_normalizers(A,
-				fname_output, override_Sims, label_tex, verbose_level);
+				fname_output, override_Sims, label_tex, class_data, verbose_level);
 		if (f_v) {
 			cout << "magma_interface::get_conjugacy_classes_and_normalizers "
 					"after read_conjugacy_classes_and_normalizers" << endl;
@@ -1113,6 +1114,7 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 		std::string &fname,
 		groups::sims *override_sims,
 		std::string &label_latex,
+		conjugacy_classes_and_normalizers *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1126,7 +1128,6 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 				"before read_conjugacy_classes_and_normalizers_from_MAGMA" << endl;
 	}
 
-	conjugacy_classes_and_normalizers *class_data;
 
 	read_conjugacy_classes_and_normalizers_from_MAGMA(
 			A,
@@ -1149,33 +1150,6 @@ void magma_interface::read_conjugacy_classes_and_normalizers(
 				"after class_data->create_classes" << endl;
 	}
 
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers "
-				"before class_data->report" << endl;
-	}
-	class_data->report(
-			override_sims,
-			label_latex,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers "
-				"after class_data->report" << endl;
-	}
-
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers "
-				"before class_data->export_csv" << endl;
-	}
-	class_data->export_csv(
-			override_sims,
-			verbose_level);
-	if (f_v) {
-		cout << "magma_interface::read_conjugacy_classes_and_normalizers "
-				"after class_data->export_csv" << endl;
-	}
-
-
-	FREE_OBJECT(class_data);
 
 	if (f_v) {
 		cout << "magma_interface::read_conjugacy_classes_and_normalizers done" << endl;

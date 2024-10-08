@@ -20,6 +20,9 @@ namespace apps_graph_theory {
 
 graph_theoretic_activity_description::graph_theoretic_activity_description()
 {
+
+	// TABLES/graph_theoretic_activity.tex
+
 	f_find_cliques = false;
 	Clique_finder_control = NULL;
 

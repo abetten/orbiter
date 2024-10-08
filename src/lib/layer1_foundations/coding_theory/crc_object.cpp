@@ -69,7 +69,8 @@ crc_object::~crc_object()
 	}
 }
 
-void crc_object::init(crc_code_description *Descr, int verbose_level)
+void crc_object::init(
+		crc_code_description *Descr, int verbose_level)
 // block_length is needed for crc32
 {
 	int f_v = (verbose_level >= 1);

@@ -239,7 +239,7 @@ public:
 	std::string evaluation_matrix_ring;
 
 
-	// TABLES/projective_space_activity_3.tex
+	// TABLES/projective_space_activity_4.tex
 
 
 

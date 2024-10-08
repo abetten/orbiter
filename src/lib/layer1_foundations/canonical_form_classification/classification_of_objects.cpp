@@ -164,14 +164,15 @@ void classification_of_objects::classify_objects_using_nauty(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int input_idx;
-	int t0, t1, dt;
-	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty" << endl;
 	}
+	int f_vv = false;
 
+	int input_idx;
+	int t0, t1, dt;
+	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty "
@@ -202,7 +203,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		any_combinatorial_object *OwCF;
 
 		OwCF = (any_combinatorial_object *) IS->Objects[input_idx];
-		if (f_v) {
+		if (f_vv) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"OwCF:" << endl;
 			OwCF->print_brief(cout);
@@ -220,7 +221,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"object_label = " << object_label << endl;
 		}
@@ -233,7 +234,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"before process_any_object" << endl;
 		}
@@ -246,9 +247,9 @@ void classification_of_objects::classify_objects_using_nauty(
 					F_reject[input_idx],
 					NO,
 					Enc,
-					verbose_level - 1);
+					verbose_level - 2);
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "classification_of_objects::classify_objects_using_nauty "
 					"after process_any_object" << endl;
 		}

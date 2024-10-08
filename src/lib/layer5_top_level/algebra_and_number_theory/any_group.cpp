@@ -3969,6 +3969,7 @@ void any_group::classes(
 	}
 
 	groups::sims *Sims;
+	interfaces::conjugacy_classes_and_normalizers *class_data;
 
 	Sims = Subgroup_gens->create_sims(verbose_level);
 
@@ -3981,11 +3982,43 @@ void any_group::classes(
 	Magma.get_conjugacy_classes_and_normalizers(
 			A, Sims,
 			label, label_tex,
+			class_data,
 			verbose_level);
 	if (f_v) {
 		cout << "any_group::classes "
 				"after Magma.get_conjugacy_classes_and_normalizers" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "any_group::classes "
+				"before class_data->report" << endl;
+	}
+	class_data->report(
+			Sims,
+			label_tex,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::classes "
+				"after class_data->report" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::classes "
+				"before class_data->export_csv" << endl;
+	}
+	class_data->export_csv(
+			Sims,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::classes "
+				"after class_data->export_csv" << endl;
+	}
+
+
+	FREE_OBJECT(class_data);
+
+
 
 	FREE_OBJECT(Sims);
 

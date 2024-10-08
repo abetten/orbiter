@@ -14319,7 +14319,7 @@ SECTION_CODING_THEORY_CRC_CODES:
 
 
 test_10_4:
-	make CRC_3_128_10
+	#make CRC_3_128_10 # too slow
 	make crc32_test
 	make crc32_test_hexdata
 	make crc32_Berlekamp_matrix
@@ -14346,25 +14346,10 @@ test_10_4:
 	make CRC_F16_BCH_write_code_for_division_Delta
 	make crc_encode_16
 	make crc_encode_32
-	make introduce_errors_16_500000
-	make introduce_errors_32_100000
-	make check_errors_16
-	make check_errors_32
-	make extract_block
 	make crc_test_alfa
 	make crc_test_bravo_10M_3
 	make error_polynomial_bravo_552
 	make crc_test_crc32_10M_3
-	make crc_test_bravo_10M_4
-	make crc_test_crc32_10M_4
-	make crc_test_bravo_10M_5
-	make crc_test_crc32_10M_5
-	make crc_test_bravo_10M_6
-	make crc_test_crc32_10M_6
-	make crc_test_bravo_10M_7
-	make crc_test_crc32_10M_7
-	make crc_test_bravo_10M_8
-	make crc_test_crc32_10M_8
 	make crc_test_bravo_10_loop
 	make crc_test_crc32_10_loop
 	make crc_test_crc32_20M_3
@@ -14425,7 +14410,7 @@ CRC_F256_BCH_code_d2:
 			-BCH 771 2 \
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
-			-export_magma BCH_lq8_n771_d2.magma \
+			-export_magma BCH_q8_n771_d2.magma \
 		-end
 	#pdflatex BCH_codes_q256_n771_d2.tex
 	#$(OPEN) BCH_codes_q256_n771_d2.pdf
@@ -14469,7 +14454,7 @@ CRC_F256_BCH_code_d3:
 			-BCH 771 3 \
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
-			-export_magma BCH_lq8_n771_d3.magma \
+			-export_magma BCH_q8_n771_d3.magma \
 		-end
 	#pdflatex BCH_codes_q256_n771_d3.tex
 	#$(OPEN) BCH_codes_q256_n771_d3.pdf
@@ -14499,10 +14484,13 @@ CRC_F256_BCH_code_d7:
 			-BCH 771 7 \
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
-			-export_magma BCH_lq8_n771_d7.magma \
+			-export_magma BCH_q8_n771_d7.magma \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
 		-end
-	pdflatex BCH_codes_q256_n771_d7.tex
-	$(OPEN) BCH_codes_q256_n771_d7.pdf
+	pdflatex BCH_n771_d7_code_n771_k759_q256.tex
+	$(OPEN) BCH_n771_d7_code_n771_k759_q256.pdf
 
 
 # polynomial of degree 12:
@@ -14533,9 +14521,12 @@ F256_BCH_code_d16:
 		-define F -finite_field -q 256 -end \
 		-define C -code -field F \
 			-BCH 771 16 \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
 		-end
-	pdflatex BCH_codes_q256_n771_d16.tex
-	$(OPEN) BCH_codes_q256_n771_d16.pdf
+	pdflatex BCH_n771_d16_code_n771_k741_q256.tex
+	$(OPEN) BCH_n771_d16_code_n771_k741_q256.pdf
 
 #generator polynomial is X^{30} + 253X^{29} + 174X^{28} + 109X^{27} + 97X^{26} + 144X^{25} + 112X^{24} + 212X^{23} + 192X^{22} + 169X^{21} + 24X^{20} + 150X^{19} + 110X^{18} + 248X^{17} + 3X^{16} + 193X^{15} + 194X^{14} + 205X^{13} + 9X^{12} + 56X^{11} + 95X^{10} + 199X^{9} + 108X^{8} + 58X^{7} + 160X^{6} + 148X^{5} + 138X^{4} + 24X^{3} + 210X^{2} + 26X + 1
 
@@ -14611,8 +14602,8 @@ nth_roots_256:
 		-with F -do -finite_field_activity \
 			-nth_roots 51 \
 		-end
-	pdflatex Nth_roots_q2_n51.tex
-	$(OPEN) Nth_roots_q2_n51.pdf
+	pdflatex Nth_roots_q256_n51.tex
+	$(OPEN) Nth_roots_q256_n51.pdf
 
 
 CRC_F16_roots_51:
@@ -14638,9 +14629,12 @@ CRC_F16_BCH_code_d3:
 		-end \
 		-with C -and F -do -coding_theoretic_activity \
 			-export_checkma_as_projective_set BCH_q16_n51_d3_check_ranks.csv \
+		-end \
+		-with C -and F -do -coding_theoretic_activity \
+			-report \
 		-end
-	#pdflatex BCH_codes_q256_n771_d2.tex
-	#$(OPEN) BCH_codes_q256_n771_d2.pdf
+	pdflatex BCH_n51_d3_code_n51_k47_q16.tex
+	$(OPEN) BCH_n51_d3_code_n51_k47_q16.pdf
 
 #BCH_q16_n51_d3_check.csv
 #BCH_q16_n51_d3_check_ranks.csv
@@ -14707,103 +14701,58 @@ CRC_F16_BCH_write_code_for_division_Delta:
 #0,0,0,0,0,
 
 
+crc_compare_Echo_crc32_Oben_e5:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 256 -end \
+		-define Echo -crc_code -type Echo -block_length 25 -end \
+		-define CRC32 -crc_code -type crc32 -block_length 25 -end \
+		-with F -do \
+			-coding_theoretic_activity \
+				-crc_compare \
+					Oben.mp4 \
+					Echo \
+					CRC32 \
+					5 \
+		-end
 
 
 crc_encode_16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define CRC16 -crc_code -type crc16 -block_length 771 -end \
 		-with F -do \
 			-coding_theoretic_activity \
 				-crc_encode_file_based \
 				$(CRC_FILE).$(CRC_FILE_EXTENSION) \
-				$(CRC_FILE)_crc16.bin crc16 771 \
+				$(CRC_FILE)_crc16.bin CRC16 \
 		-end
 
+#-rw-r--r--  1 betten  staff     646576 Oct  7 08:12 allen_Gates_crc16.bin
+# old:
 #-rw-r--r--  1 betten  staff    646576 Aug 24 14:35 allen_Gates_crc16.bin
-#-rw-r--r--  1 betten  staff  21656232 Aug 24 15:35 javad-allahyari-Fs1E2JXM3Gc-unsplash_crc16.bin
 
 
 
 crc_encode_32:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
+		-define CRC32 -crc_code -type crc32 -block_length 771 -end \
 		-with F -do \
 			-coding_theoretic_activity \
 				-crc_encode_file_based \
 				$(CRC_FILE).$(CRC_FILE_EXTENSION) \
-				$(CRC_FILE)_crc32.bin crc32 771 \
+				$(CRC_FILE)_crc32.bin CRC32 \
 		-end
 
 
+#coding_theory_domain::crc_encode_file_based input file size = 644898
+#coding_theory_domain::crc_encode_file_based nb_blocks = 841
+#Written file allen_Gates_crc32.bin of size 648262
+#nb_blocks = 841
+
+#old:
 #-rw-r--r--  1 betten  staff    648262 Aug 24 14:34 allen_Gates_crc32.bin
 
-
-
-#crc_encode_new:
-#	$(ORBITER) -v 3 \
-#		-define F -finite_field -q 256 -end \
-#		-with F -do \
-#			-coding_theoretic_activity \
-#			-crc_new_file_based $(CRC_FILE).$(CRC_FILE_EXTENSION) \
-#		-end
-
-
-introduce_errors_16_500000:
-	$(ORBITER) -v 3 \
-		-introduce_errors \
-			-input $(CRC_FILE)_crc16.bin \
-			-output $(CRC_FILE)_crc16_e.bin \
-			-block_based_error_generator \
-			-block_length 771 \
-			-threshold 500000 \
-			-file_based_error_generator 500000 \
-			-nb_repeats 30 \
-		-end
-
-
-introduce_errors_32_100000:
-	$(ORBITER) -v 3 \
-		-introduce_errors \
-			-input $(CRC_FILE)_crc32.bin \
-			-output $(CRC_FILE)_crc32_e.bin \
-			-block_based_error_generator \
-			-block_length 771 \
-			-threshold 100000 \
-			-file_based_error_generator 100000 \
-			-nb_repeats 30 \
-		-end
-
-
-check_errors_16:
-	$(ORBITER) -v 3 \
-		-check_errors \
-			-input $(CRC_FILE)_crc16_e.bin \
-			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
-			-crc_type crc16 \
-			-error_log $(CRC_FILE)_crc16_e_pattern.csv \
-			-block_length 771 \
-		-end
-
-check_errors_32:
-	$(ORBITER) -v 3 \
-		-check_errors \
-			-input $(CRC_FILE)_crc32_e.bin \
-			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
-			-crc_type crc32 \
-			-error_log $(CRC_FILE)_crc32_e_pattern.csv \
-			-block_length 771 \
-		-end
-
-
-extract_block:
-	$(ORBITER) -v 3 \
-		-extract_block \
-			-input $(CRC_FILE)_crc32_e.bin \
-			-output $(CRC_FILE)_recovered.$(CRC_FILE_EXTENSION) \
-			-error_log $(CRC_FILE)_crc32_e_pattern.csv \
-			-block_length 771 \
-			-selected_block 813731 \
-		-end
 
 
 
@@ -14852,80 +14801,6 @@ crc_test_crc32_10M_3:
 #crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=3:31
 
 
-
-crc_test_bravo_10M_4:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 4
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 4 nb_undetected=0, time=0:28
-
-crc_test_crc32_10M_4:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 4
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 4 nb_undetected=0, time=3:36
-
-
-crc_test_bravo_10M_5:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 5
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 5 nb_undetected=0, time=0:30
-
-
-crc_test_crc32_10M_5:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 5
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 5 nb_undetected=0, time=3:41
-
-
-
-
-crc_test_bravo_10M_6:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 6
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 6 nb_undetected=0, time=0:30
-
-
-crc_test_crc32_10M_6:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 6
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 6 nb_undetected=0, time=3:45
-
-
-
-crc_test_bravo_10M_7:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 7
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 7 nb_undetected=0, time=0:31
-
-
-crc_test_crc32_10M_7:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 7
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 7 nb_undetected=0, time=3:47
-
-
-crc_test_bravo_10M_8:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 8
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 8 nb_undetected=0, time=0:32
-
-crc_test_crc32_10M_8:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 8
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 8 nb_undetected=0, time=3:50
 
 
 crc_test_bravo_10_loop:
@@ -18306,7 +18181,7 @@ test_13_1:
 	make wreath_product_designs_n4_k2_inc.txt
 	make wreath_product_designs_n8_k6_inc.txt
 	make design_20
-	make design_600
+	make design_600_old
 	make LSQ_5A
 	make LSQ_5B
 	make LSQ_5_c

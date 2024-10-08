@@ -39,6 +39,9 @@ public:
 	ring_theory::longinteger_object centralizer_order;
 	long int goi;
 	data_structures_groups::vector_ge *nice_gens;
+		// a vectors of length 1 containing the
+		// chosen class representative
+
 	long int ngo;
 	int nb_perms;
 	groups::strong_generators *N_gens;

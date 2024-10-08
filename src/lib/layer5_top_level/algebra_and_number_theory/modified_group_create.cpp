@@ -345,6 +345,29 @@ void modified_group_create::modified_group_init(
 		// output in A_modified
 
 	}
+	else if (Descr->f_stabilizer_of_variety) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_stabilizer_of_variety" << endl;
+		}
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before do_stabilizer_of_variety" << endl;
+		}
+		do_stabilizer_of_variety(
+				Descr->stabilizer_of_variety_label,
+				verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after do_stabilizer_of_variety" << endl;
+		}
+
+		// output in A_modified
+
+	}
 
 
 
@@ -1913,6 +1936,63 @@ void modified_group_create::create_subgroup_by_lattice(
 	}
 }
 
+void modified_group_create::do_stabilizer_of_variety(
+		std::string &variety_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety" << endl;
+	}
+
+	canonical_form::variety_object_with_action *Input_Variety;
+
+	Input_Variety = Get_variety(variety_label);
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"Input_Variety = " << Input_Variety->Variety_object->label_txt << endl;
+	}
+
+#if 0
+	geometry::projective_space *Projective_space;
+
+	ring_theory::homogeneous_polynomial_domain *Ring;
+
+
+	std::string label_txt;
+	std::string label_tex;
+
+
+#if 0
+	std::string eqn_txt;
+
+	int f_second_equation;
+	std::string eqn2_txt;
+#endif
+
+
+	int *eqn; // [Ring->get_nb_monomials()]
+	//int *eqn2; // [Ring->get_nb_monomials()]
+
+
+	// the partition into points and lines
+	// must be invariant under the group.
+	// must be sorted if find_point() or identify_lines() is invoked.
+
+	data_structures::set_of_sets *Point_sets;
+
+	data_structures::set_of_sets *Line_sets;
+
+	int f_has_singular_points;
+	std::vector<long int> Singular_points;
+#endif
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety done" << endl;
+	}
+}
 
 
 
