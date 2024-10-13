@@ -90,6 +90,7 @@
 	// for sort
 
 
+#include <cstdint>
 
 
 
@@ -158,7 +159,6 @@
 #ifdef SYSTEMWINDOWS
 //#pragma warning(disable : 4996)
 #include <string>
-#include <cstdint>
 #endif
 
 #define MEMORY_DEBUG
