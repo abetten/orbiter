@@ -1064,7 +1064,7 @@ void substructure_lifting_data::test_identify_solution(int verbose_level)
 		//cout << "k=" << k << " r=" << r << endl;
 
 		load_solution(id, data1, verbose_level - 1);
-		Combi.random_permutation(perm, Iso->size);
+		Combi.Permutations->random_permutation(perm, Iso->size);
 		for (i = 0; i < Iso->size; i++) {
 			data2[i] = data1[perm[i]];
 		}
@@ -2766,7 +2766,7 @@ void substructure_lifting_data::read_orbit_data(
 
 		combinatorics::combinatorics_domain Combi;
 
-		Combi.perm_inverse(orbit_perm, orbit_perm_inv, N);
+		Combi.Permutations->perm_inverse(orbit_perm, orbit_perm_inv, N);
 
 	}
 

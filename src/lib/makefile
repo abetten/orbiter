@@ -80,6 +80,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/domino_change.o \
 		layer1_foundations/combinatorics/geo_parameter.o \
 		layer1_foundations/combinatorics/pentomino_puzzle.o \
+		layer1_foundations/combinatorics/permutations.o \
 		layer1_foundations/combinatorics/polynomial_function_domain.o \
 		layer1_foundations/combinatorics/row_and_col_partition.o \
 		layer1_foundations/combinatorics/tdo_data.o \
@@ -518,7 +519,6 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
 		layer5_top_level/canonical_form/canonical_form_global.o \
-		layer5_top_level/canonical_form/canonical_form_substructure.o \
 		layer5_top_level/canonical_form/classification_of_varieties_nauty.o \
 		layer5_top_level/canonical_form/classification_of_varieties.o \
 		layer5_top_level/canonical_form/combinatorial_object_with_properties.o \

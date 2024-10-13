@@ -72,11 +72,10 @@ static void induced_action_element_print_quick(
 static void induced_action_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void induced_action_element_print_latex_with_print_point_function(
+static void induced_action_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 static void induced_action_element_print_verbose(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -118,8 +117,8 @@ void action_pointer_table::init_function_pointers_induced_action()
 	ptr_element_print = induced_action_element_print;
 	ptr_element_print_quick = induced_action_element_print_quick;
 	ptr_element_print_latex = induced_action_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			induced_action_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			induced_action_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = induced_action_element_print_verbose;
 	ptr_element_code_for_make_element =
 			induced_action_element_code_for_make_element;
@@ -1354,11 +1353,10 @@ static void induced_action_element_print_latex(
 	}
 }
 
-static void induced_action_element_print_latex_with_print_point_function(
+static void induced_action_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
 	int f_v = false;
 	int *Elt = (int *) elt;
@@ -1366,7 +1364,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "induced_action_element_print_latex_with_print_point_function "
+		cout << "induced_action_element_print_latex_with_point_labels "
 				"degree = " << A.degree << endl;
 	}
 	int *p = NEW_int(A.degree);
@@ -1382,8 +1380,8 @@ static void induced_action_element_print_latex_with_print_point_function(
 	}
 	//Combi.perm_print(ost, p, A.degree);
 	//ost << ";";
-	Combi.perm_print_with_print_point_function(ost, p,
-			A.degree, point_label, point_label_data);
+	Combi.Permutations->perm_print_with_point_labels(ost, p,
+			A.degree, Point_labels, data);
 	FREE_int(p);
 
 

@@ -801,7 +801,8 @@ int surface_domain::create_surface_by_symbolic_object(
 	}
 
 	if (nb_coeffs != 20) {
-		cout << "surface_domain::create_surface_by_symbolic_object nb_coeffs != 20" << endl;
+		cout << "surface_domain::create_surface_by_symbolic_object "
+				"nb_coeffs != 20" << endl;
 		exit(1);
 	}
 	// build a surface_object and compute properties of the surface:

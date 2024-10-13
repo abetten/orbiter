@@ -1517,7 +1517,7 @@ void ttp_codes::is_cyclic(
 
 	if (f_v) {
 		cout << "is_cyclic: a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
-		}
+	}
 
 #if CONSTRUCTION_A
 	F.representing_matrix9_R(Aut, q, a, b, c, d);
@@ -1536,9 +1536,9 @@ void ttp_codes::is_cyclic(
 			C, C_inv, Aut, U, perm,
 			verbose_level - 1);
 	if (f_v) {
-		Combi.perm_print(cout, perm, n);
+		Combi.Permutations->perm_print(cout, perm, n);
 		cout << endl;
-		}
+	}
 
 	for (i = 0; i < m; i++) {
 		v1[i] = M[i * n + 0];
@@ -1549,7 +1549,7 @@ void ttp_codes::is_cyclic(
 		cout << "j=" << j << " v1=" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, v1, 1, m, m, 2);
-		}
+	}
 	for (j = 1; j < n; j++) {
 		F.Linear_algebra->mult_matrix_matrix(
 				Aut, v1, v2, m, m, 1,
@@ -1558,12 +1558,12 @@ void ttp_codes::is_cyclic(
 			cout << "j=" << j << " v2=" << endl;
 			Int_vec_print_integer_matrix_width(
 					cout, v2, 1, m, m, 2);
-			}
+		}
 		for (i = 0; i < m; i++) {
 			M2[i * n + j] = v2[i];
 			v1[i] = v2[i];
-			}
 		}
+	}
 	F.Linear_algebra->mult_matrix_matrix(
 			Aut, v1, v2, m, m, 1,
 			0 /* verbose_level */);
@@ -1571,16 +1571,16 @@ void ttp_codes::is_cyclic(
 		cout << "last v2=" << endl;;
 		Int_vec_print_integer_matrix_width(
 				cout, v2, 1, m, m, 2);
-		}
+	}
 	if (v2[0] != 1) {
 		cout << "not an n-cycle" << endl;
 		exit(1);
-		}
+	}
 	for (i = 1; i <m; i++)
 		if (v2[i]) {
 			cout << "not an n-cycle" << endl;
 			exit(1);
-			}
+		}
 	coding_theory::ttp_codes TTp;
 
 
@@ -1594,7 +1594,7 @@ void ttp_codes::is_cyclic(
 		cout << "permuted matrix Hgamma_subfield: " << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, Hgamma_subfield, m, n, n, 2);
-		}
+	}
 
 	F.Linear_algebra->Gauss_int(
 			M2, false /* f_special */,
@@ -1621,7 +1621,7 @@ void ttp_codes::is_cyclic(
 		cout << "normal form: " << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, M2, m, n, n, 2);
-		}
+	}
 
 	ring_theory::unipoly_domain FqX(&F);
 	ring_theory::unipoly_object gen, Xnm1, quo, rem, h, Xma;
@@ -1631,12 +1631,12 @@ void ttp_codes::is_cyclic(
 	for (i = 0; i <= n - m; i++) {
 		a = M2[i];
 		FqX.s_i(gen, i) = a;
-		}
+	}
 	if (f_v) {
 		cout << "generator polynomial: ";
 		FqX.print_object(gen, cout);
 		cout << endl;
-		}
+	}
 	//cout << "creating polynomial of degree " << n << endl;
 	FqX.create_object_of_degree(Xnm1, n);
 	for (i = 0; i <= n; i++) {
@@ -1647,12 +1647,12 @@ void ttp_codes::is_cyclic(
 		else
 			a = 0;
 		FqX.s_i(Xnm1, i) = a;
-		}
+	}
 	if (f_vv) {
 		cout << "X^n-1: ";
 		FqX.print_object(Xnm1, cout);
 		cout << endl;
-		}
+	}
 	FqX.create_object_of_degree(quo, n);
 	FqX.create_object_of_degree(rem, n);
 
@@ -1664,7 +1664,7 @@ void ttp_codes::is_cyclic(
 		cout << "rem=" << endl;
 		FqX.print_object(rem, cout);
 		cout << endl;
-		}
+	}
 
 	int QQ = Q * Q;
 	//finite_field FQQ;
@@ -1675,7 +1675,7 @@ void ttp_codes::is_cyclic(
 	for (i = 0; i <= deg_h; i++) {
 		a = FqX.s_i(quo, i);
 		FqX.s_i(h, i) = a;
-		}
+	}
 	cout << "reverse polynomial h=" << endl;
 	FqX.print_object(h, cout);
 	cout << endl;
@@ -1696,33 +1696,34 @@ void ttp_codes::is_cyclic(
 	subgroup_index = (QQ - 1) / (Q - 1);
 	if (f_vv) {
 		cout << "subgroup_index=" << subgroup_index << endl;
-		}
+	}
 	for (i = 0; i <= deg_h; i++) {
 		a = FqX.s_i(h, i);
 		if (a) {
 			b = F.log_alpha(a);
 			b *= subgroup_index;
 			a = FQQ.alpha_power(b);
-			}
-		FqX.s_i(h, i) = a;
 		}
+		FqX.s_i(h, i) = a;
+	}
 	if (f_vv) {
 		cout << "embedded polynomial:" << endl;
 		FQQX.print_object(h, cout);
 		cout << endl;
-		}
+	}
 	n_index = (QQ - 1) / n;
 	if (f_v) {
 		cout << "n_index=" << n_index << endl;
 		cout << "zero : alpha_power : zeta_n power" << endl;
-		}
+	}
 
 	int *taken, *transversal, tl = 0;
 
 	taken = NEW_int(n);
 	transversal = NEW_int(n);
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
 		taken[i] = false;
+	}
 
 #if 0
 	for (i = 0; i < ; i++) {
@@ -1769,7 +1770,7 @@ void ttp_codes::is_cyclic(
 			d = d % n;
 			if (f_v) {
 				cout << a << " : {" << d << " ";
-				}
+			}
 			if (!taken[d]) {
 				transversal[tl++] = d;
 				taken[d] = true;
@@ -1781,13 +1782,13 @@ void ttp_codes::is_cyclic(
 					taken[j] = true;
 					if (f_v)
 						cout << "," << j;
-					}
-				}
-			if (f_v) {
-				cout << "} : " << c << " : " << d << endl;
 				}
 			}
+			if (f_v) {
+				cout << "} : " << c << " : " << d << endl;
+			}
 		}
+	}
 
 	cout << "we found the following " << q << "-cyclotomic cosets" << endl;
 	for (i = 0; i < tl; i++) {
@@ -1799,9 +1800,9 @@ void ttp_codes::is_cyclic(
 			if (j == transversal[i]) {
 				cout << "}" << endl;
 				break;
-				}
 			}
 		}
+	}
 
 	FREE_int(v1);
 	FREE_int(v2);
@@ -1893,16 +1894,16 @@ void ttp_codes::test_representation(
 				cout << "U4s:" << endl;
 				Int_vec_print_integer_matrix_width(cout, U4s, m, m, m, 2);
 				cout << "perm1:" << endl;
-				Combi.perm_print(cout, perm1, n);
+				Combi.Permutations->perm_print(cout, perm1, n);
 				cout << endl;
 				cout << "perm2:" << endl;
-				Combi.perm_print(cout, perm2, n);
+				Combi.Permutations->perm_print(cout, perm2, n);
 				cout << endl;
 				cout << "perm3:" << endl;
-				Combi.perm_print(cout, perm3, n);
+				Combi.Permutations->perm_print(cout, perm3, n);
 				cout << endl;
 				cout << "perm4:" << endl;
-				Combi.perm_print(cout, perm4, n);
+				Combi.Permutations->perm_print(cout, perm4, n);
 				cout << endl;
 				exit(1);
 				}
@@ -2022,8 +2023,8 @@ int ttp_codes::compute_mindist(
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < n; j++) {
 			AA[i * n + j] = generator_matrix[i * n + j];
-			}
 		}
+	}
 	d = Code.mindist(n, k, f.q, AA,
 			verbose_level - 2, 0 /*idx_zero */, 1 /*idx_one*/,
 			f.private_add_table(), f.private_mult_table());
@@ -2051,19 +2052,19 @@ int ttp_codes::abcd_term(
 		cout << "e3=" << e3 << endl;
 		cout << "e4=" << e4 << endl;
 		exit(1);
-		}
+	}
 	if (e1) {
 		x = f.mult(x, f.power(a, e1));
-		}
+	}
 	if (e2) {
 		x = f.mult(x, f.power(b, e2));
-		}
+	}
 	if (e3) {
 		x = f.mult(x, f.power(c, e3));
-		}
+	}
 	if (e4) {
 		x = f.mult(x, f.power(d, e4));
-		}
+	}
 	return x;
 }
 
@@ -2142,7 +2143,7 @@ void ttp_codes::do_other_stuff(
 		cout << "H_subfield_t:" << endl;
 		Int_vec_print_integer_matrix_width(
 				cout, H_subfield_t, n, m, m, 2);
-		}
+	}
 
 
 	//rk = f.rank_and_basecols(H_subfield, m, base_cols, true, false);
@@ -2151,7 +2152,7 @@ void ttp_codes::do_other_stuff(
 	// copy the generator matrix, since otherwise the representation would not work any more.
 	for (i = 0; i < m * n; i++) {
 		H_subfield_gauss[i] = H_subfield[i];
-		}
+	}
 
 	rk = f->Linear_algebra->Gauss_int(
 			H_subfield_gauss, false /* f_special */,
@@ -2165,7 +2166,7 @@ void ttp_codes::do_other_stuff(
 		cout << "base cols: " << endl;
 		for (j = 0; j < rk; j++) {
 			cout << base_cols[j] << " ";
-			}
+		}
 		cout << endl;
 
 		cout << "H_subfield after Gaussian elimination:" << endl;
@@ -2174,7 +2175,7 @@ void ttp_codes::do_other_stuff(
 		f->Io->latex_matrix(cout,
 				f_elements_exponential,
 				symbol_for_print_subfield, H_subfield_gauss, m, n);
-		}
+	}
 
 
 	int kernel_m, kernel_n, k;
@@ -2192,7 +2193,7 @@ void ttp_codes::do_other_stuff(
 		Int_vec_print_integer_matrix_width(
 				cout,
 				G_subfield_t, kernel_m, kernel_n, kernel_n, 2);
-		}
+	}
 
 	f->Linear_algebra->transpose_matrix(
 			G_subfield_t,
@@ -2203,7 +2204,7 @@ void ttp_codes::do_other_stuff(
 		cout << "G_subfield:" << endl;
 		Int_vec_print_integer_matrix_width(cout,
 				G_subfield, k, n, n, 2);
-		}
+	}
 
 	f->Linear_algebra->Gauss_int(
 			G_subfield, false /* f_special */,
@@ -2217,12 +2218,12 @@ void ttp_codes::do_other_stuff(
 				cout,
 				G_subfield, k, n, n, 2);
 		cout << "rk=" << rk << endl;
-		}
+	}
 
 	if (q == 4) {
 		for (i = 0; i < k * n; i++) {
 			G_subfield_bar[i] = f->bar(G_subfield[i]);
-			}
+		}
 		f->Linear_algebra->transpose_matrix(
 				G_subfield_bar,
 				G_subfield_bar_t, k, n);
@@ -2237,8 +2238,8 @@ void ttp_codes::do_other_stuff(
 			Int_vec_print_integer_matrix_width(
 					cout,
 					GH, k, m, m, 2);
-			}
 		}
+	}
 
 
 
@@ -2251,9 +2252,9 @@ void ttp_codes::do_other_stuff(
 		cout << "kernel cols: " << endl;
 		for (j = 0; j < nb_kernel_cols; j++) {
 			cout << kernel_cols[j] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 
 	int_submatrix_all_rows(
@@ -2264,7 +2265,7 @@ void ttp_codes::do_other_stuff(
 		Int_vec_print_integer_matrix_width(
 				cout,
 				MMM, m, nb_kernel_cols, nb_kernel_cols, 2);
-		}
+	}
 
 #if 0
 	int dist;
@@ -2288,16 +2289,16 @@ void ttp_codes::do_other_stuff(
 			f_v = true;
 			f_vv = true;
 			f_vvv = true;
-			}
+		}
 		if (f_vv) {
 			Int_vec_print_integer_matrix_width(cout, H_subfield, m, j + 1, n, 2);
 			cout << endl;
-			}
+		}
 		if (!rc.check_rank_matrix_input(j + 1, H_subfield, n, f_vv, f_vvv, false)) {
 			cout << "j+1=" << j + 1 << ", does not have any " << r << " independent" << endl;
 			exit(1);
-			}
 		}
+	}
 	cout << "any " << r << " are independent" << endl;
 #endif
 	cout << "we got a " << m << " x " << n << " check matrix for an ";
@@ -2309,17 +2310,17 @@ void ttp_codes::do_other_stuff(
 	if (f_construction_A) {
 		F->Io->display_T2(cout);
 		F->Io->display_N2(cout);
-		}
+	}
 	else if (f_construction_B) {
 		F->Io->display_T3(cout);
 		F->Io->display_N3(cout);
-		}
+	}
 
 
 
 	for (i = 0; i < m * m; i++) {
 		Aut[i] = 0;
-		}
+	}
 
 	linear_algebra::representation_theory_domain RF;
 
@@ -2339,7 +2340,7 @@ void ttp_codes::do_other_stuff(
 		cout << "Frobenius:" << endl;
 
 		RF.representing_matrix9b(U, beta);
-		}
+	}
 
 	else if (f_construction_B) {
 		Aut[0*m+0] = 1;
@@ -2354,11 +2355,11 @@ void ttp_codes::do_other_stuff(
 		cout << "Frobenius:" << endl;
 
 		RF.representing_matrix8_V(U, beta);
-		}
+	}
 
 	if (f_v) {
 		cout << "computing action on code" << endl;
-		}
+	}
 	action_on_code(
 			*F, *f, m, n, M, H_subfield,
 			C, C_inv, Aut, U, perm, verbose_level);
@@ -2366,7 +2367,7 @@ void ttp_codes::do_other_stuff(
 
 	if (f_v) {
 		cout << "testing if cyclic" << endl;
-		}
+	}
 
 	int a, b, c, d;
 #if 1
@@ -2377,20 +2378,20 @@ void ttp_codes::do_other_stuff(
 					*F, *f, Aut, M, H_subfield,
 					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
-			}
+		}
 		if (q == 8 && !f_hyperoval) {
 			test_cyclic(
 					*F, *f, Aut, M, H_subfield,
 					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
-			}
+		}
 		if (q == 5) {
 			test_cyclic(
 					*F, *f, Aut, M, H_subfield,
 					C, C_inv, U, q, Q, m, n, beta, 1);
 			exit(1);
-			}
 		}
+	}
 	else if (f_construction_B) {
 
 #if 0
@@ -2401,7 +2402,7 @@ void ttp_codes::do_other_stuff(
 			1,3,0,1,
 			1,9,0,1,
 			1,0,0,3
-			};
+		};
 		for (i = 0; i < 5; i++) {
 			a = abcd[i * 4 + 0];
 			b = abcd[i * 4 + 1];
@@ -2414,10 +2415,10 @@ void ttp_codes::do_other_stuff(
 			action_on_code(
 					F, f, m, n, M, H_subfield,
 					C, C_inv, Aut, U, perm, true, false);
-			}
+		}
 		exit(1);
 #endif
-		}
+	}
 
 
 	if (q == 4) {
@@ -2425,22 +2426,22 @@ void ttp_codes::do_other_stuff(
 				*F, *f, Aut, M, H_subfield,
 				C, C_inv, U, q, Q, m, n, beta, 1);
 		exit(1);
-		}
+	}
 
 #endif
 
 #if 1
 	if (f_v) {
 		cout << "testing the representation" << endl;
-		}
+	}
 
 	for (i = 0; i < 100; i++) {
 		test_representation(*F, *f, Q, beta, m, n, H_subfield);
-		}
+	}
 
 	if (f_v) {
 		cout << "representation tested 100 times" << endl;
-		}
+	}
 #endif
 
 	choose_abcd_first(*F, Q, a, b, c, d);
@@ -2449,10 +2450,10 @@ void ttp_codes::do_other_stuff(
 
 		if (f_construction_A) {
 			RF.representing_matrix9_R(Aut, q, a, b, c, d);
-			}
+		}
 		else if (f_construction_B) {
 			RF.representing_matrix8_R(Aut, q, a, b, c, d);
-			}
+		}
 
 		//Int_vec_print_integer_matrix_width(cout, Aut, m, m, m, 2);
 
@@ -2462,32 +2463,32 @@ void ttp_codes::do_other_stuff(
 			RF.representing_matrix9_U(U, a, b, c, d, beta);
 			//cout << "U:" << endl;
 			//Int_vec_print_integer_matrix_width(cout, U, m, m, m, 2);
-			}
+		}
 		else if (f_construction_B) {
 			RF.representing_matrix8_U(U, a, b, c, d, beta);
 			//cout << "U:" << endl;
 			//Int_vec_print_integer_matrix_width(cout, U, m, m, m, 2);
-			}
+		}
 
 		//cout << "action on code: " << endl;
 		action_on_code(
 				*F, *f, m, n, M, H_subfield,
 				C, C_inv, Aut, U, perm, verbose_level);
 
-		if (Combi.perm_order(perm, n) == n) {
+		if (Combi.Permutations->perm_order(perm, n) == n) {
 			cout << "cyclic" << endl;
-			}
+		}
 #if 0
 		if (perm_order(perm, n) == n) {
 			is_cyclic(F, f,
 				Aut, M, H_subfield, C, C_inv, U,
 				q, Q, m, n, beta, a, b, c, d);
 			exit(1);
-			}
+		}
 #endif
 
 
-		} while (choose_abcd_next(*F, Q, a, b, c, d));
+	} while (choose_abcd_next(*F, Q, a, b, c, d));
 }
 
 

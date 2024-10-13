@@ -849,7 +849,7 @@ void flag_orbit_folding::stabilizer_action_init(
 		if (f_v) {
 			cout << "generator " << h << ":" << endl;
 			Iso->A->Group_element->element_print_quick(Elt, cout);
-			Combi.perm_print(cout, stabilizer_generators[h], Iso->size);
+			Combi.Permutations->perm_print(cout, stabilizer_generators[h], Iso->size);
 			cout << endl;
 		}
 	}
@@ -883,7 +883,7 @@ void flag_orbit_folding::stabilizer_action_add_generator(
 	if (f_vv) {
 		cout << "generator " << h << ":" << endl;
 		Iso->A->Group_element->element_print_quick(Elt, cout);
-		Combi.perm_print(cout, new_gens[h], Iso->size);
+		Combi.Permutations->perm_print(cout, new_gens[h], Iso->size);
 		cout << endl;
 	}
 	stabilizer_nb_generators++;

@@ -3858,7 +3858,7 @@ void ring_theory_global::do_export_partials(
 	}
 
 	homogeneous_polynomial_domain *Poly_reduced_degree;
-	int *gradient;
+	//int *gradient;
 
 	Poly_reduced_degree = NEW_OBJECT(homogeneous_polynomial_domain);
 

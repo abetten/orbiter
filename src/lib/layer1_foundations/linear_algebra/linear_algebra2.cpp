@@ -876,14 +876,14 @@ void linear_algebra::map_points_to_points_projectively(
 		}
 
 		cnt = 0;
-		Combi.first_lehmercode(d + 1, lehmercode);
+		Combi.Permutations->first_lehmercode(d + 1, lehmercode);
 		while (true) {
 			if (f_v) {
 				cout << "lehmercode: ";
 				Int_vec_print(cout, lehmercode, d + 1);
 				cout << endl;
 			}
-			Combi.lehmercode_to_permutation(d + 1, lehmercode, perm);
+			Combi.Permutations->lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
 				Int_vec_print(cout, perm, d + 1);
@@ -915,7 +915,7 @@ void linear_algebra::map_points_to_points_projectively(
 				cnt++;
 			}
 
-			if (!Combi.next_lehmercode(d + 1, lehmercode)) {
+			if (!Combi.Permutations->next_lehmercode(d + 1, lehmercode)) {
 				break;
 			}
 		}

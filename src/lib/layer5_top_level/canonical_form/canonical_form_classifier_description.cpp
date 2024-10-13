@@ -78,7 +78,7 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 	f_algorithm_nauty = false;
 	f_save_nauty_input_graphs = false;
 
-	f_algorithm_substructure = false;
+	//f_algorithm_substructure = false;
 
 
 	f_has_nauty_output = false;
@@ -237,12 +237,14 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-save_nauty_input_graphs " << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-algorithm_substructure") == 0) {
 			f_algorithm_substructure = true;
 			if (f_v) {
 				cout << "-algorithm_substructure" << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-has_nauty_output") == 0) {
 			f_has_nauty_output = true;
 			if (f_v) {
@@ -340,9 +342,11 @@ void canonical_form_classifier_description::print()
 	if (f_save_nauty_input_graphs) {
 		cout << "-save_nauty_input_graphs " << endl;
 	}
+#if 0
 	if (f_algorithm_substructure) {
 		cout << "-algorithm_substructure" << endl;
 	}
+#endif
 	if (f_has_nauty_output) {
 		cout << "-has_nauty_output" << endl;
 	}

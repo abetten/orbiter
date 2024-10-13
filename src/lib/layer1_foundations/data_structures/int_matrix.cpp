@@ -135,7 +135,7 @@ void int_matrix::sort_rows(
 		cout << "int_matrix::sort_rows after Sorting.Heapsort_general" << endl;
 	}
 
-	Combi.perm_inverse(perm_inv, perm, m);
+	Combi.Permutations->perm_inverse(perm_inv, perm, m);
 
 
 	if (f_v) {

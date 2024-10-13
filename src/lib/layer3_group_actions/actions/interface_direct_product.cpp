@@ -84,11 +84,10 @@ static void direct_product_group_element_print_quick(
 static void direct_product_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void direct_product_group_element_print_latex_with_print_point_function(
+static void direct_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 //static void direct_product_group_element_print_as_permutation(
 //	action &A, void *elt, std::ostream &ost);
 static void direct_product_group_element_print_verbose(
@@ -125,8 +124,8 @@ void action_pointer_table::init_function_pointers_direct_product_group()
 	ptr_element_print = direct_product_group_element_print;
 	ptr_element_print_quick = direct_product_group_element_print_quick;
 	ptr_element_print_latex = direct_product_group_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			direct_product_group_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			direct_product_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = direct_product_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			direct_product_group_element_code_for_make_element;
@@ -470,13 +469,12 @@ static void direct_product_group_element_print_latex(
 }
 
 
-static void direct_product_group_element_print_latex_with_print_point_function(
+static void direct_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
-	cout << "direct_product_group_element_print_latex_with_print_point_function "
+	cout << "direct_product_group_element_print_latex_with_point_labels "
 			"not yet implemented" << endl;
 	exit(1);
 

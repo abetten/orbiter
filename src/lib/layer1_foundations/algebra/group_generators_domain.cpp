@@ -50,7 +50,7 @@ void group_generators_domain::generators_symmetric_group(
 	nb_perms = deg - 1;
 	perms = NEW_int(nb_perms * deg);
 	for (i = 0; i < nb_perms; i++) {
-		Combi.perm_identity(perms + i * deg, deg);
+		Combi.Permutations->perm_identity(perms + i * deg, deg);
 		perms[i * deg + i] = i + 1;
 		perms[i * deg + i + 1] = i;
 	}
@@ -60,7 +60,7 @@ void group_generators_domain::generators_symmetric_group(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -99,7 +99,7 @@ void group_generators_domain::generators_cyclic_group(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -145,7 +145,7 @@ void group_generators_domain::generators_dihedral_group(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -186,7 +186,7 @@ void group_generators_domain::generators_dihedral_involution(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -224,7 +224,7 @@ void group_generators_domain::generators_identity_group(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -249,7 +249,7 @@ void group_generators_domain::generators_Hall_reflection(
 	degree = nb_pairs * 2;
 	nb_perms = 1;
 	perms = NEW_int(nb_perms * degree);
-	Combi.perm_identity(perms, degree);
+	Combi.Permutations->perm_identity(perms, degree);
 	for (i = 0; i < nb_pairs; i++) {
 		perms[2 * i] = 2 * i + 1;
 		perms[2 * i + 1] = 2 * i;
@@ -262,7 +262,7 @@ void group_generators_domain::generators_Hall_reflection(
 	}
 	if (f_vv) {
 		for (i = 0; i < 1; i++) {
-			Combi.perm_print(cout, perms + i * degree, degree);
+			Combi.Permutations->perm_print(cout, perms + i * degree, degree);
 			cout << endl;
 		}
 	}
@@ -289,12 +289,12 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 	perms = NEW_int(nb_perms * degree);
 	h = 0;
 	for (i = 0; i < nb_pairs; i++, h++) {
-		Combi.perm_identity(perms + h * degree, degree);
+		Combi.Permutations->perm_identity(perms + h * degree, degree);
 		perms[h * degree + 2 * i] = 2 * i + 1;
 		perms[h * degree + 2 * i + 1] = 2 * i;
 	}
 	for (i = 0; i < nb_pairs - 1; i++, h++) {
-		Combi.perm_identity(perms + h * degree, degree);
+		Combi.Permutations->perm_identity(perms + h * degree, degree);
 		perms[h * degree + 2 * i] = 2 * (i + 1);
 		perms[h * degree + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[h * degree + 2 * (i + 1)] = 2 * i;
@@ -313,7 +313,7 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * degree, degree);
+			Combi.Permutations->perm_print(cout, perms + i * degree, degree);
 			cout << endl;
 		}
 	}
@@ -387,14 +387,14 @@ void group_generators_domain::generators_Bn_group(
 	perms = NEW_int(nb_perms * deg);
 	j = 0;
 	for (i = 0; i < n - 1; i++, j++) {
-		Combi.perm_identity(perms + j * deg, deg);
+		Combi.Permutations->perm_identity(perms + j * deg, deg);
 		perms[j * deg + 2 * i] = 2 * (i + 1);
 		perms[j * deg + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[j * deg + 2 * (i + 1)] = 2 * i;
 		perms[j * deg + 2 * (i + 1) + 1] = 2 * i + 1;
 	}
 	for (i = 0; i < n; i++, j++) {
-		Combi.perm_identity(perms + j * deg, deg);
+		Combi.Permutations->perm_identity(perms + j * deg, deg);
 		perms[j * deg + 2 * i] = 2 * i + 1;
 		perms[j * deg + 2 * i + 1] = 2 * i;
 	}
@@ -408,7 +408,7 @@ void group_generators_domain::generators_Bn_group(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
-			Combi.perm_print(cout, perms + i * deg, deg);
+			Combi.Permutations->perm_print(cout, perms + i * deg, deg);
 			cout << endl;
 		}
 	}
@@ -437,16 +437,16 @@ void group_generators_domain::generators_direct_product(
 	perms3 = NEW_int(nb_perms3 * deg3);
 	id1 = NEW_int(deg1);
 	id2 = NEW_int(deg2);
-	Combi.perm_identity(id1, deg1);
-	Combi.perm_identity(id2, deg2);
+	Combi.Permutations->perm_identity(id1, deg1);
+	Combi.Permutations->perm_identity(id2, deg2);
 	
 	for (i = 0; i < nb_perms1; i++) {
-		Combi.perm_direct_product(deg1, deg2,
+		Combi.Permutations->perm_direct_product(deg1, deg2,
 				perms1 + i * deg1, id2, perms3 + k * deg3);
 		k++;
 	}
 	for (i = 0; i < nb_perms2; i++) {
-		Combi.perm_direct_product(deg1, deg2, id1,
+		Combi.Permutations->perm_direct_product(deg1, deg2, id1,
 				perms2 + i * deg2, perms3 + k * deg3);
 		k++;
 	}
@@ -454,7 +454,7 @@ void group_generators_domain::generators_direct_product(
 	FREE_int(id2);
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
-			Combi.perm_print(cout, perms3 + i * deg3, deg3);
+			Combi.Permutations->perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
 		}
 	}
@@ -488,11 +488,11 @@ void group_generators_domain::generators_concatenate(
 	
 	k = 0;
 	for (i = 0; i < nb_perms1; i++) {
-		Combi.perm_move(perms1 + i * deg1, perms3 + k * deg3, deg3);
+		Combi.Permutations->perm_move(perms1 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
 	}
 	for (i = 0; i < nb_perms2; i++) {
-		Combi.perm_move(perms2 + i * deg1, perms3 + k * deg3, deg3);
+		Combi.Permutations->perm_move(perms2 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
 	}
 	if (f_v) {
@@ -500,7 +500,7 @@ void group_generators_domain::generators_concatenate(
 	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
-			Combi.perm_print(cout, perms3 + i * deg3, deg3);
+			Combi.Permutations->perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
 		}
 	}

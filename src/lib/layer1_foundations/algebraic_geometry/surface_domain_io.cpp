@@ -388,6 +388,7 @@ void surface_domain::print_point(
 	Int_vec_print_fully(ost, v, 4);
 }
 
+#if 0
 void surface_domain::sstr_line_label(
 		std::stringstream &sstr, long int pt)
 {
@@ -401,6 +402,21 @@ void surface_domain::sstr_line_label(
 	}
 	sstr << Schlaefli->Labels->Line_label_tex[pt];
 }
+
+void surface_domain::sstr_tritangent_plane_label(
+		std::stringstream &sstr, long int pt)
+{
+	if (pt >= 45) {
+		cout << "surface_domain::sstr_tritangent_plane_label pt >= 45, pt=" << pt << endl;
+		exit(1);
+	}
+	if (pt < 0) {
+		cout << "surface_domain::sstr_tritangent_plane_label pt < 0, pt=" << pt << endl;
+		exit(1);
+	}
+	sstr << Schlaefli->Labels->Tritangent_plane_label_tex[pt];
+}
+#endif
 
 void surface_domain::print_one_line_tex(
 		std::ostream &ost,
@@ -448,7 +464,7 @@ void surface_domain::print_one_line_tex(
 	//ost << "\\right]_{" << Lines[i] << "}" << endl;
 
 
-	//ost << "_{" << Lines[idx] << "}" << endl;
+	ost << "_{" << line_rk << "}" << endl;
 #endif
 
 #if 0
@@ -466,31 +482,19 @@ void surface_domain::print_one_line_tex(
 
 	Int_vec_copy(v6, vv, 6); // mistake found by Alice Hui
 
-	//long int klein_rk;
-	//klein_rk = O->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+	long int klein_rk;
+	klein_rk = O->Orthogonal_indexing->Qplus_rank(
+			vv, 1, 5, 0 /* verbose_level*/);
 
 	ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 			<< v6[2] << "," << v6[3] << "," << v6[4]
 			<< "," << v6[5] << " ";
 	ost << ")";
-	//ost << "_{" << klein_rk << "}";
+	ost << "_{" << klein_rk << "}";
 	ost << endl;
 	ost << "$$" << endl;
 }
 
-// #############################################################################
-// globals:
-// #############################################################################
-
-
-void callback_surface_domain_sstr_line_label(
-		std::stringstream &sstr, long int pt, void *data)
-{
-	surface_domain *D = (surface_domain *) data;
-
-	//cout << "callback_surface_domain_sstr_line_label pt=" << pt << endl;
-	D->sstr_line_label(sstr, pt);
-}
 
 
 

@@ -108,7 +108,8 @@ void classification_of_objects::perform_classification(
 		geometry::projective_space *P,
 		data_input_stream *IS,
 		int verbose_level)
-// called from layer5_applications::apps_combinatorics::combinatorial_object::do_canonical_form_not_PG
+// called from
+// layer5_applications::apps_combinatorics::combinatorial_object_stream::do_canonical_form
 {
 	int f_v = (verbose_level >= 1);
 

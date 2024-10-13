@@ -332,7 +332,9 @@ void surface_object_properties::compute_properties(
 
 
 
-	Sorting.lint_vec_heapsort(SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0]);
+	Sorting.lint_vec_heapsort(
+			SO->Variety_object->Point_sets->Sets[0],
+			SO->Variety_object->Point_sets->Set_size[0]);
 
 	if (f_v) {
 		cout << "surface_object::compute_properties "
@@ -343,7 +345,9 @@ void surface_object_properties::compute_properties(
 		cout << "surface_object_properties::compute_properties "
 				"The points on the surface are:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
-				SO->Variety_object->Point_sets->Sets[0], SO->Variety_object->Point_sets->Set_size[0], 1, false /* f_tex */);
+				SO->Variety_object->Point_sets->Sets[0],
+				SO->Variety_object->Point_sets->Set_size[0],
+				1, false /* f_tex */);
 	}
 
 
@@ -410,7 +414,8 @@ void surface_object_properties::compute_properties(
 		cout << "surface_object::compute_properties "
 				"computing Eckardt points:" << endl;
 	}
-	Type_lines_on_point->get_class_by_value(Eckardt_points_index,
+	Type_lines_on_point->get_class_by_value(
+			Eckardt_points_index,
 		nb_Eckardt_points, 3 /* value */, 0 /* verbose_level */);
 	Sorting.int_vec_heapsort(Eckardt_points_index, nb_Eckardt_points);
 	if (f_v) {
@@ -504,8 +509,11 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 	Double_points = NEW_lint(nb_Double_points);
-	Int_vec_apply_lint(Double_points_index, SO->Variety_object->Point_sets->Sets[0],
-		Double_points, nb_Double_points);
+	Int_vec_apply_lint(
+			Double_points_index,
+			SO->Variety_object->Point_sets->Sets[0],
+		Double_points,
+		nb_Double_points);
 	if (f_v) {
 		cout << "computing Double points done, we found "
 				<< nb_Double_points << " Double points" << endl;
@@ -533,7 +541,9 @@ void surface_object_properties::compute_properties(
 		cout << endl;
 	}
 	Single_points = NEW_lint(nb_Single_points);
-	Int_vec_apply_lint(Single_points_index, SO->Variety_object->Point_sets->Sets[0],
+	Int_vec_apply_lint(
+			Single_points_index,
+			SO->Variety_object->Point_sets->Sets[0],
 			Single_points, nb_Single_points);
 	if (f_v) {
 		cout << "computing Single points done, we found "
@@ -547,7 +557,10 @@ void surface_object_properties::compute_properties(
 
 
 	Pts_not_on_lines = NEW_lint(SO->Variety_object->Point_sets->Set_size[0]);
-	Lint_vec_copy(SO->Variety_object->Point_sets->Sets[0], Pts_not_on_lines, SO->Variety_object->Point_sets->Set_size[0]);
+	Lint_vec_copy(
+			SO->Variety_object->Point_sets->Sets[0],
+			Pts_not_on_lines,
+			SO->Variety_object->Point_sets->Set_size[0]);
 	nb_pts_not_on_lines = SO->Variety_object->Point_sets->Set_size[0];
 
 	int j, a, b, idx, h;
@@ -865,7 +878,8 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(
 	int *w2;
 	int r, ns;
 
-	Kernel = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials()
+	Kernel = NEW_int(
+			SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials()
 			* SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 	w1 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 	w2 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
@@ -917,11 +931,13 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 				"matrix_of_line_intersection_graph" << endl;
 	}
 	SO->Surf->compute_adjacency_matrix_of_line_intersection_graph(
-		Adj_line_intersection_graph, SO->Variety_object->Line_sets->Sets[0], SO->Variety_object->Line_sets->Set_size[0], verbose_level - 2);
+		Adj_line_intersection_graph,
+		SO->Variety_object->Line_sets->Sets[0],
+		SO->Variety_object->Line_sets->Set_size[0],
+		verbose_level - 2);
 	if (f_v) {
-		cout << "surface_object_properties::compute_adjacency_matrix_of_"
-				"line_intersection_graph after Surf->compute_adjacency_"
-				"matrix_of_line_intersection_graph" << endl;
+		cout << "surface_object_properties::compute_adjacency_matrix_of_line_intersection_graph "
+				"after Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
 	}
 
 	Line_neighbors = NEW_OBJECT(data_structures::set_of_sets);
@@ -1728,6 +1744,7 @@ void surface_object_properties::print_equation(
 		std::ostream &ost)
 {
 	ost << "\\subsection*{The equation}" << endl;
+	ost << "surface\\_object\\_properties::print\\_equation\\\\ ";
 	ost << "The equation of the surface ";
 	ost << " is :" << endl;
 
@@ -1772,6 +1789,7 @@ void surface_object_properties::print_summary(
 {
 	ost << "\\subsection*{Summary}" << endl;
 
+	ost << "surface\\_object\\_properties::print\\_summary\\\\ ";
 
 	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;

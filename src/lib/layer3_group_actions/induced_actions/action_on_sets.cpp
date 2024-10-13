@@ -93,7 +93,7 @@ void action_on_sets::init(
 			(void **) sets, perm_inv,
 			action_on_sets_compare,
 			this);
-	Combi.perm_inverse(perm_inv, perm, nb_sets);
+	Combi.Permutations->perm_inverse(perm_inv, perm, nb_sets);
 
 	test_sets();
 

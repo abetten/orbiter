@@ -528,14 +528,12 @@ void group_element::element_print_latex_with_extras(
 }
 
 
-void group_element::element_print_latex_with_print_point_function(
+void group_element::element_print_latex_with_point_labels(
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr,
-			long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
-	(*A->ptr->ptr_element_print_latex_with_print_point_function)(
-				*A, elt, ost, point_label, point_label_data);
+	(*A->ptr->ptr_element_print_latex_with_point_labels)(
+				*A, elt, ost, Point_labels, data);
 }
 
 void group_element::element_print_verbose(
@@ -647,7 +645,7 @@ void group_element::cycle_type(
 	}
 
 
-	Combi.perm_cycle_type(
+	Combi.Permutations->perm_cycle_type(
 			perm, A->degree, cycles, nb_cycles);
 
 	FREE_int(perm);
@@ -695,27 +693,12 @@ void group_element::element_print_as_permutation_with_offset(
 				"after compute_permutation" << endl;
 	}
 
-#if 0
-	for (i = 0; i < A->degree; i++) {
-		if (f_vv) {
-			cout << "group_element::element_print_as_permutation_with_offset "
-					"computing image of " << i << endl;
-		}
-		j = element_image_of(i,
-				elt, 0 /*verbose_level - 2*/);
-		if (f_vv) {
-			cout << "group_element::element_print_as_permutation_with_offset "
-					<< i << "->" << j << endl;
-		}
-		perm[i] = j;
-	}
-#endif
 	//perm_print(ost, perm, degree);
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
 				"before Combi.perm_print_offset" << endl;
 	}
-	Combi.perm_print_offset(
+	Combi.Permutations->perm_print_offset(
 			ost, perm, A->degree, offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
@@ -776,7 +759,7 @@ void group_element::element_print_as_permutation_with_offset_and_max_cycle_lengt
 #endif
 	//perm_print(ost, v, degree);
 
-	Combi.perm_print_offset(
+	Combi.Permutations->perm_print_offset(
 			ost, perm, A->degree, offset,
 			f_print_cycles_of_length_one,
 			f_cycle_length,
@@ -816,7 +799,7 @@ int group_element::element_signum_of_permutation(
 	}
 #endif
 
-	sgn = Combi.perm_signum(perm, A->degree);
+	sgn = Combi.Permutations->perm_signum(perm, A->degree);
 
 	FREE_int(perm);
 

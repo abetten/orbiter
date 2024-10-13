@@ -414,7 +414,7 @@ void string_tools::scan_permutation_from_stream(
 	//l = s_l();
 	//perm.m_l(l);
 	//cycle.m_l_n(l);
-	Combi.perm_identity(perm, l);
+	Combi.Permutations->perm_identity(perm, l);
 	//perm.one();
 	while (true) {
 		c = get_character(is, verbose_level - 2);
@@ -552,7 +552,7 @@ void string_tools::scan_permutation_from_stream(
 	degree = largest_point + 1;
 	if (f_v) {
 		cout << "read permutation: ";
-		Combi.perm_print(cout, perm, degree);
+		Combi.Permutations->perm_print(cout, perm, degree);
 		cout << endl;
 	}
 	FREE_int(cycle);

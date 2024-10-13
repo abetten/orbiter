@@ -10,7 +10,6 @@ MODULES = \
 	canonical_form_classifier_description.o \
 	canonical_form_classifier.o \
 	canonical_form_global.o \
-	canonical_form_substructure.o \
 	classification_of_varieties_nauty.o \
 	classification_of_varieties.o \
 	combinatorial_object_with_properties.o \

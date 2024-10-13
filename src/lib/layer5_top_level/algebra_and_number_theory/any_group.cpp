@@ -1400,7 +1400,7 @@ void any_group::apply_elements_to_set_csv(
 	cout << endl;
 
 
-	if (!Combi.is_permutation(Rk, n1)) {
+	if (!Combi.Permutations->is_permutation(Rk, n1)) {
 		cout << "any_group::apply_elements_to_set_csv "
 				"The set Rk is *not* a permutation" << endl;
 		exit(1);
@@ -2060,7 +2060,7 @@ void any_group::automorphism_by_generator_images(
 
 		int c;
 
-		c = Combi.is_permutation(
+		c = Combi.Permutations->is_permutation(
 				perm, go);
 		if (c) {
 			if (f_vv) {
@@ -2074,7 +2074,7 @@ void any_group::automorphism_by_generator_images(
 
 		if (f_vv) {
 			cout << "any_group::automorphism_by_generator_images h = " << h << ", perm = ";
-			Combi.perm_print_list(
+			Combi.Permutations->perm_print_list(
 						cout, perm, go);
 			cout << endl;
 		}
@@ -2128,7 +2128,7 @@ void any_group::automorphism_by_generator_images_save(
 
 	for (h = 0; h < go; h++) {
 		Table[h * nb_c + 0] = std::to_string(h);
-		ord = Combi.perm_order(
+		ord = Combi.Permutations->perm_order(
 				Perms + h * go, go);
 		Table[h * nb_c + 1] = std::to_string(ord);
 		Table[h * nb_c + 2] = "\"" + Int_vec_stringify(Images + h * n, n) + "\"";

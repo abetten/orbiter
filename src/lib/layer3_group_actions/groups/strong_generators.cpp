@@ -1971,12 +1971,10 @@ void strong_generators::print_generators_in_different_action_tex(
 }
 
 
-void strong_generators::print_generators_tex_with_print_point_function(
+void strong_generators::print_generators_tex_with_point_labels(
 		actions::action *A_given,
 		std::ostream &ost,
-		void (*point_label)(
-				stringstream &sstr, long int pt, void *data),
-		void *point_label_data)
+		std::string *Point_labels, void *data)
 {
 	int i;
 	ring_theory::longinteger_object go;
@@ -1990,9 +1988,9 @@ void strong_generators::print_generators_tex_with_print_point_function(
 		A->Group_element->element_print_latex(gens->ith(i), ost);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		A_given->Group_element->element_print_latex_with_print_point_function(
+		A_given->Group_element->element_print_latex_with_point_labels(
 				gens->ith(i), ost,
-				point_label, point_label_data);
+				Point_labels, data);
 		ost << "$$" << endl;
 	}
 	//ost << "$$" << endl;
@@ -2232,12 +2230,10 @@ void strong_generators::print_elements_latex_ost(
 	FREE_int(Elt);
 }
 
-void strong_generators::print_elements_latex_ost_with_print_point_function(
+void strong_generators::print_elements_latex_ost_with_point_labels(
 		actions::action *A_given,
 		std::ostream &ost,
-		void (*point_label)(
-				std::stringstream &sstr, long int pt, void *data),
-		void *point_label_data)
+		std::string *Point_labels, void *data)
 {
 	long int i, order, m;
 	ring_theory::longinteger_object go;
@@ -2256,7 +2252,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	ost << "Group elements for a group of order " << go << " tl=";
 	Int_vec_print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
-	m = MINIMUM(go.as_int(), 500);
+	m = MINIMUM(go.as_int(), 1500);
 	if (m < go.as_int()) {
 		ost << "We will only list the first " << m
 				<< " elements:\\\\" << endl;
@@ -2272,9 +2268,9 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		A->Group_element->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
 		ost << "$$" << endl;
-		A_given->Group_element->element_print_latex_with_print_point_function(
+		A_given->Group_element->element_print_latex_with_point_labels(
 				Elt, ost,
-				point_label, point_label_data);
+				Point_labels, data);
 		ost << "$$" << endl;
 		ost << "The element has order " << order << ".\\\\" << endl;
 		S->compute_all_powers(i, order, power_elt, 0 /*verbose_level*/);

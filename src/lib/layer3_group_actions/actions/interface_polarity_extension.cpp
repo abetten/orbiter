@@ -85,11 +85,10 @@ static void polarity_extension_element_print_quick(
 static void polarity_extension_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void polarity_extension_element_print_latex_with_print_point_function(
+static void polarity_extension_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 //static void polarity_extension_element_print_as_permutation(
 //	action &A, void *elt, std::ostream &ost);
 static void polarity_extension_element_print_verbose(
@@ -130,8 +129,8 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_print = polarity_extension_element_print;
 	ptr_element_print_quick = polarity_extension_element_print_quick;
 	ptr_element_print_latex = polarity_extension_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			polarity_extension_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			polarity_extension_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = polarity_extension_element_print_verbose;
 	ptr_element_code_for_make_element =
 			polarity_extension_element_code_for_make_element;
@@ -473,13 +472,12 @@ static void polarity_extension_element_print_latex(
 }
 
 
-static void polarity_extension_element_print_latex_with_print_point_function(
+static void polarity_extension_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
-	cout << "polarity_extension_element_print_latex_with_print_point_function "
+	cout << "polarity_extension_element_print_latex_with_point_labels "
 			"not yet implemented" << endl;
 	exit(1);
 

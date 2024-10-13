@@ -37,8 +37,6 @@ combinatorial_object_with_properties::combinatorial_object_with_properties()
 
 	GA_on_CO = NULL;
 
-	//Flags = NULL;
-	//Anti_Flags = NULL;
 
 }
 
@@ -51,14 +49,6 @@ combinatorial_object_with_properties::~combinatorial_object_with_properties()
 	if (GA_on_CO) {
 		FREE_OBJECT(GA_on_CO);
 	}
-#if 0
-	if (Flags) {
-		FREE_OBJECT(Flags);
-	}
-	if (Anti_Flags) {
-		FREE_OBJECT(Anti_Flags);
-	}
-#endif
 }
 
 
@@ -70,7 +60,7 @@ void combinatorial_object_with_properties::init(
 		int max_TDO_depth,
 		std::string &label,
 		int verbose_level)
-// called from classification_of_combinatorial_objects::init_after_nauty
+// called from objects_after_classification::init_after_nauty
 {
 	int f_v = (verbose_level >= 1);
 
@@ -124,6 +114,20 @@ void combinatorial_object_with_properties::init(
 	}
 
 
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::init "
+				"before compute_TDO" << endl;
+	}
+	compute_TDO(max_TDO_depth, verbose_level - 2);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::init "
+				"after compute_TDO" << endl;
+	}
+
+
+
+
 	GA_on_CO = NEW_OBJECT(combinatorics_with_groups::group_action_on_combinatorial_object);
 
 
@@ -143,27 +147,6 @@ void combinatorial_object_with_properties::init(
 	}
 
 
-#if 0
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::init "
-				"before compute_flag_orbits" << endl;
-	}
-	compute_flag_orbits(verbose_level - 2);
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::init "
-				"after compute_flag_orbits" << endl;
-	}
-#endif
-
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::init "
-				"before compute_TDO" << endl;
-	}
-	compute_TDO(max_TDO_depth, verbose_level - 2);
-	if (f_v) {
-		cout << "combinatorial_object_with_properties::init "
-				"after compute_TDO" << endl;
-	}
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::init done" << endl;
@@ -267,7 +250,8 @@ void combinatorial_object_with_properties::latex_report(
 		cout << "combinatorial_object_with_properties::latex_report" << endl;
 	}
 
-	ost << "\\subsection*{object\\_with\\_properties::latex\\_report Automorphism Group as Permutation Group}" << endl;
+	ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report "
+			"Automorphism Group as Permutation Group}" << endl;
 
 	{
 		ring_theory::longinteger_object go;
@@ -293,7 +277,8 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (f_projective_space) {
 
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Automorphism Group in Projective Space}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report "
+				"Automorphism Group in Projective Space}" << endl;
 
 		{
 			ring_theory::longinteger_object go;
@@ -406,7 +391,7 @@ void combinatorial_object_with_properties::latex_report(
 					"f_export_flag_orbits" << endl;
 		}
 
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Flag Orbits}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Flag Orbits}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -443,18 +428,24 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDO" << endl;
 		}
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDO}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report TDO}" << endl;
 
 		ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
 
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before print_TDO" << endl;
+		if (f_has_TDO) {
+			if (f_v) {
+				cout << "combinatorial_object_with_properties::latex_report "
+						"before TDO->print_schemes" << endl;
+			}
+			TDO->print_schemes(ost, Report_options, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object_with_properties::latex_report "
+						"after TDO->print_schemes" << endl;
+			}
 		}
-		print_TDO(ost, Report_options, verbose_level);
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"after print_TDO" << endl;
+		else {
+			cout << "combinatorial_object_with_properties::print_TDO "
+					"TDO has not yet been computed" << endl;
 		}
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -468,7 +459,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA" << endl;
 		}
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report TDA}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report TDA}" << endl;
 
 		{
 			ring_theory::longinteger_object go;
@@ -490,18 +481,6 @@ void combinatorial_object_with_properties::latex_report(
 					"after GA_on_CO->print_schemes" << endl;
 		}
 
-#if 0
-		if (f_v) {
-			cout << "combinatorial_object_with_properties::latex_report "
-					"before Sch->print_TDA" << endl;
-		}
-		Sch->print_TDA(ost, OwCF, Report_options, verbose_level);
-		if (f_v) {
-			cout << "object_with_properties::latex_report "
-					"after Sch->print_TDA" << endl;
-		}
-#endif
-
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA done" << endl;
@@ -511,7 +490,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 	if (Report_options->f_export_labels) {
 
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Labels}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Labels}" << endl;
 
 		canonical_form_classification::encoded_combinatorial_object *Enc;
 
@@ -554,7 +533,7 @@ void combinatorial_object_with_properties::latex_report(
 		FREE_OBJECT(Enc);
 	}
 
-	ost << "\\subsection*{object\\_with\\_properties::latex\\_report Canonical labeling}" << endl;
+	ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Canonical labeling}" << endl;
 
 	ost << "Canonical labeling:\\\\" << endl;
 	canonical_form_classification::encoded_combinatorial_object *Enc;
@@ -593,7 +572,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_show_incidence_matrices) {
 
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Incidence Matrices}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Incidence Matrices}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -645,7 +624,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_lex_least) {
 
-		ost << "\\subsection*{object\\_with\\_properties::latex\\_report Lex Least Form}" << endl;
+		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Lex Least Form}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report f_lex_least" << endl;
@@ -760,22 +739,6 @@ void combinatorial_object_with_properties::compute_TDO(
 
 }
 
-void combinatorial_object_with_properties::print_TDO(
-		std::ostream &ost,
-		canonical_form_classification::objects_report_options
-			*Report_options,
-		int verbose_level)
-{
-
-	if (f_has_TDO) {
-		TDO->print_schemes(ost, Report_options, verbose_level);
-	}
-	else {
-		cout << "combinatorial_object_with_properties::print_TDO "
-				"TDO has not yet been computed" << endl;
-	}
-
-}
 
 
 

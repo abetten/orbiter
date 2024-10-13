@@ -158,6 +158,7 @@
 #ifdef SYSTEMWINDOWS
 //#pragma warning(disable : 4996)
 #include <string>
+#include <cstdint>
 #endif
 
 #define MEMORY_DEBUG
@@ -353,6 +354,7 @@ namespace combinatorics {
 	class domino_change;
 	class geo_parameter;
 	class pentomino_puzzle;
+	class permutations;
 	class polynomial_function_domain;
 	class row_and_col_partition;
 	class tdo_data;

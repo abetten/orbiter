@@ -164,6 +164,7 @@ void classification_of_varieties::init(
 		}
 
 	}
+#if 0
 	else if (Classifier->get_description()->f_algorithm_substructure) {
 
 
@@ -206,6 +207,7 @@ void classification_of_varieties::init(
 #endif
 
 	}
+#endif
 	else {
 		cout << "classification_of_varieties::init "
 				"please select which algorithm to use" << endl;
@@ -483,6 +485,7 @@ void classification_of_varieties::main_loop(
 			}
 
 		}
+#if 0
 		else if (Classifier->get_description()->f_algorithm_substructure) {
 
 			if (f_v) {
@@ -505,6 +508,7 @@ void classification_of_varieties::main_loop(
 			}
 
 		}
+#endif
 		else {
 			cout << "please select which algorithm to use" << endl;
 			exit(1);
@@ -574,18 +578,24 @@ void classification_of_varieties::report(
 			}
 
 		}
+#if 0
 		else if (Classifier->get_description()->f_algorithm_substructure) {
 			if (f_v) {
 				cout << "classification_of_varieties::report "
 						"before report_substructure" << endl;
 			}
 
-			report_substructure(ost, verbose_level);
+			cout << "classification_of_varieties::report "
+					"report_substructure is not available" << endl;
+			exit(1);
+
+			//report_substructure(ost, verbose_level);
 			if (f_v) {
 				cout << "classification_of_varieties::report "
 						"after report_substructure" << endl;
 			}
 		}
+#endif
 
 		L.foot(ost);
 	}
@@ -767,6 +777,7 @@ void classification_of_varieties::report_nauty(
 }
 
 
+#if 0
 void classification_of_varieties::report_substructure(
 		std::ostream &ost, int verbose_level)
 {
@@ -931,6 +942,7 @@ void classification_of_varieties::report_substructure(
 		cout << "classification_of_varieties::report_substructure done" << endl;
 	}
 }
+#endif
 
 void classification_of_varieties::export_canonical_form_data(
 		std::string &fname, int verbose_level)
@@ -952,7 +964,7 @@ void classification_of_varieties::export_canonical_form_data(
 
 	int c;
 	int nb_cols;
-	int idx_po, idx_so, idx_nb_pts, idx_sub = -1;
+	int idx_po, idx_so, idx_nb_pts; //, idx_sub = -1;
 	c = 0;
 	Headers[c++] = "Line";
 	Headers[c++] = "CNT";
@@ -980,10 +992,11 @@ void classification_of_varieties::export_canonical_form_data(
 
 	if (Classifier->get_description()->f_algorithm_nauty) {
 	}
+#if 0
 	else if (Classifier->get_description()->f_algorithm_substructure) {
 
 
-		idx_sub = c;
+		//idx_sub = c;
 		Headers[c++] = "nb_sub_orbs";
 		Headers[c++] = "frequencies";
 		Headers[c++] = "nb_types";
@@ -1001,6 +1014,7 @@ void classification_of_varieties::export_canonical_form_data(
 		Headers[c++] = "nb_interesting_points";
 		Headers[c++] = "orbit_length_under_set_stab";
 	}
+#endif
 
 	idx_eqn = c;
 	Headers[c++] = "stab_of_eqn";
@@ -1033,6 +1047,7 @@ void classification_of_varieties::export_canonical_form_data(
 			if (Classifier->get_description()->f_algorithm_nauty) {
 
 			}
+#if 0
 			else if (Classifier->get_description()->f_algorithm_substructure) {
 
 				cout << "test 1" << endl;
@@ -1071,6 +1086,8 @@ void classification_of_varieties::export_canonical_form_data(
 #endif
 
 			}
+#endif
+
 
 
 		}

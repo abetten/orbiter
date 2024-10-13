@@ -547,6 +547,22 @@ void schreier::write_orbit_summary(
 	}
 }
 
+void schreier::get_stabilizer_orbit_rep(
+	int orbit_idx, actions::action *default_action,
+	strong_generators *gens,
+	strong_generators *&gens_stab)
+{
+	ring_theory::longinteger_object full_group_order;
+
+	gens->group_order(full_group_order);
+
+
+	gens_stab = stabilizer_orbit_rep(
+		default_action,
+		full_group_order, orbit_idx, 0 /*verbose_level */);
+
+}
+
 void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	int i, actions::action *default_action,
 	strong_generators *gens, std::ostream &ost)
@@ -2427,7 +2443,7 @@ void schreier::read_from_file_binary(
 			//fp.read((char *) &orbit_no[i], sizeof(int));
 		}
 	}
-	Combi.perm_inverse(orbit, orbit_inv, A->degree);
+	Combi.Permutations->perm_inverse(orbit, orbit_inv, A->degree);
 
 	// ToDo
 #if 0

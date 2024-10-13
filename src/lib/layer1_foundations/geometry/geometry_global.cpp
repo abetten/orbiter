@@ -3090,7 +3090,7 @@ void geometry_global::do_blocking_set_family_3(
 #if 1
 	while (true) {
 		cout << "choosing random permutation" << endl;
-		Combi.random_permutation(idx, set_size);
+		Combi.Permutations->random_permutation(idx, set_size);
 
 		cout << idx[0] << ", ";
 		cout << idx[1] << ", ";

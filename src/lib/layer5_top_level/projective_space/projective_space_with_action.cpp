@@ -913,7 +913,8 @@ void projective_space_with_action::cheat_sheet(
 						"before A->report" << endl;
 			}
 
-			A->report(ost, A->f_has_sims, A->Sims,
+			A->report(
+					ost, A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
 					verbose_level);
@@ -951,7 +952,7 @@ void projective_space_with_action::cheat_sheet(
 
 				Surf_A->Surf->Schlaefli->print_Steiner_and_Eckardt(ost);
 
-				FREE_OBJECT(Surf_A);
+				//FREE_OBJECT(Surf_A);
 
 			}
 

@@ -83,11 +83,10 @@ static void wreath_product_group_element_print_quick(
 static void wreath_product_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void wreath_product_group_element_print_latex_with_print_point_function(
+static void wreath_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 static void wreath_product_group_element_print_verbose(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -123,8 +122,8 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 	ptr_element_print = wreath_product_group_element_print;
 	ptr_element_print_quick = wreath_product_group_element_print_quick;
 	ptr_element_print_latex = wreath_product_group_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			wreath_product_group_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			wreath_product_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = wreath_product_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			wreath_product_group_element_code_for_make_element;
@@ -501,11 +500,10 @@ static void wreath_product_group_element_print_latex(
 	W.element_print_latex(Elt, ost);
 }
 
-static void wreath_product_group_element_print_latex_with_print_point_function(
+static void wreath_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
 	cout << "wreath_product_group_element_print_latex_with_print_point_function "
 			"not yet implemented" << endl;

@@ -1083,7 +1083,7 @@ void known_groups::init_permutation_group_from_generators(
 			for (i = 0; i < nb_gens; i++) {
 				cout << i << " : ";
 				if (degree < 20) {
-					Combi.perm_print(cout, gens + i * degree, degree);
+					Combi.Permutations->perm_print(cout, gens + i * degree, degree);
 				}
 				else {
 					cout << "known_groups::init_permutation_group_from_generators "
@@ -1356,7 +1356,7 @@ void known_groups::init_cyclic_group(
 	combinatorics::combinatorics_domain Combi;
 
 	// create the cycle of degree 'degree':
-	Combi.perm_cycle(
+	Combi.Permutations->perm_cycle(
 			gens, degree);
 
 #if 0
@@ -1450,11 +1450,11 @@ void known_groups::init_elementary_abelian_group(
 
 		for (j = 0; j < h; j++) {
 			if (j == i) {
-				Combi.perm_cycle(
+				Combi.Permutations->perm_cycle(
 						gens + i * degree + j * p, p);
 			}
 			else {
-				Combi.perm_identity(
+				Combi.Permutations->perm_identity(
 						gens + i * degree + j * p, p);
 			}
 			offset = j * p;

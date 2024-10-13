@@ -31,18 +31,7 @@ surface_object::surface_object()
 	//std::string label_txt;
 	//std::string label_tex;
 
-#if 0
-	//int Lines[27];
-	//int eqn[20];
-
-	Pts = NULL;
-	nb_pts = 0;
-
-	Lines = NULL;
-	nb_lines = 0;
-#else
 	Variety_object = NULL;
-#endif
 	SOP = NULL;
 
 	//null();
@@ -58,18 +47,9 @@ surface_object::~surface_object()
 	if (f_v) {
 		cout << "surface_object::~surface_object" << endl;
 	}
-#if 0
-	if (Pts) {
-		FREE_lint(Pts);
-	}
-	if (Lines) {
-		FREE_lint(Lines);
-	}
-#else
 	if (Variety_object) {
 		FREE_OBJECT(Variety_object);
 	}
-#endif
 	if (SOP) {
 		FREE_OBJECT(SOP);
 	}
@@ -112,19 +92,6 @@ void surface_object::init_equation_points_and_lines_only(
 
 
 
-#if 0
-	//int_vec_copy(Lines, surface_object::Lines, 27);
-	Int_vec_copy(eqn, surface_object::eqn, 20);
-
-
-	//long int *Points;
-	//int nb_points;
-	//int nb_lines;
-
-
-	//Points = NEW_lint(Surf->P->N_points /* Surf->nb_pts_on_surface*/);
-		// allocate enough space in case we have a surface with too many points
-#endif
 
 	if (f_v) {
 		cout << "surface_object::init_equation_points_and_lines_only "
@@ -2301,6 +2268,20 @@ void surface_object::print_one_line_tex(
 	Surf->print_one_line_tex(ost,
 			Variety_object->Line_sets->Sets[0],
 			Variety_object->Line_sets->Set_size[0], idx);
+
+}
+
+void surface_object::print_double_sixes(
+		std::ostream &ost)
+{
+	//int idx;
+	ost << "\\bigskip" << endl;
+
+	ost << "\\subsection*{Double sixes}" << endl;
+
+	Surf->Schlaefli->Schlaefli_double_six->print_double_sixes(
+			ost, Variety_object->Line_sets->Sets[0]);
+
 
 }
 

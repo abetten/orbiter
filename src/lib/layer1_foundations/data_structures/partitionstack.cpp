@@ -86,6 +86,42 @@ void partitionstack::free()
 
 }
 
+partitionstack *partitionstack::copy(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "partitionstack::copy" << endl;
+	}
+	partitionstack *P;
+
+	P = NEW_OBJECT(partitionstack);
+	P->allocate(
+			n, verbose_level);
+
+	P->ht = ht;
+	P->ht0 = ht0;
+
+	Int_vec_copy(pointList, P->pointList, n);
+	Int_vec_copy(invPointList, P->invPointList, n);
+	Int_vec_copy(cellNumber, P->cellNumber, n);
+	Int_vec_copy(startCell, P->startCell, n + 1);
+	Int_vec_copy(cellSize, P->cellSize, n + 1);
+	Int_vec_copy(parent, P->parent, n + 1);
+	Int_vec_copy(subset, P->subset, n + 1);
+	P->subset_size = subset_size;
+
+	P->nb_subsets = nb_subsets;
+	Int_vec_copy(subset_first, P->subset_first, n + 1);
+	Int_vec_copy(subset_length, P->subset_length, n + 1);
+	Int_vec_copy(subsets, P->subsets, n + 1);
+
+	if (f_v) {
+		cout << "partitionstack::copy done" << endl;
+	}
+	return P;
+}
 
 void partitionstack::allocate(
 		int n, int verbose_level)

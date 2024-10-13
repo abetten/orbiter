@@ -86,11 +86,10 @@ static void permutation_representation_group_element_print_quick(
 static void permutation_representation_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void permutation_representation_group_element_print_latex_with_print_point_function(
+static void permutation_representation_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 static void permutation_representation_group_element_print_verbose(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -122,8 +121,8 @@ void action_pointer_table::init_function_pointers_permutation_representation_gro
 	ptr_element_print = permutation_representation_group_element_print;
 	ptr_element_print_quick = permutation_representation_group_element_print_quick;
 	ptr_element_print_latex = permutation_representation_group_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			permutation_representation_group_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			permutation_representation_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = permutation_representation_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			permutation_representation_group_element_code_for_make_element;
@@ -479,13 +478,12 @@ static void permutation_representation_group_element_print_latex(
 	P.element_print_latex(Elt, ost);
 }
 
-static void permutation_representation_group_element_print_latex_with_print_point_function(
+static void permutation_representation_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
-	cout << "permutation_representation_group_element_print_latex_with_print_point_function "
+	cout << "permutation_representation_group_element_print_latex_with_point_labels "
 			"not yet implemented" << endl;
 	exit(1);
 }

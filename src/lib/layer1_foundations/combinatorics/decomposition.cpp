@@ -27,22 +27,6 @@ decomposition::decomposition()
 	Stack = NULL;
 	f_has_decomposition = false;
 	Scheme = NULL;
-#if 0
-	row_classes = NULL;
-	row_class_inv = NULL;
-	nb_row_classes = 0;
-	col_classes = NULL;
-	col_class_inv = NULL;
-	nb_col_classes = 0;
-
-	SoS_points = NULL;
-	SoS_lines = NULL;
-
-	f_has_row_scheme = false;
-	row_scheme = NULL;
-	f_has_col_scheme = false;
-	col_scheme = NULL;
-#endif
 }
 
 
@@ -52,44 +36,26 @@ decomposition::~decomposition()
 	if (Incma) {
 		FREE_int(Incma);
 	}
-#if 0
-	if (Inc) {
-		FREE_OBJECT(Inc);
-	}
-#endif
 	if (Stack) {
 		FREE_OBJECT(Stack);
 	}
 	if (Scheme) {
 		FREE_OBJECT(Scheme);
 	}
-#if 0
-	if (f_has_decomposition) {
-		FREE_int(row_classes);
-		FREE_int(row_class_inv);
-		FREE_int(col_classes);
-		FREE_int(col_class_inv);
-	}
-
-	if (SoS_points) {
-		FREE_OBJECT(SoS_points);
-	}
-	if (SoS_lines) {
-		FREE_OBJECT(SoS_lines);
-	}
-
-	if (f_has_row_scheme) {
-		FREE_int(row_scheme);
-	}
-	if (f_has_col_scheme) {
-		FREE_int(col_scheme);
-	}
-#endif
 }
 
 void decomposition::init_incidence_structure(
 		geometry::incidence_structure *Inc,
 		int verbose_level)
+// called from
+// decomposition::init_decomposition_of_projective_space
+// combinatorics_domain::refine_the_partition
+// combinatorics_domain::compute_TDO_decomposition_of_projective_space_old
+// set_of_sets::get_eckardt_points
+// combinatorics_with_action::report_TDO_and_TDA
+// combinatorics_with_action::report_TDA
+// group_action_on_combinatorial_object::init
+// design_activity::do_tactical_decomposition
 {
 	int f_v = (verbose_level >= 1);
 
@@ -215,7 +181,6 @@ void decomposition::init_incidence_matrix(
 // copies the incidence matrix
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "decomposition::init_incidence_matrix" << endl;
@@ -224,63 +189,9 @@ void decomposition::init_incidence_matrix(
 	nb_blocks = n;
 	N = nb_points + nb_blocks;
 	Incma = NEW_int(nb_points * nb_blocks);
-	for (i = 0; i < nb_points * nb_blocks; i++) {
-		Incma[i] = M[i];
-	}
+	Int_vec_copy(M, Incma, nb_points * nb_blocks);
 }
 
-#if 0
-void decomposition::init_encoding(
-		combinatorics::encoded_combinatorial_object *Enc,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "decomposition::init_encoding" << endl;
-	}
-
-	decomposition::Enc = Enc;
-	f_has_encoding = true;
-
-	I = NEW_OBJECT(geometry::incidence_structure);
-
-	if (f_v) {
-		cout << "decomposition::init_encoding "
-				"before Inc->init_by_matrix" << endl;
-	}
-	I->init_by_matrix(
-			Enc->nb_rows,
-			Enc->nb_cols,
-			Enc->get_Incma(), 0 /* verbose_level*/);
-	if (f_v) {
-		cout << "decomposition::init_encoding "
-				"after Inc->init_by_matrix" << endl;
-	}
-	nb_points = I->nb_points();
-	nb_blocks = I->nb_lines();
-	N = nb_points + nb_blocks;
-
-
-
-	Stack = NEW_OBJECT(data_structures::partitionstack);
-
-	if (f_v) {
-		cout << "decomposition::init_encoding "
-				"allocating partitionstack" << endl;
-	}
-
-	Stack->allocate(N, 0);
-	// split off the column class:
-	Stack->subset_contiguous(I->nb_points(), I->nb_lines());
-	Stack->split_cell(0);
-
-	if (f_v) {
-		cout << "decomposition::init_encoding "
-				"done" << endl;
-	}
-}
-#endif
 
 void decomposition::compute_TDO_deep(
 		int verbose_level)
@@ -328,7 +239,8 @@ void decomposition::compute_the_decomposition(
 		cout << "decomposition::compute_the_decomposition "
 				"before Scheme->init_row_and_col_schemes" << endl;
 	}
-	Scheme->init_row_and_col_schemes(this, verbose_level - 1);
+	Scheme->init_row_and_col_schemes(
+			this, verbose_level - 1);
 	if (f_v) {
 		cout << "decomposition::compute_the_decomposition "
 				"after Scheme->init_row_and_col_schemes" << endl;
@@ -364,7 +276,8 @@ void decomposition::setup_default_partition(
 		cout << "decomposition::setup_default_partition "
 				"before I->init_by_matrix" << endl;
 	}
-	Inc->init_by_matrix(nb_points, nb_blocks,
+	Inc->init_by_matrix(
+			nb_points, nb_blocks,
 			Incma, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "decomposition::setup_default_partition "
@@ -413,14 +326,6 @@ void decomposition::compute_TDO_old(
 		cout << "decomposition::compute_TDO_old "
 				"after compute_the_decomposition" << endl;
 	}
-
-#if 0
-	Stack->allocate_and_get_decomposition(
-		row_classes, row_class_inv, nb_row_classes,
-		col_classes, col_class_inv, nb_col_classes, 
-		0);
-	f_has_decomposition = true;
-#endif
 
 	if (f_v) {
 		cout << "decomposition::compute_TDO_old done" << endl;
@@ -684,7 +589,8 @@ int decomposition::refine_column_partition_safe(
 	neighbors = NEW_int(Inc->max_k);
 
 	for (j = 0; j < Inc->nb_lines(); j++) {
-		Inc->get_points_on_line(neighbors, j, 0 /*verbose_level - 2*/);
+		Inc->get_points_on_line(
+				neighbors, j, 0 /*verbose_level - 2*/);
 		for (h = 0; h < Inc->nb_points_on_line[j]; h++) {
 			i = neighbors[h];
 			c = Stack->cellNumber[Stack->invPointList[i]];
@@ -700,9 +606,12 @@ int decomposition::refine_column_partition_safe(
 	if (f_vv) {
 		cout << "decomposition::refine_column_partition_safe "
 				"data:" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 			data + Inc->nb_points() * RC->nb_row_classes,
-			Inc->nb_lines(), RC->nb_row_classes, RC->nb_row_classes, 3);
+			Inc->nb_lines(),
+			RC->nb_row_classes,
+			RC->nb_row_classes, 3);
 	}
 
 	ht = Stack->ht;
@@ -718,9 +627,11 @@ int decomposition::refine_column_partition_safe(
 		first = Stack->startCell[c];
 		next = first + Stack->cellSize[c];
 
-		Stack->radix_sort(first /* left */,
+		Stack->radix_sort(
+				first /* left */,
 				   next - 1 /* right */,
-				   data, RC->nb_row_classes, 0 /*radix*/, false);
+				   data, RC->nb_row_classes, 0 /*radix*/,
+				   false);
 	}
 
 	FREE_int(data);
@@ -797,7 +708,8 @@ int decomposition::refine_row_partition_safe(
 	if (f_vv) {
 		cout << "decomposition::refine_row_partition_safe "
 				"data:" << endl;
-		Int_vec_print_integer_matrix_width(cout, data, Inc->nb_points(),
+		Int_vec_print_integer_matrix_width(
+				cout, data, Inc->nb_points(),
 				RC->nb_col_classes, RC->nb_col_classes, 3);
 	}
 
@@ -1148,7 +1060,8 @@ void decomposition::get_row_decomposition_scheme(
 			}
 		} // next i
 
-		Int_vec_copy(data0,
+		Int_vec_copy(
+				data0,
 				row_scheme + I * RC->nb_col_classes,
 				RC->nb_col_classes);
 	}
@@ -1636,13 +1549,31 @@ void decomposition::get_and_print_decomposition_schemes()
 	row_scheme = NEW_int(RC->nb_row_classes * RC->nb_col_classes);
 	col_scheme = NEW_int(RC->nb_row_classes * RC->nb_col_classes);
 
+	if (f_v) {
+		cout << "decomposition::get_and_print_decomposition_schemes "
+				"before get_row_decomposition_scheme" << endl;
+	}
+
 	get_row_decomposition_scheme(
 		RC,
-		row_scheme, verbose_level);
+		row_scheme, verbose_level - 2);
 
+	if (f_v) {
+		cout << "decomposition::get_and_print_decomposition_schemes "
+				"after get_row_decomposition_scheme" << endl;
+	}
+
+	if (f_v) {
+		cout << "decomposition::get_and_print_decomposition_schemes "
+				"before row_scheme_to_col_scheme" << endl;
+	}
 	row_scheme_to_col_scheme(
 		RC,
-		row_scheme, col_scheme, verbose_level);
+		row_scheme, col_scheme, verbose_level - 2);
+	if (f_v) {
+		cout << "decomposition::get_and_print_decomposition_schemes "
+				"after row_scheme_to_col_scheme" << endl;
+	}
 
 	//cout << *this << endl;
 
@@ -2305,6 +2236,7 @@ void decomposition::print_schemes(
 	int f_enter_math = false;
 	int f_print_subscripts = true;
 
+	ost << "The decomposition scheme has size $" << Scheme->RC->nb_row_classes << " \\times " << Scheme->RC->nb_col_classes << "$\\\\" << endl;
 
 	ost << "$$" << endl;
 
@@ -2374,7 +2306,8 @@ void decomposition::print_schemes(
 	}
 	else {
 		ost << "Incidence matrix not shown. "
-				"Use option \\verb'-show_incidence_matrices' to show incidence matrix.\\\\" << endl;
+				"Use option \\verb'-show_incidence_matrices' "
+				"to show incidence matrix.\\\\" << endl;
 
 	}
 

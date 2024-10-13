@@ -239,7 +239,7 @@ public:
 	// Output:
 
 	// layer 1:
-	canonical_form_classification::classification_of_objects *Classification;
+	canonical_form_classification::classification_of_objects *Classification_of_objects;
 
 	// layer 5:
 	canonical_form::objects_after_classification *Objects_after_classification;
@@ -250,15 +250,20 @@ public:
 			canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
-	void do_canonical_form_PG(
-			projective_geometry::projective_space_with_action *PA,
+	void do_canonical_form(
 			canonical_form_classification::classification_of_objects_description
-					*Canonical_form_PG_Descr,
+					*Canonical_form_Descr,
+			int f_projective_space,
+			projective_geometry::projective_space_with_action *PA,
+			geometry::projective_space *P,
 			int verbose_level);
+	// called from combinatorial_object_activity::perform_activity_combo
+#if 0
 	void do_canonical_form_not_PG(
 			canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
 			int verbose_level);
+#endif
 	void do_test_distinguishing_property(
 			graph_theory::colored_graph *CG,
 			int verbose_level);

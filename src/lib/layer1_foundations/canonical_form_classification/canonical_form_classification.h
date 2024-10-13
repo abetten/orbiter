@@ -362,6 +362,8 @@ public:
 	int f_projective_space;
 	geometry::projective_space *P;
 
+	// input:
+
 	data_input_stream *IS;
 
 

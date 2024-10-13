@@ -2345,7 +2345,7 @@ void action_global::perform_tests(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm1, A->degree);
+			Combi.Permutations->perm_print(cout, perm1, A->degree);
 			cout << endl;
 		}
 
@@ -2357,7 +2357,7 @@ void action_global::perform_tests(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm2, A->degree);
+			Combi.Permutations->perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
@@ -2370,14 +2370,14 @@ void action_global::perform_tests(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm3, A->degree);
+			Combi.Permutations->perm_print(cout, perm3, A->degree);
 			cout << endl;
 		}
 
-		Combi.perm_mult(perm1, perm2, perm4, A->degree);
+		Combi.Permutations->perm_mult(perm1, perm2, perm4, A->degree);
 		if (f_v) {
 			cout << "perm1 * perm2= " << endl;
-			Combi.perm_print(cout, perm4, A->degree);
+			Combi.Permutations->perm_print(cout, perm4, A->degree);
 			cout << endl;
 		}
 
@@ -2407,7 +2407,7 @@ void action_global::perform_tests(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm1, A->degree);
+			Combi.Permutations->perm_print(cout, perm1, A->degree);
 			cout << endl;
 		}
 		A->Group_element->element_invert(Elt1, Elt2, 0);
@@ -2419,7 +2419,7 @@ void action_global::perform_tests(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm2, A->degree);
+			Combi.Permutations->perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
@@ -2432,11 +2432,11 @@ void action_global::perform_tests(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm3, A->degree);
+			Combi.Permutations->perm_print(cout, perm3, A->degree);
 			cout << endl;
 		}
 
-		if (!Combi.perm_is_identity(perm3, A->degree)) {
+		if (!Combi.Permutations->perm_is_identity(perm3, A->degree)) {
 			cout << "fails the inverse test" << endl;
 			exit(1);
 		}
@@ -2464,7 +2464,7 @@ void action_global::perform_tests(
 				Elt1, perm1, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm1, A->degree);
+			Combi.Permutations->perm_print(cout, perm1, A->degree);
 			cout << endl;
 		}
 
@@ -2476,7 +2476,7 @@ void action_global::perform_tests(
 				Elt2, perm2, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as permutation: " << endl;
-			Combi.perm_print(cout, perm2, A->degree);
+			Combi.Permutations->perm_print(cout, perm2, A->degree);
 			cout << endl;
 		}
 
@@ -2497,7 +2497,7 @@ void action_global::perform_tests(
 				Elt3, perm3, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt3 as permutation: " << endl;
-			Combi.perm_print(cout, perm3, A->degree);
+			Combi.Permutations->perm_print(cout, perm3, A->degree);
 			cout << endl;
 		}
 
@@ -2505,14 +2505,14 @@ void action_global::perform_tests(
 				Elt4, perm4, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "as Elt4 as permutation: " << endl;
-			Combi.perm_print(cout, perm4, A->degree);
+			Combi.Permutations->perm_print(cout, perm4, A->degree);
 			cout << endl;
 		}
 
-		Combi.perm_mult(perm3, perm4, perm5, A->degree);
+		Combi.Permutations->perm_mult(perm3, perm4, perm5, A->degree);
 		if (f_v) {
 			cout << "perm3 * perm4= " << endl;
-			Combi.perm_print(cout, perm5, A->degree);
+			Combi.Permutations->perm_print(cout, perm5, A->degree);
 			cout << endl;
 		}
 
@@ -2539,7 +2539,7 @@ void action_global::perform_tests(
 			Elt1, perm1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt1 as permutation: " << endl;
-		Combi.perm_print(cout, perm1, A->degree);
+		Combi.Permutations->perm_print(cout, perm1, A->degree);
 		cout << endl;
 	}
 
@@ -2548,7 +2548,7 @@ void action_global::perform_tests(
 			Elt2, perm2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "as Elt2 as permutation: " << endl;
-		Combi.perm_print(cout, perm2, A->degree);
+		Combi.Permutations->perm_print(cout, perm2, A->degree);
 		cout << endl;
 	}
 
@@ -2559,10 +2559,10 @@ void action_global::perform_tests(
 		A->Group_element->element_print_quick(Elt3, cout);
 	}
 
-	Combi.perm_mult(perm1, perm2, perm3, A->degree);
+	Combi.Permutations->perm_mult(perm1, perm2, perm3, A->degree);
 	if (f_v) {
 		cout << "perm1 * perm2= " << endl;
-		Combi.perm_print(cout, perm3, A->degree);
+		Combi.Permutations->perm_print(cout, perm3, A->degree);
 		cout << endl;
 	}
 

@@ -801,6 +801,10 @@ public:
 			actions::action *default_action,
 			ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
+	void get_stabilizer_orbit_rep(
+		int orbit_idx, actions::action *default_action,
+		strong_generators *gens,
+		strong_generators *&gens_stab);
 	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		int i, actions::action *default_action,
 		strong_generators *gens, std::ostream &ost);
@@ -1768,12 +1772,10 @@ public:
 			std::ostream &ost);
 	void print_generators_in_different_action_tex(
 			std::ostream &ost, actions::action *A2);
-	void print_generators_tex_with_print_point_function(
+	void print_generators_tex_with_point_labels(
 			actions::action *A,
 			std::ostream &ost,
-			void (*point_label)(
-					std::stringstream &sstr, long int pt, void *data),
-			void *point_label_data);
+			std::string *Point_labels, void *data);
 	void print_generators_for_make_element(
 			std::ostream &ost);
 	void print_generators_as_permutations();
@@ -1789,12 +1791,10 @@ public:
 			std::ostream &ost, actions::action *A2);
 	void print_elements_latex_ost(
 			std::ostream &ost);
-	void print_elements_latex_ost_with_print_point_function(
+	void print_elements_latex_ost_with_point_labels(
 			actions::action *A,
 			std::ostream &ost,
-			void (*point_label)(
-					std::stringstream &sstr, long int pt, void *data),
-			void *point_label_data);
+			std::string *Point_labels, void *data);
 	void create_group_table(
 			int *&Table, long int &go,
 		int verbose_level);

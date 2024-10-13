@@ -959,6 +959,8 @@ class partitionstack {
 	partitionstack();
 	~partitionstack();
 	void free();
+	partitionstack *copy(
+			int verbose_level);
 	void allocate(
 			int n, int verbose_level);
 	void allocate_with_two_classes(
@@ -1252,6 +1254,9 @@ public:
 	void init(
 			int underlying_set_size, int nb_sets,
 		long int **Pts, long int *Sz, int verbose_level);
+	void add_constant_everywhere(
+			int c,
+			int verbose_level);
 	void init_with_Sz_in_int(
 			int underlying_set_size,
 			int nb_sets, long int **Pts, int *Sz,

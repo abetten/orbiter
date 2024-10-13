@@ -174,7 +174,7 @@ void permutation_representation::element_mult(
 		cout << "permutation_representation::element_mult" << endl;
 	}
 	A_original->Group_element->element_mult(A, B, AB, verbose_level);
-	Combi.perm_mult(A + perm_offset, B + perm_offset, AB + perm_offset, degree);
+	Combi.Permutations->perm_mult(A + perm_offset, B + perm_offset, AB + perm_offset, degree);
 	if (f_v) {
 		cout << "permutation_representation::element_mult done" << endl;
 	}
@@ -204,7 +204,7 @@ void permutation_representation::element_invert(
 		cout << "permutation_representation::element_invert" << endl;
 	}
 	A_original->Group_element->element_invert(A, Av, verbose_level);
-	Combi.perm_inverse(A + perm_offset, Av + perm_offset, degree);
+	Combi.Permutations->perm_inverse(A + perm_offset, Av + perm_offset, degree);
 	if (f_v) {
 		cout << "permutation_representation::element_invert done" << endl;
 	}

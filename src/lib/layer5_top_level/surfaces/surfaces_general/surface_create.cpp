@@ -3102,10 +3102,18 @@ void surface_create::do_report2(
 
 		fname_mask = "surface_" + SO->label_txt;
 
+		if (f_v) {
+			cout << "surface_create::do_report2 "
+					"before SOG->cheat_sheet" << endl;
+		}
 		SOG->cheat_sheet(ost,
 				f_print_orbits, fname_mask,
 				draw_options,
 				verbose_level);
+		if (f_v) {
+			cout << "surface_create::do_report2 "
+					"after SOG->cheat_sheet" << endl;
+		}
 
 	}
 

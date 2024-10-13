@@ -202,6 +202,10 @@ public:
 class combinatorics_domain {
 
 public:
+
+	permutations *Permutations;
+
+
 	combinatorics_domain();
 	~combinatorics_domain();
 	int int_factorial(
@@ -209,7 +213,8 @@ public:
 	int Kung_mue_i(
 			int *part, int i, int m);
 	void partition_dual(
-			int *part, int *dual_part, int n, int verbose_level);
+			int *part, int *dual_part, int n,
+			int verbose_level);
 	void make_all_partitions_of_n(
 			int n, int *&Table, int &nb, int verbose_level);
 	int count_all_partitions_of_n(
@@ -323,80 +328,6 @@ public:
 			int i, int j, int k, int n);
 	void h2ijk(
 			int h, int &i, int &j, int &k, int n);
-	void random_permutation(
-			int *random_permutation, long int n);
-	void perm_move(
-			int *from, int *to, long int n);
-	void perm_identity(
-			int *a, long int n);
-	int perm_is_identity(
-			int *a, long int n);
-	void perm_elementary_transposition(
-			int *a, long int n, int f);
-	void perm_cycle(
-			int *perm, long int n);
-	void perm_mult(
-			int *a, int *b, int *c, long int n);
-	void perm_conjugate(
-			int *a, int *b, int *c, long int n);
-	// c := a^b = b^-1 * a * b
-	void perm_inverse(
-			int *a, int *b, long int n);
-	// b := a^-1
-	void perm_raise(
-			int *a, int *b, int e, long int n);
-	// b := a^e (e >= 0)
-	void perm_direct_product(
-			long int n1, long int n2,
-			int *perm1, int *perm2, int *perm3);
-	void perm_print_list(
-			std::ostream &ost, int *a, int n);
-	void perm_print_list_offset(
-			std::ostream &ost, int *a, int n, int offset);
-	void perm_print_product_action(
-			std::ostream &ost, int *a, int m_plus_n, int m,
-		int offset, int f_cycle_length);
-	void perm_print(
-			std::ostream &ost, int *a, int n);
-	void perm_print_with_print_point_function(
-			std::ostream &ost,
-			int *a, int n,
-			void (*point_label)(
-					std::stringstream &sstr, long int pt, void *data),
-			void *point_label_data);
-	void perm_print_with_cycle_length(
-			std::ostream &ost, int *a, int n);
-	void perm_print_counting_from_one(
-			std::ostream &ost, int *a, int n);
-	void perm_print_offset(
-			std::ostream &ost,
-		int *a, int n,
-		int offset,
-		int f_print_cycles_of_length_one,
-		int f_cycle_length,
-		int f_max_cycle_length,
-		int max_cycle_length,
-		int f_orbit_structure,
-		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-		void *point_label_data);
-	void perm_cycle_type(
-			int *perm, long int degree, int *cycles, int &nb_cycles);
-	int perm_order(
-			int *a, long int n);
-	int perm_signum(
-			int *perm, long int n);
-	int is_permutation(
-			int *perm, long int n);
-	int is_permutation_lint(
-			long int *perm, long int n);
-	void first_lehmercode(
-			int n, int *v);
-	int next_lehmercode(
-			int n, int *v);
-	int sign_based_on_lehmercode(
-			int n, int *v);
-	void lehmercode_to_permutation(
-			int n, int *code, int *perm);
 	int disjoint_binary_representation(
 			int u, int v);
 	int hall_test(
@@ -519,6 +450,7 @@ public:
 			long int *lines, int nb_lines,
 			std::vector<std::string> &file_names,
 			int verbose_level);
+	// called from quartic_curve_from_surface::TDO_decomposition
 	combinatorics::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
 			geometry::projective_space *P,
 			long int *points, int nb_points,
@@ -576,6 +508,7 @@ public:
 	void init_row_and_col_schemes(
 			decomposition *Decomposition,
 			int verbose_level);
+	// called from combinatorics_domain::compute_TDO_decomposition_of_projective_space
 	void get_classes(
 			int verbose_level);
 	void init_row_scheme(
@@ -672,6 +605,15 @@ public:
 	void init_incidence_structure(
 			geometry::incidence_structure *Inc,
 			int verbose_level);
+	// called from
+	// decomposition::init_decomposition_of_projective_space
+	// combinatorics_domain::refine_the_partition
+	// combinatorics_domain::compute_TDO_decomposition_of_projective_space_old
+	// set_of_sets::get_eckardt_points
+	// combinatorics_with_action::report_TDO_and_TDA
+	// combinatorics_with_action::report_TDA
+	// group_action_on_combinatorial_object::init
+	// design_activity::do_tactical_decomposition
 	void init_inc_and_stack(
 			geometry::incidence_structure *Inc,
 			data_structures::partitionstack *Stack,
@@ -1200,6 +1142,94 @@ class pentomino_puzzle {
 };
 
 
+// #############################################################################
+// permutations.cpp
+// #############################################################################
+
+
+//! permutations given in vector form
+
+
+class permutations {
+
+public:
+
+	permutations();
+	~permutations();
+	void random_permutation(
+			int *random_permutation, long int n);
+	void perm_move(
+			int *from, int *to, long int n);
+	void perm_identity(
+			int *a, long int n);
+	int perm_is_identity(
+			int *a, long int n);
+	void perm_elementary_transposition(
+			int *a, long int n, int f);
+	void perm_cycle(
+			int *perm, long int n);
+	void perm_mult(
+			int *a, int *b, int *c, long int n);
+	void perm_conjugate(
+			int *a, int *b, int *c, long int n);
+	// c := a^b = b^-1 * a * b
+	void perm_inverse(
+			int *a, int *b, long int n);
+	// b := a^-1
+	void perm_raise(
+			int *a, int *b, int e, long int n);
+	// b := a^e (e >= 0)
+	void perm_direct_product(
+			long int n1, long int n2,
+			int *perm1, int *perm2, int *perm3);
+	void perm_print_list(
+			std::ostream &ost, int *a, int n);
+	void perm_print_list_offset(
+			std::ostream &ost, int *a, int n, int offset);
+	void perm_print_product_action(
+			std::ostream &ost, int *a, int m_plus_n, int m,
+		int offset, int f_cycle_length);
+	void perm_print(
+			std::ostream &ost, int *a, int n);
+	void perm_print_with_point_labels(
+			std::ostream &ost,
+			int *a, int n,
+			std::string *Point_labels, void *data);
+	void perm_print_with_cycle_length(
+			std::ostream &ost, int *a, int n);
+	void perm_print_counting_from_one(
+			std::ostream &ost, int *a, int n);
+	void perm_print_offset(
+			std::ostream &ost,
+		int *a, int n,
+		int offset,
+		int f_print_cycles_of_length_one,
+		int f_cycle_length,
+		int f_max_cycle_length,
+		int max_cycle_length,
+		int f_orbit_structure,
+		std::string *Point_labels, void *data);
+	void perm_cycle_type(
+			int *perm, long int degree, int *cycles, int &nb_cycles);
+	int perm_order(
+			int *a, long int n);
+	int perm_signum(
+			int *perm, long int n);
+	int is_permutation(
+			int *perm, long int n);
+	int is_permutation_lint(
+			long int *perm, long int n);
+	void first_lehmercode(
+			int n, int *v);
+	int next_lehmercode(
+			int n, int *v);
+	int sign_based_on_lehmercode(
+			int n, int *v);
+	void lehmercode_to_permutation(
+			int n, int *code, int *perm);
+
+};
+
 
 // #############################################################################
 // polynomial_function_domain.cpp
@@ -1524,6 +1554,7 @@ public:
 			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int max_depth,
 			int verbose_level);
+	// used by combinatorial_object_with_properties::compute_TDO
 	void init_TDA(
 			canonical_form_classification::encoded_combinatorial_object *Enc,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,

@@ -4202,12 +4202,12 @@ void syntax_tree_node::make_determinant(
 		// create the permutations in the order determined by the Lehmercode:
 
 		if (a == 0) {
-			Combi.first_lehmercode(n, lehmer_code);
+			Combi.Permutations->first_lehmercode(n, lehmer_code);
 		}
 		else {
-			Combi.next_lehmercode(n, lehmer_code);
+			Combi.Permutations->next_lehmercode(n, lehmer_code);
 		}
-		Combi.lehmercode_to_permutation(
+		Combi.Permutations->lehmercode_to_permutation(
 				n, lehmer_code, perm);
 
 
@@ -4219,7 +4219,7 @@ void syntax_tree_node::make_determinant(
 			cout << endl;
 		}
 
-		sgn = Combi.perm_signum(perm, n);
+		sgn = Combi.Permutations->perm_signum(perm, n);
 			// sgn is either +1 or -1.
 
 

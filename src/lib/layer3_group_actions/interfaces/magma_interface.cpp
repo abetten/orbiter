@@ -2252,7 +2252,7 @@ void magma_interface::normalizer_in_Sym_n(
 
 		fp << "G := PermutationGroup< " << Table->group_order << " | " << endl;
 		for (i = 0; i < Table->nb_gens; i++) {
-			Combi.perm_print_counting_from_one(fp,
+			Combi.Permutations->perm_print_counting_from_one(fp,
 					Table->Table + Table->gens[i] * Table->group_order, Table->group_order);
 			if (i < Table->nb_gens - 1) {
 				fp << ", " << endl;
@@ -2793,7 +2793,7 @@ void magma_interface::write_as_magma_permutation_group(
 
 		fp << "G := PermutationGroup< " << n << " | " << endl;
 		for (i = 0; i < l; i++) {
-			Combi.perm_print_counting_from_one(fp, Table + i * n, n);
+			Combi.Permutations->perm_print_counting_from_one(fp, Table + i * n, n);
 			if (i < l - 1) {
 				fp << ", " << endl;
 			}

@@ -188,7 +188,7 @@ void schreier::init_images_only(
 		Int_vec_copy(
 				images + i * degree,
 				schreier::images[i], degree);
-		Combi.perm_inverse(
+		Combi.Permutations->perm_inverse(
 				schreier::images[i],
 				schreier::images[i] + degree,
 				degree);
@@ -360,8 +360,8 @@ void schreier::initialize_tables()
 	long int i;
 	
 	nb_orbits = 0;
-	Combi.perm_identity(orbit, degree);
-	Combi.perm_identity(orbit_inv, degree);
+	Combi.Permutations->perm_identity(orbit, degree);
+	Combi.Permutations->perm_identity(orbit_inv, degree);
 	orbit_first[0] = 0;
 
 	// initialize prev and label with -1:

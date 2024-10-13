@@ -1868,7 +1868,7 @@ void algebra_global_with_action::compute_regular_representation(
 	}
 	cout << endl;
 	for (i = 0; i < SG->len; i++) {
-		Combi.perm_print_offset(
+		Combi.Permutations->perm_print_offset(
 				cout,
 			perm + i * goi, goi, 1 /* offset */,
 			false /* f_print_cycles_of_length_one */,

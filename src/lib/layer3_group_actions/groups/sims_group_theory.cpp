@@ -1120,7 +1120,7 @@ void sims::regular_representation(
 		A->Group_element->print(cout, Elt);
 		cout << endl;
 		cout << "is:" << endl;
-		Combi.perm_print(cout, perm, goi);
+		Combi.Permutations->perm_print(cout, perm, goi);
 		cout << endl;
 	}
 	FREE_int(Elt1);

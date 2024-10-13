@@ -1099,7 +1099,7 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 		//cout << "column permutation: ";
 		combinatorics::combinatorics_domain Combi;
 
-		Combi.perm_print_with_cycle_length(cout, perm, n);
+		Combi.Permutations->perm_print_with_cycle_length(cout, perm, n);
 		cout << endl;
 	}
 	FREE_int(AM);

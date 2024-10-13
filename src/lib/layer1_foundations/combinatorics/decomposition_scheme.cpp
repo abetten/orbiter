@@ -23,15 +23,6 @@ decomposition_scheme::decomposition_scheme()
 
 	RC = NULL;
 
-#if 0
-	row_classes = NULL;
-	row_class_inv = NULL;
-	nb_row_classes = 0;
-
-	col_classes = NULL;
-	col_class_inv = NULL;
-	nb_col_classes = 0;
-#endif
 
 	f_has_row_scheme = false;
 	row_scheme = NULL;
@@ -51,20 +42,6 @@ decomposition_scheme::~decomposition_scheme()
 	if (RC) {
 		FREE_OBJECT(RC);
 	}
-#if 0
-	if (row_classes) {
-		FREE_int(row_classes);
-	}
-	if (row_class_inv) {
-		FREE_int(row_class_inv);
-	}
-	if (col_classes) {
-		FREE_int(col_classes);
-	}
-	if (col_class_inv) {
-		FREE_int(col_class_inv);
-	}
-#endif
 
 	if (f_has_row_scheme) {
 		FREE_int(row_scheme);
@@ -86,6 +63,10 @@ decomposition_scheme::~decomposition_scheme()
 void decomposition_scheme::init_row_and_col_schemes(
 		decomposition *Decomposition,
 		int verbose_level)
+// called from
+// combinatorics_domain::compute_TDO_decomposition_of_projective_space
+// decomposition::compute_the_decomposition
+// variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions
 {
 	int f_v = (verbose_level >= 1);
 
@@ -864,12 +845,33 @@ void decomposition_scheme::report_classes_with_external_files(
 		SoS_points->print_table_latex_simple(ost);
 
 	}
+
+	if (f_v) {
+		cout << "decomposition_scheme::report_classes_with_external_files subtracting nb_points" << endl;
+	}
+
+
+	int nb_points;
+
+	nb_points = Decomposition->nb_points;
+
+	data_structures::set_of_sets *SoS_lines2;
+
+	SoS_lines2 = SoS_lines->copy();
+
+	SoS_lines2->add_constant_everywhere(
+			0, //- nb_points,
+			verbose_level - 2);
+
+
 	{
 		std::ofstream ost(fname2_tex);
 
-		SoS_lines->print_table_latex_simple(ost);
+		SoS_lines2->print_table_latex_simple(ost);
 
 	}
+
+	FREE_OBJECT(SoS_lines2);
 
 
 	ost << label_scheme << " point classes:\\\\" << endl;

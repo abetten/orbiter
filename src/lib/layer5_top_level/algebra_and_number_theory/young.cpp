@@ -526,7 +526,7 @@ void young::young_symmetrizer(
 
 	if (f_v) {
 		cout << "young::young_symmetrizer" << endl;
-		}
+	}
 
 	young::row_parts = row_parts;
 	l1 = nb_row_parts;
@@ -537,18 +537,18 @@ void young::young_symmetrizer(
 	a = row_parts[l1 - 1];
 	for (j = 0; j < a; j++) {
 		col_parts[j] = l1;
-		}
+	}
 	for (i = l1 - 2; i >= 0; i--) {
 		b = row_parts[i];
 		//cout << "i=" << i << " a=" << a << " b=" << b << endl;
 		if (b == a) {
 			continue;
-			}
+		}
 		for ( ; j < b; j++) {
 			col_parts[j] = i + 1;
-			}
-		a = b;
 		}
+		a = b;
+	}
 
 	if (f_v) {
 		cout << "row_part: ";
@@ -557,7 +557,7 @@ void young::young_symmetrizer(
 		cout << "col_part: ";
 		Int_vec_print(cout, col_parts, l2);
 		cout << endl;
-		}
+	}
 
 	h = 0;
 	for (i = 0; i < l1; i++) {
@@ -565,13 +565,13 @@ void young::young_symmetrizer(
 		for (j = 0; j < a; j++) {
 			Tableau[i * l2 + j] = tableau[h];
 			h++;
-			}
 		}
+	}
 	
 	if (f_v) {
 		cout << "We are using the following tableau:" << endl;
 		Combi.print_tableau(Tableau, l1, l2, row_parts, col_parts);
-		}
+	}
 
 
 	Row_partition = NEW_OBJECT(data_structures::set_of_sets);
@@ -583,25 +583,25 @@ void young::young_symmetrizer(
 		for (j = 0; j < a; j++) {
 			b = Tableau[i * l2 + j];
 			Row_partition->Sets[i][j] = b;
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	Col_partition->init_basic_with_Sz_in_int(n, l2, col_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l2; i++) {
 		a = col_parts[i];
 		for (j = 0; j < a; j++) {
 			b = Tableau[j * l2 + i];
 			Col_partition->Sets[i][j] = b;
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 	if (f_v) {
 		cout << "Row partition:" << endl;
 		Row_partition->print();
 		cout << "Col partition:" << endl;
 		Col_partition->print();
-		}
+	}
 
 
 	int go1, go2;
@@ -613,7 +613,7 @@ void young::young_symmetrizer(
 		gens1, go1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Row stabilizer created" << endl;
-		}
+	}
 
 
 	if (f_vv) {
@@ -622,8 +622,8 @@ void young::young_symmetrizer(
 			cout << "element " << i << " is ";
 			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
-			}
 		}
+	}
 
 
 
@@ -631,7 +631,7 @@ void young::young_symmetrizer(
 		gens2, go2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Column stabilizer created" << endl;
-		}
+	}
 
 	if (f_v) {
 		for (i = 0; i < go2; i++) {
@@ -639,8 +639,8 @@ void young::young_symmetrizer(
 			cout << "element " << i << " is ";
 			A->Group_element->element_print_quick(Elt, cout);
 			cout << endl;
-			}
 		}
+	}
 
 
 	Int_vec_zero(elt1, goi);
@@ -654,7 +654,7 @@ void young::young_symmetrizer(
 		S1->element_unrank_lint(i, Elt);
 		j = S->element_rank_lint(Elt);
 		elt1[j] += 1;
-		}
+	}
 
 	int s;
 	
@@ -665,10 +665,10 @@ void young::young_symmetrizer(
 		S2->element_unrank_lint(i, Elt);
 		j = S->element_rank_lint(Elt);
 
-		s = Combi.perm_signum(Elt, n);
+		s = Combi.Permutations->perm_signum(Elt, n);
 		
 		elt2[j] += s;
-		}
+	}
 
 
 	if (f_v) {
@@ -679,7 +679,7 @@ void young::young_symmetrizer(
 		cout << "elt2=" << endl;
 		group_ring_element_print(A, S, elt2);
 		cout << endl;
-		}
+	}
 
 	// multiply the two group ring elements:
 
@@ -689,13 +689,13 @@ void young::young_symmetrizer(
 		cout << "elt3=" << endl;
 		group_ring_element_print(A, S, elt3);
 		cout << endl;
-		}
+	}
 
 
 
 	if (f_v) {
 		cout << "young::young_symmetrizer done" << endl;
-		}
+	}
 }
 
 void young::compute_generators(

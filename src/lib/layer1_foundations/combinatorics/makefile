@@ -17,6 +17,7 @@ MODULES = \
 		domino_change.o \
 		geo_parameter.o \
 		pentomino_puzzle.o \
+		permutations.o \
 		polynomial_function_domain.o \
 		row_and_col_partition.o \
 		tdo_data.o \

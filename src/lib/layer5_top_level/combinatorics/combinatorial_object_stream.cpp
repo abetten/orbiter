@@ -24,15 +24,15 @@ combinatorial_object_stream::combinatorial_object_stream()
 
 	IS = NULL;
 
-	Classification = NULL;
+	Classification_of_objects = NULL;
 	Objects_after_classification = NULL;
 
 }
 
 combinatorial_object_stream::~combinatorial_object_stream()
 {
-	if (Classification) {
-		FREE_OBJECT(Classification);
+	if (Classification_of_objects) {
+		FREE_OBJECT(Classification_of_objects);
 	}
 	if (Objects_after_classification) {
 		FREE_OBJECT(Objects_after_classification);
@@ -74,35 +74,37 @@ void combinatorial_object_stream::init(
 
 }
 
-void combinatorial_object_stream::do_canonical_form_PG(
-		projective_geometry::projective_space_with_action *PA,
+void combinatorial_object_stream::do_canonical_form(
 		canonical_form_classification::classification_of_objects_description
-				*Canonical_form_PG_Descr,
+				*Canonical_form_Descr,
+		int f_projective_space,
+		projective_geometry::projective_space_with_action *PA,
+		geometry::projective_space *P,
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG" << endl;
+		cout << "combinatorial_object_stream::geometry::projective_space *P" << endl;
 	}
 
 
 
-	Classification = NEW_OBJECT(canonical_form_classification::classification_of_objects);
+	Classification_of_objects = NEW_OBJECT(canonical_form_classification::classification_of_objects);
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG "
-				"before Classification->perform_classification" << endl;
+		cout << "combinatorial_object_stream::geometry::projective_space *P "
+				"before Classification_of_objects->perform_classification" << endl;
 	}
-	Classification->perform_classification(
-			Canonical_form_PG_Descr,
-			true /* f_projective_space */, PA->P,
+	Classification_of_objects->perform_classification(
+			Canonical_form_Descr,
+			true /* f_projective_space */, P,
 			IS,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG "
-				"after Classification->perform_classification" << endl;
+		cout << "combinatorial_object_stream::geometry::projective_space *P "
+				"after Classification_of_objects->perform_classification" << endl;
 	}
 
 
@@ -114,25 +116,26 @@ void combinatorial_object_stream::do_canonical_form_PG(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::geometry::projective_space *P "
 				"before Objects_after_classification->init_after_nauty" << endl;
 	}
 	Objects_after_classification->init_after_nauty(
-			Classification,
-			true /* f_projective_space */, PA,
+			Classification_of_objects,
+			f_projective_space, PA,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG "
+		cout << "combinatorial_object_stream::geometry::projective_space *P "
 				"after Objects_after_classification->init_after_nauty" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_canonical_form_PG done" << endl;
+		cout << "combinatorial_object_stream::geometry::projective_space *P done" << endl;
 	}
 
 }
 
+#if 0
 void combinatorial_object_stream::do_canonical_form_not_PG(
 		canonical_form_classification::classification_of_objects_description
 			*Canonical_form_Descr,
@@ -182,6 +185,7 @@ void combinatorial_object_stream::do_canonical_form_not_PG(
 	}
 
 }
+#endif
 
 void combinatorial_object_stream::do_test_distinguishing_property(
 		graph_theory::colored_graph *CG,
@@ -260,8 +264,10 @@ void combinatorial_object_stream::do_covering_type(
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::do_covering_type verbose_level = " << verbose_level << endl;
-		cout << "combinatorial_object_stream::do_covering_type subset_sz = " << subset_sz << endl;
-		cout << "combinatorial_object_stream::do_covering_type f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
+		cout << "combinatorial_object_stream::do_covering_type "
+				"subset_sz = " << subset_sz << endl;
+		cout << "combinatorial_object_stream::do_covering_type "
+				"f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
 	}
 
 	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);

@@ -1955,6 +1955,67 @@ void modified_group_create::do_stabilizer_of_variety(
 				"Input_Variety = " << Input_Variety->Variety_object->label_txt << endl;
 	}
 
+	std::string fname_base;
+
+	fname_base = Input_Variety->Variety_object->label_txt + "_c";
+
+
+	canonical_form::canonical_form_classifier *Classifier;
+
+	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"before getting PA" << endl;
+	}
+	projective_geometry::projective_space_with_action *PA = Input_Variety->PA;
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"after getting PA" << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"before getting Poly_ring" << endl;
+	}
+	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Variety->Variety_object->Ring;
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"after getting Poly_ring" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"before Classifier->init_direct" << endl;
+	}
+
+	Classifier->init_direct(
+			PA,
+			Poly_ring,
+			1 /*nb_input_Vo*/,
+			Input_Variety,
+			fname_base,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"after Classifier->init_direct" << endl;
+	}
+
+
+
+	canonical_form::canonical_form_global Canonical_form_global;
+
+
+	Canonical_form_global.compute_group_and_tactical_decomposition(
+			Classifier,
+			Input_Variety,
+			fname_base,
+			verbose_level);
+
+
+
 #if 0
 	geometry::projective_space *Projective_space;
 
@@ -1988,6 +2049,85 @@ void modified_group_create::do_stabilizer_of_variety(
 	int f_has_singular_points;
 	std::vector<long int> Singular_points;
 #endif
+
+#if 0
+	projective_geometry::projective_space_with_action *PA;
+
+	int cnt;
+	int po_go;
+	int po_index;
+	int po;
+	int so;
+
+	int f_has_nauty_output;
+	int nauty_output_index_start;
+	std::vector<std::string> Carrying_through;
+
+	algebraic_geometry::variety_object *Variety_object;
+
+	int f_has_automorphism_group;
+	groups::strong_generators *Stab_gens;
+
+	apps_combinatorics::variety_with_TDO_and_TDA *TD;
+#endif
+
+
+	//Input_Vo[0].Stab_gens;
+
+
+	A_base = PA->A;
+	A_previous = PA->A;
+
+
+
+
+
+	label = PA->A->label + "_stab_of_" + Input_Variety->Variety_object->label_txt;
+	label_tex = PA->A->label_tex + "\\_stab\\_of\\_" + Input_Variety->Variety_object->label_tex;
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety label = " << label << endl;
+		cout << "modified_group_create::do_stabilizer_of_variety label_tex = " << label_tex << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	f_has_strong_generators = true;
+
+	groups::strong_generators *Strong_gens_temp;
+	Strong_gens_temp = Input_Variety->Stab_gens->create_copy(verbose_level - 4);
+
+	actions::action_global Action_global;
+
+	A_modified = Action_global.init_subgroup_from_strong_generators(
+			A_base,
+			Strong_gens_temp,
+			verbose_level - 1);
+
+	A_modified->label = label;
+	A_modified->label_tex = label_tex;
+
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::do_stabilizer_of_variety A_modified->label_tex = " << A_modified->label_tex << endl;
+	}
+
+
+	// Strong_gens should be in the new action.
+
+	f_has_strong_generators = true;
+	Strong_gens = A_modified->Strong_gens->create_copy(verbose_level - 4);
+	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
+
+
 
 	if (f_v) {
 		cout << "modified_group_create::do_stabilizer_of_variety done" << endl;

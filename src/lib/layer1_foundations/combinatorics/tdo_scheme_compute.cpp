@@ -40,6 +40,7 @@ void tdo_scheme_compute::init(
 		canonical_form_classification::encoded_combinatorial_object *Enc,
 		int max_depth,
 		int verbose_level)
+// used by combinatorial_object_with_properties::compute_TDO
 {
 	int f_v = (verbose_level >= 1);
 
@@ -211,6 +212,7 @@ void tdo_scheme_compute::print_schemes(
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
+// called from combinatorial_object_with_properties::print_TDO
 {
 	int f_v = (verbose_level >= 1);
 

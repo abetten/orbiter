@@ -1926,10 +1926,6 @@ public:
 			std::ostream &ost);
 	void print_lines_tex(
 			std::ostream &ost);
-#if 0
-	void write_points_to_txt_file(
-			std::string &label, int verbose_level);
-#endif
 
 };
 

@@ -148,7 +148,7 @@ void tally_vector_data::init(
 		a = rep_idx[i];
 		sorting_perm_inv[type_first[a] + Frequency2[a]++] = i;
 	}
-	Combi.perm_inverse(sorting_perm_inv, sorting_perm, data_length);
+	Combi.Permutations->perm_inverse(sorting_perm_inv, sorting_perm, data_length);
 
 	FREE_int(Frequency2);
 

@@ -647,8 +647,17 @@ public:
 			std::ostream &ost,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
+	void print_elements_on_tritangent_planes(
+			std::ostream &ost,
+			groups::strong_generators *Aut_gens,
+			int verbose_level);
 	void print_automorphism_group(
 			std::ostream &ost,
+		int f_print_orbits, std::string &fname_mask,
+		graphics::layered_graph_draw_options *Opt,
+		int verbose_level);
+	void print_orbits_on_schlaefli_related_things(
+		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
 		graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
@@ -717,15 +726,12 @@ public:
 			std::string &label_of_elements,
 			int *element_data, int nb_elements,
 			int verbose_level);
+#if 0
 	void print_double_sixes(
 			std::ostream &ost);
+#endif
 	void compute_tactical_decompositions(
 			int verbose_level);
-#if 0
-	void report_decomposition_schemes(
-			std::ostream &ost,
-			int verbose_level);
-#endif
 
 };
 

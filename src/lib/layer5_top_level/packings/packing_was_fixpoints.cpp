@@ -577,7 +577,7 @@ void packing_was_fixpoints::print_packing(
 	combinatorics::combinatorics_domain Combi;
 
 
-	if (Combi.is_permutation(Lines, sz * PW->P->spread_size)) {
+	if (Combi.Permutations->is_permutation(Lines, sz * PW->P->spread_size)) {
 		cout << "The packing passes the permutation test" << endl;
 	}
 	else {

@@ -346,7 +346,7 @@ void permutation_representation_domain::mult(
 	combinatorics::combinatorics_domain Combi;
 
 	//cout << "in perm_group::mult()" << endl;
-	Combi.perm_mult(A, B, AB, degree);
+	Combi.Permutations->perm_mult(A, B, AB, degree);
 	//cout << "in perm_group::mult()
 	// finished with perm_mult" << endl;
 }
@@ -366,7 +366,7 @@ void permutation_representation_domain::invert(
 {
 	combinatorics::combinatorics_domain Combi;
 
-	Combi.perm_inverse(A, Ainv, degree);
+	Combi.Permutations->perm_inverse(A, Ainv, degree);
 }
 
 void permutation_representation_domain::unpack(
@@ -405,22 +405,20 @@ void permutation_representation_domain::print(
 	combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
-	Combi.perm_print(ost, Elt, degree);
+	Combi.Permutations->perm_print(ost, Elt, degree);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 }
 
-void permutation_representation_domain::print_with_print_point_function(
+void permutation_representation_domain::print_with_point_labels(
 		int *Elt,
 		ostream &ost,
-		void (*point_label)(
-				std::stringstream &sstr, long int pt, void *data),
-		void *point_label_data)
+		std::string *Point_labels, void *data)
 {
 	combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
-	Combi.perm_print_with_print_point_function(ost, Elt, degree, point_label, point_label_data);
+	Combi.Permutations->perm_print_with_point_labels(ost, Elt, degree, Point_labels, data);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 }
@@ -495,13 +493,13 @@ void permutation_representation_domain::print_with_action(
 	}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
-	Combi.perm_print_offset(ost, Elt, degree, 0 /* offset */,
+	Combi.Permutations->perm_print_offset(ost, Elt, degree, 0 /* offset */,
 			false /* f_print_cycles_of_length_one */,
 			false /* f_cycle_length */, false, 0,
 			false /* f_orbit_structure */,
 			NULL, NULL);
 	ost << " : ";
-	Combi.perm_print_list_offset(ost, Elt, degree, 1);
+	Combi.Permutations->perm_print_list_offset(ost, Elt, degree, 1);
 	ost << endl;
 }
 
@@ -532,7 +530,7 @@ void permutation_representation_domain::make_element(
 		Elt[i] = a;
 	}
 
-	if (!Combi.is_permutation(my_data, elt_size_int)) {
+	if (!Combi.Permutations->is_permutation(my_data, elt_size_int)) {
 		cout << "permutation_representation_domain::make_element "
 				"The input is not a permutation" << endl;
 		exit(1);

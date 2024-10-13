@@ -254,38 +254,6 @@ void points_and_lines::print_lines_tex(
 
 }
 
-#if 0
-void points_and_lines::write_points_to_txt_file(
-		std::string &label, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "points_and_lines::write_points_to_txt_file" << endl;
-	}
-	string fname;
-	fname = label + "_points.txt";
-
-	orbiter_kernel_system::file_io Fio;
-
-	{
-		ofstream ost(fname);
-		int i;
-		ost << nb_pts;
-		for (i = 0; i < nb_pts; i++) {
-			ost << " " << Pts[i];
-		}
-		ost << endl;
-		ost << -1 << endl;
-	}
-	cout << "Written file " << fname
-			<< " of size " << Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "points_and_lines::write_points_to_txt_file done" << endl;
-	}
-}
-#endif
 
 }}}
 

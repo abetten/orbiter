@@ -128,6 +128,26 @@ void set_of_sets::init(
 	}
 }
 
+
+void set_of_sets::add_constant_everywhere(
+		int c,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	if (f_v) {
+		cout << "set_of_sets::add_constant_everywhere" << endl;
+	}
+
+	for (i = 0; i < nb_sets; i++) {
+		for (j = 0; j < Set_size[i]; j++) {
+			Sets[i][j] += c;
+		}
+	}
+}
+
+
 void set_of_sets::init_with_Sz_in_int(
 		int underlying_set_size,
 		int nb_sets, long int **Pts, int *Sz,
@@ -375,18 +395,18 @@ void set_of_sets::init_from_orbiter_file(
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file "
 				"fname=" << fname << endl;
-		}
+	}
 	nb_sets = Fio.count_number_of_orbits_in_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file "
 				"nb_sets=" << nb_sets << endl;
-		}
+	}
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_plint(nb_sets);
 	Set_size = NEW_lint(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
-		}
+	}
 	Lint_vec_zero(Set_size, nb_sets);
 
 	char *buf, *p_buf;
@@ -397,58 +417,59 @@ void set_of_sets::init_from_orbiter_file(
 	buf = NEW_char(sz + 1);
 
 	{
-	ifstream fp(fname);
-	int len, nb_sol, a, j;
-	string_tools ST;
-
+		ifstream fp(fname);
+		int len, nb_sol, a, j;
+		string_tools ST;
 	
-	nb_sol = 0;
-	while (true) {
-		if (fp.eof()) {
-			break;
-			}
 		
-		//cout << "set_of_sets::init_from_orbiter_file "
-		//"reading line, nb_sol = " << nb_sol << endl;
-		fp.getline(buf, sz + 1, '\n');
-		if (strlen(buf) == 0) {
-			cout << "set_of_sets::init_from_orbiter_file "
-					"reading an empty line" << endl;
-			break;
+		nb_sol = 0;
+		while (true) {
+			if (fp.eof()) {
+				break;
 			}
-		
-		// check for comment line:
-		if (buf[0] == '#')
-			continue;
 			
-		p_buf = buf;
-		ST.s_scan_int(&p_buf, &len);
-		if (len == -1) {
-			if (f_v) {
+			//cout << "set_of_sets::init_from_orbiter_file "
+			//"reading line, nb_sol = " << nb_sol << endl;
+			fp.getline(buf, sz + 1, '\n');
+			if (strlen(buf) == 0) {
 				cout << "set_of_sets::init_from_orbiter_file "
-						"found a complete file with " << nb_sol
-						<< " solutions" << endl;
+						"reading an empty line" << endl;
+				break;
+			}
+
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
+
+			p_buf = buf;
+			ST.s_scan_int(&p_buf, &len);
+			if (len == -1) {
+				if (f_v) {
+					cout << "set_of_sets::init_from_orbiter_file "
+							"found a complete file with " << nb_sol
+							<< " solutions" << endl;
 				}
-			break;
+				break;
 			}
-		else {
-			if (f_v) {
-				cout << "set_of_sets::init_from_orbiter_file "
-						"reading a set of size " << len << endl;
+			else {
+				if (f_v) {
+					cout << "set_of_sets::init_from_orbiter_file "
+							"reading a set of size " << len << endl;
 				}
 			}
-		Sets[nb_sol] = NEW_lint(len);
-		Set_size[nb_sol] = len;
-		for (j = 0; j < len; j++) {
-			ST.s_scan_int(&p_buf, &a);
-			Sets[nb_sol][j] = a;
+			Sets[nb_sol] = NEW_lint(len);
+			Set_size[nb_sol] = len;
+			for (j = 0; j < len; j++) {
+				ST.s_scan_int(&p_buf, &a);
+				Sets[nb_sol][j] = a;
 			}
-		nb_sol++;
+			nb_sol++;
 		}
-	if (nb_sol != nb_sets) {
-		cout << "set_of_sets::init_from_orbiter_file "
-				"nb_sol != nb_sets" << endl;
-		exit(1);
+		if (nb_sol != nb_sets) {
+			cout << "set_of_sets::init_from_orbiter_file "
+					"nb_sol != nb_sets" << endl;
+			exit(1);
 		}
 	}
 	FREE_char(buf);
@@ -456,7 +477,7 @@ void set_of_sets::init_from_orbiter_file(
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file "
 				"done" << endl;
-		}
+	}
 }
 
 void set_of_sets::init_set(
@@ -518,13 +539,13 @@ void set_of_sets::init_cycle_structure(
 		}
 		// work on a next cycle, starting at position l:
 		first = l;
-		//cout << "set_of_sets::init_cycle_structure cyle
+		//cout << "set_of_sets::init_cycle_structure cycle
 		//starting with " << first << endl;
 		l1 = l;
 		len = 1;
 		while (true) {
 			if (l1 >= n) {
-				cout << "set_of_sets::init_cycle_structure cyle "
+				cout << "set_of_sets::init_cycle_structure cycle "
 						"starting with " << first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
@@ -555,7 +576,7 @@ void set_of_sets::init_cycle_structure(
 			l1 = next;
 			len++;
 		}
-		//cout << "set_of_sets::init_cycle_structure cyle starting
+		//cout << "set_of_sets::init_cycle_structure cycle starting
 		//with " << first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		orbit_length[nb_orbits++] = len;
@@ -597,13 +618,13 @@ void set_of_sets::init_cycle_structure(
 		}
 		// work on the next cycle, starting at position l:
 		first = l;
-		//cout << "set_of_sets::init_cycle_structure cyle
+		//cout << "set_of_sets::init_cycle_structure cycle
 		//starting with " << first << endl;
 		l1 = l;
 		len = 1;
 		while (true) {
 			if (l1 >= n) {
-				cout << "set_of_sets::init_cycle_structure cyle "
+				cout << "set_of_sets::init_cycle_structure cycle "
 						"starting with " << first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
@@ -686,7 +707,7 @@ int set_of_sets::total_size()
 	sz = 0;
 	for (i = 0; i < nb_sets; i++) {
 		sz += Set_size[i];
-		}
+	}
 	return sz;
 }
 
@@ -1003,7 +1024,7 @@ void set_of_sets::compute_incidence_matrix(
 	int i, j, h;
 
 	if (f_v) {
-		cout << "set_of_sets::compute_and_print_tdo_row_scheme" << endl;
+		cout << "set_of_sets::compute_incidence_matrix" << endl;
 	}
 	m = underlying_set_size;
 	n = nb_sets;

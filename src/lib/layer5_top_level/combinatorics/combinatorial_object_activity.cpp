@@ -402,6 +402,7 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 		projective_geometry::projective_space_with_action *PA;
+		geometry::projective_space *P;
 
 
 		if (Descr->f_canonical_form_PG_has_PA) {
@@ -411,8 +412,20 @@ void combinatorial_object_activity::perform_activity_combo(
 
 			PA = Get_projective_space(Descr->canonical_form_PG_PG_label);
 		}
+		P = PA->P;
 
-		Combo->do_canonical_form_PG(PA, Descr->Canonical_form_PG_Descr, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->do_canonical_form" << endl;
+		}
+		Combo->do_canonical_form(
+				Descr->Canonical_form_PG_Descr,
+				true /* f_projective_space */, PA, P,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->do_canonical_form" << endl;
+		}
 
 	}
 	else if (Descr->f_canonical_form) {
@@ -422,7 +435,18 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_canonical_form" << endl;
 		}
 
-		Combo->do_canonical_form_not_PG(Descr->Canonical_form_Descr, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->do_canonical_form" << endl;
+		}
+		Combo->do_canonical_form(
+				Descr->Canonical_form_Descr,
+				false /* f_projective_space */, NULL, NULL,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->do_canonical_form" << endl;
+		}
 
 	}
 	if (Descr->f_report) {

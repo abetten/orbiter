@@ -694,7 +694,7 @@ void grassmann::unrank_longinteger(
 		//A = a * Q;
 		if (D.compare(r, A) < 0) {
 			break;
-			}
+		}
 		A.assign_to(mA);
 		mA.negate();
 		D.add(r, mA, r1);
@@ -816,7 +816,8 @@ void grassmann::rank_longinteger(
 	if (k == 0) {
 		return;
 	}
-	k1 = F->Linear_algebra->Gauss_int(M, false /*f_special */,
+	k1 = F->Linear_algebra->Gauss_int(
+			M, false /*f_special */,
 		true /* f_complete */, base_cols,
 		false /* f_P */, NULL, k, n, n,
 		0 /* verbose_level */);
@@ -1040,7 +1041,7 @@ void grassmann::unrank_lint_here_and_compute_perp(
 
 	if (f_v) {
 		cout << "grassmann::unrank_int_here_and_compute_perp" << endl;
-		}
+	}
 	unrank_lint(rk, verbose_level);
 	Int_vec_copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
@@ -1050,12 +1051,12 @@ void grassmann::unrank_lint_here_and_compute_perp(
 	if (r != k) {
 		cout << "r != k" << endl;
 		exit(1);
-		}
+	}
 	
 	FREE_int(base_cols);
 	if (f_v) {
 		cout << "grassmann::unrank_int_here_and_compute_perp done" << endl;
-		}
+	}
 }
 
 void grassmann::line_regulus_in_PG_3_q(
@@ -1443,7 +1444,8 @@ long int grassmann::make_special_element_infinity(
 
 	if (f_v3) {
 		cout << "grassmann::make_special_element_infinity M:" << endl;
-		Int_vec_print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Int_vec_print_integer_matrix_width(
+				cout, M, k, n, n, F->log10_of_q + 1);
 	}
 	a = rank_lint(0/*verbose_level - 4*/);
 	if (f_v3) {

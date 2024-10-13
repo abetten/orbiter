@@ -462,6 +462,7 @@ public:
 	void print();
 	void latex(
 			std::ostream &ost);
+	std::string &make_label();
 	void latex_index_only(
 			std::ostream &ost);
 	void latex_to_string(
@@ -910,6 +911,9 @@ public:
 
 	std::string *Line_label; // [27]
 	std::string *Line_label_tex; // [27]
+
+	std::string *Tritangent_plane_label; // [45]
+	std::string *Tritangent_plane_label_tex; // [45]
 
 	schlaefli_labels();
 	~schlaefli_labels();
@@ -1678,8 +1682,12 @@ public:
 			std::ostream &ost, long int rk, int *v);
 	void print_point(
 			std::ostream &ost, int *v);
+#if 0
 	void sstr_line_label(
 			std::stringstream &sstr, long int pt);
+	void sstr_tritangent_plane_label(
+			std::stringstream &sstr, long int pt);
+#endif
 	void print_one_line_tex(
 			std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);
@@ -1726,8 +1734,6 @@ public:
 
 };
 
-void callback_surface_domain_sstr_line_label(
-		std::stringstream &sstr, long int pt, void *data);
 
 // #############################################################################
 // surface_object_properties.cpp
@@ -1923,7 +1929,8 @@ public:
 	void compute_transversal_lines(
 		int line_a, int line_b, int *transversals5,
 		int verbose_level);
-	void clebsch_map_latex(std::ostream &ost,
+	void clebsch_map_latex(
+			std::ostream &ost,
 			long int *Clebsch_map, int *Clebsch_coeff);
 	void compute_reduced_set_of_points_not_on_lines_wrt_P(
 			int P_idx,
@@ -1957,18 +1964,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
-#if 0
-	long int *Pts; // in increasing order
-	int nb_pts;
-
-
-	long int *Lines;
-	int nb_lines;
-
-	int eqn[20];
-#else
 	variety_object *Variety_object;
-#endif
 
 	surface_object_properties *SOP;
 
@@ -2020,6 +2016,8 @@ public:
 			std::ostream &ost);
 	void print_one_line_tex(
 			std::ostream &ost, int idx);
+	void print_double_sixes(
+			std::ostream &ost);
 	void Clebsch_map_up(
 			std::string &fname_base,
 			int line_1_idx, int line_2_idx, int verbose_level);

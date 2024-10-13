@@ -808,9 +808,11 @@ void action::export_to_orbiter(
 			fp << "\t\"";
 			for (j = 0; j < degree; j++) {
 				if (false) {
-					cout << "action::export_to_orbiter computing image of " << j << " under generator " << i << endl;
+					cout << "action::export_to_orbiter "
+							"computing image of " << j << " under generator " << i << endl;
 				}
-				a = Group_element->element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
+				a = Group_element->element_image_of(
+						j, SG->gens->ith(i), 0 /* verbose_level*/);
 				fp << a;
 				if (j < degree - 1 || i < SG->gens->len - 1) {
 					fp << ",";

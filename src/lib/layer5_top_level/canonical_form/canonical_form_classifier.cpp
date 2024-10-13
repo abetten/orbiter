@@ -118,9 +118,11 @@ void canonical_form_classifier::init(
 
 			}
 		}
+#if 0
 		else if (Descr->f_algorithm_substructure) {
 			cout << "substructure";
 		}
+#endif
 		else {
 			cout << "unknown" << endl;
 		}
@@ -150,7 +152,7 @@ void canonical_form_classifier::init(
 
 
 
-	if (!Descr->f_algorithm_nauty && !Descr->f_algorithm_substructure) {
+	if (!Descr->f_algorithm_nauty /*&& !Descr->f_algorithm_substructure*/) {
 		cout << "canonical_form_classifier::init "
 				"please select an algorithm to use" << endl;
 		exit(1);

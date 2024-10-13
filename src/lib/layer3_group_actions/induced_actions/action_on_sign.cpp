@@ -74,7 +74,7 @@ long int action_on_sign::compute_image(
 		v = A->Group_element->element_image_of(u, Elt, false);
 		perm[u] = v;
 	}
-	sgn = Combi.perm_signum(perm, perm_degree);
+	sgn = Combi.Permutations->perm_signum(perm, perm_degree);
 	if (sgn == -1) {
 		j = (i + 1) % 2;
 	}

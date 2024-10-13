@@ -27,6 +27,10 @@ eckardt_point::~eckardt_point()
 
 void eckardt_point::print()
 {
+
+	latex(cout);
+
+#if 0
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
 	
@@ -48,6 +52,7 @@ void eckardt_point::print()
 		cout << "eckardt_point::print len is illegal" << endl;
 		exit(1);
 	}
+#endif
 }
 
 void eckardt_point::latex(
@@ -56,25 +61,38 @@ void eckardt_point::latex(
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
 	
+	string s;
+
+	s = make_label();
+	ost << "E_{" << s << "}" << endl;
+}
+
+std::string &eckardt_point::make_label()
+{
+	int t, i, j;
+	combinatorics::combinatorics_domain Combi;
+	string s;
+
 	if (len == 3) {
-		ost << "E_{";
+		s = "";
 		for (t = 0; t < 3; t++) {
 			Combi.k2ij(index[t], i, j, 6);
-			ost << i + 1 << j + 1;
+			s += std::to_string(i + 1) + std::to_string(j + 1);
 			if (t < 2) {
-				ost << ",";
+				s += ",";
 			}
 		}
-		ost << "}" << endl;
 	}
 	else if (len == 2) {
-		ost << "E_{" << index[0] + 1 << index[1] + 1 << "}" << endl;
+		s = std::to_string(index[0] + 1) + std::to_string(index[1] + 1);
 	}
 	else {
-		cout << "eckardt_point::latex len is illegal" << endl;
+		cout << "eckardt_point::make_label len is illegal" << endl;
 		exit(1);
 	}
+	return s;
 }
+
 
 void eckardt_point::latex_index_only(
 		std::ostream &ost)
@@ -112,6 +130,10 @@ void eckardt_point::latex_to_string(
 void eckardt_point::latex_to_str_without_E(
 		std::string &s)
 {
+
+	s = make_label();
+
+#if 0
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
 
@@ -132,6 +154,7 @@ void eckardt_point::latex_to_str_without_E(
 		cout << "eckardt_point::latex_to_str_without_E len is illegal" << endl;
 		exit(1);
 	}
+#endif
 }
 
 

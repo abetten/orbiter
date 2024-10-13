@@ -144,7 +144,7 @@ public:
 	int f_algorithm_nauty;
 	int f_save_nauty_input_graphs;
 
-	int f_algorithm_substructure;
+	//int f_algorithm_substructure;
 
 	int f_has_nauty_output;
 
@@ -265,67 +265,17 @@ public:
 			int *alpha, int *gamma,
 			int verbose_level);
 	// find gamma which maps the points of C1 to the points of C.
-
-
-};
-
-
-
-
-#if 0
-// #############################################################################
-// canonical_form_substructure.cpp
-// #############################################################################
-
-
-
-//! to compute the canonical form of an object using substructure canonization
-
-class canonical_form_substructure {
-
-public:
-
-	variety_compute_canonical_form *Variety;
-
-
-	set_stabilizer::substructure_stats_and_selection *SubSt;
-
-	set_stabilizer::compute_stabilizer *CS;
-
-	groups::strong_generators *Gens_stabilizer_original_set;
-	groups::strong_generators *Gens_stabilizer_canonical_form;
-
-
-	orbits_schreier::orbit_of_equations *Orb;
-
-
-	int *trans1;
-	int *trans2;
-	int *intermediate_equation;
-
-
-
-	int *Elt;
-	int *eqn2;
-
-
-
-	canonical_form_substructure();
-	~canonical_form_substructure();
-	void classify_curve_with_substructure(
-			variety_compute_canonical_form *Variety,
-			int verbose_level);
-	void handle_orbit(
-			int *transporter_to_canonical_form,
-			groups::strong_generators *&Gens_stabilizer_original_set,
-			groups::strong_generators *&Gens_stabilizer_canonical_form,
+	void compute_group_and_tactical_decomposition(
+			canonical_form::canonical_form_classifier *Classifier,
+			canonical_form::variety_object_with_action *Input_Vo,
+			std::string &fname_base,
 			int verbose_level);
 
 
 };
 
 
-#endif
+
 
 
 
@@ -418,7 +368,7 @@ public:
 
 };
 
-#if 1
+
 // #############################################################################
 // classification_of_varieties.cpp
 // #############################################################################
@@ -515,8 +465,10 @@ public:
 			int verbose_level);
 	void report_nauty(
 			std::ostream &ost, int verbose_level);
+#if 0
 	void report_substructure(
 			std::ostream &ost, int verbose_level);
+#endif
 	void export_canonical_form_data(
 			std::string &fname, int verbose_level);
 	void generate_source_code(
@@ -541,7 +493,6 @@ public:
 			int verbose_level);
 
 };
-#endif
 
 
 
@@ -600,11 +551,6 @@ public:
 			int verbose_level);
 	void compute_TDO(
 			int max_TDO_depth, int verbose_level);
-	void print_TDO(
-			std::ostream &ost,
-			canonical_form_classification::objects_report_options
-				*Report_options,
-			int verbose_level);
 
 };
 
@@ -896,37 +842,12 @@ public:
 			int counter,
 			variety_object_with_action *Vo,
 			int verbose_level);
-#if 0
-	void compute_canonical_form_nauty(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-#endif
-#if 1
 	void compute_canonical_form_nauty_new(
 			int f_save_nauty_input_graphs,
 			int verbose_level);
-#endif
-#if 0
-	void classify_using_nauty(
-			int f_save_nauty_input_graphs,
-			int verbose_level);
-#endif
-#if 1
 	void classify_using_nauty_new(
 			int f_save_nauty_input_graphs,
 			int verbose_level);
-#endif
-#if 0
-	void handle_repeated_canonical_form_of_set(
-			int idx,
-			variety_stabilizer_compute *C,
-			long int *alpha, int *gamma,
-			int &idx_canonical_form,
-			int &idx_equation,
-			int &f_found_eqn,
-			int verbose_level);
-#endif
-#if 1
 	void handle_repeated_canonical_form_of_set_new(
 			int idx,
 			variety_stabilizer_compute *C,
@@ -935,14 +856,6 @@ public:
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
-#endif
-#if 0
-	int find_equation(
-			variety_stabilizer_compute *C,
-			long int *alpha, int *gamma,
-			int idx1, int &found_at,
-			int verbose_level);
-#endif
 	int find_equation_new(
 			variety_stabilizer_compute *C,
 			int *alpha, int *gamma,
@@ -950,22 +863,10 @@ public:
 			int verbose_level);
 	// gets the canonical_form_nauty object from
 	// Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
-#if 0
-	void add_object_and_compute_canonical_equation(
-			variety_stabilizer_compute *C,
-			int idx, int verbose_level);
-	// adds the canonical form at position idx
-#endif
-#if 1
 	void add_object_and_compute_canonical_equation_new(
 			variety_stabilizer_compute *C,
 			int idx, int verbose_level);
 	// adds the canonical form at position idx, using Classification_of_varieties_nauty
-#endif
-#if 0
-	void compute_canonical_form_substructure(
-			int verbose_level);
-#endif
 	void compute_canonical_object(
 			int verbose_level);
 	std::string stringify_csv_entry_one_line(
@@ -975,19 +876,13 @@ public:
 			int verbose_level);
 	std::string stringify_csv_entry_one_line_nauty(
 			int i, int verbose_level);
-#if 1
 	std::string stringify_csv_entry_one_line_nauty_new(
 			int i, int verbose_level);
-#endif
-#if 0
-	void prepare_csv_entry_one_line_nauty(
-			std::vector<std::string> &v, int i, int verbose_level);
-#endif
-#if 1
 	void prepare_csv_entry_one_line_nauty_new(
 			std::vector<std::string> &v, int i, int verbose_level);
-#endif
 };
+
+
 
 // #############################################################################
 // veriety_object_with_action.cpp

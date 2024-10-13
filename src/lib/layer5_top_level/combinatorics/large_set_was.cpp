@@ -729,7 +729,7 @@ void large_set_was::read_solution_file(
 				Packings_explicit[i * Sz + j * LS->design_size + h] = b;
 			}
 		}
-		if (!Combi.is_permutation_lint(Packings_explicit + i * Sz, Sz)) {
+		if (!Combi.Permutations->is_permutation_lint(Packings_explicit + i * Sz, Sz)) {
 			cout << "error: the packing does not pass the permutation test" << endl;
 			exit(1);
 		}

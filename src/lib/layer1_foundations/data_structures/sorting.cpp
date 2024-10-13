@@ -903,7 +903,7 @@ void sorting::int_vec_sorting_permutation(
 			perm_inv[len - 1 - i] = a;
 		}
 	}
-	Combi.perm_inverse(perm_inv, perm, len);
+	Combi.Permutations->perm_inverse(perm_inv, perm, len);
 }
 
 void sorting::lint_vec_sorting_permutation(
@@ -941,7 +941,7 @@ void sorting::lint_vec_sorting_permutation(
 			perm_inv[len - 1 - i] = a;
 		}
 	}
-	Combi.perm_inverse(perm_inv, perm, len);
+	Combi.Permutations->perm_inverse(perm_inv, perm, len);
 }
 
 

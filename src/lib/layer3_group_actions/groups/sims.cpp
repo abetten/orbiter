@@ -574,8 +574,8 @@ void sims::initialize_table(
 	if (f_v) {
 		cout << "sims::initialize_table" << endl;
 	}
-	Combi.perm_identity(orbit[i], transversal_length);
-	Combi.perm_identity(orbit_inv[i], transversal_length);
+	Combi.Permutations->perm_identity(orbit[i], transversal_length);
+	Combi.Permutations->perm_identity(orbit_inv[i], transversal_length);
 	for (j = 0; j < transversal_length; j++) {
 		prev[i][j] = -1;
 		label[i][j] = -1;

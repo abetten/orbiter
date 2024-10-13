@@ -160,6 +160,7 @@ void variety_activity::do_compute_group(
 	}
 
 
+#if 0
 	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
 	Classification_of_varieties_nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
@@ -249,6 +250,25 @@ void variety_activity::do_compute_group(
 
 
 	FREE_OBJECT(Classifier);
+#endif
+
+	canonical_form::canonical_form_global Canonical_form_global;
+
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"before Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
+	Canonical_form_global.compute_group_and_tactical_decomposition(
+			Classifier,
+			Input_Vo,
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_activity::do_compute_group "
+				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group done" << endl;

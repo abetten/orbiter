@@ -86,11 +86,10 @@ static void matrix_group_element_print_quick(
 static void matrix_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
-static void matrix_group_element_print_latex_with_print_point_function(
+static void matrix_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data);
+	std::string *Point_labels, void *data);
 static void matrix_group_element_print_as_permutation(
 	action &A, void *elt, std::ostream &ost);
 static void matrix_group_element_print_verbose(
@@ -126,8 +125,8 @@ void action_pointer_table::init_function_pointers_matrix_group()
 	ptr_element_print = matrix_group_element_print;
 	ptr_element_print_quick = matrix_group_element_print_quick;
 	ptr_element_print_latex = matrix_group_element_print_latex;
-	ptr_element_print_latex_with_print_point_function =
-			matrix_group_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels =
+			matrix_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = matrix_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			matrix_group_element_code_for_make_element;
@@ -636,11 +635,10 @@ static void matrix_group_element_print_latex(
 #endif
 }
 
-static void matrix_group_element_print_latex_with_print_point_function(
+static void matrix_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
-	void (*point_label)(std::stringstream &sstr, long int pt, void *data),
-	void *point_label_data)
+	std::string *Point_labels, void *data)
 {
 	algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
@@ -674,7 +672,7 @@ static void matrix_group_element_print_as_permutation(
 		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
 	}
-	Combi.perm_print(ost, p, A.degree);
+	Combi.Permutations->perm_print(ost, p, A.degree);
 	FREE_int(p);
 }
 
@@ -696,7 +694,7 @@ static void matrix_group_element_print_verbose(
 			j = A.Group_element->element_image_of(i, Elt, false);
 			p[i] = j;
 		}
-		Combi.perm_print(ost, p, A.degree);
+		Combi.Permutations->perm_print(ost, p, A.degree);
 		FREE_int(p);
 	}
 	else {

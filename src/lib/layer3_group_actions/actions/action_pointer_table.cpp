@@ -95,7 +95,7 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_print = NULL;
 	ptr_element_print_quick = NULL;
 	ptr_element_print_latex = NULL;
-	ptr_element_print_latex_with_print_point_function = NULL;
+	ptr_element_print_latex_with_point_labels = NULL;
 	ptr_element_print_verbose = NULL;
 	ptr_element_code_for_make_element = NULL;
 	ptr_element_print_for_make_element = NULL;
@@ -130,7 +130,7 @@ void action_pointer_table::copy_from_but_reset_counters(
 	ptr_element_print = T->ptr_element_print;
 	ptr_element_print_quick = T->ptr_element_print_quick;
 	ptr_element_print_latex = T->ptr_element_print_latex;
-	ptr_element_print_latex_with_print_point_function = T->ptr_element_print_latex_with_print_point_function;
+	ptr_element_print_latex_with_point_labels = T->ptr_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = T->ptr_element_print_verbose;
 	ptr_element_code_for_make_element = T->ptr_element_code_for_make_element;
 	ptr_element_print_for_make_element = T->ptr_element_print_for_make_element;

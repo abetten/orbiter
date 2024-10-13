@@ -459,12 +459,10 @@ public:
 			int *Elt, uchar *elt);
 	void print(
 			int *Elt, std::ostream &ost);
-	void print_with_print_point_function(
+	void print_with_point_labels(
 			int *Elt,
 			std::ostream &ost,
-			void (*point_label)(
-					std::stringstream &sstr, long int pt, void *data),
-			void *point_label_data);
+			std::string *Point_labels, void *data);
 	void code_for_make_element(
 			int *Elt, int *data);
 	void print_for_make_element(

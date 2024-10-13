@@ -27,6 +27,9 @@ schlaefli_labels::schlaefli_labels()
 
 	Line_label = NULL;
 	Line_label_tex = NULL;
+
+	Tritangent_plane_label = NULL;
+	Tritangent_plane_label_tex = NULL;
 }
 
 schlaefli_labels::~schlaefli_labels()
@@ -47,6 +50,13 @@ schlaefli_labels::~schlaefli_labels()
 	}
 	if (Line_label_tex) {
 		delete [] Line_label_tex;
+	}
+
+	if (Tritangent_plane_label) {
+		delete [] Tritangent_plane_label;
+	}
+	if (Tritangent_plane_label_tex) {
+		delete [] Tritangent_plane_label_tex;
 	}
 
 }
@@ -172,6 +182,22 @@ void schlaefli_labels::init(
 	Line_label_tex[27].assign("d");
 
 
+	Tritangent_plane_label = new std::string[45];
+	Tritangent_plane_label_tex = new std::string[45];
+
+	for (i = 0; i < 45; i++) {
+
+		eckardt_point Eckardt_point;
+
+		Eckardt_point.init_by_rank(i);
+
+		string str;
+
+		str = Eckardt_point.make_label();
+
+		Tritangent_plane_label[i] = "\\pi_{" + str + "}";
+		Tritangent_plane_label_tex[i] = "\\pi_{" + str + "}";
+	}
 
 
 	if (f_v) {

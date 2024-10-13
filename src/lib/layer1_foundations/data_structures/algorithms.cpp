@@ -1070,6 +1070,9 @@ void algorithms::process_class_list(
 		cout << "algorithms::process_class_list" << endl;
 	}
 
+	if (f_v) {
+		cout << "algorithms::process_class_list Classes_parsed.size()=" << Classes_parsed.size() << endl;
+	}
 	int i, j;
 	for (i = 0; i < Classes_parsed.size(); i++) {
 		cout << setw(3) << i << " : ";
