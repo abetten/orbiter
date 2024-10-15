@@ -1155,6 +1155,7 @@ void orbits_global::do_conjugacy_class_of_element(
 }
 #endif
 
+#if 0
 void orbits_global::do_orbits_on_group_elements_under_conjugation(
 		apps_algebra::any_group *AG,
 		std::string &fname_group_elements_coded,
@@ -1319,7 +1320,7 @@ void orbits_global::do_orbits_on_group_elements_under_conjugation(
 		cout << "orbits_global::do_orbits_on_group_elements_under_conjugation done" << endl;
 	}
 }
-
+#endif
 
 
 

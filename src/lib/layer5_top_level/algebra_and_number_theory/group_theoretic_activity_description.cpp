@@ -102,10 +102,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string centralizer_of_element_label;
 	//std::string centralizer_of_element_data;
 
-
+#if 0
 	f_orbits_on_group_elements_under_conjugation = false;
 	//std::string orbits_on_group_elements_under_conjugation_fname;
 	//orbits_on_group_elements_under_conjugation_transporter_fname
+#endif
 
 	// Magma:
 	f_normalizer_of_cyclic_subgroup = false;
@@ -179,7 +180,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	//  3:
 
-
+#if 0
 	f_multiply_elements_csv_column_major_ordering = false;
 	//std::string multiply_elements_csv_column_major_ordering_fname1;
 	//std::string multiply_elements_csv_column_major_ordering_fname2;
@@ -194,6 +195,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string apply_elements_csv_to_set_fname1;
 	//std::string apply_elements_csv_to_set_fname2;
 	//std::string apply_elements_csv_to_set_set;
+#endif
 
 	f_order_of_products = false;
 	//order_of_products_elements = NULL;
@@ -250,11 +252,13 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string subgroup_lattice_identify_subgroup_subgroup_label;
 
 
-
-
+#if 0
+	// old style orbit function, usage is discouraged.
+	// Better to use the -orbits command.
 
 	f_orbit_of = false;
 	orbit_of_point_idx = 0;
+
 
 	f_orbits_on_set_system_from_file = false;
 	//orbits_on_set_system_from_file_fname = NULL;
@@ -265,7 +269,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//orbit_of_set_from_file_fname = NULL;
 	//f_search_subgroup = false;
 
-
+#endif
 
 
 	// classification:
@@ -516,7 +520,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << centralizer_of_element_data << endl;
 			}
 		}
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
 			f_orbits_on_group_elements_under_conjugation = true;
 			orbits_on_group_elements_under_conjugation_fname.assign(argv[++i]);
@@ -528,7 +532,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-
+#endif
 
 		else if (ST.stringcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = true;
@@ -685,6 +689,7 @@ int group_theoretic_activity_description::read_arguments(
 
 		// 3:
 
+#if 0
 		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
 			f_multiply_elements_csv_column_major_ordering = true;
 			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
@@ -724,6 +729,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+#endif
 
 
 
@@ -855,7 +861,7 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-
+#if 0
 		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = true;
 			orbit_of_point_idx = ST.strtoi(argv[++i]);
@@ -883,7 +889,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< orbits_on_set_system_number_of_columns << endl;
 			}
 		}
-
+#endif
 
 
 		// classification tasks:
@@ -1068,13 +1074,14 @@ void group_theoretic_activity_description::print()
 		cout << "-centralizer_of_element " << centralizer_of_element_label
 				<< " " << centralizer_of_element_data << endl;
 	}
+#if 0
 	if (f_orbits_on_group_elements_under_conjugation) {
 		cout << "-orbits_on_group_elements_under_conjugation "
 			<< " " << orbits_on_group_elements_under_conjugation_fname
 			<< " " << orbits_on_group_elements_under_conjugation_transporter_fname
 			<< endl;
 	}
-
+#endif
 
 	if (f_normalizer_of_cyclic_subgroup) {
 		cout << "-normalizer_of_cyclic_subgroup " << normalizer_of_cyclic_subgroup_label
@@ -1155,6 +1162,7 @@ void group_theoretic_activity_description::print()
 
 	// 3:
 
+#if 0
 	if (f_multiply_elements_csv_column_major_ordering) {
 		cout << "-multiply_elements_csv_column_major_ordering "
 				<< multiply_elements_csv_column_major_ordering_fname1 << " "
@@ -1178,7 +1186,7 @@ void group_theoretic_activity_description::print()
 				<< apply_elements_csv_to_set_set << " "
 				<< endl;
 	}
-
+#endif
 
 	if (f_order_of_products) {
 		cout << "-order_of_products " << order_of_products_elements << endl;
@@ -1245,6 +1253,7 @@ void group_theoretic_activity_description::print()
 				<< endl;
 	}
 
+#if 0
 	if (f_orbit_of) {
 		cout << "-orbit_of " << orbit_of_point_idx << endl;
 	}
@@ -1258,7 +1267,7 @@ void group_theoretic_activity_description::print()
 		cout << "-orbit_of_set_from_file"
 					<< orbit_of_set_from_file_fname << endl;
 	}
-
+#endif
 
 
 

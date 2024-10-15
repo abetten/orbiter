@@ -91,6 +91,7 @@
 
 
 #include <cstdint>
+	// for uint32_t
 
 
 

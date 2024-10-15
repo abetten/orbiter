@@ -485,6 +485,7 @@ public:
 			std::string &fname, int verbose_level);
 	void export_inversion_graphs(
 			std::string &fname, int verbose_level);
+#if 0
 	void multiply_elements_csv(
 			std::string &fname1,
 			std::string &fname2,
@@ -496,6 +497,7 @@ public:
 			std::string &fname2,
 			std::string &set_text,
 			int verbose_level);
+#endif
 	void random_element(
 			std::string &elt_label, int verbose_level);
 	void element_rank(
@@ -930,10 +932,11 @@ public:
 	std::string centralizer_of_element_data;
 
 
-
+#if 0
 	int f_orbits_on_group_elements_under_conjugation;
 	std::string orbits_on_group_elements_under_conjugation_fname;
 	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
+#endif
 
 	// Magma:
 	int f_normalizer_of_cyclic_subgroup;
@@ -1002,7 +1005,7 @@ public:
 	// TABLES/group_theoretic_activity_3.tex
 
 
-
+#if 0
 	int f_multiply_elements_csv_column_major_ordering;
 	std::string multiply_elements_csv_column_major_ordering_fname1;
 	std::string multiply_elements_csv_column_major_ordering_fname2;
@@ -1017,7 +1020,7 @@ public:
 	std::string apply_elements_csv_to_set_fname1;
 	std::string apply_elements_csv_to_set_fname2;
 	std::string apply_elements_csv_to_set_set;
-
+#endif
 
 	int f_order_of_products;
 	std::string order_of_products_elements;
@@ -1066,7 +1069,7 @@ public:
 	int f_subgroup_lattice_identify_subgroup;
 	std::string subgroup_lattice_identify_subgroup_subgroup_label;
 
-
+#if 0
 	int f_orbit_of;
 	int orbit_of_point_idx;
 
@@ -1077,7 +1080,7 @@ public:
 
 	int f_orbit_of_set_from_file;
 	std::string orbit_of_set_from_file_fname;
-
+#endif
 
 	// classification stuff:
 

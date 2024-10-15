@@ -421,12 +421,13 @@ public:
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
+#if 0
 	void do_orbits_on_group_elements_under_conjugation(
 			apps_algebra::any_group *AG,
 			std::string &fname_group_elements_coded,
 			std::string &fname_transporter,
 			int verbose_level);
-
+#endif
 
 };
 

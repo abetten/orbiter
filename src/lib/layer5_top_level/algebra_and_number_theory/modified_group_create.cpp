@@ -501,6 +501,9 @@ void modified_group_create::create_action_on_k_subspaces(
 	label_tex = AG->label_tex;
 
 
+	int n;
+	n = A_previous->dimension;
+	// should also work in case the previou action was a wedge action
 
 	actions::action_global AGlobal;
 
@@ -535,11 +538,10 @@ void modified_group_create::create_action_on_k_subspaces(
 
 	algebra::matrix_group *M;
 	field_theory::finite_field *Fq;
-	int n;
 
 	M = A_previous->get_matrix_group();
 
-	n = M->n;
+	//n = M->n;
 	Fq = M->GFq;
 
 

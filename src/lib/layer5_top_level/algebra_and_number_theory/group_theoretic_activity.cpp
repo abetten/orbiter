@@ -557,6 +557,7 @@ void group_theoretic_activity::perform_activity(
 		}
 	}
 #endif
+#if 0
 	else if (Descr->f_orbits_on_group_elements_under_conjugation) {
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -580,7 +581,7 @@ void group_theoretic_activity::perform_activity(
 					"after Orbits.do_orbits_on_group_elements_under_conjugation" << endl;
 		}
 	}
-
+#endif
 
 
 	else if (Descr->f_normalizer_of_cyclic_subgroup) {
@@ -773,6 +774,8 @@ void group_theoretic_activity::perform_activity(
 		}
 
 	}
+
+#if 0
 	else if (Descr->f_multiply_elements_csv_column_major_ordering) {
 
 		if (f_v) {
@@ -833,7 +836,7 @@ void group_theoretic_activity::perform_activity(
 					"after AG->apply_elements_to_set_csv" << endl;
 		}
 	}
-
+#endif
 
 	else if (Descr->f_order_of_products) {
 
@@ -995,7 +998,8 @@ void group_theoretic_activity::perform_activity(
 
 
 		if (AG->Subgroup_sims == NULL) {
-			cout << "group_theoretic_activity::perform_activity AG->Subgroup_sims == NULL" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"AG->Subgroup_sims == NULL" << endl;
 			exit(1);
 		}
 
@@ -1405,7 +1409,7 @@ void group_theoretic_activity::perform_activity(
 
 	}
 
-
+#if 0
 	else if (Descr->f_orbit_of) {
 
 		if (f_v) {
@@ -1474,6 +1478,7 @@ void group_theoretic_activity::perform_activity(
 					"after Orbits.orbits_on_set_from_file" << endl;
 		}
 	}
+#endif
 
 
 

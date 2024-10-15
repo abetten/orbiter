@@ -538,8 +538,9 @@ action *induced_action::induced_action_on_grassmannian(
 
 	if (f_v) {
 		cout << "the old_action " << A_old->label
-				<< " has base_length = " << A_old->base_len()
-			<< " and degree " << A_old->degree << endl;
+				<< " has base_length = " << A_old->base_len() << endl;
+		cout << "the old_action " << A_old->label
+				<< " has degree = " << A_old->degree << endl;
 	}
 	A->f_has_subaction = true;
 	A->subaction = A_old;
@@ -556,10 +557,23 @@ action *induced_action::induced_action_on_grassmannian(
 	M = A_old->G.matrix_grp;
 	AG = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
+	int old_dimension;
+
+
+	old_dimension = A->dimension;
+	//old_dimension = M->n;
+
+	// ToDo: should be wedge_dimension in case of wedge action
+
+
+	if (f_v) {
+		cout << "induced_action::induced_action_on_grassmannian old_dimension = " << old_dimension << endl;
+	}
+
 	geometry::grassmann *Gr;
 
 	Gr = NEW_OBJECT(geometry::grassmann);
-	Gr->init(M->n, k, M->GFq, verbose_level);
+	Gr->init(old_dimension, k, M->GFq, verbose_level);
 	AG->init(*A_old, Gr, verbose_level);
 	A->type_G = action_on_grassmannian_t;
 	A->G.AG = AG;
@@ -603,9 +617,10 @@ action *induced_action::induced_action_on_grassmannian(
 
 
 action *induced_action::induced_action_on_grassmannian_preloaded(
-		induced_actions::action_on_grassmannian *AG,
+		induced_actions::action_on_grassmannian *AGr,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
+// the old action may not have a base
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -616,15 +631,14 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	}
 	A = NEW_OBJECT(action);
 
-	A->label = A_old->label + "_Gr_" + std::to_string(AG->n) + "_" + std::to_string(AG->k);
-	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(AG->n) + "," + std::to_string(AG->k) + "}";
+	A->label = A_old->label + "_Gr_" + std::to_string(AGr->n) + "_" + std::to_string(AGr->k);
+	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(AGr->n) + "," + std::to_string(AGr->k) + "}";
 
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "
 			"the old_action " << A_old->label
-			<< " has base_length = " << A_old->base_len()
-			<< " and degree " << A_old->degree << endl;
+			<< " has degree " << A_old->degree << endl;
 	}
 	A->f_has_subaction = true;
 	if (f_v) {
@@ -648,14 +662,14 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 				"action is of linear type" << endl;
 	}
 	A->type_G = action_on_grassmannian_t;
-	A->G.AG = AG;
+	A->G.AG = AGr;
 	A->f_allocated = false;
 	A->make_element_size = A_old->make_element_size;
-	A->low_level_point_size = AG->low_level_point_size;
+	A->low_level_point_size = AGr->low_level_point_size;
 
 	A->f_has_strong_generators = false;
 
-	A->degree = AG->degree_as_text.as_int();
+	A->degree = AGr->degree_as_text.as_int();
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian_preloaded "

@@ -13,6 +13,9 @@
 #include <algorithm>
 #include <iterator>
 #include <limits>
+#include <cstdint>
+	// for uint32_t
+
 
 #ifndef _RAINBOW_CLIQUE_
 #define _RAINBOW_CLIQUE_

@@ -31,13 +31,16 @@ action_on_grassmannian::action_on_grassmannian()
 	subspace_basis = NULL;
 	subspace_basis2 = NULL;
 
-	//ring_theory::longinteger_object degree;
+	//ring_theory::longinteger_object degree_as_text;
+	degree = 0;
 	max_string_length = 0;
 
 	f_has_print_function = false;
 	print_function = NULL;
 	print_function_data = NULL;
 }
+
+
 
 
 action_on_grassmannian::~action_on_grassmannian()
@@ -121,7 +124,8 @@ void action_on_grassmannian::init(
 	C.q_binomial(degree_as_text, n, k, q, 0);
 
 	if (f_v) {
-		cout << "action_on_grassmannian::init degree_as_text = " << degree_as_text << endl;
+		cout << "action_on_grassmannian::init "
+				"degree_as_text = " << degree_as_text << endl;
 	}
 
 	ring_theory::longinteger_domain D;
@@ -145,10 +149,14 @@ void action_on_grassmannian::init(
 
 	max_string_length = degree_as_text.len();
 	if (f_v) {
-		cout << "action_on_grassmannian::init degree_as_text = " << degree_as_text << endl;
-		cout << "action_on_grassmannian::init degree = " << degree << endl;
-		cout << "action_on_grassmannian::init max_string_length = " << max_string_length << endl;
-		cout << "action_on_grassmannian::init low_level_point_size = " << low_level_point_size << endl;
+		cout << "action_on_grassmannian::init "
+				"degree_as_text = " << degree_as_text << endl;
+		cout << "action_on_grassmannian::init "
+				"degree = " << degree << endl;
+		cout << "action_on_grassmannian::init "
+				"max_string_length = " << max_string_length << endl;
+		cout << "action_on_grassmannian::init "
+				"low_level_point_size = " << low_level_point_size << endl;
 	}
 
 	
@@ -241,17 +249,17 @@ void action_on_grassmannian::compute_image_longinteger(
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_longinteger "
 				"i = " << i << endl;
-		}
+	}
 	G->unrank_longinteger(i, 0/*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "after G->unrank_longinteger" << endl;
 		Int_vec_print_integer_matrix_width(cout, G->M,
 				G->k, G->n, G->n, F->log10_of_q);
-		}
+	}
 	for (h = 0; h < k; h++) {
 		A->Group_element->element_image_of_low_level(G->M + h * n,
 				M1 + h * n, Elt, verbose_level - 1);
-		}
+	}
 	//A->element_image_of_low_level(G->M, M1, Elt, verbose_level - 1);
 #if 0
 	F->mult_matrix_matrix(G->M, Elt, M1, k, n, n);
@@ -259,20 +267,20 @@ void action_on_grassmannian::compute_image_longinteger(
 	if (M->f_semilinear) {
 		f = Elt[n * n];
 		F->vector_frobenius_power_in_place(M1, k * n, f);
-		}
+	}
 #endif
 	if (f_vv) {
 		cout << "after element_image_of_low_level" << endl;
 		Int_vec_print_integer_matrix_width(cout, M1,
 				G->k, G->n, G->n, F->log10_of_q);
-		}
+	}
 	
 	Int_vec_copy(M1, G->M, k * n);
 	G->rank_longinteger(j, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_longinteger "
 				"image of " << i << " is " << j << endl;
-		}
+	}
 }
 
 long int action_on_grassmannian::compute_image_int(
@@ -281,10 +289,10 @@ long int action_on_grassmannian::compute_image_int(
 {
 	if (f_embedding) {
 		return compute_image_int_embedded(A, Elt, i, verbose_level);
-		}
+	}
 	else {
 		return compute_image_int_ordinary(A, Elt, i, verbose_level);
-		}
+	}
 }
 
 long int action_on_grassmannian::compute_image_int_ordinary(
@@ -352,7 +360,8 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				"subspace_basis:" << endl;
 		cout << "k=" << k << endl;
 		cout << "big_n=" << big_n << endl;
-		Int_vec_print_integer_matrix_width(cout, subspace_basis,
+		Int_vec_print_integer_matrix_width(
+				cout, subspace_basis,
 				k, big_n, big_n, F->log10_of_q);
 	}
 	for (h = 0; h < k; h++) {

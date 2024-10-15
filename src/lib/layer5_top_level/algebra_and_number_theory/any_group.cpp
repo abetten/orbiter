@@ -1280,7 +1280,7 @@ void any_group::export_inversion_graphs(
 }
 
 
-
+#if 0
 void any_group::multiply_elements_csv(
 		std::string &fname1,
 		std::string &fname2,
@@ -1418,7 +1418,7 @@ void any_group::apply_elements_to_set_csv(
 		cout << "any_group::apply_elements_to_set_csv done" << endl;
 	}
 }
-
+#endif
 
 void any_group::random_element(
 		std::string &elt_label, int verbose_level)

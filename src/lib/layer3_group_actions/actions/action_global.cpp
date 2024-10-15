@@ -6030,13 +6030,18 @@ actions::action *action_global::create_action_on_k_subspaces(
 	int n;
 
 	M = A_previous->get_matrix_group();
-	n = M->n;
+	//n = M->n;
+	n = A_previous->dimension;
 	Fq = M->GFq;
 
-	induced_actions::action_on_grassmannian *AonG;
+	if (f_v) {
+		cout << "action_global::create_action_on_k_subspaces old_dimension = " << n << endl;
+	}
+
+	induced_actions::action_on_grassmannian *AonGr;
 	geometry::grassmann *Grass;
 
-	AonG = NEW_OBJECT(induced_actions::action_on_grassmannian);
+	AonGr = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
 	Grass = NEW_OBJECT(geometry::grassmann);
 
@@ -6056,14 +6061,14 @@ actions::action *action_global::create_action_on_k_subspaces(
 
 	if (f_v) {
 		cout << "action_global::create_action_on_k_subspaces "
-				"before AonG->init" << endl;
+				"before AonGr->init" << endl;
 	}
 
-	AonG->init(*A_previous, Grass, verbose_level - 2);
+	AonGr->init(*A_previous, Grass, verbose_level - 2);
 
 	if (f_v) {
 		cout << "action_global::create_action_on_k_subspaces "
-				"after AonG->init" << endl;
+				"after AonGr->init" << endl;
 	}
 
 
@@ -6073,7 +6078,8 @@ actions::action *action_global::create_action_on_k_subspaces(
 				"before induced_action_on_grassmannian_preloaded" << endl;
 	}
 
-	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(AonG,
+	A_modified = A_previous->Induced_action->induced_action_on_grassmannian_preloaded(
+			AonGr,
 		false /* f_induce_action */, NULL /*sims *old_G */,
 		verbose_level - 2);
 
