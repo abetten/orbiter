@@ -15,6 +15,7 @@
 #include <atomic>
 #include <string>
 #include <math.h>
+#include <cstdint>
 
 #ifndef SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_
 #define SRC_LIB_FOUNDATIONS_GRAPH_THEORY_CLIQUE_KCLIQUE_H_

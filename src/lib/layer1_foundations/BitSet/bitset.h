@@ -14,6 +14,7 @@
 #include <cstring>
 //#include <alloca.h>
 #include <math.h>
+#include <cstdint>
 
 using std::cout;
 using std::endl;
