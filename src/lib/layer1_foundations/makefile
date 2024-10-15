@@ -37,8 +37,10 @@ all: \
 	orthogonal \
 	polish \
 	ring_theory \
-	solvers \
-	BitSet
+	solvers
+
+
+	#BitSet
 
 
 
