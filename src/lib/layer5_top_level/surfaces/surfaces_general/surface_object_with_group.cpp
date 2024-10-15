@@ -426,16 +426,20 @@ void surface_object_with_group::compute_projectivity_group(
 				"verbose_level=" << verbose_level << endl;
 	}
 
+	actions::action_global Action_global;
+
+
 	if (f_v) {
 		cout << "surface_object_with_group::compute_projectivity_group "
-				"before Surf_A->A->compute_projectivity_subgroup" << endl;
+				"before Action_global.compute_projectivity_subgroup" << endl;
 	}
-	Surf_A->A->compute_projectivity_subgroup(
+	Action_global.compute_projectivity_subgroup(
+			Surf_A->A,
 			projectivity_group_gens,
 			Aut_gens, verbose_level - 2);
 	if (f_v) {
 		cout << "surface_object_with_group::compute_projectivity_group "
-				"after Surf_A->A->compute_projectivity_subgroup" << endl;
+				"after Action_global.compute_projectivity_subgroup" << endl;
 	}
 	if (f_v) {
 		cout << "surface_object_with_group::compute_projectivity_group "

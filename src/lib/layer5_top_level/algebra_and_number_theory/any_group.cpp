@@ -993,7 +993,10 @@ void any_group::do_find_subgroups(
 			true /*f_enlarged_page*/, true /* f_pagenumbers*/,
 			extras_for_preamble);
 
-		A->report_groups_and_normalizers(fp,
+		actions::action_global Action_global;
+
+		Action_global.report_groups_and_normalizers(
+				A, fp,
 				nb_subgroups, H_gens, N_gens,
 				verbose_level);
 

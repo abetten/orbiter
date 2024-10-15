@@ -16,6 +16,7 @@ all: \
   expression_parser_sajeeb \
 	algebra \
 	algebraic_geometry \
+	BitSet \
 	canonical_form_classification \
 	coding_theory \
 	combinatorics \
@@ -40,19 +41,18 @@ all: \
 	solvers
 
 
-	#BitSet
-
-
 
 
 algebra : algebra2 
 algebraic_geometry : algebraic_geometry2
+BitSet	:	BitSet2
 canonical_form_classification : canonical_form_classification2
 coding_theory : coding_theory2 
 combinatorics : combinatorics2  
 cryptography : cryptography2
 data_structures : data_structures2  
 expression_parser : expression_parser2  
+expression_parser_sajeeb : expression_parser_sajeeb2
 finite_fields : finite_fields2  
 geometry : geometry2 
 geometry_builder : geometry_builder2 
@@ -69,17 +69,17 @@ orthogonal : orthogonal2
 polish : polish2 
 ring_theory : ring_theory2  
 solvers : solvers2 
-BitSet	:	BitSet2
-expression_parser_sajeeb : expression_parser_sajeeb2
 
 algebra2 : ; cd algebra; $(MAKE)
 algebraic_geometry2 : ; cd algebraic_geometry; $(MAKE)
+BitSet2: ; cd BitSet; $(MAKE) bitset.o
 canonical_form_classification2 : ; cd canonical_form_classification; $(MAKE)
 coding_theory2 : ; cd coding_theory; $(MAKE)
 combinatorics2 : ; cd combinatorics; $(MAKE)
 cryptography2 : ; cd cryptography; $(MAKE)
 data_structures2 : ; cd data_structures; $(MAKE)
 expression_parser2 : ; cd expression_parser; $(MAKE)
+expression_parser_sajeeb2 : ; $(MAKE) -C expression_parser_sajeeb all
 finite_fields2 : ; cd finite_fields; $(MAKE)
 geometry2 : ; cd geometry; $(MAKE)
 geometry_builder2 : ; cd geometry_builder; $(MAKE)
@@ -96,13 +96,11 @@ orthogonal2 : ; cd orthogonal; $(MAKE)
 polish2 : ; cd polish; $(MAKE)
 ring_theory2 : ; cd ring_theory; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
-BitSet2: ; cd BitSet; $(MAKE)
-expression_parser_sajeeb2:
-	$(MAKE) -C expression_parser_sajeeb all
 
 clean:
 	cd algebra; $(MAKE) clean
 	cd algebraic_geometry; $(MAKE) clean
+	cd BitSet; $(MAKE) clean
 	cd canonical_form_classification; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
@@ -127,7 +125,6 @@ clean:
 	cd polish; $(MAKE) clean
 	cd ring_theory; $(MAKE) clean
 	cd solvers; $(MAKE) clean
-	cd BitSet; $(MAKE) clean
 	- rm *.o *.a 
 
 

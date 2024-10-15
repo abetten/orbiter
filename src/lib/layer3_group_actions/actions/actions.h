@@ -277,6 +277,7 @@ public:
 
 
 	// action_group_theory.cpp:
+#if 0
 	void report_groups_and_normalizers(
 			std::ostream &ost,
 			int nb_subgroups,
@@ -287,6 +288,7 @@ public:
 			groups::strong_generators *&projectivity_gens,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
+#endif
 
 
 	// action_indexing_cosets.cpp
@@ -857,6 +859,18 @@ public:
 			groups::strong_generators *Strong_gens,
 			int f_sylow, int f_group_table,
 			graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report_groups_and_normalizers(
+			action *A,
+			std::ostream &ost,
+			int nb_subgroups,
+			groups::strong_generators *H_gens,
+			groups::strong_generators *N_gens,
+			int verbose_level);
+	void compute_projectivity_subgroup(
+			action *A,
+			groups::strong_generators *&projectivity_gens,
+			groups::strong_generators *Aut_gens,
 			int verbose_level);
 
 };

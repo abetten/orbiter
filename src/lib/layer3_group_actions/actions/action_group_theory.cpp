@@ -19,53 +19,9 @@ namespace actions {
 
 
 
-void action::report_groups_and_normalizers(
-		std::ostream &ost,
-		int nb_subgroups,
-		groups::strong_generators *H_gens,
-		groups::strong_generators *N_gens,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int u;
-	ring_theory::longinteger_object go1, go2;
-
-	if (f_v) {
-		cout << "action::report_groups_and_normalizers" << endl;
-	}
-
-	for (u = 0; u < nb_subgroups; u++) {
-
-		ost << "\\subsection*{Class " << u << " / " << nb_subgroups << "}" << endl;
-
-		H_gens[u].group_order(go1);
-		N_gens[u].group_order(go2);
-
-		ost << "Group order = " << go1 << "\\\\" << endl;
-		ost << "Normalizer order = " << go2 << "\\\\" << endl;
-
-		ost << "Generators for $H$:\\\\" << endl;
-
-		H_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
-		H_gens[u].print_generators_as_permutations_tex(ost, this);
-
-		ost << "\\bigskip" << endl;
-
-		ost << "Generators for $N(H)$:\\\\" << endl;
-
-		N_gens[u].print_generators_in_latex_individually(ost, verbose_level - 1);
-		N_gens[u].print_generators_as_permutations_tex(ost, this);
-
-	}
-
-
-	if (f_v) {
-		cout << "action::report_groups_and_normalizers done" << endl;
-	}
-}
-
 #if 0
-void action::report_fixed_objects(int *Elt,
+void action::report_fixed_objects(
+		int *Elt,
 		std::string &fname_latex,
 		int verbose_level)
 {
@@ -203,83 +159,6 @@ void action::report_fixed_objects(int *Elt,
 #endif
 
 
-void action::compute_projectivity_subgroup(
-		groups::strong_generators *&projectivity_gens,
-		groups::strong_generators *Aut_gens,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "action::compute_projectivity_subgroup" << endl;
-	}
-	if (f_v) {
-		cout << "action::compute_projectivity_subgroup computing group order" << endl;
-		ring_theory::longinteger_object go;
-		Aut_gens->group_order(go);
-		cout << "action::compute_projectivity_subgroup group order = " << go << endl;
-	}
-
-	if (is_semilinear_matrix_group()) {
-		if (f_v) {
-			cout << "action::compute_projectivity_subgroup "
-					"the group is a semilinear matrix group, we can compute the projectivity subgroup" << endl;
-		}
-		if (f_v) {
-			cout << "action::compute_projectivity_subgroup "
-					"computing projectivity subgroup" << endl;
-		}
-
-		projectivity_gens = NEW_OBJECT(groups::strong_generators);
-		projectivity_gens->A = Aut_gens->A;
-		{
-			groups::sims *S;
-
-			if (f_v) {
-				cout << "action::compute_projectivity_subgroup "
-						"before Aut_gens->create_sims" << endl;
-			}
-			S = Aut_gens->create_sims(verbose_level - 2);
-			if (f_v) {
-				cout << "action::compute_projectivity_subgroup "
-						"after Aut_gens->create_sims" << endl;
-			}
-			if (f_v) {
-				cout << "action::compute_projectivity_subgroup "
-						"before projectivity_group_gens->projectivity_subgroup" << endl;
-			}
-			projectivity_gens->projectivity_subgroup(S, verbose_level - 3);
-			if (f_v) {
-				cout << "action::compute_projectivity_subgroup "
-						"after projectivity_group_gens->projectivity_subgroup" << endl;
-			}
-			FREE_OBJECT(S);
-		}
-		if (f_v) {
-			cout << "action::compute_projectivity_subgroup "
-					"computing projectivity subgroup done" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "action::compute_projectivity_subgroup "
-					"the group is linear, so we simply copy the generators for the linear group" << endl;
-		}
-		projectivity_gens = Aut_gens->create_copy(
-				verbose_level - 2);
-	}
-
-	if (f_v) {
-		cout << "action::compute_projectivity_subgroup computing group order of projectivity group" << endl;
-		ring_theory::longinteger_object go;
-		projectivity_gens->group_order(go);
-		cout << "action::compute_projectivity_subgroup group order of projectivity group = " << go << endl;
-	}
-
-	if (f_v) {
-		cout << "action::compute_projectivity_subgroup done" << endl;
-	}
-}
 
 
 

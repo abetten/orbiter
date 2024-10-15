@@ -6,8 +6,10 @@ OPT_FLAGS=-O3
 
 
 
-all: main.o bitset.o
+all:  bitset.o
 	$(CC) $(CSTD_FLAGS) $(OPT_FLAGS) bitset.o main.o -o main.out
+
+# main.o
 
 main.o: main.cpp bitset.h bitset_not_operator_test.h
 	$(CC) $(CSTD_FLAGS) $(OPT_FLAGS) -c ./main.cpp -o ./main.o

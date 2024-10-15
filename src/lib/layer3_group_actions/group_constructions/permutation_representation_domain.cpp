@@ -47,31 +47,41 @@ permutation_representation_domain::permutation_representation_domain()
 
 permutation_representation_domain::~permutation_representation_domain()
 {
-	if (Elt1)
+	if (Elt1) {
 		FREE_int(Elt1);
-	if (Elt2)
+	}
+	if (Elt2) {
 		FREE_int(Elt2);
-	if (Elt3)
+	}
+	if (Elt3) {
 		FREE_int(Elt3);
-	if (Elt4)
+	}
+	if (Elt4) {
 		FREE_int(Elt4);
+	}
 	//cout << "permutation_representation_domain::free before elt1" << endl;
-	if (elt1)
+	if (elt1) {
 		FREE_uchar(elt1);
-	if (elt2)
+	}
+	if (elt2) {
 		FREE_uchar(elt2);
-	if (elt3)
+	}
+	if (elt3) {
 		FREE_uchar(elt3);
+	}
 	//cout << "permutation_representation_domain::free before Elts" << endl;
 	if (Page_storage) {
 		FREE_OBJECT(Page_storage);
 	}
-	if (Eltrk1)
+	if (Eltrk1) {
 		FREE_int(Eltrk1);
-	if (Eltrk2)
+	}
+	if (Eltrk2) {
 		FREE_int(Eltrk2);
-	if (Eltrk3)
+	}
+	if (Eltrk3) {
 		FREE_int(Eltrk3);
+	}
 }
 
 void permutation_representation_domain::allocate()
@@ -234,7 +244,8 @@ void permutation_representation_domain::init_with_base(
 		cout << "perm_group::init "
 				"calling Page_storage->init" << endl;
 	}
-	Page_storage->init(char_per_elt /* entry_size */,
+	Page_storage->init(
+			char_per_elt /* entry_size */,
 			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(
 	//perm_group_elt_print, (void *) this);
@@ -418,7 +429,8 @@ void permutation_representation_domain::print_with_point_labels(
 	combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
-	Combi.Permutations->perm_print_with_point_labels(ost, Elt, degree, Point_labels, data);
+	Combi.Permutations->perm_print_with_point_labels(
+			ost, Elt, degree, Point_labels, data);
 	//ost << endl;
 	//cout << "perm_group::print done" << endl;
 }
@@ -493,7 +505,8 @@ void permutation_representation_domain::print_with_action(
 	}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
-	Combi.Permutations->perm_print_offset(ost, Elt, degree, 0 /* offset */,
+	Combi.Permutations->perm_print_offset(
+			ost, Elt, degree, 0 /* offset */,
 			false /* f_print_cycles_of_length_one */,
 			false /* f_cycle_length */, false, 0,
 			false /* f_orbit_structure */,

@@ -21,7 +21,7 @@ MODULES = \
 
 
 all : $(MODULES)
-	#cd ./Clique; $(MAKE)
+	cd ./Clique; $(MAKE) KClique.o
 
 %.o: %.cpp %.c %.h ./Clique/*.h; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $< -lpthread
 

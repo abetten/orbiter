@@ -352,7 +352,6 @@ ORBITER_MODULES= \
 		layer3_group_actions/actions/action.o \
 		layer3_group_actions/actions/action_cb.o \
 		layer3_group_actions/actions/action_global.o \
-		layer3_group_actions/actions/action_group_theory.o \
 		layer3_group_actions/actions/action_indexing_cosets.o \
 		layer3_group_actions/actions/action_induce.o \
 		layer3_group_actions/actions/action_init.o \

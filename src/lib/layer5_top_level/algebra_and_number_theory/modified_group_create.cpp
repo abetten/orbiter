@@ -1233,19 +1233,21 @@ void modified_group_create::create_projectivity_subgroup(
 	A_modified = A_previous; // ToDo !!
 
 
+	actions::action_global Action_global;
 
 	if (f_v) {
 		cout << "modified_group_create::create_projectivity_subgroup "
-				"before A_previous->compute_projectivity_subgroup" << endl;
+				"before Action_global.compute_projectivity_subgroup" << endl;
 	}
 
-	A_previous->compute_projectivity_subgroup(
+	Action_global.compute_projectivity_subgroup(
+			A_previous,
 			Strong_gens,
 			AG->Subgroup_gens,
 			verbose_level);
 	if (f_v) {
 		cout << "modified_group_create::create_projectivity_subgroup "
-				"after A_previous->compute_projectivity_subgroup" << endl;
+				"after Action_global.compute_projectivity_subgroup" << endl;
 	}
 
 	f_has_strong_generators = true;
