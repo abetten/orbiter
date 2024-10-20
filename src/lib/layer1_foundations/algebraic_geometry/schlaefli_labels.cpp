@@ -208,7 +208,8 @@ void schlaefli_labels::init(
 		if (f_v) {
 			cout << "schlaefli_labels::init before Eckardt_point.make_label" << endl;
 		}
-		str = Eckardt_point.make_label();
+		//str = Eckardt_point.make_label();
+		str = std::to_string(i);
 		if (f_v) {
 			cout << "schlaefli_labels::init after Eckardt_point.make_label" << endl;
 		}
