@@ -462,13 +462,10 @@ public:
 	void print();
 	void latex(
 			std::ostream &ost);
-	std::string &make_label();
+	std::string make_label();
 	void latex_index_only(
 			std::ostream &ost);
-	void latex_to_string(
-			std::string &s);
-	void latex_to_str_without_E(
-			std::string &s);
+	std::string make_symbol();
 	void init2(
 			int i, int j);
 	void init3(

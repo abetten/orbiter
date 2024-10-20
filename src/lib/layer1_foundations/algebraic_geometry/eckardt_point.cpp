@@ -30,29 +30,6 @@ void eckardt_point::print()
 
 	latex(cout);
 
-#if 0
-	int t, i, j;
-	combinatorics::combinatorics_domain Combi;
-	
-	if (len == 3) {
-		cout << "E_{";
-		for (t = 0; t < 3; t++) {
-			Combi.k2ij(index[t], i, j, 6);
-			cout << i + 1 << j + 1;
-			if (t < 2) {
-				cout << ",";
-			}
-		}
-		cout << "}" << endl;
-	}
-	else if (len == 2) {
-		cout << "E_{" << index[0] + 1 << index[1] + 1 << "}" << endl;
-	}
-	else {
-		cout << "eckardt_point::print len is illegal" << endl;
-		exit(1);
-	}
-#endif
 }
 
 void eckardt_point::latex(
@@ -67,7 +44,7 @@ void eckardt_point::latex(
 	ost << "E_{" << s << "}" << endl;
 }
 
-std::string &eckardt_point::make_label()
+std::string eckardt_point::make_label()
 {
 	int t, i, j;
 	combinatorics::combinatorics_domain Combi;
@@ -97,65 +74,23 @@ std::string &eckardt_point::make_label()
 void eckardt_point::latex_index_only(
 		std::ostream &ost)
 {
-	int t, i, j;
-	combinatorics::combinatorics_domain Combi;
-	
-	if (len == 3) {
-		for (t = 0; t < 3; t++) {
-			Combi.k2ij(index[t], i, j, 6);
-			ost << i + 1 << j + 1;
-			if (t < 2) {
-				ost << ",";
-			}
-		}
-	}
-	else if (len == 2) {
-		ost << index[0] + 1 << index[1] + 1;
-	}
-	else {
-		cout << "eckardt_point::latex_index_only len is illegal" << endl;
-		exit(1);
-	}
-}
-
-void eckardt_point::latex_to_string(
-		std::string &s)
-{
-	string s1;
-	
-	latex_to_str_without_E(s1);
-	s = "E_{" + s1 + "}";
-}
-
-void eckardt_point::latex_to_str_without_E(
-		std::string &s)
-{
+	string s;
 
 	s = make_label();
+	ost << s;
 
-#if 0
-	int t, i, j;
-	combinatorics::combinatorics_domain Combi;
-
-	s = "";
-	if (len == 3) {
-		for (t = 0; t < 3; t++) {
-			Combi.k2ij(index[t], i, j, 6);
-			s += std::to_string(i + 1) + std::to_string(j + 1);
-			if (t < 2) {
-				s += ",";
-			}
-		}
-	}
-	else if (len == 2) {
-		s += std::to_string(index[0] + 1) + std::to_string(index[1] + 1);
-	}
-	else {
-		cout << "eckardt_point::latex_to_str_without_E len is illegal" << endl;
-		exit(1);
-	}
-#endif
 }
+
+
+std::string eckardt_point::make_symbol()
+{
+	string s1, s2;
+
+	s1 = make_label();
+	s2 = "E_{" + s1 + "}";
+	return s2;
+}
+
 
 
 

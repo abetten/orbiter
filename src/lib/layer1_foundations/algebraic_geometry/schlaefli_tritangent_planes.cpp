@@ -97,7 +97,6 @@ void schlaefli_tritangent_planes::make_Eckardt_points(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string str;
 
 	if (f_v) {
 		cout << "schlaefli_tritangent_planes::make_Eckardt_points" << endl;
@@ -107,12 +106,18 @@ void schlaefli_tritangent_planes::make_Eckardt_points(
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].init_by_rank(i);
 	}
+
 	Eckard_point_label = new string [nb_Eckardt_points];
 	Eckard_point_label_tex = new string [nb_Eckardt_points];
+
 	for (i = 0; i < nb_Eckardt_points; i++) {
-		Eckardt_points[i].latex_to_str_without_E(str);
-		Eckard_point_label[i].assign(str);
-		Eckard_point_label_tex[i].assign(str);
+
+		string str;
+
+		str = Eckardt_points[i].make_label();
+		//Eckardt_points[i].latex_to_str_without_E(str);
+		Eckard_point_label[i] = str;
+		Eckard_point_label_tex[i] = str;
 	}
 	if (f_v) {
 		cout << "schlaefli_tritangent_planes::make_Eckardt_points done" << endl;

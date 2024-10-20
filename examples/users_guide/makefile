@@ -18708,7 +18708,7 @@ test_13_3:
 	make LS_AG_2_3_export_large_sets
 	make design_PG_2_3_table_create
 	make design_PG_2_3_group_5
-	make design_PG_2_3_group_5_sol_0
+	#make design_PG_2_3_group_5_sol_0
 
 
 
@@ -18903,10 +18903,13 @@ design_PG_2_3_group_5:
 #User time: 2:39
 
 
+# needs case_0_sol.txt
+
 design_PG_2_3_group_5_sol_0:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 3 -end \
 		-define D -design -field F -family PG_2_q -end \
+		-define Sym13 -permutation_group -symmetric_group 13 -end \
 		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
