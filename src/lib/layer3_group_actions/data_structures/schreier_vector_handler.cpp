@@ -423,7 +423,6 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	int nb_orbits;
 	data_structures::set_of_sets *SoS;
 	int i, t;
-	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::get_orbits_as_set_of_sets" << endl;
@@ -468,9 +467,15 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 				pts, prev, false, depth, ancestor, i);
 	}
 #else
-	Sorting.schreier_vector_compute_depth_and_ancestor(
+
+
+	data_structures::algorithms Algorithms;
+
+
+	Algorithms.schreier_vector_compute_depth_and_ancestor(
 			n, pts, prev, false /* f_prev_is_point_index */, NULL,
 			depth, ancestor, verbose_level - 2);
+
 #endif
 #if 0
 	cout << "i : pts : depth : ancestor" << endl;

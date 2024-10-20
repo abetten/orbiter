@@ -2224,7 +2224,7 @@ void graph_theory_domain::eigenvalues(
 
 		string title, author, extra_praeamble;
 
-		title = "Eigenvalues of " + CG->label_tex;
+		title = "Eigenvalues of $" + CG->label_tex + "$";
 
 		fname = CG->label + "_eigenvalues.tex";
 

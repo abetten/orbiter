@@ -3721,7 +3721,9 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 			}
 		}
 		for (j = 0; j < l; j++) {
-			LG->add_edge(0, i, 1, f + j, 0 /*verbose_level*/);
+			LG->add_edge(0, i, 1, f + j,
+					1, // edge_color
+					0 /*verbose_level*/);
 		}
 	}
 
@@ -3740,7 +3742,9 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 
 	for (i = 0; i < Iso->Lifting->nb_flag_orbits; i++) {
 		d = down_link[i];
-		LG->add_edge(1, i, 2, d, 0 /*verbose_level*/);
+		LG->add_edge(1, i, 2, d,
+				1, // edge_color
+				0 /*verbose_level*/);
 	}
 
 	string fname;

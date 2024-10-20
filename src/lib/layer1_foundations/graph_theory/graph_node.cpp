@@ -41,6 +41,7 @@ graph_node::graph_node()
 	neighbor_list_allocated = 0;
 	nb_neighbors = 0;
 	neighbor_list = NULL;
+	Edge_color = NULL;
 	x_coordinate = 0;
 
 	nb_children = 0;
@@ -58,6 +59,9 @@ graph_node::~graph_node()
 	if (neighbor_list) {
 		FREE_int(neighbor_list);
 	}
+	if (Edge_color) {
+		FREE_int(Edge_color);
+	}
 	if (f_has_vec_data) {
 		FREE_lint(vec_data);
 	}
@@ -67,31 +71,39 @@ graph_node::~graph_node()
 }
 
 void graph_node::add_neighbor(
-		int l, int n, int id)
+		int l, int n, int id, int edge_color)
 {
 	int i;
 	
 	if (nb_neighbors >= neighbor_list_allocated) {
 		int new_neighbor_list_allocated;
 		int *new_neighbor_list;
+		int *new_edge_color;
 		
 		if (neighbor_list_allocated) {
 			new_neighbor_list_allocated = 2 * neighbor_list_allocated;
-			}
+		}
 		else {
 			new_neighbor_list_allocated = 16;
-			}
+		}
 		new_neighbor_list = NEW_int(new_neighbor_list_allocated);
+		new_edge_color = NEW_int(new_neighbor_list_allocated);
 		for (i = 0; i < nb_neighbors; i++) {
 			new_neighbor_list[i] = neighbor_list[i];
-			}
+			new_edge_color[i] = Edge_color[i];
+		}
 		if (neighbor_list) {
 			FREE_int(neighbor_list);
-			}
-		neighbor_list = new_neighbor_list;
-		neighbor_list_allocated = new_neighbor_list_allocated;
 		}
+		if (Edge_color) {
+			FREE_int(Edge_color);
+		}
+		neighbor_list = new_neighbor_list;
+		Edge_color = new_edge_color;
+		neighbor_list_allocated = new_neighbor_list_allocated;
+	}
 	neighbor_list[nb_neighbors] = id;
+	Edge_color[nb_neighbors] = edge_color;
 	nb_neighbors++;
 }
 
@@ -148,7 +160,7 @@ void graph_node::write_memory_object(
 	
 	if (f_v) {
 		cout << "graph_node::write_memory_object" << endl;
-		}
+	}
 	m->write_string(label);
 
 	m->write_int(id);
@@ -163,22 +175,23 @@ void graph_node::write_memory_object(
 		m->write_int(vec_data_len);
 		for (i = 0; i < vec_data_len; i++) {
 			m->write_lint(vec_data[i]);
-			}
 		}
+	}
 	m->write_int(f_has_distinguished_element);
 	m->write_int(distinguished_element_index);
 	m->write_int(layer);
 	m->write_int(nb_neighbors);
 	for (i = 0; i < nb_neighbors; i++) {
 		m->write_int(neighbor_list[i]);
-		}
+		m->write_int(Edge_color[i]);
+	}
 	m->write_double(x_coordinate);
 	m->write_double(radius_factor);
 	if (f_v) {
 		cout << "graph_node::write_memory_object "
 				"finished, data size (in chars) = "
 				<< m->used_length << endl;
-		}
+	}
 }
 
 void graph_node::read_memory_object(
@@ -189,7 +202,7 @@ void graph_node::read_memory_object(
 	
 	if (f_v) {
 		cout << "graph_node::read_memory_object" << endl;
-		}
+	}
 	m->read_string(label);
 	m->read_int(&id);
 	m->read_int(&f_has_data1);
@@ -204,12 +217,12 @@ void graph_node::read_memory_object(
 		vec_data = NEW_lint(vec_data_len);
 		for (i = 0; i < vec_data_len; i++) {
 			m->read_lint(&vec_data[i]);
-			}
 		}
+	}
 	else {
 		vec_data_len = 0;
 		vec_data = NULL;
-		}
+	}
 	
 	m->read_int(&f_has_distinguished_element);
 	m->read_int(&distinguished_element_index);
@@ -218,15 +231,17 @@ void graph_node::read_memory_object(
 	m->read_int(&layer);
 	m->read_int(&nb_neighbors);
 	neighbor_list = NEW_int(nb_neighbors);
+	Edge_color = NEW_int(nb_neighbors);
 	for (i = 0; i < nb_neighbors; i++) {
 		m->read_int(&neighbor_list[i]);
-		}
+		m->read_int(&Edge_color[i]);
+	}
 	
 	m->read_double(&x_coordinate);
 	m->read_double(&radius_factor);
 	if (f_v) {
 		cout << "graph_node::read_memory_object finished" << endl;
-		}
+	}
 }
 
 void graph_node::allocate_tree_structure(
@@ -236,7 +251,7 @@ void graph_node::allocate_tree_structure(
 	
 	if (f_v) {
 		cout << "graph_node::allocate_tree_structure" << endl;
-		}
+	}
 	
 	nb_children = 0;
 	nb_children_allocated = 1000;
@@ -244,7 +259,7 @@ void graph_node::allocate_tree_structure(
 	
 	if (f_v) {
 		cout << "graph_node::allocate_tree_structure done" << endl;
-		}
+	}
 }
 
 int graph_node::remove_neighbor(
@@ -262,6 +277,7 @@ int graph_node::remove_neighbor(
 		if (neighbor_list[i] == id) {
 			for (j = i + 1; j < nb_neighbors; j++) {
 				neighbor_list[j - 1] = neighbor_list[j];
+				Edge_color[j - 1] = Edge_color[j];
 			}
 			nb_neighbors--;
 			return true;
@@ -317,7 +333,7 @@ int graph_node::find_parent(
 	
 	if (f_v) {
 		cout << "graph_node::find_parent" << endl;
-		}
+	}
 	
 	for (i = 0; i < nb_neighbors; i++) {
 		id = neighbor_list[i];
@@ -325,10 +341,10 @@ int graph_node::find_parent(
 		if (l < layer) {
 			if (f_v) {
 				cout << "graph_node::find_parent done" << endl;
-				}
-			return id;
 			}
+			return id;
 		}
+	}
 	cout << "graph_node::find_parent did not find "
 			"a parent node" << endl;
 	cout << "layer = " << layer << endl;
@@ -345,7 +361,7 @@ void graph_node::register_child(
 	
 	if (f_v) {
 		cout << "graph_node::register_child" << endl;
-		}
+	}
 	if (nb_children == nb_children_allocated) {
 		nb_children_allocated = 2 * nb_children_allocated;
 		int *child_id_new;
@@ -354,7 +370,7 @@ void graph_node::register_child(
 		Int_vec_copy(child_id, child_id_new, nb_children);
 		FREE_int(child_id);
 		child_id = child_id_new;
-		}
+	}
 	child_id[nb_children++] = id_child;
 	
 	G->find_node_by_id(id_child, l, n);
@@ -362,7 +378,7 @@ void graph_node::register_child(
 	
 	if (f_v) {
 		cout << "graph_node::register_child done" << endl;
-		}
+	}
 }
 
 void graph_node::place_x_based_on_tree(
@@ -378,7 +394,7 @@ void graph_node::place_x_based_on_tree(
 
 	if (f_v) {
 		cout << "graph_node::place_x_based_on_tree" << endl;
-		}
+	}
 	
 	x_coordinate = (left + right) * .5;
 	w = weight_of_subtree;
@@ -399,12 +415,12 @@ void graph_node::place_x_based_on_tree(
 		G->L[l].Nodes[n].place_x_based_on_tree(G,
 				lft, rgt, verbose_level);
 		w0 += w1;
-		}
+	}
 
 
 	if (f_v) {
 		cout << "graph_node::place_x_based_on_tree done" << endl;
-		}
+	}
 }
 
 void graph_node::depth_first_rank_recursion(
@@ -415,7 +431,7 @@ void graph_node::depth_first_rank_recursion(
 
 	if (f_v) {
 		cout << "graph_node::depth_first_rank_recursion" << endl;
-		}
+	}
 
 	depth_first_node_rank = r++;
 
@@ -424,10 +440,10 @@ void graph_node::depth_first_rank_recursion(
 		G->find_node_by_id(id_child, l, n);
 
 		G->L[l].Nodes[n].depth_first_rank_recursion(G, r, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "graph_node::depth_first_rank_recursion done" << endl;
-		}
+	}
 }
 
 void graph_node::scale_x_coordinate(

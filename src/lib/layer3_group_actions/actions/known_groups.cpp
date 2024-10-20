@@ -175,6 +175,9 @@ void known_groups::init_linear_group(
 #endif
 	}
 
+	if (f_v) {
+		cout << "known_groups::init_linear_group dimension = " << A->dimension << endl;
+	}
 
 
 	if (f_v) {
@@ -1082,12 +1085,15 @@ void known_groups::init_permutation_group_from_generators(
 		else {
 			for (i = 0; i < nb_gens; i++) {
 				cout << i << " : ";
-				if (degree < 20) {
+
+				int bound = 2000;
+
+				if (degree < bound) {
 					Combi.Permutations->perm_print(cout, gens + i * degree, degree);
 				}
 				else {
 					cout << "known_groups::init_permutation_group_from_generators "
-							"too large to print";
+							"too large to print; bound = " << bound;
 				}
 				cout << endl;
 			}

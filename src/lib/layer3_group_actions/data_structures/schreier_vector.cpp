@@ -548,7 +548,7 @@ void schreier_vector::orbit_stats(
 	int *pts;
 	int *depth;
 	int *ancestor;
-	data_structures::sorting Sorting;
+	data_structures::algorithms Algorithms;
 
 
 	n = sv[0];
@@ -590,7 +590,7 @@ void schreier_vector::orbit_stats(
 				"depth_recursion" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		Sorting.schreier_vector_determine_depth_recursion(n,
+		Algorithms.schreier_vector_determine_depth_recursion(n,
 				pts, prev, false, NULL, depth, ancestor, i);
 		}
 	if (f_vv) {
@@ -623,6 +623,7 @@ void schreier_vector::orbit_stats(
 	orbit_length = NEW_int(nb_orbits);
 	total_depth = NEW_int(nb_orbits);
 
+	data_structures::sorting Sorting;
 	int nb_orb, a;
 
 	nb_orb = 0;
@@ -660,6 +661,7 @@ void schreier_vector::orbit_of_point(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	data_structures::sorting Sorting;
+	data_structures::algorithms Algorithms;
 
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
@@ -699,7 +701,8 @@ void schreier_vector::orbit_of_point(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "schreier_vector::orbit_of_point idx_of_root_node = " << idx_of_root_node << endl;
+		cout << "schreier_vector::orbit_of_point "
+				"idx_of_root_node = " << idx_of_root_node << endl;
 	}
 
 	depth = NEW_int(n);
@@ -712,15 +715,17 @@ void schreier_vector::orbit_of_point(
 	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
-				"determining depth using schreier_vector_determine_depth_recursion" << endl;
+				"determining depth using "
+				"Algorithms.schreier_vector_determine_depth_recursion" << endl;
 	}
 	for (i = 0; i < n; i++) {
-		Sorting.schreier_vector_determine_depth_recursion(n,
+		Algorithms.schreier_vector_determine_depth_recursion(n,
 				pts, prev, false, NULL, depth, ancestor, i);
 	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
-				"determining depth using schreier_vector_determine_depth_recursion done" << endl;
+				"after determining depth using "
+				"Algorithms.schreier_vector_determine_depth_recursion done" << endl;
 	}
 	if (f_vvv && n < 100) {
 		cout << "i : pts[i] : prev[i] : label[i] : "
@@ -1144,6 +1149,7 @@ void schreier_vector::export_tree_as_layered_graph(
 							"-> (" << i << "," << j << ")" << endl;
 				}
 				LG->add_edge(i - 1, j2, i, j,
+						1, // edge_color
 						0 /*verbose_level*/);
 			}
 		}

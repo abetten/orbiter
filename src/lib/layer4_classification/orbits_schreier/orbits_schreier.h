@@ -215,6 +215,10 @@ public:
 	void get_label(
 			std::vector<int> &Label,
 			int verbose_level);
+	void export_tree_as_layered_graph(
+			graph_theory::layered_graph *&LG,
+			int verbose_level);
+
 };
 
 

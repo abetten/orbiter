@@ -1719,6 +1719,9 @@ void mp_graphics::sl_thickness(
 void mp_graphics::sl_color(
 		int line_color)
 {
+	if (line_color == 0) {
+		cout << "mp_graphics::sl_color line_color == 0" << endl;
+	}
 	mp_graphics::line_color = line_color;
 	sl_color_log();
 }
@@ -2740,6 +2743,7 @@ void mp_graphics::color_tikz(
 	else {
 		cout << "mp_graphics::color_tikz color = " << color 
 			<< ", we don't have a color for this" << endl;
+		::exit(1);
 	}
 }
 

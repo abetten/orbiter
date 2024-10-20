@@ -1867,7 +1867,6 @@ void any_group::automorphism_by_generator_images(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = false;
 
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images" << endl;
@@ -1930,9 +1929,6 @@ void any_group::automorphism_by_generator_images(
 		cout << endl;
 	}
 
-	int nb_gens;
-
-	nb_gens = Subgroup_gens->gens->len;
 
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images "
@@ -1963,14 +1959,53 @@ void any_group::automorphism_by_generator_images(
 		exit(1);
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	graph_theory::layered_graph *LG;
 
-	int in, out;
-	int h, i, a, b, c;
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before Orb.export_tree_as_layered_graph" << endl;
+	}
+	Orb.export_tree_as_layered_graph(
+			LG,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"after Orb.export_tree_as_layered_graph" << endl;
+	}
+
+
+	string fname;
+
+	fname = label + "_tree.layered_graph";
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before LG->write_file" << endl;
+	}
+	LG->write_file(fname, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"after LG->write_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"before FREE_OBJECT(LG)" << endl;
+	}
+	FREE_OBJECT(LG);
+	if (f_v) {
+		cout << "any_group::automorphism_by_generator_images "
+				"after FREE_OBJECT(LG)" << endl;
+	}
+
+
+
+	int h;
 	int *Elt;
 	int *perm;
-	long int new_set[1];
-	int pos;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	perm = NEW_int(go);
@@ -1984,103 +2019,21 @@ void any_group::automorphism_by_generator_images(
 			cout << endl;
 		}
 
+		int verbose_level1;
 
-		for (in = 0; in < go; in++) {
-
-			uint32_t hash;
-			std::vector<int> path;
-
-			new_set[0] = in;
-
-			if (!Orb.find_set(
-					new_set, pos, hash)) {
-				cout << "any_group::automorphism_by_generator_images !find_set" << endl;
-				exit(1);
-			}
-			Orb.get_path(
-					path,
-					pos);
-
-			if (f_vvv) {
-				cout << "any_group::automorphism_by_generator_images in=" << in << " pos=" << pos << " path=";
-				Int_vec_stl_print(cout, path);
-				cout << endl;
-			}
-
-
-			int *word;
-
-			word = NEW_int(path.size());
-
-			for (i = 0; i < path.size(); i++) {
-				a = path[i];
-				b = nb_gens - 1 - a; // reverse ordering because the Coxeter generators are listed in reverse
-				c = Images[h * n + b];
-
-				word[i] = c;
-			}
-
-			if (f_vvv) {
-				cout << "any_group::automorphism_by_generator_images in=" << in << " path=";
-				Int_vec_stl_print(cout, path);
-				cout << " -> ";
-				Int_vec_print(cout, word, path.size());
-				cout << endl;
-			}
-
-
-			A->Group_element->evaluate_word(
-					Elt, word, path.size(),
-					Elements_ge,
-					verbose_level - 3);
-
-			if (false) {
-				cout << "The word evaluates to" << endl;
-				A->Group_element->element_print_quick(Elt, cout);
-				cout << endl;
-				cout << "in latex:" << endl;
-				A->Group_element->element_print_latex(Elt, cout);
-				cout << endl;
-			}
-
-			ring_theory::longinteger_object rk_out;
-
-			Subgroup_sims->element_rank(rk_out, Elt);
-
-			out = rk_out.as_int();
-
-			perm[in] = out;
-
-			if (f_vvv) {
-				cout << "any_group::automorphism_by_generator_images in=" << in << " -> " << out << endl;
-			}
-
-
-			FREE_int(word);
-
-		}
-
-
-		int c;
-
-		c = Combi.Permutations->is_permutation(
-				perm, go);
-		if (c) {
-			if (f_vv) {
-				cout << "any_group::automorphism_by_generator_images h = " << h << " output is a permutation" << endl;
-			}
+		if (h == 0) {
+			verbose_level1 = verbose_level;
 		}
 		else {
-			cout << "any_group::automorphism_by_generator_images h = " << h << " output is not a permutation" << endl;
-			exit(1);
+			verbose_level1 = 0;
 		}
-
-		if (f_vv) {
-			cout << "any_group::automorphism_by_generator_images h = " << h << ", perm = ";
-			Combi.Permutations->perm_print_list(
-						cout, perm, go);
-			cout << endl;
-		}
+		create_permutation(
+				&Orb,
+				Elements_ge,
+				Images + h * n, n, h,
+				Elt,
+				perm, go,
+				verbose_level1);
 
 		Int_vec_copy(perm, Perms + h * go, go);
 
@@ -2097,6 +2050,180 @@ void any_group::automorphism_by_generator_images(
 	if (f_v) {
 		cout << "any_group::automorphism_by_generator_images done" << endl;
 	}
+}
+
+void any_group::create_permutation(
+		orbits_schreier::orbit_of_sets *Orb,
+		data_structures_groups::vector_ge *Elements_ge,
+		int *Images, int n, int h,
+		int *Elt,
+		int *perm, long int go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+
+	if (f_v) {
+		cout << "any_group::create_permutation" << endl;
+	}
+
+	if (f_vv) {
+		cout << "any_group::create_permutation h=" << h << " : ";
+		Int_vec_print(cout, Images, n);
+		cout << endl;
+	}
+
+	int in, out;
+	int i, a, b, c;
+	long int new_set[1];
+	int pos;
+
+	int nb_gens;
+
+	nb_gens = Subgroup_gens->gens->len;
+
+	if (f_vv) {
+		for (i = 0; i < n; i++) {
+			cout << "generator image " << i << " : " << Images[i] << " is: ";
+			A->Group_element->print(cout, Elements_ge->ith(Images[i]));
+			cout << endl;
+		}
+	}
+
+	for (in = 0; in < go; in++) {
+
+		uint32_t hash;
+		std::vector<int> path;
+
+		new_set[0] = in;
+
+		if (!Orb->find_set(
+				new_set, pos, hash)) {
+			cout << "any_group::create_permutation !find_set" << endl;
+			exit(1);
+		}
+		Orb->get_path(
+				path,
+				pos);
+
+		if (f_vvv) {
+			cout << "any_group::create_permutation in=" << in << " pos=" << pos << " path=";
+			Int_vec_stl_print(cout, path);
+			cout << " of length " << path.size();
+			cout << endl;
+		}
+
+
+		int *path1;
+		int *word;
+
+		path1 = NEW_int(path.size());
+		word = NEW_int(path.size());
+
+		for (i = 0; i < path.size(); i++) {
+			a = path[i];
+			b = nb_gens - 1 - a; // reverse ordering because the Coxeter generators are listed in reverse
+			path1[i] = b;
+			c = Images[b];
+
+			word[i] = c;
+		}
+
+		if (f_vvv) {
+			cout << "any_group::create_permutation in=" << in << " path=";
+			Int_vec_stl_print(cout, path);
+			cout << " -> ";
+			Int_vec_print(cout, path1, path.size());
+			cout << " -> ";
+			Int_vec_print(cout, word, path.size());
+			cout << endl;
+		}
+
+
+		A->Group_element->evaluate_word(
+				Elt, word, path.size(),
+				Elements_ge,
+				verbose_level - 3);
+
+		if (f_vvv) {
+			cout << "The word evaluates to" << endl;
+			A->Group_element->element_print_quick(Elt, cout);
+			cout << endl;
+			cout << "in latex:" << endl;
+			A->Group_element->element_print_latex(Elt, cout);
+			cout << endl;
+		}
+
+		ring_theory::longinteger_object rk_out;
+
+		Subgroup_sims->element_rank(rk_out, Elt);
+
+		out = rk_out.as_int();
+
+		perm[in] = out;
+
+		if (f_vvv) {
+			cout << "any_group::create_permutation in=" << in << " -> " << out << endl;
+		}
+
+
+		FREE_int(path1);
+		FREE_int(word);
+
+	}
+
+	combinatorics::combinatorics_domain Combi;
+
+
+	int f_is_perm;
+
+	f_is_perm = Combi.Permutations->is_permutation(
+			perm, go);
+	if (f_is_perm) {
+		if (f_vv) {
+			cout << "any_group::create_permutation h = " << h << " output is a permutation" << endl;
+		}
+	}
+	else {
+		cout << "any_group::create_permutation h = " << h << " output is not a permutation" << endl;
+		exit(1);
+	}
+
+	if (f_vv) {
+		cout << "any_group::create_permutation h = " << h << ", perm = ";
+		Combi.Permutations->perm_print_list(
+					cout, perm, go);
+		cout << endl;
+		cout << "in cycle notation: ";
+		Combi.Permutations->perm_print(
+				cout, perm, go);
+		cout << endl;
+
+		int *cycles;
+		int nb_cycles;
+
+		cycles = NEW_int(go);
+
+		Combi.Permutations->perm_cycle_type(
+				perm, go, cycles, nb_cycles);
+		cout << "The cycle type is: ";
+
+		data_structures::tally T;
+
+		T.init(cycles,
+				nb_cycles, false /* f_second */, 0 /* verbose_level*/);
+
+		T.print(true /* f_backwards*/);
+
+		FREE_int(cycles);
+		cout << endl;
+
+	}
+	if (f_v) {
+		cout << "any_group::create_permutation done" << endl;
+	}
+
 }
 
 void any_group::automorphism_by_generator_images_save(
@@ -3327,6 +3454,17 @@ void any_group::subgroup_lattice_load(
 				"after Subgroup_lattice->save_rearranged_by_orbits_csv" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"before Subgroup_lattice->do_export_csv" << endl;
+	}
+	Subgroup_lattice->do_export_csv(
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_load "
+				"after Subgroup_lattice->do_export_csv" << endl;
+	}
 
 
 #if 0

@@ -738,6 +738,7 @@ public:
 	std::string extract_solutions_by_index_label;
 	std::string extract_solutions_by_index_group;
 	std::string extract_solutions_by_index_fname_solutions_in;
+	std::string extract_solutions_by_index_col_label;
 	std::string extract_solutions_by_index_fname_solutions_out;
 	std::string extract_solutions_by_index_prefix;
 
@@ -792,10 +793,12 @@ public:
 			std::string &label,
 			std::string &group_label,
 			std::string &fname_in,
+			std::string &col_label,
 			std::string &fname_out,
 			std::string &prefix_text,
 			int f_csv_format,
 			int verbose_level);
+	// does not need DC. This should be an activity for the design_table
 	void do_create_table(
 			design_create *DC,
 			std::string &label,
@@ -913,6 +916,9 @@ public:
 
 	int f_no_group;
 
+	int f_block_partition;
+	int block_partition_sz;
+
 
 	design_create_description();
 	~design_create_description();
@@ -968,6 +974,9 @@ public:
 
 	int f_has_group;
 	groups::strong_generators *Sg;
+
+	int f_has_block_partition;
+	int block_partition_class_size;
 
 
 	projective_geometry::projective_space_with_action *PA;

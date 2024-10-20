@@ -1316,7 +1316,7 @@ void csv_file_support::do_csv_file_select_cols(
 
 	for (j = 0; j < nb_cols; j++) {
 		headings += Header_cols2[j];
-		if (j < 1 + nb_cols - 1) {
+		if (j < nb_cols - 1) {
 			headings += ",";
 		}
 	}

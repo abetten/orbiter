@@ -121,6 +121,33 @@ public:
 			std::vector<long int> &In, long int *subtract_this, int size,
 			std::vector<long int> &Out,
 			int verbose_level);
+	void export_tree_as_layered_graph(
+			int degree,
+			int *orbit_first,
+			int *orbit_len,
+			int *orbit,
+			int *orbit_inv,
+			int *prev,
+			int *label,
+			int orbit_no,
+			graph_theory::layered_graph *&LG,
+			int verbose_level);
+	void tree_trace_back(
+			int *orbit_inv,
+			int *prev,
+			int i, int &j);
+	void make_layered_graph_for_schreier_vector_tree(
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		std::string &fname_base,
+		graph_theory::layered_graph *&LG,
+		int verbose_level);
+	// called from sims_io.cpp
+	void schreier_vector_compute_depth_and_ancestor(
+		int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
+		int *&depth, int *&ancestor, int verbose_level);
+	int schreier_vector_determine_depth_recursion(
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		int *depth, int *ancestor, int pos);
 
 };
 
@@ -1705,6 +1732,7 @@ public:
 			const std::vector<unsigned int> &p,
 			const std::vector<unsigned int> &q);
 
+#if 0
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
@@ -1717,7 +1745,7 @@ public:
 		//graphics::layered_graph_draw_options *LG_Draw_options,
 		graph_theory::layered_graph *&LG,
 		int verbose_level);
-
+#endif
 
 	int compare_sets(
 			int *set1, int *set2, int sz1, int sz2);

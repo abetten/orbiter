@@ -700,7 +700,7 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
-			//FREE_OBJECT(CG);
+			FREE_OBJECT(CG);
 
 			nb_objects_to_test++;
 
@@ -963,6 +963,10 @@ void data_input_stream::read_objects(
 		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs) {
 
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs" << endl;
+			}
 			int v, b, k, design_sz;
 
 			v = Descr->Input[input_idx].input_data1;
@@ -970,11 +974,23 @@ void data_input_stream::read_objects(
 			k = Descr->Input[input_idx].input_data3;
 			design_sz = Descr->Input[input_idx].input_data4;
 
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs v = " << v << endl;
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs b = " << b << endl;
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs k = " << k << endl;
+				cout << "data_input_stream::read_objects "
+						"t_data_input_stream_file_of_designs design_sz = " << design_sz << endl;
+			}
+
+
 			data_structures::set_of_sets *SoS;
 
 			SoS = NEW_OBJECT(data_structures::set_of_sets);
 
-			int underlying_set_size = 0;
+			int underlying_set_size = v;
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
@@ -984,7 +1000,8 @@ void data_input_stream::read_objects(
 					underlying_set_size,
 					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->Input[input_idx].input_string
+				cout << "data_input_stream::read_objects "
+						"read the file " << Descr->Input[input_idx].input_string
 						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
 

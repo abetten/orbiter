@@ -327,12 +327,54 @@ void any_combinatorial_object::print_tex(
 		//ost << endl;
 
 		int nb_designs = b / design_sz;
-		int i;
 
-		for (i = 0; i < nb_designs; i++) {
+		for (int i = 0; i < nb_designs; i++) {
 			Lint_vec_print(ost, set + i * design_sz, design_sz);
 			ost << "\\\\" << endl;
 		}
+
+		combinatorics::combinatorics_domain Combi;
+
+		ost << "large set: \\\\" << endl;
+
+		Combi.report_large_set(
+				ost, set, nb_designs,
+				v, design_k, design_sz, verbose_level);
+
+		if (v <= 10) {
+			Combi.report_large_set_compact(
+					ost, set, nb_designs,
+					v, design_k, design_sz, verbose_level);
+		}
+
+		#if 0
+		int j, h;
+		int a;
+		int *the_block;
+
+		the_block = NEW_int(design_k);
+
+		for (i = 0; i < nb_designs; i++) {
+			for (j = 0; j < design_sz; j++) {
+				a = set[i * design_sz + j];
+
+
+				Combi.unrank_k_subset(a, the_block, v, design_k);
+				for (h = 0; h < design_k; h++) {
+					ost << the_block[h];
+					if (h < design_k - 1) {
+						ost << ", ";
+					}
+				}
+				ost << "\\\\" << endl;
+
+				}
+			//Lint_vec_print(ost, set + i * design_sz, design_sz);
+			ost << "\\\\" << endl;
+		}
+		FREE_int(the_block);
+#endif
+
 #if 0
 		object_with_canonical_form::set = NEW_lint(data_sz);
 		Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);

@@ -429,6 +429,7 @@ void ancestry_tree::create_poset(
 
 				L->add_edge(
 						l1, n1, l2, n2,
+						1, // edge_color
 						0 /*verbose_level*/);
 
 			}

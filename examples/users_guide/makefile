@@ -1136,32 +1136,32 @@ NEUMAIER_GRAPH_16_2_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1
 
 DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
 
-GEO_BLOCKS_600="Row,C0,C1,C2\n\
-0, 0, 5, 14, \n\
-1, 1, 6, 10, \n\
-2, 2, 7, 11, \n\
-3, 3, 8, 12, \n\
-4, 4, 9, 13, \n\
-5, 0, 6, 13, \n\
-6, 1, 7, 14, \n\
-7, 2, 8, 10, \n\
-8, 3, 9, 11, \n\
-9, 4, 5, 12, \n\
-10, 0, 7, 12, \n\
-11, 1, 8, 13, \n\
-12, 2, 9, 14, \n\
-13, 3, 5, 10, \n\
-14, 4, 6, 11, \n\
-15, 0, 8, 11, \n\
-16, 1, 9, 12, \n\
-17, 2, 5, 13, \n\
-18, 3, 6, 14, \n\
-19, 4, 7, 10, \n\
-20, 0, 9, 10, \n\
-21, 1, 5, 11, \n\
-22, 2, 6, 12, \n\
-23, 3, 7, 13, \n\
-24, 4, 8, 14, \n\
+GEO_BLOCKS_600="Row,Block\n\
+0, \"0, 5, 14\" \n\
+1, \"1, 6, 10\", \n\
+2, \"2, 7, 11\", \n\
+3, \"3, 8, 12\", \n\
+4, \"4, 9, 13\", \n\
+5, \"0, 6, 13\", \n\
+6, \"1, 7, 14\", \n\
+7, \"2, 8, 10\", \n\
+8, \"3, 9, 11\", \n\
+9, \"4, 5, 12\", \n\
+10, \"0, 7, 12\", \n\
+11, \"1, 8, 13\", \n\
+12, \"2, 9, 14\", \n\
+13, \"3, 5, 10\", \n\
+14, \"4, 6, 11\", \n\
+15, \"0, 8, 11\", \n\
+16, \"1, 9, 12\", \n\
+17, \"2, 5, 13\", \n\
+18, \"3, 6, 14\", \n\
+19, \"4, 7, 10\", \n\
+20, \"0, 9, 10\", \n\
+21, \"1, 5, 11\", \n\
+22, \"2, 6, 12\", \n\
+23, \"3, 7, 13\", \n\
+24, \"4, 8, 14\", \n\
 END\n"
 
 
@@ -2091,7 +2091,7 @@ Hirschfeld_Class_2A:
 
 surface_4_0_export_action:
 	$(ORBITER) -v 3 \
-		-define Class2A -vector -file $(FILE_NAME_CLASS_2A) -end \
+		-define Class2A -vector -file_column $(FILE_NAME_CLASS_2A) elements -end \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
 		-define S -cubic_surface -space P -catalogue 0 -end \
@@ -2111,7 +2111,7 @@ surface_4_0_export_action:
 		-with S -do \
 		-cubic_surface_activity \
 			-export_something_with_group_element "action_on_lines" gens_ge \
-		-end \
+		-end
 
 
 ###############################################################################
@@ -7467,6 +7467,7 @@ test_6_4:
 	make PGL_4_2_wd_reverse
 	make M24_perm_group
 	make M22_bar
+	make curve_q13_f0_clean2_variety_make_group
 
 
 
@@ -7994,6 +7995,38 @@ M22_bar:
 
 
 # M22_bar has order 887040
+
+
+
+curve_q13_f0_clean2_variety_make_group:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(CURVE_Q13_F0_CLEAN2_EQUATION) \
+			-label_txt curve_q13_f0_clean2 \
+			-label_tex curve\_q13\_f0\_clean2 \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_3_13_stab_of_curve_q13_f0_clean2_report.tex
+	$(OPEN) PGL_3_13_stab_of_curve_q13_f0_clean2_report.pdf
+
+
 
 
 ###############################################################################
@@ -10005,8 +10038,9 @@ subspaces_Op_4_2:
 	pdflatex Op_4_2_poset.tex
 	$(OPEN) Op_4_2_poset.pdf
 
+# find orbit of size 6:
 
-
+# the_set_orbit_under_PGL_4_2_Subgroup_double_six_stab_720_OnWedge.csv
 
 
 PGL_4_2_on_subspaces:
@@ -10979,6 +11013,7 @@ SECTION_CUBIC_SURFACE_ACTIVITIES:
 
 test_8_3:
 	make surface_4_0_report
+	make surface_4_0_clean_report
 	make surface_4_0_export
 	make Hirschfeld_surface_get_incidence_matrix_40_40
 	make Hirschfeld_surface_incma_40_40_c
@@ -11034,6 +11069,25 @@ surface_4_0_report:
 		-end
 	pdflatex surface_catalogue_q4_iso0_report.tex
 	$(OPEN) surface_catalogue_q4_iso0_report.pdf
+
+
+surface_4_0_clean_report:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -end \
+		-define S -cubic_surface -space P -catalogue 0 \
+			-select_double_six "a4,b4,c15,c25,c35,c56,a5,b5,c14,c24,c34,c46" \
+			-select_double_six "a1,a6,a2,a3,a4,a5,b1,b6,b2,b3,b4,b5" \
+			-select_double_six "a1,a2,a5,a6,a3,a4,b1,b2,b5,b6,b3,b4" \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_catalogue_q4_iso0_report.tex
+	$(OPEN) surface_catalogue_q4_iso0_report.pdf
+
+
 
 
 surface_4_0_export:
@@ -16074,11 +16128,6 @@ test_11:
 	make test_11_3
 	make test_11_4 # slow
 	make test_11_5 # slow
-	make test_11_6
-	make test_11_7
-	make test_11_8
-	make test_11_9
-	make test_11_10
 
 
 
@@ -17236,8 +17285,6 @@ test_12_1:
 	make Hamming_graph_7
 	make Op_6_2_coll_graph
 	make HJ_graph
-	make Group_Perm315_Orbital_3.colored_graph
-	make HJ_d2_graph
 	make Cayley_Z11_1mod3
 	make Cayley_Sym4_coxeter
 	make Cayley_Sym4_star
@@ -17321,7 +17368,7 @@ tritangent_planes_graph:
 trihedral_pair_graph:
 	$(ORBITER) -v 2 \
 		-define Gamma \
-			-graph - o \
+			-graph -trihedral_pair_disjointness_graph \
 		-end
 
 
@@ -17384,29 +17431,6 @@ HJ_graph:
 		-end
 
 
-Group_Perm315_Orbital_3.colored_graph: halljanko315_gens.csv
-	$(ORBITER) -v 2 \
-		-define gens -vector -format 5 -file \
-			halljanko315_gens.csv -end \
-		-define G -permutation_group \
-			-bsgs halljanko315 "File\_halljanko315" \
-			315 1209600 "0,1,2" 5 gens \
-		-end \
-		-define Gamma -graph \
-			-orbital_graph G 3 \
-		-end \
-		-with Gamma -do \
-			-graph_theoretic_activity -save \
-		-end
-
-HJ_d2_graph:
-	cp $(ORBITER_PATH)/examples/users_guide/halljanko315.csv .
-	$(ORBITER) -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			halljanko315.csv \
-			-distance_2 \
-		-end
 
 
 
@@ -18161,7 +18185,7 @@ Symmetric_5_inversion_graph_recognize:
 
 
 test_13:
-	make test_13_1 # slow
+	make test_13_1
 	make test_13_2
 	make test_13_3
 	make test_13_4
@@ -18181,7 +18205,7 @@ test_13_1:
 	make wreath_product_designs_n4_k2_inc.txt
 	make wreath_product_designs_n8_k6_inc.txt
 	make design_20
-	make design_600_old
+	make design_600
 	make LSQ_5A
 	make LSQ_5B
 	make LSQ_5_c
@@ -18265,11 +18289,11 @@ design_20:
 		-end
 
 
-design_600_old:
+design_600:
 	echo $(GEO_BLOCKS_600) | sed 's/ //' >geo_600_blocks.csv
 	$(ORBITER) -v 8 \
 		-define D -design -list_of_blocks_from_file \
-			15 geo_600_blocks.csv \
+			15 geo_600_blocks.csv Block \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18681,7 +18705,7 @@ test_13_3:
 	make AG_2_3_stab_orb_0_Perm840_res192
 	make LS_AG_2_3_disjoint_sets_graph_and_cliques
 	make LS_AG_2_3_disjoint_sets_split
-	make LS_AG_2_3_export_solutions
+	make LS_AG_2_3_export_large_sets
 	make design_PG_2_3_table_create
 	make design_PG_2_3_group_5
 	make design_PG_2_3_group_5_sol_0
@@ -18731,7 +18755,9 @@ AG_2_3_on_designs:
 	$(ORBITER) -v 2 \
 		-define gens -vector -file AG_2_3_gens.csv -end \
 		-define G -permutation_group \
-		-bsgs AG_2_3 "AG_2_3" 840 362880 "0,1,2,3,4,5,6,7" 8 gens -end \
+			-bsgs AG_2_3 "AG_2_3" 840 362880 "0,1,2,3,4,5,6,7" \
+			8 gens \
+		-end \
 		-define Orb -orbits -group G \
 			-on_points \
 		-end \
@@ -18748,27 +18774,29 @@ AG_2_3_on_designs:
 # the stabilizer of the first design:
 
 
-#ToDo AG_2_3_stab_orb_0_gens.csv does not exist or is empty
+
 
 AG_2_3_stab_orb_0:
 	$(ORBITER) -v 2 \
 		-define gens -vector -file AG_2_3_stab_pt_0_gens.csv -end \
+		-define Set192 -set -here $(LARGE_SET_AG_2_3_NEIGHBOR_SET) -end \
 		-define G -permutation_group \
 		-bsgs AG_2_3_stab_orb_0 "AG_2_3_stab_pt_0" \
-			840 432 "0,1,2,3,4,5,6,7,8" 5 gens \
+			840 432 "0,1,2,3,4,5,6,7,8" 4 gens \
 		-end \
 		-define Gr -modified_group -from G \
-			-restricted_action $(LARGE_SET_AG_2_3_NEIGHBOR_SET) \\_neighbor\\_set \
+			-restricted_action Set192 Set192 \
 		-end \
 		-with Gr -do \
 		-group_theoretic_activity \
 			-export_orbiter \
 		-end
 
+#Perm_840_res_Set192_gens.csv
 
 AG_2_3_stab_orb_0_Perm840_res192:
 	$(ORBITER) -v 2 \
-		-define gens -vector -file Perm840_res192_gens.csv -end \
+		-define gens -vector -file Perm_840_res_Set192_gens.csv -end \
 		-define G -permutation_group \
 		-bsgs Perm840_res192 "Perm840 {\rm res192}" \
 			192 432 "0,1,2,3,4,5,6,7,8" 4 gens \
@@ -18801,8 +18829,7 @@ LS_AG_2_3_disjoint_sets_graph_and_cliques:
 
 #AG_2_3_design_table_disjoint_sets.colored_graph
 #User time: 0.66 of a second, dt=66 tps = 100
-#AG_2_3_design_table_disjoint_sets_sol.txt
-#AG_2_3_design_table_disjoint_sets_sol.csv
+#AG_2_3_design_table_disjoint_sets_solutions.csv
 
 #15360 solutions
 
@@ -18822,24 +18849,24 @@ LS_AG_2_3_disjoint_sets_split:
 
 
 
-LS_AG_2_3_export_solutions:
+LS_AG_2_3_export_large_sets:
 	$(ORBITER) -v 20 \
 		-define B -vector -dense $(AG_2_3_BLOCKS) -end \
-		-define D -design -list_of_blocks 9 3 B -end \
+		-define D -design -list_of_blocks_coded 9 3 B -end \
 		-define Sym9 -permutation_group -symmetric_group 9 -end \
 		-define T -design_table D "AG_2_3" Sym9 -end \
 		-with D -do \
 		-design_activity \
-			-extract_solutions_by_index "AG_2_3" Sym9 \
-				AG_2_3_design_table_disjoint_sets_sol.csv \
-				solutions.csv \
+			-extract_solutions_by_index_csv "AG_2_3" Sym9 \
+				AG_2_3_design_table_disjoint_sets_solutions.csv \
+				"clique" \
+				AG_2_3_large_sets.csv \
 				"" \
 		-end
 
 
 #User time: 0.39 of a second, dt=39 tps = 100
-# solutions.csv
-
+# AG_2_3_large_sets.csv
 
 
 
@@ -18858,6 +18885,7 @@ design_PG_2_3_group_5:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 3 -end \
 		-define D -design -field F -family PG_2_q -end \
+		-define Sym13 -permutation_group -symmetric_group 13 -end \
 		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
@@ -22384,7 +22412,7 @@ SECTION_OBJECTS_FROM_DESIGN_THEORY:
 
 
 test_16_4:
-	#make LS_AG_2_3_solutions_classify # needs Section 13.3
+	make LS_AG_2_3_solutions_classify # needs Section 13.3
 	make design_27c
 	make design_PG_2_3_canonical
 	make wreath_product_designs_n8_k6_c
@@ -22392,7 +22420,8 @@ test_16_4:
 
 
 
-# needs Section 13.3
+# continuation of an example in Section 13.3
+# requires the file AG_2_3_large_sets.csv
 
 LS_AG_2_3_solutions_classify:
 	$(ORBITER) -v 2 \
@@ -22401,7 +22430,7 @@ LS_AG_2_3_solutions_classify:
 		-define C -combinatorial_object \
 			-label LS_AG_2_3 LS\_AG\_2\_3 \
 			-file_of_designs \
-			solutions.csv 9 84 3 12 \
+			AG_2_3_large_sets.csv 9 84 3 12 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22446,7 +22475,7 @@ design_27c:
 		-define F -finite_field -q 27 \
 			-override_polynomial 46 \
 		-end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define P -projective_space -n 2 -field F -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -22905,6 +22934,8 @@ test_16_7:
 	make HJ_group
 	make HJ_group_and_orbits
 	make HJ_orbital_graph_3
+	make Group_Perm315_Orbital_3.colored_graph
+	make HJ_d2_graph
 	make PGO_5_2_graph_group
 	make Paulus_c
 	make Neumaier_graph_25_c
@@ -23138,6 +23169,29 @@ HJ_orbital_graph_3:
 #Degree type: (64^{315} )
 
 
+Group_Perm315_Orbital_3.colored_graph:
+	$(ORBITER) -v 2 \
+		-define gens -vector -format 5 -file \
+			halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 5 gens \
+		-end \
+		-define Gamma -graph \
+			-orbital_graph G 3 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -save \
+		-end
+
+HJ_d2_graph:
+	cp $(ORBITER_PATH)/examples/users_guide/halljanko315.csv .
+	$(ORBITER) -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+			-distance_2 \
+		-end
 
 
 

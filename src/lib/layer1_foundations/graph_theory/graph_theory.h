@@ -681,7 +681,8 @@ public:
 	int layer;
 	int neighbor_list_allocated;
 	int nb_neighbors;
-	int *neighbor_list;
+	int *neighbor_list; // [nb_neighbors]
+	int *Edge_color; // [nb_neighbors]
 	double x_coordinate;
 	
 	// added June 28, 2016:
@@ -698,7 +699,7 @@ public:
 	graph_node();
 	~graph_node();
 	void add_neighbor(
-			int l, int n, int id);
+			int l, int n, int id, int edge_color);
 	void add_text(
 			std::string &text);
 	void add_vec_data(
@@ -950,6 +951,8 @@ public:
 	double average_word_length();
 	void place(
 			int verbose_level);
+	void place_upside_down(
+			int verbose_level);
 	void place_with_y_stretch(
 			double y_stretch, int verbose_level);
 	void scale_x_coordinates(
@@ -960,6 +963,7 @@ public:
 		int verbose_level);
 	void add_edge(
 			int l1, int n1, int l2, int n2,
+			int edge_color,
 			int verbose_level);
 	void add_text(
 			int l, int n, std::string &text,

@@ -120,7 +120,21 @@ void layered_graph::place(
 	for (i = 0; i < nb_layers; i++) {
 		L[i].y_coordinate = 1. - i * dy - dy2;
 		L[i].place(verbose_level);
-		}
+	}
+}
+
+void layered_graph::place_upside_down(
+		int verbose_level)
+{
+	double dy, dy2;
+	int i;
+
+	dy = 1. / (double) nb_layers;
+	dy2 = dy * .5;
+	for (i = 0; i < nb_layers; i++) {
+		L[i].y_coordinate = i * dy - dy2;
+		L[i].place(verbose_level);
+	}
 }
 
 void layered_graph::place_with_y_stretch(
@@ -184,6 +198,7 @@ void layered_graph::place_with_grouping(
 
 void layered_graph::add_edge(
 		int l1, int n1, int l2, int n2,
+		int edge_color,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,15 +208,15 @@ void layered_graph::add_edge(
 		cout << "layered_graph::add_edge l1=" << l1
 				<< " n1=" << n1 << " l2="
 				<< l2 << " n2=" << n2 << endl;
-		}
+	}
 	if (n1 < 0) {
 		cout << "layered_graph::add_edge "
 				"n1 is negative, n1=" << n1 << endl;
-		}
+	}
 	if (n2 < 0) {
 		cout << "layered_graph::add_edge "
 				"n2 is negative, n2=" << n2 << endl;
-		}
+	}
 	if (n1 >= L[l1].nb_nodes) {
 		cout << "layered_graph::add_edge "
 				"n1 >= L[l1].nb_nodes" << endl;
@@ -209,7 +224,7 @@ void layered_graph::add_edge(
 		cout << "n1 = " << n1 << endl;
 		cout << "L[l1].nb_nodes = " << L[l1].nb_nodes << endl;
 		exit(1);
-		}
+	}
 	id1 = L[l1].Nodes[n1].id;
 	if (n2 >= L[l2].nb_nodes) {
 		cout << "layered_graph::add_edge n2 >= L[l2].nb_nodes" << endl;
@@ -217,13 +232,13 @@ void layered_graph::add_edge(
 		cout << "n2 = " << n2 << endl;
 		cout << "L[l2].nb_nodes = " << L[l2].nb_nodes << endl;
 		exit(1);
-		}
+	}
 	id2 = L[l2].Nodes[n2].id;
-	L[l1].Nodes[n1].add_neighbor(l2, n2, id2);
-	L[l2].Nodes[n2].add_neighbor(l1, n1, id1);
+	L[l1].Nodes[n1].add_neighbor(l2, n2, id2, edge_color);
+	L[l2].Nodes[n2].add_neighbor(l1, n1, id1, edge_color);
 	if (f_v) {
 		cout << "layered_graph::add_edge done" << endl;
-		}
+	}
 }
 
 void layered_graph::add_text(
@@ -517,10 +532,14 @@ void layered_graph::draw_edges(
 
 			int *up;
 			int *down;
+			int *up_color;
+			int *down_color;
 			int nb_up, nb_down;
 
 			up = NEW_int(L[i].Nodes[j].nb_neighbors);
 			down = NEW_int(L[i].Nodes[j].nb_neighbors);
+			up_color = NEW_int(L[i].Nodes[j].nb_neighbors);
+			down_color = NEW_int(L[i].Nodes[j].nb_neighbors);
 			nb_up = 0;
 			nb_down = 0;
 
@@ -549,13 +568,17 @@ void layered_graph::draw_edges(
 					}
 				}
 				if (l < i) {
-					up[nb_up++] = id;
+					up[nb_up] = id;
+					up_color[nb_up] = L[i].Nodes[j].Edge_color[h];
+					nb_up++;
 					if (f_v) {
 						cout << "added an up link" << endl;
 					}
 				}
 				else {
-					down[nb_down++] = id;
+					down[nb_down] = id;
+					down_color[nb_down] = L[i].Nodes[j].Edge_color[h];
+					nb_down++;
 					if (f_v) {
 						cout << "added a down link" << endl;
 					}
@@ -573,7 +596,15 @@ void layered_graph::draw_edges(
 							"edges nb_up > threshold" << endl;
 				}
 				for (h = 0; h < nb_up; h++) {
+
+					int edge_color;
+
 					id = up[h];
+					edge_color = up_color[h];
+
+					if (edge_color == 0) {
+						edge_color = 1;
+					}
 					find_node_by_id(id, l, n);
 					coordinates(
 							id, O->xin, O->yin,
@@ -594,7 +625,10 @@ void layered_graph::draw_edges(
 						Py[0] = y;
 						Py[1] = y2;
 					}
+
+					G->sl_color(edge_color);
 					G->polygon2(Px, Py, 0, 1);
+					G->sl_color(1);
 
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
@@ -609,7 +643,17 @@ void layered_graph::draw_edges(
 			}
 			else {
 				for (h = 0; h < nb_up; h++) {
+
+					int edge_color;
+
+
 					id = up[h];
+					edge_color = up_color[h];
+
+					if (edge_color == 0) {
+						edge_color = 1;
+					}
+
 					find_node_by_id(id, l, n);
 					coordinates(
 							id, O->xin, O->yin,
@@ -618,7 +662,11 @@ void layered_graph::draw_edges(
 					Px[1] = x2;
 					Py[0] = y;
 					Py[1] = y2;
+
+					G->sl_color(edge_color);
 					G->polygon2(Px, Py, 0, 1);
+					G->sl_color(1);
+
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
@@ -647,7 +695,16 @@ void layered_graph::draw_edges(
 							"nb_down > threshold" << endl;
 				}
 				for (h = 0; h < nb_down; h++) {
+
+					int edge_color;
+
 					id = down[h];
+					edge_color = down_color[h];
+
+					if (edge_color == 0) {
+						edge_color = 1;
+					}
+
 					find_node_by_id(id, l, n);
 					coordinates(
 							id, O->xin, O->yin, O->f_rotated, x2, y2);
@@ -667,7 +724,11 @@ void layered_graph::draw_edges(
 						Py[0] = y;
 						Py[1] = y2;
 					}
+
+					G->sl_color(edge_color);
 					G->polygon2(Px, Py, 0, 1);
+					G->sl_color(1);
+
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
@@ -688,7 +749,17 @@ void layered_graph::draw_edges(
 			}
 			else {
 				for (h = 0; h < nb_down; h++) {
+
+
+					int edge_color;
+
 					id = down[h];
+					edge_color = down_color[h];
+
+					if (edge_color == 0) {
+						edge_color = 1;
+					}
+
 					find_node_by_id(id, l, n);
 					coordinates(
 							id, O->xin, O->yin,
@@ -697,7 +768,13 @@ void layered_graph::draw_edges(
 					Px[1] = x2;
 					Py[0] = y;
 					Py[1] = y2;
+
+
+					G->sl_color(edge_color);
 					G->polygon2(Px, Py, 0, 1);
+					G->sl_color(1);
+
+
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
@@ -719,6 +796,8 @@ void layered_graph::draw_edges(
 
 			FREE_int(up);
 			FREE_int(down);
+			FREE_int(up_color);
+			FREE_int(down_color);
 
 
 #if 0
@@ -1018,7 +1097,7 @@ void layered_graph::write_file(
 	
 	if (f_v) {
 		cout << "layered_graph::write_file" << endl;
-		}
+	}
 	M.alloc(1024 /* length */, verbose_level - 1);
 	M.used_length = 0;
 	M.cur_pointer = 0;
@@ -1026,7 +1105,7 @@ void layered_graph::write_file(
 	M.write_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::write_file done" << endl;
-		}
+	}
 }
 
 void layered_graph::read_file(
@@ -1502,7 +1581,9 @@ void layered_graph::make_subset_lattice(
 						set2[b] = set2[b + 1];
 						}
 					r0 = Combi.rank_k_subset(set2, n, k - 1);
-					add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
+					add_edge(k - 1, r0, k, r,
+							1, // edge_color
+							0 /*verbose_level*/);
 					}
 				}
 			else {
@@ -1512,7 +1593,9 @@ void layered_graph::make_subset_lattice(
 						set2[b] = set2[b + 1];
 						}
 					r0 = Combi.rank_k_subset(set2, n, k - 1);
-					add_edge(k - 1, r0, k, r, 0 /*verbose_level*/);
+					add_edge(k - 1, r0, k, r,
+							1, // edge_color
+							0 /*verbose_level*/);
 					}
 				}
 			}
@@ -1591,7 +1674,9 @@ void layered_graph::init_poset_from_file(
 			fp >> n1;
 			fp >> l2;
 			fp >> n2;
-			add_edge(l1, n1, l2, n2, 0 /*verbose_level*/);
+			add_edge(l1, n1, l2, n2,
+					1, // edge_color
+					0 /*verbose_level*/);
 			c++;
 		}
 	}

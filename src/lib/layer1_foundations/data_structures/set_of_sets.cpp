@@ -292,10 +292,17 @@ void set_of_sets::init_from_file(
 	}
 	if (ST.is_csv_file(fname.c_str())) {
 		if (f_v) {
+			cout << "set_of_sets::init_from_file the file is a csv file" << endl;
+		}
+		if (f_v) {
 			cout << "set_of_sets::init_from_file "
-					"the file is a csv file" << endl;
+					"before init_from_csv_file" << endl;
 		}
 		init_from_csv_file(underlying_set_size, fname, verbose_level);
+		if (f_v) {
+			cout << "set_of_sets::init_from_file "
+					"after init_from_csv_file" << endl;
+		}
 	}
 	else if (ST.is_inc_file(fname.c_str())) {
 		if (f_v) {
@@ -368,10 +375,19 @@ void set_of_sets::init_from_csv_file(
 				"m=" << m << " n=" << n << endl;
 	}
 
-	init_basic_constant_size(underlying_set_size, 
+	if (f_v) {
+		cout << "set_of_sets::init_from_csv_file "
+				"before init_basic_constant_size" << endl;
+	}
+	init_basic_constant_size(
+			underlying_set_size,
 		m /* nb_sets */, 
 		n /* constant_size */, 
-		0 /* verbose_level */);
+		verbose_level - 1);
+	if (f_v) {
+		cout << "set_of_sets::init_from_csv_file "
+				"after init_basic_constant_size" << endl;
+	}
 
 	for (i = 0; i < m; i++) {
 		Lint_vec_copy(Data + i * n, Sets[i], n);

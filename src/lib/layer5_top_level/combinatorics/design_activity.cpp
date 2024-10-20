@@ -65,6 +65,7 @@ void design_activity::perform_activity(
 				Descr->extract_solutions_by_index_label,
 				Descr->extract_solutions_by_index_group,
 				Descr->extract_solutions_by_index_fname_solutions_in,
+				Descr->extract_solutions_by_index_col_label,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
 				true /* f_csv */,
@@ -87,6 +88,7 @@ void design_activity::perform_activity(
 				Descr->extract_solutions_by_index_label,
 				Descr->extract_solutions_by_index_group,
 				Descr->extract_solutions_by_index_fname_solutions_in,
+				Descr->extract_solutions_by_index_col_label,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
 				false /* f_csv */,
@@ -265,10 +267,12 @@ void design_activity::do_extract_solutions_by_index(
 		std::string &label,
 		std::string &group_label,
 		std::string &fname_in,
+		std::string &col_label,
 		std::string &fname_out,
 		std::string &prefix_text,
 		int f_csv_format,
 		int verbose_level)
+// does not need DC. This should be an activity for the design_table
 {
 	int f_v = (verbose_level >= 1);
 
@@ -310,21 +314,70 @@ void design_activity::do_extract_solutions_by_index(
 	int sol_width = 0;
 
 	if (f_csv_format) {
-		int *Sol_idx_1;
-		int i, j;
-		Fio.Csv_file_support->int_matrix_read_csv(
-				fname_in, Sol_idx_1, nb_sol, sol_width, verbose_level);
 
+		data_structures::string_tools ST;
+
+		//int *Sol_idx_1;
+		int i, j;
+
+
+		std::string *Column;
+		int len;
+
+		if (f_v) {
+			cout << "design_activity::do_extract_solutions_by_index "
+					"before Fio.Csv_file_support->read_column_of_strings" << endl;
+		}
+		Fio.Csv_file_support->read_column_of_strings(
+				fname_in, col_label,
+				Column, len,
+				verbose_level);
+
+		//Fio.Csv_file_support->int_matrix_read_csv(
+		//		fname_in, Sol_idx_1, nb_sol, sol_width, verbose_level);
+		if (f_v) {
+			cout << "design_activity::do_extract_solutions_by_index "
+					"after Fio.Csv_file_support->read_column_of_strings" << endl;
+		}
+
+		nb_sol = len;
+
+		if (nb_sol == 0) {
+			sol_width = 0;
+		}
+		else {
+			for (i = 0; i < nb_sol; i++) {
+				std::string s;
+
+				ST.drop_quotes(
+						Column[i], s);
+				Column[i] = s;
+			}
+			int *data;
+			Int_vec_scan(Column[0], data, sol_width);
+			FREE_int(data);
+		}
+
+		if (f_v) {
+			cout << "design_activity::do_extract_solutions_by_index "
+					"Sol_idx_1 has size " << nb_sol << " x " << sol_width << endl;
+		}
 		Sol_idx = NEW_int(nb_sol * (prefix_sz + sol_width));
 		for (i = 0; i < nb_sol; i++) {
 			for (j = 0; j < prefix_sz; j++) {
 				Sol_idx[i * (prefix_sz + sol_width) + j] = prefix[j];
 			}
+			int *data;
+			Int_vec_scan(Column[i], data, sol_width);
+			Int_vec_copy(data, Sol_idx + i * (prefix_sz + sol_width) + prefix_sz, sol_width);
+			FREE_int(data);
+#if 0
 			for (j = 0; j < sol_width; j++) {
 				Sol_idx[i * (prefix_sz + sol_width) + prefix_sz + j] = Sol_idx_1[i * sol_width + j];
 			}
+#endif
 		}
-		FREE_int(Sol_idx_1);
+		//FREE_int(Sol_idx_1);
 		sol_width += prefix_sz;
 	}
 	else {

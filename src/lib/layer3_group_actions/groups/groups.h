@@ -2105,19 +2105,6 @@ public:
 	groups::schreier *Sch_on_groups;
 
 
-#if 0
-	std::vector<void *> Subgroups;
-
-	std::multimap<uint32_t, int> Hashing;
-		// we store the pair (hash, idx)
-		// where hash is the hash value of the set and idx is the
-		// index in the table Sets where the set is stored.
-		//
-		// we use a multimap because the hash values are not unique
-		// two sets may have the same hash value.
-		// map cannot handle that.
-#endif
-
 
 	subgroup_lattice_layer();
 	~subgroup_lattice_layer();
@@ -2138,7 +2125,8 @@ public:
 			int verbose_level);
 	int find_subgroup(
 			groups::subgroup *Subgroup,
-			int &pos, uint32_t &hash, int verbose_level);
+			int &pos, uint32_t &hash,
+			int verbose_level);
 	int find_subgroup_direct(
 			int *Elements, int group_order,
 			int &pos, uint32_t &hash, int verbose_level);
@@ -2153,6 +2141,9 @@ public:
 			int verbose_level);
 	int extend_group(
 			int group_idx, int verbose_level);
+	void do_export_to_string(
+			std::string *&Table, int &nb_rows, int &nb_cols,
+			int verbose_level);
 
 
 };
@@ -2313,6 +2304,8 @@ public:
 	void identify_subgroup(
 			groups::strong_generators *Strong_gens,
 			int &go, int &layer_idx, int &orb_idx, int &group_idx,
+			int verbose_level);
+	void do_export_csv(
 			int verbose_level);
 
 };

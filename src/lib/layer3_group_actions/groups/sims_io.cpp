@@ -896,7 +896,7 @@ void sims::report_basic_orbit(
 		cout << "sims::report_basic_orbit orbit_idx = " << orbit_idx << endl;
 	}
 
-	data_structures::sorting Sorting;
+	data_structures::algorithms Algorithms;
 
 	string fname_base;
 
@@ -907,10 +907,11 @@ void sims::report_basic_orbit(
 
 		if (f_v) {
 			cout << "sims::report_basic_orbit "
-					"before Sorting.make_layered_graph_for_schreier_vector_tree" << endl;
+					"before Algorithms.make_layered_graph_for_schreier_vector_tree" << endl;
 		}
-		Sorting.make_layered_graph_for_schreier_vector_tree(
-			orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx],
+		Algorithms.make_layered_graph_for_schreier_vector_tree(
+			orbit_len[orbit_idx], orbit[orbit_idx],
+			prev[orbit_idx],
 			true /* f_use_pts_inv */, orbit_inv[orbit_idx],
 			fname_base,
 			//LG_Draw_options,
@@ -918,7 +919,7 @@ void sims::report_basic_orbit(
 			verbose_level - 3);
 		if (f_v) {
 			cout << "sims::report_basic_orbit "
-					"after Sorting.make_layered_graph_for_schreier_vector_tree" << endl;
+					"after Algorithms.make_layered_graph_for_schreier_vector_tree" << endl;
 		}
 
 
@@ -977,6 +978,8 @@ void sims::report_basic_orbit(
 	for (i = 0; i < Orb.size(); i++) {
 		Orbit_elements[i] = Orb[i];
 	}
+
+	data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(Orbit_elements, Orb.size());
 

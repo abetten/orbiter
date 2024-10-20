@@ -120,7 +120,7 @@ void create_graph::init(
 				fname_base);
 
 		label = "File_" + fname_base;
-		label_tex = "File_" + fname_base;
+		label_tex = "{\\rm File_" + fname_base + "}";
 
 	}
 
@@ -164,7 +164,7 @@ void create_graph::init(
 
 
 		label = "File_" + fname;
-		label_tex = "File_" + fname;
+		label_tex = "{\\rm File_" + fname + "}";
 	}
 
 	else if (description->f_load_dimacs) {
@@ -231,7 +231,7 @@ void create_graph::init(
 		FREE_int(Idx);
 
 		label = "graph_v" + std::to_string(description->n) + "_e" + std::to_string(sz);
-		label_tex = "Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz);
+		label_tex = "{\\rm Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz) + "}";
 	}
 	else if (description->f_edges_as_pairs) {
 		int h, i, j;
@@ -255,7 +255,7 @@ void create_graph::init(
 		FREE_int(Idx);
 
 		label = "graph_v" + std::to_string(description->n) + "_e" + std::to_string(sz2);
-		label_tex = "Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz2);
+		label_tex = "{\\rm Graph\\_v" + std::to_string(description->n) + "\\_e" + std::to_string(sz2) + "}";
 
 	}
 	else if (description->f_cycle) {
@@ -503,7 +503,7 @@ void create_graph::init(
 
 
 		label = "non_attacking_queens_graph_" + std::to_string(n);
-		label_tex = "non\\_attacking\\_queens\\_graph\\_" + std::to_string(n);
+		label_tex = "{\\rm non\\_attacking\\_queens\\_graph\\_" + std::to_string(n) + "}";
 
 	}
 	else if (description->f_disjoint_sets_graph) {
@@ -686,8 +686,8 @@ void create_graph::init(
 
 		f_has_CG = true;
 
-		label += description->subset_label;
-		label_tex += description->subset_label_tex;
+		label = label + description->subset_label;
+		label_tex = label_tex + "{\\rm " + description->subset_label_tex + "}";
 
 		FREE_int(subset);
 		if (f_v) {
@@ -913,7 +913,7 @@ void create_graph::make_Cayley_graph(
 	data_structures::string_tools String;
 	String.chop_off_extension(label);
 
-	label_tex = "Cayley\\_graph\\_" + G->A->label_tex;
+	label_tex = "{\\rm Cayley\\_graph\\_}" + G->A->label_tex;
 
 }
 
@@ -942,7 +942,7 @@ void create_graph::load_csv_without_border(
 	String.chop_off_extension(label);
 
 
-	label_tex = "File\\_" + label;
+	label_tex = "{\\rm File\\_}" + label;
 
 }
 
@@ -978,7 +978,7 @@ void create_graph::load_dimacs(
 	String.chop_off_extension_and_path(label);
 
 
-	label_tex = "File\\_" + label;
+	label_tex = "{\\rm File\\_}" + label;
 
 }
 
@@ -1020,7 +1020,7 @@ void create_graph::load_Brouwer(
 	String.chop_off_extension_and_path(label);
 
 
-	label_tex = "File\\_" + label;
+	label_tex = "{\\rm File\\_}" + label;
 
 }
 
@@ -1084,7 +1084,7 @@ void create_graph::create_inversion_graph(
 	}
 
 	label = "Inversion_" + std::to_string(n);
-	label_tex = "Inversion\\_" + std::to_string(n);
+	label_tex = "{\\rm Inversion\\_}" + std::to_string(n);
 
 
 	FREE_int(perm);
@@ -1122,8 +1122,8 @@ void create_graph::create_Hamming(
 
 	label = "Hamming_" + std::to_string(n)
 			+ "_" + std::to_string(q);
-	label_tex = "Hamming\\_" + std::to_string(n)
-			+ "\\_" + std::to_string(q);
+	label_tex = "{\\rm Hamming\\_" + std::to_string(n)
+			+ "\\_" + std::to_string(q) + "}";
 
 
 	if (f_v) {
@@ -1158,9 +1158,9 @@ void create_graph::create_Johnson(
 	label = "Johnson_" + std::to_string(n)
 			+ "_" + std::to_string(k)
 			+ "_" + std::to_string(s);
-	label_tex = "Johnson\\_" + std::to_string(n)
+	label_tex = "{\\rm Johnson\\_" + std::to_string(n)
 			+ "\\_" + std::to_string(k)
-			+ "\\_" + std::to_string(s);
+			+ "\\_" + std::to_string(s) + "}";
 
 
 	if (f_v) {
@@ -1195,7 +1195,7 @@ void create_graph::create_Paley(
 	}
 
 	label = "Paley_" + std::to_string(Fq->q);
-	label_tex = "Paley\\_" + std::to_string(Fq->q);
+	label_tex = "{\\rm Paley\\_" + std::to_string(Fq->q) + "}";
 
 
 	if (f_v) {
@@ -1294,7 +1294,7 @@ void create_graph::create_Sarnak(
 
 
 	label = "Sarnak_" + std::to_string(p) + "_" + std::to_string(q);
-	label_tex = "Sarnak\\_" + std::to_string(p) + "\\_" + std::to_string(q);
+	label_tex = "{\\rm Sarnak\\_" + std::to_string(p) + "\\_" + std::to_string(q) + "}";
 
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
@@ -1332,7 +1332,7 @@ void create_graph::create_Schlaefli(
 	}
 
 	label = "Schlaefli_" + std::to_string(F->q);
-	label_tex = "Schlaefli\\_" + std::to_string(F->q);
+	label_tex = "{\\rm Schlaefli\\_" + std::to_string(F->q) + "}";
 
 
 	if (f_v) {
@@ -1504,7 +1504,7 @@ void create_graph::create_Shrikhande(
 	//N = goi;
 
 	label = "Shrikhande";
-	label_tex = "Shrikhande";
+	label_tex = "{\\rm Shrikhande}";
 
 
 	FREE_int(v);
@@ -1545,8 +1545,8 @@ void create_graph::create_Winnie_Li(
 
 	label = "Winnie_Li_" + std::to_string(Fq->q)
 			+ "_" + std::to_string(index);
-	label_tex = "Winnie\\_Li\\_" + std::to_string(Fq->q)
-			+ "\\_" + std::to_string(index);
+	label_tex = "{\\rm Winnie\\_Li\\_" + std::to_string(Fq->q)
+			+ "\\_" + std::to_string(index) + "}";
 
 
 
@@ -1588,10 +1588,10 @@ void create_graph::create_Grassmann(
 			+ "_" + std::to_string(k)
 			+ " " + std::to_string(F->q)
 			+ "_" + std::to_string(r);
-	label_tex = "Grassmann\\_" + std::to_string(n)
+	label_tex = "{\\rm Grassmann\\_" + std::to_string(n)
 			+ "\\_" + std::to_string(k)
 			+ "\\_" + std::to_string(F->q)
-			+ "\\_" + std::to_string(r);
+			+ "\\_" + std::to_string(r) + "}";
 
 
 	if (f_v) {
@@ -1639,7 +1639,7 @@ void create_graph::create_coll_orthogonal(
 
 	label = OA->O->label_txt + "_coll_" + set_of_points_label;
 
-	label_tex = OA->O->label_tex + "\\_coll\\_" + set_of_points_label;
+	label_tex = "{\\rm " + OA->O->label_tex + "\\_coll\\_" + set_of_points_label + "}";
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal done" << endl;
@@ -1678,7 +1678,7 @@ void create_graph::create_affine_polar(
 
 	label = "affine_polar_" + OA->O->label_txt;
 
-	label_tex = "\\text{affine\\_polar}\\_" + OA->O->label_tex;
+	label_tex = "{\\rm affine\\_polar\\_" + OA->O->label_tex + "}";
 
 
 	if (f_v) {
@@ -1701,8 +1701,8 @@ void create_graph::make_tritangent_plane_disjointness_graph(
 			Adj, N,
 			verbose_level);
 
-	label.assign("tritangent_planes_disjointness");
-	label_tex.assign("tritangent\\_planes\\_disjointness");
+	label = "tritangent_planes_disjointness";
+	label_tex = "{\\rm tritangent\\_planes\\_disjointness}";
 
 }
 
@@ -1723,8 +1723,8 @@ void create_graph::make_trihedral_pair_disjointness_graph(
 			verbose_level);
 
 
-	label.assign("trihedral_pair_disjointness");
-	label_tex.assign("trihedral\\_pair\\_disjointness");
+	label = "trihedral_pair_disjointness";
+	label_tex= "{\\rm trihedral\\_pair\\_disjointness}";
 
 
 }
@@ -1818,8 +1818,8 @@ void create_graph::make_orbital_graph(
 
 	label = "Group_" + AG->A->label
 			+ "_Orbital_" + std::to_string(orbit_idx);
-	label_tex = "Group\\_" + AG->A->label_tex
-			+ "\\_Orbital\\_" + std::to_string(orbit_idx);
+	label_tex = "{\\rm Group\\_" + AG->A->label_tex
+			+ "\\_Orbital\\_" + std::to_string(orbit_idx) + "}";
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph done" << endl;
@@ -1864,7 +1864,7 @@ void create_graph::make_disjoint_sets_graph(
 	String.chop_off_extension(L);
 	L += "\\_disjoint\\_sets";
 
-	label_tex = L;
+	label_tex = "{\\rm " + L + "}";
 
 
 
@@ -1902,7 +1902,7 @@ void create_graph::make_collinearity_graph(
 	FREE_int(Inc);
 
 	label = "collinearity_graph";
-	label_tex = "collinearity\\_graph";
+	label_tex = "{\\rm collinearity\\_graph}";
 
 	if (f_v) {
 		cout << "create_graph::make_collinearity_graph done" << endl;
@@ -1946,7 +1946,7 @@ void create_graph::make_chain_graph(
 	FREE_int(part2);
 
 	label = "chain_graph";
-	label_tex = "chain\\_graph";
+	label_tex = "{\\rm chain\\_graph}";
 
 	if (f_v) {
 		cout << "create_graph::make_chain_graph done" << endl;
@@ -1970,7 +1970,7 @@ void create_graph::make_Neumaier_graph_16(
 			verbose_level);
 
 	label = "Neumaier_graph_16";
-	label_tex = "Neumaier\\_graph\\_16";
+	label_tex = "{\\rm Neumaier\\_graph\\_16}";
 
 }
 
@@ -1991,7 +1991,7 @@ void create_graph::make_Neumaier_graph_25(
 			verbose_level);
 
 	label = "Neumaier_graph_25";
-	label_tex = "Neumaier\\_graph\\_25";
+	label_tex = "{\\rm Neumaier\\_graph\\_25}";
 
 }
 
@@ -2028,7 +2028,7 @@ void create_graph::make_adjacency_bitvector(
 			verbose_level);
 
 	label = "bitvector_" + std::to_string(N);
-	label_tex = "bitvector\\_" + std::to_string(N);
+	label_tex = "{\\rm bitvector\\_" + std::to_string(N) + "}";
 
 	FREE_int(v);
 

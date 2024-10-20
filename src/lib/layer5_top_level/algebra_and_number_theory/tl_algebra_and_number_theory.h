@@ -517,6 +517,13 @@ public:
 	// uses orbits_schreier::orbit_of_sets
 	// needs Subgroup_sims to set up action by right multiplication
 	// output: Perms[m * go]
+	void create_permutation(
+			orbits_schreier::orbit_of_sets *Orb,
+			data_structures_groups::vector_ge *Elements_ge,
+			int *Images, int n, int h,
+			int *Elt,
+			int *perm, long int go,
+			int verbose_level);
 	void automorphism_by_generator_images_save(
 			int *Images, int m, int n,
 			int *Perms, long int go,

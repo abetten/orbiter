@@ -43,6 +43,9 @@ design_create::design_create()
 	f_has_group = false;
 	Sg = NULL;
 
+	f_has_block_partition = false;
+	block_partition_class_size = 0;
+
 	PA = NULL;
 	P = NULL;
 	block = NULL;
@@ -571,10 +574,37 @@ void design_create::init(
 			Int_matrix_print(blocks, m, k);
 		}
 
-
 		f_has_set = false;
 		v = degree;
 		b = m;
+
+		if (Descr->f_block_partition) {
+
+			int class_size;
+
+			class_size = Descr->block_partition_sz;
+
+			if (f_v) {
+				cout << "design_create::init "
+						"block partition with classes of size " << class_size << endl;
+			}
+
+			f_has_block_partition = true;
+			if (b % Descr->block_partition_sz) {
+				cout << "design_create::init "
+						"class size must divide the number of blocks" << endl;
+				cout << "design_create::init "
+						"number of blocks = " << b << endl;
+				cout << "design_create::init "
+						"class size = " << class_size << endl;
+				exit(1);
+			}
+
+			block_partition_class_size = class_size;
+
+		}
+
+
 
 		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
 		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);

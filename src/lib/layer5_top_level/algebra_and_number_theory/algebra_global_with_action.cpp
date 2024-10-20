@@ -4044,7 +4044,8 @@ void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
 				"before A_perm->Known_groups->init_permutation_group" << endl;
 	}
 	A_perm->Known_groups->init_permutation_group(
-			go /* degree */, false /* f_no_base */, verbose_level);
+			go /* degree */, false /* f_no_base */,
+			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
 				"after A_perm->Known_groups->init_permutation_group" << endl;
@@ -4058,7 +4059,8 @@ void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
 		cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
 				"before gens->init_from_data" << endl;
 	}
-	gens->init_from_data(A_perm, Perms,
+	gens->init_from_data(
+			A_perm, Perms,
 			m /*nb_elements*/, A_perm->make_element_size,
 			0 /*verbose_level*/);
 	if (f_v) {

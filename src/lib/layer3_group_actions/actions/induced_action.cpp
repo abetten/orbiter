@@ -560,7 +560,7 @@ action *induced_action::induced_action_on_grassmannian(
 	int old_dimension;
 
 
-	old_dimension = A->dimension;
+	old_dimension = A_old->dimension;
 	//old_dimension = M->n;
 
 	// ToDo: should be wedge_dimension in case of wedge action

@@ -472,6 +472,12 @@ public:
 			int &v, int &k,
 			long int *&Blocks, long int &nb_blocks,
 			int verbose_level);
+	void report_large_set(
+			std::ostream &ost, long int *coding, int nb_designs,
+			int design_v, int design_k, int design_sz, int verbose_level);
+	void report_large_set_compact(
+			std::ostream &ost, long int *coding, int nb_designs,
+			int design_v, int design_k, int design_sz, int verbose_level);
 
 };
 

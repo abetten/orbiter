@@ -38,6 +38,7 @@ design_activity_description::design_activity_description()
 	//std::string extract_solutions_by_index_label;
 	//std::string extract_solutions_by_index_group;
 	//std::string extract_solutions_by_index_fname_solutions_in;
+	//std::string extract_solutions_by_index_col_label;
 	//std::string extract_solutions_by_index_fname_solutions_out;
 	//std::string extract_solutions_by_index_prefix;
 
@@ -120,6 +121,7 @@ int design_activity_description::read_arguments(
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
+			extract_solutions_by_index_col_label.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_out.assign(argv[++i]);
 			extract_solutions_by_index_prefix.assign(argv[++i]);
 			if (f_v) {
@@ -127,6 +129,7 @@ int design_activity_description::read_arguments(
 						<< extract_solutions_by_index_label << " "
 						<< extract_solutions_by_index_group << " "
 						<< extract_solutions_by_index_fname_solutions_in << " "
+						<< extract_solutions_by_index_col_label << " "
 						<< extract_solutions_by_index_fname_solutions_out << " "
 						<< extract_solutions_by_index_prefix << " "
 						<< endl;
@@ -137,6 +140,7 @@ int design_activity_description::read_arguments(
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
+			extract_solutions_by_index_col_label.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_out.assign(argv[++i]);
 			extract_solutions_by_index_prefix.assign(argv[++i]);
 			if (f_v) {
@@ -144,6 +148,7 @@ int design_activity_description::read_arguments(
 						<< extract_solutions_by_index_label << " "
 						<< extract_solutions_by_index_group << " "
 						<< extract_solutions_by_index_fname_solutions_in << " "
+						<< extract_solutions_by_index_col_label << " "
 						<< extract_solutions_by_index_fname_solutions_out << " "
 						<< extract_solutions_by_index_prefix << " "
 						<< endl;
@@ -263,6 +268,7 @@ void design_activity_description::print()
 				<< extract_solutions_by_index_label << " "
 				<< extract_solutions_by_index_group << " "
 				<< extract_solutions_by_index_fname_solutions_in << " "
+				<< extract_solutions_by_index_col_label << " "
 				<< extract_solutions_by_index_fname_solutions_out << " "
 				<< extract_solutions_by_index_prefix << " "
 				<< endl;
@@ -272,6 +278,7 @@ void design_activity_description::print()
 				<< extract_solutions_by_index_label << " "
 				<< extract_solutions_by_index_group << " "
 				<< extract_solutions_by_index_fname_solutions_in << " "
+				<< extract_solutions_by_index_col_label << " "
 				<< extract_solutions_by_index_fname_solutions_out << " "
 				<< extract_solutions_by_index_prefix << " "
 				<< endl;

@@ -250,8 +250,9 @@ void combinatorial_object_with_properties::latex_report(
 		cout << "combinatorial_object_with_properties::latex_report" << endl;
 	}
 
-	ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report "
-			"Automorphism Group as Permutation Group}" << endl;
+	ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+
+	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
 
 	{
 		ring_theory::longinteger_object go;
@@ -262,7 +263,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 
 	ost << "Generators for the automorphism group: \\\\" << endl;
-	if (A_perm->degree < 100) {
+	if (A_perm->degree < 1000) {
 		A_perm->Strong_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
 
 		ost << "\\begin{verbatim}" << endl;
@@ -277,8 +278,9 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (f_projective_space) {
 
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report "
-				"Automorphism Group in Projective Space}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+
+		ost << "\\subsection*{Automorphism Group in Projective Space}" << endl;
 
 		{
 			ring_theory::longinteger_object go;
@@ -390,8 +392,9 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_flag_orbits" << endl;
 		}
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Flag Orbits}" << endl;
+		ost << "\\subsection*{Flag Orbits}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -428,7 +431,8 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDO" << endl;
 		}
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report TDO}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		ost << "\\subsection*{TDO}" << endl;
 
 		ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
 
@@ -459,7 +463,8 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA" << endl;
 		}
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report TDA}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		ost << "\\subsection*{TDA}" << endl;
 
 		{
 			ring_theory::longinteger_object go;
@@ -490,7 +495,8 @@ void combinatorial_object_with_properties::latex_report(
 	}
 	if (Report_options->f_export_labels) {
 
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Labels}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		ost << "\\subsection*{Labels}" << endl;
 
 		canonical_form_classification::encoded_combinatorial_object *Enc;
 
@@ -533,7 +539,8 @@ void combinatorial_object_with_properties::latex_report(
 		FREE_OBJECT(Enc);
 	}
 
-	ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Canonical labeling}" << endl;
+	ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+	ost << "\\subsection*{Canonical labeling}" << endl;
 
 	ost << "Canonical labeling:\\\\" << endl;
 	canonical_form_classification::encoded_combinatorial_object *Enc;
@@ -572,7 +579,8 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_show_incidence_matrices) {
 
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Incidence Matrices}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		ost << "\\subsection*{Incidence Matrices}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
@@ -624,7 +632,8 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_lex_least) {
 
-		ost << "\\subsection*{combinatorial\\_object\\_with\\_properties::latex\\_report Lex Least Form}" << endl;
+		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		ost << "\\subsection*{Lex Least Form}" << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report f_lex_least" << endl;

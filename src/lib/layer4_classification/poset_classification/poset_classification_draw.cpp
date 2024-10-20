@@ -1451,6 +1451,7 @@ void poset_classification::make_full_poset_graph(
 								Fst_element_per_orbit[lvl][po] + el1,
 								lvl + 1,
 								Fst_element_per_orbit[lvl + 1][po2] + el2,
+								1, // edge_color
 								0 /*verbose_level*/);
 						}
 						else {
@@ -1625,6 +1626,7 @@ void poset_classification::make_auxiliary_graph(
 				}
 				LG->add_edge(
 						2 * lvl, po, 2 * lvl + 1, f + so,
+						1, // edge_color
 						verbose_level - 4);
 
 				extension *E = Poo->get_node(n)->get_E(so);
@@ -1639,6 +1641,7 @@ void poset_classification::make_auxiliary_graph(
 					LG->add_edge(
 							2 * lvl + 1, f + so, 2 * lvl + 2,
 							n1 - Poo->first_node_at_level(lvl + 1),
+							1, // edge_color
 							verbose_level - 4);
 				}
 				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
@@ -1673,6 +1676,7 @@ void poset_classification::make_auxiliary_graph(
 					LG->add_edge(
 							2 * lvl + 1, f + so, 2 * lvl + 2,
 							n1 - Poo->first_node_at_level(lvl + 1),
+							1, // edge_color
 							verbose_level - 4);
 				}
 			}
@@ -1876,6 +1880,7 @@ void poset_classification::make_graph(
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(lvl, po, lvl + 1,
 							n1 - Poo->first_node_at_level(lvl + 1),
+							1, // edge_color
 							0 /*verbose_level*/);
 				}
 
@@ -1905,6 +1910,7 @@ void poset_classification::make_graph(
 						//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 						LG->add_edge(lvl, po, lvl + 1,
 								n1 - Poo->first_node_at_level(lvl + 1),
+								1, // edge_color
 								0 /*verbose_level*/);
 					}
 				}
@@ -2096,8 +2102,12 @@ void poset_classification::make_level_graph(
 						"adding edges lvl=" << lvl << " po="
 						<< po << " so=" << so << endl;
 			}
-			LG->add_edge(0, po, 1, f + so, 0 /*verbose_level*/);
-			LG->add_edge(1, f + so, 2, f + so, 0 /*verbose_level*/);
+			LG->add_edge(0, po, 1, f + so,
+					1, // edge_color
+					0 /*verbose_level*/);
+			LG->add_edge(1, f + so, 2, f + so,
+					1, // edge_color
+					0 /*verbose_level*/);
 			extension *E = Poo->get_node(n)->get_E(so);
 			if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 				//cout << "extension node" << endl;
@@ -2106,6 +2116,7 @@ void poset_classification::make_level_graph(
 				LG->add_edge(
 						2, f + so, 3,
 						n1 - Poo->first_node_at_level(level + 1),
+						1, // edge_color
 						0 /*verbose_level*/);
 			}
 			else if (E->get_type() == EXTENSION_TYPE_FUSION) {
@@ -2134,6 +2145,7 @@ void poset_classification::make_level_graph(
 				LG->add_edge(
 						2, f + so, 3,
 						n1 - Poo->first_node_at_level(level + 1),
+						1, // edge_color
 						0 /*verbose_level*/);
 			}
 		}
@@ -2386,9 +2398,13 @@ void poset_classification::make_poset_graph_detailed(
 							<< " so=" << so << endl;
 				}
 				LG->add_edge(L * 3 + 0, po,
-						L * 3 + 1, f + so, 0 /*verbose_level*/);
+						L * 3 + 1, f + so,
+						1, // edge_color
+						0 /*verbose_level*/);
 				LG->add_edge(L * 3 + 1, f + so,
-						L * 3 + 2, f + so, 0 /*verbose_level*/);
+						L * 3 + 2, f + so,
+						1, // edge_color
+						0 /*verbose_level*/);
 				extension *E = Poo->get_node(n)->get_E(so);
 				if (E->get_type() == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
@@ -2396,6 +2412,7 @@ void poset_classification::make_poset_graph_detailed(
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
 							n1 - Poo->first_node_at_level(L + 1),
+							1, // edge_color
 							0 /*verbose_level*/);
 				}
 				else if (E->get_type() == EXTENSION_TYPE_FUSION) {
@@ -2423,6 +2440,7 @@ void poset_classification::make_poset_graph_detailed(
 					//<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
 							n1 - Poo->first_node_at_level(L + 1),
+							1, // edge_color
 							0 /*verbose_level*/);
 				}
 			}

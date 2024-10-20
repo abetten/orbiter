@@ -3599,6 +3599,69 @@ void combinatorics_domain::create_linear_space_from_latin_square(
 	}
 }
 
+void combinatorics_domain::report_large_set(
+		std::ostream &ost, long int *coding, int nb_designs,
+		int design_v, int design_k, int design_sz, int verbose_level)
+{
+	int i, j, h;
+	long int a;
+	int *the_block;
+
+	the_block = NEW_int(design_k);
+
+	for (i = 0; i < nb_designs; i++) {
+		for (j = 0; j < design_sz; j++) {
+			a = coding[j];
+
+
+			unrank_k_subset(a, the_block, design_v, design_k);
+			for (h = 0; h < design_k; h++) {
+				ost << the_block[h];
+				if (h < design_k - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+
+			}
+		//Lint_vec_print(ost, set + i * design_sz, design_sz);
+		ost << "\\\\" << endl;
+	}
+	FREE_int(the_block);
+
+}
+
+void combinatorics_domain::report_large_set_compact(
+		std::ostream &ost, long int *coding, int nb_designs,
+		int design_v, int design_k, int design_sz, int verbose_level)
+{
+	int i, j, h;
+	long int a;
+	char c;
+	int *the_block;
+
+	the_block = NEW_int(design_k);
+
+	for (i = 0; i < nb_designs; i++) {
+		for (j = 0; j < design_sz; j++) {
+			a = coding[i * design_sz + j];
+
+
+			unrank_k_subset(a, the_block, design_v, design_k);
+			for (h = 0; h < design_k; h++) {
+				c = '0' + the_block[h];
+				ost << c;
+			}
+			ost << "," << endl;
+
+			}
+		ost << "\\\\" << endl;
+	}
+	FREE_int(the_block);
+
+}
+
+
 
 }}}
 

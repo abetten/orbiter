@@ -2826,6 +2826,7 @@ int sorting::integer_vec_std_compare(
 
 
 
+#if 0
 void sorting::schreier_vector_compute_depth_and_ancestor(
 	int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
 	int *&depth, int *&ancestor, int verbose_level)
@@ -2918,7 +2919,6 @@ int sorting::schreier_vector_determine_depth_recursion(
 void sorting::make_layered_graph_for_schreier_vector_tree(
 	int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 	std::string &fname_base,
-	//graphics::layered_graph_draw_options *LG_Draw_options,
 	graph_theory::layered_graph *&LG,
 	int verbose_level)
 // called from sims_io.cpp
@@ -3071,7 +3071,9 @@ void sorting::make_layered_graph_for_schreier_vector_tree(
 					"cannot find point pos2" << endl;
 			exit(1);
 		}
-		LG->add_edge(d1, n1, d2, n2, 0 /*verbose_level*/);
+		LG->add_edge(d1, n1, d2, n2,
+				1, // edge_color
+				0 /*verbose_level*/);
 	}
 
 	for (i = 0; i < n; i++) {
@@ -3098,6 +3100,7 @@ void sorting::make_layered_graph_for_schreier_vector_tree(
 	}
 
 }
+#endif
 
 int sorting::compare_sets(
 		int *set1, int *set2, int sz1, int sz2)

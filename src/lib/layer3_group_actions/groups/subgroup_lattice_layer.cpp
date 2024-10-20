@@ -33,11 +33,6 @@ subgroup_lattice_layer::subgroup_lattice_layer()
 
 	Sch_on_groups = NULL;
 
-#if 0
-	//std::vector<void *> Subgroups;
-
-	//std::multimap<uint32_t, int> Hashing;
-#endif
 
 }
 
@@ -148,43 +143,6 @@ int subgroup_lattice_layer::add_subgroup(
 	f_new_group = Hash_table_subgroups->add_subgroup(Subgroup, verbose_level);
 
 
-#if 0
-	//long int order;
-
-	//order = Subgroup->group_order;
-
-	uint32_t hash;
-	int pos;
-
-	hash = Subgroup->compute_hash();
-
-	if (!find_subgroup(Subgroup, pos, hash)) {
-
-		if (f_v) {
-			cout << "subgroup_lattice_layer::add_subgroup "
-					"the subgroup is new" << endl;
-		}
-
-		Hashing.insert(pair<uint32_t, int>(hash, Subgroups.size()));
-
-		Subgroups.push_back(Subgroup);
-		if (f_v) {
-			cout << "subgroup_lattice_layer::add_subgroup "
-					"number of subgroups at layer " << layer_idx
-					<< " is " << Subgroups.size() << endl;
-		}
-		f_new_group = true;
-
-	}
-	else {
-		if (f_v) {
-			cout << "subgroup_lattice_layer::add_subgroup "
-					"the subgroup is already present" << endl;
-		}
-		f_new_group = false;
-
-	}
-#endif
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::add_subgroup done" << endl;
@@ -207,37 +165,6 @@ int subgroup_lattice_layer::find_subgroup(
 	if (f_v) {
 		cout << "subgroup_lattice_layer::find_subgroup done" << endl;
 	}
-
-#if 0
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
-
-	Sorting.int_vec_heapsort(Subgroup->Elements, Subgroup->group_order);
-	hash = Data.int_vec_hash(Subgroup->Elements, Subgroup->group_order);
-
-	map<uint32_t, int>::iterator itr, itr1, itr2;
-
-	itr1 = Hashing.lower_bound(hash);
-	itr2 = Hashing.upper_bound(hash);
-	f_found = false;
-	for (itr = itr1; itr != itr2; ++itr) {
-    	pos = itr->second;
-
-		groups::subgroup *Subgroup1;
-
-		Subgroup1 = get_subgroup(pos);
-
-		if (Subgroup1->group_order != Subgroup->group_order) {
-			continue;
-		}
-
-        if (Sorting.int_vec_compare(
-        		Subgroup->Elements, Subgroup1->Elements, Subgroup1->group_order) == 0) {
-        	f_found = true;
-        	break;
-        }
-	}
-#endif
 
 	return f_found;
 }
@@ -276,7 +203,8 @@ void subgroup_lattice_layer::group_global_to_orbit_and_group_local(
 
 	coset = Sch_on_groups->orbit_inv[group_idx_global];
 	for (orb = 0; orb < Sch_on_groups->nb_orbits; orb++) {
-		if (Sch_on_groups->orbit_first[orb] <= coset && Sch_on_groups->orbit_first[orb] + Sch_on_groups->orbit_len[orb] > coset) {
+		if (Sch_on_groups->orbit_first[orb] <= coset &&
+				Sch_on_groups->orbit_first[orb] + Sch_on_groups->orbit_len[orb] > coset) {
 			break;
 		}
 	}
@@ -534,6 +462,46 @@ int subgroup_lattice_layer::extend_group(
 		cout << "subgroup_lattice::extend_group done" << endl;
 	}
 	return nb_new_groups;
+}
+
+void subgroup_lattice_layer::do_export_to_string(
+		std::string *&Table, int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::do_export_to_string" << endl;
+	}
+
+	nb_rows = Sch_on_groups->nb_orbits;
+	nb_cols = 4;
+
+	int i;
+
+	Table = new std::string [nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+
+		groups::subgroup *Subgroup;
+
+		int fst, len, idx;
+
+		fst = Sch_on_groups->orbit_first[i];
+		len = Sch_on_groups->orbit_len[i];
+		idx = Sch_on_groups->orbit[fst];
+
+		Subgroup = Hash_table_subgroups->get_subgroup(idx);
+
+		Table[i * nb_cols + 1] = std::to_string(Subgroup->group_order);
+		Table[i * nb_cols + 2] = std::to_string(len);
+		Table[i * nb_cols + 3] = "\"" + Int_vec_stringify(Sch_on_groups->orbit + fst, len) + "\"";;
+	}
+
+	if (f_v) {
+		cout << "subgroup_lattice::do_export_to_string done" << endl;
+	}
 }
 
 

@@ -71,8 +71,6 @@ void action_on_subgroups::init(
 		actions::action *A,
 		groups::sims *S,
 		data_structures_groups::hash_table_subgroups *Hash_table_subgroups,
-		//int nb_subgroups,
-	//int subgroup_order, groups::subgroup **Subgroups,
 	int verbose_level)
 // Subgroups[nb_subgroups]
 {

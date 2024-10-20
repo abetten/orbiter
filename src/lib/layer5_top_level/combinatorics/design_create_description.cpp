@@ -71,6 +71,10 @@ design_create_description::design_create_description()
 	orbit_on_sets_idx = -1;
 
 	f_no_group = false;
+
+	f_block_partition = false;
+	block_partition_sz = 0;
+
 }
 
 design_create_description::~design_create_description()
@@ -228,6 +232,13 @@ int design_create_description::read_arguments(
 				cout << "-no_group " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-block_partition") == 0) {
+			f_block_partition = true;
+			block_partition_sz = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-block_partition " << block_partition_sz << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -313,6 +324,9 @@ void design_create_description::print()
 	}
 	if (f_no_group) {
 		cout << "-no_group " << endl;
+	}
+	if (f_block_partition) {
+		cout << "-block_partition " << block_partition_sz << endl;
 	}
 }
 

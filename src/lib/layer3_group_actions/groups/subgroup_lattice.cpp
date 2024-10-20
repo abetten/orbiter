@@ -1148,6 +1148,7 @@ void subgroup_lattice::create_drawing(
 
 					if (incma[i * nb_groups + j]) {
 						LG->add_edge(l1, g1, l2, g2,
+							1, // edge_color
 							0 /*verbose_level*/);
 					}
 				}
@@ -1251,10 +1252,14 @@ void subgroup_lattice::create_drawing_by_orbits(
 		cout << "subgroup_lattice::create_drawing_by_orbits "
 				"after LG->init" << endl;
 	}
-	LG->place(verbose_level - 2);
 	if (f_v) {
 		cout << "subgroup_lattice::create_drawing_by_orbits "
-				"after LG->place" << endl;
+				"before LG->place_upside_down" << endl;
+	}
+	LG->place_upside_down(verbose_level - 2);
+	if (f_v) {
+		cout << "subgroup_lattice::create_drawing_by_orbits "
+				"after LG->place_upside_down" << endl;
 	}
 
 	int l1, nb_orbits1, orb1;
@@ -1281,6 +1286,7 @@ void subgroup_lattice::create_drawing_by_orbits(
 
 					if (maximals[i * nb_orbits + j]) {
 						LG->add_edge(l1, orb1, l2, orb2,
+								1, // edge_color
 							0 /*verbose_level*/);
 					}
 				}
@@ -1303,11 +1309,12 @@ void subgroup_lattice::create_drawing_by_orbits(
 			text3 = "${" + std::to_string(Subgroup1->group_order) + " \\atop "
 					+ std::to_string(Subgroup_lattice_layer[l1]->get_orbit_length(orb1))
 					+ "}$";
-#else
 			text3 = "{\\tiny $" + std::to_string(Fst[l1] + orb1) + "^{" + std::to_string(Subgroup1->group_order) + "}_{"
 					+ std::to_string(Subgroup_lattice_layer[l1]->get_orbit_length(orb1))
 					+ "}$}";
 #endif
+
+			text3 = "{\\tiny $" + std::to_string(Subgroup1->group_order) + "$}";
 			LG->add_text(l1, orb1, text3, 0/*verbose_level*/);
 		}
 	}
@@ -2207,7 +2214,8 @@ void subgroup_lattice::right_transversal(
 			Subgroup_P->group_order,
 			gens, nb_gens,
 		cosets, nb_cosets,
-		Subgroup_Q->gens /* new_gens*/, Subgroup_Q->nb_gens /* nb_new_gens */,
+		Subgroup_Q->gens /* new_gens*/,
+		Subgroup_Q->nb_gens /* nb_new_gens */,
 		group, group_sz,
 		0 /* verbose_level */);
 	if (f_v) {
@@ -2282,7 +2290,8 @@ void subgroup_lattice::two_step_transversal(
 			Subgroup_P->group_order,
 			gens, nb_gens,
 		cosets1, nb_cosets1,
-		Subgroup_Q->gens /* new_gens*/, Subgroup_Q->nb_gens /* nb_new_gens */,
+		Subgroup_Q->gens /* new_gens*/,
+		Subgroup_Q->nb_gens /* nb_new_gens */,
 		group, group_sz,
 		0 /* verbose_level */);
 	if (f_v) {
@@ -2473,7 +2482,8 @@ void subgroup_lattice::intersect_subgroups(
 	}
 	if (f_vv) {
 		cout << "subgroup_lattice::intersect_subgroups "
-				"intersection is (layer,pos) = (" << layer_idx << "," << pos << ")" << endl;
+				"intersection is (layer,pos) = "
+				"(" << layer_idx << "," << pos << ")" << endl;
 	}
 
 	Subgroup_lattice_layer[layer_idx]->group_global_to_orbit_and_group_local(
@@ -2482,7 +2492,8 @@ void subgroup_lattice::intersect_subgroups(
 
 	if (f_vv) {
 		cout << "subgroup_lattice::intersect_subgroups "
-				"intersection is (layer,orb,grp) = (" << layer_idx << "," << orb_idx << "," << group_idx << ")" << endl;
+				"intersection is (layer,orb,grp) = "
+				"(" << layer_idx << "," << orb_idx << "," << group_idx << ")" << endl;
 	}
 
 	FREE_int(elements3);
@@ -2716,6 +2727,91 @@ void subgroup_lattice::identify_subgroup(
 		cout << "subgroup_lattice::identify_subgroup done" << endl;
 	}
 }
+
+void subgroup_lattice::do_export_csv(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::do_export_csv" << endl;
+	}
+
+	std::string *Table;
+	int nb_rows;
+	int nb_cols;
+	int layer_idx;
+
+	nb_cols = 6;
+
+	nb_rows = 0;
+	for (layer_idx = 0; layer_idx < nb_layers; layer_idx++) {
+		nb_rows += Subgroup_lattice_layer[layer_idx]->nb_orbits();
+	}
+
+	Table = new std::string [nb_rows * nb_cols];
+
+	int cur_row;
+	int i;
+
+	cur_row = 0;
+
+	for (layer_idx = 0; layer_idx < nb_layers; layer_idx++) {
+
+		std::string *Table1;
+		int nb_rows1, nb_cols1;
+
+		Subgroup_lattice_layer[layer_idx]->do_export_to_string(
+				Table1, nb_rows1, nb_cols1,
+				verbose_level);
+
+		if (nb_cols1 != 4) {
+			cout << "subgroup_lattice::do_export_csv nb_cols1 != 4" << endl;
+			exit(1);
+		}
+
+		for (i = 0; i < nb_rows1; i++, cur_row++) {
+			Table[cur_row * nb_cols + 0] = std::to_string(cur_row);
+			Table[cur_row * nb_cols + 1] = std::to_string(layer_idx);
+			//Table[cur_row * nb_cols + 2] = std::to_string(cur_row);
+			Table[cur_row * nb_cols + 2] = Table1[i * nb_cols1 + 0];
+			Table[cur_row * nb_cols + 3] = Table1[i * nb_cols1 + 1];
+			Table[cur_row * nb_cols + 4] = Table1[i * nb_cols1 + 2];
+			Table[cur_row * nb_cols + 5] = Table1[i * nb_cols1 + 3];
+		}
+
+		delete [] Table1;
+
+
+	}
+
+	std::string fname;
+
+	fname = label_txt + "_classes.csv";
+
+	std::string headings;
+
+	headings = "orbit,layer,idxlocal,go,length,groupidx";
+
+	orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings(
+			fname,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "subgroup_lattice::do_export_csv Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "subgroup_lattice::do_export_csv done" << endl;
+	}
+}
+
 
 }}}
 

@@ -549,7 +549,8 @@ void graph_theoretic_activity::perform_activity(
 		}
 		Graph_Domain.find_subgraph(
 				nb, CG,
-				Descr->find_subgraph_label, verbose_level);
+				Descr->find_subgraph_label,
+				verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"after Graph_Domain.find_subgraph" << endl;

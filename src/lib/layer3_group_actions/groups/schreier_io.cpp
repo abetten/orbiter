@@ -1558,12 +1558,6 @@ void schreier::export_tree_as_layered_graph(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
-	int fst, len;
-	int *depth;
-	int *horizontal_position;
-	int i, j, l, max_depth;
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph" << endl;
@@ -1575,6 +1569,36 @@ void schreier::export_tree_as_layered_graph(
 				"nb_gen = " << gens.len << endl;
 	}
 
+	data_structures::algorithms Algorithms;
+
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"before Algorithms.export_tree_as_layered_graph" << endl;
+	}
+	Algorithms.export_tree_as_layered_graph(
+			degree,
+			orbit_first,
+			orbit_len,
+			orbit,
+			orbit_inv,
+			prev,
+			label,
+			orbit_no,
+			LG,
+			verbose_level);
+	if (f_v) {
+		cout << "schreier::export_tree_as_layered_graph "
+				"after Algorithms.export_tree_as_layered_graph" << endl;
+	}
+
+
+#if 0
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int fst, len;
+	int *depth;
+	int *horizontal_position;
+	int i, j, l, max_depth;
 
 	if (f_v) {
 		cout << "    i : orbit : o_inv :  prev : label" << endl;
@@ -1834,6 +1858,7 @@ void schreier::export_tree_as_layered_graph(
 		cout << "schreier::export_tree_as_layered_graph "
 				"after FREE_int" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph done" << endl;

@@ -276,19 +276,6 @@ public:
 	algebra::matrix_group *get_matrix_group();
 
 
-	// action_group_theory.cpp:
-#if 0
-	void report_groups_and_normalizers(
-			std::ostream &ost,
-			int nb_subgroups,
-			groups::strong_generators *H_gens,
-			groups::strong_generators *N_gens,
-			int verbose_level);
-	void compute_projectivity_subgroup(
-			groups::strong_generators *&projectivity_gens,
-			groups::strong_generators *Aut_gens,
-			int verbose_level);
-#endif
 
 
 	// action_indexing_cosets.cpp

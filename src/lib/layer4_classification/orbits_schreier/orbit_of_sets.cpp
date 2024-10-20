@@ -544,6 +544,7 @@ void orbit_of_sets::make_table_of_coset_reps(
 	}
 }
 
+
 void orbit_of_sets::get_path(
 		std::vector<int> &path,
 		int j)
@@ -634,6 +635,69 @@ void orbit_of_sets::get_label(
 	}
 }
 
+void orbit_of_sets::export_tree_as_layered_graph(
+		graph_theory::layered_graph *&LG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph" << endl;
+	}
+
+	data_structures::algorithms Algorithms;
+	int orbit_first[1];
+	int orbit_len[1];
+	int *orbit;
+	int *orbit_inv;
+	int *prev;
+	int *label;
+
+	orbit_first[0] = 0;
+	orbit_len[0] = used_length;
+	orbit = NEW_int(used_length);
+	orbit_inv = NEW_int(used_length);
+	prev = NEW_int(used_length);
+	label = NEW_int(used_length);
+
+	int i;
+	for (i = 0; i < used_length; i++) {
+		orbit[i] = i;
+		orbit_inv[i] = i;
+		prev[i] = Extra[2 * i + 0];
+		label[i] = Extra[2 * i + 1] + 1; // avoid 0=white. black is 1
+	}
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph "
+				"before Algorithms.export_tree_as_layered_graph" << endl;
+	}
+	Algorithms.export_tree_as_layered_graph(
+			used_length /* degree */,
+			orbit_first,
+			orbit_len,
+			orbit,
+			orbit_inv,
+			prev,
+			label,
+			0 /* orbit_no */,
+			LG,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph "
+				"after Algorithms.export_tree_as_layered_graph" << endl;
+	}
+
+	FREE_int(orbit);
+	FREE_int(orbit_inv);
+	FREE_int(prev);
+	FREE_int(label);
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph done" << endl;
+	}
+
+}
 
 
 
