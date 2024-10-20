@@ -823,7 +823,7 @@ void colored_graph::init_from_bitvector(
 		Int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
 	}
 	
-	colored_graph::f_ownership_of_bitvec = true;
+	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
 	colored_graph::Bitvec = Bitvec;
 
 	if (f_v) {

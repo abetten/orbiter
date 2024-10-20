@@ -1083,6 +1083,10 @@ void spread_classify::setup_lifting(
 	}
 	FREE_OBJECT(Adj);
 	//FREE_int(col_color);
+	if (f_v) {
+		cout << "spread_classify::setup_lifting "
+				"after FREE_OBJECT(Adj)" << endl;
+	}
 
 	if (f_v) {
 		cout << "spread_classify::setup_lifting "

@@ -93,7 +93,7 @@ void schlaefli_labels::init(
 
 
 	if (h != 30) {
-		cout << "h != 30" << endl;
+		cout << "schlaefli_labels::init h != 30" << endl;
 		exit(1);
 	}
 
@@ -115,12 +115,12 @@ void schlaefli_labels::init(
 		}
 	}
 	if (h2 != 15) {
-		cout << "h2 != 15" << endl;
+		cout << "schlaefli_labels::init h2 != 15" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "Sets2:" << endl;
+		cout << "schlaefli_labels::init Sets2:" << endl;
 		L.print_lint_matrix_with_standard_labels(cout,
 			Sets2, 15, 2, false /* f_tex */);
 	}
@@ -149,7 +149,7 @@ void schlaefli_labels::init(
 			str = "c_{" + std::to_string(a) + std::to_string(b) + "}";
 		}
 		if (f_v) {
-			cout << "creating label " << str
+			cout << "schlaefli_labels::init creating label " << str
 				<< " for line " << i << endl;
 		}
 		Line_label[i].assign(str);
@@ -174,29 +174,51 @@ void schlaefli_labels::init(
 			str = "c_{" + std::to_string(a) + std::to_string(b) + "}";
 		}
 		if (f_v) {
-			cout << "creating label " << str
+			cout << "schlaefli_labels::init creating label " << str
 				<< " for line " << i << endl;
 		}
 		Line_label_tex[i].assign(str);
 	}
 	Line_label_tex[27].assign("d");
 
+	if (f_v) {
+		cout << "schlaefli_labels::init before new std::string[45];" << endl;
+	}
 
 	Tritangent_plane_label = new std::string[45];
 	Tritangent_plane_label_tex = new std::string[45];
 
 	for (i = 0; i < 45; i++) {
 
+		if (f_v) {
+			cout << "schlaefli_labels::init creating label for tritangent plane " << i << endl;
+		}
 		eckardt_point Eckardt_point;
 
+		if (f_v) {
+			cout << "schlaefli_labels::init before Eckardt_point.init_by_rank" << endl;
+		}
 		Eckardt_point.init_by_rank(i);
+		if (f_v) {
+			cout << "schlaefli_labels::init after Eckardt_point.init_by_rank" << endl;
+		}
 
 		string str;
 
+		if (f_v) {
+			cout << "schlaefli_labels::init before Eckardt_point.make_label" << endl;
+		}
 		str = Eckardt_point.make_label();
+		if (f_v) {
+			cout << "schlaefli_labels::init after Eckardt_point.make_label" << endl;
+		}
 
 		Tritangent_plane_label[i] = "\\pi_{" + str + "}";
 		Tritangent_plane_label_tex[i] = "\\pi_{" + str + "}";
+		if (f_v) {
+			cout << "schlaefli_labels::init Tritangent_plane_label[i]=" << Tritangent_plane_label[i] << endl;
+			cout << "schlaefli_labels::init Tritangent_plane_label_tex[i]=" << Tritangent_plane_label_tex[i] << endl;
+		}
 	}
 
 
