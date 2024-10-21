@@ -44,6 +44,11 @@ OPEN=echo
 # End of configuration part
 ###############################################################################
 
+protect:
+	echo "please type make followed by a command name"
+
+
+
 GINAC_PATH=$(ORBITER_PATH)/src/apps/ginac
 SANDBOX_PATH=$(ORBITER_PATH)/src/apps/sandbox
 
@@ -14395,14 +14400,6 @@ test_10_4:
 	make CRC_F16_BCH_write_code_for_division_Delta
 	make crc_encode_16
 	make crc_encode_32
-	make crc_test_alfa
-	make crc_test_bravo_10M_3
-	make error_polynomial_bravo_552
-	make crc_test_crc32_10M_3
-	make crc_test_bravo_10_loop
-	make crc_test_crc32_10_loop
-	make crc_test_crc32_20M_3
-	make crc_test_charlie
 
 
 
@@ -14799,92 +14796,6 @@ crc_encode_32:
 #Written file allen_Gates_crc32.bin of size 648262
 #nb_blocks = 841
 
-#old:
-#-rw-r--r--  1 betten  staff    648262 Aug 24 14:34 allen_Gates_crc32.bin
-
-
-
-
-# alfa has d = 2, so it can detect any 1 error at the F256 level
-
-crc_test_alfa:
-	$(ORBITER) -v 3 \
-		-crc_test "alfa" $(TEN_MILLION) 3
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 2 nb_undetected=89, time=0:24
-#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=153, time=0:26
-
-
-
-# bravo has d = 3, so it can detect any 2 errors at the F256 level
-
-crc_test_bravo_10M_3:
-	$(ORBITER) -v 3 \
-		-crc_test "bravo" $(TEN_MILLION) 3
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=0:27
-#23754:crc_codes::test_crc_object Nb_test = 10000000 k = 552 nb_undetected=1, time=11:54
-#12596,0,( 737, 417, 171, 634, 158, 30, 480, 688, 94, 739, 147, 694, 724, 741, 51, 411, 753, 622, 592, 667, 25, 709, 55, 450, 255, 744, 28, 718, 82, 740, 372, 144, 435, 505, 478, 233, 325, 231, 27, 518, 492, 350, 621, 468, 297, 141, 735, 338, 227, 434, 54, 180, 390, 245, 301, 617, 423, 408, 521, 42, 697, 719, 668, 618, 107, 746, 441, 376, 705, 353, 368, 254, 393, 291, 762, 188, 506, 580, 419, 525, 500, 652, 433, 130, 52, 212, 511, 191, 182, 100, 676, 706, 248, 268, 365, 626, 303, 5, 490, 524, 237, 210, 326, 619, 485, 767, 432, 721, 391, 650, 88, 627, 177, 700, 354, 682, 38, 360, 70, 636, 609, 766, 203, 7, 369, 584, 475, 84, 87, 251, 680, 479, 256, 121, 473, 604, 614, 265, 585, 40, 458, 551, 163, 661, 358, 610, 349, 748, 371, 310, 31, 136, 153, 649, 662, 547, 120, 324, 162, 671, 62, 725, 603, 645, 670, 554, 364, 127, 312, 708, 386, 286, 532, 58, 658, 366, 74, 442, 699, 707, 164, 102, 593, 657, 293, 638, 370, 716, 454, 126, 204, 232, 637, 409, 491, 666, 402, 209, 639, 560, 578, 467, 24, 629, 93, 453, 352, 425, 406, 37, 684, 189, 648, 186, 345, 691, 673, 193, 264, 247, 714, 267, 540, 215, 134, 729, 588, 295, 294, 241, 577, 398, 722, 46, 214, 60, 640, 770, 477, 106, 97, 381, 280, 675, 418, 29, 385, 269, 151, 665, 109, 514, 305, 377, 95, 544, 570, 552, 128, 152, 599, 397, 415, 149, 451, 738, 743, 302, 140, 273, 103, 284, 396, 726, 327, 221, 288, 200, 344, 285, 112, 542, 22, 313, 263, 218, 61, 157, 362, 559, 507, 243, 664, 206, 550, 242, 244, 230, 145, 761, 413, 679, 392, 447, 17, 330, 156, 279, 752, 487, 731, 651, 388, 535, 154, 502, 108, 452, 363, 240, 569, 564, 713, 704, 495, 589, 83, 15, 483, 261, 537, 595, 219, 573, 516, 252, 199, 337, 616, 339, 486, 555, 653, 728, 137, 216, 56, 211, 734, 449, 44, 26, 348, 426, 91, 139, 238, 539, 444, 754, 672, 695, 543, 659, 601, 654, 742, 300, 69, 115, 756, 122, 582, 374, 236, 656, 533, 755, 512, 594, 404, 65, 611, 316, 703, 361, 318, 80, 92, 12, 720, 378, 763, 228, 429, 623, 608, 712, 33, 612, 185, 747, 11, 620, 78, 234, 202, 165, 498, 173, 160, 494, 768, 75, 306, 482, 641, 53, 222, 379, 460, 258, 567, 50, 531, 548, 207, 424, 320, 383, 124, 757, 249, 10, 405, 575, 597, 587, 341, 328, 336, 513, 317, 172, 681, 169, 187, 430, 351, 523, 81, 553, 389, 496, 689, 461, 607, 359, 436, 105, 229, 8, 101, 176, 663, 43, 701, 356, 630, 562, 678, 272, 224, 387, 271, 311, 456, 530, 401, 278, 239, 520, 529, 287, 343, 59, 367, 342, 21, 503, 420, 466, 322, 146, 504, 563, 196, 545, 558, 161, 394, 257, 49, 99, 598, 6, 77, 143, 68, 118, 133, 690, 410, 235, 536, 48, 205, 270, 445, 283, 198, 660, 90, 47, 57, 727, 41, 463, 76, 581, 576, 192, 250, 686, 509, 34, 175, 246, 400, 168, 111, 334, 403, 517, 677, 373, 497, 431, 470, 501, 174, 225 ),( 100, 202, 178, 171, 102, 243, 43, 238, 132, 200, 126, 107, 61, 252, 150, 5, 18, 51, 161, 248, 230, 166, 207, 48, 138, 132, 221, 248, 228, 42, 126, 117, 253, 85, 133, 165, 56, 125, 224, 92, 223, 129, 108, 179, 197, 224, 163, 241, 196, 207, 53, 73, 183, 98, 172, 7, 65, 90, 35, 15, 59, 219, 95, 41, 93, 52, 51, 19, 205, 78, 66, 6, 218, 47, 109, 228, 45, 134, 141, 173, 225, 93, 194, 5, 164, 100, 199, 10, 118, 30, 163, 110, 152, 247, 212, 214, 146, 104, 164, 7, 117, 87, 129, 159, 235, 129, 233, 224, 72, 250, 167, 128, 208, 220, 150, 195, 40, 168, 73, 21, 98, 185, 128, 27, 30, 74, 251, 134, 186, 40, 109, 138, 181, 202, 137, 86, 72, 230, 117, 18, 123, 180, 10, 23, 122, 47, 241, 16, 193, 71, 189, 203, 212, 68, 241, 143, 191, 62, 228, 255, 82, 12, 178, 134, 161, 178, 251, 119, 66, 209, 33, 32, 17, 124, 47, 96, 191, 20, 10, 4, 82, 36, 65, 36, 164, 113, 230, 30, 33, 176, 75, 54, 130, 25, 171, 227, 1, 41, 182, 164, 87, 232, 210, 74, 161, 84, 24, 187, 106, 106, 52, 153, 247, 152, 252, 245, 182, 253, 213, 203, 45, 168, 193, 190, 42, 105, 201, 1, 211, 224, 153, 189, 89, 187, 59, 238, 53, 95, 105, 103, 24, 2, 62, 250, 57, 70, 68, 110, 45, 45, 226, 254, 194, 103, 186, 140, 209, 1, 37, 87, 15, 200, 26, 22, 216, 251, 175, 137, 33, 228, 132, 152, 86, 179, 106, 68, 69, 49, 202, 146, 67, 168, 130, 223, 55, 234, 177, 88, 146, 195, 100, 176, 210, 177, 61, 161, 1, 58, 5, 191, 30, 49, 183, 83, 125, 13, 170, 211, 93, 110, 219, 93, 246, 120, 169, 97, 206, 86, 241, 208, 195, 199, 53, 31, 133, 253, 181, 247, 192, 209, 19, 159, 175, 39, 247, 154, 12, 225, 43, 231, 198, 83, 125, 33, 175, 79, 242, 224, 150, 251, 213, 125, 155, 230, 61, 109, 32, 239, 227, 40, 8, 133, 186, 118, 232, 157, 218, 41, 24, 168, 32, 205, 172, 216, 36, 94, 179, 37, 212, 13, 35, 171, 16, 171, 39, 69, 241, 165, 62, 91, 136, 4, 227, 168, 53, 6, 226, 251, 58, 251, 38, 234, 245, 255, 168, 119, 169, 47, 179, 223, 28, 32, 17, 185, 49, 44, 196, 122, 89, 116, 157, 223, 252, 204, 40, 119, 89, 8, 7, 178, 235, 52, 12, 51, 217, 60, 104, 100, 59, 111, 14, 244, 49, 223, 225, 245, 187, 61, 242, 174, 29, 145, 172, 177, 131, 188, 157, 76, 104, 244, 94, 39, 96, 246, 131, 77, 255, 70, 211, 201, 166, 105, 68, 129, 4, 80, 20, 89, 58, 222, 159, 208, 82, 255, 245, 121, 210, 149, 202, 105, 212, 42, 35, 188, 3, 121, 23, 139, 50, 24, 224, 20, 140, 119, 55, 118, 53, 155, 19, 70, 138, 178, 202, 153, 78, 44, 90, 109, 32, 253, 64, 130, 238, 243, 87, 12, 204, 63, 116, 163, 82, 25, 14, 31, 197, 193, 203, 235, 79, 86, 118, 118, 88, 190, 26, 55, 179, 156, 153, 89, 227, 221 )
-#crc_codes::test_crc_object Nb_test = 10000000 k = 552 nb_undetected=1, time=11:54
-#crc_codes::test_crc_object done
-#interface_coding_theory::worker done
-
-
-error_polynomial_bravo_552:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 256 -end \
-		-define Coeff -vector -dense $(ERROR_POLY_BRAVO_COEFF) -end \
-		-define Place -vector -dense $(ERROR_POLY_BRAVO_PLACE) -end \
-		-with F -do -finite_field_activity \
-			-assemble_monopoly 771 Coeff Place \
-		-end
-
-
-
-crc_test_crc32_10M_3:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" $(TEN_MILLION) 3
-
-
-#crc_codes::test_crc_object Nb_test = 10000000 k = 3 nb_undetected=0, time=3:31
-
-
-
-
-crc_test_bravo_10_loop:
-	$(ORBITER) -v 3 \
-		-loop i 2 770 1 \
-			-crc_test "bravo" $(TEN_MILLION) %i \
-		-end_loop i
-
-
-crc_test_crc32_10_loop:
-	$(ORBITER) -v 3 \
-		-loop i 2 770 1 \
-			-crc_test "crc32" $(TEN_MILLION) %i \
-		-end_loop i
-
-
-#### 20 Million:
-
-
-
-crc_test_crc32_20M_3:
-	$(ORBITER) -v 3 \
-		-crc_test "crc32" 20000000 3
-
-
-
-
-# charlie has d = 7, so it can detect any 6 errors at the F256 level
-
-
-crc_test_charlie:
-	$(ORBITER) -v 3 \
-		-crc_test "charlie" 10000000 7
-
-
 
 
 ###############################################################################
@@ -14938,60 +14849,60 @@ RM_3_Hamming_space_diagram:
 		-end
 
 # creates 
-# RM_3_8_16.tex
-# RM_3_diagram_8_16.csv
-# RM_3_diagram_01_8_16.csv
-# RM_3_distance_8_16.csv
+# RM_m3_8_16.tex
+# RM_m3_diagram_8_16.csv
+# RM_m3_diagram_01_8_16.csv
+# RM_m3_distance_8_16.csv
 
 
 RM_3_draw:
 	$(ORBITER) -v 2 \
 		-draw_matrix \
-			-input_csv_file RM_3_distance_H_8_16.csv \
+			-input_csv_file RM_m3_distance_H_8_16.csv \
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
-			-input_csv_file RM_3_char_func_8_16.csv \
+			-input_csv_file RM_m3_char_func_8_16.csv \
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
 	$(ORBITER) -v 2 \
 		-draw_matrix \
-			-input_csv_file RM_3_idx_8_16.csv \
+			-input_csv_file RM_m3_idx_8_16.csv \
 			-box_width 25 -bit_depth 8 \
 			-partition 4 16 16 \
 		-end
-	convert RM_3_distance_H_8_16_draw.bmp RM_3_distance_H_8_16_draw.png
-	convert RM_3_char_func_8_16_draw.bmp RM_3_char_func_8_16_draw.png
-	convert RM_3_idx_8_16_draw.bmp RM_3_idx_8_16_draw.png
-	$(OPEN) RM_3_distance_H_8_16_draw.bmp
+	convert RM_m3_distance_H_8_16_draw.bmp RM_m3_distance_H_8_16_draw.png
+	convert RM_m3_char_func_8_16_draw.bmp RM_m3_char_func_8_16_draw.png
+	convert RM_m3_idx_8_16_draw.bmp RM_m3_idx_8_16_draw.png
+	$(OPEN) RM_m3_distance_H_8_16_draw.bmp
 
 
 RM_3_split:
 	#$(ORBITER) -split_by_values RM_3_distance_8_16.csv 
-	$(ORBITER) -split_by_values RM_3_distance_H_8_16.csv 
+	$(ORBITER) -split_by_values RM_m3_distance_H_8_16.csv 
 
 RM_3_distance_draw:
 	$(ORBITER) -v 2 \
 		-loop L 0 3 1 \
 			-draw_matrix \
-				-input_csv_file RM_3_distance_H_8_16_value%L.csv \
+				-input_csv_file RM_m3_distance_H_8_16_value%L.csv \
 				-box_width 25 -bit_depth 8 \
 				-partition 5 16 16 \
 			-end \
 		-end_loop L
-	convert RM_3_distance_H_8_16_value0_draw.bmp RM_3_distance_H_8_16_value0_draw.png
-	convert RM_3_distance_H_8_16_value1_draw.bmp RM_3_distance_H_8_16_value1_draw.png
-	convert RM_3_distance_H_8_16_value2_draw.bmp RM_3_distance_H_8_16_value2_draw.png
+	convert RM_m3_distance_H_8_16_value0_draw.bmp RM_m3_distance_H_8_16_value0_draw.png
+	convert RM_m3_distance_H_8_16_value1_draw.bmp RM_m3_distance_H_8_16_value1_draw.png
+	convert RM_m3_distance_H_8_16_value2_draw.bmp RM_m3_distance_H_8_16_value2_draw.png
 
 RM_3_algebraic_normal_form:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
 		-loop L 0 3 1 \
 			-define v%L -vector -field F \
-				-file RM_3_distance_8_16_value%L.csv \
+				-file RM_m3_distance_H_8_16_value%L.csv \
 			-end \
 			-with F -do -finite_field_activity \
 				-algebraic_normal_form 8 v%L \
@@ -15045,7 +14956,7 @@ RM_6_codewords_draw:
 	$(ORBITER) -v 4 \
 		-loop i 0 128 1 \
 			-csv_file_select_rows RM6_codewords.csv %i \
-			-reformat RM6_codewords_select_%i.csv RM6_codewords_ref_%i.csv 8 \
+			-reformat RM6_codewords_select.csv RM6_codewords_ref_%i.csv 8 \
 			-draw_matrix \
 				-input_csv_file RM6_codewords_ref_%i.csv \
 				-box_width 25 -bit_depth 8 \
@@ -15167,9 +15078,10 @@ F_8_BCH_code_d3:
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-define C -code -field F \
 			-BCH 21 3 \
-		-end
-	pdflatex BCH_codes_q8_n21_d3.tex
-	$(OPEN) BCH_codes_q8_n21_d3.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n21_d3_code_n21_k17_q8.tex
+	$(OPEN) BCH_n21_d3_code_n21_k17_q8.pdf
 
 #generator polynomial is X^{4} + 4X^{3} + 4X^{2} + 3X + 4
 
@@ -15178,7 +15090,10 @@ F_8_BCH_code_d4:
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-define C -code -field F \
 			-BCH 21 4 \
-		-end
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n21_d4_code_n21_k16_q8.tex
+	$(OPEN) BCH_n21_d4_code_n21_k16_q8.pdf
 
 #generator polynomial is X^{5} + 6X^{4} + 7X^{3} + 2X + 3
 
@@ -15188,9 +15103,10 @@ F_8_BCH_code_d5:
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-define C -code -field F \
 			-BCH 21 5 \
-		-end
-	pdflatex BCH_codes_q8_n21_d5.tex
-	$(OPEN) BCH_codes_q8_n21_d5.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n21_d5_code_n21_k14_q8.tex
+	$(OPEN) BCH_n21_d5_code_n21_k14_q8.pdf
 
 #-override_polynomial 11 
 #generator polynomial is X^{7} + 3X^{6} + 3X^{5} + 2X^{4} + X^{3} + 2X^{2} + X + 2
@@ -15216,8 +15132,10 @@ F_8_BCH_code_d7:
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-define C -code -field F \
 			-BCH 21 7 \
-		-end
-
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n21_d7_code_n21_k11_q8.tex
+	$(OPEN) BCH_n21_d7_code_n21_k11_q8.pdf
 
 
 
@@ -15226,13 +15144,14 @@ F8_BCH_code_n63_d43:
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-define C -code -field F \
 			-BCH 63 43 \
-		-end
-	pdflatex BCH_codes_q8_n63_d43.tex
-	$(OPEN) BCH_codes_q8_n63_d43.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n63_d43_code_n63_k9_q8.tex
+	$(OPEN) BCH_n63_d43_code_n63_k9_q8.pdf
 
 
 
-
+# slow
 
 F8_BCH_code_n63_d43_minimum_distance:
 	$(ORBITER) -v 2 \
@@ -15259,7 +15178,10 @@ F2_BCH_code_n21:
 		-define F -finite_field -q 2 -end \
 		-define C -code -field F \
 			-BCH 21 3 \
-		-end
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n21_d3_code_n21_k15_q2.tex
+	$(OPEN) BCH_n21_d3_code_n21_k15_q2.pdf
 
 
 
@@ -15268,7 +15190,10 @@ F7_RS_code_n6:
 		-define F -finite_field -q 7 -end \
 		-define C -code -field F \
 			-Reed_Solomon 6 3 \
-		-end
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex RS_n6_d3_code_n6_k4_q7.tex
+	$(OPEN) RS_n6_d3_code_n6_k4_q7.pdf
 
 
 F_64_again:
@@ -15288,8 +15213,10 @@ BCH_15_5:
 		-define F -finite_field -q 2 -end \
 		-define C -code -field F \
 			-BCH 15 5 \
-		-end
-
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n15_d5_code_n15_k7_q2.tex
+	$(OPEN) BCH_n15_d5_code_n15_k7_q2.pdf
 
 
 
@@ -15575,9 +15502,10 @@ BCH_F256_BCH_code_d16:
 		-define F -finite_field -q 256 -end \
 		-define C -code -field F \
 			-BCH 771 16 \
-		-end
-	pdflatex BCH_codes_q256_n771_d16.tex
-	$(OPEN) BCH_codes_q256_n771_d16.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex BCH_n771_d16_code_n771_k741_q256.tex
+	$(OPEN) BCH_n771_d16_code_n771_k741_q256.pdf
 
 
 #generator polynomial is X^{30} + 253X^{29} + 174X^{28} + 109X^{27} + 97X^{26} + 144X^{25} + 112X^{24} + 212X^{23} + 192X^{22} + 169X^{21} + 24X^{20} + 150X^{19} + 110X^{18} + 248X^{17} + 3X^{16} + 193X^{15} + 194X^{14} + 205X^{13} + 9X^{12} + 56X^{11} + 95X^{10} + 199X^{9} + 108X^{8} + 58X^{7} + 160X^{6} + 148X^{5} + 138X^{4} + 24X^{3} + 210X^{2} + 26X + 1
@@ -15614,9 +15542,10 @@ RS_6_3:
 		-define C -code -field F -Reed_Solomon 6 3 -end \
 		-with C -do -coding_theoretic_activity \
 			-export_magma RS_6_3.magma \
-		-end
-	pdflatex RS_codes_q7_n6_d3.tex
-	$(OPEN) RS_codes_q7_n6_d3.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex RS_n6_d3_code_n6_k4_q7.tex
+	$(OPEN) RS_n6_d3_code_n6_k4_q7.pdf
 
 
 RS_6_3_weight_enumerator:
@@ -15665,8 +15594,13 @@ Code_RS_11:
 		-define C -code -field F -Reed_Solomon 10 3 -end \
 		-with C -do -coding_theoretic_activity \
 			-export_magma RS_11_3.magma \
-		-end
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex RS_n10_d3_code_n10_k8_q11.tex
+	$(OPEN) RS_n10_d3_code_n10_k8_q11.pdf
 
+
+# slow:
 
 Code_RS_11_weight_enumerator:
 	$(ORBITER) -v 2 \
@@ -15691,9 +15625,10 @@ RS_7_3:
 		-define C -code -field F -Reed_Solomon 7 3 -end \
 		-with C -do -coding_theoretic_activity \
 			-export_magma RS_7_3.magma \
-		-end
-	pdflatex RS_codes_q8_n7_d3.tex
-	$(OPEN) RS_codes_q8_n7_d3.pdf
+		-end \
+		-with C -do -coding_theoretic_activity -report -end
+	pdflatex RS_n7_d3_code_n7_k5_q8.tex
+	$(OPEN) RS_n7_d3_code_n7_k5_q8.pdf
 
 
 RS_7_3_weight_enumerator:
@@ -15707,8 +15642,6 @@ RS_7_3_weight_enumerator:
 		-coding_theoretic_activity \
 			-weight_enumerator \
 		-end
-	pdflatex RS_codes_q8_n7_d3.tex
-	$(OPEN) RS_codes_q8_n7_d3.pdf
 
 
 
@@ -15767,8 +15700,8 @@ TTP_A_4:
 		-with C -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex code_n18_k9_q4.tex
-	$(OPEN) code_n18_k9_q4.pdf
+	pdflatex ttpA_n18_k9_code_n18_k9_q4.tex
+	$(OPEN) ttpA_n18_k9_code_n18_k9_q4.pdf
 
 
 
