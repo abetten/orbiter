@@ -699,6 +699,11 @@ void surface_repository::report_surface(
 				"orbit_index = " << orbit_index << endl;
 	}
 	SO->SOP->print_axes(ost);
+	if (f_v) {
+		cout << "surface_repository::report_surface "
+				"after SO->print_axes "
+				"orbit_index = " << orbit_index << endl;
+	}
 
 
 	//New_clebsch->SO->print_planes_in_trihedral_pairs(fp);
@@ -718,8 +723,28 @@ void surface_repository::report_surface(
 	SOA->quartic(ost,  verbose_level);
 #endif
 
+	if (f_v) {
+		cout << "surface_repository::report_surface "
+				"before FREE_OBJECT(SOA) "
+				"orbit_index = " << orbit_index << endl;
+	}
 	FREE_OBJECT(SOA);
+	if (f_v) {
+		cout << "surface_repository::report_surface "
+				"after FREE_OBJECT(SOA) "
+				"orbit_index = " << orbit_index << endl;
+	}
+	if (f_v) {
+		cout << "surface_repository::report_surface "
+				"before FREE_OBJECT(SO) "
+				"orbit_index = " << orbit_index << endl;
+	}
 	FREE_OBJECT(SO);
+	if (f_v) {
+		cout << "surface_repository::report_surface "
+				"after FREE_OBJECT(SO) "
+				"orbit_index = " << orbit_index << endl;
+	}
 
 	if (f_v) {
 		cout << "surface_repository::report_surface "

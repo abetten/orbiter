@@ -1547,8 +1547,12 @@ void symbolic_object_builder::do_collect_by(
 			d = 0;
 			for (h = 0; h < nb_var; h++) {
 
+				string s;
+
+				s = Poly->get_symbol(h);
+
 				j = O_source->Formula_vector->V[0].tree->Root->Nodes[i]->exponent_of_variable_destructive(
-						Poly->get_symbol(h));
+						s);
 
 				mon[h] = j;
 				d += j;

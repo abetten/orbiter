@@ -224,7 +224,8 @@ public:
 
 	gen_geo_conf();
 	~gen_geo_conf();
-	void print(std::ostream &ost);
+	void print(
+			std::ostream &ost);
 
 };
 

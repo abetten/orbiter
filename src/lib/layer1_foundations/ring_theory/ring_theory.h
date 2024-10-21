@@ -170,17 +170,18 @@ public:
 	int get_nb_monomials();
 	int get_nb_variables();
 	field_theory::finite_field *get_F();
-	std::string &get_symbol(
+	std::string get_symbol(
 			int i);
 	std::string list_of_variables();
-	int variable_index(std::string &s);
+	int variable_index(
+			std::string &s);
 	int get_monomial(
 			int i, int j);
-	std::string &get_monomial_symbol_easy(
+	std::string get_monomial_symbol_easy(
 			int i);
-	std::string &get_monomial_symbols_latex(
+	std::string get_monomial_symbols_latex(
 			int i);
-	std::string &get_monomial_symbols(
+	std::string get_monomial_symbols(
 			int i);
 	int *get_monomial_pointer(
 			int i);

@@ -112,7 +112,8 @@ knowledge_base::~knowledge_base()
 
 
 
-int knowledge_base::quartic_curves_nb_reps(int q)
+int knowledge_base::quartic_curves_nb_reps(
+		int q)
 {
 	int nb;
 
@@ -151,7 +152,8 @@ int knowledge_base::quartic_curves_nb_reps(int q)
 	return nb;
 }
 
-int *knowledge_base::quartic_curves_representative(int q, int i)
+int *knowledge_base::quartic_curves_representative(
+		int q, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -220,7 +222,8 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 	return p;
 }
 
-long int *knowledge_base::quartic_curves_bitangents(int q, int i)
+long int *knowledge_base::quartic_curves_bitangents(
+		int q, int i)
 // i starts from 0
 {
 	long int *p;
@@ -281,7 +284,8 @@ long int *knowledge_base::quartic_curves_bitangents(int q, int i)
 	return p;
 }
 
-void knowledge_base::quartic_curves_stab_gens(int q, int i,
+void knowledge_base::quartic_curves_stab_gens(
+		int q, int i,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -390,7 +394,8 @@ void knowledge_base::quartic_curves_stab_gens(int q, int i,
 
 
 
-int knowledge_base::cubic_surface_nb_reps(int q)
+int knowledge_base::cubic_surface_nb_reps(
+		int q)
 {
 	int nb;
 
@@ -519,7 +524,8 @@ int knowledge_base::cubic_surface_nb_reps(int q)
 	return nb;
 }
 
-int *knowledge_base::cubic_surface_representative(int q, int i)
+int *knowledge_base::cubic_surface_representative(
+		int q, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -742,7 +748,8 @@ int *knowledge_base::cubic_surface_representative(int q, int i)
 	return p;
 }
 
-void knowledge_base::cubic_surface_stab_gens(int q, int i,
+void knowledge_base::cubic_surface_stab_gens(
+		int q, int i,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -1091,7 +1098,8 @@ void knowledge_base::cubic_surface_stab_gens(int q, int i,
 	stab_order_str.assign(stab_order);
 }
 
-int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
+int knowledge_base::cubic_surface_nb_Eckardt_points(
+		int q, int i)
 // i starts from 0
 {
 	int *p, nb; //, sz;
@@ -1314,7 +1322,8 @@ int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
 }
 
 
-long int *knowledge_base::cubic_surface_Lines(int q, int i)
+long int *knowledge_base::cubic_surface_Lines(
+		int q, int i)
 // i starts from 0
 {
 	long int *p, nb;
@@ -1503,7 +1512,8 @@ long int *knowledge_base::cubic_surface_Lines(int q, int i)
 // #############################################################################
 
 
-int knowledge_base::hyperoval_nb_reps(int q)
+int knowledge_base::hyperoval_nb_reps(
+		int q)
 {
 	int nb;
 
@@ -1524,7 +1534,8 @@ int knowledge_base::hyperoval_nb_reps(int q)
 	return nb;
 }
 
-int *knowledge_base::hyperoval_representative(int q, int i)
+int *knowledge_base::hyperoval_representative(
+		int q, int i)
 // i starts from 0
 {
 	int *p, nb, sz;
@@ -1562,7 +1573,8 @@ int *knowledge_base::hyperoval_representative(int q, int i)
 	return p;
 }
 
-void knowledge_base::hyperoval_gens(int q, int i,
+void knowledge_base::hyperoval_gens(
+		int q, int i,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -1625,7 +1637,8 @@ void knowledge_base::hyperoval_gens(int q, int i,
 
 
 
-int knowledge_base::DH_nb_reps(int k, int n)
+int knowledge_base::DH_nb_reps(
+		int k, int n)
 {
 	int nb;
 
@@ -1643,7 +1656,8 @@ int knowledge_base::DH_nb_reps(int k, int n)
 	return nb;
 }
 
-long int *knowledge_base::DH_representative(int k, int n, int i)
+long int *knowledge_base::DH_representative(
+		int k, int n, int i)
 // i starts from 0
 {
 	long int *p, nb, sz;
@@ -1676,7 +1690,8 @@ long int *knowledge_base::DH_representative(int k, int n, int i)
 	return p;
 }
 
-void knowledge_base::DH_stab_gens(int k, int n, int i,
+void knowledge_base::DH_stab_gens(
+		int k, int n, int i,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -1732,7 +1747,8 @@ void knowledge_base::DH_stab_gens(int k, int n, int i,
 
 
 
-int knowledge_base::Spread_nb_reps(int q, int k)
+int knowledge_base::Spread_nb_reps(
+		int q, int k)
 {
 	int nb;
 
@@ -1763,7 +1779,8 @@ int knowledge_base::Spread_nb_reps(int q, int k)
 }
 
 
-long int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
+long int *knowledge_base::Spread_representative(
+		int q, int k, int i, int &sz)
 // i starts from 0
 {
 	long int *p, nb;
@@ -1817,7 +1834,8 @@ long int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
 	return p;
 }
 
-void knowledge_base::Spread_stab_gens(int q, int k, int i,
+void knowledge_base::Spread_stab_gens(
+		int q, int k, int i,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -1902,7 +1920,8 @@ void knowledge_base::Spread_stab_gens(int q, int k, int i,
 
 
 
-int knowledge_base::BLT_nb_reps(int q)
+int knowledge_base::BLT_nb_reps(
+		int q)
 {
 	int nb;
 
@@ -1986,7 +2005,8 @@ int knowledge_base::BLT_nb_reps(int q)
 	return nb;
 }
 
-long int *knowledge_base::BLT_representative(int q, int no)
+long int *knowledge_base::BLT_representative(
+		int q, int no)
 // i starts from 0
 {
 	long int *p;
@@ -2131,7 +2151,8 @@ long int *knowledge_base::BLT_representative(int q, int no)
 	return p;
 }
 
-void knowledge_base::BLT_stab_gens(int q, int no,
+void knowledge_base::BLT_stab_gens(
+		int q, int no,
 		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
@@ -2355,7 +2376,8 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 
 
 
-void knowledge_base::override_polynomial_subfield(std::string &poly, int q)
+void knowledge_base::override_polynomial_subfield(
+		std::string &poly, int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2419,7 +2441,8 @@ void knowledge_base::override_polynomial_subfield(std::string &poly, int q)
 	poly.assign(override_poly);
 }
 
-void knowledge_base::override_polynomial_extension_field(std::string &poly, int q)
+void knowledge_base::override_polynomial_extension_field(
+		std::string &poly, int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2681,7 +2704,8 @@ void knowledge_base::get_projective_plane_list_of_lines(
 // #############################################################################
 
 
-int knowledge_base::tensor_orbits_nb_reps(int n)
+int knowledge_base::tensor_orbits_nb_reps(
+		int n)
 {
 	int nb;
 
@@ -2699,7 +2723,8 @@ int knowledge_base::tensor_orbits_nb_reps(int n)
 	return nb;
 }
 
-long int *knowledge_base::tensor_orbits_rep(int n, int idx)
+long int *knowledge_base::tensor_orbits_rep(
+		int n, int idx)
 // idx starts from 0
 {
 	long int *p;

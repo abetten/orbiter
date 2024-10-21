@@ -11815,11 +11815,6 @@ test_8_4:
 	make Family_general_F11_iso_test
 
 
-# toDo: 
-#surface_repository::report_surface before SO->print_axes orbit_index = 0
-
-#surface_repository::report_surface before SO->print_axes orbit_index = 0
-#orbiter.out(53675,0x1f3bf8c00) malloc: *** error for object 0x600003d28130: pointer being freed was not allocated
 
 
 surface_classify_q4:

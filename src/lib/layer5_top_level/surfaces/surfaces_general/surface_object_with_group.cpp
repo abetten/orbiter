@@ -67,17 +67,39 @@ surface_object_with_group::surface_object_with_group()
 
 surface_object_with_group::~surface_object_with_group()
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_group::~surface_object_with_group" << endl;
+	}
 	if (projectivity_group_gens) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(projectivity_group_gens)" << endl;
+		}
 		FREE_OBJECT(projectivity_group_gens);
 	}
 	if (Syl) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(Syl)" << endl;
+		}
 		FREE_OBJECT(Syl);
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group after FREE_OBJECT(Syl)" << endl;
+		}
 	}
 	if (TD) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(TD)" << endl;
+		}
 		FREE_OBJECT(TD);
 	}
 
 	if (A_on_points) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(A_on_points)" << endl;
+		}
 		FREE_OBJECT(A_on_points);
 	}
 	if (A_on_Eckardt_points) {
@@ -105,6 +127,9 @@ surface_object_with_group::~surface_object_with_group()
 		FREE_OBJECT(A_on_Hesse_planes);
 	}
 	if (A_on_axes) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(A_on_axes)" << endl;
+		}
 		FREE_OBJECT(A_on_axes);
 	}
 	if (A_on_trihedral_pairs) {
@@ -132,6 +157,9 @@ surface_object_with_group::~surface_object_with_group()
 		FREE_OBJECT(Orbits_on_single_sixes);
 	}
 	if (Orbits_on_double_sixes) {
+		if (f_v) {
+			cout << "surface_object_with_group::~surface_object_with_group before FREE_OBJECT(Orbits_on_double_sixes)" << endl;
+		}
 		FREE_OBJECT(Orbits_on_double_sixes);
 	}
 	if (Orbits_on_tritangent_planes) {
@@ -148,6 +176,9 @@ surface_object_with_group::~surface_object_with_group()
 	}
 	if (Orbits_on_points_not_on_lines) {
 		FREE_OBJECT(Orbits_on_points_not_on_lines);
+	}
+	if (f_v) {
+		cout << "surface_object_with_group::~surface_object_with_group done" << endl;
 	}
 }
 

@@ -1447,7 +1447,6 @@ void linear_algebra_global::create_frame(
 
 	Int_vec_zero(frame, n * n);
 	int i;
-	long int a, b, c, d;
 
 	for (i = 0; i < n; i++) {
 		frame[i * n + i] = 1;

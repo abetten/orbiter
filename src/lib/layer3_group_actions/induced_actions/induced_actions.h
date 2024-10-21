@@ -1036,18 +1036,6 @@ public:
 
 	data_structures_groups::hash_table_subgroups *Hash_table_subgroups;
 
-#if 0
-	int nb_subgroups;
-	int subgroup_order;
-
-	groups::subgroup **Subgroups;
-
-	int **sets; // [nb_subgroups][subgroup_order]
-
-	int *perm; // inverse of perm_inv
-	int *perm_inv; // for quicksort_array_with_perm
-
-#endif
 
 	int max_subgroup_order;
 

@@ -345,6 +345,8 @@ public:
 class isomorph_arguments {
 public:
 
+	// TABLES/isomorph.tex
+
 	int f_prefix_iso;
 	std::string prefix_iso;
 
@@ -750,8 +752,10 @@ public:
 			int nb_objects,
 			std::string &prefix,
 			int verbose_level);
-	void write_fusion(int verbose_level);
-	void read_fusion(int verbose_level);
+	void write_fusion(
+			int verbose_level);
+	void read_fusion(
+			int verbose_level);
 	void write_representatives_and_stabilizers(
 			int verbose_level);
 	void read_representatives_and_stabilizers(
@@ -760,8 +764,10 @@ public:
 			isomorph *Iso, int idx,
 			groups::strong_generators *&SG,
 			int verbose_level);
-	void save(int verbose_level);
-	void load(int verbose_level);
+	void save(
+			int verbose_level);
+	void load(
+			int verbose_level);
 	void calc_fusion_statistics();
 	void print_fusion_statistics();
 };

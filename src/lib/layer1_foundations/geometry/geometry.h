@@ -628,6 +628,9 @@ public:
 
 	projective_space *P;
 
+
+	// TABLES/geometric_object_1.tex
+
 	int f_subiaco_oval;
 	int f_short;
 	int f_subiaco_hyperoval;
@@ -668,6 +671,10 @@ public:
 	int f_ttp_hyperoval;
 	int f_ttp_construction_B;
 
+
+	// TABLES/geometric_object_2.tex
+
+
 	int f_unital_XXq_YZq_ZYq;
 
 	int f_desarguesian_line_spread_in_PG_3_q;
@@ -702,6 +709,8 @@ public:
 	std::string intersection_of_zariski_open_sets_ring_label;
 	std::vector<std::string> Variety_coeffs;
 
+	// undocumented:
+
 	int f_number_of_conditions_satisfied;
 	std::string number_of_conditions_satisfied_ring_label;
 	std::string number_of_conditions_satisfied_fname;
@@ -712,6 +721,8 @@ public:
 	std::string curve_label_txt;
 	std::string curve_label_tex;
 	std::string curve_coeffs;
+
+	// undocumented:
 
 	int f_set;
 	std::string set_label_txt;

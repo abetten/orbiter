@@ -1679,12 +1679,6 @@ public:
 			std::ostream &ost, long int rk, int *v);
 	void print_point(
 			std::ostream &ost, int *v);
-#if 0
-	void sstr_line_label(
-			std::stringstream &sstr, long int pt);
-	void sstr_tritangent_plane_label(
-			std::stringstream &sstr, long int pt);
-#endif
 	void print_one_line_tex(
 			std::ostream &ost,
 			long int *Lines, int nb_lines, int idx);

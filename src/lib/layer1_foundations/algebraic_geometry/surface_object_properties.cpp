@@ -2157,6 +2157,7 @@ void surface_object_properties::print_axes(
 		}
 		ost << "\\\\" << endl;
 	}
+	ost << "Number of axes: " << nb_axes << "\\\\" << endl;
 }
 
 void surface_object_properties::print_singular_points(

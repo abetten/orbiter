@@ -51,6 +51,13 @@ subgroup_lattice::subgroup_lattice()
 
 subgroup_lattice::~subgroup_lattice()
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice::~subgroup_lattice" << endl;
+	}
 	int i;
 
 	if (Subgroup_lattice_layer) {
@@ -59,6 +66,9 @@ subgroup_lattice::~subgroup_lattice()
 			FREE_OBJECT(Subgroup_lattice_layer[i]);
 		}
 		FREE_pvoid((void **) Subgroup_lattice_layer);
+	}
+	if (f_v) {
+		cout << "subgroup_lattice::~subgroup_lattice done" << endl;
 	}
 }
 

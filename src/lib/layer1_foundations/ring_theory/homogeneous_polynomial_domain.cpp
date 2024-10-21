@@ -331,7 +331,7 @@ field_theory::finite_field *homogeneous_polynomial_domain::get_F()
 	return F;
 }
 
-std::string &homogeneous_polynomial_domain::get_symbol(
+std::string homogeneous_polynomial_domain::get_symbol(
 		int i)
 {
 	return symbols[i];
@@ -374,19 +374,19 @@ int homogeneous_polynomial_domain::get_monomial(
 	return Monomials[i * nb_variables + j];
 }
 
-std::string &homogeneous_polynomial_domain::get_monomial_symbol_easy(
+std::string homogeneous_polynomial_domain::get_monomial_symbol_easy(
 		int i)
 {
 	return monomial_symbols_easy[i];
 }
 
-std::string &homogeneous_polynomial_domain::get_monomial_symbols_latex(
+std::string homogeneous_polynomial_domain::get_monomial_symbols_latex(
 		int i)
 {
 	return monomial_symbols_latex[i];
 }
 
-std::string &homogeneous_polynomial_domain::get_monomial_symbols(
+std::string homogeneous_polynomial_domain::get_monomial_symbols(
 		int i)
 {
 	return monomial_symbols[i];

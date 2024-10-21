@@ -39,6 +39,16 @@ subgroup_lattice_layer::subgroup_lattice_layer()
 
 subgroup_lattice_layer::~subgroup_lattice_layer()
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "subgroup_lattice_layer::~subgroup_lattice_layer layer_idx = " << layer_idx << endl;
+	}
+	if (f_v) {
+		cout << "subgroup_lattice_layer::~subgroup_lattice_layer done" << endl;
+	}
 }
 
 void subgroup_lattice_layer::init(

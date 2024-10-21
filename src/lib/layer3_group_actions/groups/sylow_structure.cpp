@@ -32,6 +32,13 @@ sylow_structure::sylow_structure()
 
 sylow_structure::~sylow_structure()
 {
+	int verbose_level = 0;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sylow_structure::~sylow_structure" << endl;
+	}
 	if (primes) {
 		FREE_int(primes);
 	}
@@ -39,10 +46,25 @@ sylow_structure::~sylow_structure()
 		FREE_int(exponents);
 	}
 	if (Subgroup_lattice) {
-		FREE_OBJECTS(Subgroup_lattice);
+		if (f_v) {
+			cout << "sylow_structure::~sylow_structure before FREE_OBJECT(Subgroup_lattice)" << endl;
+		}
+		FREE_OBJECT(Subgroup_lattice);
+		if (f_v) {
+			cout << "sylow_structure::~sylow_structure after FREE_OBJECT(Subgroup_lattice)" << endl;
+		}
 	}
 	if (Sub) {
+		if (f_v) {
+			cout << "sylow_structure::~sylow_structure before FREE_OBJECTS(Sub)" << endl;
+		}
 		FREE_OBJECTS(Sub);
+		if (f_v) {
+			cout << "sylow_structure::~sylow_structure after FREE_OBJECTS(Sub)" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "sylow_structure::~sylow_structure done" << endl;
 	}
 }
 
@@ -171,6 +193,11 @@ void sylow_structure::init(
 		// don't free the objects SG1 and P, as they are now part of Sub[idx].
 		//FREE_OBJECT(SG1);
 		//FREE_OBJECT(P);
+		if (f_v) {
+			cout << "sylow_structure::init "
+					"computing Sylow subgroup for prime "
+					<< primes[idx] << " done" << endl;
+		}
 
 	}
 

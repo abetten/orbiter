@@ -388,36 +388,6 @@ void surface_domain::print_point(
 	Int_vec_print_fully(ost, v, 4);
 }
 
-#if 0
-void surface_domain::sstr_line_label(
-		std::stringstream &sstr, long int pt)
-{
-	if (pt >= 27) {
-		cout << "surface_domain::sstr_line_label pt >= 27, pt=" << pt << endl;
-		exit(1);
-	}
-	if (pt < 0) {
-		cout << "surface_domain::sstr_line_label pt < 0, pt=" << pt << endl;
-		exit(1);
-	}
-	sstr << Schlaefli->Labels->Line_label_tex[pt];
-}
-
-void surface_domain::sstr_tritangent_plane_label(
-		std::stringstream &sstr, long int pt)
-{
-	if (pt >= 45) {
-		cout << "surface_domain::sstr_tritangent_plane_label pt >= 45, pt=" << pt << endl;
-		exit(1);
-	}
-	if (pt < 0) {
-		cout << "surface_domain::sstr_tritangent_plane_label pt < 0, pt=" << pt << endl;
-		exit(1);
-	}
-	sstr << Schlaefli->Labels->Tritangent_plane_label_tex[pt];
-}
-#endif
-
 void surface_domain::print_one_line_tex(
 		std::ostream &ost,
 		long int *Lines, int nb_lines, int idx)

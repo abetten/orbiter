@@ -144,7 +144,8 @@ void representatives::init(
 	}
 }
 
-void representatives::write_fusion(int verbose_level)
+void representatives::write_fusion(
+		int verbose_level)
 // Writes fusion[] and handle[]
 // If the object is a chosen representative for an isomorphism type 
 // (i.e., if fusion[i] == i) then the identity element is written.
@@ -198,7 +199,8 @@ void representatives::write_fusion(int verbose_level)
 	
 }
 
-void representatives::read_fusion(int verbose_level)
+void representatives::read_fusion(
+		int verbose_level)
 // Reads fusion[] and handle[]
 {
 	int f_v = (verbose_level >= 1);
@@ -486,7 +488,8 @@ void representatives::get_stabilizer(
 	}
 }
 
-void representatives::save(int verbose_level)
+void representatives::save(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
@@ -500,7 +503,8 @@ void representatives::save(int verbose_level)
 	}
 }
 
-void representatives::load(int verbose_level)
+void representatives::load(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
