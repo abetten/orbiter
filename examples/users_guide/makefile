@@ -7473,6 +7473,8 @@ test_6_4:
 	make M24_perm_group
 	make M22_bar
 	make curve_q13_f0_clean2_variety_make_group
+	make conic_group_q5
+	make group_of_Hirschfeld_surface
 
 
 
@@ -8019,7 +8021,7 @@ curve_q13_f0_clean2_variety_make_group:
 			-ring R \
 			-equation_in_algebraic_form $(CURVE_Q13_F0_CLEAN2_EQUATION) \
 			-label_txt curve_q13_f0_clean2 \
-			-label_tex curve\_q13\_f0\_clean2 \
+			-label_tex "{\\rm curve\_q13\_f0\_clean2}" \
 		-end \
 		-define G -modified_group \
 			-stabilizer_of_variety V \
@@ -8030,6 +8032,70 @@ curve_q13_f0_clean2_variety_make_group:
 		-end
 	pdflatex PGL_3_13_stab_of_curve_q13_f0_clean2_report.tex
 	$(OPEN) PGL_3_13_stab_of_curve_q13_f0_clean2_report.pdf
+
+
+
+conic_group_q5:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 2 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2" "X_0,X_1,X_2" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form "X1^2-X0*X2" \
+			-label_txt conic_q5 \
+			-label_tex "{\\rm conic\_q5}" \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_3_5_stab_of_conic_q5_report.tex
+	$(OPEN) PGL_3_5_stab_of_conic_q5_report.pdf
+
+group_of_Hirschfeld_surface_q4:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form "X0^2*X3+X0*X3^2+X1^2*X2+X1*X2^2" \
+			-label_txt Hirschfeld_surface_q4 \
+			-label_tex "{\\rm Hirschfeld\_surface\_q4}" \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with V -do \
+		-variety_activity \
+			-report \
+		-end
+	pdflatex variety_Hirschfeld_surface_q4_report.tex
+	$(OPEN) variety_Hirschfeld_surface_q4_report.pdf
+	pdflatex PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.tex
+	$(OPEN) PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.pdf
 
 
 
@@ -24816,7 +24882,7 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Section 17.5: Gnuplot interface
+# Section 18.5: Gnuplot interface
 
 
 
@@ -24824,7 +24890,7 @@ SECTION_GNUPLOT_INTERFACE:
 
 
 
-test_17_5:
+test_18_5:
 	make gnuplot_test_data
 	make gnuplot_Eulerfunction_50
 

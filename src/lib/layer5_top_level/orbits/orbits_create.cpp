@@ -812,7 +812,20 @@ void orbits_create::init(
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
 						"before Classifier.classify" << endl;
 			}
-			Canonical_form_classifier->classify(Canonical_form_classifier->Input, verbose_level);
+
+			std::string fname_base;
+
+			if (Descr->Canonical_form_classifier_description->f_output_fname) {
+				fname_base = Descr->Canonical_form_classifier_description->fname_base_out;
+			}
+			else {
+				fname_base = "classification_";
+			}
+
+			Canonical_form_classifier->classify(
+					Canonical_form_classifier->Input,
+					fname_base,
+					verbose_level);
 			if (f_v) {
 				cout << "projective_space_global::classify_quartic_curves_with_substructure "
 						"after Classifier.classify" << endl;

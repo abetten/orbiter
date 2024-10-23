@@ -1968,25 +1968,6 @@ void modified_group_create::do_stabilizer_of_variety(
 
 	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"before getting PA" << endl;
-	}
-	projective_geometry::projective_space_with_action *PA = Input_Variety->PA;
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"after getting PA" << endl;
-	}
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"before getting Poly_ring" << endl;
-	}
-	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Variety->Variety_object->Ring;
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"after getting Poly_ring" << endl;
-	}
 
 
 	if (f_v) {
@@ -1995,8 +1976,8 @@ void modified_group_create::do_stabilizer_of_variety(
 	}
 
 	Classifier->init_direct(
-			PA,
-			Poly_ring,
+			//PA,
+			//Poly_ring,
 			1 /*nb_input_Vo*/,
 			Input_Variety,
 			fname_base,
@@ -2012,13 +1993,22 @@ void modified_group_create::do_stabilizer_of_variety(
 	canonical_form::canonical_form_global Canonical_form_global;
 
 
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"before Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
 	Canonical_form_global.compute_group_and_tactical_decomposition(
 			Classifier,
 			Input_Variety,
 			fname_base,
 			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
+	}
 
 
+	FREE_OBJECT(Classifier);
 
 #if 0
 	geometry::projective_space *Projective_space;
@@ -2079,15 +2069,15 @@ void modified_group_create::do_stabilizer_of_variety(
 	//Input_Vo[0].Stab_gens;
 
 
-	A_base = PA->A;
-	A_previous = PA->A;
+	A_base = Input_Variety->PA->A;
+	A_previous = Input_Variety->PA->A;
 
 
 
 
 
-	label = PA->A->label + "_stab_of_" + Input_Variety->Variety_object->label_txt;
-	label_tex = PA->A->label_tex + "\\_stab\\_of\\_" + Input_Variety->Variety_object->label_tex;
+	label = Input_Variety->PA->A->label + "_stab_of_" + Input_Variety->Variety_object->label_txt;
+	label_tex = Input_Variety->PA->A->label_tex + "{\\rm \\_stab\\_of\\_}" + Input_Variety->Variety_object->label_tex;
 	if (f_v) {
 		cout << "modified_group_create::do_stabilizer_of_variety label = " << label << endl;
 		cout << "modified_group_create::do_stabilizer_of_variety label_tex = " << label_tex << endl;
@@ -2120,8 +2110,10 @@ void modified_group_create::do_stabilizer_of_variety(
 	A_modified->label_tex = label_tex;
 
 	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety A_modified->label = " << A_modified->label << endl;
-		cout << "modified_group_create::do_stabilizer_of_variety A_modified->label_tex = " << A_modified->label_tex << endl;
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::do_stabilizer_of_variety "
+				"A_modified->label_tex = " << A_modified->label_tex << endl;
 	}
 
 

@@ -162,6 +162,9 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 		canonical_form::variety_object_with_action *Input_Vo,
 		std::string &fname_base,
 		int verbose_level)
+// called from
+// modified_group_create::do_stabilizer_of_variety
+// variety_activity::do_compute_group
 {
 	int f_v = (verbose_level >= 1);
 
@@ -182,15 +185,15 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"before Classification_of_varieties_nauty->init" << endl;
+				"before Classification_of_varieties_nauty->prepare_for_classification" << endl;
 	}
-	Classification_of_varieties_nauty->init(
+	Classification_of_varieties_nauty->prepare_for_classification(
 			Classifier->Input,
 			Classifier,
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"after Classification_of_varieties_nauty->init" << endl;
+				"after Classification_of_varieties_nauty->prepare_for_classification" << endl;
 	}
 
 	if (f_v) {
@@ -257,7 +260,7 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 	}
 
 
-	FREE_OBJECT(Classifier);
+	//FREE_OBJECT(Classifier);
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition done" << endl;

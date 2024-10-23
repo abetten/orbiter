@@ -62,9 +62,8 @@ namespace canonical_form {
 	class canonical_form_classifier_description;
 	class canonical_form_classifier;
 	class canonical_form_global;
-	//class canonical_form_substructure;
 	class classification_of_varieties_nauty;
-	class classification_of_varieties;
+	//class classification_of_varieties;
 	class combinatorial_object_with_properties;
 	class input_objects_of_type_variety;
 	class objects_after_classification;

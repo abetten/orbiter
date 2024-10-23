@@ -83,18 +83,21 @@ classification_of_varieties_nauty::~classification_of_varieties_nauty()
 
 }
 
-void classification_of_varieties_nauty::init(
+void classification_of_varieties_nauty::prepare_for_classification(
 		input_objects_of_type_variety *Input,
 		canonical_form_classifier *Classifier,
 		int verbose_level)
+// called from
+// canonical_form_classifier::classify
+// canonical_form_global::compute_group_and_tactical_decomposition
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init " << endl;
+		cout << "classification_of_varieties_nauty::prepare_for_classification " << endl;
 	}
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init" << endl;
+		cout << "classification_of_varieties_nauty::prepare_for_classification" << endl;
 	}
 
 	classification_of_varieties_nauty::Classifier = Classifier;
@@ -103,11 +106,11 @@ void classification_of_varieties_nauty::init(
 	classification_of_varieties_nauty::fname_base = Input->fname_base_out;
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"nb_objects_to_test=" << Input->nb_objects_to_test << endl;
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"fname_base=" << fname_base << endl;
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"Input->nb_objects_to_test=" << Input->nb_objects_to_test << endl;
 	}
 
@@ -118,35 +121,35 @@ void classification_of_varieties_nauty::init(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
-				"before prepare_canonical_forms" << endl;
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
+				"before prepare_input" << endl;
 	}
-	prepare_canonical_forms(verbose_level);
+	prepare_input(verbose_level);
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
-				"after prepare_canonical_forms" << endl;
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
+				"after prepare_input" << endl;
 	}
 
 #if 0
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"before classify_nauty" << endl;
 	}
 	classify_nauty(verbose_level - 1);
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"after classify_nauty" << endl;
 	}
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"before write_classification_by_nauty_csv" << endl;
 	}
 	write_classification_by_nauty_csv(
 			fname_base,
 			verbose_level);
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init "
+		cout << "classification_of_varieties_nauty::prepare_for_classification "
 				"after write_classification_by_nauty_csv" << endl;
 	}
 
@@ -154,28 +157,66 @@ void classification_of_varieties_nauty::init(
 
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::init done" << endl;
+		cout << "classification_of_varieties_nauty::prepare_for_classification done" << endl;
 	}
 
 }
 
-void classification_of_varieties_nauty::prepare_canonical_forms(
+void classification_of_varieties_nauty::compute_classification(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification" << endl;
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
+				"before classify_nauty" << endl;
+	}
+	classify_nauty(verbose_level);
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
+				"after classify_nauty" << endl;
+	}
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
+				"before write_classification_by_nauty_csv" << endl;
+	}
+	write_classification_by_nauty_csv(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification "
+				"after write_classification_by_nauty_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_varieties_nauty::compute_classification done" << endl;
+	}
+}
+
+void classification_of_varieties_nauty::prepare_input(
 		int verbose_level)
 // initializes the entries of Variety_table[nb_inputs]
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::prepare_canonical_forms " << endl;
+		cout << "classification_of_varieties_nauty::prepare_input " << endl;
 	}
 
 	if (Input == NULL) {
-		cout << "classification_of_varieties_nauty::prepare_canonical_forms Input == NULL" << endl;
+		cout << "classification_of_varieties_nauty::prepare_input Input == NULL" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::prepare_canonical_forms "
+		cout << "classification_of_varieties_nauty::prepare_input "
 				"Input->nb_objects_to_test" << Input->nb_objects_to_test << endl;
 	}
 
@@ -198,7 +239,7 @@ void classification_of_varieties_nauty::prepare_canonical_forms(
 		Variety = NEW_OBJECT(variety_compute_canonical_form);
 
 		if (f_v) {
-			cout << "classification_of_varieties_nauty::prepare_canonical_forms "
+			cout << "classification_of_varieties_nauty::prepare_input "
 					"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
 					<< " before Variety->init" << endl;
 		}
@@ -214,7 +255,7 @@ void classification_of_varieties_nauty::prepare_canonical_forms(
 
 
 		if (f_v) {
-			cout << "classification_of_varieties_nauty::prepare_canonical_forms "
+			cout << "classification_of_varieties_nauty::prepare_input "
 					"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
 					<< " after Variety->init" << endl;
 		}
@@ -223,7 +264,7 @@ void classification_of_varieties_nauty::prepare_canonical_forms(
 	}
 
 	if (f_v) {
-		cout << "classification_of_varieties_nauty::prepare_canonical_forms done" << endl;
+		cout << "classification_of_varieties_nauty::prepare_input done" << endl;
 	}
 }
 
@@ -325,41 +366,6 @@ void classification_of_varieties_nauty::main_loop(
 	for (input_counter = 0; input_counter < Input->nb_objects_to_test; input_counter++) {
 
 
-#if 0
-		string fname_case_out;
-
-		fname_case_out = fname_base + "_cnt" + std::to_string(input_counter);
-
-		variety_compute_canonical_form *Variety;
-
-		Variety = NEW_OBJECT(variety_compute_canonical_form);
-
-		if (f_v) {
-			cout << "classification_of_varieties_nauty::main_loop "
-					"input_counter = " << input_counter << " / " << nb_objects_to_test
-					<< " before Variety->init" << endl;
-		}
-		Variety->init(
-				Classifier,
-				Classifier->Ring_with_action,
-				Classifier->Classification_of_varieties_nauty,
-				fname_case_out,
-				input_counter,
-				&Input_Vo[input_counter],
-				verbose_level - 2);
-
-
-
-		if (f_v) {
-			cout << "classification_of_varieties_nauty::main_loop "
-					"input_counter = " << input_counter << " / " << nb_objects_to_test
-					<< " after Variety->init" << endl;
-		}
-
-		Canonical_forms[input_counter] = Variety;
-
-#endif
-
 		variety_compute_canonical_form *Variety;
 
 		Variety = Canonical_forms[input_counter];
@@ -389,6 +395,14 @@ void classification_of_varieties_nauty::main_loop(
 			if (Classifier->has_description()) {
 				f_save_nauty_input_graphs = Classifier->get_description()->f_save_nauty_input_graphs;
 			}
+
+
+			int f_found_canonical_form;
+			int idx_canonical_form;
+			int idx_equation;
+			int f_found_eqn;
+
+
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
 						"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
@@ -396,6 +410,10 @@ void classification_of_varieties_nauty::main_loop(
 			}
 			Variety->compute_canonical_form_nauty_new(
 					f_save_nauty_input_graphs,
+					f_found_canonical_form,
+					idx_canonical_form,
+					idx_equation,
+					f_found_eqn,
 					verbose_level);
 
 
@@ -407,19 +425,19 @@ void classification_of_varieties_nauty::main_loop(
 
 			Goi[input_counter] = Variety->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
 
-			if (Variety->Variety_stabilizer_compute->f_found_canonical_form
-					&& Variety->Variety_stabilizer_compute->f_found_eqn) {
+			if (f_found_canonical_form
+					&& f_found_eqn) {
 
 				F_first_time[input_counter] = false;
 
 			}
-			else if (Variety->Variety_stabilizer_compute->f_found_canonical_form
-					&& !Variety->Variety_stabilizer_compute->f_found_eqn) {
+			else if (f_found_canonical_form
+					&& !f_found_eqn) {
 
 				F_first_time[input_counter] = true;
 
 			}
-			else if (!Variety->Variety_stabilizer_compute->f_found_canonical_form) {
+			else if (!f_found_canonical_form) {
 
 				F_first_time[input_counter] = true;
 
@@ -429,8 +447,8 @@ void classification_of_varieties_nauty::main_loop(
 				exit(1);
 			}
 
-			Idx_canonical_form[input_counter] = Variety->Variety_stabilizer_compute->idx_canonical_form;
-			Idx_equation[input_counter] = Variety->Variety_stabilizer_compute->idx_equation;
+			Idx_canonical_form[input_counter] = idx_canonical_form;
+			Idx_equation[input_counter] = idx_equation;
 
 			if (F_first_time[input_counter]) {
 
@@ -442,7 +460,7 @@ void classification_of_varieties_nauty::main_loop(
 
 				for (i = 0; i < input_counter; i++) {
 					idx = Idx_canonical_form[i];
-					if (idx >= Variety->Variety_stabilizer_compute->idx_canonical_form) {
+					if (idx >= idx_canonical_form) {
 						Idx_canonical_form[i]++;
 					}
 				}
@@ -533,14 +551,22 @@ std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 
 	std::string header;
 
-	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,NPts,Pts,Bitangents";
+	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso_idx,F_Fst,Idx_canonical,Idx_eqn,Eqn,Eqn2,nb_pts_on_curve,pts_on_curve,Bitangents";
 
-#if 0
-	if (Classifier->Descr->carry_through.size()) {
-		int i;
+#if 1
+	if (Classifier->has_description()) {
+		if (Classifier->get_description()->carry_through.size()) {
+			int i;
 
-		for (i = 0; i < Classifier->Descr->carry_through.size(); i++) {
-			header += "," + Classifier->Descr->carry_through[i];
+			for (i = 0; i < Classifier->get_description()->carry_through.size(); i++) {
+				header += "," + Classifier->get_description()->carry_through[i];
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "classification_of_varieties_nauty::stringify_csv_header_line_nauty no carry though" << endl;
+			}
+
 		}
 	}
 #endif
@@ -710,7 +736,8 @@ void classification_of_varieties_nauty::report_iso_types(
 						"orbit_index = " << orbit_index << endl;
 			}
 
-			ost << "Isomorphism class " << orbit_index << " / " << nb_orbits << " is input " << idx << ":\\\\" << endl;
+			ost << "Isomorphism class " << orbit_index << " / " << nb_orbits
+					<< " is input " << idx << ":\\\\" << endl;
 			ost << "Automorphism group order " << Goi[idx] << "\\\\" << endl;
 
 

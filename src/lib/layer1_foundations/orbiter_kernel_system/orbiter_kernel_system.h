@@ -339,6 +339,9 @@ public:
 			std::string &fname, std::string &col_label,
 			std::string *&Column, int &len,
 			int verbose_level);
+	void read_table_of_strings_as_matrix(
+			std::string &fname, std::string &col_label,
+			int *&M, int &m, int &n, int verbose_level);
 	void read_csv_file_and_get_column(
 			std::string &fname, std::string &col_header,
 			long int *&Data, int &data_size, int verbose_level);

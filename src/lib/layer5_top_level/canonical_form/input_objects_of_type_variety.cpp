@@ -129,6 +129,8 @@ void input_objects_of_type_variety::init_direct(
 		canonical_form::variety_object_with_action *Input_Vo,
 		std::string &fname_base_out,
 		int verbose_level)
+// Vo[i] = Input_Vo + i;
+// Vo[nb_objects_to_test]
 {
 	int f_v = (verbose_level >= 1);
 
@@ -152,7 +154,8 @@ void input_objects_of_type_variety::init_direct(
 		Vo[i] = Input_Vo + i;
 
 		if (f_v) {
-			cout << "input_objects_of_type_variety::init_direct i = " << i << " / " << nb_objects_to_test << ", Variety_object = ";
+			cout << "input_objects_of_type_variety::init_direct "
+					"i = " << i << " / " << nb_objects_to_test << ", Variety_object = ";
 			Vo[i]->Variety_object->print(cout);
 		}
 	}
@@ -251,7 +254,8 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 	if (f_v) {
 		cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files" << endl;
 		if (Classifier->get_description()->f_has_nauty_output) {
-			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files f_has_nauty_output" << endl;
+			cout << "input_objects_of_type_variety::read_input_objects_from_list_of_csv_files "
+					"f_has_nauty_output" << endl;
 		}
 	}
 

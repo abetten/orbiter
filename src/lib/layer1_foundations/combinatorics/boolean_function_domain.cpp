@@ -301,6 +301,9 @@ void boolean_function_domain::setup_polynomial_rings(
 
 void boolean_function_domain::compute_polynomial_representation(
 		int *func, int *coeff, int verbose_level)
+// called from
+// boolean_function_classify::search_for_bent_functions
+// action_on_forms::orbits_on_functions
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

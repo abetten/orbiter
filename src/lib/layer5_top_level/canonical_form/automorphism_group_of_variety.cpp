@@ -90,6 +90,8 @@ void automorphism_group_of_variety::init_and_compute(
 		int nb_pts,
 		int f_save_nauty_input_graphs,
 		int verbose_level)
+// called from:
+// canonical_form_global::compute_stabilizer_of_quartic_curve
 {
 	int f_v = (verbose_level >= 1);
 

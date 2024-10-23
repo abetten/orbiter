@@ -213,8 +213,8 @@ void canonical_form_classifier::init(
 
 
 void canonical_form_classifier::init_direct(
-		projective_geometry::projective_space_with_action *PA,
-		ring_theory::homogeneous_polynomial_domain *Poly_ring,
+		//projective_geometry::projective_space_with_action *PA,
+		//ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		int nb_input_Vo,
 		canonical_form::variety_object_with_action *Input_Vo,
 		std::string &fname_base_out,
@@ -236,6 +236,26 @@ void canonical_form_classifier::init_direct(
 
 	//induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"before getting PA" << endl;
+	}
+	projective_geometry::projective_space_with_action *PA = Input_Vo->PA;
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"after getting PA" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"before getting Poly_ring" << endl;
+	}
+	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo->Variety_object->Ring;
+	if (f_v) {
+		cout << "canonical_form_classifier::init_direct "
+				"after getting Poly_ring" << endl;
+	}
 
 
 	Ring_with_action = NEW_OBJECT(projective_geometry::ring_with_action);
@@ -377,6 +397,7 @@ void canonical_form_classifier::create_action_on_polynomials(
 
 void canonical_form_classifier::classify(
 		input_objects_of_type_variety *Input,
+		std::string &fname_base,
 		int verbose_level)
 // initializes Classification_of_varieties_nauty
 {
@@ -393,10 +414,10 @@ void canonical_form_classifier::classify(
 
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
-				"before Classification_of_varieties_nauty->init" << endl;
+				"before Classification_of_varieties_nauty->prepare_for_classification" << endl;
 	}
 
-	Classification_of_varieties_nauty->init(
+	Classification_of_varieties_nauty->prepare_for_classification(
 			Input,
 			this /*canonical_form_classifier *Classifier*/,
 			verbose_level);
@@ -404,7 +425,20 @@ void canonical_form_classifier::classify(
 
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
-				"after Classification_of_varieties_nauty->init" << endl;
+				"after Classification_of_varieties_nauty->prepare_for_classification" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"before Classification_of_varieties_nauty->compute_classification" << endl;
+	}
+	Classification_of_varieties_nauty->compute_classification(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"after Classification_of_varieties_nauty->compute_classification" << endl;
 	}
 
 

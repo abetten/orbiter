@@ -315,6 +315,7 @@ void design_activity::do_extract_solutions_by_index(
 
 	if (f_csv_format) {
 
+#if 0
 		data_structures::string_tools ST;
 
 		//int *Sol_idx_1;
@@ -358,26 +359,45 @@ void design_activity::do_extract_solutions_by_index(
 			FREE_int(data);
 		}
 
+		delete [] Column;
+
+#endif
+
+		int *Sol_idx_1;
+
+		Fio.Csv_file_support->read_table_of_strings_as_matrix(
+				fname_in, col_label,
+				Sol_idx_1, nb_sol, sol_width, verbose_level - 1);
+
+
+		int i;
+
 		if (f_v) {
 			cout << "design_activity::do_extract_solutions_by_index "
 					"Sol_idx_1 has size " << nb_sol << " x " << sol_width << endl;
 		}
 		Sol_idx = NEW_int(nb_sol * (prefix_sz + sol_width));
 		for (i = 0; i < nb_sol; i++) {
+			Int_vec_copy(prefix, Sol_idx + i * (prefix_sz + sol_width), prefix_sz);
+#if 0
 			for (j = 0; j < prefix_sz; j++) {
 				Sol_idx[i * (prefix_sz + sol_width) + j] = prefix[j];
 			}
-			int *data;
-			Int_vec_scan(Column[i], data, sol_width);
-			Int_vec_copy(data, Sol_idx + i * (prefix_sz + sol_width) + prefix_sz, sol_width);
-			FREE_int(data);
+#endif
+			//int *data;
+			//Int_vec_scan(Column[i], data, sol_width);
+			Int_vec_copy(
+					Sol_idx_1 + i * sol_width,
+					Sol_idx + i * (prefix_sz + sol_width) + prefix_sz,
+					sol_width);
+			//FREE_int(data);
 #if 0
 			for (j = 0; j < sol_width; j++) {
 				Sol_idx[i * (prefix_sz + sol_width) + prefix_sz + j] = Sol_idx_1[i * sol_width + j];
 			}
 #endif
 		}
-		//FREE_int(Sol_idx_1);
+		FREE_int(Sol_idx_1);
 		sol_width += prefix_sz;
 	}
 	else {
@@ -400,9 +420,12 @@ void design_activity::do_extract_solutions_by_index(
 
 			Sol_idx = NEW_int(nb_sol * (prefix_sz + sol_width));
 			for (i = 0; i < nb_sol; i++) {
+				Int_vec_copy(prefix, Sol_idx + i * (prefix_sz + sol_width), prefix_sz);
+#if 0
 				for (j = 0; j < prefix_sz; j++) {
 					Sol_idx[i * (prefix_sz + sol_width) + j] = prefix[j];
 				}
+#endif
 				for (j = 0; j < sol_width; j++) {
 					Sol_idx[i * (prefix_sz + sol_width) + prefix_sz + j] = SoS->Sets[i][j];
 				}

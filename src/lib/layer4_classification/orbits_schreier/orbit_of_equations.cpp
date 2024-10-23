@@ -1116,7 +1116,8 @@ void orbit_of_equations::save_csv(
 }
 
 
-static int orbit_of_equations_compare_func(void *a, void *b, void *data)
+static int orbit_of_equations_compare_func(
+		void *a, void *b, void *data)
 {
 	int *A = (int *)a;
 	int *B = (int *)b;

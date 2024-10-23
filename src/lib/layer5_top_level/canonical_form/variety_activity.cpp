@@ -120,6 +120,7 @@ void variety_activity::do_compute_group(
 
 	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
+#if 0
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"before getting PA" << endl;
@@ -139,7 +140,7 @@ void variety_activity::do_compute_group(
 		cout << "variety_activity::do_compute_group "
 				"after getting Poly_ring" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
@@ -147,8 +148,8 @@ void variety_activity::do_compute_group(
 	}
 
 	Classifier->init_direct(
-			PA,
-			Poly_ring,
+			//PA,
+			//Poly_ring,
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,
@@ -160,97 +161,6 @@ void variety_activity::do_compute_group(
 	}
 
 
-#if 0
-	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
-
-	Classification_of_varieties_nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
-
-
-
-	Classifier->Classification_of_varieties_nauty = Classification_of_varieties_nauty;
-
-	//Classifier->Output_nauty = Nauty;
-
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before Classification_of_varieties_nauty->init" << endl;
-	}
-	Classification_of_varieties_nauty->init(
-			Classifier->Input,
-			Classifier,
-			verbose_level);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after Classification_of_varieties_nauty->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before Classification_of_varieties_nauty->classify_nauty" << endl;
-	}
-	Classification_of_varieties_nauty->classify_nauty(verbose_level);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after Classification_of_varieties_nauty->classify_nauty" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before Classification_of_varieties_nauty->report" << endl;
-	}
-	Classification_of_varieties_nauty->report(
-			fname_base,
-			verbose_level);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after Classification_of_varieties_nauty->report" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
-	}
-	Classification_of_varieties_nauty->write_classification_by_nauty_csv(
-			fname_base,
-			verbose_level);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before copying stabilizer generators" << endl;
-	}
-	Input_Vo[0].f_has_automorphism_group = true;
-	Input_Vo[0].Stab_gens = NEW_OBJECT(groups::strong_generators);
-
-	Input_Vo[0].Stab_gens->init_copy(
-			Classification_of_varieties_nauty->Canonical_forms[0]->Variety_stabilizer_compute->Stab_gens_variety,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after copying stabilizer generators" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before Input_Vo[0].compute_tactical_decompositions" << endl;
-	}
-	Input_Vo[0].compute_tactical_decompositions(verbose_level);
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after Input_Vo[0].compute_tactical_decompositions" << endl;
-	}
-
-
-	FREE_OBJECT(Classifier);
-#endif
 
 	canonical_form::canonical_form_global Canonical_form_global;
 
@@ -268,7 +178,7 @@ void variety_activity::do_compute_group(
 				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
 	}
 
-
+	FREE_OBJECT(Classifier);
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group done" << endl;

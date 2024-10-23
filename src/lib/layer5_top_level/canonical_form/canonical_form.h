@@ -21,7 +21,7 @@ namespace canonical_form {
 // used in quartic_curve_from_surface
 
 
-//! to classify objects using canonical forms
+//! to classify objects using canonical forms, almost identical to class variety_stabilizer_compute
 
 
 class automorphism_group_of_variety {
@@ -60,6 +60,31 @@ public:
 
 	groups::strong_generators *Stab_gens_variety;
 		// stabilizer of the variety obtained by doing an orbit algorithm
+
+
+#if 0
+	// variety_stabilizer_compute:
+	projective_geometry::ring_with_action *Ring_with_action;
+
+	//canonical_form_of_variety *Variety;
+	variety_object_with_action *Variety_object_with_action;
+
+	int nb_rows, nb_cols;
+	data_structures::bitvector *Canonical_form;
+
+	l1_interfaces::nauty_output *NO;
+
+
+	groups::strong_generators *Set_stab;
+		// the set stabilizer of the set of rational points of the variety
+		// this is not the stabilizer of the variety!
+
+	orbits_schreier::orbit_of_equations *Orb;
+		// orbit under the set stabilizer
+
+	groups::strong_generators *Stab_gens_variety;
+		// the stabilizer of the original variety
+#endif
 
 
 	automorphism_group_of_variety();
@@ -216,8 +241,8 @@ public:
 			canonical_form_classifier_description *Descr,
 			int verbose_level);
 	void init_direct(
-			projective_geometry::projective_space_with_action *PA,
-			ring_theory::homogeneous_polynomial_domain *Poly_ring,
+			//projective_geometry::projective_space_with_action *PA,
+			//ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action *Input_Vo,
 			std::string &fname_base_out,
@@ -226,6 +251,7 @@ public:
 			int verbose_level);
 	void classify(
 			input_objects_of_type_variety *Input,
+			std::string &fname_base,
 			int verbose_level);
 	// initializes Classification_of_varieties_nauty
 	void init_skip(
@@ -338,11 +364,14 @@ public:
 
 	classification_of_varieties_nauty();
 	~classification_of_varieties_nauty();
-	void init(
+	void prepare_for_classification(
 			input_objects_of_type_variety *Input,
 			canonical_form_classifier *Classifier,
 			int verbose_level);
-	void prepare_canonical_forms(
+	void compute_classification(
+			std::string &fname_base,
+			int verbose_level);
+	void prepare_input(
 			int verbose_level);
 	// initializes the entries of Variety_table[nb_inputs]
 	// given the data in Vo[]
@@ -377,7 +406,7 @@ public:
 
 //! classification of varieties
 
-
+#if 0
 class classification_of_varieties {
 
 public:
@@ -493,7 +522,7 @@ public:
 			int verbose_level);
 
 };
-
+#endif
 
 
 
@@ -782,7 +811,7 @@ public:
 
 
 
-//! to compute the canonical form of a variety
+//! to compute the canonical form of a variety, relies on class variety_stabilizer_compute
 
 class variety_compute_canonical_form {
 
@@ -844,9 +873,17 @@ public:
 			int verbose_level);
 	void compute_canonical_form_nauty_new(
 			int f_save_nauty_input_graphs,
+			int &f_found_canonical_form,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
 			int verbose_level);
 	void classify_using_nauty_new(
 			int f_save_nauty_input_graphs,
+			int &f_found_canonical_form,
+			int &idx_canonical_form,
+			int &idx_equation,
+			int &f_found_eqn,
 			int verbose_level);
 	void handle_repeated_canonical_form_of_set_new(
 			int idx,
@@ -868,11 +905,6 @@ public:
 			int idx, int verbose_level);
 	// adds the canonical form at position idx, using Classification_of_varieties_nauty
 	void compute_canonical_object(
-			int verbose_level);
-	std::string stringify_csv_entry_one_line(
-			int i, int verbose_level);
-	void prepare_csv_entry_one_line(
-			std::vector<std::string> &v, int i,
 			int verbose_level);
 	std::string stringify_csv_entry_one_line_nauty(
 			int i, int verbose_level);
@@ -961,17 +993,9 @@ class variety_stabilizer_compute {
 
 public:
 
-	//canonical_form_classifier *Classifier;
-		// needed for:
-	// Classifier->PA->P,
-	// Classifier->PA->A
-	// Classifier->PA->F
-	// Classifier->AonHPD
-
 
 	projective_geometry::ring_with_action *Ring_with_action;
 
-	//canonical_form_of_variety *Variety;
 	variety_object_with_action *Variety_object_with_action;
 
 	int nb_rows, nb_cols;
@@ -990,12 +1014,6 @@ public:
 	groups::strong_generators *Stab_gens_variety;
 		// the stabilizer of the original variety
 
-
-	// not used inside this class:
-	int f_found_canonical_form;
-	int idx_canonical_form;
-	int idx_equation;
-	int f_found_eqn;
 
 
 

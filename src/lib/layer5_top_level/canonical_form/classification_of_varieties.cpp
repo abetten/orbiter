@@ -9,7 +9,7 @@
 
 
 
-
+#if 0
 
 #include "orbiter.h"
 
@@ -1585,7 +1585,7 @@ void classification_of_varieties::write_canonical_forms_csv(
 
 			string line;
 
-			line = Variety_table[i]->stringify_csv_entry_one_line(
+			line = Variety_table[i]->stringify_csv_entry_one_line_nauty_new(
 					i, verbose_level);
 
 			ost << i << "," << line << endl;
@@ -1619,11 +1619,13 @@ std::string classification_of_varieties::stringify_csv_header(
 	header = "ROW,CNT,PO,SO,PO_GO,PO_INDEX,Iso,Eqn,Eqn2,NPts,Pts,Bitangents,"
 			"Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago";
 
-	if (Classifier->get_description()->carry_through.size()) {
-		int i;
+	if (Classifier->has_description()) {
+		if (Classifier->get_description()->carry_through.size()) {
+			int i;
 
-		for (i = 0; i < Classifier->get_description()->carry_through.size(); i++) {
-			header += "," + Classifier->get_description()->carry_through[i];
+			for (i = 0; i < Classifier->get_description()->carry_through.size(); i++) {
+				header += "," + Classifier->get_description()->carry_through[i];
+			}
 		}
 	}
 	return header;
@@ -1836,5 +1838,5 @@ void classification_of_varieties::make_classification_table_nauty(
 
 
 }}}
-
+#endif
 

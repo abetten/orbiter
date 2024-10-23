@@ -21,10 +21,8 @@ namespace canonical_form {
 variety_stabilizer_compute::variety_stabilizer_compute()
 {
 
-	//Classifier = NULL;
 	Ring_with_action = NULL;
 
-	//Variety = NULL;
 	Variety_object_with_action = NULL;
 
 	nb_rows = 0;
@@ -39,11 +37,6 @@ variety_stabilizer_compute::variety_stabilizer_compute()
 
 	Stab_gens_variety = NULL;
 
-	f_found_canonical_form = false;
-	idx_canonical_form = 0;
-	idx_equation = 0;
-	f_found_eqn = false;
-
 }
 
 variety_stabilizer_compute::~variety_stabilizer_compute()
@@ -51,11 +44,6 @@ variety_stabilizer_compute::~variety_stabilizer_compute()
 	if (NO) {
 		FREE_OBJECT(NO);
 	}
-#if 0
-	if (canonical_labeling) {
-		FREE_lint(canonical_labeling);
-	}
-#endif
 	if (Set_stab) {
 		FREE_OBJECT(Set_stab);
 	}
@@ -73,7 +61,6 @@ void variety_stabilizer_compute::init(
 {
 	int f_v = (verbose_level >= 1);
 
-	//variety_stabilizer_compute::Classifier = Classifier;
 	variety_stabilizer_compute::Ring_with_action = Ring_with_action;
 
 	if (f_v) {
@@ -99,7 +86,6 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 	}
 
 
-	//variety_stabilizer_compute::Variety = Variety;
 	variety_stabilizer_compute::Variety_object_with_action = Variety_object_with_action;
 
 	if (f_v) {

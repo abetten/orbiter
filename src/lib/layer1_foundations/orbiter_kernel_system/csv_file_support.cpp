@@ -3283,7 +3283,76 @@ void csv_file_support::read_column_of_strings(
 	}
 }
 
+void csv_file_support::read_table_of_strings_as_matrix(
+		std::string &fname, std::string &col_label,
+		int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"reading file " << fname << endl;
+	}
+
+	data_structures::string_tools ST;
+
+	int i, j;
+
+
+	std::string *Column;
+	int len;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"before read_column_of_strings" << endl;
+	}
+	read_column_of_strings(
+			fname, col_label,
+			Column, len,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"after read_column_of_strings" << endl;
+	}
+
+	m = len;
+
+	if (m == 0) {
+		M = NEW_int(1);
+		n = 0;
+	}
+	else {
+		{
+			int *data;
+			Int_vec_scan(Column[0], data, n);
+			FREE_int(data);
+		}
+
+		M = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			std::string s;
+
+			ST.drop_quotes(
+					Column[i], s);
+			Column[i] = s;
+		}
+		{
+			int *data;
+			Int_vec_scan(Column[0], data, n);
+			Int_vec_copy(data, M + i * n, n);
+			FREE_int(data);
+		}
+	}
+
+	delete [] Column;
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_as_matrix "
+				"done" << endl;
+	}
+
+}
 
 void csv_file_support::read_csv_file_and_get_column(
 		std::string &fname, std::string &col_header,
