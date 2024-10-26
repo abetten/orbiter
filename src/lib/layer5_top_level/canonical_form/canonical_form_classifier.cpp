@@ -221,6 +221,9 @@ void canonical_form_classifier::init_direct(
 		int verbose_level)
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
+// called from
+// variety_activity::do_compute_group
+//
 {
 	int f_v = (verbose_level >= 1);
 

@@ -139,8 +139,32 @@ void stabilizer_chain_base_data::reallocate_base(
 	if (f_v) {
 		cout << "stabilizer_chain_base_data::reallocate_base" << endl;
 	}
+	if (f_v) {
+		cout << "stabilizer_chain_base_data::reallocate_base action = " << A->label << endl;
+		cout << "stabilizer_chain_base_data::reallocate_base old base length = " << base_len << endl;
+		cout << "stabilizer_chain_base_data::reallocate_base old base = ";
+		Lint_vec_print(cout, base, base_len);
+		cout << endl;
+		cout << "stabilizer_chain_base_data::reallocate_base new_base_point = " << new_base_point << endl;
+	}
+	for (int i = 0; i < base_len; i++) {
+		if (base[i] == new_base_point) {
+			cout << "stabilizer_chain_base_data::reallocate_base new_base_point is not possible because it is a member of the base already" << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base new_base_point = " << new_base_point << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base action = " << A->label << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base old base length = " << base_len << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base old base A->degree = " << A->degree << endl;
+			cout << "stabilizer_chain_base_data::reallocate_base old base = ";
+			Lint_vec_print(cout, base, base_len);
+			cout << endl;
+			exit(1);
+		}
+	}
 
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
+
+		int f_vv = (verbose_level >= 2);
+
 		int i, j;
 		long int *old_base;
 		int *old_transversal_length;
@@ -153,10 +177,10 @@ void stabilizer_chain_base_data::reallocate_base(
 		old_orbit_inv = orbit_inv;
 		old_path = path;
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base base_len = " << base_len << endl;
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step1" << endl;
 		}
 		base = NEW_lint(base_len + 1);
@@ -164,16 +188,16 @@ void stabilizer_chain_base_data::reallocate_base(
 		orbit = NEW_plint(base_len + 1);
 		orbit_inv = NEW_plint(base_len + 1);
 		path = NEW_int(base_len + 1);
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step2" << endl;
 		}
 		orbit[base_len] = NEW_lint(A->degree);
 		orbit_inv[base_len] = NEW_lint(A->degree);
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step3" << endl;
 		}
 		for (i = 0; i < base_len; i++) {
-			if (f_v) {
+			if (f_vv) {
 				cout << "stabilizer_chain_base_data::reallocate_base i=" << i << endl;
 			}
 			base[i] = old_base[i];
@@ -184,7 +208,7 @@ void stabilizer_chain_base_data::reallocate_base(
 		}
 		base[base_len] = new_base_point;
 		transversal_length[base_len] = 1;
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step4" << endl;
 		}
 		for (j = 0; j < A->degree; j++) {
@@ -192,7 +216,7 @@ void stabilizer_chain_base_data::reallocate_base(
 			orbit_inv[base_len][j] = -1;
 		}
 		base_len++;
-		if (f_v) {
+		if (f_vv) {
 			cout << "stabilizer_chain_base_data::reallocate_base step5" << endl;
 		}
 		if (old_base)

@@ -512,9 +512,9 @@ int linear_algebra::matrix_determinant(
 			Tmp[0 * n + j] = Tmp[i * n + j];
 			Tmp[i * n + j] = a;
 		}
-		if (ODD(i)) {
+		//if (ODD(i)) { // mistake A Betten 10/26/2024
 			eps *= -1;
-		}
+		//}
 	}
 
 	// pick the pivot element:

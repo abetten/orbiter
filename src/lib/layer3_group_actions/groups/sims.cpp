@@ -1724,14 +1724,14 @@ void sims::compute_coset_rep_path(
 	d = 0;
 	while (true) {
 
-		if (f_vv) {
+		if (false) {
 			cout << "Path[" << depth - d
 					<< "]=" << jj << endl;
 		}
 		Path[depth - d] = jj;
 
 		p = prev[i][jj];
-		if (f_vv) {
+		if (false) {
 			cout << "p=" << p << endl;
 		}
 
@@ -1739,14 +1739,14 @@ void sims::compute_coset_rep_path(
 			break;
 		}
 		else {
-			if (f_vv) {
+			if (false) {
 				cout << "Label[" << depth - 1 - d
 						<< "]=" << label[i][jj] << endl;
 			}
 			Label[depth - 1 - d] = label[i][jj];
 		}
 		jj = orbit_inv[i][p];
-		if (f_vv) {
+		if (false) {
 			cout << "jj=" << jj << endl;
 		}
 		d++;
@@ -1995,25 +1995,28 @@ void sims::random_schreier_generator(
 		int *Elt, int verbose_level)
 // computes random Schreier generator
 {
-	int i, r1, r2, pt, pt1, pt1b, pt2, pt2_coset;
-	int *gen, gen_idx, nbg;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
-		cout << "sims:random_schreier_generator" << endl;
-		cout << "sims:random_schreier_generator "
+		cout << "sims::random_schreier_generator" << endl;
+		cout << "sims::random_schreier_generator verbose_level = " << verbose_level << endl;
+		cout << "sims::random_schreier_generator "
 				"my_base_len=" << my_base_len << endl;
-		cout << "sims:random_schreier_generator orbit_len=";
+		cout << "sims::random_schreier_generator orbit_len=";
 		Int_vec_print(cout, orbit_len, my_base_len);
 		cout << endl;
-		cout << "sims:random_schreier_generator base:" << endl;
-		for (i = 0; i < my_base_len; i++) {
+		cout << "sims::random_schreier_generator base:" << endl;
+		for (int i = 0; i < my_base_len; i++) {
 			cout << i << " : " << get_orbit(i, 0) << endl;
 		}
 	}
+
+	orbiter_kernel_system::os_interface Os;
+	int i, r1, r2, pt, pt1, pt1b, pt2, pt2_coset;
+	int *gen, gen_idx, nbg;
+
 	if (nb_gen[0] == 0) {
 		if (f_vv) {
 			cout << "sims::random_schreier_generator "
@@ -2026,7 +2029,7 @@ void sims::random_schreier_generator(
 		if (f_vv) {
 			cout << "sims::random_schreier_generator "
 					"iteration" << endl;
-			cout << "sims:random_schreier_generator orbit_len=";
+			cout << "sims::random_schreier_generator orbit_len=";
 			Int_vec_print(cout, orbit_len, my_base_len);
 			cout << endl;
 		}
@@ -2239,9 +2242,12 @@ void sims::random_schreier_generator(
 		cout << "sims::random_schreier_generator "
 				"fatal: schreier generator does not stabilize pt" << endl;
 		cout << "pt=" << pt << endl;
+		cout << "sims::random_schreier_generator action=" << endl;
+		A->print_info();
 		cout << "schreier generator:" << endl;
 		A->Group_element->element_print(schreier_gen, cout);
 		im = A->Group_element->element_image_of(pt, schreier_gen, true);
+		cout << "pt = " << pt << endl;
 		cout << "im = " << im << endl;
 		exit(1);
 	}

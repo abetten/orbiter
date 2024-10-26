@@ -120,27 +120,6 @@ void variety_activity::do_compute_group(
 
 	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
-#if 0
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before getting PA" << endl;
-	}
-	projective_geometry::projective_space_with_action *PA = Input_Vo[0].PA;
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after getting PA" << endl;
-	}
-
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"before getting Poly_ring" << endl;
-	}
-	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
-	if (f_v) {
-		cout << "variety_activity::do_compute_group "
-				"after getting Poly_ring" << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
@@ -148,8 +127,6 @@ void variety_activity::do_compute_group(
 	}
 
 	Classifier->init_direct(
-			//PA,
-			//Poly_ring,
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,

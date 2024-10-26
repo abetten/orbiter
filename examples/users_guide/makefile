@@ -1,3 +1,7 @@
+###############################################################################
+# orbiter/examples/users_guide/makefile
+###############################################################################
+
 
 
 ORBITER_PATH=~/orbiter
@@ -100,7 +104,7 @@ test_problem:
 
 
 
-
+BAER_SUBGEOMETRY_IN_PG_3_4="0,1,2,3,4,5,8,11,12,23,26,27,38,39,42"
 
 # Section 2.6 vector of group elements
 
@@ -8993,7 +8997,7 @@ test_6_8:
 	make U_3_3
 	make PGL_2_3_group_table
 	make Co3
-	#make Ree_27
+	#make Ree_27 # needs too much memory
 	make Higman_Sims_group
 	make Higman_Sims_group_classes
 	make Higman_Sims_group_subgroup_lattice
@@ -9081,6 +9085,7 @@ Ree_27:
 			-report \
 		-end
 
+# not enough memory on Mac laptop
 # needs a lot of memory to run!
 
 

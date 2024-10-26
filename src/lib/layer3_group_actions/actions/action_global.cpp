@@ -3566,13 +3566,15 @@ void action_global::induce(
 
 	if (f_v) {
 		cout << "action_global::induce" << endl;
-		cout << "action_global::induce old_action = ";
-		old_action->print_info();
-		cout << endl;
-		cout << "action_global::induce new_action = ";
-		new_action->print_info();
-		cout << endl;
+		cout << "action_global::induce old_action = " << old_action->label << endl;
+		//old_action->print_info();
+		//cout << endl;
+		cout << "action_global::induce new_action = " << new_action->label << endl;
+		//new_action->print_info();
+		//cout << endl;
+	}
 
+	if (f_vv) {
 		cout << "action_global::induce "
 				"new_action->Stabilizer_chain->A = "
 				<< new_action->Stabilizer_chain->get_A()->label << endl;
@@ -3595,14 +3597,13 @@ void action_global::induce(
 	}
 
 	action *subaction;
-	groups::sims *G, *K;
+	groups::sims *Sims, *K;
 		// will become part of the action object
 		// 'this' by the end of this procedure
 	ring_theory::longinteger_object go, /*go1,*/ go2, go3;
-	ring_theory::longinteger_object G_order, K_order;
+	ring_theory::longinteger_object Sims_order, K_order;
 	ring_theory::longinteger_domain D;
 	int b, i, old_base_len;
-	action *fallback_action;
 
 	if (f_v) {
 		cout << "action_global::induce old_action" << endl;
@@ -3658,7 +3659,7 @@ void action_global::induce(
 		}
 	}
 
-	G = NEW_OBJECT(groups::sims);
+	Sims = NEW_OBJECT(groups::sims);
 	K = NEW_OBJECT(groups::sims);
 
 	// action of G is new_action
@@ -3672,12 +3673,12 @@ void action_global::induce(
 
 	if (f_v) {
 		cout << "action_global::induce "
-				"before G->init_without_base(this);" << endl;
+				"before Sims->init_without_base(this);" << endl;
 	}
-	G->init_without_base(new_action, verbose_level - 2);
+	Sims->init_without_base(new_action, verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::induce "
-				"after G->init_without_base(this);" << endl;
+				"after Sims->init_without_base(this);" << endl;
 	}
 
 
@@ -3695,7 +3696,7 @@ void action_global::induce(
 		for (i = 0; i < base_of_choice_len; i++) {
 			b = base_of_choice[i];
 			if (f_v) {
-				cout << i << "-th base point is " << b << endl;
+				cout << "action_global::induce the " << i << "-th base point is " << b << endl;
 			}
 			//old_base_len = old_action->base_len();
 			old_base_len = new_action->base_len();
@@ -3705,7 +3706,7 @@ void action_global::induce(
 						"before new_action->Stabilizer_chain->reallocate_base" << endl;
 			}
 			new_action->Stabilizer_chain->reallocate_base(
-					b, verbose_level);
+					b, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "action_global::induce "
 						"after new_action->Stabilizer_chain->reallocate_base" << endl;
@@ -3713,12 +3714,12 @@ void action_global::induce(
 
 			if (f_v) {
 				cout << "action_global::induce "
-						"before G->reallocate_base" << endl;
+						"before Sims->reallocate_base" << endl;
 			}
-			G->reallocate_base(old_base_len, verbose_level - 2);
+			Sims->reallocate_base(old_base_len, 0 /*verbose_level - 2*/);
 			if (f_v) {
 				cout << "action_global::induce "
-						"after G->reallocate_base" << endl;
+						"after Sims->reallocate_base" << endl;
 			}
 		}
 		if (f_vv) {
@@ -3733,22 +3734,27 @@ void action_global::induce(
 
 	}
 
+	action *fallback_action;
+
 	fallback_action = subaction; // changed A. Betten Dec 27, 2011 !!!
 	//fallback_action = old_action; // changed back A. Betten, May 27, 2012 !!!
 		// The BLT search needs old_action
 		// the translation plane search needs subaction
+	if (f_vv) {
+		cout << "action_global::induce fallback_action=" << fallback_action->label << endl;
+	}
 	if (fallback_action->base_len() == 0) {
 		if (f_vv) {
-			cout << "WARNING: action_global::induce "
+			cout << "action_global::induce WARNING: action_global::induce "
 					"fallback_action->base_len == 0" << endl;
-			cout << "fallback_action=" << fallback_action->label << endl;
-			cout << "subaction=" << subaction->label << endl;
-			cout << "old_action=" << old_action->label << endl;
-			cout << "old_G->A=" << old_G->A->label << endl;
+			cout << "action_global::induce fallback_action=" << fallback_action->label << endl;
+			cout << "action_global::induce subaction=" << subaction->label << endl;
+			cout << "action_global::induce old_action=" << old_action->label << endl;
+			cout << "action_global::induce old_G->A=" << old_G->A->label << endl;
 		}
 		fallback_action = old_G->A;
 		if (f_vv) {
-			cout << "changing fallback action to " << fallback_action->label
+			cout << "action_global::induce changing fallback action to " << fallback_action->label
 					<< endl;
 		}
 	}
@@ -3761,12 +3767,13 @@ void action_global::induce(
 		cout << "action_global::induce "
 				"fallback_action=" << fallback_action->label
 				<< " of degree " << fallback_action->degree << endl;
+		fallback_action->print_info();
 	}
 
 
 	if (f_v) {
 		cout << "action_global::induce "
-				"before K->init" << endl;
+				"before K->init with action " << fallback_action->label << endl;
 	}
 	K->init(fallback_action, verbose_level - 2);
 	if (f_v) {
@@ -3776,12 +3783,12 @@ void action_global::induce(
 
 	if (f_v) {
 		cout << "action_global::induce "
-				"before G->init_trivial_group" << endl;
+				"before Sims->init_trivial_group" << endl;
 	}
-	G->init_trivial_group(verbose_level - 2);
+	Sims->init_trivial_group(verbose_level - 2);
 	if (f_v) {
 		cout << "action_global::induce "
-				"after G->init_trivial_group" << endl;
+				"after Sims->init_trivial_group" << endl;
 	}
 
 	if (f_v) {
@@ -3796,39 +3803,39 @@ void action_global::induce(
 
 	if (f_v) {
 		cout << "action_global::induce "
-				"before G->build_up_group_random_process" << endl;
+				"before Sims->build_up_group_random_process" << endl;
 	}
-	G->build_up_group_random_process(
+	Sims->build_up_group_random_process(
 			K, old_G, go,
 		false /*f_override_chose_next_base_point*/,
 		NULL /*choose_next_base_point_method*/,
 		verbose_level - 1);
 	if (f_v) {
 		cout << "action_global::induce "
-				"after G->build_up_group_random_process" << endl;
+				"after Sims->build_up_group_random_process" << endl;
 	}
 	if (f_v) {
 		cout << "action_global::induce "
 				"new_action=" << new_action->label
 				<< " of degree " << new_action->degree << endl;
 		cout << "action_global::induce "
-				"G->A->label=" << G->A->label
-				<< " of degree " << G->A->degree << endl;
+				"G->A->label=" << Sims->A->label
+				<< " of degree " << Sims->A->degree << endl;
 	}
 
-	G->group_order(G_order);
+	Sims->group_order(Sims_order);
 	K->group_order(K_order);
 	if (f_v) {
 		cout << "action_global::induce ";
-		cout << "found a group in action " << G->A->label
-				<< " of order " << G_order << " ";
+		cout << "found a group in action " << Sims->A->label
+				<< " of order " << Sims_order << " ";
 		cout << "transversal lengths: ";
-		for (int t = 0; t < G->A->base_len(); t++) {
-			cout << G->get_orbit_length(t) << ", ";
+		for (int t = 0; t < Sims->A->base_len(); t++) {
+			cout << Sims->get_orbit_length(t) << ", ";
 		}
 		cout << " base: ";
-		for (int t = 0; t < G->A->base_len(); t++) {
-			cout << G->A->base_i(t) << ", ";
+		for (int t = 0; t < Sims->A->base_len(); t++) {
+			cout << Sims->A->base_i(t) << ", ";
 		}
 		//int_vec_print(cout, G->get_orbit_length(i), G->A->base_len());
 		cout << endl;
@@ -3846,7 +3853,7 @@ void action_global::induce(
 		//int_vec_print(cout, K->get_orbit_length(), K->A->base_len());
 		cout << endl;
 	}
-	D.mult(G_order, K_order, go3);
+	D.mult(Sims_order, K_order, go3);
 	if (D.compare(go3, go) != 0) {
 		cout << "action_global::induce "
 				"group orders do not match: "
@@ -3860,12 +3867,12 @@ void action_global::induce(
 	}
 	if (f_vv) {
 		cout << "action_global::induce "
-				"before init_sims_only" << endl;
+				"before new_action->init_sims_only" << endl;
 	}
-	new_action->init_sims_only(G, verbose_level - 2);
+	new_action->init_sims_only(Sims, verbose_level - 2);
 	if (f_vv) {
 		cout << "action_global::induce "
-				"after init_sims_only" << endl;
+				"after new_action->init_sims_only" << endl;
 	}
 	new_action->f_has_kernel = true;
 	new_action->Kernel = K;

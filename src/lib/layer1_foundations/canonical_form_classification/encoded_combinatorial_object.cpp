@@ -454,10 +454,44 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 	nb_rows0 = P->Subspaces->N_points;
 	nb_cols0 = P->Subspaces->N_lines;
 
-	for (i = 0; i < P->Subspaces->N_points; i++) {
-		for (j = 0; j < P->Subspaces->N_lines; j++) {
-			if (P->Subspaces->is_incident(i, j)) {
-				set_incidence_ij(i, j);
+
+	int f_large = false;
+	long int sz;
+
+	sz = P->Subspaces->N_points * P->Subspaces->N_lines;
+
+	if (sz > 100 * ONE_MILLION) {
+		if (f_v) {
+			cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left the matrix is large" << endl;
+		}
+		f_large = true;
+
+	}
+
+	if (f_large) {
+		long int sz_100;
+		long int cnt = 0;
+
+		sz_100 = sz / 100;
+		for (i = 0; i < P->Subspaces->N_points; i++) {
+			for (j = 0; j < P->Subspaces->N_lines; j++, cnt++) {
+
+				if ((cnt % sz_100) == 0) {
+					cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left " << cnt / sz_100 << " percent" << endl;
+				}
+
+				if (P->Subspaces->is_incident(i, j)) {
+					set_incidence_ij(i, j);
+				}
+			}
+		}
+	}
+	else {
+		for (i = 0; i < P->Subspaces->N_points; i++) {
+			for (j = 0; j < P->Subspaces->N_lines; j++) {
+				if (P->Subspaces->is_incident(i, j)) {
+					set_incidence_ij(i, j);
+				}
 			}
 		}
 	}

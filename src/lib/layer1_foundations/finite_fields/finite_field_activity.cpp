@@ -392,6 +392,10 @@ void finite_field_activity::perform_activity(
 		int *func;
 		int len;
 
+		if (f_v) {
+			cout << "finite_field_activity::perform_activity "
+					"input = " << Descr->algebraic_normal_form_input << endl;
+		}
 		Get_int_vector_from_label(
 				Descr->algebraic_normal_form_input,
 				func, len, 0 /* verbose_level */);

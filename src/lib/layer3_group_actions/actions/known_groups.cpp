@@ -2297,12 +2297,13 @@ void known_groups::init_permutation_representation(
 	}
 }
 
+#if 0
 void known_groups::init_group_from_strong_generators(
 		data_structures_groups::vector_ge *gens,
 		groups::sims *K,
 	int given_base_length, int *given_base,
 	int verbose_level)
-// calls sims::build_up_group_from_generators
+// calls sims::build_up_group_from_generators without target_go
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2355,12 +2356,20 @@ void known_groups::init_group_from_strong_generators(
 	G->init_trivial_group(verbose_level - 1);
 	G->group_order(G_order);
 
+	if (f_vv) {
+		cout << "known_groups::init_group_from_strong_generators "
+				"before G->build_up_group_from_generators" << endl;
+	}
 	G->build_up_group_from_generators(
 			K, gens,
 		false, NULL, /* target_go */
 		false /* f_override_choose_next_base_point */,
 		NULL,
-		verbose_level);
+		verbose_level - 2);
+	if (f_vv) {
+		cout << "known_groups::init_group_from_strong_generators "
+				"after G->build_up_group_from_generators" << endl;
+	}
 
 	G->group_order(G_order);
 
@@ -2371,10 +2380,11 @@ void known_groups::init_group_from_strong_generators(
 	}
 
 	if (f_v) {
-		cout << "init_group_from_strong_generators: "
+		cout << "known_groups::init_group_from_strong_generators "
 				"found a group of order " << G_order << endl;
 		if (f_vv) {
-			cout << "transversal lengths:" << endl;
+			cout << "known_groups::init_group_from_strong_generators "
+					"transversal lengths:" << endl;
 			//int_vec_print(cout, G->orbit_len, base_len());
 			for (int t = 0; t < G->A->base_len(); t++) {
 				cout << G->get_orbit_length(t) << ", ";
@@ -2389,19 +2399,29 @@ void known_groups::init_group_from_strong_generators(
 	}
 	A->init_sims_only(G, 0/*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "action::init_group_from_strong_generators "
+		cout << "known_groups::init_group_from_strong_generators "
 				"after init_sims_only" << endl;
 	}
+	if (f_vv) {
+		cout << "known_groups::init_group_from_strong_generators "
+				"before A->compute_strong_generators_from_sims" << endl;
+	}
 	A->compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+	if (f_vv) {
+		cout << "known_groups::init_group_from_strong_generators "
+				"after A->compute_strong_generators_from_sims" << endl;
+	}
 
 	if (f_v) {
+		cout << "known_groups::init_group_from_strong_generators "
+				"the group action is: " << endl;
 		A->print_info();
 	}
 	if (f_v) {
 		cout << "known_groups::init_group_from_strong_generators done" << endl;
 	}
 }
-
+#endif
 
 
 void known_groups::create_orthogonal_group(

@@ -567,7 +567,8 @@ action *induced_action::induced_action_on_grassmannian(
 
 
 	if (f_v) {
-		cout << "induced_action::induced_action_on_grassmannian old_dimension = " << old_dimension << endl;
+		cout << "induced_action::induced_action_on_grassmannian "
+				"old_dimension = " << old_dimension << endl;
 	}
 
 	geometry::grassmann *Gr;
@@ -823,7 +824,8 @@ action *induced_action::induced_action_on_spread_set(
 
 
 
-action *induced_action::induced_action_on_wedge_product(int verbose_level)
+action *induced_action::induced_action_on_wedge_product(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
@@ -836,7 +838,6 @@ action *induced_action::induced_action_on_wedge_product(int verbose_level)
 
 
 	A->label = A_old->label + "_Wedge";
-
 	A->label_tex = A_old->label_tex + " {\\rm OnWedge}";
 
 
@@ -1104,7 +1105,8 @@ action *induced_action::induced_action_on_determinant(
 		cout << "induced_action::induced_action_on_determinant "
 				"before AG.induced_action_override_sims" << endl;
 	}
-	AG.induced_action_override_sims(A_old, A, old_G, verbose_level - 2);
+	AG.induced_action_override_sims(
+			A_old, A, old_G, verbose_level - 2);
 	if (f_v) {
 		cout << "induced_action::induced_action_on_determinant "
 				"after AG.induced_action_override_sims" << endl;
@@ -2150,7 +2152,8 @@ action *induced_action::induced_action_on_andre(
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_andre "
-				"finished, created action " << A->label << " of degree " << A->degree << endl;
+				"finished, created action " << A->label
+				<< " of degree " << A->degree << endl;
 		A->print_info();
 	}
 	return A;
@@ -2350,7 +2353,8 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 			cout << "induced_action::induced_action_on_homogeneous_polynomials_given_by_equations "
 					"before AG.induced_action_override_sims" << endl;
 		}
-		AG.induced_action_override_sims(A_old, A,
+		AG.induced_action_override_sims(
+				A_old, A,
 				old_G, 0/*verbose_level - 2*/);
 		if (f_v) {
 			cout << "induced_action::induced_action_on_homogeneous_polynomials_given_by_equations "
@@ -2415,7 +2419,8 @@ action *induced_action::base_change(
 	new_action->ptr->init_function_pointers_induced_action();
 
 	new_action->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	new_action->Stabilizer_chain->allocate_base_data(A_old, 0 /* base_len */, verbose_level);
+	new_action->Stabilizer_chain->allocate_base_data(
+			A_old, 0 /* base_len */, verbose_level);
 	//allocate_base_data(0);
 
 
@@ -2472,28 +2477,6 @@ action *induced_action::base_change(
 
 
 
-
-#if 0
-void induced_action::induced_action_recycle_sims(
-		action &old_action,
-	int verbose_level)
-{
-	groups::sims *old_G;
-
-	if (!old_action.f_has_sims) {
-		cout << "induced_action::induced_action_recycle_sims: "
-				"old action must have sims" << endl;
-		exit(1);
-	}
-	old_G = old_action.Sims;
-
-	action_global AG;
-
-	induce(&old_action, old_G,
-		0 /* base_of_choice_len */, NULL /* base_of_choice */,
-		verbose_level);
-}
-#endif
 
 
 

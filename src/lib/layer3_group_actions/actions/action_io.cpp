@@ -509,7 +509,7 @@ void action::print_base(
 	if (Stabilizer_chain) {
 		int i;
 
-		ost << "base: ";
+		ost << "action " << label << " has base ";
 		for (i = 0; i < base_len(); i++) {
 			ost << ", " << base_i(i);
 		}

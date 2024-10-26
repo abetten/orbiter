@@ -1325,6 +1325,13 @@ public:
 			sims *extending_by_G,
 			ring_theory::longinteger_object &target_go,
 		int verbose_level);
+	int closure_group(
+			int nb_times, int verbose_level);
+
+
+
+
+	// sims2.cpp
 	void build_up_group_random_process(
 			sims *K, sims *old_G,
 			ring_theory::longinteger_object &target_go,
@@ -1332,6 +1339,7 @@ public:
 		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
+#if 0
 	void build_up_group_from_generators(
 			sims *K,
 			data_structures_groups::vector_ge *gens,
@@ -1341,13 +1349,7 @@ public:
 		int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
 		int verbose_level);
-	int closure_group(
-			int nb_times, int verbose_level);
-
-
-
-
-	// sims2.cpp
+#endif
 	void build_up_subgroup_random_process(
 			sims *G,
 		void (*choose_random_generator_for_subgroup)(
@@ -1597,6 +1599,7 @@ public:
 };
 
 
+// sims2.cpp:
 void choose_random_generator_derived_group(
 		sims *G, int *Elt,
 	int verbose_level);

@@ -90,14 +90,43 @@ long int action_on_determinant::compute_image(
 	else {
 		a = i + 1;
 	}
+	if (f_v) {
+		cout << "action_on_determinant::compute_image "
+				"a = " << a << endl;
+	}
+	if (f_v) {
+		cout << "action_on_determinant::compute_image "
+				"M = " << endl;
+		Int_matrix_print(Elt, M->n, M->n);
+	}
 	b = M->GFq->Linear_algebra->matrix_determinant(Elt, M->n, 0);
+	if (f_v) {
+		cout << "action_on_determinant::compute_image "
+				"det = " << b << endl;
+	}
 	c = M->GFq->mult(a, b);
+	if (f_v) {
+		cout << "action_on_determinant::compute_image "
+				"c = a * b = " << c << endl;
+	}
 	if (f_projective) {
 		l = M->GFq->log_alpha(c);
+		if (f_v) {
+			cout << "action_on_determinant::compute_image "
+					"f_projective, l = " << l << endl;
+		}
 		j = l % degree;
+		if (f_v) {
+			cout << "action_on_determinant::compute_image "
+					"f_projective j = l % degree = " << j << endl;
+		}
 	}
 	else {
 		j = c - 1;
+		if (f_v) {
+			cout << "action_on_determinant::compute_image "
+					"j = c - 1 = " << j << endl;
+		}
 	}
 	if (f_v) {
 		cout << "action_on_determinant::compute_image "
@@ -105,10 +134,11 @@ long int action_on_determinant::compute_image(
 		cout << "action_on_determinant::compute_image "
 				<< a << " * " << b << " = " << c << endl;
 		if (f_projective) {
-			cout << "f_projective, a = " << a
+			cout << "action_on_determinant::compute_image f_projective, a = " << a
 					<< " l = " << l << " c = " << c << endl;
 		}
-		cout << "image of " << i << " is " << j << endl;
+		cout << "action_on_determinant::compute_image "
+				"image of " << i << " is " << j << endl;
 	}
 	return j;
 }

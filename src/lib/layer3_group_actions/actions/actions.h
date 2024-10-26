@@ -1129,7 +1129,7 @@ public:
 			int *Perms, int degree,
 			int verbose_level);
 
-
+#if 0
 	/** Create a group from generators */
 	void init_group_from_strong_generators(
 			data_structures_groups::vector_ge *gens,
@@ -1137,7 +1137,7 @@ public:
 		int given_base_length, int *given_base,
 		int verbose_level);
 	// calls sims::build_up_group_from_generators
-
+#endif
 
 	void create_orthogonal_group(
 			action *subaction,

@@ -2992,12 +2992,15 @@ void wreath_product::orbits_restricted_compute(
 			Set, set_m, set_n, verbose_level);
 
 	if (set_n != 1) {
-		cout << "orbits_restricted set_n != 1" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"orbits_restricted set_n != 1" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "Restricting to a set of size " << set_m << endl;
-		cout << "converting points to PG point labels" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"Restricting to a set of size " << set_m << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"converting points to PG point labels" << endl;
 	}
 
 	//int *v;
@@ -3011,7 +3014,8 @@ void wreath_product::orbits_restricted_compute(
 	//FREE_int(v);
 	Sorting.lint_vec_heapsort(Set_in_PG, set_m);
 	if (f_v) {
-		cout << "after sorting, Set_in_PG:" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"after sorting, Set_in_PG:" << endl;
 	}
 #if 0
 	for (i = 0; i < set_m; i++) {
@@ -3038,11 +3042,13 @@ void wreath_product::orbits_restricted_compute(
 	Fio.Csv_file_support->int_matrix_read_csv(
 			fname, Perms, perms_m, perms_n, verbose_level - 2);
 	if (perms_n != SG->gens->len) {
-		cout << "perms_n != SG->gens->len" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"perms_n != SG->gens->len" << endl;
 		exit(1);
 	}
 	if (perms_m != set_m) {
-		cout << "perms_m != set_m" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"perms_m != set_m" << endl;
 		exit(1);
 	}
 
@@ -3061,7 +3067,8 @@ void wreath_product::orbits_restricted_compute(
 			Perms, degree,
 			verbose_level);
 	if (f_v) {
-		cout << "created A_perm = " << A_perm->label << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"created A_perm = " << A_perm->label << endl;
 	}
 
 	A_perm_matrix = NEW_OBJECT(actions::action);
@@ -3071,7 +3078,8 @@ void wreath_product::orbits_restricted_compute(
 			Perms, degree,
 			verbose_level);
 	if (f_v) {
-		cout << "created A_perm_matrix = " << A_perm_matrix->label << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"created A_perm_matrix = " << A_perm_matrix->label << endl;
 	}
 
 	permutation_representation *Permutation_representation;
@@ -3103,11 +3111,13 @@ void wreath_product::orbits_restricted_compute(
 	Sch->init_generators(*Gens, verbose_level - 2);
 
 	if (f_v) {
-		cout << "before Sch->compute_all_point_orbits" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"before Sch->compute_all_point_orbits" << endl;
 	}
 	Sch->compute_all_point_orbits(0 /*verbose_level - 5*/);
 	if (f_v) {
-		cout << "after Sch->compute_all_point_orbits" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"after Sch->compute_all_point_orbits" << endl;
 	}
 
 	Sch->print_orbit_lengths_tex(cout);
@@ -3118,9 +3128,12 @@ void wreath_product::orbits_restricted_compute(
 
 	A->group_order(go);
 	if (f_v) {
-		cout << "Action " << A->label << endl;
-		cout << "group order " << go << endl;
-		cout << "computing stabilizers:" << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"Action " << A->label << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"group order " << go << endl;
+		cout << "wreath_product::orbits_restricted_compute "
+				"computing stabilizers:" << endl;
 	}
 
 	if (f_v) {
@@ -3131,7 +3144,8 @@ void wreath_product::orbits_restricted_compute(
 
 	for (orbit_idx = 0; orbit_idx < Sch->nb_orbits; orbit_idx++) {
 		if (f_v) {
-			cout << "computing point stabilizer for orbit "
+			cout << "wreath_product::orbits_restricted_compute "
+					"computing point stabilizer for orbit "
 					<< orbit_idx << ":" << endl;
 		}
 
@@ -3152,23 +3166,27 @@ void wreath_product::orbits_restricted_compute(
 		tensor_PG_unrank(tensor, orbit_rep_in_PG);
 
 		if (f_v) {
-			cout << "orbit representative is " << orb_rep
+			cout << "wreath_product::orbits_restricted_compute "
+					"orbit representative is " << orb_rep
 					<< " = " << orbit_rep_in_PG << " = "
 					<< orbit_rep_in_PG_uint << endl;
-			cout << "tensor: ";
+			cout << "wreath_product::orbits_restricted_compute tensor: ";
 			Int_vec_print(cout, tensor, dimension_of_tensor_action);
 			cout << endl;
 		}
 		groups::sims *Stab;
 
 		if (f_v) {
-			cout << "before Sch->point_stabilizer in action "
+			cout << "wreath_product::orbits_restricted_compute "
+					"before Sch->point_stabilizer in action "
 					<< A_perm_matrix->label << endl;
 		}
-		Sch->point_stabilizer(A_perm_matrix, go,
+		Sch->point_stabilizer(
+				A_perm_matrix, go,
 				Stab, orbit_idx, verbose_level - 5);
 		if (f_v) {
-			cout << "after Sch->point_stabilizer in action "
+			cout << "wreath_product::orbits_restricted_compute "
+					"after Sch->point_stabilizer in action "
 					<< A_perm_matrix->label << endl;
 		}
 
@@ -3193,7 +3211,8 @@ void wreath_product::orbits_restricted_compute(
 		label_of_set_tex.assign("\\_on\\_orbit");
 
 		if (f_v) {
-			cout << "computing restricted action on the orbit:" << endl;
+			cout << "wreath_product::orbits_restricted_compute "
+					"computing restricted action on the orbit:" << endl;
 		}
 		A_on_orbit = A_perm->Induced_action->restricted_action(
 				Orbits->Sets[orbit_idx] + 1, Orbits->Set_size[orbit_idx] - 1,
@@ -3201,7 +3220,8 @@ void wreath_product::orbits_restricted_compute(
 				verbose_level);
 
 		if (f_v) {
-			cout << "generators restricted to the orbit of degree "
+			cout << "wreath_product::orbits_restricted_compute "
+					"generators restricted to the orbit of degree "
 					<< Orbits->Set_size[orbit_idx] - 1 << ":" << endl;
 			gens->print_generators_MAGMA(A_on_orbit, cout, verbose_level - 1);
 		}
@@ -3213,18 +3233,30 @@ void wreath_product::orbits_restricted_compute(
 		derived_group = NEW_OBJECT(groups::sims);
 
 		if (f_v) {
-			cout << "computing the derived subgroup:" << endl;
+			cout << "wreath_product::orbits_restricted_compute "
+					"computing the derived subgroup:" << endl;
 		}
 
 		derived_group->init(A_perm_matrix, verbose_level - 2);
 		derived_group->init_trivial_group(verbose_level - 1);
-		derived_group->build_up_subgroup_random_process(Stab,
+
+		if (f_v) {
+			cout << "wreath_product::orbits_restricted_compute "
+					"before derived_group->build_up_subgroup_random_process" << endl;
+		}
+		derived_group->build_up_subgroup_random_process(
+				Stab,
 				groups::choose_random_generator_derived_group,
 				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "wreath_product::orbits_restricted_compute "
+					"after derived_group->build_up_subgroup_random_process" << endl;
+		}
 
 		derived_group->group_order(d_go);
 		if (f_v) {
-			cout << "the derived subgroup has order: " << d_go << endl;
+			cout << "wreath_product::orbits_restricted_compute "
+					"the derived subgroup has order: " << d_go << endl;
 		}
 
 		groups::strong_generators *d_gens;
@@ -3240,19 +3272,22 @@ void wreath_product::orbits_restricted_compute(
 
 		Sch_orbit = NEW_OBJECT(groups::schreier);
 		if (f_v) {
-			cout << "computing orbits of stabilizer on "
+			cout << "wreath_product::orbits_restricted_compute "
+					"computing orbits of stabilizer on "
 					"the rest of the orbit:" << endl;
 		}
 
 		actions::action_global AcGl;
 
-		AcGl.all_point_orbits_from_generators(A_on_orbit,
+		AcGl.all_point_orbits_from_generators(
+				A_on_orbit,
 				*Sch_orbit,
 				gens,
 				0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "Found " << Sch_orbit->nb_orbits << " orbits" << endl;
+			cout << "wreath_product::orbits_restricted_compute "
+					"Found " << Sch_orbit->nb_orbits << " orbits" << endl;
 			Sch_orbit->print_orbit_lengths_tex(cout);
 			Sch_orbit->print_and_list_orbits_tex(cout);
 		}

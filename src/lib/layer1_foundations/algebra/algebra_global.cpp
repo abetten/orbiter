@@ -1094,6 +1094,7 @@ void algebra_global::algebraic_normal_form(
 
 	if (f_v) {
 		cout << "algebra_global::algebraic_normal_form" << endl;
+		cout << "algebra_global::algebraic_normal_form n = " << n << endl;
 	}
 
 
@@ -1152,7 +1153,8 @@ void algebra_global::algebraic_normal_form(
 		cout << "algebra_global::algebraic_normal_form "
 				"before PF->compute_polynomial_representation" << endl;
 	}
-	PF->compute_polynomial_representation(func, coeff, verbose_level);
+	PF->compute_polynomial_representation(
+			func, coeff, verbose_level);
 	if (f_v) {
 		cout << "algebra_global::algebraic_normal_form "
 				"after PF->compute_polynomial_representation" << endl;
@@ -1187,8 +1189,8 @@ void algebra_global::algebraic_normal_form(
 	FREE_int(M);
 #endif
 
-	//FREE_OBJECT(PF);
-	// there is a memory error in PF
+	FREE_OBJECT(PF);
+	// there was a memory error in PF !!! ToDo
 
 	if (f_v) {
 		cout << "algebra_global::algebraic_normal_form done" << endl;
