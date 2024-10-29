@@ -995,7 +995,8 @@ void strong_generators::generators_for_the_singer_cycle(
 		}
 #endif
 	
-		Fq.finite_field_init_small_order(q,
+		Fq.finite_field_init_small_order(
+				q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
@@ -1414,6 +1415,22 @@ void strong_generators::generators_for_symplectic_group(
 		cout << endl;
 	}
 
+
+	if (Mtx->f_projective && ODD(q)) {
+		if (t_len[0] % (q - 1)) {
+			cout << "strong_generators::generators_for_symplectic_group "
+					"is projective by q - 1 does not divide the first transversal length" << endl;
+			exit(1);
+		}
+
+		t_len[0] /= 2;
+		// center is { I, -I } of order 2.
+		if (f_v) {
+			cout << "strong_generators::generators_for_symplectic_group after reduction: t_len=";
+			Int_vec_print(cout, t_len, A->base_len());
+			cout << endl;
+		}
+	}
 	if (f_v) {
 		cout << "strong_generators::generators_for_symplectic_group before "
 				"init_from_data" << endl;

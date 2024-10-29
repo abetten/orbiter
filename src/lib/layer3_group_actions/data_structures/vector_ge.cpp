@@ -346,6 +346,31 @@ void vector_ge::init_conjugate_sasv_of(
 	}
 }
 
+vector_ge *vector_ge::make_inverses(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	vector_ge *v;
+
+	if (f_v) {
+		cout << "vector_ge::make_inverses" << endl;
+	}
+
+	v = NEW_OBJECT(vector_ge);
+	v->init(A, verbose_level);
+	v->allocate(len, verbose_level);
+
+	for (i = 0; i < len; i++) {
+		A->Group_element->invert(ith(i), v->ith(i));
+	}
+	if (f_v) {
+		cout << "vector_ge::make_inverses done" << endl;
+	}
+	return v;
+}
+
+
 int *vector_ge::ith(
 		int i)
 {

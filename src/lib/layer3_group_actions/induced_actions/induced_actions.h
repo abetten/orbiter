@@ -281,6 +281,47 @@ public:
 		int verbose_level);
 };
 
+
+
+// #############################################################################
+// action_on_cosets_of_subgroup.cpp
+// #############################################################################
+
+//! induced action on the right cosets of a subgroup by right multiplication
+
+
+class action_on_cosets_of_subgroup {
+public:
+
+	actions::action *A;
+
+	groups::strong_generators *Subgroup_gens_H;
+	groups::strong_generators *Subgroup_gens_G;
+
+	groups::sims *Sims_H;
+
+
+	long int degree;
+	data_structures_groups::vector_ge *coset_reps;
+	data_structures_groups::vector_ge *coset_reps_inverse;
+
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+
+	action_on_cosets_of_subgroup();
+	~action_on_cosets_of_subgroup();
+	void init(
+			actions::action *A,
+			groups::strong_generators *Subgroup_gens_H,
+			groups::strong_generators *Subgroup_gens_G,
+			int verbose_level);
+	long int compute_image(
+			int *Elt, long int i, int verbose_level);
+
+};
+
 // #############################################################################
 // action_on_cosets.cpp
 // #############################################################################

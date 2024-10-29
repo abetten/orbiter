@@ -131,6 +131,53 @@ void group_theory_global::strong_generators_conjugate_aGav(
 	}
 }
 
+void group_theory_global::set_of_coset_representatives(
+		groups::strong_generators *Subgroup_gens_H,
+		groups::strong_generators *Subgroup_gens_G,
+		data_structures_groups::vector_ge *&coset_reps,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theory_global::set_of_coset_representatives" << endl;
+	}
+
+	//actions::action *A1;
+	//actions::action *A2;
+
+	//A1 = A;
+	//A2 = AG_secondary->A;
+
+
+	groups::sims *S;
+
+	S = Subgroup_gens_G->create_sims(verbose_level);
+	// the large group
+
+	if (f_v) {
+		cout << "group_theory_global::set_of_coset_representatives "
+				"before Subgroup_gens_H->set_of_coset_representatives" << endl;
+	}
+	Subgroup_gens_H->set_of_coset_representatives(
+			S,
+			coset_reps,
+			verbose_level);
+	if (f_v) {
+		cout << "group_theory_global::set_of_coset_representatives "
+				"after Subgroup_gens_H->set_of_coset_representatives" << endl;
+		cout << "group_theory_global::set_of_coset_representatives "
+				"number of coset reps = " << coset_reps->len << endl;
+	}
+
+
+
+	FREE_OBJECT(S);
+
+	if (f_v) {
+		cout << "group_theory_global::set_of_coset_representatives done" << endl;
+	}
+}
 
 
 

@@ -682,15 +682,13 @@ long int action_on_factor_space::lexleast_element_in_coset(
 
 
 	if (f_v) {
-		cout << "action_on_factor_space::lexleast_"
-				"element_in_coset "
+		cout << "action_on_factor_space::lexleast_element_in_coset "
 				"rk=" << rk << endl;
 		}
 	if (subspace_basis_size == 0) {
 		rk1 = rk;
 		if (f_v) {
-			cout << "action_on_factor_space::lexleast_"
-					"element_in_coset "
+			cout << "action_on_factor_space::lexleast_element_in_coset "
 					<< rk << "->" << rk1 << endl;
 			}
 		return rk1;

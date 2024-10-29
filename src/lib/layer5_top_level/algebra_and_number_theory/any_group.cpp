@@ -2701,40 +2701,32 @@ void any_group::set_of_coset_representatives(
 		cout << "any_group::set_of_coset_representatives" << endl;
 	}
 
-	//actions::action *A1;
-	//actions::action *A2;
+	groups::strong_generators *Subgroup_gens_G;
+	groups::strong_generators *Subgroup_gens_H;
 
-	//A1 = A;
-	//A2 = AG_secondary->A;
+	Subgroup_gens_H = Subgroup_gens;
+	// Subgroup_gens_H generates the small group
 
-	groups::strong_generators *Subgroup_gens1;
-	groups::strong_generators *Subgroup_gens2;
+	Subgroup_gens_G = AG_secondary->Subgroup_gens;
+	// Subgroup_gens_G generates the large group
 
-	Subgroup_gens1 = Subgroup_gens;
-	Subgroup_gens2 = AG_secondary->Subgroup_gens;
 
-	groups::sims *S;
-
-	S = Subgroup_gens2->create_sims(verbose_level);
+	groups::group_theory_global Group_theory_global;
 
 	if (f_v) {
 		cout << "any_group::set_of_coset_representatives "
-				"before Subgroup_gens1->set_of_coset_representatives" << endl;
+				"before Group_theory_global.set_of_coset_representatives" << endl;
 	}
-	Subgroup_gens1->set_of_coset_representatives(
-			S,
+	Group_theory_global.set_of_coset_representatives(
+			Subgroup_gens_H,
+			Subgroup_gens_G,
 			coset_reps,
 			verbose_level);
 	if (f_v) {
 		cout << "any_group::set_of_coset_representatives "
-				"after Subgroup_gens1->set_of_coset_representatives" << endl;
-		cout << "any_group::set_of_coset_representatives "
-				"number of coset reps = " << coset_reps->len << endl;
+				"after Group_theory_global.set_of_coset_representatives" << endl;
 	}
 
-
-
-	FREE_OBJECT(S);
 
 	if (f_v) {
 		cout << "any_group::set_of_coset_representatives done" << endl;

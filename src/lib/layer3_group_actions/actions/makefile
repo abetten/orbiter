@@ -7,7 +7,6 @@ LFLAGS = -lm
 
 MODULES = \
 	action.o \
-	action_cb.o \
 	action_global.o \
 	action_indexing_cosets.o \
 	action_induce.o \

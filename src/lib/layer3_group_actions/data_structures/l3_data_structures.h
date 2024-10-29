@@ -683,6 +683,8 @@ public:
 	void init_conjugate_sasv_of(
 			vector_ge *v, int *Elt,
 		int verbose_level);
+	vector_ge *make_inverses(
+			int verbose_level);
 	int *ith(
 			int i);
 	void print(

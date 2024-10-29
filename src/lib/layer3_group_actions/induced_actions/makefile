@@ -13,6 +13,7 @@ MODULES = \
 	action_by_subfield_structure.o \
 	action_on_andre.o \
 	action_on_bricks.o \
+	action_on_cosets_of_subgroup.o \
 	action_on_cosets.o \
 	action_on_determinant.o \
 	action_on_factor_space.o \

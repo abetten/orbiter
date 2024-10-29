@@ -558,8 +558,8 @@ void schreier_sims::create_group(
 					"iteration " << iteration << endl;
 			G->print_generator_depth_and_perm();
 		}
-		if (f_has_target_group_order && iteration > 10000) {
-			cout << "schreier_sims::create_group iteration > 1000, "
+		if (f_has_target_group_order && iteration > 50000) {
+			cout << "schreier_sims::create_group iteration > 50000, "
 					"something seems to be wrong" << endl;
 			cout << "target group order = " << tgo << endl;
 			cout << "KG_order = " << KG_order << endl;		

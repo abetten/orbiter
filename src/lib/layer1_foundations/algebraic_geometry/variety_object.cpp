@@ -754,7 +754,7 @@ void variety_object::print(
 #endif
 
 	ost << " pts=";
-	Lint_vec_print(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
+	Lint_vec_print_fully(ost, Point_sets->Sets[0], Point_sets->Set_size[0]);
 	ost << " bitangents=";
 	Lint_vec_print(ost, Line_sets->Sets[0], Line_sets->Set_size[0]);
 	ost << endl;

@@ -350,7 +350,6 @@ ORBITER_MODULES= \
 		layer2_discreta/unipoly.o \
 		layer2_discreta/vector.o \
 		layer3_group_actions/actions/action.o \
-		layer3_group_actions/actions/action_cb.o \
 		layer3_group_actions/actions/action_global.o \
 		layer3_group_actions/actions/action_indexing_cosets.o \
 		layer3_group_actions/actions/action_induce.o \
@@ -424,6 +423,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/induced_actions/action_by_subfield_structure.o \
 		layer3_group_actions/induced_actions/action_on_andre.o \
 		layer3_group_actions/induced_actions/action_on_bricks.o \
+		layer3_group_actions/induced_actions/action_on_cosets_of_subgroup.o \
 		layer3_group_actions/induced_actions/action_on_cosets.o \
 		layer3_group_actions/induced_actions/action_on_determinant.o \
 		layer3_group_actions/induced_actions/action_on_factor_space.o \

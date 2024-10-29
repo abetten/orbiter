@@ -180,6 +180,11 @@ public:
 			int *Elt_a,
 			strong_generators *&SG_out,
 			int verbose_level);
+	void set_of_coset_representatives(
+			groups::strong_generators *Subgroup_gens_H,
+			groups::strong_generators *Subgroup_gens_G,
+			data_structures_groups::vector_ge *&coset_reps,
+			int verbose_level);
 
 };
 
@@ -1936,6 +1941,8 @@ public:
 		std::string &label,
 		std::string &label_tex,
 		int verbose_level);
+
+	// creating subgroups:
 	void special_subgroup(
 			int verbose_level);
 	void projectivity_subgroup(

@@ -45,16 +45,16 @@ action_on_cosets::~action_on_cosets()
 
 	if (f_v) {
 		cout << "action_on_cosets::~action_on_coset" << endl;
-		}
+	}
 	if (v1) {
 		FREE_int(v1);
-		}
+	}
 	if (v2) {
 		FREE_int(v2);
-		}
+	}
 	if (f_v) {
 		cout << "action_on_cosets::~action_on_coset done" << endl;
-		}
+	}
 }
 
 void action_on_cosets::init(
@@ -77,7 +77,7 @@ void action_on_cosets::init(
 		cout << "action_on_cosets::init nb_points=" << nb_points
 				<< " dimension_of_subspace=" << dimension_of_subspace
 				<< " n=" << n << endl;
-		}
+	}
 	f_lint = false;
 	action_on_cosets::nb_points = nb_points;
 	action_on_cosets::Points = Points;
@@ -97,11 +97,11 @@ void action_on_cosets::init(
 			cout << "action_on_cosets::init the array Points[] "
 					"is not sorted increasingly" << endl;
 			exit(1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action_on_cosets::init done" << endl;
-		}
+	}
 }
 
 void action_on_cosets::init_lint(
@@ -124,7 +124,7 @@ void action_on_cosets::init_lint(
 		cout << "action_on_cosets::init_lint nb_points=" << nb_points
 				<< " dimension_of_subspace=" << dimension_of_subspace
 				<< " n=" << n << endl;
-		}
+	}
 
 	f_lint = true;
 	action_on_cosets::nb_points = nb_points;
@@ -145,11 +145,11 @@ void action_on_cosets::init_lint(
 			cout << "action_on_cosets::init_lint the array Points[] "
 					"is not sorted increasingly" << endl;
 			exit(1);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action_on_cosets::init done" << endl;
-		}
+	}
 }
 
 void action_on_cosets::reduce_mod_subspace(
@@ -170,12 +170,12 @@ long int action_on_cosets::compute_image(
 	
 	if (f_v) {
 		cout << "action_on_cosets::compute_image i = " << i << endl;
-		}
+	}
 	if (i >= nb_points) {
 		cout << "action_on_cosets::compute_image "
 				"i = " << i << " i >= nb_points" << endl;
 		exit(1);
-		}
+	}
 	if (f_lint) {
 		(*unrank_point_lint)(v1, lint_Points[i], rank_unrank_data);
 	}
@@ -186,9 +186,10 @@ long int action_on_cosets::compute_image(
 		cout << "action_on_cosets::compute_image after unrank:";
 		Int_vec_print(cout, v1, n);
 		cout << endl;
-		}
+	}
 	
-	A_linear->Group_element->element_image_of_low_level(v1, v2,
+	A_linear->Group_element->element_image_of_low_level(
+			v1, v2,
 			Elt, 0/*verbose_level - 1*/);
 
 	if (f_vv) {
@@ -196,7 +197,7 @@ long int action_on_cosets::compute_image(
 				"after element_image_of_low_level:";
 		Int_vec_print(cout, v2, n);
 		cout << endl;
-		}
+	}
 
 	reduce_mod_subspace(v2, 0 /* verbose_level */);
 	
@@ -205,7 +206,7 @@ long int action_on_cosets::compute_image(
 				"after reduce_mod_subspace:";
 		Int_vec_print(cout, v2, n);
 		cout << endl;
-		}
+	}
 	if (f_lint) {
 		long int R;
 
@@ -213,19 +214,23 @@ long int action_on_cosets::compute_image(
 		if (f_vv) {
 			cout << "action_on_cosets::compute_image after "
 					"rank, R = " << R << endl;
-			}
-		if (!Sorting.lint_vec_search(lint_Points, nb_points, R, idx, verbose_level)) {
+		}
+		if (!Sorting.lint_vec_search(
+				lint_Points, nb_points, R, idx,
+				0 /*verbose_level*/)) {
 			cout << "action_on_cosets::compute_image image "
 					<< R << " not found in list of points (using lint)" << endl;
 
-			Sorting.lint_vec_search(lint_Points, nb_points, R, idx, 2 /*verbose_level*/);
+			Sorting.lint_vec_search(
+					lint_Points, nb_points, R, idx,
+					2 /*verbose_level*/);
 
 			cout << "action_on_cosets::compute_image image "
 					<< R << " not found in list of points (using lint)" << endl;
 
 
 			exit(1);
-			}
+		}
 	}
 	else {
 		int r;
@@ -234,17 +239,17 @@ long int action_on_cosets::compute_image(
 		if (f_vv) {
 			cout << "action_on_cosets::compute_image after "
 					"rank, r = " << r << endl;
-			}
+		}
 		if (!Sorting.int_vec_search(Points, nb_points, r, idx)) {
 			cout << "action_on_cosets::compute_image image "
 					<< r << " not found in list of points (using int)" << endl;
 			exit(1);
-			}
+		}
 	}
 	if (f_v) {
 		cout << "action_on_cosets::compute_image image "
 				"of " << i << " is " << idx << endl;
-		}
+	}
 	return idx;
 }
 

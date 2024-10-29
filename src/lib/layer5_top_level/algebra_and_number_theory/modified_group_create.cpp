@@ -120,6 +120,23 @@ void modified_group_create::modified_group_init(
 					"after create_action_on_wedge_product" << endl;
 		}
 	}
+	else if (Descr->f_on_cosets_of_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_cosets_of_subgroup" << endl;
+		}
+
+		create_action_on_cosets_of_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_cosets_of_subgroup" << endl;
+		}
+	}
+
+
+
 
 	else if (Descr->f_create_special_subgroup) {
 
@@ -150,6 +167,22 @@ void modified_group_create::modified_group_init(
 					"after create_even_subgroup" << endl;
 		}
 	}
+
+	else if (Descr->f_derived_subgroup) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_derived_subgroup" << endl;
+		}
+
+		create_derived_subgroup(description, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_derived_subgroup" << endl;
+		}
+	}
+
 
 	else if (Descr->f_point_stabilizer) {
 
@@ -280,7 +313,8 @@ void modified_group_create::modified_group_init(
 					"f_holomorph" << endl;
 		}
 
-		cout << "modified_group_create::modified_group_init f_holomorph not yet implemented" << endl;
+		cout << "modified_group_create::modified_group_init "
+				"f_holomorph not yet implemented" << endl;
 		exit(1);
 
 #if 0
@@ -546,7 +580,7 @@ void modified_group_create::create_action_on_k_subspaces(
 
 
 	label += "_OnGr_" + std::to_string(n) + "_" + std::to_string(description->on_k_subspaces_k) + "_" + std::to_string(Fq->q);
-	label_tex += " {\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(description->on_k_subspaces_k) + "}(" + std::to_string(Fq->q) + ")";
+	label_tex += "{\\rm Gr}_{" + std::to_string(n) + "," + std::to_string(description->on_k_subspaces_k) + "}(" + std::to_string(Fq->q) + ")";
 
 
 
@@ -626,7 +660,7 @@ void modified_group_create::create_action_on_k_subsets(
 
 
 	label += "_OnSubsets_" + std::to_string(description->on_k_subsets_k);
-	label_tex += " {\\rm OnSubsets}_{" + std::to_string(description->on_k_subsets_k) + "}";
+	label_tex += "{\\rm OnSubsets}_{" + std::to_string(description->on_k_subsets_k) + "}";
 
 
 	if (f_v) {
@@ -702,12 +736,98 @@ void modified_group_create::create_action_on_wedge_product(
 
 
 	label += "_OnWedge";
-	label_tex += " {\\rm OnWedge}";
+	label_tex += "{\\rm OnWedge}";
 
 
 
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_wedge_product "
+				"done" << endl;
+	}
+}
+
+
+
+
+void modified_group_create::create_action_on_cosets_of_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+	any_group *AG_subgroup;
+
+	AG = Get_any_group(Descr->from[0]);
+	AG_subgroup = Get_any_group(Descr->on_cosets_of_subgroup_subgroup);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label = AG->label;
+	label_tex = AG->label_tex;
+
+
+	groups::strong_generators *Subgroup_gens_H;
+	groups::strong_generators *Subgroup_gens_G;
+
+	Subgroup_gens_H = AG_subgroup->Subgroup_gens;
+	Subgroup_gens_G = AG->Subgroup_gens;
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"before A_previous->Induced_action->induced_action_on_cosets_of_subgroup" << endl;
+	}
+	A_modified = A_previous->Induced_action->induced_action_on_cosets_of_subgroup(
+			Subgroup_gens_H,
+			Subgroup_gens_G,
+			verbose_level);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"after A_previous->Induced_action->induced_action_on_cosets_of_subgroup" << endl;
+	}
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"action A_wedge:" << endl;
+		A_modified->print_info();
+	}
+
+
+
+	f_has_strong_generators = true;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+	Strong_gens = AG->Subgroup_gens;
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	label += "_OnCosetsOfSubgroup";
+	label_tex += "{\\rm OnCosetsOfSubgroup}";
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_cosets_of_subgroup "
 				"done" << endl;
 	}
 }
@@ -806,7 +926,7 @@ void modified_group_create::create_special_subgroup(
 
 
 	label += "_SpecialSub";
-	label_tex += " {\\rm SpecialSub}";
+	label_tex += "{\\rm SpecialSub}";
 
 
 
@@ -918,6 +1038,141 @@ void modified_group_create::create_even_subgroup(
 }
 
 
+void modified_group_create::create_derived_subgroup(
+		group_modification_description *description,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_derived_subgroup" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_derived_subgroup "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label = AG->label;
+	label_tex = AG->label_tex;
+
+
+	A_modified = A_previous; // ToDo !!
+
+
+
+	f_has_strong_generators = true;
+	if (f_v) {
+		cout << "modified_group_create::create_derived_subgroup "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+	Strong_gens = NEW_OBJECT(groups::strong_generators);
+
+	{
+		//actions::action *A_on_sign;
+
+
+		groups::sims *Sims;
+
+
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"before AG->Subgroup_gens->create_sims" << endl;
+		}
+		Sims = AG->Subgroup_gens->create_sims(verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"after AG->Subgroup_gens->create_sims" << endl;
+		}
+
+#if 0
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"before Sims->A->Induced_action->induced_action_on_sign" << endl;
+		}
+		A_on_sign = Sims->A->Induced_action->induced_action_on_sign(
+				Sims, verbose_level);
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"after Sims->A->Induced_action->induced_action_on_sign" << endl;
+		}
+		A_on_sign->Kernel->group_order(go);
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"kernel has order " << go << endl;
+		}
+#endif
+		groups::sims *derived_group;
+		//ring_theory::longinteger_object go;
+		ring_theory::longinteger_object d_go;
+
+		derived_group = NEW_OBJECT(groups::sims);
+
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"computing the derived subgroup:" << endl;
+		}
+
+		derived_group->init(A_previous, verbose_level - 2);
+		derived_group->init_trivial_group(verbose_level - 1);
+
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"before derived_group->build_up_subgroup_random_process" << endl;
+		}
+		derived_group->build_up_subgroup_random_process(
+				Sims,
+				groups::choose_random_generator_derived_group,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"after derived_group->build_up_subgroup_random_process" << endl;
+		}
+
+		derived_group->group_order(d_go);
+		if (f_v) {
+			cout << "modified_group_create::create_derived_subgroup "
+					"the derived subgroup has order: " << d_go << endl;
+		}
+
+
+
+		Strong_gens->init_from_sims(derived_group, verbose_level);
+
+		//FREE_OBJECT(A_on_sign);
+		FREE_OBJECT(Sims);
+	}
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_derived_subgroup "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	label += "_Derived";
+	label_tex += " {\\rm Derived}";
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_derived_subgroup "
+				"done" << endl;
+	}
+}
+
+
 
 void modified_group_create::create_point_stabilizer_subgroup(
 		group_modification_description *description,
@@ -1003,7 +1258,7 @@ void modified_group_create::create_point_stabilizer_subgroup(
 
 
 	label += "_Stab" + std::to_string(Descr->point_stabilizer_point);
-	label_tex += " {\\rm Stab " + std::to_string(Descr->point_stabilizer_point) + "}";
+	label_tex += "{\\rm Stab " + std::to_string(Descr->point_stabilizer_point) + "}";
 
 
 
@@ -1187,7 +1442,7 @@ void modified_group_create::create_set_stabilizer_subgroup(
 
 
 	label += "_SetStab" + Descr->set_stabilizer_the_set;
-	label_tex += " {\\rm SetStab " + Descr->set_stabilizer_the_set + "}";
+	label_tex += "{\\rm SetStab " + Descr->set_stabilizer_the_set + "}";
 
 
 
@@ -1261,7 +1516,7 @@ void modified_group_create::create_projectivity_subgroup(
 
 
 	label += "_ProjectivitySubgroup";
-	label_tex += " {\\rm\\_ProjectivitySubgroup}";
+	label_tex += "{\\rm\\_ProjectivitySubgroup}";
 
 
 
@@ -1365,7 +1620,7 @@ void modified_group_create::create_subfield_subgroup(
 
 
 	label += "_SubfieldOfIndex" + std::to_string(Descr->subfield_subgroup_index);
-	label_tex +=" {\\rm SubfieldOfIndex " + std::to_string(Descr->subfield_subgroup_index) + "}";
+	label_tex += "{\\rm SubfieldOfIndex " + std::to_string(Descr->subfield_subgroup_index) + "}";
 
 
 
@@ -1461,7 +1716,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 
 
 	label += "_ByRightMult";
-	label_tex += " {\\rm ByRightMult}";
+	label_tex += "{\\rm ByRightMult}";
 
 
 
@@ -1703,7 +1958,7 @@ void modified_group_create::create_polarity_extension(
 
 
 	label += AG->label + "_polarity_ext";
-	label_tex += AG->label_tex + " {\\rm polarity extension}";
+	label_tex += AG->label_tex + "{\\rm polarity extension}";
 	if (f_on_middle_layer_grassmannian) {
 		label += "_on_middle_layer_grassmannian";
 		label_tex += "{\\rm \\_on\\_middle\\_layer\\_grassmannian}";
@@ -1744,7 +1999,7 @@ void modified_group_create::create_automorphism_group(
 	A_previous = AG->A;
 
 	label = AG->label + "_aut";
-	label_tex = AG->label_tex + "\\_aut";
+	label_tex = AG->label_tex + "{\\rm \\_aut}";
 
 	if (f_v) {
 		cout << "modified_group_create::create_automorphism_group "
@@ -1880,7 +2135,7 @@ void modified_group_create::create_subgroup_by_lattice(
 
 
 	label = AG->label + "_subgroup_by_lattice_" + std::to_string(orbit_index);
-	label_tex = AG->label_tex + "\\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index);
+	label_tex = AG->label_tex + "{\\rm \\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index) + "}";
 	if (f_v) {
 		cout << "modified_group_create::create_subgroup_by_lattice label = " << label << endl;
 		cout << "modified_group_create::create_subgroup_by_lattice label_tex = " << label_tex << endl;
@@ -1976,8 +2231,6 @@ void modified_group_create::do_stabilizer_of_variety(
 	}
 
 	Classifier->init_direct(
-			//PA,
-			//Poly_ring,
 			1 /*nb_input_Vo*/,
 			Input_Variety,
 			fname_base,
@@ -2009,61 +2262,6 @@ void modified_group_create::do_stabilizer_of_variety(
 
 
 	FREE_OBJECT(Classifier);
-
-#if 0
-	geometry::projective_space *Projective_space;
-
-	ring_theory::homogeneous_polynomial_domain *Ring;
-
-
-	std::string label_txt;
-	std::string label_tex;
-
-
-#if 0
-	std::string eqn_txt;
-
-	int f_second_equation;
-	std::string eqn2_txt;
-#endif
-
-
-	int *eqn; // [Ring->get_nb_monomials()]
-	//int *eqn2; // [Ring->get_nb_monomials()]
-
-
-	// the partition into points and lines
-	// must be invariant under the group.
-	// must be sorted if find_point() or identify_lines() is invoked.
-
-	data_structures::set_of_sets *Point_sets;
-
-	data_structures::set_of_sets *Line_sets;
-
-	int f_has_singular_points;
-	std::vector<long int> Singular_points;
-#endif
-
-#if 0
-	projective_geometry::projective_space_with_action *PA;
-
-	int cnt;
-	int po_go;
-	int po_index;
-	int po;
-	int so;
-
-	int f_has_nauty_output;
-	int nauty_output_index_start;
-	std::vector<std::string> Carrying_through;
-
-	algebraic_geometry::variety_object *Variety_object;
-
-	int f_has_automorphism_group;
-	groups::strong_generators *Stab_gens;
-
-	apps_combinatorics::variety_with_TDO_and_TDA *TD;
-#endif
 
 
 	//Input_Vo[0].Stab_gens;

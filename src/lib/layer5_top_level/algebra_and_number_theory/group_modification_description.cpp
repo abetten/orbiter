@@ -32,9 +32,14 @@ group_modification_description::group_modification_description()
 
 	f_on_wedge_product = false;
 
+	f_on_cosets_of_subgroup = false;
+	//std::string on_cosets_of_subgroup_subgroup;
+
 	f_create_special_subgroup = false;
 
 	f_create_even_subgroup = false;
+
+	f_derived_subgroup = false;
 
 	f_point_stabilizer = false;
 	point_stabilizer_point = 0;
@@ -127,6 +132,13 @@ int group_modification_description::read_arguments(
 				cout << "-on_wedge_product " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-on_cosets_of_subgroup") == 0) {
+			f_on_cosets_of_subgroup = true;
+			on_cosets_of_subgroup_subgroup.assign(argv[++i]);
+			if (f_v) {
+				cout << "-on_cosets_of_subgroup " << on_cosets_of_subgroup_subgroup << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-create_special_subgroup") == 0) {
 			f_create_special_subgroup = true;
 			if (f_v) {
@@ -137,6 +149,12 @@ int group_modification_description::read_arguments(
 			f_create_even_subgroup = true;
 			if (f_v) {
 				cout << "-create_even_subgroup " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-derived_subgroup") == 0) {
+			f_derived_subgroup = true;
+			if (f_v) {
+				cout << "-derived_subgroup " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-point_stabilizer") == 0) {
@@ -282,11 +300,17 @@ void group_modification_description::print()
 	if (f_on_wedge_product) {
 		cout << "-on_wedge_product " << endl;
 	}
+	if (f_on_cosets_of_subgroup) {
+		cout << "-on_cosets_of_subgroup " << on_cosets_of_subgroup_subgroup << endl;
+	}
 	if (f_create_special_subgroup) {
 		cout << "-create_special_subgroup " << endl;
 	}
 	if (f_create_even_subgroup) {
 		cout << "-create_even_subgroup " << endl;
+	}
+	if (f_derived_subgroup) {
+		cout << "-derived_subgroup " << endl;
 	}
 	if (f_point_stabilizer) {
 		cout << "-point_stabilizer " << point_stabilizer_point << endl;

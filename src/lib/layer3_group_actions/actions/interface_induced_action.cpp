@@ -562,6 +562,13 @@ static long int induced_action_element_image_of(
 		IDP = A.G.OnInteriorDirectProduct;
 		b = IDP->compute_image((int *)elt, a, verbose_level - 1);
 	}
+	else if (A.type_G == action_on_cosets_of_subgroup_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of action_on_cosets_of_subgroup_t" << endl;
+		}
+
+		b = A.G.A_on_cosets_of_subgroup->compute_image((int *)elt, a, verbose_level - 1);
+	}
 	else {
 		cout << "induced_action_element_image_of type_G "
 				"unknown:: type_G = " << A.type_G << endl;
@@ -922,6 +929,16 @@ static void induced_action_element_image_of_low_level(
 		//action_on_interior_direct_product *IDP;
 
 		cout << "action_on_interior_direct_product_t "
+				"not yet implemented" << endl;
+		exit(1);
+	}
+	else if (A.type_G == action_on_cosets_of_subgroup_t) {
+		if (f_v) {
+			cout << "action_on_cosets_of_subgroup_t" << endl;
+		}
+		//action_on_interior_direct_product *IDP;
+
+		cout << "action_on_cosets_of_subgroup_t "
 				"not yet implemented" << endl;
 		exit(1);
 	}

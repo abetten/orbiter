@@ -62,7 +62,7 @@ action *induced_action::induced_action_on_interior_direct_product(
 
 
 	A->label = A_old->label + "_on_interior_direct_product_" + std::to_string(A_old->degree) + "_" + std::to_string(nb_rows);
-	A->label_tex = A_old->label_tex + " {\\rm OnIntDirectProduct}_{" + std::to_string(A_old->degree) + "," + std::to_string(nb_rows) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnIntDirectProduct}_{" + std::to_string(A_old->degree) + "," + std::to_string(nb_rows) + "}";
 
 
 
@@ -133,7 +133,7 @@ action *induced_action::induced_action_on_set_partitions(
 
 
 	A->label = A_old->label + "_on_set_partitions_" + std::to_string(A_old->degree) + "_" + std::to_string(partition_class_size);
-	A->label_tex = A_old->label_tex + " {\\rm OnSetPart}_{" + std::to_string(A_old->degree) + "," + std::to_string(partition_class_size) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnSetPart}_{" + std::to_string(A_old->degree) + "," + std::to_string(partition_class_size) + "}";
 
 
 
@@ -286,7 +286,7 @@ action *induced_action::induced_action_by_representation_on_conic(
 
 
 	A->label = A_old->label + "_OnConic";
-	A->label_tex = A_old->label_tex + " {\\rm OnConic}";
+	A->label_tex = A_old->label_tex + "{\\rm OnConic}";
 
 
 
@@ -341,7 +341,8 @@ action *induced_action::induced_action_by_representation_on_conic(
 			cout << "induced_action::induced_action_by_representation_on_conic "
 					"before AG.induced_action_override_sims" << endl;
 		}
-		AG.induced_action_override_sims(A_old, A, old_G, 0/*verbose_level - 2*/);
+		AG.induced_action_override_sims(
+				A_old, A, old_G, 0/*verbose_level - 2*/);
 		if (f_v) {
 			cout << "induced_action::induced_action_by_representation_on_conic "
 					"after AG.induced_action_override_sims" << endl;
@@ -378,7 +379,7 @@ action *induced_action::induced_action_on_cosets(
 
 
 	A->label = A_old->label + "_Cosets_" + std::to_string(A_on_cosets->dimension_of_subspace);
-	A->label_tex = A_old->label_tex + " {\\rm OnCosets}_{" + std::to_string(A_on_cosets->dimension_of_subspace) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnCosets}_{" + std::to_string(A_on_cosets->dimension_of_subspace) + "}";
 
 
 
@@ -456,7 +457,7 @@ action *induced_action::induced_action_on_factor_space(
 
 
 	A->label = A_old->label + "_Factor_" + std::to_string(AF->VS->dimension) + "_" + std::to_string(AF->factor_space_len);
-	A->label_tex = A_old->label_tex + " {\\rm OnFactor}_{" + std::to_string(AF->VS->dimension) + "," + std::to_string(AF->factor_space_len) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnFactor}_{" + std::to_string(AF->VS->dimension) + "," + std::to_string(AF->factor_space_len) + "}";
 
 
 	if (f_v) {
@@ -518,6 +519,85 @@ action *induced_action::induced_action_on_factor_space(
 	return A;
 }
 
+action *induced_action::induced_action_on_cosets_of_subgroup(
+		groups::strong_generators *Subgroup_gens_H,
+		groups::strong_generators *Subgroup_gens_G,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A;
+
+	if (f_v) {
+		cout << "induced_action::induced_action_on_cosets_of_subgroup" << endl;
+	}
+	A = NEW_OBJECT(action);
+
+	A->label = A_old->label + "_OnCosetsOfSubgroup";
+	A->label_tex = A_old->label_tex + "{\\rm OnCosetsOfSubgroup}";
+
+
+
+	if (f_v) {
+		cout << "the old_action " << A_old->label
+				<< " has base_length = " << A_old->base_len() << endl;
+		cout << "the old_action " << A_old->label
+				<< " has degree = " << A_old->degree << endl;
+	}
+	A->f_has_subaction = true;
+	A->subaction = A_old;
+
+	induced_actions::action_on_cosets_of_subgroup *A_on_cosets_of_subgroup;
+
+	A_on_cosets_of_subgroup = NEW_OBJECT(induced_actions::action_on_cosets_of_subgroup);
+
+
+	A_on_cosets_of_subgroup->init(
+			A_old,
+			Subgroup_gens_H,
+			Subgroup_gens_G,
+			verbose_level);
+
+	A->type_G = action_on_cosets_of_subgroup_t;
+	A->G.A_on_cosets_of_subgroup = A_on_cosets_of_subgroup;
+	A->f_allocated = true;
+	A->make_element_size = A_old->make_element_size;
+	A->low_level_point_size = A_old->low_level_point_size;
+
+	A->f_has_strong_generators = false;
+
+	A->degree = A_on_cosets_of_subgroup->degree;
+	//A->base_len = 0;
+	if (f_v) {
+		cout << "induced_action::induced_action_on_cosets_of_subgroup "
+				"before init_function_pointers_induced_action" << endl;
+	}
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
+
+
+
+	A->elt_size_in_int = A_old->elt_size_in_int;
+	A->coded_elt_size_in_char = A_old->coded_elt_size_in_char;
+
+	if (f_v) {
+		cout << "induced_action::induced_action_on_grassmannian "
+				"before A->allocate_element_data" << endl;
+	}
+	A->Group_element->allocate_element_data();
+
+
+	if (f_v) {
+		cout << "induced_action::induced_action_on_cosets_of_subgroup "
+				"finished, created action " << A->label << endl;
+		cout << "degree=" << A->degree << endl;
+		cout << "make_element_size=" << A->make_element_size << endl;
+		cout << "low_level_point_size=" << A->low_level_point_size << endl;
+		A->print_info();
+	}
+	return A;
+}
+
+
 action *induced_action::induced_action_on_grassmannian(
 		int k, int verbose_level)
 {
@@ -532,7 +612,7 @@ action *induced_action::induced_action_on_grassmannian(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_Gr_" + std::to_string(k);
-	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(k) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnGr}_{" + std::to_string(k) + "}";
 
 
 
@@ -633,7 +713,7 @@ action *induced_action::induced_action_on_grassmannian_preloaded(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_Gr_" + std::to_string(AGr->n) + "_" + std::to_string(AGr->k);
-	A->label_tex = A_old->label_tex + " {\\rm OnGr}_{" + std::to_string(AGr->n) + "," + std::to_string(AGr->k) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnGr}_{" + std::to_string(AGr->n) + "," + std::to_string(AGr->k) + "}";
 
 
 	if (f_v) {
@@ -748,7 +828,7 @@ action *induced_action::induced_action_on_spread_set(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_SpreadSet_" + std::to_string(AS->k) + "_" + std::to_string(AS->q);
-	A->label_tex = A_old->label_tex + " {\\rm OnSpreadSet}_{" + std::to_string(AS->k) + "," + std::to_string(AS->q) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnSpreadSet}_{" + std::to_string(AS->k) + "," + std::to_string(AS->q) + "}";
 
 
 
@@ -838,7 +918,7 @@ action *induced_action::induced_action_on_wedge_product(
 
 
 	A->label = A_old->label + "_Wedge";
-	A->label_tex = A_old->label_tex + " {\\rm OnWedge}";
+	A->label_tex = A_old->label_tex + "{\\rm OnWedge}";
 
 
 	if (f_v) {
@@ -948,7 +1028,7 @@ action *induced_action::induced_action_on_Galois_group(
 
 
 	A->label = A_old->label + "_gal";
-	A->label_tex = A_old->label_tex + " {\\rm OnGal}";
+	A->label_tex = A_old->label_tex + "{\\rm OnGal}";
 
 	if (f_v) {
 		cout << "the old_action " << A_old->label
@@ -1041,7 +1121,7 @@ action *induced_action::induced_action_on_determinant(
 	}
 
 	A->label = A_old->label + "_det";
-	A->label_tex = A_old->label_tex + " {\\rm OnDet}";
+	A->label_tex = A_old->label_tex + "{\\rm OnDet}";
 
 
 	if (f_v) {
@@ -1141,7 +1221,7 @@ action *induced_action::induced_action_on_sign(
 
 
 	A->label = A_old->label + "_OnSign";
-	A->label_tex = A_old->label_tex + " {\\rm OnSign}";
+	A->label_tex = A_old->label_tex + "{\\rm OnSign}";
 
 
 	if (f_v) {
@@ -1230,7 +1310,7 @@ action *induced_action::create_induced_action_by_conjugation(
 
 
 	A->label = A_old->label + "_Conj" + std::to_string(goi);
-	A->label_tex = A_old->label_tex + " {\\rm ByConj " + std::to_string(goi) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm ByConj " + std::to_string(goi) + "}";
 
 
 	A->f_has_subaction = true;
@@ -1312,7 +1392,7 @@ action *induced_action::induced_action_by_right_multiplication(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_E" + std::to_string(goi);
-	A->label_tex = A_old->label_tex + " {\\rm RightMult" + std::to_string(goi) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm RightMult" + std::to_string(goi) + "}";
 
 
 	if (f_v) {
@@ -1423,7 +1503,7 @@ action *induced_action::induced_action_on_sets(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_S" + std::to_string(set_size);
-	A->label_tex = A_old->label_tex + " {\\rm S" + std::to_string(set_size) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm S" + std::to_string(set_size) + "}";
 
 
 	A->f_has_subaction = true;
@@ -1539,7 +1619,7 @@ action *induced_action::induced_action_on_subgroups(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_on_subgroups_nb_" + std::to_string(Hash_table_subgroups->nb_groups());
-	A->label_tex = A_old->label_tex + " {\\rm OnSubgroups" + std::to_string(Hash_table_subgroups->nb_groups()) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnSubgroups" + std::to_string(Hash_table_subgroups->nb_groups()) + "}";
 
 	A->f_has_subaction = true;
 	A->subaction = old_action;
@@ -1615,7 +1695,7 @@ action *induced_action::induced_action_by_restriction_on_orbit_with_schreier_vec
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_res_sv" + std::to_string(pt);
-	A->label_tex = A_old->label_tex + " {\\rm res sv" + std::to_string(pt) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm res sv" + std::to_string(pt) + "}";
 
 	A->f_has_subaction = true;
 	A->subaction = A_old;
@@ -1731,7 +1811,7 @@ action *induced_action::restricted_action(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_res_" + label_of_set;
-	A->label_tex = A_old->label_tex + " {\\rm res}" + label_of_set_tex;
+	A->label_tex = A_old->label_tex + "{\\rm res}" + label_of_set_tex;
 
 
 	A->f_has_subaction = true;
@@ -1824,7 +1904,7 @@ action *induced_action::induced_action_by_restriction(
 
 
 	A->label = old_action->label + "_res_" + label_of_set;
-	A->label_tex = old_action->label_tex + " {\\rm res}" + label_of_set_tex;
+	A->label_tex = old_action->label_tex + "{\\rm res}" + label_of_set_tex;
 
 
 	A->f_has_subaction = true;
@@ -1907,7 +1987,7 @@ action *induced_action::induced_action_on_pairs(
 	}
 
 	A->label = A_old->label + "_on_pairs";
-	A->label_tex = A_old->label_tex + " {\\rm OnPairs}";
+	A->label_tex = A_old->label_tex + "{\\rm OnPairs}";
 
 
 	if (f_v) {
@@ -1937,7 +2017,7 @@ action *induced_action::induced_action_on_ordered_pairs(
 
 
 	A->label = A_old->label + "_on_ordered_pairs";
-	A->label_tex = A_old->label_tex + " {\\rm OnOrderedPairs}";
+	A->label_tex = A_old->label_tex + "{\\rm OnOrderedPairs}";
 
 
 	A->f_has_subaction = true;
@@ -2060,7 +2140,7 @@ action *induced_action::induced_action_on_orbits(
 	A = NEW_OBJECT(action);
 
 	A->label = A_old->label + "_on_orbits_" + std::to_string(Sch->nb_orbits);
-	A->label_tex = A_old->label_tex + " {\\rm OnOrbits}_{" + std::to_string(Sch->nb_orbits) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnOrbits}_{" + std::to_string(Sch->nb_orbits) + "}";
 
 
 	On_orbits = NEW_OBJECT(induced_actions::action_on_orbits);
@@ -2121,7 +2201,7 @@ action *induced_action::induced_action_on_andre(
 	A = NEW_OBJECT(action);
 
 	A->label = An1->label + "_on_andre";
-	A->label_tex = An1->label_tex + " {\\rm OnAndre}";
+	A->label_tex = An1->label_tex + "{\\rm OnAndre}";
 
 	On_andre = NEW_OBJECT(induced_actions::action_on_andre);
 	On_andre->init(An, An1, Andre, verbose_level);
@@ -2182,7 +2262,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 			+ std::to_string(HPD->nb_variables)
 			+ "_" + std::to_string(HPD->degree);
 	A->label_tex = A_old->label_tex
-			+ " {\\rm OnHomPoly}_{" + std::to_string(HPD->nb_variables)
+			+ "{\\rm OnHomPoly}_{" + std::to_string(HPD->nb_variables)
 			+ "," + std::to_string(HPD->degree) + "}";
 
 
@@ -2281,7 +2361,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equat
 	OnHP = NEW_OBJECT(induced_actions::action_on_homogeneous_polynomials);
 
 	A->label = A_old->label + "_on_homog_poly_" + std::to_string(HPD->nb_variables) + "_" + std::to_string(HPD->degree) + "_eqn" + std::to_string(nb_equations);
-	A->label_tex = A_old->label_tex + " {\\rm OnHomPolyEqn}_{" + std::to_string(HPD->nb_variables) + "," + std::to_string(HPD->degree)  + "," + std::to_string(nb_equations) + "}";
+	A->label_tex = A_old->label_tex + "{\\rm OnHomPolyEqn}_{" + std::to_string(HPD->nb_variables) + "," + std::to_string(HPD->degree)  + "," + std::to_string(nb_equations) + "}";
 
 
 	if (f_v) {

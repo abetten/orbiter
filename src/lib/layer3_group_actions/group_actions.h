@@ -125,6 +125,7 @@ namespace induced_actions {
 	class action_by_subfield_structure;
 	class action_on_andre;
 	class action_on_bricks;
+	class action_on_cosets_of_subgroup;
 	class action_on_cosets;
 	class action_on_determinant;
 	class action_on_factor_space;
@@ -199,6 +200,7 @@ enum symmetry_group_type {
 	action_on_homogeneous_polynomials_t,
 	action_on_set_partitions_t,
 	action_on_interior_direct_product_t,
+	action_on_cosets_of_subgroup_t,
 };
 
 //! enumeration specific to action_by_representation
@@ -267,6 +269,7 @@ union symmetry_group {
 	induced_actions::action_on_homogeneous_polynomials *OnHP;
 	induced_actions::action_on_set_partitions *OnSetPartitions;
 	induced_actions::action_on_interior_direct_product *OnInteriorDirectProduct;
+	induced_actions::action_on_cosets_of_subgroup *A_on_cosets_of_subgroup;
 };
 
 

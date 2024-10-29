@@ -781,9 +781,14 @@ public:
 
 	int f_on_wedge_product;
 
+	int f_on_cosets_of_subgroup;
+	std::string on_cosets_of_subgroup_subgroup;
+
 	int f_create_special_subgroup;
 
 	int f_create_even_subgroup;
+
+	int f_derived_subgroup;
 
 	int f_point_stabilizer;
 	int point_stabilizer_point;
@@ -1198,10 +1203,16 @@ public:
 	void create_action_on_wedge_product(
 			group_modification_description *description,
 			int verbose_level);
+	void create_action_on_cosets_of_subgroup(
+			group_modification_description *description,
+			int verbose_level);
 	void create_special_subgroup(
 			group_modification_description *description,
 			int verbose_level);
 	void create_even_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_derived_subgroup(
 			group_modification_description *description,
 			int verbose_level);
 	void create_point_stabilizer_subgroup(

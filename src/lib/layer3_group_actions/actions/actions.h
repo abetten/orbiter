@@ -430,12 +430,6 @@ public:
 			std::ostream &ost,
 			int *Elt, int f_with_permutation);
 
-	// action_cb.cpp
-	void all_elements(
-			data_structures_groups::vector_ge *&vec,
-			int verbose_level);
-	void all_elements_save_csv(
-			std::string &fname, int verbose_level);
 
 
 	// in backtrack.cpp
@@ -859,6 +853,15 @@ public:
 			groups::strong_generators *&projectivity_gens,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
+	void all_elements(
+			action *A,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	// unused code
+	void all_elements_save_csv(
+			action *A,
+			std::string &fname, int verbose_level);
+	// unused code
 
 };
 
@@ -1523,6 +1526,11 @@ public:
 			induced_actions::action_on_factor_space *AF,
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
+
+	action *induced_action_on_cosets_of_subgroup(
+			groups::strong_generators *Subgroup_gens_H,
+			groups::strong_generators *Subgroup_gens_G,
+			int verbose_level);
 
 	action *induced_action_on_grassmannian(
 			int k,

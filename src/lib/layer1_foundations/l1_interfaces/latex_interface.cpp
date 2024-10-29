@@ -152,7 +152,7 @@ void latex_interface::head(
 	ost << "\\usepackage{array}" << endl;
 	ost << "\\usepackage{tikz}" << endl;
 	ost << "\\usepackage{longtable}" << endl;
-	ost << "\\usepackage{anyfontsize}" << endl;
+	ost << "%\\usepackage{anyfontsize}" << endl;
 	ost << "\\usepackage{t1enc}" << endl;
 	ost << "%\\usepackage{amsmath,amsfonts}" << endl;
 	ost << endl;
@@ -177,7 +177,7 @@ void latex_interface::head(
 		//ost << "\\usepackage[a4paper]{geometry}" << endl;
 		//ost << "\\usepackage[a3paper]{geometry}" << endl;
 		//ost << "\\usepackage[a2paper]{geometry}" << endl;
-		ost << "\\usepackage[a1paper]{geometry}" << endl;
+		//ost << "\\usepackage[a1paper]{geometry}" << endl;
 		//ost << "\\usepackage[a0paper]{geometry}" << endl;
 
 		//ost << "\\usepackage{fullpage}" << endl;

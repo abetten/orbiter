@@ -1326,9 +1326,18 @@ void linear_group::init_symplectic_group(
 	A2 = A_linear;
 
 
-	label += "_Sp_" + std::to_string(n) + "_" + std::to_string(q);
-	label_tex += "{\\rm Sp}(" + std::to_string(n) + "," + std::to_string(q) + ")";
-
+	if (Mtx->f_projective) {
+		label += "_PSp_" + std::to_string(n) + "_" + std::to_string(q);
+		label_tex += "{\\rm PSp}(" + std::to_string(n) + "," + std::to_string(q) + ")";
+	}
+	else if (Mtx->f_affine) {
+		label += "_ASp_" + std::to_string(n) + "_" + std::to_string(q);
+		label_tex += "{\\rm ASp}(" + std::to_string(n) + "," + std::to_string(q) + ")";
+	}
+	else {
+		label += "_Sp_" + std::to_string(n) + "_" + std::to_string(q);
+		label_tex += "{\\rm Sp}(" + std::to_string(n) + "," + std::to_string(q) + ")";
+	}
 
 
 	if (f_v) {

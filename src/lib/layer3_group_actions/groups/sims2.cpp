@@ -841,7 +841,9 @@ void sims::build_up_subgroup_random_process(
 	void (*choose_random_generator_for_subgroup)(sims *G,
 			int *Elt, int verbose_level),
 	int verbose_level)
-// called from wreath_product::orbits_restricted_compute
+// called from
+// wreath_product::orbits_restricted_compute
+// modified_group_create::create_derived_subgroup
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

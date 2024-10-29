@@ -141,7 +141,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 	Nau.Levi_graph(
 		Enc,
 		NO,
-		verbose_level - 3);
+		verbose_level);
 
 	//Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
