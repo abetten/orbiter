@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:spread:table:activity",,
+1,"Activities for Spread Tables",,
+1,"\verb'-find_spread' "," spread "," Find a given spread in the table. "
+1,"\verb'-find_spread_and_dualize' "," spread "," Find a given spread in the table and dualize. "
+1,"\verb'-dualize_packing' "," packing "," Dualize a packing. "
+1,"\verb'-print_spreads' "," spreads "," Print the given spreads. "
+1,"\verb'-export_spreads_to_csv' "," fname index "," Export the spread whose index is given to csv-file. "
+1,"\verb'-find_spreads_containing_one_line' "," index "," Find all spreads which contain the given line. "
+END

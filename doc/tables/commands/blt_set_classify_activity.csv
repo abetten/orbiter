@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:BLT:classify:activity",,
+1,"Activities for the Classification of BLT-sets",,
+1,"\verb'-compute_starter' ","  "," Perform classification of partial spreads. "
+1,"\verb'-poset_classification_activity' "," label ","  "
+1,"\verb'-create_graphs' ","  "," Prepare to lift all cases of partial BLT-sets by creating the associated colored graphs. "
+1,"\verb'-split' "," r m "," Lift only those cases $k$ with $k \equiv r \mod m$. "
+1,"\verb'-isomorph' "," options "," Perform isomorphism testing after lifting is complete. "
+END

@@ -251,11 +251,14 @@ void orbits_create::init(
 						Descr->on_subspaces_poset_classification_control_label);
 
 
+		apps_algebra::algebra_global_with_action Algebra_global_with_action;
+
 		if (f_v) {
-			cout << "orbits_create::init before Group->Any_group_linear->do_orbits_on_subspaces" << endl;
+			cout << "orbits_create::init before Algebra_global_with_action.do_orbits_on_subspaces" << endl;
 		}
 
-		Group->Any_group_linear->do_orbits_on_subspaces(
+		Algebra_global_with_action.do_orbits_on_subspaces(
+				Group,
 				Control,
 				On_Subspaces,
 				Descr->on_subspaces_dimension,
@@ -263,7 +266,7 @@ void orbits_create::init(
 
 
 		if (f_v) {
-			cout << "orbits_create::init after Group->Any_group_linear->do_orbits_on_subspaces" << endl;
+			cout << "orbits_create::init after Algebra_global_with_action.do_orbits_on_subspaces" << endl;
 		}
 
 		f_has_On_Subspaces = true;
@@ -289,12 +292,15 @@ void orbits_create::init(
 			exit(1);
 		}
 
+		apps_algebra::algebra_global_with_action Algebra_global_with_action;
+
 
 		if (f_v) {
-			cout << "orbits_create::init before Group->Any_group_linear->do_tensor_classify" << endl;
+			cout << "orbits_create::init before Algebra_global_with_action.do_tensor_classify" << endl;
 		}
 
-		Group->Any_group_linear->do_tensor_classify(
+		Algebra_global_with_action.do_tensor_classify(
+				Group,
 				Descr->on_tensors_poset_classification_control_label,
 				On_tensors,
 				Descr->on_tensors_dimension,
@@ -303,7 +309,7 @@ void orbits_create::init(
 		f_has_On_tensors = true;
 
 		if (f_v) {
-			cout << "orbits_create::init after Group->Any_group_linear->do_tensor_classify" << endl;
+			cout << "orbits_create::init after Algebra_global_with_action.do_tensor_classify" << endl;
 		}
 
 	}

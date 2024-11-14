@@ -181,7 +181,7 @@ void design_create::init(
 					"list_of_base_blocks_selection_idx=" << Descr->list_of_base_blocks_selection_idx << endl;
 		}
 
-		apps_algebra::any_group *AG;
+		groups::any_group *AG;
 
 		AG = Get_any_group(Descr->list_of_base_blocks_group_label);
 

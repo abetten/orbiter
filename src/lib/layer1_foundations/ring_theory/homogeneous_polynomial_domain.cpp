@@ -3176,7 +3176,8 @@ void homogeneous_polynomial_domain::create_ideal(
 
 	int r;
 
-	vanishing_ideal(Pts,
+	vanishing_ideal(
+			Pts,
 			nb_pts, r, Kernel, verbose_level - 3);
 
 
@@ -4074,16 +4075,27 @@ void homogeneous_polynomial_domain::compute_singular_points_projectively(
 	for (rk = 0; rk < nb_points; rk++) {
 		P->unrank_point(
 			v, rk);
-		for (i = 0; i < nb_variables; i++) {
-			a = Poly_reduced_degree->evaluate_at_a_point(
-					gradient + i * Poly_reduced_degree->get_nb_monomials(),
-					v);
-			if (a) {
-				break;
+
+		// check if the point lies on the variety:
+
+		a = evaluate_at_a_point(equation, v);
+
+		if (a == 0) {
+
+			// yes, it does.
+
+			// check if the point is singular:
+			for (i = 0; i < nb_variables; i++) {
+				a = Poly_reduced_degree->evaluate_at_a_point(
+						gradient + i * Poly_reduced_degree->get_nb_monomials(),
+						v);
+				if (a) {
+					break;
+				}
 			}
-		}
-		if (i == nb_variables) {
-			Singular_points.push_back(rk);
+			if (i == nb_variables) {
+				Singular_points.push_back(rk);
+			}
 		}
 	}
 

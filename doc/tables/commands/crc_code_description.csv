@@ -1,0 +1,6 @@
+ROW,C1,C2,C3
+0,"tab:CRC:description",,
+1,"Defining a CRC-Code",,
+1,"\verb'-type' "," type "," Select the type of CRC-code. "
+1,"\verb'-block_length' "," length "," Select the symbol length of the CRC-code. "
+END

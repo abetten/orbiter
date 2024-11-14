@@ -450,7 +450,8 @@ void orbiter_top_level_session::add_symbol_table_entry(
 	}
 }
 
-apps_algebra::any_group
+
+groups::any_group
 	*orbiter_top_level_session::get_any_group(
 			std::string &label)
 {
@@ -467,7 +468,7 @@ apps_algebra::any_group
 				"object type != t_any_group" << endl;
 		exit(1);
 	}
-	return (apps_algebra::any_group *) get_object(idx);
+	return (groups::any_group *) get_object(idx);
 }
 
 projective_geometry::projective_space_with_action

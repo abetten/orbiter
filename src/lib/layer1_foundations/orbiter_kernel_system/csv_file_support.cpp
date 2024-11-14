@@ -2005,7 +2005,7 @@ void csv_file_support::do_csv_file_latex(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "file_io::do_csv_file_latex" << endl;
+		cout << "csv_file_support::do_csv_file_latex" << endl;
 	}
 
 	data_structures::spreadsheet S;
@@ -2089,6 +2089,190 @@ void csv_file_support::do_csv_file_latex(
 		cout << "csv_file_support::do_csv_file_select_rows done" << endl;
 	}
 }
+
+void csv_file_support::prepare_tables_for_users_guide(
+		std::vector<std::string> &tbl_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide" << endl;
+	}
+
+	int h;
+
+	for (h = 0; h < tbl_fname.size(); h++) {
+		prepare_table_for_users_guide(tbl_fname[h], verbose_level);
+	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide done" << endl;
+	}
+}
+
+
+void csv_file_support::prepare_table_for_users_guide(
+		std::string &fname_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide" << endl;
+	}
+
+
+
+	data_structures::string_tools ST;
+
+	std::string *col_label;
+	std::string *Table;
+	int m, n;
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide before read_table_of_strings" << endl;
+	}
+
+	read_table_of_strings(
+			fname_csv, col_label,
+			Table, m, n,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide after read_table_of_strings" << endl;
+	}
+
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			string s1, s2;
+
+			s1 = Table[i * n + j];
+			ST.drop_quotes(s1, s2);
+			Table[i * n + j] = s2;
+		}
+	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide found table of size " << m << " x " << n << endl;
+	}
+
+	delete [] col_label;
+
+
+
+	std::string label;
+	std::string title;
+
+
+	label = Table[0 * n + 0];
+	title = Table[1 * n + 0];
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide label = " << label << endl;
+		cout << "csv_file_support::prepare_tables_for_users_guide title = " << title << endl;
+	}
+
+	string latex_columns_ug;
+	string latex_columns_ws;
+	string header_ug;
+	string header_ws;
+
+	if (n == 3) {
+		latex_columns_ug = "X|p{2cm}|X|";
+		latex_columns_ws = "p{3cm}|p{2cm}|p{6.3cm}|";
+		header_ug = "Command & Arguments & Purpose ";
+		header_ws = header_ug;
+	}
+	else if (n == 4) {
+		latex_columns_ug = "X|p{4cm}|X|X|";
+		latex_columns_ws = "p{1cm}|p{4cm}|p{2cm}|p{3.9cm}|";
+		header_ug = "$q$ & Polynomial & Numerical & Relation ";
+		header_ws = header_ug;
+	}
+	else {
+		cout << "number of columns must be either 2 or 3. Number of columns is = " << n << endl;
+	}
+
+	// for users_guide:
+	{
+		string fname_out;
+
+		fname_out = fname_csv;
+		ST.chop_off_extension(fname_out);
+		fname_out += "_ug.tex";
+
+		ofstream ost(fname_out);
+		int h;
+
+		ost << "\\begin{table}" << endl;
+		ost << "\\begin{tcolorbox}[tabularx={" << latex_columns_ug << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
+		ost << "colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white," << endl;
+		ost << "coltitle=black,title=" << title << "]" << endl;
+		ost << "\\hline" << endl;
+		ost << header_ug << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+		for (h = 2; h < m; h++) {
+			for (j = 0; j < n; j++) {
+				ost << Table[h * n + j];
+				if (j < n - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+		}
+		ost << "\\end{tcolorbox}" << endl;
+		ost << "\\caption{\\label{" << label << "}" << title << "}" << endl;
+		ost << "\\end{table}" << endl;
+
+	}
+
+	// for ws:
+	{
+		string fname_out;
+
+		fname_out = fname_csv;
+		ST.chop_off_extension(fname_out);
+		fname_out += "_ws.tex";
+
+		ofstream ost(fname_out);
+		int h;
+
+		ost << "\\begin{table}[t]" << endl;
+		ost << "\\tbl{\\label{" << label << "}}" << endl;
+		ost << "{\\begin{tcolorbox}[tabularx={" << latex_columns_ws << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
+		ost << "colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white," << endl;
+		ost << "coltitle=black,title=" << title << "]" << endl;
+		ost << "\\hline" << endl;
+		ost << header_ws << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+		for (h = 2; h < m; h++) {
+			for (j = 0; j < n; j++) {
+				ost << Table[h * n + j];
+				if (j < n - 1) {
+					ost << " & ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+		}
+
+		ost << "\\end{tcolorbox}}" << endl;
+		ost << "\\end{table}" << endl;
+
+	}
+
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide done" << endl;
+	}
+}
+
+
 
 void csv_file_support::read_csv_file_and_tally(
 		std::string &fname, int verbose_level)
@@ -3296,7 +3480,7 @@ void csv_file_support::read_table_of_strings_as_matrix(
 
 	data_structures::string_tools ST;
 
-	int i, j;
+	int i;
 
 
 	std::string *Column;

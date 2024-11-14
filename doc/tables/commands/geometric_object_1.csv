@@ -1,0 +1,25 @@
+ROW,C1,C2,C3
+0,"tab:geometric:objects:1",,
+1,"Geometric Objects (Part 1)",,
+1,"\verb'-hyperoval' ","  "," To create a hyperoval  "
+1,"\verb'-subiaco_oval' "," f\_short "," Create the Subiaco oval  "
+1,"\verb'-subiaco_hyperoval' ","  "," Create the Subiaco hyperoval  "
+1,"\verb'-adelaide_hyperoval' ","  "," Create the Adalaide hyperoval  "
+1,"\verb'-translation' "," $i$ "," Create the translation hyperoval with exponent $i$ "
+1,"\verb'-Segre' ","  "," Create the Segre hyperoval  "
+1,"\verb'-Payne' ","  "," Create the Payne hyperoval  "
+1,"\verb'-Cherowitzo' ","  "," Create the Cherowitzo hyperoval  "
+1,"\verb'-OKeefe_Penttila' ","  "," Create the O'Keefe, Penttila hyperoval  "
+1,"\verb'-BLT_database' "," $k$ "," Create the $k$th BLT-set of order $q$ from the database ($k=0,1,\ldots$) "
+1,"\verb'-elliptic_quadric_ovoid' ","  ","  Create an elliptic quadric ovoid in $\PG(3,q)$. "
+1,"\verb'-ovoid_ST' ","  ","  Create the Suzuki Tits ovoid in $\PG(3,q)$. Here, $q=2^{2r+1}.$ "
+1,"\verb'-Baer' ","  "," Create the (standard) Baer subgeometry "
+1,"\verb'-orthogonal' "," $\epsilon$ "," Create the $Q^\epsilon(n,q)$ quadric "
+1,"\verb'-hermitian' "," "," Create the Hermitian variety given by $\sum_{i=0}^n X_i^{\sqrt{q}+1} = 0$"
+1,"\verb'-cuspidal_cubic' "," "," Create the cuspidal cubic $(s^3,ts^2,t^3)$ in $\PG(2,q)$"
+1,"\verb'-twisted_cubic' "," "," Create a twisted cubic $(s^3,s^2t,st^2,t^3)$ in $\PG(3,q)$"
+1,"\verb'-elliptic_curve' "," $a$ $b$ "," Create the elliptic curve $y^2=x^3+ax+b$ "
+1,"\verb'-ttp_construction_A' ","  "," Create the twisted tensor product code of type $A$~\cite{Betten2008} "
+1,"\verb'-ttp_construction_A_hyperoval' ","  "," Create the twisted tensor product code of type $A$~\cite{Betten2008} "
+1,"\verb'-ttp_construction_B' ","  "," Create the twisted tensor product code of type $B$~\cite{Betten2008} "
+END

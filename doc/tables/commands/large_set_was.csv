@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:largeset:was:create",,
+1,"Creating Large Sets with Assumed Symmetry",,
+1,"\verb'-H' "," go gens  "," Specify the assumed group $H$. "
+1,"\verb'-N' "," go gens  "," Specify the normalizer $N$ of the group $H$. "
+1,"\verb'-report' ","   "," Create a latex report. "
+1,"\verb'-prefix' "," prefix  "," Set a prefix for output files. "
+1,"\verb'-selected_orbit_length' "," l  "," Select orbit length $l$. "
+END
+

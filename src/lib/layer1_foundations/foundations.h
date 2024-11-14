@@ -958,6 +958,7 @@ namespace solvers {
 #define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
 #define Get_geometry_builder(A) orbiter_kernel_system::Orbiter->get_geometry_builder(A)
 #define Get_graph(A) orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
+#define Get_any_group_opaque(A) orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
 
 
 

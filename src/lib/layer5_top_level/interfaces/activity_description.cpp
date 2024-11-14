@@ -1342,9 +1342,9 @@ void activity_description::do_group_theoretic_activity(
 		exit(1);
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
-	AG = (apps_algebra::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	AG = (groups::any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
 		apps_algebra::group_theoretic_activity Activity;
 
@@ -1364,9 +1364,9 @@ void activity_description::do_group_theoretic_activity(
 				exit(1);
 			}
 
-			apps_algebra::any_group *AG_secondary;
+			groups::any_group *AG_secondary;
 
-			AG_secondary = (apps_algebra::any_group *)
+			AG_secondary = (groups::any_group *)
 					Sym->Orbiter_top_level_session->get_object(Idx[1]);
 
 			if (f_v) {

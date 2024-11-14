@@ -1,0 +1,26 @@
+ROW,C1,C2,C3
+0,"tab:matrix:group:2",,
+1,"Creating a Matrix Group (Part 2)",,
+2,"\verb'-wedge' ","  "," Create the group in the action on the wedge product. "
+3,"\verb'-wedge_detached' ","  "," Create the group in the action on the wedge product. "
+4,"\verb'-PGL2OnConic' ","  "," Create the action of $\PGL(2,q)$ on the conic. "
+5,"\verb'-monomial' ","  "," Create the group in the monomial action. "
+6,"\verb'-diagonal' ","  "," Create the group in the diagonal action. "
+7,"\verb'-null_polarity_group' ","  "," Create the subgroup corresponding to a null polarity. "
+8,"\verb'-symplectic_group' ","  "," Create the subgroup of type symplectic group. "
+9,"\verb'-singer' ","  "," Create the Singer subgroup. "
+10,"\verb'-singer_and_frobenius' "," $k$ "," Create the Singer subgroup extended by a Frobenius automorphism. Here, $k$ is the power of the Frobenius endomorphism. "
+11,"\verb'-subfield_structure_action' "," $s$ "," Create the action on the field reduction w.r.t. the subfield $\bbF_r$, where $r^s = q$. "
+12,"\verb'-subgroup_from_file' "," fname label "," Create the subgroup from the given file and assign the given label. "
+13,"\verb'-borel_upper' ","  "," Create the upper Borel subgroup. "
+14,"\verb'-borel_lower' ","  "," Create the lower Borel subgroup. "
+15,"\verb'-identity_group' ","  "," Create the identity subgroup. "
+16,"\verb'-orthogonal' "," epsilon "," Create the orthogonal group of type epsilon as subgroup, where epsilon $\in \{0,1,-1\}.$ "
+17,"\verb'-on_tensors' ","  "," Create the tensor action. "
+18,"\verb'-on_rank_one_tensors' ","  "," Create the action on rank-one tensors. "
+19,"\verb'-subgroup_by_generators' "," label order $k$ gens "," Create a subgroup with a known order from a set of generators. There are $k$ generators. gens is a orbiter vector object. "
+20,"\verb'-Janko1' ","  "," Create the Janko group $J_1$ as a subgroup. "
+21,"\verb'-export_magma' ","  "," Export the group to Magma. "
+22,"\verb'-import_group_of_plane' "," plane "," Import the group of a translation plane. Here, plane must be an Orbiter object of type translation plane. "
+23,"\verb'-lex_least_base' ","  "," Create the lex-least base. This will make indexing of group elements deterministic. "
+END

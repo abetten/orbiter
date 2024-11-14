@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:cubic:surface:activities",,
+1,"Cubic Surface Activities",,
+1,"\verb'-report' "," "," Produce a latex report about the cubic surface. "
+1,"\verb'-report_group_elements' "," csv-file heading "," Report properties of elements of the automorphism group. The group elements must be given in make-element-form in a column in a csv-file. "
+1,"\verb'-export_something' "," type "," Exports data about the surface to a file. The type of data to be exported must be specified according to Table~\ref{tab:cubic:surface:export}. "
+1,"\verb'-export_gap' ","  "," Export a cubic surface to GAP. See Section~\ref{sec:cubicsurfaces:interface}. "
+1,"\verb'-all_quartic_curves' "," "," Creates all quartic curves with 28 bitangents from the surface by projecting along the tangent cone of a point not on any line.   "
+1,"\verb'-export_all_quartic_curves' "," "," Export all quartic curves arising from the orbits of points not on lines of the surface. The curves are written to a csv file. "
+1,"\verb'-export_something_with_group_element' "," what label "," Exports data about the surface to a file. The type of data to be exported must be specified according to Table~\ref{tab:cubic:surface:export}. "
+1,"\verb'-action_on_module' "," type basis generators "," "
+1,"\verb'-Clebsch_map_up' "," line1 line2 "," Define the birational Clebsch map from a plane to the surface. The skew lines line1 and line2 are used to define the map. "
+1,"\verb'-Clebsch_map_up_single_point' "," pt line1 line2 "," Map a single point to the surface under the Clebsch map defined by the pair of lines line1 and line2. "
+END

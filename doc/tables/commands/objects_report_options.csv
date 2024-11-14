@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:combi:reporting",,
+1,"Options for Reporting After Classification",,
+1,"\verb'-export_flag_orbits' ","   "," Export flag orbits to csv file. "
+1,"\verb'-show_incidence_matrices' ","   "," Show incidence matrices in the report. "
+1,"\verb'-show_TDO' ","   "," Compute the TDO for the report. "
+1,"\verb'-show_TDA' ","   "," Compute the TDA for the report. "
+1,"\verb'-export_labels' ","   ","  "
+1,"\verb'-export_group_orbiter' ","   ","  "
+1,"\verb'-export_group_GAP' ","   ","  "
+1,"\verb'-lex_least' ","  geo "," Show lex-least orbit representatives. Here, geo is a geometry builder object. "
+END
+

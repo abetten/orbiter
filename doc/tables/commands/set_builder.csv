@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:set:builder",,
+1,"Set Builder Commands",,
+1,"\verb'-loop' "," a b c "," creates the set $\{k \mid k = a+ic, \; i \in \bbZ, \; a \le k < c\}$"
+1,"\verb'-affine_function' "," a b "," Apply the affine function $ax+b$."
+1,"\verb'-set_builder' "," set "," Use a set as input to a construction."
+1,"\verb'-clone_with_affine_function' "," a b "," Apply the affine function $ax+b$ to the elements $x$ of a set specified using \verb'-set_builder'. "
+1,"\verb'-affine_function' "," a b "," Apply the affine function $ax+b$ to the elements $x$ of a set specified using \verb'-set_builder'. "
+1,"\verb'-here' "," elements "," Create the set from the given list of elements. The elements of the list are comma separated. "
+1,"\verb'-file' "," fname "," Create a set from the elements listed in the given file. "
+1,"\verb'-file_orbiter_format' "," fname "," Create a set from the elements listed in the given file. "
+END
+\caption{\label{tab:set:builder}Set Builder Commands}

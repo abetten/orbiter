@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:polynomial:ring",,
+1,"Creating Multivariate Polynomial Rings",,
+1,"\verb'-field' "," label "," Specify the field of coefficients. "
+1,"\verb'-homogeneous_of_degree' "," $d$ "," Specify the degree $d$ of polynomials. "
+1,"\verb'-number_of_variables' "," $n$ "," Specify the number $n$ of variables. "
+1,"\verb'-monomial_ordering_partition' ","  "," Set monomial ordering to partition ordering. "
+1,"\verb'-monomial_ordering_lex' ","  "," Set monomial ordering to lexicographic ordering. "
+1,"\verb'-variables' "," label-txt label-tex "," Specify variable labels in ascii and in latex. "
+END

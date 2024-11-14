@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:coding:global",,
+1,"Global Coding Theoretic Commands",,
+1,"\verb'-make_macwilliams_system' "," $q$ $n$ $k$ "," Create the MacWilliams equations for the weight enumerator of the dual code. "
+1,"\verb'-table_of_bounds' "," $n_{\max}$ $q$ "," Make a table of bounds for $q$-ary linear codes for all $k \le n \le n_{\max}$ "
+1,"\verb'-make_bounds_for_d_given_n_' \verb'and_k_and_q' "," $n$ $k$ $q$ "," Make bounds for the minimum distance of an $[n,k]_q$ code"
+1,"\verb'-introduce_errors' "," CRC-options ","Introduce errors to a file. See Table~\ref{tab:CRC:options}."
+1,"\verb'-check_errors' "," CRC-options ","Find errors in a CRC coded file. See Table~\ref{tab:CRC:options}."
+1,"\verb'-extract_block' "," CRC-options ","Extract a block from a CRC coded file. See Table~\ref{tab:CRC:options}. "
+1,"\verb'-random_noise_in_bitmap_file' "," input output $n$ $d$ "," Apply random noise at the $d/n$ level to the bitmap file ``input'' and write to ``output.''  "
+1,"\verb'-random_noise_of_burst_type_' \verb'in_bitmap_file' "," input output $n$ $d$ $b$ "," Apply random noise of type burst with max burst length $b$ at the $d/n$ level to the bitmap file ``input'' and write to ``output'' "
+END

@@ -1,0 +1,18 @@
+ROW,C1,C2,C3
+0,"tab:design:activity",,
+1,"Design Activities",,
+1,"\verb'-load_table' "," label group H\_label H\_group_order H\_gens l ","  "
+1,"\verb'-canonical_form' "," options  ","  "
+1,"\verb'-extract_solutions_by_index_csv' "," label group fname-solutions-in fname-solutions-out prefix   "," Used by large set desargues. "
+1,"\verb'-extract_solutions_by_index_txt' "," label group fname-solutions-in fname-solutions-out prefix    ","  "
+1,"\verb'-export_inc' ","   "," Export the incidence matrix as inc file.  "
+1,"\verb'-export_incidence_matrix' ","   "," Export the incidence matrix as csv file. "
+1,"\verb'-export_incidence_matrix_latex' ","   "," Export the incidence matrix as latex file. "
+1,"\verb'-intersection_matrix' ","   "," Compute the intersection matrix. If \verb'-save' is given, writes the intersection matrix to file. "
+1,"\verb'-save' ","   "," See \verb'-intersection_matrix'. "
+1,"\verb'-export_blocks' ","   "," Export the incidence matrix as blocks file "
+1,"\verb'-row_sums' ","   "," Compute the row sums of the incidence matrix. "
+1,"\verb'-tactical_decomposition' ","   "," Compute the tactical decomposition. "
+1,"\verb'-orbits_on_blocks' "," s control "," Computes orbits on blocks of size $s$ ($s$-subsets of the set of blocks). Requires a poset classification control structure.  "
+1,"\verb'-one_point_extension' "," idx control "," Construct the one-point extension graph from the incidence matrix of a design, using a relation on pairs of blocks. Idx is the orbit on pairs of blocks that defines the relation. Points in the graph correspond to points of the design, blocks of the design, and to the special point. "
+END

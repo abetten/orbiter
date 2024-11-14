@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:packings:was:activity",,
+1,"Activities for Packings",,
+1,"\verb'-report' ","    "," Produce a latex report "
+1,"\verb'-export_reduced_spread_orbits' ","   fname ","  Export reduced spread orbits."
+1,"\verb'-create_graph_on_mixed_orbits' ","  L  ","  Create the graph of orbits whose length is listed in L. "
+END

@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:BLT:create",,
+1,"Creating BLT-Sets",,
+1,"\verb'-catalogue' "," $i$ "," Create the BLT-set number $i$ from the Orbiter catalogue ($i$ is zero-based). "
+1,"\verb'-family' "," name "," Create a BLT-set from the named family. See Table~\ref{tab:BLT:families} for possibilities for name."
+1,"\verb'-flock' "," flock "," Create a BLT-set from a given flock. "
+1,"\verb'-space' "," space "," Set the space. "
+1,"\verb'-invariants' ","  "," Compute isomorphism invariants. "
+END

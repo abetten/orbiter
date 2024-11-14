@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:tdo:refine",,
+1,"Refining Tactical Decompositions",,
+1,"\verb'-lambda3' "," $\lambda_3$ $s$ ","  Refine as 3-design with $\lambda_3$ and with block-size $s$  "
+1,"\verb'-solution' "," $i$ fname  ","  Use solutions to system $i$ from file fname. "
+1,"\verb'-range' "," $f$ $l$  "," Refine cases $i$ with $f \le i < f + l$ only.   "
+1,"\verb'-select' "," label   ","  Select the case for refinement by label.  "
+1,"\verb'-o1' ","  $s$ "," Omit $s$ variables from the first refinement system.   "
+1,"\verb'-o2' "," $s$  ","  Omit $s$ variables from the second refinement system.   "
+1,"\verb'-D1_upper_bound_x0' ","  $b$ ","  Add the bound $x_0\le b$ in the first refinement. "
+1,"\verb'-reverse' ","   "," Sort the distributions in reverse order.   "
+1,"\verb'-reverse_inverse' ","   ","    "
+1,"\verb'-nopacking' ","   ","  Do not use packing inequalities.  "
+1,"\verb'-dual_is_linear_space' ","   ","  Assume that the dual incidence structure is a linear space also. This is valid for projective planes, for instance.  "
+1,"\verb'-geometric_test' ","   ","  Subject the distributions to the geometric test.  "
+1,"\verb'-once' ","   ","  Find at most one refinement in each case. This can be used to test which cases can be refined. "
+1,"\verb'-mckay' ","   ","  Use McKay's solver instead (by default, a lexicographic solver is used).  "
+1,"\verb'-input_file' "," fname  ","  Specify the input TDO-file for refinement.  "
+END

@@ -1,0 +1,16 @@
+ROW,C1,C2,C3
+0,"tab:design:create",,
+1,"Creating Designs",,
+1,"\verb'-field' "," F  "," Some constructions of designs require a finite field. Set the field to be $F$.  "
+1,"\verb'-catalogue' ","  iso "," Recall a design of a given family from the Orbiter catalogue. The parameter iso is the isomorphism type in the catalogue. It is zero-based.  "
+1,"\verb'-family' ","  family ","  Select the family name of the design to be constructed. The following family names are supported: PG\_2\_q for the projective plane $\PG(2,q)$. "
+1,"\verb'-list_of_base_blocks' "," G fname col  "," Creates a design by spanning the orbits of the base blocks given in column col in file fname under the group G. See Section~\ref{sec:design:DD}. "
+1,"\verb'-list_of_blocks_coded' "," v k L  "," Create a design on $v$ points and with block size $k$ from the coded list of sets in L.  "
+1,"\verb'-list_of_sets_coded' "," v label  "," Create a design on $v$ points and with block codes in the list in L.  " 
+1,"\verb'-list_of_blocks_coded_from_file' "," v k file  ","  Create a design on $v$ points and with block size $k$ from the coded list of sets read from the given file. "
+1,"\verb'-list_of_blocks_from_file' "," v fname  ","  Create a design on $v$ points and with block codes in the given file.  "
+1,"\verb'-wreath_product_designs' "," n k  "," Create a class of designs with wreath product action.  "
+1,"\verb'-linear_space_from_latin_square' "," matrix  ","  Create a linear space associated with a Latin Square given as matrix. The matrix must be an Orbiter object of type vector. "
+1,"\verb'-orbit_on_sets' "," Orbit sz idx  ","  Create a design from an orbit on subsets. Orbit must be a subset classification object. The orbit selected is given by its local index (idx) among the orbits on subsets of size sz. "
+1,"\verb'-no_group' ","   ","   "
+END

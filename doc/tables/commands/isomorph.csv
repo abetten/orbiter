@@ -1,0 +1,29 @@
+ROW,C1,C2,C3
+0,"tab:isomorph",,
+1,"Isomorph Testing",,
+1,"\verb'-prefix_iso' "," prefix "," Set a prefix for files related to isomorph testing. "
+1,"\verb'-prefix_with_directory' "," prefix "," Set a prefix for files related to isomorph testing. "
+1,"\verb'-prefix_classify' "," prefix "," Set a prefix for files related to classification. "
+1,"\verb'-solution_prefix' "," prefix "," Set a prefix for solution files. "
+1,"\verb'-base_fname' "," base "," Set the main file name. "
+1,"\verb'-use_database_for_starter' ","  "," Use database to store subobjects. "
+1,"\verb'-implicit_fusion' ","  "," Use implicit fusion during the isomorphism testing. "
+1,"\verb'-build_db' ","  "," Initialize the database. "
+1,"\verb'-read_solutions' ","  "," Read solutions. "
+1,"\verb'-list_of_cases' "," fname "," Read a list of cases from the given file. "
+1,"\verb'-read_solutions_after_split' "," m "," Read the solution files after split modulo m. "
+1,"\verb'-read_statistics_after_split' "," m ","  Read the statistics files after split modulo m. "
+1,"\verb'-recognize' "," label ","  "
+1,"\verb'-compute_orbits' ","  "," Compute the orbits of the stabilizer. These are the flag orbits. "
+1,"\verb'-isomorph_testing' ","  "," Apply isomorphism testing to the flag orbits to produce the classification. "
+1,"\verb'-classification_graph' ","  "," Compute the classification graph (after classification). "
+1,"\verb'-event_file' "," fname "," Reuse a previously written event file during the classification. "
+1,"\verb'-print_mod' "," N "," Set print internal to N.  "
+1,"\verb'-isomorph_report' ","  "," Write a report on the classification. "
+1,"\verb'-export_source_code' ","  "," Export the classification as C++ source code. "
+1,"\verb'-subset_orbits' ","  ","  "
+1,"\verb'-subset_orbits_file' "," fname ","  "
+1,"\verb'-eliminate_graphs_if_possible' ","  ","  "		
+1,"\verb'-down_orbits' ","  ","  "
+END
+

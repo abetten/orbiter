@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:projective",,
+1,"Global Commands for Projective Geometry",,
+1,"\verb'-create_points_on_quartic' ","  $\epsilon$  ","Create a table of points on a specific quartic curve. Consecutive points are no more than $\epsilon$ apart. "
+1,"\verb'-create_points_on_parabola' ","  $\epsilon$  $a$ $b$ $c$  ","Create a table of points on the parabola $y=ax^2+bx+c$. Consecutive points are no more than $\epsilon$ apart. "
+1,"\verb'-smooth_curve' ","  $\epsilon$ $N$ $b$ $t_{\min}$ $t_{\max}$ function  ","Create at least $N$ points on a continuous curve given by ``function''. Consecutive points are no more than $\epsilon$ apart. The function must be in terms of a parameter $t$. The values of $t$ are taken from the interval $[t_{\min},t_{\max}]$. "
+1,"\verb'-make_table_of_surfaces' ","  ","Produce a latex table summarizing the surfaces in the Orbiter catalogue. "
+1,"\verb'-create_surface_reports' "," field-orders ","Produce reports for all surfaces in the Orbiter catalogue over the give field orders. "
+1,"\verb'-create_surface_atlas' "," $q_{\max}$ ","Produce reports for all surfaces in the Orbiter catalogue for field orders $q \le q_{\max}$. "
+1,"\verb'-create_dickson_atlas' ","  "," Produce reports of Dickson surfaces. "
+END

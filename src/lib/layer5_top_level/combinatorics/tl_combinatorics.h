@@ -289,7 +289,7 @@ public:
 			int verbose_level);
 	void unpack_from_restricted_action(
 			std::string &prefix,
-			apps_algebra::any_group *G,
+			groups::any_group *G,
 			int verbose_level);
 	void line_covering_type(
 			std::string &prefix,
@@ -340,7 +340,7 @@ public:
 			groups::strong_generators *Gens,
 			int verbose_level);
 	void span_base_blocks(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			data_structures::set_of_sets *SoS_base_blocks,
 			int *Base_block_selection, int nb_base_blocks,
 			int &v, int &b, int &k,

@@ -1,0 +1,17 @@
+ROW,C1,C2,C3
+0,"tab:vector:builder",,
+1,"Vector Builder Commands",,
+1,"\verb'-field' "," $F$ "," Assume that the vector entries are in the range $[0,q-1]$, where $q$ is the order of the field $F$. An error is raised if not. "
+1,"\verb'-allow_negatives' "," ","Allow negative numbers when using finite fields. A negative number will be considered modulo the characteristic of the field. For instance, in the field $\bbF_5$, a -1 is considered equal to 4. "
+1,"\verb'-dense' "," "," Assume that the vector entries are given as a comma separated list (dense coding). "
+1,"\verb'-compact' "," "," Assume that the vector entries are given as a continueous list without commas or other any kind of whitespace. "
+1,"\verb'-repeat' "," pattern $n$ "," Repeat the given pattern $n$ times."
+1,"\verb'-format' "," $r$ "," Assume that the data is a matrix with $r$ rows. "
+1,"\verb'-file' "," file "," Read the data from the given csv-file. "
+1,"\verb'-file_column' "," file column "," Read the data from the given column in the given csv-file. The entries must integers or vectors of integers. The entries must all have the same size. "
+1,"\verb'-load_csv_no_border' "," file "," Read the data from the given file, assuming that there are no headers. "
+1,"\verb'-load_csv_data_column' "," file $c$ "," Read the data from column $c$ in the given csv-file. "
+1,"\verb'-sparse' "," data "," Provide data in sparse form, i.e. as pairs value and position. "
+1,"\verb'-concatenate' "," list "," Concatenate the given vectors. List is a comma separated list of vectors that have been created before. "
+1,"\verb'-loop' "," $s$ $u$ $d$ "," Create vector entries of the form $s + id<u,$ $i \in \bbZ.$  The upper bound $u$ itself will not be part of the sequence. "
+END

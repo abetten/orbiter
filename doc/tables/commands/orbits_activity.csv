@@ -1,0 +1,15 @@
+ROW,C1,C2,C3
+0,"tab:orbits:activities",,
+1,"Orbit Based Activities",,
+1,"\verb'-report' "," "," Create a report on the orbits. "
+1,"\verb'-export_something' "," type data ","Export orbit data of the given type. "
+1,"\verb'-export_trees' "," ","Create drawings of the Schreier trees. "
+1,"\verb'-export_source_code' "," ","Create a cpp file for the orbit representatives. "
+1,"\verb'-draw_tree' "," $i$ ","Create a drawing of the $i$-th orbit as a tree. "
+1,"\verb'-stabilizer' "," $i$ ","Compute the stabilizer of the given point $i$. "
+1,"\verb'-stabilizer_of_orbit_rep' "," $i$ ","Compute the stabilizer of the orbit representative of orbit $i$. "
+1,"\verb'-Kramer_Mesner_matrix' "," $t$ $k$ ","Compute the Kramer Mesner matrix of orbits on $t$-subsets and $k$-subsets. This option requires a poset type problem. "
+1,"\verb'-recognize' "," $S$ ","Recognize $S$ in the orbit data structure. "
+1,"\verb'-transporter' "," $S$ ","For each $s \in S,$ which is the index of an element in the orbit, compute a transporter that maps the element to the orbit representative. At present, this is only implemented for orbits on equations."
+1,"\verb'-report_options' "," descr ","Set additional parameters for the report, see Table~\ref{tab:pc:report:options}. "
+END

@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:createsurface:two",,
+1,"Creating a Cubic Surface (Part 2)",,
+1,"\verb'-family_G13' "," $a$   ","Create a member of the $G_{13}$ family with parameter $a$. The surface has 13 Eckardt points. "
+1,"\verb'-family_F13' "," $a$   ","Create a member of the $F_{13}$ family with parameter $a$. The surface has 13 Eckardt points. "
+1,"\verb'-family_bes' "," $a$ $c$  ","Create a member of the ``bes''-family with parameter $a$. The surface has 5 Eckardt points. "
+1,"\verb'-family_general_abcd' "," $a$ $b$ $c$ $d$  "," Create a member of the general family with parameters $a,b,c,d$. "
+1,"\verb'-arc_lifting' "," $A$    ","Create the surface associated with the arc $A=a_1,\ldots,a_6$ in $\PG(2,q)$ by means of the Clebsch map. Each of the $a_i$ is the rank of a point in $\PG(2,q).$ Use the trihedral pair algorithm. Here, $A$ is a comma-separated string containing the numerical ranks of the $P_i$ in $\PG(2,q).$"
+1,"\verb'-arc_lifting_with_two_lines' "," $A$  $L$  ","Create the surface associated with the arc $A=a_1,\ldots,a_6$ in $\PG(2,q)$ by means of the Clebsch map, defined by the lines $\ell_1$ and $\ell_2$ whose ranks are given in $L$. If both of the lines are given as 0, Orbiter will pick a suitable set of lines." 
+END

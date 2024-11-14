@@ -24,6 +24,9 @@ namespace ring_theory {
 
 polynomial_ring_activity_description::polynomial_ring_activity_description()
 {
+
+	// TABLES/polynomial_ring_activity.tex
+
 	f_cheat_sheet = false;
 
 	f_export_partials = false;

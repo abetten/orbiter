@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:spreads:classify:activity",,
+1,"Activities for the Classification of Spreads",,
+1,"\verb'-compute_starter' ","  "," Perform classification of partial spreads. "
+1,"\verb'-prepare_lifting_single_case' "," k "," Prepare to lift single case $k$. Here (and below) case means isomorphism type in the classification of partial spreads. "
+1,"\verb'-prepare_lifting_all_cases' ","  "," Prepare to lift all cases of partial spreads. "
+1,"\verb'-split' "," r m "," Lift only those cases $k$ with $k \equiv r \mod m$. "
+1,"\verb'-isomorph' "," prefix1 prefix2 options "," Perform isomorphism testing after lifting is complete. "
+END

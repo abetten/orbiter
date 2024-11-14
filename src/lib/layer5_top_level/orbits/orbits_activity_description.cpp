@@ -53,7 +53,8 @@ orbits_activity_description::orbits_activity_description()
 	//std::string transporter_label_of_set;
 
 	f_report_options = false;
-	report_options = NULL;
+	//std::string report_options_label;
+	//report_options = NULL;
 
 }
 
@@ -161,7 +162,8 @@ int orbits_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-report_options") == 0) {
 			f_report_options = true;
-
+			report_options_label.assign(argv[++i]);
+#if 0
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
 			if (f_v) {
 				cout << "-report_options " << endl;
@@ -177,10 +179,9 @@ int orbits_activity_description::read_arguments(
 					cout << "next argument is " << argv[i] << endl;
 				}
 			}
-
+#endif
 			if (f_v) {
-				cout << "-report_options" << endl;
-				report_options->print();
+				cout << "-report_options " << report_options_label << endl;
 			}
 		}
 
@@ -247,8 +248,7 @@ void orbits_activity_description::print()
 		cout << "-transporter " << transporter_label_of_set << endl;
 	}
 	if (f_report_options) {
-		cout << "-report_options" << endl;
-		report_options->print();
+		cout << "-report_options " << report_options_label << endl;
 	}
 
 

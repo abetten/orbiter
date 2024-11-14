@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:cubic:surface:classified:activity",,
+1,"Activity for Cubic Surfaces After Classification",,
+1,"\verb'-report' "," options "," Create a latex report. "
+1,"\verb'-stats' "," prefix "," Report statistics on group operations. "
+1,"\verb'-identify_Eckardt' ","  ","  "
+1,"\verb'-identify_F13' ","  ","  "
+1,"\verb'-identify_Bes' ","  ","  "
+1,"\verb'-identify_general_abcd' ","  ","  "
+1,"\verb'-isomorphism_testing' "," surf1 surf2 "," Compute an isomorphism from surface 1 to surface 2. surf1 and surf2 must be surface objects. "
+1,"\verb'-recognize' "," surf "," Recognizes the isomorphism type of the given surface object in the Orbiter Catalogue of cubic surfaces. "
+1,"\verb'-create_source_code' ","  "," Create C++ source code for the cubic surfaces of the given order. "
+1,"\verb'-sweep_Cayley' ","  "," Identify the isomorphism type of all surfaces of Cayley type. "
+END

@@ -4,10 +4,13 @@
 // December 9, 2003
 
 #include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
 #include "group_actions.h"
-#include "shallow_schreier_ai.h"
+
 
 using namespace std;
+#include "shallow_schreier_ai.h"
+
 
 
 

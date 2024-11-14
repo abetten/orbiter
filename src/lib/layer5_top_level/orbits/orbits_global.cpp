@@ -336,7 +336,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 }
 
 void orbits_global::orbits_on_set_system_from_file(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		std::string &fname_csv,
 		int number_of_columns, int first_column,
 		int verbose_level)
@@ -445,7 +445,7 @@ void orbits_global::orbits_on_set_system_from_file(
 }
 
 void orbits_global::orbits_on_set_from_file(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		std::string &fname_csv, int verbose_level)
 // called from group_theoretic_activity: f_orbit_of_set_from_file
 {
@@ -512,7 +512,7 @@ void orbits_global::orbits_on_set_from_file(
 
 
 void orbits_global::orbit_of(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		int point_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -647,7 +647,7 @@ void orbits_global::orbit_of(
 }
 
 void orbits_global::orbits_on_points(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		groups::orbits_on_something *&Orb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -686,7 +686,7 @@ void orbits_global::orbits_on_points(
 }
 
 void orbits_global::orbits_on_points_from_generators(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		data_structures_groups::vector_ge *gens,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
@@ -729,7 +729,7 @@ void orbits_global::orbits_on_points_from_generators(
 
 
 void orbits_global::orbits_on_subsets(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		poset_classification::poset_classification_control *Control,
 		poset_classification::poset_classification *&PC,
 		int subset_size,
@@ -819,7 +819,7 @@ void orbits_global::orbits_on_subsets(
 
 
 void orbits_global::orbits_of_one_subset(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		long int *set, int sz,
 		std::string &label_set,
 		actions::action *A_base, actions::action *A,
@@ -866,7 +866,7 @@ void orbits_global::orbits_of_one_subset(
 
 
 void orbits_global::orbits_on_poset_post_processing(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		poset_classification::poset_classification *PC,
 		int depth,
 		int verbose_level)

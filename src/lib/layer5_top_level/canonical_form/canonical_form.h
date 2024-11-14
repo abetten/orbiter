@@ -236,6 +236,8 @@ public:
 	canonical_form_classifier();
 	~canonical_form_classifier();
 	canonical_form_classifier_description *get_description();
+	void set_description(
+			canonical_form_classifier_description *Descr);
 	int has_description();
 	void init(
 			canonical_form_classifier_description *Descr,

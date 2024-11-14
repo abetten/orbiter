@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks:elementprocessing",,
+1,"Element Processing Options",,
+1,"\verb'-input' "," label "," Specify the input source for a sequence of group elements."
+1,"\verb'-print' ","  "," Print each group element."
+1,"\verb'-apply_isomorphism_wedge_product_4to6' ","  "," Applies a specific isomorphism from $\GL(4,q)$ to $\GL(6,q)$"
+1,"\verb'-with_permutation' ","  "," Print with permutation representation."
+1,"\verb'-with_fix_structure' ","  "," Print with fix structure on the underlying projective space."
+1,"\verb'-order_of_products_of_pairs' ","  "," Make a table of the order of all pairwise products."
+1,"\verb'-conjugate' "," data "," Conjugate each group element by the element in data."
+1,"\verb'-print_action_on_surface' "," surface "," Print the action on a cubic surface object."
+END

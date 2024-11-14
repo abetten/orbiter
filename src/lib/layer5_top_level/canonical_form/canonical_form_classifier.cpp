@@ -79,6 +79,13 @@ canonical_form_classifier_description *canonical_form_classifier::get_descriptio
 	return Descr;
 }
 
+void canonical_form_classifier::set_description(
+		canonical_form_classifier_description *Descr)
+{
+	canonical_form_classifier::Descr = Descr;
+}
+
+
 int canonical_form_classifier::has_description()
 {
 	if (Descr == NULL) {

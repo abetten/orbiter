@@ -482,7 +482,8 @@ void character_table_burnside::do_it(
 }
 
 void character_table_burnside::create_matrix(
-		typed_objects::discreta_matrix &M, int i, int *S, int nb_classes,
+		typed_objects::discreta_matrix &M,
+		int i, int *S, int nb_classes,
 	int *character_degree, int *class_size,
 	int verbose_level)
 {

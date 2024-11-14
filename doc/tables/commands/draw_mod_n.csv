@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:draw:mod:n",,
+1,"Options for Drawing Modulo N Objects",,
+1,"\verb'-n' "," n "," Set the number of dots. "
+1,"\verb'-mod_s' "," s ","  "
+1,"\verb'-divide_out_by' "," k "," Divide by k. "
+1,"\verb'-file' "," fname "," Read from file. "
+1,"\verb'-inverse' ","  "," Connect $i$ with $i^{-1}$ mod $n$. "
+1,"\verb'-additive_inverse' ","  "," Connect $i$ with $-i$ mod $n$. "
+1,"\verb'-power_cycle' "," a "," Draw a cycle connecting the powers of $a$ mod $n$. "
+1,"\verb'-cyclotomic_sets' "," q list "," Draw the $q$-cyclotomic sets of all elements in the list. "
+1,"\verb'-cyclotomic_sets_thickness' ","  "," Set the thickness for the drawing of cyclotomic sets. "
+END
+

@@ -1,0 +1,23 @@
+ROW,C1,C2,C3
+0,"tab:modifier",,
+1,"Group Modifications",,
+1,"\verb'-restricted_action' "," $S$ label-tex "," restricted action on the set $S$ using the given tex-label. "
+1,"\verb'-on_k_subspaces' "," $k$ "," induced action on $k$ dimensional subspaces "
+1,"\verb'-on_k_subsets' "," $k$ "," induced action on $k$ subsets. "
+1,"\verb'-on_wedge_product' ","  "," action on the exterior square "
+1,"\verb'-on_cosets_of_subgroup' "," H "," Action on the codes of $H$ in the given group. $H$ must be a subgroup of the given group. "
+1,"\verb'-create_special_subgroup' ","  "," Create the subgroup of special matrices. "
+1,"\verb'-create_even_subgroup' ","  "," Create the subgroup of even permutations. "
+1,"\verb'-derived_subgroup' ","  "," Create the derived subgroup. "
+1,"\verb'-point_stabilizer' "," pt "," Create the subgroup which stabilizes pt. "
+1,"\verb'-set_stabilizer' "," set control "," Create the subgroup which stabilizes the given set. Requires a poset classification control object to generate the orbits on subsets. "
+1,"\verb'-projectivity_subgroup' ","  "," Create the projectivity subgroup of a semilinear group. "
+1,"\verb'-subfield_subgroup' "," $k$ "," Create the subfield subgroup w.r.t. $\bbF_s$. Here $k = \frac{q-1}{s-1}$. "
+1,"\verb'-action_on_self_by_' \verb'right_multiplication' "," "," Create the action on the group itself by right multiplication. "
+1,"\verb'-direct_product' "," list order gens "," Create the direct product action of the two actions given in list (comma separated). Then create the subgroup of the given order from the given generators. "
+1,"\verb'-polarity_extension' "," G0 P "," Create the polarity extension of G0. P is the underlying projective space on which G0 acts. "
+1,"\verb'-automorphism_group' ","  "," Create the automorphism group of the input group (which is given in \verb'-from'). This command requires Magma. "
+1,"\verb'-subgroup_by_lattice' "," i "," Create the representative of the $i$-th conjugacy class of subgroups in the lattice of subgroups. The conjugacy classes of subgroups must have been computed before using the group theoretic activity \verb'-subgroup_lattice_magma'. A shortened base will be computed for the subgroup. The shortened base contains only those base points for which the basic orbit is non-trivial. See Section~\ref{sec:lineargroups:advanced:topics}. "
+1,"\verb'-stabilizer_of_variety' "," variety "," Create the stabilizer of the given variety. "
+1,"\verb'-from' "," label "," Specify the input group action (this option can be repeated). "
+END

@@ -248,7 +248,7 @@ void orbits_activity::do_report(
 		poset_classification::poset_classification_report_options *report_options;
 
 		if (Descr->f_report_options) {
-			report_options = Descr->report_options;
+			report_options = Get_poset_classification_report_options(Descr->report_options_label);
 		}
 		else {
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
@@ -281,7 +281,7 @@ void orbits_activity::do_report(
 		poset_classification::poset_classification_report_options *report_options;
 
 		if (Descr->f_report_options) {
-			report_options = Descr->report_options;
+			report_options = Get_poset_classification_report_options(Descr->report_options_label);
 		}
 		else {
 			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);

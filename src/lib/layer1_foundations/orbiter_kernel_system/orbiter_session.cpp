@@ -911,6 +911,26 @@ graph_theory::colored_graph
 
 
 
+void
+	*orbiter_session::get_any_group_opaque(
+			std::string &label)
+// the return type should be groups::any_group *
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_any_group_opaque "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+		cout << "orbiter_session::get_any_group_opaque "
+				"object type != t_any_group" << endl;
+		exit(1);
+	}
+	return (void *) get_object(idx);
+}
 
 
 void orbiter_session::start_memory_debug()

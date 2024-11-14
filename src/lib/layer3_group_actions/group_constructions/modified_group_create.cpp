@@ -7,14 +7,16 @@
 
 
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
+#include "group_actions.h"
+
 
 using namespace std;
-using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
-namespace layer5_applications {
-namespace apps_algebra {
+namespace layer3_group_actions {
+namespace group_constructions {
 
 
 modified_group_create::modified_group_create()
@@ -44,8 +46,10 @@ modified_group_create::~modified_group_create()
 }
 
 
+
+
 void modified_group_create::modified_group_init(
-		group_modification_description *description,
+		group_constructions::group_modification_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -53,7 +57,7 @@ void modified_group_create::modified_group_init(
 	if (f_v) {
 		cout << "modified_group_create::modified_group_init" << endl;
 	}
-	modified_group_create::Descr = description;
+	modified_group_create::Descr = Descr;
 
 	if (f_v) {
 		cout << "modified_group_create::modified_group_init "
@@ -68,7 +72,7 @@ void modified_group_create::modified_group_init(
 					"before create_restricted_action" << endl;
 		}
 
-		create_restricted_action(description, verbose_level);
+		create_restricted_action(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -83,7 +87,7 @@ void modified_group_create::modified_group_init(
 					"before create_action_on_k_subspaces" << endl;
 		}
 
-		create_action_on_k_subspaces(description, verbose_level);
+		create_action_on_k_subspaces(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -98,7 +102,7 @@ void modified_group_create::modified_group_init(
 					"before create_action_on_k_subsets" << endl;
 		}
 
-		create_action_on_k_subsets(description, verbose_level);
+		create_action_on_k_subsets(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -113,7 +117,7 @@ void modified_group_create::modified_group_init(
 					"before create_action_on_wedge_product" << endl;
 		}
 
-		create_action_on_wedge_product(description, verbose_level);
+		create_action_on_wedge_product(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -127,7 +131,7 @@ void modified_group_create::modified_group_init(
 					"before create_action_on_cosets_of_subgroup" << endl;
 		}
 
-		create_action_on_cosets_of_subgroup(description, verbose_level);
+		create_action_on_cosets_of_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -145,7 +149,7 @@ void modified_group_create::modified_group_init(
 					"before create_special_subgroup" << endl;
 		}
 
-		create_special_subgroup(description, verbose_level);
+		create_special_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -160,7 +164,7 @@ void modified_group_create::modified_group_init(
 					"before create_even_subgroup" << endl;
 		}
 
-		create_even_subgroup(description, verbose_level);
+		create_even_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -175,7 +179,7 @@ void modified_group_create::modified_group_init(
 					"before create_derived_subgroup" << endl;
 		}
 
-		create_derived_subgroup(description, verbose_level);
+		create_derived_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -186,32 +190,17 @@ void modified_group_create::modified_group_init(
 
 	else if (Descr->f_point_stabilizer) {
 
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"before create_point_stabilizer_subgroup" << endl;
-		}
+		cout << "modified_group_create::modified_group_init "
+				"f_point_stabilizer can not be handled here" << endl;
+		exit(1);
 
-		create_point_stabilizer_subgroup(description, verbose_level);
-
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"after create_point_stabilizer_subgroup" << endl;
-		}
 	}
 
 	else if (Descr->f_set_stabilizer) {
 
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"before create_set_stabilizer_subgroup" << endl;
-		}
-
-		create_set_stabilizer_subgroup(description, verbose_level);
-
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"after create_set_stabilizer_subgroup" << endl;
-		}
+		cout << "modified_group_create::modified_group_init "
+				"f_set_stabilizer can not be handled here" << endl;
+		exit(1);
 	}
 
 	else if (Descr->f_projectivity_subgroup) {
@@ -221,7 +210,7 @@ void modified_group_create::modified_group_init(
 					"before create_projectivity_subgroup" << endl;
 		}
 
-		create_projectivity_subgroup(description, verbose_level);
+		create_projectivity_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -236,7 +225,7 @@ void modified_group_create::modified_group_init(
 					"before create_subfield_subgroup" << endl;
 		}
 
-		create_subfield_subgroup(description, verbose_level);
+		create_subfield_subgroup(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -250,7 +239,7 @@ void modified_group_create::modified_group_init(
 					"before create_action_on_self_by_right_multiplication" << endl;
 		}
 
-		create_action_on_self_by_right_multiplication(description, verbose_level);
+		create_action_on_self_by_right_multiplication(Descr, verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -268,8 +257,7 @@ void modified_group_create::modified_group_init(
 			cout << "modified_group_create::modified_group_init "
 					"before create_product_action" << endl;
 		}
-		create_product_action(
-					description,
+		create_product_action(Descr,
 					verbose_level);
 
 		if (f_v) {
@@ -292,11 +280,11 @@ void modified_group_create::modified_group_init(
 					"before create_polarity_extension" << endl;
 		}
 		create_polarity_extension(
-					description->polarity_extension_input,
-					description->polarity_extension_PA,
-					description->f_on_middle_layer_grassmannian,
-					description->f_on_points_and_hyperplanes,
-					verbose_level);
+				Descr->polarity_extension_input,
+				Descr->polarity_extension_PA,
+				Descr->f_on_middle_layer_grassmannian,
+				Descr->f_on_points_and_hyperplanes,
+				verbose_level);
 
 		if (f_v) {
 			cout << "modified_group_create::modified_group_init "
@@ -381,25 +369,9 @@ void modified_group_create::modified_group_init(
 	}
 	else if (Descr->f_stabilizer_of_variety) {
 
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"f_stabilizer_of_variety" << endl;
-		}
-
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"before do_stabilizer_of_variety" << endl;
-		}
-		do_stabilizer_of_variety(
-				Descr->stabilizer_of_variety_label,
-				verbose_level);
-
-		if (f_v) {
-			cout << "modified_group_create::modified_group_init "
-					"after do_stabilizer_of_variety" << endl;
-		}
-
-		// output in A_modified
+		cout << "modified_group_create::modified_group_init "
+				"f_stabilizer_of_variety can not be handled here" << endl;
+		exit(1);
 
 	}
 
@@ -433,6 +405,8 @@ void modified_group_create::modified_group_init(
 }
 
 
+
+
 void modified_group_create::create_restricted_action(
 		group_modification_description *description,
 		int verbose_level)
@@ -449,9 +423,9 @@ void modified_group_create::create_restricted_action(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 
 	A_base = AG->A_base;
@@ -463,8 +437,10 @@ void modified_group_create::create_restricted_action(
 	long int *points;
 	int nb_points;
 
-	Get_vector_or_set(Descr->restricted_action_set_text,
-			points, nb_points);
+	Get_lint_vector_from_label(
+			Descr->restricted_action_set_text,
+			points, nb_points,
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "modified_group_create::create_restricted_action "
@@ -524,9 +500,9 @@ void modified_group_create::create_action_on_k_subspaces(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -606,9 +582,9 @@ void modified_group_create::create_action_on_k_subsets(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -686,9 +662,9 @@ void modified_group_create::create_action_on_wedge_product(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -765,11 +741,11 @@ void modified_group_create::create_action_on_cosets_of_subgroup(
 		exit(1);
 	}
 
-	any_group *AG;
-	any_group *AG_subgroup;
+	groups::any_group *AG;
+	groups::any_group *AG_subgroup;
 
-	AG = Get_any_group(Descr->from[0]);
-	AG_subgroup = Get_any_group(Descr->on_cosets_of_subgroup_subgroup);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
+	AG_subgroup = (groups::any_group *) Get_any_group_opaque(Descr->on_cosets_of_subgroup_subgroup);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -852,9 +828,9 @@ void modified_group_create::create_special_subgroup(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -953,9 +929,9 @@ void modified_group_create::create_even_subgroup(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1054,9 +1030,9 @@ void modified_group_create::create_derived_subgroup(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1174,285 +1150,6 @@ void modified_group_create::create_derived_subgroup(
 
 
 
-void modified_group_create::create_point_stabilizer_subgroup(
-		group_modification_description *description,
-		int verbose_level)
-// output in A_modified and Strong_gens
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup" << endl;
-	}
-	if (Descr->from.size() != 1) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"need exactly one argument of type -from" << endl;
-		exit(1);
-	}
-
-	any_group *AG;
-
-	AG = Get_any_group(Descr->from[0]);
-
-	A_base = AG->A_base;
-	A_previous = AG->A;
-
-	label = AG->label;
-	label_tex = AG->label_tex;
-
-	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"A_base=";
-		A_base->print_info();
-		cout << endl;
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"A_previous=";
-		A_previous->print_info();
-		cout << endl;
-	}
-
-	A_modified = A_previous; // ToDo!
-
-
-
-	f_has_strong_generators = true;
-	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"before Strong_gens = AG->Subgroup_gens" << endl;
-	}
-
-	//Strong_gens = NEW_OBJECT(groups::strong_generators);
-
-	{
-		groups::orbits_on_something *Orb;
-
-		if (f_v) {
-			cout << "modified_group_create::create_point_stabilizer_subgroup "
-					"before Orbits.orbits_on_points" << endl;
-		}
-
-		orbits::orbits_global Orbits;
-
-		Orbits.orbits_on_points(AG, Orb, verbose_level);
-
-		if (f_v) {
-			cout << "modified_group_create::create_point_stabilizer_subgroup "
-					"after Orbits.orbits_on_points" << endl;
-		}
-
-		Orb->stabilizer_any_point(
-				Descr->point_stabilizer_point,
-				Strong_gens, verbose_level);
-
-
-		FREE_OBJECT(Orb);
-	}
-
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"action A_modified created: ";
-		A_modified->print_info();
-	}
-
-
-	label += "_Stab" + std::to_string(Descr->point_stabilizer_point);
-	label_tex += "{\\rm Stab " + std::to_string(Descr->point_stabilizer_point) + "}";
-
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_point_stabilizer_subgroup "
-				"done" << endl;
-	}
-}
-
-
-void modified_group_create::create_set_stabilizer_subgroup(
-		group_modification_description *description,
-		int verbose_level)
-// output in A_modified and Strong_gens
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "modified_group_create::create_set_stabilizer_subgroup" << endl;
-	}
-	if (Descr->from.size() != 1) {
-		cout << "modified_group_create::create_set_stabilizer_subgroup "
-				"need exactly one argument of type -from" << endl;
-		exit(1);
-	}
-
-	any_group *AG;
-
-	AG = Get_any_group(Descr->from[0]);
-
-	A_base = AG->A_base;
-	A_previous = AG->A;
-
-	label = AG->label;
-	label_tex = AG->label_tex;
-
-	if (f_v) {
-		cout << "modified_group_create::create_set_stabilizer_subgroup "
-				"A_base=";
-		A_base->print_info();
-		cout << endl;
-		cout << "modified_group_create::create_set_stabilizer_subgroup "
-				"A_previous=";
-		A_previous->print_info();
-		cout << endl;
-	}
-
-	A_modified = A_previous; // ToDo !!!
-
-
-
-
-#if 0
-	//Strong_gens = NEW_OBJECT(groups::strong_generators);
-
-	{
-		groups::orbits_on_something *Orb;
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"before Orbits.orbits_on_points" << endl;
-		}
-
-		orbits::orbits_global Orbits;
-
-		Orbits.orbits_on_points(AG, Orb, verbose_level);
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"after Orbits.orbits_on_points" << endl;
-		}
-
-		Orb->stabilizer_any_point(
-				Descr->point_stabilizer_point,
-				Strong_gens, verbose_level);
-
-
-		FREE_OBJECT(Orb);
-	}
-#endif
-	{
-
-		orbits::orbits_global Orbits_global;
-		poset_classification::poset_classification_control *Control;
-		long int *the_set;
-		long int *canonical_set;
-		int *Elt1;
-		int the_set_sz;
-		int local_idx;
-
-		Lint_vec_scan(description->set_stabilizer_the_set, the_set, the_set_sz);
-
-
-		canonical_set = NEW_lint(the_set_sz);
-		Elt1 = NEW_int(A_base->elt_size_in_int);
-
-		Control = Get_poset_classification_control(description->set_stabilizer_control);
-
-		poset_classification::poset_classification *PC;
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"before Orbits_global.orbits_on_subsets" << endl;
-		}
-		Orbits_global.orbits_on_subsets(
-				AG,
-				Control,
-				PC,
-				the_set_sz,
-				verbose_level - 2);
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"after Orbits_global.orbits_on_subsets" << endl;
-		}
-
-
-		// trace the subset:
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"before trace_set" << endl;
-		}
-
-
-		local_idx = PC->trace_set(
-				the_set, the_set_sz, the_set_sz,
-				canonical_set, Elt1,
-			verbose_level - 2);
-
-
-		// Elt1 maps the_set to canonical_set.
-
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"after trace_set local_idx=" << local_idx << endl;
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"canonical_set=";
-			Lint_vec_print(cout, canonical_set, the_set_sz);
-			cout << endl;
-		}
-
-		groups::strong_generators *stab_gens_canonical_set;
-
-		PC->get_stabilizer_generators_cleaned_up(
-				stab_gens_canonical_set,
-				the_set_sz, local_idx, verbose_level - 2);
-
-		groups::group_theory_global Group_theory_global;
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"before Group_theory_global.strong_generators_conjugate_aGav" << endl;
-		}
-
-		Group_theory_global.strong_generators_conjugate_aGav(
-				stab_gens_canonical_set,
-				Elt1,
-				Strong_gens,
-				verbose_level - 2);
-
-		if (f_v) {
-			cout << "modified_group_create::create_set_stabilizer_subgroup "
-					"after Group_theory_global.strong_generators_conjugate_aGav" << endl;
-		}
-
-
-
-		FREE_OBJECT(stab_gens_canonical_set);
-		FREE_OBJECT(PC);
-		FREE_lint(canonical_set);
-		FREE_int(Elt1);
-	}
-
-	f_has_strong_generators = true;
-
-	if (f_v) {
-		cout << "modified_group_create::create_set_stabilizer_subgroup "
-				"strong generators created" << endl;
-	}
-
-
-	label += "_SetStab" + Descr->set_stabilizer_the_set;
-	label_tex += "{\\rm SetStab " + Descr->set_stabilizer_the_set + "}";
-
-
-
-	if (f_v) {
-		cout << "modified_group_create::create_set_stabilizer_subgroup "
-				"done" << endl;
-	}
-}
-
-
 void modified_group_create::create_projectivity_subgroup(
 		group_modification_description *description,
 		int verbose_level)
@@ -1464,9 +1161,9 @@ void modified_group_create::create_projectivity_subgroup(
 		cout << "modified_group_create::create_projectivity_subgroup" << endl;
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1551,9 +1248,9 @@ void modified_group_create::create_subfield_subgroup(
 
 	//index = description->subfield_subgroup_index;
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1648,9 +1345,9 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -1758,10 +1455,10 @@ void modified_group_create::create_product_action(
 	}
 
 
-	any_group *AG1, *AG2;
+	groups::any_group *AG1, *AG2;
 
-	AG1 = Get_any_group(Input[0]);
-	AG2 = Get_any_group(Input[1]);
+	AG1 = (groups::any_group *) Get_any_group_opaque(Input[0]);
+	AG2 = (groups::any_group *) Get_any_group_opaque(Input[1]);
 
 	algebra::matrix_group *M1;
 	algebra::matrix_group *M2;
@@ -1861,11 +1558,10 @@ void modified_group_create::create_polarity_extension(
 				"f_on_points_and_hyperplanes = " << f_on_points_and_hyperplanes << endl;
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(input_group_label);
+	AG = (groups::any_group *) Get_any_group_opaque(input_group_label);
 
-	//algebra::matrix_group *M;
 
 
 	if (!AG->A->is_matrix_group()) {
@@ -1873,18 +1569,23 @@ void modified_group_create::create_polarity_extension(
 				"the given group is not a matrix group" << endl;
 		exit(1);
 	}
-	//M = AG->A->get_matrix_group();
 
 	actions::action_global AGlobal;
 
 
-	projective_geometry::projective_space_with_action *PA;
+	//projective_geometry::projective_space_with_action *PA;
 
-	PA = Get_projective_space(input_projective_space_label);
+	//PA = Get_projective_space(input_projective_space_label);
+
+	geometry::projective_space *P;
+
+
+	P = Get_projective_space_low_level(input_projective_space_label);
+
 
 	geometry::polarity *Standard_polarity;
 
-	Standard_polarity = PA->P->Subspaces->Standard_polarity;
+	Standard_polarity = P->Subspaces->Standard_polarity;
 
 
 	if (f_v) {
@@ -1899,7 +1600,7 @@ void modified_group_create::create_polarity_extension(
 		}
 		A_modified = AGlobal.init_polarity_extension_group_and_restrict(
 				AG->A,
-				PA->P,
+				P,
 				Standard_polarity,
 				f_on_middle_layer_grassmannian,
 				f_on_points_and_hyperplanes,
@@ -1924,7 +1625,7 @@ void modified_group_create::create_polarity_extension(
 		}
 		A_modified = AGlobal.init_polarity_extension_group(
 				AG->A,
-				PA->P,
+				P,
 				Standard_polarity,
 				verbose_level);
 		if (f_v) {
@@ -1991,9 +1692,9 @@ void modified_group_create::create_automorphism_group(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -2013,8 +1714,6 @@ void modified_group_create::create_automorphism_group(
 	}
 
 
-	//actions::action_global AGlobal;
-
 
 	groups::sims *Sims;
 
@@ -2031,12 +1730,10 @@ void modified_group_create::create_automorphism_group(
 
 
 
-	//A_modified = NEW_OBJECT(actions::action);
 	interfaces::magma_interface Magma;
 
 
 
-	//int *Table, int group_order, int *gens, int nb_gens,
 
 	actions::action *A_perm;
 
@@ -2123,9 +1820,9 @@ void modified_group_create::create_subgroup_by_lattice(
 		exit(1);
 	}
 
-	any_group *AG;
+	groups::any_group *AG;
 
-	AG = Get_any_group(Descr->from[0]);
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
 
 	A_base = AG->A_base;
 	A_previous = AG->A;
@@ -2137,8 +1834,10 @@ void modified_group_create::create_subgroup_by_lattice(
 	label = AG->label + "_subgroup_by_lattice_" + std::to_string(orbit_index);
 	label_tex = AG->label_tex + "{\\rm \\_subgroup\\_by\\_lattice\\_" + std::to_string(orbit_index) + "}";
 	if (f_v) {
-		cout << "modified_group_create::create_subgroup_by_lattice label = " << label << endl;
-		cout << "modified_group_create::create_subgroup_by_lattice label_tex = " << label_tex << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"label = " << label << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"label_tex = " << label_tex << endl;
 	}
 
 	if (f_v) {
@@ -2159,7 +1858,8 @@ void modified_group_create::create_subgroup_by_lattice(
 	}
 
 	if (orbit_index >= AG->class_data->nb_classes) {
-		cout << "modified_group_create::create_subgroup_by_lattice orbit_index is out of range" << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"orbit_index is out of range" << endl;
 		exit(1);
 	}
 
@@ -2179,8 +1879,10 @@ void modified_group_create::create_subgroup_by_lattice(
 	A_modified->label_tex = label_tex;
 
 	if (f_v) {
-		cout << "modified_group_create::create_subgroup_by_lattice A_modified->label = " << A_modified->label << endl;
-		cout << "modified_group_create::create_subgroup_by_lattice A_modified->label_tex = " << A_modified->label_tex << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::create_subgroup_by_lattice "
+				"A_modified->label_tex = " << A_modified->label_tex << endl;
 	}
 
 
@@ -2192,139 +1894,6 @@ void modified_group_create::create_subgroup_by_lattice(
 
 	if (f_v) {
 		cout << "modified_group_create::create_subgroup_by_lattice done" << endl;
-	}
-}
-
-void modified_group_create::do_stabilizer_of_variety(
-		std::string &variety_label,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety" << endl;
-	}
-
-	canonical_form::variety_object_with_action *Input_Variety;
-
-	Input_Variety = Get_variety(variety_label);
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"Input_Variety = " << Input_Variety->Variety_object->label_txt << endl;
-	}
-
-	std::string fname_base;
-
-	fname_base = Input_Variety->Variety_object->label_txt + "_c";
-
-
-	canonical_form::canonical_form_classifier *Classifier;
-
-	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
-
-
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"before Classifier->init_direct" << endl;
-	}
-
-	Classifier->init_direct(
-			1 /*nb_input_Vo*/,
-			Input_Variety,
-			fname_base,
-			verbose_level);
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"after Classifier->init_direct" << endl;
-	}
-
-
-
-	canonical_form::canonical_form_global Canonical_form_global;
-
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"before Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
-	}
-	Canonical_form_global.compute_group_and_tactical_decomposition(
-			Classifier,
-			Input_Variety,
-			fname_base,
-			verbose_level);
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
-	}
-
-
-	FREE_OBJECT(Classifier);
-
-
-	//Input_Vo[0].Stab_gens;
-
-
-	A_base = Input_Variety->PA->A;
-	A_previous = Input_Variety->PA->A;
-
-
-
-
-
-	label = Input_Variety->PA->A->label + "_stab_of_" + Input_Variety->Variety_object->label_txt;
-	label_tex = Input_Variety->PA->A->label_tex + "{\\rm \\_stab\\_of\\_}" + Input_Variety->Variety_object->label_tex;
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety label = " << label << endl;
-		cout << "modified_group_create::do_stabilizer_of_variety label_tex = " << label_tex << endl;
-	}
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"A_base=";
-		A_base->print_info();
-		cout << endl;
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"A_previous=";
-		A_previous->print_info();
-		cout << endl;
-	}
-
-	f_has_strong_generators = true;
-
-	groups::strong_generators *Strong_gens_temp;
-	Strong_gens_temp = Input_Variety->Stab_gens->create_copy(verbose_level - 4);
-
-	actions::action_global Action_global;
-
-	A_modified = Action_global.init_subgroup_from_strong_generators(
-			A_base,
-			Strong_gens_temp,
-			verbose_level - 1);
-
-	A_modified->label = label;
-	A_modified->label_tex = label_tex;
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"A_modified->label = " << A_modified->label << endl;
-		cout << "modified_group_create::do_stabilizer_of_variety "
-				"A_modified->label_tex = " << A_modified->label_tex << endl;
-	}
-
-
-	// Strong_gens should be in the new action.
-
-	f_has_strong_generators = true;
-	Strong_gens = A_modified->Strong_gens->create_copy(verbose_level - 4);
-	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
-
-
-
-	if (f_v) {
-		cout << "modified_group_create::do_stabilizer_of_variety done" << endl;
 	}
 }
 

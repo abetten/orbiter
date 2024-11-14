@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:orthogonal:activities",,
+1,"Orthogonal Space Activities",,
+1,"\verb'-cheat_sheet_orthogonal' ","  "," Create a cheat sheet.  "
+1,"\verb'-print_points' "," $v$ "," Print the points whose ranks are given in the vector $v$. "
+1,"\verb'-print_lines' "," $v$ "," Print the lines whose ranks are given in the vector $v$. "
+1,"\verb'-unrank_line_through_two_points' "," $p1$ $p2$ ","Determine the rank of the line through the points whose ranks are $p1$ and $p2$. "
+1,"\verb'-lines_on_point' "," $p$ ","  Create the ranks of all lines through the point whose rank is $p$. "
+1,"\verb'-perp'  "," $L$ ","Determine the common perp of a set of points. The point ranks are given in the list $L$.  "
+1,"\verb'-export_point_line_incidence_matrix'  ","  ","Create a csv file with the point line incidence matrix of the space.  "
+1,"\verb'-intersect_with_subspace'  "," $M$ ","Find the points in the intersection of the quadric with the subspace whose generating matrix has label $M$. "
+1,"\verb'-table_of_blt_sets'  "," "," Export a table of BLT-sets. We must be in an $Q^4(q)$ space.  "
+END

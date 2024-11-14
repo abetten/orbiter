@@ -479,8 +479,8 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
-	apps_algebra::any_group *G;
-	apps_algebra::any_group *G_on_subspaces;
+	groups::any_group *G;
+	groups::any_group *G_on_subspaces;
 
 	int q;
 	field_theory::finite_field *F;

@@ -600,7 +600,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					<< " " << Descr->unpack_from_restricted_action_group_label << endl;
 		}
 
-		apps_algebra::any_group *G;
+		groups::any_group *G;
 
 		G = Get_any_group(Descr->unpack_from_restricted_action_group_label);
 

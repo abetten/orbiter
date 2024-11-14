@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:arcs",,
+1,"Classifying Arcs",,
+1,"\verb'-control' "," label "," Set the label of the poset classification control object. "
+1,"\verb'-projective_space' "," P "," Set the projective space to P. "
+1,"\verb'-d' "," $d$ "," Require that no more than $d$ points lie on a line. "
+1,"\verb'-target_size' "," $t$ "," Specify the size of the arc to be $t$. "
+1,"\verb'-conic_test' "," "," Require that no $6$ points of the arc lie on a conic. "
+1,"\verb'-test_nb_Eckardt_points' "," $n$ "," Require exactly $n$ Eckardt points. "
+1,"\verb'-affine' "," "," Classify arcs in the affine geometry, assuming that $x_0 = 0$ is the hyperplane at infinity. The condition that no more that $d$ point lie on a line applies to affine lines only. "
+1,"\verb'-no_arc_testing' "," "," Do not test the ``at most $d$ points per line'' condition. "
+1,"\verb'-forbidden_point_set' "," set "," The arc must not contain any of the given points. "
+1,"\verb'-override_group' "," label "," Override the group under which we classify. "
+END

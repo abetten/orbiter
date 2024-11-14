@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:session",,
+1,"Orbiter session commands",,
+1,"\verb'-v' "," $v$ "," Set verbosity to $v$. Larger values of $v$ lead to more text output. $v=0$ gives minimal to no output. "
+1,"\verb'-draw_options' "," options "," Specify options for drawing. See Section~\ref{sec:draw}. "
+1,"\verb'-draw_incidence_' \verb'structure_description' "," options "," Specify options for drawing of incidence structures. See Section~\ref{sec:canonical:form:objects:incidence:geometries}. "
+1,"\verb'-list_arguments' "," ","Print the command line arguments. "
+1,"\verb'-seed' "," $s$ "," Seed the pseudo random number generator with the integer value $s$. "
+1,"\verb'-memory_debug' ","  "," Turn on dynamic memory debugging."
+1,"\verb'-override_polynomial' "," poly "," Specify the override polynomial for the creation on finite fields. See Section~\ref{sec:extension:fields}. "
+1,"\verb'-orbiter_path' "," $p$ ","Set the orbiter path to $p$. This is useful in case the Orbiter session has to clone or fork new Orbiter sessions. In most cases, the orbiter path will end with a forward slash ``\verb'/'.'' "
+1,"\verb'-magma_path' "," $p$ "," Set the magma path to $p$. This is useful in case the Orbiter session has to create a magma process."
+1,"\verb'-fork' "," $L$ $M$ $s$ $u$ $d$ "," Fork new Orbiter sessions in parallel. The new sessions will be indexed by the values $i=s+kd$, where $k=0,1,\ldots$ subject to $i < u.$ Every occurence of the string $L$ in the argument list is replaced by the resulting value of the loop variable $i$. The forked process will write to a file. The filename is obtained from $M$ by replacing \%d with the value of $i$ (similar to a printf command in C programming). All of the command line arguments after the \verb'fork' command are passed through to the new Orbiter session, with all arguments $L$ replaced by the integer value of the loop counter. The number of Orbiter sessions forked is $(u-s)/d.$ The orbiter path is considered when starting the forked sessions."
+END

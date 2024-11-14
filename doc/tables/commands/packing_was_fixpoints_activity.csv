@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:packings:was:fixpoints:activity",,
+1,"Activities for Packings with Fixpoints",,
+1,"\verb'-report' ","    "," Produce a latex report "
+1,"\verb'-print_packing' "," text ","  Print the packing."
+1,"\verb'-compare_files_of_packings' "," fname1 fname2  ","  Compare packings in the two given files. "
+END

@@ -1,0 +1,20 @@
+ROW,C1,C2,C3
+0,"tab:orbits",,
+1,"Computing Orbits",,
+1,"\verb'-group' ","  G "," Specify the group that acts. "
+1,"\verb'-on_points' ","   "," Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group included in the action. "
+1,"\verb'-on_points_with_generators' "," gens  "," Perform Schreier algorithm to compute the orbits of $G$ in the natural action and under the group given by a set of generators. "
+1,"\verb'-on_subsets' "," $k$ control "," Consider the induced action on subsets of size $k$. This option will invoke the poset algorithm. "
+1,"\verb'-of_one_subset' "," set-label "," Compute the orbit of the given set under the group $G$. This algorithm will build up the Schreier tree. The orbit will be saved to a csv file. "
+1,"\verb'-on_subspaces' "," $k$ control "," Consider the induced action on subspaces of size $k$. We assume that the group action is linear. This option will invoke the poset algorithm. "
+1,"\verb'-on_tensors' "," $d$ control  "," Consider the orbits on the $d$-fold tensor product. "
+1,"\verb'-on_partition' ","  $k$ control "," Consider the action on partitions of type $k+k+k$. In this case, $3k$ must equal the degree of the defining action of $G$. "
+1,"\verb'-on_polynomials' ","  R "," Consider the action of $G$ on homogenous polynomials as defined in ring R. The action must be linear and the number of variables in R must match the degree of the matrix group. "
+1,"\verb'-on_one_polynomial' ","  R equation "," Consider the action of $G$ on polynomials of degree $d$ in $n$ variables. $G$ must be a matrix group. Here, the action must be linear on an $n$-dimensional space. "
+1,"\verb'-on_cubic_curves' ","  arc-generator "," Classify cubic curves by means of $(9,3)$-arcs. Options are of arc-generator type, see Tab.~\ref{tab:arcs}. "
+1,"\verb'-on_cubic_surfaces' ","  P control "," Classify cubic surfaces in the projective space P, using the given poset classification control options. "
+1,"\verb'-classify_semifields' ","  P control description "," Classify finite semifields. "
+1,"\verb'-on_boolean_functions' ","  P  "," Classify boolean functions.  "
+1,"\verb'-classification_by_canonical_form' ","  description ","  "
+1,"\verb'-override_generators' ","  gems "," Override the generators of the group. "
+END

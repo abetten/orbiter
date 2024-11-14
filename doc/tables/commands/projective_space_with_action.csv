@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:PG:create",,
+1,"Options for Creating a Projective Space",,
+1,"\verb'-n' "," $n$ ","  Specify the projective dimension $n$. "
+1,"\verb'-q' "," $q$ ","  Specify the order $q$ of the underlying finite field $\bbF_q$. A default version of the field $\bbF_q$ will be created. "
+1,"\verb'-field' "," F ","  Specify the underlying field $F$.  "
+1,"\verb'-use_projectivity_subgroup' "," "," Create the projectivity group instead of the collineation group. "
+1,"\verb'-v' ","  $k$ ","Set verbosity to $k$ during creation of the projective space. Higher values of $k$ give more output. $k=0$ is silent mode."
+END

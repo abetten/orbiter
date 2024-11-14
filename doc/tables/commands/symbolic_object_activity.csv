@@ -1,0 +1,6 @@
+ROW,C1,C2,C3
+0,"tab:symbolic:objects:activity",,
+1,"Activities for Symbolic Objects",,
+1,"\verb'-export' ","  "," Export the symbolic object. "
+1,"\verb'-print' "," F "," Print the symbolic object, assuming that coefficients are from the finite field F. "
+END

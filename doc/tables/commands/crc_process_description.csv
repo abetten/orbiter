@@ -1,0 +1,6 @@
+ROW,C1,C2,C3
+0,"tab:CRC:process",,
+1,"Defining a CRC-process",,
+1,"\verb'-code' "," label "," Set the a label. "
+1,"\verb'-crc_options' "," options "," Specify the CRC-code using commands from Table~\ref{tab:CRC:options}. "
+END

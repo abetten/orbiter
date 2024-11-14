@@ -1,0 +1,18 @@
+ROW,C1,C2,C3
+0,"tab:combi",,
+1,"Combinatorics (Part 1)",,
+1,"\verb'-random_permutation' ","  $n$ fname "," Creates a random permutation in $\Sym(n)$ and stores it in the given file."
+1,"\verb'-create_random_k_subsets' "," $n$ $k$ $N$  "," Creates $N$ random $k$-subsets of an $n$-set. "
+1,"\verb'-read_poset_file' "," fname  "," Reads a poset from the given file. "
+1,"\verb'-read_poset_file_with_grouping' "," fname x-stretch  "," Reads a poset from the given file and sets stretch factor for orbit grouping. "
+1,"\verb'-list_parameters_of_SRG' ","  $v_{\max}$ "," Performs a sift for putative parameter sets of SRGs. "
+1,"\verb'-conjugacy_classes_Sym_n' "," $n$  "," Compute a list of conjugacy classes of $\Sym(n).$ "
+1,"\verb'-tree_of_all_k_subsets' "," $n$ $k$  "," Creates a tree-file for all $k$-subsets of an $n$-set. "
+1,"\verb'-Delandtsheer_Doyen' ","   "," See Section~\ref{sec:design:DD}. "
+1,"\verb'-tdo_refinement' ","   "," See Section~\ref{sec:tactical:decompositions}. "
+1,"\verb'-tdo_print' ","   "," See Section~\ref{sec:tactical:decompositions}. "
+1,"\verb'-convert_stack_to_tdo' ","   "," See Section~\ref{sec:tactical:decompositions}. "
+1,"\verb'-maximal_arc_parameters' ","   "," See Section~\ref{sec:tactical:decompositions}. "
+1,"\verb'-arc_parameters' ","   "," See Section~\ref{sec:tactical:decompositions}. "
+1,"\verb'-pentomino_puzzle' ","   ","  "
+END

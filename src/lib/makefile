@@ -387,14 +387,19 @@ ORBITER_MODULES= \
 		layer3_group_actions/data_structures/vector_ge_description.o \
 		layer3_group_actions/data_structures/vector_ge.o \
 		layer3_group_actions/group_constructions/direct_product.o \
+		layer3_group_actions/group_constructions/group_constructions_global.o \
+		layer3_group_actions/group_constructions/group_modification_description.o \
 		layer3_group_actions/group_constructions/linear_group.o \
 		layer3_group_actions/group_constructions/linear_group_description.o \
+		layer3_group_actions/group_constructions/modified_group_create.o \
 		layer3_group_actions/group_constructions/permutation_group_create.o \
 		layer3_group_actions/group_constructions/permutation_group_description.o \
 		layer3_group_actions/group_constructions/permutation_representation_domain.o \
 		layer3_group_actions/group_constructions/permutation_representation.o \
 		layer3_group_actions/group_constructions/polarity_extension.o \
 		layer3_group_actions/group_constructions/wreath_product.o \
+		layer3_group_actions/groups/any_group_linear.o \
+		layer3_group_actions/groups/any_group.o \
 		layer3_group_actions/groups/conjugacy_class_of_elements.o \
 		layer3_group_actions/groups/conjugacy_class_of_subgroups.o \
 		layer3_group_actions/groups/exceptional_isomorphism_O4.o \
@@ -503,14 +508,10 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/action_on_forms_description.o \
 		layer5_top_level/algebra_and_number_theory/action_on_forms.o \
 		layer5_top_level/algebra_and_number_theory/algebra_global_with_action.o \
-		layer5_top_level/algebra_and_number_theory/any_group_linear.o \
-		layer5_top_level/algebra_and_number_theory/any_group.o \
 		layer5_top_level/algebra_and_number_theory/character_table_burnside.o \
 		layer5_top_level/algebra_and_number_theory/element_processing_description.o \
-		layer5_top_level/algebra_and_number_theory/group_modification_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \
-		layer5_top_level/algebra_and_number_theory/modified_group_create.o \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \

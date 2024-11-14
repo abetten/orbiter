@@ -1,0 +1,24 @@
+ROW,C1,C2,C3
+0,"tab:delandtsheer:doyen",,
+1,"Creating Linear Spaces of Delandtsheer-Doyen Type",,
+1,"\verb'-d1' "," d1  ","  Affine group parameter.  "
+1,"\verb'-d2' "," d2  ","  Affine group parameter. "
+1,"\verb'-q1' "," q1  ","  Affine group parameter. "
+1,"\verb'-q2' "," q2  ","  Affine group parameter. "
+1,"\verb'-group_label' "," label  ","  "
+1,"\verb'-mask_label' "," label  ","  "
+1,"\verb'-problem_label' "," label  ","  "
+1,"\verb'-DDx' "," x  ","  Deladtsheer-Doyen parameter $x$. "
+1,"\verb'-DDy' "," y  ","  Secondary Deladtsheer-Doyen parameter $y$. "
+1,"\verb'-K' "," k  "," Specify the size of the base-line to generate the linear space under the affine group. "
+1,"\verb'-pair_search_control' "," label  "," Options for the classification of pair orbits, see Tab.~\ref{tab:pc:options}.  "
+1,"\verb'-search_control' ","  label "," Options for the classification of the base lines by means of subsets, see Tab.~\ref{tab:pc:options}. The depth of the search for starters (partial base-lines) is set here, using the \verb'-depth' command. "
+1,"\verb'-R' "," nb\_row\_types row\_type  ","  "
+1,"\verb'-C' "," nb\_col\_types col\_type  ","  "
+1,"\verb'-nb_orbits_on_blocks' "," n  ","  "
+1,"\verb'-masktest' "," options  "," Specify conditions on the mask, which is the pattern induced by the base-line when considering the grid structure. "
+1,"\verb'-search_partial_base_lines' ","   ","Search for partial base-lines. The size of the partial base-line is specified in the search\_control data structure, using the \verb'-depth' argument. Once the classification of partial base-lines is finished (of size $s$, say), the covering matrix of pair orbits is written. For each orbit on partial base-lines of size $s$, the ${s \choose 2}$ disjoint pair-orbits orbits covered by that representative are written. "
+1,"\verb'-singletons' "," sz  ","Search for singletons. This requires that a classification of partial base-lines of size sz has been completed before. This command initiates the completion of the partial base-lines. "
+1,"\verb'-subgroup' "," gens order  "," Specify generators for the subgroup $G$ which acts line-transitive and point-imprimitive on the linear space. "
+1,"\verb'-search_wrt_subgroup' ","   ","  "
+END

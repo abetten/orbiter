@@ -1,0 +1,15 @@
+ROW,C1,C2,C3
+0,"tab:activities:part2",,
+1,"Orbiter Activities (Part 2)",,
+1,"\verb'-packing_fixed_points_activity' ","Section~\ref{sec:packings} "," An activity related to creating packings with assumed symmetry group."
+1,"\verb'-graph_classification_activity' ","Section~\ref{sec:graphtheory:classification} "," An activity for a classification of graphs problem."
+1,"\verb'-diophant_activity' ","Section~\ref{sec:diophant} "," An activity for a diophantine system."
+1,"\verb'-design_activity' ","Section~\ref{sec:design} ","An activity for a combinatorial design."
+1,"\verb'-large_set_with_symmetry_' \verb'assumption_activity' ","Section~\ref{sec:large:sets} ","An activity related to creating large sets of designs with assumed symmetry group. "
+1,"\verb'-symbolic_object_activity' ","Table~\ref{tab:symbolic:objects:activity} "," An activity related to a symbolic object. "
+1,"\verb'-BLT_set_classify_activity' ","Table~\ref{tab:BLT:classify:activity} "," An activity related to a classification of BLT-sets. "
+1,"\verb'-spread_classify_activity' "," Table~\ref{tab:spreads:classify:activity} "," An activity related to a classification of spreads. "
+1,"\verb'-spread_activity' ","Table~\ref{tab:spreads:activity} "," An activity related to a spread. "
+1,"\verb'-translation_plane_activity' ","Table~\ref{tab:translationplane:activity} ","An activity related to a translation plane. "
+1,"\verb'-orbits_activity' "," Table~\ref{tab:orbits:activities} ","An activity related to orbits. "
+END

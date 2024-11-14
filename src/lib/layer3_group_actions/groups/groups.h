@@ -16,6 +16,236 @@ namespace layer3_group_actions {
 namespace groups {
 
 
+
+// #############################################################################
+// any_group_linear.cpp
+// #############################################################################
+
+//! group theoretic activities specifically for linear groups
+
+class any_group_linear {
+
+public:
+
+	any_group *Any_group;
+
+	any_group_linear();
+	~any_group_linear();
+
+	void init(
+			any_group *Any_group, int verbose_level);
+	void classes_based_on_normal_form(
+			int verbose_level);
+	void find_singer_cycle(
+			int verbose_level);
+	void isomorphism_Klein_quadric(
+			std::string &fname, int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// any_group.cpp
+// #############################################################################
+
+//! front end for group theoretic activities for three kinds of groups: linear groups, permutation groups, modified groups
+
+class any_group {
+
+public:
+
+	int f_linear_group;
+	group_constructions::linear_group *LG;
+
+	int f_permutation_group;
+	group_constructions::permutation_group_create *PGC;
+
+	int f_modified_group;
+	group_constructions::modified_group_create *MGC;
+
+	actions::action *A_base;
+	actions::action *A;
+
+	std::string label;
+	std::string label_tex;
+
+	groups::strong_generators *Subgroup_gens;
+	groups::sims *Subgroup_sims;
+
+	any_group_linear *Any_group_linear;
+
+	int f_has_subgroup_lattice;
+	groups::subgroup_lattice *Subgroup_lattice;
+
+	int f_has_class_data;
+	interfaces::conjugacy_classes_of_subgroups *class_data;
+
+
+	any_group();
+	~any_group();
+	void init_basic(
+			int verbose_level);
+	void init_linear_group(
+			group_constructions::linear_group *LG, int verbose_level);
+	void init_permutation_group(
+			group_constructions::permutation_group_create *PGC,
+			int verbose_level);
+	void init_modified_group(
+			group_constructions::modified_group_create *MGC, int verbose_level);
+	void create_latex_report(
+			graphics::layered_graph_draw_options *O,
+			int f_sylow, int f_group_table, //int f_classes,
+			int verbose_level);
+	void export_group_table(
+			int verbose_level);
+	void do_export_orbiter(
+			actions::action *A2, int verbose_level);
+	void do_export_gap(
+			int verbose_level);
+	void do_export_magma(
+			int verbose_level);
+	void do_canonical_image_GAP(
+			std::string &input_set, int verbose_level);
+	void do_canonical_image_orbiter(
+			std::string &input_set_text,
+			int verbose_level);
+	void create_group_table(
+			int *&Table, long int &n, int verbose_level);
+	void normalizer(
+			int verbose_level);
+	void centralizer(
+			std::string &element_label,
+			std::string &element_description_text,
+			int verbose_level);
+#if 0
+	void permutation_representation_of_element(
+			std::string &element_description_text,
+			int verbose_level);
+	// use algebra_global_with_action Algebra
+	// Algebra.permutation_representation_of_element(
+	//		A,
+	//		element_description_text,
+	//		verbose_level);
+#endif
+	void normalizer_of_cyclic_subgroup(
+			std::string &element_label,
+			std::string &element_description_text,
+			int verbose_level);
+	void do_find_subgroups(
+			int order_of_subgroup,
+			int verbose_level);
+	void print_elements(
+			int verbose_level);
+	void print_elements_tex(
+			int f_with_permutation,
+			int f_override_action, actions::action *A_special,
+			int verbose_level);
+	void order_of_products_of_elements_by_rank(
+			std::string &Elements_text,
+			int verbose_level);
+	void save_elements_csv(
+			std::string &fname, int verbose_level);
+	void export_inversion_graphs(
+			std::string &fname, int verbose_level);
+#if 0
+	void multiply_elements_csv(
+			std::string &fname1,
+			std::string &fname2,
+			std::string &fname3,
+			int f_column_major_ordering,
+			int verbose_level);
+	void apply_elements_to_set_csv(
+			std::string &fname1,
+			std::string &fname2,
+			std::string &set_text,
+			int verbose_level);
+#endif
+	void random_element(
+			std::string &elt_label, int verbose_level);
+	void element_rank(
+			std::string &elt_data, int verbose_level);
+	void element_unrank(
+			std::string &rank_string, int verbose_level);
+	void automorphism_by_generator_images_save(
+			int *Images, int m, int n,
+			int *Perms, long int go,
+			int verbose_level);
+	void do_reverse_isomorphism_exterior_square(
+			int verbose_level);
+	groups::strong_generators *get_strong_generators();
+	int is_subgroup_of(
+			any_group *AG_secondary, int verbose_level);
+	void set_of_coset_representatives(
+			any_group *AG_secondary,
+			data_structures_groups::vector_ge *&coset_reps,
+			int verbose_level);
+	void report_coset_reps(
+			data_structures_groups::vector_ge *coset_reps,
+			int verbose_level);
+	void print_given_elements_tex(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int f_with_permutation,
+			int f_with_fix_structure,
+			int verbose_level);
+	void process_given_elements(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void apply_isomorphism_wedge_product_4to6(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void order_of_products_of_pairs(
+			std::string &label_of_elements,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void conjugate(
+			std::string &label_of_elements,
+			std::string &conjugate_data,
+			int *element_data, int nb_elements,
+			int verbose_level);
+	void subgroup_lattice_compute(
+			int verbose_level);
+	void subgroup_lattice_load(
+			std::string &fname,
+			int verbose_level);
+	void subgroup_lattice_draw(
+			int verbose_level);
+	void subgroup_lattice_draw_by_orbits(
+			int verbose_level);
+	void subgroup_lattice_intersection_orbit_orbit(
+			int orbit1, int orbit2,
+			int verbose_level);
+	void subgroup_lattice_find_overgroup_in_orbit(
+			int orbit_global1, int group1, int orbit_global2,
+			int verbose_level);
+	void subgroup_lattice_create_flag_transitive_geometry_with_partition(
+			int P_orbit_global,
+			int Q_orbit_global,
+			int R_orbit_global,
+			int R_group,
+			int intersection_size,
+			int verbose_level);
+	void subgroup_lattice_create_coset_geometry(
+			int P_orb_global, int P_group,
+			int Q_orb_global, int Q_group,
+			int intersection_size,
+			int verbose_level);
+	void print();
+	void classes(
+			int verbose_level);
+	void subgroup_lattice_magma(
+			int verbose_level);
+
+
+
+};
+
+
 // #############################################################################
 // conjugacy_class_of_elements.cpp
 // #############################################################################
@@ -185,6 +415,21 @@ public:
 			groups::strong_generators *Subgroup_gens_G,
 			data_structures_groups::vector_ge *&coset_reps,
 			int verbose_level);
+	void conjugacy_classes_based_on_normal_forms(
+			actions::action *A,
+			groups::sims *override_Sims,
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
+	void find_singer_cycle(
+			groups::any_group *Any_group,
+			actions::action *A1, actions::action *A2,
+			int verbose_level);
+	void relative_order_vector_of_cosets(
+			actions::action *A, groups::strong_generators *SG,
+			data_structures_groups::vector_ge *cosets,
+			int *&relative_order_table, int verbose_level);
+
 
 };
 

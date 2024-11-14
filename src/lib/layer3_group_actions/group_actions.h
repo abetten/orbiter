@@ -12,6 +12,7 @@
 
 
 using namespace orbiter::layer1_foundations;
+using namespace orbiter::layer2_discreta;
 
 
 namespace orbiter {
@@ -75,8 +76,11 @@ namespace data_structures_groups {
 namespace group_constructions {
 
 	class direct_product;
+	class group_constructions_global;
+	class group_modification_description;
 	class linear_group_description;
 	class linear_group;
+	class modified_group_create;
 	class permutation_group_create;
 	class permutation_group_description;
 	class permutation_representation_domain;
@@ -92,6 +96,8 @@ namespace group_constructions {
 namespace groups {
 
 
+	class any_group_linear;
+	class any_group;
 	class conjugacy_class_of_elements;
 	class conjugacy_class_of_subgroups;
 	class exceptional_isomorphism_O4;

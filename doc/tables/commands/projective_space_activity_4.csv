@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:projective:space:activities:4",,
+1,"Projective Space Activities (Part 4)",,
+1,"\verb'-classify_surfaces_with_double_sixes' "," label control   ","Classify cubic surfaces using the approach of double sixes. See Section~\ref{sec:cubicsurfaces:classification}.  "
+1,"\verb'-classify_surfaces_through_' \verb'arcs_and_two_lines' ","    ","Classify cubic surfaces using the approach of six-arcs and two skew lines. See Section~\ref{sec:cubicsurfaces:classification}.  "
+1,"\verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' ","    ","See Section~\ref{sec:cubicsurfaces:classification}.  "
+1,"\verb'-test_nb_Eckardt_points' ","  $e$  ","Restrict to $e$ Eckardt points. See Section~\ref{sec:cubicsurfaces:classification}. To be used in conjunction with \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs'.  "
+1,"\verb'-trihedra1_control' ","   poset-control ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
+1,"\verb'-trihedra2_control' "," poset-control   ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
+1,"\verb'-control_six_arcs' ","  poset-control  ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
+1,"\verb'-six_arcs_not_on_conic' ","    ","Classify six-arcs not on a conic in a plane.   "
+1,"\verb'-filter_by_nb_Eckardt_points' "," $e$   ","Filter for the number of Eckardt points to be equal to $e$. Used in conjunction with \verb'-six_arcs_not_on_conic'. "
+1,"\verb'-classify_arcs' "," descr  ","Classify arcs. "
+END

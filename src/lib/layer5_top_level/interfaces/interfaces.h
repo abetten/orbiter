@@ -804,6 +804,11 @@ public:
 
 class interface_toolkit {
 
+	int f_create_files_direct;
+	std::string create_files_direct_fname_mask;
+	std::string create_files_direct_text;
+	std::vector<std::string> create_files_direct_labels;
+
 	int f_create_files;
 	orbiter_kernel_system::create_file_description
 		*Create_file_description;
@@ -876,6 +881,9 @@ class interface_toolkit {
 	int f_csv_file_latex;
 	int f_produce_latex_header;
 	std::string csv_file_latex_fname;
+
+	int f_prepare_tables_for_users_guide;
+	std::vector<std::string> prepare_tables_for_users_guide_fname;
 
 	int f_grade_statistic_from_csv;
 	std::string grade_statistic_from_csv_fname;
@@ -1107,7 +1115,7 @@ public:
 			std::string &label,
 			orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
 			int verbose_level);
-	apps_algebra::any_group *get_any_group(
+	groups::any_group *get_any_group(
 			std::string &label);
 	projective_geometry::projective_space_with_action
 		*get_object_of_type_projective_space(
@@ -1219,18 +1227,8 @@ public:
 		*Permutation_group_description;
 
 	int f_group_modification;
-	apps_algebra::group_modification_description
+	group_constructions::group_modification_description
 		*Group_modification_description;
-
-#if 0
-	int f_formula;
-	expression_parser::formula *Formula;
-	std::string label;
-	std::string label_tex;
-	std::string managed_variables;
-	std::string formula_text;
-	std::string formula_finite_field;
-#endif
 
 	int f_collection;
 	std::string list_of_objects;

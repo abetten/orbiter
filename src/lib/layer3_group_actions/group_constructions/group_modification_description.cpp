@@ -8,14 +8,16 @@
 
 
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
+#include "group_actions.h"
 
 using namespace std;
 using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
-namespace layer5_applications {
-namespace apps_algebra {
+namespace layer3_group_actions {
+namespace group_constructions {
 
 
 group_modification_description::group_modification_description()

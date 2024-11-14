@@ -1,0 +1,17 @@
+ROW,C1,C2,C3
+0,"tab:geometric:objects:2",,
+1,"Geometric Objects (Part 2)",,
+1,"\verb'-unital_XXq_YZq_ZYq' ","  ","  Create  the unital with equation $XX^q+YZ^q+ZY^q=0$ "
+1,"\verb'-desarguesian_line_spread_in_PG_3_q' ","  "," Create the desarguesian line spread in $\PG(3,q)$ as a set of 2-subspaces "
+1,"\verb'-Buekenhout_Metz' ","  "," Create the Buekenhout Metz unital "
+1,"\verb'-Uab' "," $a$ $b$ "," Create the Buekenhout Metz unital in the form of Barwick and Ebert~\cite{BarwickEbert2008}"
+1,"\verb'-whole_space' ","  "," Create the whole space"
+1,"\verb'-hyperplane' "," pt "," Create the hyperplane given by dual coordinates associated with the given point"
+1,"\verb'-segre_variety' "," $a$ $b$ "," Create the Segre variety"
+1,"\verb'-arc1_BCKM' ","  "," Create arc from family 1 in~\cite{BettenCheonKimMaruta13}. "
+1,"\verb'-arc2_BCKM' ","  "," Create arc from family 2 in~\cite{BettenCheonKimMaruta13}. "
+1,"\verb'-Maruta_Hamada_arc' ","  "," Create the Maruta Hamada arc"
+1,"\verb'-projective_variety' "," lab\_ascii lab\_tex $d$ coeffs ","Create a projective variety of degree $d$ from an equation. By default, the coefficients of the equation are listed in the partition ordering. A different ordering can be specified. A label for the variety in ascii and in tex is required. See Section~\ref{sec:algebraicsets}. "
+1,"\verb'-intersection_of_zariski_open_sets' "," $l$ $d$ $n$ $\cC_1$ ... $\cC_n$ "," Create the intersection of the Zariski open sets given by equations $\cC_1,\ldots\cC_n$ of degree $d$ with label $l$, see Section~\ref{sec:algebraicsets}. "
+1,"\verb'-projective_curve' "," $l$ $r$ $d$ $\cC$ "," Create the projective curve of degree $d$ with label $l$, with coefficient vector $\cC$ in $r$ variables"
+END

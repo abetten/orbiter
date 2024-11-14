@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:orthogonal",,
+1,"Creating an Orthogonal Space",,
+1,"\verb'-epsilon' "," $\epsilon$ "," Specify the type $\epsilon$. "
+1,"\verb'-n' "," $n$ "," Specify the projective dimension. "
+1,"\verb'-q' "," $q$ "," Specify the order of the field. "
+1,"\verb'-label_txt' "," L "," Set the ascii-label of the space. The label is used for things like file names etc. A default label will be used if this option is not given. "
+1,"\verb'-label_tex' "," L "," Set the tex-label of the space. The label is used within latex reports. A default label will be used if this option is not given. "
+1,"\verb'-without_group' ","  "," Do not create the orthogonal group. "
+1,"\verb'-create_extension_fields' ","  "," Whether to create extension fields of degree two and three. "
+END

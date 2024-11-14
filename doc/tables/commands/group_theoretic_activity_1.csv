@@ -1,0 +1,25 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks",,
+1,"Group theoretic activities (Part 1)",,
+1,"\verb'-report' "," ","Produce a latex report for the group. "
+1,"\verb'-report_sylow' "," ","Include Sylow subgroups in the report (requires \verb'-report'). "
+1,"\verb'-report_group_table' "," ","Include the group table in the report (requires \verb'-report'). "
+1,"\verb'-export_group_table' "," ","Export the group table as csv-file. "
+1,"\verb'-random_element' "," label ","Creates a random element. Writes the element to file in coded form. "
+1,"\verb'-permutation_representation_' \verb'of_element' ","$g$ "," Compute the permutation representation of $g$ "
+1,"\verb'-apply' "," $a$ $g$ ","Applies the group element $g$ to the element $a$. "
+1,"\verb'-element_processing' "," options ","Perform an activity for a sequence of group elements. For options, see Table~\ref{tab:grouptasks:elementprocessing}.  "
+1,"\verb'-multiply' "," $s_1$ $s_2$ ","Multiplies group elements $s_1$ and $s_2$, assuming the elements are given in coded form. Produces a latex report. "
+1,"\verb'-inverse' "," $s$ ","Computes the inverse of $s$, which is given in coded form. Produces a latex report. "
+1,"\verb'-consecutive_powers' "," $s$ $n$ ","Computes all powers $s^i$ for $i=1,\ldots,n.$ $s$ is given in coded form. Produces a latex report. "
+1,"\verb'-raise_to_the_power' "," $s$ $n$ ","Computes the $n$-th power of $s$, which is given in coded form. Produces a latex report. "
+1,"\verb'-export_orbiter' ","  ","Exports the group to Orbiter. "
+1,"\verb'-export_gap' ","  ","Exports the group to GAP~\cite{GAP}. "
+1,"\verb'-export_magma' ","  ","Exports the group to Magma~\cite{Magma}. "
+1,"\verb'-canonical_image_GAP' "," S ","Compute the canonical image of the set $S$ using GAP. "
+1,"\verb'-canonical_image' "," S ","Compute the canonical image of the set $S$ using Orbiter. "
+1,"\verb'-search_element_of_order' "," $i$ ","Finds all elements of order $i$ in the group ($i \in {\mathbb N}$). "
+1,"\verb'-find_standard_generators' "," $a$ $b$ $c$ "," Finds all pairs of elements $x,y$ in $G$ such that $|x| = a,$ $|y|=b$, and $|xy|=c$. Such pairs are called standard generators. "
+1,"\verb'-element_rank' "," $s$ "," Determines the rank of the group element $s$ in the given group. $s$ is given in coded form."
+1,"\verb'-element_unrank' "," $r$ "," Produces the group element whose rank is $r$. "
+END

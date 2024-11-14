@@ -452,9 +452,71 @@ void variety_object_with_action::do_report2(
 	else {
 	}
 
+
+	int d;
+	long int nb_pts;
+	long int *Points;
+	int *v;
+
+	d = Variety_object->Projective_space->Subspaces->n + 1;
+	nb_pts = Variety_object->Point_sets->Set_size[0];
+	Points = Variety_object->Point_sets->Sets[0];
+
+	v = NEW_int(d);
+
+	ost << "The variety has " << nb_pts << " points. They are: " << endl;
+	Lint_vec_print_fully(ost, Points, nb_pts);
+	ost << "\\\\" << endl;
+
+
+	ost << "\\begin{multicols}{3}" << endl;
+	ost << "\\noindent" << endl;
+	int i;
+
+	for (i = 0; i < nb_pts; i++) {
+		Variety_object->Projective_space->unrank_point(v, Points[i]);
+		ost << i << " : $P_{" << Points[i] << "}=";
+		Int_vec_print_fully(ost, v, d);
+		ost << "$\\\\" << endl;
+	}
+	ost << "\\end{multicols}" << endl;
+
+
+
+	data_structures::set_of_sets *Point_sets;
+
+	if (Variety_object->f_has_singular_points) {
+
+		if (f_v) {
+			cout << "variety_object_with_action::do_report2 "
+					"number of singular points = " << Variety_object->Singular_points.size() << endl;
+		}
+
+		ost << "The singular points are: " << endl;
+		Lint_vec_stl_print_fully(ost, Variety_object->Singular_points);
+		ost << "\\\\" << endl;
+		ost << "\\begin{multicols}{3}" << endl;
+		ost << "\\noindent" << endl;
+		int i;
+
+		nb_pts = Variety_object->Singular_points.size();
+
+		for (i = 0; i < nb_pts; i++) {
+			Variety_object->Projective_space->unrank_point(v, Variety_object->Singular_points[i]);
+			ost << i << " : $P_{" << Variety_object->Singular_points[i] << "}=";
+			Int_vec_print_fully(ost, v, d);
+			ost << "$\\\\" << endl;
+		}
+		ost << "\\end{multicols}" << endl;
+
+
+	}
 	if (TD) {
 		TD->report_decomposition_schemes(ost, verbose_level);
 	}
+	FREE_int(v);
+
+
 
 
 	if (f_v) {

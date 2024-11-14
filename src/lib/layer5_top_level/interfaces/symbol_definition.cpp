@@ -400,7 +400,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-modified_group") == 0) {
 		f_group_modification = true;
 		Group_modification_description =
-				NEW_OBJECT(apps_algebra::group_modification_description);
+				NEW_OBJECT(group_constructions::group_modification_description);
 		if (f_v) {
 			cout << "reading -modified_group" << endl;
 		}
@@ -418,41 +418,6 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-
-#if 0
-	else if (ST.stringcmp(argv[i], "-formula") == 0) {
-		if (f_v) {
-			cout << "symbol_definition::read_definition -formula" << endl;
-		}
-		f_formula = true;
-
-		label.assign(argv[++i]);
-		label_tex.assign(argv[++i]);
-		managed_variables.assign(argv[++i]);
-		formula_text.assign(argv[++i]);
-		formula_finite_field.assign(argv[++i]);
-
-		i++;
-
-
-
-		Formula = NEW_OBJECT(expression_parser::formula);
-		//Formula->init_formula(label, label_tex, managed_variables, formula_text, verbose_level);
-		if (f_v) {
-			cout << "symbol_definition::read_definition "
-					"before Formula->init_formula_Sajeeb" << endl;
-		}
-		Formula->init_formula_Sajeeb(
-				label, label_tex,
-				managed_variables, formula_text,
-				verbose_level);
-		if (f_v) {
-			cout << "symbol_definition::read_definition "
-					"after Formula->init_formula_Sajeeb" << endl;
-		}
-
-	}
-#endif
 
 	else if (ST.stringcmp(argv[i], "-geometric_object") == 0) {
 		f_geometric_object = true;
@@ -1848,40 +1813,40 @@ void symbol_definition::print()
 		cout << "-finite_field ";
 		Finite_field_description->print();
 	}
-	if (f_polynomial_ring) {
+	else if (f_polynomial_ring) {
 		cout << "-polynomial_ring ";
 		Polynomial_ring_description->print();
 	}
-	if (f_projective_space) {
+	else if (f_projective_space) {
 		cout << "-projective_space ";
 		Projective_space_with_action_description->print();
 	}
-	if (f_orthogonal_space) {
+	else if (f_orthogonal_space) {
 		cout << "-orthogonal_space ";
 		Orthogonal_space_with_action_description->print();
 	}
-	if (f_BLT_set_classifier) {
+	else if (f_BLT_set_classifier) {
 		cout << "-BLT_set_classifier " << BLT_set_classifier_label_orthogonal_geometry << " ";
 		Blt_set_classify_description->print();
 	}
-	if (f_spread_classifier) {
+	else if (f_spread_classifier) {
 		cout << "-spread_classifier" << endl;
 		Spread_classify_description->print();
 	}
-	if (f_linear_group) {
+	else if (f_linear_group) {
 		cout << "-linear_group ";
 		Linear_group_description->print();
 	}
-	if (f_permutation_group) {
+	else if (f_permutation_group) {
 		cout << "-permutation_group ";
 		Permutation_group_description->print();
 	}
-	if (f_group_modification) {
+	else if (f_group_modification) {
 		cout << "-modified_group ";
 		Group_modification_description->print();
 	}
 #if 0
-	if (f_formula) {
+	else if (f_formula) {
 		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
 		//formula *F;
 		//std::string label;
@@ -1890,46 +1855,46 @@ void symbol_definition::print()
 		//std::string formula_text;
 	}
 #endif
-	if (f_geometric_object) {
+	else if (f_geometric_object) {
 		cout << "-geometric_object ";
 		Geometric_object_description->print();
 	}
-	if (f_collection) {
+	else if (f_collection) {
 		cout << "-collection ";
 		//cout << list_of_objects << endl;
 	}
-	if (f_graph) {
+	else if (f_graph) {
 		cout << "-graph ";
 		Create_graph_description->print();
 	}
-	if (f_code) {
+	else if (f_code) {
 		cout << "-code ";
 		Create_code_description->print();
 	}
-	if (f_spread) {
+	else if (f_spread) {
 		cout << "-spread ";
 		Spread_create_description->print();
 	}
-	if (f_cubic_surface) {
+	else if (f_cubic_surface) {
 		cout << "-cubic_surface " << endl;
 		Surface_Descr->print();
 	}
-	if (f_quartic_curve) {
+	else if (f_quartic_curve) {
 		cout << "-quartic_curve " << endl;
 		Quartic_curve_descr->print();
 	}
-	if (f_BLT_set) {
+	else if (f_BLT_set) {
 		cout << "-BLT_set " << endl;
 		BLT_Set_create_description->print();
 	}
-	if (f_translation_plane) {
+	else if (f_translation_plane) {
 		cout << "-translation_plane "
 				<< " " << translation_plane_spread_label
 				<< " " << translation_plane_group_n_label
 				<< " " << translation_plane_group_np1_label
 				<< endl;
 	}
-	if (f_spread_table) {
+	else if (f_spread_table) {
 		cout << "-spread_table " << spread_table_label_PA
 				<< " " << dimension_of_spread_elements
 				<< " " << spread_selection_text
@@ -1937,19 +1902,19 @@ void symbol_definition::print()
 				<< " " << spread_table_control
 				<< endl;
 	}
-	if (f_packing_classify) {
+	else if (f_packing_classify) {
 		cout << "-packing_classify "
 				<< " " << packing_classify_label_PA3
 				<< " " << packing_classify_label_PA5
 				<< " " << packing_classify_label_spread_table
 				<< endl;
 	}
-	if (f_packing_was) {
+	else if (f_packing_was) {
 		cout << "-packing_with_symmetry_assumption " << packing_was_label_packing_classify
 				<< endl;
 		packing_was_descr->print();
 	}
-	if (f_packing_was_choose_fixed_points) {
+	else if (f_packing_was_choose_fixed_points) {
 		cout << "-packing_was_choose_fixed_points ";
 		cout << packing_with_assumed_symmetry_label;
 		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " " << endl;
@@ -1958,89 +1923,97 @@ void symbol_definition::print()
 		//int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
 		//poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
 	}
-	if (f_packing_long_orbits) {
+	else if (f_packing_long_orbits) {
 		cout << "-packing_long_orbits " << packing_long_orbits_choose_fixed_points_label << endl;
 		Packing_long_orbits_description->print();
 	}
-	if (f_graph_classification) {
+	else if (f_graph_classification) {
 		cout << "-graph_classification ";
 		Graph_classify_description->print();
 	}
-	if (f_diophant) {
+	else if (f_diophant) {
 		cout << "-diophant ";
 		Diophant_description->print();
 	}
-	if (f_design) {
+	else if (f_design) {
 		cout << "-design ";
 		Design_create_description->print();
 	}
-	if (f_design_table) {
+	else if (f_design_table) {
 		cout << "-design_table "
 				<< design_table_label_design
 				<< " " << design_table_label
 				<< " " << design_table_group << endl;
 	}
-	if (f_large_set_was) {
+	else if (f_large_set_was) {
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
 		large_set_was_descr->print();
 	}
-	if (f_set) {
+	else if (f_set) {
 		cout << "-set ";
 		Set_builder_description->print();
 	}
-	if (f_vector) {
+	else if (f_vector) {
 		cout << "-vector ";
 		Vector_builder_description->print();
 	}
-	if (f_symbolic_object) {
+	else if (f_symbolic_object) {
 		cout << "-symbolic_object ";
 		Symbolic_object_builder_description->print();
 	}
-	if (f_combinatorial_object) {
+	else if (f_combinatorial_object) {
 		cout << "-combinatorial_object ";
 		Data_input_stream_description->print();
 	}
-	if (f_geometry_builder) {
+	else if (f_geometry_builder) {
 		cout << "-geometry_builder ";
 		Geometry_builder_description->print();
 	}
-	if (f_vector_ge) {
+	else if (f_vector_ge) {
 		cout << "-vector_g ";
 		Vector_ge_description->print();
 	}
-	if (f_action_on_forms) {
+	else if (f_action_on_forms) {
 		cout << "-action_on_forms ";
 		Action_on_forms_descr->print();
 	}
-	if (f_orbits) {
+	else if (f_orbits) {
 		cout << "-orbits ";
 		Orbits_create_description->print();
 	}
-	if (f_poset_classification_control) {
+	else if (f_poset_classification_control) {
 		cout << "-poset_classification_control ";
 		Poset_classification_control->print();
 	}
-	if (f_poset_classification_report_options) {
+	else if (f_poset_classification_report_options) {
 		cout << "-poset_classification_report_options ";
 		Poset_classification_report_options->print();
 	}
 
-	if (f_arc_generator_control) {
+	else if (f_arc_generator_control) {
 		cout << "-arc_generator_control" << endl;
 		Arc_generator_control->print();
 	}
 
-	if (f_poset_classification_activity) {
+	else if (f_poset_classification_activity) {
 		cout << "-poset_classification_activity ";
 		Poset_classification_activity->print();
 	}
-	if (f_crc_code) {
+	else if (f_crc_code) {
 		cout << "-crc_code ";
 		Crc_code_description->print();
 	}
-	if (f_mapping) {
+	else if (f_mapping) {
 		cout << "-mapping ";
 		Mapping_description->print();
+	}
+	else if (f_variety) {
+		cout << "-variety ";
+		Variety_description->print();
+	}
+	else {
+		cout << "symbol_definition::print unknown type" << endl;
+		exit(1);
 	}
 }
 
@@ -2451,9 +2424,9 @@ void symbol_definition::definition_of_linear_group(
 	// create any_group object from linear_group:
 
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
-	AG = NEW_OBJECT(apps_algebra::any_group);
+	AG = NEW_OBJECT(groups::any_group);
 	if (f_v) {
 		cout << "symbol_definition::definition "
 				"before AG->init_linear_group" << endl;
@@ -2511,9 +2484,9 @@ void symbol_definition::definition_of_permutation_group(
 	// create any_group object from permutation_group_create:
 
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
-	AG = NEW_OBJECT(apps_algebra::any_group);
+	AG = NEW_OBJECT(groups::any_group);
 	AG->init_permutation_group(PGC, verbose_level);
 
 
@@ -2545,25 +2518,28 @@ void symbol_definition::definition_of_modified_group(
 	}
 
 
-	apps_algebra::modified_group_create *MGC;
+	group_constructions::modified_group_create *MGC;
 
-	MGC = NEW_OBJECT(apps_algebra::modified_group_create);
+	MGC = NEW_OBJECT(group_constructions::modified_group_create);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_modified_group "
 				"before PGC->permutation_group_init, "
 				"before PGC->permutation_group_init" << endl;
 	}
 
-	MGC->modified_group_init(Group_modification_description, verbose_level);
+	apps_algebra::algebra_global_with_action Algebra_global_with_action;
+
+	Algebra_global_with_action.modified_group_init(
+			MGC, Group_modification_description, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_modified_group "
 				"after PGC->permutation_group_init, "
 				"after PGC->permutation_group_init" << endl;
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
-	AG = NEW_OBJECT(apps_algebra::any_group);
+	AG = NEW_OBJECT(groups::any_group);
 	AG->init_modified_group(MGC, verbose_level);
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -3066,8 +3042,8 @@ void symbol_definition::definition_of_translation_plane(
 
 
 	spreads::spread_create *Spread;
-	apps_algebra::any_group *Gn;
-	apps_algebra::any_group *Gnp1;
+	groups::any_group *Gn;
+	groups::any_group *Gnp1;
 	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
 
@@ -3692,7 +3668,7 @@ void symbol_definition::definition_of_design_table(
 
 
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 	idx = orbiter_kernel_system::Orbiter->find_symbol(design_table_group);
 
@@ -3706,7 +3682,7 @@ void symbol_definition::definition_of_design_table(
 		cout << endl;
 		exit(1);
 	}
-	AG = (apps_algebra::any_group *)
+	AG = (groups::any_group *)
 			orbiter_kernel_system::Orbiter->get_object(idx);
 
 

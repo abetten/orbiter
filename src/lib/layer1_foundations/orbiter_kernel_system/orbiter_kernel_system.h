@@ -58,11 +58,15 @@ public:
 
 
 class create_file_description {
+
 public:
+
 	int f_file_mask;
 	std::string file_mask;
+
 	int f_N;
 	int N;
+
 	int nb_lines;
 	std::string lines[MAX_LINES];
 	int f_line_numeric[MAX_LINES];
@@ -245,6 +249,12 @@ public:
 	void do_csv_file_latex(std::string &fname,
 			int f_produce_latex_header,
 			int nb_lines_per_table,
+			int verbose_level);
+	void prepare_tables_for_users_guide(
+			std::vector<std::string> &tbl_fname,
+			int verbose_level);
+	void prepare_table_for_users_guide(
+			std::string &fname,
 			int verbose_level);
 	void read_csv_file_and_tally(
 			std::string &fname, int verbose_level);
@@ -564,6 +574,11 @@ public:
 	void write_decomposition_stack(
 			std::string &fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
+	void create_files_direct(
+			std::string &fname_mask,
+			std::string &content_mask,
+			std::vector<std::string> &labels,
+			int verbose_level);
 	void create_file(
 			create_file_description *Descr, int verbose_level);
 	void create_files(
@@ -1291,6 +1306,10 @@ public:
 	graph_theory::colored_graph
 		*get_object_of_type_graph(
 				std::string &label);
+	void
+		*get_any_group_opaque(
+				std::string &label);
+	// the return type should be groups::any_group *
 	void start_memory_debug();
 	void stop_memory_debug();
 

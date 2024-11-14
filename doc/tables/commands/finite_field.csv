@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:create",,
+1,"Creating Finite Fields",,
+1,"\verb'-q' "," $q$ ","  Specify the order of the field. Here, $q=p^k$  for some prime $p$ and some positive integer $k$."
+1,"\verb'-override_polynomial' "," $n$  ","Specify the polynomial used to create the finite field. The polynomial is given as integer, using the base $p$ representation. See Section~\ref{sec:extension:fields}."
+1,"\verb'-without_tables' ","  ","  Create the field without precomputing the tables."
+1,"\verb'-compute_related_fields' ","  ","  Compute information about all subfields.  "
+1,"\verb'-symbol' "," $s$ ","  Use $s$ as a symbol for the primitive element during printing.  "
+END

@@ -132,6 +132,144 @@ public:
 };
 
 
+
+// #############################################################################
+// group_constructions_global.cpp
+// #############################################################################
+
+//! constructing groups and subgroups, global functions
+
+class group_constructions_global {
+
+public:
+	group_constructions_global();
+	~group_constructions_global();
+
+	void A5_in_PSL_(
+			int q, int verbose_level);
+	void A5_in_PSL_2_q(
+			int q,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & A,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & B,
+			orbiter::layer2_discreta::typed_objects::domain *dom_GFq,
+			int verbose_level);
+	void A5_in_PSL_2_q_easy(
+			int q,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & A,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & B,
+			orbiter::layer2_discreta::typed_objects::domain *dom_GFq,
+			int verbose_level);
+	void A5_in_PSL_2_q_hard(
+			int q,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & A,
+			orbiter::layer2_discreta::typed_objects::discreta_matrix & B,
+			orbiter::layer2_discreta::typed_objects::domain *dom_GFq,
+			int verbose_level);
+	int proj_order(
+			orbiter::layer2_discreta::typed_objects::discreta_matrix &A);
+	void trace(
+			orbiter::layer2_discreta::typed_objects::discreta_matrix &A,
+			orbiter::layer2_discreta::typed_objects::discreta_base &tr);
+	void elementwise_power_int(
+			orbiter::layer2_discreta::typed_objects::discreta_matrix &A,
+			int k, int verbose_level);
+	int is_in_center(
+			orbiter::layer2_discreta::typed_objects::discreta_matrix &B);
+	void matrix_convert_to_numerical(
+			orbiter::layer2_discreta::typed_objects::discreta_matrix &A,
+			int *AA, int q);
+
+};
+
+
+
+// #############################################################################
+// group_modification_description.cpp
+// #############################################################################
+
+//! create a new group or group action from an old
+
+class group_modification_description {
+
+public:
+
+	// TABLES/group_modification.tex
+
+	int f_restricted_action;
+	std::string restricted_action_set_text;
+	std::string restricted_action_set_text_tex;
+
+	int f_on_k_subspaces;
+	int on_k_subspaces_k;
+
+	int f_on_k_subsets;
+	int on_k_subsets_k;
+
+	int f_on_wedge_product;
+
+	int f_on_cosets_of_subgroup;
+	std::string on_cosets_of_subgroup_subgroup;
+
+	int f_create_special_subgroup;
+
+	int f_create_even_subgroup;
+
+	int f_derived_subgroup;
+
+	int f_point_stabilizer;
+	int point_stabilizer_point;
+
+	int f_set_stabilizer;
+	std::string set_stabilizer_the_set;
+	std::string set_stabilizer_control;
+
+
+	int f_projectivity_subgroup;
+
+	int f_subfield_subgroup;
+	int subfield_subgroup_index;
+
+	int f_action_on_self_by_right_multiplication;
+
+	int f_direct_product;
+	std::string direct_product_input;
+	std::string direct_product_subgroup_order;
+	std::string direct_product_subgroup_gens;
+
+	int f_polarity_extension;
+	std::string polarity_extension_input;
+	std::string polarity_extension_PA;
+
+	int f_on_middle_layer_grassmannian;
+
+	int f_on_points_and_hyperplanes;
+
+	int f_holomorph;
+
+	int f_automorphism_group;
+
+	int f_subgroup_by_lattice;
+	int subgroup_by_lattice_orbit_index;
+
+	int f_stabilizer_of_variety;
+	std::string stabilizer_of_variety_label;
+
+	std::vector<std::string> from;
+
+	group_modification_description();
+	~group_modification_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+
+
+
 // #############################################################################
 // linear_group_description.cpp
 // #############################################################################
@@ -233,7 +371,9 @@ public:
 //! creates a linear group from command line arguments using linear_group_description
 
 class linear_group {
+
 public:
+
 	linear_group_description *description;
 	int n;
 	int input_q;
@@ -311,6 +451,91 @@ public:
 			int verbose_level);
 
 };
+
+
+
+// #############################################################################
+// modified_group_create.cpp
+// #############################################################################
+
+//! to create a new group or group action from old ones, using class group_modification_description
+
+class modified_group_create {
+
+public:
+	group_modification_description *Descr;
+
+	std::string label;
+	std::string label_tex;
+
+
+	actions::action *A_base;
+	actions::action *A_previous;
+	actions::action *A_modified;
+
+	int f_has_strong_generators;
+	groups::strong_generators *Strong_gens;
+
+	groups::sims *action_on_self_by_right_multiplication_sims;
+	induced_actions::action_by_right_multiplication *Action_by_right_multiplication;
+
+
+
+	modified_group_create();
+	~modified_group_create();
+	void modified_group_init(
+			group_modification_description *description,
+			int verbose_level);
+	void create_restricted_action(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_k_subspaces(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_k_subsets(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_wedge_product(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_cosets_of_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_special_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_even_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_derived_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_projectivity_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_subfield_subgroup(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_self_by_right_multiplication(
+			group_modification_description *description,
+			int verbose_level);
+	void create_product_action(
+			group_modification_description *description,
+			int verbose_level);
+	void create_polarity_extension(
+			std::string &input_group_label,
+			std::string &input_projective_space_label,
+			int f_on_middle_layer_grassmannian,
+			int f_on_points_and_hyperplanes,
+			int verbose_level);
+	void create_automorphism_group(
+			int verbose_level);
+	void create_subgroup_by_lattice(
+			int orbit_index,
+			int verbose_level);
+
+};
+
 
 
 
@@ -761,6 +986,7 @@ public:
 	long int *rank_one_tensors_in_PG_sorted; // [nb_rank_one_tensors]
 	int nb_rank_one_tensors;
 
+	// TR = tensor rank
 	char *TR; // [degree_of_tensor_action + 1]
 	uint32_t *Prev; // [degree_of_tensor_action + 1]
 
@@ -885,6 +1111,7 @@ public:
 			int nb_factors,
 			std::string &orbits_restricted_fname,
 			int verbose_level);
+
 };
 
 

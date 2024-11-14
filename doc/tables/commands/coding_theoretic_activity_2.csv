@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:activities:coding2",,
+1,"Coding Theoretic Activities (Part 2)",,
+1,"\verb'-make_diagram' ","  "," Creates a diagram of the code in Hamming space. Uses \verb'-embellish' $r$  to emphasize codewords by drawing a circle of radius $r$. If \verb'-metric_balls' $r$ is given, the metric balls around codewords of radius $r$ are indicated. "
+1,"\verb'-boolean_function_of_code' ","  ","Computes the boolean function of the code $C$. "
+1,"\verb'-embellish' "," $r$ "," See \verb'-make_diagram'. "
+1,"\verb'-metric_balls' "," $r$ "," See \verb'-make_diagram'. "
+1,"\verb'-Hamming_space_distance_matrix' "," $n$ "," Make the distance matrix of the Hamming graph $H(n,q).$ "
+END

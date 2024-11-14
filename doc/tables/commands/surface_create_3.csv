@@ -1,0 +1,16 @@
+ROW,C1,C2,C3
+0,"tab:createsurface:three",,
+1,"Creating a Cubic Surface (Part 3)",,
+1,"\verb'-Cayley_form' "," $k$ $l$ $m$ $n$   ","Create the surface from Cayley's normal form, using the parameters $k,l,m,n.$"
+1,"\verb'-by_equation' "," R label label\_tex  vars eqn para para\_tex para\_values ","Create the surface from an equation."
+1,"\verb'-by_symbolic_object' ","  R formula  ","Create the surface from an equation. Here, R is a ring and formula is the equation of the surface. "
+1,"\verb'-by_double_six' ","  label label\_tex $D$  ","Create the surface from a double six $D$."
+1,"\verb'-by_skew_hexagon' ","  label label  "," Create the surface from a skew hexagon."
+1,"\verb'-select_double_six' ","  $L$   ","Establish a new set of Schlaefli labels by distinguishing a double six, using an existing Schlaefli labeling. The double six is given in $L$, and consists of 12 comma separated entries (first the six $a_i$, then the corresponding six $b_j$). The entries in $L$ can be either Schlaefli symbols or numerical line indices. The latter are integers in the interval $[0,26].$ This command can be repeated. In each application, the selection takes place with respect to the previous Schlaefli labeling. "
+1,"\verb'-override_group' "," descr ","Override the automorphism group of the surface by the given group. "
+1,"\verb'-random' ","    ","Create a random cubic surface with 27 lines over the given field."
+1,"\verb'-transform' "," elt "," Apply the transformation given by the group element. "
+1,"\verb'-transform_inverse' "," elt "," Apply the inverse transformation given by the group element. "
+END
+\caption{\label{tab:createsurface:three}Creating a Cubic Surface (Part 3)}
+

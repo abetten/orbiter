@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:activities",,
+1,"Finite Field Activities",,
+1,"\verb'-cheat_sheet_GF' ","  ","Produce a cheat sheet in latex which shows information about the field, including addition and multiplication tables.  "
+1,"\verb'-export_tables' ","  ","  Export addition and multiplication table to a csv-file.  "
+1,"\verb'-polynomial_division' "," $A$ $B$ ","  Perform polynomial division: Divide $B$ into $A$. "
+1,"\verb'-extended_gcd_for_polynomials' "," $A$ $B$ ","Compute the GCD of two polynomials $A$ and $B$ and determine two polynomials $U$ and $V$ such that $GCD(A,B) = UA+VB.$ "
+1,"\verb'-polynomial_mult_mod' "," $A$ $B$ $M$ ","Perform modular polynomial multiplication. Compute $A \cdot B \mod M$. "
+1,"\verb'-polynomial_power_mod' "," $A$ $n$ $M$ ","Perform modular polynomial exponentiation. Compute $A^n \mod M$. "
+1,"\verb'-Berlekamp_matrix' ","  $A$ ","  Compute the Berlekamp matrix associated with the polynomial $A$.  "
+1,"\verb'-polynomial_find_roots' "," $A$  ","  Compute the roots of the polynomial $A$.  "
+1,"\verb'-product_of' "," $v$ ","  Compute the product of all field elements in the vector $v$.  "
+1,"\verb'-sum_of' "," $v$ ","  Compute the sum of all field elements in the vector $v$.  "
+1,"\verb'-negate' "," $v$ ","  Negate each field element in the vector $v$."
+1,"\verb'-inverse' "," $v$ ","  Compute the multiplicative inverse of each field element in the vector $v$."
+1,"\verb'-power_map' "," $k$ $v$ ","  Compute the $k$-th power of each field element in the vector $v$."
+1,"\verb'-parse_and_evaluate' "," label managed-vars formula parameters ","  Parse the given formula with the given managed variables and evaluate at the given values of the parameters."
+1,"\verb'-evaluate' "," label parameters ","  Parse the given formula and evaluate at the given values of the parameters."
+END

@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:scene2",,
+1,"Scene Elements (Part 2)",,
+1,"\verb'-line_through_two_points' "," pt-coords   "," Create a line through two points given by 6 coordinates "
+1,"\verb'-line_through_two_existing_points' "," $i_1$ $i_2$   "," Create a line through two points "
+1,"\verb'-line_through_point_with_direction' "," $x$ $y$ $z$ $u_x$ $u_y$ $u_z$   "," Create a line through a point $(x,y,z)$ with a given direction $(u_x,u_y,u_z)$ "
+1,"\verb'-plane_by_dual_coordinates' "," $a$ $b$ $c$ $d$   "," Create the plane $ax+by+cz+d=0$ given in dual coordinates "
+1,"\verb'-dodecahedron' ","    "," Create a Dodecahedron centered at the origin (20 points, 30 edges, 12 faces) "
+1,"\verb'-Hilbert_Cohn_Vossen_surface' ","    "," Create the Hilbert, Cohn-Vossen surface (1 cubic surface, 45 tritangent planes, 27 lines) "
+1,"\verb'-obj_file' ","  fname  "," Read points and faces from the given .obj file "
+1,"\verb'-group_of_things' ","  list  "," Create a group of things from the given list "
+1,"\verb'-group_of_things_with_offset' ","  list offset "," Create a group of things from the given list, each value is increase by offset "
+1,"\verb'-group_of_things_as_interval' ","  $a$ $b$ "," Create a group of things indexed by the interval $a, \ldots, a+b -1$ "
+1,"\verb'-group_of_things_as_interval_' \verb'with_exceptions' ","  $a$ $b$ ex "," Create a group of things indexed by the interval $a, \ldots, a+b -1$ with the exceptional elements in the list ex removed"
+1,"\verb'-group_of_all_points' ","   "," Create a group of things from all points currently defined"
+1,"\verb'-group_of_all_faces' ","   "," Create a group of things from all faces currently defined"
+1,"\verb'-group_subset_at_random' "," $i$ $f$  "," Create a group of things from the existing group $i$ by picking a random subset with probability $f$ "
+1,"\verb'-create_regulus' "," $i$ $N$  "," Create a regulus for quadric $i$ with $N$ lines "
+END

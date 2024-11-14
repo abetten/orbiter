@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:projective:space:activities:2",,
+1,"Projective Space Activities (Part 2)",,
+1,"\verb'-sweep' "," fname   ","   "
+1,"\verb'-sweep_4_15_lines' ","  fname surface-descr ","   "
+1,"\verb'-sweep_F_beta_9_lines' ","  fname surface-descr ","   "
+1,"\verb'-sweep_6_9_lines' ","  fname surface-descr ","   "
+1,"\verb'-sweep_4_27' ","  fname surface-descr  ","   "
+1,"\verb'-sweep_4_L9_E4' ","  fname surface-descr  ","   "
+1,"\verb'-cheat_sheet' ","    ","Produce a cheat sheet for $\PG(n,q)$  "
+1,"\verb'-set_stabilizer' "," $k$ fname-mask $N$  col-label fname-out ","Compute canonical form of sets using the substructure algorithm. "
+1,"\verb'-conic_type' "," $t$ set ","Compute the conic type of the given set (given by its label). Record intersections of size $\ge t$ only."
+1,"\verb'-arc_with_given_set_as_' \verb's_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  ","Finds arcs with the given set as $s$-lines. "
+1,"\verb'-arc_with_two_given_sets_' \verb'of_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  $t$ $T$ ","Finds arcs with the two given sets as $s$-lines and $t$-lines, respectively. "
+1,"\verb'-arc_with_three_given_sets_' \verb'of_lines_after_dualizing' "," $sz$ $d$ $d_{\min}$ $s$  $t$ $T$  $u$ $U$ ","Finds arcs with the three given sets as $s$-lines and $t$-lines and $u$-lines, respectively. "
+1,"\verb'-dualize_hyperplanes_to_points' "," ","Turns ranks of hyperplanes into ranks of points."
+1,"\verb'-dualize_points_to_hyperplanes' "," ","Turns ranks of points into ranks of hyperplanes. "
+1,"\verb'-dualize_rank_k_subspaces' "," $k$ ","Turns ranks of $k$-subspaces into ranks of $n-k$ subspaces. "
+END

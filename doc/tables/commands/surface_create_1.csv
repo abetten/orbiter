@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:createsurface:one",,
+1,"Creating a Cubic Surface (Part 1)",,
+1,"\verb'-space' ","  P "," Specify the 3-dimensional projective space P $=\PG(3,q)$. "
+1,"\verb'-label_txt' "," label "," Override the ascii label of the curve. "
+1,"\verb'-label_tex' "," label "," Override the latex label of the curve. "
+1,"\verb'-label_for_summary' "," label "," Override the ascii label of the curve, to be used in summary commands. "
+1,"\verb'-catalogue' "," $i$   ","Create the $i$-th surface in the Orbiter catalogue. Here, $i$ is an index variable used to index all surfaces in $\PG(3,q)$. The index $i$ is zero-based. The automorphism group is created as well. "
+1,"\verb'-by_coefficients'"," list-of-coeff-pairs  ","Create a surface from a list of coefficient-monomial pairs. The automorphism group is not created. "
+1,"\verb'-by_rank'"," rank $q_0$  ","Create a surface from the numerical rank of the equation over the subfield $\bbF_{q_0}$. Here, we think of the equation as a point in $\PG(19,q_0)$ and use the Orbiter point rank. "
+1,"\verb'-family_Eckardt' "," $a$ $b$  ","Create the Eckardt surface with parameters $(a,b)$ as in see~\cite{BettenKaraoglu19a} (where it is called the Hilbert, Cohn-Vossen surface). The equation is $X_3^3-b^2(X_0^2+X_1^2+X_2^2)X_3+ \frac{b^3}{a}(a^2+1)X_0X_1X_2 = 0.$ The automorphism group is created as well. "
+END
+

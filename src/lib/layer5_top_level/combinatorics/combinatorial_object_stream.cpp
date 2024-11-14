@@ -775,7 +775,7 @@ void combinatorial_object_stream::draw_incidence_matrices(
 
 void combinatorial_object_stream::unpack_from_restricted_action(
 		std::string &prefix,
-		apps_algebra::any_group *G,
+		groups::any_group *G,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

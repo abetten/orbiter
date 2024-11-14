@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:cubic:surface:export",,
+1,"Options for Exporting Data: Cubic Surfaces",,
+1,"\verb'points' ",""," The points on the surface. "
+1,"\verb'points_off' ",""," The points off the surface. "
+1,"\verb'Eckardt_points' ",""," The Eckardt points of the surface. "
+1,"\verb'double_points' ",""," The double points of the surface. "
+1,"\verb'single_points' ",""," The single points of the surface. "
+1,"\verb'zero_points' ",""," The zero points of the surface. A point is a zero point if it does not lie on any line."
+1,"\verb'singular_points' ",""," The singular points of the surface. "
+1,"\verb'lines' ",""," The set of lines of the surface. "
+1,"\verb'tritangent_planes' ",""," The set of tritangent planes of the surface. "
+1,"\verb'Hesse_planes' ",""," The set of Hesse planes of the surface. "
+END

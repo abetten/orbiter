@@ -290,10 +290,6 @@ void nauty_interface::nauty_interface_graph_int(
 
 #endif
 	nauty_interface_free_data();
-	if (f_v) {
-		cout << "nauty_interface::nauty_interface_graph_int done" << endl;
-	}
-#endif
 
 
 	delete [] g;
@@ -302,6 +298,10 @@ void nauty_interface::nauty_interface_graph_int(
 	delete [] ptn;
 	delete [] orbits;
 
+	if (f_v) {
+		cout << "nauty_interface::nauty_interface_graph_int done" << endl;
+	}
+#endif
 
 }
 

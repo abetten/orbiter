@@ -475,7 +475,7 @@ void projective_space_global::do_classify_arcs(
 					"f_override_group label = " << Arc_generator_description->override_group_label << endl;
 		}
 		//int idx;
-		apps_algebra::any_group *AG;
+		groups::any_group *AG;
 		//linear_group *LG;
 
 #if 0

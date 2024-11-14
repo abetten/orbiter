@@ -1,0 +1,6 @@
+ROW,C1,C2,C3
+0,"tab:graph:modifiers",,
+1,"Graph Modifiers",,
+1,"\verb'-complement' ","  "," Complementary graph. "
+1,"\verb'-distance_2' ","  "," Distance two graph: Two vertices are adjacent if and only if they have distance two in the original graph. "
+END

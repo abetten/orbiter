@@ -7,9 +7,10 @@
 
 
 
-
 #include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
 #include "group_actions.h"
+
 
 using namespace std;
 
@@ -135,7 +136,7 @@ long int action_on_cosets_of_subgroup::compute_image(
 		int *Elt, long int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "action_on_cosets_of_subgroup::compute_image "

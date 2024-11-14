@@ -52,7 +52,7 @@ void vector_ge_builder::init(
 				"f_action action = " << Descr->action_label << endl;
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 
 	AG = Get_any_group(Descr->action_label);

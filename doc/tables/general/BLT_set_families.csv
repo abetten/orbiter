@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:BLT:families",,
+1,"Families of BLT-sets",,
+1,"\verb'Linear' ","  "," Linear BLT-set. "
+1,"\verb'Fisher' ","  "," Fisher BLT-set~\cite{FisherThas79}. "
+1,"\verb'Mondello' "," $q \equiv \pm 1 \mod 10$ "," Mondello BLT-set due to Penttila~\cite{Penttila98}. "
+1,"\verb'FTWKB' "," $q \equiv \pm 2 \mod 3$ "," Fisher, Thas, Walker~\cite{Walker76}, Kantor, Betten~\cite{Betten73} BLT-set. "
+1,"\verb'Kantor1' "," $q=p^e, \; e > 1$ "," Kantor's first family. "
+1,"\verb'Kantor2' "," $q \equiv \pm 2 \mod 5$ "," Kantor's second family. "
+1,"\verb'LP_37_72' "," $q=37$ "," BLT-set for $q=37$ with ago=72 due to Law and Penttila~\cite{LawPenttila04}. "
+1,"\verb'LP_37_41a' "," $q=37$  "," First BLT-set for $q=37$ with ago=4, due to Law and Penttila~\cite{LawPenttila04}. "
+1,"\verb'LP_37_41b' "," $q=37$  "," Second BLT-set for $q=37$ with ago=4, due to Law and Penttila~\cite{LawPenttila04}. "
+1,"\verb'LP_71' "," $q=71$  "," BLT-set for $q=71$ due to Law and Penttila~\cite{LawPenttila04}. "
+END

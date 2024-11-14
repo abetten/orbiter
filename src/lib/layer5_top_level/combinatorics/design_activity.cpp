@@ -283,7 +283,7 @@ void design_activity::do_extract_solutions_by_index(
 	combinatorics_global Combi;
 	design_tables *T;
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 	AG = Get_any_group(group_label);
 
@@ -479,7 +479,7 @@ void design_activity::do_create_table(
 	design_tables *T;
 
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 	AG = Get_any_group(group_label);
 
@@ -521,7 +521,7 @@ void design_activity::do_load_table(
 		cout << "design_activity::do_load_table" << endl;
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 	AG = Get_any_group(group_label);
 
@@ -1288,9 +1288,9 @@ void design_activity::do_pair_orbits_on_blocks(
 				"before creating any_group *AG" << endl;
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
-	AG = NEW_OBJECT(apps_algebra::any_group);
+	AG = NEW_OBJECT(groups::any_group);
 	AG->A_base = DC->A_base;
 	AG->A = A_on_blocks;
 	AG->label = Control->problem_label;

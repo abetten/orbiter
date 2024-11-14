@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:draw:incidence:structure",,
+1,"Options for Drawing Incidence Structures",,
+1,"\verb'-width' "," w "," Set the width of one box in units of 0.1mm. "
+1,"\verb'-width_10' "," w "," Set the width of one tenth of a box. Should with the value of width divided by 10. "
+1,"\verb'-outline_thin' ","  "," Draw a thin outline. "
+1,"\verb'-unit_length' ","  "," Default: 0.065mm. "
+1,"\verb'-thick_lines' ","  "," Default: 0.5mm. "
+1,"\verb'-thin_lines' ","  "," Default: 0.15mm. "
+1,"\verb'-geo_line_width' ","  "," Default: 0.25mm. "
+END
+

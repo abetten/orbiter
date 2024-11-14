@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:crypto",,
+1,"Cryptographic Commands",,
+1,"\verb'-solovay_strassen' "," $a$ $n$  "," Performs $n$ Solovay / Strassen tests on the number $a$"
+1,"\verb'-miller_rabin' "," $a$ $n$  "," Performs $n$ Miller / Rabin tests on the number $a$"
+1,"\verb'-fermat' "," $a$ $n$  "," Performs $n$ Fermat tests on the number $a$"
+1,"\verb'-find_pseudoprime' "," $a$ $n_1$ $n_2$ $n_3$  "," Computes a pseudoprime which survives $n_1$ Fermat tests, $n_2$ Miller Rabin tests, $n_3$ Solovay Strassen tests"
+1,"\verb'-find_strong_pseudoprime' "," $a$ $n_1$ $n_2$  "," Computes a pseudoprime which survives $n_1$ Fermat tests and  $n_2$ Miller Rabin tests "
+1,"\verb'-RSA_encrypt_text' "," $d$ $n$ $b$ text "," Using blocks of $b$ letters at a time, encrypt ``text'' using RSA with exponent $d$ modulo $n$"
+1,"\verb'-RSA' "," $d$ $n$  list-of-integers "," encrypt the given sequence of integers using RSA with exponent $d$ modulo $n$"
+END

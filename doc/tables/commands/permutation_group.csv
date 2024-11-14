@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:perm:group",,
+1,"Creating a Generic Permutation Group",,
+1,"\verb'-symmetric_group' "," $n$ "," Symmetric group of degree $n$ and order $n!$."
+1,"\verb'-cyclic_group' "," $n$ ","Cyclic group of degree $n$ and order $n$."
+1,"\verb'-elementary_abelian_group' "," $n$ ","Elementary abelian group of order $n$ and degree $hp$ where $n=p^h$ and $p$ prime."
+1,"\verb'-identity_group' "," $n$ "," Identity group of degree $n$ and order $1$."
+1,"\verb'-dihedral_group' "," $n$ "," Dihedral group of degree $n$ and order $2n$."
+1,"\verb'-bsgs' "," lab1 lab2 $n$ order base $k$ gens ","Group with a given base and a given set of generators. Here, lab1 and lab2 are labels in ascii and latex, respectively, $k$ is the number of generators, gens is the generators as an Orbiter vector of integers."
+1,"\verb'-subgroup_by_generators' "," lab order $k$ gens "," Subgroup given by generators. Here, $k$ is the number of generators, gens is an Orbiter vector of integers. "
+END

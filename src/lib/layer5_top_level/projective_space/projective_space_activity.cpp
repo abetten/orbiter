@@ -623,7 +623,8 @@ void projective_space_activity::perform_activity(
 			cout << "projective_space_activity::perform_activity "
 					"before G.conic_type" << endl;
 		}
-		G.conic_type(PA->P,
+		G.conic_type(
+				PA->P,
 				Descr->conic_type_threshold,
 				Descr->conic_type_set_text,
 				verbose_level);
@@ -641,7 +642,8 @@ void projective_space_activity::perform_activity(
 			cout << "projective_space_activity::perform_activity "
 					"before G.do_lift_skew_hexagon" << endl;
 		}
-		G.do_lift_skew_hexagon(PA,
+		G.do_lift_skew_hexagon(
+				PA,
 				Descr->lift_skew_hexagon_text,
 				verbose_level);
 		if (f_v) {
@@ -658,7 +660,8 @@ void projective_space_activity::perform_activity(
 			cout << "projective_space_activity::perform_activity "
 					"before G.do_lift_skew_hexagon_with_polarity" << endl;
 		}
-		G.do_lift_skew_hexagon_with_polarity(PA,
+		G.do_lift_skew_hexagon_with_polarity(
+				PA,
 				Descr->lift_skew_hexagon_with_polarity_polarity,
 				verbose_level);
 		if (f_v) {
@@ -1367,54 +1370,6 @@ void projective_space_activity::perform_activity(
 					"after SH.do_six_arcs" << endl;
 		}
 	}
-
-#if 0
-	else if (Descr->f_classify_quartic_curves_nauty) {
-
-		canonical_form_classifier *Classifier;
-
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before G.classify_quartic_curves_nauty" << endl;
-		}
-		G.classify_quartic_curves_nauty(PA,
-				Descr->classify_quartic_curves_nauty_fname_mask,
-				Descr->classify_quartic_curves_nauty_nb,
-				Descr->classify_quartic_curves_nauty_fname_classification,
-				Classifier,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after G.classify_quartic_curves_nauty" << endl;
-		}
-	}
-
-
-	else if (Descr->f_classify_quartic_curves_with_substructure) {
-
-		projective_space_global G;
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before G.classify_quartic_curves" << endl;
-		}
-		G.classify_quartic_curves(
-				PA,
-				Descr->classify_quartic_curves_with_substructure_fname_mask,
-				Descr->classify_quartic_curves_with_substructure_nb,
-				Descr->classify_quartic_curves_with_substructure_size,
-				Descr->classify_quartic_curves_with_substructure_degree,
-				Descr->classify_quartic_curves_with_substructure_fname_classification,
-				verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after G.classify_quartic_curves" << endl;
-		}
-
-	}
-#endif
 
 
 	else if (Descr->f_classify_arcs) {

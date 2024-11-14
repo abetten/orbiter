@@ -1,0 +1,20 @@
+ROW,C1,C2,C3
+0,"tab:pc:options",,
+1,"Options for Computing Posets",,
+1,"\verb'-problem_label' "," str   "," Use str as a prefix for files that are created. "
+1,"\verb'-path' "," $p$   "," Use path $p$ for files that are created. "
+1,"\verb'-depth' "," $d$  "," Set search depth to $d$. "
+1,"\verb'-v' "," $v$  "," Set verbosity to $v$. Larger numbers mean more output. "
+1,"\verb'-gv' "," $v$  "," Set verbosity for group theoretic operations to $v$. Larger numbers mean more output. "
+1,"\verb'-recover' "," fname  "," Recover from the given file. "
+1,"\verb'-lex' ","   "," Use the lexicographic ordering to speed up the search. "
+1,"\verb'-w' ","   "," Save orbits at level $d$ only. "
+1,"\verb'-W' ","   "," Save orbits at all levels. "
+1,"\verb'-write_data_files' ","   "," Save data to files. "
+1,"\verb'-t' ","   "," Write a file containing the search tree at level $d$. "
+1,"\verb'-T' ","   "," Write a file containing the search tree at all levels. "
+1,"\verb'-draw_options' "," options "," Drawing options according to Table~\ref{tab:draw:options}."
+1,"\verb'-preferred_choice' "," $n$ $a$ $b$ ","At node $n$, choose $b$ instead of $a$ as orbit representative. This option can be repeated. "
+1,"\verb'-clique_test' "," graph  ","Classify cliques in the given graph. "
+END
+

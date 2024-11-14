@@ -1,0 +1,22 @@
+ROW,C1,C2,C3
+0,"tab:misc:1",,
+1,"Miscellaneous Orbiter Commands (Part 1)",,
+1,"\verb'-create_files' "," descr "," Create text files. "
+1,"\verb'-save_matrix_csv' "," label "," Save matrix to a csv file. "
+1,"\verb'-csv_file_tally' "," fname "," Tally a csv file. "
+1,"\verb'-csv_file_select_rows' "," fname $R$ ","Selects rows listed in $R$ from the csv-file fname. "
+1,"\verb'-csv_file_split_rows_modulo' "," fname $n$ ","Splits the rows from the csv-file fname modulo $n$. "
+1,"\verb'-csv_file_select_cols' "," fname $R$ ","Selects columns listed in $R$ from the csv-file fname. "
+1,"\verb'-csv_file_select_rows_and_cols' "," fname $R$ $C$ ","Selects rows listed in $R$ and columns listed in $C$ from the csv-file fname. "
+1,"\verb'-csv_file_sort_each_row' "," fname  ","Sorts each individual row in the given csv file, thinking of the entries as a set. "
+1,"\verb'-csv_file_sort_rows' "," fname  ","Sorts the rows in the given csv file. "
+1,"\verb'-csv_file_join' "," fname col-label  "," Joins csv file fname according to column with label col-label. This option is given once for each file that should be joined. "
+1,"\verb'-csv_file_concatenate' "," fname-out f1 f2 ... ","Join csv files f1, f2, ... The output is written to fname-out. "
+1,"\verb'-csv_file_concatenate_from_mask' "," N fname-mask fname-out ","Join csv files. The input files arise from fname-mask with all values $i=0,\ldots,N-1.$ The output is written to fname-out. "
+1,"\verb'-csv_file_extract_column_to_txt' "," fname  col-label "," "
+1,"\verb'-csv_file_latex' "," header fname   ","Produces a latex table from the given csv-file. The binary variable header determines whether a header is produced. "
+1,"\verb'-draw_matrix' "," descr ","Produce a bitmap graphic, see Table~\ref{tab:bitmap}. "
+1,"\verb'-reformat' "," fname-in fname-out nb-cols ","Reformat the data from fname-in in nb-cols columns. Write the output to fname-out. "
+1,"\verb'-split_by_values' "," fname-in  ","Split the file fname-in by values. For each value, a separate file is written. "
+END
+

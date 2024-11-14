@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:activities:coding3",,
+1,"Coding Theoretic Activities (Part 3)",,
+1,"\verb'-crc32' "," text  "," Tests CRC32. "
+1,"\verb'-crc32_hexdata' "," hexdata  ","  "
+1,"\verb'-crc32_test' ","  block\_length ","  "
+1,"\verb'-crc256_test' "," message\_length $R$ $k$  ","  "
+1,"\verb'-crc32_remainders' "," msg\_length  ","  "
+1,"\verb'-crc_encode_file_based' "," fname\_in fname\_out block\_length  crc\_type block\_length ","  "
+1,"\verb'-crc_compare' "," fname code1 code2 error\_weight nb\_tests\_per\_block ","  "
+1,"\verb'-crc_compare_read_output_file' "," fname nb\_lines code1 code2  ","  "
+1,"\verb'-all_errors_of_a_given_weight' "," fname block\_idx code1 code2 max-weight  ","  "
+1,"\verb'-weight_enumerator_bottom_up' ","  code max\_weight ","  "
+1,"\verb'-convert_data_to_polynomials' "," fname\_in fname\_out block\_length symbol\_size   ","  "
+1,"\verb'-find_CRC_polynomials' "," nb-errors info\_bits check\_bits  ","  "
+1,"\verb'-write_code_for_division' ","  fname $A$ $B$ ","  "
+1,"\verb'-polynomial_division_from_file' ","  fname $r1$ ","  "
+1,"\verb'-polynomial_division_from_' \verb'file_all_k_bit_error_patterns' ","  fname $r1$ $k$ ","  "
+END

@@ -1,0 +1,23 @@
+ROW,C1,C2,C3
+0,"tab:canonical",,
+1,"Classification by Canonical Form",,
+1,"\verb'-space' "," L  "," A projective space is required for some types of combinatorial objects. "
+1,"\verb'-ring' "," R  "," A polynomial ring is required for algebraic varieties. "
+1,"\verb'-input_fname_mask' "," fname-mask  "," Input file name mask. "
+1,"\verb'-nb_files' "," n  "," Number of input files. "
+1,"\verb'-output_fname' "," fname  "," Output file name. "
+1,"\verb'-label_po_go' "," label  "," Column label for po-go columns. This is the stabilizer of the orbit representative of the primary orbit. "
+1,"\verb'-label_po_index' "," label  "," Column label for the subgroup index of the secondary orbit representative inside the stabilizer of the representative of the primary orbit. "
+1,"\verb'-label_po' "," label  "," Column label for the primary orbit number. "
+1,"\verb'-label_so' "," label  "," Column label for the secondary orbit number. "
+1,"\verb'-label_equation' "," label  "," Column label for the algebraic equation (in case of a variety)."
+1,"\verb'-label_equation2' "," label  "," Column label for the optional second algebraic equation (in case of a variety)."
+1,"\verb'-label_points' "," label  "," Column label for the set of points of the object (optional). "
+1,"\verb'-label_lines' "," label  "," Column label for the set of lines of the object (optional). "
+1,"\verb'-carry_through' "," label  "," Column label of a property that is carried through from the input file to the output file. This option can be repeated. "
+1,"\verb'-algorithm_nauty' ","   "," Select canonical forms computed by Nauty (recommended). "
+1,"\verb'-save_nauty_input_graphs' ","   "," Save the input graphs to Nauty in dimacs format. This requires \verb'-algorithm_nauty'."
+1,"\verb'-algorithm_substructure' ","   "," Select canonical forms computed by an algorithm based on substructures (not recommended). "
+1,"\verb'-substructure_size' "," $s$  "," Select the size of the substructure (for the substructure based algorithm). "
+1,"\verb'-skip' "," list  "," List of cases to be skipped. Case numbers are assigned consecutively. They are 0-based. "
+END

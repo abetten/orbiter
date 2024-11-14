@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:polynomial:ring:activities",,
+1,"Multivariate Polynomial Ring Activities",,
+1,"\verb'-cheat_sheet' ","  "," Create a report about the polynomial ring. "
+1,"\verb'-export_partials' ","  "," Export the matrix associated with the partial derivatives. "
+1,"\verb'-ideal' "," label\_txt label\_tex label\_set "," Compute the ideal of the given set of points. "
+1,"\verb'-apply_transformation' "," eqn elt "," Apply the transformation given by the group element to the given equation. "
+1,"\verb'-set_variable_names' "," txt tex "," Choose new variable names in text and tex format. "
+1,"\verb'-print_equation' "," equation "," Print the given equation. "
+1,"\verb'-parse_equation_wo_parameters' "," label\_txt label\_tex eqn\_algebraic "," Parse an equation given in algebraic form. "
+1,"\verb'-parse_equation' "," label\_txt label\_tex eqn\_algebraic params param\_val "," Parse an equation given in algebraic form and perform parameter substitution. "
+1,"\verb'-table_of_monomials_write_csv' "," label "," Produce a csv file with the list of monomials in the chosen ordering. "
+END

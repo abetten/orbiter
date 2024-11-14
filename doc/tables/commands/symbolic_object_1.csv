@@ -1,0 +1,20 @@
+ROW,C1,C2,C3
+0,"tab:symbolic:objects:1",,
+1,"Creating Symbolic Objects I",,
+1,"\verb'-label_txt' "," label "," Choose an ascii-label of the object. "
+1,"\verb'-label_tex' "," label "," Choose a tex-label of the object. "
+1,"\verb'-managed_variables' "," list "," A comma-separated list of managed variables may be given. The manage variables can later be matched to the variables of a polynomial ring. The other variables can be used as parameters. "
+1,"\verb'-text' "," text "," The well-formed sequence of expressions in ascii text format, separated by commas. "
+1,"\verb'-field' "," $F$ "," The finite field of coefficients in the expression. "
+1,"\verb'-matrix' "," $r$ "," Consider the expression vector as a matrix with $r$ rows, read in row-major ordering. "
+1,"\verb'-determinant' "," $s$ "," Compute the symbolic determinant of the source object $s$. The object $s$ must be a square matrix. "
+1,"\verb'-characteristic_polynomial' "," $lambda$ $s$ "," Compute the characteristic polynomial of the square matrix $s$ using the variable $\lambda$. "
+1,"\verb'-substitute' "," $v$ $t$ $s$ "," Substitute the values $v$ for the variables $t$ in the expressions given in $s$. $v$ and $s$ must be vectors of the same length. "
+1,"\verb'-simplify' "," $s$ "," Simplify the object $s$. "
+1,"\verb'-expand' "," $s$ "," Expand the object $s$. "
+1,"\verb'-right_nullspace' "," $s$ "," Compute the right nullspace of the object $s$, which must be a fully numerical matrix. "
+1,"\verb'-minor' "," $s$ $i$ $j$ "," Compute the $(i,j)$-minor of the matrix object $s.$ $s$ must be a square matrix. "
+1,"\verb'-symbolic_nullspace' "," $s$ ","  Compute the right nullspace of the object $s$, which must be a symbolic matrix. "
+1,"\verb'-stack_matrices_vertically' "," list "," Stack the given matrices in the list vertically. The matrices must have the same number of columns. "
+END
+

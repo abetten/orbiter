@@ -4,6 +4,7 @@
 // moved here from schreier.cpp: December 20, 2015
 
 #include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
 #include "group_actions.h"
 
 using namespace std;

@@ -1,0 +1,25 @@
+ROW,C1,C2,C3
+0,"tab:graphtypes:one",,
+1,"Creating Graphs (Part 1)",,
+1,"\verb'-load' "," filename  "," Read a graph from file in Orbiter format. "
+1,"\verb'-load_csv_no_border' "," filename  "," Read a graph from a csv file. The first row and the first column are part of the adjacency matrix. "
+1,"\verb'-load_adjacency_matrix_from_csv_' \verb'and_select_value' "," filename $v$ "," Read a graph from a csv file. The first row and the first column are ignored. Entries equal to $v$ define adjacencies. All other values are ignored. "
+1,"\verb'-load_dimacs' "," filename  ","Read a graph from file in dimacs format. "
+1,"\verb'-load_Brouwer' "," filename  ","Read a graph from file in Brower format. "
+1,"\verb'-edge_list' "," $n$ list-of-edges  ","Create a graph on $n$ vertices from a list of edges as ranked pairs. "
+1,"\verb'-edges_as_pairs' "," $n$ edges-as-pairs  ","Create a graph on $n$ vertices from a list of edges as pairs. "
+1,"\verb'-cycle' "," $n$   ","Cycle graph on $n$ vertices. "
+1,"\verb'-inversion_graph' "," text   ","Read inversion graph. "
+1,"\verb'-Hamming' "," $n$ $q$  ","Hamming graph $H(n,q)$ "
+1,"\verb'-Johnson' "," $n$ $k$ $s$  ","Johnson graph "
+1,"\verb'-Paley' "," $F$  ","Paley graph over the field $F=\bbF_q$. "
+1,"\verb'-Sarnak' "," $p$ $q$  ","Lubotzky-Phillips-Sarnak graph~\cite{Lubotzky1988} "
+1,"\verb'-Schlaefli' "," $F$  ","Schlaefli graph "
+1,"\verb'-Shrikhande' ","   ","Shrikhande graph "
+1,"\verb'-Winnie_Li' "," $F$ $i$  ","Winnie-Li graph (see~\cite{Li1992}) over the field $F=\bbF_q$ with subfield index $i$. "
+1,"\verb'-Grassmann' "," $n$ $k$ $F$ $r$  ","Grassmann graph over $F = \bbF_q$. "
+1,"\verb'-coll_orthogonal' "," $O$ $S$   ","Collinearity graph of the set $S$ in the orthogonal geometry $O$. "
+1,"\verb'-affine_polar' "," $O$   ","Affine polar graph associated to the orthogonal geometry $O$. "
+1,"\verb'-trihedral_pair_disjointness_graph' ","    ","Trihedral pair disjointness graph."
+1,"\verb'-non_attacking_queens_graph' ","  $n$  ","Create the graph for non-attacking queens on a $n \times n$ chess board. "
+END

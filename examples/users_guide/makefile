@@ -429,6 +429,15 @@ SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
 
 
 
+
+HERMITIAN_SURFACE_Q9_EQUATION="X0^4+X1^4+X2^4+X3^4"
+
+HERMITIAN_SURFACE_Q9_POINTS="7, 8, 10, 12, 15, 16, 18, 20, 22, 23, 26, 28, 31, 32, 35, 37, 39, 48, 58, 59, 62, 64, 66, 76, 77, 80, 82, 84, 95, 96, 98, 100, 102, 103, 106, 108, 111, 112, 115, 117, 119, 128, 138, 139, 142, 144, 146, 156, 157, 160, 162, 164, 174, 175, 178, 180, 182, 190, 202, 203, 205, 207, 211, 212, 214, 216, 217, 229, 230, 232, 234, 235, 247, 248, 250, 252, 254, 255, 258, 260, 262, 271, 283, 284, 286, 288, 292, 293, 295, 297, 298, 310, 311, 313, 315, 316, 328, 329, 331, 333, 334, 346, 347, 349, 351, 355, 356, 358, 360, 362, 363, 366, 368, 371, 372, 375, 377, 382, 383, 385, 387, 389, 390, 393, 395, 400, 401, 403, 405, 407, 408, 411, 413, 415, 427, 428, 430, 432, 436, 437, 439, 441, 443, 444, 447, 449, 452, 453, 456, 458, 463, 464, 466, 468, 470, 471, 474, 476, 481, 482, 484, 486, 488, 489, 492, 494, 497, 498, 501, 503, 505, 514, 526, 527, 529, 531, 535, 536, 538, 540, 541, 553, 554, 556, 558, 559, 571, 572, 574, 576, 577, 589, 590, 592, 594, 598, 599, 601, 603, 605, 606, 609, 611, 614, 615, 618, 620, 625, 626, 628, 630, 632, 633, 636, 638, 643, 644, 646, 648, 650, 651, 654, 656, 659, 660, 663, 665, 667, 676, 688, 689, 691, 693, 697, 698, 700, 702, 703, 715, 716, 718, 720, 721, 733, 734, 736, 738, 739, 751, 752, 754, 756, 760, 761, 763, 765, 767, 768, 771, 773, 776, 777, 780, 782, 787, 788, 790, 792, 794, 795, 798, 800, 805, 806, 808, 810, 812, 813, 816, 818"
+
+HERMITIAN_SURFACE_Q9_NB_POINTS=280
+
+
+
 # Section 6.6 Group theoretic activities based on Magma
 
 # large sets of PG(2,3):
@@ -6214,6 +6223,7 @@ SECTION_PERMUTATION_GROUPS:
 
 test_6_1:
 	make Cyclic_6
+	make Cyclic_6_from_generator
 	make Cyclic_6_group_table
 	make Symmetric_3
 	make Symmetric_3_group_table
@@ -6240,6 +6250,21 @@ Cyclic_6:
 		-end
 	pdflatex C_6_report.tex
 	$(OPEN) C_6_report.pdf
+
+
+Cyclic_6_from_generator:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			"1,2,3,4,5,0" \
+		-end \
+		-define G -permutation_group -symmetric_group 6 \
+			-subgroup_by_generators G1 6 1 gens -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_6_Subgroup_G1_6_report.tex
+	$(OPEN) Sym_6_Subgroup_G1_6_report.pdf
 
 
 Cyclic_6_group_table:
@@ -6623,6 +6648,8 @@ SECTION_LINEAR_GROUPS:
 
 test_6_2:
 	make PGL_2_3
+	make PGL_2_17
+	make PSL_2_17
 	make PGL_3_2
 	make PGL_4_2
 	make PGL_4_2_with_field
@@ -6663,6 +6690,31 @@ PGL_2_3:
 		-end
 	pdflatex PGL_2_3_report.tex
 	$(OPEN) PGL_2_3_report.pdf
+
+
+PGL_2_17:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define G -linear_group -PGL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGL_2_17_report.tex
+	$(OPEN) PGL_2_17_report.pdf
+
+PSL_2_17:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define G -linear_group -PSL 2 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PSL_2_17_report.tex
+	$(OPEN) PSL_2_17_report.pdf
+
+
 
 PGL_3_2:
 	$(ORBITER) -v 2 \
@@ -7079,6 +7131,8 @@ test_6_3:
 	make PGL_3_11_singer
 	make PGL_3_11_singer_and_frobenius
 	make PG_2_4_order_21
+	make Sym3_in_PGL_2_3_group_table
+	make Sym3_in_PGL_2_3_report
 	make quaternion
 	make cube_group
 	make tetra_group
@@ -7178,7 +7232,9 @@ PGL_3_11_singer:
 
 PGL_3_11_singer_and_frobenius:
 	$(ORBITER) -v 2 \
-		-define G -linear_group -PGL 3 11 -singer_and_frobenius 19 -end \
+		-define G -linear_group -PGL 3 11 \
+			-singer_and_frobenius 19 \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-report \
@@ -7194,8 +7250,60 @@ PG_2_4_order_21:
 			-search_element_of_order 21 \
 		-end
 
+Sym3_in_PGL_2_3_group_table:
+	$(ORBITER) -v 2 \
+		-draw_options -xout 10000 -yout 10000 \
+			-embedded -radius 50 \
+			-scale 0.1 -line_width 2 \
+		-end \
+		-define G -linear_group -PGL 2 3 \
+		-subgroup_by_generators "Sym3" "6" 2 \
+			"0,1,2,1, 0,1,1,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+			-report_group_table \
+		-end
+	pdflatex PGL_2_3_group_table_order_6.tex
+	$(OPEN) PGL_2_3_group_table_order_6.pdf
+
+Sym3_in_PGL_2_3_report:
+	$(ORBITER) -v 2 \
+		-draw_options -xout 1000000 -yout 1000000 \
+			-radius 250 \
+			-scale 0.5 -line_width 2 \
+		-end \
+		-define G -linear_group -PGL 2 3 \
+		-subgroup_by_generators "Sym3" "6" 2 \
+			"0,1,2,1, 0,1,1,0" \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
+		-end
+	$(ORBITER) -v 2 \
+		-draw_options \
+			-nodes \
+			-embedded -radius 250 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 600000 \
+			-scale 0.3 -line_width 1.0 \
+		-end \
+		-tree_draw -file PGL_2_3_Subgroup_Sym3_6_elements_tree.txt -end
+	pdflatex PGL_2_3_Subgroup_Sym3_6_report.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_report.pdf
+	pdflatex PGL_2_3_Subgroup_Sym3_6_elements.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements.pdf
+	pdflatex PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.tex
+	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.pdf
 
 
+#PGL_2_3_Subgroup_Sym3_6_elements_tree.txt
 
 quaternion:
 	$(ORBITER) -v 2 \
@@ -7453,6 +7561,7 @@ test_6_4:
 	make Elementary_abelian_8_aut
 	make Symmetric_4_on_pairs
 	make Alternating_5
+	make Alternating_5_derived
 	make direct_product_AGL
 	make PGLstar_3_2
 	make PGLstar_3_2_restrict
@@ -7478,7 +7587,9 @@ test_6_4:
 	make M22_bar
 	make curve_q13_f0_clean2_variety_make_group
 	make conic_group_q5
-	make group_of_Hirschfeld_surface
+	make group_of_Hirschfeld_surface_q4
+	make Higman_Sims_on_176_points
+	make group_U_4_3
 
 
 
@@ -7547,6 +7658,20 @@ Alternating_5:
 	$(OPEN) Sym_5_EvenSub_report.pdf
 
 # group order 60
+
+
+Alternating_5_derived:
+	$(ORBITER) -v 3 \
+		-define Sym5 -permutation_group -symmetric_group 5 -end \
+		-define Alt5 -modified_group -from Sym5 \
+			-derived_subgroup \
+		-end \
+		-with Alt5 -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_5_Derived_report.tex
+	$(OPEN) Sym_5_Derived_report.pdf
 
 
 # product action:
@@ -7657,7 +7782,9 @@ surface_q13_Eckardt:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S -cubic_surface -space P -arc_lifting "0,1,2,3,43,113" -end \
+		-define S -cubic_surface -space P \
+			-arc_lifting "0,1,2,3,43,113" \
+		-end \
 		-with S -do \
 		-cubic_surface_activity \
 			-report \
@@ -7681,7 +7808,8 @@ surface_q13_Eckardt_on_tritangent_planes:
 			-dense $(SURFACE_Q13_STAB_GENS) \
 		-end \
 		-define TriP -set -file \
-			surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_tritangent_planes.csv \
+			surface_arc_lifting_trihedral_q13_\
+arc_0_1_2_3_43_113_tritangent_planes.csv \
 		-end \
 		-define G -linear_group -PGL 4 F \
 			-subgroup_by_generators "stab" \
@@ -7958,7 +8086,9 @@ M24_perm_group:
 		-subgroup_by_generators "M24" "244823040" 12 \
 			$(GOLAY_24_CODE_AUT_GENS) \
 		-end \
-		-define M24_perm -modified_group -from G -restricted_action v \\_on\\_code -end \
+		-define M24_perm -modified_group -from G \
+			-restricted_action v \\_on\\_code \
+		-end \
 		-with M24_perm -do \
 		-group_theoretic_activity \
 			-report \
@@ -8023,7 +8153,8 @@ curve_q13_f0_clean2_variety_make_group:
 		-define V -variety \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form $(CURVE_Q13_F0_CLEAN2_EQUATION) \
+			-equation_in_algebraic_form \
+				$(CURVE_Q13_F0_CLEAN2_EQUATION) \
 			-label_txt curve_q13_f0_clean2 \
 			-label_tex "{\\rm curve\_q13\_f0\_clean2}" \
 		-end \
@@ -8081,7 +8212,8 @@ group_of_Hirschfeld_surface_q4:
 		-define V -variety \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form "X0^2*X3+X0*X3^2+X1^2*X2+X1*X2^2" \
+			-equation_in_algebraic_form \
+				"X0^2*X3+X0*X3^2+X1^2*X2+X1*X2^2" \
 			-label_txt Hirschfeld_surface_q4 \
 			-label_tex "{\\rm Hirschfeld\_surface\_q4}" \
 		-end \
@@ -8101,6 +8233,84 @@ group_of_Hirschfeld_surface_q4:
 	pdflatex PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.tex
 	$(OPEN) PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.pdf
 
+Higman_Sims_on_176_points:
+	$(ORBITER) -v 2 \
+		-define gens -vector -dense \
+			$(HIGMAN_SIMS_GENS) \
+		-end \
+		-define G -permutation_group -symmetric_group 100 \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define H176a -modified_group -from G \
+			-subgroup_by_lattice 585 \
+		-end \
+		-define G176a -modified_group -from G \
+			-on_cosets_of_subgroup H176a \
+		-end \
+		-with G176a -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.tex
+	open Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.pdf
+
+
+group_U_4_3:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+		-end \
+		-define V -variety \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form \
+				$(HERMITIAN_SURFACE_Q9_EQUATION) \
+			-label_txt hermitian_surface_q3 \
+			-label_tex "{\\rm hermitian\\_surface\\_q3}" \
+		-end \
+		-define G -modified_group \
+			-stabilizer_of_variety V \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-define GP -modified_group -from G \
+			-projectivity_subgroup \
+		-end \
+		-define GPD -modified_group -from GP \
+			-derived_subgroup \
+		-end \
+		-with GPD -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-define v -vector \
+			-dense $(HERMITIAN_SURFACE_Q9_POINTS) \
+		-end \
+		-define GPDr -modified_group \
+			-from GPD \
+			-restricted_action v \
+			"{\\rm \\_on\\_hermitiansurface}" \
+		-end \
+		-with GPDr -do \
+		-group_theoretic_activity \
+			-report \
+		-end
+	pdflatex PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.tex
+	open PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.pdf
 
 
 
@@ -8555,7 +8765,6 @@ Hirschfeld_stab_subgroup_lattice_magma:
 	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf
 
-
 PGGL_2_4_classes:
 	$(ORBITER) -v 3 \
 		-define G \
@@ -8928,7 +9137,8 @@ PGOm_6_2_Class_2A_centralizer_recover:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define Class2A_cent_gens -vector \
-			-dense $(PGOM_6_2_CLASS_2A_CENTRALIZER_GENS) -end \
+			-dense $(PGOM_6_2_CLASS_2A_CENTRALIZER_GENS) \
+		-end \
 		-define G -linear_group -PGL 6 2 \
 			-subgroup_by_generators "2ACent" \
 			1440 9 Class2A_cent_gens \
@@ -8980,7 +9190,8 @@ Edge_qurve_q17_canonical_image:
 	$(ORBITER) -v 3 \
 		-define G -linear_group -PGL 3 17 -end \
 		-with G -do -group_theoretic_activity \
-			-canonical_image_GAP $(EDGE_CURVE_Q17_AS_POINTS) \
+			-canonical_image_GAP \
+			$(EDGE_CURVE_Q17_AS_POINTS) \
 		-end
 
 #PGL_3_17_canonical_image.gap
@@ -9054,8 +9265,10 @@ PGL_2_3_group_table:
 Co3:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define g1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
-		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
+		-define g1 -vector -field F -format 22 \
+			-compact $(CONWAY_GEN1) -end \
+		-define g2 -vector -field F -format 22 \
+			-compact $(CONWAY_GEN2) -end \
 		-define gens -vector -concatenate g1,g2 -end \
 		-define G -linear_group -PGL 22 2 \
 			-subgroup_by_generators "Co3" "495766656000" 2 gens \
@@ -9074,8 +9287,10 @@ Ree_27:
 		-define F -finite_field -q 27 \
 			-override_polynomial "34" \
 		-end \
-		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
-		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
+		-define g1 -vector -field F -format 7 \
+			-dense $(Ree_gen1) -end \
+		-define g2 -vector -field F -format 7 \
+			-dense $(Ree_gen2) -end \
 		-define gens -vector -concatenate g1,g2 -end \
 		-define G -linear_group -PGL 7 F \
 			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
@@ -9096,7 +9311,10 @@ Higman_Sims_group:
 			$(HIGMAN_SIMS_GENS) \
 		-end \
 		-define G -permutation_group -symmetric_group 100 \
-			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+			-subgroup_by_generators HS \
+				$(HIGMAN_SIMS_GO) \
+				$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-report \
@@ -9111,7 +9329,10 @@ Higman_Sims_group_classes:
 			$(HIGMAN_SIMS_GENS) \
 		-end \
 		-define G -permutation_group -symmetric_group 100 \
-			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+			-subgroup_by_generators HS \
+				$(HIGMAN_SIMS_GO) \
+				$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-classes \
@@ -9126,7 +9347,10 @@ Higman_Sims_group_subgroup_lattice:
 			$(HIGMAN_SIMS_GENS) \
 		-end \
 		-define G -permutation_group -symmetric_group 100 \
-			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-subgroup_lattice_magma \
@@ -9139,7 +9363,10 @@ Higman_Sims_subgroup_176a:
 			$(HIGMAN_SIMS_GENS) \
 		-end \
 		-define G -permutation_group -symmetric_group 100 \
-			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-subgroup_lattice_magma \
@@ -9164,7 +9391,10 @@ Higman_Sims_subgroup_176b:
 			$(HIGMAN_SIMS_GENS) \
 		-end \
 		-define G -permutation_group -symmetric_group 100 \
-			-subgroup_by_generators HS $(HIGMAN_SIMS_GO) $(HIGMAN_SIMS_NB_GENS) gens -end \
+			-subgroup_by_generators HS \
+			$(HIGMAN_SIMS_GO) \
+			$(HIGMAN_SIMS_NB_GENS) gens \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-subgroup_lattice_magma \
@@ -10883,7 +11113,8 @@ surface_4_0_dot_products_columns:
 		-box_width 32 -bit_depth 24 \
 		-partition 3 45 45 \
 		-end
-	convert line_vs_trit_dot_products_columns_draw.bmp line_vs_trit_dot_products_columns_draw.png
+	convert line_vs_trit_dot_products_columns_draw.bmp \
+		line_vs_trit_dot_products_columns_draw.png
 
 
 
@@ -11901,13 +12132,14 @@ surface_classify_q4:
 		-define Control -poset_classification_control -W \
 			-problem_label "surf_q4" \
 		-end \
-		-define report_options -poset_classification_report_options \
+		-define ro -poset_classification_report_options \
 		-end \
 		-define Orb -orbits \
 			-on_cubic_surfaces P Control \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
+			-report_options ro \
 		-end
 	pdflatex Surfaces_q4.tex 
 	$(OPEN) Surfaces_q4.pdf

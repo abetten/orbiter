@@ -1,0 +1,6 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks:GAP",,
+1,"Group Theoretic Activities Based on GAP",,
+1,"\verb'-canonical_image' "," set ","Compute the canonical image of the given set under the group $G$."
+1,"\verb'-export_gap' ","  ","Export the group $G$ to GAP~\cite{GAP} / Fining~\cite{fining}."
+END

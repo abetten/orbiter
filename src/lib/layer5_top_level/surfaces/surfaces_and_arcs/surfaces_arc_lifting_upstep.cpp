@@ -398,18 +398,18 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 			Aut_gens->print_generators_tex(cout);
 		}
 
-		apps_algebra::algebra_global_with_action Algebra;
+		groups::group_theory_global Group_theory_global;
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
-					"before Algebra.relative_order_vector_of_cosets" << endl;
+					"before Group_theory_global.relative_order_vector_of_cosets" << endl;
 		}
-		Algebra.relative_order_vector_of_cosets(
+		Group_theory_global.relative_order_vector_of_cosets(
 				Lift->Surf_A->A, D->Flag_stab_gens,
 				D->coset_reps, D->relative_order_table, 0 /*verbose_level*/);
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
-					"after Algebra.relative_order_vector_of_cosets" << endl;
+					"after Group_theory_global.relative_order_vector_of_cosets" << endl;
 			cout << "relative_order_table:" << endl;
 
 			l1_interfaces::latex_interface L;

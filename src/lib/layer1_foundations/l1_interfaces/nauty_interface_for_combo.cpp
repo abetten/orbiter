@@ -81,7 +81,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 		if (f_v) {
 			cout << "nauty_interface_for_combo::run_nauty_for_combo "
-					"saving Levi graph" << endl;
+					"saving Levi graph in DIMACS format" << endl;
 		}
 
 
@@ -96,15 +96,19 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 		Enc->create_Levi_graph(CG, graph_label, verbose_level);
 
-		Enc->print_incma();
+		//Enc->print_incma();
 
+		if (f_v) {
+			cout << "nauty_interface_for_combo::run_nauty_for_combo "
+					"writing file " << graph_label << endl;
+		}
 		CG->save_DIMACS(graph_label, verbose_level);
 
 		FREE_OBJECT(CG);
 
 		if (f_v) {
 			cout << "nauty_interface_for_combo::run_nauty_for_combo "
-					"saving Levi graph done" << endl;
+					"saving Levi graph in DIMACS format done" << endl;
 		}
 
 	}
@@ -143,6 +147,11 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 		NO,
 		verbose_level);
 
+	if (f_v) {
+		cout << "nauty_interface_for_combo::run_nauty_for_combo "
+				"after Nau.Levi_graph" << endl;
+	}
+
 	//Int_vec_copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	t1 = Os.os_ticks();
@@ -151,7 +160,6 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 	if (f_v) {
 		cout << "nauty_interface_for_combo::run_nauty_for_combo "
-				"after Nau.Levi_graph, "
 				"Ago=" << *NO->Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 	}

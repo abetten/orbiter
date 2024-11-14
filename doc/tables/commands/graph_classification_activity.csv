@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:graph:classify:activity",,
+1,"Activities after Graph Classification",,
+1,"\verb'-draw_level_graph' "," $k$ ","  "
+1,"\verb'-draw_graphs' ","  ","  "
+1,"\verb'-list_graphs_at_level' "," min max ","  "
+1,"\verb'-draw_graphs_at_level' "," $k$ ","  "
+1,"\verb'-draw_options' "," "," "
+1,"\verb'-recognize_graphs_from_' \verb'adjacency_matrix_csv' ","  ","  "
+END

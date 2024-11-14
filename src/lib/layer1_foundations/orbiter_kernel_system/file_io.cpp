@@ -3065,10 +3065,57 @@ void file_io::write_decomposition_stack(
 	}
 }
 
+void file_io::create_files_direct(
+		std::string &fname_mask,
+		std::string &content_mask,
+		std::vector<std::string> &labels,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::create_files_direct" << endl;
+	}
+
+	data_structures::string_tools ST;
+	int j;
+	std::string fname;
+
+	for (j = 0; j < labels.size(); j++) {
+
+		fname = ST.printf_s(
+			fname_mask, labels[j]);
+
+		{
+			ofstream fp(fname);
+
+			string text;
+
+			text = ST.printf_s(
+					content_mask, labels[j]);
+
+			ST.fix_escape_characters(text);
+
+			fp << text << endl;
+		}
+
+		if (f_v) {
+			cout << "Written file " << fname << " of size "
+				<< file_size(fname) << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "file_io::create_files_direct done" << endl;
+	}
+}
+
 void file_io::create_file(
 		create_file_description *Descr, int verbose_level)
 {
-	file_io Fio;
+	//file_io Fio;
 	int j;
 
 	if (Descr->f_read_cases) {
@@ -3148,7 +3195,7 @@ void file_io::create_file(
 				}
 			}
 			cout << "Written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
+					<< file_size(fname) << endl;
 
 			char log_entry[1000];
 
@@ -3157,7 +3204,7 @@ void file_io::create_file(
 			}
 		}
 		cout << "Written file " << log_fname << " of size "
-				<< Fio.file_size(log_fname) << endl;
+				<< file_size(log_fname) << endl;
 	}
 	else if (Descr->f_read_cases_text) {
 		cout << "read_cases_text" << endl;

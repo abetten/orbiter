@@ -140,7 +140,7 @@ void combinatorics_global::load_design_table(
 
 
 void combinatorics_global::span_base_blocks(
-		apps_algebra::any_group *AG,
+		groups::any_group *AG,
 		data_structures::set_of_sets *SoS_base_blocks,
 		int *Base_block_selection, int nb_base_blocks,
 		int &v, int &b, int &k,

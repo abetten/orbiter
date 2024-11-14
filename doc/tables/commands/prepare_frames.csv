@@ -1,0 +1,8 @@
+ROW,C1,C2,C3
+0,"tab:prepareframes",,
+1,"Preparing Frames for an Animation",,
+1,"\verb'-i' "," $s$ $l$ mask "," Specify the input file names by running a printf command with the given mask applied to the index $i$ where $i$ loops over all integers from $s$ to $s+l-1.$ This option can be repeated. "
+1,"\verb'-step' "," $s$  "," Increment the index in steps of size $s$. "
+1,"\verb'-o' "," mask "," Create the output file using the given mask."
+1,"\verb'-output_starts_at' "," $i$ "," Start output file indices at $i$ (default is 0)."
+END

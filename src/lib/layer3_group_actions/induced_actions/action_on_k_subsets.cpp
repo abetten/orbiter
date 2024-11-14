@@ -4,10 +4,11 @@
 // May 15, 2012
 
 #include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
 #include "group_actions.h"
 
-using namespace std;
 
+using namespace std;
 
 namespace orbiter {
 namespace layer3_group_actions {
@@ -43,7 +44,7 @@ void action_on_k_subsets::init(
 	
 	if (f_v) {
 		cout << "action_on_k_subsets::init k=" << k << endl;
-		}
+	}
 	action_on_k_subsets::A = A;
 	action_on_k_subsets::k = k;
 	n = A->degree;
@@ -54,7 +55,7 @@ void action_on_k_subsets::init(
 		cout << "action_on_k_subsets::init n=" << n << endl;
 		cout << "action_on_k_subsets::init "
 				"n choose k=" << degree << endl;
-		}
+	}
 }
 
 long int action_on_k_subsets::compute_image(
@@ -69,18 +70,18 @@ long int action_on_k_subsets::compute_image(
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image "
 				"i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= degree) {
 		cout << "action_on_k_subsets::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	Combi.unrank_k_subset(i, set1, A->degree, k);
 	for (u = 0; u < k; u++) {
 		a = set1[u];
 		b = A->Group_element->image_of(Elt, a);
 		set2[u] = b;
-		}
+	}
 	Sorting.int_vec_heapsort(set2, k);
 	j = Combi.rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
@@ -89,12 +90,12 @@ long int action_on_k_subsets::compute_image(
 		cout << " maps to ";
 		Int_vec_print(cout, set2, k);
 		cout << " = " << j << endl;
-		}
+	}
 	if (j < 0 || j >= degree) {
 		cout << "action_on_k_subsets::compute_image "
 				"j = " << j << " out of range" << endl;
 		exit(1);
-		}
+	}
 	return j;
 }
 

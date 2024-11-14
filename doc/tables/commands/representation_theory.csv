@@ -1,0 +1,5 @@
+ROW,C1,C2,C3
+0,"tab:representation:theory",,
+1,"Representation Theory Activities",,
+1,"\verb'-representation_on_polynomials' "," R "," Computes the representation of the given group on homogeneous polynomials from the ring R. This is a group theoretic activity as described in Section~\ref{sec:group:theoretic:activities}. "
+END

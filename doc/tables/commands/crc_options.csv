@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:CRC:options",,
+1,"Options for CRC-Codes",,
+1,"\verb'-input' "," fname "," Input file name. "
+1,"\verb'-output' "," fname "," Output file name. "
+1,"\verb'-crc_type' "," type "," The type of CRC-code. "
+1,"\verb'-block_length' "," $L$ "," Set the block length to $L$ field elements. "
+1,"\verb'-block_based_error_generator' ","  "," Apply block-based error generator. "
+1,"\verb'-file_based_error_generator' "," threshold "," Apply file-based error generator. "
+1,"\verb'-nb_repeats' "," $N$ "," Set the number of repeats to $N$. "
+1,"\verb'-threshold' "," $t$ "," Set probability of error per experiment to $t/1000000$. "
+1,"\verb'-error_log' "," fname "," Set file name for error logging. "
+1,"\verb'-selected_block' "," $i$ "," Set block number. "
+END

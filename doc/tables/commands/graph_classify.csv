@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:graphoptions",,
+1,"Classifying Graphs",,
+1,"\verb'-regular' "," $r$ "," Regular of degree $r$ "
+1,"\verb'-n' "," $n$ "," Number of vertices $n$ "
+1,"\verb'-girth' "," $d$ "," Girth at least $d$ "
+1,"\verb'-tournament' ","  "," Classify tournaments. "
+1,"\verb'-no_transmitter' "," "," Tournament without transmitter (requires \verb'-tournament') "
+1,"\verb'-test_multi_edge' ","  ","  "
+1,"\verb'-identify' ","  ","  "
+1,"\verb'-depth' ","  ","  "
+END

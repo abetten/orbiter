@@ -1,0 +1,10 @@
+ROW,C1,C2,C3
+0,"tab:combi:classification",,
+1,"Classification of Combinatorial Objects",,
+1,"\verb'-save_classification' "," prefix  "," Save classification when finished. "
+1,"\verb'-max_TDO_depth' "," $d$  "," Limit TDO depth to $d$ in the report."
+1,"\verb'-save_canonical_labeling' ","   "," Save the canonical labeling. "
+1,"\verb'-save_ago' ","   "," Save the automorphism group orders to file."
+1,"\verb'-save_transversal' ","   "," Save the indices of the elements chosen for the transversal."
+END
+

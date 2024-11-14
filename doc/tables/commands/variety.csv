@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:variety",,
+1,"Creating Varieties",,
+1,"\verb'-label_txt' "," label "," Specify an ASCII label for the variety. "
+1,"\verb'-label_tex' "," label "," Specify a tex label for the variety. "
+1,"\verb'-projective_space' "," $P$ "," Specify the underlying projective space. "
+1,"\verb'-ring' "," $R$ "," Specify the underlying polynomial ring. "
+1,"\verb'-equation_in_algebraic_form' "," eqn "," The defining equation in algebraic form. "
+1,"\verb'-equation_by_coefficients' "," eqn "," The defining equation givem as a list of coefficients in the chosen ordering of monomials. "
+1,"\verb'-second_equation_in_algebraic_form' "," eqn "," An optional secondary defining equation in algebraic form. "
+1,"\verb'-second_equation_by_coefficients' "," eqn "," An optional secondary defining equation as a list of coefficients in the chosen ordering of monomials. "
+1,"\verb'-points' "," pts "," The set of $\bbF_q$-rational points (optional). "
+1,"\verb'-bitangents' "," lines "," A set of lines (optional). "
+END

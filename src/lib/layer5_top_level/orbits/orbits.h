@@ -27,7 +27,7 @@ public:
 
 	// we assume that N = 3 * k
 
-	apps_algebra::any_group *G;
+	groups::any_group *G;
 
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Primary_poset;
@@ -62,7 +62,7 @@ public:
 	orbit_cascade();
 	~orbit_cascade();
 	void init(
-			int N, int k, apps_algebra::any_group *G,
+			int N, int k, groups::any_group *G,
 			std::string &Control_label,
 			int verbose_level);
 	void downstep(
@@ -122,8 +122,11 @@ public:
 	std::string transporter_label_of_set;
 
 	int f_report_options;
-	poset_classification::poset_classification_report_options
-		*report_options;
+	std::string report_options_label;
+
+
+	//poset_classification::poset_classification_report_options
+	//	*report_options;
 
 
 	orbits_activity_description();
@@ -287,7 +290,7 @@ class orbits_create {
 public:
 	orbits_create_description *Descr;
 
-	apps_algebra::any_group *Group;
+	groups::any_group *Group;
 
 	std::string prefix;
 	std::string label_txt;
@@ -382,34 +385,34 @@ public:
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 	void orbits_on_set_system_from_file(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			std::string &fname_csv,
 			int number_of_columns, int first_column,
 			int verbose_level);
 	void orbits_on_set_from_file(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			std::string &fname_csv, int verbose_level);
 	void orbit_of(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			int point_idx, int verbose_level);
 	void orbits_on_points(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 	void orbits_on_points_from_generators(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			data_structures_groups::vector_ge *gens,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 
 	void orbits_on_subsets(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			poset_classification::poset_classification_control *Control,
 			poset_classification::poset_classification *&PC,
 			int subset_size,
 			int verbose_level);
 	void orbits_of_one_subset(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			long int *set, int sz,
 			std::string &label_set,
 			actions::action *A_base, actions::action *A,
@@ -417,7 +420,7 @@ public:
 			int &size,
 			int verbose_level);
 	void orbits_on_poset_post_processing(
-			apps_algebra::any_group *AG,
+			groups::any_group *AG,
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);
@@ -569,7 +572,7 @@ public:
 class orbits_on_subspaces {
 public:
 	//group_theoretic_activity *GTA;
-	apps_algebra::any_group *Group;
+	groups::any_group *Group;
 
 	// local data for orbits on subspaces:
 	poset_classification::poset_with_group_action
@@ -584,7 +587,7 @@ public:
 	orbits_on_subspaces();
 	~orbits_on_subspaces();
 	void init(
-			apps_algebra::any_group *Group,
+			groups::any_group *Group,
 			poset_classification::poset_classification_control *Control,
 			int depth,
 			int verbose_level);

@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:nt",,
+1,"Number Theoretic Commands",,
+1,"\verb'-sift_smooth' "," $a$ $n$ primes  "," Computes all smooth numbers in the interval $[a,a+n-1]$. Smooth means that they factor completely over the list of primes given. "
+1,"\verb'-random' "," $n$ fname "," Creates $n$ random numbers and writes them to the csv file \verb'fname' "
+1,"\verb'-random_last' "," $n$  "," Creates $n$ random numbers prints the last one "
+1,"\verb'-affine_sequence' "," $a$ $b$ $p$  "," Splits the interval $[0,p-1]$ into affine sequences of the form $x_{n+1} = a x_n + b \mod p$ "

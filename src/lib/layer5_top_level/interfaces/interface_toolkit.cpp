@@ -23,6 +23,11 @@ namespace user_interface {
 
 interface_toolkit::interface_toolkit()
 {
+	f_create_files_direct = false;
+	//std::string create_files_direct_fname_mask;
+	//std::string create_files_direct_text;
+	//std::vector<std::string> create_files_direct_labels;
+
 	f_create_files = false;
 	Create_file_description = NULL;
 
@@ -96,6 +101,9 @@ interface_toolkit::interface_toolkit()
 	f_csv_file_latex = false;
 	f_produce_latex_header = false;
 	//std::vector<std::string> csv_file_latex_fname;
+
+	f_prepare_tables_for_users_guide = false;
+	//std::vector<std::string> prepare_tables_for_users_guide_fname;
 
 	f_grade_statistic_from_csv = false;
 	//std::string grade_statistic_from_csv_fname;
@@ -223,7 +231,10 @@ void interface_toolkit::print_help(
 {
 	data_structures::string_tools ST;
 
-	if (ST.stringcmp(argv[i], "-create_files") == 0) {
+	if (ST.stringcmp(argv[i], "-create_files_direct") == 0) {
+		cout << "-create_files_direct <string : mask> <string : text> <string : label_1> ... <string : label_n> -end" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		cout << "-create_files <description>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
@@ -277,8 +288,11 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
-		cout << "-grade_statistic_from_csv <fname> <m1_label> <m2_label> <final_label> <oracle_grade_label>" << endl;
+	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
+		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_for_users_guide") == 0) {
+		cout << "-prepare_tables_for_users_guide <fname> <fname_1> ... <fname_n> -end" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix options -end" << endl;
@@ -362,7 +376,10 @@ int interface_toolkit::recognize_keyword(
 	if (i >= argc) {
 		return false;
 	}
-	if (ST.stringcmp(argv[i], "-create_files") == 0) {
+	if (ST.stringcmp(argv[i], "-create_files_direct") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-save_matrix_csv") == 0) {
@@ -414,6 +431,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_for_users_guide") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
@@ -507,7 +527,30 @@ void interface_toolkit::read_arguments(
 		cout << "interface_toolkit::read_arguments "
 				"the next argument is " << argv[i] << endl;
 	}
-	if (ST.stringcmp(argv[i], "-create_files") == 0) {
+	if (ST.stringcmp(argv[i], "-create_files_direct") == 0) {
+		f_create_files_direct = true;
+		create_files_direct_fname_mask.assign(argv[++i]);
+		create_files_direct_text.assign(argv[++i]);
+
+		string s;
+		int j;
+
+		for (j = 0; ; j++) {
+			s.assign(argv[++i]);
+			if (s == "-end") {
+				break;
+			}
+			create_files_direct_labels.push_back(s);
+		}
+		if (f_v) {
+			cout << "-create_files_direct " << create_files_direct_fname_mask << " " << create_files_direct_text;
+			for (j = 0; j < create_files_direct_labels.size(); j++) {
+				cout << " " << create_files_direct_labels[j];
+			}
+			cout << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		f_create_files = true;
 
 		if (f_v) {
@@ -723,6 +766,48 @@ void interface_toolkit::read_arguments(
 					<< " " << csv_file_latex_fname << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-prepare_tables_for_users_guide") == 0) {
+		f_prepare_tables_for_users_guide = true;
+
+		string s;
+		int j;
+
+		for (j = 0; ; j++) {
+			s.assign(argv[++i]);
+			if (s == "-end") {
+				break;
+			}
+			prepare_tables_for_users_guide_fname.push_back(s);
+		}
+		if (f_v) {
+			cout << "-prepare_tables_for_users_guide ";
+			for (j = 0; j < prepare_tables_for_users_guide_fname.size(); j++) {
+				cout << " " << prepare_tables_for_users_guide_fname[j];
+			}
+			cout << endl;
+		}
+	}
+
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+		string s;
+		int nb, j;
+
+		f_csv_file_concatenate = true;
+		csv_file_concatenate_fname_out.assign(argv[++i]);
+		nb = ST.strtoi(argv[++i]);
+		for (j = 0; j < nb; j++) {
+			s.assign(argv[++i]);
+			csv_file_concatenate_fname_in.push_back(s);
+		}
+		if (f_v) {
+			cout << "-csv_file_concatenate "
+					<< csv_file_concatenate_fname_out << endl;
+			for (j = 0; j < nb; j++) {
+				cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
+			}
+		}
+	}
+
 	else if (ST.stringcmp(argv[i], "-grade_statistic_from_csv") == 0) {
 		f_grade_statistic_from_csv = true;
 		grade_statistic_from_csv_fname.assign(argv[++i]);
@@ -1092,6 +1177,15 @@ void interface_toolkit::print()
 {
 	int j;
 
+	if (f_create_files_direct) {
+		int j;
+
+		cout << "-create_files_direct " << create_files_direct_fname_mask << " " << create_files_direct_text;
+		for (j = 0; j < create_files_direct_labels.size(); j++) {
+			cout << " " << create_files_direct_labels[j];
+		}
+		cout << endl;
+	}
 	if (f_create_files) {
 		cout << "-create_files " << endl;
 		Create_file_description->print();
@@ -1178,7 +1272,17 @@ void interface_toolkit::print()
 				<< " " << csv_file_extract_column_to_txt_col_label << endl;
 	}
 	if (f_csv_file_latex) {
-		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
+		cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+	}
+	if (f_prepare_tables_for_users_guide) {
+		int j;
+
+		cout << "-prepare_tables_for_users_guide ";
+		for (j = 0; j < prepare_tables_for_users_guide_fname.size(); j++) {
+			cout << " " << prepare_tables_for_users_guide_fname[j];
+		}
+		cout << endl;
+
 	}
 	if (f_grade_statistic_from_csv) {
 		cout << "-grade_statistic_from_csv "
@@ -1329,7 +1433,37 @@ void interface_toolkit::worker(
 		cout << "interface_toolkit::worker" << endl;
 	}
 
-	if (f_create_files) {
+	if (f_create_files_direct) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker f_create_files_direct" << endl;
+		}
+
+
+		orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "-create_files_direct " << create_files_direct_fname_mask << " " << create_files_direct_text;
+		}
+
+		Fio.create_files_direct(
+				create_files_direct_fname_mask,
+				create_files_direct_text,
+				create_files_direct_labels,
+				verbose_level);
+
+#if 0
+		int j;
+
+		cout << "-create_files_direct " << create_files_direct_fname_mask << " " << create_files_direct_text;
+		for (j = 0; j < create_files_direct_labels.size(); j++) {
+			cout << " " << create_files_direct_labels[j];
+		}
+		cout << endl;
+#endif
+
+	}
+	else if (f_create_files) {
 
 		if (f_v) {
 			cout << "interface_toolkit::worker f_create_files" << endl;
@@ -1574,6 +1708,20 @@ void interface_toolkit::worker(
 				nb_lines_per_table,
 				verbose_level);
 	}
+	else if (f_prepare_tables_for_users_guide) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_prepare_tables_for_users_guide" << endl;
+		}
+
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->prepare_tables_for_users_guide(
+				prepare_tables_for_users_guide_fname,
+				verbose_level);
+	}
+
 	else if (f_grade_statistic_from_csv) {
 
 		if (f_v) {

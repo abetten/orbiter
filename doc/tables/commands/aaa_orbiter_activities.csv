@@ -1,0 +1,18 @@
+ROW,C1,C2,C3
+0,"tab:activities:part1",,
+1,"Orbiter Activities (Part 1)",,
+1,"\verb'-finite_field_activity' ","Sections~\ref{sec:finite:fields} and~\ref{sec:extension:fields} ","An activity for finite fields."
+1,"\verb'-polynomial_ring_activity' ","Table~\ref{tab:polynomial:ring:activities} "," An activity for a polynomial ring."
+1,"\verb'-projective_space_activity' ","Section~\ref{sec:FPG} ","An activity for a projective space."
+1,"\verb'-orthogonal_space_activity' ","Section~\ref{sec:orthogonal} "," An activity for an orthogonal space. "
+1,"\verb'-group_theoretic_activity' ","Section~\ref{sec:group:theoretic:activities} "," An activity for a group."
+1,"\verb'-coding_theoretic_activity' ","Tables~\ref{tab:finitefield:activities:coding1}-\ref{tab:finitefield:activities:coding3} "," An activity for a code."
+1,"\verb'-cubic_surface_activity' "," Section~\ref{sec:cubicsurfaces:creation} ","An activity for a cubic surface."
+1,"\verb'-quartic_curve_activity' ","Section~\ref{sec:cubic:surfaces:quartic:curves} "," An activity for a quartic curve."
+1,"\verb'-blt_set_activity' ","Table~\ref{tab:BLT:activity} ","An activity for a BLT-set."
+1,"\verb'-combinatorial_object_activity' ","Section~\ref{sec:algebraicsets} ","An activity for a combinatorial object."
+1,"\verb'-graph_theoretic_activity' ","Section~\ref{sec:graphtheory} ","An activity for a graph."
+1,"\verb'-classification_of_cubic_surfaces_' \verb'with_double_sixes_activity' ","Section~\ref{sec:cubicsurfaces:creation} "," An activity for a cubic surface."
+1,"\verb'-spread_table_activity' ","Section~\ref{sec:packings} "," An activity associated with a table of spreads."
+1,"\verb'-packing_with_symmetry_' \verb'assumption_activity' "," Section~\ref{sec:packings} ","An activity related to creating packings with assumed symmetry group."
+END

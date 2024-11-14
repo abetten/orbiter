@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:finitefield:activities:poly",,
+1,"Finite Field Activities Related to Polynomials",,
+1,"\verb'-polynomial_division' "," $A(X)$ $B(X)$  ","Polynomial division of $A(X)$ by $B(X)$ over $\bbF_q$. $A(X)$ and $B(X)$ are given as coefficient list, starting from the lowest coefficient. "
+1,"\verb'-extended_gcd_for_polynomials' "," $A(X)$ $B(X)$  ","Extended gcd for polynomials $A(X)$ and $B(X)$ over $\bbF_q$. $A(X)$ and $B(X)$ are given as coefficient list, starting from the lowest coefficient."
+1,"\verb'-polynomial_mult_mod' "," $A(X)$ $B(X)$ $M(X)$ ","Multiply the polynomials $A(X)$ and $B(X)$ modulo $M(X)$ in $\bbF_q[X]$."
+1,"\verb'-Berlekamp_matrix' "," $A(X)$  ","Computes the rank of the Berlekamp matrix associated to the polynomial $A(X)$ over $\bbF_q$. The polynomial $A(X)$ is irreducible over $\bbF_q$ if the Berlekamp matrix has rank $d-1$, where $d$ is the degree of $A(X).$ The Berlekamp matrix is $F-I$ where $F$ is the Frobenius matrix and $I$ is the identity matrix. The Frobenius matrix is the matrix of the Frobenius endomorphism with respect to the standard basis of the polynomial ring: $1,X,X^2,\ldots,X^{d-1}.$"
+1,"\verb'-polynomial_find_roots' "," $A(X)$  ","Find the roots of $A(X)$ over $\bbF_q.$"
+1,"\verb'-get_primitive_polynomial' ","  $d$ ","Get a primitive polynomial of degree $d$ over $\bbF_q.$"
+1,"\verb'-get_primitive_polynomial_in_range' ","  $d_{\min}$ $d_{\max}$ ","Get a primitive polynomial of degree $d$ over $\bbF_q$ for all $d \in [d_{\min},d_{\max}].$"
+1,"\verb'-make_table_of_irreducible_' \verb'polynomials' ","  $d$ ","Produces a list of all irreducible polynomials of degree $d$ over $\bbF_q.$  "
+END

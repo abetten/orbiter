@@ -1,0 +1,12 @@
+ROW,C1,C2,C3
+0,"tab:bitmap",,
+1,"Creating a Bitmap Graphics",,
+1,"\verb'-input_csv_file' "," csv-file  ","Specify the input csv file. "
+1,"\verb'-secondary_input_csv_file' "," csv-file  ","Specify a secondary input csv file (optional). "
+1,"\verb'-input_object' "," l  ","Specify input to be Orbiter object l. "
+1,"\verb'-partition' "," $w$ $R$ $C$  ","Specify a partition $R$ of rows and $C$ of columns. Use separating lines of with $w$. "
+1,"\verb'-box_width' "," $w$  ","Use $w$ pixels per matrix entry. "
+1,"\verb'-bit_depth' "," $d$  ","Use  color bit depth of $d$ bits ($d=8$ or $d=24$). "
+1,"\verb'-invert_colors' ","   ","Use an inverted color scheme. "
+1,"\verb'-grayscale' ","   ","Use a grayscale color set. "
+END

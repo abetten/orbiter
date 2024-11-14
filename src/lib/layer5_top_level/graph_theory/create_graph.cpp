@@ -799,7 +799,7 @@ void create_graph::make_Cayley_graph(
 				"generators=" << generators_label << endl;
 	}
 
-	apps_algebra::any_group *G;
+	groups::any_group *G;
 
 	G = Get_any_group(group_label);
 
@@ -1739,7 +1739,7 @@ void create_graph::make_orbital_graph(
 		cout << "create_graph::make_orbital_graph" << endl;
 	}
 
-	apps_algebra::any_group *AG;
+	groups::any_group *AG;
 
 	AG = Get_any_group(group_label);
 

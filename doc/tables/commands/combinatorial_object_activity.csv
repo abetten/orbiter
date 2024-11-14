@@ -1,0 +1,19 @@
+ROW,C1,C2,C3
+0,"tab:combi:activity",,
+1,"Activities for Combinatorial Objects",,
+1,"\verb'-save' ","   "," Save the objects under the name that was assigned automatically. "
+1,"\verb'-save_as' "," fname  "," Save the objects under the given name."
+1,"\verb'-extract_subset' "," set fname  "," Extract a subset of the objects. "
+1,"\verb'-line_type_old' ","   "," Compute the line type of a set in projective space."
+1,"\verb'-line_type' ","   "," Compute the line type of a set in projective space."
+1,"\verb'-conic_type' ","   "," Compute the conic type of a set in projective space."
+1,"\verb'-non_conical_type' ","   "," "
+1,"\verb'-ideal' "," R  "," Compute the ideal of the set, using the ring R."
+1,"\verb'-canonical_form_PG' "," P options  "," Requires a projective space P. See Tab.~\ref{tab:combi:classification} for options."
+1,"\verb'-canonical_form' ","  options "," Classification by canonical form. See Tab.~\ref{tab:combi:classification} for options. "
+1,"\verb'-report' "," options  "," See Tab.~\ref{tab:combi:reporting} for options."
+1,"\verb'-draw_incidence_matrices' "," prefix  "," "
+1,"\verb'-test_distinguishing_property' "," G  "," Test the distinguishing property for the graph G."
+1,"\verb'-unpack_from_restricted_action' "," prefix G  "," "
+1,"\verb'-line_covering_type' "," prefix P L  "," Computes the line type of the lines in L in the projective space P."
+END

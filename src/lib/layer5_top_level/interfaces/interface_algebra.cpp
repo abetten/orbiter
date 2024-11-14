@@ -760,9 +760,9 @@ void interface_algebra::worker(
 
 	else if (f_make_A5_in_PSL_2_q) {
 
-		apps_algebra::algebra_global_with_action A;
+		group_constructions::group_constructions_global Group_constructions_global;
 
-		A.A5_in_PSL_(
+		Group_constructions_global.A5_in_PSL_(
 				make_A5_in_PSL_2_q_q, verbose_level);
 
 	}

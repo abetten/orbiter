@@ -6,14 +6,17 @@
  */
 
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
+#include "group_actions.h"
+
 
 using namespace std;
-using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
-namespace layer5_applications {
-namespace apps_algebra {
+namespace layer3_group_actions {
+namespace groups {
+
 
 any_group_linear::any_group_linear()
 {
@@ -55,19 +58,28 @@ void any_group_linear::classes_based_on_normal_form(
 		exit(1);
 	}
 	groups::sims *G;
-	algebra_global_with_action Algebra;
+	group_theory_global Group_theory_global;
 
 	G = Any_group->LG->Strong_gens->create_sims(verbose_level);
 
 
-	Algebra.conjugacy_classes_based_on_normal_forms(
+	if (f_v) {
+		cout << "any_group_linear::classes_based_on_normal_form "
+				"before Group_theory_global.conjugacy_classes_based_on_normal_forms" << endl;
+	}
+	Group_theory_global.conjugacy_classes_based_on_normal_forms(
 			Any_group->LG->A_linear,
 			G,
 			Any_group->label,
 			Any_group->label_tex,
 			verbose_level);
+	if (f_v) {
+		cout << "any_group_linear::classes_based_on_normal_form "
+				"after Group_theory_global.conjugacy_classes_based_on_normal_forms" << endl;
+	}
 
 	FREE_OBJECT(G);
+
 	if (f_v) {
 		cout << "any_group_linear::classes_based_on_normal_form done" << endl;
 	}
@@ -87,11 +99,20 @@ void any_group_linear::find_singer_cycle(
 		exit(1);
 	}
 
-	algebra_global_with_action Algebra;
+	group_theory_global Group_theory_global;
 
-	Algebra.find_singer_cycle(Any_group,
+	if (f_v) {
+		cout << "any_group_linear::find_singer_cycle "
+				"before Group_theory_global.find_singer_cycle" << endl;
+	}
+	Group_theory_global.find_singer_cycle(Any_group,
 			Any_group->A, Any_group->A,
 			verbose_level);
+	if (f_v) {
+		cout << "any_group_linear::find_singer_cycle "
+				"after Group_theory_global.find_singer_cycle" << endl;
+	}
+
 	if (f_v) {
 		cout << "any_group_linear::find_singer_cycle done" << endl;
 	}
@@ -214,7 +235,8 @@ void any_group_linear::isomorphism_Klein_quadric(
 
 	for (i = 0; i < m; i++) {
 
-		Any_group->A->Group_element->make_element(Elt, M + i * Any_group->A->make_element_size, 0);
+		Any_group->A->Group_element->make_element(
+				Elt, M + i * Any_group->A->make_element_size, 0);
 
 		if ((i % 10000) == 0) {
 			cout << i << " / " << m << endl;
@@ -235,7 +257,8 @@ void any_group_linear::isomorphism_Klein_quadric(
 		}
 
 		for (j = 0; j < 6; j++) {
-			F->Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+			F->Linear_algebra->mult_vector_from_the_left(
+					Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
 			Geo.wedge_to_klein(F, v /* W */, w /*K*/);
 			Int_vec_copy(w, C + j * 6, 6);
@@ -334,217 +357,6 @@ void any_group_linear::isomorphism_Klein_quadric(
 
 	if (f_v) {
 		cout << "any_group_linear::isomorphism_Klein_quadric" << endl;
-	}
-}
-
-void any_group_linear::do_orbits_on_subspaces(
-		poset_classification::poset_classification_control *Control,
-		orbits::orbits_on_subspaces *&OoS,
-		int depth, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group_linear::do_orbits_on_subspaces" << endl;
-	}
-
-
-
-
-	if (!Any_group->A->f_is_linear) {
-		cout << "any_group_linear::do_orbits_on_subspaces !A->f_is_linear" << endl;
-		cout << "group:" << endl;
-		Any_group->print();
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "group:" << endl;
-		Any_group->print();
-	}
-
-
-	//orbits_on_subspaces *OoS;
-
-	OoS = NEW_OBJECT(orbits::orbits_on_subspaces);
-
-	OoS->init(Any_group, Control, depth, verbose_level);
-
-
-	//finite_field *F;
-
-	//F = LG->F;
-
-
-	//FREE_OBJECT(OoS);
-
-
-	if (f_v) {
-		cout << "any_group_linear::do_orbits_on_subspaces done" << endl;
-	}
-}
-
-void any_group_linear::do_tensor_classify(
-		std::string &control_label,
-		apps_geometry::tensor_classify *&T,
-		int depth, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify" << endl;
-	}
-
-	if (!Any_group->f_linear_group) {
-		cout << "any_group_linear::do_tensor_classify !Any_group->f_linear_group" << endl;
-		exit(1);
-	}
-
-	field_theory::finite_field *F;
-
-	F = Any_group->LG->F;
-
-	poset_classification::poset_classification_control *Control =
-			Get_poset_classification_control(control_label);
-
-
-
-	//apps_geometry::tensor_classify *T;
-
-	T = NEW_OBJECT(apps_geometry::tensor_classify);
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify before T->init" << endl;
-	}
-	T->init(F, Any_group->LG, verbose_level - 1);
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify after T->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify before classify_poset" << endl;
-	}
-	T->classify_poset(depth,
-			Control,
-			verbose_level);
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify after classify_poset" << endl;
-	}
-
-
-
-	//FREE_OBJECT(T);
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_classify done" << endl;
-	}
-}
-
-
-void any_group_linear::do_tensor_permutations(
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_permutations" << endl;
-	}
-
-	if (!Any_group->f_linear_group) {
-		cout << "any_group_linear::do_tensor_permutations !Any_group->f_linear_group" << endl;
-		exit(1);
-	}
-	field_theory::finite_field *F;
-
-	F = Any_group->LG->F;
-
-
-	apps_geometry::tensor_classify *T;
-
-	T = NEW_OBJECT(apps_geometry::tensor_classify);
-
-	T->init(F, Any_group->LG, verbose_level - 1);
-
-
-	FREE_OBJECT(T);
-
-	if (f_v) {
-		cout << "any_group_linear::do_tensor_permutations done" << endl;
-	}
-}
-
-
-void any_group_linear::do_linear_codes(
-		std::string &control_label,
-		int minimum_distance,
-		int target_size, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group_linear::do_linear_codes" << endl;
-	}
-
-	if (!Any_group->f_linear_group) {
-		cout << "any_group_linear::do_linear_codes !f_linear_group" << endl;
-		exit(1);
-	}
-
-	poset_classification::poset_classification_control *Control =
-			Get_poset_classification_control(control_label);
-
-	algebra_global_with_action Algebra;
-
-	if (f_v) {
-		cout << "any_group_linear::do_linear_codes before "
-				"Algebra.linear_codes_with_bounded_minimum_distance" << endl;
-	}
-
-	Algebra.linear_codes_with_bounded_minimum_distance(
-			Control, Any_group->LG,
-			minimum_distance, target_size, verbose_level);
-
-	if (f_v) {
-		cout << "any_group_linear::do_linear_codes after "
-				"Algebra.linear_codes_with_bounded_minimum_distance" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "any_group_linear::do_linear_codes done" << endl;
-	}
-}
-
-void any_group_linear::do_classify_ovoids(
-		apps_geometry::ovoid_classify_description
-			*Ovoid_classify_description,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group_linear::do_classify_ovoids" << endl;
-	}
-
-	if (!Any_group->f_linear_group) {
-		cout << "any_group_linear::do_classify_ovoids !Any_group->f_linear_group" << endl;
-		exit(1);
-	}
-
-	apps_geometry::ovoid_classify *Ovoid_classify;
-
-
-	Ovoid_classify = NEW_OBJECT(apps_geometry::ovoid_classify);
-
-
-	Ovoid_classify->init(Ovoid_classify_description,
-			Any_group->LG,
-			verbose_level);
-
-	FREE_OBJECT(Ovoid_classify);
-
-	if (f_v) {
-		cout << "any_group_linear::do_classify_ovoids done" << endl;
 	}
 }
 

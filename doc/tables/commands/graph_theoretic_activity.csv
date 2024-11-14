@@ -1,0 +1,23 @@
+ROW,C1,C2,C3
+0,"tab:graphactivities",,
+1,"Graph Theoretic Activities",,
+1,"\verb'-find_cliques' "," options  "," Find all cliques. See Section~\ref{sec:graphtheory:cliques}. "
+1,"\verb'-test_SRG_property' ","   ","Test whether a graph is strongly regular. "
+1,"\verb'-test_Neumaier_property' "," $s$  ","Test whether a graph is Neumaier w.r.t. cliques of size $s$. "
+1,"\verb'-find_subgraph' "," type  ","Finds all labelings of a Dynkin diagram of a given type. This needs two graphs. The vertices correspond to the involutions. The first graph is the pairs whose product has order 2. The second graph is the pairs whose product has order 3."
+1,"\verb'-export_magma' ","   ","Export to Magma~\cite{Magma}. "
+1,"\verb'-export_maple' ","   ","Export to Maple~\cite{Maple}. "
+1,"\verb'-export_csv' ","   ","Export to csv-file. "
+1,"\verb'-export_graphviz' ","   ","Export to graphviz-file. "
+1,"\verb'-print' ","   ","Print the graph. "
+1,"\verb'-sort_by_colors' ","   ","Sort the vertices by color classes. "
+1,"\verb'-split' "," file  ","Split the graph into subgraphs. "
+1,"\verb'-split_by_starters' "," file  ","Split the graph into subgraphs according to starters. "
+1,"\verb'-split_by_clique' "," label clique  ","Compute the neighborhood graph of the given clique. "
+1,"\verb'-save' ","   ","Save the graph to file in binary format. "
+1,"\verb'-automorphism_group' ","   ","Compute the automorphism group and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-automorphism_group_' \verb'colored_graph' ","   ","Compute the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
+1,"\verb'-properties' ","   ","Compute properties of the graph. "
+1,"\verb'-eigenvalues' ","   ","Compute the eigenvalues of the graph. "
+1,"\verb'-draw' ","   ","Draw the graph. "
+END

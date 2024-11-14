@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:mapping",,
+1,"Mappings Between Projective Spaces",,
+1,"\verb'-domain' "," D "," Set the domain to D (a projective space). "
+1,"\verb'-codomain' "," C "," Set the codomain to C (a projective space). "
+1,"\verb'-ring' "," R "," Set the coordinate ring for D. "
+1,"\verb'-formula' "," f "," Use the symbolic object f to define the mapping. "
+1,"\verb'-substitute' "," s "," Substitute s into the equation before doing the mapping. "
+1,"\verb'-affine' ","  "," Treat the domain as an affine space. "
+1,"\verb'-object_in_codomain_cubic_surface' "," S "," Set the codomain to the cubic surface object S. The map will now output images as indices of points on the surface. "
+END

@@ -1,0 +1,9 @@
+ROW,C1,C2,C3
+0,"tab:largeset:was:activity",,
+1,"Large Set Activity",,
+1,"\verb'-normalizer_on_orbits_of_' \verb'a_given_length' "," l nb\_orbits control  ","  "
+1,"\verb'-create_graph_on_orbits_of_length' "," fname l  ","  "
+1,"\verb'-create_graph_on_orbits_' \verb'of_length_based_on_N_orbits' "," fname-mask l nb\_orbits r m  ","  "
+1,"\verb'-read_solution_file' ","  l fname ","  "
+END
+

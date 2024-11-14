@@ -1,0 +1,14 @@
+ROW,C1,C2,C3
+0,"tab:pc:report:options",,
+1,"Poset Classification Report Options",,
+1,"\verb'-select_orbits_by_level' ","  level  "," Select the levels which should be drawn. "
+1,"\verb'-select_orbits_by_stabilizer_order' "," m   "," Select the orbits whose stabilizer order is equal to $m$. "
+1,"\verb'-select_orbits_by_stabilizer_order_' \verb'multiple_of' ","  m  "," Select the orbits whose stabilizer order is a multiple of $m$. "
+1,"\verb'-include_projective_stabilizer' ","    "," Include the projective stabilizer in the report. This option assumes that the acting group is a collineation group. The projective stabilizer is a subgroup of the collineation stabilizer. "
+1,"\verb'-draw_poset' ","    "," Include a drawing of the poset of orbits in the report. This option requires one of the following four options to set the type of drawing. "
+1,"\verb'-type_aux' ","    "," Poset drawing of auxiliary type. The auxiliary poset includes the flag orbits between layers. "
+1,"\verb'-type_ordinary' ","    "," Poset drawing of ordinary type. "
+1,"\verb'-type_tree' ","    "," Poset drawing of type spanning tree. "
+1,"\verb'-type_detailed' ","    "," Poset drawing of type detailed. The detailed drawing includes the flag orbits between layers.  "
+1,"\verb'-fname' ","  fname  "," Set the file name. "
+END

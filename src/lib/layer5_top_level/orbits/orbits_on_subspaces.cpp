@@ -49,7 +49,7 @@ orbits_on_subspaces::~orbits_on_subspaces()
 }
 
 void orbits_on_subspaces::init(
-		apps_algebra::any_group *Group,
+		groups::any_group *Group,
 		poset_classification::poset_classification_control *Control,
 		int depth,
 		int verbose_level)

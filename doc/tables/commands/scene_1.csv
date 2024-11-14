@@ -1,0 +1,22 @@
+ROW,C1,C2,C3
+0,"tab:scene1",,
+1,"Scene Elements (Part 1)",,
+1,"\verb'-cubic_lex' "," coeffs "," Cubic surface given by 20 coefficients in lexicographic ordering "
+1,"\verb'-cubic_orbiter' "," coeffs "," Cubic surface given by 20 coefficients in Orbiter ordering "
+1,"\verb'-cubic_Goursat' "," $A$ $B$ $C$ "," Cubic surface with tetrahedral symmetry given by 3 Goursat coefficients as $Axyz + B(x^2+y^2+z^2)+C=0$ "
+1,"\verb'-quadric_lex_10' "," coeffs "," Quadric surface given by 10 coefficients in lexicographic ordering "
+1,"\verb'-quartic_lex_35' "," coeffs "," Quartic surface given by 35 coefficients in lexicographic ordering "
+1,"\verb'-octic_lex_165' "," coeffs "," Octic surface given by 165 coefficients in lexicographic ordering "
+1,"\verb'-point' "," coeffs "," Point given by three coordinates "
+1,"\verb'-point_list_from_csv_file' "," fname "," List of points with coordinates given in a csv file "
+1,"\verb'-line_through_two_points_recentered_' \verb'from_csv_file' "," fname "," List of lines through two points with point coordinates given in a csv file "
+1,"\verb'-line_through_two_points_from_csv_file' "," fname "," List of lines through two points with point coordinates given in a csv file "
+1,"\verb'-point_as_intersection_of_two_lines' "," $i_1$ $i_2$  "," Create a point from the intersection of two lines $i_1$ and $i_2$ "
+1,"\verb'-edge' "," $i_1$ $i_2$  "," Create an edge (line segment) between points $i_1$ and $i_2$ "
+1,"\verb'-text' "," $i_1$ $s$  "," Create a label $s$ located at the point $i$  "
+1,"\verb'-triangular_face_given_by_three_lines' "," $i_1$ $i_2$ $i_3$  "," Create a triangular face give by three lines $i_1,i_2,i_3$ "
+1,"\verb'-face' "," pts  "," Create a face through the vertices pts, ordered cyclically "
+1,"\verb'-quadric_through_three_skew_lines' "," $i_1$ $i_2$ $i_3$  "," Create a quadric through three skew lines "
+1,"\verb'-plane_defined_by_three_points' "," $i_1$ $i_2$ $i_3$  "," Create a plane through three noncollinear points "
+1,"\verb'-line_through_two_points_recentered' "," pt-coords   "," Create a line through two points given by 6 coordinates, recentered "
+END

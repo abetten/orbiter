@@ -1,0 +1,11 @@
+ROW,C1,C2,C3
+0,"tab:actions",,
+1,"Basic actions",,
+1,"General linear $\GL(n,q)$ "," all vectors of $V$ "," $q^n$ "
+1,"Affine $\AGL(n,q)$ "," all vectors of $V$ "," $q^n$ "
+1,"Projective $\PGL(n,q)$"," ${\frak Gr}_1(V)$ "," $\frac{q^n-1}{q-1}$ "
+1,"Wreath product $\GL(d,q) \wr \Sym(n)$ "," ${\frak Gr}_1((\bbF_q^d)^{\otimes n})$ extended ","  $n+nq^d+ \frac{q^{d^n}-1}{q-1}$"
+1,"Orthogonal $\PGO(n,q)$"," $Q(V)$ ","  $\displaystyle \frac{q^{n-1}-1}{q-1}$"
+1,"Orthogonal $\PGO^+(n,q)$"," $Q^+(V)$ ","  $\displaystyle \frac{(q^{n/2}-1)(q^{(n-2)/2}+1)}{q-1}$ "
+1,"Orthogonal $\PGO^-(n,q)$"," $Q^-(V)$ ","  $\displaystyle \frac{(q^{n/2}+1)(q^{(n-2)/2}-1)}{q-1}$"
+END
