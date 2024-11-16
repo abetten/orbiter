@@ -98,6 +98,8 @@ orbiter_session::orbiter_session()
 	f_has_get_projective_space_low_level_function = false;
 	get_projective_space_low_level_function = NULL;
 
+	//std::vector<void *> export_import_stack;
+
 	cout << "orbiter_session::orbiter_session done" << endl;
 
 }
@@ -945,7 +947,25 @@ void orbiter_session::stop_memory_debug()
 	cout << "memory debugging stopped" << endl;
 }
 
+void orbiter_session::do_export(
+		void *ptr, int verbose_level)
+{
+	export_import_stack.push_back(ptr);
+}
 
+void *orbiter_session::do_import(
+		int verbose_level)
+{
+	if (export_import_stack.size() == 0) {
+		cout << "orbiter_session::do_import export/import stack is empty" << endl;
+		exit(1);
+	}
+	void *ptr;
+
+	ptr = export_import_stack[export_import_stack.size() - 1];
+	export_import_stack.pop_back();
+	return ptr;
+}
 
 
 

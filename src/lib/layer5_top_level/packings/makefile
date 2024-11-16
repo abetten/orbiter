@@ -7,6 +7,8 @@ LFLAGS = -lm
 
 MODULES = \
 	invariants_packing.o \
+	packing_classify_activity_description.o \
+	packing_classify_activity.o \
 	packing_classify.o \
 	packing_classify2.o \
 	packing_invariants.o \

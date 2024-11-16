@@ -82,6 +82,9 @@ public:
 	spreads::spread_table_activity_description
 		*Spread_table_activity_description;
 
+	int f_packing_classify_activity_description;
+	packings::packing_classify_activity_description *Packing_classify_activity_description;
+
 	int f_packing_with_symmetry_assumption_activity;
 	packings::packing_was_activity_description
 		*Packing_was_activity_description;
@@ -174,6 +177,8 @@ public:
 	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
 			int verbose_level);
 	void do_spread_table_activity(
+			int verbose_level);
+	void do_packing_classify_activity(
 			int verbose_level);
 	void do_packing_was_activity(
 			int verbose_level);

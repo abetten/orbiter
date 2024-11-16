@@ -254,7 +254,10 @@ public:
 	int f_stabilizer_of_variety;
 	std::string stabilizer_of_variety_label;
 
+	int f_import;
+
 	std::vector<std::string> from;
+
 
 	group_modification_description();
 	~group_modification_description();
@@ -532,6 +535,8 @@ public:
 			int verbose_level);
 	void create_subgroup_by_lattice(
 			int orbit_index,
+			int verbose_level);
+	void import_group(
 			int verbose_level);
 
 };

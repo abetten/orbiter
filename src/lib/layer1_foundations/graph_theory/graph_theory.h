@@ -32,6 +32,10 @@ namespace graph_theory {
 class clique_finder_control {
 
 public:
+
+	// doc/tables/commands/clique_finder_control.csv
+
+
 	int f_rainbow;
 
 	int f_target_size;
@@ -574,6 +578,9 @@ public:
 			int verbose_level);
 	void compute_mu_matrix(
 			int *&Mu,
+			int verbose_level);
+	int test_automorphism_property(
+			int *perm, int degree,
 			int verbose_level);
 	void distance_2(
 			int verbose_level);

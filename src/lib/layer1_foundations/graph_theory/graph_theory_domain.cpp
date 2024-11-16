@@ -1461,11 +1461,24 @@ void graph_theory_domain::make_disjoint_sets_graph(
 	Fio.Csv_file_support->lint_matrix_read_csv(
 			fname, M, m, n, verbose_level);
 
+	N = m;
 
 	int i, j;
 	data_structures::sorting Sorting;
 
-	N = m;
+#if 0
+	for (i = 0; i < N; i++) {
+		if (!Sorting.lint_vec_is_sorted(M + i * n, N)) {
+			cout << "graph_theory_domain::make_disjoint_sets_graph the set is not sorted" << endl;
+			exit(1);
+		}
+	}
+#endif
+
+	for (i = 0; i < N; i++) {
+		Sorting.lint_vec_heapsort(M + i * n, N);
+	}
+
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_disjoint_sets_graph N=" << N << endl;
@@ -1478,12 +1491,14 @@ void graph_theory_domain::make_disjoint_sets_graph(
 	for (i = 0; i < N; i++) {
 		for (j = i + 1; j < N; j++) {
 
-			if (Sorting.test_if_sets_are_disjoint(M + i * n, n, M + j * n, n)) {
+			if (Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(M + i * n, M + j * n, n, n)) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
 			}
 		}
 	}
+
+	FREE_lint(M);
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_disjoint_sets_graph done" << endl;
@@ -2396,6 +2411,7 @@ void graph_theory_domain::find_subgraph(
 		cout << "graph_theory_domain::find_subgraph done" << endl;
 	}
 }
+
 
 void graph_theory_domain::find_subgraph_An(
 		int n,

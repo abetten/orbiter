@@ -27,6 +27,8 @@ namespace solvers {
 class diophant_activity_description {
 public:
 
+	// doc/commands/diophant_activity.csv
+
 	int f_input_file;
 	std::string input_file;
 	int f_print;
@@ -128,6 +130,9 @@ public:
 
 class diophant_description {
 public:
+
+	// doc/commands/diophant_create.csv
+
 	int f_label;
 	std::string label;
 

@@ -374,6 +374,7 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
+		layer3_group_actions/data_structures/export_group.o \
 		layer3_group_actions/data_structures/group_container.o \
 		layer3_group_actions/data_structures/group_table_and_generators.o \
 		layer3_group_actions/data_structures/hash_table_subgroups.o \
@@ -628,6 +629,8 @@ ORBITER_MODULES= \
 		layer5_top_level/orthogonal/orthogonal_space_with_action.o \
 		layer5_top_level/orthogonal/table_of_blt_sets.o \
 		layer5_top_level/packings/invariants_packing.o \
+		layer5_top_level/packings/packing_classify_activity_description.o \
+		layer5_top_level/packings/packing_classify_activity.o \
 		layer5_top_level/packings/packing_classify.o \
 		layer5_top_level/packings/packing_classify2.o \
 		layer5_top_level/packings/packing_invariants.o \

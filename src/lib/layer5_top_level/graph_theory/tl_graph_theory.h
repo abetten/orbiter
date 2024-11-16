@@ -601,6 +601,10 @@ public:
 	int f_find_subgraph;
 	std::string find_subgraph_label;
 
+	int f_test_automorphism_property_of_group;
+	std::string test_automorphism_property_of_group_label;
+
+
 	int f_export_magma;
 	int f_export_maple;
 	int f_export_csv;
@@ -714,6 +718,9 @@ public:
 			actions::action *A,
 			int *&Adj, int &N,
 			int verbose_level);
+	void test_automorphism_property_of_group(
+			int nb, graph_theory::colored_graph **CG,
+			std::string &group_label, int verbose_level);
 
 
 };

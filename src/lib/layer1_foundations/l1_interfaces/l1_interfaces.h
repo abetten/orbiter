@@ -339,7 +339,8 @@ public:
 	void print_table_of_strings_with_headers(
 			std::ostream &ost, std::string *headers, std::string *Table, int m, int n);
 	void print_table_of_strings_with_headers_rc(
-			std::ostream &ost, std::string *headers_row, std::string *headers_col, std::string *Table, int m, int n);
+			std::ostream &ost, std::string *headers_row, std::string *headers_col,
+			std::string *Table, int m, int n);
 	void print_table_of_strings(
 			std::ostream &ost, std::string *Table, int m, int n);
 	void int_matrix_print_tex(

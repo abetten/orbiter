@@ -238,6 +238,8 @@ namespace packings {
 
 	// packings:
 	class invariants_packing;
+	class packing_classify_activity_description;
+	class packing_classify_activity;
 	class packing_classify;
 	class packing_invariants;
 	class packing_long_orbits_description;

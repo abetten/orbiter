@@ -392,6 +392,8 @@ public:
 class geometry_builder_description {
 public:
 
+	// doc/commands/geometry_builder.csv
+
 	int f_V;
 	std::string V_text;
 	int f_B;

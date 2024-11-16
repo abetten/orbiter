@@ -339,10 +339,18 @@ void group_element::print_for_make_element_no_commas(
 long int group_element::element_image_of(
 		long int a, void *elt, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::element_image_of using ptr table " << A->ptr->label << endl;
+		cout << "group_element::element_image_of A->ptr->nb_times_image_of_called = " << A->ptr->nb_times_image_of_called << endl;
+	}
+
 	if (A->ptr == NULL) {
 		cout << "group_element::element_image_of A->ptr == NULL" << endl;
 		exit(1);
 	}
+
 	A->ptr->nb_times_image_of_called++;
 	return (*A->ptr->ptr_element_image_of)(*A, a, elt, verbose_level);
 }

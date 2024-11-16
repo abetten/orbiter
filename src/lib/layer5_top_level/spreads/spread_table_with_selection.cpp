@@ -313,7 +313,8 @@ void spread_table_with_selection::init(
 		cout << "spread_table_with_selection::init "
 				"before predict_spread_table_length" << endl;
 	}
-	predict_spread_table_length(T->A, T->A->Strong_gens, verbose_level - 1);
+	predict_spread_table_length(
+			T->A, T->A->Strong_gens, verbose_level - 1);
 	if (f_v) {
 		cout << "spread_table_with_selection::init "
 				"after predict_spread_table_length" << endl;
@@ -328,7 +329,8 @@ void spread_table_with_selection::init(
 				"before Spread_tables->init" << endl;
 	}
 
-	Spread_tables->init(T->PA->P,
+	Spread_tables->init(
+				T->PA->P,
 				false /* f_load */,
 				nb_iso_types_of_spreads,
 				path_to_spread_tables,
@@ -509,7 +511,9 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 				"before Spread_tables->init" << endl;
 	}
 
-	Spread_tables->init(T->PA->P, false, nb_iso_types_of_spreads,
+	Spread_tables->init(
+			T->PA->P, false,
+			nb_iso_types_of_spreads,
 			path_to_spread_tables,
 			verbose_level);
 
@@ -580,6 +584,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 	int *schreier_table;
 
 	schreier_table = NEW_int(nb_spreads * 4);
+
 	for (i = 0; i < nb_spreads; i++) {
 		schreier_table[i * 4 + 0] = original_position[i];
 		schreier_table[i * 4 + 1] = original_position_inv[i];
@@ -648,9 +653,12 @@ void spread_table_with_selection::create_action_on_spreads(
 	A_on_spreads = T->A2->Induced_action->create_induced_action_on_sets(
 			Spread_tables->nb_spreads, spread_size,
 			Spread_tables->spread_table,
-			0 /* verbose_level */);
+			verbose_level - 2);
 
-	cout << "created action on spreads" << endl;
+	if (f_v) {
+		cout << "spread_table_with_selection::create_action_on_spreads "
+				"created action on spreads of degree " << A_on_spreads->degree << endl;
+	}
 
 	if (f_v) {
 		cout << "spread_table_with_selection::create_action_on_spreads "
@@ -685,8 +693,10 @@ void spread_table_with_selection::find_spreads_containing_two_lines(
 		std::vector<int> &v,
 		int line1, int line2, int verbose_level)
 {
-	Spread_tables->find_spreads_containing_two_lines(v,
-			line1, line2, verbose_level);
+	Spread_tables->find_spreads_containing_two_lines(
+			v,
+			line1, line2,
+			verbose_level);
 }
 
 int spread_table_with_selection::test_if_packing_is_self_dual(
@@ -704,15 +714,18 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 		a = packing[i];
 		sorted_packing[i] = a;
 	}
-	Sorting.int_vec_heapsort(sorted_packing, size_of_packing);
+	Sorting.int_vec_heapsort(
+			sorted_packing, size_of_packing);
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = packing[i];
 		b = Spread_tables->dual_spread_idx[a];
 		dual_packing[i] = b;
 	}
-	Sorting.int_vec_heapsort(dual_packing, size_of_packing);
-	if (Sorting.int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
+	Sorting.int_vec_heapsort(
+			dual_packing, size_of_packing);
+	if (Sorting.int_vec_compare(
+			sorted_packing, dual_packing, size_of_packing) == 0) {
 		ret = true;
 	}
 
@@ -977,7 +990,7 @@ void spread_table_with_selection::make_spread_table(
 	if (f_v) {
 		cout << "spread_table_with_selection::make_spread_table "
 				"We found " << nb_spreads1 << " spreads in total" << endl;
-		}
+	}
 
 	if (nb_spreads1 != total_nb_of_spreads) {
 		cout << "spread_table_with_selection::make_spread_table "
@@ -1012,12 +1025,12 @@ void spread_table_with_selection::make_spread_table(
 			cout << i << " : ";
 			Lint_vec_print(cout, Sets[i], spread_size /* + 1*/);
 			cout << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "spread_table_with_selection::make_spread_table done" << endl;
-		}
+	}
 }
 
 void spread_table_with_selection::compute_covered_points(

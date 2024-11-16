@@ -59,6 +59,64 @@ public:
 };
 
 
+
+
+// #############################################################################
+// packing_classify_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for an object of type classification of packings in PG(3,q)
+
+class packing_classify_activity_description {
+
+public:
+
+	int f_report;
+
+	int f_classify;
+	std::string classify_control_label;
+
+	int f_make_graph_of_disjoint_spreads;
+
+	int f_export_group_on_spreads;
+
+	packing_classify_activity_description();
+	~packing_classify_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
+
+// #############################################################################
+// packing_classify_activity.cpp
+// #############################################################################
+
+//! performs an activity for an object of type classification of packings in PG(3,q)
+
+class packing_classify_activity {
+
+public:
+
+	packing_classify_activity_description *Descr;
+	packing_classify *Packing_classify;
+
+	packing_classify_activity();
+	~packing_classify_activity();
+	void init(
+			packing_classify_activity_description *Descr,
+			packing_classify *Packing_classify,
+			int verbose_level);
+	void perform_activity(
+			int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // packing_classify.cpp
 // #############################################################################
@@ -133,7 +191,6 @@ public:
 			geometry::projective_space *P5,
 			int verbose_level);
 	void prepare_generator(
-			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void compute(
 			int search_depth, int verbose_level);
@@ -442,7 +499,8 @@ public:
 			packing_was_activity_description *Descr,
 			packing_was *PW,
 			int verbose_level);
-	void perform_activity(int verbose_level);
+	void perform_activity(
+			int verbose_level);
 };
 
 

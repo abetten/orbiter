@@ -45,7 +45,8 @@ int packing_was_activity_description::read_arguments(
 	cout << "packing_was_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		cout << "packing_was_activity_description::read_arguments, next argument is " << argv[i] << endl;
+		cout << "packing_was_activity_description::read_arguments, "
+				"next argument is " << argv[i] << endl;
 
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
@@ -55,12 +56,14 @@ int packing_was_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-export_reduced_spread_orbits") == 0) {
 			f_export_reduced_spread_orbits = true;
 			export_reduced_spread_orbits_fname_base.assign(argv[++i]);
-			cout << "-export_reduced_spread_orbits " << export_reduced_spread_orbits_fname_base << endl;
+			cout << "-export_reduced_spread_orbits "
+					<< export_reduced_spread_orbits_fname_base << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-create_graph_on_mixed_orbits") == 0) {
 			f_create_graph_on_mixed_orbits = true;
 			create_graph_on_mixed_orbits_orbit_lengths.assign(argv[++i]);
-			cout << "-create_graph_on_mixed_orbits " << create_graph_on_mixed_orbits_orbit_lengths << endl;
+			cout << "-create_graph_on_mixed_orbits "
+					<< create_graph_on_mixed_orbits_orbit_lengths << endl;
 		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -84,10 +87,12 @@ void packing_was_activity_description::print()
 		cout << "-report" << endl;
 	}
 	if (f_export_reduced_spread_orbits) {
-		cout << "-export_reduced_spread_orbits " << export_reduced_spread_orbits_fname_base << endl;
+		cout << "-export_reduced_spread_orbits "
+				<< export_reduced_spread_orbits_fname_base << endl;
 	}
 	if (f_create_graph_on_mixed_orbits) {
-		cout << "-create_graph_on_mixed_orbits " << create_graph_on_mixed_orbits_orbit_lengths << endl;
+		cout << "-create_graph_on_mixed_orbits "
+				<< create_graph_on_mixed_orbits_orbit_lengths << endl;
 	}
 }
 

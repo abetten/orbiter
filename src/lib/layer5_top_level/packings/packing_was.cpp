@@ -1997,7 +1997,8 @@ void packing_was::report_reduced_spread_orbits(
 		long int *orbit_idx;
 		long int *spreads_in_reduced_orbits_by_type;
 
-		get_spreads_in_reduced_orbits_by_type(type_idx,
+		get_spreads_in_reduced_orbits_by_type(
+				type_idx,
 					nb_orbits, orbit_length,
 					orbit_idx,
 					spreads_in_reduced_orbits_by_type,

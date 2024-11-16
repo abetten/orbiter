@@ -665,7 +665,8 @@ long int schreier::get_image(
 	
 	if (f_v) {
 		cout << "schreier::get_image computing image of point "
-				<< i << " under generator " << gen_idx << endl;
+				<< i << " under generator " << gen_idx
+				<< " verbose_level = " << verbose_level << endl;
 	}
 	if (images == NULL) {
 		if (f_v) {
@@ -682,7 +683,7 @@ long int schreier::get_image(
 		a = A->Group_element->element_image_of(
 				i,
 				gens.ith(gen_idx),
-				0 /*verbose_level - 2*/);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "schreier::get_image after A->element_image_of" << endl;
 		}
@@ -706,7 +707,7 @@ long int schreier::get_image(
 			}
 			a = A->Group_element->element_image_of(
 					i, gens.ith(gen_idx),
-					0 /*verbose_level - 2*/);
+					verbose_level - 2);
 			if (f_v) {
 				cout << "schreier::get_image image of "
 						"i=" << i << " is " << a << endl;
@@ -1024,7 +1025,9 @@ void schreier::compute_all_point_orbits(
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
-				"verbose_level=" << verbose_level << " degree=" << degree << endl;
+				"verbose_level=" << verbose_level << " action=";
+		A->print_info();
+		//<< " degree=" << degree << endl;
 	}
 
 	int pt, pt_loc, cur, pt0;
@@ -1332,6 +1335,8 @@ void schreier::compute_point_orbit(
 		else {
 			cout << " in action " << A->label << endl;
 		}
+		cout << "schreier::compute_point_orbit "
+				"verbose_level = " << verbose_level;
 	}
 	//exit(1);
 	pt_loc = orbit_inv[pt];
@@ -1381,10 +1386,18 @@ void schreier::compute_point_orbit(
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
 						"expanding point " << cur_pt
-						<< " using generator " << i << endl;
+						<< " using generator " << i << " / " << nb_images << endl;
 			}
 
+			if (f_vvv) {
+				cout << "schreier::compute_point_orbit "
+						"before get_image" << endl;
+			}
 			next_pt = get_image(cur_pt, i, verbose_level - 1);
+			if (f_vvv) {
+				cout << "schreier::compute_point_orbit "
+						"after get_image" << endl;
+			}
 
 			if (f_vvv) {
 				cout << "schreier::compute_point_orbit "
@@ -1405,8 +1418,8 @@ void schreier::compute_point_orbit(
 			}
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit "
-						"expanding: "
-						<< cur_pt << ", " << next_pt << ", " << i << endl;
+						"expanding: cur_pt = "
+						<< cur_pt << " -> next_pt = " << next_pt << " under generator " << i << " / " << nb_images << endl;
 			}
 			swap_points(total, next_pt_loc, 0 /*verbose_level*/);
 			prev[total] = cur_pt;
@@ -1417,31 +1430,35 @@ void schreier::compute_point_orbit(
 			cur1 = cur - orbit_first[nb_orbits];
 			if ((total1 % print_interval) == 0 ||
 					(cur1 > 0 && (cur1 % print_interval) == 0)) {
-				cout << "schreier::compute_point_orbit degree = "
-						<< degree << " length = " << total1
-					<< " processed = " << cur1 << " nb_orbits="
-					<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
-					<< next_pt << " orbit_first[nb_orbits]="
-					<< orbit_first[nb_orbits] << endl;
+				cout << "schreier::compute_point_orbit"
+						<< " degree = " << degree
+						<< " length = " << total1
+						<< " processed = " << cur1 << " nb_orbits="
+						<< nb_orbits << " cur_pt=" << cur_pt << " next_pt="
+						<< next_pt << " orbit_first[nb_orbits]="
+						<< orbit_first[nb_orbits] << endl;
 			}
-			if (f_vv) {
-				cout << "cur = " << cur << endl;
-				cout << "total = " << total << endl;
+			if (false) {
+				cout << "schreier::compute_point_orbit cur = " << cur << " total = " << total << endl;
 				//print_orbit(cur, total - 1);
 			}
 		}
 		if (f_vv) {
 			cout << "schreier::compute_point_orbit "
 					"cur_pt " << cur_pt
-					<< " has been expanded" << endl;
+					<< " has been expanded under all generators" << endl;
 			cout << "cur=" << cur << " total = " << total << endl;
 		}
 		cur++;
 	}
+	if (f_v) {
+		cout << "schreier::compute_point_orbit orbit is complete, nb_orbits = " << nb_orbits  + 1 << endl;
+	}
 	orbit_first[nb_orbits + 1] = total;
 	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
 	if (f_v) {
-		cout << "found orbit of length " << orbit_len[nb_orbits]
+		cout << "schreier::compute_point_orbit "
+				"found orbit of length " << orbit_len[nb_orbits]
 				<< " total length " << total
 				<< " degree=" << degree << endl;
 	}

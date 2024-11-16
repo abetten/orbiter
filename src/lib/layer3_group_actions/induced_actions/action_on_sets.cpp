@@ -178,22 +178,27 @@ long int action_on_sets::compute_image(
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "the element " << endl;
+		cout << "action_on_sets::compute_image "
+				"the element " << endl;
 		A->Group_element->print(cout, Elt);
 		cout << endl;
-		cout << "as permutation:" << endl;
+		cout << "action_on_sets::compute_image "
+				"as permutation:" << endl;
 		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
 	}
 	if (f_vv) {
-		cout << "sets[perm[i]]:" << endl;
+		cout << "action_on_sets::compute_image "
+				"sets[perm[i]]:" << endl;
 		Lint_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
+#if 0
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
 			A->Group_element->print_point(sets[perm[i]][j], cout);
 			cout << endl;
 		}
+#endif
 	}
 	A->Group_element->map_a_set_and_reorder(
 			sets[perm[i]],
@@ -202,25 +207,41 @@ long int action_on_sets::compute_image(
 			Elt,
 			0);
 	if (f_vv) {
-		cout << "after map_a_set_and_reorder:" << endl;
+		cout << "action_on_sets::compute_image "
+				"after map_a_set_and_reorder:" << endl;
 		Lint_vec_print(cout, image_set, set_size);
 		cout << endl;
+#if 0
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
 			A->Group_element->print_point(image_set[j], cout);
 			cout << endl;
 		}
+#endif
 	}
-	if (!Sorting.vec_search(
+
+	int ret;
+
+	if (f_vv) {
+		cout << "action_on_sets::compute_image "
+				"before Sorting.vec_search " << endl;
+	}
+
+	ret = Sorting.vec_search(
 			(void **)sets,
 			action_on_sets_compare_inverted,
 			this,
 			nb_sets,
 			image_set,
 			idx,
-			verbose_level)) {
+			verbose_level - 2);
+	if (f_vv) {
+		cout << "action_on_sets::compute_image "
+				"after Sorting.vec_search ret = " << ret << endl;
+	}
 
-		int u;
+	if (!ret) {
+
 		cout << "action_on_sets::compute_image "
 				"image set not found" << endl;
 		cout << "action = " << A->label << endl;
@@ -228,10 +249,11 @@ long int action_on_sets::compute_image(
 		cout << "the element " << endl;
 		A->Group_element->print(cout, Elt);
 		cout << endl;
+#if 0
 		cout << "as permutation:" << endl;
 		A->Group_element->print_as_permutation(cout, Elt);
 		cout << endl;
-
+#endif
 		cout << "i=" << i << endl;
 		cout << "perm[i]=" << perm[i] << endl;
 		cout << "sets[perm[i]]:" << endl;
@@ -240,11 +262,15 @@ long int action_on_sets::compute_image(
 		cout << "image_set:" << endl;
 		Lint_vec_print_fully(cout, image_set, set_size);
 		cout << endl;
+#if 0
+		int u;
 		for (u = 0; u < nb_sets; u++) {
 			cout << u << " : ";
 			Lint_vec_print(cout, sets[u], set_size);
 			cout << endl;
 		}
+#endif
+
 #if 0
 		int a, b;
 		for (u = 0; u < set_size; u++) {

@@ -465,7 +465,8 @@ void spread_tables::save(
 				"writing file " << fname_spreads << endl;
 	}
 
-	Fio.Csv_file_support->lint_matrix_write_csv(fname_spreads,
+	Fio.Csv_file_support->lint_matrix_write_csv(
+			fname_spreads,
 			spread_table, nb_spreads, spread_size);
 	if (f_v) {
 		cout << "spread_tables::save "
@@ -1063,6 +1064,152 @@ void spread_tables::report_one_spread(
 		}
 	}
 }
+
+
+void spread_tables::make_graph_of_disjoint_spreads(
+		graph_theory::colored_graph *&CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_tables::make_graph_of_disjoint_spreads" << endl;
+	}
+
+
+	data_structures::bitvector *Bitvec;
+	long int L, L100;
+	long int i, j, k;
+
+	//int *&Adj, int &N,
+
+	//N = nb_spreads;
+
+	data_structures::sorting Sorting;
+
+#if 1
+	for (i = 0; i < nb_spreads; i++) {
+		if (!Sorting.lint_vec_is_sorted(spread_table + i * spread_size, spread_size)) {
+			cout << "spread_tables::make_graph_of_disjoint_spreads the spread is not sorted" << endl;
+			cout << "i=" << i << endl;
+			Lint_vec_print(cout, spread_table + i * spread_size, spread_size);
+			exit(1);
+		}
+	}
+#endif
+
+#if 0
+	for (i = 0; i < nb_spreads; i++) {
+		Sorting.lint_vec_heapsort(spread_table + i * spread_size, spread_size);
+	}
+#endif
+
+	if (f_v) {
+		cout << "spread_tables::make_graph_of_disjoint_spreads nb_spreads=" << nb_spreads << endl;
+	}
+
+	//Adj = NEW_int(N * N);
+	//Int_vec_zero(Adj, N * N);
+
+
+	L = ((long int) nb_spreads * (long int) (nb_spreads - 1)) >> 1;
+
+	L100 = L / 100;
+
+	if (f_v) {
+		cout << "L = " << L << endl;
+		cout << "L100 = " << L100 << endl;
+	}
+
+	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec->allocate(L);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"creating adjacency bitvector" << endl;
+	}
+
+	int t0, t1, dt;
+	orbiter_kernel_system::os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	k = 0;
+	for (i = 0; i < nb_spreads; i++) {
+		for (j = i + 1; j < nb_spreads; j++, k++) {
+
+			if (L100) {
+				if ((k % L100) == 0) {
+					t1 = Os.os_ticks();
+					dt = t1 - t0;
+					cout << "progress: "
+							<< (double) k / (double) L100 << " % dt=";
+					Os.time_check_delta(cout, dt);
+					cout << endl;
+				}
+			}
+
+
+#if 0
+			if (Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(
+					spread_table + i * spread_size,
+					spread_table + j * spread_size,
+					spread_size, spread_size)) {
+				Bitvec->m_i(k, 1);
+				//Adj[i * N + j] = 1;
+				//Adj[j * N + i] = 1;
+			}
+#else
+			if (Sorting.test_if_sets_are_disjoint(
+					spread_table + i * spread_size,
+					spread_size,
+					spread_table + j * spread_size,
+					spread_size)) {
+				Bitvec->m_i(k, 1);
+				//Adj[i * N + j] = 1;
+				//Adj[j * N + i] = 1;
+			}
+#endif
+		}
+	}
+
+	//FREE_lint(M);
+
+	CG = NEW_OBJECT(graph_theory::colored_graph);
+
+	//int nb_colors = nb_orbit_lengths;
+	//int nb_colors = my_orbits_classified->nb_sets;
+
+	string fname;
+	string fname_tex;
+	long int *point_labels;
+
+	fname = prefix + "_disjoint";
+	fname_tex = prefix + "\\_disjoint";
+
+	point_labels = NEW_lint(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		point_labels[i] = i;
+	}
+
+	CG->init_with_point_labels(
+			nb_spreads,
+			0 /* nb_colors*/,
+			0 /* nb_colors_per_vertex */,
+			NULL /*Pt_color*/ /* point_color */,
+			Bitvec, true /* f_ownership_of_bitvec */,
+			point_labels,
+			fname, fname_tex,
+			verbose_level - 2);
+			// the adjacency becomes part of the colored_graph object
+
+	if (f_v) {
+		cout << "spread_tables::make_graph_of_disjoint_spreads done" << endl;
+	}
+
+}
+
+
 
 
 static int spread_table_compare_func(

@@ -375,7 +375,15 @@ static long int induced_action_element_image_of(
 					"no subaction" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"before AOS->compute_image" << endl;
+		}
 		b = AOS->compute_image(sub, Elt, a, verbose_level - 1);
+		if (f_v) {
+			cout << "induced_action_element_image_of "
+					"after AOS->compute_image" << endl;
+		}
 	}
 	else if (A.type_G == action_on_set_partitions_t) {
 		if (f_v) {

@@ -481,6 +481,8 @@ public:
 class finite_field_description {
 public:
 
+	// doc/tables/commands/finite_field.csv:
+
 	int f_q;
 	std::string q_text;
 

@@ -774,57 +774,96 @@ public:
 
 	mem_object_registry();
 	~mem_object_registry();
-	void init(int verbose_level);
-	void accumulate_and_ignore_duplicates(int verbose_level);
-	void allocate(int N, int verbose_level);
+	void init(
+			int verbose_level);
+	void accumulate_and_ignore_duplicates(
+			int verbose_level);
+	void allocate(
+			int N, int verbose_level);
 	void set_automatic_dump(
 			int automatic_dump_interval, std::string &fname_mask,
 			int verbose_level);
 	void automatic_dump();
 	void manual_dump();
-	void manual_dump_with_file_name(std::string &fname);
+	void manual_dump_with_file_name(
+			std::string &fname);
 	void dump();
-	void dump_to_csv_file(std::string &fname);
-	int *allocate_int(long int n, const char *file, int line);
-	void free_int(int *p, const char *file, int line);
-	int **allocate_pint(long int n, const char *file, int line);
-	void free_pint(int **p, const char *file, int line);
-	long int *allocate_lint(long int n, const char *file, int line);
-	void free_lint(long int *p, const char *file, int line);
-	long int **allocate_plint(long int n, const char *file, int line);
-	void free_plint(long int **p, const char *file, int line);
-	int ***allocate_ppint(long int n, const char *file, int line);
-	void free_ppint(int ***p, const char *file, int line);
-	long int ***allocate_pplint(long int n, const char *file, int line);
-	void free_pplint(long int ***p, const char *file, int line);
-	char *allocate_char(long int n, const char *file, int line);
-	void free_char(char *p, const char *file, int line);
-	uchar *allocate_uchar(long int n, const char *file, int line);
-	void free_uchar(uchar *p, const char *file, int line);
-	char **allocate_pchar(long int n, const char *file, int line);
-	void free_pchar(char **p, const char *file, int line);
-	uchar **allocate_puchar(long int n, const char *file, int line);
-	void free_puchar(uchar **p, const char *file, int line);
-	void **allocate_pvoid(long int n, const char *file, int line);
-	void free_pvoid(void **p, const char *file, int line);
-	void *allocate_OBJECTS(void *p, long int n, std::size_t size_of,
+	void dump_to_csv_file(
+			std::string &fname);
+	int *allocate_int(
+			long int n, const char *file, int line);
+	void free_int(
+			int *p, const char *file, int line);
+	int **allocate_pint(
+			long int n, const char *file, int line);
+	void free_pint(
+			int **p, const char *file, int line);
+	long int *allocate_lint(
+			long int n, const char *file, int line);
+	void free_lint(
+			long int *p, const char *file, int line);
+	long int **allocate_plint(
+			long int n, const char *file, int line);
+	void free_plint(
+			long int **p, const char *file, int line);
+	int ***allocate_ppint(
+			long int n, const char *file, int line);
+	void free_ppint(
+			int ***p, const char *file, int line);
+	long int ***allocate_pplint(
+			long int n, const char *file, int line);
+	void free_pplint(
+			long int ***p, const char *file, int line);
+	char *allocate_char(
+			long int n, const char *file, int line);
+	void free_char(
+			char *p, const char *file, int line);
+	uchar *allocate_uchar(
+			long int n, const char *file, int line);
+	void free_uchar(
+			uchar *p, const char *file, int line);
+	char **allocate_pchar(
+			long int n, const char *file, int line);
+	void free_pchar(
+			char **p, const char *file, int line);
+	uchar **allocate_puchar(
+			long int n, const char *file, int line);
+	void free_puchar(
+			uchar **p, const char *file, int line);
+	void **allocate_pvoid(
+			long int n, const char *file, int line);
+	void free_pvoid(
+			void **p, const char *file, int line);
+	void *allocate_OBJECTS(
+			void *p, long int n, std::size_t size_of,
 			const char *extra_type_info, const char *file, int line);
-	void free_OBJECTS(void *p, const char *file, int line);
-	void *allocate_OBJECT(void *p, std::size_t size_of,
+	void free_OBJECTS(
+			void *p, const char *file, int line);
+	void *allocate_OBJECT(
+			void *p, std::size_t size_of,
 			const char *extra_type_info, const char *file, int line);
-	void free_OBJECT(void *p, const char *file, int line);
-	int search(void *p, int &idx);
-	void insert_at(int idx);
-	void add_to_registry(void *pointer,
+	void free_OBJECT(
+			void *p, const char *file, int line);
+	int search(
+			void *p, int &idx);
+	void insert_at(
+			int idx);
+	void add_to_registry(
+			void *pointer,
 			int object_type, long int object_n, int object_size_of,
 			const char *extra_type_info,
 			const char *source_file, int source_line,
 			int verbose_level);
-	void delete_from_registry(void *pointer, int verbose_level);
-	void sort_by_size(int verbose_level);
-	void sort_by_location_and_get_frequency(int verbose_level);
-	void sort_by_type(int verbose_level);
-	void sort_by_location(int verbose_level);
+	void delete_from_registry(
+			void *pointer, int verbose_level);
+	void sort_by_size(
+			int verbose_level);
+	void sort_by_location_and_get_frequency(
+			int verbose_level);
+	void sort_by_type(
+			int verbose_level);
+	void sort_by_location(
+			int verbose_level);
 };
 
 
@@ -1241,6 +1280,7 @@ public:
 	int f_has_get_projective_space_low_level_function;
 	geometry::projective_space *(* get_projective_space_low_level_function)(void *ptr);
 
+	std::vector<void *> export_import_stack;
 
 	orbiter_session();
 	~orbiter_session();
@@ -1312,6 +1352,10 @@ public:
 	// the return type should be groups::any_group *
 	void start_memory_debug();
 	void stop_memory_debug();
+	void do_export(
+			void *ptr, int verbose_level);
+	void *do_import(
+			int verbose_level);
 
 };
 

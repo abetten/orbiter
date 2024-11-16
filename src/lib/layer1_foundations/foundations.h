@@ -960,6 +960,9 @@ namespace solvers {
 #define Get_graph(A) orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
 #define Get_any_group_opaque(A) orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
 
+#define Global_export(ptr, v) orbiter_kernel_system::Orbiter->do_export(ptr, v)
+#define Global_import(v) orbiter_kernel_system::Orbiter->do_import(v)
+
 
 
 

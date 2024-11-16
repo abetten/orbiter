@@ -1435,6 +1435,8 @@ public:
 			int *v, int len);
 	void int_vec_sort_and_remove_duplicates(
 			int *v, int &len);
+	int lint_vec_is_sorted(
+			long int *v, int len);
 	void lint_vec_sort_and_remove_duplicates(
 			long int *v, int &len);
 	int int_vec_sort_and_test_if_contained(
@@ -1467,6 +1469,8 @@ public:
 			int *set1, int *set2, int set_size);
 	int test_if_sets_are_disjoint(
 			long int *set1, int sz1, long int *set2, int sz2);
+	// This function copies the sets and sorts them. It also allocates temporary memory.
+	// This is inefficient if the sets are already sorted!
 	void test_if_set(
 			int *set, int set_size);
 	int lint_vec_test_if_set(
@@ -1738,6 +1742,8 @@ public:
 			long int *set1, long int *set2, int sz1, int sz2);
 	int test_if_sets_are_disjoint(
 			long int *set1, long int *set2, int sz1, int sz2);
+	// Assumes that the sets are sorted.
+	// Not to be confused with a function with the same name but different order of parameters above.
 	void d_partition(
 			double *v, int left, int right, int *middle);
 	void d_quicksort(

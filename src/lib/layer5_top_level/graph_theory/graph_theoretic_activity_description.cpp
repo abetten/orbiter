@@ -34,6 +34,8 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_find_subgraph = false;
 	//std::string find_subgraph_label;
 
+	f_test_automorphism_property_of_group = false;
+	//std::string test_automorphism_property_of_group_label;
 
 	f_export_magma = false;
 	f_export_maple = false;
@@ -116,6 +118,16 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-find_subgraph " << find_subgraph_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-test_automorphism_property_of_group") == 0) {
+			f_test_automorphism_property_of_group = true;
+			test_automorphism_property_of_group_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-test_automorphism_property_of_group " << test_automorphism_property_of_group_label << endl;
+			}
+		}
+
+
+
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = true;
 			if (f_v) {
@@ -254,6 +266,10 @@ void graph_theoretic_activity_description::print()
 	if (f_find_subgraph) {
 		cout << "-find_subgraph " << find_subgraph_label << endl;
 	}
+	if (f_test_automorphism_property_of_group) {
+		cout << "-test_automorphism_property_of_group " << test_automorphism_property_of_group_label << endl;
+	}
+
 	if (f_export_magma) {
 		cout << "-export_magma" << endl;
 	}

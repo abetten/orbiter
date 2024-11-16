@@ -18,6 +18,32 @@ namespace data_structures_groups {
 
 
 // #############################################################################
+// export_group.cpp
+// #############################################################################
+
+//! a data structure to export and import groups internally
+
+class export_group {
+
+public:
+
+	actions::action *A_base;
+	actions::action *A_induced;
+	groups::strong_generators *Strong_gens;
+
+	export_group();
+	~export_group();
+	void init(
+			actions::action *A_base,
+			actions::action *A_induced,
+			groups::strong_generators *Strong_gens,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
 // group_container.cpp
 // #############################################################################
 

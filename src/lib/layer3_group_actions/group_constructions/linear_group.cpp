@@ -182,7 +182,8 @@ void linear_group::linear_group_import_group_of_plane(
 
 	int idx;
 
-	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(description->import_group_of_plane_label);
+	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(
+			description->import_group_of_plane_label);
 
 	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 

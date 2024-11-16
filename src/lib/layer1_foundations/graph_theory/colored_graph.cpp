@@ -3281,6 +3281,46 @@ void colored_graph::compute_mu_matrix(
 	}
 }
 
+int colored_graph::test_automorphism_property(
+		int *perm, int degree,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::test_automorphism_property" << endl;
+	}
+	int f_aut = true;
+
+	if (degree != nb_points) {
+		cout << "colored_graph::test_automorphism_property degree != nb_points" << endl;
+		exit(1);
+	}
+
+	int i, j, i1, j1, c1, c2;
+
+	for (i = 0; i < nb_points; i++) {
+		i1 = perm[i];
+		for (j = i + 1; j < nb_points; j++) {
+			j1 = perm[j];
+
+			c1 = is_adjacent(i, j);
+			c2 = is_adjacent(i1, j1);
+			if (c1 != c2) {
+				f_aut = false;
+				goto the_end;
+			}
+		}
+	}
+
+the_end:
+
+	if (f_v) {
+		cout << "colored_graph::test_automorphism_property done" << endl;
+	}
+	return f_aut;
+}
+
 void colored_graph::distance_2(
 		int verbose_level)
 {

@@ -628,5 +628,118 @@ void graph_theory_apps::expander_graph(
 	}
 }
 
+
+void graph_theory_apps::test_automorphism_property_of_group(
+		int nb, graph_theory::colored_graph **CG,
+		std::string &group_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	data_structures::string_tools ST;
+
+	if (f_v) {
+		cout << "graph_theory_apps::test_automorphism_property_of_group" << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group nb = " << nb << endl;
+		cout << "graph_theory_apps::test_automorphism_property_of_group group_label = " << group_label << endl;
+	}
+
+	if (nb != 1) {
+		cout << "graph_theory_apps::test_automorphism_property_of_group nb != 1" << endl;
+		exit(1);
+	}
+
+	graph_theory::colored_graph *Gamma;
+
+	Gamma = CG[0];
+
+	layer3_group_actions::groups::any_group *AG;
+
+
+	AG = Get_any_group(group_label);
+
+
+	if (!AG->f_modified_group) {
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"the group is not of modified group type" << endl;
+		exit(1);
+	}
+
+	int f_aut = true;
+
+	if (AG->f_modified_group) {
+		group_constructions::modified_group_create *MGC;
+
+		MGC = AG->MGC;
+
+		groups::strong_generators *Subgroup_gens;
+
+		Subgroup_gens = AG->Subgroup_gens;
+
+		int h;
+		int *perm;
+
+
+		perm = NEW_int(AG->A->degree);
+
+		for (h = 0; h < Subgroup_gens->gens->len; h++) {
+
+			if (nb != 1) {
+				cout << "graph_theory_apps::test_automorphism_property_of_group "
+						"testing generator " << h << " / " << Subgroup_gens->gens->len << endl;
+			}
+
+			int i, j;
+			int *Elt1;
+
+			Elt1 = Subgroup_gens->gens->ith(h);
+
+			for (i = 0; i < AG->A->degree; i++) {
+				j = AG->A->Group_element->element_image_of(i, Elt1, 0);
+				perm[i] = j;
+			}
+
+
+			f_aut = Gamma->test_automorphism_property(
+					perm, AG->A->degree,
+					verbose_level - 2);
+
+			if (!f_aut) {
+				if (f_v) {
+					cout << "graph_theory_apps::test_automorphism_property_of_group "
+							"generator " << h << " / " << Subgroup_gens->gens->len << " is not an automorphism" << endl;
+				}
+				break;
+			}
+
+		}
+
+		if (h < Subgroup_gens->gens->len) {
+			if (f_v) {
+				cout << "graph_theory_apps::test_automorphism_property_of_group "
+						"fail" << endl;
+			}
+		}
+
+	}
+
+	if (f_aut) {
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"the group has the automorphism property" << endl;
+	}
+	else {
+		cout << "graph_theory_apps::test_automorphism_property_of_group "
+				"the group does not have the automorphism property" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_apps::test_automorphism_property_of_group done" << endl;
+	}
+}
+
+
+
+
+
 }}}
 

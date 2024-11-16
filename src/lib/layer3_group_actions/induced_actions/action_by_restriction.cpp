@@ -31,13 +31,13 @@ action_by_restriction::~action_by_restriction()
 {
 	if (points) {
 		FREE_lint(points);
-		}
+	}
 	if (points_sorted) {
 		FREE_lint(points_sorted);
-		}
+	}
 	if (perm_inv) {
 		FREE_lint(perm_inv);
-		}
+	}
 }
 
 void action_by_restriction::init_single_orbit_from_schreier_vector(
@@ -104,7 +104,7 @@ void action_by_restriction::init(
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
 				<< nb_points << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "action_by_restriction::init points=";
 		Lint_vec_print(cout, points, nb_points);
@@ -118,7 +118,7 @@ void action_by_restriction::init(
 		action_by_restriction::points[i] = points[i];
 		points_sorted[i] = points[i];
 		perm_inv[i] = i;
-		}
+	}
 	Sorting.lint_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_vv) {
 		cout << "action_by_restriction::init points after sorting=";
@@ -127,7 +127,7 @@ void action_by_restriction::init(
 	}
 	if (f_v) {
 		cout << "action_by_restriction::init finished" << endl;
-		}
+	}
 }
 
 long int action_by_restriction::original_point(
@@ -146,7 +146,7 @@ long int action_by_restriction::restricted_point_idx(
 		cout << "action_by_restriction::restricted_point_idx fatal: "
 				"point " << pt << " not found" << endl;
 		exit(1);
-		}
+	}
 	return perm_inv[idx];
 }
 
@@ -156,74 +156,99 @@ long int action_by_restriction::compute_image(
 		int *Elt, long int i, int verbose_level)
 {
 	int idx;
-	long int b, c, h;
+	long int b, c;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_by_restriction::compute_image i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= nb_points) {
 		cout << "action_by_restriction::compute_image "
 				"i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
-		cout << "under the group element " << endl;
+		cout << "action_by_restriction::compute_image group element " << endl;
 		A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
-		}
+	}
 	if (f_vv) {
-		cout << "points[i]=" << points[i] << endl;
-		}
+		cout << "action_by_restriction::compute_image "
+				"points[i]=" << points[i] << endl;
+	}
 	b = A->Group_element->element_image_of(points[i], Elt, verbose_level - 2);
 	if (f_vv) {
-		cout << "image of " << points[i] << " is " << b << endl;
-		}
-	if (!Sorting.lint_vec_search(points_sorted, nb_points, b, idx, 0 /* verbose_level */)) {
+		cout << "action_by_restriction::compute_image "
+				"image of " << points[i] << " is " << b << endl;
+	}
+
+	int ret;
+
+	if (f_vv) {
+		cout << "action_by_restriction::compute_image "
+				"before Sorting.lint_vec_search" << endl;
+	}
+
+	ret = Sorting.lint_vec_search(
+			points_sorted, nb_points, b, idx,
+			0 /* verbose_level */);
+
+	if (f_vv) {
+		cout << "action_by_restriction::compute_image "
+				"after Sorting.lint_vec_search" << endl;
+	}
+
+	if (!ret) {
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;
 		cout << "action: ";
 		A->print_info();
 
-		cout << "the element " << endl;
+		cout << "action_by_restriction::compute_image "
+				"the element " << endl;
 		A->Group_element->element_print_quick(Elt, cout);
 		cout << endl;
 		//cout << "as permutation:" << endl;
 		//A->print_as_permutation(cout, Elt);
 		//cout << endl;
 
-		cout << "i=" << i << endl;
-		cout << "image of " << points[i] << " is " << b << endl;
-		cout << "nb_points=" << nb_points << endl;
-		cout << "points=";
+		cout << "action_by_restriction::compute_image i=" << i << endl;
+		cout << "action_by_restriction::compute_image image of " << points[i] << " is " << b << endl;
+		cout << "action_by_restriction::compute_image nb_points=" << nb_points << endl;
+
+#if 0
+		cout << "action_by_restriction::compute_image points=";
 		Lint_vec_print(cout, points, nb_points);
 		cout << endl;
-		cout << "points_sorted=" << endl;
+		cout << "action_by_restriction::compute_image points_sorted=" << endl;
+		int h;
 		for (h = 0; h < nb_points; h++) {
 			cout << h << " : " << points_sorted[h] << endl;
-			}
+		}
 		//int_vec_print(cout, points_sorted, nb_points);
 		//cout << endl;
 
-		cout << "We compute the image point again, "
+		cout << "action_by_restriction::compute_image "
+				"We compute the image point again, "
 				"this time with more output" << endl;
 		b = A->Group_element->element_image_of(points[i],
 				Elt, 10 /* verbose_level - 2*/);
+#endif
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;
 		cout << "action: ";
 		A->print_info();
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "action_on_sets::compute_image idx = " << idx << endl;
-		}
+	}
 	c = perm_inv[idx];
 	if (f_v) {
 		cout << "action_on_sets::compute_image c = " << c << endl;
-		}
+	}
 	return c;
 }
 

@@ -374,6 +374,20 @@ void modified_group_create::modified_group_init(
 		exit(1);
 
 	}
+	else if (Descr->f_import) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before import_group" << endl;
+		}
+
+		import_group(verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after import_group" << endl;
+		}
+	}
 
 
 
@@ -1896,6 +1910,96 @@ void modified_group_create::create_subgroup_by_lattice(
 		cout << "modified_group_create::create_subgroup_by_lattice done" << endl;
 	}
 }
+
+
+void modified_group_create::import_group(
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::import_group" << endl;
+	}
+
+	data_structures_groups::export_group *Export_group;
+
+	if (f_v) {
+		cout << "modified_group_create::import_group before Global_import" << endl;
+	}
+	Export_group = (data_structures_groups::export_group *) Global_import(verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::import_group after Global_import" << endl;
+	}
+
+
+	A_base = Export_group->A_base;
+	A_previous = Export_group->A_induced;
+
+
+
+
+
+	label = Export_group->A_induced->label + "_imported";
+	label_tex = Export_group->A_induced->label_tex + "{\\rm imported}";
+	if (f_v) {
+		cout << "modified_group_create::import_group "
+				"label = " << label << endl;
+		cout << "modified_group_create::import_group "
+				"label_tex = " << label_tex << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_create::import_group "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::import_group "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	f_has_strong_generators = true;
+
+#if 0
+	groups::strong_generators *Strong_gens_temp;
+	Strong_gens_temp = Export_group->Strong_gens->create_copy(verbose_level - 4);
+
+	actions::action_global Action_global;
+
+	A_modified = Action_global.init_subgroup_from_strong_generators(
+			A_base,
+			Strong_gens_temp,
+			verbose_level - 1);
+#endif
+
+	A_modified = Export_group->A_induced;
+
+
+	//A_modified->label = label;
+	//A_modified->label_tex = label_tex;
+
+#if 0
+	if (f_v) {
+		cout << "modified_group_create::import_group "
+				"A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::import_group "
+				"A_modified->label_tex = " << A_modified->label_tex << endl;
+	}
+
+
+	// Strong_gens should be in the new action.
+
+#endif
+	f_has_strong_generators = true;
+	Strong_gens = Export_group->Strong_gens->create_copy(verbose_level - 4);
+
+	if (f_v) {
+		cout << "modified_group_create::import_group done" << endl;
+	}
+}
+
 
 
 

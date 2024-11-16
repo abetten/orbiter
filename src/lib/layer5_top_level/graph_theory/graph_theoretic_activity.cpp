@@ -121,6 +121,16 @@ void graph_theoretic_activity::feedback_headings(
 
 
 	}
+	else if (Descr->f_test_automorphism_property_of_group) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::feedback_headings "
+					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+		}
+
+
+	}
+
+
 	else if (Descr->f_export_magma) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::feedback_headings "
@@ -290,6 +300,14 @@ void graph_theoretic_activity::get_label(
 					"f_find_subgraph " << Descr->find_subgraph_label << endl;
 		}
 
+
+
+	}
+	else if (Descr->f_test_automorphism_property_of_group) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::get_label "
+					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+		}
 
 
 	}
@@ -558,13 +576,40 @@ void graph_theoretic_activity::perform_activity(
 
 
 
-
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"CG[0]->label=" << CG[0]->label << endl;
 		}
 
 	}
+
+
+	else if (Descr->f_test_automorphism_property_of_group) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+		}
+
+		apps_graph_theory::graph_theory_apps Graph_theory_apps;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before Graph_theory_apps.test_automorphism_property_of_group" << endl;
+		}
+		Graph_theory_apps.test_automorphism_property_of_group(
+				nb, CG,
+				Descr->test_automorphism_property_of_group_label,
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after Graph_theory_apps.test_automorphism_property_of_group" << endl;
+		}
+
+
+
+	}
+
+
 	else if (Descr->f_export_magma) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "

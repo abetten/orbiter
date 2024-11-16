@@ -80,6 +80,8 @@ group_modification_description::group_modification_description()
 	f_stabilizer_of_variety = false;
 	//std::string stabilizer_of_variety_label;
 
+	f_import = false;
+
 	//std::vector<std::string> from;
 
 }
@@ -256,7 +258,12 @@ int group_modification_description::read_arguments(
 				cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-import") == 0) {
+			f_import = true;
+			if (f_v) {
+				cout << "-import " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
@@ -360,6 +367,9 @@ void group_modification_description::print()
 	}
 	if (f_stabilizer_of_variety) {
 		cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
+	}
+	if (f_import) {
+		cout << "-import " << endl;
 	}
 
 

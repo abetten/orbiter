@@ -22,9 +22,12 @@ namespace layer1_foundations {
 namespace orbiter_kernel_system {
 
 
-static int registry_key_pair_compare_by_size(void *K1v, void *K2v);
-static int registry_key_pair_compare_by_type(void *K1v, void *K2v);
-static int registry_key_pair_compare_by_location(void *K1v, void *K2v);
+static int registry_key_pair_compare_by_size(
+		void *K1v, void *K2v);
+static int registry_key_pair_compare_by_type(
+		void *K1v, void *K2v);
+static int registry_key_pair_compare_by_location(
+		void *K1v, void *K2v);
 
 
 
@@ -56,7 +59,8 @@ mem_object_registry::~mem_object_registry()
 	}
 }
 
-void mem_object_registry::init(int verbose_level)
+void mem_object_registry::init(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -103,7 +107,8 @@ void mem_object_registry::accumulate_and_ignore_duplicates(
 	f_ignore_duplicates = true;
 }
 
-void mem_object_registry::allocate(int N, int verbose_level)
+void mem_object_registry::allocate(
+		int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -220,7 +225,8 @@ void mem_object_registry::dump()
 	}
 }
 
-void mem_object_registry::dump_to_csv_file(std::string &fname)
+void mem_object_registry::dump_to_csv_file(
+		std::string &fname)
 {
 	int i, s, sz;
 
@@ -252,7 +258,8 @@ void mem_object_registry::dump_to_csv_file(std::string &fname)
 }
 
 
-int *mem_object_registry::allocate_int(long int n,
+int *mem_object_registry::allocate_int(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -273,7 +280,8 @@ int *mem_object_registry::allocate_int(long int n,
 	return p;
 }
 
-void mem_object_registry::free_int(int *p, const char *file, int line)
+void mem_object_registry::free_int(
+		int *p, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
@@ -294,7 +302,8 @@ void mem_object_registry::free_int(int *p, const char *file, int line)
 	delete [] p;
 }
 
-long int *mem_object_registry::allocate_lint(long int n,
+long int *mem_object_registry::allocate_lint(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -314,7 +323,8 @@ long int *mem_object_registry::allocate_lint(long int n,
 	return p;
 }
 
-void mem_object_registry::free_lint(long int *p, const char *file, int line)
+void mem_object_registry::free_lint(
+		long int *p, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
@@ -335,7 +345,8 @@ void mem_object_registry::free_lint(long int *p, const char *file, int line)
 	delete [] p;
 }
 
-int **mem_object_registry::allocate_pint(long int n,
+int **mem_object_registry::allocate_pint(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -355,7 +366,8 @@ int **mem_object_registry::allocate_pint(long int n,
 	return p;
 }
 
-void mem_object_registry::free_pint(int **p,
+void mem_object_registry::free_pint(
+		int **p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -377,7 +389,8 @@ void mem_object_registry::free_pint(int **p,
 	delete [] p;
 }
 
-long int **mem_object_registry::allocate_plint(long int n,
+long int **mem_object_registry::allocate_plint(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -397,7 +410,8 @@ long int **mem_object_registry::allocate_plint(long int n,
 	return p;
 }
 
-void mem_object_registry::free_plint(long int **p,
+void mem_object_registry::free_plint(
+		long int **p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -419,7 +433,8 @@ void mem_object_registry::free_plint(long int **p,
 	delete [] p;
 }
 
-int ***mem_object_registry::allocate_ppint(long int n,
+int ***mem_object_registry::allocate_ppint(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -439,7 +454,8 @@ int ***mem_object_registry::allocate_ppint(long int n,
 	return p;
 }
 
-void mem_object_registry::free_ppint(int ***p, const char *file, int line)
+void mem_object_registry::free_ppint(
+		int ***p, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
@@ -460,7 +476,8 @@ void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 	delete [] p;
 }
 
-long int ***mem_object_registry::allocate_pplint(long int n,
+long int ***mem_object_registry::allocate_pplint(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -480,7 +497,8 @@ long int ***mem_object_registry::allocate_pplint(long int n,
 	return p;
 }
 
-void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
+void mem_object_registry::free_pplint(
+		long int ***p, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
@@ -501,7 +519,8 @@ void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
 	delete [] p;
 }
 
-char *mem_object_registry::allocate_char(long int n,
+char *mem_object_registry::allocate_char(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -521,7 +540,8 @@ char *mem_object_registry::allocate_char(long int n,
 	return p;
 }
 
-void mem_object_registry::free_char(char *p, const char *file, int line)
+void mem_object_registry::free_char(
+		char *p, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
@@ -542,7 +562,8 @@ void mem_object_registry::free_char(char *p, const char *file, int line)
 	delete [] p;
 }
 
-uchar *mem_object_registry::allocate_uchar(long int n,
+uchar *mem_object_registry::allocate_uchar(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -562,7 +583,8 @@ uchar *mem_object_registry::allocate_uchar(long int n,
 	return p;
 }
 
-void mem_object_registry::free_uchar(uchar *p,
+void mem_object_registry::free_uchar(
+		uchar *p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -584,7 +606,8 @@ void mem_object_registry::free_uchar(uchar *p,
 	delete [] p;
 }
 
-char **mem_object_registry::allocate_pchar(long int n,
+char **mem_object_registry::allocate_pchar(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -604,7 +627,8 @@ char **mem_object_registry::allocate_pchar(long int n,
 	return p;
 }
 
-void mem_object_registry::free_pchar(char **p,
+void mem_object_registry::free_pchar(
+		char **p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -626,7 +650,8 @@ void mem_object_registry::free_pchar(char **p,
 	delete [] p;
 }
 
-uchar **mem_object_registry::allocate_puchar(long int n,
+uchar **mem_object_registry::allocate_puchar(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -646,7 +671,8 @@ uchar **mem_object_registry::allocate_puchar(long int n,
 	return p;
 }
 
-void mem_object_registry::free_puchar(uchar **p,
+void mem_object_registry::free_puchar(
+		uchar **p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -668,7 +694,8 @@ void mem_object_registry::free_puchar(uchar **p,
 	delete [] p;
 }
 
-void **mem_object_registry::allocate_pvoid(long int n,
+void **mem_object_registry::allocate_pvoid(
+		long int n,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -688,7 +715,8 @@ void **mem_object_registry::allocate_pvoid(long int n,
 	return p;
 }
 
-void mem_object_registry::free_pvoid(void **p,
+void mem_object_registry::free_pvoid(
+		void **p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -710,7 +738,8 @@ void mem_object_registry::free_pvoid(void **p,
 	delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECTS(void *p,
+void *mem_object_registry::allocate_OBJECTS(
+		void *p,
 		long int n, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
@@ -729,7 +758,8 @@ void *mem_object_registry::allocate_OBJECTS(void *p,
 	return p;
 }
 
-void mem_object_registry::free_OBJECTS(void *p,
+void mem_object_registry::free_OBJECTS(
+		void *p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -751,7 +781,8 @@ void mem_object_registry::free_OBJECTS(void *p,
 	//delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
+void *mem_object_registry::allocate_OBJECT(
+		void *p, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -769,7 +800,8 @@ void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
 	return p;
 }
 
-void mem_object_registry::free_OBJECT(void *p,
+void mem_object_registry::free_OBJECT(
+		void *p,
 		const char *file, int line)
 {
 	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
@@ -795,7 +827,8 @@ void mem_object_registry::free_OBJECT(void *p,
 
 
 
-int mem_object_registry::search(void *p, int &idx)
+int mem_object_registry::search(
+		void *p, int &idx)
 {
 	int l, r, m;
 	int f_found = false;
@@ -834,7 +867,8 @@ int mem_object_registry::search(void *p, int &idx)
 	return f_found;
 }
 
-void mem_object_registry::insert_at(int idx)
+void mem_object_registry::insert_at(
+		int idx)
 {
 	int i;
 
@@ -858,7 +892,8 @@ void mem_object_registry::insert_at(int idx)
 	nb_entries_used++;
 }
 
-void mem_object_registry::add_to_registry(void *pointer,
+void mem_object_registry::add_to_registry(
+		void *pointer,
 		int object_type, long int object_n, int object_size_of,
 		const char *extra_type_info,
 		const char *source_file, int source_line,
@@ -911,7 +946,8 @@ void mem_object_registry::add_to_registry(void *pointer,
 	}
 }
 
-void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
+void mem_object_registry::delete_from_registry(
+		void *pointer, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int idx, i;
@@ -944,7 +980,8 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 				<< nb_entries_used << " entries in the registry" << endl;
 	}
 }
-void mem_object_registry::sort_by_size(int verbose_level)
+void mem_object_registry::sort_by_size(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1061,7 +1098,8 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	}
 }
 
-void mem_object_registry::sort_by_type(int verbose_level)
+void mem_object_registry::sort_by_type(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1091,7 +1129,8 @@ void mem_object_registry::sort_by_type(int verbose_level)
 
 }
 
-void mem_object_registry::sort_by_location(int verbose_level)
+void mem_object_registry::sort_by_location(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -1126,7 +1165,8 @@ void mem_object_registry::sort_by_location(int verbose_level)
 //##############################################################################
 
 
-static int registry_key_pair_compare_by_size(void *K1v, void *K2v)
+static int registry_key_pair_compare_by_size(
+		void *K1v, void *K2v)
 {
 	int s1, s2, c;
 	mem_object_registry_entry *K1, *K2;
@@ -1139,7 +1179,8 @@ static int registry_key_pair_compare_by_size(void *K1v, void *K2v)
 	return c;
 }
 
-static int registry_key_pair_compare_by_type(void *K1v, void *K2v)
+static int registry_key_pair_compare_by_type(
+		void *K1v, void *K2v)
 {
 	int t1, t2, l1, l2, c;
 	mem_object_registry_entry *K1, *K2;
@@ -1169,7 +1210,8 @@ static int registry_key_pair_compare_by_type(void *K1v, void *K2v)
 	return c;
 }
 
-static int registry_key_pair_compare_by_location(void *K1v, void *K2v)
+static int registry_key_pair_compare_by_location(
+		void *K1v, void *K2v)
 {
 	int l1, l2, c;
 	mem_object_registry_entry *K1, *K2;

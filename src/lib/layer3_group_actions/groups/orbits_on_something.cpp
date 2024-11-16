@@ -776,7 +776,8 @@ int orbits_on_something::get_orbit_type_index(
 			return i;
 		}
 	}
-	cout << "orbits_on_something::get_orbit_type_index orbit length " << orbit_length << " not found" << endl;
+	cout << "orbits_on_something::get_orbit_type_index "
+			"orbit length " << orbit_length << " not found" << endl;
 	exit(1);
 }
 
@@ -859,7 +860,8 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
-			cout << "orbits_on_something::test_orbits_of_a_certain_length l != orbit_length" << endl;
+			cout << "orbits_on_something::test_orbits_of_a_certain_length "
+					"l != orbit_length" << endl;
 			exit(1);
 		}
 
@@ -903,7 +905,8 @@ void orbits_on_something::print_orbits_of_a_certain_length(
 	type_idx = get_orbit_type_index(orbit_length);
 	orbit = NEW_lint(orbit_length);
 
-	cout << "There are " << Classify_orbits_by_length->Set_partition->Set_size[type_idx] << " orbits of length " << orbit_length << ":" << endl;
+	cout << "There are " << Classify_orbits_by_length->Set_partition->Set_size[type_idx]
+			<< " orbits of length " << orbit_length << ":" << endl;
 	if (Classify_orbits_by_length->Set_partition->Set_size[type_idx] < 1000) {
 		for (i = 0; i < Classify_orbits_by_length->Set_partition->Set_size[type_idx]; i++) {
 			a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
@@ -1013,7 +1016,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
-				"orbit_length=" << orbit_length << " filter_by_set_size=" << filter_by_set_size << endl;
+				"orbit_length=" << orbit_length
+				<< " filter_by_set_size=" << filter_by_set_size << endl;
 	}
 
 
@@ -1050,7 +1054,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l1 != orbit_length" << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+					"l1 != orbit_length" << endl;
 			exit(1);
 		}
 		if (!(*test_function)(filter_by_set, filter_by_set_size, orbit1, orbit_length, test_function_data)) {
@@ -1061,7 +1066,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
-				"nb_points_original=" << nb_points_original << " filtered_set_of_orbits_size=" << filtered_set_of_orbits_size << endl;
+				"nb_points_original=" << nb_points_original
+				<< " filtered_set_of_orbits_size=" << filtered_set_of_orbits_size << endl;
 	}
 
 	int nb_reduced_colors = 0;
@@ -1116,7 +1122,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 			//a = Orbits_classified->Sets[type_idx][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != orbit_length) {
-				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l1 != orbit_length" << endl;
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+						"l1 != orbit_length" << endl;
 				exit(1);
 			}
 
@@ -1131,7 +1138,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 				c = color_table[orbit1[j]];
 				c2 = reduced_color[c];
 				if (c2 < 0) {
-					cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering c2 < 0" << endl;
+					cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+							"c2 < 0" << endl;
 					exit(1);
 				}
 #if 0
@@ -1161,7 +1169,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	Bitvec->allocate(L);
 
 	if (false) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering point sets:" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+				"point sets:" << endl;
 		for (i = 0; i < filtered_set_of_orbits_size; i++) {
 			a = filtered_set_of_orbits[i];
 			//a = Orbits_classified->Sets[type_idx][i];
@@ -1180,7 +1189,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		//a = Orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l1 != orbit_length" << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+					"l1 != orbit_length" << endl;
 			exit(1);
 		}
 		for (j = i + 1; j < filtered_set_of_orbits_size; j++) {
@@ -1188,7 +1198,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 			//b = Orbits_classified->Sets[type_idx][j];
 			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
-				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l2 != orbit_length" << endl;
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+						"l2 != orbit_length" << endl;
 				exit(1);
 			}
 
@@ -1198,7 +1209,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 					t1 = Os.os_ticks();
 					dt = t1 - t0;
 					cout << "progress: "
-							<< (double) k / (double) L100 << "%, " << "i=" << i << " j=" << j << " k=" << k << ", dt=";
+							<< (double) k / (double) L100 << "%, "
+							<< "i=" << i << " j=" << j << " k=" << k << ", dt=";
 					Os.time_check_delta(cout, dt);
 					cout << endl;
 				}
@@ -1216,11 +1228,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		}
 	}
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering the graph has been created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+				"the graph has been created" << endl;
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering creating colored_graph" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+				"creating colored_graph" << endl;
 	}
 
 
@@ -1244,7 +1258,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		my_user_data = NEW_lint(user_data_size);
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering user_data before: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+					"user_data before: ";
 			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering" << endl;
@@ -1253,7 +1268,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		Lint_vec_copy(user_data, my_user_data, user_data_size);
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering user_data after: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+					"user_data after: ";
 			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
@@ -1269,7 +1285,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering colored_graph created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering "
+				"the colored_graph has been created" << endl;
 	}
 
 
@@ -1383,14 +1400,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		a = Classify_orbits_by_length->Set_partition->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l1 != orbit_length" << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+					"l1 != orbit_length" << endl;
 			exit(1);
 		}
 		for (j = i + 1; j < nb_points; j++) {
 			b = Classify_orbits_by_length->Set_partition->Sets[type_idx][j];
 			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
-				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+						"l2 != orbit_length" << endl;
 				exit(1);
 			}
 
@@ -1401,7 +1420,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 					t1 = Os.os_ticks();
 					dt = t1 - t0;
 					cout << "progress: "
-							<< (double) k / (double) L100 << "%, " << "i=" << i << " j=" << j << " k=" << k << ", dt=";
+							<< (double) k / (double) L100 << "%, "
+							<< "i=" << i << " j=" << j << " k=" << k << ", dt=";
 					Os.time_check_delta(cout, dt);
 					cout << endl;
 				}
@@ -1421,17 +1441,20 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		}
 	}
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length the graph has been created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"the graph has been created" << endl;
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length creating colored_graph" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"creating colored_graph" << endl;
 	}
 
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	CG->init_with_point_labels(nb_points, number_colors, orbit_length,
+	CG->init_with_point_labels(
+			nb_points, number_colors, orbit_length,
 		point_color,
 		Bitvec, true /* f_ownership_of_bitvec */,
 		Classify_orbits_by_length->Set_partition->Sets[type_idx] /* point_labels */,
@@ -1447,7 +1470,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		my_user_data = NEW_lint(user_data_size);
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data before: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+					"user_data before: ";
 			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length" << endl;
@@ -1463,7 +1487,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 #endif
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length user_data after: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+					"user_data after: ";
 			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
@@ -1479,7 +1504,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length colored_graph created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length "
+				"colored_graph created" << endl;
 	}
 
 
@@ -1513,7 +1539,8 @@ void orbits_on_something::extract_orbits(
 
 	if (f_v) {
 		cout << "orbits_on_something::extract_orbits "
-				"orbit_length = " << orbit_length << " nb_orbits = " << nb_orbits << endl;
+				"orbit_length = " << orbit_length
+				<< " nb_orbits = " << nb_orbits << endl;
 	}
 
 	//type_idx = get_orbit_type_index(orbit_length);
@@ -1560,7 +1587,8 @@ void orbits_on_something::extract_orbits_using_classification(
 		b = Classify_orbits_by_length->Set_partition->Sets[type_idx][a];
 		Sch->get_orbit(b, orbit, l, 0 /* verbose_level*/);
 		if (l != orbit_length) {
-			cout << "orbits_on_something::extract_orbits_using_classification l != orbit_length" << endl;
+			cout << "orbits_on_something::extract_orbits_using_classification "
+					"l != orbit_length" << endl;
 			exit(1);
 		}
 		Lint_vec_copy(orbit, extracted_set + i * orbit_length, orbit_length);
@@ -1637,14 +1665,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		a = my_orbits_classified->Sets[type_idx][i];
 		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 		if (l1 != orbit_length) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l1 != orbit_length" << endl;
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+					"l1 != orbit_length" << endl;
 			exit(1);
 		}
 		for (j = i + 1; j < nb_points; j++) {
 			b = my_orbits_classified->Sets[type_idx][j];
 			Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 			if (l2 != orbit_length) {
-				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified l2 != orbit_length" << endl;
+				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+						"l2 != orbit_length" << endl;
 				exit(1);
 			}
 			//k = Combi.ij2k_lint(i, j, nb_points);
@@ -1662,7 +1692,10 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			}
 
 
-			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
+			if ((*test_function)(
+					orbit1, orbit_length,
+					orbit2, orbit_length,
+					test_function_data)) {
 				//cout << "is adjacent" << endl;
 				Bitvec->m_i(k, 1);
 			}
@@ -1675,17 +1708,20 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		}
 	}
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified the graph has been created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"the graph has been created" << endl;
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified creating colored_graph" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"creating colored_graph" << endl;
 	}
 
 
 	CG = NEW_OBJECT(graph_theory::colored_graph);
 
-	CG->init_with_point_labels(nb_points,
+	CG->init_with_point_labels(
+			nb_points,
 			1 /*nb_colors*/,
 			1 /* nb_colors_per_vertex */,
 			NULL /*point_color*/,
@@ -1701,7 +1737,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		my_user_data = NEW_lint(user_data_size);
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data before: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+					"user_data before: ";
 			Lint_vec_print(cout, user_data, user_data_size);
 			cout << endl;
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
@@ -1710,7 +1747,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		Lint_vec_copy(user_data, my_user_data, user_data_size);
 
 		if (f_v) {
-			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data after: ";
+			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+					"user_data after: ";
 			Lint_vec_print(cout, my_user_data, user_data_size);
 			cout << endl;
 		}
@@ -1724,7 +1762,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 
 	if (f_v) {
-		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified colored_graph created" << endl;
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"the colored_graph has been created" << endl;
 	}
 
 
@@ -1809,7 +1848,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits creating Pt_labels[] and Pt_color[]" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"creating Pt_labels[] and Pt_color[]" << endl;
 	}
 	Pt_labels = NEW_lint(nb_points_total);
 	Pt_color = NEW_int(nb_points_total);
@@ -1817,7 +1857,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 		fst = Pts_fst[I];
 		t = Type_idx[I];
 		if (f_v) {
-			cout << "orbits_on_something::create_weighted_graph_on_orbits I=" << I << " fst=" << fst << " len=" << Pts_len[I] << " t=" << t << endl;
+			cout << "orbits_on_something::create_weighted_graph_on_orbits "
+					"I=" << I << " fst=" << fst << " len=" << Pts_len[I] << " t=" << t << endl;
 		}
 		for (i = 0; i < Pts_len[I]; i++) {
 			Pt_labels[fst + i] = my_orbits_classified->Sets[t][fst + i];
@@ -1827,7 +1868,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 
 
 	if (f_v) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits allocating orbit1, orbit2" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"allocating orbit1, orbit2" << endl;
 	}
 
 	orbit1 = NEW_lint(max_orbit_length);
@@ -1846,7 +1888,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	Bitvec->allocate(L);
 
 	if (f_v) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits creating adjacency bitvector" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"creating adjacency bitvector" << endl;
 	}
 	t0 = Os.os_ticks();
 	k = 0;
@@ -1856,7 +1899,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 			a = my_orbits_classified->Sets[Type_idx[I]][i];
 			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
 			if (l1 != ol1) {
-				cout << "orbits_on_something::create_weighted_graph_on_orbits l1 != ol1" << endl;
+				cout << "orbits_on_something::create_weighted_graph_on_orbits "
+						"l1 != ol1" << endl;
 				exit(1);
 			}
 			for (J = I; J < nb_orbit_lengths; J++) {
@@ -1871,7 +1915,8 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 					b = my_orbits_classified->Sets[Type_idx[J]][j];
 					Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
 					if (l2 != ol2) {
-						cout << "orbits_on_something::create_weighted_graph_on_orbits l2!= ol2" << endl;
+						cout << "orbits_on_something::create_weighted_graph_on_orbits "
+								"l2 != ol2" << endl;
 						exit(1);
 					}
 
@@ -1904,16 +1949,19 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 		}
 	}
 	if (k != L) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits l != L" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"l != L" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits the graph has been created" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"the graph has been created" << endl;
 	}
 
 	if (f_v) {
-		cout << "orbits_on_something::create_weighted_graph_on_orbits creating colored_graph" << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"creating colored_graph" << endl;
 	}
 
 

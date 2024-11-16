@@ -511,7 +511,8 @@ public:
 			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
-			std::vector<int> f_inverse_transform, int verbose_level);
+			std::vector<int> f_inverse_transform,
+			int verbose_level);
 };
 
 
@@ -697,7 +698,7 @@ public:
 	field_theory::finite_field *F;
 	int q;
 	int spread_size;
-	int size_of_packing;
+	int size_of_packing; // q^2 + q + 1
 	int nb_lines;
 	int f_select_spread;
 	std::string select_spread_text;
@@ -717,8 +718,9 @@ public:
 	int nb_iso_types_of_spreads;
 	// the number of spreads
 	// from the classification
-	int *sorted_packing;
-	int *dual_packing;
+
+	int *sorted_packing; // [size_of_packing]
+	int *dual_packing; // [size_of_packing]
 
 	geometry::spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func

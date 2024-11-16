@@ -33,10 +33,14 @@ static void quicksort(
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right);
 
-static int compare_increasingly_int(int a, int b);
-static int compare_decreasingly_int(int a, int b);
-static int compare_increasingly_lint(long int a, long int b);
-static int compare_decreasingly_lint(long int a, long int b);
+static int compare_increasingly_int(
+		int a, int b);
+static int compare_decreasingly_int(
+		int a, int b);
+static int compare_increasingly_lint(
+		long int a, long int b);
+static int compare_decreasingly_lint(
+		long int a, long int b);
 
 
 sorting::sorting()
@@ -201,6 +205,20 @@ void sorting::int_vec_sort_and_remove_duplicates(
 		}
 	}
 }
+
+int sorting::lint_vec_is_sorted(
+		long int *v, int len)
+{
+	int i;
+
+	for (i = 1; i < len; i++) {
+		if (v[i - 1] > v[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
 
 void sorting::lint_vec_sort_and_remove_duplicates(
 		long int *v, int &len)
@@ -512,6 +530,8 @@ int sorting::int_vec_is_zero(
 
 int sorting::test_if_sets_are_equal(
 		int *set1, int *set2, int set_size)
+// This function copies the sets and sorts them. It also allocates temporary memory.
+// This is inefficient if the sets are already sorted!
 {
 	int *S1, *S2;
 	int i;
@@ -536,6 +556,8 @@ int sorting::test_if_sets_are_equal(
 
 int sorting::test_if_sets_are_disjoint(
 		long int *set1, int sz1, long int *set2, int sz2)
+// This function copies the sets and sorts them. It also allocates temporary memory.
+// This is inefficient if the sets are already sorted!
 {
 	long int *S1, *S2;
 	int i, idx;
@@ -2915,6 +2937,8 @@ finish:
 
 int sorting::test_if_sets_are_disjoint(
 		long int *set1, long int *set2, int sz1, int sz2)
+// Assumes that the sets are sorted.
+// Not to be confused with a function with the same name but different order of parameters above.
 {
 	int u, v;
 
@@ -2998,8 +3022,9 @@ void sorting::d_quicksort(
 void sorting::d_quicksort_array(
 		int len, double *v)
 {
-	if (len <= 1)
+	if (len <= 1) {
 		return;
+	}
 	d_quicksort(v, 0, len - 1);
 }
 
@@ -3072,11 +3097,13 @@ int sorting::uchar_vec_compare(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
+		if (p[i] < q[i]) {
 			return -1;
-		if (p[i] > q[i])
+		}
+		if (p[i] > q[i]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -3101,11 +3128,13 @@ int sorting::int_vec_compare(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
+		if (p[i] < q[i]) {
 			return -1;
-		if (p[i] > q[i])
+		}
+		if (p[i] > q[i]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -3115,11 +3144,13 @@ int sorting::lint_vec_compare(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
+		if (p[i] < q[i]) {
 			return -1;
-		if (p[i] > q[i])
+		}
+		if (p[i] > q[i]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -3129,11 +3160,13 @@ int sorting::uint_vec_compare(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
+		if (p[i] < q[i]) {
 			return -1;
-		if (p[i] > q[i])
+		}
+		if (p[i] > q[i]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -3143,11 +3176,13 @@ int sorting::int_vec_compare_stride(
 	int i;
 
 	for (i = 0; i < len; i++) {
-		if (p[i * stride] < q[i * stride])
+		if (p[i * stride] < q[i * stride]) {
 			return -1;
-		if (p[i * stride] > q[i * stride])
+		}
+		if (p[i * stride] > q[i * stride]) {
 			return 1;
 		}
+	}
 	return 0;
 }
 
@@ -3195,39 +3230,43 @@ static void int_vec_partition(
 		vv = v[pivot];
 		v[pivot] = v[left + m1];
 		v[left + m1] = vv;
-		}
+	}
 	l = left;
 	r = right;
 	while (l < r) {
 		while (true) {
-			if (l > right)
+			if (l > right) {
 				break;
+			}
 			res = (*compare_func)(v[l], v[pivot]);
-			if (res > 0)
+			if (res > 0) {
 				break;
+			}
 			l++;
-			}
+		}
 		while (true) {
-			if (r < left)
+			if (r < left) {
 				break;
-			res = (*compare_func)(v[r], v[pivot]);
-			if (res <= 0)
-				break;
-			r--;
 			}
+			res = (*compare_func)(v[r], v[pivot]);
+			if (res <= 0) {
+				break;
+			}
+			r--;
+		}
 		// now v[l] > v[pivot] and v[r] <= v[pivot]
 		if (l < r) {
 			vv = v[l];
 			v[l] = v[r];
 			v[r] = vv;
-			}
 		}
+	}
 	m = r;
 	if (left != m) {
 		vv = v[left];
 		v[left] = v[m];
 		v[m] = vv;
-		}
+	}
 	*middle = m;
 }
 
@@ -3248,39 +3287,43 @@ static void lint_vec_partition(
 		vv = v[pivot];
 		v[pivot] = v[left + m1];
 		v[left + m1] = vv;
-		}
+	}
 	l = left;
 	r = right;
 	while (l < r) {
 		while (true) {
-			if (l > right)
+			if (l > right) {
 				break;
+			}
 			res = (*compare_func)(v[l], v[pivot]);
-			if (res > 0)
+			if (res > 0) {
 				break;
+			}
 			l++;
-			}
+		}
 		while (true) {
-			if (r < left)
+			if (r < left) {
 				break;
-			res = (*compare_func)(v[r], v[pivot]);
-			if (res <= 0)
-				break;
-			r--;
 			}
+			res = (*compare_func)(v[r], v[pivot]);
+			if (res <= 0) {
+				break;
+			}
+			r--;
+		}
 		// now v[l] > v[pivot] and v[r] <= v[pivot]
 		if (l < r) {
 			vv = v[l];
 			v[l] = v[r];
 			v[r] = vv;
-			}
 		}
+	}
 	m = r;
 	if (left != m) {
 		vv = v[left];
 		v[left] = v[m];
 		v[m] = vv;
-		}
+	}
 	*middle = m;
 }
 
@@ -3306,27 +3349,31 @@ static void partition(
 			tmp = perm[pivot];
 			perm[pivot] = perm[left + m1];
 			perm[left + m1] = tmp;
-			}
 		}
+	}
 	l = left;
 	r = right;
 	while (l < r) {
 		while (true) {
-			if (l > right)
+			if (l > right) {
 				break;
+			}
 			res = (*compare_func)(v[l], v[pivot], data);
-			if (res > 0)
+			if (res > 0) {
 				break;
+			}
 			l++;
-			}
+		}
 		while (true) {
-			if (r < left)
+			if (r < left) {
 				break;
-			res = (*compare_func)(v[r], v[pivot], data);
-			if (res <= 0)
-				break;
-			r--;
 			}
+			res = (*compare_func)(v[r], v[pivot], data);
+			if (res <= 0) {
+				break;
+			}
+			r--;
+		}
 		// now v[l] > v[pivot] and v[r] <= v[pivot]
 		if (l < r) {
 			vv = v[l];
@@ -3336,9 +3383,9 @@ static void partition(
 				tmp = perm[l];
 				perm[l] = perm[r];
 				perm[r] = tmp;
-				}
 			}
 		}
+	}
 	m = r;
 	if (left != m) {
 		vv = v[left];
@@ -3348,8 +3395,8 @@ static void partition(
 			tmp = perm[left];
 			perm[left] = perm[m];
 			perm[m] = tmp;
-			}
 		}
+	}
 	*middle = m;
 }
 
@@ -3364,42 +3411,54 @@ static void quicksort(
 		partition(v, perm, compare_func, data, left, right, &middle);
 		quicksort(v, perm, compare_func, data, left, middle - 1);
 		quicksort(v, perm, compare_func, data, middle + 1, right);
-		}
+	}
 }
 
-static int compare_increasingly_int(int a, int b)
+static int compare_increasingly_int(
+		int a, int b)
 {
-	if (a < b)
+	if (a < b) {
 		return -1;
-	if (a > b)
+	}
+	if (a > b) {
 		return 1;
+	}
 	return 0;
 }
 
-static int compare_decreasingly_int(int a, int b)
+static int compare_decreasingly_int(
+		int a, int b)
 {
-	if (a > b)
+	if (a > b) {
 		return -1;
-	if (a < b)
+	}
+	if (a < b) {
 		return 1;
+	}
 	return 0;
 }
 
-static int compare_increasingly_lint(long int a, long int b)
+static int compare_increasingly_lint(
+		long int a, long int b)
 {
-	if (a < b)
+	if (a < b) {
 		return -1;
-	if (a > b)
+	}
+	if (a > b) {
 		return 1;
+	}
 	return 0;
 }
 
-static int compare_decreasingly_lint(long int a, long int b)
+static int compare_decreasingly_lint(
+		long int a, long int b)
 {
-	if (a > b)
+	if (a > b) {
 		return -1;
-	if (a < b)
+	}
+	if (a < b) {
 		return 1;
+	}
 	return 0;
 }
 

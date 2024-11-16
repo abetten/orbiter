@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	export_group.o \
 	group_container.o \
 	group_table_and_generators.o \
 	hash_table_subgroups.o \

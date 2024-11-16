@@ -1462,7 +1462,8 @@ action *induced_action::create_induced_action_on_sets(
 		cout << "induced_action::create_induced_action_on_sets "
 				"before induced_action_on_sets" << endl;
 	}
-	A = induced_action_on_sets(NULL,
+	A = induced_action_on_sets(
+			NULL,
 		nb_sets, set_size, sets,
 		false /*f_induce_action*/,
 		verbose_level);
@@ -1503,8 +1504,8 @@ action *induced_action::induced_action_on_sets(
 
 	A = NEW_OBJECT(action);
 
-	A->label = A_old->label + "_S" + std::to_string(set_size);
-	A->label_tex = A_old->label_tex + "{\\rm S" + std::to_string(set_size) + "}";
+	A->label = A_old->label + "_OnSets" + std::to_string(nb_sets) + "_" + std::to_string(set_size);
+	A->label_tex = A_old->label_tex + "{\\rm OnSets}_{" + std::to_string(nb_sets) + "," + std::to_string(set_size) + "}";
 
 
 	A->f_has_subaction = true;

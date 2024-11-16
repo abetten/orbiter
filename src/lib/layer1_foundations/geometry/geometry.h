@@ -2986,6 +2986,9 @@ public:
 			int verbose_level);
 	void report_one_spread(
 			std::ostream &ost, int a);
+	void make_graph_of_disjoint_spreads(
+			graph_theory::colored_graph *&CG,
+			int verbose_level);
 
 };
 

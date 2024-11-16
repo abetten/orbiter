@@ -30,7 +30,8 @@ static void packing_lifting_prepare_function_new(
 	int &f_ruled_out,
 	int verbose_level);
 #endif
-static void packing_early_test_function(long int *S, int len,
+static void packing_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
@@ -342,13 +343,14 @@ void packing_classify::init2(
 				"after create_action_on_spreads" << endl;
 	}
 
+	packing_classify::Control = Control;
 
 	
 	if (f_v) {
 		cout << "packing_classify::init "
 				"before prepare_generator" << endl;
 	}
-	prepare_generator(Control, verbose_level - 1);
+	prepare_generator(verbose_level - 1);
 	if (f_v) {
 		cout << "packing_classify::init "
 				"after prepare_generator" << endl;
@@ -422,7 +424,6 @@ void packing_classify::init_P3_and_P5_and_Gr(
 
 
 void packing_classify::prepare_generator(
-		poset_classification::poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -432,7 +433,9 @@ void packing_classify::prepare_generator(
 		cout << "packing_classify::prepare_generator" << endl;
 	}
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset->init_subset_lattice(T->A, Spread_table_with_selection->A_on_spreads,
+	Poset->init_subset_lattice(
+			T->A,
+			Spread_table_with_selection->A_on_spreads,
 			T->A->Strong_gens,
 			verbose_level);
 
@@ -462,7 +465,8 @@ void packing_classify::prepare_generator(
 
 	gen = NEW_OBJECT(poset_classification::poset_classification);
 
-	gen->initialize_and_allocate_root_node(Control, Poset,
+	gen->initialize_and_allocate_root_node(
+			Control, Poset,
 			size_of_packing,
 			verbose_level - 1);
 
@@ -488,7 +492,8 @@ void packing_classify::compute(
 		cout << "packing_classify::compute" << endl;
 	}
 
-	gen->main(t0, 
+	gen->main(
+			t0,
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
@@ -547,7 +552,8 @@ void packing_classify::lifting_prepare_function_new(
 				"before compute_covered_points" << endl;
 	}
 
-	Spread_table_with_selection->compute_covered_points(points_covered_by_starter,
+	Spread_table_with_selection->compute_covered_points(
+			points_covered_by_starter,
 		nb_points_covered_by_starter, 
 		E->starter, E->starter_size, 
 		verbose_level - 1);
@@ -618,7 +624,8 @@ void packing_classify::lifting_prepare_function_new(
 				"nb_cols=" << nb_cols << endl;
 	}
 
-	Spread_table_with_selection->Spread_tables->make_exact_cover_problem(Dio,
+	Spread_table_with_selection->Spread_tables->make_exact_cover_problem(
+			Dio,
 			free_point_idx, nb_free_points2,
 			live_blocks2, nb_live_blocks2,
 			nb_needed,
@@ -763,7 +770,8 @@ static void packing_lifting_prepare_function_new(
 
 
 
-static void packing_early_test_function(long int *S, int len,
+static void packing_early_test_function(
+		long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level)
@@ -778,31 +786,43 @@ static void packing_early_test_function(long int *S, int len,
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	a = S[len - 1];
-	nb_good_candidates = 0;
-	for (i = 0; i < nb_candidates; i++) {
-		b = candidates[i];
+	if (len == 0) {
+		nb_good_candidates = nb_candidates;
+		Lint_vec_copy(candidates, good_candidates, nb_candidates);
+	}
+	else {
+		a = S[len - 1];
+		if (f_v) {
+			cout << "packing_early_test_function a = " << a << endl;
+		}
+		nb_good_candidates = 0;
+		for (i = 0; i < nb_candidates; i++) {
+			b = candidates[i];
 
-		if (b == a) {
-			continue;
-		}
+			if (b == a) {
+				continue;
+			}
 #if 0
-		if (P->bitvector_adjacency) {
-			k = Combi.ij2k_lint(a, b, P->Spread_table_with_selection->Spread_tables->nb_spreads);
-			if (bitvector_s_i(P->bitvector_adjacency, k)) {
-				good_candidates[nb_good_candidates++] = b;
+			if (P->bitvector_adjacency) {
+				k = Combi.ij2k_lint(a, b, P->Spread_table_with_selection->Spread_tables->nb_spreads);
+				if (bitvector_s_i(P->bitvector_adjacency, k)) {
+					good_candidates[nb_good_candidates++] = b;
+				}
 			}
-		}
-		else {
-			if (P->Spread_table_with_selection->Spread_tables->test_if_spreads_are_disjoint(a, b)) {
-				good_candidates[nb_good_candidates++] = b;
+			else {
+				if (P->Spread_table_with_selection->Spread_tables->test_if_spreads_are_disjoint(a, b)) {
+					good_candidates[nb_good_candidates++] = b;
+				}
 			}
-		}
 #else
-		if (P->Spread_table_with_selection->is_adjacent(a, b)) {
-			good_candidates[nb_good_candidates++] = b;
-		}
+			if (P->Spread_table_with_selection->is_adjacent(a, b)) {
+				good_candidates[nb_good_candidates++] = b;
+			}
 #endif
+		}
+	}
+	if (f_v) {
+		cout << "packing_early_test_function nb_candidates: " << nb_candidates << " -> " <<  nb_good_candidates << endl;
 	}
 	if (f_v) {
 		cout << "packing_early_test_function done" << endl;
