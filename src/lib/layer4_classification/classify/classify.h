@@ -149,6 +149,7 @@ public:
 
 class flag_orbit_node {
 public:
+
 	flag_orbits *Flag_orbits;
 
 	int flag_orbit_index;

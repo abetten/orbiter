@@ -298,7 +298,6 @@ void surface_classify_wedge::read_double_sixes(
 
 void surface_classify_wedge::create_report(
 		int f_with_stabilizers,
-		graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
@@ -315,6 +314,16 @@ void surface_classify_wedge::create_report(
 	author = "Orbiter";
 
 	fname = "Surfaces_q" + std::to_string(q) + ".tex";
+
+	graphics::layered_graph_draw_options *Draw_options;
+
+	if (!Opt->f_draw_options) {
+		cout << "for a report of the surfaces, please use -draw_options" << endl;
+		exit(1);
+	}
+
+	Draw_options = Get_draw_options(Opt->draw_options_label);
+
 
 
 	{
@@ -337,7 +346,7 @@ void surface_classify_wedge::create_report(
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report before report" << endl;
 		}
-		report(fp, f_with_stabilizers, draw_options, Opt, verbose_level - 1);
+		report(fp, f_with_stabilizers, Draw_options, Opt, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report after report" << endl;
 		}

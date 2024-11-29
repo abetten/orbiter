@@ -143,7 +143,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		int verbose_level)
 // creates a any_combinatorial_object object. Calls set_stabilizer_of_object
 // called from
-// stabilizer_of_set_of_rational_points::compute_canonical_form_of_variety
+// ring_with_action::nauty_interface_with_precomputed_data
+// ring_with_action::nauty_interface_from_scratch
 {
 	int f_v = (verbose_level >= 1);
 

@@ -240,6 +240,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 
 void combinatorial_object_with_properties::latex_report(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -441,7 +442,7 @@ void combinatorial_object_with_properties::latex_report(
 				cout << "combinatorial_object_with_properties::latex_report "
 						"before TDO->print_schemes" << endl;
 			}
-			TDO->print_schemes(ost, Report_options, verbose_level);
+			TDO->print_schemes(ost, Draw_options, Report_options, verbose_level);
 			if (f_v) {
 				cout << "combinatorial_object_with_properties::latex_report "
 						"after TDO->print_schemes" << endl;
@@ -480,7 +481,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"before GA_on_CO->print_schemes" << endl;
 		}
-		GA_on_CO->print_schemes(ost, Report_options, verbose_level);
+		GA_on_CO->print_schemes(ost, Draw_options, Report_options, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
 					"after GA_on_CO->print_schemes" << endl;
@@ -614,7 +615,9 @@ void combinatorial_object_with_properties::latex_report(
 		}
 
 		Enc->latex_canonical_form_with_labels(
-				ost, NO,
+				ost,
+				Draw_options,
+				NO,
 				point_labels,
 				block_labels,
 				verbose_level);
@@ -700,6 +703,7 @@ void combinatorial_object_with_properties::latex_report(
 
 		Any_Combo2->print_tex_detailed(
 				ost,
+				Draw_options,
 				Report_options,
 				verbose_level);
 	}

@@ -22,6 +22,7 @@ namespace cubic_surfaces_in_general {
 cubic_surface_activity_description::cubic_surface_activity_description()
 {
 	f_report = false;
+	//std::string report_draw_options_label;
 
 	f_report_group_elements = false;
 	//std::string report_group_elements_csv_file;
@@ -77,8 +78,9 @@ int cubic_surface_activity_description::read_arguments(
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
+			report_draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-report " << endl;
+				cout << "-report " << report_draw_options_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_group_elements") == 0) {
@@ -189,7 +191,7 @@ int cubic_surface_activity_description::read_arguments(
 void cubic_surface_activity_description::print()
 {
 	if (f_report) {
-		cout << "-report " << endl;
+		cout << "-report " << report_draw_options_label << endl;
 	}
 	if (f_report_group_elements) {
 		cout << "-report_group_elements "

@@ -640,6 +640,8 @@ namespace orbiter_kernel_system {
 
 
 	enum symbol_table_object_type {
+
+		// group of ten:
 		t_nothing_object,
 		t_finite_field,
 		t_polynomial_ring,
@@ -650,8 +652,10 @@ namespace orbiter_kernel_system {
 		t_projective_space,
 		t_orthogonal_space,
 		t_BLT_set_classify,
+
+
+		// group of ten:
 		t_spread_classify,
-		//t_formula,
 		t_cubic_surface,
 		t_quartic_curve,
 		t_BLT_set,
@@ -661,6 +665,8 @@ namespace orbiter_kernel_system {
 		t_graph,
 		t_code,
 		t_spread,
+
+		// group of ten:
 		t_translation_plane,
 		t_spread_table,
 		t_packing_classify,
@@ -671,6 +677,8 @@ namespace orbiter_kernel_system {
 		t_diophant,
 		t_design,
 		t_design_table,
+
+		// group of ten:
 		t_large_set_was,
 		t_set,
 		t_vector,
@@ -681,12 +689,17 @@ namespace orbiter_kernel_system {
 		t_action_on_forms,
 		t_orbits,
 		t_poset_classification_control,
+
+		// group of 8:
 		t_poset_classification_report_options,
+		t_draw_options,
+		t_draw_incidence_structure_options,
 		t_arc_generator_control,
 		t_poset_classification_activity,
 		t_crc_code,
 		t_mapping,
 		t_variety,
+
 	};
 	// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
 
@@ -958,6 +971,8 @@ namespace solvers {
 #define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
 #define Get_geometry_builder(A) orbiter_kernel_system::Orbiter->get_geometry_builder(A)
 #define Get_graph(A) orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
+#define Get_draw_options(A) orbiter_kernel_system::Orbiter->get_draw_options(A)
+#define Get_draw_incidence_structure_options(A) orbiter_kernel_system::Orbiter->get_draw_incidence_structure_options(A)
 #define Get_any_group_opaque(A) orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
 
 #define Global_export(ptr, v) orbiter_kernel_system::Orbiter->do_export(ptr, v)

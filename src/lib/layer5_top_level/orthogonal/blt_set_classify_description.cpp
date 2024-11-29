@@ -17,6 +17,10 @@ namespace orthogonal_geometry_applications {
 
 blt_set_classify_description::blt_set_classify_description()
 {
+
+	f_orthogonal_space = false;
+	//std::string orthogonal_space_label;
+
 	f_starter_size = false;
 	starter_size = 0;
 }
@@ -45,6 +49,13 @@ int blt_set_classify_description::read_arguments(
 				cout << "-starter_size " << starter_size << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-orthogonal_space") == 0) {
+			f_orthogonal_space = true;
+			orthogonal_space_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-orthogonal_space " << orthogonal_space_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -65,6 +76,9 @@ void blt_set_classify_description::print()
 {
 	if (f_starter_size) {
 		cout << "-starter_size " << starter_size << endl;
+	}
+	if (f_orthogonal_space) {
+		cout << "-orthogonal_space " << orthogonal_space_label << endl;
 	}
 }
 

@@ -1057,13 +1057,28 @@ void data_input_stream::read_objects(
 						<< " spreads" << endl;
 			}
 
-
 			data_structures::set_of_sets *SoS;
+			string column_header;
 
-			SoS = NEW_OBJECT(data_structures::set_of_sets);
+			column_header = "Solution";
 
-			int underlying_set_size = 0;
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
+			}
+			Fio.Csv_file_support->read_column_and_parse(
+					Descr->Input[input_idx].input_string, column_header,
+					SoS,
+					verbose_level);
 
+
+
+
+			//SoS = NEW_OBJECT(data_structures::set_of_sets);
+
+			//int underlying_set_size = 0;
+
+#if 0
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->Input[input_idx].input_string << endl;
@@ -1075,6 +1090,7 @@ void data_input_stream::read_objects(
 				cout << "Read the file " << Descr->Input[input_idx].input_string
 						<< ", underlying_set_size=" << underlying_set_size << endl;
 			}
+#endif
 
 			int h;
 

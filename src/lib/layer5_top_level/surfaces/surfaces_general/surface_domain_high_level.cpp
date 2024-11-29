@@ -243,6 +243,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control1,
 		poset_classification::poset_classification_control *Control2,
+		graphics::layered_graph_draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
@@ -292,13 +293,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 	}
 
 
-	if (orbiter_kernel_system::Orbiter->f_draw_options) {
-		Surf_arc->report(orbiter_kernel_system::Orbiter->draw_options, verbose_level);
-	}
-	else {
-		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "
-				"please use -draw_option for a report" << endl;
-	}
+	Surf_arc->report(Draw_options, verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_pairs "

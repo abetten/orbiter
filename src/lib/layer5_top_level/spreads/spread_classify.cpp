@@ -72,7 +72,7 @@ spread_classify::spread_classify()
 
 	Nb = 0;
 
-	Worker = NULL;
+	Isomorph_worker = NULL;
 }
 
 spread_classify::~spread_classify()

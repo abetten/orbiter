@@ -895,6 +895,7 @@ void decomposition::get_permuted_incidence_matrix(
 
 void decomposition::latex(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		row_and_col_partition *RC,
 		int verbose_level)
 {
@@ -906,9 +907,9 @@ void decomposition::latex(
 
 
 	l1_interfaces::latex_interface L;
-	graphics::draw_incidence_structure_description *Descr;
+	//graphics::draw_incidence_structure_description *Descr;
 
-	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
+	//Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	int *incma;
 	int v = Inc->nb_points();
@@ -987,7 +988,7 @@ void decomposition::latex(
 	}
 	L.incma_latex_with_text_labels(
 			ost,
-			Descr,
+			Draw_options,
 			v /*v */,
 			b /*b */,
 			V, B, Vi, Bj,
@@ -2221,6 +2222,7 @@ void decomposition::get_and_report_classes(
 
 void decomposition::print_schemes(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -2236,7 +2238,9 @@ void decomposition::print_schemes(
 	int f_enter_math = false;
 	int f_print_subscripts = true;
 
-	ost << "The decomposition scheme has size $" << Scheme->RC->nb_row_classes << " \\times " << Scheme->RC->nb_col_classes << "$\\\\" << endl;
+	ost << "The decomposition scheme has size "
+			"$" << Scheme->RC->nb_row_classes << " \\times "
+			<< Scheme->RC->nb_col_classes << "$\\\\" << endl;
 
 	ost << "$$" << endl;
 
@@ -2296,6 +2300,7 @@ void decomposition::print_schemes(
 
 		latex(
 				ost,
+				Draw_options,
 				Scheme->RC,
 				verbose_level);
 

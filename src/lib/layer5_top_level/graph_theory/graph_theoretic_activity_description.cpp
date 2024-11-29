@@ -73,6 +73,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_eigenvalues = false;
 
 	f_draw = false;
+	//std::string draw_options;
 
 }
 
@@ -228,8 +229,9 @@ int graph_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-draw") == 0) {
 			f_draw = true;
+			draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw " << endl;
+				cout << "-draw " << draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -316,7 +318,7 @@ void graph_theoretic_activity_description::print()
 		cout << "-eigenvalues " << endl;
 	}
 	if (f_draw) {
-		cout << "-draw " << endl;
+		cout << "-draw " << draw_options << endl;
 	}
 }
 

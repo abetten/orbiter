@@ -52,10 +52,11 @@ isomorph_worker::~isomorph_worker()
 
 void isomorph_worker::init(
 		isomorph_arguments *Isomorph_arguments,
-		actions::action *A_base,
-		actions::action *A,
-		poset_classification::poset_classification *gen,
-		int size, int level,
+		//actions::action *A_base,
+		//actions::action *A,
+		//poset_classification::poset_classification *gen,
+		//int size,
+		int level,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -77,11 +78,19 @@ void isomorph_worker::init(
 	}
 	Iso->init(
 			Isomorph_arguments->prefix_iso,
-			A_base, A, gen, size, level,
+			Isomorph_arguments->A, //A_base,
+			Isomorph_arguments->A2, // A
+			Isomorph_arguments->gen,
+			Isomorph_arguments->target_size, // size,
+			level,
 			Isomorph_arguments->f_use_database_for_starter,
 			Isomorph_arguments->f_implicit_fusion,
 			verbose_level);
 		// sets size, level and initializes file names
+
+
+
+
 	if (f_v) {
 		cout << "isomorph_worker::init after Iso->init" << endl;
 	}

@@ -229,57 +229,64 @@ void spread_classify_activity::perform_activity(
 			cout << "spread_classify_activity::perform_activity after Isomorph_arguments->init" << endl;
 		}
 
-		int size;
+		//int size;
 
-		size = Spread_classify->target_size;
+		//size = Spread_classify->target_size;
 
 
-		if (Spread_classify->Worker == NULL) {
-
-			if (f_v) {
-				cout << "spread_classify_activity::perform_activity Spread_classify->Worker does not exist yet. Allocating" << endl;
-			}
-
-			Spread_classify->Worker = NEW_OBJECT(isomorph::isomorph_worker);
+		if (Spread_classify->Isomorph_worker == NULL) {
 
 			if (f_v) {
-				cout << "spread_classify_activity::perform_activity before Worker->init" << endl;
+				cout << "spread_classify_activity::perform_activity "
+						"Spread_classify->Isomorph_worker does not exist yet. Allocating" << endl;
 			}
 
-			Spread_classify->Worker->init(
+			Spread_classify->Isomorph_worker = NEW_OBJECT(isomorph::isomorph_worker);
+
+			if (f_v) {
+				cout << "spread_classify_activity::perform_activity "
+						"before Isomorph_worker->init" << endl;
+			}
+
+			Spread_classify->Isomorph_worker->init(
 					Descr->Isomorph_arguments,
-					Spread_classify->A,
-					Spread_classify->A2,
-					Spread_classify->gen,
-					size,
+					//Spread_classify->A,
+					//Spread_classify->A2,
+					//Spread_classify->gen,
+					//size,
 					Spread_classify->starter_size /* level */,
 					verbose_level);
 
 			if (f_v) {
-				cout << "spread_classify_activity::perform_activity after Worker->init" << endl;
+				cout << "spread_classify_activity::perform_activity "
+						"after Isomorph_worker->init" << endl;
 			}
 		}
 		else {
 
 			if (f_v) {
-				cout << "spread_classify_activity::perform_activity Spread_classify->Worker exists" << endl;
+				cout << "spread_classify_activity::perform_activity "
+						"Spread_classify->Isomorph_worker exists" << endl;
 			}
 
-			Spread_classify->Worker->Isomorph_arguments = Descr->Isomorph_arguments;
+			Spread_classify->Isomorph_worker->Isomorph_arguments = Descr->Isomorph_arguments;
 
 
 		}
 
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity before Worker->execute" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"before Isomorph_worker->execute" << endl;
 		}
 
-		Spread_classify->Worker->execute(Descr->Isomorph_arguments,
+		Spread_classify->Isomorph_worker->execute(
+				Descr->Isomorph_arguments,
 				verbose_level);
 
 		if (f_v) {
-			cout << "spread_classify_activity::perform_activity after Worker->execute" << endl;
+			cout << "spread_classify_activity::perform_activity "
+					"after Isomorph_worker->execute" << endl;
 		}
 
 

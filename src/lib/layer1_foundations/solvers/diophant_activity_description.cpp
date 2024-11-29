@@ -30,6 +30,7 @@ diophant_activity_description::diophant_activity_description()
 	box_width = 1;
 	bit_depth = 8;
 	f_draw = false;
+	//std::string draw_options_label;
 	f_perform_column_reductions = false;
 
 	f_project_to_single_equation_and_solve = false;
@@ -105,8 +106,9 @@ int diophant_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-draw") == 0) {
 			f_draw = true;
+			draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw " << endl;
+				cout << "-draw " << draw_options_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-perform_column_reductions") == 0) {
@@ -179,7 +181,7 @@ void diophant_activity_description::print()
 		cout << "-draw_as_bitmap " << box_width << " " << bit_depth << endl;
 	}
 	if (f_draw) {
-		cout << "-draw " << endl;
+		cout << "-draw " << draw_options_label << endl;
 	}
 	if (f_perform_column_reductions) {
 		cout << "-perform_column_reductions " << endl;

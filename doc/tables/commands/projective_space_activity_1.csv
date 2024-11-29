@@ -1,6 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:projective:space:activities:1",,
 1,"Projective Space Activities (Part 1)",,
+1,"\verb'-cheat_sheet' ","  options  ","Produce a cheat sheet for $\PG(n,q)$. Considers the given drawing options object for drawing options. "
 1,"\verb'-export_point_line_incidence_matrix' ","  ","Create a csv file of the point line incidence matrix. "
 1,"\verb'-export_restricted_point_line_' \verb'incidence_matrix' "," points lines ","Create a csv file of the incidence matrix between the given set of points (rows) and lines (columns)."
 1,"\verb'-export_cubic_surface_' \verb'line_vs_line_incidence_matrix' ","  ","See Section~\ref{sec:cubicsurfaces:generalties}."

@@ -35,6 +35,7 @@ orbits_activity_description::orbits_activity_description()
 
 	f_draw_tree = false;
 	draw_tree_idx = 0;
+	//std::string draw_tree_draw_options;
 
 	f_stabilizer = false;
 	stabilizer_point = 0;
@@ -52,9 +53,11 @@ orbits_activity_description::orbits_activity_description()
 	f_transporter = false;
 	//std::string transporter_label_of_set;
 
+	f_draw_options = false;
+	//std::string draw_options_label;
+
 	f_report_options = false;
 	//std::string report_options_label;
-	//report_options = NULL;
 
 }
 
@@ -113,8 +116,9 @@ int orbits_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-draw_tree") == 0) {
 			f_draw_tree = true;
 			draw_tree_idx = ST.strtoi(argv[++i]);
+			draw_tree_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-export_trees" << draw_tree_idx << endl;
+				cout << "-export_trees" << draw_tree_idx << "" << draw_tree_draw_options << endl;
 			}
 		}
 
@@ -160,26 +164,18 @@ int orbits_activity_description::read_arguments(
 				cout << "-transporter " << transporter_label_of_set << endl;
 			}
 		}
+
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = true;
+			draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-draw_options " << draw_options_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-report_options") == 0) {
 			f_report_options = true;
 			report_options_label.assign(argv[++i]);
-#if 0
-			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
-			if (f_v) {
-				cout << "-report_options " << endl;
-			}
-			i += report_options->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -report_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-#endif
 			if (f_v) {
 				cout << "-report_options " << report_options_label << endl;
 			}
@@ -225,7 +221,7 @@ void orbits_activity_description::print()
 		cout << "-export_something " << export_something_what << " " << export_something_data1 << endl;
 	}
 	if (f_draw_tree) {
-		cout << "-draw_tree " << draw_tree_idx << endl;
+		cout << "-draw_tree " << draw_tree_idx << " " << draw_tree_draw_options << endl;
 	}
 	if (f_stabilizer) {
 		cout << "-stabilizer " << stabilizer_point << endl;

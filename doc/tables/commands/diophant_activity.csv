@@ -5,7 +5,7 @@ ROW,C1,C2,C3
 1,"\verb'-solve_mckay' ","  "," Solve the system using McKay's possolve."
 1,"\verb'-solve_DLX' ","  "," Solve the system using Knuth's dancing links."
 1,"\verb'-solve_standard' ","  "," Solve the system using the standard solver."
-1,"\verb'-draw' ","  "," Produce a drawing of the coefficient matrix of the system."
+1,"\verb'-draw' "," options "," Produce a drawing of the coefficient matrix of the system. Here, options is the name of a draw options object."
 1,"\verb'-draw_as_bitmap' "," $w$ $b$ "," Produce a bitmap drawing of the coefficient matrix of the system, using boxes of $w$ pixels with. Set the color bit-depth to $b$ ($b=8$ or $b=24$). The output is a bmp-file. "
 1,"\verb'-perform_column_reductions' ","  ","Eliminate variables which must be zero and write a reduced system."
 1,"\verb'-test_single_equation' ","  "," For each row of the system, compute the number of solutions of the system restricted to the nonzero coefficients. "

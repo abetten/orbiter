@@ -20,10 +20,10 @@ namespace orbiter {
 namespace layer1_foundations {
 namespace graph_theory {
 
-
+#if 0
 static void call_back_clique_found_using_file_output(
 	clique_finder *CF, int verbose_level);
-
+#endif
 
 colored_graph_cliques::colored_graph_cliques()
 {
@@ -410,13 +410,45 @@ void colored_graph_cliques::all_cliques_black_and_white(
 		}
 		std::vector<std::vector<long int> > solutions;
 
-		do_Sajeeb_black_and_white(Control, solutions, verbose_level - 2);
+		do_Sajeeb_black_and_white(Control, solutions, verbose_level);
 
 		// Print the solutions
 		if (f_v) {
 			cout << "colored_graph_cliques::all_cliques_black_and_white "
 					"after do_Sajeeb_black_and_white "
 					"Found " << solutions.size() << " solution(s)." << endl;
+		}
+
+
+		if (Control->f_output_file) {
+			string fname_sol;
+
+			fname_sol = Control->output_file;
+
+
+			{
+				ofstream ost(fname_sol);
+
+				if (f_v) {
+					cout << "colored_graph_cliques::all_cliques_black_and_white "
+							"fname_sol = " << fname_sol << endl;
+				}
+
+				if (f_v) {
+					cout << "colored_graph_cliques::all_cliques_black_and_white "
+							"before CG->write_solutions_to_csv_file" << endl;
+				}
+				CG->write_solutions_to_csv_file(
+									solutions,
+									Control,
+									ost, verbose_level);
+				if (f_v) {
+					cout << "colored_graph_cliques::all_cliques_black_and_white "
+							"after CG->write_solutions_to_csv_file" << endl;
+				}
+
+			}
+
 		}
 
 #if 0
@@ -519,12 +551,48 @@ void colored_graph_cliques::do_Sajeeb(
 	}
 
 #if 1
+
+
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb creating Graph object" << endl;
+	}
+
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 
-	for (size_t i=0; i<G.nb_vertices; ++i) G.vertex_label[i] = CG->points[i];
-	for (size_t i=0; i<G.nb_vertices * G.nb_colors_per_vertex; ++i) G.vertex_color[i] = CG->point_color[i]; // Anton: error corrected, was nb_colors should be nb_vertices
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before setting vertex labels" << endl;
+	}
+	for (size_t i=0; i<G.nb_vertices; ++i) {
+		G.vertex_label[i] = CG->points[i];
+	}
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after setting vertex labels" << endl;
+	}
 
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before setting vertex colors" << endl;
+	}
+	if (CG->nb_colors * CG->nb_colors_per_vertex) {
+		for (size_t i=0; i<G.nb_vertices * G.nb_colors_per_vertex; ++i) {
+			G.vertex_color[i] = CG->point_color[i]; // Anton: error corrected, was nb_colors should be nb_vertices
+		}
+	}
+	else {
+		for (size_t i=0; i<G.nb_vertices * G.nb_colors_per_vertex; ++i) {
+			G.vertex_color[i] = 0;
+		}
+	}
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after setting vertex colors" << endl;
+	}
+
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before G.set_edge_from_bitvector_adjacency" << endl;
+	}
 	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after G.set_edge_from_bitvector_adjacency" << endl;
+	}
 
 	// Create the solution storage. The base type of the solution
 	// storage must be the same as data type of the vertex label
@@ -583,14 +651,54 @@ void colored_graph_cliques::do_Sajeeb_black_and_white(
 	}
 
 #if 1
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before opening Graph object" << endl;
+	}
 	Graph<long int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before setting vertex labels" << endl;
+	}
 	G.set_vertex_labels(CG->points);
-	G.set_vertex_colors(CG->point_color);
-	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after setting vertex labels" << endl;
+	}
 
-    // Call the Rainbow Clique finding algorithm
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb CG->nb_colors_per_vertex = " << CG->nb_colors_per_vertex << endl;
+	}
+
+	if (CG->nb_colors_per_vertex) {
+		if (f_v) {
+			cout << "colored_graph_cliques::do_Sajeeb before setting vertex colors" << endl;
+		}
+		G.set_vertex_colors(CG->point_color);
+		if (f_v) {
+			cout << "colored_graph_cliques::do_Sajeeb after setting vertex colors" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "colored_graph_cliques::do_Sajeeb not setting vertex colors" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before set_edge_from_bitvector_adjacency" << endl;
+	}
+	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after set_edge_from_bitvector_adjacency" << endl;
+	}
+
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb before KClique::find_cliques" << endl;
+	}
+	// Call the Rainbow Clique finding algorithm
 	KClique::find_cliques(G, solutions, Control->target_size);
 	//RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
+	if (f_v) {
+		cout << "colored_graph_cliques::do_Sajeeb after KClique::find_cliques" << endl;
+	}
 
 	//this->nb_sol = solutions.size();
 #endif
@@ -1131,6 +1239,7 @@ int colored_graph_cliques::test_if_clique_is_regular(
 // static functions:
 // #############################################################################
 
+#if 0
 static void call_back_clique_found_using_file_output(
 	clique_finder *CF, int verbose_level)
 {
@@ -1161,6 +1270,7 @@ static void call_back_clique_found_using_file_output(
 				CF->current_clique, verbose_level);
 	}
 }
+#endif
 
 
 

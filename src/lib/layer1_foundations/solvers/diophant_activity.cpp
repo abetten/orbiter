@@ -185,8 +185,13 @@ void diophant_activity::perform_activity(
 		fname_base.assign(Descr->input_file);
 		ST.replace_extension_with(fname_base, "_drawing");
 
-		Dio->draw_partitioned(fname_base,
-				orbiter_kernel_system::Orbiter->draw_options,
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_options_label);
+
+		Dio->draw_partitioned(
+				fname_base,
+				Draw_options,
 			false, 0, 0,
 			verbose_level);
 	}

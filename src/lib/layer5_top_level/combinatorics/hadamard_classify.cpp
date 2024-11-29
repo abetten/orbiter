@@ -271,9 +271,12 @@ void hadamard_classify::init(
 
 		fname_base = "Hadamard_graph_" + std::to_string(n);
 
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 		CG->draw(fname_base,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				verbose_level);
 
 		if (f_v) {

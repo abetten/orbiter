@@ -91,17 +91,17 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_report" << endl;
 		}
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "for a report of the group, please use -draw_options" << endl;
-			exit(1);
-		}
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->report_draw_options);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->create_latex_report" << endl;
 		}
 		AG->create_latex_report(
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				Descr->f_report_sylow,
 				Descr->f_report_group_table,
 				//Descr->f_report_classes,
@@ -1274,11 +1274,16 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_orbits" << endl;
 		}
 
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_orbits_draw_options);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->subgroup_lattice_draw_by_orbits" << endl;
 		}
 		AG->subgroup_lattice_draw_by_orbits(
+				Draw_options,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1294,11 +1299,16 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_groups" << endl;
 		}
 
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_groups_draw_options);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->subgroup_lattice_draw" << endl;
 		}
 		AG->subgroup_lattice_draw(
+				Draw_options,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1520,7 +1530,7 @@ void group_theoretic_activity::perform_activity(
 		}
 
 		algebra_global_with_action Algebra_global_with_action;
-
+		poset_classification::poset_classification *PC;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1531,6 +1541,7 @@ void group_theoretic_activity::perform_activity(
 				Descr->linear_codes_control,
 				Descr->linear_codes_minimum_distance,
 				Descr->linear_codes_target_size,
+				PC,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "

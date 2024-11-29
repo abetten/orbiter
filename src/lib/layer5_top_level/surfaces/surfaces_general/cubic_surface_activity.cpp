@@ -57,12 +57,20 @@ void cubic_surface_activity::perform_activity(
 	}
 
 	if (Descr->f_report) {
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity f_report" << endl;
+		}
+
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->report_draw_options_label);
 
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
 					"before SC->do_report" << endl;
 		}
-		SC->do_report(verbose_level);
+		SC->do_report(Draw_options, verbose_level);
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity "
 					"after SC->do_report" << endl;

@@ -184,10 +184,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::report" << endl;
 	}
 
-	if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-		cout << "for a report of the surfaces, please use -draw_options ... -end" << endl;
-		exit(1);
-	}
+
 
 	int f_with_stabilizers = true;
 
@@ -198,7 +195,6 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(
 	}
 	SCW->create_report(
 			f_with_stabilizers,
-			orbiter_kernel_system::Orbiter->draw_options,
 			report_options,
 			verbose_level - 1);
 	if (f_v) {

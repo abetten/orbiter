@@ -465,12 +465,13 @@ void graph_theoretic_activity::perform_activity(
 					"after CG->Colored_graph_cliques->all_cliques" << endl;
 		}
 
-		if (f_v) {
+		if (false) {
 			cout << "graph_theoretic_activity::perform_activity "
 					"CG[0]->label=" << CG[0]->label
 					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
+#if 0
 		string fname_solution;
 
 		fname_solution = CG[0]->label + "_solutions.csv";
@@ -493,8 +494,9 @@ void graph_theoretic_activity::perform_activity(
 					"CG[0]->label=" << CG[0]->label
 					<< " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
+#endif
 
-		FREE_OBJECT(CF);
+		//FREE_OBJECT(CF);
 
 	}
 	else if (Descr->f_test_SRG_property) {
@@ -1174,9 +1176,13 @@ void graph_theoretic_activity::perform_activity(
 
 		fname = CG[0]->label + "_draw.mp";
 
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_options);
+
 		CG[0]->draw_on_circle(
 				fname,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				verbose_level);
 	}
 

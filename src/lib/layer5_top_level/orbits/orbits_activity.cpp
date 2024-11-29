@@ -125,10 +125,16 @@ void orbits_activity::perform_activity(
 		if (f_v) {
 			cout << "orbits_activity::perform_activity f_draw_tree" << endl;
 		}
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_tree_draw_options);
+
+
 		if (f_v) {
 			cout << "orbits_activity::perform_activity before do_draw_tree" << endl;
 		}
-		do_draw_tree(verbose_level);
+		do_draw_tree(Draw_options, verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::perform_activity after do_draw_tree" << endl;
 		}
@@ -400,19 +406,18 @@ void orbits_activity::do_report(
 
 	else if (OC->f_has_cubic_surfaces) {
 
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "for a report of the surfaces, please use -draw_options ... -end" << endl;
-			exit(1);
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_cubic_surfaces" << endl;
 		}
 
-		poset_classification::poset_classification_report_options
-					*report_options;
+		poset_classification::poset_classification_report_options *report_options;
 
-		string report_options_label;
+		if (!Descr->f_report_options) {
+			cout << "orbits_activity::do_report please use -report_options" << endl;
+			exit(1);
+		}
+		report_options = Get_poset_classification_report_options(Descr->report_options_label);
 
-		report_options_label = "report_options";
-
-		report_options = Get_poset_classification_report_options(report_options_label);
 
 		int f_with_stabilizers = true;
 
@@ -423,7 +428,6 @@ void orbits_activity::do_report(
 		}
 		OC->SCW->create_report(
 				f_with_stabilizers,
-				orbiter_kernel_system::Orbiter->draw_options,
 				report_options,
 				verbose_level - 1);
 		if (f_v) {
@@ -435,6 +439,9 @@ void orbits_activity::do_report(
 
 	else if (OC->f_has_semifields) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_semifields" << endl;
+		}
 		if (f_v) {
 			cout << "orbits_activity::do_report "
 					"before OC->Semifields->latex_report" << endl;
@@ -450,6 +457,9 @@ void orbits_activity::do_report(
 
 	else if (OC->f_has_boolean_functions) {
 
+		if (f_v) {
+			cout << "orbits_activity::do_report f_has_boolean_functions" << endl;
+		}
 		OC->BFC->print();
 
 	}
@@ -1096,6 +1106,7 @@ void orbits_activity::do_export_levels(
 
 
 void orbits_activity::do_draw_tree(
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1125,7 +1136,7 @@ void orbits_activity::do_draw_tree(
 		}
 		OC->Orb->Sch->draw_tree(
 				fname,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				Descr->draw_tree_idx,
 				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
@@ -1183,7 +1194,7 @@ void orbits_activity::do_draw_tree(
 				OC->On_Subspaces->orbits_on_subspaces_PC->get_problem_label_with_path(),
 				OC->On_Subspaces->orbits_on_subspaces_PC->get_control()->depth,
 				0 /* data1 */,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree after draw_poset" << endl;
@@ -1218,7 +1229,7 @@ void orbits_activity::do_draw_tree(
 
 		OC->On_polynomials->Sch->draw_tree(
 				fname,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				Descr->draw_tree_idx,
 				false /* f_has_point_labels */, NULL /* long int *point_labels*/,
 				verbose_level);
@@ -1245,7 +1256,7 @@ void orbits_activity::do_draw_tree(
 				OC->CCC->Arc_gen->gen->get_problem_label_with_path(),
 				OC->Arc_generator_description->target_size,
 			0 /* data1 */,
-			orbiter_kernel_system::Orbiter->draw_options,
+			Draw_options,
 			verbose_level);
 		if (f_v) {
 			cout << "orbits_activity::do_draw_tree after draw_poset" << endl;

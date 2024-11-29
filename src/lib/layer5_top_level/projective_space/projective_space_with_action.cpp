@@ -700,27 +700,6 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 }
 
 
-void projective_space_with_action::report(
-	std::ostream &ost,
-	graphics::layered_graph_draw_options *O,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::report" << endl;
-	}
-
-
-	cout << "projective_space_with_action::report not yet implemented" << endl;
-	exit(1);
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::report done" << endl;
-	}
-}
-
 
 
 void projective_space_with_action::canonical_form_of_code(
@@ -910,6 +889,20 @@ void projective_space_with_action::cheat_sheet(
 
 			if (f_v) {
 				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"before report" << endl;
+			}
+
+
+
+			report(ost, O, verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
+						"after report" << endl;
+			}
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG "
 						"before A->report" << endl;
 			}
 
@@ -924,19 +917,8 @@ void projective_space_with_action::cheat_sheet(
 						"after A->report" << endl;
 			}
 
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
-						"before P->Reporting->report" << endl;
-			}
 
 
-
-			P->Reporting->report(ost, O, verbose_level);
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
-						"after P->Reporting->report" << endl;
-			}
 
 			if (n == 3) {
 
@@ -976,6 +958,174 @@ void projective_space_with_action::cheat_sheet(
 
 
 }
+
+
+void projective_space_with_action::report(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::report" << endl;
+	}
+
+	ost << "\\subsection*{The projective space ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+	ost << "\\noindent" << endl;
+	ost << "\\arraycolsep=2pt" << endl;
+	ost << "\\parindent=0pt" << endl;
+	ost << "Field order $q = " << P->Subspaces->F->q << "$\\\\" << endl;
+	ost << "Characteristic $p = " << P->Subspaces->F->p << "$\\\\" << endl;
+	ost << "Extension degree $e = " << P->Subspaces->F->e << "$\\\\" << endl;
+	ost << "Projective dimension $n = " << P->Subspaces->n << "$\\\\" << endl;
+
+	ost << "Symmetry group = $" << A->label_tex << "$\\\\" << endl;
+
+	if (A->f_has_strong_generators) {
+
+		ring_theory::longinteger_object go;
+
+		A->Strong_gens->group_order(go);
+		ost << "Order of the group = " << go << "\\\\" << endl;
+
+	}
+
+
+	ost << "Number of points = " << P->Subspaces->N_points << "\\\\" << endl;
+	ost << "Number of lines = " << P->Subspaces->N_lines << "\\\\" << endl;
+	ost << "Number of lines on a point = " << P->Subspaces->r << "\\\\" << endl;
+	ost << "Number of points on a line = " << P->Subspaces->k << "\\\\" << endl;
+
+
+
+	if (A->Stabilizer_chain) {
+		if (A->base_len()) {
+			ost << "Base: $";
+			Lint_vec_print(ost, A->get_base(), A->base_len());
+			ost << "$\\\\" << endl;
+		}
+		if (A->f_has_strong_generators) {
+			ost << "{\\small\\arraycolsep=2pt" << endl;
+			A->Strong_gens->print_generators_tex(ost);
+			ost << "}" << endl;
+		}
+		else {
+			ost << "Does not have strong generators.\\\\" << endl;
+		}
+	}
+
+
+
+	//ost<< "\\clearpage" << endl << endl;
+	//ost << "\\section{The Finite Field with $" << q << "$ Elements}" << endl;
+	//F->cheat_sheet(ost, verbose_level);
+
+#if 0
+	if (f_v) {
+		cout << "projective_space_with_action::report before incidence_matrix_save_csv" << endl;
+	}
+	incidence_matrix_save_csv();
+	if (f_v) {
+		cout << "projective_space_with_action::report after incidence_matrix_save_csv" << endl;
+	}
+#endif
+
+	if (P->Subspaces->n == 2) {
+		//ost << "\\clearpage" << endl << endl;
+		ost << "\\subsection*{The plane}" << endl;
+
+		if (f_v) {
+			cout << "projective_space_with_action::report "
+					"before create_drawing_of_plane" << endl;
+		}
+		P->Reporting->create_drawing_of_plane(ost, Draw_options, verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::report "
+					"after create_drawing_of_plane" << endl;
+		}
+	}
+
+	//ost << "\\clearpage" << endl << endl;
+	ost << "\\subsection*{The points of ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+	P->Reporting->cheat_sheet_points(ost, verbose_level);
+
+	//cheat_sheet_point_table(ost, verbose_level);
+
+
+#if 0
+	//ost << "\\clearpage" << endl << endl;
+	cheat_sheet_points_on_lines(ost, verbose_level);
+
+	//ost << "\\clearpage" << endl << endl;
+	cheat_sheet_lines_on_points(ost, verbose_level);
+#endif
+
+	// report subspaces:
+	int k;
+
+	for (k = 1; k < P->Subspaces->n; k++) {
+		//ost << "\\clearpage" << endl << endl;
+		if (k == 1) {
+			ost << "\\subsection*{The lines of ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+		}
+		else if (k == 2) {
+			ost << "\\subsection*{The planes of ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+		}
+		else {
+			ost << "\\subsection*{The subspaces of dimension " << k << " of ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+		}
+		//ost << "\\section{Subspaces of dimension " << k << "}" << endl;
+
+
+		if (f_v) {
+			cout << "projective_space_with_action::report "
+					"before report_subspaces_of_dimension" << endl;
+		}
+		P->Reporting->report_subspaces_of_dimension(ost, k + 1, verbose_level);
+		//Grass_stack[k + 1]->cheat_sheet_subspaces(ost, verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::report "
+					"after report_subspaces_of_dimension" << endl;
+		}
+	}
+
+
+#if 0
+	if (n >= 2 && N_lines < 25) {
+		//ost << "\\clearpage" << endl << endl;
+		ost << "\\section*{Line intersections}" << endl;
+		cheat_sheet_line_intersection(ost, verbose_level);
+	}
+
+
+	if (n >= 2 && N_points < 25) {
+		//ost << "\\clearpage" << endl << endl;
+		ost << "\\section*{Line through point-pairs}" << endl;
+		cheat_sheet_line_through_pairs_of_points(ost, verbose_level);
+	}
+#endif
+
+	if (f_v) {
+		cout << "projective_space_reporting::report "
+				"before report_polynomial_rings" << endl;
+	}
+	P->Reporting->report_polynomial_rings(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_reporting::report "
+				"after report_polynomial_rings" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::report done" << endl;
+	}
+
+}
+
+
 
 
 void projective_space_with_action::do_spread_classify(

@@ -667,6 +667,7 @@ public:
 		int *&incma, int verbose_level);
 	void latex(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			row_and_col_partition *RC,
 			int verbose_level);
 	void get_row_decomposition_scheme(
@@ -750,6 +751,7 @@ public:
 			int verbose_level);
 	void print_schemes(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -1567,6 +1569,7 @@ public:
 			int verbose_level);
 	void print_schemes(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);

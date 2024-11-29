@@ -28,13 +28,17 @@ poset_classification_activity_description::poset_classification_activity_descrip
 	export_history_to_cpp_level = 0;
 
 	f_write_tree = false;
+	//std::string write_tree_draw_options;
 
 	f_find_node_by_stabilizer_order = false;
 	find_node_by_stabilizer_order = 0;
 
 
 	f_draw_poset = false;
+	//std::string draw_poset_draw_options;
+
 	f_draw_full_poset = false;
+	//std::string draw_full_poset_draw_options;
 
 	f_plesken = false;
 	f_print_data_structure = false;
@@ -122,8 +126,9 @@ int poset_classification_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
 			f_write_tree = true;
+			write_tree_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-write_tree" << endl;
+				cout << "-write_tree " << write_tree_draw_options << endl;
 			}
 		}
 
@@ -137,14 +142,16 @@ int poset_classification_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = true;
+			draw_poset_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_poset " << endl;
+				cout << "-draw_poset " << draw_poset_draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = true;
+			draw_full_poset_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_full_poset " << endl;
+				cout << "-draw_full_poset " << draw_full_poset_draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-plesken") == 0) {
@@ -281,7 +288,6 @@ void poset_classification_activity_description::print()
 		cout << "-report ";
 		report_options->print();
 	}
-
 	if (f_export_level_to_cpp) {
 		cout << "-export_level_to_cpp " << export_level_to_cpp_level << endl;
 	}
@@ -290,17 +296,17 @@ void poset_classification_activity_description::print()
 	}
 
 	if (f_write_tree) {
-		cout << "-write_tree" << endl;
+		cout << "-write_tree " << write_tree_draw_options << endl;
 	}
 	if (f_find_node_by_stabilizer_order) {
 		cout << "-find_node_by_stabilizer_order "
 				<< find_node_by_stabilizer_order << endl;
 	}
 	if (f_draw_poset) {
-		cout << "-draw_poset" << endl;
+		cout << "-draw_poset " << draw_poset_draw_options << endl;
 	}
 	if (f_draw_full_poset) {
-		cout << "-draw_full_poset" << endl;
+		cout << "-draw_full_poset " << draw_full_poset_draw_options << endl;
 	}
 	if (f_plesken) {
 		cout << "-plesken" << endl;

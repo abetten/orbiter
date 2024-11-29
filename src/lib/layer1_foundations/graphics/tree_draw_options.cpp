@@ -35,6 +35,9 @@ tree_draw_options::tree_draw_options()
 	f_has_draw_vertex_callback = false;
 	draw_vertex_callback = NULL;
 
+	f_draw_options = false;
+	//std::string draw_options_label;
+
 }
 
 
@@ -79,6 +82,13 @@ int tree_draw_options::read_arguments(
 				cout << "-select_path " << select_path_text << " " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = true;
+			draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-draw_options " << draw_options_label << " " << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -108,6 +118,9 @@ void tree_draw_options::print()
 	}
 	if (f_has_draw_vertex_callback) {
 		cout << "has draw_vertex_callback function" << endl;
+	}
+	if (f_draw_options) {
+		cout << "-draw_options " << draw_options_label << " " << endl;
 	}
 }
 

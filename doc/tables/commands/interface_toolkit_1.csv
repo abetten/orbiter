@@ -4,6 +4,7 @@ ROW,C1,C2,C3
 1,"\verb'-create_files' "," descr "," Create text files. "
 1,"\verb'-save_matrix_csv' "," label "," Save matrix to a csv file. "
 1,"\verb'-csv_file_tally' "," fname "," Tally a csv file. "
+1,"\verb'-collect_stats' "," fname\_mask fname\_out from last step "," Gather data from a list of files. Specifically, count the number of rows in each file."
 1,"\verb'-csv_file_select_rows' "," fname $R$ ","Selects rows listed in $R$ from the csv-file fname. "
 1,"\verb'-csv_file_split_rows_modulo' "," fname $n$ ","Splits the rows from the csv-file fname modulo $n$. "
 1,"\verb'-csv_file_select_cols' "," fname $R$ ","Selects columns listed in $R$ from the csv-file fname. "

@@ -118,10 +118,18 @@ void poset_classification_activity::perform_work(
 	}
 
 	if (Descr->f_write_tree) {
+
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->write_tree_draw_options);
+
+
 		PC->get_Poo()->print_tree();
 		PC->write_treefile(
-				PC->get_problem_label_with_path(), PC->get_depth(),
-				orbiter_kernel_system::Orbiter->draw_options,
+				PC->get_problem_label_with_path(),
+				PC->get_depth(),
+				Draw_options,
 				verbose_level - 1);
 
 		//return 0;
@@ -259,10 +267,15 @@ void poset_classification_activity::perform_work(
 			exit(1);
 		}
 #endif
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_poset_draw_options);
+
 		PC->draw_poset(
 				PC->get_problem_label_with_path(), actual_size,
 			0 /* data1 */,
-			orbiter_kernel_system::Orbiter->draw_options,
+			Draw_options,
 			verbose_level);
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "
@@ -275,10 +288,15 @@ void poset_classification_activity::perform_work(
 			cout << "poset_classification_activity::perform_work "
 					"before draw_full_poset" << endl;
 		}
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_full_poset_draw_options);
+
 		PC->draw_poset_full(
 				PC->get_problem_label_with_path(), actual_size,
 				0 /* data1 */,
-				orbiter_kernel_system::Orbiter->draw_options,
+				Draw_options,
 				1 /* x_stretch */, verbose_level);
 		if (f_v) {
 			cout << "poset_classification_activity::perform_work "

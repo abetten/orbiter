@@ -142,7 +142,7 @@ public:
 		);
 	void compute_liftings_new(
 			int f_solve, int f_save, int f_read_instead,
-		int f_draw_system,
+		int f_draw_system, std::string &draw_options_label,
 		std::string &fname_system,
 		int f_write_tree,
 		std::string &fname_tree, int verbose_level);
@@ -152,7 +152,8 @@ public:
 		int &nb_col, 
 		int *&Solutions, int &sol_length, int &nb_sol,
 		int &nb_backtrack, int &dt, 
-		int f_draw_system, std::string &fname_system,
+		int f_draw_system, std::string &draw_options_label,
+		std::string &fname_system,
 		int f_write_tree, std::string &fname_tree,
 		int verbose_level);
 	void lexorder_test(
@@ -198,6 +199,7 @@ public:
 	int f_save;
 	int f_read;
 	int f_draw_system;
+	std::string draw_options;
 	std::string fname_system;
 	int f_write_tree;
 	std::string fname_tree;

@@ -83,14 +83,14 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 	f_has_nauty_output = false;
 
-	f_substructure_size = false;
-	substructure_size = 0;
+	//f_substructure_size = false;
+	//substructure_size = 0;
 
 	f_skip = false;
 	//std::string skip_vector_label;
 
 
-	Canon_substructure = NULL;
+	//Canonical_form_classifier = NULL;
 
 
 }
@@ -251,6 +251,7 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-has_nauty_output" << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-substructure_size") == 0) {
 			f_substructure_size = true;
 			substructure_size = ST.strtoi(argv[++i]);
@@ -258,6 +259,7 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-substructure_size" << endl;
 			}
 		}
+#endif
 		else if (ST.stringcmp(argv[i], "-skip") == 0) {
 			f_skip = true;
 			skip_vector_label.assign(argv[++i]);
@@ -350,9 +352,11 @@ void canonical_form_classifier_description::print()
 	if (f_has_nauty_output) {
 		cout << "-has_nauty_output" << endl;
 	}
+#if 0
 	if (f_substructure_size) {
 		cout << "-substructure_size" << endl;
 	}
+#endif
 	if (f_skip) {
 		cout << "-skip " << skip_vector_label << endl;
 	}

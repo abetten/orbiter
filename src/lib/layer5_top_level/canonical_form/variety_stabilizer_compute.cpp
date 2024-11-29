@@ -89,67 +89,30 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 	variety_stabilizer_compute::Variety_object_with_action = Variety_object_with_action;
 
 	if (f_v) {
-		//Variety->Vo->Variety_object->print(cout);
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety the variety is:" << endl;
 		Variety_object_with_action->print(cout);
-		//NO_N,NO_ago,NO_base_len,NO_aut_cnt,NO_base,NO_tl,NO_aut,NO_cl,NO_stats
-		//int f_has_nauty_output;
-		//int nauty_output_column_index_start;
-		//std::vector<std::string> Carrying_through;
 	}
 
 
 
-	interfaces::nauty_interface_with_group Nau;
-
-	if (Variety_object_with_action->f_has_nauty_output) {
-		if (f_v) {
-			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
-					"f_has_nauty_output" << endl;
-		}
-
-		if (f_v) {
-			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
-					"before Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
-		}
-		Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data(
-				Ring_with_action->PA->P,
-				Ring_with_action->PA->A,
-				Variety_object_with_action->Variety_object->Point_sets->Sets[0],
-				Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
-				f_save_nauty_input_graphs,
-				Variety_object_with_action->nauty_output_index_start,
-				Variety_object_with_action->Carrying_through,
-				Set_stab,
-				Canonical_form,
-				NO,
-				verbose_level);
-		if (f_v) {
-			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
-					"after Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
-		}
+	if (f_v) {
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
+				"before Ring_with_action->nauty_interface" << endl;
 	}
-	else {
-		if (f_v) {
-			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
-					"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
-		}
-
-		Nau.set_stabilizer_in_projective_space_using_nauty(
-				Ring_with_action->PA->P,
-				Ring_with_action->PA->A,
-				Variety_object_with_action->Variety_object->Point_sets->Sets[0],
-				Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
-				f_save_nauty_input_graphs,
-				Set_stab,
-				Canonical_form,
-				NO,
-				verbose_level);
-
-		if (f_v) {
-			cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
-					"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
-		}
+	Ring_with_action->nauty_interface(
+			Variety_object_with_action,
+			f_save_nauty_input_graphs,
+			Set_stab,
+			Canonical_form,
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "variety_stabilizer_compute::compute_canonical_form_of_variety "
+				"after Ring_with_action->nauty_interface" << endl;
 	}
+
+
+
 
 
 	// The order of the set stabilizer is needed
@@ -227,6 +190,8 @@ void variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer(
 				"after Orb->init" << endl;
 		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
 				"found an orbit of length " << Orb->used_length << endl;
+		cout << "variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer "
+				"position_of_original_object = " << Orb->position_of_original_object << endl;
 	}
 
 

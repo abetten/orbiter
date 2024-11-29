@@ -186,9 +186,9 @@ void blt_set_classify_activity::perform_activity(
 					"after Isomorph_arguments->init" << endl;
 		}
 
-		int size;
+		//int size;
 
-		size = BLT_classify->q + 1;
+		//size = BLT_classify->q + 1;
 
 		if (BLT_classify->Worker == NULL) {
 
@@ -204,10 +204,10 @@ void blt_set_classify_activity::perform_activity(
 
 			BLT_classify->Worker->init(
 					Descr->Isomorph_arguments,
-					BLT_classify->A,
-					BLT_classify->A /* A2 */,
-					BLT_classify->gen,
-					size,
+					//BLT_classify->A,
+					//BLT_classify->A /* A2 */,
+					//BLT_classify->gen,
+					//size,
 					BLT_classify->starter_size /* level */,
 					verbose_level);
 

@@ -355,6 +355,11 @@ public:
 	void read_csv_file_and_get_column(
 			std::string &fname, std::string &col_header,
 			long int *&Data, int &data_size, int verbose_level);
+	void collect_stats(
+			std::string &fname_mask,
+			std::string &fname_out,
+			int from, int last, int step,
+			int verbose_level);
 
 
 };
@@ -1229,14 +1234,6 @@ public:
 
 	long int t0;
 
-	int f_draw_options;
-	graphics::layered_graph_draw_options *draw_options;
-
-
-	int f_draw_incidence_structure_description;
-	graphics::draw_incidence_structure_description
-		*Draw_incidence_structure_description;
-
 	int f_list_arguments;
 
 	int f_seed;
@@ -1346,6 +1343,12 @@ public:
 	graph_theory::colored_graph
 		*get_object_of_type_graph(
 				std::string &label);
+	graphics::layered_graph_draw_options
+		*get_draw_options(
+				std::string &label);
+	graphics::draw_incidence_structure_description
+		*get_draw_incidence_structure_options(
+				std::string &label);
 	void
 		*get_any_group_opaque(
 				std::string &label);
@@ -1418,11 +1421,6 @@ public:
 	void init_spread_classify(
 			std::string &label,
 			void *p, int verbose_level);
-#if 0
-	void init_formula(
-			std::string &label,
-			void *p, int verbose_level);
-#endif
 	void init_cubic_surface(
 			std::string &label,
 			void *p, int verbose_level);
@@ -1516,6 +1514,14 @@ public:
 	void init_poset_classification_report_options(
 			std::string &label,
 			void *PCRO, int verbose_level);
+	void init_draw_options(
+			std::string &label,
+			graphics::layered_graph_draw_options *Draw_options,
+			int verbose_level);
+	void init_draw_incidence_structure_options(
+			std::string &label,
+			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			int verbose_level);
 	void init_arc_generator_control(
 			std::string &label,
 			void *AGC, int verbose_level);

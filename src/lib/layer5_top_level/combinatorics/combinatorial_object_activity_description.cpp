@@ -57,6 +57,7 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 
 	f_draw_incidence_matrices = false;
 	//std::string draw_incidence_matrices_prefix;
+	//std::string draw_incidence_matrices_options_label;
 
 	f_test_distinguishing_property = false;
 	//test_distinguishing_property_graph
@@ -213,8 +214,9 @@ int combinatorial_object_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
 			f_draw_incidence_matrices = true;
 			draw_incidence_matrices_prefix.assign(argv[++i]);
+			draw_incidence_matrices_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_incidence_matrices " << endl;
+				cout << "-draw_incidence_matrices " << draw_incidence_matrices_prefix << " " << draw_incidence_matrices_options_label << endl;
 			}
 		}
 
@@ -339,7 +341,7 @@ void combinatorial_object_activity_description::print()
 		Objects_report_options->print();
 	}
 	if (f_draw_incidence_matrices) {
-		cout << "-draw_incidence_matrices " << draw_incidence_matrices_prefix << endl;
+		cout << "-draw_incidence_matrices " << draw_incidence_matrices_prefix << " " << draw_incidence_matrices_options_label << endl;
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;

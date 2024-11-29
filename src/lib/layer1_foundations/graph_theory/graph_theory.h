@@ -94,7 +94,7 @@ public:
 	unsigned long int nb_decision_steps;
 	int dt;
 
-	int *Sol;
+	int *Sol; // [nb_sol * target_size]
 	long int nb_sol;
 
 
@@ -556,6 +556,7 @@ public:
 			int current_depth, int *subgraph,
 			int verbose_level);
 	void write_solutions_to_csv_file(
+			std::vector<std::vector<long int> >& solutions,
 			clique_finder_control *Control,
 			std::ostream &ost, int verbose_level);
 	void complement(

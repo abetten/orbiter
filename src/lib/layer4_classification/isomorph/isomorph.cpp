@@ -119,7 +119,8 @@ void isomorph::init(
 				"before Sub->init" << endl;
 	}
 
-	Sub->init(this,
+	Sub->init(
+			this,
 			gen,
 			f_use_database_for_starter,
 			f_implicit_fusion,
@@ -185,6 +186,7 @@ void isomorph::init_high_level(
 	std::string &prefix_classify,
 	std::string &prefix, int level,
 	int verbose_level)
+// calls layer2_discreta::typed_objects::discreta_init();
 {
 	int f_v = (verbose_level >= 1);
 
@@ -202,7 +204,8 @@ void isomorph::init_high_level(
 		cout << "isomorph::init_high_level "
 				"before init" << endl;
 	}
-	init(prefix, A, A, gen, 
+	init(
+			prefix, A, A, gen,
 		size, level, 
 		f_use_database_for_starter, 
 		f_implicit_fusion, 
@@ -221,8 +224,10 @@ void isomorph::init_high_level(
 				"before Sub->read_data_files_for_starter" << endl;
 	}
 
-	Sub->read_data_files_for_starter(level,
-			prefix_classify, verbose_level);
+	Sub->read_data_files_for_starter(
+			level,
+			prefix_classify,
+			verbose_level);
 
 	if (f_v) {
 		cout << "isomorph::init_high_level "
@@ -295,12 +300,42 @@ void isomorph::init_high_level(
 	}
 }
 
-void isomorph::induced_action_on_set_and_kernel(
-	ostream &file,
-	actions::action *A,
-	groups::sims *Stab, int size, long int *set,
+void isomorph::report_induced_action_on_set_and_kernel(
+	std::ostream &file,
+	actions::action *A_base,
+	groups::sims *Stab,
+	int size, long int *set,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "isomorph::report_induced_action_on_set_and_kernel" << endl;
+	}
+
+	actions::action_global Action_global;
+
+	if (f_v) {
+		cout << "isomorph::report_induced_action_on_set_and_kernel "
+				"before Action_global.report_induced_action_on_set_and_kernel" << endl;
+	}
+	Action_global.report_induced_action_on_set_and_kernel(
+		file,
+		A_base,
+		Sub->gen->get_A2(), //actions::action *A2,
+		Stab, size, set,
+		verbose_level);
+	if (f_v) {
+		cout << "isomorph::report_induced_action_on_set_and_kernel "
+				"after Action_global.report_induced_action_on_set_and_kernel" << endl;
+	}
+
+	if (f_v) {
+		cout << "isomorph::report_induced_action_on_set_and_kernel done" << endl;
+	}
+
+
+#if 0
 	int f_v = (verbose_level >= 1);
 	actions::action *AAA;
 	//sims K;
@@ -411,12 +446,13 @@ void isomorph::induced_action_on_set_and_kernel(
 
 		if (!ko.is_one()) {
 			groups::schreier Orb;
-			isomorph::A->compute_all_point_orbits(Orb,
+			isomorph::A->compute_all_point_orbits(
+					Orb,
 					AAA->Kernel->gens, verbose_level - 2);
 			int *val, *mult, len;
 
 			file << "The kernel has $" << Orb.nb_orbits
-					<< "$ orbits on the quadric.\\\\" << endl;
+					<< "$ orbits on the object.\\\\" << endl;
 			Int_vec_distribution(
 					Orb.orbit_len, Orb.nb_orbits,
 					val, mult, len);
@@ -465,7 +501,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	file << "\\bigskip" << endl << endl;
 	FREE_int(Elt1);
 	FREE_OBJECT(AAA);
-
+#endif
 }
 
 
@@ -484,7 +520,8 @@ void isomorph::read_everything_including_classification(
 		cout << "isomorph::read_everything_including_classification "
 				"before Sub->read_data_files_for_starter" << endl;
 	}
-	Sub->read_data_files_for_starter(level,
+	Sub->read_data_files_for_starter(
+			level,
 			prefix_classify, verbose_level - 1);
 	if (f_v) {
 		cout << "isomorph::read_everything_including_classification "
@@ -527,7 +564,8 @@ void isomorph::read_everything_including_classification(
 		cout << "isomorph::read_everything_including_classification "
 				"before gen->recreate_schreier_vectors_up_to_level" << endl;
 	}
-	Sub->gen->recreate_schreier_vectors_up_to_level(level - 1,
+	Sub->gen->recreate_schreier_vectors_up_to_level(
+			level - 1,
 			verbose_level);
 	if (f_v) {
 		cout << "isomorph::read_everything_including_classification "

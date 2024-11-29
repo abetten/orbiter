@@ -127,7 +127,7 @@ void projective_space_reporting::report_summary(
 
 void projective_space_reporting::report(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *O,
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -168,35 +168,17 @@ void projective_space_reporting::report(
 		ost << "\\subsection*{The plane}" << endl;
 
 
-		if (P->Subspaces->N_points < 1000) {
-			string fname_base;
-			long int *set;
-			int i;
-
-			set = NEW_lint(P->Subspaces->N_points);
-			for (i = 0; i < P->Subspaces->N_points; i++) {
-				set[i] = i;
-			}
-			fname_base = "plane_of_order_" + std::to_string(P->Subspaces->q);
-
-			graphics::plot_tools Pt;
-
-			Pt.draw_point_set_in_plane(fname_base,
-					O,
-					P,
-					set, P->Subspaces->N_points,
-					true /*f_point_labels*/,
-					verbose_level);
-			FREE_lint(set);
-			ost << "{\\scriptsize" << endl;
-			ost << "$$" << endl;
-			ost << "\\input " << fname_base << "_draw.tex" << endl;
-			ost << "$$" << endl;
-			ost << "}%%" << endl;
+		if (f_v) {
+			cout << "projective_space_reporting::report "
+					"before create_drawing_of_plane" << endl;
 		}
-		else {
-			ost << "Too many points to draw. \\\\" << endl;
+		create_drawing_of_plane(ost, Draw_options, verbose_level);
+		if (f_v) {
+			cout << "projective_space_reporting::report "
+					"after create_drawing_of_plane" << endl;
 		}
+
+
 	}
 
 	//ost << "\\clearpage" << endl << endl;
@@ -259,6 +241,36 @@ void projective_space_reporting::report(
 	}
 #endif
 
+
+	if (f_v) {
+		cout << "projective_space_reporting::report "
+				"before report_polynomial_rings" << endl;
+	}
+	report_polynomial_rings(
+			ost,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_reporting::report "
+				"after report_polynomial_rings" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_reporting::report done" << endl;
+	}
+
+}
+
+void projective_space_reporting::report_polynomial_rings(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_reporting::report_polynomial_rings" << endl;
+	}
+
 	ring_theory::homogeneous_polynomial_domain *Poly1;
 	ring_theory::homogeneous_polynomial_domain *Poly2;
 	ring_theory::homogeneous_polynomial_domain *Poly3;
@@ -299,9 +311,55 @@ void projective_space_reporting::report(
 	FREE_OBJECT(Poly4);
 
 	if (f_v) {
-		cout << "projective_space_reporting::report done" << endl;
+		cout << "projective_space_reporting::report_polynomial_rings done" << endl;
+	}
+}
+
+void projective_space_reporting::create_drawing_of_plane(
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_reporting::create_drawing_of_plane" << endl;
 	}
 
+	if (P->Subspaces->N_points < 1000) {
+		string fname_base;
+		long int *set;
+		int i;
+
+		set = NEW_lint(P->Subspaces->N_points);
+		for (i = 0; i < P->Subspaces->N_points; i++) {
+			set[i] = i;
+		}
+		fname_base = "plane_of_order_" + std::to_string(P->Subspaces->q);
+
+		graphics::plot_tools Pt;
+
+		Pt.draw_point_set_in_plane(
+				fname_base,
+				Draw_options,
+				P,
+				set, P->Subspaces->N_points,
+				true /*f_point_labels*/,
+				verbose_level);
+		FREE_lint(set);
+		ost << "{\\scriptsize" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname_base << "_draw.tex" << endl;
+		ost << "$$" << endl;
+		ost << "}%%" << endl;
+	}
+	else {
+		ost << "Too many points to draw. \\\\" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_reporting::create_drawing_of_plane done" << endl;
+	}
 }
 
 void projective_space_reporting::report_subspaces_of_dimension(

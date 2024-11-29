@@ -67,7 +67,8 @@ poset_classification_control::poset_classification_control()
 
 
 	f_draw_options = true;
-	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+	std::string draw_options_label;
+	//draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 
 
@@ -217,23 +218,10 @@ int poset_classification_control::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
-
-			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+			draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_options " << endl;
+				cout << "-draw_options " << draw_options_label << endl;
 			}
-			i += draw_options->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -draw_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			//cout << "-f_draw_options " << endl;
 		}
 
 
@@ -333,8 +321,7 @@ void poset_classification_control::print()
 	}
 
 	if (f_draw_options) {
-		cout << "-draw_options" << endl;
-		draw_options->print();
+		cout << "-draw_options " << draw_options_label << endl;
 	}
 
 

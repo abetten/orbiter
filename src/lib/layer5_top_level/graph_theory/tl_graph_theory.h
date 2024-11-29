@@ -634,7 +634,9 @@ public:
 
 	int f_properties;
 	int f_eigenvalues;
+
 	int f_draw;
+	std::string draw_options;
 
 
 	graph_theoretic_activity_description();

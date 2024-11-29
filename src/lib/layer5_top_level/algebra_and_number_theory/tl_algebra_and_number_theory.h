@@ -273,7 +273,9 @@ public:
 	void linear_codes_with_bounded_minimum_distance(
 			poset_classification::poset_classification_control *Control,
 			group_constructions::linear_group *LG,
-			int d, int target_depth, int verbose_level);
+			int d, int target_depth,
+			poset_classification::poset_classification *&PC,
+			int verbose_level);
 	void permutation_representation_of_element(
 			actions::action *A,
 			std::string &element_description,
@@ -336,7 +338,9 @@ public:
 			groups::any_group *Any_group,
 			std::string &control_label,
 			int minimum_distance,
-			int target_size, int verbose_level);
+			int target_size,
+			poset_classification::poset_classification *&PC,
+			int verbose_level);
 	void do_classify_ovoids(
 			groups::any_group *Any_group,
 			apps_geometry::ovoid_classify_description
@@ -533,6 +537,7 @@ public:
 
 
 	int f_report;
+	std::string report_draw_options;
 
 		// flags that apply to report:
 		int f_report_sylow;
@@ -727,8 +732,10 @@ public:
 	std::string subgroup_lattice_load_fname;
 
 	int f_subgroup_lattice_draw_by_orbits;
+	std::string subgroup_lattice_draw_by_orbits_draw_options;
 
 	int f_subgroup_lattice_draw_by_groups;
+	std::string subgroup_lattice_draw_by_groups_draw_options;
 
 	int f_subgroup_lattice_intersection_orbit_orbit;
 	int subgroup_lattice_intersection_orbit_orbit_orbit1;

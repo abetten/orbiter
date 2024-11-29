@@ -32,6 +32,8 @@ draw_mod_n_description::draw_mod_n_description()
 
 	f_file = false;
 	//std::string fname;
+
+	f_label_nodes = false;
 	f_inverse = 0;
 	f_additive_inverse = 0;
 
@@ -47,6 +49,9 @@ draw_mod_n_description::draw_mod_n_description()
 
 	f_eigenvalues = false;
 	//double eigenvalues_A[4];
+
+	f_draw_options = false;
+	//std::string draw_options_label;
 
 }
 
@@ -96,6 +101,18 @@ int draw_mod_n_description::read_arguments(
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << fname << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-label_nodes") == 0) {
+			f_label_nodes = true;
+			if (f_v) {
+				cout << "-label_nodes " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-dont_label_nodes") == 0) {
+			f_label_nodes = false;
+			if (f_v) {
+				cout << "-dont_label_nodes " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
@@ -148,6 +165,13 @@ int draw_mod_n_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = true;
+			draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-draw_options " << draw_options_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -179,6 +203,9 @@ void draw_mod_n_description::print()
 	if (f_file) {
 		cout << "-file " << fname << endl;
 	}
+	if (f_label_nodes) {
+		cout << "-label_nodes " << endl;
+	}
 	if (f_inverse) {
 		cout << "-inverse " << endl;
 	}
@@ -201,6 +228,9 @@ void draw_mod_n_description::print()
 				<< eigenvalues_A[2] << " "
 				<< eigenvalues_A[3] << " "
 				<< endl;
+	}
+	if (f_draw_options) {
+		cout << "-draw_options " << draw_options_label << endl;
 	}
 }
 

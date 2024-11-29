@@ -95,6 +95,7 @@ public:
 			int verbose_level);
 	void print_tex_detailed(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_incidence_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -331,6 +332,9 @@ public:
 
 	int f_lex_least;
 	std::string lex_least_geometry_builder;
+
+	int f_incidence_draw_options;
+	std::string incidence_draw_options_label;
 
 	objects_report_options();
 	~objects_report_options();
@@ -820,9 +824,12 @@ public:
 			std::ostream &ost,
 			int verbose_level);
 	void latex_incma(
-			std::ostream &ost, int verbose_level);
+			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			int verbose_level);
 	void latex_TDA_incidence_matrix(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
 	void compute_labels(
@@ -831,10 +838,12 @@ public:
 			int verbose_level);
 	void latex_TDA_with_labels(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
 	void latex_canonical_form(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void apply_canonical_labeling(
@@ -846,6 +855,7 @@ public:
 			l1_interfaces::nauty_output *NO);
 	void latex_canonical_form_with_labels(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			l1_interfaces::nauty_output *NO,
 			std::string *row_labels,
 			std::string *col_labels,

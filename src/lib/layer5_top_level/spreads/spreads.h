@@ -334,7 +334,7 @@ public:
 		// or R->nb_live_points if f_recoordinatize
 
 
-	isomorph::isomorph_worker *Worker;
+	isomorph::isomorph_worker *Isomorph_worker;
 
 
 

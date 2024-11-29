@@ -36,6 +36,9 @@ draw_projective_curve_description::draw_projective_curve_description()
 	f_title_page = false;
 	f_trailer_page = false;
 
+	f_draw_options = false;
+	//std::string draw_options_label;
+
 
 }
 
@@ -101,6 +104,15 @@ int draw_projective_curve_description::read_arguments(
 				cout << "-trailer_page " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = true;
+			draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-draw_options " << draw_options_label << endl;
+			}
+		}
+
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -139,6 +151,9 @@ void draw_projective_curve_description::print()
 	}
 	if (f_trailer_page) {
 		cout << "-trailer_page " << endl;
+	}
+	if (f_draw_options) {
+		cout << "-draw_options " << draw_options_label << endl;
 	}
 }
 

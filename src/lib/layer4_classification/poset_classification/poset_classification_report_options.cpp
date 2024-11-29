@@ -42,6 +42,10 @@ poset_classification_report_options::poset_classification_report_options()
 
 	f_fname = false;
 	//std::string fname;
+
+	f_draw_options = false;
+	//std::string draw_options_label;
+
 }
 
 poset_classification_report_options::~poset_classification_report_options()
@@ -129,6 +133,13 @@ int poset_classification_report_options::read_arguments(
 				cout << "-fname" << fname << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+			f_draw_options = true;
+			draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-draw_options" << draw_options_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -180,6 +191,9 @@ void poset_classification_report_options::print()
 	}
 	if (f_fname) {
 		cout << "-fname" << fname << endl;
+	}
+	if (f_draw_options) {
+		cout << "-draw_options" << draw_options_label << endl;
 	}
 }
 

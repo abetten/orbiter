@@ -189,7 +189,7 @@ void interface_cryptography::print_help(
 		cout << "-find_strong_pseudoprime <int : nb_digits> <int : nb_fermat> <int : nb_miller_rabin>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
-		cout << "-fermat_test <int : nb_times> <string : number>" << endl;
+		cout << "-miller_rabin_text <int : nb_times> <string : number>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-random") == 0) {
 		cout << "-random <int : nb_times> <string : fname_csv>" << endl;

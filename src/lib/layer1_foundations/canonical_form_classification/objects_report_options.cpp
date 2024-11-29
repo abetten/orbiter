@@ -38,6 +38,9 @@ objects_report_options::objects_report_options()
 	f_lex_least = false;
 	//std::string lex_least_geometry_builder;
 
+	f_incidence_draw_options = false;
+	//std::string incidence_draw_options_label;
+
 }
 
 objects_report_options::~objects_report_options()
@@ -147,6 +150,13 @@ int objects_report_options::read_arguments(
 				cout << "-lex_least" << lex_least_geometry_builder << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-incidence_draw_options") == 0) {
+			f_incidence_draw_options = true;
+			incidence_draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-incidence_draw_options " << incidence_draw_options_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -195,6 +205,9 @@ void objects_report_options::print()
 	}
 	if (f_lex_least) {
 		cout << "-lex_least " << lex_least_geometry_builder << endl;
+	}
+	if (f_incidence_draw_options) {
+		cout << "-incidence_draw_options " << incidence_draw_options_label << endl;
 	}
 
 }

@@ -45,10 +45,22 @@ void poset_classification::report(
 					"before get_A2()->report" << endl;
 		}
 
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		if (Control->f_draw_options) {
+			cout << "poset_classification::report "
+					"please use -draw_options" << endl;
+			exit(1);
+		}
+
+		Draw_options = Get_draw_options(Control->draw_options_label);
+
+
 		get_A2()->report(ost,
 				false /* f_sims */, NULL,
 				false /* f_strong_gens */, NULL,
-				Control->draw_options,
+				Draw_options,
 				verbose_level - 1);
 
 		if (f_v) {
@@ -89,29 +101,40 @@ void poset_classification::report2(
 	}
 
 
+
 	if (f_v) {
 		cout << "poset_classification::report2 Opt:" << endl;
 		Opt->print();
-		cout << "poset_classification::report2 draw_options:" << endl;
-		Control->draw_options->print();
 	}
 
 #if 1
 	if (Opt->f_draw_poset) {
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		if (!Control->f_draw_options) {
+			cout << "poset_classification::report2 "
+					"please use -draw_options" << endl;
+			exit(1);
+		}
+
+		Draw_options = Get_draw_options(Control->draw_options_label);
+
+		if (f_v) {
+			cout << "poset_classification::report2 draw_options:" << endl;
+			Draw_options->print();
+		}
+
+
 		if (f_v) {
 			cout << "poset_classification::report2 "
 					"before draw_poset" << endl;
-		}
-		if (!Control->f_draw_options) {
-			cout << "poset_classification::report2 "
-					"Control->f_draw_poset && !Control->f_draw_options" << endl;
-			exit(1);
 		}
 		draw_poset(
 				get_problem_label_with_path(),
 				depth /*actual_size*/,
 			0 /* data1 */,
-			Control->draw_options,
+			Draw_options,
 			verbose_level);
 		if (f_v) {
 			cout << "poset_classification::report2 "
@@ -663,22 +686,33 @@ void poset_classification::report_poset_of_orbits(
 		exit(1);
 	}
 
-	cmd += " -xin " + std::to_string(Control->draw_options->xin)
-			+ " -yin " + std::to_string(Control->draw_options->yin)
-			+ " -xout " + std::to_string(Control->draw_options->xout)
-			+ " -yout " + std::to_string(Control->draw_options->yout)
-			+ " -radius " + std::to_string(Control->draw_options->rad) + " ";
+	graphics::layered_graph_draw_options *Draw_options;
 
-	if (Control->draw_options->f_y_stretch) {
+	if (Control->f_draw_options) {
+		cout << "poset_classification::report_poset_of_orbits "
+				"please use -draw_options" << endl;
+		exit(1);
+	}
+
+	Draw_options = Get_draw_options(Control->draw_options_label);
+
+
+	cmd += " -xin " + std::to_string(Draw_options->xin)
+			+ " -yin " + std::to_string(Draw_options->yin)
+			+ " -xout " + std::to_string(Draw_options->xout)
+			+ " -yout " + std::to_string(Draw_options->yout)
+			+ " -radius " + std::to_string(Draw_options->rad) + " ";
+
+	if (Draw_options->f_y_stretch) {
 		cmd += " -y_stretch "
-				+ std::to_string(Control->draw_options->y_stretch) + " ";
+				+ std::to_string(Draw_options->y_stretch) + " ";
 	}
 
-	if (Control->draw_options->f_line_width) {
+	if (Draw_options->f_line_width) {
 		cmd += " -line_width "
-				+ std::to_string(Control->draw_options->line_width) + " ";
+				+ std::to_string(Draw_options->line_width) + " ";
 	}
-	if (Control->draw_options->f_spanning_tree) {
+	if (Draw_options->f_spanning_tree) {
 		cmd += " -spanning_tree ";
 	}
 

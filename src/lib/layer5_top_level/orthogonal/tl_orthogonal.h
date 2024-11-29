@@ -168,6 +168,9 @@ public:
 
 	// TABLES/blt_set_classify.tex
 
+	int f_orthogonal_space;
+	std::string orthogonal_space_label;
+
 
 	int f_starter_size;
 	int starter_size;
@@ -227,6 +230,9 @@ public:
 
 	blt_set_classify();
 	~blt_set_classify();
+	void init(
+			blt_set_classify_description *Descr,
+			int verbose_level);
 	void init_basic(
 			orthogonal_space_with_action *OA,
 			actions::action *A,
@@ -572,6 +578,7 @@ public:
 	// TABLES/orthogonal_space_activity.tex
 
 	int f_cheat_sheet_orthogonal;
+	std::string cheat_sheet_orthogonal_draw_options_label;
 
 	int f_print_points;
 	std::string print_points_label;
@@ -722,11 +729,11 @@ public:
 	void init_group(
 			int verbose_level);
 	void report(
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void make_table_of_blt_sets(
 			int verbose_level);

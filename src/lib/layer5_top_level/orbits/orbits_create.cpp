@@ -767,27 +767,27 @@ void orbits_create::init(
 			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"before Canonical_form_classifier->init" << endl;
 			}
 			Canonical_form_classifier->init(
 					Descr->Canonical_form_classifier_description,
 					verbose_level);
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"after Canonical_form_classifier->init" << endl;
 			}
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"before Classifier.classify" << endl;
 			}
 			Canonical_form_classifier->classify(verbose_level);
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"after Classifier.classify" << endl;
 			}
 
-			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
+			Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
 
 
 			f_has_classification_by_canonical_form = true;
@@ -804,18 +804,18 @@ void orbits_create::init(
 			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"before Canonical_form_classifier->init" << endl;
 			}
-			Canonical_form_classifier->init(
+			Canonical_form_classifier->init_objects_from_list_of_csv_files(
 					Descr->Canonical_form_classifier_description,
 					verbose_level);
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"after Canonical_form_classifier->init" << endl;
 			}
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"before Classifier.classify" << endl;
 			}
 
@@ -833,11 +833,11 @@ void orbits_create::init(
 					fname_base,
 					verbose_level);
 			if (f_v) {
-				cout << "projective_space_global::classify_quartic_curves_with_substructure "
+				cout << "orbits_create::init "
 						"after Classifier.classify" << endl;
 			}
 
-			Descr->Canonical_form_classifier_description->Canon_substructure = Canonical_form_classifier;
+			//Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
 
 
 			f_has_classification_by_canonical_form = true;

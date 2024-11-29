@@ -47,6 +47,7 @@ void exact_cover_arguments::null()
 	f_save = false;
 	f_read = false;
 	f_draw_system = false;
+	//std::string draw_options;
 	//fname_system = NULL;
 	f_write_tree = false;
 	//fname_tree = NULL;
@@ -240,8 +241,9 @@ void exact_cover_arguments::compute_lifts(
 				"before compute_liftings_new" << endl;
 	}
 
-	E->compute_liftings_new(f_solve, f_save, f_read, 
-		f_draw_system, fname_system, 
+	E->compute_liftings_new(
+			f_solve, f_save, f_read,
+		f_draw_system, draw_options, fname_system,
 		f_write_tree, fname_tree,
 		verbose_level);
 

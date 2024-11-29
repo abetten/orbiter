@@ -353,7 +353,8 @@ void set_of_sets::init_from_file(
 
 void set_of_sets::init_from_csv_file(
 		int underlying_set_size,
-		std::string &fname, int verbose_level)
+		std::string &fname,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;

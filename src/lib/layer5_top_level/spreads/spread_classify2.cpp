@@ -151,7 +151,8 @@ void spread_classify::print_isomorphism_type2(
 	
 
 	if (SD->k == 2) {
-		klein(ost, /*file_klein,*/ Iso, iso_cnt,
+		klein(
+				ost, /*file_klein,*/ Iso, iso_cnt,
 				Stab, Orb, data, Iso->size,  verbose_level);
 	}
 
@@ -164,7 +165,8 @@ void spread_classify::print_isomorphism_type2(
 		SD->Grass->unrank_lint(data[i], 0);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		SD->F->Io->latex_matrix(ost, f_elements_exponential, symbol_for_print,
+		SD->F->Io->latex_matrix(
+				ost, f_elements_exponential, symbol_for_print,
 				SD->Grass->M, SD->k, SD->n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl << endl;
@@ -177,12 +179,14 @@ void spread_classify::print_isomorphism_type2(
 		int n;
 		
 		//fp = NEW_int(A->degree);
-		n = A->Group_element->count_fixed_points(Stab->gens.ith(i), 0);
+		n = A->Group_element->count_fixed_points(
+				Stab->gens.ith(i), 0);
 		//cout << "with " << n << " fixed points" << endl;
 		//FREE_int(fp);
 
 		ost << "$$ g_{" << i + 1 << "}=" << endl;
-		A->Group_element->element_print_latex(Stab->gens.ith(i), ost);
+		A->Group_element->element_print_latex(
+				Stab->gens.ith(i), ost);
 		ost << "$$" << endl << "with " << n << " fixed points" << endl;
 	}
 
@@ -190,14 +194,15 @@ void spread_classify::print_isomorphism_type2(
 
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type "
-				"calling induced_action_on_set_and_kernel" << endl;
+				"before report_induced_action_on_set_and_kernel" << endl;
 	}
-	Iso->induced_action_on_set_and_kernel(ost,
+	Iso->report_induced_action_on_set_and_kernel(
+			ost,
 			A, Stab, Iso->size, data, verbose_level - 1);
 
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type "
-				"induced_action_on_set_and_kernel finished" << endl;
+				"after report_induced_action_on_set_and_kernel" << endl;
 	}
 
 

@@ -821,16 +821,10 @@ void interface_algebra::worker(
 
 	else if (f_draw_mod_n) {
 		graphics::plot_tools PT;
-		graphics::layered_graph_draw_options *O;
 
 
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "please use option -draw_options .. -end" << endl;
-			exit(1);
-		}
-		O = orbiter_kernel_system::Orbiter->draw_options;
-		PT.draw_mod_n(Draw_mod_n_description,
-				O,
+		PT.draw_mod_n(
+				Draw_mod_n_description,
 				verbose_level);
 	}
 

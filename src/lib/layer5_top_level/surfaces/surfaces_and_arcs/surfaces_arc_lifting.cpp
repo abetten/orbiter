@@ -806,6 +806,13 @@ void surfaces_arc_lifting::report(
 		exit(1);
 	}
 
+	graphics::layered_graph_draw_options *Draw_options;
+
+
+	Draw_options = Get_draw_options(Control->draw_options_label);
+
+
+
 	{
 		ofstream fp(fname_arc_lifting.c_str());
 		l1_interfaces::latex_interface L;
@@ -828,7 +835,7 @@ void surfaces_arc_lifting::report(
 		}
 
 
-		report2(fp, Control->draw_options, verbose_level);
+		report2(fp, Draw_options, verbose_level);
 
 
 		if (f_v) {

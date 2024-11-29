@@ -537,7 +537,8 @@ public:
 	void compute_down_orbits_for_isomorphism_type(
 		isomorph *Iso, int orbit,
 		int &cnt_orbits, int &cnt_special_orbits,
-		int *&special_orbit_identify, int verbose_level);
+		int *&special_orbit_identify,
+		int verbose_level);
 	void report_data_in_source_code_inside_tex(
 			isomorph &Iso,
 			std::string &prefix,
@@ -577,10 +578,11 @@ public:
 	~isomorph_worker();
 	void init(
 			isomorph_arguments *Isomorph_arguments,
-			actions::action *A_base,
-			actions::action *A,
-			poset_classification::poset_classification *gen,
-			int size, int level,
+			//actions::action *A_base,
+			//actions::action *A,
+			//poset_classification::poset_classification *gen,
+			//int size,
+			int level,
 			int verbose_level);
 	void execute(
 			isomorph_arguments *Isomorph_arguments,
@@ -677,10 +679,12 @@ public:
 		std::string &prefix_classify,
 		std::string &prefix,
 		int level, int verbose_level);
-	void induced_action_on_set_and_kernel(
+	// calls layer2_discreta::typed_objects::discreta_init();
+	void report_induced_action_on_set_and_kernel(
 			std::ostream &file,
-			actions::action *A,
-			groups::sims *Stab, int size, long int *set,
+			actions::action *A_base,
+			groups::sims *Stab,
+			int size, long int *set,
 		int verbose_level);
 	void read_everything_including_classification(
 			std::string &prefix_classify, int verbose_level);
@@ -832,7 +836,8 @@ public:
 
 	substructure_classification();
 	~substructure_classification();
-	void init(isomorph *Iso,
+	void init(
+			isomorph *Iso,
 			poset_classification::poset_classification *gen,
 			int f_use_database_for_starter,
 			int f_implicit_fusion,
@@ -870,7 +875,8 @@ public:
 	// Called from
 	// load_strong_generators
 	// trace_next_point_database
-	void find_extension_easy(long int *set,
+	void find_extension_easy(
+			long int *set,
 		int case_nb, int &idx,
 		int &f_found, int verbose_level);
 		// returns true if found, false otherwise
@@ -983,6 +989,7 @@ public:
 
 
 
+	// Po:
 	int *starter_number_of_solution; // starter_number
 		// [N]  starter_number_of_solution[i] = j means that
 		// solution i belongs to starter j
@@ -1075,28 +1082,44 @@ public:
 
 	substructure_lifting_data();
 	~substructure_lifting_data();
-	void init(isomorph *Iso, int verbose_level);
-	void write_solution_first_and_len(int verbose_level);
-	void read_solution_first_and_len(int verbose_level);
-	void init_starter_number(int verbose_level);
-	void init_solution(int verbose_level);
-	void load_table_of_solutions(int verbose_level);
-	void list_solutions_by_starter(int verbose_level);
-	void list_solutions_by_orbit(int verbose_level);
-	void orbits_of_stabilizer(int verbose_level);
-	void orbits_of_stabilizer_case(int the_case,
+	void init(
+			isomorph *Iso, int verbose_level);
+	void write_solution_first_and_len(
+			int verbose_level);
+	void read_solution_first_and_len(
+			int verbose_level);
+	void init_starter_number(
+			int verbose_level);
+	void init_solution(
+			int verbose_level);
+	void load_table_of_solutions(
+			int verbose_level);
+	void list_solutions_by_starter(
+			int verbose_level);
+	void list_solutions_by_orbit(
+			int verbose_level);
+	void orbits_of_stabilizer(
+			int verbose_level);
+	void orbits_of_stabilizer_case(
+			int the_case,
 			data_structures_groups::vector_ge &gens,
 			int verbose_level);
 	void orbit_representative(
 			int i, int &i0,
 		int &orbit, int *transporter, int verbose_level);
 		// slow because it calls load_strong_generators
-	void test_orbit_representative(int verbose_level);
-	void test_identify_solution(int verbose_level);
-	void setup_and_open_solution_database(int verbose_level);
-	void setup_and_create_solution_database(int verbose_level);
-	void close_solution_database(int verbose_level);
-	void init_DB_sol(int verbose_level);
+	void test_orbit_representative(
+			int verbose_level);
+	void test_identify_solution(
+			int verbose_level);
+	void setup_and_open_solution_database(
+			int verbose_level);
+	void setup_and_create_solution_database(
+			int verbose_level);
+	void close_solution_database(
+			int verbose_level);
+	void init_DB_sol(
+			int verbose_level);
 		// We assume that the starter is of size 5 and that
 		// fields 3-8 are the starter
 	void add_solution_to_database(
@@ -1106,7 +1129,8 @@ public:
 		int print_mod, int verbose_level);
 	void load_solution(
 			int id, long int *data, int verbose_level);
-	void load_solution_by_btree(int btree_idx,
+	void load_solution_by_btree(
+			int btree_idx,
 		int idx, int &id, long int *data);
 	void count_solutions(
 			int nb_files,
@@ -1124,7 +1148,8 @@ public:
 		int the_case, int nb_solutions, int nb_solutions_total,
 		int print_mod, int &no,
 		int verbose_level);
-	void init_solutions(long int **Solutions,
+	void init_solutions(
+			long int **Solutions,
 		int *Nb_sol, int verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
 	void count_solutions_from_clique_finder_case_by_case(
@@ -1153,17 +1178,23 @@ public:
 			void *final_test_data, int verbose_level),
 		void *final_test_data,
 		int verbose_level);
-	void get_statistics(int nb_files,
+	void get_statistics(
+			int nb_files,
 			std::string *fname, int *List_of_cases,
 			int verbose_level);
 	void write_statistics();
-	void evaluate_statistics(int verbose_level);
-	void write_starter_nb_orbits(int verbose_level);
-	void read_starter_nb_orbits(int verbose_level);
-	void write_hash_and_datref_file(int verbose_level);
+	void evaluate_statistics(
+			int verbose_level);
+	void write_starter_nb_orbits(
+			int verbose_level);
+	void read_starter_nb_orbits(
+			int verbose_level);
+	void write_hash_and_datref_file(
+			int verbose_level);
 		// Writes the file 'fname_hash_and_datref'
 		// containing id_to_hash[] and id_to_datref[]
-	void read_hash_and_datref_file(int verbose_level);
+	void read_hash_and_datref_file(
+			int verbose_level);
 		// Reads the file 'fname_hash_and_datref'
 		// containing id_to_hash[] and id_to_datref[]
 		// Also initializes hash_vs_id_hash and hash_vs_id_id
@@ -1171,9 +1202,11 @@ public:
 	void print_hash_vs_id();
 
 
-	void write_orbit_data(int verbose_level);
+	void write_orbit_data(
+			int verbose_level);
 		// Writes the file 'fname_staborbits'
-	void read_orbit_data(int verbose_level);
+	void read_orbit_data(
+			int verbose_level);
 		// Reads from the file 'fname_staborbits'
 		// Reads nb_orbits, N,
 		// orbit_fst[nb_flag_orbits + 1]
@@ -1183,8 +1216,10 @@ public:
 		// schreier_vector[N]
 		// schreier_prev[N]
 		// and computed orbit_perm_inv[N]
-	void test_hash(int verbose_level);
-	void id_to_datref_allocate(int verbose_level);
+	void test_hash(
+			int verbose_level);
+	void id_to_datref_allocate(
+			int verbose_level);
 
 };
 

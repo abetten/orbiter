@@ -290,6 +290,7 @@ public:
 
 	int f_file;
 	std::string fname;
+	int f_label_nodes;
 	int f_inverse;
 	int f_additive_inverse;
 	int f_power_cycle;
@@ -305,6 +306,8 @@ public:
 	int f_eigenvalues;
 	double eigenvalues_A[4];
 
+	int f_draw_options;
+	std::string draw_options_label;
 
 	draw_mod_n_description();
 	~draw_mod_n_description();
@@ -341,6 +344,9 @@ public:
 
 	int f_title_page;
 	int f_trailer_page;
+
+	int f_draw_options;
+	std::string draw_options_label;
 
 
 
@@ -477,7 +483,7 @@ public:
 			int verbose_level);
 	void draw_projective_curve(
 			draw_projective_curve_description *Descr,
-			layered_graph_draw_options *Opt, int verbose_level);
+			int verbose_level);
 	void draw_projective(
 			mp_graphics &G,
 			int number, int animate_step, int animate_nb_of_steps,
@@ -485,7 +491,8 @@ public:
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);
 	void tree_draw(
-			tree_draw_options *Tree_draw_options, int verbose_level);
+			tree_draw_options *Tree_draw_options,
+			int verbose_level);
 	void animate_povray(
 			povray_job_description *Povray_job_description,
 			int verbose_level);
@@ -1240,7 +1247,6 @@ public:
 			int verbose_level);
 	void draw_mod_n(
 			draw_mod_n_description *Descr,
-			layered_graph_draw_options *O,
 			int verbose_level);
 	void draw_mod_n_work(
 			mp_graphics &G,
@@ -1944,7 +1950,8 @@ public:
 	~tree();
 	void init(
 			graphics::tree_draw_options *Tree_draw_options,
-			int xmax, int ymax, int verbose_level);
+			int xmax, int ymax,
+			int verbose_level);
 	void draw(
 			std::string &fname,
 			graphics::tree_draw_options *Tree_draw_options,
@@ -1990,6 +1997,8 @@ public:
 		mp_graphics *G, int *v, int layer, tree_node *N,
 		int x, int y, int dx, int dy);
 
+	int f_draw_options;
+	std::string draw_options_label;
 
 	tree_draw_options();
 	~tree_draw_options();

@@ -251,12 +251,14 @@ public:
 		int verbose_level);
 	void incma_latex(
 			std::ostream &fp,
+			graphics::draw_incidence_structure_description *Descr,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
 		int *incma,
 		int verbose_level);
 	void incma_latex_with_labels(
 			std::ostream &fp,
+			graphics::draw_incidence_structure_description *Descr,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
 		int *row_labels_int,

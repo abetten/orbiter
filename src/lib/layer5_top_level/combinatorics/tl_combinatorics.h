@@ -147,6 +147,7 @@ public:
 
 	int f_draw_incidence_matrices;
 	std::string draw_incidence_matrices_prefix;
+	std::string draw_incidence_matrices_options_label;
 
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
@@ -286,6 +287,7 @@ public:
 			int verbose_level);
 	void draw_incidence_matrices(
 			std::string &prefix,
+			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 			int verbose_level);
 	void unpack_from_restricted_action(
 			std::string &prefix,
@@ -744,7 +746,10 @@ public:
 
 	int f_export_inc;
 	int f_export_incidence_matrix;
+
 	int f_export_incidence_matrix_latex;
+	std::string export_incidence_matrix_latex_draw_options;
+
 	int f_intersection_matrix;
 	int f_save;
 	int f_export_blocks;
@@ -825,6 +830,7 @@ public:
 			int verbose_level);
 	void do_export_incidence_matrix_latex(
 			design_create *DC,
+			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 			int verbose_level);
 	void do_intersection_matrix(
 			design_create *DC,

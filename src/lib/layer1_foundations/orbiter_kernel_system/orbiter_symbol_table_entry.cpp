@@ -240,26 +240,6 @@ void orbiter_symbol_table_entry::init_spread_classify(
 	}
 }
 
-#if 0
-void orbiter_symbol_table_entry::init_formula(
-		std::string &label,
-		void *p, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_formula" << endl;
-	}
-	orbiter_symbol_table_entry::label.assign(label);
-	type = t_object;
-	object_type = t_formula;
-	ptr = p;
-	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_formula done" << endl;
-	}
-}
-#endif
-
 void orbiter_symbol_table_entry::init_cubic_surface(
 		std::string &label,
 		void *p, int verbose_level)
@@ -820,6 +800,48 @@ void orbiter_symbol_table_entry::init_poset_classification_report_options(
 		cout << "orbiter_symbol_table_entry::init_poset_classification_report_options done" << endl;
 	}
 }
+
+void orbiter_symbol_table_entry::init_draw_options(
+		std::string &label,
+		graphics::layered_graph_draw_options *Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_draw_options" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_draw_options;
+	ptr = Draw_options;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_draw_options done" << endl;
+	}
+}
+
+
+void orbiter_symbol_table_entry::init_draw_incidence_structure_options(
+		std::string &label,
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_draw_options" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_draw_incidence_structure_options;
+	ptr = Draw_incidence_structure_description;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_draw_options done" << endl;
+	}
+}
+
+
+
 
 void orbiter_symbol_table_entry::init_arc_generator_control(
 		std::string &label,

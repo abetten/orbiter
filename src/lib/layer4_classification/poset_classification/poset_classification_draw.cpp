@@ -97,7 +97,8 @@ void poset_classification::write_treefile(
 		cout << "poset_classification::write_treefile "
 				"verbose_level=" << verbose_level << endl;
 	}
-	if (write_treefile(fname_base, lvl, verbose_level)) {
+	if (write_treefile(
+			fname_base, lvl, verbose_level)) {
 #if 0
 		if (f_v) {
 			cout << "poset_classification::write_treefile "

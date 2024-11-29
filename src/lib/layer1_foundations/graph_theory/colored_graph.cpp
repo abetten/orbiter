@@ -2935,6 +2935,7 @@ void colored_graph::find_subgraph_An_recursion(
 
 
 void colored_graph::write_solutions_to_csv_file(
+		std::vector<std::vector<long int> >& solutions,
 		clique_finder_control *Control,
 		std::ostream &ost, int verbose_level)
 {
@@ -2944,29 +2945,49 @@ void colored_graph::write_solutions_to_csv_file(
 		cout << "colored_graph::write_solutions_to_csv_file" << endl;
 	}
 
-	ost << "ROW";
-	for (int j = 0; j < Control->target_size; ++j) {
-		ost << ",C" << j;
-	}
-	ost << endl;
+	//int user_data_size;
+	//long int *user_data; // [user_data_size]
 
-	for (int i = 0; i < Control->nb_sol; ++i) {
+	long int *data;
+
+	data = NEW_lint(user_data_size + Control->target_size);
+
+	ost << "ROW,Cnt,Solution" << endl;
+
+	for (int i = 0; i < solutions.size(); ++i) {
 		ost << i << ",";
-		for (int j = 0; j < Control->target_size; ++j) {
+		ost << i << ",";
+
+		Lint_vec_copy(user_data, data, user_data_size);
+
+		for (int j = 0; j < Control->target_size; j++) {
 
 			if (points) {
-				ost << points[Control->Sol[i * Control->target_size + j]];
+				data[user_data_size + j] = points[solutions[i][j]];
+				//ost << points[solutions[i][j]];
+				//ost << points[solutions[i * Control->target_size + j]];
 			}
 			else {
-				ost << Control->Sol[i * Control->target_size + j];
+				data[user_data_size + j] = solutions[i][j];
+				//ost << solutions[i][j];
 			}
 			//fp_csv << Control->Sol[i * Control->target_size + j];
+#if 0
 			if (j < Control->target_size - 1) {
 				ost << ",";
 			}
+#endif
 		}
+		string s;
+
+		s = Lint_vec_stringify(data, user_data_size + Control->target_size);
+		ost << "\"" + s + "\"";
 		ost << endl;
 	}
+	ost << "END" << endl;
+
+
+	FREE_lint(data);
 
 	if (f_v) {
 		cout << "colored_graph::write_solutions_to_csv_file done" << endl;

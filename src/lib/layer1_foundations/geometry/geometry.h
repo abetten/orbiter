@@ -2342,6 +2342,13 @@ public:
 			std::ostream &ost,
 			graphics::layered_graph_draw_options *O,
 			int verbose_level);
+	void report_polynomial_rings(
+			std::ostream &ost,
+			int verbose_level);
+	void create_drawing_of_plane(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *Draw_options,
+			int verbose_level);
 	void report_subspaces_of_dimension(
 			std::ostream &ost,
 			int vs_dimension, int verbose_level);

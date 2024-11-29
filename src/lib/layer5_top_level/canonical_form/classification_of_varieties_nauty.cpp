@@ -234,16 +234,16 @@ void classification_of_varieties_nauty::prepare_input(
 
 		fname_case_out = Input->fname_base_out + "_cnt" + std::to_string(input_counter);
 
-		variety_compute_canonical_form *Variety;
+		variety_compute_canonical_form *Variety_compute_canonical_form;
 
-		Variety = NEW_OBJECT(variety_compute_canonical_form);
+		Variety_compute_canonical_form = NEW_OBJECT(variety_compute_canonical_form);
 
 		if (f_v) {
 			cout << "classification_of_varieties_nauty::prepare_input "
 					"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-					<< " before Variety->init" << endl;
+					<< " before Variety_compute_canonical_form->init" << endl;
 		}
-		Variety->init(
+		Variety_compute_canonical_form->init(
 				Classifier,
 				Classifier->Ring_with_action,
 				Classifier->Classification_of_varieties_nauty,
@@ -257,10 +257,10 @@ void classification_of_varieties_nauty::prepare_input(
 		if (f_v) {
 			cout << "classification_of_varieties_nauty::prepare_input "
 					"input_counter = " << input_counter << " / " << Classifier->Input->nb_objects_to_test
-					<< " after Variety->init" << endl;
+					<< " after Variety_compute_canonical_form->init" << endl;
 		}
 
-		Canonical_forms[input_counter] = Variety;
+		Canonical_forms[input_counter] = Variety_compute_canonical_form;
 	}
 
 	if (f_v) {
@@ -366,9 +366,9 @@ void classification_of_varieties_nauty::main_loop(
 	for (input_counter = 0; input_counter < Input->nb_objects_to_test; input_counter++) {
 
 
-		variety_compute_canonical_form *Variety;
+		variety_compute_canonical_form *Variety_compute_canonical_form;
 
-		Variety = Canonical_forms[input_counter];
+		Variety_compute_canonical_form = Canonical_forms[input_counter];
 
 
 		if (f_v) {
@@ -406,9 +406,9 @@ void classification_of_varieties_nauty::main_loop(
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
 						"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-						<< " before Variety->compute_canonical_form_nauty_new" << endl;
+						<< " before Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
 			}
-			Variety->compute_canonical_form_nauty_new(
+			Variety_compute_canonical_form->compute_canonical_form_nauty_new(
 					f_save_nauty_input_graphs,
 					f_found_canonical_form,
 					idx_canonical_form,
@@ -420,10 +420,10 @@ void classification_of_varieties_nauty::main_loop(
 			if (f_v) {
 				cout << "classification_of_varieties_nauty::main_loop "
 						"input_counter = " << input_counter << " / " << Input->nb_objects_to_test
-						<< " after Variety->compute_canonical_form_nauty_new" << endl;
+						<< " after Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
 			}
 
-			Goi[input_counter] = Variety->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
+			Goi[input_counter] = Variety_compute_canonical_form->Variety_stabilizer_compute->Stab_gens_variety->group_order_as_lint();
 
 			if (f_found_canonical_form
 					&& f_found_eqn) {

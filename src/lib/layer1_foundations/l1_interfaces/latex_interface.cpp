@@ -778,6 +778,7 @@ void latex_interface::incma_latex_with_text_labels(
 
 void latex_interface::incma_latex(
 		std::ostream &fp,
+		graphics::draw_incidence_structure_description *Descr,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
 	int *incma,
@@ -789,9 +790,9 @@ void latex_interface::incma_latex(
 	if (f_v) {
 		cout << "latex_interface::incma_latex" << endl;
 	}
-	graphics::draw_incidence_structure_description *Descr;
+	//graphics::draw_incidence_structure_description *Descr;
 
-	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
+	//Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	if (f_v) {
 		cout << "latex_interface::incma_latex "
@@ -815,6 +816,7 @@ void latex_interface::incma_latex(
 
 void latex_interface::incma_latex_with_labels(
 		std::ostream &fp,
+		graphics::draw_incidence_structure_description *Descr,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
 	int *row_labels_int,
@@ -828,9 +830,9 @@ void latex_interface::incma_latex_with_labels(
 	if (f_v) {
 		cout << "latex_interface::incma_latex" << endl;
 	}
-	graphics::draw_incidence_structure_description *Descr;
+	//graphics::draw_incidence_structure_description *Descr;
 
-	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
+	//Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
 
 	std::string *point_labels;
 	std::string *block_labels;

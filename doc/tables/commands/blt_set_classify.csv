@@ -1,5 +1,6 @@
 ROW,C1,C2,C3
 0,"tab:BLT:classify",,
 1,"Classifying BLT-Sets",,
+1,"\verb'-orthogonal_space' "," O "," Specify the orthogonal space. "
 1,"\verb'-starter_size' "," s "," Set the size of partial BLT-sets that is used as subobjects. "
 END

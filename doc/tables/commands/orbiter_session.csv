@@ -2,8 +2,6 @@ ROW,C1,C2,C3
 0,"tab:session",,
 1,"Orbiter session commands",,
 1,"\verb'-v' "," $v$ "," Set verbosity to $v$. Larger values of $v$ lead to more text output. $v=0$ gives minimal to no output. "
-1,"\verb'-draw_options' "," options "," Specify options for drawing. See Section~\ref{sec:draw}. "
-1,"\verb'-draw_incidence_' \verb'structure_description' "," options "," Specify options for drawing of incidence structures. See Section~\ref{sec:canonical:form:objects:incidence:geometries}. "
 1,"\verb'-list_arguments' "," ","Print the command line arguments. "
 1,"\verb'-seed' "," $s$ "," Seed the pseudo random number generator with the integer value $s$. "
 1,"\verb'-memory_debug' ","  "," Turn on dynamic memory debugging."

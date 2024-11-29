@@ -3569,7 +3569,8 @@ void csv_file_support::read_csv_file_and_get_column(
 		}
 	}
 	if (j == n) {
-		cout << "csv_file_support::read_csv_file_and_get_column did not find column heading " << col_header << endl;
+		cout << "csv_file_support::read_csv_file_and_get_column "
+				"did not find column heading " << col_header << endl;
 		exit(1);
 	}
 
@@ -3622,6 +3623,100 @@ void csv_file_support::read_csv_file_and_get_column(
 	}
 }
 
+
+void csv_file_support::collect_stats(
+		std::string &fname_mask,
+		std::string &fname_out,
+		int from, int last, int step,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats" << endl;
+	}
+
+	data_structures::string_tools ST;
+	int h, j;
+
+	int N;
+	int *Data;
+	int nb_sol_total = 0;
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+	}
+	N = h;
+
+	Data = NEW_int(N);
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+
+		std::string fname;
+
+		fname = ST.printf_d(
+			fname_mask, j);
+
+		{
+
+			if (f_v) {
+				cout << "csv_file_support::collect_stats file " << fname << endl;
+			}
+
+			Data[h] = Fio->count_number_of_data_lines_in_spreadsheet(
+					fname, 0 /* verbose_level */);
+			if (Data[h] == -1) {
+				cout << "csv_file_support::collect_stats cannot open the file " << fname << endl;
+				exit(1);
+			}
+			nb_sol_total += Data[h];
+
+		}
+
+
+
+	}
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats nb_sol_total = " << nb_sol_total << endl;
+	}
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = N;
+	nb_cols = 2;
+
+	Table = new string [nb_rows * nb_cols];
+
+	for (h = 0, j = from; j < last; j += step, h++) {
+		Table[h * nb_cols + 0] = std::to_string(j);
+		Table[h * nb_cols + 1] = std::to_string(Data[h]);
+	}
+
+	std::string headings;
+
+	headings = "case,nb_sol";
+
+	write_table_of_strings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "Written file " << fname_out << " of size "
+			<< Fio->file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+
+	FREE_int(Data);
+
+	if (f_v) {
+		cout << "csv_file_support::collect_stats done" << endl;
+	}
+
+}
 
 
 

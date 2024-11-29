@@ -118,7 +118,12 @@ void design_activity::perform_activity(
 		if (f_v) {
 			cout << "design_activity::perform_activity f_export_incidence_matrix_latex" << endl;
 		}
-		do_export_incidence_matrix_latex(DC, verbose_level);
+
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
+
+		Draw_incidence_structure_description = Get_draw_incidence_structure_options(Descr->export_incidence_matrix_latex_draw_options);
+
+		do_export_incidence_matrix_latex(DC, Draw_incidence_structure_description, verbose_level);
 	}
 	else if (Descr->f_intersection_matrix) {
 		if (f_v) {
@@ -743,6 +748,7 @@ void design_activity::do_export_incidence_matrix_csv(
 
 void design_activity::do_export_incidence_matrix_latex(
 		design_create *DC,
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -803,6 +809,7 @@ void design_activity::do_export_incidence_matrix_latex(
 
 		Enc->latex_incma(
 				ost,
+				Draw_incidence_structure_description,
 				verbose_level);
 
 		ost << endl;

@@ -31,6 +31,7 @@ public:
 
 
 	int f_report;
+	std::string report_draw_options_label;
 
 	int f_report_group_elements;
 	std::string report_group_elements_csv_file;
@@ -272,17 +273,21 @@ public:
 	void export_gap(
 			int verbose_level);
 	void do_report(
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_report_group_elements(
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void do_report2(
-			std::ostream &ost, int verbose_level);
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *Draw_options,
+			int verbose_level);
 	void do_report_group_elements2(
 			std::ostream &ost,
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void report_with_group(
+			graphics::layered_graph_draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(
@@ -459,6 +464,7 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
+			graphics::layered_graph_draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);

@@ -862,6 +862,13 @@ public:
 			action *A,
 			std::string &fname, int verbose_level);
 	// unused code
+	void report_induced_action_on_set_and_kernel(
+		std::ostream &file,
+		actions::action *A_base,
+		actions::action *A2,
+		groups::sims *Stab, int size, long int *set,
+		int verbose_level);
+	// called from isomorph
 
 };
 

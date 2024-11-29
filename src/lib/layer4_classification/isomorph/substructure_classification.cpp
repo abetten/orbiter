@@ -76,7 +76,8 @@ substructure_classification::~substructure_classification()
 
 }
 
-void substructure_classification::init(isomorph *Iso,
+void substructure_classification::init(
+		isomorph *Iso,
 		poset_classification::poset_classification *gen,
 		int f_use_database_for_starter,
 		int f_implicit_fusion,
@@ -145,7 +146,8 @@ void substructure_classification::read_data_files_for_starter(
 					"reading data file for level "
 					<< i << " with prefix " << fname_base_b << endl;
 		}
-		gen->read_level_file_binary(i, fname_base_b,
+		gen->read_level_file_binary(
+				i, fname_base_b,
 				MINIMUM(1, verbose_level - 1));
 	}
 
@@ -154,7 +156,8 @@ void substructure_classification::read_data_files_for_starter(
 				"reading data file for level " << level
 				<< " with prefix " << fname_base_a << endl;
 	}
-	gen->read_level_file_binary(level, fname_base_a,
+	gen->read_level_file_binary(
+			level, fname_base_a,
 			MINIMUM(1, verbose_level - 1));
 
 	if (f_v) {
@@ -380,7 +383,9 @@ void substructure_classification::find_extension_easy(
 	return ret1;
 #else
 
-	find_extension_easy_new(set, case_nb, idx, f_found, verbose_level);
+	find_extension_easy_new(
+			set, case_nb, idx, f_found,
+			verbose_level);
 
 	#endif
 }

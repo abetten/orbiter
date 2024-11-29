@@ -353,6 +353,7 @@ void group_action_on_combinatorial_object::init(
 
 void group_action_on_combinatorial_object::print_schemes(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -368,7 +369,11 @@ void group_action_on_combinatorial_object::print_schemes(
 				"before Decomposition->print_schemes" << endl;
 	}
 
-	Decomposition->print_schemes(ost, Report_options, verbose_level);
+	Decomposition->print_schemes(
+			ost,
+			Draw_options,
+			Report_options,
+			verbose_level);
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::print_schemes "

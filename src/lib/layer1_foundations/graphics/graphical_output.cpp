@@ -912,7 +912,7 @@ static int do_create_points_smooth_curve_compute_point_function(
 
 void graphical_output::draw_projective_curve(
 		draw_projective_curve_description *Descr,
-		layered_graph_draw_options *Opt, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -926,6 +926,15 @@ void graphical_output::draw_projective_curve(
 	//int ymax = Opt->yin; //1500;
 	int i;
 
+
+	layered_graph_draw_options *Opt;
+
+	if (!Descr->f_draw_options) {
+		cout << "graphical_output::draw_projective_curve please use -draw_options" << endl;
+		exit(1);
+	}
+
+	Opt = Get_draw_options(Descr->draw_options_label);
 
 	if (Descr->f_animate) {
 
@@ -1754,7 +1763,9 @@ void graphical_output::draw_projective(
 
 
 
-void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbose_level)
+void graphical_output::tree_draw(
+		tree_draw_options *Tree_draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1766,6 +1777,17 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 		cout << "graphical_output::tree_draw please use -file <fname>" << endl;
 		exit(1);
 	}
+	if (!Tree_draw_options->f_draw_options) {
+		cout << "graphical_output::tree_draw please use -draw_options" << endl;
+		exit(1);
+	}
+
+
+	layered_graph_draw_options *Draw_options;
+
+	Draw_options = Get_draw_options(Tree_draw_options->draw_options_label);
+
+
 	tree T;
 	orbiter_kernel_system::file_io Fio;
 	std::string fname2;
@@ -1782,9 +1804,10 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 	if (f_v) {
 		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << endl;
 	}
-	T.init(Tree_draw_options,
-			orbiter_kernel_system::Orbiter->draw_options->xin,
-			orbiter_kernel_system::Orbiter->draw_options->yin,
+	T.init(
+			Tree_draw_options,
+			Draw_options->xin,
+			Draw_options->yin,
 			verbose_level);
 	if (f_v) {
 		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << " finished" << endl;
@@ -1812,9 +1835,10 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 	if (f_v) {
 		cout << "graphical_output::tree_draw before T.draw" << endl;
 	}
-	T.draw(fname2,
+	T.draw(
+			fname2,
 			Tree_draw_options,
-			orbiter_kernel_system::Orbiter->draw_options,
+			Draw_options,
 			verbose_level);
 	if (f_v) {
 		cout << "graphical_output::tree_draw after T.draw" << endl;

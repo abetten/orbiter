@@ -3,7 +3,7 @@ ROW,C1,C2,C3
 1,"Projective Space Activities (Part 4)",,
 1,"\verb'-classify_surfaces_with_double_sixes' "," label control   ","Classify cubic surfaces using the approach of double sixes. See Section~\ref{sec:cubicsurfaces:classification}.  "
 1,"\verb'-classify_surfaces_through_' \verb'arcs_and_two_lines' ","    ","Classify cubic surfaces using the approach of six-arcs and two skew lines. See Section~\ref{sec:cubicsurfaces:classification}.  "
-1,"\verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' ","    ","See Section~\ref{sec:cubicsurfaces:classification}.  "
+1,"\verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' ","  options  ","See Section~\ref{sec:cubicsurfaces:classification}.  "
 1,"\verb'-test_nb_Eckardt_points' ","  $e$  ","Restrict to $e$ Eckardt points. See Section~\ref{sec:cubicsurfaces:classification}. To be used in conjunction with \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs'.  "
 1,"\verb'-trihedra1_control' ","   poset-control ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "
 1,"\verb'-trihedra2_control' "," poset-control   ","For \verb'-classify_surfaces_through_' \verb'arcs_and_trihedral_pairs' "

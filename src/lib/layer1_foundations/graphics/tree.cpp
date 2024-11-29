@@ -38,12 +38,14 @@ tree::~tree()
 
 void tree::init(
 		graphics::tree_draw_options *Tree_draw_options,
-		int xmax, int ymax, int verbose_level)
+		int xmax, int ymax,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "tree::init reading tree from file " << Tree_draw_options->file_name << endl;
+		cout << "tree::init reading tree from file "
+				<< Tree_draw_options->file_name << endl;
 	}
 	int f_vv = (verbose_level >= 1);
 	char *buf;
@@ -99,7 +101,8 @@ void tree::init(
 		cout << "tree::init calling root->init" << endl;
 	}
 	root = NEW_OBJECT(tree_node);
-	root->init(0 /* depth */,
+	root->init(
+			0 /* depth */,
 			NULL, false, 0, false, 0, dummy,
 			verbose_level - 1);
 	

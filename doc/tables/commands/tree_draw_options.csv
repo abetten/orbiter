@@ -4,4 +4,5 @@ ROW,C1,C2,C3
 1,"\verb'-file' "," fname "," File in .tree format  "
 1,"\verb'-restrict' "," color ","  "
 1,"\verb'-select_path' "," path ","  "
+1,"\verb'-draw_options' "," options "," Select the draw options object for drawing options. "
 END

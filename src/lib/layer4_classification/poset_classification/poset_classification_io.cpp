@@ -822,8 +822,19 @@ void poset_classification::housekeeping(
 					"before write_treefile_and_draw_tree" << endl;
 		}
 
-		write_treefile(problem_label_with_path, i,
-				Control->draw_options,
+		graphics::layered_graph_draw_options *Draw_options;
+
+		if (!Control->f_draw_options) {
+			cout << "poset_classification::housekeeping_no_data_file "
+					"please use -draw_options" << endl;
+			exit(1);
+		}
+
+		Draw_options = Get_draw_options(Control->draw_options_label);
+
+		write_treefile(
+				problem_label_with_path, i,
+				Draw_options,
 				0 /*verbose_level - 1*/);
 			// in poset_classification_draw.cpp
 
@@ -894,7 +905,8 @@ void poset_classification::housekeeping_no_data_file(
 		}
 #endif
 
-		Poo->write_lvl_file(problem_label_with_path, i, t0,
+		Poo->write_lvl_file(
+				problem_label_with_path, i, t0,
 				false /* f_with_strong_generators */,
 				false /* f_long_version */, 0);
 		
@@ -904,13 +916,23 @@ void poset_classification::housekeeping_no_data_file(
 	}
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
-		write_treefile(problem_label_with_path, i,
-				Control->draw_options,
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		if (!Control->f_draw_options) {
+			cout << "poset_classification::housekeeping_no_data_file "
+					"please use -draw_options" << endl;
+			exit(1);
+		}
+		Draw_options = Get_draw_options(Control->draw_options_label);
+
+		write_treefile(
+				problem_label_with_path, i,
+				Draw_options,
 				verbose_level - 1);
 	}
 	if (f_v) {
-		cout << "poset_classification::"
-				"housekeeping_no_data_file done" << endl;
+		cout << "poset_classification::housekeeping_no_data_file done" << endl;
 	}
 }
 

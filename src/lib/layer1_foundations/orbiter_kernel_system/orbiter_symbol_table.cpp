@@ -169,11 +169,28 @@ std::string orbiter_symbol_table::stringify_type(
 {
 	string s;
 
+	// group of ten:
+
+	// t_nothing_object,
+	// t_finite_field,
+	// t_polynomial_ring,
+	// t_any_group,
+	// t_linear_group,
+	// t_permutation_group,
+	// t_modified_group,
+	// t_projective_space,
+	// t_orthogonal_space,
+	// t_BLT_set_classify,
+
+
 	if (t == t_nothing_object) {
 		s = "t_nothing_object";
 	}
 	else if (t == t_finite_field) {
 		s = "t_finite_field";
+	}
+	else if (t == t_polynomial_ring) {
+		s = "t_polynomial_ring";
 	}
 	else if (t == t_any_group) {
 		s = "t_any_group";
@@ -196,14 +213,22 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_BLT_set_classify) {
 		s = "t_BLT_set_classify";
 	}
+
+	// group of ten:
+	// t_spread_classify,
+	// t_cubic_surface,
+	// t_quartic_curve,
+	// t_BLT_set,
+	// t_classification_of_cubic_surfaces_with_double_sixes,
+	// t_collection,
+	// t_geometric_object,
+	// t_graph,
+	// t_code,
+	// t_spread,
+
 	else if (t == t_spread_classify) {
 		s = "t_spread_classify";
 	}
-#if 0
-	else if (t == t_formula) {
-		cout << "t_formula" << endl;
-	}
-#endif
 	else if (t == t_cubic_surface) {
 		s = "t_cubic_surface";
 	}
@@ -227,6 +252,26 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 	else if (t == t_code) {
 		s = "t_code";
+	}
+	else if (t == t_spread) {
+		s = "t_spread";
+	}
+
+
+	// group of ten:
+	// t_translation_plane,
+	// t_spread_table,
+	// t_packing_classify,
+	// t_packing_was,
+	// t_packing_was_choose_fixed_points,
+	// t_packing_long_orbits,
+	// t_graph_classify,
+	// t_diophant,
+	// t_design,
+	// t_design_table,
+
+	else if (t == t_translation_plane) {
+		s = "t_translation_plane";
 	}
 	else if (t == t_spread_table) {
 		s = "t_spread_table";
@@ -255,6 +300,21 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_design_table) {
 		s = "t_design_table";
 	}
+
+
+
+	// group of ten:
+	// t_large_set_was,
+	// t_set,
+	// t_vector,
+	// t_symbolic_object,
+	// t_combinatorial_object,
+	// t_geometry_builder,
+	// t_vector_ge,
+	// t_action_on_forms,
+	// t_orbits,
+	// t_poset_classification_control,
+
 	else if (t == t_large_set_was) {
 		s = "t_large_set_was";
 	}
@@ -285,6 +345,27 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_poset_classification_control) {
 		s = "t_poset_classification_control";
 	}
+
+
+	// group of 8:
+	// t_poset_classification_report_options,
+	// t_draw_options,
+	// t_draw_incidence_structure_options,
+	// t_arc_generator_control,
+	// t_poset_classification_activity,
+	// t_crc_code,
+	// t_mapping,
+	// t_variety,
+
+	else if (t == t_poset_classification_report_options) {
+		s = "t_poset_classification_report_options";
+	}
+	else if (t == t_draw_options) {
+		s = "t_draw_options";
+	}
+	else if (t == t_draw_incidence_structure_options) {
+		s = "t_draw_incidence_structure_options";
+	}
 	else if (t == t_arc_generator_control) {
 		s = "t_arc_generator_control";
 	}
@@ -300,6 +381,7 @@ std::string orbiter_symbol_table::stringify_type(
 	else if (t == t_variety) {
 		s = "t_variety";
 	}
+
 	else {
 		cout << "orbiter_symbol_table::stringify_type "
 				"type is unknown" << endl;

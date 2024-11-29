@@ -2874,6 +2874,7 @@ void surface_create::export_gap(
 
 
 void surface_create::do_report(
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2924,7 +2925,7 @@ void surface_create::do_report(
 						"before do_report2" << endl;
 			}
 			do_report2(
-					ost, verbose_level);
+					ost, Draw_options, verbose_level);
 			if (f_v) {
 				cout << "surface_create::do_report "
 						"after do_report2" << endl;
@@ -3024,7 +3025,9 @@ void surface_create::do_report_group_elements(
 
 
 void surface_create::do_report2(
-		std::ostream &ost, int verbose_level)
+		std::ostream &ost,
+		graphics::layered_graph_draw_options *Draw_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3088,17 +3091,6 @@ void surface_create::do_report2(
 		std::string fname_mask;
 
 
-		graphics::layered_graph_draw_options *draw_options;
-
-		if (orbiter_kernel_system::Orbiter->f_draw_options) {
-			draw_options =
-					orbiter_kernel_system::Orbiter->draw_options;
-		}
-		else {
-			cout << "please use -draw_options" << endl;
-			exit(1);
-		}
-
 
 		fname_mask = "surface_" + SO->label_txt;
 
@@ -3108,7 +3100,7 @@ void surface_create::do_report2(
 		}
 		SOG->cheat_sheet(ost,
 				f_print_orbits, fname_mask,
-				draw_options,
+				Draw_options,
 				verbose_level);
 		if (f_v) {
 			cout << "surface_create::do_report2 "
@@ -3163,6 +3155,7 @@ void surface_create::do_report_group_elements2(
 
 
 void surface_create::report_with_group(
+		graphics::layered_graph_draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int verbose_level)
 {
@@ -3227,19 +3220,12 @@ void surface_create::report_with_group(
 				"before SOG->investigate_surface_and_write_report:" << endl;
 	}
 
-	if (orbiter_kernel_system::Orbiter->f_draw_options) {
-		SOG->investigate_surface_and_write_report(
-				orbiter_kernel_system::Orbiter->draw_options,
-				Surf_A->A,
-				this,
-				Six_arcs,
-				verbose_level);
-	}
-	else {
-		cout << "use -draw_options to specify "
-				"the drawing option for the report" << endl;
-		exit(1);
-	}
+	SOG->investigate_surface_and_write_report(
+			Draw_options,
+			Surf_A->A,
+			this,
+			Six_arcs,
+			verbose_level);
 
 	//FREE_OBJECT(SoA);
 	FREE_OBJECT(Six_arcs);

@@ -59,14 +59,14 @@ input_objects_of_type_variety::~input_objects_of_type_variety()
 	}
 }
 
-void input_objects_of_type_variety::init(
+void input_objects_of_type_variety::read_objects_from_list_of_csv_files(
 		canonical_form_classifier *Classifier,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::init" << endl;
+		cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files" << endl;
 	}
 	input_objects_of_type_variety::Classifier = Classifier;
 
@@ -75,7 +75,7 @@ void input_objects_of_type_variety::init(
 	if (Classifier->get_description()->f_output_fname) {
 		fname_base_out = Classifier->get_description()->fname_base_out;
 		if (f_v) {
-			cout << "input_objects_of_type_variety::init "
+			cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files "
 					"fname_base_out = " << fname_base_out << endl;
 		}
 	}
@@ -88,7 +88,7 @@ void input_objects_of_type_variety::init(
 #if 1
 	if (Classifier->get_description()->f_skip) {
 		if (f_v) {
-			cout << "input_objects_of_type_variety::init "
+			cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files "
 					"f_skip" << endl;
 		}
 		Get_int_vector_from_label(
@@ -99,7 +99,7 @@ void input_objects_of_type_variety::init(
 
 		Sorting.int_vec_heapsort(skip_vector, skip_sz);
 		if (f_v) {
-			cout << "input_objects_of_type_variety::init "
+			cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files "
 					"skip list consists of " << skip_sz << " cases" << endl;
 			cout << "The cases to be skipped are :";
 			Int_vec_print(cout, skip_vector, skip_sz);
@@ -110,17 +110,17 @@ void input_objects_of_type_variety::init(
 
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::init "
+		cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files "
 				"before read_input_objects_from_list_of_csv_files" << endl;
 	}
 	read_input_objects_from_list_of_csv_files(verbose_level);
 	if (f_v) {
-		cout << "input_objects_of_type_variety::init "
+		cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files "
 				"after read_input_objects_from_list_of_csv_files" << endl;
 	}
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::init done" << endl;
+		cout << "input_objects_of_type_variety::read_objects_from_list_of_csv_files done" << endl;
 	}
 }
 
@@ -245,6 +245,17 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 
 void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		int verbose_level)
+// called by
+// Nauty output column headings must be:
+//"NO_N",
+//"NO_ago",
+//"NO_base_len",
+//"NO_aut_cnt",
+//"NO_base",
+//"NO_tl",
+//"NO_aut",
+//"NO_cl",
+//"NO_stats"
 {
 	int f_v = (verbose_level >= 1);
 
@@ -457,9 +468,9 @@ void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
 
 		if (f_v) {
 			cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
-					"before prepare_input_of_variety_type" << endl;
+					"before prepare_input_of_variety_type_from_spreadsheet" << endl;
 		}
-		prepare_input_of_variety_type(
+		prepare_input_of_variety_type_from_spreadsheet(
 				row, counter,
 				Carry_through,
 				nb_carry_through,
@@ -467,7 +478,7 @@ void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
 				Vo[counter], verbose_level - 2);
 		if (f_v) {
 			cout << "input_objects_of_type_variety::read_all_varieties_from_spreadsheet "
-					"after prepare_input_of_variety_type" << endl;
+					"after prepare_input_of_variety_type_from_spreadsheet" << endl;
 		}
 
 		if (idx_pts == -1) {
@@ -570,7 +581,7 @@ void input_objects_of_type_variety::find_columns(
 	}
 }
 
-void input_objects_of_type_variety::prepare_input_of_variety_type(
+void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet(
 		int row, int counter,
 		int *Carry_through,
 		int nb_carry_trough,
@@ -583,7 +594,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type" << endl;
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet" << endl;
 	}
 
 
@@ -696,17 +707,17 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 	Vo = NEW_OBJECT(variety_object_with_action);
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
-				"before Vo->init" << endl;
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet "
+				"before Vo->create_variety" << endl;
 	}
-	Vo->init(
+	Vo->create_variety(
 			Classifier->Ring_with_action->PA,
 			counter, po_go, po_index, po, so,
 			VD,
 			verbose_level);
 	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
-				"after Vo->init" << endl;
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet "
+				"after Vo->create_variety" << endl;
 	}
 
 
@@ -726,15 +737,15 @@ void input_objects_of_type_variety::prepare_input_of_variety_type(
 		Vo->nauty_output_index_start = nb_carry_trough - 9;
 
 		if (f_v) {
-			cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+			cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet "
 					"f_has_nauty_output" << endl;
-			cout << "input_objects_of_type_variety::prepare_input_of_variety_type "
+			cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet "
 					"nauty_output_index_start=" << Vo->nauty_output_index_start << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "input_objects_of_type_variety::prepare_input_of_variety_type done" << endl;
+		cout << "input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadsheet done" << endl;
 	}
 
 }

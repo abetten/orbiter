@@ -24,6 +24,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 {
 
 	f_report = false;
+	//std::string report_draw_options;
+
 	f_report_sylow = false;
 	f_report_group_table = false;
 	//f_report_classes = false;
@@ -217,8 +219,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 
 	f_subgroup_lattice_draw_by_orbits = false;
+	//std::string subgroup_lattice_draw_by_orbits_draw_options;
 
 	f_subgroup_lattice_draw_by_groups = false;
+	//std::string subgroup_lattice_draw_by_groups_draw_options;
 
 	f_subgroup_lattice_intersection_orbit_orbit = false;
 	subgroup_lattice_intersection_orbit_orbit_orbit1 = -1;
@@ -312,8 +316,9 @@ int group_theoretic_activity_description::read_arguments(
 
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
+			report_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-report" << endl;
+				cout << "-report " << report_draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_sylow") == 0) {
@@ -779,14 +784,16 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_draw_by_orbits") == 0) {
 			f_subgroup_lattice_draw_by_orbits = true;
+			subgroup_lattice_draw_by_orbits_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-subgroup_lattice_draw_by_orbits " << endl;
+				cout << "-subgroup_lattice_draw_by_orbits " << subgroup_lattice_draw_by_orbits_draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_draw_by_groups") == 0) {
 			f_subgroup_lattice_draw_by_groups = true;
+			subgroup_lattice_draw_by_groups_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-subgroup_lattice_draw_by_groups " << endl;
+				cout << "-subgroup_lattice_draw_by_groups " << subgroup_lattice_draw_by_groups_draw_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_intersection_orbit_orbit") == 0) {
@@ -980,7 +987,7 @@ int group_theoretic_activity_description::read_arguments(
 void group_theoretic_activity_description::print()
 {
 	if (f_report) {
-		cout << "-report" << endl;
+		cout << "-report " << report_draw_options << endl;
 	}
 	if (f_report_sylow) {
 		cout << "-report_sylow" << endl;
@@ -1213,10 +1220,10 @@ void group_theoretic_activity_description::print()
 		cout << "-subgroup_lattice_load " << subgroup_lattice_load_fname << endl;
 	}
 	if (f_subgroup_lattice_draw_by_orbits) {
-		cout << "-subgroup_lattice_draw_by_orbits " << endl;
+		cout << "-subgroup_lattice_draw_by_orbits " << subgroup_lattice_draw_by_orbits_draw_options << endl;
 	}
 	if (f_subgroup_lattice_draw_by_groups) {
-		cout << "-subgroup_lattice_draw_by_groups " << endl;
+		cout << "-subgroup_lattice_draw_by_groups " << subgroup_lattice_draw_by_groups_draw_options << endl;
 	}
 	if (f_subgroup_lattice_intersection_orbit_orbit) {
 		cout << "-subgroup_lattice_intersection_orbit_orbit "

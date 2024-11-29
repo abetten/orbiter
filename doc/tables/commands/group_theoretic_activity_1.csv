@@ -1,7 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:grouptasks",,
 1,"Group theoretic activities (Part 1)",,
-1,"\verb'-report' "," ","Produce a latex report for the group. "
+1,"\verb'-report' "," options ","Produce a latex report for the group. Considers the given draw options. "
 1,"\verb'-report_sylow' "," ","Include Sylow subgroups in the report (requires \verb'-report'). "
 1,"\verb'-report_group_table' "," ","Include the group table in the report (requires \verb'-report'). "
 1,"\verb'-export_group_table' "," ","Export the group table as csv-file. "

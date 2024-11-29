@@ -214,8 +214,10 @@ public:
 			std::string &fname,
 			int verbose_level);
 	void subgroup_lattice_draw(
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void subgroup_lattice_draw_by_orbits(
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void subgroup_lattice_intersection_orbit_orbit(
 			int orbit1, int orbit2,

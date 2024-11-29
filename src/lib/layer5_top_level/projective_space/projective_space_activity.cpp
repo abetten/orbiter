@@ -37,7 +37,26 @@ void projective_space_activity::perform_activity(
 		cout << "projective_space_activity::perform_activity" << endl;
 	}
 
-	if (Descr->f_export_point_line_incidence_matrix) {
+	if (Descr->f_cheat_sheet) {
+
+		graphics::layered_graph_draw_options *O;
+
+		O = Get_draw_options(Descr->cheat_sheet_draw_options_label);
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->cheat_sheet" << endl;
+		}
+		PA->cheat_sheet(O, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->cheat_sheet" << endl;
+		}
+
+	}
+
+	else if (Descr->f_export_point_line_incidence_matrix) {
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -571,29 +590,6 @@ void projective_space_activity::perform_activity(
 	}
 
 
-	else if (Descr->f_cheat_sheet) {
-
-		graphics::layered_graph_draw_options *O;
-
-		if (orbiter_kernel_system::Orbiter->f_draw_options) {
-			O = orbiter_kernel_system::Orbiter->draw_options;
-		}
-		else {
-			cout << "please use -draw_options .. -end" << endl;
-			exit(1);
-		}
-
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"before PA->cheat_sheet" << endl;
-		}
-		PA->cheat_sheet(O, verbose_level);
-		if (f_v) {
-			cout << "projective_space_activity::perform_activity "
-					"after PA->cheat_sheet" << endl;
-		}
-
-	}
 	else if (Descr->f_set_stabilizer) {
 
 		projective_space_global G;
@@ -1333,6 +1329,12 @@ void projective_space_activity::perform_activity(
 		}
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
+
+		graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label);
+
+
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
 					"before SH.do_classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
@@ -1340,6 +1342,7 @@ void projective_space_activity::perform_activity(
 		SH.do_classify_surfaces_through_arcs_and_trihedral_pairs(
 				PA,
 				Descr->Trihedra1_control, Descr->Trihedra2_control,
+				Draw_options,
 				Descr->Control_six_arcs_label,
 				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
 				verbose_level);

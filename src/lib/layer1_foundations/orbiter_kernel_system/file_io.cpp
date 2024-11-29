@@ -3112,6 +3112,7 @@ void file_io::create_files_direct(
 	}
 }
 
+
 void file_io::create_file(
 		create_file_description *Descr, int verbose_level)
 {

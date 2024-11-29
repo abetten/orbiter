@@ -30,7 +30,6 @@ canonical_form_classifier::canonical_form_classifier()
 	skip_vector = NULL;
 	skip_sz = 0;
 
-	//Classification_of_varieties = NULL;
 
 	Classification_of_varieties_nauty = NULL;
 
@@ -55,16 +54,9 @@ canonical_form_classifier::~canonical_form_classifier()
 #endif
 
 
-#if 0
-	if (Classification_of_varieties) {
-		FREE_OBJECT(Classification_of_varieties);
-	}
-#endif
-#if 1
 	if (Classification_of_varieties_nauty) {
 		FREE_OBJECT(Classification_of_varieties_nauty);
 	}
-#endif
 	if (skip_vector) {
 		FREE_int(skip_vector);
 	}
@@ -94,9 +86,10 @@ int canonical_form_classifier::has_description()
 	return true;
 }
 
-void canonical_form_classifier::init(
+void canonical_form_classifier::init_objects_from_list_of_csv_files(
 		canonical_form_classifier_description *Descr,
 		int verbose_level)
+// called from orbits_create::init
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
 // Prepare the input input_objects_of_type_variety
@@ -105,13 +98,13 @@ void canonical_form_classifier::init(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files" << endl;
 	}
 
 	canonical_form_classifier::Descr = Descr;
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"algorithm = ";
 		if (Descr->f_algorithm_nauty) {
 			cout << "nauty";
@@ -138,12 +131,13 @@ void canonical_form_classifier::init(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init before copying carry_through" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+				"before copying carry_through" << endl;
 	}
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"Descr->carry_through.size() = " << endl;
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"Descr->carry_through.size() = " << Descr->carry_through.size() << endl;
 	}
 	int i;
@@ -154,13 +148,13 @@ void canonical_form_classifier::init(
 
 	}
 	if (f_v) {
-		cout << "canonical_form_classifier::init after copying carry_through" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files after copying carry_through" << endl;
 	}
 
 
 
 	if (!Descr->f_algorithm_nauty /*&& !Descr->f_algorithm_substructure*/) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"please select an algorithm to use" << endl;
 		exit(1);
 	}
@@ -168,7 +162,7 @@ void canonical_form_classifier::init(
 
 
 	if (!Descr->f_space) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"please use -space <label>  to specify the space" << endl;
 		exit(1);
 	}
@@ -176,12 +170,12 @@ void canonical_form_classifier::init(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"before create_action_on_polynomials" << endl;
 	}
 	create_action_on_polynomials(verbose_level - 3);
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"after create_action_on_polynomials" << endl;
 	}
 
@@ -191,37 +185,36 @@ void canonical_form_classifier::init(
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"before Input->init" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+				"before Input->read_objects_from_list_of_csv_files" << endl;
 	}
-	Input->init(this, verbose_level);
+	Input->read_objects_from_list_of_csv_files(
+			this, verbose_level);
 	if (f_v) {
-		cout << "canonical_form_classifier::init "
-				"after Input->init" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+				"after Input->read_objects_from_list_of_csv_files" << endl;
 	}
 
 	if (Descr->f_skip) {
 		if (f_v) {
-			cout << "canonical_form_classifier::init "
+			cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 					"before init_skip" << endl;
 		}
 		init_skip(
 				Descr->skip_vector_label, verbose_level);
 		if (f_v) {
-			cout << "canonical_form_classifier::init "
+			cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 					"after init_skip" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "canonical_form_classifier::init done" << endl;
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files done" << endl;
 	}
 }
 
 
 void canonical_form_classifier::init_direct(
-		//projective_geometry::projective_space_with_action *PA,
-		//ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		int nb_input_Vo,
 		canonical_form::variety_object_with_action *Input_Vo,
 		std::string &fname_base_out,

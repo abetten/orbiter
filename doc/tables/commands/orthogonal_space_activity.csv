@@ -1,7 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:orthogonal:activities",,
 1,"Orthogonal Space Activities",,
-1,"\verb'-cheat_sheet_orthogonal' ","  "," Create a cheat sheet.  "
+1,"\verb'-cheat_sheet_orthogonal' "," options "," Create a cheat sheet. Considers the given draw options object. "
 1,"\verb'-print_points' "," $v$ "," Print the points whose ranks are given in the vector $v$. "
 1,"\verb'-print_lines' "," $v$ "," Print the lines whose ranks are given in the vector $v$. "
 1,"\verb'-unrank_line_through_two_points' "," $p1$ $p2$ ","Determine the rank of the line through the points whose ranks are $p1$ and $p2$. "

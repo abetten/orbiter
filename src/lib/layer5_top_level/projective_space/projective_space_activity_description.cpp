@@ -21,6 +21,9 @@ namespace projective_geometry {
 projective_space_activity_description::projective_space_activity_description()
 {
 
+	f_cheat_sheet = false;
+	//std::string cheat_sheet_draw_options_label;
+
 
 	f_export_point_line_incidence_matrix = false;
 
@@ -110,8 +113,6 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string sweep_4_L9_E4_fname;
 	sweep_4_L9_E4_surface_description = NULL;
 
-
-	f_cheat_sheet = false;
 
 	f_set_stabilizer = false;
 	set_stabilizer_intermediate_set_size = 0;
@@ -230,6 +231,7 @@ projective_space_activity_description::projective_space_activity_description()
 
 
 	f_classify_surfaces_through_arcs_and_two_lines = false;
+	//std::string classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label;
 
 	f_test_nb_Eckardt_points = false;
 	nb_E = 0;
@@ -286,7 +288,15 @@ int projective_space_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
+		if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
+			f_cheat_sheet = true;
+			cheat_sheet_draw_options_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
 			f_export_point_line_incidence_matrix = true;
 			if (f_v) {
 				cout << "-export_point_line_incidence_matrix " << endl;
@@ -607,13 +617,6 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (ST.stringcmp(argv[i], "-cheat_sheet") == 0) {
-			f_cheat_sheet = true;
-			if (f_v) {
-				cout << "-cheat_sheet " << endl;
-			}
-		}
-
 		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
 			f_set_stabilizer = true;
 			set_stabilizer_intermediate_set_size = ST.strtoi(argv[++i]);
@@ -928,8 +931,9 @@ int projective_space_activity_description::read_arguments(
 
 		else if (ST.stringcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 			f_classify_surfaces_through_arcs_and_trihedral_pairs = true;
+			classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+				cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-trihedra1_control") == 0) {
@@ -1106,6 +1110,9 @@ int projective_space_activity_description::read_arguments(
 
 void projective_space_activity_description::print()
 {
+	if (f_cheat_sheet) {
+		cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
+	}
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
 	}
@@ -1224,9 +1231,6 @@ void projective_space_activity_description::print()
 	}
 
 
-	if (f_cheat_sheet) {
-		cout << "-cheat_sheet " << endl;
-	}
 	if (f_set_stabilizer) {
 		cout << "-set_stabilizer "
 				<< set_stabilizer_intermediate_set_size << " "
@@ -1380,7 +1384,7 @@ void projective_space_activity_description::print()
 		cout << "-test_nb_Eckardt_points " << nb_E << endl;
 	}
 	if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
-		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label << endl;
 	}
 	if (f_trihedra1_control) {
 		cout << "-trihedra1_control " << endl;

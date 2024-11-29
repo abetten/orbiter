@@ -12,7 +12,7 @@ ROW,C1,C2,C3
 1,"\verb'-canonical_form_PG' "," P options  "," Requires a projective space P. See Tab.~\ref{tab:combi:classification} for options."
 1,"\verb'-canonical_form' ","  options "," Classification by canonical form. See Tab.~\ref{tab:combi:classification} for options. "
 1,"\verb'-report' "," options  "," See Tab.~\ref{tab:combi:reporting} for options."
-1,"\verb'-draw_incidence_matrices' "," prefix  "," "
+1,"\verb'-draw_incidence_matrices' "," prefix option "," Draws the incidence matrices, using the given prefix and the given draw incidence options object. "
 1,"\verb'-test_distinguishing_property' "," G  "," Test the distinguishing property for the graph G."
 1,"\verb'-unpack_from_restricted_action' "," prefix G  "," "
 1,"\verb'-line_covering_type' "," prefix P L  "," Computes the line type of the lines in L in the projective space P."

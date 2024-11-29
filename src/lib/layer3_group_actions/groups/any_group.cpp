@@ -2583,6 +2583,7 @@ void any_group::subgroup_lattice_load(
 }
 
 void any_group::subgroup_lattice_draw(
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2611,9 +2612,9 @@ void any_group::subgroup_lattice_draw(
 	}
 
 
-	graphics::layered_graph_draw_options *LG_Draw_options;
+	//graphics::layered_graph_draw_options *Draw_options;
 
-	LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
+	//LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
 
 
 	std::string fname_base, fname_layered_graph;
@@ -2623,7 +2624,8 @@ void any_group::subgroup_lattice_draw(
 
 	LG->write_file(fname_layered_graph, verbose_level);
 	LG->draw_with_options(
-			fname_base, LG_Draw_options,
+			fname_base,
+			Draw_options,
 			verbose_level);
 
 
@@ -2637,6 +2639,7 @@ void any_group::subgroup_lattice_draw(
 
 
 void any_group::subgroup_lattice_draw_by_orbits(
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2665,9 +2668,9 @@ void any_group::subgroup_lattice_draw_by_orbits(
 	}
 
 
-	graphics::layered_graph_draw_options *LG_Draw_options;
+	//graphics::layered_graph_draw_options *LG_Draw_options;
 
-	LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
+	//LG_Draw_options = orbiter_kernel_system::Orbiter->draw_options;
 
 
 	std::string fname_base, fname_layered_graph;
@@ -2677,7 +2680,7 @@ void any_group::subgroup_lattice_draw_by_orbits(
 
 	LG->write_file(fname_layered_graph, verbose_level);
 	LG->draw_with_options(
-			fname_base, LG_Draw_options,
+			fname_base, Draw_options,
 			verbose_level);
 
 

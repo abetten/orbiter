@@ -2596,7 +2596,9 @@ void algebra_global_with_action::young_symmetrizer_sym_4(
 void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		poset_classification::poset_classification_control *Control,
 		group_constructions::linear_group *LG,
-		int d, int target_depth, int verbose_level)
+		int d, int target_depth,
+		poset_classification::poset_classification *&PC,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2605,7 +2607,6 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 	}
 
 	poset_classification::poset_with_group_action *Poset;
-	poset_classification::poset_classification *PC;
 
 
 	Control->f_depth = true;
@@ -3888,7 +3889,9 @@ void algebra_global_with_action::do_linear_codes(
 		groups::any_group *Any_group,
 		std::string &control_label,
 		int minimum_distance,
-		int target_size, int verbose_level)
+		int target_size,
+		poset_classification::poset_classification *&PC,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3913,7 +3916,9 @@ void algebra_global_with_action::do_linear_codes(
 
 	Algebra.linear_codes_with_bounded_minimum_distance(
 			Control, Any_group->LG,
-			minimum_distance, target_size, verbose_level);
+			minimum_distance, target_size,
+			PC,
+			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_linear_codes after "

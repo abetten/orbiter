@@ -54,7 +54,7 @@ variety_object_with_action::~variety_object_with_action()
 	}
 }
 
-void variety_object_with_action::init(
+void variety_object_with_action::create_variety(
 		projective_geometry::projective_space_with_action *PA,
 		int cnt, int po_go, int po_index, int po, int so,
 		algebraic_geometry::variety_description *VD,
@@ -63,7 +63,7 @@ void variety_object_with_action::init(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "variety_object_with_action::init" << endl;
+		cout << "variety_object_with_action::create_variety" << endl;
 	}
 
 	data_structures::string_tools ST;
@@ -93,14 +93,14 @@ void variety_object_with_action::init(
 
 
 	if (f_v) {
-		cout << "variety_object_with_action::init "
+		cout << "variety_object_with_action::create_variety "
 				"before Variety_object->init" << endl;
 	}
 	Variety_object->init(
 			VD,
 			verbose_level);
 	if (f_v) {
-		cout << "variety_object_with_action::init "
+		cout << "variety_object_with_action::create_variety "
 				"after Variety_object->init" << endl;
 	}
 
@@ -108,7 +108,7 @@ void variety_object_with_action::init(
 
 	for (i = 0; i < VD->transformations.size(); i++) {
 		if (f_v) {
-			cout << "variety_object_with_action::init -transform " << VD->transformations[i] << endl;
+			cout << "variety_object_with_action::create_variety -transform " << VD->transformations[i] << endl;
 		}
 
 		int *data;
@@ -121,7 +121,7 @@ void variety_object_with_action::init(
 		PA->A->Group_element->make_element(Elt, data, 0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "variety_object_with_action::init before apply_transformation" << endl;
+			cout << "variety_object_with_action::create_variety before apply_transformation" << endl;
 		}
 
 		apply_transformation(
@@ -131,7 +131,7 @@ void variety_object_with_action::init(
 				verbose_level - 2);
 
 		if (f_v) {
-			cout << "variety_object_with_action::init after apply_transformation" << endl;
+			cout << "variety_object_with_action::create_variety after apply_transformation" << endl;
 		}
 
 		FREE_int(data);
@@ -140,12 +140,12 @@ void variety_object_with_action::init(
 
 
 	if (f_v) {
-		cout << "variety_object_with_action::init before compute_tactical_decompositions" << endl;
+		cout << "variety_object_with_action::create_variety before compute_tactical_decompositions" << endl;
 	}
 	compute_tactical_decompositions(
 			verbose_level);
 	if (f_v) {
-		cout << "variety_object_with_action::init after compute_tactical_decompositions" << endl;
+		cout << "variety_object_with_action::create_variety after compute_tactical_decompositions" << endl;
 	}
 
 
@@ -154,7 +154,7 @@ void variety_object_with_action::init(
 	}
 
 	if (f_v) {
-		cout << "variety_object_with_action::init done" << endl;
+		cout << "variety_object_with_action::create_variety done" << endl;
 	}
 }
 
@@ -483,7 +483,7 @@ void variety_object_with_action::do_report2(
 
 
 
-	data_structures::set_of_sets *Point_sets;
+	//data_structures::set_of_sets *Point_sets;
 
 	if (Variety_object->f_has_singular_points) {
 

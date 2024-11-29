@@ -438,7 +438,6 @@ public:
 			int verbose_level);
 	void create_report(
 			int f_with_stabilizers,
-			graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void report(

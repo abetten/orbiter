@@ -472,8 +472,14 @@ void combinatorial_object_activity::perform_activity_combo(
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"f_draw_incidence_matrices" << endl;
 		}
+
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
+
+		Draw_incidence_structure_description = Get_draw_incidence_structure_options(Descr->draw_incidence_matrices_options_label);
+
 		Combo->draw_incidence_matrices(
 				Descr->draw_incidence_matrices_prefix,
+				Draw_incidence_structure_description,
 				verbose_level);
 
 	}

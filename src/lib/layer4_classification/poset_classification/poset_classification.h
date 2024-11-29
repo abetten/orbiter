@@ -281,14 +281,17 @@ public:
 
 
 	int f_write_tree; // create a tree
+	std::string write_tree_draw_options;
 
 	int f_find_node_by_stabilizer_order;
 	int find_node_by_stabilizer_order;
 
 
 	int f_draw_poset;
-	int f_draw_full_poset;
+	std::string draw_poset_draw_options;
 
+	int f_draw_full_poset;
+	std::string draw_full_poset_draw_options;
 
 	int f_plesken;
 
@@ -468,7 +471,8 @@ public:
 
 
 	int f_draw_options;
-	graphics::layered_graph_draw_options *draw_options;
+	std::string draw_options_label;
+	//graphics::layered_graph_draw_options *draw_options;
 		// used for write_treefile in poset_classification_io
 
 
@@ -1259,6 +1263,10 @@ public:
 
 	int f_fname;
 	std::string fname;
+
+	int f_draw_options;
+	std::string draw_options_label;
+
 
 	poset_classification_report_options();
 	~poset_classification_report_options();

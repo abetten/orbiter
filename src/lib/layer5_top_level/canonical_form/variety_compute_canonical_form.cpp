@@ -350,6 +350,10 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 		// at position idx_canonical_form,
 		// with Canonical_form_nauty as extra_data.
 		idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object;
+		if (f_v) {
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
+					"idx_equation = Variety_stabilizer_compute->Orb->position_of_original_object = " << idx_equation << endl;
+		}
 	}
 
 	FREE_int(alpha);
@@ -463,7 +467,9 @@ void variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new(
 			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"before add_object_and_compute_canonical_equation_new" << endl;
 		}
-		add_object_and_compute_canonical_equation_new(C, idx, verbose_level);
+		add_object_and_compute_canonical_equation_new(
+				C, idx,
+				verbose_level);
 		if (f_v) {
 			cout << "variety_compute_canonical_form::handle_repeated_canonical_form_of_set_new "
 					"after add_object_and_compute_canonical_equation_new" << endl;
@@ -485,7 +491,7 @@ int variety_compute_canonical_form::find_equation_new(
 		int *alpha, int *gamma,
 		int idx1, int &found_at,
 		int verbose_level)
-// gets the canonical_form_nauty object from
+// gets the variety_stabilizer_compute object from
 // Canonical_form_classifier->Output->CB->Type_extra_data[idx1]
 {
 	int f_v = (verbose_level >= 1);
@@ -578,7 +584,8 @@ int variety_compute_canonical_form::find_equation_new(
 	int idx2;
 
 	if (!C1->Orb->search_equation(
-			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /*new_object */, idx2,
+			Canonical_form_classifier->Classification_of_varieties_nauty->eqn2 /*new_object */,
+			idx2,
 			true)) {
 		// need to map points and bitangents under gamma:
 		if (f_v) {

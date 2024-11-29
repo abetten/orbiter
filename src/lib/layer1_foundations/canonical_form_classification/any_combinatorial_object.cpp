@@ -166,6 +166,7 @@ void any_combinatorial_object::print_rows(
 
 void any_combinatorial_object::print_tex_detailed(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_incidence_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -230,7 +231,10 @@ void any_combinatorial_object::print_tex_detailed(
 			cout << "any_combinatorial_object::print_tex_detailed "
 					"before Enc->latex_incma" << endl;
 		}
-		Enc->latex_incma(ost, verbose_level);
+		Enc->latex_incma(
+				ost,
+				Draw_incidence_options,
+				verbose_level);
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex_detailed "
 					"after Enc->latex_incma" << endl;

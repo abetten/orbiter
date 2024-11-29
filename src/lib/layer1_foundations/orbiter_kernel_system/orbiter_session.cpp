@@ -48,11 +48,13 @@ orbiter_session::orbiter_session()
 
 	t0 = 0;
 
+#if 0
 	f_draw_options = true;
 	draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
 
 	f_draw_incidence_structure_description = true;
 	Draw_incidence_structure_description = NEW_OBJECT(graphics::draw_incidence_structure_description);
+#endif
 
 	f_list_arguments = false;
 
@@ -236,6 +238,7 @@ int orbiter_session::read_arguments(
 				cout << "-v " << verbose_level << endl;
 			}
 		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
 
@@ -273,6 +276,7 @@ int orbiter_session::read_arguments(
 				cout << "-draw_incidence_structure_description " << endl;
 			}
 		}
+#endif
 
 
 		else if (ST.stringcmp(argv[i], "-list_arguments") == 0) {
@@ -910,6 +914,53 @@ graph_theory::colored_graph
 
 	return (graph_theory::colored_graph *) get_object(idx);
 }
+
+
+graphics::layered_graph_draw_options
+	*orbiter_session::get_draw_options(
+			std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_draw_options "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_draw_options) {
+		cout << "orbiter_session::get_draw_options "
+				"object type != t_draw_options" << endl;
+		exit(1);
+	}
+
+
+	return (graphics::layered_graph_draw_options *) get_object(idx);
+}
+
+graphics::draw_incidence_structure_description
+	*orbiter_session::get_draw_incidence_structure_options(
+			std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_draw_incidence_structure_options "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_draw_incidence_structure_options) {
+		cout << "orbiter_session::get_draw_incidence_structure_options "
+				"object type != t_draw_incidence_structure_options" << endl;
+		exit(1);
+	}
+
+
+	return (graphics::draw_incidence_structure_description *) get_object(idx);
+}
+
+
 
 
 

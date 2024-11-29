@@ -166,5 +166,180 @@ void ring_with_action::apply(
 	}
 }
 
+void ring_with_action::nauty_interface(
+		canonical_form::variety_object_with_action *Variety_object_with_action,
+		int f_save_nauty_input_graphs,
+		groups::strong_generators *&Set_stab,
+		data_structures::bitvector *&Canonical_form,
+		l1_interfaces::nauty_output *&NO,
+		int verbose_level)
+// called from variety_stabilizer_compute::compute_canonical_form_of_variety
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface" << endl;
+	}
+
+	if (Variety_object_with_action->f_has_nauty_output) {
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface f_has_nauty_output" << endl;
+		}
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface "
+					"before nauty_interface_with_precomputed_data" << endl;
+		}
+
+		nauty_interface_with_precomputed_data(
+				Variety_object_with_action,
+				f_save_nauty_input_graphs,
+				Set_stab,
+				Canonical_form,
+				NO,
+				verbose_level);
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface "
+					"after nauty_interface_with_precomputed_data" << endl;
+		}
+	}
+	else {
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface f_has_nauty_output is false" << endl;
+		}
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface "
+					"before nauty_interface_from_scratch" << endl;
+		}
+
+		nauty_interface_from_scratch(
+				Variety_object_with_action,
+				f_save_nauty_input_graphs,
+				Set_stab,
+				Canonical_form,
+				NO,
+				verbose_level);
+
+		if (f_v) {
+			cout << "ring_with_action::nauty_interface "
+					"after nauty_interface_from_scratch" << endl;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface done" << endl;
+	}
+}
+
+void ring_with_action::nauty_interface_with_precomputed_data(
+		canonical_form::variety_object_with_action *Variety_object_with_action,
+		int f_save_nauty_input_graphs,
+		groups::strong_generators *&Set_stab,
+		data_structures::bitvector *&Canonical_form,
+		l1_interfaces::nauty_output *&NO,
+		int verbose_level)
+// Nauty interface with precomputed data
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_with_precomputed_data" << endl;
+	}
+
+	interfaces::nauty_interface_with_group Nau;
+
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_with_precomputed_data "
+				"before Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
+	}
+
+
+	//
+	// Nauty interface with precomputed data:
+	//
+
+	Nau.set_stabilizer_in_projective_space_using_precomputed_nauty_data(
+			PA->P,
+			PA->A,
+			Variety_object_with_action->Variety_object->Point_sets->Sets[0],
+			Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
+			f_save_nauty_input_graphs,
+			Variety_object_with_action->nauty_output_index_start,
+			Variety_object_with_action->Carrying_through,
+			Set_stab,
+			Canonical_form,
+			NO,
+			verbose_level);
+
+
+
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_with_precomputed_data done" << endl;
+	}
+
+}
+
+void ring_with_action::nauty_interface_from_scratch(
+		canonical_form::variety_object_with_action *Variety_object_with_action,
+		int f_save_nauty_input_graphs,
+		groups::strong_generators *&Set_stab,
+		data_structures::bitvector *&Canonical_form,
+		l1_interfaces::nauty_output *&NO,
+		int verbose_level)
+// Nauty interface without precomputed data
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_from_scratch" << endl;
+	}
+
+	interfaces::nauty_interface_with_group Nau;
+
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_from_scratch "
+				"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+	}
+
+
+	//
+	// Nauty interface without precomputed data:
+	//
+
+
+	Nau.set_stabilizer_in_projective_space_using_nauty(
+			PA->P,
+			PA->A,
+			Variety_object_with_action->Variety_object->Point_sets->Sets[0],
+			Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
+			f_save_nauty_input_graphs,
+			Set_stab,
+			Canonical_form,
+			NO,
+			verbose_level);
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_from_scratch "
+				"after Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "ring_with_action::nauty_interface_from_scratch done" << endl;
+	}
+
+}
+
+
+
+
 }}}
 

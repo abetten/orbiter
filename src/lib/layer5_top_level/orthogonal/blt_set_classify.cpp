@@ -73,6 +73,52 @@ blt_set_classify::~blt_set_classify()
 	}
 }
 
+void blt_set_classify::init(
+		blt_set_classify_description *Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "blt_set_classify::init" << endl;
+		cout << "blt_set_classify::init "
+				"verbose_level = " << verbose_level << endl;
+	}
+
+
+	if (!Descr->f_orthogonal_space) {
+		cout << "blt_set_classify::init please specify an orthogonal space" << endl;
+		exit(1);
+	}
+
+	if (!Descr->f_starter_size) {
+		cout << "please use option -starter_size <s>" << endl;
+		exit(1);
+	}
+
+
+	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
+
+	OA = Get_orthogonal_space(Descr->orthogonal_space_label);
+
+	if (f_v) {
+		cout << "blt_set_classify::init before init_basic" << endl;
+	}
+	init_basic(
+			OA,
+			OA->A,
+			OA->A->Strong_gens,
+			Descr->starter_size,
+			verbose_level);
+	if (f_v) {
+		cout << "blt_set_classify::init before init_basic" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "blt_set_classify::init done" << endl;
+	}
+}
 
 
 void blt_set_classify::init_basic(
@@ -174,7 +220,8 @@ void blt_set_classify::compute_starter(
 
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
-	Poset->init_subset_lattice(A, A,
+	Poset->init_subset_lattice(
+			A, A,
 			Strong_gens,
 			verbose_level);
 
@@ -474,7 +521,8 @@ void blt_set_classify::create_graphs(
 					"with orbit " << orbit << " / " << nb_orbits
 					<< ": before create_graph" << endl;
 		}
-		if (create_graph(orbit, level_of_candidates_file, 
+		if (create_graph(
+				orbit, level_of_candidates_file,
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
 			nb_vertices,
 			CG,  
@@ -1362,7 +1410,8 @@ static void blt_set_classify_early_test_func_callback(
 		Lint_vec_print(cout, S, len);
 		cout << endl;
 	}
-	BLT->Blt_set_domain->early_test_func(S, len,
+	BLT->Blt_set_domain->early_test_func(
+			S, len,
 		candidates, nb_candidates,
 		good_candidates, nb_good_candidates,
 		verbose_level - 2);

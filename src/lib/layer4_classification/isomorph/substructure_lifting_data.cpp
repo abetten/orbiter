@@ -107,7 +107,8 @@ substructure_lifting_data::~substructure_lifting_data()
 }
 
 
-void substructure_lifting_data::init(isomorph *Iso, int verbose_level)
+void substructure_lifting_data::init(
+		isomorph *Iso, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -151,7 +152,8 @@ void substructure_lifting_data::init(isomorph *Iso, int verbose_level)
 	}
 }
 
-void substructure_lifting_data::write_solution_first_and_len(int verbose_level)
+void substructure_lifting_data::write_solution_first_and_len(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	ofstream f(fname_case_len);
@@ -171,7 +173,8 @@ void substructure_lifting_data::write_solution_first_and_len(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::read_solution_first_and_len(int verbose_level)
+void substructure_lifting_data::read_solution_first_and_len(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	data_structures::sorting Sorting;
@@ -216,7 +219,8 @@ void substructure_lifting_data::read_solution_first_and_len(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::init_starter_number(int verbose_level)
+void substructure_lifting_data::init_starter_number(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
@@ -243,7 +247,8 @@ void substructure_lifting_data::init_starter_number(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::init_solution(int verbose_level)
+void substructure_lifting_data::init_solution(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -286,7 +291,8 @@ void substructure_lifting_data::init_solution(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::load_table_of_solutions(int verbose_level)
+void substructure_lifting_data::load_table_of_solutions(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int id, j;
@@ -317,10 +323,11 @@ void substructure_lifting_data::load_table_of_solutions(int verbose_level)
 
 
 
-void substructure_lifting_data::list_solutions_by_starter(int verbose_level)
+void substructure_lifting_data::list_solutions_by_starter(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, idx, id, f, l, fst, len, h, pos, u;
+	int i, j, idx, id, f, l, fst, len, pos, u;
 	long int data[1000];
 	long int data2[1000];
 	data_structures::sorting Sorting;
@@ -334,22 +341,31 @@ void substructure_lifting_data::list_solutions_by_starter(int verbose_level)
 	for (i = 0; i < Iso->Sub->nb_starter; i++) {
 		f = starter_solution_first[i];
 		l = starter_solution_len[i];
+
 		cout << "starter " << i << " solutions from="
 				<< f << " len=" << l << endl;
+
 		pos = f;
 		while (pos < f + l) {
 			fst = flag_orbit_solution_first[j];
 			len = flag_orbit_solution_len[j];
+
 			cout << "orbit " << j << " from=" << fst
 					<< " len=" << len << endl;
+
 			for (u = 0; u < len; u++) {
 				idx = fst + u;
 				id = orbit_perm[idx];
 				load_solution(id, data, verbose_level - 1);
+				Lint_vec_copy(data, data2, Iso->size);
+#if 0
 				for (h = 0; h < Iso->size; h++) {
 					data2[h] = data[h];
 				}
+#endif
+
 				Sorting.lint_vec_heapsort(data2, Iso->size);
+
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
 				Lint_vec_print(cout, data, Iso->size);
@@ -368,10 +384,11 @@ void substructure_lifting_data::list_solutions_by_starter(int verbose_level)
 }
 
 
-void substructure_lifting_data::list_solutions_by_orbit(int verbose_level)
+void substructure_lifting_data::list_solutions_by_orbit(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, idx, id, f, l, h;
+	int i, j, idx, id, f, l;
 	long int data[1000];
 	long int data2[1000];
 	data_structures::sorting Sorting;
@@ -384,16 +401,22 @@ void substructure_lifting_data::list_solutions_by_orbit(int verbose_level)
 	for (i = 0; i < nb_flag_orbits; i++) {
 		f = flag_orbit_solution_first[i];
 		l = flag_orbit_solution_len[i];
+
 		cout << "orbit " << i << " from=" << f
 				<< " len=" << l << endl;
+
 		for (j = 0; j < l; j++) {
 			idx = f + j;
 			id = orbit_perm[idx];
 			load_solution(id, data, verbose_level - 1);
+			Lint_vec_copy(data, data2, Iso->size);
+#if 0
 			for (h = 0; h < Iso->size; h++) {
 				data2[h] = data[h];
 			}
+#endif
 			Sorting.lint_vec_heapsort(data2, Iso->size);
+
 			cout << j << " : " << idx << " : " << id << endl;
 			Lint_vec_print(cout, data, Iso->size);
 			cout << endl;
@@ -408,7 +431,8 @@ void substructure_lifting_data::list_solutions_by_orbit(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
+void substructure_lifting_data::orbits_of_stabilizer(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -428,7 +452,7 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 		cout << "action A=";
 		Iso->A->print_info();
 		cout << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "substructure_lifting_data::orbits_of_stabilizer "
@@ -494,9 +518,11 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 
 
 
-		Iso->Sub->load_strong_generators(Iso->level,
+		Iso->Sub->load_strong_generators(
+				Iso->level,
 			i,
-			gens, go, verbose_level - 2);
+			gens, go,
+			verbose_level - 2);
 		if (f_v5) {
 			cout << "substructure_lifting_data::orbits_of_stabilizer "
 					"after load_strong_generators" << endl;
@@ -551,7 +577,8 @@ void substructure_lifting_data::orbits_of_stabilizer(int verbose_level)
 					cout << "substructure_lifting_data::orbits_of_stabilizer "
 							"before orbits_of_stabilizer_case" << endl;
 				}
-				orbits_of_stabilizer_case(i, gens, verbose_level - 2);
+				orbits_of_stabilizer_case(
+						i, gens, verbose_level - 2);
 				if (f_vv) {
 					cout << "substructure_lifting_data::orbits_of_stabilizer "
 							"after orbits_of_stabilizer_case" << endl;
@@ -774,7 +801,9 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 	}
 	for (j = 0; j < l; j++) {
 
-		load_solution(f + j, sets + j * Iso->size, verbose_level - 1);
+		load_solution(
+				f + j, sets + j * Iso->size,
+				verbose_level - 1);
 		if (false && f_vv) {
 			cout << "solution " << j << "        : ";
 			Lint_vec_print(cout, sets + j * Iso->size, Iso->size);
@@ -802,7 +831,8 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 				"before Iso->A->Induced_action->induced_action_on_sets" << endl;
 	}
 
-	A_induced = Iso->A->Induced_action->induced_action_on_sets(S, //K,
+	A_induced = Iso->A->Induced_action->induced_action_on_sets(
+			S, //K,
 		l, Iso->size, sets, false /*true*/ /* A Betten 1/26/13*/,
 		verbose_level /*- 2*/);
 
@@ -838,7 +868,8 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 		cout << "substructure_lifting_data::orbits_of_stabilizer_case "
 				"before AA->compute_all_point_orbits" << endl;
 	}
-	A_induced->compute_all_point_orbits(*Schreier, gens, 0 /*verbose_level - 4*/);
+	A_induced->compute_all_point_orbits(
+			*Schreier, gens, 0 /*verbose_level - 4*/);
 	//AA->all_point_orbits(*Schreier, verbose_level - 2);
 
 	if (f_v) {
@@ -929,7 +960,8 @@ void substructure_lifting_data::orbit_representative(
 		cout << "substructure_lifting_data::orbit_representative "
 				"before prepare_database_access" << endl;
 	}
-	Iso->Sub->prepare_database_access(Iso->level, verbose_level - 2);
+	Iso->Sub->prepare_database_access(
+			Iso->level, verbose_level - 2);
 	if (f_v) {
 		cout << "substructure_lifting_data::orbit_representative "
 				"after prepare_database_access" << endl;
@@ -945,7 +977,8 @@ void substructure_lifting_data::orbit_representative(
 		cout << "substructure_lifting_data::orbit_representative "
 				"before load_strong_generators" << endl;
 	}
-	Iso->Sub->load_strong_generators(Iso->level, c,
+	Iso->Sub->load_strong_generators(
+			Iso->level, c,
 		gens, go, verbose_level - 2);
 	if (f_v) {
 		cout << "substructure_lifting_data::orbit_representative "
@@ -988,7 +1021,8 @@ void substructure_lifting_data::orbit_representative(
 	}
 }
 
-void substructure_lifting_data::test_orbit_representative(int verbose_level)
+void substructure_lifting_data::test_orbit_representative(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1012,13 +1046,15 @@ void substructure_lifting_data::test_orbit_representative(int verbose_level)
 
 		load_solution(r, data1, verbose_level - 1);
 
-		orbit_representative(r, r0, orbit,
+		orbit_representative(
+				r, r0, orbit,
 				transporter, verbose_level);
 		if (r != r0) {
 			cout << "k=" << k << " r=" << r << " r0=" << r0 << endl;
 		}
 
-		load_solution(r0, data2, verbose_level - 1);
+		load_solution(
+				r0, data2, verbose_level - 1);
 		if (!Iso->A->Group_element->check_if_transporter_for_set(transporter,
 				Iso->size, data1, data2, 0 /*verbose_level*/)) {
 			exit(1);
@@ -1032,7 +1068,8 @@ void substructure_lifting_data::test_orbit_representative(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::test_identify_solution(int verbose_level)
+void substructure_lifting_data::test_identify_solution(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1064,13 +1101,19 @@ void substructure_lifting_data::test_identify_solution(int verbose_level)
 		//cout << "k=" << k << " r=" << r << endl;
 
 		load_solution(id, data1, verbose_level - 1);
-		Combi.Permutations->random_permutation(perm, Iso->size);
+
+		Combi.Permutations->random_permutation(
+				perm, Iso->size);
+
+		//apply permutation and copy over to data2:
+
 		for (i = 0; i < Iso->size; i++) {
 			data2[i] = data1[perm[i]];
 		}
 
 		int f_failure_to_find_point;
-		r0 = Iso->Folding->identify_solution(data2, transporter,
+		r0 = Iso->Folding->identify_solution(
+				data2, transporter,
 				Iso->Sub->f_use_implicit_fusion, f_failure_to_find_point,
 				verbose_level - 2);
 
@@ -1081,8 +1124,10 @@ void substructure_lifting_data::test_identify_solution(int verbose_level)
 			cout << "k=" << k << " r=" << r << " r0=" << r0 << endl;
 			id0 = orbit_perm[flag_orbit_solution_first[r0]];
 
-			load_solution(id0, data1, verbose_level - 1);
-			if (!Iso->A->Group_element->check_if_transporter_for_set(transporter,
+			load_solution(
+					id0, data1, verbose_level - 1);
+			if (!Iso->A->Group_element->check_if_transporter_for_set(
+					transporter,
 					Iso->size, data2, data1, 0 /*verbose_level*/)) {
 				cout << "test_identify_solution, "
 						"check fails, stop" << endl;
@@ -1098,7 +1143,8 @@ void substructure_lifting_data::test_identify_solution(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::setup_and_open_solution_database(int verbose_level)
+void substructure_lifting_data::setup_and_open_solution_database(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1119,7 +1165,8 @@ void substructure_lifting_data::setup_and_open_solution_database(int verbose_lev
 	DB_sol->open(0 /*verbose_level - 1*/);
 }
 
-void substructure_lifting_data::setup_and_create_solution_database(int verbose_level)
+void substructure_lifting_data::setup_and_create_solution_database(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1140,12 +1187,14 @@ void substructure_lifting_data::setup_and_create_solution_database(int verbose_l
 	DB_sol->create(0 /*verbose_level - 1*/);
 }
 
-void substructure_lifting_data::close_solution_database(int verbose_level)
+void substructure_lifting_data::close_solution_database(
+		int verbose_level)
 {
 	DB_sol->close(0/*verbose_level - 1*/);
 }
 
-void substructure_lifting_data::init_DB_sol(int verbose_level)
+void substructure_lifting_data::init_DB_sol(
+		int verbose_level)
 // We assume that the starter is of size 'level' and that
 // fields 4,..., 4+level-1 are the starter values
 {
@@ -1237,7 +1286,8 @@ void substructure_lifting_data::add_solution_to_database(
 				<< " id=" << id << " : " << v << " : " << endl;
 	}
 
-	DB_sol->add_object_return_datref(v, datref, 0/*verbose_level - 3*/);
+	DB_sol->add_object_return_datref(
+			v, datref, 0/*verbose_level - 3*/);
 	if (f_v) {
 		cout << "substructure_lifting_data::add_solution_to_database done" << endl;
 	}
@@ -1251,15 +1301,19 @@ void substructure_lifting_data::load_solution(
 	if (f_v) {
 		cout << "substructure_lifting_data::load_solution id=" << id << endl;
 	}
-	int i, j;
+	int i;
 	long int datref;
 	layer2_discreta::typed_objects::Vector v;
 	//int verbose_level = 0;
 
 	if (f_use_table_of_solutions) {
+
+		Lint_vec_copy(table_of_solutions + id * Iso->size, data, Iso->size);
+#if 0
 		for (j = 0; j < Iso->size; j++) {
 			data[j] = table_of_solutions[id * Iso->size + j];
 		}
+#endif
 		return;
 	}
 	//DB_sol->get_object_by_unique_int4(2, id, v, verbose_level);
@@ -1407,7 +1461,8 @@ void substructure_lifting_data::count_solutions(
 	}
 
 	if (f_get_statistics) {
-		get_statistics(nb_files, fname, List_of_cases, verbose_level);
+		get_statistics(
+				nb_files, fname, List_of_cases, verbose_level);
 		write_statistics();
 		evaluate_statistics(verbose_level);
 	}
@@ -1455,7 +1510,8 @@ void substructure_lifting_data::add_solutions_to_database(
 		}
 
 
-		add_solution_to_database(data,
+		add_solution_to_database(
+				data,
 			u, id, no, nb_solutions_total, hs, datref,
 			print_mod, verbose_level - 2);
 			// in isomorph_database.cpp
@@ -1477,7 +1533,8 @@ void substructure_lifting_data::add_solutions_to_database(
 }
 
 
-void substructure_lifting_data::init_solutions(long int **Solutions, int *Nb_sol,
+void substructure_lifting_data::init_solutions(
+		long int **Solutions, int *Nb_sol,
 	int verbose_level)
 // Solutions[nb_starter], Nb_sol[nb_starter]
 {
@@ -1603,7 +1660,8 @@ void substructure_lifting_data::count_solutions_from_clique_finder_case_by_case(
 	for (i = 0; i < nb_files; i++) {
 		int nb_solutions;
 
-		Fio.count_number_of_solutions_in_file(fname[i],
+		Fio.count_number_of_solutions_in_file(
+				fname[i],
 			nb_solutions,
 			verbose_level - 2);
 
@@ -1680,7 +1738,8 @@ void substructure_lifting_data::count_solutions_from_clique_finder(
 		int *case_nb;
 		int nb_cases;
 
-		Fio.count_number_of_solutions_in_file_by_case(fname[i],
+		Fio.count_number_of_solutions_in_file_by_case(
+				fname[i],
 			nb_solutions, case_nb, nb_cases,
 			verbose_level - 2);
 
@@ -1760,8 +1819,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 	setup_and_create_solution_database(0/*verbose_level - 1*/);
 
 	if (f_v) {
-		cout << "substructure_lifting_data::read_solutions_from_clique_finder_"
-				"case_by_case after setup_and_create_solution_"
+		cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case "
+				"after setup_and_create_solution_"
 				"database" << endl;
 	}
 
@@ -1770,25 +1829,27 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 	for (i = 0; i < nb_files; i++) {
 
 		if (f_vv) {
-			cout << "substructure_lifting_data::read_solutions_from_clique_finder_"
-					"case_by_case, file " << i << " / " << nb_files
+			cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case, "
+					"file " << i << " / " << nb_files
 					<< " which is " << fname[i] << endl;
 		}
 		int nb_solutions;
 		long int *Solutions;
 
-		Fio.read_solutions_from_file(fname[i],
+		Fio.read_solutions_from_file(
+				fname[i],
 			nb_solutions,
 			Solutions, Iso->size /* solution_size */,
 			verbose_level - 2);
 
 		if (f_vv) {
-			cout << "substructure_lifting_data::read_solutions_from_clique_finder_"
-					"case_by_case file " << fname[i] << " number of "
+			cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case "
+					"file " << fname[i] << " number of "
 							"solutions read: " << nb_solutions << endl;
 		}
 
-		add_solutions_to_database(Solutions,
+		add_solutions_to_database(
+				Solutions,
 			list_of_cases[i], nb_solutions, N, print_mod, no,
 			verbose_level);
 
@@ -1812,7 +1873,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 				"Classification of hash values:" << endl;
 		C.print(false /*f_backwards*/);
 	}
-	Sorting.lint_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.lint_vec_heapsort_with_log(
+			hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case "
 				"after sorting hash_vs_id_hash" << endl;
@@ -1900,7 +1962,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 
 		the_case = substructure_case_number[i];
 
-		Fio.read_solutions_from_file_and_get_solution_size(fname[i],
+		Fio.read_solutions_from_file_and_get_solution_size(
+				fname[i],
 			nb_solutions, Solutions, solution_size,
 			verbose_level);
 
@@ -1912,7 +1975,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 		}
 
 		if (nb_solutions != Nb_sol_per_file[i]) {
-			cout << "substructure_lifting_data::read_solutions_from_clique_finder nb_solutions != Nb_sol_per_file[i]" << endl;
+			cout << "substructure_lifting_data::read_solutions_from_clique_finder "
+					"nb_solutions != Nb_sol_per_file[i]" << endl;
 			exit(1);
 		}
 
@@ -1960,7 +2024,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 	}
 
 	if (no != N) {
-		cout << "substructure_lifting_data::read_solutions_from_clique_finder no != N" << endl;
+		cout << "substructure_lifting_data::read_solutions_from_clique_finder "
+				"no != N" << endl;
 		cout << "no=" << no << endl;
 		cout << "N=" << N << endl;
 		exit(1);
@@ -1982,7 +2047,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 				"Classification of hash values:" << endl;
 		C.print(false /*f_backwards*/);
 	}
-	Sorting.lint_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.lint_vec_heapsort_with_log(
+			hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder "
 				"after sorting hash_vs_id_hash" << endl;
@@ -2129,9 +2195,11 @@ void substructure_lifting_data::build_up_database(
 			id = starter_solution_first[data[0]] + nb;
 
 
-			h = Data.lint_vec_hash_after_sorting(data + 1, Iso->size);
+			h = Data.lint_vec_hash_after_sorting(
+					data + 1, Iso->size);
 
-			add_solution_to_database(data,
+			add_solution_to_database(
+					data,
 				nb, id, nb_total, N, h, datref, print_mod,
 				verbose_level - 3);
 
@@ -2186,7 +2254,8 @@ void substructure_lifting_data::build_up_database(
 	}
 }
 
-void substructure_lifting_data::get_statistics(int nb_files,
+void substructure_lifting_data::get_statistics(
+		int nb_files,
 		std::string *fname, int *List_of_cases,
 		int verbose_level)
 {
@@ -2283,7 +2352,8 @@ void substructure_lifting_data::write_statistics()
 			<< Fio.file_size(fname_statistics) << endl;
 }
 
-void substructure_lifting_data::evaluate_statistics(int verbose_level)
+void substructure_lifting_data::evaluate_statistics(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2352,7 +2422,8 @@ void substructure_lifting_data::evaluate_statistics(int verbose_level)
 
 
 
-void substructure_lifting_data::write_starter_nb_orbits(int verbose_level)
+void substructure_lifting_data::write_starter_nb_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -2381,7 +2452,8 @@ void substructure_lifting_data::write_starter_nb_orbits(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::read_starter_nb_orbits(int verbose_level)
+void substructure_lifting_data::read_starter_nb_orbits(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	orbiter_kernel_system::file_io Fio;
@@ -2487,7 +2559,8 @@ void substructure_lifting_data::write_hash_and_datref_file(
 	}
 }
 
-void substructure_lifting_data::read_hash_and_datref_file(int verbose_level)
+void substructure_lifting_data::read_hash_and_datref_file(
+		int verbose_level)
 // Reads the file 'fname_hash_and_datref'
 // containing id_to_hash[] and id_to_datref[]
 // Also initializes hash_vs_id_hash and hash_vs_id_id
@@ -2565,7 +2638,8 @@ void substructure_lifting_data::read_hash_and_datref_file(int verbose_level)
 		}
 #endif
 	}
-	Sorting.lint_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	Sorting.lint_vec_heapsort_with_log(
+			hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_vv) {
 		cout << "substructure_lifting_data::read_hash_and_datref_file" << endl;
 		print_hash_vs_id();
@@ -2588,7 +2662,8 @@ void substructure_lifting_data::print_hash_vs_id()
 	}
 }
 
-void substructure_lifting_data::write_orbit_data(int verbose_level)
+void substructure_lifting_data::write_orbit_data(
+		int verbose_level)
 // Writes the file 'fname_staborbits'
 {
 	int f_v = (verbose_level >= 1);
@@ -2818,7 +2893,8 @@ void substructure_lifting_data::read_orbit_data(
 }
 
 
-void substructure_lifting_data::test_hash(int verbose_level)
+void substructure_lifting_data::test_hash(
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -2838,7 +2914,7 @@ void substructure_lifting_data::test_hash(int verbose_level)
 		l = starter_solution_len[case_nb];
 		if (l == 1) {
 			continue;
-			}
+		}
 		cout << "starter " << case_nb << " f=" << f << " l=" << l << endl;
 		H = NEW_lint(l);
 		for (i = 0; i < l; i++) {
@@ -2847,14 +2923,14 @@ void substructure_lifting_data::test_hash(int verbose_level)
 			load_solution(id, data, verbose_level - 1);
 			Sorting.lint_vec_heapsort(data, Iso->size);
 			H[i] = Data.lint_vec_hash(data, Iso->size);
-			}
+		}
 		{
 			data_structures::tally_lint C;
 			C.init(H, l, true, 0);
 			C.print(false /*f_backwards*/);
 		}
 		FREE_lint(H);
-		}
+	}
 
 	close_solution_database(verbose_level - 1);
 	if (f_v) {
@@ -2862,7 +2938,8 @@ void substructure_lifting_data::test_hash(int verbose_level)
 	}
 }
 
-void substructure_lifting_data::id_to_datref_allocate(int verbose_level)
+void substructure_lifting_data::id_to_datref_allocate(
+		int verbose_level)
 {
 	id_to_datref = NEW_lint(N);
 	id_to_hash = NEW_lint(N);

@@ -37,6 +37,13 @@ interface_toolkit::interface_toolkit()
 	f_csv_file_tally = false;
 	//std::string csv_file_tally_fname;
 
+	f_collect_stats = false;
+	//std::string collect_stats_fname_mask;
+	//std::string collect_stats_fname_out;
+	collect_stats_first = 0;
+	collect_stats_last = 0;
+	collect_stats_step = 0;
+
 	f_csv_file_select_rows = false;
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
@@ -243,6 +250,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
 		cout << "-csv_file_tally <string : label>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
+		cout << "-collect_stats <string : fname_mask> <string : fname_out> <int : first> <int : last> <int : step>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
@@ -386,6 +396,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_tally") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -585,6 +598,23 @@ void interface_toolkit::read_arguments(
 		csv_file_tally_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_tally " << csv_file_tally_fname << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-collect_stats") == 0) {
+		f_collect_stats = true;
+		collect_stats_fname_mask.assign(argv[++i]);
+		collect_stats_fname_out.assign(argv[++i]);
+		collect_stats_first = ST.strtoi(argv[++i]);
+		collect_stats_last = ST.strtoi(argv[++i]);
+		collect_stats_step = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-collect_stats"
+					<< " " << collect_stats_fname_mask
+					<< " " << collect_stats_fname_out
+					<< " " << collect_stats_first
+					<< " " << collect_stats_last
+					<< " " << collect_stats_step
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
@@ -1196,6 +1226,15 @@ void interface_toolkit::print()
 	if (f_csv_file_tally) {
 		cout << "-csv_file_tally " << csv_file_tally_fname << endl;
 	}
+	if (f_collect_stats) {
+		cout << "-collect_stats"
+				<< " " << collect_stats_fname_mask
+				<< " " << collect_stats_fname_out
+				<< " " << collect_stats_first
+				<< " " << collect_stats_last
+				<< " " << collect_stats_step
+				<< endl;
+	}
 	if (f_csv_file_select_rows) {
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
@@ -1505,7 +1544,23 @@ void interface_toolkit::worker(
 				csv_file_tally_fname, verbose_level);
 
 	}
+	else if (f_collect_stats) {
 
+		if (f_v) {
+			cout << "interface_toolkit::worker -f_collect_stats" << endl;
+		}
+
+		cout << "-f_collect_stats " << collect_stats_fname_mask << endl;
+
+		orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->collect_stats(
+				collect_stats_fname_mask,
+				collect_stats_fname_out,
+				collect_stats_first, collect_stats_last, collect_stats_step,
+				verbose_level);
+
+	}
 
 
 	else if (f_csv_file_select_rows) {
@@ -2072,7 +2127,7 @@ void interface_toolkit::worker(
 
 		GO.draw_projective_curve(
 				Draw_projective_curve_description,
-				orbiter_kernel_system::Orbiter->draw_options, verbose_level);
+				verbose_level);
 
 	}
 	else if (f_tree_draw) {

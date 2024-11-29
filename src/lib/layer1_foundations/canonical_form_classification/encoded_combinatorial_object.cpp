@@ -738,6 +738,7 @@ void encoded_combinatorial_object::latex_incma_as_01_matrix(
 
 void encoded_combinatorial_object::latex_incma(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -791,6 +792,7 @@ void encoded_combinatorial_object::latex_incma(
 	}
 	L.incma_latex(
 			ost,
+			Draw_incidence_structure_description,
 		nb_rows /*v */,
 		nb_cols /*b */,
 		V, B, Vi, Bj,
@@ -816,6 +818,7 @@ void encoded_combinatorial_object::latex_incma(
 
 void encoded_combinatorial_object::latex_TDA_incidence_matrix(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 		int verbose_level)
 {
@@ -889,6 +892,7 @@ void encoded_combinatorial_object::latex_TDA_incidence_matrix(
 	}
 	L.incma_latex(
 			ost,
+			Draw_incidence_structure_description,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,
@@ -941,6 +945,7 @@ void encoded_combinatorial_object::compute_labels(
 
 void encoded_combinatorial_object::latex_TDA_with_labels(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 		int verbose_level)
 {
@@ -1027,10 +1032,6 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 		block_labels[j] = std::to_string(orbit[nb_rows + j]);
 	}
 
-	graphics::draw_incidence_structure_description *Descr;
-
-	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
-
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels "
@@ -1038,7 +1039,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 	}
 	L.incma_latex_with_text_labels(
 			ost,
-			Descr,
+			Draw_options,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,
@@ -1067,6 +1068,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(
 
 void encoded_combinatorial_object::latex_canonical_form(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		l1_interfaces::nauty_output *NO,
 		int verbose_level)
 {
@@ -1169,6 +1171,7 @@ void encoded_combinatorial_object::latex_canonical_form(
 	}
 	L.incma_latex_with_labels(
 			ost,
+			Draw_options,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,
@@ -1244,6 +1247,7 @@ void encoded_combinatorial_object::apply_canonical_labeling_and_get_flags(
 
 void encoded_combinatorial_object::latex_canonical_form_with_labels(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_options,
 		l1_interfaces::nauty_output *NO,
 		std::string *row_labels,
 		std::string *col_labels,
@@ -1339,17 +1343,13 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(
 	ost << "\\\\" << endl;
 
 
-	graphics::draw_incidence_structure_description *Descr;
-
-	Descr = orbiter_kernel_system::Orbiter->Draw_incidence_structure_description;
-
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form "
 				"before L.incma_latex_with_text_labels" << endl;
 	}
 	L.incma_latex_with_text_labels(
 			ost,
-			Descr,
+			Draw_options,
 			nb_rows /*v */,
 			nb_cols /*b */,
 			V, B, Vi, Bj,

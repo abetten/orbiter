@@ -31,6 +31,9 @@ public:
 
 	// TABLES/projective_space_activity_1.tex
 
+	int f_cheat_sheet;
+	std::string cheat_sheet_draw_options_label;
+
 
 	int f_export_point_line_incidence_matrix;
 
@@ -129,8 +132,6 @@ public:
 	std::string sweep_4_L9_E4_fname;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create_description
 		*sweep_4_L9_E4_surface_description;
-
-	int f_cheat_sheet;
 
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
@@ -256,6 +257,7 @@ public:
 	int nb_E;
 
 	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
+	std::string classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label;
 
 	int f_trihedra1_control;
 	poset_classification::poset_classification_control
@@ -504,10 +506,6 @@ public:
 			std::string &label,
 			group_constructions::linear_group_description * subgroup_Descr,
 			int verbose_level);
-	void report(
-		std::ostream &ost,
-		graphics::layered_graph_draw_options *O,
-		int verbose_level);
 	void canonical_form_of_code(
 			std::string &label_txt,
 			int *genma, int m, int n,
@@ -516,6 +514,10 @@ public:
 			int verbose_level);
 	void cheat_sheet(
 			graphics::layered_graph_draw_options *O,
+			int verbose_level);
+	void report(
+			std::ostream &ost,
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_spread_classify(
 			int k,
@@ -568,6 +570,30 @@ public:
 	void apply(
 			int *Elt, int *eqn_in, int *eqn_out,
 			int verbose_level);
+	void nauty_interface(
+			canonical_form::variety_object_with_action *Variety_object_with_action,
+			int f_save_nauty_input_graphs,
+			groups::strong_generators *&Set_stab,
+			data_structures::bitvector *&Canonical_form,
+			l1_interfaces::nauty_output *&NO,
+			int verbose_level);
+	// called from variety_stabilizer_compute::compute_canonical_form_of_variety
+	void nauty_interface_with_precomputed_data(
+			canonical_form::variety_object_with_action *Variety_object_with_action,
+			int f_save_nauty_input_graphs,
+			groups::strong_generators *&Set_stab,
+			data_structures::bitvector *&Canonical_form,
+			l1_interfaces::nauty_output *&NO,
+			int verbose_level);
+	// Nauty interface with precomputed data
+	void nauty_interface_from_scratch(
+			canonical_form::variety_object_with_action *Variety_object_with_action,
+			int f_save_nauty_input_graphs,
+			groups::strong_generators *&Set_stab,
+			data_structures::bitvector *&Canonical_form,
+			l1_interfaces::nauty_output *&NO,
+			int verbose_level);
+	// Nauty interface without precomputed data
 
 
 };

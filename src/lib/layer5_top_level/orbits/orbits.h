@@ -104,6 +104,7 @@ public:
 
 	int f_draw_tree;
 	int draw_tree_idx;
+	std::string draw_tree_draw_options;
 
 	int f_stabilizer;
 	int stabilizer_point;
@@ -120,6 +121,9 @@ public:
 
 	int f_transporter;
 	std::string transporter_label_of_set;
+
+	int f_draw_options;
+	std::string draw_options_label;
 
 	int f_report_options;
 	std::string report_options_label;
@@ -175,6 +179,7 @@ public:
 	void do_export_levels(
 			int orbit_idx, int verbose_level);
 	void do_draw_tree(
+			graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_stabilizer(
 			int verbose_level);

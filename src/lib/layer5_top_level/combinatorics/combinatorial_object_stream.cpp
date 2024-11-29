@@ -673,6 +673,7 @@ void combinatorial_object_stream::do_save(
 
 void combinatorial_object_stream::draw_incidence_matrices(
 		std::string &prefix,
+		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -748,7 +749,7 @@ void combinatorial_object_stream::draw_incidence_matrices(
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"before OwCF->latex_incma" << endl;
 			}
-			Enc->latex_incma(ost, verbose_level);
+			Enc->latex_incma(ost, Draw_incidence_structure_description, verbose_level);
 			if (f_v) {
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"after OwCF->latex_incma" << endl;

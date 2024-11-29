@@ -667,9 +667,9 @@ void graph_theory_apps::test_automorphism_property_of_group(
 	int f_aut = true;
 
 	if (AG->f_modified_group) {
-		group_constructions::modified_group_create *MGC;
+		//group_constructions::modified_group_create *MGC;
 
-		MGC = AG->MGC;
+		//MGC = AG->MGC;
 
 		groups::strong_generators *Subgroup_gens;
 

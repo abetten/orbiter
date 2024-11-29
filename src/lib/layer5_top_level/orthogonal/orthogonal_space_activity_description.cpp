@@ -21,6 +21,7 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
 
 	f_cheat_sheet_orthogonal = false;
+	//std::string cheat_sheet_orthogonal_draw_options_label;
 
 	f_print_points = false;
 	//std::string print_points_label;
@@ -76,8 +77,9 @@ int orthogonal_space_activity_description::read_arguments(
 
 		if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = true;
+			cheat_sheet_orthogonal_draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-cheat_sheet_orthogonal "<< endl;
+				cout << "-cheat_sheet_orthogonal " << cheat_sheet_orthogonal_draw_options_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-print_points") == 0) {
@@ -183,8 +185,7 @@ int orthogonal_space_activity_description::read_arguments(
 void orthogonal_space_activity_description::print()
 {
 	if (f_cheat_sheet_orthogonal) {
-		f_cheat_sheet_orthogonal = true;
-		cout << "-cheat_sheet_orthogonal "<< endl;
+		cout << "-cheat_sheet_orthogonal " << cheat_sheet_orthogonal_draw_options_label << endl;
 	}
 	if (f_print_points) {
 		cout << "-print_points " << print_points_label << endl;

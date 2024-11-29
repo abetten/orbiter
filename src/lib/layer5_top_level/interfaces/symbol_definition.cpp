@@ -51,16 +51,6 @@ symbol_definition::symbol_definition()
 	f_group_modification = false;
 	Group_modification_description = NULL;
 
-#if 0
-	f_formula = false;
-	Formula = NULL;
-	//std::string label;
-	//std::string label_tex;
-	//std::string managed_variables;
-	//std::string formula_text;
-	//std::string formula_finite_field;
-#endif
-
 	f_collection = false;
 	//std::string list_of_objects;
 
@@ -174,6 +164,13 @@ symbol_definition::symbol_definition()
 
 	f_poset_classification_report_options = false;
 	Poset_classification_report_options = NULL;
+
+	f_draw_options = false;
+	Draw_options = NULL;
+
+	f_draw_incidence_structure_options = false;
+	Draw_incidence_structure_description = NULL;
+
 
 	f_arc_generator_control = false;
 	Arc_generator_control = NULL;
@@ -310,7 +307,6 @@ void symbol_definition::read_definition(
 	}
 	else if (ST.stringcmp(argv[i], "-BLT_set_classifier") == 0) {
 		f_BLT_set_classifier = true;
-		BLT_set_classifier_label_orthogonal_geometry.assign(argv[++i]);
 		Blt_set_classify_description =
 				NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify_description);
 		if (f_v) {
@@ -1131,6 +1127,58 @@ void symbol_definition::read_definition(
 	}
 
 
+	else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
+		f_draw_options = true;
+
+		Draw_options =
+				NEW_OBJECT(graphics::layered_graph_draw_options);
+		if (f_v) {
+			cout << "reading -draw_options" << endl;
+		}
+		i += Draw_options->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-draw_options" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-draw_options " << endl;
+			Draw_options->print();
+		}
+	}
+
+	else if (ST.stringcmp(argv[i], "-draw_incidence_structure_options") == 0) {
+		f_poset_classification_report_options = true;
+
+		Draw_incidence_structure_description =
+				NEW_OBJECT(graphics::draw_incidence_structure_description);
+		if (f_v) {
+			cout << "reading -draw_incidence_structure_options" << endl;
+		}
+		i += Draw_incidence_structure_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-draw_incidence_structure_options" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-draw_incidence_structure_options " << endl;
+			Draw_incidence_structure_description->print();
+		}
+	}
+
+
+
 	else if (ST.stringcmp(argv[i], "-arc_generator_control") == 0) {
 		f_arc_generator_control = true;
 
@@ -1378,20 +1426,6 @@ void symbol_definition::perform_definition(
 					"after definition_of_modified_group" << endl;
 		}
 	}
-
-#if 0
-	else if (f_formula) {
-		if (f_v) {
-			cout << "symbol_definition::perform_definition "
-					"before definition_of_formula" << endl;
-		}
-		definition_of_formula(Formula, verbose_level);
-		if (f_v) {
-			cout << "symbol_definition::perform_definition "
-					"after definition_of_formula" << endl;
-		}
-	}
-#endif
 
 	else if (f_geometric_object) {
 		if (f_v) {
@@ -1729,6 +1763,37 @@ void symbol_definition::perform_definition(
 					"after definition_of_poset_classification_report_options" << endl;
 		}
 	}
+
+	else if (f_draw_options) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"f_draw_options" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_draw_options" << endl;
+		}
+		definition_of_draw_options(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_draw_options" << endl;
+		}
+	}
+	else if (f_draw_incidence_structure_options) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"f_draw_incidence_structure_options" << endl;
+		}
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_draw_incidence_structure_options" << endl;
+		}
+		definition_of_draw_incidence_structure_options(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_draw_incidence_structure_options" << endl;
+		}
+	}
 	else if (f_arc_generator_control) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition "
@@ -1826,7 +1891,7 @@ void symbol_definition::print()
 		Orthogonal_space_with_action_description->print();
 	}
 	else if (f_BLT_set_classifier) {
-		cout << "-BLT_set_classifier " << BLT_set_classifier_label_orthogonal_geometry << " ";
+		cout << "-BLT_set_classifier " << " ";
 		Blt_set_classify_description->print();
 	}
 	else if (f_spread_classifier) {
@@ -1845,16 +1910,6 @@ void symbol_definition::print()
 		cout << "-modified_group ";
 		Group_modification_description->print();
 	}
-#if 0
-	else if (f_formula) {
-		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
-		//formula *F;
-		//std::string label;
-		//std::string label_tex;
-		//std::string managed_variables;
-		//std::string formula_text;
-	}
-#endif
 	else if (f_geometric_object) {
 		cout << "-geometric_object ";
 		Geometric_object_description->print();
@@ -1988,6 +2043,14 @@ void symbol_definition::print()
 	else if (f_poset_classification_report_options) {
 		cout << "-poset_classification_report_options ";
 		Poset_classification_report_options->print();
+	}
+	else if (f_draw_options) {
+		cout << "-draw_options ";
+		Draw_options->print();
+	}
+	else if (f_draw_incidence_structure_options) {
+		cout << "-draw_incidence_structure_options ";
+		Draw_incidence_structure_description->print();
 	}
 
 	else if (f_arc_generator_control) {
@@ -2268,52 +2331,29 @@ void symbol_definition::definition_of_BLT_set_classifier(
 		cout << "symbol_definition::definition_of_BLT_set_classifier" << endl;
 	}
 
-	//std::string BLT_set_classifier_label_orthogonal_geometry;
-	//orthogonal_geometry_applications::blt_set_classify_description *Blt_set_classify_description;
 
 
-	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
-
-	OA = The_Orbiter_top_level_session->get_object_of_type_orthogonal_space_with_action(
-			BLT_set_classifier_label_orthogonal_geometry);
 
 	orthogonal_geometry_applications::blt_set_classify *BLT_classify;
 
 	BLT_classify = NEW_OBJECT(orthogonal_geometry_applications::blt_set_classify);
 
-#if 0
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set_classifier "
 				"before BLT_classify->init" << endl;
 	}
-	BLT_classify->init(Orthogonal_space_with_action_description,
-		verbose_level - 1);
+	BLT_classify->init(
+			Blt_set_classify_description,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set_classifier "
 				"after BLT_classify->init" << endl;
 	}
-#endif
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set_classifier "
 				"before BLT_classify->init_basic" << endl;
 	}
-
-	if (!Blt_set_classify_description->f_starter_size) {
-		cout << "please use option -starter_size <s>" << endl;
-		exit(1);
-	}
-	BLT_classify->init_basic(
-			OA,
-			OA->A,
-			OA->A->Strong_gens,
-			Blt_set_classify_description->starter_size,
-			verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_BLT_set_classifier "
-				"after BLT_classify->init_basic" << endl;
-	}
-
 
 
 	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
@@ -2616,36 +2656,6 @@ void symbol_definition::definition_of_geometric_object(
 
 
 
-
-#if 0
-void symbol_definition::definition_of_formula(
-		expression_parser::formula *Formula,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_formula" << endl;
-	}
-
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
-
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
-
-	Symb->init_formula(
-			define_label, Formula, verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_formula "
-				"before add_symbol_table_entry" << endl;
-	}
-	Sym->Orbiter_top_level_session->add_symbol_table_entry(
-			define_label, Symb, verbose_level);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_formula done" << endl;
-	}
-}
-#endif
 
 void symbol_definition::definition_of_collection(
 		std::string &list_of_objects,
@@ -4367,6 +4377,75 @@ void symbol_definition::definition_of_poset_classification_report_options(
 	}
 }
 
+
+void symbol_definition::definition_of_draw_options(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_options" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_draw_options(
+			define_label, Draw_options, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_options "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_options done" << endl;
+	}
+}
+
+
+
+void symbol_definition::definition_of_draw_incidence_structure_options(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_incidence_structure_options" << endl;
+	}
+
+
+
+
+	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_draw_incidence_structure_options(
+			define_label, Draw_incidence_structure_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_incidence_structure_options "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_draw_incidence_structure_options done" << endl;
+	}
+}
+
+
+
+
+
 void symbol_definition::definition_of_arc_generator_control(
 		int verbose_level)
 {
@@ -4579,22 +4658,25 @@ void symbol_definition::definition_of_variety(
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_variety "
-				"before Variety->init" << endl;
+				"before Variety->create_variety" << endl;
 	}
-	Variety->init(PA, cnt, po_go, po_index, po, so, Variety_description, verbose_level);
+	Variety->create_variety(
+			PA, cnt, po_go, po_index, po, so, Variety_description, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_variety "
-				"after Variety->init" << endl;
+				"after Variety->create_variety" << endl;
 	}
 	if (f_v) {
-		cout << "Variety->Variety_object->label_txt" << Variety->Variety_object->label_txt << endl;
+		cout << "Variety->Variety_object->label_txt"
+				<< Variety->Variety_object->label_txt << endl;
 	}
 
 
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_variety "
-				"we have created a variety called " << Variety->Variety_object->label_txt << endl;
+				"we have created a variety called "
+				<< Variety->Variety_object->label_txt << endl;
 
 	}
 

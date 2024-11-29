@@ -173,13 +173,13 @@ public:
 
 	int f_has_nauty_output;
 
-	int f_substructure_size;
-	int substructure_size;
+	//int f_substructure_size;
+	//int substructure_size;
 
 	int f_skip;
 	std::string skip_vector_label;
 
-	canonical_form_classifier *Canon_substructure;
+	//canonical_form_classifier *Canonical_form_classifier;
 
 
 
@@ -227,7 +227,6 @@ public:
 
 
 	// Output:
-	//classification_of_varieties *Classification_of_varieties;
 
 	classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
@@ -239,12 +238,10 @@ public:
 	void set_description(
 			canonical_form_classifier_description *Descr);
 	int has_description();
-	void init(
+	void init_objects_from_list_of_csv_files(
 			canonical_form_classifier_description *Descr,
 			int verbose_level);
 	void init_direct(
-			//projective_geometry::projective_space_with_action *PA,
-			//ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action *Input_Vo,
 			std::string &fname_base_out,
@@ -577,6 +574,7 @@ public:
 			int verbose_level);
 	void latex_report(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -626,7 +624,7 @@ public:
 
 	input_objects_of_type_variety();
 	~input_objects_of_type_variety();
-	void init(
+	void read_objects_from_list_of_csv_files(
 			canonical_form_classifier *Classifier,
 			int verbose_level);
 	void init_direct(
@@ -640,6 +638,16 @@ public:
 			int verbose_level);
 	void read_input_objects_from_list_of_csv_files(
 			int verbose_level);
+	// Nauty output column headings must be:
+	//"NO_N",
+	//"NO_ago",
+	//"NO_base_len",
+	//"NO_aut_cnt",
+	//"NO_base",
+	//"NO_tl",
+	//"NO_aut",
+	//"NO_cl",
+	//"NO_stats"
 	void read_all_varieties_from_spreadsheet(
 			data_structures::spreadsheet *S,
 			int *Carry_through,
@@ -649,7 +657,7 @@ public:
 	void find_columns(
 			data_structures::spreadsheet *S,
 			int verbose_level);
-	void prepare_input_of_variety_type(
+	void prepare_input_of_variety_type_from_spreadsheet(
 			int row, int counter,
 			int *Carry_through,
 			int nb_carry_trough,
@@ -708,11 +716,13 @@ public:
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_incidence_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int i, int verbose_level);
 	void report_object(
 			std::ostream &ost,
+			graphics::draw_incidence_structure_description *Draw_incidence_options,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int i,
@@ -955,7 +965,7 @@ public:
 
 	variety_object_with_action();
 	~variety_object_with_action();
-	void init(
+	void create_variety(
 			projective_geometry::projective_space_with_action *PA,
 			int cnt, int po_go, int po_index, int po, int so,
 			algebraic_geometry::variety_description *VD,

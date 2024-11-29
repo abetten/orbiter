@@ -824,6 +824,13 @@ class interface_toolkit {
 	int f_csv_file_tally;
 	std::string csv_file_tally_fname;
 
+	int f_collect_stats;
+	std::string collect_stats_fname_mask;
+	std::string collect_stats_fname_out;
+	int collect_stats_first;
+	int collect_stats_last;
+	int collect_stats_step;
+
 	int f_csv_file_select_rows;
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;
@@ -1215,7 +1222,6 @@ public:
 		*Orthogonal_space_with_action_description;
 
 	int f_BLT_set_classifier;
-	std::string BLT_set_classifier_label_orthogonal_geometry;
 	orthogonal_geometry_applications::blt_set_classify_description
 		*Blt_set_classify_description;
 
@@ -1365,6 +1371,16 @@ public:
 	poset_classification::poset_classification_report_options
 		*Poset_classification_report_options;
 
+	// new:
+	int f_draw_options;
+	graphics::layered_graph_draw_options *Draw_options;
+
+	// new:
+	int f_draw_incidence_structure_options;
+	graphics::draw_incidence_structure_description
+		*Draw_incidence_structure_description;
+
+
 	int f_arc_generator_control;
 	apps_geometry::arc_generator_description
 		*Arc_generator_control;
@@ -1482,6 +1498,10 @@ public:
 	void definition_of_poset_classification_control(
 			int verbose_level);
 	void definition_of_poset_classification_report_options(
+			int verbose_level);
+	void definition_of_draw_options(
+			int verbose_level);
+	void definition_of_draw_incidence_structure_options(
 			int verbose_level);
 	void definition_of_arc_generator_control(
 			int verbose_level);

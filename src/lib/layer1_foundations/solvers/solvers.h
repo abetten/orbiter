@@ -39,7 +39,11 @@ public:
 	int f_draw_as_bitmap;
 	int box_width;
 	int bit_depth; // 8 or 24
+
 	int f_draw;
+	std::string draw_options_label;
+
+
 	int f_perform_column_reductions;
 
 	int f_project_to_single_equation_and_solve;

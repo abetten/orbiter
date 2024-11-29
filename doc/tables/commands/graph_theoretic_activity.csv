@@ -19,5 +19,5 @@ ROW,C1,C2,C3
 1,"\verb'-automorphism_group_' \verb'colored_graph' ","   ","Compute the automorphism group of a vertex colored graph and write a report. See Section~\ref{sec:canonical:form:objects:graphs}. "
 1,"\verb'-properties' ","   ","Compute properties of the graph. "
 1,"\verb'-eigenvalues' ","   ","Compute the eigenvalues of the graph. "
-1,"\verb'-draw' ","   ","Draw the graph. "
+1,"\verb'-draw' "," options  ","Draw the graph. Uses the given options for drawing. "
 END

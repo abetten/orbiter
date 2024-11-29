@@ -419,7 +419,6 @@ void plot_tools::projective_plane_draw_grid(
 
 void plot_tools::draw_mod_n(
 		draw_mod_n_description *Descr,
-		layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -430,12 +429,20 @@ void plot_tools::draw_mod_n(
 		cout << "plot_tools::draw_mod_n" << endl;
 	}
 
+	graphics::layered_graph_draw_options *O;
 
 
 	if (!Descr->f_file) {
 		cout << "please use -file <fname>" << endl;
 		exit(1);
 	}
+
+	if (!Descr->f_draw_options) {
+		cout << "please use -draw_options" << endl;
+		exit(1);
+	}
+
+	O = Get_draw_options(Descr->draw_options_label);
 
 	fname_full = Descr->fname + "_draw.mp";
 
@@ -514,7 +521,7 @@ void plot_tools::draw_mod_n_work(
 	int n = Descr->n;
 
 	if (f_v) {
-		cout << "plot_tools::draw_mod_n_work number=" << n << endl;
+		cout << "plot_tools::draw_mod_n_work n=" << n << endl;
 	}
 
 
@@ -615,39 +622,42 @@ void plot_tools::draw_mod_n_work(
 		}
 	}
 
-	for (i = 0; i < n; i++) {
+	if (Descr->f_label_nodes) {
 
-		string str;
+		for (i = 0; i < n; i++) {
 
-		if (O->f_nodes_empty) {
-			str = "";
-		}
-		else {
+			string str;
 
-			if (Descr->f_divide_out_by) {
-				j = i / Descr->divide_out_by;
+			if (O->f_nodes_empty) {
+				str = "";
 			}
 			else {
-				j = i;
-			}
-			str = std::to_string(j);
-		}
 
-		if (Descr->f_mod_s) {
-			if ((i % Descr->mod_s) == 0) {
+				if (Descr->f_divide_out_by) {
+					j = i / Descr->divide_out_by;
+				}
+				else {
+					j = i;
+				}
+				str = std::to_string(j);
+			}
+
+			if (Descr->f_mod_s) {
+				if ((i % Descr->mod_s) == 0) {
+					f_do_it = true;
+				}
+				else {
+					f_do_it = false;
+				}
+			}
+			else {
 				f_do_it = true;
 			}
-			else {
-				f_do_it = false;
+			if (f_do_it) {
+				string s;
+				s.assign(str);
+				G.text(Px[n + 1 + i], Py[n + 1 + i], s);
 			}
-		}
-		else {
-			f_do_it = true;
-		}
-		if (f_do_it) {
-			string s;
-			s.assign(str);
-			G.text(Px[n + 1 + i], Py[n + 1 + i], s);
 		}
 	}
 

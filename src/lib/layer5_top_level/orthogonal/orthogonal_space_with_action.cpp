@@ -220,7 +220,7 @@ void orthogonal_space_with_action::init_group(
 }
 
 void orthogonal_space_with_action::report(
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -243,7 +243,7 @@ void orthogonal_space_with_action::report(
 				cout << "orthogonal_space_with_action::report "
 						"before report2" << endl;
 			}
-			report2(ost, LG_Draw_options, verbose_level);
+			report2(ost, Draw_options, verbose_level);
 			if (f_v) {
 				cout << "orthogonal_space_with_action::report "
 						"after report2" << endl;
@@ -260,7 +260,7 @@ void orthogonal_space_with_action::report(
 
 void orthogonal_space_with_action::report2(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -279,7 +279,7 @@ void orthogonal_space_with_action::report2(
 		A->report(ost,
 				false /* f_sims */, NULL,
 				false /* f_strong_gens */, NULL,
-				LG_Draw_options,
+				Draw_options,
 				verbose_level - 1);
 
 		if (f_v) {

@@ -311,6 +311,10 @@ void objects_after_classification::latex_report(
 
 	orbiter_kernel_system::file_io Fio;
 
+
+
+
+
 	{
 		l1_interfaces::latex_interface L;
 
@@ -332,7 +336,8 @@ void objects_after_classification::latex_report(
 		}
 
 		report_all_isomorphism_types(
-				ost, Report_options,
+				ost,
+				Report_options,
 				verbose_level);
 
 		L.foot(ost);
@@ -361,6 +366,17 @@ void objects_after_classification::report_all_isomorphism_types(
 		cout << "objects_after_classification::report_all_isomorphism_types" << endl;
 	}
 	int i, j;
+
+	graphics::draw_incidence_structure_description *Draw_incidence_options;
+
+	if (Report_options->f_incidence_draw_options) {
+		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
+	}
+	else {
+		cout << "objects_after_classification::report_all_isomorphism_types please use -incidence_draw_options" << endl;
+		exit(1);
+	}
+
 
 	l1_interfaces::latex_interface L;
 
@@ -410,7 +426,11 @@ void objects_after_classification::report_all_isomorphism_types(
 					"before report_isomorphism_type" << endl;
 		}
 		report_isomorphism_type(
-				ost, Report_options, i, verbose_level);
+				ost,
+				Draw_incidence_options,
+				Report_options,
+				i,
+				verbose_level);
 		if (f_v) {
 			cout << "objects_after_classification::report_all_isomorphism_types "
 					"after report_isomorphism_type" << endl;
@@ -427,9 +447,11 @@ void objects_after_classification::report_all_isomorphism_types(
 
 void objects_after_classification::report_isomorphism_type(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_incidence_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
-		int i, int verbose_level)
+		int i,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -483,6 +505,7 @@ void objects_after_classification::report_isomorphism_type(
 	}
 	report_object(
 			ost,
+			Draw_incidence_options,
 			Report_options,
 			i /* object_idx */,
 			verbose_level);
@@ -502,6 +525,7 @@ void objects_after_classification::report_isomorphism_type(
 
 void objects_after_classification::report_object(
 		std::ostream &ost,
+		graphics::draw_incidence_structure_description *Draw_incidence_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
@@ -529,6 +553,7 @@ void objects_after_classification::report_object(
 
 	OwCF->print_tex_detailed(
 			ost,
+			Draw_incidence_options,
 			Report_options,
 			verbose_level);
 	if (f_v) {
@@ -556,6 +581,7 @@ void objects_after_classification::report_object(
 		ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object latex\\_report}" << endl;
 		OwP[i].latex_report(
 				ost,
+				Draw_incidence_options,
 				Report_options,
 				verbose_level);
 		if (f_v) {

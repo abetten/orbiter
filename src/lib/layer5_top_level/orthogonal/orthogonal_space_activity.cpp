@@ -238,12 +238,13 @@ void orthogonal_space_activity::perform_activity(
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
 		}
 
-		if (!orbiter_kernel_system::Orbiter->f_draw_options) {
-			cout << "please use -draw_options ... -end" << endl;
-			exit(1);
-		}
+		graphics::layered_graph_draw_options *Draw_options;
 
-		OA->report(orbiter_kernel_system::Orbiter->draw_options,
+		Draw_options = Get_draw_options(Descr->cheat_sheet_orthogonal_draw_options_label);
+
+
+		OA->report(
+				Draw_options,
 				verbose_level);
 
 

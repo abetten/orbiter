@@ -15,9 +15,7 @@ ROW,C1,C2,C3
 1,"\verb'-label_points' "," label  "," Column label for the set of points of the object (optional). "
 1,"\verb'-label_lines' "," label  "," Column label for the set of lines of the object (optional). "
 1,"\verb'-carry_through' "," label  "," Column label of a property that is carried through from the input file to the output file. This option can be repeated. "
-1,"\verb'-algorithm_nauty' ","   "," Select canonical forms computed by Nauty (recommended). "
-1,"\verb'-save_nauty_input_graphs' ","   "," Save the input graphs to Nauty in dimacs format. This requires \verb'-algorithm_nauty'."
-1,"\verb'-algorithm_substructure' ","   "," Select canonical forms computed by an algorithm based on substructures (not recommended). "
-1,"\verb'-substructure_size' "," $s$  "," Select the size of the substructure (for the substructure based algorithm). "
-1,"\verb'-skip' "," list  "," List of cases to be skipped. Case numbers are assigned consecutively. They are 0-based. "
+1,"\verb'-algorithm_nauty' ","   "," Select canonical forms computed by Nauty (required). "
+1,"\verb'-save_nauty_input_graphs' ","   "," Save the input graphs to Nauty in Dimacs format. "
+1,"\verb'-skip' "," list  "," List of cases to be skipped. Case numbers are 0-based. "
 END
