@@ -204,7 +204,7 @@ public:
 	groups::schreier *Sch;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	actions::action *A2; // action on the lines
 	actions::action *A3; // action on lines restricted to filtered_lines
@@ -457,13 +457,13 @@ public:
 	int Q;
 	int len; // = n + 1
 	field_theory::finite_field *F;
-	geometry::hermitian *H;
+	geometry::other_geometry::hermitian *H;
 
 	long int *Pts;
 	int nb_pts;
 	int *v;
 	int *line_type;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 	groups::strong_generators *sg;
 	long int **Intersection_sets;
 	int sz;
@@ -537,7 +537,7 @@ public:
 	field_theory::finite_field *Fq;
 	field_theory::finite_field *FQ;
 	field_theory::subfield_structure *SubS;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 
 	// the groups we need:
@@ -559,19 +559,19 @@ public:
 	groups::strong_generators *Strong_gens;
 		// generators for GL(m,Q) field reduced into GL(n,q)
 
-	geometry::desarguesian_spread *D; // n, m, s
+	geometry::finite_geometries::desarguesian_spread *D; // n, m, s
 
 	int n1; // = s * m1;
 	int m1; // = m + 1
 
-	geometry::desarguesian_spread *D1; // n1, m1, s
+	geometry::finite_geometries::desarguesian_spread *D1; // n1, m1, s
 
 	int *spread_embedding; // [D->N]
 
 	int f_identify;
 	int k;
 	int order;
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 	spreads::spread_classify *T;
 
 
@@ -818,7 +818,7 @@ public:
 	int nb_sol; // number of solutions so far
 
 
-	geometry::klein_correspondence *K;
+	geometry::projective_geometry::klein_correspondence *K;
 	int *color_table;
 	int nb_colors;
 
@@ -991,7 +991,7 @@ public:
 
 class search_blocking_set {
 public:
-	geometry::incidence_structure *Inc; // do not free
+	geometry::other_geometry::incidence_structure *Inc; // do not free
 	actions::action *A; // do not free
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
@@ -1021,7 +1021,7 @@ public:
 	search_blocking_set();
 	~search_blocking_set();
 	void init(
-			geometry::incidence_structure *Inc,
+			geometry::other_geometry::incidence_structure *Inc,
 			actions::action *A,
 			int verbose_level);
 	void find_partial_blocking_sets(
@@ -1065,7 +1065,7 @@ public:
 	data_structures_groups::vector_ge *nice_gens;
 	groups::strong_generators *SG;
 	ring_theory::longinteger_object target_go;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
 	groups::schreier *Sch;
@@ -1077,7 +1077,7 @@ public:
 	std::string *line_orbit_label_tex;
 	int *line_orbit;
 	int *line_orbit_inv;
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 	//apps_combinatorics::tactical_decomposition *T;
 
 	singer_cycle();

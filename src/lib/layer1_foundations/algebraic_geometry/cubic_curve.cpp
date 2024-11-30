@@ -78,7 +78,7 @@ void cubic_curve::init(
 		cout << "cubic_curve::init q = " << q << endl;
 	}
 
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 	if (f_v) {
 		cout << "cubic_curve::init "
 				"before P->projective_space_init" << endl;

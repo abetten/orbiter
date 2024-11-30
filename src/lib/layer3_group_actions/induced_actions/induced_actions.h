@@ -221,7 +221,7 @@ public:
 
 	actions::action *An;
 	actions::action *An1;
-	geometry::andre_construction *Andre;
+	geometry::finite_geometries::andre_construction *Andre;
 	int k, n, q;
 	int k1, n1;
 	int N; // number of points in the plane
@@ -235,7 +235,7 @@ public:
 	void init(
 			actions::action *An,
 			actions::action *An1,
-			geometry::andre_construction *Andre,
+			geometry::finite_geometries::andre_construction *Andre,
 			int verbose_level);
 	long int compute_image(
 			int *Elt, long int i,
@@ -579,7 +579,7 @@ public:
 	field_theory::finite_field *F;
 	int *type;
 	int type_len;
-	geometry::flag *Flag;
+	geometry::other_geometry::flag *Flag;
 	algebra::matrix_group *M;
 	int degree;
 	int *M1;
@@ -638,13 +638,13 @@ public:
 	int low_level_point_size;
 	
 	actions::action *A;
-	geometry::grassmann *G;
+	geometry::projective_geometry::grassmann *G;
 	int *M1;
 	int *M2;
 
 	int f_embedding;
 	int big_n;
-	geometry::grassmann_embedded *GE;
+	geometry::projective_geometry::grassmann_embedded *GE;
 	int *subspace_basis; // [n * big_n]
 	int *subspace_basis2; // [n * big_n]
 	
@@ -662,7 +662,7 @@ public:
 	~action_on_grassmannian();
 	void init(
 			actions::action &A,
-			geometry::grassmann *G, int verbose_level);
+			geometry::projective_geometry::grassmann *G, int verbose_level);
 	void add_print_function(
 			void (*print_function)(
 					std::ostream &ost, long int a, void *data),

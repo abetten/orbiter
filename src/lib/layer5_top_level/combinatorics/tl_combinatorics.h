@@ -194,7 +194,7 @@ public:
 	combinatorial_object_activity_description *Descr;
 
 	int f_has_geometric_object;
-	geometry::geometric_object_create *GOC;
+	geometry::other_geometry::geometric_object_create *GOC;
 
 	int f_has_combo;
 	apps_combinatorics::combinatorial_object_stream *Combo;
@@ -204,7 +204,7 @@ public:
 	~combinatorial_object_activity();
 	void init(
 			combinatorial_object_activity_description *Descr,
-			geometry::geometric_object_create *GOC,
+			geometry::other_geometry::geometric_object_create *GOC,
 			int verbose_level);
 	void init_combo(
 			combinatorial_object_activity_description *Descr,
@@ -256,7 +256,7 @@ public:
 					*Canonical_form_Descr,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	// called from combinatorial_object_activity::perform_activity_combo
 #if 0
@@ -986,7 +986,7 @@ public:
 
 
 	projective_geometry::projective_space_with_action *PA;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	int *block; // [k]
 

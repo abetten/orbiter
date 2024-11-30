@@ -71,9 +71,9 @@ void diophant_create::init(
 		}
 
 
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
-		P = NEW_OBJECT(geometry::projective_space);
+		P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 
 		P->projective_space_init(2, F,
 				true /* f_init_incidence_structure */,
@@ -501,7 +501,7 @@ void diophant_create::arc_lifting1(
 	}
 
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	P = Get_projective_space_low_level(Descr->space_label);
 

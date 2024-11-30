@@ -83,7 +83,7 @@ void flock_from_blt_set::init(
 		cout << "flock_from_blt_set::init" << endl;
 	}
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	flock_from_blt_set::BLT_set = BLT_set;

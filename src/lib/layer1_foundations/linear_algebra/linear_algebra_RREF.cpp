@@ -2019,7 +2019,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	long int i, j, h, N, a, sz, Sz;
 	long int rk;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -2696,7 +2696,7 @@ int linear_algebra::choose_vector_in_here_but_not_in_here_or_here_column_spaces_
 	int i, j, b;
 	int ret = true;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {

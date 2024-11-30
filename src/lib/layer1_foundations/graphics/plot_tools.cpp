@@ -882,7 +882,7 @@ void plot_tools::draw_mod_n_work(
 void plot_tools::draw_point_set_in_plane(
 	std::string &fname,
 	layered_graph_draw_options *O,
-	geometry::projective_space *P,
+	geometry::projective_geometry::projective_space *P,
 	long int *Pts, int nb_pts,
 	int f_point_labels,
 	int verbose_level)

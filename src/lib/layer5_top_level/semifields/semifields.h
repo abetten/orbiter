@@ -184,7 +184,7 @@ public:
 	std::string level_three_prefix;
 
 
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 	spreads::spread_classify *T;
 
 	actions::action *A; // = T->A = PGL_n_q
@@ -548,7 +548,7 @@ public:
 
 	semifield_flag_orbit_node *Flag_orbits;
 
-	geometry::grassmann *Gr;
+	geometry::projective_geometry::grassmann *Gr;
 
 	// po = primary orbit
 	// so = secondary orbit
@@ -720,8 +720,8 @@ public:
 	semifield_classify_with_substructure *SCWS;
 	semifield_classify *SC;
 	semifield_lifting *L3;
-	geometry::grassmann *Gr3;
-	geometry::grassmann *Gr2;
+	geometry::projective_geometry::grassmann *Gr3;
+	geometry::projective_geometry::grassmann *Gr2;
 	int *Non_unique_cases_with_non_trivial_group;
 	int nb_non_unique_cases_with_non_trivial_group;
 

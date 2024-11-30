@@ -1591,13 +1591,13 @@ void modified_group_create::create_polarity_extension(
 
 	//PA = Get_projective_space(input_projective_space_label);
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 
 	P = Get_projective_space_low_level(input_projective_space_label);
 
 
-	geometry::polarity *Standard_polarity;
+	geometry::projective_geometry::polarity *Standard_polarity;
 
 	Standard_polarity = P->Subspaces->Standard_polarity;
 

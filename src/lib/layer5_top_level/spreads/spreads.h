@@ -24,7 +24,7 @@ namespace spreads {
 class recoordinatize {
 public:
 
-	geometry::three_skew_subspaces *Three_skew_subspaces;
+	geometry::other_geometry::three_skew_subspaces *Three_skew_subspaces;
 
 
 	actions::action *A;
@@ -59,7 +59,7 @@ public:
 	recoordinatize();
 	~recoordinatize();
 	void init(
-			geometry::three_skew_subspaces *Three_skew_subspaces,
+			geometry::other_geometry::three_skew_subspaces *Three_skew_subspaces,
 			actions::action *A, actions::action *A2,
 		int f_projective, int f_semilinear,
 		int (*check_function_incremental)(
@@ -129,7 +129,7 @@ public:
 
 	spread_activity_description *Descr;
 	spread_create *Spread_create;
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
 	actions::action *A;
 		// P Gamma L(n,q)
@@ -289,7 +289,7 @@ class spread_classify {
 public:
 
 	spread_classify_description *Descr;
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
 	projective_geometry::projective_space_with_action *PA;
 	groups::strong_generators *Strong_gens;
@@ -345,7 +345,7 @@ public:
 			int verbose_level);
 	void init(
 			spreads::spread_classify_description *Descr,
-			geometry::spread_domain *SD,
+			geometry::finite_geometries::spread_domain *SD,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	void init2(
@@ -492,7 +492,7 @@ public:
 	int degree;
 
 
-	geometry::grassmann *Grass;
+	geometry::projective_geometry::grassmann *Grass;
 
 	long int *set;
 	int sz;
@@ -500,7 +500,7 @@ public:
 	int f_has_group;
 	groups::strong_generators *Sg;
 
-	geometry::andre_construction *Andre;
+	geometry::finite_geometries::andre_construction *Andre;
 
 
 
@@ -722,7 +722,7 @@ public:
 	int *sorted_packing; // [size_of_packing]
 	int *dual_packing; // [size_of_packing]
 
-	geometry::spread_tables *Spread_tables;
+	geometry::finite_geometries::spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
 	data_structures::bitvector *Bitvec;

@@ -400,7 +400,7 @@ class blt_set_domain_with_action {
 public:
 
 	actions::action *A;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	layer1_foundations::orthogonal_geometry::orthogonal *O;
 
@@ -412,7 +412,7 @@ public:
 	~blt_set_domain_with_action();
 	void init(
 			actions::action *A,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			layer1_foundations::orthogonal_geometry::orthogonal *O,
 			int f_create_extension_fields,
 			int verbose_level);
@@ -707,7 +707,7 @@ public:
 
 	orthogonal_space_with_action_description *Descr;
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	layer1_foundations::orthogonal_geometry::orthogonal *O;
 

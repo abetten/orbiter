@@ -160,7 +160,7 @@ void canonical_form_global::find_isomorphism(
 void canonical_form_global::compute_group_and_tactical_decomposition(
 		canonical_form::canonical_form_classifier *Classifier,
 		canonical_form::variety_object_with_action *Input_Vo,
-		std::string &fname_base,
+		canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
 		int verbose_level)
 // called from
 // modified_group_create::do_stabilizer_of_variety
@@ -172,7 +172,7 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition" << endl;
 	}
 
-	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
+	//canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
 	Classification_of_varieties_nauty = NEW_OBJECT(canonical_form::classification_of_varieties_nauty);
 
@@ -207,30 +207,7 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 	}
 
 
-	if (f_v) {
-		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"before Classification_of_varieties_nauty->report" << endl;
-	}
-	Classification_of_varieties_nauty->report(
-			fname_base,
-			verbose_level);
-	if (f_v) {
-		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"after Classification_of_varieties_nauty->report" << endl;
-	}
 
-
-	if (f_v) {
-		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"before Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
-	}
-	Classification_of_varieties_nauty->write_classification_by_nauty_csv(
-			fname_base,
-			verbose_level);
-	if (f_v) {
-		cout << "canonical_form_global::compute_group_and_tactical_decomposition "
-				"after Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
-	}
 
 
 	if (f_v) {
@@ -264,6 +241,50 @@ void canonical_form_global::compute_group_and_tactical_decomposition(
 
 	if (f_v) {
 		cout << "canonical_form_global::compute_group_and_tactical_decomposition done" << endl;
+	}
+
+}
+
+void canonical_form_global::report_and_orbit_transversal(
+		canonical_form::variety_object_with_action *Input_Vo,
+		canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty,
+		std::string &fname_base,
+		poset_classification::poset_classification_report_options *Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal "
+				"before Classification_of_varieties_nauty->report" << endl;
+	}
+	Classification_of_varieties_nauty->report(
+			Report_options,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal "
+				"after Classification_of_varieties_nauty->report" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal "
+				"before Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
+	}
+	Classification_of_varieties_nauty->write_classification_by_nauty_csv(
+			fname_base,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal "
+				"after Classification_of_varieties_nauty->write_classification_by_nauty_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "canonical_form_global::report_and_orbit_transversal done" << endl;
 	}
 
 }

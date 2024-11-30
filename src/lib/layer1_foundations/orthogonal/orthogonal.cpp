@@ -145,7 +145,7 @@ void orthogonal::init(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {

@@ -137,7 +137,7 @@ void spread_create::init(
 		exit(1);
 	}
 
-	Grass = NEW_OBJECT(geometry::grassmann);
+	Grass = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Grass->init(2 * k, k, F, verbose_level);
 
 
@@ -384,7 +384,7 @@ void spread_create::init(
 	}
 
 
-	Andre = NEW_OBJECT(geometry::andre_construction);
+	Andre = NEW_OBJECT(geometry::finite_geometries::andre_construction);
 
 	if (f_v) {
 		cout << "spread_create::init before Andre->init" << endl;

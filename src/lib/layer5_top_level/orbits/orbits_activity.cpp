@@ -471,23 +471,21 @@ void orbits_activity::do_report(
 					"f_has_classification_by_canonical_form" << endl;
 		}
 
-#if 0
-		poset_classification::poset_classification_report_options *report_options;
+		poset_classification::poset_classification_report_options *Report_options;
 
-		if (Descr->f_report_options) {
-			report_options = Descr->report_options;
+		if (!Descr->f_report_options) {
+			cout << "orbits_activity::do_report please use -report_options" << endl;
+			exit(1);
 		}
-		else {
-			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
-		}
-#endif
+		Report_options = Get_poset_classification_report_options(Descr->report_options_label);
 
-		string fname_base;
+		//string fname_base;
 
-		fname_base = OC->label_txt;
+		//fname_base = OC->label_txt;
 
 		OC->Canonical_form_classifier->Classification_of_varieties_nauty->report(
-				fname_base,
+				//fname_base,
+				Report_options,
 				verbose_level);
 
 #if 0

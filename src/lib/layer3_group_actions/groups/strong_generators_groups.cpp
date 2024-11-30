@@ -946,7 +946,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	int *data;
 	int i;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle "
@@ -1132,7 +1132,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int *data2;
 	int i;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_singer_cycle_and_the_Frobenius "
@@ -4014,7 +4014,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	strong_generators *SG_hyperplane,
-	geometry::projective_space *P, int line1, int line2,
+	geometry::projective_geometry::projective_space *P, int line1, int line2,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

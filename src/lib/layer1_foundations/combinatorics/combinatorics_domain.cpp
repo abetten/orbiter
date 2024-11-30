@@ -284,7 +284,7 @@ int combinatorics_domain::int_vec_is_regular_word(
 int combinatorics_domain::int_vec_first_regular_word(
 		int *v, int len, int q)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 #if 0
 	int a;
@@ -313,7 +313,7 @@ int combinatorics_domain::int_vec_next_regular_word(
 		int *v, int len, int q)
 {
 	//long int a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 #if 0
 	a = Gg.AG_element_rank(q, v, 1, len);
@@ -2965,7 +2965,7 @@ void combinatorics_domain::compute_incidence_matrix_from_sets(
 	if (f_v) {
 		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
 	}
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	int i, j;
 	int *B;
@@ -3096,10 +3096,10 @@ void combinatorics_domain::refine_the_partition(
 			M, verbose_level);
 
 	{
-		geometry::incidence_structure *Inc;
+		geometry::other_geometry::incidence_structure *Inc;
 
 
-		Inc = NEW_OBJECT(geometry::incidence_structure);
+		Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 
@@ -3244,7 +3244,7 @@ void combinatorics_domain::refine_the_partition(
 
 void combinatorics_domain::compute_TDO_decomposition_of_projective_space_old(
 		std::string &fname_base,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		std::vector<std::string> &file_names,
@@ -3259,9 +3259,9 @@ void combinatorics_domain::compute_TDO_decomposition_of_projective_space_old(
 	}
 	{
 
-		geometry::incidence_structure *Inc;
+		geometry::other_geometry::incidence_structure *Inc;
 
-		Inc = NEW_OBJECT(geometry::incidence_structure);
+		Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 		Inc->init_projective_space(P, verbose_level);
 
@@ -3310,7 +3310,7 @@ void combinatorics_domain::compute_TDO_decomposition_of_projective_space_old(
 }
 
 combinatorics::decomposition_scheme *combinatorics_domain::compute_TDO_decomposition_of_projective_space(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)

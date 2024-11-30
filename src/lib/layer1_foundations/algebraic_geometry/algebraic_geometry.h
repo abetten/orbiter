@@ -29,16 +29,16 @@ public:
 	algebraic_geometry_global();
 	~algebraic_geometry_global();
 	void analyze_del_Pezzo_surface(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			expression_parser::formula *Formula,
 			std::string &evaluate_text,
 			int verbose_level);
 	void report_grassmannian(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int k,
 			int verbose_level);
 	void map(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			std::string &ring_label,
 			std::string &formula_label,
 			std::string &evaluate_text,
@@ -46,7 +46,7 @@ public:
 			long int &N_points,
 			int verbose_level);
 	void affine_map(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			std::string &ring_label,
 			std::string &formula_label,
 			std::string &evaluate_text,
@@ -54,7 +54,7 @@ public:
 			long int &N_points,
 			int verbose_level);
 	void projective_variety(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			std::string &ring_label,
 			std::string &formula_label,
 			std::string &evaluate_text,
@@ -63,28 +63,28 @@ public:
 			int verbose_level);
 	void evaluate_regular_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_output,
 			int verbose_level);
 	void evaluate_affine_map(
 			ring_theory::homogeneous_polynomial_domain *Ring,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Image_pts, long int &N_points_input,
 			int verbose_level);
 	void compute_projective_variety(
 			ring_theory::homogeneous_polynomial_domain *Ring,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			expression_parser::symbolic_object_builder *Object,
 			std::string &evaluate_text,
 			long int *&Variety, long int &Variety_nb_points,
 			int verbose_level);
 	void make_evaluation_matrix_wrt_ring(
 			ring_theory::homogeneous_polynomial_domain *Ring,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int *&M, int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void cubic_surface_family_24_generators(
@@ -104,42 +104,42 @@ public:
 		int *&gens, int &nb_gens, int &data_size,
 		int &group_order, int verbose_level);
 	int nonconical_six_arc_get_nb_Eckardt_points(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 			long int *Arc6, int verbose_level);
 	algebraic_geometry::eckardt_point_info *compute_eckardt_point_info(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 		long int *arc6,
 		int verbose_level);
 	int test_nb_Eckardt_points(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	void rearrange_arc_for_lifting(
 			long int *Arc6,
 			long int P1, long int P2, int partition_rk, long int *arc,
 			int verbose_level);
 	void find_two_lines_for_arc_lifting(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int P1, long int P2, long int &line1, long int &line2,
 			int verbose_level);
 	void hyperplane_lifting_with_two_lines_fixed(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int *A3, int f_semilinear, int frobenius,
 			long int line1, long int line2,
 			int *A4,
 			int verbose_level);
 	void hyperplane_lifting_with_two_lines_moved(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int line1_from, long int line1_to,
 			long int line2_from, long int line2_to,
 			int *A4,
 			int verbose_level);
 	void do_move_two_lines_in_hyperplane_stabilizer(
-			geometry::projective_space *P3,
+			geometry::projective_geometry::projective_space *P3,
 			long int line1_from, long int line2_from,
 			long int line1_to, long int line2_to,
 			int verbose_level);
 	void do_move_two_lines_in_hyperplane_stabilizer_text(
-			geometry::projective_space *P3,
+			geometry::projective_geometry::projective_space *P3,
 			std::string &line1_from_text, std::string &line2_from_text,
 			std::string &line1_to_text, std::string &line2_to_text,
 			int verbose_level);
@@ -272,7 +272,7 @@ class cubic_curve {
 public:
 	int q;
 	field_theory::finite_field *F;
-	geometry::projective_space *P; // PG(2,q)
+	geometry::projective_geometry::projective_space *P; // PG(2,q)
 
 
 	int nb_monomials;
@@ -323,10 +323,10 @@ class del_pezzo_surface_of_degree_two_domain {
 
 public:
 	field_theory::finite_field *F;
-	geometry::projective_space *P3;
-	geometry::projective_space *P2;
-	geometry::grassmann *Gr; // Gr_{4,2}
-	geometry::grassmann *Gr3; // Gr_{4,3}
+	geometry::projective_geometry::projective_space *P3;
+	geometry::projective_geometry::projective_space *P2;
+	geometry::projective_geometry::grassmann *Gr; // Gr_{4,2}
+	geometry::projective_geometry::grassmann *Gr3; // Gr_{4,3}
 	long int nb_lines_PG_3;
 	ring_theory::homogeneous_polynomial_domain *Poly4_3;
 		// quartic polynomials in three variables
@@ -334,7 +334,7 @@ public:
 	del_pezzo_surface_of_degree_two_domain();
 	~del_pezzo_surface_of_degree_two_domain();
 	void init(
-			geometry::projective_space *P3,
+			geometry::projective_geometry::projective_space *P3,
 			ring_theory::homogeneous_polynomial_domain *Poly4_3,
 			int verbose_level);
 	void enumerate_points(
@@ -367,7 +367,7 @@ public:
 	expression_parser::syntax_tree_node **Subtrees;
 	int *Coefficient_vector;
 
-	geometry::points_and_lines *pal;
+	geometry::other_geometry::points_and_lines *pal;
 
 
 	del_pezzo_surface_of_degree_two_object();
@@ -410,7 +410,7 @@ class eckardt_point_info {
 public:
 
 	//surface_domain *Surf;
-	geometry::projective_space *P2;
+	geometry::projective_geometry::projective_space *P2;
 	long int arc6[6];
 
 	int *bisecants; // [15]
@@ -427,7 +427,7 @@ public:
 	eckardt_point_info();
 	~eckardt_point_info();
 	void init(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 			long int *arc6, int verbose_level);
 	void print_bisecants(
 			std::ostream &ost, int verbose_level);
@@ -580,7 +580,7 @@ class quartic_curve_domain {
 
 public:
 	field_theory::finite_field *F;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	// we use the monomial ordering t_PART in all polynomial rings:
 
@@ -1391,17 +1391,17 @@ public:
 
 	field_theory::finite_field *F;
 
-	geometry::projective_space *P; // PG(3,q)
-	geometry::projective_space *P2; // PG(2,q)
+	geometry::projective_geometry::projective_space *P; // PG(3,q)
+	geometry::projective_geometry::projective_space *P2; // PG(2,q)
 
-	geometry::grassmann *Gr; // Gr_{4,2}
-	geometry::grassmann *Gr3; // Gr_{4,3}
+	geometry::projective_geometry::grassmann *Gr; // Gr_{4,2}
+	geometry::projective_geometry::grassmann *Gr3; // Gr_{4,3}
 
 	long int nb_lines_PG_3;
 	int nb_pts_on_surface_with_27_lines; // q^2 + 7q + 1
 
 	orthogonal_geometry::orthogonal *O;
-	geometry::klein_correspondence *Klein;
+	geometry::projective_geometry::klein_correspondence *Klein;
 
 
 	int Basis0[16];
@@ -2148,7 +2148,7 @@ public:
 			int *gradient,
 			int verbose_level);
 	long int compute_special_bitangent(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 			int *gradient,
 			int verbose_level);
 	void print_clebsch_P(
@@ -2193,7 +2193,7 @@ public:
 	std::string projective_space_label;
 
 	int f_has_projective_space_pointer;
-	geometry::projective_space *Projective_space_pointer;
+	geometry::projective_geometry::projective_space *Projective_space_pointer;
 
 	int f_ring;
 	std::string ring_label;
@@ -2254,7 +2254,7 @@ public:
 
 	variety_description *Descr;
 
-	geometry::projective_space *Projective_space;
+	geometry::projective_geometry::projective_space *Projective_space;
 
 	ring_theory::homogeneous_polynomial_domain *Ring;
 
@@ -2319,17 +2319,17 @@ public:
 			int *&equation,
 			int verbose_level);
 	void init_equation_only(
-			geometry::projective_space *Projective_space,
+			geometry::projective_geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			int *equation,
 			int verbose_level);
 	void init_equation(
-			geometry::projective_space *Projective_space,
+			geometry::projective_geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			int *equation,
 			int verbose_level);
 	void init_equation_and_points_and_lines_and_labels(
-			geometry::projective_space *Projective_space,
+			geometry::projective_geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			int *equation,
 			long int *Pts, int nb_pts,
@@ -2338,7 +2338,7 @@ public:
 			std::string &label_tex,
 			int verbose_level);
 	void init_set_of_sets(
-			geometry::projective_space *Projective_space,
+			geometry::projective_geometry::projective_space *Projective_space,
 			ring_theory::homogeneous_polynomial_domain *Ring,
 			int *equation,
 			data_structures::set_of_sets *Point_sets,

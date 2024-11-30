@@ -791,8 +791,8 @@ public:
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 
-	geometry::projective_space *P;
-	geometry::polarity *Polarity;
+	geometry::projective_geometry::projective_space *P;
+	geometry::projective_geometry::polarity *Polarity;
 
 	std::string label;
 	std::string label_tex;
@@ -855,8 +855,8 @@ public:
 	~polarity_extension();
 	void init(
 			actions::action *A,
-			geometry::projective_space *P,
-			geometry::polarity *Polarity,
+			geometry::projective_geometry::projective_space *P,
+			geometry::projective_geometry::polarity *Polarity,
 			int verbose_level);
 	long int element_image_of(
 			int *Elt, long int a, int verbose_level);

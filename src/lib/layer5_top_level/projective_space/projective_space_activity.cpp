@@ -613,7 +613,7 @@ void projective_space_activity::perform_activity(
 
 	else if (Descr->f_conic_type) {
 
-		geometry::geometry_global G;
+		geometry::other_geometry::geometry_global G;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -882,7 +882,7 @@ void projective_space_activity::perform_activity(
 	else if (Descr->f_rank_lines_in_PG) {
 
 
-		geometry::geometry_global Geo;
+		geometry::other_geometry::geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -900,7 +900,7 @@ void projective_space_activity::perform_activity(
 	else if (Descr->f_unrank_lines_in_PG) {
 
 
-		geometry::geometry_global Geo;
+		geometry::other_geometry::geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -918,7 +918,7 @@ void projective_space_activity::perform_activity(
 	else if (Descr->f_points_on_lines) {
 
 
-		geometry::geometry_global Geo;
+		geometry::other_geometry::geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -1013,7 +1013,7 @@ void projective_space_activity::perform_activity(
 					"before make_restricted_incidence_matrix" << endl;
 		}
 
-		geometry::geometry_global G;
+		geometry::other_geometry::geometry_global G;
 
 
 		if (f_v) {
@@ -1077,7 +1077,7 @@ void projective_space_activity::perform_activity(
 					<< Descr->plane_intersection_type_of_klein_image_threshold << endl;
 		}
 
-		geometry::geometry_global G;
+		geometry::other_geometry::geometry_global G;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -1109,7 +1109,7 @@ void projective_space_activity::perform_activity(
 					<< Descr->plane_intersection_type_of_klein_image_threshold << endl;
 		}
 
-		geometry::geometry_global G;
+		geometry::other_geometry::geometry_global G;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "

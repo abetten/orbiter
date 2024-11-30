@@ -2264,7 +2264,7 @@ void animate::draw_surface_13_1(
 	int nb_select = nb_affine_pts;
 	long int i, rk;
 	int v[3];
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (!S->f_has_affine_space) {
 		cout << "draw_surface_13_1 "

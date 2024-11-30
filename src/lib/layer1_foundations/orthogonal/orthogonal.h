@@ -52,10 +52,10 @@ public:
 	int *Pts; // [target_size * n]
 	int *Candidates; // [degree * n]
 
-	geometry::projective_space *P;
-	geometry::grassmann *G53;
-	geometry::grassmann *G54;
-	geometry::grassmann *G43;
+	geometry::projective_geometry::projective_space *P;
+	geometry::projective_geometry::grassmann *G53;
+	geometry::projective_geometry::grassmann *G54;
+	geometry::projective_geometry::grassmann *G43;
 
 
 	// for the lifting of flocks:
@@ -76,7 +76,7 @@ public:
 	~blt_set_domain();
 	void init_blt_set_domain(
 			orthogonal *O,
-			geometry::projective_space *P4,
+			geometry::projective_geometry::projective_space *P4,
 			int f_create_extension_fields,
 		int verbose_level);
 	// creates a grassmann G43.

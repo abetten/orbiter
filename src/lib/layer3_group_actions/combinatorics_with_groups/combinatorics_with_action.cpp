@@ -33,7 +33,7 @@ combinatorics_with_action::~combinatorics_with_action()
 
 void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 		std::ostream &ost,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int *points, int nb_points,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
@@ -44,8 +44,8 @@ void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 	if (f_v) {
 		cout << "combinatorics_with_action::report_TDO_and_TDA_projective_space" << endl;
 	}
-	geometry::incidence_structure *Inc;
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	geometry::other_geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 
 	if (f_v) {
@@ -87,7 +87,7 @@ void combinatorics_with_action::report_TDO_and_TDA_projective_space(
 
 void combinatorics_with_action::report_TDA_projective_space(
 		std::ostream &ost,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
@@ -97,8 +97,8 @@ void combinatorics_with_action::report_TDA_projective_space(
 	if (f_v) {
 		cout << "combinatorics_with_action::report_TDA_projective_space" << endl;
 	}
-	geometry::incidence_structure *Inc;
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	geometry::other_geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 
 	if (f_v) {
@@ -148,8 +148,8 @@ void combinatorics_with_action::report_TDA_combinatorial_object(
 	if (f_v) {
 		cout << "combinatorics_with_action::report_TDA_combinatorial_object" << endl;
 	}
-	geometry::incidence_structure *Inc;
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	geometry::other_geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 	Inc->init_by_matrix(
 			Enc->nb_rows,
@@ -185,7 +185,7 @@ void combinatorics_with_action::report_TDA_combinatorial_object(
 
 void combinatorics_with_action::report_TDO_and_TDA(
 		std::ostream &ost,
-		geometry::incidence_structure *Inc,
+		geometry::other_geometry::incidence_structure *Inc,
 		long int *points, int nb_points,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
@@ -307,7 +307,7 @@ void combinatorics_with_action::report_TDO_and_TDA(
 
 void combinatorics_with_action::report_TDA(
 		std::ostream &ost,
-		geometry::incidence_structure *Inc,
+		geometry::other_geometry::incidence_structure *Inc,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
@@ -517,9 +517,9 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 }
 
 void combinatorics_with_action::compute_decomposition_based_on_orbits(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
-		geometry::incidence_structure *&Inc,
+		geometry::other_geometry::incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
@@ -582,9 +582,9 @@ void combinatorics_with_action::compute_decomposition_based_on_orbits(
 
 
 void combinatorics_with_action::compute_decomposition_based_on_orbit_length(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
-		geometry::incidence_structure *&Inc,
+		geometry::other_geometry::incidence_structure *&Inc,
 		data_structures::partitionstack *&Stack,
 		int verbose_level)
 {

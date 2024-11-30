@@ -461,7 +461,7 @@ void finite_field::finite_field_init_small_order(
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
-	Projective_space_basic = NEW_OBJECT(geometry::projective_space_basic);
+	Projective_space_basic = NEW_OBJECT(geometry::projective_geometry::projective_space_basic);
 	Projective_space_basic->init(this, verbose_level);
 
 	finite_field::q = q;
@@ -678,7 +678,7 @@ void finite_field::init_override_polynomial_small_order(
 	Linear_algebra = NEW_OBJECT(linear_algebra::linear_algebra);
 	Linear_algebra->init(this, verbose_level);
 
-	Projective_space_basic = NEW_OBJECT(geometry::projective_space_basic);
+	Projective_space_basic = NEW_OBJECT(geometry::projective_geometry::projective_space_basic);
 	Projective_space_basic->init(this, verbose_level);
 
 	finite_field::q = q;
@@ -740,7 +740,7 @@ void finite_field::init_override_polynomial_small_order(
 		my_poly_lint = my_poly_longinteger->as_lint();
 		my_poly_vec = NEW_int(e + 1);
 
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		my_poly_vec = NEW_int(e + 1);
 
@@ -984,7 +984,7 @@ long int finite_field::compute_subfield_polynomial(
 	int *base_cols;
 	int rk, kernel_m, kernel_n;
 	long int a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	M = NEW_int(e * (e1 + 1));
 	Int_vec_zero(M, e * (e1 + 1));

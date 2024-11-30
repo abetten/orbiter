@@ -19,7 +19,8 @@ namespace solvers {
 static void (*diophant_user_callback_solution_found)(int *sol,
 	int len, int nb_sol, void *data) = NULL;
 
-static void diophant_callback_solution_found(int *sol,
+static void diophant_callback_solution_found(
+		int *sol,
 	int len, int nb_sol, void *data);
 
 
@@ -4586,7 +4587,8 @@ int diophant::solve_first_mckay_once_option(
 // #############################################################################
 
 
-static void diophant_callback_solution_found(int *sol, int len,
+static void diophant_callback_solution_found(
+		int *sol, int len,
 	int nb_sol, void *data)
 {
 	int f_v = false;

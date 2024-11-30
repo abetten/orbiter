@@ -168,7 +168,7 @@ void easy_BMP_interface::draw_bitmap(
 
 	int width, height;
 	//int *Table;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	width = C->n;
 	height = C->m;

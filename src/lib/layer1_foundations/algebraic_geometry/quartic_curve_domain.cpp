@@ -53,7 +53,7 @@ void quartic_curve_domain::init(
 
 	quartic_curve_domain::F = F;
 
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 	if (f_v) {
 		cout << "quartic_curve_domain::init "
 				"before P->projective_space_init" << endl;

@@ -174,7 +174,7 @@ void boolean_function_classify::search_for_bent_functions(
 	int i, j;
 	ring_theory::longinteger_object a;
 	uint32_t h;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	ring_theory::longinteger_domain D;
 	data_structures::data_structures_global Data;
 
@@ -468,7 +468,7 @@ void boolean_function_classify::print_orbits_sorted()
 	int fst, len, t, t0;
 	int h, i, j;
 	int *poly;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	ring_theory::longinteger_object a;
 
 
@@ -535,7 +535,7 @@ void boolean_function_classify::print_orbit_reps_with_minimum_weight()
 	int fst, len, t, t0;
 	int h, i, j;
 	int *poly;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	ring_theory::longinteger_object a;
 
 
@@ -631,7 +631,7 @@ void boolean_function_classify::export_orbit(
 	int fst, len, t;
 	int i, j;
 	int *poly;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	ring_theory::longinteger_object a;
 
 	poly = NEW_int(BF->Poly[BF->n].get_nb_monomials());
@@ -694,7 +694,7 @@ static void boolean_function_classify_print_function(
 		int *poly, int sz, void *data)
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	ring_theory::longinteger_object a;
 
 	BFC->BF->evaluate(poly + 1, BFC->BF->f_proj);

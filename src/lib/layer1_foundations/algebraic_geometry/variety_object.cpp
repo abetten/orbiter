@@ -482,7 +482,7 @@ void variety_object::parse_equation_in_algebraic_form_with_parameters(
 }
 
 void variety_object::init_equation_only(
-		geometry::projective_space *Projective_space,
+		geometry::projective_geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		int *equation,
 		int verbose_level)
@@ -508,7 +508,7 @@ void variety_object::init_equation_only(
 }
 
 void variety_object::init_equation(
-		geometry::projective_space *Projective_space,
+		geometry::projective_geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		int *equation,
 		int verbose_level)
@@ -547,7 +547,7 @@ void variety_object::init_equation(
 }
 
 void variety_object::init_equation_and_points_and_lines_and_labels(
-		geometry::projective_space *Projective_space,
+		geometry::projective_geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		int *equation,
 		long int *Pts, int nb_pts,
@@ -589,7 +589,7 @@ void variety_object::init_equation_and_points_and_lines_and_labels(
 
 
 void variety_object::init_set_of_sets(
-		geometry::projective_space *Projective_space,
+		geometry::projective_geometry::projective_space *Projective_space,
 		ring_theory::homogeneous_polynomial_domain *Ring,
 		int *equation,
 		data_structures::set_of_sets *Point_sets,
@@ -685,7 +685,7 @@ void variety_object::enumerate_lines(
 		cout << "variety_object::enumerate_lines" << endl;
 	}
 
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 	vector<long int> Points;
 	vector<long int> The_Lines;
 	int i;

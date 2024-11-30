@@ -408,7 +408,7 @@ void linear_algebra::random_invertible_matrix(
 	int *N;
 	int i, qk, r, rk;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
@@ -527,7 +527,7 @@ long int linear_algebra::nb_points_in_PG(
 // n is projective dimension
 {
 	long int N;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N = Gg.nb_PG_elements(n, F->q);
 	return N;

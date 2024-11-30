@@ -170,7 +170,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	{
-		geometry::incidence_structure *Inc;
+		geometry::other_geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 		combinatorics_with_groups::combinatorics_with_action CombiA;
@@ -261,7 +261,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 	{
-		geometry::incidence_structure *Inc;
+		geometry::other_geometry::incidence_structure *Inc;
 		data_structures::partitionstack *Stack;
 
 		combinatorics_with_groups::combinatorics_with_action CombiA;
@@ -361,7 +361,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 
 	groups::schreier *Sch1;
 	groups::schreier *Sch2;
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 	data_structures::partitionstack S1;
 	data_structures::partitionstack S2;

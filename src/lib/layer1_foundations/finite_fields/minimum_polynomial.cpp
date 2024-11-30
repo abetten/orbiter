@@ -92,7 +92,7 @@ void minimum_polynomial::compute_subfield_polynomial(
 	ring_theory::unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	int i;
 	int j;
 	int jj;

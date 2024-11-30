@@ -570,7 +570,7 @@ void finite_field_implementation_by_tables::create_tables_extension_field(
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, l, k, ii, jj, kk, a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::create_tables_extension_field" << endl;
@@ -916,7 +916,7 @@ void finite_field_implementation_by_tables::print_tables_extension_field(
 int finite_field_implementation_by_tables::add(
 		int i, int j)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::add "
@@ -935,7 +935,7 @@ int finite_field_implementation_by_tables::add(
 int finite_field_implementation_by_tables::add_without_table(
 		int i, int j)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::add_without_table "
@@ -1056,7 +1056,7 @@ int finite_field_implementation_by_tables::mult_using_discrete_log(
 int finite_field_implementation_by_tables::negate(
 		int i)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::negate "
@@ -1070,7 +1070,7 @@ int finite_field_implementation_by_tables::negate(
 int finite_field_implementation_by_tables::negate_without_table(
 		int i)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_by_tables::negate_without_table "

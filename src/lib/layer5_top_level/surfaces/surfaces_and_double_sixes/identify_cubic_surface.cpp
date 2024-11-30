@@ -136,13 +136,14 @@ void identify_cubic_surface::identify(
 	// find all lines which are completely contained in the
 	// set of points:
 
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	if (f_v) {
 		cout << "identify_cubic_surface::identify "
 				"before Geo.find_lines_which_are_contained" << endl;
 	}
-	Geo.find_lines_which_are_contained(Wedge->Surf->P,
+	Geo.find_lines_which_are_contained(
+			Wedge->Surf->P,
 			My_Points,
 			My_Lines,
 			0/*verbose_level - 2*/);

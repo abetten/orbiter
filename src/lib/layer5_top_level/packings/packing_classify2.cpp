@@ -152,7 +152,7 @@ void packing_classify::compute_and_save_klein_invariants(
 	int threshold = 3;
 
 
-	geometry::intersection_type *Int_type;
+	geometry::other_geometry::intersection_type *Int_type;
 
 	P5->plane_intersection_type(
 			list_of_lines_klein_image, data_size, threshold,

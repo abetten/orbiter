@@ -1609,9 +1609,9 @@ void set_of_sets::get_eckardt_points(
 		cout << "set_of_sets::get_eckardt_points" << endl;
 	}
 
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 	Inc->init_by_set_of_sets(this, false);
 

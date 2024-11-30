@@ -275,7 +275,7 @@ void linear_set_classify::init(
 	}
 
 
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 	if (f_v) {
 		cout << "linear_set_classify::init before P->projective_space_init" << endl;
 	}
@@ -377,7 +377,7 @@ void linear_set_classify::init(
 	base_cols = NEW_int(vector_space_dimension);
 
 
-	D = NEW_OBJECT(geometry::desarguesian_spread);
+	D = NEW_OBJECT(geometry::finite_geometries::desarguesian_spread);
 	if (f_v) {
 		cout << "linear_set_classify::init before D->init" << endl;
 	}
@@ -390,7 +390,7 @@ void linear_set_classify::init(
 
 	m1 = m + 1;
 	n1 = s * m1; // = n + s
-	D1 = NEW_OBJECT(geometry::desarguesian_spread);
+	D1 = NEW_OBJECT(geometry::finite_geometries::desarguesian_spread);
 	if (f_v) {
 		cout << "linear_set_classify::init before D1->init" << endl;
 	}
@@ -469,7 +469,7 @@ void linear_set_classify::init(
 		//Control = NEW_OBJECT(poset_classification::poset_classification_control);
 		PA = NEW_OBJECT(projective_geometry::projective_space_with_action); // hack !!! ToDo
 
-		SD = NEW_OBJECT(geometry::spread_domain);
+		SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 		if (f_v) {
 			cout << "linear_set_classify::init before SD->init_spread_domain" << endl;
@@ -1208,7 +1208,7 @@ int linear_set_classify::test_set_secondary(
 		// need to make sure that the whole space
 		// consists of allowable vectors:
 
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		v = NEW_int(len);
 		w = NEW_int(n);
@@ -2103,8 +2103,8 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	if (f_v3) {
 		cout << "opening grassmann:" << endl;
 	}
-	geometry::grassmann *Grass;
-	Grass = NEW_OBJECT(geometry::grassmann);
+	geometry::projective_geometry::grassmann *Grass;
+	Grass = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Grass->init(n2, s, Fq, 0 /*verbose_level*/);
 
 	long int *spread_elements_numeric;
@@ -2198,7 +2198,7 @@ static long int linear_set_classify_rank_point_func(int *v, void *data)
 {
 	linear_set_classify *LS;
 	long int rk;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	LS = (linear_set_classify *) data;
 	rk = Gg.AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension);
@@ -2210,7 +2210,7 @@ static long int linear_set_classify_rank_point_func(int *v, void *data)
 static void linear_set_classify_unrank_point_func(int *v, long int rk, void *data)
 {
 	linear_set_classify *LS;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	LS = (linear_set_classify *) data;
 	Gg.AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);

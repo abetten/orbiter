@@ -181,7 +181,7 @@ void orthogonal_indexing::Q_unrank_directly(
 {
 	int n, i, minusone;
 	long int x;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(0, k);
 	x = Gg.nb_pts_Sbar(n, F->q);
@@ -214,7 +214,7 @@ long int orthogonal_indexing::Q_rank_directly(
 	int n, i;
 	long int x, a, b;
 	int minusone;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(0, k);
 	x = Gg.nb_pts_Sbar(n, F->q);
@@ -246,7 +246,7 @@ void orthogonal_indexing::Qplus_unrank(
 // k = projective dimension, must be odd
 {
 	int n;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(1, k);
 	Sbar_unrank(v, stride, n, a, verbose_level);
@@ -262,7 +262,7 @@ long int orthogonal_indexing::Qplus_rank(
 	int f_v = (verbose_level >= 1);
 	int n;
 	long int a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "orthogonal_indexing::Qplus_rank" << endl;
@@ -285,7 +285,7 @@ void orthogonal_indexing::Qminus_unrank(
 {
 	int n, z, minusz, u, vv, w, i;
 	long int x, b, c, x1, x2;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(-1, k);
 	x = Gg.nb_pts_Sbar(n, F->q);
@@ -354,7 +354,7 @@ long int orthogonal_indexing::Qminus_rank(
 {
 	int n, minusz, minuszv;
 	long int a, b, c, x, x1, x2, u, vv, w, z, i;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	n = Gg.Witt_index(-1, k);
 
@@ -437,7 +437,7 @@ void orthogonal_indexing::S_unrank(
 {
 	long int l, i, j, x, y, u;
 	int alpha, beta;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		if (a < F->q) {
@@ -501,7 +501,7 @@ void orthogonal_indexing::S_rank(
 {
 	long int l, i, j, x, y, u;
 	int alpha, beta, gamma, delta, epsilon;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		if (v[1 * stride] == 0) {
@@ -564,7 +564,7 @@ void orthogonal_indexing::N_unrank(
 {
 	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma, delta, epsilon;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		x = F->q - 1;
@@ -644,7 +644,7 @@ void orthogonal_indexing::N_rank(
 	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, beta, gamma, delta;
 	int epsilon, gamma2, epsilon_inv;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		x = F->q - 1;
@@ -718,7 +718,7 @@ void orthogonal_indexing::N1_unrank(
 {
 	long int l, i, j, k, j1, x, y, z, yz, u;
 	int alpha, beta, gamma;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		l = F->q - 1;
@@ -826,7 +826,7 @@ void orthogonal_indexing::N1_rank(
 {
 	long int l, i, j, k, x, y, z, yz, u;
 	int alpha, alpha_inv, beta, gamma, gamma2, gamma_inv;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (n == 1) {
 		alpha = v[0 * stride];
@@ -932,7 +932,7 @@ void orthogonal_indexing::Sbar_unrank(
 	int f_v = (verbose_level >= 1);
 	long int l, i, j, x, y, u;
 	int alpha, beta;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_unrank" << endl;
@@ -1037,7 +1037,7 @@ void orthogonal_indexing::Sbar_rank(
 	int f_v = (verbose_level >= 1);
 	long int l, i, j, x, y, u;
 	int alpha, beta, beta2, beta_inv;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_rank" << endl;

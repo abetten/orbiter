@@ -468,7 +468,7 @@ public:
 			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
 			actions::action *A_linear,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			groups::strong_generators *&SG,
 			actions::action *&A_perm,
 			l1_interfaces::nauty_output *NO,
@@ -529,15 +529,15 @@ public:
 			int verbose_level);
 	action *init_polarity_extension_group_and_restrict(
 			actions::action *A,
-			geometry::projective_space *P,
-			geometry::polarity *Polarity,
+			geometry::projective_geometry::projective_space *P,
+			geometry::projective_geometry::polarity *Polarity,
 			int f_on_middle_layer_grassmannian,
 			int f_on_points_and_hyperplanes,
 			int verbose_level);
 	action *init_polarity_extension_group(
 			actions::action *A,
-			geometry::projective_space *P,
-			geometry::polarity *Polarity,
+			geometry::projective_geometry::projective_space *P,
+			geometry::projective_geometry::polarity *Polarity,
 			int verbose_level);
 	action *init_subgroup_from_strong_generators(
 			actions::action *A,
@@ -557,7 +557,7 @@ public:
 		int verbose_level);
 	groups::strong_generators *set_stabilizer_in_projective_space(
 			action *A_linear,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 		long int *set, int set_size,
 		int f_save_nauty_input_graphs,
 		int verbose_level);
@@ -666,7 +666,7 @@ public:
 		int verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(
 			action *A,
-			geometry::projective_space_of_dimension_three *P3,
+			geometry::projective_geometry::projective_space_of_dimension_three *P3,
 			long int line_rk, int *Elt,
 			int verbose_level);
 	void orthogonal_group_random_generator(
@@ -710,7 +710,7 @@ public:
 			int verbose_level);
 	void reverse_engineer_semilinear_group(
 			action *A_perm, action *A_linear,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 			int verbose_level);
@@ -1474,7 +1474,7 @@ public:
 #endif
 	void report_fixed_objects_in_PG(
 			std::ostream &ost,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 		int *Elt,
 		int verbose_level);
 	int test_if_it_fixes_the_polynomial(
@@ -1625,7 +1625,7 @@ public:
 	action *induced_action_on_andre(
 			action *An,
 		action *An1,
-		geometry::andre_construction *Andre,
+		geometry::finite_geometries::andre_construction *Andre,
 		int verbose_level);
 	action *induced_action_on_homogeneous_polynomials(
 		ring_theory::homogeneous_polynomial_domain *HPD,

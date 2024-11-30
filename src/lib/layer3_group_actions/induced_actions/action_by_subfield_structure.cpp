@@ -79,7 +79,7 @@ void action_by_subfield_structure::init(
 	int p, h;
 	int q;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_by_subfield_structure::init" << endl;

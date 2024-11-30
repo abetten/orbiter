@@ -2474,7 +2474,7 @@ void group_element::compute_fixed_points_in_induced_action_on_grassmannian(
 
 void group_element::report_fixed_objects_in_PG(
 		std::ostream &ost,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 	int *Elt,
 	int verbose_level)
 // creates temporary actions using induced_action_on_grassmannian

@@ -28,7 +28,7 @@ namespace canonical_form_classification {
 
 class any_combinatorial_object {
 public:
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 
 	int f_has_label;
@@ -240,11 +240,6 @@ public:
 			int *&Adj, int &N,
 			int verbose_level);
 	void print();
-	void encode_incma_and_make_decomposition(
-			encoded_combinatorial_object *&Enc,
-			geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
-			int verbose_level);
 
 };
 
@@ -364,7 +359,7 @@ public:
 	classification_of_objects_description *Descr;
 
 	int f_projective_space;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	// input:
 
@@ -401,7 +396,7 @@ public:
 	void perform_classification(
 			classification_of_objects_description *Descr,
 			int f_projective_space,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			data_input_stream *IS,
 			int verbose_level);
 	void classify_objects_using_nauty(
@@ -807,9 +802,9 @@ public:
 			data_structures::bitvector *&Canonical_form,
 			int *canonical_labeling, int verbose_level);
 	void incidence_matrix_projective_space_top_left(
-			geometry::projective_space *P, int verbose_level);
+			geometry::projective_geometry::projective_space *P, int verbose_level);
 	void extended_incidence_matrix_projective_space_top_left(
-			geometry::projective_space *P, int verbose_level);
+			geometry::projective_geometry::projective_space *P, int verbose_level);
 	void canonical_form_given_canonical_labeling(
 			int *canonical_labeling,
 			data_structures::bitvector *&B,

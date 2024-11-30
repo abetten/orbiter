@@ -137,7 +137,7 @@ void semifield_lifting::init_level_three(
 	semifield_lifting::f_prefix = f_prefix;
 	semifield_lifting::prefix.assign(prefix);
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr->init(level, level - 1, SC->Mtx->GFq, 0/*verbose_level - 10*/);
 
 	Matrix0 = NEW_int(k2);
@@ -2669,7 +2669,7 @@ int semifield_lifting::candidate_testing(
 	//int pivot_row;
 	long int last_mtx_numeric;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {

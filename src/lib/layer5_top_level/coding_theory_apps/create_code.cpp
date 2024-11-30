@@ -142,7 +142,7 @@ void create_code::init(
 
 		int i;
 		int nb_rows, nb_cols;
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		nb_rows = sz;
 		nb_cols = description->basis_n;
@@ -578,7 +578,7 @@ void create_code::init(
 
 		int i;
 		int nb_rows, nb_cols;
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		nb_rows = description->long_code_generators.size();
 		nb_cols = description->long_code_n;
@@ -1116,7 +1116,7 @@ void create_code::export_codewords_by_weight(
 	word = NEW_int(n);
 	Wt = NEW_int(N);
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "create_code::export_codewords_by_weight "

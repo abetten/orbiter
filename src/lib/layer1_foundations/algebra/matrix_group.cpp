@@ -81,7 +81,7 @@ void matrix_group::init_projective_group(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group::init_projective_group" << endl;
@@ -172,7 +172,7 @@ void matrix_group::init_affine_group(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group" << endl;
@@ -257,7 +257,7 @@ void matrix_group::init_general_linear_group(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group" << endl;

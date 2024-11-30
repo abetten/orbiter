@@ -439,7 +439,7 @@ surface_object *surface_domain::create_Eckardt_surface(
 	int alpha0, beta0;
 	long int Lines27[27];
 	int i, rk, nb;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	if (f_v) {

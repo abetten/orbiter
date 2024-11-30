@@ -98,7 +98,7 @@ void orthogonal_global::create_BLT_set_from_flock(
 	int f_vv = (verbose_level >= 2);
 	int v[5];
 	int i, a, b, c;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -244,7 +244,7 @@ void orthogonal_global::create_K2_flock(
 	//int v[5];
 	int five, r, i, a, b, c;
 	int q;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "orthogonal_global::create_K2_flock" << endl;

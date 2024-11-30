@@ -46,7 +46,7 @@ int upstep_work::upstep_subspace_action(
 	algebra::matrix_group *M;
 	field_theory::finite_field *F;
 	{
-		geometry::grassmann G;
+		geometry::projective_geometry::grassmann G;
 	induced_actions::action_on_grassmannian *AG;
 	{
 		actions::action *A_on_hyperplanes;

@@ -3296,7 +3296,7 @@ void number_theory_domain::do_jacobi(
 }
 
 void number_theory_domain::elliptic_curve_addition_table(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 	int *A6, int *Pts, int nb_pts, int *&Table,
 	int verbose_level)
 {
@@ -3333,7 +3333,7 @@ void number_theory_domain::elliptic_curve_addition_table(
 }
 
 int number_theory_domain::elliptic_curve_addition(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 	int *A6, int p1_rk, int p2_rk,
 	int verbose_level)
 {

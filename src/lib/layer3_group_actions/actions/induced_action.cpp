@@ -652,9 +652,9 @@ action *induced_action::induced_action_on_grassmannian(
 				"old_dimension = " << old_dimension << endl;
 	}
 
-	geometry::grassmann *Gr;
+	geometry::projective_geometry::grassmann *Gr;
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr->init(old_dimension, k, M->GFq, verbose_level);
 	AG->init(*A_old, Gr, verbose_level);
 	A->type_G = action_on_grassmannian_t;
@@ -2184,7 +2184,7 @@ action *induced_action::induced_action_on_orbits(
 action *induced_action::induced_action_on_andre(
 		action *An,
 	action *An1,
-	geometry::andre_construction *Andre,
+	geometry::finite_geometries::andre_construction *Andre,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

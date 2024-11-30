@@ -442,7 +442,7 @@ void encoded_combinatorial_object::compute_canonical_form(
 }
 
 void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
-		geometry::projective_space *P, int verbose_level)
+		geometry::projective_geometry::projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -502,7 +502,7 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 
 
 void encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left(
-		geometry::projective_space *P, int verbose_level)
+		geometry::projective_geometry::projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

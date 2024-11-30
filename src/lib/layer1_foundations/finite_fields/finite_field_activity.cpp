@@ -1037,7 +1037,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_cheat_sheet_hermitian" << endl;
 		}
-		geometry::geometry_global Geo;
+		geometry::other_geometry::geometry_global Geo;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1058,7 +1058,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_cheat_sheet_desarguesian_spread" << endl;
 		}
-		geometry::geometry_global Geo;
+		geometry::other_geometry::geometry_global Geo;
 
 		if (F_secondary == NULL) {
 			cout << "F_secondary == NULL" << endl;
@@ -1218,7 +1218,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_transversal" << endl;
 		}
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1243,7 +1243,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_intersection_of_two_lines" << endl;
 		}
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1267,7 +1267,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_inverse_isomorphism_klein_quadric" << endl;
 		}
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1288,7 +1288,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_rank_point_in_PG" << endl;
 		}
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "
@@ -1310,7 +1310,7 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"f_unrank_point_in_PG" << endl;
 		}
-		geometry::geometry_global GG;
+		geometry::other_geometry::geometry_global GG;
 
 		if (f_v) {
 			cout << "finite_field_activity::perform_activity "

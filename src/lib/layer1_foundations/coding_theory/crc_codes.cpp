@@ -2243,7 +2243,7 @@ void crc_codes::CRC_encode_text(
 	int *information_and_parity;
 	int *information_and_parity_Fq;
 	int *codeword_Fq;
-	geometry::geometry_global GG;
+	geometry::other_geometry::geometry_global GG;
 
 	information = NEW_int(nb_rows * nb_cols);
 	information_and_parity = NEW_int(nb_rows * nb_cols + nb_rows + nb_cols);

@@ -1450,7 +1450,7 @@ long int surface_polynomial_domains::compute_tangent_plane(
 }
 
 long int surface_polynomial_domains::compute_special_bitangent(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 		int *gradient,
 		int verbose_level)
 {

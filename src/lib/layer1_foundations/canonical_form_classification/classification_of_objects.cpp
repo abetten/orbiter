@@ -105,7 +105,7 @@ std::string classification_of_objects::get_label_tex()
 void classification_of_objects::perform_classification(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		data_input_stream *IS,
 		int verbose_level)
 // called from

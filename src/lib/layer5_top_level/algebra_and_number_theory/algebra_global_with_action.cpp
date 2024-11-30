@@ -4670,7 +4670,7 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 
 
 	canonical_form::canonical_form_global Canonical_form_global;
-
+	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
@@ -4679,7 +4679,8 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 	Canonical_form_global.compute_group_and_tactical_decomposition(
 			Classifier,
 			Input_Variety,
-			fname_base,
+			Classification_of_varieties_nauty,
+			//fname_base,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
@@ -4687,6 +4688,7 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 	}
 
 
+	FREE_OBJECT(Classification_of_varieties_nauty);
 	FREE_OBJECT(Descr1);
 	FREE_OBJECT(Classifier);
 

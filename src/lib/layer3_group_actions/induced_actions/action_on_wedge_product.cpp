@@ -51,7 +51,7 @@ void action_on_wedge_product::init(
 		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_on_wedge_product::init" << endl;

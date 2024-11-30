@@ -1002,7 +1002,7 @@ void graph_theory_domain::make_Hamming_graph(
 	if (f_v) {
 		cout << "graph_theory_domain::make_Hamming_graph" << endl;
 	}
-	geometry::geometry_global GG;
+	geometry::other_geometry::geometry_global GG;
 	number_theory::number_theory_domain NT;
 	coding_theory::coding_theory_domain Coding;
 	int *v1;
@@ -1148,11 +1148,11 @@ void graph_theory_domain::make_Schlaefli_graph(
 		cout << "graph_theory_domain::make_Schlaefli_graph" << endl;
 	}
 
-	geometry::grassmann *Gr;
+	geometry::projective_geometry::grassmann *Gr;
 	int n = 4;
 	int k = 2;
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	Gr->create_Schlaefli_graph(Adj, N, verbose_level);
@@ -1266,14 +1266,14 @@ void graph_theory_domain::make_Grassmann_graph(
 	}
 
 
-	geometry::grassmann *Gr;
+	geometry::projective_geometry::grassmann *Gr;
 	int i, j, rr;
 	int *M1; // [k * n]
 	int *M2; // [k * n]
 	int *M; // [2 * k * n]
 	combinatorics::combinatorics_domain Combi;
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	N = Combi.generalized_binomial(n, k, F->q);

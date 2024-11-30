@@ -354,7 +354,7 @@ long int matrix_group_element::GL_image_of_AG_element(
 {
 	int f_v = (verbose_level >= 1);
 	long int b;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "matrix_group_element::GL_image_of_AG_element" << endl;
@@ -1859,7 +1859,7 @@ void matrix_group_element::print_point(
 	if (f_v) {
 		cout << "matrix_group_element::print_point" << endl;
 	}
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (Matrix_group->f_projective) {
 		Matrix_group->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
@@ -1886,7 +1886,7 @@ void matrix_group_element::unrank_point(
 	if (f_v) {
 		cout << "matrix_group_element::unrank_point" << endl;
 	}
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (Matrix_group->f_projective) {
 		Matrix_group->GFq->Projective_space_basic->PG_element_unrank_modified(
@@ -1913,7 +1913,7 @@ long int matrix_group_element::rank_point(
 		cout << "matrix_group_element::rank_point" << endl;
 	}
 	long int rk;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (Matrix_group->f_projective) {
 		Matrix_group->GFq->Projective_space_basic->PG_element_rank_modified_lint(

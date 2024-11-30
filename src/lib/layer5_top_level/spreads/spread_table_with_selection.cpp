@@ -119,9 +119,9 @@ void spread_table_with_selection::do_spread_table_init(
 	}
 
 
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
-	SD = NEW_OBJECT(geometry::spread_domain);
+	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::do_spread_table_init "
@@ -305,7 +305,7 @@ void spread_table_with_selection::init(
 	}
 
 
-	Spread_tables = NEW_OBJECT(geometry::spread_tables);
+	Spread_tables = NEW_OBJECT(geometry::finite_geometries::spread_tables);
 
 
 

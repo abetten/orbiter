@@ -420,7 +420,7 @@ void symbol_definition::read_definition(
 
 		geometric_object_projective_space_label.assign(argv[++i]);
 		Geometric_object_description =
-				NEW_OBJECT(geometry::geometric_object_description);
+				NEW_OBJECT(geometry::other_geometry::geometric_object_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -geometric_object" << endl;
 		}
@@ -2618,9 +2618,9 @@ void symbol_definition::definition_of_geometric_object(
 
 	PA = Get_projective_space(geometric_object_projective_space_label);
 
-	geometry::geometric_object_create *GeoObj;
+	geometry::other_geometry::geometric_object_create *GeoObj;
 
-	GeoObj = NEW_OBJECT(geometry::geometric_object_create);
+	GeoObj = NEW_OBJECT(geometry::other_geometry::geometric_object_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_geometric_object "

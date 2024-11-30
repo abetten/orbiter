@@ -438,7 +438,7 @@ long int wreath_product::element_image_of(
 {
 	int f_v = (verbose_level >= 1);
 	long int f, a0, b, c;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "wreath_product::element_image_of" << endl;
@@ -692,7 +692,7 @@ void wreath_product::compute_induced_permutation(
 		int *Elt, int *perm)
 {
 	int i, j, h, k, a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	for (i = 0; i < dimension_of_tensor_action; i++) {
 		Gg.AG_element_unrank(dimension_of_matrix_group,
@@ -1148,7 +1148,7 @@ void wreath_product::report_rank_one_tensors(
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	l1_interfaces::latex_interface L;
 	int *coords;
 	int *Proj;
@@ -1340,7 +1340,7 @@ void wreath_product::create_all_rank_one_tensors(
 	int f_vv = (verbose_level >= 5);
 	combinatorics::combinatorics_domain Combi;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	int *coords;
 	int *Proj;
 	int *projections;

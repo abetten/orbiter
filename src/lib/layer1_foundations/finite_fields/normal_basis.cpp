@@ -215,7 +215,7 @@ void normal_basis::init_with_polynomial_coded(
 
 	int i, j;
 	int *v;
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	Basis_encoded = NEW_lint(d);
 	v = NEW_int(d);

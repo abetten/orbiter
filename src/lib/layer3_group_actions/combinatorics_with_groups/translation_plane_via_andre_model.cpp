@@ -116,7 +116,7 @@ void translation_plane_via_andre_model::init(
 		std::string &label_txt,
 		std::string &label_tex,
 		groups::strong_generators *Sg,
-		geometry::andre_construction *Andre,
+		geometry::finite_geometries::andre_construction *Andre,
 		actions::action *An,
 		actions::action *An1,
 		int verbose_level)
@@ -179,7 +179,7 @@ void translation_plane_via_andre_model::init(
 
 
 
-	Line = NEW_OBJECT(geometry::andre_construction_line_element);
+	Line = NEW_OBJECT(geometry::finite_geometries::andre_construction_line_element);
 	Incma = NEW_int(N * N);
 	pts_on_line = NEW_int(Andre->spread_size);
 
@@ -343,7 +343,7 @@ void translation_plane_via_andre_model::init(
 	int nb_cols = N;
 	
 
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 	Inc->init_by_matrix(nb_rows, nb_cols,
 			Incma, verbose_level - 2);

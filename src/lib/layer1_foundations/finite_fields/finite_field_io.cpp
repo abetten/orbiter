@@ -1202,7 +1202,7 @@ void finite_field_io::cheat_sheet_power_table(
 	int i, j, t;
 	int len = F->q;
 	int *v;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	t = F->primitive_root();
 
@@ -1308,7 +1308,7 @@ void finite_field_io::cheat_sheet_table_of_elements(
 		ost << "\\begin{array}{|r|r|r|}" << endl;
 		ost << "\\hline" << endl;
 
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		for (j = 0; j < 25; j++) {
 
@@ -1418,7 +1418,7 @@ void finite_field_io::cheat_sheet_main_table(
 	else {
 		cheat_sheet_main_table_top(f, nb_cols);
 
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		for (i = 0; i < F->q; i++) {
 			Gg.AG_element_unrank(F->p, v, 1, F->e, i);

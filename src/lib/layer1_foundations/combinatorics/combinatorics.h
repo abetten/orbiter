@@ -445,14 +445,14 @@ public:
 			int verbose_level);
 	void compute_TDO_decomposition_of_projective_space_old(
 			std::string &fname_base,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			std::vector<std::string> &file_names,
 			int verbose_level);
 	// called from quartic_curve_from_surface::TDO_decomposition
 	combinatorics::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
@@ -599,7 +599,7 @@ public:
 	int N;
 	int *Incma;
 
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
 	int f_has_decomposition;
@@ -609,7 +609,7 @@ public:
 	decomposition();
 	~decomposition();
 	void init_incidence_structure(
-			geometry::incidence_structure *Inc,
+			geometry::other_geometry::incidence_structure *Inc,
 			int verbose_level);
 	// called from
 	// decomposition::init_decomposition_of_projective_space
@@ -621,11 +621,11 @@ public:
 	// group_action_on_combinatorial_object::init
 	// design_activity::do_tactical_decomposition
 	void init_inc_and_stack(
-			geometry::incidence_structure *Inc,
+			geometry::other_geometry::incidence_structure *Inc,
 			data_structures::partitionstack *Stack,
 		int verbose_level);
 	void init_decomposition_of_projective_space(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);

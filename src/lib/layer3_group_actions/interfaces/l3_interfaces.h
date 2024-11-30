@@ -508,7 +508,7 @@ public:
 
 
 	void set_stabilizer_in_projective_space_using_precomputed_nauty_data(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			actions::action *A,
 			long int *Pts, int sz,
 			int f_save_nauty_input_graphs,
@@ -519,7 +519,7 @@ public:
 			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	void set_stabilizer_in_projective_space_using_nauty(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			actions::action *A,
 			long int *Pts, int sz,
 			int f_save_nauty_input_graphs,

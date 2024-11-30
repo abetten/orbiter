@@ -62,7 +62,7 @@ eckardt_point_info::~eckardt_point_info()
 }
 
 void eckardt_point_info::init(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 		long int *arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

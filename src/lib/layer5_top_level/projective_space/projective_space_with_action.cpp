@@ -205,7 +205,7 @@ void projective_space_with_action::init(
 	d = n + 1;
 	q = F->q;
 	
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 
 	if (f_v) {
 		cout << "projective_space_with_action::init "
@@ -1144,9 +1144,9 @@ void projective_space_with_action::do_spread_classify(
 
 	n = A->matrix_group_dimension();
 
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
-	SD = NEW_OBJECT(geometry::spread_domain);
+	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 	if (f_v) {
 		cout << "projective_space_with_action::do_spread_classify "

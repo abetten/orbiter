@@ -70,7 +70,7 @@ void quadratic_form::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -277,7 +277,7 @@ void quadratic_form::make_Gram_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, u, offset = 0;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "quadratic_form::make_Gram_matrix" << endl;
@@ -1140,7 +1140,7 @@ void quadratic_form::make_affine_polar_graph(
 				"number of points = " << Nb_points << endl;
 	}
 
-	geometry::geometry_global Geometry;
+	geometry::other_geometry::geometry_global Geometry;
 
 	N = Geometry.nb_AG_elements(
 			d, q);

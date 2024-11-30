@@ -1120,10 +1120,10 @@ void design_activity::do_tactical_decomposition(
 
 
 	{
-		geometry::incidence_structure *Inc;
+		geometry::other_geometry::incidence_structure *Inc;
 
 
-		Inc = NEW_OBJECT(geometry::incidence_structure);
+		Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 		Inc->init_by_matrix(
 				DC->v, DC->b, DC->incma,

@@ -83,7 +83,7 @@ recoordinatize::~recoordinatize()
 }
 
 void recoordinatize::init(
-		geometry::three_skew_subspaces *Three_skew_subspaces,
+		geometry::other_geometry::three_skew_subspaces *Three_skew_subspaces,
 		actions::action *A, actions::action *A2,
 	int f_projective, int f_semilinear, 
 	int (*check_function_incremental)(

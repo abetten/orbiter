@@ -20,11 +20,13 @@ namespace cubic_surfaces_and_arcs {
 
 
 
-static void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type1(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-static void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
+static void classify_trihedral_pairs_early_test_function_type2(
+		long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);

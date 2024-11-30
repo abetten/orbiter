@@ -1411,7 +1411,7 @@ void algebra_global::Walsh_matrix(
 	int *w;
 	int *W01;
 	int i, j, a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "algebra_global::Walsh_matrix" << endl;
@@ -1469,7 +1469,7 @@ void algebra_global::Vandermonde_matrix(
 	int f_v = (verbose_level >= 1);
 	int q;
 	int i, j, a;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "algebra_global::Vandermonde_matrix" << endl;

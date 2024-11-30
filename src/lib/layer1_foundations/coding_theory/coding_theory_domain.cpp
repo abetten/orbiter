@@ -249,7 +249,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code" << endl;
 	}
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	int nmk;
 	int N_points;
 	long int *set;
@@ -743,7 +743,7 @@ void coding_theory_domain::make_Hamming_space_distance_matrix(
 	int *v;
 	int *w;
 	int *Table;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	//field_theory::finite_field *F = NULL;
 
 	if (f_v) {
@@ -995,7 +995,7 @@ void coding_theory_domain::codewords_affine(
 	long int N, h, rk;
 	int *msg;
 	int *word;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "coding_theory_domain::codewords_affine" << endl;
@@ -1037,7 +1037,7 @@ void coding_theory_domain::codewords_table(
 	long int h;
 	int *msg;
 	int *word;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "coding_theory_domain::codewords_table" << endl;
@@ -1079,7 +1079,7 @@ void coding_theory_domain::code_projective_weight_enumerator(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1156,7 +1156,7 @@ void coding_theory_domain::code_weight_enumerator(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1243,7 +1243,7 @@ void coding_theory_domain::code_weight_enumerator_fast(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1337,7 +1337,7 @@ void coding_theory_domain::code_projective_weights(
 	int *msg;
 	int *word;
 	int t0, t1, dt;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
@@ -1877,7 +1877,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_generator_matrix(
 	int *v;
 	int *word;
 	int *code_word;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
@@ -2060,7 +2060,7 @@ void coding_theory_domain::do_polynomial(
 	int h;
 	long int *set;
 	int set_sz = 0;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 	long int N_points;
 
@@ -2140,7 +2140,7 @@ void coding_theory_domain::do_sylvester_hadamard(
 	int *M2;
 	int H2[4] = {1,1,1,2};
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	nb_factors = NT.int_log2(m);
 
@@ -2412,7 +2412,7 @@ void coding_theory_domain::field_induction(
 	long int *M2;
 	int *v;
 	int m, n;
-	geometry::geometry_global GG;
+	geometry::other_geometry::geometry_global GG;
 
 
 	orbiter_kernel_system::file_io Fio;
@@ -2558,7 +2558,7 @@ void coding_theory_domain::fixed_code(
 	long int N;
 	int *msg;
 	int *word;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();

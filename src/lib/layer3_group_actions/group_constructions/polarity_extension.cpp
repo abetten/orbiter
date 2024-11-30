@@ -129,8 +129,8 @@ polarity_extension::~polarity_extension()
 
 void polarity_extension::init(
 		actions::action *A,
-		geometry::projective_space *P,
-		geometry::polarity *Polarity,
+		geometry::projective_geometry::projective_space *P,
+		geometry::projective_geometry::polarity *Polarity,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

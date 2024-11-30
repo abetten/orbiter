@@ -334,7 +334,7 @@ void packings_global::merge_packings(
 void packings_global::select_packings(
 		std::string &fname,
 		std::string &file_of_spreads_original,
-		geometry::spread_tables *Spread_tables,
+		geometry::finite_geometries::spread_tables *Spread_tables,
 		int f_self_polar,
 		int f_ago, int select_ago,
 		canonical_form_classification::classify_bitvectors *&CB,
@@ -734,7 +734,7 @@ void packings_global::select_packings_self_dual(
 		std::string &fname,
 		std::string &file_of_spreads_original,
 		int f_split, int split_r, int split_m,
-		geometry::spread_tables *Spread_tables,
+		geometry::finite_geometries::spread_tables *Spread_tables,
 		canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {

@@ -45,7 +45,7 @@ decomposition::~decomposition()
 }
 
 void decomposition::init_incidence_structure(
-		geometry::incidence_structure *Inc,
+		geometry::other_geometry::incidence_structure *Inc,
 		int verbose_level)
 // called from
 // decomposition::init_decomposition_of_projective_space
@@ -97,7 +97,7 @@ void decomposition::init_incidence_structure(
 
 
 void decomposition::init_inc_and_stack(
-		geometry::incidence_structure *Inc,
+		geometry::other_geometry::incidence_structure *Inc,
 		data_structures::partitionstack *Stack,
 		int verbose_level)
 {
@@ -118,7 +118,7 @@ void decomposition::init_inc_and_stack(
 
 
 void decomposition::init_decomposition_of_projective_space(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int *points, int nb_points,
 		long int *lines, int nb_lines,
 		int verbose_level)
@@ -129,8 +129,8 @@ void decomposition::init_decomposition_of_projective_space(
 		cout << "geometry_global::init_decomposition_of_projective_space" << endl;
 	}
 
-	geometry::incidence_structure *Inc;
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	geometry::other_geometry::incidence_structure *Inc;
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 	Inc->init_projective_space(P, verbose_level);
 
 
@@ -271,7 +271,7 @@ void decomposition::setup_default_partition(
 	if (f_v) {
 		cout << "decomposition::setup_default_partition" << endl;
 	}
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 	if (f_v) {
 		cout << "decomposition::setup_default_partition "
 				"before I->init_by_matrix" << endl;

@@ -328,7 +328,7 @@ void nth_roots::init(
 	int *input_vector;
 	int *coefficients;
 	int j, h, a;
-	geometry::geometry_global GG;
+	geometry::other_geometry::geometry_global GG;
 
 	input_vector = NEW_int(field_degree);
 	coefficients = NEW_int(subfield_degree);
@@ -434,7 +434,7 @@ void nth_roots::compute_subfield(
 	long int a;
 	int p, e, q1, subgroup_index;
 	int i, j;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 	ring_theory::ring_theory_global R;
 

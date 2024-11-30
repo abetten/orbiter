@@ -293,7 +293,13 @@ public:
 	void compute_group_and_tactical_decomposition(
 			canonical_form::canonical_form_classifier *Classifier,
 			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::classification_of_varieties_nauty *&Classification_of_varieties_nauty,
+			int verbose_level);
+	void report_and_orbit_transversal(
+			canonical_form::variety_object_with_action *Input_Vo,
+			canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty,
 			std::string &fname_base,
+			poset_classification::poset_classification_report_options *Report_options,
 			int verbose_level);
 
 
@@ -386,7 +392,7 @@ public:
 	std::string stringify_csv_header_line_nauty(
 			int verbose_level);
 	void report(
-			std::string &fname_base,
+			poset_classification::poset_classification_report_options *Report_options,
 			int verbose_level);
 	void report_iso_types(
 			std::ostream &ost, int verbose_level);

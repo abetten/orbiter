@@ -161,9 +161,9 @@ void spread_classify::init_basic(
 	}
 	starter_size = Descr->starter_size;
 
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
-	SD = NEW_OBJECT(geometry::spread_domain);
+	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 	if (!Descr->f_k) {
 		cout << "spread_classify::init_basic please specify "
@@ -256,7 +256,7 @@ void spread_classify::init_basic(
 
 void spread_classify::init(
 		spreads::spread_classify_description *Descr,
-		geometry::spread_domain *SD,
+		geometry::finite_geometries::spread_domain *SD,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {
@@ -461,9 +461,9 @@ void spread_classify::init(
 					"Descr->f_recoordinatize" << endl;
 		}
 
-		geometry::three_skew_subspaces *Three_skew_subspaces;
+		geometry::other_geometry::three_skew_subspaces *Three_skew_subspaces;
 
-		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+		Three_skew_subspaces = NEW_OBJECT(geometry::other_geometry::three_skew_subspaces);
 
 		if (f_v) {
 			cout << "spread_classify::init "

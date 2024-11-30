@@ -74,7 +74,7 @@ void null_polarity_generator::init(
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "null_polarity_generator::init" << endl;

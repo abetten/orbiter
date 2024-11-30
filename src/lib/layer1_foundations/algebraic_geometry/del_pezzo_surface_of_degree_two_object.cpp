@@ -85,7 +85,7 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(
 	}
 
 
-	pal = NEW_OBJECT(geometry::points_and_lines);
+	pal = NEW_OBJECT(geometry::other_geometry::points_and_lines);
 
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines "

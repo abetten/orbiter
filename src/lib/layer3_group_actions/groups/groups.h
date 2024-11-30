@@ -2148,7 +2148,7 @@ public:
 			int verbose_level);
 	void report_fixed_objects_in_PG(
 			std::ostream &ost,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	void reverse_isomorphism_exterior_square(
 			int verbose_level);
@@ -2323,7 +2323,7 @@ public:
 		int nb_pairs, int &degree, int verbose_level);
 	void hyperplane_lifting_with_two_lines_fixed(
 		strong_generators *SG_hyperplane,
-		geometry::projective_space *P, int line1, int line2,
+		geometry::projective_geometry::projective_space *P, int line1, int line2,
 		int verbose_level);
 	void exterior_square(
 			actions::action *A_detached,

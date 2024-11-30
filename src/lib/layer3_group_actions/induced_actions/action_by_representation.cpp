@@ -50,7 +50,7 @@ void action_by_representation::init_action_on_conic(
 		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "action_by_representation::init_action_on_conic" << endl;

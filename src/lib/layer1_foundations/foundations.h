@@ -452,45 +452,65 @@ namespace field_theory {
 }
 
 
-//! projective geometry over a finite field and related topics
+//! projective geometry and other finite geometries
 
 namespace geometry {
 
+	//! generalized quadrangles, spreads, translation planes
 
-	// geometry:
-	class andre_construction_line_element;
-	class andre_construction_point_element;
-	class andre_construction;
-	class arc_basic;
-	class arc_in_projective_space;
-	class buekenhout_metz;
-	class desarguesian_spread;
-	class flag;
-	class geometric_object_create;
-	class geometric_object_description;
-	class geometry_global;
-	class grassmann_embedded;
-	class grassmann;
-	class hermitian;
-	class hjelmslev;
-	class incidence_structure;
-	class intersection_type;
-	class klein_correspondence;
-	class knarr;
-	class point_line;
-	class points_and_lines;
-	class polarity;
-	class projective_space_basic;
-	class projective_space_implementation;
-	class projective_space_of_dimension_three;
-	class projective_space_plane;
-	class projective_space_reporting;
-	class projective_space_subspaces;
-	class projective_space;
-	class spread_domain;
-	class spread_tables;
-	class three_skew_subspaces;
-	class W3q;
+	namespace finite_geometries {
+
+		// geometry:
+		class andre_construction_line_element;
+		class andre_construction_point_element;
+		class andre_construction;
+		class buekenhout_metz;
+		class desarguesian_spread;
+		class knarr;
+		class spread_domain;
+		class spread_tables;
+		class W3q;
+
+		}
+
+	//! other geometries or related topics
+
+	namespace other_geometry {
+
+		class arc_basic;
+		class arc_in_projective_space;
+		class flag;
+		class geometric_object_create;
+		class geometric_object_description;
+		class geometry_global;
+		class hermitian;
+		class hjelmslev;
+		class incidence_structure;
+		class intersection_type;
+		class point_line;
+		class points_and_lines;
+		class three_skew_subspaces;
+	}
+
+	//! projective geometry over a finite field and related topics
+
+
+	namespace projective_geometry {
+
+		class grassmann_embedded;
+		class grassmann;
+		class klein_correspondence;
+		class polarity;
+		class projective_space_basic;
+		class projective_space_implementation;
+		class projective_space_of_dimension_three;
+		class projective_space_plane;
+		class projective_space_reporting;
+		class projective_space_subspaces;
+		class projective_space;
+
+	}
+
 
 }
 
@@ -1070,7 +1090,9 @@ enum CRC_type {
 #include "data_structures/data_structures.h"
 #include "expression_parser/expression_parser.h"
 #include "finite_fields/finite_fields.h"
-#include "geometry/geometry.h"
+#include "geometry/finite_geometries/finite_geometries.h"
+#include "geometry/other_geometry/other_geometry.h"
+#include "geometry/projective_geometry/projective_geometry.h"
 #include "geometry_builder/geometry_builder.h"
 #include "graph_theory/graph_theory.h"
 #include "graphics/graphics.h"

@@ -74,7 +74,7 @@ void heisenberg::init(
 void heisenberg::unrank_element(
 		int *Elt, long int rk)
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	Gg.AG_element_unrank(q, Elt, 1, len, rk);
 }
 
@@ -82,7 +82,7 @@ long int heisenberg::rank_element(
 		int *Elt)
 {
 	long int rk;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	
 	rk = Gg.AG_element_rank(q, Elt, 1, len);
 	return rk;

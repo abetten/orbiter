@@ -65,7 +65,7 @@ void action_on_flags::init(
 		cout << "action_on_flags::init n=" << n << " q=" << F->q << endl;
 		}
 
-	Flag = NEW_OBJECT(geometry::flag);
+	Flag = NEW_OBJECT(geometry::other_geometry::flag);
 	Flag->init(n, type, type_len, F, verbose_level);
 
 	degree = Flag->N;

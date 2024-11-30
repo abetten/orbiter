@@ -364,8 +364,8 @@ void packing_classify::init2(
 
 
 void packing_classify::init_P3_and_P5_and_Gr(
-		geometry::projective_space *P3,
-		geometry::projective_space *P5,
+		geometry::projective_geometry::projective_space *P3,
+		geometry::projective_geometry::projective_space *P5,
 		int verbose_level)
 // creates a Grassmann 6,3
 {
@@ -406,7 +406,7 @@ void packing_classify::init_P3_and_P5_and_Gr(
 	list_of_lines = NEW_lint(size_of_packing * spread_size);
 	list_of_lines_klein_image = NEW_lint(size_of_packing * spread_size);
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 
 	Gr->init(6, 3, F, 0 /* verbose_level */);
 

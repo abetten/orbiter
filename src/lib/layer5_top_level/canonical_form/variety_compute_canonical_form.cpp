@@ -252,11 +252,16 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	}
 
 
-	Variety_stabilizer_compute->Stab_gens_variety->group_order(go);
+	//Variety_stabilizer_compute->Stab_gens_variety->group_order(go);
 
 	//goi = go.as_int();
 
 	//FREE_OBJECT(gens_stab_of_canonical_equation);
+
+	if (f_v) {
+		cout << "variety_compute_canonical_form::classify_using_nauty_new "
+				"Variety_stabilizer_compute->NO->N = " << Variety_stabilizer_compute->NO->N << endl;
+	}
 
 	Canonical_form_classifier->Classification_of_varieties_nauty->canonical_labeling_len =
 			Variety_stabilizer_compute->NO->N; //canonical_labeling_len;

@@ -45,7 +45,7 @@ void fixed_objects_in_PG::init(
 		actions::action *A,
 		int *Elt,
 		int up_to_which_rank,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

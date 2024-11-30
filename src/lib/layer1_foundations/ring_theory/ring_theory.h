@@ -387,7 +387,7 @@ public:
 	void evaluate_regular_map(
 			int *Coefficient_vector,
 			int nb_eqns,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int *&Image_pts, int &N_points,
 			int verbose_level);
 	std::string stringify(
@@ -409,7 +409,7 @@ public:
 			int *&eqn, int &eqn_size,
 			int verbose_level);
 	void compute_singular_points_projectively(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int *equation,
 			std::vector<long int> &Singular_points,
 			int verbose_level);

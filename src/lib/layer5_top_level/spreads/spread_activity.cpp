@@ -46,7 +46,7 @@ void spread_activity::init(
 	spread_activity::Descr = Descr;
 	spread_activity::Spread_create = Spread_create;
 
-	SD = NEW_OBJECT(geometry::spread_domain);
+	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 
 	if (f_v) {
@@ -379,11 +379,11 @@ void spread_activity::report2(
 		if (Spread_create->k == 2) {
 
 
-			geometry::projective_space *P5;
+			geometry::projective_geometry::projective_space *P5;
 			orthogonal_geometry::orthogonal *O;
-			geometry::klein_correspondence *Klein;
+			geometry::projective_geometry::klein_correspondence *Klein;
 
-			P5 = NEW_OBJECT(geometry::projective_space);
+			P5 = NEW_OBJECT(geometry::projective_geometry::projective_space);
 			if (f_v) {
 				cout << "spread_activity::report2 "
 						"before P5->projective_space_init" << endl;
@@ -413,7 +413,7 @@ void spread_activity::report2(
 						"initializing orthogonal done" << endl;
 			}
 
-			Klein = NEW_OBJECT(geometry::klein_correspondence);
+			Klein = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
 
 			if (f_v) {
 				cout << "spread_activity::report2 before Klein->init" << endl;

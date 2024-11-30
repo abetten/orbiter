@@ -130,7 +130,7 @@ void surface_domain::init_surface_domain(
 	v2 = NEW_int(6);
 	w2 = NEW_int(6);
 	
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 	if (f_v) {
 		cout << "surface::init_surface_domain "
 				"before P->projective_space_init" << endl;
@@ -144,7 +144,7 @@ void surface_domain::init_surface_domain(
 				"after P->projective_space_init" << endl;
 	}
 
-	P2 = NEW_OBJECT(geometry::projective_space);
+	P2 = NEW_OBJECT(geometry::projective_geometry::projective_space);
 	if (f_v) {
 		cout << "surface::init_surface_domain "
 				"before P2->projective_space_init" << endl;
@@ -158,7 +158,7 @@ void surface_domain::init_surface_domain(
 				"after P2->projective_space_init" << endl;
 	}
 
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
 	nb_lines_PG_3 = Gr->nCkq->as_lint();
 	if (f_v) {
@@ -166,7 +166,7 @@ void surface_domain::init_surface_domain(
 				<< nb_lines_PG_3 << endl;
 	}
 
-	Gr3 = NEW_OBJECT(geometry::grassmann);
+	Gr3 = NEW_OBJECT(geometry::projective_geometry::grassmann);
 	Gr3->init(4, 3, F, 0 /* verbose_level*/);
 
 
@@ -181,7 +181,7 @@ void surface_domain::init_surface_domain(
 				"initializing orthogonal done" << endl;
 	}
 
-	Klein = NEW_OBJECT(geometry::klein_correspondence);
+	Klein = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
 
 	if (f_v) {
 		cout << "surface::init_surface_domain before Klein->init" << endl;
@@ -432,7 +432,7 @@ void surface_domain::create_starter_configuration(
 void surface_domain::wedge_to_klein(
 		int *W, int *K)
 {
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 
 	Geo.wedge_to_klein(F, W, K);
@@ -449,7 +449,7 @@ void surface_domain::wedge_to_klein(
 void surface_domain::klein_to_wedge(
 		int *K, int *W)
 {
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	Geo.klein_to_wedge(F, K, W);
 #if 0

@@ -103,7 +103,7 @@ search_blocking_set::~search_blocking_set()
 }
 
 void search_blocking_set::init(
-		geometry::incidence_structure *Inc,
+		geometry::other_geometry::incidence_structure *Inc,
 		actions::action *A,
 		int verbose_level)
 {

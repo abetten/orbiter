@@ -899,7 +899,7 @@ void character_table_burnside::compute_Distribution_table(
 	int *Nb;
 	int t, h, i, /*idx,*/ j;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "character_table_burnside::compute_Distribution_table" << endl;

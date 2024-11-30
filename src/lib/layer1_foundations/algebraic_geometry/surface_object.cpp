@@ -253,7 +253,7 @@ void surface_object::enumerate_points_and_lines(
 		cout << "surface_object::enumerate_points_and_lines" << endl;
 	}
 
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 	vector<long int> Points;
 	vector<long int> The_Lines;
 

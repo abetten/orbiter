@@ -173,7 +173,7 @@ void mapping::init(
 
 	output_len = Formula->Formula_vector->len;
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	P = Domain->P;
 
@@ -260,7 +260,7 @@ void mapping::evaluate_regular_map(
 	int h;
 	long int i, j;
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	P = Domain->P;
 

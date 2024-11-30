@@ -31,14 +31,14 @@ public:
 	~combinatorics_with_action();
 	void report_TDO_and_TDA_projective_space(
 			std::ostream &ost,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			long int *points, int nb_points,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA_projective_space(
 			std::ostream &ost,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -50,14 +50,14 @@ public:
 			int verbose_level);
 	void report_TDO_and_TDA(
 			std::ostream &ost,
-			geometry::incidence_structure *Inc,
+			geometry::other_geometry::incidence_structure *Inc,
 			long int *points, int nb_points,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void report_TDA(
 			std::ostream &ost,
-			geometry::incidence_structure *Inc,
+			geometry::other_geometry::incidence_structure *Inc,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -73,15 +73,15 @@ public:
 			groups::strong_generators *gens,
 			int verbose_level);
 	void compute_decomposition_based_on_orbits(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
+			geometry::other_geometry::incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
 	void compute_decomposition_based_on_orbit_length(
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
-			geometry::incidence_structure *&Inc,
+			geometry::other_geometry::incidence_structure *&Inc,
 			data_structures::partitionstack *&Stack,
 			int verbose_level);
 
@@ -104,7 +104,7 @@ public:
 
 	actions::action *A_base;
 	actions::action *A;
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 	int *Elt;
 
 	int up_to_which_rank;
@@ -118,7 +118,7 @@ public:
 			actions::action *A,
 			int *Elt,
 			int up_to_which_rank,
-			geometry::projective_space *P,
+			geometry::projective_geometry::projective_space *P,
 			int verbose_level);
 	void compute_fixed_points(
 			std::vector<long int> &fixed_points,
@@ -341,12 +341,12 @@ public:
 	int n1;
 	int order_of_plane;
 
-	geometry::andre_construction *Andre;
+	geometry::finite_geometries::andre_construction *Andre;
 	int N; // number of points = number of lines
 	int twoN; // 2 * N
 	int f_semilinear;
 
-	geometry::andre_construction_line_element *Line;
+	geometry::finite_geometries::andre_construction_line_element *Line;
 	int *Incma;
 	int *pts_on_line;
 	int *Line_through_two_points; // [N * N]
@@ -359,7 +359,7 @@ public:
 
 	groups::strong_generators *strong_gens;
 
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 	data_structures::partitionstack *Stack;
 
 	translation_plane_via_andre_model();
@@ -369,7 +369,7 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			groups::strong_generators *Sg,
-			geometry::andre_construction *Andre,
+			geometry::finite_geometries::andre_construction *Andre,
 			actions::action *An,
 			actions::action *An1,
 			int verbose_level);

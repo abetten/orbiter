@@ -227,7 +227,7 @@ void action_global::automorphism_group_as_permutation_group(
 
 void action_global::reverse_engineer_linear_group_from_permutation_group(
 		actions::action *A_linear,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		groups::strong_generators *&SG,
 		actions::action *&A_perm,
 		l1_interfaces::nauty_output *NO,
@@ -1465,8 +1465,8 @@ action *action_global::init_direct_product_group(
 
 action *action_global::init_polarity_extension_group_and_restrict(
 		actions::action *A,
-		geometry::projective_space *P,
-		geometry::polarity *Polarity,
+		geometry::projective_geometry::projective_space *P,
+		geometry::projective_geometry::polarity *Polarity,
 		int f_on_middle_layer_grassmannian,
 		int f_on_points_and_hyperplanes,
 		int verbose_level)
@@ -1629,8 +1629,8 @@ action *action_global::init_polarity_extension_group_and_restrict(
 
 action *action_global::init_polarity_extension_group(
 		actions::action *A,
-		geometry::projective_space *P,
-		geometry::polarity *Polarity,
+		geometry::projective_geometry::projective_space *P,
+		geometry::projective_geometry::polarity *Polarity,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2106,7 +2106,7 @@ void action_global::orbits_on_equations(
 
 groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		action *A_linear,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 	long int *set, int set_size,
 	int f_save_nauty_input_graphs,
 	int verbose_level)
@@ -4082,7 +4082,7 @@ void action_global::make_canonical(
 
 void action_global::make_element_which_moves_a_line_in_PG3q(
 		action *A,
-		geometry::projective_space_of_dimension_three *P3,
+		geometry::projective_geometry::projective_space_of_dimension_three *P3,
 		long int line_rk, int *Elt,
 		int verbose_level)
 {
@@ -4536,7 +4536,7 @@ void action_global::test_if_two_actions_agree(
 
 void action_global::reverse_engineer_semilinear_group(
 		action *A_perm, action *A_linear,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		data_structures_groups::vector_ge *gens_in,
 		data_structures_groups::vector_ge *&gens_out,
 		int verbose_level)
@@ -6052,11 +6052,11 @@ actions::action *action_global::create_action_on_k_subspaces(
 	}
 
 	induced_actions::action_on_grassmannian *AonGr;
-	geometry::grassmann *Grass;
+	geometry::projective_geometry::grassmann *Grass;
 
 	AonGr = NEW_OBJECT(induced_actions::action_on_grassmannian);
 
-	Grass = NEW_OBJECT(geometry::grassmann);
+	Grass = NEW_OBJECT(geometry::projective_geometry::grassmann);
 
 
 	if (f_v) {

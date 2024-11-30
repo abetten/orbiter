@@ -144,14 +144,14 @@ public:
 
 	spreads::spread_table_with_selection *Spread_table_with_selection;
 
-	geometry::projective_space *P3;
-	geometry::projective_space *P5;
+	geometry::projective_geometry::projective_space *P3;
+	geometry::projective_geometry::projective_space *P5;
 	long int *the_packing; // [size_of_packing]
 	long int *spread_iso_type; // [size_of_packing]
 	long int *dual_packing; // [size_of_packing]
 	long int *list_of_lines; // [size_of_packing * spread_size]
 	long int *list_of_lines_klein_image; // [size_of_packing * spread_size]
-	geometry::grassmann *Gr; // the Grassmannian Gr_{6,3}
+	geometry::projective_geometry::grassmann *Gr; // the Grassmannian Gr_{6,3}
 
 
 
@@ -187,8 +187,8 @@ public:
 			poset_classification::poset_classification_control *Control,
 			int verbose_level);
 	void init_P3_and_P5_and_Gr(
-			geometry::projective_space *P3,
-			geometry::projective_space *P5,
+			geometry::projective_geometry::projective_space *P3,
+			geometry::projective_geometry::projective_space *P5,
 			int verbose_level);
 	void prepare_generator(
 			int verbose_level);
@@ -311,7 +311,7 @@ public:
 	int *Inc;
 		// [total_nb_points * total_nb_blocks]
 
-	geometry::incidence_structure *I;
+	geometry::other_geometry::incidence_structure *I;
 	data_structures::partitionstack *Stack;
 	std::string fname_incidence_pic;
 	std::string fname_row_scheme;
@@ -773,7 +773,7 @@ public:
 	int *good_spreads;
 		// the union of all good orbits on spreads
 
-	geometry::spread_tables *Spread_tables_reduced;
+	geometry::finite_geometries::spread_tables *Spread_tables_reduced;
 		// The spreads in the good orbits, listed one-by-one
 		// This table is *not* sorted.
 		// The induced action on reduced spreads
@@ -936,7 +936,7 @@ public:
 	void select_packings(
 			std::string &fname,
 			std::string &file_of_spreads_original,
-			geometry::spread_tables *Spread_tables,
+			geometry::finite_geometries::spread_tables *Spread_tables,
 			int f_self_polar,
 			int f_ago, int select_ago,
 			canonical_form_classification::classify_bitvectors *&CB,
@@ -945,7 +945,7 @@ public:
 			std::string &fname,
 			std::string &file_of_spreads_original,
 			int f_split, int split_r, int split_m,
-			geometry::spread_tables *Spread_tables,
+			geometry::finite_geometries::spread_tables *Spread_tables,
 			canonical_form_classification::classify_bitvectors *&CB,
 			int verbose_level);
 

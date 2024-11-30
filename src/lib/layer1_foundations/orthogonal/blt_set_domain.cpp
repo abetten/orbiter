@@ -99,7 +99,7 @@ blt_set_domain::~blt_set_domain()
 
 void blt_set_domain::init_blt_set_domain(
 		orthogonal *O,
-		geometry::projective_space *P4,
+		geometry::projective_geometry::projective_space *P4,
 		int f_create_extension_fields,
 	int verbose_level)
 // creates a grassmann G43.
@@ -166,7 +166,7 @@ void blt_set_domain::init_blt_set_domain(
 
 
 
-	G43 = NEW_OBJECT(geometry::grassmann);
+	G43 = NEW_OBJECT(geometry::projective_geometry::grassmann);
 
 	if (f_v) {
 		cout << "blt_set_domain::init_blt_set_domain "

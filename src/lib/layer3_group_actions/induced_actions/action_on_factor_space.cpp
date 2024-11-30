@@ -586,14 +586,14 @@ void action_on_factor_space::compute_projection_table(
 
 long int action_on_factor_space::compute_degree()
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	return Gg.nb_PG_elements(factor_space_len - 1, VS->F->q);
 }
 
 long int action_on_factor_space::compute_large_degree()
 {
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	return Gg.nb_PG_elements(VS->dimension - 1, VS->F->q);
 }
@@ -680,7 +680,7 @@ long int action_on_factor_space::lexleast_element_in_coset(
 	int *w;
 	int *v1;
 	int *v2;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {

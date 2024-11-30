@@ -2135,7 +2135,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(
 	ring_theory::longinteger_object go;
 	sims *S;
 	int *Elt;
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -3949,7 +3949,7 @@ void strong_generators::export_group_and_copy_to_latex(
 
 void strong_generators::report_fixed_objects_in_PG(
 		std::ostream &ost,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

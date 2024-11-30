@@ -37,7 +37,7 @@ combinatorial_object_activity::~combinatorial_object_activity()
 
 void combinatorial_object_activity::init(
 		combinatorial_object_activity_description *Descr,
-		geometry::geometric_object_create *GOC,
+		geometry::other_geometry::geometric_object_create *GOC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -135,7 +135,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 			cout << "combinatorial_object_activity::perform_activity_geometric_object f_line_type_old" << endl;
 		}
 
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -174,14 +174,14 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 			cout << "combinatorial_object_activity::perform_activity_geometric_object f_line_type" << endl;
 		}
 
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
 		int threshold = 3;
 
 
-		geometry::intersection_type *Int_type;
+		geometry::other_geometry::intersection_type *Int_type;
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object "
@@ -224,7 +224,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 					"f_conic_type" << endl;
 		}
 
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -256,7 +256,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 					"f_non_conical_type" << endl;
 		}
 
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
 		P = GOC->Descr->P;
 
@@ -402,7 +402,7 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 		projective_geometry::projective_space_with_action *PA;
-		geometry::projective_space *P;
+		geometry::projective_geometry::projective_space *P;
 
 
 		if (Descr->f_canonical_form_PG_has_PA) {

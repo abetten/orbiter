@@ -224,7 +224,7 @@ void any_group_linear::isomorphism_Klein_quadric(
 	}
 #endif
 
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	for (i = 0; i < 6; i++) {
 		Geo.klein_to_wedge(F, Basis1 + i * 6, Basis2 + i * 6);

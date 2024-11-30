@@ -131,7 +131,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
 		int f_save_nauty_input_graphs,
@@ -242,7 +242,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 }
 
 void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
 		int f_save_nauty_input_graphs,

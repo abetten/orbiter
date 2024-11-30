@@ -703,7 +703,7 @@ public:
 
 	linear_algebra::linear_algebra *Linear_algebra;
 
-	geometry::projective_space_basic *Projective_space_basic;
+	geometry::projective_geometry::projective_space_basic *Projective_space_basic;
 
 	int f_related_fields_have_been_computed;
 	related_fields *Related_fields;

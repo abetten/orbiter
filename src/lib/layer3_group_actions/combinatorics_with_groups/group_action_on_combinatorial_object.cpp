@@ -151,9 +151,9 @@ void group_action_on_combinatorial_object::init(
 				"after A_perm->Induced_action->restricted_action" << endl;
 	}
 
-	geometry::incidence_structure *Inc;
+	geometry::other_geometry::incidence_structure *Inc;
 
-	Inc = NEW_OBJECT(geometry::incidence_structure);
+	Inc = NEW_OBJECT(geometry::other_geometry::incidence_structure);
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "

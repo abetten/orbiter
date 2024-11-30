@@ -830,7 +830,7 @@ coding_theory::crc_object *orbiter_session::get_object_of_type_crc_code(
 }
 
 
-geometry::projective_space *orbiter_session::get_projective_space_low_level(
+geometry::projective_geometry::projective_space *orbiter_session::get_projective_space_low_level(
 		std::string &label)
 {
 	int idx;

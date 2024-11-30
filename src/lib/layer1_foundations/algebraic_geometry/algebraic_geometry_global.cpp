@@ -30,7 +30,7 @@ algebraic_geometry_global::~algebraic_geometry_global()
 
 
 void algebraic_geometry_global::analyze_del_Pezzo_surface(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		expression_parser::formula *Formula,
 		std::string &evaluate_text,
 		int verbose_level)
@@ -165,7 +165,7 @@ void algebraic_geometry_global::analyze_del_Pezzo_surface(
 }
 
 void algebraic_geometry_global::report_grassmannian(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int k,
 		int verbose_level)
 {
@@ -236,7 +236,7 @@ void algebraic_geometry_global::report_grassmannian(
 }
 
 void algebraic_geometry_global::map(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		std::string &ring_label,
 		std::string &formula_label,
 		std::string &evaluate_text,
@@ -298,7 +298,7 @@ void algebraic_geometry_global::map(
 }
 
 void algebraic_geometry_global::affine_map(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		std::string &ring_label,
 		std::string &formula_label,
 		std::string &evaluate_text,
@@ -360,7 +360,7 @@ void algebraic_geometry_global::affine_map(
 }
 
 void algebraic_geometry_global::projective_variety(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		std::string &ring_label,
 		std::string &formula_label,
 		std::string &evaluate_text,
@@ -423,7 +423,7 @@ void algebraic_geometry_global::projective_variety(
 
 void algebraic_geometry_global::evaluate_regular_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Image_pts, long int &N_points_input,
@@ -536,7 +536,7 @@ void algebraic_geometry_global::evaluate_regular_map(
 
 void algebraic_geometry_global::evaluate_affine_map(
 		ring_theory::homogeneous_polynomial_domain *Ring,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Image_pts, long int &N_points_input,
@@ -567,7 +567,7 @@ void algebraic_geometry_global::evaluate_affine_map(
 	}
 
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "algebraic_geometry_global::evaluate_affine_map "
@@ -651,7 +651,7 @@ void algebraic_geometry_global::evaluate_affine_map(
 
 void algebraic_geometry_global::compute_projective_variety(
 		ring_theory::homogeneous_polynomial_domain *Ring,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		expression_parser::symbolic_object_builder *Object,
 		std::string &evaluate_text,
 		long int *&Variety, long int &Variety_nb_points,
@@ -684,7 +684,7 @@ void algebraic_geometry_global::compute_projective_variety(
 	}
 
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points_input = P->Subspaces->N_points;
 	if (f_v) {
@@ -779,7 +779,7 @@ void algebraic_geometry_global::compute_projective_variety(
 
 void algebraic_geometry_global::make_evaluation_matrix_wrt_ring(
 		ring_theory::homogeneous_polynomial_domain *Ring,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int *&M, int &nb_rows, int &nb_cols,
 		int verbose_level)
 {
@@ -969,7 +969,7 @@ void algebraic_geometry_global::cubic_surface_family_G13_generators(
 
 	int h, i, j, c, m, l;
 	int *v;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
 	m = Int_vec_maximum(data, nb_gens * data_size);
@@ -1093,7 +1093,7 @@ void algebraic_geometry_global::cubic_surface_family_F13_generators(
 
 	int h, i, j, c, m, l;
 	int *v;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	number_theory::number_theory_domain NT;
 
 	m = Int_vec_maximum(data, nb_gens * data_size);
@@ -1132,7 +1132,7 @@ void algebraic_geometry_global::cubic_surface_family_F13_generators(
 }
 
 int algebraic_geometry_global::nonconical_six_arc_get_nb_Eckardt_points(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 		long int *Arc6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1153,7 +1153,7 @@ int algebraic_geometry_global::nonconical_six_arc_get_nb_Eckardt_points(
 }
 
 algebraic_geometry::eckardt_point_info *algebraic_geometry_global::compute_eckardt_point_info(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 	long int *arc6,
 	int verbose_level)
 {
@@ -1186,7 +1186,7 @@ algebraic_geometry::eckardt_point_info *algebraic_geometry_global::compute_eckar
 }
 
 int algebraic_geometry_global::test_nb_Eckardt_points(
-		geometry::projective_space *P2,
+		geometry::projective_geometry::projective_space *P2,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 // input: S[5] and pt, which form a 6-arc.
 // we assume that len = 5.
@@ -1283,7 +1283,7 @@ void algebraic_geometry_global::rearrange_arc_for_lifting(
 }
 
 void algebraic_geometry_global::find_two_lines_for_arc_lifting(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int P1, long int P2, long int &line1, long int &line2,
 		int verbose_level)
 // P1 and P2 are points on the arc and in the plane W=0.
@@ -1297,7 +1297,7 @@ void algebraic_geometry_global::find_two_lines_for_arc_lifting(
 	int Basis_search_copy[16];
 	int base_cols[4];
 	int i, N, rk;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "algebraic_geometry_global::find_two_lines_for_arc_lifting" << endl;
@@ -1428,7 +1428,7 @@ void algebraic_geometry_global::find_two_lines_for_arc_lifting(
 }
 
 void algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int *A3, int f_semilinear, int frobenius,
 		long int line1, long int line2,
 		int *A4,
@@ -1734,7 +1734,7 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_fixed(
 }
 
 void algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int line1_from, long int line1_to,
 		long int line2_from, long int line2_to,
 		int *A4,
@@ -1973,7 +1973,7 @@ void algebraic_geometry_global::hyperplane_lifting_with_two_lines_moved(
 }
 
 void algebraic_geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
-		geometry::projective_space *P3,
+		geometry::projective_geometry::projective_space *P3,
 		long int line1_from, long int line2_from,
 		long int line1_to, long int line2_to,
 		int verbose_level)
@@ -2010,7 +2010,7 @@ void algebraic_geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 }
 
 void algebraic_geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
-		geometry::projective_space *P3,
+		geometry::projective_geometry::projective_space *P3,
 		std::string &line1_from_text, std::string &line2_from_text,
 		std::string &line1_to_text, std::string &line2_to_text,
 		int verbose_level)

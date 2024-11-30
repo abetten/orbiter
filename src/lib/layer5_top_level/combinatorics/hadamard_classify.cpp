@@ -32,7 +32,7 @@ void hadamard_classify::init(
 {
 	int f_v = (verbose_level = 1);
 	int i, j, k, d, cnt, cnt1;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (n > (int)sizeof(int) * 8) {

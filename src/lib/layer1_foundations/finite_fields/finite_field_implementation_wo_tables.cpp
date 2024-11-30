@@ -360,7 +360,7 @@ int finite_field_implementation_wo_tables::negate(
 	number_theory::number_theory_domain NT;
 
 	if (F->e > 1) {
-		geometry::geometry_global Gg;
+		geometry::other_geometry::geometry_global Gg;
 
 		if (i < 0 || i >= F->q) {
 			cout << "finite_field_implementation_wo_tables::negate "
@@ -396,7 +396,7 @@ int finite_field_implementation_wo_tables::add(
 		cout << "finite_field_implementation_wo_tables::add" << endl;
 	}
 
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (i < 0 || i >= F->q) {
 		cout << "finite_field_implementation_wo_tables::add "

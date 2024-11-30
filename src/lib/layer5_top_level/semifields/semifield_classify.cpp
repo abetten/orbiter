@@ -264,9 +264,9 @@ void semifield_classify::init(
 	Basis1 = NEW_int(k * k2);
 	Basis2 = NEW_int(k * k2);
 
-	geometry::spread_domain *SD;
+	geometry::finite_geometries::spread_domain *SD;
 
-	SD = NEW_OBJECT(geometry::spread_domain);
+	SD = NEW_OBJECT(geometry::finite_geometries::spread_domain);
 
 	if (f_v) {
 		cout << "semifield_classify::init "
@@ -909,7 +909,7 @@ void semifield_classify::early_test_func(
 	int *v, *w;
 	int i, j, N, r;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::early_test_func" << endl;
@@ -1011,7 +1011,7 @@ int semifield_classify::test_candidate(
 	int *base_cols;
 	int N, h, i, j, a, b, c, r;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_candidate" << endl;
@@ -1105,7 +1105,7 @@ int semifield_classify::test_partial_semifield(
 	int *v;
 	int *w;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "semifield_classify::test_partial_semifield" << endl;
@@ -1373,7 +1373,7 @@ void semifield_classify::candidates_classify_by_first_column(
 	int h, u, i, t, w;
 	long int a;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {

@@ -463,11 +463,11 @@ public:
 			long int jacobi_top,
 			long int jacobi_bottom, int verbose_level);
 	void elliptic_curve_addition_table(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 		int *A6, int *Pts, int nb_pts, int *&Table,
 		int verbose_level);
 	int elliptic_curve_addition(
-			geometry::projective_space *P2,
+			geometry::projective_geometry::projective_space *P2,
 		int *A6, int p1_rk, int p2_rk,
 		int verbose_level);
 	void create_gcd_worksheet(

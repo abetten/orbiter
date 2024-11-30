@@ -79,7 +79,7 @@ void combinatorial_object_stream::do_canonical_form(
 				*Canonical_form_Descr,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int verbose_level)
 // called from combinatorial_object_activity::perform_activity_combo
 {
@@ -888,7 +888,7 @@ void combinatorial_object_stream::line_covering_type(
 	orbiter_kernel_system::file_io Fio;
 	l1_interfaces::latex_interface L;
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	P = PA->P;
 
@@ -974,7 +974,7 @@ void combinatorial_object_stream::line_type(
 	}
 
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	P = PA->P;
 

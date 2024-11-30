@@ -1114,7 +1114,7 @@ void spread_classify::cooperstein_thas_quotients(
 	long int **Pts;
 	int nb_points = 0;
 	int *List;
-	geometry::grassmann *Gr;
+	geometry::projective_geometry::grassmann *Gr;
 	ring_theory::longinteger_domain Dom;
 	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
@@ -1173,7 +1173,7 @@ void spread_classify::cooperstein_thas_quotients(
 	vec2 = NEW_int(n);
 	Pts = NEW_plint(order + 1);
 	List = NEW_int(order);
-	Gr = NEW_OBJECT(geometry::grassmann);
+	Gr = NEW_OBJECT(geometry::projective_geometry::grassmann);
 
 	Gr->init(n - 1, k, SD->F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {

@@ -496,9 +496,8 @@ void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 	if (f_v) {
 		cout << "classification_of_varieties_nauty::write_classification_by_nauty_csv" << endl;
 	}
-	fname = fname_base + "_classification_by_nauty.csv";
 
-
+	fname = fname_base + "_classified.csv";
 
 	{
 		ofstream ost(fname);
@@ -579,7 +578,7 @@ std::string classification_of_varieties_nauty::stringify_csv_header_line_nauty(
 
 
 void classification_of_varieties_nauty::report(
-		std::string &fname_base,
+		poset_classification::poset_classification_report_options *Report_options,
 		int verbose_level)
 {
 
@@ -592,7 +591,11 @@ void classification_of_varieties_nauty::report(
 	string fname;
 
 
-	fname = fname_base + "_orbits.tex";
+	if (Report_options->f_fname) {
+		fname = Report_options->fname;
+	}
+
+	fname += "_orbits.tex";
 
 
 

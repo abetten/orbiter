@@ -1185,7 +1185,7 @@ public:
 
 void free_symbol_table_entry_callback(
 		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
-geometry::projective_space *get_projective_space_low_level_function(
+geometry::projective_geometry::projective_space *get_projective_space_low_level_function(
 		void *ptr);
 
 
@@ -1246,7 +1246,7 @@ public:
 
 	int f_geometric_object;
 	std::string geometric_object_projective_space_label;
-	geometry::geometric_object_description
+	geometry::other_geometry::geometric_object_description
 		*Geometric_object_description;
 
 	int f_graph;

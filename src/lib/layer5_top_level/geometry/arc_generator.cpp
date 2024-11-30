@@ -120,7 +120,7 @@ void arc_generator::init(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::init" << endl;
@@ -576,7 +576,7 @@ void arc_generator::print(
 void arc_generator::print_set_in_affine_plane(
 		int len, long int *S)
 {
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	Geo.print_set_in_affine_plane(PA->F, len, S);
 }

@@ -54,7 +54,7 @@ void orthogonal_space_with_action::init(
 	}
 	orthogonal_space_with_action::Descr = Descr;
 
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init "

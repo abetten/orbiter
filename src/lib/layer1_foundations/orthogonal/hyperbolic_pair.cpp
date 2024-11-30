@@ -197,7 +197,7 @@ void hyperbolic_pair::init_counting_functions(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "hyperbolic_pair::init_counting_functions" << endl;
@@ -305,7 +305,7 @@ void hyperbolic_pair::init_decomposition(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	int i;
 
 	if (f_v) {
@@ -400,7 +400,7 @@ void hyperbolic_pair::init_parabolic(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	//int a, b, c;
 
@@ -467,7 +467,7 @@ void hyperbolic_pair::init_parabolic_even(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "hyperbolic_pair::init_parabolic_even" << endl;
@@ -586,7 +586,7 @@ void hyperbolic_pair::init_parabolic_odd(
 {
 	long int a, b, c;
 	int f_v = (verbose_level >= 1);
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	int q, m;

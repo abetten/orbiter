@@ -1258,7 +1258,7 @@ void vector_ge::reverse_isomorphism_exterior_square(
 		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
 	}
 
-	geometry::klein_correspondence *K;
+	geometry::projective_geometry::klein_correspondence *K;
 	orthogonal_geometry::orthogonal *O;
 	int A4[17];
 
@@ -1268,7 +1268,7 @@ void vector_ge::reverse_isomorphism_exterior_square(
 	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level);
 
-	K = NEW_OBJECT(geometry::klein_correspondence);
+	K = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
 	K->init(F, O, verbose_level);
 
 

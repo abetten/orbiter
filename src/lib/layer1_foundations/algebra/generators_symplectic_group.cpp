@@ -82,7 +82,7 @@ void generators_symplectic_group::init(
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "generators_symplectic_group::init" << endl;

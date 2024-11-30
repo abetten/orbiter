@@ -1275,7 +1275,7 @@ public:
 	int syntax_tree_node_index;
 
 	int f_has_get_projective_space_low_level_function;
-	geometry::projective_space *(* get_projective_space_low_level_function)(void *ptr);
+	geometry::projective_geometry::projective_space *(* get_projective_space_low_level_function)(void *ptr);
 
 	std::vector<void *> export_import_stack;
 
@@ -1334,7 +1334,7 @@ public:
 			std::string &label);
 	coding_theory::crc_object *get_object_of_type_crc_code(
 			std::string &label);
-	geometry::projective_space *get_projective_space_low_level(
+	geometry::projective_geometry::projective_space *get_projective_space_low_level(
 			std::string &label);
 	geometry_builder::geometry_builder *get_geometry_builder(
 			std::string &label);
@@ -1438,7 +1438,7 @@ public:
 			std::string &list_of_objects, int verbose_level);
 	void init_geometric_object(
 			std::string &label,
-			geometry::geometric_object_create *COC,
+			geometry::other_geometry::geometric_object_create *COC,
 			int verbose_level);
 	void init_graph(
 			std::string &label,

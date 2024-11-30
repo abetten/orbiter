@@ -173,7 +173,7 @@ void surface_with_action::init(
 	if (f_recoordinatize) {
 
 
-		Three_skew_subspaces = NEW_OBJECT(geometry::three_skew_subspaces);
+		Three_skew_subspaces = NEW_OBJECT(geometry::other_geometry::three_skew_subspaces);
 
 		Three_skew_subspaces->init(
 				PA->P->Subspaces->Grass_lines,

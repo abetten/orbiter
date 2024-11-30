@@ -1006,7 +1006,7 @@ void packing_was::reduce_spreads(
 
 
 
-	Spread_tables_reduced = NEW_OBJECT(geometry::spread_tables);
+	Spread_tables_reduced = NEW_OBJECT(geometry::finite_geometries::spread_tables);
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads before "
@@ -1627,7 +1627,7 @@ void packing_was::report_orbit_invariant(
 					P->F->Io->print_matrix_latex(
 							ost, basis_external_line2, 2, 6);
 
-					geometry::geometry_global Gg;
+					geometry::other_geometry::geometry_global Gg;
 
 					for (u = 0; u < 4; u++) {
 						Pair[u] = Gg.AG_element_rank(P->F->q,

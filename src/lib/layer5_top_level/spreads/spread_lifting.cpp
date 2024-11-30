@@ -303,7 +303,7 @@ void spread_lifting::compute_colors(
 	int f_v = (verbose_level >= 1);
 	int i, a;
 	int *v;
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 	
 	if (f_v) {
 		cout << "spread_lifting::compute_colors" << endl;

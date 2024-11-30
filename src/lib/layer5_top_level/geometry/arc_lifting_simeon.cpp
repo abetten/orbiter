@@ -124,7 +124,7 @@ void arc_lifting_simeon::init(
 
 	Sch->print_and_list_orbits(cout);
 
-	P = NEW_OBJECT(geometry::projective_space);
+	P = NEW_OBJECT(geometry::projective_geometry::projective_space);
 
 	P->projective_space_init(n /* n */,
 		F /* finite_field *F*/,

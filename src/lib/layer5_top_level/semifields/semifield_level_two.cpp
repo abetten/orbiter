@@ -1545,7 +1545,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int N, N1, v[2], j, h, b1, b2;
 	long int r;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	data_structures::sorting Sorting;
 
 	N = NT.i_power_j(q, k);

@@ -154,40 +154,40 @@ ORBITER_MODULES= \
 		layer1_foundations/finite_fields/related_fields.o \
 		layer1_foundations/finite_fields/square_nonsquare.o \
 		layer1_foundations/finite_fields/subfield_structure.o \
-		layer1_foundations/geometry/andre_construction.o \
-		layer1_foundations/geometry/andre_construction_line_element.o \
-		layer1_foundations/geometry/andre_construction_point_element.o \
-		layer1_foundations/geometry/arc_basic.o \
-		layer1_foundations/geometry/arc_in_projective_space.o \
-		layer1_foundations/geometry/buekenhout_metz.o \
-		layer1_foundations/geometry/desarguesian_spread.o \
-		layer1_foundations/geometry/flag.o \
-		layer1_foundations/geometry/geometric_object_create.o \
-		layer1_foundations/geometry/geometric_object_description.o \
-		layer1_foundations/geometry/geometry_global.o \
-		layer1_foundations/geometry/grassmann.o \
-		layer1_foundations/geometry/grassmann_embedded.o \
-		layer1_foundations/geometry/hermitian.o \
-		layer1_foundations/geometry/hjelmslev.o \
-		layer1_foundations/geometry/incidence_structure.o \
-		layer1_foundations/geometry/intersection_type.o \
-		layer1_foundations/geometry/klein_correspondence.o \
-		layer1_foundations/geometry/knarr.o \
-		layer1_foundations/geometry/point_line.o \
-		layer1_foundations/geometry/points_and_lines.o \
-		layer1_foundations/geometry/polarity.o \
-		layer1_foundations/geometry/projective_space_basic.o \
-		layer1_foundations/geometry/projective_space_implementation.o \
-		layer1_foundations/geometry/projective_space_of_dimension_three.o \
-		layer1_foundations/geometry/projective_space_plane.o \
-		layer1_foundations/geometry/projective_space_reporting.o \
-		layer1_foundations/geometry/projective_space_subspaces.o \
-		layer1_foundations/geometry/projective_space.o \
-		layer1_foundations/geometry/projective_space2.o \
-		layer1_foundations/geometry/spread_domain.o \
-		layer1_foundations/geometry/spread_tables.o \
-		layer1_foundations/geometry/three_skew_subspaces.o \
-		layer1_foundations/geometry/w3q.o \
+		layer1_foundations/geometry/finite_geometries/andre_construction.o \
+		layer1_foundations/geometry/finite_geometries/andre_construction_line_element.o \
+		layer1_foundations/geometry/finite_geometries/andre_construction_point_element.o \
+		layer1_foundations/geometry/finite_geometries/buekenhout_metz.o \
+		layer1_foundations/geometry/finite_geometries/desarguesian_spread.o \
+		layer1_foundations/geometry/finite_geometries/knarr.o \
+		layer1_foundations/geometry/finite_geometries/spread_domain.o \
+		layer1_foundations/geometry/finite_geometries/spread_tables.o \
+		layer1_foundations/geometry/finite_geometries/w3q.o \
+		layer1_foundations/geometry/other_geometry/arc_basic.o \
+		layer1_foundations/geometry/other_geometry/arc_in_projective_space.o \
+		layer1_foundations/geometry/other_geometry/flag.o \
+		layer1_foundations/geometry/other_geometry/geometric_object_create.o \
+		layer1_foundations/geometry/other_geometry/geometric_object_description.o \
+		layer1_foundations/geometry/other_geometry/geometry_global.o \
+		layer1_foundations/geometry/other_geometry/hermitian.o \
+		layer1_foundations/geometry/other_geometry/hjelmslev.o \
+		layer1_foundations/geometry/other_geometry/incidence_structure.o \
+		layer1_foundations/geometry/other_geometry/intersection_type.o \
+		layer1_foundations/geometry/other_geometry/point_line.o \
+		layer1_foundations/geometry/other_geometry/points_and_lines.o \
+		layer1_foundations/geometry/other_geometry/three_skew_subspaces.o \
+		layer1_foundations/geometry/projective_geometry/grassmann.o \
+		layer1_foundations/geometry/projective_geometry/grassmann_embedded.o \
+		layer1_foundations/geometry/projective_geometry/klein_correspondence.o \
+		layer1_foundations/geometry/projective_geometry/polarity.o \
+		layer1_foundations/geometry/projective_geometry/projective_space.o \
+		layer1_foundations/geometry/projective_geometry/projective_space2.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_basic.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_implementation.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_of_dimension_three.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_plane.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_reporting.o \
+		layer1_foundations/geometry/projective_geometry/projective_space_subspaces.o \
 		layer1_foundations/geometry_builder/cperm.o \
 		layer1_foundations/geometry_builder/decomposition_with_fuse.o \
 		layer1_foundations/geometry_builder/gen_geo_conf.o \

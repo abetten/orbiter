@@ -509,7 +509,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
@@ -1573,7 +1573,7 @@ void homogeneous_polynomial_domain::algebraic_set(
 	}
 
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 	if (f_v) {
@@ -1611,7 +1611,7 @@ void homogeneous_polynomial_domain::polynomial_function(
 		cout << "homogeneous_polynomial_domain::polynomial_function" << endl;
 	}
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 	if (f_v) {
@@ -1636,7 +1636,7 @@ void homogeneous_polynomial_domain::polynomial_function_affine(
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::polynomial_function_affine" << endl;
 	}
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 	number_theory::number_theory_domain NT;
 
 	N = NT.i_power_j(F->q, nb_variables - 1);
@@ -1672,7 +1672,7 @@ void homogeneous_polynomial_domain::enumerate_points(
 	}
 
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
@@ -1728,7 +1728,7 @@ void homogeneous_polynomial_domain::enumerate_points_in_intersection(
 	}
 
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
@@ -1870,7 +1870,7 @@ void homogeneous_polynomial_domain::enumerate_points_zariski_open_set(
 		cout << "homogeneous_polynomial_domain::enumerate_points_zariski_open_set" << endl;
 	}
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
@@ -1956,7 +1956,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 	int a, b, c, i, j, idx;
 	int *A;
 	int *V;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear" << endl;
@@ -2088,7 +2088,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *Mtx;
 	int my_nb_affine, wt;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 
 	if (f_v) {
@@ -2948,7 +2948,7 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 	int sz2;
 	data_structures::sorting Sorting;
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
@@ -3056,7 +3056,7 @@ void homogeneous_polynomial_domain::create_projective_variety(
 
 	number_theory::number_theory_domain NT;
 	long int N_points;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	N_points = Gg.nb_PG_elements(nb_variables - 1, q);
 
@@ -3402,7 +3402,7 @@ void homogeneous_polynomial_domain::get_coefficient_vector(
 void homogeneous_polynomial_domain::evaluate_regular_map(
 		int *Coefficient_vector,
 		int nb_eqns,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		long int *&Image_pts, int &N_points,
 		int verbose_level)
 {
@@ -4018,7 +4018,7 @@ void homogeneous_polynomial_domain::parse_equation_and_substitute_parameters(
 
 
 void homogeneous_polynomial_domain::compute_singular_points_projectively(
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		int *equation,
 		std::vector<long int> &Singular_points,
 		int verbose_level)

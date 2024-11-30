@@ -496,7 +496,7 @@ void surface_classify_wedge::identify_general_abcd(
 	int iso_type;
 	int *Elt;
 	int q2, q3, q4;
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_general_abcd" << endl;

@@ -1165,7 +1165,7 @@ void linear_algebra::find_singular_vector_brute_force(
 	int f_v = (verbose_level >= 1);
 	int N, a, i;
 	int *v1;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "linear_algebra::find_singular_vector_brute_force" << endl;
@@ -1204,7 +1204,7 @@ void linear_algebra::find_singular_vector(
 	int f_vv = (verbose_level >= 2);
 	int a, b, c, d, r3, x, y, i, k3;
 	int *v1, *v2, *v3, *v2_coords, *v3_coords, *intersection;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
 		cout << "linear_algebra::find_singular_vector" << endl;
@@ -1674,7 +1674,7 @@ void linear_algebra::lift_to_Klein_quadric(
 	int Image[36];
 	int i;
 
-	geometry::geometry_global Geo;
+	geometry::other_geometry::geometry_global Geo;
 
 	for (i = 0; i < 6; i++) {
 		Geo.klein_to_wedge(F, Basis1 + i * 6, Basis2 + i * 6);

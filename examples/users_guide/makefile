@@ -22287,7 +22287,7 @@ quartic_curves_q13_classify_nauty:
 	$(OPEN) quartic_curves_q13_classified_orbits.pdf
 
 #quartic_curves_q13_classified_orbits.tex
-# quartic_curves_q13_classified_classification_by_nauty.csv
+# quartic_curves_q13_classified_classified.csv
 
 
 KLEIN_CUBIC_THREEFOLD_EQN="X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0"

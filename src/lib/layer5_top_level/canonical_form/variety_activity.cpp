@@ -141,6 +141,9 @@ void variety_activity::do_compute_group(
 
 	canonical_form::canonical_form_global Canonical_form_global;
 
+	canonical_form::classification_of_varieties_nauty *Classification_of_varieties_nauty;
+
+
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"before Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
@@ -148,12 +151,13 @@ void variety_activity::do_compute_group(
 	Canonical_form_global.compute_group_and_tactical_decomposition(
 			Classifier,
 			Input_Vo,
-			fname_base,
+			Classification_of_varieties_nauty,
 			verbose_level);
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"after Canonical_form_global.compute_group_and_tactical_decomposition" << endl;
 	}
+
 
 	FREE_OBJECT(Classifier);
 
@@ -173,7 +177,7 @@ void variety_activity::do_singular_points(
 		cout << "variety_activity::do_singular_points" << endl;
 	}
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 
 	P = Input_Vo[0].Variety_object->Projective_space;

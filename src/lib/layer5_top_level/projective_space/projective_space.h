@@ -454,7 +454,7 @@ public:
 	int f_semilinear;
 	int f_init_incidence_structure;
 
-	geometry::projective_space *P;
+	geometry::projective_geometry::projective_space *P;
 
 	// if n >= 3:
 	projective_space_with_action *PA2;

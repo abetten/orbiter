@@ -2183,7 +2183,7 @@ void scene::hypercube(
 	double t, dt;
 	orbiter_kernel_system::numerics Num;
 	number_theory::number_theory_domain NT;
-	geometry::geometry_global Gg;
+	geometry::other_geometry::geometry_global Gg;
 
 	int first_pt_idx;
 

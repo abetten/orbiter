@@ -39,7 +39,7 @@ blt_set_domain_with_action::~blt_set_domain_with_action()
 
 void blt_set_domain_with_action::init(
 		actions::action *A,
-		geometry::projective_space *P,
+		geometry::projective_geometry::projective_space *P,
 		layer1_foundations::orthogonal_geometry::orthogonal *O,
 		int f_create_extension_fields,
 		int verbose_level)
