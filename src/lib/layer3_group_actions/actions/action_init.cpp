@@ -24,8 +24,8 @@ void action::init_group_from_generators(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, cur_go;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, cur_go;
 	groups::sims S;
 	int *Elt;
 	int nb_gens, i;
@@ -107,8 +107,8 @@ void action::init_group_from_generators_by_base_images(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, cur_go;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, cur_go;
 	groups::sims S;
 	int *Elt;
 	int nb_gens, i;
@@ -193,7 +193,7 @@ void action::build_up_automorphism_group_from_aut_data(
 	int f_v = (verbose_level >= 1);
 	int h, i, coset;
 	int *Elt1, *Elt2;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action::build_up_automorphism_group_from_aut_data "
@@ -256,8 +256,8 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_factor
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_domain D;
 	groups::sims *S;
 
 	if (f_v) {
@@ -285,7 +285,7 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_lint(
 		long int target_go,
 		int verbose_level)
 {
-	ring_theory::longinteger_object tgo;
+	algebra::ring_theory::longinteger_object tgo;
 
 	tgo.create(target_go);
 	return create_sims_from_generators_with_target_group_order(
@@ -295,7 +295,7 @@ groups::sims *action::create_sims_from_generators_with_target_group_order_lint(
 
 groups::sims *action::create_sims_from_generators_with_target_group_order(
 		data_structures_groups::vector_ge *gens,
-	ring_theory::longinteger_object &target_go,
+		algebra::ring_theory::longinteger_object &target_go,
 	int verbose_level)
 {
 	return create_sims_from_generators_randomized(
@@ -307,7 +307,7 @@ groups::sims *action::create_sims_from_generators_without_target_group_order(
 		data_structures_groups::vector_ge *gens,
 		int verbose_level)
 {
-	ring_theory::longinteger_object dummy;
+	algebra::ring_theory::longinteger_object dummy;
 
 	return create_sims_from_generators_randomized(
 		gens, false /* f_target_go */, dummy,
@@ -320,7 +320,7 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 	int f_v = (verbose_level >= 1);
 	groups::sims *S;
 	data_structures_groups::vector_ge *gens;
-	ring_theory::longinteger_object dummy;
+	algebra::ring_theory::longinteger_object dummy;
 
 	if (f_v) {
 		cout << "action::create_sims_from_single_generator_"
@@ -344,7 +344,7 @@ groups::sims *action::create_sims_from_single_generator_without_target_group_ord
 
 groups::sims *action::create_sims_from_generators_randomized(
 		data_structures_groups::vector_ge *gens,
-		int f_target_go, ring_theory::longinteger_object &target_go,
+		int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 	int verbose_level)
 // uses groups::schreier_sims
 {
@@ -439,10 +439,10 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	int d, q, i;
-	linear_algebra::gl_classes *C;
+	algebra::linear_algebra::gl_classes *C;
 
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix" << endl;
@@ -511,9 +511,9 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 
 	Elt = NEW_int(elt_size_in_int);
 
-	linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 	int *Basis;
 	int **Gens;
@@ -588,7 +588,7 @@ groups::sims *action::create_sims_for_centralizer_of_matrix(
 	data_structures_groups::vector_ge *gens;
 	data_structures_groups::vector_ge *SG;
 	int *tl;
-	ring_theory::longinteger_object centralizer_order, cent_go;
+	algebra::ring_theory::longinteger_object centralizer_order, cent_go;
 	int *Elt1;
 
 	gens = NEW_OBJECT(data_structures_groups::vector_ge);

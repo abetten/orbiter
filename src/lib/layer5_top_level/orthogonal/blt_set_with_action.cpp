@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_with_action::blt_set_with_action()
 {
+	Record_birth();
 	A = NULL;
 	Blt_set_domain_with_action = NULL;
 
@@ -38,6 +39,7 @@ blt_set_with_action::blt_set_with_action()
 
 blt_set_with_action::~blt_set_with_action()
 {
+	Record_death();
 	if (Inv) {
 		FREE_OBJECT(Inv);
 	}
@@ -74,7 +76,7 @@ void blt_set_with_action::init_set(
 	blt_set_with_action::label_txt.assign(label_txt);
 	blt_set_with_action::label_tex.assign(label_tex);
 
-	Inv = NEW_OBJECT(orthogonal_geometry::blt_set_invariants);
+	Inv = NEW_OBJECT(geometry::orthogonal_geometry::blt_set_invariants);
 	if (f_v) {
 		cout << "blt_set_with_action::init_set "
 				"before Inv->init" << endl;
@@ -263,7 +265,7 @@ void blt_set_with_action::report_basics(
 	ost << "\\bigskip" << endl;
 
 
-	l1_interfaces::latex_interface Li;
+	other::l1_interfaces::latex_interface Li;
 
 	ost << "$\\Pi_{ij}$ matrix:" << endl;
 	ost << "$$" << endl;

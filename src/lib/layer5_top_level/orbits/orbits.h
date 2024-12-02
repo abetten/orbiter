@@ -179,7 +179,7 @@ public:
 	void do_export_levels(
 			int orbit_idx, int verbose_level);
 	void do_draw_tree(
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_stabilizer(
 			int verbose_level);
@@ -325,7 +325,7 @@ public:
 	int f_has_on_cubic_curves;
 	apps_geometry::arc_generator_description
 				*Arc_generator_description;
-	algebraic_geometry::cubic_curve *CC;
+	geometry::algebraic_geometry::cubic_curve *CC;
 	apps_geometry::cubic_curve_with_action *CCA;
 	apps_geometry::classify_cubic_curves *CCC;
 
@@ -337,7 +337,7 @@ public:
 	semifields::semifield_classify_with_substructure *Semifields;
 
 	int f_has_boolean_functions;
-	combinatorics::boolean_function_domain *BF;
+	combinatorics::special_functions::boolean_function_domain *BF;
 	apps_combinatorics::boolean_function_classify *BFC;
 
 	int f_has_classification_by_canonical_form;
@@ -502,12 +502,12 @@ public:
 	group_constructions::linear_group *LG;
 	int degree_of_poly;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 	int n;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 	//geometry::projective_space *P;
 
@@ -520,7 +520,7 @@ public:
 	// initialized by init:
 	int f_has_Sch;
 	groups::schreier *Sch;
-	ring_theory::longinteger_object full_go;
+	algebra::ring_theory::longinteger_object full_go;
 
 	// initialized by orbit_of_one_polynomial:
 	int f_has_Orb;
@@ -539,12 +539,12 @@ public:
 	~orbits_on_polynomials();
 	void init(
 			group_constructions::linear_group *LG,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 	void orbit_of_one_polynomial(
 			group_constructions::linear_group *LG,
-			ring_theory::homogeneous_polynomial_domain *HPD,
-			expression_parser::symbolic_object_builder *Symbol,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::expression_parser::symbolic_object_builder *Symbol,
 			int verbose_level);
 	void compute_points(
 			int verbose_level);
@@ -584,7 +584,7 @@ public:
 		*orbits_on_subspaces_Poset;
 	poset_classification::poset_classification
 		*orbits_on_subspaces_PC;
-	linear_algebra::vector_space *orbits_on_subspaces_VS;
+	algebra::linear_algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
 

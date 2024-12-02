@@ -24,6 +24,7 @@ namespace groups {
 
 subgroup_lattice::subgroup_lattice()
 {
+	Record_birth();
 
 	A = NULL;
 
@@ -53,6 +54,7 @@ subgroup_lattice::subgroup_lattice()
 
 subgroup_lattice::~subgroup_lattice()
 {
+	Record_death();
 	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
@@ -151,7 +153,7 @@ void subgroup_lattice::init_basic(
 		cout << "subgroup_lattice::init_basic group_order = " << group_order << endl;
 	}
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	nb_layers = NT.nb_prime_factors_counting_multiplicities(
 			group_order) + 1;
@@ -610,7 +612,7 @@ void subgroup_lattice::save_csv(
 		}
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	//std::string fname;
 
@@ -756,7 +758,7 @@ void subgroup_lattice::save_rearranged_by_orbits_csv(
 		}
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	//std::string fname;
 
@@ -797,9 +799,9 @@ void subgroup_lattice::load_csv(
 		cout << "subgroup_lattice::load_csv" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
-	data_structures::spreadsheet S;
+	other::data_structures::spreadsheet S;
 
 	S.read_spreadsheet(fname, verbose_level);
 
@@ -853,7 +855,7 @@ void subgroup_lattice::load_csv(
 		}
 	}
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	int layer_col_idx;
 	int idx_in_layer_col_idx;
 	int go_col_idx;
@@ -1066,7 +1068,7 @@ void subgroup_lattice::load_csv(
 }
 
 void subgroup_lattice::create_drawing(
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1120,7 +1122,7 @@ void subgroup_lattice::create_drawing(
 
 
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_v) {
 		cout << "subgroup_lattice::create_drawing "
 				"before LG->init" << endl;
@@ -1195,7 +1197,7 @@ void subgroup_lattice::create_drawing(
 
 
 void subgroup_lattice::create_drawing_by_orbits(
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1249,7 +1251,7 @@ void subgroup_lattice::create_drawing_by_orbits(
 
 
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_v) {
 		cout << "subgroup_lattice::create_drawing_by_orbits "
 				"before LG->init" << endl;
@@ -1381,7 +1383,7 @@ void subgroup_lattice::create_incidence_matrix(
 	groups::subgroup *Subgroup2;
 	int i, j;
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	for (l1 = 0; l1 < nb_layers; l1++) {
@@ -1461,7 +1463,7 @@ void subgroup_lattice::create_incidence_matrix_for_orbits_Asup(
 	groups::subgroup *Subgroup2;
 	int i, j, g2, cnt;
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	for (l1 = 0; l1 < nb_layers; l1++) {
@@ -2062,7 +2064,7 @@ void subgroup_lattice::create_coset_geometry(
 	}
 
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int i, j;
 	int *Elt1;
 	int *Elt2;
@@ -2472,7 +2474,7 @@ void subgroup_lattice::intersect_subgroups(
 		cout << "subgroup_lattice::intersect_subgroups" << endl;
 	}
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int *elements3;
 	int group_order3;
 	int f_found;
@@ -2532,7 +2534,7 @@ int subgroup_lattice::add_subgroup(
 
 	order = Subgroup->group_order;
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	layer_idx = NT.nb_prime_factors_counting_multiplicities(order);
 
@@ -2556,7 +2558,7 @@ int subgroup_lattice::find_subgroup_direct(
 
 	int f_found;
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	layer_idx = NT.nb_prime_factors_counting_multiplicities(group_order);
 
@@ -2637,7 +2639,7 @@ void subgroup_lattice::identify_subgroup(
 
 	go = Strong_gens->group_order_as_lint();
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	layer_idx = NT.nb_prime_factors_counting_multiplicities(go);
@@ -2805,7 +2807,7 @@ void subgroup_lattice::do_export_csv(
 
 	headings = "orbit,layer,idxlocal,go,length,groupidx";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->write_table_of_strings(
 			fname,

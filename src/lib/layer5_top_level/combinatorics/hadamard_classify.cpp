@@ -72,7 +72,7 @@ void hadamard_classify::init(
 		}
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(N2);
 	//bitvector_length = (N2 + 7) >> 3;
 
@@ -149,10 +149,10 @@ void hadamard_classify::init(
 
 
 	{
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 		string fname;
 
-		CG = NEW_OBJECT(graph_theory::colored_graph);
+		CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 		int *color;
 
 		color = NEW_int(N);
@@ -175,7 +175,7 @@ void hadamard_classify::init(
 
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	if (f_v) {
 		cout << "initializing colored graph" << endl;
@@ -271,9 +271,9 @@ void hadamard_classify::init(
 
 		fname_base = "Hadamard_graph_" + std::to_string(n);
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
-		Draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+		Draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
 
 		CG->draw(fname_base,
 				Draw_options,
@@ -297,7 +297,7 @@ void hadamard_classify::init(
 		CG->nb_points, Bitvec,
 		verbose_level);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	A->group_order(go);
 	if (f_v) {
 		cout << "computing automorphism group of "
@@ -421,7 +421,7 @@ int hadamard_classify::clique_test(
 		long int *set, int sz)
 {
 	long int i, j, a, b, idx;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	for (i = 0; i < n; i++) {
 		a = set[i];

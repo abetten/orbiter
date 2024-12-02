@@ -21,6 +21,7 @@ namespace spreads {
 
 spread_create_description::spread_create_description()
 {
+	Record_birth();
 	f_kernel_field = false;
 	//std::string kernel_field_label;
 
@@ -51,6 +52,7 @@ spread_create_description::spread_create_description()
 
 spread_create_description::~spread_create_description()
 {
+	Record_death();
 }
 
 
@@ -59,7 +61,7 @@ int spread_create_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "spread_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

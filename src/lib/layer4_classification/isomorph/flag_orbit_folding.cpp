@@ -20,6 +20,7 @@ namespace isomorph {
 
 flag_orbit_folding::flag_orbit_folding()
 {
+	Record_birth();
 	Iso = NULL;
 
 	//std::string event_out_fname;
@@ -95,6 +96,7 @@ flag_orbit_folding::flag_orbit_folding()
 
 flag_orbit_folding::~flag_orbit_folding()
 {
+	Record_death();
 	if (AA) {
 		FREE_OBJECT(AA);
 		AA = NULL;
@@ -182,9 +184,9 @@ void flag_orbit_folding::isomorph_testing(
 	int f_v = (verbose_level >= 1);
 	//int f_v4 = false;// (verbose_level >= 1);
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int f_eof;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::isomorph_testing" << endl;
@@ -310,11 +312,11 @@ void flag_orbit_folding::do_iso_test(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int id;
 	long int data[1000];
 	int f_continue;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -496,8 +498,8 @@ int flag_orbit_folding::next_subset(
 	int f_v6 = (verbose_level >= 6);
 	int f_is_minimal;
 	int i;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	f_continue = false;
 
@@ -582,7 +584,7 @@ void flag_orbit_folding::process_rearranged_set(
 	int f_v6 = (verbose_level >= 6);
 	int orbit_no0, id0, hdl, i, j;
 	long int data0[1000];
-	ring_theory::longinteger_object new_go;
+	algebra::ring_theory::longinteger_object new_go;
 	int f_found;
 
 	if (f_v) {
@@ -782,7 +784,7 @@ int flag_orbit_folding::is_minimal(
 		int verbose_level)
 {
 	int rk, rk0;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	rk = Combi.rank_k_subset(subset, Iso->size, Iso->level);
 	rk0 = UF->ancestor(rk);
@@ -818,7 +820,7 @@ void flag_orbit_folding::stabilizer_action_init(
 	int f_v = (verbose_level >= 1);
 	int h, i, j;
 	int *Elt;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	nb_sets_reached = 0;
 	nb_is_minimal_called = 0;
@@ -862,7 +864,7 @@ void flag_orbit_folding::stabilizer_action_add_generator(
 	int f_vv = (verbose_level >= 2);
 	int **new_gens;
 	int h, i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	AA->group_order(stabilizer_group_order);
 	if (f_v) {
@@ -925,14 +927,14 @@ void flag_orbit_folding::print_statistics_iso_test(
 // assumes AA and AA_on_k_subsets are set
 {
 	//double progress;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_object AA_go;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object AA_go;
 	int subset_rank;
 	int t1, dt;
 	int nb, N;
 	double f1; //, f2;
-	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::os_interface Os;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -1011,7 +1013,7 @@ int flag_orbit_folding::identify_database_is_open(
 	//database DD1, DD2;
 	long int data0[1000];
 	int orbit_no0, id0, f;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::identify_database_is_open" << endl;
@@ -1130,7 +1132,7 @@ void flag_orbit_folding::induced_action_on_set_basic(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, K_go;
+	algebra::ring_theory::longinteger_object go, K_go;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::induced_action_on_set_basic" << endl;
@@ -1186,7 +1188,7 @@ void flag_orbit_folding::induced_action_on_set(
 // using the generators in S.
 // Calls action::induced_action_by_restriction()
 {
-	ring_theory::longinteger_object go, K_go;
+	algebra::ring_theory::longinteger_object go, K_go;
 	//sims *K;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1255,7 +1257,7 @@ void flag_orbit_folding::induced_action_on_set(
 		//AA->Sims->print_generators_as_permutations();
 		//AA->Sims->print_basic_orbits();
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		AA->Sims->group_order(go);
 		cout << "flag_orbit_folding::induced_action_on_set "
 				"AA->Sims go=" << go << endl;
@@ -1383,7 +1385,7 @@ int flag_orbit_folding::handle_automorphism(
 	int f_vvv = (verbose_level >= 3);
 	int f_v6 = (verbose_level >= 6);
 	int *Elt1;
-	ring_theory::longinteger_object go, go1;
+	algebra::ring_theory::longinteger_object go, go1;
 	int ret;
 
 	if (f_v) {
@@ -1467,7 +1469,7 @@ void flag_orbit_folding::print_isomorphism_types(
 {
 	int f_v = (verbose_level >= 1);
 	int h, i, j, id, first, c;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::print_isomorphism_types" << endl;
@@ -1531,7 +1533,7 @@ void flag_orbit_folding::print_isomorphism_types(
 		induced_action_on_set(Stab, data, verbose_level);
 
 		if (f_v) {
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			AA->group_order(go);
 			cout << "action " << AA->label << " computed, "
@@ -1539,7 +1541,7 @@ void flag_orbit_folding::print_isomorphism_types(
 		}
 
 		groups::schreier Orb;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		AA->compute_all_point_orbits(Orb, Stab->gens, verbose_level - 2);
 		cout << "Computed all orbits on the set, found "
@@ -1991,7 +1993,7 @@ void flag_orbit_folding::make_set_smaller(
 	int i, j;
 	long int n, m, a, b;
 	//int set1[1000];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -2008,7 +2010,7 @@ void flag_orbit_folding::make_set_smaller(
 	}
 
 	data_structures_groups::vector_ge gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 	Iso->Sub->load_strong_generators(Iso->level, case_nb_local /* cur_node */,
@@ -2127,7 +2129,7 @@ int flag_orbit_folding::trace_set_recursion(
 	int f_vv = (verbose_level >= 2);
 	long int pt, pt0;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	f_failure_to_find_point = false;
 	if (f_v) {
@@ -2654,7 +2656,7 @@ int flag_orbit_folding::handle_extension_database(
 	int i, pt0, pt, /*orbit_len,*/ t = 0, d = 0;
 	int pos, ref, nb_strong_generators, nb_extensions;
 	int nb_fusion, next_node_global;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -2830,7 +2832,7 @@ int flag_orbit_folding::handle_extension_tree(
 	int f_vv = (verbose_level >= 2);
 	poset_classification::poset_orbit_node *O = Iso->Sub->gen->get_node(cur_node_global);
 	int pt0, current_extension, t, d, next_node_global;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	f_failure_to_find_point = false;
 	if (f_v) {
@@ -3077,7 +3079,7 @@ void flag_orbit_folding::apply_isomorphism_tree(
 
 #if 1
 	poset_classification::poset_orbit_node *O = Iso->Sub->gen->get_node(cur_node_global);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	Iso->Sub->gen->get_A()->Group_element->element_retrieve(
 			O->get_E(current_extension)->get_data(),
 			apply_isomorphism_tree_tmp_Elt, false);
@@ -3145,7 +3147,7 @@ void flag_orbit_folding::skip_through_event_file(
 	char token[1000];
 	int l, j, case_no;
 	char *p_buf;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "flag_orbit_folding::skip_through_event_file" << endl;
 
@@ -3204,7 +3206,7 @@ void flag_orbit_folding::skip_through_event_file1(
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	while (true) {
@@ -3306,7 +3308,7 @@ void flag_orbit_folding::event_file_completed_cases(
 	char token[1000];
 	ifstream f(event_file_name);
 	char buf[MY_BUFSIZE];
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	nb_completed_cases = 0;
 	while (true) {
@@ -3347,7 +3349,7 @@ void flag_orbit_folding::event_file_read_case(
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	ifstream f(event_file_name);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	while (true) {
 
@@ -3392,7 +3394,7 @@ void flag_orbit_folding::event_file_read_case1(
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	while (true) {
@@ -3461,8 +3463,8 @@ int flag_orbit_folding::next_subset_play_back(
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	int rank;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::string_tools ST;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::string_tools ST;
 
 	f_eof = false;
 	if (play_back_file->eof()) {
@@ -3620,7 +3622,7 @@ void flag_orbit_folding::write_classification_matrix(
 		cout << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = Iso->prefix + "_flag_orbit_links.csv";
@@ -3664,12 +3666,12 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 	int *Nb;
 	int *Fst;
 	int i, j, f, l, d;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::write_classification_graph" << endl;
 	}
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 
 	nb_layers = 3;
@@ -3689,7 +3691,7 @@ void flag_orbit_folding::write_classification_graph(int verbose_level)
 
 
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 
 	string dummy;
 
@@ -3773,7 +3775,7 @@ void flag_orbit_folding::decomposition_matrix(
 	//int f_vv = (verbose_level >= 2);
 	int m, n, i, j, a, b, f, l;
 	int *M;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::decomposition_matrix" << endl;
@@ -3885,11 +3887,11 @@ void flag_orbit_folding::probe(
 {
 	int f_v = (verbose_level >= 1);
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int data[1000];
 	int i, id;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::probe for flag orbit " << flag_orbit
@@ -3995,7 +3997,7 @@ void flag_orbit_folding::test_compute_stabilizer(
 	int orbit_no;
 	groups::sims *Stab;
 	int k;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::test_compute_stabilizer" << endl;
@@ -4140,7 +4142,7 @@ int flag_orbit_folding::test_edge(
 	int r, r0, id, id0;
 	long int data1[1000];
 	long int data2[1000];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::test_edge" << endl;
@@ -4196,8 +4198,8 @@ int flag_orbit_folding::test_edge(
 }
 
 void flag_orbit_folding::compute_Ago_Ago_induced(
-		ring_theory::longinteger_object *&Ago,
-		ring_theory::longinteger_object *&Ago_induced, int verbose_level)
+		algebra::ring_theory::longinteger_object *&Ago,
+		algebra::ring_theory::longinteger_object *&Ago_induced, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -4208,8 +4210,8 @@ void flag_orbit_folding::compute_Ago_Ago_induced(
 	if (f_v) {
 		cout << "flag_orbit_folding::compute_Ago_Ago_induced" << endl;
 	}
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Reps->count);
-	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Reps->count);
+	Ago = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Reps->count);
+	Ago_induced = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Reps->count);
 
 
 	for (h = 0; h < Reps->count; h++) {
@@ -4256,7 +4258,7 @@ void flag_orbit_folding::get_orbit_transversal(
 		cout << "flag_orbit_folding::get_orbit_transversal" << endl;
 	}
 	int h, rep, first, id;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	T = NEW_OBJECT(data_structures_groups::orbit_transversal);
 
@@ -4314,15 +4316,15 @@ void flag_orbit_folding::compute_stabilizer(
 				"verbose_level " << verbose_level << endl;
 	}
 
-	ring_theory::longinteger_object AA_go, K_go;
+	algebra::ring_theory::longinteger_object AA_go, K_go;
 	groups::sims *S;
 	actions::action *A_induced;
 	data_structures_groups::vector_ge *gens;
 	groups::schreier *Schreier;
 	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
-	ring_theory::longinteger_object go, so, so1;
-	data_structures::sorting Sorting;
+	algebra::ring_theory::longinteger_object go, so, so1;
+	other::data_structures::sorting Sorting;
 
 
 	first = Iso->Lifting->flag_orbit_solution_first[current_flag_orbit];
@@ -4565,7 +4567,7 @@ void flag_orbit_folding::iso_test_init2(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "flag_orbit_folding::iso_test_init2" << endl;

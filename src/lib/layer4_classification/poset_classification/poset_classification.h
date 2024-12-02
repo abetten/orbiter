@@ -483,7 +483,7 @@ public:
 
 	int f_clique_test;
 	std::string clique_test_graph;
-	graph_theory::colored_graph *clique_test_CG;
+	combinatorics::graph_theory::colored_graph *clique_test_CG;
 
 
 
@@ -596,6 +596,7 @@ public:
 
 
 	// poset_classification.cpp:
+
 	poset_of_orbits *get_Poo();
 	orbit_tracer *get_Orbit_tracer();
 	std::string &get_problem_label_with_path();
@@ -621,7 +622,7 @@ public:
 	poset_classification_control *get_control();
 	actions::action *get_A();
 	actions::action *get_A2();
-	linear_algebra::vector_space *get_VS();
+	algebra::linear_algebra::vector_space *get_VS();
 	data_structures_groups::schreier_vector_handler
 		*get_schreier_vector_handler();
 	int &get_depth();
@@ -679,21 +680,21 @@ public:
 			int lvl);
 	void count_automorphism_group_orders(
 			int lvl, int &nb_agos,
-			ring_theory::longinteger_object *&agos,
+			algebra::ring_theory::longinteger_object *&agos,
 			int *&multiplicities,
 		int verbose_level);
 	void compute_and_print_automorphism_group_orders(
 			int lvl,
 			std::ostream &ost);
 	void stabilizer_order(
-			int node, ring_theory::longinteger_object &go);
+			int node, algebra::ring_theory::longinteger_object &go);
 	void orbit_length(
 			int orbit_at_level, int level,
-			ring_theory::longinteger_object &len);
+			algebra::ring_theory::longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(
 			int node, int level,
-			ring_theory::longinteger_object &stab_order,
-			ring_theory::longinteger_object &len);
+			algebra::ring_theory::longinteger_object &stab_order,
+			algebra::ring_theory::longinteger_object &len);
 	int orbit_length_as_int(
 			int orbit_at_level, int level);
 	void recreate_schreier_vectors_up_to_level(
@@ -709,7 +710,7 @@ public:
 			long int *&Ago, int &nb, int verbose_level);
 	void get_stabilizer_order(
 			int level, int orbit_at_level,
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(
 			int level,
 			int orbit_at_level);
@@ -797,7 +798,7 @@ public:
 		int &orbit_idx, int verbose_level);
 	void classify_k_subsets(
 			long int *the_set, int n, int k,
-			data_structures::tally *&C, int verbose_level);
+			other::data_structures::tally *&C, int verbose_level);
 	void trace_all_k_subsets_and_compute_frequencies(
 			long int *the_set,
 			int n, int k, int &nCk,
@@ -927,21 +928,21 @@ public:
 	void write_treefile(
 			std::string &fname_base,
 		int lvl,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 		int verbose_level);
 	int write_treefile(
 			std::string &fname_base, int lvl,
 		int verbose_level);
 	void draw_tree(
 			std::string &fname_base, int lvl,
-			graphics::tree_draw_options *Tree_draw_options,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::tree_draw_options *Tree_draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 		int xmax, int ymax, int rad, int f_embedded,
 		int f_sideways, int verbose_level);
 	void draw_tree_low_level(
 			std::string &fname,
-			graphics::tree_draw_options *Tree_draw_options,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::tree_draw_options *Tree_draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points,
@@ -950,7 +951,7 @@ public:
 		int f_sideways,
 		int verbose_level);
 	void draw_tree_low_level1(
-			graphics::mp_graphics &G, int nb_nodes,
+			other::graphics::mp_graphics &G, int nb_nodes,
 		int *coords, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points, 
 		int f_draw_aut_group_order, 
@@ -958,25 +959,25 @@ public:
 	void draw_poset_full(
 			std::string &fname_base,
 			int depth, int data,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			double x_stretch,
 			int verbose_level);
 	void draw_poset(
 			std::string &fname_base,
 			int depth, int data,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void draw_level_graph(
 			std::string &fname_base,
 			int depth, int data, int level,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void make_flag_orbits_on_relations(
 			int depth,
 			std::string &fname_prefix, int verbose_level);
 	void make_full_poset_graph(
 			int depth,
-			graph_theory::layered_graph *&LG,
+			combinatorics::graph_theory::layered_graph *&LG,
 		int data1, double x_stretch, 
 		int verbose_level);
 		// Draws the full poset: each element of each orbit is drawn.
@@ -985,22 +986,22 @@ public:
 		// This is only good for actions on sets, not for actions on subspaces
 	void make_auxiliary_graph(
 			int depth,
-			graph_theory::layered_graph *&LG, int data1,
+			combinatorics::graph_theory::layered_graph *&LG, int data1,
 		int verbose_level);
 		// makes a graph of the poset of orbits with 2 * depth + 1 layers.
 		// The middle layers represent the flag orbits.
 	void make_graph(
-			int depth, graph_theory::layered_graph *&LG,
+			int depth, combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int f_tree, int verbose_level);
 		// makes a graph  of the poset of orbits with depth + 1 layers.
 	void make_level_graph(
 			int depth,
-			graph_theory::layered_graph *&LG,
+			combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int level, int verbose_level);
 		// makes a graph with 4 levels showing the relation between
 		// orbits at level 'level' and orbits at level 'level' + 1
 	void make_poset_graph_detailed(
-			graph_theory::layered_graph *&LG,
+			combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int max_depth, int verbose_level);
 		// creates the poset graph, with two middle layers at each level.
 		// In total, the graph that is created will have 3 * depth + 1 layers.
@@ -1107,10 +1108,10 @@ public:
 			std::ostream &f, int size);
 
 	void make_spreadsheet_of_orbit_reps(
-			data_structures::spreadsheet *&Sp,
+			other::data_structures::spreadsheet *&Sp,
 		int max_depth);
 	void make_spreadsheet_of_level_info(
-			data_structures::spreadsheet *&Sp,
+			other::data_structures::spreadsheet *&Sp,
 		int max_depth, int verbose_level);
 
 	void create_schreier_tree_fname_mask_base(
@@ -1390,12 +1391,12 @@ public:
 		int *&perm, int *&perm_inv, int verbose_level);
 	void read_memory_object(
 			int &depth_completed,
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 			int &nb_group_elements,
 			int verbose_level);
 	void write_memory_object(
 			int depth_completed,
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 			int &nb_group_elements,
 			int verbose_level);
 	long int calc_size_on_file(
@@ -1448,7 +1449,7 @@ public:
 			std::string &fname,
 			int lvl, int verbose_level);
 	void get_set_orbits_at_level(
-			int lvl, data_structures::set_of_sets *&SoS,
+			int lvl, other::data_structures::set_of_sets *&SoS,
 			int verbose_level);
 
 };
@@ -1600,13 +1601,13 @@ public:
 			groups::strong_generators *Strong_gens);
 	void get_stabilizer_order(
 			poset_classification *gen,
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	long int get_stabilizer_order_lint(
 			poset_classification *PC);
 	void get_stabilizer(
 			poset_classification *PC,
 			data_structures_groups::group_container &G,
-			ring_theory::longinteger_object &go_G,
+			algebra::ring_theory::longinteger_object &go_G,
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(
@@ -1617,7 +1618,7 @@ public:
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
 		data_structures_groups::group_container &G,
-		ring_theory::longinteger_object &go_G,
+		algebra::ring_theory::longinteger_object &go_G,
 		int verbose_level);
 		// sets up the group G using the strong
 		// poset_classifications that are stored
@@ -1625,9 +1626,9 @@ public:
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
 		data_structures_groups::group_container &G,
-		ring_theory::longinteger_object &go_G,
+		algebra::ring_theory::longinteger_object &go_G,
 		data_structures_groups::group_container &H,
-		ring_theory::longinteger_object &go_H,
+		algebra::ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 		// sets up the group H which is the stabilizer
@@ -1636,16 +1637,16 @@ public:
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
 		data_structures_groups::group_container &G,
-		ring_theory::longinteger_object &go_G,
+		algebra::ring_theory::longinteger_object &go_G,
 		data_structures_groups::group_container &H,
-		ring_theory::longinteger_object &go_H,
+		algebra::ring_theory::longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 	void compute_point_stabilizer_in_standard_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
 		data_structures_groups::group_container &G,
-		ring_theory::longinteger_object &go_G,
+		algebra::ring_theory::longinteger_object &go_G,
 		data_structures_groups::group_container &H,
 		int pt, int pt_orbit_len,
 		int verbose_level);
@@ -1668,14 +1669,14 @@ public:
 	void read_memory_object(
 		poset_classification *PC,
 		actions::action *A,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level);
 	void write_memory_object(
 		poset_classification *PC,
 		actions::action *A,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level);
@@ -2003,13 +2004,13 @@ public:
 	int n;
 
 	int f_subspace_lattice;
-	linear_algebra::vector_space *VS;
+	algebra::linear_algebra::vector_space *VS;
 
 	actions::action *A; // the action in which the group is given
 	actions::action *A2; // the action in which we do the search
 
 	groups::strong_generators *Strong_gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	int f_has_orbit_based_testing;
 	orbit_based_testing *Orbit_based_testing;
@@ -2028,7 +2029,7 @@ public:
 	void init_subspace_lattice(
 			actions::action *A, actions::action *A2,
 			groups::strong_generators *Strong_gens,
-			linear_algebra::vector_space *VS,
+			algebra::linear_algebra::vector_space *VS,
 			int verbose_level);
 	void add_independence_condition(
 			int independence_value,
@@ -2127,7 +2128,7 @@ public:
 
 	data_structures_groups::group_container *G;
 	data_structures_groups::group_container *H;
-	ring_theory::longinteger_object go_G, go_H;
+	algebra::ring_theory::longinteger_object go_G, go_H;
 
 	int coset;
 	

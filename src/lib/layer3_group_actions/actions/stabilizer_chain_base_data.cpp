@@ -23,6 +23,7 @@ namespace actions {
 
 stabilizer_chain_base_data::stabilizer_chain_base_data()
 {
+	Record_birth();
 	A = NULL;
 	f_has_base = false;
 	base_len = 0;
@@ -35,6 +36,7 @@ stabilizer_chain_base_data::stabilizer_chain_base_data()
 
 stabilizer_chain_base_data::~stabilizer_chain_base_data()
 {
+	Record_death();
 	free_base_data();
 }
 
@@ -532,15 +534,15 @@ int &stabilizer_chain_base_data::path_i(
 }
 
 void stabilizer_chain_base_data::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	D.multiply_up(go, transversal_length, base_len, 0 /* verbose_level */);
 }
 
 void stabilizer_chain_base_data::init_projective_matrix_group(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
@@ -551,7 +553,7 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 
 		GGD.projective_matrix_group_base_and_orbits(n, F,
@@ -572,7 +574,7 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_affine_matrix_group(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
@@ -583,7 +585,7 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 		GGD.affine_matrix_group_base_and_transversal_length(n, F,
 			f_semilinear,
@@ -604,7 +606,7 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 }
 
 void stabilizer_chain_base_data::init_linear_matrix_group(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int f_semilinear, int degree,
 		int verbose_level)
 {
@@ -615,7 +617,7 @@ void stabilizer_chain_base_data::init_linear_matrix_group(
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 		GGD.general_linear_matrix_group_base_and_transversal_length(n, F,
 			f_semilinear,

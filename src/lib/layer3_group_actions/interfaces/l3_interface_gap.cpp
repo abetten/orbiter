@@ -21,12 +21,14 @@ namespace interfaces {
 
 l3_interface_gap::l3_interface_gap()
 {
+	Record_birth();
 
 }
 
 
 l3_interface_gap::~l3_interface_gap()
 {
+	Record_death();
 
 }
 
@@ -57,7 +59,7 @@ void l3_interface_gap::canonical_image_GAP(
 	}
 	ost << "]);" << endl;
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	std::string output;
 
 	long int *set2;
@@ -92,9 +94,9 @@ void l3_interface_gap::export_collineation_group_to_fining(
 		cout << "l3_interface_gap::export_collineation_group_to_fining" << endl;
 	}
 	int h;
-	l1_interfaces::interface_gap_low Interface_low;
-	field_theory::finite_field *F;
-	algebra::matrix_group *M;
+	other::l1_interfaces::interface_gap_low Interface_low;
+	algebra::field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
 	int *Elt;
 	int frob;
 	int d;
@@ -152,7 +154,7 @@ void l3_interface_gap::export_surface(
 		std::string &label_txt,
 		int f_has_group,
 		groups::strong_generators *SG,
-		ring_theory::homogeneous_polynomial_domain *Poly3_4,
+		algebra::ring_theory::homogeneous_polynomial_domain *Poly3_4,
 		int *equation,
 		int verbose_level)
 {
@@ -162,7 +164,7 @@ void l3_interface_gap::export_surface(
 		cout << "l3_interface_gap::export_surface" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	ost << "# Cubic surface " << label_txt << endl;
 	ost << "# Group:" << endl;
@@ -191,7 +193,7 @@ void l3_interface_gap::export_surface(
 
 	//SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	std::stringstream ss;
 	string s;
 
@@ -225,7 +227,7 @@ void l3_interface_gap::export_BLT_set(
 		int f_has_group,
 		groups::strong_generators *SG,
 		actions::action *A,
-		layer1_foundations::orthogonal_geometry::blt_set_domain
+		layer1_foundations::geometry::orthogonal_geometry::blt_set_domain
 				*Blt_set_domain,
 		long int *set, int verbose_level)
 {
@@ -242,7 +244,7 @@ void l3_interface_gap::export_BLT_set(
 
 	if (f_has_group) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		SG->group_order(go);
 		ost << "# Group of order " << go << endl;
@@ -271,7 +273,7 @@ void l3_interface_gap::export_BLT_set(
 	int sz;
 	int d = 5;
 	int v[5];
-	l1_interfaces::interface_gap_low Interface;
+	other::l1_interfaces::interface_gap_low Interface;
 
 	sz = Blt_set_domain->target_size;
 
@@ -319,7 +321,7 @@ void l3_interface_gap::export_group_to_GAP_and_copy_to_latex(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -373,7 +375,7 @@ void l3_interface_gap::export_permutation_group_to_GAP(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "l3_interface_gap::export_permutation_group_to_GAP" << endl;

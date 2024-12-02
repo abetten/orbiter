@@ -19,6 +19,7 @@ namespace apps_graph_theory {
 
 graph_theoretic_activity::graph_theoretic_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	nb = 0;
 	CG = NULL;
@@ -26,13 +27,14 @@ graph_theoretic_activity::graph_theoretic_activity()
 
 graph_theoretic_activity::~graph_theoretic_activity()
 {
+	Record_death();
 }
 
 
 void graph_theoretic_activity::init(
 		graph_theoretic_activity_description *Descr,
 		int nb,
-		graph_theory::colored_graph **CG,
+		combinatorics::graph_theory::colored_graph **CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -440,7 +442,7 @@ void graph_theoretic_activity::perform_activity(
 	if (f_v) {
 		cout << "graph_theoretic_activity::perform_activity" << endl;
 	}
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (Descr->f_find_cliques) {
 		if (f_v) {
@@ -448,7 +450,7 @@ void graph_theoretic_activity::perform_activity(
 					"f_find_cliques" << endl;
 		}
 
-		graph_theory::clique_finder *CF;
+		combinatorics::graph_theory::clique_finder *CF;
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -561,7 +563,7 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 
-		graph_theory::graph_theory_domain Graph_Domain;
+		combinatorics::graph_theory::graph_theory_domain Graph_Domain;
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -725,7 +727,7 @@ void graph_theoretic_activity::perform_activity(
 			cout << "graph_theoretic_activity::perform_activity "
 					"f_sort_by_colors" << endl;
 		}
-		graph_theory::colored_graph *CG2;
+		combinatorics::graph_theory::colored_graph *CG2;
 		string fname2;
 
 		fname2.assign(CG[0]->label);
@@ -742,11 +744,11 @@ void graph_theoretic_activity::perform_activity(
 			cout << "splitting by file " << Descr->split_by_file << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *Split;
 		int m, n;
 		int a, c;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 
 		Fio.Csv_file_support->lint_matrix_read_csv(
@@ -761,9 +763,9 @@ void graph_theoretic_activity::perform_activity(
 			}
 			a = Split[2 * c + 0];
 
-			graph_theory::colored_graph *Subgraph;
-			data_structures::fancy_set *color_subset;
-			data_structures::fancy_set *vertex_subset;
+			combinatorics::graph_theory::colored_graph *Subgraph;
+			other::data_structures::fancy_set *color_subset;
+			other::data_structures::fancy_set *vertex_subset;
 
 			Subgraph = CG[0]->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset,
@@ -786,8 +788,8 @@ void graph_theoretic_activity::perform_activity(
 			cout << "splitting by file " << Descr->split_by_starters_fname_reps
 					<< " column " << Descr->split_by_starters_col_label << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
-		data_structures::set_of_sets *Reps;
+		other::orbiter_kernel_system::file_io Fio;
+		other::data_structures::set_of_sets *Reps;
 		//string_tools ST;
 		int c;
 
@@ -808,9 +810,9 @@ void graph_theoretic_activity::perform_activity(
 				cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
 			}
 
-			graph_theory::colored_graph *Subgraph;
-			data_structures::fancy_set *color_subset;
-			data_structures::fancy_set *vertex_subset;
+			combinatorics::graph_theory::colored_graph *Subgraph;
+			other::data_structures::fancy_set *color_subset;
+			other::data_structures::fancy_set *vertex_subset;
 
 
 			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
@@ -833,8 +835,8 @@ void graph_theoretic_activity::perform_activity(
 			cout << "combining by file " << Descr->combine_by_starters_fname_reps
 					<< " column " << Descr->combine_by_starters_col_label << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
-		data_structures::set_of_sets *Reps;
+		other::orbiter_kernel_system::file_io Fio;
+		other::data_structures::set_of_sets *Reps;
 		//string_tools ST;
 		int c;
 
@@ -874,9 +876,9 @@ void graph_theoretic_activity::perform_activity(
 				cout << endl;
 			}
 
-			graph_theory::colored_graph *Subgraph;
-			data_structures::fancy_set *color_subset;
-			data_structures::fancy_set *vertex_subset;
+			combinatorics::graph_theory::colored_graph *Subgraph;
+			other::data_structures::fancy_set *color_subset;
+			other::data_structures::fancy_set *vertex_subset;
 
 
 			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
@@ -944,9 +946,9 @@ void graph_theoretic_activity::perform_activity(
 				cout << "combining solutions from case " << c << " / " << Reps->nb_sets << ":" << endl;
 			}
 
-			graph_theory::colored_graph *Subgraph;
-			data_structures::fancy_set *color_subset;
-			data_structures::fancy_set *vertex_subset;
+			combinatorics::graph_theory::colored_graph *Subgraph;
+			other::data_structures::fancy_set *color_subset;
+			other::data_structures::fancy_set *vertex_subset;
 
 
 			Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
@@ -1030,9 +1032,9 @@ void graph_theoretic_activity::perform_activity(
 
 		Lint_vec_scan(Descr->split_by_clique_set, set, sz);
 
-		graph_theory::colored_graph *Subgraph;
-		data_structures::fancy_set *color_subset;
-		data_structures::fancy_set *vertex_subset;
+		combinatorics::graph_theory::colored_graph *Subgraph;
+		other::data_structures::fancy_set *color_subset;
+		other::data_structures::fancy_set *vertex_subset;
 
 
 		Subgraph = CG[0]->compute_neighborhood_subgraph_based_on_subset(
@@ -1062,7 +1064,7 @@ void graph_theoretic_activity::perform_activity(
 
 	else if (Descr->f_save) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname = CG[0]->label + ".colored_graph";
@@ -1151,7 +1153,7 @@ void graph_theoretic_activity::perform_activity(
 					"f_properties" << endl;
 		}
 
-		graph_theory::graph_theory_domain GT;
+		combinatorics::graph_theory::graph_theory_domain GT;
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
@@ -1176,7 +1178,7 @@ void graph_theoretic_activity::perform_activity(
 
 		fname = CG[0]->label + "_draw.mp";
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_options);
 

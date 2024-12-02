@@ -27,6 +27,7 @@ namespace projective_geometry {
 
 projective_space_implementation::projective_space_implementation()
 {
+	Record_birth();
 	P = NULL;
 
 	Bitmatrix = NULL;
@@ -46,6 +47,7 @@ projective_space_implementation::projective_space_implementation()
 
 projective_space_implementation::~projective_space_implementation()
 {
+	Record_death();
 	if (Bitmatrix) {
 		FREE_OBJECT(Bitmatrix);
 	}
@@ -109,7 +111,7 @@ void projective_space_implementation::init(
 			cout << "projective_space_implementation::init "
 					"allocating Incidence (bitvector)" << endl;
 		}
-		Bitmatrix = NEW_OBJECT(data_structures::bitmatrix);
+		Bitmatrix = NEW_OBJECT(other::data_structures::bitmatrix);
 		Bitmatrix->init(N_points, N_lines, verbose_level);
 	}
 	else {
@@ -460,7 +462,7 @@ void projective_space_implementation::init(
 	}
 }
 
-data_structures::bitmatrix *projective_space_implementation::get_Bitmatrix()
+other::data_structures::bitmatrix *projective_space_implementation::get_Bitmatrix()
 {
 	return Bitmatrix;
 }
@@ -489,7 +491,7 @@ int projective_space_implementation::has_lines_on_point()
 int projective_space_implementation::find_point_on_line(
 		int line_rk, int pt)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int *L;
 	int k;
 	int idx;
@@ -701,7 +703,7 @@ void projective_space_implementation::incidence_m_ii(
 int projective_space_implementation::test_if_lines_are_disjoint(
 		long int l1, long int l2)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (Lines) {
 		int k;

@@ -294,7 +294,7 @@ public:
 	projective_geometry::projective_space_with_action *PA;
 	groups::strong_generators *Strong_gens;
 
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 
 	long int block_size;
 		// = r = {k choose 1}_q,
@@ -357,14 +357,14 @@ public:
 			int f_lexorder_test, int f_eliminate_graphs_if_possible,
 			int &nb_vertices,
 			//graph_theory::colored_graph *&CG,
-			solvers::diophant *&Dio,
+			combinatorics::solvers::diophant *&Dio,
 			long int *&col_labels,
 			int &f_ruled_out,
 			int verbose_level);
 	void setup_lifting(
 			data_structures_groups::orbit_rep *R,
 			std::string &output_prefix,
-			solvers::diophant *&Dio, long int *&col_labels,
+			combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 			int &f_ruled_out,
 			int verbose_level);
 
@@ -483,7 +483,7 @@ public:
 	groups::any_group *G_on_subspaces;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int k;
 
 	int f_semilinear;
@@ -587,14 +587,14 @@ public:
 			int &f_ruled_out, int verbose_level);
 	void reduce_candidates(
 			int verbose_level);
-	solvers::diophant *create_system(
+	combinatorics::solvers::diophant *create_system(
 			int verbose_level);
 	int is_e1_vector(
 			int *v);
 	int is_zero_vector(
 			int *v);
 	void create_graph(
-			data_structures::bitvector *Adj,
+			other::data_structures::bitvector *Adj,
 			int verbose_level);
 	void create_dummy_graph(
 			int verbose_level);
@@ -695,7 +695,7 @@ class spread_table_with_selection {
 public:
 
 	spread_classify *T;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 	int spread_size;
 	int size_of_packing; // q^2 + q + 1
@@ -725,7 +725,7 @@ public:
 	geometry::finite_geometries::spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 
 	actions::action *A_on_spreads;
 

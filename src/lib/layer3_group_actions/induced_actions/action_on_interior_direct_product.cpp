@@ -23,6 +23,7 @@ namespace induced_actions {
 
 action_on_interior_direct_product::action_on_interior_direct_product()
 {
+	Record_birth();
 	A = NULL;
 	nb_rows = 0;
 	nb_cols = 0;
@@ -31,6 +32,7 @@ action_on_interior_direct_product::action_on_interior_direct_product()
 
 action_on_interior_direct_product::~action_on_interior_direct_product()
 {
+	Record_death();
 }
 
 void action_on_interior_direct_product::init(

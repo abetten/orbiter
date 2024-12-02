@@ -19,6 +19,7 @@ namespace spreads {
 
 spread_activity::spread_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	Spread_create = NULL;
 	SD = NULL;
@@ -30,6 +31,7 @@ spread_activity::spread_activity()
 
 spread_activity::~spread_activity()
 {
+	Record_death();
 }
 
 void spread_activity::init(
@@ -205,7 +207,7 @@ void spread_activity::report(
 	{
 		ofstream ost(fname);
 
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head(ost,
 				false /* f_book*/,
@@ -264,7 +266,7 @@ void spread_activity::report2(
 	int sz, i, k, k2;
 	k = Spread_create->k;
 	k2 = k * k;
-	l1_interfaces::latex_interface Li;
+	other::l1_interfaces::latex_interface Li;
 
 	if (f_v) {
 		cout << "spread_activity::report2 "
@@ -297,7 +299,7 @@ void spread_activity::report2(
 
 	if (Spread_create->f_has_group) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Spread_create->Sg->group_order(go);
 
@@ -380,7 +382,7 @@ void spread_activity::report2(
 
 
 			geometry::projective_geometry::projective_space *P5;
-			orthogonal_geometry::orthogonal *O;
+			geometry::orthogonal_geometry::orthogonal *O;
 			geometry::projective_geometry::klein_correspondence *Klein;
 
 			P5 = NEW_OBJECT(geometry::projective_geometry::projective_space);
@@ -402,7 +404,7 @@ void spread_activity::report2(
 				cout << "spread_activity::report2 "
 						"initializing orthogonal" << endl;
 			}
-			O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+			O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
 			O->init(
 					1 /* epsilon */,
 					6 /* n */,
@@ -518,7 +520,7 @@ void spread_activity::report2(
 						type, 0 /* verbose_level*/);
 						// type[N_planes]
 
-				data_structures::tally T;
+				other::data_structures::tally T;
 
 				T.init(type, nb_planes, false, 0);
 

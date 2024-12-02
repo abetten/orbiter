@@ -22,6 +22,7 @@ namespace apps_combinatorics {
 
 large_set_was::large_set_was()
 {
+	Record_birth();
 	Descr = NULL;
 
 	LS = NULL;
@@ -61,6 +62,7 @@ large_set_was::large_set_was()
 
 large_set_was::~large_set_was()
 {
+	Record_death();
 }
 
 void large_set_was::init(
@@ -340,7 +342,7 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
 
 	{
 		long int *Orbits_under_N;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname_out;
 		int i, a, l;
 
@@ -468,7 +470,7 @@ void large_set_was::create_graph_on_orbits_of_length(
 		cout << "large_set_was::create_graph_on_orbits_of_length" << endl;
 	}
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 
 	H_orbits->create_graph_on_orbits_of_a_certain_length(
 		CG,
@@ -567,7 +569,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 			verbose_level);
 
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 
 		std::string fname;
@@ -583,7 +585,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(
 			cout << endl;
 		}
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
 
 		H_orbits->create_graph_on_orbits_of_a_certain_length_after_filtering(
@@ -648,7 +650,7 @@ void large_set_was::read_solution_file(
 	}
 	int i, j, a, b, l, h;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int nb_solutions;
 	long int *Solutions;
 	int solution_size;
@@ -705,9 +707,9 @@ void large_set_was::read_solution_file(
 		}
 	}
 	{
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname_out;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		fname_out.assign(solution_file_name);
 		ST.replace_extension_with(fname_out, "_packings_design_indices.csv");
@@ -718,7 +720,7 @@ void large_set_was::read_solution_file(
 	}
 	Sz = sz * LS->design_size;
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Packings_explicit = NEW_lint(nb_solutions * Sz);
 	for (i = 0; i < nb_solutions; i++) {
@@ -740,9 +742,9 @@ void large_set_was::read_solution_file(
 	}
 
 	{
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname_out;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		fname_out.assign(solution_file_name);
 		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
@@ -815,7 +817,7 @@ int large_set_was::normalizer_orbits_check_conditions(
 	int f_v = (verbose_level >= 1);
 	int idx, i;
 	long int a, b;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "large_set_was::normalizer_orbits_check_conditions "

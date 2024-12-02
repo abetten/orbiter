@@ -18,17 +18,19 @@ namespace apps_graph_theory {
 
 graph_theory_apps::graph_theory_apps()
 {
+	Record_birth();
 
 }
 
 graph_theory_apps::~graph_theory_apps()
 {
+	Record_death();
 
 }
 
 
 void graph_theory_apps::automorphism_group(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		std::vector<std::string> &feedback,
 		int verbose_level)
 {
@@ -38,7 +40,7 @@ void graph_theory_apps::automorphism_group(
 		cout << "graph_theory_apps::automorphism_group" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = CG->label + ".colored_graph";
@@ -64,7 +66,7 @@ void graph_theory_apps::automorphism_group(
 	fname_orbits = CG->label + "_orbits.csv";
 
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Aut->Strong_gens->group_order(go);
 
@@ -82,7 +84,7 @@ void graph_theory_apps::automorphism_group(
 
 		{
 			ofstream ost(fname_report);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -118,7 +120,7 @@ void graph_theory_apps::automorphism_group(
 			Int_vec_print_fully(ost, orbit_no, Aut->degree);
 			ost << "\\\\" << endl;
 
-			orbiter_kernel_system::file_io Fio;
+			other::orbiter_kernel_system::file_io Fio;
 
 			Fio.Csv_file_support->int_matrix_write_csv(
 					fname_orbits, orbit_no, Aut->degree - 1, 1);
@@ -132,7 +134,7 @@ void graph_theory_apps::automorphism_group(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_report << " of size "
 				<< Fio.file_size(fname_report) << endl;
@@ -174,7 +176,7 @@ void graph_theory_apps::automorphism_group(
 
 
 void graph_theory_apps::automorphism_group_bw(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		std::vector<std::string> &feedback,
 		int verbose_level)
 {
@@ -184,7 +186,7 @@ void graph_theory_apps::automorphism_group_bw(
 		cout << "graph_theory_apps::automorphism_group_bw" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = CG->label + ".colored_graph";
@@ -210,7 +212,7 @@ void graph_theory_apps::automorphism_group_bw(
 	fname_orbits = CG->label + "_orbits.csv";
 
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Aut->Strong_gens->group_order(go);
 
@@ -232,7 +234,7 @@ void graph_theory_apps::automorphism_group_bw(
 
 		{
 			ofstream ost(fname_report);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -276,7 +278,7 @@ void graph_theory_apps::automorphism_group_bw(
 			Int_vec_print_fully(ost, orbit_no, Aut->degree);
 			ost << "\\\\" << endl;
 
-			orbiter_kernel_system::file_io Fio;
+			other::orbiter_kernel_system::file_io Fio;
 
 			Fio.Csv_file_support->int_matrix_write_csv(
 					fname_orbits, orbit_no, Aut->degree - 1, 1);
@@ -290,7 +292,7 @@ void graph_theory_apps::automorphism_group_bw(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_report << " of size "
 				<< Fio.file_size(fname_report) << endl;
@@ -350,7 +352,7 @@ void graph_theory_apps::automorphism_group_bw(
 void graph_theory_apps::expander_graph(
 		int p, int q,
 		int f_special,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		actions::action *A,
 		int *&Adj, int &N,
 		int verbose_level)
@@ -630,12 +632,12 @@ void graph_theory_apps::expander_graph(
 
 
 void graph_theory_apps::test_automorphism_property_of_group(
-		int nb, graph_theory::colored_graph **CG,
+		int nb, combinatorics::graph_theory::colored_graph **CG,
 		std::string &group_label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_theory_apps::test_automorphism_property_of_group" << endl;
@@ -648,7 +650,7 @@ void graph_theory_apps::test_automorphism_property_of_group(
 		exit(1);
 	}
 
-	graph_theory::colored_graph *Gamma;
+	combinatorics::graph_theory::colored_graph *Gamma;
 
 	Gamma = CG[0];
 

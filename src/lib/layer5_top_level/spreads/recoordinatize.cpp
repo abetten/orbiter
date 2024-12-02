@@ -21,6 +21,7 @@ namespace spreads {
 
 recoordinatize::recoordinatize()
 {
+	Record_birth();
 
 	Three_skew_subspaces = NULL;
 
@@ -64,6 +65,7 @@ recoordinatize::recoordinatize()
 
 recoordinatize::~recoordinatize()
 {
+	Record_death();
 	if (transform) {
 		FREE_int(transform);
 	}
@@ -227,10 +229,10 @@ void recoordinatize::stabilizer_of_first_three(
 // then calls actions::action_global::make_generators_stabilizer_of_three_components
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
-	ring_theory::longinteger_object target_go, six, target_go2, go, go_linear;
-	ring_theory::longinteger_object go_small;
+	algebra::ring_theory::longinteger_object target_go, six, target_go2, go, go_linear;
+	algebra::ring_theory::longinteger_object go_small;
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three" << endl;
@@ -431,8 +433,8 @@ void recoordinatize::compute_live_points_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	algebra::matrix_group *Mtx;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *Mtx;
+	algebra::field_theory::finite_field *Fq;
 	long int set[4];
 	int *Elt1;
 	int *Elt2;
@@ -440,10 +442,10 @@ void recoordinatize::compute_live_points_low_level(
 
 	int cnt, z;
 	int cnt_mod = 1000;
-	ring_theory::longinteger_object go_linear;
+	algebra::ring_theory::longinteger_object go_linear;
 	long int gos;
 	long int i, h, a;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {

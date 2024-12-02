@@ -29,14 +29,14 @@ public:
 
 
 	packing_invariants *Inv;
-	ring_theory::longinteger_object *Ago, *Ago_induced;
+	algebra::ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
 	int *Spread_type_of_packing;
 		// [Iso->Reps->count * P->nb_iso_types_of_spreads]
 
 
-	data_structures::tally_vector_data *Classify;
+	other::data_structures::tally_vector_data *Classify;
 
 
 	int *Dual_idx;
@@ -131,7 +131,7 @@ public:
 	std::string path_to_spread_tables;
 
 	spreads::spread_classify *T;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int spread_size;
 	int nb_lines;
 
@@ -199,7 +199,7 @@ public:
 			int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_labels,
+		combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	int test_if_orbit_is_partial_packing(
@@ -238,7 +238,7 @@ public:
 			isomorph::isomorph *Iso,
 			std::ostream &ost,
 		invariants_packing *inv,
-		data_structures::tally &C_ago,
+		other::data_structures::tally &C_ago,
 		int verbose_level);
 	void report_isomorphism_type(
 			isomorph::isomorph *Iso,
@@ -293,12 +293,12 @@ public:
 		// [P->size_of_packing * P->spread_size]
 
 	int f_has_klein;
-	ring_theory::longinteger_object *R;
+	algebra::ring_theory::longinteger_object *R;
 	int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
 
-	data_structures::tally *C;
+	other::data_structures::tally *C;
 	int nb_blocks;
 	int *block_to_plane; // [nb_blocks]
 	int *plane_to_block; // [nb_planes]
@@ -312,7 +312,7 @@ public:
 		// [total_nb_points * total_nb_blocks]
 
 	geometry::other_geometry::incidence_structure *I;
-	data_structures::partitionstack *Stack;
+	other::data_structures::partitionstack *Stack;
 	std::string fname_incidence_pic;
 	std::string fname_row_scheme;
 	std::string fname_col_scheme;
@@ -402,7 +402,7 @@ public:
 	long int *fixpoint_clique_orbit_numbers;
 	groups::strong_generators *fixpoint_clique_stabilizer_gens;
 	long int *fixpoint_clique;
-	data_structures::set_of_sets *Filtered_orbits;
+	other::data_structures::set_of_sets *Filtered_orbits;
 
 	std::string fname_graph;
 	std::string fname_solutions;
@@ -435,13 +435,13 @@ public:
 			int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
 	void create_graph_and_save_to_file(
-			graph_theory::colored_graph *&CG,
+			combinatorics::graph_theory::colored_graph *&CG,
 			std::string &fname,
 			int f_has_user_data,
 			long int *user_data, int user_data_size,
 			int verbose_level);
 	void create_graph_on_long_orbits(
-			graph_theory::colored_graph *&CG,
+			combinatorics::graph_theory::colored_graph *&CG,
 			long int *user_data, int user_data_sz,
 			int verbose_level);
 	void report_filtered_orbits(
@@ -628,7 +628,7 @@ public:
 		// reduced_spread_orbits_under_H->
 		// Orbits_classified->Sets[fixpoints_idx])
 
-	graph_theory::colored_graph *fixpoint_graph;
+	combinatorics::graph_theory::colored_graph *fixpoint_graph;
 	poset_classification::poset_with_group_action
 		*Poset_fixpoint_cliques;
 	poset_classification::poset_classification
@@ -715,17 +715,17 @@ public:
 	packing_classify *P;
 
 	groups::strong_generators *H_gens;
-	ring_theory::longinteger_object H_go;
+	algebra::ring_theory::longinteger_object H_go;
 	long int H_goi;
 	groups::sims *H_sims;
 
 	actions::action *A;
 	int f_semilinear;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 	int dim;
 
 	groups::strong_generators *N_gens;
-	ring_theory::longinteger_object N_go;
+	algebra::ring_theory::longinteger_object N_go;
 	long int N_goi;
 
 
@@ -798,7 +798,7 @@ public:
 		// induced_action_on_orbits(A_on_reduced_spreads,
 		// reduced_spread_orbits_under_H)
 
-	data_structures::set_of_sets *Orbit_invariant;
+	other::data_structures::set_of_sets *Orbit_invariant;
 		// the values of Spread_type_reduced->type[spread_idx]
 		// for the spreads in one orbit.
 		// Since it is an orbit invariant,
@@ -809,7 +809,7 @@ public:
 		// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
 
 	int nb_sets;
-	data_structures::tally
+	other::data_structures::tally
 		*Classify_spread_invariant_by_orbit_length;
 
 	regular_packing *Regular_packing;
@@ -931,7 +931,7 @@ public:
 	void merge_packings(
 			std::string *fnames, int nb_files,
 			std::string &file_of_spreads,
-			canonical_form_classification::classify_bitvectors *&CB,
+			combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings(
 			std::string &fname,
@@ -939,14 +939,14 @@ public:
 			geometry::finite_geometries::spread_tables *Spread_tables,
 			int f_self_polar,
 			int f_ago, int select_ago,
-			canonical_form_classification::classify_bitvectors *&CB,
+			combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings_self_dual(
 			std::string &fname,
 			std::string &file_of_spreads_original,
 			int f_split, int split_r, int split_m,
 			geometry::finite_geometries::spread_tables *Spread_tables,
-			canonical_form_classification::classify_bitvectors *&CB,
+			combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 			int verbose_level);
 
 };

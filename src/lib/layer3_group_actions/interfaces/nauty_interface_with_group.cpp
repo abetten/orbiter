@@ -23,24 +23,26 @@ namespace interfaces {
 
 nauty_interface_with_group::nauty_interface_with_group()
 {
+	Record_birth();
 
 }
 
 nauty_interface_with_group::~nauty_interface_with_group()
 {
+	Record_death();
 
 }
 
 
 
 groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-		canonical_form_classification::any_combinatorial_object *Any_combo,
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 		actions::action *A_linear,
 	int f_compute_canonical_form,
 	int f_save_nauty_input_graphs,
-	data_structures::bitvector *&Canonical_form,
-	l1_interfaces::nauty_output *&NO,
-	canonical_form_classification::encoded_combinatorial_object *&Enc,
+	other::data_structures::bitvector *&Canonical_form,
+	other::l1_interfaces::nauty_output *&NO,
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
 	int verbose_level)
 // called from:
 // nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data
@@ -58,7 +60,7 @@ groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 
 
-	l1_interfaces::nauty_interface_for_combo NI;
+	other::l1_interfaces::nauty_interface_for_combo NI;
 
 
 	if (f_v) {
@@ -138,8 +140,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		int nauty_output_index_start,
 		std::vector<std::string> &Carrying_through,
 		groups::strong_generators *&Set_stab,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // creates a any_combinatorial_object object. Calls set_stabilizer_of_object
 // called from
@@ -153,10 +155,10 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data" << endl;
 	}
 
-	canonical_form_classification::any_combinatorial_object *Combo = NULL;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Combo = NULL;
 
 
-	Combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
+	Combo = NEW_OBJECT(combinatorics::canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data "
@@ -185,9 +187,9 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 	}
 
 
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 
 
 
@@ -247,8 +249,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		long int *Pts, int sz,
 		int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // creates a OwCF object. Calls set_stabilizer_of_object
 // called from action_global::set_stabilizer_in_projective_space
@@ -262,10 +264,10 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	canonical_form_classification::any_combinatorial_object *Combo = NULL;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Combo = NULL;
 
 
-	Combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
+	Combo = NEW_OBJECT(combinatorics::canonical_form_classification::any_combinatorial_object);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty "
@@ -294,9 +296,9 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 
 
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 	NO->nauty_output_allocate(
 			nb_rows + nb_cols,
 			0,

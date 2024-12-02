@@ -33,6 +33,7 @@ static void arc_generator_print_arc(
 
 arc_generator::arc_generator()
 {
+	Record_birth();
 	Descr = NULL;
 	PA = NULL;
 	Control = NULL;
@@ -58,6 +59,7 @@ arc_generator::arc_generator()
 
 arc_generator::~arc_generator()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -119,7 +121,7 @@ void arc_generator::init(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -303,7 +305,7 @@ void arc_generator::compute_starter(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 	
 
@@ -377,7 +379,7 @@ int arc_generator::test_nb_Eckardt_points(
 {
 	int f_v = (verbose_level >= 1);
 	int ret = true;
-	algebraic_geometry::algebraic_geometry_global Gg;
+	geometry::algebraic_geometry::algebraic_geometry_global Gg;
 
 	if (f_v) {
 		cout << "arc_generator::test_nb_Eckardt_points" << endl;
@@ -494,7 +496,7 @@ void arc_generator::print(
 	Lint_vec_print(cout, S, len);
 	cout << " has line type ";
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(
 			line_type, PA->P->Subspaces->N_lines, false, 0);
@@ -632,7 +634,7 @@ void arc_generator::lifting_prepare_function_new(
 		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
+	combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 // compute the incidence matrix of tangent lines versus candidate points
@@ -674,7 +676,7 @@ void arc_generator::lifting_prepare_function_new(
 
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(line_type, PA->P->Subspaces->N_lines, false, 0);
 	if (f_v) {
@@ -792,7 +794,7 @@ void arc_generator::lifting_prepare_function_new(
 	nb_rows = nb_tangent_lines + nb_external_lines;
 	nb_cols = nb_candidates;
 
-	Dio = NEW_OBJECT(solvers::diophant);
+	Dio = NEW_OBJECT(combinatorics::solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->sum = nb_needed;
 
@@ -848,7 +850,7 @@ void arc_generator::report(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
@@ -874,7 +876,7 @@ void arc_generator::report(
 		int f_12pt = false;
 		int f_enlarged_page = true;
 		int f_pagenumbers = true;
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		if (Descr->target_size == PA->q + 2) {
 			title = "Hyperovals over ${\\mathbb F}_{" + std::to_string(PA->q) + "}$";
@@ -910,7 +912,7 @@ void arc_generator::report_do_the_work(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_generator::report_do_the_work" << endl;
@@ -927,16 +929,16 @@ void arc_generator::report_do_the_work(
 
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int data[1000];
 
 
 
-	ring_theory::longinteger_object *Ago, *Ago_induced;
+	algebra::ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
-	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_induced = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Iso.Folding->Reps->count);
 	Ago_int = NEW_int(Iso.Folding->Reps->count);
 
 
@@ -964,7 +966,7 @@ void arc_generator::report_do_the_work(
 	}
 
 
-	data_structures::tally C_ago;
+	other::data_structures::tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Folding->Reps->count, false, 0);
 	cout << "Classification by ago:" << endl;
@@ -1126,7 +1128,7 @@ void arc_generator::report_do_the_work(
 		}
 		Iso.Folding->induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
-		ring_theory::longinteger_object go1;
+		algebra::ring_theory::longinteger_object go1;
 			
 		Iso.Folding->AA->group_order(go1);
 		cout << "action " << Iso.Folding->AA->label
@@ -1146,7 +1148,7 @@ void arc_generator::report_do_the_work(
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the set.\\\\" << endl;
 
-		data_structures::tally C_ol;
+		other::data_structures::tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 

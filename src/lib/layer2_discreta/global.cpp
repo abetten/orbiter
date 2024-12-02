@@ -47,7 +47,7 @@ void discreta_init()
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	char str[1000];
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	discreta_home = getenv("DISCRETA_HOME");
 	if (discreta_home == NULL) {
@@ -335,7 +335,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 //the vector exponents holds the $e_i$.
 {
 	int d, last_prime = 2, l;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (n == 0) {
 		cout << "factor_integer n == 0" << endl;
@@ -471,7 +471,7 @@ int nb_primes(int n)
 {
 	int i = 0;
 	int d;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (n < 0)
 		n = -n;
@@ -504,7 +504,7 @@ int Euler(int n)
 {
 	Vector p, e;
 	int i, k, p1, e1, l;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	factor_integer(n, p, e);
 	k = 1;
@@ -636,7 +636,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	longinteger P, m1;
 	longinteger A, X, a2, a4, b, X2;
 	int round;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "sqrt_mod_involved" << endl;
@@ -1759,7 +1759,7 @@ int Gauss_int(
 	int f_v = (verbose_level >= 1);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
-	data_structures::algorithms Algo;
+	other::data_structures::algorithms Algo;
 	
 	if (f_v) {
 		cout << "Gauss_int Gauss algorithm for matrix:" << endl;
@@ -2067,7 +2067,7 @@ int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 
 
 void fine_tune(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *mtxD, int verbose_level)
 // added Dec 28 2009
 // This is here because it uses sqrt_mod_involved
@@ -2077,7 +2077,7 @@ void fine_tune(
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int q = F->q;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;

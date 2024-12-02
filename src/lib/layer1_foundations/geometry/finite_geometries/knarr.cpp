@@ -22,6 +22,7 @@ namespace finite_geometries {
 
 knarr::knarr()
 {
+	Record_birth();
 	q = 0;
 	BLT_no = 0;
 	W = NULL;
@@ -61,6 +62,7 @@ knarr::knarr()
 
 knarr::~knarr()
 {
+	Record_death();
 	if (BLT_line_idx) {
 		FREE_int(BLT_line_idx);
 	}
@@ -106,15 +108,15 @@ knarr::~knarr()
 }
 
 void knarr::init(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int BLT_no, int verbose_level)
 // creates a W3q and a projective space P5 and a grassmann G63
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
-	knowledge_base::knowledge_base K;
-	combinatorics::combinatorics_domain C;
+	combinatorics::knowledge_base::knowledge_base K;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 	
 	knarr::F = F;
 	knarr::q = F->q;
@@ -142,7 +144,7 @@ void knarr::init(
 	G63->init(6, 3, F, verbose_level - 2);
 
 
-	six_choose_three_q = NEW_OBJECT(ring_theory::longinteger_object);
+	six_choose_three_q = NEW_OBJECT(algebra::ring_theory::longinteger_object);
 
 
 	C.q_binomial(*six_choose_three_q, 6, 3, q, 0);
@@ -188,7 +190,7 @@ void knarr::points_and_lines(
 	int f_v4 = (verbose_level >= 4);
 
 	int i, j, a, c, jj, h, hh, rk, u;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	other_geometry::geometry_global Gg;
 
 
@@ -196,11 +198,11 @@ void knarr::points_and_lines(
 		cout << "knarr::points_and_lines" << endl;
 	}
 	
-	type_i_points = NEW_OBJECT(data_structures::fancy_set);
-	type_ii_points = NEW_OBJECT(data_structures::fancy_set);
-	type_iii_points = NEW_OBJECT(data_structures::fancy_set);
-	type_a_lines = NEW_OBJECT(data_structures::fancy_set);
-	type_b_lines = NEW_OBJECT(data_structures::fancy_set);
+	type_i_points = NEW_OBJECT(other::data_structures::fancy_set);
+	type_ii_points = NEW_OBJECT(other::data_structures::fancy_set);
+	type_iii_points = NEW_OBJECT(other::data_structures::fancy_set);
+	type_a_lines = NEW_OBJECT(other::data_structures::fancy_set);
+	type_b_lines = NEW_OBJECT(other::data_structures::fancy_set);
 
 
 

@@ -19,12 +19,12 @@ namespace apps_combinatorics {
 
 void difference_set_in_heisenberg_group::init(
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i; //, j, a, b, ord;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::init" << endl;
@@ -33,7 +33,7 @@ void difference_set_in_heisenberg_group::init(
 	difference_set_in_heisenberg_group::F = F;
 	q = F->q;
 
-	H = NEW_OBJECT(algebra::heisenberg);
+	H = NEW_OBJECT(algebra::basic_algebra::heisenberg);
 	H->init(F, n, verbose_level);
 
 	cout << "group order = " << H->group_order << endl;
@@ -184,7 +184,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, t;
 	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
@@ -253,7 +253,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	groups::strong_generators *gens_N;
 	interfaces::magma_interface Magma;
 
-	l1_interfaces::interface_magma_low Magma_low;
+	other::l1_interfaces::interface_magma_low Magma_low;
 
 	Magma.normalizer_using_MAGMA(
 			A, prefix, Aut, U, gens_N, verbose_level);
@@ -270,7 +270,7 @@ void difference_set_in_heisenberg_group::do_n2q3(
 
 
 	N = NEW_OBJECT(actions::action);
-	ring_theory::longinteger_object n_go;
+	algebra::ring_theory::longinteger_object n_go;
 	int f_no_base = false;
 
 	n_go.create(N_go);
@@ -363,10 +363,10 @@ void difference_set_in_heisenberg_group::do_n2q3(
 	}
 
 
-	data_structures::tally Pair_orbit_type;
+	other::data_structures::tally Pair_orbit_type;
 	Pair_orbit_type.init(Pair_orbit_length, nb_paired_orbits, false, 0);
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	Pair_orbit_type.get_class_by_value(Pairs_of_type1,
@@ -482,8 +482,8 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
-	l1_interfaces::latex_interface L;
+	other::data_structures::sorting Sorting;
+	other::l1_interfaces::latex_interface L;
 
 
 
@@ -522,7 +522,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 
 		groups::sims *O;
 		data_structures_groups::vector_ge *O_gens;
-		ring_theory::longinteger_object O_go;
+		algebra::ring_theory::longinteger_object O_go;
 		groups::schreier *Sch1;
 
 
@@ -560,7 +560,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		Sch1->print_orbit_length_distribution(cout);
 
 
-		data_structures::tally Overgroup_orbit_type;
+		other::data_structures::tally Overgroup_orbit_type;
 		Overgroup_orbit_type.init(Sch1->orbit_len,
 				Sch1->nb_orbits, false, 0);
 		cout << "Overgroup orbit type:" << endl;
@@ -635,7 +635,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int u, t, ff, ll, v, k, di, dj;
 		int i, j;
 		int nb_good, nb_bad;
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 		geometry::other_geometry::geometry_global Gg;
 
 		N = NT.i_power_j(2, nb_pairs_of_long_orbits);
@@ -706,7 +706,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 				}
 			}
 
-			data_structures::tally D_type;
+			other::data_structures::tally D_type;
 			D_type.init(count, H->group_order, false, 0);
 			cout << "D type:" << endl;
 			D_type.print_bare(true);
@@ -755,7 +755,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	std::vector<long int> Zuppos;
 	//int nb_zuppos;
 	int goi;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, j, t;
 
 	if (f_v) {
@@ -848,7 +848,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 
 	}
-	data_structures::tally Group_orders;
+	other::data_structures::tally Group_orders;
 	int *Idx_subgroup;
 	int nb_subgroups;
 	int o, idx_E1;
@@ -994,7 +994,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 						verbose_level);
 
 			}
-			data_structures::tally Overgroup_orders;
+			other::data_structures::tally Overgroup_orders;
 
 			Overgroup_orders.init(Overgroup_order, Zuppos.size(), false, 0);
 			if (f_v) {
@@ -1111,7 +1111,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					//print_integer_matrix_with_standard_labels(cout,
 					// second_generator, Sch_overgroups->nb_orbits,
 					// 1, false /* f_tex */);
-					orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
+					other::orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(cout,
 						second_generator, Sch_overgroups->nb_orbits);
 					cout << endl;
 				}

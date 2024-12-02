@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_grassmannian::action_on_grassmannian()
 {
+	Record_birth();
 	n = k = q = 0;
 	F = NULL;
 	low_level_point_size = 0;
@@ -47,6 +48,7 @@ action_on_grassmannian::action_on_grassmannian()
 
 action_on_grassmannian::~action_on_grassmannian()
 {
+	Record_death();
 	int f_v = false;
 
 	if (M1) {
@@ -91,8 +93,8 @@ void action_on_grassmannian::init(
 		geometry::projective_geometry::grassmann *G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
-	combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object go;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init" << endl;
@@ -130,7 +132,7 @@ void action_on_grassmannian::init(
 				"degree_as_text = " << degree_as_text << endl;
 	}
 
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "action_on_grassmannian::init "
@@ -240,8 +242,8 @@ long int action_on_grassmannian::rank(
 void action_on_grassmannian::compute_image_longinteger(
 		actions::action *A,
 		int *Elt,
-	ring_theory::longinteger_object &i,
-	ring_theory::longinteger_object &j,
+		algebra::ring_theory::longinteger_object &i,
+		algebra::ring_theory::longinteger_object &j,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -418,7 +420,7 @@ void action_on_grassmannian::print_point(
 	print_integer_matrix_width(ost, G->M,
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 #else
-	l1_interfaces::latex_interface Li;
+	other::l1_interfaces::latex_interface Li;
 
 	ost << "\\left[" << endl;
 	Li.print_integer_matrix_tex(ost,

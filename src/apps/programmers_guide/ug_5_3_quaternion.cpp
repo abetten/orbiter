@@ -22,9 +22,9 @@ int main()
 	int verbose_level = 2;
 	int q = 3;
 	int f_without_tables = false;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 
 	F->finite_field_init_small_order(q,
 			f_without_tables,
@@ -50,7 +50,7 @@ int main()
 
 	Gens = NEW_OBJECT(groups::strong_generators);
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	target_go.create(8);
 

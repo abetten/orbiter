@@ -17,6 +17,7 @@ namespace spreads {
 
 spread_lifting::spread_lifting()
 {
+	Record_birth();
 	S = NULL;
 	R = NULL;
 	//std::string output_prefix;
@@ -58,6 +59,7 @@ spread_lifting::spread_lifting()
 
 spread_lifting::~spread_lifting()
 {
+	Record_death();
 	if (points_covered_by_starter) {
 		FREE_lint(points_covered_by_starter);
 	}
@@ -90,7 +92,7 @@ void spread_lifting::init(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	
 	
 	if (f_v) {
@@ -177,7 +179,7 @@ void spread_lifting::compute_points_covered_by_starter(
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int i, a;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_lifting::compute_points_covered_by_starter" << endl;
@@ -243,7 +245,7 @@ void spread_lifting::prepare_free_points(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	//int f_v3 = (verbose_level >= 3);
 	int i, j, idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "spread_lifting::prepare_free_points" << endl;
@@ -512,7 +514,7 @@ void spread_lifting::reduce_candidates(
 				"nb_reduced_candidates = " << nb_reduced_candidates << endl;
 	}
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 
 	T.init(col_color, nb_cols, false, verbose_level);
@@ -533,13 +535,13 @@ void spread_lifting::reduce_candidates(
 
 }
 
-solvers::diophant *spread_lifting::create_system(
+combinatorics::solvers::diophant *spread_lifting::create_system(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v5 = (verbose_level >= 5);
-	solvers::diophant *Dio;
+	combinatorics::solvers::diophant *Dio;
 	int nb_rows = nb_free_points;
 	int i, j, a, b, h;
 
@@ -547,7 +549,7 @@ solvers::diophant *spread_lifting::create_system(
 		cout << "spread_lifting::create_system" << endl;
 	}
 
-	Dio = NEW_OBJECT(solvers::diophant);
+	Dio = NEW_OBJECT(combinatorics::solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->f_has_sum = true;
 	Dio->sum = nb_needed;
@@ -664,7 +666,7 @@ int spread_lifting::is_zero_vector(
 }
 
 void spread_lifting::create_graph(
-		data_structures::bitvector *Adj,
+		other::data_structures::bitvector *Adj,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -675,9 +677,9 @@ void spread_lifting::create_graph(
 	}
 
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	string label, label_tex;
 	label = S->prefix + "_graph_" + std::to_string(R->orbit_at_level);
@@ -710,7 +712,7 @@ void spread_lifting::create_graph(
 	}
 
 	string fname_clique_graph;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname_clique_graph = output_prefix + label + ".bin";
 
@@ -742,9 +744,9 @@ void spread_lifting::create_dummy_graph(
 		cout << "spread_lifting::create_dummy_graph" << endl;
 	}
 
-	data_structures::bitvector *Adj;
+	other::data_structures::bitvector *Adj;
 
-	Adj = NEW_OBJECT(data_structures::bitvector);
+	Adj = NEW_OBJECT(other::data_structures::bitvector);
 
 	long int L;
 	int n = 2;
@@ -771,9 +773,9 @@ void spread_lifting::create_dummy_graph(
 	}
 
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	string label, label_tex;
 
@@ -800,7 +802,7 @@ void spread_lifting::create_dummy_graph(
 	}
 
 	string fname_clique_graph;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname_clique_graph = output_prefix + label + ".bin";
 

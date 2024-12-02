@@ -45,11 +45,11 @@ void spread_classify::print_isomorphism_type(
 	fname_klein = Iso->prefix + "_" + std::to_string(iso_cnt) + "_klein.tex";
 
 	
-	int save_longinteger_f_print_scientific = orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
-	orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = false;
+	int save_longinteger_f_print_scientific = other::orbiter_kernel_system::Orbiter->longinteger_f_print_scientific;
+	other::orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = false;
 	{
 		ofstream file(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		string title, author, extra_praeamble;
 
@@ -76,10 +76,10 @@ void spread_classify::print_isomorphism_type(
 	
 		L.foot(file);
 
-		orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = save_longinteger_f_print_scientific;
+		other::orbiter_kernel_system::Orbiter->longinteger_f_print_scientific = save_longinteger_f_print_scientific;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type written file "
@@ -102,15 +102,15 @@ void spread_classify::print_isomorphism_type2(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	ring_theory::longinteger_object so;
+	algebra::ring_theory::longinteger_object so;
 	long int *pt_list;
 	int f, l, j, idx, pt;
 	int p, h;
 	int f_elements_exponential = false;
 	string symbol_for_print;
 
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_classify::print_isomorphism_type2" << endl;
@@ -133,7 +133,7 @@ void spread_classify::print_isomorphism_type2(
 	
 	Stab->group_order(so);
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
@@ -266,7 +266,7 @@ void spread_classify::save_klein_invariants(
 	long int *data, int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object *R;
+	algebra::ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -334,7 +334,7 @@ void spread_classify::klein(
 // Called from print_isomorphism_type if k == 2
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object *R;
+	algebra::ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes;
@@ -351,7 +351,7 @@ void spread_classify::klein(
 		nb_planes, 
 		verbose_level);
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f_second = false;
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
@@ -552,7 +552,7 @@ void spread_classify::report2(
 		int f_12pt = false;
 		int f_enlarged_page = true;
 		int f_pagenumbers = true;
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		title = "$" + std::to_string(SD->k - 1) + "$-Spreads of PG($" + std::to_string(2 * SD->k - 1) + "," + std::to_string(SD->q) + "$)";
 		author = "Orbiter";
@@ -569,7 +569,7 @@ void spread_classify::report2(
 		L.foot(f);
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -587,7 +587,7 @@ void spread_classify::report3(
 	}
 
 	int target_size = SD->order + 1;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	ost << "\\chapter{Summary}" << endl << endl;
 	ost << "There are " << Iso.Folding->Reps->count << " spreads." << endl << endl;
@@ -597,16 +597,16 @@ void spread_classify::report3(
 
 	int i, first, /*c,*/ id;
 	int u, v, h, rep, tt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int data[1000];
 
 
 
-	ring_theory::longinteger_object *Ago, *Ago_induced;
+	algebra::ring_theory::longinteger_object *Ago, *Ago_induced;
 	int *Ago_int;
 
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
-	Ago_induced = NEW_OBJECTS(ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Iso.Folding->Reps->count);
+	Ago_induced = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Iso.Folding->Reps->count);
 	Ago_int = NEW_int(Iso.Folding->Reps->count);
 
 
@@ -636,7 +636,7 @@ void spread_classify::report3(
 	}
 
 
-	data_structures::tally C_ago;
+	other::data_structures::tally C_ago;
 
 	C_ago.init(Ago_int, Iso.Folding->Reps->count, false, 0);
 	cout << "Classification by ago:" << endl;
@@ -814,7 +814,7 @@ void spread_classify::report3(
 		}
 		Iso.Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
-		ring_theory::longinteger_object go1;
+		algebra::ring_theory::longinteger_object go1;
 			
 		Iso.Folding->AA->group_order(go1);
 		cout << "action " << Iso.Folding->AA->label << " computed, "
@@ -835,7 +835,7 @@ void spread_classify::report3(
 		ost << "With " << Orb.nb_orbits
 				<< " orbits on the subspaces\\\\" << endl;
 
-		data_structures::tally C_ol;
+		other::data_structures::tally C_ol;
 
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
@@ -919,7 +919,7 @@ void spread_classify::report3(
 			ost << i << " & " << len << " & ";
 			long int *set;
 			actions::action *A1;
-			ring_theory::longinteger_object go1, gok;
+			algebra::ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
@@ -972,7 +972,7 @@ void spread_classify::report3(
 			actions::action *A1;
 			data_structures_groups::vector_ge *gens;
 			int *tl;
-			ring_theory::longinteger_object go1, gok;
+			algebra::ring_theory::longinteger_object go1, gok;
 
 			set = NEW_lint(len);
 			//A1 = NEW_OBJECT(action);
@@ -1081,7 +1081,7 @@ void spread_classify::all_cooperstein_thas_quotients(
 
 		f << -1 << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -1115,10 +1115,10 @@ void spread_classify::cooperstein_thas_quotients(
 	int nb_points = 0;
 	int *List;
 	geometry::projective_geometry::grassmann *Gr;
-	ring_theory::longinteger_domain Dom;
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	algebra::ring_theory::longinteger_domain Dom;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -1137,8 +1137,8 @@ void spread_classify::cooperstein_thas_quotients(
 	Stab = Iso.Folding->Reps->stab[h];
 
 	groups::schreier Orb;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_object stab_order;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object stab_order;
 		
 	Stab->group_order(go);
 
@@ -1244,7 +1244,7 @@ void spread_classify::cooperstein_thas_quotients(
 			// delete column 'pivot' in the k x n matrix M.
 			// Afterwards, the matrix is k x (n - 1)
 
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_delete_column_in_place(M, k, n, pivot);
+			other::orbiter_kernel_system::Orbiter->Int_vec->matrix_delete_column_in_place(M, k, n, pivot);
 #endif
 
 			if (f_vv) {
@@ -1326,7 +1326,7 @@ void spread_classify::orbit_info_short(
 
 	Iso.Folding->induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
-	ring_theory::longinteger_object go1;
+	algebra::ring_theory::longinteger_object go1;
 			
 	Iso.Folding->AA->group_order(go1);
 	cout << "action " << Iso.Folding->AA->label << " computed, "
@@ -1349,7 +1349,7 @@ void spread_classify::orbit_info_short(
 
 	ost << " & " << Orb.nb_orbits << " & ";
 
-	data_structures::tally C_ol;
+	other::data_structures::tally C_ol;
 
 	C_ol.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
 
@@ -1369,7 +1369,7 @@ void spread_classify::report_stabilizer(
 		std::ostream &ost, int orbit, int verbose_level)
 {
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Folding->Reps->stab[orbit];

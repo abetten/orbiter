@@ -22,6 +22,7 @@ namespace other_geometry {
 
 three_skew_subspaces::three_skew_subspaces()
 {
+	Record_birth();
 	//SD = NULL;
 
 	n = k = q = 0;
@@ -41,6 +42,7 @@ three_skew_subspaces::three_skew_subspaces()
 
 three_skew_subspaces::~three_skew_subspaces()
 {
+	Record_death();
 	if (f_data_is_allocated) {
 		FREE_int(M);
 		FREE_int(M1);
@@ -56,7 +58,7 @@ three_skew_subspaces::~three_skew_subspaces()
 
 void three_skew_subspaces::init(
 		geometry::projective_geometry::grassmann *Grass,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int k, int n,
 	int verbose_level)
 {
@@ -65,7 +67,7 @@ void three_skew_subspaces::init(
 	if (f_v) {
 		cout << "three_skew_subspaces::init" << endl;
 	}
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//three_skew_subspaces::SD = SD;
 

@@ -272,7 +272,7 @@ int calc_redinv(
 		int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int vt, kt, g, v1, k1, gg;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (t == k)
 		return false;
@@ -307,7 +307,7 @@ int calc_resinv(
 		int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int a, b, g;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (t == k)
 		return false;
@@ -597,7 +597,7 @@ void design_parameter_database_read_design_txt(
 	char comment[BUFSIZE];
 	int t, v, k, lambda;
 	int btree_idx_id = 0;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	ifstream f(fname_design_txt);
 	if (!f) {
@@ -718,7 +718,7 @@ void design_parameter_database_export_tex(
 
 
 	ofstream f("designs.tex", ios::trunc);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	string title, author, extra_praeamble;
 

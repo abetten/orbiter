@@ -21,6 +21,7 @@ namespace data_structures_groups {
 
 vector_ge_description::vector_ge_description()
 {
+	Record_birth();
 
 	f_action = false;
 	//std::string action_label;
@@ -36,6 +37,7 @@ vector_ge_description::vector_ge_description()
 
 vector_ge_description::~vector_ge_description()
 {
+	Record_death();
 }
 
 int vector_ge_description::read_arguments(
@@ -44,7 +46,7 @@ int vector_ge_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "vector_ge_description::read_arguments" << endl;

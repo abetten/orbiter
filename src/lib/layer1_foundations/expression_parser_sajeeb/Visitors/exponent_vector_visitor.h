@@ -54,7 +54,7 @@ public:
 std::ostream& operator<< (std::ostream& os, const managed_variables_index_table& obj);
 
 struct monomial_coefficient_table_hash_function final {
-    using algorithms = orbiter::layer1_foundations::data_structures::algorithms;
+    using algorithms = orbiter::layer1_foundations::other::data_structures::algorithms;
     uint32_t operator()(const vector<unsigned int>& exponent_vector) const {
         static algorithms algo_instance;
         return algo_instance.SuperFastHash_uint(exponent_vector.data(), exponent_vector.size());
@@ -62,7 +62,7 @@ struct monomial_coefficient_table_hash_function final {
 };
 struct monomial_coefficient_table_key_equal_function final {
     bool operator()(const vector<unsigned int>& a, const vector<unsigned int>& b) const {
-        using sorting = orbiter::layer1_foundations::data_structures::sorting;
+        using sorting = orbiter::layer1_foundations::other::data_structures::sorting;
         static sorting keyEqualFn;
         return !keyEqualFn.integer_vec_std_compare(a, b);
     }

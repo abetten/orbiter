@@ -20,6 +20,7 @@ namespace spreads {
 
 spread_create::spread_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	//std::string prefix;
@@ -52,6 +53,7 @@ spread_create::spread_create()
 
 spread_create::~spread_create()
 {
+	Record_death();
 #if 0
 	if (F) {
 		FREE_OBJECT(F);
@@ -77,7 +79,7 @@ void spread_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -158,7 +160,7 @@ void spread_create::init(
 					"spread from catalogue" << endl;
 		}
 		int nb_iso;
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 
 		nb_iso = K.Spread_nb_reps(q, k);
 		if (Descr->iso >= nb_iso) {

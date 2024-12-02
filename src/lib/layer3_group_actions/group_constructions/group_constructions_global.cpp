@@ -24,10 +24,12 @@ namespace group_constructions {
 
 group_constructions_global::group_constructions_global()
 {
+	Record_birth();
 }
 
 group_constructions_global::~group_constructions_global()
 {
+	Record_death();
 }
 
 
@@ -44,7 +46,7 @@ void group_constructions_global::A5_in_PSL_(
 	int f_v = (verbose_level >= 1);
 	int p, f;
 	typed_objects::discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	NT.factor_prime_power(q, p, f);

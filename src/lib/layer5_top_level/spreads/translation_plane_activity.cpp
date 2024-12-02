@@ -22,12 +22,14 @@ namespace spreads {
 
 translation_plane_activity::translation_plane_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	TP = NULL;
 }
 
 translation_plane_activity::~translation_plane_activity()
 {
+	Record_death();
 }
 
 void translation_plane_activity::init(

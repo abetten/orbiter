@@ -116,7 +116,7 @@ public:
 	int orbit_idx;
 	int f, l, hds;
 
-	algebraic_geometry::clebsch_map *Clebsch_map;
+	geometry::algebraic_geometry::clebsch_map *Clebsch_map;
 
 
 	surface_clebsch_map();
@@ -146,7 +146,7 @@ public:
 	int f_ownership;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 
 
@@ -154,11 +154,11 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 
 	surface_with_action *Surf_A;
 
-	algebraic_geometry::surface_object *SO;
+	geometry::algebraic_geometry::surface_object *SO;
 
 	int f_has_group;
 	groups::strong_generators *Sg;
@@ -273,21 +273,21 @@ public:
 	void export_gap(
 			int verbose_level);
 	void do_report(
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_report_group_elements(
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void do_report2(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_report_group_elements2(
 			std::ostream &ost,
 			std::string &fname_csv, std::string &col_heading,
 			int verbose_level);
 	void report_with_group(
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void test_group(
@@ -453,7 +453,7 @@ public:
 
 
 	void do_study_surface(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int nb, int verbose_level);
 	void do_classify_surfaces_through_arcs_and_two_lines(
 			projective_geometry::projective_space_with_action *PA,
@@ -464,7 +464,7 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			poset_classification::poset_classification_control *Control1,
 			poset_classification::poset_classification_control *Control2,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			std::string &Control_six_arcs_label,
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
@@ -493,7 +493,7 @@ public:
 	void report_surfaces_by_lines(
 			std::ostream &ost,
 			struct cubic_surface_data_set *Data,
-			data_structures::tally &T, int verbose_level);
+			other::data_structures::tally &T, int verbose_level);
 	void do_create_surface_reports(
 			std::string &field_orders_text, int verbose_level);
 	void do_create_surface_atlas(
@@ -541,10 +541,10 @@ class surface_object_with_group {
 
 public:
 
-	algebraic_geometry::surface_domain *Surf; // do not free
+	geometry::algebraic_geometry::surface_domain *Surf; // do not free
 	surface_with_action *Surf_A; // do not free
 
-	algebraic_geometry::surface_object *SO; // do not free
+	geometry::algebraic_geometry::surface_object *SO; // do not free
 	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
 
@@ -607,14 +607,14 @@ public:
 		int verbose_level);
 	void init_with_surface_object(
 			surface_with_action *Surf_A,
-			algebraic_geometry::surface_object *SO,
+			geometry::algebraic_geometry::surface_object *SO,
 			groups::strong_generators *Aut_gens,
 			int f_has_nice_gens,
 			data_structures_groups::vector_ge *nice_gens,
 			int verbose_level);
 	void init_surface_object(
 			surface_with_action *Surf_A,
-			algebraic_geometry::surface_object *SO,
+			geometry::algebraic_geometry::surface_object *SO,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
 	void compute_projectivity_group(
@@ -660,19 +660,19 @@ public:
 	void print_automorphism_group(
 			std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
 	void print_orbits_on_schlaefli_related_things(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level);
 	void cheat_sheet_basic(
 			std::ostream &ost, int verbose_level);
 	void cheat_sheet(
 			std::ostream &ost,
 			int f_print_orbits, std::string &fname_mask,
-			graphics::layered_graph_draw_options *Opt,
+			other::graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void cheat_sheet_group_elements(
 			std::ostream &ost,
@@ -688,14 +688,14 @@ public:
 			std::ostream &ost,
 			int verbose_level);
 	void investigate_surface_and_write_report(
-			graphics::layered_graph_draw_options *Opt,
+			other::graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Opt,
+			other::graphics::layered_graph_draw_options *Opt,
 			actions::action *A,
 			surface_create *SC,
 			cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
@@ -719,7 +719,7 @@ public:
 			std::string &heading, int &nb_cols);
 	void create_vector_of_strings(
 			quartic_curves::quartic_curve_from_surface *QC,
-			algebraic_geometry::quartic_curve_object *QO,
+			geometry::algebraic_geometry::quartic_curve_object *QO,
 			std::vector<std::string> &v,
 			int verbose_level);
 	void print_full_del_Pezzo(
@@ -753,8 +753,8 @@ public:
 	int nb;
 	int *rep;
 	std::string prefix;
-	field_theory::finite_field *F;
-	algebraic_geometry::surface_domain *Surf;
+	algebra::field_theory::finite_field *F;
+	geometry::algebraic_geometry::surface_domain *Surf;
 
 	int nb_lines_PG_3;
 
@@ -796,8 +796,10 @@ public:
 	int nb_Eckardt_pts;
 
 
+	surface_study();
+	~surface_study();
 	void init(
-			field_theory::finite_field *F, int nb, int verbose_level);
+			algebra::field_theory::finite_field *F, int nb, int verbose_level);
 	void study_intersection_points(
 			int verbose_level);
 	void study_line_orbits(
@@ -833,7 +835,7 @@ public:
 
 	int f_semilinear;
 
-	algebraic_geometry::surface_domain *Surf; // do not free
+	geometry::algebraic_geometry::surface_domain *Surf; // do not free
 
 	actions::action *A; // linear group PGGL(4,q)
 
@@ -861,7 +863,7 @@ public:
 	surface_with_action();
 	~surface_with_action();
 	void init(
-			algebraic_geometry::surface_domain *Surf,
+			geometry::algebraic_geometry::surface_domain *Surf,
 			projective_geometry::projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);

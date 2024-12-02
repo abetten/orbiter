@@ -19,6 +19,7 @@ namespace apps_coding_theory {
 
 crc_process::crc_process()
 {
+	Record_birth();
 	Descr = NULL;
 
 	Code = NULL;
@@ -35,6 +36,7 @@ crc_process::crc_process()
 
 crc_process::~crc_process()
 {
+	Record_death();
 }
 
 
@@ -168,9 +170,9 @@ void crc_process::encode_file(
 				"block_length=" << block_length << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	//long int N, L, nb_blocks, cnt;
 	//char *buffer;

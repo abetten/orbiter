@@ -17,6 +17,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_classify_activity_description::blt_set_classify_activity_description()
 {
+	Record_birth();
 	f_compute_starter = false;
 	starter_control = NULL;
 
@@ -36,6 +37,7 @@ blt_set_classify_activity_description::blt_set_classify_activity_description()
 
 blt_set_classify_activity_description::~blt_set_classify_activity_description()
 {
+	Record_death();
 }
 
 int blt_set_classify_activity_description::read_arguments(
@@ -44,7 +46,7 @@ int blt_set_classify_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "blt_set_classify_activity_description::read_arguments" << endl;

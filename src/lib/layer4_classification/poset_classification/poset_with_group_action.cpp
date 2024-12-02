@@ -22,6 +22,7 @@ static int callback_test_independence_condition(
 
 poset_with_group_action::poset_with_group_action()
 {
+	Record_birth();
 	f_subset_lattice = false;
 	n = 0;
 	f_subspace_lattice = false;
@@ -43,6 +44,7 @@ poset_with_group_action::poset_with_group_action()
 
 poset_with_group_action::~poset_with_group_action()
 {
+	Record_death();
 	if (f_has_orbit_based_testing) {
 		if (Orbit_based_testing) {
 			FREE_OBJECT(Orbit_based_testing);
@@ -80,7 +82,7 @@ void poset_with_group_action::init_subset_lattice(
 void poset_with_group_action::init_subspace_lattice(
 		actions::action *A, actions::action *A2,
 		groups::strong_generators *Strong_gens,
-		linear_algebra::vector_space *VS,
+		algebra::linear_algebra::vector_space *VS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -117,12 +119,12 @@ void poset_with_group_action::add_independence_condition(
 				<< independence_value << endl;
 	}
 
-	algebra::rank_checker *rc;
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::rank_checker *rc;
+	algebra::basic_algebra::matrix_group *mtx;
 
 	mtx = A->get_matrix_group();
 
-	rc = NEW_OBJECT(algebra::rank_checker);
+	rc = NEW_OBJECT(algebra::basic_algebra::rank_checker);
 	if (f_v) {
 		cout << "poset_with_group_action::add_independence_condition before "
 				"rc->init" << endl;
@@ -380,7 +382,7 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 			k /* sz */,
 			verbose_level - 1);
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int schreier_depth = k;
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
@@ -423,9 +425,9 @@ static int callback_test_independence_condition(
 	if (f_v) {
 		cout << "callback_test_independence_condition" << endl;
 	}
-	algebra::rank_checker *rc;
+	algebra::basic_algebra::rank_checker *rc;
 
-	rc = (algebra::rank_checker *) data;
+	rc = (algebra::basic_algebra::rank_checker *) data;
 	if (rc->check_rank_last_two_are_fixed(len,
 		S, verbose_level - 1)) {
 		return true;

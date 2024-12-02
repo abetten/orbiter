@@ -682,7 +682,7 @@ void sims::build_up_group_random_process_no_kernel(
 		sims *old_G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go, go1;
+	algebra::ring_theory::longinteger_object go, go1;
 	sims K;
 
 	if (f_v) {
@@ -717,7 +717,7 @@ void sims::build_up_group_random_process_no_kernel(
 
 void sims::extend_group_random_process_no_kernel(
 		sims *extending_by_G,
-		ring_theory::longinteger_object &target_go,
+		algebra::ring_theory::longinteger_object &target_go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -762,7 +762,7 @@ int sims::closure_group(
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
-	ring_theory::longinteger_object old_go, go, go1;
+	algebra::ring_theory::longinteger_object old_go, go, go1;
 
 	if (f_v) {
 		cout << "sims::closure_group" << endl;

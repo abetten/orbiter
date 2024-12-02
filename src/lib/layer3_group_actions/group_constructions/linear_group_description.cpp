@@ -18,6 +18,7 @@ namespace group_constructions {
 
 linear_group_description::linear_group_description()
 {
+	Record_birth();
 	f_projective = false;
 	f_general = false;
 	f_affine = false;
@@ -84,6 +85,7 @@ linear_group_description::linear_group_description()
 
 linear_group_description::~linear_group_description()
 {
+	Record_death();
 }
 
 int linear_group_description::read_arguments(
@@ -92,7 +94,7 @@ int linear_group_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "linear_group_description::read_arguments" << endl;

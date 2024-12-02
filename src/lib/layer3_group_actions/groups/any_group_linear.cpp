@@ -20,11 +20,13 @@ namespace groups {
 
 any_group_linear::any_group_linear()
 {
+	Record_birth();
 	Any_group = NULL;
 }
 
 any_group_linear::~any_group_linear()
 {
+	Record_death();
 }
 
 
@@ -134,9 +136,9 @@ void any_group_linear::isomorphism_Klein_quadric(
 		exit(1);
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	groups::sims *H;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	F = Any_group->LG->F;
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
@@ -211,7 +213,7 @@ void any_group_linear::isomorphism_Klein_quadric(
 			0,0,0,1,4,2,
 	};
 	int Bv[36];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 #if 0
 	for (i = 0; i < 6; i++) {
@@ -375,7 +377,7 @@ int any_group_linear::subspace_orbits_test_set(
 	int ret = true;
 	int rk;
 	int n;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
 

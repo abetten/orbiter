@@ -21,6 +21,7 @@ namespace quartic_curves {
 
 quartic_curve_create::quartic_curve_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	//std::string prefix;
@@ -53,6 +54,7 @@ quartic_curve_create::quartic_curve_create()
 
 quartic_curve_create::~quartic_curve_create()
 {
+	Record_death();
 	if (f_ownership) {
 		if (F) {
 			FREE_OBJECT(F);
@@ -162,7 +164,7 @@ void quartic_curve_create::init_with_data(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -217,7 +219,7 @@ void quartic_curve_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -447,7 +449,7 @@ void quartic_curve_create::create_quartic_curve_from_description(
 	}
 
 
-	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 
 	//std::string label_txt;
 	//std::string label_tex;
@@ -618,7 +620,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(
 	FREE_int(coeff_list);
 
 
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficient_vector "
@@ -665,7 +667,7 @@ void quartic_curve_create::create_quartic_curve_by_coefficient_vector(
 
 
 
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficient_vector "
@@ -716,7 +718,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	long int *p_bitangents;
 	long int bitangents28[28];
 	int nb_iso;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	nb_iso = K.quartic_curves_nb_reps(q);
 	if (Descr->iso >= nb_iso) {
@@ -740,7 +742,7 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(
 	Lint_vec_copy(p_bitangents, bitangents28, 28);
 
 
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue "
@@ -833,7 +835,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 	//nb_vars = 3;
 	//degree = 4;
 
-	ring_theory::homogeneous_polynomial_domain *Poly;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly;
 
 
 
@@ -889,7 +891,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 	// build a quartic_curve_object and compute properties of the surface:
 
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 
 	if (f_v) {
@@ -907,7 +909,7 @@ void quartic_curve_create::create_quartic_curve_by_equation(
 
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	f_has_group = false;
@@ -956,7 +958,7 @@ int quartic_curve_create::create_quartic_curve_by_symbolic_object(
 	int ret;
 
 
-	ring_theory::homogeneous_polynomial_domain *Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 
 
 
@@ -1008,7 +1010,7 @@ int quartic_curve_create::create_quartic_curve_by_symbolic_object(
 		return false;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	f_has_group = false;
 
@@ -1178,7 +1180,7 @@ void quartic_curve_create::create_quartic_curve_from_cubic_surface(
 				"QC_from_surface->nb_bitangents != 28" << endl;
 		exit(1);
 	}
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
@@ -1259,7 +1261,7 @@ void quartic_curve_create::create_quartic_curve_from_variety(
 	}
 
 
-	QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+	QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_variety "
@@ -1593,7 +1595,7 @@ void quartic_curve_create::apply_single_transformation(
 #endif
 
 	}
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.lint_vec_heapsort(QO->Pts, QO->nb_pts);
 
@@ -1617,7 +1619,7 @@ void quartic_curve_create::export_something(
 		cout << "quartic_curve_create::export_something" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	string fname_base;
 
@@ -1648,7 +1650,7 @@ void quartic_curve_create::do_report(
 		cout << "quartic_curve_create::do_report" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = QCDA->Dom->F;
 
@@ -1672,7 +1674,7 @@ void quartic_curve_create::do_report(
 			title = label_tex + " over GF(" + std::to_string(F->q) + ")";
 
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -1724,7 +1726,7 @@ void quartic_curve_create::do_report(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "Written file " << fname_report << " of size "
@@ -1918,7 +1920,7 @@ void quartic_curve_create::print_general(
 						"information about the group:" << endl;
 			}
 
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			if (f_v) {
 				cout << "quartic_curve_create::print_general "

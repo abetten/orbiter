@@ -26,7 +26,7 @@ void packing_classify::compute_klein_invariants(
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int orbit, id;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::compute_klein_invariants" << endl;
@@ -233,7 +233,7 @@ void packing_classify::report(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_classify::report" << endl;
@@ -298,7 +298,7 @@ void packing_classify::report_whole(
 	}
 
 	
-	data_structures::tally C_ago;
+	other::data_structures::tally C_ago;
 
 	
 	C_ago.init(inv->Ago_int, Iso->Folding->Reps->count, false, 0);
@@ -330,7 +330,7 @@ void packing_classify::report_whole(
 	report_extra_stuff(Iso, ost, verbose_level);
 	
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	L.foot(ost);
 	if (inv) {
 		FREE_OBJECT(inv);
@@ -351,7 +351,7 @@ void packing_classify::report_title_page(
 	int f_12pt = false;
 	int f_enlarged_page = true;
 	int f_pagenumbers = true;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	title = "The Packings of PG$(3," + std::to_string(q) + ")$";
 	author = "Orbiter";
@@ -370,10 +370,10 @@ void packing_classify::report_packings_by_ago(
 		isomorph::isomorph *Iso,
 		std::ostream &ost,
 	invariants_packing *inv,
-	data_structures::tally &C_ago, int verbose_level)
+	other::data_structures::tally &C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "packing_classify::report_packings_by_ago" << endl;
@@ -452,7 +452,7 @@ void packing_classify::report_isomorphism_type(
 {
 	int f_v = (verbose_level >= 1);
 	int i, id, rep, first; //, c;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "packing_classify::report_isomorphism_type" << endl;
@@ -495,7 +495,7 @@ void packing_classify::report_isomorphism_type(
 	//ost << "\\\\" << endl;
 	ost << "\\bigskip" << endl;
 
-	data_structures::tally C_iso;
+	other::data_structures::tally C_iso;
 
 	C_iso.init_lint(spread_iso_type, Iso->size, false, 0);
 	ost << "Classification by isomorphism type of spreads: ";
@@ -550,7 +550,7 @@ void packing_classify::report_isomorphism_type(
 			Stab, the_packing, verbose_level - 2);
 
 	if (f_v) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 			
 		Iso->Folding->AA->group_order(go);
 		cout << "action " << Iso->Folding->AA->label << " computed, "
@@ -577,7 +577,7 @@ void packing_classify::report_isomorphism_type(
 	//int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
 	//cout << endl;
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 
 	C.init(Orb.orbit_len, Orb.nb_orbits, false, 0);
@@ -614,7 +614,7 @@ void packing_classify::report_packing_as_table(
 	invariants_packing *inv, long int *list_of_lines,
 	int verbose_level)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 #if 1
 	{
@@ -711,7 +711,7 @@ void packing_classify::report_klein_invariants(
 {
 	//int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	// klein invariants:
 	{
@@ -764,7 +764,7 @@ void packing_classify::report_stabilizer(
 		int verbose_level)
 {
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Folding->Reps->stab[orbit];
@@ -799,7 +799,7 @@ void packing_classify::report_stabilizer_in_action(
 		int verbose_level)
 {
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 
 	Stab = Iso.Folding->Reps->stab[orbit];
@@ -840,7 +840,7 @@ void packing_classify::report_stabilizer_in_action_gap(
 		int verbose_level)
 {
 	groups::sims *Stab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 	string fname;
 
@@ -911,7 +911,7 @@ void packing_classify::report_extra_stuff(
 		int nb_lines;
 		int v[4];
 		int i, j, u;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		nb_points = P3->Subspaces->N_points;
 		nb_lines = Combi.generalized_binomial(4, 2, q);

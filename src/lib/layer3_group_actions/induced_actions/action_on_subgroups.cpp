@@ -24,6 +24,7 @@ static int action_on_subgroups_compare_inverted(
 
 action_on_subgroups::action_on_subgroups()
 {
+	Record_birth();
 	A = NULL;
 	S = NULL;
 	Hash_table_subgroups = NULL;
@@ -43,6 +44,7 @@ action_on_subgroups::action_on_subgroups()
 
 action_on_subgroups::~action_on_subgroups()
 {
+	Record_death();
 #if 0
 	int i;
 	
@@ -79,8 +81,8 @@ void action_on_subgroups::init(
 	int i;
 	int f_v = (verbose_level >= 1);
 	//int f_vv = false; //(verbose_level >= 5);
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_subgroups::init" << endl;

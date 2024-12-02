@@ -21,6 +21,7 @@ namespace apps_algebra {
 
 element_processing_description::element_processing_description()
 {
+	Record_birth();
 	f_input = false;
 	//std::string input_label;
 
@@ -45,6 +46,7 @@ element_processing_description::element_processing_description()
 
 element_processing_description::~element_processing_description()
 {
+	Record_death();
 }
 
 int element_processing_description::read_arguments(
@@ -53,7 +55,7 @@ int element_processing_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "element_processing_description::read_arguments" << endl;

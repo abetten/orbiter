@@ -20,6 +20,7 @@ namespace semifields {
 
 semifield_flag_orbit_node::semifield_flag_orbit_node()
 {
+	Record_birth();
 	downstep_primary_orbit = 0;
 	downstep_secondary_orbit = 0;
 	pt_local = 0;
@@ -38,6 +39,7 @@ semifield_flag_orbit_node::semifield_flag_orbit_node()
 
 semifield_flag_orbit_node::~semifield_flag_orbit_node()
 {
+	Record_death();
 }
 
 
@@ -64,7 +66,7 @@ void semifield_flag_orbit_node::init(
 }
 
 void semifield_flag_orbit_node::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
 	if (f_long_orbit) {
 		go.create(1);

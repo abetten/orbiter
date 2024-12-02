@@ -21,11 +21,13 @@ namespace solvers_package {
 
 exact_cover::exact_cover()
 {
+	Record_birth();
 	null();
 }
 
 exact_cover::~exact_cover()
 {
+	Record_death();
 	freeself();
 }
 
@@ -70,7 +72,7 @@ void exact_cover::init_basic(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 3);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::init_basic" << endl;
@@ -156,7 +158,7 @@ void exact_cover::init_prepare_function_new(
 	void (*prepare_function_new)(
 			solvers_package::exact_cover *E, int starter_case,
 			long int *candidates, int nb_candidates, groups::strong_generators *Strong_gens,
-			solvers::diophant *&Dio, long int *&col_label,
+			combinatorics::solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level),
 	int verbose_level)
@@ -226,7 +228,7 @@ void exact_cover::randomize(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "exact_cover::randomize" << endl;
@@ -307,8 +309,8 @@ void exact_cover::compute_liftings_new(
 	int nb_deleted_solutions = 0;
 	int starter_case;
 	int the_starter_case;
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 
@@ -574,8 +576,8 @@ void exact_cover::compute_liftings_single_case_new(
 	int f_vv = (verbose_level >= 2);
 	int f_v4 = (verbose_level >= 4);
 	string prefix;
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -658,7 +660,7 @@ void exact_cover::compute_liftings_single_case_new(
 				<< " calling prepare function" << endl;
 	}
 
-	solvers::diophant *Dio = NULL;
+	combinatorics::solvers::diophant *Dio = NULL;
 	long int *col_labels;
 	int f_ruled_out = false;
 
@@ -701,7 +703,7 @@ void exact_cover::compute_liftings_single_case_new(
 			int ymax_out = 1000000;
 #endif
 
-			graphics::layered_graph_draw_options *Draw_options;
+			other::graphics::layered_graph_draw_options *Draw_options;
 
 			Draw_options = Get_draw_options(draw_options_label);
 

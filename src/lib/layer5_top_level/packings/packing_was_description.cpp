@@ -19,6 +19,7 @@ namespace packings {
 
 packing_was_description::packing_was_description()
 {
+	Record_birth();
 
 	f_process_long_orbits = false;
 	Long_Orbits_Descr = NULL;
@@ -50,6 +51,7 @@ packing_was_description::packing_was_description()
 
 packing_was_description::~packing_was_description()
 {
+	Record_death();
 }
 
 int packing_was_description::read_arguments(
@@ -57,7 +59,7 @@ int packing_was_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 

@@ -40,7 +40,7 @@ struct action_is_minimal_data {
 	int *transporter_witness;
 
 	int *coset_rep; // [A->elt_size_in_int]
-	data_structures::partitionstack *Staborbits;
+	other::data_structures::partitionstack *Staborbits;
 		// computed in A.compute_stabilizer_orbits()
 
 	int nb_auts;
@@ -90,7 +90,7 @@ int action_is_minimal_recursion(
 	long int *next_set;
 	int i, idx, coset, cmp, ret, a;
 	action *A;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	D->backtrack_node++;
 	A = D->A;
@@ -392,7 +392,7 @@ int action::is_minimal_witness(
 	int f_vv = (verbose_level >= 4);
 	//int f_vvv = (verbose_level >= 5);
 	//int f_vvvv = (verbose_level >= 7);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action::is_minimal_witness" << endl;
@@ -499,7 +499,7 @@ int action::is_minimal_witness(
 	}
 
 	for (i = 0; i < A->base_len(); i++) {
-		data_structures::partitionstack *S;
+		other::data_structures::partitionstack *S;
 		int b, c, f, l, j, p;
 		
 		b = A->base_i(i);
@@ -559,7 +559,7 @@ int action::is_minimal_witness(
 	// now we compute is_minimal_base_point array:
 	for (i = 0; i < A->base_len(); i++) {
 		int j, b, c, l;
-		data_structures::partitionstack *S;
+		other::data_structures::partitionstack *S;
 		S = &D.Staborbits[i];
 		b = A->base_i(i);
 		for (j = 0; j < b; j++) {
@@ -632,7 +632,7 @@ finish:
 			}
 		}
 		groups::sims Aut2, K;
-		ring_theory::longinteger_object go, go2;
+		algebra::ring_theory::longinteger_object go, go2;
 		
 		if (f_vv) {
 			cout << "action::is_minimal_witness "

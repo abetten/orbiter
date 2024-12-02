@@ -147,7 +147,7 @@ static long int matrix_group_element_image_of(
 		long int a, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	long int b;
 	
@@ -169,7 +169,7 @@ static void matrix_group_element_image_of_low_level(
 		int *input, int *output, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	if (f_v) {
@@ -196,7 +196,7 @@ static int matrix_group_element_linear_entry_ij(
 		void *elt, int i, int j, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	int w;
 
@@ -213,7 +213,7 @@ static int matrix_group_element_linear_entry_frobenius(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	int w;
 
@@ -228,7 +228,7 @@ static void matrix_group_element_one(
 		action &A, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	
 	if (f_v) {
@@ -241,7 +241,7 @@ static int matrix_group_element_is_one(
 		action &A, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	int f_is_one, i, j;
 	
@@ -284,7 +284,7 @@ static void matrix_group_element_unpack(
 		void *elt, void *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
@@ -299,7 +299,7 @@ static void matrix_group_element_pack(
 		void *Elt, void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
@@ -320,7 +320,7 @@ static void matrix_group_element_retrieve(
 		int hdl, void *elt, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	//int *Elt = (int *) elt;
 	//uchar *p_elt;
 
@@ -366,7 +366,7 @@ static int matrix_group_element_store(
 		void *elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	//int *Elt = (int *) elt;
 	int hdl;
 	
@@ -392,7 +392,7 @@ static void matrix_group_element_mult(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
@@ -430,7 +430,7 @@ static void matrix_group_element_invert(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *AA = (int *) a;
 	int *AAv = (int *) av;
 
@@ -457,7 +457,7 @@ static void matrix_group_element_transpose(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *AA = (int *) a;
 	int *Atv = (int *) at;
 
@@ -483,7 +483,7 @@ static void matrix_group_element_move(
 		void *a, void *b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 
@@ -498,7 +498,7 @@ static void matrix_group_element_dispose(
 		int hdl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 
 	if (f_v) {
 		cout << "matrix_group_element_dispose "
@@ -512,7 +512,7 @@ static void matrix_group_element_print(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	
 
@@ -549,7 +549,7 @@ static void matrix_group_element_code_for_make_element(
 		action &A,
 		void *elt, int *data)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_code_for_make_element
@@ -563,7 +563,7 @@ static void matrix_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_print_for_make_element
@@ -576,7 +576,7 @@ static void matrix_group_element_print_for_make_element(
 static void matrix_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_print_for_make_element_
@@ -590,7 +590,7 @@ static void matrix_group_element_print_quick(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 	//int *fp; //, n;
 	
@@ -625,7 +625,7 @@ static void matrix_group_element_print_latex(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	G.Element->GL_print_latex(Elt, ost);
@@ -641,7 +641,7 @@ static void matrix_group_element_print_latex_with_point_labels(
 	void *elt, std::ostream &ost,
 	std::string *Point_labels, void *data)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
 
 	G.Element->GL_print_latex(Elt, ost);
@@ -656,7 +656,7 @@ static void matrix_group_element_print_as_permutation(
 	int f_v = false;
 	int *Elt = (int *) elt;
 	int i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "matrix_group_element_print_as_permutation "
@@ -681,9 +681,9 @@ static void matrix_group_element_print_verbose(
 		action &A,
 		void *elt, std::ostream &ost)
 {
-	algebra::matrix_group &G = *A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	G.Element->GL_print_easy(Elt, ost);
 	ost << "\n";
@@ -713,7 +713,7 @@ static void matrix_group_element_print_verbose(
 static void matrix_group_print_point(
 		action &A, long int a, std::ostream &ost, int verbose_level)
 {
-	algebra::matrix_group *G = A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group *G = A.G.matrix_grp;
 
 
 	G->Element->print_point(
@@ -723,7 +723,7 @@ static void matrix_group_print_point(
 static void matrix_group_unrank_point(
 		action &A, long int rk, int *v, int verbose_level)
 {
-	algebra::matrix_group *G = A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group *G = A.G.matrix_grp;
 
 	G->Element->unrank_point(rk, v, verbose_level);
 
@@ -732,7 +732,7 @@ static void matrix_group_unrank_point(
 static long int matrix_group_rank_point(
 		action &A, int *v, int verbose_level)
 {
-	algebra::matrix_group *G = A.G.matrix_grp;
+	algebra::basic_algebra::matrix_group *G = A.G.matrix_grp;
 	long int rk;
 
 

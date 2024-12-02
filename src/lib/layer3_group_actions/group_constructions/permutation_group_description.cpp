@@ -25,6 +25,7 @@ namespace group_constructions {
 
 permutation_group_description::permutation_group_description()
 {
+	Record_birth();
 	degree = 0;
 	type = unknown_permutation_group_t;
 
@@ -47,6 +48,7 @@ permutation_group_description::permutation_group_description()
 
 permutation_group_description::~permutation_group_description()
 {
+	Record_death();
 }
 
 
@@ -56,7 +58,7 @@ int permutation_group_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "permutation_group_description::read_arguments" << endl;

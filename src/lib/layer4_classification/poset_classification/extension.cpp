@@ -17,6 +17,7 @@ namespace poset_classification {
 
 extension::extension()
 {
+	Record_birth();
 	pt = -1;
 	orbit_len = 0;
 	type = EXTENSION_TYPE_UNPROCESSED;
@@ -27,6 +28,7 @@ extension::extension()
 
 extension::~extension()
 {
+	Record_death();
 }
 
 int extension::get_pt()

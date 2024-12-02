@@ -20,6 +20,7 @@ namespace semifields {
 
 semifield_classify_description::semifield_classify_description()
 {
+	Record_birth();
 	f_order = false;
 	order = 0;
 	f_dim_over_kernel = false;
@@ -44,6 +45,7 @@ semifield_classify_description::semifield_classify_description()
 
 semifield_classify_description::~semifield_classify_description()
 {
+	Record_death();
 
 }
 
@@ -54,7 +56,7 @@ int semifield_classify_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "semifield_classify_description::read_arguments" << endl;

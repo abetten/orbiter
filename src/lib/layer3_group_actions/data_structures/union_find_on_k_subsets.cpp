@@ -18,6 +18,7 @@ namespace data_structures_groups {
 
 union_find_on_k_subsets::union_find_on_k_subsets()
 {
+	Record_birth();
 	set = NULL;
 	set_sz = 0;
 	k = 0;
@@ -40,6 +41,7 @@ union_find_on_k_subsets::union_find_on_k_subsets()
 
 union_find_on_k_subsets::~union_find_on_k_subsets()
 {
+	Record_death();
 	if (Ar) {
 		FREE_OBJECT(Ar);
 		}
@@ -69,7 +71,7 @@ void union_find_on_k_subsets::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, K_go;
+	algebra::ring_theory::longinteger_object go, K_go;
 	int i, j, h, len;
 	int *data1;
 	int *data2;
@@ -138,7 +140,7 @@ void union_find_on_k_subsets::init(
 		//Ar->Sims->print_generators_as_permutations();
 		//Ar->Sims->print_basic_orbits();
 	
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Ar->Sims->group_order(go);
 		cout << "union_find_on_k_subsets::init "
 				"Ar->Sims go=" << go << endl;

@@ -23,6 +23,7 @@ namespace isomorph {
 
 isomorph::isomorph()
 {
+	Record_birth();
 	size = 0;
 	level = 0;
 
@@ -51,6 +52,7 @@ isomorph::isomorph()
 
 isomorph::~isomorph()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {

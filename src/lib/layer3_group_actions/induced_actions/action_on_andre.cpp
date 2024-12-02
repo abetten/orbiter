@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_andre::action_on_andre()
 {
+	Record_birth();
 	An = NULL;
 	An1 = NULL;
 	Andre = NULL;
@@ -33,6 +34,7 @@ action_on_andre::action_on_andre()
 
 action_on_andre::~action_on_andre()
 {
+	Record_death();
 	if (coords1) {
 		FREE_int(coords1);
 		}
@@ -107,7 +109,7 @@ long int action_on_andre::compute_image_of_point(
 	geometry::finite_geometries::andre_construction_point_element Pt;
 	long int i, image, rk, parallel_class_idx;
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_andre::compute_image_of_point" << endl;

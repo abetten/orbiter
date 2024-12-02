@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 orthogonal_space_activity::orthogonal_space_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	OA = NULL;
 	//Blt_set_domain = NULL;
@@ -27,6 +28,7 @@ orthogonal_space_activity::orthogonal_space_activity()
 
 orthogonal_space_activity::~orthogonal_space_activity()
 {
+	Record_death();
 #if 0
 	if (Blt_set_domain) {
 		FREE_OBJECT(Blt_set_domain);
@@ -238,7 +240,7 @@ void orthogonal_space_activity::perform_activity(
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->cheat_sheet_orthogonal_draw_options_label);
 
@@ -332,7 +334,7 @@ void orthogonal_space_activity::perform_activity(
 		long int p1;
 		long int p2;
 		long int rk;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		p1 = ST.strtolint(Descr->unrank_line_through_two_points_p1);
 		p2 = ST.strtolint(Descr->unrank_line_through_two_points_p2);
@@ -445,7 +447,7 @@ void orthogonal_space_activity::perform_activity(
 		cout << endl;
 
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		string fname;
 

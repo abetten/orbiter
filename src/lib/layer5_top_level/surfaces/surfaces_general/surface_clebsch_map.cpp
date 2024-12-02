@@ -21,6 +21,7 @@ namespace cubic_surfaces_in_general {
 
 surface_clebsch_map::surface_clebsch_map()
 {
+	Record_birth();
 	SOA = NULL;
 
 	orbit_idx = 0;
@@ -33,6 +34,7 @@ surface_clebsch_map::surface_clebsch_map()
 
 surface_clebsch_map::~surface_clebsch_map()
 {
+	Record_death();
 	if (Clebsch_map) {
 		FREE_OBJECT(Clebsch_map);
 	}
@@ -81,7 +83,7 @@ void surface_clebsch_map::init(
 
 
 
-	Clebsch_map = NEW_OBJECT(algebraic_geometry::clebsch_map);
+	Clebsch_map = NEW_OBJECT(geometry::algebraic_geometry::clebsch_map);
 
 
 	if (f_v) {

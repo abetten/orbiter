@@ -20,6 +20,7 @@ namespace canonical_form {
 
 variety_stabilizer_compute::variety_stabilizer_compute()
 {
+	Record_birth();
 
 	Ring_with_action = NULL;
 
@@ -41,6 +42,7 @@ variety_stabilizer_compute::variety_stabilizer_compute()
 
 variety_stabilizer_compute::~variety_stabilizer_compute()
 {
+	Record_death();
 	if (NO) {
 		FREE_OBJECT(NO);
 	}
@@ -120,7 +122,7 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 	// which fixes the canonical equation.
 
 
-	ring_theory::longinteger_object set_stab_order;
+	algebra::ring_theory::longinteger_object set_stab_order;
 
 	Set_stab->group_order(set_stab_order);
 	if (f_v) {
@@ -195,7 +197,7 @@ void variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer(
 	}
 
 
-	ring_theory::longinteger_object set_stab_order;
+	algebra::ring_theory::longinteger_object set_stab_order;
 
 	Set_stab->group_order(set_stab_order);
 
@@ -231,7 +233,7 @@ void variety_stabilizer_compute::orbit_of_equation_under_set_stabilizer(
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	if (f_v) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Stab_gens_variety->group_order(go);
 		cout << "The stabilizer of the variety is a group of order " << go << endl;

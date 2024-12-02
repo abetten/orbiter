@@ -21,6 +21,7 @@ namespace data_structures_groups {
 
 hash_table_subgroups::hash_table_subgroups()
 {
+	Record_birth();
 
 	//std::vector<void *> Subgroups;
 
@@ -30,6 +31,7 @@ hash_table_subgroups::hash_table_subgroups()
 
 hash_table_subgroups::~hash_table_subgroups()
 {
+	Record_death();
 }
 
 
@@ -90,8 +92,8 @@ int hash_table_subgroups::find_subgroup(
 		groups::subgroup *Subgroup,
 		int &pos, uint32_t &hash, int verbose_level)
 {
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 	Sorting.int_vec_heapsort(Subgroup->Elements, Subgroup->group_order);
 	hash = Data.int_vec_hash(Subgroup->Elements, Subgroup->group_order);
@@ -126,8 +128,8 @@ int hash_table_subgroups::find_subgroup_direct(
 		int *Elements, int group_order,
 		int &pos, uint32_t &hash, int verbose_level)
 {
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 	Sorting.int_vec_heapsort(Elements, group_order);
 	hash = Data.int_vec_hash(Elements, group_order);

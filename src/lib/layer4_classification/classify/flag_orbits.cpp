@@ -21,6 +21,7 @@ namespace invariant_relations {
 
 flag_orbits::flag_orbits()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	nb_primary_orbits_lower = 0;
@@ -39,6 +40,7 @@ flag_orbits::flag_orbits()
 
 flag_orbits::~flag_orbits()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 

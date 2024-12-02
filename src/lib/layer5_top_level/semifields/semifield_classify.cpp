@@ -37,6 +37,7 @@ static void canonial_form_compute_image_of_vector_callback(
 
 semifield_classify::semifield_classify()
 {
+	Record_birth();
 	PA = NULL;
 	n = 0;
 	k = 0;
@@ -94,6 +95,7 @@ semifield_classify::semifield_classify()
 
 semifield_classify::~semifield_classify()
 {
+	Record_death();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
@@ -193,8 +195,8 @@ void semifield_classify::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
-	number_theory::number_theory_domain NT;
+	algebra::ring_theory::longinteger_object go;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "semifield_classify::init" << endl;
@@ -313,7 +315,7 @@ void semifield_classify::init(
 				"after T->init" << endl;
 	}
 
-	ring_theory::longinteger_object go1, go2;
+	algebra::ring_theory::longinteger_object go1, go2;
 	//int f_semilinear = true;
 
 #if 0
@@ -505,13 +507,13 @@ void semifield_classify::report(
 		std::ostream &ost, int level,
 		semifield_level_two *L2,
 		semifield_lifting *L3,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "semifield_classify::report level = " << level << endl;
@@ -561,7 +563,7 @@ void semifield_classify::report(
 	ost << "\\hline" << endl;
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Strong_gens->group_order(go);
 
 		ost << "1 & 1 & " << go << "\\\\" << endl;
@@ -579,7 +581,7 @@ void semifield_classify::report(
 				Go[i] = L2->Flag_orbit_stabilizer[i].group_order_as_lint();
 			}
 			{
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init_lint(Go, L2->nb_flag_orbits, false, 0);
 				C.print_file_tex(ost, true /* f_backwards */);
@@ -592,7 +594,7 @@ void semifield_classify::report(
 		ost << "\\hline" << endl;
 		ost << 2 << " & " << L2->nb_orbits << " & ";
 		{
-			data_structures::tally C;
+			other::data_structures::tally C;
 
 			C.init_lint(L2->Go, L2->nb_orbits, false, 0);
 			C.print_file_tex(ost, true /* f_backwards */);
@@ -615,7 +617,7 @@ void semifield_classify::report(
 			for (po = 0; po < L3->prev_level_nb_orbits; po++) {
 
 
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object go;
 
 				L2->Stabilizer_gens[po].group_order(go);
 
@@ -633,7 +635,7 @@ void semifield_classify::report(
 				cout << "f != L3->nb_flag_orbits" << endl;
 			}
 			{
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init_lint(Go, L3->nb_flag_orbits, false, 0);
 				C.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
@@ -650,12 +652,12 @@ void semifield_classify::report(
 			Go = NEW_lint(L3->nb_orbits);
 
 			for (i = 0; i < L3->nb_orbits; i++) {
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object go;
 				L3->Stabilizer_gens[i].group_order(go);
 				Go[i] = go.as_lint();
 			}
 
-			data_structures::tally C;
+			other::data_structures::tally C;
 
 			C.init_lint(Go, L3->nb_orbits, false, 0);
 			C.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
@@ -684,7 +686,7 @@ void semifield_classify::init_poset_classification(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "semifield_classify::init_poset_classification" << endl;
@@ -692,8 +694,8 @@ void semifield_classify::init_poset_classification(
 
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
 
-	linear_algebra::vector_space *VS;
-	VS = NEW_OBJECT(linear_algebra::vector_space);
+	algebra::linear_algebra::vector_space *VS;
+	VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
 	VS->init(Mtx->GFq, vector_space_dimension,
 			verbose_level);
 	VS->init_rank_functions(
@@ -751,9 +753,9 @@ void semifield_classify::compute_orbits(
 		int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify::compute_orbits "
@@ -819,7 +821,7 @@ void semifield_classify::list_points()
 {
 	int *v;
 	int rk;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int goi;
 
 	cout << "semifield_classify::list_points" << endl;
@@ -908,7 +910,7 @@ void semifield_classify::early_test_func(
 	int *M;
 	int *v, *w;
 	int i, j, N, r;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -1010,7 +1012,7 @@ int semifield_classify::test_candidate(
 	int *w;
 	int *base_cols;
 	int N, h, i, j, a, b, c, r;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -1104,7 +1106,7 @@ int semifield_classify::test_partial_semifield(
 	int *base_cols;
 	int *v;
 	int *w;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -1170,7 +1172,7 @@ void semifield_classify::test_rank_unrank()
 {
 	int *Mtx;
 	int r1, r2;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	Mtx = NEW_int(k2);
 	for (r1 = 0; r1 < NT.i_power_j(q, k2); r1++) {
@@ -1372,7 +1374,7 @@ void semifield_classify::candidates_classify_by_first_column(
 	int *Tmp_sz;
 	int h, u, i, t, w;
 	long int a;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 

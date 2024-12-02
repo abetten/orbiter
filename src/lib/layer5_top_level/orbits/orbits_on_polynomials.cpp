@@ -21,6 +21,7 @@ namespace orbits {
 
 orbits_on_polynomials::orbits_on_polynomials()
 {
+	Record_birth();
 	LG = NULL;
 	degree_of_poly = 0;
 
@@ -48,11 +49,12 @@ orbits_on_polynomials::orbits_on_polynomials()
 
 orbits_on_polynomials::~orbits_on_polynomials()
 {
+	Record_death();
 }
 
 void orbits_on_polynomials::init(
 		group_constructions::linear_group *LG,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -237,8 +239,8 @@ void orbits_on_polynomials::init(
 
 void orbits_on_polynomials::orbit_of_one_polynomial(
 		group_constructions::linear_group *LG,
-		ring_theory::homogeneous_polynomial_domain *HPD,
-		expression_parser::symbolic_object_builder *Symbol,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::expression_parser::symbolic_object_builder *Symbol,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -473,7 +475,7 @@ void orbits_on_polynomials::compute_points(
 
 	for (i = 0; i < T->nb_orbits; i++) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		T->Reps[i].Strong_gens->group_order(go);
 
 		cout << i << " : ";
@@ -519,7 +521,7 @@ void orbits_on_polynomials::report(
 
 	{
 		ofstream ost(fname_report);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head(ost,
 				false /* f_book*/,
@@ -597,7 +599,7 @@ void orbits_on_polynomials::report(
 
 
 
-		data_structures::tally T_nb_pts;
+		other::data_structures::tally T_nb_pts;
 		int h, j, f, l, a;
 
 		T_nb_pts.init(Nb_pts, T->nb_orbits, false, 0);
@@ -618,7 +620,7 @@ void orbits_on_polynomials::report(
 			T_nb_pts.get_class_by_value(Idx, len, a, 0 /*verbose_level*/);
 
 
-			data_structures::sorting Sorting;
+			other::data_structures::sorting Sorting;
 
 			Sorting.int_vec_heapsort(Idx, l);
 
@@ -629,7 +631,7 @@ void orbits_on_polynomials::report(
 
 				i = Idx[j];
 
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object go;
 				T->Reps[i].Strong_gens->group_order(go);
 
 				ost << i << " : ";
@@ -706,7 +708,7 @@ void orbits_on_polynomials::report(
 		L.foot(ost);
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_report << " of size " << Fio.file_size(fname_report) << endl;
 	if (f_v) {
@@ -728,7 +730,7 @@ void orbits_on_polynomials::report_detailed_list(
 
 
 
-	data_structures::tally T1;
+	other::data_structures::tally T1;
 
 	T1.init(Nb_pts, T->nb_orbits, false, 0);
 	ost << "Distribution of the number of points: $";
@@ -844,7 +846,7 @@ void orbits_on_polynomials::export_something(
 		cout << "orbits_on_polynomials::export_something this = " << this << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	string fname_base;
 
@@ -878,8 +880,8 @@ void orbits_on_polynomials::export_something_worker(
 		cout << "orbits_on_polynomials::export_something_worker" << endl;
 	}
 
-	data_structures::string_tools ST;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (ST.stringcmp(what, "orbit") == 0) {

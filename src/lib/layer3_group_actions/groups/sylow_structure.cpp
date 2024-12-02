@@ -24,6 +24,7 @@ namespace groups {
 
 sylow_structure::sylow_structure()
 {
+	Record_birth();
 	primes = NULL;
 	exponents = NULL;
 	nb_primes = 0;
@@ -34,6 +35,7 @@ sylow_structure::sylow_structure()
 
 sylow_structure::~sylow_structure()
 {
+	Record_death();
 	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
@@ -83,7 +85,7 @@ void sylow_structure::init(
 		cout << "sylow_structure::init" << endl;
 	}
 
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int i;
 
 	sylow_structure::S = Sims;

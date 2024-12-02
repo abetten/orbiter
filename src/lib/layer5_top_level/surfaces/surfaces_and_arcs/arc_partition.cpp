@@ -20,6 +20,7 @@ namespace cubic_surfaces_and_arcs {
 
 arc_partition::arc_partition()
 {
+	Record_birth();
 	OP = NULL;
 
 	A = NULL;
@@ -41,6 +42,7 @@ arc_partition::arc_partition()
 
 arc_partition::~arc_partition()
 {
+	Record_death();
 	if (The_pair) {
 		FREE_OBJECT(The_pair);
 	}
@@ -84,7 +86,7 @@ void arc_partition::init(
 			0 /* verbose_level */);
 
 
-	orbiter_kernel_system::Orbiter->Lint_vec->complement(The_pair->data, arc_remainder, 6, 2);
+	other::orbiter_kernel_system::Orbiter->Lint_vec->complement(The_pair->data, arc_remainder, 6, 2);
 	if (f_v) {
 		cout << "arc_partition::init "
 				"the pair is :";
@@ -151,7 +153,7 @@ void arc_partition::recognize(
 {
 	int f_v = (verbose_level >= 1);
 	int partition_idx;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {

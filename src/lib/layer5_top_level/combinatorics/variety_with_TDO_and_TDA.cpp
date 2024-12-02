@@ -23,6 +23,7 @@ namespace apps_combinatorics {
 
 variety_with_TDO_and_TDA::variety_with_TDO_and_TDA()
 {
+	Record_birth();
 	PA = NULL;
 
 	Variety_object = NULL;
@@ -45,6 +46,7 @@ variety_with_TDO_and_TDA::variety_with_TDO_and_TDA()
 
 variety_with_TDO_and_TDA::~variety_with_TDO_and_TDA()
 {
+	Record_death();
 	if (Decomposition_scheme_TDO) {
 		FREE_OBJECT(Decomposition_scheme_TDO);
 	}
@@ -63,7 +65,7 @@ variety_with_TDO_and_TDA::~variety_with_TDO_and_TDA()
 
 void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 		projective_geometry::projective_space_with_action *PA,
-		algebraic_geometry::variety_object *Variety_object,
+		geometry::algebraic_geometry::variety_object *Variety_object,
 		groups::strong_generators *Aut_gens,
 		int verbose_level)
 {
@@ -73,7 +75,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions" << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	variety_with_TDO_and_TDA::PA = PA;
@@ -129,7 +131,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 
 	//combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
 
-	Decomposition_scheme_TDA = NEW_OBJECT(combinatorics::decomposition_scheme);
+	Decomposition_scheme_TDA = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition_scheme);
 
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
@@ -144,7 +146,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 	}
 
 
-	Variety_with_TDO = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_with_TDO = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
 				"before Variety_with_TDO->init_set_of_sets" << endl;
@@ -161,7 +163,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 				"after Variety_with_TDO->init_set_of_sets" << endl;
 	}
 
-	Variety_with_TDA = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_with_TDA = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
 				"before Variety_with_TDA->init_set_of_sets" << endl;

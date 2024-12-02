@@ -31,7 +31,7 @@ class orbit_of_equations {
 public:
 	actions::action *A;
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	groups::strong_generators *SG;
 
 	int nb_monomials;
@@ -64,7 +64,7 @@ public:
 	~orbit_of_equations();
 	void init(
 			actions::action *A,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			induced_actions::action_on_homogeneous_polynomials
 				*AonHPD,
 		groups::strong_generators *SG,
@@ -95,19 +95,19 @@ public:
 			int *transporter_to_canonical_form,
 			groups::strong_generators
 				*&gens_stab_of_canonical_equation,
-			ring_theory::longinteger_object
+				algebra::ring_theory::longinteger_object
 				&full_group_order,
 			int verbose_level);
 	groups::strong_generators *stabilizer_orbit_rep(
-			ring_theory::longinteger_object &full_group_order,
+			algebra::ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void stabilizer_orbit_rep_work(
 			actions::action *default_action,
-			ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &go,
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 	groups::strong_generators *stabilizer_any_point(
-			ring_theory::longinteger_object &full_group_order,
+			algebra::ring_theory::longinteger_object &full_group_order,
 			int idx,
 		int verbose_level);
 	int search_equation(
@@ -216,7 +216,7 @@ public:
 			std::vector<int> &Label,
 			int verbose_level);
 	void export_tree_as_layered_graph(
-			graph_theory::layered_graph *&LG,
+			combinatorics::graph_theory::layered_graph *&LG,
 			int verbose_level);
 
 };
@@ -236,7 +236,7 @@ class orbit_of_subspaces {
 public:
 	actions::action *A;
 	actions::action *A2;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	data_structures_groups::vector_ge *gens;
 	int f_lint;
 	int k;
@@ -296,7 +296,7 @@ public:
 	void init(
 			actions::action *A,
 			actions::action *A2,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int *subspace, int k, int n, 
 		int f_has_desired_pivots, int *desired_pivots, 
 		int f_has_rank_functions, void *rank_unrank_data, 
@@ -315,7 +315,7 @@ public:
 	void init_lint(
 			actions::action *A,
 			actions::action *A2,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		long int *subspace_by_rank, int k, int n,
 		int f_has_desired_pivots, int *desired_pivots,
 		int f_has_rank_functions, void *rank_unrank_data,
@@ -381,11 +381,11 @@ public:
 	void get_random_schreier_generator(
 			int *Elt, int verbose_level);
 	groups::strong_generators *stabilizer_orbit_rep(
-			ring_theory::longinteger_object &full_group_order,
+			algebra::ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void compute_stabilizer(
 			actions::action *default_action,
-			ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &go,
 			groups::sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
 };

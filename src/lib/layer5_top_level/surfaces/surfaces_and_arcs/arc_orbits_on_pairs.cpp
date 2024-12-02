@@ -20,6 +20,7 @@ namespace cubic_surfaces_and_arcs {
 
 arc_orbits_on_pairs::arc_orbits_on_pairs()
 {
+	Record_birth();
 	SAL = NULL;
 
 	A = NULL;
@@ -42,6 +43,7 @@ arc_orbits_on_pairs::arc_orbits_on_pairs()
 
 arc_orbits_on_pairs::~arc_orbits_on_pairs()
 {
+	Record_death();
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
@@ -144,7 +146,7 @@ void arc_orbits_on_pairs::init(
 	if (f_v) {
 		cout << "arc_orbits_on_pairs::init after init_root_node" << endl;
 	}
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	int t0 = Os.os_ticks();
 

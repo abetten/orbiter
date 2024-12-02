@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_arcs {
 
 surfaces_arc_lifting_definition_node::surfaces_arc_lifting_definition_node()
 {
+	Record_birth();
 	Lift = NULL;
 
 	f = 0;
@@ -50,6 +51,7 @@ surfaces_arc_lifting_definition_node::surfaces_arc_lifting_definition_node()
 
 surfaces_arc_lifting_definition_node::~surfaces_arc_lifting_definition_node()
 {
+	Record_death();
 }
 
 void surfaces_arc_lifting_definition_node::init_with_27_lines(
@@ -73,7 +75,7 @@ void surfaces_arc_lifting_definition_node::init_with_27_lines(
 	label_txt = "arc_lifting";
 	label_tex = "arc\\_lifting";
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_definition_node::init_with_27_lines before SO->init_with_27_lines" << endl;
@@ -106,7 +108,7 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 	for (i = 0; i < 45 * 72; i++) {
 		F2[i] = Seventytwo[i].f2;
 	}
-	tally_F2 = NEW_OBJECT(data_structures::tally);
+	tally_F2 = NEW_OBJECT(other::data_structures::tally);
 	tally_F2->init(F2, 45 * 72, false, 0);
 
 	f_has_F2 = true;
@@ -118,7 +120,7 @@ void surfaces_arc_lifting_definition_node::tally_f2(
 void surfaces_arc_lifting_definition_node::report(
 		int verbose_level)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	string fname_base;
 
@@ -152,7 +154,7 @@ void surfaces_arc_lifting_definition_node::report(
 		L.foot(fp);
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;

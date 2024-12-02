@@ -30,6 +30,7 @@ static void polar_callback_early_test_func(
 
 polar::polar()
 {
+	Record_birth();
 	epsilon = 0;
 	n = 0; // vector space dimension
 	k = 0;
@@ -69,6 +70,7 @@ polar::polar()
 
 polar::~polar()
 {
+	Record_death();
 	if (tmp_M) {
 		FREE_int(tmp_M);
 	}
@@ -140,9 +142,9 @@ void polar::init_group(
 
 void polar::init(
 		actions::action *A,
-		orthogonal_geometry::orthogonal *O,
+		geometry::orthogonal_geometry::orthogonal *O,
 	int epsilon, int n, int k,
-	field_theory::finite_field *F,
+	algebra::field_theory::finite_field *F,
 	int depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -215,7 +217,7 @@ void polar::init2(
 			f_print_cycles_of_length_one,
 			0 /* verbose_level */);
 		}
-	VS = NEW_OBJECT(linear_algebra::vector_space);
+	VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
 
 	VS->init(F, n /* dimension */,
 			verbose_level - 1);
@@ -310,8 +312,8 @@ void polar::compute_cosets(
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, go2, index, rem, Rank;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, go2, index, rem, Rank;
 	poset_classification::poset_orbit_node *O2;
 
 	if (f_v) {
@@ -423,7 +425,7 @@ void polar::compute_cosets(
 
 void polar::dual_polar_graph(
 		int depth, int orbit_idx,
-		ring_theory::longinteger_object *&Rank_table,
+		algebra::ring_theory::longinteger_object *&Rank_table,
 		int &nb_maximals,
 	int verbose_level)
 {
@@ -435,8 +437,8 @@ void polar::dual_polar_graph(
 	int *M1;
 	int *M2;
 	int *Elt1, *Elt2;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, go2, index, rem, Rank;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, go2, index, rem, Rank;
 	poset_classification::poset_orbit_node *O2;
 	int *Adj;
 	int **M;
@@ -469,7 +471,7 @@ void polar::dual_polar_graph(
 		}
 
 	nb_maximals = index_int;
-	Rank_table = NEW_OBJECTS(ring_theory::longinteger_object, index_int);
+	Rank_table = NEW_OBJECTS(algebra::ring_theory::longinteger_object, index_int);
 	Adj = NEW_int(index_int * index_int);
 	M = NEW_pint(index_int);
 
@@ -659,7 +661,7 @@ void polar::dual_polar_graph(
 			f << -1 << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -701,7 +703,7 @@ void polar::show_stabilizer(
 	S = A->create_sims_from_generators_with_target_group_order_factorized(
 		Strong_gens->gens, Strong_gens->tl, A->base_len(),
 		verbose_level);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	S->group_order(go);	
 	cout << "polar::show_stabilizer created group of order " << go << endl;
@@ -927,7 +929,7 @@ void polar::test_if_closed_under_cosets(
 	int *tmp_candidates;
 	int nb_tmp_candidates;
 	geometry::other_geometry::geometry_global Gg;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
@@ -1135,7 +1137,7 @@ void polar::test_if_closed_under_cosets(
 void polar::get_stabilizer(
 		int orbit_idx,
 		data_structures_groups::group_container &G,
-		ring_theory::longinteger_object &go_G)
+		algebra::ring_theory::longinteger_object &go_G)
 {
 	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
 			G, go_G, 0 /*verbose_level - 2*/);
@@ -1143,7 +1145,7 @@ void polar::get_stabilizer(
 
 void polar::get_orbit_length(
 		int orbit_idx,
-		ring_theory::longinteger_object &length)
+		algebra::ring_theory::longinteger_object &length)
 {
 	Gen->orbit_length(orbit_idx, depth, length);
 }
@@ -1190,7 +1192,7 @@ void polar::list_whole_orbit(
 	int ii;
 	long int len, j, h, jj;
 	data_structures_groups::group_container G;
-	ring_theory::longinteger_object go_G, Rank;
+	algebra::ring_theory::longinteger_object go_G, Rank;
 	int *M1;
 	int *base_cols;
 

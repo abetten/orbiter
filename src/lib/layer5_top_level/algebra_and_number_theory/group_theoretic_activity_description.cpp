@@ -22,6 +22,7 @@ namespace apps_algebra {
 
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
+	Record_birth();
 
 	f_report = false;
 	//std::string report_draw_options;
@@ -298,6 +299,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 group_theoretic_activity_description::~group_theoretic_activity_description()
 {
+	Record_death();
 }
 
 
@@ -307,7 +309,7 @@ int group_theoretic_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "group_theoretic_activity_description::read_arguments" << endl;

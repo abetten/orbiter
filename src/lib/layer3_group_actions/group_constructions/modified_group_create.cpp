@@ -21,6 +21,7 @@ namespace group_constructions {
 
 modified_group_create::modified_group_create()
 {
+	Record_birth();
 		Descr = NULL;
 
 		//std::string label;
@@ -42,6 +43,7 @@ modified_group_create::modified_group_create()
 
 modified_group_create::~modified_group_create()
 {
+	Record_death();
 		Descr = NULL;
 }
 
@@ -401,7 +403,7 @@ void modified_group_create::modified_group_init(
 
 	if (f_v) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Strong_gens->group_order(go);
 
@@ -560,8 +562,8 @@ void modified_group_create::create_action_on_k_subspaces(
 		A_modified->print_info();
 	}
 
-	algebra::matrix_group *M;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *Fq;
 
 	M = A_previous->get_matrix_group();
 
@@ -867,7 +869,7 @@ void modified_group_create::create_special_subgroup(
 
 	{
 		actions::action *A_on_det;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 
 		groups::sims *Sims;
@@ -968,7 +970,7 @@ void modified_group_create::create_even_subgroup(
 
 	{
 		actions::action *A_on_sign;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 
 		groups::sims *Sims;
@@ -1103,7 +1105,7 @@ void modified_group_create::create_derived_subgroup(
 #endif
 		groups::sims *derived_group;
 		//ring_theory::longinteger_object go;
-		ring_theory::longinteger_object d_go;
+		algebra::ring_theory::longinteger_object d_go;
 
 		derived_group = NEW_OBJECT(groups::sims);
 
@@ -1455,7 +1457,7 @@ void modified_group_create::create_product_action(
 	}
 #endif
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	std::vector<std::string> Input;
 
 	ST.parse_comma_separated_strings(
@@ -1474,8 +1476,8 @@ void modified_group_create::create_product_action(
 	AG1 = (groups::any_group *) Get_any_group_opaque(Input[0]);
 	AG2 = (groups::any_group *) Get_any_group_opaque(Input[1]);
 
-	algebra::matrix_group *M1;
-	algebra::matrix_group *M2;
+	algebra::basic_algebra::matrix_group *M1;
+	algebra::basic_algebra::matrix_group *M2;
 
 
 	if (!AG1->A->is_matrix_group()) {
@@ -1793,7 +1795,7 @@ void modified_group_create::create_automorphism_group(
 
 	FREE_OBJECT(Table);
 
-	ring_theory::longinteger_object Aut_order;
+	algebra::ring_theory::longinteger_object Aut_order;
 
 	f_has_strong_generators = true;
 	Strong_gens->group_order(Aut_order);

@@ -69,7 +69,7 @@ public:
 
 	int cnt_minimal;
 	int NCK;
-	ring_theory::longinteger_object stabilizer_group_order;
+	algebra::ring_theory::longinteger_object stabilizer_group_order;
 
 	int stabilizer_nb_generators;
 	int **stabilizer_generators;
@@ -318,8 +318,8 @@ public:
 			int n1, long int *subset1,
 		int *transporter, int verbose_level);
 	void compute_Ago_Ago_induced(
-			ring_theory::longinteger_object *&Ago,
-			ring_theory::longinteger_object *&Ago_induced,
+			algebra::ring_theory::longinteger_object *&Ago,
+			algebra::ring_theory::longinteger_object *&Ago_induced,
 			int verbose_level);
 	void get_orbit_transversal(
 			data_structures_groups::orbit_transversal *&T,
@@ -908,7 +908,7 @@ public:
 			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Called from compute_stabilizer and
 		// from orbit_representative
@@ -916,13 +916,13 @@ public:
 			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level);
 	void load_strong_generators_database(
 			int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level);
 		// Reads node cur_node_local (local index)
 		// from database D through btree 0

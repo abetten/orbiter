@@ -20,6 +20,7 @@ namespace cubic_surfaces_and_arcs {
 
 surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 {
+	Record_birth();
 	Lift = NULL;
 	//f = f2 = po = so = 0;
 	f_processed = NULL;
@@ -61,6 +62,7 @@ surfaces_arc_lifting_upstep::surfaces_arc_lifting_upstep()
 
 surfaces_arc_lifting_upstep::~surfaces_arc_lifting_upstep()
 {
+	Record_death();
 	if (f_processed) {
 		FREE_int(f_processed);
 	}
@@ -376,7 +378,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 
 
 	{
-		ring_theory::longinteger_object ago;
+		algebra::ring_theory::longinteger_object ago;
 
 		if (f_v) {
 			cout << "surfaces_arc_lifting_upstep::compute_stabilizer "
@@ -412,7 +414,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(
 					"after Group_theory_global.relative_order_vector_of_cosets" << endl;
 			cout << "relative_order_table:" << endl;
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.print_integer_matrix_with_standard_labels(cout,
 					D->relative_order_table,

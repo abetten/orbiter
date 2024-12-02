@@ -19,6 +19,7 @@ namespace apps_combinatorics {
 
 large_set_activity::large_set_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	LSW = NULL;
 }
@@ -26,6 +27,7 @@ large_set_activity::large_set_activity()
 
 large_set_activity::~large_set_activity()
 {
+	Record_death();
 }
 
 

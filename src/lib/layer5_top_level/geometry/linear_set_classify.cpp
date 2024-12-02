@@ -33,6 +33,7 @@ static void linear_set_classify_secondary_early_test_func(long int *S, int len,
 
 linear_set_classify::linear_set_classify()
 {
+	Record_birth();
 	s = n = m = q = Q = depth = 0;
 	f_semilinear = false;
 	schreier_depth = 0;
@@ -89,6 +90,7 @@ linear_set_classify::linear_set_classify()
 
 linear_set_classify::~linear_set_classify()
 {
+	Record_death();
 	int f_v = false;
 
 	if (VS) {
@@ -205,7 +207,7 @@ void linear_set_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "linear_set_classify::init" << endl;
@@ -244,7 +246,7 @@ void linear_set_classify::init(
 		f_semilinear = true;
 	}
 
-	Fq = NEW_OBJECT(field_theory::finite_field);
+	Fq = NEW_OBJECT(algebra::field_theory::finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before Fq->init" << endl;
 	}
@@ -253,7 +255,7 @@ void linear_set_classify::init(
 			false /* f_compute_related_fields */,
 			0);
 
-	FQ = NEW_OBJECT(field_theory::finite_field);
+	FQ = NEW_OBJECT(algebra::field_theory::finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before FQ->init" << endl;
 	}
@@ -262,7 +264,7 @@ void linear_set_classify::init(
 			false /* f_compute_related_fields */,
 			0);
 
-	SubS = NEW_OBJECT(field_theory::subfield_structure);
+	SubS = NEW_OBJECT(algebra::field_theory::subfield_structure);
 	if (f_v) {
 		cout << "linear_set_classify::init before SubS->init" << endl;
 	}
@@ -423,7 +425,7 @@ void linear_set_classify::init(
 		cout << "linear_set_classify::init computing spread_embedding done" << endl;
 	}
 
-	VS = NEW_OBJECT(linear_algebra::vector_space);
+	VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
 	VS->init(P->Subspaces->F, vector_space_dimension /* dimension */,
 			verbose_level - 1);
 	VS->init_rank_functions(
@@ -697,7 +699,7 @@ void linear_set_classify::calculate_intersections(
 	int **Intersection_dimensions;
 	long int ***Sets;
 	int **Set_sz;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, h, j;
 
 	Nb_nodes = NEW_int(depth + 1);
@@ -722,7 +724,7 @@ void linear_set_classify::calculate_intersections(
 					Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init(Intersection_dimensions[level] + i * D->N, D->N, false, 0);
 				C.print_bare(true);
@@ -837,7 +839,7 @@ void linear_set_classify::print_orbits_at_level(
 		int level)
 {
 	int len, orbit_at_level, i;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int *set;
 	int *Basis;
 
@@ -1058,7 +1060,7 @@ void linear_set_classify::do_classify_secondary(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set_classify::do_classify_secondary" << endl;
@@ -1142,7 +1144,7 @@ void linear_set_classify::do_classify_secondary(
 		cout << endl;
 
 		groups::strong_generators *Strong_gens2;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Gen2->get_stabilizer_generators(Strong_gens2,
 			secondary_depth, h, 0 /*verbose_level*/);
@@ -1473,7 +1475,7 @@ void linear_set_classify::do_compute_stabilizer(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "linear_set_classify::do_compute_stabilizer" << endl;
@@ -1575,7 +1577,7 @@ void linear_set_classify::do_compute_stabilizer(
 	data_structures_groups::vector_ge *aut_gens;
 	groups::strong_generators *Strong_gens_previous;
 	int group_index, orbit_len, go_int;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Gen->get_stabilizer_generators(Strong_gens_previous,
 		level, orbit_at_level, verbose_level);
@@ -1734,7 +1736,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "linear_set_classify::construct_semifield orbit_for_W=" << orbit_for_W << endl;
@@ -2144,7 +2146,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			final_node, 0 /*verbose_level*/);
 		//T->identify(spread_elements_numeric, nb_components, verbose_level);
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		int lvl;
 		int orbit_at_lvl;
 

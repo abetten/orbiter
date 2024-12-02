@@ -187,7 +187,7 @@ public:
 	int f_ownership;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_semilinear;
 
@@ -196,7 +196,7 @@ public:
 
 	quartic_curve_domain_with_action *QCDA;
 
-	algebraic_geometry::quartic_curve_object *QO;
+	geometry::algebraic_geometry::quartic_curve_object *QO;
 
 	quartic_curve_object_with_group *QOG;
 
@@ -209,7 +209,7 @@ public:
 	quartic_curves::quartic_curve_from_surface *QC_from_surface;
 
 
-	algebraic_geometry::variety_object *Variety_object;
+	geometry::algebraic_geometry::variety_object *Variety_object;
 
 
 	quartic_curve_create();
@@ -304,7 +304,7 @@ public:
 
 	int f_semilinear;
 
-	algebraic_geometry::quartic_curve_domain *Dom; // do not free
+	geometry::algebraic_geometry::quartic_curve_domain *Dom; // do not free
 
 	actions::action *A; // linear group PGGL(3,q)
 
@@ -319,7 +319,7 @@ public:
 	quartic_curve_domain_with_action();
 	~quartic_curve_domain_with_action();
 	void init(
-			algebraic_geometry::quartic_curve_domain *Dom,
+			geometry::algebraic_geometry::quartic_curve_domain *Dom,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 	void table_of_quartic_curves(
@@ -419,7 +419,7 @@ public:
 	int sz_curve;
 
 
-	algebraic_geometry::variety_object *Variety_object;
+	geometry::algebraic_geometry::variety_object *Variety_object;
 
 
 	// computed by canonical_form_global::compute_stabilizer_of_quartic_curve:
@@ -478,7 +478,7 @@ public:
 
 	quartic_curve_domain_with_action *DomA;
 
-	algebraic_geometry::quartic_curve_object *QO; // do not free
+	geometry::algebraic_geometry::quartic_curve_object *QO; // do not free
 
 	groups::strong_generators *Aut_gens;
 		// generators for the automorphism group
@@ -497,7 +497,7 @@ public:
 	~quartic_curve_object_with_group();
 	void init(
 			quartic_curve_domain_with_action *DomA,
-			algebraic_geometry::quartic_curve_object *QO,
+			geometry::algebraic_geometry::quartic_curve_object *QO,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
 	void export_something(

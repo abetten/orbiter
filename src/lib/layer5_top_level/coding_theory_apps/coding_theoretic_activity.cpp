@@ -18,6 +18,7 @@ namespace apps_coding_theory {
 
 coding_theoretic_activity::coding_theoretic_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	f_has_finite_field = false;
@@ -29,12 +30,13 @@ coding_theoretic_activity::coding_theoretic_activity()
 
 coding_theoretic_activity::~coding_theoretic_activity()
 {
+	Record_death();
 }
 
 
 void coding_theoretic_activity::init_field(
 		coding_theoretic_activity_description *Descr,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -92,7 +94,7 @@ void coding_theoretic_activity::perform_activity(
 	if (f_v) {
 		cout << "coding_theoretic_activity::perform_activity" << endl;
 	}
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (Descr->f_report) {
 		if (f_v) {
@@ -122,10 +124,10 @@ void coding_theoretic_activity::perform_activity(
 
 		Get_vector_or_set(Descr->general_code_binary_text, Words, nb_words);
 
-		coding_theory::code_diagram *Diagram;
+		combinatorics::coding_theory::code_diagram *Diagram;
 
 
-		Diagram = NEW_OBJECT(coding_theory::code_diagram);
+		Diagram = NEW_OBJECT(combinatorics::coding_theory::code_diagram);
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -156,7 +158,7 @@ void coding_theoretic_activity::perform_activity(
 
 	}
 	else if (Descr->f_encode_text_5bits) {
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -173,7 +175,7 @@ void coding_theoretic_activity::perform_activity(
 
 	}
 	else if (Descr->f_field_induction) {
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -213,7 +215,7 @@ void coding_theoretic_activity::perform_activity(
 	}
 	else if (Descr->f_minimum_distance) {
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		int *v;
 		int m, n;
@@ -240,7 +242,7 @@ void coding_theoretic_activity::perform_activity(
 
 		cout << "before generator_matrix_cyclic_code" << endl;
 
-		coding_theory::cyclic_codes Cyclic_codes;
+		combinatorics::coding_theory::cyclic_codes Cyclic_codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -261,7 +263,7 @@ void coding_theoretic_activity::perform_activity(
 		cout << "-Sylvester_Hadamard_code "
 				"n=" << Descr->Sylvester_Hadamard_code_n << endl;
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -280,7 +282,7 @@ void coding_theoretic_activity::perform_activity(
 
 
 	else if (Descr->f_NTT) {
-		number_theory::number_theoretic_transform NTT;
+		algebra::number_theory::number_theoretic_transform NTT;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -297,7 +299,7 @@ void coding_theoretic_activity::perform_activity(
 	else if (Descr->f_fixed_code) {
 		cout << "-fixed_code " << Descr->fixed_code_perm << endl;
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		long int *perm;
 		int n;
@@ -510,7 +512,7 @@ void coding_theoretic_activity::perform_activity(
 			exit(1);
 		}
 
-		coding_theory::code_diagram *Diagram;
+		combinatorics::coding_theory::code_diagram *Diagram;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -573,7 +575,7 @@ void coding_theoretic_activity::perform_activity(
 			exit(1);
 		}
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -595,7 +597,7 @@ void coding_theoretic_activity::perform_activity(
 	else if (Descr->f_crc32) {
 		cout << "-crc32 " << Descr->crc32_text << endl;
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 		uint32_t a;
 
 		if (f_v) {
@@ -610,7 +612,7 @@ void coding_theoretic_activity::perform_activity(
 
 		cout << "CRC value of " << Descr->crc32_text << " is ";
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 		Algo.print_uint32_hex(cout, a);
 		cout << endl;
@@ -619,8 +621,8 @@ void coding_theoretic_activity::perform_activity(
 	else if (Descr->f_crc32_hexdata) {
 		cout << "-crc32_hexdata " << Descr->crc32_hexdata_text << endl;
 
-		coding_theory::crc_codes Crc_codes;
-		data_structures::algorithms Algo;
+		combinatorics::coding_theory::crc_codes Crc_codes;
+		other::data_structures::algorithms Algo;
 		uint32_t a;
 		char *data;
 		int data_size;
@@ -666,7 +668,7 @@ void coding_theoretic_activity::perform_activity(
 				<< Descr->crc32_test_block_length
 				<< endl;
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -732,9 +734,9 @@ void coding_theoretic_activity::perform_activity(
 				<< endl;
 
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
-		coding_theory::crc_object *CRC;
+		combinatorics::coding_theory::crc_object *CRC;
 
 
 		CRC = Get_crc_code(Descr->crc_encode_file_based_crc_code);
@@ -772,10 +774,10 @@ void coding_theoretic_activity::perform_activity(
 				<< endl;
 
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
-		coding_theory::crc_object *CRC1;
-		coding_theory::crc_object *CRC2;
+		combinatorics::coding_theory::crc_object *CRC1;
+		combinatorics::coding_theory::crc_object *CRC2;
 
 		CRC1 = Get_crc_code(Descr->crc_compare_code1);
 		CRC2 = Get_crc_code(Descr->crc_compare_code2);
@@ -819,10 +821,10 @@ void coding_theoretic_activity::perform_activity(
 				<< endl;
 
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
-		coding_theory::crc_object *CRC1;
-		coding_theory::crc_object *CRC2;
+		combinatorics::coding_theory::crc_object *CRC1;
+		combinatorics::coding_theory::crc_object *CRC2;
 
 
 
@@ -863,9 +865,9 @@ void coding_theoretic_activity::perform_activity(
 				<< endl;
 
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
-		coding_theory::crc_object *CRC1;
+		combinatorics::coding_theory::crc_object *CRC1;
 
 		CRC1 = Get_crc_code(Descr->weight_enumerator_bottom_up_crc_code);
 
@@ -905,10 +907,10 @@ void coding_theoretic_activity::perform_activity(
 				<< endl;
 
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
-		coding_theory::crc_object *CRC1;
-		coding_theory::crc_object *CRC2;
+		combinatorics::coding_theory::crc_object *CRC1;
+		combinatorics::coding_theory::crc_object *CRC2;
 
 
 		CRC1 = Get_crc_code(Descr->crc_compare_read_output_file_crc_code1);
@@ -950,7 +952,7 @@ void coding_theoretic_activity::perform_activity(
 				<< " " << Descr->convert_data_to_polynomials_symbol_size
 				<< endl;
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 
 		if (Descr->convert_data_to_polynomials_symbol_size == 256) {
@@ -989,7 +991,7 @@ void coding_theoretic_activity::perform_activity(
 #endif
 	else if (Descr->f_find_CRC_polynomials) {
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -1007,7 +1009,7 @@ void coding_theoretic_activity::perform_activity(
 	}
 	else if (Descr->f_write_code_for_division) {
 
-		ring_theory::ring_theory_global R;
+		algebra::ring_theory::ring_theory_global R;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -1026,7 +1028,7 @@ void coding_theoretic_activity::perform_activity(
 
 	else if (Descr->f_polynomial_division_from_file) {
 
-		ring_theory::ring_theory_global R;
+		algebra::ring_theory::ring_theory_global R;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -1044,7 +1046,7 @@ void coding_theoretic_activity::perform_activity(
 
 	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
 
-		ring_theory::ring_theory_global R;
+		algebra::ring_theory::ring_theory_global R;
 
 		if (f_v) {
 			cout << "coding_theoretic_activity::perform_activity "
@@ -1068,7 +1070,7 @@ void coding_theoretic_activity::perform_activity(
 }
 
 void coding_theoretic_activity::do_diagram(
-		coding_theory::code_diagram *Diagram,
+		combinatorics::coding_theory::code_diagram *Diagram,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

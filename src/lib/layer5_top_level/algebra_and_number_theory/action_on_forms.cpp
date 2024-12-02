@@ -19,6 +19,7 @@ namespace apps_algebra {
 
 action_on_forms::action_on_forms()
 {
+	Record_birth();
 	Descr = NULL;
 
 	//std::string prefix;
@@ -44,6 +45,7 @@ action_on_forms::action_on_forms()
 
 action_on_forms::~action_on_forms()
 {
+	Record_death();
 }
 
 
@@ -70,7 +72,7 @@ void action_on_forms::create_action_on_forms(
 
 	F = PA->F;
 
-	PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
+	PF = NEW_OBJECT(combinatorics::special_functions::polynomial_function_domain);
 
 	if (f_v) {
 		cout << "action_on_forms::create_action_on_forms "
@@ -92,7 +94,7 @@ void action_on_forms::create_action_on_forms(
 	}
 
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 	HPD = &PF->Poly[PF->max_degree];
 
@@ -149,7 +151,7 @@ void action_on_forms::orbits_on_functions(
 		cout << "action_on_forms::orbits_on_functions len=" << len << endl;
 	}
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 	HPD = &PF->Poly[PF->max_degree];
 
@@ -180,9 +182,9 @@ void action_on_forms::orbits_on_functions(
 	}
 
 #if 1
-	data_structures::int_matrix *Table_of_equations;
+	other::data_structures::int_matrix *Table_of_equations;
 
-	Table_of_equations = NEW_OBJECT(data_structures::int_matrix);
+	Table_of_equations = NEW_OBJECT(other::data_structures::int_matrix);
 
 	if (f_v) {
 		cout << "action_on_forms::orbits_on_functions "
@@ -268,16 +270,16 @@ void action_on_forms::orbits_on_functions(
 	}
 
 
-	data_structures::tally *Classify_orbits_by_length;
+	other::data_structures::tally *Classify_orbits_by_length;
 
 	if (f_v) {
 		cout << "action_on_forms::orbits_on_functions" << endl;
 	}
-	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
+	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
 	Classify_orbits_by_length->init(Orb->orbit_len, Orb->nb_orbits, false, 0);
 
 
-	data_structures::set_of_sets *SoS;
+	other::data_structures::set_of_sets *SoS;
 	int *types;
 	int nb_types;
 
@@ -337,7 +339,7 @@ void action_on_forms::orbits_on_functions(
 
 				for (u = 0; u < orbit_len; u++) {
 
-					data_structures::int_matrix *Table_of_equations;
+					other::data_structures::int_matrix *Table_of_equations;
 
 					orbit_element = v[u];
 					cout << orbit_element << " = ";
@@ -398,7 +400,7 @@ void action_on_forms::orbits_on_equations(
 	}
 
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 	HPD = &PF->Poly[PF->max_degree];
 
@@ -497,10 +499,10 @@ void action_on_forms::differential_uniformity(
 	int delta;
 	int *Fibre;
 
-	combinatorics::apn_functions *Apn_functions;
+	combinatorics::special_functions::apn_functions *Apn_functions;
 
 
-	Apn_functions = NEW_OBJECT(combinatorics::apn_functions);
+	Apn_functions = NEW_OBJECT(combinatorics::special_functions::apn_functions);
 
 	Apn_functions->init(F, verbose_level);
 

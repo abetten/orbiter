@@ -20,6 +20,7 @@ namespace apps_combinatorics {
 
 combinatorial_object_stream::combinatorial_object_stream()
 {
+	Record_birth();
 	//Data_input_stream_description = NULL;
 
 	IS = NULL;
@@ -31,6 +32,7 @@ combinatorial_object_stream::combinatorial_object_stream()
 
 combinatorial_object_stream::~combinatorial_object_stream()
 {
+	Record_death();
 	if (Classification_of_objects) {
 		FREE_OBJECT(Classification_of_objects);
 	}
@@ -41,7 +43,7 @@ combinatorial_object_stream::~combinatorial_object_stream()
 
 
 void combinatorial_object_stream::init(
-		canonical_form_classification::data_input_stream_description
+		combinatorics::canonical_form_classification::data_input_stream_description
 				*Data_input_stream_description,
 		int verbose_level)
 {
@@ -53,7 +55,7 @@ void combinatorial_object_stream::init(
 	//combinatorial_object::Data_input_stream_description = Data_input_stream_description;
 
 
-	IS = NEW_OBJECT(canonical_form_classification::data_input_stream);
+	IS = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream);
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::init "
@@ -75,7 +77,7 @@ void combinatorial_object_stream::init(
 }
 
 void combinatorial_object_stream::do_canonical_form(
-		canonical_form_classification::classification_of_objects_description
+		combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
@@ -91,7 +93,7 @@ void combinatorial_object_stream::do_canonical_form(
 
 
 
-	Classification_of_objects = NEW_OBJECT(canonical_form_classification::classification_of_objects);
+	Classification_of_objects = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects);
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::geometry::projective_space *P "
@@ -188,7 +190,7 @@ void combinatorial_object_stream::do_canonical_form_not_PG(
 #endif
 
 void combinatorial_object_stream::do_test_distinguishing_property(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -205,15 +207,15 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		F_distinguishing[input_idx] = CG->test_distinguishing_property(
 				OwCF->set, OwCF->sz, verbose_level);
 	}
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(F_distinguishing, IS->Objects.size(), false, 0);
 	cout << "classification : ";
@@ -234,9 +236,9 @@ void combinatorial_object_stream::do_test_distinguishing_property(
 			continue;
 		}
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		OwCF->print_brief(cout);
 
@@ -257,7 +259,7 @@ void combinatorial_object_stream::do_covering_type(
 		orbits::orbits_create *Orb,
 		int subset_sz,
 		int f_filter_by_Steiner_property,
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -270,7 +272,7 @@ void combinatorial_object_stream::do_covering_type(
 				"f_filter_by_Steiner_property = " << f_filter_by_Steiner_property << endl;
 	}
 
-	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
+	AO = NEW_OBJECT(other::orbiter_kernel_system::activity_output);
 	//AO->nb_rows = IS->Objects.size();
 
 	AO->headings = "set,idx,covering_wrt" + std::to_string(subset_sz) + ",steiner_p";
@@ -278,7 +280,7 @@ void combinatorial_object_stream::do_covering_type(
 	AO->description_txt = "covering_wrt" + std::to_string(subset_sz);
 
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	int nCk;
 
@@ -297,9 +299,9 @@ void combinatorial_object_stream::do_covering_type(
 	}
 
 
-	canonical_form_classification::any_combinatorial_object *OwCF;
+	combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-	OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
+	OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
 
 
 	if (OwCF->type != t_PTS) {
@@ -366,14 +368,14 @@ void combinatorial_object_stream::do_covering_type(
 
 	long int input_idx;
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 
 		if (OwCF->type != t_PTS) {
@@ -476,7 +478,7 @@ void combinatorial_object_stream::do_covering_type(
 }
 
 void combinatorial_object_stream::do_compute_frequency_graph(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -496,9 +498,9 @@ void combinatorial_object_stream::do_compute_frequency_graph(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 #if 0
 		if (input_idx == 0) {
@@ -520,7 +522,7 @@ void combinatorial_object_stream::do_compute_frequency_graph(
 		//CG->distinguishing_code_frequency(
 		//		OwCF->set, OwCF->sz, frequency, N, verbose_level);
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(code, CG->nb_points, false, 0);
 		cout << "frequency tally : ";
@@ -539,7 +541,7 @@ void combinatorial_object_stream::do_compute_frequency_graph(
 }
 
 void combinatorial_object_stream::do_compute_ideal(
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -556,9 +558,9 @@ void combinatorial_object_stream::do_compute_ideal(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		HPD->explore_vanishing_ideal(OwCF->set, OwCF->sz, verbose_level);
 
@@ -586,9 +588,9 @@ void combinatorial_object_stream::do_save(
 
 	N = IS->Objects.size();
 
-	canonical_form_classification::any_combinatorial_object *OwCF;
+	combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-	OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
+	OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[0];
 
 	//OwCF->set;
 	sz = OwCF->sz;
@@ -601,9 +603,9 @@ void combinatorial_object_stream::do_save(
 					<< " / " << IS->Objects.size() << endl;
 		}
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *)
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *)
 				IS->Objects[input_idx];
 
 		//OwCF->set;
@@ -620,9 +622,9 @@ void combinatorial_object_stream::do_save(
 	Sets = NEW_lint(N * sz);
 
 	for (input_idx = 0; input_idx < N; input_idx++) {
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		Lint_vec_copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
@@ -653,7 +655,7 @@ void combinatorial_object_stream::do_save(
 	else {
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string fname_out;
 
@@ -673,12 +675,12 @@ void combinatorial_object_stream::do_save(
 
 void combinatorial_object_stream::draw_incidence_matrices(
 		std::string &prefix,
-		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::draw_incidence_matrices" << endl;
@@ -698,7 +700,7 @@ void combinatorial_object_stream::draw_incidence_matrices(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -724,12 +726,12 @@ void combinatorial_object_stream::draw_incidence_matrices(
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
 						"object " << i << " / " << N << endl;
 			}
-			canonical_form_classification::any_combinatorial_object *OwCF;
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
-			canonical_form_classification::encoded_combinatorial_object *Enc;
+			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
 			if (f_v) {
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
@@ -780,8 +782,8 @@ void combinatorial_object_stream::unpack_from_restricted_action(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::unpack_from_restricted_action" << endl;
@@ -829,9 +831,9 @@ void combinatorial_object_stream::unpack_from_restricted_action(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::any_combinatorial_object *OwCF;
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			//encoded_combinatorial_object *Enc;
@@ -885,8 +887,8 @@ void combinatorial_object_stream::line_covering_type(
 		cout << "combinatorial_object_stream::line_covering_type" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	geometry::projective_geometry::projective_space *P;
 
@@ -929,9 +931,9 @@ void combinatorial_object_stream::line_covering_type(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::any_combinatorial_object *OwCF;
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type_basic_given_a_set_of_lines(
@@ -966,8 +968,8 @@ void combinatorial_object_stream::line_type(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorial_object_stream::line_type" << endl;
@@ -1010,9 +1012,9 @@ void combinatorial_object_stream::line_type(
 
 		for (i = 0; i < N; i++) {
 
-			canonical_form_classification::any_combinatorial_object *OwCF;
+			combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-			OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
+			OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[i];
 
 
 			P->Subspaces->line_intersection_type(
@@ -1026,7 +1028,7 @@ void combinatorial_object_stream::line_type(
 			ost << endl;
 
 #if 1
-			data_structures::tally T;
+			other::data_structures::tally T;
 
 			T.init(type, P->Subspaces->N_lines, false, 0);
 
@@ -1070,7 +1072,7 @@ void combinatorial_object_stream::line_type(
 
 void combinatorial_object_stream::do_activity(
 		user_interface::activity_description *Activity_description,
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1100,7 +1102,7 @@ void combinatorial_object_stream::do_activity(
 void combinatorial_object_stream::do_graph_theoretic_activity(
 		apps_graph_theory::graph_theoretic_activity_description
 				*Graph_theoretic_activity_description,
-		orbiter_kernel_system::activity_output *&AO,
+				other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1110,7 +1112,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 	}
 
 
-	AO = NEW_OBJECT(orbiter_kernel_system::activity_output);
+	AO = NEW_OBJECT(other::orbiter_kernel_system::activity_output);
 	//AO->nb_rows = IS->Objects.size();
 
 	{
@@ -1137,9 +1139,9 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		canonical_form_classification::any_combinatorial_object *OwCF;
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
 
-		OwCF = (canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
 		if (OwCF->type != t_INC) {
 			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
@@ -1158,9 +1160,9 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 				Adj, N,
 				verbose_level);
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
-		CG = NEW_OBJECT(graph_theory::colored_graph);
+		CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 		if (f_v) {
 			cout << "combinatorial_object_stream::do_graph_theoretic_activity "
 					"before CG->init_from_adjacency_no_colors" << endl;

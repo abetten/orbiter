@@ -24,12 +24,14 @@ namespace other_geometry {
 
 arc_in_projective_space::arc_in_projective_space()
 {
+	Record_birth();
 	P = NULL;
 
 }
 
 arc_in_projective_space::~arc_in_projective_space()
 {
+	Record_death();
 
 }
 
@@ -72,7 +74,7 @@ void arc_in_projective_space::create_arc_1_BCKM(
 	long int *Hyperoval;
 	int hyperoval_size;
 	int frob_power;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	hyperoval_size = P->Subspaces->q + 2;
@@ -148,7 +150,7 @@ void arc_in_projective_space::create_arc_1_BCKM(
 			line_pencil, 0 /* verbose_level */);
 
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 	Algorithms.set_minus(
 			External_lines, line_pencil, line_pencil_size,
@@ -365,7 +367,7 @@ void arc_in_projective_space::create_arc_2_BCKM(
 
 	}
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 	Algorithms.filter_duplicates_and_make_array_of_long_int(
 			Pts, the_arc, size,
@@ -430,7 +432,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	int i, j, b, h, idx;
 	long int L[4];
 	int v[3];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (P->Subspaces->n != 2) {
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
@@ -605,7 +607,7 @@ void arc_in_projective_space::create_pasch_arc(
 	int points[5];
 	int i, j, b, h, idx;
 	int L[4];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_pasch_arc" << endl;
@@ -700,7 +702,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	int L[3];
 	int pencil[9];
 	int Pencil[21];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Cheon_arc" << endl;
@@ -980,8 +982,8 @@ void arc_in_projective_space::create_Payne_hyperoval(
 	int f_v = (verbose_level >= 1);
 	int i;
 	int v[3];
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object a, b, u, u2, g;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object a, b, u, u2, g;
 	int exponent;
 	int one_sixth, one_half, five_sixth;
 
@@ -1061,7 +1063,7 @@ void arc_in_projective_space::create_Cherowitzo_hyperoval(
 	int h;
 	int sigma;
 	int exponent, one_half, e1, e2, e3;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Cherowitzo_hyperoval" << endl;
@@ -1184,7 +1186,7 @@ void arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32(
 void arc_in_projective_space::arc_lifting_diophant(
 	long int *arc, int arc_sz,
 	int target_sz, int target_d,
-	solvers::diophant *&D,
+	combinatorics::solvers::diophant *&D,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1193,7 +1195,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 	int i, j, h, pt;
 	long int *free_points;
 	int nb_free_points;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting_diophant" << endl;
@@ -1222,7 +1224,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 		}
 	}
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	C.init(line_type, P->Subspaces->N_lines, false, 0);
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting_diophant line_type:";
@@ -1232,7 +1234,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 	}
 
 
-	D = NEW_OBJECT(solvers::diophant);
+	D = NEW_OBJECT(combinatorics::solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, nb_free_points, verbose_level - 1);
 	//D->f_x_max = true;
 	for (j = 0; j < nb_free_points; j++) {
@@ -1311,7 +1313,7 @@ void arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_
 	long int *s_lines, int nb_s_lines,
 	int target_sz, int arc_d, int arc_d_low, int arc_s,
 	int f_dualize,
-	solvers::diophant *&D,
+	combinatorics::solvers::diophant *&D,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1322,7 +1324,7 @@ void arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_
 	long int *other_lines;
 	int nb_other_lines;
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_s_lines" << endl;
@@ -1345,7 +1347,7 @@ void arc_in_projective_space::create_diophant_for_arc_lifting_with_given_set_of_
 	}
 
 
-	D = NEW_OBJECT(solvers::diophant);
+	D = NEW_OBJECT(combinatorics::solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
@@ -1444,7 +1446,7 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 		long int *t_lines, int nb_t_lines, int arc_t,
 		int target_sz, int arc_d, int arc_d_low,
 		int f_dualize,
-		solvers::diophant *&D,
+		combinatorics::solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1452,8 +1454,8 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 	int i, j, h, a, line;
 	long int *other_lines;
 	int nb_other_lines;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_with_two_given_line_sets_diophant" << endl;
@@ -1478,7 +1480,7 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 	}
 
 
-	D = NEW_OBJECT(solvers::diophant);
+	D = NEW_OBJECT(combinatorics::solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
@@ -1600,7 +1602,7 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 		long int *u_lines, int nb_u_lines, int arc_u,
 		int target_sz, int arc_d, int arc_d_low,
 		int f_dualize,
-		solvers::diophant *&D,
+		combinatorics::solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1608,8 +1610,8 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 	int i, j, h, a, line;
 	long int *other_lines;
 	int nb_other_lines;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_with_three_given_line_sets_diophant" << endl;
@@ -1637,7 +1639,7 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 	}
 
 
-	D = NEW_OBJECT(solvers::diophant);
+	D = NEW_OBJECT(combinatorics::solvers::diophant);
 	D->open(P->Subspaces->N_lines + 1, P->Subspaces->N_points, verbose_level - 1);
 	//D->f_x_max = true;
 	for (j = 0; j < P->Subspaces->N_points; j++) {
@@ -1776,7 +1778,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 		int arc_sz, int arc_d,
 		std::string &secant_lines_text,
 		std::string &external_lines_as_subset_of_secants_text,
-		solvers::diophant *&D,
+		combinatorics::solvers::diophant *&D,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1790,8 +1792,8 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	int nb_external_lines;
 	int *other_lines;
 	int nb_other_lines;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::maximal_arc_by_diophant" << endl;
@@ -1893,7 +1895,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	nb_eqns = P->Subspaces->N_lines + 1 + nb_pencil_conditions;
 	nb_vars = P->Subspaces->N_points + nb_slack1;
 
-	D = NEW_OBJECT(solvers::diophant);
+	D = NEW_OBJECT(combinatorics::solvers::diophant);
 	D->open(nb_eqns, nb_vars, verbose_level - 1);
 	//D->f_x_max = true;
 	for (j = 0; j < nb_vars; j++) {
@@ -2055,7 +2057,7 @@ void arc_in_projective_space::arc_lifting1(
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting1" << endl;
 	}
-	solvers::diophant *D = NULL;
+	combinatorics::solvers::diophant *D = NULL;
 	int f_save_system = true;
 
 	long int *the_set_in;
@@ -2114,7 +2116,7 @@ void arc_in_projective_space::arc_lifting1(
 
 	fname_solutions = arc_label + ".solutions";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.write_solutions_as_index_set(
 			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
@@ -2159,7 +2161,7 @@ void arc_in_projective_space::arc_lifting2(
 	Lint_vec_scan(arc_input_set, the_set_in, set_size_in);
 
 
-	solvers::diophant *D = NULL;
+	combinatorics::solvers::diophant *D = NULL;
 	int f_save_system = true;
 
 	arc_with_two_given_line_sets_diophant(
@@ -2204,7 +2206,7 @@ void arc_in_projective_space::arc_lifting2(
 
 	fname_solutions = arc_label + ".solutions";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.write_solutions_as_index_set(
 			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
@@ -2238,7 +2240,7 @@ void arc_in_projective_space::arc_lifting3(
 	}
 	//int arc_size;
 	//int arc_d;
-	solvers::diophant *D = NULL;
+	combinatorics::solvers::diophant *D = NULL;
 	int f_save_system = true;
 
 	long int *t_lines;
@@ -2309,7 +2311,7 @@ void arc_in_projective_space::arc_lifting3(
 
 	fname_solutions = arc_label + ".solutions";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.write_solutions_as_index_set(
 			fname_solutions, Sol, nb_sol, D->n, D->sum, verbose_level);
@@ -2334,7 +2336,7 @@ void arc_in_projective_space::create_hyperoval(
 	int n = 2;
 	int i, d;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	d = n + 1;
 
@@ -2418,7 +2420,7 @@ void arc_in_projective_space::create_subiaco_oval(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_oval" << endl;
@@ -2477,7 +2479,7 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_hyperoval" << endl;
@@ -2531,7 +2533,7 @@ int arc_in_projective_space::arc_test(
 	int set[3];
 	int ret = true;
 	int h, i, N;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_test" << endl;

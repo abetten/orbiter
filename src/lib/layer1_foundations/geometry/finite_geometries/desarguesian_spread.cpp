@@ -18,6 +18,7 @@ namespace finite_geometries {
 
 desarguesian_spread::desarguesian_spread()
 {
+	Record_birth();
 	n = m = s = q = Q = 0;
 	Fq = NULL;
 	FQ = NULL;
@@ -30,12 +31,13 @@ desarguesian_spread::desarguesian_spread()
 	Spread_elements = NULL;
 	Rk = NULL;
 	List_of_points = NULL;
-};
+}
 
 
 
 desarguesian_spread::~desarguesian_spread()
 {
+	Record_death();
 #if 0
 	if (SubS) {
 		FREE_OBJECT(SubS);
@@ -57,11 +59,11 @@ desarguesian_spread::~desarguesian_spread()
 
 void desarguesian_spread::init(
 		int n, int m, int s,
-		field_theory::subfield_structure *SubS,
+		algebra::field_theory::subfield_structure *SubS,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -509,7 +511,7 @@ void desarguesian_spread::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -537,7 +539,7 @@ void desarguesian_spread::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

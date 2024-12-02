@@ -31,6 +31,7 @@ static void blt_set_classify_early_test_func_callback(
 
 blt_set_classify::blt_set_classify()
 {
+	Record_birth();
 	OA = NULL;
 	Blt_set_domain_with_action = NULL;
 	Blt_set_domain = NULL;
@@ -51,6 +52,7 @@ blt_set_classify::blt_set_classify()
 
 blt_set_classify::~blt_set_classify()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -137,7 +139,7 @@ void blt_set_classify::init_basic(
 	}
 
 	induced_actions::action_on_orthogonal *AO;
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 	int f_semilinear;
 
 
@@ -437,7 +439,7 @@ void blt_set_classify::create_graphs(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -462,7 +464,7 @@ void blt_set_classify::create_graphs(
 
 	long int *Time;
 	int time_idx;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string str;
 
@@ -510,7 +512,7 @@ void blt_set_classify::create_graphs(
 		}
 
 		
-		graph_theory::colored_graph *CG = NULL;
+		combinatorics::graph_theory::colored_graph *CG = NULL;
 		int nb_vertices = -1;
 
 		int t0 = Os.os_ticks();
@@ -642,7 +644,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	long int *list_of_cases_created;
 	int nb_of_cases_created;
 	int c;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	fname = Blt_set_domain->prefix + "_lvl_" + std::to_string(starter_size);
@@ -675,7 +677,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 		}
 
 		
-		graph_theory::colored_graph *CG = NULL;
+		combinatorics::graph_theory::colored_graph *CG = NULL;
 		int nb_vertices = -1;
 
 
@@ -745,7 +747,7 @@ int blt_set_classify::create_graph(
 	int orbit_at_level, int level_of_candidates_file, 
 	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
 	int &nb_vertices,
-	graph_theory::colored_graph *&CG,
+	combinatorics::graph_theory::colored_graph *&CG,
 	int verbose_level)
 // returns true if a graph was written, false otherwise
 {
@@ -896,7 +898,7 @@ void blt_set_classify::lifting_prepare_function_new(
 		solvers_package::exact_cover *E, int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
+	combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out,
 	int verbose_level)
 {
@@ -1006,7 +1008,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 
 
-	Dio = NEW_OBJECT(solvers::diophant);
+	Dio = NEW_OBJECT(combinatorics::solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->sum = nb_needed;
 
@@ -1104,7 +1106,7 @@ void blt_set_classify::report(
 		report2(ost, T, verbose_level);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
@@ -1140,7 +1142,7 @@ void blt_set_classify::report2(
 	int f_12pt = false;
 	int f_enlarged_page = true;
 	int f_pagenumbers = true;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	title = "BLT-sets of ${\\cal Q}(4," + std::to_string(q) + ")$";
 
@@ -1160,12 +1162,12 @@ void blt_set_classify::report2(
 
 
 	int h;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
-	ring_theory::longinteger_object *Ago;
+	algebra::ring_theory::longinteger_object *Ago;
 
-	Ago = NEW_OBJECTS(ring_theory::longinteger_object, T->nb_orbits);
+	Ago = NEW_OBJECTS(algebra::ring_theory::longinteger_object, T->nb_orbits);
 
 
 
@@ -1185,9 +1187,9 @@ void blt_set_classify::report2(
 	cout << "Computing intersection and plane invariants" << endl;
 
 
-	orthogonal_geometry::blt_set_invariants *Inv;
+	geometry::orthogonal_geometry::blt_set_invariants *Inv;
 
-	Inv = NEW_OBJECTS(orthogonal_geometry::blt_set_invariants, T->nb_orbits);
+	Inv = NEW_OBJECTS(geometry::orthogonal_geometry::blt_set_invariants, T->nb_orbits);
 
 	for (h = 0; h < T->nb_orbits; h++) {
 

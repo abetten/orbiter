@@ -17,6 +17,7 @@ namespace packings {
 
 packing_classify_activity::packing_classify_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	Packing_classify = NULL;
 }
@@ -24,6 +25,7 @@ packing_classify_activity::packing_classify_activity()
 
 packing_classify_activity::~packing_classify_activity()
 {
+	Record_death();
 }
 
 
@@ -134,7 +136,7 @@ void packing_classify_activity::perform_activity(
 					"f_make_graph_of_disjoint_spreads" << endl;
 		}
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
 
 		if (f_v) {

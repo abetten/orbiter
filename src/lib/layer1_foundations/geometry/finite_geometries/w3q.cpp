@@ -21,6 +21,7 @@ namespace finite_geometries {
 
 W3q::W3q()
 {
+	Record_birth();
 	q = 0;
 
 	P3 = NULL;
@@ -38,6 +39,7 @@ W3q::W3q()
 
 W3q::~W3q()
 {
+	Record_death();
 	if (P3) {
 		FREE_OBJECT(P3);
 	}
@@ -56,7 +58,7 @@ W3q::~W3q()
 }
 
 void W3q::init(
-		field_theory::finite_field *F, int verbose_level)
+		algebra::field_theory::finite_field *F, int verbose_level)
 // allocates a projective_space P3 = PG(3,q)
 // and an orthogonal space Q4 = Q(4,q)
 {
@@ -268,7 +270,7 @@ int W3q::find_line(
 		int line)
 {
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (!Sorting.int_vec_search(Lines, nb_lines, line, idx)) {
 		cout << "W3q::find_line could not find the line" << endl;

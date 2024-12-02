@@ -18,6 +18,7 @@ namespace cubic_surfaces_and_arcs {
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
+	Record_birth();
 	Descr = NULL;
 	PA = NULL;
 	Gen = NULL;
@@ -29,6 +30,7 @@ six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 
 six_arcs_not_on_a_conic::~six_arcs_not_on_a_conic()
 {
+	Record_death();
 	if (Gen) {
 		FREE_OBJECT(Gen);
 	}
@@ -208,7 +210,7 @@ void six_arcs_not_on_a_conic::recognize(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_at_level;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::recognize" << endl;
@@ -242,8 +244,8 @@ void six_arcs_not_on_a_conic::report_latex(
 	ost << "\\subsection*{Classification of 6-arcs not on a conic "
 			"in $\\PG(2," << PA->F->q << ")$}" << endl;
 	
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_domain D;
 	{
 		PA->A->Strong_gens->group_order(go);
 
@@ -254,7 +256,7 @@ void six_arcs_not_on_a_conic::report_latex(
 		ost << "\\bigskip" << endl << endl;
 	}
 
-	ring_theory::longinteger_object ol, Ol;
+	algebra::ring_theory::longinteger_object ol, Ol;
 	Ol.create(0);
 	for (h = 0; h < nb_arcs_not_on_conic; h++) {
 		data_structures_groups::set_and_stabilizer *R;
@@ -286,7 +288,7 @@ void six_arcs_not_on_a_conic::report_specific_arc_basic(
 		std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
 			6 /* level */,
@@ -318,7 +320,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(
 		std::ostream &ost, int arc_idx)
 {
 	data_structures_groups::set_and_stabilizer *The_arc;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	The_arc = Gen->gen->get_set_and_stabilizer(
 			6 /* level */,

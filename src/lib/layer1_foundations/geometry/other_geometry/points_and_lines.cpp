@@ -23,6 +23,7 @@ namespace other_geometry {
 
 points_and_lines::points_and_lines()
 {
+	Record_birth();
 	P = NULL;
 
 	Pts = NULL;
@@ -37,6 +38,7 @@ points_and_lines::points_and_lines()
 
 points_and_lines::~points_and_lines()
 {
+	Record_death();
 	if (Pts) {
 		FREE_lint(Pts);
 	}
@@ -195,7 +197,7 @@ void points_and_lines::print_lines_tex(
 		std::ostream &ost)
 {
 	int i;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	long int *Rk;
 
 	Rk = NEW_lint(nb_lines);

@@ -26,9 +26,9 @@ class arc_lifting {
 public:
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
@@ -41,7 +41,7 @@ public:
 
 	int *the_equation; // [20]
 
-	algebraic_geometry::web_of_cubic_curves *Web;
+	geometry::algebraic_geometry::web_of_cubic_curves *Web;
 
 
 	trihedral_pair_with_action *Trihedral_pair;
@@ -161,11 +161,11 @@ class classify_trihedral_pairs {
 public:
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 
 	groups::strong_generators *gens_type1;
 	groups::strong_generators *gens_type2;
@@ -324,10 +324,11 @@ public:
 			int f_test_nb_Eckardt_points, int nb_E,
 			int verbose_level);
 	void report(
-			graphics::layered_graph_draw_options *Opt,
+			other::graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
-	void report2(std::ostream &ost,
-			graphics::layered_graph_draw_options *Opt,
+	void report2(
+			std::ostream &ost,
+			other::graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 	void report_decomposition_matrix(
 			std::ostream &ost, int verbose_level);
@@ -374,7 +375,7 @@ public:
 			std::ostream &ost, int verbose_level);
 	void report(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Opt,
+			other::graphics::layered_graph_draw_options *Opt,
 			int verbose_level);
 
 };
@@ -397,13 +398,13 @@ public:
 	int f;
 	int orbit_idx;
 
-	algebraic_geometry::surface_object *SO;
+	geometry::algebraic_geometry::surface_object *SO;
 	cubic_surfaces_in_general::surface_object_with_group *SOA;
 
 
 
 	groups::strong_generators *Flag_stab_gens;
-	ring_theory::longinteger_object Flag_stab_go;
+	algebra::ring_theory::longinteger_object Flag_stab_go;
 
 
 	int three_lines_idx[45 * 3];
@@ -417,7 +418,7 @@ public:
 
 
 
-	algebraic_geometry::seventytwo_cases Seventytwo[45 * 72];
+	geometry::algebraic_geometry::seventytwo_cases Seventytwo[45 * 72];
 		// for each of the 45 tritangent planes,
 		// there are 72 Clebsch maps
 
@@ -430,7 +431,7 @@ public:
 
 	int f_has_F2;
 	int *F2; // F2[i] = Seventytwo[i].f2;
-	data_structures::tally *tally_F2;
+	other::data_structures::tally *tally_F2;
 
 
 	surfaces_arc_lifting_definition_node();
@@ -536,7 +537,7 @@ public:
 
 	int seventytwo_case_idx;
 
-	algebraic_geometry::seventytwo_cases The_case;
+	geometry::algebraic_geometry::seventytwo_cases The_case;
 
 
 	surfaces_arc_lifting_trace();
@@ -554,7 +555,7 @@ public:
 			long int *P6_local, long int *P6_local_canonical,
 			int &orbit_not_on_conic_idx, int verbose_level);
 	void compute_beta1(
-			algebraic_geometry::seventytwo_cases *The_case,
+			geometry::algebraic_geometry::seventytwo_cases *The_case,
 			int verbose_level);
 	void compute_beta2(
 			int orbit_not_on_conic_idx,
@@ -594,7 +595,7 @@ public:
 	long int *Flag2_representation;
 		// used only in upstep_group_elements
 
-	ring_theory::longinteger_object A4_go;
+	algebra::ring_theory::longinteger_object A4_go;
 
 
 	double progress;
@@ -628,7 +629,7 @@ public:
 
 
 
-	algebraic_geometry::seventytwo_cases Seventytwo[72];
+	geometry::algebraic_geometry::seventytwo_cases Seventytwo[72];
 
 	int seventytwo_case_idx;
 
@@ -663,7 +664,7 @@ public:
 
 class surfaces_arc_lifting {
 public:
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 	group_constructions::linear_group *LG4; // PGL(4,q)
 
@@ -674,7 +675,7 @@ public:
 	actions::action *A4; // the action of PGL(4,q) on points
 	actions::action *A3; // the action of PGL(3,q) on points
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	six_arcs_not_on_a_conic *Six_arcs;
@@ -712,7 +713,7 @@ public:
 			std::string &Control_six_arcs_label,
 			int verbose_level);
 	void report2(std::ostream &ost,
-			graphics::layered_graph_draw_options *draw_options,
+			other::graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void report_flag_orbits(
 			std::ostream &ost, int verbose_level);
@@ -746,10 +747,10 @@ public:
 
 	groups::strong_generators *stab_gens_trihedral_pair; // stabilizer of trihedral pair
 	groups::strong_generators *gens_subgroup;
-	ring_theory::longinteger_object stabilizer_of_trihedral_pair_go;
+	algebra::ring_theory::longinteger_object stabilizer_of_trihedral_pair_go;
 	actions::action *A_on_equations;
 	groups::schreier *Orb;
-	ring_theory::longinteger_object stab_order;
+	algebra::ring_theory::longinteger_object stab_order;
 	int trihedral_pair_orbit_index;
 	data_structures_groups::vector_ge *cosets;
 
@@ -766,8 +767,8 @@ public:
 	//int nine_lines[9];
 
 	int Iso_type_as_double_triplet[120];
-	data_structures::tally *Double_triplet_type_distribution;
-	data_structures::set_of_sets *Double_triplet_types;
+	other::data_structures::tally *Double_triplet_type_distribution;
+	other::data_structures::set_of_sets *Double_triplet_types;
 	int *Double_triplet_type_values;
 	int nb_double_triplet_types;
 

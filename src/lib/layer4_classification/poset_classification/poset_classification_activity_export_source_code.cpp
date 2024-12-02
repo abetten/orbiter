@@ -32,8 +32,8 @@ void poset_classification_activity::generate_source_code(
 	int i, j;
 	int nb_iso;
 	long int *set;
-	ring_theory::longinteger_object go;
-	orbiter_kernel_system::file_io Fio;
+	algebra::ring_theory::longinteger_object go;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification_activity::generate_source_code" << endl;
@@ -52,7 +52,7 @@ void poset_classification_activity::generate_source_code(
 	{
 		ofstream fp(fname);
 
-		orbiter_kernel_system::os_interface Os;
+		other::orbiter_kernel_system::os_interface Os;
 		string str;
 
 		Os.get_date(str);
@@ -203,8 +203,8 @@ void poset_classification_activity::generate_history(
 	int nb_iso;
 	long int *set;
 	int *Elt;
-	ring_theory::longinteger_object go;
-	orbiter_kernel_system::file_io Fio;
+	algebra::ring_theory::longinteger_object go;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification_activity::generate_history" << endl;
@@ -225,7 +225,7 @@ void poset_classification_activity::generate_history(
 		ofstream fp(fname);
 		int lvl;
 
-		orbiter_kernel_system::os_interface Os;
+		other::orbiter_kernel_system::os_interface Os;
 		string str;
 
 		Os.get_date(str);
@@ -482,7 +482,7 @@ void poset_classification_activity::generate_history(
 
 				int f;
 				int po, so;
-				data_structures::sorting Sorting;
+				other::data_structures::sorting Sorting;
 
 				fp << "static int " << PC->get_problem_label()
 						<< "_lvl_" << lvl

@@ -26,6 +26,7 @@ static int spread_table_compare_func(
 
 spread_tables::spread_tables()
 {
+	Record_birth();
 	q = 0;
 	d = 4; // = 4
 	F = NULL;
@@ -63,6 +64,7 @@ spread_tables::spread_tables()
 
 spread_tables::~spread_tables()
 {
+	Record_death();
 #if 0
 	if (P) {
 		FREE_OBJECT(P);
@@ -99,7 +101,7 @@ void spread_tables::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init" << endl;
@@ -245,7 +247,7 @@ void spread_tables::init_reduced(
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init_reduced, nb_select=" << nb_select << endl;
@@ -284,7 +286,7 @@ void spread_tables::init_reduced(
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int *select_sorted;
 	int *select_original_idx;
 
@@ -401,7 +403,7 @@ void spread_tables::find_spreads_containing_two_lines(
 
 void spread_tables::classify_self_dual_spreads(
 		int *&type,
-		data_structures::set_of_sets *&SoS,
+		other::data_structures::set_of_sets *&SoS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -416,7 +418,7 @@ void spread_tables::classify_self_dual_spreads(
 		a = spread_iso_type[i];
 		type[a]++;
 	}
-	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 	SoS->init_basic_with_Sz_in_int(
 			nb_self_dual_spreads /* underlying_set_size */,
 			nb_iso_types_of_spreads /* nb_sets */,
@@ -438,7 +440,7 @@ int spread_tables::files_exist(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::files_exist testing whether file exists: " << fname_spreads << endl;
@@ -455,7 +457,7 @@ void spread_tables::save(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::save" << endl;
@@ -554,7 +556,7 @@ void spread_tables::load(
 {
 	int f_v = (verbose_level >= 1);
 	int a, b;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_tables::load" << endl;
@@ -669,7 +671,7 @@ void spread_tables::load(
 
 
 void spread_tables::compute_adjacency_matrix(
-		data_structures::bitvector *&Bitvec,
+		other::data_structures::bitvector *&Bitvec,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -681,7 +683,7 @@ void spread_tables::compute_adjacency_matrix(
 
 	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(N2);
 
 	k = 0;
@@ -711,13 +713,13 @@ void spread_tables::compute_adjacency_matrix(
 
 
 	{
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 		std::string fname;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string label;
 		string label_tex;
 
-		CG = NEW_OBJECT(graph_theory::colored_graph);
+		CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 		int *color;
 
 		label.assign(prefix);
@@ -754,7 +756,7 @@ int spread_tables::test_if_spreads_are_disjoint(
 		int a, int b)
 {
 	long int *p, *q;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int ret;
 
 	p = spread_table + a * spread_size;
@@ -775,7 +777,7 @@ void spread_tables::compute_dual_spreads(
 	int i, j;
 	long int a, b;
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_tables::compute_dual_spreads" << endl;
@@ -942,7 +944,7 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 }
 
 void spread_tables::make_exact_cover_problem(
-		solvers::diophant *&Dio,
+		combinatorics::solvers::diophant *&Dio,
 		long int *live_point_index, int nb_live_points,
 		long int *live_blocks, int nb_live_blocks,
 		int nb_needed,
@@ -959,7 +961,7 @@ void spread_tables::make_exact_cover_problem(
 	int nb_rows = nb_live_points;
 	int nb_cols = nb_live_blocks;
 
-	Dio = NEW_OBJECT(solvers::diophant);
+	Dio = NEW_OBJECT(combinatorics::solvers::diophant);
 	Dio->open(nb_rows, nb_cols, verbose_level - 1);
 	Dio->f_has_sum = true;
 	Dio->sum = nb_needed;
@@ -1068,7 +1070,7 @@ void spread_tables::report_one_spread(
 
 
 void spread_tables::make_graph_of_disjoint_spreads(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1078,7 +1080,7 @@ void spread_tables::make_graph_of_disjoint_spreads(
 	}
 
 
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	long int L, L100;
 	long int i, j, k;
 
@@ -1086,7 +1088,7 @@ void spread_tables::make_graph_of_disjoint_spreads(
 
 	//N = nb_spreads;
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 #if 1
 	for (i = 0; i < nb_spreads; i++) {
@@ -1122,7 +1124,7 @@ void spread_tables::make_graph_of_disjoint_spreads(
 		cout << "L100 = " << L100 << endl;
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	if (f_v) {
@@ -1131,7 +1133,7 @@ void spread_tables::make_graph_of_disjoint_spreads(
 	}
 
 	int t0, t1, dt;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -1176,7 +1178,7 @@ void spread_tables::make_graph_of_disjoint_spreads(
 
 	//FREE_lint(M);
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	//int nb_colors = nb_orbit_lengths;
 	//int nb_colors = my_orbits_classified->nb_sets;

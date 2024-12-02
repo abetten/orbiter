@@ -17,6 +17,19 @@ namespace geometry {
 namespace other_geometry {
 
 
+point_line::point_line()
+{
+	Record_birth();
+
+}
+
+point_line::~point_line()
+{
+	Record_death();
+
+}
+
+
 int point_line::is_desarguesian_plane(
 		int verbose_level)
 {
@@ -28,7 +41,7 @@ int point_line::is_desarguesian_plane(
 	int slope, b, x, f_slope, f_b, f_x;
 	int f_found_quadrangle = false;
 	int aa;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "is_desarguesian_plane plane_order ="
@@ -38,7 +51,7 @@ int point_line::is_desarguesian_plane(
 	plane_get_points_on_line(line, pts_on_line);
 	if (f_vv) {
 		cout << "line " << line << " ";
-		orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, pts_on_line, plane_order + 1);
+		other::orbiter_kernel_system::Orbiter->Int_vec->set_print(cout, pts_on_line, plane_order + 1);
 		}
 	u = pts_on_line[0];
 	v = pts_on_line[1];
@@ -1050,7 +1063,7 @@ void point_line::print_MOLS(
 }
 
 int point_line::is_projective_plane(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int &order, int verbose_level)
 // if it is a projective plane, the order is returned.
 // otherwise, 0 is returned.
@@ -1145,7 +1158,7 @@ int point_line::is_projective_plane(
 }
 
 int point_line::count_RC(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int row_cell, int col_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1168,7 +1181,7 @@ int point_line::count_RC(
 }
 
 int point_line::count_CR(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int col_cell, int row_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1190,7 +1203,7 @@ int point_line::count_CR(
 }
 
 int point_line::count_RC_representative(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 	int row_cell, int row_cell_pt, int col_cell)
 {
 	int f1, f2, /*l1,*/ l2, e1, e2, j, s = 0;
@@ -1211,7 +1224,7 @@ int point_line::count_RC_representative(
 }
 
 int point_line::count_CR_representative(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 	int col_cell, int col_cell_pt, int row_cell)
 {
 	int f1, f2, l1, /*l2,*/ e1, e2, i, s = 0;
@@ -1232,7 +1245,7 @@ int point_line::count_CR_representative(
 }
 
 int point_line::count_pairs_RRC(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int row_cell1, int row_cell2, int col_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1255,7 +1268,7 @@ int point_line::count_pairs_RRC(
 }
 
 int point_line::count_pairs_CCR(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int col_cell1, int col_cell2, int row_cell)
 {
 	int l1, i, nb = -1, nb1;
@@ -1278,7 +1291,7 @@ int point_line::count_pairs_CCR(
 }
 
 int point_line::count_pairs_RRC_representative(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int row_cell1, int row_cell_pt, int row_cell2, int col_cell)
 // returns the number of joinings from a point of
 // row_cell1 to elements of row_cell2 within col_cell
@@ -1320,7 +1333,7 @@ int point_line::count_pairs_RRC_representative(
 
 
 int point_line::count_pairs_CCR_representative(
-		data_structures::partitionstack &P,
+		other::data_structures::partitionstack &P,
 		int col_cell1, int col_cell_pt, int col_cell2, int row_cell)
 // returns the number of joinings from a point of
 // col_cell1 to elements of col_cell2 within row_cell

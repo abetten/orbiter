@@ -14,6 +14,19 @@ namespace layer5_applications {
 namespace projective_geometry {
 
 
+projective_space_global::projective_space_global()
+{
+	Record_birth();
+
+}
+
+projective_space_global::~projective_space_global()
+{
+	Record_death();
+
+}
+
+
 void projective_space_global::analyze_del_Pezzo_surface(
 		projective_space_with_action *PA,
 		std::string &label,
@@ -38,7 +51,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 	}
 	user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
 
-	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != orbiter_kernel_system::t_object) {
+	if (user_interface::The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != other::orbiter_kernel_system::t_object) {
 		cout << "symbol table entry must be of type t_object" << endl;
 		exit(1);
 	}
@@ -100,7 +113,7 @@ void projective_space_global::analyze_del_Pezzo_surface(
 
 void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 		projective_space_with_action *PA,
-		expression_parser::formula *F,
+		algebra::expression_parser::formula *F,
 		std::string &evaluate_text,
 		int verbose_level)
 {
@@ -115,7 +128,7 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 				"before PA->analyze_del_Pezzo_surface" << endl;
 	}
 
-	algebraic_geometry::algebraic_geometry_global AGG;
+	geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 	AGG.analyze_del_Pezzo_surface(PA->P, F, evaluate_text, verbose_level);
 
@@ -166,7 +179,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		Int_matrix_print(Pluecker_coords, nb_pts, 6);
 	}
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
@@ -180,7 +193,7 @@ void projective_space_global::do_lift_skew_hexagon(
 		cout << "projective_space_global::do_lift_skew_hexagon "
 				"before Surf->init_surface_domain" << endl;
 	}
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+	Surf = NEW_OBJECT(geometry::algebraic_geometry::surface_domain);
 	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon "
@@ -285,7 +298,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	}
 
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	if (PA->n != 3) {
@@ -299,7 +312,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
 				"before Surf->init_surface_domain" << endl;
 	}
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+	Surf = NEW_OBJECT(geometry::algebraic_geometry::surface_domain);
 	Surf->init_surface_domain(PA->F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity "
@@ -777,7 +790,7 @@ void projective_space_global::make_relation(
 	int i;
 	long int p1, p2;
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 
 

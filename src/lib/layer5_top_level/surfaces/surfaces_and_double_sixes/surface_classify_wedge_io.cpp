@@ -59,7 +59,7 @@ void surface_classify_wedge::read_file(
 
 	Surfaces = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	A->group_order(go);
 
@@ -123,7 +123,7 @@ void surface_classify_wedge::generate_history(
 int surface_classify_wedge::test_if_surfaces_have_been_computed_already()
 {
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int ret;
 
 	fname = "Surfaces_q" + std::to_string(q) + ".data";
@@ -146,7 +146,7 @@ void surface_classify_wedge::write_surfaces(
 		cout << "surface_classify_wedge::write_surfaces" << endl;
 	}
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = "Surfaces_q" + std::to_string(q) + ".data";
 	{
@@ -177,7 +177,7 @@ void surface_classify_wedge::read_surfaces(
 		cout << "surface_classify_wedge::read_surfaces" << endl;
 	}
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = "Surfaces_q" + std::to_string(q) + ".data";
 	cout << "Reading file " << fname << " of size "
@@ -213,7 +213,7 @@ void surface_classify_wedge::read_surfaces(
 int surface_classify_wedge::test_if_double_sixes_have_been_computed_already()
 {
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int ret;
 
 	fname = "Double_sixes_q" + std::to_string(q) + ".data";
@@ -236,7 +236,7 @@ void surface_classify_wedge::write_double_sixes(
 		cout << "surface_classify_wedge::write_double_sixes" << endl;
 	}
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = "Double_sixes_q" + std::to_string(q) + ".data";
 	{
@@ -269,7 +269,7 @@ void surface_classify_wedge::read_double_sixes(
 		cout << "surface_classify_wedge::read_double_sixes" << endl;
 	}
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = "Double_sixes_q" + std::to_string(q) + ".data";
 	if (f_v) {
@@ -307,7 +307,7 @@ void surface_classify_wedge::create_report(
 		cout << "surface_classify_wedge::create_report" << endl;
 	}
 	string fname, title, author, extra_praeamble;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	title = "Cubic Surfaces with 27 Lines over GF(" + std::to_string(q) + ") ";
 
@@ -315,7 +315,7 @@ void surface_classify_wedge::create_report(
 
 	fname = "Surfaces_q" + std::to_string(q) + ".tex";
 
-	graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::layered_graph_draw_options *Draw_options;
 
 	if (!Opt->f_draw_options) {
 		cout << "for a report of the surfaces, please use -draw_options" << endl;
@@ -328,7 +328,7 @@ void surface_classify_wedge::create_report(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -361,7 +361,7 @@ void surface_classify_wedge::create_report(
 void surface_classify_wedge::report(
 		std::ostream &ost,
 		int f_with_stabilizers,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 		poset_classification::poset_classification_report_options *Opt,
 		int verbose_level)
 {
@@ -370,7 +370,7 @@ void surface_classify_wedge::report(
 	if (f_v) {
 		cout << "surface_classify_wedge::report" << endl;
 	}
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 
 #if 0
@@ -498,7 +498,7 @@ void surface_classify_wedge::latex_surfaces(
 	ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		A->Strong_gens->group_order(go);
 
 		ost << "The order of the group is ";
@@ -575,7 +575,7 @@ void surface_classify_wedge::create_report_double_sixes(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -620,7 +620,7 @@ void surface_classify_wedge::create_report_double_sixes(
 
 		L.foot(fp);
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size "

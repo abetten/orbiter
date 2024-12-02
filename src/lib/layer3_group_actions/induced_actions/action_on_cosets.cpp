@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_cosets::action_on_cosets()
 {
+	Record_birth();
 	A_linear = NULL;
 	F = NULL;
 	dimension_of_subspace = 0;
@@ -42,6 +43,7 @@ action_on_cosets::action_on_cosets()
 
 action_on_cosets::~action_on_cosets()
 {
+	Record_death();
 	int f_v = false;
 	//int f_vv = false;
 
@@ -62,7 +64,7 @@ action_on_cosets::~action_on_cosets()
 void action_on_cosets::init(
 		int nb_points, int *Points,
 		actions::action *A_linear,
-	field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int dimension_of_subspace, 
 	int n, 
 	int *subspace_basis, 
@@ -109,7 +111,7 @@ void action_on_cosets::init(
 void action_on_cosets::init_lint(
 		int nb_points, long int *Points,
 		actions::action *A_linear,
-	field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int dimension_of_subspace,
 	int n,
 	int *subspace_basis,
@@ -168,7 +170,7 @@ long int action_on_cosets::compute_image(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_cosets::compute_image i = " << i << endl;

@@ -22,6 +22,7 @@ namespace projective_geometry {
 
 grassmann::grassmann()
 {
+	Record_birth();
 	n = 0;
 	k = 0;
 	q = 0;
@@ -38,6 +39,7 @@ grassmann::grassmann()
 
 grassmann::~grassmann()
 {
+	Record_death();
 	//cout << "grassmann::~grassmann 1" << endl;
 	if (nCkq) {
 		FREE_OBJECT(nCkq);
@@ -70,7 +72,7 @@ grassmann::~grassmann()
 
 void grassmann::init(
 		int n, int k,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -86,9 +88,9 @@ void grassmann::init(
 	grassmann::F = F;
 	q = F->q;
 
-	combinatorics::combinatorics_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain D;
 
-	nCkq = NEW_OBJECT(ring_theory::longinteger_object);
+	nCkq = NEW_OBJECT(algebra::ring_theory::longinteger_object);
 
 	D.q_binomial(*nCkq, n, k, q, 0 /* verbose_level */);
 	if (f_v) {
@@ -118,7 +120,7 @@ long int grassmann::nb_of_subspaces(
 		int verbose_level)
 {
 	long int nb;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	nb = Combi.generalized_binomial(n, k, q);
 	return nb;
@@ -264,7 +266,7 @@ int grassmann::nb_points_covered(
 		int verbose_level)
 {
 	int nb;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	nb = Combi.generalized_binomial(k, 1, q);
 	return nb;
@@ -374,9 +376,9 @@ void grassmann::unrank_lint(
 	long int r, h, a = 1, A;
 	int nb_free_cols = 0;
 	long int Q, b, c, i, j;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	other_geometry::geometry_global Gg;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "grassmann::unrank_lint " << rk << endl;
@@ -466,7 +468,7 @@ void grassmann::unrank_lint(
 		Int_vec_print(cout, base_cols, k);
 		cout << endl;
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
+	other::orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -518,9 +520,9 @@ long int grassmann::rank_lint(
 	long int k1, r, h, a, A;
 	int nb_free_cols;
 	long int Q, b, c, i, j;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	other_geometry::geometry_global Gg;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	r = 0;
 	if (f_v) {
@@ -558,7 +560,7 @@ long int grassmann::rank_lint(
 		Int_vec_print(cout, base_cols, k);
 		cout << endl;
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
+	other::orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
 	if (f_v) {
 		cout << "grassmann::rank_lint complement : ";
 		Int_vec_print(cout, base_cols + k, n - k);
@@ -641,7 +643,7 @@ long int grassmann::rank_lint(
 
 void grassmann::unrank_longinteger_here(
 		int *Mtx,
-		ring_theory::longinteger_object &rk,
+		algebra::ring_theory::longinteger_object &rk,
 		int verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
@@ -650,7 +652,7 @@ void grassmann::unrank_longinteger_here(
 
 void grassmann::rank_longinteger_here(
 		int *Mtx,
-		ring_theory::longinteger_object &rk,
+		algebra::ring_theory::longinteger_object &rk,
 		int verbose_level)
 {
 	Int_vec_copy(Mtx, M, k * n);
@@ -658,13 +660,13 @@ void grassmann::rank_longinteger_here(
 }
 
 void grassmann::unrank_longinteger(
-		ring_theory::longinteger_object &rk,
+		algebra::ring_theory::longinteger_object &rk,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object r, r1, a, A, mA, Q, b, c;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object r, r1, a, A, mA, Q, b, c;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 	int i, j, h, nb_free_cols = 0;
 	other_geometry::geometry_global Gg;
 	
@@ -750,7 +752,7 @@ void grassmann::unrank_longinteger(
 		Int_vec_print(cout, base_cols, k);
 		cout << endl;
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
+	other::orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -798,13 +800,13 @@ void grassmann::unrank_longinteger(
 }
 
 void grassmann::rank_longinteger(
-		ring_theory::longinteger_object &r,
+		algebra::ring_theory::longinteger_object &r,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 	int k1, nb_free_cols, h, i, j;
 	other_geometry::geometry_global Gg;
 	
@@ -846,7 +848,7 @@ void grassmann::rank_longinteger(
 		Int_vec_print(cout, base_cols, k);
 		cout << endl;
 	}
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
+	other::orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
 	if (f_v) {
 		cout << "yields: ";
 		Int_vec_print(cout, base_cols + k, n - k);
@@ -1294,7 +1296,7 @@ void grassmann::create_Schlaefli_graph(
 	int v[2];
 	int w[4];
 	int *List;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	other_geometry::geometry_global Geo;
 
 
@@ -1690,7 +1692,7 @@ void grassmann::cheat_sheet_subspaces(
 	int nb_k_subspaces;
 	int i, j, u;
 	int f_need_comma = false;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -1745,10 +1747,10 @@ void grassmann::cheat_sheet_subspaces(
 
 				points_covered(the_points, 0 /* verbose_level*/);
 
-				data_structures::sorting Sorting;
+				other::data_structures::sorting Sorting;
 
 				Sorting.lint_vec_heapsort(the_points, nb);
-				orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(
+				other::orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(
 						f, the_points, nb);
 				//Lint_vec_print(the_points, nb);
 
@@ -1885,7 +1887,7 @@ void grassmann::do_pluecker_reverse(
 	int v6[6];
 	int *T;
 	int *Pos;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "grassmann::do_pluecker_reverse" << endl;
@@ -1998,7 +2000,7 @@ void grassmann::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2026,7 +2028,7 @@ void grassmann::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

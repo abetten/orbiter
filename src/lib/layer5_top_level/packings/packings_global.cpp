@@ -19,11 +19,13 @@ namespace packings {
 
 packings_global::packings_global()
 {
+	Record_birth();
 }
 
 
 packings_global::~packings_global()
 {
+	Record_death();
 }
 
 
@@ -31,7 +33,7 @@ packings_global::~packings_global()
 void packings_global::merge_packings(
 		std::string *fnames, int nb_files,
 		std::string &file_of_spreads,
-		canonical_form_classification::classify_bitvectors *&CB,
+		combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {
 #if 0
@@ -337,7 +339,7 @@ void packings_global::select_packings(
 		geometry::finite_geometries::spread_tables *Spread_tables,
 		int f_self_polar,
 		int f_ago, int select_ago,
-		canonical_form_classification::classify_bitvectors *&CB,
+		combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {
 #if 0
@@ -735,7 +737,7 @@ void packings_global::select_packings_self_dual(
 		std::string &file_of_spreads_original,
 		int f_split, int split_r, int split_m,
 		geometry::finite_geometries::spread_tables *Spread_tables,
-		canonical_form_classification::classify_bitvectors *&CB,
+		combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

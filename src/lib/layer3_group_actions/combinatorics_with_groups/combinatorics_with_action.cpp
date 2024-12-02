@@ -22,11 +22,13 @@ namespace combinatorics_with_groups {
 
 combinatorics_with_action::combinatorics_with_action()
 {
+	Record_birth();
 
 }
 
 combinatorics_with_action::~combinatorics_with_action()
 {
+	Record_death();
 
 }
 
@@ -138,7 +140,7 @@ void combinatorics_with_action::report_TDA_projective_space(
 
 void combinatorics_with_action::report_TDA_combinatorial_object(
 		std::ostream &ost,
-		canonical_form_classification::encoded_combinatorial_object *Enc,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens, int size_limit_for_printing,
 		int verbose_level)
@@ -198,10 +200,10 @@ void combinatorics_with_action::report_TDO_and_TDA(
 	}
 
 
-	combinatorics::decomposition *Decomposition;
+	combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-	Decomposition = NEW_OBJECT(combinatorics::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 	Decomposition->init_incidence_structure(
 			Inc,
@@ -319,10 +321,10 @@ void combinatorics_with_action::report_TDA(
 	}
 
 
-	combinatorics::decomposition *Decomposition;
+	combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-	Decomposition = NEW_OBJECT(combinatorics::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 	Decomposition->init_incidence_structure(
 			Inc,
@@ -415,7 +417,7 @@ void combinatorics_with_action::report_TDA(
 
 
 void combinatorics_with_action::refine_decomposition_by_group_orbits(
-		combinatorics::decomposition *Decomposition,
+		combinatorics::tactical_decompositions::decomposition *Decomposition,
 		actions::action *A_on_points, actions::action *A_on_lines,
 		groups::strong_generators *gens,
 		int verbose_level)
@@ -462,7 +464,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits(
 }
 
 void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
-		combinatorics::decomposition *Decomposition,
+		combinatorics::tactical_decompositions::decomposition *Decomposition,
 		actions::action *A_on_points_or_lines,
 		int f_lines,
 		groups::strong_generators *gens,
@@ -520,7 +522,7 @@ void combinatorics_with_action::compute_decomposition_based_on_orbits(
 		geometry::projective_geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
 		geometry::other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -529,12 +531,12 @@ void combinatorics_with_action::compute_decomposition_based_on_orbits(
 		cout << "combinatorics_with_action::compute_decomposition_based_on_orbits" << endl;
 	}
 
-	data_structures::partitionstack *S1;
-	data_structures::partitionstack *S2;
+	other::data_structures::partitionstack *S1;
+	other::data_structures::partitionstack *S2;
 
 
-	S1 = NEW_OBJECT(data_structures::partitionstack);
-	S2 = NEW_OBJECT(data_structures::partitionstack);
+	S1 = NEW_OBJECT(other::data_structures::partitionstack);
+	S2 = NEW_OBJECT(other::data_structures::partitionstack);
 
 	if (f_v) {
 		cout << "combinatorics_with_action::compute_decomposition_based_on_orbits "
@@ -585,7 +587,7 @@ void combinatorics_with_action::compute_decomposition_based_on_orbit_length(
 		geometry::projective_geometry::projective_space *P,
 		groups::schreier *Sch1, groups::schreier *Sch2,
 		geometry::other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -599,7 +601,7 @@ void combinatorics_with_action::compute_decomposition_based_on_orbit_length(
 	Sch1->get_orbit_length(L1, 0 /* verbose_level */);
 	Sch2->get_orbit_length(L2, 0 /* verbose_level */);
 
-	data_structures::tally T1, T2;
+	other::data_structures::tally T1, T2;
 
 	T1.init(L1, Sch1->A->degree, false, 0);
 

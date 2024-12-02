@@ -22,6 +22,7 @@ namespace user_interface {
 
 interface_povray::interface_povray()
 {
+	Record_birth();
 	f_povray = false;
 	Povray_job_description = NULL;
 
@@ -29,11 +30,15 @@ interface_povray::interface_povray()
 	Prepare_frames = NULL;
 }
 
+interface_povray::~interface_povray()
+{
+	Record_death();
+}
 
 void interface_povray::print_help(
 		int argc, std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-povray") == 0) {
 		cout << "-povray" << endl;
@@ -46,7 +51,7 @@ void interface_povray::print_help(
 int interface_povray::recognize_keyword(
 		int argc, std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -64,7 +69,7 @@ void interface_povray::read_arguments(
 		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_povray::read_arguments" << endl;
@@ -78,7 +83,7 @@ void interface_povray::read_arguments(
 		if (f_v) {
 			cout << "-povray " << endl;
 		}
-		Povray_job_description = NEW_OBJECT(graphics::povray_job_description);
+		Povray_job_description = NEW_OBJECT(other::graphics::povray_job_description);
 		i += Povray_job_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
@@ -93,7 +98,7 @@ void interface_povray::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-prepare_frames") == 0) {
 		f_prepare_frames = true;
-		Prepare_frames = NEW_OBJECT(orbiter_kernel_system::prepare_frames);
+		Prepare_frames = NEW_OBJECT(other::orbiter_kernel_system::prepare_frames);
 		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 
 		if (f_v) {
@@ -133,7 +138,7 @@ void interface_povray::worker(
 
 	if (f_povray) {
 
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 
 		GO.animate_povray(

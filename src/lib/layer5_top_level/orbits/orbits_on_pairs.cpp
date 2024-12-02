@@ -20,6 +20,7 @@ namespace orbits {
 
 orbits_on_pairs::orbits_on_pairs()
 {
+	Record_birth();
 
 	Strong_gens = NULL;
 	A = NULL;
@@ -41,6 +42,7 @@ orbits_on_pairs::orbits_on_pairs()
 
 orbits_on_pairs::~orbits_on_pairs()
 {
+	Record_death();
 	if (pair_orbit) {
 		FREE_int(pair_orbit);
 	}
@@ -98,7 +100,7 @@ void orbits_on_pairs::compute_orbits_on_pairs(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {

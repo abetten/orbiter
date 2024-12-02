@@ -44,7 +44,7 @@ public:
 			int verbose_level);
 	void report_TDA_combinatorial_object(
 			std::ostream &ost,
-			canonical_form_classification::encoded_combinatorial_object *Enc,
+			combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
@@ -62,12 +62,12 @@ public:
 			groups::strong_generators *gens, int size_limit_for_printing,
 			int verbose_level);
 	void refine_decomposition_by_group_orbits(
-			combinatorics::decomposition *Decomposition,
+			combinatorics::tactical_decompositions::decomposition *Decomposition,
 			actions::action *A_on_points, actions::action *A_on_lines,
 			groups::strong_generators *gens,
 			int verbose_level);
 	void refine_decomposition_by_group_orbits_one_side(
-			combinatorics::decomposition *Decomposition,
+			combinatorics::tactical_decompositions::decomposition *Decomposition,
 			actions::action *A_on_points_or_lines,
 			int f_lines,
 			groups::strong_generators *gens,
@@ -76,13 +76,13 @@ public:
 			geometry::projective_geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
 			geometry::other_geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
+			other::data_structures::partitionstack *&Stack,
 			int verbose_level);
 	void compute_decomposition_based_on_orbit_length(
 			geometry::projective_geometry::projective_space *P,
 			groups::schreier *Sch1, groups::schreier *Sch2,
 			geometry::other_geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
+			other::data_structures::partitionstack *&Stack,
 			int verbose_level);
 
 };
@@ -149,7 +149,7 @@ class flag_orbits_incidence_structure {
 public:
 
 
-	canonical_form_classification::any_combinatorial_object *Any_combo;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo;
 
 	int nb_rows;
 	int nb_cols;
@@ -166,7 +166,7 @@ public:
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
 	void init(
-			canonical_form_classification::any_combinatorial_object *Any_combo,
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 			int f_anti_flags, actions::action *A_perm,
 			groups::strong_generators *SG,
 			int verbose_level);
@@ -196,12 +196,12 @@ class group_action_on_combinatorial_object {
 
 public:
 
-	canonical_form_classification::any_combinatorial_object *Any_Combo;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo;
 
 	std::string label_txt;
 	std::string label_tex;
 
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	actions::action *A_perm;
 
@@ -213,7 +213,7 @@ public:
 	long int *points;
 	long int *lines;
 
-	combinatorics::decomposition *Decomposition;
+	combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 	groups::schreier *Sch_points;
 	groups::schreier *Sch_lines;
@@ -229,13 +229,13 @@ public:
 	void init(
 			std::string &label_txt,
 			std::string &label_tex,
-			canonical_form_classification::any_combinatorial_object *Any_Combo,
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
 			actions::action *A_perm,
 			int verbose_level);
 	void print_schemes(
 			std::ostream &ost,
-			graphics::draw_incidence_structure_description *Draw_options,
-			canonical_form_classification::objects_report_options
+			other::graphics::draw_incidence_structure_description *Draw_options,
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void compute_flag_orbits(
@@ -333,7 +333,7 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 	int k;
 	int n;
@@ -360,7 +360,7 @@ public:
 	groups::strong_generators *strong_gens;
 
 	geometry::other_geometry::incidence_structure *Inc;
-	data_structures::partitionstack *Stack;
+	other::data_structures::partitionstack *Stack;
 
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();

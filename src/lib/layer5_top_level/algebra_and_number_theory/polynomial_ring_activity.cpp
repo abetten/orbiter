@@ -19,6 +19,7 @@ namespace apps_algebra {
 
 polynomial_ring_activity::polynomial_ring_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	HPD = NULL;
 
@@ -27,12 +28,13 @@ polynomial_ring_activity::polynomial_ring_activity()
 
 polynomial_ring_activity::~polynomial_ring_activity()
 {
+	Record_death();
 
 }
 
 void polynomial_ring_activity::init(
-		ring_theory::polynomial_ring_activity_description *Descr,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::polynomial_ring_activity_description *Descr,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -66,7 +68,7 @@ void polynomial_ring_activity::perform_activity(
 			cout << "polynomial_ring_activity::perform_activity f_cheat_sheet" << endl;
 		}
 
-		algebra::algebra_global Algebra;
+		algebra::basic_algebra::algebra_global Algebra;
 
 		//Algebra.do_cheat_sheet_GF(F, verbose_level);
 		//HPD->print_monomial_ordering_latex(cout);
@@ -81,7 +83,7 @@ void polynomial_ring_activity::perform_activity(
 			cout << "polynomial_ring_activity::perform_activity f_export_partials" << endl;
 		}
 
-		ring_theory::ring_theory_global RT;
+		algebra::ring_theory::ring_theory_global RT;
 
 
 
@@ -360,7 +362,7 @@ void polynomial_ring_activity::perform_activity(
 					<< endl;
 		}
 
-		ring_theory::ring_theory_global RT;
+		algebra::ring_theory::ring_theory_global RT;
 
 		RT.make_table_of_monomials(
 				HPD,

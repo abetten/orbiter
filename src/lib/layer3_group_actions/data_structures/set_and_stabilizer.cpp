@@ -17,6 +17,7 @@ namespace data_structures_groups {
 
 set_and_stabilizer::set_and_stabilizer()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	data = NULL;
@@ -29,6 +30,7 @@ set_and_stabilizer::set_and_stabilizer()
 
 set_and_stabilizer::~set_and_stabilizer()
 {
+	Record_death();
 	if (data) {
 		FREE_lint(data);
 	}
@@ -58,7 +60,7 @@ void set_and_stabilizer::init(
 }
 
 void set_and_stabilizer::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
 	if (Strong_gens == NULL) {
 		cout << "set_and_stabilizer::group_order "
@@ -213,7 +215,7 @@ void set_and_stabilizer::init_stab_from_file(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	vector_ge *gens;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_file" << endl;
@@ -279,7 +281,7 @@ void set_and_stabilizer::init_stab_from_file(
 void set_and_stabilizer::print_set_tex(
 		std::ostream &ost)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	L.lint_set_print_tex(ost, data, sz);
 	ost << "_{";
@@ -290,7 +292,7 @@ void set_and_stabilizer::print_set_tex(
 void set_and_stabilizer::print_set_tex_for_inline_text(
 		std::ostream &ost)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	L.lint_set_print_tex_for_inline_text(ost, data, sz);
 	ost << "_{";
@@ -489,7 +491,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 	orbit_first[0] = 0;
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int t, ff, c, d;
 	//int d;
 
@@ -624,7 +626,7 @@ void set_and_stabilizer::test_if_group_acts(
 int set_and_stabilizer::find(
 		long int pt)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int idx;
 
 	if (!Sorting.lint_vec_search(

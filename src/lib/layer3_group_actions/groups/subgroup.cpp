@@ -19,6 +19,7 @@ namespace groups {
 
 subgroup::subgroup()
 {
+	Record_birth();
 	Subgroup_lattice = NULL;
 	//A = NULL;
 	Elements = NULL;
@@ -31,6 +32,7 @@ subgroup::subgroup()
 
 subgroup::~subgroup()
 {
+	Record_death();
 	if (Elements) {
 		FREE_int(Elements);
 	}
@@ -53,7 +55,7 @@ void subgroup::init_from_sims(
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	long int i, rk;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "subgroup::init_from_sims" << endl;
@@ -129,7 +131,7 @@ int subgroup::contains_this_element(
 		int elt)
 {
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (Sorting.int_vec_search(Elements, group_order, elt, idx)) {
 		return true;
@@ -149,8 +151,8 @@ uint32_t subgroup::compute_hash()
 // performs a sort of the group elements before hashing
 {
 	uint32_t hash;
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 	Sorting.int_vec_heapsort(Elements, group_order);
 	hash = Data.int_vec_hash(Elements, group_order);
@@ -161,7 +163,7 @@ uint32_t subgroup::compute_hash()
 int subgroup::is_subgroup_of(
 		subgroup *Subgroup2)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int ret;
 
 	ret = Sorting.int_vec_is_subset_of(

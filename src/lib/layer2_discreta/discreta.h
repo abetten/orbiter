@@ -354,7 +354,7 @@ void int_matrix_realloc(
 		int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
 void fine_tune(
-		layer1_foundations::field_theory::finite_field *F,
+		layer1_foundations::algebra::field_theory::finite_field *F,
 		int *mtxD, int verbose_level);
 
 
@@ -1453,15 +1453,15 @@ class domain {
 		discreta_base the_prime;
 		unipoly *the_factor_poly;
 		domain *the_sub_domain;
-		layer1_foundations::field_theory::finite_field *F;
+		layer1_foundations::algebra::field_theory::finite_field *F;
 	
 	public:
 		domain(int p);
-		domain(layer1_foundations::field_theory::finite_field *F);
+		domain(layer1_foundations::algebra::field_theory::finite_field *F);
 	domain(unipoly *factor_poly, domain *sub_domain);
 	
 	domain_type type();
-	layer1_foundations::field_theory::finite_field *get_F();
+	layer1_foundations::algebra::field_theory::finite_field *get_F();
 	int order_int();
 	int order_subfield_int();
 	int characteristic();
@@ -1998,7 +1998,7 @@ typedef page_table *ppage_table;
 
 class page_table {
 public:
-	layer1_foundations::data_structures::page_storage *btree_pages;
+	layer1_foundations::other::data_structures::page_storage *btree_pages;
 	int btree_page_registry_length;
 	int btree_page_registry_allocated_length;
 	btree_page_registry_key_pair *btree_table;

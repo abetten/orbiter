@@ -24,6 +24,7 @@ static void packing_was_fixpoints_early_test_function_fp_cliques(
 
 packing_was_fixpoints::packing_was_fixpoints()
 {
+	Record_birth();
 	PW = NULL;
 
 	//fname_fixp_graph;
@@ -44,6 +45,7 @@ packing_was_fixpoints::packing_was_fixpoints()
 
 packing_was_fixpoints::~packing_was_fixpoints()
 {
+	Record_death();
 }
 
 void packing_was_fixpoints::init(
@@ -240,8 +242,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 {
 	int f_v = (verbose_level >= 1);
 	string my_prefix;
-	orbiter_kernel_system::file_io Fio;
-	data_structures::string_tools ST;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
@@ -260,7 +262,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	//PW->Descr->clique_size = clique_size;
 
 
-	fixpoint_graph = NEW_OBJECT(graph_theory::colored_graph);
+	fixpoint_graph = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 	fixpoint_graph->load(fname_fixp_graph, verbose_level);
 
 	my_prefix = fname_fixp_graph;
@@ -320,7 +322,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	}
 
 
-	data_structures::tally *T;
+	other::data_structures::tally *T;
 	long int *Ago;
 
 
@@ -361,7 +363,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 				Iso_type_invariant,
 				verbose_level);
 
-	data_structures::tally_vector_data C;
+	other::data_structures::tally_vector_data C;
 
 
 	C.init(Iso_type_invariant, nb_cliques,
@@ -394,7 +396,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 // orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
@@ -574,7 +576,7 @@ void packing_was_fixpoints::print_packing(
 	Int_matrix_print(Lines, sz, PW->P->spread_size);
 
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (Combi.Permutations->is_permutation(Lines, sz * PW->P->spread_size)) {
@@ -601,7 +603,7 @@ void packing_was_fixpoints::print_packing(
 
 
 	for (i = 0; i < sz; i++) {
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, true, 0);
 		cout << i << " : ";
@@ -623,7 +625,7 @@ void packing_was_fixpoints::report(
 		cout << "packing_was_fixpoints::report" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	{
 	string fname, title, author, extra_praeamble;
@@ -635,7 +637,7 @@ void packing_was_fixpoints::report(
 
 		{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface Li;
+		other::l1_interfaces::latex_interface Li;
 
 		//latex_head_easy(fp);
 		Li.head(fp,
@@ -857,7 +859,7 @@ static void packing_was_fixpoints_early_test_function_fp_cliques(
 {
 	int f_v = (verbose_level >= 1);
 	packing_was_fixpoints *P = (packing_was_fixpoints *) data;
-	graph_theory::colored_graph *CG = P->fixpoint_graph;
+	combinatorics::graph_theory::colored_graph *CG = P->fixpoint_graph;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints_early_test_function_fp_cliques" << endl;

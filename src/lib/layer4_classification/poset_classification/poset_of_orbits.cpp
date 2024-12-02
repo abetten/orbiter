@@ -21,6 +21,7 @@ namespace poset_classification {
 
 poset_of_orbits::poset_of_orbits()
 {
+	Record_birth();
 	PC = NULL;
 
 	sz = 0;
@@ -48,6 +49,7 @@ poset_of_orbits::poset_of_orbits()
 
 poset_of_orbits::~poset_of_orbits()
 {
+	Record_death();
 	int f_v = false; //(verbose_level >= 1);
 
 	if (f_v) {
@@ -457,7 +459,7 @@ void poset_of_orbits::get_table_of_nodes(
 		Table[i * nb_cols + 1] = root[i].get_node_in_level(PC);
 		Table[i * nb_cols + 2] = root[i].get_pt();
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		root[i].get_stabilizer_order(PC, go);
 		Table[i * nb_cols + 3] = go.as_int();
@@ -632,7 +634,7 @@ void poset_of_orbits::make_tabe_of_nodes(
 	long int *Table;
 	int nb_rows, nb_cols;
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	get_table_of_nodes(Table,
 		nb_rows, nb_cols, 0 /*verbose_level*/);
@@ -694,7 +696,7 @@ void poset_of_orbits::poset_orbit_node_depth_breadth_perm_and_inverse(
 
 void poset_of_orbits::read_memory_object(
 		int &depth_completed,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int verbose_level)
 {
@@ -767,7 +769,7 @@ void poset_of_orbits::read_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
-				orbiter_kernel_system::os_interface Os;
+				other::orbiter_kernel_system::os_interface Os;
 
 				t1 = Os.os_ticks();
 				dt = t1 - t0;
@@ -811,7 +813,7 @@ void poset_of_orbits::read_memory_object(
 
 void poset_of_orbits::write_memory_object(
 		int depth_completed,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int verbose_level)
 {
@@ -855,7 +857,7 @@ void poset_of_orbits::write_memory_object(
 		if (nb_nodes > 1000) {
 			if ((i % one_percent) == 0) {
 				int t1, dt;
-				orbiter_kernel_system::os_interface Os;
+				other::orbiter_kernel_system::os_interface Os;
 
 				t1 = Os.os_ticks();
 				dt = t1 - t0;
@@ -933,7 +935,7 @@ void poset_of_orbits::read_sv_level_file_binary2(
 	int f, i, nb_nodes;
 	int f_v = (verbose_level >= 1);
 	int I;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -1008,7 +1010,7 @@ void poset_of_orbits::write_sv_level_file_binary2(
 {
 	int f, i, nb_nodes, tmp;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -1050,7 +1052,7 @@ void poset_of_orbits::read_level_file_binary2(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int_4 I;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::read_level_file_binary2" << endl;
@@ -1122,7 +1124,7 @@ void poset_of_orbits::write_level_file_binary2(
 {
 	int f, i, nb_nodes, tmp;
 	int f_v = false;//(verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	f = first_node_at_level(level);
 	nb_nodes = nb_orbits_at_level(level);
@@ -1171,7 +1173,7 @@ void poset_of_orbits::write_candidates_binary_using_sv(
 	int *subset;
 	//int *Cand;
 	int i, j, node, nb, pos;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fst = first_node_at_level(lvl);
 	len = nb_orbits_at_level(lvl);
@@ -1275,7 +1277,7 @@ void poset_of_orbits::read_level_file(
 	int nb_nodes, first_at_level;
 	int i, I, J;
 	poset_orbit_node *O;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::read_level_file "
@@ -1384,8 +1386,8 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::os_interface Os;
 
 	fname1 = fname_base + "_lvl_" + std::to_string(lvl) + "_candidates.txt";
 	{
@@ -1443,7 +1445,7 @@ void poset_of_orbits::write_orbit_reps_at_level(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_of_orbits::write_orbit_reps_at_level" << endl;
@@ -1494,8 +1496,8 @@ void poset_of_orbits::write_lvl_file(
 {
 	int f_v = (verbose_level >= 1);
 	string fname1;
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::os_interface Os;
 
 	PC->make_fname_lvl_file(fname1, fname_base, lvl);
 	{
@@ -1533,7 +1535,7 @@ void poset_of_orbits::write_lvl(
 	//int f_v = (verbose_level >= 1);
 	int i;
 	int fst, len;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	fst = first_node_at_level(lvl);
@@ -1623,7 +1625,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
 			ost << "," << ago;
 
-			ring_theory::longinteger_object len;
+			algebra::ring_theory::longinteger_object len;
 
 			PC->orbit_length(i, lvl, len);
 
@@ -1639,7 +1641,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 
 		FREE_lint(set);
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1651,7 +1653,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(
 }
 
 void poset_of_orbits::get_set_orbits_at_level(
-		int lvl, data_structures::set_of_sets *&SoS,
+		int lvl, other::data_structures::set_of_sets *&SoS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1683,7 +1685,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 
 		get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 
 		Orb[i] = NEW_OBJECT(orbits_schreier::orbit_of_sets);
@@ -1704,7 +1706,7 @@ void poset_of_orbits::get_set_orbits_at_level(
 
 	}
 
-	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	SoS->init_basic(
 			PC->get_poset()->A2->degree,

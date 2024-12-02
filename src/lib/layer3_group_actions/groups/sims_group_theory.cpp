@@ -29,7 +29,7 @@ void sims::random_element(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "sims::random_element" << endl;
@@ -130,10 +130,10 @@ int sims::transitive_extension_tolerant(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	algebra::ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
-	ring_theory::longinteger_domain D;
-	orbiter_kernel_system::os_interface Os;
+	algebra::ring_theory::longinteger_domain D;
+	other::orbiter_kernel_system::os_interface Os;
 
 	orbit_len = O.orbit_len[0];
 	if (f_v) {
@@ -250,10 +250,10 @@ void sims::transitive_extension_using_coset_representatives(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	algebra::ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int orbit_len, j;
-	ring_theory::longinteger_domain D;
-	orbiter_kernel_system::os_interface Os;
+	algebra::ring_theory::longinteger_domain D;
+	other::orbiter_kernel_system::os_interface Os;
 
 	orbit_len = nb_cosets;
 	if (f_v) {
@@ -344,10 +344,10 @@ void sims::transitive_extension_using_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
+	algebra::ring_theory::longinteger_object go, ol, ego, cur_ego, rgo, rem;
 	int j;
-	ring_theory::longinteger_domain D;
-	orbiter_kernel_system::os_interface Os;
+	algebra::ring_theory::longinteger_domain D;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "sims::transitive_extension_using_generators "
@@ -431,9 +431,9 @@ void sims::point_stabilizer_stabchain_with_action(
 // then sifts random schreier generators into S
 {
 	schreier O;
-	ring_theory::longinteger_object go, stab_order, cur_stab_order, rgo, rem;
+	algebra::ring_theory::longinteger_object go, stab_order, cur_stab_order, rgo, rem;
 	int orbit_len, r, cnt = 0, image; // d
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int *Elt;
 
 	int f_v = (verbose_level >= 1);
@@ -791,8 +791,8 @@ void sims::conjugate(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
 	//int f_vvv = (verbose_level >= 3);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, target_go, quo, rem;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, target_go, quo, rem;
 	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
 	int cnt, drop_out_level, image, f_added, c;
 
@@ -941,7 +941,7 @@ int sims::test_if_in_set_stabilizer(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, a;
+	algebra::ring_theory::longinteger_object go, a;
 	long int goi, i, ret;
 	int *Elt1;
 
@@ -984,7 +984,7 @@ int sims::test_if_subgroup(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go, a, b;
+	algebra::ring_theory::longinteger_object go, a, b;
 	int goi, i, ret, drop_out_level, image;
 	int *Elt1, *Elt2;
 
@@ -1031,7 +1031,7 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 		actions::action *A_given, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i, order = 0;
 	long int goi;
 	int *cycle_type;
@@ -1074,7 +1074,7 @@ void sims::table_of_group_elements_in_data_form(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
 
 	if (f_v) {
@@ -1100,11 +1100,11 @@ void sims::regular_representation(
 		int *perm, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int goi, i, j;
 	int *Elt1;
 	int *Elt2;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -1133,7 +1133,7 @@ void sims::element_ranks_subgroup(
 		int *element_ranks, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int goi;
 	long int i, j;
 	int *Elt1;
@@ -1159,7 +1159,7 @@ void sims::center(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	data_structures_groups::vector_ge gens_inv;
 	long int goi, i, j, k, len;
 	int *Elt1;
@@ -1218,7 +1218,7 @@ void sims::all_cosets(
 		long int *all_cosets, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int goi, i, j, k, nb_cosets, cnt;
 	int *Elt1;
 	int *Elt2;
@@ -1268,7 +1268,7 @@ void sims::all_cosets(
 	}
 	if (f_v) {
 		cout << "sims::all_cosets finished" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print_width(cout,
+		other::orbiter_kernel_system::Orbiter->Lint_vec->matrix_print_width(cout,
 				all_cosets, nb_cosets, size, size, 2);
 		cout << endl;
 	}
@@ -1337,7 +1337,7 @@ long int sims::find_element_of_given_order_int(
 		int &nb_trials, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int o, d, goi;
 	int *Elt1;
 	long int a;
@@ -1399,7 +1399,7 @@ int sims::find_element_of_given_order_int(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int o, d, goi;
 	int *Elt1;
 
@@ -1473,7 +1473,7 @@ void sims::find_element_of_prime_power_order(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int o;
 
 	nb_trials = 0;
@@ -1532,8 +1532,8 @@ void sims::sylow_subgroup(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, go1, go_P, go_P1;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, go1, go_P, go_P1;
 	int i, e, e1, c, nb_trials;
 
 	if (f_v) {
@@ -1675,7 +1675,7 @@ void sims::create_Cayley_graph(
 {
 	int f_v = (verbose_level >= 1);
 	int i, h, j;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int *Elt1;
 	int *Elt2;
 
@@ -1738,7 +1738,7 @@ void sims::create_group_table(
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int *Elt1;
 	int *Elt2;
 	int *Elt3;
@@ -2028,7 +2028,7 @@ void sims::conjugate_numerical_set(
 	if (f_v) {
 		cout << "sims::conjugate_numerical_set" << endl;
 	}
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int *Eltv;
 
 
@@ -2092,7 +2092,7 @@ void sims::right_translate_numerical_set(
 	if (f_v) {
 		cout << "sims::right_translate_numerical_set" << endl;
 	}
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	int j;
@@ -2195,12 +2195,12 @@ void sims::zuppo_list(
 {
 	int f_v = (verbose_level >= 1);
 	int goi;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int rk, o, i, j;
 	int *Elt1;
 	int *Elt2;
 	int *f_done;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "sims::zuppo_list" << endl;
@@ -2268,7 +2268,7 @@ void sims::dimino(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, c, idx, new_coset_rep, nb_cosets;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "sims::dimino new_gen = " << new_gen << endl;
@@ -2334,7 +2334,7 @@ void sims::dimino_with_multiple_generators(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, c, idx, new_coset_rep;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "sims::dimino_with_multiple_generators "

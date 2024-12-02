@@ -17,6 +17,7 @@ namespace orbits {
 
 orbits_create::orbits_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	Group = NULL;
@@ -70,6 +71,7 @@ orbits_create::orbits_create()
 
 orbits_create::~orbits_create()
 {
+	Record_death();
 }
 
 void orbits_create::init(
@@ -77,7 +79,7 @@ void orbits_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "orbits_create::init" << endl;
@@ -371,7 +373,7 @@ void orbits_create::init(
 
 
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->on_polynomials_ring);
@@ -420,13 +422,13 @@ void orbits_create::init(
 
 
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->of_one_polynomial_ring);
 
 
-		expression_parser::symbolic_object_builder *Symbol;
+		algebra::expression_parser::symbolic_object_builder *Symbol;
 
 		Symbol = Get_symbol(Descr->of_one_polynomial_equation);
 
@@ -476,7 +478,7 @@ void orbits_create::init(
 		}
 		PA = Get_projective_space(Arc_generator_description->projective_space_label);
 
-		CC = NEW_OBJECT(algebraic_geometry::cubic_curve);
+		CC = NEW_OBJECT(geometry::algebraic_geometry::cubic_curve);
 
 		if (f_v) {
 			cout << "orbits_create::init "
@@ -699,7 +701,7 @@ void orbits_create::init(
 		}
 
 
-		BF = NEW_OBJECT(combinatorics::boolean_function_domain);
+		BF = NEW_OBJECT(combinatorics::special_functions::boolean_function_domain);
 
 		if (f_v) {
 			cout << "orbits_create::init before BF->init" << endl;

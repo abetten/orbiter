@@ -23,6 +23,7 @@ namespace set_stabilizer {
 
 compute_stabilizer::compute_stabilizer()
 {
+	Record_birth();
 
 	SubSt = NULL;
 
@@ -79,6 +80,7 @@ compute_stabilizer::compute_stabilizer()
 
 compute_stabilizer::~compute_stabilizer()
 {
+	Record_death();
 	//free1();
 
 	if (Stab) {
@@ -321,7 +323,7 @@ void compute_stabilizer::compute_automorphism_group(
 {
 	int f_v = (verbose_level >= 1);
 	int cnt2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_automorphism_group" << endl;
@@ -363,7 +365,7 @@ void compute_stabilizer::compute_automorphism_group_handle_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int cnt;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -716,7 +718,7 @@ void compute_stabilizer::setup_stabilizer(
 				"automorphism group order after = " << ago1 << endl;
 	}
 
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	D.mult(K_go, ago, target_go);
 	if (f_v) {
@@ -872,7 +874,7 @@ void compute_stabilizer::compute_canonical_form(
 {
 	int f_v = (verbose_level >= 1);
 	int cnt;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "compute_stabilizer::compute_canonical_form" << endl;
@@ -922,7 +924,7 @@ void compute_stabilizer::compute_canonical_form(
 
 	if (f_v) {
 		cout << "Canonical forms:" << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
+		other::orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
 				Canonical_forms,
 				Stab_orbits->nb_interesting_subsets_reduced,
 				Stab_orbits->reduced_set_size, 2);
@@ -967,7 +969,7 @@ void compute_stabilizer::compute_canonical_form(
 #if 1
 	if (f_v) {
 		cout << "canonical form : " << endl;
-		orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
+		other::orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(
 				Stab_orbits->canonical_set2, 1, Stab_orbits->reduced_set_size, 2);
 		cout << "nb_interesting_subsets_rr = " << nb_interesting_subsets_rr << endl;
 		cout << "interesting_subsets_rr:" << endl;
@@ -1180,7 +1182,7 @@ void compute_stabilizer::update_stabilizer(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int cmp;
 
 	Stab->group_order(new_stab_order);

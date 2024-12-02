@@ -19,6 +19,7 @@ namespace apps_combinatorics {
 
 design_create_description::design_create_description()
 {
+	Record_birth();
 	f_label = false;
 	//std::string label_txt;
 	//std::string label_tex;
@@ -79,6 +80,7 @@ design_create_description::design_create_description()
 
 design_create_description::~design_create_description()
 {
+	Record_death();
 }
 
 int design_create_description::read_arguments(
@@ -87,7 +89,7 @@ int design_create_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

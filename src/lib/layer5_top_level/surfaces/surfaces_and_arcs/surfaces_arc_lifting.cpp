@@ -31,6 +31,7 @@ static void callback_surfaces_arc_lifting_latex_report_trace(
 
 surfaces_arc_lifting::surfaces_arc_lifting()
 {
+	Record_birth();
 	F = NULL;
 	q = 0;
 	LG4 = NULL;
@@ -67,6 +68,7 @@ surfaces_arc_lifting::surfaces_arc_lifting()
 
 surfaces_arc_lifting::~surfaces_arc_lifting()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -467,8 +469,8 @@ void surfaces_arc_lifting::downstep_one_arc(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics::combinatorics_domain Combi;
-	algebraic_geometry::algebraic_geometry_global Gg;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	geometry::algebraic_geometry::algebraic_geometry_global Gg;
 
 
 	if (f_v) {
@@ -599,7 +601,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 				cout << endl;
 			}
 
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 			groups::strong_generators *SG; // stabilizer as 3x3 matrices
 
 			if (f_v) {
@@ -607,7 +609,7 @@ void surfaces_arc_lifting::downstep_one_arc(
 						"computing partition stabilizer:" << endl;
 			}
 
-			ring_theory::longinteger_object full_group_order;
+			algebra::ring_theory::longinteger_object full_group_order;
 
 			pair_orbit->Strong_gens->group_order(full_group_order);
 			if (f_v) {
@@ -806,7 +808,7 @@ void surfaces_arc_lifting::report(
 		exit(1);
 	}
 
-	graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::layered_graph_draw_options *Draw_options;
 
 
 	Draw_options = Get_draw_options(Control->draw_options_label);
@@ -815,7 +817,7 @@ void surfaces_arc_lifting::report(
 
 	{
 		ofstream fp(fname_arc_lifting.c_str());
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head(fp,
 			false /* f_book */,
@@ -849,7 +851,7 @@ void surfaces_arc_lifting::report(
 
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
 			<< Fio.file_size(fname_arc_lifting.c_str()) << endl;
@@ -861,7 +863,7 @@ void surfaces_arc_lifting::report(
 
 void surfaces_arc_lifting::report2(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1006,7 +1008,7 @@ void surfaces_arc_lifting::report_flag_orbits(
 {
 	int flag_orbit_idx;
 	int i;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	ost << "Flag orbits: \\\\" << endl;
 	ost << "The number of flag orbits is " << Flag_orbits->nb_flag_orbits << " \\\\" << endl;
@@ -1080,7 +1082,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report_flag_orbits_in_detail" << endl;
@@ -1228,12 +1230,12 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(
 		}
 		ost << "$\\\\" << endl;
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		groups::strong_generators *SG;
 
 		cout << "computing partition stabilizer:" << endl;
 
-		ring_theory::longinteger_object full_group_order;
+		algebra::ring_theory::longinteger_object full_group_order;
 
 		pair_orbit->Strong_gens->group_order(full_group_order);
 		cout << "expecting a group of order "
@@ -1495,10 +1497,10 @@ void surfaces_arc_lifting::report_surfaces_in_detail(
 	int f_v = (verbose_level >= 1);
 	int i;
 	int f_print_stabilizer_gens = true;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	surfaces_arc_lifting_definition_node *D;
-	ring_theory::longinteger_domain Dom;
-	ring_theory::longinteger_object go1, ol;
+	algebra::ring_theory::longinteger_domain Dom;
+	algebra::ring_theory::longinteger_object go1, ol;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report_surfaces_in_detail" << endl;

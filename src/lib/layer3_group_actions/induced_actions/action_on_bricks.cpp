@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_bricks::action_on_bricks()
 {
+	Record_birth();
 	A = NULL;
 	B = NULL;
 	degree = 0;
@@ -26,11 +27,12 @@ action_on_bricks::action_on_bricks()
 
 action_on_bricks::~action_on_bricks()
 {
+	Record_death();
 }
 
 void action_on_bricks::init(
 		actions::action *A,
-		combinatorics::brick_domain *B,
+		combinatorics::puzzles::brick_domain *B,
 	int f_linear_action, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

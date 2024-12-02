@@ -31,6 +31,7 @@ static void packing_was_print_function(
 
 packing_was::packing_was()
 {
+	Record_birth();
 	Descr = NULL;
 
 	H_LG = NULL;
@@ -104,6 +105,7 @@ packing_was::packing_was()
 
 packing_was::~packing_was()
 {
+	Record_death();
 	if (Orbit_invariant) {
 		FREE_OBJECT(Orbit_invariant);
 	}
@@ -417,7 +419,7 @@ void packing_was::init_N(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was::init_N" << endl;
@@ -796,7 +798,7 @@ void packing_was::compute_H_orbits_on_spreads(
 // and writes to file fname_orbits
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads" << endl;
@@ -857,7 +859,7 @@ void packing_was::test_orbits_on_spreads(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::test_orbits_on_spreads "
@@ -968,7 +970,7 @@ void packing_was::reduce_spreads(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::reduce_spreads " << endl;
@@ -1023,7 +1025,7 @@ void packing_was::reduce_spreads(
 	}
 
 	string fname_reduced_spread_original_idx;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	fname_reduced_spread_original_idx = P->path_to_spread_tables
 			+ "reduced_spread_" + std::to_string(NT.i_power_j(P->F->q, 2))
@@ -1090,7 +1092,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads" << endl;
@@ -1270,7 +1272,7 @@ void packing_was::create_graph_and_save_to_file(
 				"orbit_length = " << orbit_length << endl;
 	}
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 	int type_idx;
 
 	if (f_v) {
@@ -1325,7 +1327,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 		cout << endl;
 	}
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 	int *Type_idx;
 	string fname;
 
@@ -1528,7 +1530,7 @@ void packing_was::classify_orbit_invariant(
 				"Classify_spread_invariant_by_orbit_length[i].init" << endl;
 	}
 	nb_sets = Orbit_invariant->nb_sets;
-	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(data_structures::tally, nb_sets);
+	Classify_spread_invariant_by_orbit_length = NEW_OBJECTS(other::data_structures::tally, nb_sets);
 
 	for (i = 0; i < nb_sets; i++) {
 		Classify_spread_invariant_by_orbit_length[i].init_lint(
@@ -1591,11 +1593,11 @@ void packing_was::report_orbit_invariant(
 
 			//P->F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
-			l1_interfaces::latex_interface L;
-			field_theory::finite_field *Fq3;
-			number_theory::number_theory_domain NT;
+			other::l1_interfaces::latex_interface L;
+			algebra::field_theory::finite_field *Fq3;
+			algebra::number_theory::number_theory_domain NT;
 
-			Fq3 = NEW_OBJECT(field_theory::finite_field);
+			Fq3 = NEW_OBJECT(algebra::field_theory::finite_field);
 			Fq3->finite_field_init_small_order(NT.i_power_j(P->F->q, 3),
 					false /* f_without_tables */,
 					false /* f_compute_related_fields */,
@@ -1726,7 +1728,7 @@ void packing_was::report2(
 void packing_was::report(
 		int verbose_level)
 {
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	{
 		string fname, title, author, extra_praeamble;
@@ -1739,7 +1741,7 @@ void packing_was::report(
 
 		{
 			ofstream fp(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(fp,
@@ -1796,7 +1798,7 @@ void packing_was::report_line_orbits_under_H(
 	//Line_orbits_under_H->report_classified_orbits_by_lengths(ost);
 	int i, j, h;
 	long int a, b;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 
 
@@ -1938,14 +1940,14 @@ void packing_was::export_reduced_spread_orbits_csv(
 		cout << "packing_was::export_reduced_spread_orbits_csv" << endl;
 	}
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int type_idx;
 	string fname;
 
 
 	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition->nb_sets; type_idx++) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 
 		int nb_orbits;
@@ -1986,7 +1988,7 @@ void packing_was::report_reduced_spread_orbits(
 	//ost << "\\noindent" << endl;
 
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int type_idx;
 
 

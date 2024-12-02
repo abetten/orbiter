@@ -149,7 +149,7 @@ int main(int argc, const char** argv) {
     //orbiter::layer5_applications::user_interface::orbiter_top_level_session Top_level_session;
     //orbiter::layer5_applications::user_interface::The_Orbiter_top_level_session = &Top_level_session;
 
-	orbiter::layer1_foundations::orbiter_kernel_system::orbiter_session Orbiter_session;
+	orbiter::layer1_foundations::other::orbiter_kernel_system::orbiter_session Orbiter_session;
 
 
     //std::string *Argv;
@@ -161,8 +161,8 @@ int main(int argc, const char** argv) {
     //static_cast<void>(Top_level_session.startup_and_read_arguments(argc, Argv, 1));
 
     {
-		orbiter::layer1_foundations::field_theory::finite_field_description Descr;
-		orbiter::layer1_foundations::field_theory::finite_field Fq;
+		orbiter::layer1_foundations::algebra::field_theory::finite_field_description Descr;
+		orbiter::layer1_foundations::algebra::field_theory::finite_field Fq;
 		Descr.f_q = true;
 		Descr.q_text.assign("5");
 		;

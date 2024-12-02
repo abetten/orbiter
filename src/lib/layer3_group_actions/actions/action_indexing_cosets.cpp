@@ -26,11 +26,11 @@ void action::coset_unrank(
 	long int i, base_idx = 0, base_pt, rank0, nb, len, k, elt_k;
 	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object G0_order, G_order;
-	ring_theory::longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object G0_order, G_order;
+	algebra::ring_theory::longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
 	groups::schreier G_orb, U_orb;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action::coset_unrank rank=" << rank << endl;
@@ -298,10 +298,10 @@ long int action::coset_rank(
 	long int i, base_idx = 0, base_pt, rank1, nb, len, k, kk, elt_k, im;
 	int rem_int;
 	int *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	groups::schreier G_orb, U_orb;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "##################################" << endl;

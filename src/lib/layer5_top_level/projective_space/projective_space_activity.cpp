@@ -19,12 +19,14 @@ namespace projective_geometry {
 
 projective_space_activity::projective_space_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	PA = NULL;
 }
 
 projective_space_activity::~projective_space_activity()
 {
+	Record_death();
 
 }
 
@@ -39,7 +41,7 @@ void projective_space_activity::perform_activity(
 
 	if (Descr->f_cheat_sheet) {
 
-		graphics::layered_graph_draw_options *O;
+		other::graphics::layered_graph_draw_options *O;
 
 		O = Get_draw_options(Descr->cheat_sheet_draw_options_label);
 
@@ -217,7 +219,7 @@ void projective_space_activity::perform_activity(
 		long int *Image_pts;
 		long int N_points;
 
-		algebraic_geometry::algebraic_geometry_global AGG;
+		geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -244,7 +246,7 @@ void projective_space_activity::perform_activity(
 		}
 
 		string fname_map;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname_map = Descr->map_formula_label + "_map.csv";
 
@@ -275,7 +277,7 @@ void projective_space_activity::perform_activity(
 		long int *Image_pts;
 		long int N_points;
 
-		algebraic_geometry::algebraic_geometry_global AGG;
+		geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -302,7 +304,7 @@ void projective_space_activity::perform_activity(
 		}
 
 		string fname_map;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname_map = Descr->affine_map_formula_label + "_affine_map.csv";
 
@@ -333,7 +335,7 @@ void projective_space_activity::perform_activity(
 		long int *Variety;
 		long int N_points;
 
-		algebraic_geometry::algebraic_geometry_global AGG;
+		geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -362,7 +364,7 @@ void projective_space_activity::perform_activity(
 		}
 
 		string fname;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname = Descr->projective_variety_formula_label + "_projective_variety.csv";
 
@@ -936,7 +938,7 @@ void projective_space_activity::perform_activity(
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer) {
 
 
-		algebraic_geometry::algebraic_geometry_global Geo;
+		geometry::algebraic_geometry::algebraic_geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -953,7 +955,7 @@ void projective_space_activity::perform_activity(
 	}
 	else if (Descr->f_move_two_lines_in_hyperplane_stabilizer_text) {
 
-		algebraic_geometry::algebraic_geometry_global Geo;
+		geometry::algebraic_geometry::algebraic_geometry_global Geo;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -1137,7 +1139,7 @@ void projective_space_activity::perform_activity(
 
 		k = Descr->report_Grassmannian_k;
 
-		algebraic_geometry::algebraic_geometry_global AGG;
+		geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity "
@@ -1183,13 +1185,13 @@ void projective_space_activity::perform_activity(
 					"f_evaluation_matrix" << endl;
 		}
 
-		ring_theory::homogeneous_polynomial_domain *Ring;
+		algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 
 		Ring = Get_ring(Descr->evaluation_matrix_ring);
 
 
 
-		algebraic_geometry::algebraic_geometry_global AGG;
+		geometry::algebraic_geometry::algebraic_geometry_global AGG;
 		int *M;
 		int nb_rows, nb_cols;
 
@@ -1220,7 +1222,7 @@ void projective_space_activity::perform_activity(
 		}
 
 		string fname, fname_base;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname_base = "evaluation_matrix_deg"
 				+ std::to_string(Ring->degree)
@@ -1276,9 +1278,9 @@ void projective_space_activity::perform_activity(
 				SCW,
 				verbose_level);
 
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-		Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+		Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 
 		Symb->init_classification_of_cubic_surfaces_with_double_sixes(
 				Descr->classify_surfaces_with_double_sixes_label, SCW, verbose_level);
@@ -1286,7 +1288,7 @@ void projective_space_activity::perform_activity(
 			cout << "before Orbiter->add_symbol_table_entry "
 					<< Descr->classify_surfaces_with_double_sixes_label << endl;
 		}
-		orbiter_kernel_system::Orbiter->add_symbol_table_entry(
+		other::orbiter_kernel_system::Orbiter->add_symbol_table_entry(
 				Descr->classify_surfaces_with_double_sixes_label, Symb, verbose_level);
 
 	}
@@ -1330,7 +1332,7 @@ void projective_space_activity::perform_activity(
 		applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_domain_high_level SH;
 
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->classify_surfaces_through_arcs_and_trihedral_pairs_draw_options_label);
 

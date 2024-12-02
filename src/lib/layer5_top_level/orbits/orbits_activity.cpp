@@ -19,6 +19,7 @@ namespace orbits {
 
 orbits_activity::orbits_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	OC = NULL;
@@ -28,6 +29,7 @@ orbits_activity::orbits_activity()
 
 orbits_activity::~orbits_activity()
 {
+	Record_death();
 
 }
 
@@ -126,7 +128,7 @@ void orbits_activity::perform_activity(
 			cout << "orbits_activity::perform_activity f_draw_tree" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_tree_draw_options);
 
@@ -373,7 +375,7 @@ void orbits_activity::do_report(
 
 		{
 			ofstream fp(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(fp,
@@ -668,7 +670,7 @@ void orbits_activity::do_export(
 
 	if (fname.length()) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "orbits_activity::do_export "
@@ -951,7 +953,7 @@ void orbits_activity::do_export_levels(
 		string fname;
 
 		fname_tree_mask = "orbit_" + OC->Group->A->label + "_orbit_" + std::to_string(orbit_idx);
-		data_structures::set_of_sets *SoS;
+		other::data_structures::set_of_sets *SoS;
 
 		OC->Orb->Sch->get_orbit_by_levels(
 				orbit_idx,
@@ -960,7 +962,7 @@ void orbits_activity::do_export_levels(
 
 		int i;
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		for (i = 0; i < SoS->nb_sets; i++) {
 			fname = fname_tree_mask + "_level_" + std::to_string(i) + ".csv";
@@ -1104,7 +1106,7 @@ void orbits_activity::do_export_levels(
 
 
 void orbits_activity::do_draw_tree(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1157,7 +1159,7 @@ void orbits_activity::do_draw_tree(
 					"after OC->Orb->Sch->get_orbit_in_order" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		string fname_full;
 
@@ -1310,7 +1312,7 @@ void orbits_activity::do_stabilizer(
 
 
 		std::string gens_str;
-		ring_theory::longinteger_object stab_go;
+		algebra::ring_theory::longinteger_object stab_go;
 
 
 		gens_str = Stab->stringify_gens_data(0 /*verbose_level*/);
@@ -1884,7 +1886,7 @@ void orbits_activity::do_transporter(
 					"after OC->On_polynomials->export_something" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "orbits_activity::do_transporter "
 				"Written file " << fname << " of size "

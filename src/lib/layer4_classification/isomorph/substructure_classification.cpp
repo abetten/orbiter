@@ -23,6 +23,7 @@ namespace isomorph {
 
 substructure_classification::substructure_classification()
 {
+	Record_birth();
 	Iso = NULL;
 
 	f_use_database_for_starter = false;
@@ -55,6 +56,7 @@ substructure_classification::substructure_classification()
 
 substructure_classification::~substructure_classification()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -404,7 +406,7 @@ int substructure_classification::find_extension_search_interval(
 
 	long int *data = Iso->Folding->find_extension_set1;
 	int i, id = 0;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
@@ -447,7 +449,7 @@ int substructure_classification::find_extension_easy_old(
 {
 	int f_v = (verbose_level >= 1);
 	int first, len, ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_old" << endl;
@@ -481,7 +483,7 @@ void substructure_classification::find_extension_easy_new(
 	//int f_vv = false; // (verbose_level >= 2);
 	//int ret;
 	int first, idx2, len;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_classification::find_extension_easy_new" << endl;
@@ -489,7 +491,7 @@ void substructure_classification::find_extension_easy_new(
 	Sorting.lint_vec_heapsort(set + Iso->level, Iso->size - Iso->level);
 
 	long int h;
-	data_structures::data_structures_global Data;
+	other::data_structures::data_structures_global Data;
 
 	h = Data.lint_vec_hash_after_sorting(set, Iso->size);
 	if (f_v) {
@@ -763,7 +765,7 @@ void substructure_classification::create_level_database(
 	long int set2[1000];
 	//char *elt;
 	int *Elt;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_classification::create_level_database "
@@ -1044,7 +1046,7 @@ void substructure_classification::create_level_database(
 
 	D.close(0/*verbose_level - 1*/);
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	if (f_v) {
 		cout << "number of group elements in " << fname_db_level_ge
 				<< " is " << cnt << endl;
@@ -1063,7 +1065,7 @@ void substructure_classification::load_strong_generators(
 		int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level)
 // Called from compute_stabilizer and from orbit_representative
 {
@@ -1102,7 +1104,7 @@ void substructure_classification::load_strong_generators_tree(
 		int cur_level,
 	int cur_node_local,
 	data_structures_groups::vector_ge &gens,
-	ring_theory::longinteger_object &go,
+	algebra::ring_theory::longinteger_object &go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1166,7 +1168,7 @@ void substructure_classification::load_strong_generators_database(
 		int cur_level,
 		int cur_node_local,
 		data_structures_groups::vector_ge &gens,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level)
 // Reads node cur_node (global index) from database D through btree 0
 // Reads generators from file fp_ge
@@ -1179,7 +1181,7 @@ void substructure_classification::load_strong_generators_database(
 	int i;
 	int set[1000];
 	int *tl;
-	ring_theory::longinteger_domain Dom;
+	algebra::ring_theory::longinteger_domain Dom;
 
 
 	if (f_v) {

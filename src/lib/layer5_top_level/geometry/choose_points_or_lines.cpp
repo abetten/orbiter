@@ -16,11 +16,13 @@ namespace apps_geometry {
 
 choose_points_or_lines::choose_points_or_lines()
 {
+	Record_birth();
 	null();
 }
 
 choose_points_or_lines::~choose_points_or_lines()
 {
+	Record_death();
 	freeself();
 }
 
@@ -282,7 +284,7 @@ void choose_points_or_lines::choose_orbit(
 	f = gen->first_node_at_level(nb_points_or_lines);
 	nd = f + orbit_no;
 	
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	
 	G = NEW_OBJECT(data_structures_groups::group_container);
 	representative = NEW_lint(nb_points_or_lines);
@@ -364,12 +366,12 @@ void choose_points_or_lines::choose_orbit(
 		cout << "stabilizer of the chosen set has order " << go << endl;
 	}
 	
-	stab_order = NEW_OBJECT(ring_theory::longinteger_object);
+	stab_order = NEW_OBJECT(algebra::ring_theory::longinteger_object);
 	Stab_Strong_gens = NEW_OBJECT(groups::strong_generators);
 
 	if (f_changed) {
 		
-		ring_theory::longinteger_object go1;
+		algebra::ring_theory::longinteger_object go1;
 		groups::sims *NewStab;
 		
 		if (f_vvv) {

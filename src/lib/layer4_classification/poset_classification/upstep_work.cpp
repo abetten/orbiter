@@ -19,6 +19,7 @@ static void print_coset_table(coset_table_entry *coset_table, int len);
 
 upstep_work::upstep_work()
 {
+	Record_birth();
 	gen = NULL;
 	size = 0;
 	prev = 0;
@@ -51,6 +52,7 @@ upstep_work::upstep_work()
 
 upstep_work::~upstep_work()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -654,7 +656,7 @@ int upstep_work::init_extension_node(
 	
 
 	if (f_v) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		
 		gen->stabilizer_order(cur, go);
 		gen->print_level_extension_info(size - 1, prev, prev_ex);

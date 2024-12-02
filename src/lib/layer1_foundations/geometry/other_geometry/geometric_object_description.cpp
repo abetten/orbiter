@@ -25,6 +25,7 @@ namespace other_geometry {
 
 geometric_object_description::geometric_object_description()
 {
+	Record_birth();
 	P = NULL;
 
 	f_subiaco_oval = false;
@@ -129,6 +130,7 @@ geometric_object_description::geometric_object_description()
 
 geometric_object_description::~geometric_object_description()
 {
+	Record_death();
 
 }
 
@@ -138,7 +140,7 @@ int geometric_object_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -413,7 +415,7 @@ int geometric_object_description::read_arguments(
 			variety_label_tex.assign(argv[++i]);
 
 
-			orbiter_kernel_system::os_interface Os;
+			other::orbiter_kernel_system::os_interface Os;
 
 			i++;
 			Os.get_string_from_command_line(variety_coeffs, argc, argv, i, verbose_level);
@@ -443,7 +445,7 @@ int geometric_object_description::read_arguments(
 			int j;
 
 
-			orbiter_kernel_system::os_interface Os;
+			other::orbiter_kernel_system::os_interface Os;
 
 			i++;
 
@@ -485,7 +487,7 @@ int geometric_object_description::read_arguments(
 
 			int j;
 
-			orbiter_kernel_system::os_interface Os;
+			other::orbiter_kernel_system::os_interface Os;
 
 			i++;
 

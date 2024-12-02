@@ -32,7 +32,7 @@ domain::domain(int p)
 
 
 
-domain::domain(field_theory::finite_field *F)
+domain::domain(algebra::field_theory::finite_field *F)
 {
 	cout << "domain::domain orbiter finite_field of order " << F->q << endl;
 	domain::F = F;
@@ -71,14 +71,14 @@ domain_type domain::type()
 	return the_type;
 }
 
-field_theory::finite_field *domain::get_F()
+algebra::field_theory::finite_field *domain::get_F()
 {
 	return F;
 }
 
 int domain::order_int()
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (the_type == GFp)
 		return the_prime.s_i_i();
@@ -278,7 +278,7 @@ int finite_field_domain_primitive_root()
 {
 	domain *d;
 	int q;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_primitive_root() no finite field domain" << endl;
@@ -315,7 +315,7 @@ void finite_field_domain_base_over_subfield(Vector & b)
 {
 	domain *d, *sd;
 	int q, f, a, i;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_base_over_subfield "
@@ -382,7 +382,7 @@ domain *allocate_finite_field_domain(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	FF_MEMORY *ffm = new FF_MEMORY;
 	int p, f;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (nb_ffm >= MAX_FF_DOMAIN) {
 		cout << "allocate_finite_field_domain() too many finite field domains" << endl;

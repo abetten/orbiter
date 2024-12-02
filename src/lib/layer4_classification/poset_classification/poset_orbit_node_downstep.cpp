@@ -1119,7 +1119,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 	int f_vv = (verbose_level >= 2);
 	int ret = false;
 	int i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 
 	n = -1;

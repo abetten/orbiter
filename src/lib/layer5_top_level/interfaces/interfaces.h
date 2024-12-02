@@ -31,11 +31,11 @@ public:
 
 
 	int f_finite_field_activity;
-	field_theory::finite_field_activity_description
+	algebra::field_theory::finite_field_activity_description
 		*Finite_field_activity_description;
 
 	int f_polynomial_ring_activity;
-	ring_theory::polynomial_ring_activity_description
+	algebra::ring_theory::polynomial_ring_activity_description
 		*Polynomial_ring_activity_description;
 
 	int f_projective_space_activity;
@@ -98,7 +98,7 @@ public:
 		*Graph_classification_activity_description;
 
 	int f_diophant_activity;
-	solvers::diophant_activity_description
+	combinatorics::solvers::diophant_activity_description
 		*Diophant_activity_description;
 
 	int f_design_activity;
@@ -110,7 +110,7 @@ public:
 		*Large_set_was_activity_description;
 
 	int f_symbolic_object_activity;
-	expression_parser::symbolic_object_activity_description
+	algebra::expression_parser::symbolic_object_activity_description
 		*Symbolic_object_activity_description;
 
 	int f_BLT_set_classify_activity;
@@ -151,7 +151,7 @@ public:
 			int verbose_level);
 	void print();
 	void do_finite_field_activity(
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_ring_theoretic_activity(
 			int verbose_level);
@@ -170,7 +170,7 @@ public:
 	void do_blt_set_activity(
 			int verbose_level);
 	void do_combinatorial_object_activity(
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
 			int verbose_level);
@@ -288,7 +288,7 @@ class interface_algebra {
 	int f_young_symmetrizer_sym_4;
 
 	int f_draw_mod_n;
-	graphics::draw_mod_n_description *Draw_mod_n_description;
+	other::graphics::draw_mod_n_description *Draw_mod_n_description;
 
 	int f_power_function_mod_n;
 	int power_function_mod_n_k;
@@ -325,6 +325,7 @@ class interface_algebra {
 
 public:
 	interface_algebra();
+	~interface_algebra();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -366,15 +367,15 @@ class interface_coding_theory {
 	int make_bounds_q;
 
 	int f_introduce_errors;
-	coding_theory::crc_options_description
+	combinatorics::coding_theory::crc_options_description
 		*introduce_errors_crc_options_description;
 
 	int f_check_errors;
-	coding_theory::crc_options_description
+	combinatorics::coding_theory::crc_options_description
 		*check_errors_crc_options_description;
 
 	int f_extract_block;
-	coding_theory::crc_options_description
+	combinatorics::coding_theory::crc_options_description
 		*extract_block_crc_options_description;
 
 	int f_random_noise_in_bitmap_file;
@@ -401,6 +402,7 @@ class interface_coding_theory {
 
 public:
 	interface_coding_theory();
+	~interface_coding_theory();
 	void print_help(
 			int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(
@@ -453,7 +455,7 @@ class interface_combinatorics {
 		*Delandtsheer_Doyen_description;
 
 	int f_tdo_refinement;
-	combinatorics::tdo_refinement_description
+	combinatorics::tactical_decompositions::tdo_refinement_description
 		*Tdo_refinement_descr;
 
 	int f_tdo_print;
@@ -479,7 +481,7 @@ class interface_combinatorics {
 	int domino_portrait_D;
 	int domino_portrait_s;
 	std::string domino_portrait_fname;
-	graphics::layered_graph_draw_options *domino_portrait_draw_options;
+	other::graphics::layered_graph_draw_options *domino_portrait_draw_options;
 
 	int f_read_solutions_and_tally;
 	std::string read_solutions_and_tally_fname;
@@ -501,7 +503,7 @@ class interface_combinatorics {
 	std::string rank_k_subset_text;
 
 	int f_geometry_builder;
-	geometry_builder::geometry_builder_description
+	combinatorics::geometry_builder::geometry_builder_description
 		*Geometry_builder_description;
 
 	int f_union;
@@ -525,6 +527,7 @@ class interface_combinatorics {
 
 public:
 	interface_combinatorics();
+	~interface_combinatorics();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -640,6 +643,7 @@ class interface_cryptography {
 
 public:
 	interface_cryptography();
+	~interface_cryptography();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -666,13 +670,14 @@ public:
 class interface_povray {
 
 	int f_povray;
-	graphics::povray_job_description *Povray_job_description;
+	other::graphics::povray_job_description *Povray_job_description;
 
 	int f_prepare_frames;
-	orbiter_kernel_system::prepare_frames *Prepare_frames;
+	other::orbiter_kernel_system::prepare_frames *Prepare_frames;
 
 public:
 	interface_povray();
+	~interface_povray();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -715,7 +720,7 @@ class interface_projective {
 	double smooth_curve_boundary;
 	double smooth_curve_t_min;
 	double smooth_curve_t_max;
-	polish::function_polish_description *FP_descr;
+	other::polish::function_polish_description *FP_descr;
 
 
 	int f_make_table_of_surfaces;
@@ -736,6 +741,7 @@ public:
 
 
 	interface_projective();
+	~interface_projective();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -779,6 +785,7 @@ public:
 
 
 	interface_symbol_table();
+	~interface_symbol_table();
 	void init(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
@@ -815,7 +822,7 @@ class interface_toolkit {
 	std::vector<std::string> create_files_direct_labels;
 
 	int f_create_files;
-	orbiter_kernel_system::create_file_description
+	other::orbiter_kernel_system::create_file_description
 		*Create_file_description;
 
 	int f_save_matrix_csv;
@@ -905,7 +912,7 @@ class interface_toolkit {
 	std::string grade_statistic_from_csv_oracle_grade_label;
 
 	int f_draw_matrix;
-	graphics::draw_bitmap_control *Draw_bitmap_control;
+	other::graphics::draw_bitmap_control *Draw_bitmap_control;
 
 	int f_reformat;
 	std::string reformat_fname_in;
@@ -956,11 +963,11 @@ class interface_toolkit {
 	std::string plot_function_fname;
 
 	int f_draw_projective_curve;
-	graphics::draw_projective_curve_description
+	other::graphics::draw_projective_curve_description
 		*Draw_projective_curve_description;
 
 	int f_tree_draw;
-	graphics::tree_draw_options *Tree_draw_options;
+	other::graphics::tree_draw_options *Tree_draw_options;
 
 	int f_extract_from_file;
 	std::string extract_from_file_fname;
@@ -999,7 +1006,7 @@ class interface_toolkit {
 
 	int f_draw_layered_graph;
 	std::string draw_layered_graph_fname;
-	graphics::layered_graph_draw_options *Layered_graph_draw_options;
+	other::graphics::layered_graph_draw_options *Layered_graph_draw_options;
 
 	int f_read_gedcom;
 	std::string read_gedcom_fname;
@@ -1017,6 +1024,7 @@ public:
 
 
 	interface_toolkit();
+	~interface_toolkit();
 	void print_help(
 			int argc,
 			std::string *argv, int i, int verbose_level);
@@ -1098,7 +1106,7 @@ class orbiter_top_level_session {
 
 public:
 
-	orbiter_kernel_system::orbiter_session *Orbiter_session;
+	other::orbiter_kernel_system::orbiter_session *Orbiter_session;
 
 	orbiter_top_level_session();
 	~orbiter_top_level_session();
@@ -1116,7 +1124,7 @@ public:
 			std::vector<void * > &program, int verbose_level);
 	void *get_object(
 			int idx);
-	layer1_foundations::orbiter_kernel_system::symbol_table_object_type get_object_type(
+	layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type get_object_type(
 			int idx);
 	int find_symbol(
 			std::string &label);
@@ -1125,7 +1133,7 @@ public:
 	void print_symbol_table();
 	void add_symbol_table_entry(
 			std::string &label,
-			orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb,
 			int verbose_level);
 	groups::any_group *get_any_group(
 			std::string &label);
@@ -1167,7 +1175,7 @@ public:
 	apps_coding_theory::create_code
 		*get_object_of_type_code(
 				std::string &label);
-	graph_theory::colored_graph
+	combinatorics::graph_theory::colored_graph
 		*get_object_of_type_graph(
 				std::string &label);
 	orthogonal_geometry_applications::orthogonal_space_with_action
@@ -1184,7 +1192,7 @@ public:
 
 
 void free_symbol_table_entry_callback(
-		orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb, int verbose_level);
 geometry::projective_geometry::projective_space *get_projective_space_low_level_function(
 		void *ptr);
 
@@ -1206,11 +1214,11 @@ public:
 	std::string define_label;
 
 	int f_finite_field;
-	field_theory::finite_field_description
+	algebra::field_theory::finite_field_description
 		*Finite_field_description;
 
 	int f_polynomial_ring;
-	ring_theory::polynomial_ring_description
+	algebra::ring_theory::polynomial_ring_description
 		*Polynomial_ring_description;
 
 	int f_projective_space;
@@ -1313,7 +1321,7 @@ public:
 		* Graph_classify_description;
 
 	int f_diophant;
-	solvers::diophant_description
+	combinatorics::solvers::diophant_description
 		*Diophant_description;
 
 	int f_design;
@@ -1332,23 +1340,23 @@ public:
 		*large_set_was_descr;
 
 	int f_set;
-	data_structures::set_builder_description
+	other::data_structures::set_builder_description
 		*Set_builder_description;
 
 	int f_vector;
-	data_structures::vector_builder_description
+	other::data_structures::vector_builder_description
 		*Vector_builder_description;
 
 	int f_symbolic_object;
-	expression_parser::symbolic_object_builder_description
+	algebra::expression_parser::symbolic_object_builder_description
 		*Symbolic_object_builder_description;
 
 	int f_combinatorial_object;
-	canonical_form_classification::data_input_stream_description
+	combinatorics::canonical_form_classification::data_input_stream_description
 		*Data_input_stream_description;
 
 	int f_geometry_builder;
-	geometry_builder::geometry_builder_description
+	combinatorics::geometry_builder::geometry_builder_description
 		*Geometry_builder_description;
 
 	int f_vector_ge;
@@ -1373,11 +1381,11 @@ public:
 
 	// new:
 	int f_draw_options;
-	graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::layered_graph_draw_options *Draw_options;
 
 	// new:
 	int f_draw_incidence_structure_options;
-	graphics::draw_incidence_structure_description
+	other::graphics::draw_incidence_structure_description
 		*Draw_incidence_structure_description;
 
 
@@ -1390,13 +1398,13 @@ public:
 		*Poset_classification_activity;
 
 	int f_crc_code;
-	coding_theory::crc_code_description *Crc_code_description;
+	combinatorics::coding_theory::crc_code_description *Crc_code_description;
 
 	int f_mapping;
 	apps_geometry::mapping_description *Mapping_description;
 
 	int f_variety;
-	algebraic_geometry::variety_description *Variety_description;
+	geometry::algebraic_geometry::variety_description *Variety_description;
 
 	symbol_definition();
 	~symbol_definition();
@@ -1474,11 +1482,11 @@ public:
 			int verbose_level);
 	void definition_of_vector(
 			std::string &label,
-			data_structures::vector_builder_description *Descr,
+			other::data_structures::vector_builder_description *Descr,
 			int verbose_level);
 	void definition_of_symbolic_object(
 			std::string &label,
-			expression_parser::symbolic_object_builder_description *Descr,
+			algebra::expression_parser::symbolic_object_builder_description *Descr,
 			int verbose_level);
 	void definition_of_combinatorial_object(
 			int verbose_level);
@@ -1486,7 +1494,7 @@ public:
 			int verbose_level);
 	void load_finite_field_PG(
 			int verbose_level);
-	field_theory::finite_field *get_or_create_finite_field(
+	algebra::field_theory::finite_field *get_or_create_finite_field(
 			std::string &input_q,
 			int verbose_level);
 	void definition_of_vector_ge(

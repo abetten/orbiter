@@ -20,6 +20,7 @@ namespace poset_classification {
 
 orbit_tracer::orbit_tracer()
 {
+	Record_birth();
 	PC = NULL;
 
 	Transporter = NULL;
@@ -34,6 +35,7 @@ orbit_tracer::orbit_tracer()
 
 orbit_tracer::~orbit_tracer()
 {
+	Record_death();
 	int i;
 
 	if (Transporter) {
@@ -110,7 +112,7 @@ void orbit_tracer::recognize_start_over(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_tracer::recognize_start_over" << endl;
@@ -593,7 +595,7 @@ void orbit_tracer::identify(
 		cout << "orbit_tracer::identify after recognize" << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	orbit_at_level = final_node - PC->get_Poo()->first_node_at_level(sz);
 	PC->get_stabilizer_order(sz, orbit_at_level, go);

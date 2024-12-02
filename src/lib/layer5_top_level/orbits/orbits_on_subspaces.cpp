@@ -31,6 +31,7 @@ static void orbits_on_subspaces_early_test_func(
 
 orbits_on_subspaces::orbits_on_subspaces()
 {
+	Record_birth();
 	//GTA = NULL;
 	Group = NULL;
 
@@ -46,6 +47,7 @@ orbits_on_subspaces::orbits_on_subspaces()
 
 orbits_on_subspaces::~orbits_on_subspaces()
 {
+	Record_death();
 }
 
 void orbits_on_subspaces::init(
@@ -94,7 +96,7 @@ void orbits_on_subspaces::init(
 	orbits_on_subspaces_M = NEW_int(n * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
-	orbits_on_subspaces_VS = NEW_OBJECT(linear_algebra::vector_space);
+	orbits_on_subspaces_VS = NEW_OBJECT(algebra::linear_algebra::vector_space);
 	orbits_on_subspaces_VS->init(
 			Group->A->matrix_group_finite_field(),
 			n /* dimension */,
@@ -160,7 +162,7 @@ void orbits_on_subspaces::init(
 	int f_debug = false;
 	int nb_orbits;
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (f_v) {

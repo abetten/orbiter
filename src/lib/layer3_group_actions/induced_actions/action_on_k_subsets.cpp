@@ -17,6 +17,7 @@ namespace induced_actions {
 
 action_on_k_subsets::action_on_k_subsets()
 {
+	Record_birth();
 	A = NULL;
 	k = 0;
 	degree = 0;
@@ -26,6 +27,7 @@ action_on_k_subsets::action_on_k_subsets()
 
 action_on_k_subsets::~action_on_k_subsets()
 {
+	Record_death();
 	if (set1) {
 		FREE_int(set1);
 		}
@@ -40,7 +42,7 @@ void action_on_k_subsets::init(
 {
 	int f_v = (verbose_level >= 1);
 	int n;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_k_subsets::init k=" << k << endl;
@@ -64,8 +66,8 @@ long int action_on_k_subsets::compute_image(
 	long int u, a, b, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image "

@@ -18,6 +18,7 @@ namespace user_interface {
 
 symbol_definition::symbol_definition()
 {
+	Record_birth();
 	Sym = NULL;
 
 	//std::string define_label;
@@ -193,6 +194,7 @@ symbol_definition::symbol_definition()
 
 symbol_definition::~symbol_definition()
 {
+	Record_death();
 
 }
 
@@ -202,7 +204,7 @@ void symbol_definition::read_definition(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "symbol_definition::read_definition "
@@ -224,7 +226,7 @@ void symbol_definition::read_definition(
 	if (ST.stringcmp(argv[i], "-finite_field") == 0) {
 		f_finite_field = true;
 		Finite_field_description =
-				NEW_OBJECT(field_theory::finite_field_description);
+				NEW_OBJECT(algebra::field_theory::finite_field_description);
 		if (f_v) {
 			cout << "reading -finite_field" << endl;
 		}
@@ -245,7 +247,7 @@ void symbol_definition::read_definition(
 	else if (ST.stringcmp(argv[i], "-polynomial_ring") == 0) {
 		f_polynomial_ring = true;
 		Polynomial_ring_description =
-				NEW_OBJECT(ring_theory::polynomial_ring_description);
+				NEW_OBJECT(algebra::ring_theory::polynomial_ring_description);
 		if (f_v) {
 			cout << "reading -polynomial_ring" << endl;
 		}
@@ -787,7 +789,7 @@ void symbol_definition::read_definition(
 		f_diophant = true;
 
 		Diophant_description =
-				NEW_OBJECT(solvers::diophant_description);
+				NEW_OBJECT(combinatorics::solvers::diophant_description);
 		if (f_v) {
 			cout << "reading -diophant_description" << endl;
 		}
@@ -882,7 +884,7 @@ void symbol_definition::read_definition(
 
 
 		Set_builder_description =
-				NEW_OBJECT(data_structures::set_builder_description);
+				NEW_OBJECT(other::data_structures::set_builder_description);
 		if (f_v) {
 			cout << "reading -set" << endl;
 		}
@@ -907,7 +909,7 @@ void symbol_definition::read_definition(
 
 
 		Vector_builder_description =
-				NEW_OBJECT(data_structures::vector_builder_description);
+				NEW_OBJECT(other::data_structures::vector_builder_description);
 		if (f_v) {
 			cout << "reading -vector" << endl;
 		}
@@ -932,7 +934,7 @@ void symbol_definition::read_definition(
 
 
 		Symbolic_object_builder_description =
-				NEW_OBJECT(expression_parser::symbolic_object_builder_description);
+				NEW_OBJECT(algebra::expression_parser::symbolic_object_builder_description);
 		if (f_v) {
 			cout << "reading -symbolic_object" << endl;
 		}
@@ -959,7 +961,7 @@ void symbol_definition::read_definition(
 
 
 		Data_input_stream_description =
-				NEW_OBJECT(canonical_form_classification::data_input_stream_description);
+				NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_description);
 		if (f_v) {
 			cout << "reading -combinatorial_objects" << endl;
 		}
@@ -984,7 +986,7 @@ void symbol_definition::read_definition(
 
 
 		Geometry_builder_description =
-				NEW_OBJECT(geometry_builder::geometry_builder_description);
+				NEW_OBJECT(combinatorics::geometry_builder::geometry_builder_description);
 		if (f_v) {
 			cout << "reading -geometry_builder" << endl;
 		}
@@ -1131,7 +1133,7 @@ void symbol_definition::read_definition(
 		f_draw_options = true;
 
 		Draw_options =
-				NEW_OBJECT(graphics::layered_graph_draw_options);
+				NEW_OBJECT(other::graphics::layered_graph_draw_options);
 		if (f_v) {
 			cout << "reading -draw_options" << endl;
 		}
@@ -1156,7 +1158,7 @@ void symbol_definition::read_definition(
 		f_poset_classification_report_options = true;
 
 		Draw_incidence_structure_description =
-				NEW_OBJECT(graphics::draw_incidence_structure_description);
+				NEW_OBJECT(other::graphics::draw_incidence_structure_description);
 		if (f_v) {
 			cout << "reading -draw_incidence_structure_options" << endl;
 		}
@@ -1234,7 +1236,7 @@ void symbol_definition::read_definition(
 
 		f_crc_code = true;
 		Crc_code_description =
-				NEW_OBJECT(coding_theory::crc_code_description);
+				NEW_OBJECT(combinatorics::coding_theory::crc_code_description);
 		if (f_v) {
 			cout << "symbol_definition::read_definition reading -crc_code" << endl;
 		}
@@ -1284,7 +1286,7 @@ void symbol_definition::read_definition(
 
 		f_variety = true;
 		Variety_description =
-				NEW_OBJECT(algebraic_geometry::variety_description);
+				NEW_OBJECT(geometry::algebraic_geometry::variety_description);
 		if (f_v) {
 			cout << "reading -variety" << endl;
 		}
@@ -2093,9 +2095,9 @@ void symbol_definition::definition_of_finite_field(
 		cout << "symbol_definition::definition_of_finite_field" << endl;
 	}
 	Finite_field_description->print();
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_finite_field "
 				"before F->init" << endl;
@@ -2106,9 +2108,9 @@ void symbol_definition::definition_of_finite_field(
 				"after F->init" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_finite_field(
 			define_label, F, verbose_level);
 	if (f_v) {
@@ -2132,9 +2134,9 @@ void symbol_definition::definition_of_polynomial_ring(
 		cout << "symbol_definition::definition_of_polynomial_ring" << endl;
 	}
 	Polynomial_ring_description->print();
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
-	HPD = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	HPD = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_polynomial_ring "
 				"before HPD->init" << endl;
@@ -2146,9 +2148,9 @@ void symbol_definition::definition_of_polynomial_ring(
 				"after F->init" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_polynomial_ring(
 			define_label, HPD, verbose_level);
 	if (f_v) {
@@ -2229,9 +2231,9 @@ void symbol_definition::definition_of_projective_space(
 				"after PA->init_from_description" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_projective_space(define_label, PA, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space "
@@ -2278,7 +2280,7 @@ void symbol_definition::definition_of_orthogonal_space(
 	}
 
 	//int f_semilinear;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 #if 0
 	if (NT.is_prime(Orthogonal_space_with_action_description->F->q)) {
@@ -2304,9 +2306,9 @@ void symbol_definition::definition_of_orthogonal_space(
 				"after OA->init" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_orthogonal_space(
 			define_label, OA, verbose_level);
 	if (f_v) {
@@ -2356,9 +2358,9 @@ void symbol_definition::definition_of_BLT_set_classifier(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_BLT_set_classify(
 			define_label, BLT_classify, verbose_level);
 	if (f_v) {
@@ -2399,9 +2401,9 @@ void symbol_definition::definition_of_spread_classifier(
 				"after Spread_classify->init_basic" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_spread_classify(
 			define_label, Spread_classify, verbose_level);
 	if (f_v) {
@@ -2480,9 +2482,9 @@ void symbol_definition::definition_of_linear_group(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_any_group(
 			define_label, AG, verbose_level);
 	if (f_v) {
@@ -2531,9 +2533,9 @@ void symbol_definition::definition_of_permutation_group(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_any_group(
 			define_label, AG, verbose_level);
 	if (f_v) {
@@ -2582,9 +2584,9 @@ void symbol_definition::definition_of_modified_group(
 	AG = NEW_OBJECT(groups::any_group);
 	AG->init_modified_group(MGC, verbose_level);
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 
 	Symb->init_any_group(
 			define_label, AG, verbose_level);
@@ -2634,9 +2636,9 @@ void symbol_definition::definition_of_geometric_object(
 				"after GeoObj->init" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 
 
 
@@ -2667,9 +2669,9 @@ void symbol_definition::definition_of_collection(
 		cout << "symbol_definition::definition_of_collection" << endl;
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_collection(
 			define_label, list_of_objects, verbose_level);
 	if (f_v) {
@@ -2737,9 +2739,9 @@ void symbol_definition::definition_of_graph(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_graph(
 			define_label, Gr->CG, verbose_level);
 	if (f_v) {
@@ -2792,9 +2794,9 @@ void symbol_definition::definition_of_code(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_code(
 			define_label, Code, verbose_level);
 	if (f_v) {
@@ -2845,9 +2847,9 @@ void symbol_definition::definition_of_spread(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_spread(
 			define_label, Spread, verbose_level);
 	if (f_v) {
@@ -2891,9 +2893,9 @@ void symbol_definition::definition_of_cubic_surface(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_cubic_surface(
 			define_label, SC, verbose_level);
 	if (f_v) {
@@ -2948,9 +2950,9 @@ void symbol_definition::definition_of_quartic_curve(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_quartic_curve(
 			define_label, QC, verbose_level);
 	if (f_v) {
@@ -3016,9 +3018,9 @@ void symbol_definition::definition_of_BLT_set(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_BLT_set(define_label, BC, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_BLT_set "
@@ -3117,9 +3119,9 @@ void symbol_definition::definition_of_translation_plane(
 
 	}
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_translation_plane(
 			define_label, TP, verbose_level);
 	if (f_v) {
@@ -3198,9 +3200,9 @@ void symbol_definition::definition_of_spread_table(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_spread_table(define_label, Spread_table_with_selection, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_spread_table "
@@ -3266,9 +3268,9 @@ void symbol_definition::definition_of_packing_classify(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_packing_classify(define_label, PC, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_packing_classify "
@@ -3327,9 +3329,9 @@ void symbol_definition::definition_of_packing_was(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_packing_was(
 			define_label, PW, verbose_level);
 	if (f_v) {
@@ -3404,9 +3406,9 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_packing_was_choose_fixed_points(
 			define_label, PWF, verbose_level);
 	if (f_v) {
@@ -3470,9 +3472,9 @@ void symbol_definition::definition_of_packing_long_orbits(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_packing_long_orbits(
 			define_label, PL, verbose_level);
 	if (f_v) {
@@ -3527,9 +3529,9 @@ void symbol_definition::definition_of_graph_classification(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_graph_classify(
 			define_label, GC, verbose_level);
 	if (f_v) {
@@ -3562,10 +3564,10 @@ void symbol_definition::definition_of_diophant(
 	}
 
 
-	solvers::diophant_create *Dio;
+	combinatorics::solvers::diophant_create *Dio;
 
 
-	Dio = NEW_OBJECT(solvers::diophant_create);
+	Dio = NEW_OBJECT(combinatorics::solvers::diophant_create);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_diophant "
@@ -3583,9 +3585,9 @@ void symbol_definition::definition_of_diophant(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_diophant(
 			define_label, Dio, verbose_level);
 	if (f_v) {
@@ -3634,9 +3636,9 @@ void symbol_definition::definition_of_design(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_design(
 			define_label, DC, verbose_level);
 	if (f_v) {
@@ -3680,20 +3682,20 @@ void symbol_definition::definition_of_design_table(
 
 	groups::any_group *AG;
 
-	idx = orbiter_kernel_system::Orbiter->find_symbol(design_table_group);
+	idx = other::orbiter_kernel_system::Orbiter->find_symbol(design_table_group);
 
-	layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
+	layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type t;
 
-	t = orbiter_kernel_system::Orbiter->get_object_type(idx);
+	t = other::orbiter_kernel_system::Orbiter->get_object_type(idx);
 
-	if (t != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+	if (t != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 		cout << "object must be of type group, but is ";
-		orbiter_kernel_system::Orbiter->print_type(t);
+		other::orbiter_kernel_system::Orbiter->print_type(t);
 		cout << endl;
 		exit(1);
 	}
 	AG = (groups::any_group *)
-			orbiter_kernel_system::Orbiter->get_object(idx);
+		other::orbiter_kernel_system::Orbiter->get_object(idx);
 
 
 
@@ -3739,9 +3741,9 @@ void symbol_definition::definition_of_design_table(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_design_table(
 			define_label, LS, verbose_level);
 	if (f_v) {
@@ -3804,9 +3806,9 @@ void symbol_definition::definition_of_large_set_was(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_large_set_was(
 			define_label, LSW, verbose_level);
 	if (f_v) {
@@ -3833,9 +3835,9 @@ void symbol_definition::definition_of_set(
 	}
 
 
-	data_structures::set_builder *SB;
+	other::data_structures::set_builder *SB;
 
-	SB = NEW_OBJECT(data_structures::set_builder);
+	SB = NEW_OBJECT(other::data_structures::set_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_set "
@@ -3850,9 +3852,9 @@ void symbol_definition::definition_of_set(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_set(
 			define_label, SB, verbose_level);
 	if (f_v) {
@@ -3871,7 +3873,7 @@ void symbol_definition::definition_of_set(
 
 void symbol_definition::definition_of_vector(
 		std::string &label,
-		data_structures::vector_builder_description *Descr,
+		other::data_structures::vector_builder_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3881,7 +3883,7 @@ void symbol_definition::definition_of_vector(
 	}
 
 
-	field_theory::finite_field *F = NULL;
+	algebra::field_theory::finite_field *F = NULL;
 
 	if (Descr->f_field) {
 
@@ -3900,9 +3902,9 @@ void symbol_definition::definition_of_vector(
 	}
 
 
-	data_structures::vector_builder *VB;
+	other::data_structures::vector_builder *VB;
 
-	VB = NEW_OBJECT(data_structures::vector_builder);
+	VB = NEW_OBJECT(other::data_structures::vector_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_vector "
@@ -3917,9 +3919,9 @@ void symbol_definition::definition_of_vector(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_vector(
 			label, VB, verbose_level);
 	if (f_v) {
@@ -3939,7 +3941,7 @@ void symbol_definition::definition_of_vector(
 
 void symbol_definition::definition_of_symbolic_object(
 		std::string &label,
-		expression_parser::symbolic_object_builder_description *Descr,
+		algebra::expression_parser::symbolic_object_builder_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3950,9 +3952,9 @@ void symbol_definition::definition_of_symbolic_object(
 
 
 
-	expression_parser::symbolic_object_builder *SB;
+	algebra::expression_parser::symbolic_object_builder *SB;
 
-	SB = NEW_OBJECT(expression_parser::symbolic_object_builder);
+	SB = NEW_OBJECT(algebra::expression_parser::symbolic_object_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_symbolic_object "
@@ -3967,9 +3969,9 @@ void symbol_definition::definition_of_symbolic_object(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_symbolic_object(
 			label, SB, verbose_level);
 	if (f_v) {
@@ -4005,9 +4007,9 @@ void symbol_definition::definition_of_combinatorial_object(
 			Data_input_stream_description,
 			verbose_level);
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_combinatorial_object(
 			define_label, Combo, verbose_level);
 	if (f_v) {
@@ -4033,18 +4035,18 @@ void symbol_definition::do_geometry_builder(
 		cout << "symbol_definition::do_geometry_builder" << endl;
 	}
 
-	geometry_builder::geometry_builder *GB;
+	combinatorics::geometry_builder::geometry_builder *GB;
 
-	GB = NEW_OBJECT(geometry_builder::geometry_builder);
+	GB = NEW_OBJECT(combinatorics::geometry_builder::geometry_builder);
 
 	GB->init_description(Geometry_builder_description, verbose_level);
 
 	GB->gg->main2(verbose_level);
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_geometry_builder_object(
 			define_label, GB, verbose_level);
 	if (f_v) {
@@ -4069,7 +4071,7 @@ void symbol_definition::load_finite_field_PG(
 	if (f_v) {
 		cout << "symbol_definition::load_finite_field_PG" << endl;
 	}
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (Projective_space_with_action_description->f_field_label) {
@@ -4090,7 +4092,7 @@ void symbol_definition::load_finite_field_PG(
 			cout << "symbol_definition::load_finite_field_PG "
 					"creating the finite field of order " << q << endl;
 		}
-		Projective_space_with_action_description->F = NEW_OBJECT(field_theory::finite_field);
+		Projective_space_with_action_description->F = NEW_OBJECT(algebra::field_theory::finite_field);
 		Projective_space_with_action_description->F->finite_field_init_small_order(q,
 				false /* f_without_tables */,
 				true /* f_compute_related_fields */,
@@ -4117,7 +4119,7 @@ void symbol_definition::load_finite_field_PG(
 
 
 
-field_theory::finite_field *symbol_definition::get_or_create_finite_field(
+algebra::field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 		std::string &input_q,
 		int verbose_level)
 {
@@ -4126,8 +4128,8 @@ field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 	if (f_v) {
 		cout << "symbol_definition::get_or_create_finite_field" << endl;
 	}
-	field_theory::finite_field *F;
-	data_structures::string_tools ST;
+	algebra::field_theory::finite_field *F;
+	other::data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(input_q)) {
 		int q;
@@ -4137,7 +4139,7 @@ field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 			cout << "symbol_definition::get_or_create_finite_field "
 					"creating the finite field of order " << q << endl;
 		}
-		F = NEW_OBJECT(field_theory::finite_field);
+		F = NEW_OBJECT(algebra::field_theory::finite_field);
 
 		F->finite_field_init_small_order(q,
 				false /* f_without_tables */,
@@ -4162,7 +4164,7 @@ field_theory::finite_field *symbol_definition::get_or_create_finite_field(
 					"done cannot find finite field object" << endl;
 			exit(1);
 		}
-		F = (field_theory::finite_field *)
+		F = (algebra::field_theory::finite_field *)
 				Sym->Orbiter_top_level_session->get_object(idx);
 	}
 
@@ -4200,9 +4202,9 @@ void symbol_definition::definition_of_vector_ge(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_vector_ge(
 			define_label, VB, verbose_level);
 	if (f_v) {
@@ -4248,9 +4250,9 @@ void symbol_definition::definition_of_action_on_forms(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_action_on_forms(
 			define_label, AF, verbose_level);
 	if (f_v) {
@@ -4296,9 +4298,9 @@ void symbol_definition::definition_of_orbits(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_orbits(
 			define_label, OC, verbose_level);
 	if (f_v) {
@@ -4327,9 +4329,9 @@ void symbol_definition::definition_of_poset_classification_control(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_poset_classification_control(
 			define_label, Poset_classification_control, verbose_level);
 	if (f_v) {
@@ -4358,9 +4360,9 @@ void symbol_definition::definition_of_poset_classification_report_options(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_poset_classification_report_options(
 			define_label, Poset_classification_report_options, verbose_level);
 	if (f_v) {
@@ -4390,9 +4392,9 @@ void symbol_definition::definition_of_draw_options(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_draw_options(
 			define_label, Draw_options, verbose_level);
 	if (f_v) {
@@ -4423,9 +4425,9 @@ void symbol_definition::definition_of_draw_incidence_structure_options(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_draw_incidence_structure_options(
 			define_label, Draw_incidence_structure_description, verbose_level);
 	if (f_v) {
@@ -4458,9 +4460,9 @@ void symbol_definition::definition_of_arc_generator_control(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_arc_generator_control(
 			define_label, Arc_generator_control, verbose_level);
 	if (f_v) {
@@ -4490,9 +4492,9 @@ void symbol_definition::definition_of_poset_classification_activity(
 
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_poset_classification_activity(
 			define_label, Poset_classification_activity, verbose_level);
 	if (f_v) {
@@ -4518,9 +4520,9 @@ void symbol_definition::definition_of_crc_code(
 		cout << "symbol_definition::definition_of_crc_code" << endl;
 	}
 
-	coding_theory::crc_object *Code;
+	combinatorics::coding_theory::crc_object *Code;
 
-	Code = NEW_OBJECT(coding_theory::crc_object);
+	Code = NEW_OBJECT(combinatorics::coding_theory::crc_object);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_crc_code "
@@ -4544,9 +4546,9 @@ void symbol_definition::definition_of_crc_code(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_crc_code(
 			define_label, Code, verbose_level);
 	if (f_v) {
@@ -4599,9 +4601,9 @@ void symbol_definition::definition_of_mapping(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_mapping(
 			define_label, Mapping, verbose_level);
 	if (f_v) {
@@ -4681,9 +4683,9 @@ void symbol_definition::definition_of_variety(
 	}
 
 
-	orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
 
-	Symb = NEW_OBJECT(orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
 	Symb->init_variety(
 			define_label, Variety, verbose_level);
 	if (f_v) {

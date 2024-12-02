@@ -18,6 +18,7 @@ namespace orbits {
 
 orbit_cascade::orbit_cascade()
 {
+	Record_birth();
 	N = 0;
 	k = 0;
 
@@ -48,6 +49,7 @@ orbit_cascade::orbit_cascade()
 
 orbit_cascade::~orbit_cascade()
 {
+	Record_death();
 }
 
 void orbit_cascade::init(
@@ -91,7 +93,7 @@ void orbit_cascade::init(
 	if (f_v) {
 		cout << "orbit_cascade::init group order" << endl;
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		G->Subgroup_gens->group_order(go);
 
@@ -334,7 +336,7 @@ void orbit_cascade::init(
 
 
 
-	data_structures::tally_lint T;
+	other::data_structures::tally_lint T;
 
 	T.init_vector_lint(Ago,
 			false /* f_second */, 0 /* verbose_level */);
@@ -396,8 +398,8 @@ void orbit_cascade::downstep(
 
 			for (so = 0; so < nb_orbits_secondary[po]; so++, f++) {
 				data_structures_groups::set_and_stabilizer *R;
-				ring_theory::longinteger_object ol;
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object ol;
+				algebra::ring_theory::longinteger_object go;
 
 				R = orbits_secondary_poset[po]->get_set_and_stabilizer(
 						k /* level */,
@@ -446,8 +448,8 @@ void orbit_cascade::downstep(
 		for (so = 0; so < nb_orbits_secondary[po]; so++, f++) {
 
 			data_structures_groups::set_and_stabilizer *R;
-			ring_theory::longinteger_object ol;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object ol;
+			algebra::ring_theory::longinteger_object go;
 
 			R = orbits_secondary_poset[po]->get_set_and_stabilizer(
 					k /* level */,
@@ -558,7 +560,7 @@ void orbit_cascade::upstep(
 
 	Partition_orbits = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	G->Subgroup_gens->group_order(go);
 
@@ -617,7 +619,7 @@ void orbit_cascade::upstep(
 
 
 		groups::strong_generators *S;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		if (f_v) {
 			cout << "orbit_cascade::upstep f=" << f << " before gens->create_copy" << endl;
@@ -806,7 +808,7 @@ void orbit_cascade::upstep(
 		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
 
 		groups::strong_generators *Aut_gens;
-		ring_theory::longinteger_object ago;
+		algebra::ring_theory::longinteger_object ago;
 
 		{
 
@@ -876,7 +878,7 @@ void orbit_cascade::upstep(
 			cout << i << " : " << Ago[i] << endl;
 		}
 
-		data_structures::tally_lint T;
+		other::data_structures::tally_lint T;
 
 		T.init_vector_lint(Ago,
 				false /* f_second */, 0 /* verbose_level */);

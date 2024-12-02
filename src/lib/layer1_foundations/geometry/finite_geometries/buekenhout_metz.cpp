@@ -21,6 +21,7 @@ namespace finite_geometries {
 
 buekenhout_metz::buekenhout_metz()
 {
+	Record_birth();
 	FQ = NULL;
 	Fq = NULL;
 	q = 0;
@@ -73,6 +74,7 @@ buekenhout_metz::buekenhout_metz()
 
 buekenhout_metz::~buekenhout_metz()
 {
+	Record_death();
 	if (SubS) {
 		FREE_OBJECT(SubS);
 	}
@@ -133,8 +135,8 @@ buekenhout_metz::~buekenhout_metz()
 }
 
 void buekenhout_metz::buekenhout_metz_init(
-		field_theory::finite_field *Fq,
-		field_theory::finite_field *FQ,
+		algebra::field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *FQ,
 		int f_Uab, int a, int b, 
 		int f_classical, int verbose_level)
 // creates P2 over FQ and P3 over Fq,
@@ -183,7 +185,7 @@ void buekenhout_metz::buekenhout_metz_init(
 	P3->projective_space_init(3, Fq, true, verbose_level);
 
 
-	SubS = NEW_OBJECT(field_theory::subfield_structure);
+	SubS = NEW_OBJECT(algebra::field_theory::subfield_structure);
 
 	if (f_v) {
 		cout << "buekenhout_metz::buekenhout_metz_init "
@@ -842,7 +844,7 @@ void buekenhout_metz::compute_the_design(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, h, a, b;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "buekenhout_metz::compute_the_design" << endl;
@@ -1365,7 +1367,7 @@ void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 void buekenhout_metz::write_unital_to_file()
 {
 	string fname_unital;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	get_name(fname_unital);
 	fname_unital += ".txt";

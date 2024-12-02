@@ -24,11 +24,13 @@ namespace projective_geometry {
 
 projective_space_reporting::projective_space_reporting()
 {
+	Record_birth();
 	P = NULL;
 }
 
 projective_space_reporting::~projective_space_reporting()
 {
+	Record_death();
 	P = NULL;
 }
 
@@ -47,7 +49,7 @@ void projective_space_reporting::init(
 }
 
 void projective_space_reporting::create_latex_report(
-		graphics::layered_graph_draw_options *O,
+		other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -73,7 +75,7 @@ void projective_space_reporting::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -101,7 +103,7 @@ void projective_space_reporting::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -128,7 +130,7 @@ void projective_space_reporting::report_summary(
 
 void projective_space_reporting::report(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -272,15 +274,15 @@ void projective_space_reporting::report_polynomial_rings(
 		cout << "projective_space_reporting::report_polynomial_rings" << endl;
 	}
 
-	ring_theory::homogeneous_polynomial_domain *Poly1;
-	ring_theory::homogeneous_polynomial_domain *Poly2;
-	ring_theory::homogeneous_polynomial_domain *Poly3;
-	ring_theory::homogeneous_polynomial_domain *Poly4;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly1;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly2;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly3;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly4;
 
-	Poly1 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly2 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly3 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
-	Poly4 = NEW_OBJECT(ring_theory::homogeneous_polynomial_domain);
+	Poly1 = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
+	Poly2 = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
+	Poly4 = NEW_OBJECT(algebra::ring_theory::homogeneous_polynomial_domain);
 
 	ost << "\\subsection*{The polynomial rings associated "
 			"with ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
@@ -318,7 +320,7 @@ void projective_space_reporting::report_polynomial_rings(
 
 void projective_space_reporting::create_drawing_of_plane(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -338,7 +340,7 @@ void projective_space_reporting::create_drawing_of_plane(
 		}
 		fname_base = "plane_of_order_" + std::to_string(P->Subspaces->q);
 
-		graphics::plot_tools Pt;
+		other::graphics::plot_tools Pt;
 
 		Pt.draw_point_set_in_plane(
 				fname_base,
@@ -634,7 +636,7 @@ void projective_space_reporting::cheat_sheet_points_on_lines(
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_points_on_lines" << endl;
 	}
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_lines
@@ -691,7 +693,7 @@ void projective_space_reporting::cheat_sheet_lines_on_points(
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_lines_on_points" << endl;
 	}
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has " << P->Subspaces->N_points
 			<< " points, each with " << P->Subspaces->r << " lines:\\\\" << endl;

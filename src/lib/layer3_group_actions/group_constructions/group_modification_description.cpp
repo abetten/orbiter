@@ -22,6 +22,7 @@ namespace group_constructions {
 
 group_modification_description::group_modification_description()
 {
+	Record_birth();
 	f_restricted_action = false;
 	//std::string restricted_action_set_text;
 	//std::string restricted_action_set_text_tex;
@@ -89,6 +90,7 @@ group_modification_description::group_modification_description()
 
 group_modification_description::~group_modification_description()
 {
+	Record_death();
 }
 
 
@@ -98,7 +100,7 @@ int group_modification_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "group_modification_description::read_arguments" << endl;

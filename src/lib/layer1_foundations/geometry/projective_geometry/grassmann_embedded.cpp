@@ -21,6 +21,7 @@ namespace projective_geometry {
 
 grassmann_embedded::grassmann_embedded()
 {
+	Record_birth();
 	big_n = n = k = q = 0;
 	F = NULL;
 	G = NULL;
@@ -39,6 +40,7 @@ grassmann_embedded::grassmann_embedded()
 
 grassmann_embedded::~grassmann_embedded()
 {
+	Record_death();
 	//if (G) {
 		//delete G;
 		//}
@@ -76,17 +78,18 @@ grassmann_embedded::~grassmann_embedded()
 
 void grassmann_embedded::init(
 		int big_n, int n,
-		projective_geometry::grassmann *G, int *M, int verbose_level)
+		projective_geometry::grassmann *G, int *M,
+		int verbose_level)
 // M is n x big_n
 // G is for k-dimensional subspaces of an n-space.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, rk, idx;
-	ring_theory::longinteger_object deg;
+	algebra::ring_theory::longinteger_object deg;
 	//longinteger_domain D;
-	combinatorics::combinatorics_domain C;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain C;
+	other::data_structures::sorting Sorting;
 	
 	grassmann_embedded::big_n = big_n;
 	grassmann_embedded::G = G;
@@ -134,7 +137,8 @@ void grassmann_embedded::init(
 	}
 	//rk = F->Gauss_simple(M_Gauss, n, big_n,
 	//base_cols, verbose_level - 1);
-	rk = F->Linear_algebra->Gauss_int(M_Gauss,
+	rk = F->Linear_algebra->Gauss_int(
+			M_Gauss,
 		false /*f_special*/,
 		true/* f_complete*/,
 		base_cols,
@@ -206,7 +210,8 @@ void grassmann_embedded::unrank_embedded_lint(
 		Int_vec_print_integer_matrix_width(cout,
 				M, n, big_n, big_n, F->log10_of_q);
 	}
-	F->Linear_algebra->mult_matrix_matrix(G->M, M,
+	F->Linear_algebra->mult_matrix_matrix(
+			G->M, M,
 			subspace_basis_with_embedding, n /* not k */, n, big_n,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -280,7 +285,7 @@ long int grassmann_embedded::rank_lint(
 {
 	int f_v = (verbose_level >= 1);
 	long int rk, i, j, a;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {

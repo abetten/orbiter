@@ -85,7 +85,7 @@ public:
 	semifield_classify_description *Descr;
 
 	projective_geometry::projective_space_with_action *PA;
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 	poset_classification::poset_classification_control *Control;
 
 
@@ -173,7 +173,7 @@ public:
 	int k;
 	int k2; // = k * k
 	//linear_group *LG;
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 
 	int q;
 	int order; // q^k
@@ -239,7 +239,7 @@ public:
 			std::ostream &ost, int level,
 			semifield_level_two *L2,
 			semifield_lifting *L3,
-			graphics::layered_graph_draw_options *draw_options,
+			other::graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void init_poset_classification(
 			poset_classification::poset_classification_control *Control,
@@ -337,14 +337,14 @@ public:
 
 	actions::action *A; // PGL(n,q)
 	actions::action *A_PGLk; // PGL(k,q)
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
-	linear_algebra::gl_classes *C;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
+	algebra::linear_algebra::gl_classes *C;
 	int *desired_pivots; // [k]
 
 
 	// Level one:
-	linear_algebra::gl_class_rep *R; // [nb_classes]
+	algebra::linear_algebra::gl_class_rep *R; // [nb_classes]
 		// conjugacy class reps,
 		// allocated and computed in C->make_classes,
 		// which is called from downstep()
@@ -430,7 +430,7 @@ public:
 	int *M1;
 	int *Basis1, *Basis2;
 
-	linear_algebra::gl_class_rep *R1, *R2;
+	algebra::linear_algebra::gl_class_rep *R1, *R2;
 
 	long int **Candidates;
 		// candidates for the generator matrix,
@@ -490,7 +490,7 @@ public:
 		long int *Candidates, int Nb_candidates, int orbit,
 		int verbose_level);
 	void read_candidates_at_level_two_by_type(
-			data_structures::set_of_sets_lint *&Candidates_by_type,
+			other::data_structures::set_of_sets_lint *&Candidates_by_type,
 			int orbit,
 			int verbose_level);
 	void get_basis_and_pivots(
@@ -572,7 +572,7 @@ public:
 	int *base_cols;
 	int *M1;
 	int *Basis;
-	linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R1;
 
 
 
@@ -668,8 +668,8 @@ public:
 	int candidate_testing(
 		int orbit,
 		int *last_mtx, int window_bottom, int window_size,
-		data_structures::set_of_sets_lint *C_in,
-		data_structures::set_of_sets_lint *C_out,
+		other::data_structures::set_of_sets_lint *C_in,
+		other::data_structures::set_of_sets_lint *C_out,
 		long int *Tmp1, long int *Tmp2,
 		int verbose_level);
 	void level_three_get_a1_a2_a3(
@@ -817,7 +817,7 @@ class semifield_downstep_node {
 public:
 	semifield_classify *SC;
 	semifield_lifting *SL;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int k;
 	int k2;
 
@@ -870,7 +870,7 @@ public:
 	int fusion_with;
 	int *fusion_elt;
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	groups::strong_generators *gens;
 
 	semifield_flag_orbit_node();
@@ -880,7 +880,7 @@ public:
 		int pt_local, long int pt, int downstep_orbit_len, int f_long_orbit,
 		int verbose_level);
 	void group_order(
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	int group_order_as_int();
 	void write_to_file_binary(
 			semifield_lifting *SL, std::ofstream &fp,
@@ -904,7 +904,7 @@ public:
 	semifield_lifting *SL;
 	semifield_level_two *L2;
 	actions::action *A;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n;
 	int k;
 	int k2;
@@ -913,7 +913,7 @@ public:
 	int *Basis;
 	int *basis_tmp;
 	int *base_cols;
-	linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R1;
 
 	semifield_trace();
 	~semifield_trace();

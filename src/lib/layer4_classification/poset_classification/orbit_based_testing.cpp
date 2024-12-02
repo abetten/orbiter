@@ -17,6 +17,7 @@ namespace poset_classification {
 
 orbit_based_testing::orbit_based_testing()
 {
+	Record_birth();
 	int i;
 
 	PC = NULL;
@@ -36,6 +37,7 @@ orbit_based_testing::orbit_based_testing()
 
 orbit_based_testing::~orbit_based_testing()
 {
+	Record_death();
 	if (local_S) {
 		FREE_lint(local_S);
 	}
@@ -169,7 +171,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group" << endl;

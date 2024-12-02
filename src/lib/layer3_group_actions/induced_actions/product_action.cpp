@@ -18,6 +18,7 @@ namespace induced_actions {
 
 product_action::product_action()
 {
+	Record_birth();
 	A1 = NULL;
 	A2 = NULL;
 	f_use_projections = false;
@@ -39,6 +40,7 @@ product_action::product_action()
 
 product_action::~product_action()
 {
+	Record_death();
 	if (A1) {
 		FREE_OBJECT(A1);
 	}
@@ -99,7 +101,7 @@ void product_action::init(
 	elt3 = NEW_uchar(coded_elt_size_in_char);
 
 
-	Elts = NEW_OBJECT(data_structures::page_storage);
+	Elts = NEW_OBJECT(other::data_structures::page_storage);
 	if (f_vv) {
 		cout << "matrix_group::init_linear calling Elts->init" << endl;
 	}

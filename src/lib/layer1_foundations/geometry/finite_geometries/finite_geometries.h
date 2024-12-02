@@ -40,7 +40,7 @@ public:
 
 
 	projective_geometry::grassmann *Grass;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	long int *spread_elements_numeric; // [spread_size]
 	long int *spread_elements_numeric_sorted; // [spread_size]
@@ -56,7 +56,7 @@ public:
 	andre_construction();
 	~andre_construction();
 	void init(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int k, long int *spread_elements_numeric,
 		int verbose_level);
 	void points_on_line(
@@ -82,7 +82,7 @@ class andre_construction_point_element {
 public:
 	andre_construction *Andre;
 	int k, n, q, spread_size;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int point_rank;
 	int f_is_at_infinity;
 	int at_infinity_idx;
@@ -112,7 +112,7 @@ class andre_construction_line_element {
 public:
 	andre_construction *Andre;
 	int k, n, q, spread_size;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int line_rank;
 	int f_is_at_infinity;
 	int affine_numeric;
@@ -146,11 +146,11 @@ public:
 
 class buekenhout_metz {
 public:
-	field_theory::finite_field *FQ, *Fq;
+	algebra::field_theory::finite_field *FQ, *Fq;
 	int q;
 	int Q;
 
-	field_theory::subfield_structure *SubS;
+	algebra::field_theory::subfield_structure *SubS;
 
 	int f_classical;
 	int f_Uab;
@@ -202,8 +202,8 @@ public:
 	buekenhout_metz();
 	~buekenhout_metz();
 	void buekenhout_metz_init(
-			field_theory::finite_field *Fq,
-			field_theory::finite_field *FQ,
+			algebra::field_theory::finite_field *Fq,
+			algebra::field_theory::finite_field *FQ,
 		int f_Uab, int a, int b,
 		int f_classical, int verbose_level);
 	void init_ovoid(
@@ -241,9 +241,9 @@ public:
 	int s;
 	int q;
 	int Q;
-	field_theory::finite_field *Fq;
-	field_theory::finite_field *FQ;
-	field_theory::subfield_structure *SubS;
+	algebra::field_theory::finite_field *Fq;
+	algebra::field_theory::finite_field *FQ;
+	algebra::field_theory::subfield_structure *SubS;
 	projective_geometry::grassmann *Gr;
 
 	int N;
@@ -271,7 +271,7 @@ public:
 	~desarguesian_spread();
 	void init(
 			int n, int m, int s,
-			field_theory::subfield_structure *SubS,
+			algebra::field_theory::subfield_structure *SubS,
 		int verbose_level);
 	void calculate_spread_elements(
 			int verbose_level);
@@ -354,20 +354,20 @@ public:
 	W3q *W;
 	projective_geometry::projective_space *P5;
 	projective_geometry::grassmann *G63;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	long int *BLT;
 	int *BLT_line_idx;
 	int *Basis;
 	int *Basis2;
 	int *subspace_basis;
 	int *Basis_Pperp;
-	ring_theory::longinteger_object *six_choose_three_q;
+	algebra::ring_theory::longinteger_object *six_choose_three_q;
 	int six_choose_three_q_int;
 	int f_show;
 	int dim_intersection;
 	int *Basis_intersection;
-	data_structures::fancy_set *type_i_points, *type_ii_points, *type_iii_points;
-	data_structures::fancy_set *type_a_lines, *type_b_lines;
+	other::data_structures::fancy_set *type_i_points, *type_ii_points, *type_iii_points;
+	other::data_structures::fancy_set *type_a_lines, *type_b_lines;
 	int *type_a_line_BLT_idx;
 	int q2;
 	int q5;
@@ -377,7 +377,7 @@ public:
 	knarr();
 	~knarr();
 	void init(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int BLT_no, int verbose_level);
 	void points_and_lines(
 			int verbose_level);
@@ -409,7 +409,7 @@ class spread_domain {
 
 public:
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int n; // = a multiple of k
 	int k;
@@ -444,7 +444,7 @@ public:
 
 	// only if n = 2 * k:
 	projective_geometry::klein_correspondence *Klein;
-	layer1_foundations::orthogonal_geometry::orthogonal *O;
+	layer1_foundations::geometry::orthogonal_geometry::orthogonal *O;
 
 
 	int *Data1;
@@ -458,7 +458,7 @@ public:
 	spread_domain();
 	~spread_domain();
 	void init_spread_domain(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int k,
 			int verbose_level);
 	void unrank_point(
@@ -520,7 +520,7 @@ class spread_tables {
 public:
 	int q;
 	int d; // = 4
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	projective_geometry::projective_space *P; // PG(3,q)
 	projective_geometry::grassmann *Gr; // Gr_{4,2}
 	long int nb_lines;
@@ -586,7 +586,7 @@ public:
 
 	void classify_self_dual_spreads(
 			int *&type,
-			data_structures::set_of_sets *&SoS,
+			other::data_structures::set_of_sets *&SoS,
 			int verbose_level);
 	int files_exist(
 			int verbose_level);
@@ -595,7 +595,7 @@ public:
 	void load(
 			int verbose_level);
 	void compute_adjacency_matrix(
-			data_structures::bitvector *&Bitvec,
+			other::data_structures::bitvector *&Bitvec,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(
 			int a, int b);
@@ -614,7 +614,7 @@ public:
 	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(
 			long int *set, int len);
 	void make_exact_cover_problem(
-			solvers::diophant *&Dio,
+			combinatorics::solvers::diophant *&Dio,
 			long int *live_point_index, int nb_live_points,
 			long int *live_blocks, int nb_live_blocks,
 			int nb_needed,
@@ -631,7 +631,7 @@ public:
 	void report_one_spread(
 			std::ostream &ost, int a);
 	void make_graph_of_disjoint_spreads(
-			graph_theory::colored_graph *&CG,
+			combinatorics::graph_theory::colored_graph *&CG,
 			int verbose_level);
 
 };
@@ -653,7 +653,7 @@ public:
 
 	projective_geometry::projective_space *P3;
 	orthogonal_geometry::orthogonal *Q4;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int nb_lines;
 		// number of absolute lines of W(3,q)
@@ -682,7 +682,7 @@ public:
 	W3q();
 	~W3q();
 	void init(
-			field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F, int verbose_level);
 	void find_lines(
 			int verbose_level);
 	void print_lines();

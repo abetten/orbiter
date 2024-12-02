@@ -26,6 +26,7 @@ static void design_tables_swap_func(
 
 design_tables::design_tables()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	initial_set = NULL;
@@ -41,6 +42,7 @@ design_tables::design_tables()
 
 design_tables::~design_tables()
 {
+	Record_death();
 	if (the_table) {
 		FREE_lint(the_table);
 	}
@@ -152,8 +154,8 @@ void design_tables::create_table(
 
 	long int **Sets;
 	int i;
-	data_structures::sorting Sorting;
-	combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "design_tables::init" << endl;
@@ -280,7 +282,7 @@ void design_tables::extract_solutions_by_index(
 	int f_v = (verbose_level >= 1);
 	long int i, j, k, idx, N;
 	long int *Sol;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::extract_solutions_by_index" << endl;
@@ -408,7 +410,7 @@ int design_tables::test_if_table_exists(
 
 	fname_design_table = label + "_design_table.csv";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (Fio.file_size(fname_design_table) > 0) {
 		if (f_v) {
@@ -432,7 +434,7 @@ void design_tables::save(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::save" << endl;
@@ -462,7 +464,7 @@ void design_tables::load(
 {
 	int f_v = (verbose_level >= 1);
 	int b;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "design_tables::load" << endl;
@@ -500,7 +502,7 @@ int design_tables::test_if_designs_are_disjoint(
 		int i, int j)
 {
 	long int *p1, *p2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	p1 = the_table + i * design_size;
 	p2 = the_table + j * design_size;
@@ -521,7 +523,7 @@ int design_tables::test_set_within_itself(
 	int i, j, a, b;
 	long int *p1;
 	long int *p2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	for (i = 0; i < set_size; i++) {
 		a = set_of_designs_by_index[i];
@@ -545,7 +547,7 @@ int design_tables::test_between_two_sets(
 	int i, j, a, b;
 	long int *p1;
 	long int *p2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	for (i = 0; i < set_size1; i++) {
 		a = set_of_designs_by_index1[i];
@@ -572,7 +574,7 @@ static int design_tables_compare_func(
 	design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	ret = Sorting.int_vec_compare(Sets[i], Sets[j], D->design_size);
 	return ret;

@@ -22,6 +22,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 classify_double_sixes::classify_double_sixes()
 {
+	Record_birth();
 
 	Five_p1 = NULL;
 
@@ -42,6 +43,7 @@ classify_double_sixes::classify_double_sixes()
 
 classify_double_sixes::~classify_double_sixes()
 {
+	Record_death();
 	if (Elt3) {
 		FREE_int(Elt3);
 	}
@@ -284,8 +286,8 @@ void classify_double_sixes::downstep(
 		}
 
 		data_structures_groups::set_and_stabilizer *R;
-		ring_theory::longinteger_object ol;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object ol;
+		algebra::ring_theory::longinteger_object go;
 		long int dataset[23];
 
 		R = Five_p1->Five_plus_one->get_set_and_stabilizer(
@@ -411,7 +413,7 @@ void classify_double_sixes::upstep(
 	int f, po, so;
 	int *f_processed;
 	int nb_processed;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::upstep" << endl;
@@ -425,7 +427,7 @@ void classify_double_sixes::upstep(
 
 	Double_sixes = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	Five_p1->A->group_order(go);
 
 	Double_sixes->init(
@@ -491,7 +493,7 @@ void classify_double_sixes::upstep(
 
 
 		groups::strong_generators *S;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		long int double_six[12];
 
 		Lint_vec_copy(dataset + 11, double_six, 12);
@@ -633,7 +635,7 @@ void classify_double_sixes::upstep(
 		groups::strong_generators *Aut_gens;
 
 		{
-			ring_theory::longinteger_object ago;
+			algebra::ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "classify_double_sixes::upstep "
@@ -734,7 +736,7 @@ void classify_double_sixes::print_five_plus_ones(
 
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Five_p1->A->Strong_gens->group_order(go);
 
 		ost << "The order of the group is ";
@@ -746,8 +748,8 @@ void classify_double_sixes::print_five_plus_ones(
 
 
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object ol, Ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object ol, Ol;
 	Ol.create(0);
 
 	ost << "The group has " 
@@ -812,7 +814,7 @@ void classify_double_sixes::identify_double_six(
 	long int five_lines[5];
 	long int five_lines_out_as_neighbors[5];
 	int po;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_double_sixes::identify_double_six" << endl;
@@ -885,7 +887,7 @@ void classify_double_sixes::identify_double_six(
 }
 
 void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
-		data_structures::spreadsheet *&Sp,
+		other::data_structures::spreadsheet *&Sp,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -898,8 +900,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	long int *rep;
 	long int *lines;
 	int *data;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_object len;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object len;
 	string fname_csv;
 
 
@@ -970,7 +972,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 #endif
 
 
-	Sp = NEW_OBJECT(data_structures::spreadsheet);
+	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
 #if 0
 	if (f_with_fusion) {
 		Sp->init_empty_table(nb + 1, 7);
@@ -1150,7 +1152,7 @@ void classify_double_sixes::read_file(
 	//Double_sixes->A = A;
 	//Double_sixes->A2 = A2;
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	Five_p1->A->group_order(go);
 	//A->group_order(Double_sixes->go);
 

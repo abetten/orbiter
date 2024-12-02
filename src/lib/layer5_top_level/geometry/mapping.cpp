@@ -20,6 +20,7 @@ namespace apps_geometry {
 
 mapping::mapping()
 {
+	Record_birth();
 	Descr = NULL;
 
 	Domain = NULL;
@@ -28,7 +29,7 @@ mapping::mapping()
 	Formula = NULL;
 
 	object_in_codomain_idx = -1;
-	object_in_codomain_type = orbiter_kernel_system::symbol_table_object_type::t_nothing_object;
+	object_in_codomain_type = other::orbiter_kernel_system::symbol_table_object_type::t_nothing_object;
 	object_in_codomain_cubic_surface = NULL;
 
 	f_object_in_codomain = false;
@@ -46,6 +47,7 @@ mapping::mapping()
 
 mapping::~mapping()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -113,16 +115,16 @@ void mapping::init(
 					<< Descr->object_in_codomain_cubic_surface_label << endl;
 		}
 
-		object_in_codomain_idx = orbiter_kernel_system::Orbiter->find_symbol(Descr->object_in_codomain_cubic_surface_label);
+		object_in_codomain_idx = other::orbiter_kernel_system::Orbiter->find_symbol(Descr->object_in_codomain_cubic_surface_label);
 		if (f_v) {
 			cout << "mapping::init object_in_codomain_idx = "
 					<< object_in_codomain_idx << endl;
 		}
 
 		object_in_codomain_type =
-				orbiter_kernel_system::Orbiter->get_object_type(object_in_codomain_idx);
+				other::orbiter_kernel_system::Orbiter->get_object_type(object_in_codomain_idx);
 
-		if (object_in_codomain_type != orbiter_kernel_system::symbol_table_object_type::t_cubic_surface) {
+		if (object_in_codomain_type != other::orbiter_kernel_system::symbol_table_object_type::t_cubic_surface) {
 			cout << "mapping::init object in codomain must be of type cubic surface" << endl;
 			exit(1);
 		}
@@ -156,7 +158,7 @@ void mapping::init(
 	}
 
 	string fname_map;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname_map = Descr->formula_label + "_map.csv";
 
@@ -303,7 +305,7 @@ void mapping::evaluate_regular_map(
 	w2 = NEW_int(len);
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	std::map<std::string, std::string> symbol_table;
 
 	ST.parse_value_pairs(symbol_table,

@@ -21,7 +21,7 @@ namespace poset_classification {
 void poset_orbit_node::read_memory_object(
 		poset_classification *PC,
 		actions::action *A,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level)
@@ -147,7 +147,7 @@ void poset_orbit_node::read_memory_object(
 void poset_orbit_node::write_memory_object(
 		poset_classification *PC,
 		actions::action *A,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int &nb_group_elements,
 		int *Elt_tmp,
 		int verbose_level)
@@ -344,7 +344,7 @@ void poset_orbit_node::read_file(
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int *Elt;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	//node = Fio.fread_int4(fp);
@@ -485,7 +485,7 @@ void poset_orbit_node::write_file(
 	int *Elt;
 	int f_v = false;//(verbose_level >= 1);
 	int f_vv = false;//(verbose_level >= 2);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	if (f_v) {

@@ -20,6 +20,7 @@ namespace apps_coding_theory {
 
 create_code_description::create_code_description()
 {
+	Record_birth();
 	f_field = false;
 	//std::string field_label;
 
@@ -68,6 +69,10 @@ create_code_description::create_code_description()
 
 }
 
+create_code_description::~create_code_description()
+{
+	Record_death();
+}
 
 int create_code_description::read_arguments(
 	int argc, std::string *argv,
@@ -75,7 +80,7 @@ int create_code_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "create_code_description::read_arguments" << endl;

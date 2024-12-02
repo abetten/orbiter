@@ -95,7 +95,7 @@ public:
 	void require_strong_generators();
 	void require_sims();
 	void group_order(
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	void print_group_order(
 			std::ostream &ost);
 	void print_tl();
@@ -248,7 +248,7 @@ public:
 	groups::sims *Stab;
 	groups::strong_generators *Strong_gens;
 
-	ring_theory::longinteger_object *stab_go;
+	algebra::ring_theory::longinteger_object *stab_go;
 	long int *candidates;
 	int nb_candidates;
 
@@ -293,7 +293,7 @@ public:
 	void init_from_schreier(
 			groups::schreier *Sch,
 			actions::action *default_action,
-			ring_theory::longinteger_object &full_group_order,
+			algebra::ring_theory::longinteger_object &full_group_order,
 			int verbose_level);
 	void read_from_file(
 			actions::action *A,
@@ -306,7 +306,7 @@ public:
 			int case_nr,
 			set_and_stabilizer *&Rep,
 			int verbose_level);
-	data_structures::tally *get_ago_distribution(
+	other::data_structures::tally *get_ago_distribution(
 			long int *&ago,
 			int verbose_level);
 	void report_ago_distribution(
@@ -379,7 +379,7 @@ public:
 	void sv_write_file(
 			schreier_vector *Sv,
 			std::ofstream &fp, int verbose_level);
-	data_structures::set_of_sets *get_orbits_as_set_of_sets(
+	other::data_structures::set_of_sets *get_orbits_as_set_of_sets(
 			schreier_vector *Sv,
 			int verbose_level);
 
@@ -476,7 +476,7 @@ public:
 	actions::action *A2;
 	long int *data;
 	int sz;
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 	groups::strong_generators *Strong_gens;
 	groups::sims *Stab;
 
@@ -487,7 +487,7 @@ public:
 			actions::action *A2,
 			int verbose_level);
 	void group_order(
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	long int group_order_as_lint();
 	void init_everything(
 			actions::action *A,
@@ -720,7 +720,7 @@ public:
 	void print_tex(
 			std::ostream &ost);
 	void print_generators_tex(
-			ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &go,
 			std::ostream &ost);
 	void print_as_permutation(
 			std::ostream& ost);
@@ -755,10 +755,10 @@ public:
 	void print_for_make_element(
 			std::ostream &ost);
 	void write_to_memory_object(
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 		int verbose_level);
 	void read_from_memory_object(
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 		int verbose_level);
 	void write_to_file_binary(
 			std::ofstream &fp,
@@ -806,7 +806,7 @@ public:
 			int verbose_level);
 	void stab_BLT_set_from_catalogue(
 			actions::action *A,
-		field_theory::finite_field *F, int iso,
+			algebra::field_theory::finite_field *F, int iso,
 		std::string &target_go_text,
 		int verbose_level);
 	int test_if_in_set_stabilizer(

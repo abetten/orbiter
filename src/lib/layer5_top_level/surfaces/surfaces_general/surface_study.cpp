@@ -35,9 +35,20 @@ static void matrix_entry_print(
 		std::string &output, void *data);
 
 
+surface_study::surface_study()
+{
+	Record_birth();
+}
+
+surface_study::~surface_study()
+{
+	Record_death();
+}
+
 
 void surface_study::init(
-		field_theory::finite_field *F, int nb, int verbose_level)
+		algebra::field_theory::finite_field *F,
+		int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -50,8 +61,8 @@ void surface_study::init(
 
 
 	int i;
-	number_theory::number_theory_domain NT;
-	knowledge_base::knowledge_base K;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::knowledge_base::knowledge_base K;
 
 
 
@@ -60,7 +71,7 @@ void surface_study::init(
 
 
 
-	Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+	Surf = NEW_OBJECT(geometry::algebraic_geometry::surface_domain);
 
 	if (f_v) {
 		cout << "surface_study::init initializing surface" << endl;
@@ -333,7 +344,7 @@ void surface_study::study_intersection_points(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_study::study_intersection_points" << endl;
@@ -383,7 +394,7 @@ void surface_study::study_intersection_points(
 
 	{
 		ofstream fp(fname_intersection_pts_tex);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		//latex_head_easy_sideways(fp);
@@ -470,7 +481,7 @@ void surface_study::study_group(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_study::study_group" << endl;
@@ -481,7 +492,7 @@ void surface_study::study_group(
 	int *Group_elts;
 	int group_order;
 	int elt_sz;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 
 	SaS->Stab->table_of_group_elements_in_data_form(
@@ -686,9 +697,9 @@ void surface_study::study_find_eckardt_points(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
-	graph_theory::graph_theory_domain Graph;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
+	combinatorics::graph_theory::graph_theory_domain Graph;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_study::study_find_eckardt_points" << endl;
@@ -735,7 +746,7 @@ void surface_study::study_find_eckardt_points(
 
 		{
 		ofstream fp(fname_intersection_pts_tex);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		//latex_head_easy_sideways(fp);
@@ -757,7 +768,7 @@ void surface_study::study_find_eckardt_points(
 	}
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init_lint(Intersection_pt, SaS->sz * SaS->sz, false, 0);
 	cout << "classification of points by multiplicity:" << endl;
@@ -856,12 +867,12 @@ void surface_study::study_surface_with_6_eckardt_points(
 
 
 
-	orbiter_kernel_system::Orbiter->Lint_vec->take_away(Double_pts, nb_double_pts, triangle, nb_pts_triangle);
-	orbiter_kernel_system::Orbiter->Lint_vec->take_away(Double_pts, nb_double_pts, three_points, 3);
+	other::orbiter_kernel_system::Orbiter->Lint_vec->take_away(Double_pts, nb_double_pts, triangle, nb_pts_triangle);
+	other::orbiter_kernel_system::Orbiter->Lint_vec->take_away(Double_pts, nb_double_pts, three_points, 3);
 
 	cout << "After taking away the triangle points, "
 			"we still have " << nb_double_pts << " double points" << endl;
-	orbiter_kernel_system::Orbiter->Lint_vec->print_as_table(cout, Double_pts, nb_double_pts, 10);
+	other::orbiter_kernel_system::Orbiter->Lint_vec->print_as_table(cout, Double_pts, nb_double_pts, 10);
 	cout << endl;
 
 
@@ -1552,7 +1563,7 @@ static void move_point_set(
 	long int *data_out;
 	long int *data2;
 	int idx, i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	//prefix[0] = 0;
 
@@ -1652,8 +1663,8 @@ static void matrix_entry_print(
 		int m, int n, int i, int j, int val,
 		std::string &output, void *data)
 {
-	algebraic_geometry::surface_domain *Surf;
-	Surf = (algebraic_geometry::surface_domain *) data;
+	geometry::algebraic_geometry::surface_domain *Surf;
+	Surf = (geometry::algebraic_geometry::surface_domain *) data;
 
 	if (i == -1) {
 		output = Surf->Schlaefli->Labels->Line_label_tex[val];

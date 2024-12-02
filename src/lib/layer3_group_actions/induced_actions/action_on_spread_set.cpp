@@ -17,6 +17,7 @@ namespace induced_actions {
 
 action_on_spread_set::action_on_spread_set()
 {
+	Record_birth();
 	k = n = k2 = q = 0;
 	F = NULL;
 	low_level_point_size = 0;
@@ -37,6 +38,7 @@ action_on_spread_set::action_on_spread_set()
 
 action_on_spread_set::~action_on_spread_set()
 {
+	Record_death();
 	if (mtx1) {
 		FREE_int(mtx1);
 		}
@@ -61,14 +63,14 @@ void action_on_spread_set::init(
 		actions::action *A_PGL_n_q,
 		actions::action *A_PGL_k_q,
 		groups::sims *G_PGL_k_q,
-	int k, field_theory::finite_field *F,
+	int k, algebra::field_theory::finite_field *F,
 	int verbose_level)
 // we are acting on the elements of G_PGL_k_q, so the degree of the action 
 // is the order of this group.
 // A_PGL_k_q in only needed for make_element
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action_on_spread_set::init" << endl;
@@ -122,7 +124,7 @@ void action_on_spread_set::report(
 {
 	ost << "Action on spread set has degree = " << degree << "\\\\" << endl;
 	ost << "Low-level point size = " << low_level_point_size << "\\\\" << endl;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	G_PGL_k_q->group_order(go);
 	ost << "PGL$(" << k << "," << q << ")$ has order " << go << "\\\\" << endl;
 }
@@ -147,7 +149,8 @@ long int action_on_spread_set::compute_image_int(
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_int "
 				"after unrank_point" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				subspace1, k, n, n, F->log10_of_q);
 		cout << "action_on_spread_set::compute_image_int "
 				"group element:" << endl;
@@ -162,7 +165,8 @@ long int action_on_spread_set::compute_image_int(
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_int "
 				"after applying group element" << endl;
-		Int_vec_print_integer_matrix_width(cout,
+		Int_vec_print_integer_matrix_width(
+				cout,
 				subspace2, k, n, n, F->log10_of_q);
 		}
 

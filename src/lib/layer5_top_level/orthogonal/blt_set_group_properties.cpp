@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_group_properties::blt_set_group_properties()
 {
+	Record_birth();
 	Blt_set_with_action = NULL;
 
 	A_on_points = NULL;
@@ -30,6 +31,7 @@ blt_set_group_properties::blt_set_group_properties()
 
 blt_set_group_properties::~blt_set_group_properties()
 {
+	Record_death();
 	if (A_on_points) {
 		FREE_OBJECT(A_on_points);
 	}
@@ -224,7 +226,7 @@ void blt_set_group_properties::print_automorphism_group(
 	std::ostream &ost)
 {
 	if (Blt_set_with_action->Aut_gens) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Blt_set_with_action->Aut_gens->group_order(go);
 

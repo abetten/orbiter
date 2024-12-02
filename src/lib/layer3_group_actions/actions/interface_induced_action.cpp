@@ -478,7 +478,7 @@ static long int induced_action_element_image_of(
 					"action_on_pairs_t" << endl;
 		}
 		action *sub;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		long int i, j, u, v;
 		
 		sub = A.subaction;
@@ -498,7 +498,7 @@ static long int induced_action_element_image_of(
 					"action_on_ordered_pairs_t" << endl;
 		}
 		action *sub;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		long int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
 		
 		sub = A.subaction;
@@ -1387,7 +1387,7 @@ static void induced_action_element_print_latex_with_point_labels(
 	int f_v = false;
 	int *Elt = (int *) elt;
 	int i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "induced_action_element_print_latex_with_point_labels "
@@ -1660,7 +1660,7 @@ static void induced_action_print_point(
 	}
 	else if (A.type_G == action_on_pairs_t) {
 		action *sub;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		int i, j;
 		
 		sub = A.subaction;
@@ -1674,7 +1674,7 @@ static void induced_action_print_point(
 	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		action *sub;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		int a2, swap, tmp, i, j;
 		
 		sub = A.subaction;

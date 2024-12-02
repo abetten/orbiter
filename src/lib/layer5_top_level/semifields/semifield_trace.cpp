@@ -21,6 +21,7 @@ namespace semifields {
 
 semifield_trace::semifield_trace()
 {
+	Record_birth();
 	SC = NULL;
 	SL = NULL;
 	L2 = NULL;
@@ -38,6 +39,7 @@ semifield_trace::semifield_trace()
 
 semifield_trace::~semifield_trace()
 {
+	Record_death();
 	if (ELT1) {
 		FREE_int(ELT1);
 	}
@@ -86,7 +88,7 @@ void semifield_trace::init(
 	basis_tmp = NEW_int(k /* basis_sz */ * k2);
 	base_cols = NEW_int(k2);
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 }
 
 void semifield_trace::trace_very_general(

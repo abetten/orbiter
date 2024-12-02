@@ -16,8 +16,8 @@ using namespace orbiter;
 
 int main()
 {
-	field_theory::finite_field_description Descr;
-	field_theory::finite_field Fq;
+	algebra::field_theory::finite_field_description Descr;
+	algebra::field_theory::finite_field Fq;
 
 	Descr.f_q = true;
 	Descr.q_text.assign("11");

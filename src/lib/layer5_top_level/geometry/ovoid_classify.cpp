@@ -30,6 +30,7 @@ static void callback_ovoid_print_set(
 
 ovoid_classify::ovoid_classify()
 {
+	Record_birth();
 	Descr = NULL;
 	Control = NULL;
 	LG = NULL;
@@ -58,6 +59,7 @@ ovoid_classify::ovoid_classify()
 
 ovoid_classify::~ovoid_classify()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -111,7 +113,7 @@ void ovoid_classify::init(
 
 	//int f_semilinear;
 	//int f_basis = true;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	ovoid_classify::Descr = Descr;
@@ -388,7 +390,7 @@ void ovoid_classify::print(
 }
 
 void ovoid_classify::make_graphs(
-		orbiter_kernel_system::orbiter_data_file *ODF,
+		other::orbiter_kernel_system::orbiter_data_file *ODF,
 		std::string &prefix,
 		int f_split, int split_r, int split_m,
 		int f_lexorder_test,
@@ -400,8 +402,8 @@ void ovoid_classify::make_graphs(
 	int f_v3 = (verbose_level >= 3);
 	string fname_graph;
 	int level;
-	orbiter_kernel_system::file_io Fio;
-	data_structures::string_tools ST;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
 	actions::action_global AG;
 
 
@@ -470,7 +472,7 @@ void ovoid_classify::make_graphs(
 
 
 			groups::strong_generators *SG;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			SG = NEW_OBJECT(groups::strong_generators);
 			SG->init(A);
@@ -522,7 +524,7 @@ void ovoid_classify::make_graphs(
 
 
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
 		create_graph(
 				ODF,
@@ -548,16 +550,16 @@ void ovoid_classify::make_graphs(
 }
 
 void ovoid_classify::make_one_graph(
-		orbiter_kernel_system::orbiter_data_file *ODF,
+		other::orbiter_kernel_system::orbiter_data_file *ODF,
 		std::string &prefix,
 	int orbit_idx,
 	int f_lexorder_test,
-	graph_theory::colored_graph *&CG,
+	combinatorics::graph_theory::colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int level;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	actions::action_global AG;
 
 	if (f_v) {
@@ -605,7 +607,7 @@ void ovoid_classify::make_one_graph(
 
 
 		groups::strong_generators *SG;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		SG = NEW_OBJECT(groups::strong_generators);
 		SG->init(A);
@@ -676,10 +678,10 @@ void ovoid_classify::make_one_graph(
 }
 
 void ovoid_classify::create_graph(
-		orbiter_kernel_system::orbiter_data_file *ODF,
+		other::orbiter_kernel_system::orbiter_data_file *ODF,
 	int orbit_idx,
 	long int *candidates, int nb_candidates,
-	graph_theory::colored_graph *&CG,
+	combinatorics::graph_theory::colored_graph *&CG,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -700,7 +702,7 @@ void ovoid_classify::create_graph(
 
 	starter_size = ODF->set_sizes[orbit_idx];
 
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 
 	Pts = NEW_int(nb_points * Descr->d);
 	for (i = 0; i < nb_points; i++) {
@@ -710,7 +712,7 @@ void ovoid_classify::create_graph(
 
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	k = 0;
@@ -764,7 +766,7 @@ void ovoid_classify::create_graph(
 	label_tex = label;
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	CG->init_from_bitvector(
 			nb_points, nb_colors_used, 1,
@@ -797,7 +799,7 @@ void ovoid_classify::compute_coloring(
 {
 	int f_v (verbose_level >= 1);
 	int i, j, c, pos;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "ovoid_classify::compute_coloring" << endl;

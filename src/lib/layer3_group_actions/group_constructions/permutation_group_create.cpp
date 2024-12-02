@@ -24,6 +24,7 @@ namespace group_constructions {
 
 permutation_group_create::permutation_group_create()
 {
+	Record_birth();
 		Descr = NULL;
 
 		//std::string label;
@@ -42,6 +43,7 @@ permutation_group_create::permutation_group_create()
 
 permutation_group_create::~permutation_group_create()
 {
+	Record_death();
 		Descr = NULL;
 }
 
@@ -189,7 +191,7 @@ void permutation_group_create::permutation_group_init(
 		}
 		A_initial = NEW_OBJECT(actions::action);
 
-		ring_theory::longinteger_object target_go;
+		algebra::ring_theory::longinteger_object target_go;
 		long int *given_base;
 		int given_base_length;
 
@@ -279,7 +281,7 @@ void permutation_group_create::permutation_group_init(
 		cout << "permutation_group_create::permutation_group_init label = " << label << endl;
 		cout << "permutation_group_create::permutation_group_init label_tex = " << label_tex << endl;
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Strong_gens->group_order(go);
 		cout << "permutation_group_create::permutation_group_init go = " << go << endl;
@@ -345,7 +347,7 @@ void permutation_group_create::init_subgroup_by_generators(
 	A2 = A_initial;
 
 	stringstream str;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int max_len = 80;
 	int line_skip = 0;
 

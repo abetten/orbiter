@@ -88,7 +88,7 @@ void poset_classification::draw_poset_fname_poset_detailed(
 
 void poset_classification::write_treefile(
 		std::string &fname_base, int lvl,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -121,7 +121,7 @@ int poset_classification::write_treefile(
 	int f_vv = (verbose_level >= 2);
 	string fname1;
 	int i, level;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::write_treefile" << endl;
@@ -178,8 +178,8 @@ int poset_classification::write_treefile(
 
 void poset_classification::draw_tree(
 		std::string &fname_base, int lvl,
-		graphics::tree_draw_options *Tree_draw_options,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::tree_draw_options *Tree_draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
@@ -187,7 +187,7 @@ void poset_classification::draw_tree(
 	int f_vv = (verbose_level >= 2);
 	string fname;
 	string fname1;
-	graphics::tree T;
+	other::graphics::tree T;
 	int idx = 0;
 	int nb_nodes, i;
 	int *coord_xyw;
@@ -196,7 +196,7 @@ void poset_classification::draw_tree(
 	int f_draw_points = true;
 	int f_draw_extension_points = false;
 	int f_draw_aut_group_order = false;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::draw_tree" << endl;
@@ -309,8 +309,8 @@ void poset_classification::draw_tree(
 
 void poset_classification::draw_tree_low_level(
 		std::string &fname,
-		graphics::tree_draw_options *Tree_draw_options,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::tree_draw_options *Tree_draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
@@ -322,7 +322,7 @@ void poset_classification::draw_tree_low_level(
 	int f_v = (verbose_level >= 1);
 	int factor_1000 = 1000;
 	string fname_full;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	if (xmax == -1)
 		xmax = 2000;
@@ -341,7 +341,7 @@ void poset_classification::draw_tree_low_level(
 	}
 	{
 
-		graphics::mp_graphics G;
+		other::graphics::mp_graphics G;
 
 		G.init(fname, Draw_options, verbose_level - 1);
 
@@ -369,7 +369,7 @@ void poset_classification::draw_tree_low_level(
 }
 
 void poset_classification::draw_tree_low_level1(
-		graphics::mp_graphics &G,
+		other::graphics::mp_graphics &G,
 	int nb_nodes,
 	int *coords, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
@@ -386,7 +386,7 @@ void poset_classification::draw_tree_low_level1(
 	int y_offset2 = 200;
 	int nb_e, Nb_e, pt, dx, dx0, nxt, hdl, depth, hdl2;
 	int rad = 200 >> 3;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int max_set_size;
 	long int *set0;
 	long int *set1;
@@ -681,12 +681,12 @@ void poset_classification::draw_tree_low_level1(
 void poset_classification::draw_poset_full(
 		std::string &fname_base,
 		int depth, int data,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		double x_stretch,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset_full "
@@ -730,14 +730,14 @@ void poset_classification::draw_poset_full(
 void poset_classification::draw_poset(
 		std::string &fname_base,
 		int depth, int data,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	graph_theory::layered_graph *LG1;
-	graph_theory::layered_graph *LG2;
-	graph_theory::layered_graph *LG3;
-	graph_theory::layered_graph *LG4;
+	combinatorics::graph_theory::layered_graph *LG1;
+	combinatorics::graph_theory::layered_graph *LG2;
+	combinatorics::graph_theory::layered_graph *LG3;
+	combinatorics::graph_theory::layered_graph *LG4;
 
 	if (f_v) {
 		cout << "poset_classification::draw_poset "
@@ -852,11 +852,11 @@ void poset_classification::draw_poset(
 void poset_classification::draw_level_graph(
 		std::string &fname_base,
 		int depth, int data, int level,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "poset_classification::draw_level_graph "
@@ -907,7 +907,7 @@ void poset_classification::make_flag_orbits_on_relations(
 	long int *set2;
 	int f_contained;
 	//longinteger_domain D;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_flag_orbits_on_relations" << endl;
@@ -941,7 +941,7 @@ void poset_classification::make_flag_orbits_on_relations(
 
 	for (lvl = 0; lvl <= depth; lvl++) {
 		string fname;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname = fname_prefix + "_depth_" + std::to_string(lvl) + "_orbit_lengths.csv";
 
@@ -1163,7 +1163,7 @@ void poset_classification::make_flag_orbits_on_relations(
 
 		} // po
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname,
@@ -1203,7 +1203,7 @@ void poset_classification::make_flag_orbits_on_relations(
 
 
 void poset_classification::make_full_poset_graph(
-		int depth, graph_theory::layered_graph *&LG,
+		int depth, combinatorics::graph_theory::layered_graph *&LG,
 		int data1, double x_stretch, int verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
 // The orbits are indicated by grouping the elements closer together.
@@ -1224,7 +1224,7 @@ void poset_classification::make_full_poset_graph(
 	long int *set2;
 	int f_contained;
 	//longinteger_domain D;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph" << endl;
@@ -1256,7 +1256,7 @@ void poset_classification::make_full_poset_graph(
 		Fst[i + 1] = Fst[i] + Nb_elements[i];
 	}
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	LG->add_data1(data1, 0/*verbose_level*/);
 
 	if (f_v) {
@@ -1544,7 +1544,7 @@ void poset_classification::make_full_poset_graph(
 
 void poset_classification::make_auxiliary_graph(
 		int depth,
-		graph_theory::layered_graph *&LG, int data1, int verbose_level)
+		combinatorics::graph_theory::layered_graph *&LG, int data1, int verbose_level)
 // makes a graph of the poset of orbits with 2 * depth + 1 layers.
 // The middle layers represent the flag orbits.
 {
@@ -1556,7 +1556,7 @@ void poset_classification::make_auxiliary_graph(
 	int *Nb;
 	int *Fst;
 	int i, lvl, po, so, n, n1, f;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::make_auxiliary_graph" << endl;
@@ -1580,7 +1580,7 @@ void poset_classification::make_auxiliary_graph(
 	}
 	Nb[2 * depth] = nb_orbits_at_level(depth);
 	
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_vv) {
 		cout << "poset_classification::make_auxiliary_graph "
 				"before LG->init" << endl;
@@ -1715,7 +1715,7 @@ void poset_classification::make_auxiliary_graph(
 
 			string text1;
 			string text2;
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = Poo->first_node_at_level(lvl) + po;
@@ -1789,7 +1789,7 @@ void poset_classification::make_auxiliary_graph(
 
 void poset_classification::make_graph(
 		int depth,
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int f_tree, int verbose_level)
 // makes a graph  of the poset of orbits with depth + 1 layers.
 {
@@ -1824,7 +1824,7 @@ void poset_classification::make_graph(
 	the_set = NEW_lint(depth);
 
 	
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_vv) {
 		cout << "poset_classification::make_graph "
 				"before LG->init" << endl;
@@ -1948,7 +1948,7 @@ void poset_classification::make_graph(
 
 			string text;
 			string text2;
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			int n;
 			
 			n = Poo->first_node_at_level(lvl) + po;
@@ -2019,7 +2019,7 @@ void poset_classification::make_graph(
 
 void poset_classification::make_level_graph(
 		int depth,
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int level, int verbose_level)
 // makes a graph with 4 levels showing the relation between
 // orbits at level 'level' and orbits at level 'level' + 1
@@ -2030,7 +2030,7 @@ void poset_classification::make_level_graph(
 	int *Fst;
 	long int nb_middle;
 	int i, lvl, po, so, n, n1, f, l;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int nb_layers = 4;
 	long int *the_set;
 	long int *the_set2;
@@ -2060,7 +2060,7 @@ void poset_classification::make_level_graph(
 	Nb[2] = nb_middle;
 	Nb[3] = nb_orbits_at_level(level + 1);
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_vv) {
 		cout << "poset_classification::make_level_graph "
 				"before LG->init" << endl;
@@ -2191,7 +2191,7 @@ void poset_classification::make_level_graph(
 
 
 			string text;
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = Poo->first_node_at_level(lvl) + po;
@@ -2287,7 +2287,7 @@ void poset_classification::make_level_graph(
 }
 
 void poset_classification::make_poset_graph_detailed(
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int data1, int max_depth,
 		int verbose_level)
 // creates the poset graph, with two middle layers at each level.
@@ -2298,7 +2298,7 @@ void poset_classification::make_poset_graph_detailed(
 	int *Nb;
 	int *Nb_middle;
 	int i, po, so, n, n1, f, L;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int nb_layers = 3 * max_depth + 1;
 	long int *the_set;
 	long int *the_set2;
@@ -2330,7 +2330,7 @@ void poset_classification::make_poset_graph_detailed(
 	}
 	Nb[max_depth * 3 + 0] = nb_orbits_at_level(max_depth);
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_vv) {
 		cout << "poset_classification::make_poset_graph_detailed "
 				"before LG->init" << endl;
@@ -2484,7 +2484,7 @@ void poset_classification::make_poset_graph_detailed(
 
 
 			string text;
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			int n, so, len, r;
 			
 			n = Poo->first_node_at_level(L) + po;
@@ -2594,7 +2594,7 @@ void poset_classification::print_data_structure_tex(
 	string fname;
 	int lvl, po, so, n, n1, cnt;
 	long int *set;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex" << endl;
@@ -2606,7 +2606,7 @@ void poset_classification::print_data_structure_tex(
 	set = NEW_lint(depth);
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -2632,7 +2632,7 @@ void poset_classification::print_data_structure_tex(
 				n = Poo->first_node_at_level(lvl) + po;
 				
 				string text;
-				ring_theory::longinteger_object go, go1;
+				algebra::ring_theory::longinteger_object go, go1;
 			
 				n = Poo->first_node_at_level(lvl) + po;
 				get_stabilizer_order(lvl, po, go);
@@ -2678,7 +2678,7 @@ void poset_classification::print_data_structure_tex(
 
 				n = Poo->first_node_at_level(lvl) + po;
 
-				ring_theory::longinteger_object go, go1;
+				algebra::ring_theory::longinteger_object go, go1;
 				int ol, r, hdl;
 			
 				n = Poo->first_node_at_level(lvl) + po;

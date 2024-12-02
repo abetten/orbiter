@@ -19,12 +19,14 @@ namespace apps_graph_theory {
 
 graph_classification_activity::graph_classification_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	GC = NULL;
 }
 
 graph_classification_activity::~graph_classification_activity()
 {
+	Record_death();
 }
 
 
@@ -109,7 +111,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 	else if (Descr->f_recognize_graphs_from_adjacency_matrix_csv) {
 
 		cout << "f_recognize_graphs_from_adjacency_matrix_csv" << endl;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int *M;
 		int m, n;
 		int h;
@@ -147,11 +149,11 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			cout << h << " : " << Iso_type[h] << endl;
 		}
 
-		data_structures::tally By_orbit_number;
+		other::data_structures::tally By_orbit_number;
 
 		By_orbit_number.init(Iso_type, m, false, 0);
 
-		data_structures::set_of_sets *SoS;
+		other::data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 		int u;
@@ -183,7 +185,7 @@ void graph_classification_activity::perform_activity(int verbose_level)
 		complement = NEW_int(nb_orbits);
 
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.set_complement(types, nb_types, complement,
 				size_complement, nb_orbits);

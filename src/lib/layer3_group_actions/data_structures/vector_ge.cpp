@@ -20,6 +20,7 @@ namespace data_structures_groups {
 
 vector_ge::vector_ge()
 {
+	Record_birth();
 	A = NULL;
 	data = NULL;
 	len = 0;
@@ -28,6 +29,7 @@ vector_ge::vector_ge()
 
 vector_ge::~vector_ge()
 {
+	Record_death();
 	if (data) {
 		FREE_int(data);
 		data = NULL;
@@ -441,7 +443,7 @@ void vector_ge::print_tex(
 
 
 void vector_ge::print_generators_tex(
-		ring_theory::longinteger_object &go, std::ostream &ost)
+		algebra::ring_theory::longinteger_object &go, std::ostream &ost)
 {
 	int i;
 
@@ -741,7 +743,7 @@ void vector_ge::print_for_make_element(
 
 
 void vector_ge::write_to_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		other::orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -756,7 +758,7 @@ void vector_ge::write_to_memory_object(
 }
 
 void vector_ge::read_from_memory_object(
-		orbiter_kernel_system::memory_object *m, int verbose_level)
+		other::orbiter_kernel_system::memory_object *m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l;
@@ -825,7 +827,7 @@ void vector_ge::write_to_csv_file_coded(
 			Table[i * A->make_element_size + j] = ith(i)[j];
 		}
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Table, len, A->make_element_size);
@@ -847,7 +849,7 @@ void vector_ge::save_csv(
 		cout << "vector_ge::save_csv" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int i;
 	int *Elt;
 	int *data;
@@ -885,12 +887,12 @@ void vector_ge::export_inversion_graphs(
 		cout << "vector_ge::export_inversion_graphs" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int h;
 	int *Elt;
 	int *perm;
 	int N2;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	N2 = Combi.int_n_choose_k(A->degree, 2);
 
@@ -915,7 +917,7 @@ void vector_ge::export_inversion_graphs(
 			A->Group_element->compute_permutation(
 					Elt, perm, 0 /* verbose_level*/);
 
-			graph_theory::graph_theory_domain GT;
+			combinatorics::graph_theory::graph_theory_domain GT;
 
 
 			if (f_v) {
@@ -963,8 +965,8 @@ void vector_ge::read_column_csv(
 		cout << "vector_ge::read_column_csv" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
-	data_structures::spreadsheet S;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::spreadsheet S;
 	int n, i, me_sz;
 
 
@@ -1017,8 +1019,8 @@ void vector_ge::read_column_csv_using_column_label(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
-	data_structures::spreadsheet S;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::spreadsheet S;
 	int n, i, me_sz;
 
 
@@ -1252,20 +1254,20 @@ void vector_ge::reverse_isomorphism_exterior_square(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "vector_ge::reverse_isomorphism_exterior_square" << endl;
 	}
 
 	geometry::projective_geometry::klein_correspondence *K;
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 	int A4[17];
 
 
 	F = A->matrix_group_finite_field();
 
-	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+	O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, verbose_level);
 
 	K = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
@@ -1324,7 +1326,7 @@ void vector_ge::matrix_representation(
 
 void vector_ge::stab_BLT_set_from_catalogue(
 		actions::action *A,
-	field_theory::finite_field *F, int iso,
+		algebra::field_theory::finite_field *F, int iso,
 	std::string &target_go_text,
 	int verbose_level)
 {
@@ -1344,7 +1346,7 @@ void vector_ge::stab_BLT_set_from_catalogue(
 	//string ascii_target_go;
 	//ring_theory::longinteger_object target_go;
 	int i;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "vector_ge::stab_BLT_set_from_catalogue "

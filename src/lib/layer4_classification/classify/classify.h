@@ -31,7 +31,7 @@ public:
 	actions::action *A; // do not free
 	actions::action *A2; // do not free
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int max_orbits;
 	int nb_orbits;
 	orbit_node *Orbit; // [max_orbits]
@@ -44,7 +44,7 @@ public:
 			actions::action *A,
 			actions::action *A2,
 			int max_orbits, int representation_sz,
-			ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &go,
 			int verbose_level);
 	data_structures_groups::set_and_stabilizer
 		*get_set_and_stabilizer(
@@ -56,7 +56,7 @@ public:
 			std::ifstream &fp,
 			actions::action *A,
 			actions::action *A2,
-			ring_theory::longinteger_object &go,
+			algebra::ring_theory::longinteger_object &go,
 			int verbose_level);
 	void generate_source_code(
 			std::string &fname_base, int verbose_level);
@@ -164,7 +164,7 @@ public:
 	int fusion_with;
 	int *fusion_elt;
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	groups::strong_generators *gens;
 
 	int nb_received;

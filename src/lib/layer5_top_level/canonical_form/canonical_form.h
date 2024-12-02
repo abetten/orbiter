@@ -32,7 +32,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
@@ -41,19 +41,19 @@ public:
 	int nb_pts;
 
 
-	canonical_form_classification::any_combinatorial_object *Any_combo;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo;
 
 	int nb_rows, nb_cols;
 
-	data_structures::bitvector *Canonical_form;
+	other::data_structures::bitvector *Canonical_form;
 
-	l1_interfaces::nauty_output *NO;
+	other::l1_interfaces::nauty_output *NO;
 
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	groups::strong_generators *SG_pt_stab;
 		// the stabilizer of the set of rational points
-	ring_theory::longinteger_object pt_stab_order;
+	algebra::ring_theory::longinteger_object pt_stab_order;
 		// order of stabilizer of the set of rational points
 
 	orbits_schreier::orbit_of_equations *Orb;
@@ -339,7 +339,7 @@ public:
 
 	// nauty stuff:
 
-	canonical_form_classification::classify_bitvectors *CB;
+	combinatorics::canonical_form_classification::classify_bitvectors *CB;
 	int canonical_labeling_len;
 
 	// output data, nauty specific:
@@ -542,11 +542,11 @@ public:
 class combinatorial_object_with_properties {
 public:
 
-	canonical_form_classification::any_combinatorial_object *Any_Combo;
+	combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo;
 
 	std::string label;
 
-	l1_interfaces::nauty_output *NO;
+	other::l1_interfaces::nauty_output *NO;
 
 	int f_projective_space;
 	projective_geometry::projective_space_with_action *PA;
@@ -556,15 +556,15 @@ public:
 	actions::action *A_perm;
 
 	int f_has_TDO;
-	combinatorics::tdo_scheme_compute *TDO;
+	combinatorics::tactical_decompositions::tdo_scheme_compute *TDO;
 
 	combinatorics_with_groups::group_action_on_combinatorial_object *GA_on_CO;
 
 	combinatorial_object_with_properties();
 	~combinatorial_object_with_properties();
 	void init(
-			canonical_form_classification::any_combinatorial_object *Any_Combo,
-			l1_interfaces::nauty_output *NO,
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
+			other::l1_interfaces::nauty_output *NO,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
@@ -573,15 +573,15 @@ public:
 	void lift_generators_to_matrix_group(
 			int verbose_level);
 	void init_object_in_projective_space(
-			canonical_form_classification::any_combinatorial_object *Any_Combo,
-			l1_interfaces::nauty_output *NO,
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
+			other::l1_interfaces::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
 	void latex_report(
 			std::ostream &ost,
-			graphics::draw_incidence_structure_description *Draw_options,
-			canonical_form_classification::objects_report_options
+			other::graphics::draw_incidence_structure_description *Draw_options,
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void compute_TDO(
@@ -655,19 +655,19 @@ public:
 	//"NO_cl",
 	//"NO_stats"
 	void read_all_varieties_from_spreadsheet(
-			data_structures::spreadsheet *S,
+			other::data_structures::spreadsheet *S,
 			int *Carry_through,
 			int nb_carry_through,
 			int file_cnt, int &counter,
 			int verbose_level);
 	void find_columns(
-			data_structures::spreadsheet *S,
+			other::data_structures::spreadsheet *S,
 			int verbose_level);
 	void prepare_input_of_variety_type_from_spreadsheet(
 			int row, int counter,
 			int *Carry_through,
 			int nb_carry_trough,
-			data_structures::spreadsheet *S,
+			other::data_structures::spreadsheet *S,
 			variety_object_with_action *&Vo,
 			int verbose_level);
 
@@ -689,7 +689,7 @@ class objects_after_classification {
 public:
 
 
-	canonical_form_classification::classification_of_objects *Classification_of_objects;
+	combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects;
 
 	combinatorial_object_with_properties *OwP; // [CO->nb_orbits]
 
@@ -700,7 +700,7 @@ public:
 	objects_after_classification();
 	~objects_after_classification();
 	void init_after_nauty(
-			canonical_form_classification::classification_of_objects *Classification_of_objects,
+			combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
@@ -708,28 +708,28 @@ public:
 			std::string &fname_base,
 			int verbose_level);
 	void classification_report(
-			canonical_form_classification::objects_report_options
+			combinatorics::canonical_form_classification::objects_report_options
 						*Report_options,
 			int verbose_level);
 	void latex_report(
-			canonical_form_classification::objects_report_options
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_all_isomorphism_types(
 			std::ostream &ost,
-			canonical_form_classification::objects_report_options
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost,
-			graphics::draw_incidence_structure_description *Draw_incidence_options,
-			canonical_form_classification::objects_report_options
+			other::graphics::draw_incidence_structure_description *Draw_incidence_options,
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int i, int verbose_level);
 	void report_object(
 			std::ostream &ost,
-			graphics::draw_incidence_structure_description *Draw_incidence_options,
-			canonical_form_classification::objects_report_options
+			other::graphics::draw_incidence_structure_description *Draw_incidence_options,
+			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int i,
 			int verbose_level);
@@ -873,7 +873,7 @@ public:
 	// nauty output:
 	variety_stabilizer_compute *Variety_stabilizer_compute;
 
-	ring_theory::longinteger_object *go_eqn;
+	algebra::ring_theory::longinteger_object *go_eqn;
 
 	variety_object_with_action *Canonical_object;
 
@@ -961,7 +961,7 @@ public:
 	int nauty_output_index_start;
 	std::vector<std::string> Carrying_through;
 
-	algebraic_geometry::variety_object *Variety_object;
+	geometry::algebraic_geometry::variety_object *Variety_object;
 
 	int f_has_automorphism_group;
 	groups::strong_generators *Stab_gens;
@@ -974,7 +974,7 @@ public:
 	void create_variety(
 			projective_geometry::projective_space_with_action *PA,
 			int cnt, int po_go, int po_index, int po, int so,
-			algebraic_geometry::variety_description *VD,
+			geometry::algebraic_geometry::variety_description *VD,
 			int verbose_level);
 	void apply_transformation(
 			int *Elt,
@@ -1017,9 +1017,9 @@ public:
 	variety_object_with_action *Variety_object_with_action;
 
 	int nb_rows, nb_cols;
-	data_structures::bitvector *Canonical_form;
+	other::data_structures::bitvector *Canonical_form;
 
-	l1_interfaces::nauty_output *NO;
+	other::l1_interfaces::nauty_output *NO;
 
 
 	groups::strong_generators *Set_stab;

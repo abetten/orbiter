@@ -23,6 +23,7 @@ namespace finite_geometries {
 
 andre_construction_line_element::andre_construction_line_element()
 {
+	Record_birth();
 	Andre = NULL;
 	k = 0;
 	n = 0;
@@ -42,6 +43,7 @@ andre_construction_line_element::andre_construction_line_element()
 
 andre_construction_line_element::~andre_construction_line_element()
 {
+	Record_death();
 	if (pivots) {
 		FREE_int(pivots);
 	}
@@ -130,8 +132,8 @@ int andre_construction_line_element::rank(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, rk, idx;
 	other_geometry::geometry_global Gg;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::rank" << endl;

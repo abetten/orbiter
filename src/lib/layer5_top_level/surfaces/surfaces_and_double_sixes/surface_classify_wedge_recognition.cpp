@@ -112,7 +112,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2, *Elt3;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::isomorphism_test_pairwise" << endl;
@@ -170,7 +170,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << "an isomorphism from surface1 to surface2 is" << endl;
 			A->Group_element->element_print(Elt_isomorphism_1to2, cout);
 		}
-		algebra::matrix_group *mtx;
+		algebra::basic_algebra::matrix_group *mtx;
 
 		mtx = A->G.matrix_grp;
 
@@ -287,7 +287,7 @@ void surface_classify_wedge::recognition(
 
 	SG0->init_generators_for_the_conjugate_group_aGav(
 			SG, Elt_isomorphism, verbose_level);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	SG0->group_order(go);
 	if (f_v) {
@@ -368,7 +368,7 @@ void surface_classify_wedge::sweep_Cayley(
 	int h;
 
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	nb_iso = K.cubic_surface_nb_reps(q);
 
@@ -467,7 +467,7 @@ void surface_classify_wedge::sweep_Cayley(
 
 	fname = "Cayley_q" + std::to_string(q) + ".csv";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, Table, cnt, 5);
@@ -700,7 +700,7 @@ void surface_classify_wedge::identify_general_abcd(
 					Nb_lines[a * q3 + b * q2 + c * q + d] = -1;
 					//Nb_E[a * q3 + b * q2 + c * q + d] = -1;
 
-					algebraic_geometry::surface_object *SO;
+					geometry::algebraic_geometry::surface_object *SO;
 
 					SO = Surf->create_surface_general_abcd(
 							a, b, c, d, verbose_level);
@@ -807,8 +807,8 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(
 	long int *Table;
 	int h = 0;
 	int nb_lines, iso, nb_e;
-	knowledge_base::knowledge_base K;
-	orbiter_kernel_system::file_io Fio;
+	combinatorics::knowledge_base::knowledge_base K;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Table = NEW_lint(q4 * 7);
 
@@ -1077,7 +1077,7 @@ void surface_classify_wedge::identify_Eckardt(
 		}
 
 
-		algebraic_geometry::surface_object *SO;
+		geometry::algebraic_geometry::surface_object *SO;
 
 		SO = Surf->create_Eckardt_surface(
 				a, b,
@@ -1135,7 +1135,7 @@ void surface_classify_wedge::identify_F13(
 		Nb_lines[a] = -1;
 		//Nb_E[a] = -1;
 
-		algebraic_geometry::surface_object *SO;
+		geometry::algebraic_geometry::surface_object *SO;
 
 		SO = Surf->create_surface_F13(a, verbose_level);
 
@@ -1198,7 +1198,7 @@ void surface_classify_wedge::identify_Bes(
 			Nb_lines[a * q + c] = -1;
 			//Nb_E[a * q + c] = -1;
 
-			algebraic_geometry::surface_object *SO;
+			geometry::algebraic_geometry::surface_object *SO;
 
 			SO = Surf->create_surface_bes(a, c, verbose_level);
 

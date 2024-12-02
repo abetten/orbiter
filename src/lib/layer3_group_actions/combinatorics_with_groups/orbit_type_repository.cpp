@@ -33,6 +33,7 @@ static void orbit_type_repository_swap_types(
 
 orbit_type_repository::orbit_type_repository()
 {
+	Record_birth();
 	Oos = NULL;
 
 	nb_sets = 0;
@@ -51,6 +52,7 @@ orbit_type_repository::orbit_type_repository()
 
 orbit_type_repository::~orbit_type_repository()
 {
+	Record_death();
 	if (Type_repository) {
 		FREE_lint(Type_repository);
 	}
@@ -88,7 +90,7 @@ void orbit_type_repository::init(
 	orbit_type_repository::goi = goi;
 
 	int i, f; //, l;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	orbit_type_size = (goi + 1) * goi;
 	Type_repository = NEW_lint(nb_sets * orbit_type_size);
@@ -260,7 +262,7 @@ void orbit_type_repository::create_latex_report(
 
 		{
 			ofstream ost(fname_tex);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -286,7 +288,7 @@ void orbit_type_repository::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_tex << " of size "
 				<< Fio.file_size(fname_tex) << endl;
@@ -403,11 +405,11 @@ void orbit_type_repository::report_one_type(
 							b = Oos->Sch->orbit_number(a);
 							v[h] = b;
 						}
-						data_structures::tally By_orbit_number;
+						other::data_structures::tally By_orbit_number;
 
 						By_orbit_number.init(v, len, false, 0);
 
-						data_structures::set_of_sets *SoS;
+						other::data_structures::set_of_sets *SoS;
 						int *types;
 						int nb_types;
 						int u;
@@ -465,7 +467,7 @@ static int orbit_type_repository_compare_types(
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
 	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	return Sorting.lint_vec_compare(Types + i * len, Types + j * len, len);
 }
@@ -478,7 +480,7 @@ static int orbit_type_repository_compare_type_with(
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
 	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	return Sorting.lint_vec_compare(Types + i * len, (long int *) type, len);
 }

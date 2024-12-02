@@ -20,6 +20,7 @@ namespace canonical_form {
 
 automorphism_group_of_variety::automorphism_group_of_variety()
 {
+	Record_birth();
 	PA = NULL;
 
 	HPD = NULL;
@@ -53,6 +54,7 @@ automorphism_group_of_variety::automorphism_group_of_variety()
 
 automorphism_group_of_variety::~automorphism_group_of_variety()
 {
+	Record_death();
 	if (equation) {
 		FREE_int(equation);
 	}
@@ -107,7 +109,7 @@ void automorphism_group_of_variety::init_and_compute(
 	automorphism_group_of_variety::Pts_on_object = Pts_on_object;
 	automorphism_group_of_variety::nb_pts = nb_pts;
 
-	Any_combo = NEW_OBJECT(canonical_form_classification::any_combinatorial_object);
+	Any_combo = NEW_OBJECT(combinatorics::canonical_form_classification::any_combinatorial_object);
 
 
 	if (f_v) {

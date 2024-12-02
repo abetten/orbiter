@@ -23,6 +23,7 @@ namespace user_interface {
 
 interface_combinatorics::interface_combinatorics()
 {
+	Record_birth();
 
 	f_random_permutation = false;
 	random_permutation_degree = 0;
@@ -126,12 +127,16 @@ interface_combinatorics::interface_combinatorics()
 
 }
 
+interface_combinatorics::~interface_combinatorics()
+{
+	Record_death();
+}
 
 void interface_combinatorics::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
@@ -218,7 +223,7 @@ int interface_combinatorics::recognize_keyword(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	if (i >= argc) {
 		return false;
 	}
@@ -309,7 +314,7 @@ void interface_combinatorics::read_arguments(
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments" << endl;
@@ -392,7 +397,7 @@ void interface_combinatorics::read_arguments(
 		if (f_v) {
 			cout << "-tdo_refinement " << endl;
 		}
-		Tdo_refinement_descr = NEW_OBJECT(combinatorics::tdo_refinement_description);
+		Tdo_refinement_descr = NEW_OBJECT(combinatorics::tactical_decompositions::tdo_refinement_description);
 		i += Tdo_refinement_descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -478,7 +483,7 @@ void interface_combinatorics::read_arguments(
 		domino_portrait_D = ST.strtoi(argv[++i]);
 		domino_portrait_s = ST.strtoi(argv[++i]);
 		domino_portrait_fname.assign(argv[++i]);
-		domino_portrait_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+		domino_portrait_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
 		i += domino_portrait_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -541,7 +546,7 @@ void interface_combinatorics::read_arguments(
 		if (f_v) {
 			cout << "-geometry_builder " << endl;
 		}
-		Geometry_builder_description = NEW_OBJECT(geometry_builder::geometry_builder_description);
+		Geometry_builder_description = NEW_OBJECT(combinatorics::geometry_builder::geometry_builder_description);
 		i += Geometry_builder_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -752,14 +757,14 @@ void interface_combinatorics::worker(
 
 	if (f_random_permutation) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.create_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
 	}
 	else if (f_create_random_k_subsets) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		string fname;
 
 		fname = "random_k_subsets_n"
@@ -777,7 +782,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_read_poset_file) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_read_poset_file(read_poset_file_fname,
 				f_grouping, grouping_x_stretch,
@@ -785,7 +790,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_list_parameters_of_SRG) {
 
-		graph_theory::graph_theory_domain G;
+		combinatorics::graph_theory::graph_theory_domain G;
 
 		G.list_parameters_of_SRG(list_parameters_of_SRG_v_max, verbose_level);
 	}
@@ -798,7 +803,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_tree_of_all_k_subsets) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_make_tree_of_all_k_subsets(tree_of_all_k_subsets_n, tree_of_all_k_subsets_k, verbose_level);
 	}
@@ -808,32 +813,32 @@ void interface_combinatorics::worker(
 	}
 	else if (f_tdo_refinement) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_tdo_refinement(Tdo_refinement_descr, verbose_level);
 	}
 	else if (f_tdo_print) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_tdo_print(tdo_print_fname, verbose_level);
 	}
 	else if (f_convert_stack_to_tdo) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.convert_stack_to_tdo(stack_fname, verbose_level);
 	}
 	else if (f_maximal_arc_parameters) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q,
 				maximal_arc_parameters_r, verbose_level);
 	}
 	else if (f_arc_parameters) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.do_parameters_arc(arc_parameters_q,
 				arc_parameters_s, arc_parameters_r, verbose_level);
@@ -841,9 +846,9 @@ void interface_combinatorics::worker(
 	else if (f_pentomino_puzzle) {
 		cout << "pentomino_puzzle " <<endl;
 
-		combinatorics::pentomino_puzzle *P;
+		combinatorics::puzzles::pentomino_puzzle *P;
 
-		P = NEW_OBJECT(combinatorics::pentomino_puzzle);
+		P = NEW_OBJECT(combinatorics::puzzles::pentomino_puzzle);
 
 		P->main(verbose_level);
 
@@ -869,7 +874,7 @@ void interface_combinatorics::worker(
 	}
 #endif
 	else if (f_domino_portrait) {
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.do_domino_portrait(
 				domino_portrait_D,
@@ -881,7 +886,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_read_solutions_and_tally) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.read_solutions_and_tally(read_solutions_and_tally_fname,
 				read_solutions_and_tally_sz, verbose_level);
@@ -889,7 +894,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_make_elementary_symmetric_functions) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
 				make_elementary_symmetric_functions_k_max, verbose_level);
@@ -897,7 +902,7 @@ void interface_combinatorics::worker(
 	}
 	else if (f_Dedekind_numbers) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.Dedekind_numbers(
 				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
@@ -907,7 +912,7 @@ void interface_combinatorics::worker(
 
 	else if (f_rank_k_subset) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		int *Mtx;
 		int nb_rows, nb_cols;
@@ -935,9 +940,9 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -geometry_builder" << endl;
 		}
 
-		geometry_builder::geometry_builder *GB;
+		combinatorics::geometry_builder::geometry_builder *GB;
 
-		GB = NEW_OBJECT(geometry_builder::geometry_builder);
+		GB = NEW_OBJECT(combinatorics::geometry_builder::geometry_builder);
 
 		GB->init_description(Geometry_builder_description, verbose_level);
 
@@ -951,7 +956,7 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -union" << endl;
 		}
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 
 		Algo.union_of_sets(union_set_of_sets_fname,
@@ -963,7 +968,7 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -dot_product_of_columns" << endl;
 		}
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 
 
@@ -975,7 +980,7 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -dot_product_of_rows" << endl;
 		}
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 
 
@@ -988,7 +993,7 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -matrix_multiply_over_Z" << endl;
 		}
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 
 
@@ -1003,7 +1008,7 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker -rowspan_over_R" << endl;
 		}
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 
 
@@ -1087,10 +1092,10 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(
 
 	int i;
 	int cnt;
-	ring_theory::longinteger_object class_size, S, F, A;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
-	combinatorics::combinatorics_domain Combi;
+	algebra::ring_theory::longinteger_object class_size, S, F, A;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	cnt = Combi.count_partitions(n);
 
@@ -1139,10 +1144,10 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(
 
 	int i;
 	int cnt;
-	ring_theory::longinteger_object class_size, S, F, A;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
-	combinatorics::combinatorics_domain Combi;
+	algebra::ring_theory::longinteger_object class_size, S, F, A;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	cnt = Combi.count_partitions(n);
 
@@ -1194,7 +1199,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n_file(
 		fp << "END" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

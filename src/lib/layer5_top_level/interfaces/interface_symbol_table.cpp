@@ -23,6 +23,7 @@ namespace user_interface {
 
 interface_symbol_table::interface_symbol_table()
 {
+	Record_birth();
 
 	Orbiter_top_level_session = NULL;
 
@@ -38,6 +39,13 @@ interface_symbol_table::interface_symbol_table()
 	Activity_description = NULL;
 
 }
+
+interface_symbol_table::~interface_symbol_table()
+{
+	Record_death();
+
+}
+
 
 void interface_symbol_table::init(
 		orbiter_top_level_session *Orbiter_top_level_session,
@@ -59,7 +67,7 @@ void interface_symbol_table::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-define") == 0) {
 		cout << "-define <string : label> description -end" << endl;
@@ -76,7 +84,7 @@ int interface_symbol_table::recognize_keyword(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -98,7 +106,7 @@ void interface_symbol_table::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments" << endl;
@@ -173,7 +181,7 @@ void interface_symbol_table::read_with(
 
 	f_with = true;
 	string s;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	s.assign(argv[++i]);
 	with_labels.push_back(s);

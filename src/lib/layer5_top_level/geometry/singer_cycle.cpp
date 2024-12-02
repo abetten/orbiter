@@ -19,6 +19,7 @@ namespace apps_geometry {
 
 singer_cycle::singer_cycle()
 {
+	Record_birth();
 	F = NULL;
 	A = NULL;
 	A2 = NULL;
@@ -48,6 +49,7 @@ singer_cycle::singer_cycle()
 
 singer_cycle::~singer_cycle()
 {
+	Record_death();
 	if (poly_coeffs) {
 		FREE_int(poly_coeffs);
 	}
@@ -106,7 +108,7 @@ singer_cycle::~singer_cycle()
 
 void singer_cycle::init(
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		actions::action *A,
 		actions::action *A2, int verbose_level)
 {
@@ -126,7 +128,7 @@ void singer_cycle::init(
 		cout << "singer_cycle::init field must be prime field" << endl;
 		exit(1);
 	}
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	K.get_primitive_polynomial(poly, q, n, verbose_level);
 	poly_coeffs = NEW_int(n + 1);
@@ -135,8 +137,8 @@ void singer_cycle::init(
 
 		//GFp.init(p, 0);
 	
-		ring_theory::unipoly_domain FX(F);
-		ring_theory::unipoly_object m;
+		algebra::ring_theory::unipoly_domain FX(F);
+		algebra::ring_theory::unipoly_object m;
 	
 		FX.create_object_by_rank_string(m, poly, 0);
 		int *rep = (int *) m;
@@ -176,7 +178,7 @@ void singer_cycle::init(
 	//Elt = NEW_int(A->elt_size_in_int);
 	//A->make_element(Elt, Singer_matrix, verbose_level);
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	target_go.create((NT.i_power_j(q, n) - 1) / (q - 1));
 

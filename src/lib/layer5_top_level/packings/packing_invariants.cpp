@@ -22,6 +22,7 @@ namespace packings {
 
 packing_invariants::packing_invariants()
 {
+	Record_birth();
 	P = NULL;
 
 	//std::string prefix;
@@ -54,6 +55,7 @@ packing_invariants::packing_invariants()
 
 packing_invariants::~packing_invariants()
 {
+	Record_death();
 	int i;
 	
 	if (the_packing) {
@@ -137,7 +139,7 @@ void packing_invariants::init_klein_invariants(
 		cout << "packing_invariants::init_klein_invariants" << endl;
 	}
 	nb_planes = v.s_ii(0);
-	R = new ring_theory::longinteger_object[nb_planes];
+	R = new algebra::ring_theory::longinteger_object[nb_planes]; // ToDo
 	Pts_on_plane = NEW_pint(nb_planes);
 	nb_pts_on_plane = NEW_int(nb_planes);
 	for (i = 0; i < nb_planes; i++) {
@@ -172,7 +174,7 @@ void packing_invariants::compute_decomposition(
 
 	int f_second = false;
 
-	C = NEW_OBJECT(data_structures::tally);
+	C = NEW_OBJECT(other::data_structures::tally);
 	C->init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
 		cout << "packing_invariants::compute_decomposition: "

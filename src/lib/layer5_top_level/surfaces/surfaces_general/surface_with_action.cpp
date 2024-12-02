@@ -22,6 +22,7 @@ namespace cubic_surfaces_in_general {
 
 surface_with_action::surface_with_action()
 {
+	Record_birth();
 	PA = NULL;
 
 	f_semilinear = false;
@@ -46,6 +47,7 @@ surface_with_action::surface_with_action()
 
 surface_with_action::~surface_with_action()
 {
+	Record_death();
 	if (A_on_planes) {
 		FREE_OBJECT(A_on_planes);
 	}
@@ -73,7 +75,7 @@ surface_with_action::~surface_with_action()
 }
 
 void surface_with_action::init(
-		algebraic_geometry::surface_domain *Surf,
+		geometry::algebraic_geometry::surface_domain *Surf,
 		projective_geometry::projective_space_with_action *PA,
 		int f_recoordinatize,
 		int verbose_level)
@@ -251,7 +253,7 @@ void surface_with_action::complete_skew_hexagon(
 	int Mtx[16];
 	int forbidden_points[6];
 	int Forbidden_points[6 * 4];
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	long int a1, a2, a3;
 	long int b1, b2, b3;
 	long int a4, a5, a6;
@@ -572,7 +574,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 	int Mtx[16];
 	int forbidden_points[6];
 	int Forbidden_points[6 * 4];
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	long int a1, a2, a3;
 	long int b1, b2, b3;
 	long int a4, a5, a6;
@@ -992,7 +994,7 @@ void surface_with_action::sweep_4_15_lines(
 		cout << "surface_with_action::sweep_4_15_lines" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -1240,7 +1242,7 @@ void surface_with_action::sweep_4_15_lines(
 		} // alpha
 		ost_csv << "END" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size "
 			<< Fio.file_size(sweep_fname_csv) << endl;
 
@@ -1310,7 +1312,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 		cout << "surface_with_action::sweep_F_beta_9_lines" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -1473,7 +1475,7 @@ void surface_with_action::sweep_F_beta_9_lines(
 		} // b
 		ost_csv << "END" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size "
 			<< Fio.file_size(sweep_fname_csv) << endl;
 
@@ -1545,7 +1547,7 @@ void surface_with_action::sweep_6_9_lines(
 		cout << "surface_with_action::sweep_6_9_lines" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -1815,7 +1817,7 @@ void surface_with_action::sweep_6_9_lines(
 		} // a
 		ost_csv << "END" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size "
 			<< Fio.file_size(sweep_fname_csv) << endl;
 
@@ -1889,7 +1891,7 @@ void surface_with_action::sweep_4_27(
 		cout << "surface_with_action::sweep_4_27" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2081,7 +2083,7 @@ void surface_with_action::sweep_4_27(
 			T[i * 16 + j] = Properties[i][j];
 		}
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	std::string fname;
 
 	fname = Surface_Descr->equation_name_of_formula
@@ -2138,7 +2140,7 @@ void surface_with_action::sweep_4_L9_E4(
 		cout << "surface_with_action::sweep_4_L9_E4" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2310,7 +2312,7 @@ void surface_with_action::sweep_4_L9_E4(
 		} // alpha
 		ost_csv << "END" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	cout << "Written file " << sweep_fname_csv << " of size "
 			<< Fio.file_size(sweep_fname_csv) << endl;
 

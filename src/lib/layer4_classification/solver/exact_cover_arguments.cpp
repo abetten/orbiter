@@ -17,11 +17,13 @@ namespace solvers_package {
 
 exact_cover_arguments::exact_cover_arguments()
 {
+	Record_birth();
 	null();
 }
 
 exact_cover_arguments::~exact_cover_arguments()
 {
+	Record_death();
 	freeself();
 }
 
@@ -73,7 +75,7 @@ int exact_cover_arguments::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	for (i = 1; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-starter_size") == 0) {

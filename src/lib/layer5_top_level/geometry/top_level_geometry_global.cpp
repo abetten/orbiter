@@ -18,11 +18,14 @@ namespace apps_geometry {
 
 top_level_geometry_global::top_level_geometry_global()
 {
+	Record_birth();
 
 }
 
 top_level_geometry_global::~top_level_geometry_global()
 {
+	Record_death();
+
 
 }
 
@@ -123,7 +126,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 		Sch2->get_orbit_in_order(Orb2, 0 /* orbit_idx */, verbose_level);
 
 		int *Inc;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname = fname_base + "_incma_transitive.csv";
@@ -171,7 +174,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 	{
 		geometry::other_geometry::incidence_structure *Inc;
-		data_structures::partitionstack *Stack;
+		other::data_structures::partitionstack *Stack;
 
 		combinatorics_with_groups::combinatorics_with_action CombiA;
 
@@ -189,10 +192,10 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 
 
-		combinatorics::decomposition *Decomposition;
+		combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(combinatorics::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 		Decomposition->init_inc_and_stack(
 				Inc, Stack,
@@ -262,7 +265,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 	{
 		geometry::other_geometry::incidence_structure *Inc;
-		data_structures::partitionstack *Stack;
+		other::data_structures::partitionstack *Stack;
 
 		combinatorics_with_groups::combinatorics_with_action CombiA;
 
@@ -279,10 +282,10 @@ void top_level_geometry_global::report_decomposition_by_group(
 		}
 
 
-		combinatorics::decomposition *Decomposition;
+		combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(combinatorics::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 		Decomposition->init_inc_and_stack(
 				Inc, Stack,
@@ -339,7 +342,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	//projective_space *P3;
 	int order;
 
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 	order = PA->A->Group_element->element_order(Elt);
 
 	full_group_order.create(order);
@@ -362,9 +365,9 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	groups::schreier *Sch1;
 	groups::schreier *Sch2;
 	geometry::other_geometry::incidence_structure *Inc;
-	data_structures::partitionstack *Stack;
-	data_structures::partitionstack S1;
-	data_structures::partitionstack S2;
+	other::data_structures::partitionstack *Stack;
+	other::data_structures::partitionstack S1;
+	other::data_structures::partitionstack S2;
 
 	Sch1 = NEW_OBJECT(groups::schreier);
 	Sch2 = NEW_OBJECT(groups::schreier);
@@ -463,7 +466,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		Sch2->get_orbit_in_order(Orb2, 0 /* orbit_idx */, verbose_level);
 
 		int *Inc;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname = fname_base + "_incma_cyclic.csv";
@@ -485,7 +488,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 				int *v, *w;
 				std::vector<int> Orb1_subgroup;
 				std::vector<int> Orb2_subgroup;
-				combinatorics::combinatorics_domain Combi;
+				combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 				v = NEW_int(Orb1.size());
 				w = NEW_int(Orb1.size());
@@ -552,10 +555,10 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	}
 
 
-	combinatorics::decomposition *Decomposition;
+	combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-	Decomposition = NEW_OBJECT(combinatorics::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 	Decomposition->init_inc_and_stack(
 			Inc, Stack,

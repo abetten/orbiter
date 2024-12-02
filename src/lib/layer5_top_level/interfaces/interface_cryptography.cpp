@@ -19,6 +19,7 @@ namespace user_interface {
 
 interface_cryptography::interface_cryptography()
 {
+	Record_birth();
 	//cout << "interface_cryptography::interface_cryptography" << endl;
 	//cout << "sizeof(interface_cryptography)=" << sizeof(interface_cryptography) << endl;
 
@@ -120,13 +121,17 @@ interface_cryptography::interface_cryptography()
 
 
 
+interface_cryptography::~interface_cryptography()
+{
+	Record_death();
+}
 
 
 
 void interface_cryptography::print_help(
 		int argc, std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-cipher_substitution") == 0) {
 		cout << "-cipher_substitution <ptext>" << endl;
@@ -206,7 +211,7 @@ int interface_cryptography::recognize_keyword(
 		int argc, std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_cryptography::recognize_keyword" << endl;
@@ -293,7 +298,7 @@ void interface_cryptography::read_arguments(
 		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_cryptography::read_arguments" << endl;
@@ -622,7 +627,7 @@ void interface_cryptography::worker(
 {
 	if (f_cipher) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		if (t == substitution) {
 			Crypto.get_random_permutation(key);
@@ -645,7 +650,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_analyze) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		if (t == substitution) {
 			cout << "ctext: " << endl << ctext << endl;
@@ -658,13 +663,13 @@ void interface_cryptography::worker(
 	}
 	else if (f_avk) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.vigenere_analysis2(ctext, key_length);
 	}
 	else if (f_kasiski) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		int m;
 
@@ -674,7 +679,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_decipher) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		if (t == substitution) {
 			cout << "ctext: " << ctext << endl;
@@ -703,20 +708,20 @@ void interface_cryptography::worker(
 	}
 	else if (f_RSA) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_RSA(RSA_d, RSA_m, RSA_block_size, RSA_text, verbose_level);
 	}
 	else if (f_RSA_encrypt_text) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_RSA_encrypt_text(RSA_d, RSA_m, RSA_block_size,
 				RSA_encrypt_text, verbose_level);
 	}
 	else if (f_RSA_setup) {
-		cryptography::cryptography_domain Crypto;
-		ring_theory::longinteger_object n, p, q, a, b;
+		combinatorics::cryptography::cryptography_domain Crypto;
+		algebra::ring_theory::longinteger_object n, p, q, a, b;
 
 		Crypto.RSA_setup(n, p, q, a, b,
 			RSA_setup_nb_bits,
@@ -726,7 +731,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_sift_smooth) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_sift_smooth(sift_smooth_from,
 				sift_smooth_len,
@@ -736,7 +741,7 @@ void interface_cryptography::worker(
 
 	else if (f_quadratic_sieve) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.quadratic_sieve(quadratic_sieve_n,
 				quadratic_sieve_factorbase,
@@ -745,25 +750,25 @@ void interface_cryptography::worker(
 	}
 	else if (f_solovay_strassen) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_solovay_strassen(solovay_strassen_p, solovay_strassen_a, verbose_level);
 	}
 	else if (f_miller_rabin) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_miller_rabin(miller_rabin_p, miller_rabin_nb_times, verbose_level);
 	}
 	else if (f_fermat_test) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_fermat_test(fermat_test_p, fermat_test_nb_times, verbose_level);
 	}
 	else if (f_find_pseudoprime) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_find_pseudoprime(
 				find_pseudoprime_nb_digits,
@@ -774,7 +779,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_find_strong_pseudoprime) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_find_strong_pseudoprime(
 				find_pseudoprime_nb_digits,
@@ -784,7 +789,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_miller_rabin_text) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_miller_rabin_text(
 				miller_rabin_number_text, miller_rabin_text_nb_times,
@@ -792,7 +797,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_random) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_random(
 				random_nb, random_fname_csv,
@@ -800,7 +805,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_random_last) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_random_last(
 				random_last_nb,
@@ -808,7 +813,7 @@ void interface_cryptography::worker(
 	}
 	else if (f_affine_sequence) {
 
-		cryptography::cryptography_domain Crypto;
+		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);

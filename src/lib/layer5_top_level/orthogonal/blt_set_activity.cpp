@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_activity::blt_set_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	BC = NULL;
@@ -26,6 +27,7 @@ blt_set_activity::blt_set_activity()
 
 blt_set_activity::~blt_set_activity()
 {
+	Record_death();
 }
 
 void blt_set_activity::init(

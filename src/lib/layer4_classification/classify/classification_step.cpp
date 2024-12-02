@@ -21,6 +21,7 @@ namespace invariant_relations {
 
 classification_step::classification_step()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	max_orbits = 0;
@@ -32,6 +33,7 @@ classification_step::classification_step()
 
 classification_step::~classification_step()
 {
+	Record_death();
 	if (Orbit) {
 		FREE_OBJECTS(Orbit);
 	}
@@ -45,7 +47,7 @@ void classification_step::init(
 		actions::action *A2,
 	int max_orbits,
 	int representation_sz,
-	ring_theory::longinteger_object &go,
+	algebra::ring_theory::longinteger_object &go,
 	int verbose_level)
 // max_orbits is an upper bound on the expected number of orbits.
 // in fact, it is the number of flag orbits in the relation.
@@ -157,7 +159,7 @@ void classification_step::read_file(
 		std::ifstream &fp,
 		actions::action *A,
 		actions::action *A2,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -225,7 +227,7 @@ void classification_step::generate_source_code(
 		generate_source_code(f, prefix, verbose_level - 2);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -297,7 +299,7 @@ void classification_step::generate_source_code(
 			orbit_index < nb_orbits;
 			orbit_index++) {
 
-		ring_theory::longinteger_object ago;
+		algebra::ring_theory::longinteger_object ago;
 
 		Orbit[orbit_index].gens->group_order(ago);
 
@@ -426,8 +428,8 @@ long int *classification_step::Rep_lint_ith(int i)
 void classification_step::print_group_orders()
 {
 	int i;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, ol;
 
 	cout << "i : stab order : orbit length" << endl;
 	for (i = 0; i < nb_orbits; i++) {
@@ -446,7 +448,7 @@ void classification_step::print_summary(
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_summary" << endl;
@@ -475,7 +477,7 @@ void classification_step::print_latex(
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "classification_step::print_latex" << endl;
@@ -498,8 +500,8 @@ void classification_step::print_latex(
 	ost << "The group has " << nb_orbits << " orbits: \\\\" << endl;
 
 	int i;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, ol, Ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, ol, Ol;
 	Ol.create(0);
 
 	ost << "The orbits are:" << endl;

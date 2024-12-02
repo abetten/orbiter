@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_by_representation::action_by_representation()
 {
+	Record_birth();
 	type = representation_type_nothing;
 	n = 0;
 	q = 0;
@@ -34,6 +35,7 @@ action_by_representation::action_by_representation()
 
 action_by_representation::~action_by_representation()
 {
+	Record_death();
 	if (v1) {
 		FREE_int(v1);
 		}

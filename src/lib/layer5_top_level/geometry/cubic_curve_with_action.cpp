@@ -19,6 +19,7 @@ namespace apps_geometry {
 
 cubic_curve_with_action::cubic_curve_with_action()
 {
+	Record_birth();
 	q = 0;
 	F = NULL;
 	CC = NULL;
@@ -30,6 +31,7 @@ cubic_curve_with_action::cubic_curve_with_action()
 
 cubic_curve_with_action::~cubic_curve_with_action()
 {
+	Record_death();
 	if (A) {
 		FREE_OBJECT(A);
 	}
@@ -45,7 +47,7 @@ cubic_curve_with_action::~cubic_curve_with_action()
 }
 
 void cubic_curve_with_action::init(
-		algebraic_geometry::cubic_curve *CC,
+		geometry::algebraic_geometry::cubic_curve *CC,
 		actions::action *A,
 		int verbose_level)
 {

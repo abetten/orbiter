@@ -21,6 +21,7 @@ namespace quartic_curves {
 
 quartic_curve_object_with_group::quartic_curve_object_with_group()
 {
+	Record_birth();
 	DomA = NULL;
 	QO = NULL;
 	Aut_gens = NULL;
@@ -34,11 +35,12 @@ quartic_curve_object_with_group::quartic_curve_object_with_group()
 
 quartic_curve_object_with_group::~quartic_curve_object_with_group()
 {
+	Record_death();
 }
 
 void quartic_curve_object_with_group::init(
 		quartic_curve_domain_with_action *DomA,
-		algebraic_geometry::quartic_curve_object *QO,
+		geometry::algebraic_geometry::quartic_curve_object *QO,
 		groups::strong_generators *Aut_gens,
 		int verbose_level)
 {
@@ -66,9 +68,9 @@ void quartic_curve_object_with_group::export_something(
 		cout << "quartic_curve_object_with_group::export_something" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (ST.stringcmp(what, "points") == 0) {
 

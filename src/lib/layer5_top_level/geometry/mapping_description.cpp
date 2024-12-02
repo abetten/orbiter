@@ -19,6 +19,7 @@ namespace apps_geometry {
 
 mapping_description::mapping_description()
 {
+	Record_birth();
 	f_domain = false;
 	//std::string domain_label;
 
@@ -43,6 +44,7 @@ mapping_description::mapping_description()
 
 mapping_description::~mapping_description()
 {
+	Record_death();
 }
 
 int mapping_description::read_arguments(
@@ -51,7 +53,7 @@ int mapping_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (f_v) {

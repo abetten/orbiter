@@ -46,7 +46,7 @@ public:
 			exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_label,
+		combinatorics::solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
 
@@ -118,7 +118,7 @@ public:
 				solvers_package::exact_cover *E, int starter_case,
 				long int *candidates, int nb_candidates,
 				groups::strong_generators *Strong_gens,
-			solvers::diophant *&Dio, long int *&col_label,
+				combinatorics::solvers::diophant *&Dio, long int *&col_label,
 			int &f_ruled_out, 
 			int verbose_level),
 		int verbose_level);
@@ -207,7 +207,7 @@ public:
 			exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_label,
+		combinatorics::solvers::diophant *&Dio, long int *&col_label,
 		int &f_ruled_out, 
 		int verbose_level);
 	void (*early_test_function)(

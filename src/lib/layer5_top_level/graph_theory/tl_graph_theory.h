@@ -44,14 +44,14 @@ public:
 	int *list_of_elements_inverse; // [go]
 
 	actions::action *A;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int target_depth;
 
 	int *Elt1;
 	int *Elt2;
 	data_structures_groups::vector_ge *gens;
 	data_structures_groups::vector_ge *gens_subgroup;
-	ring_theory::longinteger_object target_go, target_go_subgroup;
+	algebra::ring_theory::longinteger_object target_go, target_go_subgroup;
 	groups::strong_generators *Strong_gens;
 	groups::strong_generators *Strong_gens_subgroup;
 
@@ -69,7 +69,7 @@ public:
 	std::string fname_graphs;
 
 	groups::strong_generators *Aut_gens;
-	ring_theory::longinteger_object Aut_order;
+	algebra::ring_theory::longinteger_object Aut_order;
 	actions::action *Aut;
 	actions::action *A2;
 	poset_classification::poset_with_group_action *Poset;
@@ -233,6 +233,7 @@ public:
 	std::vector<graph_modification_description> Modifications;
 
 	create_graph_description();
+	~create_graph_description();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
@@ -256,7 +257,7 @@ public:
 	create_graph_description *description;
 
 	int f_has_CG;
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 
 	int N;
 	int *Adj;
@@ -369,7 +370,7 @@ public:
 	int draw_graphs_at_level_level;
 
 	int f_draw_options;
-	graphics::layered_graph_draw_options *draw_options;
+	other::graphics::layered_graph_draw_options *draw_options;
 
 	int f_recognize_graphs_from_adjacency_matrix_csv;
 	std::string recognize_graphs_from_adjacency_matrix_csv_fname;
@@ -529,7 +530,7 @@ public:
 			int level_min, int level_max, int verbose_level);
 	void draw_graphs(
 			int level,
-			graphics::layered_graph_draw_options *draw_options,
+			other::graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 	void recognize_graph_from_adjacency_list(
 			int *Adj, int N2,
@@ -572,7 +573,7 @@ public:
 		int verbose_level);
 	void print();
 	void apply(
-			graph_theory::colored_graph *&CG, int verbose_level);
+			combinatorics::graph_theory::colored_graph *&CG, int verbose_level);
 
 };
 
@@ -591,7 +592,7 @@ public:
 	// TABLES/graph_theoretic_activity.tex
 
 	int f_find_cliques;
-	graph_theory::clique_finder_control *Clique_finder_control;
+	combinatorics::graph_theory::clique_finder_control *Clique_finder_control;
 
 	int f_test_SRG_property;
 
@@ -663,7 +664,7 @@ public:
 
 	graph_theoretic_activity_description *Descr;
 	int nb;
-	graph_theory::colored_graph **CG; // [nb]
+	combinatorics::graph_theory::colored_graph **CG; // [nb]
 
 
 	graph_theoretic_activity();
@@ -671,7 +672,7 @@ public:
 	void init(
 			graph_theoretic_activity_description *Descr,
 			int nb,
-			graph_theory::colored_graph **CG,
+			combinatorics::graph_theory::colored_graph **CG,
 			int verbose_level);
 	void feedback_headings(
 			graph_theoretic_activity_description *Descr,
@@ -706,22 +707,22 @@ public:
 	graph_theory_apps();
 	~graph_theory_apps();
 	void automorphism_group(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			std::vector<std::string> &feedback,
 			int verbose_level);
 	void automorphism_group_bw(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			std::vector<std::string> &feedback,
 			int verbose_level);
 	void expander_graph(
 			int p, int q,
 			int f_special,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			actions::action *A,
 			int *&Adj, int &N,
 			int verbose_level);
 	void test_automorphism_property_of_group(
-			int nb, graph_theory::colored_graph **CG,
+			int nb, combinatorics::graph_theory::colored_graph **CG,
 			std::string &group_label, int verbose_level);
 
 

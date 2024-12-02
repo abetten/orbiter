@@ -20,6 +20,7 @@ namespace canonical_form {
 
 variety_object_with_action::variety_object_with_action()
 {
+	Record_birth();
 
 	PA = NULL;
 
@@ -43,6 +44,7 @@ variety_object_with_action::variety_object_with_action()
 
 variety_object_with_action::~variety_object_with_action()
 {
+	Record_death();
 	if (Variety_object) {
 		FREE_OBJECT(Variety_object);
 	}
@@ -57,7 +59,7 @@ variety_object_with_action::~variety_object_with_action()
 void variety_object_with_action::create_variety(
 		projective_geometry::projective_space_with_action *PA,
 		int cnt, int po_go, int po_index, int po, int so,
-		algebraic_geometry::variety_description *VD,
+		geometry::algebraic_geometry::variety_description *VD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -66,7 +68,7 @@ void variety_object_with_action::create_variety(
 		cout << "variety_object_with_action::create_variety" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	variety_object_with_action::PA = PA;
@@ -89,7 +91,7 @@ void variety_object_with_action::create_variety(
 
 
 
-	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 
 
 	if (f_v) {
@@ -183,11 +185,11 @@ void variety_object_with_action::apply_transformation(
 #endif
 
 
-	algebraic_geometry::variety_object *old_Variety_object;
+	geometry::algebraic_geometry::variety_object *old_Variety_object;
 
 	old_Variety_object = Variety_object;
 
-	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 
 
 	Variety_object->Descr = old_Variety_object->Descr;
@@ -378,7 +380,7 @@ void variety_object_with_action::do_report(
 					+ std::to_string(q) + ")";
 
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -410,7 +412,7 @@ void variety_object_with_action::do_report(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -534,7 +536,7 @@ void variety_object_with_action::print_summary(
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|l|r|}" << endl;
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 
 	if (f_has_automorphism_group) {
 		Stab_gens->group_order(ago);

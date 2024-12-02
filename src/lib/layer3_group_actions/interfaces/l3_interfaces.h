@@ -150,7 +150,7 @@ public:
 			std::string &label_txt,
 			int f_has_group,
 			groups::strong_generators *SG,
-			ring_theory::homogeneous_polynomial_domain *Poly3_4,
+			algebra::ring_theory::homogeneous_polynomial_domain *Poly3_4,
 			int *equation,
 			int verbose_level);
 	void export_BLT_set(
@@ -159,7 +159,7 @@ public:
 			int f_has_group,
 			groups::strong_generators *SG,
 			actions::action *A,
-			layer1_foundations::orthogonal_geometry::blt_set_domain
+			layer1_foundations::geometry::orthogonal_geometry::blt_set_domain
 					*Blt_set_domain,
 			long int *set, int verbose_level);
 	void export_group_to_GAP_and_copy_to_latex(
@@ -442,31 +442,31 @@ public:
 	nauty_interface_for_graphs();
 	~nauty_interface_for_graphs();
 	actions::action *create_automorphism_group_of_colored_graph_object(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			int *labeling,
 			int verbose_level);
 	actions::action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
 		int n,
 		int f_bitvec,
-		data_structures::bitvector *Bitvec,
+		other::data_structures::bitvector *Bitvec,
 		int *Adj,
 		int *vertex_colors,
 		int *labeling,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_colored_graph_ignoring_colors(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 	actions::action *create_automorphism_group_of_graph_bitvec(
 		int n,
-		data_structures::bitvector *Bitvec,
+		other::data_structures::bitvector *Bitvec,
 		int verbose_level);
 	actions::action *create_automorphism_group_of_graph_with_partition_and_labeling(
 		int n,
 		int f_bitvector,
-		data_structures::bitvector *Bitvec,
+		other::data_structures::bitvector *Bitvec,
 		int *Adj,
 		int nb_parts, int *parts,
 		int *labeling,
@@ -497,13 +497,13 @@ public:
 	~nauty_interface_with_group();
 
 	groups::strong_generators *set_stabilizer_of_object(
-			canonical_form_classification::any_combinatorial_object *Any_combo,
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 			actions::action *A_linear,
 		int f_compute_canonical_form,
 		int f_save_nauty_input_graphs,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
-		canonical_form_classification::encoded_combinatorial_object *&Enc,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
 		int verbose_level);
 
 
@@ -515,8 +515,8 @@ public:
 			int nauty_output_index_start,
 			std::vector<std::string> &Carrying_through,
 			groups::strong_generators *&Set_stab,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
+			other::data_structures::bitvector *&Canonical_form,
+			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	void set_stabilizer_in_projective_space_using_nauty(
 			geometry::projective_geometry::projective_space *P,
@@ -524,8 +524,8 @@ public:
 			long int *Pts, int sz,
 			int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
+			other::data_structures::bitvector *&Canonical_form,
+			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 
 };

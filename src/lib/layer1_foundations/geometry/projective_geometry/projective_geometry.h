@@ -34,8 +34,8 @@ namespace projective_geometry {
 class grassmann {
 public:
 	int n, k, q;
-	ring_theory::longinteger_object *nCkq; // n choose k q-analog
-	field_theory::finite_field *F;
+	algebra::ring_theory::longinteger_object *nCkq; // n choose k q-analog
+	algebra::field_theory::finite_field *F;
 	int *base_cols;
 	int *coset;
 	int *M; // [n * n], this used to be [k * n]
@@ -49,7 +49,7 @@ public:
 	~grassmann();
 	void init(
 			int n, int k,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int verbose_level);
 	long int nb_of_subspaces(
 			int verbose_level);
@@ -84,16 +84,16 @@ public:
 			int verbose_level);
 	void unrank_longinteger_here(
 			int *Mtx,
-			ring_theory::longinteger_object &rk,
+			algebra::ring_theory::longinteger_object &rk,
 		int verbose_level);
 	void rank_longinteger_here(
 			int *Mtx,
-			ring_theory::longinteger_object &rk,
+			algebra::ring_theory::longinteger_object &rk,
 		int verbose_level);
 	void unrank_longinteger(
-			ring_theory::longinteger_object &rk, int verbose_level);
+			algebra::ring_theory::longinteger_object &rk, int verbose_level);
 	void rank_longinteger(
-			ring_theory::longinteger_object &r, int verbose_level);
+			algebra::ring_theory::longinteger_object &r, int verbose_level);
 	void print();
 	int dimension_of_join(
 			long int rk1, long int rk2, int verbose_level);
@@ -201,7 +201,7 @@ public:
 class grassmann_embedded {
 public:
 	int big_n, n, k, q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	grassmann *G; // only a reference, not freed
 	int *M; // [n * big_n] the original matrix
 	int *M_Gauss; // [n * big_n] the echelon form (RREF)
@@ -270,7 +270,7 @@ public:
 	projective_space *P3;
 	projective_space *P5;
 	orthogonal_geometry::orthogonal *O;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 	long int nb_Pts; // number of points on the Klein quadric
 	long int nb_pts_PG; // number of points in PG(5,q)
@@ -295,13 +295,13 @@ public:
 	klein_correspondence();
 	~klein_correspondence();
 	void init(
-			field_theory::finite_field *F,
-			orthogonal_geometry::orthogonal *O,
+			algebra::field_theory::finite_field *F,
+			geometry::orthogonal_geometry::orthogonal *O,
 			int verbose_level);
 	// opens two projective_space objects P3 and P5
 	void plane_intersections(
 			long int *lines_in_PG3, int nb_lines,
-			ring_theory::longinteger_object *&R,
+			algebra::ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane,
 		int *&nb_pts_on_plane,
 		int &nb_planes,
@@ -406,7 +406,7 @@ public:
 	long int image_of_element(
 			int *Elt, int rho, long int a,
 			projective_space *P,
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			int verbose_level);
 	void report(
 			std::ostream &f);
@@ -429,12 +429,12 @@ private:
 
 public:
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	projective_space_basic();
 	~projective_space_basic();
 	void init(
-			field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F, int verbose_level);
 	void PG_element_apply_frobenius(
 			int n, int *v, int f);
 	int test_if_vectors_are_projectively_equal(
@@ -513,7 +513,7 @@ public:
 	projective_space *P;
 
 private:
-	data_structures::bitmatrix *Bitmatrix;
+	other::data_structures::bitmatrix *Bitmatrix;
 
 	int *Lines; // [N_lines * k]
 	int *Lines_on_point; // [N_points * r]
@@ -532,7 +532,7 @@ public:
 	~projective_space_implementation();
 	void init(
 			projective_space *P, int verbose_level);
-	data_structures::bitmatrix *get_Bitmatrix();
+	other::data_structures::bitmatrix *get_Bitmatrix();
 	int has_lines();
 	int has_lines_on_point();
 	int find_point_on_line(
@@ -670,7 +670,7 @@ public:
 			// coefficient matrix is not 5.
 			// true otherwise.
 	int determine_cubic_in_plane(
-			ring_theory::homogeneous_polynomial_domain *Poly_3_3,
+			algebra::ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 			int nb_pts, long int *Pts, int *coeff10,
 			int verbose_level);
 	void conic_points_brute_force(
@@ -698,7 +698,7 @@ public:
 		int threshold,
 		int *&intersection_type, int &highest_intersection_number,
 		int f_save_largest_sets,
-		data_structures::set_of_sets *&largest_sets,
+		other::data_structures::set_of_sets *&largest_sets,
 		int verbose_level);
 	void determine_nonconical_six_subsets(
 		long int *set, int set_size,
@@ -743,20 +743,20 @@ public:
 	void init(
 			projective_space *P, int verbose_level);
 	void create_latex_report(
-			graphics::layered_graph_draw_options *O,
+			other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report_summary(
 			std::ostream &ost);
 	void report(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *O,
+			other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report_polynomial_rings(
 			std::ostream &ost,
 			int verbose_level);
 	void create_drawing_of_plane(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void report_subspaces_of_dimension(
 			std::ostream &ost,
@@ -814,7 +814,7 @@ public:
 
 	grassmann **Grass_stack; // [n + 1]
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	//ring_theory::longinteger_object *Go;
 
 	int n; // projective dimension
@@ -842,7 +842,7 @@ public:
 	void init(
 		projective_space *P,
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int f_init_incidence_structure,
 		int verbose_level);
 	// n is projective dimension
@@ -888,7 +888,7 @@ public:
 			int pt, int line, int a);
 	void make_incidence_structure_and_partition(
 		other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level);
 	void incma_for_type_ij(
 		int row_type, int col_type,
@@ -911,7 +911,7 @@ public:
 	void incidence_and_stack_for_type_ij(
 		int row_type, int col_type,
 		other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level);
 	long int nb_rk_k_subspaces_as_lint(
 			int k);
@@ -1005,16 +1005,16 @@ public:
 	void make_fname_incidence_matrix_csv(
 			std::string &fname);
 	void compute_decomposition(
-			data_structures::partitionstack *S1,
-			data_structures::partitionstack *S2,
+			other::data_structures::partitionstack *S1,
+			other::data_structures::partitionstack *S2,
 			other_geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
+			other::data_structures::partitionstack *&Stack,
 			int verbose_level);
 	void compute_decomposition_based_on_tally(
-			data_structures::tally *T1,
-			data_structures::tally *T2,
+			other::data_structures::tally *T1,
+			other::data_structures::tally *T2,
 			other_geometry::incidence_structure *&Inc,
-			data_structures::partitionstack *&Stack,
+			other::data_structures::partitionstack *&Stack,
 			int verbose_level);
 	void polarity_rank_k_subspace(
 			int k,
@@ -1075,7 +1075,7 @@ public:
 	~projective_space();
 	void projective_space_init(
 			int n,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int f_init_incidence_structure,
 		int verbose_level);
 	long int rank_point(
@@ -1116,7 +1116,7 @@ public:
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
 	void intersection_of_subspace_with_point_set_rank_is_longinteger(
-		grassmann *G, ring_theory::longinteger_object &rk,
+		grassmann *G, algebra::ring_theory::longinteger_object &rk,
 		long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
 		int verbose_level);
@@ -1139,13 +1139,13 @@ public:
 	int plane_intersections(
 		grassmann *G,
 		long int *set, int set_size,
-		ring_theory::longinteger_object *&R,
-		data_structures::set_of_sets &SoS,
+		algebra::ring_theory::longinteger_object *&R,
+		other::data_structures::set_of_sets &SoS,
 		int verbose_level);
 	void plane_intersection_type_fast(
 		grassmann *G,
 		long int *set, int set_size,
-		ring_theory::longinteger_object *&R,
+		algebra::ring_theory::longinteger_object *&R,
 		long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
 		int verbose_level);
 

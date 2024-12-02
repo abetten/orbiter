@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_by_restriction::action_by_restriction()
 {
+	Record_birth();
 	nb_points = 0;
 	points = NULL;
 	points_sorted = NULL;
@@ -29,6 +30,7 @@ action_by_restriction::action_by_restriction()
 
 action_by_restriction::~action_by_restriction()
 {
+	Record_death();
 	if (points) {
 		FREE_lint(points);
 	}
@@ -99,7 +101,7 @@ void action_by_restriction::init(
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
@@ -140,7 +142,7 @@ long int action_by_restriction::restricted_point_idx(
 		long int pt)
 {
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (!Sorting.lint_vec_search(points_sorted, nb_points, pt, idx, 0 /* verbose_level */)) {
 		cout << "action_by_restriction::restricted_point_idx fatal: "
@@ -159,7 +161,7 @@ long int action_by_restriction::compute_image(
 	long int b, c;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_by_restriction::compute_image i = " << i << endl;

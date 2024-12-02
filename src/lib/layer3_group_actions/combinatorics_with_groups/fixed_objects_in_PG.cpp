@@ -21,6 +21,7 @@ namespace combinatorics_with_groups {
 
 fixed_objects_in_PG::fixed_objects_in_PG()
 {
+	Record_birth();
 
 	A_base = NULL;
 	A = NULL;
@@ -35,6 +36,7 @@ fixed_objects_in_PG::fixed_objects_in_PG()
 
 fixed_objects_in_PG::~fixed_objects_in_PG()
 {
+	Record_death();
 	if (Elt) {
 		FREE_int(Elt);
 	}

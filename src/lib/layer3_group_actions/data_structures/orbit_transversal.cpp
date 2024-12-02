@@ -18,6 +18,7 @@ namespace data_structures_groups {
 
 orbit_transversal::orbit_transversal()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	nb_orbits = 0;
@@ -26,6 +27,7 @@ orbit_transversal::orbit_transversal()
 
 orbit_transversal::~orbit_transversal()
 {
+	Record_death();
 	if (Reps) {
 		FREE_OBJECTS(Reps);
 		}
@@ -34,7 +36,7 @@ orbit_transversal::~orbit_transversal()
 void orbit_transversal::init_from_schreier(
 		groups::schreier *Sch,
 		actions::action *default_action,
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -88,7 +90,7 @@ void orbit_transversal::read_from_file(
 	int *Casenumbers;
 	int nb_cases, nb_cases_mod;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file "
@@ -181,7 +183,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	int *Casenumbers;
 	int nb_cases; //, nb_cases_mod;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file_one_case_only "
@@ -244,7 +246,7 @@ void orbit_transversal::read_from_file_one_case_only(
 	}
 }
 
-data_structures::tally *orbit_transversal::get_ago_distribution(
+other::data_structures::tally *orbit_transversal::get_ago_distribution(
 		long int *&ago,
 		int verbose_level)
 {
@@ -262,8 +264,8 @@ data_structures::tally *orbit_transversal::get_ago_distribution(
 	for (i = 0; i < nb_orbits; i++) {
 		ago[i] = Reps[i].group_order_as_lint();
 	}
-	data_structures::tally *C;
-	C = NEW_OBJECT(data_structures::tally);
+	other::data_structures::tally *C;
+	C = NEW_OBJECT(other::data_structures::tally);
 	C->init_lint(ago, nb_orbits, false, 0);
 	if (f_v) {
 		cout << "orbit_transversal::get_ago_distribution done" << endl;
@@ -274,7 +276,7 @@ data_structures::tally *orbit_transversal::get_ago_distribution(
 void orbit_transversal::report_ago_distribution(
 		std::ostream &ost)
 {
-	data_structures::tally *C;
+	other::data_structures::tally *C;
 	long int *Ago;
 	int i, f, l, a;
 
@@ -326,7 +328,7 @@ void orbit_transversal::print_table_latex(
 			i = I * nb_rows_per_page + row;
 			if (i < nb_orbits) {
 
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object go;
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
@@ -412,7 +414,7 @@ void orbit_transversal::export_data_in_source_code_inside_tex(
 	ost << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (h = 0; h < nb_orbits; h++) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		if (Reps[h].Stab) {
 			Reps[h].Stab->group_order(go);

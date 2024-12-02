@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_by_right_multiplication::action_by_right_multiplication()
 {
+	Record_birth();
 	Base_group = NULL;
 	f_ownership = false;
 	goi = 0;
@@ -28,6 +29,7 @@ action_by_right_multiplication::action_by_right_multiplication()
 
 action_by_right_multiplication::~action_by_right_multiplication()
 {
+	Record_death();
 	if (Base_group && f_ownership) {
 		delete Base_group;
 		}
@@ -44,7 +46,7 @@ void action_by_right_multiplication::init(
 		int f_ownership, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	actions::action *A;
 	
 	if (f_v) {

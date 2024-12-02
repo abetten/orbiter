@@ -21,6 +21,20 @@ namespace layer5_applications {
 namespace apps_algebra {
 
 
+character_table_burnside::character_table_burnside()
+{
+	Record_birth();
+
+}
+
+character_table_burnside::~character_table_burnside()
+{
+	Record_death();
+
+}
+
+
+
 void character_table_burnside::do_it(
 		int n, int verbose_level)
 {
@@ -30,14 +44,14 @@ void character_table_burnside::do_it(
 		cout << "character_table_burnside::do_it" << endl;
 	}
 
-	algebra::a_domain *D;
+	algebra::basic_algebra::a_domain *D;
 
-	D = NEW_OBJECT(algebra::a_domain);
+	D = NEW_OBJECT(algebra::basic_algebra::a_domain);
 	D->init_integer_fractions(verbose_level);
 
 
 	actions::action *A;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int goi;
 	int *Elt;
 	int i, j;
@@ -444,7 +458,7 @@ void character_table_burnside::do_it(
 	}
 
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	L.print_integer_matrix_tex(cout, character_table, nb_classes, nb_classes);
 
@@ -539,7 +553,7 @@ void character_table_burnside::create_matrix(
 
 
 void character_table_burnside::compute_character_table(
-		algebra::a_domain *D, int nb_classes, int *Omega,
+		algebra::basic_algebra::a_domain *D, int nb_classes, int *Omega,
 	int *character_degree, int *class_size,
 	int *&character_table, int verbose_level)
 {
@@ -581,7 +595,7 @@ void character_table_burnside::compute_character_table(
 }
 
 void character_table_burnside::compute_character_degrees(
-		algebra::a_domain *D,
+		algebra::basic_algebra::a_domain *D,
 	int goi, int nb_classes, int *Omega, int *class_size,
 	int *&character_degree,
 	int verbose_level)
@@ -661,7 +675,7 @@ void character_table_burnside::compute_character_degrees(
 }
 
 void character_table_burnside::compute_omega(
-		algebra::a_domain *D, int *N0, int nb_classes,
+		algebra::basic_algebra::a_domain *D, int *N0, int nb_classes,
 		int *Mu, int nb_mu, int *&Omega,
 		int verbose_level)
 {
@@ -898,7 +912,7 @@ void character_table_burnside::compute_Distribution_table(
 	int *Choice;
 	int *Nb;
 	int t, h, i, /*idx,*/ j;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {

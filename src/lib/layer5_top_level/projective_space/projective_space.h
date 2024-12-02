@@ -60,7 +60,7 @@ public:
 	int f_canonical_form_of_code;
 	std::string canonical_form_of_code_label;
 	std::string canonical_form_of_code_generator_matrix;
-	canonical_form_classification::classification_of_objects_description
+	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_codes_Descr;
 
 	int f_map;
@@ -337,6 +337,9 @@ public:
 
 class projective_space_global {
 public:
+
+	projective_space_global();
+	~projective_space_global();
 	void analyze_del_Pezzo_surface(
 			projective_space_with_action *PA,
 			std::string &label,
@@ -345,7 +348,7 @@ public:
 	// ToDo use symbolic object instead
 	void analyze_del_Pezzo_surface_formula_given(
 			projective_space_with_action *PA,
-			expression_parser::formula *F,
+			algebra::expression_parser::formula *F,
 			std::string &evaluate_text,
 			int verbose_level);
 	void do_lift_skew_hexagon(
@@ -412,7 +415,7 @@ public:
 	std::string field_label;
 
 	int f_field_pointer;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_use_projectivity_subgroup;
 
@@ -450,7 +453,7 @@ public:
 	int n; // projective dimension
 	int d; // n + 1
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int f_semilinear;
 	int f_init_incidence_structure;
 
@@ -465,7 +468,7 @@ public:
 
 
 	// if n == 2:
-	algebraic_geometry::quartic_curve_domain *Dom;
+	geometry::algebraic_geometry::quartic_curve_domain *Dom;
 	applications_in_algebraic_geometry::quartic_curves::quartic_curve_domain_with_action
 		*QCDA;
 
@@ -489,7 +492,7 @@ public:
 			projective_space_with_action_description *Descr,
 			int verbose_level);
 	void init(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(
@@ -509,15 +512,15 @@ public:
 	void canonical_form_of_code(
 			std::string &label_txt,
 			int *genma, int m, int n,
-			canonical_form_classification::classification_of_objects_description
+			combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_codes_Descr,
 			int verbose_level);
 	void cheat_sheet(
-			graphics::layered_graph_draw_options *O,
+			other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void do_spread_classify(
 			int k,
@@ -553,7 +556,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	ring_theory::homogeneous_polynomial_domain *Poly_ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 
@@ -562,7 +565,7 @@ public:
 	~ring_with_action();
 	void ring_with_action_init(
 			projective_geometry::projective_space_with_action *PA,
-			ring_theory::homogeneous_polynomial_domain *Poly_ring,
+			algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring,
 			int verbose_level);
 	void lift_mapping(
 			int *gamma, int *Elt, int verbose_level);
@@ -574,24 +577,24 @@ public:
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
+			other::data_structures::bitvector *&Canonical_form,
+			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	// called from variety_stabilizer_compute::compute_canonical_form_of_variety
 	void nauty_interface_with_precomputed_data(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
+			other::data_structures::bitvector *&Canonical_form,
+			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	// Nauty interface with precomputed data
 	void nauty_interface_from_scratch(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
-			data_structures::bitvector *&Canonical_form,
-			l1_interfaces::nauty_output *&NO,
+			other::data_structures::bitvector *&Canonical_form,
+			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 	// Nauty interface without precomputed data
 

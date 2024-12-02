@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_sign::action_on_sign()
 {
+	Record_birth();
 	A = NULL;
 	perm_degree = 0;
 	perm = NULL;
@@ -26,6 +27,7 @@ action_on_sign::action_on_sign()
 
 action_on_sign::~action_on_sign()
 {
+	Record_death();
 	if (perm) {
 		FREE_int(perm);
 	}
@@ -37,7 +39,7 @@ void action_on_sign::init(
 		actions::action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	
 	if (f_v) {
 		cout << "action_on_sign::init" << endl;
@@ -61,7 +63,7 @@ long int action_on_sign::compute_image(
 {
 	int f_v = (verbose_level >= 1);
 	long int u, v, sgn, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_sign::compute_image "

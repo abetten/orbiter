@@ -24,6 +24,7 @@ namespace other_geometry {
 
 incidence_structure::incidence_structure()
 {
+	Record_birth();
 	//std::string label;
 
 	nb_rows = nb_cols = 0;
@@ -49,6 +50,7 @@ incidence_structure::incidence_structure()
 
 incidence_structure::~incidence_structure()
 {
+	Record_death();
 	if (M) {
 		FREE_int(M);
 	}
@@ -320,7 +322,7 @@ void incidence_structure::init_by_R_and_X(
 }
 
 void incidence_structure::init_by_set_of_sets(
-		data_structures::set_of_sets *SoS,
+		other::data_structures::set_of_sets *SoS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -371,7 +373,7 @@ void incidence_structure::init_by_matrix(
 
 void incidence_structure::init_by_matrix_as_bitmatrix(
 		int m, int n,
-		data_structures::bitmatrix *Bitmatrix,
+		other::data_structures::bitmatrix *Bitmatrix,
 		int verbose_level)
 {
 	int i, j;
@@ -727,12 +729,12 @@ void incidence_structure::print(
 }
 
 
-data_structures::bitvector *incidence_structure::encode_as_bitvector()
+other::data_structures::bitvector *incidence_structure::encode_as_bitvector()
 {
 	int i, j, a;
-	data_structures::bitvector *B;
+	other::data_structures::bitvector *B;
 
-	B = NEW_OBJECT(data_structures::bitvector);
+	B = NEW_OBJECT(other::data_structures::bitvector);
 	B->allocate(nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
@@ -797,7 +799,7 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 void incidence_structure::save_as_csv(
 		std::string &fname_csv, int verbose_level)
 {
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname_csv, M, nb_rows, nb_cols);
@@ -843,7 +845,7 @@ void incidence_structure::init_large_set(
 	int nb_cols;
 	int N;
 	int u, i, j, t, a;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	nb_classes = design_b / partition_class_size;
@@ -889,7 +891,7 @@ void incidence_structure::init_large_set(
 
 
 	if (f_v) {
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(partition, N, false, 0);
 		T.print_array_tex(cout, true);

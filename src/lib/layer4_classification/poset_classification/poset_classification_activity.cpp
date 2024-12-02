@@ -19,6 +19,7 @@ namespace poset_classification {
 
 poset_classification_activity::poset_classification_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	PC = NULL;
 	actual_size = 0;
@@ -26,6 +27,7 @@ poset_classification_activity::poset_classification_activity()
 
 poset_classification_activity::~poset_classification_activity()
 {
+	Record_death();
 }
 
 void poset_classification_activity::init(
@@ -120,7 +122,7 @@ void poset_classification_activity::perform_work(
 	if (Descr->f_write_tree) {
 
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->write_tree_draw_options);
 
@@ -216,7 +218,7 @@ void poset_classification_activity::perform_work(
 					"preparing level spreadsheet" << endl;
 		}
 		{
-			data_structures::spreadsheet *Sp;
+			other::data_structures::spreadsheet *Sp;
 			PC->make_spreadsheet_of_level_info(
 					Sp, actual_size, verbose_level);
 			string fname_csv;
@@ -239,7 +241,7 @@ void poset_classification_activity::perform_work(
 					"preparing orbit spreadsheet" << endl;
 		}
 		{
-			data_structures::spreadsheet *Sp;
+			other::data_structures::spreadsheet *Sp;
 			PC->make_spreadsheet_of_orbit_reps(
 					Sp, actual_size);
 			string fname_csv;
@@ -268,7 +270,7 @@ void poset_classification_activity::perform_work(
 		}
 #endif
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_poset_draw_options);
 
@@ -289,7 +291,7 @@ void poset_classification_activity::perform_work(
 					"before draw_full_poset" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->draw_full_poset_draw_options);
 
@@ -454,7 +456,7 @@ void poset_classification_activity::compute_Kramer_Mesner_matrix(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int i;
 
 	string fname;
@@ -793,13 +795,13 @@ void poset_classification_activity::Asup_to_Ainf(
 		long int *M_sup, long int *&M_inf, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object quo, rem, aa, bb, cc;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_object *go_t;
-	ring_theory::longinteger_object *go_k;
-	ring_theory::longinteger_object *ol_t;
-	ring_theory::longinteger_object *ol_k;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object quo, rem, aa, bb, cc;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object *go_t;
+	algebra::ring_theory::longinteger_object *go_k;
+	algebra::ring_theory::longinteger_object *ol_t;
+	algebra::ring_theory::longinteger_object *ol_k;
 	int Nt, Nk;
 	int i, j;
 	long int a, c;
@@ -816,10 +818,10 @@ void poset_classification_activity::Asup_to_Ainf(
 	if (f_v) {
 		cout << "poset_classification_activity::Asup_to_Ainf go=" << go << endl;
 	}
-	go_t = NEW_OBJECTS(ring_theory::longinteger_object, Nt);
-	go_k = NEW_OBJECTS(ring_theory::longinteger_object, Nk);
-	ol_t = NEW_OBJECTS(ring_theory::longinteger_object, Nt);
-	ol_k = NEW_OBJECTS(ring_theory::longinteger_object, Nk);
+	go_t = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Nt);
+	go_k = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Nk);
+	ol_t = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Nt);
+	ol_k = NEW_OBJECTS(algebra::ring_theory::longinteger_object, Nk);
 	if (f_v) {
 		cout << "poset_classification_activity::Asup_to_Ainf "
 				"computing orbit lengths t-orbits" << endl;
@@ -1125,7 +1127,7 @@ void poset_classification_activity::Mtk_via_Mtr_Mrk(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, b, c, s = 0;
-	combinatorics::combinatorics_domain C;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 
 	if (f_v) {
 		cout << "poset_classification_activity::Mtk_via_Mtr_Mrk "
@@ -1159,7 +1161,7 @@ void poset_classification_activity::Mtk_via_Mtr_Mrk(
 	// Mtk := {(k - t) \atop (k - r)} * M_t,k
 
 
-	ring_theory::longinteger_object S;
+	algebra::ring_theory::longinteger_object S;
 
 	if (PC->get_poset()->f_subset_lattice) {
 		C.binomial(

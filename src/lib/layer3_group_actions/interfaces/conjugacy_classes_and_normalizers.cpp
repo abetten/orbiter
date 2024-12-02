@@ -25,6 +25,7 @@ namespace interfaces {
 
 conjugacy_classes_and_normalizers::conjugacy_classes_and_normalizers()
 {
+	Record_birth();
 	A = NULL;
 	//std::string fname;
 	nb_classes = 0;
@@ -41,6 +42,7 @@ conjugacy_classes_and_normalizers::conjugacy_classes_and_normalizers()
 
 conjugacy_classes_and_normalizers::~conjugacy_classes_and_normalizers()
 {
+	Record_death();
 	if (perms) {
 		FREE_int(perms);
 	}
@@ -227,7 +229,7 @@ void conjugacy_classes_and_normalizers::report(
 	}
 
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "i : class_order_of_element : class_normalizer_order" << endl;
 	for (i = 0; i < nb_classes; i++) {
@@ -236,8 +238,8 @@ void conjugacy_classes_and_normalizers::report(
 
 
 
-	data_structures::string_tools ST;
-	ring_theory::longinteger_object go;
+	other::data_structures::string_tools ST;
+	algebra::ring_theory::longinteger_object go;
 
 	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
@@ -252,7 +254,7 @@ void conjugacy_classes_and_normalizers::report(
 	{
 		ofstream ost(fname_latex);
 		string title, author, extra_praeamble;
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		title = "Conjugacy classes of $" + label_latex + "$";
 
@@ -318,7 +320,7 @@ void conjugacy_classes_and_normalizers::export_csv(
 		cout << "conjugacy_classes_and_normalizers::export_csv" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	string fname_csv;
 
 	fname_csv.assign(fname);
@@ -483,7 +485,7 @@ void conjugacy_classes_and_normalizers::export_csv(
 
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	string fname_csv;

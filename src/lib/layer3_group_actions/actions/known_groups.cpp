@@ -20,11 +20,13 @@ namespace actions {
 
 known_groups::known_groups()
 {
+	Record_birth();
 	A = NULL;
 }
 
 known_groups::~known_groups()
 {
+	Record_death();
 
 }
 
@@ -44,7 +46,7 @@ void known_groups::init(
 
 
 void known_groups::init_linear_group(
-		field_theory::finite_field *F, int m,
+		algebra::field_theory::finite_field *F, int m,
 	int f_projective, int f_general, int f_affine,
 	int f_semilinear, int f_special,
 	data_structures_groups::vector_ge *&nice_gens,
@@ -188,14 +190,14 @@ void known_groups::init_linear_group(
 
 
 void known_groups::init_projective_group(
-		int n, field_theory::finite_field *F,
+		int n, algebra::field_theory::finite_field *F,
 	int f_semilinear,
 	int f_basis, int f_init_sims,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_projective_group" << endl;
@@ -206,7 +208,7 @@ void known_groups::init_projective_group(
 
 
 
-	M = NEW_OBJECT(algebra::matrix_group);
+	M = NEW_OBJECT(algebra::basic_algebra::matrix_group);
 
 
 
@@ -301,14 +303,14 @@ void known_groups::init_projective_group(
 }
 
 void known_groups::init_affine_group(
-		int n, field_theory::finite_field *F,
+		int n, algebra::field_theory::finite_field *F,
 	int f_semilinear,
 	int f_basis, int f_init_sims,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_affine_group" << endl;
@@ -317,7 +319,7 @@ void known_groups::init_affine_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
-	M = NEW_OBJECT(algebra::matrix_group);
+	M = NEW_OBJECT(algebra::basic_algebra::matrix_group);
 
 
 
@@ -397,14 +399,14 @@ void known_groups::init_affine_group(
 }
 
 void known_groups::init_general_linear_group(
-		int n, field_theory::finite_field *F,
+		int n, algebra::field_theory::finite_field *F,
 	int f_semilinear,
 	int f_basis, int f_init_sims,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_general_linear_group" << endl;
@@ -413,7 +415,7 @@ void known_groups::init_general_linear_group(
 		cout << "f_basis=" << f_basis << endl;
 	}
 
-	M = NEW_OBJECT(algebra::matrix_group);
+	M = NEW_OBJECT(algebra::basic_algebra::matrix_group);
 
 
 
@@ -502,7 +504,7 @@ void known_groups::compute_special_subgroup(
 
 
 	action *A_on_det;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "known_groups::compute_special_subgroup "
@@ -545,7 +547,7 @@ void known_groups::compute_special_subgroup(
 
 
 void known_groups::setup_linear_group_from_strong_generators(
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		data_structures_groups::vector_ge *&nice_gens,
 		int f_init_sims,
 	int verbose_level)
@@ -641,7 +643,7 @@ void known_groups::init_sims_from_generators(
 }
 
 void known_groups::init_projective_special_group(
-	int n, field_theory::finite_field *F,
+	int n, algebra::field_theory::finite_field *F,
 	int f_semilinear, int f_basis, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -674,7 +676,7 @@ void known_groups::init_projective_special_group(
 
 	{
 		action *A_on_det;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		groups::strong_generators *gens;
 		groups::sims *Sims2;
 
@@ -712,13 +714,13 @@ void known_groups::init_projective_special_group(
 }
 
 void known_groups::init_matrix_group_strong_generators_builtin(
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int n, q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *data;
 	int size, nb_gens;
 
@@ -744,7 +746,7 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 	}
 	if (M->f_projective) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 		if (f_v) {
 			cout << "known_groups::init_matrix_group_strong_generators_builtin "
@@ -762,7 +764,7 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 	}
 	else if (M->f_affine) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 		if (f_v) {
 			cout << "known_groups::init_matrix_group_strong_generators_builtin "
@@ -780,7 +782,7 @@ void known_groups::init_matrix_group_strong_generators_builtin(
 	}
 	else if (M->f_general_linear) {
 
-		algebra::group_generators_domain GGD;
+		algebra::basic_algebra::group_generators_domain GGD;
 
 		if (f_v) {
 			cout << "known_groups::init_matrix_group_strong_generators_builtin "
@@ -934,7 +936,7 @@ void known_groups::init_permutation_group(
 }
 
 void known_groups::init_permutation_group_from_nauty_output(
-		l1_interfaces::nauty_output *NO,
+		other::l1_interfaces::nauty_output *NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1041,7 +1043,7 @@ void known_groups::init_permutation_group_from_nauty_output(
 
 void known_groups::init_permutation_group_from_generators(
 		int degree,
-	int f_target_go, ring_theory::longinteger_object &target_go,
+	int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 	int nb_gens, int *gens,
 	int given_base_length, long int *given_base,
 	int f_given_base,
@@ -1051,7 +1053,7 @@ void known_groups::init_permutation_group_from_generators(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "known_groups::init_permutation_group_from_generators "
@@ -1155,7 +1157,7 @@ void known_groups::init_permutation_group_from_generators(
 }
 
 void known_groups::init_base_and_generators(
-		int f_target_go, ring_theory::longinteger_object &target_go,
+		int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 		int nb_gens, int *gens,
 		int given_base_length, long int *given_base,
 		int f_given_base,
@@ -1165,7 +1167,7 @@ void known_groups::init_base_and_generators(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "known_groups::init_base_and_generators "
@@ -1283,8 +1285,8 @@ void known_groups::init_symmetric_group(
 	int given_base_length;
 	long int *given_base;
 	int i, j;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "known_groups::init_symmetric_group" << endl;
@@ -1345,7 +1347,7 @@ void known_groups::init_cyclic_group(
 	int given_base_length;
 	long int *given_base;
 	int i; //, j;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "known_groups::init_cyclic_group" << endl;
@@ -1360,7 +1362,7 @@ void known_groups::init_cyclic_group(
 	given_base = NEW_lint(given_base_length);
 
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	// create the cycle of degree 'degree':
 	Combi.Permutations->perm_cycle(
@@ -1420,13 +1422,13 @@ void known_groups::init_elementary_abelian_group(
 	int i, j, k;
 	int p, h;
 	int offset;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "known_groups::init_elementary_abelian_group" << endl;
 	}
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (!NT.is_prime_power(
 			order, p, h)) {
@@ -1444,7 +1446,7 @@ void known_groups::init_elementary_abelian_group(
 	A->make_element_size = degree;
 
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	// create the generators for the elementary group
 
@@ -1512,7 +1514,7 @@ void known_groups::init_identity_group(
 	int given_base_length;
 	long int *given_base;
 	int i, j;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	//ring_theory::longinteger_domain D;
 
 	if (f_v) {
@@ -1744,7 +1746,7 @@ void known_groups::init_orthogonal_group(
 #endif
 
 void known_groups::init_orthogonal_group_with_O(
-	orthogonal_geometry::orthogonal *O,
+		geometry::orthogonal_geometry::orthogonal *O,
 	int f_on_points, int f_on_lines, int f_on_points_and_lines,
 	int f_semilinear,
 	int f_basis, int verbose_level)
@@ -1755,7 +1757,7 @@ void known_groups::init_orthogonal_group_with_O(
 	action *A_PGL;
 	induced_actions::action_on_orthogonal *AO;
 	int q = O->F->q;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "known_groups::init_orthogonal_group_with_O "
@@ -1814,7 +1816,7 @@ void known_groups::init_orthogonal_group_with_O(
 	A->make_element_size = A_PGL->make_element_size;
 
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 
 	String.name_of_orthogonal_group(
 			A->label,
@@ -1824,7 +1826,7 @@ void known_groups::init_orthogonal_group_with_O(
 
 
 	if (f_basis) {
-		ring_theory::longinteger_object target_go;
+		algebra::ring_theory::longinteger_object target_go;
 
 		if (f_v) {
 			cout << "known_groups::init_orthogonal_group_with_O "
@@ -1890,7 +1892,7 @@ void known_groups::init_orthogonal_group_with_O(
 
 void known_groups::init_wreath_product_group_and_restrict(
 		int nb_factors, int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 {
@@ -1956,14 +1958,14 @@ void known_groups::init_wreath_product_group_and_restrict(
 
 void known_groups::init_wreath_product_group(
 		int nb_factors, int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A_mtx;
 	group_constructions::wreath_product *W;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "known_groups::init_wreath_product_group" << endl;
@@ -1972,7 +1974,7 @@ void known_groups::init_wreath_product_group(
 	}
 
 	A_mtx = NEW_OBJECT(action);
-	M = NEW_OBJECT(algebra::matrix_group);
+	M = NEW_OBJECT(algebra::basic_algebra::matrix_group);
 	W = NEW_OBJECT(group_constructions::wreath_product);
 
 
@@ -2428,7 +2430,7 @@ void known_groups::init_group_from_strong_generators(
 void known_groups::create_orthogonal_group(
 		action *subaction,
 	int f_has_target_group_order,
-	ring_theory::longinteger_object &target_go,
+	algebra::ring_theory::longinteger_object &target_go,
 	void (* callback_choose_random_generator)(int iteration,
 		int *Elt, void *data, int verbose_level),
 	int verbose_level)
@@ -2444,7 +2446,7 @@ void known_groups::create_orthogonal_group(
 	}
 
 	action_global AG;
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 	int degree_save;
 
 	Mtx = subaction->get_matrix_group();

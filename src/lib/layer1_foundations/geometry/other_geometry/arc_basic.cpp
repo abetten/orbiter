@@ -23,17 +23,19 @@ namespace other_geometry {
 
 arc_basic::arc_basic()
 {
+	Record_birth();
 	F = NULL;
 
 }
 
 arc_basic::~arc_basic()
 {
+	Record_death();
 
 }
 
 void arc_basic::init(
-		field_theory::finite_field *F, int verbose_level)
+		algebra::field_theory::finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -107,7 +109,7 @@ void arc_basic::GlynnI_hyperoval(
 	long int a;
 	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
 	int *Mtx;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_basic::GlynnI_hyperoval q=" << F->q << endl;
@@ -180,7 +182,7 @@ void arc_basic::GlynnII_hyperoval(
 	long int a;
 	int sigma, gamma = 0, Sigma, Gamma, exponent;
 	int *Mtx;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "arc_basic::GlynnII_hyperoval q=" << F->q << endl;

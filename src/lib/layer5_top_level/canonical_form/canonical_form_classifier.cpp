@@ -20,6 +20,7 @@ namespace canonical_form {
 
 canonical_form_classifier::canonical_form_classifier()
 {
+	Record_birth();
 	Descr = NULL;
 
 	Ring_with_action = NULL;
@@ -37,6 +38,7 @@ canonical_form_classifier::canonical_form_classifier()
 
 canonical_form_classifier::~canonical_form_classifier()
 {
+	Record_death();
 	if (Ring_with_action) {
 		FREE_OBJECT(Ring_with_action);
 	}
@@ -254,7 +256,7 @@ void canonical_form_classifier::init_direct(
 		cout << "canonical_form_classifier::init_direct "
 				"before getting Poly_ring" << endl;
 	}
-	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo->Variety_object->Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo->Variety_object->Ring;
 	if (f_v) {
 		cout << "canonical_form_classifier::init_direct "
 				"after getting Poly_ring" << endl;
@@ -327,7 +329,7 @@ void canonical_form_classifier::create_action_on_polynomials(
 
 	projective_geometry::projective_space_with_action *PA;
 
-	ring_theory::homogeneous_polynomial_domain *Poly_ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring;
 
 
 
@@ -467,7 +469,7 @@ void canonical_form_classifier::init_skip(
 			skip_vector, skip_sz,
 			0 /* verbose_level */);
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(skip_vector, skip_sz);
 	if (f_v) {
@@ -486,7 +488,7 @@ void canonical_form_classifier::init_skip(
 int canonical_form_classifier::skip_this_one(
 		int counter)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int idx;
 
 	if (f_has_skip) {

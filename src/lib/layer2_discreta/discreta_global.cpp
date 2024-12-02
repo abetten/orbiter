@@ -23,7 +23,7 @@ void free_global_data()
 		cout << "discreta_global free_global_data" << endl;
 	}
 	//orthogonal_points_free_global_data();
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Combi.free_global_data();
 	Combi.free_tab_q_binomials();
@@ -36,8 +36,8 @@ void the_end(int t0)
 {
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		 cout << "the_end" << endl;
@@ -52,7 +52,7 @@ void the_end(int t0)
 		 cout << "the_end after free_global_data" << endl;
 	}
 	if (f_v) {
-		if (orbiter_kernel_system::Orbiter->f_memory_debug) {
+		if (other::orbiter_kernel_system::Orbiter->f_memory_debug) {
 			//registry_dump();
 			//registry_dump_sorted();
 			}
@@ -77,7 +77,7 @@ void the_end(int t0)
 
 void the_end_quietly(int t0)
 {
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	//cout << "discreta_global the_end_quietly: freeing global data" << endl;
 	free_global_data();

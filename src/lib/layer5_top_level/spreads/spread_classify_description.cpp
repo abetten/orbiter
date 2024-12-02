@@ -16,6 +16,7 @@ namespace spreads {
 
 spread_classify_description::spread_classify_description()
 {
+	Record_birth();
 	f_projective_space = false;
 	//std::string projective_space_label;
 
@@ -39,6 +40,7 @@ spread_classify_description::spread_classify_description()
 
 spread_classify_description::~spread_classify_description()
 {
+	Record_death();
 }
 
 int spread_classify_description::read_arguments(
@@ -47,7 +49,7 @@ int spread_classify_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "spread_classify_description::read_arguments" << endl;

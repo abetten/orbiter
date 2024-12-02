@@ -23,6 +23,7 @@ namespace orbits_schreier {
 
 orbit_of_sets::orbit_of_sets()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	gens = NULL;
@@ -41,6 +42,7 @@ orbit_of_sets::orbit_of_sets()
 
 orbit_of_sets::~orbit_of_sets()
 {
+	Record_death();
 	int i;
 	
 	if (Sets) {
@@ -110,8 +112,8 @@ void orbit_of_sets::compute(
 	long int *new_set;
 	long int *Q;
 	int Q_len;
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 	if (f_v) {
 		cout << "orbit_of_sets::compute" << endl;
@@ -310,8 +312,8 @@ void orbit_of_sets::compute(
 int orbit_of_sets::find_set(
 		long int *new_set, int &pos, uint32_t &hash)
 {
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 	Sorting.lint_vec_heapsort(new_set, sz);
 	hash = Data.lint_vec_hash(new_set, sz);
@@ -342,8 +344,8 @@ void orbit_of_sets::setup_root_node(
 	if (f_v) {
 		cout << "orbit_of_sets::setup_root_node" << endl;
 	}
-	data_structures::data_structures_global Data;
-	data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
 	uint32_t h;
 
 	// setup root node:
@@ -438,7 +440,7 @@ void orbit_of_sets::dump_tables_of_hash_values()
     map<uint32_t, int>::iterator itr;
     int pos;
     uint32_t h;
-    data_structures::data_structures_global Data;
+    other::data_structures::data_structures_global Data;
 
     int cnt;
 
@@ -488,7 +490,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	uint32_t h;
-	data_structures::data_structures_global Data;
+	other::data_structures::data_structures_global Data;
 
 	set_size = sz + 1;
 	orbit_length = used_length;
@@ -636,7 +638,7 @@ void orbit_of_sets::get_label(
 }
 
 void orbit_of_sets::export_tree_as_layered_graph(
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -645,7 +647,7 @@ void orbit_of_sets::export_tree_as_layered_graph(
 		cout << "orbit_of_sets::export_tree_as_layered_graph" << endl;
 	}
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 	int orbit_first[1];
 	int orbit_len[1];
 	int *orbit;

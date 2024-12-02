@@ -20,6 +20,7 @@ namespace quartic_curves {
 
 quartic_curve_from_surface::quartic_curve_from_surface()
 {
+	Record_birth();
 
 	//std::string label;
 	//std::string label_tex;
@@ -75,6 +76,7 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 
 quartic_curve_from_surface::~quartic_curve_from_surface()
 {
+	Record_death();
 	if (transporter) {
 		FREE_int(transporter);
 	}
@@ -187,7 +189,7 @@ void quartic_curve_from_surface::quartic(
 		int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int i, a;
 
 	if (f_v) {
@@ -485,7 +487,7 @@ void quartic_curve_from_surface::quartic(
 #endif
 
 
-	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
+	Variety_object = NEW_OBJECT(geometry::algebraic_geometry::variety_object);
 
 	int nb_bitangents;
 
@@ -759,7 +761,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve" << endl;
 	}
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	int i;
 
@@ -1024,7 +1026,7 @@ void quartic_curve_from_surface::TDO_decomposition(
 	}
 
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	string fname_base;
 
 	fname_base = label + "_orb" + std::to_string(pt_orbit) + "_quartic";

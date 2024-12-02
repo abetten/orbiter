@@ -23,12 +23,14 @@ namespace spreads {
 
 spread_classify_activity::spread_classify_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	Spread_classify = NULL;
 }
 
 spread_classify_activity::~spread_classify_activity()
 {
+	Record_death();
 }
 
 void spread_classify_activity::init(
@@ -98,7 +100,7 @@ void spread_classify_activity::perform_activity(
 		}
 
 		int nb_vertices;
-		solvers::diophant *Dio;
+		combinatorics::solvers::diophant *Dio;
 		long int *col_labels;
 		int f_ruled_out;
 
@@ -151,7 +153,7 @@ void spread_classify_activity::perform_activity(
 		for (case_nb = 0; case_nb < nb_orbits; case_nb++) {
 
 			int nb_vertices;
-			solvers::diophant *Dio;
+			combinatorics::solvers::diophant *Dio;
 			long int *col_labels;
 			int f_ruled_out;
 

@@ -6,7 +6,9 @@ LIB =
 LFLAGS = -lm
 
 all: \
+	algebraic_geometry1 \
 	finite_geometries1 \
+	orthogonal1 \
 	other_geometry1 \
 	projective_geometry1
 
@@ -14,7 +16,9 @@ all: \
 
 
 
+algebraic_geometry1 :  ; cd algebraic_geometry; $(MAKE)
 finite_geometries1 :  ; cd finite_geometries; $(MAKE)
+orthogonal1 :  ; cd orthogonal; $(MAKE)
 other_geometry1 :  ; cd other_geometry; $(MAKE)
 projective_geometry1 :  ; cd projective_geometry; $(MAKE)
 
@@ -28,7 +32,9 @@ projective_geometry1 :  ; cd projective_geometry; $(MAKE)
 
 
 clean:
+	cd algebraic_geometry; $(MAKE) clean
 	cd finite_geometries; $(MAKE) clean
+	cd orthogonal; $(MAKE) clean
 	cd other_geometry; $(MAKE) clean
 	cd projective_geometry; $(MAKE) clean
 	- rm *.o *.a 

@@ -18,6 +18,7 @@ namespace apps_geometry {
 
 classify_cubic_curves::classify_cubic_curves()
 {
+	Record_birth();
 	q = 0;
 	F = NULL;
 	A = NULL; // do not free
@@ -43,6 +44,7 @@ classify_cubic_curves::classify_cubic_curves()
 
 classify_cubic_curves::~classify_cubic_curves()
 {
+	Record_death();
 	if (Arc_gen) {
 		FREE_OBJECT(Arc_gen);
 	}
@@ -225,7 +227,7 @@ void classify_cubic_curves::test_orbits(
 				FREE_lint(Pts);
 			}
 
-			data_structures::tally Cl;
+			other::data_structures::tally Cl;
 
 			Cl.init(type, CC->P->Subspaces->N_lines, false, 0);
 			idx = Cl.determine_class_by_value(q + 1);
@@ -328,8 +330,8 @@ void classify_cubic_curves::downstep(
 		}
 
 		data_structures_groups::set_and_stabilizer *R;
-		ring_theory::longinteger_object ol;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object ol;
+		algebra::ring_theory::longinteger_object go;
 		long int dataset[19];
 
 		R = Arc_gen->gen->get_set_and_stabilizer(
@@ -429,8 +431,8 @@ void classify_cubic_curves::upstep(
 	long int canonical_set[9];
 	long int *Pts;
 	int *type;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::upstep" << endl;
@@ -448,7 +450,7 @@ void classify_cubic_curves::upstep(
 
 	Curves = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Curves->init(A, A,
@@ -512,7 +514,7 @@ void classify_cubic_curves::upstep(
 
 
 		groups::strong_generators *S;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		int eqn[10];
 
 		Lint_vec_copy_to_int(dataset + 9, eqn, 10);
@@ -672,7 +674,7 @@ void classify_cubic_curves::upstep(
 		groups::strong_generators *Aut_gens;
 
 		{
-			ring_theory::longinteger_object ago;
+			algebra::ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "classify_cubic_curves::upstep "
@@ -804,8 +806,8 @@ int classify_cubic_curves::recognize(
 	long int *singular_Pts;
 	int *type;
 	int ret;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_cubic_curves::recognize" << endl;
@@ -1348,8 +1350,8 @@ void classify_cubic_curves::report(
 			<< " orbits: \\\\" << endl;
 
 	int i;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, ol, Ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, ol, Ol;
 	Ol.create(0);
 
 	vector<string> References;
@@ -1392,7 +1394,7 @@ void classify_cubic_curves::report(
 		int nb_pts_on_curve;
 		int nb_singular_pts;
 		int nb_inflection_pts;
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		data = Curves->Rep + i * Curves->representation_sz;
 		eqn1 = data + 9;
@@ -1502,7 +1504,7 @@ void classify_cubic_curves::report(
 		// type[N_lines]
 
 		ost << "The line type is $";
-		data_structures::tally C;
+		other::data_structures::tally C;
 		C.init(type, CCA->CC->P->Subspaces->N_lines, false, 0);
 		C.print_bare_tex(ost, true /* f_backwards*/);
 		ost << ".$ \\\\" << endl;
@@ -1720,7 +1722,7 @@ void classify_cubic_curves::report(
 
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(Ago, Curves->nb_orbits, false, 0);
 	ost << "Distribution: $(";

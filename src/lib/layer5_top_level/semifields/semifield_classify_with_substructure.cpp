@@ -23,6 +23,7 @@ static void semifield_print_function_callback(
 
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
+	Record_birth();
 	Descr = NULL;
 	PA = NULL;
 	Mtx = NULL;
@@ -64,6 +65,7 @@ semifield_classify_with_substructure::semifield_classify_with_substructure()
 
 semifield_classify_with_substructure::~semifield_classify_with_substructure()
 {
+	Record_death();
 
 }
 
@@ -78,7 +80,7 @@ void semifield_classify_with_substructure::init(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init" << endl;
 	}
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	semifield_classify_with_substructure::Descr = Descr;
@@ -226,7 +228,7 @@ void semifield_classify_with_substructure::read_data(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::read_data" << endl;
@@ -240,7 +242,7 @@ void semifield_classify_with_substructure::read_data(
 
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int mtx_n;
 	int i, a;
 
@@ -338,7 +340,7 @@ void semifield_classify_with_substructure::read_data(
 	}
 
 	{
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(Non_unique_cases_len, nb_non_unique_cases, false, 0);
 		if (f_v) {
@@ -348,7 +350,7 @@ void semifield_classify_with_substructure::read_data(
 		}
 	}
 	{
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init_lint(Non_unique_cases_go, nb_non_unique_cases, false, 0);
 		if (f_v) {
@@ -393,7 +395,7 @@ void semifield_classify_with_substructure::classify_semifields(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::classify_semifields" << endl;
@@ -436,7 +438,7 @@ void semifield_classify_with_substructure::load_classification(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::load_classification" << endl;
@@ -444,7 +446,7 @@ void semifield_classify_with_substructure::load_classification(
 
 	Semifields = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Sub->SC->A->group_order(go);
 
@@ -475,7 +477,7 @@ void semifield_classify_with_substructure::load_flag_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::load_flag_orbits" << endl;
@@ -578,7 +580,7 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int i;
 
 	if (f_v) {
@@ -643,7 +645,7 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 
 		}
 		string fname;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		fname = Descr->identify_semifields_from_file_fname;
 		ST.chop_off_extension(fname);
@@ -662,8 +664,8 @@ void semifield_classify_with_substructure::latex_report(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 	int i;
 
 	if (f_v) {
@@ -685,7 +687,7 @@ void semifield_classify_with_substructure::latex_report(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 
 		//latex_head_easy(ost);
@@ -711,7 +713,7 @@ void semifield_classify_with_substructure::latex_report(
 		long int *Go;
 
 
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		Go = NEW_lint(Semifields->nb_orbits);
 		for (i = 0; i < Semifields->nb_orbits; i++) {
@@ -813,7 +815,7 @@ void semifield_classify_with_substructure::latex_report(
 			ost << "\\item" << endl;
 			ost << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			ost << " has  type ";
-			data_structures::tally C;
+			other::data_structures::tally C;
 
 			C.init(Po2, Sub->N2, false, 0);
 			ost << "$";
@@ -1024,7 +1026,7 @@ static void semifield_print_function_callback(
 	semifield_substructure *Sub = (semifield_substructure *) print_function_data;
 	semifield_classify *SC;
 	semifield_classify_with_substructure *SCWS;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	long int *R;
 	long int a;
 	int i, j;

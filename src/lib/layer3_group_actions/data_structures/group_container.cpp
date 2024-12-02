@@ -17,6 +17,7 @@ namespace data_structures_groups {
 
 group_container::group_container()
 {
+	Record_birth();
 	A = NULL;
 	f_has_ascii_coding = false;
 	//std::string ascii_coding;
@@ -31,6 +32,7 @@ group_container::group_container()
 
 group_container::~group_container()
 {
+	Record_death();
 	delete_ascii_coding();
 	delete_strong_generators();
 	delete_sims();
@@ -259,9 +261,9 @@ void group_container::require_sims()
 }
 
 void group_container::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	
 	if (f_has_sims) {
 		S->group_order(go);
@@ -279,7 +281,7 @@ void group_container::group_order(
 void group_container::print_group_order(
 		std::ostream &ost)
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_order(go);
 	ost << go;
 }
@@ -303,7 +305,7 @@ void group_container::code_ascii(
 	int sz, i, j;
 	char *p;
 	char *p0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "group_container::code_ascii action " << A->label
@@ -354,7 +356,7 @@ void group_container::decode_ascii(
 	int *base1;
 	const char *p, *p0;
 	int str_len;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	require_ascii_coding();
 	//cout << "group_container::decode_ascii ascii_coding=" << ascii_coding << endl;
@@ -600,9 +602,9 @@ void group_container::induced_action(
 		int n = 0;
 		{
 			groups::sims HH, KK;
-			ring_theory::longinteger_object go, H_order, K_order, HK_order, quo, rem;
+			algebra::ring_theory::longinteger_object go, H_order, K_order, HK_order, quo, rem;
 			int drop_out_level, image;
-			ring_theory::longinteger_domain D;
+			algebra::ring_theory::longinteger_domain D;
 
 			require_sims();
 
@@ -746,8 +748,8 @@ void group_container::extension(
 	//int f_vvv = (verbose_level >= 3);
 	actions::action *A = N.A;
 	groups::sims G;
-	ring_theory::longinteger_object go_N, go_H, go_G, cur_go, quo, rem;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go_N, go_H, go_G, cur_go, quo, rem;
+	algebra::ring_theory::longinteger_domain D;
 	int n = 0, drop_out_level, image;
 	int *p_gen;
 	int *Elt;

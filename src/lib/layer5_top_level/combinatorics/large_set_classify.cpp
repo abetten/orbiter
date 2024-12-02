@@ -24,6 +24,7 @@ static void large_set_early_test_function(long int *S, int len,
 
 large_set_classify::large_set_classify()
 {
+	Record_birth();
 	DC = NULL;
 	design_size = 0;
 	nb_points = 0;
@@ -79,6 +80,7 @@ large_set_classify::large_set_classify()
 
 large_set_classify::~large_set_classify()
 {
+	Record_death();
 	if (Design_table) {
 		FREE_OBJECT(Design_table);
 	}
@@ -263,7 +265,7 @@ void large_set_classify::compute(
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -828,7 +830,7 @@ static void large_set_early_test_function(long int *S, int len,
 	large_set_classify *LS = (large_set_classify *) data;
 	int f_v = (verbose_level >= 1);
 	int i, k, a, b;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "large_set_early_test_function for set ";

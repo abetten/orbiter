@@ -23,6 +23,7 @@ namespace other_geometry {
 
 hjelmslev::hjelmslev()
 {
+	Record_birth();
 	n = k = q = 0;
 	n_choose_k_p = 0;
 	R = NULL;
@@ -35,6 +36,7 @@ hjelmslev::hjelmslev()
 
 hjelmslev::~hjelmslev()
 {
+	Record_death();
 	if (G) {
 		FREE_OBJECT(G);
 		}
@@ -50,11 +52,11 @@ hjelmslev::~hjelmslev()
 }
 
 void hjelmslev::init(
-		ring_theory::finite_ring *R,
+		algebra::ring_theory::finite_ring *R,
 		int n, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "hjelmslev::init n=" << n << " k=" << k
@@ -77,7 +79,7 @@ void hjelmslev::init(
 
 long int hjelmslev::number_of_submodules()
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	return n_choose_k_p * NT.i_power_j_lint(R->get_p(), (R->get_e() - 1) * k * (n - k));
 }
 
@@ -153,7 +155,7 @@ long int hjelmslev::rank_lint(
 		Int_vec_print(cout, base_cols, rk_mtx);
 		cout << endl;
 		}
-	orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
+	other::orbiter_kernel_system::Orbiter->Int_vec->complement(base_cols, n, k);
 	if (rk_mtx != k) {
 		cout << "hjelmslev::rank_lint fatal: rk_mtx != k" << endl;
 		exit(1);

@@ -17,12 +17,14 @@ namespace apps_algebra {
 
 vector_ge_builder::vector_ge_builder()
 {
+	Record_birth();
 	Descr = NULL;
 	V = NULL;
 }
 
 vector_ge_builder::~vector_ge_builder()
 {
+	Record_death();
 	if (V) {
 		FREE_OBJECT(V);
 	}

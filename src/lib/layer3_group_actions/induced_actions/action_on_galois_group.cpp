@@ -21,6 +21,7 @@ namespace induced_actions {
 
 action_on_galois_group::action_on_galois_group()
 {
+	Record_birth();
 	A = NULL;
 	M = NULL;
 	m = 0;
@@ -30,6 +31,7 @@ action_on_galois_group::action_on_galois_group()
 
 action_on_galois_group::~action_on_galois_group()
 {
+	Record_death();
 }
 
 
@@ -38,7 +40,7 @@ void action_on_galois_group::init(
 		int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action_on_galois_group::init" << endl;

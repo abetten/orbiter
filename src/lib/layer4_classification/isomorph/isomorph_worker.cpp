@@ -22,6 +22,7 @@ namespace isomorph {
 
 isomorph_worker::isomorph_worker()
 {
+	Record_birth();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
@@ -47,6 +48,7 @@ isomorph_worker::isomorph_worker()
 
 isomorph_worker::~isomorph_worker()
 {
+	Record_death();
 }
 
 
@@ -107,7 +109,7 @@ void isomorph_worker::execute(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "isomorph_worker::execute" << endl;
@@ -412,7 +414,7 @@ void isomorph_worker::read_solutions(
 		string fname;
 		int m, n;
 		int i, a;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 
 		Fio.Csv_file_support->int_matrix_read_csv(
@@ -698,7 +700,7 @@ void isomorph_worker::isomorph_testing(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	long int data1[1000];
 	int id, orbit;
@@ -738,7 +740,7 @@ void isomorph_worker::isomorph_testing(
 			for (i = 0; i < Iso->size; i++) {
 				fp << " " << data1[i];
 			}
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			Iso->Folding->Reps->stab[orbit]->group_order(go);
 			fp << " ";
@@ -800,7 +802,7 @@ void isomorph_worker::isomorph_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -828,7 +830,7 @@ void isomorph_worker::isomorph_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -883,7 +885,7 @@ void isomorph_worker::export_source_code(
 				selection[i] = i;
 			}
 
-			orbiter_kernel_system::os_interface Os;
+			other::orbiter_kernel_system::os_interface Os;
 			string str;
 
 			Os.get_date(str);
@@ -910,7 +912,7 @@ void isomorph_worker::export_source_code(
 
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -944,7 +946,7 @@ void isomorph_worker::report(
 	int rep;
 	int first;
 	int id;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Reps = Iso->Folding->Reps;
 
@@ -1223,7 +1225,7 @@ void isomorph_worker::recognize(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -1252,7 +1254,7 @@ void isomorph_worker::recognize(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

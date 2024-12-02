@@ -21,6 +21,7 @@ namespace canonical_form {
 
 objects_after_classification::objects_after_classification()
 {
+	Record_birth();
 
 	Classification_of_objects = NULL;
 
@@ -33,11 +34,12 @@ objects_after_classification::objects_after_classification()
 
 objects_after_classification::~objects_after_classification()
 {
+	Record_death();
 }
 
 
 void objects_after_classification::init_after_nauty(
-		canonical_form_classification::classification_of_objects *Classification_of_objects,
+		combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
@@ -118,12 +120,12 @@ void objects_after_classification::classification_write_file(
 		cout << "objects_after_classification::classification_write_file" << endl;
 	}
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int iso;
 
-	canonical_form_classification::encoded_combinatorial_object **Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object **Enc;
 
-	Enc = (canonical_form_classification::encoded_combinatorial_object **) NEW_pvoid(Classification_of_objects->CB->nb_types);
+	Enc = (combinatorics::canonical_form_classification::encoded_combinatorial_object **) NEW_pvoid(Classification_of_objects->CB->nb_types);
 
 	for (iso = 0; iso < Classification_of_objects->CB->nb_types; iso++) {
 
@@ -135,7 +137,7 @@ void objects_after_classification::classification_write_file(
 			<< Classification_of_objects->CB->Type_mult[iso] << " times: \\\\" << endl;
 
 
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 		int *Input_objects;
 		int nb_input_objects;
 		//int object_idx;
@@ -166,7 +168,7 @@ void objects_after_classification::classification_write_file(
 		}
 
 		//object_idx = Input_objects[0];
-		canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[iso];
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[iso];
 
 
 		if (f_v) {
@@ -222,7 +224,7 @@ void objects_after_classification::classification_write_file(
 	string headings;
 
 	headings.assign("input,nb_rows,nb_cols,nb_flags,ago,flags");
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = fname_base + "_classification_data.csv";
 
@@ -239,7 +241,7 @@ void objects_after_classification::classification_write_file(
 }
 
 void objects_after_classification::classification_report(
-		canonical_form_classification::objects_report_options
+		combinatorics::canonical_form_classification::objects_report_options
 					*Report_options,
 		int verbose_level)
 {
@@ -281,7 +283,7 @@ void objects_after_classification::classification_report(
 }
 
 void objects_after_classification::latex_report(
-		canonical_form_classification::objects_report_options
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -309,14 +311,14 @@ void objects_after_classification::latex_report(
 				"CB->nb_types=" << Classification_of_objects->CB->nb_types << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
 
 
 	{
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		ofstream ost(fname);
 
@@ -356,7 +358,7 @@ void objects_after_classification::latex_report(
 
 void objects_after_classification::report_all_isomorphism_types(
 		std::ostream &ost,
-		canonical_form_classification::objects_report_options
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -367,7 +369,7 @@ void objects_after_classification::report_all_isomorphism_types(
 	}
 	int i, j;
 
-	graphics::draw_incidence_structure_description *Draw_incidence_options;
+	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
 
 	if (Report_options->f_incidence_draw_options) {
 		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
@@ -378,7 +380,7 @@ void objects_after_classification::report_all_isomorphism_types(
 	}
 
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	for (i = 0; i < Classification_of_objects->CB->nb_types; i++) {
 
@@ -392,7 +394,7 @@ void objects_after_classification::report_all_isomorphism_types(
 			<< Classification_of_objects->CB->Type_mult[j] << " times: \\\\" << endl;
 
 		{
-			data_structures::sorting Sorting;
+			other::data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
 			Classification_of_objects->CB->C_type_of->get_class_by_value(Input_objects,
@@ -447,8 +449,8 @@ void objects_after_classification::report_all_isomorphism_types(
 
 void objects_after_classification::report_isomorphism_type(
 		std::ostream &ost,
-		graphics::draw_incidence_structure_description *Draw_incidence_options,
-		canonical_form_classification::objects_report_options
+		other::graphics::draw_incidence_structure_description *Draw_incidence_options,
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
 		int verbose_level)
@@ -460,7 +462,7 @@ void objects_after_classification::report_isomorphism_type(
 				"i=" << i << endl;
 	}
 	int j;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	//j = CB->perm[i];
 	//j = CB->Type_rep[i];
@@ -525,8 +527,8 @@ void objects_after_classification::report_isomorphism_type(
 
 void objects_after_classification::report_object(
 		std::ostream &ost,
-		graphics::draw_incidence_structure_description *Draw_incidence_options,
-		canonical_form_classification::objects_report_options
+		other::graphics::draw_incidence_structure_description *Draw_incidence_options,
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
 		int verbose_level)
@@ -542,7 +544,7 @@ void objects_after_classification::report_object(
 
 	//j = CO->CB->perm[i];
 
-	canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[i];
+	combinatorics::canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[i];
 
 	if (f_v) {
 		cout << "objects_after_classification::report_object "

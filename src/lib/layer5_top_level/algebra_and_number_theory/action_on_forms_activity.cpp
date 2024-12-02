@@ -20,6 +20,7 @@ namespace apps_algebra {
 
 action_on_forms_activity::action_on_forms_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	AF = NULL;
@@ -29,6 +30,7 @@ action_on_forms_activity::action_on_forms_activity()
 
 action_on_forms_activity::~action_on_forms_activity()
 {
+	Record_death();
 
 }
 

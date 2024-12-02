@@ -114,11 +114,11 @@ public:
 	projective_geometry::projective_space_with_action *PA;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 
 
 	actions::action *A2;
@@ -134,11 +134,11 @@ public:
 		// this group acts on the set Neighbors[] in the wedge action
 
 
-	orthogonal_geometry::linear_complex *Linear_complex;
+	geometry::orthogonal_geometry::linear_complex *Linear_complex;
 
 
 
-	ring_theory::longinteger_object go, stab_go;
+	algebra::ring_theory::longinteger_object go, stab_go;
 	groups::sims *Stab;
 	groups::strong_generators *stab_gens;
 
@@ -185,7 +185,7 @@ public:
 		int *transporter, int verbose_level);
 	void report(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options
+			other::graphics::layered_graph_draw_options
 				*draw_options,
 			poset_classification::poset_classification_report_options
 				*Opt,
@@ -248,7 +248,7 @@ public:
 		int *transporter, int &orbit_index,
 		int verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(
-			data_structures::spreadsheet *&Sp,
+			other::data_structures::spreadsheet *&Sp,
 		int verbose_level);
 	void write_file(
 			std::ofstream &fp, int verbose_level);
@@ -292,7 +292,7 @@ public:
 
 	int *Adj; // line intersection graph
 
-	data_structures::set_of_sets *line_intersections;
+	other::data_structures::set_of_sets *line_intersections;
 
 	int *Starter_Table; // [nb_starter * 2]
 	int nb_starter;
@@ -354,7 +354,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 
 	std::string fname_base;
@@ -362,7 +362,7 @@ public:
 	actions::action *A; // the action of PGL(4,q) on points
 	actions::action *A2; // the action on the wedge product
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 	cubic_surfaces_in_general::surface_with_action *Surf_A;
 
 	int *Elt0;
@@ -443,7 +443,7 @@ public:
 	void report(
 			std::ostream &ost,
 			int f_with_stabilizers,
-			graphics::layered_graph_draw_options *draw_options,
+			other::graphics::layered_graph_draw_options *draw_options,
 			poset_classification::poset_classification_report_options *Opt,
 			int verbose_level);
 	void latex_surfaces(

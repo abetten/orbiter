@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_arcs {
 
 arc_lifting::arc_lifting()
 {
+	Record_birth();
 	q = 0;
 	F = NULL;
 	Surf = NULL;
@@ -40,6 +41,7 @@ arc_lifting::arc_lifting()
 
 arc_lifting::~arc_lifting()
 {
+	Record_death();
 	if (the_equation) {
 		FREE_int(the_equation);
 	}
@@ -118,7 +120,7 @@ void arc_lifting::create_web_of_cubic_curves(
 	the_equation = NEW_int(20);
 	
 
-	Web = NEW_OBJECT(algebraic_geometry::web_of_cubic_curves);
+	Web = NEW_OBJECT(geometry::algebraic_geometry::web_of_cubic_curves);
 
 	if (f_v) {
 		cout << "arc_lifting::create_web_of_cubic_curves before Web->init" << endl;

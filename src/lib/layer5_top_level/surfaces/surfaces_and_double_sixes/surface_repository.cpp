@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 surface_repository::surface_repository()
 {
+	Record_birth();
 	Wedge = NULL;
 	nb_surfaces = 0;
 	SaS = NULL;
@@ -31,6 +32,7 @@ surface_repository::surface_repository()
 
 surface_repository::~surface_repository()
 {
+	Record_death();
 	if (SaS) {
 		int i;
 
@@ -188,7 +190,7 @@ void surface_repository::generate_source_code(
 	{
 		ofstream f(fname);
 
-		orbiter_kernel_system::os_interface Os;
+		other::orbiter_kernel_system::os_interface Os;
 		string str;
 
 		Os.get_date(str);
@@ -240,7 +242,7 @@ void surface_repository::generate_source_code(
 				orbit_index < nb_surfaces;
 				orbit_index++) {
 
-			ring_theory::longinteger_object ago;
+			algebra::ring_theory::longinteger_object ago;
 
 			SaS[orbit_index]->Strong_gens->group_order(ago);
 
@@ -265,7 +267,7 @@ void surface_repository::generate_source_code(
 
 			long int *Pts;
 			int nb_pts;
-			data_structures::set_of_sets *pts_on_lines;
+			other::data_structures::set_of_sets *pts_on_lines;
 			int nb_E;
 
 			if (f_v) {
@@ -507,7 +509,7 @@ void surface_repository::generate_source_code(
 		}
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -536,7 +538,7 @@ void surface_repository::report_surface(
 
 	//Surf->print_equation_wrapped(ost, equation);
 
-	algebraic_geometry::surface_object *SO;
+	geometry::algebraic_geometry::surface_object *SO;
 	int *equation;
 
 	equation = Eqn + orbit_index * 20;
@@ -547,7 +549,7 @@ void surface_repository::report_surface(
 	label_txt = "surface_q" + std::to_string(Wedge->q) + "_iso" + std::to_string(orbit_index);
 	label_tex = "surface\\_q" + std::to_string(Wedge->q) + "\\_iso" + std::to_string(orbit_index);
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_repository::report_surface "
@@ -613,7 +615,7 @@ void surface_repository::report_surface(
 	}
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	SaS[orbit_index]->Strong_gens->group_order(ago);
 	ost << "The automorphism group of the surface "
 			"has order " << ago << "\\\\" << endl;

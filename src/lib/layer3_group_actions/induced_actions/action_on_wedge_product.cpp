@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_wedge_product::action_on_wedge_product()
 {
+	Record_birth();
 	A = NULL;
 	n = q = 0;
 	M = NULL;
@@ -33,6 +34,7 @@ action_on_wedge_product::action_on_wedge_product()
 
 action_on_wedge_product::~action_on_wedge_product()
 {
+	Record_death();
 	if (wedge_v1) {
 		FREE_int(wedge_v1);
 	}
@@ -149,7 +151,7 @@ int action_on_wedge_product::element_entry_ij(
 		int *Elt, int I, int J, int verbose_level)
 {
 	int i, j, k, l, w;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other::combinatorics_domain Combi;
 
 	Combi.k2ij(I, i, j, n);
 	Combi.k2ij(J, k, l, n);
@@ -202,7 +204,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 	}
 #if 0
 	int i, j, ij, k, l, kl, c, w, z, xkl;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other::combinatorics_domain Combi;
 	// (i,j) = row index
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -306,7 +308,7 @@ void action_on_wedge_product::create_induced_matrix(
 	}
 	int i, j, ij, k, l, kl;
 	int w;
-	//combinatorics::combinatorics_domain Combi;
+	//combinatorics::other::combinatorics_domain Combi;
 
 	for (i = 0, ij = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++, ij++) {

@@ -19,11 +19,13 @@ namespace orbits {
 
 orbits_global::orbits_global()
 {
+	Record_birth();
 
 }
 
 orbits_global::~orbits_global()
 {
+	Record_death();
 
 }
 
@@ -155,7 +157,7 @@ void orbits_global::compute_orbit_of_set(
 		cout << "orbits_global::compute_orbit_of_set "
 				"Writing orbit to file " << fname_csv << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	std::string *sTable;
@@ -350,7 +352,7 @@ void orbits_global::orbits_on_set_system_from_file(
 		cout << "computing orbits on set system from file "
 			<< fname_csv << ":" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, n;
 	long int *Table;
@@ -418,7 +420,7 @@ void orbits_global::orbits_on_set_system_from_file(
 		}
 	}
 	string fname;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname = fname_csv;
 	ST.chop_off_extension(fname);
@@ -460,7 +462,7 @@ void orbits_global::orbits_on_set_from_file(
 				"computing orbit of set from file "
 			<< fname_csv << ":" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	long int *the_set;
 	int set_sz;
 
@@ -475,7 +477,7 @@ void orbits_global::orbits_on_set_from_file(
 
 
 	string label_set;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	label_set.assign(fname_csv);
 	ST.chop_off_extension(label_set);
@@ -571,7 +573,7 @@ void orbits_global::orbit_of(
 	}
 
 	groups::strong_generators *SG_stab;
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	AG->Subgroup_gens->group_order(full_group_order);
 
@@ -768,7 +770,7 @@ void orbits_global::orbits_on_subsets(
 		cout << "orbits_global::orbits_on_subsets "
 				"group order" << endl;
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		AG->Subgroup_gens->group_order(go);
 

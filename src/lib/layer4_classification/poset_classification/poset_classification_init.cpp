@@ -20,6 +20,7 @@ namespace poset_classification {
 
 poset_classification::poset_classification()
 {
+	Record_birth();
 	t0 = 0;
 
 	Control = NULL;
@@ -64,13 +65,14 @@ poset_classification::poset_classification()
 
 
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 }
 
 poset_classification::~poset_classification()
 {
+	Record_death();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
@@ -179,7 +181,7 @@ void poset_classification::init_internal(
 		Poset->Orbit_based_testing->PC = this;
 	}
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 

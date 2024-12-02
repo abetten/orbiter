@@ -20,6 +20,7 @@ namespace cubic_surfaces_and_arcs {
 
 surface_create_by_arc_lifting::surface_create_by_arc_lifting()
 {
+	Record_birth();
 	arc_idx = 0;
 	surface_idx = 0;
 	SCA = NULL;
@@ -34,6 +35,7 @@ surface_create_by_arc_lifting::surface_create_by_arc_lifting()
 
 surface_create_by_arc_lifting::~surface_create_by_arc_lifting()
 {
+	Record_death();
 	if (Arc6) {
 		FREE_lint(Arc6);
 	}
@@ -112,7 +114,7 @@ void surface_create_by_arc_lifting::init(
 	}
 
 	string magma_fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	magma_fname = "surface_q" + std::to_string(SCA->Surf_A->PA->F->q)
 			+ "_iso" + std::to_string(SCA->nb_surfaces)
@@ -146,7 +148,7 @@ void surface_create_by_arc_lifting::init(
 				<< Fio.file_size(magma_fname) << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	AL->Trihedral_pair->Aut_gens->group_order(go);
 
@@ -180,7 +182,7 @@ void surface_create_by_arc_lifting::init(
 
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 	cout << "The automorphism group of the surface has order "
 			<< ago << "\\\\" << endl;
@@ -287,7 +289,7 @@ void surface_create_by_arc_lifting::report_summary(
 
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 
 	ost << "The equation of the surface is" << endl;
@@ -331,7 +333,7 @@ void surface_create_by_arc_lifting::report_summary(
 
 void surface_create_by_arc_lifting::report(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -341,7 +343,7 @@ void surface_create_by_arc_lifting::report(
 	}
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	AL->Trihedral_pair->Aut_gens->group_order(ago);
 
 	ost << "The equation of the surface is" << endl;

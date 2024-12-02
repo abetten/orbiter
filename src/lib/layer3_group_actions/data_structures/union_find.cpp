@@ -17,12 +17,14 @@ namespace data_structures_groups {
 
 union_find::union_find()
 {
+	Record_birth();
 	A = NULL;
 	prev = NULL;
 }
 
 union_find::~union_find()
 {
+	Record_death();
 	if (prev) {
 		FREE_int(prev);
 	}

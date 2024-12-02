@@ -19,6 +19,7 @@ namespace actions {
 
 action_pointer_table::action_pointer_table()
 {
+	Record_birth();
 	null_function_pointers();
 
 	nb_times_image_of_called = 0;
@@ -33,6 +34,7 @@ action_pointer_table::action_pointer_table()
 
 action_pointer_table::~action_pointer_table()
 {
+	Record_death();
 
 }
 
@@ -63,7 +65,7 @@ void action_pointer_table::save_stats(
 	stats[6] = nb_times_mult_called;
 	stats[7] = nb_times_invert_called;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = fname_base + "_stats.csv";

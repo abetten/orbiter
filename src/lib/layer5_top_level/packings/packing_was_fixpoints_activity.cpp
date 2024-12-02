@@ -18,6 +18,7 @@ namespace packings {
 
 packing_was_fixpoints_activity::packing_was_fixpoints_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	PWF = NULL;
 
@@ -25,6 +26,7 @@ packing_was_fixpoints_activity::packing_was_fixpoints_activity()
 
 packing_was_fixpoints_activity::~packing_was_fixpoints_activity()
 {
+	Record_death();
 
 }
 
@@ -104,7 +106,7 @@ void packing_was_fixpoints_activity::perform_activity(
 					"f_compare_files_of_packings" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int *M1;
 		int *M2;
 		int m1, n1;
@@ -123,7 +125,7 @@ void packing_was_fixpoints_activity::perform_activity(
 		len1 = m1 * n1;
 		len2 = m2 * n2;
 
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 
 		Sorting.int_vec_sort_and_remove_duplicates(M1, len1);
 		Sorting.int_vec_sort_and_remove_duplicates(M2, len2);

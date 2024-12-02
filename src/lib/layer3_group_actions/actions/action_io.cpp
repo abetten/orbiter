@@ -24,7 +24,7 @@ void action::report(
 		std::ostream &ost,
 		int f_sims, groups::sims *S,
 		int f_strong_gens, groups::strong_generators *SG,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -43,7 +43,7 @@ void action::report(
 
 	if (f_strong_gens) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		SG->group_order(go);
 		ost << "Group order = " << go << "\\\\" << endl;
@@ -121,7 +121,7 @@ void action::report(
 		if (f_v) {
 			cout << "action::report we have sims, printing group order" << endl;
 		}
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		S->group_order(go);
 		ost << "Group order " << go << "\\\\" << endl;
@@ -201,7 +201,7 @@ void action::report(
 
 void action::report_group_name_and_degree(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -222,7 +222,7 @@ void action::report_group_name_and_degree(
 
 void action::report_type_of_action(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *O,
+		other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	std::string txt;
@@ -240,7 +240,7 @@ void action::report_type_of_action(
 
 void action::report_what_we_act_on(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *O,
+		other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -257,8 +257,8 @@ void action::report_what_we_act_on(
 		if (f_v) {
 			cout << "action::report_what_we_act_on is_matrix_group is true" << endl;
 		}
-		field_theory::finite_field *F;
-		algebra::matrix_group *M;
+		algebra::field_theory::finite_field *F;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		F = M->GFq;
@@ -446,7 +446,7 @@ void action::print_info()
 
 	if (f_has_sims) {
 		cout << "has sims" << endl;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Sims->group_order(go);
 		cout << "Order " << go << " = ";
@@ -530,7 +530,7 @@ void action::print_bare_base(
 		std::ofstream &ost)
 {
 	if (Stabilizer_chain) {
-		orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(ost, get_base(), base_len());
+		other::orbiter_kernel_system::Orbiter->Lint_vec->print_bare_fully(ost, get_base(), base_len());
 	}
 	else {
 		cout << "action " << label << " does not have a base" << endl;
@@ -684,7 +684,7 @@ void action::latex_point_set(
 void action::print_group_order(
 		std::ostream &ost)
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
@@ -695,7 +695,7 @@ void action::print_group_order_long(
 {
 	int i;
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go << " =";
 	if (Stabilizer_chain) {
@@ -744,11 +744,11 @@ void action::write_set_of_elements_latex_file(
 {
 	{
 		ofstream ost(fname);
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		string author, extra_praeamble;
 
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head(ost,
 				false /* f_book*/,
@@ -775,7 +775,7 @@ void action::write_set_of_elements_latex_file(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -788,8 +788,8 @@ void action::export_to_orbiter(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	long int a;
-	orbiter_kernel_system::file_io Fio;
-	ring_theory::longinteger_object go;
+	other::orbiter_kernel_system::file_io Fio;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action::export_to_orbiter" << endl;

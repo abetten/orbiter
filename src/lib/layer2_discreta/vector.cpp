@@ -625,7 +625,7 @@ static void partition(Vector& v, int left, int right, int *middle)
 static void partition_with_logging(Vector& v, permutation& p, int left, int right, int *middle)
 {
 	int l, r, m, len, m1, res, pivot;
-	data_structures::algorithms Algo;
+	other::data_structures::algorithms Algo;
 	
 	// pivot strategy: take the element in the middle: 
 	len = right + 1 - left;

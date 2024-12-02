@@ -22,6 +22,7 @@ namespace cubic_surfaces_in_general {
 
 surface_object_with_group::surface_object_with_group()
 {
+	Record_birth();
 	Surf = NULL;
 	Surf_A = NULL;
 	SO = NULL;
@@ -67,6 +68,7 @@ surface_object_with_group::surface_object_with_group()
 
 surface_object_with_group::~surface_object_with_group()
 {
+	Record_death();
 	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
@@ -199,7 +201,7 @@ void surface_object_with_group::init_equation(
 	surface_object_with_group::Aut_gens = Aut_gens;
 	Surf = Surf_A->Surf;
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 	if (f_v) {
 		cout << "surface_object_with_group::init_equation "
 				"before SO->init_equation" << endl;
@@ -258,9 +260,9 @@ void surface_object_with_group::init_with_group(
 		cout << "surface_object_with_group::init_with_group" << endl;
 	}
 
-	algebraic_geometry::surface_object *SO;
+	geometry::algebraic_geometry::surface_object *SO;
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 	if (nb_lines == 27) {
 		if (f_v) {
@@ -317,7 +319,7 @@ void surface_object_with_group::init_with_group(
 
 void surface_object_with_group::init_with_surface_object(
 		surface_with_action *Surf_A,
-		algebraic_geometry::surface_object *SO,
+		geometry::algebraic_geometry::surface_object *SO,
 		groups::strong_generators *Aut_gens,
 		int f_has_nice_gens,
 		data_structures_groups::vector_ge *nice_gens,
@@ -391,7 +393,7 @@ void surface_object_with_group::init_with_surface_object(
 
 void surface_object_with_group::init_surface_object(
 	surface_with_action *Surf_A,
-	algebraic_geometry::surface_object *SO,
+	geometry::algebraic_geometry::surface_object *SO,
 	groups::strong_generators *Aut_gens,
 	int verbose_level)
 {
@@ -476,7 +478,7 @@ void surface_object_with_group::compute_projectivity_group(
 		cout << "surface_object_with_group::compute_projectivity_group "
 				"computing order of projectivity_group " << endl;
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		projectivity_group_gens->group_order(go);
 
@@ -1393,7 +1395,7 @@ void surface_object_with_group::print_elements_on_tritangent_planes(
 void surface_object_with_group::print_automorphism_group(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
-	graphics::layered_graph_draw_options *Opt,
+	other::graphics::layered_graph_draw_options *Opt,
 	int verbose_level)
 // called from surface_object_with_group::cheat_sheet
 {
@@ -1404,8 +1406,8 @@ void surface_object_with_group::print_automorphism_group(
 	}
 
 
-	ring_theory::longinteger_object go;
-	l1_interfaces::latex_interface L;
+	algebra::ring_theory::longinteger_object go;
+	other::l1_interfaces::latex_interface L;
 
 	Aut_gens->group_order(go);
 	
@@ -1553,7 +1555,7 @@ void surface_object_with_group::print_automorphism_group(
 void surface_object_with_group::print_orbits_on_schlaefli_related_things(
 	std::ostream &ost,
 	int f_print_orbits, std::string &fname_mask,
-	graphics::layered_graph_draw_options *Opt,
+	other::graphics::layered_graph_draw_options *Opt,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1670,15 +1672,15 @@ void surface_object_with_group::cheat_sheet_basic(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_object_with_group::cheat_sheet_basic" << endl;
 	}
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	Aut_gens->group_order(ago);
 	ost << "The automorphism group has order "
 			<< ago << "\\\\" << endl;
@@ -1742,11 +1744,11 @@ void surface_object_with_group::cheat_sheet_basic(
 void surface_object_with_group::cheat_sheet(
 		std::ostream &ost,
 		int f_print_orbits, std::string &fname_mask,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_object_with_group::cheat_sheet" << endl;
@@ -1765,7 +1767,7 @@ void surface_object_with_group::cheat_sheet(
 	}
 
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	Aut_gens->group_order(ago);
 	ost << "The automorphism group has order "
 			<< ago << "\\\\" << endl;
@@ -1828,7 +1830,7 @@ void surface_object_with_group::cheat_sheet(
 	go = Aut_gens->group_order_as_lint();
 	if (go < 50) {
 
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		int *Table;
 		Aut_gens->create_group_table(
@@ -1898,11 +1900,11 @@ void surface_object_with_group::cheat_sheet_group_elements(
 				"verbose_level = " << verbose_level << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
-	data_structures::spreadsheet S;
+	other::data_structures::spreadsheet S;
 
 	S.read_spreadsheet(fname_csv, 0 /*verbose_level*/);
 
@@ -2039,9 +2041,9 @@ void surface_object_with_group::cheat_sheet_group_elements(
 		for (j = 0; j < nb_col; j++) {
 
 			string s;
-			data_structures::tally *Classify_orbits_by_length;
+			other::data_structures::tally *Classify_orbits_by_length;
 
-			Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
+			Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
 
 			Classify_orbits_by_length->init(Orbits[j]->orbit_len, Orbits[j]->nb_orbits, false, 0);
 
@@ -2131,7 +2133,7 @@ void surface_object_with_group::print_automorphism_group_generators(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_object_with_group::print_automorphism_group_generators" << endl;
@@ -2216,7 +2218,7 @@ void surface_object_with_group::print_projectivity_group(
 		cout << "surface_object_with_group::print_projectivity_group "
 				"projectivity stabilizer" << endl;
 	}
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	projectivity_group_gens->group_order(go);
 	ost << "The projectivity group has order "
 			<< go << "\\\\" << endl;
@@ -2360,7 +2362,7 @@ void surface_object_with_group::print_sylow_groups_of_projectivity_group(
 
 
 void surface_object_with_group::investigate_surface_and_write_report(
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
@@ -2384,7 +2386,7 @@ void surface_object_with_group::investigate_surface_and_write_report(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -2400,7 +2402,7 @@ void surface_object_with_group::investigate_surface_and_write_report(
 
 		L.foot(fp);
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -2413,7 +2415,7 @@ void surface_object_with_group::investigate_surface_and_write_report(
 
 void surface_object_with_group::investigate_surface_and_write_report2(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		actions::action *A,
 		surface_create *SC,
 		cubic_surfaces_and_arcs::six_arcs_not_on_a_conic *Six_arcs,
@@ -2812,9 +2814,9 @@ void surface_object_with_group::export_one_quartic_curve(
 
 
 	{
-		algebraic_geometry::quartic_curve_object *QO;
+		geometry::algebraic_geometry::quartic_curve_object *QO;
 
-		QO = NEW_OBJECT(algebraic_geometry::quartic_curve_object);
+		QO = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_object);
 
 		if (f_v) {
 			cout << "quartic_curve_create::create_quartic_curve_from_cubic_surface "
@@ -2899,7 +2901,7 @@ void surface_object_with_group::create_heading(
 
 void surface_object_with_group::create_vector_of_strings(
 		quartic_curves::quartic_curve_from_surface *QC,
-		algebraic_geometry::quartic_curve_object *QO,
+		geometry::algebraic_geometry::quartic_curve_object *QO,
 		std::vector<std::string> &v,
 		int verbose_level)
 {
@@ -2936,7 +2938,7 @@ void surface_object_with_group::create_vector_of_strings(
 
 	s_Kovalevski = Lint_vec_stringify(QO->QP->Kovalevski->Kovalevski_points, QO->QP->Kovalevski->nb_Kovalevski);
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 
 	Aut_gens->group_order(ago);
 
@@ -3391,12 +3393,12 @@ void surface_object_with_group::print_action_on_surface(
 
 	A = Surf_A->A;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -3408,7 +3410,7 @@ void surface_object_with_group::print_action_on_surface(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);

@@ -33,8 +33,8 @@ void poset_classification::report(
 
 	string fname_report;
 	fname_report = problem_label + "_poset.tex";
-	l1_interfaces::latex_interface L;
-	orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
 
 	{
 		ofstream ost(fname_report);
@@ -46,7 +46,7 @@ void poset_classification::report(
 		}
 
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		if (Control->f_draw_options) {
 			cout << "poset_classification::report "
@@ -110,7 +110,7 @@ void poset_classification::report2(
 #if 1
 	if (Opt->f_draw_poset) {
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::report2 "
@@ -118,7 +118,7 @@ void poset_classification::report2(
 			exit(1);
 		}
 
-		Draw_options = Get_draw_options(Control->draw_options_label);
+		Draw_options = Get_draw_options(Opt->draw_options_label);
 
 		if (f_v) {
 			cout << "poset_classification::report2 draw_options:" << endl;
@@ -336,7 +336,7 @@ void poset_classification::report_number_of_orbits_at_level(
 
 		ost << i << " & " << N[i] << " & ";
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init_lint(Ago, nb, false, 0);
 		T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
@@ -404,9 +404,9 @@ void poset_classification::report_orbits_summary(
 	int level, nb_orbits, cnt, nb_live_pts, nb_extensions, /*nbo,*/ nbg;
 	long int *rep = NULL;
 	poset_orbit_node *O;
-	ring_theory::longinteger_object stab_order, orbit_length;
+	algebra::ring_theory::longinteger_object stab_order, orbit_length;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 
 	rep = NEW_lint(depth + 1);
@@ -666,9 +666,9 @@ void poset_classification::report_poset_of_orbits(
 	string cmd;
 
 
-	if (orbiter_kernel_system::Orbiter->f_orbiter_path) {
+	if (other::orbiter_kernel_system::Orbiter->f_orbiter_path) {
 
-		cmd.assign(orbiter_kernel_system::Orbiter->orbiter_path);
+		cmd.assign(other::orbiter_kernel_system::Orbiter->orbiter_path);
 
 	}
 	else {
@@ -680,21 +680,16 @@ void poset_classification::report_poset_of_orbits(
 
 	cmd += "orbiter.out -v 3 -draw_layered_graph " + fname_poset + " ";
 
-	if (!Control->f_draw_options) {
+	if (!Opt->f_draw_options) {
 		cout << "poset_classification::report_poset_of_orbits "
-				"We need -draw_options to be set in -poset_classification_control" << endl;
+				"We need -draw_options to be set in -report options" << endl;
 		exit(1);
 	}
 
-	graphics::layered_graph_draw_options *Draw_options;
+	other::graphics::layered_graph_draw_options *Draw_options;
 
-	if (Control->f_draw_options) {
-		cout << "poset_classification::report_poset_of_orbits "
-				"please use -draw_options" << endl;
-		exit(1);
-	}
 
-	Draw_options = Get_draw_options(Control->draw_options_label);
+	Draw_options = Get_draw_options(Opt->draw_options_label);
 
 
 	cmd += " -xin " + std::to_string(Draw_options->xin)
@@ -756,11 +751,11 @@ void poset_classification::report_orbit(
 	int nb_gens;
 	int nb_extensions;
 	poset_orbit_node *O;
-	ring_theory::longinteger_object stab_order, orbit_length;
+	algebra::ring_theory::longinteger_object stab_order, orbit_length;
 	string s;
 	long int *rep = NULL;
 	data_structures_groups::schreier_vector *Schreier_vector;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	long int so;
 
 	rep = NEW_lint(depth + 1);
@@ -893,7 +888,7 @@ void poset_classification::report_orbit(
 			exit(1);
 		}
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(orbit_length, nb_o, false, 0);
 		ost << "Orbit type of flag orbits: \\\\" << endl;

@@ -24,16 +24,18 @@ namespace interfaces {
 
 nauty_interface_for_graphs::nauty_interface_for_graphs()
 {
+	Record_birth();
 
 }
 
 nauty_interface_for_graphs::~nauty_interface_for_graphs()
 {
+	Record_death();
 
 }
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_object(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		int verbose_level)
 // called from
 // graph_theory_apps::automorphism_group
@@ -65,7 +67,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 }
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		int *labeling,
 		int verbose_level)
 {
@@ -94,7 +96,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_colored_graph(
 	int n,
 	int f_bitvec,
-	data_structures::bitvector *Bitvec,
+	other::data_structures::bitvector *Bitvec,
 	int *Adj,
 	int *vertex_colors,
 	int *labeling,
@@ -102,17 +104,17 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 {
 	int f_v = (verbose_level >= 1);
 	actions::action *A;
-	data_structures::bitvector *Adj1;
+	other::data_structures::bitvector *Adj1;
 	int *parts;
 	int nb_parts;
 	int i, j, k, n1, N, f_on = 0, c;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "nauty_interface_for_graphs::create_automorphism_group_and_canonical_labeling_of_colored_graph" << endl;
 	}
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(vertex_colors, n, false, 0);
 
@@ -133,7 +135,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 	}
 
 	N = (n1 * (n1 - 1)) >> 1;
-	Adj1 = NEW_OBJECT(data_structures::bitvector);
+	Adj1 = NEW_OBJECT(other::data_structures::bitvector);
 	Adj1->allocate(N);
 
 	//nb_edges = 0;
@@ -222,7 +224,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colored_graph_ignoring_colors(
-		graph_theory::colored_graph *CG,
+		combinatorics::graph_theory::colored_graph *CG,
 		int verbose_level)
 // called from
 // graph_theory_apps::automorphism_group
@@ -260,7 +262,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_colore
 
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_bitvec(
 	int n,
-	data_structures::bitvector *Bitvec,
+	other::data_structures::bitvector *Bitvec,
 	int verbose_level)
 // called from
 // hadamard_classify::init
@@ -290,7 +292,7 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
 	int f_bitvector,
-	data_structures::bitvector *Bitvec,
+	other::data_structures::bitvector *Bitvec,
 	int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
@@ -301,11 +303,11 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph_
 	int f_vv = (verbose_level >= 2);
 	int *partitions;
 	int i, u, a;
-	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	l1_interfaces::nauty_output *NO;
+	layer1_foundations::other::l1_interfaces::nauty_interface Nau;
+	other::l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 
 	NO->N = n;
 
@@ -442,11 +444,11 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_of_graph(
 	}
 
 	int *partition;
-	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	l1_interfaces::nauty_output *NO;
+	layer1_foundations::other::l1_interfaces::nauty_interface Nau;
+	other::l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 
 	NO->N = n;
 
@@ -530,11 +532,11 @@ actions::action *nauty_interface_for_graphs::create_automorphism_group_and_canon
 	int *partition;
 	//longinteger_object Ago;
 	//int i;
-	layer1_foundations::l1_interfaces::nauty_interface Nau;
-	l1_interfaces::nauty_output *NO;
+	layer1_foundations::other::l1_interfaces::nauty_interface Nau;
+	other::l1_interfaces::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(l1_interfaces::nauty_output);
+	NO = NEW_OBJECT(other::l1_interfaces::nauty_output);
 
 	NO->N = n;
 

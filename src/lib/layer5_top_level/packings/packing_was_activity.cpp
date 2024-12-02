@@ -19,6 +19,7 @@ namespace packings {
 
 packing_was_activity::packing_was_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	PW = NULL;
 
@@ -26,6 +27,7 @@ packing_was_activity::packing_was_activity()
 
 packing_was_activity::~packing_was_activity()
 {
+	Record_death();
 
 }
 

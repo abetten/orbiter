@@ -18,6 +18,7 @@ namespace spreads {
 
 spread_classify_activity_description::spread_classify_activity_description()
 {
+	Record_birth();
 	f_compute_starter = false;
 
 	f_prepare_lifting_single_case = false;
@@ -38,6 +39,7 @@ spread_classify_activity_description::spread_classify_activity_description()
 
 spread_classify_activity_description::~spread_classify_activity_description()
 {
+	Record_death();
 }
 
 int spread_classify_activity_description::read_arguments(
@@ -46,7 +48,7 @@ int spread_classify_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "spread_classify_activity_description::read_arguments" << endl;

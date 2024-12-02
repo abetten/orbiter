@@ -19,9 +19,10 @@ namespace actions {
 
 action::action()
 {
+	Record_birth();
 	int verbose_level = 0;
 
-	orbiter_kernel_system::Orbiter->nb_times_action_created++;
+	other::orbiter_kernel_system::Orbiter->nb_times_action_created++;
 
 	null();
 
@@ -38,6 +39,7 @@ action::action()
 
 action::~action()
 {
+	Record_death();
 	freeself();
 }
 
@@ -734,7 +736,7 @@ void action::compute_point_stabilizer_chain(
 }
 
 void action::compute_stabilizer_orbits(
-		data_structures::partitionstack *&Staborbits,
+		other::data_structures::partitionstack *&Staborbits,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -753,7 +755,7 @@ void action::compute_stabilizer_orbits(
 		}
 		cout << "degree = " << degree << endl;
 	}
-	Staborbits = NEW_OBJECTS(data_structures::partitionstack, base_len());
+	Staborbits = NEW_OBJECTS(other::data_structures::partitionstack, base_len());
 		// where is this freed??? in backtrack.cpp
 
 	for (i = 0; i < base_len(); i++) {
@@ -766,7 +768,7 @@ void action::compute_stabilizer_orbits(
 			gen.print(cout);
 		}
 
-		data_structures::partitionstack *S;
+		other::data_structures::partitionstack *S;
 		groups::schreier Schreier;
 
 
@@ -855,7 +857,7 @@ void action::find_strong_generators_at_level(
 
 
 void action::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
 	//longinteger_domain D;
 	
@@ -871,7 +873,7 @@ void action::group_order(
 
 long int action::group_order_lint()
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	group_order(go);
 	return go.as_lint();
@@ -880,7 +882,7 @@ long int action::group_order_lint()
 
 std::string action::group_order_as_string()
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	string s;
 
 	group_order(go);
@@ -927,14 +929,14 @@ int action::matrix_group_dimension()
 #endif
 }
 
-field_theory::finite_field *action::matrix_group_finite_field()
+algebra::field_theory::finite_field *action::matrix_group_finite_field()
 {
 	if (!is_matrix_group()) {
 			cout << "action::matrix_group_finite_field is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		return M->GFq;
@@ -948,7 +950,7 @@ int action::is_semilinear_matrix_group()
 			exit(1);
 	}
 	else {
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_semilinear) {
@@ -969,7 +971,7 @@ int action::is_projective()
 			exit(1);
 	}
 	else {
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_projective) {
@@ -988,7 +990,7 @@ int action::is_affine()
 			exit(1);
 	}
 	else {
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_affine) {
@@ -1007,7 +1009,7 @@ int action::is_general_linear()
 			exit(1);
 	}
 	else {
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = get_matrix_group();
 		if (M->f_general_linear) {
@@ -1035,7 +1037,7 @@ int action::is_matrix_group()
 	}
 }
 
-algebra::matrix_group *action::get_matrix_group()
+algebra::basic_algebra::matrix_group *action::get_matrix_group()
 {
 	if (type_G == unknown_symmetry_group_t) {
 		cout << "action::get_matrix_group type_G == unknown_symmetry_group_t" << endl;

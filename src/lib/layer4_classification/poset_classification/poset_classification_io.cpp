@@ -225,7 +225,7 @@ void poset_classification::print_level_info(
 		int prev_level, int prev)
 {
 	int t1, dt;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t1 = Os.os_ticks();
 	//cout << "poset_classification::print_level_info t0=" << t0 << endl;
@@ -332,8 +332,8 @@ void poset_classification::read_data_file(
 	int f_v = (verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
-	orbiter_kernel_system::memory_object *m;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::memory_object *m;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -358,7 +358,7 @@ void poset_classification::read_data_file(
 				"before m->alloc" << endl;
 	}
 
-	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
+	m = NEW_OBJECT(other::orbiter_kernel_system::memory_object);
 	m->alloc(size, 0);
 
 	if (f_v) {
@@ -409,13 +409,13 @@ void poset_classification::write_data_file(
 		int depth_completed,
 		std::string &fname_base, int verbose_level)
 {
-	orbiter_kernel_system::memory_object *m;
+	other::orbiter_kernel_system::memory_object *m;
 	int f_v = (verbose_level >= 1);
 	string fname;
 	int nb_group_elements;
 	long int size0;
 	int verbose_level1;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	prepare_fname_data_file(fname, fname_base, depth_completed);
 
@@ -441,7 +441,7 @@ void poset_classification::write_data_file(
 		verbose_level1 = 2;
 	}
 
-	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
+	m = NEW_OBJECT(other::orbiter_kernel_system::memory_object);
 	//m->alloc(10, 0);
 	m->alloc(size0, 0);
 	m->used_length = 0;
@@ -498,7 +498,7 @@ void poset_classification::write_file(
 		std::ofstream &fp,
 		int depth_completed, int verbose_level)
 {
-	orbiter_kernel_system::memory_object *m;
+	other::orbiter_kernel_system::memory_object *m;
 	int f_v = (verbose_level >= 1);
 	long int size0;
 	int nb_group_elements = 0;
@@ -521,7 +521,7 @@ void poset_classification::write_file(
 		cout << "the size is very big (> 1 GB)" << endl;
 	}
 
-	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
+	m = NEW_OBJECT(other::orbiter_kernel_system::memory_object);
 	m->alloc(10, 0);
 	//m->alloc(size0, 0);
 	m->used_length = 0;
@@ -580,7 +580,7 @@ void poset_classification::read_file(
 		std::ifstream &fp,
 		int &depth_completed, int verbose_level)
 {
-	orbiter_kernel_system::memory_object *m;
+	other::orbiter_kernel_system::memory_object *m;
 	int f_v = (verbose_level >= 1);
 	long int size;
 	int nb_group_elements;
@@ -598,7 +598,7 @@ void poset_classification::read_file(
 				"size = " << size << endl;
 	}
 
-	m = NEW_OBJECT(orbiter_kernel_system::memory_object);
+	m = NEW_OBJECT(other::orbiter_kernel_system::memory_object);
 
 	m->alloc(size, 0);
 	m->used_length = 0;
@@ -822,7 +822,7 @@ void poset_classification::housekeeping(
 					"before write_treefile_and_draw_tree" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::housekeeping_no_data_file "
@@ -917,7 +917,7 @@ void poset_classification::housekeeping_no_data_file(
 
 	if (Control->f_T || (Control->f_t && i == sz)) {
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		if (!Control->f_draw_options) {
 			cout << "poset_classification::housekeeping_no_data_file "
@@ -948,7 +948,7 @@ int poset_classification::test_sv_level_file_binary(
 		int level, std::string &fname_base)
 {
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	if (Fio.file_size(fname) >= 1) {
@@ -967,7 +967,7 @@ void poset_classification::read_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	
@@ -995,7 +995,7 @@ void poset_classification::write_sv_level_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	create_fname_sv_level_file_binary(fname, fname_base, level);
 	
@@ -1027,7 +1027,7 @@ void poset_classification::read_level_file_binary(
 	int f_v = (verbose_level >= 1);
 	string fname;
 	int nb_group_elements;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	fname = fname_base + "_lvl_" + std::to_string(level) + ".data";
 	
@@ -1060,7 +1060,7 @@ void poset_classification::write_level_file_binary(
 	int f_v = (verbose_level >= 1);
 	string fname;
 	int nb_group_elements;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = fname_base + "_lvl_" + std::to_string(level) + ".data";
 	
@@ -1239,7 +1239,7 @@ void poset_classification::log_current_node(
 
 
 void poset_classification::make_spreadsheet_of_orbit_reps(
-		data_structures::spreadsheet *&Sp, int max_depth)
+		other::data_structures::spreadsheet *&Sp, int max_depth)
 {
 	int Nb_orbits, nb_orbits, i, level, first;
 	string *Text_level;
@@ -1248,7 +1248,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 	string *Text_stab_order;
 	string *Text_orbit_length;
 	string *Text_schreier_vector_length;
-	ring_theory::longinteger_object stab_order, orbit_length;
+	algebra::ring_theory::longinteger_object stab_order, orbit_length;
 	int schreier_vector_length;
 	long int *rep;
 	poset_orbit_node *O;
@@ -1294,7 +1294,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			Text_schreier_vector_length[first + i] = std::to_string(schreier_vector_length);
 			}
 		}
-	Sp = NEW_OBJECT(data_structures::spreadsheet);
+	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, Text_level, "Level");
@@ -1321,7 +1321,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 }
 
 void poset_classification::make_spreadsheet_of_level_info(
-		data_structures::spreadsheet *&Sp, int max_depth,
+		other::data_structures::spreadsheet *&Sp, int max_depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1332,13 +1332,13 @@ void poset_classification::make_spreadsheet_of_level_info(
 	string *Text_orbit_length_sum;
 	string *Text_schreier_vector_length_sum;
 	string *Text_binomial;
-	ring_theory::longinteger_object stab_order, orbit_length,
+	algebra::ring_theory::longinteger_object stab_order, orbit_length,
 		orbit_length_sum, orbit_length_total;
-	ring_theory::longinteger_object a, a_total;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object a, a_total;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 	int schreier_vector_length_int;
-	ring_theory::longinteger_object schreier_vector_length,
+	algebra::ring_theory::longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
 	int *rep;
 	poset_orbit_node *O;
@@ -1445,7 +1445,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 	a_total.print_to_string(Text_binomial[level]);
 
 
-	Sp = NEW_OBJECT(data_structures::spreadsheet);
+	Sp = NEW_OBJECT(other::data_structures::spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, Text_label, "Level");
@@ -1518,7 +1518,7 @@ void poset_classification::wedge_product_export_magma(
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1529,7 +1529,7 @@ void poset_classification::wedge_product_export_magma(
 	long int *the_set;
 	int *v;
 	int a, i, j, h, fst, len, ii, jj;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int *Elt;
 
 	//level = depth_completed + 1;
@@ -1783,7 +1783,7 @@ void poset_classification::export_something(
 		cout << "poset_classification::export_something" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (f_v) {
@@ -1797,7 +1797,7 @@ void poset_classification::export_something(
 				"after export_something_worker" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "poset_classification::export_something "
@@ -1823,8 +1823,8 @@ void poset_classification::export_something_worker(
 		cout << "poset_classification::export_something_worker" << endl;
 	}
 
-	data_structures::string_tools ST;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (ST.stringcmp(what, "orbit_reps") == 0) {
@@ -1848,7 +1848,7 @@ void poset_classification::export_something_worker(
 
 		fname = problem_label_with_path + "_set_orbits" + "_level_" + std::to_string(data1) + ".csv";
 
-		data_structures::set_of_sets *SoS;
+		other::data_structures::set_of_sets *SoS;
 
 		Poo->get_set_orbits_at_level(
 				data1, SoS,

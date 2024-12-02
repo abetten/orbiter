@@ -25,6 +25,7 @@ namespace finite_geometries {
 
 spread_domain::spread_domain()
 {
+	Record_birth();
 
 	F = NULL;
 
@@ -64,6 +65,7 @@ spread_domain::spread_domain()
 
 spread_domain::~spread_domain()
 {
+	Record_death();
 	if (Grass) {
 		FREE_OBJECT(Grass);
 	}
@@ -95,7 +97,7 @@ spread_domain::~spread_domain()
 }
 
 void spread_domain::init_spread_domain(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int k,
 		int verbose_level)
 // creates grassmann n,k
@@ -103,8 +105,8 @@ void spread_domain::init_spread_domain(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	number_theory::number_theory_domain NT;
-	combinatorics::combinatorics_domain Combi;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -175,7 +177,7 @@ void spread_domain::init_spread_domain(
 					"initializing the Klein correspondence" << endl;
 		}
 		Klein = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
-		O = NEW_OBJECT(layer1_foundations::orthogonal_geometry::orthogonal);
+		O = NEW_OBJECT(layer1_foundations::geometry::orthogonal_geometry::orthogonal);
 
 		O->init(1 /* epsilon */, 6, F, 0 /* verbose_level*/);
 		Klein->init(F, O, 0 /* verbose_level */);
@@ -648,7 +650,7 @@ void spread_domain::czerwinski_oakden(
 	long int data[26];
 	int M[8];
 	int h, u, i, a = 0, b = 0, c = 0, d = 0;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int spreads[] =
 		{
 			// S1:
@@ -1345,7 +1347,7 @@ void spread_domain::write_spread_to_file(
 		fname = "spread_q" + std::to_string(q) + "_Hudson.txt";
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	data = NEW_lint(sz);
 	if (type_of_spread == SPREAD_OF_TYPE_DICKSON_KANTOR ||
@@ -1371,7 +1373,7 @@ void spread_domain::make_spread(
 	int sz = order + 1;
 	int M[8];
 	int h, i, h1, s, t, sq, tq, x, y, w, z, eta, exponent;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	int q1 = NT.i_power_j(F->p, (F->e >> 1));
 
 	if (f_v) {
@@ -1464,7 +1466,7 @@ void spread_domain::make_spread_from_q_clan(
 	int h, h1, i, s, t, t2, t3, t4, t5, t7, t9;
 	int a_t = 0, b_t = 0, c_t = 0, x, y, w, z, r;
 	int three, five, nonsquare = 0, minus_nonsquare = 0, nonsquare_inv = 0;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_domain::make_spread_from_q_clan" << endl;
@@ -1631,7 +1633,7 @@ void spread_domain::read_and_print_spread(
 {
 	long int *data;
 	int sz;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.read_set_from_file(fname, data, sz, verbose_level);
 	print_spread(cout, data, sz);
@@ -1651,7 +1653,7 @@ void spread_domain::HMO(
 	int *GG, *HH;
 	int alpha, beta, omega, x, y, tmp1, tmp2, f, z;
 	int M[8];
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "spread_domain::HMO" << endl;
@@ -1681,14 +1683,14 @@ void spread_domain::HMO(
 
 
 	int q2;
-	field_theory::finite_field *Fq2;
-	field_theory::subfield_structure *Sub;
+	algebra::field_theory::finite_field *Fq2;
+	algebra::field_theory::subfield_structure *Sub;
 
 	q2 = q * q;
 
-	Fq2 = NEW_OBJECT(field_theory::finite_field);
+	Fq2 = NEW_OBJECT(algebra::field_theory::finite_field);
 
-	Sub = NEW_OBJECT(field_theory::subfield_structure);
+	Sub = NEW_OBJECT(algebra::field_theory::subfield_structure);
 
 	if (f_v) {
 		cout << "spread_domain::HMO "

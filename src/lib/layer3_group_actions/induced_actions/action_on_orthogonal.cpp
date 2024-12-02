@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_orthogonal::action_on_orthogonal()
 {
+	Record_birth();
 	original_action = NULL;
 	O = NULL;
 	v1 = NULL;
@@ -33,6 +34,7 @@ action_on_orthogonal::action_on_orthogonal()
 
 action_on_orthogonal::~action_on_orthogonal()
 {
+	Record_death();
 	if (v1) {
 		FREE_int(v1);
 	}
@@ -49,7 +51,7 @@ action_on_orthogonal::~action_on_orthogonal()
 
 void action_on_orthogonal::init(
 		actions::action *original_action,
-		orthogonal_geometry::orthogonal *O,
+		geometry::orthogonal_geometry::orthogonal *O,
 		int f_on_points,
 		int f_on_lines,
 		int f_on_points_and_lines,

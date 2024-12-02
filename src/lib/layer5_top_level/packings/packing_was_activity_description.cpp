@@ -21,6 +21,7 @@ namespace packings {
 
 packing_was_activity_description::packing_was_activity_description()
 {
+	Record_birth();
 	f_report = false;
 
 	f_export_reduced_spread_orbits = false;
@@ -32,6 +33,7 @@ packing_was_activity_description::packing_was_activity_description()
 
 packing_was_activity_description::~packing_was_activity_description()
 {
+	Record_death();
 
 }
 
@@ -40,7 +42,7 @@ int packing_was_activity_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "packing_was_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

@@ -20,6 +20,7 @@ namespace apps_graph_theory {
 
 create_graph::create_graph()
 {
+	Record_birth();
 	description = NULL;
 
 	f_has_CG = false;
@@ -33,6 +34,7 @@ create_graph::create_graph()
 
 create_graph::~create_graph()
 {
+	Record_death();
 	if (f_has_CG) {
 		FREE_OBJECT(CG);
 	}
@@ -112,7 +114,7 @@ void create_graph::init(
 					"after load_csv_without_border" << endl;
 		}
 
-		data_structures::string_tools String;
+		other::data_structures::string_tools String;
 		string fname_base;
 
 		fname_base = description->load_csv_no_border_fname;
@@ -130,7 +132,7 @@ void create_graph::init(
 					"f_load_adjacency_matrix_from_csv_and_select_value" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int *M;
 		int m, n;
 		int i;
@@ -159,7 +161,7 @@ void create_graph::init(
 
 		fname = description->load_adjacency_matrix_from_csv_and_select_value_fname;
 
-		data_structures::string_tools String;
+		other::data_structures::string_tools String;
 		String.chop_off_extension(fname);
 
 
@@ -209,7 +211,7 @@ void create_graph::init(
 
 	else if (description->f_edge_list) {
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		int h, i, j, a;
 
 		int *Idx;
@@ -484,7 +486,7 @@ void create_graph::init(
 	else if (description->f_non_attacking_queens_graph) {
 
 
-		graph_theory::graph_theory_domain GT;
+		combinatorics::graph_theory::graph_theory_domain GT;
 
 		int n;
 
@@ -525,7 +527,7 @@ void create_graph::init(
 	}
 	else if (description->f_orbital_graph) {
 
-		graph_theory::graph_theory_domain GT;
+		combinatorics::graph_theory::graph_theory_domain GT;
 
 
 		if (f_v) {
@@ -657,7 +659,7 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init the graph has a subset" << endl;
 		}
-		CG = NEW_OBJECT(graph_theory::colored_graph);
+		CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 		if (f_v) {
 			cout << "create_graph::init "
 					"before CG->init_from_adjacency_no_colors" << endl;
@@ -699,7 +701,7 @@ void create_graph::init(
 
 		if (!f_has_CG) {
 
-			CG = NEW_OBJECT(graph_theory::colored_graph);
+			CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 			if (f_v) {
 				cout << "create_graph::init "
 						"before CG->init_from_adjacency_no_colors" << endl;
@@ -750,7 +752,7 @@ void create_graph::load(
 	}
 
 	f_has_CG = true;
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 	if (f_v) {
 		cout << "create_graph::load "
 				"before CG->load, "
@@ -774,7 +776,7 @@ void create_graph::load(
 				"label = " << label << endl;
 	}
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	String.chop_off_extension(label);
 
 	label_tex = "File\\_" + label;
@@ -855,7 +857,7 @@ void create_graph::make_Cayley_graph(
 
 	int *Elt1;
 	int *Elt2;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, h, j;
 
 	Elt1 = NEW_int(G->A_base->elt_size_in_int);
@@ -910,7 +912,7 @@ void create_graph::make_Cayley_graph(
 		cout << "create_graph::init label = " << label << endl;
 	}
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	String.chop_off_extension(label);
 
 	label_tex = "{\\rm Cayley\\_graph\\_}" + G->A->label_tex;
@@ -927,7 +929,7 @@ void create_graph::load_csv_without_border(
 		cout << "create_graph::load_csv_without_border" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int *M;
 	int m, n;
 
@@ -938,7 +940,7 @@ void create_graph::load_csv_without_border(
 
 	label = description->fname;
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	String.chop_off_extension(label);
 
 
@@ -957,7 +959,7 @@ void create_graph::load_dimacs(
 	}
 
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -974,7 +976,7 @@ void create_graph::load_dimacs(
 
 	label = fname;
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	String.chop_off_extension_and_path(label);
 
 
@@ -992,7 +994,7 @@ void create_graph::load_Brouwer(
 		cout << "create_graph::load_Brouwer" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int nb_V;
 
 	if (f_v) {
@@ -1016,7 +1018,7 @@ void create_graph::load_Brouwer(
 
 	label = description->load_Brouwer_fname;
 
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 	String.chop_off_extension_and_path(label);
 
 
@@ -1033,7 +1035,7 @@ void create_graph::create_cycle(
 		cout << "create_graph::create_cycle" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1070,7 +1072,7 @@ void create_graph::create_inversion_graph(
 	Int_vec_scan(perm_text, perm, n);
 
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1107,7 +1109,7 @@ void create_graph::create_Hamming(
 		cout << "create_graph::create_Hamming" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1142,7 +1144,7 @@ void create_graph::create_Johnson(
 		cout << "create_graph::create_Johnson" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1178,8 +1180,8 @@ void create_graph::create_Paley(
 	}
 
 
-	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *Fq;
+	combinatorics::graph_theory::graph_theory_domain GT;
+	algebra::field_theory::finite_field *Fq;
 
 	Fq = Get_finite_field(label_Fq);
 
@@ -1215,7 +1217,7 @@ void create_graph::create_Sarnak(
 
 
 	int l, f_special = false;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 
@@ -1226,12 +1228,12 @@ void create_graph::create_Sarnak(
 	}
 
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 	int f_semilinear = false;
 	int f_basis = true;
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 
 	F->finite_field_init_small_order(q,
 			false /* f_without_tables */,
@@ -1315,8 +1317,8 @@ void create_graph::create_Schlaefli(
 		cout << "create_graph::create_Schlaefli" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *F;
+	combinatorics::graph_theory::graph_theory_domain GT;
+	algebra::field_theory::finite_field *F;
 
 	F = Get_finite_field(label_Fq);
 
@@ -1526,8 +1528,8 @@ void create_graph::create_Winnie_Li(
 		cout << "create_graph::create_Winnie_Li" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *Fq;
+	combinatorics::graph_theory::graph_theory_domain GT;
+	algebra::field_theory::finite_field *Fq;
 
 	Fq = Get_finite_field(label_Fq);
 
@@ -1566,8 +1568,8 @@ void create_graph::create_Grassmann(
 	}
 
 
-	graph_theory::graph_theory_domain GT;
-	field_theory::finite_field *F;
+	combinatorics::graph_theory::graph_theory_domain GT;
+	algebra::field_theory::finite_field *F;
 
 	F = Get_finite_field(label_Fq);
 
@@ -1610,7 +1612,7 @@ void create_graph::create_coll_orthogonal(
 		cout << "create_graph::create_coll_orthogonal" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
@@ -1656,7 +1658,7 @@ void create_graph::create_affine_polar(
 		cout << "create_graph::create_affine_polar" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 	orthogonal_geometry_applications::orthogonal_space_with_action *OA;
 
@@ -1695,7 +1697,7 @@ void create_graph::make_tritangent_plane_disjointness_graph(
 		cout << "create_graph::make_tritangent_plane_disjointness_graph" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 	GT.make_tritangent_plane_disjointness_graph(
 			Adj, N,
@@ -1716,7 +1718,7 @@ void create_graph::make_trihedral_pair_disjointness_graph(
 	}
 
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 	GT.make_trihedral_pair_disjointness_graph(
 			Adj, N,
@@ -1835,7 +1837,7 @@ void create_graph::make_disjoint_sets_graph(
 		cout << "create_graph::make_disjoint_sets_graph" << endl;
 	}
 
-	graph_theory::graph_theory_domain GT;
+	combinatorics::graph_theory::graph_theory_domain GT;
 
 
 	if (f_v) {
@@ -1852,7 +1854,7 @@ void create_graph::make_disjoint_sets_graph(
 	}
 
 	string L;
-	data_structures::string_tools String;
+	other::data_structures::string_tools String;
 
 	L = fname;
 	String.chop_off_extension(L);
@@ -1891,7 +1893,7 @@ void create_graph::make_collinearity_graph(
 
 	Get_matrix(matrix_label, Inc, nb_rows, nb_cols);
 
-	graph_theory::graph_theory_domain Graph;
+	combinatorics::graph_theory::graph_theory_domain Graph;
 
 
 	Graph.make_collinearity_graph(
@@ -1933,7 +1935,7 @@ void create_graph::make_chain_graph(
 			part2, sz2, 0 /* verbose_level*/);
 
 
-	graph_theory::graph_theory_domain Graph;
+	combinatorics::graph_theory::graph_theory_domain Graph;
 
 
 	Graph.make_chain_graph(
@@ -1962,7 +1964,7 @@ void create_graph::make_Neumaier_graph_16(
 		cout << "create_graph::make_Neumaier_graph_16" << endl;
 	}
 
-	graph_theory::graph_theory_domain Graph;
+	combinatorics::graph_theory::graph_theory_domain Graph;
 
 
 	Graph.make_Neumaier_graph_16(
@@ -1983,7 +1985,7 @@ void create_graph::make_Neumaier_graph_25(
 		cout << "create_graph::make_Neumaier_graph_25" << endl;
 	}
 
-	graph_theory::graph_theory_domain Graph;
+	combinatorics::graph_theory::graph_theory_domain Graph;
 
 
 	Graph.make_Neumaier_graph_25(
@@ -2009,7 +2011,7 @@ void create_graph::make_adjacency_bitvector(
 	}
 
 
-	graph_theory::graph_theory_domain Graph;
+	combinatorics::graph_theory::graph_theory_domain Graph;
 	int *v;
 	int sz;
 

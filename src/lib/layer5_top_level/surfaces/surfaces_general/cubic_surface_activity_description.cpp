@@ -21,6 +21,7 @@ namespace cubic_surfaces_in_general {
 
 cubic_surface_activity_description::cubic_surface_activity_description()
 {
+	Record_birth();
 	f_report = false;
 	//std::string report_draw_options_label;
 
@@ -59,6 +60,7 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
 {
+	Record_death();
 
 }
 
@@ -69,7 +71,7 @@ int cubic_surface_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "cubic_surface_activity_description::read_arguments" << endl;

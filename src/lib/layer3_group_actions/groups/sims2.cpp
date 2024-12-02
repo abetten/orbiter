@@ -18,7 +18,7 @@ namespace groups {
 void sims::build_up_group_random_process(
 		sims *K,
 	sims *old_G,
-	ring_theory::longinteger_object &target_go,
+	algebra::ring_theory::longinteger_object &target_go,
 	int f_override_choose_next_base_point,
 	int (*choose_next_base_point_method)(actions::action *A,
 			int *Elt, int verbose_level),
@@ -43,8 +43,8 @@ void sims::build_up_group_random_process(
 				"old_G action =" << old_G->A->label << endl;
 	}
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go, G_order, K_order, KG_order, quo, rem;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, G_order, K_order, KG_order, quo, rem;
 	int drop_out_level, image, cnt, b, c, old_base_len;
 	actions::action *GA;
 	actions::action *KA;
@@ -856,7 +856,7 @@ void sims::build_up_subgroup_random_process(
 		cout << "sims::build_up_subgroup_random_process verbose_level = " << verbose_level << endl;
 	}
 
-	ring_theory::longinteger_object go, G_order, quo, rem;
+	algebra::ring_theory::longinteger_object go, G_order, quo, rem;
 	int drop_out_level, image, cnt, f_added;
 	actions::action *GA;
 	

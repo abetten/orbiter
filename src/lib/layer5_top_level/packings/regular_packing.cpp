@@ -21,6 +21,7 @@ namespace packings {
 
 regular_packing::regular_packing()
 {
+	Record_birth();
 	PW = NULL;
 
 	spread_to_external_line_idx = NULL;
@@ -29,6 +30,7 @@ regular_packing::regular_packing()
 
 regular_packing::~regular_packing()
 {
+	Record_death();
 	if (spread_to_external_line_idx) {
 		FREE_lint(spread_to_external_line_idx);
 	}

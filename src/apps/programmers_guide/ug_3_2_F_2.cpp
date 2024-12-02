@@ -32,8 +32,8 @@ int main()
 
 void first()
 {
-	field_theory::finite_field_description Descr;
-	field_theory::finite_field Fq;
+	algebra::field_theory::finite_field_description Descr;
+	algebra::field_theory::finite_field Fq;
 
 	int verbose_level = 2;
 
@@ -43,7 +43,7 @@ void first()
 
 	cout << "in F_2, 1 + 1 = " << Fq.add(1, 1) << endl;
 
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	Algebra.do_cheat_sheet_GF(&Fq, verbose_level);
 }
@@ -53,7 +53,7 @@ void second()
 	int q = 2;
 	int verbose_level = 2;
 	int f_without_tables = false;
-	field_theory::finite_field Fq;
+	algebra::field_theory::finite_field Fq;
 
 	Fq.finite_field_init_small_order(q,
 			f_without_tables,
@@ -62,7 +62,7 @@ void second()
 
 	cout << "in F_2, 1 + 1 = " << Fq.add(1, 1) << endl;
 
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	Algebra.do_cheat_sheet_GF(&Fq, verbose_level);
 }
@@ -72,9 +72,9 @@ void third()
 	int q = 2;
 	int verbose_level = 2;
 	int f_without_tables = false;
-	field_theory::finite_field *Fq;
+	algebra::field_theory::finite_field *Fq;
 
-	Fq = NEW_OBJECT(field_theory::finite_field);
+	Fq = NEW_OBJECT(algebra::field_theory::finite_field);
 
 	Fq->finite_field_init_small_order(q,
 			f_without_tables,
@@ -84,7 +84,7 @@ void third()
 	cout << "in F_2, 1 + 1 = " << Fq->add(1, 1) << endl;
 
 
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	Algebra.do_cheat_sheet_GF(Fq, verbose_level);
 

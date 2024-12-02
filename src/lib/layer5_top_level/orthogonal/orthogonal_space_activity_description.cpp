@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 orthogonal_space_activity_description::orthogonal_space_activity_description()
 {
+	Record_birth();
 
 	f_cheat_sheet_orthogonal = false;
 	//std::string cheat_sheet_orthogonal_draw_options_label;
@@ -58,6 +59,7 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 
 orthogonal_space_activity_description::~orthogonal_space_activity_description()
 {
+	Record_death();
 
 }
 
@@ -68,7 +70,7 @@ int orthogonal_space_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "orthogonal_space_activity_description::read_arguments" << endl;

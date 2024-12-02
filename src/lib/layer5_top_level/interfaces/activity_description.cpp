@@ -17,6 +17,7 @@ namespace user_interface {
 
 activity_description::activity_description()
 {
+	Record_birth();
 	Sym = NULL;
 
 	f_finite_field_activity = false;
@@ -108,6 +109,7 @@ activity_description::activity_description()
 
 activity_description::~activity_description()
 {
+	Record_death();
 
 }
 
@@ -121,14 +123,14 @@ void activity_description::read_arguments(
 	if (f_v) {
 		cout << "activity_description::read_arguments" << endl;
 	}
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	//activity_description::Sym = Sym;
 
 	if (ST.stringcmp(argv[i], "-finite_field_activity") == 0) {
 		f_finite_field_activity = true;
 		Finite_field_activity_description =
-				NEW_OBJECT(field_theory::finite_field_activity_description);
+				NEW_OBJECT(algebra::field_theory::finite_field_activity_description);
 		if (f_v) {
 			cout << "reading -finite_field_activity" << endl;
 		}
@@ -150,7 +152,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-ring_theoretic_activity") == 0) {
 		f_polynomial_ring_activity = true;
 		Polynomial_ring_activity_description =
-				NEW_OBJECT(ring_theory::polynomial_ring_activity_description);
+				NEW_OBJECT(algebra::ring_theory::polynomial_ring_activity_description);
 		if (f_v) {
 			cout << "reading -ring_theoretic_activity" << endl;
 		}
@@ -505,7 +507,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		f_diophant_activity = true;
 		Diophant_activity_description =
-				NEW_OBJECT(solvers::diophant_activity_description);
+				NEW_OBJECT(combinatorics::solvers::diophant_activity_description);
 		if (f_v) {
 			cout << "reading -diophant_activity" << endl;
 		}
@@ -571,7 +573,7 @@ void activity_description::read_arguments(
 	else if (ST.stringcmp(argv[i], "-symbolic_object_activity") == 0) {
 		f_symbolic_object_activity = true;
 		Symbolic_object_activity_description =
-				NEW_OBJECT(expression_parser::symbolic_object_activity_description);
+				NEW_OBJECT(algebra::expression_parser::symbolic_object_activity_description);
 		if (f_v) {
 			cout << "reading -symbolic_object_activity" << endl;
 		}
@@ -767,7 +769,7 @@ void activity_description::worker(
 	}
 
 
-	orbiter_kernel_system::activity_output *AO = NULL;
+	other::orbiter_kernel_system::activity_output *AO = NULL;
 
 	if (f_finite_field_activity) {
 
@@ -1152,7 +1154,7 @@ void activity_description::print()
 
 
 void activity_description::do_finite_field_activity(
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1172,16 +1174,16 @@ void activity_description::do_finite_field_activity(
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
-	F = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	F = (algebra::field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	field_theory::finite_field_activity FA;
+	algebra::field_theory::finite_field_activity FA;
 	FA.init(Finite_field_activity_description, F, verbose_level);
 
 	if (Sym->with_labels.size() == 2) {
 		cout << "-finite_field_activity has two inputs" << endl;
-		FA.F_secondary = (field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+		FA.F_secondary = (algebra::field_theory::finite_field *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
 	}
 
 
@@ -1221,9 +1223,9 @@ void activity_description::do_ring_theoretic_activity(
 		cout << "-finite_field_activity requires at least one input" << endl;
 		exit(1);
 	}
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
-	HPD = (ring_theory::homogeneous_polynomial_domain *)
+	HPD = (algebra::ring_theory::homogeneous_polynomial_domain *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
 	apps_algebra::polynomial_ring_activity A;
@@ -1378,11 +1380,11 @@ void activity_description::do_group_theoretic_activity(
 	}
 
 
-	layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
+	layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type type;
 
 	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 
-	if (type != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+	if (type != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 		cout << "activity_description::do_group_theoretic_activity type is not t_any_group" << endl;
 		exit(1);
 	}
@@ -1400,11 +1402,11 @@ void activity_description::do_group_theoretic_activity(
 
 		if (Sym->with_labels.size() >= 2) {
 
-			layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
+			layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type type;
 
 			type = Sym->Orbiter_top_level_session->get_object_type(Idx[1]);
 
-			if (type != layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
+			if (type != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_any_group) {
 				cout << "activity_description::do_group_theoretic_activity secondary type is not t_any_group" << endl;
 				exit(1);
 			}
@@ -1469,25 +1471,25 @@ void activity_description::do_coding_theoretic_activity(
 
 
 		for (i = 0; i < Sym->with_labels.size(); i++) {
-			layer1_foundations::orbiter_kernel_system::symbol_table_object_type type;
+			layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type type;
 
 			type = Sym->Orbiter_top_level_session->get_object_type(Idx[i]);
 
-			if (type == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_finite_field) {
+			if (type == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_finite_field) {
 
 				if (f_v) {
 					cout << "activity_description::do_coding_theoretic_activity type is t_finite_field" << endl;
 				}
 
-				field_theory::finite_field *F;
+				algebra::field_theory::finite_field *F;
 
-				F = (field_theory::finite_field *)
+				F = (algebra::field_theory::finite_field *)
 						Sym->Orbiter_top_level_session->get_object(Idx[i]);
 
 				Activity.init_field(Coding_theoretic_activity_description, F, verbose_level);
 			}
 
-			else if (type == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_code) {
+			else if (type == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_code) {
 
 				if (f_v) {
 					cout << "activity_description::do_coding_theoretic_activity type is t_code" << endl;
@@ -1682,7 +1684,7 @@ void activity_description::do_blt_set_activity(
 
 
 void activity_description::do_combinatorial_object_activity(
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1706,10 +1708,10 @@ void activity_description::do_combinatorial_object_activity(
 		exit(1);
 	}
 
-	layer1_foundations::orbiter_kernel_system::symbol_table_object_type t;
+	layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type t;
 
 	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
-	if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_geometric_object) {
+	if (t == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_geometric_object) {
 		geometry::other_geometry::geometric_object_create *GOC;
 
 		GOC = (geometry::other_geometry::geometric_object_create *)
@@ -1737,7 +1739,7 @@ void activity_description::do_combinatorial_object_activity(
 
 		}
 	}
-	else if (t == layer1_foundations::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
+	else if (t == layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_combinatorial_object) {
 		apps_combinatorics::combinatorial_object_stream *Combo;
 
 		Combo = (apps_combinatorics::combinatorial_object_stream *)
@@ -1801,13 +1803,13 @@ void activity_description::do_graph_theoretic_activity(
 
 
 	//create_graph *Gr;
-	graph_theory::colored_graph **CG;
+	combinatorics::graph_theory::colored_graph **CG;
 	int i;
 
-	CG = (graph_theory::colored_graph **) NEW_pvoid(nb);
+	CG = (combinatorics::graph_theory::colored_graph **) NEW_pvoid(nb);
 
 	for (i = 0; i < nb; i++) {
-		CG[i] = (graph_theory::colored_graph *)
+		CG[i] = (combinatorics::graph_theory::colored_graph *)
 			Sym->Orbiter_top_level_session->get_object(Idx[i]);
 	}
 	if (f_v) {
@@ -2182,12 +2184,12 @@ void activity_description::do_diophant_activity(
 		exit(1);
 	}
 
-	solvers::diophant_create *Dio;
+	combinatorics::solvers::diophant_create *Dio;
 
-	Dio = (solvers::diophant_create *)
+	Dio = (combinatorics::solvers::diophant_create *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		solvers::diophant_activity Activity;
+		combinatorics::solvers::diophant_activity Activity;
 
 
 		if (f_v) {
@@ -2332,12 +2334,12 @@ void activity_description::do_symbolic_object_activity(
 		exit(1);
 	}
 
-	expression_parser::symbolic_object_builder *f;
+	algebra::expression_parser::symbolic_object_builder *f;
 
-	f = (expression_parser::symbolic_object_builder *)
+	f = (algebra::expression_parser::symbolic_object_builder *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 	{
-		expression_parser::symbolic_object_activity Activity;
+		algebra::expression_parser::symbolic_object_activity Activity;
 
 
 		Activity.init(

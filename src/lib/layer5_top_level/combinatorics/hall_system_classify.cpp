@@ -28,6 +28,7 @@ static void hall_system_early_test_function(
 
 hall_system_classify::hall_system_classify()
 {
+	Record_birth();
 	//e = 0;
 	n = 0;
 	nm1 = 0;
@@ -62,6 +63,7 @@ hall_system_classify::hall_system_classify()
 
 hall_system_classify::~hall_system_classify()
 {
+	Record_death();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
@@ -117,7 +119,7 @@ void hall_system_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "hall_system_classify::init" << endl;
@@ -291,7 +293,7 @@ void hall_system_classify::init(
 	int f_debug = false;
 	int schreier_depth = INT_MAX;
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -319,7 +321,7 @@ void hall_system_classify::orbits_on_triples(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "hall_system_classify::orbits_on_triples" << endl;
@@ -442,7 +444,7 @@ void hall_system_classify::unrank_triple(
 	int a, b, i;
 	int set[3];
 	int binary[3];
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	b = rk % 8;
 	a = rk / 8;
@@ -463,7 +465,7 @@ void hall_system_classify::unrank_triple_pair(
 	int a, b, i;
 	int set[3];
 	int binary[3];
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	b = rk % 8;
 	a = rk / 8;
@@ -492,7 +494,7 @@ void hall_system_classify::early_test_func(
 	int orb, f, l, t, h;
 	long int T[3];
 	int f_OK;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "hall_system_classify::early_test_func checking set ";

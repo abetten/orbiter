@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 {
+	Record_birth();
 	n = 0;
 	q = 0;
 	A = NULL;
@@ -42,6 +43,7 @@ action_on_homogeneous_polynomials::action_on_homogeneous_polynomials()
 
 action_on_homogeneous_polynomials::~action_on_homogeneous_polynomials()
 {
+	Record_death();
 	if (v1) {
 		FREE_int(v1);
 	}
@@ -61,7 +63,7 @@ action_on_homogeneous_polynomials::~action_on_homogeneous_polynomials()
 
 void action_on_homogeneous_polynomials::init(
 		actions::action *A,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -128,7 +130,7 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	degree = nb_equations;
 
 
-	Table_of_equations = NEW_OBJECT(data_structures::int_matrix);
+	Table_of_equations = NEW_OBJECT(other::data_structures::int_matrix);
 
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::init_invariant_set_of_equations "
@@ -199,7 +201,7 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int b;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_homogeneous_polynomials::compute_image_int "
@@ -310,7 +312,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_semilinear;
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::matrix_group *mtx;
 	int n;
 	
 	if (f_v) {

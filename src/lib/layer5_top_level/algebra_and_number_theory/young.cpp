@@ -18,6 +18,7 @@ namespace apps_algebra {
 
 young::young()
 {
+	Record_birth();
 	n = 0;
 	A = NULL;
 	S = NULL;
@@ -51,6 +52,7 @@ young::young()
 
 young::~young()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -201,7 +203,7 @@ void young::init(
 
 
 
-	D = NEW_OBJECT(algebra::a_domain);
+	D = NEW_OBJECT(algebra::basic_algebra::a_domain);
 	D->init_integer_fractions(verbose_level);
 
 	if (f_v) {
@@ -522,7 +524,7 @@ void young::young_symmetrizer(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, a, b, h;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::young_symmetrizer" << endl;
@@ -574,8 +576,8 @@ void young::young_symmetrizer(
 	}
 
 
-	Row_partition = NEW_OBJECT(data_structures::set_of_sets);
-	Col_partition = NEW_OBJECT(data_structures::set_of_sets);
+	Row_partition = NEW_OBJECT(other::data_structures::set_of_sets);
+	Col_partition = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	Row_partition->init_basic_with_Sz_in_int(n, l1, row_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l1; i++) {
@@ -703,7 +705,7 @@ void young::compute_generators(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::compute_generators" << endl;

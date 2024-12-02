@@ -17,7 +17,7 @@
 #define LOG(x) std::cout << __FILE__ << ":" << __LINE__ << ": " << x << std::endl;
 #endif
 
-using finite_field = orbiter::layer1_foundations::field_theory::finite_field;
+using finite_field = orbiter::layer1_foundations::algebra::field_theory::finite_field;
 using std::unordered_map;
 using std::string;
 

@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 orthogonal_space_with_action_description::orthogonal_space_with_action_description()
 {
+	Record_birth();
 	epsilon = 0;
 	n = 0;
 
@@ -42,6 +43,7 @@ orthogonal_space_with_action_description::orthogonal_space_with_action_descripti
 
 orthogonal_space_with_action_description::~orthogonal_space_with_action_description()
 {
+	Record_death();
 }
 
 
@@ -51,7 +53,7 @@ int orthogonal_space_with_action_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_object_classifier_description::read_arguments" << endl;

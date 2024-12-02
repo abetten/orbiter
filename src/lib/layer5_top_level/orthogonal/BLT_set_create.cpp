@@ -20,6 +20,7 @@ namespace orthogonal_geometry_applications {
 
 BLT_set_create::BLT_set_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	//std::string prefix;
@@ -37,6 +38,7 @@ BLT_set_create::BLT_set_create()
 
 BLT_set_create::~BLT_set_create()
 {
+	Record_death();
 	if (set) {
 		FREE_lint(set);
 	}
@@ -57,8 +59,8 @@ void BLT_set_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
-	data_structures::string_tools ST;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::string_tools ST;
 	
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
@@ -84,7 +86,7 @@ void BLT_set_create::init(
 		string str;
 		string str_q;
 		f_has_group = false;
-		orthogonal_geometry::orthogonal_global OG;
+		geometry::orthogonal_geometry::orthogonal_global OG;
 
 		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
 			if (f_v) {
@@ -94,11 +96,11 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			orthogonal_geometry::orthogonal_global OG;
-			field_theory::finite_field *FQ;
+			geometry::orthogonal_geometry::orthogonal_global OG;
+			algebra::field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(field_theory::finite_field);
+			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			if (f_v) {
@@ -131,11 +133,11 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			orthogonal_geometry::orthogonal_global OG;
-			field_theory::finite_field *FQ;
+			geometry::orthogonal_geometry::orthogonal_global OG;
+			algebra::field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(field_theory::finite_field);
+			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init_small_order(Q,
@@ -160,11 +162,11 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 
-			orthogonal_geometry::orthogonal_global OG;
-			field_theory::finite_field *FQ;
+			geometry::orthogonal_geometry::orthogonal_global OG;
+			algebra::field_theory::finite_field *FQ;
 			int q, Q;
 
-			FQ = NEW_OBJECT(field_theory::finite_field);
+			FQ = NEW_OBJECT(algebra::field_theory::finite_field);
 			q = OA->Descr->F->q;
 			Q = q * q;
 			FQ->finite_field_init_small_order(Q,
@@ -297,7 +299,7 @@ void BLT_set_create::init(
 		}
 
 		f_has_group = false;
-		orthogonal_geometry::orthogonal_global OG;
+		geometry::orthogonal_geometry::orthogonal_global OG;
 
 		int *ABC;
 		int m, n;
@@ -347,7 +349,7 @@ void BLT_set_create::init(
 			cout << "BLT_set_create::init BLT set from catalogue" << endl;
 		}
 		int nb_iso;
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 
 		nb_iso = K.BLT_nb_reps(OA->Descr->F->q);
 		if (Descr->iso >= nb_iso) {
@@ -411,7 +413,7 @@ void BLT_set_create::init(
 
 
 
-		ring_theory::longinteger_object target_go;
+		algebra::ring_theory::longinteger_object target_go;
 
 		target_go.create_from_base_10_string(target_go_text);
 		if (f_v) {
@@ -555,7 +557,7 @@ void BLT_set_create::export_gap(
 	{
 		ofstream ost(fname);
 
-		orbiter_kernel_system::os_interface Os;
+		other::orbiter_kernel_system::os_interface Os;
 		string str;
 
 		Os.get_date(str);
@@ -572,7 +574,7 @@ void BLT_set_create::export_gap(
 		//ost << "# BLT-set " << label_txt << endl;
 
 
-		orthogonal_geometry::quadratic_form *Quadratic_form;
+		geometry::orthogonal_geometry::quadratic_form *Quadratic_form;
 
 		Quadratic_form = Blt_set_domain_with_action->Blt_set_domain->O->Quadratic_form;
 
@@ -641,7 +643,7 @@ void BLT_set_create::create_flock(
 
 	string str;
 	string fname_csv;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	str = "_flock_pt" + std::to_string(point_idx) + ".csv";
@@ -731,7 +733,7 @@ void BLT_set_create::export_set_in_PG(
 	long int j;
 	int v[5];
 	long int *Pts;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	sz = Blt_set_domain_with_action->Blt_set_domain->target_size;
 
@@ -758,7 +760,7 @@ void BLT_set_create::export_set_in_PG(
 	}
 
 	string fname_csv;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	fname_csv = label_txt + "_in_PG.csv";
@@ -786,14 +788,14 @@ void BLT_set_create::plane_invariant(
 	}
 
 	int sz;
-	orthogonal_geometry::orthogonal_plane_invariant *PI;
+	geometry::orthogonal_geometry::orthogonal_plane_invariant *PI;
 
 	sz = Blt_set_domain_with_action->Blt_set_domain->target_size;
 
 	//F = Blt_set_domain_with_action->Blt_set_domain->O->F;
 
 
-	PI = NEW_OBJECT(orthogonal_geometry::orthogonal_plane_invariant);
+	PI = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal_plane_invariant);
 
 	PI->init(
 			Blt_set_domain_with_action->Blt_set_domain->O,
@@ -826,7 +828,7 @@ void BLT_set_create::report2(
 	int f_12pt = false;
 	int f_enlarged_page = true;
 	int f_pagenumbers = true;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	str = "BLT-set " + label_tex;
 	title = str;

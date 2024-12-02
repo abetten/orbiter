@@ -19,6 +19,7 @@ namespace canonical_form {
 
 variety_activity::variety_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	nb_input_Vo = 0;
@@ -29,6 +30,7 @@ variety_activity::variety_activity()
 
 variety_activity::~variety_activity()
 {
+	Record_death();
 
 }
 
@@ -186,7 +188,7 @@ void variety_activity::do_singular_points(
 		cout << "variety_activity::do_compute_group "
 				"before getting Poly_ring" << endl;
 	}
-	ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring = Input_Vo[0].Variety_object->Ring;
 	if (f_v) {
 		cout << "variety_activity::do_compute_group "
 				"after getting Poly_ring" << endl;
@@ -220,7 +222,7 @@ void variety_activity::do_singular_points(
 		cout << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = Input_Vo[0].Variety_object->label_txt + "_singular_pts.csv";

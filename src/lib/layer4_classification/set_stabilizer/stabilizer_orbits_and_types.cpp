@@ -23,6 +23,7 @@ namespace set_stabilizer {
 
 stabilizer_orbits_and_types::stabilizer_orbits_and_types()
 {
+	Record_birth();
 	CS = NULL;
 
 	selected_set_stab_gens = NULL;
@@ -81,6 +82,7 @@ stabilizer_orbits_and_types::stabilizer_orbits_and_types()
 
 stabilizer_orbits_and_types::~stabilizer_orbits_and_types()
 {
+	Record_death();
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
@@ -234,7 +236,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 // orbits on points in action A2
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern" << endl;
@@ -355,7 +357,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 
 #if 1
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	int v, k, b_reduced;
 
@@ -419,7 +421,7 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(
 
 	fname = CS->SubSt->fname_case_out + "_stage_" + std::to_string(stage) + ".csv";
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string label;
 
@@ -451,7 +453,7 @@ void stabilizer_orbits_and_types::find_orbit_pattern(
 				<< " interesting_subsets[cnt]="
 				<< CS->SubSt->interesting_subsets[cnt] << endl;
 	}
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::find_orbit_pattern "
@@ -543,7 +545,7 @@ void stabilizer_orbits_and_types::find_interesting_orbits(
 	interesting_orbit_len = NEW_int(nb_interesting_orbits);
 
 	int idx, j, f, l, k, ii;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	j = 0;
 	for (k = 0; k < nb_interesting_orbits; k++) {
@@ -587,7 +589,7 @@ void stabilizer_orbits_and_types::compute_local_labels(
 
 	int i, idx, idx1, f, l, pos_local;
 	long int a;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	for (i = 0; i < sz; i++) {
 		a = set_in[i];
@@ -735,7 +737,7 @@ void stabilizer_orbits_and_types::map_reduced_set_and_do_orbit_counting(
 		long int subset_idx, int *transporter, int verbose_level)
 // computes orbit_count1[]
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	CS->SubSt->SubC->PC->map_to_canonical_k_subset(
 			CS->SubSt->Pts, CS->SubSt->nb_pts,
@@ -871,7 +873,7 @@ void stabilizer_orbits_and_types::print_minimal_orbit_pattern()
 	int *the_set;
 	int i;
 	int n, k;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	n = CS->SubSt->nb_pts;
 	k = CS->SubSt->SubC->substructure_size;

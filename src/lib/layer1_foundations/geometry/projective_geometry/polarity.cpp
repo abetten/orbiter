@@ -22,6 +22,7 @@ namespace projective_geometry {
 
 polarity::polarity()
 {
+	Record_birth();
 	//std::string label_txt;
 	//std::string label_tex;
 
@@ -51,6 +52,7 @@ polarity::polarity()
 
 polarity::~polarity()
 {
+	Record_death();
 	if (Point_to_hyperplane) {
 		FREE_int(Point_to_hyperplane);
 	}
@@ -593,7 +595,7 @@ void polarity::init_reversal_polarity(
 long int polarity::image_of_element(
 		int *Elt, int rho, long int a,
 		projective_space *P,
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

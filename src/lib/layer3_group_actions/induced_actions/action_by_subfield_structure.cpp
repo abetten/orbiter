@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_by_subfield_structure::action_by_subfield_structure()
 {
+	Record_birth();
 	n = 0;
 	Q = 0;
 	poly_q = NULL;
@@ -46,6 +47,7 @@ action_by_subfield_structure::action_by_subfield_structure()
 
 action_by_subfield_structure::~action_by_subfield_structure()
 {
+	Record_death();
 	if (v1) {
 		FREE_int(v1);
 		}
@@ -71,14 +73,14 @@ action_by_subfield_structure::~action_by_subfield_structure()
 
 void action_by_subfield_structure::init(
 		actions::action &A,
-		field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *Fq,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int p1, h1;
 	int p, h;
 	int q;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -156,7 +158,7 @@ void action_by_subfield_structure::init(
 	cout << "action_by_subfield_structure::init "
 			"creating subfield structure" << endl;
 
-	S = NEW_OBJECT(field_theory::subfield_structure);
+	S = NEW_OBJECT(algebra::field_theory::subfield_structure);
 
 	S->init(FQ, Fq, verbose_level);
 	cout << "action_by_subfield_structure::init "

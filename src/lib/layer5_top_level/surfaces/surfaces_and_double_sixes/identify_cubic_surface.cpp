@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 identify_cubic_surface::identify_cubic_surface()
 {
+	Record_birth();
 	Wedge = NULL;
 	coeff_of_given_surface = NULL;
 
@@ -66,6 +67,7 @@ identify_cubic_surface::identify_cubic_surface()
 
 identify_cubic_surface::~identify_cubic_surface()
 {
+	Record_death();
 }
 
 
@@ -76,7 +78,7 @@ void identify_cubic_surface::identify(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "identify_cubic_surface::identify" << endl;
@@ -164,10 +166,10 @@ void identify_cubic_surface::identify(
 				<< " lines, but should have 27 lines" << endl;
 		cout << "something is wrong with the input surface, skipping" << endl;
 		cout << "Points:";
-		orbiter_kernel_system::Orbiter->Lint_vec->print(cout, My_Points);
+		other::orbiter_kernel_system::Orbiter->Lint_vec->print(cout, My_Points);
 		cout << endl;
 		cout << "Lines:";
-		orbiter_kernel_system::Orbiter->Lint_vec->print(cout, My_Lines);
+		other::orbiter_kernel_system::Orbiter->Lint_vec->print(cout, My_Lines);
 		cout << endl;
 
 		return;
@@ -194,7 +196,7 @@ void identify_cubic_surface::identify(
 
 
 
-	line_intersections = NEW_OBJECT(data_structures::set_of_sets);
+	line_intersections = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	line_intersections->init_from_adjacency_matrix(
 		27 /* nb_lines*/, Adj,
@@ -479,7 +481,7 @@ void identify_cubic_surface::identify(
 	cout << endl;
 
 
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::matrix_group *mtx;
 
 	mtx = Wedge->A->G.matrix_grp;
 

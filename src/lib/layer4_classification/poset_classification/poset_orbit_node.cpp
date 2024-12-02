@@ -17,6 +17,7 @@ namespace poset_classification {
 
 poset_orbit_node::poset_orbit_node()
 {
+	Record_birth();
 	pt = -1;
 	prev = -1;
 	node = -1;
@@ -33,6 +34,7 @@ poset_orbit_node::poset_orbit_node()
 
 poset_orbit_node::~poset_orbit_node()
 {
+	Record_death();
 	freeself();
 }
 
@@ -126,7 +128,7 @@ void poset_orbit_node::init_root_node(
 	//sv = NULL;
 	Schreier_vector = NULL;
 	
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "poset_orbit_node::init_root_node "
@@ -439,7 +441,7 @@ void poset_orbit_node::log_current_node_without_group(
 		int s, std::ostream &f, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 
 	if (f_v) {
@@ -476,7 +478,7 @@ void poset_orbit_node::log_current_node(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go, rk;
+	algebra::ring_theory::longinteger_object go, rk;
 	int i;
 
 	if (f_v) {
@@ -564,7 +566,7 @@ void poset_orbit_node::log_current_node(
 
 	if (f_with_stabilizer_generators) {
 		groups::strong_generators *Strong_gens;
-		ring_theory::longinteger_object go1;
+		algebra::ring_theory::longinteger_object go1;
 
 		get_stabilizer_generators(gen, Strong_gens, verbose_level);
 		Strong_gens->group_order(go1);
@@ -620,7 +622,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i;
 	int *S;
 	int *Elt;
@@ -885,8 +887,8 @@ void poset_orbit_node::print_set(
 		poset_classification *gen)
 {
 	int depth, size, i;
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_domain D;
 	long int *set;
 	
 	depth = depth_of_node(gen);
@@ -1109,7 +1111,7 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 	int *ancestor;
 	int *depth;
 	int *orbit_reps;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {

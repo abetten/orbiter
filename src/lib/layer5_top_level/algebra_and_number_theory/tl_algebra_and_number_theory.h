@@ -142,13 +142,13 @@ public:
 	std::string label_tex;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_semilinear;
 
 	projective_geometry::projective_space_with_action *PA;
 
-	combinatorics::polynomial_function_domain *PF;
+	combinatorics::special_functions::polynomial_function_domain *PF;
 
 	actions::action *A_on_poly;
 
@@ -191,6 +191,8 @@ class algebra_global_with_action {
 
 public:
 
+	algebra_global_with_action();
+	~algebra_global_with_action();
 	void orbits_under_conjugation(
 			long int *the_set, int set_size,
 			groups::sims *S,
@@ -210,7 +212,7 @@ public:
 	// this is related to Betten, Topalova, Zhelezova 2021,
 	// packings in PG(3,4) invariant under an elementary abelian group of order 4
 	void classes_GL(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int d, int f_no_eigenvalue_one, int verbose_level);
 #if 0
 	void do_normal_form(
@@ -255,14 +257,14 @@ public:
 #endif
 
 	void do_eigenstuff_with_coefficients(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, std::string &coeffs_text,
 			int verbose_level);
 	void do_eigenstuff_from_file(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, std::string &fname, int verbose_level);
 	void do_eigenstuff(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int size, int *Data, int verbose_level);
 
 
@@ -282,7 +284,7 @@ public:
 			int verbose_level);
 	void representation_on_polynomials(
 			group_constructions::linear_group *LG,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 
 	void search_element_of_order(
@@ -404,6 +406,8 @@ public:
 class character_table_burnside {
 public:
 
+	character_table_burnside();
+	~character_table_burnside();
 	void do_it(
 			int n, int verbose_level);
 	void create_matrix(
@@ -412,16 +416,16 @@ public:
 		int *character_degree, int *class_size,
 		int verbose_level);
 	void compute_character_table(
-			algebra::a_domain *D, int nb_classes, int *Omega,
+			algebra::basic_algebra::a_domain *D, int nb_classes, int *Omega,
 		int *character_degree, int *class_size,
 		int *&character_table, int verbose_level);
 	void compute_character_degrees(
-			algebra::a_domain *D,
+			algebra::basic_algebra::a_domain *D,
 		int goi, int nb_classes, int *Omega, int *class_size,
 		int *&character_degree,
 		int verbose_level);
 	void compute_omega(
-			algebra::a_domain *D, int *N0, int nb_classes,
+			algebra::basic_algebra::a_domain *D, int *N0, int nb_classes,
 			int *Mu, int nb_mu, int *&Omega,
 			int verbose_level);
 	int compute_r0(
@@ -853,16 +857,16 @@ public:
 class polynomial_ring_activity {
 public:
 
-	ring_theory::polynomial_ring_activity_description *Descr;
+	algebra::ring_theory::polynomial_ring_activity_description *Descr;
 
-	ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 	polynomial_ring_activity();
 	~polynomial_ring_activity();
 	void init(
-			ring_theory::polynomial_ring_activity_description *Descr,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::polynomial_ring_activity_description *Descr,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);
@@ -916,7 +920,7 @@ public:
 	int n;
 	actions::action *A;
 	groups::sims *S;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int goi;
 	int *Elt;
 	int *v;
@@ -928,15 +932,15 @@ public:
 	int nb_classes;
 	int *class_size;
 	int *class_rep;
-	algebra::a_domain *D;
+	algebra::basic_algebra::a_domain *D;
 
 	int l1, l2;
 	int *row_parts;
 	int *col_parts;
 	int *Tableau;
 
-	data_structures::set_of_sets *Row_partition;
-	data_structures::set_of_sets *Col_partition;
+	other::data_structures::set_of_sets *Row_partition;
+	other::data_structures::set_of_sets *Col_partition;
 
 	data_structures_groups::vector_ge *gens1, *gens2;
 	groups::sims *S1, *S2;

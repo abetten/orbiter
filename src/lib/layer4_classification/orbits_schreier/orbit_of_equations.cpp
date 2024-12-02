@@ -26,6 +26,7 @@ static int orbit_of_equations_compare_func(
 
 orbit_of_equations::orbit_of_equations()
 {
+	Record_birth();
 	A = NULL;
 	AonHPD = NULL;
 	F = NULL;
@@ -53,6 +54,7 @@ orbit_of_equations::orbit_of_equations()
 
 orbit_of_equations::~orbit_of_equations()
 {
+	Record_death();
 	int i;
 	
 	if (Equations) {
@@ -74,7 +76,7 @@ orbit_of_equations::~orbit_of_equations()
 
 void orbit_of_equations::init(
 		actions::action *A,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		induced_actions::action_on_homogeneous_polynomials
 			*AonHPD,
 	groups::strong_generators *SG,
@@ -600,7 +602,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	int *E1, *E2, *E3, *E4, *E5;
 	int *cur_object;
 	int *new_object;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "orbit_of_equations::get_random_schreier_generator" << endl;
@@ -704,7 +706,7 @@ void orbit_of_equations::get_canonical_form(
 		int *transporter_to_canonical_form,
 		groups::strong_generators
 			*&gens_stab_of_canonical_equation,
-		ring_theory::longinteger_object
+			algebra::ring_theory::longinteger_object
 			&full_group_order,
 		int verbose_level)
 {
@@ -752,7 +754,7 @@ void orbit_of_equations::get_canonical_form(
 }
 
 groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -781,7 +783,7 @@ groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 				"after stabilizer_orbit_rep_work" << endl;
 	}
 
-	ring_theory::longinteger_object stab_order;
+	algebra::ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -803,7 +805,7 @@ groups::strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 void orbit_of_equations::stabilizer_orbit_rep_work(
 		actions::action *default_action,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		groups::sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -818,8 +820,8 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 	}
 
 	Stab = NEW_OBJECT(groups::sims);
-	ring_theory::longinteger_object cur_go, target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object cur_go, target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int *E1;
@@ -921,7 +923,7 @@ void orbit_of_equations::stabilizer_orbit_rep_work(
 
 
 groups::strong_generators *orbit_of_equations::stabilizer_any_point(
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int idx,
 	int verbose_level)
 {
@@ -1007,7 +1009,7 @@ int orbit_of_equations::search_equation(
 		int *eqn, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int p[1];
 	p[0] = sz_for_compare;
 	int ret;
@@ -1059,7 +1061,7 @@ int orbit_of_equations::search_data(
 		int *data, int &idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int p[1];
 	p[0] = sz_for_compare;
 	int ret;
@@ -1102,7 +1104,7 @@ void orbit_of_equations::save_csv(
 {
 	int i;
 	int *Data;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Data = NEW_int(used_length * nb_monomials);
 	for (i = 0; i < used_length; i++) {

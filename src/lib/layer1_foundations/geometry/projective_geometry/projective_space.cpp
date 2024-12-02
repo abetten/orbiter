@@ -24,7 +24,8 @@ namespace projective_geometry {
 
 projective_space::projective_space()
 {
-	orbiter_kernel_system::Orbiter->nb_times_projective_space_created++;
+	Record_birth();
+	other::orbiter_kernel_system::Orbiter->nb_times_projective_space_created++;
 
 	Subspaces = NULL;
 
@@ -46,6 +47,7 @@ projective_space::projective_space()
 
 projective_space::~projective_space()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -79,15 +81,15 @@ projective_space::~projective_space()
 
 void projective_space::projective_space_init(
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int f_init_incidence_structure, 
 	int verbose_level)
 // n is projective dimension
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
-	combinatorics::combinatorics_domain C;
-	ring_theory::longinteger_object a;
+	combinatorics::other_combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object a;
 
 	if (f_v) {
 		cout << "projective_space::projective_space_init "
@@ -268,7 +270,7 @@ void projective_space::Baer_subline(
 	int rk;
 	int len;
 	int i, j;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::Baer_subline" << endl;

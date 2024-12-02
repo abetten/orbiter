@@ -34,6 +34,7 @@ static void spread_early_test_func_callback(
 
 spread_classify::spread_classify()
 {
+	Record_birth();
 
 	Descr = NULL;
 	SD = NULL;
@@ -77,6 +78,7 @@ spread_classify::spread_classify()
 
 spread_classify::~spread_classify()
 {
+	Record_death();
 #if 0
 	if (A) {
 		FREE_OBJECT(A);
@@ -262,8 +264,8 @@ void spread_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory::number_theory_domain NT;
-	combinatorics::combinatorics_domain Combi;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	
 	if (f_v) {
@@ -441,7 +443,7 @@ void spread_classify::init(
 
 
 	if (true /*f_v*/) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		
 		if (f_v) {
 			cout << "spread_classify::init computing group order" << endl;
@@ -507,7 +509,7 @@ void spread_classify::init(
 					"recoordinatize::compute_starter" << endl;
 		}
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Starter_Strong_gens->group_order(go);
 		if (true /*f_v*/) {
 			cout << "spread_classify::init "
@@ -698,7 +700,7 @@ void spread_classify::classify_partial_spreads(
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -759,7 +761,7 @@ void spread_classify::lifting(
 		int orbit_at_level, int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int &nb_vertices,
-		solvers::diophant *&Dio,
+		combinatorics::solvers::diophant *&Dio,
 		long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level)
@@ -940,7 +942,7 @@ void spread_classify::lifting(
 void spread_classify::setup_lifting(
 		data_structures_groups::orbit_rep *R,
 		std::string &output_prefix,
-		solvers::diophant *&Dio, long int *&col_labels,
+		combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level)
 {
@@ -1045,7 +1047,7 @@ void spread_classify::setup_lifting(
 	}
 #endif
 
-	data_structures::bitvector *Adj;
+	other::data_structures::bitvector *Adj;
 	
 	if (f_v) {
 		cout << "spread_classify::setup_lifting "

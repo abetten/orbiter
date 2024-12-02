@@ -20,6 +20,7 @@ namespace apps_algebra {
 
 action_on_forms_activity_description::action_on_forms_activity_description()
 {
+	Record_birth();
 
 	f_algebraic_normal_form = false;
 	//std::string algebraic_normal_form_input;
@@ -39,6 +40,7 @@ action_on_forms_activity_description::action_on_forms_activity_description()
 
 action_on_forms_activity_description::~action_on_forms_activity_description()
 {
+	Record_death();
 }
 
 
@@ -48,7 +50,7 @@ int action_on_forms_activity_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "action_on_forms_activity_description::read_arguments" << endl;

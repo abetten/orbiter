@@ -400,7 +400,7 @@ void cayley_graph_search::init_group_level_4(
 		int q = 2;
 		data_structures_groups::vector_ge *nice_gens;
 
-		F = NEW_OBJECT(field_theory::finite_field);
+		F = NEW_OBJECT(algebra::field_theory::finite_field);
 		F->finite_field_init_small_order(q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
@@ -549,7 +549,7 @@ void cayley_graph_search::init_group_level_4(
 			"(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)",
 			"(5,6)(7,8)(9,10)(11,12)"
 			};
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		gens->allocate(5, verbose_level - 2);
 
@@ -672,7 +672,7 @@ void cayley_graph_search::init_group_level_5(
 		int q = 2;
 		data_structures_groups::vector_ge *nice_gens;
 
-		F = NEW_OBJECT(field_theory::finite_field);
+		F = NEW_OBJECT(algebra::field_theory::finite_field);
 		F->finite_field_init_small_order(q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
@@ -746,7 +746,7 @@ void cayley_graph_search::init_group_level_5(
 		gens, Strong_gens,
 		verbose_level);
 
-	ring_theory::longinteger_object go1;
+	algebra::ring_theory::longinteger_object go1;
 	Strong_gens->group_order(go1);
 	cout << "go1=" << go1 << endl;
 	//exit(1);
@@ -981,7 +981,7 @@ void cayley_graph_search::write_file(
 		FREE_lint(Adj);
 		} // end of fp
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_graphs << " of size "
 			<< Fio.file_size(fname_graphs) << endl;

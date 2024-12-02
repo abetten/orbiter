@@ -22,6 +22,7 @@ namespace combinatorics_with_groups {
 
 group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 {
+	Record_birth();
 	Any_Combo = NULL;
 
 	//std::string label_txt;
@@ -52,6 +53,7 @@ group_action_on_combinatorial_object::group_action_on_combinatorial_object()
 
 group_action_on_combinatorial_object::~group_action_on_combinatorial_object()
 {
+	Record_death();
 	if (points) {
 		FREE_lint(points);
 	}
@@ -63,7 +65,7 @@ group_action_on_combinatorial_object::~group_action_on_combinatorial_object()
 void group_action_on_combinatorial_object::init(
 		std::string &label_txt,
 		std::string &label_tex,
-		canonical_form_classification::any_combinatorial_object *Any_Combo,
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
 		actions::action *A_perm,
 		int verbose_level)
 {
@@ -169,7 +171,7 @@ void group_action_on_combinatorial_object::init(
 	}
 
 
-	Decomposition = NEW_OBJECT(combinatorics::decomposition);
+	Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
@@ -353,8 +355,8 @@ void group_action_on_combinatorial_object::init(
 
 void group_action_on_combinatorial_object::print_schemes(
 		std::ostream &ost,
-		graphics::draw_incidence_structure_description *Draw_options,
-		canonical_form_classification::objects_report_options
+		other::graphics::draw_incidence_structure_description *Draw_options,
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -454,7 +456,7 @@ void group_action_on_combinatorial_object::export_TDA_with_flag_orbits(
 		cout << "group_action_on_combinatorial_object::export_TDA_with_flag_orbits" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 
@@ -584,7 +586,7 @@ void group_action_on_combinatorial_object::export_INP_with_flag_orbits(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 

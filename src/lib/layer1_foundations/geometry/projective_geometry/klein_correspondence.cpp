@@ -17,6 +17,7 @@ namespace projective_geometry {
 
 klein_correspondence::klein_correspondence()
 {
+	Record_birth();
 	P3 = NULL;
 	P5 = NULL;
 	O = NULL;
@@ -38,6 +39,7 @@ klein_correspondence::klein_correspondence()
 
 klein_correspondence::~klein_correspondence()
 {
+	Record_death();
 	if (P3) {
 		FREE_OBJECT(P3);
 	}
@@ -77,8 +79,8 @@ klein_correspondence::~klein_correspondence()
 }
 
 void klein_correspondence::init(
-		field_theory::finite_field *F,
-		orthogonal_geometry::orthogonal *O,
+		algebra::field_theory::finite_field *F,
+		geometry::orthogonal_geometry::orthogonal *O,
 		int verbose_level)
 // opens two projective_space objects P3 and P5
 // and two grassmann objects Gr63 and Gr62
@@ -135,8 +137,8 @@ void klein_correspondence::init(
 	Gr63->init(6, 3, F, 0 /* verbose_level */);
 	Gr62->init(6, 2, F, 0 /* verbose_level */);
 
-	combinatorics::combinatorics_domain Combi;
-	ring_theory::longinteger_object la;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	algebra::ring_theory::longinteger_object la;
 
 	Combi.q_binomial(la, d, 2, q, 0 /* verbose_level */);
 
@@ -368,7 +370,7 @@ void klein_correspondence::init(
 
 void klein_correspondence::plane_intersections(
 	long int *lines_in_PG3, int nb_lines,
-	ring_theory::longinteger_object *&R,
+	algebra::ring_theory::longinteger_object *&R,
 	long int **&Pts_on_plane,
 	int *&nb_pts_on_plane, 
 	int &nb_planes, 
@@ -786,7 +788,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 	int *basis_elliptic_quadric;
 	int *basis;
 	int *basis_external_line;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	spread_to_external_line_idx = NEW_lint(T->nb_spreads);
 	external_line_to_spread = NEW_lint(External_lines.size());

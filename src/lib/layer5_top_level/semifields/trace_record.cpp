@@ -20,6 +20,7 @@ namespace semifields {
 
 trace_record::trace_record()
 {
+	Record_birth();
 	coset = 0;
 	trace_po = 0;
 	f_skip = false;
@@ -34,6 +35,7 @@ trace_record::trace_record()
 
 trace_record::~trace_record()
 {
+	Record_death();
 
 }
 
@@ -59,7 +61,7 @@ void save_trace_record(
 		"f2"
 		};
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	M = NEW_lint(N * w);
 	for (i = 0; i < N; i++) {

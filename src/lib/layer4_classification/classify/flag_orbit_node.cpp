@@ -21,6 +21,7 @@ namespace invariant_relations {
 
 flag_orbit_node::flag_orbit_node()
 {
+	Record_birth();
 	Flag_orbits = NULL;
 	flag_orbit_index = -1;
 	downstep_primary_orbit = -1;
@@ -42,6 +43,7 @@ flag_orbit_node::flag_orbit_node()
 
 flag_orbit_node::~flag_orbit_node()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -203,7 +205,7 @@ void flag_orbit_node::print_latex(
 		std::ostream &ost,
 		int f_print_stabilizer_gens)
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	ost << "Flag orbit " << flag_orbit_index << " / " << Flag_orbits->nb_flag_orbits
 			<< " down=(" << downstep_primary_orbit
@@ -248,7 +250,7 @@ void flag_orbit_node::print(
 		flag_orbits *Flag_orbits,
 		int f_print_stabilizer_gens)
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	cout << "Flag orbit " << flag_orbit_index << " / " << Flag_orbits->nb_flag_orbits
 			<< " down=(" << downstep_primary_orbit

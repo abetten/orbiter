@@ -31,6 +31,7 @@ static void poset_classification_control_early_test_function_cliques(
 
 poset_classification_control::poset_classification_control()
 {
+	Record_birth();
 
 	f_problem_label = false;
 	//problem_label = NULL;
@@ -99,6 +100,7 @@ poset_classification_control::poset_classification_control()
 
 poset_classification_control::~poset_classification_control()
 {
+	Record_death();
 
 }
 
@@ -110,7 +112,7 @@ int poset_classification_control::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_control::read_arguments" << endl;
@@ -354,14 +356,14 @@ void poset_classification_control::prepare(
 
 		int idx;
 
-		idx = orbiter_kernel_system::Orbiter->find_symbol(clique_test_graph);
+		idx = other::orbiter_kernel_system::Orbiter->find_symbol(clique_test_graph);
 
 		if (idx == -1) {
 			cout << "poset_classification_control::prepare -clique_test cannot find symbol " << clique_test_graph << endl;
 			exit(1);
 		}
 
-		clique_test_CG = (graph_theory::colored_graph *) orbiter_kernel_system::Orbiter->get_object(idx);
+		clique_test_CG = (combinatorics::graph_theory::colored_graph *) other::orbiter_kernel_system::Orbiter->get_object(idx);
 		if (f_v) {
 			cout << "poset_classification_control::prepare -clique_test "
 					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;

@@ -25,6 +25,7 @@ namespace groups {
 
 conjugacy_class_of_subgroups::conjugacy_class_of_subgroups()
 {
+	Record_birth();
 
 	Class_data = NULL;
 	idx = 0;
@@ -39,6 +40,7 @@ conjugacy_class_of_subgroups::conjugacy_class_of_subgroups()
 
 conjugacy_class_of_subgroups::~conjugacy_class_of_subgroups()
 {
+	Record_death();
 	if (gens) {
 		FREE_OBJECT(gens);
 	}

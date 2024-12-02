@@ -23,6 +23,7 @@ namespace actions {
 
 group_element::group_element()
 {
+	Record_birth();
 	A = NULL;
 
 	Elt1 = Elt2 = Elt3 = Elt4 = Elt5 = NULL;
@@ -35,6 +36,7 @@ group_element::group_element()
 
 group_element::~group_element()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -637,7 +639,7 @@ void group_element::cycle_type(
 		cout << "group_element::cycle_type" << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	int *perm;
 
 	perm = NEW_int(A->degree);
@@ -676,7 +678,7 @@ void group_element::element_print_as_permutation_with_offset(
 	int f_max_cycle_length = false;
 	int max_cycle_length = 50;
 	int f_orbit_structure = false;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "group_element::element_print_as_permutation_with_offset "
@@ -753,7 +755,7 @@ void group_element::element_print_as_permutation_with_offset_and_max_cycle_lengt
 	int f_print_cycles_of_length_one = false;
 	int f_cycle_length = false;
 	int f_max_cycle_length = true;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	perm = NEW_int(A->degree);
 
@@ -794,7 +796,7 @@ int group_element::element_signum_of_permutation(
 {
 	int *perm;
 	int sgn;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	perm = NEW_int(A->degree);
 
@@ -863,7 +865,7 @@ void group_element::element_write_file(
 // opens and closes the file
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 #if 0
 	FILE *f2;
@@ -890,7 +892,7 @@ void group_element::element_read_file(
 // opens and closes the file
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "group_element::element_read_file: "
@@ -915,7 +917,7 @@ void group_element::element_read_file(
 
 void group_element::element_write_to_memory_object(
 		int *Elt,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -933,7 +935,7 @@ void group_element::element_write_to_memory_object(
 
 void group_element::element_read_from_memory_object(
 		int *Elt,
-		orbiter_kernel_system::memory_object *m,
+		other::orbiter_kernel_system::memory_object *m,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1137,7 +1139,7 @@ int group_element::element_order_and_cycle_type_verbose(
 	int f_vv = (verbose_level >= 2);
 	int *have_seen;
 	long int l, l1, first, next, len, g, n, order = 1;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_element::element_order_verbose" << endl;
@@ -1207,7 +1209,7 @@ int group_element::element_order_if_divisor_of(
 {
 	int *have_seen;
 	long int l, l1, first, next, len, g, n, order = 1;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	n = A->degree;
 	have_seen = NEW_int(n);
@@ -1602,7 +1604,7 @@ int group_element::test_if_set_stabilizes(
 	long int *set1, *set2;
 	int cmp;
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "group_element::test_if_set_stabilizes" << endl;
@@ -1683,7 +1685,7 @@ void group_element::map_a_set_and_reorder(
 		long int *image_set,
 		int n, int *Elt, int verbose_level)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	map_a_set(set, image_set, n, Elt, verbose_level);
 	Sorting.lint_vec_heapsort(image_set, n);
@@ -2194,7 +2196,7 @@ int group_element::check_if_in_set_stabilizer(
 	int i, a, b, idx;
 	long int *ordered_set;
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	ordered_set = NEW_lint(size);
 	Lint_vec_copy(set, ordered_set, size);
@@ -2241,7 +2243,7 @@ void group_element::check_if_in_set_stabilizer_debug(
 
 	int i, a, b, idx;
 	long int *ordered_set;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	ordered_set = NEW_lint(size);
 	Lint_vec_copy(set, ordered_set, size);
@@ -2299,7 +2301,7 @@ int group_element::check_if_transporter_for_set(
 	int f_vv = false; //(verbose_level >= 4);
 	int i, a, b, idx;
 	long int *ordered_set2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "group_element::check_if_transporter_for_set "
@@ -2613,14 +2615,14 @@ void group_element::report_fixed_objects_in_PG(
 int group_element::test_if_it_fixes_the_polynomial(
 	int *Elt,
 	int *input,
-	ring_theory::homogeneous_polynomial_domain *HPD,
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *input1;
 	int *output;
 	int ret = true;
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::matrix_group *mtx;
 
 	if (f_v) {
 		cout << "group_element::test_if_it_fixes_the_polynomial" << endl;
@@ -2662,7 +2664,7 @@ int group_element::test_if_it_fixes_the_polynomial(
 			output, 1, HPD->get_nb_monomials());
 
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int cmp;
 
 	cmp = Sorting.integer_vec_compare(
@@ -2705,13 +2707,13 @@ int group_element::test_if_it_fixes_the_polynomial(
 void group_element::action_on_polynomial(
 	int *Elt,
 	int *input, int *output,
-	ring_theory::homogeneous_polynomial_domain *HPD,
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_semilinear;
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::matrix_group *mtx;
 	int n;
 	int *Elt1;
 

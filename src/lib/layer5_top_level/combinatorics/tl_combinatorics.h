@@ -26,7 +26,7 @@ class boolean_function_classify {
 
 public:
 
-	combinatorics::boolean_function_domain *BF;
+	combinatorics::special_functions::boolean_function_domain *BF;
 
 	// group stuff:
 	actions::action *A;
@@ -34,7 +34,7 @@ public:
 
 	induced_actions::action_on_homogeneous_polynomials *AonHPD;
 	groups::strong_generators *SG;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	actions::action *A_affine;
 		// restricted action on affine points
@@ -66,7 +66,7 @@ public:
 	~boolean_function_classify();
 
 	void init_group(
-			combinatorics::boolean_function_domain *BF,
+			combinatorics::special_functions::boolean_function_domain *BF,
 			actions::action *A,
 			int verbose_level);
 	void search_for_bent_functions(
@@ -76,7 +76,7 @@ public:
 	void print_orbit_reps_with_minimum_weight();
 	void export_orbit(
 			int idx,
-			data_structures::int_matrix *&M,
+			other::data_structures::int_matrix *&M,
 			int verbose_level);
 
 };
@@ -134,15 +134,15 @@ public:
 	projective_geometry::projective_space_with_action
 		*Canonical_form_PG_PA;
 
-	canonical_form_classification::classification_of_objects_description
+	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_PG_Descr;
 
 	int f_canonical_form;
-	canonical_form_classification::classification_of_objects_description
+	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
 
 	int f_report;
-	canonical_form_classification::objects_report_options
+	combinatorics::canonical_form_classification::objects_report_options
 		*Objects_report_options;
 
 	int f_draw_incidence_matrices;
@@ -211,12 +211,12 @@ public:
 			apps_combinatorics::combinatorial_object_stream *Combo,
 			int verbose_level);
 	void perform_activity(
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void perform_activity_geometric_object(
 			int verbose_level);
 	void perform_activity_combo(
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };
@@ -235,12 +235,12 @@ class combinatorial_object_stream {
 public:
 
 	// Input:
-	canonical_form_classification::data_input_stream *IS;
+	combinatorics::canonical_form_classification::data_input_stream *IS;
 
 	// Output:
 
 	// layer 1:
-	canonical_form_classification::classification_of_objects *Classification_of_objects;
+	combinatorics::canonical_form_classification::classification_of_objects *Classification_of_objects;
 
 	// layer 5:
 	canonical_form::objects_after_classification *Objects_after_classification;
@@ -248,11 +248,11 @@ public:
 	combinatorial_object_stream();
 	~combinatorial_object_stream();
 	void init(
-			canonical_form_classification::data_input_stream_description
+			combinatorics::canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
 	void do_canonical_form(
-			canonical_form_classification::classification_of_objects_description
+			combinatorics::canonical_form_classification::classification_of_objects_description
 					*Canonical_form_Descr,
 			int f_projective_space,
 			projective_geometry::projective_space_with_action *PA,
@@ -266,19 +266,19 @@ public:
 			int verbose_level);
 #endif
 	void do_test_distinguishing_property(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 	void do_covering_type(
 			orbits::orbits_create *Orb,
 			int sz,
 			int f_filter_by_Steiner_property,
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_compute_frequency_graph(
-			graph_theory::colored_graph *CG,
+			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
 	void do_compute_ideal(
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int verbose_level);
 	void do_save(
 			std::string &save_as_fname,
@@ -287,7 +287,7 @@ public:
 			int verbose_level);
 	void draw_incidence_matrices(
 			std::string &prefix,
-			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 			int verbose_level);
 	void unpack_from_restricted_action(
 			std::string &prefix,
@@ -304,12 +304,12 @@ public:
 			int verbose_level);
 	void do_activity(
 			user_interface::activity_description *Activity_description,
-			orbiter_kernel_system::activity_output *&AO,
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
 			apps_graph_theory::graph_theoretic_activity_description
 					*Graph_theoretic_activity_description,
-			orbiter_kernel_system::activity_output *&AO,
+					other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 
 };
@@ -343,7 +343,7 @@ public:
 			int verbose_level);
 	void span_base_blocks(
 			groups::any_group *AG,
-			data_structures::set_of_sets *SoS_base_blocks,
+			other::data_structures::set_of_sets *SoS_base_blocks,
 			int *Base_block_selection, int nb_base_blocks,
 			int &v, int &b, int &k,
 			long int *&Blocks,
@@ -390,7 +390,7 @@ public:
 	long int nb_nodes_total;
 
 
-	orbiter_kernel_system::orbiter_data_file *ODF;
+	other::orbiter_kernel_system::orbiter_data_file *ODF;
 
 
 	dd_lifting();
@@ -427,7 +427,7 @@ public:
 	int orbit_idx;
 	int target_depth;
 	int level;
-	data_structures::set_of_sets *Live_points;
+	other::data_structures::set_of_sets *Live_points;
 	long int *chosen_set; // [target_depth]
 	int *index; // [target_depth]
 	long int nb_nodes;
@@ -565,8 +565,8 @@ public:
 
 	delandtsheer_doyen_description *Descr;
 
-	field_theory::finite_field *F1;
-	field_theory::finite_field *F2;
+	algebra::field_theory::finite_field *F1;
+	algebra::field_theory::finite_field *F2;
 
 	std::string label;
 
@@ -581,8 +581,8 @@ public:
 
 	poset_classification::poset_classification_control *Search_control;
 
-	algebra::matrix_group *M1;
-	algebra::matrix_group *M2;
+	algebra::basic_algebra::matrix_group *M1;
+	algebra::basic_algebra::matrix_group *M2;
 	actions::action *A1;
 	actions::action *A2;
 
@@ -590,7 +590,7 @@ public:
 	actions::action *A0;
 
 	groups::strong_generators *SG;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_constructions::direct_product *P;
 
 	poset_classification::poset_classification *Gen;
@@ -732,7 +732,7 @@ public:
 
 
 	int f_canonical_form;
-	canonical_form_classification::classification_of_objects_description
+	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
 
 	int f_extract_solutions_by_index_csv;
@@ -819,7 +819,7 @@ public:
 			int selected_orbit_length,
 			int verbose_level);
 	void do_canonical_form(
-			canonical_form_classification::classification_of_objects_description
+			combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
@@ -830,7 +830,7 @@ public:
 			int verbose_level);
 	void do_export_incidence_matrix_latex(
 			design_create *DC,
-			graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 			int verbose_level);
 	void do_intersection_matrix(
 			design_create *DC,
@@ -955,7 +955,7 @@ public:
 	std::string label_tex;
 
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int k;
 
@@ -1002,7 +1002,7 @@ public:
 			apps_combinatorics::design_create_description *Descr,
 			int verbose_level);
 	void create_design_PG_2_q(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			long int *&set, int &sz, int &k,
 			int verbose_level);
 	// creates a projective_space_with_action object
@@ -1117,8 +1117,8 @@ public:
 
 	int n;
 	int q;
-	field_theory::finite_field *F;
-	algebra::heisenberg *H;
+	algebra::field_theory::finite_field *F;
+	algebra::basic_algebra::heisenberg *H;
 	int *Table;
 	int *Table_abv;
 	int *gens;
@@ -1126,7 +1126,7 @@ public:
 
 	actions::action *A;
 	groups::strong_generators *Aut_gens;
-	ring_theory::longinteger_object Aut_order;
+	algebra::ring_theory::longinteger_object Aut_order;
 
 	int given_base_length; // = nb_gens
 	long int *given_base; // = gens
@@ -1139,7 +1139,7 @@ public:
 	std::string fname_magma_out;
 	groups::sims *Aut;
 	groups::sims *U;
-	ring_theory::longinteger_object U_go;
+	algebra::ring_theory::longinteger_object U_go;
 	data_structures_groups::vector_ge *U_gens;
 	groups::schreier *Sch;
 
@@ -1148,7 +1148,7 @@ public:
 	int *N_gens;
 	int N_nb_gens, N_go;
 	actions::action *N;
-	ring_theory::longinteger_object N_order;
+	algebra::ring_theory::longinteger_object N_order;
 
 	actions::action *N_on_orbits;
 	int *Paired_with;
@@ -1182,7 +1182,7 @@ public:
 
 	void init(
 			int n,
-			field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F, int verbose_level);
 	void do_n2q3(
 			int verbose_level);
 	void check_overgroups_of_order_nine(
@@ -1214,8 +1214,8 @@ class hadamard_classify {
 public:
 	int n;
 	int N, N2;
-	data_structures::bitvector *Bitvec;
-	graph_theory::colored_graph *CG;
+	other::data_structures::bitvector *Bitvec;
+	combinatorics::graph_theory::colored_graph *CG;
 
 	actions::action *A;
 
@@ -1437,7 +1437,7 @@ public:
 	actions::action *A_on_designs;
 
 
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	int *degree;
 
 	poset_classification::poset_classification_control *Control;
@@ -1720,7 +1720,7 @@ public:
 
 	projective_geometry::projective_space_with_action *PA;
 
-	algebraic_geometry::variety_object *Variety_object;
+	geometry::algebraic_geometry::variety_object *Variety_object;
 
 	actions::action *A_on_points;
 	actions::action *A_on_lines;
@@ -1731,18 +1731,18 @@ public:
 	int f_has_TDO_TDA;
 
 	// these may be NULL, for instance if the projective space is too large:
-	combinatorics::decomposition_scheme *Decomposition_scheme_TDO;
-	combinatorics::decomposition_scheme *Decomposition_scheme_TDA;
+	combinatorics::tactical_decompositions::decomposition_scheme *Decomposition_scheme_TDO;
+	combinatorics::tactical_decompositions::decomposition_scheme *Decomposition_scheme_TDA;
 
-	algebraic_geometry::variety_object *Variety_with_TDO;
-	algebraic_geometry::variety_object *Variety_with_TDA;
+	geometry::algebraic_geometry::variety_object *Variety_with_TDO;
+	geometry::algebraic_geometry::variety_object *Variety_with_TDA;
 
 
 	variety_with_TDO_and_TDA();
 	~variety_with_TDO_and_TDA();
 	void init_and_compute_tactical_decompositions(
 			projective_geometry::projective_space_with_action *PA,
-			algebraic_geometry::variety_object *Variety_object,
+			geometry::algebraic_geometry::variety_object *Variety_object,
 			groups::strong_generators *Aut_gens,
 			int verbose_level);
 	void report_decomposition_schemes(

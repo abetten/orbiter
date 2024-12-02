@@ -25,6 +25,7 @@ namespace finite_geometries {
 
 andre_construction_point_element::andre_construction_point_element()
 {
+	Record_birth();
 	Andre = NULL;
 	k = 0;
 	n = 0;
@@ -40,6 +41,7 @@ andre_construction_point_element::andre_construction_point_element()
 
 andre_construction_point_element::~andre_construction_point_element()
 {
+	Record_death();
 	if (coordinates) {
 		FREE_int(coordinates);
 	}

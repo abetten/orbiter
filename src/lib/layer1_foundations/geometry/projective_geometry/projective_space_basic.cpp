@@ -21,15 +21,17 @@ namespace projective_geometry {
 
 projective_space_basic::projective_space_basic()
 {
+	Record_birth();
 	F = NULL;
 }
 
 projective_space_basic::~projective_space_basic()
 {
+	Record_death();
 }
 
 void projective_space_basic::init(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -857,7 +859,7 @@ void projective_space_basic::all_PG_elements_in_subspace(
 	int *word;
 	int i;
 	long int a;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space_basic::all_PG_elements_in_subspace" << endl;
@@ -905,7 +907,7 @@ void projective_space_basic::all_PG_elements_in_subspace_array_is_given(
 	int *message;
 	int *word;
 	long i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space_basic::all_PG_elements_in_subspace_array_is_given" << endl;

@@ -21,6 +21,7 @@ namespace other_geometry {
 
 flag::flag()
 {
+	Record_birth();
 	F = NULL;
 	Gr = NULL;
 	n = 0;
@@ -44,6 +45,7 @@ flag::flag()
 
 flag::~flag()
 {
+	Record_death();
 	if (Gr) {
 		FREE_OBJECT(Gr);
 	}
@@ -75,7 +77,7 @@ flag::~flag()
 
 void flag::init(
 		int n, int *type, int type_len,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -92,12 +94,12 @@ void flag::init(
 
 void flag::init_recursion(
 		int n, int *type, int type_len, int idx,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "flag::init_recursion type_len = "
@@ -304,7 +306,7 @@ long int flag::rank_recursion(
 {
 	int f_v = (verbose_level >= 1);
 	long int a, b, rk, r, i, j;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "flag::rank_recursion idx=" << idx << endl;

@@ -47,7 +47,7 @@ void strong_generators::prepare_from_generator_data(
 	gens->init_from_data(A, data,
 			nb_gens, data_size, 0 /*verbose_level*/);
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	target_go.create_from_base_10_string(ascii_target_go);
 
@@ -91,7 +91,7 @@ void strong_generators::prepare_from_generator_data(
 
 void strong_generators::init_linear_group_from_scratch(
 		actions::action *&A,
-	field_theory::finite_field *F, int n,
+		algebra::field_theory::finite_field *F, int n,
 	group_constructions::linear_group_description *Descr,
 	data_structures_groups::vector_ge *&nice_gens,
 	std::string &label,
@@ -190,13 +190,13 @@ void strong_generators::init_linear_group_from_scratch(
 			cout << "cannot reach this" << endl;
 			exit(1);
 		}
-		orthogonal_geometry::orthogonal *O;
+		geometry::orthogonal_geometry::orthogonal *O;
 
 		if (f_v) {
 			cout << "known_groups::init_orthogonal_group "
 					"verbose_level=" << verbose_level << endl;
 		}
-		O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+		O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
 		if (f_v) {
 			cout << "strong_generators::init_linear_group_from_scratch "
 					"before O->init" << endl;
@@ -250,7 +250,7 @@ void strong_generators::init_linear_group_from_scratch(
 
 		if (Descr->f_projective) {
 
-			data_structures::string_tools String;
+			other::data_structures::string_tools String;
 
 			String.name_of_group_projective(
 					label,
@@ -261,7 +261,7 @@ void strong_generators::init_linear_group_from_scratch(
 		}
 		else if (Descr->f_affine) {
 
-			data_structures::string_tools String;
+			other::data_structures::string_tools String;
 
 			String.name_of_group_affine(
 					label,
@@ -272,7 +272,7 @@ void strong_generators::init_linear_group_from_scratch(
 		}
 		else if (Descr->f_general) {
 
-			data_structures::string_tools String;
+			other::data_structures::string_tools String;
 
 			String.name_of_group_general_linear(
 					label,
@@ -334,7 +334,7 @@ void strong_generators::init_linear_group_from_scratch(
 		cout << "strong_generators::init_linear_group_from_scratch "
 				"label=" << label << endl;
 		cout << "strong_generators::init_linear_group_from_scratch go=";
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		group_order(go);
 		cout << go << endl;
 	}
@@ -352,7 +352,7 @@ void strong_generators::special_subgroup(
 	int f_v = (verbose_level >= 1);
 
 	actions::action *A_on_det;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 		
 	if (f_v) {
 		cout << "strong_generators::special_subgroup "
@@ -416,7 +416,7 @@ void strong_generators::projectivity_subgroup(
 		cout << "strong_generators::projectivity_subgroup A->A=" << endl;
 		S->A->print_info();
 	}
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::projectivity_subgroup "
@@ -457,7 +457,7 @@ void strong_generators::even_subgroup(
 	int f_v = (verbose_level >= 1);
 
 	actions::action *A_on_sign;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 		
 	if (f_v) {
 		cout << "strong_generators::even_subgroup "
@@ -490,7 +490,7 @@ void strong_generators::Sylow_subgroup(
 {
 	int f_v = (verbose_level >= 1);
 	sims *P;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::Sylow_subgroup " << endl;
@@ -574,21 +574,21 @@ void strong_generators::init_trivial_group(
 
 void strong_generators::generators_for_the_monomial_group(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	sims *S;
-	field_theory::finite_field *F;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object target_go;
+	algebra::field_theory::finite_field *F;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go;
 	int *go_factored;
 	int n, q, pos_frobenius;
 	data_structures_groups::vector_ge *my_gens;
 	int *data;
 	int i, h, hh, h1, j, a, b, nb_gens;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_monomial_group "
@@ -757,7 +757,7 @@ void strong_generators::generators_for_the_monomial_group(
 		int f_do_it_anyway_even_for_big_degree = false;
 		int f_print_cycles_of_length_one = false;
 		
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 	
 		cout << "computing the group order:" << endl;
 		group_order(go);
@@ -783,15 +783,15 @@ void strong_generators::generators_for_the_monomial_group(
 
 void strong_generators::generators_for_the_diagonal_group(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	sims *S;
-	field_theory::finite_field *F;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object target_go;
+	algebra::field_theory::finite_field *F;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go;
 	int *go_factored;
 	int n, q;
 	data_structures_groups::vector_ge *my_gens;
@@ -903,7 +903,7 @@ void strong_generators::generators_for_the_diagonal_group(
 		int f_do_it_anyway_even_for_big_degree = false;
 		int f_print_cycles_of_length_one = false;
 		
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 	
 		cout << "computing the group order:" << endl;
 		group_order(go);
@@ -929,7 +929,7 @@ void strong_generators::generators_for_the_diagonal_group(
 
 void strong_generators::generators_for_the_singer_cycle(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int power_of_singer,
+		algebra::basic_algebra::matrix_group *Mtx, int power_of_singer,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -937,15 +937,15 @@ void strong_generators::generators_for_the_singer_cycle(
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	sims *S;
-	field_theory::finite_field *F;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object target_go;
+	algebra::field_theory::finite_field *F;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go;
 	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
 	int *data;
 	int i;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 	
 	if (f_v) {
@@ -986,7 +986,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	
 
 	{
-		field_theory::finite_field Fq;
+		algebra::field_theory::finite_field Fq;
 
 #if 0
 		if (!NT.is_prime(q)) {
@@ -1001,10 +1001,10 @@ void strong_generators::generators_for_the_singer_cycle(
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
-		ring_theory::unipoly_domain FX(&Fq);
+		algebra::ring_theory::unipoly_domain FX(&Fq);
 
-		ring_theory::unipoly_object m;
-		ring_theory::longinteger_object rk;
+		algebra::ring_theory::unipoly_object m;
+		algebra::ring_theory::longinteger_object rk;
 
 		FX.create_object_by_rank(m, 0, verbose_level);
 
@@ -1114,7 +1114,7 @@ void strong_generators::generators_for_the_singer_cycle(
 
 void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int power_of_singer,
+		algebra::basic_algebra::matrix_group *Mtx, int power_of_singer,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -1122,16 +1122,16 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	sims *S;
-	field_theory::finite_field *F;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object target_go;
+	algebra::field_theory::finite_field *F;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go;
 	long int *go_factored;
 	int n, q;
 	//vector_ge *my_gens;
 	int *data1;
 	int *data2;
 	int i;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 
 	if (f_v) {
@@ -1176,7 +1176,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 
 
 	{
-		field_theory::finite_field Fp;
+		algebra::field_theory::finite_field Fp;
 
 		if (!NT.is_prime(q)) {
 			cout << "strong_generators::generators_for_the_singer_cycle_and_the_Frobenius "
@@ -1188,10 +1188,10 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
 				0 /*verbose_level*/);
-		ring_theory::unipoly_domain FX(&Fp);
+		algebra::ring_theory::unipoly_domain FX(&Fp);
 
-		ring_theory::unipoly_object m;
-		ring_theory::longinteger_object rk;
+		algebra::ring_theory::unipoly_object m;
+		algebra::ring_theory::longinteger_object rk;
 
 		FX.create_object_by_rank(m, 0, verbose_level);
 
@@ -1312,11 +1312,11 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 
 void strong_generators::generators_for_the_null_polarity_group(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, q;
 	
 	if (f_v) {
@@ -1329,9 +1329,9 @@ void strong_generators::generators_for_the_null_polarity_group(
 		cout << "n=" << n << " q=" << q << endl;
 	}
 
-	algebra::null_polarity_generator *N;
+	algebra::basic_algebra::null_polarity_generator *N;
 
-	N = NEW_OBJECT(algebra::null_polarity_generator);
+	N = NEW_OBJECT(algebra::basic_algebra::null_polarity_generator);
 
 
 	if (f_v) {
@@ -1363,10 +1363,10 @@ void strong_generators::generators_for_the_null_polarity_group(
 
 void strong_generators::generators_for_symplectic_group(
 		actions::action *A,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, q;
 	
 	if (f_v) {
@@ -1379,9 +1379,9 @@ void strong_generators::generators_for_symplectic_group(
 		cout << "n=" << n << " q=" << q << endl;
 	}
 
-	algebra::generators_symplectic_group *N;
+	algebra::basic_algebra::generators_symplectic_group *N;
 
-	N = NEW_OBJECT(algebra::generators_symplectic_group);
+	N = NEW_OBJECT(algebra::basic_algebra::generators_symplectic_group);
 
 
 	if (f_v) {
@@ -1446,7 +1446,7 @@ void strong_generators::generators_for_symplectic_group(
 				"init_from_data" << endl;
 	}
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 
@@ -1507,9 +1507,9 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	//int f_vv = (verbose_level >= 2);
 	sims *S;
 	strong_generators *SG1;
-	ring_theory::longinteger_object go1, Q, go;
-	ring_theory::longinteger_domain D;
-	algebra::matrix_group *M;
+	algebra::ring_theory::longinteger_object go1, Q, go;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::basic_algebra::matrix_group *M;
 	data_structures_groups::vector_ge *new_gens;
 	int *data;
 	int q, n, i;
@@ -1597,19 +1597,19 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 void strong_generators::field_reduction(
 		actions::action *Aq,
 		int n, int s,
-		field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *Fq,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int q, Q, m, t;
-	field_theory::finite_field *FQ;
+	algebra::field_theory::finite_field *FQ;
 	actions::action *AQ;
-	field_theory::subfield_structure *S;
+	algebra::field_theory::subfield_structure *S;
 	sims *Sims;
 	int *EltQ;
 	int *Eltq;
 	int *Mtx;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "strong_generators::field_reduction" << endl;
@@ -1633,7 +1633,7 @@ void strong_generators::field_reduction(
 		cout << "q=" << q << endl;
 		cout << "Q=" << Q << endl;
 	}
-	FQ = NEW_OBJECT(field_theory::finite_field);
+	FQ = NEW_OBJECT(algebra::field_theory::finite_field);
 	FQ->finite_field_init_small_order(
 			Q,
 			false /* f_without_tables */,
@@ -1670,9 +1670,9 @@ void strong_generators::field_reduction(
 	}
 	FREE_OBJECT(nice_gens);
 
-	ring_theory::longinteger_object order_GLmQ;
-	ring_theory::longinteger_object target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object order_GLmQ;
+	algebra::ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int r;
 
 	AQ->group_order(order_GLmQ);
@@ -1689,7 +1689,7 @@ void strong_generators::field_reduction(
 				"target_go = " << target_go << endl;
 	}
 
-	S = NEW_OBJECT(field_theory::subfield_structure);
+	S = NEW_OBJECT(algebra::field_theory::subfield_structure);
 	S->init(FQ, Fq, verbose_level);
 
 	if (f_v) {
@@ -1752,7 +1752,7 @@ void strong_generators::field_reduction(
 				"creating lifted group done" << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Sims->group_order(go);
 
@@ -1783,13 +1783,13 @@ void strong_generators::field_reduction(
 void strong_generators::generators_for_translation_plane_in_andre_model(
 		actions::action *A_PGL_n1_q,
 		actions::action *A_PGL_n_q,
-		algebra::matrix_group *Mtx_n1, algebra::matrix_group *Mtx_n,
+		algebra::basic_algebra::matrix_group *Mtx_n1, algebra::basic_algebra::matrix_group *Mtx_n,
 	strong_generators *spread_stab_gens,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, n1, q;
 	data_structures_groups::vector_ge *my_gens;
 	int *M, *M1;
@@ -1927,8 +1927,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				my_gens->ith(h), M1, 0 /* verbose_level */);
 	}
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object spread_stab_go, target_go, aa, b, bb, c, go;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object spread_stab_go, target_go, aa, b, bb, c, go;
 	
 
 	spread_stab_gens->group_order(spread_stab_go);
@@ -1983,10 +1983,10 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 
 void strong_generators::generators_for_the_stabilizer_of_two_components(
 		actions::action *A_PGL_n_q,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, k, q;
 	data_structures_groups::vector_ge *my_gens;
 	actions::action *A_PGL_k_q;
@@ -2044,8 +2044,8 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 				"after AG.make_generators_stabilizer_of_two_components" << endl;
 	}
 
-	ring_theory::longinteger_object go_linear, a, two, target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go_linear, a, two, target_go;
+	algebra::ring_theory::longinteger_domain D;
 
 	two.create(1);
 	A_PGL_k_q->group_order(go_linear);
@@ -2084,16 +2084,16 @@ void strong_generators::generators_for_the_stabilizer_of_two_components(
 
 void strong_generators::regulus_stabilizer(
 		actions::action *A_PGL_n_q,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, k, q;
 	data_structures_groups::vector_ge *my_gens;
 	actions::action *A_PGL_k_q;
-	ring_theory::longinteger_object go, a, b, target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, a, b, target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int *P;
 	int len1, len;
 	int h1, h;
@@ -2268,13 +2268,13 @@ void strong_generators::regulus_stabilizer(
 
 void strong_generators::generators_for_the_borel_subgroup_upper(
 		actions::action *A_linear,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	data_structures_groups::vector_ge *my_gens;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *Q;
 	int n, i, j, h, alpha, len, q;
 	
@@ -2350,7 +2350,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	int *factors;
 	int nb_factors;
@@ -2397,13 +2397,13 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 
 void strong_generators::generators_for_the_borel_subgroup_lower(
 		actions::action *A_linear,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	data_structures_groups::vector_ge *my_gens;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *Q;
 	int n, i, j, h, alpha, len, q;
 	
@@ -2479,7 +2479,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	int *factors;
 	int nb_factors;
@@ -2526,13 +2526,13 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 
 void strong_generators::generators_for_the_identity_subgroup(
 		actions::action *A_linear,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *Elt1;
 	data_structures_groups::vector_ge *my_gens;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *Q;
 	int n, i, h, len; //, q;
 	
@@ -2583,7 +2583,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 			A_linear->Group_element->element_print(my_gens->ith(h), cout);
 		}
 	}
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	target_go.create(1);
 
@@ -2616,10 +2616,10 @@ void strong_generators::generators_for_the_identity_subgroup(
 
 void strong_generators::generators_for_parabolic_subgroup(
 		actions::action *A_PGL_n_q,
-		algebra::matrix_group *Mtx, int k, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, q;
 	data_structures_groups::vector_ge *my_gens;
 	int *data;
@@ -2638,7 +2638,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 
 
 
-	algebra::group_generators_domain GGD;
+	algebra::basic_algebra::group_generators_domain GGD;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_parabolic_subgroup "
@@ -2665,9 +2665,9 @@ void strong_generators::generators_for_parabolic_subgroup(
 				"after generators_for_parabolic_subgroup" << endl;
 	}
 
-	ring_theory::longinteger_object go1, nCk, target_go;
-	ring_theory::longinteger_domain D;
-	combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object go1, nCk, target_go;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 
 
 	D.group_order_PGL(go1, n, q, Mtx->f_semilinear);
@@ -2719,16 +2719,16 @@ void strong_generators::generators_for_parabolic_subgroup(
 void
 strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		actions::action *A_PGL_4_q,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, q;
 	data_structures_groups::vector_ge *my_gens;
 	int *data;
 	int size;
 	int nb_gens;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
@@ -2746,7 +2746,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	}
 
 
-	algebra::group_generators_domain GGD;
+	algebra::basic_algebra::group_generators_domain GGD;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4 "
@@ -2774,8 +2774,8 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"after generators_for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 	}
 
-	ring_theory::longinteger_object target_go, a, b, c, d, e, f;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go, a, b, c, d, e, f;
+	algebra::ring_theory::longinteger_domain D;
 
 
 	target_go.create(1);
@@ -2826,16 +2826,16 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 
 void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 		actions::action *A_PGL_4_q,
-		algebra::matrix_group *Mtx, int verbose_level)
+		algebra::basic_algebra::matrix_group *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int n, q;
 	data_structures_groups::vector_ge *my_gens;
 	int *data;
 	int size;
 	int nb_gens;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4" << endl;
@@ -2853,7 +2853,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	}
 
 
-	algebra::group_generators_domain GGD;
+	algebra::basic_algebra::group_generators_domain GGD;
 
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4 "
@@ -2882,8 +2882,8 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"after generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
-	ring_theory::longinteger_object target_go, a, b, c, f;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object target_go, a, b, c, f;
+	algebra::ring_theory::longinteger_domain D;
 
 
 	target_go.create(1);
@@ -2929,7 +2929,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 
 void strong_generators::generators_for_the_orthogonal_group(
 		actions::action *A,
-	orthogonal_geometry::orthogonal *O,
+		geometry::orthogonal_geometry::orthogonal *O,
 	int f_semilinear, 
 	int verbose_level)
 {
@@ -2962,7 +2962,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 				"after A2->init_orthogonal_group_with_O" << endl;
 	}
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 	strong_generators *Strong_gens2;
 
 	A2->Sims->group_order(target_go);
@@ -2994,7 +2994,7 @@ void strong_generators::generators_for_the_orthogonal_group(
 
 void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 		actions::action *A,
-	field_theory::finite_field *F, int iso,
+		algebra::field_theory::finite_field *F, int iso,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3011,8 +3011,8 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	ring_theory::longinteger_object target_go;
-	knowledge_base::knowledge_base K;
+	algebra::ring_theory::longinteger_object target_go;
+	combinatorics::knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
@@ -3088,7 +3088,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 
 void strong_generators::init_reduced_generating_set(
 		data_structures_groups::vector_ge *gens,
-		ring_theory::longinteger_object &target_go,
+		algebra::ring_theory::longinteger_object &target_go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3125,7 +3125,7 @@ void strong_generators::init_reduced_generating_set(
 
 void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 		actions::action *A,
-	field_theory::finite_field *F, int iso,
+		algebra::field_theory::finite_field *F, int iso,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3143,8 +3143,8 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	ring_theory::longinteger_object target_go;
-	knowledge_base::knowledge_base K;
+	algebra::ring_theory::longinteger_object target_go;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue "
@@ -3221,7 +3221,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 void
 strong_generators::stabilizer_of_Eckardt_surface(
 		actions::action *A,
-	field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int f_with_normalizer, int f_semilinear,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
@@ -3239,8 +3239,8 @@ strong_generators::stabilizer_of_Eckardt_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	ring_theory::longinteger_object target_go;
-	algebraic_geometry::algebraic_geometry_global AGG;
+	algebra::ring_theory::longinteger_object target_go;
+	geometry::algebraic_geometry::algebraic_geometry_global AGG;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_Eckardt_surface "
@@ -3295,7 +3295,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 
 void strong_generators::stabilizer_of_G13_surface(
 		actions::action *A,
-	field_theory::finite_field *F, int a,
+		algebra::field_theory::finite_field *F, int a,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -3311,8 +3311,8 @@ void strong_generators::stabilizer_of_G13_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	ring_theory::longinteger_object target_go;
-	algebraic_geometry::algebraic_geometry_global AGG;
+	algebra::ring_theory::longinteger_object target_go;
+	geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_G13_surface "
@@ -3364,7 +3364,7 @@ void strong_generators::stabilizer_of_G13_surface(
 
 void strong_generators::stabilizer_of_F13_surface(
 		actions::action *A,
-	field_theory::finite_field *F, int a,
+		algebra::field_theory::finite_field *F, int a,
 	data_structures_groups::vector_ge *&nice_gens,
 	int verbose_level)
 {
@@ -3380,8 +3380,8 @@ void strong_generators::stabilizer_of_F13_surface(
 	int nb_gens;
 	int data_size;
 	int group_order;
-	ring_theory::longinteger_object target_go;
-	algebraic_geometry::algebraic_geometry_global AGG;
+	algebra::ring_theory::longinteger_object target_go;
+	geometry::algebraic_geometry::algebraic_geometry_global AGG;
 
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_F13_surface "
@@ -3434,7 +3434,7 @@ void strong_generators::stabilizer_of_F13_surface(
 
 void strong_generators::BLT_set_from_catalogue_stabilizer(
 		actions::action *A,
-	field_theory::finite_field *F, int iso,
+		algebra::field_theory::finite_field *F, int iso,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3449,8 +3449,8 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	ring_theory::longinteger_object target_go;
-	knowledge_base::knowledge_base K;
+	algebra::ring_theory::longinteger_object target_go;
+	combinatorics::knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::BLT_set_from_catalogue_stabilizer "
@@ -3529,8 +3529,8 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	int nb_gens;
 	int data_size;
 	string ascii_target_go;
-	ring_theory::longinteger_object target_go;
-	knowledge_base::knowledge_base K;
+	algebra::ring_theory::longinteger_object target_go;
+	combinatorics::knowledge_base::knowledge_base K;
 	
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_spread_from_catalogue "
@@ -3595,7 +3595,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 
 void strong_generators::stabilizer_of_pencil_of_conics(
 		actions::action *A,
-	field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3605,8 +3605,8 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 		cout << "q=" << F->q << endl;
 	}
 
-	ring_theory::longinteger_object target_go;
-	number_theory::number_theory_domain NT;
+	algebra::ring_theory::longinteger_object target_go;
+	algebra::number_theory::number_theory_domain NT;
 	int i;
 
 	if (f_v) {
@@ -3685,7 +3685,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 
 void strong_generators::Janko1(
 		actions::action *A,
-	field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3699,7 +3699,7 @@ void strong_generators::Janko1(
 		cout << "strong_generators::Janko1 q != 11" << endl;
 		exit(1);
 	}
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A->get_matrix_group();
 	if (M->n != 7) {
@@ -3707,8 +3707,8 @@ void strong_generators::Janko1(
 				"dimension != 7" << endl;
 		exit(1);
 	}
-	ring_theory::longinteger_object target_go;
-	number_theory::number_theory_domain NT;
+	algebra::ring_theory::longinteger_object target_go;
+	algebra::number_theory::number_theory_domain NT;
 	int i;
 
 
@@ -3801,7 +3801,7 @@ void strong_generators::Hall_reflection(
 	int nb_perms;
 	int *perms;
 	data_structures_groups::vector_ge *gens;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::Hall_reflection" << endl;
@@ -3852,7 +3852,7 @@ void strong_generators::Hall_reflection(
 
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 	target_go.create(2);
@@ -3907,7 +3907,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	int nb_perms;
 	int *perms;
 	data_structures_groups::vector_ge *gens;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::normalizer_of_a_Hall_reflection" << endl;
@@ -3958,7 +3958,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 
 	int *factors;
 	int nb_factors;
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 	GG.order_Hall_reflection_normalizer_factorized(
@@ -4033,7 +4033,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 	int i;
 	int f_semilinear = false;
 	int frobenius = 0;
-	algebraic_geometry::algebraic_geometry_global Gg;
+	geometry::algebraic_geometry::algebraic_geometry_global Gg;
 
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
@@ -4098,7 +4098,7 @@ void strong_generators::hyperplane_lifting_with_two_lines_fixed(
 
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 	SG_hyperplane->group_order(target_go);
@@ -4159,7 +4159,7 @@ void strong_generators::exterior_square(
 	int f_semilinear = false;
 	int frobenius = 0;
 	int *An2;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	n = SG_original->A->matrix_group_dimension();
 	F = A->matrix_group_finite_field();
@@ -4168,7 +4168,7 @@ void strong_generators::exterior_square(
 				"n = " << n << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	n2 = Combi.binomial2(n);
 
@@ -4242,7 +4242,7 @@ void strong_generators::exterior_square(
 	gens->copy(nice_gens, verbose_level);
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 	SG_original->group_order(target_go);
@@ -4301,7 +4301,7 @@ void strong_generators::diagonally_repeat(
 	int h, l, i, j, a, n, k;
 	int *M;
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	sims *Sims;
 
 

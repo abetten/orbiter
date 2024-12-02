@@ -30,6 +30,7 @@ static void wreath_product_rank_one_early_test_func_callback(
 
 tensor_classify::tensor_classify()
 {
+	Record_birth();
 	nb_factors = 0;
 	vector_space_dimension = 0;
 	v = NULL;
@@ -52,15 +53,16 @@ tensor_classify::tensor_classify()
 
 tensor_classify::~tensor_classify()
 {
+	Record_death();
 
 }
 
 void tensor_classify::init(
-		field_theory::finite_field *F, group_constructions::linear_group *LG,
+		algebra::field_theory::finite_field *F, group_constructions::linear_group *LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "tensor_classify::init" << endl;
@@ -382,7 +384,7 @@ void tensor_classify::early_test_func(
 
 void tensor_classify::report(
 		int f_poset_classify, int poset_classify_depth,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -396,8 +398,8 @@ void tensor_classify::report(
 
 
 
-	orbiter_kernel_system::file_io Fio;
-	l1_interfaces::latex_interface L;
+	other::orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface L;
 
 	string fname, title, author, extra_praeamble;
 	//int f_with_stabilizers = true;
@@ -409,7 +411,7 @@ void tensor_classify::report(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		//latex_head_easy(fp);
 		L.head(fp,
@@ -538,7 +540,7 @@ void tensor_classify::report(
 					data[i] = a;
 					fp << "\\\\" << endl;
 				}
-				data_structures::sorting Sorting;
+				other::data_structures::sorting Sorting;
 
 				Sorting.lint_vec_heapsort(data, orbit_length);
 
@@ -546,7 +548,7 @@ void tensor_classify::report(
 				L.print_lint_matrix_tex(fp, data, (orbit_length + 9)/ 10, 10);
 				fp << "$$" << endl;
 
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init_lint(data, orbit_length, true, 0);
 				fp << "$$";

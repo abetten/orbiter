@@ -20,6 +20,7 @@ namespace orthogonal_geometry_applications {
 
 BLT_set_create_description::BLT_set_create_description()
 {
+	Record_birth();
 	//f_q = false;
 	//q = 0;
 	f_catalogue = false;
@@ -41,6 +42,7 @@ BLT_set_create_description::BLT_set_create_description()
 
 BLT_set_create_description::~BLT_set_create_description()
 {
+	Record_death();
 }
 
 int BLT_set_create_description::read_arguments(
@@ -49,7 +51,7 @@ int BLT_set_create_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "BLT_set_create_description::read_arguments" << endl;

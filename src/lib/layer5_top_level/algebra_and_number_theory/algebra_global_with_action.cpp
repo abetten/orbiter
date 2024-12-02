@@ -17,6 +17,17 @@ namespace orbiter {
 namespace layer5_applications {
 namespace apps_algebra {
 
+algebra_global_with_action::algebra_global_with_action()
+{
+	Record_birth();
+
+}
+
+algebra_global_with_action::~algebra_global_with_action()
+{
+	Record_death();
+
+}
 
 void algebra_global_with_action::orbits_under_conjugation(
 		long int *the_set, int set_size,
@@ -128,8 +139,8 @@ void algebra_global_with_action::create_subgroups(
 	int f, l, rep;
 	long int *the_set_sorted;
 	long int *position;
-	data_structures::sorting Sorting;
-	ring_theory::longinteger_object go;
+	other::data_structures::sorting Sorting;
+	algebra::ring_theory::longinteger_object go;
 
 	SG->group_order(go);
 	if (f_v) {
@@ -256,7 +267,7 @@ void algebra_global_with_action::create_subgroups(
 		int h;
 
 		for (h = 0; h < nb_flag_orbits; h++) {
-			ring_theory::longinteger_object go1;
+			algebra::ring_theory::longinteger_object go1;
 
 			cout << "flag orbit " << h << " / " << nb_flag_orbits << ":" << endl;
 			Flag_stab[h]->group_order(go1);
@@ -489,7 +500,7 @@ void algebra_global_with_action::create_subgroups(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -511,7 +522,7 @@ void algebra_global_with_action::create_subgroups(
 			int h;
 			ost << "There are " << nb_flag_orbits << " flag orbits:\\\\" << endl;
 			for (h = 0; h < nb_flag_orbits; h++) {
-				ring_theory::longinteger_object go1;
+				algebra::ring_theory::longinteger_object go1;
 
 				ost << "Flag orbit " << h << " / " << nb_flag_orbits << ":\\\\" << endl;
 				Flag_stab[h]->group_order(go1);
@@ -592,7 +603,7 @@ void algebra_global_with_action::create_subgroups(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -620,7 +631,7 @@ void algebra_global_with_action::create_subgroups(
 
 
 void algebra_global_with_action::classes_GL(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int d, int f_no_eigenvalue_one, int verbose_level)
 // called from interface_algebra
 // creates an object of type action
@@ -631,8 +642,8 @@ void algebra_global_with_action::classes_GL(
 		cout << "algebra_global_with_action::classes_GL" << endl;
 	}
 
-	linear_algebra::gl_classes C;
-	linear_algebra::gl_class_rep *R;
+	algebra::linear_algebra::gl_classes C;
+	algebra::linear_algebra::gl_class_rep *R;
 	int nb_classes;
 	int i;
 
@@ -642,7 +653,7 @@ void algebra_global_with_action::classes_GL(
 	C.make_classes(R, nb_classes, f_no_eigenvalue_one, verbose_level);
 
 	actions::action *A;
-	ring_theory::longinteger_object Go;
+	algebra::ring_theory::longinteger_object Go;
 	data_structures_groups::vector_ge *nice_gens;
 	int a;
 	int *Mtx;
@@ -690,7 +701,7 @@ void algebra_global_with_action::classes_GL(
 			+ "_" + std::to_string(F->q) + ".tex";
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 		C.report(fp, verbose_level);
@@ -1635,9 +1646,9 @@ void algebra_global_with_action::compute_regular_representation(
 	if (f_v) {
 		cout << "algebra_global_with_action::compute_regular_representation" << endl;
 	}
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int goi, i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	S->group_order(go);
 	goi = go.as_int();
@@ -1843,7 +1854,7 @@ void algebra_global_with_action::presentation(
 
 
 void algebra_global_with_action::do_eigenstuff_with_coefficients(
-		field_theory::finite_field *F, int n, std::string &coeffs_text,
+		algebra::field_theory::finite_field *F, int n, std::string &coeffs_text,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1877,7 +1888,7 @@ void algebra_global_with_action::do_eigenstuff_with_coefficients(
 }
 
 void algebra_global_with_action::do_eigenstuff_from_file(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1886,7 +1897,7 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 		cout << "algebra_global_with_action::do_eigenstuff_from_file" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int *Data;
 	int mtx_m, mtx_n;
 
@@ -1919,7 +1930,7 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 
 
 void algebra_global_with_action::do_eigenstuff(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1928,7 +1939,7 @@ void algebra_global_with_action::do_eigenstuff(
 	long int a;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_eigenstuff" << endl;
@@ -2267,7 +2278,7 @@ void algebra_global_with_action::young_symmetrizer(
 	int *Fst;
 	int *Len;
 	int cnt, s, i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	part = NEW_int(n);
@@ -2645,7 +2656,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 			target_depth, verbose_level);
 
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int depth;
 
 	t0 = Os.os_ticks();
@@ -2723,7 +2734,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2759,7 +2770,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -2785,7 +2796,7 @@ void algebra_global_with_action::permutation_representation_of_element(
 
 void algebra_global_with_action::representation_on_polynomials(
 		group_constructions::linear_group *LG,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level)
 // creates an action object for the induced action on polynomials
 // assumes a linear group
@@ -2805,7 +2816,7 @@ void algebra_global_with_action::representation_on_polynomials(
 	//matrix_group *M;
 	int n;
 	//int degree;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	A = LG->A_linear;
 	//F = A->matrix_group_finite_field();
@@ -2896,7 +2907,7 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	for (i = 0; i < nb_gens; i++) {
 		string fname;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		fname = LG->label + "_rep_" + std::to_string(degree_of_poly) + "_" + std::to_string(i) + ".csv";
 
@@ -2951,7 +2962,7 @@ void algebra_global_with_action::search_element_of_order(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, cnt, ord;
 
 	Elt = NEW_int(A1->elt_size_in_int);
@@ -3019,7 +3030,7 @@ void algebra_global_with_action::find_standard_generators(
 	int *Elt_a;
 	int *Elt_b;
 	int *Elt_ab;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, j, cnt, ord;
 
 	Elt_a = NEW_int(A1->elt_size_in_int);
@@ -3196,7 +3207,7 @@ void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
 	A_perm = NEW_OBJECT(actions::action);
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 	int f_target_go = true;
 
 	target_go.create(m);
@@ -3347,7 +3358,7 @@ void algebra_global_with_action::group_of_automorphisms_by_images_of_generators(
 			Strong_gens->print_generators_gap(
 					ost, verbose_level);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "algebra_global_with_action::group_of_automorphisms_by_images_of_generators "
@@ -3464,7 +3475,7 @@ void algebra_global_with_action::automorphism_by_generator_images(
 		exit(1);
 	}
 
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 
 	if (f_v) {
@@ -3667,7 +3678,7 @@ void algebra_global_with_action::create_permutation(
 			cout << endl;
 		}
 
-		ring_theory::longinteger_object rk_out;
+		algebra::ring_theory::longinteger_object rk_out;
 
 		Subgroup_sims->element_rank(rk_out, Elt);
 
@@ -3685,7 +3696,7 @@ void algebra_global_with_action::create_permutation(
 
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	int f_is_perm;
@@ -3724,7 +3735,7 @@ void algebra_global_with_action::create_permutation(
 				perm, go, cycles, nb_cycles);
 		cout << "The cycle type is: ";
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(cycles,
 				nb_cycles, false /* f_second */, 0 /* verbose_level*/);
@@ -3809,7 +3820,7 @@ void algebra_global_with_action::do_tensor_classify(
 		exit(1);
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = Any_group->LG->F;
 
@@ -3865,7 +3876,7 @@ void algebra_global_with_action::do_tensor_permutations(
 				"!Any_group->f_linear_group" << endl;
 		exit(1);
 	}
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = Any_group->LG->F;
 
@@ -4308,7 +4319,7 @@ void algebra_global_with_action::modified_group_init(
 
 	if (f_v) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Modified_group_create->Strong_gens->group_order(go);
 
@@ -4788,7 +4799,7 @@ void algebra_global_with_action::conjugacy_class_of(
 
 	Elt = NEW_int(Any_group->A->elt_size_in_int);
 
-	ring_theory::longinteger_object a, b;
+	algebra::ring_theory::longinteger_object a, b;
 
 #if 1
 	if (f_v) {
@@ -4847,7 +4858,7 @@ void algebra_global_with_action::conjugacy_class_of(
 
 	orbits_schreier::orbit_of_sets Orb;
 	long int set[1];
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	set[0] = b.as_lint();
 

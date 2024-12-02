@@ -43,8 +43,8 @@ int upstep_work::upstep_subspace_action(
 	int final_node, final_ex;
 	
 	//wreath_product *W;
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	{
 		geometry::projective_geometry::grassmann G;
 	induced_actions::action_on_grassmannian *AG;

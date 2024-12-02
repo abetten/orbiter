@@ -391,7 +391,7 @@ int action::choose_next_base_point_default_method(
 
 void action::generators_to_strong_generators(
 	int f_target_go,
-	ring_theory::longinteger_object &target_go,
+	algebra::ring_theory::longinteger_object &target_go,
 	data_structures_groups::vector_ge *gens,
 	groups::strong_generators *&Strong_gens,
 	int verbose_level)

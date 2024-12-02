@@ -34,7 +34,7 @@ public:
 	groups::sims *Stab; // the stabilizer of the original set
 
 
-	ring_theory::longinteger_object stab_order, new_stab_order;
+	algebra::ring_theory::longinteger_object stab_order, new_stab_order;
 	int nb_times_orbit_count_does_not_match_up;
 	int backtrack_nodes_first_time;
 	int backtrack_nodes_total_in_loop;
@@ -50,7 +50,7 @@ public:
 	actions::action *A_induced;
 		// the action on Stab_orbits->interesting_points[]
 
-	ring_theory::longinteger_object induced_go, K_go;
+	algebra::ring_theory::longinteger_object induced_go, K_go;
 
 	int *transporter_witness;
 	int *transporter1;
@@ -65,9 +65,9 @@ public:
 
 	groups::sims *Aut;
 	groups::sims *Aut_original;
-	ring_theory::longinteger_object ago;
-	ring_theory::longinteger_object ago1;
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago1;
+	algebra::ring_theory::longinteger_object target_go;
 
 
 	//union_find_on_k_subsets *U;
@@ -165,7 +165,7 @@ public:
 	int *elt2, *Elt2;
 	int *transporter0; // = elt1 * elt2
 
-	ring_theory::longinteger_object go_G;
+	algebra::ring_theory::longinteger_object go_G;
 
 	groups::schreier *Schreier;
 	int nb_orbits;
@@ -319,11 +319,11 @@ public:
 	int *isotype; // [nCk]
 	int *orbit_frequencies; // [nb_orbits]
 	int nb_orbits;
-	data_structures::tally *T;
+	other::data_structures::tally *T;
 	// for orbit_frequencies[]
 
 
-	data_structures::set_of_sets *SoS;
+	other::data_structures::set_of_sets *SoS;
 	int *types;
 	int nb_types;
 	int selected_type;

@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_determinant::action_on_determinant()
 {
+	Record_birth();
 	M = NULL;
 	f_projective = false;
 	m = 0;
@@ -27,6 +28,7 @@ action_on_determinant::action_on_determinant()
 
 action_on_determinant::~action_on_determinant()
 {
+	Record_death();
 }
 
 
@@ -35,8 +37,8 @@ void action_on_determinant::init(
 		int f_projective, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_object go;
-	number_theory::number_theory_domain NT;
+	algebra::ring_theory::longinteger_object go;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "action_on_determinant::init" << endl;

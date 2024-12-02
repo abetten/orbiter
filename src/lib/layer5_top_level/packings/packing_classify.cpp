@@ -43,6 +43,7 @@ static int count_and_record(int *Inc, int n, int m,
 
 packing_classify::packing_classify()
 {
+	Record_birth();
 	PA = NULL;
 	T = NULL;
 	F = NULL;
@@ -80,6 +81,7 @@ packing_classify::packing_classify()
 
 packing_classify::~packing_classify()
 {
+	Record_death();
 	if (Spread_table_with_selection) {
 		FREE_OBJECT(Spread_table_with_selection);
 	}
@@ -484,7 +486,7 @@ void packing_classify::compute(
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -521,7 +523,7 @@ void packing_classify::lifting_prepare_function_new(
 		int starter_case,
 	long int *candidates, int nb_candidates,
 	groups::strong_generators *Strong_gens,
-	solvers::diophant *&Dio, long int *&col_labels,
+	combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 	int &f_ruled_out, 
 	int verbose_level)
 {
@@ -779,7 +781,7 @@ static void packing_early_test_function(
 	packing_classify *P = (packing_classify *) data;
 	int f_v = (verbose_level >= 1);
 	long int i, a, b;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "packing_early_test_function for set ";

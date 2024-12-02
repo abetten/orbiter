@@ -21,6 +21,7 @@ namespace projective_geometry {
 
 projective_space_with_action_description::projective_space_with_action_description()
 {
+	Record_birth();
 	f_n = false;
 	n = 0;
 
@@ -42,6 +43,7 @@ projective_space_with_action_description::projective_space_with_action_descripti
 
 projective_space_with_action_description::~projective_space_with_action_description()
 {
+	Record_death();
 }
 
 
@@ -51,7 +53,7 @@ int projective_space_with_action_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i = 0;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_with_action_description::read_arguments" << endl;

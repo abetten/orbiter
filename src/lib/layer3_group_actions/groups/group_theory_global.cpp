@@ -25,12 +25,14 @@ namespace groups {
 
 group_theory_global::group_theory_global()
 {
+	Record_birth();
 
 }
 
 
 group_theory_global::~group_theory_global()
 {
+	Record_death();
 
 }
 
@@ -44,7 +46,7 @@ void group_theory_global::strong_generators_conjugate_avGa(
 	int f_v = (verbose_level >= 1);
 	//actions::action *A;
 	data_structures_groups::vector_ge *gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "group_theory_global::strong_generators_conjugate_avGa" << endl;
@@ -95,7 +97,7 @@ void group_theory_global::strong_generators_conjugate_aGav(
 {
 	int f_v = (verbose_level >= 1);
 	data_structures_groups::vector_ge *gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "group_theory_global::strong_generators_conjugate_aGav" << endl;
@@ -193,9 +195,9 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 	int f_v = (verbose_level >= 1);
 	string prefix;
 	string fname_output;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int d;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 
 	if (f_v) {
@@ -216,8 +218,8 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 				"q=" << F->q << endl;
 	}
 
-	linear_algebra::gl_classes C;
-	linear_algebra::gl_class_rep *R;
+	algebra::linear_algebra::gl_classes C;
+	algebra::linear_algebra::gl_class_rep *R;
 	int nb_classes;
 	int *Mtx;
 	int *Elt;
@@ -294,14 +296,14 @@ void group_theory_global::conjugacy_classes_based_on_normal_forms(
 
 	}
 
-	data_structures::tally T_order;
+	other::data_structures::tally T_order;
 
 	T_order.init(Order, nb_classes, false, 0);
 
 
 	{
 		ofstream ost(fname_output);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 		//C.report(fp, verbose_level);
@@ -430,16 +432,16 @@ void group_theory_global::find_singer_cycle(
 	}
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, d, q, cnt, ord, order;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (!A1->is_matrix_group()) {
 		cout << "group_theory_global::find_singer_cycle "
 				"needs matrix group" << endl;
 		exit(1);
 	}
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A1->get_matrix_group();
 	q = M->GFq->q;

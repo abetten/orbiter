@@ -23,6 +23,7 @@ namespace group_constructions {
 
 permutation_representation_domain::permutation_representation_domain()
 {
+	Record_birth();
 	degree = 0;
 	f_induced_action = false;
 	f_product_action = false;
@@ -49,6 +50,7 @@ permutation_representation_domain::permutation_representation_domain()
 
 permutation_representation_domain::~permutation_representation_domain()
 {
+	Record_death();
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
@@ -99,7 +101,7 @@ void permutation_representation_domain::allocate()
 	Eltrk2 = NEW_int(elt_size_int);
 	Eltrk3 = NEW_int(elt_size_int);
 
-	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
 }
 
 void permutation_representation_domain::init_product_action(
@@ -356,7 +358,7 @@ int permutation_representation_domain::is_one(
 void permutation_representation_domain::mult(
 		int *A, int *B, int *AB)
 {
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "in perm_group::mult()" << endl;
 	Combi.Permutations->perm_mult(A, B, AB, degree);
@@ -377,7 +379,7 @@ void permutation_representation_domain::copy(
 void permutation_representation_domain::invert(
 		int *A, int *Ainv)
 {
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Combi.Permutations->perm_inverse(A, Ainv, degree);
 }
@@ -415,7 +417,7 @@ void permutation_representation_domain::pack(
 void permutation_representation_domain::print(
 		int *Elt, std::ostream &ost)
 {
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
 	Combi.Permutations->perm_print(ost, Elt, degree);
@@ -428,7 +430,7 @@ void permutation_representation_domain::print_with_point_labels(
 		ostream &ost,
 		std::string *Point_labels, void *data)
 {
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
 	Combi.Permutations->perm_print_with_point_labels(
@@ -470,7 +472,7 @@ void permutation_representation_domain::print_with_action(
 	//ost << endl;
 	int i, bi, a;
 	int x1, y1, x2, y2; // if in product action
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (A->base_len() < A->degree) {
 		for (i = 0; i < A->base_len(); i++) {
@@ -525,7 +527,7 @@ void permutation_representation_domain::make_element(
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	int *my_data;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 
 	if (f_v) {

@@ -22,6 +22,7 @@ namespace semifields {
 
 semifield_lifting::semifield_lifting()
 {
+	Record_birth();
 	SC = NULL;
 	L2 = NULL;
 	Prev = NULL;
@@ -67,6 +68,7 @@ semifield_lifting::semifield_lifting()
 
 semifield_lifting::~semifield_lifting()
 {
+	Record_death();
 	if (flag_orbit_first) {
 		FREE_int(flag_orbit_first);
 	}
@@ -159,7 +161,7 @@ void semifield_lifting::init_level_three(
 	basis_tmp = NEW_int(k * k2);
 	base_cols = NEW_int(k2);
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 	if (f_v) {
 		cout << "semifield_lifting::init_level_three done" << endl;
@@ -296,7 +298,7 @@ void semifield_lifting::report(
 
 
 			ost << "\\item" << endl;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 			int po;
 
 			Stabilizer_gens[i].group_order(go);
@@ -737,7 +739,7 @@ void semifield_lifting::downstep(
 		for (orbit = 0; orbit < prev_level_nb_orbits; orbit++) {
 			Nb_orbits[orbit] = Downstep_nodes[orbit].Sch->nb_orbits;
 		}
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(Nb_orbits, prev_level_nb_orbits, false, 0);
 		cout << "semifield_lifting::downstep "
@@ -762,7 +764,7 @@ void semifield_lifting::compute_flag_orbits(
 	int po;
 	int so, f, pt_local, len;
 	long int pt;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int *Mtx1;
 
 	if (f_v) {
@@ -823,7 +825,7 @@ void semifield_lifting::compute_flag_orbits(
 	}
 	for (po = 0, f = 0; po < prev_level_nb_orbits; po++) {
 		groups::schreier *S;
-		ring_theory::longinteger_object go_prev;
+		algebra::ring_theory::longinteger_object go_prev;
 		int go_prev_int;
 
 
@@ -899,7 +901,7 @@ void semifield_lifting::compute_flag_orbits(
 
 					FREE_OBJECT(Stab);
 					if ((f % 100) == 0) {
-						ring_theory::longinteger_object go;
+						algebra::ring_theory::longinteger_object go;
 
 						Flag_orbits[f].gens->group_order(go);
 						cout << "The flag orbit stabilizer has order " << go << endl;
@@ -939,7 +941,7 @@ void semifield_lifting::compute_flag_orbits(
 			//Go[i] = M[i].gens->group_order_as_int();
 			//cout << i << " : " << Go[i] << endl;
 		}
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init_lint(Go, nb_flag_orbits, false, 0);
 		cout << "semifield_lifting::compute_flag_orbits "
@@ -989,7 +991,7 @@ void semifield_lifting::upstep(
 	int i, N, h, po, so; //, pt_local;
 	long int pt;
 	//int trace_po, trace_so;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	int /*fo,*/ class_idx;
 
 	transporter = NEW_int(SC->A->elt_size_in_int);
@@ -1137,7 +1139,7 @@ void semifield_lifting::upstep(
 
 		FREE_OBJECT(coset_reps);
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Stabilizer_gens[nb_orbits].group_order(go);
 		Go[nb_orbits] = go.as_lint();
@@ -1384,7 +1386,7 @@ void semifield_lifting::find_all_candidates(
 #endif
 
 	if (f_v) {
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(Nb_candidates, prev_level_nb_orbits, false, 0);
 		cout << "semifield_lifting::find_all_candidates "
@@ -1718,7 +1720,7 @@ void semifield_lifting::trace_very_general(
 	int f_vvv = (verbose_level >= 3);
 	int i, j;
 	actions::action *A;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_very_general" << endl;
@@ -1896,7 +1898,7 @@ void semifield_lifting::trace_to_level_two(
 	int f_vvv = (verbose_level >= 3);
 	int i, j, idx, d, d0, c0, c1;
 	actions::action *A;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "semifield_lifting::trace_very_general" << endl;
@@ -2249,7 +2251,7 @@ void semifield_lifting::deep_search_at_level_three(
 	//int *pivots;
 	int i;
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_lifting::deep_search_at_level_three" << endl;
@@ -2337,7 +2339,7 @@ void semifield_lifting::print_stabilizer_orders()
 		Go[i] = Stabilizer_gens[i].group_order_as_lint();
 		}
 #endif
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init_lint(Go, nb_orbits, false, 0);
 	cout << "distribution of stabilizer orders at level " << cur_level << " : ";
@@ -2363,10 +2365,10 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 	long int a1, a2, a3;
 	int cur_pivot_row;
 	int u;
-	data_structures::set_of_sets_lint *C3; // Level two candidates sorted by type
-	data_structures::set_of_sets_lint *C4; // those that are compatible with A_3
-	data_structures::set_of_sets_lint *C5; // those that are compatible with A_4
-	data_structures::set_of_sets_lint *C6; // those that are compatible with A_5
+	other::data_structures::set_of_sets_lint *C3; // Level two candidates sorted by type
+	other::data_structures::set_of_sets_lint *C4; // those that are compatible with A_3
+	other::data_structures::set_of_sets_lint *C5; // those that are compatible with A_4
+	other::data_structures::set_of_sets_lint *C6; // those that are compatible with A_5
 
 
 	if (f_v) {
@@ -2418,15 +2420,15 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 		// reads the files "C2_orbit%d_type%d_int4.bin"
 		// this function allocates C3
 
-	C4 = NEW_OBJECT(data_structures::set_of_sets_lint);
-	C5 = NEW_OBJECT(data_structures::set_of_sets_lint);
-	C6 = NEW_OBJECT(data_structures::set_of_sets_lint);
+	C4 = NEW_OBJECT(other::data_structures::set_of_sets_lint);
+	C5 = NEW_OBJECT(other::data_structures::set_of_sets_lint);
+	C6 = NEW_OBJECT(other::data_structures::set_of_sets_lint);
 
 	long int underlying_set_size;
 	int max_l = 0;
 	long int *Tmp1;
 	long int *Tmp2;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	underlying_set_size = NT.i_power_j(SC->q, k2);
 
@@ -2644,7 +2646,7 @@ done4:
 	FREE_lint(Tmp2);
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_lifting::deep_search_at_level_three_orbit "
@@ -2656,8 +2658,8 @@ done4:
 int semifield_lifting::candidate_testing(
 	int orbit,
 	int *last_mtx, int window_bottom, int window_size,
-	data_structures::set_of_sets_lint *C_in,
-	data_structures::set_of_sets_lint *C_out,
+	other::data_structures::set_of_sets_lint *C_in,
+	other::data_structures::set_of_sets_lint *C_out,
 	long int *Tmp1, long int *Tmp2,
 	int verbose_level)
 {
@@ -2668,9 +2670,9 @@ int semifield_lifting::candidate_testing(
 	int /*window_bottom_new,*/ window_size_new;
 	//int pivot_row;
 	long int last_mtx_numeric;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "semifield_lifting::candidate_testing" << endl;
@@ -2794,7 +2796,7 @@ void semifield_lifting::write_level_info_file(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_lifting::write_level_info_file "
@@ -2850,7 +2852,7 @@ void semifield_lifting::read_level_info_file(
 	string fname;
 	long int *M;
 	int m, n, i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_lifting::read_level_info_file" << endl;
@@ -2905,7 +2907,7 @@ void semifield_lifting::save_flag_orbits(
 	}
 	string fname;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	make_fname_flag_orbits(fname);
 	{
@@ -2937,7 +2939,7 @@ void semifield_lifting::read_flag_orbits(
 	}
 	string fname;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	make_fname_flag_orbits(fname);
@@ -2993,7 +2995,7 @@ void semifield_lifting::save_stabilizers(
 	}
 	string fname;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	make_fname_stabilizers(fname);
 	{
@@ -3024,7 +3026,7 @@ void semifield_lifting::read_stabilizers(
 	}
 	string fname;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	make_fname_stabilizers(fname);

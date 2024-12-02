@@ -23,6 +23,7 @@ namespace packings {
 
 invariants_packing::invariants_packing()
 {
+	Record_birth();
 	T = NULL;
 	P = NULL;
 	Iso = NULL;
@@ -46,6 +47,7 @@ invariants_packing::invariants_packing()
 
 invariants_packing::~invariants_packing()
 {
+	Record_death();
 	if (Inv) {
 		delete [] Inv;
 	}
@@ -94,7 +96,7 @@ void invariants_packing::init(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int orbit, i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::init" << endl;
@@ -163,7 +165,7 @@ void invariants_packing::init(
 		}
 	}
 
-	Classify = NEW_OBJECT(data_structures::tally_vector_data);
+	Classify = NEW_OBJECT(other::data_structures::tally_vector_data);
 
 	Classify->init(Spread_type_of_packing, Iso->size /* data_length */,
 			P->Spread_table_with_selection->nb_iso_types_of_spreads /* data_set_sz */,
@@ -264,7 +266,7 @@ void invariants_packing::compute_dual_packings(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int orbit, i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings" << endl;
@@ -307,7 +309,7 @@ void invariants_packing::compute_dual_packings(
 			f_implicit_fusion, verbose_level - 3);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 	string label, label1, label2;
 
@@ -339,7 +341,7 @@ void invariants_packing::make_table(
 	//int f_vv = (verbose_level >= 2);
 	int i;
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	
 	if (f_v) {
 		cout << "invariants_packing::make_table" << endl;
@@ -424,7 +426,7 @@ void invariants_packing::make_table(
 		Fio.Csv_file_support->int_vecs_write_csv(
 				set, ago, nb, fname, label1, label2);
 
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(ago, nb, false, 0);
 		

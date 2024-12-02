@@ -17,6 +17,7 @@ namespace induced_actions {
 
 action_on_orbits::action_on_orbits()
 {
+	Record_birth();
 	A = NULL;
 	Sch = NULL;
 	f_play_it_safe = false;
@@ -26,6 +27,7 @@ action_on_orbits::action_on_orbits()
 
 action_on_orbits::~action_on_orbits()
 {
+	Record_death();
 }
 
 void action_on_orbits::init(

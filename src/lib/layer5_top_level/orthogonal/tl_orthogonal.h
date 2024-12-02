@@ -203,7 +203,7 @@ public:
 	orthogonal_geometry_applications::blt_set_domain_with_action
 		*Blt_set_domain_with_action;
 
-	orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	geometry::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
 	actions::action *A; // orthogonal group
 
@@ -260,14 +260,14 @@ public:
 		int orbit_at_level, int level_of_candidates_file,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int &nb_vertices,
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 		int verbose_level);
 
 	void lifting_prepare_function_new(
 			solvers_package::exact_cover *E, int starter_case,
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_labels,
+		combinatorics::solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out,
 		int verbose_level);
 	void report_from_iso(
@@ -402,18 +402,18 @@ public:
 	actions::action *A;
 	geometry::projective_geometry::projective_space *P;
 
-	layer1_foundations::orthogonal_geometry::orthogonal *O;
+	layer1_foundations::geometry::orthogonal_geometry::orthogonal *O;
 
-	orthogonal_geometry::blt_set_domain *Blt_set_domain;
+	geometry::orthogonal_geometry::blt_set_domain *Blt_set_domain;
 
-	combinatorics::polynomial_function_domain *PF;
+	combinatorics::special_functions::polynomial_function_domain *PF;
 
 	blt_set_domain_with_action();
 	~blt_set_domain_with_action();
 	void init(
 			actions::action *A,
 			geometry::projective_geometry::projective_space *P,
-			layer1_foundations::orthogonal_geometry::orthogonal *O,
+			layer1_foundations::geometry::orthogonal_geometry::orthogonal *O,
 			int f_create_extension_fields,
 			int verbose_level);
 
@@ -485,7 +485,7 @@ public:
 	std::string label_tex;
 
 	groups::strong_generators *Aut_gens;
-	orthogonal_geometry::blt_set_invariants *Inv;
+	geometry::orthogonal_geometry::blt_set_invariants *Inv;
 
 	long int *T; // [target_size]
 	long int *Pi_ij; // [target_size * target_size]
@@ -538,7 +538,7 @@ public:
 
 	int *ABC; // [q * 3]
 
-	data_structures::int_matrix *Table_of_ABC;
+	other::data_structures::int_matrix *Table_of_ABC;
 		// same as ABC, but sorted by rows.
 
 	int *func_f; // second column of ABC
@@ -674,7 +674,7 @@ public:
 
 	std::string input_q;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_label_txt;
 	std::string label_txt;
@@ -709,7 +709,7 @@ public:
 
 	geometry::projective_geometry::projective_space *P;
 
-	layer1_foundations::orthogonal_geometry::orthogonal *O;
+	layer1_foundations::geometry::orthogonal_geometry::orthogonal *O;
 
 	int f_semilinear;
 
@@ -729,11 +729,11 @@ public:
 	void init_group(
 			int verbose_level);
 	void report(
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void report2(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *Draw_options,
+			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void make_table_of_blt_sets(
 			int verbose_level);

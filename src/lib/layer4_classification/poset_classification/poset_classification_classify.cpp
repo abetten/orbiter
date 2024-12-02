@@ -29,7 +29,7 @@ void poset_classification::compute_orbits_on_subsets(
 	int schreier_depth = target_depth;
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 
@@ -130,7 +130,7 @@ int poset_classification::main(
 	int target_depth;
 	//int f_write_files;
 	//int f_embedded = true;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "poset_classification::main" << endl;
@@ -230,7 +230,7 @@ int poset_classification::compute_orbits(
 	int f_create_schreier_vector = true;
 	int f_debug = false;
 	int f_write_files;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	if (f_v) {
@@ -999,7 +999,7 @@ void poset_classification::extend_node(
 	nb_ext_cur = 0;
 			
 	if (f_vv) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		
 		print_level_info(size, prev);
 		//cout << "Level " << size << " Node " << cur << " : ";

@@ -22,10 +22,10 @@ namespace group_constructions {
 class direct_product {
 
 public:
-	algebra::matrix_group *M1;
-	algebra::matrix_group *M2;
-	field_theory::finite_field *F1;
-	field_theory::finite_field *F2;
+	algebra::basic_algebra::matrix_group *M1;
+	algebra::basic_algebra::matrix_group *M2;
+	algebra::field_theory::finite_field *F1;
+	algebra::field_theory::finite_field *F2;
 	int q1;
 	int q2;
 
@@ -80,13 +80,13 @@ public:
 	long int *the_base; // the union of the two bases, as a subset of A \cup B.
 	int *the_transversal_length;
 
-	data_structures::page_storage *Page_storage;
+	other::data_structures::page_storage *Page_storage;
 
 	direct_product();
 	~direct_product();
 	void init(
-			algebra::matrix_group *M1,
-			algebra::matrix_group *M2,
+			algebra::basic_algebra::matrix_group *M1,
+			algebra::basic_algebra::matrix_group *M2,
 			int verbose_level);
 	long int element_image_of(
 			int *Elt, long int a, int verbose_level);
@@ -302,7 +302,7 @@ public:
 
 	std::string input_q;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 
 	int f_semilinear;
@@ -380,7 +380,7 @@ public:
 	linear_group_description *description;
 	int n;
 	int input_q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int f_semilinear;
 
 	std::string label;
@@ -388,7 +388,7 @@ public:
 
 	groups::strong_generators *initial_strong_gens;
 	actions::action *A_linear;
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 
 	int f_has_strong_generators;
 	groups::strong_generators *Strong_gens;
@@ -654,7 +654,7 @@ public:
 	int *Eltrk1, *Eltrk2, *Eltrk3;
 		// used in store / retrieve
 
-	data_structures::page_storage *Page_storage;
+	other::data_structures::page_storage *Page_storage;
 
 	permutation_representation_domain();
 	~permutation_representation_domain();
@@ -738,7 +738,7 @@ public:
 	std::string label;
 	std::string label_tex;
 
-	data_structures::page_storage *Page_storage;
+	other::data_structures::page_storage *Page_storage;
 
 	int *Elts;
 		// [nb_gens * elt_size_int], the generators in the induced action
@@ -788,8 +788,8 @@ class polarity_extension {
 
 public:
 
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 
 	geometry::projective_geometry::projective_space *P;
 	geometry::projective_geometry::polarity *Polarity;
@@ -849,7 +849,7 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	data_structures::page_storage *Page_storage;
+	other::data_structures::page_storage *Page_storage;
 
 	polarity_extension();
 	~polarity_extension();
@@ -923,9 +923,9 @@ public:
 class wreath_product {
 
 public:
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 	actions::action *A_mtx;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int q;
 	int nb_factors;
 
@@ -983,7 +983,7 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	data_structures::page_storage *Page_storage;
+	other::data_structures::page_storage *Page_storage;
 
 	uint32_t *rank_one_tensors; // [nb_rank_one_tensors]
 	long int *rank_one_tensors_in_PG; // [nb_rank_one_tensors]
@@ -998,7 +998,7 @@ public:
 	wreath_product();
 	~wreath_product();
 	void init_tensor_wreath_product(
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			actions::action *A_mtx, int nb_factors,
 			int verbose_level);
 	void compute_tensor_ranks(

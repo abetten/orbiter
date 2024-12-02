@@ -25,6 +25,7 @@ namespace projective_geometry {
 
 projective_space_subspaces::projective_space_subspaces()
 {
+	Record_birth();
 	P = NULL;
 
 	Grass_lines = NULL;
@@ -58,6 +59,7 @@ projective_space_subspaces::projective_space_subspaces()
 
 projective_space_subspaces::~projective_space_subspaces()
 {
+	Record_death();
 	int f_v = false;
 
 	if (f_v) {
@@ -128,7 +130,7 @@ projective_space_subspaces::~projective_space_subspaces()
 void projective_space_subspaces::init(
 	projective_space *P,
 	int n,
-	field_theory::finite_field *F,
+	algebra::field_theory::finite_field *F,
 	int f_init_incidence_structure,
 	int verbose_level)
 // n is projective dimension
@@ -211,7 +213,7 @@ void projective_space_subspaces::init_grassmann(
 
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics::combinatorics_domain C;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::init_grassmann" << endl;
@@ -252,7 +254,7 @@ void projective_space_subspaces::compute_number_of_subspaces(
 
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics::combinatorics_domain C;
+	combinatorics::other_combinatorics::combinatorics_domain C;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::compute_number_of_subspaces" << endl;
@@ -265,8 +267,8 @@ void projective_space_subspaces::compute_number_of_subspaces(
 	Nb_subspaces = NEW_lint(n + 1);
 	//if (n < 10) {
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object a, b;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object a, b;
 
 	for (i = 0; i <= n; i++) {
 		if (f_v) {
@@ -833,7 +835,7 @@ void projective_space_subspaces::incidence_m_ii(
 
 void projective_space_subspaces::make_incidence_structure_and_partition(
 	other_geometry::incidence_structure *&Inc,
-	data_structures::partitionstack *&Stack,
+	other::data_structures::partitionstack *&Stack,
 	int verbose_level)
 // points vs lines
 {
@@ -887,7 +889,7 @@ void projective_space_subspaces::make_incidence_structure_and_partition(
 	FREE_int(M);
 
 
-	Stack = NEW_OBJECT(data_structures::partitionstack);
+	Stack = NEW_OBJECT(other::data_structures::partitionstack);
 	Stack->allocate(N_points + N_lines, 0 /* verbose_level */);
 	Stack->subset_contiguous(N_points, N_lines);
 	Stack->split_cell(0 /* verbose_level */);
@@ -1136,7 +1138,7 @@ void projective_space_subspaces::points_covered_by_plane(
 void projective_space_subspaces::incidence_and_stack_for_type_ij(
 	int row_type, int col_type,
 	other_geometry::incidence_structure *&Inc,
-	data_structures::partitionstack *&Stack,
+	other::data_structures::partitionstack *&Stack,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1165,7 +1167,7 @@ void projective_space_subspaces::incidence_and_stack_for_type_ij(
 	FREE_int(Incma);
 
 
-	Stack = NEW_OBJECT(data_structures::partitionstack);
+	Stack = NEW_OBJECT(other::data_structures::partitionstack);
 	Stack->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 	Stack->subset_contiguous(nb_rows, nb_cols);
 	Stack->split_cell(0 /* verbose_level */);
@@ -1179,8 +1181,8 @@ void projective_space_subspaces::incidence_and_stack_for_type_ij(
 long int projective_space_subspaces::nb_rk_k_subspaces_as_lint(
 		int k)
 {
-	combinatorics::combinatorics_domain C;
-	ring_theory::longinteger_object aa;
+	combinatorics::other_combinatorics::combinatorics_domain C;
+	algebra::ring_theory::longinteger_object aa;
 	long int N;
 	int d = n + 1;
 
@@ -1560,7 +1562,7 @@ void projective_space_subspaces::line_intersection_type_through_hyperplane(
 	int nb_pts_in_hyperplane;
 	int idx;
 	other_geometry::geometry_global Gg;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::line_intersection_type_through_hyperplane "
@@ -2054,7 +2056,7 @@ void projective_space_subspaces::export_incidence_matrix_to_csv(
 
 	int i, j, k;
 	int *T;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	T = NEW_int(N_points * N_lines);
 	for (i = 0; i < N_points; i++) {
@@ -2105,7 +2107,7 @@ void projective_space_subspaces::export_restricted_incidence_matrix_to_csv(
 
 	int i, j, k, ii, jj;
 	int *T;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	T = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
@@ -2148,10 +2150,10 @@ void projective_space_subspaces::make_fname_incidence_matrix_csv(
 
 
 void projective_space_subspaces::compute_decomposition(
-		data_structures::partitionstack *S1,
-		data_structures::partitionstack *S2,
+		other::data_structures::partitionstack *S1,
+		other::data_structures::partitionstack *S2,
 		other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2206,10 +2208,10 @@ void projective_space_subspaces::compute_decomposition(
 }
 
 void projective_space_subspaces::compute_decomposition_based_on_tally(
-		data_structures::tally *T1,
-		data_structures::tally *T2,
+		other::data_structures::tally *T1,
+		other::data_structures::tally *T2,
 		other_geometry::incidence_structure *&Inc,
-		data_structures::partitionstack *&Stack,
+		other::data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2487,7 +2489,7 @@ void projective_space_subspaces::plane_intersection(
 	int *Coords;
 	int base_cols[3];
 	int coefficients[3];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::plane_intersection" << endl;
@@ -2560,7 +2562,7 @@ void projective_space_subspaces::line_intersection(
 	int *Basis;
 	int *Basis_save;
 	int *Coords;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_subspaces::line_intersection" << endl;

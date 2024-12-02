@@ -21,6 +21,7 @@ namespace induced_actions {
 
 action_on_module::action_on_module()
 {
+	Record_birth();
 	A = NULL;
 	n = q = 0;
 	M = NULL;
@@ -49,6 +50,7 @@ action_on_module::action_on_module()
 
 action_on_module::~action_on_module()
 {
+	Record_death();
 	A = NULL;
 
 	if (module_basis) {
@@ -81,7 +83,7 @@ action_on_module::~action_on_module()
 }
 
 void action_on_module::init_action_on_module(
-		algebraic_geometry::surface_object *SO,
+		geometry::algebraic_geometry::surface_object *SO,
 		actions::action *A_on_the_lines,
 		std::string &module_type,
 		int *module_basis, int module_dimension_m, int module_dimension_n,
@@ -170,7 +172,7 @@ void action_on_module::init_action_on_module(
 #endif
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (ST.stringcmp(module_type, "on_tritangent_planes") == 0) {
@@ -261,9 +263,10 @@ void action_on_module::compute_image_int_low_level(
 	}
 
 
-	algebra::module Module;
+	algebra::basic_algebra::module Module;
 
-	Module.apply(input, output, perm,
+	Module.apply(
+			input, output, perm,
 			module_dimension_m, module_dimension_n, module_basis,
 			v1, v2, verbose_level);
 

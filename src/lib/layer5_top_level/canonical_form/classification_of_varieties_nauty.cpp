@@ -24,6 +24,7 @@ namespace canonical_form {
 
 classification_of_varieties_nauty::classification_of_varieties_nauty()
 {
+	Record_birth();
 	Classifier = NULL;
 
 	Input = NULL;
@@ -61,6 +62,7 @@ classification_of_varieties_nauty::classification_of_varieties_nauty()
 
 classification_of_varieties_nauty::~classification_of_varieties_nauty()
 {
+	Record_death();
 	if (F_first_time) {
 		FREE_int(F_first_time);
 	}
@@ -324,7 +326,7 @@ void classification_of_varieties_nauty::allocate_tables(
 		cout << "classification_of_varieties_nauty::allocate_tables" << endl;
 	}
 
-	CB = NEW_OBJECT(canonical_form_classification::classify_bitvectors);
+	CB = NEW_OBJECT(combinatorics::canonical_form_classification::classify_bitvectors);
 
 
 	// classification by nauty:
@@ -530,7 +532,7 @@ void classification_of_varieties_nauty::write_classification_by_nauty_csv(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
@@ -601,7 +603,7 @@ void classification_of_varieties_nauty::report(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -623,7 +625,7 @@ void classification_of_varieties_nauty::report(
 
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
@@ -704,7 +706,7 @@ void classification_of_varieties_nauty::report_iso_types(
 			Ago.push_back(Goi[idx]);
 		}
 
-		data_structures::tally_lint T;
+		other::data_structures::tally_lint T;
 
 		T.init_vector_lint(
 				Ago,

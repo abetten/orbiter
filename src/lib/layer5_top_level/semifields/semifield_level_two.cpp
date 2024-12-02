@@ -20,6 +20,7 @@ namespace semifields {
 
 semifield_level_two::semifield_level_two()
 {
+	Record_birth();
 	SC = NULL;
 	n = k = k2 = q = 0;
 
@@ -85,6 +86,7 @@ semifield_level_two::semifield_level_two()
 
 semifield_level_two::~semifield_level_two()
 {
+	Record_death();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -334,7 +336,7 @@ void semifield_level_two::init(
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object Go;
+	algebra::ring_theory::longinteger_object Go;
 
 	if (f_v) {
 		cout << "semifield_level_two::init" << endl;
@@ -404,8 +406,8 @@ void semifield_level_two::init(
 	Basis1 = NEW_int(k * k);
 	Basis2 = NEW_int(k * k);
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
-	R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
+	R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 	init_desired_pivots(verbose_level - 1);
 
@@ -455,8 +457,8 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	groups::strong_generators *Centralizer_gens;
 	groups::sims *G;
 	groups::sims *U;
-	ring_theory::longinteger_object Go, Co, Cl;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object Go, Co, Cl;
+	algebra::ring_theory::longinteger_domain D;
 	int rk, cl, r;
 
 	if (f_v) {
@@ -694,9 +696,9 @@ void semifield_level_two::downstep(
 
 		class_rep_plus_I_rank[i] = SC->matrix_rank(Mtx_2);
 
-		linear_algebra::gl_class_rep *R2;
+		algebra::linear_algebra::gl_class_rep *R2;
 
-		R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
+		R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 		class_rep_plus_I_Basis[i] = NEW_int(k * k);
 		class_rep_plus_I_Basis_inv[i] = NEW_int(k * k);
@@ -864,9 +866,9 @@ void semifield_level_two::compute_stabilizers_downstep(
 						<< " a == b, extending Flag_orbit_stabilizer[i]" << endl;
 			}
 
-			linear_algebra::gl_class_rep *R2;
+			algebra::linear_algebra::gl_class_rep *R2;
 
-			R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
+			R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 			F->Linear_algebra->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
 
@@ -892,7 +894,7 @@ void semifield_level_two::compute_stabilizers_downstep(
 		cout << "semifield_level_two::compute_stabilizers_downstep "
 				"We found " << nb_flag_orbits << " down orbits:" << endl;
 		for (i = 0; i < nb_flag_orbits; i++) {
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			Flag_orbit_stabilizer[i].group_order(go);
 			for (j = 0; j < 2; j++) {
@@ -912,7 +914,7 @@ void semifield_level_two::compute_stabilizers_downstep(
 	if (f_vv) {
 		cout << "Stabilizers of middle object:" << endl;
 		for (i = 0; i < nb_flag_orbits; i++) {
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			Flag_orbit_stabilizer[i].group_order(go);
 			cout << "flag orbit " << i << " / " << nb_flag_orbits
@@ -1101,7 +1103,7 @@ void semifield_level_two::upstep(
 		FREE_OBJECT(coset_reps);
 
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Stabilizer_gens[nb_orbits].group_order(go);
 		if (f_vv) {
@@ -1125,7 +1127,7 @@ void semifield_level_two::upstep(
 
 
 	for (i = 0; i < nb_orbits; i++) {
-		ring_theory::longinteger_object go, go1;
+		algebra::ring_theory::longinteger_object go, go1;
 
 		Stabilizer_gens[i].group_order(go);
 
@@ -1148,7 +1150,7 @@ void semifield_level_two::upstep(
 	if (f_vv) {
 		cout << "i : defining_flag_orbit[i] : go" << endl;
 		for (i = 0; i < nb_orbits; i++) {
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			int *Mtx;
 
 			Stabilizer_gens[i].group_order(go);
@@ -1498,7 +1500,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int i;
 	long int a;
 	groups::sims *G;
-	ring_theory::longinteger_object go_PGL;
+	algebra::ring_theory::longinteger_object go_PGL;
 	int alloc_length;
 
 
@@ -1544,9 +1546,9 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int *base_cols;
 	int N, N1, v[2], j, h, b1, b2;
 	long int r;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	N = NT.i_power_j(q, k);
 	N1 = NT.i_power_j(q, 2);
@@ -1733,7 +1735,7 @@ int semifield_level_two::test_if_file_exists_candidates_at_level_two_case(
 {
 	string fname;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	SC->make_fname_candidates_at_level_two_orbit(fname, orbit);
 	if (Fio.file_size(fname) > 0) {
@@ -1757,7 +1759,7 @@ int semifield_level_two::test_if_txt_file_exists_candidates_at_level_two_case(
 {
 	string fname;
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	SC->make_fname_candidates_at_level_two_orbit_txt(fname, orbit);
 	if (Fio.file_size(fname) > 0) {
@@ -1782,7 +1784,7 @@ void semifield_level_two::find_all_candidates_at_level_two(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::find_all_candidates_at_level_two" << endl;
@@ -1914,7 +1916,7 @@ void semifield_level_two::read_candidates_at_level_two_case(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::read_candidates_at_level_two_case" << endl;
@@ -1954,7 +1956,7 @@ void semifield_level_two::read_candidates_at_level_two_case_txt_file(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::read_candidates_at_level_"
@@ -1997,7 +1999,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 {
 	int f_v = (verbose_level >= 1);
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::write_candidates_"
@@ -2023,7 +2025,7 @@ void semifield_level_two::write_candidates_at_level_two_case(
 }
 
 void semifield_level_two::read_candidates_at_level_two_by_type(
-		data_structures::set_of_sets_lint *&Candidates_by_type,
+		other::data_structures::set_of_sets_lint *&Candidates_by_type,
 		int orbit,
 		int verbose_level)
 {
@@ -2034,15 +2036,15 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 				"two_by_type" << endl;
 	}
 
-	Candidates_by_type = NEW_OBJECT(data_structures::set_of_sets_lint);
+	Candidates_by_type = NEW_OBJECT(other::data_structures::set_of_sets_lint);
 
 	long int **Set;
 	int *Set_sz;
 	int Nb_sets;
 	int /*window_bottom,*/ window_size;
 	int h;
-	number_theory::number_theory_domain NT;
-	orbiter_kernel_system::file_io Fio;
+	algebra::number_theory::number_theory_domain NT;
+	other::orbiter_kernel_system::file_io Fio;
 
 	//window_bottom = k - 1;
 	window_size = k - 2;
@@ -2208,7 +2210,7 @@ void semifield_level_two::report(
 			//A_PGLk->make_element(Elt, Mtx, 0);
 
 			groups::strong_generators *Centralizer_gens;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 
 			C->make_matrix_from_class_rep(Mtx, R + i, 0 /*verbose_level - 1 */);
@@ -2251,7 +2253,7 @@ void semifield_level_two::report(
 				SC->A->Group_element->element_print_latex(Fusion_elt[i], ost);
 				ost << "$$" << endl;
 			}
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 			Flag_orbit_stabilizer[i].group_order(go);
 			ost << "Flag orbit stabilizer has order " << go << "\\\\" << endl;
 			Flag_orbit_stabilizer[i].print_generators_tex(ost);
@@ -2271,7 +2273,7 @@ void semifield_level_two::report(
 
 			ost << "\\item" << endl;
 
-			ring_theory::longinteger_object go, go1;
+			algebra::ring_theory::longinteger_object go, go1;
 			//int *Elt1;
 
 			Stabilizer_gens[i].group_order(go);
@@ -2361,7 +2363,7 @@ void semifield_level_two::write_level_info_file(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::write_level_info_file" << endl;
@@ -2415,7 +2417,7 @@ void semifield_level_two::read_level_info_file(
 	long int *M;
 	int m, n, i;
 	//int tmp;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "semifield_level_two::read_level_info_file" << endl;

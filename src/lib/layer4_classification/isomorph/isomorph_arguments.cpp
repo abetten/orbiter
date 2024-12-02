@@ -17,6 +17,7 @@ namespace isomorph {
 
 isomorph_arguments::isomorph_arguments()
 {
+	Record_birth();
 	f_prefix_iso = false;
 	//std::string prefix_iso;
 	//prefix_iso = "./ISO/";
@@ -98,6 +99,7 @@ isomorph_arguments::isomorph_arguments()
 
 isomorph_arguments::~isomorph_arguments()
 {
+	Record_death();
 }
 
 int isomorph_arguments::read_arguments(
@@ -105,7 +107,7 @@ int isomorph_arguments::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	for (i = 0; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-prefix_iso") == 0) {

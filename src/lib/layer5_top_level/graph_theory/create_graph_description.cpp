@@ -19,6 +19,7 @@ namespace apps_graph_theory {
 
 create_graph_description::create_graph_description()
 {
+	Record_birth();
 
 	// TABLES/create_graph_1.tex
 
@@ -134,6 +135,10 @@ create_graph_description::create_graph_description()
 
 }
 
+create_graph_description::~create_graph_description()
+{
+	Record_death();
+}
 
 int create_graph_description::read_arguments(
 	int argc, std::string *argv,
@@ -141,7 +146,7 @@ int create_graph_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "create_graph_description::read_arguments" << endl;

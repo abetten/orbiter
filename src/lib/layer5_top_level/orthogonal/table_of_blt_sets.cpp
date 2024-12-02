@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 table_of_blt_sets::table_of_blt_sets()
 {
+	Record_birth();
 	Space = NULL;
 
 	nb_objects = 0;
@@ -34,6 +35,7 @@ table_of_blt_sets::table_of_blt_sets()
 
 table_of_blt_sets::~table_of_blt_sets()
 {
+	Record_death();
 	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 
@@ -72,7 +74,7 @@ void table_of_blt_sets::init(
 
 	table_of_blt_sets::Space = Space;
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	int h;
 
@@ -274,7 +276,7 @@ void table_of_blt_sets::export_csv(
 		cout << "table_of_blt_sets::export_csv" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string fname;
 	fname = "table_of_blt_sets_q" + std::to_string(Space->O->F->q) + ".csv";

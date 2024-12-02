@@ -22,6 +22,7 @@ namespace isomorph {
 
 substructure_lifting_data::substructure_lifting_data()
 {
+	Record_birth();
 	Iso = NULL;
 
 	nb_flag_orbits = 0;
@@ -76,6 +77,7 @@ substructure_lifting_data::substructure_lifting_data()
 
 substructure_lifting_data::~substructure_lifting_data()
 {
+	Record_death();
 	if (table_of_solutions) {
 		FREE_lint(table_of_solutions);
 		table_of_solutions = NULL;
@@ -177,8 +179,8 @@ void substructure_lifting_data::read_solution_first_and_len(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::read_solution_first_and_len "
@@ -330,7 +332,7 @@ void substructure_lifting_data::list_solutions_by_starter(
 	int i, j, idx, id, f, l, fst, len, pos, u;
 	long int data[1000];
 	long int data2[1000];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::list_solutions_by_starter" << endl;
@@ -391,7 +393,7 @@ void substructure_lifting_data::list_solutions_by_orbit(
 	int i, j, idx, id, f, l;
 	long int data[1000];
 	long int data2[1000];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::list_solutions_by_orbit" << endl;
@@ -439,7 +441,7 @@ void substructure_lifting_data::orbits_of_stabilizer(
 	int f_vvvv = (verbose_level >= 4);
 	int f_v5 = (verbose_level >= 5);
 	int i, j, f, l, nb_orbits_prev = 0;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::orbits_of_stabilizer" << endl;
@@ -596,7 +598,7 @@ void substructure_lifting_data::orbits_of_stabilizer(
 					<< " / " << Iso->Sub->nb_starter << " finished, we found "
 					<< nb_flag_orbits - nb_orbits_prev << " orbits : ";
 			if (nb_flag_orbits - nb_orbits_prev) {
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init(flag_orbit_solution_len + nb_orbits_prev,
 						nb_flag_orbits - nb_orbits_prev, false, 0);
@@ -651,7 +653,7 @@ void substructure_lifting_data::orbits_of_stabilizer(
 		cout << "substructure_lifting_data::orbits_of_stabilizer "
 				"We found " << nb_flag_orbits
 				<< " orbits : ";
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(flag_orbit_solution_len, nb_flag_orbits, false, 0);
 		C.print_bare(true /* f_backwards */);
@@ -738,13 +740,13 @@ void substructure_lifting_data::orbits_of_stabilizer_case(
 				"solution_len[the_case] = " << l << endl;
 	}
 
-	ring_theory::longinteger_object S_go;
+	algebra::ring_theory::longinteger_object S_go;
 	groups::sims *S;
 	actions::action *A_induced;
 	groups::schreier *Schreier;
 	long int *sets;
 	int h, p, prev, b, hdl;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	sets = NEW_lint(l * Iso->size);
 	S = NEW_OBJECT(groups::sims);
@@ -949,7 +951,7 @@ void substructure_lifting_data::orbit_representative(
 	int c, p, i_loc, l; //, hdl;
 	int *Elt1, *Elt2;
 	data_structures_groups::vector_ge gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::orbit_representative" << endl;
@@ -1080,8 +1082,8 @@ void substructure_lifting_data::test_identify_solution(
 	int perm[1000];
 	int i, k;
 	int *transporter;
-	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::os_interface Os;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::test_identify_solution" << endl;
@@ -1364,7 +1366,7 @@ void substructure_lifting_data::count_solutions(
 	int f_v = (verbose_level >= 1);
 	int i;
 	//int total_days, total_hours, total_minutes;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::count_solutions" << endl;
@@ -1482,7 +1484,7 @@ void substructure_lifting_data::add_solutions_to_database(
 	//int f_vvv = (verbose_level >= 3);
 	int u, v;
 	long int *data;
-	data_structures::data_structures_global Data;
+	other::data_structures::data_structures_global Data;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::add_solutions_to_database "
@@ -1541,7 +1543,7 @@ void substructure_lifting_data::init_solutions(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::init_solutions "
@@ -1614,7 +1616,7 @@ void substructure_lifting_data::init_solutions(
 				"sorting hash_vs_id_hash" << endl;
 	}
 	{
-		data_structures::tally_lint C;
+		other::data_structures::tally_lint C;
 
 		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::init_solutions "
@@ -1646,7 +1648,7 @@ void substructure_lifting_data::count_solutions_from_clique_finder_case_by_case(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::count_solutions_from_clique_finder_case_by_case "
@@ -1719,7 +1721,7 @@ void substructure_lifting_data::count_solutions_from_clique_finder(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h, c, n;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::count_solutions_from_clique_finder "
@@ -1802,8 +1804,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 	int i, no = 0;
 	int print_mod = 1000;
@@ -1866,7 +1868,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder_case_by_case(
 				"sorting hash_vs_id_hash" << endl;
 	}
 	{
-		data_structures::tally_lint C;
+		other::data_structures::tally_lint C;
 
 		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder_case_by_case "
@@ -1907,8 +1909,8 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 	//int *data;
 	int print_mod = 1000;
 	int nb_solutions_total;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -1947,7 +1949,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 		//int nb_solutions_total;
 		//string fname_summary;
 		//char extension[1000];
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 #if 0
 		fname_summary = fname[i];
@@ -2040,7 +2042,7 @@ void substructure_lifting_data::read_solutions_from_clique_finder(
 				"sorting hash_vs_id_hash" << endl;
 	}
 	{
-		data_structures::tally_lint C;
+		other::data_structures::tally_lint C;
 
 		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::read_solutions_from_clique_finder "
@@ -2091,10 +2093,10 @@ void substructure_lifting_data::build_up_database(
 	int print_mod = 1000;
 	uint_4 datref;
 	int nb_fail = 0;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
-	data_structures::data_structures_global Data;
-	data_structures::string_tools ST;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::data_structures_global Data;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::build_up_database "
@@ -2234,7 +2236,7 @@ void substructure_lifting_data::build_up_database(
 				"sorting hash_vs_id_hash" << endl;
 	}
 	{
-		data_structures::tally_lint C;
+		other::data_structures::tally_lint C;
 
 		C.init(hash_vs_id_hash, N, true, 0);
 		cout << "substructure_lifting_data::build_up_database "
@@ -2263,7 +2265,7 @@ void substructure_lifting_data::get_statistics(
 	int nb_points, dt[5], dt_total;
 	int f_v = (verbose_level >= 1);
 	string fname_summary;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::get_statistics: reading "
@@ -2331,7 +2333,7 @@ void substructure_lifting_data::get_statistics(
 
 void substructure_lifting_data::write_statistics()
 {
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	{
 		ofstream f(fname_statistics);
@@ -2363,8 +2365,8 @@ void substructure_lifting_data::evaluate_statistics(
 	int graph_size_min;
 	int time_max;
 	int time_min;
-	ring_theory::longinteger_object a, b, c, a1, b1, c1, d, n, q1, q2, q3, r1, r2, r3;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object a, b, c, a1, b1, c1, d, n, q1, q2, q3, r1, r2, r3;
+	algebra::ring_theory::longinteger_domain D;
 
 	nb_backtrack_max = nb_backtrack_min = stats_nb_backtrack[0];
 	graph_size_max = graph_size_min = stats_graph_size[0];
@@ -2426,7 +2428,7 @@ void substructure_lifting_data::write_starter_nb_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -2456,7 +2458,7 @@ void substructure_lifting_data::read_starter_nb_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -2510,14 +2512,14 @@ void substructure_lifting_data::write_hash_and_datref_file(
 // containing id_to_hash[] and id_to_datref[]
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::write_hash_and_datref_file" << endl;
 	}
 	{
 		//ofstream f(fname_hash_and_datref);
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *T;
 		int i;
 
@@ -2531,7 +2533,7 @@ void substructure_lifting_data::write_hash_and_datref_file(
 				fname_hash_and_datref, T, N, 2);
 
 
-		data_structures::tally_lint TA;
+		other::data_structures::tally_lint TA;
 
 		TA.init(id_to_hash, N, true, 0);
 		cout << "substructure_lifting_data::write_hash_and_datref_file "
@@ -2568,7 +2570,7 @@ void substructure_lifting_data::read_hash_and_datref_file(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::read_hash_and_datref_file" << endl;
@@ -2576,7 +2578,7 @@ void substructure_lifting_data::read_hash_and_datref_file(
 
 	{
 		//ifstream f(fname_hash_and_datref);
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *T;
 		int m, n;
 
@@ -2667,7 +2669,7 @@ void substructure_lifting_data::write_orbit_data(
 // Writes the file 'fname_staborbits'
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "substructure_lifting_data::write_orbit_data" << endl;
@@ -2772,7 +2774,7 @@ void substructure_lifting_data::read_orbit_data(
 
 
 	{
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *T;
 		int m, n;
 
@@ -2804,7 +2806,7 @@ void substructure_lifting_data::read_orbit_data(
 
 
 	{
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *T;
 		int m, n;
 
@@ -2839,7 +2841,7 @@ void substructure_lifting_data::read_orbit_data(
 
 		FREE_lint(T);
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.Permutations->perm_inverse(orbit_perm, orbit_perm_inv, N);
 
@@ -2901,8 +2903,8 @@ void substructure_lifting_data::test_hash(
 	long int data[1000];
 	int id, case_nb, f, l, i;
 	long int *H;
-	data_structures::sorting Sorting;
-	data_structures::data_structures_global Data;
+	other::data_structures::sorting Sorting;
+	other::data_structures::data_structures_global Data;
 
 
 	if (f_v) {
@@ -2925,7 +2927,7 @@ void substructure_lifting_data::test_hash(
 			H[i] = Data.lint_vec_hash(data, Iso->size);
 		}
 		{
-			data_structures::tally_lint C;
+			other::data_structures::tally_lint C;
 			C.init(H, l, true, 0);
 			C.print(false /*f_backwards*/);
 		}

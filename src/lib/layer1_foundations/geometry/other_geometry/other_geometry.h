@@ -36,12 +36,12 @@ namespace other_geometry {
 class arc_basic {
 public:
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	arc_basic();
 	~arc_basic();
 	void init(
-			field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F, int verbose_level);
 
 	void Segre_hyperoval(
 			long int *&Pts, int &nb_pts, int verbose_level);
@@ -93,8 +93,8 @@ public:
 	arc_in_projective_space();
 	~arc_in_projective_space();
 	void init(
-			projective_geometry::projective_space *P, int verbose_level);
-
+			projective_geometry::projective_space *P,
+			int verbose_level);
 	void create_arc_1_BCKM(
 			long int *&the_arc, int &size,
 		int verbose_level);
@@ -138,20 +138,20 @@ public:
 	void arc_lifting_diophant(
 		long int *arc, int arc_sz,
 		int target_sz, int target_d,
-		solvers::diophant *&D,
+		combinatorics::solvers::diophant *&D,
 		int verbose_level);
 	void create_diophant_for_arc_lifting_with_given_set_of_s_lines(
 			long int *s_lines, int nb_s_lines,
 			int target_sz, int arc_d, int arc_d_low, int arc_s,
 			int f_dualize,
-			solvers::diophant *&D,
+			combinatorics::solvers::diophant *&D,
 			int verbose_level);
 	void arc_with_two_given_line_sets_diophant(
 			long int *s_lines, int nb_s_lines, int arc_s,
 			long int *t_lines, int nb_t_lines, int arc_t,
 			int target_sz, int arc_d, int arc_d_low,
 			int f_dualize,
-			solvers::diophant *&D,
+			combinatorics::solvers::diophant *&D,
 			int verbose_level);
 	void arc_with_three_given_line_sets_diophant(
 			long int *s_lines, int nb_s_lines, int arc_s,
@@ -159,13 +159,13 @@ public:
 			long int *u_lines, int nb_u_lines, int arc_u,
 			int target_sz, int arc_d, int arc_d_low,
 			int f_dualize,
-			solvers::diophant *&D,
+			combinatorics::solvers::diophant *&D,
 			int verbose_level);
 	void maximal_arc_by_diophant(
 			int arc_sz, int arc_d,
 			std::string &secant_lines_text,
 			std::string &external_lines_as_subset_of_secants_text,
-			solvers::diophant *&D,
+			combinatorics::solvers::diophant *&D,
 			int verbose_level);
 	void arc_lifting1(
 			int arc_size,
@@ -238,7 +238,7 @@ public:
 
 class flag {
 public:
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	projective_geometry::grassmann *Gr;
 	int n;
 	int s0, s1, s2;
@@ -262,11 +262,12 @@ public:
 	~flag();
 	void init(
 			int n, int *type, int type_len,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int verbose_level);
 	void init_recursion(
 			int n, int *type, int type_len, int idx,
-			field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F,
+			int verbose_level);
 	void unrank(
 			long int rk, int *subspace, int verbose_level);
 	void unrank_recursion(
@@ -505,19 +506,19 @@ public:
 			int q, int *v, int stride, int len);
 	void AG_element_rank_longinteger(
 			int q, int *v, int stride, int len,
-			ring_theory::longinteger_object &a);
+			algebra::ring_theory::longinteger_object &a);
 	void AG_element_unrank_longinteger(
 			int q, int *v, int stride, int len,
-			ring_theory::longinteger_object &a);
+			algebra::ring_theory::longinteger_object &a);
 	int PG_element_modified_is_in_subspace(
 			int n, int m, int *v);
 	int test_if_arc(
-			field_theory::finite_field *Fq,
+			algebra::field_theory::finite_field *Fq,
 			int *pt_coords, int *set,
 			int set_sz, int k, int verbose_level);
 	void create_Buekenhout_Metz(
-			field_theory::finite_field *Fq,
-			field_theory::finite_field *FQ,
+			algebra::field_theory::finite_field *Fq,
+			algebra::field_theory::finite_field *FQ,
 		int f_classical, int f_Uab, int parameter_a, int parameter_b,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
@@ -587,50 +588,50 @@ public:
 	int packing_number_via_maxfit(
 			int n, int k);
 	void do_inverse_isomorphism_klein_quadric(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 			int verbose_level);
 	// creates klein_correspondence and orthogonal_geometry::orthogonal objects
 	void do_rank_points_in_PG(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			std::string &label,
 			int verbose_level);
 	void do_unrank_points_in_PG(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n,
 			std::string &text,
 			int verbose_level);
 	void do_intersection_of_two_lines(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			int verbose_level);
 	void do_transversal(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			std::string &line_1_basis,
 			std::string &line_2_basis,
 			std::string &point,
 			int verbose_level);
 	void do_cheat_sheet_hermitian(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int projective_dimension,
 			int verbose_level);
 	// creates a hermitian object
 	void do_create_desarguesian_spread(
-			field_theory::finite_field *FQ,
-			field_theory::finite_field *Fq,
+			algebra::field_theory::finite_field *FQ,
+			algebra::field_theory::finite_field *Fq,
 			int m,
 			int verbose_level);
 	// creates field_theory::subfield_structure and desarguesian_spread objects
 	void create_BLT_point(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
 		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
 	void create_BLT_point_from_flock(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *v5, int a, int b, int c, int verbose_level);
 	// creates the point (a/2,-a^2/4-bc,1,c,b)
 #if 0
@@ -690,19 +691,19 @@ public:
 			int verbose_level);
 	void do_cone_over(
 			int n,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		long int *set_in, int set_size_in,
 		long int *&set_out, int &set_size_out,
 		int verbose_level);
 	void do_blocking_set_family_3(
 			int n,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		long int *set_in, int set_size,
 		long int *&the_set_out, int &set_size_out,
 		int verbose_level);
 	// creates projective_space PG(2,q)
 	void create_orthogonal(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int epsilon, int n,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -710,7 +711,7 @@ public:
 		int verbose_level);
 	// creates a quadratic form
 	void create_hermitian(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -718,14 +719,14 @@ public:
 		int verbose_level);
 	// creates hermitian
 	void create_ttp_code(
-			field_theory::finite_field *FQ,
-			field_theory::finite_field *Fq_subfield,
+			algebra::field_theory::finite_field *FQ,
+			algebra::field_theory::finite_field *Fq_subfield,
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	// creates a projective_space
 	void create_segre_variety(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int a, int b,
 			std::string &label_txt,
 			std::string &label_tex,
@@ -744,37 +745,37 @@ public:
 	// it needs a pair of finite fields
 #endif
 	void do_embed_orthogonal(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int epsilon, int n,
 		long int *set_in, long int *&set_out, int set_size,
 		int verbose_level);
 	// creates a quadratic_form object
 	void do_embed_points(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n,
 			long int *set_in, long int *&set_out, int set_size,
 		int verbose_level);
 	void print_set_in_affine_plane(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int len, long int *S);
 	void simeon(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int len, long int *S, int s, int verbose_level);
 	void wedge_to_klein(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *W, int *K);
 	void klein_to_wedge(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *K, int *W);
 	void isomorphism_to_special_orthogonal(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *A4, int *A6, int verbose_level);
 	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int x, int y,
 			int &a, int &b, int verbose_level);
 	int evaluate_Fermat_cubic(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int *v);
 
 };
@@ -794,7 +795,7 @@ public:
 
 	// The hermitian form is \sum_{i=0}^{k-1} X_i^{q+1}
 
-	field_theory::finite_field *F; // only a reference, not to be freed
+	algebra::field_theory::finite_field *F; // only a reference, not to be freed
 	int Q;
 	int q;
 	int k; // nb_vars
@@ -816,7 +817,7 @@ public:
 	hermitian();
 	~hermitian();
 	void init(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int nb_vars, int verbose_level);
 	int nb_points();
 	void unrank_point(
@@ -872,7 +873,7 @@ class hjelmslev {
 public:
 	int n, k, q;
 	int n_choose_k_p;
-	ring_theory::finite_ring *R; // do not free
+	algebra::ring_theory::finite_ring *R; // do not free
 	projective_geometry::grassmann *G;
 	int *v;
 	int *Mtx;
@@ -881,7 +882,7 @@ public:
 	hjelmslev();
 	~hjelmslev();
 	void init(
-			ring_theory::finite_ring *R,
+			algebra::ring_theory::finite_ring *R,
 			int n, int k, int verbose_level);
 	long int number_of_submodules();
 	void unrank_lint(
@@ -956,13 +957,13 @@ class incidence_structure {
 			int m, int n, int *R, int *X, int max_r,
 		int verbose_level);
 	void init_by_set_of_sets(
-			data_structures::set_of_sets *SoS,
+			other::data_structures::set_of_sets *SoS,
 			int verbose_level);
 	void init_by_matrix(
 			int m, int n, int *M, int verbose_level);
 	void init_by_matrix_as_bitmatrix(
 			int m, int n,
-			data_structures::bitmatrix *Bitmatrix,
+			other::data_structures::bitmatrix *Bitmatrix,
 			int verbose_level);
 	void init_by_matrix2(
 			int verbose_level);
@@ -977,7 +978,7 @@ class incidence_structure {
 	int get_nb_inc();
 	void print(
 			std::ostream &ost);
-	data_structures::bitvector *encode_as_bitvector();
+	other::data_structures::bitvector *encode_as_bitvector();
 	incidence_structure *apply_canonical_labeling(
 			long int *canonical_labeling, int verbose_level);
 	void save_as_csv(
@@ -1012,7 +1013,7 @@ public:
 	projective_geometry::projective_space *P;
 	projective_geometry::grassmann *Gr;
 
-	ring_theory::longinteger_object *R;
+	algebra::ring_theory::longinteger_object *R;
 	long int **Pts_on_subspace;
 	int *nb_pts_on_subspace;
 	int len;
@@ -1025,7 +1026,7 @@ public:
 
 	int *Intersection_sets;
 
-	data_structures::int_matrix *M;
+	other::data_structures::int_matrix *M;
 
 	intersection_type();
 	~intersection_type();
@@ -1065,7 +1066,7 @@ struct plane_data {
 class point_line {
 
 public:
-	data_structures::partitionstack *P;
+	other::data_structures::partitionstack *P;
 
 	int m, n;
 	int *a; // the same as in PB
@@ -1125,7 +1126,8 @@ public:
 	int *field_element; // [plane_order]
 	int *field_element_inv; // [plane_order]
 
-
+	point_line();
+	~point_line();
 	int is_desarguesian_plane(
 			int verbose_level);
 	int identify_field_not_of_prime_order(
@@ -1172,36 +1174,36 @@ public:
 			std::ostream &ost);
 
 	int is_projective_plane(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int &order, int verbose_level);
 		// if it is a projective plane, the order is returned.
 		// otherwise, 0 is returned.
 	int count_RC(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int row_cell, int col_cell);
 	int count_CR(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int col_cell, int row_cell);
 	int count_RC_representative(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 		int row_cell, int row_cell_pt, int col_cell);
 	int count_CR_representative(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 		int col_cell, int col_cell_pt, int row_cell);
 	int count_pairs_RRC(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int row_cell1, int row_cell2, int col_cell);
 	int count_pairs_CCR(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int col_cell1, int col_cell2, int row_cell);
 	int count_pairs_RRC_representative(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int row_cell1, int row_cell_pt, int row_cell2, int col_cell);
 		// returns the number of joinings from a point of
 		// row_cell1 to elements of row_cell2 within col_cell
 		// if that number exists, -1 otherwise
 	int count_pairs_CCR_representative(
-			data_structures::partitionstack &P,
+			other::data_structures::partitionstack &P,
 			int col_cell1, int col_cell_pt, int col_cell2, int row_cell);
 		// returns the number of joinings from a point of
 		// col_cell1 to elements of col_cell2 within row_cell
@@ -1279,7 +1281,7 @@ public:
 	int k;
 	int q;
 	projective_geometry::grassmann *Grass;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	long int nCkq;
 
@@ -1300,7 +1302,7 @@ public:
 	~three_skew_subspaces();
 	void init(
 			projective_geometry::grassmann *Grass,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int k, int n,
 			int verbose_level);
 	void do_recoordinatize(

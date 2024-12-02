@@ -20,6 +20,7 @@ namespace apps_combinatorics {
 
 large_set_was_description::large_set_was_description()
 {
+	Record_birth();
 
 	f_H = false;
 	//std::string H_go;
@@ -43,6 +44,7 @@ large_set_was_description::large_set_was_description()
 
 large_set_was_description::~large_set_was_description()
 {
+	Record_death();
 }
 
 int large_set_was_description::read_arguments(
@@ -50,7 +52,7 @@ int large_set_was_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 

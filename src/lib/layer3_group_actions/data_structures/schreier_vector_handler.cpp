@@ -17,6 +17,7 @@ namespace data_structures_groups {
 
 schreier_vector_handler::schreier_vector_handler()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	cosetrep = NULL;
@@ -32,6 +33,7 @@ schreier_vector_handler::schreier_vector_handler()
 
 schreier_vector_handler::~schreier_vector_handler()
 {
+	Record_death();
 	if (cosetrep) {
 		FREE_int(cosetrep);
 	}
@@ -177,7 +179,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int hdl, pt_loc, pr, la, n;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv_recursion "
@@ -313,7 +315,7 @@ schreier_vector *schreier_vector_handler::sv_read_file(
 	int I, n;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_read_file" << endl;
@@ -366,7 +368,7 @@ void schreier_vector_handler::sv_write_file(
 	int i, len, tmp;
 	int f_v = (verbose_level >= 1);
 	int f_trivial_group;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::sv_write_file" << endl;
@@ -415,14 +417,14 @@ void schreier_vector_handler::sv_write_file(
 	}
 }
 
-data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
+other::data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 		schreier_vector *Sv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *orbit_reps;
 	int nb_orbits;
-	data_structures::set_of_sets *SoS;
+	other::data_structures::set_of_sets *SoS;
 	int i, t;
 
 	if (f_v) {
@@ -443,7 +445,7 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 
 	Sv->count_number_of_orbits_and_get_orbit_reps(
 		orbit_reps, nb_orbits);
-	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 	int *prev;
 
 	prev = pts + n;
@@ -470,7 +472,7 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 #else
 
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 
 	Algorithms.schreier_vector_compute_depth_and_ancestor(
@@ -485,7 +487,7 @@ data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets
 	}
 #endif
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f, a;
 
 	C.init(ancestor, n, false, 0);

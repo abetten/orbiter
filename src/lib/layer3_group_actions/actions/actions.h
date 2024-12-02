@@ -252,7 +252,7 @@ public:
 			groups::sims *S, int *sequence, int len,
 		int verbose_level);
 	void compute_stabilizer_orbits(
-			data_structures::partitionstack *&Staborbits,
+			other::data_structures::partitionstack *&Staborbits,
 			int verbose_level);
 	void find_strong_generators_at_level(
 			int base_len,
@@ -261,19 +261,19 @@ public:
 		data_structures_groups::vector_ge &subset_of_gens,
 		int verbose_level);
 	void group_order(
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	long int group_order_lint();
 	std::string group_order_as_string();
 
 
 	int matrix_group_dimension();
-	field_theory::finite_field *matrix_group_finite_field();
+	algebra::field_theory::finite_field *matrix_group_finite_field();
 	int is_semilinear_matrix_group();
 	int is_projective();
 	int is_affine();
 	int is_general_linear();
 	int is_matrix_group();
-	algebra::matrix_group *get_matrix_group();
+	algebra::basic_algebra::matrix_group *get_matrix_group();
 
 
 
@@ -326,7 +326,7 @@ public:
 			long int target_go, int verbose_level);
 	groups::sims *create_sims_from_generators_with_target_group_order(
 			data_structures_groups::vector_ge *gens,
-			ring_theory::longinteger_object &target_go,
+			algebra::ring_theory::longinteger_object &target_go,
 		int verbose_level);
 	groups::sims *create_sims_from_generators_without_target_group_order(
 			data_structures_groups::vector_ge *gens,
@@ -336,7 +336,7 @@ public:
 
 	groups::sims *create_sims_from_generators_randomized(
 			data_structures_groups::vector_ge *gens,
-			int f_target_go, ring_theory::longinteger_object &target_go,
+			int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 		int verbose_level);
 	// uses groups::schreier_sims
 
@@ -363,7 +363,7 @@ public:
 			int *Elt, int verbose_level);
 	void generators_to_strong_generators(
 		int f_target_go,
-		ring_theory::longinteger_object &target_go,
+		algebra::ring_theory::longinteger_object &target_go,
 		data_structures_groups::vector_ge *gens,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
@@ -373,19 +373,19 @@ public:
 	void report(
 			std::ostream &ost, int f_sims, groups::sims *S,
 			int f_strong_gens, groups::strong_generators *SG,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_group_name_and_degree(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_type_of_action(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *O,
+			other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report_what_we_act_on(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *O,
+			other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 
 
@@ -456,6 +456,9 @@ public:
 class action_global {
 public:
 
+	action_global();
+	~action_global();
+
 	void action_print_symmetry_group_type(
 			std::ostream &ost,
 			symmetry_group_type a);
@@ -463,7 +466,7 @@ public:
 			std::string &txt, std::string &tex,
 			symmetry_group_type a);
 	void automorphism_group_as_permutation_group(
-			l1_interfaces::nauty_output *NO,
+			other::l1_interfaces::nauty_output *NO,
 			actions::action *&A_perm,
 			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
@@ -471,7 +474,7 @@ public:
 			geometry::projective_geometry::projective_space *P,
 			groups::strong_generators *&SG,
 			actions::action *&A_perm,
-			l1_interfaces::nauty_output *NO,
+			other::l1_interfaces::nauty_output *NO,
 			int verbose_level);
 	void make_generators_stabilizer_of_three_components(
 		action *A_PGL_n_q, action *A_PGL_k_q,
@@ -485,7 +488,7 @@ public:
 	void compute_generators_GL_n_q(
 			int *&Gens, int &nb_gens,
 		int &elt_size, int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 	void set_orthogonal_group_type(
@@ -497,17 +500,17 @@ public:
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 		action *Aq,
-		field_theory::subfield_structure *S, int n,
+		algebra::field_theory::subfield_structure *S, int n,
 		int verbose_level);
 	void retract_generators(
 			data_structures_groups::vector_ge *gens_in,
 			data_structures_groups::vector_ge *&gens_out,
 		action *AQ,
-		field_theory::subfield_structure *S, int n,
+		algebra::field_theory::subfield_structure *S, int n,
 		int verbose_level);
 	void lift_generators_to_subfield_structure(
 		int n, int s,
-		field_theory::subfield_structure *S,
+		algebra::field_theory::subfield_structure *S,
 		action *Aq, action *AQ,
 		groups::strong_generators *&Strong_gens,
 		int verbose_level);
@@ -520,12 +523,12 @@ public:
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one, int verbose_level);
 	action *init_direct_product_group_and_restrict(
-			algebra::matrix_group *M1,
-			algebra::matrix_group *M2,
+			algebra::basic_algebra::matrix_group *M1,
+			algebra::basic_algebra::matrix_group *M2,
 			int verbose_level);
 	action *init_direct_product_group(
-			algebra::matrix_group *M1,
-			algebra::matrix_group *M2,
+			algebra::basic_algebra::matrix_group *M1,
+			algebra::basic_algebra::matrix_group *M2,
 			int verbose_level);
 	action *init_polarity_extension_group_and_restrict(
 			actions::action *A,
@@ -549,7 +552,7 @@ public:
 			int verbose_level);
 	void orbits_on_equations(
 			action *A,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int *The_equations,
 		int nb_equations, groups::strong_generators *gens,
 		actions::action *&A_on_equations,
@@ -671,8 +674,8 @@ public:
 			int verbose_level);
 	void orthogonal_group_random_generator(
 			action *A,
-			orthogonal_geometry::orthogonal *O,
-			algebra::matrix_group *M,
+			geometry::orthogonal_geometry::orthogonal *O,
+			algebra::basic_algebra::matrix_group *M,
 		int f_siegel,
 		int f_reflection,
 		int f_similarity,
@@ -680,23 +683,23 @@ public:
 		int *Elt, int verbose_level);
 	void init_base(
 			actions::action *A,
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			int verbose_level);
 	void init_base_projective(
 			actions::action *A,
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			int verbose_level);
 	void init_base_affine(
 			actions::action *A,
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			int verbose_level);
 	void init_base_general_linear(
 			actions::action *A,
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			int verbose_level);
 	void substitute_semilinear(
 			action *A,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 			int *Elt,
 			int *input, int *output,
 			int verbose_level);
@@ -817,10 +820,10 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	// reads an orbiter data file
-	data_structures::set_of_sets *set_of_sets_copy_and_apply(
+	other::data_structures::set_of_sets *set_of_sets_copy_and_apply(
 			action *A,
 			int *Elt,
-			data_structures::set_of_sets *old_one,
+			other::data_structures::set_of_sets *old_one,
 		int verbose_level);
 	actions::action *create_action_on_k_subspaces(
 			actions::action *A_previous,
@@ -828,7 +831,7 @@ public:
 			int verbose_level);
 	void report_strong_generators(
 			std::ostream &ost,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			groups::strong_generators *SG,
 			action *A,
 			int verbose_level);
@@ -839,7 +842,7 @@ public:
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
 			int f_sylow, int f_group_table,
-			graphics::layered_graph_draw_options *LG_Draw_options,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_groups_and_normalizers(
 			action *A,
@@ -997,7 +1000,7 @@ public:
 
 	/** Create a linear group */
 	void init_linear_group(
-			field_theory::finite_field *F, int m,
+			algebra::field_theory::finite_field *F, int m,
 		int f_projective, int f_general, int f_affine,
 		int f_semilinear, int f_special,
 		data_structures_groups::vector_ge *&nice_gens,
@@ -1006,7 +1009,7 @@ public:
 
 	/** Create a projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(
-			int n, field_theory::finite_field *F,
+			int n, algebra::field_theory::finite_field *F,
 		int f_semilinear,
 		int f_basis, int f_init_sims,
 		data_structures_groups::vector_ge *&nice_gens,
@@ -1015,7 +1018,7 @@ public:
 
 	/** Create an affine group AGL(n,q) */
 	void init_affine_group(
-			int n, field_theory::finite_field *F,
+			int n, algebra::field_theory::finite_field *F,
 		int f_semilinear,
 		int f_basis, int f_init_sims,
 		data_structures_groups::vector_ge *&nice_gens,
@@ -1023,7 +1026,7 @@ public:
 
 	/** Create the general linear group GL(n,q) */
 	void init_general_linear_group(
-			int n, field_theory::finite_field *F,
+			int n, algebra::field_theory::finite_field *F,
 		int f_semilinear, int f_basis, int f_init_sims,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
@@ -1031,7 +1034,7 @@ public:
 	void compute_special_subgroup(
 			int verbose_level);
 	void setup_linear_group_from_strong_generators(
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 			int f_init_sims,
 		int verbose_level);
@@ -1041,11 +1044,11 @@ public:
 
 	/** Create the projective special linear group PSL */
 	void init_projective_special_group(
-			int n, field_theory::finite_field *F,
+			int n, algebra::field_theory::finite_field *F,
 		int f_semilinear, int f_basis, int verbose_level);
 
 	void init_matrix_group_strong_generators_builtin(
-			algebra::matrix_group *M,
+			algebra::basic_algebra::matrix_group *M,
 			data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level);
 
@@ -1053,18 +1056,18 @@ public:
 	void init_permutation_group(
 			int degree, int f_no_base, int verbose_level);
 	void init_permutation_group_from_nauty_output(
-			l1_interfaces::nauty_output *NO,
+			other::l1_interfaces::nauty_output *NO,
 		int verbose_level);
 	void init_permutation_group_from_generators(
 			int degree,
-		int f_target_go, ring_theory::longinteger_object &target_go,
+		int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 		int nb_gens, int *gens,
 		int given_base_length, long int *given_base,
 		int f_given_base,
 		int verbose_level);
 	// calls init_base_and_generators is f_given_base is true, otherwise does not initialize group
 	void init_base_and_generators(
-			int f_target_go, ring_theory::longinteger_object &target_go,
+			int f_target_go, algebra::ring_theory::longinteger_object &target_go,
 			int nb_gens, int *gens,
 			int given_base_length, long int *given_base,
 			int f_given_base,
@@ -1104,7 +1107,7 @@ public:
 #endif
 
 	void init_orthogonal_group_with_O(
-			orthogonal_geometry::orthogonal *O,
+			geometry::orthogonal_geometry::orthogonal *O,
 		int f_on_points, int f_on_lines, int f_on_points_and_lines,
 		int f_semilinear,
 		int f_basis, int verbose_level);
@@ -1116,7 +1119,7 @@ public:
 	 * and restrict the action to the tensor space. */
 	void init_wreath_product_group_and_restrict(
 			int nb_factors, int n,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			data_structures_groups::vector_ge *&nice_gens,
 			int verbose_level);
 
@@ -1125,7 +1128,7 @@ public:
 	 */
 	void init_wreath_product_group(
 			int nb_factors, int n,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			data_structures_groups::vector_ge *&nice_gens,
 			int verbose_level);
 
@@ -1152,7 +1155,7 @@ public:
 	void create_orthogonal_group(
 			action *subaction,
 		int f_has_target_group_order,
-		ring_theory::longinteger_object &target_go,
+		algebra::ring_theory::longinteger_object &target_go,
 		void (* callback_choose_random_generator)(int iteration,
 			int *Elt, void *data, int verbose_level),
 		int verbose_level);
@@ -1348,11 +1351,11 @@ public:
 			std::string &fname, int verbose_level);
 	void element_write_to_memory_object(
 			int *Elt,
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 			int verbose_level);
 	void element_read_from_memory_object(
 			int *Elt,
-			orbiter_kernel_system::memory_object *m,
+			other::orbiter_kernel_system::memory_object *m,
 			int verbose_level);
 	void element_write_to_file_binary(
 			int *Elt,
@@ -1480,12 +1483,12 @@ public:
 	int test_if_it_fixes_the_polynomial(
 		int *Elt,
 		int *input,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	void action_on_polynomial(
 		int *Elt,
 		int *input, int *output,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	std::string stringify(
 		int *Elt);
@@ -1628,11 +1631,11 @@ public:
 		geometry::finite_geometries::andre_construction *Andre,
 		int verbose_level);
 	action *induced_action_on_homogeneous_polynomials(
-		ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
 	action *induced_action_on_homogeneous_polynomials_given_by_equations(
-		ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int *Equations, int nb_equations,
 		int f_induce_action, groups::sims *old_G,
 		int verbose_level);
@@ -1718,17 +1721,17 @@ public:
 	int &path_i(
 			int i);
 	void group_order(
-			ring_theory::longinteger_object &go);
+			algebra::ring_theory::longinteger_object &go);
 	void init_projective_matrix_group(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int f_semilinear, int degree,
 			int verbose_level);
 	void init_affine_matrix_group(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int f_semilinear, int degree,
 			int verbose_level);
 	void init_linear_matrix_group(
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int n, int f_semilinear, int degree,
 			int verbose_level);
 	void report_basic_orbits(

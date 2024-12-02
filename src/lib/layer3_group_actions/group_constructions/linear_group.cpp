@@ -20,6 +20,7 @@ namespace group_constructions {
 
 linear_group::linear_group()
 {
+	Record_birth();
 	description = NULL;
 	n = 0;
 	input_q = 0;
@@ -44,6 +45,7 @@ linear_group::linear_group()
 
 linear_group::~linear_group()
 {
+	Record_death();
 }
 
 void linear_group::linear_group_init(
@@ -125,7 +127,7 @@ void linear_group::linear_group_init(
 		cout << "linear_group::linear_group_init label=" << label << endl;
 		cout << "linear_group::linear_group_init degree=" << A2->degree << endl;
 		cout << "linear_group::linear_group_init go=";
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Strong_gens->group_order(go);
 		cout << go << endl;
 		cout << "linear_group::linear_group_init label=" << label << endl;
@@ -182,13 +184,13 @@ void linear_group::linear_group_import_group_of_plane(
 
 	int idx;
 
-	idx = orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(
+	idx = other::orbiter_kernel_system::Orbiter->Orbiter_symbol_table->find_symbol(
 			description->import_group_of_plane_label);
 
 	combinatorics_with_groups::translation_plane_via_andre_model *TP;
 
 	TP = (combinatorics_with_groups::translation_plane_via_andre_model *)
-		orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
+		other::orbiter_kernel_system::Orbiter->Orbiter_symbol_table->get_object(idx);
 
 #if 0
 	std::string label_txt;
@@ -346,7 +348,7 @@ void linear_group::linear_group_create(
 		cout << "linear_group::linear_group_create label=" << label << endl;
 		cout << "linear_group::linear_group_create degree=" << A_linear->degree << endl;
 		cout << "linear_group::linear_group_create go=";
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		initial_strong_gens->group_order(go);
 		//A_linear->Strong_gens->group_order(go);
 		cout << go << endl;
@@ -391,7 +393,7 @@ void linear_group::linear_group_create(
 		cout << "linear_group::linear_group_create label=" << label << endl;
 		cout << "linear_group::linear_group_create degree=" << A2->degree << endl;
 		cout << "linear_group::linear_group_create go=";
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Strong_gens->group_order(go);
 		//A_linear->Strong_gens->group_order(go);
 		cout << go << endl;
@@ -1012,7 +1014,7 @@ void linear_group::init_wedge_action_detached(
 	data_structures_groups::vector_ge *secondary_nice_gens;
 	int n2;
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	n2 = Combi.binomial2(n);
 
@@ -1405,13 +1407,13 @@ void linear_group::init_orthogonal_group(
 		cout << "epsilon=" << epsilon << endl;
 	}
 		
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
 				"verbose_level=" << verbose_level << endl;
 	}
-	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+	O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
 				"before O->init" << endl;
@@ -1544,7 +1546,7 @@ void linear_group::init_subgroup_by_generators(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 	f_has_strong_generators = true;
@@ -1560,7 +1562,7 @@ void linear_group::init_subgroup_by_generators(
 	A2 = A_linear;
 
 	stringstream str;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int max_len = 80;
 	int line_skip = 0;
 
@@ -1597,7 +1599,7 @@ void linear_group::init_subgroup_Janko1(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A_linear->get_matrix_group();
 

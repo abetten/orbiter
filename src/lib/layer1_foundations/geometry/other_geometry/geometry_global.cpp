@@ -21,11 +21,13 @@ namespace other_geometry {
 
 geometry_global::geometry_global()
 {
+	Record_birth();
 
 }
 
 geometry_global::~geometry_global()
 {
+	Record_death();
 
 }
 
@@ -62,7 +64,7 @@ long int geometry_global::nb_AG_elements(
 		int n, int q)
 // $q^n$
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	return NT.i_power_j_lint(q, n);
 }
@@ -70,7 +72,7 @@ long int geometry_global::nb_AG_elements(
 long int geometry_global::nb_affine_lines(
 		int n, int q)
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	long int qnp1, qn, q2, a, b, denom, res;
 
 	qnp1 = NT.i_power_j_lint(q, n + 1);
@@ -152,10 +154,10 @@ int geometry_global::AG_element_next(
 void geometry_global::AG_element_rank_longinteger(
 		int q,
 		int *v, int stride, int len,
-		ring_theory::longinteger_object &a)
+		algebra::ring_theory::longinteger_object &a)
 {
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object Q, a1;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object Q, a1;
 	int i;
 
 	if (len <= 0) {
@@ -180,11 +182,11 @@ void geometry_global::AG_element_rank_longinteger(
 void geometry_global::AG_element_unrank_longinteger(
 		int q,
 		int *v, int stride, int len,
-		ring_theory::longinteger_object &a)
+		algebra::ring_theory::longinteger_object &a)
 {
 	int i, r;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object a0, Q, a1;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object a0, Q, a1;
 
 	a.assign_to(a0);
 	if (len <= 0) {
@@ -218,7 +220,7 @@ int geometry_global::PG_element_modified_is_in_subspace(
 
 
 int geometry_global::test_if_arc(
-		field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *Fq,
 		int *pt_coords,
 		int *set, int set_sz, int k, int verbose_level)
 // Used by Hill_cap56()
@@ -230,8 +232,8 @@ int geometry_global::test_if_arc(
 	int *Mtx;
 	int ret = false;
 	int i, j, a, rk;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -285,8 +287,8 @@ done:
 }
 
 void geometry_global::create_Buekenhout_Metz(
-		field_theory::finite_field *Fq,
-		field_theory::finite_field *FQ,
+		algebra::field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *FQ,
 	int f_classical, int f_Uab, int parameter_a, int parameter_b,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
@@ -382,7 +384,7 @@ long int geometry_global::count_T1(
 		int epsilon, int n, int q)
 // n = Witt index
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (n < 0) {
 		//cout << "count_T1 n is negative. n=" << n << endl;
@@ -407,7 +409,7 @@ long int geometry_global::count_T1(
 long int geometry_global::count_T2(
 		int n, int q)
 {
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (n <= 0) {
 		return 0;
@@ -1201,7 +1203,7 @@ int geometry_global::packing_number_via_maxfit(
 
 
 void geometry_global::do_inverse_isomorphism_klein_quadric(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		std::string &inverse_isomorphism_klein_quadric_matrix_A6,
 		int verbose_level)
 // creates klein_correspondence and orthogonal_geometry::orthogonal objects
@@ -1252,7 +1254,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 }
 
 void geometry_global::do_rank_points_in_PG(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		std::string &label,
 		int verbose_level)
 {
@@ -1291,7 +1293,7 @@ void geometry_global::do_rank_points_in_PG(
 }
 
 void geometry_global::do_unrank_points_in_PG(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n,
 		std::string &text,
 		int verbose_level)
@@ -1348,7 +1350,7 @@ void geometry_global::do_unrank_points_in_PG(
 
 
 void geometry_global::do_intersection_of_two_lines(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		std::string &line_1_basis,
 		std::string &line_2_basis,
 		int verbose_level)
@@ -1455,7 +1457,7 @@ void geometry_global::do_intersection_of_two_lines(
 }
 
 void geometry_global::do_transversal(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		std::string &line_1_basis,
 		std::string &line_2_basis,
 		std::string &point,
@@ -1572,7 +1574,7 @@ void geometry_global::do_transversal(
 
 
 void geometry_global::do_cheat_sheet_hermitian(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int projective_dimension,
 		int verbose_level)
 // creates a hermitian object
@@ -1620,8 +1622,8 @@ void geometry_global::do_cheat_sheet_hermitian(
 }
 
 void geometry_global::do_create_desarguesian_spread(
-		field_theory::finite_field *FQ,
-		field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *FQ,
+		algebra::field_theory::finite_field *Fq,
 		int m,
 		int verbose_level)
 // creates field_theory::subfield_structure and desarguesian_spread objects
@@ -1651,10 +1653,10 @@ void geometry_global::do_create_desarguesian_spread(
 	}
 
 	n = m * s;
-	field_theory::subfield_structure *SubS;
+	algebra::field_theory::subfield_structure *SubS;
 	finite_geometries::desarguesian_spread *D;
 
-	SubS = NEW_OBJECT(field_theory::subfield_structure);
+	SubS = NEW_OBJECT(algebra::field_theory::subfield_structure);
 	if (f_v) {
 		cout << "geometry_global::do_create_desarguesian_spread "
 				"before SubS->init" << endl;
@@ -1693,7 +1695,7 @@ void geometry_global::do_create_desarguesian_spread(
 
 
 void geometry_global::create_BLT_point(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
 // creates the point (-b/2,-c,a,-(b^2/4-ac),1)
 // check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
@@ -1728,14 +1730,14 @@ void geometry_global::create_BLT_point(
 	v3 = F->mult(minus_one, F->add(
 			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
 	v4 = 1;
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
+	other::orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "geometry_global::create_BLT_point done" << endl;
 	}
 }
 
 void geometry_global::create_BLT_point_from_flock(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *v5, int a, int b, int c, int verbose_level)
 // creates the point (c/2,-c^2/4-ab,1,b,a)
 {
@@ -1767,7 +1769,7 @@ void geometry_global::create_BLT_point_from_flock(
 	v2 = 1;
 	v3 = b;
 	v4 = a;
-	orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
+	other::orbiter_kernel_system::Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "geometry_global::create_BLT_point_from_flock done" << endl;
 	}
@@ -1983,7 +1985,7 @@ void geometry_global::find_secant_lines(
 	int f_v = (verbose_level >= 1);
 	int i, j, rk, d, h, idx;
 	int *M;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geometry_global::find_secant_lines "
@@ -2045,7 +2047,7 @@ void geometry_global::find_lines_which_are_contained(
 	long int *set2;
 	int sz1, sz2;
 	int *f_taken;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geometry_global::find_lines_which_are_contained "
@@ -2342,7 +2344,7 @@ void geometry_global::make_restricted_incidence_matrix(
 		}
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname_csv;
 	string fname_inc;
 
@@ -2441,7 +2443,7 @@ void geometry_global::plane_intersection_type(
 	}
 
 	string fname;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname.assign(input);
 	ST.chop_off_extension(fname);
@@ -2550,7 +2552,7 @@ void geometry_global::plane_intersection_type_of_klein_image(
 	}
 
 	string fname;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname.assign(input);
 	ST.chop_off_extension(fname);
@@ -2711,7 +2713,7 @@ void geometry_global::conic_type2(
 		}
 	}
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int idx;
 
 	cout << "We found the following conics and their "
@@ -2950,7 +2952,7 @@ void geometry_global::do_points_on_lines_in_PG(
 
 void geometry_global::do_cone_over(
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	long int *set_in, int set_size_in,
 	long int *&set_out, int &set_size_out,
 	int verbose_level)
@@ -3033,7 +3035,7 @@ void geometry_global::do_cone_over(
 
 void geometry_global::do_blocking_set_family_3(
 		int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	long int *set_in, int set_size,
 	long int *&the_set_out, int &set_size_out,
 	int verbose_level)
@@ -3077,11 +3079,11 @@ void geometry_global::do_blocking_set_family_3(
 	int nb, pt, sz;
 	int i, j;
 	int basis[6];
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-	data_structures::fancy_set *S;
+	other::data_structures::fancy_set *S;
 
-	S = NEW_OBJECT(data_structures::fancy_set);
+	S = NEW_OBJECT(other::data_structures::fancy_set);
 
 	S->init(P->Subspaces->N_lines, 0);
 	S->k = 0;
@@ -3217,7 +3219,7 @@ void geometry_global::do_blocking_set_family_3(
 	P->Subspaces->Implementation->point_types_of_line_set(
 			S->set, S->k, pt_type, 0);
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(pt_type, P->Subspaces->N_points, false, 0);
 
@@ -3262,7 +3264,7 @@ void geometry_global::do_blocking_set_family_3(
 
 
 void geometry_global::create_orthogonal(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int epsilon, int n,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -3330,7 +3332,7 @@ void geometry_global::create_orthogonal(
 #endif
 
 
-	algebra::algebra_global AG;
+	algebra::basic_algebra::algebra_global AG;
 
 	label_txt = "Q" + AG.plus_minus_string(epsilon) + "_" + std::to_string(n) + "_" + std::to_string(F->q);
 	label_tex = "Q" + AG.plus_minus_string(epsilon) + "\\_" + std::to_string(n) + "\\_" + std::to_string(F->q);
@@ -3343,7 +3345,7 @@ void geometry_global::create_orthogonal(
 
 
 void geometry_global::create_hermitian(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -3404,8 +3406,8 @@ void geometry_global::create_hermitian(
 }
 
 void geometry_global::create_ttp_code(
-		field_theory::finite_field *FQ,
-		field_theory::finite_field *Fq_subfield,
+		algebra::field_theory::finite_field *FQ,
+		algebra::field_theory::finite_field *Fq_subfield,
 	int f_construction_A, int f_hyperoval, int f_construction_B,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
@@ -3423,7 +3425,7 @@ void geometry_global::create_ttp_code(
 	int m, n;
 	int f_elements_exponential = true;
 	string symbol_for_print_subfield;
-	coding_theory::ttp_codes Ttp_codes;
+	combinatorics::coding_theory::ttp_codes Ttp_codes;
 
 	if (f_v) {
 		cout << "geometry_global::create_ttp_code" << endl;
@@ -3515,7 +3517,7 @@ void geometry_global::create_ttp_code(
 
 
 void geometry_global::create_segre_variety(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int a, int b,
 		std::string &label_txt,
 		std::string &label_tex,
@@ -3827,7 +3829,7 @@ void geometry_global::do_andre(
 #endif
 
 void geometry_global::do_embed_orthogonal(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int epsilon, int n,
 	long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
@@ -3879,7 +3881,7 @@ void geometry_global::do_embed_orthogonal(
 }
 
 void geometry_global::do_embed_points(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n,
 		long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
@@ -3919,7 +3921,7 @@ void geometry_global::do_embed_points(
 }
 
 void geometry_global::print_set_in_affine_plane(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int len, long int *S)
 {
 	int *A;
@@ -3958,7 +3960,7 @@ void geometry_global::print_set_in_affine_plane(
 
 
 void geometry_global::simeon(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int len, long int *S, int s, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3974,8 +3976,8 @@ void geometry_global::simeon(
 	int *U1;
 	int nb_A, nb_U;
 	int a, u, ac, i, d, idx, mtx_rank;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geometry_global::simeon s=" << s << endl;
@@ -4133,7 +4135,7 @@ void geometry_global::simeon(
 
 
 void geometry_global::wedge_to_klein(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *W, int *K)
 {
 	K[0] = W[0]; // 12
@@ -4145,7 +4147,7 @@ void geometry_global::wedge_to_klein(
 }
 
 void geometry_global::klein_to_wedge(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *K, int *W)
 {
 	W[0] = K[0];
@@ -4158,7 +4160,7 @@ void geometry_global::klein_to_wedge(
 
 
 void geometry_global::isomorphism_to_special_orthogonal(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *A4, int *A6, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4191,7 +4193,7 @@ void geometry_global::isomorphism_to_special_orthogonal(
 			0,0,0,2,0,4,
 	};
 	int Bv[36];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	for (i = 0; i < 6; i++) {
 		klein_to_wedge(F, Basis1 + i * 6, Basis2 + i * 6);
@@ -4254,7 +4256,7 @@ void geometry_global::isomorphism_to_special_orthogonal(
 }
 
 void geometry_global::minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int x, int y,
 		int &a, int &b, int verbose_level)
 // used by surface_classify_wedge::identify_general_abcd
@@ -4296,7 +4298,7 @@ void geometry_global::minimal_orbit_rep_under_stabilizer_of_frame_characteristic
 }
 
 int geometry_global::evaluate_Fermat_cubic(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int *v)
 // used to create the Schlaefli graph
 {

@@ -20,6 +20,7 @@ namespace spreads {
 
 spread_table_activity_description::spread_table_activity_description()
 {
+	Record_birth();
 	f_find_spread = false;
 	//std::string find_spread_text
 
@@ -48,6 +49,7 @@ spread_table_activity_description::spread_table_activity_description()
 
 spread_table_activity_description::~spread_table_activity_description()
 {
+	Record_death();
 
 }
 
@@ -56,7 +58,7 @@ int spread_table_activity_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "spread_table_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

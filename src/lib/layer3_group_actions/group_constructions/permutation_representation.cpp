@@ -25,6 +25,7 @@ namespace group_constructions {
 
 permutation_representation::permutation_representation()
 {
+	Record_birth();
 	A_original = NULL;
 	f_stay_in_the_old_action = false;
 	nb_gens = 0;
@@ -47,6 +48,7 @@ permutation_representation::permutation_representation()
 
 permutation_representation::~permutation_representation()
 {
+	Record_death();
 	if (P) {
 		FREE_OBJECT(P);
 	}
@@ -97,7 +99,7 @@ void permutation_representation::init(
 	char_per_elt = A_original->coded_elt_size_in_char + char_per_elt;
 	elt1 = (uchar *) NEW_char(char_per_elt);
 
-	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
 	Page_storage->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -170,7 +172,7 @@ void permutation_representation::element_mult(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "permutation_representation::element_mult" << endl;
@@ -200,7 +202,7 @@ void permutation_representation::element_invert(
 		int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "permutation_representation::element_invert" << endl;

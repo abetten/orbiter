@@ -30,6 +30,7 @@ static void graph_classify_print_set(
 
 graph_classify::graph_classify()
 {
+	Record_birth();
 	Descr = NULL;
 
 	Poset = NULL;
@@ -50,6 +51,7 @@ graph_classify::graph_classify()
 
 graph_classify::~graph_classify()
 {
+	Record_death();
 	if (A_base) {
 		FREE_OBJECT(A_base);
 	}
@@ -92,7 +94,7 @@ void graph_classify::init(
 
 	int N;
 	int target_depth;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 
 	graph_classify::Descr = Descr;
@@ -226,7 +228,7 @@ void graph_classify::init(
 		verbose_level - 1);
 
 	long int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int depth;
 
 	t0 = Os.os_ticks();
@@ -309,8 +311,8 @@ int graph_classify::check_conditions_tournament(
 	int f_vv = (verbose_level >= 2);
 	int a, a2, swap, swap2, b2, b, i, idx;
 	long int *S_sorted;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "graph_classify::check_conditions_tournament "
@@ -414,7 +416,7 @@ int graph_classify::compute_degree_sequence(
 		long int *S, int len)
 {
 	long int h, a, i, j;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (Descr->f_tournament) {
 		cout << "graph_classify::compute_degree_sequence "
@@ -539,7 +541,7 @@ void graph_classify::get_adjacency(
 {
 	int f_v = (verbose_level >= 1);
 	long int h, i, j, a;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	Int_vec_zero(adjacency, Descr->n * Descr->n);
 
@@ -618,7 +620,7 @@ void graph_classify::print_score_sequences(
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		groups::strong_generators *Strong_gens;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);
 		gen->get_stabilizer_generators(Strong_gens,  
@@ -650,7 +652,7 @@ void graph_classify::score_sequence(
 		int verbose_level)
 {
 	int i, a, swap, a2, u, v;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Lint_vec_zero(score, n);
 	for (i = 0; i < sz; i++) {
@@ -715,7 +717,7 @@ void graph_classify::list_graphs(
 
 		for (h = 0; h < nb_orbits; h++) {
 			groups::strong_generators *Strong_gens;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			gen->get_set_by_level(level, h, set);
 			gen->get_stabilizer_generators(Strong_gens,
@@ -749,7 +751,7 @@ void graph_classify::list_graphs(
 
 void graph_classify::draw_graphs(
 		int level,
-		graphics::layered_graph_draw_options *draw_options,
+		other::graphics::layered_graph_draw_options *draw_options,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -772,7 +774,7 @@ void graph_classify::draw_graphs(
 
 	for (h = 0; h < nb_orbits; h++) {
 		groups::strong_generators *Strong_gens;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		gen->get_set_by_level(level, h, set);
 		gen->get_stabilizer_generators(Strong_gens,  
@@ -810,7 +812,7 @@ void graph_classify::draw_graphs(
 
 		{
 
-			graphics::mp_graphics G;
+			other::graphics::mp_graphics G;
 
 			G.init(fname_full, draw_options, verbose_level - 1);
 
@@ -841,7 +843,7 @@ void graph_classify::draw_graphs(
 			G.end_figure();
 			G.footer();
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
@@ -866,7 +868,7 @@ void graph_classify::draw_graphs(
 
 
 		ofstream fp(fname_list);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -890,7 +892,7 @@ void graph_classify::draw_graphs(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "written file " << fname_list
 			<< " of size " << Fio.file_size(fname_list) << endl;

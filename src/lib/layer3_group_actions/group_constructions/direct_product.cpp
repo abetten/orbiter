@@ -21,6 +21,7 @@ namespace group_constructions {
 
 direct_product::direct_product()
 {
+	Record_birth();
 	M1 = NULL;
 	M2 = NULL;
 	F1 = NULL;
@@ -70,6 +71,7 @@ direct_product::direct_product()
 
 direct_product::~direct_product()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -112,8 +114,8 @@ direct_product::~direct_product()
 }
 
 void direct_product::init(
-		algebra::matrix_group *M1,
-		algebra::matrix_group *M2,
+		algebra::basic_algebra::matrix_group *M1,
+		algebra::basic_algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,7 +234,7 @@ void direct_product::init(
 		cout << endl;
 	}
 
-	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
 	if (f_v) {
 		cout << "direct_product::init "
 				"before Page_storage->init" << endl;
@@ -485,7 +487,7 @@ void direct_product::put_digit(
 	int h0 = 0;
 	int h, h1, a;
 	int nb_bits = 0;
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -515,7 +517,7 @@ int direct_product::get_digit(
 	int h0 = 0;
 	int h, h1, a, d;
 	int nb_bits = 0;
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -753,8 +755,8 @@ void direct_product::lift_generators(
 	int *Elt3;
 	data_structures_groups::vector_ge *gens;
 	int i, len1, len2, len3;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object go1, go2, go3;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go1, go2, go3;
 
 	if (f_v) {
 		cout << "direct_product::lift_generators" << endl;

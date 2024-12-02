@@ -22,6 +22,7 @@ namespace data_structures_groups {
 
 group_table_and_generators::group_table_and_generators()
 {
+	Record_birth();
 	Table = NULL;
 	group_order = 0;
 	gens = NULL;
@@ -30,6 +31,7 @@ group_table_and_generators::group_table_and_generators()
 
 group_table_and_generators::~group_table_and_generators()
 {
+	Record_death();
 
 }
 

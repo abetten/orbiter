@@ -19,6 +19,7 @@ namespace poset_classification {
 
 poset_classification_activity_description::poset_classification_activity_description()
 {
+	Record_birth();
 	f_report = false;
 	report_options = NULL;
 
@@ -71,6 +72,7 @@ poset_classification_activity_description::poset_classification_activity_descrip
 
 poset_classification_activity_description::~poset_classification_activity_description()
 {
+	Record_death();
 }
 
 int poset_classification_activity_description::read_arguments(
@@ -79,7 +81,7 @@ int poset_classification_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_activity_description::read_arguments" << endl;

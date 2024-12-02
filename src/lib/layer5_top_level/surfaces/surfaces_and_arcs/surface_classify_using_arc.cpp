@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_arcs {
 
 surface_classify_using_arc::surface_classify_using_arc()
 {
+	Record_birth();
 	PA = NULL;
 	Surf_A = NULL;
 
@@ -47,6 +48,7 @@ surface_classify_using_arc::surface_classify_using_arc()
 
 surface_classify_using_arc::~surface_classify_using_arc()
 {
+	Record_death();
 #if 0
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
@@ -83,7 +85,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, arc_idx;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 
@@ -215,7 +217,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 
 
 void surface_classify_using_arc::report(
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -224,7 +226,7 @@ void surface_classify_using_arc::report(
 		cout << "surface_classify_using_arc::report" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 
 
@@ -242,7 +244,7 @@ void surface_classify_using_arc::report(
 
 
 		ofstream fp(fname_arc_lifting);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 
 		L.head(fp,
@@ -264,7 +266,7 @@ void surface_classify_using_arc::report(
 
 	} // fp
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_arc_lifting << " of size "
 			<< Fio.file_size(fname_arc_lifting) << endl;
@@ -276,8 +278,9 @@ void surface_classify_using_arc::report(
 }
 
 
-void surface_classify_using_arc::report2(std::ostream &ost,
-		graphics::layered_graph_draw_options *Opt,
+void surface_classify_using_arc::report2(
+		std::ostream &ost,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -287,7 +290,7 @@ void surface_classify_using_arc::report2(std::ostream &ost,
 	}
 
 	//surface_domain *Surf;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = Surf_A->PA->F;
 	//Surf = Surf_A->Surf;
@@ -483,7 +486,7 @@ void surface_classify_using_arc::report_decomposition_matrix(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "surface_classify_using_arc::report_decomposition_matrix" << endl;
@@ -509,7 +512,7 @@ void surface_classify_using_arc::report_decomposition_matrix(
 			Six_arcs->nb_arcs_not_on_conic, nb_surfaces, 25);
 	//fp << "$$" << endl;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname_decomposition;
 
 	fname_decomposition = "surfaces_q" + std::to_string(Surf_A->PA->F->q) + "_decomposition_matrix.csv";

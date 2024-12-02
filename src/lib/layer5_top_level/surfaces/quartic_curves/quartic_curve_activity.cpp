@@ -20,12 +20,14 @@ namespace quartic_curves {
 
 quartic_curve_activity::quartic_curve_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	QC = NULL;
 }
 
 quartic_curve_activity::~quartic_curve_activity()
 {
+	Record_death();
 }
 
 

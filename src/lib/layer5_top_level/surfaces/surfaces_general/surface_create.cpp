@@ -23,6 +23,7 @@ namespace cubic_surfaces_in_general {
 
 surface_create::surface_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	f_ownership = false;
@@ -51,6 +52,7 @@ surface_create::surface_create()
 
 surface_create::~surface_create()
 {
+	Record_death();
 	if (f_ownership) {
 		if (F) {
 			FREE_OBJECT(F);
@@ -212,7 +214,7 @@ int surface_create::init_with_data(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -264,7 +266,7 @@ int surface_create::init(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {
@@ -1118,7 +1120,7 @@ void surface_create::create_surface_by_coefficients(
 	FREE_int(surface_coeffs);
 #endif
 
-	algebra::algebra_global Algebra_global;
+	algebra::basic_algebra::algebra_global Algebra_global;
 
 	Algebra_global.scan_equation_in_pairs_in_characteristic_p(
 			coeffs20, 20, F->p /*  characteristic_p */,
@@ -1175,7 +1177,7 @@ void surface_create::create_surface_by_rank(
 
 	int coeffs20[20];
 	long int rank;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	rank = ST.strtolint(rank_text);
 
@@ -1185,7 +1187,7 @@ void surface_create::create_surface_by_rank(
 	}
 
 	{
-		field_theory::finite_field F0;
+		algebra::field_theory::finite_field F0;
 
 		F0.finite_field_init_small_order(
 				defining_q,
@@ -1366,7 +1368,7 @@ void surface_create::create_surface_by_arc_lifting(
 
 
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_arc_lifting "
@@ -1448,11 +1450,11 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		cout << endl;
 	}
 
-	algebraic_geometry::arc_lifting_with_two_lines *AL;
+	geometry::algebraic_geometry::arc_lifting_with_two_lines *AL;
 	int coeffs20[20];
 	long int Lines27[27];
 
-	AL = NEW_OBJECT(algebraic_geometry::arc_lifting_with_two_lines);
+	AL = NEW_OBJECT(geometry::algebraic_geometry::arc_lifting_with_two_lines);
 
 
 	if (f_v) {
@@ -1493,7 +1495,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 			+ "\\_" + std::to_string(arc[5]);
 
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 
 	if (f_v) {
@@ -1575,7 +1577,7 @@ void surface_create::create_surface_Cayley_form(
 
 
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 
 	if (f_v) {
@@ -1629,8 +1631,8 @@ void surface_create::create_surface_by_equation(
 		cout << "surface_create::create_surface_by_equation" << endl;
 	}
 
-	ring_theory::ring_theory_global Ring_global;
-	ring_theory::homogeneous_polynomial_domain *Ring;
+	algebra::ring_theory::ring_theory_global Ring_global;
+	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 	int *coeffs;
 	int nb_coeffs;
 
@@ -1675,7 +1677,7 @@ void surface_create::create_surface_by_equation(
 				"after Surf->create_surface_by_equation" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	f_has_group = false;
 
@@ -1734,7 +1736,7 @@ int surface_create::create_surface_by_symbolic_object(
 				"before Surf->create_surface_by_equation" << endl;
 	}
 
-	ring_theory::homogeneous_polynomial_domain *Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 
 	Ring = Get_ring(ring_label);
 
@@ -1755,7 +1757,7 @@ int surface_create::create_surface_by_symbolic_object(
 		return false;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	f_has_group = false;
 
@@ -1963,7 +1965,7 @@ void surface_create::create_surface_by_skew_hexagon(
 
 
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_skew_hexagon "
@@ -2007,8 +2009,8 @@ void surface_create::create_surface_at_random(
 
 	int nb_surfaces;
 	int iso;
-	orbiter_kernel_system::os_interface Os;
-	knowledge_base::knowledge_base K;
+	other::orbiter_kernel_system::os_interface Os;
+	combinatorics::knowledge_base::knowledge_base K;
 	actions::action_global AG;
 	int *Elt;
 	int *eqn;
@@ -2155,7 +2157,7 @@ void surface_create::create_surface_at_random(
 	label_tex = "random\\_q" + std::to_string(F->q);
 
 
-	SO = NEW_OBJECT(algebraic_geometry::surface_object);
+	SO = NEW_OBJECT(geometry::algebraic_geometry::surface_object);
 
 
 	std::vector<std::string> select_double_six_string;
@@ -2353,7 +2355,7 @@ void surface_create::apply_single_transformation(
 
 	// apply the transformation to the equation of the surface:
 
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
 	M->Element->substitute_surface_equation(
@@ -2456,7 +2458,7 @@ void surface_create::apply_single_transformation(
 		}
 
 	}
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.lint_vec_heapsort(
 			SO->Variety_object->Point_sets->Sets[0],
@@ -2481,7 +2483,7 @@ void surface_create::export_something(
 		cout << "surface_create::export_something" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	string fname_base;
 
@@ -2524,9 +2526,9 @@ void surface_create::export_something_with_group_element(
 
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (ST.stringcmp(what, "action_on_tritangent_planes") == 0) {
@@ -2821,7 +2823,7 @@ void surface_create::export_gap(
 		cout << "surface_create::export_gap" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	string fname_base;
 
@@ -2858,7 +2860,7 @@ void surface_create::export_gap(
 
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "surface_create::export_gap "
@@ -2874,7 +2876,7 @@ void surface_create::export_gap(
 
 
 void surface_create::do_report(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2883,7 +2885,7 @@ void surface_create::do_report(
 		cout << "surface_create::do_report" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2902,7 +2904,7 @@ void surface_create::do_report(
 			title = "Cubic Surface " + SO->label_tex + " over GF(" + std::to_string(F->q) + ")";
 
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -2934,7 +2936,7 @@ void surface_create::do_report(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -2957,7 +2959,7 @@ void surface_create::do_report_group_elements(
 		cout << "surface_create::do_report_group_elements" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -2976,7 +2978,7 @@ void surface_create::do_report_group_elements(
 			title = SO->label_tex + " over GF(" + std::to_string(F->q) + ")";
 
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -3009,7 +3011,7 @@ void surface_create::do_report_group_elements(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -3026,7 +3028,7 @@ void surface_create::do_report_group_elements(
 
 void surface_create::do_report2(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3155,7 +3157,7 @@ void surface_create::do_report_group_elements2(
 
 
 void surface_create::report_with_group(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int verbose_level)
 {
@@ -3268,7 +3270,7 @@ void surface_create::test_group(
 
 
 
-		algebra::matrix_group *M;
+		algebra::basic_algebra::matrix_group *M;
 
 		M = Surf_A->A->G.matrix_grp;
 		M->Element->substitute_surface_equation(
@@ -3350,7 +3352,7 @@ void surface_create::all_quartic_curves(
 	{
 		ofstream ost(fname_tex);
 
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -3368,7 +3370,7 @@ void surface_create::all_quartic_curves(
 
 		L.foot(ost);
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_tex << " of size "
 			<< Fio.file_size(fname_tex) << endl;
@@ -3432,7 +3434,7 @@ void surface_create::export_all_quartic_curves(
 					"after SOG->export_all_quartic_curves" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 
 		Fio.Csv_file_support->write_table_of_strings(
@@ -3445,7 +3447,7 @@ void surface_create::export_all_quartic_curves(
 
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_curves << " of size "
 			<< Fio.file_size(fname_curves) << endl;

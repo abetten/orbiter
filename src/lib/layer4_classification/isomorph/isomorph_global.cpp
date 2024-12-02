@@ -26,6 +26,7 @@ static void callback_compute_down_orbits_worker(
 
 isomorph_global::isomorph_global()
 {
+	Record_birth();
 	A_base = NULL;
 	A = NULL;
 	gen = NULL;
@@ -33,6 +34,7 @@ isomorph_global::isomorph_global()
 
 isomorph_global::~isomorph_global()
 {
+	Record_death();
 
 }
 
@@ -800,8 +802,8 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 	int f_vvv = (verbose_level >= 3);
 	int id, rep, first; //, c;
 	long int data[1000];
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph_global::compute_down_orbits_for_isomorphism_type "
@@ -843,7 +845,7 @@ void isomorph_global::compute_down_orbits_for_isomorphism_type(
 		cout << endl;
 	}
 		
-	ring_theory::longinteger_object go1;
+	algebra::ring_theory::longinteger_object go1;
 			
 	Iso->Folding->AA->group_order(go1);
 
@@ -1141,7 +1143,7 @@ void isomorph_global::export_source_code_with_selection(
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		rep = Iso.Folding->Reps->rep[h];
 		first = Iso.Lifting->flag_orbit_solution_first[rep];

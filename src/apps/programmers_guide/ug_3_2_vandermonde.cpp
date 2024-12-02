@@ -20,7 +20,7 @@ int main()
 	int q = 7;
 	int verbose_level = 2;
 	int f_without_tables = false;
-	field_theory::finite_field Fq;
+	algebra::field_theory::finite_field Fq;
 
 	Fq.finite_field_init_small_order(q,
 			f_without_tables,

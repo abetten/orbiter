@@ -21,6 +21,7 @@ namespace user_interface {
 
 orbiter_command::orbiter_command()
 {
+	Record_birth();
 	Orbiter_top_level_session = NULL;
 
 	f_algebra = false;
@@ -50,6 +51,7 @@ orbiter_command::orbiter_command()
 
 orbiter_command::~orbiter_command()
 {
+	Record_death();
 }
 
 

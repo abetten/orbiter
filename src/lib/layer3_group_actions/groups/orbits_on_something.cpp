@@ -26,6 +26,7 @@ namespace groups {
 
 orbits_on_something::orbits_on_something()
 {
+	Record_birth();
 	A = NULL;
 
 	f_has_SG = false;
@@ -44,6 +45,7 @@ orbits_on_something::orbits_on_something()
 
 orbits_on_something::~orbits_on_something()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -67,7 +69,7 @@ void orbits_on_something::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbits_on_something::init" << endl;
@@ -196,7 +198,7 @@ void orbits_on_something::init_from_vector_ge(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "orbits_on_something::init_from_vector_ge" << endl;
@@ -322,7 +324,7 @@ void orbits_on_something::stabilizer_any_point(
 		cout << "orbits_on_something::stabilizer_any_point" << endl;
 	}
 
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	SG->group_order(full_group_order);
 
@@ -378,7 +380,7 @@ void orbits_on_something::stabilizer_of(
 	}
 
 
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	SG->group_order(full_group_order);
 
@@ -404,7 +406,7 @@ void orbits_on_something::stabilizer_of(
 
 
 	std::string gens_str;
-	ring_theory::longinteger_object stab_go;
+	algebra::ring_theory::longinteger_object stab_go;
 
 
 	gens_str = Stab->stringify_gens_data(0 /*verbose_level*/);
@@ -478,7 +480,7 @@ void orbits_on_something::orbit_type_of_set(
 	int i, j, b, c, l, orbit_type_sz;
 	long int a;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "orbits_on_something::orbit_type_of_set" << endl;
@@ -538,7 +540,7 @@ void orbits_on_something::report_type(
 	ost << "\\right]" << endl;
 #else
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 #if 0
 	ost << "\\left[" << endl;
@@ -649,7 +651,7 @@ void orbits_on_something::report_orbit_lengths(
 
 void orbits_on_something::print_orbits_based_on_filtered_orbits(
 		std::ostream &ost,
-		data_structures::set_of_sets *Filtered_orbits)
+		other::data_structures::set_of_sets *Filtered_orbits)
 {
 	int i, j;
 	int a;
@@ -689,7 +691,7 @@ void orbits_on_something::classify_orbits_by_length(
 	if (f_v) {
 		cout << "orbits_on_something::classify_orbits_by_length" << endl;
 	}
-	Classify_orbits_by_length = NEW_OBJECT(data_structures::tally);
+	Classify_orbits_by_length = NEW_OBJECT(other::data_structures::tally);
 	Classify_orbits_by_length->init(Sch->orbit_len, Sch->nb_orbits, false, 0);
 
 	if (f_v) {
@@ -750,7 +752,7 @@ void orbits_on_something::report_classified_orbits_by_lengths(
 {
 	int i, j;
 	long int a;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	for (i = 0; i < Classify_orbits_by_length->Set_partition->nb_sets; i++) {
 		ost << "Set " << i << " has size " << Classify_orbits_by_length->Set_partition->Set_size[i] << " : ";
@@ -998,7 +1000,7 @@ void orbits_on_something::report_orbits_of_type(
 }
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 	std::string &fname,
 	long int *filter_by_set,
 	int filter_by_set_size,
@@ -1022,17 +1024,17 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 
 	int nb_points_original;
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	long int L, L100;
 	long int i, j, k;
 	int a, b, c;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	long int *orbit1;
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
 	int *point_color;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points_original = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
@@ -1165,7 +1167,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		cout << "L100 = " << L100 << endl;
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	if (false) {
@@ -1238,7 +1240,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	}
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	CG->init_with_point_labels(
 			filtered_set_of_orbits_size /* nb_points */,
@@ -1306,7 +1308,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int orbit_length,
 	int &type_idx,
@@ -1325,17 +1327,17 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				"orbit_length=" << orbit_length << endl;
 	}
 	int nb_points;
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	long int L, L100;
 	long int i, j, k;
 	int a, b, c;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	long int *orbit1;
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
 	int *point_color;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = Classify_orbits_by_length->Set_partition->Set_size[type_idx];
@@ -1379,7 +1381,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		cout << "L100 = " << L100 << endl;
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	if (false) {
@@ -1451,7 +1453,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	CG->init_with_point_labels(
 			nb_points, number_colors, orbit_length,
@@ -1603,7 +1605,7 @@ void orbits_on_something::extract_orbits_using_classification(
 
 
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int orbit_length,
 	int &type_idx,
@@ -1612,7 +1614,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			long int *orbit1, int orbit_length1,
 			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
-	data_structures::set_of_sets *my_orbits_classified,
+	other::data_structures::set_of_sets *my_orbits_classified,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1622,16 +1624,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 				"orbit_length=" << orbit_length << endl;
 	}
 	int nb_points;
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	long int L, L100;
 	long int i, j, k;
 	int a, b;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	long int *orbit1;
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	if (f_v) {
@@ -1656,7 +1658,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		cout << "L100 = " << L100 << endl;
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	t0 = Os.os_ticks();
@@ -1718,7 +1720,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	CG->init_with_point_labels(
 			nb_points,
@@ -1778,7 +1780,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 
 void orbits_on_something::create_weighted_graph_on_orbits(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int *Orbit_lengths,
 	int nb_orbit_lengths,
@@ -1788,7 +1790,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 			long int *orbit1, int orbit_length1,
 			long int *orbit2, int orbit_length2, void *data),
 	void *test_function_data,
-	data_structures::set_of_sets *my_orbits_classified,
+	other::data_structures::set_of_sets *my_orbits_classified,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1805,16 +1807,16 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	int *Pts_fst;
 	int *Pts_len;
 	int max_orbit_length;
-	data_structures::bitvector *Bitvec;
+	other::data_structures::bitvector *Bitvec;
 	long int L, L100;
 	long int i, j, k;
 	int a, b;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	long int *orbit1;
 	long int *orbit2;
 	int l1, l2;
 	int t0, t1, dt;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int I, J, j0, fst, t;
 	int ol1, ol2;
 
@@ -1884,7 +1886,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 		cout << "L100 = " << L100 << endl;
 	}
 
-	Bitvec = NEW_OBJECT(data_structures::bitvector);
+	Bitvec = NEW_OBJECT(other::data_structures::bitvector);
 	Bitvec->allocate(L);
 
 	if (f_v) {
@@ -1965,7 +1967,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	}
 
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 
 	int nb_colors = nb_orbit_lengths;
 	//int nb_colors = my_orbits_classified->nb_sets;
@@ -2028,7 +2030,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 
 
 void orbits_on_something::compute_orbit_invariant_after_classification(
-		data_structures::set_of_sets *&Orbit_invariant,
+		other::data_structures::set_of_sets *&Orbit_invariant,
 		int (*evaluate_orbit_invariant_function)(
 				int a, int i, int j,
 				void *evaluate_data, int verbose_level),
@@ -2203,7 +2205,7 @@ void orbits_on_something::create_latex_report(
 
 		{
 			ofstream ost(fname_tex);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2229,7 +2231,7 @@ void orbits_on_something::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname_tex << " of size "
 				<< Fio.file_size(fname_tex) << endl;
@@ -2250,7 +2252,7 @@ void orbits_on_something::report(
 	}
 
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 
@@ -2471,7 +2473,7 @@ void orbits_on_something::report_quick(
 	}
 
 
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	ost << "$$" << endl;
 	if (f_v) {
@@ -2501,7 +2503,7 @@ void orbits_on_something::export_something(
 		cout << "orbits_on_something::export_something" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	string fname_base;
 
@@ -2534,8 +2536,8 @@ void orbits_on_something::export_something_worker(
 		cout << "orbits_on_something::export_something_worker" << endl;
 	}
 
-	data_structures::string_tools ST;
-	orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (ST.stringcmp(what, "orbit") == 0) {

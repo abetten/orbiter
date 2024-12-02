@@ -20,6 +20,7 @@ namespace projective_geometry {
 
 summary_of_properties_of_objects::summary_of_properties_of_objects()
 {
+	Record_birth();
 	field_orders = NULL;
 	nb_fields = 0;
 
@@ -43,6 +44,7 @@ summary_of_properties_of_objects::summary_of_properties_of_objects()
 
 summary_of_properties_of_objects::~summary_of_properties_of_objects()
 {
+	Record_death();
 	if (Nb_objects) {
 		FREE_int(Nb_objects);
 	}
@@ -83,8 +85,8 @@ void summary_of_properties_of_objects::init_surfaces(
 		cout << "summary_of_properties_of_objects::init_surfaces" << endl;
 	}
 	int i, j, q, idx, nb_e;
-	knowledge_base::knowledge_base K;
-	data_structures::string_tools String;
+	combinatorics::knowledge_base::knowledge_base K;
+	other::data_structures::string_tools String;
 
 	summary_of_properties_of_objects::field_orders = field_orders;
 	summary_of_properties_of_objects::nb_fields = nb_fields;
@@ -451,7 +453,7 @@ void summary_of_properties_of_objects::export_table_csv(
 				"preparing headers done" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->lint_matrix_write_csv_override_headers(
 			fname, headers, Table2, nb_fields, nb_cols);
@@ -567,7 +569,7 @@ void summary_of_properties_of_objects::table_ago(
 				int nb_e;
 				int *Ago_q;
 				int h, u, nb_total;
-				data_structures::string_tools ST;
+				other::data_structures::string_tools ST;
 
 				nb_total = Nb_objects[i]; //K.cubic_surface_nb_reps(q);
 				Ago_q = NEW_int(nb_reps);
@@ -585,7 +587,7 @@ void summary_of_properties_of_objects::table_ago(
 					cout << "u != nb_reps" << endl;
 					exit(1);
 				}
-				data_structures::tally C;
+				other::data_structures::tally C;
 
 				C.init(Ago_q, nb_reps, false, 0);
 				ost << q << " & " << nb_reps << " & ";
@@ -625,9 +627,9 @@ void summary_of_properties_of_objects::make_detailed_table_of_objects(
 		cout << "summary_of_properties_of_objects::make_detailed_table_of_objects" << endl;
 	}
 	int i, j, q, cur;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 	long int *Big_table;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Big_table = NEW_lint(Nb_total * 4);
 

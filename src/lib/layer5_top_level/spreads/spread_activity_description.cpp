@@ -19,11 +19,13 @@ namespace spreads {
 
 spread_activity_description::spread_activity_description()
 {
+	Record_birth();
 	f_report = false;
 }
 
 spread_activity_description::~spread_activity_description()
 {
+	Record_death();
 }
 
 int spread_activity_description::read_arguments(
@@ -32,7 +34,7 @@ int spread_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "spread_activity_description::read_arguments" << endl;

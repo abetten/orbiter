@@ -21,6 +21,7 @@ namespace apps_algebra {
 
 group_theoretic_activity::group_theoretic_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	AG = NULL;
@@ -31,6 +32,7 @@ group_theoretic_activity::group_theoretic_activity()
 
 group_theoretic_activity::~group_theoretic_activity()
 {
+	Record_death();
 
 }
 
@@ -92,7 +94,7 @@ void group_theoretic_activity::perform_activity(
 					"f_report" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->report_draw_options);
 
@@ -1274,7 +1276,7 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_orbits" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_orbits_draw_options);
 
@@ -1299,7 +1301,7 @@ void group_theoretic_activity::perform_activity(
 					"f_subgroup_lattice_draw_by_groups" << endl;
 		}
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->subgroup_lattice_draw_by_groups_draw_options);
 
@@ -1613,7 +1615,7 @@ void group_theoretic_activity::perform_activity(
 		}
 
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->representation_on_polynomials_ring);

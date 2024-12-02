@@ -18,6 +18,7 @@ namespace orthogonal_geometry_applications {
 
 flock_from_blt_set::flock_from_blt_set()
 {
+	Record_birth();
 	BLT_set = NULL;
 
 	point_idx = 0;
@@ -42,6 +43,7 @@ flock_from_blt_set::flock_from_blt_set()
 
 flock_from_blt_set::~flock_from_blt_set()
 {
+	Record_death();
 
 	if (Flock) {
 		FREE_lint(Flock);
@@ -212,7 +214,7 @@ void flock_from_blt_set::init(
 		exit(1);
 	}
 
-	Table_of_ABC = NEW_OBJECT(data_structures::int_matrix);
+	Table_of_ABC = NEW_OBJECT(other::data_structures::int_matrix);
 
 	if (f_v) {
 		cout << "flock_from_blt_set::init "
@@ -277,7 +279,7 @@ void flock_from_blt_set::init(
 			ABC, outcome, N, verbose_level);
 
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(outcome, N, false, 0);
 	cout << "outcome : ";
@@ -396,7 +398,7 @@ void flock_from_blt_set::report(
 			BLT_set->Blt_set_domain_with_action->Blt_set_domain->F,
 			ABC, outcome, N, verbose_level - 2);
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(outcome, N, false, 0);
 	ost << "flock condition : ";

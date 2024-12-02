@@ -18,6 +18,7 @@ namespace cubic_surfaces_in_general {
 
 table_of_surfaces::table_of_surfaces()
 {
+	Record_birth();
 	PA = NULL;
 
 	nb_cubic_surfaces = 0;
@@ -32,6 +33,7 @@ table_of_surfaces::table_of_surfaces()
 
 table_of_surfaces::~table_of_surfaces()
 {
+	Record_death();
 	if (Surface_create_description) {
 		FREE_OBJECTS(Surface_create_description);
 	}
@@ -58,7 +60,7 @@ void table_of_surfaces::init(
 
 	table_of_surfaces::PA = PA;
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	int h;
 
@@ -291,7 +293,7 @@ void table_of_surfaces::export_csv(
 		cout << "table_of_surfaces::export_csv" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	string fname;
@@ -335,7 +337,7 @@ void table_of_surfaces::export_sql(
 		cout << "table_of_surfaces::export_sql" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string fname;
 	fname = "table_of_cubic_surfaces_q" + std::to_string(PA->F->q) + "_data.sql";

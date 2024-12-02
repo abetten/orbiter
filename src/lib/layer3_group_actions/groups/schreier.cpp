@@ -21,6 +21,7 @@ namespace groups {
 
 schreier::schreier()
 {
+	Record_birth();
 	A = NULL;
 	f_images_only = false;
 	degree = 0;
@@ -54,6 +55,7 @@ schreier::schreier()
 
 schreier::~schreier()
 {
+	Record_death();
 	//cout << "deleting A" << endl;
 	if (A) {
 		//cout << "deleting orbit" << endl;
@@ -172,7 +174,7 @@ void schreier::init_images_only(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schreier::init_images_only" << endl;
@@ -359,7 +361,7 @@ void schreier::init2()
 
 void schreier::initialize_tables()
 {
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	long int i;
 	
 	nb_orbits = 0;
@@ -1115,7 +1117,7 @@ void schreier::compute_all_point_orbits(
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
 				<< nb_orbits << " orbits" << endl;
-		data_structures::tally Cl;
+		other::data_structures::tally Cl;
 
 		Cl.init(orbit_len, nb_orbits, false, 0);
 		cout << "The distribution of orbit lengths is: ";
@@ -1167,7 +1169,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	int pt, pt_loc, cur, a, i;
 	int f_v = (verbose_level >= 1);
 	int *labels, *perm, *perm_inv;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits_with_preferred_labels" << endl;
@@ -1687,7 +1689,7 @@ void schreier::random_schreier_generator_ith_orbit(
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
 	int f_vvv = false; //(verbose_level >= 3);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::random_schreier_generator_ith_orbit, "
@@ -1838,7 +1840,7 @@ void schreier::random_schreier_generator(
 	int r1, r2, pt, pt2, pt2b, pt2_coset;
 	int *gen;
 	int pt1, pt1b;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::random_schreier_generator "
@@ -2285,7 +2287,7 @@ void schreier::orbits_on_invariant_subset(
 }
 
 void schreier::get_orbit_partition_of_points_and_lines(
-		data_structures::partitionstack &S,
+		other::data_structures::partitionstack &S,
 		int verbose_level)
 {
 	int first_column_element, pos, first_column_orbit, i, j, f, l, a;
@@ -2327,7 +2329,7 @@ void schreier::get_orbit_partition_of_points_and_lines(
 }
 
 void schreier::get_orbit_partition(
-		data_structures::partitionstack &S,
+		other::data_structures::partitionstack &S,
 	int verbose_level)
 {
 	int pos, i, j, f, l, a;
@@ -2366,7 +2368,7 @@ void schreier::get_orbit_in_order(
 
 strong_generators *schreier::stabilizer_any_point_plus_cosets(
 		actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 	int pt, data_structures_groups::vector_ge *&cosets,
 	int verbose_level)
 {
@@ -2475,7 +2477,7 @@ strong_generators *schreier::stabilizer_any_point_plus_cosets(
 
 strong_generators *schreier::stabilizer_any_point(
 		actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 	int pt,
 	int verbose_level)
 {
@@ -2558,7 +2560,7 @@ strong_generators *schreier::stabilizer_any_point(
 data_structures_groups::set_and_stabilizer
 	*schreier::get_orbit_rep(
 		actions::action *default_action,
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2602,7 +2604,7 @@ data_structures_groups::set_and_stabilizer
 
 void schreier::get_orbit_rep_to(
 		actions::action *default_action,
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int orbit_idx,
 		data_structures_groups::set_and_stabilizer *Rep,
 		int verbose_level)
@@ -2656,7 +2658,7 @@ void schreier::get_orbit_rep_to(
 
 strong_generators *schreier::stabilizer_orbit_rep(
 		actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order, int orbit_idx,
+		algebra::ring_theory::longinteger_object &full_group_order, int orbit_idx,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2688,7 +2690,7 @@ strong_generators *schreier::stabilizer_orbit_rep(
 				"after point_stabilizer" << endl;
 	}
 
-	ring_theory::longinteger_object stab_order;
+	algebra::ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -2710,14 +2712,14 @@ strong_generators *schreier::stabilizer_orbit_rep(
 
 void schreier::point_stabilizer(
 		actions::action *default_action,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		groups::sims *&Stab,
 		int orbit_no,
 	int verbose_level)
 // this function allocates a sims structure into Stab.
 {
-	ring_theory::longinteger_object cur_go, target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object cur_go, target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int f_v = (verbose_level >= 1);
@@ -2996,7 +2998,7 @@ void schreier::compute_orbit_statistic_lint(
 
 
 void schreier::orbits_as_set_of_sets(
-		data_structures::set_of_sets *&S,
+		other::data_structures::set_of_sets *&S,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3006,7 +3008,7 @@ void schreier::orbits_as_set_of_sets(
 	if (f_v) {
 		cout << "schreier::orbits_as_set_of_sets" << endl;
 	}
-	S = NEW_OBJECT(data_structures::set_of_sets);
+	S = NEW_OBJECT(other::data_structures::set_of_sets);
 	Sz = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		l = orbit_len[i];
@@ -3126,7 +3128,7 @@ void schreier::get_orbit_lengths_once_each(
 {
 	int *val, *mult, len;	
 	
-	orbiter_kernel_system::Orbiter->Int_vec->distribution(
+	other::orbiter_kernel_system::Orbiter->Int_vec->distribution(
 			orbit_len, nb_orbits, val, mult, len);
 	//int_distribution_print(ost, val, mult, len);
 	//ost << endl;
@@ -3147,7 +3149,7 @@ int schreier::orbit_number(
 {
 	int pos;
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	pos = orbit_inv[pt];
 	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, idx)) {
@@ -3178,7 +3180,7 @@ void schreier::get_orbit_number_and_position(
 {
 	int f_v = (verbose_level >= 1);
 	int pos;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier::get_orbit_number_and_position" << endl;
@@ -3287,7 +3289,7 @@ void schreier::create_point_list_sorted(
 		int *&point_list, int &point_list_length)
 {
 	int i, j, k, f, l, ff, p;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	point_list_length = 0;
 	for (k = 0; k < nb_orbits; k++) {
@@ -3326,7 +3328,7 @@ void schreier::shallow_tree_generators(
 	int *Elt1, *Elt2;
 	int *candidates;
 	int nb_candidates;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "schreier::shallow_tree_generators " << endl;

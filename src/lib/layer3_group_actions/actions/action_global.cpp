@@ -15,6 +15,18 @@ namespace layer3_group_actions {
 namespace actions {
 
 
+action_global::action_global()
+{
+	Record_birth();
+}
+
+action_global::~action_global()
+{
+	Record_death();
+}
+
+
+
 void action_global::action_print_symmetry_group_type(
 		std::ostream &ost,
 		symmetry_group_type a)
@@ -185,7 +197,7 @@ void action_global::get_symmetry_group_type_text(
 
 
 void action_global::automorphism_group_as_permutation_group(
-		l1_interfaces::nauty_output *NO,
+		other::l1_interfaces::nauty_output *NO,
 		actions::action *&A_perm,
 		int verbose_level)
 {
@@ -230,7 +242,7 @@ void action_global::reverse_engineer_linear_group_from_permutation_group(
 		geometry::projective_geometry::projective_space *P,
 		groups::strong_generators *&SG,
 		actions::action *&A_perm,
-		l1_interfaces::nauty_output *NO,
+		other::l1_interfaces::nauty_output *NO,
 		int verbose_level)
 // called from
 // combinatorial_object_with_properties::lift_generators_to_matrix_group
@@ -306,7 +318,7 @@ void action_global::reverse_engineer_linear_group_from_permutation_group(
 
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	NO->Ago->assign_to(target_go);
 
@@ -356,8 +368,8 @@ void action_global::make_generators_stabilizer_of_two_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	algebra::matrix_group *Mtx;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *Mtx;
+	algebra::field_theory::finite_field *Fq;
 	int minus_one, alpha;
 	groups::strong_generators *gens_PGL_k;
 	//vector_ge *gens_PGL_k;
@@ -419,12 +431,12 @@ void action_global::make_generators_stabilizer_of_two_components(
 
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+			other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 					Q, k, P, Zero, Zero, Id);
 		}
 		else {
 			// Q := diag(Id,P)
-			orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+			other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 					Q, k, Id, Zero, Zero, P);
 		}
 		if (Mtx->f_semilinear) {
@@ -445,7 +457,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 #endif
 
 	// Q := matrix(Center,0,0,I):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+	other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 			Q, k, Center, Zero, Zero, Id);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
@@ -454,7 +466,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 	idx++;
 
 	// Q := matrix(I,0,0,Center):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+	other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 			Q, k, Id, Zero, Zero, Center);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
@@ -513,8 +525,8 @@ void action_global::make_generators_stabilizer_of_three_components(
 	int *minusId;
 	int n, i, len;
 	int *P;
-	algebra::matrix_group *Mtx;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *Mtx;
+	algebra::field_theory::finite_field *Fq;
 	int minus_one;
 	groups::strong_generators *gens_PGL_k;
 
@@ -583,7 +595,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 		//P = gens_PGL_k->ith(h);
 
 		// Q := diag(P,P)
-		orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+		other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 				Q, k, P, Zero, Zero, P);
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
@@ -602,7 +614,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 				"step 2" << endl;
 	}
 	// Q := matrix(0,I,I,0):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+	other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 			Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
@@ -620,7 +632,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 				"step 3" << endl;
 	}
 	// Q := matrix(0,I,-I,-I):
-	orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
+	other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(
 			Q, k, Zero, Id, minusId, minusId);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
@@ -685,7 +697,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 void action_global::compute_generators_GL_n_q(
 		int *&Gens,
 		int &nb_gens, int &elt_size, int n,
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		data_structures_groups::vector_ge *&nice_gens,
 		int verbose_level)
 // puts generators for the kernel back in to get from PGL to GL
@@ -783,7 +795,7 @@ void action_global::lift_generators(
 		data_structures_groups::vector_ge *gens_in,
 		data_structures_groups::vector_ge *&gens_out,
 	action *Aq,
-	field_theory::subfield_structure *S, int n,
+	algebra::field_theory::subfield_structure *S, int n,
 	int verbose_level)
 // gens_in are m x m (i.e., small matrices over the large field),
 // gens_out are n x n (i.e., large matrices over the small field).
@@ -847,7 +859,7 @@ void action_global::retract_generators(
 		data_structures_groups::vector_ge *gens_in,
 		data_structures_groups::vector_ge *&gens_out,
 	action *AQ,
-	field_theory::subfield_structure *S, int n,
+	algebra::field_theory::subfield_structure *S, int n,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -913,7 +925,7 @@ void action_global::retract_generators(
 
 void action_global::lift_generators_to_subfield_structure(
 	int n, int s, 
-	field_theory::subfield_structure *S,
+	algebra::field_theory::subfield_structure *S,
 	action *Aq, action *AQ, 
 	groups::strong_generators *&Strong_gens,
 	int verbose_level)
@@ -921,10 +933,10 @@ void action_global::lift_generators_to_subfield_structure(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int q, Q, m;
-	field_theory::finite_field *Fq;
+	algebra::field_theory::finite_field *Fq;
 	//finite_field *FQ;
 	groups::sims *Sims;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "action_global::lift_generators_to_subfield_structure" << endl;
@@ -951,9 +963,9 @@ void action_global::lift_generators_to_subfield_structure(
 		cout << "Q=" << Q << endl;
 	}
 
-	ring_theory::longinteger_object order_GLmQ;
-	ring_theory::longinteger_object target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object order_GLmQ;
+	algebra::ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int r;
 
 	AQ->group_order(order_GLmQ);
@@ -1011,7 +1023,7 @@ void action_global::lift_generators_to_subfield_structure(
 				"creating lifted group done" << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Sims->group_order(go);
 
@@ -1112,7 +1124,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 	int nb_types;
 	int *type_first;
 	int *type_len;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	Sorting.int_vec_classify(
 			S.nb_orbits, S.orbit_len, orbit_len_sorted,
@@ -1206,8 +1218,8 @@ void action_global::perm_print_cycles_sorted_by_length_offset(
 
 
 action *action_global::init_direct_product_group_and_restrict(
-		algebra::matrix_group *M1,
-		algebra::matrix_group *M2,
+		algebra::basic_algebra::matrix_group *M1,
+		algebra::basic_algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1267,8 +1279,8 @@ action *action_global::init_direct_product_group_and_restrict(
 }
 
 action *action_global::init_direct_product_group(
-		algebra::matrix_group *M1,
-		algebra::matrix_group *M2,
+		algebra::basic_algebra::matrix_group *M1,
+		algebra::basic_algebra::matrix_group *M2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2048,7 +2060,7 @@ void action_global::compute_sims(
 
 void action_global::orbits_on_equations(
 		action *A,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 	int *The_equations,
 	int nb_equations, groups::strong_generators *gens,
 	actions::action *&A_on_equations,
@@ -2128,8 +2140,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 
 	groups::strong_generators *Set_stab;
 
-	data_structures::bitvector *Canonical_form;
-	l1_interfaces::nauty_output *NO;
+	other::data_structures::bitvector *Canonical_form;
+	other::l1_interfaces::nauty_output *NO;
 
 
 	if (f_v) {
@@ -2170,7 +2182,7 @@ void action_global::stabilizer_of_dual_hyperoval_representative(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_dual_hyperoval_representative" << endl;
@@ -2211,7 +2223,7 @@ void action_global::stabilizer_of_spread_representative(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_spread_representative"
@@ -2260,7 +2272,7 @@ void action_global::stabilizer_of_quartic_curve_representative(
 	int f_vv = (verbose_level >= 2);
 	int *data, nb_gens, data_size;
 	//int i;
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	if (f_v) {
 		cout << "action_global::stabilizer_of_quartic_curve_representative" << endl;
@@ -2321,8 +2333,8 @@ void action_global::perform_tests(
 	int *perm5;
 	int cnt;
 	int i;
-	combinatorics::combinatorics_domain Combi;
-	orbiter_kernel_system::os_interface Os;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::orbiter_kernel_system::os_interface Os;
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -2664,7 +2676,7 @@ void action_global::apply_based_on_text(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2700,7 +2712,7 @@ void action_global::apply_based_on_text(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -2832,7 +2844,7 @@ void action_global::multiply_based_on_text(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2864,7 +2876,7 @@ void action_global::multiply_based_on_text(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -2954,7 +2966,7 @@ void action_global::inverse_based_on_text(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -2984,7 +2996,7 @@ void action_global::inverse_based_on_text(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -3020,7 +3032,7 @@ void action_global::consecutive_powers_based_on_text(
 	}
 
 	int exponent;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	exponent = ST.strtoi(exponent_text);
 
@@ -3057,7 +3069,7 @@ void action_global::consecutive_powers_based_on_text(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 			int i;
 
 			L.head(ost,
@@ -3132,7 +3144,7 @@ void action_global::consecutive_powers_based_on_text(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -3169,7 +3181,7 @@ void action_global::raise_to_the_power_based_on_text(
 	}
 
 	int exponent;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	exponent = ST.strtoi(exponent_text);
 
@@ -3217,7 +3229,7 @@ void action_global::raise_to_the_power_based_on_text(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -3247,7 +3259,7 @@ void action_global::raise_to_the_power_based_on_text(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -3606,9 +3618,9 @@ void action_global::induce(
 	groups::sims *Sims, *K;
 		// will become part of the action object
 		// 'this' by the end of this procedure
-	ring_theory::longinteger_object go, /*go1,*/ go2, go3;
-	ring_theory::longinteger_object Sims_order, K_order;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go, /*go1,*/ go2, go3;
+	algebra::ring_theory::longinteger_object Sims_order, K_order;
+	algebra::ring_theory::longinteger_domain D;
 	int b, i, old_base_len;
 
 	if (f_v) {
@@ -3979,7 +3991,7 @@ void action_global::make_canonical(
 	}
 #endif
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	Sims->group_order(go);
 	if (f_v) {
 		cout << "action_global::make_canonical "
@@ -4057,7 +4069,7 @@ void action_global::make_canonical(
 		cout << "action_global::make_canonical succeeds in " << cnt
 				<< " iterations, total_backtrack_nodes="
 				<< total_backtrack_nodes << endl;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Aut->group_order(go);
 		cout << "the automorphism group has order " << go << endl;
 	}
@@ -4122,8 +4134,8 @@ void action_global::make_element_which_moves_a_line_in_PG3q(
 
 void action_global::orthogonal_group_random_generator(
 		action *A,
-		orthogonal_geometry::orthogonal *O,
-		algebra::matrix_group *M,
+		geometry::orthogonal_geometry::orthogonal *O,
+		algebra::basic_algebra::matrix_group *M,
 	int f_siegel,
 	int f_reflection,
 	int f_similarity,
@@ -4186,7 +4198,7 @@ void action_global::orthogonal_group_random_generator(
 
 void action_global::init_base(
 		actions::action *A,
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4240,14 +4252,14 @@ void action_global::init_base(
 
 void action_global::init_base_projective(
 		actions::action *A,
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int q = M->GFq->q;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 	int base_len;
 
 	if (f_v) {
@@ -4309,14 +4321,14 @@ void action_global::init_base_projective(
 
 void action_global::init_base_affine(
 		actions::action *A,
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
 	int q = M->GFq->q;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 	int base_len;
 
 	if (f_v) {
@@ -4359,14 +4371,14 @@ void action_global::init_base_affine(
 
 void action_global::init_base_general_linear(
 		actions::action *A,
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		int verbose_level)
 // initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
 	int q = M->GFq->q;
-	algebra::group_generators_domain GG;
+	algebra::basic_algebra::group_generators_domain GG;
 	int base_len;
 
 	if (f_v) {
@@ -4410,7 +4422,7 @@ void action_global::init_base_general_linear(
 
 void action_global::substitute_semilinear(
 		action *A,
-		ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int *Elt,
 		int *input, int *output,
 		int verbose_level)
@@ -4423,7 +4435,7 @@ void action_global::substitute_semilinear(
 	}
 
 	int *Elt1;
-	algebra::matrix_group *mtx;
+	algebra::basic_algebra::matrix_group *mtx;
 	int f_semilinear;
 	int n;
 
@@ -4549,7 +4561,7 @@ void action_global::reverse_engineer_semilinear_group(
 	}
 
 
-	linear_algebra::linear_algebra_global LA;
+	algebra::linear_algebra::linear_algebra_global LA;
 
 	//action *A_perm;
 
@@ -4757,7 +4769,7 @@ void action_global::get_generators_from_ascii_coding(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	data_structures_groups::group_container *G;
 
 	if (f_v) {
@@ -4939,7 +4951,7 @@ void action_global::point_stabilizer_any_point(
 	}
 
 	int f; //, len;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action_global::point_stabilizer_any_point "
@@ -5017,7 +5029,7 @@ void action_global::point_stabilizer_any_point_with_given_group(
 	}
 
 	int f; //, len;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	if (f_v) {
 		cout << "action_global::point_stabilizer_any_point_with_given_group "
@@ -5098,7 +5110,7 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 		A2->print_info();
 	}
 
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	SG->group_order(full_group_order);
 	if (f_v) {
@@ -5236,7 +5248,7 @@ void action_global::rational_normal_form(
 		A->print_info();
 	}
 
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
 
@@ -5244,7 +5256,7 @@ void action_global::rational_normal_form(
 
 	n = M->n;
 
-	linear_algebra::gl_classes *C;
+	algebra::linear_algebra::gl_classes *C;
 
 
 #if 0
@@ -5262,7 +5274,7 @@ void action_global::rational_normal_form(
 	C = M->C;
 #endif
 
-	C = NEW_OBJECT(linear_algebra::gl_classes);
+	C = NEW_OBJECT(algebra::linear_algebra::gl_classes);
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
 				"before C->init" << endl;
@@ -5298,7 +5310,7 @@ void action_global::rational_normal_form(
 
 	int *Mtx1;
 	int *Basis1;
-	linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R1;
 
 	//Mtx1 = NEW_int(n);
 	Mtx1 = Elt1;
@@ -5306,7 +5318,7 @@ void action_global::rational_normal_form(
 
 	Basis1 = NEW_int(n * n);
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
@@ -5378,7 +5390,7 @@ void action_global::find_conjugating_element(
 		A->print_info();
 	}
 
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	M = A->G.matrix_grp;
 
@@ -5386,7 +5398,7 @@ void action_global::find_conjugating_element(
 
 	n = M->n;
 
-	linear_algebra::gl_classes *C;
+	algebra::linear_algebra::gl_classes *C;
 
 
 #if 0
@@ -5404,7 +5416,7 @@ void action_global::find_conjugating_element(
 	C = M->C;
 #endif
 
-	C = NEW_OBJECT(linear_algebra::gl_classes);
+	C = NEW_OBJECT(algebra::linear_algebra::gl_classes);
 	if (f_v) {
 		cout << "action_global::find_conjugating_element "
 				"before C->init" << endl;
@@ -5441,8 +5453,8 @@ void action_global::find_conjugating_element(
 	int *Mtx2;
 	int *Basis1;
 	int *Basis2;
-	linear_algebra::gl_class_rep *R1;
-	linear_algebra::gl_class_rep *R2;
+	algebra::linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R2;
 
 	//Mtx1 = NEW_int(n);
 	Mtx1 = Elt1;
@@ -5452,8 +5464,8 @@ void action_global::find_conjugating_element(
 	Basis1 = NEW_int(n * n);
 	Basis2 = NEW_int(n * n);
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
-	R2 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
+	R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
 	if (f_v) {
 		cout << "action_global::find_conjugating_element "
@@ -5590,7 +5602,7 @@ void action_global::read_orbit_rep_and_candidates_from_files(
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_at_candidate_level = -1;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -5714,7 +5726,7 @@ void action_global::read_representatives(
 	char **Aut_ascii;
 	int *Casenumbers;
 	int i, j;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action_global::read_representatives "
@@ -5758,7 +5770,7 @@ void action_global::read_representatives_and_strong_generators(
 	//char **Aut_ascii;
 	int *Casenumbers;
 	int i, j;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -5817,7 +5829,7 @@ void action_global::read_file_and_print_representatives(
 	char **Aut_ascii;
 	int *Casenumbers;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action_global::read_file_and_print_representatives "
@@ -5851,7 +5863,7 @@ void action_global::read_file_and_print_representatives(
 		G->init_ascii_coding_to_sims(s, verbose_level - 2);
 
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		G->S->group_order(go);
 
@@ -5902,7 +5914,7 @@ void action_global::read_set_and_stabilizer(
 	int *Casenumbers;
 	data_structures_groups::group_container *G;
 	int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	if (f_v) {
@@ -5953,7 +5965,7 @@ void action_global::read_set_and_stabilizer(
 	G->S = NULL;
 	G->f_has_sims = false;
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	stab->group_order(go);
 
@@ -5983,10 +5995,10 @@ void action_global::read_set_and_stabilizer(
 
 }
 
-data_structures::set_of_sets *action_global::set_of_sets_copy_and_apply(
+other::data_structures::set_of_sets *action_global::set_of_sets_copy_and_apply(
 		action *A,
 		int *Elt,
-		data_structures::set_of_sets *old_one,
+		other::data_structures::set_of_sets *old_one,
 	int verbose_level)
 {
 	int f_v = (verbose_level  >= 1);
@@ -5995,7 +6007,7 @@ data_structures::set_of_sets *action_global::set_of_sets_copy_and_apply(
 		cout << "action_global::set_of_sets_copy_and_apply" << endl;
 	}
 
-	data_structures::set_of_sets *SoS;
+	other::data_structures::set_of_sets *SoS;
 
 	SoS = old_one->copy();
 
@@ -6038,8 +6050,8 @@ actions::action *action_global::create_action_on_k_subspaces(
 	}
 
 	action *A_modified;
-	algebra::matrix_group *M;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *Fq;
 	int n;
 
 	M = A_previous->get_matrix_group();
@@ -6114,7 +6126,7 @@ actions::action *action_global::create_action_on_k_subspaces(
 
 void action_global::report_strong_generators(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		groups::strong_generators *SG,
 		action *A,
 		int verbose_level)
@@ -6203,7 +6215,7 @@ void action_global::report(
 		actions::action *A,
 		groups::strong_generators *Strong_gens,
 		int f_sylow, int f_group_table,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -6232,7 +6244,7 @@ void action_global::report(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -6242,7 +6254,7 @@ void action_global::report(
 
 		//H->print_all_group_elements_tex(fp);
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		//sims *G;
 		//sims *H;
 
@@ -6343,7 +6355,7 @@ void action_global::report(
 
 			int *Table;
 			long int n;
-			orbiter_kernel_system::file_io Fio;
+			other::orbiter_kernel_system::file_io Fio;
 			string fname_group_table;
 			H->create_group_table(Table, n, verbose_level);
 
@@ -6357,7 +6369,7 @@ void action_global::report(
 					<< Fio.file_size(fname_group_table) << endl;
 
 			{
-				l1_interfaces::latex_interface L;
+				other::l1_interfaces::latex_interface L;
 
 				ost << "\\begin{sidewaystable}" << endl;
 				ost << "$$" << endl;
@@ -6405,7 +6417,7 @@ void action_global::report(
 				fname2 = A->label + "_group_table_order_" + std::to_string(n);
 
 				{
-					graphics::mp_graphics G;
+					other::graphics::mp_graphics G;
 
 					G.init(fname2, LG_Draw_options, verbose_level);
 
@@ -6513,7 +6525,7 @@ void action_global::report_groups_and_normalizers(
 {
 	int f_v = (verbose_level >= 1);
 	int u;
-	ring_theory::longinteger_object go1, go2;
+	algebra::ring_theory::longinteger_object go1, go2;
 
 	if (f_v) {
 		cout << "action_global::report_groups_and_normalizers" << endl;
@@ -6567,7 +6579,7 @@ void action_global::compute_projectivity_subgroup(
 	}
 	if (f_v) {
 		cout << "action_global::compute_projectivity_subgroup computing group order" << endl;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		Aut_gens->group_order(go);
 		cout << "action_global::compute_projectivity_subgroup group order = " << go << endl;
 	}
@@ -6626,7 +6638,7 @@ void action_global::compute_projectivity_subgroup(
 	if (f_v) {
 		cout << "action_global::compute_projectivity_subgroup "
 				"computing group order of projectivity group" << endl;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		projectivity_gens->group_order(go);
 		cout << "action_global::compute_projectivity_subgroup "
 				"group order of projectivity group = " << go << endl;
@@ -6656,7 +6668,7 @@ void action_global::all_elements(
 		exit(1);
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i, goi;
 
 	A->group_order(go);
@@ -6683,7 +6695,7 @@ void action_global::all_elements_save_csv(
 {
 
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "action_global::all_elements_save_csv" << endl;
@@ -6742,7 +6754,7 @@ void action_global::report_induced_action_on_set_and_kernel(
 	int f_v = (verbose_level >= 1);
 	actions::action *AAA;
 	//sims K;
-	ring_theory::longinteger_object go, ko;
+	algebra::ring_theory::longinteger_object go, ko;
 	int i;
 	int *Elt1;
 
@@ -6931,7 +6943,7 @@ void callback_choose_random_generator_orthogonal(
 	groups::schreier_sims *ss = (groups::schreier_sims *) data;
 	action *A = ss->GA;
 	action *subaction = ss->KA;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 #if 0
 	int f_siegel = true;
 	int f_reflection = true;
@@ -6940,7 +6952,7 @@ void callback_choose_random_generator_orthogonal(
 #endif
 
 	induced_actions::action_on_orthogonal *AO;
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 	action_global AG;
 
 	AO = A->G.AO;

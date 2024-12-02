@@ -65,8 +65,8 @@ public:
 	int n;
 	int q;
 	actions::action *A;
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
 	
@@ -181,12 +181,12 @@ public:
 	actions::action *AQ;
 	actions::action *Aq;
 
-	algebra::matrix_group *MQ;
-	field_theory::finite_field *FQ;
-	algebra::matrix_group *Mq;
-	field_theory::finite_field *Fq;
+	algebra::basic_algebra::matrix_group *MQ;
+	algebra::field_theory::finite_field *FQ;
+	algebra::basic_algebra::matrix_group *Mq;
+	algebra::field_theory::finite_field *Fq;
 
-	field_theory::subfield_structure *S;
+	algebra::field_theory::subfield_structure *S;
 
 	int *Eltq;
 	int *Mtx; // [m * m]
@@ -198,7 +198,7 @@ public:
 	~action_by_subfield_structure();
 	void init(
 			actions::action &A,
-			field_theory::finite_field *Fq,
+			algebra::field_theory::finite_field *Fq,
 			int verbose_level);
 	long int compute_image_int(
 			actions::action &A, int *Elt,
@@ -259,7 +259,7 @@ class action_on_bricks {
 public:
 
 	actions::action *A;
-	combinatorics::brick_domain *B;
+	combinatorics::puzzles::brick_domain *B;
 	int degree;
 	int f_linear_action;
 
@@ -267,7 +267,7 @@ public:
 	~action_on_bricks();
 	void init(
 			actions::action *A,
-			combinatorics::brick_domain *B,
+			combinatorics::puzzles::brick_domain *B,
 			int f_linear_action,
 		int verbose_level);
 	long int compute_image(
@@ -332,7 +332,7 @@ public:
 class action_on_cosets {
 public:
 	actions::action *A_linear;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int dimension_of_subspace;
 	int n;
 	int *subspace_basis; // [dimension_of_subspace * n]
@@ -360,7 +360,7 @@ public:
 	void init(
 			int nb_points, int *Points,
 			actions::action *A_linear,
-		field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int dimension_of_subspace, 
 		int n, 
 		int *subspace_basis, 
@@ -372,7 +372,7 @@ public:
 	void init_lint(
 			int nb_points, long int *Points,
 			actions::action *A_linear,
-		field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 		int dimension_of_subspace,
 		int n,
 		int *subspace_basis,
@@ -397,7 +397,7 @@ public:
 
 class action_on_determinant {
 public:
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 	int f_projective;
 	int m;
 	int q;
@@ -424,7 +424,7 @@ public:
 
 class action_on_factor_space {
 public:
-	linear_algebra::vector_space *VS;
+	algebra::linear_algebra::vector_space *VS;
 
 
 	// VS->dimension = length of vectors in large space
@@ -487,12 +487,12 @@ public:
 	action_on_factor_space();
 	~action_on_factor_space();
 	void init_light(
-			linear_algebra::vector_space *VS,
+			algebra::linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
-			linear_algebra::vector_space *VS,
+			algebra::linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		long int *point_list, int nb_points,
@@ -504,12 +504,12 @@ public:
 			long int *point_list, int nb_points,
 			int verbose_level);
 	void init_by_rank(
-			linear_algebra::vector_space *VS,
+			algebra::linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
-			linear_algebra::vector_space *VS,
+			algebra::linear_algebra::vector_space *VS,
 			actions::action &A_base, actions::action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
@@ -576,11 +576,11 @@ class action_on_flags {
 public:
 	actions::action *A;
 	int n;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int *type;
 	int type_len;
 	geometry::other_geometry::flag *Flag;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 	int degree;
 	int *M1;
 	int *M2;
@@ -606,7 +606,7 @@ public:
 class action_on_galois_group {
 public:
 	actions::action *A;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 	int m;
 	int q;
 	int degree;
@@ -634,7 +634,7 @@ public:
 	int n;
 	int k;
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size;
 	
 	actions::action *A;
@@ -648,7 +648,7 @@ public:
 	int *subspace_basis; // [n * big_n]
 	int *subspace_basis2; // [n * big_n]
 	
-	ring_theory::longinteger_object degree_as_text;
+	algebra::ring_theory::longinteger_object degree_as_text;
 	long int degree;
 	int max_string_length;
 	
@@ -678,8 +678,8 @@ public:
 	void compute_image_longinteger(
 			actions::action *A,
 			int *Elt,
-			ring_theory::longinteger_object &i,
-			ring_theory::longinteger_object &j,
+			algebra::ring_theory::longinteger_object &i,
+			algebra::ring_theory::longinteger_object &j,
 		int verbose_level);
 	long int compute_image_int(
 			actions::action *A, int *Elt,
@@ -707,9 +707,9 @@ public:
 	int n; // the dimension M->n
 	int q;
 	actions::action *A;
-	ring_theory::homogeneous_polynomial_domain *HPD;
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size;
 	int degree;
 
@@ -724,13 +724,13 @@ public:
 	int *Equations;
 	int nb_equations;
 
-	data_structures::int_matrix *Table_of_equations;
+	other::data_structures::int_matrix *Table_of_equations;
 
 	action_on_homogeneous_polynomials();
 	~action_on_homogeneous_polynomials();
 	void init(
 			actions::action *A,
-			ring_theory::homogeneous_polynomial_domain *HPD,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	void init_invariant_set_of_equations(
 			int *Equations,
@@ -812,12 +812,12 @@ public:
 	actions::action *A;
 	int n;
 	int q;
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size; // = module_dimension_m
 	//long int degree;
 
-	algebraic_geometry::surface_object *SO;
+	geometry::algebraic_geometry::surface_object *SO;
 	int *module_basis; // [module_dimension_m * module_dimension_n]
 	int module_dimension_m;
 	int module_dimension_n;
@@ -837,7 +837,7 @@ public:
 	action_on_module();
 	~action_on_module();
 	void init_action_on_module(
-			algebraic_geometry::surface_object *SO,
+			geometry::algebraic_geometry::surface_object *SO,
 			actions::action *A_on_the_lines,
 			std::string &module_type,
 			int *module_basis, int module_dimension_m, int module_dimension_n,
@@ -887,7 +887,7 @@ class action_on_orthogonal {
 public:
 	actions::action *original_action;
 		// needs original_action->Group_element->element_image_of_low_level
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 	int *v1;
 	int *v2;
 	int *w1;
@@ -902,7 +902,7 @@ public:
 	~action_on_orthogonal();
 	void init(
 			actions::action *original_action,
-			orthogonal_geometry::orthogonal *O,
+			geometry::orthogonal_geometry::orthogonal *O,
 		int f_on_points, int f_on_lines,
 		int f_on_points_and_lines,
 		int verbose_level);
@@ -1019,7 +1019,7 @@ public:
 	int n; // = 2 * k
 	int k2; // = k^2
 	int q;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size; // = k * k
 	int degree;
 	
@@ -1041,7 +1041,7 @@ public:
 			actions::action *A_PGL_n_q,
 			actions::action *A_PGL_k_q,
 			groups::sims *G_PGL_k_q,
-		int k, field_theory::finite_field *F,
+		int k, algebra::field_theory::finite_field *F,
 		int verbose_level);
 	void report(
 			std::ostream &ost, int verbose_level);
@@ -1112,8 +1112,8 @@ public:
 	actions::action *A;
 	int n;
 	int q;
-	algebra::matrix_group *M;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *M;
+	algebra::field_theory::finite_field *F;
 	int low_level_point_size;
 	long int degree;
 
@@ -1173,7 +1173,7 @@ public:
 	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 
-	data_structures::page_storage *Elts;
+	other::data_structures::page_storage *Elts;
 	
 	product_action();
 	~product_action();

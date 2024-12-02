@@ -26,6 +26,7 @@ static void projective_space_init_line_action(
 
 hermitian_spreads_classify::hermitian_spreads_classify()
 {
+	Record_birth();
 	n = Q = len = 0;
 	F = NULL;
 	H = NULL;
@@ -56,6 +57,7 @@ hermitian_spreads_classify::hermitian_spreads_classify()
 
 hermitian_spreads_classify::~hermitian_spreads_classify()
 {
+	Record_death();
 	int f_v = false;
 	int i;
 
@@ -131,7 +133,7 @@ void hermitian_spreads_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::init" << endl;
@@ -141,7 +143,7 @@ void hermitian_spreads_classify::init(
 	hermitian_spreads_classify::n = n;
 	hermitian_spreads_classify::Q = Q;
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 
 	F->finite_field_init_small_order(
 			Q,
@@ -157,7 +159,7 @@ void hermitian_spreads_classify::init(
 
 
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f, j, a, b, idx;
 
 
@@ -285,7 +287,7 @@ void hermitian_spreads_classify::init(
 			verbose_level);
 
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	sg->group_order(go);
 	cout << "Group has been computed, group order = " << go << endl;
@@ -324,7 +326,7 @@ void hermitian_spreads_classify::read_arguments(
 		int argc, std::string *argv)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	Control = NEW_OBJECT(poset_classification::poset_classification_control);
 	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
@@ -407,7 +409,7 @@ void hermitian_spreads_classify::compute(
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 
 	Control->f_depth = true;
@@ -560,7 +562,7 @@ static void projective_space_init_line_action(
 	}
 	int f_induce_action = true;
 	groups::sims S;
-	ring_theory::longinteger_object go1;
+	algebra::ring_theory::longinteger_object go1;
 
 	S.init(A_points, 0);
 	S.init_generators(*A_points->Strong_gens->gens,

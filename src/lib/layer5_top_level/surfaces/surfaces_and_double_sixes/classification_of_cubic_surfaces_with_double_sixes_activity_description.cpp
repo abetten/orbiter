@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 classification_of_cubic_surfaces_with_double_sixes_activity_description::classification_of_cubic_surfaces_with_double_sixes_activity_description()
 {
+	Record_birth();
 	f_report = false;
 	report_options = NULL;
 
@@ -50,6 +51,7 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 
 classification_of_cubic_surfaces_with_double_sixes_activity_description::~classification_of_cubic_surfaces_with_double_sixes_activity_description()
 {
+	Record_death();
 }
 
 int classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments(
@@ -58,7 +60,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments" << endl;

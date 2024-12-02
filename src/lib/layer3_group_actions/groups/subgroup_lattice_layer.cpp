@@ -22,6 +22,7 @@ namespace groups {
 
 subgroup_lattice_layer::subgroup_lattice_layer()
 {
+	Record_birth();
 	Subgroup_lattice = NULL;
 
 	layer_idx = 0;
@@ -40,6 +41,7 @@ subgroup_lattice_layer::subgroup_lattice_layer()
 
 subgroup_lattice_layer::~subgroup_lattice_layer()
 {
+	Record_death();
 	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
@@ -123,7 +125,7 @@ void subgroup_lattice_layer::print(
 
 	}
 
-	data_structures::tally_lint T;
+	other::data_structures::tally_lint T;
 
 	T.init(
 			Go,

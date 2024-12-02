@@ -22,6 +22,7 @@ namespace set_stabilizer {
 
 substructure_classifier::substructure_classifier()
 {
+	Record_birth();
 	//std::string &fname_base_out;
 	substructure_size = 0;
 	PC = NULL;
@@ -35,6 +36,7 @@ substructure_classifier::substructure_classifier()
 
 substructure_classifier::~substructure_classifier()
 {
+	Record_death();
 
 }
 
@@ -123,7 +125,7 @@ void substructure_classifier::classify_substructures(
 				substructure_size, j,
 				0 /* verbose_level*/);
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Strong_gens->group_order(go);
 
@@ -191,13 +193,13 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 	for (cnt = 0; cnt < nb; cnt++) {
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		string fname;
 
 		fname = ST.printf_d(fname_mask, cnt);
 
-		data_structures::spreadsheet S;
+		other::data_structures::spreadsheet S;
 
 		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
@@ -222,13 +224,13 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 	for (cnt = 0; cnt < nb; cnt++) {
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		string fname;
 
 		fname = ST.printf_d(fname_mask, cnt);
 
-		data_structures::spreadsheet S;
+		other::data_structures::spreadsheet S;
 
 		S.read_spreadsheet(fname, verbose_level);
 
@@ -261,7 +263,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 			j = col_idx;
 			pts_txt = S.get_entry_ij(row + 1, j);
 
-			data_structures::string_tools ST;
+			other::data_structures::string_tools ST;
 
 			ST.remove_specific_character(pts_txt, '\"');
 
@@ -378,7 +380,7 @@ void substructure_classifier::set_stabilizer_of_set(
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Lint_vec_print(cout, canonical_pts, nb_pts);
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
 		cout << "_{" << go << "}" << endl;
@@ -410,7 +412,7 @@ void substructure_classifier::set_stabilizer_of_set(
 				"after handle_orbit" << endl;
 		cout << "canonical point set: ";
 		Lint_vec_print(cout, canonical_pts, nb_pts);
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);
 		cout << "_{" << go << "}" << endl;

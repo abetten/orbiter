@@ -23,6 +23,7 @@ namespace user_interface {
 
 interface_toolkit::interface_toolkit()
 {
+	Record_birth();
 	f_create_files_direct = false;
 	//std::string create_files_direct_fname_mask;
 	//std::string create_files_direct_text;
@@ -232,11 +233,17 @@ interface_toolkit::interface_toolkit()
 }
 
 
+interface_toolkit::~interface_toolkit()
+{
+	Record_birth();
+}
+
+
 void interface_toolkit::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-create_files_direct") == 0) {
 		cout << "-create_files_direct <string : mask> <string : text> <string : label_1> ... <string : label_n> -end" << endl;
@@ -381,7 +388,7 @@ int interface_toolkit::recognize_keyword(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -530,7 +537,7 @@ void interface_toolkit::read_arguments(
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments" << endl;
@@ -571,7 +578,7 @@ void interface_toolkit::read_arguments(
 		}
 
 		Create_file_description =
-				NEW_OBJECT(orbiter_kernel_system::create_file_description);
+				NEW_OBJECT(other::orbiter_kernel_system::create_file_description);
 		i += Create_file_description->read_arguments(argc - i - 1,
 			argv + i + 1, verbose_level);
 		if (f_v) {
@@ -857,7 +864,7 @@ void interface_toolkit::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = true;
-		Draw_bitmap_control = NEW_OBJECT(graphics::draw_bitmap_control);
+		Draw_bitmap_control = NEW_OBJECT(other::graphics::draw_bitmap_control);
 		if (f_v) {
 			cout << "reading -draw_matrix" << endl;
 		}
@@ -1023,7 +1030,7 @@ void interface_toolkit::read_arguments(
 	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		f_draw_projective_curve = true;
 		Draw_projective_curve_description =
-				NEW_OBJECT(graphics::draw_projective_curve_description);
+				NEW_OBJECT(other::graphics::draw_projective_curve_description);
 		if (f_v) {
 			cout << "reading -draw_projective_curve" << endl;
 		}
@@ -1041,7 +1048,7 @@ void interface_toolkit::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		f_tree_draw = true;
-		Tree_draw_options = NEW_OBJECT(graphics::tree_draw_options);
+		Tree_draw_options = NEW_OBJECT(other::graphics::tree_draw_options);
 		if (f_v) {
 			cout << "reading -tree_draw" << endl;
 		}
@@ -1152,7 +1159,7 @@ void interface_toolkit::read_arguments(
 		if (f_v) {
 			cout << "-draw_layered_graph " << endl;
 		}
-		Layered_graph_draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+		Layered_graph_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
 		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -1479,7 +1486,7 @@ void interface_toolkit::worker(
 		}
 
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "-create_files_direct " << create_files_direct_fname_mask << " " << create_files_direct_text;
@@ -1507,7 +1514,7 @@ void interface_toolkit::worker(
 		if (f_v) {
 			cout << "interface_toolkit::worker f_create_files" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.create_file(Create_file_description, verbose_level);
 	}
@@ -1516,7 +1523,7 @@ void interface_toolkit::worker(
 		if (f_v) {
 			cout << "interface_toolkit::worker f_save_matrix_csv" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int *v;
 		int m, n;
 		string fname;
@@ -1538,7 +1545,7 @@ void interface_toolkit::worker(
 
 		cout << "-csv_file_tally " << csv_file_tally_fname << endl;
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->read_csv_file_and_tally(
 				csv_file_tally_fname, verbose_level);
@@ -1552,7 +1559,7 @@ void interface_toolkit::worker(
 
 		cout << "-f_collect_stats " << collect_stats_fname_mask << endl;
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->collect_stats(
 				collect_stats_fname_mask,
@@ -1569,7 +1576,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_rows" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_rows(
 				csv_file_select_rows_fname,
@@ -1582,7 +1589,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_rows_by_file" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_rows_by_file(
 				csv_file_select_rows_by_file_fname,
@@ -1595,7 +1602,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_rows" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_rows_complement(
 				csv_file_select_rows_complement_fname,
@@ -1608,7 +1615,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_split_rows_modulo" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_split_rows_modulo(
 				csv_file_split_rows_modulo_fname,
@@ -1620,7 +1627,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_cols" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_cols(
 				csv_file_select_cols_fname,
@@ -1634,7 +1641,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_cols_by_label" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_cols_by_label(
 				csv_file_select_cols_by_label_fname,
@@ -1651,7 +1658,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_select_rows_and_cols" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_select_rows_and_cols(
 				csv_file_select_rows_and_cols_fname,
@@ -1665,7 +1672,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_sort_each_row" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_sort_each_row(
 				csv_file_sort_each_row_fname, verbose_level);
@@ -1677,7 +1684,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_sort_rows" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->csv_file_sort_rows(
 				csv_file_sort_rows_fname, verbose_level);
@@ -1689,7 +1696,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_sort_rows_and_remove_duplicates" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->csv_file_sort_rows_and_remove_duplicates(
 				csv_file_sort_rows_and_remove_duplicates_fname, verbose_level);
@@ -1702,7 +1709,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_join" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_join(
 				csv_file_join_fname,
@@ -1714,7 +1721,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_concatenate" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_concatenate(
 				csv_file_concatenate_fname_in,
@@ -1726,7 +1733,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_concatenate_from_mask" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_concatenate_from_mask(
 				csv_file_concatenate_from_mask_mask,
@@ -1740,7 +1747,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_extract_column_to_txt" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->do_csv_file_extract_column_to_txt(
 				csv_file_extract_column_to_txt_fname,
@@ -1754,7 +1761,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_csv_file_latex" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int nb_lines_per_table = 40;
 
 		Fio.Csv_file_support->do_csv_file_latex(
@@ -1770,7 +1777,7 @@ void interface_toolkit::worker(
 					"f_prepare_tables_for_users_guide" << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->prepare_tables_for_users_guide(
 				prepare_tables_for_users_guide_fname,
@@ -1783,7 +1790,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_grade_statistic_from_csv" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int f_midterm1 = true;
 		int f_midterm2 = true;
 		int f_final = true;
@@ -1805,7 +1812,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_draw_matrix" << endl;
 		}
-		l1_interfaces::easy_BMP_interface BMP;
+		other::l1_interfaces::easy_BMP_interface BMP;
 
 		BMP.draw_bitmap(Draw_bitmap_control, verbose_level);
 
@@ -1817,7 +1824,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_reformat" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int *M;
 		int *M2;
 		int m, n;
@@ -1843,7 +1850,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_split_by_values" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "interface_toolkit::worker "
@@ -1864,7 +1871,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_change_values" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "interface_toolkit::worker "
@@ -1903,7 +1910,7 @@ void interface_toolkit::worker(
 			cout << "store_as_csv_file_n = " << store_as_csv_file_n << endl;
 			exit(1);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->lint_matrix_write_csv(
 				store_as_csv_file_fname, D,
@@ -2086,8 +2093,8 @@ void interface_toolkit::worker(
 		if (f_v) {
 			cout << "interface_toolkit::worker f_plot_function" << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
-		data_structures::string_tools ST;
+		other::orbiter_kernel_system::file_io Fio;
+		other::data_structures::string_tools ST;
 		int *T;
 		int *M;
 		int m1, n1, x, y;
@@ -2123,7 +2130,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_draw_projective_curve" << endl;
 		}
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.draw_projective_curve(
 				Draw_projective_curve_description,
@@ -2136,7 +2143,7 @@ void interface_toolkit::worker(
 			cout << "interface_toolkit::worker "
 					"f_tree_draw" << endl;
 		}
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.tree_draw(Tree_draw_options, verbose_level);
 
@@ -2150,7 +2157,7 @@ void interface_toolkit::worker(
 		cout << "-extract_from_file "
 				<< extract_from_file_fname
 				<< " " << extract_from_file_label << endl;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		std::vector<std::string> text;
 		int i;
 		std::string tail;
@@ -2187,7 +2194,7 @@ void interface_toolkit::worker(
 		cout << "-extract_from_file_with_tail "
 				<< extract_from_file_with_tail_fname
 				<< " " << extract_from_file_with_tail_label << endl;
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		std::vector<std::string> text;
 		int i;
 
@@ -2222,7 +2229,7 @@ void interface_toolkit::worker(
 					"-serialize_file_names "
 					<< serialize_file_names_fname << endl;
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 
 		int nb_files;
@@ -2252,7 +2259,7 @@ void interface_toolkit::worker(
 				save_4_bit_data_file_vector_data,
 				Data, sz, 0 /* verbose_level */);
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 		unsigned char *data_long;
 		unsigned char *data;
@@ -2296,7 +2303,7 @@ void interface_toolkit::worker(
 
 
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		{
 			ofstream ost(save_4_bit_data_file_fname, ios::binary);
@@ -2320,7 +2327,7 @@ void interface_toolkit::worker(
 					<< endl;
 		}
 
-		l1_interfaces::gnuplot_interface Gnuplot;
+		other::l1_interfaces::gnuplot_interface Gnuplot;
 
 		Gnuplot.gnuplot(
 				gnuplot_file_fname,
@@ -2341,7 +2348,7 @@ void interface_toolkit::worker(
 					<< endl;
 		}
 
-		data_structures::spreadsheet S;
+		other::data_structures::spreadsheet S;
 
 		S.read_spreadsheet(
 				compare_columns_fname, 0/*verbose_level - 1*/);
@@ -2352,14 +2359,14 @@ void interface_toolkit::worker(
 
 	else if (f_gcd_worksheet) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.create_gcd_worksheet(
 				gcd_worksheet_nb_problems, gcd_worksheet_N, gcd_worksheet_key,
 				verbose_level);
 	}
 	else if (f_draw_layered_graph) {
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 
 
@@ -2376,9 +2383,9 @@ void interface_toolkit::worker(
 		}
 
 
-		data_structures::ancestry_tree *AT;
+		other::data_structures::ancestry_tree *AT;
 
-		AT = NEW_OBJECT(data_structures::ancestry_tree);
+		AT = NEW_OBJECT(other::data_structures::ancestry_tree);
 
 		AT->read_gedcom(read_gedcom_fname, verbose_level);
 
@@ -2390,7 +2397,7 @@ void interface_toolkit::worker(
 		}
 
 
-		l1_interfaces::pugixml_interface Pugi;
+		other::l1_interfaces::pugixml_interface Pugi;
 		std::vector<std::vector<std::string> > Classes_parsed;
 
 		if (f_v) {
@@ -2405,7 +2412,7 @@ void interface_toolkit::worker(
 		}
 
 
-		data_structures::algorithms Algo;
+		other::data_structures::algorithms Algo;
 
 		if (f_v) {
 			cout << "interface_toolkit::worker "
@@ -2428,7 +2435,7 @@ void interface_toolkit::worker(
 					"f_read_column_and_tally " << read_column_and_tally_fname << endl;
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		long int *Data;
 		int data_size;
 
@@ -2442,7 +2449,7 @@ void interface_toolkit::worker(
 		}
 
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init_lint(Data, data_size, false, 0);
 		cout << "tally:" << endl;
@@ -2450,7 +2457,7 @@ void interface_toolkit::worker(
 		cout << endl;
 
 
-		data_structures::set_of_sets *SoS;
+		other::data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 		int i;

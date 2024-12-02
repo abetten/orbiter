@@ -59,7 +59,7 @@ int poset_classification_report_options::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_report_options::read_arguments" << endl;
@@ -137,7 +137,7 @@ int poset_classification_report_options::read_arguments(
 			f_draw_options = true;
 			draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_options" << draw_options_label << endl;
+				cout << "-draw_options " << draw_options_label << endl;
 			}
 		}
 
@@ -193,7 +193,7 @@ void poset_classification_report_options::print()
 		cout << "-fname" << fname << endl;
 	}
 	if (f_draw_options) {
-		cout << "-draw_options" << draw_options_label << endl;
+		cout << "-draw_options " << draw_options_label << endl;
 	}
 }
 

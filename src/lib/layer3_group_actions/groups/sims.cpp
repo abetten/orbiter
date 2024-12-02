@@ -16,6 +16,7 @@ namespace groups {
 
 sims::sims()
 {
+	Record_birth();
 	A = NULL;
 	my_base_len = 0;
 
@@ -62,6 +63,7 @@ sims::sims()
 
 sims::~sims()
 {
+	Record_death();
 	int i;
 	int f_v = false;
 	
@@ -568,7 +570,7 @@ void sims::initialize_table(
 		int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	int j;
 	
 	if (f_v) {
@@ -1054,9 +1056,9 @@ int sims::depth_in_stabilizer_chain(
 }
 
 void sims::group_order(
-		ring_theory::longinteger_object &go)
+		algebra::ring_theory::longinteger_object &go)
 {
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	//cout << "sims::group_order before D.multiply_up" << endl;
 	//cout << "A->base_len=" << A->base_len << endl;
@@ -1068,11 +1070,11 @@ void sims::group_order(
 }
 
 void sims::group_order_verbose(
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	
 	if (f_v) {
 		cout << "sims::group_order_verbose" << endl;
@@ -1090,11 +1092,11 @@ void sims::group_order_verbose(
 }
 
 void sims::subgroup_order_verbose(
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		int level, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "sims::subgroup_order_verbose" << endl;
@@ -1113,7 +1115,7 @@ void sims::subgroup_order_verbose(
 
 long int sims::group_order_lint()
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	group_order(go);
 	return go.as_lint();
@@ -1327,7 +1329,7 @@ void sims::element_from_path_inv(
 }
 
 void sims::element_unrank(
-		ring_theory::longinteger_object &a,
+		algebra::ring_theory::longinteger_object &a,
 		int *elt, int verbose_level)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
@@ -1338,8 +1340,8 @@ void sims::element_unrank(
 {
 	int f_v = (verbose_level >= 1);
 	int ii, l, r;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object q;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object q;
 	
 	if (f_v) {
 		cout << "sims::element_unrank rk=" << a << endl;
@@ -1366,7 +1368,7 @@ void sims::element_unrank(
 }
 
 void sims::element_unrank(
-		ring_theory::longinteger_object &a, int *elt)
+		algebra::ring_theory::longinteger_object &a, int *elt)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
 // are enumerated 0, ... go - 1
@@ -1375,8 +1377,8 @@ void sims::element_unrank(
 // The computed group element will be computed into Elt1
 {
 	int ii, l, r;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object q;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object q;
 	
 	for (ii = A->base_len() - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
@@ -1392,13 +1394,13 @@ void sims::element_unrank(
 }
 
 void sims::element_rank(
-		ring_theory::longinteger_object &a, int *elt)
+		algebra::ring_theory::longinteger_object &a, int *elt)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 {
 	long int i, j, bi, jj, l;
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object b, c;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object b, c;
 	
 	A->Group_element->element_move(elt, eltrk1, false);
 	a.zero();
@@ -1475,7 +1477,7 @@ void sims::element_unrank_lint(
 long int sims::element_rank_lint(
 		int *Elt)
 {
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 	
 	element_rank(a, Elt);
 	return a.as_lint();
@@ -1520,7 +1522,7 @@ int sims::is_element_of(
 
 void sims::test_element_rank_unrank()
 {
-	ring_theory::longinteger_object go, a, b;
+	algebra::ring_theory::longinteger_object go, a, b;
 	int i, j, goi;
 	int *elt = NEW_int(A->elt_size_in_int);
 	
@@ -2013,7 +2015,7 @@ void sims::random_schreier_generator(
 		}
 	}
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int i, r1, r2, pt, pt1, pt1b, pt2, pt2_coset;
 	int *gen, gen_idx, nbg;
 
@@ -2442,7 +2444,7 @@ void sims::all_elements(
 		cout << "sims::all_elements" << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i, goi;
 
 	group_order(go);
@@ -2468,7 +2470,7 @@ void sims::all_elements_save_csv(
 {
 
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "sims::all_elements_save_csv" << endl;
@@ -2498,7 +2500,7 @@ void sims::all_elements_export_inversion_graphs(
 {
 
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "sims::all_elements_export_inversion_graphs" << endl;

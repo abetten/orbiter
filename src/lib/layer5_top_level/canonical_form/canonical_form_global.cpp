@@ -21,10 +21,12 @@ namespace canonical_form {
 
 canonical_form_global::canonical_form_global()
 {
+	Record_birth();
 }
 
 canonical_form_global::~canonical_form_global()
 {
+	Record_death();
 }
 
 void canonical_form_global::compute_stabilizer_of_quartic_curve(

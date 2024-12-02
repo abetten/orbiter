@@ -21,6 +21,7 @@ namespace apps_combinatorics {
 
 delandtsheer_doyen_description::delandtsheer_doyen_description()
 {
+	Record_birth();
 #if 0
 	f_depth = false;
 	depth = 0;
@@ -90,6 +91,7 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 
 delandtsheer_doyen_description::~delandtsheer_doyen_description()
 {
+	Record_death();
 	if (row_type) {
 		FREE_int(row_type);
 	}
@@ -107,7 +109,7 @@ int delandtsheer_doyen_description::read_arguments(
 
 
 	int i, j;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "delandtsheer_doyen_description::read_arguments" << endl;

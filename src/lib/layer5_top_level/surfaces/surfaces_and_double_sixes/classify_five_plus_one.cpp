@@ -27,6 +27,7 @@ static void callback_partial_ovoid_test_early(
 
 classify_five_plus_one::classify_five_plus_one()
 {
+	Record_birth();
 	PA = NULL;
 
 	q = 0;
@@ -67,6 +68,7 @@ classify_five_plus_one::classify_five_plus_one()
 
 classify_five_plus_one::~classify_five_plus_one()
 {
+	Record_death();
 	if (Elt0) {
 		FREE_int(Elt0);
 	}
@@ -132,7 +134,7 @@ void classify_five_plus_one::init(
 
 
 
-	Linear_complex = NEW_OBJECT(orthogonal_geometry::linear_complex);
+	Linear_complex = NEW_OBJECT(geometry::orthogonal_geometry::linear_complex);
 
 
 	if (f_v) {
@@ -222,7 +224,7 @@ void classify_five_plus_one::classify_partial_ovoids(
 	int schreier_depth = 10000;
 	int f_use_invariant_subset_if_available = true;
 	int f_debug = false;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 
@@ -276,7 +278,7 @@ int classify_five_plus_one::line_to_neighbor(
 	int f_v = (verbose_level >= 1);
 	int idx;
 	long int point_rk;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_five_plus_one::line_to_neighbor" << endl;
@@ -385,7 +387,7 @@ void classify_five_plus_one::identify_five_plus_one(
 	long int W1[5];
 	long int W2[5];
 	long int N1[5];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_five_plus_one::identify_five_plus_one" << endl;
@@ -476,7 +478,7 @@ void classify_five_plus_one::identify_five_plus_one(
 
 void classify_five_plus_one::report(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options
+		other::graphics::layered_graph_draw_options
 			*draw_options,
 		poset_classification::poset_classification_report_options
 			*Opt,

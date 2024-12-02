@@ -28,6 +28,7 @@ static void place_binary(
 
 wreath_product::wreath_product()
 {
+	Record_birth();
 	M = NULL;
 	A_mtx = NULL;
 	F = NULL;
@@ -92,6 +93,7 @@ wreath_product::wreath_product()
 
 wreath_product::~wreath_product()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -182,14 +184,14 @@ wreath_product::~wreath_product()
 }
 
 void wreath_product::init_tensor_wreath_product(
-		algebra::matrix_group *M,
+		algebra::basic_algebra::matrix_group *M,
 		actions::action *A_mtx, int nb_factors,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	number_theory::number_theory_domain NT;
-	algebra::group_generators_domain GG;
+	algebra::number_theory::number_theory_domain NT;
+	algebra::basic_algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
@@ -322,7 +324,7 @@ void wreath_product::init_tensor_wreath_product(
 	tl_for_component = NEW_int(base_len_in_component);
 
 
-	algebra::group_generators_domain GGD;
+	algebra::basic_algebra::group_generators_domain GGD;
 
 
 	GGD.general_linear_matrix_group_base_and_transversal_length(
@@ -342,7 +344,7 @@ void wreath_product::init_tensor_wreath_product(
 		cout << endl;
 	}
 
-	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
 	Page_storage->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -627,7 +629,7 @@ void wreath_product::element_mult(
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_mult" << endl;
@@ -672,7 +674,7 @@ void wreath_product::element_invert(
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_invert" << endl;
@@ -850,7 +852,7 @@ void wreath_product::element_unpack(
 void wreath_product::put_digit(
 		uchar *elt, int f, int i, int j, int d)
 {
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a;
@@ -872,7 +874,7 @@ void wreath_product::put_digit(
 int wreath_product::get_digit(
 		uchar *elt, int f, int i, int j)
 {
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a, d;
@@ -990,7 +992,7 @@ void wreath_product::element_print_latex(
 		int *Elt, std::ostream &ost)
 {
 	int f;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	ost << "\\left(";
 	for (f = 0; f < nb_factors; f++) {
@@ -1069,7 +1071,7 @@ void wreath_product::make_strong_generators_data(
 	int GL_nb_gens;
 	int h, k, f, g;
 	int *dat;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data" << endl;
@@ -1079,7 +1081,7 @@ void wreath_product::make_strong_generators_data(
 				"before strong_generators_for_general_linear_group" << endl;
 	}
 
-	algebra::group_generators_domain GGD;
+	algebra::basic_algebra::group_generators_domain GGD;
 
 
 	GGD.strong_generators_for_general_linear_group(
@@ -1146,10 +1148,10 @@ void wreath_product::report_rank_one_tensors(
 	verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics::combinatorics_domain Combi;
-	number_theory::number_theory_domain NT;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int *coords;
 	int *Proj;
 	int *projections;
@@ -1338,8 +1340,8 @@ void wreath_product::create_all_rank_one_tensors(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
-	combinatorics::combinatorics_domain Combi;
-	number_theory::number_theory_domain NT;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	algebra::number_theory::number_theory_domain NT;
 	geometry::other_geometry::geometry_global Gg;
 	int *coords;
 	int *Proj;
@@ -1417,7 +1419,7 @@ void wreath_product::create_all_rank_one_tensors(
 	}
 	Lint_vec_copy(rank_one_tensors_in_PG, rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.lint_vec_heapsort(rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
 
@@ -1541,7 +1543,7 @@ void wreath_product::compute_tensor_ranks(
 	std::deque<uint32_t> D;
 	uint32_t a, b, c;
 	long int one_percent;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "wreath_product::compute_tensor_ranks" << endl;
@@ -1746,7 +1748,7 @@ void wreath_product::compute_tensor_ranks(
 			cout << "q == 2 && nb_factors == 5" << endl;
 		}
 
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 
 
 		int N = K.tensor_orbits_nb_reps(nb_factors);
@@ -1791,8 +1793,8 @@ void wreath_product::compute_tensor_ranks(
 			cout << endl;
 		}
 
-		data_structures::tally C;
-		data_structures::set_of_sets *SoS;
+		other::data_structures::tally C;
+		other::data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 
@@ -1818,8 +1820,8 @@ void wreath_product::compute_tensor_ranks(
 				//L[s] = w5_reps[3 * a + 2];
 				Ago[s] = 933120 / L[s];
 			}
-			data_structures::tally C1;
-			data_structures::tally C2;
+			other::data_structures::tally C1;
+			other::data_structures::tally C2;
 
 			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
@@ -1845,7 +1847,7 @@ void wreath_product::compute_tensor_ranks(
 			cout << "q == 2 && nb_factors == 4" << endl;
 		}
 
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 		int N = K.tensor_orbits_nb_reps(nb_factors);
 		int *R;
 		int *L;
@@ -1890,8 +1892,8 @@ void wreath_product::compute_tensor_ranks(
 			cout << endl;
 		}
 
-		data_structures::tally C;
-		data_structures::set_of_sets *SoS;
+		other::data_structures::tally C;
+		other::data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 
@@ -1917,8 +1919,8 @@ void wreath_product::compute_tensor_ranks(
 				//L[s] = w4_reps[3 * a + 2];
 				Ago[s] = 31104 / L[s];
 			}
-			data_structures::tally C1;
-			data_structures::tally C2;
+			other::data_structures::tally C1;
+			other::data_structures::tally C2;
 
 			C1.init(L, SoS->Set_size[t], false, 0);
 			cout << "classification of orbit lengths for tensor rank " << types[t] << ":" << endl;
@@ -2192,9 +2194,9 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		//linalg::Matrix<char> M  (l, mtx_n);
 
-		data_structures::bitmatrix *M;
+		other::data_structures::bitmatrix *M;
 
-		M = NEW_OBJECT(data_structures::bitmatrix);
+		M = NEW_OBJECT(other::data_structures::bitmatrix);
 		M->init(mtx_n, l, 0 /*verbose_level*/);
 
 		if (f_v) {
@@ -2231,9 +2233,9 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		//linalg::Matrix<char> MN (l, mtx_n);
 
-		data_structures::bitmatrix *NM;
+		other::data_structures::bitmatrix *NM;
 
-		NM = NEW_OBJECT(data_structures::bitmatrix);
+		NM = NEW_OBJECT(other::data_structures::bitmatrix);
 		NM->init(mtx_n, l, 0 /*verbose_level*/);
 
 
@@ -2266,7 +2268,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 							"before CPU multiplication" << endl;
 				}
 				int t0, t1, dt;
-				orbiter_kernel_system::os_interface Os;
+				other::orbiter_kernel_system::os_interface Os;
 				t0 = Os.os_ticks();
 				//linalg::cpu_mod_mat_mul_block_AB(M, N[h], MN, W->q);
 				M->mult_int_matrix_from_the_left(
@@ -2434,7 +2436,7 @@ int wreath_product::test_if_file_exists(
 		int nb_factors, int h, int b)
 {
 	std::string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	make_fname(fname, nb_factors, h, b);
 	if (Fio.file_size(fname) > 0) {
@@ -2461,7 +2463,7 @@ void wreath_product::orbits_using_files_and_union_find(
 	long int i, b, h;
 	long int j, r, orbit_idx, rep;
 	long int nb_orbits = 0;
-	data_structures::algorithms Algo;
+	other::data_structures::algorithms Algo;
 
 	//int mtx_n;
 
@@ -2652,7 +2654,7 @@ void wreath_product::orbits_using_files_and_union_find(
 
 	uint32_t *Orbit;
 	int goi;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 	SG->group_order(go);
@@ -2743,8 +2745,8 @@ void wreath_product::orbits_restricted(
 				"orbits_restricted_fname=" << orbits_restricted_fname << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
-	data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
 
 	//int mtx_n;
 	long int *Set;
@@ -2950,7 +2952,7 @@ void wreath_product::orbits_restricted(
 	} // next h
 
 	string fname;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname = orbits_restricted_fname;
 	ST.chop_off_extension(fname);
@@ -2981,8 +2983,8 @@ void wreath_product::orbits_restricted_compute(
 				"orbits_restricted_fname=" << orbits_restricted_fname << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
-	data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::sorting Sorting;
 
 	long int *Set;
 	long int *Set_in_PG;
@@ -3031,7 +3033,7 @@ void wreath_product::orbits_restricted_compute(
 
 
 	string fname;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	int *Perms;
 	int perms_m, perms_n;
@@ -3103,7 +3105,7 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 	groups::schreier *Sch;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int orbit_idx;
 
 	Sch = NEW_OBJECT(groups::schreier);
@@ -3125,7 +3127,7 @@ void wreath_product::orbits_restricted_compute(
 	Sch->print_orbit_lengths_tex(cout);
 	Sch->print_and_list_orbits_tex(cout);
 
-	data_structures::set_of_sets *Orbits;
+	other::data_structures::set_of_sets *Orbits;
 	Sch->orbits_as_set_of_sets(Orbits, verbose_level);
 
 	A->group_order(go);
@@ -3230,7 +3232,7 @@ void wreath_product::orbits_restricted_compute(
 
 
 		groups::sims *derived_group;
-		ring_theory::longinteger_object d_go;
+		algebra::ring_theory::longinteger_object d_go;
 
 		derived_group = NEW_OBJECT(groups::sims);
 

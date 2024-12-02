@@ -20,6 +20,7 @@ namespace induced_actions {
 
 action_on_set_partitions::action_on_set_partitions()
 {
+	Record_birth();
 	nb_set_partitions = 0;
 	universal_set_size = 0;
 	partition_class_size = 0;
@@ -32,6 +33,7 @@ action_on_set_partitions::action_on_set_partitions()
 
 action_on_set_partitions::~action_on_set_partitions()
 {
+	Record_death();
 	if (v1) {
 		FREE_int(v1);
 	}
@@ -86,8 +88,8 @@ long int action_on_set_partitions::compute_image(
 {
 	int f_v = (verbose_level >= 1);
 	int i, b;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_set_partitions::compute_image "

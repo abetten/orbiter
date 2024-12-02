@@ -39,7 +39,7 @@ void sims::subgroup_make_characteristic_vector(
 	if (f_v) {
 		cout << "The characteristic vector of the "
 				"subgroup of order " << go_sub << " is:" << endl;
-		orbiter_kernel_system::Orbiter->Int_vec->print_as_table(cout, C, go, 25);
+		other::orbiter_kernel_system::Orbiter->Int_vec->print_as_table(cout, C, go, 25);
 		}
 	if (f_v) {
 		cout << "sims::subgroup_make_characteristic_vector done" << endl;

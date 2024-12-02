@@ -21,6 +21,7 @@ namespace apps_algebra {
 
 action_on_forms_description::action_on_forms_description()
 {
+	Record_birth();
 
 	f_space = false;
 	//std::string space_label;
@@ -35,6 +36,7 @@ action_on_forms_description::action_on_forms_description()
 
 action_on_forms_description::~action_on_forms_description()
 {
+	Record_death();
 }
 
 
@@ -44,7 +46,7 @@ int action_on_forms_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "action_on_forms_description::read_arguments" << endl;

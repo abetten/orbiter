@@ -21,6 +21,7 @@ namespace isomorph {
 
 representatives::representatives()
 {
+	Record_birth();
 	A = NULL;
 
 	//std::string prefix;
@@ -50,6 +51,7 @@ representatives::representatives()
 
 representatives::~representatives()
 {
+	Record_death();
 	int i;
 	int f_v = true;
 
@@ -151,7 +153,7 @@ void representatives::write_fusion(
 // (i.e., if fusion[i] == i) then the identity element is written.
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
@@ -205,7 +207,7 @@ void representatives::read_fusion(
 {
 	int f_v = (verbose_level >= 1);
 	int a, b, i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::read_fusion nb_objects="
@@ -267,7 +269,7 @@ void representatives::write_representatives_and_stabilizers(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "representatives::write_representatives_and_stabilizers" << endl;
@@ -289,7 +291,7 @@ void representatives::write_representatives_and_stabilizers(
 
 		for (i = 0; i < count; i++) {
 			groups::sims *Stab;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 			data_structures_groups::vector_ge SG;
 
 			Stab = stab[i];
@@ -366,7 +368,7 @@ void representatives::read_representatives_and_stabilizers(
 		}
 		for (i = 0; i < count; i++) {
 			groups::sims *Stab;
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 			data_structures_groups::vector_ge gens;
 
 			stab[i] = NEW_OBJECT(groups::sims);
@@ -457,7 +459,7 @@ void representatives::get_stabilizer(
 	}
 
 
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 
 	Iso->Folding->Reps->stab[idx]->group_order(target_go);
 

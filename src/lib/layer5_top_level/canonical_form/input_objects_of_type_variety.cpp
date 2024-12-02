@@ -21,6 +21,7 @@ namespace canonical_form {
 
 input_objects_of_type_variety::input_objects_of_type_variety()
 {
+	Record_birth();
 	Classifier = NULL;
 
 	//std::string fname_base_out;
@@ -47,6 +48,7 @@ input_objects_of_type_variety::input_objects_of_type_variety()
 
 input_objects_of_type_variety::~input_objects_of_type_variety()
 {
+	Record_death();
 	if (Vo) {
 		int i;
 
@@ -95,7 +97,7 @@ void input_objects_of_type_variety::read_objects_from_list_of_csv_files(
 				Classifier->get_description()->skip_vector_label,
 				skip_vector, skip_sz,
 				0 /* verbose_level */);
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 
 		Sorting.int_vec_heapsort(skip_vector, skip_sz);
 		if (f_v) {
@@ -168,7 +170,7 @@ void input_objects_of_type_variety::init_direct(
 int input_objects_of_type_variety::skip_this_one(
 		int counter)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int idx;
 
 	if (Classifier->get_description()->f_skip) {
@@ -197,7 +199,7 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 		cout << "input_objects_of_type_variety::count_nb_objects_to_test" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	nb_objects_to_test = 0;
 
@@ -208,7 +210,7 @@ void input_objects_of_type_variety::count_nb_objects_to_test(
 			cout << "input_objects_of_type_variety::count_nb_objects_to_test "
 					<< cnt << " / " << Classifier->get_description()->nb_files << endl;
 		}
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 
 		string fname;
@@ -290,11 +292,11 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 		}
 		string fname;
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		fname = ST.printf_d(Classifier->get_description()->fname_mask, file_cnt);
 
-		data_structures::spreadsheet S;
+		other::data_structures::spreadsheet S;
 
 		S.read_spreadsheet(fname, 0 /*verbose_level*/);
 
@@ -425,7 +427,7 @@ void input_objects_of_type_variety::read_input_objects_from_list_of_csv_files(
 
 
 void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
-		data_structures::spreadsheet *S,
+		other::data_structures::spreadsheet *S,
 		int *Carry_through,
 		int nb_carry_through,
 		int file_cnt, int &counter,
@@ -504,7 +506,7 @@ void input_objects_of_type_variety::read_all_varieties_from_spreadsheet(
 }
 
 void input_objects_of_type_variety::find_columns(
-		data_structures::spreadsheet *S,
+		other::data_structures::spreadsheet *S,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -585,7 +587,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 		int row, int counter,
 		int *Carry_through,
 		int nb_carry_trough,
-		data_structures::spreadsheet *S,
+		other::data_structures::spreadsheet *S,
 		variety_object_with_action *&Vo,
 		int verbose_level)
 {
@@ -610,13 +612,13 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 	so = S->get_lint(row + 1, idx_so);
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 
-	algebraic_geometry::variety_description *VD;
+	geometry::algebraic_geometry::variety_description *VD;
 
-	VD = NEW_OBJECT(algebraic_geometry::variety_description);
+	VD = NEW_OBJECT(geometry::algebraic_geometry::variety_description);
 
 
 	VD->f_label_txt = true;

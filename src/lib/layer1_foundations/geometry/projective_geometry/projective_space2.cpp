@@ -33,7 +33,7 @@ int projective_space::is_contained_in_Baer_subline(
 	int sz;
 	int i, idx, a;
 	int ret = true;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::is_contained_in_Baer_subline "
@@ -84,8 +84,8 @@ void projective_space::circle_type_of_line_subset(
 	int idx_set[3];
 	int sz;
 	int i, idx, a, b;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::circle_type_of_line_subset "
@@ -195,7 +195,7 @@ void projective_space::intersection_of_subspace_with_point_set(
 }
 
 void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger(
-	grassmann *G, ring_theory::longinteger_object &rk,
+	grassmann *G, algebra::ring_theory::longinteger_object &rk,
 	long int *set, int set_size,
 	long int *&intersection_set, int &intersection_set_size,
 	int verbose_level)
@@ -242,7 +242,7 @@ void projective_space::plane_intersection_invariant(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	ring_theory::longinteger_object *R;
+	algebra::ring_theory::longinteger_object *R;
 	long int **Pts_on_plane;
 	int *nb_pts_on_plane;
 	int nb_planes_total;
@@ -265,7 +265,7 @@ void projective_space::plane_intersection_invariant(
 				"after plane_intersection_type_fast" << endl;
 	}
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f_second = false;
 
 	C.init(nb_pts_on_plane, nb_planes_total, f_second, 0);
@@ -501,8 +501,8 @@ void projective_space::plane_intersection_type(
 int projective_space::plane_intersections(
 	grassmann *G,
 	long int *set, int set_size,
-	ring_theory::longinteger_object *&R,
-	data_structures::set_of_sets &SoS,
+	algebra::ring_theory::longinteger_object *&R,
+	other::data_structures::set_of_sets &SoS,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -563,7 +563,7 @@ int projective_space::plane_intersections(
 void projective_space::plane_intersection_type_fast(
 	grassmann *G,
 	long int *set, int set_size,
-	ring_theory::longinteger_object *&R,
+	algebra::ring_theory::longinteger_object *&R,
 	long int **&Pts_on_plane, int *&nb_pts_on_plane, int &len,
 	int verbose_level)
 {
@@ -582,10 +582,10 @@ void projective_space::plane_intersection_type_fast(
 	int subset[3];
 	int subset2[3];
 	int subset3[3];
-	ring_theory::longinteger_object plane_rk, aa;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
-	linear_algebra::linear_algebra LA;
+	algebra::ring_theory::longinteger_object plane_rk, aa;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
+	algebra::linear_algebra::linear_algebra LA;
 
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type_fast" << endl;
@@ -614,7 +614,7 @@ void projective_space::plane_intersection_type_fast(
 	}
 
 	// allocate data that is returned:
-	R = NEW_OBJECTS(ring_theory::longinteger_object, N);
+	R = NEW_OBJECTS(algebra::ring_theory::longinteger_object, N);
 	Pts_on_plane = NEW_plint(N);
 	nb_pts_on_plane = NEW_int(N);
 
@@ -827,7 +827,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 	int *Basis;
 	int *Basis_save;
 	int *Coords;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points" << endl;

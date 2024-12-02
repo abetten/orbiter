@@ -23,6 +23,7 @@ namespace canonical_form {
 
 variety_compute_canonical_form::variety_compute_canonical_form()
 {
+	Record_birth();
 	Canonical_form_classifier = NULL;
 
 	Ring_with_action = NULL;
@@ -50,6 +51,7 @@ variety_compute_canonical_form::variety_compute_canonical_form()
 
 variety_compute_canonical_form::~variety_compute_canonical_form()
 {
+	Record_death();
 	if (canonical_equation) {
 		FREE_int(canonical_equation);
 	}
@@ -104,7 +106,7 @@ void variety_compute_canonical_form::init(
 
 	canonical_pts = NEW_lint(Vo->Variety_object->Point_sets->Set_size[0]);
 
-	go_eqn = NEW_OBJECT(ring_theory::longinteger_object);
+	go_eqn = NEW_OBJECT(algebra::ring_theory::longinteger_object);
 
 
 
@@ -179,7 +181,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 	int *alpha; // [Canonical_form_classifier->Output->canonical_labeling_len]
@@ -220,7 +222,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 				"after Variety_stabilizer_compute->compute_canonical_form_of_variety" << endl;
 	}
 
-	ring_theory::longinteger_object set_stab_order;
+	algebra::ring_theory::longinteger_object set_stab_order;
 
 	Variety_stabilizer_compute->Set_stab->group_order(set_stab_order);
 
@@ -243,7 +245,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 
 
 	if (f_v) {
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		gens_stab_of_canonical_equation->group_order(go);
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
@@ -837,7 +839,7 @@ void variety_compute_canonical_form::prepare_csv_entry_one_line_nauty_new(
 		int l;
 
 		// we don't have NO, so we create an empty one here:
-		l1_interfaces::nauty_output NO;
+		other::l1_interfaces::nauty_output NO;
 
 		l = NO.get_output_size(verbose_level);
 		int j;

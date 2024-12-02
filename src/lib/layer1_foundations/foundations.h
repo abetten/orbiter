@@ -250,211 +250,328 @@ namespace orbiter {
 namespace layer1_foundations {
 
 
-
-//! algebraic algorithms, generators for groups, conjugacy classes in the general linear group
+//! algebra, linear algebra, ring theory and number theory
 
 namespace algebra {
 
-	// algebra:
-	class a_domain;
-	class algebra_global;
-	class generators_symplectic_group;
-	class group_generators_domain;
-	class heisenberg;
-	class matrix_group_element;
-	class matrix_group;
-	class module;
-	class null_polarity_generator;
-	class rank_checker;
+	//! basic algebraic algorithms, generators for groups, conjugacy classes in the general linear group
+
+	namespace basic_algebra {
+
+		// algebra:
+		class a_domain;
+		class algebra_global;
+		class generators_symplectic_group;
+		class group_generators_domain;
+		class heisenberg;
+		class matrix_group_element;
+		class matrix_group;
+		class module;
+		class null_polarity_generator;
+		class rank_checker;
+	}
+
+	//! expression parser, used to create an abstract syntax tree (AST) of a well-formed algebraic expression
+
+	namespace expression_parser {
+
+		// expression_parser:
+		class formula_vector;
+		class formula;
+		class symbolic_object_activity_description;
+		class symbolic_object_activity;
+		class symbolic_object_builder_description;
+		class symbolic_object_builder;
+		class syntax_tree_node_terminal;
+		class syntax_tree_node;
+		class syntax_tree;
+		class syntax_tree_latex;
+	}
+
+	//! finite fields, n-th roots, subfields, trace and norm.
+
+	namespace field_theory {
+
+		// finite_fields:
+		class finite_field_activity_description;
+		class finite_field_activity;
+		class finite_field_description;
+		class finite_field_io;
+		class finite_field;
+		class finite_field_implementation_by_tables;
+		class finite_field_implementation_wo_tables;
+		class minimum_polynomial;
+		class norm_tables;
+		class normal_basis;
+		class nth_roots;
+		class related_fields;
+		class square_nonsquare;
+		class subfield_structure;
+	}
+
+	//! linear algebra and representation theory
+
+	namespace linear_algebra {
+
+		// linear_algebra:
+		class gl_class_rep;
+		class gl_classes;
+		class linear_algebra;
+		class matrix_block_data;
+		class representation_theory_domain;
+		class vector_space;
+
+	}
+
+	//! number theory, cyclotomic sets, elliptic curves, number theoretic transform (NTT)
+
+	namespace number_theory {
+
+		// number_theory:
+		class cyclotomic_sets;
+		class elliptic_curve;
+		class number_theoretic_transform;
+		class number_theory_domain;
+
+	}
+
+
+	//! ring theory, including polynomial rings and longinteger arithmetic.
+
+	namespace ring_theory {
+		// ring_theory:
+		class finite_ring;
+		class homogeneous_polynomial_domain;
+		class longinteger_domain;
+		class longinteger_object;
+		class partial_derivative;
+		class polynomial_double_domain;
+		class polynomial_double;
+		class polynomial_ring_activity_description;
+		class polynomial_ring_description;
+		class ring_theory_global;
+		class table_of_irreducible_polynomials;
+		class unipoly_domain;
+
+		typedef ring_theory::longinteger_object *plonginteger_object;
+		typedef void *unipoly_object;
+
+	}
+
 
 }
 
 
-//! cubic surfaces, quartic curves, Schlaefli labelings, Eckardt points,  Del Pezzo surfaces, Clebsch maps
 
-namespace algebraic_geometry {
-
-	class algebraic_geometry_global;
-	class arc_lifting_with_two_lines;
-	class clebsch_map;
-	class cubic_curve;
-	class del_pezzo_surface_of_degree_two_domain;
-	class del_pezzo_surface_of_degree_two_object;
-	class eckardt_point_info;
-	class eckardt_point;
-	class kovalevski_points;
-	class quartic_curve_domain;
-	class quartic_curve_object_properties;
-	class quartic_curve_object;
-	class schlaefli_double_six;
-	class schlaefli_labels;
-	class schlaefli_trihedral_pairs;
-	class schlaefli_tritangent_planes;
-	class schlaefli;
-	class seventytwo_cases;
-	class smooth_surface_object_properties;
-	class surface_domain;
-	class surface_object_properties;
-	class surface_object;
-	class surface_polynomial_domains;
-	class veriety_description;
-	class variety_object;
-	class web_of_cubic_curves;
-
-}
-
-
-//! classification of combinatorial objects using canonical forms and Nauty
-
-namespace canonical_form_classification {
-
-	class any_combinatorial_object;
-	class classification_of_objects_description;
-	class classification_of_objects;
-	class classify_bitvectors;
-	class classify_using_canonical_forms;
-	class data_input_stream_description_element;
-	class data_input_stream_description;
-	class data_input_stream;
-	class encoded_combinatorial_object;
-	class objects_report_options;
-
-}
-
-//! coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
-
-namespace coding_theory {
-
-	// coding_theory:
-	class code_diagram;
-	class coding_theory_domain;
-	class crc_code_description;
-	class crc_codes;
-	class crc_object;
-	class crc_options_description;
-	class create_BCH_code;
-	class create_RS_code;
-	class error_pattern_generator;
-	class error_repository;
-	class ttp_codes;
-
-}
-
-//! combinatorics: boolean functions, combinatorial objects, classification, tactical decompositions, various puzzles
+//! combinatorics: coding theory, graph theory, special functions, combinatorial objects, classification, tactical decompositions, various puzzles
 
 namespace combinatorics {
 
-	// combinatorics:
-	class apn_functions;
-	class boolean_function_domain;
-	class brick_domain;
-	class combinatorics_domain;
-	class decomposition_scheme;
-	class decomposition;
-	class domino_assignment;
-	class domino_change;
-	class geo_parameter;
-	class pentomino_puzzle;
-	class permutations;
-	class polynomial_function_domain;
-	class row_and_col_partition;
-	class tdo_data;
-	class tdo_refinement_description;
-	class tdo_refinement;
-	class tdo_scheme_compute;
-	class tdo_scheme_synthetic;
-	struct solution_file_data;
+
+	//! classification of combinatorial objects using canonical forms and Nauty
+
+	namespace canonical_form_classification {
+
+		class any_combinatorial_object;
+		class classification_of_objects_description;
+		class classification_of_objects;
+		class classify_bitvectors;
+		class classify_using_canonical_forms;
+		class data_input_stream_description_element;
+		class data_input_stream_description;
+		class data_input_stream;
+		class encoded_combinatorial_object;
+		class objects_report_options;
+
+	}
+
+
+	//! coding theory, MacWilliams, weight enumerators, cyclic codes, BCH codes, Reed-Muller codes, etc.
+
+	namespace coding_theory {
+
+		// coding_theory:
+		class code_diagram;
+		class coding_theory_domain;
+		class crc_code_description;
+		class crc_codes;
+		class crc_object;
+		class crc_options_description;
+		class create_BCH_code;
+		class create_RS_code;
+		class error_pattern_generator;
+		class error_repository;
+		class ttp_codes;
+
+	}
+
+
+	//! cryptography: Vigenere, Caesar, RSA, primality tests, elliptic curve, NTRU, square roots modulo n.
+
+	namespace cryptography {
+
+		// cryptography
+		class cryptography_domain;
+
+	}
+
+
+	//! construction and classification of configurations, linear spaces, and designs
+
+	namespace geometry_builder {
+
+		// geometry_builder:
+		class cperm;
+		class decomposition_with_fuse;
+		class gen_geo_conf;
+		class gen_geo;
+		class geometric_backtrack_search;
+		class geometry_builder_description;
+		class geometry_builder;
+		class girth_test;
+		class inc_encoding;
+		class incidence;
+		class iso_type;
+		class test_semicanonical;
+
+	}
+
+
+
+	//! graph theory: constructions, clique finding, drawing
+
+	namespace graph_theory {
+
+		// graph_theory
+		class clique_finder_control;
+		class clique_finder;
+		class colored_graph_cliques;
+		class colored_graph;
+		class graph_layer;
+		class graph_node;
+		class graph_theory_domain;
+		class layered_graph;
+		class rainbow_cliques;
+
+	}
+
+	//! database of mathematical objects
+
+	namespace knowledge_base {
+
+		// knowledge_base:
+		class knowledge_base;
+
+	}
+
+
+
+	//! general combinatorics
+
+	namespace other_combinatorics {
+		class combinatorics_domain;
+	}
+
+	//! combinatorial puzzles
+
+	namespace puzzles {
+
+		class brick_domain;
+		class domino_assignment;
+		class domino_change;
+		class pentomino_puzzle;
+
+	}
+
+	//! Solvers for diophantine systems of equations.
+
+	namespace solvers {
+
+		class diophant_activity_description;
+		class diophant_activity;
+		class diophant_create;
+		class diophant_description;
+		class diophant;
+		class dlx_problem_description;
+		class dlx_solver;
+		struct dlx_node;
+		typedef struct dlx_node *pdlx_node;
+	}
+
+
+
+	//! combinatorics: special functions
+
+	namespace special_functions {
+
+		class apn_functions;
+		class boolean_function_domain;
+		class permutations;
+		class polynomial_function_domain;
+
+	}
+
+	//! tactical decompositions of incidence structures
+
+	namespace tactical_decompositions {
+
+		class decomposition_scheme;
+		class decomposition;
+		class geo_parameter;
+		class row_and_col_partition;
+		class tdo_data;
+		class tdo_refinement_description;
+		class tdo_refinement;
+		class tdo_scheme_compute;
+		class tdo_scheme_synthetic;
+
+		struct solution_file_data;
+
+	}
+
 
 }
 
 
-//! cryptography: Vigenere, Caesar, RSA, primality tests, elliptic curve, NTRU, square roots modulo n.
-
-namespace cryptography {
-
-	// cryptography
-	class cryptography_domain;
-
-}
-
-//! basic data structures used throughout the project
-
-namespace data_structures {
-
-	// data_structures:
-	class algorithms;
-	class ancestry_family;
-	class ancestry_indi;
-	class ancestry_tree;
-	class bitmatrix;
-	class bitvector;
-	class data_file;
-	class data_structures_global;
-	class fancy_set;
-	class int_matrix;
-	class int_vec;
-	class int_vector;
-	class lint_vec;
-	class page_storage;
-	class partitionstack;
-	class set_builder_description;
-	class set_builder;
-	class set_of_sets_lint;
-	class set_of_sets;
-	class sorting;
-	class spreadsheet;
-	class string_tools;
-	class tally_lint;
-	class tally_vector_data;
-	class tally;
-	class vector_hashing;
-
-}
-
-
-//! expression parser, used to create an abstract syntax tree (AST) of a well-formed algebraic expression
-
-namespace expression_parser {
-
-	// expression_parser:
-	class formula_vector;
-	class formula;
-	class symbolic_object_activity_description;
-	class symbolic_object_activity;
-	class symbolic_object_builder_description;
-	class symbolic_object_builder;
-	class syntax_tree_node_terminal;
-	class syntax_tree_node;
-	class syntax_tree;
-	class syntax_tree_latex;
-}
-
-
-//! finite fields, n-th roots, subfields, trace and norm.
-
-namespace field_theory {
-
-	// finite_fields:
-	class finite_field_activity_description;
-	class finite_field_activity;
-	class finite_field_description;
-	class finite_field_io;
-	class finite_field;
-	class finite_field_implementation_by_tables;
-	class finite_field_implementation_wo_tables;
-	class minimum_polynomial;
-	class norm_tables;
-	class normal_basis;
-	class nth_roots;
-	class related_fields;
-	class square_nonsquare;
-	class subfield_structure;
-}
 
 
 //! projective geometry and other finite geometries
 
 namespace geometry {
+
+	//! cubic surfaces, quartic curves, Schlaefli labelings, Eckardt points,  Del Pezzo surfaces, Clebsch maps
+
+	namespace algebraic_geometry {
+
+		class algebraic_geometry_global;
+		class arc_lifting_with_two_lines;
+		class clebsch_map;
+		class cubic_curve;
+		class del_pezzo_surface_of_degree_two_domain;
+		class del_pezzo_surface_of_degree_two_object;
+		class eckardt_point_info;
+		class eckardt_point;
+		class kovalevski_points;
+		class quartic_curve_domain;
+		class quartic_curve_object_properties;
+		class quartic_curve_object;
+		class schlaefli_double_six;
+		class schlaefli_labels;
+		class schlaefli_trihedral_pairs;
+		class schlaefli_tritangent_planes;
+		class schlaefli;
+		class seventytwo_cases;
+		class smooth_surface_object_properties;
+		class surface_domain;
+		class surface_object_properties;
+		class surface_object;
+		class surface_polynomial_domains;
+		class veriety_description;
+		class variety_object;
+		class web_of_cubic_curves;
+
+	}
+
 
 	//! generalized quadrangles, spreads, translation planes
 
@@ -472,6 +589,25 @@ namespace geometry {
 		class W3q;
 
 		}
+
+	//! orthogonal geometry: quadrics, BLT sets
+
+	namespace orthogonal_geometry {
+
+		// orthogonal:
+		class blt_set_domain;
+		class blt_set_invariants;
+		class linear_complex;
+		class orthogonal_global;
+		class orthogonal_group;
+		class orthogonal_indexing;
+		class orthogonal_plane_invariant;
+		class orthogonal;
+		class quadratic_form_list_coding;
+		class quadratic_form;
+		class unusual_model;
+
+	}
 
 	//! other geometries or related topics
 
@@ -514,337 +650,256 @@ namespace geometry {
 
 }
 
-//! construction and classification of configurations, linear spaces, and designs
+//! other things at level 1
 
-namespace geometry_builder {
+namespace other {
 
-	// geometry_builder:
-	class cperm;
-	class decomposition_with_fuse;
-	class gen_geo_conf;
-	class gen_geo;
-	class geometric_backtrack_search;
-	class geometry_builder_description;
-	class geometry_builder;
-	class girth_test;
-	class inc_encoding;
-	class incidence;
-	class iso_type;
-	class test_semicanonical;
+
+	//! basic data structures used throughout the project
+
+	namespace data_structures {
+
+		// data_structures:
+		class algorithms;
+		class ancestry_family;
+		class ancestry_indi;
+		class ancestry_tree;
+		class bitmatrix;
+		class bitvector;
+		class data_file;
+		class data_structures_global;
+		class fancy_set;
+		class int_matrix;
+		class int_vec;
+		class int_vector;
+		class lint_vec;
+		class page_storage;
+		class partitionstack;
+		class set_builder_description;
+		class set_builder;
+		class set_of_sets_lint;
+		class set_of_sets;
+		class sorting;
+		class spreadsheet;
+		class string_tools;
+		class tally_lint;
+		class tally_vector_data;
+		class tally;
+		class vector_hashing;
+
+	}
+
+
+
+	//! graphical output interfaces: 2D graphics (BMP, TikZ, Metapost) and 3D graphics (povray)
+
+	namespace graphics {
+
+		// graphics:
+		class animate;
+		class draw_bitmap_control;
+		class draw_incidence_structure_description;
+		class draw_mod_n_description;
+		class draw_projective_curve_description;
+		class drawable_set_of_objects;
+		class graphical_output;
+		class layered_graph_draw_options;
+		class mp_graphics;
+		class parametric_curve_point;
+		class parametric_curve;
+		class plot_tools;
+		class povray_job_description;
+		class scene_element_of_type_edge;
+		class scene_element_of_type_face;
+		class scene_element_of_type_line;
+		class scene_element_of_type_plane;
+		class scene_element_of_type_point;
+		class scene_element_of_type_surface;
+		class scene;
+		class tree_draw_options;
+		class tree;
+		class tree_node;
+		class video_draw_options;
+		// pointer types
+		typedef tree_node *ptree_node;
+
+	}
+
+
+	//! interface to external software, including to Sajeeb's expression parser
+
+	namespace l1_interfaces {
+
+		class easy_BMP_interface;
+		class eigen_interface;
+		class expression_parser_sajeeb;
+		class gnuplot_interface;
+		class interface_gap_low;
+		class interface_magma_low;
+		class latex_interface;
+		class nauty_interface_for_combo;
+		class nauty_interface;
+		class nauty_output;
+		class povray_interface;
+		class pugixml_interface;
+
+	}
+
+
+
+	//! the Orbiter kernel. It contains functions related to the symbol-table, memory management, os-interface, file-io, latex-interface etc.
+
+	namespace orbiter_kernel_system {
+
+		enum symbol_table_entry_type {
+			t_nothing,
+			t_intvec,
+			t_object,
+			t_string,
+		};
+
+
+		enum symbol_table_object_type {
+
+			// group of ten:
+			t_nothing_object,
+			t_finite_field,
+			t_polynomial_ring,
+			t_any_group,
+			t_linear_group,
+			t_permutation_group,
+			t_modified_group,
+			t_projective_space,
+			t_orthogonal_space,
+			t_BLT_set_classify,
+
+
+			// group of ten:
+			t_spread_classify,
+			t_cubic_surface,
+			t_quartic_curve,
+			t_BLT_set,
+			t_classification_of_cubic_surfaces_with_double_sixes,
+			t_collection,
+			t_geometric_object,
+			t_graph,
+			t_code,
+			t_spread,
+
+			// group of ten:
+			t_translation_plane,
+			t_spread_table,
+			t_packing_classify,
+			t_packing_was,
+			t_packing_was_choose_fixed_points,
+			t_packing_long_orbits,
+			t_graph_classify,
+			t_diophant,
+			t_design,
+			t_design_table,
+
+			// group of ten:
+			t_large_set_was,
+			t_set,
+			t_vector,
+			t_symbolic_object,
+			t_combinatorial_object,
+			t_geometry_builder,
+			t_vector_ge,
+			t_action_on_forms,
+			t_orbits,
+			t_poset_classification_control,
+
+			// group of 8:
+			t_poset_classification_report_options,
+			t_draw_options,
+			t_draw_incidence_structure_options,
+			t_arc_generator_control,
+			t_poset_classification_activity,
+			t_crc_code,
+			t_mapping,
+			t_variety,
+
+		};
+		// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
+
+
+		class activity_output;
+		class create_file_description;
+		class csv_file_support;
+		class file_io;
+		class file_output;
+		class mem_object_registry_entry;
+		class mem_object_registry;
+		class memory_object;
+		class numerics;
+		class orbiter_data_file;
+		class orbiter_session;
+		class orbiter_symbol_table_entry;
+		class orbiter_symbol_table;
+		class os_interface;
+		class override_double;
+		class prepare_frames;
+
+	}
+
+
+
+
+	//! expressions in reverse Polish notation
+
+	namespace polish {
+
+		class function_command;
+		class function_polish_description;
+		class function_polish;
+
+	}
+
+
+
 
 }
 
 
 
-//! graph theory: constructions, clique finding, drawing
-
-namespace graph_theory {
-
-	// graph_theory
-	class clique_finder_control;
-	class clique_finder;
-	class colored_graph_cliques;
-	class colored_graph;
-	class graph_layer;
-	class graph_node;
-	class graph_theory_domain;
-	class layered_graph;
-	class rainbow_cliques;
-
-}
-
-
-//! graphical output interfaces: 2D graphics (BMP, TikZ, Metapost) and 3D graphics (povray)
-
-namespace graphics {
-
-	// graphics:
-	class animate;
-	class draw_bitmap_control;
-	class draw_incidence_structure_description;
-	class draw_mod_n_description;
-	class draw_projective_curve_description;
-	class drawable_set_of_objects;
-	class graphical_output;
-	class layered_graph_draw_options;
-	class mp_graphics;
-	class parametric_curve_point;
-	class parametric_curve;
-	class plot_tools;
-	class povray_job_description;
-	class scene_element_of_type_edge;
-	class scene_element_of_type_face;
-	class scene_element_of_type_line;
-	class scene_element_of_type_plane;
-	class scene_element_of_type_point;
-	class scene_element_of_type_surface;
-	class scene;
-	class tree_draw_options;
-	class tree;
-	class tree_node;
-	class video_draw_options;
-	// pointer types
-	typedef tree_node *ptree_node;
-
-}
-
-
-//! database of mathematical objects
-
-namespace knowledge_base {
-
-	// knowledge_base:
-	class knowledge_base;
-
-}
 
 
 
-//! interface to external software, including to Sajeeb's expression parser
-
-namespace l1_interfaces {
-
-	class easy_BMP_interface;
-	class eigen_interface;
-	class expression_parser_sajeeb;
-	class gnuplot_interface;
-	class interface_gap_low;
-	class interface_magma_low;
-	class latex_interface;
-	class nauty_interface_for_combo;
-	class nauty_interface;
-	class nauty_output;
-	class povray_interface;
-	class pugixml_interface;
-
-}
-
-
-
-//! linear algebra and representation theory
-
-namespace linear_algebra {
-
-	// linear_algebra:
-	class gl_class_rep;
-	class gl_classes;
-	class linear_algebra;
-	class matrix_block_data;
-	class representation_theory_domain;
-	class vector_space;
-
-}
-
-//! number theory, cyclotomic sets, elliptic curves, number theoretic transform (NTT)
-
-namespace number_theory {
-
-	// number_theory:
-	class cyclotomic_sets;
-	class elliptic_curve;
-	class number_theoretic_transform;
-	class number_theory_domain;
-
-}
-
-//! the Orbiter kernel. It contains functions related to the symbol-table, memory management, os-interface, file-io, latex-interface etc.
-
-namespace orbiter_kernel_system {
-
-	enum symbol_table_entry_type {
-		t_nothing,
-		t_intvec,
-		t_object,
-		t_string,
-	};
-
-
-	enum symbol_table_object_type {
-
-		// group of ten:
-		t_nothing_object,
-		t_finite_field,
-		t_polynomial_ring,
-		t_any_group,
-		t_linear_group,
-		t_permutation_group,
-		t_modified_group,
-		t_projective_space,
-		t_orthogonal_space,
-		t_BLT_set_classify,
-
-
-		// group of ten:
-		t_spread_classify,
-		t_cubic_surface,
-		t_quartic_curve,
-		t_BLT_set,
-		t_classification_of_cubic_surfaces_with_double_sixes,
-		t_collection,
-		t_geometric_object,
-		t_graph,
-		t_code,
-		t_spread,
-
-		// group of ten:
-		t_translation_plane,
-		t_spread_table,
-		t_packing_classify,
-		t_packing_was,
-		t_packing_was_choose_fixed_points,
-		t_packing_long_orbits,
-		t_graph_classify,
-		t_diophant,
-		t_design,
-		t_design_table,
-
-		// group of ten:
-		t_large_set_was,
-		t_set,
-		t_vector,
-		t_symbolic_object,
-		t_combinatorial_object,
-		t_geometry_builder,
-		t_vector_ge,
-		t_action_on_forms,
-		t_orbits,
-		t_poset_classification_control,
-
-		// group of 8:
-		t_poset_classification_report_options,
-		t_draw_options,
-		t_draw_incidence_structure_options,
-		t_arc_generator_control,
-		t_poset_classification_activity,
-		t_crc_code,
-		t_mapping,
-		t_variety,
-
-	};
-	// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
-
-
-	class activity_output;
-	class create_file_description;
-	class csv_file_support;
-	class file_io;
-	class file_output;
-	class mem_object_registry_entry;
-	class mem_object_registry;
-	class memory_object;
-	class numerics;
-	class orbiter_data_file;
-	class orbiter_session;
-	class orbiter_symbol_table_entry;
-	class orbiter_symbol_table;
-	class os_interface;
-	class override_double;
-	class prepare_frames;
-
-}
-
-
-//! orthogonal geometry: quadrics, BLT sets
-
-namespace orthogonal_geometry {
-
-	// orthogonal:
-	class blt_set_domain;
-	class blt_set_invariants;
-	class linear_complex;
-	class orthogonal_global;
-	class orthogonal_group;
-	class orthogonal_indexing;
-	class orthogonal_plane_invariant;
-	class orthogonal;
-	class quadratic_form_list_coding;
-	class quadratic_form;
-	class unusual_model;
-
-}
-
-
-//! expressions in reverse Polish notation
-
-namespace polish {
-
-	class function_command;
-	class function_polish_description;
-	class function_polish;
-
-}
-
-
-//! ring theory, including polynomial rings and longinteger arithmetic.
-
-namespace ring_theory {
-	// ring_theory:
-	class finite_ring;
-	class homogeneous_polynomial_domain;
-	class longinteger_domain;
-	class longinteger_object;
-	class partial_derivative;
-	class polynomial_double_domain;
-	class polynomial_double;
-	class polynomial_ring_activity_description;
-	class polynomial_ring_description;
-	class ring_theory_global;
-	class table_of_irreducible_polynomials;
-	class unipoly_domain;
-
-	typedef ring_theory::longinteger_object *plonginteger_object;
-	typedef void *unipoly_object;
-
-}
-
-//! diophantine systems of equations. Solvers Possolve and Dancing Links.
-
-namespace solvers {
-	// solvers
-	class diophant_activity_description;
-	class diophant_activity;
-	class diophant_create;
-	class diophant_description;
-	class diophant;
-	class dlx_problem_description;
-	class dlx_solver;
-	struct dlx_node;
-	typedef struct dlx_node *pdlx_node;
-}
 
 
 
 
 
 #ifdef MEMORY_DEBUG
-#define NEW_int(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, __FILE__, __LINE__)
-#define NEW_int_with_tracking(n, file, line) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, file, line)
-#define NEW_pint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pint(n, __FILE__, __LINE__)
-#define NEW_lint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_lint(n, __FILE__, __LINE__)
-#define NEW_plint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_plint(n, __FILE__, __LINE__)
-#define NEW_ppint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_ppint(n, __FILE__, __LINE__)
-#define NEW_pplint(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pplint(n, __FILE__, __LINE__)
-#define NEW_char(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, __FILE__, __LINE__)
-#define NEW_char_with_tracking(n, file, line) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, file, line)
-#define NEW_uchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_uchar(n, __FILE__, __LINE__)
-#define NEW_pchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pchar(n, __FILE__, __LINE__)
-#define NEW_puchar(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_puchar(n, __FILE__, __LINE__)
-#define NEW_pvoid(n) orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pvoid(n, __FILE__, __LINE__)
-#define NEW_OBJECT(type) (type *)orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECT(new type, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
-#define NEW_OBJECTS(type, n) (type *)orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECTS(new type[n], n, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
-#define FREE_int(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_int(p, __FILE__, __LINE__)
-#define FREE_pint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pint(p, __FILE__, __LINE__)
-#define FREE_lint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_lint(p, __FILE__, __LINE__)
-#define FREE_plint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_plint(p, __FILE__, __LINE__)
-#define FREE_ppint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_ppint(p, __FILE__, __LINE__)
-#define FREE_pplint(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pplint(p, __FILE__, __LINE__)
-#define FREE_char(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_char(p, __FILE__, __LINE__)
-#define FREE_uchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_uchar(p, __FILE__, __LINE__)
-#define FREE_pchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pchar(p, __FILE__, __LINE__)
-#define FREE_puchar(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_puchar(p, __FILE__, __LINE__)
-#define FREE_pvoid(p) orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pvoid(p, __FILE__, __LINE__)
-#define FREE_OBJECT(p) {orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECT(p, __FILE__, __LINE__); delete p;}
-#define FREE_OBJECTS(p) {orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
+#define NEW_int(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, __FILE__, __LINE__)
+#define NEW_int_with_tracking(n, file, line) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_int(n, file, line)
+#define NEW_pint(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pint(n, __FILE__, __LINE__)
+#define NEW_lint(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_lint(n, __FILE__, __LINE__)
+#define NEW_plint(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_plint(n, __FILE__, __LINE__)
+#define NEW_ppint(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_ppint(n, __FILE__, __LINE__)
+#define NEW_pplint(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pplint(n, __FILE__, __LINE__)
+#define NEW_char(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, __FILE__, __LINE__)
+#define NEW_char_with_tracking(n, file, line) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_char(n, file, line)
+#define NEW_uchar(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_uchar(n, __FILE__, __LINE__)
+#define NEW_pchar(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pchar(n, __FILE__, __LINE__)
+#define NEW_puchar(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_puchar(n, __FILE__, __LINE__)
+#define NEW_pvoid(n) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_pvoid(n, __FILE__, __LINE__)
+#define NEW_OBJECT(type) (type *)other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECT(new type, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
+#define NEW_OBJECTS(type, n) (type *)other::orbiter_kernel_system::Orbiter->global_mem_object_registry->allocate_OBJECTS(new type[n], n, (std::size_t) sizeof(type), #type, __FILE__, __LINE__)
+#define FREE_int(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_int(p, __FILE__, __LINE__)
+#define FREE_pint(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pint(p, __FILE__, __LINE__)
+#define FREE_lint(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_lint(p, __FILE__, __LINE__)
+#define FREE_plint(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_plint(p, __FILE__, __LINE__)
+#define FREE_ppint(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_ppint(p, __FILE__, __LINE__)
+#define FREE_pplint(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pplint(p, __FILE__, __LINE__)
+#define FREE_char(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_char(p, __FILE__, __LINE__)
+#define FREE_uchar(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_uchar(p, __FILE__, __LINE__)
+#define FREE_pchar(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pchar(p, __FILE__, __LINE__)
+#define FREE_puchar(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_puchar(p, __FILE__, __LINE__)
+#define FREE_pvoid(p) other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_pvoid(p, __FILE__, __LINE__)
+#define FREE_OBJECT(p) {other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECT(p, __FILE__, __LINE__); delete p;}
+#define FREE_OBJECTS(p) {other::orbiter_kernel_system::Orbiter->global_mem_object_registry->free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
 #else
 #define NEW_int(n) new int[n]
 #define NEW_int_with_tracking(n, file, line) new int[n]
@@ -877,127 +932,130 @@ namespace solvers {
 #endif
 
 
-#define Int_vec_print_as_polynomial_in_algebraic_notation(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(A, B, C)
+#define Int_vec_print_as_polynomial_in_algebraic_notation(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_as_polynomial_in_algebraic_notation(A, B, C)
 
-#define Int_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print(A, B, C)
-#define Int_vec_stl_print(A, B) orbiter_kernel_system::Orbiter->Int_vec->print_stl(A, B)
-#define Lint_vec_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
-#define Lint_vec_stl_print(A, B) orbiter_kernel_system::Orbiter->Lint_vec->print_stl(A, B)
-#define Int_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
-#define Int_vec_stl_print_fully(A, B) orbiter_kernel_system::Orbiter->Int_vec->print_stl_fully(A, B)
-#define Lint_vec_print_fully(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
-#define Lint_vec_stl_print_fully(A, B) orbiter_kernel_system::Orbiter->Lint_vec->print_stl_fully(A, B)
-#define Int_vec_print_bare_fully(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_bare_fully(A, B, C)
+#define Int_vec_print(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print(A, B, C)
+#define Int_vec_stl_print(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->print_stl(A, B)
+#define Lint_vec_print(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->print(A, B, C)
+#define Lint_vec_stl_print(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->print_stl(A, B)
+#define Int_vec_print_fully(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_fully(A, B, C)
+#define Int_vec_stl_print_fully(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->print_stl_fully(A, B)
+#define Lint_vec_print_fully(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->print_fully(A, B, C)
+#define Lint_vec_stl_print_fully(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->print_stl_fully(A, B)
+#define Int_vec_print_bare_fully(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_bare_fully(A, B, C)
 
-#define Int_vec_print_integer_matrix(A,B,C,D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
-#define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
+#define Int_vec_print_integer_matrix(A,B,C,D) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
+#define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
 
-#define Int_vec_copy(from, to, len) orbiter_kernel_system::Orbiter->Int_vec->copy(from, to, len)
-#define Lint_vec_copy(from, to, len) orbiter_kernel_system::Orbiter->Lint_vec->copy(from, to, len)
+#define Int_vec_copy(from, to, len) other::orbiter_kernel_system::Orbiter->Int_vec->copy(from, to, len)
+#define Lint_vec_copy(from, to, len) other::orbiter_kernel_system::Orbiter->Lint_vec->copy(from, to, len)
 
-#define Int_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_to_str(A, B, C)
-#define Lint_vec_print_to_str(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_to_str(A, B, C)
-
-
-#define Int_vec_print_bare_str(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_bare_str(A, B, C)
+#define Int_vec_print_to_str(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_to_str(A, B, C)
+#define Lint_vec_print_to_str(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->print_to_str(A, B, C)
 
 
-#define Int_vec_print_GAP(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_GAP(A, B, C)
-#define Lint_vec_print_GAP(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->print_GAP(A, B, C)
+#define Int_vec_print_bare_str(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_bare_str(A, B, C)
 
 
-#define Int_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print(A, B, C)
-#define Lint_matrix_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(A, B, C)
-
-#define Int_matrix_print_comma_separated(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_comma_separated(A, B, C)
-
-#define Int_matrix_print_nonzero_entries(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_nonzero_entries(A, B, C)
-#define Lint_matrix_print_nonzero_entries(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->matrix_print_nonzero_entries(A, B, C)
-
-#define Int_matrix_print_ost(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(A, B, C, D)
-
-#define Int_matrix_print_bitwise(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)
+#define Int_vec_print_GAP(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_GAP(A, B, C)
+#define Lint_vec_print_GAP(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->print_GAP(A, B, C)
 
 
-#define Int_vec_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
-#define Lint_vec_zero(A, B) orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B)
+#define Int_matrix_print(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print(A, B, C)
+#define Lint_matrix_print(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->matrix_print(A, B, C)
+
+#define Int_matrix_print_comma_separated(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_comma_separated(A, B, C)
+
+#define Int_matrix_print_nonzero_entries(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_nonzero_entries(A, B, C)
+#define Lint_matrix_print_nonzero_entries(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->matrix_print_nonzero_entries(A, B, C)
+
+#define Int_matrix_print_ost(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(A, B, C, D)
+
+#define Int_matrix_print_bitwise(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)
 
 
-#define Int_vec_is_zero(A, B) orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B)
-
-#define Int_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
-#define Lint_vec_scan(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)
+#define Int_vec_zero(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
+#define Lint_vec_zero(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->zero(A, B)
 
 
-#define Int_vec_copy_to_lint(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->copy_to_lint(A, B, C)
-#define Lint_vec_copy_to_int(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->copy_to_int(A, B, C)
+#define Int_vec_is_zero(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->is_zero(A, B)
+
+#define Int_vec_scan(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->scan(A, B, C)
+#define Lint_vec_scan(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->scan(A, B, C)
 
 
-#define Int_vec_print_integer_matrix_in_C_source(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_in_C_source(A, B, C, D)
-
-#define Int_vec_apply_lint(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->apply_lint(A, B, C, D)
-#define Lint_vec_apply(from, through, to, len) orbiter_kernel_system::Orbiter->Lint_vec->apply(from, through, to, len)
+#define Int_vec_copy_to_lint(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->copy_to_lint(A, B, C)
+#define Lint_vec_copy_to_int(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->copy_to_int(A, B, C)
 
 
+#define Int_vec_print_integer_matrix_in_C_source(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_in_C_source(A, B, C, D)
 
-#define Int_vec_one(A, B) orbiter_kernel_system::Orbiter->Int_vec->one(A, B)
-#define Lint_vec_one(A, B) orbiter_kernel_system::Orbiter->Lint_vec->one(A, B)
-
-#define Int_vec_mone(A, B) orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
-#define Lint_vec_mone(A, B) orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)
-
-#define Int_vec_print_Cpp(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(A, B, C)
-
-#define Int_vec_complement(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C)
-#define Int_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C, D)
-
-#define Lint_vec_complement_to(A, B, C, D) orbiter_kernel_system::Orbiter->Lint_vec->complement(A, B, C, D)
-
-#define Int_vec_maximum(v, len) orbiter_kernel_system::Orbiter->Int_vec->maximum(v, len)
-#define Lint_vec_maximum(v, len) orbiter_kernel_system::Orbiter->Lint_vec->maximum(v, len)
-#define Int_vec_minimum(v, len) orbiter_kernel_system::Orbiter->Int_vec->minimum(v, len)
-#define Lint_vec_minimum(v, len) orbiter_kernel_system::Orbiter->Lint_vec->minimum(v, len)
+#define Int_vec_apply_lint(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->apply_lint(A, B, C, D)
+#define Lint_vec_apply(from, through, to, len) other::orbiter_kernel_system::Orbiter->Lint_vec->apply(from, through, to, len)
 
 
-#define Int_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
-#define Lint_vec_set_print(A, B, C) orbiter_kernel_system::Orbiter->Lint_vec->set_print(A, B, C)
+
+#define Int_vec_one(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->one(A, B)
+#define Lint_vec_one(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->one(A, B)
+
+#define Int_vec_mone(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
+#define Lint_vec_mone(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)
+
+#define Int_vec_print_Cpp(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(A, B, C)
+
+#define Int_vec_complement(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C)
+#define Int_vec_complement_to(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C, D)
+
+#define Lint_vec_complement_to(A, B, C, D) other::orbiter_kernel_system::Orbiter->Lint_vec->complement(A, B, C, D)
+
+#define Int_vec_maximum(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->maximum(v, len)
+#define Lint_vec_maximum(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->maximum(v, len)
+#define Int_vec_minimum(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->minimum(v, len)
+#define Lint_vec_minimum(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->minimum(v, len)
 
 
-#define Int_vec_print_classified_str(A, B, C, D) orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(A, B, C, D)
-
-#define Int_vec_distribution(A, B, C, D, E) orbiter_kernel_system::Orbiter->Int_vec->distribution(A, B, C, D, E)
-
-#define Int_vec_find_first_nonzero_entry(A, B) pivot = orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
+#define Int_vec_set_print(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->set_print(A, B, C)
+#define Lint_vec_set_print(A, B, C) other::orbiter_kernel_system::Orbiter->Lint_vec->set_print(A, B, C)
 
 
-#define Int_vec_compare(p, q, len) orbiter_kernel_system::Orbiter->Int_vec->compare(p, q, len)
-#define Lint_vec_compare(p, q, len) orbiter_kernel_system::Orbiter->Lint_vec->compare(p, q, len)
+#define Int_vec_print_classified_str(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->print_classified_str(A, B, C, D)
 
-#define Int_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, len)
-#define Lint_vec_create_string_with_quotes(str, v, len) orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
+#define Int_vec_distribution(A, B, C, D, E) other::orbiter_kernel_system::Orbiter->Int_vec->distribution(A, B, C, D, E)
 
-#define Int_vec_stringify(v, len) orbiter_kernel_system::Orbiter->Int_vec->stringify(v, len)
-#define Lint_vec_stringify(v, len) orbiter_kernel_system::Orbiter->Lint_vec->stringify(v, len)
+#define Int_vec_find_first_nonzero_entry(A, B) pivot = other::orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
 
-#define Get_vector(A) orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
-#define Get_int_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
-#define Get_lint_vector_from_label(A, B, C, D) orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
-#define Get_matrix(label, A, m, n) orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
-#define Get_ring(label) orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
-#define Get_finite_field(label) orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
-#define Get_symbol(label) orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
-#define Find_symbol(label) orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
-#define Get_crc_code(A) orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
-#define Get_projective_space_low_level(A) orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
-#define Get_geometry_builder(A) orbiter_kernel_system::Orbiter->get_geometry_builder(A)
-#define Get_graph(A) orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
-#define Get_draw_options(A) orbiter_kernel_system::Orbiter->get_draw_options(A)
-#define Get_draw_incidence_structure_options(A) orbiter_kernel_system::Orbiter->get_draw_incidence_structure_options(A)
-#define Get_any_group_opaque(A) orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
 
-#define Global_export(ptr, v) orbiter_kernel_system::Orbiter->do_export(ptr, v)
-#define Global_import(v) orbiter_kernel_system::Orbiter->do_import(v)
+#define Int_vec_compare(p, q, len) other::orbiter_kernel_system::Orbiter->Int_vec->compare(p, q, len)
+#define Lint_vec_compare(p, q, len) other::orbiter_kernel_system::Orbiter->Lint_vec->compare(p, q, len)
 
+#define Int_vec_create_string_with_quotes(str, v, len) other::orbiter_kernel_system::Orbiter->Int_vec->create_string_with_quotes(str, v, len)
+#define Lint_vec_create_string_with_quotes(str, v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->create_string_with_quotes(str, v, len)
+
+#define Int_vec_stringify(v, len) other::orbiter_kernel_system::Orbiter->Int_vec->stringify(v, len)
+#define Lint_vec_stringify(v, len) other::orbiter_kernel_system::Orbiter->Lint_vec->stringify(v, len)
+
+#define Get_vector(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_vector(A)
+#define Get_int_vector_from_label(A, B, C, D) other::orbiter_kernel_system::Orbiter->get_int_vector_from_label(A, B, C, D)
+#define Get_lint_vector_from_label(A, B, C, D) other::orbiter_kernel_system::Orbiter->get_lint_vector_from_label(A, B, C, D)
+#define Get_matrix(label, A, m, n) other::orbiter_kernel_system::Orbiter->get_matrix_from_label(label, A, m, n)
+#define Get_ring(label) other::orbiter_kernel_system::Orbiter->get_object_of_type_polynomial_ring(label)
+#define Get_finite_field(label) other::orbiter_kernel_system::Orbiter->get_object_of_type_finite_field(label)
+#define Get_symbol(label) other::orbiter_kernel_system::Orbiter->get_object_of_type_symbolic_object(label)
+#define Find_symbol(label) other::orbiter_kernel_system::Orbiter->find_object_of_type_symbolic_object(label)
+#define Get_crc_code(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_crc_code(A)
+#define Get_projective_space_low_level(A) other::orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
+#define Get_geometry_builder(A) other::orbiter_kernel_system::Orbiter->get_geometry_builder(A)
+#define Get_graph(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
+#define Get_draw_options(A) other::orbiter_kernel_system::Orbiter->get_draw_options(A)
+#define Get_draw_incidence_structure_options(A) other::orbiter_kernel_system::Orbiter->get_draw_incidence_structure_options(A)
+#define Get_any_group_opaque(A) other::orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
+
+#define Global_export(ptr, v) other::orbiter_kernel_system::Orbiter->do_export(ptr, v)
+#define Global_import(v) other::orbiter_kernel_system::Orbiter->do_import(v)
+
+
+#define Record_birth() other::orbiter_kernel_system::Orbiter->record_birth(__func__)
+#define Record_death() other::orbiter_kernel_system::Orbiter->record_death(__func__)
 
 
 
@@ -1081,30 +1139,39 @@ enum CRC_type {
 }}
 
 
-#include "algebra/algebra.h"
-#include "algebraic_geometry/algebraic_geometry.h"
-#include "canonical_form_classification/canonical_form_classification.h"
-#include "coding_theory/coding_theory.h"
-#include "combinatorics/combinatorics.h"
-#include "cryptography/cryptography.h"
-#include "data_structures/data_structures.h"
-#include "expression_parser/expression_parser.h"
-#include "finite_fields/finite_fields.h"
+#include "algebra/basic_algebra/basic_algebra.h"
+#include "algebra/expression_parser/expression_parser.h"
+#include "algebra/finite_fields/finite_fields.h"
+#include "algebra/linear_algebra/linear_algebra.h"
+#include "algebra/number_theory/number_theory.h"
+#include "algebra/ring_theory/ring_theory.h"
+
+#include "combinatorics/canonical_form_classification/canonical_form_classification.h"
+#include "combinatorics/coding_theory/coding_theory.h"
+#include "combinatorics/cryptography/cryptography.h"
+#include "combinatorics/geometry_builder/geometry_builder.h"
+#include "combinatorics/graph_theory/graph_theory.h"
+#include "combinatorics/knowledge_base/knowledge_base.h"
+#include "combinatorics/other_combinatorics/other.h"
+#include "combinatorics/solvers/solvers.h"
+#include "combinatorics/puzzles/puzzles.h"
+#include "combinatorics/special_functions/special_functions.h"
+#include "combinatorics/tactical_decompositions/tactical_decompositions.h"
+
+
+#include "geometry/algebraic_geometry/algebraic_geometry.h"
 #include "geometry/finite_geometries/finite_geometries.h"
+#include "geometry/orthogonal/orthogonal.h"
 #include "geometry/other_geometry/other_geometry.h"
 #include "geometry/projective_geometry/projective_geometry.h"
-#include "geometry_builder/geometry_builder.h"
-#include "graph_theory/graph_theory.h"
-#include "graphics/graphics.h"
-#include "knowledge_base/knowledge_base.h"
-#include "l1_interfaces/l1_interfaces.h"
-#include "linear_algebra/linear_algebra.h"
-#include "number_theory/number_theory.h"
-#include "orbiter_kernel_system/orbiter_kernel_system.h"
-#include "orthogonal/orthogonal.h"
-#include "polish/polish.h"
-#include "ring_theory/ring_theory.h"
-#include "solvers/solvers.h"
+
+
+
+#include "other/data_structures/data_structures.h"
+#include "other/graphics/graphics.h"
+#include "other/l1_interfaces/l1_interfaces.h"
+#include "other/orbiter_kernel_system/orbiter_kernel_system.h"
+#include "other/polish/polish.h"
 
 
 

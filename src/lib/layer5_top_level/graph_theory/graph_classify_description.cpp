@@ -17,6 +17,7 @@ namespace apps_graph_theory {
 
 graph_classify_description::graph_classify_description()
 {
+	Record_birth();
 	f_n = false;
 	f_regular = false;
 
@@ -44,6 +45,7 @@ graph_classify_description::graph_classify_description()
 
 graph_classify_description::~graph_classify_description()
 {
+	Record_death();
 }
 
 int graph_classify_description::read_arguments(
@@ -51,7 +53,7 @@ int graph_classify_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 

@@ -20,6 +20,7 @@ namespace apps_combinatorics {
 
 combinatorial_object_activity_description::combinatorial_object_activity_description()
 {
+	Record_birth();
 	f_save = false;
 
 	f_save_as = false;
@@ -87,6 +88,7 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
 {
+	Record_death();
 }
 
 
@@ -96,7 +98,7 @@ int combinatorial_object_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity_description::read_arguments" << endl;
@@ -172,7 +174,7 @@ int combinatorial_object_activity_description::read_arguments(
 
 			canonical_form_PG_PG_label.assign(argv[++i]);
 
-			Canonical_form_PG_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
+			Canonical_form_PG_Descr = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -192,7 +194,7 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
 
-			Canonical_form_Descr = NEW_OBJECT(canonical_form_classification::classification_of_objects_description);
+			Canonical_form_Descr = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects_description);
 
 			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -207,7 +209,7 @@ int combinatorial_object_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 
-			Objects_report_options = NEW_OBJECT(canonical_form_classification::objects_report_options);
+			Objects_report_options = NEW_OBJECT(combinatorics::canonical_form_classification::objects_report_options);
 			i += Objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
 

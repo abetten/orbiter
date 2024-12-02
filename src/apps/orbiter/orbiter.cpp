@@ -74,7 +74,7 @@ std::string do_orbiter_session(
 	}
 
 
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	string str;
 
 	t0 = Top_level_session.Orbiter_session->t0;

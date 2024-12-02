@@ -240,7 +240,7 @@ public:
 	coding_theoretic_activity_description *Descr;
 
 	int f_has_finite_field;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_has_code;
 	apps_coding_theory::create_code *Code;
@@ -250,7 +250,7 @@ public:
 	~coding_theoretic_activity();
 	void init_field(
 			coding_theoretic_activity_description *Descr,
-			field_theory::finite_field *F,
+			algebra::field_theory::finite_field *F,
 			int verbose_level);
 	void init_code(
 			coding_theoretic_activity_description *Descr,
@@ -259,7 +259,7 @@ public:
 	void perform_activity(
 			int verbose_level);
 	void do_diagram(
-			coding_theory::code_diagram *Diagram,
+			combinatorics::coding_theory::code_diagram *Diagram,
 			int verbose_level);
 
 
@@ -283,7 +283,7 @@ public:
 	std::string code_label;
 
 	int f_crc_options;
-	coding_theory::crc_options_description *Crc_options;
+	combinatorics::coding_theory::crc_options_description *Crc_options;
 
 
 
@@ -426,7 +426,7 @@ public:
 	std::string label_tex;
 
 	int f_field;
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	int f_has_generator_matrix;
 	int *genma; // [k * n]
@@ -438,8 +438,8 @@ public:
 	int nmk;
 	int d;
 
-	coding_theory::create_BCH_code *Create_BCH_code; // if BCH code
-	coding_theory::create_RS_code *Create_RS_code; // if RS code
+	combinatorics::coding_theory::create_BCH_code *Create_BCH_code; // if BCH code
+	combinatorics::coding_theory::create_RS_code *Create_RS_code; // if RS code
 
 
 	create_code();
@@ -474,7 +474,7 @@ public:
 	void make_diagram(
 			int f_embellish, int embellish_radius,
 			int f_metric_balls, int radius_of_metric_ball,
-			coding_theory::code_diagram *&Diagram,
+			combinatorics::coding_theory::code_diagram *&Diagram,
 			int verbose_level);
 	void polynomial_representation_of_boolean_function(
 			int verbose_level);

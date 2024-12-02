@@ -19,6 +19,7 @@ namespace orthogonal_geometry_applications {
 
 orthogonal_space_with_action::orthogonal_space_with_action()
 {
+	Record_birth();
 	Descr = NULL;
 	P = NULL;
 	O = NULL;
@@ -30,6 +31,7 @@ orthogonal_space_with_action::orthogonal_space_with_action()
 
 orthogonal_space_with_action::~orthogonal_space_with_action()
 {
+	Record_death();
 	if (O) {
 		FREE_OBJECT(O);
 	}
@@ -71,7 +73,7 @@ void orthogonal_space_with_action::init(
 				"after P->projective_space_init" << endl;
 	}
 
-	O = NEW_OBJECT(orthogonal_geometry::orthogonal);
+	O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
 
 
 	if (f_v) {
@@ -152,7 +154,7 @@ void orthogonal_space_with_action::init_group(
 		cout << "orthogonal_space_with_action::init_group" << endl;
 	}
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	f_semilinear = true;
 	if (NT.is_prime(Descr->F->q)) {
@@ -220,7 +222,7 @@ void orthogonal_space_with_action::init_group(
 }
 
 void orthogonal_space_with_action::report(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,8 +234,8 @@ void orthogonal_space_with_action::report(
 	{
 		string fname_report;
 		fname_report = O->label_txt + "_report.tex";
-		l1_interfaces::latex_interface L;
-		orbiter_kernel_system::file_io Fio;
+		other::l1_interfaces::latex_interface L;
+		other::orbiter_kernel_system::file_io Fio;
 
 		{
 			ofstream ost(fname_report);
@@ -260,7 +262,7 @@ void orthogonal_space_with_action::report(
 
 void orthogonal_space_with_action::report2(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

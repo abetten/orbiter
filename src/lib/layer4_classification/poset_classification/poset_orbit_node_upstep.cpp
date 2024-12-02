@@ -27,7 +27,7 @@ int poset_orbit_node::apply_isomorphism(
 	int f_v = (verbose_level >= 1);
 	int next_node;
 	long int *set;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism" << endl;
@@ -127,7 +127,7 @@ void poset_orbit_node::install_fusion_node(
 	int f_v = (verbose_level >= 1);
 	//int f_v10 = (verbose_level >= 10);
 	int hdl, cmp;	
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "

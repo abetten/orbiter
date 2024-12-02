@@ -35,6 +35,7 @@ static void classify_trihedral_pairs_early_test_function_type2(
 
 classify_trihedral_pairs::classify_trihedral_pairs()
 {
+	Record_birth();
 	q = 0;
 	F = NULL;
 	A = NULL;
@@ -63,6 +64,7 @@ classify_trihedral_pairs::classify_trihedral_pairs()
 
 classify_trihedral_pairs::~classify_trihedral_pairs()
 {
+	Record_death();
 	if (gens_type1) {
 		FREE_OBJECT(gens_type1);
 	}
@@ -122,7 +124,7 @@ void classify_trihedral_pairs::init(
 	gens_type2->generators_for_stabilizer_of_triangle_in_PGL4(A, 
 		A->G.matrix_grp, verbose_level - 1);
 
-	ring_theory::longinteger_object go1, go2;
+	algebra::ring_theory::longinteger_object go1, go2;
 
 	gens_type1->group_order(go1);
 	gens_type2->group_order(go2);
@@ -295,7 +297,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		gens_type1->group_order(go);
 
 		ost << "The order of the group of type 1 is ";
@@ -307,8 +309,8 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 
 
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object ol, Ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object ol, Ol;
 	Ol.create(0);
 
 	ost << "The group of type 1 has " 
@@ -358,7 +360,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		gens_type2->group_order(go);
 
 		ost << "The order of the group of type 2 is ";
@@ -370,8 +372,8 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 
 
 
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object ol, Ol;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object ol, Ol;
 	Ol.create(0);
 
 	ost << "The group of type 2 has " 
@@ -420,7 +422,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 	long int a, rk; //, idx; //, f_bad, rk0, ;
 	long int Lines[9];
 	long int Lines2[9];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 		
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 "
@@ -596,7 +598,7 @@ void classify_trihedral_pairs::early_test_func_type2(
 	//int M2[12];
 	//int M3[16];
 	//int base_cols[4];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type2 "
@@ -714,7 +716,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	int rk;
 	int size_complement;
 	int c1, c2, c3, c4, a, b, c, d, e, f, lambda, mu, det, det_inv;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "classify_trihedral_pairs::identify_three_planes" << endl;
@@ -895,8 +897,8 @@ void classify_trihedral_pairs::downstep(
 	}
 	for (i = 0; i < nb_orbits_type1; i++) {
 		data_structures_groups::set_and_stabilizer *R;
-		ring_theory::longinteger_object ol;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object ol;
+		algebra::ring_theory::longinteger_object go;
 
 		R = orbits_on_trihedra_type1->get_set_and_stabilizer(
 				3 /* level */,
@@ -934,8 +936,8 @@ void classify_trihedral_pairs::downstep(
 	}
 	for (i = 0; i < nb_orbits_type2; i++) {
 		data_structures_groups::set_and_stabilizer *R;
-		ring_theory::longinteger_object ol;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object ol;
+		algebra::ring_theory::longinteger_object go;
 
 		R = orbits_on_trihedra_type2->get_set_and_stabilizer(
 				3 /* level */, i /* orbit_at_level */,
@@ -1006,7 +1008,7 @@ void classify_trihedral_pairs::upstep(
 	
 	Trihedral_pairs = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	Trihedral_pairs->init(
@@ -1078,7 +1080,7 @@ void classify_trihedral_pairs::upstep(
 
 
 		groups::strong_generators *S;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		

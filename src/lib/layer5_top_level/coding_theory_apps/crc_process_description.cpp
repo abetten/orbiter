@@ -19,6 +19,7 @@ namespace apps_coding_theory {
 
 crc_process_description::crc_process_description()
 {
+	Record_birth();
 	f_code = false;
 	//std::string code_label;
 
@@ -27,6 +28,10 @@ crc_process_description::crc_process_description()
 
 }
 
+crc_process_description::~crc_process_description()
+{
+	Record_death();
+}
 
 int crc_process_description::read_arguments(
 	int argc, std::string *argv,
@@ -34,7 +39,7 @@ int crc_process_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "crc_process_description::read_arguments" << endl;
@@ -52,7 +57,7 @@ int crc_process_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-crc_options") == 0) {
 			f_crc_options = true;
-			Crc_options = NEW_OBJECT(coding_theory::crc_options_description);
+			Crc_options = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 			if (f_v) {
 				cout << "-crc_options" << endl;
 			}

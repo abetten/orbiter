@@ -20,12 +20,14 @@ namespace cubic_surfaces_in_general {
 
 cubic_surface_activity::cubic_surface_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	SC = NULL;
 }
 
 cubic_surface_activity::~cubic_surface_activity()
 {
+	Record_death();
 
 }
 
@@ -62,7 +64,7 @@ void cubic_surface_activity::perform_activity(
 		}
 
 
-		graphics::layered_graph_draw_options *Draw_options;
+		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->report_draw_options_label);
 

@@ -24,6 +24,7 @@ namespace groups {
 
 conjugacy_class_of_elements::conjugacy_class_of_elements()
 {
+	Record_birth();
 
 	Class_data = NULL;
 	idx = 0;
@@ -43,6 +44,7 @@ conjugacy_class_of_elements::conjugacy_class_of_elements()
 
 conjugacy_class_of_elements::~conjugacy_class_of_elements()
 {
+	Record_death();
 	if (nice_gens_N) {
 		FREE_OBJECT(nice_gens_N);
 	}
@@ -78,8 +80,8 @@ void conjugacy_class_of_elements::init(
 
 
 
-	ring_theory::longinteger_object go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_domain D;
 
 	group_G->group_order(go);
 

@@ -22,6 +22,7 @@ namespace set_stabilizer {
 
 substructure_stats_and_selection::substructure_stats_and_selection()
 {
+	Record_birth();
 	//std::string fname_case_out;
 	SubC = NULL;
 	Pts = NULL;
@@ -50,6 +51,7 @@ substructure_stats_and_selection::substructure_stats_and_selection()
 
 substructure_stats_and_selection::~substructure_stats_and_selection()
 {
+	Record_death();
 	if (gens) {
 		FREE_OBJECT(gens);
 	}
@@ -114,7 +116,7 @@ void substructure_stats_and_selection::init(
 
 
 
-	T = NEW_OBJECT(data_structures::tally);
+	T = NEW_OBJECT(other::data_structures::tally);
 
 	T->init(orbit_frequencies, nb_orbits, false, 0);
 
@@ -135,7 +137,7 @@ void substructure_stats_and_selection::init(
 	}
 
 
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	int i, /*f, l,*/ idx;
 	int j;
 
@@ -143,7 +145,7 @@ void substructure_stats_and_selection::init(
 
 	SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
 
-	ring_theory::longinteger_object go_min;
+	algebra::ring_theory::longinteger_object go_min;
 
 
 	selected_type = -1;
@@ -161,7 +163,7 @@ void substructure_stats_and_selection::init(
 
 			idx = SoS->Sets[i][j];
 
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			SubC->PC->get_stabilizer_order(SubC->substructure_size, idx, go);
 

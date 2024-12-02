@@ -1518,7 +1518,7 @@ void discreta_base::load_ascii(istream & f)
 	int a;
 	unsigned int a1, a2;
 	char cc;
-	layer1_foundations::data_structures::string_tools ST;
+	layer1_foundations::other::data_structures::string_tools ST;
 		
 	f.getline(buf, sizeof(buf));
 	p = buf;

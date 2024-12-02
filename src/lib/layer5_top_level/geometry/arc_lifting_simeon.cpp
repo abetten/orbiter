@@ -24,6 +24,7 @@ static void early_test_func_for_arc_callback(long int *S, int len,
 
 arc_lifting_simeon::arc_lifting_simeon()
 {
+	Record_birth();
 	verbose_level = 0;
 	q = 0;
 	d = 0; // largest number of points per line
@@ -52,6 +53,7 @@ arc_lifting_simeon::arc_lifting_simeon()
 
 arc_lifting_simeon::~arc_lifting_simeon()
 {
+	Record_death();
 
 }
 
@@ -78,7 +80,7 @@ void arc_lifting_simeon::init(
 
 	v = NEW_int(n + 1);
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 	F->finite_field_init_small_order(q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
@@ -257,8 +259,8 @@ void arc_lifting_simeon::do_covering_problem(
 	int nb_external_lines;
 	int h, i, j, pi, pj;
 	int nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	original_arc = SaS->data;
 	original_arc_sz = SaS->sz;
@@ -502,7 +504,7 @@ void arc_lifting_simeon::do_covering_problem(
 	FREE_lint(S);
 
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "number of solutions = " << nb_sol << endl;
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;

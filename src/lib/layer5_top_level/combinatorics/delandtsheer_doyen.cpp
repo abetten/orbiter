@@ -29,6 +29,7 @@ static void delandtsheer_doyen_early_test_func_callback(
 
 delandtsheer_doyen::delandtsheer_doyen()
 {
+	Record_birth();
 
 	Descr = NULL;
 
@@ -110,6 +111,7 @@ delandtsheer_doyen::delandtsheer_doyen()
 
 delandtsheer_doyen::~delandtsheer_doyen()
 {
+	Record_death();
 	if (line) {
 		FREE_lint(line);
 	}
@@ -265,11 +267,11 @@ void delandtsheer_doyen::init(
 	Int_vec_zero(col_sum, Ysize);
 
 
-	M1 = NEW_OBJECT(algebra::matrix_group);
-	M2 = NEW_OBJECT(algebra::matrix_group);
+	M1 = NEW_OBJECT(algebra::basic_algebra::matrix_group);
+	M2 = NEW_OBJECT(algebra::basic_algebra::matrix_group);
 
-	F1 = NEW_OBJECT(field_theory::finite_field);
-	F2 = NEW_OBJECT(field_theory::finite_field);
+	F1 = NEW_OBJECT(algebra::field_theory::finite_field);
+	F2 = NEW_OBJECT(algebra::field_theory::finite_field);
 
 
 
@@ -592,7 +594,7 @@ void delandtsheer_doyen::create_starter(
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_starter" << endl;
 	}
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	int t0 = Os.os_ticks();
 
 	if (!Search_control->f_depth) {
@@ -768,7 +770,7 @@ void delandtsheer_doyen::create_graphs(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 #if 0
@@ -967,9 +969,9 @@ void delandtsheer_doyen::create_graph(
 	// create a graph from Adj and save the graph to file.
 	// Then delete the graph and Adj.
 
-	graph_theory::colored_graph *CG;
+	combinatorics::graph_theory::colored_graph *CG;
 
-	CG = NEW_OBJECT(graph_theory::colored_graph);
+	CG = NEW_OBJECT(combinatorics::graph_theory::colored_graph);
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_graph "
 				"before CG->init_from_adjacency_no_colors" << endl;
@@ -1489,7 +1491,7 @@ int delandtsheer_doyen::check_conditions(
 	int f_bad_col = false;
 	int f_bad_mask = false;
 	int pt, idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "delandtsheer_doyen::check_conditions "

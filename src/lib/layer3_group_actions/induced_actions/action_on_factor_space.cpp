@@ -18,6 +18,7 @@ namespace induced_actions {
 
 action_on_factor_space::action_on_factor_space()
 {
+	Record_birth();
 	VS = NULL;
 	subspace_basis = NULL;
 	subspace_basis_size = 0;
@@ -46,6 +47,7 @@ action_on_factor_space::action_on_factor_space()
 
 action_on_factor_space::~action_on_factor_space()
 {
+	Record_death();
 	int f_v = false;
 	int f_vv = false;
 
@@ -134,7 +136,7 @@ action_on_factor_space::~action_on_factor_space()
 }
 
 void action_on_factor_space::init_light(
-		linear_algebra::vector_space *VS,
+		algebra::linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int verbose_level)
@@ -165,7 +167,7 @@ void action_on_factor_space::init_light(
 }
 
 void action_on_factor_space::init_by_rank_table_mode(
-		linear_algebra::vector_space *VS,
+		algebra::linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	long int *point_list, int nb_points,
@@ -318,7 +320,7 @@ void action_on_factor_space::init_coset_table(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_factor_space::init_coset_table" << endl;
@@ -379,7 +381,7 @@ void action_on_factor_space::init_coset_table(
 
 
 void action_on_factor_space::init_by_rank(
-		linear_algebra::vector_space *VS,
+		algebra::linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	long int *subspace_basis_ranks, int subspace_basis_size,
 	int f_compute_tables,
@@ -406,7 +408,7 @@ void action_on_factor_space::init_by_rank(
 }
 
 void action_on_factor_space::init_from_coordinate_vectors(
-		linear_algebra::vector_space *VS,
+		algebra::linear_algebra::vector_space *VS,
 		actions::action &A_base, actions::action &A,
 	int *subspace_basis, int subspace_basis_size,
 	int f_compute_tables, int verbose_level)
@@ -445,7 +447,7 @@ void action_on_factor_space::init2(
 	int f_vv = (verbose_level >= 1);
 	//int f_v8 = (verbose_level >= 8);
 	int i, j, idx, rk;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -941,7 +943,7 @@ void action_on_factor_space::unrank(
 long int action_on_factor_space::rank(
 		int *v, int verbose_level)
 {
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_table_mode) {
 		long int p;

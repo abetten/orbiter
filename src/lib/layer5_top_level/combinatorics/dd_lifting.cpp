@@ -26,6 +26,7 @@ namespace apps_combinatorics {
 
 dd_lifting::dd_lifting()
 {
+	Record_birth();
 	DD = NULL;
 	target_depth = 0;
 	level = 0;
@@ -46,6 +47,7 @@ dd_lifting::dd_lifting()
 
 dd_lifting::~dd_lifting()
 {
+	Record_death();
 	if (ODF) {
 		FREE_OBJECT(ODF);
 	}
@@ -94,7 +96,7 @@ void dd_lifting::perform_lifting(
 		cout << "dd_lifting::perform_lifting starter_file = " << starter_file << endl;
 	}
 
-	ODF = NEW_OBJECT(orbiter_kernel_system::orbiter_data_file);
+	ODF = NEW_OBJECT(other::orbiter_kernel_system::orbiter_data_file);
 
 	if (f_v) {
 		cout << "dd_lifting::perform_lifting "
@@ -284,7 +286,7 @@ void dd_lifting::perform_lifting(
 #if 0
 			int *subset;
 			int nCk, l;
-			combinatorics::combinatorics_domain Combi;
+			combinatorics::other::combinatorics_domain Combi;
 
 			subset = NEW_int(target_depth);
 			nCk = Combi.int_n_choose_k(
@@ -410,7 +412,7 @@ void dd_lifting::search_case_singletons_and_count(
 #if 0
 		int *subset;
 		int nCk, l;
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other::combinatorics_domain Combi;
 
 		subset = NEW_int(target_depth);
 		nCk = Combi.int_n_choose_k(

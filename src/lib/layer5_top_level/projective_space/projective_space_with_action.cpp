@@ -21,6 +21,7 @@ namespace projective_geometry {
 
 projective_space_with_action::projective_space_with_action()
 {
+	Record_birth();
 	Descr = NULL;
 
 	n = 0;
@@ -49,6 +50,7 @@ projective_space_with_action::projective_space_with_action()
 
 projective_space_with_action::~projective_space_with_action()
 {
+	Record_death();
 	if (P) {
 		FREE_OBJECT(P);
 	}
@@ -91,7 +93,7 @@ void projective_space_with_action::init_from_description(
 
 	projective_space_with_action::Descr = Descr;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	if (Descr->f_field_label) {
 
@@ -107,7 +109,7 @@ void projective_space_with_action::init_from_description(
 			cout << "projective_space_with_action::init_from_description "
 					"creating the finite field of order " << q << endl;
 		}
-		F = NEW_OBJECT(field_theory::finite_field);
+		F = NEW_OBJECT(algebra::field_theory::finite_field);
 		F->finite_field_init_small_order(Descr->q,
 				false /* f_without_tables */,
 				true /* f_compute_related_fields */,
@@ -139,7 +141,7 @@ void projective_space_with_action::init_from_description(
 
 	int f_semilinear = true;
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space_with_action::init_from_description, "
@@ -184,7 +186,7 @@ void projective_space_with_action::init_from_description(
 
 
 void projective_space_with_action::init(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int n, int f_semilinear,
 	int f_init_incidence_structure,
 	int verbose_level)
@@ -240,7 +242,7 @@ void projective_space_with_action::init(
 			cout << "projective_space_with_action::init "
 					"n == 2" << endl;
 		}
-		Dom = NEW_OBJECT(algebraic_geometry::quartic_curve_domain);
+		Dom = NEW_OBJECT(geometry::algebraic_geometry::quartic_curve_domain);
 
 		if (f_v) {
 			cout << "projective_space_with_action::init "
@@ -288,9 +290,9 @@ void projective_space_with_action::init(
 					"n == 3, so we initialize a Surf_A object" << endl;
 		}
 
-		algebraic_geometry::surface_domain *Surf;
+		geometry::algebraic_geometry::surface_domain *Surf;
 
-		Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+		Surf = NEW_OBJECT(geometry::algebraic_geometry::surface_domain);
 		if (f_v) {
 			cout << "projective_space_with_action::init "
 					"before Surf->init_surface_domain" << endl;
@@ -423,7 +425,7 @@ void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	//projective_space *P3;
 	int order;
 
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 	order = A->Group_element->element_order(Elt);
 
 	full_group_order.create(order);
@@ -524,7 +526,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 	}
 
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = P->Subspaces->F;
 
@@ -542,7 +544,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 
 		{
 			ofstream ost(fname_tex);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -596,7 +598,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname_tex << " of size "
@@ -657,7 +659,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -686,7 +688,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -705,7 +707,7 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_subgroup(
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label_txt,
 		int *genma, int m, int n,
-		canonical_form_classification::classification_of_objects_description
+		combinatorics::canonical_form_classification::classification_of_objects_description
 			*Canonical_form_codes_Descr,
 		int verbose_level)
 {
@@ -747,7 +749,7 @@ void projective_space_with_action::canonical_form_of_code(
 		cout << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	string points_as_string;
 
 	ST.create_comma_separated_list(points_as_string, set, n);
@@ -756,8 +758,8 @@ void projective_space_with_action::canonical_form_of_code(
 				"points_as_string=" << points_as_string << endl;
 	}
 
-	canonical_form_classification::data_input_stream_description ISD;
-	canonical_form_classification::data_input_stream_description_element E;
+	combinatorics::canonical_form_classification::data_input_stream_description ISD;
+	combinatorics::canonical_form_classification::data_input_stream_description_element E;
 
 	E.init_set_of_points(points_as_string);
 	ISD.Input.push_back(E);
@@ -785,7 +787,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 	COAD.f_report = true;
 	COAD.Objects_report_options =
-			NEW_OBJECT(canonical_form_classification::objects_report_options);
+			NEW_OBJECT(combinatorics::canonical_form_classification::objects_report_options);
 
 	COAD.Objects_report_options->f_export_flag_orbits = true;
 	COAD.Objects_report_options->f_show_incidence_matrices = true;
@@ -810,7 +812,7 @@ void projective_space_with_action::canonical_form_of_code(
 			verbose_level);
 
 
-	orbiter_kernel_system::activity_output *AO;
+	other::orbiter_kernel_system::activity_output *AO;
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code "
@@ -849,7 +851,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 
 void projective_space_with_action::cheat_sheet(
-		graphics::layered_graph_draw_options *O,
+		other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -873,7 +875,7 @@ void projective_space_with_action::cheat_sheet(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -943,7 +945,7 @@ void projective_space_with_action::cheat_sheet(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		if (f_v) {
 			cout << "written file " << fname << " of size "
@@ -962,7 +964,7 @@ void projective_space_with_action::cheat_sheet(
 
 void projective_space_with_action::report(
 		std::ostream &ost,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -984,7 +986,7 @@ void projective_space_with_action::report(
 
 	if (A->f_has_strong_generators) {
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		A->Strong_gens->group_order(go);
 		ost << "Order of the group = " << go << "\\\\" << endl;
@@ -1280,7 +1282,7 @@ void projective_space_with_action::report_fixed_objects(
 		ofstream fp(fname_latex);
 		string title, author, extra_praeamble;
 
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		title = "Fixed Objects";
 		author = "";
@@ -1311,7 +1313,7 @@ void projective_space_with_action::report_fixed_objects(
 
 		L.foot(fp);
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname_latex << " of size "
 			<< Fio.file_size(fname_latex) << endl;

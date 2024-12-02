@@ -21,6 +21,7 @@ namespace groups {
 
 any_group::any_group()
 {
+	Record_birth();
 	f_linear_group = false;
 	LG = NULL;
 
@@ -51,6 +52,7 @@ any_group::any_group()
 
 any_group::~any_group()
 {
+	Record_death();
 	if (Any_group_linear) {
 		FREE_OBJECT(Any_group_linear);
 	}
@@ -279,7 +281,7 @@ void any_group::create_latex_report(
 
 
 void any_group::create_latex_report(
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int f_sylow, int f_group_table, //int f_classes,
 		int verbose_level)
 {
@@ -308,7 +310,7 @@ void any_group::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -393,7 +395,7 @@ void any_group::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -435,7 +437,7 @@ void any_group::export_group_table(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	fname = label + "_group_table.csv";
@@ -466,7 +468,7 @@ void any_group::do_export_orbiter(
 	}
 
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "any_group::do_export_orbiter label=" << label << endl;
@@ -518,7 +520,7 @@ void any_group::do_export_gap(
 	}
 
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = label + "_generators.gap";
 	{
@@ -587,7 +589,7 @@ void any_group::do_export_magma(
 	}
 
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = label + "_generators.magma";
 	{
@@ -620,7 +622,7 @@ void any_group::do_canonical_image_GAP(
 	}
 
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = label + "_canonical_image.gap";
 	{
@@ -709,9 +711,9 @@ void any_group::normalizer(
 	groups::sims *G;
 	groups::sims *H;
 	groups::strong_generators *gens_N;
-	ring_theory::longinteger_object N_order;
-	ring_theory::longinteger_object G_order;
-	ring_theory::longinteger_object H_order;
+	algebra::ring_theory::longinteger_object N_order;
+	algebra::ring_theory::longinteger_object G_order;
+	algebra::ring_theory::longinteger_object H_order;
 
 
 
@@ -769,7 +771,7 @@ void any_group::normalizer(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -803,7 +805,7 @@ void any_group::normalizer(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -977,7 +979,7 @@ void any_group::do_find_subgroups(
 	author.assign("Orbiter");
 	string extras_for_preamble;
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = A->label + "_report.tex";
 
@@ -988,7 +990,7 @@ void any_group::do_find_subgroups(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
 			false /* f_book */, true /* f_title */,
@@ -1044,7 +1046,7 @@ void any_group::print_elements(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i; //, cnt;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -1082,7 +1084,7 @@ void any_group::print_elements_tex(
 		cout << "any_group::print_elements_tex" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	groups::strong_generators *SG;
 
@@ -1096,7 +1098,7 @@ void any_group::print_elements_tex(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -1108,7 +1110,7 @@ void any_group::print_elements_tex(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp,
@@ -1130,7 +1132,7 @@ void any_group::print_elements_tex(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		//L.head_easy(fp);
 
 		//H->print_all_group_elements_tex(fp);
@@ -1176,7 +1178,7 @@ void any_group::order_of_products_of_elements_by_rank(
 	cout << "group order H = " << H->group_order_lint() << endl;
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	H->group_order(go);
@@ -1194,7 +1196,7 @@ void any_group::order_of_products_of_elements_by_rank(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
 		int f_override_action = false;
@@ -1367,7 +1369,7 @@ void any_group::apply_elements_to_set_csv(
 	int *set_image_int;
 	int sz;
 	int *Rk;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other::combinatorics_domain Combi;
 
 
 	Lint_vec_scan(set_text, set, sz);
@@ -1494,7 +1496,7 @@ void any_group::random_element(
 
 	}
 
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 	H->element_rank(a, Elt);
 
 	if (f_v) {
@@ -1502,7 +1504,7 @@ void any_group::random_element(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = elt_label + ".csv";
@@ -1592,7 +1594,7 @@ void any_group::element_rank(
 		cout << endl;
 	}
 
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 	H->element_rank(a, Elt);
 
 	if (f_v) {
@@ -1641,7 +1643,7 @@ void any_group::element_unrank(
 	Elt = NEW_int(A1->elt_size_in_int);
 
 
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 
 	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
 
@@ -1698,7 +1700,7 @@ void any_group::automorphism_by_generator_images_save(
 	Col_headings[3] = "perm";
 
 	int h;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	for (h = 0; h < go; h++) {
 		Table[h * nb_c + 0] = std::to_string(h);
@@ -1709,7 +1711,7 @@ void any_group::automorphism_by_generator_images_save(
 		Table[h * nb_c + 3] = "\"" + Int_vec_stringify(Perms + h * go, go) + "\"";
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	string fname;
 
 	fname = label + "_elements.csv";
@@ -1894,7 +1896,7 @@ void any_group::report_coset_reps(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		L.head_easy(fp);
 
 		//H->print_all_group_elements_tex(fp);
@@ -1939,12 +1941,12 @@ void any_group::print_given_elements_tex(
 		cout << "any_group::print_given_elements_tex" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
 
@@ -1956,7 +1958,7 @@ void any_group::print_given_elements_tex(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);
@@ -2031,7 +2033,7 @@ void any_group::process_given_elements(
 
 
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	//Elt = NEW_int(A->elt_size_in_int);
 
@@ -2043,7 +2045,7 @@ void any_group::process_given_elements(
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		int i, ord;
 
 		L.head_easy(ost);
@@ -2082,7 +2084,7 @@ void any_group::process_given_elements(
 		L.foot(ost);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	cout << "Written file " << fname
 			<< " of size " << Fio.file_size(fname) << endl;
@@ -2187,7 +2189,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 #if 0
 	Fio.Csv_file_support->int_matrix_write_csv(
@@ -2229,7 +2231,7 @@ void any_group::order_of_products_of_pairs(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -2237,7 +2239,7 @@ void any_group::order_of_products_of_pairs(
 	int *Elt2;
 	int *Elt3;
 	int *Order_table;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -2316,7 +2318,7 @@ void any_group::conjugate(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -2326,7 +2328,7 @@ void any_group::conjugate(
 	int *Elt2;
 	int *Elt3;
 	int *Output_table;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	S = NEW_int(A->elt_size_in_int);
 	Sv = NEW_int(A->elt_size_in_int);
@@ -2583,7 +2585,7 @@ void any_group::subgroup_lattice_load(
 }
 
 void any_group::subgroup_lattice_draw(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2597,7 +2599,7 @@ void any_group::subgroup_lattice_draw(
 		exit(1);
 	}
 
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_draw "
@@ -2639,7 +2641,7 @@ void any_group::subgroup_lattice_draw(
 
 
 void any_group::subgroup_lattice_draw_by_orbits(
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2653,7 +2655,7 @@ void any_group::subgroup_lattice_draw_by_orbits(
 		exit(1);
 	}
 
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_draw_by_orbits "

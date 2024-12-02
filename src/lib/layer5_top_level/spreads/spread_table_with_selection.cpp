@@ -23,6 +23,7 @@ static void spread_table_with_selection_swap_func(
 
 spread_table_with_selection::spread_table_with_selection()
 {
+	Record_birth();
 	T = NULL;
 	F = NULL;
 	q = 0;
@@ -58,6 +59,7 @@ spread_table_with_selection::spread_table_with_selection()
 
 spread_table_with_selection::~spread_table_with_selection()
 {
+	Record_death();
 	if (select_spread) {
 		FREE_int(select_spread);
 	}
@@ -102,8 +104,8 @@ void spread_table_with_selection::do_spread_table_init(
 				<< dimension_of_spread_elements << endl;
 	}
 	int n, q;
-	algebra::matrix_group *Mtx;
-	field_theory::finite_field *F;
+	algebra::basic_algebra::matrix_group *Mtx;
+	algebra::field_theory::finite_field *F;
 
 	spreads::spread_classify *Spread_classify;
 
@@ -433,7 +435,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(
 	int *Len;
 	int *isomorphism_type_of_spread;
 	long int *Spread_table;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	nb_spreads = Spread_tables->nb_spreads;
@@ -705,7 +707,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(
 	int f_v = (verbose_level >= 1);
 	int ret = false;
 	int i, a, b;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::test_if_packing_is_self_dual" << endl;
@@ -807,10 +809,10 @@ void spread_table_with_selection::predict_spread_table_length(
 {
 	int f_v = (verbose_level >= 1);
 	int f_do_it, idx, no;
-	ring_theory::longinteger_object go, stab_go;
-	ring_theory::longinteger_domain D;
-	knowledge_base::knowledge_base K;
-	data_structures::sorting Sorting;
+	algebra::ring_theory::longinteger_object go, stab_go;
+	algebra::ring_theory::longinteger_domain D;
+	combinatorics::knowledge_base::knowledge_base K;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::predict_spread_table_length" << endl;
@@ -917,7 +919,7 @@ void spread_table_with_selection::make_spread_table(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int nb_spreads1;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::make_spread_table "
@@ -1173,7 +1175,7 @@ int spread_table_with_selection::is_adjacent(
 		int i, int j)
 {
 	int k;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (i == j) {
 		return false;
@@ -1218,7 +1220,7 @@ static int spread_table_with_selection_compare_func(
 	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
 	long int **Sets = (long int **) data;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	ret = Sorting.lint_vec_compare(Sets[i], Sets[j], S->spread_size);
 	return ret;

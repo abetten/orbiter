@@ -21,6 +21,7 @@ namespace invariant_relations {
 
 orbit_node::orbit_node()
 {
+	Record_birth();
 	C = NULL;
 	orbit_index = 0;
 	flag_orbit_idx = 0;
@@ -30,6 +31,7 @@ orbit_node::orbit_node()
 
 orbit_node::~orbit_node()
 {
+	Record_death();
 }
 
 void orbit_node::init(

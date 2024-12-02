@@ -123,7 +123,7 @@ actions::action *poset_classification::get_A2()
 	return Poset->A2;
 }
 
-linear_algebra::vector_space *poset_classification::get_VS()
+algebra::linear_algebra::vector_space *poset_classification::get_VS()
 {
 	return Poset->VS;
 }
@@ -230,7 +230,7 @@ int poset_classification::poset_structure_is_contained(
 	int f_vv = (verbose_level >= 2);
 	int f_contained;
 	int i, rk1, rk2;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::poset_structure_is_contained" << endl;
@@ -612,16 +612,16 @@ double poset_classification::level_progress(
 
 void poset_classification::count_automorphism_group_orders(
 	int lvl, int &nb_agos,
-	ring_theory::longinteger_object *&agos,
+	algebra::ring_theory::longinteger_object *&agos,
 	int *&multiplicities,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, l, j, c, h, f_added;
-	ring_theory::longinteger_object ago;
-	ring_theory::longinteger_object *tmp_agos;
+	algebra::ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object *tmp_agos;
 	int *tmp_multiplicities;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_domain D;
 	
 	l = nb_orbits_at_level(lvl);
 	if (f_v) {
@@ -645,7 +645,7 @@ void poset_classification::count_automorphism_group_orders(
 				else {
 					tmp_agos = agos;
 					tmp_multiplicities = multiplicities;
-					agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
+					agos = NEW_OBJECTS(algebra::ring_theory::longinteger_object, nb_agos + 1);
 					multiplicities = NEW_int(nb_agos + 1);
 					for (h = 0; h < j; h++) {
 						tmp_agos[h].swap_with(agos[h]);
@@ -671,7 +671,7 @@ void poset_classification::count_automorphism_group_orders(
 			// add at the end (including the case that the list is empty)
 			tmp_agos = agos;
 			tmp_multiplicities = multiplicities;
-			agos = NEW_OBJECTS(ring_theory::longinteger_object, nb_agos + 1);
+			agos = NEW_OBJECTS(algebra::ring_theory::longinteger_object, nb_agos + 1);
 			multiplicities = NEW_int(nb_agos + 1);
 			for (h = 0; h < nb_agos; h++) {
 				tmp_agos[h].swap_with(agos[h]);
@@ -693,11 +693,11 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 {
 
 	int j, nb_agos;
-	ring_theory::longinteger_object *agos;
+	algebra::ring_theory::longinteger_object *agos;
 	int *multiplicities;
 	int N, r, h;
-	ring_theory::longinteger_object S, S1, Q;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object S, S1, Q;
+	algebra::ring_theory::longinteger_domain D;
 	
 	count_automorphism_group_orders(lvl, nb_agos, agos,
 			multiplicities, false);
@@ -736,7 +736,7 @@ void poset_classification::compute_and_print_automorphism_group_orders(
 }
 
 void poset_classification::stabilizer_order(
-		int node, ring_theory::longinteger_object &go)
+		int node, algebra::ring_theory::longinteger_object &go)
 {
 #if 0
 	if (root[node].get_nb_strong_generators()) {
@@ -753,11 +753,11 @@ void poset_classification::stabilizer_order(
 
 void poset_classification::orbit_length(
 		int orbit_at_level,
-		int level, ring_theory::longinteger_object &len)
+		int level, algebra::ring_theory::longinteger_object &len)
 // uses poset_classification::go for the group order
 {
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object stab_order, quo, rem;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object stab_order, quo, rem;
 
 	get_stabilizer_order(level, orbit_at_level, stab_order);
 	D.integral_division(Poset->go, stab_order, len, rem, 0);
@@ -770,12 +770,12 @@ void poset_classification::orbit_length(
 
 void poset_classification::get_orbit_length_and_stabilizer_order(
 		int node,
-		int level, ring_theory::longinteger_object &stab_order,
-		ring_theory::longinteger_object &len)
+		int level, algebra::ring_theory::longinteger_object &stab_order,
+		algebra::ring_theory::longinteger_object &len)
 // uses poset_classification::go for the group order
 {
-	ring_theory::longinteger_domain D;
-	ring_theory::longinteger_object quo, rem;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object quo, rem;
 
 	get_stabilizer_order(level, node, stab_order);
 	D.integral_division(Poset->go, stab_order, len, rem, 0);
@@ -790,7 +790,7 @@ void poset_classification::get_orbit_length_and_stabilizer_order(
 int poset_classification::orbit_length_as_int(
 		int orbit_at_level, int level)
 {
-	ring_theory::longinteger_object len;
+	algebra::ring_theory::longinteger_object len;
 
 	orbit_length(orbit_at_level, level, len);
 	return len.as_int();
@@ -927,7 +927,7 @@ void poset_classification::find_node_by_stabilizer_order(
 {
 	int f_v = (verbose_level >= 1);
 	int nb_nodes, node, i, j, elt_order;
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	long int set[300];
 	
 	if (f_v) {
@@ -1000,7 +1000,7 @@ void poset_classification::get_all_stabilizer_orders_at_level(
 
 void poset_classification::get_stabilizer_order(
 		int level,
-		int orbit_at_level, ring_theory::longinteger_object &go)
+		int orbit_at_level, algebra::ring_theory::longinteger_object &go)
 {
 	poset_orbit_node *O;
 
@@ -1065,7 +1065,7 @@ void poset_classification::get_stabilizer_group(
 			O->hdl_strong_generators, O->tl, false);
 	G->schreier_sims(0);
 #else
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	G = NEW_OBJECT(data_structures_groups::group_container);
 	O->get_stabilizer(
@@ -1259,7 +1259,7 @@ void poset_classification::coset_unrank(
 	long int *the_set;
 	data_structures_groups::group_container *G1, *G2;
 	int *Elt_gk;
-	ring_theory::longinteger_object G_order, U_order;
+	algebra::ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
@@ -1315,7 +1315,7 @@ long int poset_classification::coset_rank(
 	long int *the_set;
 	data_structures_groups::group_container *G1, *G2;
 	int *Elt_gk;
-	ring_theory::longinteger_object G_order, U_order;
+	algebra::ring_theory::longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
@@ -1548,8 +1548,8 @@ void poset_classification::list_whole_orbit(
 	long int *set;
 	int rank, len;
 	groups::strong_generators *Strong_gens;
-	ring_theory::longinteger_object Len, L, go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object Len, L, go;
+	algebra::ring_theory::longinteger_domain D;
 	
 	set = NEW_lint(depth);
 
@@ -1655,8 +1655,8 @@ void poset_classification::get_whole_orbit(
 {
 	int f_v = (verbose_level >= 1);
 	long int rank;
-	ring_theory::longinteger_object Len, L, go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object Len, L, go;
+	algebra::ring_theory::longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::get_whole_orbit" << endl;
@@ -1713,7 +1713,7 @@ void poset_classification::map_to_canonical_k_subset(
 	int *Elt1;
 	int i; //, j, k;
 	int reduced_set_size;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	our_set = NEW_int(set_size);
 	subset = NEW_lint(set_size);
@@ -1854,7 +1854,7 @@ void poset_classification::find_interesting_k_subsets(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::tally *C;
+	other::data_structures::tally *C;
 	int j, t, f, l, l_min, t_min = 0;
 
 	if (f_v) {
@@ -1910,7 +1910,7 @@ void poset_classification::find_interesting_k_subsets(
 
 void poset_classification::classify_k_subsets(
 		long int *the_set, int n, int k,
-		data_structures::tally *&C, int verbose_level)
+		other::data_structures::tally *&C, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -1924,7 +1924,7 @@ void poset_classification::classify_k_subsets(
 	
 	trace_all_k_subsets(the_set, n, k, nCk, isotype, verbose_level);
 	
-	C = NEW_OBJECT(data_structures::tally);
+	C = NEW_OBJECT(other::data_structures::tally);
 
 	C->init(isotype, nCk, false, 0);
 
@@ -1981,7 +1981,7 @@ void poset_classification::trace_all_k_subsets(
 	int *Elt;
 	long int subset_rk, local_idx, i;
 	//int f_implicit_fusion = true;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	nCk = Combi.int_n_choose_k(n, k);
 	if (f_v) {

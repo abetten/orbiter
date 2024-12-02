@@ -21,10 +21,12 @@ namespace cubic_surfaces_in_general {
 
 surface_domain_high_level::surface_domain_high_level()
 {
+	Record_birth();
 }
 
 surface_domain_high_level::~surface_domain_high_level()
 {
+	Record_death();
 }
 
 
@@ -134,7 +136,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 
 
 void surface_domain_high_level::do_study_surface(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -243,7 +245,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 		projective_geometry::projective_space_with_action *PA,
 		poset_classification::poset_classification_control *Control1,
 		poset_classification::poset_classification_control *Control2,
-		graphics::layered_graph_draw_options *Draw_options,
+		other::graphics::layered_graph_draw_options *Draw_options,
 		std::string &Control_six_arcs_label,
 		int f_test_nb_Eckardt_points, int nb_E,
 		int verbose_level)
@@ -320,7 +322,7 @@ void surface_domain_high_level::do_six_arcs(
 		cout << "surface_domain_high_level::do_six_arcs" << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = PA->F;
 
@@ -389,7 +391,7 @@ void surface_domain_high_level::do_six_arcs(
 				"testing the arcs" << endl;
 	}
 
-	ring_theory::longinteger_object ago;
+	algebra::ring_theory::longinteger_object ago;
 	int *Abcd;
 	int *Nb_E;
 	int *Ago;
@@ -446,9 +448,9 @@ void surface_domain_high_level::do_six_arcs(
 		Abcd[h * 4 + 2] = c;
 		Abcd[h * 4 + 3] = d;
 
-		algebraic_geometry::eckardt_point_info *E;
+		geometry::algebraic_geometry::eckardt_point_info *E;
 
-		algebraic_geometry::algebraic_geometry_global Gg;
+		geometry::algebraic_geometry::algebraic_geometry_global Gg;
 
 		E = Gg.compute_eckardt_point_info(
 				PA->Surf_A->Surf->P2, Arc6,
@@ -475,7 +477,7 @@ void surface_domain_high_level::do_six_arcs(
 	}
 #endif
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(Nb_E, nb_orbits, false, 0);
 
@@ -558,16 +560,16 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	}
 
 	int i;
-	field_theory::finite_field *F0;
-	field_theory::finite_field *F;
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	algebra::field_theory::finite_field *F0;
+	algebra::field_theory::finite_field *F;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
 
-	F0 = NEW_OBJECT(field_theory::finite_field);
+	F0 = NEW_OBJECT(algebra::field_theory::finite_field);
 	F0->finite_field_init_small_order(defining_q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
@@ -731,7 +733,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 	string fname_data;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname_data = fname_csv;
 	ST.chop_off_extension(fname_data);
@@ -817,15 +819,15 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		cout << "surface_domain_high_level::do_cubic_surface_properties_analyze" << endl;
 	}
 
-	field_theory::finite_field *F0;
-	field_theory::finite_field *F;
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	algebra::field_theory::finite_field *F0;
+	algebra::field_theory::finite_field *F;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
-	F0 = NEW_OBJECT(field_theory::finite_field);
+	F0 = NEW_OBJECT(algebra::field_theory::finite_field);
 	F0->finite_field_init_small_order(defining_q,
 			false /* f_without_tables */,
 			false /* f_compute_related_fields */,
@@ -879,7 +881,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	}
 
 
-	data_structures::tally T_S;
+	other::data_structures::tally T_S;
 
 	T_S.init_lint(Nb_singular_pts, nb_orbits, false, 0);
 
@@ -888,14 +890,14 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	{
 		string fname_report;
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		fname_report = fname_csv;
 		ST.chop_off_extension(fname_report);
 		fname_report += "_report.tex";
 
-		l1_interfaces::latex_interface L;
-		orbiter_kernel_system::file_io Fio;
+		other::l1_interfaces::latex_interface L;
+		other::orbiter_kernel_system::file_io Fio;
 
 		{
 			ofstream ost(fname_report);
@@ -1020,7 +1022,7 @@ void surface_domain_high_level::report_singular_surfaces(
 		Selected_Nb_lines[h] = Data_S[h].Nb_lines;
 	}
 
-	data_structures::tally T_L;
+	other::data_structures::tally T_L;
 
 	T_L.init_lint(Selected_Nb_lines, nb_S, false, 0);
 
@@ -1094,7 +1096,7 @@ void surface_domain_high_level::report_non_singular_surfaces(
 		cout << h << " : " << Data_NS[h].orbit_idx << " : " << Data_NS[h].Nb_lines << endl;
 	}
 
-	data_structures::tally T_L;
+	other::data_structures::tally T_L;
 
 	T_L.init_lint(Selected_Nb_lines, nb_NS, false, 0);
 
@@ -1119,7 +1121,7 @@ void surface_domain_high_level::report_non_singular_surfaces(
 void surface_domain_high_level::report_surfaces_by_lines(
 		std::ostream &ost,
 		struct cubic_surface_data_set *Data,
-		data_structures::tally &T,
+		other::data_structures::tally &T,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1182,17 +1184,17 @@ struct table_surfaces_field_order {
 	int p;
 	int h;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	projective_geometry::projective_space_with_action *PA;
 
-	algebraic_geometry::surface_domain *Surf;
+	geometry::algebraic_geometry::surface_domain *Surf;
 	surface_with_action *Surf_A;
 
 	int nb_total;
 	int *nb_E;
 
-	data_structures::tally *T_nb_E;
+	other::data_structures::tally *T_nb_E;
 
 
 
@@ -1209,9 +1211,9 @@ void surface_domain_high_level::do_create_surface_reports(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	knowledge_base::knowledge_base K;
-	number_theory::number_theory_domain NT;
-	orbiter_kernel_system::file_io Fio;
+	combinatorics::knowledge_base::knowledge_base K;
+	algebra::number_theory::number_theory_domain NT;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	int *Q;
@@ -1255,7 +1257,7 @@ void surface_domain_high_level::do_create_surface_reports(
 
 
 
-			cmd = orbiter_kernel_system::Orbiter->orbiter_path
+			cmd = other::orbiter_kernel_system::Orbiter->orbiter_path
 					+ "/orbiter.out -v 3 "
 					+ "-define F -finite_field -q " + std::to_string(q) + " "
 					+ "-end "
@@ -1306,12 +1308,12 @@ void surface_domain_high_level::do_create_surface_atlas(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	struct table_surfaces_field_order *T;
@@ -1364,7 +1366,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 		T[cur].Descr->f_special = false;
 #endif
 
-		T[cur].F = NEW_OBJECT(field_theory::finite_field);
+		T[cur].F = NEW_OBJECT(algebra::field_theory::finite_field);
 		T[cur].F->finite_field_init_small_order(q,
 				false /* f_without_tables */,
 				false /* f_compute_related_fields */,
@@ -1397,7 +1399,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 					"before Surf->init" << endl;
 		}
 
-		T[cur].Surf = NEW_OBJECT(algebraic_geometry::surface_domain);
+		T[cur].Surf = NEW_OBJECT(geometry::algebraic_geometry::surface_domain);
 		T[cur].Surf->init_surface_domain(T[cur].F, 0 /*verbose_level - 1*/);
 		if (f_v) {
 			cout << "do_create_surface_atlas after Surf->init_surface_domain" << endl;
@@ -1442,7 +1444,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 			T[cur].nb_E[j] = K.cubic_surface_nb_Eckardt_points(T[cur].q, j);
 		}
 
-		T[cur].T_nb_E = NEW_OBJECT(data_structures::tally);
+		T[cur].T_nb_E = NEW_OBJECT(other::data_structures::tally);
 
 		T[cur].T_nb_E->init(T[cur].nb_E, T[cur].nb_total, false, 0);
 
@@ -1477,7 +1479,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 			title = "ATLAS of Cubic Surfaces";
 			author = "Anton Betten and Fatma Karaoglu";
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 				false /* f_book */,
@@ -1539,7 +1541,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 								fname_report_tex,
 								verbose_level);
 
-						data_structures::string_tools ST;
+						other::data_structures::string_tools ST;
 
 						fname_report_html = fname_report_tex;
 						ST.chop_off_extension(fname_report_html);
@@ -1593,7 +1595,7 @@ void surface_domain_high_level::do_create_surface_atlas(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -1627,12 +1629,12 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 				"q=" << T->q << " " << nb_e << endl;
 	}
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 
-	number_theory::number_theory_domain NT;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::file_io Fio;
+	algebra::number_theory::number_theory_domain NT;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -1652,7 +1654,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 			author.assign("Anton Betten and Fatma Karaoglu");
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -1705,7 +1707,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report_tex << " of size "
 			<< Fio.file_size(fname_report_tex) << endl;
@@ -1726,7 +1728,7 @@ void surface_domain_high_level::do_create_dickson_atlas(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 
@@ -1745,7 +1747,7 @@ void surface_domain_high_level::do_create_dickson_atlas(
 			title = "ATLAS of Dickson Surfaces";
 			author = "Fatma Karaoglu";
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			//latex_head_easy(fp);
 			L.head(ost,
@@ -1834,7 +1836,7 @@ void surface_domain_high_level::do_create_dickson_atlas(
 
 			L.foot(ost);
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "Written file " << fname_report << " of size "
 			<< Fio.file_size(fname_report) << endl;
@@ -1939,7 +1941,7 @@ void surface_domain_high_level::make_table_of_surfaces(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
 			false /* f_book */, true /* f_title */,
@@ -2044,7 +2046,7 @@ void surface_domain_high_level::make_table_of_quartic_curves(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 		//latex_head_easy(fp);
 		L.head(fp,
 			false /* f_book */, true /* f_title */,

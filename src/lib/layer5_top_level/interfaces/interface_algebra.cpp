@@ -20,6 +20,7 @@ namespace user_interface {
 
 interface_algebra::interface_algebra()
 {
+	Record_birth();
 	f_primitive_root = false;
 	//std::string primitive_root_p;
 
@@ -125,12 +126,16 @@ interface_algebra::interface_algebra()
 
 }
 
+interface_algebra::~interface_algebra()
+{
+	Record_death();
+}
 
 void interface_algebra::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-primitive_root") == 0) {
 		cout << "-primitive_root <int : p>" << endl;
@@ -214,7 +219,7 @@ int interface_algebra::recognize_keyword(
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_algebra::recognize_keyword" << endl;
@@ -309,7 +314,7 @@ void interface_algebra::read_arguments(
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_algebra::read_arguments" << endl;
@@ -465,7 +470,7 @@ void interface_algebra::read_arguments(
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		f_draw_mod_n = true;
 		cout << "-draw_mod_n " << endl;
-		Draw_mod_n_description = NEW_OBJECT(graphics::draw_mod_n_description);
+		Draw_mod_n_description = NEW_OBJECT(other::graphics::draw_mod_n_description);
 		i += Draw_mod_n_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -654,7 +659,7 @@ void interface_algebra::worker(
 
 	if (f_discrete_log) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 
 		NT.do_discrete_log(
@@ -663,23 +668,23 @@ void interface_algebra::worker(
 	}
 	else if (f_primitive_root) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		//longinteger_domain D;
-		ring_theory::longinteger_object p;
+		algebra::ring_theory::longinteger_object p;
 
 		p.create_from_base_10_string(primitive_root_p);
 		NT.do_primitive_root_longinteger(p, verbose_level);
 	}
 	else if (f_smallest_primitive_root) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_smallest_primitive_root(smallest_primitive_root_p, verbose_level);
 	}
 	else if (f_smallest_primitive_root_interval) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_smallest_primitive_root_interval(
 				smallest_primitive_root_interval_min,
@@ -687,7 +692,7 @@ void interface_algebra::worker(
 	}
 	else if (f_number_of_primitive_roots_interval) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_number_of_primitive_roots_interval(
 				smallest_primitive_root_interval_min,
@@ -695,23 +700,23 @@ void interface_algebra::worker(
 	}
 	else if (f_inverse_mod) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_inverse_mod(inverse_mod_a, inverse_mod_n, verbose_level);
 	}
 	else if (f_extended_gcd) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_extended_gcd(extended_gcd_a, extended_gcd_b, verbose_level);
 	}
 	else if (f_power_mod) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
-		ring_theory::longinteger_object a;
-		ring_theory::longinteger_object k;
-		ring_theory::longinteger_object n;
+		algebra::ring_theory::longinteger_object a;
+		algebra::ring_theory::longinteger_object k;
+		algebra::ring_theory::longinteger_object n;
 
 		a.create_from_base_10_string(power_mod_a);
 		k.create_from_base_10_string(power_mod_k);
@@ -721,20 +726,20 @@ void interface_algebra::worker(
 	}
 	else if (f_square_root) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.square_root(square_root_number, verbose_level);
 	}
 	else if (f_square_root_mod) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.square_root_mod(square_root_mod_a, square_root_mod_m, verbose_level);
 	}
 
 	else if (f_all_square_roots_mod_n) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 		vector<long int> S;
 		int i;
 
@@ -769,7 +774,7 @@ void interface_algebra::worker(
 
 	else if (f_count_subprimitive) {
 
-		algebra::algebra_global Algebra;
+		algebra::basic_algebra::algebra_global Algebra;
 
 		Algebra.count_subprimitive(
 				count_subprimitive_Q_max,
@@ -788,7 +793,7 @@ void interface_algebra::worker(
 
 	else if (f_order_of_q_mod_n) {
 
-		algebra::algebra_global Algebra;
+		algebra::basic_algebra::algebra_global Algebra;
 
 		Algebra.order_of_q_mod_n(
 				order_of_q_mod_n_q, order_of_q_mod_n_n_min, order_of_q_mod_n_n_max,
@@ -798,7 +803,7 @@ void interface_algebra::worker(
 
 	else if (f_eulerfunction_interval) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_eulerfunction_interval(
 				eulerfunction_interval_n_min, eulerfunction_interval_n_max,
@@ -820,7 +825,7 @@ void interface_algebra::worker(
 	}
 
 	else if (f_draw_mod_n) {
-		graphics::plot_tools PT;
+		other::graphics::plot_tools PT;
 
 
 		PT.draw_mod_n(
@@ -830,7 +835,7 @@ void interface_algebra::worker(
 
 	else if (f_power_function_mod_n) {
 
-		algebra::algebra_global Algebra;
+		algebra::basic_algebra::algebra_global Algebra;
 
 		Algebra.power_function_mod_n(
 				power_function_mod_n_k, power_function_mod_n_n,
@@ -844,7 +849,7 @@ void interface_algebra::worker(
 
 		apps_algebra::algebra_global_with_action Algebra;
 
-		field_theory::finite_field *F;
+		algebra::field_theory::finite_field *F;
 
 		F = Get_finite_field(all_rational_normal_forms_finite_field_label);
 
@@ -862,7 +867,7 @@ void interface_algebra::worker(
 		apps_algebra::algebra_global_with_action Algebra;
 		int *data;
 		int sz;
-		field_theory::finite_field *F;
+		algebra::field_theory::finite_field *F;
 
 
 		F = Get_finite_field(eigenstuff_finite_field_label);
@@ -885,7 +890,7 @@ void interface_algebra::worker(
 			cout << "interface_algebra::worker f_smith_normal_form" << endl;
 		}
 
-		algebra::algebra_global Algebra;
+		algebra::basic_algebra::algebra_global Algebra;
 		int *A;
 		int m, n;
 
@@ -936,7 +941,7 @@ void interface_algebra::worker(
 	}
 	else if (f_jacobi) {
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 
 		NT.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
 	}
@@ -950,7 +955,7 @@ void interface_algebra::worker(
 		Get_vector_or_set(Chinese_remainders_R, R, sz1);
 		Get_vector_or_set(Chinese_remainders_M, M, sz2);
 
-		number_theory::number_theory_domain NT;
+		algebra::number_theory::number_theory_domain NT;
 		std::vector<long int> Remainders;
 		std::vector<long int> Moduli;
 		int i;
@@ -973,8 +978,8 @@ void interface_algebra::worker(
 
 		cout << "The solution is " << x << " modulo " << Modulus << endl;
 
-		ring_theory::longinteger_domain D;
-		ring_theory::longinteger_object xl, Ml;
+		algebra::ring_theory::longinteger_domain D;
+		algebra::ring_theory::longinteger_object xl, Ml;
 
 		D.Chinese_Remainders(
 				Remainders,

@@ -24,7 +24,7 @@ void schreier::latex(
 
 	{
 		ofstream fp(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(fp);
 
@@ -55,7 +55,7 @@ void schreier::print_orbit_lengths(
 	int nb_types;
 	int *type_first;
 	int *type_len;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_classify(
 			nb_orbits, orbit_len, orbit_len_sorted,
@@ -94,7 +94,7 @@ void schreier::print_orbit_lengths_tex(
 	int nb_types;
 	int *type_first;
 	int *type_len;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_classify(
 			nb_orbits, orbit_len, orbit_len_sorted,
@@ -133,7 +133,7 @@ void schreier::print_fixed_points_tex(
 	int nb_types;
 	int *type_first;
 	int *type_len;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_classify(
 			nb_orbits, orbit_len, orbit_len_sorted,
@@ -173,9 +173,9 @@ void schreier::print_orbit_length_distribution(
 {
 	int *val, *mult, len;
 
-	orbiter_kernel_system::Orbiter->Int_vec->distribution(
+	other::orbiter_kernel_system::Orbiter->Int_vec->distribution(
 			orbit_len, nb_orbits, val, mult, len);
-	orbiter_kernel_system::Orbiter->Int_vec->distribution_print(
+	other::orbiter_kernel_system::Orbiter->Int_vec->distribution_print(
 			ost, val, mult, len);
 	ost << endl;
 
@@ -188,9 +188,9 @@ void schreier::print_orbit_length_distribution_to_string(
 {
 	int *val, *mult, len;
 
-	orbiter_kernel_system::Orbiter->Int_vec->distribution(
+	other::orbiter_kernel_system::Orbiter->Int_vec->distribution(
 			orbit_len, nb_orbits, val, mult, len);
-	orbiter_kernel_system::Orbiter->Int_vec->distribution_print_to_string(
+	other::orbiter_kernel_system::Orbiter->Int_vec->distribution_print_to_string(
 			str, val, mult, len);
 
 	FREE_int(val);
@@ -241,7 +241,7 @@ void schreier::print(
 void schreier::print_and_list_orbits_and_stabilizer(
 		std::ostream &ost,
 		actions::action *default_action,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 	void (*print_point)(
 			std::ostream &ost, int pt, void *data),
 	void *data)
@@ -374,11 +374,11 @@ void schreier::print_and_list_all_orbits_and_stabilizers_with_list_of_elements_t
 void schreier::make_orbit_trees(
 		std::ostream &ost,
 		std::string &fname_mask,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "schreier::make_orbit_trees" << endl;
@@ -397,7 +397,7 @@ void schreier::make_orbit_trees(
 		cout << "schreier::make_orbit_trees after draw_forest" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 
@@ -464,7 +464,7 @@ void schreier::print_and_list_orbit_tex(
 void schreier::print_and_list_orbit_and_stabilizer_tex(
 		int i,
 		actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 	std::ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " : ";
@@ -484,7 +484,7 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(
 void schreier::write_orbit_summary(
 		std::string &fname,
 		actions::action *default_action,
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -516,7 +516,7 @@ void schreier::write_orbit_summary(
 
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	long int *Vec[3];
 	string *column_label;
 
@@ -553,7 +553,7 @@ void schreier::get_stabilizer_orbit_rep(
 	strong_generators *gens,
 	strong_generators *&gens_stab)
 {
-	ring_theory::longinteger_object full_group_order;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
 
@@ -568,9 +568,9 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	int i, actions::action *default_action,
 	strong_generators *gens, std::ostream &ost)
 {
-	data_structures::sorting Sorting;
-	l1_interfaces::latex_interface L;
-	ring_theory::longinteger_object full_group_order;
+	other::data_structures::sorting Sorting;
+	other::l1_interfaces::latex_interface L;
+	algebra::ring_theory::longinteger_object full_group_order;
 
 	gens->group_order(full_group_order);
 
@@ -635,7 +635,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
@@ -687,13 +687,13 @@ void schreier::print_and_list_orbits_sorted_by_length(
 void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	std::ostream &ost, int f_tex,
 	actions::action *default_action,
-	ring_theory::longinteger_object &full_group_order)
+	algebra::ring_theory::longinteger_object &full_group_order)
 {
 	int i, h;
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
@@ -751,8 +751,8 @@ void schreier::print_fancy(
 	int *Len;
 	int *Perm;
 	int *Perm_inv;
-	ring_theory::longinteger_object full_group_order;
-	data_structures::sorting Sorting;
+	algebra::ring_theory::longinteger_object full_group_order;
+	other::data_structures::sorting Sorting;
 
 	gens_full_group->group_order(full_group_order);
 	Len = NEW_int(nb_orbits);
@@ -848,9 +848,9 @@ void schreier::print_tables(
 		std::ostream &ost,
 	int f_with_cosetrep)
 {
-    int i;
-    int w; //  j, k;
-    number_theory::number_theory_domain NT;
+	int i;
+	int w; //  j, k;
+	algebra::number_theory::number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;
@@ -859,9 +859,9 @@ void schreier::print_tables(
 		for (j = 0; j < gens.len; j++) {
 			k = A->element_image_of(i, gens.ith(j), false);
 			ost << " : " << k;
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 	ost << endl;
 #endif
 	w = NT.int_log10(A->degree) + 1;
@@ -901,7 +901,7 @@ void schreier::print_tables_latex(
 {
     int i;
     int w; //  j, k;
-    number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 #if 0
 	ost << gens.len << " generators:" << endl;
@@ -1089,10 +1089,10 @@ void schreier::print_orbit_with_original_labels(
 void schreier::print_orbit_tex(
 		std::ostream &ost, int orbit_no)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int i, first, len;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1112,10 +1112,10 @@ void schreier::print_orbit_sorted_tex(
 		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int i, first, len;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1141,7 +1141,7 @@ void schreier::get_orbit_sorted(
 		int *&v, int &len, int orbit_no)
 {
 	int i, first;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1158,11 +1158,11 @@ void schreier::print_orbit_sorted_with_original_labels_tex(
 		std::ostream &ost,
 		int orbit_no, int f_truncate, int max_length)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int i, first, len;
 	long int *v;
 	long int *w;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1197,7 +1197,7 @@ void schreier::print_orbit_using_labels(
 {
 	int i, first, len;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1232,7 +1232,7 @@ void schreier::print_orbit_using_callback(
 void schreier::print_orbit_type(
 		int f_backwards)
 {
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(orbit_len, nb_orbits, false, 0);
 	C.print_bare(f_backwards);
@@ -1267,7 +1267,7 @@ void schreier::print_orbit_through_labels(
 {
 	int i, first, len;
 	long int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -1285,7 +1285,7 @@ void schreier::print_orbit_sorted(
 {
 	int i, len;
 	int *v;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	len = orbit_first[orbit_no + 1] - orbit_first[orbit_no];
 	v = NEW_int(len);
@@ -1358,7 +1358,7 @@ void schreier::print_tree(
 
 void schreier::draw_forest(
 		std::string &fname_mask,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
 {
@@ -1369,7 +1369,7 @@ void schreier::draw_forest(
 		cout << "schreier::draw_forest" << endl;
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 
@@ -1395,7 +1395,7 @@ void schreier::draw_forest(
 
 void schreier::get_orbit_by_levels(
 		int orbit_no,
-		data_structures::set_of_sets *&SoS,
+		other::data_structures::set_of_sets *&SoS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1459,7 +1459,7 @@ void schreier::get_orbit_by_levels(
 		Node[l][Nb1[l]] = j;
 		Nb1[l]++;
 	}
-	SoS = NEW_OBJECT(data_structures::set_of_sets);
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	SoS->init_basic_with_Sz_in_int(
 			A->degree /* underlying_set_size */,
@@ -1498,7 +1498,7 @@ void schreier::export_tree_as_layered_graph_and_save(
 
 
 
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph_and_save "
@@ -1516,7 +1516,7 @@ void schreier::export_tree_as_layered_graph_and_save(
 	}
 
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 
@@ -1555,7 +1555,7 @@ void schreier::export_tree_as_layered_graph_and_save(
 
 void schreier::export_tree_as_layered_graph(
 		int orbit_no,
-		graph_theory::layered_graph *&LG,
+		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1570,7 +1570,7 @@ void schreier::export_tree_as_layered_graph(
 				"nb_gen = " << gens.len << endl;
 	}
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
@@ -1868,7 +1868,7 @@ void schreier::export_tree_as_layered_graph(
 
 void schreier::draw_tree(
 		std::string &fname,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int orbit_no,
 		int f_has_point_labels, long int *point_labels,
 		int verbose_level)
@@ -1972,7 +1972,7 @@ static void calc_y_coordinate(
 
 void schreier::draw_tree2(
 		std::string &fname,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::layered_graph_draw_options *Opt,
 		int *weight, int *placement_x,
 		int max_depth,
 		int i,
@@ -1996,7 +1996,7 @@ void schreier::draw_tree2(
 		cout << "schreier::draw_tree2 before creating G" << endl;
 	}
 
-	graphics::mp_graphics G;
+	other::graphics::mp_graphics G;
 
 	G.init(fname_full, Opt, verbose_level - 1);
 
@@ -2085,8 +2085,8 @@ void schreier::draw_tree2(
 }
 
 void schreier::subtree_draw_lines(
-		graphics::mp_graphics &G,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::mp_graphics &G,
+		other::graphics::layered_graph_draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int y_max,
@@ -2156,8 +2156,8 @@ void schreier::subtree_draw_lines(
 }
 
 void schreier::subtree_draw_vertices(
-		graphics::mp_graphics &G,
-		graphics::layered_graph_draw_options *Opt,
+		other::graphics::mp_graphics &G,
+		other::graphics::layered_graph_draw_options *Opt,
 		int parent_x, int parent_y, int *weight,
 		int *placement_x, int max_depth, int i, int last,
 		int f_has_point_labels, long int *point_labels,
@@ -2313,7 +2313,7 @@ void schreier::write_to_file_csv(
 	if (f_v) {
 		cout << "schreier::write_to_file_csv" << endl;
 	}
-	data_structures::spreadsheet S;
+	other::data_structures::spreadsheet S;
 
 	int nb_rows;
 	int nb_cols;
@@ -2361,7 +2361,7 @@ void schreier::write_to_file_csv(
 
 	}
 	S.save(fname_csv, 0/* verbose_level*/);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname_csv
@@ -2427,7 +2427,7 @@ void schreier::read_from_file_binary(
 {
 	int f_v = (verbose_level >= 1);
 	int i, deg, dummy, a, version;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schreier::read_from_file_binary" << endl;
@@ -2489,7 +2489,7 @@ void schreier::write_file_binary(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::write_file_binary" << endl;
@@ -2510,7 +2510,7 @@ void schreier::read_file_binary(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "schreier::read_file_binary reading file "

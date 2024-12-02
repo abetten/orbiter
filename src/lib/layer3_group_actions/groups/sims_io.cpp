@@ -31,11 +31,11 @@ void sims::create_group_tree(
 		cout << "sims::create_group_tree" << endl;
 	}
 	long int i, j, h, go, l;
-	ring_theory::longinteger_object Go;
+	algebra::ring_theory::longinteger_object Go;
 	int *Elt;
 	int *Elt2;
 	int *Fst;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -377,7 +377,7 @@ void sims::print_generator_depth_and_perm()
 void sims::print_group_order(
 		std::ostream &ost)
 {
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_order(go);
 	cout << go;
 }
@@ -427,9 +427,9 @@ void sims::write_all_group_elements(
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	//char *elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	//elt = NEW_char(A->coded_elt_size_in_char);
@@ -458,9 +458,9 @@ void sims::print_all_group_elements_to_file(
 {
 	int f_v = (verbose_level >= 1);
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
@@ -485,7 +485,7 @@ void sims::print_all_group_elements_to_file(
 void sims::print_all_group_elements()
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -509,7 +509,7 @@ void sims::print_all_group_elements_tex(
 		int f_override_action, actions::action *A_special)
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i, ord;
 	long int goi;
 	int *Order;
@@ -546,7 +546,7 @@ void sims::print_all_group_elements_tex(
 		Order[i] = ord;
 	}
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(Order, goi, false, 0 /*verbose_level*/);
 
@@ -565,7 +565,7 @@ void sims::print_all_group_elements_tree(
 		std::ostream &ost)
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
 	int j;
 	int offset = 1;
@@ -617,7 +617,7 @@ void sims::print_all_group_elements_with_permutations_tex(
 		std::ostream &ost)
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i, ord;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -648,7 +648,7 @@ void sims::print_all_group_elements_with_permutations_tex(
 void sims::print_all_group_elements_as_permutations()
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -670,7 +670,7 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 		actions::action *A_special)
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int i;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -691,7 +691,7 @@ void sims::print_all_group_elements_as_permutations_in_special_action(
 void sims::print_all_transversal_elements()
 {
 	int *Elt;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int i, j, ii;
 
 	Elt = NEW_int(A->elt_size_in_int);
@@ -730,8 +730,8 @@ void sims::save_list_of_elements(
 	int f_v = (verbose_level >= 1);
 	int *Elt1;
 	long int goi, i;
-	ring_theory::longinteger_object go;
-	orbiter_kernel_system::file_io Fio;
+	algebra::ring_theory::longinteger_object go;
+	other::orbiter_kernel_system::file_io Fio;
 
 	group_order(go);
 	goi = go.as_lint();
@@ -769,7 +769,7 @@ void sims::read_list_of_elements(
 	int f_v = (verbose_level >= 1);
 	int *Elt1, *Elt2;
 	int goi, i;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	goi = Fio.file_size(fname) / A->coded_elt_size_in_char;
 	if (f_v) {
@@ -806,7 +806,7 @@ void sims::read_list_of_elements(
 void sims::report(
 		std::ostream &ost,
 		std::string &prefix,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -836,7 +836,7 @@ void sims::report(
 
 
 
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		subgroup_order_verbose(go, i, false /*verbose_level*/);
 		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
@@ -888,7 +888,7 @@ void sims::report(
 void sims::report_basic_orbit(
 		std::ostream &ost,
 		std::string &prefix,
-		graphics::layered_graph_draw_options *LG_Draw_options,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int orbit_idx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -897,14 +897,14 @@ void sims::report_basic_orbit(
 		cout << "sims::report_basic_orbit orbit_idx = " << orbit_idx << endl;
 	}
 
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 	string fname_base;
 
 	fname_base = prefix + "_sims_" + std::to_string(orbit_idx);
 
 	{
-		graph_theory::layered_graph *LG;
+		combinatorics::graph_theory::layered_graph *LG;
 
 		if (f_v) {
 			cout << "sims::report_basic_orbit "
@@ -980,7 +980,7 @@ void sims::report_basic_orbit(
 		Orbit_elements[i] = Orb[i];
 	}
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(Orbit_elements, Orb.size());
 

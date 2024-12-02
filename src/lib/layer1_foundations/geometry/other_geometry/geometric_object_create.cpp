@@ -22,6 +22,7 @@ namespace other_geometry {
 
 geometric_object_create::geometric_object_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	nb_pts = 0;
@@ -34,6 +35,7 @@ geometric_object_create::geometric_object_create()
 
 geometric_object_create::~geometric_object_create()
 {
+	Record_death();
 	if (Pts) {
 		FREE_lint(Pts);
 	}
@@ -45,7 +47,7 @@ void geometric_object_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -54,7 +56,7 @@ void geometric_object_create::init(
 	Descr->P = P;
 	geometric_object_create::Descr = Descr;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = P->Subspaces->F;
 
@@ -154,7 +156,7 @@ void geometric_object_create::init(
 		if (f_v) {
 			cout << "geometric_object_create::init f_BLT_database" << endl;
 		}
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 		orthogonal_geometry::quadratic_form *Quadratic_form;
 
 		Quadratic_form = NEW_OBJECT(orthogonal_geometry::quadratic_form);
@@ -190,7 +192,7 @@ void geometric_object_create::init(
 	}
 	else if (Descr->f_BLT_database_embedded) {
 
-		knowledge_base::knowledge_base K;
+		combinatorics::knowledge_base::knowledge_base K;
 
 		orthogonal_geometry::quadratic_form *Quadratic_form;
 
@@ -577,7 +579,7 @@ void geometric_object_create::init(
 	else if (Descr->f_projective_variety) {
 
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->projective_variety_ring_label);
@@ -602,7 +604,7 @@ void geometric_object_create::init(
 	}
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->intersection_of_zariski_open_sets_ring_label);
@@ -626,7 +628,7 @@ void geometric_object_create::init(
 	}
 	else if (Descr->f_number_of_conditions_satisfied) {
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->number_of_conditions_satisfied_ring_label);
@@ -654,7 +656,7 @@ void geometric_object_create::init(
 
 	else if (Descr->f_projective_curve) {
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->projective_curve_ring_label);
@@ -817,7 +819,7 @@ void geometric_object_create::create_ovoid_ST(
 	int i, d, x, y, z, r, sigma, sigma_plus_two;
 	long int a;
 	int v[4];
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (EVEN(P->Subspaces->F->e)) {
 		cout << "geometric_object_create::create_ovoid_ST need odd field degree" << endl;
@@ -1086,7 +1088,7 @@ void geometric_object_create::create_elliptic_curve(
 	//int n = 2;
 	long int i, a, d;
 	int *v;
-	number_theory::elliptic_curve *E;
+	algebra::number_theory::elliptic_curve *E;
 
 	if (P->Subspaces->n != 2) {
 		cout << "geometric_object_create::create_elliptic_curve n != 2" << endl;
@@ -1096,7 +1098,7 @@ void geometric_object_create::create_elliptic_curve(
 
 	nb_pts = P->Subspaces->q + 1;
 
-	E = NEW_OBJECT(number_theory::elliptic_curve);
+	E = NEW_OBJECT(algebra::number_theory::elliptic_curve);
 	v = NEW_int(P->Subspaces->n + 1);
 	Pts = NEW_lint(P->Subspaces->N_points);
 
@@ -1277,7 +1279,7 @@ void geometric_object_create::create_Baer_substructure(
 
 	// projective space over the big field FQ = this
 
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	int Q = P->Subspaces->q;
 	int q = NT.i_power_j(P->Subspaces->F->p, P->Subspaces->F->e >> 1);
 	if (f_v) {

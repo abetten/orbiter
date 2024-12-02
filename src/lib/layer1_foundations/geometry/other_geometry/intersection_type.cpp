@@ -22,6 +22,7 @@ namespace other_geometry {
 
 intersection_type::intersection_type()
 {
+	Record_birth();
 	set = NULL;
 	set_size = 0;
 	threshold = 0;
@@ -50,6 +51,7 @@ intersection_type::intersection_type()
 
 intersection_type::~intersection_type()
 {
+	Record_death();
 	int i;
 
 	for (i = 0; i < len; i++) {
@@ -82,7 +84,7 @@ void intersection_type::line_intersection_type_slow(
 	int *Basis;
 	int *Basis_save;
 	int *Coords;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "intersection_type::line_intersection_type_slow" << endl;
@@ -121,7 +123,7 @@ void intersection_type::line_intersection_type_slow(
 
 
 	// allocate data that is returned:
-	R = NEW_OBJECTS(ring_theory::longinteger_object, N_subspaces);
+	R = NEW_OBJECTS(algebra::ring_theory::longinteger_object, N_subspaces);
 	Pts_on_subspace = NEW_plint(N_subspaces);
 	nb_pts_on_subspace = NEW_int(N_subspaces);
 
@@ -220,7 +222,7 @@ void intersection_type::plane_intersection_type_slow(
 	int *Basis;
 	int *Basis_save;
 	int *Coords;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "intersection_type::plane_intersection_type_slow" << endl;
@@ -259,7 +261,7 @@ void intersection_type::plane_intersection_type_slow(
 
 
 	// allocate data that is returned:
-	R = NEW_OBJECTS(ring_theory::longinteger_object, N_subspaces);
+	R = NEW_OBJECTS(algebra::ring_theory::longinteger_object, N_subspaces);
 	Pts_on_subspace = NEW_plint(N_subspaces);
 	nb_pts_on_subspace = NEW_int(N_subspaces);
 
@@ -346,7 +348,7 @@ void intersection_type::compute_heighest_weight_objects(
 		cout << "intersection_type::compute_heighest_weight_objects" << endl;
 	}
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f_second = false;
 
 	C.init(nb_pts_on_subspace, len, f_second, 0);
@@ -381,7 +383,7 @@ void intersection_type::compute_heighest_weight_objects(
 
 	int *Pts;
 	int nb_pts;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	C.get_class_by_value(Pts, nb_pts, highest_intersection_number,
 			verbose_level);
@@ -432,7 +434,7 @@ void intersection_type::compute_heighest_weight_objects(
 	}
 
 
-	M = NEW_OBJECT(data_structures::int_matrix);
+	M = NEW_OBJECT(other::data_structures::int_matrix);
 
 	M->allocate_and_init(
 			nb_highest_weight_objects,

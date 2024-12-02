@@ -20,6 +20,7 @@ namespace cubic_surfaces_and_arcs {
 
 surfaces_arc_lifting_trace::surfaces_arc_lifting_trace()
 {
+	Record_birth();
 	Up = NULL;
 
 	f = f2 = po = so = 0;
@@ -49,6 +50,7 @@ surfaces_arc_lifting_trace::surfaces_arc_lifting_trace()
 
 surfaces_arc_lifting_trace::~surfaces_arc_lifting_trace()
 {
+	Record_death();
 	if (Elt_alpha2) {
 		FREE_int(Elt_alpha2);
 	}
@@ -476,7 +478,7 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 }
 
 void surfaces_arc_lifting_trace::compute_beta1(
-		algebraic_geometry::seventytwo_cases *The_case,
+		geometry::algebraic_geometry::seventytwo_cases *The_case,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -486,7 +488,7 @@ void surfaces_arc_lifting_trace::compute_beta1(
 	}
 	int i;
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	long int P6_orbit_rep[6];
 	int idx;
 
@@ -805,7 +807,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(
 	}
 
 
-	algebraic_geometry::algebraic_geometry_global Gg;
+	geometry::algebraic_geometry::algebraic_geometry_global Gg;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines "

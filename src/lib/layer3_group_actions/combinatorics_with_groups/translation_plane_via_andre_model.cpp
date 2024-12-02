@@ -30,6 +30,7 @@ static int translation_plane_via_andre_model_check_subplane(int len, long int *S
 
 translation_plane_via_andre_model::translation_plane_via_andre_model()
 {
+	Record_birth();
 	//std::string label_txt;
 	//std::string label_tex;
 	F = NULL;
@@ -60,6 +61,7 @@ translation_plane_via_andre_model::translation_plane_via_andre_model()
 
 translation_plane_via_andre_model::~translation_plane_via_andre_model()
 {
+	Record_death();
 #if 0
 	if (Andre) {
 		FREE_OBJECT(Andre);
@@ -126,7 +128,7 @@ void translation_plane_via_andre_model::init(
 	//int f_v4 = (verbose_level >= 6);
 	int f_v10 = (verbose_level >= 10);
 	int i, j, h, u, v, i1, i2, j1, j2;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init" << endl;
@@ -409,7 +411,7 @@ void translation_plane_via_andre_model::init(
 					"after strong_gens->generators_for_translation_plane_in_andre_model" << endl;
 		}
 
-		ring_theory::longinteger_object stab_go;
+		algebra::ring_theory::longinteger_object stab_go;
 
 		strong_gens->group_order(stab_go);
 
@@ -802,7 +804,7 @@ int translation_plane_via_andre_model::check_subplane(
 					"check_subplane h != len2" << endl;
 			exit(1);
 		}
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(L, len2, false, 0);
 
@@ -911,7 +913,7 @@ void translation_plane_via_andre_model::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -939,7 +941,7 @@ void translation_plane_via_andre_model::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
@@ -993,7 +995,7 @@ void translation_plane_via_andre_model::export_incma(
 		cout << "translation_plane_via_andre_model::export_incma" << endl;
 	}
 	string fname;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fname = label_txt + "_incma.csv";
 	Fio.Csv_file_support->int_matrix_write_csv(
@@ -1018,9 +1020,9 @@ void translation_plane_via_andre_model::p_rank(
 		cout << "translation_plane_via_andre_model::p_rank p=" << p << endl;
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
-	F = NEW_OBJECT(field_theory::finite_field);
+	F = NEW_OBJECT(algebra::field_theory::finite_field);
 
 	F->finite_field_init_small_order(p,
 			false /* f_without_tables */,

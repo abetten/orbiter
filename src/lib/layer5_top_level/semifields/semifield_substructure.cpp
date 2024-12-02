@@ -22,6 +22,7 @@ namespace semifields {
 
 semifield_substructure::semifield_substructure()
 {
+	Record_birth();
 	SCWS = NULL;
 	SC = NULL;
 	L3 = NULL;
@@ -71,6 +72,7 @@ semifield_substructure::semifield_substructure()
 
 semifield_substructure::~semifield_substructure()
 {
+	Record_death();
 
 }
 
@@ -145,7 +147,7 @@ void semifield_substructure::compute_cases(
 		sum += Need_orbits_len[i];
 		}
 	{
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(Need_orbits_len,
 				nb_non_unique_cases_with_non_trivial_group, false,
@@ -331,7 +333,7 @@ void semifield_substructure::compute_flag_orbits(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int o, idx, h, fst, g;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "semifield_substructure::compute_flag_orbits" << endl;
@@ -453,7 +455,7 @@ void semifield_substructure::compute_flag_orbits(
 			for (g = 0; g < Nb_orb[idx]; g++) {
 				orbits_schreier::orbit_of_subspaces *Orb;
 				groups::strong_generators *gens;
-				ring_theory::longinteger_object go;
+				algebra::ring_theory::longinteger_object go;
 
 				Orb = All_Orbits[idx][g];
 				data = Orb->Subspaces_lint[Orb->position_of_original_subspace];
@@ -494,7 +496,7 @@ void semifield_substructure::do_classify(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "semifield_substructure::do_classify" << endl;
@@ -510,7 +512,7 @@ void semifield_substructure::do_classify(
 
 
 	int po, so;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int f_skip = false;
 	int i;
 
@@ -597,7 +599,7 @@ void semifield_substructure::do_classify(
 		}
 
 		groups::strong_generators *Aut_gens;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		Aut_gens = Flag_orbits->Flag_orbit_node[f].gens->create_copy(verbose_level - 2);
 		coset_reps = NEW_OBJECT(data_structures_groups::vector_ge);
@@ -674,8 +676,8 @@ void semifield_substructure::do_classify(
 		FREE_OBJECTS(TR);
 
 		int cl;
-		ring_theory::longinteger_object go1, Cl, ago, ago1;
-		ring_theory::longinteger_domain D;
+		algebra::ring_theory::longinteger_object go1, Cl, ago, ago1;
+		algebra::ring_theory::longinteger_domain D;
 
 		Aut_gens->group_order(go);
 		cl = coset_reps->len;
@@ -752,13 +754,13 @@ void semifield_substructure::loop_over_all_subspaces(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int rk, i, f2;
 	int k, k2;
 	int f_skip;
 	int trace_po;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 #if 0
@@ -1175,11 +1177,11 @@ void semifield_substructure::all_two_dimensional_subspaces(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int rk, i;
 	int k, k2;
 	int trace_po;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 
@@ -1269,13 +1271,13 @@ int semifield_substructure::identify(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int i, f2;
 	int k, k2;
 	int f_skip;
 	//int trace_po;
 	int ret;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int solution_idx;
 
 
@@ -1561,7 +1563,7 @@ int semifield_substructure::find_semifield_in_table(
 {
 	int f_v = (verbose_level >= 1);
 	int fst, len, g;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 
 	if (f_v) {

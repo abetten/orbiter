@@ -8,10 +8,11 @@
 
 
 
-#include "orbiter.h"
+#include "layer1_foundations/foundations.h"
+#include "layer2_discreta/discreta.h"
+#include "group_actions.h"
 
 using namespace std;
-using namespace orbiter::layer1_foundations;
 
 namespace orbiter {
 namespace layer3_group_actions {
@@ -19,6 +20,7 @@ namespace data_structures_groups {
 
 export_group::export_group()
 {
+	Record_birth();
 	A_base = NULL;
 	A_induced = NULL;
 	Strong_gens = NULL;
@@ -27,6 +29,7 @@ export_group::export_group()
 
 export_group::~export_group()
 {
+	Record_death();
 }
 
 void export_group::init(

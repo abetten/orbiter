@@ -20,6 +20,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_classify_activity::blt_set_classify_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	BLT_classify = NULL;
 	OA = NULL;
@@ -27,6 +28,7 @@ blt_set_classify_activity::blt_set_classify_activity()
 
 blt_set_classify_activity::~blt_set_classify_activity()
 {
+	Record_death();
 }
 
 void blt_set_classify_activity::init(

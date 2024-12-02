@@ -26,6 +26,7 @@ static int packing_long_orbit_test_function(
 
 packing_long_orbits::packing_long_orbits()
 {
+	Record_birth();
 	PWF = NULL;
 	Descr = NULL;
 
@@ -53,6 +54,7 @@ packing_long_orbits::packing_long_orbits()
 
 packing_long_orbits::~packing_long_orbits()
 {
+	Record_death();
 	if (fixpoint_clique) {
 		FREE_lint(fixpoint_clique);
 	}
@@ -231,7 +233,7 @@ void packing_long_orbits::list_of_cases_from_file(
 		cout << "packing_long_orbits::list_of_cases_from_file" << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_long_orbits::list_of_cases_from_file" << endl;
@@ -347,7 +349,7 @@ void packing_long_orbits::list_of_cases_from_file(
 	}
 
 	std::string fname_out;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	fname_out.assign(Descr->list_of_cases_from_file_fname);
 	ST.replace_extension_with(fname_out, "_count.csv");
@@ -402,7 +404,7 @@ void packing_long_orbits::save_packings_by_case(
 
 	int idx;
 	int total = 0;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "packing_long_orbits::save_packings_by_case" << endl;
@@ -557,7 +559,7 @@ void packing_long_orbits::filter_orbits(
 	}
 
 
-	data_structures::set_of_sets *Input;
+	other::data_structures::set_of_sets *Input;
 
 	Input = PWF->PW->reduced_spread_orbits_under_H->Classify_orbits_by_length->Set_partition;
 
@@ -566,7 +568,7 @@ void packing_long_orbits::filter_orbits(
 		Filtered_orbits = NULL;
 	}
 
-	Filtered_orbits = NEW_OBJECT(data_structures::set_of_sets);
+	Filtered_orbits = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	Filtered_orbits->init_basic(
 			Input->underlying_set_size,
@@ -689,7 +691,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	//int user_data_sz;
 	//long int *user_data;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 #if 0
@@ -708,7 +710,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 
 	if (Descr->f_create_graphs) {
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 		if (f_v) {
 			cout << "solution file does not exist" << endl;
 			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
@@ -1027,7 +1029,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 
 
-		data_structures::tally_vector_data T;
+		other::data_structures::tally_vector_data T;
 
 		T.init(
 				iso_type,
@@ -1050,7 +1052,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 #endif
 		cout << fixpoints_clique_case_number << " & ";
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int nb_points;
 
 		nb_points = Fio.number_of_vertices_in_colored_graph(
@@ -1061,7 +1063,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		cout << fixpoint_clique_stabilizer_gens->group_order_as_lint()  << " & ";
 
 		{
-			data_structures::tally Cl;
+			other::data_structures::tally Cl;
 
 			Cl.init(Orbits->orbit_len, Orbits->nb_orbits, false, 0);
 			Cl.print_tex_no_lf(false);
@@ -1108,7 +1110,7 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 }
 
 void packing_long_orbits::create_graph_and_save_to_file(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 	std::string &fname,
 	int f_has_user_data,
 	long int *user_data, int user_data_size,
@@ -1206,7 +1208,7 @@ void packing_long_orbits::create_graph_and_save_to_file(
 }
 
 void packing_long_orbits::create_graph_on_long_orbits(
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 		long int *user_data, int user_data_sz,
 		int verbose_level)
 {

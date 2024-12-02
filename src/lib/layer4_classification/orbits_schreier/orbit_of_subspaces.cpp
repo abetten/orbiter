@@ -22,6 +22,7 @@ namespace orbits_schreier {
 
 orbit_of_subspaces::orbit_of_subspaces()
 {
+	Record_birth();
 	A = NULL;
 	A2 = NULL;
 	F = NULL;
@@ -59,6 +60,7 @@ orbit_of_subspaces::orbit_of_subspaces()
 
 orbit_of_subspaces::~orbit_of_subspaces()
 {
+	Record_death();
 	int i;
 	
 	if (subspace_by_rank) {
@@ -102,7 +104,7 @@ orbit_of_subspaces::~orbit_of_subspaces()
 void orbit_of_subspaces::init(
 		actions::action *A,
 	actions::action *A2,
-	field_theory::finite_field *F,
+	algebra::field_theory::finite_field *F,
 	int *subspace_by_rank, int k, int n, 
 	int f_has_desired_pivots, int *desired_pivots, 
 	int f_has_rank_functions, void *rank_unrank_data, 
@@ -173,7 +175,7 @@ void orbit_of_subspaces::init(
 void orbit_of_subspaces::init_lint(
 		actions::action *A,
 	actions::action *A2,
-	field_theory::finite_field *F,
+	algebra::field_theory::finite_field *F,
 	long int *subspace_by_rank, int k, int n,
 	int f_has_desired_pivots, int *desired_pivots,
 	int f_has_rank_functions, void *rank_unrank_data,
@@ -365,7 +367,7 @@ void orbit_of_subspaces::rank_subspace(
 uint32_t orbit_of_subspaces::hash_subspace()
 {
 	uint32_t h;
-	data_structures::data_structures_global Data;
+	other::data_structures::data_structures_global Data;
 
 	if (f_lint) {
 		h = Data.lint_vec_hash(subspace_by_rank_lint, sz);
@@ -573,7 +575,7 @@ int orbit_of_subspaces::rank_hash_and_find(
 		int &idx, uint32_t &h, int verbose_level)
 {
 	int f_found;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	rank_subspace(subspace, verbose_level - 2);
 
@@ -937,7 +939,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 	uint32_t h;
 	//int *cur_basis;
 	//int *new_basis;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	
 	if (f_v) {
 		cout << "orbit_of_subspaces::get_random_schreier_generator" << endl;
@@ -1032,7 +1034,7 @@ void orbit_of_subspaces::get_random_schreier_generator(
 
 groups::strong_generators
 *orbit_of_subspaces::stabilizer_orbit_rep(
-		ring_theory::longinteger_object &full_group_order,
+		algebra::ring_theory::longinteger_object &full_group_order,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1047,7 +1049,7 @@ groups::strong_generators
 			A /* default_action */, full_group_order,
 		Stab, 0 /*verbose_level*/);
 
-	ring_theory::longinteger_object stab_order;
+	algebra::ring_theory::longinteger_object stab_order;
 
 	Stab->group_order(stab_order);
 	if (f_v) {
@@ -1069,7 +1071,7 @@ groups::strong_generators
 
 void orbit_of_subspaces::compute_stabilizer(
 		actions::action *default_action,
-		ring_theory::longinteger_object &go,
+		algebra::ring_theory::longinteger_object &go,
 		groups::sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -1084,8 +1086,8 @@ void orbit_of_subspaces::compute_stabilizer(
 	}
 
 	Stab = NEW_OBJECT(groups::sims);
-	ring_theory::longinteger_object cur_go, target_go;
-	ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object cur_go, target_go;
+	algebra::ring_theory::longinteger_domain D;
 	int len, r, cnt = 0, f_added, drop_out_level, image;
 	int *residue;
 	int *E1;

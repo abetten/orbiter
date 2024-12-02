@@ -19,6 +19,7 @@ namespace cubic_surfaces_and_double_sixes {
 
 surface_classify_wedge::surface_classify_wedge()
 {
+	Record_birth();
 	PA = NULL;
 	F = NULL;
 	q = 0;
@@ -50,6 +51,7 @@ surface_classify_wedge::surface_classify_wedge()
 
 surface_classify_wedge::~surface_classify_wedge()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -434,7 +436,7 @@ void surface_classify_wedge::downstep(
 					"orbit " << i << " / " << nb_orbits << endl;
 		}
 		data_structures_groups::set_and_stabilizer *R;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 		long int Lines[27];
 
 		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(
@@ -520,7 +522,7 @@ void surface_classify_wedge::upstep(
 
 	Surfaces = NEW_OBJECT(invariant_relations::classification_step);
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	A->group_order(go);
 
 	if (f_v) {
@@ -591,7 +593,7 @@ void surface_classify_wedge::upstep(
 
 
 		groups::strong_generators *S;
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 
 		if (f_v) {
@@ -690,7 +692,7 @@ void surface_classify_wedge::upstep(
 		groups::strong_generators *Aut_gens;
 
 		{
-			ring_theory::longinteger_object ago;
+			algebra::ring_theory::longinteger_object ago;
 
 			if (f_v) {
 				cout << "surface_classify_wedge::upstep "

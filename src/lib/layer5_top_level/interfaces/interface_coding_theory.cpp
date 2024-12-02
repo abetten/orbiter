@@ -20,6 +20,7 @@ namespace user_interface {
 
 interface_coding_theory::interface_coding_theory()
 {
+	Record_birth();
 	f_make_macwilliams_system = false;
 	make_macwilliams_system_q = 0;
 	make_macwilliams_system_n = 0;
@@ -67,12 +68,17 @@ interface_coding_theory::interface_coding_theory()
 
 }
 
+interface_coding_theory::~interface_coding_theory()
+{
+	Record_death();
+}
+
 
 void interface_coding_theory::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
@@ -111,7 +117,7 @@ int interface_coding_theory::recognize_keyword(
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -160,7 +166,7 @@ void interface_coding_theory::read_arguments(
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments" << endl;
@@ -205,11 +211,11 @@ void interface_coding_theory::read_arguments(
 	else if (ST.stringcmp(argv[i], "-introduce_errors") == 0) {
 		f_introduce_errors = true;
 
-		introduce_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		introduce_errors_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		if (f_v) {
 			cout << "-introduce_errors " << endl;
 		}
-		introduce_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		introduce_errors_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		i += introduce_errors_crc_options_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -227,11 +233,11 @@ void interface_coding_theory::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-check_errors") == 0) {
 		f_check_errors = true;
-		check_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		check_errors_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		if (f_v) {
 			cout << "-check_errors " << endl;
 		}
-		check_errors_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		check_errors_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		i += check_errors_crc_options_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -249,11 +255,11 @@ void interface_coding_theory::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-extract_block") == 0) {
 		f_extract_block = true;
-		extract_block_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		extract_block_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		if (f_v) {
 			cout << "-extract_block " << endl;
 		}
-		extract_block_crc_options_description = NEW_OBJECT(coding_theory::crc_options_description);
+		extract_block_crc_options_description = NEW_OBJECT(combinatorics::coding_theory::crc_options_description);
 		i += extract_block_crc_options_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -390,7 +396,7 @@ void interface_coding_theory::worker(
 
 	if (f_make_macwilliams_system) {
 
-		coding_theory::coding_theory_domain Coding;
+		combinatorics::coding_theory::coding_theory_domain Coding;
 
 		int n, k, q;
 
@@ -406,13 +412,13 @@ void interface_coding_theory::worker(
 	}
 	else if (f_table_of_bounds) {
 
-		coding_theory::coding_theory_domain Coding;
+		combinatorics::coding_theory::coding_theory_domain Coding;
 
 		Coding.make_table_of_bounds(table_of_bounds_n_max, table_of_bounds_q, verbose_level);
 	}
 	else if (f_make_bounds_for_d_given_n_and_k_and_q) {
 
-		coding_theory::coding_theory_domain Coding;
+		combinatorics::coding_theory::coding_theory_domain Coding;
 		int d_GV;
 		int d_singleton;
 		int d_hamming;
@@ -443,7 +449,7 @@ void interface_coding_theory::worker(
 
 	else if (f_introduce_errors) {
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 		Crc_codes.introduce_errors(introduce_errors_crc_options_description,
 				verbose_level);
@@ -452,7 +458,7 @@ void interface_coding_theory::worker(
 
 	else if (f_check_errors) {
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 		Crc_codes.check_errors(check_errors_crc_options_description,
 				verbose_level);
@@ -461,7 +467,7 @@ void interface_coding_theory::worker(
 
 	else if (f_extract_block) {
 
-		coding_theory::crc_codes Crc_codes;
+		combinatorics::coding_theory::crc_codes Crc_codes;
 
 		Crc_codes.extract_block(extract_block_crc_options_description,
 				verbose_level);
@@ -471,7 +477,7 @@ void interface_coding_theory::worker(
 
 		cout << "-random_noise_in_bitmap_file" << endl;
 
-		l1_interfaces::easy_BMP_interface BMP;
+		other::l1_interfaces::easy_BMP_interface BMP;
 
 		BMP.random_noise_in_bitmap_file(
 				random_noise_in_bitmap_file_input,
@@ -484,7 +490,7 @@ void interface_coding_theory::worker(
 
 		cout << "-random_noise_of_burst_type_in_bitmap_file" << endl;
 
-		l1_interfaces::easy_BMP_interface BMP;
+		other::l1_interfaces::easy_BMP_interface BMP;
 
 		BMP.random_noise_in_bitmap_file_burst(
 				random_noise_of_burst_type_in_bitmap_file_input,

@@ -43,7 +43,7 @@ trace_result upstep_work::recognize(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int len = size - 1;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -684,7 +684,7 @@ trace_result upstep_work::start_over(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		print_level_extension_coset_info();

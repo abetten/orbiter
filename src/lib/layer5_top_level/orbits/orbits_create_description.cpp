@@ -20,6 +20,7 @@ namespace orbits {
 
 orbits_create_description::orbits_create_description()
 {
+	Record_birth();
 	f_group = false;
 	//std::string group_label;
 
@@ -79,6 +80,7 @@ orbits_create_description::orbits_create_description()
 
 orbits_create_description::~orbits_create_description()
 {
+	Record_death();
 }
 
 int orbits_create_description::read_arguments(
@@ -87,7 +89,7 @@ int orbits_create_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

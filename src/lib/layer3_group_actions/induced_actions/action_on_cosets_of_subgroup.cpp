@@ -22,6 +22,7 @@ namespace induced_actions {
 
 action_on_cosets_of_subgroup::action_on_cosets_of_subgroup()
 {
+	Record_birth();
 	A = NULL;
 	Subgroup_gens_H = NULL;
 	Subgroup_gens_G = NULL;
@@ -37,6 +38,7 @@ action_on_cosets_of_subgroup::action_on_cosets_of_subgroup()
 
 action_on_cosets_of_subgroup::~action_on_cosets_of_subgroup()
 {
+	Record_death();
 	if (Sims_H) {
 		FREE_OBJECT(Sims_H);
 	}
@@ -68,7 +70,7 @@ void action_on_cosets_of_subgroup::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "action_on_cosets_of_subgroup::init" << endl;

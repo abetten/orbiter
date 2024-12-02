@@ -20,6 +20,7 @@ namespace apps_geometry {
 
 search_blocking_set::search_blocking_set()
 {
+	Record_birth();
 	Inc = NULL;
 	A = NULL;
 	Control = NULL;
@@ -50,6 +51,7 @@ search_blocking_set::search_blocking_set()
 
 search_blocking_set::~search_blocking_set()
 {
+	Record_death();
 	int i;
 	
 	if (Line_intersections) {
@@ -116,7 +118,7 @@ void search_blocking_set::init(
 	search_blocking_set::Inc = Inc;
 	search_blocking_set::A = A;
 
-	Line_intersections = NEW_OBJECTS(data_structures::fancy_set, Inc->nb_cols);
+	Line_intersections = NEW_OBJECTS(other::data_structures::fancy_set, Inc->nb_cols);
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].init(Inc->nb_rows, 0);
 		}
@@ -124,7 +126,7 @@ void search_blocking_set::init(
 	blocking_set = NEW_lint(Inc->nb_rows);
 	sz = NEW_int(Inc->nb_cols);
 
-	active_set = NEW_OBJECT(data_structures::fancy_set);
+	active_set = NEW_OBJECT(other::data_structures::fancy_set);
 	active_set->init(Inc->nb_rows, 0);
 	sz_active_set = NEW_int(Inc->nb_cols + 1);
 }
@@ -134,7 +136,7 @@ void search_blocking_set::find_partial_blocking_sets(
 {
 	int f_v = (verbose_level >= 1);
 	int t0;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 
 	t0 = Os.os_ticks();
 
@@ -288,7 +290,7 @@ int search_blocking_set::test_blocking_set(
 		}
 
 	if (f_v) {
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(sz, Inc->nb_cols, false, 0);
 
@@ -367,7 +369,7 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 		}
 
 	if (f_v) {
-		data_structures::tally C;
+		other::data_structures::tally C;
 
 		C.init(sz, Inc->nb_cols, false, 0);
 
@@ -540,7 +542,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 	for (j = 0; j < Inc->nb_cols; j++) {
 		sz[j] = Line_intersections[j].k;
 		}
-	data_structures::tally C;
+	other::data_structures::tally C;
 
 	C.init(sz, Inc->nb_cols, false, 0);
 

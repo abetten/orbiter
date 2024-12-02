@@ -23,6 +23,7 @@ namespace user_interface {
 
 interface_projective::interface_projective()
 {
+	Record_birth();
 
 	f_create_points_on_quartic = false;
 	desired_distance = 0;
@@ -57,12 +58,18 @@ interface_projective::interface_projective()
 
 }
 
+interface_projective::~interface_projective()
+{
+	Record_death();
+
+}
+
 
 void interface_projective::print_help(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
@@ -96,7 +103,7 @@ int interface_projective::recognize_keyword(
 		int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -133,7 +140,7 @@ void interface_projective::read_arguments(
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_projective::read_arguments" << endl;
@@ -170,7 +177,7 @@ void interface_projective::read_arguments(
 		smooth_curve_t_min = ST.strtof(argv[++i]);
 		smooth_curve_t_max = ST.strtof(argv[++i]);
 
-		FP_descr = NEW_OBJECT(polish::function_polish_description);
+		FP_descr = NEW_OBJECT(other::polish::function_polish_description);
 
 		i += FP_descr->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
@@ -274,20 +281,20 @@ void interface_projective::worker(
 
 	if (f_create_points_on_quartic) {
 
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.do_create_points_on_quartic(desired_distance, verbose_level);
 	}
 	else if (f_create_points_on_parabola) {
 
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.do_create_points_on_parabola(desired_distance,
 				parabola_N, parabola_a, parabola_b, parabola_c, verbose_level);
 	}
 	else if (f_smooth_curve) {
 
-		graphics::graphical_output GO;
+		other::graphics::graphical_output GO;
 
 		GO.do_smooth_curve(smooth_curve_label,
 				desired_distance, smooth_curve_N,

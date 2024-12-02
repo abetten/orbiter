@@ -20,6 +20,7 @@ namespace other_geometry {
 
 hermitian::hermitian()
 {
+	Record_birth();
 	F = NULL;
 	Q = 0;
 	q = 0;
@@ -38,6 +39,7 @@ hermitian::hermitian()
 
 hermitian::~hermitian()
 {
+	Record_death();
 	if (cnt_N) {
 		FREE_int(cnt_N);
 	}
@@ -66,12 +68,12 @@ hermitian::~hermitian()
 
 
 void hermitian::init(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		int nb_vars, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	hermitian::F = F;
 	hermitian::Q = F->q;
@@ -1008,7 +1010,7 @@ void hermitian::create_latex_report(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -1036,7 +1038,7 @@ void hermitian::create_latex_report(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

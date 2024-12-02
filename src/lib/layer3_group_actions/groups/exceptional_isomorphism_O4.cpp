@@ -21,6 +21,7 @@ namespace groups {
 
 exceptional_isomorphism_O4::exceptional_isomorphism_O4()
 {
+	Record_birth();
 	Fq = NULL;
 	A2 = NULL;
 	A4 = NULL;
@@ -34,6 +35,7 @@ exceptional_isomorphism_O4::exceptional_isomorphism_O4()
 
 exceptional_isomorphism_O4::~exceptional_isomorphism_O4()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -43,7 +45,7 @@ exceptional_isomorphism_O4::~exceptional_isomorphism_O4()
 }
 
 void exceptional_isomorphism_O4::init(
-		field_theory::finite_field *Fq,
+		algebra::field_theory::finite_field *Fq,
 		actions::action *A2, actions::action *A4, actions::action *A5,
 		int verbose_level)
 {
@@ -77,7 +79,7 @@ void exceptional_isomorphism_O4::apply_2to4_embedded(
 	int mtx4x4[16];
 	int mtx5x5[25];
 	int *E1;
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_2to4_embedded" << endl;
@@ -353,7 +355,7 @@ void exceptional_isomorphism_O4::apply_4_to_2(
 	int Data[16];
 	int M2a[4];
 	int M2b[4];
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_2" << endl;
@@ -393,7 +395,7 @@ void exceptional_isomorphism_O4::apply_2_to_4(
 {
 	int f_v = (verbose_level >= 1);
 	int Data[16];
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_2_to_4" << endl;
@@ -426,7 +428,7 @@ void exceptional_isomorphism_O4::print_as_2x2(
 {
 	int small[8], f_switch, r, order;
 	int *elt1;
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 
 	elt1 = NEW_int(A2->elt_size_in_int);
 	Algebra.O4_isomorphism_4to2(Fq,

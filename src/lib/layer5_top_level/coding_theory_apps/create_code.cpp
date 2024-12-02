@@ -21,6 +21,7 @@ namespace apps_coding_theory {
 
 create_code::create_code()
 {
+	Record_birth();
 	description = NULL;
 
 	//std::string label_txt;
@@ -46,6 +47,7 @@ create_code::create_code()
 
 create_code::~create_code()
 {
+	Record_death();
 }
 
 void create_code::init(
@@ -270,7 +272,7 @@ void create_code::init(
 			exit(1);
 		}
 
-		coding_theory::coding_theory_domain Codes;
+		combinatorics::coding_theory::coding_theory_domain Codes;
 
 		long int *set;
 		int sz;
@@ -353,8 +355,8 @@ void create_code::init(
 		int m;
 		int i;
 		long int a;
-		coding_theory::coding_theory_domain Codes;
-		number_theory::number_theory_domain NT;
+		combinatorics::coding_theory::coding_theory_domain Codes;
+		algebra::number_theory::number_theory_domain NT;
 		long int *v;
 
 		m = description->Reed_Muller_m;
@@ -428,7 +430,7 @@ void create_code::init(
 		n = description->BCH_n;
 		d = description->BCH_d;
 
-		Create_BCH_code = NEW_OBJECT(coding_theory::create_BCH_code);
+		Create_BCH_code = NEW_OBJECT(combinatorics::coding_theory::create_BCH_code);
 
 		Create_BCH_code->init(F,
 				n,
@@ -478,7 +480,7 @@ void create_code::init(
 		n = description->Reed_Solomon_n;
 		d = description->Reed_Solomon_d;
 
-		Create_RS_code = NEW_OBJECT(coding_theory::create_RS_code);
+		Create_RS_code = NEW_OBJECT(combinatorics::coding_theory::create_RS_code);
 
 		Create_RS_code->init(F,
 				n,
@@ -527,7 +529,7 @@ void create_code::init(
 		k = description->Gilbert_Varshamov_k;
 		d = description->Gilbert_Varshamov_d;
 
-		coding_theory::coding_theory_domain Coding;
+		combinatorics::coding_theory::coding_theory_domain Coding;
 
 
 		if (f_v) {
@@ -660,11 +662,11 @@ void create_code::init(
 		//int sz;
 
 
-		field_theory::finite_field *FQ;
+		algebra::field_theory::finite_field *FQ;
 
 		FQ = Get_finite_field(description->ttpA_field_label);
 
-		coding_theory::ttp_codes TTP;
+		combinatorics::coding_theory::ttp_codes TTP;
 
 		int nb_rows, nb_cols;
 
@@ -811,7 +813,7 @@ void create_code::export_magma(
 
 	//interfaces::magma_interface M;
 
-	l1_interfaces::interface_magma_low Magma;
+	other::l1_interfaces::interface_magma_low Magma;
 
 	if (f_v) {
 		cout << "create_code::export_magma "
@@ -960,8 +962,8 @@ void create_code::export_codewords(
 		exit(1);
 	}
 
-	number_theory::number_theory_domain NT;
-	coding_theory::coding_theory_domain Code;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::coding_theory::coding_theory_domain Code;
 	long int *codewords;
 	long int N;
 
@@ -990,7 +992,7 @@ void create_code::export_codewords(
 		cout << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, codewords, N, 1);
@@ -1021,8 +1023,8 @@ void create_code::export_codewords_long(
 		exit(1);
 	}
 
-	number_theory::number_theory_domain NT;
-	coding_theory::coding_theory_domain Code;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::coding_theory::coding_theory_domain Code;
 	int *codewords;
 	long int N;
 
@@ -1048,7 +1050,7 @@ void create_code::export_codewords_long(
 		cout << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, codewords, N, n);
@@ -1082,7 +1084,7 @@ void create_code::export_codewords_by_weight(
 		exit(1);
 	}
 
-	coding_theory::coding_theory_domain Code;
+	combinatorics::coding_theory::coding_theory_domain Code;
 
 	long int *codewords;
 	long int N;
@@ -1134,12 +1136,12 @@ void create_code::export_codewords_by_weight(
 	}
 
 
-	data_structures::tally *T;
-	data_structures::set_of_sets *SoS;
+	other::data_structures::tally *T;
+	other::data_structures::set_of_sets *SoS;
 	int *types;
 	int nb_types;
 
-	T = NEW_OBJECT(data_structures::tally);
+	T = NEW_OBJECT(other::data_structures::tally);
 	T->init(Wt, N, false, 0 /* verbose_level */);
 
 	SoS = T->get_set_partition_and_types(types, nb_types, 0 /* verbose_level */);
@@ -1198,7 +1200,7 @@ void create_code::export_codewords_by_weight(
 		}
 
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 		std::string headings;
 
@@ -1252,7 +1254,7 @@ void create_code::export_genma(
 		exit(1);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, genma, k, n);
@@ -1283,7 +1285,7 @@ void create_code::export_checkma(
 		exit(1);
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->int_matrix_write_csv(
 			fname, checkma, nmk, n);
@@ -1336,7 +1338,7 @@ void create_code::export_checkma_as_projective_set(
 		cout << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	Fio.Csv_file_support->lint_matrix_write_csv(
 			fname, Rk, n, 1);
@@ -1369,7 +1371,7 @@ void create_code::weight_enumerator(
 	}
 
 
-	coding_theory::coding_theory_domain Codes;
+	combinatorics::coding_theory::coding_theory_domain Codes;
 
 
 
@@ -1418,7 +1420,7 @@ void create_code::fixed_code(
 		exit(1);
 	}
 
-	coding_theory::coding_theory_domain Codes;
+	combinatorics::coding_theory::coding_theory_domain Codes;
 
 	int subcode_k;
 	int *subcode_genma;
@@ -1458,7 +1460,7 @@ void create_code::fixed_code(
 void create_code::make_diagram(
 		int f_embellish, int embellish_radius,
 		int f_metric_balls, int radius_of_metric_ball,
-		coding_theory::code_diagram *&Diagram,
+		combinatorics::coding_theory::code_diagram *&Diagram,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1473,7 +1475,7 @@ void create_code::make_diagram(
 	long int nb_words;
 
 
-	coding_theory::coding_theory_domain Code;
+	combinatorics::coding_theory::coding_theory_domain Code;
 
 
 	if (f_v) {
@@ -1500,7 +1502,7 @@ void create_code::make_diagram(
 
 
 
-	Diagram = NEW_OBJECT(coding_theory::code_diagram);
+	Diagram = NEW_OBJECT(combinatorics::coding_theory::code_diagram);
 
 	if (f_v) {
 		cout << "create_code::code_diagram "
@@ -1540,7 +1542,7 @@ void create_code::polynomial_representation_of_boolean_function(
 	long int nb_words;
 
 
-	coding_theory::coding_theory_domain Codes;
+	combinatorics::coding_theory::coding_theory_domain Codes;
 
 
 	if (f_v) {
@@ -1601,8 +1603,8 @@ void create_code::report(
 
 	string label;
 	//coding_theory_domain Codes;
-	l1_interfaces::latex_interface Li;
-	orbiter_kernel_system::file_io Fio;
+	other::l1_interfaces::latex_interface Li;
+	other::orbiter_kernel_system::file_io Fio;
 
 	{
 
@@ -1622,10 +1624,10 @@ void create_code::report(
 
 		{
 			ofstream ost(fname);
-			number_theory::number_theory_domain NT;
+			algebra::number_theory::number_theory_domain NT;
 
 
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -1679,7 +1681,7 @@ void create_code::report2(
 			Create_RS_code->report(ost, verbose_level);
 		}
 		else {
-			l1_interfaces::latex_interface Li;
+			other::l1_interfaces::latex_interface Li;
 
 			ost << "The generator matrix is:" << endl;
 			ost << "$$" << endl;

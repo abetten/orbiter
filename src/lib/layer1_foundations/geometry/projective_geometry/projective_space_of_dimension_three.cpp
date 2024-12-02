@@ -22,6 +22,7 @@ namespace projective_geometry {
 
 projective_space_of_dimension_three::projective_space_of_dimension_three()
 {
+	Record_birth();
 	Projective_space = NULL;
 
 	Three_skew_subspaces = NULL;
@@ -30,6 +31,7 @@ projective_space_of_dimension_three::projective_space_of_dimension_three()
 
 projective_space_of_dimension_three::~projective_space_of_dimension_three()
 {
+	Record_death();
 	if (Three_skew_subspaces) {
 		FREE_OBJECT(Three_skew_subspaces);
 	}
@@ -116,7 +118,7 @@ void projective_space_of_dimension_three::determine_quadric_in_solid(
 				Projective_space->Subspaces->F->log10_of_q);
 	}
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 
 	F = Projective_space->Subspaces->F;
 	for (i = 0; i < nb_pts; i++) {
@@ -716,8 +718,8 @@ int projective_space_of_dimension_three::five_plus_one_to_double_six(
 	int nb_pts;
 	int transformation[17];
 	int transformation_inv[17];
-	combinatorics::combinatorics_domain Combi;
-	field_theory::finite_field *F;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	algebra::field_theory::finite_field *F;
 
 	if (f_v) {
 		cout << "projective_space_of_dimension_three::five_plus_one_to_double_six, "

@@ -19,6 +19,7 @@ namespace apps_graph_theory {
 
 graph_classification_activity_description::graph_classification_activity_description()
 {
+	Record_birth();
 	f_draw_level_graph = false;
 	draw_level_graph_level = 0;
 
@@ -40,6 +41,7 @@ graph_classification_activity_description::graph_classification_activity_descrip
 
 graph_classification_activity_description::~graph_classification_activity_description()
 {
+	Record_death();
 }
 
 int graph_classification_activity_description::read_arguments(
@@ -48,7 +50,7 @@ int graph_classification_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_classification_activity_description::read_arguments" << endl;
@@ -85,7 +87,7 @@ int graph_classification_activity_description::read_arguments(
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
 
-			draw_options = NEW_OBJECT(graphics::layered_graph_draw_options);
+			draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
 			if (f_v) {
 				cout << "-draw_options " << endl;
 			}

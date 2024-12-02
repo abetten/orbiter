@@ -17,6 +17,7 @@ namespace spreads {
 
 spread_table_activity::spread_table_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	P = NULL;
 
@@ -24,6 +25,7 @@ spread_table_activity::spread_table_activity()
 
 spread_table_activity::~spread_table_activity()
 {
+	Record_death();
 
 }
 
@@ -58,7 +60,7 @@ void spread_table_activity::perform_activity(
 		long int *spread_elts;
 		int sz;
 		int idx;
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 
 
 
@@ -84,7 +86,7 @@ void spread_table_activity::perform_activity(
 		long int *spread_elts;
 		int sz;
 		int a, b;
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 
 
 
@@ -115,7 +117,7 @@ void spread_table_activity::perform_activity(
 		int sz;
 		long int *dual_packing;
 		int a, b;
-		data_structures::sorting Sorting;
+		other::data_structures::sorting Sorting;
 
 
 
@@ -211,7 +213,7 @@ void spread_table_activity::perform_activity(
 				N[line2] = v.size();
 			}
 		}
-		data_structures::tally N_t;
+		other::data_structures::tally N_t;
 
 		N_t.init(N, P->P3->Subspaces->N_lines, false, 0);
 		cout << "type of covering based on all lines together with line " << line1 << ":" << endl;
@@ -240,7 +242,7 @@ void spread_table_activity::export_spreads_to_csv(
 
 	long int *T;
 	int i, j, idx;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	T = NEW_lint(nb * P->spread_size);
 	for (i = 0; i < nb; i++) {
@@ -293,7 +295,7 @@ void spread_table_activity::report_spreads(
 
 		{
 			ofstream ost(fname);
-			l1_interfaces::latex_interface L;
+			other::l1_interfaces::latex_interface L;
 
 			L.head(ost,
 					false /* f_book*/,
@@ -329,7 +331,7 @@ void spread_table_activity::report_spreads(
 			L.foot(ost);
 
 		}
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;

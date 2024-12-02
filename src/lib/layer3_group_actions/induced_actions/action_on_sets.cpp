@@ -22,6 +22,7 @@ static int action_on_sets_compare_inverted(
 
 action_on_sets::action_on_sets()
 {
+	Record_birth();
 	nb_sets = 0;
 	set_size = 0;
 	sets = NULL;
@@ -33,6 +34,7 @@ action_on_sets::action_on_sets()
 
 action_on_sets::~action_on_sets()
 {
+	Record_death();
 	int i;
 	
 	if (sets) {
@@ -61,8 +63,8 @@ void action_on_sets::init(
 	int i, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 5);
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_sets::init "
@@ -132,7 +134,7 @@ int action_on_sets::find_set(
 		long int *set, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int idx, j;
 
 	if (f_v) {
@@ -164,7 +166,7 @@ long int action_on_sets::compute_image(
 	int f_vv = (verbose_level >= 2);
 	int idx, res;
 	long int j;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_sets::compute_image "
@@ -354,7 +356,7 @@ static int action_on_sets_compare(
 	long int *A = (long int *)a;
 	long int *B = (long int *)b;
 	int c;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	c = Sorting.lint_vec_compare(A, B, AOS->set_size);
 	return c;
@@ -367,7 +369,7 @@ static int action_on_sets_compare_inverted(
 	long int *A = (long int *)a;
 	long int *B = (long int *)b;
 	int c;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	c = Sorting.lint_vec_compare(B, A, AOS->set_size);
 	return c;

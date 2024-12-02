@@ -149,7 +149,7 @@ public:
 		int starter_case, 
 		long int *candidates, int nb_candidates,
 		groups::strong_generators *Strong_gens,
-		solvers::diophant *&Dio, long int *&col_labels,
+		combinatorics::	solvers::diophant *&Dio, long int *&col_labels,
 		int &f_ruled_out, 
 		int verbose_level);
 		// compute the incidence matrix of tangent lines 
@@ -190,7 +190,7 @@ public:
 	int d; // largest number of points per line
 	int n; // projective dimension
 	int k; // size of the arc
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	int f_projective;
 	int f_general;
 	int f_affine;
@@ -198,7 +198,7 @@ public:
 	int f_special;
 
 	actions::action *A;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int *Elt;
 	int *v;
 	groups::schreier *Sch;
@@ -292,7 +292,7 @@ public:
 	
 	long int *representative; // [nb_points_or_lines]
 
-	ring_theory::longinteger_object *stab_order;
+	algebra::ring_theory::longinteger_object *stab_order;
 	groups::sims *stab;
 	groups::strong_generators *Stab_Strong_gens;
 
@@ -344,11 +344,11 @@ class classify_cubic_curves {
 public:
 
 	int q;
-	field_theory::finite_field *F; // do not free
+	algebra::field_theory::finite_field *F; // do not free
 	actions::action *A; // do not free
 
 	cubic_curve_with_action *CCA; // do not free
-	algebraic_geometry::cubic_curve *CC; // do not free
+	geometry::algebraic_geometry::cubic_curve *CC; // do not free
 
 	arc_generator *Arc_gen;
 
@@ -422,9 +422,9 @@ class cubic_curve_with_action {
 public:
 
 	int q;
-	field_theory::finite_field *F; // do not free
+	algebra::field_theory::finite_field *F; // do not free
 
-	algebraic_geometry::cubic_curve *CC; // do not free
+	geometry::algebraic_geometry::cubic_curve *CC; // do not free
 
 	actions::action *A; // linear group PGGL(3,q)
 	actions::action *A2; // linear group PGGL(3,q) acting on lines
@@ -438,7 +438,7 @@ public:
 	cubic_curve_with_action();
 	~cubic_curve_with_action();
 	void init(
-			algebraic_geometry::cubic_curve *CC,
+			geometry::algebraic_geometry::cubic_curve *CC,
 			actions::action *A,
 			int verbose_level);
 
@@ -456,7 +456,7 @@ public:
 	int n;
 	int Q;
 	int len; // = n + 1
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	geometry::other_geometry::hermitian *H;
 
 	long int *Pts;
@@ -534,9 +534,9 @@ public:
 	int *Basis; // [depth * vector_space_dimension]
 	int *base_cols;
 
-	field_theory::finite_field *Fq;
-	field_theory::finite_field *FQ;
-	field_theory::subfield_structure *SubS;
+	algebra::field_theory::finite_field *Fq;
+	algebra::field_theory::finite_field *FQ;
+	algebra::field_theory::subfield_structure *SubS;
 	geometry::projective_geometry::projective_space *P;
 
 
@@ -548,7 +548,7 @@ public:
 
 	actions::action *A_PGLQ; // PGL(m,Q)
 
-	linear_algebra::vector_space *VS;
+	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control1;
 	poset_classification::poset_with_group_action *Poset1;
 	poset_classification::poset_classification *Gen;
@@ -716,18 +716,18 @@ public:
 	projective_geometry::projective_space_with_action *Codomain;
 
 
-	ring_theory::homogeneous_polynomial_domain *Ring;
+	algebra::ring_theory::homogeneous_polynomial_domain *Ring;
 
-	expression_parser::symbolic_object_builder *Formula;
+	algebra::expression_parser::symbolic_object_builder *Formula;
 
 	int object_in_codomain_idx;
-	orbiter_kernel_system::symbol_table_object_type object_in_codomain_type;
+	other::orbiter_kernel_system::symbol_table_object_type object_in_codomain_type;
 
 	applications_in_algebraic_geometry::cubic_surfaces_in_general::surface_create
 		*object_in_codomain_cubic_surface;
 
 	int f_object_in_codomain;
-	algebraic_geometry::variety_object *Variety_object;
+	geometry::algebraic_geometry::variety_object *Variety_object;
 
 	std::string label_txt;
 	std::string label_tex;
@@ -808,7 +808,7 @@ public:
 	actions::action *A;
 
 
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 
 
 	int N; // = O->nb_points
@@ -840,24 +840,24 @@ public:
 	void print(
 			std::ostream &ost, long int *S, int len);
 	void make_graphs(
-			orbiter_kernel_system::orbiter_data_file *ODF,
+			other::orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int f_split, int split_r, int split_m,
 			int f_lexorder_test,
 			std::string &fname_mask,
 			int verbose_level);
 	void make_one_graph(
-			orbiter_kernel_system::orbiter_data_file *ODF,
+			other::orbiter_kernel_system::orbiter_data_file *ODF,
 			std::string &prefix,
 			int orbit_idx,
 			int f_lexorder_test,
-			graph_theory::colored_graph *&CG,
+			combinatorics::graph_theory::colored_graph *&CG,
 			int verbose_level);
 	void create_graph(
-			orbiter_kernel_system::orbiter_data_file *ODF,
+			other::orbiter_kernel_system::orbiter_data_file *ODF,
 		int orbit_idx,
 		long int *candidates, int nb_candidates,
-		graph_theory::colored_graph *&CG,
+		combinatorics::graph_theory::colored_graph *&CG,
 		int verbose_level);
 	void compute_coloring(
 			long int *starter, int starter_size,
@@ -891,17 +891,17 @@ public:
 
 
 	
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 		// only a copy of a pointer, not to be freed
-	orthogonal_geometry::orthogonal *O;
+	geometry::orthogonal_geometry::orthogonal *O;
 		// only a copy of a pointer, not to be freed
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 		// only a copy of a pointer, not to be freed
 
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
 
-	linear_algebra::vector_space *VS;
+	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
@@ -929,9 +929,9 @@ public:
 		int verbose_level);
 	void init(
 			actions::action *A,
-			orthogonal_geometry::orthogonal *O,
+			geometry::orthogonal_geometry::orthogonal *O,
 		int epsilon, int n, int k,
-		field_theory::finite_field *F, int depth,
+		algebra::field_theory::finite_field *F, int depth,
 		int verbose_level);
 	void init2(
 			int depth, int verbose_level);
@@ -941,7 +941,7 @@ public:
 			int depth, int orbit_idx, int verbose_level);
 	void dual_polar_graph(
 			int depth, int orbit_idx,
-			ring_theory::longinteger_object *&Rank_table,
+			algebra::ring_theory::longinteger_object *&Rank_table,
 			int &nb_maximals,
 		int verbose_level);
 	void show_stabilizer(
@@ -959,9 +959,9 @@ public:
 	void get_stabilizer(
 			int orbit_idx,
 			data_structures_groups::group_container &G,
-			ring_theory::longinteger_object &go_G);
+			algebra::ring_theory::longinteger_object &go_G);
 	void get_orbit_length(
-			int orbit_idx, ring_theory::longinteger_object &length);
+			int orbit_idx, algebra::ring_theory::longinteger_object &length);
 	int get_orbit_length_as_int(
 			int orbit_idx);
 	void orbit_element_unrank(
@@ -997,12 +997,12 @@ public:
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *gen;
 
-	data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
+	other::data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
 	long int *blocking_set;
 	int blocking_set_len;
 	int *sz; // [Inc->nb_cols]
 	
-	data_structures::fancy_set *active_set;
+	other::data_structures::fancy_set *active_set;
 	int *sz_active_set; // [Inc->nb_cols + 1]
 
 	std::deque<std::vector<int> > solutions;
@@ -1055,7 +1055,7 @@ public:
 
 class singer_cycle {
 public:	
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 	actions::action *A2;
 	int n;
@@ -1064,7 +1064,7 @@ public:
 	int *Singer_matrix;
 	data_structures_groups::vector_ge *nice_gens;
 	groups::strong_generators *SG;
-	ring_theory::longinteger_object target_go;
+	algebra::ring_theory::longinteger_object target_go;
 	geometry::projective_geometry::projective_space *P;
 	int *singer_point_list;
 	int *singer_point_list_inv;
@@ -1083,7 +1083,7 @@ public:
 	singer_cycle();
 	~singer_cycle();
 	void init(
-			int n, field_theory::finite_field *F, actions::action *A,
+			int n, algebra::field_theory::finite_field *F, actions::action *A,
 			actions::action *A2, int verbose_level);
 	void init_lines(
 			int verbose_level);
@@ -1107,7 +1107,7 @@ public:
 	int n;
 	int q;
 
-	field_theory::finite_field *F;
+	algebra::field_theory::finite_field *F;
 	actions::action *A;
 	actions::action *A0;
 
@@ -1117,9 +1117,9 @@ public:
 
 
 	groups::strong_generators *SG;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	group_constructions::wreath_product *W;
-	linear_algebra::vector_space *VS;
+	algebra::linear_algebra::vector_space *VS;
 	poset_classification::poset_classification_control *Control;
 	poset_classification::poset_with_group_action *Poset;
 	poset_classification::poset_classification *Gen;
@@ -1129,7 +1129,7 @@ public:
 	tensor_classify();
 	~tensor_classify();
 	void init(
-			field_theory::finite_field *F, group_constructions::linear_group *LG,
+			algebra::field_theory::finite_field *F, group_constructions::linear_group *LG,
 			int verbose_level);
 	void classify_poset(
 			int depth,
@@ -1144,7 +1144,7 @@ public:
 		int verbose_level);
 	void report(
 			int f_poset_classify, int poset_classify_depth,
-			graphics::layered_graph_draw_options *draw_options,
+			other::graphics::layered_graph_draw_options *draw_options,
 			int verbose_level);
 };
 

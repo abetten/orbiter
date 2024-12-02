@@ -21,11 +21,13 @@ namespace projective_geometry {
 
 projective_space_plane::projective_space_plane()
 {
+	Record_birth();
 		P = NULL;
 }
 
 projective_space_plane::~projective_space_plane()
 {
+	Record_death();
 }
 
 void projective_space_plane::init(
@@ -141,7 +143,7 @@ int projective_space_plane::conic_test(
 	long int the_set[6];
 	int six_coeffs[6];
 	int i;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "projective_space_plane::conic_test" << endl;
@@ -314,7 +316,7 @@ int projective_space_plane::determine_conic_in_plane(
 
 
 int projective_space_plane::determine_cubic_in_plane(
-		ring_theory::homogeneous_polynomial_domain *Poly_3_3,
+		algebra::ring_theory::homogeneous_polynomial_domain *Poly_3_3,
 		int nb_pts, long int *Pts, int *coeff10,
 		int verbose_level)
 {
@@ -661,7 +663,7 @@ int projective_space_plane::determine_hermitian_form_in_plane(
 	int i, x, y, z, xq, yq, zq, rk;
 	int Q, q, little_e;
 	int kernel_m, kernel_n;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space_plane::determine_hermitian_form_in_plane" << endl;
@@ -788,13 +790,13 @@ void projective_space_plane::conic_type_randomized(
 	int vec[3];
 
 	int subset[5];
-	ring_theory::longinteger_object conic_rk, aa;
+	algebra::ring_theory::longinteger_object conic_rk, aa;
 	long int *pts_on_conic;
 	int allocation_length;
 	other_geometry::geometry_global Gg;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
-	orbiter_kernel_system::os_interface Os;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "projective_space_plane::conic_type_randomized" << endl;
@@ -981,7 +983,7 @@ void projective_space_plane::conic_type_randomized(
 							<< " conics" << endl;
 
 
-					data_structures::tally C;
+					other::data_structures::tally C;
 					int f_second = false;
 
 					C.init(nb_pts_on_conic, len, f_second, 0);
@@ -1039,7 +1041,7 @@ void projective_space_plane::conic_intersection_type(
 	int threshold,
 	int *&intersection_type, int &highest_intersection_number,
 	int f_save_largest_sets,
-	data_structures::set_of_sets *&largest_sets,
+	other::data_structures::set_of_sets *&largest_sets,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1076,7 +1078,7 @@ void projective_space_plane::conic_intersection_type(
 			verbose_level - 1);
 	}
 
-	data_structures::tally C;
+	other::data_structures::tally C;
 	int f_second = false;
 
 	C.init(nb_pts_on_conic, nb_conics, f_second, 0);
@@ -1104,7 +1106,7 @@ void projective_space_plane::conic_intersection_type(
 	}
 
 	if (f_save_largest_sets) {
-		largest_sets = NEW_OBJECT(data_structures::set_of_sets);
+		largest_sets = NEW_OBJECT(other::data_structures::set_of_sets);
 		t = C.nb_types - 1;
 		f = C.type_first[t];
 		l = C.type_len[t];
@@ -1146,8 +1148,8 @@ void projective_space_plane::determine_nonconical_six_subsets(
 	int *nb_pts_on_conic;
 	int len;
 
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_plane::determine_nonconical_six_subsets" << endl;
@@ -1263,7 +1265,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 		Nb_E[i] = nb_E;
 	}
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(Nb_E, nb, false, 0);
 	if (f_v) {
@@ -1320,7 +1322,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 			}
 		}
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		std::string fname;
 
 		fname.assign("set_system.csv");
@@ -1330,7 +1332,7 @@ void projective_space_plane::determine_nonconical_six_subsets(
 				<< " of size " << Fio.file_size(fname) << endl;
 
 
-		data_structures::tally T2;
+		other::data_structures::tally T2;
 
 		T2.init(System, nb_idx * 6, false, 0);
 		if (f_v) {
@@ -1366,13 +1368,13 @@ void projective_space_plane::conic_type(
 	int vec[3];
 
 	int subset[5];
-	ring_theory::longinteger_object conic_rk, aa;
+	algebra::ring_theory::longinteger_object conic_rk, aa;
 	int *coords;
 	long int *pts_on_conic;
 	int allocation_length;
 	other_geometry::geometry_global Gg;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_plane::conic_type, "
@@ -1591,7 +1593,7 @@ void projective_space_plane::conic_type(
 							<< " conics" << endl;
 
 
-					data_structures::tally C;
+					other::data_structures::tally C;
 					int f_second = false;
 
 					C.init(nb_pts_on_conic, nb_conics, f_second, 0);
@@ -1667,7 +1669,7 @@ void projective_space_plane::find_nucleus(
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, l, sz, idx, t1, t2;
 	int *Lines;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_plane::find_nucleus" << endl;
@@ -1789,7 +1791,7 @@ void projective_space_plane::points_on_projective_triangle(
 	long int three_lines[3];
 	long int *Pts;
 	int sz, h, i, a;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "projective_space_plane::points_on_projective_triangle" << endl;

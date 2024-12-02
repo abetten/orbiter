@@ -21,6 +21,7 @@ namespace projective_geometry {
 
 ring_with_action::ring_with_action()
 {
+	Record_birth();
 	PA = NULL;
 
 	Poly_ring = NULL;
@@ -31,6 +32,7 @@ ring_with_action::ring_with_action()
 
 ring_with_action::~ring_with_action()
 {
+	Record_death();
 	if (AonHPD) {
 		FREE_OBJECT(AonHPD);
 	}
@@ -39,7 +41,7 @@ ring_with_action::~ring_with_action()
 
 void ring_with_action::ring_with_action_init(
 		projective_geometry::projective_space_with_action *PA,
-		ring_theory::homogeneous_polynomial_domain *Poly_ring,
+		algebra::ring_theory::homogeneous_polynomial_domain *Poly_ring,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -92,7 +94,7 @@ void ring_with_action::lift_mapping(
 
 
 	int frobenius;
-	linear_algebra::linear_algebra_global LA;
+	algebra::linear_algebra::linear_algebra_global LA;
 
 	if (f_v) {
 		cout << "ring_with_action::lift_mapping "
@@ -170,8 +172,8 @@ void ring_with_action::nauty_interface(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // called from variety_stabilizer_compute::compute_canonical_form_of_variety
 {
@@ -240,8 +242,8 @@ void ring_with_action::nauty_interface_with_precomputed_data(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // Nauty interface with precomputed data
 {
@@ -290,8 +292,8 @@ void ring_with_action::nauty_interface_from_scratch(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
-		data_structures::bitvector *&Canonical_form,
-		l1_interfaces::nauty_output *&NO,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // Nauty interface without precomputed data
 {

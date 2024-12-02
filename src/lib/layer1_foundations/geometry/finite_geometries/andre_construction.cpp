@@ -22,6 +22,7 @@ namespace finite_geometries {
 
 andre_construction::andre_construction()
 {
+	Record_birth();
 	order = 0;
 	spread_size = 0;
 	n = 0;
@@ -44,6 +45,7 @@ andre_construction::andre_construction()
 
 andre_construction::~andre_construction()
 {
+	Record_death();
 	if (Grass) {
 		FREE_OBJECT(Grass);
 	}
@@ -71,15 +73,15 @@ andre_construction::~andre_construction()
 }
 
 void andre_construction::init(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 	int k, long int *spread_elements_numeric,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	number_theory::number_theory_domain NT;
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	algebra::number_theory::number_theory_domain NT;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction::init" << endl;

@@ -21,6 +21,7 @@ namespace cubic_surfaces_and_arcs {
 
 trihedral_pair_with_action::trihedral_pair_with_action()
 {
+	Record_birth();
 	AL = NULL;
 
 	//int The_six_plane_equations[6 * 4];
@@ -65,6 +66,7 @@ trihedral_pair_with_action::trihedral_pair_with_action()
 
 trihedral_pair_with_action::~trihedral_pair_with_action()
 {
+	Record_death();
 	if (The_surface_equations) {
 		FREE_int(The_surface_equations);
 	}
@@ -334,7 +336,7 @@ void trihedral_pair_with_action::init(
 
 	// the problem is here:
 	{
-		ring_theory::longinteger_object ago;
+		algebra::ring_theory::longinteger_object ago;
 
 		if (f_v) {
 			cout << "trihedral_pair_with_action::init "
@@ -377,7 +379,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 	//long int Nine_lines[9];
 	//long int *v;
 	//int sz;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::loop_over_trihedral_pairs" << endl;
@@ -544,7 +546,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 
 
 
-			algebra::matrix_group *M;
+			algebra::basic_algebra::matrix_group *M;
 
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
@@ -723,7 +725,7 @@ groups::strong_generators *trihedral_pair_with_action::create_stabilizer_of_trih
 
 	groups::strong_generators *gens_dual;
 	groups::strong_generators *gens;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	gens = NEW_OBJECT(groups::strong_generators);
 
@@ -915,10 +917,10 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(
 	}
 
 
-	Double_triplet_type_distribution = NEW_OBJECT(data_structures::tally);
+	Double_triplet_type_distribution = NEW_OBJECT(other::data_structures::tally);
 
 	Double_triplet_type_distribution->init(Iso_type_as_double_triplet, 120, false, 0);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	Double_triplet_types = Double_triplet_type_distribution->get_set_partition_and_types(
 			Double_triplet_type_values,
@@ -938,7 +940,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(
 void trihedral_pair_with_action::print_FG(
 		std::ostream &ost)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	ost << "$F$-planes:\\\\";
 	ost << "$$" << endl;
@@ -1398,7 +1400,7 @@ void trihedral_pair_with_action::report(
 #endif
 
 
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 	Aut_gens->group_order(go);
 	ost << "The automorphism group of the surface has order "
@@ -1416,7 +1418,7 @@ void trihedral_pair_with_action::report(
 void trihedral_pair_with_action::report_iso_type_as_double_triplets(
 		std::ostream &ost)
 {
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	int i;
 
 	ost << "The isomorphism types of the trihedral pairs "

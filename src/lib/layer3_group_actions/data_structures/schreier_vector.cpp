@@ -17,6 +17,7 @@ namespace data_structures_groups {
 
 schreier_vector::schreier_vector()
 {
+	Record_birth();
 	gen_hdl_first = 0;
 	nb_gen = 0;
 	number_of_orbits = -1;
@@ -27,6 +28,7 @@ schreier_vector::schreier_vector()
 
 schreier_vector::~schreier_vector()
 {
+	Record_death();
 	if (sv) {
 		FREE_int(sv);
 	}
@@ -229,7 +231,7 @@ int schreier_vector::determine_depth_recursion(
 	int *depth, int *ancestor, int pos)
 {
 	int pt, pt_loc, d;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	pt = prev[pos];
 	if (pt == -1) {
@@ -293,7 +295,7 @@ void schreier_vector::relabel_points(
 
 	int nb_old_orbit_reps = 0, idx, j;
 	int *old_orbit_reps = NULL;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::relabel_points" << endl;
@@ -549,7 +551,7 @@ void schreier_vector::orbit_stats(
 	int *pts;
 	int *depth;
 	int *ancestor;
-	data_structures::algorithms Algorithms;
+	other::data_structures::algorithms Algorithms;
 
 
 	n = sv[0];
@@ -624,7 +626,7 @@ void schreier_vector::orbit_stats(
 	orbit_length = NEW_int(nb_orbits);
 	total_depth = NEW_int(nb_orbits);
 
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int nb_orb, a;
 
 	nb_orb = 0;
@@ -661,8 +663,8 @@ void schreier_vector::orbit_of_point(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	data_structures::sorting Sorting;
-	data_structures::algorithms Algorithms;
+	other::data_structures::sorting Sorting;
+	other::data_structures::algorithms Algorithms;
 
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
@@ -854,7 +856,7 @@ void schreier_vector::init_shallow_schreier_forest(
 	int n;
 	int *point_list;
 	int *svec;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::init_shallow_schreier_forest" << endl;
@@ -986,7 +988,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	int *points;
 	int orbit_len;
 	int idx_of_root_node;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph" << endl;
@@ -1083,10 +1085,10 @@ void schreier_vector::export_tree_as_layered_graph(
 		}
 	}
 
-	graph_theory::layered_graph *LG;
+	combinatorics::graph_theory::layered_graph *LG;
 	int n1, n2, j2;
 
-	LG = NEW_OBJECT(graph_theory::layered_graph);
+	LG = NEW_OBJECT(combinatorics::graph_theory::layered_graph);
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph "
 				"before LG->init" << endl;
@@ -1166,7 +1168,7 @@ void schreier_vector::export_tree_as_layered_graph(
 				text2, 0/*verbose_level*/);
 	}
 
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	string fname;
@@ -1197,7 +1199,7 @@ void schreier_vector::trace_back(
 	int pr, n, pos;
 	int *points;
 	int *prev;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	n = sv[0];
 	points = sv + 1;

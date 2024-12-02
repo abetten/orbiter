@@ -20,6 +20,7 @@ namespace apps_combinatorics {
 
 combinatorial_object_activity::combinatorial_object_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 	f_has_geometric_object = false;
@@ -32,6 +33,7 @@ combinatorial_object_activity::combinatorial_object_activity()
 
 combinatorial_object_activity::~combinatorial_object_activity()
 {
+	Record_death();
 }
 
 
@@ -79,7 +81,7 @@ void combinatorial_object_activity::init_combo(
 }
 
 void combinatorial_object_activity::perform_activity(
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -155,7 +157,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 			cout << endl;
 		}
 
-		data_structures::tally T;
+		other::data_structures::tally T;
 
 		T.init(type, P->Subspaces->N_lines, false, 0);
 
@@ -279,7 +281,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 					"f_ideal" << endl;
 		}
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->ideal_ring_label);
@@ -361,7 +363,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 
 	if (Descr->f_save) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname = GOC->label_txt + ".txt";
@@ -384,7 +386,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 
 
 void combinatorial_object_activity::perform_activity_combo(
-		orbiter_kernel_system::activity_output *&AO,
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -473,7 +475,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_draw_incidence_matrices" << endl;
 		}
 
-		graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
+		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
 
 		Draw_incidence_structure_description = Get_draw_incidence_structure_options(Descr->draw_incidence_matrices_options_label);
 
@@ -490,7 +492,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_test_distinguishing_property" << endl;
 		}
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
 
 		CG = Get_object_of_type_graph(Descr->test_distinguishing_property_graph);
@@ -534,7 +536,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_compute_frequency" << endl;
 		}
 
-		graph_theory::colored_graph *CG;
+		combinatorics::graph_theory::colored_graph *CG;
 
 
 		CG = Get_object_of_type_graph(Descr->compute_frequency_graph);
@@ -553,7 +555,7 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_ideal" << endl;
 		}
 
-		ring_theory::homogeneous_polynomial_domain *HPD;
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
 		HPD = Get_ring(Descr->ideal_ring_label);

@@ -23,6 +23,7 @@ namespace apps_combinatorics {
 
 dd_search_singletons::dd_search_singletons()
 {
+	Record_birth();
 	DD_lifting = NULL;
 	DD = NULL;
 
@@ -40,6 +41,7 @@ dd_search_singletons::dd_search_singletons()
 
 dd_search_singletons::~dd_search_singletons()
 {
+	Record_death();
 
 }
 
@@ -71,7 +73,7 @@ void dd_search_singletons::search_case_singletons(
 	}
 
 
-	Live_points = NEW_OBJECT(data_structures::set_of_sets);
+	Live_points = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	Live_points->init_basic_constant_size(
 			DD->nb_live_points,

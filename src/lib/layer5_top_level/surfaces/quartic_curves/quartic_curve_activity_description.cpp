@@ -20,6 +20,7 @@ namespace quartic_curves {
 
 quartic_curve_activity_description::quartic_curve_activity_description()
 {
+	Record_birth();
 
 	f_report = false;
 
@@ -44,6 +45,7 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 
 quartic_curve_activity_description::~quartic_curve_activity_description()
 {
+	Record_death();
 }
 
 int quartic_curve_activity_description::read_arguments(
@@ -52,7 +54,7 @@ int quartic_curve_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "quartic_curve_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

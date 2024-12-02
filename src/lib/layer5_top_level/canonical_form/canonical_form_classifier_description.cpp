@@ -20,6 +20,7 @@ namespace canonical_form {
 
 canonical_form_classifier_description::canonical_form_classifier_description()
 {
+	Record_birth();
 
 	f_space = false;
 	//std::string space_label;
@@ -98,6 +99,7 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 canonical_form_classifier_description::~canonical_form_classifier_description()
 {
+	Record_death();
 }
 
 int canonical_form_classifier_description::read_arguments(
@@ -106,7 +108,7 @@ int canonical_form_classifier_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "canonical_form_classifier_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

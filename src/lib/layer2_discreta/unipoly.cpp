@@ -573,7 +573,7 @@ void unipoly::Singer(int p, int f, int verbose_level)
 	int m, i, a, b, low, high;
 	Vector vp, ve;
 	unipoly x;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (p <= 1) {
 		cout << "unipoly::Singer: p <= 1" << endl;
@@ -628,7 +628,7 @@ void unipoly::get_an_irreducible_polynomial(
 	int low, high, q, i;
 	domain *d;
 	unipoly x;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "unipoly::get_an_irreducible_polynomial" << endl;
@@ -936,7 +936,7 @@ void unipoly::Phi(int n, int verbose_level)
 static int multiply(Vector & vp, Vector & ve)
 {
 	int i, l, n, m;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 	
 	n = 1;
 	l = vp.s_l();
@@ -1023,10 +1023,10 @@ void unipoly::charpoly(
 	int f_vv = (verbose_level >= 2);
 	discreta_matrix M;
 	int i, j, k, a, p, h;
-	field_theory::finite_field Fq;
+	algebra::field_theory::finite_field Fq;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
-	number_theory::number_theory_domain NT;
+	algebra::number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "unipoly::charpoly" << endl;

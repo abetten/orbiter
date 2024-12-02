@@ -24,6 +24,7 @@ namespace group_constructions {
 
 polarity_extension::polarity_extension()
 {
+	Record_birth();
 	M = NULL;
 	P = NULL;
 	Polarity = NULL;
@@ -74,6 +75,7 @@ polarity_extension::polarity_extension()
 
 polarity_extension::~polarity_extension()
 {
+	Record_death();
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
@@ -140,7 +142,7 @@ void polarity_extension::init(
 	}
 
 
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 
 	if (!A->is_matrix_group()) {
@@ -320,7 +322,7 @@ void polarity_extension::init(
 		cout << endl;
 	}
 
-	Page_storage = NEW_OBJECT(data_structures::page_storage);
+	Page_storage = NEW_OBJECT(other::data_structures::page_storage);
 	if (f_v) {
 		cout << "polarity_extension::init "
 				"before Page_storage->init" << endl;
@@ -643,7 +645,7 @@ void polarity_extension::create_rho_A_rho(
 		cout << "polarity_extension::create_rho_A_rho" << endl;
 	}
 
-	linear_algebra::linear_algebra_global LA;
+	algebra::linear_algebra::linear_algebra_global LA;
 
 
 	int *frame;
@@ -1012,7 +1014,7 @@ void polarity_extension::put_digit(
 	int h0 = 0;
 	int h, h1, a;
 	int nb_bits = 0;
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit;
@@ -1042,7 +1044,7 @@ int polarity_extension::get_digit(
 	int h0 = 0;
 	int h, h1, a, d;
 	int nb_bits = 0;
-	data_structures::data_structures_global D;
+	other::data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit;

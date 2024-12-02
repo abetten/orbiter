@@ -21,6 +21,7 @@ namespace quartic_curves {
 
 quartic_curve_domain_with_action::quartic_curve_domain_with_action()
 {
+	Record_birth();
 		PA = NULL;
 		f_semilinear = false;
 		Dom = NULL;
@@ -33,10 +34,11 @@ quartic_curve_domain_with_action::quartic_curve_domain_with_action()
 
 quartic_curve_domain_with_action::~quartic_curve_domain_with_action()
 {
+	Record_death();
 }
 
 void quartic_curve_domain_with_action::init(
-		algebraic_geometry::quartic_curve_domain *Dom,
+		geometry::algebraic_geometry::quartic_curve_domain *Dom,
 		projective_geometry::projective_space_with_action *PA,
 		int verbose_level)
 {
@@ -139,7 +141,7 @@ void quartic_curve_domain_with_action::table_of_quartic_curves(
 	}
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	string fname;
 	string headings;
@@ -203,7 +205,7 @@ void quartic_curve_domain_with_action::create_all_quartic_curves_over_a_given_fi
 		cout << "quartic_curve_domain_with_action::create_all_quartic_curves_over_a_given_field" << endl;
 	}
 
-	knowledge_base::knowledge_base K;
+	combinatorics::knowledge_base::knowledge_base K;
 
 	nb_quartic_curves = K.quartic_curves_nb_reps(PA->F->q);
 

@@ -85,7 +85,7 @@ void poset_classification::identify_and_get_stabilizer(
 	//set_and_stabilizer *SaS0;
 	//data_structures_groups::set_and_stabilizer *SaS;
 	int *Elt;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::identify_and_get_stabilizer" << endl;
@@ -150,8 +150,8 @@ void poset_classification::test_identify(
 	long int *set1;
 	long int *set2;
 	groups::sims *S;
-	ring_theory::longinteger_object go;
-	orbiter_kernel_system::os_interface Os;
+	algebra::ring_theory::longinteger_object go;
+	other::orbiter_kernel_system::os_interface Os;
 
 	if (f_v) {
 		cout << "poset_classification::test_identify, "
@@ -276,7 +276,7 @@ int poset_classification::poset_classification_apply_isomorphism(
 	int f_v = (verbose_level >= 1);
 	int next_node;
 	poset_orbit_node *O;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	int *Elt1, *Elt2;
 
 	O = get_node(current_node);
@@ -382,7 +382,7 @@ int poset_classification::trace_set_recursion(
 	int current_extension, i, t, next_node;
 	int f_failure_to_find_point;
 	poset_orbit_node *O = get_node(cur_node); //&root[cur_node];
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "poset_classification::trace_set_recursion "

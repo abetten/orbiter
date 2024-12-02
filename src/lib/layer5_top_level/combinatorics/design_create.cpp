@@ -18,6 +18,7 @@ namespace apps_combinatorics {
 
 design_create::design_create()
 {
+	Record_birth();
 	Descr = NULL;
 
 	//std::string prefix;
@@ -59,6 +60,7 @@ design_create::design_create()
 
 design_create::~design_create()
 {
+	Record_death();
 	if (F) {
 		FREE_OBJECT(F);
 	}
@@ -84,7 +86,7 @@ void design_create::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "design_create::init" << endl;
@@ -190,8 +192,8 @@ void design_create::init(
 		A2 = AG->A; // ToDo!
 
 
-		orbiter_kernel_system::file_io Fio;
-		data_structures::set_of_sets *SoS_base_blocks;
+		other::orbiter_kernel_system::file_io Fio;
+		other::data_structures::set_of_sets *SoS_base_blocks;
 
 		Fio.Csv_file_support->read_column_and_parse(
 				Descr->list_of_base_blocks_fname,
@@ -220,7 +222,7 @@ void design_create::init(
 		}
 
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		int *Base_block_selection;
 		int nb_base_blocks;
@@ -275,7 +277,7 @@ void design_create::init(
 
 
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		if (f_v) {
 			cout << "design_create::init "
@@ -429,7 +431,7 @@ void design_create::init(
 		degree = Descr->list_of_blocks_coded_v;
 		k = Descr->list_of_blocks_coded_k;
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		int m, n;
 
 		Fio.Csv_file_support->lint_matrix_read_csv(
@@ -495,7 +497,7 @@ void design_create::init(
 
 		degree = Descr->list_of_blocks_from_file_v;
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		std::string *Column;
 		int len;
@@ -509,7 +511,7 @@ void design_create::init(
 
 
 
-		data_structures::string_tools ST;
+		other::data_structures::string_tools ST;
 
 		int i;
 		int m, k;
@@ -646,7 +648,7 @@ void design_create::init(
 
 		degree = 2 * n;
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		long int nb_blocks;
 
 
@@ -733,7 +735,7 @@ void design_create::init(
 
 		degree = 3 * s;
 
-		combinatorics::combinatorics_domain Combi;
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
 		long int nb_blocks;
 
 
@@ -983,7 +985,7 @@ void design_create::init(
 }
 
 void design_create::create_design_PG_2_q(
-		field_theory::finite_field *F,
+		algebra::field_theory::finite_field *F,
 		long int *&set, int &sz, int &k,
 		int verbose_level)
 // creates a projective_space_with_action object
@@ -994,8 +996,8 @@ void design_create::create_design_PG_2_q(
 		cout << "design_create::create_design_PG_2_q" << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 	int j;
 	int f_semilinear;
 	//int *block;
@@ -1084,7 +1086,7 @@ void design_create::unrank_block_in_PG_2_q(
 		cout << "design_create::unrank_block_in_PG_2_q rk=" << rk
 				<< " P->N_points=" << P->Subspaces->N_points << " k=" << k << endl;
 	}
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Combi.unrank_k_subset(rk, block, P->Subspaces->N_points, k);
 	if (f_v) {
@@ -1107,8 +1109,8 @@ int design_create::rank_block_in_PG_2_q(
 	if (f_v) {
 		cout << "design_create::rank_block_in_PG_2_q" << endl;
 	}
-	combinatorics::combinatorics_domain Combi;
-	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	other::data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(block, k);
 	rk = Combi.rank_k_subset(block, P->Subspaces->N_points, k);
@@ -1122,7 +1124,7 @@ int design_create::get_nb_colors_as_two_design(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	int nb_c;
 
 	if (f_v) {
@@ -1144,7 +1146,7 @@ int design_create::get_color_as_two_design_assume_sorted(
 	if (f_v) {
 		cout << "design_create::get_color_as_two_design_assume_sorted" << endl;
 	}
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	Combi.unrank_k_subset(
 			design[0], block, P->Subspaces->N_points, k);
@@ -1182,7 +1184,7 @@ void design_create::compute_incidence_matrix_from_set_of_codes(
 		cout << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	if (f_has_set) {

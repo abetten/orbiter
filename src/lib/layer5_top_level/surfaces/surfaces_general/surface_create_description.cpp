@@ -21,6 +21,7 @@ namespace cubic_surfaces_in_general {
 
 surface_create_description::surface_create_description()
 {
+	Record_birth();
 
 	// surface_create_1.tex
 
@@ -139,6 +140,7 @@ surface_create_description::surface_create_description()
 
 surface_create_description::~surface_create_description()
 {
+	Record_death();
 }
 
 int surface_create_description::read_arguments(
@@ -146,7 +148,7 @@ int surface_create_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	cout << "surface_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

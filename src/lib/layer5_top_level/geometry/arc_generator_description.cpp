@@ -18,6 +18,7 @@ namespace apps_geometry {
 
 arc_generator_description::arc_generator_description()
 {
+	Record_birth();
 
 	f_control = false;
 	//std::string control_label;
@@ -52,6 +53,7 @@ arc_generator_description::arc_generator_description()
 
 arc_generator_description::~arc_generator_description()
 {
+	Record_death();
 }
 
 int arc_generator_description::read_arguments(
@@ -60,7 +62,7 @@ int arc_generator_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 	if (f_v) {
@@ -125,7 +127,7 @@ int arc_generator_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-forbidden_point_set") == 0) {
 			f_has_forbidden_point_set = true;
-			orbiter_kernel_system::os_interface Os;
+			other::orbiter_kernel_system::os_interface Os;
 
 			i++;
 

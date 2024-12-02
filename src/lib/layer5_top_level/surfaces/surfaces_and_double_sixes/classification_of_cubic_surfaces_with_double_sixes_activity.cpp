@@ -19,12 +19,14 @@ namespace cubic_surfaces_and_double_sixes {
 
 classification_of_cubic_surfaces_with_double_sixes_activity::classification_of_cubic_surfaces_with_double_sixes_activity()
 {
+	Record_birth();
 	Descr = NULL;
 	SCW = NULL;
 }
 
 classification_of_cubic_surfaces_with_double_sixes_activity::~classification_of_cubic_surfaces_with_double_sixes_activity()
 {
+	Record_death();
 }
 
 void classification_of_cubic_surfaces_with_double_sixes_activity::init(

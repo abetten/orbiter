@@ -20,6 +20,7 @@ namespace apps_graph_theory {
 
 graph_modification_description::graph_modification_description()
 {
+	Record_birth();
 	f_complement = false;
 
 	f_distance_2 = false;
@@ -32,6 +33,7 @@ graph_modification_description::graph_modification_description()
 
 graph_modification_description::~graph_modification_description()
 {
+	Record_death();
 }
 
 
@@ -40,7 +42,7 @@ int graph_modification_description::check_and_parse_argument(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::check_and_parse_argument" << endl;
@@ -83,7 +85,7 @@ int graph_modification_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::read_arguments" << endl;
@@ -143,7 +145,7 @@ void graph_modification_description::print()
 }
 
 void graph_modification_description::apply(
-		graph_theory::colored_graph *&CG, int verbose_level)
+		combinatorics::graph_theory::colored_graph *&CG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

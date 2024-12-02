@@ -271,7 +271,7 @@ void memory::read_char(char *c)
 void memory::write_int(int i)
 {
 	int_4 i1 = (int_4) i;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	
 #ifdef DEBUG_WRITE_int
 	cout << "memory::write_int at " << used_length() << ", writing int " << i1 << endl;
@@ -285,7 +285,7 @@ void memory::read_int(int *i)
 	int_4 i1;
 	int l1, j, cur_p, l;
 	char *cp, *cp1;
-	orbiter_kernel_system::os_interface Os;
+	other::orbiter_kernel_system::os_interface Os;
 	
 	cur_p = cur_pointer();
 	l = used_length();
@@ -318,7 +318,7 @@ void memory::read_file(char *fname, int verbose_level)
 	FILE *fp;
 	int fsize;
 	char *pc;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	fsize = Fio.file_size(fname);
 	alloc(fsize);
@@ -342,7 +342,7 @@ void memory::write_file(char *fname, int verbose_level)
 	FILE *fp;
 	int size;
 	char *pc;
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	size = used_length();
 	pc = self.char_pointer;

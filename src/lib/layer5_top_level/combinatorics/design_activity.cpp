@@ -17,12 +17,14 @@ namespace apps_combinatorics {
 
 design_activity::design_activity()
 {
+	Record_birth();
 	Descr = NULL;
 
 }
 
 design_activity::~design_activity()
 {
+	Record_death();
 
 }
 
@@ -119,7 +121,7 @@ void design_activity::perform_activity(
 			cout << "design_activity::perform_activity f_export_incidence_matrix_latex" << endl;
 		}
 
-		graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
+		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description;
 
 		Draw_incidence_structure_description = Get_draw_incidence_structure_options(Descr->export_incidence_matrix_latex_draw_options);
 
@@ -249,7 +251,7 @@ void design_activity::perform_activity(
 		string fname;
 
 		fname = DC->label_txt + "_one_pt_ext_orb" + std::to_string(orbit_idx) + ".csv";
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		Fio.Csv_file_support->int_matrix_write_csv(
 				fname, Adj, n, n);
@@ -313,7 +315,7 @@ void design_activity::do_extract_solutions_by_index(
 
 	Int_vec_scan(prefix_text, prefix, prefix_sz);
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 	int *Sol_idx;
 	int nb_sol;
 	int sol_width = 0;
@@ -406,11 +408,11 @@ void design_activity::do_extract_solutions_by_index(
 		sol_width += prefix_sz;
 	}
 	else {
-		data_structures::set_of_sets *SoS;
+		other::data_structures::set_of_sets *SoS;
 		int underlying_set_size = 0;
 		int i, j;
 
-		SoS = NEW_OBJECT(data_structures::set_of_sets);
+		SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 		SoS->init_from_orbiter_file(underlying_set_size,
 				fname_in, verbose_level);
 		nb_sol = SoS->nb_sets;
@@ -612,7 +614,7 @@ void design_activity::do_load_table(
 }
 
 void design_activity::do_canonical_form(
-		canonical_form_classification::classification_of_objects_description
+		combinatorics::canonical_form_classification::classification_of_objects_description
 			*Canonical_form_Descr,
 		int verbose_level)
 {
@@ -690,7 +692,7 @@ void design_activity::do_export_inc(
 		ost << endl;
 		ost << "-1" << endl;
 	}
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "Written file " << fname
@@ -729,7 +731,7 @@ void design_activity::do_export_incidence_matrix_csv(
 				"fname=" << fname << endl;
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	Fio.Csv_file_support->int_matrix_write_csv(
@@ -748,7 +750,7 @@ void design_activity::do_export_incidence_matrix_csv(
 
 void design_activity::do_export_incidence_matrix_latex(
 		design_create *DC,
-		graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -771,9 +773,9 @@ void design_activity::do_export_incidence_matrix_latex(
 	nb_rows = DC->v;
 	nb_cols = DC->b;
 
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	Enc = NEW_OBJECT(canonical_form_classification::encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::canonical_form_classification::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	int i, j, f;
@@ -797,12 +799,12 @@ void design_activity::do_export_incidence_matrix_latex(
 		Enc->print_partition();
 	}
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	{
 		ofstream ost(fname);
-		l1_interfaces::latex_interface L;
+		other::l1_interfaces::latex_interface L;
 
 		L.head_easy(ost);
 
@@ -892,7 +894,7 @@ void design_activity::do_intersection_matrix(
 
 	}
 
-	algebra::algebra_global Algebra;
+	algebra::basic_algebra::algebra_global Algebra;
 	int coeff_I, coeff_J;
 
 	if (Algebra.is_lc_of_I_and_J(
@@ -907,7 +909,7 @@ void design_activity::do_intersection_matrix(
 
 	if (f_save) {
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 		string fname;
 
 		fname = DC->label_txt + "_AAt.csv";
@@ -953,14 +955,14 @@ void design_activity::do_export_blocks(
 
 	fname = DC->label_txt + "_blocks.csv";
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 	int v = DC->v;
 	int k = DC->k;
 	int b = DC->b;
 
 
-	orbiter_kernel_system::file_io Fio;
+	other::orbiter_kernel_system::file_io Fio;
 
 
 	#if 0
@@ -1069,7 +1071,7 @@ void design_activity::do_row_sums(
 		cout << "design_activity::do_row_sums" << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 	int i, j;
@@ -1086,7 +1088,7 @@ void design_activity::do_row_sums(
 		}
 	}
 
-	data_structures::tally T;
+	other::data_structures::tally T;
 
 	T.init(R, DC->v, false, 0);
 	if (f_v) {
@@ -1115,7 +1117,7 @@ void design_activity::do_tactical_decomposition(
 		cout << "design_activity::do_tactical_decomposition" << endl;
 	}
 
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 
 
@@ -1129,10 +1131,10 @@ void design_activity::do_tactical_decomposition(
 				DC->v, DC->b, DC->incma,
 				0 /* verbose_level */);
 
-		combinatorics::decomposition *Decomposition;
+		combinatorics::tactical_decompositions::decomposition *Decomposition;
 
 
-		Decomposition = NEW_OBJECT(combinatorics::decomposition);
+		Decomposition = NEW_OBJECT(combinatorics::tactical_decompositions::decomposition);
 
 		Decomposition->init_incidence_structure(
 				Inc,
@@ -1197,8 +1199,8 @@ void design_activity::do_tactical_decomposition(
 				cout, true /* f_enter_math */,
 			f_print_subscripts);
 
-		data_structures::set_of_sets *Row_classes;
-		data_structures::set_of_sets *Col_classes;
+		other::data_structures::set_of_sets *Row_classes;
+		other::data_structures::set_of_sets *Col_classes;
 
 		Decomposition->Stack->get_row_classes(Row_classes, verbose_level);
 		cout << "Row classes:\\\\" << endl;

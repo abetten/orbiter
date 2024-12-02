@@ -335,7 +335,7 @@ void permutation::scan(istream & is, int verbose_level)
 	int i, a_last, a, dig, ci;
 	char s[10000], c;
 	int si, largest_point = 0;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 	
 	//l = s_l();
 	perm.m_l(l);
@@ -759,7 +759,7 @@ void permutation::induce2(permutation & b)
 {
 	int n;
 	int i, j, k, i1, j1, k1, m;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	n = s_l();
 	m = (n * (n - 1)) >> 1;

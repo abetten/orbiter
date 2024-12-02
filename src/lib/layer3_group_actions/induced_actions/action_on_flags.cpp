@@ -17,6 +17,7 @@ namespace induced_actions {
 
 action_on_flags::action_on_flags()
 {
+	Record_birth();
 	A = NULL;
 	n = 0;
 	F = NULL;
@@ -32,6 +33,7 @@ action_on_flags::action_on_flags()
 
 action_on_flags::~action_on_flags()
 {
+	Record_death();
 }
 
 void action_on_flags::init(

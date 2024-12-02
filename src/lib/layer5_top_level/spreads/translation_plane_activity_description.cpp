@@ -18,6 +18,7 @@ namespace spreads {
 
 translation_plane_activity_description::translation_plane_activity_description()
 {
+	Record_birth();
 	f_export_incma = false;
 
 	f_p_rank = false;
@@ -28,6 +29,7 @@ translation_plane_activity_description::translation_plane_activity_description()
 
 translation_plane_activity_description::~translation_plane_activity_description()
 {
+	Record_death();
 }
 
 int translation_plane_activity_description::read_arguments(
@@ -36,7 +38,7 @@ int translation_plane_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "translation_plane_activity_description::read_arguments" << endl;

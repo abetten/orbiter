@@ -21,6 +21,7 @@ namespace orthogonal_geometry_applications {
 
 blt_set_domain_with_action::blt_set_domain_with_action()
 {
+	Record_birth();
 	A = NULL;
 	P = NULL;
 	O = NULL;
@@ -32,6 +33,7 @@ blt_set_domain_with_action::blt_set_domain_with_action()
 
 blt_set_domain_with_action::~blt_set_domain_with_action()
 {
+	Record_death();
 	if (PF) {
 		FREE_OBJECT(PF);
 	}
@@ -40,7 +42,7 @@ blt_set_domain_with_action::~blt_set_domain_with_action()
 void blt_set_domain_with_action::init(
 		actions::action *A,
 		geometry::projective_geometry::projective_space *P,
-		layer1_foundations::orthogonal_geometry::orthogonal *O,
+		layer1_foundations::geometry::orthogonal_geometry::orthogonal *O,
 		int f_create_extension_fields,
 		int verbose_level)
 {
@@ -54,7 +56,7 @@ void blt_set_domain_with_action::init(
 	blt_set_domain_with_action::O = O;
 
 
-	Blt_set_domain = NEW_OBJECT(orthogonal_geometry::blt_set_domain);
+	Blt_set_domain = NEW_OBJECT(geometry::orthogonal_geometry::blt_set_domain);
 
 	if (f_v) {
 		cout << "blt_set_domain_with_action::init "
@@ -68,7 +70,7 @@ void blt_set_domain_with_action::init(
 
 
 	if (f_create_extension_fields) {
-		PF = NEW_OBJECT(combinatorics::polynomial_function_domain);
+		PF = NEW_OBJECT(combinatorics::special_functions::polynomial_function_domain);
 
 		if (f_v) {
 			cout << "blt_set_domain_with_action::init "

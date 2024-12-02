@@ -20,12 +20,14 @@ namespace apps_coding_theory {
 
 code_modification_description::code_modification_description()
 {
+	Record_birth();
 	f_dual = false;
 
 }
 
 code_modification_description::~code_modification_description()
 {
+	Record_death();
 }
 
 
@@ -34,7 +36,7 @@ int code_modification_description::check_and_parse_argument(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "code_modification_description::check_and_parse_argument" << endl;
@@ -59,7 +61,7 @@ int code_modification_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "code_modification_description::read_arguments" << endl;

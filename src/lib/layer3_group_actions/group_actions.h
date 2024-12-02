@@ -245,7 +245,7 @@ enum permutation_group_type {
 //! interface for the various types of group actions
 
 union symmetry_group {
-	algebra::matrix_group *matrix_grp;
+	algebra::basic_algebra::matrix_group *matrix_grp;
 	group_constructions::permutation_representation_domain *perm_grp;
 	group_constructions::wreath_product *wreath_product_group;
 	group_constructions::direct_product *direct_product_group;

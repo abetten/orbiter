@@ -22,11 +22,13 @@ namespace actions {
 
 induced_action::induced_action()
 {
+	Record_birth();
 	A_old = NULL;
 }
 
 induced_action::~induced_action()
 {
+	Record_death();
 }
 
 void induced_action::init(
@@ -605,7 +607,7 @@ action *induced_action::induced_action_on_grassmannian(
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_on_grassmannian *AG;
 	action *A;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_grassmannian" << endl;
@@ -1012,7 +1014,7 @@ action *induced_action::induced_action_on_Galois_group(
 		}
 	induced_actions::action_on_galois_group *AG;
 	action *A;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	A = NEW_OBJECT(action);
 
@@ -1105,15 +1107,15 @@ action *induced_action::induced_action_on_determinant(
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_on_determinant *AD;
 	action *A;
-	algebra::matrix_group *M;
+	algebra::basic_algebra::matrix_group *M;
 
 	if (f_v) {
 		cout << "induced_action::induced_action_on_determinant" << endl;
 	}
 	A = NEW_OBJECT(action);
 
-	ring_theory::longinteger_object go1;
-	ring_theory::longinteger_object go2;
+	algebra::ring_theory::longinteger_object go1;
+	algebra::ring_theory::longinteger_object go2;
 
 	old_G->group_order(go1);
 	if (f_v) {
@@ -1292,7 +1294,7 @@ action *induced_action::create_induced_action_by_conjugation(
 
 
 	induced_actions::action_by_conjugation *ABC;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	long int goi;
 
 	if (f_v) {
@@ -1375,7 +1377,7 @@ action *induced_action::induced_action_by_right_multiplication(
 {
 	int f_v = (verbose_level >= 1);
 	induced_actions::action_by_right_multiplication *ABRM;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 	int goi;
 	action *A;
 
@@ -2243,7 +2245,7 @@ action *induced_action::induced_action_on_andre(
 
 
 action *induced_action::induced_action_on_homogeneous_polynomials(
-	ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
 {
@@ -2344,7 +2346,7 @@ action *induced_action::induced_action_on_homogeneous_polynomials(
 }
 
 action *induced_action::induced_action_on_homogeneous_polynomials_given_by_equations(
-	ring_theory::homogeneous_polynomial_domain *HPD,
+		algebra::ring_theory::homogeneous_polynomial_domain *HPD,
 	int *Equations, int nb_equations,
 	int f_induce_action, groups::sims *old_G,
 	int verbose_level)
@@ -2534,7 +2536,7 @@ action *induced_action::base_change(
 
 
 	if (f_v) {
-		ring_theory::longinteger_object go, K_go;
+		algebra::ring_theory::longinteger_object go, K_go;
 		new_action->group_order(go);
 		new_action->Kernel->group_order(K_go);
 		cout << "induced_action::base_change finished" << endl;

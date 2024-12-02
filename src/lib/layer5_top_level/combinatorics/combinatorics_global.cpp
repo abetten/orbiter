@@ -18,11 +18,13 @@ namespace apps_combinatorics {
 
 combinatorics_global::combinatorics_global()
 {
+	Record_birth();
 
 }
 
 combinatorics_global::~combinatorics_global()
 {
+	Record_death();
 
 }
 
@@ -38,7 +40,7 @@ void combinatorics_global::create_design_table(
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table" << endl;
 	}
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 
 	if (f_v) {
 		cout << "combinatorics_global::create_design_table design:" << endl;
@@ -90,7 +92,7 @@ void combinatorics_global::load_design_table(
 	if (f_v) {
 		cout << "combinatorics_global::load_design_table" << endl;
 	}
-	l1_interfaces::latex_interface L;
+	other::l1_interfaces::latex_interface L;
 	//actions::action *A;
 	//int *Elt1;
 	//int *Elt2;
@@ -141,7 +143,7 @@ void combinatorics_global::load_design_table(
 
 void combinatorics_global::span_base_blocks(
 		groups::any_group *AG,
-		data_structures::set_of_sets *SoS_base_blocks,
+		other::data_structures::set_of_sets *SoS_base_blocks,
 		int *Base_block_selection, int nb_base_blocks,
 		int &v, int &b, int &k,
 		long int *&Blocks,
@@ -488,7 +490,7 @@ void combinatorics_global::Hill_cap56(
 
 	int *Sets; // [max_sol * 56]
 	int max_sol = 100;
-	combinatorics::combinatorics_domain Combi;
+	combinatorics::other::combinatorics_domain Combi;
 
 	Sets = NEW_int(max_sol * 56);
 

@@ -25,6 +25,7 @@ static long int coset_action_rank_point(
 
 semifield_downstep_node::semifield_downstep_node()
 {
+	Record_birth();
 	SC = NULL;
 	SL = NULL;
 	F = NULL;
@@ -44,6 +45,7 @@ semifield_downstep_node::semifield_downstep_node()
 
 semifield_downstep_node::~semifield_downstep_node()
 {
+	Record_death();
 	if (subspace_basis) {
 		FREE_int(subspace_basis);
 	}
@@ -61,7 +63,7 @@ void semifield_downstep_node::init(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "semifield_downstep_node::init level=" << level
@@ -166,7 +168,7 @@ void semifield_downstep_node::init(
 
 
 	groups::strong_generators *sg;
-	ring_theory::longinteger_object go;
+	algebra::ring_theory::longinteger_object go;
 
 
 	sg = SL->get_stabilizer_generators(
@@ -197,7 +199,7 @@ void semifield_downstep_node::init(
 		}
 	else {
 #endif
-		orbiter_kernel_system::file_io File_io;
+		other::orbiter_kernel_system::file_io File_io;
 		string fname;
 
 		SL->make_file_name_schreier(fname, level, orbit_number);
@@ -244,7 +246,7 @@ int semifield_downstep_node::find_point(
 		long int a)
 {
 	int idx;
-	data_structures::sorting Sorting;
+	other::data_structures::sorting Sorting;
 
 	if (!Sorting.lint_vec_search(Candidates, nb_candidates,
 			a, idx, 0 /* verbose_level */)) {

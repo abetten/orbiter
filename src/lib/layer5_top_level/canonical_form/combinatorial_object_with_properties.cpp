@@ -19,6 +19,7 @@ namespace canonical_form {
 
 combinatorial_object_with_properties::combinatorial_object_with_properties()
 {
+	Record_birth();
 	Any_Combo = NULL;
 
 	//std::string label;
@@ -42,6 +43,7 @@ combinatorial_object_with_properties::combinatorial_object_with_properties()
 
 combinatorial_object_with_properties::~combinatorial_object_with_properties()
 {
+	Record_death();
 
 	if (TDO) {
 		FREE_OBJECT(TDO);
@@ -53,8 +55,8 @@ combinatorial_object_with_properties::~combinatorial_object_with_properties()
 
 
 void combinatorial_object_with_properties::init(
-		canonical_form_classification::any_combinatorial_object *Any_Combo,
-		l1_interfaces::nauty_output *NO,
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
+		other::l1_interfaces::nauty_output *NO,
 		int f_projective_space,
 		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth,
@@ -193,8 +195,8 @@ void combinatorial_object_with_properties::lift_generators_to_matrix_group(
 }
 
 void combinatorial_object_with_properties::init_object_in_projective_space(
-		canonical_form_classification::any_combinatorial_object *Any_Combo,
-		l1_interfaces::nauty_output *NO,
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo,
+		other::l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
 		int verbose_level)
@@ -240,8 +242,8 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 
 void combinatorial_object_with_properties::latex_report(
 		std::ostream &ost,
-		graphics::draw_incidence_structure_description *Draw_options,
-		canonical_form_classification::objects_report_options
+		other::graphics::draw_incidence_structure_description *Draw_options,
+		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
 {
@@ -256,7 +258,7 @@ void combinatorial_object_with_properties::latex_report(
 	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
 
 	{
-		ring_theory::longinteger_object go;
+		algebra::ring_theory::longinteger_object go;
 
 		A_perm->Strong_gens->group_order(go);
 
@@ -284,7 +286,7 @@ void combinatorial_object_with_properties::latex_report(
 		ost << "\\subsection*{Automorphism Group in Projective Space}" << endl;
 
 		{
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			SG->group_order(go);
 
@@ -468,7 +470,7 @@ void combinatorial_object_with_properties::latex_report(
 		ost << "\\subsection*{TDA}" << endl;
 
 		{
-			ring_theory::longinteger_object go;
+			algebra::ring_theory::longinteger_object go;
 
 			A_perm->Strong_gens->group_order(go);
 
@@ -499,7 +501,7 @@ void combinatorial_object_with_properties::latex_report(
 		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{Labels}" << endl;
 
-		canonical_form_classification::encoded_combinatorial_object *Enc;
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
 		Any_Combo->encode_incma(Enc, verbose_level);
 
@@ -514,7 +516,7 @@ void combinatorial_object_with_properties::latex_report(
 				point_labels, block_labels,
 				verbose_level);
 
-		orbiter_kernel_system::file_io Fio;
+		other::orbiter_kernel_system::file_io Fio;
 
 		string fname;
 
@@ -544,8 +546,8 @@ void combinatorial_object_with_properties::latex_report(
 	ost << "\\subsection*{Canonical labeling}" << endl;
 
 	ost << "Canonical labeling:\\\\" << endl;
-	canonical_form_classification::encoded_combinatorial_object *Enc;
-	canonical_form_classification::encoded_combinatorial_object *Enc2;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc2;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
@@ -558,7 +560,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 
 
-	Enc2 = NEW_OBJECT(canonical_form_classification::encoded_combinatorial_object);
+	Enc2 = NEW_OBJECT(combinatorics::canonical_form_classification::encoded_combinatorial_object);
 
 	Enc2->init_canonical_form(Enc, NO, verbose_level);
 
@@ -641,15 +643,15 @@ void combinatorial_object_with_properties::latex_report(
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report f_lex_least" << endl;
 		}
-		geometry_builder::geometry_builder *GB;
+		combinatorics::geometry_builder::geometry_builder *GB;
 
 		GB = Get_geometry_builder(Report_options->lex_least_geometry_builder);
 
 
 		int idx;
 		int f_found;
-		l1_interfaces::nauty_output *NO;
-		data_structures::bitvector *Canonical_form;
+		other::l1_interfaces::nauty_output *NO;
+		other::data_structures::bitvector *Canonical_form;
 
 
 		if (f_v) {
@@ -679,8 +681,8 @@ void combinatorial_object_with_properties::latex_report(
 			exit(1);
 		}
 
-		canonical_form_classification::any_combinatorial_object *Any_Combo2 =
-				(canonical_form_classification::any_combinatorial_object *)
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo2 =
+				(combinatorics::canonical_form_classification::any_combinatorial_object *)
 				GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->Objects[idx];
 
 		if (f_v) {
@@ -723,13 +725,13 @@ void combinatorial_object_with_properties::compute_TDO(
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::compute_TDO" << endl;
 	}
-	canonical_form_classification::encoded_combinatorial_object *Enc;
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
 	Any_Combo->encode_incma(Enc, verbose_level);
 
 
 
-	TDO = NEW_OBJECT(combinatorics::tdo_scheme_compute);
+	TDO = NEW_OBJECT(combinatorics::tactical_decompositions::tdo_scheme_compute);
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::compute_TDO "

@@ -21,6 +21,7 @@ namespace poset_classification {
 
 classification_base_case::classification_base_case()
 {
+	Record_birth();
 		Poset = NULL;
 
 		size = 0;
@@ -35,6 +36,7 @@ classification_base_case::classification_base_case()
 
 classification_base_case::~classification_base_case()
 {
+	Record_death();
 	if (Elt) {
 		FREE_int(Elt);
 	}

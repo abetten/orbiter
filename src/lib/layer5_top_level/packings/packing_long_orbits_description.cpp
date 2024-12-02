@@ -19,6 +19,7 @@ namespace packings {
 
 packing_long_orbits_description::packing_long_orbits_description()
 {
+	Record_birth();
 	f_split = false;
 	split_r = 0;
 	split_m = 0;
@@ -46,6 +47,7 @@ packing_long_orbits_description::packing_long_orbits_description()
 
 packing_long_orbits_description::~packing_long_orbits_description()
 {
+	Record_death();
 }
 
 int packing_long_orbits_description::read_arguments(
@@ -53,7 +55,7 @@ int packing_long_orbits_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	data_structures::string_tools ST;
+	other::data_structures::string_tools ST;
 
 
 

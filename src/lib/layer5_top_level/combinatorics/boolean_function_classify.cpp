@@ -25,6 +25,7 @@ static void boolean_function_classify_reduction_function(
 
 boolean_function_classify::boolean_function_classify()
 {
+	Record_birth();
 	BF = NULL;
 	A = NULL;
 	//nice_gens = NULL;
@@ -45,6 +46,7 @@ boolean_function_classify::boolean_function_classify()
 
 boolean_function_classify::~boolean_function_classify()
 {
+	Record_death();
 #if 0
 	if (A) {
 		FREE_OBJECT(A);
@@ -67,7 +69,7 @@ boolean_function_classify::~boolean_function_classify()
 
 
 void boolean_function_classify::init_group(
-		combinatorics::boolean_function_domain *BF,
+		combinatorics::special_functions::boolean_function_domain *BF,
 		actions::action *A,
 		int verbose_level)
 {
@@ -97,7 +99,7 @@ void boolean_function_classify::init_group(
 
 	SG = NEW_OBJECT(groups::strong_generators);
 
-	algebra::matrix_group *Mtx;
+	algebra::basic_algebra::matrix_group *Mtx;
 
 	Mtx = A->get_matrix_group();
 
@@ -172,11 +174,11 @@ void boolean_function_classify::search_for_bent_functions(
 	int f_v = (verbose_level >= 1);
 	int *poly;
 	int i, j;
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 	uint32_t h;
 	geometry::other_geometry::geometry_global Gg;
-	ring_theory::longinteger_domain D;
-	data_structures::data_structures_global Data;
+	algebra::ring_theory::longinteger_domain D;
+	other::data_structures::data_structures_global Data;
 
 #if 0
 	vector<int> orbit_first;
@@ -469,7 +471,7 @@ void boolean_function_classify::print_orbits_sorted()
 	int h, i, j;
 	int *poly;
 	geometry::other_geometry::geometry_global Gg;
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 
 
 	int nb_monomials;
@@ -486,7 +488,7 @@ void boolean_function_classify::print_orbits_sorted()
 		cout << "Orbit " << h << " / " << orbit_first.size() << " has length " << len << ":" << endl;
 		groups::strong_generators *Stab_gens;
 
-		data_structures::int_matrix *M;
+		other::data_structures::int_matrix *M;
 
 		export_orbit(h,
 				M,
@@ -536,7 +538,7 @@ void boolean_function_classify::print_orbit_reps_with_minimum_weight()
 	int h, i, j;
 	int *poly;
 	geometry::other_geometry::geometry_global Gg;
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 
 
 	int nb_monomials;
@@ -553,7 +555,7 @@ void boolean_function_classify::print_orbit_reps_with_minimum_weight()
 		cout << "Orbit " << h << " / " << orbit_first.size() << " has length " << len << ":" << endl;
 		groups::strong_generators *Stab_gens;
 
-		data_structures::int_matrix *M;
+		other::data_structures::int_matrix *M;
 
 		export_orbit(h,
 				M,
@@ -620,7 +622,7 @@ void boolean_function_classify::print_orbit_reps_with_minimum_weight()
 
 void boolean_function_classify::export_orbit(
 		int idx,
-		data_structures::int_matrix *&M,
+		other::data_structures::int_matrix *&M,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -632,7 +634,7 @@ void boolean_function_classify::export_orbit(
 	int i, j;
 	int *poly;
 	geometry::other_geometry::geometry_global Gg;
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 
 	poly = NEW_int(BF->Poly[BF->n].get_nb_monomials());
 
@@ -644,7 +646,7 @@ void boolean_function_classify::export_orbit(
 				<< " has length " << len << ":" << endl;
 	}
 
-	M = NEW_OBJECT(data_structures::int_matrix);
+	M = NEW_OBJECT(other::data_structures::int_matrix);
 
 	int nb_monomials;
 
@@ -695,7 +697,7 @@ static void boolean_function_classify_print_function(
 {
 	boolean_function_classify *BFC = (boolean_function_classify *) data;
 	geometry::other_geometry::geometry_global Gg;
-	ring_theory::longinteger_object a;
+	algebra::ring_theory::longinteger_object a;
 
 	BFC->BF->evaluate(poly + 1, BFC->BF->f_proj);
 	Int_vec_copy(BFC->BF->f_proj, BFC->BF->f_proj2, BFC->BF->Q);
