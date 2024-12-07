@@ -39,6 +39,14 @@ canonical_form_classifier::canonical_form_classifier()
 canonical_form_classifier::~canonical_form_classifier()
 {
 	Record_death();
+
+	int verbose_level = 1;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_classifier::~canonical_form_classifier before Ring_with_action" << endl;
+	}
 	if (Ring_with_action) {
 		FREE_OBJECT(Ring_with_action);
 	}
@@ -56,11 +64,21 @@ canonical_form_classifier::~canonical_form_classifier()
 #endif
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::~canonical_form_classifier before Classification_of_varieties_nauty" << endl;
+	}
 	if (Classification_of_varieties_nauty) {
 		FREE_OBJECT(Classification_of_varieties_nauty);
 	}
+
+	if (f_v) {
+		cout << "canonical_form_classifier::~canonical_form_classifier before skip_vector" << endl;
+	}
 	if (skip_vector) {
 		FREE_int(skip_vector);
+	}
+	if (f_v) {
+		cout << "canonical_form_classifier::~canonical_form_classifier done" << endl;
 	}
 }
 

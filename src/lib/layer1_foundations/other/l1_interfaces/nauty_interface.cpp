@@ -65,9 +65,11 @@ using namespace std;
 
 typedef unsigned char uchar;
 
-static void nauty_interface_allocate_data(int n);
+static void nauty_interface_allocate_data(
+		int n);
 static void nauty_interface_free_data();
-static void nauty_interface_fill_nauty_output(int n,
+static void nauty_interface_fill_nauty_output(
+		int n,
 		l1_interfaces::nauty_output *NO,
 	int verbose_level);
 #else
@@ -466,7 +468,8 @@ void nauty_interface::Levi_graph(
 }
 
 #if 1
-static void nauty_interface_allocate_data(int n)
+static void nauty_interface_allocate_data(
+		int n)
 {
 #if HAS_NAUTY
 	aut = new int[n * n];

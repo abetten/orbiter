@@ -109,6 +109,10 @@ void any_group::init_linear_group(
 
 	label.assign(LG->label);
 	label_tex.assign(LG->label_tex);
+	if (f_v) {
+		cout << "any_group::init_linear_group label = " << label << endl;
+		cout << "any_group::init_linear_group label_tex = " << label_tex << endl;
+	}
 
 	if (!LG->f_has_strong_generators) {
 		cout << "any_group::init_linear_group "
@@ -222,6 +226,10 @@ void any_group::init_modified_group(
 
 	label.assign(MGC->label);
 	label_tex.assign(MGC->label_tex);
+	if (f_v) {
+		cout << "any_group::init_modified_group label = " << label << endl;
+		cout << "any_group::init_modified_group label_tex = " << label_tex << endl;
+	}
 
 	if (f_v) {
 		cout << "any_group::init_modified_group done" << endl;

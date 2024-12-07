@@ -4699,9 +4699,37 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 	}
 
 
-	FREE_OBJECT(Classification_of_varieties_nauty);
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"before FREE_OBJECT(Classification_of_varieties_nauty)" << endl;
+	}
+
+	//FREE_OBJECT(Classification_of_varieties_nauty);
+	// Classification_of_varieties_nauty is freed in FREE_OBJECT(Classifier);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"after FREE_OBJECT(Classification_of_varieties_nauty)" << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"before FREE_OBJECT(Descr1)" << endl;
+	}
 	FREE_OBJECT(Descr1);
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"after FREE_OBJECT(Descr1)" << endl;
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"before FREE_OBJECT(Classifier)" << endl;
+	}
 	FREE_OBJECT(Classifier);
+	if (f_v) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"after FREE_OBJECT(Classifier)" << endl;
+	}
 
 
 	//Input_Vo[0].Stab_gens;

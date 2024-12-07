@@ -259,7 +259,8 @@ void orbits_activity::do_report(
 			report_options = Get_poset_classification_report_options(Descr->report_options_label);
 		}
 		else {
-			report_options = NEW_OBJECT(poset_classification::poset_classification_report_options);
+			cout << "orbits_activity::do_report please use -report_options" << endl;
+			exit(1);
 		}
 		if (f_v) {
 			cout << "orbits_activity::do_report "

@@ -1052,17 +1052,235 @@ void orbiter_session::do_statistics()
 
 void orbiter_session::print_births()
 {
+	int verbose_level = 0;
 
-	map<string, int>::iterator i;
+	int f_v (verbose_level >= 1);
 
-	cout << "Births:" << endl;
-	for (i = Births.begin(); i != Births.end(); i++) {
-		cout << i->first << "," << i->second << endl;
+	if (f_v) {
+		cout << "orbiter_session::print_births" << endl;
+	}
+	map<string, int>::iterator iter;
+	int nb_births;
+	int nb_deaths;
+
+	nb_births = 0;
+	for (iter = Births.begin(); iter != Births.end(); iter++) {
+		nb_births++;
 	}
 
-	cout << "Deaths:" << endl;
-	for (i = Deaths.begin(); i != Deaths.end(); i++) {
-		cout << i->first << "," << i->second << endl;
+	nb_deaths = 0;
+	for (iter = Deaths.begin(); iter != Deaths.end(); iter++) {
+		nb_deaths++;
+	}
+
+	if (f_v) {
+		int cnt;
+		cout << "Births:" << endl;
+		cnt = 0;
+		for (iter = Births.begin(); iter != Births.end(); iter++, cnt++) {
+			cout << cnt << ":" << iter->first << "," << iter->second << endl;
+		}
+
+		cout << "Deaths:" << endl;
+		cnt = 0;
+		for (iter = Deaths.begin(); iter != Deaths.end(); iter++, cnt++) {
+			cout << cnt << " : ";
+			cout << iter->first << "," << iter->second << endl;
+		}
+	}
+	int_matrix *Births_sorted;
+	vector<string> Births_string;
+	vector<string> Deaths_string;
+	int *Mtx;
+	int *Mtx_deaths;
+	int cnt;
+
+	Mtx = NEW_int(nb_births * 3);
+	Mtx_deaths = NEW_int(nb_deaths * 3);
+
+	cnt = 0;
+	for (iter = Births.begin(); iter != Births.end(); iter++, cnt++) {
+		Mtx[3 * cnt + 0] = iter->second;
+		Mtx[3 * cnt + 1] = cnt;
+		Mtx[3 * cnt + 2] = -1;
+		Births_string.push_back(iter->first);
+	}
+
+	cnt = 0;
+	for (iter = Deaths.begin(); iter != Deaths.end(); iter++, cnt++) {
+		Mtx_deaths[3 * cnt + 0] = iter->second;
+		Mtx_deaths[3 * cnt + 1] = cnt;
+		Mtx_deaths[3 * cnt + 2] = -1;
+		Deaths_string.push_back(iter->first);
+	}
+
+	int i;
+	long int total_births = 0;
+	long int total_deaths = 0;
+
+	for (i = 0; i < nb_births; i++) {
+		total_births += Mtx[3 * i + 0];
+	}
+
+	for (i = 0; i < nb_deaths; i++) {
+		total_deaths += Mtx_deaths[3 * i + 0];
+	}
+
+	for (i = 0; i < nb_deaths; i++) {
+		string s;
+
+		s = Deaths_string[i].substr(1, Deaths_string[i].length() - 1);
+		Deaths_string[i] = s;
+	}
+
+	cout << "total_births = " << total_births << endl;
+	cout << "total_deaths = " << total_deaths << endl;
+	cout << "difference = " << total_births - total_deaths << endl;
+
+
+
+	Births_sorted = NEW_OBJECT(int_matrix);
+	Births_sorted->allocate_and_init(
+			nb_births, 3, Mtx);
+
+	if (f_v) {
+		int w = 5;
+		int j;
+
+		cout << "Births_sorted before sorting:" << endl;
+		//Births_sorted->print();
+
+		for (i = 0; i < Births_sorted->m; i++) {
+			for (j = 0; j < Births_sorted->n; j++) {
+				cout << setw((int) w) << Births_sorted->M[i * Births_sorted->n + j];
+				if (w) {
+					cout << " ";
+				}
+			}
+			cout << Births_string[i];
+			cout << endl;
+		}
+
+	}
+
+	Births_sorted->sort_rows(verbose_level);
+
+	if (f_v) {
+		cout << "Births_sorted after sorting:" << endl;
+		Births_sorted->print();
+	}
+
+	//int nb_b;
+	//int idx;
+	int j, a, b, c;
+
+
+	for (i = 0; i < nb_deaths; i++) {
+
+		string s;
+
+		s = Deaths_string[i];
+
+		for (j = 0; j < nb_births; j++) {
+			if (Births_string[j] == s) {
+				Mtx_deaths[3 * i + 2] = j;
+				Mtx[3 * j + 2] = i;
+				break;
+			}
+		}
+	}
+
+#if 0
+	string s;
+
+	s = "algorithms";
+	nb_b = Births[s];
+
+	cout << "test: " << s << " nb_b = " << nb_b << endl;
+
+
+	for (i = 0; i < nb_deaths; i++) {
+
+
+		nb_b = Births[Deaths_string[i]];
+		// nb_b may have changed by now!
+
+		if (f_v) {
+			cout << "checking on deaths of class " << Deaths_string[i] << " nb_b = " << nb_b << endl;
+		}
+
+		if (!Births_sorted->search_first_column_only(
+				nb_b, idx, 0 /*verbose_level */)) {
+			cout << "We have a death without a recorded birth! class name = " << Deaths_string[i]
+				<< " !Births_sorted->search_first_column_only" << endl;
+			cout << "nb_b=" << nb_b << endl;
+			exit(1);
+		}
+
+		int h;
+
+		for (h = idx; h >= 0; h--) {
+			a = Births_sorted->M[h * 3 + 0];
+			b = Births_sorted->M[h * 3 + 1];
+			if (a != nb_b) {
+				cout << "We have a death without a recorded birth! class name = " << Deaths_string[i] << endl;
+				exit(1);
+				break;
+			}
+			if (Births_string[b] == Deaths_string[i]) {
+				Mtx_deaths[3 * cnt + 2] = b;
+				Mtx[3 * b + 2] = i;
+				break;
+			}
+		}
+
+
+	}
+
+#endif
+
+	//int idx;
+
+	int nb_d;
+
+	cout << "Births sorted (top 20 only):" << endl;
+	for (j = nb_births - 1; j >= 0; j--) {
+		a = Births_sorted->M[j * 3 + 0];
+		b = Births_sorted->M[j * 3 + 1];
+		c = Mtx[3 * b + 2];
+		if (c >= 0) {
+			nb_d = Mtx_deaths[3 * c + 0];
+		}
+		else {
+			nb_d = 0;
+		}
+		//idx = Births_sorted->M[j * 2 + 1];
+		cout << Births_string[b] << "," << a << "," << nb_d << endl;
+		if (j < nb_births - 20) {
+			break;
+		}
+	}
+
+	cout << "objects that are not freed:" << endl;
+	for (j = nb_births - 1; j >= 0; j--) {
+		a = Births_sorted->M[j * 3 + 0];
+		b = Births_sorted->M[j * 3 + 1];
+		c = Mtx[3 * b + 2];
+		if (c >= 0) {
+			nb_d = Mtx_deaths[3 * c + 0];
+		}
+		else {
+			nb_d = 0;
+		}
+		//idx = Births_sorted->M[j * 2 + 1];
+		if (nb_d == a) {
+			continue;
+		}
+		cout << Births_string[b] << "," << a << "," << nb_d << endl;
+	}
+
+	if (f_v) {
+		cout << "orbiter_session::print_births done" << endl;
 	}
 }
 

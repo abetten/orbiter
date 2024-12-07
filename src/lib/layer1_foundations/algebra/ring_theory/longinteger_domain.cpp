@@ -20,10 +20,23 @@ namespace ring_theory {
 
 
 
+longinteger_domain::longinteger_domain()
+{
+	Record_birth();
+
+}
+
+longinteger_domain::~longinteger_domain()
+{
+	Record_death();
+
+}
+
+
+
 int longinteger_domain::compare(
 		longinteger_object &a, longinteger_object &b)
 {
-	Record_birth();
 	int r;
 	
 	if (a.sign() != b.sign()) {
@@ -44,7 +57,6 @@ int longinteger_domain::compare_unsigned(
 // returns -1 if a < b, 0 if a = b,
 // and 1 if a > b, treating a and b as unsigned.
 {
-	Record_death();
 	int i, l;
 	char ai, bi;
 	

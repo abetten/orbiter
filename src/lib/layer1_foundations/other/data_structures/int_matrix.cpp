@@ -21,6 +21,8 @@ namespace data_structures {
 
 static int int_matrix_compare_with(
 		void *data, void *entry, int j, void *extra_data);
+static int int_matrix_compare_with_restricted(
+		void *data, void *entry, int j, void *extra_data);
 static int int_matrix_compare_rows(
 		void *data, int i, int j, void *extra_data);
 static void int_matrix_swap_rows(
@@ -217,6 +219,33 @@ int int_matrix::search(
 	return ret;
 }
 
+int int_matrix::search_first_column_only(
+		int value, int &idx, int verbose_level)
+{
+	int ret;
+	int data[1];
+
+	data_structures::sorting Sorting;
+
+	data[0] = value;
+
+	ret = Sorting.vec_search_general(M,
+			int_matrix_compare_with_restricted,
+			this,
+			m, data, idx,
+			0 /* verbose_level*/);
+
+#if 0
+	int sorting::vec_search_general(void *vec,
+		int (*compare_func)(void *vec, void *a, int b, void *data_for_compare),
+		void *data_for_compare,
+		int len, void *a, int &idx, int verbose_level)
+#endif
+
+	return ret;
+}
+
+
 void int_matrix::write_csv(
 		std::string &fname, int verbose_level)
 {
@@ -252,6 +281,24 @@ static int int_matrix_compare_with(
 	n = IM->n;
 
 	ret = Sorting.int_vec_compare((int *)entry, Data + j * n, n) * -1;
+
+	return ret;
+
+}
+
+static int int_matrix_compare_with_restricted(
+		void *data, void *entry, int j, void *extra_data)
+{
+	int_matrix *IM = (int_matrix *) extra_data;
+	int *Data;
+	int n;
+	int ret;
+	data_structures::sorting Sorting;
+
+	Data = (int *) IM->M;
+	n = IM->n;
+
+	ret = Sorting.int_vec_compare((int *)entry, Data + j * n, 1) * -1;
 
 	return ret;
 

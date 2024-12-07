@@ -440,6 +440,8 @@ public:
 class longinteger_domain {
 
 public:
+	longinteger_domain();
+	~longinteger_domain();
 	int compare(
 			longinteger_object &a, longinteger_object &b);
 	int compare_unsigned(
@@ -770,6 +772,7 @@ public:
 class polynomial_double_domain {
 public:
 	int alloc_length;
+
 	polynomial_double_domain();
 	~polynomial_double_domain();
 	void init(
@@ -814,6 +817,7 @@ public:
 	int alloc_length;
 	int degree;
 	double *coeff; // [alloc_length]
+
 	polynomial_double();
 	~polynomial_double();
 	void init(

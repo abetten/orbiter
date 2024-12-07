@@ -544,6 +544,8 @@ public:
 			int verbose_level);
 	int search(
 			int *entry, int &idx, int verbose_level);
+	int search_first_column_only(
+			int value, int &idx, int verbose_level);
 	void write_csv(
 			std::string &fname, int verbose_level);
 

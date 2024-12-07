@@ -40,21 +40,21 @@ void poset_classification::report(
 		ofstream ost(fname_report);
 		L.head_easy(ost);
 
-		if (f_v) {
-			cout << "poset_classification::report "
-					"before get_A2()->report" << endl;
-		}
-
 
 		other::graphics::layered_graph_draw_options *Draw_options;
 
-		if (Control->f_draw_options) {
+		if (!Opt->f_draw_options) {
 			cout << "poset_classification::report "
 					"please use -draw_options" << endl;
 			exit(1);
 		}
 
-		Draw_options = Get_draw_options(Control->draw_options_label);
+		Draw_options = Get_draw_options(Opt->draw_options_label);
+
+		if (f_v) {
+			cout << "poset_classification::report "
+					"before get_A2()->report" << endl;
+		}
 
 
 		get_A2()->report(ost,

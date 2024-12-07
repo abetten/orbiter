@@ -18385,6 +18385,7 @@ Higman_Sims_graph:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -18400,9 +18401,6 @@ Higman_Sims_graph:
 		-with D -do \
 			-design_activity \
 				-intersection_matrix \
-		-end \
-		-defined Do -draw_options -embedded -sideways -radius 50 \
-			-scale 0.5 -line_width 0.3 \
 		-end \
 		-define Control_block_orbits -poset_classification_control \
 			-problem_label M22bar_block_orbits -W -depth 2 \

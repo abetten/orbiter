@@ -1457,7 +1457,7 @@ void strong_generators::generators_for_symplectic_group(
 	}
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue "
+		cout << "strong_generators::generators_for_the_symplectic_group "
 				"before init_reduced_generating_set" << endl;
 	}
 	init_reduced_generating_set(
@@ -1465,7 +1465,7 @@ void strong_generators::generators_for_symplectic_group(
 			target_go,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue "
+		cout << "strong_generators::generators_for_the_symplectic_group "
 				"after init_reduced_generating_set" << endl;
 	}
 

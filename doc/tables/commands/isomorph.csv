@@ -23,7 +23,7 @@ ROW,C1,C2,C3
 1,"\verb'-export_source_code' ","  "," Export the classification as C++ source code. "
 1,"\verb'-subset_orbits' ","  ","  "
 1,"\verb'-subset_orbits_file' "," fname ","  "
-1,"\verb'-eliminate_graphs_if_possible' ","  ","  "		
+1,"\verb'-eliminate_graphs_if_possible' ","  ","  "
 1,"\verb'-down_orbits' ","  ","  "
 END
 

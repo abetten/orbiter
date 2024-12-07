@@ -184,7 +184,8 @@ public:
 			int *v, int *b, int *theTDO, int verbose_level);
 	void init_tdo_line(
 			int fuse_idx,
-			int tdo_line, int v, int *b, int *r, int verbose_level);
+			int tdo_line, int v, int *b, int *r,
+			int verbose_level);
 	void print_conf();
 	void init_fuse(
 			int verbose_level);
@@ -423,6 +424,7 @@ public:
 
 	std::vector<std::string> test_lines;
 
+	// undocumented:
 	std::vector<std::string> test2_lines;
 
 	int f_split;

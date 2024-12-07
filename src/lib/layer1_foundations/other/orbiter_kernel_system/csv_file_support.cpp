@@ -2144,8 +2144,29 @@ void csv_file_support::prepare_table_for_users_guide(
 	if (f_v) {
 		cout << "csv_file_support::prepare_tables_for_users_guide after read_table_of_strings" << endl;
 	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide found table of size " << m << " x " << n << endl;
+	}
 
 	int i, j;
+
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_tables_for_users_guide before drop_quotes" << endl;
+	}
+
+	if (f_v) {
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				cout << Table[i * n + j];
+				if (j < n - 1) {
+					cout << " , ";
+				}
+			}
+			cout << endl;
+		}
+	}
+
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -2157,8 +2178,21 @@ void csv_file_support::prepare_table_for_users_guide(
 		}
 	}
 	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide found table of size " << m << " x " << n << endl;
+		cout << "csv_file_support::prepare_tables_for_users_guide after drop_quotes" << endl;
 	}
+
+	if (f_v) {
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				cout << Table[i * n + j];
+				if (j < n - 1) {
+					cout << " , ";
+				}
+			}
+			cout << endl;
+		}
+	}
+
 
 	delete [] col_label;
 
