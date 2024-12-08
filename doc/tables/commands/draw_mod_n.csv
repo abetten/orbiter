@@ -10,5 +10,6 @@ ROW,C1,C2,C3
 1,"\verb'-power_cycle' "," a "," Draw a cycle connecting the powers of $a$ mod $n$. "
 1,"\verb'-cyclotomic_sets' "," q list "," Draw the $q$-cyclotomic sets of all elements in the list. "
 1,"\verb'-cyclotomic_sets_thickness' ","  "," Set the thickness for the drawing of cyclotomic sets. "
+1,"\verb'-draw_option' "," label "," Set the draw options as defined by the given object of type \verb'-draw_options'. "
 END
 

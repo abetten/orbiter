@@ -18,7 +18,7 @@ ORBITER_PATH=~/orbiter
 
 ORBITER_EXE_PATH=$(ORBITER_PATH)/src/apps/orbiter/
 
-ORBITER=$(ORBITER_EXE_PATH)orbiter.out
+ORBITER=$(ORBITER_EXE_PATH)orbiter.out -parse_commands_only
 
 SANDBOX=$(ORBITER_PATH)/src/apps/sandbox/sandbox.out
 
@@ -38,11 +38,15 @@ LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
 #MAGMA_PATH=/usr/local/magma
 MAGMA_PATH=""
 
+#MAGMA_EXE=$(MAGMA_PATH)magma
+MAGMA_EXE=echo
 
 #OPEN=open
 OPEN=echo
 
 
+#PDFLATEX=pdflatex
+PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -1942,7 +1946,7 @@ create_BLT_5_1:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_catalogue_q5_iso1.tex
+	$(PDFLATEX) BLT_catalogue_q5_iso1.tex
 	$(OPEN) BLT_catalogue_q5_iso1.pdf
 
 
@@ -1959,7 +1963,7 @@ create_surface_4_0:
 			-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q4_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q4_iso0_report.tex
 	$(OPEN) surface_catalogue_q4_iso0_report.pdf
 
 
@@ -2205,7 +2209,7 @@ symbolic_poly2:
 			-field F \
 			-text "X*Y*X"\
 		-end
-	pdflatex sajeeb_tree0.tex
+	$(PDFLATEX) sajeeb_tree0.tex
 	$(OPEN) sajeeb_tree0.pdf
 
 
@@ -2241,7 +2245,7 @@ symbolic_CRC_alfa_draw_trees:
 			-expand M \
 			-write_trees_during_expand \
 		-end
-		pdflatex Mx_0_efsxsfscsc.tex
+		$(PDFLATEX) Mx_0_efsxsfscsc.tex
 		$(OPEN) Mx_0_efsxsfscsc.pdf
 
 
@@ -2265,7 +2269,7 @@ symbolic_CRC_bravo_draw_trees:
 			-expand M \
 			-write_trees_during_expand \
 		-end
-		pdflatex Mx_0_efsxsfscsc.tex
+		$(PDFLATEX) Mx_0_efsxsfscsc.tex
 		$(OPEN) Mx_0_efsxsfscsc.pdf
 
 
@@ -2284,31 +2288,31 @@ symbolic_test_4_expand:
 		-end
 
 symbolic_test_4_expand_draw:
-	pdflatex M.tex
+	$(PDFLATEX) M.tex
 	$(OPEN) M.pdf
-	pdflatex M1.tex
+	$(PDFLATEX) M1.tex
 	$(OPEN) M1.pdf
-	pdflatex M1_0.tex
+	$(PDFLATEX) M1_0.tex
 	$(OPEN) M1_0.pdf
-	pdflatex M1_0_e.tex
+	$(PDFLATEX) M1_0_e.tex
 	$(OPEN) M1_0_e.pdf
-	pdflatex M1_0_ef.tex
+	$(PDFLATEX) M1_0_ef.tex
 	$(OPEN) M1_0_ef.pdf
-	pdflatex M1_0_efs.tex
+	$(PDFLATEX) M1_0_efs.tex
 	$(OPEN) M1_0_efs.pdf
-	pdflatex M1_0_efsx.tex
+	$(PDFLATEX) M1_0_efsx.tex
 	$(OPEN) M1_0_efsx.pdf
-	pdflatex M1_0_efsxs.tex
+	$(PDFLATEX) M1_0_efsxs.tex
 	$(OPEN) M1_0_efsxs.pdf
-	pdflatex M1_0_efsxsf.tex
+	$(PDFLATEX) M1_0_efsxsf.tex
 	$(OPEN) M1_0_efsxsf.pdf
-	pdflatex M1_0_efsxsfs.tex
+	$(PDFLATEX) M1_0_efsxsfs.tex
 	$(OPEN) M1_0_efsxsfs.pdf
-	pdflatex M1_0_efsxsfsc.tex
+	$(PDFLATEX) M1_0_efsxsfsc.tex
 	$(OPEN) M1_0_efsxsfsc.pdf
-	pdflatex M1_0_efsxsfscs.tex
+	$(PDFLATEX) M1_0_efsxsfscs.tex
 	$(OPEN) M1_0_efsxsfscs.pdf
-	pdflatex M1_0_efsxsfscsc.tex
+	$(PDFLATEX) M1_0_efsxsfscsc.tex
 	$(OPEN) M1_0_efsxsfscsc.pdf
 
 
@@ -2323,9 +2327,9 @@ symbolic_test_5_expand:
 			-field F \
 			-expand M \
 		-end
-	pdflatex M.tex
+	$(PDFLATEX) M.tex
 	$(OPEN) M.pdf
-	pdflatex M1.tex
+	$(PDFLATEX) M1.tex
 	$(OPEN) M1.pdf
 
 
@@ -2342,7 +2346,7 @@ test_expand_1:
 			-expand f \
 			-write_trees_during_expand \
 		-end
-	pdflatex fe_0_efsxsfscsc.tex
+	$(PDFLATEX) fe_0_efsxsfscsc.tex
 	$(OPEN) fe_0_efsxsfscsc.pdf
 
 test_expand_2:
@@ -2357,7 +2361,7 @@ test_expand_2:
 			-expand f \
 			-write_trees_during_expand \
 		-end
-	pdflatex fe_0_efsxsfscsc.tex
+	$(PDFLATEX) fe_0_efsxsfscsc.tex
 	$(OPEN) fe_0_efsxsfscsc.pdf
 
 test_expand_3:
@@ -2372,21 +2376,21 @@ test_expand_3:
 			-expand f \
 			-write_trees_during_expand \
 		-end
-	pdflatex fe_0_efs.tex
+	$(PDFLATEX) fe_0_efs.tex
 	$(OPEN) fe_0_efs.pdf
-	pdflatex fe_0_efsx.tex
+	$(PDFLATEX) fe_0_efsx.tex
 	$(OPEN) fe_0_efsx.pdf
-	pdflatex fe_0_efsxsf.tex
+	$(PDFLATEX) fe_0_efsxsf.tex
 	$(OPEN) fe_0_efsxsf.pdf
-	pdflatex fe_0_efsxsfs.tex
+	$(PDFLATEX) fe_0_efsxsfs.tex
 	$(OPEN) fe_0_efsxsfs.pdf
-	pdflatex fe_0_efsxsfsc.tex
+	$(PDFLATEX) fe_0_efsxsfsc.tex
 	$(OPEN) fe_0_efsxsfsc.pdf
-	pdflatex fe_0_efsxsfscsefsx.tex
+	$(PDFLATEX) fe_0_efsxsfscsefsx.tex
 	$(OPEN) fe_0_efsxsfscsefsx.pdf
-	pdflatex fe_0_efsxsfscsefsxsf.tex
+	$(PDFLATEX) fe_0_efsxsfscsefsxsf.tex
 	$(OPEN) fe_0_efsxsfscsefsxsf.pdf
-	pdflatex fe_0_efsxsfscsefsxsfscsc.tex
+	$(PDFLATEX) fe_0_efsxsfscsefsxsfscsc.tex
 	$(OPEN) fe_0_efsxsfscsefsxsfscsc.pdf
 
 
@@ -2402,7 +2406,7 @@ test_expand_4:
 			-expand f \
 			-write_trees_during_expand \
 		-end
-	pdflatex fx_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.tex
+	$(PDFLATEX) fx_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.tex
 	$(OPEN) fx_0_efsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsefsxsfscsc.pdf
 
 
@@ -2459,7 +2463,7 @@ symbolic_test_6:
 			-field F \
 			-text "a^2" \
 		-end
-	pdflatex a.tex
+	$(PDFLATEX) a.tex
 	$(OPEN) a.pdf
 
 
@@ -2479,7 +2483,7 @@ symbolic_test_7:
 			-field Fq \
 			-substitute "a,b" M values \
 		-end
-	#pdflatex M.tex
+	#$(PDFLATEX) M.tex
 	#$(OPEN) M.pdf
 
 
@@ -2530,7 +2534,7 @@ symbolic_determinant_2x2:
 			-field F \
 			-expand det \
 		-end
-	pdflatex det1.tex
+	$(PDFLATEX) det1.tex
 	$(OPEN) det1.pdf
 
 
@@ -2550,7 +2554,7 @@ symbolic_determinant_3x3:
 			-field F \
 			-expand det \
 		-end
-	pdflatex det1.tex
+	$(PDFLATEX) det1.tex
 	$(OPEN) det1.pdf
 
 
@@ -2595,29 +2599,29 @@ symbolic_characteristic_polynomial_2x2:
 		-end
 
 symbolic_characteristic_polynomial_2x2_draw:
-	pdflatex p1.tex
+	$(PDFLATEX) p1.tex
 	$(OPEN) p1.pdf
-	pdflatex p1_0.tex
+	$(PDFLATEX) p1_0.tex
 	$(OPEN) p1_0.pdf
-	pdflatex p1_0_e.tex
+	$(PDFLATEX) p1_0_e.tex
 	$(OPEN) p1_0_e.pdf
-	pdflatex p1_0_ef.tex
+	$(PDFLATEX) p1_0_ef.tex
 	$(OPEN) p1_0_ef.pdf
-	pdflatex p1_0_efs.tex
+	$(PDFLATEX) p1_0_efs.tex
 	$(OPEN) p1_0_efs.pdf
-	pdflatex p1_0_efsx.tex
+	$(PDFLATEX) p1_0_efsx.tex
 	$(OPEN) p1_0_efsx.pdf
-	pdflatex p1_0_efsxs.tex
+	$(PDFLATEX) p1_0_efsxs.tex
 	$(OPEN) p1_0_efsxs.pdf
-	pdflatex p1_0_efsxsf.tex
+	$(PDFLATEX) p1_0_efsxsf.tex
 	$(OPEN) p1_0_efsxsf.pdf
-	pdflatex p1_0_efsxsfs.tex
+	$(PDFLATEX) p1_0_efsxsfs.tex
 	$(OPEN) p1_0_efsxsfs.pdf
-	pdflatex p1_0_efsxsfsc.tex
+	$(PDFLATEX) p1_0_efsxsfsc.tex
 	$(OPEN) p1_0_efsxsfsc.pdf
-	pdflatex p1_0_efsxsfscs.tex
+	$(PDFLATEX) p1_0_efsxsfscs.tex
 	$(OPEN) p1_0_efsxsfscs.pdf
-	pdflatex p1_0_efsxsfscsc.tex
+	$(PDFLATEX) p1_0_efsxsfscsc.tex
 	$(OPEN) p1_0_efsxsfscsc.pdf
 
 symbolic_characteristic_polynomial_3x3:
@@ -2640,7 +2644,7 @@ symbolic_characteristic_polynomial_3x3:
 			-field F \
 			-collect p1 lambda \
 		-end
-	#pdflatex p1.tex
+	#$(PDFLATEX) p1.tex
 	#$(OPEN) p1.pdf
 
 
@@ -2665,7 +2669,7 @@ symbolic_object1_expand:
 			-field F \
 			-expand M \
 		-end
-	pdflatex M1.tex
+	$(PDFLATEX) M1.tex
 	$(OPEN) M1.pdf
 
 
@@ -2677,9 +2681,9 @@ symbolic_object1_draw:
 			-field F \
 			-text "a+2*b^2*(x-y)+3*-(2*c^4+3*d-(a*b*c)^2)^3" \
 		-end
-	pdflatex sajeeb_tree0.tex
+	$(PDFLATEX) sajeeb_tree0.tex
 	$(OPEN) sajeeb_tree0.pdf
-	pdflatex M.tex
+	$(PDFLATEX) M.tex
 	$(OPEN) M.pdf
 
 
@@ -2736,7 +2740,7 @@ symbolic_Eckardt_surface_q13_a3_b1:
 			-expand M1 \
 			-write_trees_during_expand \
 		-end
-	pdflatex M2.tex
+	$(PDFLATEX) M2.tex
 	$(OPEN) M2.pdf
 
 
@@ -2799,7 +2803,7 @@ symbolic_Fabcd_q31_E18:
 			-expand M1 \
 			-write_trees_during_expand \
 		-end
-	pdflatex M2.tex
+	$(PDFLATEX) M2.tex
 	$(OPEN) M2.pdf
 
 
@@ -2835,7 +2839,7 @@ symbolic_Fabcd_q31_E18_with_implicit_substitution:
 			-field F \
 			-expand M \
 		-end
-	pdflatex M2.tex
+	$(PDFLATEX) M2.tex
 	$(OPEN) M2.pdf
 
 
@@ -3023,7 +3027,7 @@ F_2:
 	$(ORBITER) -v 3 -list_arguments \
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_2.tex
+	$(PDFLATEX) GF_2.tex
 	$(OPEN) GF_2.pdf
 
 
@@ -3031,14 +3035,14 @@ F_3:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 3 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_3.tex
+	$(PDFLATEX) GF_3.tex
 	$(OPEN) GF_3.pdf
 
 F_5:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 5 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_5.tex
+	$(PDFLATEX) GF_5.tex
 	$(OPEN) GF_5.pdf
 
 
@@ -3054,7 +3058,7 @@ F_7:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 7 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_7.tex
+	$(PDFLATEX) GF_7.tex
 	$(OPEN) GF_7.pdf
 
 
@@ -3101,7 +3105,7 @@ F_101_wo:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 101 -without_tables -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_101.tex
+	$(PDFLATEX) GF_101.tex
 	$(OPEN) GF_101.pdf
 
 
@@ -3140,7 +3144,7 @@ F_4:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_4.tex
+	$(PDFLATEX) GF_4.tex
 	$(OPEN) GF_4.pdf
 
 
@@ -3169,7 +3173,7 @@ F_8:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_8.tex
+	$(PDFLATEX) GF_8.tex
 	$(OPEN) GF_8.pdf
 
 
@@ -3189,7 +3193,7 @@ F_8b:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 8 -override_polynomial 11 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_8.tex
+	$(PDFLATEX) GF_8.tex
 	$(OPEN) GF_8.pdf
 
 
@@ -3198,7 +3202,7 @@ F_9:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 9 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_9.tex
+	$(PDFLATEX) GF_9.tex
 	$(OPEN) GF_9.pdf
 
 
@@ -3207,7 +3211,7 @@ F_16:
 	$(ORBITER) -v 10 \
 		-define F -finite_field -q 16 -compute_related_fields -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_16.tex
+	$(PDFLATEX) GF_16.tex
 	$(OPEN) GF_16.pdf
 
 
@@ -3236,7 +3240,7 @@ F_64:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 64 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_64.tex
+	$(PDFLATEX) GF_64.tex
 	$(OPEN) GF_64.pdf
 
 
@@ -3247,7 +3251,7 @@ nth_roots_63:
 		-with F -do -finite_field_activity \
 			-nth_roots 63 \
 		-end
-	pdflatex Nth_roots_q2_n63.tex
+	$(PDFLATEX) Nth_roots_q2_n63.tex
 	$(OPEN) Nth_roots_q2_n63.pdf
 
 
@@ -3275,7 +3279,7 @@ F_4096:
 			-compute_related_fields \
 		-end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_4096.tex
+	$(PDFLATEX) GF_4096.tex
 	$(OPEN) GF_4096.pdf
 
 
@@ -3299,7 +3303,7 @@ F_2_power_24:
 		-with F -do -finite_field_activity \
 			-cheat_sheet_GF \
 		-end
-	pdflatex GF_16777216.tex
+	$(PDFLATEX) GF_16777216.tex
 	$(OPEN) GF_16777216.pdf
 
 
@@ -3329,7 +3333,7 @@ RREF:
 		-with F -do -finite_field_activity \
 			-RREF v \
 		-end
-	pdflatex v_rref.tex
+	$(PDFLATEX) v_rref.tex
 	$(OPEN) v_rref.pdf
 
 
@@ -3342,7 +3346,7 @@ RREF_V7:
 		-with F -do -finite_field_activity \
 			-RREF V7 \
 		-end
-	pdflatex V7_rref.tex
+	$(PDFLATEX) V7_rref.tex
 	$(OPEN) V7_rref.pdf
 
 
@@ -3357,7 +3361,7 @@ nullspace:
 		-finite_field_activity \
 			-nullspace v \
 		-end
-	pdflatex v_nullspace.tex
+	$(PDFLATEX) v_nullspace.tex
 	$(OPEN) v_nullspace.pdf
 
 RREF_RS_6_4_7:
@@ -3368,7 +3372,7 @@ RREF_RS_6_4_7:
 		-end \
 		-with F -do \
 		-finite_field_activity -RREF v -end
-	pdflatex v_rref.tex
+	$(PDFLATEX) v_rref.tex
 	$(OPEN) v_rref.pdf
 
 
@@ -3384,7 +3388,7 @@ classes_GL_3_2:
 	$(ORBITER) -v 7 \
 		-define F -finite_field -q 2 -end \
 		-all_rational_normal_forms F 3 
-	pdflatex Class_reps_GL_3_2.tex
+	$(PDFLATEX) Class_reps_GL_3_2.tex
 	$(OPEN) Class_reps_GL_3_2.pdf
 
 
@@ -3392,7 +3396,7 @@ classes_GL_4_2:
 	$(ORBITER) -v 7 \
 		-define F -finite_field -q 2 -end \
 		-all_rational_normal_forms F 4 
-	pdflatex Class_reps_GL_4_2.tex
+	$(PDFLATEX) Class_reps_GL_4_2.tex
 	$(OPEN) Class_reps_GL_4_2.pdf
 
 
@@ -3417,8 +3421,8 @@ test_3_4:
 	make F_8_Nth_roots_21
 	make F_8_vandermonde
 	make F_1024_vandermonde
-	make NTT_k4_q17.cpp
-	make F_17_NTT_compile
+	#make NTT_k4_q17.cpp
+	#make F_17_NTT_compile
 
 
 
@@ -3427,7 +3431,7 @@ normal_basis_2_3:
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
 		-normal_basis 3 -end
-	pdflatex normal_basis_q2_d3.tex
+	$(PDFLATEX) normal_basis_q2_d3.tex
 	$(OPEN) normal_basis_q2_d3.pdf
 
 
@@ -3443,7 +3447,7 @@ normal_basis_2_4_poly19:
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
 		-normal_basis_with_given_polynomial 19 4 -end
-	pdflatex normal_basis_q2_d4_poly19.tex
+	$(PDFLATEX) normal_basis_q2_d4_poly19.tex
 	$(OPEN) normal_basis_q2_d4_poly19.pdf
 
 
@@ -3460,7 +3464,7 @@ normal_basis_2_8:
 		-define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity \
 		-normal_basis 8 -end
-	pdflatex normal_basis_q2_d8.tex
+	$(PDFLATEX) normal_basis_q2_d8.tex
 	$(OPEN) normal_basis_q2_d8.pdf
 
 
@@ -3482,7 +3486,7 @@ F8_over_F2_field_reduction:
 				-partition 4 3 3 \
 			-end \
 		-end_loop L
-	#pdflatex field_reduction_Q8_q2_5_7.tex
+	#$(PDFLATEX) field_reduction_Q8_q2_5_7.tex
 
 
 
@@ -3499,7 +3503,7 @@ F_64_over_F8_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
 	$(OPEN) F64_over_F8_draw.bmp
-	pdflatex field_reduction_Q64_q8_8_8.tex
+	$(PDFLATEX) field_reduction_Q64_q8_8_8.tex
 	$(OPEN) field_reduction_Q64_q8_8_8.pdf
 
 
@@ -3515,7 +3519,7 @@ F_64_over_F4_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
 	$(OPEN) F64_over_F4_draw.bmp
-	pdflatex field_reduction_Q64_q4_8_8.tex
+	$(PDFLATEX) field_reduction_Q64_q4_8_8.tex
 	$(OPEN) field_reduction_Q64_q4_8_8.pdf
 
 
@@ -3531,7 +3535,7 @@ F_64_over_F2_field_reduction:
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6" -end
 	$(OPEN) F64_over_F2_draw.bmp
-	pdflatex field_reduction_Q64_q2_8_8.tex
+	$(PDFLATEX) field_reduction_Q64_q2_8_8.tex
 	$(OPEN) field_reduction_Q64_q2_8_8.pdf
 
 
@@ -3544,7 +3548,7 @@ F_8_Nth_roots_21:
 		-with F -do -finite_field_activity \
 			-nth_roots 21 \
 		-end
-	pdflatex Nth_roots_q8_n21.tex
+	$(PDFLATEX) Nth_roots_q8_n21.tex
 	$(OPEN) Nth_roots_q8_n21.pdf
 
 
@@ -3565,8 +3569,8 @@ F_1024_vandermonde:
 		-with F -do -finite_field_activity \
 			-Vandermonde_matrix \
 		-end
-	rm Vandermonde_q1024.csv
-	rm Vandermonde_q1024_inv.csv
+	- rm Vandermonde_q1024.csv
+	- rm Vandermonde_q1024_inv.csv
 
 
 
@@ -3590,7 +3594,7 @@ F64_1:
 		-with F -do -finite_field_activity \
 			-nth_roots 7 \
 		-end
-	pdflatex Nth_roots_q64_n7.tex
+	$(PDFLATEX) Nth_roots_q64_n7.tex
 	$(OPEN) Nth_roots_q64_n7.pdf
 
 
@@ -3680,7 +3684,7 @@ PG_1_16:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_1_16.tex 
+	$(PDFLATEX) PG_1_16.tex 
 	$(OPEN) PG_1_16.pdf
 
 
@@ -3692,7 +3696,7 @@ PG_2_2:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_2.tex 
+	$(PDFLATEX) PG_2_2.tex 
 	$(OPEN) PG_2_2.pdf
 
 PG_2_3:
@@ -3703,7 +3707,7 @@ PG_2_3:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_3.tex 
+	$(PDFLATEX) PG_2_3.tex 
 	$(OPEN) PG_2_3.pdf
 
 
@@ -3715,7 +3719,7 @@ PG_2_4:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_4.tex 
+	$(PDFLATEX) PG_2_4.tex 
 	$(OPEN) PG_2_4.pdf
 
 
@@ -3729,7 +3733,7 @@ PG_2_13:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_13.tex 
+	$(PDFLATEX) PG_2_13.tex 
 	$(OPEN) PG_2_13.pdf
 
 
@@ -3743,7 +3747,7 @@ PG_2_64:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_64.tex 
+	$(PDFLATEX) PG_2_64.tex 
 	$(OPEN) PG_2_64.pdf
 
 
@@ -3756,7 +3760,7 @@ PG_3_2:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_2.tex 
+	$(PDFLATEX) PG_3_2.tex 
 	$(OPEN) PG_3_2.pdf
 
 
@@ -3768,7 +3772,7 @@ PG_3_4:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_4.tex 
+	$(PDFLATEX) PG_3_4.tex 
 	$(OPEN) PG_3_4.pdf
 
 PG_3_5:
@@ -3779,7 +3783,7 @@ PG_3_5:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_5.tex 
+	$(PDFLATEX) PG_3_5.tex 
 	$(OPEN) PG_3_5.pdf
 
 
@@ -3791,7 +3795,7 @@ PG_3_7:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_7.tex 
+	$(PDFLATEX) PG_3_7.tex 
 	$(OPEN) PG_3_7.pdf
 
 
@@ -3805,7 +3809,7 @@ PG_3_8:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_8.tex 
+	$(PDFLATEX) PG_3_8.tex 
 	$(OPEN) PG_3_8.pdf
 
 
@@ -3817,7 +3821,7 @@ PG_3_16:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_16.tex 
+	$(PDFLATEX) PG_3_16.tex 
 	$(OPEN) PG_3_16.pdf
 
 
@@ -3831,7 +3835,7 @@ PG_3_25:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_25.tex 
+	$(PDFLATEX) PG_3_25.tex 
 	$(OPEN) PG_3_25.pdf
 
 
@@ -3844,7 +3848,7 @@ PG_4_2:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_4_2.tex 
+	$(PDFLATEX) PG_4_2.tex 
 	$(OPEN) PG_4_2.pdf
 
 PG_4_3:
@@ -3855,7 +3859,7 @@ PG_4_3:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_4_3.tex 
+	$(PDFLATEX) PG_4_3.tex 
 	$(OPEN) PG_4_3.pdf
 
 
@@ -3867,7 +3871,7 @@ PG_8_2:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_8_2.tex 
+	$(PDFLATEX) PG_8_2.tex 
 	$(OPEN) PG_8_2.pdf
 
 
@@ -3997,7 +4001,7 @@ PG_2_16:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_16.tex 
+	$(PDFLATEX) PG_2_16.tex 
 	$(OPEN) PG_2_16.pdf
 
 
@@ -4073,7 +4077,7 @@ PG_2_4_with_decomposition:
 			1 "0,1,0, 0,0,1, 2,1,1, 0" \
 			"PG_2_4_singer" \
 		-end
-	pdflatex PG_2_4_singer.tex
+	$(PDFLATEX) PG_2_4_singer.tex
 	$(OPEN) PG_2_4_singer.pdf
 
 
@@ -4152,7 +4156,7 @@ GR_3_2_2:
 		-projective_space_activity \
 			-report_Grassmannian 2 \
 		-end
-	pdflatex Gr_3_2_2.tex 
+	$(PDFLATEX) Gr_3_2_2.tex 
 	$(OPEN) Gr_3_2_2.pdf
 
 
@@ -4343,7 +4347,7 @@ GR_4_2_2:
 		-projective_space_activity \
 			-report_Grassmannian 2 \
 		-end
-	pdflatex Gr_4_2_2.tex 
+	$(PDFLATEX) Gr_4_2_2.tex 
 	$(OPEN) Gr_4_2_2.pdf
 
 
@@ -4383,7 +4387,7 @@ Op_4_2:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_4_2_report.tex 
+	$(PDFLATEX) O_1_4_2_report.tex 
 	$(OPEN) O_1_4_2_report.pdf
 
 
@@ -4419,7 +4423,7 @@ Op_6_2:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_6_2_report.tex 
+	$(PDFLATEX) O_1_6_2_report.tex 
 	$(OPEN) O_1_6_2_report.pdf
 
 
@@ -4452,7 +4456,7 @@ Op_6_2_with_group:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_6_2_report.tex 
+	$(PDFLATEX) O_1_6_2_report.tex 
 	$(OPEN) O_1_6_2_report.pdf
 
 # problem:
@@ -4470,7 +4474,7 @@ Op_6_8:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_6_8_report.tex
+	$(PDFLATEX) O_1_6_8_report.tex
 	$(OPEN) O_1_6_8_report.pdf
 
 
@@ -4484,7 +4488,7 @@ Op_8_2:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_8_2_report.tex 
+	$(PDFLATEX) O_1_8_2_report.tex 
 	$(OPEN) O_1_8_2_report.pdf
 
 
@@ -4498,7 +4502,7 @@ Op_6_64:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_6_64_report.tex 
+	$(PDFLATEX) O_1_6_64_report.tex 
 	$(OPEN) O_1_6_64_report.pdf
 
 
@@ -4534,7 +4538,7 @@ Op_6_64_report:
 		-with O -do -orthogonal_space_activity \
 			-cheat_sheet_orthogonal Do \
 		-end
-	pdflatex O_1_6_64_report.tex
+	$(PDFLATEX) O_1_6_64_report.tex
 	$(OPEN) O_1_6_64_report.pdf
 
 
@@ -4576,7 +4580,7 @@ BLT_database_7_1_print:
 		-define S -set -file_orbiter_format BLT_7_1.txt -end \
 		-with O -do -orthogonal_space_activity \
 			-print_points S -end
-	pdflatex S_set_report.tex
+	$(PDFLATEX) S_set_report.tex
 	$(OPEN) S_set_report.pdf
 
 
@@ -4597,9 +4601,9 @@ Doily_W_2:
 		-orthogonal_space_activity \
 			-print_lines W2_lines \
 		-end
-	pdflatex W2_points_set_report.tex
+	$(PDFLATEX) W2_points_set_report.tex
 	$(OPEN) W2_points_set_report.pdf
-	pdflatex W2_lines_set_of_lines_report.tex
+	$(PDFLATEX) W2_lines_set_of_lines_report.tex
 	$(OPEN) W2_lines_set_of_lines_report.pdf
 
 
@@ -4626,7 +4630,7 @@ H_2_4:
 		-define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity \
 			-cheat_sheet_hermitian 2 -end
-	pdflatex H_2_4.tex 
+	$(PDFLATEX) H_2_4.tex 
 	$(OPEN) H_2_4.pdf
 
 
@@ -4635,7 +4639,7 @@ H_2_9:
 		-define F -finite_field -q 9 -end \
 		-with F -do -finite_field_activity \
 			-cheat_sheet_hermitian 2 -end
-	pdflatex H_2_9.tex 
+	$(PDFLATEX) H_2_9.tex 
 	$(OPEN) H_2_9.pdf
 
 
@@ -4647,7 +4651,7 @@ H_3_4:
 		-define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity \
 			-cheat_sheet_hermitian 3 -end
-	pdflatex H_3_4.tex 
+	$(PDFLATEX) H_3_4.tex 
 	$(OPEN) H_3_4.pdf
 
 
@@ -4681,7 +4685,7 @@ fixed_objects_2A:
 				"1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1" \
 				fix_structure_2A.tex \
 		-end 
-	pdflatex fix_structure_2A.tex
+	$(PDFLATEX) fix_structure_2A.tex
 	$(OPEN) fix_structure_2A.pdf
 
 
@@ -4695,7 +4699,7 @@ fixed_objects_2B:
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,0,1, 0" \
 				fix_structure_2B.tex \
 		-end 
-	pdflatex fix_structure_2B.tex
+	$(PDFLATEX) fix_structure_2B.tex
 	$(OPEN) fix_structure_2B.pdf
 
 
@@ -4709,7 +4713,7 @@ fixed_objects_2C:
 				"1,0,0,0, 1,1,0,0, 0,0,1,0, 0,0,1,1, 0" \
 				fix_structure_2C.tex \
 		-end 
-	pdflatex fix_structure_2C.tex
+	$(PDFLATEX) fix_structure_2C.tex
 	$(OPEN) fix_structure_2C.pdf
 
 
@@ -4724,7 +4728,7 @@ fix_structure_G1:
 			-decomposition_by_subgroup \
 				$(H1_LABEL) $(H1_GENS)  \
 		-end 
-	pdflatex PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.tex
 	$(OPEN) PGGL_4_4_Subgroup_$(H1_LABEL)_4_decomp.pdf
 
 
@@ -4862,7 +4866,7 @@ BLT_database_7_0_print:
 		-define BLT_7_0 -set -file_orbiter_format BLT_7_0.txt -end \
 		-with O -do -orthogonal_space_activity \
 			-print_points BLT_7_0 -end
-	pdflatex BLT_7_0_set_report.tex
+	$(PDFLATEX) BLT_7_0_set_report.tex
 	$(OPEN) BLT_7_0_set_report.pdf
 
 
@@ -4879,7 +4883,7 @@ BLT_database_67_4:
 		-define BLT_67_4 -set -file_orbiter_format BLT_67_4.txt -end \
 		-with O -do -orthogonal_space_activity \
 			-print_points BLT_67_4 -end
-	pdflatex BLT_67_4_set_report.tex
+	$(PDFLATEX) BLT_67_4_set_report.tex
 	$(OPEN) BLT_67_4_set_report.pdf
 
 
@@ -5112,7 +5116,7 @@ mult_polynomials_2_5_7:
 		-define F -finite_field -q 2 -end \
 		-with F -do \
 		-finite_field_activity -mult_polynomials 5 7 -end
-	pdflatex polynomial_mult_5_7.tex
+	$(PDFLATEX) polynomial_mult_5_7.tex
 	$(OPEN) polynomial_mult_5_7.pdf
 
 
@@ -5123,7 +5127,7 @@ polynomial_division_ranked_2_27_13:
 		-finite_field_activity \
 			-polynomial_division_ranked 27 13 \
 		-end
-	pdflatex polynomial_division_27_13.tex
+	$(PDFLATEX) polynomial_division_27_13.tex
 	$(OPEN) polynomial_division_27_13.pdf
 
 
@@ -5134,7 +5138,7 @@ mult_polynomials_2_8_15:
 		-define F -finite_field -q 2 -end \
 		-with F -do \
 		-finite_field_activity -mult_polynomials 8 15 -end
-	pdflatex polynomial_mult_8_15.tex
+	$(PDFLATEX) polynomial_mult_8_15.tex
 	$(OPEN) polynomial_mult_8_15.pdf
 
 polynomial_division_ranked_2_120_25:
@@ -5144,7 +5148,7 @@ polynomial_division_ranked_2_120_25:
 		-finite_field_activity \
 			-polynomial_division_ranked 120 25 \
 		-end
-	pdflatex polynomial_division_120_25.tex
+	$(PDFLATEX) polynomial_division_120_25.tex
 	$(OPEN) polynomial_division_120_25.pdf
 
 # the answer is 5
@@ -5156,7 +5160,7 @@ mult_polynomials_2_7_7:
 		-with F -do \
 		-finite_field_activity \
 		-mult_polynomials 7 7 -end
-	pdflatex polynomial_mult_7_7.tex
+	$(PDFLATEX) polynomial_mult_7_7.tex
 	$(OPEN) polynomial_mult_7_7.pdf
 
 
@@ -5167,7 +5171,7 @@ mult_polynomials_2_4_6:
 		-with F -do \
 		-finite_field_activity \
 		-mult_polynomials 4 6 -end
-	pdflatex polynomial_mult_4_6.tex
+	$(PDFLATEX) polynomial_mult_4_6.tex
 	$(OPEN) polynomial_mult_4_6.pdf
 
 polynomial_division_ranked_2_24_13:
@@ -5177,7 +5181,7 @@ polynomial_division_ranked_2_24_13:
 		-finite_field_activity \
 			-polynomial_division_ranked 24 13 \
 		-end
-	pdflatex polynomial_division_24_13.tex
+	$(PDFLATEX) polynomial_division_24_13.tex
 	$(OPEN) polynomial_division_24_13.pdf
 
 
@@ -5189,7 +5193,7 @@ mult_polynomials_1024_999_997:
 		-finite_field_activity \
 			-mult_polynomials 999 997 \
 		-end
-	pdflatex polynomial_mult_999_997.tex
+	$(PDFLATEX) polynomial_mult_999_997.tex
 	$(OPEN) polynomial_mult_999_997.pdf
 
 
@@ -5200,7 +5204,7 @@ polynomial_division_ranked_2_349147_1033:
 		-finite_field_activity \
 		-polynomial_division_ranked 349147 1033 \
 		-end
-	pdflatex polynomial_division_349147_1033.tex
+	$(PDFLATEX) polynomial_division_349147_1033.tex
 	$(OPEN) polynomial_division_349147_1033.pdf
 
 
@@ -5213,7 +5217,7 @@ mult_polynomials_17_12:
 		-with F -do \
 		-finite_field_activity \
 		-mult_polynomials 17 12 -end
-	pdflatex polynomial_mult_17_12.tex
+	$(PDFLATEX) polynomial_mult_17_12.tex
 	$(OPEN) polynomial_mult_17_12.pdf
 	
 # gives 204
@@ -5225,7 +5229,7 @@ polynomial_division_ranked_2_204_37:
 		-finite_field_activity \
 			-polynomial_division_ranked 204 37 \
 		-end
-	pdflatex polynomial_division_204_37.tex
+	$(PDFLATEX) polynomial_division_204_37.tex
 	$(OPEN) polynomial_division_204_37.pdf
 	
 # answer is 18
@@ -5300,7 +5304,7 @@ Berlekamp_matrix_2_3:
 		-with F -do \
 		-finite_field_activity \
 		-Berlekamp_matrix v -end
-	pdflatex Berlekamp_matrix_q2_d3.tex
+	$(PDFLATEX) Berlekamp_matrix_q2_d3.tex
 	$(OPEN) Berlekamp_matrix_q2_d3.pdf
 
 # the polynomial X^3+X+1 is irreducible over GF(2) because the rank of the Berlekamp matrix is 2.
@@ -5405,7 +5409,7 @@ irred_3_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 3 -end
-	pdflatex Irred_q2_d3.tex
+	$(PDFLATEX) Irred_q2_d3.tex
 	$(OPEN) Irred_q2_d3.pdf
 
 
@@ -5415,7 +5419,7 @@ irred_4_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 4 -end
-	pdflatex Irred_q2_d4.tex
+	$(PDFLATEX) Irred_q2_d4.tex
 	$(OPEN) Irred_q2_d4.pdf
 
 # 3 polys
@@ -5426,7 +5430,7 @@ irred_5_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 5 -end
-	pdflatex Irred_q2_d5.tex
+	$(PDFLATEX) Irred_q2_d5.tex
 	$(OPEN) Irred_q2_d5.pdf
 
 # 6 polys
@@ -5437,7 +5441,7 @@ irred_6_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 6 -end
-	pdflatex Irred_q2_d6.tex
+	$(PDFLATEX) Irred_q2_d6.tex
 	$(OPEN) Irred_q2_d6.pdf
 
 # 9 polys: 97, 73, 67, 115, 117, 109, 91, 87, 103.
@@ -5448,7 +5452,7 @@ irred_7_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 7 -end
-	pdflatex Irred_q2_d7.tex
+	$(PDFLATEX) Irred_q2_d7.tex
 	$(OPEN) Irred_q2_d7.pdf
 
 # 18 polys
@@ -5459,7 +5463,7 @@ irred_8_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 8 -end
-	pdflatex Irred_q2_d8.tex
+	$(PDFLATEX) Irred_q2_d8.tex
 	$(OPEN) Irred_q2_d8.pdf
 
 # 30 polys
@@ -5470,7 +5474,7 @@ irred_9_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 9 -end
-	pdflatex Irred_q2_d9.tex
+	$(PDFLATEX) Irred_q2_d9.tex
 	$(OPEN) Irred_q2_d9.pdf
 
 # 56 polys
@@ -5481,7 +5485,7 @@ irred_10_2:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 10 -end
-	pdflatex Irred_q2_d10.tex
+	$(PDFLATEX) Irred_q2_d10.tex
 	$(OPEN) Irred_q2_d10.pdf
 
 # 99 polys
@@ -5492,7 +5496,7 @@ irred_2_4:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 2 -end
-	pdflatex Irred_q4_d2.tex
+	$(PDFLATEX) Irred_q4_d2.tex
 	$(OPEN) Irred_q4_d2.pdf
 
 # 6 polys
@@ -5504,7 +5508,7 @@ irred_3_4:
 		-with F -do \
 		-finite_field_activity \
 		-make_table_of_irreducible_polynomials 3 -end
-	pdflatex Irred_q4_d3.tex
+	$(PDFLATEX) Irred_q4_d3.tex
 	$(OPEN) Irred_q4_d3.pdf
 
 # 20 polys
@@ -5658,7 +5662,7 @@ Fermat_cubic_F9_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex Fermat_cubic_F9_classification.tex
+	$(PDFLATEX) Fermat_cubic_F9_classification.tex
 	$(OPEN) Fermat_cubic_F9_classification.pdf
 
 
@@ -5744,7 +5748,7 @@ arcs_5_2_q11:
 				-d 2 \
 			-end \
 		-end
-	#pdflatex arcs_5_2_q11_poset.tex
+	#$(PDFLATEX) arcs_5_2_q11_poset.tex
 	#$(OPEN) arcs_5_2_q11_poset.pdf
 
 
@@ -5839,7 +5843,7 @@ F_9_q7:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_F_9_report.tex
+	$(PDFLATEX) surface_F_9_report.tex
 	$(OPEN) surface_F_9_report.pdf
 
 
@@ -6153,7 +6157,7 @@ curve_q13_f0_clean2_variety_compute_group:
 			-label_tex curve\_q13\_f0\_clean2 \
 		-end \
 		-with V -do -variety_activity -compute_group -end 
-	pdflatex curve_q13_f0_clean2_c_orbits.tex
+	$(PDFLATEX) curve_q13_f0_clean2_c_orbits.tex
 	$(OPEN) curve_q13_f0_clean2_c_orbits.pdf
 
 
@@ -6178,7 +6182,7 @@ Hirschfeld_q2_group:
 		-with V -do -variety_activity -compute_group -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Hirschfeld_q2_report.tex
+	$(PDFLATEX) variety_Hirschfeld_q2_report.tex
 	$(OPEN) variety_Hirschfeld_q2_report.pdf
 
 
@@ -6203,7 +6207,7 @@ Hirschfeld_q4_group:
 		-with V -do -variety_activity -compute_group -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Hirschfeld_q4_report.tex
+	$(PDFLATEX) variety_Hirschfeld_q4_report.tex
 	$(OPEN) variety_Hirschfeld_q4_report.pdf
 
 
@@ -6230,7 +6234,7 @@ Barth_sextic_mod_11:
 		-with V -do -variety_activity -compute_group -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Barth_q11_report.tex
+	$(PDFLATEX) variety_Barth_q11_report.tex
 	$(OPEN) variety_Barth_q11_report.pdf
 
 
@@ -6317,7 +6321,7 @@ Cyclic_6:
 			-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex C_6_report.tex
+	$(PDFLATEX) C_6_report.tex
 	$(OPEN) C_6_report.pdf
 
 
@@ -6335,7 +6339,7 @@ Cyclic_6_from_generator:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_6_Subgroup_G1_6_report.tex
+	$(PDFLATEX) Sym_6_Subgroup_G1_6_report.tex
 	$(OPEN) Sym_6_Subgroup_G1_6_report.pdf
 
 
@@ -6368,7 +6372,7 @@ Symmetric_3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_3_report.tex
+	$(PDFLATEX) Sym_3_report.tex
 	$(OPEN) Sym_3_report.pdf
 
 
@@ -6458,9 +6462,9 @@ Symmetric_3_long:
 			-partition 3 \
 				all_one_r all_one_c \
 		-end
-	pdflatex Sym_3_elements_tree_draw.tex
+	$(PDFLATEX) Sym_3_elements_tree_draw.tex
 	$(OPEN) Sym_3_elements_tree_draw.pdf
-	#pdflatex Perm3_report.tex
+	#$(PDFLATEX) Perm3_report.tex
 	#$(OPEN) Perm3_report.pdf
 
 
@@ -6474,7 +6478,7 @@ Elementary_abelian_8:
 			-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex E_8_report.tex
+	$(PDFLATEX) E_8_report.tex
 	$(OPEN) E_8_report.pdf
 
 
@@ -6488,7 +6492,7 @@ Symmetric_4:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_4_report.tex
+	$(PDFLATEX) Sym_4_report.tex
 	$(OPEN) Sym_4_report.pdf
 
 
@@ -6569,7 +6573,7 @@ Symmetric_4_long:
 			-partition 3 \
 				all_one_r all_one_c \
 		-end
-	pdflatex Sym_4_elements_tree_draw.tex
+	$(PDFLATEX) Sym_4_elements_tree_draw.tex
 	#$(OPEN) Sym_4_elements_tree_draw.pdf
 
 
@@ -6732,7 +6736,7 @@ Group_M12:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_12_Subgroup_M12_95040_report.tex
+	$(PDFLATEX) Sym_12_Subgroup_M12_95040_report.tex
 	$(OPEN) Sym_12_Subgroup_M12_95040_report.pdf
 
 
@@ -6788,7 +6792,7 @@ PGL_2_3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_2_3_report.tex
+	$(PDFLATEX) PGL_2_3_report.tex
 	$(OPEN) PGL_2_3_report.pdf
 
 
@@ -6803,7 +6807,7 @@ PGL_2_17:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_2_17_report.tex
+	$(PDFLATEX) PGL_2_17_report.tex
 	$(OPEN) PGL_2_17_report.pdf
 
 PSL_2_17:
@@ -6817,7 +6821,7 @@ PSL_2_17:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PSL_2_17_report.tex
+	$(PDFLATEX) PSL_2_17_report.tex
 	$(OPEN) PSL_2_17_report.pdf
 
 
@@ -6833,7 +6837,7 @@ PGL_3_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_2_report.tex
+	$(PDFLATEX) PGL_3_2_report.tex
 	$(OPEN) PGL_3_2_report.pdf
 
 
@@ -6857,7 +6861,7 @@ PGL_4_2_report:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_2_report.tex
+	$(PDFLATEX) PGL_4_2_report.tex
 	$(OPEN) PGL_4_2_report.pdf
 
 
@@ -6888,7 +6892,7 @@ PGL_4_2_export:
 		-group_theoretic_activity \
 			-export_orbiter \
 		-end
-	pdflatex PGL_4_2_report.tex
+	$(PDFLATEX) PGL_4_2_report.tex
 	$(OPEN) PGL_4_2_report.pdf
 
 # created by PGL_4_2_export
@@ -6909,7 +6913,7 @@ PGL_4_2_export_GAP:
 		-group_theoretic_activity \
 			-export_gap \
 		-end
-	#pdflatex PGL_4_2_report.tex
+	#$(PDFLATEX) PGL_4_2_report.tex
 	#$(OPEN) PGL_4_2_report.pdf
 
 
@@ -6930,7 +6934,7 @@ PGL_5_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_5_2_report.tex
+	$(PDFLATEX) PGL_5_2_report.tex
 	$(OPEN) PGL_5_2_report.pdf
 
 #The order of the group PGGL(5, 2) is 9999360
@@ -6958,7 +6962,7 @@ L_5_3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PSL_5_3_report.tex
+	$(PDFLATEX) PSL_5_3_report.tex
 	$(OPEN) PSL_5_3_report.pdf
 
 #PSL(5,3): Order 237783237120 = 121 * 120 * 117 * 108 * 81 * 16
@@ -6976,7 +6980,7 @@ L_4_5:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PSL_4_5_report.tex
+	$(PDFLATEX) PSL_4_5_report.tex
 	$(OPEN) PSL_4_5_report.pdf
 
 #PSL(4,5): Order 7254000000
@@ -7000,7 +7004,7 @@ PGL_4_5:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_5_report.tex
+	$(PDFLATEX) PGL_4_5_report.tex
 	$(OPEN) PGL_4_5_report.pdf
 
 
@@ -7016,7 +7020,7 @@ PGGL_3_4:
 			-report Do \
 			-report_sylow \
 		-end
-	pdflatex PGGL_3_4_report.tex
+	$(PDFLATEX) PGGL_3_4_report.tex
 	$(OPEN) PGGL_3_4_report.pdf
 
 
@@ -7032,7 +7036,7 @@ PGGL_3_8:
 			-report Do \
 			-report_sylow \
 		-end
-	pdflatex PGGL_3_8_report.tex
+	$(PDFLATEX) PGGL_3_8_report.tex
 	$(OPEN) PGGL_3_8_report.pdf
 
 
@@ -7049,7 +7053,7 @@ AGL_1_27:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex AGL_1_27_report.tex
+	$(PDFLATEX) AGL_1_27_report.tex
 	$(OPEN) AGL_1_27_report.pdf
 
 
@@ -7064,7 +7068,7 @@ AGGL_2_27:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex AGGL_2_27_report.tex
+	$(PDFLATEX) AGGL_2_27_report.tex
 	$(OPEN) AGGL_2_27_report.pdf
 
 #The order of the group AGGL(2, 27) is 1117679472
@@ -7083,7 +7087,7 @@ SP_4_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_4_2_Sp_4_2_report.tex
+	$(PDFLATEX) GL_4_2_Sp_4_2_report.tex
 	$(OPEN) GL_4_2_Sp_4_2_report.pdf
 
 # order 720
@@ -7102,7 +7106,7 @@ PSP_4_4:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_4_Sp_4_4_report.tex
+	$(PDFLATEX) PGL_4_4_Sp_4_4_report.tex
 	$(OPEN) PGL_4_4_Sp_4_4_report.pdf
 
 #order 979200
@@ -7119,7 +7123,7 @@ PGOp_4_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOp_4_2_report.tex
+	$(PDFLATEX) PGOp_4_2_report.tex
 	$(OPEN) PGOp_4_2_report.pdf
 
 # order 72
@@ -7136,7 +7140,7 @@ PGO_5_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGO_5_2_report.tex
+	$(PDFLATEX) PGO_5_2_report.tex
 	$(OPEN) PGO_5_2_report.pdf
 
 # order 720
@@ -7153,7 +7157,7 @@ PGGO_5_4:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGO_5_4_report.tex
+	$(PDFLATEX) PGGO_5_4_report.tex
 	$(OPEN) PGGO_5_4_report.pdf
 
 # order 1958400
@@ -7189,7 +7193,7 @@ PGOp_6_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOp_6_2_report.tex
+	$(PDFLATEX) PGOp_6_2_report.tex
 	$(OPEN) PGOp_6_2_report.pdf
 
 PGOm_6_2:
@@ -7203,7 +7207,7 @@ PGOm_6_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOm_6_2_report.tex
+	$(PDFLATEX) PGOm_6_2_report.tex
 	$(OPEN) PGOm_6_2_report.pdf
 
 
@@ -7225,7 +7229,7 @@ PSP_6_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Sp_6_2_report.tex
+	$(PDFLATEX) PGL_6_2_Sp_6_2_report.tex
 	$(OPEN) PGL_6_2_Sp_6_2_report.pdf
 
 # group order 1451520, acting on 63 points
@@ -7242,7 +7246,7 @@ PGO_7_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGO_7_2_report.tex
+	$(PDFLATEX) PGO_7_2_report.tex
 	$(OPEN) PGO_7_2_report.pdf
 
 
@@ -7265,7 +7269,7 @@ NullPolarity_6_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_NullPolarity_6_2_report.tex
+	$(PDFLATEX) PGL_6_2_NullPolarity_6_2_report.tex
 	$(OPEN) PGL_6_2_NullPolarity_6_2_report.pdf
 
 # group order 23040, acting on 63 points
@@ -7285,7 +7289,7 @@ M24_matrix_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_Subgroup_M24_244823040_report.tex
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_244823040_report.tex
 	$(OPEN) PGL_12_2_Subgroup_M24_244823040_report.pdf
 
 # see also Section 10.3
@@ -7353,7 +7357,7 @@ C13:
 		-group_theoretic_activity \
 			-save_elements_csv "C13_elts.csv" \
 		-end
-	pdflatex C13_report.tex
+	$(PDFLATEX) C13_report.tex
 	$(OPEN) C13_report.pdf
 
 
@@ -7383,7 +7387,7 @@ C13_as_subgroup:
 		-group_theoretic_activity \
 			-save_elements_csv "C13_elts.csv" \
 		-end
-	#pdflatex Perm13_Subgroup_C13_13_report.tex
+	#$(PDFLATEX) Perm13_Subgroup_C13_13_report.tex
 	#$(OPEN) Perm13_Subgroup_C13_13_report.pdf
 
 
@@ -7399,7 +7403,7 @@ J1:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Janko1_report.tex
+	$(PDFLATEX) Janko1_report.tex
 	$(OPEN) Janko1_report.pdf
 
 
@@ -7413,7 +7417,7 @@ PGL_3_11_singer:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_11_Singer_3_11_19_report.tex
+	$(PDFLATEX) PGL_3_11_Singer_3_11_19_report.tex
 	$(OPEN) PGL_3_11_Singer_3_11_19_report.pdf
 
 
@@ -7429,7 +7433,7 @@ PGL_3_11_singer_and_frobenius:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-		pdflatex PGL_3_11_Singer_and_Frob3_11_19_report.tex
+		$(PDFLATEX) PGL_3_11_Singer_and_Frob3_11_19_report.tex
 		$(OPEN) PGL_3_11_Singer_and_Frob3_11_19_report.pdf
 
 PG_2_4_order_21:
@@ -7443,9 +7447,7 @@ PG_2_4_order_21:
 Sym3_in_PGL_2_3_group_table:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options \
-			-radius 200 -line_width 0.3 \
-		-end \
-		-draw_options -xout 10000 -yout 10000 \
+			-xout 10000 -yout 10000 \
 			-embedded -radius 50 \
 			-scale 0.1 -line_width 2 \
 		-end \
@@ -7458,7 +7460,7 @@ Sym3_in_PGL_2_3_group_table:
 			-report Do \
 			-report_group_table \
 		-end
-	pdflatex PGL_2_3_group_table_order_6.tex
+	$(PDFLATEX) PGL_2_3_group_table_order_6.tex
 	$(OPEN) PGL_2_3_group_table_order_6.pdf
 
 Sym3_in_PGL_2_3_report:
@@ -7491,11 +7493,11 @@ Sym3_in_PGL_2_3_report:
 			-file PGL_2_3_Subgroup_Sym3_6_elements_tree.txt \
 			-draw_options Do \
 		-end
-	pdflatex PGL_2_3_Subgroup_Sym3_6_report.tex
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_report.tex
 	$(OPEN) PGL_2_3_Subgroup_Sym3_6_report.pdf
-	pdflatex PGL_2_3_Subgroup_Sym3_6_elements.tex
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_elements.tex
 	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements.pdf
-	pdflatex PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.tex
+	$(PDFLATEX) PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.tex
 	$(OPEN) PGL_2_3_Subgroup_Sym3_6_elements_tree_draw.pdf
 
 
@@ -7516,7 +7518,7 @@ quaternion:
 			-report_group_table \
 			-report Do \
 		-end
-	pdflatex SL_2_3_Subgroup_quaternion_8_report.tex
+	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_report.tex
 	$(OPEN) SL_2_3_Subgroup_quaternion_8_report.pdf
 
 
@@ -7539,7 +7541,7 @@ cube_group:
 			-print_elements_tex \
 			-report Do \
 		-end
-	pdflatex GL_3_3_Subgroup_cube_48_report.tex
+	$(PDFLATEX) GL_3_3_Subgroup_cube_48_report.tex
 	$(OPEN) GL_3_3_Subgroup_cube_48_report.pdf
 
 
@@ -7557,7 +7559,7 @@ tetra_group:
 			-print_elements_tex \
 			-report Do \
 		-end
-	pdflatex GL_3_3_Subgroup_tetra_12_report.tex
+	$(PDFLATEX) GL_3_3_Subgroup_tetra_12_report.tex
 	$(OPEN) GL_3_3_Subgroup_tetra_12_report.pdf
 
 
@@ -7578,7 +7580,7 @@ Hesse_group:
 			-print_elements_tex \
 			-report Do \
 		-end
-	pdflatex PGGL_3_4_Subgroup_Hesse_432_report.tex
+	$(PDFLATEX) PGGL_3_4_Subgroup_Hesse_432_report.tex
 	$(OPEN) PGGL_3_4_Subgroup_Hesse_432_report.pdf
 
 
@@ -7599,7 +7601,7 @@ Weyl_E8:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_8_3_Subgroup_Weyl_E8_696729600_report.tex
+	$(PDFLATEX) GL_8_3_Subgroup_Weyl_E8_696729600_report.tex
 	$(OPEN) GL_8_3_Subgroup_Weyl_E8_696729600_report.pdf
 
 # group generators from http://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/E8.b.html
@@ -7630,7 +7632,7 @@ coset_reps:
 		-group_theoretic_activity \
 			-coset_reps \
 		-end
-	pdflatex PGOp_6_2_coset_reps.tex
+	$(PDFLATEX) PGOp_6_2_coset_reps.tex
 	$(OPEN) PGOp_6_2_coset_reps.pdf
 
 coset_reps_read:
@@ -7661,7 +7663,7 @@ SP_6_2_point_stab_subgroup:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Sp_6_2_Stab0_report.tex
+	$(PDFLATEX) PGL_6_2_Sp_6_2_Stab0_report.tex
 	$(OPEN) PGL_6_2_Sp_6_2_Stab0_report.pdf
 
 
@@ -7679,7 +7681,7 @@ PGOp_6_2_report:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOp_6_2_report.tex
+	$(PDFLATEX) PGOp_6_2_report.tex
 	$(OPEN) PGOp_6_2_report.pdf
 
 # group order 40320
@@ -7696,7 +7698,7 @@ PGOm_6_2_report:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOm_6_2_report.tex
+	$(PDFLATEX) PGOm_6_2_report.tex
 	$(OPEN) PGOm_6_2_report.pdf
 
 # group order 51840
@@ -7728,7 +7730,7 @@ PGOp_6_2_point_stab_subgroup:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGOp_6_2_report.tex
+	$(PDFLATEX) PGOp_6_2_report.tex
 	$(OPEN) PGOp_6_2_report.pdf
 
 
@@ -7749,7 +7751,7 @@ PGOp_6_2_linear:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Subgroup_PGOp_6_2_40320_report.tex
+	$(PDFLATEX) PGL_6_2_Subgroup_PGOp_6_2_40320_report.tex
 	$(OPEN) PGL_6_2_Subgroup_PGOp_6_2_40320_report.pdf
 
 
@@ -7771,7 +7773,7 @@ PGOp_6_2_linear_stab_6:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Subgroup_PGOp_6_2_40320_Stab6_report.tex
+	$(PDFLATEX) PGL_6_2_Subgroup_PGOp_6_2_40320_Stab6_report.tex
 	$(OPEN) PGL_6_2_Subgroup_PGOp_6_2_40320_Stab6_report.pdf
 
 
@@ -7841,7 +7843,7 @@ Cyclic_6_aut:
 			-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex C_6_aut_report.tex
+	$(PDFLATEX) C_6_aut_report.tex
 	$(OPEN) C_6_aut_report.pdf
 
 Elementary_abelian_8_aut:
@@ -7861,7 +7863,7 @@ Elementary_abelian_8_aut:
 			-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex E_8_aut_report.tex
+	$(PDFLATEX) E_8_aut_report.tex
 	$(OPEN) E_8_aut_report.pdf
 
 
@@ -7879,7 +7881,7 @@ Symmetric_4_on_pairs:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_4_OnSubsets_2_report.tex
+	$(PDFLATEX) Sym_4_OnSubsets_2_report.tex
 	$(OPEN) Sym_4_OnSubsets_2_report.pdf
 
 
@@ -7897,7 +7899,7 @@ Alternating_5:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_5_EvenSub_report.tex
+	$(PDFLATEX) Sym_5_EvenSub_report.tex
 	$(OPEN) Sym_5_EvenSub_report.pdf
 
 # group order 60
@@ -7916,7 +7918,7 @@ Alternating_5_derived:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_5_Derived_report.tex
+	$(PDFLATEX) Sym_5_Derived_report.tex
 	$(OPEN) Sym_5_Derived_report.pdf
 
 
@@ -7939,7 +7941,7 @@ direct_product_AGL:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex product_AGL_1_3_AGL_1_7_report.tex
+	$(PDFLATEX) product_AGL_1_3_AGL_1_7_report.tex
 	$(OPEN) product_AGL_1_3_AGL_1_7_report.pdf
 
 
@@ -7958,7 +7960,7 @@ PGLstar_3_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_2_polarity_ext_report.tex
+	$(PDFLATEX) PGL_3_2_polarity_ext_report.tex
 	$(OPEN) PGL_3_2_polarity_ext_report.pdf
 
 PGLstar_3_2_restrict:
@@ -7980,7 +7982,7 @@ PGLstar_3_2_restrict:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_2_polarity_extension_res_H_report.tex
+	$(PDFLATEX) PGL_3_2_polarity_extension_res_H_report.tex
 	$(OPEN) PGL_3_2_polarity_extension_res_H_report.pdf
 
 
@@ -7999,7 +8001,7 @@ PGGLstar_3_4:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_3_4_polarity_ext_report.tex
+	$(PDFLATEX) PGGL_3_4_polarity_ext_report.tex
 	$(OPEN) PGGL_3_4_polarity_ext_report.pdf
 
 PGLstar_4_2:
@@ -8017,7 +8019,7 @@ PGLstar_4_2:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_2_polarity_ext_report.tex
+	$(PDFLATEX) PGL_4_2_polarity_ext_report.tex
 	$(OPEN) PGL_4_2_polarity_ext_report.pdf
 
 
@@ -8037,7 +8039,7 @@ Group_M11:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_12_Subgroup_M12_95040_Stab0_report.tex
+	$(PDFLATEX) Sym_12_Subgroup_M12_95040_Stab0_report.tex
 	$(OPEN) Sym_12_Subgroup_M12_95040_Stab0_report.pdf
 
 
@@ -8060,7 +8062,7 @@ surface_q13_Eckardt:
 		-cubic_surface_activity \
 			-export_something tritangent_planes \
 		-end
-	pdflatex surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
+	$(PDFLATEX) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
 	$(OPEN) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.pdf
 
 #surface_equation_F_Hirschfeld_q4_tritangent_planes.csv
@@ -8110,7 +8112,7 @@ arc_0_1_2_3_43_113_tritangent_planes.csv \
 		-with Orb -do -orbits_activity \
 			-stabilizer 36 \
 		-end
-	pdflatex PGL_4_13_Gr_4_3_res_TriP_orbits_report.tex
+	$(PDFLATEX) PGL_4_13_Gr_4_3_res_TriP_orbits_report.tex
 	$(OPEN) PGL_4_13_Gr_4_3_res_TriP_orbits_report.pdf
 
 
@@ -8128,7 +8130,7 @@ Hirschfeld_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.pdf
 
 
@@ -8163,7 +8165,7 @@ Hirschfeld_stab_projectivity_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_ProjectivitySubgroup_report.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_ProjectivitySubgroup_report.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_ProjectivitySubgroup_report.pdf
 
 
@@ -8189,7 +8191,7 @@ on_planes:
 			-apply "0,8,1,6,4,3,7,2,5" \
 			"1,0,0,0, 0,1,0,0, 0,0,0,2, 0,0,1,1" \
 		-end
-	pdflatex PGL_4_8_Gr_4_3_apply.tex
+	$(PDFLATEX) PGL_4_8_Gr_4_3_apply.tex
 	$(OPEN) PGL_4_8_Gr_4_3_apply.pdf
 
 
@@ -8215,7 +8217,7 @@ on_planes_restricted:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_8_Gr_4_3_res_planes_report.tex
+	$(PDFLATEX) PGL_4_8_Gr_4_3_res_planes_report.tex
 	$(OPEN) PGL_4_8_Gr_4_3_res_planes_report.pdf
 
 
@@ -8231,7 +8233,7 @@ T3_on_tensors:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_2_2_wreath_Sym3_report.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym3_report.tex
 	$(OPEN) GL_2_2_wreath_Sym3_report.pdf
 	
 
@@ -8248,7 +8250,7 @@ T3r1:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_2_2_wreath_Sym3_report.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym3_report.tex
 	$(OPEN) GL_2_2_wreath_Sym3_report.pdf
 
 
@@ -8267,7 +8269,7 @@ T4_on_tensors:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_2_2_wreath_Sym4_report.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
 	$(OPEN) GL_2_2_wreath_Sym4_report.pdf
 	
 	
@@ -8283,7 +8285,7 @@ T4r1:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex GL_2_2_wreath_Sym4_report.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
 	$(OPEN) GL_2_2_wreath_Sym4_report.pdf
 
 
@@ -8302,7 +8304,7 @@ PGGL_2_8_on_conic:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	#pdflatex PGGL_2_8_OnConic_2_8_report.tex
+	#$(PDFLATEX) PGGL_2_8_OnConic_2_8_report.tex
 	#$(OPEN) PGGL_2_8_OnConic_2_8_report.pdf
 
 PGL_4_2_wedge:
@@ -8318,7 +8320,7 @@ PGL_4_2_wedge:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_4_2_report.tex
+	$(PDFLATEX) PGL_4_2_report.tex
 	$(OPEN) PGL_4_2_report.pdf
 
 
@@ -8337,7 +8339,7 @@ PGL_5_3_wedge:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_5_3_report.tex
+	$(PDFLATEX) PGL_5_3_report.tex
 	$(OPEN) PGL_5_3_report.pdf
 
 
@@ -8354,7 +8356,7 @@ PGL_4_2_wd:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Wedge_4_2_detached_report.tex
+	$(PDFLATEX) PGL_6_2_Wedge_4_2_detached_report.tex
 	$(OPEN) PGL_6_2_Wedge_4_2_detached_report.pdf
 
 
@@ -8369,7 +8371,7 @@ PGL_5_3_wd:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_10_3_Wedge_5_3_detached_report.tex
+	$(PDFLATEX) PGL_10_3_Wedge_5_3_detached_report.tex
 	$(OPEN) PGL_10_3_Wedge_5_3_detached_report.pdf
 
 
@@ -8402,7 +8404,7 @@ M24_perm_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_res_v_report.tex
+	$(PDFLATEX) PGL_12_2_res_v_report.tex
 	$(OPEN) PGL_12_2_res_v_report.pdf
 
 
@@ -8445,7 +8447,7 @@ M22_bar:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_res_code_res_pts_report.tex
+	$(PDFLATEX) PGL_12_2_res_code_res_pts_report.tex
 	$(OPEN) PGL_12_2_res_code_res_pts_report.pdf
 
 
@@ -8482,7 +8484,7 @@ curve_q13_f0_clean2_variety_make_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_13_stab_of_curve_q13_f0_clean2_report.tex
+	$(PDFLATEX) PGL_3_13_stab_of_curve_q13_f0_clean2_report.tex
 	$(OPEN) PGL_3_13_stab_of_curve_q13_f0_clean2_report.pdf
 
 
@@ -8515,7 +8517,7 @@ conic_group_q5:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_5_stab_of_conic_q5_report.tex
+	$(PDFLATEX) PGL_3_5_stab_of_conic_q5_report.tex
 	$(OPEN) PGL_3_5_stab_of_conic_q5_report.pdf
 
 group_of_Hirschfeld_surface_q4:
@@ -8551,9 +8553,9 @@ group_of_Hirschfeld_surface_q4:
 		-variety_activity \
 			-report \
 		-end
-	pdflatex variety_Hirschfeld_surface_q4_report.tex
+	$(PDFLATEX) variety_Hirschfeld_surface_q4_report.tex
 	$(OPEN) variety_Hirschfeld_surface_q4_report.pdf
-	pdflatex PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.tex
+	$(PDFLATEX) PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.tex
 	$(OPEN) PGGL_4_4_stab_of_Hirschfeld_surface_q4_report.pdf
 
 Higman_Sims_on_176_points:
@@ -8583,8 +8585,8 @@ Higman_Sims_on_176_points:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.tex
-	open Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.pdf
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.tex
+	$(OPEN) Sym_100_Subgroup_HS_44352000_OnCosetsOfSubgroup_report.pdf
 
 
 group_U_4_3:
@@ -8638,8 +8640,8 @@ group_U_4_3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.tex
-	open PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.pdf
+	$(PDFLATEX) PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.tex
+	$(OPEN) PGGL_4_9_stab_of_hermitian_surface_q3_res_v_report.pdf
 
 
 
@@ -8706,7 +8708,7 @@ Sym_3_elements:
 			-file Sym_3_elements_tree.txt \
 			-draw_options Do \
 		-end
-	pdflatex Sym_3_elements_tree_draw.tex
+	$(PDFLATEX) Sym_3_elements_tree_draw.tex
 	$(OPEN) Sym_3_elements_tree_draw.pdf
 
 
@@ -8719,7 +8721,7 @@ Cycle_13_power:
 			-consecutive_powers \
 			"1,2,3,4,5,6,7,8,9,10,11,12,0" 13 \
 		-end
-	pdflatex Sym_13_all_powers.tex
+	$(PDFLATEX) Sym_13_all_powers.tex
 	$(OPEN) Sym_13_all_powers.pdf
 
 
@@ -8731,7 +8733,7 @@ Cycle_12_power:
 			-consecutive_powers \
 			"1,2,3,4,5,6,7,8,9,10,11,0" 12 \
 		-end
-	pdflatex Sym_12_all_powers.tex
+	$(PDFLATEX) Sym_12_all_powers.tex
 	$(OPEN) Sym_12_all_powers.pdf
 	
 
@@ -8754,7 +8756,7 @@ GL_2_8_multiply:
 		-group_theoretic_activity \
 			-multiply "0,1,2,3" "4,5,6,7" \
 		-end
-	pdflatex GL_2_8_mult.tex
+	$(PDFLATEX) GL_2_8_mult.tex
 	$(OPEN) GL_2_8_mult.pdf
 
 
@@ -8765,7 +8767,7 @@ GL_2_7_multiply:
 		-group_theoretic_activity \
 			-multiply "0,1,2,3" "4,5,6,0" \
 		-end
-	pdflatex GL_2_7_mult.tex
+	$(PDFLATEX) GL_2_7_mult.tex
 	$(OPEN) GL_2_7_mult.pdf
 
 
@@ -8776,7 +8778,7 @@ GL_2_7_inv:
 		-group_theoretic_activity \
 			-inverse "0,1,2,3" \
 		-end
-	pdflatex GL_2_7_inv.tex
+	$(PDFLATEX) GL_2_7_inv.tex
 	$(OPEN) GL_2_7_inv.pdf
 
 GL_2_7_power:
@@ -8786,7 +8788,7 @@ GL_2_7_power:
 		-group_theoretic_activity \
 			-raise_to_the_power "0,1,2,3" 2 \
 		-end
-	pdflatex GL_2_7_power.tex
+	$(PDFLATEX) GL_2_7_power.tex
 	$(OPEN) GL_2_7_power.pdf
 
 
@@ -8797,9 +8799,9 @@ PGL_3_2_classes:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGL_3_2_classes_based_on_normal_forms_3_2.tex
+	$(PDFLATEX) PGL_3_2_classes_based_on_normal_forms_3_2.tex
 	$(OPEN) PGL_3_2_classes_based_on_normal_forms_3_2.pdf
-	#pdflatex PGL_3_2_classes_out.tex
+	#$(PDFLATEX) PGL_3_2_classes_out.tex
 	#$(OPEN) PGL_3_2_classes_out.pdf
 
 #		-classes \
@@ -8812,7 +8814,7 @@ PGL_4_2_classes_based_on_normal_form:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGL_4_2_classes_based_on_normal_forms_4_2.tex
+	$(PDFLATEX) PGL_4_2_classes_based_on_normal_forms_4_2.tex
 	$(OPEN) PGL_4_2_classes_based_on_normal_forms_4_2.pdf
 
 
@@ -8823,7 +8825,7 @@ PGL_10_2_classes_based_on_normal_form:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGL_10_2_classes_based_on_normal_forms_10_2.tex
+	$(PDFLATEX) PGL_10_2_classes_based_on_normal_forms_10_2.tex
 	$(OPEN) PGL_10_2_classes_based_on_normal_forms_10_2.pdf
 
 
@@ -8835,7 +8837,7 @@ normal_forms_PGL_4_4:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGGL_4_4_classes_based_on_normal_forms_4_4.tex
+	$(PDFLATEX) PGGL_4_4_classes_based_on_normal_forms_4_4.tex
 	$(OPEN) PGGL_4_4_classes_based_on_normal_forms_4_4.pdf
 
 
@@ -8892,7 +8894,7 @@ normal_forms_PGL_4_5:
 		-group_theoretic_activity \
 			-classes_based_on_normal_form \
 		-end
-	pdflatex PGL_4_5_classes_based_on_normal_forms_4_5.tex
+	$(PDFLATEX) PGL_4_5_classes_based_on_normal_forms_4_5.tex
 	$(OPEN) PGL_4_5_classes_based_on_normal_forms_4_5.pdf
 
 
@@ -8941,7 +8943,7 @@ PGL_2_3_subgroup_lattice:
 
 PGL_2_3_subgroup_lattice_load_and_draw_by_groups:
 	$(ORBITER) -v 3 \
-		-draw_options -embedded -end \
+		-define Do -draw_options -embedded -end \
 		-define F -finite_field -q 3 -end \
 		-define G -linear_group -PGL 2 F -end \
 		-with G -do \
@@ -8950,16 +8952,16 @@ PGL_2_3_subgroup_lattice_load_and_draw_by_groups:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-subgroup_lattice_draw_by_groups \
+			-subgroup_lattice_draw_by_groups Do \
 		-end
-	pdflatex PGL_2_3_drawing.tex
+	$(PDFLATEX) PGL_2_3_drawing.tex
 	$(OPEN) PGL_2_3_drawing.pdf
 
 
 
 PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
 	$(ORBITER) -v 3 \
-		-draw_options -embedded -end \
+		-define Do -draw_options -embedded -end \
 		-define F -finite_field -q 3 -end \
 		-define G -linear_group -PGL 2 F -end \
 		-with G -do \
@@ -8968,9 +8970,9 @@ PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-subgroup_lattice_draw_by_orbits \
+			-subgroup_lattice_draw_by_orbits Do \
 		-end
-	pdflatex PGL_2_3_drawing_by_orbits.tex
+	$(PDFLATEX) PGL_2_3_drawing_by_orbits.tex
 	$(OPEN) PGL_2_3_drawing_by_orbits.pdf
 
 
@@ -9048,7 +9050,7 @@ PGGL_2_4_export_magma:
 		-group_theoretic_activity \
 			-export_magma \
 		-end
-	pdflatex PGGL_2_4_report.tex
+	$(PDFLATEX) PGGL_2_4_report.tex
 	$(OPEN) PGGL_2_4_report.pdf
 
 
@@ -9097,7 +9099,7 @@ Hirschfeld_stab_subgroup_lattice_magma:
 		-group_theoretic_activity \
 			-subgroup_lattice_magma \
 		-end
-	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_subgroup_lattice_out.pdf
 
 PGGL_2_4_classes:
@@ -9109,7 +9111,7 @@ PGGL_2_4_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma PGGL_2_4_classes.magma
+	$(MAGMA_EXE) PGGL_2_4_classes.magma
 	$(ORBITER) -v 3 \
 		-define G \
 		-linear_group -PGGL 2 4 \
@@ -9118,7 +9120,7 @@ PGGL_2_4_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGGL_2_4_classes_out.tex
+	$(PDFLATEX) PGGL_2_4_classes_out.tex
 	$(OPEN) PGGL_2_4_classes_out.pdf
 	$(OPEN) PGGL_2_4_classes_out.csv
 
@@ -9148,7 +9150,7 @@ PGL_3_11_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma PGL_3_11_classes.magma
+	$(MAGMA_EXE) PGL_3_11_classes.magma
 	$(ORBITER) -v 3 \
 		-define G \
 		-linear_group -PGL 3 11 \
@@ -9157,7 +9159,7 @@ PGL_3_11_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGL_3_11_classes_out.tex
+	$(PDFLATEX) PGL_3_11_classes_out.tex
 	$(OPEN) PGL_3_11_classes_out.pdf
 
 PGL_7_2_classes:
@@ -9169,7 +9171,7 @@ PGL_7_2_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma PGL_7_2_classes.magma
+	$(MAGMA_EXE) PGL_7_2_classes.magma
 	$(ORBITER) -v 3 \
 		-define G \
 		-linear_group -PGL 7 2 \
@@ -9198,11 +9200,11 @@ PGL_8_2_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGL_8_2_classes_out.tex
+	$(PDFLATEX) PGL_8_2_classes_out.tex
 	$(OPEN) PGL_8_2_classes_out.pdf
 
 
-	#$(MAGMA_PATH)magma PGL_8_2_classes.magma
+	#$(MAGMA_EXE) PGL_8_2_classes.magma
 
 
 
@@ -9227,7 +9229,7 @@ Hirschfeld_stab_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.pdf
 
 
@@ -9248,7 +9250,7 @@ PGGL_2_4_cent_2A:
 		-group_theoretic_activity \
 			-centralizer_of_element "2A" "1,0, 0,1, 1" \
 		-end
-	pdflatex PGGL_2_4_elt_2A_centralizer.tex
+	$(PDFLATEX) PGGL_2_4_elt_2A_centralizer.tex
 	$(OPEN) PGGL_2_4_elt_2A_centralizer.pdf
 	
 
@@ -9262,7 +9264,7 @@ Normalizer_of_H5:
 		-group_theoretic_activity \
 			-normalizer \
 		-end
-	pdflatex Sym_13_Subgroup_H5_5_normalizer.tex
+	$(PDFLATEX) Sym_13_Subgroup_H5_5_normalizer.tex
 	$(OPEN) Sym_13_Subgroup_H5_5_normalizer.pdf
 
 # ToDo: ! Missing $ inserted.
@@ -9279,7 +9281,7 @@ PGGL_3_4_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGGL_3_4_classes_out.tex
+	$(PDFLATEX) PGGL_3_4_classes_out.tex
 	$(OPEN) PGGL_3_4_classes_out.pdf
 
 
@@ -9296,7 +9298,7 @@ classes_PGGL_4_4:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGGL_4_4_classes_out.tex
+	$(PDFLATEX) PGGL_4_4_classes_out.tex
 	$(OPEN) PGGL_4_4_classes_out.pdf
 
 # group order 1974067200 = 2^13 * 3^4 * 5^2 * 7 * 17
@@ -9315,7 +9317,7 @@ subgroups_PGL_4_5:
 		-group_theoretic_activity \
 			-find_subgroup 3 \
 		-end
-	pdflatex PGL_4_5_report.tex
+	$(PDFLATEX) PGL_4_5_report.tex
 	$(OPEN) PGL_4_5_report.pdf
 
 
@@ -9327,7 +9329,7 @@ classes_PGL_4_5:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGL_4_5_classes_out.tex
+	$(PDFLATEX) PGL_4_5_classes_out.tex
 	$(OPEN) PGL_4_5_classes_out.pdf
 	
 # 163 classes
@@ -9373,7 +9375,7 @@ GL_3_5_singer_power:
 			-raise_to_the_power \
 			"0,1,0, 0,0,1, 3,0,4" 31 \
 		-end
-	pdflatex GL_3_5_power.tex
+	$(PDFLATEX) GL_3_5_power.tex
 	$(OPEN) GL_3_5_power.pdf
 
 
@@ -9386,7 +9388,7 @@ PGL_4_5_norm_31:
 			-normalizer_of_cyclic_subgroup "31" \
 			"2,0,0,0, 0,0,1,0, 0,0,0,1, 0,3,0,4"
 		-end
-	pdflatex normalizer_of_31_in_PGL_4_5.tex
+	$(PDFLATEX) normalizer_of_31_in_PGL_4_5.tex
 	$(OPEN) normalizer_of_31_in_PGL_4_5.pdf
 
 
@@ -9400,7 +9402,7 @@ Normalizer_of_Z22_in_PGL_2_9:
 		-group_theoretic_activity \
 			-normalizer \
 		-end
-	pdflatex PGL_2_9_Subgroup_Z22_4_normalizer.tex
+	$(PDFLATEX) PGL_2_9_Subgroup_Z22_4_normalizer.tex
 	$(OPEN) PGL_2_9_Subgroup_Z22_4_normalizer.pdf
 
 
@@ -9414,7 +9416,7 @@ PGOm_6_2_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGOm_6_2_classes_out.tex
+	$(PDFLATEX) PGOm_6_2_classes_out.tex
 	$(OPEN) PGOm_6_2_classes_out.pdf
 
 
@@ -9447,7 +9449,7 @@ PGOm_6_2_Class_2A_print:
 				-print \
 			-end \
 		-end
-	pdflatex PGOm_6_2_Class2A_elements.tex
+	$(PDFLATEX) PGOm_6_2_Class2A_elements.tex
 	$(OPEN) PGOm_6_2_Class2A_elements.pdf
 
 
@@ -9463,7 +9465,7 @@ PGOm_6_2_Class_2A_centralizer:
 			-centralizer_of_element \
 				"2Arep" $(PGOM_6_2_CLASS_2A_REP_CLEAN) \
 		-end
-	pdflatex PGOm_6_2_elt_2Arep_centralizer.tex
+	$(PDFLATEX) PGOm_6_2_elt_2Arep_centralizer.tex
 	$(OPEN) PGOm_6_2_elt_2Arep_centralizer.pdf
 
 
@@ -9485,7 +9487,7 @@ PGOm_6_2_Class_2A_centralizer_recover:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Subgroup_2ACent_1440_report.tex
+	$(PDFLATEX) PGL_6_2_Subgroup_2ACent_1440_report.tex
 	$(OPEN) PGL_6_2_Subgroup_2ACent_1440_report.pdf
 
 
@@ -9572,7 +9574,7 @@ U_3_3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_9_Subgroup_U_3_3_6048_report.tex
+	$(PDFLATEX) PGL_3_9_Subgroup_U_3_3_6048_report.tex
 	#$(OPEN) PGL_3_9_Subgroup_U_3_3_6048_report.pdf
 
 
@@ -9590,9 +9592,9 @@ PGL_2_3_group_table:
 			-report Do \
 			-report_group_table \
 		-end
-	pdflatex PGL_2_3_report.tex
+	$(PDFLATEX) PGL_2_3_report.tex
 	$(OPEN) PGL_2_3_report.pdf
-	#pdflatex PGL_2_3_group_table_order_24.tex
+	#$(PDFLATEX) PGL_2_3_group_table_order_24.tex
 	#$(OPEN) PGL_2_3_group_table_order_24.pdf
 	#$(OPEN) PGL_2_3_report.pdf
 
@@ -9624,7 +9626,7 @@ Co3:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_22_2_Subgroup_Co3_495766656000_report.tex
+	$(PDFLATEX) PGL_22_2_Subgroup_Co3_495766656000_report.tex
 	#$(OPEN) PGL_22_2_Subgroup_Co3_495766656000_report.pdf
 
 # needs a lot of memory to run!
@@ -9672,7 +9674,7 @@ Higman_Sims_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_100_Subgroup_HS_44352000_report.tex
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_report.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_report.pdf
 
 
@@ -9690,7 +9692,7 @@ Higman_Sims_group_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex Sym_100_Subgroup_HS_44352000_classes_out.tex
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_classes_out.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_classes_out.pdf
 
 
@@ -9734,7 +9736,7 @@ Higman_Sims_subgroup_176a:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.tex
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_585_report.pdf
 
 
@@ -9765,7 +9767,7 @@ Higman_Sims_subgroup_176b:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.tex
+	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.pdf
 
 
@@ -9828,19 +9830,25 @@ orbits_PGL_4_2_on_points_draw_tree:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
-	pdflatex PGL_4_2_orbits_report.tex
+	$(PDFLATEX) PGL_4_2_orbits_report.tex
 	$(OPEN) PGL_4_2_orbits_report.pdf
 
 
 orbits_PGL_4_2_on_points_export_trees:
 	$(ORBITER) -v 4 \
-		-draw_options -embedded -end \
+		-define Do -draw_options -embedded -end \
 		-define G -linear_group -PGL 4 2 -end \
 		-define Orb -orbits -group G \
 			-on_points \
 		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
 		-with Orb -do -orbits_activity \
 			-report \
+			-report_options ro \
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_trees \
@@ -9851,7 +9859,7 @@ orbits_PGL_4_2_on_points_export_trees:
 		-radius 500 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
 		-end
-	pdflatex orbit_PGL_4_2_0_draw.tex
+	$(PDFLATEX) orbit_PGL_4_2_0_draw.tex
 	$(OPEN) orbit_PGL_4_2_0_draw.pdf
 
 
@@ -9892,7 +9900,7 @@ T3r1_orbits:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
-	pdflatex GL_2_2_wreath_Sym3_orbit_0_tree.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym3_orbit_0_tree.tex
 	$(OPEN) GL_2_2_wreath_Sym3_orbit_0_tree.pdf
 
 
@@ -9905,9 +9913,9 @@ T3r1_orbits_draw:
 		-radius 500 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 1.4 -scale 0.25 \
 		-end
-	#pdflatex GL_2_2_wreath_Sym3_report.tex
+	#$(PDFLATEX) GL_2_2_wreath_Sym3_report.tex
 	#$(OPEN) GL_2_2_wreath_Sym3_report.pdf
-	pdflatex GL_2_2_wreath_Sym3_res27_0_draw.tex
+	$(PDFLATEX) GL_2_2_wreath_Sym3_res27_0_draw.tex
 	$(OPEN) GL_2_2_wreath_Sym3_res27_0_draw.pdf
 
 
@@ -9948,7 +9956,7 @@ orbits_on_conics_q13:
 		-define Orb -orbits -group G \
 			-on_polynomials R \
 		-end
-	#pdflatex poly_orbits_d2_n2_q13.tex
+	#$(PDFLATEX) poly_orbits_d2_n2_q13.tex
 	#$(OPEN) poly_orbits_d2_n2_q13.pdf
 
 
@@ -9966,7 +9974,7 @@ orbits_cubic_curves_q2:
 		-define Orb -orbits -group G \
 			-on_polynomials R \
 		-end
-	#pdflatex poly_orbits_d3_n3_q2.tex
+	#$(PDFLATEX) poly_orbits_d3_n3_q2.tex
 	#$(OPEN) poly_orbits_d3_n3_q2.pdf
 
 
@@ -9991,7 +9999,7 @@ orbits_cubic_curves_q2_with_draw_tree:
 		-with Orb -do -orbits_activity \
 			-draw_tree 6 Do \
 		-end
-	pdflatex PGL_3_2_orbit_6_tree.tex
+	$(PDFLATEX) PGL_3_2_orbit_6_tree.tex
 	$(OPEN) PGL_3_2_orbit_6_tree.pdf
 
 
@@ -10021,7 +10029,7 @@ poly_orbits_d3_n3_q2.csv:
 		-with Orb -do -orbits_activity \
 			-draw_tree 6 Do \
 		-end
-	pdflatex PGL_4_2_orbit_6_tree.tex
+	$(PDFLATEX) PGL_4_2_orbit_6_tree.tex
 	$(OPEN) PGL_4_2_orbit_6_tree.pdf
 
 #written file PGL_4_2_orbit_6_tree.tex of size 79891
@@ -10031,7 +10039,7 @@ poly_orbits_d3_n3_q2_get_ranks:
 	$(ORBITER) -v 4 \
 		-define cols -vector -dense 0 -end \
 		-csv_file_select_cols poly_orbits_d3_n3_q2.csv "_reps" cols
-	#pdflatex poly_orbits_d3_n3_q2.tex
+	#$(PDFLATEX) poly_orbits_d3_n3_q2.tex
 	#$(OPEN) poly_orbits_d3_n3_q2.pdf
 
 
@@ -10045,9 +10053,9 @@ T4_orbits:
 		-define Orb -orbits -group G \
 			-on_points \
 		-end
-	#pdflatex GL_2_2_wreath_Sym4_res65535_orbits.tex
+	#$(PDFLATEX) GL_2_2_wreath_Sym4_res65535_orbits.tex
 	#$(OPEN) GL_2_2_wreath_Sym4_res65535_orbits.pdf
-	#pdflatex GL_2_2_wreath_Sym4_report.tex
+	#$(PDFLATEX) GL_2_2_wreath_Sym4_report.tex
 	#$(OPEN) GL_2_2_wreath_Sym4_report.pdf
 
 
@@ -10080,7 +10088,7 @@ T4r1_orbits_draw:
 		-radius 400 -spanning_tree -embedded \
 			-line_width 1.1 -x_stretch 2.5 -scale 0.15 \
 		-end
-	pdflatex orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.tex
+	$(PDFLATEX) orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.tex
 	$(OPEN) orbit_GL_2_2_wreath_Sym4_res__on_rank_one_tensors_0_draw.pdf
 
 
@@ -10105,7 +10113,7 @@ T4r1_orbits_4:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex T4r1_poset.tex
+	$(PDFLATEX) T4r1_poset.tex
 	$(OPEN) T4r1_poset.pdf
 
 
@@ -10175,7 +10183,7 @@ poset_of_4subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex poset_4_poset.tex
+	$(PDFLATEX) poset_4_poset.tex
 	$(OPEN) poset_4_poset.pdf
 
 
@@ -10187,7 +10195,7 @@ poset_of_4subsets_draw:
 			-radius 300 -embedded -line_width 1.1 \
 			-y_stretch 0.9 -scale 0.25 \
 		-end
-	pdflatex poset_4_poset_lvl_4_draw.tex
+	$(PDFLATEX) poset_4_poset_lvl_4_draw.tex
 	$(OPEN) poset_4_poset_lvl_4_draw.pdf
 
 
@@ -10212,7 +10220,7 @@ poset_of_5subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex poset_5_poset.tex
+	$(PDFLATEX) poset_5_poset.tex
 	$(OPEN) poset_5_poset.pdf
 
 
@@ -10224,7 +10232,7 @@ poset_of_5subsets_draw:
 			-line_width 1.1 -y_stretch 0.9 \
 			-scale 0.25 \
 		-end
-	pdflatex poset_5_poset_lvl_5_draw.tex
+	$(PDFLATEX) poset_5_poset_lvl_5_draw.tex
 	$(OPEN) poset_5_poset_lvl_5_draw.pdf
 
 
@@ -10253,7 +10261,7 @@ Symmetric_4_on_pairs_poset:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex Sym4_on2_poset.tex
+	$(PDFLATEX) Sym4_on2_poset.tex
 	$(OPEN) Sym4_on2_poset.pdf
 
 
@@ -10280,7 +10288,7 @@ V_3_2_trivial:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_3_2_Identity_3_2_poset.tex
+	$(PDFLATEX) PGL_3_2_Identity_3_2_poset.tex
 	$(OPEN) PGL_3_2_Identity_3_2_poset.pdf
 
 
@@ -10364,9 +10372,9 @@ PG_2_2_subsets:
 		-group_theoretic_activity \
 			-stats "PG_2_2_subsets" \
 		-end
-	pdflatex PGL_3_2_poset_lvl_7.tex
+	$(PDFLATEX) PGL_3_2_poset_lvl_7.tex
 	$(OPEN) PGL_3_2_poset_lvl_7.pdf
-	pdflatex PGL_3_2_poset.tex
+	$(PDFLATEX) PGL_3_2_poset.tex
 	$(OPEN) PGL_3_2_poset.pdf
 
 
@@ -10401,7 +10409,7 @@ PG_3_2_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_4_2_poset.tex
+	$(PDFLATEX) PGL_4_2_poset.tex
 	$(OPEN) PGL_4_2_poset.pdf
 
 PGL_3_2_singer:
@@ -10427,7 +10435,7 @@ PGL_3_2_singer:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_3_2_singer_1_poset.tex
+	$(PDFLATEX) PGL_3_2_singer_1_poset.tex
 	$(OPEN) PGL_3_2_singer_1_poset.pdf
 
 
@@ -10454,7 +10462,7 @@ PGL_3_2_on_lines:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_3_2_lines_poset.tex
+	$(PDFLATEX) PGL_3_2_lines_poset.tex
 	$(OPEN) PGL_3_2_lines_poset.pdf
 
 
@@ -10478,7 +10486,7 @@ PGL_2_5_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_2_5_poset.tex
+	$(PDFLATEX) PGL_2_5_poset.tex
 	$(OPEN) PGL_2_5_poset.pdf
 
 PGL_2_7_on_subsets:
@@ -10500,7 +10508,7 @@ PGL_2_7_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_2_7_poset.tex
+	$(PDFLATEX) PGL_2_7_poset.tex
 	$(OPEN) PGL_2_7_poset.pdf
 
 PGGL_2_8_on_subsets:
@@ -10522,7 +10530,7 @@ PGGL_2_8_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_2_8_poset.tex
+	$(PDFLATEX) PGGL_2_8_poset.tex
 	$(OPEN) PGGL_2_8_poset.pdf
 
 
@@ -10545,7 +10553,7 @@ PGGL_2_9_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_2_9_poset.tex
+	$(PDFLATEX) PGGL_2_9_poset.tex
 	$(OPEN) PGGL_2_9_poset.pdf
 
 
@@ -10568,7 +10576,7 @@ PGL_2_11_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_2_11_poset.tex
+	$(PDFLATEX) PGL_2_11_poset.tex
 	$(OPEN) PGL_2_11_poset.pdf
 
 
@@ -10592,7 +10600,7 @@ PGGL_2_16_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_2_16_poset.tex
+	$(PDFLATEX) PGGL_2_16_poset.tex
 	$(OPEN) PGGL_2_16_poset.pdf
 
 
@@ -10615,7 +10623,7 @@ PGGL_2_32_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_2_32_poset.tex
+	$(PDFLATEX) PGGL_2_32_poset.tex
 	$(OPEN) PGGL_2_32_poset.pdf
 
 
@@ -10638,7 +10646,7 @@ PG_3_4_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_4_4_poset.tex
+	$(PDFLATEX) PGGL_4_4_poset.tex
 	$(OPEN) PGGL_4_4_poset.pdf
 
 
@@ -10660,7 +10668,7 @@ PGGL_2_9_orbits:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGGL_2_9_poset.tex
+	$(PDFLATEX) PGGL_2_9_poset.tex
 	$(OPEN) PGGL_2_9_poset.pdf
 
 
@@ -10687,7 +10695,7 @@ PGO_5_2_on_subsets:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGO_5_2_poset.tex
+	$(PDFLATEX) PGO_5_2_poset.tex
 	$(OPEN) PGO_5_2_poset.pdf
 
 
@@ -10732,7 +10740,7 @@ PGL_5_3_wedge_subspace_orbits:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end 
-	pdflatex PGL_5_3_wedge_tree_lvl_5.tex
+	$(PDFLATEX) PGL_5_3_wedge_tree_lvl_5.tex
 	$(OPEN) PGL_5_3_wedge_tree_lvl_5.pdf
 
 
@@ -10756,7 +10764,7 @@ subspaces_Op_4_2:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex Op_4_2_poset.tex
+	$(PDFLATEX) Op_4_2_poset.tex
 	$(OPEN) Op_4_2_poset.pdf
 
 # find orbit of size 6:
@@ -10783,7 +10791,7 @@ PGL_4_2_on_subspaces:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_4_2_poset.tex
+	$(PDFLATEX) PGL_4_2_poset.tex
 	$(OPEN) PGL_4_2_poset.pdf
 
 
@@ -10808,7 +10816,7 @@ PGL_4_2_singer_on_subspaces:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex PGL_4_2_singer_poset.tex
+	$(PDFLATEX) PGL_4_2_singer_poset.tex
 	$(OPEN) PGL_4_2_singer_poset.pdf
 
 
@@ -10833,7 +10841,7 @@ PGL_8_2_singer_on_subspaces:
 			-report \
 			-report_options ro \
 		-end 
-	#pdflatex PGL_8_2_singer_poset.tex
+	#$(PDFLATEX) PGL_8_2_singer_poset.tex
 	#$(OPEN) PGL_8_2_singer_poset.pdf
 
 # May 7, 2020: 16 sec on Mac
@@ -10903,7 +10911,7 @@ Op_8_2_orbits_on_subspaces:
 			-report \
 			-report_options ro \
 		-end 
-	pdflatex Op_8_2_poset.tex
+	$(PDFLATEX) Op_8_2_poset.tex
 	$(OPEN) Op_8_2_poset.pdf
 
 
@@ -10998,7 +11006,7 @@ PGL_3_27:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_3_27_report.tex
+	$(PDFLATEX) PGL_3_27_report.tex
 	$(OPEN) PGL_3_27_report.pdf
 	
 
@@ -11021,7 +11029,7 @@ hyperoval_4_classify:
 				-d 2 \
 			-end \
 		-end
-	#pdflatex hyperoval_q4_poset.tex
+	#$(PDFLATEX) hyperoval_q4_poset.tex
 	#$(OPEN) hyperoval_q4_poset.pdf
 
 
@@ -11044,7 +11052,7 @@ hyperoval_8_classify:
 				-d 2 \
 			-end \
 		-end
-	#pdflatex hyperoval_q8_poset.tex
+	#$(PDFLATEX) hyperoval_q8_poset.tex
 	#$(OPEN) hyperoval_q8_poset.pdf
 
 
@@ -11071,7 +11079,7 @@ hyperoval_16_classify:
 		-end
 
 
-	#pdflatex hyperoval_q16_poset.tex
+	#$(PDFLATEX) hyperoval_q16_poset.tex
 	#$(OPEN) hyperoval_q16_poset.pdf
 
 
@@ -11228,7 +11236,7 @@ nc_arcs_16:
 				-conic_test \
 			-end \
 		-end
-	#pdflatex nc_arcs_q16_d2_poset.tex
+	#$(PDFLATEX) nc_arcs_q16_d2_poset.tex
 	#$(OPEN) nc_arcs_q16_d2_poset.pdf
 
 
@@ -11251,7 +11259,7 @@ five_arcs_q13:
 				-d 2 \
 			-end \
 		-end
-	#pdflatex five_arcs_q13_poset.tex
+	#$(PDFLATEX) five_arcs_q13_poset.tex
 	#$(OPEN) five_arcs_q13_poset.pdf
 
 
@@ -11303,16 +11311,16 @@ cubic_curves_PG_2_4:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
-	#pdflatex cc_4_poset_lvl_9.tex
+	#$(PDFLATEX) cc_4_poset_lvl_9.tex
 	#$(OPEN) cc_4_poset_lvl_9.pdf
-	pdflatex Cubic_curves_q4.tex
+	$(PDFLATEX) Cubic_curves_q4.tex
 	$(OPEN) Cubic_curves_q4.pdf
 
 
 
 poly_orbits_q4:
 	$(ORBITER) -v 4 \
-		-draw_options -yout 500000 -radius 15 -nodes_empty \
+		-define Do -draw_options -yout 500000 -radius 15 -nodes_empty \
 			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define F -finite_field -q 4 -print_numerically -end \
 		-define R -polynomial_ring \
@@ -11326,13 +11334,19 @@ poly_orbits_q4:
 		-define Orb -orbits -group G \
 			-on_polynomials R \
 		-end \
+		-define ro \
+			-poset_classification_report_options \
+				-draw_poset -type_ordinary \
+				-draw_options Do \
+		-end \
 		-with Orb -do -orbits_activity \
 			-report \
+			-report_options ro \
 		-end \
 		-with Orb -do -orbits_activity \
 			-export_something "orbit" 0 \
 		-end
-	pdflatex poly_orbits_d3_n2_q4.tex
+	$(PDFLATEX) poly_orbits_d3_n2_q4.tex
 	$(OPEN) poly_orbits_d3_n2_q4.pdf
 
 #orbits_PGGL_3_4_orbit_0.csv
@@ -11367,7 +11381,7 @@ cubic_curves_PG_2_9:
 		-with Orb -do -orbits_activity \
 			-draw_tree 0 Do \
 		-end
-	#pdflatex cc_9_poset_lvl_9.tex
+	#$(PDFLATEX) cc_9_poset_lvl_9.tex
 	#$(OPEN) cc_9_poset_lvl_9.pdf
 
 
@@ -11379,14 +11393,12 @@ cubic_curves_PG_2_9_draw:
 			-radius 300 -embedded -line_width 1.1 \
 			-y_stretch 0.9 -scale 0.25 \
 		-end
-	#pdflatex cc_9_poset_lvl_9_draw.tex
+	#$(PDFLATEX) cc_9_poset_lvl_9_draw.tex
 	#$(OPEN) cc_9_poset_lvl_9_draw.pdf
 
 
 curve_orbit_mini:
 	$(ORBITER) -v 4 \
-		-draw_options -yout 500000 -radius 15 -nodes_empty \
-			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define F -finite_field -q 3 -print_numerically -end \
 		-define R -polynomial_ring \
 			-field F \
@@ -11410,8 +11422,6 @@ curve_orbit_mini:
 
 curve_orbit:
 	$(ORBITER) -v 4 \
-		-draw_options -yout 500000 -radius 15 -nodes_empty \
-			-line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define F -finite_field -q 9 -print_numerically -end \
 		-define R -polynomial_ring \
 			-field F \
@@ -11789,7 +11799,7 @@ surface_4_0_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q4_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q4_iso0_report.tex
 	$(OPEN) surface_catalogue_q4_iso0_report.pdf
 
 
@@ -11809,7 +11819,7 @@ surface_4_0_clean_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q4_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q4_iso0_report.tex
 	$(OPEN) surface_catalogue_q4_iso0_report.pdf
 
 
@@ -11852,9 +11862,10 @@ Hirschfeld_surface_get_incidence_matrix_40_40:
 
 
 Hirschfeld_surface_incma_40_40_c:
-	$(ORBITER) -v 5 \
-		-draw_incidence_structure_description \
-			-width 60 -width_10 6 -end \
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
 		-define C -combinatorial_object \
 			-label H_incma_40_40 H\_incma\_40\_40 \
 			-file_of_incidence_geometries H_incma_40_40.inc 40 40 480 \
@@ -11879,7 +11890,7 @@ Hirschfeld_surface_incma_40_40_c:
 		-secondary_input_csv_file H_incma_40_40_object0_TDA.csv \
 		-box_width 32 -bit_depth 24 \
 		-end
-	pdflatex H_incma_40_40_classification.tex
+	$(PDFLATEX) H_incma_40_40_classification.tex
 	$(OPEN) H_incma_40_40_classification.pdf
 
 surface_4_0_plane_type_of_lines_on_Klein_quadric:
@@ -11915,7 +11926,7 @@ surface_7_0:
 		-cubic_surface_activity \
 			-export_something "lines" \
 		-end
-	pdflatex surface_catalogue_q7_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
 	$(OPEN) surface_catalogue_q7_iso0_report.pdf
 
 
@@ -11951,7 +11962,7 @@ Family_general_F7_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_F_a2_b3_c4_d4_report.tex
+	$(PDFLATEX) surface_F_a2_b3_c4_d4_report.tex
 	$(OPEN) surface_F_a2_b3_c4_d4_report.pdf
 
 
@@ -12011,7 +12022,7 @@ surface_8_0_catalogue:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q8_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q8_iso0_report.tex
 	$(OPEN) surface_catalogue_q8_iso0_report.pdf
 
 
@@ -12034,7 +12045,7 @@ surface_8_0_clean:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q8_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q8_iso0_report.tex
 	$(OPEN) surface_catalogue_q8_iso0_report.pdf
 
 
@@ -12118,7 +12129,7 @@ surface_9_1:
 		-cubic_surface_activity \
 			-export_something "lines" \
 		-end
-	pdflatex surface_catalogue_q9_iso1_report.tex
+	$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	$(OPEN) surface_catalogue_q9_iso1_report.pdf
 
 
@@ -12155,7 +12166,7 @@ surface_eckardt_13_4_12_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_Eckardt_alpha12_beta12_report.tex
+	$(PDFLATEX) surface_Eckardt_alpha12_beta12_report.tex
 	$(OPEN) surface_Eckardt_alpha12_beta12_report.pdf
 
 
@@ -12186,7 +12197,7 @@ Eckardt_13_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_Eckardt_alpha12_beta12_report.tex
+	$(PDFLATEX) surface_Eckardt_alpha12_beta12_report.tex
 	$(OPEN) surface_Eckardt_alpha12_beta12_report.pdf
 
 
@@ -12202,7 +12213,7 @@ Eckardt_13_by_arc_lifting_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
+	$(PDFLATEX) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.tex
 	$(OPEN) surface_arc_lifting_trihedral_q13_arc_0_1_2_3_43_113_report.pdf
 
 
@@ -12218,7 +12229,7 @@ surface_13_0:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q13_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q13_iso0_report.tex
 	$(OPEN) surface_catalogue_q13_iso0_report.pdf
 
 
@@ -12241,7 +12252,7 @@ surface_16_0:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q16_iso0_report.tex
+	$(PDFLATEX) surface_catalogue_q16_iso0_report.tex
 	$(OPEN) surface_catalogue_q16_iso0_report.pdf
 
 
@@ -12271,7 +12282,7 @@ G13_8:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_G13_a2_report.tex
+	$(PDFLATEX) surface_G13_a2_report.tex
 	$(OPEN) surface_G13_a2_report.pdf
 
 
@@ -12287,7 +12298,7 @@ F13_8:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_F13_a2_report.tex
+	$(PDFLATEX) surface_F13_a2_report.tex
 	$(OPEN) surface_F13_a2_report.pdf
 
 
@@ -12503,7 +12514,7 @@ surface_F_abcd_Eckardt_q31_by_symbolic_object_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	#pdflatex surface_F_abcd_sub_report.tex
+	#$(PDFLATEX) surface_F_abcd_sub_report.tex
 	#$(OPEN) surface_F_abcd_sub_report.pdf
 
 
@@ -12540,7 +12551,7 @@ surface_F_abcd_Eckardt_q31_by_equation_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_F_abcd_report.tex
+	$(PDFLATEX) surface_F_abcd_report.tex
 	$(OPEN) surface_F_abcd_report.pdf
 
 
@@ -12589,7 +12600,7 @@ surface_11_random_report:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_random_q11_report.tex
+	$(PDFLATEX) surface_random_q11_report.tex
 	$(OPEN) surface_random_q11_report.pdf
 
 
@@ -12605,7 +12616,7 @@ surface_11_1:
 		-cubic_surface_activity \
 			-report Do \
 		-end
-	pdflatex surface_catalogue_q11_iso1_report.tex
+	$(PDFLATEX) surface_catalogue_q11_iso1_report.tex
 	$(OPEN) surface_catalogue_q11_iso1_report.pdf
 
 ###############################################################################
@@ -12652,7 +12663,7 @@ surface_classify_q4:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Surfaces_q4.tex 
+	$(PDFLATEX) Surfaces_q4.tex 
 	$(OPEN) Surfaces_q4.pdf
 
 #			-draw_poset \
@@ -12682,7 +12693,7 @@ surface_classify_q4_old:
 			-stats surf_q4 \
 		-end \
 		-print_symbols
-	pdflatex Surfaces_q4.tex
+	$(PDFLATEX) Surfaces_q4.tex
 	$(OPEN) Surfaces_q4.pdf
 
 # time: 0:00
@@ -12702,7 +12713,7 @@ surface_classify_q4_arc_lifting_two_lines:
 			-control_six_arcs Control \
 			-classify_surfaces_through_arcs_and_two_lines \
 		-end
-	pdflatex surfaces_arc_lifting_4.tex
+	$(PDFLATEX) surfaces_arc_lifting_4.tex
 	$(OPEN) surfaces_arc_lifting_4.pdf
 
 
@@ -12737,7 +12748,7 @@ surface_classify_q7:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Surfaces_q7.tex 
+	$(PDFLATEX) Surfaces_q7.tex 
 	$(OPEN) Surfaces_q7.pdf
 
 
@@ -12756,7 +12767,7 @@ surface_classify_q7_old:
 			-report -end \
 		-end \
 		-print_symbols
-	pdflatex Surfaces_q7.tex
+	$(PDFLATEX) Surfaces_q7.tex
 	$(OPEN) Surfaces_q7.pdf
 
 #neighbors_7.csv
@@ -12785,7 +12796,7 @@ surface_classify_q9:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Surfaces_q9.tex 
+	$(PDFLATEX) Surfaces_q9.tex 
 	$(OPEN) Surfaces_q9.pdf
 
 
@@ -12803,7 +12814,7 @@ surface_classify_q9_old:
 			-report -end \
 		-end \
 		-print_symbols
-	pdflatex Surfaces_q9.tex
+	$(PDFLATEX) Surfaces_q9.tex
 	$(OPEN) Surfaces_q9.pdf
 
 
@@ -12831,7 +12842,7 @@ surface_classify_q11:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Surfaces_q11.tex 
+	$(PDFLATEX) Surfaces_q11.tex 
 	$(OPEN) Surfaces_q11.pdf
 
 
@@ -12858,7 +12869,7 @@ surface_classify_q13:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Surfaces_q13.tex 
+	$(PDFLATEX) Surfaces_q13.tex 
 	$(OPEN) Surfaces_q13.pdf
 
 
@@ -13018,7 +13029,7 @@ quartic_curve_edge_q9:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_equation_Edge_f3_q9_report.tex
+	$(PDFLATEX) quartic_curve_equation_Edge_f3_q9_report.tex
 	$(OPEN) quartic_curve_equation_Edge_f3_q9_report.pdf
 
 
@@ -13036,7 +13047,7 @@ surface_7_0_make_quartic_curves:
 			-report Do \
 			-all_quartic_curves \
 		-end
-	#pdflatex surface_catalogue_q7_iso0_report.tex
+	#$(PDFLATEX) surface_catalogue_q7_iso0_report.tex
 	#$(OPEN) surface_catalogue_q7_iso0_report.pdf
 
 
@@ -13055,7 +13066,7 @@ surface_9_1_make_quartic_curves:
 			-report Do \
 			-all_quartic_curves \
 		-end
-	#pdflatex surface_catalogue_q9_iso1_report.tex
+	#$(PDFLATEX) surface_catalogue_q9_iso1_report.tex
 	#$(OPEN) surface_catalogue_q9_iso1_report.pdf
 
 
@@ -13068,7 +13079,7 @@ quartic_curve_9_0_report:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_catalogue_q9_iso0_report.tex
+	$(PDFLATEX) quartic_curve_catalogue_q9_iso0_report.tex
 	$(OPEN) quartic_curve_catalogue_q9_iso0_report.pdf
 
 
@@ -13090,7 +13101,7 @@ quartic_curve_13_0_report:
 			-quartic_curve_activity \
 				-extract_orbit_on_bitangents_by_length 4 \
 			-end
-	#pdflatex quartic_curve_catalogue_q13_iso0_report.tex
+	#$(PDFLATEX) quartic_curve_catalogue_q13_iso0_report.tex
 	#$(OPEN) quartic_curve_catalogue_q13_iso0_report.pdf
 
 # 170, 111, 140, 2
@@ -13127,7 +13138,7 @@ PG_2_13_orbits_on_lines:
 			-recognize "170, 111, 140, 2" \
 			-recognize "0,23,24,47" \
 		-end
-	#pdflatex PGL_3_13_poset.tex
+	#$(PDFLATEX) PGL_3_13_poset.tex
 	#$(OPEN) PGL_3_13_poset.pdf
 
 # stabilizer of {0,23,24,47}
@@ -13145,7 +13156,7 @@ quartic_curve_13_1_report:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_catalogue_q13_iso1_report.tex
+	$(PDFLATEX) quartic_curve_catalogue_q13_iso1_report.tex
 	$(OPEN) quartic_curve_catalogue_q13_iso1_report.pdf
 
 
@@ -13161,20 +13172,20 @@ quartic_curves_19_report:
 				-report \
 			-end \
 		-end_loop L
-		pdflatex quartic_curve_catalogue_q19_iso0_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso1_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso2_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso3_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso4_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso5_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso6_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso7_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso8_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso9_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso10_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso11_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso12_report.tex
-		pdflatex quartic_curve_catalogue_q19_iso13_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso0_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso1_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso2_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso3_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso4_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso5_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso6_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso7_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso8_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso9_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso10_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso11_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso12_report.tex
+		$(PDFLATEX) quartic_curve_catalogue_q19_iso13_report.tex
 
 
 
@@ -13189,7 +13200,7 @@ quartic_curve_q9_1:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
+	$(PDFLATEX) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.tex
 	$(OPEN) quartic_curve_surface_catalogue_q9_iso1_pt_orb_0_report.pdf
 
 
@@ -13233,7 +13244,7 @@ quartic_curve_q13_f1_from_variety:
 			-quartic_curve_activity \
 				-report \
 			-end
-	pdflatex quartic_curve_V_q13_f1_report.tex
+	$(PDFLATEX) quartic_curve_V_q13_f1_report.tex
 	$(OPEN) quartic_curve_V_q13_f1_report.pdf
 
 
@@ -13426,13 +13437,13 @@ PR_2_1000:
 	$(ORBITER) -v 1 -smallest_primitive_root_interval 2 1000
 	$(ORBITER) -v 1 -csv_file_latex 1 \
 		primitive_element_table_2_1000.csv
-	pdflatex primitive_element_table_2_1000.tex
+	$(PDFLATEX) primitive_element_table_2_1000.tex
 	$(OPEN) primitive_element_table_2_1000.pdf
 
 PE_number_2_1000:
 	$(ORBITER) -v 1 -number_of_primitive_roots_interval 2 1000
 	$(ORBITER) -v 1 -csv_file_latex 1 table_number_of_pe_2_1000.csv
-	pdflatex table_number_of_pe_2_1000.tex
+	$(PDFLATEX) table_number_of_pe_2_1000.tex
 	$(OPEN) table_number_of_pe_2_1000.pdf
 
 number_of_primitive_roots_10000:
@@ -13497,7 +13508,7 @@ order_of_2_mod_n:
 	$(ORBITER) -v 3 -order_of_q_mod_n 2 3 51
 	$(ORBITER) -v 1 -csv_file_latex 1 \
 		order_of_q_mod_n_q2_3_51.csv
-	pdflatex order_of_q_mod_n_q2_3_51.tex
+	$(PDFLATEX) order_of_q_mod_n_q2_3_51.tex
 	$(OPEN) order_of_q_mod_n_q2_3_51.pdf
 
 
@@ -13509,21 +13520,21 @@ Eulerfunction_150:
 	$(ORBITER) -v 1 -eulerfunction_interval 1 150
 	$(ORBITER) -v 1 -csv_file_latex 1 \
 		table_eulerfunction_1_150.csv
-	pdflatex table_eulerfunction_1_150.tex
+	$(PDFLATEX) table_eulerfunction_1_150.tex
 	$(OPEN) table_eulerfunction_1_150.pdf
 
 Eulerfunction_900:
 	$(ORBITER) -v 1 -eulerfunction_interval 900 1150
 	$(ORBITER) -v 1 -csv_file_latex 1 \
 		table_eulerfunction_900_1150.csv
-	pdflatex table_eulerfunction_900_1150.tex
+	$(PDFLATEX) table_eulerfunction_900_1150.tex
 	$(OPEN) table_eulerfunction_900_1150.pdf
 
 Eulerfunction_10000:
 	$(ORBITER) -v 1 -eulerfunction_interval 10000 10150
 	$(ORBITER) -v 1 -csv_file_latex 1 \
 		table_eulerfunction_10000_10150.csv
-	pdflatex table_eulerfunction_10000_10150.tex
+	$(PDFLATEX) table_eulerfunction_10000_10150.tex
 	$(OPEN) table_eulerfunction_10000_10150.pdf
 
 
@@ -13531,20 +13542,21 @@ Eulerfunction_10000:
 power_function_2_mod_11:
 	$(ORBITER) -v 5 -power_function_mod_n 2 11
 	$(ORBITER) -v 1 -csv_file_latex 1 power_function_k2_n11.csv
-	pdflatex power_function_k2_n11.tex
+	$(PDFLATEX) power_function_k2_n11.tex
 	$(OPEN) power_function_k2_n11.pdf
 
 
 draw_mod_13:
 	$(ORBITER) -v 2 \
-		-draw_options -embedded -end \
+		-define Do -draw_options -embedded -end \
 		-draw_mod_n \
 			-n 13 \
 			-file mod_13 \
 			-power_cycle 2 \
 			-label_nodes \
+			-draw_options Do \
 		-end
-	pdflatex mod_13_draw.tex
+	$(PDFLATEX) mod_13_draw.tex
 	$(OPEN) mod_13_draw.pdf
 
 
@@ -13580,13 +13592,13 @@ smith_normal_form_2:
 
 jacobi_35_41:
 	$(ORBITER) -v 5 -jacobi 35 41
-	pdflatex jacobi_35_41.tex
+	$(PDFLATEX) jacobi_35_41.tex
 	$(OPEN) jacobi_35_41.pdf
 
 
 jacobi_33_41:
 	$(ORBITER) -v 5 -jacobi 33 41
-	pdflatex jacobi_33_41.tex
+	$(PDFLATEX) jacobi_33_41.tex
 	$(OPEN) jacobi_33_41.pdf
 
 
@@ -14150,13 +14162,13 @@ quadratic_sieve:
 pseudoprime3:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 3 5 0 0 
-	pdflatex pseudoprime_3.tex
+	$(PDFLATEX) pseudoprime_3.tex
 	$(OPEN) pseudoprime_3.pdf
 
 pseudoprime10:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 10 5 5 5
-	pdflatex pseudoprime_10.tex
+	$(PDFLATEX) pseudoprime_10.tex
 	$(OPEN) pseudoprime_10.pdf
 
 # 4460190157
@@ -14176,7 +14188,7 @@ PR10_test1:
 pseudoprime11:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 11 5 5 5 
-	pdflatex pseudoprime_11.tex
+	$(PDFLATEX) pseudoprime_11.tex
 	$(OPEN) pseudoprime_11.pdf
 
 # 63814633367
@@ -14187,7 +14199,7 @@ pseudoprime11:
 pseudoprime20:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 20 5 5 5 
-	pdflatex pseudoprime_20.tex
+	$(PDFLATEX) pseudoprime_20.tex
 	$(OPEN) pseudoprime_20.pdf
 
 
@@ -14204,7 +14216,7 @@ PR10:
 pseudoprime50:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 50 5 0 0
-	pdflatex pseudoprime_50.tex
+	$(PDFLATEX) pseudoprime_50.tex
 	$(OPEN) pseudoprime_50.pdf
 
 
@@ -14213,7 +14225,7 @@ pseudoprime50:
 pseudoprime51:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 51 5 5 5 
-	pdflatex pseudoprime_51.tex
+	$(PDFLATEX) pseudoprime_51.tex
 	$(OPEN) pseudoprime_51.pdf
 
 #754600727746834470214089702490004944659715367045417
@@ -14223,7 +14235,7 @@ pseudoprime51:
 pseudoprime30:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 30 5 5 5 
-	pdflatex pseudoprime_30.tex
+	$(PDFLATEX) pseudoprime_30.tex
 	$(OPEN) pseudoprime_30.pdf
 
 # 286525565474504516914595596387
@@ -14231,7 +14243,7 @@ pseudoprime30:
 pseudoprime31:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 31 5 5 5 
-	pdflatex pseudoprime_31.tex
+	$(PDFLATEX) pseudoprime_31.tex
 	$(OPEN) pseudoprime_31.pdf
 #8777266765422645523724129853331
 
@@ -14243,7 +14255,7 @@ pseudoprime31:
 pseudoprime33:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 33 5 5 5 
-	pdflatex pseudoprime_33.tex
+	$(PDFLATEX) pseudoprime_33.tex
 	$(OPEN) pseudoprime_33.pdf
 
 
@@ -14253,7 +14265,7 @@ pseudoprime33:
 pseudoprime34:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 34 5 5 5 
-	pdflatex pseudoprime_34.tex
+	$(PDFLATEX) pseudoprime_34.tex
 	$(OPEN) pseudoprime_34.pdf
 
 #9309708224110488378214945245346817
@@ -14266,7 +14278,7 @@ pseudoprime34:
 pseudoprime35:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 35 5 5 5 
-	pdflatex pseudoprime_35.tex
+	$(PDFLATEX) pseudoprime_35.tex
 	$(OPEN) pseudoprime_35.pdf
 
 #81329557792505271120435930267680203
@@ -14274,7 +14286,7 @@ pseudoprime35:
 pseudoprime36:
 	$(ORBITER) -v 5 \
 		-seed 2531011 -find_pseudoprime 36 5 5 5 
-	pdflatex pseudoprime_36.tex
+	$(PDFLATEX) pseudoprime_36.tex
 	$(OPEN) pseudoprime_36.pdf
 
 #162624680891993404333363207561599139
@@ -14404,7 +14416,7 @@ Hamming_space_4_2_distance_matrix_draw:
 Hamming_code_macwilliams:
 	$(ORBITER) -v 2 \
 		-make_macwilliams_system 7 4 2
-	pdflatex MacWilliams_n7_k4_q2.tex
+	$(PDFLATEX) MacWilliams_n7_k4_q2.tex
 	$(OPEN) MacWilliams_n7_k4_q2.pdf
 
 
@@ -14456,7 +14468,7 @@ Hamming_5_2_with_5_2_3_code:
 		-graph_theoretic_activity -save -end \
 		-with G -do \
 		-graph_theoretic_activity -automorphism_group -end
-	pdflatex Hamming_5_2_code_5_2_3_report.tex
+	$(PDFLATEX) Hamming_5_2_code_5_2_3_report.tex
 	$(OPEN) Hamming_5_2_code_5_2_3_report.pdf
 
 # group has order 32
@@ -14518,7 +14530,7 @@ RM_3_1:
 		-with C -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex RM_m3_code_n8_k4_q2.tex
+	$(PDFLATEX) RM_m3_code_n8_k4_q2.tex
 	$(OPEN) RM_m3_code_n8_k4_q2.pdf
 
 
@@ -14539,7 +14551,7 @@ code_6:
 		-box_width 20 -bit_depth 24 \
 		-partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" \
 		-end
-	pdflatex by_basis_n6_k3_code_n6_k3_q2.tex
+	$(PDFLATEX) by_basis_n6_k3_code_n6_k3_q2.tex
 	$(OPEN) by_basis_n6_k3_code_n6_k3_q2.pdf
 	$(OPEN) by_basis_n6_k3_char_func_6_8_draw.bmp
 
@@ -14563,7 +14575,7 @@ simplex_code:
 		-with C -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex by_genma_n7_k3_code_n7_k3_q2.tex
+	$(PDFLATEX) by_genma_n7_k3_code_n7_k3_q2.tex
 	$(OPEN) by_genma_n7_k3_code_n7_k3_q2.pdf
 
 
@@ -14578,7 +14590,7 @@ Hamming_generator:
 		-finite_field_activity \
 			-nullspace v \
 		-end
-	pdflatex v_nullspace.tex
+	$(PDFLATEX) v_nullspace.tex
 	$(OPEN) v_nullspace.pdf
 
 # basis in binary:
@@ -14631,7 +14643,7 @@ RM_3_1_from_generator_matrix:
 		-define C -code -field F \
 			-generator_matrix genma \
 		-end
-	#pdflatex code_n8_k4_q2.tex
+	#$(PDFLATEX) code_n8_k4_q2.tex
 	#$(OPEN) code_n8_k4_q2.pdf
 
 #Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
@@ -14675,7 +14687,7 @@ Hamming_code_by_rows:
 		-define C -code -field F \
 			-basis 7 v \
 		-end
-	#pdflatex code_n7_k4_q2.tex
+	#$(PDFLATEX) code_n7_k4_q2.tex
 	#$(OPEN) code_n7_k4_q2.pdf
 
 
@@ -14785,7 +14797,7 @@ code_Hamming_systematic:
 	#	-input_csv_file code_matrix_16_8.csv \
 	#	-box_width 25 -bit_depth 8 -partition 2 16 8 -end
 	#$(OPEN) code_matrix_16_8_draw.bmp
-	#pdflatex code_7_16.tex
+	#$(PDFLATEX) code_7_16.tex
 	#$(OPEN) code_7_16.pdf
 
 
@@ -14808,9 +14820,9 @@ Hamming_RREF:
 		-finite_field_activity \
 			-RREF v \
 		-end
-	pdflatex v_rref.tex
+	$(PDFLATEX) v_rref.tex
 	$(OPEN) v_rref.pdf
-	#pdflatex RREF_example_q2_4_7.tex
+	#$(PDFLATEX) RREF_example_q2_4_7.tex
 	#gs -sDEVICE=png16 -dFIXEDMEDIA \
 	#	-dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 	#	-r240 -oHamming_dual_page%02d.png \
@@ -14828,7 +14840,7 @@ Hamming_nullspace:
 		-finite_field_activity \
 		-nullspace v \
 		-end
-	pdflatex v_nullspace.tex
+	$(PDFLATEX) v_nullspace.tex
 	$(OPEN) v_nullspace.pdf
 
 
@@ -14888,7 +14900,7 @@ Golay23_code_words:
 		-with C -and F -do -coding_theoretic_activity \
 			-export_genma Golay23_genma.csv \
 		-end 
-	#pdflatex code_n23_k12_q2.tex
+	#$(PDFLATEX) code_n23_k12_q2.tex
 	#$(OPEN) code_n23_k12_q2.pdf
 
 
@@ -14938,7 +14950,7 @@ Golay24_make_aut_gens:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_Subgroup_M24_244823040_report.tex
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_244823040_report.tex
 	$(OPEN) PGL_12_2_Subgroup_M24_244823040_report.pdf
 
 
@@ -14953,7 +14965,7 @@ Golay24_make_aut_gens_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma M24_classes.magma
+	$(MAGMA_EXE) M24_classes.magma
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 12 2 \
@@ -14964,7 +14976,7 @@ Golay24_make_aut_gens_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGL_12_2_Subgroup_M24_244823040_classes_out.tex
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_244823040_classes_out.tex
 	$(OPEN) PGL_12_2_Subgroup_M24_244823040_classes_out.pdf
 
 
@@ -14983,7 +14995,7 @@ M24_elt_2A:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_Subgroup_M24_2A_2_report.tex
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_2A_2_report.tex
 	$(OPEN) PGL_12_2_Subgroup_M24_2A_2_report.pdf
 
 M24_elt_2B:
@@ -15000,7 +15012,7 @@ M24_elt_2B:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_12_2_Subgroup_M24_2B_2_report.tex
+	$(PDFLATEX) PGL_12_2_Subgroup_M24_2B_2_report.tex
 	$(OPEN) PGL_12_2_Subgroup_M24_2B_2_report.pdf
 
 M24_2A_restricted:
@@ -15021,7 +15033,7 @@ M24_2A_restricted:
 			-group_theoretic_activity \
 				-print_elements_tex  \
 		-end
-	pdflatex PGL_12_2_res_v_elements.tex
+	$(PDFLATEX) PGL_12_2_res_v_elements.tex
 	$(OPEN) PGL_12_2_res_v_elements.pdf
 
 
@@ -15048,7 +15060,7 @@ M24_2B_restricted:
 			-group_theoretic_activity \
 				-print_elements_tex  \
 		-end
-	pdflatex PGL_12_2_res_v_elements.tex
+	$(PDFLATEX) PGL_12_2_res_v_elements.tex
 	$(OPEN) PGL_12_2_res_v_elements.pdf
 
 # 12 cycles of length 2
@@ -15181,7 +15193,7 @@ Golay24_2A_fix_weight12:
 
 Golay24_2A_fix_weight12_c:
 	$(ORBITER) -v 3 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label Golay24_2A_fix_weight12 Golay24\_2A\_fix\_weight12 \
@@ -15202,7 +15214,7 @@ Golay24_2A_fix_weight12_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex Golay24_2A_fix_weight12_classification.tex
+	$(PDFLATEX) Golay24_2A_fix_weight12_classification.tex
 	$(OPEN) Golay24_2A_fix_weight12_classification.pdf
 
 
@@ -15221,7 +15233,7 @@ Golay24_2A_fix_weight12_graph_24:
 			-graph_theoretic_activity \
 			-properties \
 		-end
-	#pdflatex _report.tex
+	#$(PDFLATEX) _report.tex
 	#$(OPEN) _report.pdf
 
 #Degree type: (14^{16},\, 7^8 )
@@ -15321,7 +15333,7 @@ CRC_F256_BCH_code_d2:
 		-with C -and F -do -coding_theoretic_activity \
 			-export_magma BCH_q8_n771_d2.magma \
 		-end
-	#pdflatex BCH_codes_q256_n771_d2.tex
+	#$(PDFLATEX) BCH_codes_q256_n771_d2.tex
 	#$(OPEN) BCH_codes_q256_n771_d2.pdf
 
 #Q=X^{2} + 167X + 214
@@ -15365,7 +15377,7 @@ CRC_F256_BCH_code_d3:
 		-with C -and F -do -coding_theoretic_activity \
 			-export_magma BCH_q8_n771_d3.magma \
 		-end
-	#pdflatex BCH_codes_q256_n771_d3.tex
+	#$(PDFLATEX) BCH_codes_q256_n771_d3.tex
 	#$(OPEN) BCH_codes_q256_n771_d3.pdf
 
 
@@ -15398,7 +15410,7 @@ CRC_F256_BCH_code_d7:
 		-with C -and F -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex BCH_n771_d7_code_n771_k759_q256.tex
+	$(PDFLATEX) BCH_n771_d7_code_n771_k759_q256.tex
 	$(OPEN) BCH_n771_d7_code_n771_k759_q256.pdf
 
 
@@ -15434,7 +15446,7 @@ F256_BCH_code_d16:
 		-with C -and F -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex BCH_n771_d16_code_n771_k741_q256.tex
+	$(PDFLATEX) BCH_n771_d16_code_n771_k741_q256.tex
 	$(OPEN) BCH_n771_d16_code_n771_k741_q256.pdf
 
 #generator polynomial is X^{30} + 253X^{29} + 174X^{28} + 109X^{27} + 97X^{26} + 144X^{25} + 112X^{24} + 212X^{23} + 192X^{22} + 169X^{21} + 24X^{20} + 150X^{19} + 110X^{18} + 248X^{17} + 3X^{16} + 193X^{15} + 194X^{14} + 205X^{13} + 9X^{12} + 56X^{11} + 95X^{10} + 199X^{9} + 108X^{8} + 58X^{7} + 160X^{6} + 148X^{5} + 138X^{4} + 24X^{3} + 210X^{2} + 26X + 1
@@ -15489,7 +15501,7 @@ F_256:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 256 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_256.tex
+	$(PDFLATEX) GF_256.tex
 	$(OPEN) GF_256.pdf
 
 
@@ -15502,7 +15514,7 @@ CRC_F_16:
 	$(ORBITER) -v 3 \
 		-define F -finite_field -q 16 -override_polynomial 19 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_16_poly19.tex
+	$(PDFLATEX) GF_16_poly19.tex
 	$(OPEN) GF_16_poly19.pdf
 
 nth_roots_256:
@@ -15511,7 +15523,7 @@ nth_roots_256:
 		-with F -do -finite_field_activity \
 			-nth_roots 51 \
 		-end
-	pdflatex Nth_roots_q256_n51.tex
+	$(PDFLATEX) Nth_roots_q256_n51.tex
 	$(OPEN) Nth_roots_q256_n51.pdf
 
 
@@ -15521,7 +15533,7 @@ CRC_F16_roots_51:
 		-with F -do -finite_field_activity \
 			-nth_roots 51 \
 		-end
-	pdflatex Nth_roots_q16_n51.tex
+	$(PDFLATEX) Nth_roots_q16_n51.tex
 	$(OPEN) Nth_roots_q16_n51.pdf
 
 CRC_F16_BCH_code_d3:
@@ -15542,7 +15554,7 @@ CRC_F16_BCH_code_d3:
 		-with C -and F -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex BCH_n51_d3_code_n51_k47_q16.tex
+	$(PDFLATEX) BCH_n51_d3_code_n51_k47_q16.tex
 	$(OPEN) BCH_n51_d3_code_n51_k47_q16.pdf
 
 #BCH_q16_n51_d3_check.csv
@@ -15917,7 +15929,7 @@ draw_cyclotomic_mod_51_q16:
 			-file cyclotomic_51 \
 			-label_nodes \
 		-end
-	pdflatex cyclotomic_51_draw.tex
+	$(PDFLATEX) cyclotomic_51_draw.tex
 	$(OPEN) cyclotomic_51_draw.pdf
 
 #			-cyclotomic_sets 8 "1,2,4,5,7,10,13" \
@@ -15936,7 +15948,7 @@ draw_cyclotomic_mod_21_q8:
 			-label_nodes \
 			-draw_options Do \
 		-end
-	pdflatex mod_21_cyclotomic_draw.tex
+	$(PDFLATEX) mod_21_cyclotomic_draw.tex
 	$(OPEN) mod_21_cyclotomic_draw.pdf
 
 
@@ -15947,7 +15959,7 @@ F_8_BCH_code_d3:
 			-BCH 21 3 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n21_d3_code_n21_k17_q8.tex
+	$(PDFLATEX) BCH_n21_d3_code_n21_k17_q8.tex
 	$(OPEN) BCH_n21_d3_code_n21_k17_q8.pdf
 
 #generator polynomial is X^{4} + 4X^{3} + 4X^{2} + 3X + 4
@@ -15959,7 +15971,7 @@ F_8_BCH_code_d4:
 			-BCH 21 4 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n21_d4_code_n21_k16_q8.tex
+	$(PDFLATEX) BCH_n21_d4_code_n21_k16_q8.tex
 	$(OPEN) BCH_n21_d4_code_n21_k16_q8.pdf
 
 #generator polynomial is X^{5} + 6X^{4} + 7X^{3} + 2X + 3
@@ -15972,7 +15984,7 @@ F_8_BCH_code_d5:
 			-BCH 21 5 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n21_d5_code_n21_k14_q8.tex
+	$(PDFLATEX) BCH_n21_d5_code_n21_k14_q8.tex
 	$(OPEN) BCH_n21_d5_code_n21_k14_q8.pdf
 
 #-override_polynomial 11 
@@ -16001,7 +16013,7 @@ F_8_BCH_code_d7:
 			-BCH 21 7 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n21_d7_code_n21_k11_q8.tex
+	$(PDFLATEX) BCH_n21_d7_code_n21_k11_q8.tex
 	$(OPEN) BCH_n21_d7_code_n21_k11_q8.pdf
 
 
@@ -16013,7 +16025,7 @@ F8_BCH_code_n63_d43:
 			-BCH 63 43 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n63_d43_code_n63_k9_q8.tex
+	$(PDFLATEX) BCH_n63_d43_code_n63_k9_q8.tex
 	$(OPEN) BCH_n63_d43_code_n63_k9_q8.pdf
 
 
@@ -16047,7 +16059,7 @@ F2_BCH_code_n21:
 			-BCH 21 3 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n21_d3_code_n21_k15_q2.tex
+	$(PDFLATEX) BCH_n21_d3_code_n21_k15_q2.tex
 	$(OPEN) BCH_n21_d3_code_n21_k15_q2.pdf
 
 
@@ -16059,7 +16071,7 @@ F7_RS_code_n6:
 			-Reed_Solomon 6 3 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex RS_n6_d3_code_n6_k4_q7.tex
+	$(PDFLATEX) RS_n6_d3_code_n6_k4_q7.tex
 	$(OPEN) RS_n6_d3_code_n6_k4_q7.pdf
 
 
@@ -16070,7 +16082,7 @@ F_64_again:
 			-finite_field_activity \
 			-cheat_sheet_GF \
 		-end
-	pdflatex GF_64.tex
+	$(PDFLATEX) GF_64.tex
 	$(OPEN) GF_64.pdf
 
 
@@ -16082,7 +16094,7 @@ BCH_15_5:
 			-BCH 15 5 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n15_d5_code_n15_k7_q2.tex
+	$(PDFLATEX) BCH_n15_d5_code_n15_k7_q2.tex
 	$(OPEN) BCH_n15_d5_code_n15_k7_q2.pdf
 
 
@@ -16099,7 +16111,7 @@ draw_mod_31:
 			-label_nodes \
 			-draw_options Do \
 		-end
-	pdflatex mod_31_draw.tex
+	$(PDFLATEX) mod_31_draw.tex
 	$(OPEN) mod_31_draw.pdf
 
 
@@ -16117,7 +16129,7 @@ draw_mod_127_power:
 			-power_cycle 3 \
 			-draw_options Do \
 		-end
-	pdflatex mod_127_draw.tex
+	$(PDFLATEX) mod_127_draw.tex
 	$(OPEN) mod_127_draw.pdf
 
 draw_mod_251:
@@ -16129,7 +16141,7 @@ draw_mod_251:
 			-label_nodes \
 			-draw_options Do \
 		-end
-	pdflatex mod_251_draw.tex
+	$(PDFLATEX) mod_251_draw.tex
 	$(OPEN) mod_251_draw.pdf
 
 #-draw_mod_n_inverse
@@ -16146,7 +16158,7 @@ draw_mod_255_cyclotomic_1:
 			-cyclotomic_sets 2 "1" \
 			-draw_options Do \
 		-end
-	pdflatex mod_255_cyclotomic_1_draw.tex
+	$(PDFLATEX) mod_255_cyclotomic_1_draw.tex
 	$(OPEN) mod_255_cyclotomic_1_draw.pdf
 
 draw_mod_255_cyclotomic_3:
@@ -16160,7 +16172,7 @@ draw_mod_255_cyclotomic_3:
 			-cyclotomic_sets 2 "3" \
 			-draw_options Do \
 		-end 
-	pdflatex mod_255_cyclotomic_3_draw.tex
+	$(PDFLATEX) mod_255_cyclotomic_3_draw.tex
 	$(OPEN) mod_255_cyclotomic_3_draw.pdf
 
 draw_mod_255_cyclotomic_1_and_3:
@@ -16174,7 +16186,7 @@ draw_mod_255_cyclotomic_1_and_3:
 			-cyclotomic_sets 2 "1,3" \
 			-draw_options Do \
 		-end
-	pdflatex mod_255_cyclotomic_1_and_3_draw.tex
+	$(PDFLATEX) mod_255_cyclotomic_1_and_3_draw.tex
 	$(OPEN) mod_255_cyclotomic_1_and_3_draw.pdf
 
 draw_mod_63_4_cyclotomic_3_6:
@@ -16189,7 +16201,7 @@ draw_mod_63_4_cyclotomic_3_6:
 			-cyclotomic_sets_thickness 50 \
 			-draw_options Do \
 		-end
-	pdflatex mod_63_4_cyclotomic_3_6_draw.tex
+	$(PDFLATEX) mod_63_4_cyclotomic_3_6_draw.tex
 	$(OPEN) mod_63_4_cyclotomic_3_6_draw.pdf
 
 BCH_F_64:
@@ -16198,7 +16210,7 @@ BCH_F_64:
 		-with F -do -finite_field_activity \
 			-cheat_sheet_GF \
 		-end
-	pdflatex GF_64.tex
+	$(PDFLATEX) GF_64.tex
 
 
 
@@ -16309,7 +16321,7 @@ BCH_21_6_weight_enumerator:
 BCH_21_6_4_macwilliams:
 	$(ORBITER) -v 2 \
 		-make_macwilliams_system 21 6 4
-	pdflatex MacWilliams_n21_k6_q4.tex
+	$(PDFLATEX) MacWilliams_n21_k6_q4.tex
 	$(OPEN) MacWilliams_n21_k6_q4.pdf
 
 
@@ -16331,7 +16343,7 @@ BCH_21_15_4_field_reduction:
 			-box_width 20 -bit_depth 24 \
 			-partition 4 "30" "42" \
 		-end
-	pdflatex field_reduction_Q4_q2_15_21.tex
+	$(PDFLATEX) field_reduction_Q4_q2_15_21.tex
 	$(OPEN) BCH_21_15_4_draw.bmp
 	#$(OPEN) field_reduction_Q4_q2_15_21.pdf
 
@@ -16354,7 +16366,7 @@ F16_roots_5:
 		-with F -do -finite_field_activity \
 			-nth_roots 5 \
 		-end
-	pdflatex Nth_roots_q2_n5.tex
+	$(PDFLATEX) Nth_roots_q2_n5.tex
 	$(OPEN) Nth_roots_q2_n5.pdf
 
 
@@ -16365,7 +16377,7 @@ F64_roots_21:
 		-with F -do -finite_field_activity \
 			-nth_roots 21 \
 		-end
-	pdflatex Nth_roots_q2_n21.tex
+	$(PDFLATEX) Nth_roots_q2_n21.tex
 	$(OPEN) Nth_roots_q2_n21.pdf
 
 
@@ -16385,7 +16397,7 @@ BCH_F256_BCH_code_d16:
 			-BCH 771 16 \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex BCH_n771_d16_code_n771_k741_q256.tex
+	$(PDFLATEX) BCH_n771_d16_code_n771_k741_q256.tex
 	$(OPEN) BCH_n771_d16_code_n771_k741_q256.pdf
 
 
@@ -16425,7 +16437,7 @@ RS_6_3:
 			-export_magma RS_6_3.magma \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex RS_n6_d3_code_n6_k4_q7.tex
+	$(PDFLATEX) RS_n6_d3_code_n6_k4_q7.tex
 	$(OPEN) RS_n6_d3_code_n6_k4_q7.pdf
 
 
@@ -16477,7 +16489,7 @@ Code_RS_11:
 			-export_magma RS_11_3.magma \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex RS_n10_d3_code_n10_k8_q11.tex
+	$(PDFLATEX) RS_n10_d3_code_n10_k8_q11.tex
 	$(OPEN) RS_n10_d3_code_n10_k8_q11.pdf
 
 
@@ -16508,7 +16520,7 @@ RS_7_3:
 			-export_magma RS_7_3.magma \
 		-end \
 		-with C -do -coding_theoretic_activity -report -end
-	pdflatex RS_n7_d3_code_n7_k5_q8.tex
+	$(PDFLATEX) RS_n7_d3_code_n7_k5_q8.tex
 	$(OPEN) RS_n7_d3_code_n7_k5_q8.pdf
 
 
@@ -16539,7 +16551,7 @@ RS_7_3_field_reduction:
 		-draw_matrix -input_csv_file RS_8_red_2.csv \
 		-box_width 40 -bit_depth 24 \
 		-partition 4 "3,3,3,3,3" "3,3,3,3,3,3,3" -end
-	pdflatex field_reduction_Q8_q2_5_7.tex
+	$(PDFLATEX) field_reduction_Q8_q2_5_7.tex
 	$(OPEN) field_reduction_Q8_q2_5_7.pdf
 
 
@@ -16581,7 +16593,7 @@ TTP_A_4:
 		-with C -do -coding_theoretic_activity \
 			-report \
 		-end
-	pdflatex ttpA_n18_k9_code_n18_k9_q4.tex
+	$(PDFLATEX) ttpA_n18_k9_code_n18_k9_q4.tex
 	$(OPEN) ttpA_n18_k9_code_n18_k9_q4.pdf
 
 
@@ -16625,7 +16637,7 @@ coding_theory_bounds_q2:
 	$(ORBITER) -v 2 -table_of_bounds 12 2
 	$(ORBITER) -v 2 \
 		-csv_file_latex 1 table_of_bounds_n12_q2.csv
-	pdflatex table_of_bounds_n12_q2.tex
+	$(PDFLATEX) table_of_bounds_n12_q2.tex
 	$(OPEN) table_of_bounds_n12_q2.pdf
 
 # produces table_of_bounds_n20_q2.csv
@@ -16702,7 +16714,7 @@ code_n15_k6_d6_RREF:
 		-with F -do -finite_field_activity \
 			-RREF v \
 		-end
-	#pdflatex RREF_example_q2_6_15.tex
+	#$(PDFLATEX) RREF_example_q2_6_15.tex
 	#$(OPEN) RREF_example_q2_6_15.pdf
 
 code_n15_k6_d6_check_RREF:
@@ -16714,7 +16726,7 @@ code_n15_k6_d6_check_RREF:
 		-with F -do -finite_field_activity \
 		-RREF v \
 		-end
-	#pdflatex RREF_example_q2_9_15.tex
+	#$(PDFLATEX) RREF_example_q2_9_15.tex
 	#$(OPEN) RREF_example_q2_9_15.pdf
 
 
@@ -16758,9 +16770,9 @@ codes_8_4_4:
 		-group_theoretic_activity \
 			-linear_codes Control 3 8 \
 		-end
-	#pdflatex codes_8_4_4_poset_lvl_8.tex
+	#$(PDFLATEX) codes_8_4_4_poset_lvl_8.tex
 	#$(OPEN) codes_8_4_4_poset_lvl_8.pdf
-	#pdflatex codes_8_4_4_poset.tex
+	#$(PDFLATEX) codes_8_4_4_poset.tex
 	#$(OPEN) codes_8_4_4_poset.pdf
 
 
@@ -16773,7 +16785,7 @@ codes_8_4_4_draw:
 			-radius 250 -embedded -line_width 1.0 \
 			-y_stretch 1.0 -scale 0.5 \
 		-end
-	pdflatex codes_8_4_4_poset_lvl_8_draw.tex
+	$(PDFLATEX) codes_8_4_4_poset_lvl_8_draw.tex
 	$(OPEN) codes_8_4_4_poset_lvl_8_draw.pdf
 
 
@@ -16793,7 +16805,7 @@ codes_14_4_9_3:
 		-group_theoretic_activity \
 			-linear_codes Control 9 14 \
 		-end
-	#pdflatex codes_14_4_9_3_poset_lvl_13.tex
+	#$(PDFLATEX) codes_14_4_9_3_poset_lvl_13.tex
 	#$(OPEN) codes_14_4_9_3_poset_lvl_13.pdf 
 
 #very slow
@@ -16816,7 +16828,7 @@ codes_15_6_6_2:
 		-group_theoretic_activity \
 			-linear_codes Control 6 15 \
 		-end
-	#pdflatex codes_15_6_6_2_poset_lvl_15.tex
+	#$(PDFLATEX) codes_15_6_6_2_poset_lvl_15.tex
 	#$(OPEN) codes_15_6_6_2_poset_lvl_15.pdf 
 
 
@@ -16855,7 +16867,7 @@ codes_24_12_8:
 		-group_theoretic_activity \
 			-linear_codes Control 8 24 \
 		-end
-	#pdflatex codes_24_12_8_poset.tex
+	#$(PDFLATEX) codes_24_12_8_poset.tex
 	#$(OPEN) codes_24_12_8_poset.pdf
 
 #codes_24_12_8_poset_lvl_24.layered_graph
@@ -16868,7 +16880,7 @@ codes_24_12_8_draw:
 			-line_width 0.5 -x_stretch 1.4 \
 			-scale 0.25 -nodes_empty \
 		-end
-	pdflatex codes_24_12_8_poset_lvl_24_draw.tex
+	$(PDFLATEX) codes_24_12_8_poset_lvl_24_draw.tex
 	$(OPEN) codes_24_12_8_poset_lvl_24_draw.pdf
 
 glynn_arc:
@@ -16887,7 +16899,7 @@ glynn_arc:
 		-group_theoretic_activity \
 			-linear_codes Control 6 10 \
 		-end
-	#pdflatex glynn_arc_poset.tex
+	#$(PDFLATEX) glynn_arc_poset.tex
 	#$(OPEN) glynn_arc_poset.pdf
 
 
@@ -16911,7 +16923,7 @@ five_points_in_general:
 		-group_theoretic_activity \
 		-linear_codes Control 4 5 \
 		-end
-	#pdflatex five_points_in_general_poset.tex
+	#$(PDFLATEX) five_points_in_general_poset.tex
 	#$(OPEN) five_points_in_general_poset.pdf
 
 
@@ -16934,7 +16946,7 @@ codes_q13_12_4:
 		-group_theoretic_activity \
 		-linear_codes Control 6 12 \
 		-end
-	#pdflatex codes_q13_poset.tex
+	#$(PDFLATEX) codes_q13_poset.tex
 	#$(OPEN) codes_q13_poset.pdf
 
 
@@ -17019,7 +17031,7 @@ all_subsets_6_3:
 			-file all_k_subsets_n6_k3.tree \
 			-draw_options Do \
 		-end
-	pdflatex all_k_subsets_n6_k3_draw.tex
+	$(PDFLATEX) all_k_subsets_n6_k3_draw.tex
 	$(OPEN) all_k_subsets_n6_k3_draw.pdf
 
 random_k_subsets:
@@ -17043,14 +17055,14 @@ Walsh_matrix_4:
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file Walsh_01_4.csv \
 		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
-	#pdflatex GF_2.tex
+	#$(PDFLATEX) GF_2.tex
 	#$(OPEN) GF_2.pdf
 
 
 Dedekind_10_10:
 	$(ORBITER) -v 3 -Dedekind_numbers 2 10 2 10
 	$(ORBITER) -v 3 -csv_file_latex 1 Dedekind_2_10_2_10.csv
-	pdflatex Dedekind_2_10_2_10.tex
+	$(PDFLATEX) Dedekind_2_10_2_10.tex
 	$(OPEN) Dedekind_2_10_2_10.pdf
 
 
@@ -17168,7 +17180,7 @@ LS_AG_2_3_read:
 
 geo_7_3_read:
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label geo_7_3 geo\_7\_3 \
@@ -17439,7 +17451,7 @@ geo_7_3_no_square_test:
 
 geo_7_3_no_square_test_draw:
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label geo_7_3_nst geo_7_3_nst \
@@ -17450,7 +17462,7 @@ geo_7_3_no_square_test_draw:
 			-draw_incidence_matrices \
 			7_3_nst \
 		-end
-	pdflatex 7_3_nst_incma.tex
+	$(PDFLATEX) 7_3_nst_incma.tex
 	$(OPEN) 7_3_nst_incma.pdf
 
 
@@ -17479,7 +17491,7 @@ geo_7_3_orderly_draw:
 			-file 7_3_tree.txt \
 			-draw_options Do \
 		-end
-	pdflatex 7_3_tree_draw.tex
+	$(PDFLATEX) 7_3_tree_draw.tex
 	$(OPEN) 7_3_tree_draw.pdf
 
 geo_7_3_orderly_mem_debug:
@@ -17544,7 +17556,7 @@ geo_10_3:
 
 geo_10_3_inc_draw:
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label geo_10_3 geo\_10\_3 \
@@ -17556,7 +17568,7 @@ geo_10_3_inc_draw:
 			-draw_incidence_matrices \
 			10_3_inc \
 		-end
-	pdflatex 10_3_inc_incma.tex
+	$(PDFLATEX) 10_3_inc_incma.tex
 	$(OPEN) 10_3_inc_incma.pdf
 
 
@@ -17607,7 +17619,7 @@ geo_10_3_tree:
 			-file 10_3_tree.txt \
 			-draw_options Do \
 		-end
-	pdflatex 10_3_tree_draw.tex
+	$(PDFLATEX) 10_3_tree_draw.tex
 	$(OPEN) 10_3_tree_draw.pdf
 
 
@@ -17637,7 +17649,7 @@ geo_10_3_tree_path:
 			-draw_options Do \
 			-select_path "0,0,15,26,46,56,72,80,93,106,119" \
 		-end
-	pdflatex 10_3_tree_draw.tex
+	$(PDFLATEX) 10_3_tree_draw.tex
 	$(OPEN) 10_3_tree_draw.pdf
 
 #			-nodes_empty \
@@ -17662,7 +17674,7 @@ Desargues_path_lex_least_draw:
 			-draw_incidence_matrices \
 			Desargues_path_lex_least \
 		-end
-	pdflatex Desargues_path_lex_least_incma.tex
+	$(PDFLATEX) Desargues_path_lex_least_incma.tex
 	$(OPEN) Desargues_path_lex_least_incma.pdf
 
 
@@ -17680,7 +17692,7 @@ Desargues_path_can_anc_draw:
 			-draw_incidence_matrices \
 			Desargues_path_can_anc \
 		-end
-	pdflatex Desargues_path_can_anc_incma.tex
+	$(PDFLATEX) Desargues_path_can_anc_incma.tex
 	$(OPEN) Desargues_path_can_anc_incma.pdf
 
 
@@ -17819,8 +17831,8 @@ geo_15_3_g4:
 			-file 15_3_g4_tree.txt \
 			-draw_options Do \
 		-end
-	pdflatex 15_3_g4_tree_draw.tex
-	$(OPEN) open 15_3_g4_tree_draw.pdf
+	$(PDFLATEX) 15_3_g4_tree_draw.tex
+	$(OPEN) 15_3_g4_tree_draw.pdf
 
 
 # The unique Cremona Richmond configuration with group of order 720
@@ -17924,7 +17936,7 @@ geo_15_4:
 			-file 15_4_tree.txt \
 			-draw_options Do \
 		-end 
-	pdflatex 15_4_tree_draw.tex
+	$(PDFLATEX) 15_4_tree_draw.tex
 	$(OPEN) 15_4_tree_draw.pdf
 
 # 4 objects
@@ -18000,7 +18012,7 @@ geo_40_4_g4:
 			-file 40_4_g4_tree.txt \
 			-draw_options Do \
 		-end 
-	pdflatex 40_4_g4_tree_draw.tex
+	$(PDFLATEX) 40_4_g4_tree_draw.tex
 	$(OPEN) 40_4_g4_tree_draw.pdf
 
 
@@ -18345,9 +18357,6 @@ Higman_Sims_graph:
 		-define code -vector \
 			-dense $(GOLAY_24_CODE_PROJECTIVE) \
 		-end \
-		-define Do -draw_options -embedded -sideways -radius 50 \
-			-scale 0.5 -line_width 0.3 \
-		-end \
 		-define Control2 -poset_classification_control \
 			-problem_label M24_pairs -W -depth 2 \
 			-draw_options Do \
@@ -18368,9 +18377,6 @@ Higman_Sims_graph:
 		-with M22 -do \
 		-group_theoretic_activity \
 			-report Do \
-		-end \
-		-defined Do -draw_options -embedded -sideways -radius 50 \
-			-scale 0.5 -line_width 0.3 \
 		-end \
 		-define Control -poset_classification_control \
 			-problem_label M22 -W -depth 6 \
@@ -18484,7 +18490,7 @@ Cycle_13_draw:
 	dot -Tpng Cycle_13.gv >Cycle_13.png
 	#twopi -Tpng Cycle_13.gv >Cycle_13.png
 	#$(OPEN) Cycle_13_draw.bmp
-	#pdflatex Cycle_13_report.tex
+	#$(PDFLATEX) Cycle_13_report.tex
 	#$(OPEN) Cycle_13_report.pdf
 
 
@@ -18495,7 +18501,7 @@ Cycle_9_eigenvalues:
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end
-	pdflatex Cycle_9_eigenvalues.tex
+	$(PDFLATEX) Cycle_9_eigenvalues.tex
 	$(OPEN) Cycle_9_eigenvalues.pdf
 
 
@@ -18520,7 +18526,7 @@ Paley_13_eigenvalues:
 		-define Gamma -graph -Paley F -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end
-	pdflatex Paley_13_eigenvalues.tex
+	$(PDFLATEX) Paley_13_eigenvalues.tex
 	$(OPEN) Paley_13_eigenvalues.pdf
 
 
@@ -18536,7 +18542,7 @@ tritangent_planes_graph_eigenvalues:
 
 Cayley_Z11_1mod3_eigenvalues_and_draw:
 	$(ORBITER) -v 2 \
-		-draw_options -xin 20000 \
+		-define Do -draw_options -xin 20000 \
 			-yin 20000 -embedded -radius 200 -end \
 		-define F -finite_field -q 11 -end \
 		-define S -vector -dense \
@@ -18550,14 +18556,14 @@ Cayley_Z11_1mod3_eigenvalues_and_draw:
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end \
 		-with Gamma -do \
-		-graph_theoretic_activity -draw -end
-	pdflatex Cayley_graph_AGL_1_11_draw.tex
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_AGL_1_11_draw.tex
 	$(OPEN) Cayley_graph_AGL_1_11_draw.pdf
 
 
 Cayley_Sym4_coxeter_draw:
 	$(ORBITER) -v 2 \
-		-draw_options -xin 2000000 -yin 2000000 \
+		-define Do -draw_options -xin 2000000 -yin 2000000 \
 			-radius 20000 -embedded -nodes_empty -end \
 		-define S -vector -dense \
 			"1,0,2,3, 0,2,1,3, 0,1,3,2" -end \
@@ -18567,13 +18573,13 @@ Cayley_Sym4_coxeter_draw:
 			-Cayley_graph G S \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -draw -end
-	pdflatex Cayley_graph_Sym_4_draw.tex
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_Sym_4_draw.tex
 	$(OPEN) Cayley_graph_Sym_4_draw.pdf
 
 Cayley_Sym5_coxeter_draw:
 	$(ORBITER) -v 2 \
-		-draw_options -xin 1000000 -yin 1000000 \
+		-define Do -draw_options -xin 1000000 -yin 1000000 \
 			-embedded -radius 10000 -nodes_empty -end \
 		-define S -vector -dense \
 			"1,0,2,3,4, 0,2,1,3,4, 0,1,3,2,4, 0,1,2,4,3" -end \
@@ -18583,14 +18589,14 @@ Cayley_Sym5_coxeter_draw:
 			-Cayley_graph G S \
 		-end \
 		-with Gamma -do \
-		-graph_theoretic_activity -draw -end
-	pdflatex Cayley_graph_Sym_5_draw.tex
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_Sym_5_draw.tex
 	$(OPEN) Cayley_graph_Sym_5_draw.pdf
 
 
 Cayley_Sym4_star_eigenvalues_and_draw:
 	$(ORBITER) -v 2 \
-		-draw_options -xin 1000000 -yin 1000000 -embedded -end \
+		-define Do -draw_options -xin 1000000 -yin 1000000 -embedded -end \
 		-define S -vector -dense "1,0,2,3, 2,1,0,3, 3,1,2,0" -end \
 		-define G -permutation_group -symmetric_group 4 \
 		-end \
@@ -18600,10 +18606,10 @@ Cayley_Sym4_star_eigenvalues_and_draw:
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end \
 		-with Gamma -do \
-		-graph_theoretic_activity -draw -end
-	pdflatex Cayley_graph_Sym_4_draw.tex
+		-graph_theoretic_activity -draw Do -end
+	$(PDFLATEX) Cayley_graph_Sym_4_draw.tex
 	$(OPEN) Cayley_graph_Sym_4_draw.pdf
-	pdflatex Cayley_graph_Sym_4_eigenvalues.tex
+	$(PDFLATEX) Cayley_graph_Sym_4_eigenvalues.tex
 	$(OPEN) Cayley_graph_Sym_4_eigenvalues.pdf
 
 
@@ -18731,7 +18737,7 @@ Chain_232_eigen:
 			-graph_theoretic_activity \
 			-eigenvalues \
 		-end
-	pdflatex chain_graph_eigenvalues.tex
+	$(PDFLATEX) chain_graph_eigenvalues.tex
 	$(OPEN) chain_graph_eigenvalues.pdf
 
 
@@ -18825,7 +18831,7 @@ Op_4_2_affine_polar_graph_info:
 		-graph_theoretic_activity \
 			-automorphism_group \
 		-end
-	#pdflatex affine_polar_O_1_4_2_report.tex
+	#$(PDFLATEX) affine_polar_O_1_4_2_report.tex
 	#$(OPEN) affine_polar_O_1_4_2_report.pdf
 
 
@@ -18851,7 +18857,7 @@ Paulus_1_aut:
 		-graph_theoretic_activity \
 			-automorphism_group \
 		-end
-	pdflatex P25_1_report.tex
+	$(PDFLATEX) P25_1_report.tex
 	$(OPEN) P25_1_report.pdf
 
 Paulus_15_aut:
@@ -18863,7 +18869,7 @@ Paulus_15_aut:
 		-graph_theoretic_activity \
 			-automorphism_group \
 		-end
-	pdflatex P25_15_report.tex
+	$(PDFLATEX) P25_15_report.tex
 	$(OPEN) P25_15_report.pdf
 
 # ago = 600
@@ -18889,8 +18895,10 @@ test_12_3:
 graph_classify_5:
 	$(ORBITER) -v 2 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
-		-define Do -draw_options -radius 250 \
-			-embedded \
+		-define Do -draw_options \
+			-radius 300 -nodes_empty \
+			-line_width 1.5  \
+			-scale 0.1 \
 		-end \
 		-define GC -graph_classification \
 			-n 5 \
@@ -18906,24 +18914,21 @@ graph_classify_5:
 		-end \
 		-with GC -do \
 		-graph_classification_activity \
-			-draw_options \
-				-radius 300 -nodes_empty \
-				-line_width 1.5  \
-				-scale 0.1 \
-			-end \
+			-draw_options Do \
 			-draw_graphs_at_level 5 \
 		-end \
 		-print_symbols
-	pdflatex graphs_v5_level_5_reps.tex
+	$(PDFLATEX) graphs_v5_level_5_reps.tex
 	$(OPEN) graphs_v5_level_5_reps.pdf
-	#pdflatex graphs_v5_poset.tex
+	#$(PDFLATEX) graphs_v5_poset.tex
 	#$(OPEN) graphs_v5_poset.pdf
 
 
 tournament_classify_4:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options \
-			-radius 250 -embedded \
+			-radius 400 \
+			-line_width 2 -scale 0.10 \
 		-end \
 		-define GC -graph_classification \
 			-n 4 -tournament \
@@ -18935,14 +18940,11 @@ tournament_classify_4:
 		-end \
 		-with GC -do \
 		-graph_classification_activity \
-			-draw_options \
-				-radius 400 \
-				-line_width 2 -scale 0.10 \
-			-end \
+			-draw_options Do \
 			-draw_graphs_at_level 6 \
 		-end \
 		-print_symbols
-	pdflatex tournament_4_level_6_reps.tex
+	$(PDFLATEX) tournament_4_level_6_reps.tex
 	$(OPEN) tournament_4_level_6_reps.pdf
 	
 
@@ -18951,8 +18953,9 @@ tournament_classify_4:
 
 graph_classify_8_r3:
 	$(ORBITER) -v 3 \
-		-defined Do -draw_options -radius 250 \
-			-line_width 0.2 -embedded \
+		-define Do -draw_options \
+			-radius 400 \
+			-line_width 2 -scale 0.10 \
 		-end \
 		-define GC -graph_classification \
 			-n 8 -regular 3 \
@@ -18964,14 +18967,11 @@ graph_classify_8_r3:
 		-end \
 		-with GC -do \
 		-graph_classification_activity \
-			-draw_options \
-				-radius 400 \
-				-line_width 2 -scale 0.10 \
-			-end \
+			-draw_options Do \
 			-draw_graphs_at_level 12 \
 		-end \
 		-print_symbols
-	#pdflatex graphs_v8_r3_poset_lvl_12.tex
+	#$(PDFLATEX) graphs_v8_r3_poset_lvl_12.tex
 	#$(OPEN) graphs_v8_r3_poset_lvl_12.pdf
 
 
@@ -18985,8 +18985,8 @@ Symmetric_4_inversion_graph_recognize:
 			-export_inversion_graphs "Symmetric4_inversion_graphs.csv" \
 		-end
 	$(ORBITER) -v 2 \
-		-define Do -problem_label graphs_v4 -depth 6 \
-			-draw_options -radius 250 -embedded \
+		-define Do -draw_options \
+			-radius 250 -embedded \
 		-end \
 		-define GC -graph_classification \
 			-n 4 \
@@ -19029,7 +19029,7 @@ Symmetric_5_inversion_graph_recognize:
 			Symmetric5_inversion_graphs.csv \
 		-end \
 		-print_symbols
-	#pdflatex graphs_v5_poset.tex
+	#$(PDFLATEX) graphs_v5_poset.tex
 	#$(OPEN) graphs_v5_poset.pdf
 
 
@@ -19213,7 +19213,7 @@ LSQ_5_c:
 				-dont_show_incidence_matrices \
 			-end \
 		-end
-	pdflatex LSQ_5_classification.tex
+	$(PDFLATEX) LSQ_5_classification.tex
 	$(OPEN) LSQ_5_classification.pdf
 
 
@@ -19315,7 +19315,7 @@ KM_PGGL_2_32:
 		-input_csv_file KM_PGGL_2_32_KM_7_8.csv \
 		-box_width 20 -bit_depth 24 \
 		-partition 3 32 97 -end
-	pdflatex KM_PGGL_2_32_poset_lvl_8.tex
+	$(PDFLATEX) KM_PGGL_2_32_poset_lvl_8.tex
 	$(OPEN) KM_PGGL_2_32_poset_lvl_8.pdf
 	$(OPEN) KM_PGGL_2_32_KM_7_8_draw.bmp
 
@@ -19487,7 +19487,7 @@ C5_design_classify:
 				-show_incidence_matrices \
 			-end \
 		-end
-	pdflatex C5_config_classification.tex
+	$(PDFLATEX) C5_config_classification.tex
 	$(OPEN) C5_config_classification.pdf
 
 
@@ -19690,7 +19690,7 @@ AG_2_3_stab_orb_0_Perm840_res192:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Perm840_res192_report.tex
+	$(PDFLATEX) Perm840_res192_report.tex
 	$(OPEN) Perm840_res192_report.pdf
 
 
@@ -19837,10 +19837,12 @@ DD_PP4:
 		-Delandtsheer_Doyen \
 			-pair_search_control pair_search_control \
 			-search_control search_control \
-			-search_partial_base_lines \
 			$(PP4) $(PP4_GROUP1) $(PP4_MASK1) \
+			-create_starter \
 			-end \
 
+
+#-group_label
 
 DD_PP4_span_design:
 	$(ORBITER) -v 6 \
@@ -19889,7 +19891,7 @@ PG_2_27_special:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_2_27.tex 
+	$(PDFLATEX) PG_2_27.tex 
 	$(OPEN) PG_2_27.pdf
 
 
@@ -19994,7 +19996,7 @@ desarguesian_spread_in_PG_3_2:
 		-define Fq -finite_field -q 2 -end \
 		-with FQ -and Fq -do -finite_field_activity \
 			-cheat_sheet_desarguesian_spread 2 -end
-	pdflatex Desarguesian_Spread_3_2.tex
+	$(PDFLATEX) Desarguesian_Spread_3_2.tex
 	$(OPEN) Desarguesian_Spread_3_2.pdf
 
 desarguesian_spread_in_PG_5_2:
@@ -20003,7 +20005,7 @@ desarguesian_spread_in_PG_5_2:
 		-define Fq -finite_field -q 2 -end \
 		-with FQ -and Fq -do -finite_field_activity \
 			-cheat_sheet_desarguesian_spread 2 -end
-	pdflatex Desarguesian_Spread_5_2.tex
+	$(PDFLATEX) Desarguesian_Spread_5_2.tex
 	$(OPEN) Desarguesian_Spread_5_2.pdf
 
 desarguesian_spread_in_PG_3_4:
@@ -20012,7 +20014,7 @@ desarguesian_spread_in_PG_3_4:
 		-define Fq -finite_field -q 4 -end \
 		-with FQ -and Fq -do -finite_field_activity \
 			-cheat_sheet_desarguesian_spread 2 -end
-	pdflatex Desarguesian_Spread_3_4.tex
+	$(PDFLATEX) Desarguesian_Spread_3_4.tex
 	$(OPEN) Desarguesian_Spread_3_4.pdf
 
 desarguesian_spread_in_PG_3_5:
@@ -20021,7 +20023,7 @@ desarguesian_spread_in_PG_3_5:
 		-define Fq -finite_field -q 5 -end \
 		-with FQ -and Fq -do -finite_field_activity \
 			-cheat_sheet_desarguesian_spread 2 -end
-	pdflatex Desarguesian_Spread_3_5.tex
+	$(PDFLATEX) Desarguesian_Spread_3_5.tex
 	$(OPEN) Desarguesian_Spread_3_5.pdf
 
 
@@ -20049,13 +20051,13 @@ classify_spreads_4:
 		-with C -do -spread_classify_activity \
 			-compute_starter \
 		-end
-	#pdflatex spreads_2_2_poset_lvl_5.tex
+	#$(PDFLATEX) spreads_2_2_poset_lvl_5.tex
 	#$(OPEN) spreads_2_2_poset_lvl_5.pdf
 
 
 classify_spreads_16_4:
 	$(ORBITER) -v 4 \
-		-defined Do -draw_options \
+		-define Do -draw_options \
 			-radius 20 \
 			-nodes_empty \
 			-line_width 0.2 \
@@ -20077,7 +20079,7 @@ classify_spreads_16_4:
 		-with C -do -spread_classify_activity \
 			-compute_starter \
 		-end
-	#pdflatex spreads_16_4_poset_lvl_17.tex
+	#$(PDFLATEX) spreads_16_4_poset_lvl_17.tex
 	#$(OPEN) spreads_16_4_poset_lvl_17.pdf
 
 
@@ -20247,7 +20249,7 @@ classify_spreads_25_isomorph:
 				-base_fname "spreads_25_graph" \
 			-end \
 		-end
-	pdflatex spreads_25_isomorphism_types.tex
+	$(PDFLATEX) spreads_25_isomorphism_types.tex
 	$(OPEN) spreads_25_isomorphism_types.pdf
 
 #We found 21 isomorphism types
@@ -20284,7 +20286,7 @@ classify_spreads_27_3_starter:
 		-with C -do -spread_classify_activity \
 			-prepare_lifting_single_case 0 \
 		-end
-	#pdflatex spreads_27_3_poset_detailed_lvl_5.tex
+	#$(PDFLATEX) spreads_27_3_poset_detailed_lvl_5.tex
 	#$(OPEN) spreads_27_3_poset_detailed_lvl_5.pdf
 
 # 50 orbits at level 5:
@@ -20425,9 +20427,9 @@ classify_spreads_27_isomorph_and_recognize:
 				-base_fname "spreads_27_3_graph" \
 			-end \
 		-end
-	#pdflatex spreads_27_isomorphism_types.tex
+	#$(PDFLATEX) spreads_27_isomorphism_types.tex
 	#$(OPEN) spreads_27_isomorphism_types.pdf
-	#pdflatex spreads_27_aut_group.tex
+	#$(PDFLATEX) spreads_27_aut_group.tex
 	#$(OPEN) spreads_27_aut_group.pdf
 
 
@@ -20458,7 +20460,7 @@ create_spread_27_0:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_0_report.tex
+	$(PDFLATEX) catalogue_q3_k3_0_report.tex
 	$(OPEN) catalogue_q3_k3_0_report.pdf
 
 create_spread_27_1:
@@ -20471,7 +20473,7 @@ create_spread_27_1:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_1_report.tex
+	$(PDFLATEX) catalogue_q3_k3_1_report.tex
 	$(OPEN) catalogue_q3_k3_1_report.pdf
 
 create_spread_27_2:
@@ -20484,7 +20486,7 @@ create_spread_27_2:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_2_report.tex
+	$(PDFLATEX) catalogue_q3_k3_2_report.tex
 	$(OPEN) catalogue_q3_k3_2_report.pdf
 
 create_spread_27_3:
@@ -20497,7 +20499,7 @@ create_spread_27_3:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_3_report.tex
+	$(PDFLATEX) catalogue_q3_k3_3_report.tex
 	$(OPEN) catalogue_q3_k3_3_report.pdf
 
 create_spread_27_4:
@@ -20510,7 +20512,7 @@ create_spread_27_4:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_4_report.tex
+	$(PDFLATEX) catalogue_q3_k3_4_report.tex
 	$(OPEN) catalogue_q3_k3_4_report.pdf
 
 create_spread_27_5:
@@ -20523,7 +20525,7 @@ create_spread_27_5:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_5_report.tex
+	$(PDFLATEX) catalogue_q3_k3_5_report.tex
 	$(OPEN) catalogue_q3_k3_5_report.pdf
 
 create_spread_27_6:
@@ -20536,7 +20538,7 @@ create_spread_27_6:
 		-with S -do -spread_activity \
 			-report \
 		-end
-	pdflatex catalogue_q3_k3_6_report.tex
+	$(PDFLATEX) catalogue_q3_k3_6_report.tex
 	$(OPEN) catalogue_q3_k3_6_report.pdf
 
 
@@ -20611,11 +20613,11 @@ create_translation_plane_9b:
 			-radius 250 -spanning_tree -embedded -nodes_empty \
 			-line_width 1.1 -x_stretch 2.4 -scale 0.15 \
 		-end
-	pdflatex orbit_PGL_5_3_on_andre_3_draw.tex
+	$(PDFLATEX) orbit_PGL_5_3_on_andre_3_draw.tex
 	$(OPEN) orbit_PGL_5_3_on_andre_3_draw.pdf
-	pdflatex group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
+	$(PDFLATEX) group_of_plane_plane_catalogue_q3_k2_1_orbits_report.tex
 	$(OPEN) group_of_plane_plane_catalogue_q3_k2_1_orbits_report.pdf
-	pdflatex group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.tex
+	$(PDFLATEX) group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.tex
 	$(OPEN) group_of_plane_plane_catalogue_q3_k2_1_stab_pt_92_report.pdf
 
 
@@ -20788,7 +20790,7 @@ create_translation_plane_27_5_Rao_Rao:
 		-define Orb -orbits -group A \
 			-on_points \
 		-end
-	pdflatex plane_catalogue_q3_k3_5_report.tex
+	$(PDFLATEX) plane_catalogue_q3_k3_5_report.tex
 	$(OPEN) plane_catalogue_q3_k3_5_report.pdf
 
 
@@ -20947,7 +20949,7 @@ PG_3_5_element_of_order_31_GL_normalizer:
 			-normalizer_of_cyclic_subgroup "124" \
 			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
 		-end
-	pdflatex normalizer_of_124_in_GL_4_5.tex
+	$(PDFLATEX) normalizer_of_124_in_GL_4_5.tex
 	$(OPEN) normalizer_of_124_in_GL_4_5.pdf
 
 # needs magma
@@ -20963,8 +20965,8 @@ PG_3_5_element_of_order_31_ME_normalizer:
 			-normalizer_of_cyclic_subgroup "31" \
 			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
 		-end
-	mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_ME_in_PGL_4_5.tex
-	pdflatex normalizer_of_31_ME_in_PGL_4_5.tex
+	- mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_ME_in_PGL_4_5.tex
+	$(PDFLATEX) normalizer_of_31_ME_in_PGL_4_5.tex
 	$(OPEN) normalizer_of_31_ME_in_PGL_4_5.pdf
 
 
@@ -20995,20 +20997,20 @@ PG_3_5_assume_31_graph:
 
 
 no:
-	pdflatex H31_reduced_spread_orbits_orbits_report.tex
+	$(PDFLATEX) H31_reduced_spread_orbits_orbits_report.tex
 	$(OPEN) H31_reduced_spread_orbits_orbits_report.pdf
-	pdflatex H31_line_orbits_orbits_report.tex
+	$(PDFLATEX) H31_line_orbits_orbits_report.tex
 	$(OPEN) H31_line_orbits_orbits_report.pdf
-	pdflatex H31_line_orbits_orbits_report.tex
+	$(PDFLATEX) H31_line_orbits_orbits_report.tex
 	$(OPEN) H31_line_orbits_orbits_report.pdf
-	pdflatex N31_line_orbits_orbits_report.tex
+	$(PDFLATEX) N31_line_orbits_orbits_report.tex
 	$(OPEN) N31_line_orbits_orbits_report.pdf
-	pdflatex H31_point_orbits_orbits_report.tex
+	$(PDFLATEX) H31_point_orbits_orbits_report.tex
 	$(OPEN) H31_point_orbits_orbits_report.pdf
-	pdflatex N31_point_orbits_orbits_report.tex
+	$(PDFLATEX) N31_point_orbits_orbits_report.tex
 	$(OPEN) N31_point_orbits_orbits_report.pdf
 
-	#pdflatex H31_spread_orbits_orbits_report.tex
+	#$(PDFLATEX) H31_spread_orbits_orbits_report.tex
 	#$(OPEN) H31_spread_orbits_orbits_report.pdf
 #H31_line_orbits_orbits.bin
 #H31_line_orbits_orbits_report.tex
@@ -21118,7 +21120,7 @@ BLT_5_1:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_catalogue_q5_iso1.tex
+	$(PDFLATEX) BLT_catalogue_q5_iso1.tex
 	$(OPEN) BLT_catalogue_q5_iso1.pdf
 
 
@@ -21144,7 +21146,7 @@ BLT_5_Linear:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_Linear_q5.tex
+	$(PDFLATEX) BLT_Linear_q5.tex
 	$(OPEN) BLT_Linear_q5.pdf
 
 
@@ -21158,7 +21160,7 @@ BLT_9_0:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_catalogue_q9_iso0.tex
+	$(PDFLATEX) BLT_catalogue_q9_iso0.tex
 	$(OPEN) BLT_catalogue_q9_iso0.pdf
 
 
@@ -21174,7 +21176,7 @@ BLT_9_Kantor1:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_Kantor1_q9.tex
+	$(PDFLATEX) BLT_Kantor1_q9.tex
 	$(OPEN) BLT_Kantor1_q9.pdf
 
 
@@ -21190,7 +21192,7 @@ BLT_11_0:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_catalogue_q11_iso0.tex
+	$(PDFLATEX) BLT_catalogue_q11_iso0.tex
 	$(OPEN) BLT_catalogue_q11_iso0.pdf
 
 
@@ -21204,7 +21206,7 @@ BLT_11_Fisher:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_Fisher_q11.tex
+	$(PDFLATEX) BLT_Fisher_q11.tex
 	$(OPEN) BLT_Fisher_q11.pdf
 
 BLT_11_Mondello:
@@ -21217,7 +21219,7 @@ BLT_11_Mondello:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_Mondello_q11.tex
+	$(PDFLATEX) BLT_Mondello_q11.tex
 	$(OPEN) BLT_Mondello_q11.pdf
 
 
@@ -21231,7 +21233,7 @@ BLT_11_FTWKB:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_FTWKB_q11.tex
+	$(PDFLATEX) BLT_FTWKB_q11.tex
 	$(OPEN) BLT_FTWKB_q11.pdf
 
 
@@ -21246,7 +21248,7 @@ BLT_13_Kantor2:
 		-with BLT -do -blt_set_activity \
 			-report \
 		-end
-	pdflatex BLT_Kantor2_q13.tex
+	$(PDFLATEX) BLT_Kantor2_q13.tex
 	$(OPEN) BLT_Kantor2_q13.pdf
 
 
@@ -21300,7 +21302,7 @@ BLT_9_deep_search:
 			-poset_classification_activity \
 				Activity_export \
 		-end
-	pdflatex BLT_q9_poset.tex
+	$(PDFLATEX) BLT_q9_poset.tex
 	$(OPEN) BLT_q9_poset.pdf
 
 
@@ -21318,7 +21320,7 @@ BLT_11_deep_search:
 				-W -depth 12 \
 			-end \
 		-end
-	#pdflatex BLT_q11_poset.tex
+	#$(PDFLATEX) BLT_q11_poset.tex
 	#$(OPEN) BLT_q11_poset.pdf
 
 
@@ -21337,7 +21339,7 @@ BLT_13_deep_search:
 				-W -depth 14 \
 			-end \
 		-end
-	#pdflatex BLT_q13_poset.tex
+	#$(PDFLATEX) BLT_q13_poset.tex
 	#$(OPEN) BLT_q13_poset.pdf
 
 
@@ -21487,7 +21489,7 @@ BLT_13_isomorph_testing:
 				-base_fname "BLT_q13_graph" \
 			-end \
 		-end
-	pdflatex BLT_q13_isomorphism_types.tex
+	$(PDFLATEX) BLT_q13_isomorphism_types.tex
 	$(OPEN) BLT_q13_isomorphism_types.pdf
 
 
@@ -21687,7 +21689,7 @@ tritangent_planes_graph_aut:
 		-graph_theoretic_activity \
 			-automorphism_group \
 		-end 
-	pdflatex tritangent_planes_disjointness_report.tex
+	$(PDFLATEX) tritangent_planes_disjointness_report.tex
 	$(OPEN) tritangent_planes_disjointness_report.pdf
 
 #tritangent_planes_disjointness_report.tex
@@ -21803,7 +21805,7 @@ PG_3_2_test:
 		-with P -do -projective_space_activity \
 			-cheat_sheet Do \
 		-end
-	pdflatex PG_3_2.tex
+	$(PDFLATEX) PG_3_2.tex
 	$(OPEN) PG_3_2.pdf
 
 
@@ -21908,7 +21910,7 @@ BLT_11_classify_starter:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define O -orthogonal_space 0 5 F -end \
-		-define C -BLT_set_classifier O -starter_size 5 -end \
+		-define C -BLT_set_classifier -orthogonal_space O -starter_size 5 -end \
 		-with C -do -BLT_set_classify_activity \
 			-compute_starter \
 				-problem_label BLT_q11 \
@@ -21962,7 +21964,7 @@ BLT_11_0_sort:
 
 BLT_11_0_sorted_draw:
 	$(ORBITER) -v 2 \
-		-draw_options \
+		-define Do -draw_options \
 			-radius 100 \
 			-scale 0.4 \
 			-line_width 1.0 -embedded \
@@ -21972,9 +21974,9 @@ BLT_11_0_sorted_draw:
 		-end \
 		-with G -do \
 		-graph_theoretic_activity \
-			-draw \
+			-draw Do \
 		-end
-	pdflatex BLT_q11_graph_5_0_sorted_draw.tex
+	$(PDFLATEX) BLT_q11_graph_5_0_sorted_draw.tex
 	$(OPEN) BLT_q11_graph_5_0_sorted_draw.pdf
 
 
@@ -22175,7 +22177,7 @@ quadrangles_PG_2_2:
 				-dont_show_incidence_matrices \
 			-end \
 		-end
-	pdflatex quadrangle_classification.tex
+	$(PDFLATEX) quadrangle_classification.tex
 	$(OPEN) quadrangle_classification.pdf
 
 
@@ -22207,7 +22209,7 @@ Barth_mod_11_singular_pts_c:
 				-show_TDA \
 			-end \
 		-end
-	pdflatex Barth_q11_sing_classification.tex
+	$(PDFLATEX) Barth_q11_sing_classification.tex
 	$(OPEN) Barth_q11_sing_classification.pdf
 
 
@@ -22281,7 +22283,7 @@ quartic_curves_q13_classify_nauty:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex quartic_curves_q13_classified_orbits.tex
+	$(PDFLATEX) quartic_curves_q13_classified_orbits.tex
 	$(OPEN) quartic_curves_q13_classified_orbits.pdf
 
 #quartic_curves_q13_classified_orbits.tex
@@ -22322,7 +22324,7 @@ Klein_cubic_threefold_q5_old:
 			-report \
 			-report_options ro \
 		-end
-	pdflatex Klein_cubic_threefold_q5_orbits.tex
+	$(PDFLATEX) Klein_cubic_threefold_q5_orbits.tex
 	$(OPEN) Klein_cubic_threefold_q5_orbits.pdf
 
 #User time: 0:45
@@ -22348,7 +22350,7 @@ Klein_cubic_threefold_q3:
 		-with V -do -variety_activity -compute_group -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Klein3_q3_report.tex
+	$(PDFLATEX) variety_Klein3_q3_report.tex
 	$(OPEN) variety_Klein3_q3_report.pdf
 
 # 1 singular point
@@ -22376,7 +22378,7 @@ Klein_cubic_threefold_q5:
 		-with V -do -variety_activity -compute_group -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
-	pdflatex variety_Klein3_q5_report.tex
+	$(PDFLATEX) variety_Klein3_q5_report.tex
 	$(OPEN) variety_Klein3_q5_report.pdf
 
 #user	0m50.437s
@@ -22413,7 +22415,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex EC_classification.tex
+	$(PDFLATEX) EC_classification.tex
 	$(OPEN) EC_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file EC_object0_TDA_flag_orbits.csv \
@@ -22466,7 +22468,7 @@ Hirschfeld_q4_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
+	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
 	$(OPEN) Hirschfeld_surface_q4_classification.pdf
 
 
@@ -22487,7 +22489,7 @@ Hirschfeld_stab_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.tex
 	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report.pdf
 
 Hirschfeld_stab_subgroup:
@@ -22560,7 +22562,7 @@ Hirschfeld_q4_set_c:
 				-show_TDA \
 			-end \
 		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
+	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
 	$(OPEN) Hirschfeld_surface_q4_classification.pdf
 
 
@@ -22599,7 +22601,7 @@ Dickson_sets_stabilizer:
 				-show_TDA \
 			-end \
 		-end
-	pdflatex Dickson_sets_classification.tex
+	$(PDFLATEX) Dickson_sets_classification.tex
 	$(OPEN) Dickson_sets_classification.pdf
 
 
@@ -22643,7 +22645,7 @@ Endrass_7c:
 			-report \
 			-end \
 		-end
-	pdflatex Endrass_F7_classification.tex
+	$(PDFLATEX) Endrass_F7_classification.tex
 	$(OPEN) Endrass_F7_classification.pdf
 
 #				-show_TDO \
@@ -22680,7 +22682,7 @@ hyperoval_16_canonical_form:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex hyperoval_q16_classification.tex
+	$(PDFLATEX) hyperoval_q16_classification.tex
 	$(OPEN) hyperoval_q16_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file hyperoval_q16_object0_TDA_flag_orbits.csv \
@@ -22724,7 +22726,7 @@ cubic_curves_PG_2_8_canon:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex cc_8_classification.tex
+	$(PDFLATEX) cc_8_classification.tex
 	$(OPEN) cc_8_classification.pdf
 
 
@@ -22762,7 +22764,7 @@ ovoid_q8_canon:
 				-export_group_GAP \
 			-end \
 		-end
-	#pdflatex ovoid_classification.tex
+	#$(PDFLATEX) ovoid_classification.tex
 	#$(OPEN) ovoid_classification.pdf
 
 #User time: 0:3
@@ -22800,7 +22802,7 @@ ovoid_ST_q8_canon:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex ovoid_ST_classification.tex
+	$(PDFLATEX) ovoid_ST_classification.tex
 	$(OPEN) ovoid_ST_classification.pdf
 
 #User time: 0:8
@@ -22824,7 +22826,7 @@ Suzuki_8:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGGL_4_8_Subgroup_Sz8_87360_report.tex
+	$(PDFLATEX) PGGL_4_8_Subgroup_Sz8_87360_report.tex
 	$(OPEN) PGGL_4_8_Subgroup_Sz8_87360_report.pdf
 
 #User time: 0.010000 of a second, dt=1 tps = 100
@@ -22858,7 +22860,7 @@ quartic_curve_25_0_0_canonical:
 				-export_group_GAP \
 			-end \
 		-end
-	#pdflatex quartic_25_0_0_classification.tex
+	#$(PDFLATEX) quartic_25_0_0_classification.tex
 	#$(OPEN) quartic_25_0_0_classification.pdf
 
 #User time: 0:1
@@ -22888,7 +22890,7 @@ CRC_BCH_Q16_N51_D3_canonical:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex BCH_Q16_N51_classification.tex
+	$(PDFLATEX) BCH_Q16_N51_classification.tex
 	$(OPEN) BCH_Q16_N51_classification.pdf
 
 # slow
@@ -22920,7 +22922,7 @@ Veronese_1_3_q7_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex veronese_1_3_q7_classification.tex
+	$(PDFLATEX) veronese_1_3_q7_classification.tex
 	$(OPEN) veronese_1_3_q7_classification.pdf
 
 
@@ -22958,7 +22960,7 @@ geo_7_3_c:
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label geo_7_3 geo\_7\_3 \
@@ -22979,7 +22981,7 @@ geo_7_3_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex geo_7_3_classification.tex
+	$(PDFLATEX) geo_7_3_classification.tex
 	$(OPEN) geo_7_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file geo_7_3_object0_TDA_flag_orbits.csv \
@@ -23006,7 +23008,7 @@ geo_10_3_c:
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label geo_10_3 geo\_10\_3 \
@@ -23027,7 +23029,7 @@ geo_10_3_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex geo_10_3_classification.tex
+	$(PDFLATEX) geo_10_3_classification.tex
 	$(OPEN) geo_10_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file geo_10_3_object7_TDA_flag_orbits.csv \
@@ -23046,7 +23048,7 @@ geo_10_3_c:
 
 geo_10_3_c_lex_least:
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define Test_lines -set -loop 4 11 1 -end \
 		-define Geo -geometry_builder \
@@ -23076,7 +23078,7 @@ geo_10_3_c_lex_least:
 				-lex_least Geo \
 			-end \
 		-end
-	pdflatex geo_10_3_classification.tex
+	$(PDFLATEX) geo_10_3_classification.tex
 	$(OPEN) geo_10_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file geo_10_3_object7_TDA_flag_orbits.csv \
@@ -23097,7 +23099,7 @@ geo_10_3_c_lex_least:
 
 geo_14_3_c:
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define Test_lines -set -loop 4 15 1 -end \
 		-define C -combinatorial_object \
@@ -23115,7 +23117,7 @@ geo_14_3_c:
 
 geo_15_3_c:
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 50 -width_10 5 -end \
 		-define C -combinatorial_object \
 			-label geo_15_3 geo\_15\_3 \
@@ -23126,7 +23128,7 @@ geo_15_3_c:
 			-canonical_form \
 			-save_ago \
 		-end
-	pdflatex 15_3_classification.tex
+	$(PDFLATEX) 15_3_classification.tex
 	$(OPEN) 15_3_classification.pdf
 
 TFC_24_3_c:
@@ -23151,7 +23153,7 @@ TFC_24_3_c:
 				-show_incidence_matrices \
 			-end \
 		-end
-	pdflatex 24_3_TFC_classification.tex
+	$(PDFLATEX) 24_3_TFC_classification.tex
 	$(OPEN) 24_3_TFC_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
@@ -23176,7 +23178,7 @@ geo_40_4_g4_c:
 			-output_to_inc_file \
 		-end
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 50 -width_10 5 -end \
 		-define C -combinatorial_object \
 			-label 40_4_g4 40\_4\_g4 \
@@ -23209,12 +23211,12 @@ geo_40_4_g4_c:
 				40_4_g4_object%L_TDA_flag_orbits_draw.bmp \
 				40_4_g4_object%L_TDA_flag_orbits_draw.png" \
 		-end_loop L
-	pdflatex 40_4_g4_classification.tex
+	$(PDFLATEX) 40_4_g4_classification.tex
 	$(OPEN) 40_4_g4_classification.pdf
 
 geo_17_3_g4_c:
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 50 -width_10 5 -end \
 		-define C -combinatorial_object \
 			-label 17_3_g4 17\_3\_g4 \
@@ -23235,7 +23237,7 @@ geo_17_3_g4_c:
 				-show_incidence_matrices \
 			-end \
 		-end
-	pdflatex 17_3_g4_classification.tex
+	$(PDFLATEX) 17_3_g4_classification.tex
 	$(OPEN) 17_3_g4_classification.pdf
 
 
@@ -23262,7 +23264,7 @@ AG_2_3_c: AG_2_3.inc
 				-show_incidence_matrices \
 			-end \
 		-end
-	pdflatex AG_2_3_classification.tex
+	$(PDFLATEX) AG_2_3_classification.tex
 	$(OPEN) AG_2_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file AG_2_3_object0_INP_flag_orbits.csv \
@@ -23286,7 +23288,7 @@ geo_LSQ6_c:
 			-test Test_lines \
 		-end
 	$(ORBITER) -v 3 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label LSQ6 LSQ6 \
@@ -23308,7 +23310,7 @@ geo_LSQ6_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex LSQ6_classification.tex
+	$(PDFLATEX) LSQ6_classification.tex
 	$(OPEN) LSQ6_classification.pdf
 	$(ORBITER) -v 2 \
 		-loop L 0 12 1 \
@@ -23363,7 +23365,7 @@ test_16_4:
 
 LS_AG_2_3_solutions_classify:
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 20 -width_10 2 -end \
 		-define C -combinatorial_object \
 			-label LS_AG_2_3 LS\_AG\_2\_3 \
@@ -23385,7 +23387,7 @@ LS_AG_2_3_solutions_classify:
 				-show_TDO \
 			-end \
 		-end
-	pdflatex LS_AG_2_3_classification.tex
+	$(PDFLATEX) LS_AG_2_3_classification.tex
 	$(OPEN) LS_AG_2_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file LS_AG_2_3_object0_INP_flag_orbits.csv \
@@ -23423,7 +23425,7 @@ design_27c:
 		-combinatorial_object_activity \
 			-report \
 		-end
-	pdflatex design_classification.tex
+	$(PDFLATEX) design_classification.tex
 	$(OPEN) design_classification.pdf
 
 
@@ -23437,7 +23439,7 @@ design_PG_2_3_canonical:
 				-export_inc \
 		-end
 	$(ORBITER) -v 3 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label PG_2_3 PG\_2\_3 \
@@ -23459,7 +23461,7 @@ design_PG_2_3_canonical:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex PG_2_3_classification.tex
+	$(PDFLATEX) PG_2_3_classification.tex
 	$(OPEN) PG_2_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file PG_2_3_object0_TDA_flag_orbits.csv \
@@ -23478,7 +23480,7 @@ wreath_product_designs_n4_k2_c:
 				-export_inc \
 		-end
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label wreath_4_2 wreath\_4\_2 \
@@ -23501,7 +23503,7 @@ wreath_product_designs_n4_k2_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex wreath_4_2_classification.tex
+	$(PDFLATEX) wreath_4_2_classification.tex
 	$(OPEN) wreath_4_2_classification.pdf
 
 
@@ -23513,7 +23515,7 @@ wreath_product_designs_n8_k6_c:
 				-export_inc \
 		-end
 	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 60 -width_10 6 -end \
 		-define C -combinatorial_object \
 			-label wreath_8_6 wreath\_8\_6 \
@@ -23535,14 +23537,14 @@ wreath_product_designs_n8_k6_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex wreath_8_6_classification.tex
+	$(PDFLATEX) wreath_8_6_classification.tex
 	$(OPEN) wreath_8_6_classification.pdf
 
 
 
 neumaier_graphs_16_classify:
 	$(ORBITER) -v 2 \
-		-draw_incidence_structure_description \
+		-define Doinc -draw_incidence_structure_options \
 			-width 20 -width_10 2 -end \
 		-define C -combinatorial_object \
 			-label neumaier_graph neumaier\_graph \
@@ -23570,7 +23572,7 @@ neumaier_graphs_16_classify:
 		-end
 	$(ORBITER) -v 4 -csv_file_select_rows_by_file \
 		NG_16_9_4_2_4.csv neumaier_graph_transversal.csv
-	pdflatex neumaier_graph_classification.tex
+	$(PDFLATEX) neumaier_graph_classification.tex
 	$(OPEN) neumaier_graph_classification.pdf
 
 
@@ -23613,7 +23615,7 @@ code_3_2_aut:
 				-save_classification "3_2" \
 			-end \
 		-end
-	pdflatex 3_2_classification.tex
+	$(PDFLATEX) 3_2_classification.tex
 	$(OPEN) 3_2_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file 3_2_object0_TDA_flag_orbits.csv \
@@ -23640,7 +23642,7 @@ code_6_3_aut:
 				-save_classification "6_3" \
 			-end \
 		-end
-	pdflatex 6_3_classification.tex
+	$(PDFLATEX) 6_3_classification.tex
 	$(OPEN) 6_3_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file 6_3_object0_TDA_flag_orbits.csv \
@@ -23667,7 +23669,7 @@ RM_3_1_group:
 				-save_classification "RM_3_1" \
 			-end \
 		-end
-	pdflatex RM_3_1_classification.tex
+	$(PDFLATEX) RM_3_1_classification.tex
 	$(OPEN) RM_3_1_classification.pdf
 
 # group order 1344
@@ -23688,7 +23690,7 @@ RM_3_1_group_and_diagram:
 				-save_classification "RM_3_1" \
 			-end \
 		-end
-	pdflatex RM_3_1_classification.tex
+	$(PDFLATEX) RM_3_1_classification.tex
 	$(OPEN) RM_3_1_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file RM_3_1_object0_INP_flag_orbits.csv \
@@ -23720,7 +23722,7 @@ RM_4_1_group:
 				-save_classification "RM_4_1" \
 			-end \
 		-end
-	pdflatex RM_4_1_classification.tex
+	$(PDFLATEX) RM_4_1_classification.tex
 	$(OPEN) RM_4_1_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file RM_4_1_object0_INP_flag_orbits.csv \
@@ -23771,7 +23773,7 @@ GV_n15_k6_d5_group:
 				-save_classification "GV_n15_k6_d5" \
 			-end \
 		-end
-	pdflatex GV_n15_k6_d5_classification.tex
+	$(PDFLATEX) GV_n15_k6_d5_classification.tex
 	$(OPEN) GV_n15_k6_d5_classification.pdf
 
 #ago=12
@@ -23793,7 +23795,7 @@ code_n15_k6_d6_a_group:
 				-save_classification "n15_k6_d6_a" \
 			-end \
 		-end
-	pdflatex n15_k6_d6_a_classification.tex
+	$(PDFLATEX) n15_k6_d6_a_classification.tex
 	$(OPEN) n15_k6_d6_a_classification.pdf
 
 
@@ -23812,7 +23814,7 @@ code_n15_k6_d6_b_group:
 				-save_classification "n15_k6_d6_b" \
 			-end \
 		-end
-	pdflatex n15_k6_d6_b_classification.tex
+	$(PDFLATEX) n15_k6_d6_b_classification.tex
 	$(OPEN) n15_k6_d6_b_classification.pdf
 
 
@@ -23842,7 +23844,7 @@ Hamming_graph_7_with_Hamming_code:
 		-graph_theoretic_activity -save -end \
 		-with G -do \
 		-graph_theoretic_activity -automorphism_group -end
-	pdflatex Hamming_7_2_Hamming_code_report.tex
+	$(PDFLATEX) Hamming_7_2_Hamming_code_report.tex
 	$(OPEN) Hamming_7_2_Hamming_code_report.pdf
 
 # group of order 2688 = 16 * 168
@@ -23885,7 +23887,7 @@ Cycle_13_aut:
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-	pdflatex Cycle_13_report.tex
+	$(PDFLATEX) Cycle_13_report.tex
 	$(OPEN) Cycle_13_report.pdf
 
 
@@ -23896,7 +23898,7 @@ Neumaier_16_aut:
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-		pdflatex Neumaier_graph_16_report.tex
+		$(PDFLATEX) Neumaier_graph_16_report.tex
 		$(OPEN) Neumaier_graph_16_report.pdf
 
 # ago=256
@@ -23907,7 +23909,7 @@ Queens_graph_aut:
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-	pdflatex non_attacking_queens_graph_8_report.tex
+	$(PDFLATEX) non_attacking_queens_graph_8_report.tex
 	$(OPEN) non_attacking_queens_graph_8_report.pdf
 
 #non_attacking_queens_graph_8_orbits.csv
@@ -23954,7 +23956,7 @@ Chain_232_aut:
 		-with Gamma -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-	pdflatex chain_graph_report.tex
+	$(PDFLATEX) chain_graph_report.tex
 	$(OPEN) chain_graph_report.pdf
 
 
@@ -24036,7 +24038,7 @@ HJ_group:
 		-with G -do \
 			-graph_theoretic_activity -properties \
 		-end
-	pdflatex File_halljanko315_report.tex
+	$(PDFLATEX) File_halljanko315_report.tex
 	$(OPEN) File_halljanko315_report.pdf
 
 
@@ -24151,7 +24153,7 @@ PGO_5_2_graph_group:
 		-graph_theoretic_activity \
 			-eigenvalues \
 		-end
-	pdflatex collinearity_graph_eigenvalues.tex
+	$(PDFLATEX) collinearity_graph_eigenvalues.tex
 	$(OPEN) collinearity_graph_eigenvalues.pdf
 
 
@@ -24200,7 +24202,7 @@ Paulus_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex P25_classification.tex
+	$(PDFLATEX) P25_classification.tex
 	$(OPEN) P25_classification.pdf
 
 
@@ -24254,7 +24256,7 @@ Neumaier_graph_25_c:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex N25_classification.tex
+	$(PDFLATEX) N25_classification.tex
 	$(OPEN) N25_classification.pdf
 
 
@@ -24280,7 +24282,7 @@ F_17_edge:
 		-define F -finite_field -q 17 -end \
 		-with F -do -finite_field_activity \
 			-cheat_sheet_GF -end
-	pdflatex GF_17.tex
+	$(PDFLATEX) GF_17.tex
 	$(OPEN) GF_17.pdf
 
 
@@ -24313,7 +24315,7 @@ Edge_curve_17_nauty:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex Edge_curve_q17_classification.tex
+	$(PDFLATEX) Edge_curve_q17_classification.tex
 	$(OPEN) Edge_curve_q17_classification.pdf
 	$(ORBITER) -v 2 -draw_matrix \
 		-input_csv_file Edge_curve_q17_object0_TDA_flag_orbits.csv \
@@ -24352,7 +24354,7 @@ Edge_curve_17_group:
 				-report_group_table \
 				-report Do \
 		-end
-	pdflatex PGL_3_17_Subgroup_Stab_Edge_24_report.tex
+	$(PDFLATEX) PGL_3_17_Subgroup_Stab_Edge_24_report.tex
 	$(OPEN) PGL_3_17_Subgroup_Stab_Edge_24_report.pdf
 
 
@@ -24412,7 +24414,7 @@ Sym_6:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex Sym_6_report.tex
+	$(PDFLATEX) Sym_6_report.tex
 	$(OPEN) Sym_6_report.pdf
 
 
@@ -24423,14 +24425,14 @@ Sym_6_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_PATH)magma Sym_6_classes.magma
+	$(MAGMA_EXE) Sym_6_classes.magma
 	$(ORBITER) -v 3 \
 		-define G -permutation_group -symmetric_group 6 -end \
 		-with G -do \
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex Sym_6_classes_out.tex
+	$(PDFLATEX) Sym_6_classes_out.tex
 	$(OPEN) Sym_6_classes_out.pdf
 
 
@@ -24549,7 +24551,7 @@ Sym_6_class_2ABC_make_graph_G2:
 		-with G -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-	pdflatex File_Sym_6_class_2ABC_order_2_report.tex
+	$(PDFLATEX) File_Sym_6_class_2ABC_order_2_report.tex
 	$(OPEN) File_Sym_6_class_2ABC_order_2_report.pdf
 
 # ago = 1440
@@ -24571,7 +24573,7 @@ Sym_6_class_2ABC_make_graph_G3:
 		-with G -do \
 			-graph_theoretic_activity -automorphism_group \
 		-end
-	pdflatex File_Sym_6_class_2ABC_order_3_report.tex
+	$(PDFLATEX) File_Sym_6_class_2ABC_order_3_report.tex
 	$(OPEN) File_Sym_6_class_2ABC_order_3_report.pdf
 
 #ago=3762339840000
@@ -24640,7 +24642,7 @@ Aut_Sym_6_group:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex AutSym6_report.tex
+	$(PDFLATEX) AutSym6_report.tex
 	$(OPEN) AutSym6_report.pdf
 
 
@@ -24685,9 +24687,9 @@ Aut_Sym_6_subgroup_lattice_load_and_draw:
 		-group_theoretic_activity \
 			-subgroup_lattice_draw_by_orbits \
 		-end
-	#pdflatex AutSym6_drawing.tex
+	#$(PDFLATEX) AutSym6_drawing.tex
 	#$(OPEN) AutSym6_drawing.pdf
-	pdflatex AutSym6_drawing_by_orbits.tex
+	$(PDFLATEX) AutSym6_drawing_by_orbits.tex
 	$(OPEN) AutSym6_drawing_by_orbits.pdf
 
 
@@ -24738,7 +24740,7 @@ PGL_6_2_Wedge_4_2_detached_report.tex:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	pdflatex PGL_6_2_Wedge_4_2_detached_report.tex
+	$(PDFLATEX) PGL_6_2_Wedge_4_2_detached_report.tex
 	$(OPEN) PGL_6_2_Wedge_4_2_detached_report.pdf
 
 
@@ -25895,14 +25897,14 @@ test_19_1:
 make_table_of_surfaces:
 	$(ORBITER) -v 3 \
 		-make_table_of_surfaces
-	pdflatex surfaces_report.tex
+	$(PDFLATEX) surfaces_report.tex
 	$(OPEN) surfaces_report.pdf
 
 
 make_table_of_quartic_curves:
 	$(ORBITER) -v 3 \
 		-make_table_of_quartic_curves
-	pdflatex quartic_curves_report.tex
+	$(PDFLATEX) quartic_curves_report.tex
 	$(OPEN) quartic_curves_report.pdf
 
 
@@ -26171,5 +26173,5 @@ draw_eigenvalue_diag23:
 			-eigenvalues 2 0 0 3 \
 			-label_nodes \
 		-end
-	pdflatex ev_diag23_draw.tex
+	$(PDFLATEX) ev_diag23_draw.tex
 	$(OPEN) ev_diag23_draw.pdf

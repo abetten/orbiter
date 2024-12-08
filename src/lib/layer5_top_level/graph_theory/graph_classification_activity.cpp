@@ -65,11 +65,16 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			cout << "please specify -draw_options" << endl;
 			exit(1);
 		}
+
+		other::graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_options_label);
+
 		GC->gen->draw_level_graph(
 				GC->gen->get_problem_label_with_path(),
 				GC->Descr->Control->depth, GC->Descr->n /* data1 */,
 				Descr->draw_level_graph_level,
-				Descr->draw_options,
+				Draw_options,
 				verbose_level - 3);
 	}
 
@@ -81,9 +86,15 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			cout << "please specify -draw_options" << endl;
 			exit(1);
 		}
+
+		other::graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_options_label);
+
 		for (level = 0; level <= GC->Descr->Control->depth; level++) {
-			GC->draw_graphs(level,
-					Descr->draw_options,
+			GC->draw_graphs(
+					level,
+					Draw_options,
 					verbose_level);
 		}
 	}
@@ -91,7 +102,8 @@ void graph_classification_activity::perform_activity(int verbose_level)
 	else if (Descr->f_list_graphs_at_level) {
 
 		cout << "graph_classification_activity::perform_activity f_list_graphs_at_level" << endl;
-		GC->list_graphs(Descr->list_graphs_at_level_level_min,
+		GC->list_graphs(
+				Descr->list_graphs_at_level_level_min,
 				Descr->list_graphs_at_level_level_max,
 				verbose_level);
 	}
@@ -103,8 +115,14 @@ void graph_classification_activity::perform_activity(int verbose_level)
 			cout << "please specify -draw_options" << endl;
 			exit(1);
 		}
-		GC->draw_graphs(Descr->draw_graphs_at_level_level,
-				Descr->draw_options,
+
+		other::graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->draw_options_label);
+
+		GC->draw_graphs(
+				Descr->draw_graphs_at_level_level,
+				Draw_options,
 				verbose_level);
 	}
 

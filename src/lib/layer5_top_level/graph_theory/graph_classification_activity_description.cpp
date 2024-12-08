@@ -33,7 +33,7 @@ graph_classification_activity_description::graph_classification_activity_descrip
 	draw_graphs_at_level_level = 0;
 
 	f_draw_options = false;
-	draw_options = NULL;
+	//std::string draw_options_label;
 
 	f_recognize_graphs_from_adjacency_matrix_csv = false;
 	//std::string recognize_graphs_from_adjacency_matrix_csv_fname;
@@ -86,22 +86,9 @@ int graph_classification_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = true;
-
-			draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
+			draw_options_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-draw_options " << endl;
-			}
-			i += draw_options->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -draw_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-f_draw_options " << endl;
+				cout << "-draw_options " << draw_options_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-recognize_graphs_from_adjacency_matrix_csv") == 0) {
@@ -147,8 +134,7 @@ void graph_classification_activity_description::print()
 		cout << "-draw_graphs_at_level " << draw_graphs_at_level_level << endl;
 	}
 	if (f_draw_options) {
-		cout << "-f_draw_options " << endl;
-		draw_options->print();
+		cout << "-draw_options " << draw_options_label << endl;
 	}
 	if (f_recognize_graphs_from_adjacency_matrix_csv) {
 		cout << "-recognize_graphs_from_adjacency_matrix_csv " << recognize_graphs_from_adjacency_matrix_csv_fname << endl;

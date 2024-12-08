@@ -1260,6 +1260,8 @@ public:
 	int fork_to;
 	int fork_step;
 
+	int f_parse_commands_only;
+
 	orbiter_kernel_system::orbiter_symbol_table *Orbiter_symbol_table;
 
 	long int nb_times_finite_field_created;

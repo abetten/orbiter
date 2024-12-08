@@ -1155,7 +1155,7 @@ void symbol_definition::read_definition(
 	}
 
 	else if (ST.stringcmp(argv[i], "-draw_incidence_structure_options") == 0) {
-		f_poset_classification_report_options = true;
+		f_draw_incidence_structure_options = true;
 
 		Draw_incidence_structure_description =
 				NEW_OBJECT(other::graphics::draw_incidence_structure_description);
@@ -1875,7 +1875,7 @@ void symbol_definition::perform_definition(
 
 void symbol_definition::print()
 {
-	cout << "-define " << define_label << " ";
+	cout << "-define " << define_label << " " << endl;
 	if (f_finite_field) {
 		cout << "-finite_field ";
 		Finite_field_description->print();
@@ -2051,7 +2051,7 @@ void symbol_definition::print()
 		Draw_options->print();
 	}
 	else if (f_draw_incidence_structure_options) {
-		cout << "-draw_incidence_structure_options ";
+		cout << "-draw_incidence_structure_options " << endl;
 		Draw_incidence_structure_description->print();
 	}
 

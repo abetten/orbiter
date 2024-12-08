@@ -82,6 +82,8 @@ orbiter_session::orbiter_session()
 	fork_to = 0;
 	fork_step = 0;
 
+	f_parse_commands_only = false;
+
 	//Orbiter_symbol_table = NULL;
 	Orbiter_symbol_table = NEW_OBJECT(orbiter_symbol_table);
 
@@ -172,6 +174,9 @@ void orbiter_session::print_help(
 	else if (ST.stringcmp(argv[i], "-fork") == 0) {
 		cout << "-fork <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-parse_commands_only") == 0) {
+		cout << "-parse_commands_only" << endl;
+	}
 }
 
 int orbiter_session::recognize_keyword(
@@ -208,6 +213,9 @@ int orbiter_session::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-fork") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-parse_commands_only") == 0) {
 		return true;
 	}
 	return false;
@@ -336,6 +344,12 @@ int orbiter_session::read_arguments(
 						<< " " << fork_to
 						<< " " << fork_step
 						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-parse_commands_only") == 0) {
+			f_parse_commands_only = true;
+			if (f_v) {
+				cout << "-parse_commands_only" << endl;
 			}
 		}
 		else {

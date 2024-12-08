@@ -370,7 +370,8 @@ public:
 	int draw_graphs_at_level_level;
 
 	int f_draw_options;
-	other::graphics::layered_graph_draw_options *draw_options;
+	std::string draw_options_label;
+	//other::graphics::layered_graph_draw_options *draw_options;
 
 	int f_recognize_graphs_from_adjacency_matrix_csv;
 	std::string recognize_graphs_from_adjacency_matrix_csv_fname;

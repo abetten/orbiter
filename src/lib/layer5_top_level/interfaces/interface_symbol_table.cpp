@@ -241,6 +241,7 @@ void interface_symbol_table::worker(
 
 void interface_symbol_table::print()
 {
+	//cout << "interface_symbol_table::print" << endl;
 	if (f_define) {
 		Symbol_definition->print();
 	}
@@ -250,6 +251,7 @@ void interface_symbol_table::print()
 	if (f_activity) {
 		Activity_description->print();
 	}
+	//cout << "interface_symbol_table::print done" << endl;
 }
 
 void interface_symbol_table::print_with()

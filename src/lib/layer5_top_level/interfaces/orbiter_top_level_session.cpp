@@ -203,7 +203,7 @@ void orbiter_top_level_session::handle_everything(
 	}
 
 
-	if (Orbiter_session->f_fork) {
+	if (Orbiter_session->f_fork && !Orbiter_session->f_parse_commands_only) {
 		if (f_v) {
 			cout << "before Orbiter_session->fork" << endl;
 		}
@@ -213,7 +213,7 @@ void orbiter_top_level_session::handle_everything(
 		}
 	}
 	else {
-		if (Orbiter_session->f_seed) {
+		if (Orbiter_session->f_seed && !Orbiter_session->f_parse_commands_only) {
 			other::orbiter_kernel_system::os_interface Os;
 
 			if (f_v) {
@@ -309,31 +309,36 @@ void orbiter_top_level_session::parse_and_execute(
 	if (f_v) {
 		cout << "################################################################################################" << endl;
 	}
-	if (f_v) {
-		cout << "Executing commands:" << endl;
+
+	if (Orbiter_session->f_parse_commands_only) {
+		cout << "not executing the commands because of option -parse_commands_only" << endl;
 	}
-
-	for (i = 0; i < program.size(); i++) {
-
-		orbiter_command *OC;
-
-		OC = (orbiter_command *) program[i];
-
+	else {
 		if (f_v) {
-			cout << "################################################################################################" << endl;
-			cout << "Executing command " << i << ":" << endl;
-			OC->print();
-			cout << "################################################################################################" << endl;
+			cout << "Executing commands:" << endl;
 		}
+		for (i = 0; i < program.size(); i++) {
 
-		OC->execute(verbose_level);
+			orbiter_command *OC;
 
+			OC = (orbiter_command *) program[i];
+
+			if (f_v) {
+				cout << "################################################################################################" << endl;
+				cout << "Executing command " << i << ":" << endl;
+				OC->print();
+				cout << "################################################################################################" << endl;
+			}
+
+			OC->execute(verbose_level);
+
+		}
+		if (f_v) {
+			cout << "Executing commands done" << endl;
+		}
 	}
 
 
-	if (f_v) {
-		cout << "Executing commands done" << endl;
-	}
 
 	if (f_v) {
 		cout << "orbiter_top_level_session::parse_and_execute done" << endl;
@@ -346,7 +351,7 @@ void orbiter_top_level_session::parse(
 {
 	int cnt = 0;
 	int f_v = (verbose_level >= 1);
-	int f_vv = false;
+	int f_vv = (verbose_level >= 2);
 	int i_prev = -1;
 
 	if (f_v) {
@@ -373,7 +378,7 @@ void orbiter_top_level_session::parse(
 		i_prev = i;
 		if (f_v) {
 			cout << "orbiter_top_level_session::parse "
-					"before Interface_symbol_table, i = " << i << endl;
+					"i = " << i << endl;
 		}
 
 		orbiter_command *OC;
@@ -387,6 +392,11 @@ void orbiter_top_level_session::parse(
 		if (f_vv) {
 			cout << "orbiter_top_level_session::parse "
 					"after OC->parse" << endl;
+		}
+		if (f_vv) {
+			cout << "orbiter_top_level_session::parse "
+					"command " << program.size() << " starting at token " << i << " is:" << endl;
+			OC->print();
 		}
 
 		program.push_back(OC);
