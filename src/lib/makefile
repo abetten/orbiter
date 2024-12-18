@@ -303,6 +303,7 @@ ORBITER_MODULES= \
 		layer1_foundations/other/l1_interfaces/interface_gap_low.o \
 		layer1_foundations/other/l1_interfaces/interface_magma_low.o \
 		layer1_foundations/other/l1_interfaces/latex_interface.o \
+		layer1_foundations/other/l1_interfaces/nauty_interface_control.o \
 		layer1_foundations/other/l1_interfaces/nauty_interface_for_combo.o \
 		layer1_foundations/other/l1_interfaces/nauty_interface.o \
 		layer1_foundations/other/l1_interfaces/nauty_output.o \
@@ -521,7 +522,6 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
 		layer5_top_level/canonical_form/canonical_form_global.o \
 		layer5_top_level/canonical_form/classification_of_varieties_nauty.o \
-		layer5_top_level/canonical_form/classification_of_varieties.o \
 		layer5_top_level/canonical_form/combinatorial_object_with_properties.o \
 		layer5_top_level/canonical_form/input_objects_of_type_variety.o \
 		layer5_top_level/canonical_form/objects_after_classification.o \

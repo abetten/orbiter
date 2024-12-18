@@ -562,7 +562,7 @@ public:
 			action *A_linear,
 			geometry::projective_geometry::projective_space *P,
 		long int *set, int set_size,
-		int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int verbose_level);
 	// assuming we are in a linear action.
 	void stabilizer_of_dual_hyperoval_representative(

@@ -23,6 +23,9 @@ canonical_form_classifier::canonical_form_classifier()
 	Record_birth();
 	Descr = NULL;
 
+	f_nauty_control = false;
+	Nauty_interface_control = NULL;
+
 	Ring_with_action = NULL;
 
 	Input = NULL;
@@ -123,31 +126,8 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 
 	canonical_form_classifier::Descr = Descr;
 
-	if (f_v) {
-		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
-				"algorithm = ";
-		if (Descr->f_algorithm_nauty) {
-			cout << "nauty";
-
-			if (Descr->f_has_nauty_output) {
-
-				cout << ", has nauty output";
-			}
-			else {
-				cout << ", needs to apply nauty";
-
-			}
-		}
-#if 0
-		else if (Descr->f_algorithm_substructure) {
-			cout << "substructure";
-		}
-#endif
-		else {
-			cout << "unknown" << endl;
-		}
-		cout << endl;
-	}
+	f_nauty_control = Descr->f_nauty_control;
+	Nauty_interface_control = Descr->Nauty_interface_control;
 
 
 	if (f_v) {
@@ -172,13 +152,25 @@ void canonical_form_classifier::init_objects_from_list_of_csv_files(
 	}
 
 
-
+#if 0
 	if (!Descr->f_algorithm_nauty /*&& !Descr->f_algorithm_substructure*/) {
 		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
 				"please select an algorithm to use" << endl;
 		exit(1);
 	}
+#endif
 
+	if (!Descr->f_nauty_control) {
+		cout << "canonical_form_classifier::init_objects_from_list_of_csv_files "
+				"please use -nauty_control <options> -end" << endl;
+		exit(1);
+	}
+	else {
+		if (f_v) {
+			cout << "canonical_form_classifier::init_objects_from_list_of_csv_files nauty_control:" << endl;
+			Descr->Nauty_interface_control->print();
+		}
+	}
 
 
 	if (!Descr->f_space) {
@@ -238,6 +230,8 @@ void canonical_form_classifier::init_direct(
 		int nb_input_Vo,
 		canonical_form::variety_object_with_action *Input_Vo,
 		std::string &fname_base_out,
+		int f_nauty_control,
+		other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
 		int verbose_level)
 // Prepare the projective space and the ring,
 // Create the action_on_homogeneous_polynomials
@@ -252,6 +246,8 @@ void canonical_form_classifier::init_direct(
 		cout << "canonical_form_classifier::init_direct" << endl;
 	}
 
+	canonical_form_classifier::f_nauty_control = f_nauty_control;
+	canonical_form_classifier::Nauty_interface_control = Nauty_interface_control;
 
 	//canonical_form_classifier::PA = PA;
 

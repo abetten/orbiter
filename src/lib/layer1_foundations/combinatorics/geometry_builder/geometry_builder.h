@@ -742,6 +742,8 @@ public:
 
 	combinatorics::canonical_form_classification::classify_using_canonical_forms *Canonical_forms;
 
+	other::l1_interfaces::nauty_interface_control *Nauty_control;
+
 	int f_print_mod;
 	int print_mod;
 

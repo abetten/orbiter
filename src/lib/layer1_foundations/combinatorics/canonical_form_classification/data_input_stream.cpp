@@ -655,10 +655,10 @@ int data_input_stream::count_number_of_objects_to_test(
 
             nb_sol = SoS->nb_sets;
             if (f_v) {
-                cout << "objects from file " << fname <<
-                     " the file contains " << nb_sol << " sets" << endl;
+            	cout << "objects from file " << fname <<
+                		" the file contains " << nb_sol << " sets" << endl;
             }
-             nb_objects_to_test += nb_sol;
+            nb_objects_to_test += nb_sol;
             FREE_OBJECT(SoS);
         }
     	else if (Descr->Input[input_idx].input_type == t_data_input_stream_graph_by_adjacency_matrix) {
@@ -703,7 +703,7 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			CG = Get_graph(Descr->Input[input_idx].input_string);
 
-			FREE_OBJECT(CG);
+			//FREE_OBJECT(CG);
 
 			nb_objects_to_test++;
 

@@ -282,7 +282,9 @@ public:
 
 	// nauty related stuff:
 
-	int f_save_nauty_input_graphs;
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_control;
+	//int f_save_nauty_input_graphs;
 
 
 
@@ -564,9 +566,11 @@ public:
 	~classify_using_canonical_forms();
 	void orderly_test(
 			any_combinatorial_object *OwCF,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_accept, int verbose_level);
 	void find_object(
 			any_combinatorial_object *OwCF,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_found, int &idx,
 			other::l1_interfaces::nauty_output *&NO,
 			other::data_structures::bitvector *&Canonical_form,
@@ -574,6 +578,7 @@ public:
 		// if f_found is true, B[idx] agrees with the given object
 	void add_object(
 			any_combinatorial_object *OwCF,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_new_object,
 			int verbose_level);
 

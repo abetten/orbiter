@@ -575,7 +575,8 @@ public:
 			int verbose_level);
 	void nauty_interface(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,
@@ -583,7 +584,8 @@ public:
 	// called from variety_stabilizer_compute::compute_canonical_form_of_variety
 	void nauty_interface_with_precomputed_data(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,
@@ -591,7 +593,8 @@ public:
 	// Nauty interface with precomputed data
 	void nauty_interface_from_scratch(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,

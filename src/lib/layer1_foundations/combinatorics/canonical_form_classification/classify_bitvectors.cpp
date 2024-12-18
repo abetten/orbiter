@@ -142,21 +142,22 @@ void classify_bitvectors::search_and_add_if_new(
 	other::data_structures::sorting Sorting;
 	
 	if (f_v) {
-		cout << "classify_bitvectors::add rep_len=" << rep_len << endl;
+		cout << "classify_bitvectors::search_and_add_if_new rep_len=" << rep_len << endl;
 	}
 
 	if (n >= N) {
-		cout << "classify_bitvectors::add n >= N" << endl;
+		cout << "classify_bitvectors::search_and_add_if_new n >= N" << endl;
 		cout << "n=" << n << endl;
 		cout << "N=" << N << endl;
 		exit(1);
 	}
-	if (Sorting.vec_search((void **) Type_data,
+	if (Sorting.vec_search(
+			(void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 			nb_types, data, idx,
 			0 /*verbose_level - 2*/)) {
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search "
+			cout << "classify_bitvectors::search_and_add_if_new vec_search "
 					"returns true, idx=" << idx << endl;
 		}
 		type_of[n] = idx;
@@ -165,12 +166,12 @@ void classify_bitvectors::search_and_add_if_new(
 	}
 	else {
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search "
+			cout << "classify_bitvectors::search_and_add_if_new vec_search "
 					"returns false, new bitvector, before add_at_idx" << endl;
 		}
 		add_at_idx(data, extra_data, idx, 0/*verbose_level*/);
 		if (f_v) {
-			cout << "classify_bitvectors::add vec_search "
+			cout << "classify_bitvectors::search_and_add_if_new vec_search "
 					"after add_at_idx" << endl;
 		}
 		f_found = false;
@@ -179,7 +180,7 @@ void classify_bitvectors::search_and_add_if_new(
 
 
 	if (f_v) {
-		cout << "classify_bitvectors::add done, nb_types="
+		cout << "classify_bitvectors::search_and_add_if_new done, nb_types="
 				<< nb_types << endl;
 	}
 }

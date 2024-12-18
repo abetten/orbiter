@@ -45,6 +45,8 @@ iso_type::iso_type()
 
 	Canonical_forms = NULL;
 
+	Nauty_control = NEW_OBJECT(other::l1_interfaces::nauty_interface_control);
+
 	f_print_mod = true;
 	print_mod = 1;
 
@@ -215,7 +217,9 @@ void iso_type::find_and_add_geo(
 			cout << "iso_type::find_and_add_geo "
 					"before Canonical_forms->orderly_test" << endl;
 		}
-		Canonical_forms->orderly_test(OwCF,
+		Canonical_forms->orderly_test(
+				OwCF,
+				Nauty_control,
 				f_new_object, verbose_level - 2);
 
 		if (f_v) {
@@ -224,7 +228,9 @@ void iso_type::find_and_add_geo(
 		}
 
 		if (v == gg->inc->Encoding->v) {
-			Canonical_forms->add_object(OwCF,
+			Canonical_forms->add_object(
+					OwCF,
+					Nauty_control,
 					f_new_object, verbose_level);
 		}
 		else {
@@ -236,7 +242,9 @@ void iso_type::find_and_add_geo(
 			cout << "iso_type::find_and_add_geo "
 					"before Canonical_forms->add_object" << endl;
 		}
-		Canonical_forms->add_object(OwCF,
+		Canonical_forms->add_object(
+				OwCF,
+				Nauty_control,
 				f_new_object, verbose_level);
 
 		if (f_v) {

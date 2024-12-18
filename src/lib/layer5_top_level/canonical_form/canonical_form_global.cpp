@@ -32,7 +32,8 @@ canonical_form_global::~canonical_form_global()
 void canonical_form_global::compute_stabilizer_of_quartic_curve(
 		applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
 			*Quartic_curve_from_surface,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			automorphism_group_of_variety *&Aut_of_variety,
 			int verbose_level)
 {
@@ -64,7 +65,8 @@ void canonical_form_global::compute_stabilizer_of_quartic_curve(
 			input_idx,
 			Quartic_curve_from_surface->curve,
 			Quartic_curve_from_surface->Pts_on_curve, Quartic_curve_from_surface->sz_curve,
-			f_save_nauty_input_graphs,
+			Nauty_control,
+			//f_save_nauty_input_graphs,
 			verbose_level);
 
 	if (f_v) {

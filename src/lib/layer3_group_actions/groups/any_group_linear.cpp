@@ -56,7 +56,8 @@ void any_group_linear::classes_based_on_normal_form(
 	}
 
 	if (!Any_group->f_linear_group) {
-		cout << "any_group_linear::classes_based_on_normal_form !Any_group->f_linear_group" << endl;
+		cout << "any_group_linear::classes_based_on_normal_form "
+				"!Any_group->f_linear_group" << endl;
 		exit(1);
 	}
 	groups::sims *G;

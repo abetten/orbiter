@@ -567,6 +567,13 @@ int classification_of_objects::process_object(
 	other::l1_interfaces::nauty_interface_for_combo NI;
 
 
+	if (!Descr->f_nauty_control) {
+		cout << "classification_of_objects::process_object "
+				"please use option -nauty_control" << endl;
+		exit(1);
+	}
+
+
 	if (f_v) {
 		cout << "classification_of_objects::process_object "
 				"before NI.run_nauty_for_combo" << endl;
@@ -576,7 +583,7 @@ int classification_of_objects::process_object(
 	NI.run_nauty_for_combo(
 			OwCF,
 			true /* f_compute_canonical_form */,
-			Descr->f_save_nauty_input_graphs,
+			Descr->Nauty_control,
 			Canonical_form,
 			NO,
 			Enc,

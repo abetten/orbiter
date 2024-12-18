@@ -496,22 +496,12 @@ public:
 	nauty_interface_with_group();
 	~nauty_interface_with_group();
 
-	groups::strong_generators *set_stabilizer_of_object(
-			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
-			actions::action *A_linear,
-		int f_compute_canonical_form,
-		int f_save_nauty_input_graphs,
-		other::data_structures::bitvector *&Canonical_form,
-		other::l1_interfaces::nauty_output *&NO,
-		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
-		int verbose_level);
-
-
 	void set_stabilizer_in_projective_space_using_precomputed_nauty_data(
 			geometry::projective_geometry::projective_space *P,
 			actions::action *A,
 			long int *Pts, int sz,
-			int f_save_nauty_input_graphs,
+			//int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int nauty_output_index_start,
 			std::vector<std::string> &Carrying_through,
 			groups::strong_generators *&Set_stab,
@@ -522,13 +512,27 @@ public:
 			geometry::projective_geometry::projective_space *P,
 			actions::action *A,
 			long int *Pts, int sz,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 
+
+	groups::strong_generators *set_stabilizer_of_object(
+			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
+			actions::action *A_linear,
+		int f_compute_canonical_form,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		//int f_save_nauty_input_graphs,
+		other::data_structures::bitvector *&Canonical_form,
+		other::l1_interfaces::nauty_output *&NO,
+		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
+		int verbose_level);
+
 };
+
 
 
 }}}

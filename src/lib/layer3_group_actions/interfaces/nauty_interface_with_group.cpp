@@ -35,100 +35,6 @@ nauty_interface_with_group::~nauty_interface_with_group()
 
 
 
-groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-		combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
-		actions::action *A_linear,
-	int f_compute_canonical_form,
-	int f_save_nauty_input_graphs,
-	other::data_structures::bitvector *&Canonical_form,
-	other::l1_interfaces::nauty_output *&NO,
-	combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
-	int verbose_level)
-// called from:
-// nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data
-// nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty
-// layer5_applications::canonical_form::automorphism_group_of_variety::init_and_compute
-// layer5_applications::canonical_form::combinatorial_object_in_projective_space_with_action::report
-{
-	int f_v = (verbose_level >= 1);
-
-
-
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object" << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-
-	other::l1_interfaces::nauty_interface_for_combo NI;
-
-
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"before NI.run_nauty_for_combo" << endl;
-
-	}
-
-	NI.run_nauty_for_combo(
-			Any_combo,
-			f_compute_canonical_form,
-			f_save_nauty_input_graphs,
-			Canonical_form,
-			NO,
-			Enc,
-			verbose_level);
-
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"after NI.run_nauty_for_combo" << endl;
-
-	}
-
-	long int ago;
-
-
-	ago = NO->Ago->as_lint();
-
-	if (f_v) {
-
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"ago = " << ago << endl;
-
-		NO->print_stats();
-	}
-
-
-	actions::action_global Action_global;
-
-
-	groups::strong_generators *SG;
-	actions::action *A_perm;
-
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"before Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
-	}
-	Action_global.reverse_engineer_linear_group_from_permutation_group(
-			A_linear,
-			Any_combo->P,
-			SG,
-			A_perm,
-			NO,
-			verbose_level);
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"after Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
-	}
-
-
-	FREE_OBJECT(A_perm);
-
-	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object done" << endl;
-	}
-	return SG;
-}
-
 
 
 
@@ -136,7 +42,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 		geometry::projective_geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
-		int f_save_nauty_input_graphs,
+		//int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int nauty_output_index_start,
 		std::vector<std::string> &Carrying_through,
 		groups::strong_generators *&Set_stab,
@@ -224,7 +131,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 			Combo,
 			A,
 		true /* f_compute_canonical_form */,
-		f_save_nauty_input_graphs,
+		Nauty_control,
+		//f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,
@@ -247,7 +155,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		geometry::projective_geometry::projective_space *P,
 		actions::action *A,
 		long int *Pts, int sz,
-		int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		//int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
 		other::data_structures::bitvector *&Canonical_form,
 		other::l1_interfaces::nauty_output *&NO,
@@ -314,7 +223,8 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 			Combo,
 			A,
 		true /* f_compute_canonical_form */,
-		f_save_nauty_input_graphs,
+		Nauty_control,
+		//f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,
@@ -359,6 +269,108 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 
 
 }
+
+
+
+
+groups::strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
+		combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
+		actions::action *A_linear,
+	int f_compute_canonical_form,
+	other::l1_interfaces::nauty_interface_control *Nauty_control,
+	//int f_save_nauty_input_graphs,
+	other::data_structures::bitvector *&Canonical_form,
+	other::l1_interfaces::nauty_output *&NO,
+	combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
+	int verbose_level)
+// called from:
+// nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data
+// nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty
+// layer5_applications::canonical_form::automorphism_group_of_variety::init_and_compute
+// layer5_applications::canonical_form::combinatorial_object_in_projective_space_with_action::report
+{
+	int f_v = (verbose_level >= 1);
+
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+
+	other::l1_interfaces::nauty_interface_for_combo NI;
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"before NI.run_nauty_for_combo" << endl;
+
+	}
+
+	NI.run_nauty_for_combo(
+			Any_combo,
+			f_compute_canonical_form,
+			Nauty_control,
+			//f_save_nauty_input_graphs,
+			Canonical_form,
+			NO,
+			Enc,
+			verbose_level);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"after NI.run_nauty_for_combo" << endl;
+
+	}
+
+	long int ago;
+
+
+	ago = NO->Ago->as_lint();
+
+	if (f_v) {
+
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"ago = " << ago << endl;
+
+		NO->print_stats();
+	}
+
+
+	actions::action_global Action_global;
+
+
+	groups::strong_generators *SG;
+	actions::action *A_perm;
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"before Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
+	}
+	Action_global.reverse_engineer_linear_group_from_permutation_group(
+			A_linear,
+			Any_combo->P,
+			SG,
+			A_perm,
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"after Action_global.reverse_engineer_linear_group_from_permutation_group" << endl;
+	}
+
+
+	FREE_OBJECT(A_perm);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object done" << endl;
+	}
+	return SG;
+}
+
+
+
 
 
 #if 0

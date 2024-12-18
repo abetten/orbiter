@@ -3981,7 +3981,8 @@ void algebra_global_with_action::print_action_on_surface(
 		groups::any_group *Any_group,
 		std::string &surface_label,
 		std::string &label_of_elements,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *Elements,
+		//int *element_data, int nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -4000,7 +4001,8 @@ void algebra_global_with_action::print_action_on_surface(
 	}
 	SC->SOG->print_action_on_surface(
 			label_of_elements,
-			element_data, nb_elements,
+			Elements,
+			//element_data, nb_elements,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::print_action_on_surface "
@@ -4024,25 +4026,36 @@ void algebra_global_with_action::element_processing(
 		cout << "algebra_global_with_action::element_processing" << endl;
 	}
 
+#if 0
 	int *element_data = NULL;
 	int nb_elements;
 	int n;
+#endif
+
+	apps_algebra::vector_ge_builder *Elements_builder;
+	data_structures_groups::vector_ge *Elements;
 
 
-	if (element_processing_descr->f_input) {
+	if (!element_processing_descr->f_input) {
 
-		if (f_v) {
-			cout << "algebra_global_with_action::element_processing getting input" << endl;
-		}
-		Get_matrix(element_processing_descr->input_label,
-				element_data, nb_elements, n);
-
-	}
-	else {
 		cout << "please use -input <label> to define input elements" << endl;
 		exit(1);
-
 	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::element_processing getting input" << endl;
+	}
+
+	Elements_builder = Get_object_of_type_vector_ge(element_processing_descr->input_label);
+
+	Elements = Elements_builder->V;
+
+#if 0
+	Get_matrix(element_processing_descr->input_label,
+			element_data, nb_elements, n);
+#endif
+
 
 
 	if (element_processing_descr->f_print) {
@@ -4057,7 +4070,8 @@ void algebra_global_with_action::element_processing(
 
 		Any_group->print_given_elements_tex(
 				element_processing_descr->input_label,
-				element_data, nb_elements,
+				Elements,
+				//element_data, nb_elements,
 				element_processing_descr->f_with_permutation,
 				element_processing_descr->f_with_fix_structure,
 				verbose_level);
@@ -4080,7 +4094,8 @@ void algebra_global_with_action::element_processing(
 		}
 		Any_group->apply_isomorphism_wedge_product_4to6(
 				element_processing_descr->input_label,
-				element_data, nb_elements,
+				Elements,
+				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -4101,7 +4116,8 @@ void algebra_global_with_action::element_processing(
 		}
 		Any_group->order_of_products_of_pairs(
 				element_processing_descr->input_label,
-				element_data, nb_elements,
+				Elements,
+				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -4123,7 +4139,8 @@ void algebra_global_with_action::element_processing(
 		Any_group->conjugate(
 				element_processing_descr->input_label,
 				element_processing_descr->conjugate_data,
-				element_data, nb_elements,
+				Elements,
+				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -4148,7 +4165,8 @@ void algebra_global_with_action::element_processing(
 				Any_group,
 				element_processing_descr->print_action_on_surface_label,
 				element_processing_descr->input_label,
-				element_data, nb_elements,
+				Elements,
+				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
@@ -4651,6 +4669,11 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 	Classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
 
+	if (!Descr->f_nauty_control) {
+		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
+				"Please use -nauty_control" << endl;
+		exit(1);
+	}
 
 	if (f_v) {
 		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "
@@ -4661,6 +4684,8 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 			1 /*nb_input_Vo*/,
 			Input_Variety,
 			fname_base,
+			Descr->f_nauty_control,
+			Descr->Nauty_interface_control,
 			verbose_level);
 
 	if (f_v) {
@@ -4674,7 +4699,7 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 
 
 
-	Descr1->f_save_nauty_input_graphs = true;
+	//Descr1->f_save_nauty_input_graphs = true;
 
 	Classifier->set_description(Descr1);
 

@@ -73,6 +73,8 @@ void variety_activity::perform_activity(
 		do_compute_group(
 				Descr->f_output_fname_base,
 				Descr->output_fname_base,
+				Descr->f_nauty_control,
+				Descr->Nauty_interface_control,
 				verbose_level);
 	}
 	if (Descr->f_report) {
@@ -91,6 +93,8 @@ void variety_activity::perform_activity(
 void variety_activity::do_compute_group(
 		int f_has_output_fname_base,
 		std::string &output_fname_base,
+		int f_nauty_control,
+		other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -132,6 +136,8 @@ void variety_activity::do_compute_group(
 			nb_input_Vo,
 			Input_Vo,
 			fname_base,
+			f_nauty_control,
+			Nauty_interface_control,
 			verbose_level);
 
 	if (f_v) {

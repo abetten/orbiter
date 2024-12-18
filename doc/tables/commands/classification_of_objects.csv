@@ -6,5 +6,26 @@ ROW,C1,C2,C3
 1,"\verb'-save_canonical_labeling' ","   "," Save the canonical labeling. "
 1,"\verb'-save_ago' ","   "," Save the automorphism group orders to file."
 1,"\verb'-save_transversal' ","   "," Save the indices of the elements chosen for the transversal."
+1,"\verb'-nauty_control' "," options  "," Set options that control Nauty. See Table~\ref{tab:nauty:control}. "
 END
+
+
+	int f_save_classification;
+	std::string save_prefix;
+
+	int f_max_TDO_depth;
+	int max_TDO_depth;
+
+	int f_save_canonical_labeling;
+
+	int f_save_ago;
+
+	int f_save_transversal;
+
+	// nauty related stuff:
+
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_control;
+	//int f_save_nauty_input_graphs;
+
 

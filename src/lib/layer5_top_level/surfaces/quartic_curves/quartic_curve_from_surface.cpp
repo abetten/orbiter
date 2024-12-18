@@ -728,7 +728,10 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 
 
 	canonical_form::canonical_form_global Canon;
-	int f_save_nauty_input_graphs = false;
+	//int f_save_nauty_input_graphs = false;
+
+	other::l1_interfaces::nauty_interface_control Nauty_control;
+
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer_with_nauty "
@@ -736,7 +739,8 @@ void quartic_curve_from_surface::compute_stabilizer_with_nauty(
 	}
 	Canon.compute_stabilizer_of_quartic_curve(
 			this,
-			f_save_nauty_input_graphs,
+			&Nauty_control,
+			//f_save_nauty_input_graphs,
 			Aut_of_variety,
 			verbose_level);
 	if (f_v) {

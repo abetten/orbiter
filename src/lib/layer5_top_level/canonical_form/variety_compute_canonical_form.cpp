@@ -117,7 +117,7 @@ void variety_compute_canonical_form::init(
 
 
 void variety_compute_canonical_form::compute_canonical_form_nauty_new(
-		int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_found_canonical_form,
 		int &idx_canonical_form,
 		int &idx_equation,
@@ -137,7 +137,7 @@ void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 	}
 
 	classify_using_nauty_new(
-			f_save_nauty_input_graphs,
+			Nauty_control,
 			f_found_canonical_form,
 			idx_canonical_form,
 			idx_equation,
@@ -167,7 +167,7 @@ void variety_compute_canonical_form::compute_canonical_form_nauty_new(
 }
 
 void variety_compute_canonical_form::classify_using_nauty_new(
-		int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_found_canonical_form,
 		int &idx_canonical_form,
 		int &idx_equation,
@@ -211,7 +211,7 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	}
 	Variety_stabilizer_compute->compute_canonical_form_of_variety(
 			Vo,
-			f_save_nauty_input_graphs,
+			Nauty_control,
 			verbose_level - 2);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.
@@ -241,6 +241,50 @@ void variety_compute_canonical_form::classify_using_nauty_new(
 	if (f_v) {
 		cout << "variety_compute_canonical_form::classify_using_nauty_new "
 				"after Variety_stabilizer_compute->Orb->get_canonical_form" << endl;
+	}
+
+	if (Nauty_control->f_save_orbit_of_equations) {
+		if (f_v) {
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
+					"f_save_orbit_of_equations" << endl;
+		}
+
+		std::string *Table;
+		std::string *Headings;
+		int nb_rows, nb_cols;
+
+		Variety_stabilizer_compute->Orb->get_table(
+				Table, Headings,
+				nb_rows, nb_cols,
+				verbose_level);
+
+		string fname;
+
+		fname = Nauty_control->save_orbit_of_equations_prefix + fname_case_out + ".csv";
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+				fname,
+				nb_rows, nb_cols,
+				Table, Headings,
+				verbose_level - 2);
+
+		delete [] Table;
+		delete [] Headings;
+
+		if (f_v) {
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
+					"Written file " << fname
+					<< " of size " << Fio.file_size(fname) << endl;
+		}
+
+		if (f_v) {
+			cout << "variety_compute_canonical_form::classify_using_nauty_new "
+					"f_save_orbit_of_equations done" << endl;
+		}
+
+
 	}
 
 

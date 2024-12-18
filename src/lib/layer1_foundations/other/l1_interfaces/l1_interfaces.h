@@ -430,6 +430,40 @@ public:
 
 
 // #############################################################################
+// nauty_interface_control.cpp:
+// #############################################################################
+
+//! Input options for Nauty
+
+
+class nauty_interface_control {
+
+public:
+
+	int f_save_nauty_input_graphs;
+	std::string save_nauty_input_graphs_prefix;
+
+	int f_save_orbit_of_equations;
+	std::string save_orbit_of_equations_prefix;
+
+
+
+	nauty_interface_control();
+	~nauty_interface_control();
+	void init(
+			int f_save_nauty_input_graphs,
+			std::string &save_nauty_input_graphs_prefix,
+			int verbose_level);
+	int parse_arguments(
+			int argc, std::string *argv,
+			int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
 // nauty_interface_for_combo.cpp
 // #############################################################################
 
@@ -445,7 +479,8 @@ public:
 	void run_nauty_for_combo(
 			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 			int f_compute_canonical_form,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			data_structures::bitvector *&Canonical_form,
 			l1_interfaces::nauty_output *&NO,
 			combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
@@ -458,6 +493,7 @@ public:
 	// classify_using_canonical_forms::find_object
 	void run_nauty_for_combo_basic(
 			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			l1_interfaces::nauty_output *&NO,
 			int verbose_level);
 

@@ -2120,7 +2120,7 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 		action *A_linear,
 		geometry::projective_geometry::projective_space *P,
 	long int *set, int set_size,
-	int f_save_nauty_input_graphs,
+	other::l1_interfaces::nauty_interface_control *Nauty_control,
 	int verbose_level)
 // used only by hermitian_spreads_classify
 // assuming we are in a linear action.
@@ -2143,7 +2143,6 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 	other::data_structures::bitvector *Canonical_form;
 	other::l1_interfaces::nauty_output *NO;
 
-
 	if (f_v) {
 		cout << "action_global::set_stabilizer_in_projective_space "
 				"before Nau.set_stabilizer_in_projective_space_using_nauty" << endl;
@@ -2152,7 +2151,8 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 			P,
 			A_linear,
 			set, set_size,
-			f_save_nauty_input_graphs,
+			Nauty_control,
+			//f_save_nauty_input_graphs,
 			Set_stab,
 			Canonical_form,
 			NO,

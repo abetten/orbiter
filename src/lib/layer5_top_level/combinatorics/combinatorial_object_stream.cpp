@@ -88,7 +88,7 @@ void combinatorial_object_stream::do_canonical_form(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form" << endl;
 	}
 
 
@@ -96,7 +96,7 @@ void combinatorial_object_stream::do_canonical_form(
 	Classification_of_objects = NEW_OBJECT(combinatorics::canonical_form_classification::classification_of_objects);
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P "
+		cout << "combinatorial_object_stream::do_canonical_form "
 				"before Classification_of_objects->perform_classification" << endl;
 	}
 	Classification_of_objects->perform_classification(
@@ -105,7 +105,7 @@ void combinatorial_object_stream::do_canonical_form(
 			IS,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P "
+		cout << "combinatorial_object_stream::do_canonical_form "
 				"after Classification_of_objects->perform_classification" << endl;
 	}
 
@@ -118,7 +118,7 @@ void combinatorial_object_stream::do_canonical_form(
 		exit(1);
 	}
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P "
+		cout << "combinatorial_object_stream::do_canonical_form "
 				"before Objects_after_classification->init_after_nauty" << endl;
 	}
 	Objects_after_classification->init_after_nauty(
@@ -126,13 +126,13 @@ void combinatorial_object_stream::do_canonical_form(
 			f_projective_space, PA,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P "
+		cout << "combinatorial_object_stream::do_canonical_form "
 				"after Objects_after_classification->init_after_nauty" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object_stream::geometry::projective_space *P done" << endl;
+		cout << "combinatorial_object_stream::do_canonical_form done" << endl;
 	}
 
 }

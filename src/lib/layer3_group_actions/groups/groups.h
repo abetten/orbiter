@@ -187,27 +187,26 @@ public:
 			int verbose_level);
 	void print_given_elements_tex(
 			std::string &label_of_elements,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *Elements,
 			int f_with_permutation,
 			int f_with_fix_structure,
 			int verbose_level);
-	void process_given_elements(
-			std::string &label_of_elements,
-			int *element_data, int nb_elements,
-			int verbose_level);
 	void apply_isomorphism_wedge_product_4to6(
 			std::string &label_of_elements,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *vec_in,
 			int verbose_level);
 	void order_of_products_of_pairs(
 			std::string &label_of_elements,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *Elements,
+			//int *element_data, int nb_elements,
 			int verbose_level);
 	void conjugate(
 			std::string &label_of_elements,
 			std::string &conjugate_data,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *Elements,
+			//int *element_data, int nb_elements,
 			int verbose_level);
+
 	void subgroup_lattice_compute(
 			int verbose_level);
 	void subgroup_lattice_load(

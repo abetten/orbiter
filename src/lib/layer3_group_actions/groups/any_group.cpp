@@ -749,7 +749,8 @@ void any_group::normalizer(
 			cout << "group order H = " << H->group_order_lint() << endl;
 			cout << "before M.normalizer_using_MAGMA" << endl;
 	}
-	M.normalizer_using_MAGMA(A, fname_magma_prefix,
+	M.normalizer_using_MAGMA(
+			A, fname_magma_prefix,
 			G, H, gens_N, verbose_level);
 
 	G->group_order(G_order);
@@ -960,7 +961,8 @@ void any_group::do_find_subgroups(
 	S = SG->create_sims(verbose_level);
 
 	if (f_v) {
-		cout << "any_group::do_find_subgroups before M.find_subgroups" << endl;
+		cout << "any_group::do_find_subgroups "
+				"before M.find_subgroups" << endl;
 	}
 	M.find_subgroups(
 			A, S,
@@ -971,12 +973,14 @@ void any_group::do_find_subgroups(
 			N_gens,
 			verbose_level);
 	if (f_v) {
-		cout << "any_group::do_find_subgroups after M.find_subgroups" << endl;
+		cout << "any_group::do_find_subgroups "
+				"after M.find_subgroups" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "any_group::do_find_subgroups We found " << nb_subgroups << " subgroups" << endl;
+		cout << "any_group::do_find_subgroups "
+				"We found " << nb_subgroups << " subgroups" << endl;
 	}
 
 
@@ -1524,32 +1528,6 @@ void any_group::random_element(
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
-#if 0
-	// read vector from file:
-
-	data_structures::vector_builder_description *Descr;
-	user_interface::symbol_definition *Symbol_definition;
-
-	Descr = NEW_OBJECT(data_structures::vector_builder_description);
-
-	Descr->f_file = true;
-	Descr->file_name.assign(fname);
-
-	Symbol_definition = NEW_OBJECT(user_interface::symbol_definition);
-
-	user_interface::interface_symbol_table *Interface_symbol_table;
-
-	Interface_symbol_table = NEW_OBJECT(user_interface::interface_symbol_table);
-	Interface_symbol_table->init(user_interface::The_Orbiter_top_level_session, verbose_level);
-
-
-	Symbol_definition->Sym = Interface_symbol_table;
-
-	Symbol_definition->definition_of_vector(
-			elt_label, Descr, verbose_level);
-
-#endif
-
 
 	FREE_int(Elt);
 	FREE_OBJECT(H);
@@ -1638,12 +1616,12 @@ void any_group::element_unrank(
 
 	SG = get_strong_generators();
 
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = SG->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	if (f_v) {
-		cout << "group order H = " << H->group_order_lint() << endl;
+		cout << "any_group::element_unrank "
+				"group order H = " << H->group_order_lint() << endl;
 	}
 
 	int *Elt;
@@ -1653,10 +1631,12 @@ void any_group::element_unrank(
 
 	algebra::ring_theory::longinteger_object a;
 
-	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+	a.create_from_base_10_string(
+			rank_string);
 
 	if (f_v) {
-		cout << "Creating element of rank " << a << endl;
+		cout << "any_group::element_unrank "
+				"Creating element of rank " << a << endl;
 	}
 
 	H->element_unrank(a, Elt);
@@ -1767,7 +1747,8 @@ void any_group::do_reverse_isomorphism_exterior_square(
 		if (f_v) {
 			cout << "any_group::do_reverse_isomorphism_exterior_square "
 					"strong generators are:" << endl;
-			LG->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
+			LG->Strong_gens->print_generators_in_latex_individually(
+					cout, verbose_level - 1);
 		}
 		LG->Strong_gens->reverse_isomorphism_exterior_square(verbose_level);
 	}
@@ -1791,7 +1772,8 @@ groups::strong_generators *any_group::get_strong_generators()
 	}
 	else if (A->f_has_strong_generators) {
 		if (f_v) {
-			cout << "any_group::get_strong_generators using A_base->Strong_gens" << endl;
+			cout << "any_group::get_strong_generators "
+					"using A_base->Strong_gens" << endl;
 		}
 		SG = A->Strong_gens;
 	}
@@ -1938,7 +1920,7 @@ void any_group::report_coset_reps(
 
 void any_group::print_given_elements_tex(
 		std::string &label_of_elements,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *Elements,
 		int f_with_permutation,
 		int f_with_fix_structure,
 		int verbose_level)
@@ -1953,10 +1935,8 @@ void any_group::print_given_elements_tex(
 
 
 
-	int *Elt;
 	algebra::ring_theory::longinteger_object go;
 
-	Elt = NEW_int(A->elt_size_in_int);
 
 
 	string fname;
@@ -1982,25 +1962,23 @@ void any_group::print_given_elements_tex(
 		ost << "\\bigskip" << endl;
 		ost << endl;
 
-		for (i = 0; i < nb_elements; i++) {
+		for (i = 0; i < Elements->len; i++) {
 
-			A->Group_element->make_element(Elt,
-					element_data + i * A->make_element_size,
-					verbose_level);
 
-			ord = A->Group_element->element_order(Elt);
+			ord = A->Group_element->element_order(Elements->ith(i));
 
 			ost << "Element " << setw(5) << i << " / "
-					<< nb_elements << " of order " << ord << ":" << endl;
+					<< Elements->len << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost, Elt, f_with_permutation);
-			Int_vec_print(ost, Elt, A->make_element_size);
+			A->print_one_element_tex(ost, Elements->ith(i), f_with_permutation);
+			Int_vec_print(ost, Elements->ith(i), A->make_element_size);
 			ost << "\\\\" << endl;
 
 			if (f_with_fix_structure) {
 				int f;
 
-				f = A->Group_element->count_fixed_points(Elt, 0 /* verbose_level */);
+				f = A->Group_element->count_fixed_points(
+						Elements->ith(i), 0 /* verbose_level */);
 
 				ost << "$f=" << f << "$\\\\" << endl;
 			}
@@ -2012,102 +1990,16 @@ void any_group::print_given_elements_tex(
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 
-	FREE_int(Elt);
 	if (f_v) {
 		cout << "any_group::print_elements_tex done" << endl;
 	}
 }
 
 
-void any_group::process_given_elements(
-		std::string &label_of_elements,
-		int *element_data, int nb_elements,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::process_given_elements" << endl;
-	}
-
-
-	data_structures_groups::vector_ge *vec_in;
-
-	vec_in = NEW_OBJECT(data_structures_groups::vector_ge);
-
-	vec_in->init_from_data(A, element_data,
-		nb_elements, A->make_element_size, 0 /* verbose_level */);
-
-
-
-	int *Elt;
-	algebra::ring_theory::longinteger_object go;
-
-	//Elt = NEW_int(A->elt_size_in_int);
-
-
-	string fname;
-
-	fname = label_of_elements + "_processing.tex";
-
-
-	{
-		ofstream ost(fname);
-		other::l1_interfaces::latex_interface L;
-		int i, ord;
-
-		L.head_easy(ost);
-
-		//H->print_all_group_elements_tex(fp, f_with_permutation, f_override_action, A_special);
-		//H->print_all_group_elements_tree(fp);
-		//H->print_all_group_elements_with_permutations_tex(fp);
-
-		//Schreier.print_and_list_orbits_tex(fp);
-
-		ost << "Action $" << label_tex << "$:\\\\" << endl;
-		ost << endl;
-		ost << "\\bigskip" << endl;
-		ost << endl;
-
-		for (i = 0; i < nb_elements; i++) {
-
-#if 0
-			A->Group_element->make_element(Elt,
-					element_data + i * A->make_element_size,
-					verbose_level);
-#endif
-
-			Elt = vec_in->ith(i);
-
-			ord = A->Group_element->element_order(Elt);
-
-			ost << "Element " << setw(5) << i << " / "
-					<< nb_elements << " of order " << ord << ":" << endl;
-
-			A->print_one_element_tex(ost, Elt, false /* f_with_permutation */);
-
-		}
-
-
-		L.foot(ost);
-	}
-
-	other::orbiter_kernel_system::file_io Fio;
-
-	cout << "Written file " << fname
-			<< " of size " << Fio.file_size(fname) << endl;
-
-	FREE_OBJECT(vec_in);
-	//FREE_int(Elt);
-
-	if (f_v) {
-		cout << "any_group::process_given_elements done" << endl;
-	}
-}
 
 void any_group::apply_isomorphism_wedge_product_4to6(
 		std::string &label_of_elements,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *vec_in,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2116,14 +2008,8 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		cout << "any_group::apply_isomorphism_wedge_product_4to6" << endl;
 	}
 
-	//int *Elt;
-	//int *Elt_in;
 	int *Elt_out;
-	//int *Output;
 
-	//ring_theory::longinteger_object go;
-
-	//Elt = NEW_int(A->elt_size_in_int);
 
 	int elt_size_out;
 
@@ -2131,7 +2017,6 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	Elt_out = NEW_int(elt_size_out);
 
-	//Output = NEW_int(nb_elements * elt_size_out);
 
 
 	string fname;
@@ -2144,17 +2029,13 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 		exit(1);
 	}
 
-	data_structures_groups::vector_ge *vec_in;
 	data_structures_groups::vector_ge *vec_out;
 
-	vec_in = NEW_OBJECT(data_structures_groups::vector_ge);
 	vec_out = NEW_OBJECT(data_structures_groups::vector_ge);
 
-	vec_in->init_from_data(A, element_data,
-		nb_elements, A->make_element_size, 0 /* verbose_level */);
 
 	vec_out->init(A, verbose_level);
-	vec_out->allocate(nb_elements, 0 /* verbose_level */);
+	vec_out->allocate(vec_in->len, 0 /* verbose_level */);
 
 
 
@@ -2163,11 +2044,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 
 
-		for (i = 0; i < nb_elements; i++) {
-
-			//Elt_in = element_data + i * A->make_element_size;
-
-			//A->Group_element->make_element(Elt, Elt_in, verbose_level);
+		for (i = 0; i < vec_in->len; i++) {
 
 
 
@@ -2191,7 +2068,6 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 			A->Group_element->make_element(
 					vec_out->ith(i), Elt_out, 0 /* verbose_level */);
 
-			//Int_vec_copy(Elt_out, Output + i * elt_size_out, elt_size_out);
 
 		}
 
@@ -2199,13 +2075,8 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 	other::orbiter_kernel_system::file_io Fio;
 
-#if 0
-	Fio.Csv_file_support->int_matrix_write_csv(
-			fname, Output, nb_elements, elt_size_out);
-#else
 	vec_out->save_csv(
 			fname, verbose_level - 1);
-#endif
 
 	if (f_v) {
 		cout << "any_group::apply_isomorphism_wedge_product_4to6 "
@@ -2214,10 +2085,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 	}
 
 
-	//FREE_int(Elt);
 	FREE_int(Elt_out);
-	//FREE_int(Output);
-	FREE_OBJECT(vec_in);
 	FREE_OBJECT(vec_out);
 
 
@@ -2229,7 +2097,7 @@ void any_group::apply_isomorphism_wedge_product_4to6(
 
 void any_group::order_of_products_of_pairs(
 		std::string &label_of_elements,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *Elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2243,16 +2111,16 @@ void any_group::order_of_products_of_pairs(
 
 
 
-	int *Elt1;
-	int *Elt2;
 	int *Elt3;
 	int *Order_table;
 	algebra::ring_theory::longinteger_object go;
 
-	Elt1 = NEW_int(A->elt_size_in_int);
-	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
 
 	Order_table = NEW_int(nb_elements * nb_elements);
 
@@ -2269,16 +2137,12 @@ void any_group::order_of_products_of_pairs(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->Group_element->make_element(
-					Elt1, element_data + i * A->make_element_size, verbose_level);
 
 			for (j = 0; j < nb_elements; j++) {
 
-				A->Group_element->make_element(
-						Elt2, element_data + j * A->make_element_size, verbose_level);
 
 				A->Group_element->element_mult(
-						Elt1, Elt2, Elt3, 0);
+						Elements->ith(i), Elements->ith(j), Elt3, 0);
 
 				Order_table[i * nb_elements + j] = A->Group_element->element_order(
 						Elt3);
@@ -2300,8 +2164,6 @@ void any_group::order_of_products_of_pairs(
 	}
 
 
-	FREE_int(Elt1);
-	FREE_int(Elt2);
 	FREE_int(Elt3);
 	FREE_int(Order_table);
 
@@ -2316,7 +2178,8 @@ void any_group::order_of_products_of_pairs(
 void any_group::conjugate(
 		std::string &label_of_elements,
 		std::string &conjugate_data,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *Elements,
+		//int *element_data, int nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2340,10 +2203,13 @@ void any_group::conjugate(
 
 	S = NEW_int(A->elt_size_in_int);
 	Sv = NEW_int(A->elt_size_in_int);
-	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
 
 	Output_table = NEW_int(nb_elements * A->make_element_size);
 
@@ -2364,10 +2230,7 @@ void any_group::conjugate(
 
 		for (i = 0; i < nb_elements; i++) {
 
-			A->Group_element->make_element(Elt1,
-					element_data + i * A->make_element_size,
-					verbose_level);
-
+			Elt1 = Elements->ith(i);
 
 			A->Group_element->element_mult(Sv, Elt1, Elt2, 0);
 			A->Group_element->element_mult(Elt2, S, Elt3, 0);
@@ -2375,8 +2238,6 @@ void any_group::conjugate(
 			A->Group_element->code_for_make_element(
 					Output_table + i * A->make_element_size, Elt3);
 
-
-			//A->print_one_element_tex(cout, Elt3, false /* f_with_permutation */);
 
 
 		}
@@ -2396,7 +2257,6 @@ void any_group::conjugate(
 
 	FREE_int(S);
 	FREE_int(Sv);
-	FREE_int(Elt1);
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	FREE_int(Output_table);

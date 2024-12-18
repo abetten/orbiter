@@ -2,6 +2,7 @@ ROW,C1,C2,C3
 0,"tab:variety:activities",,
 1,"Variety Activities",,
 1,"\verb'-compute_group' ","  "," Compute the group of the variety. "
+1,"\verb'-nauty_control' ","  options "," Nauty options, see Table~\ref{tab:nauty:control}.  "
 1,"\verb'-report' ","  "," Produce a report of the variety. "
 1,"\verb'-apply_transformation' "," trans "," Perform a linear transformation of the variety. Not yet implemented. "
 1,"\verb'-singular_points' ","  "," Compute the singular points of the variety. "

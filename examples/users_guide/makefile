@@ -18,7 +18,8 @@ ORBITER_PATH=~/orbiter
 
 ORBITER_EXE_PATH=$(ORBITER_PATH)/src/apps/orbiter/
 
-ORBITER=$(ORBITER_EXE_PATH)orbiter.out -parse_commands_only
+ORBITER=$(ORBITER_EXE_PATH)orbiter.out 
+#ORBITER=$(ORBITER_EXE_PATH)orbiter.out -parse_commands_only
 
 SANDBOX=$(ORBITER_PATH)/src/apps/sandbox/sandbox.out
 
@@ -41,12 +42,12 @@ MAGMA_PATH=""
 #MAGMA_EXE=$(MAGMA_PATH)magma
 MAGMA_EXE=echo
 
-#OPEN=open
-OPEN=echo
+OPEN=open
+#OPEN=echo
 
 
-#PDFLATEX=pdflatex
-PDFLATEX=echo
+PDFLATEX=pdflatex
+#PDFLATEX=echo
 
 ###############################################################################
 # End of configuration part
@@ -5649,7 +5650,11 @@ Fermat_cubic_F9_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -5660,6 +5665,7 @@ Fermat_cubic_F9_c:
 				-export_labels \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Fermat_cubic_F9_classification.tex
@@ -6152,11 +6158,12 @@ curve_q13_f0_clean2_variety_compute_group:
 		-define V -variety \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form $(CURVE_Q13_F0_CLEAN2_EQUATION) \
+			-equation_in_algebraic_form \
+				$(CURVE_Q13_F0_CLEAN2_EQUATION) \
 			-label_txt curve_q13_f0_clean2 \
 			-label_tex curve\_q13\_f0\_clean2 \
 		-end \
-		-with V -do -variety_activity -compute_group -end 
+		-with V -do -variety_activity -compute_group -nauty_control -end -end 
 	$(PDFLATEX) curve_q13_f0_clean2_c_orbits.tex
 	$(OPEN) curve_q13_f0_clean2_c_orbits.pdf
 
@@ -6177,9 +6184,10 @@ Hirschfeld_q2_group:
 			-label_tex Hirschfeld\_q2 \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form $(HIRSCHFELD_EQUATION_XYZW) \
+			-equation_in_algebraic_form \
+				$(HIRSCHFELD_EQUATION_XYZW) \
 		-end \
-		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -compute_group -nauty_control -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Hirschfeld_q2_report.tex
@@ -6202,9 +6210,10 @@ Hirschfeld_q4_group:
 			-label_tex Hirschfeld\_q4 \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form $(HIRSCHFELD_EQUATION_XYZW) \
+			-equation_in_algebraic_form \
+				$(HIRSCHFELD_EQUATION_XYZW) \
 		-end \
-		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -compute_group -nauty_control -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Hirschfeld_q4_report.tex
@@ -6226,12 +6235,13 @@ Barth_sextic_mod_11:
 		-define V -variety \
 			-projective_space P \
 			-ring R \
-			-equation_in_algebraic_form $(BARTH_EQUATION_GENERAL) \
+			-equation_in_algebraic_form \
+				$(BARTH_EQUATION_GENERAL) \
 			-set_parameters "PHI" "\Phi" "8" \
 			-label_txt Barth_q11 \
 			-label_tex Barth\_q11 \
 		-end \
-		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -compute_group -nauty_control -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Barth_q11_report.tex
@@ -8479,6 +8489,7 @@ curve_q13_f0_clean2_variety_make_group:
 		-end \
 		-define G -modified_group \
 			-stabilizer_of_variety V \
+			-nauty_control -end \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -9438,10 +9449,12 @@ PGOm_6_2_Class_2A:
 PGOm_6_2_Class_2A_print:
 	$(ORBITER) -v 9 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
-		-define PGOm_6_2_Class2A -vector \
-			-file $(FILE_NAME_PGOM_6_2_CLASS_2A) -end \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGOm 6 F -end \
+		-define PGOm_6_2_Class2A -vector_ge \
+			-action G \
+			-read_csv $(FILE_NAME_PGOM_6_2_CLASS_2A) elements \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-element_processing \
@@ -9452,7 +9465,7 @@ PGOm_6_2_Class_2A_print:
 	$(PDFLATEX) PGOm_6_2_Class2A_elements.tex
 	$(OPEN) PGOm_6_2_Class2A_elements.pdf
 
-
+# 36 elements
 
 
 PGOm_6_2_Class_2A_centralizer:
@@ -11864,7 +11877,7 @@ Hirschfeld_surface_get_incidence_matrix_40_40:
 Hirschfeld_surface_incma_40_40_c:
 	$(ORBITER) -v 10 \
 		-define Doinc -draw_incidence_structure_options \
-			-width 60 -width_10 6 \
+			-width 40 -width_10 6 \
 		-end \
 		-define C -combinatorial_object \
 			-label H_incma_40_40 H\_incma\_40\_40 \
@@ -11875,6 +11888,7 @@ Hirschfeld_surface_incma_40_40_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -11883,6 +11897,7 @@ Hirschfeld_surface_incma_40_40_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(ORBITER) -v 2 -draw_matrix \
@@ -11892,6 +11907,8 @@ Hirschfeld_surface_incma_40_40_c:
 		-end
 	$(PDFLATEX) H_incma_40_40_classification.tex
 	$(OPEN) H_incma_40_40_classification.pdf
+
+
 
 surface_4_0_plane_type_of_lines_on_Klein_quadric:
 	$(ORBITER) -v 6 \
@@ -13238,7 +13255,7 @@ quartic_curve_q13_f1_from_variety:
 			-transform $(CURVE_Q13_FLAG_1_TRANS_1) \
 			-transform $(CURVE_Q13_FLAG_1_TRANS_2) \
 		-end \
-		-with V_q13_f1 -do -variety_activity -compute_group -end \
+		-with V_q13_f1 -do -variety_activity -compute_group -nauty_control -end -end \
 		-define C -quartic_curve -space P -from_variety V_q13_f1 -end \
 		-with C -do \
 			-quartic_curve_activity \
@@ -17117,7 +17134,6 @@ test_11_2:
 	#make PG_3_5_assume_31_read
 	#make LS_AG_2_3_read
 	make geo_7_3_read
-	#make Desargues_path_lex_least_read
 	make geo_pasch_read
 	make geo_pasch_given
 	make neumaier_graphs_16
@@ -17188,18 +17204,6 @@ geo_7_3_read:
 				7_3.inc 7 7 21 \
 		-end
 
-
-
-Desargues_path_lex_least_read:
-	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
-	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
-			-width 60 -width_10 6 -end \
-		-define C -combinatorial_object \
-			-label Desargues_path_lex_least Desargues\_path\_lex\_least \
-			-file_of_incidence_geometries_by_row_ranks \
-				Desargues_path_lex_least.inc 10 10 3 \
-		-end
 
 
 
@@ -22166,7 +22170,11 @@ quadrangles_PG_2_2:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
+			-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22175,6 +22183,7 @@ quadrangles_PG_2_2:
 				-show_TDO \
 				-show_TDA \
 				-dont_show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) quadrangle_classification.tex
@@ -22200,13 +22209,18 @@ Barth_mod_11_singular_pts_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Barth_q11_sing_classification.tex
@@ -22272,7 +22286,9 @@ quartic_curves_q13_classify_nauty:
 			-carry_through "NB_DOUBLE" \
 			-carry_through "NB_SINGLE" \
 			-carry_through "NB_ZERO" \
-			-algorithm_nauty \
+			-nauty_control \
+				-save_orbit_of_equations equations_ \
+			-end \
 			-end \
 		-end \
 		-define ro \
@@ -22289,45 +22305,14 @@ quartic_curves_q13_classify_nauty:
 #quartic_curves_q13_classified_orbits.tex
 # quartic_curves_q13_classified_classified.csv
 
+#-rw-r--r--  1 betten  staff         78 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt0.csv
+#-rw-r--r--  1 betten  staff      24690 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt1.csv
+#-rw-r--r--  1 betten  staff         82 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt2.csv
+#-rw-r--r--  1 betten  staff         81 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt3.csv
+#-rw-r--r--  1 betten  staff      24717 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt4.csv
 
 KLEIN_CUBIC_THREEFOLD_EQN="X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0"
 
-KLEIN_CUBIC_THREEFOLD_EQN_CSV="Line,equation\n0,\"X0^2*X1 + X1^2*X2 + X2^2*X3 + X3^2*X4 + X4^2*X0\"\nEND"
-
-Klein_cubic_threefold_q5_old:
-	echo $(KLEIN_CUBIC_THREEFOLD_EQN_CSV) >Klein_cubic_threefold_q5.csv
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 4 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 5 \
-			-homogeneous_of_degree 3 \
-			-monomial_ordering_partition \
-			-variables "X0,X1,X2,X3,X4" "X_0,X_1,X_2,X_3,X_4" \
-		-end \
-		-define O -orbits -classification_by_canonical_form \
-			-space P \
-			-ring R \
-			-input_fname_mask Klein_cubic_threefold_q5.csv \
-			-nb_files 1 \
-			-output_fname Klein_cubic_threefold_q5 \
-			-label_equation "equation" \
-			-algorithm_nauty \
-			-end \
-		-end \
-		-define ro \
-			-poset_classification_report_options \
-				-fname Klein_cubic_threefold_q5 \
-		-end \
-		-with O -do -orbits_activity \
-			-report \
-			-report_options ro \
-		-end
-	$(PDFLATEX) Klein_cubic_threefold_q5_orbits.tex
-	$(OPEN) Klein_cubic_threefold_q5_orbits.pdf
-
-#User time: 0:45
 
 Klein_cubic_threefold_q3:
 	$(ORBITER) -v 10 \
@@ -22347,7 +22332,7 @@ Klein_cubic_threefold_q3:
 			-label_txt Klein3_q3 \
 			-label_tex Klein3\_q3 \
 		-end \
-		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -compute_group -nauty_control -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Klein3_q3_report.tex
@@ -22375,7 +22360,7 @@ Klein_cubic_threefold_q5:
 			-label_txt Klein3_q5 \
 			-label_tex Klein3\_q5 \
 		-end \
-		-with V -do -variety_activity -compute_group -end \
+		-with V -do -variety_activity -compute_group -nauty_control -end -end \
 		-with V -do -variety_activity -singular_points -end \
 		-with V -do -variety_activity -report -end
 	$(PDFLATEX) variety_Klein3_q5_report.tex
@@ -22403,7 +22388,11 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 400 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22413,6 +22402,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) EC_classification.tex
@@ -22455,7 +22445,13 @@ Hirschfeld_q4_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 10 \
+				-nauty_control \
+					-save_nauty_input_graphs Hirschfeld_q4 \
+				-end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22466,6 +22462,7 @@ Hirschfeld_q4_c:
 				-export_labels \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
@@ -22553,13 +22550,18 @@ Hirschfeld_q4_set_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
@@ -22592,13 +22594,18 @@ Dickson_sets_stabilizer:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
 				-show_TDO \
 				-show_TDA \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Dickson_sets_classification.tex
@@ -22638,11 +22645,16 @@ Endrass_7c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
+			-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Endrass_F7_classification.tex
@@ -22670,7 +22682,11 @@ hyperoval_16_canonical_form:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22680,6 +22696,7 @@ hyperoval_16_canonical_form:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) hyperoval_q16_classification.tex
@@ -22714,7 +22731,11 @@ cubic_curves_PG_2_8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22724,6 +22745,7 @@ cubic_curves_PG_2_8_canon:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) cc_8_classification.tex
@@ -22753,7 +22775,11 @@ ovoid_q8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22762,6 +22788,7 @@ ovoid_q8_canon:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	#$(PDFLATEX) ovoid_classification.tex
@@ -22791,7 +22818,11 @@ ovoid_ST_q8_canon:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22800,6 +22831,7 @@ ovoid_ST_q8_canon:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) ovoid_ST_classification.tex
@@ -22849,7 +22881,11 @@ quartic_curve_25_0_0_canonical:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22858,6 +22894,7 @@ quartic_curve_25_0_0_canonical:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	#$(PDFLATEX) quartic_25_0_0_classification.tex
@@ -22879,7 +22916,11 @@ CRC_BCH_Q16_N51_D3_canonical:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22888,6 +22929,7 @@ CRC_BCH_Q16_N51_D3_canonical:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) BCH_Q16_N51_classification.tex
@@ -22911,7 +22953,11 @@ Veronese_1_3_q7_c:
 			-canonical_form_PG P \
 				-save_ago \
 				-max_TDO_depth 4 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -22920,11 +22966,13 @@ Veronese_1_3_q7_c:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) veronese_1_3_q7_classification.tex
 	$(OPEN) veronese_1_3_q7_classification.pdf
 
+# ago = 336
 
 
 
@@ -22971,6 +23019,7 @@ geo_7_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -22979,6 +23028,7 @@ geo_7_3_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) geo_7_3_classification.tex
@@ -23019,6 +23069,7 @@ geo_10_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23027,20 +23078,44 @@ geo_10_3_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) geo_10_3_classification.tex
 	$(OPEN) geo_10_3_classification.pdf
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file geo_10_3_object7_TDA_flag_orbits.csv \
-		-secondary_input_csv_file geo_10_3_object7_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	$(ORBITER) -v 2 -draw_matrix \
-		-input_csv_file geo_10_3_object7_INP_flag_orbits.csv \
-		-secondary_input_csv_file geo_10_3_object7_INP.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
+	$(ORBITER) -v 2 \
+		-loop L 0 10 1 \
+			-draw_matrix \
+			-input_csv_file geo_10_3_object%L_TDA_flag_orbits.csv \
+			-secondary_input_csv_file geo_10_3_object%L_TDA.csv \
+			-box_width 16 -bit_depth 24 \
+			-end \
+		-end_loop L
+	$(ORBITER) -v 2 \
+		-loop L 0 10 1 \
+			-draw_matrix \
+			-input_csv_file geo_10_3_object%L_INP_flag_orbits.csv \
+			-secondary_input_csv_file geo_10_3_object%L_INP.csv \
+			-box_width 16 -bit_depth 24 \
+			-end \
+		-end_loop L
+	convert -frame 5 \
+		geo_10_3_object0_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object1_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object2_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object3_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object4_TDA_flag_orbits_draw.bmp \
+		+append a0.png
+	convert -frame 5 \
+		geo_10_3_object5_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object6_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object7_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object8_TDA_flag_orbits_draw.bmp \
+		geo_10_3_object9_TDA_flag_orbits_draw.bmp \
+		+append a1.png
+	convert -frame 5 \
+		a0.png a1.png \
+		-append 10_3.png
 
 
 
@@ -23065,6 +23140,7 @@ geo_10_3_c_lex_least:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23076,6 +23152,7 @@ geo_10_3_c_lex_least:
 				-show_TDO \
 				-show_TDA \
 				-lex_least Geo \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) geo_10_3_classification.tex
@@ -23111,9 +23188,12 @@ geo_14_3_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end
 
+#-rw-r--r--  1 betten  staff     160116 Dec 18 17:44 geo_14_3_ago.csv
+#-rw-r--r--  1 betten  staff     234589 Dec 18 17:44 geo_14_3_transversal.csv
 
 geo_15_3_c:
 	$(ORBITER) -v 2 \
@@ -23127,6 +23207,7 @@ geo_15_3_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 			-save_ago \
+			-nauty_control -end \
 		-end
 	$(PDFLATEX) 15_3_classification.tex
 	$(OPEN) 15_3_classification.pdf
@@ -23142,7 +23223,11 @@ TFC_24_3_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 			-save_ago \
+			-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23151,6 +23236,7 @@ TFC_24_3_c:
 				-show_TDO \
 				-show_TDA \
 				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) 24_3_TFC_classification.tex
@@ -23189,6 +23275,7 @@ geo_40_4_g4_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23198,6 +23285,7 @@ geo_40_4_g4_c:
 				-show_TDO \
 				-show_TDA \
 				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(ORBITER) -v 2 \
@@ -23226,7 +23314,11 @@ geo_17_3_g4_c:
 		-combinatorial_object_activity \
 			-canonical_form \
 				-save_ago \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23235,6 +23327,7 @@ geo_17_3_g4_c:
 				-show_TDO \
 				-show_TDA \
 				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) 17_3_g4_classification.tex
@@ -23253,7 +23346,11 @@ AG_2_3_c: AG_2_3.inc
 			-canonical_form \
 				-save_ago \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
@@ -23262,6 +23359,7 @@ AG_2_3_c: AG_2_3.inc
 				-show_TDO \
 				-show_TDA \
 				-show_incidence_matrices \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) AG_2_3_classification.tex
@@ -23300,6 +23398,7 @@ geo_LSQ6_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23308,6 +23407,7 @@ geo_LSQ6_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) LSQ6_classification.tex
@@ -23378,6 +23478,7 @@ LS_AG_2_3_solutions_classify:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23385,6 +23486,7 @@ LS_AG_2_3_solutions_classify:
 			-report \
 				-export_flag_orbits \
 				-show_TDO \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) LS_AG_2_3_classification.tex
@@ -23408,6 +23510,8 @@ LS_AG_2_3_solutions_classify:
 
 design_27c:
 	$(ORBITER) -v 4 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
 		-define C -combinatorial_object \
 			-label design design \
 			-set_of_points "2,56,30,112,253,90,440,508" \
@@ -23419,15 +23523,19 @@ design_27c:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
+			-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
+				-incidence_draw_options Doinc \
 		-end
 	$(PDFLATEX) design_classification.tex
 	$(OPEN) design_classification.pdf
 
+
+# ago = 1 ?? ToDo
 
 
 design_PG_2_3_canonical: 
@@ -23451,6 +23559,7 @@ design_PG_2_3_canonical:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23459,6 +23568,7 @@ design_PG_2_3_canonical:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) PG_2_3_classification.tex
@@ -23493,6 +23603,7 @@ wreath_product_designs_n4_k2_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23501,6 +23612,7 @@ wreath_product_designs_n4_k2_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) wreath_4_2_classification.tex
@@ -23528,6 +23640,7 @@ wreath_product_designs_n8_k6_c:
 			-canonical_form \
 				-save_ago \
 				-save_transversal \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23535,6 +23648,7 @@ wreath_product_designs_n8_k6_c:
 			-report \
 				-export_flag_orbits \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) wreath_8_6_classification.tex
@@ -23557,6 +23671,7 @@ neumaier_graphs_16_classify:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -23568,6 +23683,7 @@ neumaier_graphs_16_classify:
 				-export_labels \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(ORBITER) -v 4 -csv_file_select_rows_by_file \
@@ -23891,6 +24007,9 @@ Cycle_13_aut:
 	$(OPEN) Cycle_13_report.pdf
 
 
+# ago=26
+
+
 Neumaier_16_aut:
 	$(ORBITER) -v 2 \
 		-define perm -vector -dense "0,1,2,3,4,5,12,13,6,7,8,9,10,11,14,15" -end \
@@ -23913,6 +24032,7 @@ Queens_graph_aut:
 	$(OPEN) non_attacking_queens_graph_8_report.pdf
 
 #non_attacking_queens_graph_8_orbits.csv
+# ago=8
 
 
 Queens_graph_aut_orbits_draw:
@@ -24042,6 +24162,8 @@ HJ_group:
 	$(OPEN) File_halljanko315_report.pdf
 
 
+# ago = 1209600
+
 #-rw-r--r--  1 betten  staff       1785 Sep 16 23:16 File_halljanko315_orbits.csv
 #-rw-r--r--  1 betten  staff      23892 Sep 16 23:16 File_halljanko315_report.tex
 #-rw-r--r--  1 betten  staff       7211 Sep 16 23:16 File_halljanko315_gens.csv
@@ -24160,6 +24282,8 @@ PGO_5_2_graph_group:
 
 Paulus_c:
 	$(ORBITER) -v 6 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
 		-loop L 1 16 1 \
 			-define P25_%L -graph -load_Brouwer \
 				$(ORBITER_PATH)/examples/users_guide/PAULUS_ROSENFELD/P25_%L.txt \
@@ -24189,6 +24313,7 @@ Paulus_c:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
 		-end \
 		-with C -do \
@@ -24200,6 +24325,7 @@ Paulus_c:
 				-export_labels \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) P25_classification.tex
@@ -24243,8 +24369,11 @@ Neumaier_graph_25_c:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 			-end \
 		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 20 -width_10 2 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
@@ -24254,6 +24383,7 @@ Neumaier_graph_25_c:
 				-export_labels \
 				-show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) N25_classification.tex
@@ -24303,8 +24433,12 @@ Edge_curve_17_nauty:
 				-save_ago \
 				-save_transversal \
 				-max_TDO_depth 10 \
+				-nauty_control -end \
 				-end \
 			-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-report \
@@ -24313,6 +24447,7 @@ Edge_curve_17_nauty:
 				-show_TDA \
 				-dont_show_incidence_matrices \
 				-export_group_GAP \
+				-incidence_draw_options Doinc \
 			-end \
 		-end
 	$(PDFLATEX) Edge_curve_q17_classification.tex
@@ -24502,10 +24637,11 @@ Sym_6_concatenate_classes:
 Sym_6_class_2ABC_order_of_pairs:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
-		-define Sym_6_class_2ABC -vector \
-			-file_column Sym_6_class_2ABC.csv "elements" \
-		-end \
 		-define G -permutation_group -symmetric_group 6 -end \
+		-define Sym_6_class_2ABC -vector_ge \
+			-action G \
+			-read_csv Sym_6_class_2ABC.csv elements \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-element_processing \
@@ -24805,6 +24941,7 @@ test_18_2:
 
 
 cube:
+	cp $(ORBITER_PATH)/examples/users_guide/cube_centered.obj .
 	$(ORBITER) -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
 		-output_mask cube_%d_%03d.pov \
@@ -26145,33 +26282,3 @@ F_64bit:
 
 
 
-
-
-
-
-# unclassified:
-
-
-
-
-
-
-
-extract:
-	$(ORBITER) -v 3 \
-		-extract_from_file makefile Cremona_map make_Cremona_map.txt
-	~/bin/a2tex.out -numbers -text_width 80 <make_Cremona_map.txt >make_Cremona_map.tex
-
-draw_eigenvalue_diag23:
-	$(ORBITER) -v 2 \
-		-draw_options \
-			-radius 10 \
-			-line_width 1.5 -embedded \
-		-end \
-		-draw_mod_n -n 20 \
-			-file ev_diag23 \
-			-eigenvalues 2 0 0 3 \
-			-label_nodes \
-		-end
-	$(PDFLATEX) ev_diag23_draw.tex
-	$(OPEN) ev_diag23_draw.pdf

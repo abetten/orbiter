@@ -352,7 +352,8 @@ public:
 			groups::any_group *Any_group,
 			std::string &surface_label,
 			std::string &label_of_elements,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *Elements,
+			//int *element_data, int nb_elements,
 			int verbose_level);
 	void element_processing(
 			groups::any_group *Any_group,

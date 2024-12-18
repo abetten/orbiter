@@ -16,6 +16,7 @@ MODULES = \
 	interface_gap_low.o \
 	interface_magma_low.o \
 	latex_interface.o \
+	nauty_interface_control.o \
 	nauty_interface_for_combo.o \
 	nauty_interface.o \
 	nauty_output.o \

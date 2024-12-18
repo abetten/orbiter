@@ -758,97 +758,47 @@ void orbits_create::init(
 					<< Descr->Canonical_form_classifier_description->space_label << endl;
 		}
 
-#if 0
+		Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
 
-		if (Descr->Canonical_form_classifier_description->f_algorithm_substructure) {
-
-			if (f_v) {
-				cout << "orbits_create::init f_algorithm_substructure" << endl;
-			}
-
-			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before Canonical_form_classifier->init" << endl;
-			}
-			Canonical_form_classifier->init(
-					Descr->Canonical_form_classifier_description,
-					verbose_level);
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after Canonical_form_classifier->init" << endl;
-			}
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before Classifier.classify" << endl;
-			}
-			Canonical_form_classifier->classify(verbose_level);
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after Classifier.classify" << endl;
-			}
-
-			Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
-
-
-			f_has_classification_by_canonical_form = true;
-
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Canonical_form_classifier->init" << endl;
 		}
-#endif
+		Canonical_form_classifier->init_objects_from_list_of_csv_files(
+				Descr->Canonical_form_classifier_description,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after Canonical_form_classifier->init" << endl;
+		}
+		if (f_v) {
+			cout << "orbits_create::init "
+					"before Classifier.classify" << endl;
+		}
 
-		if (Descr->Canonical_form_classifier_description->f_algorithm_nauty) {
+		std::string fname_base;
 
-			if (f_v) {
-				cout << "orbits_create::init f_algorithm_nauty" << endl;
-			}
-
-			Canonical_form_classifier = NEW_OBJECT(canonical_form::canonical_form_classifier);
-
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before Canonical_form_classifier->init" << endl;
-			}
-			Canonical_form_classifier->init_objects_from_list_of_csv_files(
-					Descr->Canonical_form_classifier_description,
-					verbose_level);
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after Canonical_form_classifier->init" << endl;
-			}
-			if (f_v) {
-				cout << "orbits_create::init "
-						"before Classifier.classify" << endl;
-			}
-
-			std::string fname_base;
-
-			if (Descr->Canonical_form_classifier_description->f_output_fname) {
-				fname_base = Descr->Canonical_form_classifier_description->fname_base_out;
-			}
-			else {
-				fname_base = "classification_";
-			}
-
-			Canonical_form_classifier->classify(
-					Canonical_form_classifier->Input,
-					fname_base,
-					verbose_level);
-			if (f_v) {
-				cout << "orbits_create::init "
-						"after Classifier.classify" << endl;
-			}
-
-			//Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
-
-
-			f_has_classification_by_canonical_form = true;
-
+		if (Descr->Canonical_form_classifier_description->f_output_fname) {
+			fname_base = Descr->Canonical_form_classifier_description->fname_base_out;
 		}
 		else {
-			cout << "orbits_create::init please specify which algorithm should be used" << endl;
-			exit(1);
+			fname_base = "classification_";
 		}
+
+		Canonical_form_classifier->classify(
+				Canonical_form_classifier->Input,
+				fname_base,
+				verbose_level);
+		if (f_v) {
+			cout << "orbits_create::init "
+					"after Classifier.classify" << endl;
+		}
+
+		//Descr->Canonical_form_classifier_description->Canonical_form_classifier = Canonical_form_classifier;
+
+
+		f_has_classification_by_canonical_form = true;
+
 
 		if (f_v) {
 			cout << "orbits_create::init f_classification_by_canonical_form done" << endl;

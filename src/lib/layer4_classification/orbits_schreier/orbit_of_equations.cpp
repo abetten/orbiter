@@ -344,7 +344,7 @@ void orbit_of_equations::compute_orbit(
 
 			map_an_equation(
 					cur_object, new_object,
-					SG->gens->ith(j),  verbose_level);
+					SG->gens->ith(j), verbose_level);
 
 			
 			if (f_vvv) {

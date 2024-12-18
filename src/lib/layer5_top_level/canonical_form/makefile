@@ -11,7 +11,6 @@ MODULES = \
 	canonical_form_classifier.o \
 	canonical_form_global.o \
 	classification_of_varieties_nauty.o \
-	classification_of_varieties.o \
 	combinatorial_object_with_properties.o \
 	input_objects_of_type_variety.o \
 	objects_after_classification.o \

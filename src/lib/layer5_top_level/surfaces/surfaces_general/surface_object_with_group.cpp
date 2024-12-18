@@ -3379,7 +3379,8 @@ void surface_object_with_group::print_summary(
 
 void surface_object_with_group::print_action_on_surface(
 		std::string &label_of_elements,
-		int *element_data, int nb_elements,
+		data_structures_groups::vector_ge *Elements,
+		//int *element_data, int nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3400,13 +3401,16 @@ void surface_object_with_group::print_action_on_surface(
 	int *Elt;
 	algebra::ring_theory::longinteger_object go;
 
-	Elt = NEW_int(A->elt_size_in_int);
+	//Elt = NEW_int(A->elt_size_in_int);
 
 
 	string fname;
 
 	fname = label_of_elements + "_action_on_surface.tex";
 
+	int nb_elements;
+
+	nb_elements = Elements->len;
 
 	{
 		ofstream ost(fname);
@@ -3428,10 +3432,14 @@ void surface_object_with_group::print_action_on_surface(
 
 		for (i = 0; i < nb_elements; i++) {
 
+#if 0
 			A->Group_element->make_element(
 					Elt,
 					element_data + i * A->make_element_size,
 					verbose_level);
+#endif
+
+			Elt = Elements->ith(i);
 
 			ord = A->Group_element->element_order(Elt);
 
@@ -3514,7 +3522,7 @@ void surface_object_with_group::print_action_on_surface(
 			<< " of size " << Fio.file_size(fname) << endl;
 
 
-	FREE_int(Elt);
+	//FREE_int(Elt);
 
 
 	if (f_v) {

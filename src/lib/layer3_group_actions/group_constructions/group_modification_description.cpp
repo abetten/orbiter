@@ -81,6 +81,9 @@ group_modification_description::group_modification_description()
 	f_stabilizer_of_variety = false;
 	//std::string stabilizer_of_variety_label;
 
+	f_nauty_control = false;
+	Nauty_interface_control = NULL;
+
 	f_import = false;
 
 	//std::vector<std::string> from;
@@ -260,6 +263,26 @@ int group_modification_description::read_arguments(
 				cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nauty_control") == 0) {
+			if (f_v) {
+				cout << "-nauty_control " << endl;
+			}
+			f_nauty_control = true;
+			Nauty_interface_control = NEW_OBJECT(other::l1_interfaces::nauty_interface_control);
+
+			i += Nauty_interface_control->parse_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+
+			if (f_v) {
+				cout << "done reading -nauty_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-import") == 0) {
 			f_import = true;
 			if (f_v) {
@@ -369,6 +392,10 @@ void group_modification_description::print()
 	}
 	if (f_stabilizer_of_variety) {
 		cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
+	}
+	if (f_nauty_control) {
+		cout << "-nauty_control " << endl;
+		Nauty_interface_control->print();
 	}
 	if (f_import) {
 		cout << "-import " << endl;

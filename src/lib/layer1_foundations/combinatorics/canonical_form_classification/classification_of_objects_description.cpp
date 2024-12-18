@@ -34,7 +34,9 @@ classification_of_objects_description::classification_of_objects_description()
 
 	f_save_transversal = false;
 
-	f_save_nauty_input_graphs = false;
+	f_nauty_control = false;
+	Nauty_control = NULL;
+	//f_save_nauty_input_graphs = false;
 
 }
 
@@ -100,13 +102,35 @@ int classification_of_objects_description::read_arguments(
 				cout << "-save_transversal " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nauty_control") == 0) {
+
+			if (f_v) {
+				cout << "-nauty_control " << endl;
+			}
+			f_nauty_control = true;
+			Nauty_control = NEW_OBJECT(other::l1_interfaces::nauty_interface_control);
+
+			i += Nauty_control->parse_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+
+			if (f_v) {
+				cout << "done reading -nauty_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+#if 0
 		else if (ST.stringcmp(argv[i], "-save_nauty_input_graphs") == 0) {
 			f_save_nauty_input_graphs = true;
 			if (f_v) {
 				cout << "-save_nauty_input_graphs " << endl;
 			}
 		}
-
+#endif
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -155,10 +179,15 @@ void classification_of_objects_description::print()
 	if (f_save_transversal) {
 		cout << "-save_transversal " << endl;
 	}
+	if (f_nauty_control) {
+		cout << "-nauty_control " << endl;
+		Nauty_control->print();
+	}
+#if 0
 	if (f_save_nauty_input_graphs) {
 		cout << "-save_nauty_input_graphs " << endl;
 	}
-
+#endif
 }
 
 

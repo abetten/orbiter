@@ -76,8 +76,14 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 	//std::vector<std::string> carry_through;
 
-	f_algorithm_nauty = false;
-	f_save_nauty_input_graphs = false;
+	f_nauty_control = false;
+	Nauty_interface_control = NULL;
+
+
+
+	//f_algorithm_nauty = false;
+	//f_save_nauty_input_graphs = false;
+	//std::string save_nauty_input_graphs_prefix;
 
 	//f_algorithm_substructure = false;
 
@@ -227,6 +233,32 @@ int canonical_form_classifier_description::read_arguments(
 				cout << "-carry_through " << s << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-nauty_control") == 0) {
+			if (f_v) {
+				cout << "-nauty_control " << endl;
+			}
+			f_nauty_control = true;
+			Nauty_interface_control = NEW_OBJECT(other::l1_interfaces::nauty_interface_control);
+
+			i += Nauty_interface_control->parse_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+
+			if (f_v) {
+				cout << "done reading -nauty_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+
+		//int f_has_nauty_control;
+		//other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
+
+
+#if 0
 		else if (ST.stringcmp(argv[i], "-algorithm_nauty") == 0) {
 			f_algorithm_nauty = true;
 			if (f_v) {
@@ -235,10 +267,12 @@ int canonical_form_classifier_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-save_nauty_input_graphs") == 0) {
 			f_save_nauty_input_graphs = true;
+			save_nauty_input_graphs_prefix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-save_nauty_input_graphs " << endl;
+				cout << "-save_nauty_input_graphs " << save_nauty_input_graphs_prefix << endl;
 			}
 		}
+#endif
 #if 0
 		else if (ST.stringcmp(argv[i], "-algorithm_substructure") == 0) {
 			f_algorithm_substructure = true;
@@ -340,12 +374,18 @@ void canonical_form_classifier_description::print()
 			cout << "-carry_through " << carry_through[i] << endl;
 		}
 	}
+	if (f_nauty_control) {
+		cout << "-nauty_control " << endl;
+		Nauty_interface_control->print();
+	}
+#if 0
 	if (f_algorithm_nauty) {
 		cout << "-algorithm_nauty" << endl;
 	}
 	if (f_save_nauty_input_graphs) {
-		cout << "-save_nauty_input_graphs " << endl;
+		cout << "-save_nauty_input_graphs " << save_nauty_input_graphs_prefix << endl;
 	}
+#endif
 #if 0
 	if (f_algorithm_substructure) {
 		cout << "-algorithm_substructure" << endl;

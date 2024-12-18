@@ -276,14 +276,17 @@ void hermitian_spreads_classify::init(
 
 	actions::action_global AcGl;
 
-	int f_save_nauty_input_graphs = false;
+	//int f_save_nauty_input_graphs = false;
 
+
+	other::l1_interfaces::nauty_interface_control Nauty_control;
 
 	//int canonical_pt;
 
 	sg = AcGl.set_stabilizer_in_projective_space(A, P,
 			Pts, nb_pts, /*canonical_pt,*/
-			f_save_nauty_input_graphs,
+			&Nauty_control,
+			//f_save_nauty_input_graphs,
 			verbose_level);
 
 	//GU = P->set_stabilizer(Pts, nb_pts, verbose_level);

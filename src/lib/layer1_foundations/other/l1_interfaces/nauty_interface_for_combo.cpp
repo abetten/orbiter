@@ -35,7 +35,8 @@ nauty_interface_for_combo::~nauty_interface_for_combo()
 void nauty_interface_for_combo::run_nauty_for_combo(
 		combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 		int f_compute_canonical_form,
-		int f_save_nauty_input_graphs,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
+		//int f_save_nauty_input_graphs,
 		data_structures::bitvector *&Canonical_form,
 		l1_interfaces::nauty_output *&NO,
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
@@ -78,7 +79,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 
 
-	if (f_save_nauty_input_graphs) {
+	if (Nauty_control->f_save_nauty_input_graphs) {
 
 		// save Levi graph in DIMACS format:
 
@@ -93,7 +94,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 		static int run_nauty_graph_counter = 0;
 
 
-		graph_label = Any_combo->label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
+		graph_label = Nauty_control->save_nauty_input_graphs_prefix + Any_combo->label + "_run_nauty_graph_" + std::to_string(run_nauty_graph_counter);
 
 		run_nauty_graph_counter++;
 
@@ -209,6 +210,7 @@ void nauty_interface_for_combo::run_nauty_for_combo(
 
 void nauty_interface_for_combo::run_nauty_for_combo_basic(
 		combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		l1_interfaces::nauty_output *&NO,
 		int verbose_level)
 // called from
@@ -228,7 +230,7 @@ void nauty_interface_for_combo::run_nauty_for_combo_basic(
 
 	combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
 
-	int f_save_nauty_input_graphs = false;
+	//int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "nauty_interface_for_combo::run_nauty_for_combo_basic "
@@ -237,7 +239,8 @@ void nauty_interface_for_combo::run_nauty_for_combo_basic(
 	run_nauty_for_combo(
 			Any_combo,
 			false /* f_compute_canonical_form */,
-			f_save_nauty_input_graphs,
+			Nauty_control,
+			//f_save_nauty_input_graphs,
 			Canonical_form,
 			NO,
 			Enc,

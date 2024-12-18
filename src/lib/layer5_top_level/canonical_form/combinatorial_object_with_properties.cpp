@@ -660,8 +660,14 @@ void combinatorial_object_with_properties::latex_report(
 					"OwCF->v=" << Any_Combo->v << endl;
 		}
 
+		other::l1_interfaces::nauty_interface_control *Nauty_control;
+
+
+		Nauty_control = GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Nauty_control;
+
 		GB->gg->inc->iso_type_at_line[Any_Combo->v - 1]->Canonical_forms->find_object(
 				Any_Combo,
+				Nauty_control,
 				f_found, idx,
 				NO,
 				Canonical_form,

@@ -33,6 +33,7 @@ classify_using_canonical_forms::~classify_using_canonical_forms()
 
 void classify_using_canonical_forms::orderly_test(
 		any_combinatorial_object *OwCF,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_accept, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -52,6 +53,7 @@ void classify_using_canonical_forms::orderly_test(
 	}
 	NI.run_nauty_for_combo_basic(
 			OwCF,
+			Nauty_control,
 			NO,
 			verbose_level);
 	if (f_v) {
@@ -103,6 +105,7 @@ void classify_using_canonical_forms::orderly_test(
 
 void classify_using_canonical_forms::find_object(
 		any_combinatorial_object *OwCF,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_found, int &idx,
 		other::l1_interfaces::nauty_output *&NO,
 		other::data_structures::bitvector *&Canonical_form,
@@ -120,7 +123,7 @@ void classify_using_canonical_forms::find_object(
 
 
 	encoded_combinatorial_object *Enc;
-	int f_save_nauty_input_graphs = false;
+	//int f_save_nauty_input_graphs = false;
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::find_object "
@@ -129,7 +132,8 @@ void classify_using_canonical_forms::find_object(
 	NI.run_nauty_for_combo(
 			OwCF,
 			true /* f_compute_canonical_form */,
-			f_save_nauty_input_graphs,
+			Nauty_control,
+			//f_save_nauty_input_graphs,
 			Canonical_form,
 			NO,
 			Enc,
@@ -174,6 +178,7 @@ void classify_using_canonical_forms::find_object(
 
 void classify_using_canonical_forms::add_object(
 		any_combinatorial_object *OwCF,
+		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int &f_new_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -226,7 +231,9 @@ void classify_using_canonical_forms::add_object(
 	int f_found;
 	int idx;
 
-	find_object(OwCF,
+	find_object(
+			OwCF,
+			Nauty_control,
 			f_found, idx,
 			NO,
 			Canonical_form,

@@ -254,6 +254,10 @@ public:
 	int f_stabilizer_of_variety;
 	std::string stabilizer_of_variety_label;
 
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
+
+
 	int f_import;
 
 	std::vector<std::string> from;

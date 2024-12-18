@@ -2,6 +2,6 @@ ROW,C1,C2,C3
 0,"tab:vector:ge:builder",,
 1,"Vector of Group Elements Builder Commands",,
 1,"\verb'-action' "," $A$ "," Set the action type for the group elements. "
-1,"\verb'-read_csv' "," fname "," Read group elements from the given csv file. "
+1,"\verb'-read_csv' "," fname col "," Read group elements from the given csv file. The data is taken from the given column. "
 1,"\verb'-vector_data' "," v "," Read group elements from the given vector data. "
 END

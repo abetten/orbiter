@@ -392,10 +392,17 @@ void classification_of_varieties_nauty::main_loop(
 		}
 		else {
 
-			int f_save_nauty_input_graphs = false;
+			other::l1_interfaces::nauty_interface_control *Nauty_control;
 
-			if (Classifier->has_description()) {
-				f_save_nauty_input_graphs = Classifier->get_description()->f_save_nauty_input_graphs;
+
+
+			if (Classifier->f_nauty_control) {
+				Nauty_control = Classifier->Nauty_interface_control;
+			}
+			else {
+				cout << "classification_of_varieties_nauty::main_loop "
+						"Classifier->f_nauty_control is false, so no nauty_control" << endl;
+				exit(1);
 			}
 
 
@@ -411,7 +418,7 @@ void classification_of_varieties_nauty::main_loop(
 						<< " before Variety_compute_canonical_form->compute_canonical_form_nauty_new" << endl;
 			}
 			Variety_compute_canonical_form->compute_canonical_form_nauty_new(
-					f_save_nauty_input_graphs,
+					Nauty_control,
 					f_found_canonical_form,
 					idx_canonical_form,
 					idx_equation,
@@ -476,6 +483,8 @@ void classification_of_varieties_nauty::main_loop(
 			else {
 				Iso_idx[input_counter] = Iso_idx[Idx_canonical_form[input_counter]];
 			}
+
+
 		}
 
 

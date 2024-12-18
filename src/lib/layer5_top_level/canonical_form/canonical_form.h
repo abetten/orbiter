@@ -97,7 +97,8 @@ public:
 			int *equation,
 			long int *Pts_on_object,
 			int nb_pts,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			int verbose_level);
 
 };
@@ -166,8 +167,15 @@ public:
 
 	std::vector<std::string> carry_through;
 
-	int f_algorithm_nauty;
-	int f_save_nauty_input_graphs;
+	//int f_algorithm_nauty;
+
+	// for nauty_control:
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
+
+
+	//int f_save_nauty_input_graphs;
+	//std::string save_nauty_input_graphs_prefix;
 
 	//int f_algorithm_substructure;
 
@@ -212,6 +220,9 @@ private:
 
 public:
 
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
+
 	projective_geometry::ring_with_action *Ring_with_action;
 
 
@@ -245,6 +256,8 @@ public:
 			int nb_input_Vo,
 			canonical_form::variety_object_with_action *Input_Vo,
 			std::string &fname_base_out,
+			int f_nauty_control,
+			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
 			int verbose_level);
 	void create_action_on_polynomials(
 			int verbose_level);
@@ -281,7 +294,8 @@ public:
 	void compute_stabilizer_of_quartic_curve(
 			applications_in_algebraic_geometry::quartic_curves::quartic_curve_from_surface
 				*Quartic_curve_from_surface,
-				int f_save_nauty_input_graphs,
+				other::l1_interfaces::nauty_interface_control *Nauty_control,
+				//int f_save_nauty_input_graphs,
 				automorphism_group_of_variety *&Aut_of_variety,
 				int verbose_level);
 	void find_isomorphism(
@@ -402,132 +416,6 @@ public:
 
 };
 
-
-// #############################################################################
-// classification_of_varieties.cpp
-// #############################################################################
-
-
-
-//! classification of varieties
-
-#if 0
-class classification_of_varieties {
-
-public:
-
-	canonical_form_classifier *Classifier;
-
-
-	// Work data:
-
-
-	// nauty stuff:
-
-		canonical_form_classification::classify_bitvectors *CB;
-		int canonical_labeling_len;
-
-		// output data, nauty specific:
-		int *F_first_time; // [Canonical_form_classifier->Input->nb_objects_to_test]
-		int *Iso_idx; // [Canonical_form_classifier->Input->nb_objects_to_test]
-		int *Idx_canonical_form; // [Canonical_form_classifier->Input->nb_objects_to_test]
-		int *Idx_equation; // [Canonical_form_classifier->Input->nb_objects_to_test]
-		int nb_iso_orbits;
-		int *Orbit_input_idx; // [nb_iso_orbits]
-
-		int *Classification_table_nauty; // [Canonical_form_classifier->Input->nb_objects_to_test * 4]
-
-
-
-	// substructure stuff:
-
-#if 0
-		// needed once for the whole classification process:
-		set_stabilizer::substructure_classifier *SubC;
-
-		// needed once for each object:
-		canonical_form_substructure **CFS_table;
-			// [Input->nb_objects_to_test]
-#endif
-
-		// computed in finalize_canonical_forms, only if we don't use nauty:
-
-
-
-		int *Canonical_equation;
-			// [Input->nb_objects_to_test * Poly_ring->get_nb_monomials()]
-
-		data_structures::tally_vector_data
-			*Tally;
-			// based on Canonical_forms, nb_objects_to_test
-
-		// transversal of the isomorphism types:
-		int *transversal;
-		int *frequency;
-		int nb_types; // number of isomorphism types
-
-
-
-	// output data for both algorithms:
-
-		variety_compute_canonical_form **Variety_table; // [Input->nb_objects_to_test]
-
-
-	int *Elt; // [Classifier->PA->A->elt_size_in_int]
-	int *eqn2; // [Classifier->Poly_ring->get_nb_monomials()]
-		// used by canonical_form_of_variety::find_equation
-	long int *Goi; // [Input->nb_objects_to_test]
-
-
-
-
-	classification_of_varieties();
-	~classification_of_varieties();
-	void init(
-			canonical_form_classifier *Classifier,
-			int verbose_level);
-	void classify_nauty(
-			int verbose_level);
-#if 0
-	void classify_with_substructure(
-			int verbose_level);
-#endif
-	void main_loop(
-			int verbose_level);
-	void report(
-			poset_classification::poset_classification_report_options *Opt,
-			int verbose_level);
-	void report_nauty(
-			std::ostream &ost, int verbose_level);
-#if 0
-	void report_substructure(
-			std::ostream &ost, int verbose_level);
-#endif
-	void export_canonical_form_data(
-			std::string &fname, int verbose_level);
-	void generate_source_code(
-			std::string &fname_base,
-			int verbose_level);
-	void write_classification_by_nauty_csv(
-			std::string &fname_base,
-			int verbose_level);
-	void write_canonical_forms_csv(
-			std::string &fname_base,
-			int verbose_level);
-	std::string stringify_csv_header(
-			int verbose_level);
-	std::string stringify_csv_header_line_nauty(
-			int verbose_level);
-	void finalize_classification_by_nauty(
-			int verbose_level);
-	void finalize_canonical_forms(
-			int verbose_level);
-	void make_classification_table_nauty(
-			int *&T,
-			int verbose_level);
-
-};
-#endif
 
 
 
@@ -762,6 +650,11 @@ public:
 
 	int f_compute_group;
 
+
+	int f_nauty_control;
+	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
+
+
 	int f_report;
 
 	int f_classify; // not yet implemented
@@ -815,6 +708,8 @@ public:
 	void do_compute_group(
 			int f_has_output_fname_base,
 			std::string &output_fname_base,
+			int f_nauty_control,
+			other::l1_interfaces::nauty_interface_control *Nauty_interface_control,
 			int verbose_level);
 	void do_singular_points(
 			int verbose_level);
@@ -890,14 +785,14 @@ public:
 			variety_object_with_action *Vo,
 			int verbose_level);
 	void compute_canonical_form_nauty_new(
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_found_canonical_form,
 			int &idx_canonical_form,
 			int &idx_equation,
 			int &f_found_eqn,
 			int verbose_level);
 	void classify_using_nauty_new(
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
 			int &f_found_canonical_form,
 			int &idx_canonical_form,
 			int &idx_equation,
@@ -1042,7 +937,8 @@ public:
 			int verbose_level);
 	void compute_canonical_form_of_variety(
 			variety_object_with_action *Variety_object_with_action,
-			int f_save_nauty_input_graphs,
+			other::l1_interfaces::nauty_interface_control *Nauty_control,
+			//int f_save_nauty_input_graphs,
 			int verbose_level);
 	// Computes the canonical labeling of the graph associated with
 	// the set of rational points of the variety.

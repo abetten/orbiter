@@ -730,7 +730,8 @@ public:
 			std::ostream &ost);
 	void print_action_on_surface(
 			std::string &label_of_elements,
-			int *element_data, int nb_elements,
+			data_structures_groups::vector_ge *Elements,
+			//int *element_data, int nb_elements,
 			int verbose_level);
 #if 0
 	void print_double_sixes(

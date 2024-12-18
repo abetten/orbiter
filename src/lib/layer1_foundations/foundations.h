@@ -737,6 +737,7 @@ namespace other {
 		class interface_gap_low;
 		class interface_magma_low;
 		class latex_interface;
+		class nauty_interface_control;
 		class nauty_interface_for_combo;
 		class nauty_interface;
 		class nauty_output;
