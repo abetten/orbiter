@@ -189,31 +189,11 @@ CODE_RS_6_4_7="\
 
 
 
-# Chapter 4 Geometry
-
-
-# Section 4.5 Algebraic sets
-
-
-SURFACE_F9_1_EQN="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+\
-3*X1*X2^2+3*X0*X1*X2+X0^2*X3+6*X0*X3^2+\
-5*X0*X1*X3+X0*X2*X3+5*X1*X2*X3"
-
-
-EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
+# Chapter 4 Projective Geometry
 
 
 
-HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
-
-HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
-
-#X_0^2*X_3 + X_1^2*X_2 + X_1*X_2^2 + X_0*X_3^2
-#X^2*W+X*W^2+Y^2*Z+Y*Z^2
-
-
-
-# Section 4.9 Advanced topics
+# Section 4.4 Advanced topics
 
 H1_LABEL="H1"
 
@@ -226,7 +206,7 @@ H1_GENS=-PGGL 4 4 \
 
 
 
-# Section 4.10 Geometric objects
+# Section 4.5 Geometric objects
 
 
 DOILY="Row,C0,C1,C2\
@@ -339,9 +319,27 @@ ENDRASS_SPARSE="\
 2,143,6,147,3,156"
 
 
+# Section 6.2 Algebraic sets
 
 
-# Section 5.3 Algebraic geometry
+SURFACE_F9_1_EQN="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+\
+3*X1*X2^2+3*X0*X1*X2+X0^2*X3+6*X0*X3^2+\
+5*X0*X1*X3+X0*X2*X3+5*X1*X2*X3"
+
+
+EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
+
+
+
+HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
+
+HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
+
+#X_0^2*X_3 + X_1^2*X_2 + X_1*X_2^2 + X_0*X_3^2
+#X^2*W+X*W^2+Y^2*Z+Y*Z^2
+
+
+# Section 6.2 Algebraic varieties
 
 CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 + 3*X1^2*X2^2"
 
@@ -352,20 +350,20 @@ BARTH_EQUATION_GENERAL="4*(PHI^2*X^2-Y^2)*(PHI^2*Y^2-Z^2)*(PHI^2*Z^2-X^2)-(1+2*P
 
 
 
-# Chapter 6 Group Theory
+# Chapter 7 Group Theory
 
 
 
-# Section 6.1 generic permutation groups
+# Section 7.1 generic permutation groups
 
 
 
 GENERATORS_M12="3,1,9,0,10,11,6,7,8,2,4,5, 7,2,3,1,11,9,5,8,0,6,4,10"
 
-# Section 6.2 Matrix groups
+# Section 7.2 Matrix groups
 
 
-# Section 6.3 Subgroups
+# Section 7.3 Subgroups
 
 GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
 # (0,1,2,3,4,5,6,7,8,9,10,11,12)
@@ -424,7 +422,7 @@ PGOp_6_2_GENS="\
 
 
 
-# Section 6.4 New actions from old
+# Section 7.4 New actions from old
 
 
 SURFACE_Q13_STAB_GENS="1,0,0,0,9,12,0,0,10,0,12,0,9,0,0,12, \
@@ -443,7 +441,7 @@ HERMITIAN_SURFACE_Q9_NB_POINTS=280
 
 
 
-# Section 6.6 Group theoretic activities based on Magma
+# Section 7.6 Group theoretic activities based on Magma
 
 # large sets of PG(2,3):
 
@@ -481,11 +479,11 @@ PGOM_6_2_CLASS_2A_CENTRALIZER_GENS="\
 
 
 
-# Section 6.7 Group theoretic activities based on GAP
+# Section 7.7 Group theoretic activities based on GAP
 
 
 
-# Section 6.8 Group theory, advanced topics
+# Section 7.8 Group theory, advanced topics
 
 
 
@@ -576,22 +574,220 @@ HIGMAN_SIMS_GO=44352000
 
 
 
-# Chapter 7 Orbit Algorithms
+# Chapter 8 Orbit Algorithms
 
 
-# Section 7.7
+# Section 8.7
 
 SURFACE_F9_1_EQN_RESTRICTED="4*X0*X1^2+4*X1^2*X2+8*X0*X2^2+3*X1*X2^2+3*X0*X1*X2"
 
 
-# Chapter 8 Cubic Surfaces
+# Chapter 9 Cubic Surfaces
 
-# Section 8.2 Generalities
+# Section 9.2 Generalities
 
 
-# Section 8.2 Creation
+# Section 9.2 Creation
 
-# Section 8.3 Activities
+
+# Dickson 1915:
+
+Dickson1="1,4,1,7,1,12,1,15"
+
+Dickson2= "1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
+
+Dickson3="1,4,1,7,1,12,1,14,1,15,1,19"
+
+Dickson4="1,3,1,4,1,11,1,9,1,10,1,14,1,17,1,18,1,19"
+
+Dickson5="1,3,1,4,1,8,1,10,1,17,1,18,1,19"
+
+Dickson6="1,2,1,3,1,4,1,7,1,15"
+
+Dickson7="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
+
+Dickson8="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
+
+Dickson9="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
+
+Dickson10="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
+
+Dickson11="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
+
+Dickson12="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
+
+Dickson13="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
+
+Dickson14="1,6,1,7,1,10,1,11,1,14,1,15"
+
+Dickson15="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
+
+Dickson16=" 1,4,1,7,1,3,1,15,1,12"
+
+Dickson17="1,4,1,7,1,8,1,9,1,11,1,13,1,15,1,16,1,17,1,18,1,19"
+
+Dickson18="1,4,1,7,1,8,1,11,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+
+Dickson19= "1,4,1,7,1,6,1,8,1,11,1,14,1,12,1,16,1,17,1,18,1,19 "
+
+Dickson20="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
+
+Dickson21="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
+
+Dickson22="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
+
+Dickson23="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
+
+Dickson24="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
+
+Dickson25= "1,5,1,10,1,13,1,11,1,9,1,14,1,15,1,18,1,19 "
+
+Dickson26="1,5,1,6,1,8,1,10,1,15,1,18,1,19"
+
+Dickson27="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
+
+Dickson28="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
+
+Dickson29="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
+
+Dickson30= "1,0,1,1,1,2,1,3,1,7,1,10,1,11,1,16"
+
+Dickson31="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
+
+Dickson32="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
+
+Dickson33="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
+
+Dickson34= "1,0,1,1,1,2,1,3,1,7,1,10,1,16,1,19"
+
+Dickson35="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
+
+Dickson36="1,0,1,1,1,2,1,3,1,7,1,15"
+
+Dickson37="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+
+Dickson38="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
+
+Dickson39="1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,19"
+
+Dickson40="1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,19"
+
+Dickson41="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
+
+Dickson42="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+
+Dickson43= "1,0,1,1,1,2,1,7,1,13,1,8,1,11,1,14,1,15,1,17"
+
+Dickson44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
+
+Dickson45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+
+Dickson46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19" 
+
+Dickson47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19"
+
+
+
+
+Dickson1_eqn_af="X0^2*X1 + X0*X1^2 + X2^2*X3 + X2*X3^2"
+
+Dickson2_eqn_af="X1^3 + X2^3 + X3^3 + X0^2*X1 + X0*X1^2 + X1*X2^2 + X1*X3^2 + X2*X3^2 + X1*X2*X3"
+
+Dickson3_eqn_af="X0^2*X1 + X0*X1^2 + X2^2*X3 + X1*X3^2 + X2*X3^2 + X1*X2*X3"
+
+Dickson4_eqn_af="X3^3 + X0^2*X1 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X1*X3^2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson5_eqn_af="X3^3 + X0^2*X1 + X1^2*X2 + X0*X2^2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson6_eqn_af="X2^3 + X3^3 + X0^2*X1 + X0*X1^2 + X2*X3^2"
+
+Dickson7_eqn_af="X2^3 + X3^3 + X0^2*X2 + X1^2*X3 + X0*X2^2 + X1*X3^2 + X2*X3^2"
+
+Dickson8_eqn_af="X3^3 + X0^2*X1 + X0^2*X2 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X1*X2*X3"
+
+Dickson9_eqn_af="X3^3 + X0^2*X1 + X0*X1^2 + X1*X2^2 + X2^2*X3 + X2*X3^2 + X1*X2*X3"
+
+Dickson10_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X0*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3"
+
+Dickson11_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X2 + X0*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3"
+
+Dickson12_eqn_af="X0^2*X1 + X0^2*X3 + X0*X1^2 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3"
+
+Dickson13_eqn_af="X0^2*X3 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3"
+
+Dickson14_eqn_af="X0^2*X3 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X1*X3^2 + X2*X3^2"
+
+Dickson15_eqn_af="X0^2*X1 + X0^2*X2 + X0^2*X3 + X1^2*X2 + X2^2*X3 + X1*X3^2 + X0*X1*X2"
+
+Dickson16_eqn_af="X3^3 + X0^2*X1 + X0*X1^2 + X2^2*X3 + X2*X3^2"
+
+Dickson17_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X2 + X1^2*X3 + X1*X2^2 + X0*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson18_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson19_eqn_af="X0^2*X1 + X0^2*X3 + X0*X1^2 + X1^2*X2 + X1*X2^2 + X2^2*X3 + X1*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson20_eqn_af="X0^2*X1 + X0^2*X2 + X0^2*X3 + X0*X1^2 + X1^2*X2 + X0*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2"
+
+Dickson21_eqn_af="X0^2*X2 + X0^2*X3 + X1^2*X2 + X0*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2"
+
+Dickson22_eqn_af="X0^2*X1 + X0^2*X2 + X0*X1^2 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X2*X3 + X1*X2*X3"
+
+Dickson23_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X3 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X2*X3 + X1*X2*X3"
+
+Dickson24_eqn_af="X0^2*X2 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X2*X3 + X1*X2*X3"
+
+Dickson25_eqn_af="X0^2*X2 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X2*X3 + X1*X2*X3"
+
+Dickson26_eqn_af="X0^2*X2 + X0^2*X3 + X1^2*X2 + X0*X2^2 + X2*X3^2 + X0*X2*X3 + X1*X2*X3"
+
+Dickson27_eqn_af="X0^2*X1 + X0^2*X2 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X2^2*X3 + X0*X3^2 + X1*X3^2 + X0*X1*X3 + X0*X2*X3"
+
+Dickson28_eqn_af="X0^2*X1 + X0^2*X2 + X0^2*X3 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X1*X3^2 + X2*X3^2 + X0*X1*X3 + X0*X2*X3"
+
+Dickson29_eqn_af="X0^2*X1 + X0*X1^2 + X1^2*X3 + X1*X2^2 + X0*X3^2 + X2*X3^2 + X0*X1*X3 + X0*X2*X3"
+
+Dickson30_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X0*X1*X2"
+
+Dickson31_eqn_af="X0^3 + X1^3 + X2^3 + X0^2*X2 + X0*X1^2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson32_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0*X1^2 + X1^2*X2 + X0*X2^2 + X1*X2^2 + X2^2*X3 + X2*X3^2 + X0*X1*X2 + X1*X2*X3"
+
+Dickson33_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0^2*X3 + X0*X1^2 + X0*X2^2 + X2^2*X3 + X0*X3^2 + X2*X3^2 + X0*X1*X2 + X1*X2*X3"
+
+Dickson34_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0*X1^2 + X0*X2^2 + X0*X1*X2 + X1*X2*X3"
+
+Dickson35_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0^2*X3 + X0*X1^2 + X1^2*X2 + X1*X2^2 + X0*X3^2 + X2*X3^2"
+
+Dickson36_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0*X1^2 + X2*X3^2"
+
+Dickson37_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0*X1^2 + X2^2*X3 + X2*X3^2 + X1*X2*X3"
+
+Dickson38_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0^2*X3 + X0*X1^2 + X2^2*X3 + X0*X3^2 + X2*X3^2 + X1*X2*X3"
+
+Dickson39_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0^2*X2 + X0^2*X3 + X0*X1^2 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X2^2*X3 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X1*X2*X3"
+
+Dickson40_eqn_af="X0^3 + X1^3 + X2^3 + X3^3 + X0^2*X2 + X0^2*X3 + X0*X1^2 + X0*X2^2 + X0*X3^2 + X1*X2*X3"
+
+Dickson41_eqn_af="X2^3 + X0^2*X1 + X0^2*X2 + X0*X1^2 + X0*X2^2 + X1*X2^2 + X1*X3^2 + X1*X2*X3"
+
+Dickson42_eqn_af="X2^3 + X0^2*X1 + X0*X1^2 + X1*X2^2 + X2^2*X3 + X1*X3^2 + X2*X3^2 + X1*X2*X3"
+
+Dickson43_eqn_af="X0^3 + X1^3 + X2^3 + X0*X1^2 + X1^2*X2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X3"
+
+Dickson44_eqn_af="X0^3 + X1^3 + X2^3 + X0^2*X3 + X1^2*X2 + X1*X2^2 + X2^2*X3 + X1*X3^2"
+
+Dickson45_eqn_af="X0^2*X3 + X1^2*X2 + X1^2*X3 + X1*X2^2 + X2^2*X3 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson46_eqn_af="X0^2*X2 + X0^2*X3 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X2^2*X3 + X0*X3^2 + X1*X3^2 + X2*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+Dickson47_eqn_af="X0^2*X2 + X0^2*X3 + X1^2*X2 + X1^2*X3 + X0*X2^2 + X1*X2^2 + X0*X3^2 + X1*X3^2 + X0*X1*X2 + X0*X1*X3 + X0*X2*X3 + X1*X2*X3"
+
+
+
+
+
+# Section 9.3 Activities
 
 # points:
 #0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,79,80,81,82
@@ -613,9 +809,9 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 
 
 
-# Section 8.4 Classification of cubic surfaces
+# Section 9.4 Classification of cubic surfaces
 
-# Section 8.5 Quartic curves
+# Section 9.5 Quartic curves
 
 
 CURVE_Q13_FLAG_1_EQN="10*x1^4 + 12*x2^4 + 9*x3^4 + 8*x1^3*x2 + 2*x1*x2^3 + 5*x2^3*x3 + 3*x2*x3^3 + 4*x1^2*x2^2 + 3*x1^2*x3^2 + x2^2*x3^2 + 12*x1^2*x2*x3 + 10*x1*x2^2*x3 + 9*x1*x2*x3^2"
@@ -629,7 +825,7 @@ CURVE_Q13_FLAG_1_TRANS_1="4,12,0,1,11,5,12,10,6"
 CURVE_Q13_FLAG_1_TRANS_2="1,0,0,12,3,0,9,7,8"
 
 
-# Section 8.6 Classification of quartic curves
+# Section 9.6 Classification of quartic curves
 
 
 
@@ -645,19 +841,19 @@ NB_QUARTIC_CURVES_Q19=14
 
 
 
-# Section 8.7 Interface to GAP
+# Section 9.7 Interface to GAP
 
 
 
-# Chapter 9 Applications
+# Chapter 10 Applications
 
 
-# Section 9.1 Number Theory
+# Section 10.1 Number Theory
 
-# Section 9.2 Representation Theory
+# Section 10.2 Representation Theory
 
 
-# Section 9.3 Cryptography
+# Section 10.3 Cryptography
 
 
 NTRU_N=7
@@ -711,14 +907,14 @@ ALICE_C4="1,2,1,1,0,2"
 
 
 
-# Chapter 10 Coding Theory
+# Chapter 11 Coding Theory
 
-# Section 10.1 Introduction
+# Section 11.1 Introduction
 
 CODE_5_2_3_CODEWORDS="0,7,25,30"
 
 
-# Section 10.2 Linear codes
+# Section 11.2 Linear codes
 
 
 SIMPLEX_CODE_GENERATOR="\
@@ -771,7 +967,7 @@ GOLAY23_CODE_GENERATOR="\
 
 
 
-# Section 10.3 Golay codes
+# Section 11.3 Golay codes
 
 
 
@@ -854,7 +1050,7 @@ GOLAY24_2B_FIX_SUBCODE="1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, \
 
 
 
-# Section 10.4 CRC codes
+# Section 11.4 CRC codes
 
 
 CRC4="1,4,1,2,1,1,1,0"
@@ -925,7 +1121,7 @@ CRC_ERROR_POLY_BRAVO="104*X^5+118*X^6+27*X^7+39*X^8+51*X^10+245*X^11+91*X^12+247
 
 
 
-# Section 10.5 Reed-Muller codes
+# Section 11.5 Reed-Muller codes
 
 
 
@@ -955,7 +1151,7 @@ RM_6_GENERATOR_7="32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,\
 
 
 
-# Section 10.6 BCH-codes
+# Section 11.6 BCH-codes
 
 
 #CODE_BCH_F8_N21_D5_GENMA
@@ -1009,7 +1205,7 @@ BCH_21_15_GENERATOR_MATRIX="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 BCH_21_6_GENERATOR_MATRIX=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
 
-# Section 10.7 Reed-Solomon codes
+# Section 11.7 Reed-Solomon codes
 
 
 
@@ -1107,7 +1303,7 @@ CODE_15_6_6_E="\
 
 
 
-# Section 10.9 Bounds
+# Section 11.9 Bounds
 
 
 CODE_GV_N15_K6="\
@@ -1132,11 +1328,11 @@ CODE_GV_N15_K6_CHECK="\
 
 
 
-# Chapter 11 Combinatorics
+# Chapter 12 Combinatorics
 
 
 
-# Section 11.2 Combinatorial Objects
+# Section 12.2 Combinatorial Objects
 
 HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,\
 10,11,12,13,14,23,26,27,30,31,34,35,38,39,42,47,48,51,52,\
@@ -1154,7 +1350,7 @@ NEUMAIER_GRAPH_16_1_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1
 
 NEUMAIER_GRAPH_16_2_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1,1,1,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,0,1,0,0,1,0,1,0,1,0,1,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,1,0,1,0,0,1,1,1,1,1,1,1"
 
-# Section 11.4 Classification of Configurations and Geometries
+# Section 12.4 Classification of Configurations and Geometries
 
 
 DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
@@ -1195,9 +1391,9 @@ LSQ_5B_TABLE="0,1,2,3,4,1,0,4,2,3,2,4,3,1,0,3,2,0,4,1,4,3,1,0,2"
 
 
 
-# Chapter 12 Graph theory
+# Chapter 13 Graph theory
 
-# Section 12.1 Creating graphs
+# Section 13.1 Creating graphs
 
 TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"
 
@@ -1206,19 +1402,19 @@ TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"
 
 
 
-# Chapter 13 Design theory
+# Chapter 14 Design theory
 
 
 
 
-# Section 13.2 Assumed symmetry
+# Section 14.2 Assumed symmetry
 
 
 GEN_C5="1,2,3,4,0,6,7,8,9,5,11,12,13,14,10"
 
 
 
-# Section 13.3 Design Theory - Large sets
+# Section 14.3 Design Theory - Large sets
 
 
 
@@ -1244,7 +1440,7 @@ LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,\
 
 
 
-# Section 13.4: Design Theory - Delandtsheer Doyen
+# Section 14.4: Design Theory - Delandtsheer Doyen
 
 
 
@@ -1295,9 +1491,9 @@ DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1= -mask_label "mask1" -depth 5
 
 
 
-# Chapter 14 Finite geometry
+# Chapter 15 Finite geometry
 
-# Section 14.1 Spreads
+# Section 15.1 Spreads
 
 
 SPREAD_SET_27_RAO_RAO="\
@@ -1376,7 +1572,7 @@ SPREADS_27_ISO_6="\
 
 
 
-# Section 14.3 Packings
+# Section 15.3 Packings
 
 
 
@@ -1415,7 +1611,7 @@ PGL_4_5_SUBGROUP_31_ME_NORMALIZER=-PGL 4 5 \
 
 
 
-# Section 14.4 BLT-Sets
+# Section 15.4 BLT-Sets
 
 
 BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,\
@@ -1426,9 +1622,9 @@ BLT_NUMBER_ISO="1,2,2,3,4,3,6,5,9,6,6,\
 
 
 
-# Chapter 15 Computer Science Primitives
+# Chapter 16 Computer Science Primitives
 
-# Section 15.2 Diophantine systems
+# Section 16.2 Diophantine systems
 
 
 TEST_SYSTEM="\
@@ -1447,9 +1643,9 @@ PRAEGER_DESIGN_LINE_TYPE="\
 1,1,1,1,1,1"
 
 
-# Chapter 16 Canonical Forms with Nauty
+# Chapter 17 Canonical Forms with Nauty
 
-# Section 16.2 Canonical forms of objects in projective space
+# Section 17.2 Canonical forms of objects in projective space
 
 
 BARTH_SEXTIC_MOD_11_SINGULAR_POINTS="0, 1, 2, 4, 39, 44, 61, 63, 64, 66, 94, 96, 97, 99, 116, 121, 135, 144, 145, 171, 174, 226, 229, 244, 255, 275, 365, 374, 424, 425, 457, 458, 540, 573, 620, 625, 674, 681, 685, 692, 764, 767, 841, 844, 885, 888, 962, 965, 983, 988, 1037, 1044, 1048, 1055, 1145, 1178, 1271, 1272, 1304, 1305, 1343, 1355, 1364, 1454, 1463"
@@ -1469,7 +1665,7 @@ SUZUKI_8_GENERATORS="\
 
 
 
-# Section 16.3 Canonical Forms of Incidence Geometries
+# Section 17.3 Canonical Forms of Incidence Geometries
 
 
 
@@ -1495,7 +1691,7 @@ FILE_24_3_TFC_INC="24 24 72\
 \n-1 3"
 
 
-# Section 16.5 Canonical forms of linear codes
+# Section 17.5 Canonical forms of linear codes
 
 # consider the binary code with generator matrix:
 # 1 0 1
@@ -1511,7 +1707,7 @@ CODE_N6_K3_Q2_GENMA="\
 
 
 
-# Section 17.1 Automorphism group of Sym(6)
+# Section 18.1 Automorphism group of Sym(6)
 
 
 SYM_6_CLASS_2A_REP="1,0,3,2,5,4"
@@ -1549,10 +1745,10 @@ AUT_SYM_6_GENS="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 
 
 
-# Chapter 18 Interfaces
+# Chapter 19 Interfaces
 
 
-# Section 18.2 Poyvray interface
+# Section 19.2 Poyvray interface
 
 # povray colors:
 POLISHED_CHROME_WHITE=\
@@ -1829,16 +2025,16 @@ CLEBSCH_CUBICS=\
 
 
 
-# Section 18.5 The Gnuplot interface
+# Section 19.5 The Gnuplot interface
 
 GNUPLOT_TEST_INPUT="Row,Curve-1,Curve-2\n1,2,4\n2,6,8\n3,9,10\n4,13,17\n5,17,20\n6,19,25\n7,23,30\nEND\n"
 
-# Chapter 19 Mathematical Data in Orbiter
+# Chapter 20 Mathematical Data in Orbiter
 
 
-# Section 19.1 Mathematical data on Cubic Surfaces
+# Section 20.1 Mathematical data on Cubic Surfaces
 
-# Section 19.2 Mathematical data on BLT-sets
+# Section 20.2 Mathematical data on BLT-sets
 
 BLT_ORDER_Q="3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73"
 
@@ -3625,7 +3821,7 @@ Polynomial_ring:
 
 
 ###############################################################################
-# Chapter 4 - Geometry
+# Chapter 4 - Projective Geometry
 ###############################################################################
 
 
@@ -3635,11 +3831,6 @@ test_4:
 	make test_4_3
 	make test_4_4
 	make test_4_5
-	make test_4_6
-	make test_4_7
-	make test_4_8
-	make test_4_9
-	make test_4_10
 
 
 
@@ -4134,539 +4325,13 @@ PG_2_4_incma_singer_sub_7:
 
 
 ###############################################################################
-# Section 4.4: The Grassmannian
-
-
-SECTION_GRASSMANNIAN:
-
-
-
-test_4_4:
-	make GR_3_2_2
-	make planes_in_pencil
-
-
-
-
-
-GR_3_2_2:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-report_Grassmannian 2 \
-		-end
-	$(PDFLATEX) Gr_3_2_2.tex 
-	$(OPEN) Gr_3_2_2.pdf
-
-
-
-
-
-
-planes_in_pencil:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-planes_through_line 0 \
-		-end
-
-
-
-###############################################################################
-# Section 4.5: Algebraic Sets
-
-
-SECTION_ALGEBRAIC_SETS:
-
-
-test_4_5:
-	make Fermat_curve_F7
-	make Hesse_pencil_F7
-	make surface_F9
-	make elliptic_curve_b1_c3_q11.txt
-	make EC_11.txt
-	make Hirschfeld_surface_q4.txt
-	make Hirschfeld_surface_q16.txt
-
-
-
-Fermat_curve_F7:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 3 \
-			-monomial_ordering_lex \
-			-variables "y0,y1,y2" "y_0,y_1,y_2" \
-			-end \
-		-define Fermat -symbolic_object \
-			-field F \
-			-text "y0^3+y1^3+y2^3" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-projective_variety R Fermat "" \
-		-end
-
-
-Hesse_pencil_F7:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 3 \
-			-monomial_ordering_lex \
-			-variables "y0,y1,y2" "y_0,y_1,y_2" \
-			-end \
-		-define Hesse_pencil -symbolic_object \
-			-field F \
-			-text "y0^3+y1^3+y2^3+y0*y1*y2" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-projective_variety R Hesse_pencil "" \
-		-end
-
-
-surface_F9:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 9 -print_numerically -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 3 \
-			-monomial_ordering_lex \
-			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
-			-end \
-		-define surface_F9 -symbolic_object \
-			-field F \
-			-text $(SURFACE_F9_1_EQN) \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-projective_variety R surface_F9 "" \
-		-end
-
-
-elliptic_curve_b1_c3_q11.txt:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define EC -geometric_object P \
-			-elliptic_curve 1 3 \
-		-end \
-		-with EC -do -combinatorial_object_activity -save \
-		-end
-
-
-EC_11.txt:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 11 -end \
-		-define R -polynomial_ring -field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 3 \
-			-end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define EC -geometric_object P \
-			-projective_variety R \
-				"EC_11" "EC\_11" \
-				$(EC_11_EQUATION) \
-			-end \
-		-with EC -do -combinatorial_object_activity -save \
-		-end
-
-
-
-
-Hirschfeld_surface_q4.txt:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 4 -end \
-		-define R -polynomial_ring -field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 3 \
-			-end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define H4 -geometric_object P \
-			-projective_variety R \
-				"Hirschfeld_surface_q4" \
-				"Hirschfeld\_surface\_q4" \
-				$(HIRSCHFELD_SURFACE_EQUATION) \
-			-end \
-		-with H4 -do -combinatorial_object_activity -save \
-		-end
-
-# creates Hirschfeld_surface_q4.txt
-
-Hirschfeld_surface_q16.txt:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 16 -end \
-		-define R -polynomial_ring -field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 3 \
-			-end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define H16 -geometric_object P \
-			-projective_variety R \
-				"Hirschfeld_surface_q16" \
-				"Hirschfeld\_surface\_q16" \
-				$(HIRSCHFELD_SURFACE_EQUATION) \
-			-end \
-		-with H16 -do -combinatorial_object_activity -save \
-		-end
-
-
-# the coefficient vector is given as a list of pairs. 
-# 165 = binomial(11,3)
-
-
-
-###############################################################################
-# Section 4.6: The Klein Quadric and Pluecker coordinates
-
-
-SECTION_KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
-
-
-test_4_6:
-	make GR_4_2_2
-
-
-GR_4_2_2:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-with P -do \
-		-projective_space_activity \
-			-report_Grassmannian 2 \
-		-end
-	$(PDFLATEX) Gr_4_2_2.tex 
-	$(OPEN) Gr_4_2_2.pdf
-
-
-###############################################################################
-# Section 4.7: Orthogonal spaces
-
-
-SECTION_ORTHOGONAL_SPACES:
-
-
-test_4_7:
-	make Op_4_2
-	make O_5_2_incidence_matrix.csv
-	make Op_6_2
-	make Op_6_2_incidence_matrix.csv
-	make Op_6_2_with_group
-	make Op_6_8
-	make Op_8_2
-	make Op_6_64
-	#make Op_6_64_line_rank_problem
-	make Op_6_64_line_rank
-	make Op_6_64_report
-	#make elliptic_quadric_subspace  fails
-	make BLT_database_7_1
-	make BLT_database_7_1_print
-	make Doily_W_2
-
-
-
-Op_4_2:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 4 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_4_2_report.tex 
-	$(OPEN) O_1_4_2_report.pdf
-
-
-O_5_2_incidence_matrix.csv:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 0 5 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-export_point_line_incidence_matrix \
-		-end
-	$(ORBITER) -v 2 \
-		-define all_one_r -vector -repeat 1 15 -end \
-		-define all_one_c -vector -repeat 1 15 -end \
-		-draw_matrix \
-			-input_csv_file O_5_2_incidence_matrix.csv \
-			-box_width 20 -bit_depth 8 \
-			-partition 2 \
-				all_one_r all_one_c \
-		-end
-	$(OPEN) O_5_2_incidence_matrix_draw.bmp
-
-#O(5,2) projectively = Q(4,2) = (dual of) W(3,2) = W(3,2) 
-# recall that W(3,2) and Q(4,q) are self dual if q is even
-
-
-Op_6_2:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_6_2_report.tex 
-	$(OPEN) O_1_6_2_report.pdf
-
-
-Op_6_2_incidence_matrix.csv:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-export_point_line_incidence_matrix \
-		-end
-	$(ORBITER) -v 2 \
-		-define all_one_r -vector -repeat 1 35 -end \
-		-define all_one_c -vector -repeat 1 105 -end \
-		-draw_matrix \
-			-input_csv_file Op_6_2_incidence_matrix.csv \
-			-box_width 20 -bit_depth 8 \
-			-partition 2 \
-				all_one_r all_one_c \
-		-end
-	$(OPEN) Op_6_2_incidence_matrix_draw.bmp
-
-
-Op_6_2_with_group:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 6 F -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_6_2_report.tex 
-	$(OPEN) O_1_6_2_report.pdf
-
-# problem:
-# error message:
-#stabilizer_chain_base_data::allocate_base_data degree is too large
-
-
-Op_6_8:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 8 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_6_8_report.tex
-	$(OPEN) O_1_6_8_report.pdf
-
-
-Op_8_2:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 8 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_8_2_report.tex 
-	$(OPEN) O_1_8_2_report.pdf
-
-
-Op_6_64:
-	$(ORBITER) -v 2 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 64 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_6_64_report.tex 
-	$(OPEN) O_1_6_64_report.pdf
-
-
-# problem, because we are trying to create PGL(6,64):
-
-Op_6_64_line_rank_problem:
-	$(ORBITER) -v 4 \
-		-define F -finite_field -q 64 -end \
-		-define O -orthogonal_space 1 6 F -end \
-		-with O -do -orthogonal_space_activity \
-			-unrank_line_through_two_points 15447347 15225451 \
-		-end
-
-# use option -without_group to skip the group. This will work:
-
-Op_6_64_line_rank:
-	$(ORBITER) -v 4 \
-		-define F -finite_field -q 64 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-unrank_line_through_two_points 15447347 15225451 \
-		-end
-
-# this will create a basic report without the group:
-
-Op_6_64_report:
-	$(ORBITER) -v 4 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 64 -end \
-		-define O -orthogonal_space 1 6 F -without_group -end \
-		-with O -do -orthogonal_space_activity \
-			-cheat_sheet_orthogonal Do \
-		-end
-	$(PDFLATEX) O_1_6_64_report.tex
-	$(OPEN) O_1_6_64_report.pdf
-
-
-
-# ToDo: this command fails:
-
-elliptic_quadric_subspace:
-	$(ORBITER) -v 3 \
-		-define F -finite_field -q 5 -end \
-		-define v -vector -format 4 \
-			-dense "1,3,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,1" \
-		-end \
-		-define O -orthogonal_space 1 6 F -end \
-		-with O -do -orthogonal_space_activity \
-			-intersect_with_subspace v \
-		-end
-
-#We found that the intersection contains 26 points: 
-#( 2, 3, 1572, 100, 98, 116, 132, 1570, 1588, 1604, 1631, 1688, 1704, 1706, 1747, 1745, 1847, 1845, 1856, 1888, 1904, 1931, 1988, 2004, 2022, 2020 )
-
-
-
-BLT_database_7_1:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space -n 4 -field F -v 0 -end \
-		-define S -geometric_object P \
-			-BLT_database 1 \
-		-end \
-		-with S -do -combinatorial_object_activity -save \
-		-end
-
-# writes BLT_7_1.txt
-
-BLT_database_7_1_print:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define O -orthogonal_space 0 5 F -without_group -end \
-		-define S -set -file_orbiter_format BLT_7_1.txt -end \
-		-with O -do -orthogonal_space_activity \
-			-print_points S -end
-	$(PDFLATEX) S_set_report.tex
-	$(OPEN) S_set_report.pdf
-
-
-
-# O(5,2) space:
-
-Doily_W_2:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 0 5 F -without_group -end \
-		-define W2_points -set -loop 0 15 1 -end \
-		-define W2_lines -set -loop 0 15 1 -end \
-		-with O -do \
-		-orthogonal_space_activity \
-			-print_points W2_points \
-		-end \
-		-with O -do \
-		-orthogonal_space_activity \
-			-print_lines W2_lines \
-		-end
-	$(PDFLATEX) W2_points_set_report.tex
-	$(OPEN) W2_points_set_report.pdf
-	$(PDFLATEX) W2_lines_set_of_lines_report.tex
-	$(OPEN) W2_lines_set_of_lines_report.pdf
-
-
-# the output defines doily.csv
-
-
-
-
-
-###############################################################################
-# Section 4.8: Hermitian varieties
-
-
-SECTION_HERMITIAN_VARIETIES:
-
-test_4_8:
-	make H_2_4
-	make H_2_9
-	make H_3_4
-
-
-H_2_4:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_hermitian 2 -end
-	$(PDFLATEX) H_2_4.tex 
-	$(OPEN) H_2_4.pdf
-
-
-H_2_9:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 9 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_hermitian 2 -end
-	$(PDFLATEX) H_2_9.tex 
-	$(OPEN) H_2_9.pdf
-
-
-# 28 points: 6, 11, 9, 7, 14, 19, 17, 15, 80, 75, 78, 74, 35, 30, 33, 29, 62, 57, 60, 56, 26, 21, 24, 3, 37, 82, 64, 46 
-
-
-H_3_4:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_hermitian 3 -end
-	$(PDFLATEX) H_3_4.tex 
-	$(OPEN) H_3_4.pdf
-
-
-# H_3_4 = the Hirschfeld surface
-
-
-###############################################################################
-# Section 4.9: Projective Space Advanced Topics
+# Section 4.4: Projective Space Advanced Topics
 
 
 SECTION_PROJECTIVE_SPACE_ADVANCED_TOPICS:
 
 
-test_4_9:
+test_4_4:
 	make fixed_objects_2A
 	make fixed_objects_2B
 	make fixed_objects_2C
@@ -4760,14 +4425,14 @@ PG_2_3_plane_pencil:
 
 
 ###############################################################################
-# Section 4.10: Geometric Objects
+# Section 4.5: Geometric Objects
 
 
 SECTION_GEOMETRIC_OBJECTS:
 
 
 
-test_4_10:
+test_4_5:
 	make elliptic_quadric_ovoid_q8
 	make ovoid_ST_q8
 	make Baer_PG_2_4
@@ -4973,7 +4638,6 @@ Edge_curve_q23_line_type:
 test_5:
 	make test_5_1
 	make test_5_2
-	make test_5_3
 
 
 
@@ -5550,20 +5214,6 @@ SECTION_MULTIVARIATE_POLYNOMIALS:
 
 test_5_2:
 	make parse_homogeneous_polynomial
-	make Fermat_cubic_F9
-	make Fermat_cubic_F9_monomials
-	make Fermat_cubic_F9_c
-	make Cremona_map
-	make quartic_curve_q13_f0_apply_transformation
-	make arcs_5_2_q11
-	make arcs_5_2_q11_ideal
-	make surface_9lines_4E_ideal
-	make F_9_q7
-	make random_k_subsets_PG_2_11
-	#make line_type_in_PG_2_11
-	make random_arc_5_2_q11_ideal
-	make Endrass_F7.txt
-	make octic_prepare
 	make affine_map_F5_0
 	make affine_map_F5_1
 	make affine_map_F5_2
@@ -5587,6 +5237,747 @@ parse_homogeneous_polynomial:
 			-ring_theoretic_activity \
 			-parse_equation_wo_parameters "eqn" "eqn" "y0^3+y1^3+y2^3" \
 		-end
+
+
+affine_map_F5_0:
+	$(ORBITER) -v 8 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-x^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 1, 0, 0, 0, 0 )
+
+affine_map_F5_1:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-1)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 1, 0, 0, 0 )
+
+affine_map_F5_2:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-2)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+#( 0, 0, 1, 0, 0 )
+
+affine_map_F5_3:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-3)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 1, 0 )
+
+
+
+affine_map_F5_4:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "1-(x-4)^4" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end
+
+
+#( 0, 0, 0, 0, 1 )
+
+
+
+permutation_polynomial_F5:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space -n 1 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 2 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_lex \
+			-variables "x,y" "x,y" \
+			-end \
+		-define Y0 -symbolic_object \
+			-field F \
+			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
+			-end \
+		-define Y -symbolic_object \
+			-field F \
+			-text "Y0" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-affine_map R Y "" \
+		-end \
+		-define Yx -symbolic_object \
+			-field F \
+			-expand Y \
+			-end \
+
+
+
+
+
+
+
+
+###############################################################################
+# Chapter 6 - Algebraic Geometry
+###############################################################################
+
+
+test_6:
+	make test_6_1
+	make test_6_2
+	make test_6_3
+	make test_6_4
+	make test_6_5
+	make test_6_6
+	make test_6_7
+
+
+
+###############################################################################
+# Section 6_1: The Grassmannian
+
+
+SECTION_GRASSMANNIAN:
+
+
+
+test_6_1:
+	make GR_3_2_2
+	make planes_in_pencil
+
+
+
+
+
+GR_3_2_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-report_Grassmannian 2 \
+		-end
+	$(PDFLATEX) Gr_3_2_2.tex 
+	$(OPEN) Gr_3_2_2.pdf
+
+
+
+
+
+
+planes_in_pencil:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-planes_through_line 0 \
+		-end
+
+
+
+###############################################################################
+# Section 6_2: Algebraic Sets
+
+
+SECTION_ALGEBRAIC_SETS:
+
+
+test_6_2:
+	make Fermat_curve_F7
+	make Hesse_pencil_F7
+	make surface_F9
+	make elliptic_curve_b1_c3_q11.txt
+	make EC_11.txt
+	make Hirschfeld_surface_q4.txt
+	make Hirschfeld_surface_q16.txt
+
+
+
+Fermat_curve_F7:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Fermat -symbolic_object \
+			-field F \
+			-text "y0^3+y1^3+y2^3" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Fermat "" \
+		-end
+
+
+Hesse_pencil_F7:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "y0,y1,y2" "y_0,y_1,y_2" \
+			-end \
+		-define Hesse_pencil -symbolic_object \
+			-field F \
+			-text "y0^3+y1^3+y2^3+y0*y1*y2" \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R Hesse_pencil "" \
+		-end
+
+
+surface_F9:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 9 -print_numerically -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-monomial_ordering_lex \
+			-variables "X0,X1,X2,X3" "X_0,X_1,X_2,X_3" \
+			-end \
+		-define surface_F9 -symbolic_object \
+			-field F \
+			-text $(SURFACE_F9_1_EQN) \
+			-end \
+		-with P -do \
+		-projective_space_activity \
+			-projective_variety R surface_F9 "" \
+		-end
+
+
+elliptic_curve_b1_c3_q11.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define EC -geometric_object P \
+			-elliptic_curve 1 3 \
+		-end \
+		-with EC -do -combinatorial_object_activity -save \
+		-end
+
+
+EC_11.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 11 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define EC -geometric_object P \
+			-projective_variety R \
+				"EC_11" "EC\_11" \
+				$(EC_11_EQUATION) \
+			-end \
+		-with EC -do -combinatorial_object_activity -save \
+		-end
+
+
+
+
+Hirschfeld_surface_q4.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define H4 -geometric_object P \
+			-projective_variety R \
+				"Hirschfeld_surface_q4" \
+				"Hirschfeld\_surface\_q4" \
+				$(HIRSCHFELD_SURFACE_EQUATION) \
+			-end \
+		-with H4 -do -combinatorial_object_activity -save \
+		-end
+
+# creates Hirschfeld_surface_q4.txt
+
+Hirschfeld_surface_q16.txt:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 16 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 4 \
+			-homogeneous_of_degree 3 \
+			-end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define H16 -geometric_object P \
+			-projective_variety R \
+				"Hirschfeld_surface_q16" \
+				"Hirschfeld\_surface\_q16" \
+				$(HIRSCHFELD_SURFACE_EQUATION) \
+			-end \
+		-with H16 -do -combinatorial_object_activity -save \
+		-end
+
+
+# the coefficient vector is given as a list of pairs. 
+# 165 = binomial(11,3)
+
+
+
+###############################################################################
+# Section 6.3: The Klein Quadric and Pluecker coordinates
+
+
+SECTION_KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
+
+
+test_6_3:
+	make GR_4_2_2
+
+
+GR_4_2_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-with P -do \
+		-projective_space_activity \
+			-report_Grassmannian 2 \
+		-end
+	$(PDFLATEX) Gr_4_2_2.tex 
+	$(OPEN) Gr_4_2_2.pdf
+
+
+
+
+
+###############################################################################
+# Section 6.4: Orthogonal spaces
+
+
+SECTION_ORTHOGONAL_SPACES:
+
+
+test_6_4:
+	make Op_4_2
+	make O_5_2_incidence_matrix.csv
+	make Op_6_2
+	make Op_6_2_incidence_matrix.csv
+	make Op_6_2_with_group
+	make Op_6_8
+	make Op_8_2
+	make Op_6_64
+	#make Op_6_64_line_rank_problem
+	make Op_6_64_line_rank
+	make Op_6_64_report
+	#make elliptic_quadric_subspace  fails
+	make BLT_database_7_1
+	make BLT_database_7_1_print
+	make Doily_W_2
+
+
+
+Op_4_2:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 4 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_4_2_report.tex 
+	$(OPEN) O_1_4_2_report.pdf
+
+
+O_5_2_incidence_matrix.csv:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 15 -end \
+		-define all_one_c -vector -repeat 1 15 -end \
+		-draw_matrix \
+			-input_csv_file O_5_2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 2 \
+				all_one_r all_one_c \
+		-end
+	$(OPEN) O_5_2_incidence_matrix_draw.bmp
+
+#O(5,2) projectively = Q(4,2) = (dual of) W(3,2) = W(3,2) 
+# recall that W(3,2) and Q(4,q) are self dual if q is even
+
+
+Op_6_2:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_2_report.tex 
+	$(OPEN) O_1_6_2_report.pdf
+
+
+Op_6_2_incidence_matrix.csv:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 35 -end \
+		-define all_one_c -vector -repeat 1 105 -end \
+		-draw_matrix \
+			-input_csv_file Op_6_2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 2 \
+				all_one_r all_one_c \
+		-end
+	$(OPEN) Op_6_2_incidence_matrix_draw.bmp
+
+
+Op_6_2_with_group:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_2_report.tex 
+	$(OPEN) O_1_6_2_report.pdf
+
+# problem:
+# error message:
+#stabilizer_chain_base_data::allocate_base_data degree is too large
+
+
+Op_6_8:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_8_report.tex
+	$(OPEN) O_1_6_8_report.pdf
+
+
+Op_8_2:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 8 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_8_2_report.tex 
+	$(OPEN) O_1_8_2_report.pdf
+
+
+Op_6_64:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_64_report.tex 
+	$(OPEN) O_1_6_64_report.pdf
+
+
+# problem, because we are trying to create PGL(6,64):
+
+Op_6_64_line_rank_problem:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-unrank_line_through_two_points 15447347 15225451 \
+		-end
+
+# use option -without_group to skip the group. This will work:
+
+Op_6_64_line_rank:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-unrank_line_through_two_points 15447347 15225451 \
+		-end
+
+# this will create a basic report without the group:
+
+Op_6_64_report:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal Do \
+		-end
+	$(PDFLATEX) O_1_6_64_report.tex
+	$(OPEN) O_1_6_64_report.pdf
+
+
+
+# ToDo: this command fails:
+
+elliptic_quadric_subspace:
+	$(ORBITER) -v 3 \
+		-define F -finite_field -q 5 -end \
+		-define v -vector -format 4 \
+			-dense "1,3,0,0,0,0, 0,0,1,0,0,0, 0,0,0,1,0,0, 0,0,0,0,1,1" \
+		-end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity \
+			-intersect_with_subspace v \
+		-end
+
+#We found that the intersection contains 26 points: 
+#( 2, 3, 1572, 100, 98, 116, 132, 1570, 1588, 1604, 1631, 1688, 1704, 1706, 1747, 1745, 1847, 1845, 1856, 1888, 1904, 1931, 1988, 2004, 2022, 2020 )
+
+
+
+BLT_database_7_1:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space -n 4 -field F -v 0 -end \
+		-define S -geometric_object P \
+			-BLT_database 1 \
+		-end \
+		-with S -do -combinatorial_object_activity -save \
+		-end
+
+# writes BLT_7_1.txt
+
+BLT_database_7_1_print:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 7 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define S -set -file_orbiter_format BLT_7_1.txt -end \
+		-with O -do -orthogonal_space_activity \
+			-print_points S -end
+	$(PDFLATEX) S_set_report.tex
+	$(OPEN) S_set_report.pdf
+
+
+
+# O(5,2) space:
+
+Doily_W_2:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-define W2_points -set -loop 0 15 1 -end \
+		-define W2_lines -set -loop 0 15 1 -end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_points W2_points \
+		-end \
+		-with O -do \
+		-orthogonal_space_activity \
+			-print_lines W2_lines \
+		-end
+	$(PDFLATEX) W2_points_set_report.tex
+	$(OPEN) W2_points_set_report.pdf
+	$(PDFLATEX) W2_lines_set_of_lines_report.tex
+	$(OPEN) W2_lines_set_of_lines_report.pdf
+
+
+# the output defines doily.csv
+
+
+
+
+
+###############################################################################
+# Section 6.5: Hermitian varieties
+
+
+SECTION_HERMITIAN_VARIETIES:
+
+test_6_5:
+	make H_2_4
+	make H_2_9
+	make H_3_4
+
+
+H_2_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_hermitian 2 -end
+	$(PDFLATEX) H_2_4.tex 
+	$(OPEN) H_2_4.pdf
+
+
+H_2_9:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 9 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_hermitian 2 -end
+	$(PDFLATEX) H_2_9.tex 
+	$(OPEN) H_2_9.pdf
+
+
+# 28 points: 6, 11, 9, 7, 14, 19, 17, 15, 80, 75, 78, 74, 35, 30, 33, 29, 62, 57, 60, 56, 26, 21, 24, 3, 37, 82, 64, 46 
+
+
+H_3_4:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_hermitian 3 -end
+	$(PDFLATEX) H_3_4.tex 
+	$(OPEN) H_3_4.pdf
+
+
+# H_3_4 = the Hirschfeld surface
+
+
+
+
+
+###############################################################################
+# Section 6.6: Algebraic Varieties
+
+test_6_6:
+	make Fermat_cubic_F9
+	make Fermat_cubic_F9_monomials
+	make Fermat_cubic_F9_c
+	make Cremona_map
+	make quartic_curve_q13_f0_apply_transformation
+	make arcs_5_2_q11
+	make arcs_5_2_q11_ideal
+	make surface_9lines_4E_ideal
+	make F_9_q7
+	make random_k_subsets_PG_2_11
+	#make line_type_in_PG_2_11
+	make random_arc_5_2_q11_ideal
+	make Endrass_F7.txt
+	make octic_prepare
+
+
 
 Fermat_cubic_F9:
 	$(ORBITER) -v 6 \
@@ -5958,181 +6349,14 @@ octic_prepare:
 
 
 
-affine_map_F5_0:
-	$(ORBITER) -v 8 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-x^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 1, 0, 0, 0, 0 )
-
-affine_map_F5_1:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-1)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 0, 1, 0, 0, 0 )
-
-affine_map_F5_2:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-2)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-#( 0, 0, 1, 0, 0 )
-
-affine_map_F5_3:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-3)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-
-#( 0, 0, 0, 1, 0 )
-
-
-
-affine_map_F5_4:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "1-(x-4)^4" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end
-
-
-#( 0, 0, 0, 0, 1 )
-
-
-
-permutation_polynomial_F5:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space -n 1 -field F -v 0 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 2 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_lex \
-			-variables "x,y" "x,y" \
-			-end \
-		-define Y0 -symbolic_object \
-			-field F \
-			-text "3*(1-x^4)+4*(1-(x-2)^4)+1*(1-(x-3)^4)+2*(1-(x-4)^4)" \
-			-end \
-		-define Y -symbolic_object \
-			-field F \
-			-text "Y0" \
-			-end \
-		-with P -do \
-		-projective_space_activity \
-			-affine_map R Y "" \
-		-end \
-		-define Yx -symbolic_object \
-			-field F \
-			-expand Y \
-			-end \
-
-
-
-
 
 
 ###############################################################################
-# Section 5.3: Algebraic Geometry
+# Section 6.7: Groups of Varieties
 
 
 
-test_5_3:
+test_6_7:
 	make curve_q13_f0_clean2_variety_compute_group
 	make Hirschfeld_q2_group
 	make Hirschfeld_q4_group
@@ -6280,28 +6504,28 @@ Veronese_1_3_q7:
 
 
 ###############################################################################
-# Chapter 6 - Group Theory
+# Chapter 7 - Group Theory
 ###############################################################################
 
 
-test_6:
-	make test_6_1
-	make test_6_2
-	make test_6_3
-	make test_6_4
-	make test_6_5
-	make test_6_6 # Magma stuff
-	make test_6_7 # gap stuff
-	make test_6_8 # Linear Groups, Advanced Topics
+test_7:
+	make test_7_1
+	make test_7_2
+	make test_7_3
+	make test_7_4
+	make test_7_5
+	make test_7_6 # Magma stuff
+	make test_7_7 # gap stuff
+	make test_7_8 # Linear Groups, Advanced Topics
 
 
 ###############################################################################
-# Section 6.1: Permutation groups
+# Section 7.1: Permutation groups
 
 
 SECTION_PERMUTATION_GROUPS:
 
-test_6_1:
+test_7_1:
 	make Cyclic_6
 	make Cyclic_6_from_generator
 	make Cyclic_6_group_table
@@ -6752,12 +6976,12 @@ Group_M12:
 
 
 ###############################################################################
-# Section 6.2: Linear Groups
+# Section 7.2: Linear Groups
 
 
 SECTION_LINEAR_GROUPS:
 
-test_6_2:
+test_7_2:
 	make PGL_2_3
 	make PGL_2_17
 	make PSL_2_17
@@ -7307,12 +7531,12 @@ M24_matrix_group:
 
 
 ###############################################################################
-# Section 6.3: Subgroups
+# Section 7.3: Subgroups
 
 SECTION_SUBGROUPS:
 
 
-test_6_3:
+test_7_3:
 	make C13
 	make C13_generated
 	make C13_as_subgroup
@@ -7793,13 +8017,13 @@ PGOp_6_2_linear_stab_6:
 
 
 ###############################################################################
-# Section 6.4: New Actions from Old
+# Section 7.4: New Actions from Old
 
 
 SECTION_NEW_ACTIONS_FROM_OLD:
 
 
-test_6_4:
+test_7_4:
 	make Cyclic_6_aut
 	make Elementary_abelian_8_aut
 	make Symmetric_4_on_pairs
@@ -8657,13 +8881,13 @@ group_U_4_3:
 
 
 ###############################################################################
-# Section 6.5: Group Theoretic Activities
+# Section 7.5: Group Theoretic Activities
 
 
 SECTION_GROUP_THEORETIC_ACTIVITIES:
 
 
-test_6_5:
+test_7_5:
 	make PGL_3_2_elements
 	make Sym_3_elements
 	make Cycle_13_power
@@ -8992,13 +9216,13 @@ PGL_2_3_subgroup_lattice_load_and_draw_by_orbits:
 
 
 ###############################################################################
-# Section 6.6: Group Theoretic Activities Based on Magma
+# Section 7.6: Group Theoretic Activities Based on Magma
 
 
 SECTION_GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
 
 
-test_6_6:
+test_7_6:
 	make PSP_4_4_export_magma
 	make PGGL_2_4_export_magma
 	make Hirschfeld_stab_export_magma
@@ -9505,12 +9729,12 @@ PGOm_6_2_Class_2A_centralizer_recover:
 
 
 ###############################################################################
-# Section 6.7: The GAP Interface
+# Section 7.7: The GAP Interface
 
 
 SECTION_GAP_INTERFACE:
 
-test_6_7:
+test_7_7:
 	make Hirschfeld_stab_export_gap
 	make Cyclic_6_canonical_image
 	make Edge_qurve_q17_canonical_image
@@ -9552,12 +9776,12 @@ Edge_qurve_q17_canonical_image:
 
 
 ###############################################################################
-# Section 6.8: Group Theory, Advanced Topics
+# Section 7.8: Group Theory, Advanced Topics
 
 
 SECTION_GROUP_THEORY_ADVANCED_TOPICS:
 
-test_6_8:
+test_7_8:
 	make U_3_3
 	make PGL_2_3_group_table
 	make Co3
@@ -9785,28 +10009,28 @@ Higman_Sims_subgroup_176b:
 
 
 ###############################################################################
-# Chapter 7 - Orbit Algorithms
+# Chapter 8 - Orbit Algorithms
 ###############################################################################
 
 
-test_7:
-	make test_7_1
-	make test_7_2
-	make test_7_3
-	make test_7_4
-	make test_7_5
-	make test_7_6
-	make test_7_7
+test_8:
+	make test_8_1
+	make test_8_2
+	make test_8_3
+	make test_8_4
+	make test_8_5
+	make test_8_6
+	make test_8_7
 
 
 ###############################################################################
-# Section 7.1: Orbit Algorithms
+# Section 8.1: Orbit Algorithms
 
 
 SECTION_ORBIT_ALGORITHMS_SCHREIER_TREES:
 
 
-test_7_1:
+test_8_1:
 	make orbits_PGL_4_2_on_points_draw_tree
 	make orbits_PGL_4_2_on_points_export_trees
 	make DD_PP4_orbit
@@ -10162,12 +10386,12 @@ PGGL_7_8_orbits:
 
 
 ###############################################################################
-# Section 7.2: Poset Classification
+# Section 8.2: Poset Classification
 
 
 SECTION_POSET_CLASSIFICATION:
 
-test_7_2:
+test_8_2:
 	make poset_of_4subsets
 	make poset_of_4subsets_draw
 	make poset_of_5subsets
@@ -10333,13 +10557,13 @@ V_4_2_trivial:
 
 
 ###############################################################################
-# Section 7.3: Orbits on Subsets
+# Section 8.3: Orbits on Subsets
 
 
 SECTION_ORBITS_ON_SUBSETS:
 
 
-test_7_3:
+test_8_3:
 	make PG_2_2_subsets
 	make PG_3_2_subsets
 	make PGL_3_2_singer
@@ -10715,13 +10939,13 @@ PGO_5_2_on_subsets:
 
 
 ###############################################################################
-# Section 7.4: Orbits on Subspaces
+# Section 8.4: Orbits on Subspaces
 
 
 SECTION_ORBITS_ON_SUBSPACES:
 
 
-test_7_4:
+test_8_4:
 	make PGL_5_3_wedge_subspace_orbits
 	make subspaces_Op_4_2
 	make PGL_4_2_on_subspaces
@@ -10945,14 +11169,14 @@ PGO_7_2_on_subspaces:
 
 
 ###############################################################################
-# Section 7.5: Orbits on set partitions
+# Section 8.5: Orbits on set partitions
 
 
 SECTION_ORBITS_ON_SET_PARTITIONS:
 
 
 
-test_7_5:
+test_8_5:
 	make C6_on_partition
 	make PGL_2_17_on_partition
 
@@ -10986,14 +11210,14 @@ PGL_2_17_on_partition:
 
 
 ###############################################################################
-# Section 7.6: Arcs and Caps in Projective Spaces
+# Section 8.6: Arcs and Caps in Projective Spaces
 
 
 SECTION_ARCS_AND_CAPS_IN_PROJECTIVE_SPACES:
 
 
 
-test_7_6:
+test_8_6:
 	make PGL_3_27
 	make hyperoval_4_classify
 	make hyperoval_8_classify
@@ -11282,13 +11506,13 @@ five_arcs_q13:
 
 
 ###############################################################################
-# Section 7.7: Cubic Curves
+# Section 8.7: Cubic Curves
 
 SECTION_CUBIC_CURVES:
 
 
 
-test_7_7:
+test_8_7:
 	make cubic_curves_PG_2_4
 	make poly_orbits_q4
 	#make cubic_curves_PG_2_9
@@ -11463,32 +11687,32 @@ curve_orbit:
 
 
 ###############################################################################
-# Chapter 8 - Cubic Surfaces
+# Chapter 9 - Cubic Surfaces
 ###############################################################################
 
 
-test_8:
-	make test_8_1
-	make test_8_2
-	make test_8_3
-	make test_8_4
-	make test_8_5
-	make test_8_6
-	make test_8_7
+test_9:
+	make test_9_1
+	make test_9_2
+	make test_9_3
+	make test_9_4
+	make test_9_5
+	make test_9_6
+	make test_9_7
 
 
 
 
 
 ###############################################################################
-# Section 8.1: Global Commands for Cubic Surfaces 
+# Section 9.1: Global Commands for Cubic Surfaces 
 
 
 SECTION_CUBIC_SURFACES_GLOBAL:
 
 
 
-test_8_1:
+test_9_1:
 	make surface_4_0_lines_vs_lines
 	make surface_4_0_lines_vs_tritangent_planes
 	make surface_4_0_dot_products_columns
@@ -11616,14 +11840,14 @@ surface_4_0_single_six_times_lines_vs_lines_rowspan:
 
 
 ###############################################################################
-# Section 8.2: Cubic Surfaces Creation
+# Section 9.2: Cubic Surfaces Creation
 
 
 SECTION_CUBIC_SURFACES_CREATION:
 
 
 
-test_8_2:
+test_9_2:
 	make surface_4_0
 	make Family_general_F7
 	make surface_eckardt_13_4_12
@@ -11632,6 +11856,7 @@ test_8_2:
 	make surface_F_abcd_Eckardt_q31_by_equation
 	make Eckardt_13_by_arc_lifting
 	make surface_F_abcd_Eckardt_q31_by_symbolic_object
+	make Dickson6_q2
 
 
 
@@ -11743,17 +11968,36 @@ surface_F_abcd_Eckardt_q31_by_symbolic_object:
 
 
 
+Dickson6_q2:
+	$(ORBITER) -v 10 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 -nodes_empty \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space -n 3 -field F -v 0 -end \
+		-define S -cubic_surface \
+			-space P -by_coefficients $(Dickson6) \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report Do \
+		-end
+	pdflatex surface_by_coefficients_q2_report.tex
+	open surface_by_coefficients_q2_report.pdf
+
+
+
 
 
 ###############################################################################
-# Section 8.3: Cubic Surface Activities
+# Section 9.3: Cubic Surface Activities
 
 
 SECTION_CUBIC_SURFACE_ACTIVITIES:
 
 
 
-test_8_3:
+test_9_3:
 	make surface_4_0_report
 	make surface_4_0_clean_report
 	make surface_4_0_export
@@ -12637,13 +12881,13 @@ surface_11_1:
 	$(OPEN) surface_catalogue_q11_iso1_report.pdf
 
 ###############################################################################
-# Section 8.4: Classification of Cubic Surfaces with 27 lines
+# Section 9.4: Classification of Cubic Surfaces with 27 lines
 
 
 SECTION_CLASSIFICATION_OF_CUBIC_SURFACES_WITH_27_LINES:
 
 
-test_8_4:
+test_9_4:
 	make surface_classify_q4
 	make surface_classify_q4_arc_lifting_two_lines
 	make surface_classify_q7
@@ -12982,13 +13226,13 @@ Family_general_F11_iso_test:
 
 
 ###############################################################################
-# Section 8.5: Quartic Curves Creation
+# Section 9.5: Quartic Curves Creation
 
 
 SECTION_QUARTIC_CURVES_CREATION:
 
 
-test_8_5:
+test_9_5:
 	make quartic_curve_9_0
 	make quartic_curve_edge_q9
 	make surface_7_0_make_quartic_curves
@@ -13268,13 +13512,13 @@ quartic_curve_q13_f1_from_variety:
 
 
 ###############################################################################
-# Section 8.6: Quartic Curve Activities
+# Section 9.6: Quartic Curve Activities
 
 
 SECTION_QUARTIC_CURVE_ACTIVITIES:
 
 
-test_8_6:
+test_9_6:
 	make quartic_curves_q7
 	make quartic_curves_q13
 	make quartic_curves_q19
@@ -13344,12 +13588,12 @@ quartic_curves_q19:
 
 
 ###############################################################################
-# Section 8.7: Interfaces
+# Section 9.7: Interfaces
 
 SECTION_CUBIC_SURFACES_INTERFACES:
 
 
-test_8_7:
+test_9_7:
 	make surface_4_0_export_gap
 
 surface_4_0_export_gap:
@@ -13366,25 +13610,25 @@ surface_4_0_export_gap:
 
 
 ###############################################################################
-# Chapter 9 - Applications
+# Chapter 10 - Applications
 ###############################################################################
 
 
-test_9:
-	make test_9_1
-	make test_9_2
-	make test_9_3
+test_10:
+	make test_10_1
+	make test_10_2
+	make test_10_3
 
 
 
 ###############################################################################
-# Section 9.1: Number Theory
+# Section 10.1: Number Theory
 
 
 SECTION_NUMBER_THEORY:
 
 
-test_9_1:
+test_10_1:
 	make PR101
 	make PR101_smallest
 	make PR29
@@ -13689,12 +13933,12 @@ Chinese_remainders_C3:
 
 
 ###############################################################################
-# Section 9.2: Representation Theory
+# Section 10.2: Representation Theory
 
 SECTION_REPRESENTATION_THEORY:
 
 
-test_9_2:
+test_10_2:
 	make representation_on_polynomials_of_degree_3
 	make representation_tetrahedral_group_on_polynomials_of_degree_3
 
@@ -13751,14 +13995,14 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 
 
 ###############################################################################
-# Section 9.3: Cryptography 
+# Section 10.3: Cryptography 
 
 
 SECTION_CRYPTOGRAPHY:
 
 
 
-test_9_3:
+test_10_3:
 	make EC_add
 	make EC_cyclic_subgroup
 	make EC_points_13
@@ -14366,31 +14610,31 @@ power_mod_211:
 
 
 ###############################################################################
-# Chapter 10 - Coding Theory
+# Chapter 11 - Coding Theory
 ###############################################################################
 
 
-test_10:
-	make test_10_1
-	make test_10_2
-	make test_10_3
-	make test_10_4
-	make test_10_5
-	make test_10_6
-	make test_10_7
-	make test_10_8
-	make test_10_9
-	make test_10_10
+test_11:
+	make test_11_1
+	make test_11_2
+	make test_11_3
+	make test_11_4
+	make test_11_5
+	make test_11_6
+	make test_11_7
+	make test_11_8
+	make test_11_9
+	make test_11_10
 
 
 
 
 ###############################################################################
-# Section 10.1: Coding Theory
+# Section 11.1: Coding Theory
 
 SECTION_CODING_THEORY_INTRODUCTION:
 
-test_10_1:
+test_11_1:
 	make Allen_Gates_noise_1_percent
 	make Hamming_space_4_2_distance_matrix
 	make Hamming_space_4_2_distance_matrix_draw
@@ -14505,14 +14749,14 @@ Sylvester_Hadamard_code_8:
 
 
 ###############################################################################
-# Section 10.2: Linear codes
+# Section 11.2: Linear codes
 
 SECTION_CODING_THEORY_LINEAR_CODES:
 
 
 
 
-test_10_2:
+test_11_2:
 	make RM_3_1
 	make code_6
 	make simplex_code
@@ -14875,12 +15119,12 @@ Hamming_nullspace:
 
 
 ###############################################################################
-# Section 10.3: Coding Theory - Golay codes
+# Section 11.3: Coding Theory - Golay codes
 
 SECTION_CODING_THEORY_GOLAY_CODES:
 
 
-test_10_3:
+test_11_3:
 	make Golay23_code_words
 	make Golay23_code_diagram
 	#make Golay23_code_diagram_draw
@@ -15259,12 +15503,12 @@ Golay24_2A_fix_weight12_graph_24:
 
 
 ###############################################################################
-# Section 10.4: Coding Theory - CRC codes
+# Section 11.4: Coding Theory - CRC codes
 
 SECTION_CODING_THEORY_CRC_CODES:
 
 
-test_10_4:
+test_11_4:
 	#make CRC_3_128_10 # too slow
 	make crc32_test
 	make crc32_test_hexdata
@@ -15691,14 +15935,14 @@ crc_encode_32:
 
 
 ###############################################################################
-# Section 10.5: Coding Theory - Reed-Muller codes
+# Section 11.5: Coding Theory - Reed-Muller codes
 
 SECTION_CODING_THEORY_REED_MULLER_CODES:
 
 
 
 
-test_10_5:
+test_11_5:
 	make RM_3_export
 	make RM_3_Hamming_space_diagram
 	make RM_3_draw
@@ -15889,12 +16133,12 @@ RM_6_codewords_draw:
 
 
 ###############################################################################
-# Section 10.6: Coding Theory - BCH Codes
+# Section 11.6: Coding Theory - BCH Codes
 
 SECTION_CODING_THEORY_BCH_CODES:
 
 
-test_10_6:
+test_11_6:
 	make draw_cyclotomic_mod_51_q16
 	make draw_cyclotomic_mod_21_q8
 	make F_8_BCH_code_d3
@@ -16428,12 +16672,12 @@ BCH_F256_BCH_code_d16:
 
 
 ###############################################################################
-# Section 10.7: Coding Theory - Reed Solomon codes
+# Section 11.7: Coding Theory - Reed Solomon codes
 
 SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 
 
-test_10_7:
+test_11_7:
 	make RS_6_3
 	make RS_6_3_weight_enumerator
 	make RREF_RS_6_4_7_weight_enumerator
@@ -16590,12 +16834,12 @@ RS_7_3_reduced_weight_enumerator:
 
 
 ###############################################################################
-# Section 10.8: Coding Theory - Twisted tensor product codes
+# Section 11.8: Coding Theory - Twisted tensor product codes
 
 SECTION_CODING_THEORY_TWISTED_TENSOR_PRODUCT_CODES:
 
 
-test_10_8:
+test_11_8:
 		make TTP_A_4
 
 
@@ -16616,12 +16860,12 @@ TTP_A_4:
 
 
 ###############################################################################
-# Section 10.9: Coding Theory - Bounds
+# Section 11.9: Coding Theory - Bounds
 
 SECTION_CODING_THEORY_BOUNDS:
 
 
-test_10_9:
+test_11_9:
 	make bounds_for_d_given_n6_k4_q7
 	make bounds_for_d_given_n15_k6_q2
 	make coding_theory_bounds_q2
@@ -16751,11 +16995,11 @@ code_n15_k6_d6_check_RREF:
 
 
 ###############################################################################
-# Section 10.10: Coding Theory - Classification
+# Section 11.10: Coding Theory - Classification
 
 SECTION_CODING_THEORY_CLASSIFICATION:
 
-test_10_10:
+test_11_10:
 	make codes_8_4_4
 	#make codes_8_4_4_draw
 	#make codes_14_4_9_3
@@ -16970,29 +17214,29 @@ codes_q13_12_4:
 
 
 ###############################################################################
-# Chapter 11 - Combinatorics
+# Chapter 12 - Combinatorics
 ###############################################################################
 
 
 
-test_11:
-	make test_11_1
-	make test_11_2
-	make test_11_3
-	make test_11_4 # slow
-	make test_11_5 # slow
+test_12:
+	make test_12_1
+	make test_12_2
+	make test_12_3
+	make test_12_4 # slow
+	make test_12_5 # slow
 
 
 
 ###############################################################################
-# Section 11.1: Combinatorics
+# Section 12.1: Combinatorics
 
 
 SECTION_COMBINATORICS:
 	
 
 
-test_11_1:
+test_12_1:
 	make Sym_4_conj_classes
 	make Sym_10_conj_classes
 	make Sym_15_conj_classes
@@ -17122,12 +17366,12 @@ domino_portrait_input:
 
 
 ###############################################################################
-# Section 11.2: Combinatorial Objects
+# Section 12.2: Combinatorial Objects
 
 SECTION_COMBINATORIAL_OBJECTS:
 
 
-test_11_2:
+test_12_2:
 	make Hirschfeld_q4_from_set
 	make hyperoval_16_create
 	make EC_read
@@ -17274,12 +17518,12 @@ Neumaier_graph_25:
 
 
 ###############################################################################
-# Section 11.3: Combinatorial Linear Spaces
+# Section 12.3: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 
-test_11_3:
+test_12_3:
 	make linsp6
 	make linsp7
 	make linsp30_pt_types
@@ -17364,9 +17608,9 @@ linsp30_pt_distribution:
 
 
 ###############################################################################
-# Section 11.4: Combinatorial Linear Spaces
+# Section 12.4: Combinatorial Linear Spaces
 
-test_11_4:
+test_12_4:
 	make geo_pasch
 	make geo_petersen
 	make geo_7_3
@@ -18077,11 +18321,11 @@ geo_MOL6.inc:
 
 
 ###############################################################################
-# Section 11.5: Tactical Decompositions
+# Section 12.5: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
-test_11_5:
+test_12_5:
 	make max_arc_16_4_start
 	make max_arc_16_4_convert_stack_tdo
 	make max_arc_16_4_refine
@@ -18107,24 +18351,24 @@ max_arc_16_4r_print:
 
 
 ###############################################################################
-# Chapter 12 - Graph Theory
+# Chapter 13 - Graph Theory
 ###############################################################################
 
 
-test_12:
-	make test_12_1
-	make test_12_2
-	make test_12_3
+test_13:
+	make test_13_1
+	make test_13_2
+	make test_13_3
 
 
 ###############################################################################
-# Section 12.1: Creating Graphs
+# Section 13.1: Creating Graphs
 
 
 SECTION_CREATING_GRAPHS:
 
 
-test_12_1:
+test_13_1:
 	make Cycle_graph_13
 	make make_triangle_graph
 	make Chain_232
@@ -18433,13 +18677,13 @@ Higman_Sims_graph:
 
 
 ###############################################################################
-# Section 12.2: Graph Theoretic Activities
+# Section 13.2: Graph Theoretic Activities
 
 
 SECTION_GRAPH_THEORETIC_ACTIVITIES:
 
 
-test_12_2:
+test_13_2:
 	make triangle_graph_properties
 	make Cycle_13_draw
 	make Cycle_9_eigenvalues
@@ -18881,13 +19125,13 @@ Paulus_15_aut:
 
 
 ###############################################################################
-# Section 12.3: Graph Theory: Classification
+# Section 13.3: Graph Theory: Classification
 
 
 SECTION_GRAPH_THEORY_CLASSIFICATION:
 
 
-test_12_3:
+test_13_3:
 	make graph_classify_5
 	make tournament_classify_4
 	make graph_classify_8_r3
@@ -19040,27 +19284,27 @@ Symmetric_5_inversion_graph_recognize:
 
 
 ###############################################################################
-# Chapter 13 - Design Theory
+# Chapter 14 - Design Theory
 ###############################################################################
 
 
 
-test_13:
-	make test_13_1
-	make test_13_2
-	make test_13_3
-	make test_13_4
+test_14:
+	make test_14_1
+	make test_14_2
+	make test_14_3
+	make test_14_4
 
 
 
 
 ###############################################################################
-# Section 13.1: Design Theory
+# Section 14.1: Design Theory
 
 SECTION_DESIGN_THEORY:
 
 
-test_13_1:
+test_14_1:
 	make design_PG_2_3
 	make design_PG_2_4
 	make wreath_product_designs_n4_k2_inc.txt
@@ -19225,11 +19469,11 @@ LSQ_5_c:
 
 
 ###############################################################################
-# Section 13.2: Assuming Symmetry
+# Section 14.2: Assuming Symmetry
 
 SECTION_ASSUMING_SYMMETRY:
 
-test_13_2:
+test_14_2:
 	make KM_cyclic_7
 	make KM_PGGL_2_32
 	#make KM_PGGL_2_32_solve
@@ -19579,11 +19823,11 @@ Witt_design_on_22_points:
 
 
 ###############################################################################
-# Section 13.3: Design Theory - Large Sets
+# Section 14.3: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
-test_13_3:
+test_14_3:
 	make AG_2_3.inc
 	make LS_AG_2_3_design_table_create
 	make AG_2_3_on_designs
@@ -19815,11 +20059,11 @@ design_PG_2_3_group_5_sol_0:
 
 
 ###############################################################################
-# Section 13.4: Design Theory - Delandtsheer Doyen
+# Section 14.4: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
-test_13_4:
+test_14_4:
 	make DD_PP4
 	make DD_PP4_span_design
 	make DD_PP4_design_orbit
@@ -19904,25 +20148,25 @@ PG_2_27_special:
 
 
 ###############################################################################
-# Chapter 14 - Finite Geometry
+# Chapter 15 - Finite Geometry
 ###############################################################################
 
 
-test_14:
-	make test_14_1
-	make test_14_2
-	make test_14_3
-	make test_14_4
+test_15:
+	make test_15_1
+	make test_15_2
+	make test_15_3
+	make test_15_4
 
 
 
 
 ###############################################################################
-# Section 14.1: Spreads
+# Section 15.1: Spreads
 
 SECTION_SPREADS:
 
-test_14_1:
+test_15_1:
 	make create_spread_9a
 	make create_spread_9b
 	make create_spread_25_7
@@ -20554,13 +20798,13 @@ create_spread_27_6:
 
 
 ###############################################################################
-# Section 14.2: Translation planes
+# Section 15.2: Translation planes
 
 
 SECTION_TRANSLATION_PLANES:
 
 
-test_14_2:
+test_15_2:
 	make create_translation_plane_9b
 	make create_translation_plane_16_4_0
 	make create_translation_plane_16_2_0
@@ -20870,13 +21114,13 @@ translation_plane_27_6_orbits:
 
 
 ###############################################################################
-# Section 14.3: Packings
+# Section 15.3: Packings
 
 
 SECTION_PACKINGS:
 
 
-test_14_3:
+test_15_3:
 	#make spread_table_PG_3_4 # slow
 	make spread_table_PG_3_5_regular
 	make PG_3_5_element_of_order_31_GL_normalizer
@@ -21083,12 +21327,12 @@ no:
 
 
 ###############################################################################
-# Section 14.4: BLT-sets
+# Section 15.4: BLT-sets
 
 SECTION_BLT_SETS:
 
 
-test_14_4:
+test_15_4:
 	make BLT_5_1
 	make BLT_5_1_export_gap
 	make BLT_5_Linear
@@ -21530,27 +21774,27 @@ blt_set_export_gap_all:
 
 
 ###############################################################################
-# Chapter 15 - Computer Science Primitives
+# Chapter 16 - Computer Science Primitives
 ###############################################################################
 
 
 
-test_15:
-	make test_15_1
-	make test_15_2
-	make test_15_3
+test_16:
+	make test_16_1
+	make test_16_2
+	make test_16_3
 
 
 
 
 ###############################################################################
-# Section 15.1: Clique finding
+# Section 16.1: Clique finding
 
 
 SECTION_GRAPH_THEORY_CLIQUE_FINDING:
 
 
-test_15_1:
+test_16_1:
 	make small_graph_cliques
 	make BLT_q13_graph_5_0_cliques_bw
 	make BLT_q13_graph_5_0_cliques_rainbow
@@ -21896,13 +22140,13 @@ Op_4_2_affine_polar_graph_cliques_4:
 
 
 ###############################################################################
-# Section 15.2: Rainbow cliques
+# Section 16.2: Rainbow cliques
 
 
 SECTION_GRAPH_THEORY_RAINBOW_CLIQUES:
 
 
-test_15_2:
+test_16_2:
 	make BLT_11_classify_starter
 	make BLT_11_clique_0
 	make BLT_11_clique_0_Sajeeb
@@ -21987,12 +22231,12 @@ BLT_11_0_sorted_draw:
 
 
 ###############################################################################
-# Section 15.3: Diophantine Systems
+# Section 16.3: Diophantine Systems
 
 SECTION_DIOPHANT:
 
 
-test_15_3:
+test_16_3:
 	make part10
 	make octic_monomials
 	make solve_test_system
@@ -22103,24 +22347,24 @@ solve_praeger_design_line_type_system:
 
 
 ###############################################################################
-# Chapter 16 - Canonical Forms with Nauty 
+# Chapter 17 - Canonical Forms with Nauty 
 ###############################################################################
 
 
 
-test_16:
-	make test_16_2
-	make test_16_3
-	make test_16_4
-	make test_16_5
-	make test_16_6
-	make test_16_7
-	make test_16_8
+test_17:
+	make test_17_2
+	make test_17_3
+	make test_17_4
+	make test_17_5
+	make test_17_6
+	make test_17_7
+	make test_17_8
 
 
 
 ###############################################################################
-# Section 16.1: Overview of Canonical Forms
+# Section 17.1: Overview of Canonical Forms
 
 
 SECTION_OVERVIEW_CANONICAL_FORMS:
@@ -22130,13 +22374,13 @@ SECTION_OVERVIEW_CANONICAL_FORMS:
 
 
 ###############################################################################
-# Section 16.2: Objects in projective Space
+# Section 17.2: Objects in projective Space
 
 
 SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
 
 
-test_16_2:
+test_17_2:
 	make quadrangles_PG_2_2
 	make Barth_mod_11_singular_pts_c
 	make quartic_curves_q13_classify_nauty
@@ -22977,14 +23221,14 @@ Veronese_1_3_q7_c:
 
 
 ###############################################################################
-# Section 16.3: Incidence Geometries
+# Section 17.3: Incidence Geometries
 
 
 SECTION_INCIDENCE_GEOMETRIES:
 
 
 
-test_16_3:
+test_17_3:
 	make geo_7_3_c
 	make geo_10_3_c
 	make geo_10_3_c_lex_least
@@ -23445,13 +23689,13 @@ geo_LSQ6_c:
 
 
 ###############################################################################
-# Section 16.4: Objects from Design Theory
+# Section 17.4: Objects from Design Theory
 
 
 SECTION_OBJECTS_FROM_DESIGN_THEORY:
 
 
-test_16_4:
+test_17_4:
 	make LS_AG_2_3_solutions_classify # needs Section 13.3
 	make design_27c
 	make design_PG_2_3_canonical
@@ -23697,13 +23941,13 @@ neumaier_graphs_16_classify:
 
 
 ###############################################################################
-# Section 16.5: Linear Codes
+# Section 17.5: Linear Codes
 
 
 SECTION_CANONICAL_FORMS_OF_LINEAR_CODES:
 
 
-test_16_5:
+test_17_5:
 	make code_3_2_aut
 	make code_6_3_aut
 	make RM_3_1_group
@@ -23937,12 +24181,12 @@ code_n15_k6_d6_b_group:
 
 
 ###############################################################################
-# Section 16.6: General Codes
+# Section 17.6: General Codes
 
 
 SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
 
-test_16_6:
+test_17_6:
 	make Hamming_graph_7_with_Hamming_code
 
 
@@ -23969,13 +24213,13 @@ Hamming_graph_7_with_Hamming_code:
 
 
 ###############################################################################
-# Section 16.7: Graphs
+# Section 17.7: Graphs
 
 
 SECTION_CANONICAL_FORMS_OF_GRAPHS:
 
 
-test_16_7:
+test_17_7:
 	make Cycle_13_aut
 	make Neumaier_16_aut
 	make Queens_graph_aut
@@ -24394,13 +24638,13 @@ Neumaier_graph_25_c:
 
 
 ###############################################################################
-# Section 16.8: Quartic Curves
+# Section 17.8: Quartic Curves
 
 
 SECTION_CANONICAL_FORMS_OF_QUARTIC_CURVES:
 
 
-test_16_8:
+test_17_8:
 	make F_17_edge
 	make Edge_curve_17_nauty
 	make Edge_curve_17_group
@@ -24500,23 +24744,23 @@ Edge_curve_17_group:
 
 
 ###############################################################################
-# Chapter 17 - Applied Algebra
+# Chapter 18 - Applied Algebra
 ###############################################################################
 
 
-test_17:
-	make test_17_1
+test_18:
+	make test_18_1
 
 
 
 ###############################################################################
-# Section 17.1: Automorphism group of Sym(6)
+# Section 18.1: Automorphism group of Sym(6)
 
 SECTION_MISCELLANEOUS:
 
 
 
-test_17_1:
+test_18_1:
 	make Sym_6
 	make Sym_6_classes
 	make Sym_6_Class_2A
@@ -24837,25 +25081,25 @@ Aut_Sym_6_subgroup_lattice_load_and_draw:
 
 
 ###############################################################################
-# Chapter 18 - Interfaces
+# Chapter 19 - Interfaces
 ###############################################################################
 
 
-test_18:
-	make test_18_1
-	make test_18_2
-	make test_18_3
-	make test_18_4
-	make test_18_5
+test_19:
+	make test_19_1
+	make test_19_2
+	make test_19_3
+	make test_19_4
+	make test_19_5
 
 
 ###############################################################################
-# Section 18.1: Graphical Output
+# Section 19.1: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 
 
-test_18_1:
+test_19_1:
 	make PGL_6_2_Wedge_4_2_detached_report.tex
 	make schreier_tree_graphical_output
 	make Queens_graph_again
@@ -24920,12 +25164,12 @@ Queens_graph_again:
 
 
 ###############################################################################
-# Section 18.2: The Povray Interface
+# Section 19.2: The Povray Interface
 
 
 SECTION_POVRAY:
 
-test_18_2:
+test_19_2:
 	make cube
 	make math261_test
 	make plane1
@@ -25408,12 +25652,12 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Section 18.3: Creating Animations
+# Section 19.3: Creating Animations
 
 SECTION_ANIMATIONS:
 
 
-test_18_3:
+test_19_3:
 	make dode
 	make dode_video
 	make monkey_video
@@ -25854,7 +26098,7 @@ McKean_video:
 
 
 ###############################################################################
-# Section 18.4: Continuous Function Plotter
+# Section 19.4: Continuous Function Plotter
 
 
 
@@ -25862,7 +26106,7 @@ SECTION_CONTINUOUS_FUNCTION_PLOTTER:
 
 
 
-test_18_4:
+test_19_4:
 	make lissajous
 	make lissajous_plot
 	make lissajous_3d
@@ -25974,7 +26218,7 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 ###############################################################################
-# Section 18.5: Gnuplot interface
+# Section 19.5: Gnuplot interface
 
 
 
@@ -25982,7 +26226,7 @@ SECTION_GNUPLOT_INTERFACE:
 
 
 
-test_18_5:
+test_19_5:
 	make gnuplot_test_data
 	make gnuplot_Eulerfunction_50
 
@@ -26009,22 +26253,22 @@ gnuplot_Eulerfunction_50:
 
 
 ###############################################################################
-# Chapter 19 - Mathematical Data in Orbiter
+# Chapter 20 - Mathematical Data in Orbiter
 ###############################################################################
 
 
-test_19:
-	make test_19_1
-	make test_19_2
+test_20:
+	make test_20_1
+	make test_20_2
 
 
 ###############################################################################
-# Section 19.1: Mathematical Data on Cubic Surfaces
+# Section 20.1: Mathematical Data on Cubic Surfaces
 
 SECTION_MATHEMATICAL_DATA:
 
 
-test_19_1:
+test_20_1:
 	make make_table_of_surfaces
 	make make_table_of_quartic_curves
 	make cubic_surfaces_table_q17
@@ -26073,12 +26317,12 @@ quartic_curves_table_q17:
 
 
 ###############################################################################
-# Section 19.2: Mathematical Data on BLT-Sets
+# Section 20.2: Mathematical Data on BLT-Sets
 
 SECTION_MATHEMATICAL_DATA:
 
 
-test_19_2:
+test_20_2:
 	make blt_set_table_q7
 	make blt_set_table_q9
 	make blt_set_table_q13
@@ -26156,24 +26400,24 @@ blt_set_export_gap:
 
 
 ###############################################################################
-# Chapter 20 - Miscellaneous
+# Chapter 21 - Miscellaneous
 ###############################################################################
 
 
-test_20:
-	make test_20_1
-	make test_20_2
+test_21:
+	make test_21_1
+	make test_21_2
 
 
 
 ###############################################################################
-# Section 20.1: Miscellaneous
+# Section 21.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
 
 
-test_20_1:
+test_21_1:
 	make misc_select
 	make misc_join
 	make table_mod_12
@@ -26215,11 +26459,11 @@ table_mod_12:
 
 
 ###############################################################################
-# Section 20.2: Limitations
+# Section 21.2: Limitations
 
 SECTION_LIMITATIONS:
 
-test_20_2:
+test_21_2:
 	make F_15bit
 	make F_31bit
 	#make F_32bit

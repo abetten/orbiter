@@ -331,7 +331,8 @@ void variety_object::parse_equation_by_coefficients(
 		cout << "variety_object::parse_equation_by_coefficients" << endl;
 	}
 	if (f_v) {
-		cout << "variety_object::parse_equation_by_coefficients equation = " << equation_txt << endl;
+		cout << "variety_object::parse_equation_by_coefficients "
+				"equation = " << equation_txt << endl;
 	}
 	if (f_v) {
 		cout << "variety_object::parse_equation_by_coefficients "
@@ -365,7 +366,8 @@ void variety_object::parse_equation_in_algebraic_form(
 		cout << "variety_object::parse_equation_in_algebraic_form" << endl;
 	}
 	if (f_v) {
-		cout << "variety_object::parse_equation_in_algebraic_form equation = " << equation_txt << endl;
+		cout << "variety_object::parse_equation_in_algebraic_form "
+				"equation = " << equation_txt << endl;
 	}
 
 	//if (std::isalpha(equation_txt[0])) {
@@ -441,7 +443,8 @@ void variety_object::parse_equation_in_algebraic_form_with_parameters(
 		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters" << endl;
 	}
 	if (f_v) {
-		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters equation = " << equation_txt << endl;
+		cout << "variety_object::parse_equation_in_algebraic_form_with_parameters "
+				"equation = " << equation_txt << endl;
 	}
 
 	//if (std::isalpha(equation_txt[0])) {

@@ -576,7 +576,6 @@ public:
 	void nauty_interface(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,
@@ -585,7 +584,6 @@ public:
 	void nauty_interface_with_precomputed_data(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,
@@ -594,7 +592,6 @@ public:
 	void nauty_interface_from_scratch(
 			canonical_form::variety_object_with_action *Variety_object_with_action,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			groups::strong_generators *&Set_stab,
 			other::data_structures::bitvector *&Canonical_form,
 			other::l1_interfaces::nauty_output *&NO,

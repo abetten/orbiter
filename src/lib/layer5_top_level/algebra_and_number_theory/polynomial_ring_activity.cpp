@@ -80,7 +80,8 @@ void polynomial_ring_activity::perform_activity(
 	else if (Descr->f_export_partials) {
 
 		if (f_v) {
-			cout << "polynomial_ring_activity::perform_activity f_export_partials" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"f_export_partials" << endl;
 		}
 
 		algebra::ring_theory::ring_theory_global RT;
@@ -129,8 +130,10 @@ void polynomial_ring_activity::perform_activity(
 	}
 	else if (Descr->f_apply_transformation) {
 		if (f_v) {
-			cout << "polynomial_ring_activity::perform_activity f_apply_transformation" << endl;
-			cout << "polynomial_ring_activity::perform_activity vector of group elements " << Descr->apply_transformation_vector_ge_label << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"f_apply_transformation" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"vector of group elements " << Descr->apply_transformation_vector_ge_label << endl;
 		}
 
 		apps_algebra::vector_ge_builder *VB;
@@ -144,13 +147,15 @@ void polynomial_ring_activity::perform_activity(
 		V = VB->V;
 
 		if (f_v) {
-			cout << "polynomial_ring_activity::perform_activity the input vector has length " << V->len << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"the input vector has length " << V->len << endl;
 		}
 
 		A = V->A;
 
 		if (f_v) {
-			cout << "polynomial_ring_activity::perform_activity the input vector has length " << V->len << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"the input vector has length " << V->len << endl;
 			cout << "Group elements:" << endl;
 			for (i = 0; i < V->len; i++) {
 				cout << i << " / " << V->len << ":" << endl;
@@ -165,7 +170,10 @@ void polynomial_ring_activity::perform_activity(
 		int sz;
 
 
-		Get_int_vector_from_label(Descr->apply_transformation_Eqn_in_label, Eqn_in, sz, 0 /* verbose_level */);
+		Get_int_vector_from_label(
+				Descr->apply_transformation_Eqn_in_label,
+				Eqn_in, sz,
+				0 /* verbose_level */);
 		//Int_vec_scan(Descr->apply_transformation_Eqn_in_label, Eqn_in, sz);
 
 		if (f_v) {
@@ -175,7 +183,8 @@ void polynomial_ring_activity::perform_activity(
 		}
 
 		if (sz != HPD->get_nb_monomials()) {
-			cout << "polynomial_ring_activity::perform_activity the equation does not have the right amount of coefficients" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"the equation does not have the right amount of coefficients" << endl;
 			cout << "have: " << sz << endl;
 			cout << "need: " << HPD->get_nb_monomials() << endl;
 			exit(1);
@@ -202,27 +211,32 @@ void polynomial_ring_activity::perform_activity(
 
 		for (i = 0; i < V->len; i++) {
 			if (f_v) {
-				cout << "polynomial_ring_activity::perform_activity i=" << i << " / " << V->len << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"i=" << i << " / " << V->len << endl;
 				cout << "Group element:" << endl;
 				A->Group_element->element_print_quick(V->ith(i), cout);
 			}
 
 			if (f_v) {
-				cout << "polynomial_ring_activity::perform_activity before element_invert" << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"before element_invert" << endl;
 			}
 
 			A->Group_element->element_invert(V->ith(i), Elt_inv, 0);
 			if (f_v) {
-				cout << "polynomial_ring_activity::perform_activity after element_invert" << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"after element_invert" << endl;
 			}
 
 			if (f_v) {
-				cout << "polynomial_ring_activity::perform_activity before substitute_linear" << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"before substitute_linear" << endl;
 			}
 			HPD->substitute_linear(Eqn_in /* coeff_in */, Eqn_out /* coeff_out */,
 					Elt_inv /* Mtx_inv */, 0/*verbose_level*/);
 			if (f_v) {
-				cout << "polynomial_ring_activity::perform_activity after substitute_linear" << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"after substitute_linear" << endl;
 			}
 
 			HPD->get_F()->Projective_space_basic->PG_element_normalize_from_front(
@@ -290,7 +304,10 @@ void polynomial_ring_activity::perform_activity(
 		int *eqn;
 		int sz;
 
-		Get_int_vector_from_label(Descr->print_equation_input, eqn, sz, 0 /* verbose_level */);
+		Get_int_vector_from_label(
+				Descr->print_equation_input,
+				eqn, sz,
+				0 /* verbose_level */);
 
 		HPD->print_equation_tex(cout, eqn);
 		cout << endl;

@@ -922,6 +922,39 @@ public:
 			std::vector<std::vector<int> > &Solutions,
 			int current_depth, int *subgraph,
 			int verbose_level);
+	void find_subgraph_Dn(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<std::vector<int> > &Solutions,
+			int verbose_level);
+	void find_subgraph_Dn_recursion_level_0(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<int> &Candidates,
+			std::vector<std::vector<int> > &Solutions,
+			int *subgraph,
+			int verbose_level);
+	void find_subgraph_Dn_recursion_level_1(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<int> &Candidates,
+			std::vector<std::vector<int> > &Solutions,
+			int *subgraph,
+			int verbose_level);
+	void find_subgraph_Dn_recursion_level_2(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<int> &Candidates,
+			std::vector<std::vector<int> > &Solutions,
+			int *subgraph,
+			int verbose_level);
+	void find_subgraph_Dn_recursion_level_3_and_above(
+			int n,
+			int nb, colored_graph **CG,
+			std::vector<int> &Candidates,
+			std::vector<std::vector<int> > &Solutions,
+			int current_depth, int *subgraph,
+			int verbose_level);
 
 };
 

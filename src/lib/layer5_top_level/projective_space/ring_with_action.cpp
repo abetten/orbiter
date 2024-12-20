@@ -171,7 +171,6 @@ void ring_with_action::apply(
 void ring_with_action::nauty_interface(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
-		//int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
 		other::data_structures::bitvector *&Canonical_form,
 		other::l1_interfaces::nauty_output *&NO,
@@ -198,7 +197,6 @@ void ring_with_action::nauty_interface(
 		nauty_interface_with_precomputed_data(
 				Variety_object_with_action,
 				Nauty_control,
-				//f_save_nauty_input_graphs,
 				Set_stab,
 				Canonical_form,
 				NO,
@@ -244,7 +242,6 @@ void ring_with_action::nauty_interface(
 void ring_with_action::nauty_interface_with_precomputed_data(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
-		//int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
 		other::data_structures::bitvector *&Canonical_form,
 		other::l1_interfaces::nauty_output *&NO,
@@ -276,7 +273,6 @@ void ring_with_action::nauty_interface_with_precomputed_data(
 			Variety_object_with_action->Variety_object->Point_sets->Sets[0],
 			Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
 			Nauty_control,
-			//f_save_nauty_input_graphs,
 			Variety_object_with_action->nauty_output_index_start,
 			Variety_object_with_action->Carrying_through,
 			Set_stab,
@@ -296,7 +292,6 @@ void ring_with_action::nauty_interface_with_precomputed_data(
 void ring_with_action::nauty_interface_from_scratch(
 		canonical_form::variety_object_with_action *Variety_object_with_action,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
-		//int f_save_nauty_input_graphs,
 		groups::strong_generators *&Set_stab,
 		other::data_structures::bitvector *&Canonical_form,
 		other::l1_interfaces::nauty_output *&NO,
@@ -329,7 +324,6 @@ void ring_with_action::nauty_interface_from_scratch(
 			Variety_object_with_action->Variety_object->Point_sets->Sets[0],
 			Variety_object_with_action->Variety_object->Point_sets->Set_size[0],
 			Nauty_control,
-			//f_save_nauty_input_graphs,
 			Set_stab,
 			Canonical_form,
 			NO,

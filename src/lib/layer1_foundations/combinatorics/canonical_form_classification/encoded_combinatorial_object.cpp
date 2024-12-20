@@ -465,7 +465,8 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 
 	if (sz > 100 * ONE_MILLION) {
 		if (f_v) {
-			cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left the matrix is large" << endl;
+			cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left "
+					"the matrix is large" << endl;
 		}
 		f_large = true;
 
@@ -480,7 +481,8 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 			for (j = 0; j < P->Subspaces->N_lines; j++, cnt++) {
 
 				if ((cnt % sz_100) == 0) {
-					cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left " << cnt / sz_100 << " percent" << endl;
+					cout << "encoded_combinatorial_object::incidence_matrix_projective_space_top_left "
+							<< cnt / sz_100 << " percent" << endl;
 				}
 
 				if (P->Subspaces->is_incident(i, j)) {

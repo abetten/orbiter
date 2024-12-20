@@ -480,7 +480,6 @@ public:
 			combinatorics::canonical_form_classification::any_combinatorial_object *Any_combo,
 			int f_compute_canonical_form,
 			other::l1_interfaces::nauty_interface_control *Nauty_control,
-			//int f_save_nauty_input_graphs,
 			data_structures::bitvector *&Canonical_form,
 			l1_interfaces::nauty_output *&NO,
 			combinatorics::canonical_form_classification::encoded_combinatorial_object *&Enc,
