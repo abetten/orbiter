@@ -234,7 +234,12 @@ void vector_ge::init_from_data(
 	init(A, verbose_level - 2);
 	allocate(nb_elements, verbose_level - 2);
 	for (i = 0; i < nb_elements; i++) {
-		A->Group_element->make_element(Elt, data + i * elt_size, 0 /*verbose_level - 2*/);
+		if (f_v) {
+			cout << "vector_ge::init_from_data i = " << i << " / " << nb_elements << endl;
+		}
+
+		A->Group_element->make_element(
+				Elt, data + i * elt_size, 0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
@@ -849,12 +854,41 @@ void vector_ge::save_csv(
 		cout << "vector_ge::save_csv" << endl;
 	}
 
-	other::orbiter_kernel_system::file_io Fio;
 	int i;
 	int *Elt;
 	int *data;
+	int nb_rows, nb_cols;
+	std::string *Table;
+	std::string *Col_headings;
+
+	nb_cols = 2;
+	nb_rows = len;
+	Table = new std::string [nb_rows * nb_cols];
+	Col_headings = new std::string [nb_cols];
+
+	Col_headings[0] = "Row";
+	Col_headings[1] = "Element";
 
 	data = NEW_int(A->make_element_size);
+
+	for (i = 0; i < len; i++) {
+		Elt = ith(i);
+
+		A->Group_element->element_code_for_make_element(Elt, data);
+
+		Table[nb_cols * i + 0] = std::to_string(i);
+		Table[nb_cols * i + 1] = "\"" + Int_vec_stringify(data, A->make_element_size) + "\"";
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+#if 0
 	{
 		ofstream ost(fname);
 
@@ -870,10 +904,14 @@ void vector_ge::save_csv(
 		}
 		ost << "END" << endl;
 	}
+#endif
+
+	delete [] Col_headings;
+	delete [] Table;
 	FREE_int(data);
 
 	if (f_v) {
-		cout << "sims::save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "vector_ge::save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 }
@@ -1276,14 +1314,22 @@ void vector_ge::reverse_isomorphism_exterior_square(
 
 	for (i = 0; i < len; i++) {
 
+		if (f_v) {
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"generator " << i << " / " << len << ":" << endl;
+		}
+
+
 		K->reverse_isomorphism(ith(i), A4, verbose_level);
-		cout << "generator " << i << " / " << len << ":" << endl;
 
-		cout << "before:" << endl;
-		Int_matrix_print(ith(i), 6, 6);
+		if (f_v) {
+			cout << "before:" << endl;
+			Int_matrix_print(ith(i), 6, 6);
 
-		cout << "after:" << endl;
-		Int_matrix_print(A4, 4, 4);
+			cout << "after:" << endl;
+			Int_matrix_print(A4, 4, 4);
+		}
+
 	}
 
 	FREE_OBJECT(K);

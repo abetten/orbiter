@@ -763,6 +763,10 @@ public:
 			int vs_dimension, int verbose_level);
 	void cheat_sheet_points(
 			std::ostream &f, int verbose_level);
+	void cheat_sheet_given_set_of_points(
+			std::ostream &f,
+			long int *Pts, int nb_pts,
+			int verbose_level);
 	void cheat_polarity(
 			std::ostream &f, int verbose_level);
 	void cheat_sheet_point_table(

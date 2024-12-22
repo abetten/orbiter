@@ -611,6 +611,12 @@ public:
 
 	int f_table_of_blt_sets;
 
+	int f_create_orthogonal_reflection;
+	std::string create_orthogonal_reflection_points;
+
+	int f_create_orthogonal_reflection_6_and_4;
+	std::string create_orthogonal_reflection_6_and_4_points;
+	std::string create_orthogonal_reflection_6_and_4_A4;
 
 
 	orthogonal_space_activity_description();
@@ -736,6 +742,16 @@ public:
 			other::graphics::layered_graph_draw_options *Draw_options,
 			int verbose_level);
 	void make_table_of_blt_sets(
+			int verbose_level);
+	void create_orthogonal_reflections(
+			long int *pts, int nb_pts,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	void create_orthogonal_reflections_6x6_and_4x4(
+			long int *pts, int nb_pts,
+			actions::action *A4,
+			data_structures_groups::vector_ge *&vec6,
+			data_structures_groups::vector_ge *&vec4,
 			int verbose_level);
 
 };

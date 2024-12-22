@@ -2152,7 +2152,6 @@ groups::strong_generators *action_global::set_stabilizer_in_projective_space(
 			A_linear,
 			set, set_size,
 			Nauty_control,
-			//f_save_nauty_input_graphs,
 			Set_stab,
 			Canonical_form,
 			NO,

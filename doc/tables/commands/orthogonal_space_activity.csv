@@ -10,4 +10,5 @@ ROW,C1,C2,C3
 1,"\verb'-export_point_line_incidence_matrix'  ","  ","Create a csv file with the point line incidence matrix of the space.  "
 1,"\verb'-intersect_with_subspace'  "," $M$ ","Find the points in the intersection of the quadric with the subspace whose generating matrix has label $M$. "
 1,"\verb'-table_of_blt_sets'  "," "," Export a table of BLT-sets. We must be in an $Q^4(q)$ space.  "
+1,"\verb'-create_orthogonal_reflection'  "," points "," Create the orthogonal reflections associated with the given set of points, encoded as a vector. The points must be off the quadric. The points are given as point ranks in projective space. "
 END

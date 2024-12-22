@@ -1043,7 +1043,8 @@ void klein_correspondence::reverse_isomorphism(
 	int rk;
 	int base_cols[8];
 
-	rk = F->Linear_algebra->Gauss_simple(M, 16, 8, base_cols, verbose_level);
+	rk = F->Linear_algebra->Gauss_simple(
+			M, 16, 8, base_cols, verbose_level);
 
 	//rk = F->RREF_and_kernel(16, 8, M, verbose_level);
 
@@ -1061,7 +1062,8 @@ void klein_correspondence::reverse_isomorphism(
 	int K[8 * 8];
 	int i, j;
 
-	F->Linear_algebra->matrix_get_kernel(M, 16, 8, base_cols, rk,
+	F->Linear_algebra->matrix_get_kernel(
+			M, 16, 8, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 

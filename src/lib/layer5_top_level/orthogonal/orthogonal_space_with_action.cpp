@@ -195,6 +195,8 @@ void orthogonal_space_with_action::init_group(
 				"!A->f_has_sims" << endl;
 		exit(1);
 	}
+
+#if 0
 	if (f_v) {
 		cout << "orthogonal_space_with_action::init_group "
 				"before A->lex_least_base_in_place" << endl;
@@ -209,7 +211,7 @@ void orthogonal_space_with_action::init_group(
 		Lint_vec_print(cout, A->get_base(), A->base_len());
 		cout << endl;
 	}
-
+#endif
 
 
 	AO = A->G.AO;
@@ -354,6 +356,236 @@ void orthogonal_space_with_action::make_table_of_blt_sets(
 		cout << "orthogonal_space_with_action::make_table_of_blt_sets done" << endl;
 	}
 
+}
+
+void orthogonal_space_with_action::create_orthogonal_reflections(
+		long int *pts, int nb_pts,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections "
+				"nb_pts = " << nb_pts << endl;
+	}
+
+
+	int *z;
+	int *Data;
+	int i, d, sz;
+
+	d = P->Subspaces->n + 1;
+
+	sz = d * d;
+	if (f_semilinear) {
+		sz++;
+	}
+
+	z = NEW_int(d);
+	Data = NEW_int(nb_pts * sz);
+	for (i = 0; i < nb_pts; i++) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_orthogonal_reflections "
+					"i = " << i << " / " << nb_pts << endl;
+		}
+		P->Subspaces->unrank_point(z, pts[i]);
+
+		O->Orthogonal_group->make_orthogonal_reflection(
+				Data + i * sz, z, verbose_level);
+
+		if (f_semilinear) {
+			Data[i * sz + d * d] = 0;
+		}
+
+	}
+
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections "
+				"A = " << endl;
+		A->print_info();
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections "
+				"before vec->init_from_data" << endl;
+	}
+	vec->init_from_data(
+			A, Data,
+			nb_pts, sz, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections "
+				"after vec->init_from_data" << endl;
+	}
+
+	FREE_int(Data);
+	FREE_int(z);
+
+
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections done" << endl;
+	}
+}
+
+
+void orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4(
+		long int *pts, int nb_pts,
+		actions::action *A4,
+		data_structures_groups::vector_ge *&vec6,
+		data_structures_groups::vector_ge *&vec4,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"nb_pts = " << nb_pts << endl;
+	}
+
+
+	int *z;
+	int *Data6;
+	int i, d, sz;
+
+	d = P->Subspaces->n + 1;
+	if (d != 6) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 d != 6" << endl;
+		exit(1);
+	}
+
+	sz = d * d;
+	if (f_semilinear) {
+		sz++;
+	}
+
+	z = NEW_int(d);
+	Data6 = NEW_int(nb_pts * sz);
+	for (i = 0; i < nb_pts; i++) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+					"i = " << i << " / " << nb_pts << endl;
+		}
+		P->Subspaces->unrank_point(z, pts[i]);
+
+		O->Orthogonal_group->make_orthogonal_reflection(
+				Data6 + i * sz, z, verbose_level);
+
+		if (f_semilinear) {
+			Data6[i * sz + d * d] = 0;
+		}
+
+	}
+
+	vec6 = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"A = " << endl;
+		A->print_info();
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"before vec->init_from_data" << endl;
+	}
+	vec6->init_from_data(
+			A, Data6,
+			nb_pts, sz, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"after vec->init_from_data" << endl;
+	}
+
+
+
+	geometry::projective_geometry::klein_correspondence *K;
+	//geometry::orthogonal_geometry::orthogonal *O;
+	int sz4;
+
+	sz4 = 4 * 4;
+
+	if (f_semilinear) {
+		sz4++;
+	}
+
+	int *Data4;
+
+	Data4 = NEW_int(nb_pts * sz4);
+
+
+	//F = A->matrix_group_finite_field();
+
+	//O = NEW_OBJECT(geometry::orthogonal_geometry::orthogonal);
+	//O->init(1 /* epsilon */, 6 /* n */, F, verbose_level);
+
+	K = NEW_OBJECT(geometry::projective_geometry::klein_correspondence);
+	K->init(O->F, O, verbose_level);
+
+
+	for (i = 0; i < vec6->len; i++) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+					"generator " << i << " / " << vec6->len << ":" << endl;
+		}
+
+
+		K->reverse_isomorphism(vec6->ith(i), Data4 + i * sz4, verbose_level);
+
+		if (f_semilinear) {
+			Data4[i * sz4 + 16] = 0;
+		}
+
+		if (f_v) {
+			cout << "before:" << endl;
+			Int_matrix_print(vec6->ith(i), 6, 6);
+
+			cout << "after:" << endl;
+			Int_matrix_print(Data4 + i * sz4, 4, 4);
+		}
+
+	}
+
+	vec4 = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"A4 = " << endl;
+		A4->print_info();
+	}
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"before vec4->init_from_data" << endl;
+	}
+	vec4->init_from_data(
+			A4, Data4,
+			nb_pts, sz4, verbose_level);
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 "
+				"after vec4->init_from_data" << endl;
+	}
+
+
+
+	FREE_OBJECT(K);
+	//FREE_OBJECT(O);
+
+	if (f_v) {
+		cout << "orthogonal_space_with_action::create_orthogonal_reflections_6x6_and_4x4 done" << endl;
+	}
 }
 
 

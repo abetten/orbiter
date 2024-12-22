@@ -400,7 +400,19 @@ void projective_space_reporting::cheat_sheet_points(
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_points" << endl;
 	}
-	int i, d;
+
+	long int *Pts;
+	int nb_pts;
+	int i;
+
+	nb_pts = P->Subspaces->N_points;
+	Pts = NEW_lint(nb_pts);
+
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = i;
+	}
+
+	int d;
 	int *v;
 	string symbol_for_print;
 
@@ -412,49 +424,9 @@ void projective_space_reporting::cheat_sheet_points(
 	f << "PG$(" << P->Subspaces->n << ", " << P->Subspaces->q << ")$ has "
 			<< P->Subspaces->N_points << " points:\\\\" << endl;
 
-	if (P->Subspaces->N_points < 1000) {
-		if (P->Subspaces->F->e == 1) {
-			f << "\\begin{multicols}{4}" << endl;
-			for (i = 0; i < P->Subspaces->N_points; i++) {
-				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
-						v, 1, d, i);
-				f << "$P_{" << i << "}=\\bP";
-				Int_vec_print(f, v, d);
-				f << "$\\\\" << endl;
-			}
-			f << "\\end{multicols}" << endl;
-		}
-		else {
-			f << "\\begin{multicols}{2}" << endl;
-			for (i = 0; i < P->Subspaces->N_points; i++) {
-				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
-						v, 1, d, i);
-				f << "$P_{" << i << "}=\\bP";
-				Int_vec_print(f, v, d);
-				f << "=";
-				P->Subspaces->F->Io->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
-				f << "$\\\\" << endl;
-			}
-			f << "\\end{multicols}" << endl;
 
-			f << "\\begin{multicols}{2}" << endl;
-			for (i = 0; i < P->Subspaces->N_points; i++) {
-				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
-						v, 1, d, i);
-				f << "$P_{" << i << "}=\\bP";
-				Int_vec_print(f, v, d);
-				//f << "=";
-				//F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
-				f << "$\\\\" << endl;
-			}
-			f << "\\end{multicols}" << endl;
+	cheat_sheet_given_set_of_points(f, Pts, nb_pts, verbose_level);
 
-		}
-	}
-	else {
-		f << "Too many to list. \\\\" << endl;
-
-	}
 
 	if (P->Subspaces->F->has_quadratic_subfield()) {
 		int cnt = 0;
@@ -529,8 +501,83 @@ void projective_space_reporting::cheat_sheet_points(
 	cheat_polarity(f, verbose_level);
 
 	FREE_int(v);
+	FREE_lint(Pts);
+
 	if (f_v) {
 		cout << "projective_space_reporting::cheat_sheet_points done" << endl;
+	}
+}
+
+void projective_space_reporting::cheat_sheet_given_set_of_points(
+		std::ostream &f,
+		long int *Pts, int nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_reporting::cheat_sheet_given_set_of_points" << endl;
+	}
+	long int idx;
+	int i, d;
+	int *v;
+	string symbol_for_print;
+
+	d = P->Subspaces->n + 1;
+
+	symbol_for_print.assign("\\alpha");
+	v = NEW_int(d);
+
+	if (P->Subspaces->N_points < 1000) {
+		if (P->Subspaces->F->e == 1) {
+			//f << "\\begin{multicols}{4}" << endl;
+			for (i = 0; i < nb_pts; i++) {
+				idx = Pts[i];
+				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, idx);
+				f << i << " : $P_{" << idx << "}=\\bP";
+				Int_vec_print(f, v, d);
+				f << "$\\\\" << endl;
+			}
+			//f << "\\end{multicols}" << endl;
+		}
+		else {
+			//f << "\\begin{multicols}{2}" << endl;
+			for (i = 0; i < nb_pts; i++) {
+				idx = Pts[i];
+				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, idx);
+				f << i << " : $P_{" << idx << "}=\\bP";
+				Int_vec_print(f, v, d);
+				f << "=";
+				P->Subspaces->F->Io->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
+				f << "$\\\\" << endl;
+			}
+			//f << "\\end{multicols}" << endl;
+
+			//f << "\\begin{multicols}{2}" << endl;
+			for (i = 0; i < nb_pts; i++) {
+				idx = Pts[i];
+				P->Subspaces->F->Projective_space_basic->PG_element_unrank_modified(
+						v, 1, d, idx);
+				f << i << " : $P_{" << idx << "}=\\bP";
+				Int_vec_print(f, v, d);
+				//f << "=";
+				//F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
+				f << "$\\\\" << endl;
+			}
+			//f << "\\end{multicols}" << endl;
+
+		}
+	}
+	else {
+		f << "Too many to list. \\\\" << endl;
+
+	}
+
+	FREE_int(v);
+	if (f_v) {
+		cout << "projective_space_reporting::cheat_sheet_given_set_of_points done" << endl;
 	}
 }
 

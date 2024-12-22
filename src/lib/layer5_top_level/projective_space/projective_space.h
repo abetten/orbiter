@@ -34,6 +34,9 @@ public:
 	int f_cheat_sheet;
 	std::string cheat_sheet_draw_options_label;
 
+	int f_print_points;
+	std::string print_points_label;
+
 
 	int f_export_point_line_incidence_matrix;
 
@@ -517,6 +520,9 @@ public:
 			int verbose_level);
 	void cheat_sheet(
 			other::graphics::layered_graph_draw_options *O,
+			int verbose_level);
+	void print_points(
+			long int *Pts, int nb_pts,
 			int verbose_level);
 	void report(
 			std::ostream &ost,

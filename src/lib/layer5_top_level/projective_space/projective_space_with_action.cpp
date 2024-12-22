@@ -890,7 +890,7 @@ void projective_space_with_action::cheat_sheet(
 
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
+				cout << "projective_space_with_action::cheat_sheet "
 						"before report" << endl;
 			}
 
@@ -899,12 +899,12 @@ void projective_space_with_action::cheat_sheet(
 			report(ost, O, verbose_level);
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
+				cout << "projective_space_with_action::cheat_sheet "
 						"after report" << endl;
 			}
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
+				cout << "projective_space_with_action::cheat_sheet "
 						"before A->report" << endl;
 			}
 
@@ -915,7 +915,7 @@ void projective_space_with_action::cheat_sheet(
 					verbose_level);
 
 			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG "
+				cout << "projective_space_with_action::cheat_sheet "
 						"after A->report" << endl;
 			}
 
@@ -956,6 +956,86 @@ void projective_space_with_action::cheat_sheet(
 
 	if (f_v) {
 		cout << "projective_space_with_action::cheat_sheet done" << endl;
+	}
+
+
+}
+
+
+void projective_space_with_action::print_points(
+		long int *Pts, int nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::print_points" << endl;
+	}
+
+
+
+	{
+
+		string fname, title, author, extra_praeamble;
+
+		fname = "PG_" + std::to_string(n) + "_" + std::to_string(F->q) + "_points.tex";
+		title = "Cheat Sheet ${\\rm PG}(" + std::to_string(n) + "," + std::to_string(F->q) + ")$";
+
+
+
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::print_points "
+						"before report" << endl;
+			}
+
+
+			ost << "\\subsection*{A set of points of ${\\rm \\PG}(" << P->Subspaces->n << "," << P->Subspaces->F->q << ")$}" << endl;
+			//P->Reporting->cheat_sheet_points(ost, verbose_level);
+			P->Reporting->cheat_sheet_given_set_of_points(
+					ost,
+					Pts, nb_pts,
+					verbose_level);
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::print_points "
+						"after report" << endl;
+			}
+
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::print_points done" << endl;
 	}
 
 

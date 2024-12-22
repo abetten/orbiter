@@ -57,6 +57,32 @@ void projective_space_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_print_points) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"f_print_points" << endl;
+		}
+		long int *Pts;
+		int nb_pts;
+
+		Get_vector_or_set(Descr->print_points_label, Pts, nb_pts);
+
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before PA->cheat_sheet" << endl;
+		}
+		PA->print_points(
+				Pts, nb_pts,
+				verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after PA->cheat_sheet" << endl;
+		}
+
+	}
 
 	else if (Descr->f_export_point_line_incidence_matrix) {
 

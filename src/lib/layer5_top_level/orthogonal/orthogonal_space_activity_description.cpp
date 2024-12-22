@@ -55,6 +55,13 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 
 	f_table_of_blt_sets = false;
 
+	f_create_orthogonal_reflection = false;
+	//std::string create_orthogonal_reflection_points;
+
+	f_create_orthogonal_reflection_6_and_4 = false;
+	//std::string create_orthogonal_reflection_6_and_4_points;
+	//std::string create_orthogonal_reflection_6_and_4_A4;
+
 }
 
 orthogonal_space_activity_description::~orthogonal_space_activity_description()
@@ -159,8 +166,23 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-table_of_blt_sets " << endl;
 			}
 		}
-
-
+		else if (ST.stringcmp(argv[i], "-create_orthogonal_reflection") == 0) {
+			f_create_orthogonal_reflection = true;
+			create_orthogonal_reflection_points.assign(argv[++i]);
+			if (f_v) {
+				cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-create_orthogonal_reflection_6_and_4") == 0) {
+			f_create_orthogonal_reflection_6_and_4 = true;
+			create_orthogonal_reflection_6_and_4_points.assign(argv[++i]);
+			create_orthogonal_reflection_6_and_4_A4.assign(argv[++i]);
+			if (f_v) {
+				cout << "-f_create_orthogonal_reflection_6_and_4 "
+						<< create_orthogonal_reflection_6_and_4_points
+						<< " " << create_orthogonal_reflection_6_and_4_A4 << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -224,6 +246,14 @@ void orthogonal_space_activity_description::print()
 	}
 	if (f_table_of_blt_sets) {
 		cout << "-table_of_blt_sets " << endl;
+	}
+	if (f_create_orthogonal_reflection) {
+		cout << "-create_orthogonal_reflection " << create_orthogonal_reflection_points << endl;
+	}
+	if (f_create_orthogonal_reflection_6_and_4) {
+		cout << "-f_create_orthogonal_reflection_6_and_4 "
+				<< create_orthogonal_reflection_6_and_4_points
+				<< " " << create_orthogonal_reflection_6_and_4_A4 << endl;
 	}
 }
 

@@ -25,6 +25,8 @@ projective_space_activity_description::projective_space_activity_description()
 	f_cheat_sheet = false;
 	//std::string cheat_sheet_draw_options_label;
 
+	f_print_points = false;
+	//std::string print_points_label;
 
 	f_export_point_line_incidence_matrix = false;
 
@@ -295,6 +297,14 @@ int projective_space_activity_description::read_arguments(
 			cheat_sheet_draw_options_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
+			}
+		}
+
+		else if (ST.stringcmp(argv[i], "-print_points") == 0) {
+			f_print_points = true;
+			print_points_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-print_points " << print_points_label << endl;
 			}
 		}
 
@@ -1114,6 +1124,9 @@ void projective_space_activity_description::print()
 {
 	if (f_cheat_sheet) {
 		cout << "-cheat_sheet " << cheat_sheet_draw_options_label << endl;
+	}
+	if (f_print_points) {
+		cout << "-print_points " << print_points_label << endl;
 	}
 	if (f_export_point_line_incidence_matrix) {
 		cout << "-export_point_line_incidence_matrix " << endl;
