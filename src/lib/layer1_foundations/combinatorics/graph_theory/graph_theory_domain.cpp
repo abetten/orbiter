@@ -2238,13 +2238,53 @@ void graph_theory_domain::eigenvalues(
 		cout << i << " : " << L[i] << endl;
 	}
 
+	std::string *Table;
+	std::string *Col_headings;
+	int nb_rows, nb_cols;
+
+	nb_rows = CG->nb_points;
+	nb_cols = 3;
+
+	Table = new string[nb_rows * nb_cols];
+	Col_headings = new string[nb_cols];
+
+	Col_headings[0] = "i";
+	Col_headings[1] = "Ei";
+	Col_headings[2] = "Li";
+	for (i = 0; i < CG->nb_points; i++) {
+		Table[3 * i + 0] = std::to_string(i);
+		Table[3 * i + 1] = std::to_string(E[CG->nb_points - 1 - i]);
+		Table[3 * i + 2] = std::to_string(L[CG->nb_points - 1 - i]);
+	}
+
+	string fname;
+
+	fname = CG->label + "_eigenvalues.csv";
+
+	other::orbiter_kernel_system::file_io Fio;
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+	delete [] Col_headings;
+
+	cout << "graph_theory_domain::perform_activity "
+			"written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+
+#if 0
 
 	{
 		string fname;
 
 		string title, author, extra_praeamble;
 
-		title = "Eigenvalues of $" + CG->label_tex + "$";
+		title = "Eigenvalues of graph"; //\\verb'" + CG->label_tex + "'";
 
 		fname = CG->label + "_eigenvalues.tex";
 
@@ -2305,6 +2345,8 @@ void graph_theory_domain::eigenvalues(
 				"written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
+#endif
+
 
 
 

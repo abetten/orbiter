@@ -1226,8 +1226,10 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	}
 
 
-	cout << "A6:" << endl;
-	Int_matrix_print(A6, 6, 6);
+	if (f_v) {
+		cout << "A6:" << endl;
+		Int_matrix_print(A6, 6, 6);
+	}
 
 	projective_geometry::klein_correspondence *Klein;
 	orthogonal_geometry::orthogonal *O;
@@ -1240,10 +1242,27 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(
 	Klein->init(F, O, 0 /* verbose_level */);
 
 	int A4[16];
-	Klein->reverse_isomorphism(A6, A4, verbose_level);
 
-	cout << "A4:" << endl;
-	Int_matrix_print(A4, 4, 4);
+	int f_has_polarity;
+
+
+	if (f_v) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
+				"before reverse_isomorphism_with_polarity" << endl;
+	}
+	Klein->reverse_isomorphism_with_polarity(A6, A4, f_has_polarity, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
+				"after reverse_isomorphism_with_polarity" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
+				"A4:" << endl;
+		Int_matrix_print(A4, 4, 4);
+		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
+				"f_has_polarity = " << f_has_polarity << endl;
+	}
 
 	FREE_OBJECT(Klein);
 	FREE_OBJECT(O);

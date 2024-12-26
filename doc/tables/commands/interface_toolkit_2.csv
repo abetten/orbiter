@@ -18,4 +18,5 @@ ROW,C1,C2,C3
 1,"\verb'-compare_columns' "," fname col1 col2 ","  "
 1,"\verb'-gcd_worksheet' "," nb\_problems N key ","  "
 1,"\verb'-draw_layered_graph' "," options ","  "
+1,"\verb'-intersect_with' "," matrix data "," Counts the number of times an element of data appears in any given row of the given matrix.  "
 END

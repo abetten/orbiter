@@ -663,6 +663,9 @@ public:
 	int f_print_elements;
 	int f_print_elements_tex;
 
+	int f_vector_ge_print_elements_tex;
+	std::string vector_ge_print_elements_tex_label;
+
 	int f_save_elements_csv;
 	std::string save_elements_csv_fname;
 
@@ -724,6 +727,9 @@ public:
 	std::string order_of_products_elements;
 
 	int f_reverse_isomorphism_exterior_square;
+
+	int f_reverse_isomorphism_exterior_square_vector_of_ge;
+	std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
 
 	int f_is_subgroup_of;
 	int f_coset_reps;
@@ -871,6 +877,70 @@ public:
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// vector_ge_activity_description.cpp
+// #############################################################################
+
+
+
+//! description of an activity associated with a vector of group elements
+
+
+class vector_ge_activity_description {
+
+public:
+
+	int f_report;
+
+	int f_export_GAP;
+
+	int f_transform_variety;
+	std::string transform_variety_label;
+
+
+
+	vector_ge_activity_description();
+	~vector_ge_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// vector_ge_activity.cpp
+// #############################################################################
+
+
+
+//! an activity associated with a vector of group elements
+
+
+class vector_ge_activity {
+
+public:
+
+	vector_ge_activity_description *Descr;
+	apps_algebra::vector_ge_builder *VB;
+	data_structures_groups::vector_ge *vec;
+
+	vector_ge_activity();
+	~vector_ge_activity();
+	void init(
+			vector_ge_activity_description *Descr,
+			apps_algebra::vector_ge_builder *VB,
+			int verbose_level);
+	void perform_activity(
+			int verbose_level);
+
 
 };
 

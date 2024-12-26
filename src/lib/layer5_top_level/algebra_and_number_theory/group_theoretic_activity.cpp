@@ -766,6 +766,46 @@ void group_theoretic_activity::perform_activity(
 					"after AG->print_elements_tex" << endl;
 		}
 	}
+
+	else if (Descr->f_vector_ge_print_elements_tex) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_vector_ge_print_elements_tex" << endl;
+		}
+
+		apps_algebra::vector_ge_builder *VB;
+		data_structures_groups::vector_ge *vec;
+
+		VB = Get_object_of_type_vector_ge(
+				Descr->vector_ge_print_elements_tex_label);
+
+		vec = VB->V;
+
+
+		int f_with_permutation = true;
+		int f_override_action = true;
+		actions::action *A_special;
+
+		A_special = AG->A;
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before vec->report_elements" << endl;
+		}
+		vec->report_elements(
+				AG->label,
+				f_with_permutation,
+				f_override_action,
+				A_special,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after vec->report_elements" << endl;
+		}
+	}
+
+
 	else if (Descr->f_save_elements_csv) {
 
 		if (f_v) {
@@ -906,6 +946,44 @@ void group_theoretic_activity::perform_activity(
 					"after AG->do_reverse_isomorphism_exterior_square" << endl;
 		}
 	}
+
+	else if (Descr->f_reverse_isomorphism_exterior_square_vector_of_ge) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_reverse_isomorphism_exterior_square_vector_of_ge" << endl;
+		}
+
+
+		apps_algebra::vector_ge_builder *VB;
+		data_structures_groups::vector_ge *vec;
+
+		VB = Get_object_of_type_vector_ge(
+				Descr->reverse_isomorphism_exterior_square_vector_of_ge_label);
+
+		vec = VB->V;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_reverse_isomorphism_exterior_square" << endl;
+		}
+		AG->do_reverse_isomorphism_exterior_square_vector_ge(vec, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_reverse_isomorphism_exterior_square" << endl;
+		}
+
+		std::string fname;
+
+		fname = AG->label + "_reverse_iso_4x4.csv";
+
+		vec->save_csv(fname, verbose_level);
+
+		FREE_OBJECT(vec);
+
+	}
+
+
 	else if (Descr->f_is_subgroup_of) {
 
 		if (f_v) {

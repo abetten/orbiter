@@ -335,8 +335,10 @@ public:
 	// external_line_to_spread[i] is the index of the
 	// regular spread of PG(3,q) in table T associated with
 	// External_lines[i]
+	void reverse_isomorphism_with_polarity(
+			int *A6, int *A4, int &f_has_polarity, int verbose_level);
 	void reverse_isomorphism(
-			int *A6, int *A4, int verbose_level);
+			int *A6, int *A4, int &f_success, int verbose_level);
 	long int apply_null_polarity(
 		long int a, int verbose_level);
 	long int apply_polarity(

@@ -603,12 +603,21 @@ void klein_correspondence::exterior_square_to_line(
 		cout << "klein_correspondence::exterior_square_to_line" << endl;
 	}
 
+#if 0
 	p12 = v[0];
 	p13 = v[1];
 	p14 = v[2];
 	p23 = v[3];
 	p24 = v[4];
 	p34 = v[5];
+#else
+	p12 = v[0];
+	p34 = v[1];
+	p13 = v[2];
+	p24 = F->negate(v[3]);
+	p14 = v[4];
+	p23 = v[5];
+#endif
 
 
 	Int_vec_zero(basis_line, 8);
@@ -868,14 +877,112 @@ void klein_correspondence::identify_external_lines_and_spreads(
 
 }
 
+void klein_correspondence::reverse_isomorphism_with_polarity(
+		int *A6, int *A4, int &f_has_polarity, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism_with_polarity" << endl;
+	}
+
+	int f_success;
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"before reverse_isomorphism" << endl;
+	}
+	reverse_isomorphism(
+			A6, A4, f_success, verbose_level);
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"after reverse_isomorphism" << endl;
+	}
+
+	if (!f_success) {
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"reverse_isomorphism fails for the first time" << endl;
+		}
+
+		int P[36];
+		int B6[36];
+
+		F->Linear_algebra->identity_matrix(P, 6);
+
+		P[0 * 6 + 0] = 0;
+		P[0 * 6 + 1] = 1;
+		P[1 * 6 + 0] = 1;
+		P[1 * 6 + 1] = 0;
+
+		P[2 * 6 + 2] = 0;
+		P[2 * 6 + 3] = 1;
+		P[3 * 6 + 2] = 1;
+		P[3 * 6 + 3] = 0;
+
+		P[4 * 6 + 4] = 0;
+		P[4 * 6 + 5] = 1;
+		P[5 * 6 + 4] = 1;
+		P[5 * 6 + 5] = 0;
+
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"A6=" << endl;
+			Int_matrix_print(A6, 6, 6);
+		}
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"multiplying by a polarity:" << endl;
+			Int_matrix_print(P, 6, 6);
+		}
+
+		F->Linear_algebra->mult_matrix_matrix(
+				A6, P, B6, 6, 6, 6, 0 /* verbose_level*/);
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+				"B6=:" << endl;
+			Int_matrix_print(B6, 6, 6);
+		}
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+					"before reverse_isomorphism" << endl;
+		}
+		reverse_isomorphism(
+				B6, A4, f_success, verbose_level);
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+					"after reverse_isomorphism" << endl;
+		}
+		if (!f_success) {
+			if (f_v) {
+				cout << "klein_correspondence::reverse_isomorphism_with_polarity "
+					"reverse_isomorphism fails for the second time" << endl;
+				exit(1);
+			}
+		}
+		f_has_polarity = true;
+	}
+	else {
+		f_has_polarity = false;
+	}
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism_with_polarity done" << endl;
+	}
+}
+
 
 void klein_correspondence::reverse_isomorphism(
-		int *A6, int *A4, int verbose_level)
+		int *A6, int *A4, int &f_success, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int A6_copy[36];
 	int X[16];
-	int Xv[16];
+	//int Xv[16];
 	int Y[16];
 	int Z[16];
 	int Yv[16];
@@ -890,59 +997,13 @@ void klein_correspondence::reverse_isomorphism(
 	}
 
 	if (f_v) {
-		cout << "A6=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"A6=" << endl;
 		Int_matrix_print(A6, 6, 6);
 	}
 
 
 #if 0
-	int Basis1[] = {
-			1,0,0,0,0,0,
-			0,1,0,0,0,0,
-			0,0,1,0,0,0,
-			0,0,0,1,0,0,
-			0,0,0,0,1,0,
-			0,0,0,0,0,1,
-	};
-	int Basis2[36];
-	int Image[36];
-	int Image2[36];
-	int v[6];
-	int w[6];
-	sorting Sorting;
-
-	for (i = 0; i < 6; i++) {
-		F->wedge_to_klein(Basis1 + i * 6, Basis2 + i * 6);
-	}
-
-	F->mult_matrix_matrix(Basis2, A6, Image, 6, 6, 6, 0 /* verbose_level*/);
-	for (i = 0; i < 6; i++) {
-		F->klein_to_wedge(Image + i * 6, Image2 + i * 6);
-	}
-#endif
-
-#if 0
-	int_vec_copy(A6, A6_copy, 36);
-
-#if 0
-	for (i = 0; i < 6; i++) {
-		u1 = A6_copy[3 * 6 + i];
-		u2 = F->negate(u1);
-		A6_copy[3 * 6 + i] = u2;
-	}
-
-	for (i = 0; i < 6; i++) {
-		u1 = A6_copy[i * 6 + 3];
-		u2 = F->negate(u1);
-		A6_copy[i * 6 + 3] = u2;
-	}
-#endif
-	if (f_v) {
-		cout << "A6_copy=" << endl;
-		int_matrix_print(A6_copy, 6, 6);
-	}
-#endif
-
 	// 12,34:
 	exterior_square_to_line(A6, X, 0 /* verbose_level*/);
 	exterior_square_to_line(A6 + 5 * 6, X + 8, 0 /* verbose_level*/);
@@ -954,44 +1015,69 @@ void klein_correspondence::reverse_isomorphism(
 	// 14,23
 	exterior_square_to_line(A6 + 2 * 6, Z, 0 /* verbose_level*/);
 	exterior_square_to_line(A6 + 3 * 6, Z + 8, 0 /* verbose_level*/);
+#else
+	// 12,34:
+	exterior_square_to_line(A6, X, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 1 * 6, X + 8, 0 /* verbose_level*/);
+
+	// 13,24
+	exterior_square_to_line(A6 + 2 * 6, Y, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 3 * 6, Y + 8, 0 /* verbose_level*/);
+
+	// 14,23
+	exterior_square_to_line(A6 + 4 * 6, Z, 0 /* verbose_level*/);
+	exterior_square_to_line(A6 + 5 * 6, Z + 8, 0 /* verbose_level*/);
+#endif
 
 	if (f_v) {
-		cout << "X=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"X=" << endl;
 		Int_matrix_print(X, 4, 4);
-		cout << "Y=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"Y=" << endl;
 		Int_matrix_print(Y, 4, 4);
-		cout << "Z=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"Z=" << endl;
 		Int_matrix_print(Z, 4, 4);
 	}
 
-	F->Linear_algebra->invert_matrix(X, Xv, 4, 0 /* verbose_level*/);
+	//F->Linear_algebra->invert_matrix(X, Xv, 4, 0 /* verbose_level*/);
 	F->Linear_algebra->invert_matrix(Y, Yv, 4, 0 /* verbose_level*/);
 	F->Linear_algebra->invert_matrix(Z, Zv, 4, 0 /* verbose_level*/);
 	//F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "Xv=" << endl;
+#if 0
+		cout << "klein_correspondence::reverse_isomorphism "
+				"Xv=" << endl;
 		Int_matrix_print(Xv, 4, 4);
-		cout << "Yv=" << endl;
+#endif
+		cout << "klein_correspondence::reverse_isomorphism "
+				"Yv=" << endl;
 		Int_matrix_print(Yv, 4, 4);
-		cout << "Zv=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"Zv=" << endl;
 		Int_matrix_print(Zv, 4, 4);
 	}
 
 	F->Linear_algebra->mult_matrix_matrix(X, Yv, XYv, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "XYv=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"XYv=" << endl;
 		Int_matrix_print(XYv, 4, 4);
 	}
 
 	F->Linear_algebra->mult_matrix_matrix(X, Zv, XZv, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
-		cout << "XZv=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"XZv=" << endl;
 		Int_matrix_print(XZv, 4, 4);
 	}
 
+
+#if 1
 	//int a, b, c, d, e, f, g, h;
 
 	int M[16 * 8];
@@ -1036,7 +1122,8 @@ void klein_correspondence::reverse_isomorphism(
 
 
 	if (f_v) {
-		cout << "M=" << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"M=" << endl;
 		Int_matrix_print(M, 16, 8);
 	}
 
@@ -1046,14 +1133,20 @@ void klein_correspondence::reverse_isomorphism(
 	rk = F->Linear_algebra->Gauss_simple(
 			M, 16, 8, base_cols, verbose_level);
 
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism "
+				"rk=" << rk << endl;
+	}
 	//rk = F->RREF_and_kernel(16, 8, M, verbose_level);
 
 	if (f_v) {
-		cout << "has rank " << rk << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"has rank " << rk << endl;
 		Int_matrix_print(M, rk, 8);
 	}
 	if (f_v) {
-		cout << "base columns: " << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"base columns: " << endl;
 		Int_vec_print(cout, base_cols, rk);
 		cout << endl;
 	}
@@ -1068,78 +1161,104 @@ void klein_correspondence::reverse_isomorphism(
 
 
 	if (f_v) {
-		cout << "kernel: " << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"nullity= " << kernel_n << endl;
+		cout << "klein_correspondence::reverse_isomorphism "
+				"kernel: " << endl;
 		Int_matrix_print(K, 8, kernel_n);
 	}
 
-
-	int abcdefgh[8];
-	int a, b, c, d, e, f, g, h;
-
-	for (i = 0; i < 8; i++) {
-		abcdefgh[i] = 0;
-	}
-
-
-	for (j = 0; j < kernel_n; j++) {
-		for (i = 0; i < 8; i++) {
-			if (K[i * kernel_n + j]) {
-				abcdefgh[i] = K[i * kernel_n + j];
-			}
-		}
-	}
-
-	a = abcdefgh[0];
-	b = abcdefgh[1];
-	c = abcdefgh[2];
-	d = abcdefgh[3];
-	e = abcdefgh[4];
-	f = abcdefgh[5];
-	g = abcdefgh[6];
-	h = abcdefgh[7];
-
-
-	Int_vec_zero(D, 16);
-	D[0 * 4 + 0] = a;
-	D[0 * 4 + 1] = b;
-	D[1 * 4 + 0] = c;
-	D[1 * 4 + 1] = d;
-	D[2 * 4 + 2] = e;
-	D[2 * 4 + 3] = f;
-	D[3 * 4 + 2] = g;
-	D[3 * 4 + 3] = h;
-
-	if (f_v) {
-		cout << "D=" << endl;
-		Int_matrix_print(D, 4, 4);
-	}
-
-	F->Linear_algebra->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
-
-	if (f_v) {
-		cout << "A4=" << endl;
-		Int_matrix_print(A4, 4, 4);
-	}
-
-
-	int A6b[36];
-
-	F->Linear_algebra->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
-	//F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
-
-	if (f_v) {
-		cout << "A6b=" << endl;
-		Int_matrix_print(A6b, 6, 6);
-	}
-
-
-	if (!F->Projective_space_basic->test_if_vectors_are_projectively_equal(
-			A6, A6b, 36)) {
-		cout << "matrices are not projectively equal" << endl;
-		exit(1);
+	if (kernel_n == 0) {
+		cout << "klein_correspondence::reverse_isomorphism nullity = 0" << endl;
+		f_success = false;
 	}
 	else {
-		cout << "matrices are projectively the same, success" << endl;
+
+		int abcdefgh[8];
+		int a, b, c, d, e, f, g, h;
+
+		for (i = 0; i < 8; i++) {
+			abcdefgh[i] = 0;
+		}
+
+
+		for (j = 0; j < kernel_n; j++) {
+			for (i = 0; i < 8; i++) {
+				if (K[i * kernel_n + j]) {
+					abcdefgh[i] = K[i * kernel_n + j];
+				}
+			}
+		}
+
+		a = abcdefgh[0];
+		b = abcdefgh[1];
+		c = abcdefgh[2];
+		d = abcdefgh[3];
+		e = abcdefgh[4];
+		f = abcdefgh[5];
+		g = abcdefgh[6];
+		h = abcdefgh[7];
+
+
+		Int_vec_zero(D, 16);
+		D[0 * 4 + 0] = a;
+		D[0 * 4 + 1] = b;
+		D[1 * 4 + 0] = c;
+		D[1 * 4 + 1] = d;
+		D[2 * 4 + 2] = e;
+		D[2 * 4 + 3] = f;
+		D[3 * 4 + 2] = g;
+		D[3 * 4 + 3] = h;
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"D=" << endl;
+			Int_matrix_print(D, 4, 4);
+		}
+
+		F->Linear_algebra->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"A4=" << endl;
+			Int_matrix_print(A4, 4, 4);
+		}
+
+
+		int A6b[36];
+
+		//F->Linear_algebra->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
+
+
+		F->Linear_algebra->exterior_square_4x4(
+				A4, A6b, 0 /* verbose_level*/);
+
+
+		//F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
+
+		if (f_v) {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"A6b=" << endl;
+			Int_matrix_print(A6b, 6, 6);
+		}
+
+
+		if (!F->Projective_space_basic->test_if_vectors_are_projectively_equal(
+				A6, A6b, 36)) {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"matrices are not projectively equal" << endl;
+			exit(1);
+		}
+		else {
+			cout << "klein_correspondence::reverse_isomorphism "
+					"matrices are projectively the same, success" << endl;
+		}
+		f_success = true;
+	}
+#endif
+
+	if (f_v) {
+		cout << "klein_correspondence::reverse_isomorphism f_success = " << f_success << endl;
 	}
 
 	if (f_v) {

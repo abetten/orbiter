@@ -110,7 +110,8 @@ void variety_object_with_action::create_variety(
 
 	for (i = 0; i < VD->transformations.size(); i++) {
 		if (f_v) {
-			cout << "variety_object_with_action::create_variety -transform " << VD->transformations[i] << endl;
+			cout << "variety_object_with_action::create_variety "
+					"-transform " << VD->transformations[i] << endl;
 		}
 
 		int *data;
@@ -123,7 +124,8 @@ void variety_object_with_action::create_variety(
 		PA->A->Group_element->make_element(Elt, data, 0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "variety_object_with_action::create_variety before apply_transformation" << endl;
+			cout << "variety_object_with_action::create_variety "
+					"before apply_transformation" << endl;
 		}
 
 		apply_transformation(
@@ -133,7 +135,8 @@ void variety_object_with_action::create_variety(
 				verbose_level - 2);
 
 		if (f_v) {
-			cout << "variety_object_with_action::create_variety after apply_transformation" << endl;
+			cout << "variety_object_with_action::create_variety "
+					"after apply_transformation" << endl;
 		}
 
 		FREE_int(data);
@@ -142,12 +145,14 @@ void variety_object_with_action::create_variety(
 
 
 	if (f_v) {
-		cout << "variety_object_with_action::create_variety before compute_tactical_decompositions" << endl;
+		cout << "variety_object_with_action::create_variety "
+				"before compute_tactical_decompositions" << endl;
 	}
 	compute_tactical_decompositions(
 			verbose_level);
 	if (f_v) {
-		cout << "variety_object_with_action::create_variety after compute_tactical_decompositions" << endl;
+		cout << "variety_object_with_action::create_variety "
+				"after compute_tactical_decompositions" << endl;
 	}
 
 
@@ -172,17 +177,7 @@ void variety_object_with_action::apply_transformation(
 	if (f_v) {
 		cout << "variety_object_with_action::apply_transformation" << endl;
 	}
-	//data_structures::sorting Sorting;
 
-
-#if 0
-	cnt = old_one->cnt;
-	po = old_one->po;
-	so = old_one->so;
-
-	Variety_object = NEW_OBJECT(algebraic_geometry::variety_object);
-
-#endif
 
 
 	geometry::algebraic_geometry::variety_object *old_Variety_object;
@@ -267,6 +262,8 @@ void variety_object_with_action::apply_transformation(
 
 
 	if (f_v) {
+		cout << "variety_object_with_action::apply_transformation "
+				"after transforming:" << endl;
 		print(cout);
 	}
 
@@ -295,7 +292,8 @@ void variety_object_with_action::compute_tactical_decompositions(
 					"before TD->init_and_compute_tactical_decompositions" << endl;
 		}
 		TD->init_and_compute_tactical_decompositions(
-				PA, Variety_object, Stab_gens, verbose_level);
+				PA, Variety_object, Stab_gens,
+				verbose_level);
 		if (f_v) {
 			cout << "variety_object_with_action::compute_tactical_decompositions "
 					"after TD->init_and_compute_tactical_decompositions" << endl;

@@ -175,6 +175,9 @@ public:
 			int verbose_level);
 	void do_reverse_isomorphism_exterior_square(
 			int verbose_level);
+	void do_reverse_isomorphism_exterior_square_vector_ge(
+			data_structures_groups::vector_ge *vec,
+			int verbose_level);
 	groups::strong_generators *get_strong_generators();
 	int is_subgroup_of(
 			any_group *AG_secondary, int verbose_level);

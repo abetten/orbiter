@@ -105,6 +105,9 @@ activity_description::activity_description()
 	f_variety_activity = false;
 	Variety_activity_description = NULL;
 
+	f_vector_ge_activity = false;
+	Vector_ge_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -746,6 +749,29 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-vector_ge_activity") == 0) {
+		f_vector_ge_activity = true;
+		Vector_ge_activity_description =
+				NEW_OBJECT(apps_algebra::vector_ge_activity_description);
+		if (f_v) {
+			cout << "reading -vector_ge_activity" << endl;
+		}
+		i += Vector_ge_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-vector_ge_activity" << endl;
+			Vector_ge_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
@@ -999,7 +1025,14 @@ void activity_description::worker(
 
 		do_variety_activity(verbose_level);
 	}
+	else if (f_vector_ge_activity) {
 
+		if (f_v) {
+			cout << "activity_description::worker f_vector_ge_activity" << endl;
+		}
+
+		do_vector_ge_activity(verbose_level);
+	}
 
 
 	if (AO) {
@@ -1143,6 +1176,10 @@ void activity_description::print()
 	else if (f_variety_activity) {
 		cout << "-variety_activity" << endl;
 		Variety_activity_description->print();
+	}
+	else if (f_vector_ge_activity) {
+		cout << "-vector_ge_activity" << endl;
+		Vector_ge_activity_description->print();
 	}
 	else {
 		cout << "activity_description::print unknown type of activity" << endl;
@@ -2764,6 +2801,68 @@ void activity_description::do_variety_activity(
 	}
 
 }
+
+void activity_description::do_vector_ge_activity(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_vector_ge_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	apps_algebra::vector_ge_builder *VB;
+	//data_structures_groups::vector_ge *vec;
+
+	VB = (apps_algebra::vector_ge_builder *)
+			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+
+	//vec = VB->V;
+	{
+
+		apps_algebra::vector_ge_activity Activity;
+
+		Activity.init(
+				Vector_ge_activity_description,
+				VB,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "activity_description::do_vector_ge_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_vector_ge_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_vector_ge_activity done" << endl;
+	}
+
+}
+
+
 
 
 

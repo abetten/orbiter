@@ -142,6 +142,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_print_elements = false;
 	f_print_elements_tex = false;
 
+	f_vector_ge_print_elements_tex = false;
+	//std::string vector_ge_print_elements_tex_label;
+
+
 	f_save_elements_csv = false;
 	//std::string save_elements_csv_fname;
 
@@ -204,6 +208,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//order_of_products_elements = NULL;
 
 	f_reverse_isomorphism_exterior_square = false;
+
+
+	f_reverse_isomorphism_exterior_square_vector_of_ge = false;
+	//std::string reverse_isomorphism_exterior_square_vector_of_ge_label;
+
 
 	f_is_subgroup_of = false;
 
@@ -611,6 +620,14 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-print_elements_tex " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-vector_ge_print_elements_tex") == 0) {
+			f_vector_ge_print_elements_tex = true;
+			vector_ge_print_elements_tex_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-vector_ge_print_elements_tex " << vector_ge_print_elements_tex_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-save_elements_csv") == 0) {
 			f_save_elements_csv = true;
 			save_elements_csv_fname.assign(argv[++i]);
@@ -753,6 +770,15 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-reverse_isomorphism_exterior_square " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square_vector_of_ge") == 0) {
+			f_reverse_isomorphism_exterior_square_vector_of_ge = true;
+			reverse_isomorphism_exterior_square_vector_of_ge_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-reverse_isomorphism_exterior_square_vector_of_ge "
+						<< reverse_isomorphism_exterior_square_vector_of_ge_label << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-is_subgroup_of") == 0) {
 			f_is_subgroup_of = true;
 			if (f_v) {
@@ -1126,6 +1152,9 @@ void group_theoretic_activity_description::print()
 	if (f_print_elements_tex) {
 		cout << "-print_elements_tex " << endl;
 	}
+	if (f_vector_ge_print_elements_tex) {
+		cout << "-vector_ge_print_elements_tex " << vector_ge_print_elements_tex_label << endl;
+	}
 	if (f_save_elements_csv) {
 		cout << "-save_elements_csv " << save_elements_csv_fname << endl;
 	}
@@ -1202,6 +1231,10 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_reverse_isomorphism_exterior_square) {
 		cout << "-reverse_isomorphism_exterior_square " << endl;
+	}
+	if (f_reverse_isomorphism_exterior_square_vector_of_ge) {
+		cout << "-reverse_isomorphism_exterior_square_vector_of_ge "
+				<< reverse_isomorphism_exterior_square_vector_of_ge_label << endl;
 	}
 	if (f_is_subgroup_of) {
 		cout << "-is_subgroup_of " << endl;

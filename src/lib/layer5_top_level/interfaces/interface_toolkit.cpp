@@ -228,6 +228,9 @@ interface_toolkit::interface_toolkit()
 	//std::string read_column_and_tally_fname;
 	//std::string read_column_and_tally_col_header;
 
+	f_intersect_with = false;
+	//std::string intersect_with_vector;
+	//std::string intersect_with_data;
 
 
 }
@@ -381,6 +384,9 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-read_column_and_tally") == 0) {
 		cout << "-read_column_and_tally <string : fname> <string : col_header>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-intersect_with") == 0) {
+		cout << "-intersect_with <string : vector> <string : data>" << endl;
+	}
 
 }
 
@@ -527,6 +533,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-read_column_and_tally") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-intersect_with") == 0) {
 		return true;
 	}
 	return false;
@@ -1203,6 +1212,16 @@ void interface_toolkit::read_arguments(
 					<< endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-intersect_with") == 0) {
+		f_intersect_with = true;
+		intersect_with_vector.assign(argv[++i]);
+		intersect_with_data.assign(argv[++i]);
+		if (f_v) {
+			cout << "-intersect_with "
+					<< intersect_with_vector
+				<< " " << intersect_with_data << endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -1467,6 +1486,11 @@ void interface_toolkit::print()
 				<< " " << read_column_and_tally_fname
 				<< " " << read_column_and_tally_col_header
 				<< endl;
+	}
+	if (f_intersect_with) {
+		cout << "-intersect_with "
+				<< intersect_with_vector
+			<< " " << intersect_with_data << endl;
 	}
 }
 
@@ -2476,6 +2500,69 @@ void interface_toolkit::worker(
 		//SoS->print_table();
 
 		FREE_lint(Data);
+
+	}
+	else if (f_intersect_with) {
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"f_intersect_with " << intersect_with_vector
+					<< " " << intersect_with_data << endl;
+		}
+
+		int *M;
+		int m, n;
+		int *Cnt;
+
+		Get_matrix(intersect_with_vector, M, m, n);
+
+		if (f_v) {
+			cout << "matrix of size " << m << " x " << n << endl;
+		}
+
+		int *data;
+		int sz;
+
+		Get_int_vector_from_label(
+				intersect_with_data,
+				data, sz,
+				verbose_level);
+
+		if (f_v) {
+			cout << "data: ";
+			Int_vec_print(cout, data, sz);
+			cout << endl;
+		}
+
+		Cnt = NEW_int(m);
+		Int_vec_zero(Cnt, m);
+		int i, j, a, idx;
+
+		other::data_structures::sorting Sorting;
+
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < sz; j++) {
+				a = data[j];
+
+				if (Sorting.int_vec_search_linear(
+						M + i * n, n, a, idx)) {
+					Cnt[i]++;
+				}
+			}
+
+		}
+
+		other::data_structures::tally T;
+
+		T.init(
+				Cnt,
+				m, false /* f_second */, verbose_level);
+
+		T.print_types();
+
+		idx = T.Set_partition->nb_sets - 1;
+		cout << "type = " << idx << " has " << T.Set_partition->Set_size[idx] << " elements" << endl;
+		Lint_vec_print_fully(cout, T.Set_partition->Sets[idx], T.Set_partition->Set_size[idx]);
+		cout << endl;
 
 	}
 

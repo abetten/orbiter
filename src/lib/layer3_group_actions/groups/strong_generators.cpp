@@ -1364,34 +1364,21 @@ void strong_generators::print_generators_gap(
 		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "strong_generators::print_generators_gap" << endl;
 	}
-	ost << "#Generators in GAP format are:" << endl;
-	if (A->degree < 1000) {
-		ost << "G := Group([";
-		for (i = 0; i < gens->len; i++) {
-			if (f_v) {
-				cout << "strong_generators::print_generators_gap "
-						"i=" << i << " / " << gens->len << endl;
-			}
-			A->Group_element->element_print_as_permutation_with_offset(
-					gens->ith(i), ost,
-					1 /*offset*/,
-					true /* f_do_it_anyway_even_for_big_degree */,
-					false /* f_print_cycles_of_length_one */,
-					0 /* verbose_level*/);
-			if (i < gens->len - 1) {
-				ost << ", " << endl;
-			}
-		}
-		ost << "]);" << endl;
+
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap "
+				"before gens->print_generators_gap" << endl;
 	}
-	else {
-		ost << "too big to print" << endl;
+	gens->print_generators_gap(ost, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap "
+				"after gens->print_generators_gap" << endl;
 	}
+
 	if (f_v) {
 		cout << "strong_generators::print_generators_gap done" << endl;
 	}
@@ -1406,27 +1393,17 @@ void strong_generators::print_generators_gap_in_different_action(
 	if (f_v) {
 		cout << "strong_generators::print_generators_gap_in_different_action" << endl;
 	}
-	int i;
 
-	ost << "Generators in GAP format are:" << endl;
-	if (A->degree < 200) {
-		ost << "G := Group([";
-		for (i = 0; i < gens->len; i++) {
-			A2->Group_element->element_print_as_permutation_with_offset(
-					gens->ith(i), ost,
-					1 /*offset*/,
-					true /* f_do_it_anyway_even_for_big_degree */,
-					false /* f_print_cycles_of_length_one */,
-					0 /* verbose_level*/);
-			if (i < gens->len - 1) {
-				ost << ", " << endl;
-			}
-		}
-		ost << "]);" << endl;
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap_in_different_action "
+				"before gens->print_generators_gap_in_different_action" << endl;
 	}
-	else {
-		ost << "too big to print" << endl;
+	gens->print_generators_gap_in_different_action(ost, A2, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap_in_different_action "
+				"after gens->print_generators_gap_in_different_action" << endl;
 	}
+
 	if (f_v) {
 		cout << "strong_generators::print_generators_gap_in_different_action done" << endl;
 	}
@@ -1441,26 +1418,17 @@ void strong_generators::print_generators_compact(
 	if (f_v) {
 		cout << "strong_generators::print_generators_compact" << endl;
 	}
-	int i, j, a;
 
-	ost << "Generators in compact permutation form are:" << endl;
-	if (A->degree < 200) {
-		ost << gens->len << " " << A->degree << endl;
-		for (i = 0; i < gens->len; i++) {
-			for (j = 0; j < A->degree; j++) {
-				a = A->Group_element->element_image_of(
-						j,
-						gens->ith(i),
-						0 /* verbose_level */);
-				ost << a << " ";
-				}
-			ost << endl;
-			}
-		ost << "-1" << endl;
+	if (f_v) {
+		cout << "strong_generators::print_generators_compact "
+				"before gens->print_generators_compact" << endl;
 	}
-	else {
-		ost << "too big to print" << endl;
+	gens->print_generators_compact(ost, verbose_level);
+	if (f_v) {
+		cout << "strong_generators::print_generators_compact "
+				"after gens->print_generators_compact" << endl;
 	}
+
 	if (f_v) {
 		cout << "strong_generators::print_generators_compact done" << endl;
 	}

@@ -446,6 +446,100 @@ void vector_ge::print_tex(
 }
 
 
+void vector_ge::report_elements(
+		std::string &label,
+		int f_with_permutation,
+		int f_override_action, actions::action *A_special,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::report_elements" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+
+
+	string fname;
+
+	fname = label + "_elements.tex";
+
+
+	{
+		ofstream ost(fname);
+		other::l1_interfaces::latex_interface L;
+		L.head_easy(ost);
+
+
+		int *Order;
+		int ord;
+		actions::action *A1;
+
+		Order = NEW_int(len);
+
+		ost << "Group elements in action ";
+		ost << "$";
+		if (f_override_action) {
+			A1 = A_special;
+		}
+		else {
+			A1 = A;
+		}
+		ost << A1->label_tex;
+		ost << "$\\\\" << endl;
+
+		int i;
+
+		for (i = 0; i < len; i++) {
+
+			Elt = ith(i);
+
+			ord = A1->Group_element->element_order(Elt);
+			ost << "Element " << setw(5) << i << " / "
+					<< len << " of order " << ord << ":" << endl;
+
+			A1->print_one_element_tex(
+					ost,
+					Elt, f_with_permutation);
+
+			Order[i] = ord;
+		}
+
+		other::data_structures::tally T;
+
+		T.init(Order, len, false, 0 /*verbose_level*/);
+
+		ost << "Order structure:\\\\" << endl;
+		ost << "$" << endl;
+		T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
+		ost << "$" << endl;
+		ost << "\\\\" << endl;
+
+
+
+		L.foot(ost);
+
+		FREE_int(Order);
+
+	}
+	if (f_v) {
+		cout << "vector_ge::report_elements "
+			"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "vector_ge::report_elements done" << endl;
+	}
+}
+
+
+
 
 void vector_ge::print_generators_tex(
 		algebra::ring_theory::longinteger_object &go, std::ostream &ost)
@@ -1320,14 +1414,22 @@ void vector_ge::reverse_isomorphism_exterior_square(
 		}
 
 
-		K->reverse_isomorphism(ith(i), A4, verbose_level);
+		//K->reverse_isomorphism(ith(i), A4, verbose_level);
+
+		int f_has_polarity;
+
+		K->reverse_isomorphism_with_polarity(ith(i), A4, f_has_polarity, verbose_level - 2);
 
 		if (f_v) {
-			cout << "before:" << endl;
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"before:" << endl;
 			Int_matrix_print(ith(i), 6, 6);
 
-			cout << "after:" << endl;
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"after:" << endl;
 			Int_matrix_print(A4, 4, 4);
+			cout << "vector_ge::reverse_isomorphism_exterior_square "
+					"f_has_polarity = " << f_has_polarity << endl;
 		}
 
 	}
@@ -1460,6 +1562,114 @@ int vector_ge::test_if_in_set_stabilizer(
 	}
 	return ret;
 }
+
+
+void vector_ge::print_generators_gap(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "vector_ge::print_generators_gap" << endl;
+	}
+	ost << "#Generators in GAP format are:" << endl;
+	if (A->degree < 1000) {
+		ost << "G := Group([";
+		for (i = 0; i < len; i++) {
+			if (f_v) {
+				cout << "vector_ge::print_generators_gap "
+						"i=" << i << " / " << len << endl;
+			}
+			A->Group_element->element_print_as_permutation_with_offset(
+					ith(i), ost,
+					1 /*offset*/,
+					true /* f_do_it_anyway_even_for_big_degree */,
+					false /* f_print_cycles_of_length_one */,
+					0 /* verbose_level*/);
+			if (i < len - 1) {
+				ost << ", " << endl;
+			}
+		}
+		ost << "]);" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+	if (f_v) {
+		cout << "vector_ge::print_generators_gap done" << endl;
+	}
+}
+
+
+void vector_ge::print_generators_gap_in_different_action(
+		std::ostream &ost, actions::action *A2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::print_generators_gap_in_different_action" << endl;
+	}
+	int i;
+
+	ost << "Generators in GAP format are:" << endl;
+	if (A->degree < 200) {
+		ost << "G := Group([";
+		for (i = 0; i < len; i++) {
+			A2->Group_element->element_print_as_permutation_with_offset(
+					ith(i), ost,
+					1 /*offset*/,
+					true /* f_do_it_anyway_even_for_big_degree */,
+					false /* f_print_cycles_of_length_one */,
+					0 /* verbose_level*/);
+			if (i < len - 1) {
+				ost << ", " << endl;
+			}
+		}
+		ost << "]);" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+	if (f_v) {
+		cout << "vector_ge::print_generators_gap_in_different_action done" << endl;
+	}
+}
+
+
+void vector_ge::print_generators_compact(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::print_generators_compact" << endl;
+	}
+	int i, j, a;
+
+	ost << "Generators in compact permutation form are:" << endl;
+	if (A->degree < 200) {
+		ost << len << " " << A->degree << endl;
+		for (i = 0; i < len; i++) {
+			for (j = 0; j < A->degree; j++) {
+				a = A->Group_element->element_image_of(
+						j,
+						ith(i),
+						0 /* verbose_level */);
+				ost << a << " ";
+				}
+			ost << endl;
+			}
+		ost << "-1" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+	if (f_v) {
+		cout << "vector_ge::print_generators_compact done" << endl;
+	}
+}
+
 
 
 }}}

@@ -141,6 +141,10 @@ public:
 	canonical_form::variety_activity_description
 		*Variety_activity_description;
 
+	int f_vector_ge_activity;
+	apps_algebra::vector_ge_activity_description
+		*Vector_ge_activity_description;
+
 	activity_description();
 	~activity_description();
 	void read_arguments(
@@ -207,6 +211,8 @@ public:
 	void do_orbits_activity(
 			int verbose_level);
 	void do_variety_activity(
+			int verbose_level);
+	void do_vector_ge_activity(
 			int verbose_level);
 
 };
@@ -1018,6 +1024,10 @@ class interface_toolkit {
 	int f_read_column_and_tally;
 	std::string read_column_and_tally_fname;
 	std::string read_column_and_tally_col_header;
+
+	int f_intersect_with;
+	std::string intersect_with_vector;
+	std::string intersect_with_data;
 
 
 public:

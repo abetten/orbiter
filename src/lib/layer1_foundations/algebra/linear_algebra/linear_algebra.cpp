@@ -1652,6 +1652,88 @@ void linear_algebra::exterior_square(
 	}
 }
 
+
+void linear_algebra::exterior_square_4x4(
+		int *A4, int *A6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "linear_algebra::exterior_square_4x4" << endl;
+	}
+	int i, j, k, l, ij, kl;
+	int aki, alj, akj, ali;
+	int u, v, w;
+	int n = 4;
+	int n2 = 6;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "linear_algebra::exterior_square_4x4 input matrix:" << endl;
+		Int_matrix_print(A4, n, n);
+	}
+
+	int Pairs[] = {
+			0,1,
+			2,3,
+			0,2,
+			1,3,
+			0,3,
+			1,2
+	};
+
+
+	// (i,j) = row index
+
+	for (ij = 0; ij < n2; ij++) {
+		i = Pairs[ij * 2 + 0];
+		j = Pairs[ij * 2 + 1];
+
+
+		// (k,l) = column index
+		for (kl = 0; kl < 6; kl++) {
+			k = Pairs[kl * 2 + 0];
+			l = Pairs[kl * 2 + 1];
+
+
+			// a_{k,i}a_{l,j} - a_{k,j}a_{l,i}
+			// = matrix entry at position (ij,kl)
+#if 0
+			aki = An[k * n + i];
+			alj = An[l * n + j];
+			akj = An[k * n + j];
+			ali = An[l * n + i];
+#else
+			// transposed:
+			aki = A4[i * n + k];
+			alj = A4[j * n + l];
+			akj = A4[j * n + k];
+			ali = A4[i * n + l];
+#endif
+			u = F->mult(aki, alj);
+			v = F->mult(akj, ali);
+			w = F->add(u, F->negate(v));
+
+			// now w is the matrix entry
+
+			A6[ij * n2 + kl] = w;
+		}
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::exterior_square_4x4 output matrix:" << endl;
+		Int_matrix_print(A6, n2, n2);
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::exterior_square_4x4 done" << endl;
+	}
+}
+
+
+
+
 void linear_algebra::lift_to_Klein_quadric(
 		int *A4, int *A6, int verbose_level)
 {

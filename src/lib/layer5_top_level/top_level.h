@@ -43,6 +43,8 @@ namespace apps_algebra {
 	class group_theoretic_activity_description;
 	class group_theoretic_activity;
 	class polynomial_ring_activity;
+	class vector_ge_activity_description;
+	class vector_ge_activity;
 	class vector_ge_builder;
 	class young;
 

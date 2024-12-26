@@ -515,6 +515,8 @@ ORBITER_MODULES= \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
+		layer5_top_level/algebra_and_number_theory/vector_ge_activity_description.o \
+		layer5_top_level/algebra_and_number_theory/vector_ge_activity.o \
 		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
 		layer5_top_level/algebra_and_number_theory/young.o \
 		layer5_top_level/canonical_form/automorphism_group_of_variety.o \

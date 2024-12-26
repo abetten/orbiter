@@ -719,6 +719,11 @@ public:
 			std::ostream& ost);
 	void print_tex(
 			std::ostream &ost);
+	void report_elements(
+			std::string &label,
+			int f_with_permutation,
+			int f_override_action, actions::action *A_special,
+			int verbose_level);
 	void print_generators_tex(
 			algebra::ring_theory::longinteger_object &go,
 			std::ostream &ost);
@@ -812,6 +817,12 @@ public:
 	int test_if_in_set_stabilizer(
 			actions::action *A,
 			long int *set, int sz, int verbose_level);
+	void print_generators_gap(
+			std::ostream &ost, int verbose_level);
+	void print_generators_gap_in_different_action(
+			std::ostream &ost, actions::action *A2, int verbose_level);
+	void print_generators_compact(
+			std::ostream &ost, int verbose_level);
 
 };
 

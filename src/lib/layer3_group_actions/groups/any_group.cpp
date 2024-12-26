@@ -1759,6 +1759,37 @@ void any_group::do_reverse_isomorphism_exterior_square(
 }
 
 
+void any_group::do_reverse_isomorphism_exterior_square_vector_ge(
+		data_structures_groups::vector_ge *vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 5);
+
+	if (f_v) {
+		cout << "any_group::do_reverse_isomorphism_exterior_square_vector_ge" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::do_reverse_isomorphism_exterior_square_vector_ge "
+				"before vec->reverse_isomorphism_exterior_square" << endl;
+	}
+
+	vec->reverse_isomorphism_exterior_square(verbose_level);
+
+	if (f_v) {
+		cout << "any_group::do_reverse_isomorphism_exterior_square_vector_ge "
+				"after vec->reverse_isomorphism_exterior_square" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::do_reverse_isomorphism_exterior_square_vector_ge done" << endl;
+	}
+}
+
+
+
+
 groups::strong_generators *any_group::get_strong_generators()
 {
 	int f_v = false;

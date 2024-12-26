@@ -16,6 +16,8 @@ MODULES = \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
 	polynomial_ring_activity.o \
+	vector_ge_activity_description.o \
+	vector_ge_activity.o \
 	vector_ge_builder.o \
 	young.o 
 
