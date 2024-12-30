@@ -593,13 +593,18 @@ void csv_file_support::read_column_as_table_of_lint(
 				SoS,
 				verbose_level);
 
+	m = SoS->nb_sets;
+
 	if (SoS->nb_sets == 0) {
-		cout << "csv_file_support::read_column_as_table_of_lint the file seems to be empty" << endl;
-		exit(1);
+		cout << "csv_file_support::read_column_as_table_of_lint the file is empty" << endl;
+		//exit(1);
+		n = 0;
+	}
+	else {
+		n = SoS->Set_size[0];
+
 	}
 
-	m = SoS->nb_sets;
-	n = SoS->Set_size[0];
 	M = NEW_lint(m * n);
 
 	int i;

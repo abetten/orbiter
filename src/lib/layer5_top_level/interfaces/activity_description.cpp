@@ -785,6 +785,8 @@ void activity_description::read_arguments(
 
 
 void activity_description::worker(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -836,7 +838,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_group_theoretic_activity" << endl;
 		}
-		do_group_theoretic_activity(verbose_level);
+		do_group_theoretic_activity(nb_output, Output, verbose_level);
 
 	}
 	else if (f_coding_theoretic_activity) {
@@ -1397,6 +1399,8 @@ void activity_description::do_orthogonal_space_activity(
 }
 
 void activity_description::do_group_theoretic_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1471,6 +1475,9 @@ void activity_description::do_group_theoretic_activity(
 			cout << "activity_description::do_group_theoretic_activity "
 					"after Activity.perform_activity" << endl;
 		}
+
+		nb_output = Activity.nb_output;
+		Output = Activity.Output;
 
 	}
 

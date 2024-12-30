@@ -97,6 +97,8 @@ test:
 	make test_17
 	make test_18
 	make test_19
+	make test_20
+	make test_21
 
 
 
@@ -109,7 +111,6 @@ test_problem:
 
 
 
-BAER_SUBGEOMETRY_IN_PG_3_4="0,1,2,3,4,5,8,11,12,23,26,27,38,39,42"
 
 # Section 2.6 vector of group elements
 
@@ -582,6 +583,8 @@ HIGMAN_SIMS_NB_GENS=12
 
 HIGMAN_SIMS_GO=44352000
 
+
+# Section 7.9 Group theory, activities for vectors of group elements
 
 
 # Chapter 8 Orbit Algorithms
@@ -1363,7 +1366,6 @@ NEUMAIER_GRAPH_16_2_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1
 # Section 12.4 Classification of Configurations and Geometries
 
 
-DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
 
 GEO_BLOCKS_600="Row,Block\n\
 0, \"0, 5, 14\" \n\
@@ -6191,6 +6193,8 @@ test_7:
 	make test_7_6 # Magma stuff
 	make test_7_7 # gap stuff
 	make test_7_8 # Linear Groups, Advanced Topics
+	make test_7_9 # activities for vectors of group elements
+
 
 
 ###############################################################################
@@ -9626,6 +9630,86 @@ Higman_Sims_subgroup_176b:
 		-end
 	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.pdf
+
+
+
+
+###############################################################################
+# Section 7.9: Group Theory, activities for vectors of group elements
+
+
+SECTION_GROUP_THEORY_ACTIVITIES_FOR_VECTORS:
+
+test_7_9:
+	make PGL_4_2_orthogonal_reflections_report_vector_ge
+	make Sym_6_generators
+	make Sym_6_elements
+
+
+
+
+PGL_4_2_orthogonal_reflections_report_vector_ge:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-define G4 -linear_group -PGL 4 2 -end \
+		-with O -do -orthogonal_space_activity \
+			-create_orthogonal_reflection_6_and_4 Pts G4 \
+		-end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define PGL_4_2_elements -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_orthogonal_reflections_4x4.csv Element \
+		-end \
+		-with PGL_4_2_elements -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with PGL_4_2_elements -do \
+		-vector_ge_activity \
+			-export_GAP \
+		-end
+	$(PDFLATEX) PGL_4_2_elements.tex
+	$(OPEN) PGL_4_2_elements.pdf
+
+
+Sym_6_generators:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-assign gens -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-generators \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) Sym_6_elements.tex
+	$(OPEN) Sym_6_elements.pdf
+
+Sym_6_elements:
+	$(ORBITER) -v 3 \
+		-define G -permutation_group -symmetric_group 6 -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) Sym_6_elements.tex
+	$(OPEN) Sym_6_elements.pdf
+
 
 
 ###############################################################################
@@ -17166,9 +17250,6 @@ test_12_4:
 	make geo_10_3_orderly
 	make geo_10_3_orderly_mem_debug
 	make geo_10_3_tree
-	make geo_10_3_tree_path
-	#make Desargues_path_lex_least_draw
-	#make Desargues_path_can_anc_draw
 	make geo_11_3
 	make geo_12_3
 	make geo_12_3_orderly
@@ -17415,76 +17496,6 @@ geo_10_3_tree:
 
 
 
-
-geo_10_3_tree_path:
-	$(ORBITER) -v 20 \
-		-define Test_lines -set -loop 0 11 1 -end \
-		-define GEO -geometry_builder \
-			-V 10 -B 10 -TDO 3 -fuse 1 \
-			-fname_GEO 10_3 \
-			-output_to_inc_file \
-			-search_tree \
-			-test Test_lines \
-		-end
-	$(ORBITER) -v 20 \
-		-define Do -draw_options -embedded -radius 20 \
-			-paperheight 220 \
-			-paperwidth 330 \
-			-xin 10000 -yin 10000 \
-			-xout 1000000 -yout 500000 \
-			-scale 2 -line_width 0.3 \
-		-end \
-		-tree_draw \
-			-restrict 2 \
-			-file 10_3_tree.txt \
-			-draw_options Do \
-			-select_path "0,0,15,26,46,56,72,80,93,106,119" \
-		-end
-	$(PDFLATEX) 10_3_tree_draw.tex
-	$(OPEN) 10_3_tree_draw.pdf
-
-#			-nodes_empty \
-#-sideways 
-
-
-# ToDo:
-#Desargues_path_lex_least.inc is missing
-
-Desargues_path_lex_least_draw:
-	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
-	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
-			-width 60 -width_10 6 -end \
-		-define C -combinatorial_object \
-			-label geo_10_3 geo\_10\_3 \
-			-file_of_incidence_geometries_by_row_ranks \
-			Desargues_path_lex_least.inc 10 10 3 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-draw_incidence_matrices \
-			Desargues_path_lex_least \
-		-end
-	$(PDFLATEX) Desargues_path_lex_least_incma.tex
-	$(OPEN) Desargues_path_lex_least_incma.pdf
-
-
-Desargues_path_can_anc_draw:
-	echo $(DESARGUES_PATH_CANONICAL_ANCESTOR) >Desargues_path_can_anc.inc
-	$(ORBITER) -v 10 \
-		-draw_incidence_structure_description \
-			-width 60 -width_10 6 -end \
-		-define C -combinatorial_object \
-			-label geo_10_3 geo\_10\_3 \
-			-file_of_incidence_geometries_by_row_ranks Desargues_path_can_anc.inc 10 10 3 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-draw_incidence_matrices \
-			Desargues_path_can_anc \
-		-end
-	$(PDFLATEX) Desargues_path_can_anc_incma.tex
-	$(OPEN) Desargues_path_can_anc_incma.pdf
 
 
 
@@ -23232,7 +23243,7 @@ SECTION_OBJECTS_FROM_DESIGN_THEORY:
 
 
 test_17_4:
-	make LS_AG_2_3_solutions_classify # needs Section 13.3
+	make LS_AG_2_3_solutions_classify # needs Section 14.3
 	make design_27c
 	make design_PG_2_3_canonical
 	make wreath_product_designs_n8_k6_c
@@ -23240,7 +23251,7 @@ test_17_4:
 
 
 
-# continuation of an example in Section 13.3
+# continuation of an example in Section 14.3
 # requires the file AG_2_3_large_sets.csv
 
 LS_AG_2_3_solutions_classify:
@@ -23509,6 +23520,7 @@ code_3_2_aut:
 				"3_2" genma \
 				-save_ago \
 				-save_classification "3_2" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) 3_2_classification.tex
@@ -23536,6 +23548,7 @@ code_6_3_aut:
 				"6_3" genma \
 				-save_ago \
 				-save_classification "6_3" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) 6_3_classification.tex
@@ -23563,6 +23576,7 @@ RM_3_1_group:
 				"RM_3_1" genma \
 				-save_ago \
 				-save_classification "RM_3_1" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) RM_3_1_classification.tex
@@ -23584,6 +23598,7 @@ RM_3_1_group_and_diagram:
 				"RM_3_1" genma \
 				-save_ago \
 				-save_classification "RM_3_1" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) RM_3_1_classification.tex
@@ -23616,6 +23631,7 @@ RM_4_1_group:
 				"RM_4_1" genma \
 				-save_ago \
 				-save_classification "RM_4_1" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) RM_4_1_classification.tex
@@ -23650,6 +23666,7 @@ RS_6_4_7_group:
 				"RS_6" genma \
 				-save_ago \
 				-save_classification "RS_6" \
+				-nauty_control -end \
 			-end \
 		-end
 
@@ -23667,6 +23684,7 @@ GV_n15_k6_d5_group:
 				"GV_n15_k6_d5" genma \
 				-save_ago \
 				-save_classification "GV_n15_k6_d5" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) GV_n15_k6_d5_classification.tex
@@ -23689,6 +23707,7 @@ code_n15_k6_d6_a_group:
 				"n15_k6_d6_a" genma \
 				-save_ago \
 				-save_classification "n15_k6_d6_a" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) n15_k6_d6_a_classification.tex
@@ -23708,6 +23727,7 @@ code_n15_k6_d6_b_group:
 				"n15_k6_d6_b" genma \
 				-save_ago \
 				-save_classification "n15_k6_d6_b" \
+				-nauty_control -end \
 			-end \
 		-end
 	$(PDFLATEX) n15_k6_d6_b_classification.tex
@@ -24200,6 +24220,20 @@ F_17_edge:
 
 
 Edge_curve_17_nauty: 
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring -field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -geometric_object P \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				$(EDGE_CURVE_Q17_EQUATION) \
+		-end \
+		-with C -do -combinatorial_object_activity -save \
+		-end
 	$(ORBITER) -v 3 \
 		-define C -combinatorial_object \
 			-label Edge_curve_q17 Edge\_curve\_q17 \
@@ -24309,6 +24343,7 @@ test_18_1:
 	make Sym_6_class_2ABC_make_graph_G3
 	make Sym_6_class_2ABC_subgraph_A5
 	make Sym_6_aut_group
+	make Sym_6_Schreier_tree_draw
 	make Aut_Sym_6_group
 	#make Aut_Sym_6_subgroup_lattice   # too slow
 	#make Aut_Sym_6_subgroup_lattice_load_and_draw
@@ -24517,16 +24552,13 @@ Sym_6_class_2ABC_subgraph_A5:
 
 Sym_6_aut_group:
 	$(ORBITER) -v 3 \
-		-define elements_of_order2 -vector \
-			-file_column Sym_6_class_2ABC.csv "elements" \
-		-end \
 		-define images -vector -file_column \
 			File_Sym_6_class_2ABC_order_2_all_A5.csv "C0" \
 		-end \
 		-define G -permutation_group -symmetric_group 6 -end \
 		-define elements_of_order2_ge -vector_ge \
 			-action G \
-			-vector_data elements_of_order2 \
+			-read_csv Sym_6_class_2ABC.csv "elements" \
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -24538,6 +24570,18 @@ Sym_6_aut_group:
 
 
 
+Sym_6_Schreier_tree_draw:
+	$(ORBITER) -v 3 \
+		-draw_layered_graph \
+			images_tree.layered_graph \
+			-embedded \
+			-nodes_empty \
+			-spanning_tree \
+			-radius 25 -line_width 1.3 \
+			-y_stretch 1.0 -scale 0.5 \
+		-end
+	pdflatex images_tree_draw.tex
+	open images_tree_draw.pdf
 
 
 Aut_Sym_6_group:

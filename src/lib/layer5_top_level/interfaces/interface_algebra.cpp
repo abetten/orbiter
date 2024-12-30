@@ -124,6 +124,19 @@ interface_algebra::interface_algebra()
 	//std::string Chinese_remainders_M;
 
 
+	f_order_of_group_Anq = false;
+	order_of_group_Anq_n = 0;
+	order_of_group_Anq_q = 0;
+
+	f_order_of_group_Bnq = false;
+	order_of_group_Bnq_n = 0;
+	order_of_group_Bnq_q = 0;
+
+	f_order_of_group_Dnq = false;
+	order_of_group_Dnq_n = 0;
+	order_of_group_Dnq_q = 0;
+
+
 }
 
 interface_algebra::~interface_algebra()
@@ -212,7 +225,18 @@ void interface_algebra::print_help(
 	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
 		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
+		cout << "-order_of_group_Anq <int : n> <int : q>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Bnq") == 0) {
+		cout << "-order_of_group_Bnq <int : n> <int : q>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Dnq") == 0) {
+		cout << "-order_of_group_Dnq <int : n> <int : q>" << endl;
+	}
 }
+
+
 
 int interface_algebra::recognize_keyword(
 		int argc,
@@ -300,6 +324,15 @@ int interface_algebra::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Bnq") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Dnq") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -540,6 +573,33 @@ void interface_algebra::read_arguments(
 					<< " " << Chinese_remainders_M << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
+		f_order_of_group_Anq = true;
+		order_of_group_Anq_n = ST.strtoi(argv[++i]);
+		order_of_group_Anq_q = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-order_of_group_Anq " << order_of_group_Anq_n << " "
+					<< order_of_group_Anq_q << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Bnq") == 0) {
+		f_order_of_group_Bnq = true;
+		order_of_group_Bnq_n = ST.strtoi(argv[++i]);
+		order_of_group_Bnq_q = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-order_of_group_Bnq " << order_of_group_Bnq_n << " "
+					<< order_of_group_Bnq_q << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-order_of_group_Dnq") == 0) {
+		f_order_of_group_Dnq = true;
+		order_of_group_Dnq_n = ST.strtoi(argv[++i]);
+		order_of_group_Dnq_q = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-order_of_group_Dnq " << order_of_group_Dnq_n << " "
+					<< order_of_group_Dnq_q << endl;
+		}
+	}
 
 }
 
@@ -643,6 +703,18 @@ void interface_algebra::print()
 	if (f_Chinese_remainders) {
 		cout << "-Chinese_remainders " << Chinese_remainders_R
 				<< " " << Chinese_remainders_M << endl;
+	}
+	if (f_order_of_group_Anq) {
+		cout << "-order_of_group_Anq " << order_of_group_Anq_n << " "
+				<< order_of_group_Anq_q << endl;
+	}
+	if (f_order_of_group_Bnq) {
+		cout << "-order_of_group_Bnq " << order_of_group_Bnq_n << " "
+				<< order_of_group_Bnq_q << endl;
+	}
+	if (f_order_of_group_Dnq) {
+		cout << "-order_of_group_Dnq " << order_of_group_Dnq_n << " "
+				<< order_of_group_Dnq_q << endl;
 	}
 
 }
@@ -990,6 +1062,56 @@ void interface_algebra::worker(
 
 		FREE_lint(R);
 		FREE_lint(M);
+
+	}
+	else if (f_order_of_group_Anq) {
+
+		if (f_v) {
+			cout << "-order_of_group_Anq " << order_of_group_Anq_n << " "
+				<< order_of_group_Anq_q << endl;
+		}
+
+		algebra::ring_theory::longinteger_domain L;
+		algebra::ring_theory::longinteger_object a;
+
+		L.create_order_of_group_Anq(
+				a, order_of_group_Anq_n, order_of_group_Anq_q, verbose_level - 1);
+
+		cout << "order of A(" << order_of_group_Anq_n << "," << order_of_group_Anq_q << ") = " << a << endl;
+
+	}
+
+	else if (f_order_of_group_Bnq) {
+
+		if (f_v) {
+			cout << "-order_of_group_Bnq " << order_of_group_Bnq_n << " "
+				<< order_of_group_Bnq_q << endl;
+		}
+
+		algebra::ring_theory::longinteger_domain L;
+		algebra::ring_theory::longinteger_object a;
+
+		L.create_order_of_group_Bnq(
+				a, order_of_group_Bnq_n, order_of_group_Bnq_q, verbose_level - 1);
+
+		cout << "order of B(" << order_of_group_Bnq_n << "," << order_of_group_Bnq_q << ") = " << a << endl;
+
+	}
+
+	else if (f_order_of_group_Dnq) {
+
+		if (f_v) {
+			cout << "-order_of_group_Dnq " << order_of_group_Dnq_n << " "
+				<< order_of_group_Dnq_q << endl;
+		}
+
+		algebra::ring_theory::longinteger_domain L;
+		algebra::ring_theory::longinteger_object a;
+
+		L.create_order_of_group_Dnq(
+				a, order_of_group_Dnq_n, order_of_group_Dnq_q, verbose_level - 1);
+
+		cout << "order of D(" << order_of_group_Dnq_n << "," << order_of_group_Dnq_q << ") = " << a << endl;
 
 	}
 

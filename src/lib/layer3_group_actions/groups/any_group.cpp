@@ -534,28 +534,6 @@ void any_group::do_export_gap(
 	{
 		ofstream ost(fname);
 
-#if 0
-		if (Subgroup_gens) {
-			if (f_v) {
-				cout << "any_group::do_export_gap "
-						"using Subgroup_gens" << endl;
-			}
-			Subgroup_gens->print_generators_gap(ost);
-		}
-		else if (A->f_has_strong_generators) {
-			if (f_v) {
-				cout << "any_group::do_export_gap "
-						"using A_base->Strong_gens" << endl;
-			}
-			A->Strong_gens->print_generators_gap_in_different_action(ost, A);
-		}
-		else {
-			cout << "any_group::do_export_gap "
-					"no generators to export" << endl;
-			exit(1);
-		}
-#endif
-
 		ost << "LoadPackage(\"fining\");" << endl;
 
 
@@ -1282,6 +1260,33 @@ void any_group::save_elements_csv(
 	}
 }
 
+void any_group::all_elements(
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::all_elements" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::all_elements "
+				"before Subgroup_sims->all_elements" << endl;
+	}
+	Subgroup_sims->all_elements(
+			vec,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::all_elements "
+				"after Subgroup_sims->all_elements" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::all_elements done" << endl;
+	}
+
+}
 void any_group::export_inversion_graphs(
 		std::string &fname, int verbose_level)
 {
@@ -1301,145 +1306,6 @@ void any_group::export_inversion_graphs(
 }
 
 
-#if 0
-void any_group::multiply_elements_csv(
-		std::string &fname1,
-		std::string &fname2,
-		std::string &fname3,
-		int f_column_major_ordering,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::multiply_elements_csv" << endl;
-	}
-
-	data_structures_groups::vector_ge V1, V2, V3;
-	int n1, n2, n3;
-	int i, j, k;
-
-	V1.read_column_csv(fname1, A, 1 /* col_idx */, verbose_level);
-	n1 = V1.len;
-
-	V2.read_column_csv(fname2, A, 1 /* col_idx */, verbose_level);
-	n2 = V2.len;
-
-	n3 = n1 * n2;
-
-	if (f_v) {
-		cout << "any_group::multiply_elements_csv "
-				"n1=" << V1.len << " n2=" << V2.len << " n3=" << n3 << endl;
-	}
-
-	V3.init(A, 0 /* vl */);
-	V3.allocate(n3, 0 /* vl */);
-
-	if (f_column_major_ordering) {
-		k = 0;
-		for (j = 0; j < n2; j++) {
-			for (i = 0; i < n1; i++, k++) {
-				A->Group_element->mult(V1.ith(i), V2.ith(j), V3.ith(k));
-			}
-		}
-	}
-	else {
-		k = 0;
-		for (i = 0; i < n1; i++) {
-			for (j = 0; j < n2; j++, k++) {
-				A->Group_element->mult(V1.ith(i), V2.ith(j), V3.ith(k));
-			}
-		}
-
-	}
-
-	//Subgroup_sims->all_elements_save_csv(fname, verbose_level);
-	V3.save_csv(fname3, verbose_level);
-
-	if (f_v) {
-		cout << "any_group::multiply_elements_csv done" << endl;
-	}
-}
-
-void any_group::apply_elements_to_set_csv(
-		std::string &fname1,
-		std::string &fname2,
-		std::string &set_text,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "any_group::apply_elements_to_set_csv" << endl;
-	}
-
-	data_structures_groups::vector_ge V1;
-	int n1;
-	int i, j;
-	long int *set;
-	long int *set_image;
-	int *set_image_int;
-	int sz;
-	int *Rk;
-	combinatorics::other::combinatorics_domain Combi;
-
-
-	Lint_vec_scan(set_text, set, sz);
-
-	V1.read_column_csv(fname1, A, 1 /* col_idx */, verbose_level);
-	n1 = V1.len;
-
-	set_image = NEW_lint(sz);
-	set_image_int = NEW_int(sz);
-	Rk = NEW_int(n1);
-
-	if (f_v) {
-		cout << "any_group::apply_elements_to_set_csv "
-				"n1=" << V1.len << endl;
-	}
-
-	for (i = 0; i < n1; i++) {
-		A->Group_element->map_a_set_and_reorder(set, set_image,
-				sz, V1.ith(i), 0 /* verbose_level */);
-
-		for (j = 0; j < sz; j++) {
-			set_image_int[j] = set_image[j];
-		}
-		Rk[i] = Combi.rank_k_subset(set_image_int, A->degree, sz);
-
-		cout << i << " : ";
-		Lint_vec_print(cout, set_image, sz);
-		cout << i << " : ";
-		cout << Rk[i];
-		cout << endl;
-
-	}
-
-
-	cout << "Image sets by rank: ";
-	Int_vec_print_fully(cout, Rk, n1);
-	cout << endl;
-
-
-	if (!Combi.Permutations->is_permutation(Rk, n1)) {
-		cout << "any_group::apply_elements_to_set_csv "
-				"The set Rk is *not* a permutation" << endl;
-		exit(1);
-	}
-	else {
-		cout << "any_group::apply_elements_to_set_csv "
-				"The set Rk is a permutation" << endl;
-	}
-
-	FREE_lint(set);
-	FREE_lint(set_image);
-	FREE_int(set_image_int);
-
-	if (f_v) {
-		cout << "any_group::apply_elements_to_set_csv done" << endl;
-	}
-}
-#endif
 
 void any_group::random_element(
 		std::string &elt_label, int verbose_level)
@@ -3081,6 +2947,38 @@ void any_group::search_element_of_order(
 	}
 }
 #endif
+
+
+void any_group::get_generators(
+		data_structures_groups::vector_ge *&gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::get_generators" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "any_group::get_generators "
+				"before Subgroup_gens->gens->copy" << endl;
+	}
+	Subgroup_gens->gens->copy(gens, verbose_level);
+	if (f_v) {
+		cout << "any_group::get_generators "
+				"after Subgroup_gens->gens->copy" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::get_generators done" << endl;
+	}
+}
+
+
+
 
 
 }}}

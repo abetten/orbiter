@@ -702,6 +702,66 @@ void orbit_of_sets::export_tree_as_layered_graph(
 }
 
 
+void orbit_of_sets::export_tree_as_layered_graph_to_file(
+		std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file" << endl;
+	}
+
+
+	combinatorics::graph_theory::layered_graph *LG;
+
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"before Orb.export_tree_as_layered_graph" << endl;
+	}
+	export_tree_as_layered_graph(
+			LG,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"after Orb.export_tree_as_layered_graph" << endl;
+	}
+
+
+	//string fname;
+
+	//fname = label + "_tree.layered_graph";
+
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"before LG->write_file" << endl;
+	}
+	LG->write_file(fname, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"after LG->write_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"before FREE_OBJECT(LG)" << endl;
+	}
+	FREE_OBJECT(LG);
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
+				"after FREE_OBJECT(LG)" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file done" << endl;
+	}
+}
+
 
 
 }}}

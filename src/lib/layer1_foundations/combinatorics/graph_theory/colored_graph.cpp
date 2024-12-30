@@ -1667,7 +1667,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	Bitvec->allocate(l);
 
-	S->init_from_bitvector(nb_points_subgraph,
+	S->init_from_bitvector(
+			nb_points_subgraph,
 			color_subset->k, nb_colors_per_vertex,
 			color_in_subgraph,
 			Bitvec, true,
@@ -1810,7 +1811,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 
 	Bitvec->allocate(l);
 
-	S->init_from_bitvector(nb_points_subgraph,
+	S->init_from_bitvector(
+			nb_points_subgraph,
 			color_subset->k, nb_colors_per_vertex,
 			color_in_subgraph,
 			Bitvec, true,
@@ -2938,9 +2940,10 @@ void colored_graph::find_subgraph_An_recursion(
 
 
 void colored_graph::write_solutions_to_csv_file(
+		std::string &fname_sol,
 		std::vector<std::vector<long int> >& solutions,
 		clique_finder_control *Control,
-		std::ostream &ost, int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2948,49 +2951,69 @@ void colored_graph::write_solutions_to_csv_file(
 		cout << "colored_graph::write_solutions_to_csv_file" << endl;
 	}
 
-	//int user_data_size;
-	//long int *user_data; // [user_data_size]
 
-	long int *data;
+	{
+		ofstream ost(fname_sol);
 
-	data = NEW_lint(user_data_size + Control->target_size);
-
-	ost << "ROW,Cnt,Solution" << endl;
-
-	for (int i = 0; i < solutions.size(); ++i) {
-		ost << i << ",";
-		ost << i << ",";
-
-		Lint_vec_copy(user_data, data, user_data_size);
-
-		for (int j = 0; j < Control->target_size; j++) {
-
-			if (points) {
-				data[user_data_size + j] = points[solutions[i][j]];
-				//ost << points[solutions[i][j]];
-				//ost << points[solutions[i * Control->target_size + j]];
-			}
-			else {
-				data[user_data_size + j] = solutions[i][j];
-				//ost << solutions[i][j];
-			}
-			//fp_csv << Control->Sol[i * Control->target_size + j];
-#if 0
-			if (j < Control->target_size - 1) {
-				ost << ",";
-			}
-#endif
+		if (f_v) {
+			cout << "colored_graph::write_solutions_to_csv_file "
+					"fname_sol = " << fname_sol << endl;
 		}
-		string s;
 
-		s = Lint_vec_stringify(data, user_data_size + Control->target_size);
-		ost << "\"" + s + "\"";
-		ost << endl;
+		//int user_data_size;
+		//long int *user_data; // [user_data_size]
+
+		long int *data;
+
+		data = NEW_lint(user_data_size + Control->target_size);
+
+		ost << "ROW,Cnt,Solution" << endl;
+
+		for (int i = 0; i < solutions.size(); ++i) {
+			ost << i << ",";
+			ost << i << ",";
+
+			Lint_vec_copy(user_data, data, user_data_size);
+
+			for (int j = 0; j < Control->target_size; j++) {
+
+				if (points) {
+					data[user_data_size + j] = points[solutions[i][j]];
+					//ost << points[solutions[i][j]];
+					//ost << points[solutions[i * Control->target_size + j]];
+				}
+				else {
+					data[user_data_size + j] = solutions[i][j];
+					//ost << solutions[i][j];
+				}
+				//fp_csv << Control->Sol[i * Control->target_size + j];
+	#if 0
+				if (j < Control->target_size - 1) {
+					ost << ",";
+				}
+	#endif
+			}
+			string s;
+
+			s = Lint_vec_stringify(data, user_data_size + Control->target_size);
+			ost << "\"" + s + "\"";
+			ost << endl;
+		}
+		ost << "END" << endl;
+
+
+		FREE_lint(data);
 	}
-	ost << "END" << endl;
 
 
-	FREE_lint(data);
+	other::orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "colored_graph::write_solutions_to_csv_file "
+				"written file " << fname_sol
+				<< " of size " << Fio.file_size(fname_sol) << endl;
+	}
+
 
 	if (f_v) {
 		cout << "colored_graph::write_solutions_to_csv_file done" << endl;

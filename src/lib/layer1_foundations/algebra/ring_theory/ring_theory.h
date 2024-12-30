@@ -540,6 +540,12 @@ public:
 		// solves x^2 = a mod p. Returns x
 
 
+	void create_order_of_group_Anq(
+			longinteger_object &order, int n, int q, int verbose_level);
+	void create_order_of_group_Bnq(
+			longinteger_object &order, int n, int q, int verbose_level);
+	void create_order_of_group_Dnq(
+			longinteger_object &order, int n, int q, int verbose_level);
 	void create_q_to_the_n(
 			longinteger_object &a, int q, int n);
 	void create_qnm1(

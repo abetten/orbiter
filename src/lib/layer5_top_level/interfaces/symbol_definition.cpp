@@ -107,7 +107,8 @@ symbol_definition::symbol_definition()
 	f_packing_was_choose_fixed_points = false;
 	//std::string packing_with_assumed_symmetry_label;
 	packing_with_assumed_symmetry_choose_fixed_points_clique_size = 0;
-	packing_with_assumed_symmetry_choose_fixed_points_control = NULL;
+	//std::string packing_was_choose_fixed_points_control_label;
+	//packing_with_assumed_symmetry_choose_fixed_points_control = NULL;
 
 
 	f_packing_long_orbits = false;
@@ -709,7 +710,10 @@ void symbol_definition::read_definition(
 
 		packing_with_assumed_symmetry_label.assign(argv[++i]);
 		packing_with_assumed_symmetry_choose_fixed_points_clique_size = ST.strtoi(argv[++i]);
+		packing_was_choose_fixed_points_control_label.assign(argv[++i]);
+		i++;
 
+#if 0
 		packing_with_assumed_symmetry_choose_fixed_points_control =
 				NEW_OBJECT(poset_classification::poset_classification_control);
 		if (f_v) {
@@ -732,6 +736,14 @@ void symbol_definition::read_definition(
 					<< " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size
 					<< endl;
 			packing_with_assumed_symmetry_choose_fixed_points_control->print();
+		}
+#endif
+		if (f_v) {
+			cout << "-packing_with_symmetry_assumption_choose_fixed_points "
+					<< packing_with_assumed_symmetry_label
+					<< " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size
+					<< " " << packing_was_choose_fixed_points_control_label
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-packing_long_orbits") == 0) {
@@ -1972,13 +1984,11 @@ void symbol_definition::print()
 		packing_was_descr->print();
 	}
 	else if (f_packing_was_choose_fixed_points) {
-		cout << "-packing_was_choose_fixed_points ";
-		cout << packing_with_assumed_symmetry_label;
-		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " " << endl;
-		packing_with_assumed_symmetry_choose_fixed_points_control->print();
-		//std::string packing_with_assumed_symmetry_label;
-		//int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
-		//poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
+		cout << "-packing_with_symmetry_assumption_choose_fixed_points "
+				<< packing_with_assumed_symmetry_label
+				<< " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size
+				<< " " << packing_was_choose_fixed_points_control_label
+				<< endl;
 	}
 	else if (f_packing_long_orbits) {
 		cout << "-packing_long_orbits " << packing_long_orbits_choose_fixed_points_label << endl;
@@ -3363,7 +3373,15 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
 				"using existing object "
 				<< packing_with_assumed_symmetry_label << endl;
+
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"packing_with_assumed_symmetry_choose_fixed_points_clique_size = "
+				<< packing_with_assumed_symmetry_choose_fixed_points_clique_size << endl;
+		cout << "symbol_definition::definition_of_packing_was_choose_fixed_points "
+				"packing_was_choose_fixed_points_control_label = "
+				<< packing_was_choose_fixed_points_control_label << endl;
 	}
+
 	int idx;
 	packings::packing_was *PW;
 
@@ -3382,9 +3400,15 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 				"before PWF->init" << endl;
 	}
 
+	poset_classification::poset_classification_control
+				*Control;
+
+	Control = Get_poset_classification_control(packing_was_choose_fixed_points_control_label);
+
+
 	PWF->init(PW,
 			packing_with_assumed_symmetry_choose_fixed_points_clique_size,
-			packing_with_assumed_symmetry_choose_fixed_points_control,
+			Control,
 			verbose_level);
 
 	if (f_v) {
@@ -3395,7 +3419,7 @@ void symbol_definition::definition_of_packing_was_choose_fixed_points(
 	if (packing_with_assumed_symmetry_choose_fixed_points_clique_size > 0) {
 		PWF->compute_cliques_on_fixpoint_graph(
 				packing_with_assumed_symmetry_choose_fixed_points_clique_size,
-				packing_with_assumed_symmetry_choose_fixed_points_control,
+				Control,
 				verbose_level);
 	}
 	else {

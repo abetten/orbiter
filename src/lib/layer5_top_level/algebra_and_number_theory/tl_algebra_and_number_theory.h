@@ -313,6 +313,20 @@ public:
 			int *Images, int m, int n,
 			int *&Perms, long int &go,
 			int verbose_level);
+	// An automorphism of a group is determined by the images of the generators.
+	// Here, we assume that we have a certain set of standard generators, and that
+	// the images of these generators are known.
+	// Using the right regular representation and a Schreier tree,
+	// we can then compute the automorphisms associated to the Images.
+	// Any automorphism is computed as a permutation of the elements
+	// in the ordering defined by the sims object Subgroup_sims
+	// The images in Images[] and the generators
+	// in Subgroup_gens->gens must correspond.
+	// This means that n must equal Subgroup_gens->gens->len
+	//
+	// We use orbits_schreier::orbit_of_sets for the Schreier tree.
+	// We need Subgroup_sims to set up action by right multiplication
+	// output: Perms[m * go]
 	void create_permutation(
 			actions::action *A,
 			groups::strong_generators *Subgroup_gens,
@@ -547,8 +561,10 @@ public:
 		// flags that apply to report:
 		int f_report_sylow;
 		int f_report_group_table;
-		//int f_report_classes;
 
+	int f_generators;
+
+	int f_elements;
 
 	int f_export_group_table;
 
@@ -706,23 +722,6 @@ public:
 	// TABLES/group_theoretic_activity_3.tex
 
 
-#if 0
-	int f_multiply_elements_csv_column_major_ordering;
-	std::string multiply_elements_csv_column_major_ordering_fname1;
-	std::string multiply_elements_csv_column_major_ordering_fname2;
-	std::string multiply_elements_csv_column_major_ordering_fname3;
-
-	int f_multiply_elements_csv_row_major_ordering;
-	std::string multiply_elements_csv_row_major_ordering_fname1;
-	std::string multiply_elements_csv_row_major_ordering_fname2;
-	std::string multiply_elements_csv_row_major_ordering_fname3;
-
-	int f_apply_elements_csv_to_set;
-	std::string apply_elements_csv_to_set_fname1;
-	std::string apply_elements_csv_to_set_fname2;
-	std::string apply_elements_csv_to_set_set;
-#endif
-
 	int f_order_of_products;
 	std::string order_of_products_elements;
 
@@ -835,6 +834,9 @@ public:
 
 	groups::any_group *AG_secondary; // used in is_subgroup_of, coset_reps
 
+
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
 
 
 	group_theoretic_activity();

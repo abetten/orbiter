@@ -145,7 +145,8 @@ void packing_was_fixpoints::setup_file_names(
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::setup_file_names "
-				"fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
+				"fname_fixp_graph_cliques="
+				<< fname_fixp_graph_cliques << endl;
 	}
 
 
@@ -156,7 +157,8 @@ void packing_was_fixpoints::setup_file_names(
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
-				"fname_fixp_graph_cliques_orbiter=" << fname_fixpoint_cliques_orbiter << endl;
+				"fname_fixp_graph_cliques_orbiter="
+				<< fname_fixpoint_cliques_orbiter << endl;
 	}
 
 	if (f_v) {

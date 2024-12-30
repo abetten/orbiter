@@ -212,6 +212,22 @@ void conjugacy_classes_and_normalizers::create_classes(
 				verbose_level - 1);
 
 	}
+
+	Conjugacy_class[0]->sub_idx = 0;
+
+	for (idx = 1; idx < nb_classes; idx++) {
+		if (idx == 1) {
+			Conjugacy_class[idx]->sub_idx = 0;
+		}
+		else {
+			if (Conjugacy_class[idx]->goi == Conjugacy_class[idx - 1]->goi) {
+				Conjugacy_class[idx]->sub_idx = Conjugacy_class[idx - 1]->sub_idx + 1;
+			}
+			else {
+				Conjugacy_class[idx]->sub_idx = 0;
+			}
+		}
+	}
 	if (f_v) {
 		cout << "conjugacy_classes_and_normalizers::create_classes" << endl;
 	}
@@ -435,6 +451,59 @@ void conjugacy_classes_and_normalizers::report_classes(
 	int idx;
 
 	cout << "The conjugacy classes are:" << endl;
+
+	std::vector< std::vector<std::string > > Data;
+
+	for (idx = 0; idx < nb_classes; idx++) {
+
+		std::vector<std::string > data;
+
+		Conjugacy_class[idx]->single_class_data(data, verbose_level - 1);
+
+		Data.push_back(data);
+	}
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+	int i, j;
+
+	nb_cols = Data[0].size();
+	nb_rows = nb_classes;
+	Table = new string [nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			Table[i * nb_cols + j] = Data[i][j];
+		}
+	}
+
+	other::l1_interfaces::latex_interface L;
+
+	int nb_pp = 20;
+	int nb_p, nb_r;
+	int I;
+
+	nb_p = (nb_classes + nb_pp - 1)/ nb_pp;
+	for (I = 0; I < nb_p; I++) {
+
+		if (I == nb_p - 1) {
+			nb_r = nb_rows - nb_pp * I;
+		}
+		else {
+			nb_r = nb_pp;
+		}
+		ost << "\\begin{center}" << endl;
+		L.print_tabular_of_strings(
+				ost, Table + I * nb_pp * nb_cols, nb_r, nb_cols);
+		ost << "\\end{center}" << endl;
+
+
+	}
+
+	ost << endl;
+	ost << "\\bigskip" << endl;
+	ost << endl;
+
+
 	for (idx = 0; idx < nb_classes; idx++) {
 
 

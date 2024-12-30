@@ -30,6 +30,9 @@ interface_symbol_table::interface_symbol_table()
 	f_define = false;
 	Symbol_definition = NULL;
 
+	f_assign = false;
+	//std::vector<std::string> assign_labels;
+
 	f_print_symbols = false;
 
 	f_with = false;
@@ -72,6 +75,9 @@ void interface_symbol_table::print_help(
 	if (ST.stringcmp(argv[i], "-define") == 0) {
 		cout << "-define <string : label> description -end" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-assign") == 0) {
+		cout << "-assign <string : label>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
 		cout << "-print_symbols" << endl;
 	}
@@ -90,6 +96,9 @@ int interface_symbol_table::recognize_keyword(
 		return false;
 	}
 	if (ST.stringcmp(argv[i], "-define") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-assign") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
@@ -134,17 +143,47 @@ void interface_symbol_table::read_arguments(
 					"after Symbol_definition->read_definition" << endl;
 		}
 
-#if 0
-		if (f_v) {
-			cout << "interface_symbol_table::read_arguments "
-					"before Symbol_definition->perform_definition" << endl;
+	}
+
+	else if (ST.stringcmp(argv[i], "-assign") == 0) {
+
+		f_assign = true;
+
+		string s;
+		other::data_structures::string_tools ST;
+
+		s.assign(argv[++i]);
+		assign_labels.push_back(s);
+
+		while (true) {
+			i++;
+			if (ST.stringcmp(argv[i], "-and") == 0) {
+				string s;
+
+				s.assign(argv[++i]);
+				assign_labels.push_back(s);
+			}
+			else {
+				break;
+			}
 		}
-		Symbol_definition->perform_definition(verbose_level);
-		if (f_v) {
-			cout << "interface_symbol_table::read_arguments "
-					"after Symbol_definition->perform_definition" << endl;
+
+
+		if (ST.stringcmp(argv[i], "-from") != 0) {
+			cout << "after assign, we need -from" << endl;
+			cout << "but we have " << argv[i] << endl;
+			exit(1);
 		}
+		i++;
+#if 1
+		if (ST.stringcmp(argv[i], "-with") != 0) {
+			cout << "after assign, we need -from and -with" << endl;
+			cout << "but we have " << argv[i] << endl;
+			exit(1);
+		}
+		read_with(argc, argv, i, verbose_level);
 #endif
+
 	}
 
 	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
@@ -216,6 +255,52 @@ void interface_symbol_table::read_with(
 
 }
 
+void interface_symbol_table::read_from(
+		int argc, std::string *argv, int &i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::read_from" << endl;
+	}
+
+	f_with = true;
+	string s;
+	other::data_structures::string_tools ST;
+
+	s.assign(argv[++i]);
+	with_labels.push_back(s);
+
+	while (true) {
+		i++;
+		if (ST.stringcmp(argv[i], "-and") == 0) {
+			string s;
+
+			s.assign(argv[++i]);
+			with_labels.push_back(s);
+		}
+		else if (ST.stringcmp(argv[i], "-do") == 0) {
+			i++;
+
+			f_activity = true;
+			Activity_description = NEW_OBJECT(activity_description);
+
+			Activity_description->Sym = this;
+
+			Activity_description->read_arguments(argc, argv, i, verbose_level);
+			break;
+		}
+		else {
+			cout << "syntax error after -from, seeing " << argv[i] << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "interface_symbol_table::read_from done" << endl;
+	}
+
+}
+
 
 void interface_symbol_table::worker(
 		int verbose_level)
@@ -232,7 +317,72 @@ void interface_symbol_table::worker(
 		Orbiter_top_level_session->print_symbol_table();
 	}
 	else if (f_activity) {
-		Activity_description->worker(verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_activity" << endl;
+		}
+
+		int nb_output;
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker "
+					"before Activity_description->worker" << endl;
+		}
+		Activity_description->worker(nb_output, Output, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::worker "
+					"after Activity_description->worker" << endl;
+		}
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker "
+					"nb_output = " << nb_output << endl;
+		}
+
+		if (f_assign) {
+
+			if (f_v) {
+				cout << "interface_symbol_table::worker "
+						"performing the assignment" << endl;
+			}
+
+			if (assign_labels.size() > nb_output) {
+				cout << "interface_symbol_table::worker "
+						"assign_labels.size() > nb_output" << endl;
+				exit(1);
+			}
+
+			int i;
+
+			for (i = 0; i < assign_labels.size(); i++) {
+				if (f_v) {
+					cout << "interface_symbol_table::worker "
+							"assigning " << assign_labels[i] << endl;
+				}
+
+				Output[i].label = assign_labels[i];
+
+
+				if (f_v) {
+					cout << "interface_symbol_table::worker "
+							"before add_symbol_table_entry" << endl;
+				}
+				Orbiter_top_level_session->add_symbol_table_entry(
+						assign_labels[i], Output + i, verbose_level);
+				if (f_v) {
+					cout << "interface_symbol_table::worker "
+							"after add_symbol_table_entry" << endl;
+				}
+
+
+			}
+			if (f_v) {
+				cout << "interface_symbol_table::worker "
+						"performing the assignment done" << endl;
+			}
+		}
+
 	}
 	if (f_v) {
 		cout << "interface_symbol_table::worker done" << endl;
@@ -245,10 +395,24 @@ void interface_symbol_table::print()
 	if (f_define) {
 		Symbol_definition->print();
 	}
+	if (f_assign) {
+
+		cout << "-assign ";
+
+		int i;
+		for (i = 0; i < assign_labels.size(); i++) {
+			cout << assign_labels[i] << " ";
+			if (i < assign_labels.size() - 1) {
+				cout << "-and ";
+			}
+		}
+		cout << "-from ";
+		Activity_description->print();
+	}
 	if (f_print_symbols) {
 		cout << "print_symbol_table" << endl;
 	}
-	if (f_activity) {
+	if (f_activity && ! f_assign) {
 		Activity_description->print();
 	}
 	//cout << "interface_symbol_table::print done" << endl;

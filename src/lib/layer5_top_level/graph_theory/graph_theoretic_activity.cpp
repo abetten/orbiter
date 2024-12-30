@@ -126,7 +126,8 @@ void graph_theoretic_activity::feedback_headings(
 	else if (Descr->f_test_automorphism_property_of_group) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::feedback_headings "
-					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+					"f_test_automorphism_property_of_group "
+					<< Descr->test_automorphism_property_of_group_label << endl;
 		}
 
 

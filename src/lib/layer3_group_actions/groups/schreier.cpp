@@ -1027,7 +1027,8 @@ void schreier::compute_all_point_orbits(
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
-				"verbose_level=" << verbose_level << " action=";
+				"verbose_level=" << verbose_level;
+		cout << "schreier::compute_all_point_orbits action=";
 		A->print_info();
 		//<< " degree=" << degree << endl;
 	}
@@ -1095,7 +1096,7 @@ void schreier::compute_all_point_orbits(
 		//void *preferred_choice_function_data;
 
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << degree
 					<< " nb_orbits=" << nb_orbits
@@ -1338,7 +1339,7 @@ void schreier::compute_point_orbit(
 			cout << " in action " << A->label << endl;
 		}
 		cout << "schreier::compute_point_orbit "
-				"verbose_level = " << verbose_level;
+				"verbose_level = " << verbose_level << endl;
 	}
 	//exit(1);
 	pt_loc = orbit_inv[pt];

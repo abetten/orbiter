@@ -1437,9 +1437,131 @@ int longinteger_domain::square_root_mod(
 	}
 }
 
+void longinteger_domain::create_order_of_group_Anq(
+		longinteger_object &order, int n, int q, int verbose_level)
+{
+	int e, g, i, r;
+
+	e = (n * (n + 1)) >> 1;
+
+	algebra::number_theory::number_theory_domain NT;
+
+
+	g = NT.gcd_lint(n + 1, q - 1);
+
+	longinteger_object b, c, d, t;
+
+	create_q_to_the_n(b, q, e);
+
+	c.create(1);
+	for (i = 1; i <= n; i++) {
+		create_qnm1(d, q, i + 1);
+		mult(c, d, t);
+		t.assign_to(c);
+	}
+	mult(c, b, t);
+	t.assign_to(c);
+
+	integral_division_by_int(
+			c,
+			g, t, r);
+
+	if (r) {
+		cout << "longinteger_domain::create_order_of_group_Anq error, g does not divide" << endl;
+		exit(1);
+	}
+	t.assign_to(order);
+
+}
+
+void longinteger_domain::create_order_of_group_Bnq(
+		longinteger_object &order, int n, int q, int verbose_level)
+{
+	int e, g, i, r;
+
+	e = n * n;
+
+	algebra::number_theory::number_theory_domain NT;
+
+
+	g = NT.gcd_lint(2, q - 1);
+
+	longinteger_object b, c, d, t;
+
+	create_q_to_the_n(b, q, e);
+
+	c.create(1);
+	for (i = 1; i <= n; i++) {
+		create_qnm1(d, q, 2 * i);
+		mult(c, d, t);
+		t.assign_to(c);
+	}
+	mult(c, b, t);
+	t.assign_to(c);
+
+	integral_division_by_int(
+			c,
+			g, t, r);
+
+	if (r) {
+		cout << "longinteger_domain::create_order_of_group_Bnq error, g does not divide" << endl;
+		exit(1);
+	}
+	t.assign_to(order);
+
+}
+
+
+void longinteger_domain::create_order_of_group_Dnq(
+		longinteger_object &order, int n, int q, int verbose_level)
+{
+	int e, g, i, r;
+	long int Q, Qm1;
+
+	e = n * (n - 1);
+
+	algebra::number_theory::number_theory_domain NT;
+
+
+	Q = NT.i_power_j(q, n);
+	Qm1 = Q - 1;
+	g = NT.gcd_lint(4, Qm1);
+
+	longinteger_object b, c, d, t;
+
+	create_q_to_the_n(b, q, e);
+
+	c.create(1);
+	for (i = 1; i <= n - 1; i++) {
+		create_qnm1(d, q, 2 * i);
+		mult(c, d, t);
+		t.assign_to(c);
+	}
+	mult(c, b, t);
+	t.assign_to(c);
+
+
+	b.create(Qm1);
+	mult(c, b, t);
+	t.assign_to(c);
+
+
+	integral_division_by_int(
+			c,
+			g, t, r);
+
+	if (r) {
+		cout << "longinteger_domain::create_order_of_group_Dnq error, g does not divide" << endl;
+		exit(1);
+	}
+	t.assign_to(order);
+
+}
+
+
 void longinteger_domain::create_q_to_the_n(
 		longinteger_object &a, int q, int n)
-// create (q^n - 1)
+// create q^n
 {
 	a.create(q);
 	power_int(a, n);

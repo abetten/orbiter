@@ -218,6 +218,9 @@ public:
 	void export_tree_as_layered_graph(
 			combinatorics::graph_theory::layered_graph *&LG,
 			int verbose_level);
+	void export_tree_as_layered_graph_to_file(
+			std::string &fname,
+			int verbose_level);
 
 };
 

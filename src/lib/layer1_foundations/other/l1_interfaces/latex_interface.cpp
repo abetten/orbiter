@@ -1587,6 +1587,26 @@ void latex_interface::print_table_of_strings(
 	ost << "\\end{array}" << endl;
 }
 
+void latex_interface::print_tabular_of_strings(
+		std::ostream &ost, std::string *Table, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{tabular}{*{" << n << "}{r}}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << Table[i * n + j];
+			if (j < n - 1) {
+				ost << " & ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+	ost << "\\end{tabular}" << endl;
+}
+
+
+
 void latex_interface::int_matrix_print_tex(
 		std::ostream &ost, int *p, int m, int n)
 {

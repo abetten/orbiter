@@ -340,7 +340,6 @@ public:
 			int verbose_level);
 	void all_rainbow_cliques(
 			clique_finder_control *Control,
-			//std::ostream &fp,
 			int verbose_level);
 	int test_Neumaier_property(
 			int &regularity,
@@ -553,9 +552,10 @@ public:
 			int current_depth, int *subgraph,
 			int verbose_level);
 	void write_solutions_to_csv_file(
+			std::string &fname_sol,
 			std::vector<std::vector<long int> >& solutions,
 			clique_finder_control *Control,
-			std::ostream &ost, int verbose_level);
+			int verbose_level);
 	void complement(
 			int verbose_level);
 	int test_SRG_property(

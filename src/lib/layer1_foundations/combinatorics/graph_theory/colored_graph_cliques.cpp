@@ -107,12 +107,12 @@ void colored_graph_cliques::early_test_func_for_coclique_search(
 				<< nb_candidates << ":" << endl;
 		Lint_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
-		}
+	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
 		Lint_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
-		}
+	}
 
 	pt = S[len - 1];
 
@@ -168,17 +168,6 @@ void colored_graph_cliques::all_cliques(
 
 
 	{
-#if 0
-		string fname_sol_csv;
-		string fname_sol_txt;
-
-
-		fname_sol_csv = fname_sol + ".csv";
-		fname_sol_txt = fname_sol + ".txt";
-
-		ofstream fp(fname_sol_txt);
-		ofstream fp_csv(fname_sol_csv);
-#endif
 
 		if (Control->f_rainbow) {
 
@@ -191,8 +180,6 @@ void colored_graph_cliques::all_cliques(
 			}
 			all_cliques_rainbow(
 					Control,
-					//fp,
-					//fp_csv,
 					verbose_level);
 			if (f_v) {
 				cout << "colored_graph_cliques::all_cliques "
@@ -239,8 +226,6 @@ void colored_graph_cliques::all_cliques(
 			all_cliques_black_and_white(
 					Control,
 					CF,
-					//fp,
-					//fp_csv,
 					verbose_level);
 			if (f_v) {
 				cout << "colored_graph_cliques::all_cliques "
@@ -402,16 +387,17 @@ void colored_graph_cliques::all_cliques_black_and_white(
 		exit(1);
 	}
 
+
+	std::vector<std::vector<long int> > solutions;
+
 	if (Control->f_Sajeeb) {
 		if (f_v) {
 			cout << "colored_graph_cliques::all_cliques_black_and_white "
 					"before do_Sajeeb_black_and_white" << endl;
 		}
-		std::vector<std::vector<long int> > solutions;
 
 		do_Sajeeb_black_and_white(Control, solutions, verbose_level);
 
-		// Print the solutions
 		if (f_v) {
 			cout << "colored_graph_cliques::all_cliques_black_and_white "
 					"after do_Sajeeb_black_and_white "
@@ -419,74 +405,6 @@ void colored_graph_cliques::all_cliques_black_and_white(
 		}
 
 
-		if (Control->f_output_file) {
-			string fname_sol;
-
-			fname_sol = Control->output_file;
-
-
-			{
-				ofstream ost(fname_sol);
-
-				if (f_v) {
-					cout << "colored_graph_cliques::all_cliques_black_and_white "
-							"fname_sol = " << fname_sol << endl;
-				}
-
-				if (f_v) {
-					cout << "colored_graph_cliques::all_cliques_black_and_white "
-							"before CG->write_solutions_to_csv_file" << endl;
-				}
-				CG->write_solutions_to_csv_file(
-									solutions,
-									Control,
-									ost, verbose_level);
-				if (f_v) {
-					cout << "colored_graph_cliques::all_cliques_black_and_white "
-							"after CG->write_solutions_to_csv_file" << endl;
-				}
-
-			}
-
-		}
-
-#if 0
-		if (f_v) {
-			cout << "colored_graph_cliques::all_cliques_black_and_white "
-					"before writing solutions to file" << endl;
-		}
-
-		#if 1
-		for (size_t i = 0; i < solutions.size(); ++i) {
-			ost_txt << solutions[i].size() << " ";
-			for (size_t j = 0; j < solutions[i].size(); ++j) {
-				ost_txt << points[solutions[i][j]] << " ";
-			}
-			ost_txt << endl;
-		}
-
-		ost_csv << "ROW";
-		for (int j = 0; j < Control->target_size; ++j) {
-			ost_csv << ",C" << j;
-		}
-		ost_csv << endl;
-
-		for (size_t i = 0; i < solutions.size(); ++i) {
-			ost_csv << i << ",";
-			for (size_t j = 0; j < solutions[i].size(); ++j) {
-				ost_csv << points[solutions[i][j]];
-				if (j < solutions[i].size() - 1) {
-					ost_csv << ",";
-				}
-			}
-			ost_csv << endl;
-		}
-		#endif
-		if (f_v) {
-			cout << "colored_graph_cliques::all_cliques_black_and_white "
-					"after writing solutions to file" << endl;
-		}
-#endif
 
 	}
 	else {
@@ -506,31 +424,51 @@ void colored_graph_cliques::all_cliques_black_and_white(
 					"nb_cliques = " << Control->nb_sol << endl;
 		}
 
-#if 0
-		if (f_v) {
-			cout << "colored_graph_cliques::all_cliques_black_and_white "
-					"before writing solutions to file" << endl;
-		}
+
+
 		for (int i = 0; i < Control->nb_sol; ++i) {
-			ost_txt << Control->target_size << " ";
+			std::vector<long int> sol;
+
 			for (int j = 0; j < Control->target_size; ++j) {
-				ost_txt << points[Control->Sol[i * Control->target_size + j]];
-				if (j < Control->target_size - 1) {
-					ost_txt << " ";
-				}
+				long int a;
+
+				a = Control->Sol[i * Control->target_size + j];
+				sol.push_back(a);
 			}
-			ost_txt << endl;
-		}
 
-		write_solutions_to_csv_file(Control, ost_csv, verbose_level);
+			solutions.push_back(sol);
 
-		if (f_v) {
-			cout << "colored_graph_cliques::all_cliques_black_and_white "
-					"after writing solutions to file" << endl;
 		}
-#endif
 
 	}
+
+
+	if (Control->f_output_file) {
+		string fname_sol;
+
+		fname_sol = Control->output_file;
+
+
+
+		if (f_v) {
+			cout << "colored_graph_cliques::all_cliques_black_and_white "
+					"before CG->write_solutions_to_csv_file" << endl;
+		}
+		CG->write_solutions_to_csv_file(
+							fname_sol,
+							solutions,
+							Control,
+							verbose_level);
+		if (f_v) {
+			cout << "colored_graph_cliques::all_cliques_black_and_white "
+					"after CG->write_solutions_to_csv_file" << endl;
+		}
+
+	}
+
+
+
+
 
 	if (f_v) {
 		cout << "colored_graph_cliques::all_cliques_black_and_white done" << endl;
@@ -553,23 +491,27 @@ void colored_graph_cliques::do_Sajeeb(
 
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb creating Graph object" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"creating Graph object" << endl;
 	}
 
 	Graph<> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before setting vertex labels" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before setting vertex labels" << endl;
 	}
 	for (size_t i=0; i<G.nb_vertices; ++i) {
 		G.vertex_label[i] = CG->points[i];
 	}
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after setting vertex labels" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after setting vertex labels" << endl;
 	}
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before setting vertex colors" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before setting vertex colors" << endl;
 	}
 	if (CG->nb_colors * CG->nb_colors_per_vertex) {
 		for (size_t i=0; i<G.nb_vertices * G.nb_colors_per_vertex; ++i) {
@@ -582,15 +524,18 @@ void colored_graph_cliques::do_Sajeeb(
 		}
 	}
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after setting vertex colors" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after setting vertex colors" << endl;
 	}
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before G.set_edge_from_bitvector_adjacency" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before G.set_edge_from_bitvector_adjacency" << endl;
 	}
 	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after G.set_edge_from_bitvector_adjacency" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after G.set_edge_from_bitvector_adjacency" << endl;
 	}
 
 	// Create the solution storage. The base type of the solution
@@ -618,7 +563,8 @@ void colored_graph_cliques::do_Sajeeb(
 
 	// Print the solutions
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb Found " << solutions.size()
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"Found " << solutions.size()
 				<< " solution(s)." << endl;
 		for (size_t i=0; i<solutions.size(); ++i) {
 			for (size_t j=0; j<solutions[i].size(); ++j) {
@@ -651,52 +597,63 @@ void colored_graph_cliques::do_Sajeeb_black_and_white(
 
 #if 1
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before opening Graph object" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before opening Graph object" << endl;
 	}
 	Graph<long int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before setting vertex labels" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before setting vertex labels" << endl;
 	}
 	G.set_vertex_labels(CG->points);
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after setting vertex labels" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after setting vertex labels" << endl;
 	}
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb CG->nb_colors_per_vertex = " << CG->nb_colors_per_vertex << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"CG->nb_colors_per_vertex = " << CG->nb_colors_per_vertex << endl;
 	}
 
 	if (CG->nb_colors_per_vertex) {
 		if (f_v) {
-			cout << "colored_graph_cliques::do_Sajeeb before setting vertex colors" << endl;
+			cout << "colored_graph_cliques::do_Sajeeb "
+					"before setting vertex colors" << endl;
 		}
 		G.set_vertex_colors(CG->point_color);
 		if (f_v) {
-			cout << "colored_graph_cliques::do_Sajeeb after setting vertex colors" << endl;
+			cout << "colored_graph_cliques::do_Sajeeb "
+					"after setting vertex colors" << endl;
 		}
 	}
 	else {
 		if (f_v) {
-			cout << "colored_graph_cliques::do_Sajeeb not setting vertex colors" << endl;
+			cout << "colored_graph_cliques::do_Sajeeb "
+					"no vertex colors" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before set_edge_from_bitvector_adjacency" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before set_edge_from_bitvector_adjacency" << endl;
 	}
 	G.set_edge_from_bitvector_adjacency(CG->Bitvec);
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after set_edge_from_bitvector_adjacency" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after set_edge_from_bitvector_adjacency" << endl;
 	}
 
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb before KClique::find_cliques" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"before KClique::find_cliques" << endl;
 	}
 	// Call the Rainbow Clique finding algorithm
 	KClique::find_cliques(G, solutions, Control->target_size);
 	//RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
 	if (f_v) {
-		cout << "colored_graph_cliques::do_Sajeeb after KClique::find_cliques" << endl;
+		cout << "colored_graph_cliques::do_Sajeeb "
+				"after KClique::find_cliques" << endl;
 	}
 
 	//this->nb_sol = solutions.size();

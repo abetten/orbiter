@@ -3511,11 +3511,27 @@ void action_global::all_point_orbits_from_generators(
 	if (f_v) {
 		cout << "action_global::all_point_orbits_from_generators" << endl;
 	}
+	if (f_v) {
+		cout << "action_global::all_point_orbits_from_generators verbose_level = " << verbose_level << endl;
+	}
+	if (f_v) {
+		cout << "action_global::all_point_orbits_from_generators group order = ";
+		SG->print_group_order(cout);
+		cout << endl;
+	}
 	Schreier.init(A, verbose_level - 2);
 	Schreier.init_generators(
 			*SG->gens /* *strong_generators */,
-			verbose_level - 2);
-	Schreier.compute_all_point_orbits(verbose_level);
+			verbose_level);
+	if (f_v) {
+		cout << "action_global::all_point_orbits_from_generators "
+				"before Schreier.compute_all_point_orbits" << endl;
+	}
+	Schreier.compute_all_point_orbits(verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::all_point_orbits_from_generators "
+				"after Schreier.compute_all_point_orbits" << endl;
+	}
 	if (f_v) {
 		cout << "action_global::all_point_orbits_from_generators done" << endl;
 	}

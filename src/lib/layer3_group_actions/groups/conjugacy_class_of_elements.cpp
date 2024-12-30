@@ -35,6 +35,7 @@ conjugacy_class_of_elements::conjugacy_class_of_elements()
 	//ring_theory::longinteger_object Class_size;
 	//ring_theory::longinteger_object centralizer_order;
 	goi = 0;
+	sub_idx = 0;
 	nice_gens = NULL;
 	ngo = 0;
 	nb_perms = 0;
@@ -258,6 +259,52 @@ std::string conjugacy_class_of_elements::stringify_representative_coded(
 	s = Class_data->A->Group_element->element_stringify_code_for_make_element(Elt);
 	return s;
 }
+
+void conjugacy_class_of_elements::single_class_data(
+		std::vector<std::string > &data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_class_of_elements::single_class_data" << endl;
+	}
+
+	string s, str;
+
+	s = std::to_string(idx);
+
+	data.push_back(s);
+
+	s = std::to_string(goi);
+
+	data.push_back(s);
+	char c[2];
+
+	c[0] = 'A' + sub_idx;
+	c[1] = 0;
+
+	str.assign(c);
+
+	s = std::to_string(goi) + str;
+
+	data.push_back(s);
+
+	s = Class_size.stringify();
+	data.push_back(s);
+
+	s = centralizer_order.stringify();
+	data.push_back(s);
+
+	s = std::to_string(ngo);
+	data.push_back(s);
+
+	if (f_v) {
+		cout << "conjugacy_class_of_elements::single_class_data done" << endl;
+	}
+}
+
+
+
 
 void conjugacy_class_of_elements::report_single_class(
 		std::ofstream &ost, int verbose_level)

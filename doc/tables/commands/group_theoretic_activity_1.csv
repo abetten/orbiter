@@ -4,6 +4,8 @@ ROW,C1,C2,C3
 1,"\verb'-report' "," options ","Produce a latex report for the group. Considers the given draw options. "
 1,"\verb'-report_sylow' "," ","Include Sylow subgroups in the report (requires \verb'-report'). "
 1,"\verb'-report_group_table' "," ","Include the group table in the report (requires \verb'-report'). "
+1,"\verb'-generators' ","  ","Returns the generators of the group as a vector of group elements. "
+1,"\verb'-elements' ","  ","Returns the elements of the group as a vector of group elements. "
 1,"\verb'-export_group_table' "," ","Export the group table as csv-file. "
 1,"\verb'-random_element' "," label ","Creates a random element. Writes the element to file in coded form. "
 1,"\verb'-permutation_representation_' \verb'of_element' ","$g$ "," Compute the permutation representation of $g$ "

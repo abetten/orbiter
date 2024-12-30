@@ -90,7 +90,7 @@ void orbiter_symbol_table::add_symbol_table_entry(
 	}
 	else {
 		Table.push_back(*Symb);
-		Symb->freeself();
+		//Symb->freeself();
 	}
 	if (f_v) {
 		cout << "orbiter_symbol_table::add_symbol_table_entry done" << endl;

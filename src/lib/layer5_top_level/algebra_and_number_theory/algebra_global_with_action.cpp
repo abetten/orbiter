@@ -3377,8 +3377,19 @@ void algebra_global_with_action::automorphism_by_generator_images(
 		int *Images, int m, int n,
 		int *&Perms, long int &go,
 		int verbose_level)
-// uses orbits_schreier::orbit_of_sets
-// needs Subgroup_sims to set up action by right multiplication
+// An automorphism of a group is determined by the images of the generators.
+// Here, we assume that we have a certain set of standard generators, and that
+// the images of these generators are known.
+// Using the right regular representation and a Schreier tree,
+// we can then compute the automorphisms associated to the Images.
+// Any automorphism is computed as a permutation of the elements
+// in the ordering defined by the sims object Subgroup_sims
+// The images in Images[] and the generators
+// in Subgroup_gens->gens must correspond.
+// This means that n must equal Subgroup_gens->gens->len
+//
+// We use orbits_schreier::orbit_of_sets for the Schreier tree.
+// We need Subgroup_sims to set up action by right multiplication
 // output: Perms[m * go]
 {
 	int f_v = (verbose_level >= 1);
@@ -3388,37 +3399,11 @@ void algebra_global_with_action::automorphism_by_generator_images(
 		cout << "algebra_global_with_action::automorphism_by_generator_images" << endl;
 	}
 
-	//long int go;
-
 	go = Subgroup_sims->group_order_lint();
 	if (f_v) {
 		cout << "algebra_global_with_action::automorphism_by_generator_images go = " << go << endl;
 	}
 
-	Perms = NEW_int(m * go);
-
-#if 0
-
-	ring_theory::longinteger_object a, b;
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images creating element " << elt_data << endl;
-	}
-
-	A->Group_element->make_element_from_string(Elt, elt_data, 0);
-
-	Subgroup_sims->element_rank(a, Elt);
-
-	a.assign_to(b);
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images Element :" << endl;
-		A->Group_element->element_print(Elt, cout);
-		cout << endl;
-	}
-#endif
 
 	actions::action *A_rm;
 	// action by right multiplication
@@ -3445,6 +3430,11 @@ void algebra_global_with_action::automorphism_by_generator_images(
 		cout << endl;
 	}
 
+	if (Subgroup_gens->gens->len != n) {
+		cout << "algebra_global_with_action::automorphism_by_generator_images "
+				"Subgroup_gens->gens->len != n" << endl;
+		exit(1);
+	}
 
 	if (f_v) {
 		cout << "algebra_global_with_action::automorphism_by_generator_images "
@@ -3471,23 +3461,9 @@ void algebra_global_with_action::automorphism_by_generator_images(
 				"Found an orbit of size " << Orb.used_length << endl;
 	}
 	if (Orb.used_length != go) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images orbit length != go" << endl;
+		cout << "algebra_global_with_action::automorphism_by_generator_images "
+				"orbit length != go" << endl;
 		exit(1);
-	}
-
-	combinatorics::graph_theory::layered_graph *LG;
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"before Orb.export_tree_as_layered_graph" << endl;
-	}
-	Orb.export_tree_as_layered_graph(
-			LG,
-			verbose_level - 2);
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"after Orb.export_tree_as_layered_graph" << endl;
 	}
 
 
@@ -3495,26 +3471,18 @@ void algebra_global_with_action::automorphism_by_generator_images(
 
 	fname = label + "_tree.layered_graph";
 
+	if (f_v) {
+		cout << "algebra_global_with_action::automorphism_by_generator_images "
+				"before Orb.export_tree_as_layered_graph_to_file" << endl;
+	}
+
+	Orb.export_tree_as_layered_graph_to_file(
+			fname,
+			verbose_level);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"before LG->write_file" << endl;
-	}
-	LG->write_file(fname, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"after LG->write_file" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"before FREE_OBJECT(LG)" << endl;
-	}
-	FREE_OBJECT(LG);
-	if (f_v) {
-		cout << "algebra_global_with_action::automorphism_by_generator_images "
-				"after FREE_OBJECT(LG)" << endl;
+				"after Orb.export_tree_as_layered_graph_to_file" << endl;
 	}
 
 
@@ -3527,10 +3495,14 @@ void algebra_global_with_action::automorphism_by_generator_images(
 	perm = NEW_int(go);
 
 
+	Perms = NEW_int(m * go);
+
+
 	for (h = 0; h < m; h++) {
 
 		if (f_vv) {
-			cout << "algebra_global_with_action::automorphism_by_generator_images h=" << h << " : ";
+			cout << "algebra_global_with_action::automorphism_by_generator_images "
+					"h=" << h << " : ";
 			Int_vec_print(cout, Images + h * n, n);
 			cout << endl;
 		}
@@ -3631,7 +3603,8 @@ void algebra_global_with_action::create_permutation(
 				pos);
 
 		if (f_vvv) {
-			cout << "algebra_global_with_action::create_permutation in=" << in << " pos=" << pos << " path=";
+			cout << "algebra_global_with_action::create_permutation "
+					"in=" << in << " pos=" << pos << " path=";
 			Int_vec_stl_print(cout, path);
 			cout << " of length " << path.size();
 			cout << endl;
@@ -3687,7 +3660,8 @@ void algebra_global_with_action::create_permutation(
 		perm[in] = out;
 
 		if (f_vvv) {
-			cout << "algebra_global_with_action::create_permutation in=" << in << " -> " << out << endl;
+			cout << "algebra_global_with_action::create_permutation "
+					"in=" << in << " -> " << out << endl;
 		}
 
 

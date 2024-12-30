@@ -152,6 +152,8 @@ public:
 			int argc, std::string *argv, int &i,
 			int verbose_level);
 	void worker(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void print();
 	void do_finite_field_activity(
@@ -164,6 +166,8 @@ public:
 	void do_orthogonal_space_activity(
 			int verbose_level);
 	void do_group_theoretic_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_coding_theoretic_activity(
 			int verbose_level);
@@ -327,6 +331,18 @@ class interface_algebra {
 	int f_Chinese_remainders;
 	std::string Chinese_remainders_R;
 	std::string Chinese_remainders_M;
+
+	int f_order_of_group_Anq;
+	int order_of_group_Anq_n;
+	int order_of_group_Anq_q;
+
+	int f_order_of_group_Bnq;
+	int order_of_group_Bnq_n;
+	int order_of_group_Bnq_q;
+
+	int f_order_of_group_Dnq;
+	int order_of_group_Dnq_n;
+	int order_of_group_Dnq_q;
 
 
 public:
@@ -778,6 +794,9 @@ public:
 	int f_define;
 	symbol_definition *Symbol_definition;
 
+	int f_assign;
+	std::vector<std::string> assign_labels;
+
 	int f_print_symbols;
 
 	int f_with;
@@ -803,6 +822,8 @@ public:
 	void read_arguments(
 			int argc, std::string *argv, int &i, int verbose_level);
 	void read_with(
+			int argc, std::string *argv, int &i, int verbose_level);
+	void read_from(
 			int argc, std::string *argv, int &i, int verbose_level);
 	void worker(
 			int verbose_level);
@@ -1317,8 +1338,9 @@ public:
 	int f_packing_was_choose_fixed_points;
 	std::string packing_with_assumed_symmetry_label;
 	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
-	poset_classification::poset_classification_control
-		*packing_with_assumed_symmetry_choose_fixed_points_control;
+	std::string packing_was_choose_fixed_points_control_label;
+	//poset_classification::poset_classification_control
+	//	*packing_with_assumed_symmetry_choose_fixed_points_control;
 
 
 	int f_packing_long_orbits;
@@ -1446,11 +1468,6 @@ public:
 			int verbose_level);
 	void definition_of_geometric_object(
 			int verbose_level);
-#if 0
-	void definition_of_formula(
-			expression_parser::formula *Formula,
-			int verbose_level);
-#endif
 	void definition_of_collection(
 			std::string &list_of_objects,
 			int verbose_level);

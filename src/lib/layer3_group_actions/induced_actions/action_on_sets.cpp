@@ -85,7 +85,7 @@ void action_on_sets::init(
 		sets[i] = NEW_lint(set_size);
 		for (j = 0; j < set_size; j++) {
 			sets[i][j] = input_sets[i * set_size + j];
-			}
+		}
 		Sorting.lint_vec_quicksort_increasingly(sets[i], set_size);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";

@@ -827,7 +827,8 @@ void spread_table_with_selection::predict_spread_table_length(
 	}
 
 
-	nb_iso_types_of_spreads = K.Spread_nb_reps(q, T->SD->k /* dimension_of_spread_elements */);
+	nb_iso_types_of_spreads = K.Spread_nb_reps(
+			q, T->SD->k /* dimension_of_spread_elements */);
 	if (f_v) {
 		cout << "spread_table_with_selection::predict_spread_table_length "
 				"nb_iso_types_of_spreads = " << nb_iso_types_of_spreads << endl;
@@ -855,7 +856,8 @@ void spread_table_with_selection::predict_spread_table_length(
 
 		f_do_it = false;
 		if (f_select_spread) {
-			if (Sorting.int_vec_search_linear(select_spread,
+			if (Sorting.int_vec_search_linear(
+					select_spread,
 					select_spread_nb, no, idx)) {
 				f_do_it = true;
 			}

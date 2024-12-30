@@ -148,21 +148,11 @@ public:
 			int verbose_level);
 	void save_elements_csv(
 			std::string &fname, int verbose_level);
+	void all_elements(
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
 	void export_inversion_graphs(
 			std::string &fname, int verbose_level);
-#if 0
-	void multiply_elements_csv(
-			std::string &fname1,
-			std::string &fname2,
-			std::string &fname3,
-			int f_column_major_ordering,
-			int verbose_level);
-	void apply_elements_to_set_csv(
-			std::string &fname1,
-			std::string &fname2,
-			std::string &set_text,
-			int verbose_level);
-#endif
 	void random_element(
 			std::string &elt_label, int verbose_level);
 	void element_rank(
@@ -244,6 +234,9 @@ public:
 			int verbose_level);
 	void subgroup_lattice_magma(
 			int verbose_level);
+	void get_generators(
+			data_structures_groups::vector_ge *&gens,
+			int verbose_level);
 
 
 
@@ -272,6 +265,10 @@ public:
 	algebra::ring_theory::longinteger_object Class_size;
 	algebra::ring_theory::longinteger_object centralizer_order;
 	long int goi;
+		// order of element
+	int sub_idx;
+		// counter for classes of elements of a given order, 0-based
+
 	data_structures_groups::vector_ge *nice_gens;
 		// a vectors of length 1 containing the
 		// chosen class representative
@@ -290,6 +287,8 @@ public:
 			int verbose_level);
 	std::string stringify_representative_coded(
 		int verbose_level);
+	void single_class_data(
+			std::vector<std::string > &data, int verbose_level);
 	void report_single_class(
 			std::ofstream &ost, int verbose_level);
 

@@ -27,6 +27,8 @@ group_theoretic_activity::group_theoretic_activity()
 	AG = NULL;
 	AG_secondary = NULL;
 
+	nb_output = 0;
+	Output = NULL;
 
 }
 
@@ -106,7 +108,6 @@ void group_theoretic_activity::perform_activity(
 				Draw_options,
 				Descr->f_report_sylow,
 				Descr->f_report_group_table,
-				//Descr->f_report_classes,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -114,6 +115,88 @@ void group_theoretic_activity::perform_activity(
 		}
 
 	}
+
+	else if (Descr->f_generators) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_generators" << endl;
+		}
+
+		data_structures_groups::vector_ge *gens;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->get_generators" << endl;
+		}
+		AG->get_generators(
+				gens,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->get_generators" << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_generators";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = gens;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
+
+
+	else if (Descr->f_elements) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_elements" << endl;
+		}
+
+		data_structures_groups::vector_ge *vec;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->all_elements" << endl;
+		}
+		AG->all_elements(
+				vec,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->all_elements" << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_elements";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = vec;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
+
+
+
 
 	else if (Descr->f_export_group_table) {
 
@@ -844,68 +927,6 @@ void group_theoretic_activity::perform_activity(
 
 	}
 
-#if 0
-	else if (Descr->f_multiply_elements_csv_column_major_ordering) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_multiply_elements_csv_column_major_ordering" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->multiply_elements_csv" << endl;
-		}
-		AG->multiply_elements_csv(
-				Descr->multiply_elements_csv_column_major_ordering_fname1,
-				Descr->multiply_elements_csv_column_major_ordering_fname2,
-				Descr->multiply_elements_csv_column_major_ordering_fname3,
-				true, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->multiply_elements_csv" << endl;
-		}
-	}
-	else if (Descr->f_multiply_elements_csv_row_major_ordering) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_multiply_elements_csv_row_major_ordering" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->multiply_elements_csv" << endl;
-		}
-		AG->multiply_elements_csv(
-				Descr->multiply_elements_csv_row_major_ordering_fname1,
-				Descr->multiply_elements_csv_row_major_ordering_fname2,
-				Descr->multiply_elements_csv_row_major_ordering_fname3,
-				false, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->multiply_elements_csv" << endl;
-		}
-	}
-	else if (Descr->f_apply_elements_csv_to_set) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_apply_elements_csv_to_set" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->apply_elements_to_set_csv" << endl;
-		}
-		AG->apply_elements_to_set_csv(
-				Descr->apply_elements_csv_to_set_fname1,
-				Descr->apply_elements_csv_to_set_fname2,
-				Descr->apply_elements_csv_to_set_set,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->apply_elements_to_set_csv" << endl;
-		}
-	}
-#endif
 
 	else if (Descr->f_order_of_products) {
 

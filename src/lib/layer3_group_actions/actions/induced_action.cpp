@@ -1468,7 +1468,7 @@ action *induced_action::create_induced_action_on_sets(
 			NULL,
 		nb_sets, set_size, sets,
 		false /*f_induce_action*/,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "induced_action::create_induced_action_on_sets "
 				"after A->induced_action_on_sets" << endl;

@@ -31,6 +31,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_report_group_table = false;
 	//f_report_classes = false;
 
+	f_generators = false;
+
+	f_elements = false;
+
+
 	f_export_group_table = false;
 
 
@@ -187,23 +192,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	//  3:
 
-#if 0
-	f_multiply_elements_csv_column_major_ordering = false;
-	//std::string multiply_elements_csv_column_major_ordering_fname1;
-	//std::string multiply_elements_csv_column_major_ordering_fname2;
-	//std::string multiply_elements_csv_column_major_ordering_fname3;
-
-	f_multiply_elements_csv_row_major_ordering = false;
-	//std::string multiply_elements_csv_row_major_ordering_fname1;
-	//std::string multiply_elements_csv_row_major_ordering_fname2;
-	//std::string multiply_elements_csv_row_major_ordering_fname3;
-
-	f_apply_elements_csv_to_set = false;
-	//std::string apply_elements_csv_to_set_fname1;
-	//std::string apply_elements_csv_to_set_fname2;
-	//std::string apply_elements_csv_to_set_set;
-#endif
-
 	f_order_of_products = false;
 	//order_of_products_elements = NULL;
 
@@ -352,6 +340,20 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 #endif
+
+		else if (ST.stringcmp(argv[i], "-generators") == 0) {
+			f_generators = true;
+			if (f_v) {
+				cout << "-generators" << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-elements") == 0) {
+			f_elements = true;
+			if (f_v) {
+				cout << "-elements" << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
 			f_export_group_table = true;
 			if (f_v) {
@@ -1023,11 +1025,12 @@ void group_theoretic_activity_description::print()
 	if (f_report_group_table) {
 		cout << "-report_group_table" << endl;
 	}
-#if 0
-	if (f_report_classes) {
-		cout << "-report_classes" << endl;
+	if (f_generators) {
+		cout << "-generators" << endl;
 	}
-#endif
+	if (f_elements) {
+		cout << "-elements" << endl;
+	}
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}

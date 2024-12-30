@@ -665,11 +665,13 @@ void packing_was::compute_N_orbits_on_points(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "packing_was::compute_N_orbits_on_points before Point_orbits_under_N->create_latex_report" << endl;
+		cout << "packing_was::compute_N_orbits_on_points "
+				"before Point_orbits_under_N->create_latex_report" << endl;
 	}
 	Point_orbits_under_N->create_latex_report(verbose_level);
 	if (f_v) {
-		cout << "packing_was::compute_N_orbits_on_points after Point_orbits_under_N->create_latex_report" << endl;
+		cout << "packing_was::compute_N_orbits_on_points "
+				"after Point_orbits_under_N->create_latex_report" << endl;
 	}
 
 	if (f_v) {
@@ -747,11 +749,13 @@ void packing_was::compute_N_orbits_on_lines(
 			verbose_level - 2);
 
 	if (f_v) {
-		cout << "packing_was::compute_N_orbits_on_lines before Line_orbits_under_N->create_latex_report" << endl;
+		cout << "packing_was::compute_N_orbits_on_lines "
+				"before Line_orbits_under_N->create_latex_report" << endl;
 	}
 	Line_orbits_under_N->create_latex_report(verbose_level);
 	if (f_v) {
-		cout << "packing_was::compute_N_orbits_on_lines after Line_orbits_under_N->create_latex_report" << endl;
+		cout << "packing_was::compute_N_orbits_on_lines "
+				"after Line_orbits_under_N->create_latex_report" << endl;
 	}
 
 	if (f_v) {
@@ -810,24 +814,28 @@ void packing_was::compute_H_orbits_on_spreads(
 
 
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_on_spreads before Spread_orbits_under_H->init" << endl;
+		cout << "packing_was::compute_H_orbits_on_spreads "
+				"before Spread_orbits_under_H->init" << endl;
 	}
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens,
 			true /*f_load_save*/, prefix_spread_orbits,
 			verbose_level - 2);
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_on_spreads after Spread_orbits_under_H->init" << endl;
+		cout << "packing_was::compute_H_orbits_on_spreads "
+				"after Spread_orbits_under_H->init" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_on_lines before Spread_orbits_under_H->create_latex_report" << endl;
+		cout << "packing_was::compute_H_orbits_on_lines "
+				"before Spread_orbits_under_H->create_latex_report" << endl;
 	}
 	Spread_orbits_under_H->create_latex_report(verbose_level);
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_on_lines after Spread_orbits_under_H->create_latex_report" << endl;
+		cout << "packing_was::compute_H_orbits_on_lines "
+				"after Spread_orbits_under_H->create_latex_report" << endl;
 	}
 
 
@@ -871,7 +879,7 @@ void packing_was::test_orbits_on_spreads(
 
 
 
-	if (Fio.file_size(fname_good_orbits.c_str()) > 0) {
+	if (Fio.file_size(fname_good_orbits) > 0) {
 
 		if (f_v) {
 			cout << "packing_was::test_orbits_on_spreads file "

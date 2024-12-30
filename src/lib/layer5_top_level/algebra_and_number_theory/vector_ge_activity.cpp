@@ -135,23 +135,27 @@ void vector_ge_activity::perform_activity(
 			cout << "vector_ge_activity::perform_activity f_transform_variety" << endl;
 		}
 
+#if 0
+		canonical_form::variety_object_with_action *Variety;
+
+
+		Variety = Get_variety(Descr->transform_variety_label);
+
+		int i;
+		int *Elt;
+
+		for (i = 0; i < vec->len; i++) {
+
+			Elt = vec->ith(i);
+
+
+
+		}
+#endif
+
+
 	}
 
-	canonical_form::variety_object_with_action *Variety;
-
-
-	Variety = Get_variety(Descr->transform_variety_label);
-
-	int i;
-	int *Elt;
-
-	for (i = 0; i < vec->len; i++) {
-
-		Elt = vec->ith(i);
-
-
-
-	}
 
 
 	if (f_v) {

@@ -166,16 +166,6 @@ public:
 
 	packing_classify();
 	~packing_classify();
-#if 0
-	void spread_table_init(
-			projective_geometry::projective_space_with_action *PA3,
-			projective_geometry::projective_space_with_action *PA5,
-			int dimension_of_spread_elements,
-			int f_select_spread, std::string &select_spread_text,
-			std::string &path_to_spread_tables,
-			std::string &poset_classification_control_label,
-			int verbose_level);
-#endif
 	void init(
 			projective_geometry::projective_space_with_action *PA3,
 			projective_geometry::projective_space_with_action *PA5,
@@ -422,16 +412,23 @@ public:
 				&Packings_by_case,
 			int verbose_level);
 	void process_single_case(
-			std::vector<std::vector<int> > &Packings_classified,
+			std::vector<std::vector<int> > &Packings_flag_orbits,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
 	void init_fixpoint_clique_from_orbit_numbers(
 			int verbose_level);
-	void filter_orbits(
-			int verbose_level);
 	void create_graph_on_remaining_long_orbits(
-			std::vector<std::vector<int> > &Packings_classified,
+			std::vector<std::vector<int> > &Packings_flag_orbits,
 			std::vector<std::vector<int> > &Packings,
+			int verbose_level);
+	void read_and_process_solutions(
+			std::vector<std::vector<int> > &Packings_flag_orbits,
+			std::vector<std::vector<int> > &Packings,
+			int verbose_level);
+	void read_solutions(
+			long int *&Packings_table,
+			int &nb_packings,
+			int &size_of_packing,
 			int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
 	void create_graph_and_save_to_file(
@@ -443,6 +440,8 @@ public:
 	void create_graph_on_long_orbits(
 			combinatorics::graph_theory::colored_graph *&CG,
 			long int *user_data, int user_data_sz,
+			int verbose_level);
+	void filter_orbits(
 			int verbose_level);
 	void report_filtered_orbits(
 			std::ostream &ost);
@@ -757,6 +756,7 @@ public:
 
 
 	actions::action *A_on_spread_orbits;
+		// For the action of N on the orbits of H on spreads
 		// derived from P->Spread_table_with_selection
 		// ->A_on_spreads
 		// restricted action on Spread_orbits_under_H:
