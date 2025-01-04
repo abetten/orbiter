@@ -424,7 +424,7 @@ public:
 // combinatorial_object_with_properties.cpp
 // #############################################################################
 
-//! properties of a combinatorial object, derived from the nauty output
+//! properties of a combinatorial object, including the automorphism group as derived from the output of nauty
 
 
 class combinatorial_object_with_properties {
@@ -466,9 +466,13 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
+	void latex_report_wrapper(
+			std::string label,
+			combinatorics::canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
 	void latex_report(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_options,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -610,13 +614,11 @@ public:
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_incidence_options,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int i, int verbose_level);
 	void report_object(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_incidence_options,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int i,

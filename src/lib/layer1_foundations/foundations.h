@@ -811,7 +811,7 @@ namespace other {
 			t_orbits,
 			t_poset_classification_control,
 
-			// group of 8:
+			// group of 9:
 			t_poset_classification_report_options,
 			t_draw_options,
 			t_draw_incidence_structure_options,
@@ -820,6 +820,7 @@ namespace other {
 			t_crc_code,
 			t_mapping,
 			t_variety,
+			t_combo_with_group,
 
 		};
 		// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print

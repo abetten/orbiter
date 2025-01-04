@@ -169,7 +169,6 @@ void any_combinatorial_object::print_rows(
 
 void any_combinatorial_object::print_tex_detailed(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_incidence_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -196,61 +195,98 @@ void any_combinatorial_object::print_tex_detailed(
 			cout << "any_combinatorial_object::print_tex_detailed f_show_incma" << endl;
 		}
 
-		ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex\\_detailed show\\_incma}" << endl;
+		print_incidence_matrices(ost, Report_options, verbose_level);
 
-		encoded_combinatorial_object *Enc;
-
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"before encode_incma" << endl;
-		}
-		encode_incma(Enc, verbose_level);
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"after encode_incma" << endl;
-		}
-
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"before Enc->latex_set_system_by_columns" << endl;
-		}
-		Enc->latex_set_system_by_columns(ost, verbose_level);
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"after Enc->latex_set_system_by_columns" << endl;
-		}
-
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"before Enc->latex_set_system_by_rows" << endl;
-		}
-		Enc->latex_set_system_by_rows(ost, verbose_level);
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"after Enc->latex_set_system_by_rows" << endl;
-		}
-
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"before Enc->latex_incma" << endl;
-		}
-		Enc->latex_incma(
-				ost,
-				Draw_incidence_options,
-				verbose_level);
-		if (f_v) {
-			cout << "any_combinatorial_object::print_tex_detailed "
-					"after Enc->latex_incma" << endl;
-		}
-		ost << "\\\\" << endl;
-
-		FREE_OBJECT(Enc);
 	}
 
 	if (f_v) {
 		cout << "any_combinatorial_object::print_tex_detailed done" << endl;
 	}
 }
+
+void any_combinatorial_object::print_incidence_matrices(
+		std::ostream &ost,
+		canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices" << endl;
+	}
+
+
+	ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_incidence\\_matrices}" << endl;
+
+	encoded_combinatorial_object *Enc;
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"before encode_incma" << endl;
+	}
+	encode_incma(Enc, verbose_level);
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"after encode_incma" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"before Enc->latex_set_system_by_columns" << endl;
+	}
+	Enc->latex_set_system_by_columns(ost, verbose_level);
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"after Enc->latex_set_system_by_columns" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"before Enc->latex_set_system_by_rows" << endl;
+	}
+	Enc->latex_set_system_by_rows(ost, verbose_level);
+	if (f_v) {
+		cout << "any_combinatorial_object::print_tex_detailed "
+				"after Enc->latex_set_system_by_rows" << endl;
+	}
+
+
+	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
+
+	if (Report_options->f_incidence_draw_options) {
+		Draw_incidence_options = Get_draw_incidence_structure_options(
+				Report_options->incidence_draw_options_label);
+	}
+	else {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"please use -incidence_draw_options" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"before Enc->latex_incma" << endl;
+	}
+	Enc->latex_incma(
+			ost,
+			Draw_incidence_options,
+			verbose_level);
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices "
+				"after Enc->latex_incma" << endl;
+	}
+	ost << "\\\\" << endl;
+
+	FREE_OBJECT(Enc);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::print_incidence_matrices done" << endl;
+	}
+
+}
+
 
 void any_combinatorial_object::print_tex(
 		std::ostream &ost, int verbose_level)
@@ -443,7 +479,8 @@ void any_combinatorial_object::print_tex(
 
 void any_combinatorial_object::get_packing_as_set_system(
 		long int *&Sets,
-		int &nb_sets, int &set_size, int verbose_level)
+		int &nb_sets, int &set_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;

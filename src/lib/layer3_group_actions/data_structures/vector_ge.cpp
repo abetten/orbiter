@@ -1080,7 +1080,8 @@ void vector_ge::export_inversion_graphs(
 	FREE_int(perm);
 
 	if (f_v) {
-		cout << "sims::export_inversion_graphs Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "sims::export_inversion_graphs "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
 }
@@ -1669,6 +1670,142 @@ void vector_ge::print_generators_compact(
 		cout << "vector_ge::print_generators_compact done" << endl;
 	}
 }
+
+void vector_ge::multiply_with(
+		vector_ge **V, int nb_with, vector_ge *&result, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::multiply_with" << endl;
+	}
+
+
+	int sz, h;
+
+	sz = len;
+
+	for (h = 0; h < nb_with; h++) {
+		if (V[h]->len != sz) {
+			cout << "vector_ge::multiply_with the vectors must all have the same length" << endl;
+			exit(1);
+		}
+	}
+
+
+	result = NEW_OBJECT(vector_ge);
+	result->init(
+			A, 0 /* verbose_level*/);
+	result->allocate(
+			len, 0 /* verbose_level*/);
+	int i;
+	int *Elt1;
+	int *Elt2;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	for (i = 0; i < len; i++) {
+
+		A->Group_element->element_mult(ith(i), V[0]->ith(i), Elt1, false);
+
+		for (h = 1; h < nb_with; h++) {
+			A->Group_element->element_mult(Elt1, V[h]->ith(i), Elt2, false);
+			A->Group_element->element_move(Elt2, Elt1, false);
+		}
+
+		A->Group_element->element_move(Elt2, result->ith(i), false);
+
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+	if (f_v) {
+		cout << "vector_ge::multiply_with done" << endl;
+	}
+}
+
+
+void vector_ge::conjugate_svas_to(
+		int *Elt, vector_ge *&result, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::conjugate_svas_to" << endl;
+	}
+
+	result = NEW_OBJECT(vector_ge);
+	result->init(
+			A, 0 /* verbose_level*/);
+	result->allocate(
+			len, 0 /* verbose_level*/);
+	int i;
+	int *Elt1, *Elt2;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	A->Group_element->invert(Elt, Elt1);
+
+	for (i = 0; i < len; i++) {
+
+		A->Group_element->element_mult(Elt1, ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt, result->ith(i), false);
+
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+	if (f_v) {
+		cout << "vector_ge::conjugate_svas_to done" << endl;
+	}
+}
+
+
+void vector_ge::conjugate_sasv_to(
+		int *Elt, vector_ge *&result, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::conjugate_sasv_to" << endl;
+	}
+
+
+
+	result = NEW_OBJECT(vector_ge);
+	result->init(
+			A, 0 /* verbose_level*/);
+	result->allocate(
+			len, 0 /* verbose_level*/);
+	int i;
+	int *Elt1, *Elt2;
+
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	A->Group_element->invert(Elt, Elt1);
+
+	for (i = 0; i < len; i++) {
+
+		A->Group_element->element_mult(Elt, ith(i), Elt2, false);
+		A->Group_element->element_mult(Elt2, Elt1, result->ith(i), false);
+
+	}
+
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+
+	if (f_v) {
+		cout << "vector_ge::conjugate_svas_to done" << endl;
+	}
+}
+
+
+
 
 
 

@@ -32,6 +32,13 @@ vector_ge_activity_description::vector_ge_activity_description()
 	f_transform_variety = false;
 	//std::string transform_variety_label;
 
+	f_multiply = false;
+
+	f_conjugate = false;
+
+	f_conjugate_inverse = false;
+
+
 }
 
 vector_ge_activity_description::~vector_ge_activity_description()
@@ -72,6 +79,24 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-transform_variety " << transform_variety_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-multiply") == 0) {
+			f_multiply = true;
+			if (f_v) {
+				cout << "-multiply " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-conjugate") == 0) {
+			f_conjugate = true;
+			if (f_v) {
+				cout << "-conjugate " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-conjugate_inverse") == 0) {
+			f_conjugate_inverse = true;
+			if (f_v) {
+				cout << "-conjugate_inverse " << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -103,6 +128,15 @@ void vector_ge_activity_description::print()
 	}
 	if (f_transform_variety) {
 		cout << "-transform_variety " << transform_variety_label << endl;
+	}
+	if (f_multiply) {
+		cout << "-multiply " << endl;
+	}
+	if (f_conjugate) {
+		cout << "-conjugate " << endl;
+	}
+	if (f_conjugate_inverse) {
+		cout << "-conjugate_inverse " << endl;
 	}
 
 }

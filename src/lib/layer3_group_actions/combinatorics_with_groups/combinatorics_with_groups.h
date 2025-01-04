@@ -234,7 +234,6 @@ public:
 			int verbose_level);
 	void print_schemes(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_options,
 			combinatorics::canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);

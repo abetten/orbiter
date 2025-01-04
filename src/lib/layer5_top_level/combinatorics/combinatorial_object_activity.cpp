@@ -29,6 +29,9 @@ combinatorial_object_activity::combinatorial_object_activity()
 	f_has_combo = false;
 	Combo = NULL;
 
+	nb_output = 0;
+	Output = NULL;
+
 }
 
 combinatorial_object_activity::~combinatorial_object_activity()
@@ -451,6 +454,49 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 	}
+
+	else if (Descr->f_get_combo_with_group) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"f_get_combo_with_group, iso type idx = " << Descr->get_combo_with_group_idx << endl;
+		}
+
+
+		//combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
+
+		//OwCF = Combo->Objects_after_classification->Classification_of_objects->OWCF_transversal[Descr->get_combo_with_group_idx];
+
+		canonical_form::combinatorial_object_with_properties *OwP;
+
+		OwP = &Combo->Objects_after_classification->OwP[Descr->get_combo_with_group_idx];
+
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+
+
+		output_label = Combo->IS->Descr->label_txt + "_object_" + std::to_string(Descr->get_combo_with_group_idx);
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"f_get_combo_with_group, output_label = " << output_label << endl;
+		}
+
+		Output->init_combo_with_group(output_label, OwP, verbose_level);
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"f_get_combo_with_group done" << endl;
+		}
+	}
+
+
 	if (Descr->f_report) {
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "

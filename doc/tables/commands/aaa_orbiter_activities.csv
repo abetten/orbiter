@@ -10,7 +10,7 @@ ROW,C1,C2,C3
 1,"\verb'-cubic_surface_activity' "," Section~\ref{sec:cubicsurfaces:creation} ","An activity for a cubic surface."
 1,"\verb'-quartic_curve_activity' ","Section~\ref{sec:cubic:surfaces:quartic:curves} "," An activity for a quartic curve."
 1,"\verb'-blt_set_activity' ","Table~\ref{tab:BLT:activity} ","An activity for a BLT-set."
-1,"\verb'-combinatorial_object_activity' ","Section~\ref{sec:algebraicsets} ","An activity for a combinatorial object."
+1,"\verb'-combinatorial_object_activity' ","Section~\ref{sec:combo} ","An activity for a combinatorial object."
 1,"\verb'-graph_theoretic_activity' ","Section~\ref{sec:graphtheory} ","An activity for a graph."
 1,"\verb'-classification_of_cubic_surfaces_' \verb'with_double_sixes_activity' ","Section~\ref{sec:cubicsurfaces:creation} "," An activity for a cubic surface."
 1,"\verb'-spread_table_activity' ","Section~\ref{sec:packings} "," An activity associated with a table of spreads."

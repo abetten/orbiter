@@ -672,8 +672,33 @@ void algebra_global_with_action::classes_GL(
 	A->print_base();
 	A->group_order(Go);
 
+
+	actions::action *A_on_lines;
+
+	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
+			2, verbose_level);
+
 	Mtx = NEW_int(d * d);
 	Elt = NEW_int(A->elt_size_in_int);
+
+	int order, nb_fixpoints, nb_fixlines;
+
+	std::string Col_headings[7];
+
+	Col_headings[0] = "Line";
+	Col_headings[1] = "order";
+	Col_headings[2] = "nb_fixpoints";
+	Col_headings[3] = "nb_fixlines";
+	Col_headings[4] = "centralizer_order";
+	Col_headings[5] = "class_size";
+	Col_headings[6] = "matrix";
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = nb_classes;
+	nb_cols = 7;
+	Table = new string [nb_rows * nb_cols];
 
 
 	for (i = 0; i < nb_classes; i++) {
@@ -689,13 +714,74 @@ void algebra_global_with_action::classes_GL(
 				<< nb_classes << " has rank " << a << endl;
 		Int_matrix_print(Elt, d, d);
 
+
+		order = A->Group_element->element_order(Elt);
+
+		nb_fixpoints = A->Group_element->count_fixed_points(
+				Elt, 0 /*  verbose_level */);
+
+
+		nb_fixlines = A_on_lines->Group_element->count_fixed_points(
+				Elt, 0 /*  verbose_level */);
+
+		algebra::ring_theory::longinteger_object go, co, cl;
+		int *Mtx2;
+
+		C.get_matrix_and_centralizer_order(
+				go,
+				co,
+				cl,
+				Mtx2,
+				R + i);
+
+
+		FREE_int(Mtx2);
+
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = std::to_string(order);
+		Table[i * nb_cols + 2] = std::to_string(nb_fixpoints);
+		Table[i * nb_cols + 3] = std::to_string(nb_fixlines);
+		Table[i * nb_cols + 4] = co.stringify();
+		Table[i * nb_cols + 5] = cl.stringify();
+		Table[i * nb_cols + 6] = "\"" + Int_vec_stringify(Elt, d * d) + "\"";
+
 		C.print_matrix_and_centralizer_order_latex(
 				cout, R + i);
 
 	}
 
+	other::orbiter_kernel_system::file_io Fio;
+
 
 	string fname;
+
+	{
+		fname = "Class_reps_GL_" + std::to_string(d)
+				+ "_" + std::to_string(F->q) + "_classes.csv";
+
+		other::orbiter_kernel_system::file_io Fio;
+
+
+		Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+				fname,
+				nb_rows, nb_cols, Table,
+				Col_headings,
+				verbose_level);
+
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::classes_GL "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	delete [] Table;
+
+
+
+
+
 
 	fname = "Class_reps_GL_" + std::to_string(d)
 			+ "_" + std::to_string(F->q) + ".tex";
@@ -707,6 +793,11 @@ void algebra_global_with_action::classes_GL(
 		C.report(fp, verbose_level);
 		L.foot(fp);
 	}
+	if (f_v) {
+		cout << "algebra_global_with_action::classes_GL "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	//make_gl_classes(d, q, f_no_eigenvalue_one, verbose_level);
 
@@ -714,6 +805,7 @@ void algebra_global_with_action::classes_GL(
 	FREE_int(Elt);
 	FREE_OBJECTS(R);
 	FREE_OBJECT(A);
+	FREE_OBJECT(A_on_lines);
 	if (f_v) {
 		cout << "algebra_global_with_action::classes_GL done" << endl;
 	}

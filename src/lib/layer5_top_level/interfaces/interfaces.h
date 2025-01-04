@@ -145,6 +145,9 @@ public:
 	apps_algebra::vector_ge_activity_description
 		*Vector_ge_activity_description;
 
+	int f_combo_activity;
+	apps_combinatorics::combo_activity_description *Combo_activity_description;
+
 	activity_description();
 	~activity_description();
 	void read_arguments(
@@ -178,6 +181,8 @@ public:
 	void do_blt_set_activity(
 			int verbose_level);
 	void do_combinatorial_object_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_graph_theoretic_activity(
@@ -217,6 +222,12 @@ public:
 	void do_variety_activity(
 			int verbose_level);
 	void do_vector_ge_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
+	void do_combo_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 
 };
@@ -1217,6 +1228,9 @@ public:
 			std::string &label);
 	canonical_form::variety_object_with_action
 		*get_variety(
+				std::string &label);
+	canonical_form::combinatorial_object_with_properties
+		*get_combo_with_group(
 				std::string &label);
 
 };

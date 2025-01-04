@@ -157,6 +157,13 @@ public:
 	void print_matrix_and_centralizer_order_latex(
 			std::ostream &ost,
 		gl_class_rep *R);
+	void get_matrix_and_centralizer_order(
+			ring_theory::longinteger_object &go,
+			ring_theory::longinteger_object &co,
+			ring_theory::longinteger_object &cl,
+			int *&Mtx,
+			gl_class_rep *R);
+
 };
 
 

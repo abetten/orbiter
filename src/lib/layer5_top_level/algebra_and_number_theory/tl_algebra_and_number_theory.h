@@ -905,6 +905,11 @@ public:
 	int f_transform_variety;
 	std::string transform_variety_label;
 
+	int f_multiply;
+
+	int f_conjugate;
+
+	int f_conjugate_inverse;
 
 
 	vector_ge_activity_description();
@@ -931,14 +936,21 @@ class vector_ge_activity {
 public:
 
 	vector_ge_activity_description *Descr;
-	apps_algebra::vector_ge_builder *VB;
-	data_structures_groups::vector_ge *vec;
+
+	int nb_objects;
+	apps_algebra::vector_ge_builder **VB;
+
+	data_structures_groups::vector_ge **vec;
+
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
 
 	vector_ge_activity();
 	~vector_ge_activity();
 	void init(
 			vector_ge_activity_description *Descr,
-			apps_algebra::vector_ge_builder *VB,
+			apps_algebra::vector_ge_builder **VB,
+			int nb_objects,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);

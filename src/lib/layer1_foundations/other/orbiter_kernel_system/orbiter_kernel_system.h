@@ -1553,6 +1553,9 @@ public:
 	void init_variety(
 			std::string &label,
 			void *variety, int verbose_level);
+	void init_combo_with_group(
+			std::string &label,
+			void *V, int verbose_level);
 	void print();
 };
 

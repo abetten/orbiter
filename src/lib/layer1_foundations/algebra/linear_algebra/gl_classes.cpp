@@ -2138,6 +2138,68 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 }
 
 
+void gl_classes::get_matrix_and_centralizer_order(
+		ring_theory::longinteger_object &go,
+		ring_theory::longinteger_object &co,
+		ring_theory::longinteger_object &cl,
+		int *&Mtx,
+		gl_class_rep *R)
+{
+	//int *Mtx;
+	ring_theory::longinteger_object r, f, g;
+	ring_theory::longinteger_domain D;
+	int *Select_polynomial, *Select_Partition;
+	int i, a, m, p, b;
+	//int f_elements_exponential = false;
+	//string symbol_for_print;
+	number_theory::number_theory_domain NT;
+
+	Mtx = NEW_int(k * k);
+
+	//symbol_for_print.assign("\\alpha");
+
+
+	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
+	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
+	Int_vec_zero(Select_polynomial, Table_of_polynomials->nb_irred);
+	Int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
+
+	for (i = 0; i < R->type_coding->m; i++) {
+		a = R->type_coding->s_ij(i, 0);
+		m = R->type_coding->s_ij(i, 1);
+		p = R->type_coding->s_ij(i, 2);
+		Select_polynomial[a] = m;
+		Select_Partition[a] = p;
+	}
+
+
+	go.create(1);
+	a = NT.i_power_j(q, k);
+	for (i = 0; i < k; i++) {
+		b = a - NT.i_power_j(q, i);
+		f.create(b);
+		D.mult(go, f, g);
+		g.assign_to(go);
+	}
+
+
+
+	make_matrix_from_class_rep(
+			Mtx, R, 0 /* verbose_level */);
+
+	centralizer_order_Kung(
+			Select_polynomial,
+			Select_Partition, co, 0 /*verbose_level - 2*/);
+
+	D.integral_division(
+			go, co, cl, r, 0 /* verbose_level */);
+
+
+	FREE_int(Select_polynomial);
+	FREE_int(Select_Partition);
+	//FREE_int(Mtx);
+}
+
 
 }}}}
 

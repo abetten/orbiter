@@ -2225,7 +2225,6 @@ void decomposition::get_and_report_classes(
 
 void decomposition::print_schemes(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_options,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -2235,6 +2234,17 @@ void decomposition::print_schemes(
 	if (f_v) {
 		cout << "decomposition::print_schemes" << endl;
 	}
+
+	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
+
+	if (Report_options->f_incidence_draw_options) {
+		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
+	}
+	else {
+		cout << "decomposition::print_schemes please use -incidence_draw_options" << endl;
+		exit(1);
+	}
+
 
 	ost << "\\subsection*{decomposition::print\\_schemes}" << endl;
 
@@ -2303,7 +2313,7 @@ void decomposition::print_schemes(
 
 		latex(
 				ost,
-				Draw_options,
+				Draw_incidence_options,
 				Scheme->RC,
 				verbose_level);
 

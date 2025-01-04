@@ -944,6 +944,31 @@ canonical_form::variety_object_with_action
 			get_object(idx);
 }
 
+canonical_form::combinatorial_object_with_properties
+	*orbiter_top_level_session::get_combo_with_group(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_combo_with_group "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+
+	if (get_object_type(idx) != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_combo_with_group) {
+		cout << "orbiter_top_level_session::get_combo_with_group "
+				"object type != t_combo_with_group" << endl;
+		exit(1);
+	}
+
+
+	return (canonical_form::combinatorial_object_with_properties *)
+			get_object(idx);
+}
+
+
 
 
 

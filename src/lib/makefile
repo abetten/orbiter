@@ -544,6 +544,8 @@ ORBITER_MODULES= \
 		layer5_top_level/combinatorics/combinatorial_object_activity.o \
 		layer5_top_level/combinatorics/combinatorial_object_stream.o \
 		layer5_top_level/combinatorics/combinatorics_global.o \
+		layer5_top_level/combinatorics/combo_activity_description.o \
+		layer5_top_level/combinatorics/combo_activity.o \
 		layer5_top_level/combinatorics/dd_lifting.o \
 		layer5_top_level/combinatorics/dd_search_singletons.o \
 		layer5_top_level/combinatorics/delandtsheer_doyen_description.o \

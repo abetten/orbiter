@@ -53,6 +53,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_canonical_form = false;
 	Canonical_form_Descr = NULL;
 
+	f_get_combo_with_group = false;
+	get_combo_with_group_idx = -1;
+
 	f_report = false;
 	Objects_report_options = NULL;
 
@@ -206,6 +209,13 @@ int combinatorial_object_activity_description::read_arguments(
 				}
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-get_combo_with_group") == 0) {
+			f_get_combo_with_group = true;
+			get_combo_with_group_idx = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-get_combo_with_group " << get_combo_with_group_idx << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 
@@ -337,6 +347,9 @@ void combinatorial_object_activity_description::print()
 	if (f_canonical_form) {
 		cout << "-canonical_form " << endl;
 		Canonical_form_Descr->print();
+	}
+	if (f_get_combo_with_group) {
+		cout << "-get_combo_with_group " << get_combo_with_group_idx << endl;
 	}
 	if (f_report) {
 		cout << "-report " << endl;

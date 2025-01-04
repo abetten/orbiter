@@ -801,7 +801,8 @@ void latex_interface::incma_latex(
 		cout << "latex_interface::incma_latex "
 				"before incma_latex_with_text_labels" << endl;
 	}
-	incma_latex_with_text_labels(fp,
+	incma_latex_with_text_labels(
+			fp,
 			Descr,
 		v, b, V, B, Vi, Bj, incma,
 		false /* f_labelling_points */, NULL,
@@ -858,7 +859,8 @@ void latex_interface::incma_latex_with_labels(
 		cout << "latex_interface::incma_latex "
 				"before incma_latex_with_text_labels" << endl;
 	}
-	incma_latex_with_text_labels(fp,
+	incma_latex_with_text_labels(
+			fp,
 			Descr,
 		v, b, V, B, Vi, Bj, incma,
 		true /* f_labelling_points */, point_labels,
@@ -999,8 +1001,10 @@ void latex_interface::print_integer_matrix_with_labels(
 	}
 }
 
-void latex_interface::print_lint_matrix_with_labels(std::ostream &ost,
-	long int *p, int m, int n, long int *row_labels, long int *col_labels,
+void latex_interface::print_lint_matrix_with_labels(
+		std::ostream &ost,
+	long int *p, int m, int n,
+	long int *row_labels, long int *col_labels,
 	int f_tex)
 {
 	int i, j;

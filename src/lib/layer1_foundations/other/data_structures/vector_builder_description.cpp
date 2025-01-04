@@ -70,6 +70,13 @@ vector_builder_description::vector_builder_description()
 	f_index_of_support = false;
 	//std::string index_of_support_input;
 
+	f_permutation_matrix = false;
+	//std::string permutation_matrix_data;
+
+	f_permutation_matrix_inverse = false;
+	//std::string permutation_matrix_inverse_data;
+
+
 }
 
 vector_builder_description::~vector_builder_description()
@@ -199,6 +206,20 @@ int vector_builder_description::read_arguments(
 				cout << "-index_of_support " << index_of_support_input << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-permutation_matrix") == 0) {
+			f_permutation_matrix = true;
+			permutation_matrix_data.assign(argv[++i]);
+			if (f_v) {
+				cout << "-permutation_matrix " << permutation_matrix_data << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-permutation_matrix_inverse") == 0) {
+			f_permutation_matrix_inverse = true;
+			permutation_matrix_inverse_data.assign(argv[++i]);
+			if (f_v) {
+				cout << "-permutation_matrix_inverse " << permutation_matrix_inverse_data << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -266,6 +287,12 @@ void vector_builder_description::print()
 	}
 	if (f_index_of_support) {
 		cout << "-index_of_support " << index_of_support_input << endl;
+	}
+	if (f_permutation_matrix) {
+		cout << "-permutation_matrix " << permutation_matrix_data << endl;
+	}
+	if (f_permutation_matrix_inverse) {
+		cout << "-permutation_matrix_inverse " << permutation_matrix_inverse_data << endl;
 	}
 
 }

@@ -108,6 +108,9 @@ activity_description::activity_description()
 	f_vector_ge_activity = false;
 	Vector_ge_activity_description = NULL;
 
+	f_combo_activity = false;
+	Combo_activity_description = NULL;
+
 }
 
 activity_description::~activity_description()
@@ -771,7 +774,28 @@ void activity_description::read_arguments(
 			}
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-combo_activity") == 0) {
+		f_combo_activity = true;
+		Combo_activity_description =
+				NEW_OBJECT(apps_combinatorics::combo_activity_description);
+		if (f_v) {
+			cout << "reading -combo_activity" << endl;
+		}
+		i += Combo_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
+		i++;
+
+		if (f_v) {
+			cout << "-combo_activity" << endl;
+			Combo_activity_description->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
@@ -878,7 +902,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker f_combinatorial_object_activity" << endl;
 		}
-		do_combinatorial_object_activity(AO, verbose_level);
+		do_combinatorial_object_activity(nb_output, Output, AO, verbose_level);
 
 	}
 	else if (f_graph_theoretic_activity) {
@@ -1033,7 +1057,15 @@ void activity_description::worker(
 			cout << "activity_description::worker f_vector_ge_activity" << endl;
 		}
 
-		do_vector_ge_activity(verbose_level);
+		do_vector_ge_activity(nb_output, Output, verbose_level);
+	}
+	else if (f_combo_activity) {
+
+		if (f_v) {
+			cout << "activity_description::worker f_combo_activity" << endl;
+		}
+
+		do_combo_activity(nb_output, Output, verbose_level);
 	}
 
 
@@ -1182,6 +1214,10 @@ void activity_description::print()
 	else if (f_vector_ge_activity) {
 		cout << "-vector_ge_activity" << endl;
 		Vector_ge_activity_description->print();
+	}
+	else if (f_combo_activity) {
+		cout << "-combo_activity" << endl;
+		Combo_activity_description->print();
 	}
 	else {
 		cout << "activity_description::print unknown type of activity" << endl;
@@ -1728,6 +1764,8 @@ void activity_description::do_blt_set_activity(
 
 
 void activity_description::do_combinatorial_object_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
@@ -1807,6 +1845,10 @@ void activity_description::do_combinatorial_object_activity(
 			if (AO) {
 				AO->fname_base = Combo->IS->Descr->label_txt;
 			}
+
+			// pass back the output (if there is one):
+			nb_output = Activity.nb_output;
+			Output = Activity.Output;
 
 		}
 	}
@@ -2810,6 +2852,8 @@ void activity_description::do_variety_activity(
 }
 
 void activity_description::do_vector_ge_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2831,11 +2875,22 @@ void activity_description::do_vector_ge_activity(
 		exit(1);
 	}
 
-	apps_algebra::vector_ge_builder *VB;
+	int nb_objects;
+	apps_algebra::vector_ge_builder **pVB;
 	//data_structures_groups::vector_ge *vec;
 
-	VB = (apps_algebra::vector_ge_builder *)
-			Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	nb_objects = Sym->with_labels.size();
+	pVB = (apps_algebra::vector_ge_builder **) NEW_pvoid(nb_objects);
+	int i;
+
+	for (i = 0; i < nb_objects; i++) {
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = (apps_algebra::vector_ge_builder *)
+				Sym->Orbiter_top_level_session->get_object(Idx[i]);
+		pVB[i] = VB;
+
+	}
 
 	//vec = VB->V;
 	{
@@ -2844,7 +2899,8 @@ void activity_description::do_vector_ge_activity(
 
 		Activity.init(
 				Vector_ge_activity_description,
-				VB,
+				pVB,
+				nb_objects,
 				verbose_level);
 
 
@@ -2859,7 +2915,13 @@ void activity_description::do_vector_ge_activity(
 					"after Activity.perform_activity" << endl;
 		}
 
+		// pass back the output (if there is one):
+		nb_output = Activity.nb_output;
+		Output = Activity.Output;
+
 	}
+
+	FREE_pvoid((void **) pVB);
 
 	FREE_int(Idx);
 
@@ -2871,6 +2933,82 @@ void activity_description::do_vector_ge_activity(
 
 
 
+void activity_description::do_combo_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "activity_description::do_combo_activity "
+				"activity for the following objects:";
+		Sym->print_with();
+	}
+
+
+
+	int *Idx;
+
+	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
+
+	if (Sym->with_labels.size() < 1) {
+		cout << "activity requires at least one input" << endl;
+		exit(1);
+	}
+
+
+	int nb_objects;
+	canonical_form::combinatorial_object_with_properties **pOwP;
+
+	nb_objects = Sym->with_labels.size();
+	pOwP = (canonical_form::combinatorial_object_with_properties **) NEW_pvoid(nb_objects);
+	int i;
+
+	for (i = 0; i < nb_objects; i++) {
+
+		pOwP[i] = (canonical_form::combinatorial_object_with_properties *)
+				Sym->Orbiter_top_level_session->get_object(Idx[i]);
+
+	}
+
+	other::orbiter_kernel_system::activity_output *AO;
+	{
+
+		apps_combinatorics::combo_activity Activity;
+
+		Activity.init(
+				Combo_activity_description,
+				pOwP,
+				nb_objects,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "activity_description::do_combo_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(AO, verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_combo_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+		// pass back the output (if there is one):
+		nb_output = Activity.nb_output;
+		Output = Activity.Output;
+
+	}
+
+	FREE_pvoid((void **) pOwP);
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "activity_description::do_combo_activity done" << endl;
+	}
+
+}
 
 
 

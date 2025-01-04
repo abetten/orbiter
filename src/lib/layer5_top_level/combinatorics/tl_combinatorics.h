@@ -141,6 +141,9 @@ public:
 	combinatorics::canonical_form_classification::classification_of_objects_description
 		*Canonical_form_Descr;
 
+	int f_get_combo_with_group;
+	int get_combo_with_group_idx;
+
 	int f_report;
 	combinatorics::canonical_form_classification::objects_report_options
 		*Objects_report_options;
@@ -198,6 +201,9 @@ public:
 
 	int f_has_combo;
 	apps_combinatorics::combinatorial_object_stream *Combo;
+
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
 
 
 	combinatorial_object_activity();
@@ -360,6 +366,68 @@ public:
 #endif
 
 };
+
+
+
+// #############################################################################
+// combo_activity_description.cpp
+// #############################################################################
+
+
+//! description of an activity for a combinatorial object with group
+
+class combo_activity_description {
+public:
+
+
+	// TABLE/combo_activity.tex
+
+	int f_report;
+	combinatorics::canonical_form_classification::objects_report_options
+		*Objects_report_options;
+
+	combo_activity_description();
+	~combo_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// combo_activity.cpp
+// #############################################################################
+
+
+//! perform an activity for a combinatorial object with group
+
+class combo_activity {
+public:
+	combo_activity_description *Descr;
+
+	canonical_form::combinatorial_object_with_properties **pOwP;
+	int nb_objects;
+
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
+
+
+	combo_activity();
+	~combo_activity();
+	void init(
+			combo_activity_description *Descr,
+			canonical_form::combinatorial_object_with_properties **pOwP,
+			int nb_objects,
+			int verbose_level);
+	void perform_activity(
+			other::orbiter_kernel_system::activity_output *&AO,
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################

@@ -401,6 +401,71 @@ void vector_builder::init(
 
 	}
 
+	else if (Descr->f_permutation_matrix) {
+		if (f_v) {
+			cout << "vector_builder::init "
+					"-permutation_matrix" << endl;
+		}
+
+		int *perm;
+		int sz;
+
+		Int_vec_scan(Descr->permutation_matrix_data, perm, sz);
+
+		f_has_k = true;
+		k = sz;
+		len = sz * sz;
+
+		v = NEW_lint(len);
+		Lint_vec_zero(v, len);
+
+		int i;
+
+		for (i = 0; i < sz; i++) {
+			v[i * sz + perm[i]] = 1;
+		}
+
+
+		FREE_int(perm);
+
+	}
+
+	else if (Descr->f_permutation_matrix_inverse) {
+		if (f_v) {
+			cout << "vector_builder::init "
+					"-permutation_matrix_inverse" << endl;
+		}
+
+		int *perm;
+		int *perm_inv;
+		int sz;
+
+		Int_vec_scan(Descr->permutation_matrix_inverse_data, perm, sz);
+
+		perm_inv = NEW_int(sz);
+
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		Combi.Permutations->perm_inverse(perm, perm_inv, sz);
+
+		f_has_k = true;
+		k = sz;
+		len = sz * sz;
+
+		v = NEW_lint(len);
+		Lint_vec_zero(v, len);
+
+		int i;
+
+		for (i = 0; i < sz; i++) {
+			v[i * sz + perm_inv[i]] = 1;
+		}
+
+
+		FREE_int(perm);
+		FREE_int(perm_inv);
+
+	}
 
 
 	else {

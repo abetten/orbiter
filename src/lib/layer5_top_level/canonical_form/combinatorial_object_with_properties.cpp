@@ -96,8 +96,10 @@ void combinatorial_object_with_properties::init(
 		cout << "combinatorial_object_with_properties::init "
 				"A_perm:" << endl;
 
-		A_perm->Strong_gens->print_generators_in_latex_individually(cout, verbose_level - 1);
-		A_perm->Strong_gens->print_generators_in_source_code(verbose_level - 1);
+		A_perm->Strong_gens->print_generators_in_latex_individually(
+				cout, verbose_level - 1);
+		A_perm->Strong_gens->print_generators_in_source_code(
+				verbose_level - 1);
 		A_perm->print_base();
 	}
 
@@ -240,9 +242,73 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 
 }
 
+void combinatorial_object_with_properties::latex_report_wrapper(
+		std::string label,
+		combinatorics::canonical_form_classification::objects_report_options
+			*Report_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report_wrapper" << endl;
+	}
+
+
+	string fname;
+
+	fname = label + "_report.tex";
+
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report_wrapper "
+				"before latex_report" << endl;
+	}
+
+
+
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+
+
+
+
+	{
+		other::l1_interfaces::latex_interface L;
+
+		ofstream ost(fname);
+
+		//L.head_easy(ost);
+		L.head_easy_and_enlarged(ost);
+
+
+
+		latex_report(
+				ost,
+				Report_options,
+				verbose_level);
+
+
+
+		L.foot(ost);
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report_wrapper "
+				"Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report_wrapper done" << endl;
+	}
+}
+
+
 void combinatorial_object_with_properties::latex_report(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_options,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -255,6 +321,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
+
 	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
 
 	{
@@ -266,7 +333,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 
 	ost << "Generators for the automorphism group: \\\\" << endl;
-	if (A_perm->degree < 1000) {
+	if (A_perm->degree < 100) {
 		A_perm->Strong_gens->print_generators_in_latex_individually(ost, verbose_level - 1);
 
 		ost << "\\begin{verbatim}" << endl;
@@ -305,6 +372,19 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"after SG->print_generators_in_latex_individually" << endl;
 		}
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report "
+				"before Any_Combo->print_tex_detailed" << endl;
+	}
+	Any_Combo->print_tex_detailed(
+			ost,
+			Report_options,
+			verbose_level);
+	if (f_v) {
+		cout << "combinatorial_object_with_properties::latex_report "
+				"after Any_Combo->print_tex_detailed" << endl;
 	}
 
 
@@ -444,7 +524,7 @@ void combinatorial_object_with_properties::latex_report(
 				cout << "combinatorial_object_with_properties::latex_report "
 						"before TDO->print_schemes" << endl;
 			}
-			TDO->print_schemes(ost, Draw_options, Report_options, verbose_level);
+			TDO->print_schemes(ost, Report_options, verbose_level);
 			if (f_v) {
 				cout << "combinatorial_object_with_properties::latex_report "
 						"after TDO->print_schemes" << endl;
@@ -483,7 +563,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"before GA_on_CO->print_schemes" << endl;
 		}
-		GA_on_CO->print_schemes(ost, Draw_options, Report_options, verbose_level);
+		GA_on_CO->print_schemes(ost, Report_options, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_with_properties::latex_report "
 					"after GA_on_CO->print_schemes" << endl;
@@ -616,9 +696,20 @@ void combinatorial_object_with_properties::latex_report(
 			block_labels[j] = std::to_string(NO->canonical_labeling[v + j]);
 		}
 
+		other::graphics::draw_incidence_structure_description *Draw_incidence_options;
+
+		if (Report_options->f_incidence_draw_options) {
+			Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
+		}
+		else {
+			cout << "combinatorial_object_with_properties::latex_report_wrapper please use -incidence_draw_options" << endl;
+			exit(1);
+		}
+
+
 		Enc->latex_canonical_form_with_labels(
 				ost,
-				Draw_options,
+				Draw_incidence_options,
 				NO,
 				point_labels,
 				block_labels,
@@ -709,9 +800,9 @@ void combinatorial_object_with_properties::latex_report(
 		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
 		ost << "Lex-least form is:\\\\" << endl;
 
+
 		Any_Combo2->print_tex_detailed(
 				ost,
-				Draw_options,
 				Report_options,
 				verbose_level);
 	}
@@ -725,6 +816,7 @@ void combinatorial_object_with_properties::latex_report(
 
 void combinatorial_object_with_properties::compute_TDO(
 		int max_TDO_depth, int verbose_level)
+// interface to combinatorics::tactical_decompositions::tdo_scheme_compute
 {
 	int f_v = (verbose_level >= 1);
 

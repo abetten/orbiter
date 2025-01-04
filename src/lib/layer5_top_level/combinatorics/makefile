@@ -11,6 +11,8 @@ MODULES = \
 	combinatorial_object_activity.o \
 	combinatorial_object_stream.o \
 	combinatorics_global.o \
+	combo_activity_description.o \
+	combo_activity.o \
 	dd_lifting.o \
 	dd_search_singletons.o \
 	delandtsheer_doyen_description.o \

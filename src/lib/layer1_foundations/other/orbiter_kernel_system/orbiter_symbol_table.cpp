@@ -350,7 +350,7 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 
 
-	// group of 8:
+	// group of 9:
 	// t_poset_classification_report_options,
 	// t_draw_options,
 	// t_draw_incidence_structure_options,
@@ -359,6 +359,7 @@ std::string orbiter_symbol_table::stringify_type(
 	// t_crc_code,
 	// t_mapping,
 	// t_variety,
+	// t_combo_with_group,
 
 	else if (t == t_poset_classification_report_options) {
 		s = "t_poset_classification_report_options";
@@ -383,6 +384,9 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 	else if (t == t_variety) {
 		s = "t_variety";
+	}
+	else if (t == t_combo_with_group) {
+		s = "t_combo_with_group";
 	}
 
 	else {

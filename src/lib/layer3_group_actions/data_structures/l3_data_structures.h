@@ -664,7 +664,7 @@ public:
 // vector_ge.cpp
 // #############################################################################
 
-//! to hold a vector of group elements
+//! a vector of group elements
 
 
 class vector_ge {
@@ -823,6 +823,12 @@ public:
 			std::ostream &ost, actions::action *A2, int verbose_level);
 	void print_generators_compact(
 			std::ostream &ost, int verbose_level);
+	void multiply_with(
+			vector_ge **V, int nb_with, vector_ge *&result, int verbose_level);
+	void conjugate_svas_to(
+			int *Elt, vector_ge *&result, int verbose_level);
+	void conjugate_sasv_to(
+			int *Elt, vector_ge *&result, int verbose_level);
 
 };
 

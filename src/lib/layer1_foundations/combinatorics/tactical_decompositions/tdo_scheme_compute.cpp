@@ -212,7 +212,6 @@ void tdo_scheme_compute::init_TDA(
 
 void tdo_scheme_compute::print_schemes(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_options,
 		canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -230,7 +229,7 @@ void tdo_scheme_compute::print_schemes(
 		cout << "tdo_scheme_compute::print_schemes "
 				"before Decomp->print_schemes" << endl;
 	}
-	Decomp->print_schemes(ost, Draw_options, Report_options, verbose_level);
+	Decomp->print_schemes(ost, Report_options, verbose_level);
 	if (f_v) {
 		cout << "tdo_scheme_compute::print_schemes "
 				"after Decomp->print_schemes" << endl;

@@ -936,6 +936,23 @@ void orbiter_symbol_table_entry::init_variety(
 	}
 }
 
+void orbiter_symbol_table_entry::init_combo_with_group(
+		std::string &label,
+		void *V, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combo_with_group" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_combo_with_group;
+	ptr = V;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combo_with_group done" << endl;
+	}
+}
 
 
 
@@ -1161,7 +1178,7 @@ void orbiter_symbol_table_entry::print()
 
 
 #if 0
-		// group of 8:
+		// group of 9:
 		t_poset_classification_report_options,
 		t_draw_options,
 		t_draw_incidence_structure_options,
@@ -1170,6 +1187,7 @@ void orbiter_symbol_table_entry::print()
 		t_crc_code,
 		t_mapping,
 		t_variety,
+		t_combo_with_group,
 #endif
 
 
@@ -1196,6 +1214,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_variety) {
 			cout << "variety" << endl;
+		}
+		else if (object_type == t_combo_with_group) {
+			cout << "combo_with_group" << endl;
 		}
 
 	}

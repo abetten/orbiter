@@ -2452,6 +2452,12 @@ public:
 	int f_index_of_support;
 	std::string index_of_support_input;
 
+	int f_permutation_matrix;
+	std::string permutation_matrix_data;
+
+	int f_permutation_matrix_inverse;
+	std::string permutation_matrix_inverse_data;
+
 	vector_builder_description();
 	~vector_builder_description();
 	int read_arguments(

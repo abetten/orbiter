@@ -96,7 +96,11 @@ public:
 			int verbose_level);
 	void print_tex_detailed(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_incidence_options,
+			canonical_form_classification::objects_report_options
+				*Report_options,
+			int verbose_level);
+	void print_incidence_matrices(
+			std::ostream &ost,
 			canonical_form_classification::objects_report_options
 				*Report_options,
 			int verbose_level);
@@ -104,7 +108,8 @@ public:
 			std::ostream &ost, int verbose_level);
 	void get_packing_as_set_system(
 			long int *&Sets,
-			int &nb_sets, int &set_size, int verbose_level);
+			int &nb_sets, int &set_size,
+			int verbose_level);
 	void init_input_fname(
 			std::string &input_fname,
 			int input_idx,

@@ -355,7 +355,6 @@ void group_action_on_combinatorial_object::init(
 
 void group_action_on_combinatorial_object::print_schemes(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_options,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int verbose_level)
@@ -373,7 +372,6 @@ void group_action_on_combinatorial_object::print_schemes(
 
 	Decomposition->print_schemes(
 			ost,
-			Draw_options,
 			Report_options,
 			verbose_level);
 

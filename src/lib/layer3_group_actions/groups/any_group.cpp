@@ -753,7 +753,7 @@ void any_group::normalizer(
 		string fname, title, author, extra_praeamble;
 
 		fname = fname_magma_prefix + ".tex";
-		title = "Normalizer of subgroup " + label_tex;
+		title = "Normalizer of subgroup $" + label_tex + "$";
 
 
 		{

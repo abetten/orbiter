@@ -369,16 +369,6 @@ void objects_after_classification::report_all_isomorphism_types(
 	}
 	int i, j;
 
-	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
-
-	if (Report_options->f_incidence_draw_options) {
-		Draw_incidence_options = Get_draw_incidence_structure_options(Report_options->incidence_draw_options_label);
-	}
-	else {
-		cout << "objects_after_classification::report_all_isomorphism_types please use -incidence_draw_options" << endl;
-		exit(1);
-	}
-
 
 	other::l1_interfaces::latex_interface L;
 
@@ -429,7 +419,6 @@ void objects_after_classification::report_all_isomorphism_types(
 		}
 		report_isomorphism_type(
 				ost,
-				Draw_incidence_options,
 				Report_options,
 				i,
 				verbose_level);
@@ -449,7 +438,6 @@ void objects_after_classification::report_all_isomorphism_types(
 
 void objects_after_classification::report_isomorphism_type(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_incidence_options,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
@@ -507,7 +495,6 @@ void objects_after_classification::report_isomorphism_type(
 	}
 	report_object(
 			ost,
-			Draw_incidence_options,
 			Report_options,
 			i /* object_idx */,
 			verbose_level);
@@ -527,7 +514,6 @@ void objects_after_classification::report_isomorphism_type(
 
 void objects_after_classification::report_object(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_incidence_options,
 		combinatorics::canonical_form_classification::objects_report_options
 			*Report_options,
 		int i,
@@ -544,7 +530,8 @@ void objects_after_classification::report_object(
 
 	//j = CO->CB->perm[i];
 
-	combinatorics::canonical_form_classification::any_combinatorial_object *OwCF = Classification_of_objects->OWCF_transversal[i];
+	combinatorics::canonical_form_classification::any_combinatorial_object
+		*OwCF = Classification_of_objects->OWCF_transversal[i];
 
 	if (f_v) {
 		cout << "objects_after_classification::report_object "
@@ -555,7 +542,6 @@ void objects_after_classification::report_object(
 
 	OwCF->print_tex_detailed(
 			ost,
-			Draw_incidence_options,
 			Report_options,
 			verbose_level);
 	if (f_v) {
@@ -583,7 +569,6 @@ void objects_after_classification::report_object(
 		ost << "\\subsubsection*{objects\\_after\\_classification::report\\_object latex\\_report}" << endl;
 		OwP[i].latex_report(
 				ost,
-				Draw_incidence_options,
 				Report_options,
 				verbose_level);
 		if (f_v) {

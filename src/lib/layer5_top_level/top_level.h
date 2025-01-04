@@ -99,6 +99,8 @@ namespace apps_combinatorics {
 	class combinatorial_object_activity;
 	class combinatorial_object_stream;
 	class combinatorics_global;
+	class combo_activity_description;
+	class combo_activity;
 	class dd_lifting;
 	class dd_search_singletons;
 	class delandtsheer_doyen_description;
@@ -417,6 +419,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_orthogonal_space(label) user_interface::The_Orbiter_top_level_session->get_orthogonal_space(label)
 #define Get_orbits(label) user_interface::The_Orbiter_top_level_session->get_orbits(label)
 #define Get_variety(label) user_interface::The_Orbiter_top_level_session->get_variety(label)
+#define Get_combo_with_group(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
 
 
 
