@@ -189,8 +189,14 @@ public:
 	int split_m;
 
 	int f_isomorph;
-	layer4_classification::isomorph::isomorph_arguments
-		*Isomorph_arguments;
+	std::string isomorph_label;
+
+	int f_build_db;
+	int f_read_solutions;
+	int f_compute_orbits;
+	int f_isomorph_testing;
+	int f_isomorph_report;
+
 
 	spread_classify_activity_description();
 	~spread_classify_activity_description();
@@ -200,7 +206,6 @@ public:
 	void print();
 
 };
-
 
 
 // #############################################################################
@@ -225,6 +230,10 @@ public:
 			spread_classify *Spread_classify,
 			int verbose_level);
 	void perform_activity(
+			int verbose_level);
+	void create_context(
+			std::string &isomorph_label,
+			layer4_classification::isomorph::isomorph_context *&Isomorph_context,
 			int verbose_level);
 
 };

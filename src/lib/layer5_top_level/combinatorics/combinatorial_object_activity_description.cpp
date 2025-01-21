@@ -87,6 +87,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_activity = false;
 	Activity_description = NULL;
 
+	f_algebraic_degree = false;
+	//std::string algebraic_degree_PG_label;
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -295,6 +298,14 @@ int combinatorial_object_activity_description::read_arguments(
 			Activity_description->read_arguments(argc, argv, i, verbose_level);
 			break;
 		}
+		else if (ST.stringcmp(argv[i], "-algebraic_degree") == 0) {
+			f_algebraic_degree = true;
+			algebraic_degree_PG_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-algebraic_degree " << algebraic_degree_PG_label
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -378,6 +389,14 @@ void combinatorial_object_activity_description::print()
 		cout << "-line_covering_type " << line_covering_type_prefix
 				<< " " << line_covering_type_projective_space
 				<< " " << line_covering_type_lines
+				<< endl;
+	}
+	if (f_activity) {
+		cout << "-activity " << endl;
+		Activity_description->print();
+	}
+	if (f_algebraic_degree) {
+		cout << "-algebraic_degree " << algebraic_degree_PG_label
 				<< endl;
 	}
 }

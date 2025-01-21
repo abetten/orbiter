@@ -233,23 +233,14 @@ void any_combinatorial_object::print_incidence_matrices(
 
 	if (f_v) {
 		cout << "any_combinatorial_object::print_incidence_matrices "
-				"before Enc->latex_set_system_by_columns" << endl;
+				"before Enc->latex_set_system_by_rows_and_columns" << endl;
 	}
-	Enc->latex_set_system_by_columns(ost, verbose_level);
+	Enc->latex_set_system_by_rows_and_columns(ost, verbose_level);
 	if (f_v) {
 		cout << "any_combinatorial_object::print_incidence_matrices "
-				"after Enc->latex_set_system_by_columns" << endl;
+				"after Enc->latex_set_system_by_rows_and_columns" << endl;
 	}
 
-	if (f_v) {
-		cout << "any_combinatorial_object::print_incidence_matrices "
-				"before Enc->latex_set_system_by_rows" << endl;
-	}
-	Enc->latex_set_system_by_rows(ost, verbose_level);
-	if (f_v) {
-		cout << "any_combinatorial_object::print_tex_detailed "
-				"after Enc->latex_set_system_by_rows" << endl;
-	}
 
 
 	other::graphics::draw_incidence_structure_description *Draw_incidence_options;
@@ -297,13 +288,13 @@ void any_combinatorial_object::print_tex(
 		cout << "any_combinatorial_object::print_tex" << endl;
 	}
 
-	ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex}" << endl;
+	//ost << "\\subsubsection*{any\\_combinatorial\\_object::print\\_tex}" << endl;
 
 	if (type == t_PTS) {
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_PTS" << endl;
 		}
-		ost << "set of points of size " << sz << ": ";
+		ost << "Set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
@@ -321,7 +312,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_LNS" << endl;
 		}
-		ost << "set of lines of size " << sz << ": ";
+		ost << "Set of lines of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 	}
@@ -329,7 +320,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_PNL" << endl;
 		}
-		ost << "set of points of size " << sz << ": ";
+		ost << "Set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
 		ost << "\\\\" << endl;
 		ost << "and a set of lines of size " << sz2 << ": ";
@@ -340,7 +331,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_PAC" << endl;
 		}
-		ost << "packing: \\\\" << endl;
+		ost << "Packing: \\\\" << endl;
 		SoS->print_table_tex(ost);
 		ost << endl;
 	}
@@ -348,7 +339,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_INC" << endl;
 		}
-		ost << "incidence structure: \\\\" << endl;
+		ost << "Incidence structure by flags: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
 		Lint_vec_print_fully(ost, set, sz);
@@ -365,7 +356,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_LS" << endl;
 		}
-		ost << "large set: \\\\" << endl;
+		ost << "Large set: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
 
@@ -378,7 +369,7 @@ void any_combinatorial_object::print_tex(
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-		ost << "large set: \\\\" << endl;
+		ost << "Large set: \\\\" << endl;
 
 		Combi.report_large_set(
 				ost, set, nb_designs,
@@ -433,7 +424,7 @@ void any_combinatorial_object::print_tex(
 		if (f_v) {
 			cout << "any_combinatorial_object::print_tex t_MMX" << endl;
 		}
-		ost << "multi matrix: \\\\" << endl;
+		ost << "Multi matrix: \\\\" << endl;
 
 
 		other::l1_interfaces::latex_interface Latex;

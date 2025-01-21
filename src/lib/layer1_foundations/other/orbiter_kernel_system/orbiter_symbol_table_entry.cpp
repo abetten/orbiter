@@ -954,6 +954,25 @@ void orbiter_symbol_table_entry::init_combo_with_group(
 	}
 }
 
+void orbiter_symbol_table_entry::init_isomorph_arguments(
+		std::string &label,
+		void *V, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_isomorph_arguments" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_isomorph_arguments;
+	ptr = V;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_isomorph_arguments done" << endl;
+	}
+}
+
+
 
 
 
@@ -1178,7 +1197,7 @@ void orbiter_symbol_table_entry::print()
 
 
 #if 0
-		// group of 9:
+		// group of 10:
 		t_poset_classification_report_options,
 		t_draw_options,
 		t_draw_incidence_structure_options,
@@ -1188,6 +1207,7 @@ void orbiter_symbol_table_entry::print()
 		t_mapping,
 		t_variety,
 		t_combo_with_group,
+		t_isomorph_arguments
 #endif
 
 
@@ -1217,6 +1237,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_combo_with_group) {
 			cout << "combo_with_group" << endl;
+		}
+		else if (object_type == t_isomorph_arguments) {
+			cout << "isomorph_arguments" << endl;
 		}
 
 	}

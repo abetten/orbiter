@@ -31,7 +31,13 @@ blt_set_classify_activity_description::blt_set_classify_activity_description()
 	split_m = 1;
 
 	f_isomorph = false;
-	Isomorph_arguments = NULL;
+	//std::string isomorph_label;
+
+	f_build_db = false;
+	f_read_solutions = false;
+	f_compute_orbits = false;
+	f_isomorph_testing = false;
+	f_isomorph_report = false;
 
 }
 
@@ -88,15 +94,39 @@ int blt_set_classify_activity_description::read_arguments(
 		}
 		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = true;
-			//prefix_classify.assign(argv[++i]);
-			//prefix_iso.assign(argv[++i]);
-			Isomorph_arguments = NEW_OBJECT(layer4_classification::isomorph::isomorph_arguments);
-
-			i += Isomorph_arguments->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
+			isomorph_label.assign(argv[++i]);
 			if (f_v) {
-				cout << "-isomorph " << endl; //prefix_classify << " " << prefix_iso << endl;
-				Isomorph_arguments->print();
+				cout << "-isomorph " << isomorph_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-build_db") == 0) {
+			f_build_db = true;
+			if (f_v) {
+				cout << "-build_db " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-read_solutions") == 0) {
+			f_read_solutions = true;
+			if (f_v) {
+				cout << "-read_solutions " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-compute_orbits") == 0) {
+			f_compute_orbits = true;
+			if (f_v) {
+				cout << "-compute_orbits " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-isomorph_testing") == 0) {
+			f_isomorph_testing = true;
+			if (f_v) {
+				cout << "-isomorph_testing " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-isomorph_report") == 0) {
+			f_isomorph_report = true;
+			if (f_v) {
+				cout << "-isomorph_report " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -131,8 +161,22 @@ void blt_set_classify_activity_description::print()
 		cout << "-split " << split_r << " " << split_m << endl;
 	}
 	if (f_isomorph) {
-		cout << "-isomorph " << endl; //prefix_classify << " " << prefix_iso << endl;
-		Isomorph_arguments->print();
+		cout << "-isomorph " << isomorph_label << endl;
+	}
+	if (f_build_db) {
+		cout << "-build_db " << endl;
+	}
+	if (f_read_solutions) {
+		cout << "-read_solutions " << endl;
+	}
+	if (f_compute_orbits) {
+		cout << "-compute_orbits " << endl;
+	}
+	if (f_isomorph_testing) {
+		cout << "-isomorph_testing " << endl;
+	}
+	if (f_isomorph_report) {
+		cout << "-isomorph_report " << endl;
 	}
 }
 

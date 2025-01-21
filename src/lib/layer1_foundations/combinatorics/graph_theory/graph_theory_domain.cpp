@@ -1480,23 +1480,38 @@ void graph_theory_domain::make_disjoint_sets_graph(
 	}
 #endif
 
-	for (i = 0; i < N; i++) {
-		Sorting.lint_vec_heapsort(M + i * n, N);
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph N=" << N << " n=" << n << endl;
 	}
-
 
 	if (f_v) {
-		cout << "graph_theory_domain::make_disjoint_sets_graph N=" << N << endl;
+		cout << "graph_theory_domain::make_disjoint_sets_graph before sorting" << endl;
 	}
+	for (i = 0; i < N; i++) {
+		if ((i % 1000) == 0) {
+			cout << i << endl;
+		}
+		Sorting.lint_vec_heapsort(M + i * n, n);
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph after sorting" << endl;
+	}
+
+
 
 	Adj = NEW_int(N * N);
 	Int_vec_zero(Adj, N * N);
 
 
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph "
+				"computing adjacency matrix" << endl;
+	}
 	for (i = 0; i < N; i++) {
 		for (j = i + 1; j < N; j++) {
 
-			if (Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(M + i * n, M + j * n, n, n)) {
+			if (Sorting.test_if_sets_are_disjoint_assuming_sorted_lint(
+					M + i * n, M + j * n, n, n)) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
 			}

@@ -397,7 +397,6 @@ namespace applications_in_algebraic_geometry {
 
 }
 
-//#define Get_object_of_type_any_group(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_any_group(label)
 #define Get_vector_or_set(label, set, sz) user_interface::The_Orbiter_top_level_session->get_vector_or_set(label, set, sz, 0)
 #define Get_any_group(label) user_interface::The_Orbiter_top_level_session->get_any_group(label)
 
@@ -405,7 +404,6 @@ namespace applications_in_algebraic_geometry {
 #define Get_poset_classification_control(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_control(label)
 #define Get_poset_classification_report_options(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_report_options(label)
 
-//#define Get_draw_options(label) user_interface::The_Orbiter_top_level_session->get_poset_classification_report_options(label)
 
 #define Get_object_of_type_arc_generator_control(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_arc_generator_control(label)
 #define Get_object_of_type_poset_classification_activity(label) user_interface::The_Orbiter_top_level_session->get_object_of_type_poset_classification_activity(label)
@@ -420,7 +418,7 @@ namespace applications_in_algebraic_geometry {
 #define Get_orbits(label) user_interface::The_Orbiter_top_level_session->get_orbits(label)
 #define Get_variety(label) user_interface::The_Orbiter_top_level_session->get_variety(label)
 #define Get_combo_with_group(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
-
+#define Get_isomorph_arguments(label) user_interface::The_Orbiter_top_level_session->get_combo_with_group(label)
 
 
 }}

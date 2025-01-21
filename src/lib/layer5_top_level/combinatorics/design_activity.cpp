@@ -101,11 +101,11 @@ void design_activity::perform_activity(
 					"f_extract_solutions_by_index_txt done" << endl;
 		}
 	}
-	else if (Descr->f_export_inc) {
+	else if (Descr->f_export_flags) {
 		if (f_v) {
-			cout << "design_activity::perform_activity export_inc" << endl;
+			cout << "design_activity::perform_activity f_export_flags" << endl;
 		}
-		do_export_inc(
+		do_export_flags(
 				DC,
 				verbose_level);
 
@@ -659,6 +659,8 @@ void design_activity::do_canonical_form(
 
 }
 
+
+#if 0
 void design_activity::do_export_inc(
 		design_create *DC,
 		int verbose_level)
@@ -710,6 +712,61 @@ void design_activity::do_export_inc(
 		cout << "design_activity::do_export_inc done" << endl;
 	}
 }
+#endif
+
+void design_activity::do_export_flags(
+		design_create *DC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_export_flags" << endl;
+	}
+
+	string fname;
+
+	fname = DC->label_txt + "_flags.txt";
+
+	if (f_v) {
+		cout << "design_activity::do_export_flags "
+				"fname=" << fname << endl;
+	}
+
+
+	{
+		ofstream ost(fname);
+
+		int h;
+		ost << DC->v << " " << DC->b << " " << DC->nb_inc << endl;
+		for (h = 0; h < DC->v * DC->b; h++) {
+			if (DC->incma[h]) {
+				ost << h << " ";
+			}
+		}
+		ost << endl;
+		ost << "-1" << endl;
+	}
+	other::orbiter_kernel_system::file_io Fio;
+
+	if (f_v) {
+		cout << "Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	//8 8 24
+	//0 1 2 8 11 12 16 21 22 25 27 29 33 36 39 42 44 46 50 53 55 59 62 63
+	//-1 1
+	//48
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_export_flags done" << endl;
+	}
+}
+
+
 
 
 void design_activity::do_export_incidence_matrix_csv(

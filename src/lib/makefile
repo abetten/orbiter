@@ -462,6 +462,7 @@ ORBITER_MODULES= \
 		layer4_classification/classify/orbit_node.o \
 		layer4_classification/isomorph/flag_orbit_folding.o \
 		layer4_classification/isomorph/isomorph_arguments.o \
+		layer4_classification/isomorph/isomorph_context.o \
 		layer4_classification/isomorph/isomorph_global.o \
 		layer4_classification/isomorph/isomorph_worker.o \
 		layer4_classification/isomorph/isomorph.o \

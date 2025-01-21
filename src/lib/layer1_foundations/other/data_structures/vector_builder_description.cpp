@@ -76,6 +76,15 @@ vector_builder_description::vector_builder_description()
 	f_permutation_matrix_inverse = false;
 	//std::string permutation_matrix_inverse_data;
 
+	// for use inside code:
+	f_binary_data_lint = false;
+	binary_data_lint_sz = 0;
+	binary_data_lint = NULL;
+
+	// for use inside code:
+	f_binary_data_int = false;
+	binary_data_int_sz = 0;
+	binary_data_int = NULL;
 
 }
 

@@ -215,7 +215,7 @@ void vector_ge::init_from_data(
 	int nb_elements, int elt_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	int i;
 	int *Elt;
 
@@ -238,9 +238,17 @@ void vector_ge::init_from_data(
 			cout << "vector_ge::init_from_data i = " << i << " / " << nb_elements << endl;
 		}
 
+		if (f_v) {
+			cout << "vector_ge::init_from_data "
+					"data      " << i << ": ";
+			Int_vec_print(cout, data + i * elt_size, elt_size);
+			cout << endl;
+			A->Group_element->element_print_quick(Elt, cout);
+		}
+
 		A->Group_element->make_element(
 				Elt, data + i * elt_size, 0 /*verbose_level - 2*/);
-		if (f_vv) {
+		if (f_v) {
 			cout << "vector_ge::init_from_data "
 					"generator " << i << ": " << endl;
 			A->Group_element->element_print_quick(Elt, cout);

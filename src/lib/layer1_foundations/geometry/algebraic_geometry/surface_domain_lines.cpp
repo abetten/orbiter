@@ -208,9 +208,25 @@ void surface_domain::create_system(
 	}
 
 	vector<long int> Pts;
-	long int *pts_on_line;
-	int *Pt_coords;
 
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"before P->Subspaces->points_covered_by_lines" << endl;
+	}
+	P->Subspaces->points_covered_by_lines(
+			S, len,
+			Pts,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"after P->Subspaces->points_covered_by_lines" << endl;
+	}
+
+#if 0
+	long int *pts_on_line;
+
+
+	// Pts is the set of points on the lines in S[]
 
 	pts_on_line = NEW_lint(P->Subspaces->k);
 	//nb_pts = 0;
@@ -242,6 +258,7 @@ void surface_domain::create_system(
 		}
 	}
 	FREE_lint(pts_on_line);
+#endif
 
 #if 0
 	if (nb_pts > max_pts) {
@@ -261,6 +278,7 @@ void surface_domain::create_system(
 				"covered points by lines has been created" << endl;
 	}
 
+	int *Pt_coords;
 
 	nb_rows = Pts.size();
 
@@ -287,6 +305,7 @@ void surface_domain::create_system(
 				"nb_rows = " << nb_rows << endl;
 	}
 
+#if 0
 	System = NEW_int(nb_rows * PolynomialDomains->nb_monomials);
 
 	for (i = 0; i < nb_rows; i++) {
@@ -296,6 +315,24 @@ void surface_domain::create_system(
 							j, Pt_coords + i * n);
 		}
 	}
+#endif
+
+	int nb_cols;
+
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"before PolynomialDomains->Poly3_4->make_system" << endl;
+	}
+	PolynomialDomains->Poly3_4->make_system(
+			Pt_coords, nb_rows,
+			System, nb_cols,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"after PolynomialDomains->Poly3_4->make_system" << endl;
+	}
+
+
 	FREE_int(Pt_coords);
 
 

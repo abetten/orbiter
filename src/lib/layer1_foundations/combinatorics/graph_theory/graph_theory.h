@@ -329,7 +329,7 @@ public:
 			int verbose_level);
 	void do_Sajeeb_black_and_white(
 			clique_finder_control *Control,
-			std::vector<std::vector<long int> >& solutions,
+			std::vector<std::vector<unsigned int> >& solutions,
 			int verbose_level);
 	void all_cliques_weighted_with_two_colors(
 			clique_finder_control *Control,
@@ -553,7 +553,7 @@ public:
 			int verbose_level);
 	void write_solutions_to_csv_file(
 			std::string &fname_sol,
-			std::vector<std::vector<long int> >& solutions,
+			std::vector<std::vector<unsigned int> >& solutions,
 			clique_finder_control *Control,
 			int verbose_level);
 	void complement(

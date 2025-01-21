@@ -743,6 +743,16 @@ int linear_group::linear_group_apply_modification(
 		}
 
 
+		if (sz != A_linear->make_element_size * description->nb_subgroup_generators) {
+			cout << "linear_group::linear_group_apply_modification sz != A_linear->make_element_size * nb_subgroup_generators" << endl;
+			cout << "sz = " << sz << endl;
+			cout << "should be = " << A_linear->make_element_size * description->nb_subgroup_generators << endl;
+			cout << "A_linear->make_element_size = " << A_linear->make_element_size << endl;
+			cout << "nb_subgroup_generators = " << description->nb_subgroup_generators << endl;
+			exit(1);
+		}
+
+
 		if (f_v) {
 			cout << "linear_group::linear_group_apply_modification "
 					"before init_subgroup_by_generators" << endl;

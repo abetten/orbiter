@@ -2458,6 +2458,16 @@ public:
 	int f_permutation_matrix_inverse;
 	std::string permutation_matrix_inverse_data;
 
+	// for use inside code:
+	int f_binary_data_lint;
+	int binary_data_lint_sz;
+	long int *binary_data_lint;
+
+	// for use inside code:
+	int f_binary_data_int;
+	int binary_data_int_sz;
+	int *binary_data_int;
+
 	vector_builder_description();
 	~vector_builder_description();
 	int read_arguments(

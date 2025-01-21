@@ -266,6 +266,9 @@ INVERSE_SPARSE="1,31,1,25,1,22,1,21,1,15,\
 
 # Section 5.2 multivariate polynomial rings
 
+EDGE_CURVE_EQUATION_ALGEBRAIC="X^4 -Y^4 -Z^4 +2*f^2*Y^2*Z^2 +4*f*X^2*Y*Z"
+
+
 # Section 6.1 The Grassmannian
 
 # Section 6.2 The Klein Quadric and the Pluecker Map
@@ -1589,6 +1592,9 @@ SPREADS_27_ISO_6="\
 
 
 
+PGL_4_3_CLASS_5A_REP="2,2,2,0,1,1,1,2,2,1,0,0,1,0,1,2"
+
+PGL_4_3_CLASS_5A_N_GENS="1,0,0,0,2,0,1,1,2,1,2,1,1,1,0,0, 1,1,1,0,2,2,2,1,1,2,0,0,2,0,2,1, 1,1,1,2,2,2,0,1,0,2,2,0,1,2,2,1,"
 
 
 # nice generators, from Michael Epstein:
@@ -2076,7 +2082,6 @@ test_2:
 	make test_2_4
 	make test_2_5
 	make test_2_6
-	make test_2_7
 
 
 
@@ -2137,55 +2142,15 @@ vector_ex:
 
 
 
-###############################################################################
-# Section 2.3: Mathematical Data
-
-SECTION_MATHEMATICAL_DATA:
-
-
-test_2_3:
-	#make create_BLT_5_1 #error in init_group
-	make create_surface_4_0
-
-create_BLT_5_1:
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 5 -end \
-		-define O -orthogonal_space 0 5 F -end \
-		-define BLT -BLT_set \
-			-space O -catalogue 1 \
-		-end \
-		-with BLT -do -blt_set_activity \
-			-report \
-		-end
-	$(PDFLATEX) BLT_catalogue_q5_iso1.tex
-	$(OPEN) BLT_catalogue_q5_iso1.pdf
-
-
-
-create_surface_4_0:
-	$(ORBITER) -v 3 \
-		-define Do -draw_options \
-			-radius 200 -line_width 0.3 -nodes_empty \
-		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define S4_0 -cubic_surface -space P -catalogue 0 -end \
-		-with S4_0 -do \
-			-cubic_surface_activity \
-			-report Do \
-		-end
-	$(PDFLATEX) surface_catalogue_q4_iso0_report.tex
-	$(OPEN) surface_catalogue_q4_iso0_report.pdf
-
 
 
 ###############################################################################
-# Section 2.4: Set Builder
+# Section 2.3: Set Builder
 
 SECTION_SET_BUILDER:
 
 
-test_2_4:
+test_2_3:
 	make set_of_primes
 	make set_interval
 
@@ -2202,12 +2167,12 @@ set_interval:
 
 
 ###############################################################################
-# Section 2.5: Vector Builder
+# Section 2.4: Vector Builder
 
 SECTION_VECTOR_BUILDER:
 
 
-test_2_5:
+test_2_4:
 	make vector_example1
 	make vector_example2
 	make vector_example_repeat
@@ -2299,12 +2264,12 @@ matrix_example_co_1:
 
 
 ###############################################################################
-# Section 2.6: Vector of Group Elements Builder
+# Section 2.5: Vector of Group Elements Builder
 
 SECTION_VECTOR_OF_GROUP_ELEMENTS_BUILDER:
 
 
-test_2_6:
+test_2_5:
 	make Hirschfeld_Class_2A
 	make surface_4_0_export_action
 
@@ -2351,11 +2316,11 @@ surface_4_0_export_action:
 
 
 ###############################################################################
-# Section 2.7: Symbolic Algebra
+# Section 2.6: Symbolic Algebra
 
 SECTION_FORMULA_BUILDER:
 
-test_2_7:
+test_2_6:
 	make symbolic_poly
 	make symbolic_poly2
 	make symbolic_CRC32
@@ -3845,6 +3810,7 @@ test_4:
 	make test_4_3
 	make test_4_4
 	make test_4_5
+	make test_4_6
 
 
 
@@ -4472,8 +4438,6 @@ test_4_5:
 	make BLT_database_7_0
 	make BLT_database_7_0_print
 	make BLT_database_67_4
-	make Edge_curve_17
-	make Edge_curve_17_line_type
 
 
 
@@ -4481,10 +4445,12 @@ elliptic_quadric_ovoid_q8:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-elliptic_quadric_ovoid \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
+		-define C -combinatorial_object \
+			-label ovoid ovoid \
+			-geometric_object Geo \
 		-end
 
 #ovoid_q8.txt
@@ -4494,10 +4460,12 @@ ovoid_ST_q8:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-ovoid_ST \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
+		-define C -combinatorial_object \
+			-label ovoid_ST ovoid\_ST \
+			-geometric_object Geo \
 		-end
 
 #ovoid_ST_q8.txt
@@ -4507,20 +4475,24 @@ Baer_PG_2_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-Baer_substructure \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
+		-define C -combinatorial_object \
+			-label Baer Baer \
+			-geometric_object Geo \
 		-end
 
 Baer_PG_3_4:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-Baer_substructure \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
+		-define C -combinatorial_object \
+			-label Baer Baer \
+			-geometric_object Geo \
 		-end
 
 BLT_database_5_0:
@@ -4588,46 +4560,78 @@ BLT_database_67_4:
 
 
 
+
+
+
+###############################################################################
+# Section 4.6: Activities for Geometric Objects
+
+
+SECTION_ACTIVITIES_FOR_GEOMETRIC_OBJECTS:
+
+
+
+test_4_6:
+	make Edge_curve_17
+	make Edge_curve_17_line_type
+
+
+
+
+
 Edge_curve_17:
-	$(ORBITER) -v 2 \
+	$(ORBITER) -v 6 \
 		-define F -finite_field -q 17 -end \
-		-define R -polynomial_ring -field F \
+		-define R -polynomial_ring \
+			-field F \
 			-number_of_variables 3 \
 			-homogeneous_of_degree 4 \
-			-end \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -geometric_object P \
 			-projective_variety R \
 				"Edge_q17" "Edge\_q17" \
-				$(EDGE_CURVE_Q17_EQUATION) \
-		-end \
-		-with C -do -combinatorial_object_activity -save \
+				Eqn \
 		-end
-
-#Edge_q17.txt
-#combinatorial_object_create::init created a set of size 12
-
-
-
 
 
 
 
 
 Edge_curve_17_line_type:
-	echo $(FILE_Q17) >edge_q17.csv
-	$(ORBITER) -v 2 \
+	$(ORBITER) -v 6 \
 		-define F -finite_field -q 17 -end \
-		-define R -polynomial_ring -field F \
+		-define R -polynomial_ring \
+			-field F \
 			-number_of_variables 3 \
 			-homogeneous_of_degree 4 \
-			-end \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
 		-define C -geometric_object P \
 			-projective_variety R \
 				"Edge_q17" "Edge\_q17" \
-				$(EDGE_CURVE_Q17_EQUATION) \
-			-end \
+				Eqn \
+		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-line_type_old \
@@ -4635,10 +4639,6 @@ Edge_curve_17_line_type:
 		-print_symbols
 
 #( 4^6, 2^30, 1^132, 0^139 )
-
-
-
-
 
 
 
@@ -5226,6 +5226,7 @@ SECTION_MULTIVARIATE_POLYNOMIALS:
 
 test_5_2:
 	make parse_homogeneous_polynomial
+	make parse_homogeneous_polynomial_with_parameters
 	make affine_map_F5_0
 	make affine_map_F5_1
 	make affine_map_F5_2
@@ -5249,6 +5250,28 @@ parse_homogeneous_polynomial:
 			-ring_theoretic_activity \
 			-parse_equation_wo_parameters "eqn" "eqn" "y0^3+y1^3+y2^3" \
 		-end
+
+parse_homogeneous_polynomial_with_parameters:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end
+
+
+#-parse_equation The equation is:
+#( 1, 16, 16, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12, 0, 0 )
 
 
 affine_map_F5_0:
@@ -9641,41 +9664,11 @@ Higman_Sims_subgroup_176b:
 SECTION_GROUP_THEORY_ACTIVITIES_FOR_VECTORS:
 
 test_7_9:
-	make PGL_4_2_orthogonal_reflections_report_vector_ge
 	make Sym_6_generators
 	make Sym_6_elements
+	make PGL_4_2_orthogonal_reflections_report_vector_ge
 
 
-
-
-PGL_4_2_orthogonal_reflections_report_vector_ge:
-	$(ORBITER) -v 2 \
-		-define Pts -vector \
-			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define O -orthogonal_space 1 6 F -end \
-		-define G4 -linear_group -PGL 4 2 -end \
-		-with O -do -orthogonal_space_activity \
-			-create_orthogonal_reflection_6_and_4 Pts G4 \
-		-end
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define G -linear_group -PGL 4 F -end \
-		-define PGL_4_2_elements -vector_ge \
-			-action G \
-			-read_csv O_1_6_2_orthogonal_reflections_4x4.csv Element \
-		-end \
-		-with PGL_4_2_elements -do \
-		-vector_ge_activity \
-			-report \
-		-end \
-		-with PGL_4_2_elements -do \
-		-vector_ge_activity \
-			-export_GAP \
-		-end
-	$(PDFLATEX) PGL_4_2_elements.tex
-	$(OPEN) PGL_4_2_elements.pdf
 
 
 Sym_6_generators:
@@ -9709,6 +9702,36 @@ Sym_6_elements:
 		-print_symbols
 	$(PDFLATEX) Sym_6_elements.tex
 	$(OPEN) Sym_6_elements.pdf
+
+
+PGL_4_2_orthogonal_reflections_report_vector_ge:
+	$(ORBITER) -v 2 \
+		-define Pts -vector \
+			-dense $(ORTHOGONAL_OP_6_2_POINTS_OFF) \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-define G4 -linear_group -PGL 4 2 -end \
+		-with O -do -orthogonal_space_activity \
+			-create_orthogonal_reflection_6_and_4 Pts G4 \
+		-end
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 4 F -end \
+		-define PGL_4_2_elements -vector_ge \
+			-action G \
+			-read_csv O_1_6_2_orthogonal_reflections_4x4.csv Element \
+		-end \
+		-with PGL_4_2_elements -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with PGL_4_2_elements -do \
+		-vector_ge_activity \
+			-export_GAP \
+		-end
+	$(PDFLATEX) PGL_4_2_elements.tex
+	$(OPEN) PGL_4_2_elements.pdf
 
 
 
@@ -15059,7 +15082,7 @@ Golay24_2A_fix_weight12:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18204,7 +18227,7 @@ Higman_Sims_graph:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18876,7 +18899,7 @@ design_PG_2_2:
 		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18890,7 +18913,7 @@ design_PG_2_3:
 		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18905,7 +18928,7 @@ design_PG_2_4:
 		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18919,7 +18942,7 @@ wreath_product_designs_n4_k2_inc.txt:
 		-define D -design -wreath_product_designs 4 2 -end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				export_flags \
 		-end
 
 
@@ -18929,7 +18952,7 @@ wreath_product_designs_n8_k6_inc.txt:
 		-define D -design -wreath_product_designs 8 6 -end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				export_flags \
 		-end
 
 
@@ -18944,7 +18967,7 @@ design_20:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				export_flags \
 		-end
 
 
@@ -18956,7 +18979,7 @@ design_600:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
@@ -18974,7 +18997,7 @@ LSQ_5A:
 		-end \
 		-with D -do \
 			-design_activity \
-				-export_inc \
+				-export_flags \
 		-end
 
 LSQ_5B:
@@ -19933,7 +19956,9 @@ spreads_25_starter_0_cliques:
 			-define G -graph -load spreads_25_graph_0.bin -end \
 			-with G -do \
 			-graph_theoretic_activity \
-				-find_cliques -rainbow -target_size 21 -end \
+				-find_cliques -rainbow -target_size 21 \
+				-output_file spreads_25_0_cliques.csv \
+			-end \
 			-end \
 
 #graph_theoretic_activity::perform_activity Gr->label=spreads_25_graph_0 nb_sol = 7680
@@ -19975,10 +20000,13 @@ spreads_25_starter_cliques:
 			-define G -graph -load spreads_25_graph_%L.bin -end \
 			-with G -do \
 			-graph_theoretic_activity \
-				-find_cliques -rainbow -target_size 21 -end \
+				-find_cliques -rainbow -target_size 21 \
+				-output_file spreads_25_graph_%L_cliques.csv \
+			-end \
 			-end \
 		-end_loop L
 
+#spreads_25_graph_0_cliques.csv
 
 classify_spreads_25_isomorph:
 	$(ORBITER) -v 4 \
@@ -19992,6 +20020,12 @@ classify_spreads_25_isomorph:
 			-W \
 			-problem_label spreads_25 \
 			-draw_options Do \
+		-end \
+		-define Iso -isomorph_arguments \
+			-prefix_iso "./spreads_25" \
+			-use_database_for_starter \
+			-solution_prefix "" \
+			-base_fname "" \
 		-end \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
@@ -20007,49 +20041,24 @@ classify_spreads_25_isomorph:
 			-compute_starter \
 		-end \
 		-with C -do -spread_classify_activity \
-			-isomorph \
-				-prefix_iso "./spreads_25" \
-				-use_database_for_starter \
-				-build_db \
-				-solution_prefix "" \
-				-base_fname "" \
-			-end \
+			-isomorph Iso \
+			-build_db \
 		-end \
 		-with C -do -spread_classify_activity \
-			-isomorph \
-				-prefix_iso "./spreads_25" \
-				-use_database_for_starter \
-				-read_solutions \
-				-solution_prefix "" \
-				-base_fname "spreads_25_graph" \
-			-end \
+			-isomorph Iso \
+			-read_solutions \
 		-end \
 		-with C -do -spread_classify_activity \
-			-isomorph \
-				-prefix_iso "./spreads_25" \
-				-use_database_for_starter \
-				-compute_orbits \
-				-solution_prefix "" \
-				-base_fname "spreads_25_graph" \
-			-end \
+			-isomorph Iso \
+			-compute_orbits \
 		-end \
 		-with C -do -spread_classify_activity \
-			-isomorph \
-				-prefix_iso "./spreads_25" \
-				-use_database_for_starter \
-				-isomorph_testing \
-				-solution_prefix "" \
-				-base_fname "spreads_25_graph" \
-			-end \
+			-isomorph Iso \
+			-isomorph_testing \
 		-end \
 		-with C -do -spread_classify_activity \
-			-isomorph \
-				-prefix_iso "./spreads_25" \
-				-use_database_for_starter \
-				-isomorph_report \
-				-solution_prefix "" \
-				-base_fname "spreads_25_graph" \
-			-end \
+			-isomorph Iso \
+			-isomorph_report \
 		-end
 	$(PDFLATEX) spreads_25_isomorphism_types.tex
 	$(OPEN) spreads_25_isomorphism_types.pdf
@@ -20675,41 +20684,31 @@ SECTION_PACKINGS:
 
 
 test_15_3:
-	#make spread_table_PG_3_4 # slow
+	make PG_3_3_spread_table
 	make spread_table_PG_3_5_regular
-	make PG_3_5_element_of_order_31_GL_normalizer
-	make PG_3_5_element_of_order_31_ME_normalizer
-	make PG_3_5_assume_31_graph
+	make PGL_4_3_classes
+	make PG_3_3_assume_5_graph
+	make PG_3_3_assume_5_fpc0_lo_cliques
+	make PG_3_3_assume_5_fpc1_lo_cliques
+	make PG_3_3_assume_5_fpc2_lo_cliques
+	make PG_3_3_assume_5_read_solution
+	make PG_3_3_assume_5_packings_classify
 
 
 
-
-spread_table_PG_3_4:
-	- mkdir SPREAD_TABLES_4
-	$(ORBITER) -v 6 \
+PG_3_3_spread_table:
+	mkdir SPREAD_TABLES_3
+	$(ORBITER) -v 5 \
 		-define Control -poset_classification_control \
-			-problem_label spreads_PG_3_4 \
+			-problem_label spreads_PG_3_3 \
+			-W \
 		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define T -spread_table P 2 "0,1,2" "SPREAD_TABLES_4/" Control 
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control
 
 
-# 5096448 spreads
-# 1020 self dual spreads
-# User time: 56:38 on Mac
-# User time: 17:53 on Mac 1/11/2024
-
-#spread_tables::save writing file SPREAD_TABLES_4/spread_16_spreads.csv
-#spread_tables::save written file SPREAD_TABLES_4/spread_16_spreads.csv
-#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_spreads_iso.csv
-#spread_tables::save, written file SPREAD_TABLES_4/spread_16_spreads_iso.csv
-#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_dual_spread_idx.csv
-#spread_tables::save, written file SPREAD_TABLES_4/spread_16_dual_spread_idx.csv
-#spread_tables::save, writing file SPREAD_TABLES_4/spread_16_self_dual_spreads.csv
-#spread_tables::save, written file SPREAD_TABLES_4/spread_16_self_dual_spreads.csv
-#spread_tables::save writing file SPREAD_TABLES_4/spread_16_schreier_table.csv
-#spread_tables::save written file SPREAD_TABLES_4/spread_16_schreier_table.csv
 
 
 
@@ -20731,153 +20730,171 @@ spread_table_PG_3_5_regular:
 # time: 0:19  1/11/2024 on Mac
 # 155000 spreads
 
-#spread_tables::save writing file SPREAD_TABLES_5_REG/spread_25_spreads.csv
-#spread_tables::save written file SPREAD_TABLES_5_REG/spread_25_spreads.csv
-#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_spreads_iso.csv
-#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_spreads_iso.csv
-#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_dual_spread_idx.csv
-#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_dual_spread_idx.csv
-#spread_tables::save, writing file SPREAD_TABLES_5_REG/spread_25_self_dual_spreads.csv
-#spread_tables::save, written file SPREAD_TABLES_5_REG/spread_25_self_dual_spreads.csv
-#spread_tables::save writing file SPREAD_TABLES_5_REG/spread_25_schreier_table.csv
-#spread_tables::save written file SPREAD_TABLES_5_REG/spread_25_schreier_table.csv
 
 
-PG_3_5_element_of_order_31_GL_normalizer:
-	$(ORBITER) -v 6 -define G \
-		-linear_group -GL 4 5 -end \
+
+
+PGL_4_3_classes:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define G -linear_group -PGL 4 3 -end \
 		-with G -do \
 		-group_theoretic_activity \
-			-normalizer_of_cyclic_subgroup "124" \
-			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
-		-end
-	$(PDFLATEX) normalizer_of_124_in_GL_4_5.tex
-	$(OPEN) normalizer_of_124_in_GL_4_5.pdf
-
-# needs magma
-# the group has order 124.
-# the normalizer has order 1488
-# normalizer has order 1488=4*372=4*4*3*31
-
-PG_3_5_element_of_order_31_ME_normalizer:
-	$(ORBITER) -v 6 -define G \
-		-linear_group -PGL 4 5 -end \
+			-report Do \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-normalizer_of_cyclic_subgroup "31" \
-			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
+			-classes \
 		-end
-	- mv normalizer_of_31_in_PGL_4_5.tex normalizer_of_31_ME_in_PGL_4_5.tex
-	$(PDFLATEX) normalizer_of_31_ME_in_PGL_4_5.tex
-	$(OPEN) normalizer_of_31_ME_in_PGL_4_5.pdf
-
-
-# group has order 31
-# normalizer has order 372
+	pdflatex PGL_4_3_classes_out.tex
+	open PGL_4_3_classes_out.pdf
 
 
 
-PG_3_5_assume_31_graph:
+
+
+
+PG_3_3_assume_5_graph:
 	$(ORBITER) -v 5 \
 		-define Control -poset_classification_control \
-			-problem_label spreads_PG_3_5 \
+			-problem_label spreads_PG_3_3 \
+			-W \
 		-end \
-		-define F -finite_field -q 5 -end \
+		-define Control_Fix -poset_classification_control \
+			-problem_label N5_fixp_cliques \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
 		-define P3 -projective_space -n 3 -field F -v 0 -end \
 		-define P5 -projective_space -n 5 -field F -v 0 -end \
-		-define T -spread_table P3 2 "12" "SPREAD_TABLES_5_REG/" Control \
+		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control \
 		-define PC -packing_classify P3 P5 T \
 		-define PW -packing_with_symmetry_assumption PC \
-				-H "H31" $(PGL_4_5_SUBGROUP_31_ME) -end \
-				-N "N31" $(PGL_4_5_SUBGROUP_31_ME_NORMALIZER) -end \
+				-H "H5" -PGL 4 3 -subgroup_by_generators \
+					"5" 5 1 $(PGL_4_3_CLASS_5A_REP) -end \
+				-N "N5" -PGL 4 3 -subgroup_by_generators \
+					"N5" 160 3 $(PGL_4_3_CLASS_5A_N_GENS) -end \
 			-end \
-		-define PWF -packing_choose_fixed_points PW 0 -end \
-		-define L -packing_long_orbits PWF \
-			-orbit_length 31 -create_graphs \
+		-define PWF -packing_choose_fixed_points PW 3 Control_Fix \
+		-define Long -packing_long_orbits PWF \
+			-orbit_length 5 \
+			-list_of_cases_from_file N5_fixp_cliques.csv \
+			-create_graphs \
 			-end \
 		-print_symbols
 
+# 3 orbits on 3 fixpoints
 
-no:
-	$(PDFLATEX) H31_reduced_spread_orbits_orbits_report.tex
-	$(OPEN) H31_reduced_spread_orbits_orbits_report.pdf
-	$(PDFLATEX) H31_line_orbits_orbits_report.tex
-	$(OPEN) H31_line_orbits_orbits_report.pdf
-	$(PDFLATEX) H31_line_orbits_orbits_report.tex
-	$(OPEN) H31_line_orbits_orbits_report.pdf
-	$(PDFLATEX) N31_line_orbits_orbits_report.tex
-	$(OPEN) N31_line_orbits_orbits_report.pdf
-	$(PDFLATEX) H31_point_orbits_orbits_report.tex
-	$(OPEN) H31_point_orbits_orbits_report.pdf
-	$(PDFLATEX) N31_point_orbits_orbits_report.tex
-	$(OPEN) N31_point_orbits_orbits_report.pdf
-
-	#$(PDFLATEX) H31_spread_orbits_orbits_report.tex
-	#$(OPEN) H31_spread_orbits_orbits_report.pdf
-#H31_line_orbits_orbits.bin
-#H31_line_orbits_orbits_report.tex
-#H_spread_orbits_orbit_types_report.tex
-#H31_spread_orbits_orbits.bin
-#H31_good_orbits
-#H31_spread_types_reduced_orbit_types_report.tex
-#H31_reduced_spread_orbits_orbits.bin
-#H31_fpc0_lo.graph
+#-rw-r--r--  1 betten  staff     317 Dec 30 14:20 H5_fpc0_lo.graph
+#-rw-r--r--  1 betten  staff     602 Dec 30 14:20 H5_fpc1_lo.graph
+#-rw-r--r--  1 betten  staff     347 Dec 30 14:20 H5_fpc2_lo.graph
 
 
-# number of points = 156
-# number of lines = 856
-#spread_classify::init The order of PGGL(4,5) is 29016000000
-#spread orbit 12 has group order 187200 orbit_length = 155000
-#spread_tables::init nb_lines=806
-#spread_tables::init spread_size=26
-#spread_tables::init nb_iso_types_of_spreads=21
-#spread_tables::init prefix=SPREAD_TABLES_5_REG/spread_25
-#packing_classify::init_P3_and_P5_and_Gr P3->N_points=156
-#packing_classify::init_P3_and_P5_and_Gr P3->N_lines=806
-#packing_classify::init_P3_and_P5_and_Gr P5->N_points=3906
-#packing_classify::init_P3_and_P5_and_Gr P5->N_lines=508431
-#-H H31
-#-PGL 4 5
-#-subgroup_by_generators 31 1 1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3
-#-N N31
-#-PGL 4 5
-#-subgroup_by_generators normalizer_31 4 1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, 1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3, 1,0,0,0,0,4,0,0,0,0,2,1,0,3,2,4, 1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,3,
-#packing_was::init_H H_goi=31
-#packing_was::init_N N_goi=372
-#orbits_on_something::init after reading orbits from file H31_point_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#1, 31^5
-#orbits_on_something::init after reading orbits from file N31_point_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#1, 31, 124
-#orbits_on_something::init after reading orbits from file H31_line_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#31^{26}
-#orbits_on_something::init after reading orbits from file H31_spread_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#31^{5000}
-#packing_was::reduce_spreads nb_good_spreads = 248
-#packing_was::compute_H_orbits_on_lines after reduced_spread_orbits_under_H->create_latex_report
-#orbits_on_something::classify_orbits_by_length
-#orbits_on_something::classify_orbits_by_length The distribution of orbit lengths is: 31^8
-#orbits_on_something::init after reading orbits from file N31_line_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#31^2, 372^2
+PG_3_3_assume_5_fpc0_lo_cliques:
+	$(ORBITER) -v 2 \
+		-define G -graph -load H5_fpc0_lo.graph -end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques -target_size 2 -output_file H5_fpc0_lo_cliques.csv -end -end \
+		-print_symbols
+
+
+#colored_graph_cliques::all_cliques_black_and_white after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = 0
+
+
+PG_3_3_assume_5_fpc1_lo_cliques:
+	$(ORBITER) -v 2 \
+		-define G -graph -load H5_fpc1_lo.graph -end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques -target_size 2 -output_file H5_fpc1_lo_cliques.csv -end -end \
+		-print_symbols
+
+#colored_graph_cliques::all_cliques_black_and_white after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = 4
 
 
 
-#packing_was::compute_reduced_spread_types_wrt_H
-#orbit_type_repository::init nb_sets = 248 goi=31
+PG_3_3_assume_5_fpc2_lo_cliques:
+	$(ORBITER) -v 2 \
+		-define G -graph -load H5_fpc2_lo.graph -end \
+		-with G -do \
+			-graph_theoretic_activity \
+			-find_cliques -target_size 2 -output_file H5_fpc2_lo_cliques.csv -end -end \
+		-print_symbols
+
+#colored_graph_cliques::all_cliques_black_and_white after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = 10
+
+PG_3_3_assume_5_read_solution:
+	$(ORBITER) -v 5 \
+		-define Control -poset_classification_control \
+			-problem_label spreads_PG_3_3 \
+			-W \
+		-end \
+		-define Control_Fix -poset_classification_control \
+			-problem_label N5_fixp_cliques \
+			-W \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-define P5 -projective_space -n 5 -field F -v 0 -end \
+		-define T -spread_table P3 2 "0,1" "SPREAD_TABLES_3/" Control \
+		-define PC -packing_classify P3 P5 T \
+		-define PW -packing_with_symmetry_assumption PC \
+				-H "H5" -PGL 4 3 -subgroup_by_generators \
+					"5" 5 1 $(PGL_4_3_CLASS_5A_REP) -end \
+				-N "N5" -PGL 4 3 -subgroup_by_generators \
+					"N5" 160 3 $(PGL_4_3_CLASS_5A_N_GENS) -end \
+			-end \
+		-define PWF -packing_choose_fixed_points PW 3 Control_Fix \
+		-define Long -packing_long_orbits PWF \
+			-orbit_length 5 \
+			-list_of_cases_from_file N5_fixp_cliques.csv \
+			-read_solutions \
+			-end \
+		-print_symbols
+
+# we find 14 packings.
+#-rw-r--r--  1 betten  staff    1131 Dec 31 00:53 H5_packings.csv
+#-rw-r--r--  1 betten  staff     581 Dec 31 00:53 H5_packings_flag_orbits.csv
 
 
-#orbits_on_something::init after reading orbits from file H31_reduced_spread_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#31^8
+PG_3_3_assume_5_packings_classify:
+	$(ORBITER) -v 2 \
+		-define C -combinatorial_object \
+			-label PG_3_3_assuming_5 \
+			"{\\rm PG\_3\_3\_assuming\_5}" \
+			-file_of_packings_through_spread_table \
+				H5_packings.csv \
+				SPREAD_TABLES_3/spread_9_spreads.csv \
+				3 \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define P3 -projective_space -n 3 -field F -v 0 -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P3 \
+			-nauty_control -end \
+			-end \
+		-end \
+		-define Doinc -draw_incidence_structure_options \
+			-width 40 -width_10 6 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	pdflatex PG_3_3_assuming_5_classification.tex
+	open PG_3_3_assuming_5_classification.pdf
 
 
-#orbits_on_something::init after reading orbits from file N31_line_orbits_orbits.bin
-#orbits_on_something::init orbit length distribution:
-#31^2, 372^2
 
 
 ###############################################################################
@@ -22066,7 +22083,7 @@ quartic_curves_q13_classify_nauty:
 			-ring R \
 			-input_fname_mask quartics_q13.csv \
 			-nb_files 1 \
-			-output_fname quartic_curves_q13_classified \
+			-output_fname quartic_curves_q13 \
 			-label_po "PO" \
 			-label_so "orbit" \
 			-carry_through "SEQN" \
@@ -22092,23 +22109,15 @@ quartic_curves_q13_classify_nauty:
 		-end \
 		-define ro \
 			-poset_classification_report_options \
-				-fname quartic_curves_q13_classified \
+				-fname quartic_curves_q13 \
 		-end \
 		-with O -do -orbits_activity \
 			-report \
 			-report_options ro \
 		-end
-	$(PDFLATEX) quartic_curves_q13_classified_orbits.tex
-	$(OPEN) quartic_curves_q13_classified_orbits.pdf
+	$(PDFLATEX) quartic_curves_q13_orbits.tex
+	$(OPEN) quartic_curves_q13_orbits.pdf
 
-#quartic_curves_q13_classified_orbits.tex
-# quartic_curves_q13_classified_classified.csv
-
-#-rw-r--r--  1 betten  staff         78 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt0.csv
-#-rw-r--r--  1 betten  staff      24690 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt1.csv
-#-rw-r--r--  1 betten  staff         82 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt2.csv
-#-rw-r--r--  1 betten  staff         81 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt3.csv
-#-rw-r--r--  1 betten  staff      24717 Dec 18 18:28 equations_quartic_curves_q13_classified_cnt4.csv
 
 
 
@@ -22146,18 +22155,13 @@ EC_canon:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define EC -geometric_object P \
+		-define Geo -geometric_object P \
 			-elliptic_curve 1 3 \
 		-end \
-		-with EC -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 3 \
 		-define C -combinatorial_object \
 			-label EC EC \
-			-file_of_points elliptic_curve_b1_c3_q11.txt \
+			-geometric_object Geo \
 		-end \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -22201,36 +22205,22 @@ Hirschfeld_q4_c:
 			-homogeneous_of_degree 3 \
 			-end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define H4 -geometric_object P \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation_wo_parameters \
+				"Hirschfeld_surface_q4" "Hirschfeld\_surface\_q4" \
+				$(HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM) \
+		-end \
+		-define Geo -geometric_object P \
 			-projective_variety R \
-				"Hirschfeld_surface_q4" \
-				"Hirschfeld\_surface\_q4" \
-				$(HIRSCHFELD_SURFACE_EQUATION) \
-			-end \
-		-with H4 -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 2 \
-		-define F -finite_field -q 4 -end \
-		-define R -polynomial_ring -field F \
-			-number_of_variables 4 \
-			-homogeneous_of_degree 3 \
-			-end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define H4 -geometric_object P \
-			-projective_variety R \
-				"Hirschfeld_surface_q4" \
-				"Hirschfeld\_surface\_q4" \
-				$(HIRSCHFELD_SURFACE_EQUATION) \
-			-end \
-		-with H4 -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 6 \
+				"Hirschfeld_surface_q4" "Hirschfeld\_surface\_q4" \
+				Eqn \
+		-end \
 		-define C -combinatorial_object \
 			-label Hirschfeld_surface_q4 Hirschfeld\_surface\_q4 \
-			-file_of_points Hirschfeld_surface_q4.txt \
+			-geometric_object Geo \
 		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -22258,6 +22248,7 @@ Hirschfeld_q4_c:
 		-end
 	$(PDFLATEX) Hirschfeld_surface_q4_classification.tex
 	$(OPEN) Hirschfeld_surface_q4_classification.pdf
+
 
 
 # group order is 51840
@@ -22549,18 +22540,13 @@ ovoid_q8_canon:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-elliptic_quadric_ovoid \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 6 \
 		-define C -combinatorial_object \
 			-label ovoid ovoid \
-			-file_of_points ovoid_q8.txt \
+			-geometric_object Geo \
 		-end \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -22582,28 +22568,22 @@ ovoid_q8_canon:
 				-incidence_draw_options Doinc \
 			-end \
 		-end
-	#$(PDFLATEX) ovoid_classification.tex
-	#$(OPEN) ovoid_classification.pdf
+	$(PDFLATEX) ovoid_classification.tex
+	$(OPEN) ovoid_classification.pdf
 
-#User time: 0:3
 # group order 1572480
 
 ovoid_ST_q8_canon: 
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space -n 3 -field F -v 0 -end \
-		-define O -geometric_object P \
+		-define Geo -geometric_object P \
 			-ovoid_ST \
 		-end \
-		-with O -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 6 \
 		-define C -combinatorial_object \
 			-label ovoid_ST ovoid\_ST \
-			-file_of_points ovoid_ST_q8.txt \
+			-geometric_object Geo \
 		-end \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space -n 3 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -22631,6 +22611,7 @@ ovoid_ST_q8_canon:
 #User time: 0:8
 #ago = 87360
 
+# note: 18 * 87360 = 1572480
 
 
 
@@ -22779,6 +22760,7 @@ test_17_3:
 	make geo_7_3_c
 	make geo_10_3_c
 	make geo_10_3_c_lex_least
+	make geo_10_3_Desargues_configuration_c
 	#make geo_14_3_c
 	#make geo_15_3_c
 	make TFC_24_3_c
@@ -22921,6 +22903,7 @@ geo_10_3_c_lex_least:
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-test Test_lines \
+			-output_to_inc_file \
 		-end \
 		-define C -combinatorial_object \
 			-label geo_10_3 geo\_10\_3 \
@@ -22962,6 +22945,51 @@ geo_10_3_c_lex_least:
 #10_3_object7_TDA_flag_orbits.csv
 
 #0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
+
+
+
+geo_10_3_Desargues_configuration_c:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines \
+			-output_to_inc_file \
+		-end \
+		-define C -combinatorial_object \
+			-label 10_3 "{\rm 10\\_3}" \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -end \
+			-end \
+		-end \
+		-assign Object7 -from \
+		-with C -do \
+		-combinatorial_object_activity \
+			-get_combo_with_group 7 \
+		-end \
+		-with Object7 -do \
+			-combo_activity \
+				-report \
+					-show_TDO \
+					-show_TDA \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
+				-end \
+		-end \
+		-print_symbols
+	pdflatex 10_3_object7_report.tex
+	open 10_3_object7_report.pdf
 
 
 
@@ -24219,28 +24247,36 @@ F_17_edge:
 
 
 
-Edge_curve_17_nauty: 
-	$(ORBITER) -v 2 \
+Edge_curve_17_nauty:
+	$(ORBITER) -v 6 \
 		-define F -finite_field -q 17 -end \
-		-define R -polynomial_ring -field F \
+		-define R -polynomial_ring \
+			-field F \
 			-number_of_variables 3 \
 			-homogeneous_of_degree 4 \
-			-end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -geometric_object P \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
+		-define P -projective_space \
+			-n 2 -field F -v 0 \
+		-end \
+		-define Geo -geometric_object P \
 			-projective_variety R \
-				"Edge_q17" "Edge\_q17" \
-				$(EDGE_CURVE_Q17_EQUATION) \
+				"Edge_curve_q17" "Edge\_curve\_q17" \
+				Eqn \
 		-end \
-		-with C -do -combinatorial_object_activity -save \
-		-end
-	$(ORBITER) -v 3 \
 		-define C -combinatorial_object \
-			-label Edge_curve_q17 Edge\_curve\_q17 \
-			-file_of_points Edge_q17.txt \
+			-label "Edge_curve_q17" "Edge\_curve\_q17" \
+			-geometric_object Geo \
 		-end \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
@@ -24369,13 +24405,6 @@ Sym_6:
 
 
 Sym_6_classes:
-	$(ORBITER) -v 3 \
-		-define G -permutation_group -symmetric_group 6 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-classes \
-		-end
-	$(MAGMA_EXE) Sym_6_classes.magma
 	$(ORBITER) -v 3 \
 		-define G -permutation_group -symmetric_group 6 -end \
 		-with G -do \

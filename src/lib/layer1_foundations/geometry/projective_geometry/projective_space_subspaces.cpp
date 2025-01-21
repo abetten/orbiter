@@ -2606,6 +2606,59 @@ void projective_space_subspaces::line_intersection(
 }
 
 
+void projective_space_subspaces::points_covered_by_lines(
+		long int *Lines, int nb_lines,
+		std::vector<long int> &Pts,
+		int verbose_level)
+// computes Pts as the set of points covered by the lines in Lines[]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::points_covered_by_lines" << endl;
+	}
+
+	long int *pts_on_line;
+	int *Pt_coords;
+	int i, j;
+	long int a;
+
+
+	pts_on_line = NEW_lint(P->Subspaces->k);
+	for (i = 0; i < nb_lines; i++) {
+		a = Lines[i];
+
+		if (P->Subspaces->Implementation->has_lines()) {
+			for (j = 0; j < P->Subspaces->k; j++) {
+				Pts.push_back(P->Subspaces->Implementation->lines(a, j));
+				//pt_list[nb_pts++] = P->Lines[a * P->k + j];
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "surface_domain::create_system "
+						"before P->create_points_on_line" << endl;
+			}
+			P->Subspaces->create_points_on_line(a,
+					pts_on_line, //pt_list + nb_pts,
+					0 /* verbose_level */);
+			if (f_v) {
+				cout << "surface_domain::create_system "
+						"after P->create_points_on_line" << endl;
+			}
+			for (j = 0; j < P->Subspaces->k; j++) {
+				Pts.push_back(pts_on_line[j]);
+			}
+		}
+	}
+	FREE_lint(pts_on_line);
+
+	if (f_v) {
+		cout << "projective_space_subspaces::points_covered_by_lines done" << endl;
+	}
+
+}
+
 
 }}}}
 

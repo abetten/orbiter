@@ -148,6 +148,8 @@ public:
 	int f_combo_activity;
 	apps_combinatorics::combo_activity_description *Combo_activity_description;
 
+
+
 	activity_description();
 	~activity_description();
 	void read_arguments(
@@ -163,6 +165,8 @@ public:
 			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void do_ring_theoretic_activity(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
 	void do_projective_space_activity(
 			int verbose_level);
@@ -1232,6 +1236,9 @@ public:
 	canonical_form::combinatorial_object_with_properties
 		*get_combo_with_group(
 				std::string &label);
+	isomorph::isomorph_arguments
+		*get_isomorph_arguments(
+				std::string &label);
 
 };
 
@@ -1452,6 +1459,11 @@ public:
 	int f_variety;
 	geometry::algebraic_geometry::variety_description *Variety_description;
 
+	int f_isomorph_arguments;
+	isomorph::isomorph_arguments *Isomorph_arguments;
+
+
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -1561,6 +1573,8 @@ public:
 	void definition_of_mapping(
 			int verbose_level);
 	void definition_of_variety(
+			int verbose_level);
+	void definition_of_isomorph_arguments(
 			int verbose_level);
 
 

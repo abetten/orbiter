@@ -265,12 +265,18 @@ void colored_graph_cliques::all_cliques_rainbow(
 		cout << "nb_points = " << CG->nb_points << endl;
 	}
 
+
+	//std::vector<std::vector<long int> > solutions;
+	std::vector<std::vector<unsigned int> > solutions;
+
+
+
 	if (Control->f_Sajeeb) {
 		if (f_v) {
 			cout << "colored_graph_cliques::all_cliques_rainbow "
 					"before do_Sajeeb" << endl;
 		}
-		std::vector<std::vector<unsigned int> > solutions;
+		//std::vector<std::vector<unsigned int> > solutions;
 
 		do_Sajeeb(Control, solutions, verbose_level);
 		if (f_v) {
@@ -365,6 +371,33 @@ void colored_graph_cliques::all_cliques_rainbow(
 #endif
 
 	}
+
+
+	if (Control->f_output_file) {
+		string fname_sol;
+
+		fname_sol = Control->output_file;
+
+
+
+		if (f_v) {
+			cout << "colored_graph_cliques::all_cliques_rainbow "
+					"before CG->write_solutions_to_csv_file" << endl;
+		}
+		CG->write_solutions_to_csv_file(
+							fname_sol,
+							solutions,
+							Control,
+							verbose_level);
+		if (f_v) {
+			cout << "colored_graph_cliques::all_cliques_rainbow "
+					"after CG->write_solutions_to_csv_file" << endl;
+		}
+
+	}
+
+
+
 	if (f_v) {
 		cout << "colored_graph_cliques::all_cliques_rainbow done" << endl;
 	}
@@ -388,7 +421,7 @@ void colored_graph_cliques::all_cliques_black_and_white(
 	}
 
 
-	std::vector<std::vector<long int> > solutions;
+	std::vector<std::vector<unsigned int> > solutions;
 
 	if (Control->f_Sajeeb) {
 		if (f_v) {
@@ -427,7 +460,7 @@ void colored_graph_cliques::all_cliques_black_and_white(
 
 
 		for (int i = 0; i < Control->nb_sol; ++i) {
-			std::vector<long int> sol;
+			std::vector<unsigned int> sol;
 
 			for (int j = 0; j < Control->target_size; ++j) {
 				long int a;
@@ -586,7 +619,7 @@ void colored_graph_cliques::do_Sajeeb(
 
 void colored_graph_cliques::do_Sajeeb_black_and_white(
 		clique_finder_control *Control,
-		std::vector<std::vector<long int> >& solutions,
+		std::vector<std::vector<unsigned int> >& solutions,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -600,7 +633,9 @@ void colored_graph_cliques::do_Sajeeb_black_and_white(
 		cout << "colored_graph_cliques::do_Sajeeb "
 				"before opening Graph object" << endl;
 	}
-	Graph<long int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+	Graph<unsigned int, int> G (CG->nb_points, CG->nb_colors, CG->nb_colors_per_vertex);
+
+#if 0
 	if (f_v) {
 		cout << "colored_graph_cliques::do_Sajeeb "
 				"before setting vertex labels" << endl;
@@ -610,6 +645,7 @@ void colored_graph_cliques::do_Sajeeb_black_and_white(
 		cout << "colored_graph_cliques::do_Sajeeb "
 				"after setting vertex labels" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "colored_graph_cliques::do_Sajeeb "

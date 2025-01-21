@@ -871,6 +871,10 @@ public:
 	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
 
+	int nb_output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
+
+
 	polynomial_ring_activity();
 	~polynomial_ring_activity();
 	void init(

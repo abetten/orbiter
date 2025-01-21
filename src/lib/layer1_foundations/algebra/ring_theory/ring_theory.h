@@ -325,9 +325,16 @@ public:
 			int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
+	int dimension_of_ideal(
+			long int *Pts,
+			int nb_pts, int verbose_level);
 	void explore_vanishing_ideal(
 			long int *Pts,
 			int nb_pts, int verbose_level);
+	void make_system(
+			int *Pt_coords, int nb_pts,
+			int *&System, int &nb_cols,
+			int verbose_level);
 	void vanishing_ideal(
 			long int *Pts, int nb_pts, int &r, int *Kernel,
 		int verbose_level);
@@ -361,7 +368,8 @@ public:
 	void create_projective_variety(
 			std::string &variety_label,
 			std::string &variety_label_tex,
-			std::string &variety_coeffs,
+			int *coeff, int sz,
+			//std::string &variety_coeffs,
 			std::string &label_txt,
 			std::string &label_tex,
 			int &nb_pts, long int *&Pts,

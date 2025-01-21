@@ -165,12 +165,28 @@ void blt_set_classify_activity::perform_activity(
 					"before Isomorph_arguments->init" << endl;
 		}
 
+		layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
+
+		Isomorph_arguments = (layer4_classification::isomorph::isomorph_arguments *)
+						Get_isomorph_arguments_opaque(Descr->isomorph_label);
+
 
 		layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
 
 		ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
 
-		Descr->Isomorph_arguments->init(
+
+		layer4_classification::isomorph::isomorph_context *Isomorph_context = NULL;
+
+		Isomorph_context = NEW_OBJECT(layer4_classification::isomorph::isomorph_context);
+
+		if (f_v) {
+			cout << "blt_set_classify_activity::perform_activity before Isomorph_context->init" << endl;
+		}
+
+
+		Isomorph_context->init(
+				Isomorph_arguments,
 				BLT_classify->A,
 				BLT_classify->A /* A2 */,
 				BLT_classify->gen,
@@ -182,10 +198,23 @@ void blt_set_classify_activity::perform_activity(
 				NULL /* void *callback_data */,
 				verbose_level);
 
+#if 0
+		Descr->Isomorph_arguments->init(
+				BLT_classify->A,
+				BLT_classify->A /* A2 */,
+				BLT_classify->gen,
+				BLT_classify->target_size,
+				BLT_classify->Control,
+				ECA,
+				NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
+				NULL /* void *callback_data */,
+				verbose_level);
+#endif
 
 		if (f_v) {
 			cout << "blt_set_classify_activity::perform_activity "
-					"after Isomorph_arguments->init" << endl;
+					"after Isomorph_context->init" << endl;
 		}
 
 		//int size;
@@ -204,12 +233,10 @@ void blt_set_classify_activity::perform_activity(
 						"before Worker->init" << endl;
 			}
 
+
+
 			BLT_classify->Worker->init(
-					Descr->Isomorph_arguments,
-					//BLT_classify->A,
-					//BLT_classify->A /* A2 */,
-					//BLT_classify->gen,
-					//size,
+					Isomorph_context,
 					BLT_classify->starter_size /* level */,
 					verbose_level);
 
@@ -225,7 +252,7 @@ void blt_set_classify_activity::perform_activity(
 						"BLT_classify->Worker exists" << endl;
 			}
 
-			BLT_classify->Worker->Isomorph_arguments = Descr->Isomorph_arguments;
+			BLT_classify->Worker->Isomorph_context = Isomorph_context;
 
 		}
 
@@ -236,7 +263,7 @@ void blt_set_classify_activity::perform_activity(
 		}
 
 		BLT_classify->Worker->execute(
-				Descr->Isomorph_arguments, verbose_level);
+				Isomorph_context, verbose_level);
 
 		if (f_v) {
 			cout << "blt_set_classify_activity::perform_activity "

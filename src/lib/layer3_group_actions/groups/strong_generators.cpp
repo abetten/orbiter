@@ -1549,7 +1549,7 @@ void strong_generators::print_generators_in_latex_individually(
 				A->Group_element->element_print_latex(gens->ith(i), ost);
 			}
 
-			//ost << "\\\\" << endl;
+			ost << "\\\\" << endl;
 
 
 	#if 0
@@ -1563,7 +1563,7 @@ void strong_generators::print_generators_in_latex_individually(
 			ost << " and with " << n << " fixed points.\\\\" << endl;
 	#endif
 			}
-		ost << "\\\\" << endl;
+		//ost << "\\\\" << endl;
 		ost << endl << "\\noindent" << endl;
 
 		print_for_make_element(ost);

@@ -2941,7 +2941,7 @@ void colored_graph::find_subgraph_An_recursion(
 
 void colored_graph::write_solutions_to_csv_file(
 		std::string &fname_sol,
-		std::vector<std::vector<long int> >& solutions,
+		std::vector<std::vector<unsigned int> >& solutions,
 		clique_finder_control *Control,
 		int verbose_level)
 {

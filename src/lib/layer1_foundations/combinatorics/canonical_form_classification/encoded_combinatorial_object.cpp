@@ -445,7 +445,8 @@ void encoded_combinatorial_object::compute_canonical_form(
 }
 
 void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
-		geometry::projective_geometry::projective_space *P, int verbose_level)
+		geometry::projective_geometry::projective_space *P,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -507,7 +508,8 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(
 
 
 void encoded_combinatorial_object::extended_incidence_matrix_projective_space_top_left(
-		geometry::projective_geometry::projective_space *P, int verbose_level)
+		geometry::projective_geometry::projective_space *P,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -633,6 +635,25 @@ void encoded_combinatorial_object::canonical_form_given_canonical_labeling(
 	}
 }
 
+void encoded_combinatorial_object::latex_set_system_by_rows_and_columns(
+		std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_rows_and_columns" << endl;
+	}
+
+	latex_set_system_by_rows(ost, verbose_level);
+
+	latex_set_system_by_columns(ost, verbose_level);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_rows_and_columns done" << endl;
+	}
+}
+
 void encoded_combinatorial_object::latex_set_system_by_columns(
 		std::ostream &ost,
 		int verbose_level)
@@ -643,7 +664,7 @@ void encoded_combinatorial_object::latex_set_system_by_columns(
 		cout << "encoded_combinatorial_object::latex_set_system_by_columns" << endl;
 	}
 
-	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_columns}" << endl;
+	//ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_columns}" << endl;
 
 	if (nb_rows >= 30) {
 		ost << "Too big, number of rows is bigger than 30\\\\" << endl;
@@ -652,28 +673,35 @@ void encoded_combinatorial_object::latex_set_system_by_columns(
 
 	other::l1_interfaces::latex_interface L;
 	int i, j;
-	int *B;
+	int *Block;
 	int sz;
+	long int rk;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-	B = NEW_int(nb_rows);
+	Block = NEW_int(nb_rows);
 
 	ost << "Column sets of the encoded object:\\\\" << endl;
 	for (j = 0; j < nb_cols; j++) {
 		sz = 0;
 		for (i = 0; i < nb_rows; i++) {
 			if (Incma[i * nb_cols + j]) {
-				B[sz++] = i;
+				Block[sz++] = i;
 			}
 		}
-		L.int_set_print_tex(ost, B, sz);
+		L.int_set_print_tex(ost, Block, sz);
+		rk = Combi.rank_k_subset(Block, nb_rows, sz);
+		ost << " = " << rk;
 		if (j < nb_cols - 1) {
 			ost << ", " << endl;
 		}
+		ost << "\\\\" << endl;
 	}
-	ost << "\\\\" << endl;
 
-	FREE_int(B);
+	FREE_int(Block);
 
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_columns done" << endl;
+	}
 }
 
 void encoded_combinatorial_object::latex_set_system_by_rows(
@@ -686,7 +714,7 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 		cout << "encoded_combinatorial_object::latex_set_system_by_rows" << endl;
 	}
 
-	ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_rows}" << endl;
+	//ost << "\\subsubsection*{encoded\\_combinatorial\\_object::latex\\_set\\_system\\_by\\_rows}" << endl;
 
 	if (nb_cols >= 30) {
 		ost << "Too big, number of cols is bigger than 30\\\\" << endl;
@@ -699,32 +727,35 @@ void encoded_combinatorial_object::latex_set_system_by_rows(
 
 	other::l1_interfaces::latex_interface L;
 	int i, j;
-	int *B;
+	int *Block;
 	int sz;
 	long int rk;
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-	B = NEW_int(nb_cols);
+	Block = NEW_int(nb_cols);
 
 	ost << "Row sets of the encoded object:\\\\" << endl;
 	for (i = 0; i < nb_rows; i++) {
 		sz = 0;
 		for (j = 0; j < nb_cols; j++) {
 			if (Incma[i * nb_cols + j]) {
-				B[sz++] = j;
+				Block[sz++] = j;
 			}
 		}
-		rk = Combi.rank_k_subset(B, nb_cols, sz);
-		L.int_set_print_tex(ost, B, sz);
+		rk = Combi.rank_k_subset(Block, nb_cols, sz);
+		L.int_set_print_tex(ost, Block, sz);
 		ost << " = " << rk;
-		if (j < nb_cols - 1) {
+		if (i < nb_cols - 1) {
 			ost << ", ";
 		}
+		ost << "\\\\" << endl;
 	}
-	ost << "\\\\" << endl;
 
-	FREE_int(B);
+	FREE_int(Block);
 
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_rows done" << endl;
+	}
 }
 
 void encoded_combinatorial_object::latex_incma_as_01_matrix(
@@ -743,7 +774,8 @@ void encoded_combinatorial_object::latex_incma_as_01_matrix(
 
 void encoded_combinatorial_object::latex_incma(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+		other::graphics::draw_incidence_structure_description
+			*Draw_incidence_structure_description,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -823,7 +855,8 @@ void encoded_combinatorial_object::latex_incma(
 
 void encoded_combinatorial_object::latex_TDA_incidence_matrix(
 		std::ostream &ost,
-		other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+		other::graphics::draw_incidence_structure_description
+			*Draw_incidence_structure_description,
 		int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 		int verbose_level)
 {

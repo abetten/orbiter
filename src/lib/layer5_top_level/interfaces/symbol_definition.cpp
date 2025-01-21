@@ -190,6 +190,9 @@ symbol_definition::symbol_definition()
 	f_variety = false;
 	Variety_description = NULL;
 
+	f_isomorph_arguments = false;
+	Isomorph_arguments = NULL;
+
 }
 
 
@@ -1319,6 +1322,28 @@ void symbol_definition::read_definition(
 			Variety_description->print();
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-isomorph_arguments") == 0) {
+		f_isomorph_arguments = true;
+		Isomorph_arguments =
+				NEW_OBJECT(isomorph::isomorph_arguments);
+		if (f_v) {
+			cout << "reading -isomorph_arguments" << endl;
+		}
+		i += Isomorph_arguments->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-isomorph_arguments" << endl;
+			Isomorph_arguments->print();
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 
 	else {
@@ -1875,6 +1900,17 @@ void symbol_definition::perform_definition(
 					"after definition_of_variety" << endl;
 		}
 	}
+	else if (f_isomorph_arguments) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"before definition_of_isomorph_arguments" << endl;
+		}
+		definition_of_isomorph_arguments(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition "
+					"after definition_of_isomorph_arguments" << endl;
+		}
+	}
 
 	else {
 		if (f_v) {
@@ -2085,6 +2121,10 @@ void symbol_definition::print()
 	else if (f_variety) {
 		cout << "-variety ";
 		Variety_description->print();
+	}
+	else if (f_isomorph_arguments) {
+		cout << "-isomorph_arguments" << endl;
+		Isomorph_arguments->print();
 	}
 	else {
 		cout << "symbol_definition::print unknown type" << endl;
@@ -4726,6 +4766,38 @@ void symbol_definition::definition_of_variety(
 	}
 }
 
+
+
+void symbol_definition::definition_of_isomorph_arguments(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_isomorph_arguments" << endl;
+	}
+
+
+
+
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Symb;
+
+	Symb = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+	Symb->init_isomorph_arguments(
+			define_label, Isomorph_arguments, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_isomorph_arguments "
+				"before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_isomorph_arguments done" << endl;
+	}
+}
 
 
 

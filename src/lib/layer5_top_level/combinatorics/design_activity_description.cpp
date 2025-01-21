@@ -43,7 +43,7 @@ design_activity_description::design_activity_description()
 	//std::string extract_solutions_by_index_fname_solutions_out;
 	//std::string extract_solutions_by_index_prefix;
 
-	f_export_inc = false;
+	f_export_flags = false;
 	f_export_incidence_matrix = false;
 	f_export_incidence_matrix_latex = false;
 	std::string export_incidence_matrix_latex_draw_options;
@@ -158,10 +158,10 @@ int design_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-export_inc") == 0) {
-			f_export_inc = true;
+		else if (ST.stringcmp(argv[i], "-export_flags") == 0) {
+			f_export_flags = true;
 			if (f_v) {
-				cout << "-export_inc " << endl;
+				cout << "-export_flags " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_incidence_matrix") == 0) {
@@ -288,8 +288,8 @@ void design_activity_description::print()
 				<< extract_solutions_by_index_prefix << " "
 				<< endl;
 	}
-	if (f_export_inc) {
-		cout << "-export_inc " << endl;
+	if (f_export_flags) {
+		cout << "-export_flags " << endl;
 	}
 	if (f_export_incidence_matrix) {
 		cout << "-export_incidence_matrix " << endl;

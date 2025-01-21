@@ -499,6 +499,55 @@ void design_create::init(
 
 		other::orbiter_kernel_system::file_io Fio;
 
+#if 1
+		other::data_structures::set_of_sets *SoS;
+
+		if (f_v) {
+			cout << "design_create::init "
+					"before Fio.Csv_file_support->read_column_and_parse" << endl;
+		}
+		Fio.Csv_file_support->read_column_and_parse(
+				Descr->list_of_blocks_from_file_fname,
+				Descr->list_of_blocks_from_file_column,
+				SoS,
+				verbose_level);
+		if (f_v) {
+			cout << "design_create::init "
+					"after Fio.Csv_file_support->read_column_and_parse" << endl;
+		}
+
+		if (f_v) {
+			cout << "design_create::init "
+					"SoS=" << endl;
+			SoS->print();
+		}
+
+		v = degree;
+		b = SoS->nb_sets;
+
+
+		// extend the incidence matrix by three blocks
+		// in the beginning to distinguish the three parts:
+
+		int h, u, i, s;
+
+		nb_inc = 0;
+		incma = NEW_int(v * b);
+		Int_vec_zero(incma, v * b);
+		for (h = 0; h < b; h++) {
+			s = SoS->Set_size[h];
+			for (u = 0; u < s; u++) {
+				i = SoS->Sets[h][u];
+				incma[i * b + h] = 1;
+				nb_inc++;
+			}
+		}
+
+		f_has_set = false;
+		f_has_incma = true;
+
+#else
+
 		std::string *Column;
 		int len;
 
@@ -507,7 +556,6 @@ void design_create::init(
 				Descr->list_of_blocks_from_file_column,
 				Column, len,
 				verbose_level);
-
 
 
 
@@ -579,6 +627,7 @@ void design_create::init(
 		f_has_set = false;
 		v = degree;
 		b = m;
+#endif
 
 		if (Descr->f_block_partition) {
 
@@ -608,9 +657,9 @@ void design_create::init(
 
 
 
-		prefix = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
-		label_txt = "blocks_v" + std::to_string(degree) + "_k" + std::to_string(k);
-		label_tex = "blocks\\_v" + std::to_string(degree) + "\\_k" + std::to_string(k);
+		prefix = "blocks_v" + std::to_string(degree); // + "_k" + std::to_string(k);
+		label_txt = "blocks_v" + std::to_string(degree); // + "_k" + std::to_string(k);
+		label_tex = "blocks\\_v" + std::to_string(degree); // + "\\_k" + std::to_string(k);
 
 		f_has_group = false;
 
@@ -619,8 +668,10 @@ void design_create::init(
 					"before compute_incidence_matrix_from_blocks" << endl;
 		}
 
+#if 0
 		compute_incidence_matrix_from_blocks(
 				blocks, b, k, 0 /*verbose_level*/);
+#endif
 
 		if (f_v) {
 			cout << "design_create::init "

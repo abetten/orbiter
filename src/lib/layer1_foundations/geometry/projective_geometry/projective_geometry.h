@@ -1043,6 +1043,11 @@ public:
 			long int *set, int set_size,
 			std::vector<int> &point_indices,
 			int verbose_level);
+	void points_covered_by_lines(
+			long int *Lines, int nb_lines,
+			std::vector<long int> &Pts,
+			int verbose_level);
+	// computes Pts as the set of points covered by the lines in Lines[]
 
 };
 

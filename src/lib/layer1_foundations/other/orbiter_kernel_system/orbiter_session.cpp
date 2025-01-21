@@ -557,6 +557,9 @@ void orbiter_session::get_lint_vector_from_label(
 	if (f_v) {
 		cout << "orbiter_session::get_lint_vector_from_label" << endl;
 	}
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vector_from_label label = " << label << endl;
+	}
 	if (isalpha(label[0])) {
 		if (f_v) {
 			cout << "orbiter_session::get_lint_vector_from_label "
@@ -588,8 +591,15 @@ void orbiter_session::get_lint_vector_from_label(
 		}
 	}
 	else {
+		if (f_v) {
+			cout << "orbiter_session::get_lint_vector_from_label "
+					"scanning equation" << endl;
+		}
 
 		Lint_vec_scan(label, v, sz);
+	}
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vector_from_label found a vector of size " << sz << endl;
 	}
 
 	if (f_v) {
@@ -979,7 +989,55 @@ graphics::draw_incidence_structure_description
 	return (graphics::draw_incidence_structure_description *) get_object(idx);
 }
 
+geometry::other_geometry::geometric_object_create
+	*orbiter_session::get_geometric_object(
+			std::string &label)
+{
+	int idx;
 
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_geometric_object "
+				"cannot find symbol " << label << endl;
+		cout << "symbol table:" << endl;
+		print_symbol_table();
+		exit(1);
+	}
+	if (get_object_type(idx) != t_geometric_object) {
+		cout << "orbiter_session::get_geometric_object "
+				"object type != t_geometric_object" << endl;
+		exit(1);
+	}
+
+
+	return (geometry::other_geometry::geometric_object_create *) get_object(idx);
+}
+
+
+
+
+void *orbiter_session::get_isomorph_arguments_opaque(
+		std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_isomorph_arguments_opaque "
+				"cannot find symbol " << label << endl;
+		cout << "symbol table:" << endl;
+		print_symbol_table();
+		exit(1);
+	}
+	if (get_object_type(idx) != t_isomorph_arguments) {
+		cout << "orbiter_session::get_isomorph_arguments_opaque "
+				"object type != t_isomorph_arguments" << endl;
+		exit(1);
+	}
+
+
+	return get_object(idx);
+}
 
 
 

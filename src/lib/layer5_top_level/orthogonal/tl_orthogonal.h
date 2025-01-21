@@ -109,8 +109,14 @@ public:
 	int split_m;
 
 	int f_isomorph;
-	layer4_classification::isomorph::isomorph_arguments
-		*Isomorph_arguments;
+	std::string isomorph_label;
+
+	int f_build_db;
+	int f_read_solutions;
+	int f_compute_orbits;
+	int f_isomorph_testing;
+	int f_isomorph_report;
+
 
 	blt_set_classify_activity_description();
 	~blt_set_classify_activity_description();

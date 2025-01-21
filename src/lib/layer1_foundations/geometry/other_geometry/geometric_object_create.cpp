@@ -577,9 +577,23 @@ void geometric_object_create::init(
 		}
 	}
 	else if (Descr->f_projective_variety) {
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"-projective_variety" << endl;
+		}
 
+		if (f_v) {
+			cout << "geometric_object_create::init "
+					"equation_label = " << Descr->variety_coeffs << endl;
+		}
 
 		algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+
+		int *coeffs;
+		int sz;
+
+		Get_int_vector_from_label(Descr->variety_coeffs, coeffs, sz, 6 /* verbose_level */);
 
 
 		HPD = Get_ring(Descr->projective_variety_ring_label);
@@ -591,7 +605,8 @@ void geometric_object_create::init(
 		HPD->create_projective_variety(
 				Descr->variety_label_txt,
 				Descr->variety_label_tex,
-				Descr->variety_coeffs,
+				coeffs, sz,
+				//Descr->variety_coeffs,
 				label_txt,
 				label_tex,
 				nb_pts, Pts,

@@ -507,6 +507,7 @@ public:
 	int nb_objects_to_test;
 
 
+		// index of column in input file:
 	int idx_po_go, idx_po_index;
 	int idx_po, idx_so;
 	int idx_eqn_algebraic;

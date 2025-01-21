@@ -23,6 +23,9 @@ polynomial_ring_activity::polynomial_ring_activity()
 	Descr = NULL;
 	HPD = NULL;
 
+	nb_output = 0;
+	Output = NULL;
+
 }
 
 
@@ -115,7 +118,8 @@ void polynomial_ring_activity::perform_activity(
 				verbose_level - 2);
 
 		if (f_v) {
-			cout << "The ideal has dimension " << dim_kernel << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"The ideal has dimension " << dim_kernel << endl;
 			cout << "generators for the ideal:" << endl;
 			Int_matrix_print(Kernel, dim_kernel, nb_monomials);
 
@@ -191,7 +195,8 @@ void polynomial_ring_activity::perform_activity(
 		}
 
 		if (f_v) {
-			cout << "The input equation is:";
+			cout << "polynomial_ring_activity::perform_activity "
+					"The input equation is:";
 			HPD->print_equation_simple(cout, Eqn_in);
 			cout << endl;
 		}
@@ -244,13 +249,16 @@ void polynomial_ring_activity::perform_activity(
 
 
 			if (f_v) {
-				cout << "The mapped equation is:";
+				cout << "polynomial_ring_activity::perform_activity "
+						"The mapped equation is:";
 				HPD->print_equation_simple(cout, Eqn_out);
 				cout << endl;
-				cout << "The mapped equation is:";
+				cout << "polynomial_ring_activity::perform_activity "
+						"The mapped equation is:";
 				HPD->print_equation_tex(cout, Eqn_out);
 				cout << endl;
-				cout << "The mapped equation is:";
+				cout << "polynomial_ring_activity::perform_activity "
+						"The mapped equation is:";
 				HPD->print_equation_relaxed(cout, Eqn_out);
 				cout << endl;
 			}
@@ -261,7 +269,8 @@ void polynomial_ring_activity::perform_activity(
 
 				M = NEW_int(n * n);
 				HPD->get_quadratic_form_matrix(Eqn_out, M);
-				cout << "quadratic form matrix:" << endl;
+				cout << "polynomial_ring_activity::perform_activity "
+						"quadratic form matrix:" << endl;
 				Int_matrix_print(M, n, n);
 				FREE_int(M);
 				int h;
@@ -271,7 +280,8 @@ void polynomial_ring_activity::perform_activity(
 			}
 		}
 		if (HPD->degree == 2) {
-			cout << "Diagonal part:" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"Diagonal part:" << endl;
 			Int_matrix_print(Diagonal_part, V->len, HPD->nb_variables);
 		}
 
@@ -282,7 +292,8 @@ void polynomial_ring_activity::perform_activity(
 	}
 	else if (Descr->f_set_variable_names) {
 		if (f_v) {
-			cout << "-set_variable_names "
+			cout << "polynomial_ring_activity::perform_activity "
+					"-set_variable_names "
 					<< Descr->set_variable_names_txt << " "
 					<< Descr->set_variable_names_tex << " "
 					<< endl;
@@ -296,7 +307,8 @@ void polynomial_ring_activity::perform_activity(
 	}
 	else if (Descr->f_print_equation) {
 		if (f_v) {
-			cout << "-print_equation "
+			cout << "polynomial_ring_activity::perform_activity "
+					"-print_equation "
 					<< Descr->print_equation_input << " "
 					<< endl;
 		}
@@ -315,7 +327,8 @@ void polynomial_ring_activity::perform_activity(
 
 	else if (Descr->f_parse_equation_wo_parameters) {
 		if (f_v) {
-			cout << "-parse_equation_wo_parameters "
+			cout << "polynomial_ring_activity::perform_activity "
+					"-parse_equation_wo_parameters "
 					<< Descr->parse_equation_wo_parameters_name_of_formula << " "
 					<< Descr->parse_equation_wo_parameters_name_of_formula_tex << " "
 					<< Descr->parse_equation_wo_parameters_equation_text << " "
@@ -333,17 +346,57 @@ void polynomial_ring_activity::perform_activity(
 				eqn, eqn_size,
 				verbose_level);
 		if (f_v) {
-			cout << "-parse_equation_wo_parameters The equation is:" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"-parse_equation_wo_parameters The equation is:" << endl;
 			Int_vec_print(cout, eqn, eqn_size);
 			cout << endl;
 		}
+
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = Descr->parse_equation_name_of_formula + "_coeffs";
+
+
+		other::data_structures::vector_builder *VB;
+
+		VB = NEW_OBJECT(other::data_structures::vector_builder);
+
+		other::data_structures::vector_builder_description *VB_Descr;
+
+		VB_Descr = NEW_OBJECT(other::data_structures::vector_builder_description);
+
+		VB_Descr->f_binary_data_int = true;
+		VB_Descr->binary_data_int = eqn;
+		VB_Descr->binary_data_int_sz = eqn_size;
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before VB->init" << endl;
+		}
+
+		VB->init(VB_Descr, HPD->get_F(), verbose_level);
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"after VB->init" << endl;
+		}
+
+
+		Output->init_vector(output_label, VB, verbose_level);
+
+
 
 	}
 
 
 	else if (Descr->f_parse_equation) {
 		if (f_v) {
-			cout << "-parse_equation "
+			cout << "polynomial_ring_activity::perform_activity "
+					"-parse_equation "
 					<< Descr->parse_equation_name_of_formula << " "
 					<< Descr->parse_equation_name_of_formula_tex << " "
 					<< Descr->parse_equation_equation_text << " "
@@ -365,16 +418,57 @@ void polynomial_ring_activity::perform_activity(
 				eqn, eqn_size,
 				verbose_level);
 		if (f_v) {
-			cout << "-parse_equation The equation is:" << endl;
+			cout << "polynomial_ring_activity::perform_activity "
+					"-parse_equation The equation is:" << endl;
 			Int_vec_print(cout, eqn, eqn_size);
 			cout << endl;
 		}
+
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = Descr->parse_equation_name_of_formula + "_coeffs";
+
+
+		other::data_structures::vector_builder *VB;
+
+		VB = NEW_OBJECT(other::data_structures::vector_builder);
+
+		other::data_structures::vector_builder_description *VB_Descr;
+
+		VB_Descr = NEW_OBJECT(other::data_structures::vector_builder_description);
+
+		VB_Descr->f_binary_data_int = true;
+		VB_Descr->binary_data_int = eqn;
+		VB_Descr->binary_data_int_sz = eqn_size;
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"before VB->init" << endl;
+		}
+
+		VB->init(VB_Descr, HPD->get_F(), verbose_level);
+
+		if (f_v) {
+			cout << "polynomial_ring_activity::perform_activity "
+					"after VB->init" << endl;
+		}
+
+
+		Output->init_vector(output_label, VB, verbose_level);
+
+
+
 
 	}
 
 	else if (Descr->f_table_of_monomials_write_csv) {
 		if (f_v) {
-			cout << "-table_of_monomials_write_csv "
+			cout << "polynomial_ring_activity::perform_activity "
+					"-table_of_monomials_write_csv "
 					<< Descr->table_of_monomials_write_csv_label << " "
 					<< endl;
 		}

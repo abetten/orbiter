@@ -76,6 +76,57 @@ void combinatorial_object_stream::init(
 
 }
 
+#if 0
+void combinatorial_object_stream::init_from_geometric_object(
+		geometry::other_geometry::geometric_object_create *GOC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::init_from_geometric_object" << endl;
+	}
+
+
+	combinatorics::canonical_form_classification::data_input_stream_description *Data_input_stream_description;
+
+	Data_input_stream_description = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_description);
+
+	combinatorics::canonical_form_classification::data_input_stream_description_element *E;
+
+	E = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream_description_element);
+	string a;
+
+	E->init_geometric_object(GOC);
+	Data_input_stream_description->Input.push_back(*E);
+	Data_input_stream_description->nb_inputs++;
+
+	Data_input_stream_description->f_label = true;
+	Data_input_stream_description->label_txt = GOC->label_txt;
+	Data_input_stream_description->label_tex = GOC->label_tex;
+
+	IS = NEW_OBJECT(combinatorics::canonical_form_classification::data_input_stream);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::init_from_geometric_object "
+				"before IS->init" << endl;
+	}
+
+	IS->init(Data_input_stream_description, verbose_level);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::init_from_geometric_object "
+				"after IS->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::init_from_geometric_object done" << endl;
+	}
+}
+#endif
+
+
 void combinatorial_object_stream::do_canonical_form(
 		combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
@@ -743,9 +794,8 @@ void combinatorial_object_stream::draw_incidence_matrices(
 						"after OwCF->encode_incma" << endl;
 			}
 
-			//Enc->latex_set_system_by_columns(ost, verbose_level);
+			//Enc->latex_set_system_by_rows_and_columns(ost, verbose_level);
 
-			//Enc->latex_set_system_by_rows(ost, verbose_level);
 
 			if (f_v) {
 				cout << "combinatorial_object_stream::draw_incidence_matrices "
@@ -1208,6 +1258,77 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 	}
 }
 
+
+void combinatorial_object_stream::do_algebraic_degree(
+		projective_geometry::projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree" << endl;
+	}
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+	int n, q, m, i;
+
+	n = PA->P->Subspaces->n + 1;
+	q = PA->F->q;
+
+	m = (q - 1) * n;
+
+
+	HPD = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, m + 1);
+
+	for (i = 1; i <= m; i++) {
+
+		//Descr->;
+
+		if (f_v) {
+			cout << "symbol_definition::definition_of_polynomial_ring "
+					"before HPD->init i=" << i << endl;
+		}
+		HPD[i].init(
+				PA->F,
+				n /* nb_vars */, i /* degree */,
+				t_PART,
+				verbose_level - 2);
+
+	}
+
+
+
+
+	int input_idx, d, r;
+
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
+
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+
+		for (d = 1; d <= m; d++) {
+			r = HPD[d].dimension_of_ideal(
+				OwCF->set, OwCF->sz, 0 /*verbose_level*/);
+			if (r) {
+				break;
+			}
+		}
+
+		cout << "input " << input_idx << " : ";
+		Lint_vec_print(cout, OwCF->set, OwCF->sz);
+		cout << " algebraic degree is " << d << endl;
+
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree done" << endl;
+	}
+}
 
 
 

@@ -99,7 +99,7 @@ void combinatorial_object_activity::perform_activity(
 			cout << "combinatorial_object_activity::perform_activity "
 					"before perform_activity_geometric_object" << endl;
 		}
-		perform_activity_geometric_object(verbose_level);
+		perform_activity_geometric_object(AO, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity "
 					"after perform_activity_geometric_object" << endl;
@@ -126,6 +126,7 @@ void combinatorial_object_activity::perform_activity(
 
 
 void combinatorial_object_activity::perform_activity_geometric_object(
+		other::orbiter_kernel_system::activity_output *&AO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -133,6 +134,9 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity_geometric_object" << endl;
 	}
+
+
+
 
 	if (Descr->f_line_type_old) {
 
@@ -172,8 +176,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 		}
 
 	}
-
-	if (Descr->f_line_type) {
+	else if (Descr->f_line_type) {
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object f_line_type" << endl;
@@ -220,9 +223,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 		FREE_OBJECT(Int_type);
 
 	}
-
-
-	if (Descr->f_conic_type) {
+	else if (Descr->f_conic_type) {
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object "
@@ -253,8 +254,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 
 
 	}
-
-	if (Descr->f_non_conical_type) {
+	else if (Descr->f_non_conical_type) {
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object "
@@ -275,9 +275,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 		cout << "We found " << Rk.size() << " non-conical 6 subsets" << endl;
 
 	}
-
-
-	if (Descr->f_ideal) {
+	else if (Descr->f_ideal) {
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_geometric_object "
@@ -362,9 +360,7 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 #endif
 
 	}
-
-
-	if (Descr->f_save) {
+	else if (Descr->f_save) {
 
 		other::orbiter_kernel_system::file_io Fio;
 		string fname;
@@ -380,6 +376,43 @@ void combinatorial_object_activity::perform_activity_geometric_object(
 					<< Fio.file_size(fname) << endl;
 		}
 	}
+#if 0
+	else {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object creating stream" << endl;
+		}
+		Combo = NEW_OBJECT(apps_combinatorics::combinatorial_object_stream);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object "
+					"before Combo->init_from_geometric_object" << endl;
+		}
+		Combo->init_from_geometric_object(
+				GOC,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_geometric_object "
+					"after Combo->init_from_geometric_object" << endl;
+		}
+
+		f_has_combo = true;
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"before perform_activity_combo" << endl;
+		}
+		perform_activity_combo(AO, verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity "
+					"after perform_activity_combo" << endl;
+		}
+
+		f_has_geometric_object = false;
+		//f_has_combo = false;
+
+	}
+#endif
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity_geometric_object "
@@ -400,6 +433,8 @@ void combinatorial_object_activity::perform_activity_combo(
 	}
 
 	if (Descr->f_canonical_form_PG) {
+
+
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -503,6 +538,12 @@ void combinatorial_object_activity::perform_activity_combo(
 					"f_report" << endl;
 		}
 
+		if (Combo->Objects_after_classification == NULL) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"Combo->Objects_after_classification == NULL" << endl;
+			exit(1);
+		}
+
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"before classification_report" << endl;
@@ -594,7 +635,7 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 	}
-	if (Descr->f_ideal) {
+	else if (Descr->f_ideal) {
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
@@ -739,6 +780,36 @@ void combinatorial_object_activity::perform_activity_combo(
 		}
 
 
+
+	}
+	else if (Descr->f_algebraic_degree) {
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_algebraic_degree" << endl;
+		}
+
+		projective_geometry::projective_space_with_action *PA;
+
+
+
+		PA = Get_projective_space(Descr->algebraic_degree_PG_label);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->do_algebraic_degree" << endl;
+		}
+
+		Combo->do_algebraic_degree(
+				PA,
+				verbose_level);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->do_algebraic_degree" << endl;
+		}
 
 	}
 

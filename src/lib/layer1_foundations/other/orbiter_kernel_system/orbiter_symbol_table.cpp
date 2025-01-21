@@ -350,7 +350,7 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 
 
-	// group of 9:
+	// group of 10:
 	// t_poset_classification_report_options,
 	// t_draw_options,
 	// t_draw_incidence_structure_options,
@@ -360,6 +360,7 @@ std::string orbiter_symbol_table::stringify_type(
 	// t_mapping,
 	// t_variety,
 	// t_combo_with_group,
+	// t_isomorph_arguments,
 
 	else if (t == t_poset_classification_report_options) {
 		s = "t_poset_classification_report_options";
@@ -387,6 +388,9 @@ std::string orbiter_symbol_table::stringify_type(
 	}
 	else if (t == t_combo_with_group) {
 		s = "t_combo_with_group";
+	}
+	else if (t == t_isomorph_arguments) {
+		s = "t_isomorph_arguments";
 	}
 
 	else {

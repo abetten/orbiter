@@ -61,7 +61,14 @@ orbiter_top_level_session::~orbiter_top_level_session()
 			cout << "orbiter_top_level_session::~orbiter_top_level_session "
 					"before Orbiter_session->do_statistics" << endl;
 		}
-		Orbiter_session->do_statistics();
+
+		if (verbose_level >= 10) {
+			Orbiter_session->do_statistics();
+		}
+		else {
+			cout << "Need verbose_level >= 10 to do statistics" << endl;
+		}
+
 		if (f_v) {
 			cout << "orbiter_top_level_session::~orbiter_top_level_session "
 					"after Orbiter_session->do_statistics" << endl;
@@ -968,6 +975,30 @@ canonical_form::combinatorial_object_with_properties
 			get_object(idx);
 }
 
+
+isomorph::isomorph_arguments
+	*orbiter_top_level_session::get_isomorph_arguments(
+			std::string &label)
+{
+	int idx;
+
+	idx = Orbiter_session->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_top_level_session::get_isomorph_arguments "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+
+	if (get_object_type(idx) != layer1_foundations::other::orbiter_kernel_system::symbol_table_object_type::t_isomorph_arguments) {
+		cout << "orbiter_top_level_session::get_isomorph_arguments "
+				"object type != t_isomorph_arguments" << endl;
+		exit(1);
+	}
+
+
+	return (isomorph::isomorph_arguments *)
+			get_object(idx);
+}
 
 
 

@@ -42,6 +42,7 @@ namespace isomorph {
 	// isomorph
 	class flag_orbit_folding;
 	class isomorph_arguments;
+	class isomorph_context;
 	class isomorph;
 	class isomorph_worker;
 	struct isomorph_worker_data;

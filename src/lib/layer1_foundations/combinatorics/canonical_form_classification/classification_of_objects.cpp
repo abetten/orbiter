@@ -166,6 +166,9 @@ void classification_of_objects::perform_classification(
 
 void classification_of_objects::classify_objects_using_nauty(
 	int verbose_level)
+// assumes that IS->Objects is available.
+// This is an array of pointers to objects of type any_combinatorial_object,
+// disguised as void pointers
 {
 	int f_v = (verbose_level >= 1);
 

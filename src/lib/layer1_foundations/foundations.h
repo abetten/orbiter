@@ -811,7 +811,7 @@ namespace other {
 			t_orbits,
 			t_poset_classification_control,
 
-			// group of 9:
+			// group of 10:
 			t_poset_classification_report_options,
 			t_draw_options,
 			t_draw_incidence_structure_options,
@@ -821,6 +821,7 @@ namespace other {
 			t_mapping,
 			t_variety,
 			t_combo_with_group,
+			t_isomorph_arguments,
 
 		};
 		// please maintain orbiter_symbol_table::stringify_type and orbiter_symbol_table_entry::print
@@ -1051,6 +1052,11 @@ namespace other {
 #define Get_draw_options(A) other::orbiter_kernel_system::Orbiter->get_draw_options(A)
 #define Get_draw_incidence_structure_options(A) other::orbiter_kernel_system::Orbiter->get_draw_incidence_structure_options(A)
 #define Get_any_group_opaque(A) other::orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
+#define Get_isomorph_arguments_opaque(A) other::orbiter_kernel_system::Orbiter->get_isomorph_arguments_opaque(A)
+#define Get_geometric_object(A) other::orbiter_kernel_system::Orbiter->get_geometric_object(A)
+
+
+
 
 #define Global_export(ptr, v) other::orbiter_kernel_system::Orbiter->do_export(ptr, v)
 #define Global_import(v) other::orbiter_kernel_system::Orbiter->do_import(v)
@@ -1124,6 +1130,7 @@ enum data_input_stream_type {
 	t_data_input_stream_graph_object,
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,
 	t_data_input_stream_multi_matrix,
+	t_data_input_stream_geometric_object,
 
 };
 

@@ -611,6 +611,8 @@ public:
 	int input_data3; // k = block size
 	int input_data4; // partition class size
 
+	//geometry::other_geometry::geometric_object_create *GOC;
+
 	data_input_stream_description_element();
 	~data_input_stream_description_element();
 	void print();
@@ -672,6 +674,8 @@ public:
 				int N);
 	void init_multi_matrix(
 			std::string &a, std::string &b);
+	void init_geometric_object(
+			std::string &label);
 
 };
 
@@ -813,12 +817,17 @@ public:
 			other::data_structures::bitvector *&Canonical_form,
 			int *canonical_labeling, int verbose_level);
 	void incidence_matrix_projective_space_top_left(
-			geometry::projective_geometry::projective_space *P, int verbose_level);
+			geometry::projective_geometry::projective_space *P,
+			int verbose_level);
 	void extended_incidence_matrix_projective_space_top_left(
-			geometry::projective_geometry::projective_space *P, int verbose_level);
+			geometry::projective_geometry::projective_space *P,
+			int verbose_level);
 	void canonical_form_given_canonical_labeling(
 			int *canonical_labeling,
 			other::data_structures::bitvector *&B,
+			int verbose_level);
+	void latex_set_system_by_rows_and_columns(
+			std::ostream &ost,
 			int verbose_level);
 	void latex_set_system_by_columns(
 			std::ostream &ost,
@@ -831,11 +840,13 @@ public:
 			int verbose_level);
 	void latex_incma(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			other::graphics::draw_incidence_structure_description
+				*Draw_incidence_structure_description,
 			int verbose_level);
 	void latex_TDA_incidence_matrix(
 			std::ostream &ost,
-			other::graphics::draw_incidence_structure_description *Draw_incidence_structure_description,
+			other::graphics::draw_incidence_structure_description
+				*Draw_incidence_structure_description,
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
 	void compute_labels(

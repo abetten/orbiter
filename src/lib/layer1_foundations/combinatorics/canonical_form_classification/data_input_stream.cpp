@@ -717,6 +717,14 @@ int data_input_stream::count_number_of_objects_to_test(
 			nb_objects_to_test++;
 
 		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_geometric_object) {
+			if (f_v) {
+				cout << "input geometric object " << endl;
+			}
+
+			nb_objects_to_test++;
+
+		}
 		else {
 			cout << "data_input_stream::count_number_of_objects_to_test "
                     "unknown input type" << endl;
@@ -1822,6 +1830,28 @@ void data_input_stream::read_objects(
 			Any_combo->init_multi_matrix(
 					Descr->Input[input_idx].input_string,
 					Descr->Input[input_idx].input_string2,
+					verbose_level);
+
+			Objects.push_back(Any_combo);
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_geometric_object) {
+			if (f_v) {
+				cout << "input geometric object " << endl;
+			}
+
+			geometry::other_geometry::geometric_object_create *GOC;
+
+			GOC = Get_geometric_object(Descr->Input[input_idx].input_string);
+
+			any_combinatorial_object *Any_combo;
+
+
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
+
+			Any_combo->init_point_set(
+					GOC->Pts,
+					GOC->nb_pts,
 					verbose_level);
 
 			Objects.push_back(Any_combo);

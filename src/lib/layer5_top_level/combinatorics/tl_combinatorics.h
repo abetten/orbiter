@@ -176,6 +176,9 @@ public:
 	int f_activity;
 	user_interface::activity_description *Activity_description;
 
+	int f_algebraic_degree;
+	std::string algebraic_degree_PG_label;
+
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
 	int read_arguments(
@@ -220,6 +223,7 @@ public:
 			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void perform_activity_geometric_object(
+			other::orbiter_kernel_system::activity_output *&AO,
 			int verbose_level);
 	void perform_activity_combo(
 			other::orbiter_kernel_system::activity_output *&AO,
@@ -257,6 +261,11 @@ public:
 			combinatorics::canonical_form_classification::data_input_stream_description
 					*Data_input_stream_description,
 			int verbose_level);
+#if 0
+	void init_from_geometric_object(
+			geometry::other_geometry::geometric_object_create *GOC,
+			int verbose_level);
+#endif
 	void do_canonical_form(
 			combinatorics::canonical_form_classification::classification_of_objects_description
 					*Canonical_form_Descr,
@@ -316,6 +325,9 @@ public:
 			apps_graph_theory::graph_theoretic_activity_description
 					*Graph_theoretic_activity_description,
 					other::orbiter_kernel_system::activity_output *&AO,
+			int verbose_level);
+	void do_algebraic_degree(
+			projective_geometry::projective_space_with_action *PA,
 			int verbose_level);
 
 };
@@ -812,7 +824,7 @@ public:
 	std::string extract_solutions_by_index_fname_solutions_out;
 	std::string extract_solutions_by_index_prefix;
 
-	int f_export_inc;
+	int f_export_flags;
 	int f_export_incidence_matrix;
 
 	int f_export_incidence_matrix_latex;
@@ -890,7 +902,12 @@ public:
 			combinatorics::canonical_form_classification::classification_of_objects_description
 				*Canonical_form_Descr,
 			int verbose_level);
+#if 0
 	void do_export_inc(
+			design_create *DC,
+			int verbose_level);
+#endif
+	void do_export_flags(
 			design_create *DC,
 			int verbose_level);
 	void do_export_incidence_matrix_csv(

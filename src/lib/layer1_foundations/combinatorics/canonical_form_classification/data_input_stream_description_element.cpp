@@ -30,6 +30,8 @@ data_input_stream_description_element::data_input_stream_description_element()
 	input_data3 = 0;
 	input_data4 = 0;
 
+	//GOC = NULL;
+
 }
 
 data_input_stream_description_element::~data_input_stream_description_element()
@@ -174,6 +176,11 @@ void data_input_stream_description_element::print()
 		cout << "-multi_matrix"
 				<< " " << input_string
 				<< " " << input_string2
+			<< endl;
+	}
+	else if (input_type == t_data_input_stream_geometric_object) {
+		cout << "-geometric_object"
+				<< " " << input_string
 			<< endl;
 	}
 	else {
@@ -451,6 +458,13 @@ void data_input_stream_description_element::init_multi_matrix(
 	input_string2.assign(b);
 }
 
+void data_input_stream_description_element::init_geometric_object(
+		std::string &label)
+{
+	input_type = t_data_input_stream_geometric_object;
+
+	input_string.assign(label);
+}
 
 }}}}
 

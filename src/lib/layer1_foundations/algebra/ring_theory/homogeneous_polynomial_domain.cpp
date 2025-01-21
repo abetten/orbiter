@@ -2440,6 +2440,55 @@ int homogeneous_polynomial_domain::test_weierstrass_form(
 	return true;
 }
 
+int homogeneous_polynomial_domain::dimension_of_ideal(
+		long int *Pts,
+		int nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal" << endl;
+	}
+	int *Kernel;
+	int r, rk;
+
+	Kernel = NEW_int(get_nb_monomials() * get_nb_monomials());
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
+				"the input set has size " << nb_pts << endl;
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
+				"the input set is: " << endl;
+		Lint_vec_print(cout, Pts, nb_pts);
+		cout << endl;
+		//P->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
+				"before vanishing_ideal" << endl;
+	}
+	vanishing_ideal(
+			Pts, nb_pts,
+			rk, Kernel, verbose_level - 1);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
+				"after vanishing_ideal" << endl;
+	}
+
+	r = get_nb_monomials() - rk;
+
+	FREE_int(Kernel);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::dimension_of_ideal done" << endl;
+	}
+
+	return r;
+}
+
 void homogeneous_polynomial_domain::explore_vanishing_ideal(
 		long int *Pts,
 		int nb_pts, int verbose_level)
@@ -2534,6 +2583,36 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 }
 
 
+void homogeneous_polynomial_domain::make_system(
+		int *Pt_coords, int nb_pts,
+		int *&System, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_system" << endl;
+	}
+
+	nb_cols = nb_variables;
+
+	System = NEW_int(nb_pts * nb_monomials);
+
+	for (i = 0; i < nb_pts; i++) {
+		for (j = 0; j < nb_monomials; j++) {
+			System[i * nb_monomials + j] =
+					F->Linear_algebra->evaluate_monomial(
+							Monomials + j * nb_variables, Pt_coords + i * nb_variables, nb_variables);
+		}
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_system done" << endl;
+	}
+}
+
 void homogeneous_polynomial_domain::vanishing_ideal(
 		long int *Pts,
 		int nb_pts, int &r, int *Kernel, int verbose_level)
@@ -2546,6 +2625,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal" << endl;
 	}
+
 	System = NEW_int(MAX(nb_pts, nb_monomials) * nb_monomials);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, Pts[i]);
@@ -2555,6 +2635,8 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 							Monomials + j * nb_variables, v, nb_variables);
 		}
 	}
+
+
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system:" << endl;
@@ -3045,7 +3127,8 @@ void homogeneous_polynomial_domain::create_intersection_of_zariski_open_sets(
 void homogeneous_polynomial_domain::create_projective_variety(
 		std::string &variety_label,
 		std::string &variety_label_tex,
-		std::string &variety_coeffs,
+		int *coeff, int sz,
+		//std::string &variety_coeffs,
 		std::string &label_txt,
 		std::string &label_tex,
 		int &nb_pts, long int *&Pts,
@@ -3067,10 +3150,10 @@ void homogeneous_polynomial_domain::create_projective_variety(
 	label_txt = variety_label;
 	label_tex = variety_label_tex;
 
-	int *coeff;
-	int sz;
+	//int *coeff;
+	//int sz;
 
-	Get_int_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
+	//Get_int_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
 
 	if (sz != get_nb_monomials()) {
 		cout << "homogeneous_polynomial_domain::create_projective_variety "

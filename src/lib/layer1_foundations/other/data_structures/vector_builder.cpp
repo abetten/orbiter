@@ -155,7 +155,8 @@ void vector_builder::init(
 	else if (Descr->f_file_column) {
 		if (f_v) {
 			cout << "vector_builder::init "
-					"-f_file_column " << Descr->file_column_name << " " << Descr->file_column_label << endl;
+					"-f_file_column " << Descr->file_column_name
+					<< " " << Descr->file_column_label << endl;
 		}
 		orbiter_kernel_system::file_io Fio;
 		int m, n;
@@ -166,7 +167,9 @@ void vector_builder::init(
 		//		Descr->file_name, v, m, n, verbose_level);
 
 		if (f_v) {
-			cout << "vector_builder::init reading file " << Descr->file_column_name << ", column " << Descr->file_column_label << endl;
+			cout << "vector_builder::init "
+					"reading file " << Descr->file_column_name
+					<< ", column " << Descr->file_column_label << endl;
 		}
 
 		Fio.Csv_file_support->read_column_and_parse(
@@ -466,7 +469,40 @@ void vector_builder::init(
 		FREE_int(perm_inv);
 
 	}
+	else if (Descr->f_binary_data_lint) {
+		if (f_v) {
+			cout << "vector_builder::init f_binary_data_lint" << endl;
+		}
+		len = Descr->binary_data_lint_sz;
+		v = NEW_lint(len);
+		Lint_vec_copy(Descr->binary_data_lint, v, len);
 
+		if (Descr->f_format) {
+			f_has_k = true;
+			k = Descr->format_k;
+		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
+	else if (Descr->f_binary_data_int) {
+		if (f_v) {
+			cout << "vector_builder::init f_binary_data_int" << endl;
+		}
+		len = Descr->binary_data_int_sz;
+		v = NEW_lint(len);
+		Int_vec_copy_to_lint(Descr->binary_data_int, v, len);
+
+		if (Descr->f_format) {
+			f_has_k = true;
+			k = Descr->format_k;
+		}
+		if (f_v) {
+			cout << "vector_builder::init found a vector of length " << len << endl;
+		}
+
+	}
 
 	else {
 		cout << "vector_builder::init please specify "

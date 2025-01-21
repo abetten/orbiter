@@ -319,7 +319,7 @@ void combinatorial_object_with_properties::latex_report(
 		cout << "combinatorial_object_with_properties::latex_report" << endl;
 	}
 
-	ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+	//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
 
 	ost << "\\subsection*{Automorphism Group as Permutation Group}" << endl;
@@ -348,7 +348,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (f_projective_space) {
 
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
 		ost << "\\subsection*{Automorphism Group in Projective Space}" << endl;
 
@@ -475,7 +475,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_export_flag_orbits" << endl;
 		}
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 
 		ost << "\\subsection*{Flag Orbits}" << endl;
 
@@ -514,7 +514,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDO" << endl;
 		}
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{TDO}" << endl;
 
 		ost << "Decomposition by combinatorial refinement (TDO):\\\\" << endl;
@@ -546,7 +546,7 @@ void combinatorial_object_with_properties::latex_report(
 			cout << "combinatorial_object_with_properties::latex_report "
 					"f_show_TDA" << endl;
 		}
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{TDA}" << endl;
 
 		{
@@ -578,7 +578,7 @@ void combinatorial_object_with_properties::latex_report(
 	}
 	if (Report_options->f_export_labels) {
 
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{Labels}" << endl;
 
 		combinatorics::canonical_form_classification::encoded_combinatorial_object *Enc;
@@ -622,7 +622,7 @@ void combinatorial_object_with_properties::latex_report(
 		FREE_OBJECT(Enc);
 	}
 
-	ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+	//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 	ost << "\\subsection*{Canonical labeling}" << endl;
 
 	ost << "Canonical labeling:\\\\" << endl;
@@ -656,13 +656,13 @@ void combinatorial_object_with_properties::latex_report(
 	ost << "canonical row = " << canonical_row << "\\\\" << endl;
 	ost << "canonical orbit number = " << canonical_orbit << "\\\\" << endl;
 
-	Enc2->latex_set_system_by_rows(ost, verbose_level);
+	Enc2->latex_set_system_by_rows_and_columns(ost, verbose_level);
 
 	FREE_OBJECT(Enc2);
 
 	if (Report_options->f_show_incidence_matrices) {
 
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{Incidence Matrices}" << endl;
 
 		if (f_v) {
@@ -721,6 +721,8 @@ void combinatorial_object_with_properties::latex_report(
 		FREE_OBJECT(Enc);
 	}
 
+	ost << "\\subsection*{Orbits on Flags and Anti-Flags}" << endl;
+
 	GA_on_CO->report_flag_orbits(
 			ost, verbose_level);
 
@@ -728,7 +730,7 @@ void combinatorial_object_with_properties::latex_report(
 
 	if (Report_options->f_lex_least) {
 
-		ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
+		//ost << "combinatorial\\_object\\_with\\_properties::latex\\_report \\\\" << endl;
 		ost << "\\subsection*{Lex Least Form}" << endl;
 
 		if (f_v) {
@@ -816,6 +818,7 @@ void combinatorial_object_with_properties::latex_report(
 
 void combinatorial_object_with_properties::compute_TDO(
 		int max_TDO_depth, int verbose_level)
+// called from combinatorial_object_with_properties::init
 // interface to combinatorics::tactical_decompositions::tdo_scheme_compute
 {
 	int f_v = (verbose_level >= 1);

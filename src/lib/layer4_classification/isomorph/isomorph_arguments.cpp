@@ -75,26 +75,6 @@ isomorph_arguments::isomorph_arguments()
 
 
 
-	//
-
-	f_init_has_been_called = false;
-
-	A = NULL;
-	A2 = NULL;
-	gen = NULL;
-	target_size = 0;
-	Control = NULL;
-
-	ECA = NULL;
-
-	callback_report = NULL;
-	callback_subset_orbits = NULL;
-	callback_data = NULL;
-
-	f_has_final_test_function = false;
-	final_test_function = NULL;
-	final_test_data = NULL;
-
 }
 
 isomorph_arguments::~isomorph_arguments()
@@ -308,52 +288,6 @@ void isomorph_arguments::print()
 
 }
 
-void isomorph_arguments::init(
-		actions::action *A,
-		actions::action *A2,
-		poset_classification::poset_classification *gen,
-	int target_size,
-	poset_classification::poset_classification_control *Control,
-	solvers_package::exact_cover_arguments *ECA,
-	void (*callback_report)(
-			isomorph *Iso, void *data, int verbose_level),
-	void (*callback_subset_orbits)(
-			isomorph *Iso, void *data, int verbose_level),
-	void *callback_data, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "isomorph_arguments::init" << endl;
-	}
-	isomorph_arguments::A = A;
-	isomorph_arguments::A2 = A2;
-	isomorph_arguments::gen = gen;
-	isomorph_arguments::target_size = target_size;
-	isomorph_arguments::Control = Control;
-	isomorph_arguments::ECA = ECA;
-	isomorph_arguments::callback_report = callback_report;
-	isomorph_arguments::callback_subset_orbits = callback_subset_orbits;
-	isomorph_arguments::callback_data = callback_data;
-
-	if (!f_solution_prefix) {
-		cout << "isomorph_arguments::init please "
-				"use -solution_prefix <solution_prefix>" << endl;
-		exit(1);
-	}
-	if (!f_base_fname) {
-		cout << "isomorph_arguments::init please "
-				"use -base_fname <base_fname>" << endl;
-		exit(1);
-	}
-
-	f_init_has_been_called = true;
-
-	if (f_v) {
-		cout << "isomorph_arguments::init done" << endl;
-	}
-}
 
 
 }}}

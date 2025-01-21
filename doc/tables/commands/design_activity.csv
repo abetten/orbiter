@@ -5,7 +5,7 @@ ROW,C1,C2,C3
 1,"\verb'-canonical_form' "," options  ","  "
 1,"\verb'-extract_solutions_by_index_csv' "," label group fname-solutions-in fname-solutions-out prefix   "," Used by large set desargues. "
 1,"\verb'-extract_solutions_by_index_txt' "," label group fname-solutions-in fname-solutions-out prefix    ","  "
-1,"\verb'-export_inc' ","   "," Export the incidence matrix as inc file.  "
+1,"\verb'-export_flags' ","   "," Export the flags of the incidence to file.  "
 1,"\verb'-export_incidence_matrix' ","   "," Export the incidence matrix as csv file. "
 1,"\verb'-export_incidence_matrix_latex' ","  options "," Export the incidence matrix as latex file. Used the options for drawing incidence matrices."
 1,"\verb'-intersection_matrix' ","   "," Compute the intersection matrix. If \verb'-save' is given, writes the intersection matrix to file. "

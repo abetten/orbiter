@@ -1359,6 +1359,11 @@ public:
 	graphics::draw_incidence_structure_description
 		*get_draw_incidence_structure_options(
 				std::string &label);
+	geometry::other_geometry::geometric_object_create
+		*get_geometric_object(
+				std::string &label);
+	void *get_isomorph_arguments_opaque(
+			std::string &label);
 	void
 		*get_any_group_opaque(
 				std::string &label);
@@ -1554,6 +1559,9 @@ public:
 			std::string &label,
 			void *variety, int verbose_level);
 	void init_combo_with_group(
+			std::string &label,
+			void *V, int verbose_level);
+	void init_isomorph_arguments(
 			std::string &label,
 			void *V, int verbose_level);
 	void print();

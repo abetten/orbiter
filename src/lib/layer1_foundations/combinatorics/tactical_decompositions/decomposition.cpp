@@ -300,6 +300,7 @@ void decomposition::setup_default_partition(
 void decomposition::compute_TDO_old(
 		int max_depth, int verbose_level)
 // put max_depth = INT_MAX if you want full depth
+// called by init()
 {
 	int f_v = (verbose_level >= 1);
 	//int depth = INT_MAX;
@@ -2246,7 +2247,7 @@ void decomposition::print_schemes(
 	}
 
 
-	ost << "\\subsection*{decomposition::print\\_schemes}" << endl;
+	//ost << "\\subsection*{decomposition::print\\_schemes}" << endl;
 
 	int f_enter_math = false;
 	int f_print_subscripts = true;

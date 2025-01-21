@@ -339,7 +339,7 @@ public:
 // isomorph_arguments.cpp
 // #############################################################################
 
-//! auxiliary class for class isomorph
+//! command line input for the isomorphism classification algorithm using class isomorph
 
 
 class isomorph_arguments {
@@ -405,9 +405,30 @@ public:
 
 
 
-	// everything below is set in init:
+	isomorph_arguments();
+	~isomorph_arguments();
+	int read_arguments(
+			int argc, std::string *argv,
+		int verbose_level);
+	void print();
 
-	int f_init_has_been_called;
+};
+
+
+
+
+
+// #############################################################################
+// isomorph_context.cpp
+// #############################################################################
+
+//! shell class for the isomorphism classification algorithm using class isomorph
+
+
+class isomorph_context {
+public:
+
+	isomorph_arguments *Descr;
 
 	actions::action *A;
 	actions::action *A2;
@@ -423,22 +444,19 @@ public:
 		int verbose_level);
 	void *callback_data;
 
-	// until here
-
-
 
 	int f_has_final_test_function;
 	int (*final_test_function)(long int *data, int sz,
 		void *final_test_data, int verbose_level);
 	void *final_test_data;
 
-	isomorph_arguments();
-	~isomorph_arguments();
-	int read_arguments(
-			int argc, std::string *argv,
-		int verbose_level);
-	void print();
+
+
+
+	isomorph_context();
+	~isomorph_context();
 	void init(
+			isomorph_arguments *Descr,
 			actions::action *A,
 			actions::action *A2,
 			poset_classification::poset_classification *gen,
@@ -453,16 +471,8 @@ public:
 			int verbose_level),
 		void *callback_data,
 		int verbose_level);
-	//void execute(int verbose_level);
 
-};
 
-//! auxiliary class to pass case specific data to the function isomorph_worker
-
-struct isomorph_worker_data {
-	long int *the_set;
-	int set_size;
-	void *callback_data;
 };
 
 
@@ -568,7 +578,7 @@ public:
 class isomorph_worker {
 public:
 
-	isomorph_arguments *Isomorph_arguments;
+	isomorph_context *Isomorph_context;
 
 	isomorph_global *Isomorph_global;
 
@@ -577,15 +587,11 @@ public:
 	isomorph_worker();
 	~isomorph_worker();
 	void init(
-			isomorph_arguments *Isomorph_arguments,
-			//actions::action *A_base,
-			//actions::action *A,
-			//poset_classification::poset_classification *gen,
-			//int size,
+			isomorph_context *Isomorph_context,
 			int level,
 			int verbose_level);
 	void execute(
-			isomorph_arguments *Isomorph_arguments,
+			isomorph_context *Isomorph_context,
 			int verbose_level);
 	void build_db(
 			int verbose_level);
@@ -604,6 +610,16 @@ public:
 	void recognize(
 			std::string &label, int verbose_level);
 
+};
+
+
+
+//! auxiliary class to pass case specific data to the function isomorph_worker
+
+struct isomorph_worker_data {
+	long int *the_set;
+	int set_size;
+	void *callback_data;
 };
 
 

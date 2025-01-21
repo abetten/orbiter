@@ -202,38 +202,32 @@ void spread_classify_activity::perform_activity(
 
 		if (f_v) {
 			cout << "spread_classify_activity::perform_activity f_isomorph" << endl;
+			cout << "spread_classify_activity::perform_activity isomorph_label = " << Descr->isomorph_label << endl;
 		}
 
+		layer4_classification::isomorph::isomorph_context *Isomorph_context;
 
-		if (f_v) {
-			cout << "spread_classify_activity::perform_activity before Isomorph_arguments->init" << endl;
-		}
-
-
-		layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
-
-		ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
-
-		Descr->Isomorph_arguments->init(
-				Spread_classify->A,
-				Spread_classify->A2,
-				Spread_classify->gen,
-				Spread_classify->target_size,
-				Spread_classify->Control,
-				ECA,
-				NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
-				NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
-				NULL /* void *callback_data */,
+		create_context(
+				Descr->isomorph_label,
+				Isomorph_context,
 				verbose_level);
 
 
-		if (f_v) {
-			cout << "spread_classify_activity::perform_activity after Isomorph_arguments->init" << endl;
+		if (Descr->f_build_db) {
+			Isomorph_context->Descr->f_build_db = true;
 		}
-
-		//int size;
-
-		//size = Spread_classify->target_size;
+		else if (Descr->f_read_solutions) {
+			Isomorph_context->Descr->f_read_solutions = true;
+		}
+		else if (Descr->f_compute_orbits) {
+			Isomorph_context->Descr->f_compute_orbits = true;
+		}
+		else if (Descr->f_isomorph_testing) {
+			Isomorph_context->Descr->f_isomorph_testing = true;
+		}
+		else if (Descr->f_isomorph_report) {
+			Isomorph_context->Descr->f_isomorph_report = true;
+		}
 
 
 		if (Spread_classify->Isomorph_worker == NULL) {
@@ -251,11 +245,7 @@ void spread_classify_activity::perform_activity(
 			}
 
 			Spread_classify->Isomorph_worker->init(
-					Descr->Isomorph_arguments,
-					//Spread_classify->A,
-					//Spread_classify->A2,
-					//Spread_classify->gen,
-					//size,
+					Isomorph_context,
 					Spread_classify->starter_size /* level */,
 					verbose_level);
 
@@ -271,7 +261,7 @@ void spread_classify_activity::perform_activity(
 						"Spread_classify->Isomorph_worker exists" << endl;
 			}
 
-			Spread_classify->Isomorph_worker->Isomorph_arguments = Descr->Isomorph_arguments;
+			Spread_classify->Isomorph_worker->Isomorph_context = Isomorph_context;
 
 
 		}
@@ -283,13 +273,33 @@ void spread_classify_activity::perform_activity(
 		}
 
 		Spread_classify->Isomorph_worker->execute(
-				Descr->Isomorph_arguments,
+				Isomorph_context,
 				verbose_level);
 
 		if (f_v) {
 			cout << "spread_classify_activity::perform_activity "
 					"after Isomorph_worker->execute" << endl;
 		}
+
+
+
+		if (Descr->f_build_db) {
+			Isomorph_context->Descr->f_build_db = false;
+		}
+		else if (Descr->f_read_solutions) {
+			Isomorph_context->Descr->f_read_solutions = false;
+		}
+		else if (Descr->f_compute_orbits) {
+			Isomorph_context->Descr->f_compute_orbits = false;
+		}
+		else if (Descr->f_isomorph_testing) {
+			Isomorph_context->Descr->f_isomorph_testing = false;
+		}
+		else if (Descr->f_isomorph_report) {
+			Isomorph_context->Descr->f_isomorph_report = false;
+		}
+
+
 
 
 		if (f_v) {
@@ -309,7 +319,58 @@ void spread_classify_activity::perform_activity(
 
 }
 
+void spread_classify_activity::create_context(
+		std::string &isomorph_label,
+		layer4_classification::isomorph::isomorph_context *&Isomorph_context,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "spread_classify_activity::create_context" << endl;
+	}
+
+	layer4_classification::isomorph::isomorph_arguments *Isomorph_arguments;
+
+	Isomorph_arguments = (layer4_classification::isomorph::isomorph_arguments *)
+					Get_isomorph_arguments_opaque(isomorph_label);
+
+
+	layer4_classification::solvers_package::exact_cover_arguments *ECA = NULL;
+
+	ECA = NEW_OBJECT(layer4_classification::solvers_package::exact_cover_arguments);
+
+	//layer4_classification::isomorph::isomorph_context *Isomorph_context = NULL;
+
+	Isomorph_context = NEW_OBJECT(layer4_classification::isomorph::isomorph_context);
+
+	if (f_v) {
+		cout << "spread_classify_activity::create_context before Isomorph_context->init" << endl;
+	}
+
+
+	Isomorph_context->init(
+			Isomorph_arguments,
+			Spread_classify->A,
+			Spread_classify->A2,
+			Spread_classify->gen,
+			Spread_classify->target_size,
+			Spread_classify->Control,
+			ECA,
+			NULL /*void (*callback_report)(isomorph *Iso, void *data, int verbose_level)*/,
+			NULL /*void (*callback_subset_orbits)(isomorph *Iso, void *data, int verbose_level)*/,
+			NULL /* void *callback_data */,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "spread_classify_activity::create_context after Isomorph_context->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "spread_classify_activity::create_context done" << endl;
+	}
+}
 
 
 }}}

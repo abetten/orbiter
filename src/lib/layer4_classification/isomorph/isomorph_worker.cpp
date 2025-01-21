@@ -27,7 +27,7 @@ isomorph_worker::isomorph_worker()
 	int f_v = (verbose_level >= 1);
 
 
-	Isomorph_arguments = NULL;
+	Isomorph_context = NULL;
 	Isomorph_global = NULL;
 	Iso = NULL;
 
@@ -53,11 +53,7 @@ isomorph_worker::~isomorph_worker()
 
 
 void isomorph_worker::init(
-		isomorph_arguments *Isomorph_arguments,
-		//actions::action *A_base,
-		//actions::action *A,
-		//poset_classification::poset_classification *gen,
-		//int size,
+		isomorph_context *Isomorph_context,
 		int level,
 		int verbose_level)
 {
@@ -67,7 +63,7 @@ void isomorph_worker::init(
 		cout << "isomorph_worker::init" << endl;
 	}
 
-	isomorph_worker::Isomorph_arguments = Isomorph_arguments;
+	isomorph_worker::Isomorph_context = Isomorph_context;
 
 	Isomorph_global = NEW_OBJECT(isomorph_global);
 
@@ -79,14 +75,14 @@ void isomorph_worker::init(
 		cout << "isomorph_worker::init before Iso->init" << endl;
 	}
 	Iso->init(
-			Isomorph_arguments->prefix_iso,
-			Isomorph_arguments->A, //A_base,
-			Isomorph_arguments->A2, // A
-			Isomorph_arguments->gen,
-			Isomorph_arguments->target_size, // size,
+			Isomorph_context->Descr->prefix_iso,
+			Isomorph_context->A, //A_base,
+			Isomorph_context->A2, // A
+			Isomorph_context->gen,
+			Isomorph_context->target_size, // size,
 			level,
-			Isomorph_arguments->f_use_database_for_starter,
-			Isomorph_arguments->f_implicit_fusion,
+			Isomorph_context->Descr->f_use_database_for_starter,
+			Isomorph_context->Descr->f_implicit_fusion,
 			verbose_level);
 		// sets size, level and initializes file names
 
@@ -105,7 +101,7 @@ void isomorph_worker::init(
 
 
 void isomorph_worker::execute(
-		isomorph_arguments *Isomorph_arguments,
+		isomorph_context *Isomorph_context,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -115,15 +111,16 @@ void isomorph_worker::execute(
 		cout << "isomorph_worker::execute" << endl;
 	}
 
-	if (!Isomorph_arguments->f_init_has_been_called) {
+#if 0
+	if (!Isomorph_context->f_init_has_been_called) {
 		cout << "isomorph_worker::execute please "
-				"call Isomorph_arguments->init before execute" << endl;
+				"call Isomorph_context->init before execute" << endl;
 		exit(1);
 	}
-
+#endif
 
 #if 0
-	Iso->read_data_files_for_starter(Iso->level, Isomorph_arguments->prefix_classify,
+	Iso->read_data_files_for_starter(Iso->level, Isomorph_context->prefix_classify,
 			verbose_level);
 #else
 	if (f_v) {
@@ -139,7 +136,7 @@ void isomorph_worker::execute(
 #endif
 
 
-	if (Isomorph_arguments->f_build_db) {
+	if (Isomorph_context->Descr->f_build_db) {
 
 		if (f_v) {
 			cout << "isomorph_worker::execute "
@@ -157,7 +154,7 @@ void isomorph_worker::execute(
 
 	}
 
-	else if (Isomorph_arguments->f_read_solutions) {
+	else if (Isomorph_context->Descr->f_read_solutions) {
 
 
 		if (f_v) {
@@ -173,7 +170,7 @@ void isomorph_worker::execute(
 		}
 
 	}
-	else if (Isomorph_arguments->f_compute_orbits) {
+	else if (Isomorph_context->Descr->f_compute_orbits) {
 
 
 		if (f_v) {
@@ -189,7 +186,7 @@ void isomorph_worker::execute(
 					"isomorph_compute_orbits" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_isomorph_testing) {
+	else if (Isomorph_context->Descr->f_isomorph_testing) {
 
 
 		if (f_v) {
@@ -204,7 +201,7 @@ void isomorph_worker::execute(
 					"after isomorph_testing" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_isomorph_report) {
+	else if (Isomorph_context->Descr->f_isomorph_report) {
 
 
 		if (f_v) {
@@ -219,7 +216,7 @@ void isomorph_worker::execute(
 					"after isomorph_report" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_export_source_code) {
+	else if (Isomorph_context->Descr->f_export_source_code) {
 
 
 		if (f_v) {
@@ -234,7 +231,7 @@ void isomorph_worker::execute(
 					"after export_source_code" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_recognize) {
+	else if (Isomorph_context->Descr->f_recognize) {
 
 
 		if (f_v) {
@@ -242,14 +239,14 @@ void isomorph_worker::execute(
 					"before recognize" << endl;
 		}
 
-		recognize(Isomorph_arguments->recognize_label, verbose_level);
+		recognize(Isomorph_context->Descr->recognize_label, verbose_level);
 
 		if (f_v) {
 			cout << "isomorph_worker::execute "
 					"after recognize" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_classification_graph) {
+	else if (Isomorph_context->Descr->f_classification_graph) {
 
 
 		if (f_v) {
@@ -265,7 +262,7 @@ void isomorph_worker::execute(
 		}
 	}
 #if 0
-	else if (Isomorph_arguments->f_classification_graph) {
+	else if (Isomorph_context->Descr->f_classification_graph) {
 
 		if (f_v) {
 			cout << "isomorph_worker::execute before "
@@ -281,7 +278,7 @@ void isomorph_worker::execute(
 					"isomorph_classification_graph" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_isomorph_report) {
+	else if (Isomorph_context->Descr->f_isomorph_report) {
 
 		if (callback_report == NULL) {
 			cout << "isomorph_worker::execute "
@@ -299,7 +296,7 @@ void isomorph_worker::execute(
 			cout << "isomorph_worker::execute after isomorph_worker" << endl;
 		}
 	}
-	else if (Isomorph_arguments->f_subset_orbits) {
+	else if (Isomorph_context->Descr->f_subset_orbits) {
 
 		isomorph_worker_data WD;
 
@@ -326,7 +323,7 @@ void isomorph_worker::execute(
 			FREE_lint(WD.the_set);
 		}
 	}
-	else if (Isomorph_arguments->f_down_orbits) {
+	else if (Isomorph_context->Descr->f_down_orbits) {
 
 		if (f_v) {
 			cout << "isomorph_worker::execute before isomorph_compute_down_orbits" << endl;
@@ -404,11 +401,11 @@ void isomorph_worker::read_solutions(
 	int *List_of_cases;
 
 
-	if (Isomorph_arguments->f_list_of_cases) {
+	if (Isomorph_context->Descr->f_list_of_cases) {
 
 		if (f_v) {
 			cout << "-list_of_cases "
-					<< Isomorph_arguments->list_of_cases_fname << endl;
+					<< Isomorph_context->Descr->list_of_cases_fname << endl;
 		}
 
 		string fname;
@@ -418,7 +415,7 @@ void isomorph_worker::read_solutions(
 
 
 		Fio.Csv_file_support->int_matrix_read_csv(
-				Isomorph_arguments->list_of_cases_fname,
+				Isomorph_context->Descr->list_of_cases_fname,
 				List_of_cases,
 				m, n, verbose_level);
 
@@ -428,7 +425,7 @@ void isomorph_worker::read_solutions(
 		for (i = 0; i < nb_files; i++) {
 
 			a = List_of_cases[i];
-			fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+			fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
 					+ "_" + std::to_string(Iso->level) + "_" + std::to_string(a) + "_sol.txt";
 
 			fname_array[i] = fname;
@@ -441,7 +438,7 @@ void isomorph_worker::read_solutions(
 
 
 		string fname;
-		fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+		fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
 				+ "_" + std::to_string(Iso->level) + "_sol.txt";
 
 
@@ -457,7 +454,7 @@ void isomorph_worker::read_solutions(
 
 			List_of_cases[i] = i;
 
-			fname = Isomorph_arguments->solution_prefix + Isomorph_arguments->base_fname
+			fname = Isomorph_context->Descr->solution_prefix + Isomorph_context->Descr->base_fname
 					+ "_" + std::to_string(i) + "_sol.txt";
 
 			fname_array[i] = fname;
@@ -709,7 +706,7 @@ void isomorph_worker::isomorph_testing(
 
 	string fname;
 
-	fname = Isomorph_arguments->prefix_iso + "orbits.txt";
+	fname = Isomorph_context->Descr->prefix_iso + "orbits.txt";
 
 	{
 		ofstream fp(fname);
@@ -798,6 +795,9 @@ void isomorph_worker::isomorph_report(
 		fname = Iso->prefix + "_isomorphism_types.tex";
 		title = "Isomorphism Types";
 
+		if (f_v) {
+			cout << "isomorph_worker::isomorph_report fname=" << fname << endl;
+		}
 
 
 		{
@@ -1153,8 +1153,9 @@ void isomorph_worker::recognize(
 				"before Iso->Folding->identify" << endl;
 	}
 
-	idx = Iso->Folding->identify(data,
-			Isomorph_arguments->f_implicit_fusion,
+	idx = Iso->Folding->identify(
+			data,
+			Isomorph_context->Descr->f_implicit_fusion,
 			verbose_level);
 
 	if (f_v) {

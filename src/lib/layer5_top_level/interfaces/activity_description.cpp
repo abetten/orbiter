@@ -111,6 +111,7 @@ activity_description::activity_description()
 	f_combo_activity = false;
 	Combo_activity_description = NULL;
 
+
 }
 
 activity_description::~activity_description()
@@ -797,6 +798,8 @@ void activity_description::read_arguments(
 		}
 	}
 
+
+
 	else {
 		cout << "unrecognized activity after -do : " << argv[i] << endl;
 		exit(1);
@@ -837,7 +840,7 @@ void activity_description::worker(
 		if (f_v) {
 			cout << "activity_description::worker ring_theoretic_activity" << endl;
 		}
-		do_ring_theoretic_activity(verbose_level);
+		do_ring_theoretic_activity(nb_output, Output, verbose_level);
 
 	}
 
@@ -1069,6 +1072,7 @@ void activity_description::worker(
 	}
 
 
+
 	if (AO) {
 
 		if (f_v) {
@@ -1279,6 +1283,8 @@ void activity_description::do_finite_field_activity(
 
 
 void activity_description::do_ring_theoretic_activity(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1303,8 +1309,8 @@ void activity_description::do_ring_theoretic_activity(
 	HPD = (algebra::ring_theory::homogeneous_polynomial_domain *)
 			Sym->Orbiter_top_level_session->get_object(Idx[0]);
 
-	apps_algebra::polynomial_ring_activity A;
-	A.init(Polynomial_ring_activity_description, HPD, verbose_level);
+	apps_algebra::polynomial_ring_activity Activity;
+	Activity.init(Polynomial_ring_activity_description, HPD, verbose_level);
 
 #if 0
 	if (Sym->with_labels.size() == 2) {
@@ -1316,13 +1322,16 @@ void activity_description::do_ring_theoretic_activity(
 
 	if (f_v) {
 		cout << "activity_description::do_ring_theoretic_activity "
-				"before A.perform_activity" << endl;
+				"before Activity.perform_activity" << endl;
 	}
-	A.perform_activity(verbose_level);
+	Activity.perform_activity(verbose_level);
 	if (f_v) {
 		cout << "activity_description::do_ring_theoretic_activity "
-				"after A.perform_activity" << endl;
+				"after Activity.perform_activity" << endl;
 	}
+
+	nb_output = Activity.nb_output;
+	Output = Activity.Output;
 
 	FREE_int(Idx);
 
