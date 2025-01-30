@@ -307,6 +307,36 @@ public:
 
 
 
+// #############################################################################
+// special_functions_domain.cpp
+// #############################################################################
+
+//! polynomial expressions for functions from a projective space to the field
+
+class special_functions_domain {
+
+public:
+	algebra::field_theory::finite_field *Fq; // the field Fq
+	int q;
+
+	geometry::projective_geometry::projective_space *P;
+
+	int nb_vars;
+	int max_degree; // nb_vars * (q - 1)
+
+	special_functions_domain();
+	~special_functions_domain();
+	void init(
+			geometry::projective_geometry::projective_space *P,
+			int verbose_level);
+	void make_polynomial_representation(
+			long int *Pts, int nb_pts,
+			std::string &poly_rep,
+			int verbose_level);
+
+
+};
+
 
 
 }}}}

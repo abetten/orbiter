@@ -930,7 +930,8 @@ class interface_toolkit {
 	std::vector<std::string> csv_file_concatenate_fname_in;
 
 	int f_csv_file_concatenate_from_mask;
-	int csv_file_concatenate_from_mask_N;
+	int csv_file_concatenate_from_mask_N_min;
+	int csv_file_concatenate_from_mask_N_max;
 	std::string csv_file_concatenate_from_mask_mask;
 	std::string csv_file_concatenate_from_mask_fname_out;
 

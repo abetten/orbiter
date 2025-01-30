@@ -529,6 +529,8 @@ public:
 	~int_matrix();
 	void allocate(
 			int m, int n);
+	void allocate_and_initialize_with_zero(
+			int m, int n);
 	void allocate_and_init(
 			int m, int n, int *Mtx);
 	int &s_ij(

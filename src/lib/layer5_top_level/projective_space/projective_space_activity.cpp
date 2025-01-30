@@ -1284,6 +1284,45 @@ void projective_space_activity::perform_activity(
 	}
 
 
+	else if (Descr->f_polynomial_representation) {
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"-polynomial_representation " << Descr->polynomial_representation_set_label << endl;
+		}
+
+		long int *Pts;
+		int nb_pts;
+
+		Get_lint_vector_from_label(Descr->polynomial_representation_set_label, Pts, nb_pts, 0 /* verbose_level */);
+
+		combinatorics::special_functions::special_functions_domain Special_functions_domain;
+
+		Special_functions_domain.init(
+				PA->P,
+				verbose_level);
+
+		std::string poly_rep;
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"before Special_functions_domain.make_polynomial_representation" << endl;
+		}
+		Special_functions_domain.make_polynomial_representation(
+				Pts, nb_pts,
+				poly_rep,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"after Special_functions_domain.make_polynomial_representation" << endl;
+		}
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity "
+					"poly_rep = " << poly_rep << endl;
+		}
+
+	}
 
 
 

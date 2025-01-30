@@ -71,6 +71,7 @@ void quadratic_form::init(
 		int epsilon, int n,
 		algebra::field_theory::finite_field *F,
 		int verbose_level)
+// here, n is the vector space dimension
 {
 	int f_v = (verbose_level >= 1);
 	geometry::other_geometry::geometry_global Gg;

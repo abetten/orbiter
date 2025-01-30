@@ -58,8 +58,20 @@ void int_matrix::allocate(
 {
 	if (M) {
 		FREE_int(M);
-		}
+	}
 	M = NEW_int(m * n);
+	int_matrix::m = m;
+	int_matrix::n = n;
+}
+
+void int_matrix::allocate_and_initialize_with_zero(
+		int m, int n)
+{
+	if (M) {
+		FREE_int(M);
+	}
+	M = NEW_int(m * n);
+	Int_vec_zero(M, m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;
 }

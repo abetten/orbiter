@@ -611,6 +611,11 @@ public:
 		int len, int idx, int verbose_level);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
+	void extend_basis_of_subspace(
+			int n, int k1, int *Basis_U, int k2, int *Basis_V,
+			int *&Basis_UV,
+			int *&base_cols,
+			int verbose_level);
 	void extend_basis(
 			int m, int n, int *Basis, int verbose_level);
 	int base_cols_and_embedding(
@@ -655,6 +660,11 @@ public:
 			int n, int k, int *A,
 		int *B, int *K, int *base_cols,
 		int verbose_level);
+	void subspace_intersection(
+			other::data_structures::int_matrix *U,
+			other::data_structures::int_matrix *V,
+			other::data_structures::int_matrix *&UcapV,
+			int verbose_level);
 	int intersect_subspaces(
 			int n, int k1, int *A, int k2, int *B,
 		int &k3, int *intersection, int verbose_level);

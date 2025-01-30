@@ -35,10 +35,18 @@ int linear_algebra::Gauss_int(
 	other::data_structures::algorithms Algo;
 
 	if (f_v) {
-		cout << "linear_algebra::Gauss_int" << endl;
+		cout << "linear_algebra::Gauss_int m=" << m << " n=" << n<< endl;
+	}
+	if (F == NULL) {
+		cout << "linear_algebra::Gauss_int no finite field!" << endl;
+		exit(1);
 	}
 	if (f_v) {
-		cout << "Gauss algorithm for matrix of "
+		cout << "linear_algebra::Gauss_int q=" << F->q << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::Gauss_int "
+				"Gauss algorithm for matrix of "
 				"size " << m << " x " << n << endl;
 		//Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
@@ -46,17 +54,23 @@ int linear_algebra::Gauss_int(
 	i = 0;
 	for (j = 0; j < n; j++) {
 		if (f_v) {
-			cout << "searching for pivot element in column j=" << j << endl;
+			cout << "linear_algebra::Gauss_int "
+					"searching for pivot element in column j=" << j << endl;
 		}
 		// search for pivot element:
 		for (k = i; k < m; k++) {
 			if (A[k * n + j]) {
-				if (f_vv) {
-					cout << "i=" << i << " pivot found in "
-							<< k << "," << j << endl;
+				if (f_v) {
+					cout << "linear_algebra::Gauss_int j=" << j << " "
+							"i=" << i << " pivot found in position ("
+							<< k << "," << j << ")" << endl;
 				}
 				// pivot element found:
 				if (k != i) {
+					if (f_v) {
+						cout << "linear_algebra::Gauss_int j=" << j << " "
+								"before swapping rows" << endl;
+					}
 					for (jj = j; jj < n; jj++) {
 						Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 					}
@@ -65,20 +79,33 @@ int linear_algebra::Gauss_int(
 							Algo.int_swap(P[i * Pn + jj], P[k * Pn + jj]);
 						}
 					}
+					if (f_v) {
+						cout << "linear_algebra::Gauss_int j=" << j << " "
+								"after swapping rows" << endl;
+					}
+				}
+				if (f_v) {
+					cout << "linear_algebra::Gauss_int j=" << j << " before break" << endl;
 				}
 				break;
 			} // if != 0
 		} // next k
 
 		if (k == m) { // no pivot found
-			if (f_vv) {
-				cout << "no pivot found" << endl;
+			if (f_v) {
+				cout << "linear_algebra::Gauss_int j=" << j << " no pivot found" << endl;
 			}
 			continue; // increase j, leave i constant
 		}
+		else {
+			if (f_v) {
+				cout << "linear_algebra::Gauss_int j=" << j << " pivot found" << endl;
+			}
+		}
 
-		if (f_vv) {
-			cout << "row " << i << " pivot in row "
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int "
+					"row " << i << " pivot in row "
 					<< k << " colum " << j << endl;
 		}
 
@@ -88,13 +115,13 @@ int linear_algebra::Gauss_int(
 		//	}
 
 		pivot = A[i * n + j];
-		if (f_vv) {
-			cout << "pivot=" << pivot << endl;
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int pivot=" << pivot << endl;
 		}
 		//pivot_inv = inv_table[pivot];
 		pivot_inv = F->inverse(pivot);
-		if (f_vv) {
-			cout << "pivot=" << pivot << " pivot_inv="
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int pivot=" << pivot << " pivot_inv="
 					<< pivot_inv << endl;
 		}
 		if (!f_special) {
@@ -107,8 +134,8 @@ int linear_algebra::Gauss_int(
 					P[i * Pn + jj] = F->mult(P[i * Pn + jj], pivot_inv);
 				}
 			}
-			if (f_vv) {
-				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv
+			if (f_v) {
+				cout << "linear_algebra::Gauss_int pivot=" << pivot << " pivot_inv=" << pivot_inv
 					<< " made to one: " << A[i * n + j] << endl;
 			}
 			if (f_vvv) {
@@ -118,8 +145,8 @@ int linear_algebra::Gauss_int(
 
 		// do the gaussian elimination:
 
-		if (f_vv) {
-			cout << "doing elimination in column " << j << " from row "
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int doing elimination in column " << j << " from row "
 					<< i + 1 << " to row " << m - 1 << ":" << endl;
 		}
 		for (k = i + 1; k < m; k++) {
@@ -138,8 +165,8 @@ int linear_algebra::Gauss_int(
 			}
 			f = F->negate(f);
 			A[k * n + j] = 0;
-			if (f_vv) {
-				cout << "eliminating row " << k << endl;
+			if (f_v) {
+				cout << "linear_algebra::Gauss_int eliminating row " << k << endl;
 			}
 			for (jj = j + 1; jj < n; jj++) {
 				a = A[i * n + jj];
@@ -150,7 +177,7 @@ int linear_algebra::Gauss_int(
 				c = F->mult(f, a);
 				c = F->add(c, b);
 				A[k * n + jj] = c;
-				if (f_vv) {
+				if (false) {
 					cout << A[k * n + jj] << " ";
 				}
 			}
@@ -164,21 +191,21 @@ int linear_algebra::Gauss_int(
 					P[k * Pn + jj] = c;
 				}
 			}
-			if (f_vv) {
+			if (false) {
 				cout << endl;
 			}
 			if (f_vvv) {
-				cout << "A=" << endl;
+				cout << "linear_algebra::Gauss_int A=" << endl;
 				Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 		i++;
 		if (f_vv) {
-			cout << "A=" << endl;
+			cout << "linear_algebra::Gauss_int A=" << endl;
 			Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
 			if (f_P) {
-				cout << "P=" << endl;
+				cout << "linear_algebra::Gauss_int P=" << endl;
 				Int_vec_print_integer_matrix(cout, P, m, Pn);
 			}
 		}
@@ -188,6 +215,9 @@ int linear_algebra::Gauss_int(
 		cout << "linear_algebra::Gauss_int rank = " << i << endl;
 	}
 	if (f_complete) {
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int f_complete" << endl;
+		}
 		//if (false) {
 		//	cout << ";"; cout.flush();
 		//	}
@@ -236,18 +266,22 @@ int linear_algebra::Gauss_int(
 				}
 			} // next k
 		} // next i
+		if (f_v) {
+			cout << "linear_algebra::Gauss_int f_complete done" << endl;
+		}
 	}
 	if (f_vv) {
-		cout << endl;
+		//cout << endl;
+		cout << "linear_algebra::Gauss_int A=" << endl;
 		Int_vec_print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
-		cout << "the rank is " << rank << endl;
-	}
-	if (f_v) {
 		cout << "linear_algebra::Gauss_int the rank is " << rank << endl;
 	}
 	if (f_v) {
-		cout << "linear_algebra::Gauss_int done" << endl;
+		cout << "linear_algebra::Gauss_int linear_algebra::Gauss_int the rank is " << rank << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::Gauss_int done, rank = " << rank << endl;
 	}
 	return rank;
 }
@@ -1070,6 +1104,231 @@ after:
 	}
 }
 
+void linear_algebra::extend_basis_of_subspace(
+		int n, int k1, int *Basis_U, int k2, int *Basis_V,
+		int *&Basis_UV,
+		int *&base_cols,
+		int verbose_level)
+// output:
+// Basis_UV[k2 * n]
+// base_cols[k2]
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace k1 = " << k1 << " k2 = " << k2 << " n = " << n << endl;
+	}
+	int *B;
+	int *base_cols1;
+	int *base_cols2;
+
+	B = NEW_int((k1 + k2) * n);
+	base_cols1 = NEW_int(n);
+	base_cols2 = NEW_int(n);
+
+	Int_vec_copy(Basis_U, B, k1 * n);
+	Int_vec_copy(Basis_V, B + k1 * n, k2 * n);
+
+	if (f_vv) {
+		cout << "linear_algebra::extend_basis_of_subspace B=" << endl;
+		Int_matrix_print(B, k1 + k2, n);
+	}
+	int r1;
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace before Gauss_simple" << endl;
+	}
+	r1 = Gauss_simple(
+			B, k1, n,
+			base_cols1, verbose_level);
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace after Gauss_simple r1 = " << r1 << endl;
+	}
+	if (r1 != k1) {
+		cout << "linear_algebra::extend_basis_of_subspace r1 != k1" << endl;
+		exit(1);
+	}
+	if (f_vv) {
+		cout << "linear_algebra::extend_basis_of_subspace B=" << endl;
+		Int_matrix_print(B, k2, n);
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace before Int_vec_complement_to" << endl;
+	}
+	Int_vec_complement_to(
+			base_cols1, base_cols1 + k1, n, k1);
+	// computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace after Int_vec_complement_to" << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace base_cols1=";
+		Int_vec_print(cout, base_cols1, n);
+		cout << endl;
+		cout << "linear_algebra::extend_basis_of_subspace n = " << n << endl;
+	}
+
+	int i, j, k, h, col, a;
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace before cleaning (1)" << endl;
+	}
+	for (i = 0; i < k1; i++) {
+		col = base_cols1[i];
+		if (f_v) {
+			cout << "linear_algebra::extend_basis_of_subspace cleaning (1) col = " << col << endl;
+		}
+		for (h = k1; h < k1 + k2; h++) {
+			Gauss_step(
+					B + i * n, B + h * n, n,
+					col, 0 /* verbose_level */);
+		}
+	}
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace after cleaning (1)" << endl;
+	}
+
+	if (f_vv) {
+		cout << "linear_algebra::extend_basis_of_subspace B=" << endl;
+		Int_matrix_print(B, k1 + k2, n);
+	}
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace before cleaning (2)" << endl;
+	}
+	k = k1;
+	for (i = k1; i < n; i++) {
+
+		col = base_cols1[i];
+		if (f_v) {
+			cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << endl;
+		}
+
+		// search for pivot:
+		for (j = k; j < k1 + k2; j++) {
+			if (B[j * n + col]) {
+				if (j != k) {
+					// swap rows k and j:
+					for (h = 0; h < n; h++) {
+						a = B[k * n + h];
+						B[k * n + h] = B[j * n + h];
+						B[j * n + h] = a;
+					}
+				}
+				break;
+			}
+		}
+		if (j == k1 + k2) {
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " no pivot" << endl;
+			}
+			//k++;
+		}
+		else {
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " found pivot" << endl;
+			}
+			// we have a pivot element
+			base_cols2[k - k1] = col;
+
+			int pivot;
+
+			pivot = B[k * n + col];
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) pivot = " << pivot << " make it equal to one" << endl;
+			}
+			if (pivot != 1) {
+				int pivot_inv;
+
+				pivot_inv = F->inverse(pivot);
+				for (h = 0; h < n; h++) {
+					B[k * n + h] = F->mult(B[k * n + h], pivot_inv);
+				}
+			}
+			pivot = B[k * n + col];
+			if (pivot != 1) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) pivot != 1" << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) pivot = " << pivot << " is equal to one" << endl;
+			}
+
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " clean below" << endl;
+			}
+			// clean below:
+			for (j = k + 1; j < k1 + k2; j++) {
+				Gauss_step(
+						B + k * n, B + j * n, n,
+						col, 0 /* verbose_level */);
+			}
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " clean below done" << endl;
+			}
+
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " clean above" << endl;
+			}
+			// clean above:
+			for (j = k - 1; j >= k1; j--) {
+				Gauss_step(
+						B + k * n, B + j * n, n,
+						col, 0 /* verbose_level */);
+			}
+			if (f_v) {
+				cout << "linear_algebra::extend_basis_of_subspace cleaning (2) col = " << col << " clean above done" << endl;
+			}
+			k++;
+		}
+	}
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace after cleaning (2) k=" << k << endl;
+	}
+	if (f_vv) {
+		cout << "linear_algebra::extend_basis_of_subspace B=" << endl;
+		Int_matrix_print(B, k1 + k2, n);
+	}
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace base_cols2=";
+		Int_vec_print(cout, base_cols2, k - k1);
+		cout << endl;
+		cout << "linear_algebra::extend_basis_of_subspace k = " << k << endl;
+		cout << "linear_algebra::extend_basis_of_subspace k - k1 = " << k - k1 << endl;
+	}
+
+	if (k != k2) {
+		cout << "linear_algebra::extend_basis_of_subspace k != k2" << endl;
+		exit(1);
+	}
+
+	Basis_UV = NEW_int(k2 * n);
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace before Int_vec_copy" << endl;
+	}
+	Int_vec_copy(B, Basis_UV, k2 * n);
+
+	base_cols = NEW_int(n);
+	Int_vec_zero(base_cols, n);
+
+
+	Int_vec_copy(base_cols1, base_cols, k1);
+	Int_vec_copy(base_cols2, base_cols + k1, k2 - k1);
+
+
+	FREE_int(B);
+	FREE_int(base_cols1);
+	FREE_int(base_cols2);
+
+	if (f_v) {
+		cout << "linear_algebra::extend_basis_of_subspace done" << endl;
+	}
+}
+
+
 void linear_algebra::extend_basis(
 		int m, int n, int *Basis,
 	int verbose_level)
@@ -1234,19 +1493,19 @@ int linear_algebra::Gauss_simple(
 // returns the rank which is the number of entries in base_cols
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	int rk;
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_simple before Gauss_int" << endl;
 	}
-	ret = Gauss_int(
+	rk = Gauss_int(
 			A, false, true, base_cols,
 			false, NULL, m, n, n,
 			verbose_level);
 	if (f_v) {
-		cout << "linear_algebra::Gauss_simple after Gauss_int" << endl;
+		cout << "linear_algebra::Gauss_simple after Gauss_int rk = " << rk << endl;
 	}
-	return ret;
+	return rk;
 }
 
 void linear_algebra::kernel_columns(
@@ -1408,7 +1667,7 @@ int linear_algebra::perp(
 		cout << "linear_algebra::perp nb_base_cols != k" << endl;
 		cout << "need to copy B back to A to be safe." << endl;
 		exit(1);
-		}
+	}
 
 	matrix_get_kernel(B, k, n, base_cols, nb_base_cols,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
@@ -1521,6 +1780,7 @@ int linear_algebra::perp_standard_with_temporary_data(
 	int n, int k, int *A,
 	int *B, int *K, int *base_cols,
 	int verbose_level)
+// return the rank of the input matrix
 {
 	int f_v = (verbose_level >= 1);
 	//int *B;
@@ -1541,17 +1801,21 @@ int linear_algebra::perp_standard_with_temporary_data(
 		cout << "linear_algebra::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
 		Int_matrix_print(B, k, n);
-		cout << "finite_field::perp_standard_temporary_data "
+		cout << "linear_algebra::perp_standard_temporary_data "
 				"before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(
 			B,
 		false /* f_special */, true /* f_complete */, base_cols,
 		false /* f_P */, NULL /*P*/, k, n, n,
-		0 /*verbose_level*/);
+		verbose_level);
 	if (f_v) {
 		cout << "linear_algebra::perp_standard_temporary_data "
-				"after Gauss_int" << endl;
+				"after Gauss_int nb_base_cols = " << nb_base_cols << endl;
+	}
+	if (f_v) {
+		cout << "linear_algebra::perp_standard_temporary_data "
+				"before matrix_get_kernel" << endl;
 	}
 	matrix_get_kernel(
 			B, k, n, base_cols, nb_base_cols,
@@ -1587,6 +1851,54 @@ int linear_algebra::perp_standard_with_temporary_data(
 	return nb_base_cols;
 }
 
+void linear_algebra::subspace_intersection(
+		other::data_structures::int_matrix *U,
+		other::data_structures::int_matrix *V,
+		other::data_structures::int_matrix *&UcapV,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "linear_algebra::subspace_intersection" << endl;
+	}
+	int n;
+
+	n = U->n;
+	if (V->n != n) {
+		cout << "linear_algebra::subspace_intersection V->n != n" << endl;
+		exit(1);
+	}
+
+	int *intersection;
+	int k3;
+
+	intersection = NEW_int(n * n);
+
+	if (f_v) {
+		cout << "linear_algebra::subspace_intersection "
+				"before intersect_subspaces" << endl;
+	}
+	intersect_subspaces(n,
+			U->m, U->M,
+			V->m, V->M,
+			k3, intersection,
+			verbose_level - 2);
+	if (f_v) {
+		cout << "linear_algebra::subspace_intersection "
+				"after intersect_subspaces, k3=" << k3 << endl;
+	}
+	UcapV = NEW_OBJECT(other::data_structures::int_matrix);
+	UcapV->allocate_and_init(k3, n, intersection);
+
+	FREE_int(intersection);
+
+	if (f_v) {
+		cout << "linear_algebra::subspace_intersection done" << endl;
+	}
+}
+
+
 int linear_algebra::intersect_subspaces(
 		int n,
 		int k1, int *A,
@@ -1603,7 +1915,7 @@ int linear_algebra::intersect_subspaces(
 	int *base_cols;
 
 	if (f_v) {
-		cout << "linear_algebra::intersect_subspaces" << endl;
+		cout << "linear_algebra::intersect_subspaces k1=" << k1 << " k2=" << k2 << " n=" << n << endl;
 	}
 	AA = NEW_int(n * n);
 	BB = NEW_int(n * n);
@@ -1616,8 +1928,14 @@ int linear_algebra::intersect_subspaces(
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
 		Int_vec_print_integer_matrix_width(cout, AA, k1, n, n, 2);
 	}
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces before perp_standard_with_temporary_data (1)" << endl;
+	}
 	r1 = perp_standard_with_temporary_data(n, k1,
-			AA, B1, K, base_cols, 0);
+			AA, B1, K, base_cols, verbose_level);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data (1) r1=" << r1 << endl;
+	}
 	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
 		Int_vec_print_integer_matrix_width(cout, AA, n, n, n, 2);
@@ -1633,7 +1951,13 @@ int linear_algebra::intersect_subspaces(
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
 		Int_vec_print_integer_matrix_width(cout, BB, k2, n, n, 2);
 	}
-	r2 = perp_standard_with_temporary_data(n, k2, BB, B1, K, base_cols, 0);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces before perp_standard_with_temporary_data (2)" << endl;
+	}
+	r2 = perp_standard_with_temporary_data(n, k2, BB, B1, K, base_cols, verbose_level);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data (2) r2=" << r2 << endl;
+	}
 	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
 		Int_vec_print_integer_matrix_width(cout, BB, n, n, n, 2);
@@ -1647,24 +1971,55 @@ int linear_algebra::intersect_subspaces(
 	}
 	CC = NEW_int((3 * n) * n);
 
-	Int_vec_copy(AA + k1 * n, CC, (n - k1) * n);
+	Int_vec_copy(AA + r1 * n, CC, (n - r1) * n);
 
-	Int_vec_copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
+	Int_vec_copy(BB + r2 * n, CC + (n - r1) * n, (n - r2) * n);
 
-	k3 = (n - k1) + (n - k2);
+	int nb_rows;
+
+	nb_rows = (n - r1) + (n - r2);
+
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data "
+				"r1=" << r1 << " r2=" << r2 << " nb_rows=" << nb_rows << endl;
+	}
 
 	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces CC=" << endl;
-		Int_vec_print_integer_matrix_width(cout, CC, k3, n, n, 2);
-		cout << "k3=" << k3 << endl;
+		Int_vec_print_integer_matrix_width(cout, CC, nb_rows, n, n, 2);
+		cout << "nb_rows=" << nb_rows << endl;
 	}
 
 
-	k3 = Gauss_easy(CC, k3, n);
+	int rk3;
 
-	r3 = perp_standard_with_temporary_data(n, k3, CC, B1, K, base_cols, 0);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data "
+				"before Gauss_easy nb_rows = " << nb_rows << endl;
+	}
+	rk3 = Gauss_easy(CC, nb_rows, n);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data "
+				"after Gauss_easy nb_rows=" << nb_rows << " rk3=" << rk3 << endl;
+	}
 
-	Int_vec_copy(CC + k3 * n, intersection, (n - r3) * n);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces before perp_standard_with_temporary_data (3)" << endl;
+	}
+	r3 = perp_standard_with_temporary_data(n, rk3, CC, B1, K, base_cols, verbose_level);
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data (3) r3=" << r3 << endl;
+	}
+	if (rk3 != r3) {
+		cout << "linear_algebra::intersect_subspaces rk3 != r3" << endl;
+		exit(1);
+	}
+
+	k3 = n - r3;
+	if (f_v) {
+		cout << "linear_algebra::intersect_subspaces after perp_standard_with_temporary_data (3) k3=" << k3 << endl;
+	}
+	Int_vec_copy(CC + r3 * n, intersection, k3 * n);
 
 	FREE_int(AA);
 	FREE_int(BB);
@@ -1676,13 +2031,12 @@ int linear_algebra::intersect_subspaces(
 	if (f_vv) {
 		cout << "linear_algebra::intersect_subspaces n=" << n
 				<< " dim A =" << r1 << " dim B =" << r2
-				<< " dim intersection =" << n - r3 << endl;
+				<< " dim intersection =" << k3 << endl;
 	}
-	k3 = n - r3;
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces done" << endl;
 	}
-	return n - r3;
+	return k3;
 
 }
 

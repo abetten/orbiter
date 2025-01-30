@@ -71,6 +71,9 @@ symbolic_object_builder_description::symbolic_object_builder_description()
 	f_simplify = false;
 	//std::string simplify_source;
 
+	f_reduce_exponents = false;
+	//std::string reduce_exponents_source;
+
 	f_expand = false;
 	//std::string expand_source;
 
@@ -261,6 +264,15 @@ int symbolic_object_builder_description::read_arguments(
 			if (f_v) {
 				cout << "-simplify "
 						<< " " << simplify_source
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-reduce_exponents") == 0) {
+			f_reduce_exponents = true;
+			reduce_exponents_source.assign(argv[++i]);
+			if (f_v) {
+				cout << "-reduce_exponents "
+						<< " " << reduce_exponents_source
 						<< endl;
 			}
 		}
@@ -540,6 +552,11 @@ void symbolic_object_builder_description::print()
 	if (f_simplify) {
 		cout << "-simplify "
 				<< " " << simplify_source
+				<< endl;
+	}
+	if (f_reduce_exponents) {
+		cout << "-reduce_exponents "
+				<< " " << reduce_exponents_source
 				<< endl;
 	}
 	if (f_expand) {

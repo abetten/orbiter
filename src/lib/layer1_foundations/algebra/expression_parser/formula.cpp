@@ -1129,6 +1129,45 @@ void formula::simplify(
 
 }
 
+void formula::reduce_exponents(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula::reduce_exponents" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify beginning tree = ";
+		tree->print_easy(cout);
+	}
+
+	int verbose_level_down = verbose_level - 1;
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"before tree->Root->reduce_exponents" << endl;
+	}
+
+	tree->Root->reduce_exponents(verbose_level_down);
+
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->reduce_exponents" << endl;
+	}
+	if (f_v) {
+		cout << "formula::simplify "
+				"after tree->Root->reduce_exponents tree = ";
+		tree->print_easy(cout);
+	}
+
+
+	if (f_v) {
+		cout << "formula::reduce_exponents done" << endl;
+	}
+
+}
+
 void formula::expand_in_place(
 		int f_write_trees,
 		int verbose_level)

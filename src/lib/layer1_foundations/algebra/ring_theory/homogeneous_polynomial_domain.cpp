@@ -2440,6 +2440,264 @@ int homogeneous_polynomial_domain::test_weierstrass_form(
 	return true;
 }
 
+int homogeneous_polynomial_domain::test_potential_algebraic_degree(
+		int *eqn, int eqn_size,
+		long int *Pts, int nb_pts,
+		int d,
+		other::data_structures::int_matrix *Subspace_wgr,
+		int *eqn_reduced,
+		int *eqn_kernel,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree d = " << d << endl;
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"the input set has size " << nb_pts << endl;
+
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"the input set is: " << endl;
+		Lint_vec_print(cout, Pts, nb_pts);
+		cout << endl;
+
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"the input equation is: " << endl;
+		Int_vec_print(cout, eqn, eqn_size);
+		cout << endl;
+	}
+
+	other::data_structures::int_matrix *Ideal;
+	int rk;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"before vanishing_ideal" << endl;
+	}
+	vanishing_ideal(
+			Pts, nb_pts,
+			rk, Ideal,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"after vanishing_ideal" << endl;
+	}
+	int r1, r2, ret = false;
+
+	r1 = Ideal->m;
+	r2 = Subspace_wgr->m;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"d = " << d << " r1=" << r1 << " r2=" << r2 << endl;
+	}
+
+	if (Ideal->n != eqn_size) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"Ideal->n != eqn_size" << endl;
+		exit(1);
+	}
+
+	algebra::linear_algebra::linear_algebra Linear_algebra;
+
+	Linear_algebra.init(
+			F, verbose_level);
+
+	other::data_structures::int_matrix *Intersection;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree Ideal=" << endl;
+		Ideal->print();
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree Subspace_wgr=" << endl;
+		Subspace_wgr->print();
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"before Linear_algebra.subspace_intersection" << endl;
+	}
+	Linear_algebra.subspace_intersection(
+			Ideal,
+			Subspace_wgr,
+			Intersection,
+			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"after Linear_algebra.subspace_intersection" << endl;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree Intersection=" << endl;
+		Intersection->print();
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+				"dimension of intersection = " << Intersection->m << endl;
+	}
+
+	if (Intersection->m == 0) {
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"dimension of intersection is zero" << endl;
+		}
+		ret = false;
+	}
+	else {
+
+		int *Basis_UV;
+		int *base_cols;
+		int n;
+		int k1, k2;
+
+		n = Intersection->n;
+		k1 = Intersection->m;
+		k2 = Ideal->m ;
+
+
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"before Linear_algebra.extend_basis_of_subspace" << endl;
+		}
+		Linear_algebra.extend_basis_of_subspace(
+				n, k1, Intersection->M, k2, Ideal->M,
+				Basis_UV,
+				base_cols,
+				verbose_level);
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"after Linear_algebra.extend_basis_of_subspace" << endl;
+		}
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"Basis_UV=" << endl;
+			Int_matrix_print(Basis_UV, k2, n);
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"base_cols=";
+			Int_vec_print(cout, base_cols, k2);
+			cout << endl;
+		}
+
+		int *eqn2;
+		int *eqn3;
+		int *coeffs;
+
+		eqn2 = NEW_int(n);
+		eqn3 = NEW_int(n);
+		coeffs = NEW_int(k2);
+
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree eqn=";
+			Int_vec_print(cout, eqn, n);
+			cout << endl;
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree n = " << n << endl;
+		}
+
+		Int_vec_copy(eqn, eqn2, n);
+
+		int i, a, b, col;
+
+		for (i = 0; i < k2; i++) {
+
+			col = base_cols[i];
+			if (f_v) {
+				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree i=" << i << ", cleaning column " << col << endl;
+			}
+
+			a = eqn2[col];
+			coeffs[i] = a;
+			b = F->negate(a);
+
+			Linear_algebra.linear_combination_of_vectors(
+					1, eqn2, b, Basis_UV + i * n, eqn3, n);
+
+			Int_vec_copy(eqn3, eqn2, n);
+			if (f_v) {
+				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree eqn=";
+				Int_vec_print(cout, eqn2, n);
+				cout << endl;
+			}
+
+		}
+
+		if (!Int_vec_is_zero(eqn2, n)) {
+			cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+					"eqn does not reduce to zero" << endl;
+			ret = false;
+		}
+		else {
+			if (f_v) {
+				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+						"Basis_UV=" << endl;
+				Int_matrix_print(Basis_UV, k2, n);
+				cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+						"coeffs=";
+				Int_vec_print(cout, coeffs, k2);
+				cout << endl;
+			}
+
+			if (Int_vec_is_zero(coeffs, k1)) {
+				if (f_v) {
+					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+							"coeffs[k1] is zero" << endl;
+				}
+				ret = false;
+			}
+			else {
+				Linear_algebra.mult_vector_from_the_left(
+						coeffs, Basis_UV,
+						eqn_reduced, k1, n);
+
+				Linear_algebra.mult_vector_from_the_left(
+						coeffs + k1, Basis_UV + k1 * n,
+						eqn_kernel, k2 - k1, n);
+
+				if (f_v) {
+					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+							"eqn        =";
+					Int_vec_print(cout, eqn, n);
+					cout << endl;
+
+					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+							"eqn_reduced=";
+					Int_vec_print(cout, eqn_reduced, n);
+					cout << endl;
+
+					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
+							"eqn_kernel =";
+					Int_vec_print(cout, eqn_kernel, n);
+					cout << endl;
+				}
+				ret = true;
+			}
+		}
+
+
+		FREE_int(eqn2);
+		FREE_int(eqn3);
+		FREE_int(coeffs);
+		FREE_int(Basis_UV);
+		FREE_int(base_cols);
+	}
+
+	FREE_OBJECT(Ideal);
+	FREE_OBJECT(Intersection);
+
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree done" << endl;
+	}
+
+	return ret;
+}
+
+
 int homogeneous_polynomial_domain::dimension_of_ideal(
 		long int *Pts,
 		int nb_pts, int verbose_level)
@@ -2449,10 +2707,10 @@ int homogeneous_polynomial_domain::dimension_of_ideal(
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::dimension_of_ideal" << endl;
 	}
-	int *Kernel;
-	int r, rk;
+	//int *Kernel;
+	//int r, rk;
 
-	Kernel = NEW_int(get_nb_monomials() * get_nb_monomials());
+	//Kernel = NEW_int(get_nb_monomials() * get_nb_monomials());
 
 
 	if (f_v) {
@@ -2465,6 +2723,8 @@ int homogeneous_polynomial_domain::dimension_of_ideal(
 		//P->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
 	}
 
+	other::data_structures::int_matrix *Kernel;
+	int rk, r;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
@@ -2472,15 +2732,17 @@ int homogeneous_polynomial_domain::dimension_of_ideal(
 	}
 	vanishing_ideal(
 			Pts, nb_pts,
-			rk, Kernel, verbose_level - 1);
+			rk, Kernel,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::dimension_of_ideal "
 				"after vanishing_ideal" << endl;
 	}
 
-	r = get_nb_monomials() - rk;
+	//r = get_nb_monomials() - rk;
+	r = Kernel->m;
 
-	FREE_int(Kernel);
+	FREE_OBJECT(Kernel);
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::dimension_of_ideal done" << endl;
@@ -2499,10 +2761,10 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal" << endl;
 	}
 
-	int *Kernel;
-	int r, rk;
+	//int *Kernel;
+	//int r, rk;
 
-	Kernel = NEW_int(get_nb_monomials() * get_nb_monomials());
+	//Kernel = NEW_int(get_nb_monomials() * get_nb_monomials());
 
 
 	if (f_v) {
@@ -2515,6 +2777,8 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 		//P->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
 	}
 
+	other::data_structures::int_matrix *Kernel;
+	int rk, r;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
@@ -2522,7 +2786,9 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 	}
 	vanishing_ideal(
 			Pts, nb_pts,
-			rk, Kernel, verbose_level - 1);
+			rk,
+			Kernel,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal "
 				"after vanishing_ideal" << endl;
@@ -2536,7 +2802,7 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 
 	for (h = 0; h < r; h++) {
 		cout << "generator " << h << " / " << r << " is ";
-		print_equation_relaxed(cout, Kernel + h * get_nb_monomials());
+		print_equation_relaxed(cout, Kernel->M + h * get_nb_monomials());
 		cout << endl;
 
 	}
@@ -2545,7 +2811,7 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 	cout << "looping over all generators of the ideal:" << endl;
 	for (h = 0; h < r; h++) {
 		cout << "generator " << h << " / " << r << " is ";
-		Int_vec_print(cout, Kernel + h * get_nb_monomials(), get_nb_monomials());
+		Int_vec_print(cout, Kernel->M + h * get_nb_monomials(), get_nb_monomials());
 		cout << " : " << endl;
 
 #if 0
@@ -2562,7 +2828,7 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 			Pts2[i] = Points[i];
 		}
 #endif
-		enumerate_points_lint(Kernel + h * get_nb_monomials(), Pts2, nb_pts2, verbose_level);
+		enumerate_points_lint(Kernel->M + h * get_nb_monomials(), Pts2, nb_pts2, verbose_level);
 
 
 		cout << "We found " << nb_pts2 << " points "
@@ -2576,10 +2842,31 @@ void homogeneous_polynomial_domain::explore_vanishing_ideal(
 
 	} // next h
 
+	FREE_OBJECT(Kernel);
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::explore_vanishing_ideal done" << endl;
 	}
 
+}
+
+
+void homogeneous_polynomial_domain::evaluate_point_on_all_monomials(
+		int *pt_coords,
+		int *evaluation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int j;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::evaluate_point_on_all_monomials" << endl;
+	}
+	for (j = 0; j < nb_monomials; j++) {
+		evaluation[j] =
+				F->Linear_algebra->evaluate_monomial(
+						Monomials + j * nb_variables, pt_coords, nb_variables);
+	}
 }
 
 
@@ -2589,8 +2876,7 @@ void homogeneous_polynomial_domain::make_system(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i, j;
+	int i;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_system" << endl;
@@ -2601,11 +2887,20 @@ void homogeneous_polynomial_domain::make_system(
 	System = NEW_int(nb_pts * nb_monomials);
 
 	for (i = 0; i < nb_pts; i++) {
+
+		evaluate_point_on_all_monomials(
+				Pt_coords + i * nb_variables,
+				System + i * nb_monomials,
+				verbose_level - 2);
+
+#if 0
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
 					F->Linear_algebra->evaluate_monomial(
 							Monomials + j * nb_variables, Pt_coords + i * nb_variables, nb_variables);
 		}
+#endif
+
 	}
 
 	if (f_v) {
@@ -2614,12 +2909,14 @@ void homogeneous_polynomial_domain::make_system(
 }
 
 void homogeneous_polynomial_domain::vanishing_ideal(
-		long int *Pts,
-		int nb_pts, int &r, int *Kernel, int verbose_level)
+		long int *Pts, int nb_pts, int &rank,
+		other::data_structures::int_matrix *&Kernel,
+		int verbose_level)
+// Kernel[(nb_monomials - r) * nb_monomials]
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j;
+	int i;
 	int *System;
 
 	if (f_v) {
@@ -2628,12 +2925,23 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 
 	System = NEW_int(MAX(nb_pts, nb_monomials) * nb_monomials);
 	for (i = 0; i < nb_pts; i++) {
+
 		unrank_point(v, Pts[i]);
+
+
+		evaluate_point_on_all_monomials(
+				v,
+				System + i * nb_monomials,
+				verbose_level - 2);
+
+#if 0
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
 					F->Linear_algebra->evaluate_monomial(
 							Monomials + j * nb_variables, v, nb_variables);
 		}
+#endif
+
 	}
 
 
@@ -2647,30 +2955,231 @@ void homogeneous_polynomial_domain::vanishing_ideal(
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"before RREF_and_kernel" << endl;
 	}
-	r = F->Linear_algebra->RREF_and_kernel(
+	rank = F->Linear_algebra->RREF_and_kernel(
 			nb_monomials,
 			nb_pts, System, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
-				"The system has rank " << r << endl;
+				"The system has rank " << rank << endl;
 	}
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
 		Int_matrix_print(
-				System, r, nb_monomials);
+				System, rank, nb_monomials);
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The kernel:" << endl;
 		Int_matrix_print(
-				System + r * nb_monomials,
-				nb_monomials - r, nb_monomials);
+				System + rank * nb_monomials,
+				nb_monomials - rank, nb_monomials);
 	}
+#if 0
 	Int_vec_copy(
-			System + r * nb_monomials, Kernel,
+			System + rank * nb_monomials, Kernel,
 			(nb_monomials - r) * nb_monomials);
+#endif
+
+
+	Kernel = NEW_OBJECT(other::data_structures::int_matrix);
+
+	Kernel->allocate_and_init(
+			nb_monomials - rank /* m */, nb_monomials /* n */,
+			System + rank * nb_monomials);
+
 	FREE_int(System);
+
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal done" << endl;
+	}
+}
+
+void homogeneous_polynomial_domain::subspace_with_good_reduction(
+		int degree, int modulus,
+		other::data_structures::int_matrix *&Subspace_wgr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction" << endl;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction degree = " << degree << " modulus=" << modulus << endl;
+	}
+	int rk, j;
+	int *basis;
+
+	basis = NEW_int(nb_monomials);
+	rk = 0;
+	for (j = 0; j < nb_monomials; j++) {
+		if (monomial_has_good_reduction(j, degree, modulus, 0 /*verbose_level - 3*/)) {
+			basis[rk++] = j;
+		}
+	}
+
+	Subspace_wgr = NEW_OBJECT(other::data_structures::int_matrix);
+
+	Subspace_wgr->allocate_and_initialize_with_zero(rk, nb_monomials);
+
+	int i;
+
+	for (i = 0; i < rk; i++) {
+		Subspace_wgr->M[i * nb_monomials + basis[i]] = 1;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction degree = " << degree << " modulus=" << modulus << " rk=" << rk << endl;
+	}
+
+	FREE_int(basis);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction done" << endl;
+	}
+}
+
+int homogeneous_polynomial_domain::monomial_has_good_reduction(
+		int mon_idx, int degree, int modulus,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, modulus = " << modulus << endl;
+	}
+
+	//int *mon;
+	int *reduced_monomial;
+	int i, s;
+	int ret = false;
+
+	reduced_monomial = NEW_int(nb_variables);
+
+#if 0
+	mon = Monomials + mon_idx * nb_variables;
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, monomial = ";
+		Int_vec_print(cout, mon, nb_variables);
+		cout << endl;
+	}
+#endif
+
+
+	monomial_reduction(mon_idx, modulus, reduced_monomial, verbose_level - 1);
+
+	s = 0;
+	for (i = 0; i < nb_variables; i++) {
+		s += reduced_monomial[i];
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, s = " << s << endl;
+	}
+	if (s <= degree) {
+		ret = true;
+	}
+
+	FREE_int(reduced_monomial);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction done" << endl;
+	}
+	return ret;
+}
+
+void homogeneous_polynomial_domain::monomial_reduction(
+		int mon_idx, int modulus,
+		int *reduced_monomial,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_reduction, modulus = " << modulus << endl;
+	}
+	int *mon;
+	int i, a, b;
+
+	Int_vec_zero(reduced_monomial, nb_variables);
+
+	mon = Monomials + mon_idx * nb_variables;
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_reduction, monomial = ";
+		Int_vec_print(cout, mon, nb_variables);
+		cout << endl;
+	}
+	for (i = 0; i < nb_variables; i++) {
+		a = mon[i];
+		if (a > modulus) {
+			b = a % modulus;
+			if (b == 0) {
+				b = modulus;
+			}
+		}
+		else {
+			b = a;
+		}
+		reduced_monomial[i] = b;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::monomial_reduction done" << endl;
+	}
+}
+
+void homogeneous_polynomial_domain::equation_reduce(
+		int modulus,
+		homogeneous_polynomial_domain *HPD,
+		int *eqn_in,
+		int *eqn_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::equation_reduce" << endl;
+	}
+
+	int *reduced_monomial;
+	int mon_idx;
+	int mon_idx_d;
+	int nb_mon_d;
+
+	reduced_monomial = NEW_int(nb_variables);
+	nb_mon_d = HPD->get_nb_monomials();
+	Int_vec_zero(eqn_out, nb_mon_d);
+
+	for (mon_idx = 0; mon_idx < nb_monomials; mon_idx++) {
+
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::equation_reduce mon_idx = " << mon_idx << " / " << nb_monomials << endl;
+		}
+
+		if (eqn_in[mon_idx] == 0) {
+			continue;
+		}
+
+#if 0
+		int *mon;
+		mon = Monomials + mon_idx * nb_variables;
+		if (f_v) {
+			cout << "homogeneous_polynomial_domain::monomial_reduction, monomial = ";
+			Int_vec_print(cout, mon, nb_variables);
+			cout << endl;
+		}
+#endif
+
+		monomial_reduction(
+				mon_idx, modulus,
+				reduced_monomial,
+				verbose_level - 2);
+
+		mon_idx_d = HPD->index_of_monomial(reduced_monomial);
+
+		eqn_out[mon_idx_d] = F->add(eqn_out[mon_idx_d], eqn_in[mon_idx]);
+	}
+
+	FREE_int(reduced_monomial);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::equation_reduce done" << endl;
 	}
 }
 
@@ -3219,7 +3728,9 @@ void homogeneous_polynomial_domain::create_ideal(
 		std::string &ideal_label,
 		std::string &ideal_label_tex,
 		std::string &ideal_point_set_label,
-		int &dim_kernel, int &nb_monomials, int *&Kernel,
+		int &dim_kernel, int &nb_monomials,
+		other::data_structures::int_matrix *&Kernel,
+		//int *&Kernel,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3258,13 +3769,14 @@ void homogeneous_polynomial_domain::create_ideal(
 				"before HPD->vanishing_ideal" << endl;
 	}
 
-	Kernel = NEW_int(nb_monomials * nb_monomials);
+	//Kernel = NEW_int(nb_monomials * nb_monomials);
 
 	int r;
 
 	vanishing_ideal(
-			Pts,
-			nb_pts, r, Kernel, verbose_level - 3);
+			Pts, nb_pts, r,
+			Kernel,
+			verbose_level - 3);
 
 
 	dim_kernel = nb_monomials - r;

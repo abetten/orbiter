@@ -1933,7 +1933,9 @@ void csv_file_support::do_csv_file_concatenate(
 }
 
 void csv_file_support::do_csv_file_concatenate_from_mask(
-		std::string &fname_in_mask, int N, std::string &fname_out,
+		std::string &fname_in_mask,
+		int N_min, int N_max,
+		std::string &fname_out,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1944,6 +1946,9 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 
 	int nb_files;
 	long int i;
+	int N;
+
+	N = N_max - N_min + 1;
 
 	nb_files = N;
 
@@ -1962,7 +1967,7 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 
 		std::string fname_in;
 
-		fname_in = ST.printf_d(fname_in_mask, i);
+		fname_in = ST.printf_d(fname_in_mask, N_min + i);
 
 		cout << "Reading table " << fname_in << endl;
 		S[i].read_spreadsheet(fname_in, 0 /*verbose_level*/);
@@ -1995,7 +2000,10 @@ void csv_file_support::do_csv_file_concatenate_from_mask(
 		}
 		ost << "END" << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << Fio->file_size(fname_out) << endl;
+
+	if (f_v) {
+		cout << "Written file " << fname_out << " of size " << Fio->file_size(fname_out) << endl;
+	}
 
 
 	if (f_v) {

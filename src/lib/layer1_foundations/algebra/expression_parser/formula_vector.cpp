@@ -1167,6 +1167,86 @@ void formula_vector::simplify(
 	}
 }
 
+void formula_vector::reduce_exponents(
+		formula_vector *A,
+		algebra::field_theory::finite_field *Fq,
+		std::string &label_txt,
+		std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "formula_vector::reduce_exponents" << endl;
+	}
+	init_and_allocate(
+			label_txt,
+			label_tex,
+			A->f_has_managed_variables,
+			A->managed_variables_text,
+			A->len, verbose_level);
+
+
+	f_matrix = A->f_matrix;
+	nb_rows = A->nb_rows;
+	nb_cols = A->nb_cols;
+
+	int i;
+
+	for (i = 0; i < A->len; i++) {
+		if (f_v) {
+			cout << "formula_vector::reduce_exponents "
+					"node " << i << " / " << A->len
+					<< " before copy_to" << endl;
+		}
+
+		A->V[i].copy_to(
+				&V[i], verbose_level - 2);
+
+		if (f_v) {
+			cout << "formula_vector::reduce_exponents "
+					"node " << i << " / " << A->len
+					<< " after copy_to" << endl;
+		}
+
+		if (f_v) {
+			cout << "formula_vector::reduce_exponents "
+					"node " << i << " / " << A->len
+					<< " before V[i].reduce_exponents" << endl;
+		}
+
+		V[i].reduce_exponents(verbose_level - 2);
+
+		if (f_v) {
+			cout << "formula_vector::reduce_exponents "
+					"node " << i << " / " << A->len
+					<< " after V[i].reduce_exponents" << endl;
+			cout << "formula_vector::reduce_exponents ";
+			V[i].tree->Root->print_subtree_easy(cout);
+			cout << endl;
+		}
+
+		if (f_v) {
+			cout << "formula_vector::reduce_exponents "
+					"node " << i << " / " << A->len
+					<< " done" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "formula_vector::reduce_exponents before collect_variables" << endl;
+	}
+	collect_variables(verbose_level);
+	if (f_v) {
+		cout << "formula_vector::reduce_exponents after collect_variables" << endl;
+	}
+
+	if (f_v) {
+		cout << "formula_vector::reduce_exponents done" << endl;
+	}
+}
+
+
 void formula_vector::expand(
 		formula_vector *A,
 		algebra::field_theory::finite_field *Fq,

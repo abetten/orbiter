@@ -108,7 +108,8 @@ void polynomial_ring_activity::perform_activity(
 
 		int dim_kernel;
 		int nb_monomials;
-		int *Kernel;
+		//int *Kernel;
+		other::data_structures::int_matrix *Kernel;
 
 		HPD->create_ideal(
 				Descr->ideal_label_txt,
@@ -121,12 +122,13 @@ void polynomial_ring_activity::perform_activity(
 			cout << "polynomial_ring_activity::perform_activity "
 					"The ideal has dimension " << dim_kernel << endl;
 			cout << "generators for the ideal:" << endl;
-			Int_matrix_print(Kernel, dim_kernel, nb_monomials);
+			Kernel->print();
+			//Int_matrix_print(Kernel, dim_kernel, nb_monomials);
 
 			int i;
 
 			for (i = 0; i < dim_kernel; i++) {
-				HPD->print_equation_relaxed(cout, Kernel + i * nb_monomials);
+				HPD->print_equation_relaxed(cout, Kernel->M + i * nb_monomials);
 				cout << endl;
 			}
 		}

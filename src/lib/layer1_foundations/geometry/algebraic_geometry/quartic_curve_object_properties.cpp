@@ -736,15 +736,15 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 #endif
 
 
-	int *Kernel;
+	other::data_structures::int_matrix *Kernel;
+	//int *Kernel;
 	int *w1;
 	int *w2;
 	int r, ns;
 
-	Kernel = NEW_int(QO->Dom->Poly2_3->get_nb_monomials() * QO->Dom->Poly2_3->get_nb_monomials());
+	//Kernel = NEW_int(QO->Dom->Poly2_3->get_nb_monomials() * QO->Dom->Poly2_3->get_nb_monomials());
 	w1 = NEW_int(QO->Dom->Poly2_3->get_nb_monomials());
 	w2 = NEW_int(QO->Dom->Poly2_3->get_nb_monomials());
-
 
 
 	QO->Dom->Poly2_3->vanishing_ideal(
@@ -767,7 +767,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 #endif
 	}
 
-	FREE_int(Kernel);
+	FREE_OBJECT(Kernel);
 	FREE_int(w1);
 	FREE_int(w2);
 

@@ -245,7 +245,9 @@ public:
 			std::vector<std::string> &fname, std::string &fname_out,
 			int verbose_level);
 	void do_csv_file_concatenate_from_mask(
-			std::string &fname_in_mask, int N, std::string &fname_out,
+			std::string &fname_in_mask,
+			int N_min, int N_max,
+			std::string &fname_out,
 			int verbose_level);
 	void do_csv_file_latex(std::string &fname,
 			int f_produce_latex_header,

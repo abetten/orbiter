@@ -2655,6 +2655,90 @@ void syntax_tree_node::simplify_exponents(
 
 }
 
+
+void syntax_tree_node::reduce_exponents(
+		int verbose_level)
+// X^q = X for all elements in F_q, hence we can reduce exponents "mod q-1"
+// except X^q-1 canod reduce to X^0.
+// So, we reduce to the least integer in {1,...,q-1} mod q-1.
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree_node::reduce_exponents" << endl;
+	}
+
+	if (Tree->Fq == NULL) {
+		cout << "syntax_tree_node::simplify_exponents "
+				"Tree->Fq == NULL" << endl;
+		exit(1);
+	}
+
+
+	if (f_terminal) {
+
+		if (f_has_exponent) {
+
+			int q = Tree->Fq->q;
+			int r;
+
+			int exp = exponent;
+
+			if (f_v) {
+				cout << "syntax_tree_node::reduce_exponents "
+						"raising to the power of " << exp << endl;
+			}
+			if (exp > q - 1) {
+				r = exp % (q - 1);
+				if (r == 0) {
+					r = q - 1;
+				}
+			}
+			else {
+				r = exp;
+			}
+			exponent = r;
+			if (f_v) {
+				cout << "syntax_tree_node::reduce_exponents "
+						"raising to the power of " << exp << " becomes raising to the power " << r << endl;
+			}
+		}
+	}
+	else {
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::reduce_exponents "
+						"simplifying multiplication node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+			int i;
+
+			for (i = 0; i < nb_nodes; i++) {
+				Nodes[i]->reduce_exponents(verbose_level - 2);
+			}
+		}
+		else if (type == operation_type_add) {
+			if (f_v) {
+				cout << "syntax_tree_node::reduce_exponents "
+						"simplifying addition node, "
+						"nb_children = " << nb_nodes << endl;
+			}
+			int i;
+
+			for (i = 0; i < nb_nodes; i++) {
+				Nodes[i]->reduce_exponents(verbose_level - 2);
+			}
+		}
+
+	}
+
+	if (f_v) {
+		cout << "syntax_tree_node::reduce_exponents done" << endl;
+	}
+
+}
+
+
 void syntax_tree_node::sort_terms(
 		int verbose_level)
 // called from formula::simplify

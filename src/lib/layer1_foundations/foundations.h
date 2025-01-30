@@ -508,6 +508,7 @@ namespace combinatorics {
 		class boolean_function_domain;
 		class permutations;
 		class polynomial_function_domain;
+		class special_functions_domain;
 
 	}
 

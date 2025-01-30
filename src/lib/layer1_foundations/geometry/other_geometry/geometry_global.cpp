@@ -3296,13 +3296,33 @@ void geometry_global::create_orthogonal(
 	if (f_v) {
 		cout << "geometry_global::create_orthogonal" << endl;
 	}
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal epsilon = " << epsilon << endl;
+		cout << "geometry_global::create_orthogonal n = " << n << endl;
+		cout << "geometry_global::create_orthogonal q = " << F->q << endl;
+	}
 	long int i, j;
 	int d = n + 1;
 	int *v;
 	geometry::other_geometry::geometry_global Gg;
 	orthogonal_geometry::quadratic_form *Quadratic_form;
 
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal "
+				"before Gg.nb_pts_Qepsilon" << endl;
+	}
 	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, F->q);
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal "
+				"after Gg.nb_pts_Qepsilon" << endl;
+	}
+
+	if (f_v) {
+		cout << "geometry_global::create_orthogonal epsilon = " << epsilon << endl;
+		cout << "geometry_global::create_orthogonal n = " << n << endl;
+		cout << "geometry_global::create_orthogonal q = " << F->q << endl;
+		cout << "geometry_global::create_orthogonal nb_pts = " << nb_pts << endl;
+	}
 
 	v = NEW_int(d);
 	Pts = NEW_lint(nb_pts);
@@ -3314,7 +3334,7 @@ void geometry_global::create_orthogonal(
 		cout << "geometry_global::create_orthogonal "
 				"before Quadratic_form->init" << endl;
 	}
-	Quadratic_form->init(epsilon, n, F, verbose_level);
+	Quadratic_form->init(epsilon, d, F, verbose_level);
 	if (f_v) {
 		cout << "geometry_global::create_orthogonal "
 				"after Quadratic_form->init" << endl;

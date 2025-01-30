@@ -1335,6 +1335,7 @@ public:
 			int epsilon, int n,
 			algebra::field_theory::finite_field *F,
 			int verbose_level);
+	// here, n is the vector space dimension
 	void init_form_and_Gram_matrix(
 			int verbose_level);
 	void make_Gram_matrix(

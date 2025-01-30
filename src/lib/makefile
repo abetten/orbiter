@@ -139,6 +139,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/special_functions/boolean_function_domain.o \
 		layer1_foundations/combinatorics/special_functions/permutations.o \
 		layer1_foundations/combinatorics/special_functions/polynomial_function_domain.o \
+		layer1_foundations/combinatorics/special_functions/special_functions_domain.o \
 		layer1_foundations/combinatorics/tactical_decompositions/decomposition_scheme.o \
 		layer1_foundations/combinatorics/tactical_decompositions/decomposition.o \
 		layer1_foundations/combinatorics/tactical_decompositions/geo_parameter.o \

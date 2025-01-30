@@ -325,19 +325,49 @@ public:
 			int rk,
 		int &a1, int &a2, int &a3, int &a4, int &a6,
 		int verbose_level);
+	int test_potential_algebraic_degree(
+			int *eqn, int eqn_size,
+			long int *Pts, int nb_pts,
+			int d,
+			other::data_structures::int_matrix *Subspace_wgr,
+			int *eqn_reduced,
+			int *eqn_kernel,
+			int verbose_level);
 	int dimension_of_ideal(
 			long int *Pts,
 			int nb_pts, int verbose_level);
 	void explore_vanishing_ideal(
 			long int *Pts,
 			int nb_pts, int verbose_level);
+	void evaluate_point_on_all_monomials(
+			int *pt_coords,
+			int *evaluation,
+			int verbose_level);
 	void make_system(
 			int *Pt_coords, int nb_pts,
 			int *&System, int &nb_cols,
 			int verbose_level);
 	void vanishing_ideal(
-			long int *Pts, int nb_pts, int &r, int *Kernel,
+			long int *Pts, int nb_pts, int &r,
+			other::data_structures::int_matrix *&Kernel,
 		int verbose_level);
+	void subspace_with_good_reduction(
+			int degree, int modulus,
+			other::data_structures::int_matrix *&Subspace_wgr,
+			int verbose_level);
+	int monomial_has_good_reduction(
+			int mon_idx, int degree, int modulus,
+			int verbose_level);
+	void monomial_reduction(
+			int mon_idx, int modulus,
+			int *reduced_monomial,
+			int verbose_level);
+	void equation_reduce(
+			int modulus,
+			homogeneous_polynomial_domain *HPD,
+			int *eqn_in,
+			int *eqn_out,
+			int verbose_level);
 	int compare_monomials(
 			int *M1, int *M2);
 	int compare_monomials_PART(
@@ -378,7 +408,9 @@ public:
 			std::string &ideal_label,
 			std::string &ideal_label_tex,
 			std::string &ideal_point_set_label,
-			int &dim_kernel, int &nb_monomials, int *&Kernel,
+			int &dim_kernel, int &nb_monomials,
+			other::data_structures::int_matrix *&Kernel,
+			//int *&Kernel,
 			int verbose_level);
 	void create_projective_curve(
 			std::string &variety_label_txt,
@@ -1281,6 +1313,8 @@ public:
 			unipoly_object p);
 	void print_object_sstr_latex(
 			unipoly_object p, std::stringstream &ost);
+	std::string stringify_object(
+			unipoly_object p);
 	void print_object_sstr(
 			unipoly_object p, std::stringstream &ost);
 	void print_object_tight(

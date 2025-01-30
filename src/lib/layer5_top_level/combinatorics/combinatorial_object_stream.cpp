@@ -1261,6 +1261,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 
 void combinatorial_object_stream::do_algebraic_degree(
 		projective_geometry::projective_space_with_action *PA,
+		int *&Algebraic_degree,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1272,10 +1273,11 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
 
-	int n, q, m, i;
+	int n, q, m, i, qm1;
 
 	n = PA->P->Subspaces->n + 1;
 	q = PA->F->q;
+	qm1 = q - 1;
 
 	m = (q - 1) * n;
 
@@ -1287,7 +1289,7 @@ void combinatorial_object_stream::do_algebraic_degree(
 		//Descr->;
 
 		if (f_v) {
-			cout << "symbol_definition::definition_of_polynomial_ring "
+			cout << "combinatorial_object_stream::do_algebraic_degree "
 					"before HPD->init i=" << i << endl;
 		}
 		HPD[i].init(
@@ -1301,8 +1303,77 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 
 
-	int input_idx, d, r;
 
+	combinatorics::special_functions::special_functions_domain Special_functions_domain;
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"before Special_functions_domain.init" << endl;
+	}
+
+	Special_functions_domain.init(
+			PA->P,
+			verbose_level);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"after Special_functions_domain.init" << endl;
+	}
+
+
+
+
+	int d;
+
+	other::data_structures::int_matrix **Subspace_wgr;
+	int *Subspace_wgr_rk;
+
+	Subspace_wgr = (other::data_structures::int_matrix **) NEW_pvoid(m + 1);
+
+	Subspace_wgr_rk = NEW_int(m + 1);
+	Subspace_wgr_rk[0] = 0;
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"before computing subspaces with good reduction" << endl;
+	}
+
+
+	for (d = 1; d <= m; d++) {
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"before HPD[m].subspace_with_good_reduction, d=" << d << endl;
+		}
+		HPD[m].subspace_with_good_reduction(
+				d /* degree */, qm1 /* modulus */,
+				Subspace_wgr[d],
+				verbose_level - 2);
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"after HPD[m].subspace_with_good_reduction" << endl;
+		}
+
+		Subspace_wgr_rk[d] = Subspace_wgr[d]->m;
+
+	}
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"after computing subspaces with good reduction" << endl;
+	}
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree Subspace_wgr_rk = ";
+		Int_vec_print(cout, Subspace_wgr_rk, m + 1);
+		cout << endl;
+	}
+
+	int input_idx;
+
+
+	Algebraic_degree = NEW_int(IS->Objects.size());
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
@@ -1310,19 +1381,175 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
 
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"input_idx =  " << input_idx << " / " << IS->Objects.size() << endl;
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"the input set has size " << OwCF->sz << endl;
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"the input set is: " << endl;
+			Lint_vec_print(cout, OwCF->set, OwCF->sz);
+			cout << endl;
+		}
+
+
+		std::string poly_rep;
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"before Special_functions_domain.make_polynomial_representation" << endl;
+		}
+		Special_functions_domain.make_polynomial_representation(
+				OwCF->set, OwCF->sz,
+				poly_rep,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"after Special_functions_domain.make_polynomial_representation" << endl;
+		}
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"poly_rep = " << poly_rep << endl;
+		}
+
+
+		int *eqn;
+		int eqn_size;
+		std::string name_of_formula;
+		std::string name_of_formula_tex;
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"before HPD[m].parse_equation_wo_parameters" << endl;
+		}
+		HPD[m].parse_equation_wo_parameters(
+				name_of_formula,
+				name_of_formula_tex,
+				poly_rep /*equation_text*/,
+				eqn, eqn_size,
+				0 /*verbose_level - 5*/);
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"after HPD[m].parse_equation_wo_parameters" << endl;
+		}
+		if (f_v) {
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"eqn = ";
+			Int_vec_print(cout, eqn, eqn_size);
+			cout << endl;
+		}
+
+
+		int *eqn_reduced;
+		int *eqn_kernel;
+
+		eqn_reduced = NEW_int(eqn_size);
+		eqn_kernel = NEW_int(eqn_size);
+
 		for (d = 1; d <= m; d++) {
+
+			if (f_v) {
+				cout << "combinatorial_object_stream::do_algebraic_degree "
+						"degree = " << d << endl;
+			}
+			if (f_v) {
+				cout << "combinatorial_object_stream::do_algebraic_degree "
+						"before HPD[m].test_potential_algebraic_degree" << endl;
+			}
+
+			if (HPD[m].test_potential_algebraic_degree(
+				eqn, eqn_size,
+				OwCF->set, OwCF->sz,
+				d,
+				Subspace_wgr[d],
+				eqn_reduced,
+				eqn_kernel,
+				verbose_level - 1)) {
+
+				if (f_v) {
+					cout << "combinatorial_object_stream::do_algebraic_degree "
+							"HPD[m].test_potential_algebraic_degree returns true, algebraic degree = " << d << endl;
+				}
+				break;
+			}
+
+
+			if (f_v) {
+				cout << "combinatorial_object_stream::do_algebraic_degree "
+						"HPD[m].test_potential_algebraic_degree returns false" << endl;
+			}
+
+#if 0
 			r = HPD[d].dimension_of_ideal(
 				OwCF->set, OwCF->sz, 0 /*verbose_level*/);
 			if (r) {
 				break;
 			}
+#endif
+
 		}
 
-		cout << "input " << input_idx << " : ";
+		int *eqn_reduced2;
+
+		eqn_reduced2 = NEW_int(HPD[d].get_nb_monomials());
+
+
+		cout << "input " << input_idx << " / " << IS->Objects.size() << " : ";
 		Lint_vec_print(cout, OwCF->set, OwCF->sz);
 		cout << " algebraic degree is " << d << endl;
 
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"eqn_reduced=";
+		Int_vec_print_fully(cout, eqn_reduced, eqn_size);
+		cout << endl;
+		cout << "eqn_size=" << eqn_size << endl;
+
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"eqn_reduced=";
+		HPD[m].print_equation(cout, eqn_reduced);
+		cout << endl;
+
+
+		if (d < m) {
+			HPD[m].equation_reduce(
+					q - 1 /*modulus*/,
+					&HPD[d],
+					eqn_reduced,
+					eqn_reduced2,
+					verbose_level - 1);
+
+		}
+		else {
+			Int_vec_copy(eqn_reduced, eqn_reduced2, eqn_size);
+		}
+
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"eqn_reduced2=";
+		HPD[d].print_equation(cout, eqn_reduced2);
+		cout << endl;
+
+
+		Algebraic_degree[input_idx] = d;
+
+		FREE_int(eqn_reduced);
+		FREE_int(eqn_kernel);
+
 	}
+
+
+	cout << "combinatorial_object_stream::do_algebraic_degree Algebraic_degree=";
+	Int_vec_print(cout, Algebraic_degree, IS->Objects.size());
+	cout << endl;
+
+
+	for (d = 1; d <= m; d++) {
+		FREE_OBJECT(Subspace_wgr[d]);
+	}
+	FREE_pvoid((void **) Subspace_wgr);
+
 
 
 	if (f_v) {

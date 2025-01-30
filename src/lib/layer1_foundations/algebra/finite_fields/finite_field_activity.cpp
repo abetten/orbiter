@@ -692,9 +692,13 @@ void finite_field_activity::perform_activity(
 			cout << "finite_field_activity::perform_activity "
 					"get_primitive_polynomial: ";
 			//cout << d << " : " << rk << " : ";
-			cout << "\"" << rk << "\", // ";
-			FX.print_object(m, cout);
-			cout << endl;
+			cout << "\"" << rk << "\", ";
+
+			string s;
+
+			s = FX.stringify_object(m);
+			//FX.print_object(m, cout);
+			cout << s << " //" << endl;
 		}
 
 
@@ -736,9 +740,12 @@ void finite_field_activity::perform_activity(
 				cout << "finite_field_activity::perform_activity "
 						"get_primitive_polynomial: ";
 				//cout << d << " : " << rk << " : ";
-				cout << "\"" << rk << "\", // ";
-				FX.print_object(m, cout);
-				cout << endl;
+				cout << "\"" << rk << "\",  ";
+				string s;
+
+				s = FX.stringify_object(m);
+				//FX.print_object(m, cout);
+				cout << s << " //" << endl;
 			}
 
 

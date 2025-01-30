@@ -802,9 +802,17 @@ void combinatorial_object_activity::perform_activity_combo(
 					"before Combo->do_algebraic_degree" << endl;
 		}
 
+
+		int *Algebraic_degree;
+
 		Combo->do_algebraic_degree(
 				PA,
+				Algebraic_degree,
 				verbose_level);
+
+		cout << "combinatorial_object_activity::perform_activity_combo Algebraic_degree=";
+		Int_vec_print(cout, Algebraic_degree, Combo->IS->Objects.size());
+		cout << endl;
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "

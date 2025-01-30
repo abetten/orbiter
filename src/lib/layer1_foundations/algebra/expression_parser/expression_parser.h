@@ -105,6 +105,12 @@ public:
 			std::string &label_txt,
 			std::string &label_tex,
 			int verbose_level);
+	void reduce_exponents(
+			formula_vector *A,
+			algebra::field_theory::finite_field *Fq,
+			std::string &label_txt,
+			std::string &label_tex,
+			int verbose_level);
 	void expand(
 			formula_vector *A,
 			algebra::field_theory::finite_field *Fq,
@@ -294,6 +300,8 @@ public:
 			int verbose_level);
 	void simplify(
 			int verbose_level);
+	void reduce_exponents(
+			int verbose_level);
 	void expand_in_place(
 			int f_write_trees,
 			int verbose_level);
@@ -466,6 +474,10 @@ public:
 	int f_simplify;
 	std::string simplify_source;
 
+	int f_reduce_exponents;
+	std::string reduce_exponents_source;
+
+
 	int f_expand;
 	std::string expand_source;
 
@@ -589,6 +601,10 @@ public:
 			std::string &label,
 			int verbose_level);
 	void do_simplify(
+			symbolic_object_builder_description *Descr,
+			std::string &label,
+			int verbose_level);
+	void do_reduce_exponents(
 			symbolic_object_builder_description *Descr,
 			std::string &label,
 			int verbose_level);
@@ -840,6 +856,11 @@ public:
 			int verbose_level);
 	void simplify_exponents(
 			int verbose_level);
+	void reduce_exponents(
+			int verbose_level);
+	// X^q = X for all elements in F_q, hence we can reduce exponents "mod q-1"
+	// except X^q-1 canod reduce to X^0.
+	// So, we reduce to the least integer in {1,...,q-1} mod q-1.
 	void sort_terms(
 			int verbose_level);
 	void collect_like_terms(

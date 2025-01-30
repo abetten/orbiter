@@ -175,8 +175,15 @@ void polynomial_function_domain::setup_polynomial_rings(
 		// We need one more variable to capture the constants
 		// So, we are really making homogeneous polynomials
 		// for projective space PG(n,2) with n+1 variables.
+	if (f_v) {
+		cout << "polynomial_function_domain::setup_polynomial_rings nb_vars = " << nb_vars << endl;
+	}
+	if (f_v) {
+		cout << "polynomial_function_domain::setup_polynomial_rings max_degree = " << max_degree << endl;
+	}
 
-	Poly = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, max_degree + 1);
+	Poly = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, max_degree + 2);
+	//  It was max_degree + 1 before. Do we need the + 2 ?
 
 	A_poly = NEW_pint(max_degree + 1);
 	B_poly = NEW_pint(max_degree + 1);
@@ -186,10 +193,22 @@ void polynomial_function_domain::setup_polynomial_rings(
 			cout << "polynomial_function_domain::setup_polynomial_rings "
 					"setting up polynomial ring of degree " << degree << endl;
 		}
+		if (f_v) {
+			cout << "polynomial_function_domain::setup_polynomial_rings "
+					"before Poly[degree].init" << endl;
+		}
 		Poly[degree].init(
 				Fq, nb_vars, degree,
 				t_PART,
-				0 /* verbose_level */);
+				verbose_level - 1);
+		if (f_v) {
+			cout << "polynomial_function_domain::setup_polynomial_rings "
+					"after Poly[degree].init" << endl;
+		}
+		if (f_v) {
+			cout << "polynomial_function_domain::setup_polynomial_rings "
+					"nb_monomials = " << Poly[degree].get_nb_monomials() << endl;
+		}
 		A_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
 		B_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
 		C_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
@@ -222,7 +241,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 		int *func, int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = false; //(verbose_level >= 2);
 	geometry::other_geometry::geometry_global Gg;
 	int s, i, h, idx; //idx_last
 	int *vec;
@@ -235,8 +254,10 @@ void polynomial_function_domain::compute_polynomial_representation(
 	if (f_v) {
 		cout << "func=" << endl;
 		for (s = 0; s < Q; s++) {
-			cout << s << " : " << func[s] << endl;
+			//cout << s << " : " << func[s] << endl;
+			cout << func[s];
 		}
+		cout << endl;
 		cout << "Poly[n].nb_monomials=" << Poly[n].get_nb_monomials() << endl;
 	}
 	m1 = Fq->negate(1); // minus one
@@ -256,7 +277,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 	for (s = 0; s < Q; s++) {
 
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "polynomial_function_domain::compute_polynomial_representation "
 					"s=" << s << " / " << Q << endl;
 		}
@@ -267,7 +288,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 		Gg.AG_element_unrank(q, vec, 1, n, s);
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "the function value at s=" << s << " is " << func[s] << endl;
 			cout << "vec=" << endl;
 			Int_vec_print(cout, vec, n);
@@ -306,7 +327,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 			A_poly[1][idx] = Fq->negate(vec[i]);
 
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "created the polynomial x_i-vec[i]*x_n = ";
 				Poly[1].print_equation(cout, A_poly[1]);
 				cout << endl;
@@ -322,7 +343,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 							A_poly[1], B_poly[j - 1], B_poly[j],
 							0 /*verbose_level*/);
 			}
-			if (f_v) {
+			if (f_vv) {
 				cout << "after raising to the power q-1: ";
 				Poly[q - 1].print_equation(cout, B_poly[q - 1]);
 				cout << endl;
@@ -377,7 +398,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 #endif
 
-			if (f_v) {
+			if (f_vv) {
 				cout << "s=" << s << " / " << Q << " : ";
 				Poly[(i + 1) * (q - 1)].print_equation(
 						cout, C_poly[(i + 1) * (q - 1)]);
@@ -386,7 +407,7 @@ void polynomial_function_domain::compute_polynomial_representation(
 
 
 		} // next i
-		if (f_v) {
+		if (f_vv) {
 			cout << "s=" << s << " / " << Q << " : ";
 			Poly[max_degree].print_equation(
 					cout, C_poly[max_degree]);
@@ -425,17 +446,18 @@ void polynomial_function_domain::compute_polynomial_representation(
 		evaluate(coeff, f);
 
 		for (h = 0; h < Q; h++) {
-			cout << h << " : " << func[h] << " : " << f[h];
+			//cout << h << " : " << func[h] << " : " << f[h];
+			cout << func[h];
 #if 0
 			if (func[h] != f[h]) {
 				cout << "error";
 				f_error = true;
 			}
 #endif
-			cout << endl;
 		}
+		cout << endl;
 		if (f_error) {
-			cout << "an error has occurred" << endl;
+			cout << "an error has occurred in position " << h << endl;
 			exit(1);
 		}
 		FREE_int(f);
@@ -554,10 +576,13 @@ void polynomial_function_domain::multiply_i_times_j(
 				continue;
 			}
 			c = Fq->mult(a, b);
+
+			// add the exponents of the monomials over the integers:
 			for (w = 0; w <= n; w++) {
 				M[w] = Poly[i].get_monomial(u, w)
 						+ Poly[j].get_monomial(v, w);
 			}
+
 			idx = Poly[ipj].index_of_monomial(M);
 			C_eqn[idx] = Fq->add(C_eqn[idx], c);
 		}

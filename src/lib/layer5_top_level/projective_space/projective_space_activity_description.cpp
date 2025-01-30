@@ -222,6 +222,11 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string evaluation_matrix_ring;
 
 
+	f_polynomial_representation = false;
+	//std::string polynomial_representation_set_label;
+
+
+
 
 
 
@@ -908,7 +913,15 @@ int projective_space_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-polynomial_representation") == 0) {
+			f_polynomial_representation = true;
+			polynomial_representation_set_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-polynomial_representation"
+						<< " " << polynomial_representation_set_label
+					<< endl;
+			}
+		}
 
 
 		// classification stuff:
@@ -1378,6 +1391,11 @@ void projective_space_activity_description::print()
 	if (f_evaluation_matrix) {
 		cout << "-evaluation_matrix"
 				<< " " << evaluation_matrix_ring
+			<< endl;
+	}
+	if (f_polynomial_representation) {
+		cout << "-polynomial_representation"
+				<< " " << polynomial_representation_set_label
 			<< endl;
 	}
 

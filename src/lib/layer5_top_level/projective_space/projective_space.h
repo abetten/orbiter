@@ -242,6 +242,9 @@ public:
 	int f_evaluation_matrix;
 	std::string evaluation_matrix_ring;
 
+	int f_polynomial_representation;
+	std::string polynomial_representation_set_label;
+
 
 	// TABLES/projective_space_activity_4.tex
 

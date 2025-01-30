@@ -876,14 +876,15 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(
 #endif
 
 
-	int *Kernel;
+	other::data_structures::int_matrix *Kernel;
+	//int *Kernel;
 	int *w1;
 	int *w2;
 	int r, ns;
 
-	Kernel = NEW_int(
-			SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials()
-			* SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
+	//Kernel = NEW_int(
+	//		SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials()
+	//		* SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 	w1 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 	w2 = NEW_int(SO->Surf->PolynomialDomains->Poly3_4->get_nb_monomials());
 
@@ -909,7 +910,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(
 #endif
 	}
 
-	FREE_int(Kernel);
+	FREE_OBJECT(Kernel);
 	FREE_int(w1);
 	FREE_int(w2);
 

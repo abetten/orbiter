@@ -280,6 +280,24 @@ void symbolic_object_builder::process_arguments(
 		}
 
 	}
+	else if (Descr->f_reduce_exponents) {
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -reduce_exponents"
+					<< " " << Descr->simplify_source
+					<< endl;
+		}
+
+
+		do_reduce_exponents(
+					Descr,
+					label,
+					verbose_level - 1);
+
+		if (f_v) {
+			cout << "symbolic_object_builder::process_arguments -reduce_exponents finished" << endl;
+		}
+
+	}
 	else if (Descr->f_expand) {
 		if (f_v) {
 			cout << "symbolic_object_builder::process_arguments -expand"
@@ -755,6 +773,46 @@ void symbolic_object_builder::do_simplify(
 
 	if (f_v) {
 		cout << "symbolic_object_builder::do_simplify done" << endl;
+	}
+
+}
+
+void symbolic_object_builder::do_reduce_exponents(
+		symbolic_object_builder_description *Descr,
+		std::string &label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_reduce_exponents" << endl;
+	}
+
+	symbolic_object_builder *O_source;
+
+	O_source = Get_symbol(Descr->reduce_exponents_source);
+
+	Formula_vector = NEW_OBJECT(expression_parser::formula_vector);
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_reduce_exponents "
+				"before Formula_vector->simplify" << endl;
+	}
+	Formula_vector->reduce_exponents(
+			O_source->Formula_vector,
+			Fq,
+			label, label,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "symbolic_object_builder::do_reduce_exponents "
+				"after Formula_vector->simplify" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "symbolic_object_builder::do_reduce_exponents done" << endl;
 	}
 
 }

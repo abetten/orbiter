@@ -2357,6 +2357,8 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 	}
 
 
+	ring_theory::unipoly_domain FX(F);
+
 
 	{
 
@@ -2408,10 +2410,28 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(
 				for (j = 0; j <= deg; j++) {
 					ost << T[i * (deg + 1) + j];
 				}
-				ost << " : ";
+				ost << "$ : $";
 				rk = GG.AG_element_rank(F->q, T + i * (deg + 1), 1, deg + 1);
 				ost << rk;
-				ost << "$\\\\" << endl;
+				ost << "$";
+
+
+
+				ring_theory::unipoly_object m;
+
+
+				FX.create_object_by_rank(
+					m, rk,
+					0 /*verbose_level*/);
+
+				string s;
+
+				s = FX.stringify_object(m);
+
+				ost << " : $" << s << "$";
+
+
+				ost << "\\\\" << endl;
 			}
 			//ost << "\\end{multicols}" << endl;
 

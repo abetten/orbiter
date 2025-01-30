@@ -10,7 +10,8 @@ MODULES = \
 		apn_functions.o \
 		boolean_function_domain.o \
 		permutations.o \
-		polynomial_function_domain.o
+		polynomial_function_domain.o \
+		special_functions_domain.o
 
 
 all : $(MODULES)

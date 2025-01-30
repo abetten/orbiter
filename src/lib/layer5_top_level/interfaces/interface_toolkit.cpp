@@ -98,7 +98,8 @@ interface_toolkit::interface_toolkit()
 	//std::vector<std::string> csv_file_concatenate_fname_in;
 
 	f_csv_file_concatenate_from_mask = false;
-	csv_file_concatenate_from_mask_N = 0;
+	csv_file_concatenate_from_mask_N_min = 0;
+	csv_file_concatenate_from_mask_N_max = 0;
 	//std::string csv_file_concatenate_from_mask_mask;
 	//std::string csv_file_concatenate_from_mask_fname_out;
 
@@ -781,12 +782,14 @@ void interface_toolkit::read_arguments(
 	}
 	else if (ST.stringcmp(argv[i], "-csv_file_concatenate_from_mask") == 0) {
 		f_csv_file_concatenate_from_mask = true;
-		csv_file_concatenate_from_mask_N = ST.strtoi(argv[++i]);
+		csv_file_concatenate_from_mask_N_min = ST.strtoi(argv[++i]);
+		csv_file_concatenate_from_mask_N_max = ST.strtoi(argv[++i]);
 		csv_file_concatenate_from_mask_mask.assign(argv[++i]);
 		csv_file_concatenate_from_mask_fname_out.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_concatenate_from_mask "
-					<< " " << csv_file_concatenate_from_mask_N
+					<< " " << csv_file_concatenate_from_mask_N_min
+					<< " " << csv_file_concatenate_from_mask_N_max
 					<< " " << csv_file_concatenate_from_mask_mask
 					<< " " << csv_file_concatenate_from_mask_fname_out
 					<< endl;
@@ -1326,7 +1329,8 @@ void interface_toolkit::print()
 	}
 	if (f_csv_file_concatenate_from_mask) {
 		cout << "-csv_file_concatenate_from_mask "
-				<< " " << csv_file_concatenate_from_mask_N
+				<< " " << csv_file_concatenate_from_mask_N_min
+				<< " " << csv_file_concatenate_from_mask_N_max
 				<< " " << csv_file_concatenate_from_mask_mask
 				<< " " << csv_file_concatenate_from_mask_fname_out
 				<< endl;
@@ -1761,7 +1765,8 @@ void interface_toolkit::worker(
 
 		Fio.Csv_file_support->do_csv_file_concatenate_from_mask(
 				csv_file_concatenate_from_mask_mask,
-				csv_file_concatenate_from_mask_N,
+				csv_file_concatenate_from_mask_N_min,
+				csv_file_concatenate_from_mask_N_max,
 				csv_file_concatenate_from_mask_fname_out,
 				verbose_level);
 	}
