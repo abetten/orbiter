@@ -543,7 +543,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"before D->solve_all_betten" << endl;
 	}
-	D->solve_all_betten(0 /* verbose_level */);
+	D->solve_all_betten(verbose_level - 1);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"after D->solve_all_betten" << endl;
@@ -556,7 +556,7 @@ void homogeneous_polynomial_domain::make_monomials(
 
 	int nb_sol;
 
-	D->get_solutions(Monomials, nb_sol, 0 /* verbose_level */);
+	D->get_solutions(Monomials, nb_sol, verbose_level - 1);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials "
 				"There are " << nb_sol << " monomials." << endl;

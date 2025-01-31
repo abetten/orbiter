@@ -1280,6 +1280,9 @@ void combinatorial_object_stream::do_algebraic_degree(
 	qm1 = q - 1;
 
 	m = (q - 1) * n;
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree m = " << m << endl;
+	}
 
 
 	HPD = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, m + 1);

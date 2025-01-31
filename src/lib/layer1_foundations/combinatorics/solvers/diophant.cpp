@@ -1484,6 +1484,11 @@ int diophant::solve_all_betten(
 			for (j = 0; j < n; j++) {
 				lo[j] = (int) x[j];
 			}
+			if ((_resultanz % 100000) == 0) {
+				if (f_v) {
+					cout << "diophant::solve_all_betten nb_sol=" << _results.size() << endl;
+				}
+			}
 			_results.push_back(lo);
 			_resultanz++;
 		}
@@ -1783,7 +1788,7 @@ int diophant::solve_next_betten(
 	while (true) {
 		while (true) {
 			nb_steps_betten++;
-			if ((nb_steps_betten % 1000000) == 0) {
+			if ((nb_steps_betten % 100000) == 0) {
 				cout << "diophant::solve_next_betten nb_steps_betten="
 						<< nb_steps_betten << " sol=" << _resultanz << " ";
 				if (f_max_time) {
