@@ -25,6 +25,8 @@ static int int_matrix_compare_with_restricted(
 		void *data, void *entry, int j, void *extra_data);
 static int int_matrix_compare_rows(
 		void *data, int i, int j, void *extra_data);
+static int int_matrix_compare_rows_in_reverse(
+		void *data, int i, int j, void *extra_data);
 static void int_matrix_swap_rows(
 		void *data, int i, int j, void *extra_data);
 
@@ -159,6 +161,59 @@ void int_matrix::sort_rows(
 		cout << "int_matrix::sort_rows done" << endl;
 	}
 }
+
+
+void int_matrix::sort_rows_in_reverse(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	data_structures::sorting Sorting;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "int_matrix::sort_rows_in_reverse" << endl;
+	}
+	int i;
+
+	perm = NEW_int(m);
+	perm_inv = NEW_int(m);
+
+	for (i = 0; i < m; i++) {
+		perm[i] = i;
+		perm_inv[i] = i;
+	}
+
+	if (f_v) {
+		cout << "int_matrix::sort_rows_in_reverse before Sorting.Heapsort_general" << endl;
+	}
+	Sorting.Heapsort_general_with_log(M, perm_inv, m,
+			int_matrix_compare_rows_in_reverse,
+			int_matrix_swap_rows,
+		this);
+
+
+#if 0
+	orbiter_kernel_system::file_io Fio;
+
+	string fname;
+
+	fname.assign("int_matrix_sorted.csv");
+	Fio.int_matrix_write_csv(fname, M, m, n);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+#endif
+
+	if (f_v) {
+		cout << "int_matrix::sort_rows_in_reverse after Sorting.Heapsort_general" << endl;
+	}
+
+	Combi.Permutations->perm_inverse(perm_inv, perm, m);
+
+
+	if (f_v) {
+		cout << "int_matrix::sort_rows_in_reverse done" << endl;
+	}
+}
+
 
 void int_matrix::remove_duplicates(
 		int verbose_level)
@@ -330,6 +385,25 @@ static int int_matrix_compare_rows(
 	n = IM->n;
 
 	ret = Sorting.int_vec_compare(Data + i * n, Data + j * n, n); // * -1
+
+	return ret;
+}
+
+static int int_matrix_compare_rows_in_reverse(
+		void *data, int i, int j, void *extra_data)
+{
+	int_matrix *IM = (int_matrix *) extra_data;
+	int *Data;
+	int n;
+	int ret;
+	data_structures::sorting Sorting;
+
+	Data = (int *) IM->M;
+	n = IM->n;
+
+	ret = Sorting.int_vec_compare(Data + i * n, Data + j * n, n); // * -1
+
+	ret = -1 * ret;
 
 	return ret;
 }

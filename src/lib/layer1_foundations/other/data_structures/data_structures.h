@@ -540,6 +540,8 @@ public:
 	void print();
 	void sort_rows(
 			int verbose_level);
+	void sort_rows_in_reverse(
+			int verbose_level);
 	void remove_duplicates(
 			int verbose_level);
 	void check_that_entries_are_distinct(

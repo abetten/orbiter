@@ -2235,7 +2235,21 @@ void syntax_tree_node::expand_in_place(
 						<< " after expand_in_place" << endl;
 			}
 		}
-
+#if 0
+		// added Jan 30, 2025:
+		if (type == operation_type_mult) {
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"before collect_like_terms_addition" << endl;
+			}
+			collect_like_terms_addition(
+						verbose_level);
+			if (f_v) {
+				cout << "syntax_tree_node::expand_in_place "
+						"after collect_like_terms_addition" << endl;
+			}
+		}
+#endif
 
 	}
 
@@ -2853,6 +2867,7 @@ void syntax_tree_node::sort_terms(
 
 void syntax_tree_node::collect_like_terms(
 		int verbose_level)
+// calls collect_like_terms_addition
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2915,6 +2930,7 @@ void syntax_tree_node::collect_like_terms(
 
 void syntax_tree_node::collect_like_terms_addition(
 		int verbose_level)
+// collects terms and sorts the monomials, called from collect_like_terms
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2962,7 +2978,9 @@ void syntax_tree_node::collect_like_terms_addition(
 	}
 
 
-	I->sort_rows(verbose_level);
+	I->sort_rows_in_reverse(verbose_level);
+	// 1/30/2025: added _in_reverse to sort in the reverse direction,
+	// which is better for the monomial ordering
 
 	if (f_v) {
 		cout << "syntax_tree_node::collect_like_terms_addition "
@@ -3419,8 +3437,7 @@ void syntax_tree_node::flatten(
 	}
 
 
-	flatten_with_depth(0 /* depth */,
-			verbose_level);
+	flatten_with_depth(0 /* depth */, verbose_level - 1);
 
 	if (f_v) {
 		cout << "syntax_tree_node::flatten after  ";
@@ -3466,9 +3483,13 @@ void syntax_tree_node::flatten_with_depth(
 
 		if (nb_nodes == 0) {
 			if (f_v) {
-				cout << "syntax_tree_node::flatten_with_depth nb_nodes == 0" << endl;
-				exit(1);
+				cout << "syntax_tree_node::flatten_with_depth nb_nodes == 0, returning early" << endl;
+				//exit(1);
 			}
+			if (f_v) {
+				cout << "syntax_tree_node::flatten_with_depth done" << endl;
+			}
+			return;
 		}
 
 		if (type == operation_type_mult) {

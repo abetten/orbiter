@@ -1063,6 +1063,10 @@ void formula::simplify(
 		tree->print_easy(cout);
 	}
 
+
+#if 0
+	// 1/30/2025 disabled ToDo
+	// sort_terms behaves weird and does not sort the monomials.
 	if (f_v) {
 		cout << "formula::simplify "
 				"before tree->Root->sort_terms" << endl;
@@ -1079,6 +1083,8 @@ void formula::simplify(
 				"after tree->Root->sort_terms tree = ";
 		tree->print_easy(cout);
 	}
+#endif
+
 
 	if (f_v) {
 		cout << "formula::simplify "
@@ -1452,7 +1458,7 @@ void formula::expand_in_place(
 				"before tree->Root->collect_like_terms" << endl;
 	}
 
-	tree->Root->collect_like_terms(verbose_level_down);
+	tree->Root->collect_like_terms(verbose_level);
 
 	if (f_v) {
 		cout << "formula::expand_in_place (end) "
@@ -1581,7 +1587,7 @@ void formula::collect_monomial_terms(
 
 	if (f_v) {
 		cout << "formula::collect_monomial_terms "
-				"before tree->Root->collect_like_terms "
+				"before tree->Root->collect_monomial_terms "
 				"nb_nodes = " << tree->Root->nb_nodes << endl;
 	}
 
@@ -1592,7 +1598,7 @@ void formula::collect_monomial_terms(
 
 	if (f_v) {
 		cout << "formula::collect_monomial_terms "
-				"after tree->Root->collect_like_terms" << endl;
+				"after tree->Root->collect_monomial_terms" << endl;
 	}
 
 	if (false) {

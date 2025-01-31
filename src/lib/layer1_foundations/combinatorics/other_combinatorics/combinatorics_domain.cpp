@@ -2418,10 +2418,9 @@ void combinatorics_domain::make_elementary_symmetric_functions(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorics_domain::make_elementary_symmetric_function" << endl;
+		cout << "combinatorics_domain::make_elementary_symmetric_functions" << endl;
 	}
 	int *set;
-	combinatorics_domain Combi;
 	int k, j;
 	int f_first;
 
@@ -2429,7 +2428,7 @@ void combinatorics_domain::make_elementary_symmetric_functions(
 	set = NEW_int(k_max);
 	for (k = 1; k <= k_max; k++) {
 		cout << "k=" << k << " : " << endl;
-		Combi.first_k_subset(set, n, k);
+		first_k_subset(set, n, k);
 		f_first = true;
 		while (true) {
 			if (f_first) {
@@ -2444,7 +2443,7 @@ void combinatorics_domain::make_elementary_symmetric_functions(
 					cout << "*";
 				}
 			}
-			if (!Combi.next_k_subset(set, n, k)) {
+			if (!next_k_subset(set, n, k)) {
 				break;
 			}
 		}
@@ -2457,6 +2456,73 @@ void combinatorics_domain::make_elementary_symmetric_functions(
 	}
 
 }
+
+std::string combinatorics_domain::stringify_elementary_symmetric_function(
+		int nb_vars, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::stringify_elementary_symmetric_function "
+				"nb_vars=" << nb_vars << " k=" << k << endl;
+	}
+
+	std::string *Vars;
+	int *set;
+
+	set = NEW_int(k);
+	Vars = new std::string[nb_vars];
+
+	int i, j;
+
+	for (i = 0; i < nb_vars; i++) {
+		Vars[i] = "X" + std::to_string(i);
+	}
+
+	string s;
+	int f_first;
+
+	first_k_subset(set, nb_vars, k);
+
+	f_first = true;
+
+	while (true) {
+
+		string s2;
+
+		for (j = 0; j < k; j++) {
+
+			s2 += Vars[set[j]];
+
+			if (j < k - 1) {
+				s2 += "*";
+			}
+
+		}
+
+		if (f_first) {
+			f_first = false;
+			s = s2;
+		}
+		else {
+			s += " + " + s2;
+		}
+
+
+		if (!next_k_subset(set, nb_vars, k)) {
+			break;
+		}
+	}
+
+	FREE_int(set);
+	delete [] Vars;
+
+	if (f_v) {
+		cout << "combinatorics_domain::stringify_elementary_symmetric_function done" << endl;
+	}
+	return s;
+}
+
 
 void combinatorics_domain::Dedekind_numbers(
 		int n_min, int n_max, int q_min, int q_max,
@@ -2752,7 +2818,6 @@ void combinatorics_domain::do_make_tree_of_all_k_subsets(
 		cout << "combinatorics_domain::do_make_tree_of_all_k_subsets" << endl;
 	}
 
-	combinatorics_domain Combi;
 	int *set;
 	int N;
 	int h, i;
@@ -2763,20 +2828,20 @@ void combinatorics_domain::do_make_tree_of_all_k_subsets(
 			+ "_k" + std::to_string(k)
 			+ ".tree";
 	set = NEW_int(k);
-	N = Combi.int_n_choose_k(n, k);
+	N = int_n_choose_k(n, k);
 
 
 	{
 		ofstream fp(fname);
 
 		for (h = 0; h < N; h++) {
-			Combi.unrank_k_subset(h, set, n, k);
+			unrank_k_subset(h, set, n, k);
 			fp << k;
 			for (i = 0; i < k; i++) {
 				fp << " " << set[i];
-				}
-			fp << endl;
 			}
+			fp << endl;
+		}
 		fp << "-1" << endl;
 	}
 	FREE_int(set);

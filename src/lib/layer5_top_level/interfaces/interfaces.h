@@ -528,6 +528,10 @@ class interface_combinatorics {
 	int make_elementary_symmetric_functions_n;
 	int make_elementary_symmetric_functions_k_max;
 
+	int f_make_elementary_symmetric_function;
+	int make_elementary_symmetric_function_n;
+	int make_elementary_symmetric_function_k;
+
 	int f_Dedekind_numbers;
 	int Dedekind_n_min;
 	int Dedekind_n_max;

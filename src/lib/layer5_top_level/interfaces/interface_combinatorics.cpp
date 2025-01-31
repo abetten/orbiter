@@ -93,6 +93,10 @@ interface_combinatorics::interface_combinatorics()
 	make_elementary_symmetric_functions_n = 0;
 	make_elementary_symmetric_functions_k_max = 0;
 
+	f_make_elementary_symmetric_function = false;
+	make_elementary_symmetric_function_n = 0;
+	make_elementary_symmetric_function_k = 0;
+
 	f_Dedekind_numbers = false;
 	Dedekind_n_min = 0;
 	Dedekind_n_max = 0;
@@ -193,6 +197,9 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		cout << "-make_elementary_symmetric_functions <int : n> <int :k_max>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_function") == 0) {
+		cout << "-make_elementary_symmetric_function <int : n> <int :k_max>" << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
 	}
@@ -280,6 +287,9 @@ int interface_combinatorics::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_function") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
@@ -515,6 +525,15 @@ void interface_combinatorics::read_arguments(
 				<< " " << make_elementary_symmetric_functions_k_max << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_function") == 0) {
+		f_make_elementary_symmetric_function = true;
+		make_elementary_symmetric_function_n = ST.strtoi(argv[++i]);
+		make_elementary_symmetric_function_k = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-make_elementary_symmetric_function " << make_elementary_symmetric_function_n
+				<< " " << make_elementary_symmetric_function_k << endl;
+		}
+	}
 	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		f_Dedekind_numbers = true;
 		Dedekind_n_min = ST.strtoi(argv[++i]);
@@ -696,6 +715,12 @@ void interface_combinatorics::print()
 		cout << "-make_elementary_symmetric_functions "
 				<< make_elementary_symmetric_functions_n
 				<< " " << make_elementary_symmetric_functions_k_max
+				<< endl;
+	}
+	if (f_make_elementary_symmetric_function) {
+		cout << "-make_elementary_symmetric_function "
+				<< make_elementary_symmetric_function_n
+				<< " " << make_elementary_symmetric_function_k
 				<< endl;
 	}
 	if (f_Dedekind_numbers) {
@@ -898,6 +923,22 @@ void interface_combinatorics::worker(
 
 		Combi.make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
 				make_elementary_symmetric_functions_k_max, verbose_level);
+
+	}
+	else if (f_make_elementary_symmetric_function) {
+
+		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		string s;
+
+		s = Combi.stringify_elementary_symmetric_function(
+				make_elementary_symmetric_function_n,
+				make_elementary_symmetric_function_k,
+				verbose_level);
+
+		cout << "elementary symmetric function "
+				"e_{" << make_elementary_symmetric_function_n << ","
+				<< make_elementary_symmetric_function_k << "} = "
+				<< s << endl;
 
 	}
 	else if (f_Dedekind_numbers) {

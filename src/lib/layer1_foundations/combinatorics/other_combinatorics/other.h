@@ -232,6 +232,8 @@ public:
 			std::string &fname, int verbose_level);
 	void make_elementary_symmetric_functions(
 			int n, int k_max, int verbose_level);
+	std::string stringify_elementary_symmetric_function(
+			int nb_vars, int k, int verbose_level);
 	void Dedekind_numbers(
 			int n_min, int n_max, int q_min, int q_max,
 			int verbose_level);

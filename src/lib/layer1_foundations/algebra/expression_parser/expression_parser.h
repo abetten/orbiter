@@ -867,6 +867,7 @@ public:
 			int verbose_level);
 	void collect_like_terms_addition(
 			int verbose_level);
+		// collects terms and sorts the monomials
 	void append_monomial(
 			int *exponent_vector, int nb_vars, int coeff,
 			int verbose_level);
