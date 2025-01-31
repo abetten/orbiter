@@ -775,12 +775,46 @@ void homogeneous_polynomial_domain::make_monomials(
 		}
 	}
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials  "
+				"before making Affine" << endl;
+	}
 
 
+	ring_theory::longinteger_object Nb_affine, Bound;
+	ring_theory::longinteger_domain Longint;
 
-	nb_affine = NT.i_power_j(nb_variables, degree);
+	NT.i_power_j_longinteger(
+			nb_variables, degree, Nb_affine);
 
-	if (nb_affine < ONE_MILLION) {
+	Bound.create(ONE_MILLION);
+
+	int f_ok;
+
+	if (Longint.is_less_than(Nb_affine, Bound)) {
+		f_ok = true;
+		nb_affine = Nb_affine.as_lint();
+	}
+	else {
+		f_ok = false;
+		nb_affine = -1;
+	}
+
+
+	//nb_affine = NT.i_power_j(nb_variables, degree);
+		// could be negative in case of overflow!
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::make_monomials  "
+				"f_ok = " << f_ok << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials  "
+				"nb_affine = " << nb_affine << endl;
+		cout << "homogeneous_polynomial_domain::make_monomials  "
+				"nb_affine * degree = " << nb_affine * degree << endl;
+	}
+
+
+	if (f_ok) {
 		Affine = NEW_int(nb_affine * degree);
 		if (f_v) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
@@ -3004,12 +3038,22 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction" << endl;
 	}
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction degree = " << degree << " modulus=" << modulus << endl;
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"degree = " << degree << " modulus=" << modulus << endl;
 	}
 	int rk, j;
 	int *basis;
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"before allocating basis" << endl;
+	}
 	basis = NEW_int(nb_monomials);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"before computing basis" << endl;
+	}
 	rk = 0;
 	for (j = 0; j < nb_monomials; j++) {
 		if (monomial_has_good_reduction(j, degree, modulus, 0 /*verbose_level - 3*/)) {
@@ -3017,9 +3061,22 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 		}
 	}
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"rk = " << rk << endl;
+	}
+
 	Subspace_wgr = NEW_OBJECT(other::data_structures::int_matrix);
 
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"before Subspace_wgr->allocate_and_initialize_with_zero" << endl;
+	}
 	Subspace_wgr->allocate_and_initialize_with_zero(rk, nb_monomials);
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"after Subspace_wgr->allocate_and_initialize_with_zero" << endl;
+	}
 
 	int i;
 
@@ -3073,7 +3130,7 @@ int homogeneous_polynomial_domain::monomial_has_good_reduction(
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, s = " << s << endl;
 	}
-	if (s <= degree) {
+	if (s == degree) {
 		ret = true;
 	}
 

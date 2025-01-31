@@ -989,6 +989,17 @@ long int number_theory_domain::gcd_with_key_in_latex(
 	return b1;
 }
 
+void number_theory_domain::i_power_j_longinteger(
+		int i, int j, ring_theory::longinteger_object &a)
+{
+	ring_theory::longinteger_domain D;
+
+	ring_theory::longinteger_object b, c;
+
+	a.create(i);
+	D.power_int(a, j);
+}
+
 int number_theory_domain::i_power_j_safe(
 		int i, int j)
 {

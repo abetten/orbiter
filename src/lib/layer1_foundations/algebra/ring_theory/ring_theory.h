@@ -123,10 +123,14 @@ private:
 		// For instance, the monomial x_0^2x_1x_3
 		// is recorded as 0,0,1,3
 	int nb_affine; // nb_variables^degree
+
+	// Affine could get too big:
 	int *Affine; // [nb_affine * degree]
 		// the affine elements are used for foiling
 		// when doing a linear substitution
 	int *v; // [nb_variables]
+
+	// Affine_to_monomial could get too big:
 	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space,
 		// record the monomial associated with it.

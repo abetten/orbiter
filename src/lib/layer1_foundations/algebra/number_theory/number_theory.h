@@ -301,6 +301,8 @@ public:
 			std::ostream &ost,
 			long int a, long int b, int f_key,
 			int verbose_level);
+	void i_power_j_longinteger(
+			int i, int j, ring_theory::longinteger_object &a);
 	int i_power_j_safe(
 			int i, int j);
 	long int i_power_j_lint_safe(
