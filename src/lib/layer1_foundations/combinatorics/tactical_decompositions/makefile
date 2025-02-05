@@ -11,6 +11,7 @@ MODULES = \
 		decomposition.o \
 		geo_parameter.o \
 		row_and_col_partition.o \
+		tactical_decomposition_domain.o \
 		tdo_data.o \
 		tdo_refinement_description.o \
 		tdo_refinement.o \

@@ -520,6 +520,7 @@ namespace combinatorics {
 		class decomposition;
 		class geo_parameter;
 		class row_and_col_partition;
+		class tactical_decomposition_domain;
 		class tdo_data;
 		class tdo_refinement_description;
 		class tdo_refinement;
@@ -1132,6 +1133,7 @@ enum data_input_stream_type {
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,
 	t_data_input_stream_multi_matrix,
 	t_data_input_stream_geometric_object,
+	t_data_input_stream_Kaempfer_file,
 
 };
 

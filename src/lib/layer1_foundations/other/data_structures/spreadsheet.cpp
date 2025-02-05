@@ -39,18 +39,18 @@ spreadsheet::~spreadsheet()
 	if (tokens) {
 		for (i = 0; i < nb_tokens; i++) {
 			FREE_char(tokens[i]);
-			}
-		FREE_pchar(tokens);
 		}
+		FREE_pchar(tokens);
+	}
 	if (line_start) {
 		FREE_int(line_start);
-		}
+	}
 	if (line_size) {
 		FREE_int(line_size);
-		}
+	}
 	if (Table) {
 		FREE_int(Table);
-		}
+	}
 }
 
 void spreadsheet::init_set_of_sets(
@@ -63,16 +63,16 @@ void spreadsheet::init_set_of_sets(
 	if (f_make_heading) {
 		spreadsheet::nb_rows = S->nb_sets + 1;
 		offset = 1;
-		}
+	}
 	else {
 		spreadsheet::nb_rows = S->nb_sets;
 		offset = 0;
-		}
+	}
 	spreadsheet::nb_cols = s + 1;
 	Table = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows * nb_cols; i++) {
 		Table[i] = -1;
-		}
+	}
 	nb_tokens = nb_rows * nb_cols;
 	tokens = NEW_pchar(nb_tokens + 1);
 
@@ -85,8 +85,8 @@ void spreadsheet::init_set_of_sets(
 			strcpy(tokens[h], str);
 			Table[0 * nb_cols + j] = h;
 			h++;
-			}
 		}
+	}
 	for (i = 0; i < S->nb_sets; i++) {
 
 		snprintf(str, 1000, "%ld", S->Set_size[i]);
@@ -106,8 +106,8 @@ void spreadsheet::init_set_of_sets(
 			Table[(i + offset) * nb_cols + 1 + j] = h;
 			h++;
 
-			}
 		}
+	}
 }
 
 void spreadsheet::init_int_matrix(
@@ -121,7 +121,7 @@ void spreadsheet::init_int_matrix(
 	Table = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows * nb_cols; i++) {
 		Table[i] = -1;
-		}
+	}
 	nb_tokens = nb_rows * nb_cols;
 	tokens = NEW_pchar(nb_tokens + 1);
 	for (i = 0; i < nb_tokens; i++) {
@@ -131,7 +131,7 @@ void spreadsheet::init_int_matrix(
 		tokens[i] = NEW_char(len + 1);
 		strcpy(tokens[i], str);
 		Table[i] = i;
-		}
+	}
 }
 
 void spreadsheet::init_empty_table(
@@ -144,12 +144,12 @@ void spreadsheet::init_empty_table(
 	Table = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows * nb_cols; i++) {
 		Table[i] = i;
-		}
+	}
 	nb_tokens = nb_rows * nb_cols;
 	tokens = NEW_pchar(nb_tokens);
 	for (i = 0; i < nb_tokens; i++) {
 		tokens[i] = NULL;
-		}
+	}
 }
 
 void spreadsheet::fill_entry_with_text(
@@ -163,7 +163,7 @@ void spreadsheet::fill_entry_with_text(
 		//cout << "fill_column_with_text before FREE_char i="
 		//<< i << " col_idx=" << col_idx << " t=" << t << endl;
 		FREE_char(tokens[t]);
-		}
+	}
 	l = strlen(text);
 	tokens[t] = NEW_char(l + 1);
 	strcpy(tokens[t], text);
@@ -180,7 +180,7 @@ void spreadsheet::fill_entry_with_text(
 		//cout << "fill_column_with_text before FREE_char i="
 		//<< i << " col_idx=" << col_idx << " t=" << t << endl;
 		FREE_char(tokens[t]);
-		}
+	}
 	l = text.size();
 	tokens[t] = NEW_char(l + 1);
 	strcpy(tokens[t], text.c_str());
@@ -200,7 +200,7 @@ void spreadsheet::set_entry_lint(
 		//cout << "fill_column_with_text before FREE_char i="
 		//<< i << " col_idx=" << col_idx << " t=" << t << endl;
 		FREE_char(tokens[t]);
-		}
+	}
 	l = strlen(str);
 	tokens[t] = NEW_char(l + 1);
 	strcpy(tokens[t], str);
@@ -219,18 +219,18 @@ void spreadsheet::fill_column_with_text(
 			//cout << "fill_column_with_text before FREE_char i="
 			//<< i << " col_idx=" << col_idx << " t=" << t << endl;
 			FREE_char(tokens[t]);
-			}
+		}
 		if (i == 0) {
 			l = strlen(heading);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
-			}
+		}
 		else {
 			l = text[i - 1].length();
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], text[i - 1].c_str());
-			}
 		}
+	}
 }
 
 void spreadsheet::fill_column_with_int(
@@ -246,19 +246,19 @@ void spreadsheet::fill_column_with_int(
 			//cout << "fill_column_with_int before FREE_char i=" << i
 			//<< " col_idx=" << col_idx << " t=" << t << endl;
 			FREE_char(tokens[t]);
-			}
+		}
 		if (i == 0) {
 			l = strlen(heading);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
-			}
+		}
 		else {
 			snprintf(str, 1000, "%d", data[i - 1]);
 			l = strlen(str);
 			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
-			}
 		}
+	}
 }
 
 void spreadsheet::fill_column_with_lint(
@@ -359,7 +359,7 @@ void spreadsheet::save(
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 }
 
 
@@ -374,7 +374,7 @@ void spreadsheet::read_spreadsheet(
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet reading file "
 			<< fname << " of size " << Fio.file_size(fname) << endl;
-		}
+	}
 	
 
 	
@@ -393,9 +393,9 @@ void spreadsheet::read_spreadsheet(
 		if (f_vv) {
 			for (i = 0; i < nb_tokens; i++) {
 				cout << setw(6) << i << " : '" << tokens[i] << "'" << endl;
-				}
 			}
 		}
+	}
 
 
 
@@ -407,7 +407,7 @@ void spreadsheet::read_spreadsheet(
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet Found "
 				<< nb_lines << " lines" << endl;
-		}
+	}
 	
 	if (false) {
 		{
@@ -421,12 +421,12 @@ void spreadsheet::read_spreadsheet(
 					cout << "'" << tokens[f + j] << "'";
 					if (j < l - 1) {
 						cout << ", ";
-						}
 					}
-				cout << endl;
 				}
+				cout << endl;
 			}
 		}
+	}
 
 	int j;
 	
@@ -450,15 +450,15 @@ void spreadsheet::read_spreadsheet(
 			for (j = 0; j < nb_cols; j++) {
 				cout << "row " << i << " column " << j << " entry '"
 						<< tokens[Table[i * nb_cols + j]] << "'" << endl;
-				}
 			}
 		}
+	}
 	
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet reading file "
 				<< fname << " of size " << Fio.file_size(fname)
 				<< " done" << endl;
-		}
+	}
 	
 }
 
@@ -470,7 +470,7 @@ void spreadsheet::print_table(
 	//cout << "Table:" << endl;
 	for (i = 0; i < nb_rows; i++) {
 		print_table_row(i, f_enclose_in_parentheses, ost);
-		}
+	}
 }
 
 void spreadsheet::print_table_latex_all_columns(
@@ -616,10 +616,10 @@ void spreadsheet::print_table_row_latex(
 		if (f_column_select[j]) {
 			if (f_first) {
 				f_first = false;
-				}
+			}
 			else {
 				ost << " & ";
-				}
+			}
 			t = Table[row * nb_cols + j];
 			if (t >= 0) {
 	#if 0
@@ -627,26 +627,26 @@ void spreadsheet::print_table_row_latex(
 					cout << "printing token '" << tokens[t] << "'" << endl;
 					for (h = 0; h < 10; h++) {
 						cout << h << " : " << (int) tokens[t][h] << endl;
-						}
 					}
+				}
 	#endif
 				if (f_enclose_in_parentheses) {
 					ost << "\"";
-					}
+				}
 				if (tokens[t][0] == '"') {
 					tokens[t][0] = ' ';
-					}
+				}
 				l = strlen(tokens[t]);
 				if (tokens[t][l - 1] == '"') {
 					tokens[t][l - 1] = ' ';
-					}
+				}
 				ost << tokens[t];
 				if (f_enclose_in_parentheses) {
 					ost << "\"";
-					}
 				}
 			}
 		}
+	}
 	ost << "\\\\" << endl;
 }
 
@@ -661,12 +661,12 @@ void spreadsheet::print_table_row_detailed(
 		t = Table[row * nb_cols + j];
 		if (t >= 0) {
 			ost << tokens[t];
-			}
+		}
 		if (j < nb_cols - 1) {
 			ost << ",";
-			}
-		ost << endl;
 		}
+		ost << endl;
+	}
 }
 
 void spreadsheet::print_table_row_with_column_selection(
@@ -744,9 +744,9 @@ void spreadsheet::print_table_with_row_selection(
 	for (i = 0; i < nb_rows; i++) {
 		if (!f_selected[i]) {
 			continue;
-			}
-		print_table_row(i, false, ost);
 		}
+		print_table_row(i, false, ost);
+	}
 }
 
 void spreadsheet::print_table_sorted(
@@ -769,17 +769,17 @@ void spreadsheet::print_table_sorted(
 			if (tokens[t][0] == '"') {
 				labels[i] = NEW_char(strlen(tokens[t]) + 1);
 				strcpy(labels[i], tokens[t] + 1);
-				}
+			}
 			else {
 				labels[i] = NEW_char(strlen(tokens[t]) + 1);
 				strcpy(labels[i], tokens[t]);
-				}
 			}
+		}
 		else {
 			labels[i] = NEW_char(1);
 			labels[i][0] = 0;
-			}
 		}
+	}
 	
 	Sorting.quicksort_array_with_perm(nb_rows - 1, (void **) labels, perm,
 		string_tools_compare_strings, NULL /*void *data*/);
@@ -789,12 +789,12 @@ void spreadsheet::print_table_sorted(
 	for (i = 0; i < nb_rows; i++) {
 		if (i == 0) {
 			ii = 0;
-			}
+		}
 		else {
 			ii = perm[i - 1] + 1;
-			}
-		print_table_row(ii, false, ost);
 		}
+		print_table_row(ii, false, ost);
+	}
 }
 
 
@@ -809,38 +809,38 @@ void spreadsheet::add_column_with_constant_value(
 	for (i = 1; i < nb_rows; i++) {
 		add_token(value);
 		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
-		}
+	}
 	
 }
 
 void spreadsheet::add_column_with_int(
-		const char *label, int *Value)
+		std::string &heading, int *Value)
 {
 	int i;
 	char str[1000];
 
 	reallocate_table();
-	add_token(label);
+	add_token(heading.c_str());
 	Table[0 * nb_cols + nb_cols - 1] = nb_tokens - 1;
 	for (i = 1; i < nb_rows; i++) {
 		snprintf(str, 1000, "%d", Value[i - 1]);
 		add_token(str);
 		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
-		}
+	}
 
 }
 void spreadsheet::add_column_with_text(
-		const char *label, char **Value)
+		std::string &heading, std::string *Value)
 {
 	int i;
 
 	reallocate_table();
-	add_token(label);
+	add_token(heading.c_str());
 	Table[0 * nb_cols + nb_cols - 1] = nb_tokens - 1;
 	for (i = 1; i < nb_rows; i++) {
-		add_token(Value[i - 1]);
+		add_token(Value[i - 1].c_str());
 		Table[i * nb_cols + nb_cols - 1] = nb_tokens - 1;
-		}
+	}
 
 }
 
@@ -854,9 +854,9 @@ void spreadsheet::reallocate_table()
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Table2[i * (nb_cols + 1) + j] = Table[i * nb_cols + j];
-			}
-		Table2[i * (nb_cols + 1) + nb_cols] = -1;
 		}
+		Table2[i * (nb_cols + 1) + nb_cols] = -1;
+	}
 	FREE_int(Table);
 	Table = Table2;
 	nb_cols++;
@@ -872,11 +872,11 @@ void spreadsheet::reallocate_table_add_row()
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Table2[i * nb_cols + j] = Table[i * nb_cols + j];
-			}
 		}
+	}
 	for (j = 0; j < nb_cols; j++) {
 		Table2[nb_rows * nb_cols + j] = -1;
-		}
+	}
 	FREE_int(Table);
 	Table = Table2;
 	nb_rows++;
@@ -904,13 +904,13 @@ int spreadsheet::find_by_column(
 			for (h = 0; h < (int)strlen(join_by); h++) {
 				cout << h << " : " << tokens[t][h] << " : "
 						<< join_by[h] << endl;
-				}
+			}
 #endif
 			if (c == 0) {
 				return j;
-				}
 			}
 		}
+	}
 	// in case we don't find it, maybe it is because the labels
 	//are all encapsulated in \" signs
 	char join_by_in_quotes[1000];
@@ -927,13 +927,13 @@ int spreadsheet::find_by_column(
 			for (h = 0; h < (int)strlen(join_by); h++) {
 				cout << h << " : " << (int) tokens[t][h] << " : "
 						<< (int) join_by[h] << endl;
-				}
+			}
 #endif
 			if (c == 0) {
 				return j;
-				}
 			}
 		}
+	}
 	cout << "by column not found, label='" << join_by << "'" << endl;
 	cout << "The first row of the table is:" << endl;
 	print_table_row_detailed(0, cout);
@@ -959,7 +959,7 @@ void spreadsheet::tokenize(
 		cout << "spreadsheet::tokenize file=" << fname << endl;
 		cout << "spreadsheet::tokenize verbose_level="
 				<< verbose_level << endl;
-		}
+	}
 
 	sz = Fio.file_size(fname);
 	if (f_v) {

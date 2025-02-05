@@ -243,6 +243,8 @@ public:
 			std::stringstream &ost, int i);
 	void print_equation(
 			std::ostream &ost, int *coeffs);
+	std::string stringify_equation(
+			int *coeffs);
 	void print_equation_simple(
 			std::ostream &ost, int *coeffs);
 	void print_equation_tex(
@@ -341,8 +343,7 @@ public:
 			long int *Pts,
 			int nb_pts, int verbose_level);
 	void explore_vanishing_ideal(
-			long int *Pts,
-			int nb_pts, int verbose_level);
+			long int *Pts, int nb_pts, int verbose_level);
 	void evaluate_point_on_all_monomials(
 			int *pt_coords,
 			int *evaluation,

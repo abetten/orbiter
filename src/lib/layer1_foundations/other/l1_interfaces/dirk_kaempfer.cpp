@@ -315,7 +315,6 @@ static void erhoehe_Indices(INT         * pi, INT * pj,
                            HTDO        * phtdo,
                            HTDO1_PARMS * pparms );
 static void berechneErsteHtdo(GERADENFALL gf);
-int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[]);
 
 
 
@@ -382,6 +381,7 @@ static void LesenGeraden(GERADENFALL *pgf)
   INT         i, j;
   LONG        lLiesAnzahlen;
 
+  cout << "Suchen von Wenn nein" << endl;
   /******************************************************************
    * Suchen von "Wenn nein"
    ******************************************************************/
@@ -389,6 +389,7 @@ static void LesenGeraden(GERADENFALL *pgf)
     fgets(sPuffer,sizeof(sPuffer), INDAT);
   } while ( memcmp(sPuffer,"Wenn nein",9) ); /* enddo */
 
+  cout << "Lesen PunktAnzahl" << endl;
   /******************************************************************
    * Lesen PunktAnzahl
    ******************************************************************/
@@ -399,6 +400,7 @@ static void LesenGeraden(GERADENFALL *pgf)
   fprintf(OUTDAT,"Anzahl der Punkte: %d \n", pgf->iPunkteAnzahl);
   fflush(OUTDAT);
 
+  cout << "Lesen GeradenTypAnzahl" << endl;
   /******************************************************************
    * Lesen GeradenTypAnzahl
    ******************************************************************/
@@ -406,6 +408,7 @@ static void LesenGeraden(GERADENFALL *pgf)
   sscanf(sPuffer,"%d", &pgf->iGeradenTypAnzahl);
   fprintf(OUTDAT,"Anzahl der Geradentypen: %d \n", pgf->iGeradenTypAnzahl);
 
+  cout << "Lesen, ob die Anzahlen der Geraden vorgegeben werden sollen" << endl;
   /******************************************************************
    * Lesen, ob die Anzahlen der Geraden vorgegeben werden sollen *
    ******************************************************************/
@@ -416,6 +419,7 @@ static void LesenGeraden(GERADENFALL *pgf)
   DBG2("Vorgabe der Anzahlen der Geraden: %ld\n", lLiesAnzahlen);
   pgf->bGeradenAnzahlProTypVorgegeben = (lLiesAnzahlen != 0);
 
+  cout << "Lesen der Geradenlaengen und u.U. ihrer Anzahlen" << endl;
   /******************************************************************
    * Lesen der Geradenlaengen und u.U. ihrer Anzahlen *
    ******************************************************************/
@@ -428,6 +432,7 @@ static void LesenGeraden(GERADENFALL *pgf)
                    pgf->agt[i].iLaenge);
   }
 
+  cout << "Sortieren der Geraden" << endl;
   /******************************************************************
    * Sortieren der Geraden (Bubblesort): Die lngsten Geraden zuerst
    ******************************************************************/
@@ -443,6 +448,7 @@ static void LesenGeraden(GERADENFALL *pgf)
   } /* endfor */
   DBG2("Nach Tausch agt[0]: %d\n",pgf->agt[0].iLaenge);
 
+  cout << "Daten-Ueberpruefung" << endl;
   /******************************************************************
    * Daten-Ueberpruefung bei Vorgabe der GeradenAnzahlen            *
    ******************************************************************/
@@ -455,6 +461,7 @@ static void LesenGeraden(GERADENFALL *pgf)
      DBG2("lInzidenzanzahl: %ld \n",lInzidenzenAnzahl);
   };  /* endif */
 
+  cout << "Ende LesenGeraden" << endl;
 fflush(OUTDAT);
 return;
 } /* LesenGeraden */
@@ -491,7 +498,7 @@ static GERADENFALL gfLesenEingabe()
    * u.U. Einlesen der Eingabedatei der Testfaelle
    ******************************************************************/
   if (bBearbeiteTestfall) {
-     fgets(sPuffer,sizeof(sPuffer), INDAT);
+	  fgets(sPuffer,sizeof(sPuffer), INDAT);
      sscanf(sPuffer,"%s", TESTFALLIN_NAME);
      fprintf(OUTDAT,"Testfall-Datei:%s\n",TESTFALLIN_NAME);
      TESTFALLIN = fopen(TESTFALLIN_NAME, "r");
@@ -520,9 +527,11 @@ static GERADENFALL gfLesenEingabe()
      /******************************************************************
       * u.U. Einlesen der Punkte und Geraden
       ******************************************************************/
-     LesenGeraden(&gf);
+	  cout << "before LesenGeraden" << endl;
+    LesenGeraden(&gf);
   } /* endif */
 
+  cout << "Weiterlesen bis zur Zeile Steuerungsangaben" << endl;
   /******************************************************************
    * Weiterlesen bis zur Zeile "Steuerungsangaben:"
    ******************************************************************/
@@ -531,6 +540,7 @@ static GERADENFALL gfLesenEingabe()
     DBG2("%80.80s\n",sPuffer);
   } while ( memcmp(sPuffer,"Steuerungsangaben:",18)); /* enddo */
 
+  cout << "Einlesen der maximalen Berechnungssstufe der TDOs" << endl;
   /******************************************************************
    * Einlesen der maximalen Berechnungssstufe der TDOs              *
    ******************************************************************/
@@ -541,6 +551,7 @@ static GERADENFALL gfLesenEingabe()
   sscanf(sPuffer,"%d", &iMaxStufe);
   fprintf(OUTDAT,"Maximale Tiefe: %d  \n",iMaxStufe);fflush(OUTDAT);
 
+  cout << "Einlesen des Schalters" << endl;
   /******************************************************************
    * Einlesen des Schalters,
    * ob die Testfaelle wieder einlesbar sein sollen
@@ -558,7 +569,8 @@ static GERADENFALL gfLesenEingabe()
     TESTFALLOUT = fopen(TESTFALLOUT_NAME, "w");
   } /* endif */
 
-  /******************************************************************
+  cout << "Einlesen des Schalters" << endl;
+ /******************************************************************
    * Einlesen des Schalters, ob HTDOs gedruckt werden sollen
    ******************************************************************/
   do {
@@ -568,6 +580,7 @@ static GERADENFALL gfLesenEingabe()
   DBG2("Drucken von HTDOs: %ld\n", l);
   bDruckeHtdos = (1 == l);
 
+  cout << "Einlesen des Schalters" << endl;
   /******************************************************************
    * Einlesen des Schalters, ob die Typen der 2-Geraden gedruckt
    * werden sollen
@@ -580,6 +593,7 @@ static GERADENFALL gfLesenEingabe()
   DBG2("Drucken von 2-Geraden: %d\n", bDruckeZweier);
   fprintf(OUTDAT,"Ende LesenEingabe \n");fflush(OUTDAT);
 
+  cout << "ende bLesenEingabe" << endl;
   return gf;
 }  /* end bLesenEingabe */
 
@@ -3079,7 +3093,8 @@ static void berechneErsteHtdo(GERADENFALL gf)
 
 
 
-int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[])
+int Dirk_Kaempfer_main()
+//int argc, char *argv[], char *envp[])
 {  /* HAUPTPROGRAMM */
    BOOL        bLoesungVorhanden             = FALSE;
    INT         i;
@@ -3089,14 +3104,24 @@ int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[])
    cl = clock();
 
 
+   cout << "before oeffneDateien" << endl;
 
    oeffneDateien();
+
+   cout << "after oeffneDateien" << endl;
+
+   cout << "before InitMaxfit" << endl;
    InitMaxfit();
+   cout << "after InitMaxfit" << endl;
 
+   cout << "before gfLesenEingabe" << endl;
    gf = gfLesenEingabe();
+   cout << "after gfLesenEingabe" << endl;
 
+   cout << "before bBearbeiteTestfall" << endl;
    if (bBearbeiteTestfall) {
-      HTDO htdo;
+	   cout << "after bBearbeiteTestfall returns true" << endl;
+     HTDO htdo;
       for(i=1; i<=iTestfallAnzahl; ++i) {
          if (bEinlesenTestfall(&htdo,i)) {
             berechneNaechsteHtdo(&htdo);
@@ -3105,6 +3130,7 @@ int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[])
          }
       }
    } else {
+	   cout << "after bBearbeiteTestfall returns false" << endl;
       DBG2("gf.bGeradenAnzahlProTypVorgegeben = %d\n",
              gf.bGeradenAnzahlProTypVorgegeben);
       if ( !gf.bGeradenAnzahlProTypVorgegeben ) {

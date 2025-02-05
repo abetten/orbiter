@@ -885,6 +885,17 @@ void string_tools::chop_off_extension(
 #endif
 }
 
+std::string string_tools::without_extension(
+		std::string &p)
+{
+	std::string ext;
+	std::string q;
+
+	get_extension(p, ext);
+	q = p.substr(0, p.length() - ext.length());
+	return q;
+}
+
 void string_tools::chop_off_path(
 		std::string &p)
 {

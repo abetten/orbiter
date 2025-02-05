@@ -509,6 +509,21 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (ST.stringcmp(argv[i], "-Kaempfer_file") == 0) {
+
+			data_input_stream_description_element E;
+			string a;
+
+			a.assign(argv[++i]);
+			E.init_Kaempfer_file(a);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

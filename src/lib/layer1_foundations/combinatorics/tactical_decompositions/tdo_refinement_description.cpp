@@ -266,7 +266,7 @@ void tdo_refinement_description::print()
 		cout << "-mckay" << endl;
 	}
 	if (f_input_file) {
-		cout << "-input_file" << fname_in << endl;
+		cout << "-input_file " << fname_in << endl;
 	}
 
 }

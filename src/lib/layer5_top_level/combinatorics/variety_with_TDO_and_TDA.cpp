@@ -75,7 +75,8 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions" << endl;
 	}
 
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
+	combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
 
 	variety_with_TDO_and_TDA::PA = PA;
@@ -88,9 +89,9 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
-				"before Combi.compute_TDO_decomposition_of_projective_space" << endl;
+				"before Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
 	}
-	Decomposition_scheme_TDO = Combi.compute_TDO_decomposition_of_projective_space(
+	Decomposition_scheme_TDO = Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space(
 			PA->P,
 			Variety_object->Point_sets->Sets[0],
 			Variety_object->Point_sets->Set_size[0],
@@ -99,7 +100,7 @@ void variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions(
 			verbose_level);
 	if (f_v) {
 		cout << "variety_with_TDO_and_TDA::init_and_compute_tactical_decompositions "
-				"after Combi.compute_TDO_decomposition_of_projective_space" << endl;
+				"after Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space" << endl;
 	}
 
 

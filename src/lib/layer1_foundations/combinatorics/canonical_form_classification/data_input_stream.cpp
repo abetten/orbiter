@@ -699,11 +699,10 @@ int data_input_stream::count_number_of_objects_to_test(
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
-			combinatorics::graph_theory::colored_graph *CG;
+			//combinatorics::graph_theory::colored_graph *CG;
 
-			CG = Get_graph(Descr->Input[input_idx].input_string);
+			//CG = Get_graph(Descr->Input[input_idx].input_string);
 
-			//FREE_OBJECT(CG);
 
 			nb_objects_to_test++;
 
@@ -723,6 +722,47 @@ int data_input_stream::count_number_of_objects_to_test(
 			}
 
 			nb_objects_to_test++;
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_Kaempfer_file) {
+			if (f_v) {
+				cout << "input Kaempfer file " << endl;
+			}
+
+			string fname_in;
+
+			fname_in = Descr->Input[input_idx].input_string;
+
+			other::orbiter_kernel_system::file_io Fio;
+			std::vector<std::string> Lines;
+
+			Fio.read_file_as_array_of_strings(
+					fname_in,
+					Lines,
+					verbose_level);
+			int i, count;
+
+			count = 0;
+			for (i = 0; i < Lines.size(); i++) {
+
+				string s;
+
+				s = Lines[i];
+				std::size_t pos = s.find(" Testfall");
+
+				if (pos == std::string::npos) {
+					continue;
+				}
+
+				count++;
+			}
+
+
+			if (f_v) {
+				cout << "input Kaempfer file we found " << count << " decompositions" << endl;
+			}
+
+			nb_objects_to_test += count;
 
 		}
 		else {
@@ -1161,18 +1201,6 @@ void data_input_stream::read_objects(
 					0 /*verbose_level*/);
 
 			SoS->underlying_set_size = v;
-
-#if 0
-			SoS = NEW_OBJECT(data_structures::set_of_sets);
-
-			if (f_v) {
-				cout << "data_input_stream::read_objects "
-						"Reading the file " << fname_block_orbits << endl;
-			}
-			SoS->init_from_file(
-					underlying_set_size,
-					fname_block_orbits, verbose_level);
-#endif
 
 			if (f_v) {
 				cout << "Read the file " << fname_block_orbits
@@ -1855,6 +1883,200 @@ void data_input_stream::read_objects(
 					verbose_level);
 
 			Objects.push_back(Any_combo);
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_Kaempfer_file) {
+			if (f_v) {
+				cout << "input Kaempfer file = " << Descr->Input[input_idx].input_string << endl;
+			}
+
+			string fname_in;
+
+			fname_in = Descr->Input[input_idx].input_string;
+
+			other::orbiter_kernel_system::file_io Fio;
+
+			other::data_structures::string_tools String;
+
+
+			std::vector<std::string> Lines;
+
+			Fio.read_file_as_array_of_strings(
+					fname_in,
+					Lines,
+					verbose_level);
+			int h, count;
+
+			count = 0;
+			for (h = 0; h < Lines.size(); h++) {
+
+				string s;
+
+				s = Lines[h];
+				std::size_t pos = s.find(" Testfall");
+
+				if (pos == std::string::npos) {
+					continue;
+				}
+
+				count++;
+			}
+
+
+			if (f_v) {
+				cout << "input Kaempfer we found " << count << " decompositions" << endl;
+			}
+
+			int cnt;
+
+			cnt = 0;
+			for (h = 0; h < Lines.size(); h++) {
+
+				string s, s1;
+
+				s = Lines[h];
+				std::size_t pos;
+				std::size_t pos2;
+
+				pos = s.find(" Testfall");
+
+				if (pos == std::string::npos) {
+					continue;
+				}
+
+				if (f_v) {
+					cout << "reading case " << cnt << endl;
+				}
+
+				string label;
+				string level_s;
+				int level;
+
+				label = s.substr(pos + 10);
+
+				s = Lines[h + 1];
+
+				pos = s.find("Stufe");
+
+				if (pos == std::string::npos) {
+					cout << "did not find Stufe" << endl;
+					exit(1);
+				}
+				level_s = s.substr(pos + 6);
+				level = atoi(level_s.c_str());
+
+
+				s = Lines[h + 2];
+
+				pos = s.find("gibt");
+
+				if (pos == std::string::npos) {
+					cout << "did not find gibt" << endl;
+					exit(1);
+				}
+
+				pos2 = s.find("Geradentypen");
+
+				if (pos2 == std::string::npos) {
+					cout << "did not find Geradentypen" << endl;
+					exit(1);
+				}
+
+				int nb_V, nb_B;
+				int *V, *B, *scheme;
+
+				s1 = s.substr(pos + 5, pos2);
+				nb_B = atoi(s1.c_str());
+
+				pos = s.find("und");
+
+				if (pos == std::string::npos) {
+					cout << "did not find und" << endl;
+					exit(1);
+				}
+
+				pos2 = s.find("Punkttypen");
+
+				if (pos2 == std::string::npos) {
+					cout << "did not find Punkttypen" << endl;
+					exit(1);
+				}
+
+				s1 = s.substr(pos + 4, pos2);
+				nb_V = atoi(s1.c_str());
+
+				if (f_v) {
+					cout << "reading case " << cnt << " label=" << label
+							<< " level=" << level
+							<< " nb_V=" << nb_V << " nb_B=" << nb_B << endl;
+				}
+
+				V = NEW_int(nb_V);
+				B = NEW_int(nb_B);
+				scheme = NEW_int(nb_V * nb_B);
+
+				s = Lines[h + 3];
+
+				int argc;
+				char **argv;
+
+				String.chop_string(
+						s.c_str(), argc, argv);
+
+				if (argc != nb_B) {
+					cout << "reading case " << cnt << " argc != nb_B" << endl;
+					exit(1);
+				}
+
+
+
+				int i, j;
+
+				for (j = 0; j < nb_B; j++) {
+					B[j] = atoi(argv[j]);
+					FREE_char(argv[j]);
+				}
+				FREE_pchar(argv);
+
+				for (i = 0; i < nb_V; i++) {
+
+					s = Lines[h + 4 + i];
+					String.chop_string(
+							s.c_str(), argc, argv);
+					if (argc != nb_B + 1) {
+						cout << "reading case " << cnt << " argc != nb_B + 1" << endl;
+						exit(1);
+					}
+
+					V[i] = atoi(argv[0]);
+					FREE_char(argv[0]);
+
+					for (j = 0; j < nb_B; j++) {
+						scheme[i * nb_B + j] = atoi(argv[1 + j]);
+						FREE_char(argv[1 + j]);
+					}
+					FREE_pchar(argv);
+
+
+				}
+
+
+				any_combinatorial_object *Any_combo;
+
+
+				Any_combo = NEW_OBJECT(any_combinatorial_object);
+
+
+				Any_combo->init_multi_matrix_from_data(
+						nb_V, nb_B, V, B, scheme,
+						verbose_level);
+
+				Objects.push_back(Any_combo);
+
+
+
+				cnt++;
+			}
 
 		}
 

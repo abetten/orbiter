@@ -1870,9 +1870,9 @@ public:
 	void add_column_with_constant_value(
 			const char *label, char *value);
 	void add_column_with_int(
-			const char *label, int *Value);
+			std::string &heading, int *Value);
 	void add_column_with_text(
-			const char *label, char **Value);
+			std::string &heading, std::string *Value);
 	void reallocate_table();
 	void reallocate_table_add_row();
 	int find_column(
@@ -1975,6 +1975,8 @@ public:
 	void chop_off_extension_and_path(
 			std::string &p);
 	void chop_off_extension(
+			std::string &p);
+	std::string without_extension(
 			std::string &p);
 	void chop_off_path(
 			std::string &p);

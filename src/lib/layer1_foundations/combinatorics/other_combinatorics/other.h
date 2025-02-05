@@ -226,10 +226,6 @@ public:
 	void krawtchouk(
 			algebra::ring_theory::longinteger_object &a,
 			int n, int q, int k, int x);
-	void do_tdo_refinement(
-			tactical_decompositions::tdo_refinement_description *Descr, int verbose_level);
-	void do_tdo_print(
-			std::string &fname, int verbose_level);
 	void make_elementary_symmetric_functions(
 			int n, int k_max, int verbose_level);
 	std::string stringify_elementary_symmetric_function(
@@ -237,12 +233,6 @@ public:
 	void Dedekind_numbers(
 			int n_min, int n_max, int q_min, int q_max,
 			int verbose_level);
-	void convert_stack_to_tdo(
-			std::string &stack_fname, int verbose_level);
-	void do_parameters_maximal_arc(
-			int q, int r, int verbose_level);
-	void do_parameters_arc(
-			int q, int s, int r, int verbose_level);
 	void do_read_poset_file(
 			std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);
@@ -275,24 +265,6 @@ public:
 	void compute_blocks_from_incma(
 			int v, int b, int k, int *incma,
 			int *&Blocks, int verbose_level);
-	void refine_the_partition(
-			int v, int k, int b, long int *Blocks_coded,
-			int &b_reduced,
-			int verbose_level);
-	void compute_TDO_decomposition_of_projective_space_old(
-			std::string &fname_base,
-			geometry::projective_geometry::projective_space *P,
-			long int *points, int nb_points,
-			long int *lines, int nb_lines,
-			std::vector<std::string> &file_names,
-			int verbose_level);
-	// called from quartic_curve_from_surface::TDO_decomposition
-	combinatorics::tactical_decompositions::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
-			geometry::projective_geometry::projective_space *P,
-			long int *points, int nb_points,
-			long int *lines, int nb_lines,
-			int verbose_level);
-	// returns NULL if the space is too large
 	void create_incidence_matrix_of_graph(
 			int *Adj, int n,
 			int *&M, int &nb_rows, int &nb_cols,

@@ -565,6 +565,10 @@ class interface_combinatorics {
 	int f_rowspan_over_R;
 	std::string rowspan_over_R_label;
 
+	int f_read_widor;
+	std::string read_widor_fname;
+
+	int f_Kaempfer;
 
 public:
 	interface_combinatorics();

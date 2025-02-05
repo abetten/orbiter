@@ -2045,26 +2045,26 @@ void file_io::write_set_to_file(
 	if (f_v) {
 		cout << "write_set_to_file opening file "
 			<< fname << " for writing" << endl;
-		}
+	}
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
-	f << set_size << " ";
+		f << set_size << " ";
 
-	for (i = 0; i < set_size; i++) {
+		for (i = 0; i < set_size; i++) {
 #if 0
-		if (i && ((i % 10) == 0)) {
-			f << endl;
+			if (i && ((i % 10) == 0)) {
+				f << endl;
 			}
 #endif
-		f << the_set[i] << " ";
+			f << the_set[i] << " ";
 		}
-	f << endl << -1 << endl;
+		f << endl << -1 << endl;
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
-		}
+	}
 }
 
 void file_io::read_set_from_file_lint(

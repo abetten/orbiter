@@ -357,14 +357,15 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 
 #if 1
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
+	combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
 	int v, k, b_reduced;
 
 	v = CS->SubSt->nb_pts;
 	k = CS->SubSt->SubC->substructure_size;
 
-	Combi.refine_the_partition(
+	Tactical_decomposition_domain.refine_the_partition(
 			v, k,
 			nb_interesting_subsets_reduced /* b */,
 			interesting_subsets_reduced,

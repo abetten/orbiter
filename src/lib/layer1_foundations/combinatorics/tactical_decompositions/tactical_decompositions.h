@@ -449,6 +449,75 @@ public:
 
 
 
+
+// #############################################################################
+// tactical_decomposition_domain.cpp
+// #############################################################################
+
+
+//! catch all class for everything related to tactical decomposition that does not fit elsewhere
+
+
+class tactical_decomposition_domain {
+
+public:
+
+	tactical_decomposition_domain();
+	~tactical_decomposition_domain();
+
+	void do_widor(
+				std::string &widor_fname, int verbose_level);
+	void do_tdo_refinement(
+			tactical_decompositions::tdo_refinement_description *Descr, int verbose_level);
+	void do_tdo_print(
+			std::string &fname, int verbose_level);
+	void convert_stack_to_tdo(
+			std::string &stack_fname, int verbose_level);
+	void do_parameters_maximal_arc(
+			int q, int r, int verbose_level);
+	void do_parameters_arc(
+			int q, int s, int r, int verbose_level);
+	void compute_TDO_decomposition_of_projective_space_old(
+			std::string &fname_base,
+			geometry::projective_geometry::projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			std::vector<std::string> &file_names,
+			int verbose_level);
+	// called from quartic_curve_from_surface::TDO_decomposition
+	combinatorics::tactical_decompositions::decomposition_scheme *compute_TDO_decomposition_of_projective_space(
+			geometry::projective_geometry::projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			int verbose_level);
+	// returns NULL if the space is too large
+	void refine_the_partition(
+			int v, int k, int b, long int *Blocks_coded,
+			int &b_reduced,
+			int verbose_level);
+	std::string stringify_row_scheme(
+			std::string label_base,
+			int nb_V, int nb_B,
+			int *V, int *B, int *the_scheme,
+			int verbose_level);
+	std::string stringify_col_scheme(
+			std::string &label_base, int nb_V, int nb_B,
+			int *V, int *B, int *the_scheme,
+			int verbose_level);
+	std::string stringify_tdo_line_type(
+			std::string &label_base, int m, int n,
+			int nb_line_types, int *lines, int *multiplicities,
+			int verbose_level);
+	std::string stringify_td_scheme(
+			std::string &label_base, int nb_V, int nb_B,
+			int *V, int *B, int *the_scheme,
+			int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // tdo_data.cpp TDO parameter refinement
 // #############################################################################

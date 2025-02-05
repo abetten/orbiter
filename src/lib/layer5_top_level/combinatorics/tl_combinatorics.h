@@ -328,7 +328,7 @@ public:
 			int verbose_level);
 	void do_algebraic_degree(
 			projective_geometry::projective_space_with_action *PA,
-			int *&Algebraic_degree,
+			int *&Algebraic_degree, std::string *&Reduced_equation,
 			int verbose_level);
 
 };

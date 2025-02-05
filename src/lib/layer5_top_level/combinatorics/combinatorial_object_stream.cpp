@@ -1261,7 +1261,7 @@ void combinatorial_object_stream::do_graph_theoretic_activity(
 
 void combinatorial_object_stream::do_algebraic_degree(
 		projective_geometry::projective_space_with_action *PA,
-		int *&Algebraic_degree,
+		int *&Algebraic_degree, std::string *&Reduced_equation,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1376,6 +1376,7 @@ void combinatorial_object_stream::do_algebraic_degree(
 	int input_idx;
 
 
+	Reduced_equation = new string[IS->Objects.size()];
 	Algebraic_degree = NEW_int(IS->Objects.size());
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
@@ -1443,6 +1444,8 @@ void combinatorial_object_stream::do_algebraic_degree(
 					"eqn = ";
 			Int_vec_print(cout, eqn, eqn_size);
 			cout << endl;
+			HPD[m].print_equation(cout, eqn);
+			cout << endl;
 		}
 
 
@@ -1456,7 +1459,7 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 			if (f_v) {
 				cout << "combinatorial_object_stream::do_algebraic_degree "
-						"degree = " << d << endl;
+						"testing if degree = " << d << endl;
 			}
 			if (f_v) {
 				cout << "combinatorial_object_stream::do_algebraic_degree "
@@ -1470,7 +1473,7 @@ void combinatorial_object_stream::do_algebraic_degree(
 				Subspace_wgr[d],
 				eqn_reduced,
 				eqn_kernel,
-				verbose_level - 1)) {
+				verbose_level - 2)) {
 
 				if (f_v) {
 					cout << "combinatorial_object_stream::do_algebraic_degree "
@@ -1482,7 +1485,8 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 			if (f_v) {
 				cout << "combinatorial_object_stream::do_algebraic_degree "
-						"HPD[m].test_potential_algebraic_degree returns false" << endl;
+						"HPD[m].test_potential_algebraic_degree returns false "
+						"degree = " << d << " is not possible" << endl;
 			}
 
 #if 0
@@ -1510,10 +1514,16 @@ void combinatorial_object_stream::do_algebraic_degree(
 		cout << endl;
 		cout << "eqn_size=" << eqn_size << endl;
 
-		cout << "combinatorial_object_stream::do_algebraic_degree "
-				"eqn_reduced=";
-		HPD[m].print_equation(cout, eqn_reduced);
-		cout << endl;
+		{
+			string s;
+
+			s = HPD[d].stringify_equation(eqn_reduced);
+
+			cout << "combinatorial_object_stream::do_algebraic_degree "
+					"eqn_reduced=" << s << endl;
+		}
+		//HPD[m].print_equation(cout, eqn_reduced);
+		//cout << endl;
 
 
 		if (d < m) {
@@ -1534,8 +1544,15 @@ void combinatorial_object_stream::do_algebraic_degree(
 		HPD[d].print_equation(cout, eqn_reduced2);
 		cout << endl;
 
+		string s;
+
+		s = HPD[d].stringify_equation(eqn_reduced2);
+
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"eqn_reduced2=" << s << endl;
 
 		Algebraic_degree[input_idx] = d;
+		Reduced_equation[input_idx] = s;
 
 		FREE_int(eqn_reduced);
 		FREE_int(eqn_kernel);

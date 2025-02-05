@@ -183,6 +183,12 @@ void data_input_stream_description_element::print()
 				<< " " << input_string
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_Kaempfer_file) {
+		cout << "-Kaempfer_file"
+				<< " " << input_string
+			<< endl;
+	}
+
 	else {
 		cout << "data_input_stream_description_element::print unknown type" << endl;
 		exit(1);
@@ -451,6 +457,8 @@ void data_input_stream_description_element::init_graph_by_adjacency_matrix_from_
 
 void data_input_stream_description_element::init_multi_matrix(
 		std::string &a, std::string &b)
+// a= m, n, max_value
+// b= m values for the rows, n values for the columns, and then the m * n entries of the matrix
 {
 	input_type = t_data_input_stream_multi_matrix;
 
@@ -462,6 +470,14 @@ void data_input_stream_description_element::init_geometric_object(
 		std::string &label)
 {
 	input_type = t_data_input_stream_geometric_object;
+
+	input_string.assign(label);
+}
+
+void data_input_stream_description_element::init_Kaempfer_file(
+		std::string &label)
+{
+	input_type = t_data_input_stream_Kaempfer_file;
 
 	input_string.assign(label);
 }

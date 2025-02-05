@@ -129,6 +129,10 @@ interface_combinatorics::interface_combinatorics()
 	f_rowspan_over_R = false;
 	//std::string rowspan_over_R_label;
 
+	f_read_widor = false;
+	//std::string read_widor_fname;
+
+	f_Kaempfer = false;
 }
 
 interface_combinatorics::~interface_combinatorics()
@@ -224,6 +228,12 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
 		cout << "-rowspan_over_R <label : matrix> " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-read_widor") == 0) {
+		cout << "-read_widor <label : fname> " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-Kaempfer") == 0) {
+		cout << "-Kaempfer " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(
@@ -314,6 +324,12 @@ int interface_combinatorics::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-rowspan_over_R") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-read_widor") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-Kaempfer") == 0) {
 		return true;
 	}
 	return false;
@@ -629,8 +645,22 @@ void interface_combinatorics::read_arguments(
 				<< " " << endl;
 		}
 	}
-
-
+	else if (ST.stringcmp(argv[i], "-read_widor") == 0) {
+		f_read_widor = true;
+		read_widor_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-read_widor "
+					<< " " << read_widor_fname
+				<< " " << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-Kaempfer") == 0) {
+		f_Kaempfer = true;
+		if (f_v) {
+			cout << "-Kaempfer "
+				<< " " << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -766,6 +796,15 @@ void interface_combinatorics::print()
 				<< " " << rowspan_over_R_label
 			<< " " << endl;
 	}
+	if (f_read_widor) {
+		cout << "-read_widor "
+				<< " " << read_widor_fname
+			<< " " << endl;
+	}
+	if (f_Kaempfer) {
+		cout << "-Kaempfer "
+			<< " " << endl;
+	}
 
 }
 
@@ -838,35 +877,46 @@ void interface_combinatorics::worker(
 	}
 	else if (f_tdo_refinement) {
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
-		Combi.do_tdo_refinement(Tdo_refinement_descr, verbose_level);
+		Tactical_decomposition_domain.do_tdo_refinement(
+				Tdo_refinement_descr, verbose_level);
 	}
 	else if (f_tdo_print) {
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
-		Combi.do_tdo_print(tdo_print_fname, verbose_level);
+		Tactical_decomposition_domain.do_tdo_print(
+				tdo_print_fname, verbose_level);
 	}
 	else if (f_convert_stack_to_tdo) {
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
-		Combi.convert_stack_to_tdo(stack_fname, verbose_level);
+		Tactical_decomposition_domain.convert_stack_to_tdo(
+				stack_fname, verbose_level);
 	}
 	else if (f_maximal_arc_parameters) {
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
-		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q,
+		Tactical_decomposition_domain.do_parameters_maximal_arc(
+				maximal_arc_parameters_q,
 				maximal_arc_parameters_r, verbose_level);
 	}
 	else if (f_arc_parameters) {
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 
-		Combi.do_parameters_arc(arc_parameters_q,
-				arc_parameters_s, arc_parameters_r, verbose_level);
+		Tactical_decomposition_domain.do_parameters_arc(
+				arc_parameters_q,
+				arc_parameters_s, arc_parameters_r,
+				verbose_level);
 	}
 	else if (f_pentomino_puzzle) {
 		cout << "pentomino_puzzle " <<endl;
@@ -913,16 +963,20 @@ void interface_combinatorics::worker(
 
 		other::orbiter_kernel_system::file_io Fio;
 
-		Fio.read_solutions_and_tally(read_solutions_and_tally_fname,
-				read_solutions_and_tally_sz, verbose_level);
+		Fio.read_solutions_and_tally(
+				read_solutions_and_tally_fname,
+				read_solutions_and_tally_sz,
+				verbose_level);
 
 	}
 	else if (f_make_elementary_symmetric_functions) {
 
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
-		Combi.make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
-				make_elementary_symmetric_functions_k_max, verbose_level);
+		Combi.make_elementary_symmetric_functions(
+				make_elementary_symmetric_functions_n,
+				make_elementary_symmetric_functions_k_max,
+				verbose_level);
 
 	}
 	else if (f_make_elementary_symmetric_function) {
@@ -946,7 +1000,8 @@ void interface_combinatorics::worker(
 		combinatorics::other_combinatorics::combinatorics_domain Combi;
 
 		Combi.Dedekind_numbers(
-				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
+				Dedekind_n_min, Dedekind_n_max,
+				Dedekind_q_min, Dedekind_q_max,
 				verbose_level);
 
 	}
@@ -1056,6 +1111,41 @@ void interface_combinatorics::worker(
 		Algo.matrix_rowspan_over_R(rowspan_over_R_label, verbose_level);
 	}
 
+	else if (f_read_widor) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -read_widor " << read_widor_fname << endl;
+		}
+
+		combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"before Tactical_decomposition_domain.do_widor" << endl;
+		}
+		Tactical_decomposition_domain.do_widor(
+				read_widor_fname, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"after Tactical_decomposition_domain.do_widor" << endl;
+		}
+	}
+
+	else if (f_Kaempfer) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -Kaempfer " << endl;
+		}
+
+
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"before Dirk_Kaempfer_main" << endl;
+		}
+		other::l1_interfaces::Dirk_Kaempfer_main();
+		if (f_v) {
+			cout << "interface_combinatorics::worker "
+					"after Dirk_Kaempfer_main" << endl;
+		}
+	}
 
 
 }

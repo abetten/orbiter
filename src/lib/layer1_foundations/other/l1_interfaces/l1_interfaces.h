@@ -24,7 +24,7 @@ namespace l1_interfaces {
 
 
 
-int Dirk_Kaempfer_main(int argc, char *argv[], char *envp[]);
+int Dirk_Kaempfer_main();
 
 
 

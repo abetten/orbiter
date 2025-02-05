@@ -1140,7 +1140,8 @@ void any_combinatorial_object::init_incidence_geometry_from_string_of_row_ranks(
 
 
 void any_combinatorial_object::init_large_set(
-	long int *data, int data_sz, int v, int b, int k, int design_sz,
+	long int *data, int data_sz,
+	int v, int b, int k, int design_sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1439,6 +1440,40 @@ void any_combinatorial_object::init_multi_matrix(
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_multi_matrix done" << endl;
+	}
+}
+
+void any_combinatorial_object::init_multi_matrix_from_data(
+		int nb_V, int nb_B, int *V, int *B, int *scheme,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_multi_matrix_from_data" << endl;
+	}
+
+
+	sz = nb_V + nb_B + nb_V * nb_B;
+
+	P = NULL;
+	type = t_MMX;
+	set = NEW_lint(sz);
+
+	Int_vec_copy_to_lint(V, set, nb_V);
+	Int_vec_copy_to_lint(B, set + nb_V, nb_B);
+	Int_vec_copy_to_lint(scheme, set + nb_V + nb_B, nb_V * nb_B);
+	m = nb_V;
+	n = nb_B;
+	max_val = Lint_vec_maximum(set, sz);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_multi_matrix_from_data "
+				"m=" << m << " n=" << n << " max_val=" << max_val << endl;
+	}
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_multi_matrix_from_data done" << endl;
 	}
 }
 

@@ -1030,7 +1030,8 @@ void quartic_curve_from_surface::TDO_decomposition(
 	}
 
 
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
+	combinatorics::tactical_decompositions::tactical_decomposition_domain Tactical_decomposition_domain;
 	string fname_base;
 
 	fname_base = label + "_orb" + std::to_string(pt_orbit) + "_quartic";
@@ -1042,12 +1043,12 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"before Combi.compute_TDO_decomposition_of_projective_space_old" << endl;
+			"before Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	std::vector<std::string> file_names;
 
-	Combi.compute_TDO_decomposition_of_projective_space_old(
+	Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space_old(
 			fname_base,
 			SOA->Surf_A->PA->PA2->P,
 			Pts_on_curve, sz_curve,
@@ -1057,7 +1058,7 @@ void quartic_curve_from_surface::TDO_decomposition(
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::TDO_decomposition "
-			"after Combi.compute_TDO_decomposition_of_projective_space_old" << endl;
+			"after Tactical_decomposition_domain.compute_TDO_decomposition_of_projective_space_old" << endl;
 	}
 
 	ost << endl << endl;

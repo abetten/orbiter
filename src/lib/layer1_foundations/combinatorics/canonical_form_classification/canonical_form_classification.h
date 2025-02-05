@@ -44,6 +44,7 @@ public:
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
 		// t_INC = incidence geometry
 		// t_LS = large set
+		// t_MMX = multi matrix
 
 	std::string input_fname;
 	int input_idx;
@@ -172,7 +173,8 @@ public:
 		int v, int b, int r,
 		int verbose_level);
 	void init_large_set(
-		long int *data, int data_sz, int v, int b, int k, int design_sz,
+		long int *data, int data_sz,
+		int v, int b, int k, int design_sz,
 		int verbose_level);
 	void init_large_set_from_string(
 		std::string &data_text, int v, int k, int design_sz,
@@ -190,6 +192,9 @@ public:
 			std::string &data1,
 			std::string &data2,
 		int verbose_level);
+	void init_multi_matrix_from_data(
+			int nb_V, int nb_B, int *V, int *B, int *scheme,
+			int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -674,7 +679,11 @@ public:
 				int N);
 	void init_multi_matrix(
 			std::string &a, std::string &b);
+	// a= m, n, max_value
+	// b= m values for the rows, n values for the columns, and then the m * n entries of the matrix
 	void init_geometric_object(
+			std::string &label);
+	void init_Kaempfer_file(
 			std::string &label);
 
 };

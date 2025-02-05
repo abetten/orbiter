@@ -1311,6 +1311,12 @@ void homogeneous_polynomial_domain::print_monomial_latex_str(
 void homogeneous_polynomial_domain::print_equation(
 		std::ostream &ost, int *coeffs)
 {
+	std:string s;
+
+	s = stringify_equation(coeffs);
+	ost << s;
+
+#if 0
 	int i, c;
 	int f_first = true;
 
@@ -1332,7 +1338,39 @@ void homogeneous_polynomial_domain::print_equation(
 		}
 		print_monomial(ost, i);
 	}
+#endif
 }
+
+
+std::string homogeneous_polynomial_domain::stringify_equation(
+		int *coeffs)
+{
+	int i, c;
+	int f_first = true;
+	string s;
+
+	//cout << "homogeneous_polynomial_domain::print_equation" << endl;
+	for (i = 0; i < nb_monomials; i++) {
+		c = coeffs[i];
+		if (c == 0) {
+			continue;
+		}
+		if (f_first) {
+			f_first = false;
+		}
+		else {
+			s += " + ";
+		}
+		if (c > 1) {
+			//F->print_element(ost, c);
+			s += std::to_string(c) + "*";
+		}
+		s += stringify_monomial(i);
+		//print_monomial(ost, i);
+	}
+	return s;
+}
+
 
 void homogeneous_polynomial_domain::print_equation_simple(
 		std::ostream &ost, int *coeffs)
@@ -2503,6 +2541,10 @@ int homogeneous_polynomial_domain::test_potential_algebraic_degree(
 				"the input equation is: " << endl;
 		Int_vec_print(cout, eqn, eqn_size);
 		cout << endl;
+
+		print_equation(cout, eqn);
+		cout << endl;
+
 	}
 
 	other::data_structures::int_matrix *Ideal;
@@ -2697,15 +2739,27 @@ int homogeneous_polynomial_domain::test_potential_algebraic_degree(
 					Int_vec_print(cout, eqn, n);
 					cout << endl;
 
+					print_equation(cout, eqn);
+					cout << endl;
+
+
 					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
 							"eqn_reduced=";
 					Int_vec_print(cout, eqn_reduced, n);
 					cout << endl;
 
+					print_equation(cout, eqn_reduced);
+					cout << endl;
+
+
 					cout << "homogeneous_polynomial_domain::test_potential_algebraic_degree "
 							"eqn_kernel =";
 					Int_vec_print(cout, eqn_kernel, n);
 					cout << endl;
+
+					print_equation(cout, eqn_kernel);
+					cout << endl;
+
 				}
 				ret = true;
 			}
@@ -2786,8 +2840,7 @@ int homogeneous_polynomial_domain::dimension_of_ideal(
 }
 
 void homogeneous_polynomial_domain::explore_vanishing_ideal(
-		long int *Pts,
-		int nb_pts, int verbose_level)
+		long int *Pts, int nb_pts, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2899,7 +2952,8 @@ void homogeneous_polynomial_domain::evaluate_point_on_all_monomials(
 	for (j = 0; j < nb_monomials; j++) {
 		evaluation[j] =
 				F->Linear_algebra->evaluate_monomial(
-						Monomials + j * nb_variables, pt_coords, nb_variables);
+						Monomials + j * nb_variables,
+						pt_coords, nb_variables);
 	}
 }
 
@@ -3039,7 +3093,8 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 	}
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
-				"degree = " << degree << " modulus=" << modulus << endl;
+				"degree = " << degree
+				<< " modulus=" << modulus << endl;
 	}
 	int rk, j;
 	int *basis;
@@ -3056,7 +3111,9 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 	}
 	rk = 0;
 	for (j = 0; j < nb_monomials; j++) {
-		if (monomial_has_good_reduction(j, degree, modulus, 0 /*verbose_level - 3*/)) {
+		if (monomial_has_good_reduction(
+				j, degree, modulus,
+				0 /*verbose_level - 3*/)) {
 			basis[rk++] = j;
 		}
 	}
@@ -3072,7 +3129,8 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
 				"before Subspace_wgr->allocate_and_initialize_with_zero" << endl;
 	}
-	Subspace_wgr->allocate_and_initialize_with_zero(rk, nb_monomials);
+	Subspace_wgr->allocate_and_initialize_with_zero(
+			rk, nb_monomials);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
 				"after Subspace_wgr->allocate_and_initialize_with_zero" << endl;
@@ -3085,7 +3143,10 @@ void homogeneous_polynomial_domain::subspace_with_good_reduction(
 	}
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction degree = " << degree << " modulus=" << modulus << " rk=" << rk << endl;
+		cout << "homogeneous_polynomial_domain::subspace_with_good_reduction "
+				"degree = " << degree
+				<< " modulus=" << modulus
+				<< " rk=" << rk << endl;
 	}
 
 	FREE_int(basis);
@@ -3101,24 +3162,15 @@ int homogeneous_polynomial_domain::monomial_has_good_reduction(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, modulus = " << modulus << endl;
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, "
+				"modulus = " << modulus << endl;
 	}
 
-	//int *mon;
 	int *reduced_monomial;
 	int i, s;
 	int ret = false;
 
 	reduced_monomial = NEW_int(nb_variables);
-
-#if 0
-	mon = Monomials + mon_idx * nb_variables;
-	if (f_v) {
-		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, monomial = ";
-		Int_vec_print(cout, mon, nb_variables);
-		cout << endl;
-	}
-#endif
 
 
 	monomial_reduction(mon_idx, modulus, reduced_monomial, verbose_level - 1);
@@ -3128,10 +3180,20 @@ int homogeneous_polynomial_domain::monomial_has_good_reduction(
 		s += reduced_monomial[i];
 	}
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, s = " << s << endl;
+		cout << "homogeneous_polynomial_domain::monomial_has_good_reduction, "
+				"s = " << s << endl;
 	}
 	if (s == degree) {
 		ret = true;
+	}
+	else if (s < degree) {
+
+		// we reduced it down too much.
+		// Test if it could reduce to degree:
+
+		if (((degree - s) % modulus) == 0) {
+			ret = true;
+		}
 	}
 
 	FREE_int(reduced_monomial);
@@ -3150,7 +3212,8 @@ void homogeneous_polynomial_domain::monomial_reduction(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::monomial_reduction, modulus = " << modulus << endl;
+		cout << "homogeneous_polynomial_domain::monomial_reduction, "
+				"modulus = " << modulus << endl;
 	}
 	int *mon;
 	int i, a, b;
@@ -3159,7 +3222,8 @@ void homogeneous_polynomial_domain::monomial_reduction(
 
 	mon = Monomials + mon_idx * nb_variables;
 	if (f_v) {
-		cout << "homogeneous_polynomial_domain::monomial_reduction, monomial = ";
+		cout << "homogeneous_polynomial_domain::monomial_reduction, "
+				"monomial = ";
 		Int_vec_print(cout, mon, nb_variables);
 		cout << endl;
 	}
@@ -3206,7 +3270,8 @@ void homogeneous_polynomial_domain::equation_reduce(
 	for (mon_idx = 0; mon_idx < nb_monomials; mon_idx++) {
 
 		if (f_v) {
-			cout << "homogeneous_polynomial_domain::equation_reduce mon_idx = " << mon_idx << " / " << nb_monomials << endl;
+			cout << "homogeneous_polynomial_domain::equation_reduce "
+					"mon_idx = " << mon_idx << " / " << nb_monomials << endl;
 		}
 
 		if (eqn_in[mon_idx] == 0) {
