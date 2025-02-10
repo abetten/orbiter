@@ -105,7 +105,6 @@ void variety_stabilizer_compute::compute_canonical_form_of_variety(
 	Ring_with_action->nauty_interface(
 			Variety_object_with_action,
 			Nauty_control,
-			//f_save_nauty_input_graphs,
 			Set_stab,
 			Canonical_form,
 			NO,

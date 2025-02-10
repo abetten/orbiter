@@ -512,6 +512,10 @@ public:
 		other::data_structures::fancy_set *&vertex_subset,
 		other::data_structures::fancy_set *&color_subset,
 		int verbose_level);
+	void common_neighbors(
+		int *Pts, int nb_pts,
+		other::data_structures::fancy_set *&vertex_subset,
+		int verbose_level);
 	void export_to_magma(
 			std::string &fname, int verbose_level);
 	void export_to_maple(
@@ -594,6 +598,17 @@ public:
 			int &regularity,
 			int verbose_level);
 	void properties(
+			int verbose_level);
+	int is_regular(
+			int *Degree,
+			int &regularity,
+			int verbose_level);
+	int is_strongly_regular(
+			int &k, int &lambda, int &mu,
+			int verbose_level);
+	void compute_A_and_A_square(
+			int *&A,
+			int *&A_square,
 			int verbose_level);
 	int test_distinguishing_property(
 			long int *set, int sz,

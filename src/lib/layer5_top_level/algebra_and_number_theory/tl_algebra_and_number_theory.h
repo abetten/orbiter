@@ -915,6 +915,10 @@ public:
 
 	int f_conjugate_inverse;
 
+	int f_select_subset;
+	std::string select_subset_vector_label;
+
+
 
 	vector_ge_activity_description();
 	~vector_ge_activity_description();

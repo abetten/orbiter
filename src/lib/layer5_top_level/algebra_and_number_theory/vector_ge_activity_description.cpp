@@ -38,6 +38,8 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_conjugate_inverse = false;
 
+	f_select_subset = false;
+	//std::string select_subset_vector_label;
 
 }
 
@@ -97,7 +99,13 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-conjugate_inverse " << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-select_subset") == 0) {
+			f_select_subset = true;
+			select_subset_vector_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-select_subset " << select_subset_vector_label << endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -137,6 +145,9 @@ void vector_ge_activity_description::print()
 	}
 	if (f_conjugate_inverse) {
 		cout << "-conjugate_inverse " << endl;
+	}
+	if (f_select_subset) {
+		cout << "-select_subset " << select_subset_vector_label << endl;
 	}
 
 }

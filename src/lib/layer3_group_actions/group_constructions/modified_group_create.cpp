@@ -1124,7 +1124,7 @@ void modified_group_create::create_derived_subgroup(
 		derived_group->build_up_subgroup_random_process(
 				Sims,
 				groups::choose_random_generator_derived_group,
-				0 /*verbose_level*/);
+				verbose_level - 2);
 		if (f_v) {
 			cout << "modified_group_create::create_derived_subgroup "
 					"after derived_group->build_up_subgroup_random_process" << endl;

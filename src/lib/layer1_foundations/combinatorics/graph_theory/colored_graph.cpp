@@ -282,7 +282,8 @@ colored_graph *colored_graph::sort_by_color_classes(
 		cout << "colored_graph::sort_by_color_classes" << endl;
 	}
 	if (nb_colors_per_vertex != 1) {
-		cout << "colored_graph::sort_by_color_classes nb_colors_per_vertex != 1" << endl;
+		cout << "colored_graph::sort_by_color_classes "
+				"nb_colors_per_vertex != 1" << endl;
 		exit(1);
 	}
 
@@ -426,10 +427,11 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency(
 			l /* nb_points */, 1 /*nb_colors */, 1 /* nb_colors_per_vertex*/,
-		Color, A,
-		label, label_tex,
-		0 /* verbose_level */);
-	CG->init_user_data(user_data, user_data_size,
+			Color, A,
+			label, label_tex,
+			0 /* verbose_level */);
+	CG->init_user_data(
+			user_data, user_data_size,
 			0 /* verbose_level */);
 	Lint_vec_copy(Pts, CG->points, l);
 	FREE_int(A);
@@ -752,8 +754,10 @@ void colored_graph::init_basic(
 	colored_graph::label.assign(label);
 	colored_graph::label_tex.assign(label_tex);
 	if (f_v) {
-		cout << "colored_graph::init_basic colored_graph::label = " << label << endl;
-		cout << "colored_graph::init_basic colored_graph::label_tex = " << label_tex << endl;
+		cout << "colored_graph::init_basic "
+				"colored_graph::label = " << label << endl;
+		cout << "colored_graph::init_basic "
+				"colored_graph::label_tex = " << label_tex << endl;
 	}
 
 
@@ -803,8 +807,10 @@ void colored_graph::init_from_bitvector(
 	colored_graph::label.assign(label);
 	colored_graph::label_tex.assign(label_tex);
 	if (f_v) {
-		cout << "colored_graph::init_from_bitvector colored_graph::label = " << label << endl;
-		cout << "colored_graph::init_from_bitvector colored_graph::label_tex = " << label_tex << endl;
+		cout << "colored_graph::init_from_bitvector "
+				"colored_graph::label = " << label << endl;
+		cout << "colored_graph::init_from_bitvector "
+				"colored_graph::label_tex = " << label_tex << endl;
 	}
 
 
@@ -1096,7 +1102,8 @@ void colored_graph::save_DIMACS(
 	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
-		cout << "colored_graph::save_DIMACS written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "colored_graph::save_DIMACS written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 
@@ -1207,6 +1214,7 @@ void colored_graph::draw_on_circle_2(
 	if (true) {
 		rad2 = Draw_options->rad;
 	}
+
 	for (i = 0; i < n; i++) {
 		Num.on_circle_int(Px, Py, i,
 				((int)(90. + (double)i * phi)) % 360, rad1);
@@ -1226,6 +1234,7 @@ void colored_graph::draw_on_circle_2(
 			// << " Py=" << Py[i] << endl;
 		}
 	}
+
 	for (i = 0; i < n; i++) {
 
 		if (i) {
@@ -1238,6 +1247,7 @@ void colored_graph::draw_on_circle_2(
 			}
 		}
 	}
+
 	for (i = 0; i < n; i++) {
 
 #if 0
@@ -1258,12 +1268,11 @@ void colored_graph::draw_on_circle_2(
 		//G.sf_color(0);
 		G.circle(Px[i], Py[i], rad2);
 	}
+
 	if (!Draw_options->f_nodes_empty) {
 		string s;
+
 		for (i = 0; i < n; i++) {
-
-
-
 
 			if (Draw_options->f_show_colors) {
 
@@ -1856,6 +1865,43 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
 }
 
 
+void colored_graph::common_neighbors(
+	int *Pts, int nb_pts,
+	other::data_structures::fancy_set *&vertex_subset,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::common_neighbors "
+				"of set ";
+		Int_vec_print(cout, Pts, nb_pts);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "The graph has " << nb_points << " vertices and "
+				<< nb_colors << " colors" << endl;
+	}
+	vertex_subset = NEW_OBJECT(other::data_structures::fancy_set);
+
+	vertex_subset->init(nb_points, 0 /* verbose_level */);
+
+	int i, j;
+	for (i = 0; i < nb_points; i++) {
+
+		for (j = 0; j < nb_pts; j++) {
+			if (!is_adjacent(i, Pts[j])) {
+				break;
+			}
+		}
+		if (j == nb_pts) {
+			vertex_subset->add_element(i);
+		}
+	}
+
+}
+
+
 
 #if 0
 colored_graph
@@ -2051,8 +2097,10 @@ void colored_graph::export_to_maple(
 
 
 	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "colored_graph::export_to_maple" << endl;
@@ -2100,8 +2148,10 @@ void colored_graph::export_to_file(
 
 
 	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -2118,8 +2168,9 @@ void colored_graph::export_to_text(
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
 	}
+
 	{
-		ofstream fp(fname.c_str());
+		ofstream fp(fname);
 
 		fp << "" << endl;
 		for (i = 0; i < nb_points; i++) {
@@ -2144,17 +2195,16 @@ void colored_graph::export_to_text(
 			}
 		}
 		fp << "" << endl;
-
-		
-
-
 	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
-		}
+	}
 }
 
 void colored_graph::export_laplacian_to_file(
@@ -2257,16 +2307,13 @@ void colored_graph::export_to_file_matlab(
 		}
 		fp << "]" << endl;
 
-		
-
-
 	}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
-		}
+	}
 }
 
 void colored_graph::export_to_csv(
@@ -2355,12 +2402,14 @@ void colored_graph::export_to_graphviz(
 	}
 	//Fio.int_matrix_write_csv(fname, M, nb_points, nb_points);
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 
 	if (f_v) {
 		cout << "colored_graph::export_to_graphviz done" << endl;
-		}
+	}
 }
 
 
@@ -2850,7 +2899,8 @@ void colored_graph::find_subgraph_An_recursion(
 
 	if (current_depth == n) {
 		if (f_v) {
-			cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			cout << "colored_graph::find_subgraph_An_recursion "
+					"current_depth=" << current_depth << " : subgraph = ";
 			Int_vec_print(cout, subgraph, current_depth);
 			cout << " is solution " << Solutions.size() << endl;
 
@@ -2880,7 +2930,8 @@ void colored_graph::find_subgraph_An_recursion(
 				a = subgraph[j];
 				if (a == b) {
 					if (f_v) {
-						cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						cout << "colored_graph::find_subgraph_An_recursion "
+								"current_depth=" << current_depth << " : subgraph = ";
 						Int_vec_print(cout, subgraph, current_depth + 1);
 						cout << ", candidate " << b << " is eliminated because it is contained in the subgraph" << endl;
 					}
@@ -2890,7 +2941,8 @@ void colored_graph::find_subgraph_An_recursion(
 				c2 = T[j * n + current_depth + 1];
 				if (c1 != c2) {
 					if (f_v) {
-						cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+						cout << "colored_graph::find_subgraph_An_recursion "
+								"current_depth=" << current_depth << " : subgraph = ";
 						Int_vec_print(cout, subgraph, current_depth + 1);
 						cout << ", candidate " << b << " is eliminated by comparing it with vertex j=" << j << " which is " << a << " in the subgraph" << endl;
 					}
@@ -2899,7 +2951,8 @@ void colored_graph::find_subgraph_An_recursion(
 			}
 			if (j == current_depth + 1) {
 				if (f_v) {
-					cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+					cout << "colored_graph::find_subgraph_An_recursion "
+							"current_depth=" << current_depth << " : subgraph = ";
 					Int_vec_print(cout, subgraph, current_depth + 1);
 					cout << ", candidate " << b << " is accepted" << endl;
 				}
@@ -2909,7 +2962,8 @@ void colored_graph::find_subgraph_An_recursion(
 		}
 
 		if (f_v) {
-			cout << "colored_graph::find_subgraph_An_recursion current_depth=" << current_depth << " : subgraph = ";
+			cout << "colored_graph::find_subgraph_An_recursion "
+					"current_depth=" << current_depth << " : subgraph = ";
 			Int_vec_print(cout, subgraph, current_depth + 1);
 			cout << " : Candidates_reduced=";
 			for (j = 0; j < Candidates_reduced.size(); j++) {
@@ -3340,7 +3394,8 @@ int colored_graph::test_automorphism_property(
 	int f_aut = true;
 
 	if (degree != nb_points) {
-		cout << "colored_graph::test_automorphism_property degree != nb_points" << endl;
+		cout << "colored_graph::test_automorphism_property "
+				"degree != nb_points" << endl;
 		exit(1);
 	}
 
@@ -3522,10 +3577,8 @@ void colored_graph::compute_degree_sequence(
 		cout << "colored_graph::compute_degree_sequence" << endl;
 	}
 
-	//int *Degree;
 	int i, j;
 
-	//Degree = NEW_int(nb_points);
 	Int_vec_zero(Degree, nb_points);
 
 	for (i = 0; i < nb_points; i++) {
@@ -3595,13 +3648,74 @@ void colored_graph::properties(
 		cout << "colored_graph::properties" << endl;
 	}
 
+
+
 	int *Degree;
 
 	Degree = NEW_int(nb_points);
 
-	compute_degree_sequence(
+	if (f_v) {
+		cout << "colored_graph::properties "
+				"before compute_degree_sequence" << endl;
+	}
+	compute_degree_sequence(Degree, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "colored_graph::properties "
+				"after compute_degree_sequence" << endl;
+	}
+
+	int f_is_regular;
+	int regularity;
+
+	if (f_v) {
+		cout << "colored_graph::properties "
+				"before is_regular" << endl;
+	}
+	f_is_regular = is_regular(
 			Degree,
+			regularity,
 			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "colored_graph::properties "
+				"after is_regular" << endl;
+	}
+
+
+
+	if (f_is_regular) {
+		cout << "colored_graph::properties "
+				"The graph is regular of degree " << regularity << endl;
+	}
+	else {
+		cout << "colored_graph::properties "
+				"The graph is NOT regular" << endl;
+
+	}
+
+
+	int f_is_strongly_regular;
+	int k, lambda, mu;
+
+	f_is_strongly_regular = is_strongly_regular(
+			k, lambda, mu,
+			verbose_level);
+
+	if (f_is_strongly_regular) {
+		if (f_v) {
+			cout << "colored_graph::properties "
+					"is strongly regular with parameters "
+					"k=" << k << " lambda=" << lambda << " mu=" << mu << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "colored_graph::properties "
+					"is NOT strongly regular" << endl;
+		}
+
+	}
+
+
 
 #if 0
 	int i, j;
@@ -3617,12 +3731,14 @@ void colored_graph::properties(
 	}
 #endif
 
+#if 0
 	other::data_structures::tally T;
 
 	T.init(Degree, nb_points, false, 0);
 	cout << "Degree type: ";
 	T.print_first_tex(true /* f_backwards */);
 	cout << endl;
+#endif
 
 	FREE_int(Degree);
 
@@ -3630,6 +3746,195 @@ void colored_graph::properties(
 		cout << "colored_graph::properties done" << endl;
 	}
 }
+
+
+int colored_graph::is_regular(
+		int *Degree,
+		int &regularity,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::is_regular" << endl;
+	}
+	int f_is_regular;
+
+	other::data_structures::tally T;
+
+	T.init(Degree, nb_points, false, 0);
+	if (f_v) {
+		cout << "colored_graph::is_regular Degree type: ";
+		T.print_first_tex(true /* f_backwards */);
+		cout << endl;
+	}
+	if (T.nb_types == 1) {
+		f_is_regular = true;
+		regularity = T.data[T.sorting_perm_inv[T.type_first[0]]];
+	}
+	else {
+		f_is_regular = false;
+	}
+
+
+	if (f_v) {
+		cout << "colored_graph::is_regular done" << endl;
+	}
+	return f_is_regular;
+}
+
+int colored_graph::is_strongly_regular(
+		int &k, int &lambda, int &mu,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::is_strongly_regular" << endl;
+	}
+	int f_is_strongly_regular = true;
+
+
+	int *A;
+	int *A_square;
+
+	compute_A_and_A_square(A, A_square, verbose_level);
+
+	k = -1;
+	lambda = -1;
+	mu = -1;
+
+	int f_has_k = false;
+	int f_has_lambda = false;
+	int f_has_mu = false;
+	int f_dead = false;
+
+	int i, j;
+	int a, a2;
+
+	for (i = 0; i < nb_points; i++) {
+		if (f_dead) {
+			break;
+		}
+		for (j = 0; j < nb_points; j++) {
+			if (f_dead) {
+				break;
+			}
+			a = A[i * nb_points + j];
+			a2 = A_square[i * nb_points + j];
+			if (i == j) {
+				if (f_has_k) {
+					if (a2 != k) {
+						f_dead = true;
+						if (f_v) {
+							cout << "colored_graph::is_strongly_regular "
+									"not strongly regular because not regular" << endl;
+						}
+
+						break;
+					}
+				}
+				else {
+					k = a2;
+					f_has_k = true;
+				}
+			}
+			else if (a) {
+				if (f_has_lambda) {
+					if (a2 != lambda) {
+						f_dead = true;
+						if (f_v) {
+							cout << "colored_graph::is_strongly_regular "
+									"not strongly regular because lambda does not exist" << endl;
+						}
+						break;
+					}
+				}
+				else {
+					lambda = a2;
+					f_has_lambda = true;
+				}
+
+			}
+			else {
+				if (f_has_mu) {
+					if (a2 != mu) {
+						f_dead = true;
+						if (f_v) {
+							cout << "colored_graph::is_strongly_regular "
+									"not strongly regular because mu does not exist" << endl;
+						}
+						break;
+					}
+				}
+				else {
+					mu = a2;
+					f_has_mu = true;
+				}
+
+			}
+		}
+	}
+
+	if (f_dead) {
+		f_is_strongly_regular = false;
+	}
+
+
+	FREE_int(A);
+	FREE_int(A_square);
+
+	if (f_v) {
+		cout << "colored_graph::is_strongly_regular done" << endl;
+	}
+	return f_is_strongly_regular;
+}
+
+
+void colored_graph::compute_A_and_A_square(
+		int *&A,
+		int *&A_square,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_A_and_A_square" << endl;
+	}
+	int i, j;
+
+	A = NEW_int(nb_points * nb_points);
+	A_square = NEW_int(nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = 0; j < nb_points; j++) {
+			A[i * nb_points + j] = is_adjacent(i, j);
+		}
+	}
+
+	int k, c;
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = 0; j < nb_points; j++) {
+			c = 0;
+			for (k = 0; k < nb_points; k++) {
+				if (A[i * nb_points + k] && A[k * nb_points + j]) {
+					c++;
+				}
+			}
+			A_square[i * nb_points + j] = c;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "colored_graph::compute_A_and_A_square done" << endl;
+	}
+}
+
 
 int colored_graph::test_distinguishing_property(
 		long int *set, int sz,

@@ -88,10 +88,18 @@ void sims::compute_base_orbits_known_length(
 					"orbit_len[i] != tl[i]" << endl;
 			cout << "orbit_len[i]=" << orbit_len[i] << endl;
 			cout << "tl[i]=" << tl[i] << endl;
+			cout << "i=" << i << endl;
+			cout << "action " << A->label << endl;
+			Int_vec_print(cout, tl, A->base_len());
+			cout << endl;
+			cout << "A->base_len() = " << A->base_len() << endl;
+			cout << "tl=";
+			Int_vec_print(cout, tl, A->base_len());
+			cout << endl;
 			print_generators_at_level_or_below(i);
 			exit(1);
 		}
-		}
+	}
 	if (f_v) {
 		cout << "sims::compute_base_orbits_known_length done" << endl;
 	}

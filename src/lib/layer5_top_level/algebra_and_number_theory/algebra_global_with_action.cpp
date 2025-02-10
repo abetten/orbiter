@@ -4782,7 +4782,6 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 			Classifier,
 			Input_Variety,
 			Classification_of_varieties_nauty,
-			//fname_base,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety "

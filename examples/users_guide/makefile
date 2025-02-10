@@ -10450,6 +10450,7 @@ PG_2_2_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10491,6 +10492,7 @@ PG_3_2_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10517,6 +10519,7 @@ PGL_3_2_singer:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10530,6 +10533,9 @@ PGL_3_2_singer:
 PGL_3_2_on_lines:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_3_2_lines \
 			-W -depth 7 \
@@ -10544,6 +10550,7 @@ PGL_3_2_on_lines:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10557,6 +10564,9 @@ PGL_3_2_on_lines:
 PGL_2_5_on_subsets:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_5 \
 			-W -depth 6 \
@@ -10568,6 +10578,7 @@ PGL_2_5_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10579,6 +10590,9 @@ PGL_2_5_on_subsets:
 PGL_2_7_on_subsets:
 	$(ORBITER) -v 10 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_7 \
 			-W -depth 8 \
@@ -10590,6 +10604,7 @@ PGL_2_7_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10601,6 +10616,9 @@ PGL_2_7_on_subsets:
 PGGL_2_8_on_subsets:
 	$(ORBITER) -v 10 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_8 \
 			-W -depth 9 \
@@ -10612,6 +10630,7 @@ PGGL_2_8_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10624,6 +10643,9 @@ PGGL_2_8_on_subsets:
 PGGL_2_9_on_subsets:
 	$(ORBITER) -v 10 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_9 \
 			-W -depth 10 \
@@ -10635,6 +10657,7 @@ PGGL_2_9_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10647,6 +10670,9 @@ PGGL_2_9_on_subsets:
 PGL_2_11_on_subsets:
 	$(ORBITER) -v 10 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_2_11 \
 			-W -depth 12 \
@@ -10658,6 +10684,7 @@ PGL_2_11_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10671,6 +10698,9 @@ PGL_2_11_on_subsets:
 PGGL_2_16_on_subsets:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_16 \
 			-W -depth 10 \
@@ -10682,6 +10712,7 @@ PGGL_2_16_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10694,6 +10725,9 @@ PGGL_2_16_on_subsets:
 PGGL_2_32_on_subsets:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_32 \
 			-W -depth 8 \
@@ -10705,6 +10739,7 @@ PGGL_2_32_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10717,6 +10752,9 @@ PGGL_2_32_on_subsets:
 PG_3_4_subsets:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_4_4 \
 			-depth 5 \
@@ -10728,6 +10766,7 @@ PG_3_4_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10740,6 +10779,9 @@ PG_3_4_subsets:
 PGGL_2_9_orbits:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGGL_2_9 -W -depth 5 \
 		-end \
@@ -10750,6 +10792,7 @@ PGGL_2_9_orbits:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10764,6 +10807,9 @@ PGGL_2_9_orbits:
 PGO_5_2_on_subsets:
 	$(ORBITER) -v 3 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -embedded \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGO_5_2 \
 			-depth 15 \
@@ -10777,6 +10823,7 @@ PGO_5_2_on_subsets:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+				-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10836,6 +10883,9 @@ PGL_5_3_wedge_subspace_orbits:
 subspaces_Op_4_2:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label Op_4_2 -W -depth 4 \
 		-end \
@@ -10846,6 +10896,7 @@ subspaces_Op_4_2:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10862,6 +10913,9 @@ subspaces_Op_4_2:
 PGL_4_2_on_subspaces:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_4_2 \
 			-W -depth 4 \
@@ -10873,6 +10927,7 @@ PGL_4_2_on_subspaces:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10887,6 +10942,9 @@ PGL_4_2_on_subspaces:
 PGL_4_2_singer_on_subspaces:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_4_2_singer \
 			-W -depth 4 \
@@ -10898,6 +10956,7 @@ PGL_4_2_singer_on_subspaces:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10912,6 +10971,9 @@ PGL_4_2_singer_on_subspaces:
 PGL_8_2_singer_on_subspaces:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label PGL_8_2_singer \
 			-W -depth 8 \
@@ -10923,6 +10985,7 @@ PGL_8_2_singer_on_subspaces:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -10983,6 +11046,9 @@ Op_6_11_orbits_on_subspaces:
 Op_8_2_orbits_on_subspaces:
 	$(ORBITER) -v 5 \
 		-orbiter_path $(ORBITER_EXE_PATH) \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
 		-define Control -poset_classification_control \
 			-problem_label Op_8_2 -W -depth 8 \
 		-end \
@@ -10993,6 +11059,7 @@ Op_8_2_orbits_on_subspaces:
 		-define ro \
 			-poset_classification_report_options \
 				-draw_poset -type_ordinary \
+			-draw_options Do \
 		-end \
 		-with Orb -do -orbits_activity \
 			-report \
@@ -16803,6 +16870,7 @@ codes_8_4_4:
 		-define Control -poset_classification_control \
 			-problem_label codes_8_4_4 \
 			-draw_options Do \
+			-W \
 		-end \
 		-define G \
 		-linear_group -PGL 4 2 -end \
@@ -16815,8 +16883,11 @@ codes_8_4_4:
 	#$(PDFLATEX) codes_8_4_4_poset.tex
 	#$(OPEN) codes_8_4_4_poset.pdf
 
+# There are six codes, one of them has a group of order 1344
 
-# ToDo: the previous command does not produce the graph
+#CODE_8_4_4_1344="0,1,2,3,8,11,13,14"
+
+
 
 codes_8_4_4_draw:
 	$(ORBITER) -v 3 \
@@ -26263,7 +26334,38 @@ F_64bit:
 
 
 
-####
+###############################################################################
+# unclassified:
+
+
+stabilizer_of_mmx:
+	$(ORBITER) -v 7 \
+		-define C -combinatorial_object \
+			-label decomp decomp \
+			-multi_matrix "8,5,36" "3,3,3,3,3,3,3,3, 1,1,1,1,36, 1,0,0,0,6, 0,1,0,0,6, 0,0,1,0,6, 0,0,0,1,6, 1,0,0,0,6, 0,1,0,0,6, 0,0,1,0,6, 0,0,0,1,6" \
+			-multi_matrix "8,5,36" "3,3,3,3,3,3,3,3, 36,1,1,1,1, 6,1,0,0,0, 6,0,1,0,0, 6,0,0,1,0, 6,0,0,0,1, 6,1,0,0,0, 6,0,1,0,0, 6,0,0,1,0, 6,0,0,0,1" \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 400 \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group_GAP \
+			-end \
+		-end
+	pdflatex decomp_classification.tex
+	open decomp_classification.pdf
+
 
 
 

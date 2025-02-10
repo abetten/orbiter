@@ -4,4 +4,5 @@ ROW,C1,C2,C3
 1,"\verb'-report' ","  "," Produce a report of the group elements in the vector. "
 1,"\verb'-export_GAP' ","  "," Export the group elements to GAP and generate the group. "
 1,"\verb'-transform_variety' "," variety "," Transform the given variety by the group elements in the vector. "
+1,"\verb'-select_subset' "," indexset "," Create a new vector from the elements given in the index set. The index set must be a label of a vector of integers. Indexing of elements of the vector is zero-based. "
 END

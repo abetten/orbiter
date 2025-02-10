@@ -606,6 +606,9 @@ public:
 	int f_test_automorphism_property_of_group;
 	std::string test_automorphism_property_of_group_label;
 
+	int f_common_neighbors;
+	std::string common_neighbors_set;
+
 
 	int f_export_magma;
 	int f_export_maple;
@@ -715,6 +718,11 @@ public:
 			combinatorics::graph_theory::colored_graph *CG,
 			std::vector<std::string> &feedback,
 			int verbose_level);
+	void report_automorphism_group(
+			combinatorics::graph_theory::colored_graph *CG,
+			actions::action *Aut,
+			std::string &title,
+			int verbose_level);
 	void expander_graph(
 			int p, int q,
 			int f_special,
@@ -722,6 +730,9 @@ public:
 			actions::action *A,
 			int *&Adj, int &N,
 			int verbose_level);
+	void common_neighbors(
+			int nb, combinatorics::graph_theory::colored_graph **CG,
+			std::string &common_neighbors_set, int verbose_level);
 	void test_automorphism_property_of_group(
 			int nb, combinatorics::graph_theory::colored_graph **CG,
 			std::string &group_label, int verbose_level);

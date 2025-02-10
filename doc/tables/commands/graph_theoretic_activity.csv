@@ -6,6 +6,7 @@ ROW,C1,C2,C3
 1,"\verb'-test_Neumaier_property' "," $s$  ","Test whether a graph is Neumaier w.r.t. cliques of size $s$. "
 1,"\verb'-find_subgraph' "," type  ","Finds all labelings of a Dynkin diagram of a given type. This needs two graphs. The vertices correspond to the involutions. The first graph is the pairs whose product has order 2. The second graph is the pairs whose product has order 3."
 1,"\verb'-test_automorphism_property_of_group' "," group  "," Tests if the given group preserves the graph. "
+1,"\verb'-common_neighbors' "," S  "," Find the comon neighbors of the set S. S must be a vector object. "
 1,"\verb'-export_magma' ","   ","Export to Magma~\cite{Magma}. "
 1,"\verb'-export_maple' ","   ","Export to Maple~\cite{Maple}. "
 1,"\verb'-export_csv' ","   ","Export to csv-file. "

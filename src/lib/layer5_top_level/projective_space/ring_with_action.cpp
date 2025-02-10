@@ -221,7 +221,6 @@ void ring_with_action::nauty_interface(
 		nauty_interface_from_scratch(
 				Variety_object_with_action,
 				Nauty_control,
-				//f_save_nauty_input_graphs,
 				Set_stab,
 				Canonical_form,
 				NO,

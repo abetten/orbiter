@@ -303,6 +303,54 @@ void vector_ge_activity::perform_activity(
 		Output->init_vector_ge(output_label, VB, verbose_level);
 
 	}
+	else if (Descr->f_select_subset) {
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"-select_subset " << Descr->select_subset_vector_label<< endl;
+		}
+
+		int *Selection;
+		int len;
+
+		Get_int_vector_from_label(Descr->select_subset_vector_label, Selection, len, 0 /* verbose_level */);
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"selecting subset of size " << len<< endl;
+		}
+
+		data_structures_groups::vector_ge *result;
+
+		result = NEW_OBJECT(data_structures_groups::vector_ge);
+		result->init(
+				vec[0]->A, 0 /* verbose_level*/);
+		result->allocate(
+				len, 0 /* verbose_level*/);
+		int i;
+
+		for (i = 0; i < len; i++) {
+
+			vec[0]->A->Group_element->element_move(
+					vec[0]->ith(Selection[i]), result->ith(i), false);
+
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = "selection";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = result;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
 
 
 	if (f_v) {

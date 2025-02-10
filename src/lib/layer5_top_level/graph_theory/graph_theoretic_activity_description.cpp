@@ -38,6 +38,10 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_test_automorphism_property_of_group = false;
 	//std::string test_automorphism_property_of_group_label;
 
+	f_common_neighbors = false;
+	//std::string common_neighbors_set;
+
+
 	f_export_magma = false;
 	f_export_maple = false;
 	f_export_csv = false;
@@ -128,9 +132,13 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-test_automorphism_property_of_group " << test_automorphism_property_of_group_label << endl;
 			}
 		}
-
-
-
+		else if (ST.stringcmp(argv[i], "-common_neighbors") == 0) {
+			f_common_neighbors = true;
+			common_neighbors_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-common_neighbors " << common_neighbors_set << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = true;
 			if (f_v) {
@@ -272,6 +280,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_test_automorphism_property_of_group) {
 		cout << "-test_automorphism_property_of_group " << test_automorphism_property_of_group_label << endl;
+	}
+	if (f_common_neighbors) {
+		cout << "-common_neighbors " << common_neighbors_set << endl;
 	}
 
 	if (f_export_magma) {

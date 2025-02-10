@@ -309,7 +309,8 @@ void graph_theoretic_activity::get_label(
 	else if (Descr->f_test_automorphism_property_of_group) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::get_label "
-					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+					"f_test_automorphism_property_of_group "
+					<< Descr->test_automorphism_property_of_group_label << endl;
 		}
 
 
@@ -592,7 +593,8 @@ void graph_theoretic_activity::perform_activity(
 	else if (Descr->f_test_automorphism_property_of_group) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"f_test_automorphism_property_of_group " << Descr->test_automorphism_property_of_group_label << endl;
+					"f_test_automorphism_property_of_group "
+					<< Descr->test_automorphism_property_of_group_label << endl;
 		}
 
 		apps_graph_theory::graph_theory_apps Graph_theory_apps;
@@ -610,6 +612,30 @@ void graph_theoretic_activity::perform_activity(
 					"after Graph_theory_apps.test_automorphism_property_of_group" << endl;
 		}
 
+
+
+	}
+	else if (Descr->f_common_neighbors) {
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"-common_neighbors "
+					<< Descr->common_neighbors_set << endl;
+		}
+
+		apps_graph_theory::graph_theory_apps Graph_theory_apps;
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"before Graph_theory_apps.common_neighbors" << endl;
+		}
+		Graph_theory_apps.common_neighbors(
+				nb, CG,
+				Descr->common_neighbors_set,
+				verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity "
+					"after Graph_theory_apps.common_neighbors" << endl;
+		}
 
 
 	}

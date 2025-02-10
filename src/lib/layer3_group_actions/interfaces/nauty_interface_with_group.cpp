@@ -40,7 +40,7 @@ nauty_interface_with_group::~nauty_interface_with_group()
 
 void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precomputed_nauty_data(
 		geometry::projective_geometry::projective_space *P,
-		actions::action *A,
+		actions::action *A_linear,
 		long int *Pts, int sz,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		int nauty_output_index_start,
@@ -128,7 +128,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 	}
 	Set_stab = set_stabilizer_of_object(
 			Combo,
-			A,
+			A_linear,
 		true /* f_compute_canonical_form */,
 		Nauty_control,
 		Canonical_form,
@@ -151,7 +151,7 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_precom
 
 void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 		geometry::projective_geometry::projective_space *P,
-		actions::action *A,
+		actions::action *A_linear,
 		long int *Pts, int sz,
 		other::l1_interfaces::nauty_interface_control *Nauty_control,
 		groups::strong_generators *&Set_stab,
@@ -218,10 +218,9 @@ void nauty_interface_with_group::set_stabilizer_in_projective_space_using_nauty(
 	}
 	Set_stab = set_stabilizer_of_object(
 			Combo,
-			A,
+			A_linear,
 		true /* f_compute_canonical_form */,
 		Nauty_control,
-		//f_save_nauty_input_graphs,
 		Canonical_form,
 		NO,
 		Enc,
