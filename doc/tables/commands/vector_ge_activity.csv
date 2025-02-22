@@ -5,4 +5,5 @@ ROW,C1,C2,C3
 1,"\verb'-export_GAP' ","  "," Export the group elements to GAP and generate the group. "
 1,"\verb'-transform_variety' "," variety "," Transform the given variety by the group elements in the vector. "
 1,"\verb'-select_subset' "," indexset "," Create a new vector from the elements given in the index set. The index set must be a label of a vector of integers. Indexing of elements of the vector is zero-based. "
+1,"\verb'-field_reduction' "," s "," Perform field reduction w.r.t. the subfield of the given index s. The group must be a matrix group over a field admitting a subfield of index s."
 END

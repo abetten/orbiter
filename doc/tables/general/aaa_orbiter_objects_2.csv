@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:define:2",,
 1,"Orbiter Objects (Part II)",,
+1,"X","p{3cm}","X"
+1,"Command","Reference","Type of Object"
 1,"\verb'-packing_long_orbits' ","  Section~\ref{sec:packings}   "," A search for long orbits for packings with assumed symmetry. "
 1,"\verb'-graph_classification' ","  Section~\ref{sec:graphtheory:classification}   "," An object which allows classifying graphs and tournaments.  "
 1,"\verb'-diophant' ","  Section~\ref{sec:diophant}   "," A diophantine system, i.e., a system of positive integer equations. "

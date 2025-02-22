@@ -376,7 +376,7 @@ groups::sims *action::create_sims_from_generators_randomized(
 		cout << "action::create_sims_from_generators_randomized "
 				"before ss->init" << endl;
 	}
-	ss->init(this, verbose_level - 1);
+	ss->init(this,  0 /* verbose_level - 1 */);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "
 				"after ss->init" << endl;
@@ -410,7 +410,7 @@ groups::sims *action::create_sims_from_generators_randomized(
 		cout << "action::create_sims_from_generators_randomized "
 				"before ss->create_group" << endl;
 	}
-	ss->create_group(verbose_level - 2);
+	ss->create_group(0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "
 				"after ss->create_group" << endl;

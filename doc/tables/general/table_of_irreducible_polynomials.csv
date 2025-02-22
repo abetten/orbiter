@@ -1,6 +1,8 @@
 ROW,C1,C2,C3,C4
 0,"tab:primitive:polynomials",,
 1,"Orbiter Primitive Polynomials",,
+1,"X","p{4cm}","X","X"
+1,"$q$","Polynomial","Numerical","Relation"
 1,"4 "," $X^2+X+1$ "," 7 "," $\omega^2 = \omega+1$ "
 1,"8 "," $X^3 + X^2 + 1$ "," 13 "," $\gamma^3 = \gamma^2+1$ "
 1,"9 "," $X^2 + X + 2$ "," 14 "," "

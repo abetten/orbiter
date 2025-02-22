@@ -1,0 +1,13 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks4",,
+1,"Group theoretic activities (Part 4)",,
+1,"\verb'-subgroup_lattice_create_flag_' \verb'transitive_geometry_with_partition' "," Pidx Qidx Ridx Rgrpidx s "," Create flag transitive large set from groups of orbit Pidx and Qidx, assuming that group Rgrpidx from orbit Ridx normalizes the orbit representative of orbit Pidx. Incidence between groups is defined whenever the intersection has size s. "
+1,"\verb'-subgroup_lattice_' \verb'create_coset_geometry' "," Pidx Pgrpidx Qidx Qgrpidx s "," Create flag transitive incidence structure from the gosets of the group Pidx in orbit Pidx and group Qgrpidx in orbit Qidx. Incidence between cosets is defined whenever the intersection has size s. "
+1,"\verb'-subgroup_lattice_identify_subgroup' "," grp "," Identify a subgroup in the lattice. "
+1,"\verb'-create_flag_transitive_geometry' "," P Q ","Create a matrix of intersections of all groups in the class of P and all groups in the class of Q. The entry in the matrix is the size of the intersection of the i-th group in the orbit of P with the j-th group in the orbit of Q. The ordering of groups in the conkjugacy classes depends on the generating set for the group G. It is the ordering determined by the Schreier algorithm. The groups in the first row and first column are the groups P and Q which are given. "
+1,"\verb'-linear_codes' "," control $d$ $n_{\max}$ ","Classify linear codes with prescribed minimum distance $d$. Assumes that the group is $\PGL(r,q)$ or $\PGGL(r,q).$ For each $n \le n_{\max}$, the $[n,k, \ge d]$ codes are classified with $n-k=r$. See Section~\ref{sec:coding}."
+1,"\verb'-tensor_permutations' ","  "," Computes the permutation representation of the generators of the wreath product. "
+1,"\verb'-classify_ovoids' "," descr "," "
+1,"\verb'-representation_on_polynomials' "," R ","Computes the representation of the built-in generating set of the present group in the action on homogeneous polynomials as defined in the ring R. This function assumes a linear group."
+END
+

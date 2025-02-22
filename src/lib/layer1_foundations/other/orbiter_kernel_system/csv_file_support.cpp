@@ -2119,16 +2119,37 @@ void csv_file_support::prepare_tables_for_users_guide(
 	int h;
 
 	for (h = 0; h < tbl_fname.size(); h++) {
-		prepare_table_for_users_guide(tbl_fname[h], verbose_level);
+		prepare_table_for_users_guide(tbl_fname[h], false /* f_general */, verbose_level);
 	}
 	if (f_v) {
 		cout << "csv_file_support::prepare_tables_for_users_guide done" << endl;
 	}
 }
 
+void csv_file_support::prepare_general_tables_for_users_guide(
+		std::vector<std::string> &tbl_fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::prepare_general_tables_for_users_guide" << endl;
+	}
+
+	int h;
+
+	for (h = 0; h < tbl_fname.size(); h++) {
+		prepare_table_for_users_guide(tbl_fname[h], true /* f_general */, verbose_level);
+	}
+	if (f_v) {
+		cout << "csv_file_support::prepare_general_tables_for_users_guide done" << endl;
+	}
+}
+
 
 void csv_file_support::prepare_table_for_users_guide(
 		std::string &fname_csv,
+		int f_general,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2146,64 +2167,22 @@ void csv_file_support::prepare_table_for_users_guide(
 	int m, n;
 
 	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide before read_table_of_strings" << endl;
+		cout << "csv_file_support::prepare_tables_for_users_guide "
+				"before read_table_of_strings_and_drop_quotes" << endl;
 	}
 
-	read_table_of_strings(
+	read_table_of_strings_and_drop_quotes(
 			fname_csv, col_label,
 			Table, m, n,
 			verbose_level);
 
 	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide after read_table_of_strings" << endl;
+		cout << "csv_file_support::prepare_tables_for_users_guide "
+				"after read_table_of_strings_and_drop_quotes" << endl;
 	}
 	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide found table of size " << m << " x " << n << endl;
-	}
-
-	int i, j;
-
-
-	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide before drop_quotes" << endl;
-	}
-
-	if (f_v) {
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				cout << Table[i * n + j];
-				if (j < n - 1) {
-					cout << " , ";
-				}
-			}
-			cout << endl;
-		}
-	}
-
-
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			string s1, s2;
-
-			s1 = Table[i * n + j];
-			ST.drop_quotes(s1, s2);
-			Table[i * n + j] = s2;
-		}
-	}
-	if (f_v) {
-		cout << "csv_file_support::prepare_tables_for_users_guide after drop_quotes" << endl;
-	}
-
-	if (f_v) {
-		for (i = 0; i < m; i++) {
-			for (j = 0; j < n; j++) {
-				cout << Table[i * n + j];
-				if (j < n - 1) {
-					cout << " , ";
-				}
-			}
-			cout << endl;
-		}
+		cout << "csv_file_support::prepare_tables_for_users_guide "
+				"found table of size " << m << " x " << n << endl;
 	}
 
 
@@ -2227,20 +2206,69 @@ void csv_file_support::prepare_table_for_users_guide(
 	string header_ug;
 	string header_ws;
 
-	if (n == 3) {
-		latex_columns_ug = "X|p{2cm}|X|";
-		latex_columns_ws = "p{3cm}|p{2cm}|p{6.3cm}|";
-		header_ug = "Command & Arguments & Purpose ";
+	int h0;
+
+	if (f_general) {
+		int j;
+
+		h0 = 4;
+
+		latex_columns_ug = "";
+		for (j= 0; j < n; j++) {
+			latex_columns_ug += Table[2 * n + j] + "|";
+		}
+		header_ug = "";
+		for (j= 0; j < n; j++) {
+			header_ug += Table[3 * n + j];
+			if (j < n - 1) {
+				header_ug += " & ";
+			}
+		}
 		header_ws = header_ug;
-	}
-	else if (n == 4) {
-		latex_columns_ug = "X|p{4cm}|X|X|";
-		latex_columns_ws = "p{1cm}|p{4cm}|p{2cm}|p{3.9cm}|";
-		header_ug = "$q$ & Polynomial & Numerical & Relation ";
-		header_ws = header_ug;
+
+
+		if (n == 3) {
+			latex_columns_ws = "p{3cm}|p{2cm}|p{6.3cm}|";
+		}
+		else if (n == 4) {
+			latex_columns_ws = "p{1cm}|p{4cm}|p{2cm}|p{3.9cm}|";
+		}
+#if 0
+		if (n == 3) {
+			//latex_columns_ug = "X|p{2cm}|X|";
+			latex_columns_ws = "p{3cm}|p{2cm}|p{6.3cm}|";
+			//header_ug = "Command & Arguments & Purpose ";
+			//header_ws = header_ug;
+		}
+		else if (n == 4) {
+			latex_columns_ug = "X|p{4cm}|X|X|";
+			latex_columns_ws = "p{1cm}|p{4cm}|p{2cm}|p{3.9cm}|";
+			header_ug = "$q$ & Polynomial & Numerical & Relation ";
+			header_ws = header_ug;
+		}
+		else {
+			cout << "number of columns must be either 2 or 3. Number of columns is = " << n << endl;
+		}
+#endif
+
 	}
 	else {
-		cout << "number of columns must be either 2 or 3. Number of columns is = " << n << endl;
+		h0 = 2;
+		if (n == 3) {
+			latex_columns_ug = "X|p{2cm}|X|";
+			latex_columns_ws = "p{3cm}|p{2cm}|p{6.3cm}|";
+			header_ug = "Command & Arguments & Purpose ";
+			header_ws = header_ug;
+		}
+		else if (n == 4) {
+			latex_columns_ug = "X|p{4cm}|X|X|";
+			latex_columns_ws = "p{1cm}|p{4cm}|p{2cm}|p{3.9cm}|";
+			header_ug = "$q$ & Polynomial & Numerical & Relation ";
+			header_ws = header_ug;
+		}
+		else {
+			cout << "number of columns must be either 2 or 3. Number of columns is = " << n << endl;
+		}
 	}
 
 	// for users_guide:
@@ -2252,18 +2280,30 @@ void csv_file_support::prepare_table_for_users_guide(
 		fname_out += "_ug.tex";
 
 		ofstream ost(fname_out);
-		int h;
+		int h, j;
 
 		ost << "\\begin{table}" << endl;
-		ost << "\\begin{tcolorbox}[tabularx={" << latex_columns_ug << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
-		ost << "colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white," << endl;
-		ost << "coltitle=black,title=" << title << "]" << endl;
-		ost << "\\hline" << endl;
-		ost << header_ug << "\\\\" << endl;
+
+		if (f_general) {
+			ost << "\\begin{tcolorbox}[tabularx={" << latex_columns_ug << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
+			ost << "colback=yellow!10!white,colframe=green!50!black,colbacktitle=blue!30!white," << endl;
+			ost << "coltitle=black,title=" << title << "]" << endl;
+			ost << "\\hline" << endl;
+			ost << header_ug << "\\\\" << endl;
+
+		}
+		else {
+
+			ost << "\\begin{tcolorbox}[tabularx={" << latex_columns_ug << "},enhanced,fonttitle=\\bfseries\\large,fontupper=\\normalsize\\sffamily," << endl;
+			ost << "colback=yellow!10!white,colframe=red!50!black,colbacktitle=blue!30!white," << endl;
+			ost << "coltitle=black,title=" << title << "]" << endl;
+			ost << "\\hline" << endl;
+			ost << header_ug << "\\\\" << endl;
+		}
 		ost << "\\hline" << endl;
 		ost << "\\hline" << endl;
 
-		for (h = 2; h < m; h++) {
+		for (h = h0; h < m; h++) {
 			for (j = 0; j < n; j++) {
 				ost << Table[h * n + j];
 				if (j < n - 1) {
@@ -2288,7 +2328,7 @@ void csv_file_support::prepare_table_for_users_guide(
 		fname_out += "_ws.tex";
 
 		ofstream ost(fname_out);
-		int h;
+		int h, j;
 
 		ost << "\\begin{table}[t]" << endl;
 		ost << "\\tbl{\\label{" << label << "}}" << endl;
@@ -2300,7 +2340,7 @@ void csv_file_support::prepare_table_for_users_guide(
 		ost << "\\hline" << endl;
 		ost << "\\hline" << endl;
 
-		for (h = 2; h < m; h++) {
+		for (h = h0; h < m; h++) {
 			for (j = 0; j < n; j++) {
 				ost << Table[h * n + j];
 				if (j < n - 1) {
@@ -2321,6 +2361,8 @@ void csv_file_support::prepare_table_for_users_guide(
 		cout << "csv_file_support::prepare_tables_for_users_guide done" << endl;
 	}
 }
+
+
 
 
 
@@ -3424,6 +3466,41 @@ std::vector<int> topo_downlink;
 #endif
 
 
+void csv_file_support::read_table_of_strings_and_drop_quotes(
+		std::string &fname, std::string *&col_label,
+		std::string *&Table, int &m, int &n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_and_drop_quotes "
+				"reading file " << fname << endl;
+	}
+
+	read_table_of_strings(
+			fname, col_label,
+			Table, m, n,
+			verbose_level);
+
+	data_structures::string_tools ST;
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			string s1, s2;
+
+			s1 = Table[i * n + j];
+			ST.drop_quotes(s1, s2);
+			Table[i * n + j] = s2;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "csv_file_support::read_table_of_strings_and_drop_quotes done" << endl;
+	}
+}
 
 void csv_file_support::read_table_of_strings(
 		std::string &fname, std::string *&col_label,

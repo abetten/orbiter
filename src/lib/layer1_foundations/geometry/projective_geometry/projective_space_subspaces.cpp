@@ -2619,7 +2619,7 @@ void projective_space_subspaces::points_covered_by_lines(
 	}
 
 	long int *pts_on_line;
-	int *Pt_coords;
+	//int *Pt_coords;
 	int i, j;
 	long int a;
 

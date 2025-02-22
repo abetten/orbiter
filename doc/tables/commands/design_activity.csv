@@ -1,7 +1,7 @@
 ROW,C1,C2,C3
 0,"tab:design:activity",,
 1,"Design Activities",,
-1,"\verb'-load_table' "," label group H\_label H\_group_order H\_gens l ","  "
+1,"\verb'-load_table' "," label group H\_label H\_group\_order H\_gens l ","  "
 1,"\verb'-canonical_form' "," options  ","  "
 1,"\verb'-extract_solutions_by_index_csv' "," label group fname-solutions-in fname-solutions-out prefix   "," Used by large set desargues. "
 1,"\verb'-extract_solutions_by_index_txt' "," label group fname-solutions-in fname-solutions-out prefix    ","  "

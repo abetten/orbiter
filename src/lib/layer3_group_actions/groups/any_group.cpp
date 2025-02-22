@@ -31,6 +31,8 @@ any_group::any_group()
 	f_modified_group = false;
 	MGC = NULL;
 
+	f_perm_group_direct = false;
+
 	A_base = NULL;
 	A = NULL;
 
@@ -224,6 +226,17 @@ void any_group::init_modified_group(
 	}
 	Subgroup_gens = MGC->Strong_gens;
 
+	if (f_v) {
+		cout << "any_group::init_modified_group "
+				"before Subgroup_gens->create_sims" << endl;
+	}
+	Subgroup_sims = Subgroup_gens->create_sims(
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::init_modified_group "
+				"after Subgroup_gens->create_sims" << endl;
+	}
+
 	label.assign(MGC->label);
 	label_tex.assign(MGC->label_tex);
 	if (f_v) {
@@ -235,6 +248,58 @@ void any_group::init_modified_group(
 		cout << "any_group::init_modified_group done" << endl;
 	}
 }
+
+
+void any_group::init_perm_group_direct(
+		actions::action *A_perm,
+		std::string &label, std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct before init_basic" << endl;
+	}
+	init_basic(verbose_level);
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct after init_basic" << endl;
+	}
+
+	f_perm_group_direct = true;
+
+	A_base = A_perm;
+	A = A_perm;
+
+	Subgroup_gens = A_perm->Strong_gens;
+
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct "
+				"before Subgroup_gens->create_sims" << endl;
+	}
+	Subgroup_sims = Subgroup_gens->create_sims(
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct "
+				"after Subgroup_gens->create_sims" << endl;
+	}
+
+	any_group::label = label;
+	any_group::label_tex = label_tex;
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct label = " << label << endl;
+		cout << "any_group::init_perm_group_direct label_tex = " << label_tex << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::init_perm_group_direct done" << endl;
+	}
+}
+
+
 
 
 
@@ -2470,7 +2535,8 @@ void any_group::subgroup_lattice_intersection_orbit_orbit(
 	}
 
 	if (!f_has_subgroup_lattice) {
-		cout << "any_group::subgroup_lattice_intersection_orbit_orbit subgroup lattice is not available" << endl;
+		cout << "any_group::subgroup_lattice_intersection_orbit_orbit "
+				"subgroup lattice is not available" << endl;
 		exit(1);
 	}
 
@@ -2853,6 +2919,8 @@ void any_group::subgroup_lattice_magma(
 
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_magma" << endl;
+		cout << "any_group::subgroup_lattice_magma label = " << label << endl;
+		cout << "any_group::subgroup_lattice_magma label_tex = " << label_tex << endl;
 	}
 
 
@@ -2886,6 +2954,33 @@ void any_group::subgroup_lattice_magma(
 	}
 
 	f_has_class_data = true;
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"before class_data->report" << endl;
+	}
+	class_data->report(
+			Sims,
+			label,
+			label_tex,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"after class_data->report" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"before class_data->export_csv" << endl;
+	}
+	class_data->export_csv(
+			Sims,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::subgroup_lattice_magma "
+				"after class_data->export_csv" << endl;
+	}
+
 
 	FREE_OBJECT(Sims);
 

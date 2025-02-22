@@ -319,9 +319,8 @@ public:
 		int *v, int *Av, int n);
 		// Av = (A * v)^{p^f}
 	void affine_action_from_the_right(
-			int f_semilinear,
-		int *v, int *A, int *vA, int n);
-		// vA = (v * A)^{p^f} + b
+			int f_semilinear, int *v, int *A, int *vA, int n);
+	// vA = (v * A + b)^{p^f}
 	void zero_vector(
 			int *A, int m);
 	void all_one_vector(

@@ -365,7 +365,8 @@ void linear_group::linear_group_create(
 	int f_OK = false;
 
 	if (f_v) {
-		cout << "linear_group::linear_group_create before linear_group_apply_modification" << endl;
+		cout << "linear_group::linear_group_create "
+				"before linear_group_apply_modification" << endl;
 	}
 
 	f_OK = linear_group_apply_modification(
@@ -373,7 +374,8 @@ void linear_group::linear_group_create(
 			verbose_level);
 
 	if (f_v) {
-		cout << "linear_group::linear_group_create after linear_group_apply_modification" << endl;
+		cout << "linear_group::linear_group_create "
+				"after linear_group_apply_modification" << endl;
 		cout << "linear_group::linear_group_create label = " << label << endl;
 		cout << "linear_group::linear_group_create label_tex = " << label_tex << endl;
 	}

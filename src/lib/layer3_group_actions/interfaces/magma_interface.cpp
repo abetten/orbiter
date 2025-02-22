@@ -1436,11 +1436,14 @@ void magma_interface::get_subgroup_lattice(
 					"before read_subgroup_lattice" << endl;
 		}
 		read_subgroup_lattice(A,
-				fname_output, override_Sims, label_tex, class_data, verbose_level);
+				fname_output, override_Sims, //label, label_tex,
+				class_data, verbose_level);
 		if (f_v) {
 			cout << "magma_interface::get_subgroup_lattice "
 					"after read_subgroup_lattice" << endl;
 		}
+
+
 	}
 	else {
 		if (f_v) {
@@ -1525,6 +1528,7 @@ void magma_interface::subgroup_lattice_using_MAGMA(
 
 
 		//fp << "# compute conjugacy classes of subgroups of G:" << endl;
+		//fp << "C := SubgroupLattice(G);" << endl;
 		fp << "C := SubgroupClasses(G);" << endl;
 		fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
 		fp << "printf \"%o\", #C; printf \"\\n\";" << endl;
@@ -1599,7 +1603,8 @@ void magma_interface::read_subgroup_lattice(
 		actions::action *A,
 		std::string &fname,
 		groups::sims *override_sims,
-		std::string &label_latex,
+		//std::string &label,
+		//std::string &label_latex,
 		interfaces::conjugacy_classes_of_subgroups *&class_data,
 		int verbose_level)
 {
@@ -1636,30 +1641,6 @@ void magma_interface::read_subgroup_lattice(
 				"after class_data->create_classes" << endl;
 	}
 
-	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
-				"before class_data->report" << endl;
-	}
-	class_data->report(
-			override_sims,
-			label_latex,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
-				"after class_data->report" << endl;
-	}
-
-	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
-				"before class_data->export_csv" << endl;
-	}
-	class_data->export_csv(
-			override_sims,
-			verbose_level);
-	if (f_v) {
-		cout << "magma_interface::read_subgroup_lattice "
-				"after class_data->export_csv" << endl;
-	}
 
 
 	//FREE_OBJECT(class_data);

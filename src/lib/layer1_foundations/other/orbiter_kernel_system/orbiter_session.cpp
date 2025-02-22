@@ -940,6 +940,28 @@ combinatorics::graph_theory::colored_graph
 	return (combinatorics::graph_theory::colored_graph *) get_object(idx);
 }
 
+combinatorics::design_theory::design_object
+	*orbiter_session::get_object_of_type_design(
+			std::string &label)
+{
+	int idx;
+
+	idx = find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_design "
+				"cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_design) {
+		cout << "orbiter_session::get_object_of_type_design "
+				"object type != t_design" << endl;
+		exit(1);
+	}
+
+
+	return (combinatorics::design_theory::design_object *) get_object(idx);
+}
+
 
 graphics::layered_graph_draw_options
 	*orbiter_session::get_draw_options(

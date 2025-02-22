@@ -8,7 +8,7 @@ LFLAGS = -lm
 all: \
 	basic_algebra1 \
 	expression_parser1 \
-	finite_fields1 \
+	field_theory1 \
 	linear_algebra1 \
 	number_theory1 \
 	ring_theory1
@@ -19,7 +19,7 @@ all: \
 
 basic_algebra1 :  ; cd basic_algebra; $(MAKE)
 expression_parser1 :  ; cd expression_parser; $(MAKE)
-finite_fields1 :  ; cd finite_fields; $(MAKE)
+field_theory1 :  ; cd field_theory; $(MAKE)
 linear_algebra1 :  ; cd linear_algebra; $(MAKE)
 number_theory1 :  ; cd number_theory; $(MAKE)
 ring_theory1 :  ; cd ring_theory; $(MAKE)
@@ -36,7 +36,7 @@ ring_theory1 :  ; cd ring_theory; $(MAKE)
 clean:
 	cd basic_algebra; $(MAKE) clean
 	cd expression_parser; $(MAKE) clean
-	cd finite_fields; $(MAKE) clean
+	cd field_theory; $(MAKE) clean
 	cd linear_algebra; $(MAKE) clean
 	cd number_theory; $(MAKE) clean
 	cd ring_theory; $(MAKE) clean

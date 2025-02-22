@@ -313,7 +313,8 @@ int subgroup_lattice_layer::extend_layer(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "subgroup_lattice::extend_layer layer = " << layer_idx << endl;
+		cout << "subgroup_lattice::extend_layer "
+				"layer = " << layer_idx << endl;
 	}
 
 
@@ -370,7 +371,8 @@ int subgroup_lattice_layer::extend_layer(
 	}
 
 	if (f_v) {
-		cout << "subgroup_lattice::extend_layer layer = " << layer_idx << " done" << endl;
+		cout << "subgroup_lattice::extend_layer "
+				"layer = " << layer_idx << " done" << endl;
 	}
 	return nb_new_groups_total;
 }

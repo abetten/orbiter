@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:combo:activity",,
+1,"Activities for Combinatorial Objects with Group",,
+1,"\verb'-report' "," options  "," Produce a report. See Tab.~\ref{tab:combi:reporting} for options."
+1,"\verb'-get_group' ","  "," Returns the group of the object as permutation group. "
+END
+blah

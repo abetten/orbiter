@@ -311,7 +311,8 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (ST.stringcmp(argv[i], "-file_of_incidence_geometries_by_row_ranks") == 0) {
+		else if (ST.stringcmp(argv[i],
+				"-file_of_incidence_geometries_by_row_ranks") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
@@ -468,6 +469,22 @@ int data_input_stream_description::read_arguments(
 			object_label.assign(argv[++i]);
 
 			E.init_graph_object(object_label);
+			Input.push_back(E);
+
+			if (f_v) {
+				E.print();
+			}
+
+			nb_inputs++;
+		}
+		else if (ST.stringcmp(argv[i], "-design_object") == 0) {
+
+			data_input_stream_description_element E;
+			string object_label;
+
+			object_label.assign(argv[++i]);
+
+			E.init_design_object(object_label);
 			Input.push_back(E);
 
 			if (f_v) {

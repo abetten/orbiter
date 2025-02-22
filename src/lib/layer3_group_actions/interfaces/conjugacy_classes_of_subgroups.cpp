@@ -185,6 +185,7 @@ void conjugacy_classes_of_subgroups::create_classes(
 
 void conjugacy_classes_of_subgroups::report(
 		groups::sims *override_sims,
+		std::string &label,
 		std::string &label_latex,
 		int verbose_level)
 {
@@ -192,6 +193,8 @@ void conjugacy_classes_of_subgroups::report(
 
 	if (f_v) {
 		cout << "conjugacy_classes_of_subgroups::report" << endl;
+		cout << "conjugacy_classes_of_subgroups::report label = " << label << endl;
+		cout << "conjugacy_classes_of_subgroups::report label_latex = " << label_latex << endl;
 	}
 
 	int i;
@@ -204,27 +207,27 @@ void conjugacy_classes_of_subgroups::report(
 
 
 
-	other::data_structures::string_tools ST;
+	//other::data_structures::string_tools ST;
 	algebra::ring_theory::longinteger_object go;
 
 	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
 
-	string fname_latex;
+	string fname_report;
 
-	fname_latex = fname;
+	fname_report = label + "_subgroup_lattice.tex";
 
-	ST.replace_extension_with(fname_latex, ".tex");
+	//ST.replace_extension_with(fname_latex, ".tex");
 
 
 	{
-		ofstream ost(fname_latex);
+		ofstream ost(fname_report);
 		string title, author, extra_praeamble;
 		other::l1_interfaces::latex_interface L;
 
-		title = "Conjugacy classes subgroups of $" + label_latex + "$";
+		title = "Conjugacy classes of subgroups of $" + label_latex + "$";
 
-		author = "computed by Orbiter and MAGMA";
+		author = "Computed by Orbiter and MAGMA";
 
 		L.head(ost,
 			false /* f_book */, true /* f_title */,
@@ -234,7 +237,7 @@ void conjugacy_classes_of_subgroups::report(
 			extra_praeamble /* extra_praeamble */);
 		//latex_head_easy(fp);
 
-		ost << "\\section{Conjugacy classes in $" << label_latex << "$}" << endl;
+		ost << "\\section{Conjugacy classes of subgroups of $" << label_latex << "$}" << endl;
 
 
 		ost << "The group order is " << endl;
@@ -243,12 +246,88 @@ void conjugacy_classes_of_subgroups::report(
 		ost << endl;
 		ost << "$$" << endl;
 
+
+		ost << "There are " << nb_classes << " classes of subgroups\\\\" << endl;
+
+		std::string *Table;
+		int nb_rows, nb_cols;
+		//int i;
+
+		nb_cols = 4;
+		nb_rows = nb_classes;
+		Table = new string [nb_rows * nb_cols];
+		for (i = 0; i < nb_rows; i++) {
+			Table[i * nb_cols + 0] = std::to_string(i);
+			Table[i * nb_cols + 1] = std::to_string(Subgroup_order[i]);
+			Table[i * nb_cols + 2] = std::to_string(Length[i]);
+
+			groups::group_theory_global Group_theory_global;
+			std::string s;
+
+			s = Group_theory_global.order_invariant(
+					A, Conjugacy_class[i]->gens,
+					verbose_level);
+
+			//ost << "The order invariant is ";
+			//ost << "$" << s << "$";
+			//ost << "\\\\" << endl;
+
+			Table[i * nb_cols + 3] = "$" + s + "$";
+
+
+		}
+
 		cout << "second time" << endl;
 
-		cout << "i : class_subgroup_order : class_length" << endl;
+		cout << "i : class_subgroup_order : class_length : order invariant" << endl;
 		for (i = 0; i < nb_classes; i++) {
-			cout << i << " : " << Subgroup_order[i] << " : " << Length[i] << endl;
+			cout << i << " : " << Table[i * nb_cols + 1] << " : " << Table[i * nb_cols + 2] << " : " << Table[i * nb_cols + 3] << endl;
 		}
+
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+		ost << "The following table shows the conjugacy classes of subgroups. The columns display: "
+				"the number of the class, "
+				"the order of the subgroups in the class, and "
+				"the size of the class.\\\\" << endl;
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+
+		//other::l1_interfaces::latex_interface L;
+
+		int nb_pp = 20;
+		int nb_p, nb_r;
+		int I;
+
+		nb_p = (nb_classes + nb_pp - 1)/ nb_pp;
+		for (I = 0; I < nb_p; I++) {
+
+			if (I == nb_p - 1) {
+				nb_r = nb_rows - nb_pp * I;
+			}
+			else {
+				nb_r = nb_pp;
+			}
+			ost << "\\begin{center}" << endl;
+			L.print_tabular_of_strings(
+					ost, Table + I * nb_pp * nb_cols, nb_r, nb_cols);
+			ost << "\\end{center}" << endl;
+
+
+		}
+
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
+
+
+		delete [] Table;
 
 
 		if (f_v) {
@@ -265,8 +344,8 @@ void conjugacy_classes_of_subgroups::report(
 
 		L.foot(ost);
 	}
-	cout << "Written file " << fname_latex << " of size "
-			<< Fio.file_size(fname_latex) << endl;
+	cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
 
 
 

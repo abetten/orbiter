@@ -3397,7 +3397,7 @@ void linear_algebra::semilinear_matrix_invert_affine(
 // Tmp[n * n + 1]
 // Tmp_basecols[n]
 // input: (A,v,f),
-// output: (A^{-1}^{\Phi^f},-(v*A^{-1}^{\Phi^f})^{\Phi^{-f}},-f mod e)
+// output: (A^{-1}^{\Phi^f},(-v*A^{-1})^{\Phi^f}),-f mod e)
 {
 	int f, finv;
 	int *b1, *b2;
@@ -3429,9 +3429,10 @@ void linear_algebra::semilinear_matrix_invert_affine(
 	mult_matrix_matrix(
 			b1, Ainv, b2, 1, n, n, 0 /* verbose_level */);
 
-	vector_frobenius_power_in_place(b2, n, finv);
-
 	negate_vector_in_place(b2, n);
+
+	vector_frobenius_power_in_place(b2, n, f);
+
 
 	Ainv[n * n + n] = finv;
 	if (f_vv) {

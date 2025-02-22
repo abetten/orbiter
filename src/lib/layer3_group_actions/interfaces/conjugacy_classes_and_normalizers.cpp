@@ -190,7 +190,8 @@ void conjugacy_classes_and_normalizers::read_magma_output_file(
 }
 
 void conjugacy_classes_and_normalizers::create_classes(
-		groups::sims *group_G, int verbose_level)
+		groups::sims *group_G,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

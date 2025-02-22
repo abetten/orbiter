@@ -165,6 +165,11 @@ void data_input_stream_description_element::print()
 				<< " " << input_string
 			<< endl;
 	}
+	else if (input_type == t_data_input_stream_design_object) {
+		cout << "-design_object"
+				<< " " << input_string
+			<< endl;
+	}
 	else if (input_type == t_data_input_stream_graph_by_adjacency_matrix_from_file) {
 		cout << "-graph_by_adjacency_matrix_from_file"
 				<< " " << input_string
@@ -319,7 +324,8 @@ void data_input_stream_description_element::init_file_of_point_set(
 
 void data_input_stream_description_element::init_file_of_designs(
 		std::string &a,
-			int N_points, int b, int k, int partition_class_size)
+			int N_points, int b, int k,
+			int partition_class_size)
 {
 	input_type = t_data_input_stream_file_of_designs;
 
@@ -440,6 +446,18 @@ void data_input_stream_description_element::init_graph_object(
 
 }
 
+void data_input_stream_description_element::init_design_object(
+		std::string &object_label)
+{
+	input_type = t_data_input_stream_design_object;
+
+	input_string.assign(object_label);
+	input_data1 = 0;
+	input_data2 = 0;
+	input_data3 = 0;
+
+}
+
 void data_input_stream_description_element::init_graph_by_adjacency_matrix_from_file(
 		std::string &fname,
 		std::string &col_label,
@@ -458,7 +476,9 @@ void data_input_stream_description_element::init_graph_by_adjacency_matrix_from_
 void data_input_stream_description_element::init_multi_matrix(
 		std::string &a, std::string &b)
 // a= m, n, max_value
-// b= m values for the rows, n values for the columns, and then the m * n entries of the matrix
+// b= m values for the rows,
+// n values for the columns,
+// and then the m * n entries of the matrix
 {
 	input_type = t_data_input_stream_multi_matrix;
 

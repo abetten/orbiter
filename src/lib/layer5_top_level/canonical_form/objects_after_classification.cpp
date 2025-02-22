@@ -83,8 +83,10 @@ void objects_after_classification::init_after_nauty(
 		}
 
 		std::string label;
+		std::string label_tex;
 
-		label = Classification_of_objects->IS->Descr->label_txt + "_object" + std::to_string(iso_type);
+		label = Classification_of_objects->IS->Descr->label_txt + "_object_" + std::to_string(iso_type);
+		label_tex = Classification_of_objects->IS->Descr->label_tex + "\\_object\\_" + std::to_string(iso_type);
 
 		if (f_v) {
 			cout << "objects_after_classification::init_after_nauty "
@@ -96,6 +98,7 @@ void objects_after_classification::init_after_nauty(
 				f_projective_space, PA,
 				Classification_of_objects->Descr->max_TDO_depth,
 				label,
+				label_tex,
 				verbose_level);
 		if (f_v) {
 			cout << "objects_after_classification::init_after_nauty "

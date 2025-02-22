@@ -571,7 +571,8 @@ void orbiter_symbol_table_entry::init_diophant(
 
 void orbiter_symbol_table_entry::init_design(
 		std::string &label,
-		void *DC, int verbose_level)
+		combinatorics::design_theory::design_object *Design_object,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -581,7 +582,7 @@ void orbiter_symbol_table_entry::init_design(
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
 	object_type = t_design;
-	ptr = DC;
+	ptr = Design_object;
 	if (f_v) {
 		cout << "orbiter_symbol_table_entry::init_design done" << endl;
 	}

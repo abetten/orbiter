@@ -3,7 +3,9 @@ ROW,C1,C2,C3
 1,"Creating Designs",,
 1,"\verb'-field' "," F  "," Some constructions of designs require a finite field. Set the field to be $F$.  "
 1,"\verb'-catalogue' ","  iso "," Recall a design of a given family from the Orbiter catalogue. The parameter iso is the isomorphism type in the catalogue. It is zero-based.  "
-1,"\verb'-family' ","  family ","  Select the family name of the design to be constructed. The following family names are supported: PG\_2\_q for the projective plane $\PG(2,q)$. "
+1,"\verb'-family' ","  familyname ","  Select a family for a design to be constructed. The following family names are supported: PG\_2\_q for the projective plane $\PG(2,q)$. "
+1,"\verb'-sporadic' ","  keyword ","  Select a sporadic design to be constructed. The following keywords are recognized: Baker\_1978 (Baker's elliptic semiplane), Mathon\_1987 (Mathon's elliptic semiplane). "
+1,"\verb'-from_incidence_matrix' ","  matrix ","  Create a design from the given incidence matrix. The incidence matrix is an orbiter matrix object. The number of ones in each column of the matrix must be constant.  "
 1,"\verb'-list_of_base_blocks' "," G fname col  "," Create a design by spanning the orbits of the base blocks given in column col in file fname under the group G. See Section~\ref{sec:design:DD}. "
 1,"\verb'-list_of_blocks_coded' "," v k L  "," Create a design on $v$ points and with block size $k$ from the coded list of sets L.  "
 1,"\verb'-list_of_sets_coded' "," v label  "," Create a design on $v$ points and with block codes in the list L.  "

@@ -1,7 +1,9 @@
 ROW,C1,C2,C3
 0,"tab:quadrics",,
 1,"Types of Quadrics",,
-1,"\begin{tabular}{c}$Q^+(n,q)$\\ Hyperbolic ($n$ is odd) \end{tabular}"," $\displaystyle \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}$ "," $\displaystyle \frac{(q^{(n+1)/2}-1)(q^{(n-1)/2}+1)}{q-1}$ "
-1,"\begin{tabular}{c}$Q^-(n,q)$ \\ Elliptic ($n$ is odd) \end{tabular}"," $\displaystyle p(X_{n-1}, X_{n}) + \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}$  ","$\displaystyle \frac{(q^{(n+1)/2}+1)(q^{(n-1)/2}-1)}{q-1}$  "
-1,"\begin{tabular}{c} $Q(n,q)$ \\ Parabolic ($n$ is even)  \end{tabular}"," $\displaystyle X_0^2 + \sum_{i=0}^{\frac{n}{2} - 1} X_{2i+1}X_{2i+2}$  ","  $\displaystyle \frac{q^n-1}{q-1}$ "
+1,"X","p{6cm}","X"
+1,"Type","Quadratic Form","\# Points"
+1,"\begin{tabular}{c}$Q^+(n,q)$\\ Hyperbolic ($n$ is odd) \end{tabular}"," $\displaystyle \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}=0$ "," $\displaystyle \frac{(q^{(n+1)/2}-1)(q^{(n-1)/2}+1)}{q-1}$ "
+1,"\begin{tabular}{c}$Q^-(n,q)$ \\ Elliptic ($n$ is odd) \end{tabular}"," $\displaystyle p(X_{n-1}, X_{n}) + \sum_{i=0}^{\frac{n-1}{2} - 1} X_{2i}X_{2i+1}=0$  ","$\displaystyle \frac{(q^{(n+1)/2}+1)(q^{(n-1)/2}-1)}{q-1}$  "
+1,"\begin{tabular}{c} $Q(n,q)$ \\ Parabolic ($n$ is even)  \end{tabular}"," $\displaystyle X_0^2 + \sum_{i=0}^{\frac{n}{2} - 1} X_{2i+1}X_{2i+2}=0$  ","  $\displaystyle \frac{q^n-1}{q-1}$ "
 END

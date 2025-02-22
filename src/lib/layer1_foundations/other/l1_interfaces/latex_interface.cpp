@@ -1514,7 +1514,8 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(
 }
 
 void latex_interface::print_table_of_strings_with_headers(
-		std::ostream &ost, std::string *headers, std::string *Table, int m, int n)
+		std::ostream &ost, std::string *headers,
+		std::string *Table, int m, int n)
 {
 	int i, j;
 
@@ -1542,7 +1543,8 @@ void latex_interface::print_table_of_strings_with_headers(
 }
 
 void latex_interface::print_table_of_strings_with_headers_rc(
-		std::ostream &ost, std::string *headers_row, std::string *headers_col,
+		std::ostream &ost, std::string *headers_row,
+		std::string *headers_col,
 		std::string *Table, int m, int n)
 {
 	int i, j;
@@ -2024,7 +2026,9 @@ void latex_interface::report_matrix_longinteger(
 		std::string &title,
 		std::string &author,
 		std::string &extra_praeamble,
-		algebra::ring_theory::longinteger_object *M, int nb_rows, int nb_cols, int verbose_level)
+		algebra::ring_theory::longinteger_object *M,
+		int nb_rows, int nb_cols,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

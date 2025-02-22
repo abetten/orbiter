@@ -66,6 +66,8 @@ public:
 	int f_modified_group;
 	group_constructions::modified_group_create *MGC;
 
+	int f_perm_group_direct;
+
 	actions::action *A_base;
 	actions::action *A;
 
@@ -95,6 +97,10 @@ public:
 			int verbose_level);
 	void init_modified_group(
 			group_constructions::modified_group_create *MGC, int verbose_level);
+	void init_perm_group_direct(
+			actions::action *A_perm,
+			std::string &label, std::string &label_tex,
+			int verbose_level);
 	void create_latex_report(
 			other::graphics::layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, //int f_classes,
@@ -432,6 +438,12 @@ public:
 			actions::action *A, groups::strong_generators *SG,
 			data_structures_groups::vector_ge *cosets,
 			int *&relative_order_table, int verbose_level);
+	void order_of_all_elements(
+			actions::action *A, groups::strong_generators *SG,
+			int *&order_table, int &go, int verbose_level);
+	std::string order_invariant(
+			actions::action *A, groups::strong_generators *SG,
+			int verbose_level);
 
 
 };
@@ -1335,12 +1347,6 @@ private:
 	int **prev; // [my_base_len][transversal_length]
 	int **label; // [my_base_len][transversal_length]
 	
-
-	// this is wrong, Path and Label describe a path in a schreier tree
-	// and hence should be allocated according
-	// to the largest degree, not the base length
-	//int *Path; // [my_base_len + 1]
-	//int *Label; // [my_base_len]
 
 	
 	// storage for temporary data and 

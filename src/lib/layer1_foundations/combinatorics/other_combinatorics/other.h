@@ -210,7 +210,8 @@ public:
 			algebra::ring_theory::longinteger_object &a,
 			int n, int k);
 	void size_of_conjugacy_class_in_sym_n(
-			algebra::ring_theory::longinteger_object &a, int n, int *part);
+			algebra::ring_theory::longinteger_object &a,
+			int n, int *part);
 	void q_binomial_with_table(
 			algebra::ring_theory::longinteger_object &a,
 		int n, int k, int q, int verbose_level);
@@ -246,46 +247,12 @@ public:
 	void create_random_k_subsets(
 			int n, int k, int nb,
 			std::string &fname_csv, int verbose_level);
-	void compute_incidence_matrix(
-			int v, int b, int k, long int *Blocks_coded,
-			int *&M, int verbose_level);
-	void compute_incidence_matrix_from_blocks(
-			int v, int b, int k, int *Blocks,
-			int *&M, int verbose_level);
-	void compute_incidence_matrix_from_blocks_lint(
-			int v, int b, int k, long int *Blocks,
-			int *&M, int verbose_level);
-	void compute_incidence_matrix_from_sets(
-			int v, int b, long int *Sets_coded,
-			int *&M,
-			int verbose_level);
-	void compute_blocks_from_coding(
-			int v, int b, int k, long int *Blocks_coded,
-			int *&Blocks, int verbose_level);
-	void compute_blocks_from_incma(
-			int v, int b, int k, int *incma,
-			int *&Blocks, int verbose_level);
-	void create_incidence_matrix_of_graph(
-			int *Adj, int n,
-			int *&M, int &nb_rows, int &nb_cols,
-			int verbose_level);
+
+
 	void free_global_data();
 	void free_tab_q_binomials();
-	void create_wreath_product_design(
-			int n, int k,
-			long int *&Blocks, long int &nb_blocks,
-			int verbose_level);
-	void create_linear_space_from_latin_square(
-			int *Mtx, int s,
-			int &v, int &k,
-			long int *&Blocks, long int &nb_blocks,
-			int verbose_level);
-	void report_large_set(
-			std::ostream &ost, long int *coding, int nb_designs,
-			int design_v, int design_k, int design_sz, int verbose_level);
-	void report_large_set_compact(
-			std::ostream &ost, long int *coding, int nb_designs,
-			int design_v, int design_k, int design_sz, int verbose_level);
+
+
 
 };
 

@@ -416,6 +416,16 @@ namespace combinatorics {
 	}
 
 
+	//! design theory
+
+	namespace design_theory {
+
+	class design_object;
+	class design_theory_global;
+
+	}
+
+
 	//! construction and classification of configurations, linear spaces, and designs
 
 	namespace geometry_builder {
@@ -1051,6 +1061,7 @@ namespace other {
 #define Get_projective_space_low_level(A) other::orbiter_kernel_system::Orbiter->get_projective_space_low_level(A)
 #define Get_geometry_builder(A) other::orbiter_kernel_system::Orbiter->get_geometry_builder(A)
 #define Get_graph(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_graph(A)
+#define Get_design(A) other::orbiter_kernel_system::Orbiter->get_object_of_type_design(A)
 #define Get_draw_options(A) other::orbiter_kernel_system::Orbiter->get_draw_options(A)
 #define Get_draw_incidence_structure_options(A) other::orbiter_kernel_system::Orbiter->get_draw_incidence_structure_options(A)
 #define Get_any_group_opaque(A) other::orbiter_kernel_system::Orbiter->get_any_group_opaque(A)
@@ -1130,6 +1141,7 @@ enum data_input_stream_type {
 	t_data_input_stream_csv_file,
 	t_data_input_stream_graph_by_adjacency_matrix,
 	t_data_input_stream_graph_object,
+	t_data_input_stream_design_object,
 	t_data_input_stream_graph_by_adjacency_matrix_from_file,
 	t_data_input_stream_multi_matrix,
 	t_data_input_stream_geometric_object,
@@ -1153,7 +1165,7 @@ enum CRC_type {
 
 #include "algebra/basic_algebra/basic_algebra.h"
 #include "algebra/expression_parser/expression_parser.h"
-#include "algebra/finite_fields/finite_fields.h"
+#include "algebra/field_theory/finite_fields.h"
 #include "algebra/linear_algebra/linear_algebra.h"
 #include "algebra/number_theory/number_theory.h"
 #include "algebra/ring_theory/ring_theory.h"
@@ -1161,6 +1173,7 @@ enum CRC_type {
 #include "combinatorics/canonical_form_classification/canonical_form_classification.h"
 #include "combinatorics/coding_theory/coding_theory.h"
 #include "combinatorics/cryptography/cryptography.h"
+#include "combinatorics/design_theory/design_theory.h"
 #include "combinatorics/geometry_builder/geometry_builder.h"
 #include "combinatorics/graph_theory/graph_theory.h"
 #include "combinatorics/knowledge_base/knowledge_base.h"

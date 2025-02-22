@@ -1805,7 +1805,8 @@ void modified_group_create::create_automorphism_group(
 
 	if (f_v) {
 		cout << "modified_group_create::create_automorphism_group "
-				"order of automorphism group = " << Aut_order << endl;
+				"order of automorphism group = "
+				<< Aut_order << endl;
 	}
 
 	A_base = A_modified;
@@ -1927,11 +1928,14 @@ void modified_group_create::import_group(
 	data_structures_groups::export_group *Export_group;
 
 	if (f_v) {
-		cout << "modified_group_create::import_group before Global_import" << endl;
+		cout << "modified_group_create::import_group "
+				"before Global_import" << endl;
 	}
-	Export_group = (data_structures_groups::export_group *) Global_import(verbose_level);
+	Export_group = (data_structures_groups::export_group *)
+			Global_import(verbose_level);
 	if (f_v) {
-		cout << "modified_group_create::import_group after Global_import" << endl;
+		cout << "modified_group_create::import_group "
+				"after Global_import" << endl;
 	}
 
 

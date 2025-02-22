@@ -32,13 +32,14 @@ public:
 	actions::action *A;
 	std::string fname;
 
+	// output data from Magma:
 	int nb_classes;
-	int *perms;
-	long int *class_size;
-	int *class_order_of_element;
-	long int *class_normalizer_order;
-	int *class_normalizer_number_of_generators;
-	int **normalizer_generators_perms;
+	int *perms; // [nb_classes * A->degree]
+	long int *class_size; // [nb_classes]
+	int *class_order_of_element; // [nb_classes]
+	long int *class_normalizer_order; // [nb_classes]
+	int *class_normalizer_number_of_generators; // [nb_classes]
+	int **normalizer_generators_perms; // [nb_classes][class_normalizer_number_of_generators[i] * A->degree]
 
 	// perms[nb_classes * A->degree]
 	// class_size[nb_classes]
@@ -57,7 +58,8 @@ public:
 			std::string &fname,
 			int verbose_level);
 	void create_classes(
-			groups::sims *group_G, int verbose_level);
+			groups::sims *group_G,
+			int verbose_level);
 	void report(
 			groups::sims *override_sims,
 			std::string &label_latex,
@@ -108,6 +110,7 @@ public:
 			groups::sims *group_G, int verbose_level);
 	void report(
 			groups::sims *override_sims,
+			std::string &label,
 			std::string &label_latex,
 			int verbose_level);
 	void export_csv(
@@ -318,7 +321,8 @@ public:
 			actions::action *A,
 			std::string &fname,
 			groups::sims *override_sims,
-			std::string &label_latex,
+			//std::string &label,
+			//std::string &label_latex,
 			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 	void read_conjugacy_classes_of_subgroups_from_MAGMA(

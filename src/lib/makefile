@@ -26,20 +26,20 @@ ORBITER_MODULES= \
 		layer1_foundations/algebra/expression_parser/syntax_tree_node_terminal.o \
 		layer1_foundations/algebra/expression_parser/syntax_tree_node.o \
 		layer1_foundations/algebra/expression_parser/syntax_tree.o \
-		layer1_foundations/algebra/finite_fields/finite_field_activity_description.o \
-		layer1_foundations/algebra/finite_fields/finite_field_activity.o \
-		layer1_foundations/algebra/finite_fields/finite_field_description.o \
-		layer1_foundations/algebra/finite_fields/finite_field_implementation_by_tables.o \
-		layer1_foundations/algebra/finite_fields/finite_field_implementation_wo_tables.o \
-		layer1_foundations/algebra/finite_fields/finite_field_io.o \
-		layer1_foundations/algebra/finite_fields/finite_field.o \
-		layer1_foundations/algebra/finite_fields/minimum_polynomial.o \
-		layer1_foundations/algebra/finite_fields/norm_tables.o \
-		layer1_foundations/algebra/finite_fields/normal_basis.o \
-		layer1_foundations/algebra/finite_fields/nth_roots.o \
-		layer1_foundations/algebra/finite_fields/related_fields.o \
-		layer1_foundations/algebra/finite_fields/square_nonsquare.o \
-		layer1_foundations/algebra/finite_fields/subfield_structure.o \
+		layer1_foundations/algebra/field_theory/finite_field_activity_description.o \
+		layer1_foundations/algebra/field_theory/finite_field_activity.o \
+		layer1_foundations/algebra/field_theory/finite_field_description.o \
+		layer1_foundations/algebra/field_theory/finite_field_implementation_by_tables.o \
+		layer1_foundations/algebra/field_theory/finite_field_implementation_wo_tables.o \
+		layer1_foundations/algebra/field_theory/finite_field_io.o \
+		layer1_foundations/algebra/field_theory/finite_field.o \
+		layer1_foundations/algebra/field_theory/minimum_polynomial.o \
+		layer1_foundations/algebra/field_theory/norm_tables.o \
+		layer1_foundations/algebra/field_theory/normal_basis.o \
+		layer1_foundations/algebra/field_theory/nth_roots.o \
+		layer1_foundations/algebra/field_theory/related_fields.o \
+		layer1_foundations/algebra/field_theory/square_nonsquare.o \
+		layer1_foundations/algebra/field_theory/subfield_structure.o \
 		layer1_foundations/algebra/linear_algebra/gl_class_rep.o \
 		layer1_foundations/algebra/linear_algebra/gl_classes.o \
 		layer1_foundations/algebra/linear_algebra/linear_algebra_global.o \
@@ -93,6 +93,8 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/coding_theory/mindist.o \
 		layer1_foundations/combinatorics/coding_theory/ttp_codes.o \
 		layer1_foundations/combinatorics/cryptography/cryptography_domain.o \
+		layer1_foundations/combinatorics/design_theory/design_object.o \
+		layer1_foundations/combinatorics/design_theory/design_theory_global.o \
 		layer1_foundations/combinatorics/geometry_builder/cperm.o \
 		layer1_foundations/combinatorics/geometry_builder/decomposition_with_fuse.o \
 		layer1_foundations/combinatorics/geometry_builder/gen_geo_conf.o \
@@ -377,19 +379,19 @@ ORBITER_MODULES= \
 		layer3_group_actions/combinatorics_with_groups/group_action_on_combinatorial_object.o \
 		layer3_group_actions/combinatorics_with_groups/orbit_type_repository.o \
 		layer3_group_actions/combinatorics_with_groups/translation_plane_via_andre_model.o \
-		layer3_group_actions/data_structures/export_group.o \
-		layer3_group_actions/data_structures/group_container.o \
-		layer3_group_actions/data_structures/group_table_and_generators.o \
-		layer3_group_actions/data_structures/hash_table_subgroups.o \
-		layer3_group_actions/data_structures/orbit_rep.o \
-		layer3_group_actions/data_structures/orbit_transversal.o \
-		layer3_group_actions/data_structures/schreier_vector_handler.o \
-		layer3_group_actions/data_structures/schreier_vector.o \
-		layer3_group_actions/data_structures/set_and_stabilizer.o \
-		layer3_group_actions/data_structures/union_find.o \
-		layer3_group_actions/data_structures/union_find_on_k_subsets.o \
-		layer3_group_actions/data_structures/vector_ge_description.o \
-		layer3_group_actions/data_structures/vector_ge.o \
+		layer3_group_actions/data_structures_groups/export_group.o \
+		layer3_group_actions/data_structures_groups/group_container.o \
+		layer3_group_actions/data_structures_groups/group_table_and_generators.o \
+		layer3_group_actions/data_structures_groups/hash_table_subgroups.o \
+		layer3_group_actions/data_structures_groups/orbit_rep.o \
+		layer3_group_actions/data_structures_groups/orbit_transversal.o \
+		layer3_group_actions/data_structures_groups/schreier_vector_handler.o \
+		layer3_group_actions/data_structures_groups/schreier_vector.o \
+		layer3_group_actions/data_structures_groups/set_and_stabilizer.o \
+		layer3_group_actions/data_structures_groups/union_find.o \
+		layer3_group_actions/data_structures_groups/union_find_on_k_subsets.o \
+		layer3_group_actions/data_structures_groups/vector_ge_description.o \
+		layer3_group_actions/data_structures_groups/vector_ge.o \
 		layer3_group_actions/group_constructions/direct_product.o \
 		layer3_group_actions/group_constructions/group_constructions_global.o \
 		layer3_group_actions/group_constructions/group_modification_description.o \
@@ -458,10 +460,10 @@ ORBITER_MODULES= \
 		layer3_group_actions/interfaces/magma_interface.o \
 		layer3_group_actions/interfaces/nauty_interface_for_graphs.o \
 		layer3_group_actions/interfaces/nauty_interface_with_group.o \
-		layer4_classification/classify/classification_step.o \
-		layer4_classification/classify/flag_orbit_node.o \
-		layer4_classification/classify/flag_orbits.o \
-		layer4_classification/classify/orbit_node.o \
+		layer4_classification/invariant_relations/classification_step.o \
+		layer4_classification/invariant_relations/flag_orbit_node.o \
+		layer4_classification/invariant_relations/flag_orbits.o \
+		layer4_classification/invariant_relations/orbit_node.o \
 		layer4_classification/isomorph/flag_orbit_folding.o \
 		layer4_classification/isomorph/isomorph_arguments.o \
 		layer4_classification/isomorph/isomorph_context.o \
@@ -506,22 +508,122 @@ ORBITER_MODULES= \
 		layer4_classification/set_stabilizer/stabilizer_orbits_and_types.o \
 		layer4_classification/set_stabilizer/substructure_classifier.o \
 		layer4_classification/set_stabilizer/substructure_stats_and_selection.o \
-		layer4_classification/solver/exact_cover.o \
-		layer4_classification/solver/exact_cover_arguments.o \
-		layer5_top_level/algebra_and_number_theory/action_on_forms_activity_description.o \
-		layer5_top_level/algebra_and_number_theory/action_on_forms_activity.o \
-		layer5_top_level/algebra_and_number_theory/action_on_forms_description.o \
-		layer5_top_level/algebra_and_number_theory/action_on_forms.o \
-		layer5_top_level/algebra_and_number_theory/algebra_global_with_action.o \
-		layer5_top_level/algebra_and_number_theory/character_table_burnside.o \
-		layer5_top_level/algebra_and_number_theory/element_processing_description.o \
-		layer5_top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
-		layer5_top_level/algebra_and_number_theory/group_theoretic_activity.o \
-		layer5_top_level/algebra_and_number_theory/polynomial_ring_activity.o \
-		layer5_top_level/algebra_and_number_theory/vector_ge_activity_description.o \
-		layer5_top_level/algebra_and_number_theory/vector_ge_activity.o \
-		layer5_top_level/algebra_and_number_theory/vector_ge_builder.o \
-		layer5_top_level/algebra_and_number_theory/young.o \
+		layer4_classification/solvers_package/exact_cover.o \
+		layer4_classification/solvers_package/exact_cover_arguments.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/arc_lifting.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/arc_orbits_on_pairs.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/arc_partition.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/classify_trihedral_pairs.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/six_arcs_not_on_a_conic.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surface_classify_using_arc.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surface_create_by_arc_lifting.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surfaces_arc_lifting_definition_node.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surfaces_arc_lifting_trace.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surfaces_arc_lifting_upstep.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/surfaces_arc_lifting.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_arcs/trihedral_pair_with_action.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/classify_double_sixes.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/classify_five_plus_one.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/identify_cubic_surface.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/surface_classify_wedge_io.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/surface_classify_wedge_recognition.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/surface_classify_wedge.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_and_double_sixes/surface_repository.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/cubic_surface_activity_description.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/cubic_surface_activity.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_clebsch_map.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_create_description.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_create.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_domain_high_level.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_object_with_group.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_study.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/surface_with_action.o \
+		layer5_top_level/applications_in_algebraic_geometry/cubic_surfaces_in_general/table_of_surfaces.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_activity_description.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_activity.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_create_description.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_create.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_domain_with_action.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_from_surface.o \
+		layer5_top_level/applications_in_algebraic_geometry/quartic_curves/quartic_curve_object_with_group.o \
+		layer5_top_level/apps_algebra/action_on_forms_activity_description.o \
+		layer5_top_level/apps_algebra/action_on_forms_activity.o \
+		layer5_top_level/apps_algebra/action_on_forms_description.o \
+		layer5_top_level/apps_algebra/action_on_forms.o \
+		layer5_top_level/apps_algebra/algebra_global_with_action.o \
+		layer5_top_level/apps_algebra/character_table_burnside.o \
+		layer5_top_level/apps_algebra/element_processing_description.o \
+		layer5_top_level/apps_algebra/group_theoretic_activity_description.o \
+		layer5_top_level/apps_algebra/group_theoretic_activity.o \
+		layer5_top_level/apps_algebra/polynomial_ring_activity.o \
+		layer5_top_level/apps_algebra/vector_ge_activity_description.o \
+		layer5_top_level/apps_algebra/vector_ge_activity.o \
+		layer5_top_level/apps_algebra/vector_ge_builder.o \
+		layer5_top_level/apps_algebra/young.o \
+		layer5_top_level/apps_coding_theory/code_modification_description.o \
+		layer5_top_level/apps_coding_theory/coding_theoretic_activity_description.o \
+		layer5_top_level/apps_coding_theory/coding_theoretic_activity.o \
+		layer5_top_level/apps_coding_theory/crc_process_description.o \
+		layer5_top_level/apps_coding_theory/crc_process.o \
+		layer5_top_level/apps_coding_theory/create_code_description.o \
+		layer5_top_level/apps_coding_theory/create_code.o \
+		layer5_top_level/apps_combinatorics/boolean_function_classify.o \
+		layer5_top_level/apps_combinatorics/combinatorial_object_activity_description.o \
+		layer5_top_level/apps_combinatorics/combinatorial_object_activity.o \
+		layer5_top_level/apps_combinatorics/combinatorial_object_stream.o \
+		layer5_top_level/apps_combinatorics/combinatorics_global.o \
+		layer5_top_level/apps_combinatorics/combo_activity_description.o \
+		layer5_top_level/apps_combinatorics/combo_activity.o \
+		layer5_top_level/apps_combinatorics/dd_lifting.o \
+		layer5_top_level/apps_combinatorics/dd_search_singletons.o \
+		layer5_top_level/apps_combinatorics/delandtsheer_doyen_description.o \
+		layer5_top_level/apps_combinatorics/delandtsheer_doyen.o \
+		layer5_top_level/apps_combinatorics/design_activity_description.o \
+		layer5_top_level/apps_combinatorics/design_activity.o \
+		layer5_top_level/apps_combinatorics/design_create_description.o \
+		layer5_top_level/apps_combinatorics/design_create.o \
+		layer5_top_level/apps_combinatorics/design_tables.o \
+		layer5_top_level/apps_combinatorics/difference_set_in_heisenberg_group.o \
+		layer5_top_level/apps_combinatorics/hadamard_classify.o \
+		layer5_top_level/apps_combinatorics/hall_system_classify.o \
+		layer5_top_level/apps_combinatorics/large_set_activity_description.o \
+		layer5_top_level/apps_combinatorics/large_set_activity.o \
+		layer5_top_level/apps_combinatorics/large_set_classify.o \
+		layer5_top_level/apps_combinatorics/large_set_was_activity_description.o \
+		layer5_top_level/apps_combinatorics/large_set_was_activity.o \
+		layer5_top_level/apps_combinatorics/large_set_was_description.o \
+		layer5_top_level/apps_combinatorics/large_set_was.o \
+		layer5_top_level/apps_combinatorics/variety_with_TDO_and_TDA.o \
+		layer5_top_level/apps_geometry/arc_generator_description.o \
+		layer5_top_level/apps_geometry/arc_generator.o \
+		layer5_top_level/apps_geometry/arc_lifting_simeon.o \
+		layer5_top_level/apps_geometry/choose_points_or_lines.o \
+		layer5_top_level/apps_geometry/classify_cubic_curves.o \
+		layer5_top_level/apps_geometry/cubic_curve_with_action.o \
+		layer5_top_level/apps_geometry/hermitian_spreads_classify.o \
+		layer5_top_level/apps_geometry/linear_set_classify.o \
+		layer5_top_level/apps_geometry/mapping_description.o \
+		layer5_top_level/apps_geometry/mapping.o \
+		layer5_top_level/apps_geometry/ovoid_classify_description.o \
+		layer5_top_level/apps_geometry/ovoid_classify.o \
+		layer5_top_level/apps_geometry/polar.o \
+		layer5_top_level/apps_geometry/search_blocking_set.o \
+		layer5_top_level/apps_geometry/singer_cycle.o \
+		layer5_top_level/apps_geometry/tensor_classify.o \
+		layer5_top_level/apps_geometry/top_level_geometry_global.o \
+		layer5_top_level/apps_graph_theory/cayley_graph_search.o \
+		layer5_top_level/apps_graph_theory/create_graph_description.o \
+		layer5_top_level/apps_graph_theory/create_graph.o \
+		layer5_top_level/apps_graph_theory/graph_classification_activity_description.o \
+		layer5_top_level/apps_graph_theory/graph_classification_activity.o \
+		layer5_top_level/apps_graph_theory/graph_classify_description.o \
+		layer5_top_level/apps_graph_theory/graph_classify.o \
+		layer5_top_level/apps_graph_theory/graph_modification_description.o \
+		layer5_top_level/apps_graph_theory/graph_theoretic_activity_description.o \
+		layer5_top_level/apps_graph_theory/graph_theoretic_activity.o \
+		layer5_top_level/apps_graph_theory/graph_theory_apps.o \
 		layer5_top_level/canonical_form/automorphism_group_of_variety.o \
 		layer5_top_level/canonical_form/canonical_form_classifier_description.o \
 		layer5_top_level/canonical_form/canonical_form_classifier.o \
@@ -535,80 +637,6 @@ ORBITER_MODULES= \
 		layer5_top_level/canonical_form/variety_compute_canonical_form.o \
 		layer5_top_level/canonical_form/variety_object_with_action.o \
 		layer5_top_level/canonical_form/variety_stabilizer_compute.o \
-		layer5_top_level/coding_theory_apps/code_modification_description.o \
-		layer5_top_level/coding_theory_apps/coding_theoretic_activity_description.o \
-		layer5_top_level/coding_theory_apps/coding_theoretic_activity.o \
-		layer5_top_level/coding_theory_apps/crc_process_description.o \
-		layer5_top_level/coding_theory_apps/crc_process.o \
-		layer5_top_level/coding_theory_apps/create_code_description.o \
-		layer5_top_level/coding_theory_apps/create_code.o \
-		layer5_top_level/combinatorics/boolean_function_classify.o \
-		layer5_top_level/combinatorics/combinatorial_object_activity_description.o \
-		layer5_top_level/combinatorics/combinatorial_object_activity.o \
-		layer5_top_level/combinatorics/combinatorial_object_stream.o \
-		layer5_top_level/combinatorics/combinatorics_global.o \
-		layer5_top_level/combinatorics/combo_activity_description.o \
-		layer5_top_level/combinatorics/combo_activity.o \
-		layer5_top_level/combinatorics/dd_lifting.o \
-		layer5_top_level/combinatorics/dd_search_singletons.o \
-		layer5_top_level/combinatorics/delandtsheer_doyen_description.o \
-		layer5_top_level/combinatorics/delandtsheer_doyen.o \
-		layer5_top_level/combinatorics/design_activity_description.o \
-		layer5_top_level/combinatorics/design_activity.o \
-		layer5_top_level/combinatorics/design_create_description.o \
-		layer5_top_level/combinatorics/design_create.o \
-		layer5_top_level/combinatorics/design_tables.o \
-		layer5_top_level/combinatorics/difference_set_in_heisenberg_group.o \
-		layer5_top_level/combinatorics/hadamard_classify.o \
-		layer5_top_level/combinatorics/hall_system_classify.o \
-		layer5_top_level/combinatorics/large_set_activity_description.o \
-		layer5_top_level/combinatorics/large_set_activity.o \
-		layer5_top_level/combinatorics/large_set_classify.o \
-		layer5_top_level/combinatorics/large_set_was_activity_description.o \
-		layer5_top_level/combinatorics/large_set_was_activity.o \
-		layer5_top_level/combinatorics/large_set_was_description.o \
-		layer5_top_level/combinatorics/large_set_was.o \
-		layer5_top_level/combinatorics/variety_with_TDO_and_TDA.o \
-		layer5_top_level/geometry/arc_generator_description.o \
-		layer5_top_level/geometry/arc_generator.o \
-		layer5_top_level/geometry/arc_lifting_simeon.o \
-		layer5_top_level/geometry/choose_points_or_lines.o \
-		layer5_top_level/geometry/classify_cubic_curves.o \
-		layer5_top_level/geometry/cubic_curve_with_action.o \
-		layer5_top_level/geometry/hermitian_spreads_classify.o \
-		layer5_top_level/geometry/linear_set_classify.o \
-		layer5_top_level/geometry/mapping_description.o \
-		layer5_top_level/geometry/mapping.o \
-		layer5_top_level/geometry/ovoid_classify_description.o \
-		layer5_top_level/geometry/ovoid_classify.o \
-		layer5_top_level/geometry/polar.o \
-		layer5_top_level/geometry/search_blocking_set.o \
-		layer5_top_level/geometry/singer_cycle.o \
-		layer5_top_level/geometry/tensor_classify.o \
-		layer5_top_level/geometry/top_level_geometry_global.o \
-		layer5_top_level/graph_theory/cayley_graph_search.o \
-		layer5_top_level/graph_theory/create_graph_description.o \
-		layer5_top_level/graph_theory/create_graph.o \
-		layer5_top_level/graph_theory/graph_classification_activity_description.o \
-		layer5_top_level/graph_theory/graph_classification_activity.o \
-		layer5_top_level/graph_theory/graph_classify_description.o \
-		layer5_top_level/graph_theory/graph_classify.o \
-		layer5_top_level/graph_theory/graph_modification_description.o \
-		layer5_top_level/graph_theory/graph_theoretic_activity_description.o \
-		layer5_top_level/graph_theory/graph_theoretic_activity.o \
-		layer5_top_level/graph_theory/graph_theory_apps.o \
-		layer5_top_level/interfaces/activity_description.o \
-		layer5_top_level/interfaces/interface_algebra.o \
-		layer5_top_level/interfaces/interface_coding_theory.o \
-		layer5_top_level/interfaces/interface_combinatorics.o \
-		layer5_top_level/interfaces/interface_cryptography.o \
-		layer5_top_level/interfaces/interface_povray.o \
-		layer5_top_level/interfaces/interface_projective.o \
-		layer5_top_level/interfaces/interface_symbol_table.o \
-		layer5_top_level/interfaces/interface_toolkit.o \
-		layer5_top_level/interfaces/orbiter_command.o \
-		layer5_top_level/interfaces/orbiter_top_level_session.o \
-		layer5_top_level/interfaces/symbol_definition.o \
 		layer5_top_level/orbits/orbit_cascade.o \
 		layer5_top_level/orbits/orbits_activity_description.o \
 		layer5_top_level/orbits/orbits_activity.o \
@@ -618,23 +646,23 @@ ORBITER_MODULES= \
 		layer5_top_level/orbits/orbits_on_pairs.o \
 		layer5_top_level/orbits/orbits_on_polynomials.o \
 		layer5_top_level/orbits/orbits_on_subspaces.o \
-		layer5_top_level/orthogonal/blt_set_activity_description.o \
-		layer5_top_level/orthogonal/blt_set_activity.o \
-		layer5_top_level/orthogonal/blt_set_classify_activity_description.o \
-		layer5_top_level/orthogonal/blt_set_classify_activity.o \
-		layer5_top_level/orthogonal/blt_set_classify_description.o \
-		layer5_top_level/orthogonal/blt_set_classify.o \
-		layer5_top_level/orthogonal/BLT_set_create_description.o \
-		layer5_top_level/orthogonal/BLT_set_create.o \
-		layer5_top_level/orthogonal/blt_set_domain_with_action.o \
-		layer5_top_level/orthogonal/blt_set_group_properties.o \
-		layer5_top_level/orthogonal/blt_set_with_action.o \
-		layer5_top_level/orthogonal/flock_from_blt_set.o \
-		layer5_top_level/orthogonal/orthogonal_space_activity_description.o \
-		layer5_top_level/orthogonal/orthogonal_space_activity.o \
-		layer5_top_level/orthogonal/orthogonal_space_with_action_description.o \
-		layer5_top_level/orthogonal/orthogonal_space_with_action.o \
-		layer5_top_level/orthogonal/table_of_blt_sets.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_activity_description.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_activity.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_classify_activity_description.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_classify_activity.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_classify_description.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_classify.o \
+		layer5_top_level/orthogonal_geometry_applications/BLT_set_create_description.o \
+		layer5_top_level/orthogonal_geometry_applications/BLT_set_create.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_domain_with_action.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_group_properties.o \
+		layer5_top_level/orthogonal_geometry_applications/blt_set_with_action.o \
+		layer5_top_level/orthogonal_geometry_applications/flock_from_blt_set.o \
+		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_activity_description.o \
+		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_activity.o \
+		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_with_action_description.o \
+		layer5_top_level/orthogonal_geometry_applications/orthogonal_space_with_action.o \
+		layer5_top_level/orthogonal_geometry_applications/table_of_blt_sets.o \
 		layer5_top_level/packings/invariants_packing.o \
 		layer5_top_level/packings/packing_classify_activity_description.o \
 		layer5_top_level/packings/packing_classify_activity.o \
@@ -652,13 +680,13 @@ ORBITER_MODULES= \
 		layer5_top_level/packings/packing_was.o \
 		layer5_top_level/packings/packings_global.o \
 		layer5_top_level/packings/regular_packing.o \
-		layer5_top_level/projective_space/projective_space_activity_description.o \
-		layer5_top_level/projective_space/projective_space_activity.o \
-		layer5_top_level/projective_space/projective_space_global.o \
-		layer5_top_level/projective_space/projective_space_with_action_description.o \
-		layer5_top_level/projective_space/projective_space_with_action.o \
-		layer5_top_level/projective_space/ring_with_action.o \
-		layer5_top_level/projective_space/summary_of_properties_of_objects.o \
+		layer5_top_level/projective_geometry/projective_space_activity_description.o \
+		layer5_top_level/projective_geometry/projective_space_activity.o \
+		layer5_top_level/projective_geometry/projective_space_global.o \
+		layer5_top_level/projective_geometry/projective_space_with_action_description.o \
+		layer5_top_level/projective_geometry/projective_space_with_action.o \
+		layer5_top_level/projective_geometry/ring_with_action.o \
+		layer5_top_level/projective_geometry/summary_of_properties_of_objects.o \
 		layer5_top_level/semifields/semifield_classify_description.o \
 		layer5_top_level/semifields/semifield_classify_with_substructure.o \
 		layer5_top_level/semifields/semifield_classify.o \
@@ -685,44 +713,18 @@ ORBITER_MODULES= \
 		layer5_top_level/spreads/spread_table_with_selection.o \
 		layer5_top_level/spreads/translation_plane_activity_description.o \
 		layer5_top_level/spreads/translation_plane_activity.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_activity_description.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_activity.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_create_description.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_create.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_domain_with_action.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_from_surface.o \
-		layer5_top_level/surfaces/quartic_curves/quartic_curve_object_with_group.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/arc_lifting.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/arc_orbits_on_pairs.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/arc_partition.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/classify_trihedral_pairs.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/six_arcs_not_on_a_conic.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surface_classify_using_arc.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surface_create_by_arc_lifting.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_definition_node.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_trace.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_upstep.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting.o \
-		layer5_top_level/surfaces/surfaces_and_arcs/trihedral_pair_with_action.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_double_sixes.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/classify_five_plus_one.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/identify_cubic_surface.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_io.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge_recognition.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge.o \
-		layer5_top_level/surfaces/surfaces_and_double_sixes/surface_repository.o \
-		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity_description.o \
-		layer5_top_level/surfaces/surfaces_general/cubic_surface_activity.o \
-		layer5_top_level/surfaces/surfaces_general/surface_clebsch_map.o \
-		layer5_top_level/surfaces/surfaces_general/surface_create_description.o \
-		layer5_top_level/surfaces/surfaces_general/surface_create.o \
-		layer5_top_level/surfaces/surfaces_general/surface_domain_high_level.o \
-		layer5_top_level/surfaces/surfaces_general/surface_object_with_group.o \
-		layer5_top_level/surfaces/surfaces_general/surface_study.o \
-		layer5_top_level/surfaces/surfaces_general/surface_with_action.o \
-		layer5_top_level/surfaces/surfaces_general/table_of_surfaces.o
+		layer5_top_level/user_interface/activity_description.o \
+		layer5_top_level/user_interface/interface_algebra.o \
+		layer5_top_level/user_interface/interface_coding_theory.o \
+		layer5_top_level/user_interface/interface_combinatorics.o \
+		layer5_top_level/user_interface/interface_cryptography.o \
+		layer5_top_level/user_interface/interface_povray.o \
+		layer5_top_level/user_interface/interface_projective.o \
+		layer5_top_level/user_interface/interface_symbol_table.o \
+		layer5_top_level/user_interface/interface_toolkit.o \
+		layer5_top_level/user_interface/orbiter_command.o \
+		layer5_top_level/user_interface/orbiter_top_level_session.o \
+		layer5_top_level/user_interface/symbol_definition.o
 
 
 JL_MODULES=\

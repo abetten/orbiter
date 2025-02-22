@@ -286,13 +286,13 @@ union symmetry_group {
 
 
 
-#include "./actions/actions.h"
-#include "./combinatorics_with_groups/combinatorics_with_groups.h"
-#include "./data_structures/l3_data_structures.h"
-#include "./group_constructions/group_constructions.h"
-#include "./groups/groups.h"
-#include "./induced_actions/induced_actions.h"
-#include "./interfaces/l3_interfaces.h"
+#include "actions/actions.h"
+#include "combinatorics_with_groups/combinatorics_with_groups.h"
+#include "data_structures_groups/l3_data_structures.h"
+#include "group_constructions/group_constructions.h"
+#include "groups/groups.h"
+#include "induced_actions/induced_actions.h"
+#include "interfaces/l3_interfaces.h"
 
 
 

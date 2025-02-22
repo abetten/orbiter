@@ -552,6 +552,96 @@ void group_theory_global::relative_order_vector_of_cosets(
 }
 
 
+void group_theory_global::order_of_all_elements(
+		actions::action *A, groups::strong_generators *SG,
+		int *&order_table, int &go, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *Elt;
+	groups::sims *S;
+	long int rk;
+	int order;
+
+	if (f_v) {
+		cout << "group_theory_global::order_of_all_elements" << endl;
+	}
+
+	go = SG->group_order_as_lint();
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	order_table = NEW_int(go);
+
+	S = SG->create_sims(0 /*verbose_level */);
+	for (rk = 0; rk < go; rk++) {
+
+		S->element_unrank_lint(
+				rk, Elt, 0 /* verbose_level */);
+
+
+		order = A->Group_element->element_order(Elt);
+		order_table[rk] = order;
+	}
+
+	FREE_OBJECT(S);
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "group_theory_global::order_of_all_elements done" << endl;
+	}
+}
+
+
+std::string group_theory_global::order_invariant(
+		actions::action *A, groups::strong_generators *SG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theory_global::order_invariant" << endl;
+	}
+
+	int *order_table;
+	int go;
+
+	if (f_v) {
+		cout << "group_theory_global::order_invariant "
+				"before order_of_all_elements" << endl;
+	}
+	order_of_all_elements(
+			A, SG,
+			order_table, go, verbose_level - 1);
+	if (f_v) {
+		cout << "group_theory_global::order_invariant "
+				"after order_of_all_elements" << endl;
+	}
+
+	other::data_structures::tally *C;
+	int f_second = false;
+
+	C = NEW_OBJECT(other::data_structures::tally);
+	C->init(order_table, go, f_second, 0);
+	if (f_v) {
+		cout << "group_theory_global::order_invariant: "
+				"order invariant: ";
+		C->print(false /*f_backwards*/);
+		C->print_bare_tex(cout, false /*f_backwards*/);
+		cout << endl;
+	}
+
+	string s;
+
+	s = C->stringify_bare_tex(false /*f_backwards*/);
+
+	FREE_OBJECT(C);
+
+	if (f_v) {
+		cout << "group_theory_global::order_invariant done" << endl;
+	}
+	return s;
+}
+
 
 
 

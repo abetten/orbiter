@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:BLT:families",,
 1,"Families of BLT-sets",,
+1,"X","p{3cm}","X"
+1,"Label","Condition","Explanation"
 1,"\verb'Linear' ","  "," Linear BLT-set. "
 1,"\verb'Fisher' ","  "," Fisher BLT-set~\cite{FisherThas79}. "
 1,"\verb'Mondello' "," $q \equiv \pm 1 \mod 10$ "," Mondello BLT-set due to Penttila~\cite{Penttila98}. "

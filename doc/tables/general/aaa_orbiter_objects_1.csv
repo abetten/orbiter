@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:define:1",,
 1,"Orbiter Objects (Part I)",,
+1,"X","p{3cm}","X"
+1,"Command","Reference","Type of Object"
 1,"\verb'-finite_field' ","   Sections~\ref{sec:finite:fields} and~\ref{sec:extension:fields}   "," A finite field $\bbF_q$. "
 1,"\verb'-polynomial_ring' ","   Section~\ref{sec:ring:theory:multivariate}   "," A multivariate polynomial ring. "
 1,"\verb'-projective_space' "," Section~\ref{sec:FPG} "," A projective space $\PG(n,q).$  "

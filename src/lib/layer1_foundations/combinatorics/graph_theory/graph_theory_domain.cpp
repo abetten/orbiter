@@ -2867,6 +2867,12 @@ void graph_theory_domain::find_subgraph_Dn_recursion_level_0(
 
 		subgraph[current_depth] = Candidates[cur];
 
+
+		// ToDo special case for D8:
+		if (subgraph[current_depth] != 112) {
+			continue;
+		}
+
 		vector<int> Candidates_reduced;
 
 		int j, a, b;
@@ -3329,6 +3335,20 @@ void graph_theory_domain::find_subgraph_Dn_recursion_level_3_and_above(
 
 	if (current_depth == n) {
 		if (f_v) {
+			cout << "graph_theory_domain::find_subgraph_Dn_recursion_level_3_and_above "
+					"current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth);
+			cout << " is solution " << Solutions.size() << endl;
+
+		}
+
+		if (Solutions.size() && subgraph[0] != Solutions[Solutions.size() - 1][0]) {
+			cout << "graph_theory_domain::find_subgraph_Dn_recursion_level_3_and_above "
+					"current_depth=" << current_depth << " : subgraph = ";
+			Int_vec_print(cout, subgraph, current_depth);
+			cout << " is solution " << Solutions.size() << ", change at level 0 " << endl;
+		}
+		if ((Solutions.size() % 10000) == 0) {
 			cout << "graph_theory_domain::find_subgraph_Dn_recursion_level_3_and_above "
 					"current_depth=" << current_depth << " : subgraph = ";
 			Int_vec_print(cout, subgraph, current_depth);

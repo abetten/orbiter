@@ -188,6 +188,9 @@ public:
 	void init_graph_by_object(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
+	void init_incidence_structure_from_design_object(
+			combinatorics::design_theory::design_object *Design_object,
+			int verbose_level);
 	void init_multi_matrix(
 			std::string &data1,
 			std::string &data2,
@@ -294,7 +297,6 @@ public:
 
 	int f_nauty_control;
 	other::l1_interfaces::nauty_interface_control *Nauty_control;
-	//int f_save_nauty_input_graphs;
 
 
 
@@ -616,7 +618,6 @@ public:
 	int input_data3; // k = block size
 	int input_data4; // partition class size
 
-	//geometry::other_geometry::geometric_object_create *GOC;
 
 	data_input_stream_description_element();
 	~data_input_stream_description_element();
@@ -648,7 +649,8 @@ public:
 			std::string &a);
 	void init_file_of_designs(
 			std::string &a,
-				int N_points, int b, int k, int partition_class_size);
+				int N_points, int b, int k,
+				int partition_class_size);
 	void init_file_of_incidence_geometries(
 			std::string &a,
 				int v, int b, int f);
@@ -673,6 +675,8 @@ public:
 				int N);
 	void init_graph_object(
 			std::string &object_label);
+	void init_design_object(
+			std::string &object_label);
 	void init_graph_by_adjacency_matrix_from_file(
 			std::string &fname,
 			std::string &col_label,
@@ -680,7 +684,9 @@ public:
 	void init_multi_matrix(
 			std::string &a, std::string &b);
 	// a= m, n, max_value
-	// b= m values for the rows, n values for the columns, and then the m * n entries of the matrix
+	// b= m values for the rows,
+	// n values for the columns,
+	// and then the m * n entries of the matrix
 	void init_geometric_object(
 			std::string &label);
 	void init_Kaempfer_file(

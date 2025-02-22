@@ -1474,7 +1474,12 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(
 		c++;
 	}
 	if (f_semilinear) {
-		base[c] = F->q + F->p;
+		if (n > 1) {
+			base[c] = F->q + F->p; // ToDo: this does not work when n = 1
+		}
+		else {
+			base[c] = F->p;
+		}
 		transversal_length[c] = F->e;
 		c++;
 	}

@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:cubic:surface:export",,
 1,"Options for Exporting Data: Cubic Surfaces",,
+1,"X","p{1cm}","X"
+1,"Label"," ","What"
 1,"\verb'points' ",""," The points on the surface. "
 1,"\verb'points_off' ",""," The points off the surface. "
 1,"\verb'Eckardt_points' ",""," The Eckardt points of the surface. "

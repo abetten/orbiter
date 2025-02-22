@@ -433,6 +433,7 @@ public:
 	combinatorics::canonical_form_classification::any_combinatorial_object *Any_Combo;
 
 	std::string label;
+	std::string label_tex;
 
 	other::l1_interfaces::nauty_output *NO;
 
@@ -457,6 +458,7 @@ public:
 			projective_geometry::projective_space_with_action *PA,
 			int max_TDO_depth,
 			std::string &label,
+			std::string &label_tex,
 			int verbose_level);
 	void lift_generators_to_matrix_group(
 			int verbose_level);
@@ -465,6 +467,7 @@ public:
 			other::l1_interfaces::nauty_output *NO,
 			projective_geometry::projective_space_with_action *PA,
 			std::string &label,
+			std::string &label_tex,
 			int verbose_level);
 	void latex_report_wrapper(
 			std::string label,

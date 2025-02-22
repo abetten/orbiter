@@ -699,9 +699,15 @@ int data_input_stream::count_number_of_objects_to_test(
 						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
-			//combinatorics::graph_theory::colored_graph *CG;
 
-			//CG = Get_graph(Descr->Input[input_idx].input_string);
+			nb_objects_to_test++;
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_design_object) {
+			if (f_v) {
+				cout << "t_data_input_stream_design_object "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
 
 
 			nb_objects_to_test++;
@@ -1843,6 +1849,43 @@ void data_input_stream::read_objects(
 			Objects.push_back(Any_combo);
 
 		}
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_design_object) {
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+
+			combinatorics::design_theory::design_object *Design_object;
+
+			Design_object = Get_design(Descr->Input[input_idx].input_string);
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string
+						<< ", a design on " << Design_object->v << " vertices" << endl;
+			}
+
+			any_combinatorial_object *Any_combo;
+
+			Any_combo = NEW_OBJECT(any_combinatorial_object);
+
+			Any_combo->init_incidence_structure_from_design_object(
+					Design_object,
+					verbose_level);
+
+			if (f_v) {
+				cout << "data_input_stream::read_objects "
+						<< Descr->Input[input_idx].input_string
+						<< ", we created the following object:" << endl;
+				Any_combo->print();
+			}
+
+
+			Objects.push_back(Any_combo);
+
+		}
+
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_multi_matrix) {
 			if (f_v) {
 				cout << "input multi matrix "

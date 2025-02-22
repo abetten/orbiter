@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:actions",,
 1,"Basic actions",,
+1,"X","p{5cm}","X"
+1,"Name","Object","Number of points"
 1,"General linear $\GL(n,q)$ "," all vectors of $V$ "," $q^n$ "
 1,"Affine $\AGL(n,q)$ "," all vectors of $V$ "," $q^n$ "
 1,"Projective $\PGL(n,q)$"," ${\frak Gr}_1(V)$ "," $\frac{q^n-1}{q-1}$ "

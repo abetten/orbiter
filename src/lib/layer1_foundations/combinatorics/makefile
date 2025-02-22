@@ -9,6 +9,7 @@ all: \
 	canonical_form_classification1 \
 	coding_theory1 \
 	cryptography1 \
+	design_theory1 \
 	geometry_builder1 \
 	graph_theory1 \
 	graph_theory_nauty1 \
@@ -26,6 +27,7 @@ all: \
 canonical_form_classification1 :  ; cd canonical_form_classification; $(MAKE)
 coding_theory1 :  ; cd coding_theory; $(MAKE)
 cryptography1 :  ; cd cryptography; $(MAKE)
+design_theory1 :  ; cd design_theory; $(MAKE)
 geometry_builder1 :  ; cd geometry_builder; $(MAKE)
 graph_theory1 :  ; cd graph_theory; $(MAKE)
 graph_theory_nauty1 :  ; cd graph_theory_nauty; $(MAKE)
@@ -51,6 +53,7 @@ clean:
 	cd canonical_form_classification; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean
 	cd cryptography; $(MAKE) clean
+	cd design_theory; $(MAKE) clean
 	cd geometry_builder; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd graph_theory_nauty; $(MAKE) clean

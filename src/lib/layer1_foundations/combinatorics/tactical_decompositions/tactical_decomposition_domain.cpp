@@ -503,7 +503,8 @@ void tactical_decomposition_domain::refine_the_partition(
 		cout << "tactical_decomposition_domain::refine_the_partition" << endl;
 	}
 
-	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	//combinatorics::other_combinatorics::combinatorics_domain Combi;
+	combinatorics::design_theory::design_theory_global Design;
 
 	//int N = k * b;
 	int *M;
@@ -512,7 +513,7 @@ void tactical_decomposition_domain::refine_the_partition(
 
 	R = NEW_int(v);
 
-	Combi.compute_incidence_matrix(v, b, k, Blocks_coded,
+	Design.compute_incidence_matrix(v, b, k, Blocks_coded,
 			M, verbose_level);
 
 	{

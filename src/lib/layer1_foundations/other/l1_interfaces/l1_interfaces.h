@@ -340,9 +340,11 @@ public:
 		void *data,
 		int f_tex);
 	void print_table_of_strings_with_headers(
-			std::ostream &ost, std::string *headers, std::string *Table, int m, int n);
+			std::ostream &ost, std::string *headers,
+			std::string *Table, int m, int n);
 	void print_table_of_strings_with_headers_rc(
-			std::ostream &ost, std::string *headers_row, std::string *headers_col,
+			std::ostream &ost, std::string *headers_row,
+			std::string *headers_col,
 			std::string *Table, int m, int n);
 	void print_table_of_strings(
 			std::ostream &ost, std::string *Table, int m, int n);
@@ -405,7 +407,8 @@ public:
 			std::string &title,
 			std::string &author,
 			std::string &extra_praeamble,
-			algebra::ring_theory::longinteger_object *M, int nb_rows, int nb_cols,
+			algebra::ring_theory::longinteger_object *M,
+			int nb_rows, int nb_cols,
 			int verbose_level);
 	void print_decomposition_matrix(
 			std::ostream &ost,
@@ -441,6 +444,9 @@ public:
 class nauty_interface_control {
 
 public:
+
+	// nauty_control.csv
+
 
 	int f_save_nauty_input_graphs;
 	std::string save_nauty_input_graphs_prefix;

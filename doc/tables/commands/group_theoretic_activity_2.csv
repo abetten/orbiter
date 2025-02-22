@@ -12,6 +12,7 @@ ROW,C1,C2,C3
 1,"\verb'-isomorphism_Klein_quadric' "," fname "," "
 1,"\verb'-print_elements' "," ","Produces a printout of all group elements. "
 1,"\verb'-print_elements_tex' "," ","Produces a latex report of all group elements. "
+1,"\verb'-vector_ge_print_elements_tex' "," vector ","Produces a latex report of all group elements in the vector object. "
 1,"\verb'-save_elements_csv' "," fname ","Writes the elements of the group to the given csv file."
 1,"\verb'-export_inversion_graphs' "," fname ","Exports the inversion graphs associated to the group elements to the given file."
 1,"\verb'-evaluate_word' "," word gens ","Expresses a word in terms of the given set of generators. "

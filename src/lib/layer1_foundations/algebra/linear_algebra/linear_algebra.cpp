@@ -441,6 +441,7 @@ void linear_algebra::matrix_mult_affine(
 void linear_algebra::semilinear_matrix_mult_affine(
 		int *A, int *B, int *AB, int n)
 {
+#if 0
 	int f1, f2, f12, f1inv;
 	int *b1, *b2, *b3;
 	int *A1, *A2, *A3;
@@ -471,6 +472,44 @@ void linear_algebra::semilinear_matrix_mult_affine(
 
 	AB[n * n + n] = f12;
 	FREE_int(T);
+#else
+	int f1, f2, f12, f1inv;
+	int *b1, *b2, *b3;
+	int *A1, *A2, *A3;
+	int *T;
+	int *v;
+	number_theory::number_theory_domain NT;
+
+	T = NEW_int(n * n);
+	v = NEW_int(n);
+	A1 = A;
+	A2 = B;
+	A3 = AB;
+	b1 = A + n * n;
+	b2 = B + n * n;
+	b3 = AB + n * n;
+
+	f1 = A[n * n + n];
+	f2 = B[n * n + n];
+	f12 = NT.mod(f1 + f2, F->e);
+	f1inv = NT.mod(F->e - f1, F->e);
+
+	Int_vec_copy(A2, T, n * n);
+	vector_frobenius_power_in_place(T, n * n, f1inv);
+	mult_matrix_matrix(A1, T, A3, n, n, n, 0 /* verbose_level */);
+	//vector_frobenius_power_in_place(A2, n * n, f1);
+
+	Int_vec_copy(b2, v, n);
+	vector_frobenius_power_in_place(v, n, f1inv);
+
+
+	mult_matrix_matrix(b1, T, b3, 1, n, n, 0 /* verbose_level */);
+	//vector_frobenius_power_in_place(b3, n, f2);
+	add_vector(b3, v, b3, n);
+
+	AB[n * n + n] = f12;
+	FREE_int(T);
+#endif
 }
 
 int linear_algebra::matrix_determinant(
@@ -754,6 +793,7 @@ void linear_algebra::semilinear_action_from_the_left(
 	vector_frobenius_power_in_place(Av, n, f);
 }
 
+#if 0
 void linear_algebra::affine_action_from_the_right(
 		int f_semilinear, int *v, int *A, int *vA, int n)
 // vA = (v * A)^{p^f} + b
@@ -766,6 +806,23 @@ void linear_algebra::affine_action_from_the_right(
 		vector_frobenius_power_in_place(vA, n, f);
 	}
 	add_vector(vA, A + n * n, vA, n);
+}
+#endif
+
+void linear_algebra::affine_action_from_the_right(
+		int f_semilinear, int *v, int *A, int *vA, int n)
+// vA = (v * A + b)^{p^f}
+{
+	mult_vector_from_the_left(v, A, vA, n, n);
+
+	add_vector(vA, A + n * n, vA, n);
+
+	if (f_semilinear) {
+		int f;
+
+		f = A[n * n + n];
+		vector_frobenius_power_in_place(vA, n, f);
+	}
 }
 
 void linear_algebra::zero_vector(

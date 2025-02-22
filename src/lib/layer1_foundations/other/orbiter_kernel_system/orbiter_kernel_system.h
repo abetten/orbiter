@@ -256,8 +256,12 @@ public:
 	void prepare_tables_for_users_guide(
 			std::vector<std::string> &tbl_fname,
 			int verbose_level);
+	void prepare_general_tables_for_users_guide(
+			std::vector<std::string> &tbl_fname,
+			int verbose_level);
 	void prepare_table_for_users_guide(
 			std::string &fname,
+			int f_general,
 			int verbose_level);
 	void read_csv_file_and_tally(
 			std::string &fname, int verbose_level);
@@ -344,6 +348,10 @@ public:
 			data_structures::ancestry_indi **Individual,
 			data_structures::ancestry_family **Family,
 		int verbose_level);
+	void read_table_of_strings_and_drop_quotes(
+			std::string &fname, std::string *&col_label,
+			std::string *&Table, int &m, int &n,
+			int verbose_level);
 	void read_table_of_strings(
 			std::string &fname, std::string *&col_label,
 			std::string *&Table, int &m, int &n,
@@ -1355,6 +1363,9 @@ public:
 	combinatorics::graph_theory::colored_graph
 		*get_object_of_type_graph(
 				std::string &label);
+	combinatorics::design_theory::design_object
+		*get_object_of_type_design(
+				std::string &label);
 	graphics::layered_graph_draw_options
 		*get_draw_options(
 				std::string &label);
@@ -1499,7 +1510,8 @@ public:
 			void *Dio, int verbose_level);
 	void init_design(
 			std::string &label,
-			void *DC, int verbose_level);
+			combinatorics::design_theory::design_object *Design_object,
+			int verbose_level);
 	void init_design_table(
 			std::string &label,
 			void *DT, int verbose_level);

@@ -1,6 +1,6 @@
 ROW,C1,C2,C3
 0,"tab:combinatorial:objects",,
-1,"Defining Combinatorial Objects",,
+1,"Defining Combinatorial Objects (Part 1)",,
 1,"\verb'-label' "," label-txt label-tex ","A label for the objects. "
 1,"\verb'-set_of_points' "," $S$ ","A set $S$ consisting of points. "
 1,"\verb'-set_of_lines' "," $S$ ","A set $S$ consisting of lines. "
@@ -12,11 +12,7 @@ ROW,C1,C2,C3
 1,"\verb'-file_of_packings' "," fname ","A set consisting of packings read from file."
 1,"\verb'-file_of_packings_through_spread' \verb'_table' "," spread-table fname-packings q  "," A file of packings of $\PG(3,q)$. This relies on the presence of a spread-table. "
 1,"\verb'-file_of_designs_through_block' \verb'_orbits' "," fname1 fname2 v k  ","A set of designs (or configurations) built from a set of orbits on k-subsets. The file fname1 is a matrix of zero-one vectors, for instance the solutions of a Diophantine system (see Section~\ref{sec:diophant}). The file fname2 is a list of orbits of a group on k-subsets created using the -export\_something activity from Table~\ref{tab:orbits:activities} using the keyword set\_orbits. The design will be invariant under the group used to compute the k-orbits."
+1,"\verb'-file_of_designs_through_blocks' "," fname column v b k  ","A set of designs (or configurations) built from a set of k-subsets. The file fname is a csv file, and the blocks are listed as coded k-subsets in the given column."
 1,"\verb'-file_of_point_set' "," fname ","A file containing sets of points. "
 1,"\verb'-file_of_designs' "," fname v b k c "," A file containing designs or large sets. Here, $v$ is the number of points in the design, $b$ is the number of blocks, $k$ is the block size, and $c$ is the size of one class of the partition. "
-1,"\verb'-file_of_incidence_geometries' "," fname $v$ $b$ $f$ ","A file of incidence geometries. The incidence structure is listed as set of flags. Here, $v$ is the number of points, $b$ is the number of blocks and $f$ is the number of flags. If point $i$ and block $j$ are incident, this corresponds to the value $ib+j$ being listed as a flag (recall that $i$ and $j$ are zero-based). "
-1,"\verb'-file_of_incidence_geometries_by' \verb'_row_ranks' "," fname $v$ $b$ $r$ ","A file describing incidence geometries defined by their row ranks. "
-1,"\verb'-incidence_geometry' "," fname $v$ $b$ $f$  ","An incidence geometry defined by a set of flags. Here, $v$ is the number of points, $b$ is the number of blocks and $f$ is the number of flags."
-1,"\verb'-incidence_geometry_by_row_ranks' "," fname $v$ $b$ $r$  ","An incidence geometry defined by row ranks."
-1,"\verb'-from_parallel_search' "," fname-mask nb\_cases cases\_fname ","   "
 END

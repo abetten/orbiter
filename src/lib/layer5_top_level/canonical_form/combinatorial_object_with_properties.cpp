@@ -61,6 +61,7 @@ void combinatorial_object_with_properties::init(
 		projective_geometry::projective_space_with_action *PA,
 		int max_TDO_depth,
 		std::string &label,
+		std::string &label_tex,
 		int verbose_level)
 // called from objects_after_classification::init_after_nauty
 {
@@ -74,7 +75,8 @@ void combinatorial_object_with_properties::init(
 	combinatorial_object_with_properties::NO = NO;
 	combinatorial_object_with_properties::f_projective_space = f_projective_space;
 	combinatorial_object_with_properties::PA = PA;
-	combinatorial_object_with_properties::label.assign(label);
+	combinatorial_object_with_properties::label = label;
+	combinatorial_object_with_properties::label_tex = label_tex;
 
 	actions::action_global Action_global;
 
@@ -201,6 +203,7 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 		other::l1_interfaces::nauty_output *NO,
 		projective_geometry::projective_space_with_action *PA,
 		std::string &label,
+		std::string &label_tex,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -211,7 +214,8 @@ void combinatorial_object_with_properties::init_object_in_projective_space(
 
 	combinatorial_object_with_properties::Any_Combo = Any_Combo;
 	combinatorial_object_with_properties::NO = NO;
-	combinatorial_object_with_properties::label.assign(label);
+	combinatorial_object_with_properties::label = label;
+	combinatorial_object_with_properties::label_tex = label_tex;
 
 
 	actions::action_global Action_global;

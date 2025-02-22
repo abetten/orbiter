@@ -117,7 +117,7 @@ void schreier_sims::init(
 		cout << "schreier_sims::init "
 				"before G->init_trivial_group" << endl;
 	}
-	G->init_trivial_group(0 /*verbose_level*/);
+	G->init_trivial_group(verbose_level - 2);
 	if (f_v) {
 		cout << "schreier_sims::init "
 				"after G->init_trivial_group" << endl;
@@ -611,7 +611,7 @@ void schreier_sims::create_group(
 					"calling strip:" << endl;
 		}
 		if (G->strip(Elt1, Elt2, drop_out_level,
-				image, verbose_level - 2)) {
+				image, 0 /*verbose_level - 2*/)) {
 			if (f_vv) {
 				cout << "schreier_sims::create_group: "
 						"element strips through" << endl;

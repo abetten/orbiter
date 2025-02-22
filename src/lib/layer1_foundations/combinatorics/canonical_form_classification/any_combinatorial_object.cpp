@@ -91,7 +91,8 @@ void any_combinatorial_object::print_brief(
 		std::ostream &ost)
 {
 
-	cout << "any_combinatorial_object: set_as_string: " << set_as_string << endl;
+	cout << "any_combinatorial_object: "
+			"set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
 		Lint_vec_print(ost, set, sz);
@@ -367,21 +368,23 @@ void any_combinatorial_object::print_tex(
 			ost << "\\\\" << endl;
 		}
 
-		combinatorics::other_combinatorics::combinatorics_domain Combi;
+		//combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+		combinatorics::design_theory::design_theory_global Design;
 
 		ost << "Large set: \\\\" << endl;
 
-		Combi.report_large_set(
+		Design.report_large_set(
 				ost, set, nb_designs,
 				v, design_k, design_sz, verbose_level);
 
 		if (v <= 10) {
-			Combi.report_large_set_compact(
+			Design.report_large_set_compact(
 					ost, set, nb_designs,
 					v, design_k, design_sz, verbose_level);
 		}
 
-		#if 0
+#if 0
 		int j, h;
 		int a;
 		int *the_block;
@@ -409,15 +412,6 @@ void any_combinatorial_object::print_tex(
 		FREE_int(the_block);
 #endif
 
-#if 0
-		object_with_canonical_form::set = NEW_lint(data_sz);
-		Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
-		object_with_canonical_form::sz = data_sz;
-		object_with_canonical_form::v = v;
-		object_with_canonical_form::b = data_sz;
-		object_with_canonical_form::design_k = k;
-		object_with_canonical_form::design_sz = design_sz;
-#endif
 
 	}
 	else if (type == t_MMX) {
@@ -802,7 +796,8 @@ void any_combinatorial_object::init_packing_from_spread_table(
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
-		cout << "any_combinatorial_object::init_packing_from_spread_table Sos:" << endl;
+		cout << "any_combinatorial_object::init_packing_from_spread_table "
+				"Sos:" << endl;
 		SoS->print_table();
 	}
 
@@ -821,7 +816,8 @@ void any_combinatorial_object::init_packing_from_spread_table(
 						"not a packing, spreads "
 						<< i << " and " << j << " meet in "
 						<< M[i * SoS->nb_sets + j] << " lines" << endl;
-				cout << "any_combinatorial_object::init_packing_from_spread_table Sos:" << endl;
+				cout << "any_combinatorial_object::init_packing_from_spread_table "
+						"Sos:" << endl;
 				SoS->print_table();
 				exit(1);
 
@@ -903,7 +899,8 @@ void any_combinatorial_object::init_design_from_block_orbits(
 		len = Block_orbits->Set_size[h];
 		l = len / k;
 		if (l * k != len) {
-			cout << "any_combinatorial_object::init_design_from_block_orbits l * k != len" << endl;
+			cout << "any_combinatorial_object::init_design_from_block_orbits "
+					"l * k != len" << endl;
 			exit(1);
 		}
 		for (a = 0; a < l; a++, j++) {
@@ -1005,7 +1002,8 @@ void any_combinatorial_object::init_incidence_geometry(
 		cout << "any_combinatorial_object::init_incidence_geometry" << endl;
 	}
 	if (nb_flags != data_sz) {
-		cout << "any_combinatorial_object::init_incidence_geometry nb_flags != data_sz" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry "
+				"nb_flags != data_sz" << endl;
 	}
 	any_combinatorial_object::P = NULL;
 	type = t_INC;
@@ -1029,7 +1027,8 @@ void any_combinatorial_object::init_incidence_geometry_from_vector(
 		cout << "any_combinatorial_object::init_incidence_geometry" << endl;
 	}
 	if (nb_flags != Flags.size()) {
-		cout << "any_combinatorial_object::init_incidence_geometry nb_flags != Flags.size()" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry "
+				"nb_flags != Flags.size()" << endl;
 	}
 
 	any_combinatorial_object::P = NULL;
@@ -1106,7 +1105,8 @@ void any_combinatorial_object::init_incidence_geometry_from_string_of_row_ranks(
 	Lint_vec_scan(data, row_ranks, data_sz);
 
 	if (v != data_sz) {
-		cout << "any_combinatorial_object::init_incidence_geometry_from_string v != data_sz" << endl;
+		cout << "any_combinatorial_object::init_incidence_geometry_from_string "
+				"v != data_sz" << endl;
 	}
 
 	flags = NEW_lint(v * r);
@@ -1151,7 +1151,8 @@ void any_combinatorial_object::init_large_set(
 	}
 
 	if (data_sz != b) {
-		cout << "any_combinatorial_object::init_large_set data_sz != b" << endl;
+		cout << "any_combinatorial_object::init_large_set "
+				"data_sz != b" << endl;
 		exit(1);
 	}
 	any_combinatorial_object::P = NULL;
@@ -1330,6 +1331,9 @@ void any_combinatorial_object::init_graph_by_adjacency_matrix(
 void any_combinatorial_object::init_graph_by_object(
 		combinatorics::graph_theory::colored_graph *CG,
 		int verbose_level)
+// A graph is converted into an incidence geometry
+// with v points and nb_edges lines of size 2.
+// The flags of the incidence geometry are stored.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1340,7 +1344,8 @@ void any_combinatorial_object::init_graph_by_object(
 	int N, nb_edges;
 
 	if (f_v) {
-		cout << "any_combinatorial_object::init_graph_by_object CG->nb_points = " << CG->nb_points << endl;
+		cout << "any_combinatorial_object::init_graph_by_object "
+				"CG->nb_points = " << CG->nb_points << endl;
 	}
 
 
@@ -1349,7 +1354,8 @@ void any_combinatorial_object::init_graph_by_object(
 	nb_edges = CG->get_nb_edges(0 /*verbose_level */);
 
 	if (f_v) {
-		cout << "any_combinatorial_object::init_graph_by_object nb_edges = " << nb_edges << endl;
+		cout << "any_combinatorial_object::init_graph_by_object "
+				"nb_edges = " << nb_edges << endl;
 	}
 
 	long int *flags;
@@ -1382,7 +1388,8 @@ void any_combinatorial_object::init_graph_by_object(
 	any_combinatorial_object::b = nb_edges;
 
 	if (f_v) {
-		cout << "any_combinatorial_object::init_graph_by_object v=" << v << " b=" << b << endl;
+		cout << "any_combinatorial_object::init_graph_by_object "
+				"v=" << v << " b=" << b << endl;
 	}
 
 	FREE_lint(flags);
@@ -1391,6 +1398,103 @@ void any_combinatorial_object::init_graph_by_object(
 		cout << "any_combinatorial_object::init_graph_by_object done" << endl;
 	}
 }
+
+
+void any_combinatorial_object::init_incidence_structure_from_design_object(
+		combinatorics::design_theory::design_object *Design_object,
+		int verbose_level)
+// A design with v points and b blocks is converted into an incidence geometry
+// with 2 * v points and 2 + k * b blocks.
+// Two blocks have size v, and all remaining blocks have size 2.
+// The flags of this expanded incidence geometry are stored.
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object" << endl;
+	}
+
+	int v, b, k;
+
+
+
+	v = Design_object->v;
+	b = Design_object->b;
+	k = Design_object->k;
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object v = " << v << endl;
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object k = " << k << endl;
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object b = " << b << endl;
+	}
+
+
+	long int *flags;
+	int nb_flags;
+	int i, j, col, cur_flag;
+	int V, B;
+
+	nb_flags = v * 2 + 2 * k * b;
+	V = 2 * v;
+	B = 2 + k * b;
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object "
+				"nb_flags = " << nb_flags << endl;
+	}
+
+	flags = NEW_lint(nb_flags);
+	cur_flag = 0;
+	col = 0;
+	for (i = 0; i < v; i++) {
+		flags[cur_flag++] = i * B + col;
+	}
+	col++;
+	for (i = 0; i < v; i++) {
+		flags[cur_flag++] = (v + i) * B + col;
+	}
+	col++;
+	for (j = 0; j < b; j++) {
+		for (i = 0; i < v; i++) {
+			if (Design_object->incma[i * b + j]) {
+				flags[cur_flag++] = i * B + col;
+				flags[cur_flag++] = (v + j) * B + col;
+				col++;
+			}
+		}
+	}
+	if (col != B) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object "
+				"col != B" << endl;
+		cout << "col=" << col << endl;
+		cout << "B=" << B << endl;
+		exit(1);
+	}
+	if (cur_flag != nb_flags) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object "
+				"cur_flag != nb_flags" << endl;
+		exit(1);
+	}
+	any_combinatorial_object::P = NULL;
+	type = t_INC;
+	any_combinatorial_object::set = NEW_lint(nb_flags);
+	Lint_vec_copy(flags, any_combinatorial_object::set, nb_flags);
+	any_combinatorial_object::sz = nb_flags;
+	any_combinatorial_object::v = V;
+	any_combinatorial_object::b = B;
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object "
+				"V=" << V << " B=" << B << endl;
+	}
+
+	FREE_lint(flags);
+
+	if (f_v) {
+		cout << "any_combinatorial_object::init_incidence_structure_from_design_object done" << endl;
+	}
+}
+
 
 
 void any_combinatorial_object::init_multi_matrix(
@@ -1412,7 +1516,8 @@ void any_combinatorial_object::init_multi_matrix(
 	Lint_vec_scan(data2, entries2, nb_entries2);
 
 	if (nb_entries1 != 3) {
-		cout << "any_combinatorial_object::init_multi_matrix nb_entries1 != 3" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix "
+				"nb_entries1 != 3" << endl;
 		exit(1);
 	}
 
@@ -1425,13 +1530,17 @@ void any_combinatorial_object::init_multi_matrix(
 	any_combinatorial_object::n = entries1[1];
 	any_combinatorial_object::max_val = entries1[2];
 	if (f_v) {
-		cout << "any_combinatorial_object::init_multi_matrix m = " << m << endl;
-		cout << "any_combinatorial_object::init_multi_matrix n = " << n << endl;
-		cout << "any_combinatorial_object::init_multi_matrix max_val = " << max_val << endl;
+		cout << "any_combinatorial_object::init_multi_matrix "
+				"m = " << m << endl;
+		cout << "any_combinatorial_object::init_multi_matrix "
+				"n = " << n << endl;
+		cout << "any_combinatorial_object::init_multi_matrix "
+				"max_val = " << max_val << endl;
 	}
 
 	if (nb_entries2 != m + n + m * n) {
-		cout << "any_combinatorial_object::init_multi_matrix nb_entries2 != m + n + m * n" << endl;
+		cout << "any_combinatorial_object::init_multi_matrix "
+				"nb_entries2 != m + n + m * n" << endl;
 		exit(1);
 	}
 
@@ -1469,7 +1578,8 @@ void any_combinatorial_object::init_multi_matrix_from_data(
 
 	if (f_v) {
 		cout << "any_combinatorial_object::init_multi_matrix_from_data "
-				"m=" << m << " n=" << n << " max_val=" << max_val << endl;
+				"m=" << m << " n=" << n
+				<< " max_val=" << max_val << endl;
 	}
 
 	if (f_v) {
@@ -2331,10 +2441,12 @@ void any_combinatorial_object::encode_multi_matrix(
 	for (i = 0; i < m; i++) {
 		a = set[i];
 		if (f_v) {
-			cout << "any_combinatorial_object::encode_multi_matrix i=" << i << " a=" << a << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix "
+					"i=" << i << " a=" << a << endl;
 		}
 		if (a > max_val) {
-			cout << "any_combinatorial_object::encode_multi_matrix a > max_val" << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix "
+					"a > max_val" << endl;
 			exit(1);
 		}
 		Enc->set_incidence(i * nb_cols + i);
@@ -2345,10 +2457,12 @@ void any_combinatorial_object::encode_multi_matrix(
 	for (i = 0; i < n; i++) {
 		a = set[m + i];
 		if (f_v) {
-			cout << "any_combinatorial_object::encode_multi_matrix i=" << i << " a=" << a << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix "
+					"i=" << i << " a=" << a << endl;
 		}
 		if (a > max_val) {
-			cout << "any_combinatorial_object::encode_multi_matrix a > max_val" << endl;
+			cout << "any_combinatorial_object::encode_multi_matrix "
+					"a > max_val" << endl;
 			exit(1);
 		}
 		Enc->set_incidence((m + i) * nb_cols + m + i);

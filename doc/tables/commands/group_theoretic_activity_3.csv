@@ -3,14 +3,13 @@ ROW,C1,C2,C3
 1,"Group theoretic activities (Part 3)",,
 1,"\verb'-order_of_products' ","  $g_1 \ldots g_n$ ","Computes the orders of all products $g_ig_j$, $1 \le i,j \le n.$ Writes a table with these orders to file."
 1,"\verb'-reverse_isomorphism_exterior_square' ","  ","Given a set of generators of a subgroup of $\PGO^+(6,q)$ as $6\times 6$ matrixes, the command computes the inverse image of the generators in $\PGL(4,q)$ (if possible)."
+1,"\verb'-reverse_isomorphism_exterior_' \verb'square_vector_of_ge' "," vector  ","applies reverse isomorphism exterior square to all elements in the given vector object."
 1,"\verb'-is_subgroup_of' ","  ","This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It tests if $G_1$ is a subgroup of $G_2$."
 1,"\verb'-coset_reps' ","  ","This function is applied to two groups, say $G_1$ and $G_2$, using the syntax \verb'-with G1 -and G2'. It assumes that $G_1$ is a subgroup of $G_2$. The command produces a set of coset representatives for $G_1$ in $G_2$."
 1,"\verb'-subgroup_lattice' ","  ","Computes the subgroup lattice of the given group. A csv file containing the subgroup lattice is written."
 1,"\verb'-subgroup_lattice_load' "," fname ","Reads a previously computed subgroup lattice from the csv file."
 1,"\verb'-subgroup_lattice_draw_by_orbits' "," options ","Produces a drawing of the subgroup lattice in terms of the conjugacy classes of subgroups. Each node represents one conjugacy class of subgroups. Uses the given draw options. "
 1,"\verb'-subgroup_lattice_draw_by_groups' "," options ","Produces a drawing of the subgroup lattice in terms of subgroups. Each node represents one single subgroup. Uses the given draw options. "
-1,"\verb'-linear_codes' "," control $d$ $n_{\max}$ ","Classify linear codes with prescribed minimum distance $d$. Assumes that the group is $\PGL(r,q)$ or $\PGGL(r,q).$ For each $n \le n_{\max}$, the $[n,k, \ge d]$ codes are classified with $n-k=r$. See Section~\ref{sec:coding}."
-1,"\verb'-tensor_permutations' ","  "," Computes the permutation representation of the generators of the wreath product. "
-1,"\verb'-classify_ovoids' "," descr "," "
-1,"\verb'-representation_on_polynomials' "," R ","Computes the representation of the built-in generating set of the present group in the action on homogeneous polynomials as defined in the ring R. This function assumes a linear group."
+1,"\verb'-subgroup_lattice_' \verb'intersection_orbit_orbit' "," orb1 orb2 "," Intersect all groups of orbit 1 with groups of orbit 2."
+1,"\verb'-subgroup_lattice_' \verb'find_overgroup_in_orbit' "," orb1global gidx orb2global "," Find the group on orb2global which normalizes the group gidx in orb1global. "
 END
