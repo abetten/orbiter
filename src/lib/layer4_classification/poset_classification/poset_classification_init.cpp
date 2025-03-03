@@ -296,7 +296,6 @@ void poset_classification::initialize_and_allocate_root_node(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "poset_classification::initialize_and_allocate_root_node" << endl;
@@ -314,7 +313,7 @@ void poset_classification::initialize_and_allocate_root_node(
 	// !!!
 	//f_allowed_to_show_group_elements = true;
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_classification::initialize_and_allocate_root_node "
 				"before init_internal" << endl;
 	}
@@ -322,12 +321,20 @@ void poset_classification::initialize_and_allocate_root_node(
 		Poset,
 		depth,
 		verbose_level - 2);
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_classification::initialize_and_allocate_root_node "
 				"after init_internal" << endl;
 	}
 	
+	if (f_v) {
+		cout << "poset_classification::initialize_and_allocate_root_node "
+				"before Poo->init_root_node" << endl;
+	}
 	Poo->init_root_node(verbose_level - 1);
+	if (f_v) {
+		cout << "poset_classification::initialize_and_allocate_root_node "
+				"after Poo->init_root_node" << endl;
+	}
 
 
 	if (f_v) {

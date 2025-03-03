@@ -58,7 +58,8 @@ gl_classes::~gl_classes()
 
 void gl_classes::init(
 		int k,
-		algebra::field_theory::finite_field *F, int verbose_level)
+		algebra::field_theory::finite_field *F,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d;
@@ -211,6 +212,7 @@ void gl_classes::make_matrix_from_class_rep(
 	if (f_v) {
 		cout << "gl_classes::make_matrix_from_class_rep" << endl;
 	}
+
 	Select = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
 	Int_vec_zero(Select, Table_of_polynomials->nb_irred);
@@ -720,11 +722,12 @@ loop2:
 
 void gl_classes::identify_matrix(
 		int *Mtx,
-		gl_class_rep *R, int *Basis, int verbose_level)
+		gl_class_rep *R, int *Basis, int *Rational_normal_form,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *M2;
-	int *M3;
+	//int *M3;
 	//int *Basis;
 	int *Basis_inv;
 	int *Mult;
@@ -742,7 +745,7 @@ void gl_classes::identify_matrix(
 	}
 
 	M2 = NEW_int(k * k);
-	M3 = NEW_int(k * k);
+	//M3 = NEW_int(k * k);
 	//Basis = NEW_int(k * k);
 	Basis_inv = NEW_int(k * k);
 	Mult = NEW_int(Table_of_polynomials->nb_irred);
@@ -757,8 +760,16 @@ void gl_classes::identify_matrix(
 		U.create_object_by_rank(
 				char_poly, 0, verbose_level - 2);
 
+		if (f_v) {
+			cout << "gl_classes::identify_matrix "
+					"before U.characteristic_polynomial" << endl;
+		}
 		U.characteristic_polynomial(
 				Mtx, k, char_poly, verbose_level - 2);
+		if (f_v) {
+			cout << "gl_classes::identify_matrix "
+					"after U.characteristic_polynomial" << endl;
+		}
 
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
@@ -821,6 +832,12 @@ void gl_classes::identify_matrix(
 
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
+					"Basis = " << endl;
+			Int_matrix_print(Basis, k, k);
+		}
+
+		if (f_v) {
+			cout << "gl_classes::identify_matrix "
 					"before R->init" << endl;
 		}
 		R->init(Table_of_polynomials->nb_irred,
@@ -836,18 +853,24 @@ void gl_classes::identify_matrix(
 				Basis, Basis_inv, k,
 				0 /* verbose_level */);
 
+		if (f_v) {
+			cout << "gl_classes::identify_matrix "
+					"Basis_inv = " << endl;
+			Int_matrix_print(Basis_inv, k, k);
+		}
+
 		F->Linear_algebra->mult_matrix_matrix(
 				Basis_inv, Mtx, M2, k, k, k,
 				0 /* verbose_level */);
 
 		F->Linear_algebra->mult_matrix_matrix(
-				M2, Basis, M3, k, k, k,
+				M2, Basis, Rational_normal_form, k, k, k,
 				0 /* verbose_level */);
 
 		if (f_v) {
 			cout << "gl_classes::identify_matrix "
 					"B^-1 * A * B = " << endl;
-			Int_matrix_print(M3, k, k);
+			Int_matrix_print(Rational_normal_form, k, k);
 			cout << endl;
 		}
 
@@ -857,7 +880,7 @@ void gl_classes::identify_matrix(
 	}
 
 	FREE_int(M2);
-	FREE_int(M3);
+	//FREE_int(M3);
 	//FREE_int(Basis);
 	FREE_int(Basis_inv);
 	FREE_int(Mult);

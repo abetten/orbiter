@@ -10,7 +10,7 @@ ROW,C1,C2,C3
 1,"\verb'-list_of_blocks_coded' "," v k L  "," Create a design on $v$ points and with block size $k$ from the coded list of sets L.  "
 1,"\verb'-list_of_sets_coded' "," v label  "," Create a design on $v$ points and with block codes in the list L.  "
 1,"\verb'-list_of_blocks_coded_from_file' "," v k file  ","  Create a design on $v$ points and with block size $k$ from the coded list of sets read from the given file. "
-1,"\verb'-list_of_blocks_from_file' "," v fname  ","  Create a design on $v$ points and with block codes in the given file.  "
+1,"\verb'-list_of_blocks_from_file' "," v fname column ","  Create a design on $v$ points and with blocks from the given column in the given file.  "
 1,"\verb'-wreath_product_designs' "," n k  "," Create a class of designs with wreath product action.  "
 1,"\verb'-linear_space_from_latin_square' "," matrix  ","  Create a linear space associated with a Latin Square given as matrix. The matrix must be an Orbiter object of type vector. "
 1,"\verb'-orbit_on_sets' "," Orbit sz idx  ","  Create a design from an orbit on subsets. Orbit must be a subset classification object. The orbit selected is given by its local index (idx) among the orbits on subsets of size sz. "

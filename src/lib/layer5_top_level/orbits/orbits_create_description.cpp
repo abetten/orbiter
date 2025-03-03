@@ -21,8 +21,13 @@ namespace orbits {
 orbits_create_description::orbits_create_description()
 {
 	Record_birth();
+
 	f_group = false;
 	//std::string group_label;
+
+	// ToDo: undocumented
+	f_group_action = false;
+	//std::string group_action_label;
 
 	f_on_points = false;
 
@@ -99,6 +104,13 @@ int orbits_create_description::read_arguments(
 			group_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-group " << group_label << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-group_action") == 0) {
+			f_group_action = true;
+			group_action_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-group_action " << group_action_label << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-on_points") == 0) {
@@ -293,6 +305,9 @@ void orbits_create_description::print()
 {
 	if (f_group) {
 		cout << "-group " << group_label << endl;
+	}
+	if (f_group_action) {
+		cout << "-group_action " << group_action_label << endl;
 	}
 	if (f_on_points) {
 		cout << "-on_points" << endl;

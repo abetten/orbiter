@@ -62,13 +62,16 @@ public:
 			int verbose_level);
 	void report(
 			groups::sims *override_sims,
+			std::string &label,
 			std::string &label_latex,
 			int verbose_level);
 	void export_csv(
 			groups::sims *override_sims,
 			int verbose_level);
 	void report_classes(
-			std::ofstream &ost, int verbose_level);
+			std::ostream &ost, int verbose_level);
+	void report_summary_table(
+			std::ostream &ost, int verbose_level);
 	void export_csv(
 			int verbose_level);
 

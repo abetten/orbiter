@@ -429,6 +429,7 @@ public:
 	int *ELT1, *ELT2, *ELT3;
 	int *M1;
 	int *Basis1, *Basis2;
+	int *Rational_normal_form1, *Rational_normal_form2;
 
 	algebra::linear_algebra::gl_class_rep *R1, *R2;
 
@@ -572,6 +573,7 @@ public:
 	int *base_cols;
 	int *M1;
 	int *Basis;
+	int *Rational_normal_form;
 	algebra::linear_algebra::gl_class_rep *R1;
 
 
@@ -911,6 +913,7 @@ public:
 	int *ELT1, *ELT2, *ELT3;
 	int *M1;
 	int *Basis;
+	int *Rational_normal_form;
 	int *basis_tmp;
 	int *base_cols;
 	algebra::linear_algebra::gl_class_rep *R1;

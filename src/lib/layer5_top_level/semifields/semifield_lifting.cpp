@@ -62,6 +62,7 @@ semifield_lifting::semifield_lifting()
 	base_cols = NULL;
 	M1 = NULL;
 	Basis = NULL;
+	Rational_normal_form = NULL;
 	R1 = NULL;
 
 }
@@ -106,6 +107,10 @@ semifield_lifting::~semifield_lifting()
 	if (Basis) {
 		FREE_int(Basis);
 	}
+	if (Rational_normal_form) {
+		FREE_int(Rational_normal_form);
+	}
+
 	if (basis_tmp) {
 		FREE_int(basis_tmp);
 	}
@@ -158,6 +163,7 @@ void semifield_lifting::init_level_three(
 
 	M1 = NEW_int(n * n);
 	Basis = NEW_int(k * k);
+	Rational_normal_form = NEW_int(k * k);
 	basis_tmp = NEW_int(k * k2);
 	base_cols = NEW_int(k2);
 
@@ -1976,7 +1982,7 @@ void semifield_lifting::trace_to_level_two(
 	L2->C->identify_matrix(
 			input_basis + 1 * k2,
 			R1,
-			Basis,
+			Basis, Rational_normal_form,
 			0 /* verbose_level */);
 
 	idx = L2->C->find_class_rep(L2->R,

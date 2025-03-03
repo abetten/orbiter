@@ -20,6 +20,8 @@ namespace user_interface {
 interface_cryptography::interface_cryptography()
 {
 	Record_birth();
+
+
 	//cout << "interface_cryptography::interface_cryptography" << endl;
 	//cout << "sizeof(interface_cryptography)=" << sizeof(interface_cryptography) << endl;
 
@@ -47,32 +49,19 @@ interface_cryptography::interface_cryptography()
 	//std::string key;
 	//cout << "interface_cryptography::interface_cryptography 00e" << endl;
 
-	f_RSA = false;
-	RSA_d = 0;
-	RSA_m = 0;
-	//RSA_text = NULL;
-	//cout << "interface_cryptography::interface_cryptography 00f" << endl;
-
-	f_RSA_setup = false;
-	RSA_setup_nb_bits = 0;
-	RSA_setup_nb_tests_solovay_strassen = 0;
-	RSA_setup_f_miller_rabin_test = 0;
-
-	f_RSA_encrypt_text = false;
-	RSA_block_size = 0;
-	//RSA_encrypt_text = NULL;
-
-	f_sift_smooth = false;
-	sift_smooth_from = 0;
-	sift_smooth_len = 0;
-	//cout << "interface_cryptography::interface_cryptography 1" << endl;
-	//sift_smooth_factor_base = NULL;
 
 	f_quadratic_sieve = false;
 	quadratic_sieve_n = 0;
 	quadratic_sieve_factorbase = 0;
 	quadratic_sieve_x0 = 0;
 	//cout << "interface_cryptography::interface_cryptography 1b" << endl;
+
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
+
 
 	f_solovay_strassen = false;
 	solovay_strassen_p = 0;
@@ -83,6 +72,12 @@ interface_cryptography::interface_cryptography()
 	miller_rabin_p = 0;
 	miller_rabin_nb_times = 0;
 	//cout << "interface_cryptography::interface_cryptography 1e" << endl;
+
+	// undocumented:
+	f_miller_rabin_text = false;
+	miller_rabin_text_nb_times = 0;
+	//miller_rabin_number_text = NULL;
+	//cout << "interface_cryptography::interface_cryptography 1h" << endl;
 
 	f_fermat_test = false;
 	fermat_test_p = 0;
@@ -98,10 +93,37 @@ interface_cryptography::interface_cryptography()
 
 	f_find_strong_pseudoprime = false;
 
-	f_miller_rabin_text = false;
-	miller_rabin_text_nb_times = 0;
-	//miller_rabin_number_text = NULL;
-	//cout << "interface_cryptography::interface_cryptography 1h" << endl;
+	f_RSA_encrypt_text = false;
+	RSA_block_size = 0;
+	//RSA_encrypt_text = NULL;
+
+	f_RSA = false;
+	RSA_d = 0;
+	RSA_m = 0;
+	//RSA_text = NULL;
+	//cout << "interface_cryptography::interface_cryptography 00f" << endl;
+
+	f_RSA_setup = false;
+	RSA_setup_nb_bits = 0;
+	RSA_setup_nb_tests_solovay_strassen = 0;
+	RSA_setup_f_miller_rabin_test = 0;
+
+
+
+
+
+
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+
+	f_sift_smooth = false;
+	sift_smooth_from = 0;
+	sift_smooth_len = 0;
+	//cout << "interface_cryptography::interface_cryptography 1" << endl;
+	//sift_smooth_factor_base = NULL;
+
 
 	f_random = false;
 	random_nb = 0;
@@ -163,26 +185,22 @@ void interface_cryptography::print_help(
 	else if (ST.stringcmp(argv[i], "-decipher_affine") == 0) {
 		cout << "-decipher_affine <ctext> <guess>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
-		cout << "-RSA <int : d> <int : m> <text>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
-		cout << "-RSA_encrypt_text <int : d> <int : m> <int : block_size> <text>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
-		cout << "-RSA_setup <int : nb_bits> <int : nb_tests_solovay_strassen> <int : f_miller_rabin_test>" << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
-		cout << "-sift_smooth <int : from> <int : ken> <string : factor_base>" << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		cout << "-quadratic_sieve <int : n> <string : factor_base> <int : x0>" << endl;
 	}
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
 		cout << "-solovay_strassen <int : a> <int : p>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-miller_rabin") == 0) {
 		cout << "-miller_rabin <int : p> <int : nb_times>" << endl;
+	}
+	// undocumented:
+	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
+		cout << "-miller_rabin_text <int : nb_times> <string : number>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-fermat_test") == 0) {
 		cout << "-fermat_test <int : p> <int : nb_times>" << endl;
@@ -193,8 +211,21 @@ void interface_cryptography::print_help(
 	else if (ST.stringcmp(argv[i], "-find_strong_pseudoprime") == 0) {
 		cout << "-find_strong_pseudoprime <int : nb_digits> <int : nb_fermat> <int : nb_miller_rabin>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
-		cout << "-miller_rabin_text <int : nb_times> <string : number>" << endl;
+	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
+		cout << "-RSA_encrypt_text <int : d> <int : m> <int : block_size> <text>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
+		cout << "-RSA <int : d> <int : m> <text>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
+		cout << "-RSA_setup <int : nb_bits> <int : nb_tests_solovay_strassen> <int : f_miller_rabin_test>" << endl;
+	}
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
+		cout << "-sift_smooth <int : from> <int : ken> <string : factor_base>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-random") == 0) {
 		cout << "-random <int : nb_times> <string : fname_csv>" << endl;
@@ -249,25 +280,23 @@ int interface_cryptography::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-decipher_affine") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
-		return true;
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		return true;
 	}
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
+
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-miller_rabin") == 0) {
+		return true;
+	}
+	// undocumented:
+	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-fermat_test") == 0) {
@@ -279,7 +308,20 @@ int interface_cryptography::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-find_strong_pseudoprime") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
+	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
+		return true;
+	}
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-random") == 0) {
@@ -389,48 +431,6 @@ void interface_cryptography::read_arguments(
 		ctext.assign(argv[++i]);
 		guess.assign(argv[++i]);
 	}
-	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
-		f_RSA = true;
-		RSA_d = ST.strtoi(argv[++i]);
-		RSA_m = ST.strtoi(argv[++i]);
-		RSA_block_size = ST.strtoi(argv[++i]);
-		RSA_text.assign(argv[++i]);
-		if (f_v) {
-			cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
-		f_RSA_encrypt_text = true;
-		RSA_d = ST.strtoi(argv[++i]);
-		RSA_m = ST.strtoi(argv[++i]);
-		RSA_block_size = ST.strtoi(argv[++i]);
-		RSA_encrypt_text.assign(argv[++i]);
-		if (f_v) {
-			cout << "-RSA_encrypt_text " << RSA_d << " "
-					<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
-		f_RSA_setup = true;
-		RSA_setup_nb_bits = ST.strtoi(argv[++i]);
-		RSA_setup_nb_tests_solovay_strassen = ST.strtoi(argv[++i]);
-		RSA_setup_f_miller_rabin_test = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-RSA_setup " << RSA_setup_nb_bits << " "
-					<< RSA_setup_nb_tests_solovay_strassen << " "
-					<< RSA_setup_f_miller_rabin_test << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
-		f_sift_smooth = true;
-		sift_smooth_from = ST.strtoi(argv[++i]);
-		sift_smooth_len = ST.strtoi(argv[++i]);
-		sift_smooth_factor_base = argv[++i];
-		if (f_v) {
-			cout << "-sift_smooth " << sift_smooth_from << " "
-					<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
-		}
-	}
 	else if (ST.stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		f_quadratic_sieve = true;
 		quadratic_sieve_n = ST.strtoi(argv[++i]);
@@ -441,6 +441,12 @@ void interface_cryptography::read_arguments(
 					<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
 		}
 	}
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
+
 	else if (ST.stringcmp(argv[i], "-solovay_strassen") == 0) {
 		f_solovay_strassen = true;
 		solovay_strassen_p = ST.strtoi(argv[++i]);
@@ -456,6 +462,17 @@ void interface_cryptography::read_arguments(
 		miller_rabin_nb_times = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-miller_rabin " << miller_rabin_p << " " << miller_rabin_nb_times << endl;
+		}
+	}
+	// undocumented:
+	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
+		f_miller_rabin_text = true;
+		miller_rabin_text_nb_times = ST.strtoi(argv[++i]);
+		miller_rabin_number_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-miller_rabin " << miller_rabin_text_nb_times
+					<< " " << miller_rabin_number_text
+					<< endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-fermat_test") == 0) {
@@ -491,14 +508,51 @@ void interface_cryptography::read_arguments(
 					<< endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-miller_rabin_text") == 0) {
-		f_miller_rabin_text = true;
-		miller_rabin_text_nb_times = ST.strtoi(argv[++i]);
-		miller_rabin_number_text.assign(argv[++i]);
+
+	else if (ST.stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
+		f_RSA_encrypt_text = true;
+		RSA_d = ST.strtoi(argv[++i]);
+		RSA_m = ST.strtoi(argv[++i]);
+		RSA_block_size = ST.strtoi(argv[++i]);
+		RSA_encrypt_text.assign(argv[++i]);
 		if (f_v) {
-			cout << "-miller_rabin " << miller_rabin_text_nb_times
-					<< " " << miller_rabin_number_text
-					<< endl;
+			cout << "-RSA_encrypt_text " << RSA_d << " "
+					<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-RSA") == 0) {
+		f_RSA = true;
+		RSA_d = ST.strtoi(argv[++i]);
+		RSA_m = ST.strtoi(argv[++i]);
+		RSA_block_size = ST.strtoi(argv[++i]);
+		RSA_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
+		}
+	}
+	else if (ST.stringcmp(argv[i], "-RSA_setup") == 0) {
+		f_RSA_setup = true;
+		RSA_setup_nb_bits = ST.strtoi(argv[++i]);
+		RSA_setup_nb_tests_solovay_strassen = ST.strtoi(argv[++i]);
+		RSA_setup_f_miller_rabin_test = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-RSA_setup " << RSA_setup_nb_bits << " "
+					<< RSA_setup_nb_tests_solovay_strassen << " "
+					<< RSA_setup_f_miller_rabin_test << endl;
+		}
+	}
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+	else if (ST.stringcmp(argv[i], "-sift_smooth") == 0) {
+		f_sift_smooth = true;
+		sift_smooth_from = ST.strtoi(argv[++i]);
+		sift_smooth_len = ST.strtoi(argv[++i]);
+		sift_smooth_factor_base = argv[++i];
+		if (f_v) {
+			cout << "-sift_smooth " << sift_smooth_from << " "
+					<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-random") == 0) {
@@ -563,32 +617,28 @@ void interface_cryptography::print()
 	if (f_decipher && t == affine) {
 		cout << "-decipher_affine " << ctext << " " << guess << endl;
 	}
-	if (f_RSA) {
-		cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
-	}
-	if (f_RSA_encrypt_text) {
-		cout << "-RSA_encrypt_text " << RSA_d << " "
-				<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
-	}
-	if (f_RSA_setup) {
-		cout << "-RSA_setup " << RSA_setup_nb_bits << " "
-				<< RSA_setup_nb_tests_solovay_strassen << " "
-				<< RSA_setup_f_miller_rabin_test << endl;
-	}
-	if (f_sift_smooth) {
-		cout << "-sift_smooth " << sift_smooth_from << " "
-				<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
-	}
 	if (f_quadratic_sieve) {
 		cout << "-quadratic_sieve " << quadratic_sieve_n << " "
 				<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
 	}
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
+
 	if (f_solovay_strassen) {
 		cout << "-solovay_strassen " << solovay_strassen_p << " "
 				<< solovay_strassen_a << endl;
 	}
 	if (f_miller_rabin) {
 		cout << "-miller_rabin " << miller_rabin_p << " " << miller_rabin_nb_times << endl;
+	}
+	// undocumented:
+	if (f_miller_rabin_text) {
+		cout << "-miller_rabin " << miller_rabin_text_nb_times
+				<< " " << miller_rabin_number_text
+				<< endl;
 	}
 	if (f_fermat_test) {
 		cout << "-fermat_test " << fermat_test_p << " " << fermat_test_nb_times << endl;
@@ -605,10 +655,27 @@ void interface_cryptography::print()
 				<< " " << find_pseudoprime_nb_miller_rabin
 				<< endl;
 	}
-	if (f_miller_rabin_text) {
-		cout << "-miller_rabin " << miller_rabin_text_nb_times
-				<< " " << miller_rabin_number_text
-				<< endl;
+
+	if (f_RSA_encrypt_text) {
+		cout << "-RSA_encrypt_text " << RSA_d << " "
+				<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
+	}
+	if (f_RSA) {
+		cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
+	}
+	if (f_RSA_setup) {
+		cout << "-RSA_setup " << RSA_setup_nb_bits << " "
+				<< RSA_setup_nb_tests_solovay_strassen << " "
+				<< RSA_setup_f_miller_rabin_test << endl;
+	}
+
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+	if (f_sift_smooth) {
+		cout << "-sift_smooth " << sift_smooth_from << " "
+				<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 	}
 	if (f_random) {
 		cout << "-random " << random_nb << " " << random_fname_csv << endl;
@@ -706,39 +773,6 @@ void interface_cryptography::worker(
 			//print_on_top(ptext, ctext);
 		}
 	}
-	else if (f_RSA) {
-
-		combinatorics::cryptography::cryptography_domain Crypto;
-
-		Crypto.do_RSA(RSA_d, RSA_m, RSA_block_size, RSA_text, verbose_level);
-	}
-	else if (f_RSA_encrypt_text) {
-
-		combinatorics::cryptography::cryptography_domain Crypto;
-
-		Crypto.do_RSA_encrypt_text(RSA_d, RSA_m, RSA_block_size,
-				RSA_encrypt_text, verbose_level);
-	}
-	else if (f_RSA_setup) {
-		combinatorics::cryptography::cryptography_domain Crypto;
-		algebra::ring_theory::longinteger_object n, p, q, a, b;
-
-		Crypto.RSA_setup(n, p, q, a, b,
-			RSA_setup_nb_bits,
-			RSA_setup_nb_tests_solovay_strassen,
-			RSA_setup_f_miller_rabin_test,
-			1 /*verbose_level */);
-	}
-	else if (f_sift_smooth) {
-
-		combinatorics::cryptography::cryptography_domain Crypto;
-
-		Crypto.do_sift_smooth(sift_smooth_from,
-				sift_smooth_len,
-				sift_smooth_factor_base, verbose_level);
-	}
-
-
 	else if (f_quadratic_sieve) {
 
 		combinatorics::cryptography::cryptography_domain Crypto;
@@ -748,6 +782,11 @@ void interface_cryptography::worker(
 				quadratic_sieve_x0,
 				verbose_level);
 	}
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
 	else if (f_solovay_strassen) {
 
 		combinatorics::cryptography::cryptography_domain Crypto;
@@ -759,6 +798,15 @@ void interface_cryptography::worker(
 		combinatorics::cryptography::cryptography_domain Crypto;
 
 		Crypto.do_miller_rabin(miller_rabin_p, miller_rabin_nb_times, verbose_level);
+	}
+	// undocumented:
+	else if (f_miller_rabin_text) {
+
+		combinatorics::cryptography::cryptography_domain Crypto;
+
+		Crypto.do_miller_rabin_text(
+				miller_rabin_number_text, miller_rabin_text_nb_times,
+				verbose_level);
 	}
 	else if (f_fermat_test) {
 
@@ -787,13 +835,41 @@ void interface_cryptography::worker(
 				find_pseudoprime_nb_miller_rabin,
 				verbose_level);
 	}
-	else if (f_miller_rabin_text) {
+	else if (f_RSA_encrypt_text) {
 
 		combinatorics::cryptography::cryptography_domain Crypto;
 
-		Crypto.do_miller_rabin_text(
-				miller_rabin_number_text, miller_rabin_text_nb_times,
-				verbose_level);
+		Crypto.do_RSA_encrypt_text(RSA_d, RSA_m, RSA_block_size,
+				RSA_encrypt_text, verbose_level);
+	}
+	else if (f_RSA) {
+
+		combinatorics::cryptography::cryptography_domain Crypto;
+
+		Crypto.do_RSA(RSA_d, RSA_m, RSA_block_size, RSA_text, verbose_level);
+	}
+	else if (f_RSA_setup) {
+		combinatorics::cryptography::cryptography_domain Crypto;
+		algebra::ring_theory::longinteger_object n, p, q, a, b;
+
+		Crypto.RSA_setup(n, p, q, a, b,
+			RSA_setup_nb_bits,
+			RSA_setup_nb_tests_solovay_strassen,
+			RSA_setup_f_miller_rabin_test,
+			1 /*verbose_level */);
+	}
+
+
+
+	// Section 10.1
+	// number_theoretic_commands.csv
+	else if (f_sift_smooth) {
+
+		combinatorics::cryptography::cryptography_domain Crypto;
+
+		Crypto.do_sift_smooth(sift_smooth_from,
+				sift_smooth_len,
+				sift_smooth_factor_base, verbose_level);
 	}
 	else if (f_random) {
 

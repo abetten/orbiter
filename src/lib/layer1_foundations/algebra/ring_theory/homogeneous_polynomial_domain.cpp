@@ -1311,7 +1311,7 @@ void homogeneous_polynomial_domain::print_monomial_latex_str(
 void homogeneous_polynomial_domain::print_equation(
 		std::ostream &ost, int *coeffs)
 {
-	std:string s;
+	std::string s;
 
 	s = stringify_equation(coeffs);
 	ost << s;

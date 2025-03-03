@@ -630,7 +630,7 @@ void algebra_global_with_action::create_subgroups(
 
 
 
-void algebra_global_with_action::classes_GL(
+void algebra_global_with_action::make_classes_GL(
 		algebra::field_theory::finite_field *F,
 		int d, int f_no_eigenvalue_one, int verbose_level)
 // called from interface_algebra
@@ -639,7 +639,7 @@ void algebra_global_with_action::classes_GL(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::classes_GL" << endl;
+		cout << "algebra_global_with_action::make_classes_GL" << endl;
 	}
 
 	algebra::linear_algebra::gl_classes C;
@@ -648,9 +648,25 @@ void algebra_global_with_action::classes_GL(
 	int i;
 
 
-	C.init(d, F, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"before C.init" << endl;
+	}
+	C.init(d, F, verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"after C.init" << endl;
+	}
 
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"before C.make_classes" << endl;
+	}
 	C.make_classes(R, nb_classes, f_no_eigenvalue_one, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"after C.make_classes" << endl;
+	}
 
 	actions::action *A;
 	algebra::ring_theory::longinteger_object Go;
@@ -662,12 +678,21 @@ void algebra_global_with_action::classes_GL(
 
 
 	A = NEW_OBJECT(actions::action);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"before A->Known_groups->init_projective_group" << endl;
+	}
 	A->Known_groups->init_projective_group(
 			d /* n */, F,
 			false /* f_semilinear */,
 			true /* f_basis */, true /* f_init_sims */,
 			nice_gens,
-			verbose_level);
+			verbose_level - 2);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"after A->Known_groups->init_projective_group" << endl;
+	}
+
 	FREE_OBJECT(nice_gens);
 	A->print_base();
 	A->group_order(Go);
@@ -675,8 +700,16 @@ void algebra_global_with_action::classes_GL(
 
 	actions::action *A_on_lines;
 
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"before A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
 	A_on_lines = A->Induced_action->induced_action_on_grassmannian(
 			2, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::make_classes_GL "
+				"after A->Induced_action->induced_action_on_grassmannian" << endl;
+	}
 
 	Mtx = NEW_int(d * d);
 	Elt = NEW_int(A->elt_size_in_int);
@@ -771,7 +804,7 @@ void algebra_global_with_action::classes_GL(
 
 	}
 	if (f_v) {
-		cout << "algebra_global_with_action::classes_GL "
+		cout << "algebra_global_with_action::make_classes_GL "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
@@ -794,7 +827,7 @@ void algebra_global_with_action::classes_GL(
 		L.foot(fp);
 	}
 	if (f_v) {
-		cout << "algebra_global_with_action::classes_GL "
+		cout << "algebra_global_with_action::make_classes_GL "
 				"Written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
 	}
@@ -807,65 +840,65 @@ void algebra_global_with_action::classes_GL(
 	FREE_OBJECT(A);
 	FREE_OBJECT(A_on_lines);
 	if (f_v) {
-		cout << "algebra_global_with_action::classes_GL done" << endl;
+		cout << "algebra_global_with_action::make_classes_GL done" << endl;
 	}
 }
 
 
-#if 0
-void algebra_global_with_action::do_normal_form(
-		int q, int d,
-		int f_no_eigenvalue_one, int *data, int data_sz,
+
+void algebra_global_with_action::compute_rational_normal_form(
+		algebra::field_theory::finite_field *F,
+		int d,
+		int *matrix_data,
+		int *Basis, int *Rational_normal_form,
 		int verbose_level)
-// ToDo: move this
-// not called from anywhere at all
+// matrix_data[d * d]
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form" << endl;
+		cout << "algebra_global_with_action::compute_rational_normal_form" << endl;
 	}
 
-	linear_algebra::gl_classes C;
-	linear_algebra::gl_class_rep *Reps;
+	algebra::linear_algebra::gl_classes C;
+	algebra::linear_algebra::gl_class_rep *Reps;
 	int nb_classes;
-	field_theory::finite_field *F;
-
-	F = NEW_OBJECT(field_theory::finite_field);
-	F->finite_field_init_small_order(q,
-			false /* f_without_tables */,
-			false /* f_compute_related_fields */,
-			0);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form "
+		cout << "algebra_global_with_action::compute_rational_normal_form "
 				"before C.init" << endl;
 	}
 	C.init(d, F, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form "
+		cout << "algebra_global_with_action::compute_rational_normal_form "
 				"after C.init" << endl;
 	}
 
+	int f_no_eigenvalue_one = false;
+
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form "
+		cout << "algebra_global_with_action::compute_rational_normal_form "
 				"before C.make_classes" << endl;
 	}
 	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one,
 			0 /*verbose_level*/);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form "
+		cout << "algebra_global_with_action::compute_rational_normal_form "
 				"after C.make_classes" << endl;
 	}
 
 
 
 	actions::action *A;
-	ring_theory::longinteger_object Go;
+	algebra::ring_theory::longinteger_object Go;
 	data_structures_groups::vector_ge *nice_gens;
 
 
 	A = NEW_OBJECT(actions::action);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"before A->Known_groups->init_projective_group" << endl;
+	}
 	A->Known_groups->init_projective_group(
 			d /* n */, F,
 			false /* f_semilinear */,
@@ -873,41 +906,71 @@ void algebra_global_with_action::do_normal_form(
 			true /* f_init_sims */,
 			nice_gens,
 			0 /*verbose_level*/);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"after A->Known_groups->init_projective_group" << endl;
+	}
+
 	FREE_OBJECT(nice_gens);
+
 	A->print_base();
 	A->group_order(Go);
 
 
 	int class_rep;
 
-	int *Elt, *Basis;
+	int *Elt;
 
 	Elt = NEW_int(A->elt_size_in_int);
-	Basis = NEW_int(d * d);
 
 	//go = Go.as_int();
 
-	cout << "Making element from data ";
-	Int_vec_print(cout, data, data_sz);
-	cout << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"Making element from data ";
+		Int_vec_print(cout, matrix_data, d * d);
+		cout << endl;
+	}
 
 	//A->Sims->element_unrank_int(elt_idx, Elt);
-	A->Group_element->make_element(Elt, data, verbose_level);
+	A->Group_element->make_element(Elt, matrix_data, verbose_level);
 
-	cout << "Looking at element:" << endl;
-	Int_matrix_print(Elt, d, d);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"Looking at element:" << endl;
+		Int_matrix_print(Elt, d, d);
+	}
 
 
-	linear_algebra::gl_class_rep *R1;
+	algebra::linear_algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(linear_algebra::gl_class_rep);
+	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
-	C.identify_matrix(Elt, R1, Basis, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"before C.identify_matrix" << endl;
+	}
+	C.identify_matrix(Elt, R1, Basis, Rational_normal_form, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"after C.identify_matrix" << endl;
+	}
 
-	class_rep = C.find_class_rep(Reps, nb_classes, R1,
-			0 /* verbose_level */);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"before C.find_class_rep" << endl;
+	}
+	class_rep = C.find_class_rep(
+			Reps, nb_classes, R1,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::compute_rational_normal_form "
+				"after C.find_class_rep" << endl;
+	}
 
-	cout << "class = " << class_rep << endl;
+	if (f_v) {
+		cout << "class = " << class_rep << endl;
+	}
 
 	FREE_OBJECT(R1);
 
@@ -915,16 +978,15 @@ void algebra_global_with_action::do_normal_form(
 
 
 	FREE_int(Elt);
-	FREE_int(Basis);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 	FREE_OBJECTS(Reps);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_normal_form done" << endl;
+		cout << "algebra_global_with_action::compute_rational_normal_form done" << endl;
 	}
 }
 
-
+#if 0
 void algebra_global_with_action::do_identify_one(
 		int q, int d,
 		int f_no_eigenvalue_one, int elt_idx,
@@ -4183,13 +4245,115 @@ void algebra_global_with_action::element_processing(
 		Any_group->order_of_products_of_pairs(
 				element_processing_descr->input_label,
 				Elements,
-				//element_data, nb_elements,
 				verbose_level);
 		if (f_v) {
 			cout << "algebra_global_with_action::element_processing "
 					"after Any_group->order_of_products_of_pairs" << endl;
 		}
 
+
+	}
+	else if (element_processing_descr->f_products_of_pairs) {
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"f_class_of_products_of_pairs" << endl;
+		}
+
+		data_structures_groups::vector_ge *Products;
+
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"before Any_group->products_of_pairs" << endl;
+		}
+		Any_group->products_of_pairs(
+				Elements,
+				Products,
+				verbose_level);
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"after Any_group->products_of_pairs" << endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = element_processing_descr->input_label + "_pairs.csv";
+
+		Products->save_csv(
+				fname, verbose_level);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"Written file " << fname << " of size "
+						<< Fio.file_size(fname) << endl;
+		}
+
+#if 0
+		groups::sims *Sims;
+		if (Any_group->Subgroup_sims == NULL) {
+			cout << "algebra_global_with_action::element_processing "
+					"Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = Any_group->Subgroup_sims;
+
+		long int *Elt_rk;
+		int i;
+		int nb_elements;
+
+		nb_elements = Products->len;
+
+		Elt_rk = NEW_lint(nb_elements);
+
+		for (i = 0; i < nb_elements; i++) {
+			Elt_rk[i] = Sims->element_rank_lint(
+					Products->ith(i));
+		}
+
+		int expand_by_go = 1000;
+		int *class_index;
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"before identify_elements_by_classes" << endl;
+		}
+		identify_elements_by_classes(
+				Sims,
+				Any_group,
+				expand_by_go,
+				Elt_rk, nb_elements,
+				class_index,
+				verbose_level);
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"after identify_elements_by_classes" << endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+
+		//string fname;
+
+		fname = element_processing_descr->input_label + "_class_of_products_of_pairs.csv";
+
+		Fio.Csv_file_support->int_matrix_write_csv(
+				fname, class_index, nb_elements, nb_elements);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"Written file " << fname << " of size "
+						<< Fio.file_size(fname) << endl;
+		}
+
+		FREE_int(class_index);
+		FREE_OBJECT(Products);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::element_processing "
+					"f_class_of_products_of_pairs done" << endl;
+		}
+#endif
 
 	}
 	else if (element_processing_descr->f_conjugate) {
@@ -4320,7 +4484,7 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 	G_gens = Any_group->Subgroup_gens;
 	G_sims = Any_group->Subgroup_sims;
 
-	int group_order, go_P, go_Q;
+	long int group_order, go_G, go_P, go_Q;
 
 	group_order = G_sims->group_order_lint();
 	if (f_v) {
@@ -4329,18 +4493,23 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 	}
 
 	if (P->Subgroup_sims == NULL) {
-		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure P->Subgroup_sims == NULL" << endl;
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"P->Subgroup_sims == NULL" << endl;
 		exit(1);
 	}
 	if (Q->Subgroup_sims == NULL) {
-		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure Q->Subgroup_sims == NULL" << endl;
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"Q->Subgroup_sims == NULL" << endl;
 		exit(1);
 	}
+	go_G = Any_group->Subgroup_sims->group_order_lint();
 	go_P = P->Subgroup_sims->group_order_lint();
 	go_Q = Q->Subgroup_sims->group_order_lint();
 
 
 	if (f_v) {
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"go_G = " << go_G << endl;
 		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
 				"go_P = " << go_P << endl;
 		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
@@ -4440,15 +4609,27 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 				"sz2 = " << sz2 << endl;
 	}
 
+	other::data_structures::set_of_sets *SoS;
+
+
+	SoS = NEW_OBJECT(other::data_structures::set_of_sets);
 
 	int *Intersection;
 	int j;
 	long int *v3;
+	int nb_sets = sz1 * sz2;
 
 	v3 = NEW_lint(group_order);
 
+
 	Intersection = NEW_int(sz1 * sz2);
 	Int_vec_zero(Intersection, sz1 * sz2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"computing Intersection" << endl;
+	}
+
 	for (i = 0; i < sz1; i++) {
 		for (j = 0; j < sz2; j++) {
 
@@ -4463,13 +4644,40 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 
 		}
 	}
-	FREE_lint(v3);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
 				"Intersection = " << endl;
 		Int_matrix_print(Intersection, sz1, sz2);
 	}
+
+	SoS->init_basic_with_Sz_in_int(
+			go_G,
+			nb_sets, Intersection, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"computing SoS" << endl;
+	}
+
+	for (i = 0; i < sz1; i++) {
+		for (j = 0; j < sz2; j++) {
+
+			int len3;
+
+			Sorting.lint_vec_intersect_sorted_vectors(
+					Orbits_P->Sets[i], go_P,
+					Orbits_Q->Sets[j], go_Q,
+					v3, len3);
+
+			Lint_vec_copy(v3, SoS->Sets[i * sz2 + j], len3);
+
+		}
+	}
+
+
+
+	FREE_lint(v3);
 
 	other::orbiter_kernel_system::file_io Fio;
 
@@ -4484,8 +4692,20 @@ void algebra_global_with_action::create_flag_transitive_incidence_structure(
 				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 	}
 
+	fname = Any_group->label + "_" + P->label + "_" + Q->label + "_intersection_sets.csv";
 
 
+	SoS->save_csv(
+			fname,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_flag_transitive_incidence_structure "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_OBJECT(SoS);
 	FREE_int(Intersection);
 
 	FREE_OBJECT(Orbits_P);
@@ -4812,8 +5032,12 @@ void algebra_global_with_action::create_set_stabilizer_subgroup(
 			cout << "algebra_global_with_action::create_set_stabilizer_subgroup "
 					"before Orbits_global.orbits_on_subsets" << endl;
 		}
+
+		// ToDo:
 		Orbits_global.orbits_on_subsets(
 				AG,
+				AG,
+				AG->Subgroup_gens,
 				Control,
 				PC,
 				the_set_sz,
@@ -5268,8 +5492,787 @@ void algebra_global_with_action::conjugacy_class_of(
 	}
 }
 
+void algebra_global_with_action::identify_subgroups_from_file(
+		groups::any_group *AG,
+		std::string &fname,
+		std::string &col_label,
+		int expand_go,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file" << endl;
+		cout << "algebra_global_with_action::identify_subgroups_from_file expand_go = " << expand_go << endl;
+	}
+
+	groups::sims *Sims;
+	interfaces::conjugacy_classes_of_subgroups *class_data;
+
+	if (AG->Subgroup_sims == NULL) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+
+	Sims = AG->Subgroup_sims;
 
 
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file "
+				"before AG->get_subgroup_lattice" << endl;
+	}
+
+	AG->get_subgroup_lattice(
+			Sims,
+			class_data,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file "
+				"after AG->get_subgroup_lattice" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file "
+				"before identify_groups_from_csv_file" << endl;
+	}
+	identify_groups_from_csv_file(
+			class_data,
+			Sims /* override_sims */,
+			AG,
+			expand_go,
+			fname,
+			col_label,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file "
+				"after identify_groups_from_csv_file" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_subgroups_from_file done" << endl;
+	}
+}
+
+
+
+void algebra_global_with_action::identify_groups_from_csv_file(
+		interfaces::conjugacy_classes_of_subgroups *Classes,
+		groups::sims *sims_G,
+		groups::any_group *Any_group,
+		int expand_by_go,
+		std::string &fname,
+		std::string &col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file" << endl;
+		cout << "algebra_global_with_action::identify_groups_from_csv_file expand_by_go = " << expand_by_go << endl;
+		cout << "algebra_global_with_action::identify_groups_from_csv_file fname = " << fname << endl;
+	}
+
+
+	classes_of_subgroups_expanded *Classes_of_subgroups_expanded;
+
+	Classes_of_subgroups_expanded = NEW_OBJECT(classes_of_subgroups_expanded);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"before Classes_of_subgroups_expanded->init" << endl;
+	}
+	Classes_of_subgroups_expanded->init(
+			Classes,
+			sims_G,
+			Any_group,
+			expand_by_go,
+			Any_group->label,
+			Any_group->label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"after Classes_of_subgroups_expanded->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"before Classes_of_subgroups_expanded->report" << endl;
+	}
+	Classes_of_subgroups_expanded->report(
+			Any_group->label,
+			Any_group->label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"after Classes_of_subgroups_expanded->report" << endl;
+	}
+
+
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::set_of_sets *SoS;
+
+	//SoS = NEW_OBJECT(other::data_structures::set_of_sets);
+
+
+	//int underlying_set_size = 0;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"before SoS->init_from_csv_file" << endl;
+	}
+#if 0
+	SoS->init_from_csv_file(
+			underlying_set_size,
+			fname,
+			verbose_level);
+#endif
+	Fio.Csv_file_support->read_column_and_parse(
+			fname, col_label,
+			SoS,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"after SoS->init_from_csv_file" << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = SoS->nb_sets;
+	nb_cols = 6;
+
+	Table = new std::string [nb_rows * nb_cols];
+
+	int i, h, idx;
+	int nb_sets = 0;
+	int nb_found = 0;
+
+	for (i = 0; i < SoS->nb_sets; i++) {
+
+		if (f_v) {
+			cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"identifying set " << i << " / " << SoS->nb_sets << endl;
+		}
+
+		if (SoS->Set_size[i] != expand_by_go) {
+			if (f_v) {
+				cout << "algebra_global_with_action::identify_groups_from_csv_file "
+					"skipping" << endl;
+			}
+			continue;
+		}
+
+
+		if (f_v) {
+			cout << "algebra_global_with_action::identify_groups_from_csv_file "
+					"The set " << i << " / " << SoS->nb_sets << " with number " << nb_sets << " is : ";
+			Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+			cout << endl;
+		}
+
+
+
+		int j;
+		int f_found;
+		int found_at_class_h, found_at_class_idx, found_at_group_idx;
+
+		f_found = false;
+		found_at_class_h = -1;
+		found_at_class_idx = -1;
+		found_at_group_idx = -1;
+
+		for (h = 0; h < Classes_of_subgroups_expanded->nb_idx; h++) {
+
+			idx = Classes_of_subgroups_expanded->Idx[h];
+
+			long int *Elements;
+			int class_sz;
+
+
+			//Elements = Classes_of_subgroups_expanded->Orbit_of_subgroups[h]->Elements_P;
+
+			class_sz = Classes_of_subgroups_expanded->Orbit_of_subgroups[h]->Orbits_P->used_length;
+			if (f_v) {
+				cout << "algebra_global_with_action::identify_groups_from_csv_file "
+						"The set " << i << " / " << SoS->nb_sets
+						<< " with number " << nb_sets << " is : ";
+				Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+				cout << " checking class " << h << " / " << Classes_of_subgroups_expanded->nb_idx << " = " << idx
+						<< " of size " << class_sz << endl;
+			}
+
+			for (j = 0; j < class_sz; j++) {
+
+				Elements = Classes_of_subgroups_expanded->Orbit_of_subgroups[h]->Orbits_P->Sets[j];
+
+				//int orbit_of_sets::find_set(
+				//		long int *new_set, int &pos, uint32_t &hash)
+
+				if (false) {
+					cout << "algebra_global_with_action::identify_groups_from_csv_file "
+							"The conjugate group " << j << " / " << class_sz << " is : ";
+					Lint_vec_print(cout, Elements, expand_by_go);
+					cout << endl;
+				}
+
+				if (Sorting.compare_sets_lint(
+						Elements, SoS->Sets[i], expand_by_go, expand_by_go) == 0) {
+					if (f_v) {
+						cout << "algebra_global_with_action::identify_groups_from_csv_file "
+								"The set " << i << " / " << SoS->nb_sets << " with number " << nb_sets << " is : ";
+						Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+						cout << " found in class " << h << " / " << Classes_of_subgroups_expanded->nb_idx << " = " << idx
+								<< " at position " << j << endl;
+					}
+					f_found = true;
+					found_at_class_h = h;
+					found_at_class_idx = idx;
+					found_at_group_idx = j;
+					break;
+				}
+			}
+			if (f_found) {
+				// no need to look at any further classes
+				break;
+			}
+
+		}
+
+		if (f_found) {
+			cout << "algebra_global_with_action::identify_groups_from_csv_file "
+					"The set " << i << " / " << SoS->nb_sets << " with number " << nb_sets << " is : ";
+			Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+			cout << " has been found at class " << found_at_class_idx
+					<< " and group index " << found_at_group_idx << endl;
+			nb_found++;
+		}
+		else {
+			cout << "algebra_global_with_action::identify_groups_from_csv_file "
+					"The set " << i << " / " << SoS->nb_sets << " with number " << nb_sets << " is : ";
+			Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+			cout << " has *not* been found" << endl;
+		}
+
+		Table[nb_sets * nb_cols + 0] = std::to_string(i);
+		Table[nb_sets * nb_cols + 1] = "\"" + Lint_vec_stringify(SoS->Sets[i], SoS->Set_size[i]) + "\"";
+		Table[nb_sets * nb_cols + 2] = std::to_string(f_found);
+		Table[nb_sets * nb_cols + 3] = std::to_string(found_at_class_h);
+		Table[nb_sets * nb_cols + 4] = std::to_string(found_at_class_idx);
+		Table[nb_sets * nb_cols + 5] = std::to_string(found_at_group_idx);
+
+
+		nb_sets++;
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file nb_sets in file = " << SoS->nb_sets << endl;
+		cout << "algebra_global_with_action::identify_groups_from_csv_file nb_sets of size " << expand_by_go << " = " << nb_sets << endl;
+		cout << "algebra_global_with_action::identify_groups_from_csv_file of these, nb_found = " << nb_found << endl;
+	}
+
+	std::string fname_identify;
+
+	fname_identify = Any_group->label + "_identify_order_" + std::to_string(expand_by_go) + ".csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "incidence";
+	Col_headings[1] = "subgroup";
+	Col_headings[2] = "f_found";
+	Col_headings[3] = "class_local";
+	Col_headings[4] = "class_global";
+	Col_headings[5] = "group_idx";
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_identify,
+			nb_sets, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file "
+				"written file " << fname_identify << " of size "
+				<< Fio.file_size(fname_identify) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+	FREE_OBJECT(SoS);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_groups_from_csv_file done" << endl;
+	}
+}
+
+void algebra_global_with_action::get_classses_expanded(
+		groups::sims *Sims,
+		groups::any_group *Any_group,
+		int expand_by_go,
+		classes_of_elements_expanded *&Classes_of_elements_expanded,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded" << endl;
+	}
+
+	interfaces::conjugacy_classes_and_normalizers *class_data;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"before AG->get_conjugacy_classes_of_elements" << endl;
+	}
+	Any_group->get_conjugacy_classes_of_elements(
+			Sims, class_data, verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"after AG->get_conjugacy_classes_of_elements" << endl;
+	}
+
+
+
+
+	//classes_of_elements_expanded *Classes_of_elements_expanded;
+
+	Classes_of_elements_expanded = NEW_OBJECT(classes_of_elements_expanded);
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"before Classes_of_elements_expanded->init" << endl;
+	}
+	Classes_of_elements_expanded->init(
+			class_data,
+			Sims,
+			Any_group,
+			expand_by_go,
+			Any_group->label,
+			Any_group->label_tex,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"after Classes_of_elements_expanded->init" << endl;
+	}
+
+
+	//FREE_OBJECT(class_data);
+	//FREE_OBJECT(Classes_of_elements_expanded);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded done" << endl;
+	}
+
+}
+
+void algebra_global_with_action::split_by_classes(
+		groups::sims *Sims,
+		groups::any_group *Any_group,
+		int expand_by_go,
+		std::string &fname,
+		std::string &col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes" << endl;
+	}
+
+	classes_of_elements_expanded *Classes_of_elements_expanded;
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"before get_classses_expanded" << endl;
+	}
+	get_classses_expanded(
+			Sims,
+			Any_group,
+			expand_by_go,
+			Classes_of_elements_expanded,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"after get_classses_expanded" << endl;
+	}
+
+
+
+	int nb_classes;
+
+	nb_classes = Classes_of_elements_expanded->Classes->nb_classes;
+
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::set_of_sets *SoS;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"before SoS->init_from_csv_file" << endl;
+	}
+	Fio.Csv_file_support->read_column_and_parse(
+			fname, col_label,
+			SoS,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"after SoS->init_from_csv_file" << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+
+
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = SoS->nb_sets;
+	nb_cols = 3 + nb_classes;
+
+	Table = new std::string [nb_rows * nb_cols];
+
+	int i;
+
+	int *First;
+
+	First = NEW_int(nb_classes);
+
+
+	// we assume that all classes have been expanded:
+	int j;
+	for (j = 0; j < nb_classes; j++) {
+		if (j == 0) {
+			First[j] = 0;
+		}
+		else {
+			First[j] = First[j - 1] + Classes_of_elements_expanded->Orbit_of_elements[j - 1]->orbit_length;
+		}
+	}
+
+	for (i = 0; i < SoS->nb_sets; i++) {
+
+
+		if (f_v) {
+			cout << "algebra_global_with_action::split_by_classes "
+					"The set " << i << " / " << SoS->nb_sets << " is : ";
+			Lint_vec_print(cout, SoS->Sets[i], SoS->Set_size[i]);
+			cout << endl;
+		}
+
+		long int *vec_combined;
+
+		vec_combined = NEW_lint(SoS->Set_size[i]);
+
+		std::vector<std::vector<long int>> V;
+
+		for (j = 0; j < nb_classes; j++) {
+			std::vector<long int> v;
+
+			V.push_back(v);
+		}
+
+		int h, idx;
+
+		for (h = 0; h < SoS->Set_size[i]; h++) {
+
+			long int a;
+			int f_found;
+
+			a = SoS->Sets[i][h];
+			f_found = false;
+
+			for (j = 0; j < nb_classes; j++) {
+				if (Sorting.lint_vec_search(
+						Classes_of_elements_expanded->Orbit_of_elements[j]->Table_of_elements,
+						Classes_of_elements_expanded->Orbit_of_elements[j]->orbit_length,
+						a, idx, 0 /*verbose_level*/)) {
+					V[j].push_back(idx);
+					f_found = true;
+					break;
+				}
+			}
+			if (!f_found) {
+				cout << "algebra_global_with_action::split_by_classes did not find element " << endl;
+			}
+
+		}
+
+		Table[i * nb_cols + 0] = std::to_string(i);
+		Table[i * nb_cols + 1] = "\"" + Lint_vec_stringify(SoS->Sets[i], SoS->Set_size[i]) + "\"";
+
+		int cur;
+
+		cur = 0;
+		for (j = 0; j < nb_classes; j++) {
+			long int *vec;
+			int len;
+
+			len = V[j].size();
+			vec = NEW_lint(len);
+			for (h = 0; h < len; h++) {
+				vec[h] = First[j] + V[j][h];
+			}
+			Lint_vec_copy(vec, vec_combined + cur, len);
+			cur += len;
+			FREE_lint(vec);
+		}
+		Table[i * nb_cols + 2] = "\"" + Lint_vec_stringify(vec_combined, SoS->Set_size[i]) + "\"";
+
+		for (j = 0; j < nb_classes; j++) {
+
+			long int *vec;
+			int len;
+
+			len = V[j].size();
+			vec = NEW_lint(len);
+			for (h = 0; h < len; h++) {
+				vec[h] = V[j][h];
+			}
+
+
+
+			Table[i * nb_cols + 3 + j] = "\"" + Lint_vec_stringify(vec, len) + "\"";
+
+			FREE_lint(vec);
+
+		}
+
+		FREE_lint(vec_combined);
+
+
+	}
+	FREE_int(First);
+
+
+	std::string fname_identify;
+
+	fname_identify = Any_group->label + "_split_by_classes_" + std::to_string(expand_by_go) + ".csv";
+
+	std::string *Col_headings;
+
+	Col_headings = new string [nb_cols];
+
+	Col_headings[0] = "line";
+	Col_headings[1] = "set";
+	Col_headings[2] = "set_out";
+
+	for (j = 0; j < nb_classes; j++) {
+		Col_headings[3 + j] = "C" + std::to_string(j);
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"nb_rows = " << nb_rows << endl;
+		cout << "algebra_global_with_action::split_by_classes "
+				"nb_cols = " << nb_cols << endl;
+	}
+
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname_identify,
+			nb_rows, nb_cols, Table,
+			Col_headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::split_by_classes "
+				"written file " << fname_identify << " of size "
+				<< Fio.file_size(fname_identify) << endl;
+	}
+
+	delete [] Col_headings;
+	delete [] Table;
+
+
+	FREE_OBJECT(SoS);
+	FREE_OBJECT(Classes_of_elements_expanded);
+
+
+}
+
+
+void algebra_global_with_action::identify_elements_by_classes(
+		groups::sims *Sims,
+		groups::any_group *Any_group_H,
+		groups::any_group *Any_group_G,
+		int expand_by_go,
+		std::string &fname, std::string &col_label,
+		int *&Class_index,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes" << endl;
+	}
+
+
+	classes_of_elements_expanded *Classes_of_elements_expanded;
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"before get_classses_expanded" << endl;
+	}
+	get_classses_expanded(
+			Sims,
+			Any_group_H,
+			expand_by_go,
+			Classes_of_elements_expanded,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"after get_classses_expanded" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::set_of_sets *SoS;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"before SoS->init_from_csv_file" << endl;
+	}
+	Fio.Csv_file_support->read_column_and_parse(
+			fname, col_label,
+			SoS,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"after SoS->init_from_csv_file" << endl;
+	}
+
+	int nb_elements;
+
+	nb_elements = SoS->nb_sets;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"nb_elements = " << nb_elements << endl;
+	}
+
+	other::data_structures::sorting Sorting;
+
+	Class_index = NEW_int(nb_elements);
+
+	int nb_classes;
+
+	nb_classes = Classes_of_elements_expanded->Classes->nb_classes;
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"nb_classes = " << nb_classes << endl;
+		cout << "algebra_global_with_action::identify_elements_by_classes "
+				"nb_expanded_classes = " << Classes_of_elements_expanded->nb_idx << endl;
+	}
+
+	int *Elt;
+	int *data;
+	int i, j, idx;
+	long int a;
+	int f_found;
+	int f_is_member;
+
+	Elt = NEW_int(Any_group_G->A->elt_size_in_int);
+	data = NEW_int(Any_group_G->A->make_element_size);
+
+
+	for (i = 0; i < nb_elements; i++) {
+
+		Lint_vec_copy_to_int(SoS->Sets[i], data, Any_group_G->A->make_element_size);
+
+		Any_group_G->A->Group_element->make_element(Elt, data, 0 /*verbose_level */);
+
+
+		algebra::ring_theory::longinteger_object rk;
+
+		if (f_v) {
+			cout << "algebra_global_with_action::identify_elements_by_classes "
+					"before Sims->test_membership_and_rank_element" << endl;
+		}
+		f_is_member = Sims->test_membership_and_rank_element(
+				rk, Elt, 0 /*verbose_level */);
+		if (f_v) {
+			cout << "algebra_global_with_action::identify_elements_by_classes "
+					"after Sims->test_membership_and_rank_element" << endl;
+		}
+
+
+		if (f_is_member) {
+
+			a = rk.as_lint();
+
+			f_found = false;
+
+			for (j = 0; j < Classes_of_elements_expanded->nb_idx; j++) {
+				if (Sorting.lint_vec_search(
+						Classes_of_elements_expanded->Orbit_of_elements[j]->Table_of_elements,
+						Classes_of_elements_expanded->Orbit_of_elements[j]->orbit_length,
+						a, idx, 0 /*verbose_level*/)) {
+					Class_index[i] = j;
+					f_found = true;
+					break;
+				}
+			}
+			if (!f_found) {
+				if (f_v) {
+					cout << "algebra_global_with_action::identify_elements_by_classes did not find element " << endl;
+				}
+				Class_index[i] = -2;
+				//exit(1);
+			}
+		}
+		else {
+			Class_index[i] = -1;
+		}
+
+	}
+
+	//other::orbiter_kernel_system::file_io Fio;
+	std::string new_col_label;
+
+	new_col_label= "class_idx";
+
+	string fname_out;
+
+	Fio.Csv_file_support->append_column_of_int(
+			fname, fname_out,
+			Class_index, nb_elements,
+			new_col_label,
+			verbose_level);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes written file "
+				<< fname_out << " of size " << Fio.file_size(fname_out) << endl;
+	}
+
+
+	FREE_OBJECT(Classes_of_elements_expanded);
+	FREE_OBJECT(SoS);
+	FREE_int(Elt);
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::identify_elements_by_classes done" << endl;
+	}
+}
 
 
 

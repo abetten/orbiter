@@ -35,6 +35,8 @@ element_processing_description::element_processing_description()
 
 	f_order_of_products_of_pairs = false;
 
+	f_products_of_pairs = false;
+
 	f_conjugate = false;
 	//std::string conjugate_data;
 
@@ -99,6 +101,12 @@ int element_processing_description::read_arguments(
 				cout << "-order_of_products_of_pairs " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-products_of_pairs") == 0) {
+			f_products_of_pairs = true;
+			if (f_v) {
+				cout << "-products_of_pairs " << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-conjugate") == 0) {
 			f_conjugate = true;
 			conjugate_data.assign(argv[++i]);
@@ -153,6 +161,9 @@ void element_processing_description::print()
 	}
 	if (f_order_of_products_of_pairs) {
 		cout << "-order_of_products_of_pairs " << endl;
+	}
+	if (f_products_of_pairs) {
+		cout << "-products_of_pairs " << endl;
 	}
 	if (f_conjugate) {
 		cout << "-conjugate " << conjugate_data << endl;

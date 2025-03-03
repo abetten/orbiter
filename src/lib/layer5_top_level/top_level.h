@@ -120,9 +120,13 @@ namespace apps_algebra {
 	class action_on_forms;
 	class algebra_global_with_action;
 	class character_table_burnside;
+	class classes_of_elements_expanded;
+	class classes_of_subgroups_expanded;
 	class element_processing_description;
 	class group_theoretic_activity_description;
 	class group_theoretic_activity;
+	class orbit_of_elements;
+	class orbit_of_subgroups;
 	class polynomial_ring_activity;
 	class vector_ge_activity_description;
 	class vector_ge_activity;

@@ -1759,8 +1759,14 @@ void create_graph::make_orbital_graph(
 		cout << "create_graph::make_orbital_graph "
 				"before Orbits.orbits_on_subsets" << endl;
 	}
+	// ToDo:
 	Orbits.orbits_on_subsets(
-			AG, Control, PC, 2, verbose_level);
+			AG,
+			AG,
+			AG->Subgroup_gens,
+			Control,
+			PC, 2,
+			verbose_level);
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph "
 				"after Orbits.orbits_on_subsets" << endl;

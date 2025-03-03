@@ -211,14 +211,16 @@ public:
 			int verbose_level);
 	// this is related to Betten, Topalova, Zhelezova 2021,
 	// packings in PG(3,4) invariant under an elementary abelian group of order 4
-	void classes_GL(
+	void make_classes_GL(
 			algebra::field_theory::finite_field *F,
 			int d, int f_no_eigenvalue_one, int verbose_level);
-#if 0
-	void do_normal_form(
-			int q, int d,
-			int f_no_eigenvalue_one, int *data, int data_sz,
+	void compute_rational_normal_form(
+			algebra::field_theory::finite_field *F,
+			int d,
+			int *matrix_data,
+			int *Basis, int *Rational_normal_form,
 			int verbose_level);
+#if 0
 	void do_identify_one(
 			int q, int d,
 			int f_no_eigenvalue_one, int elt_idx,
@@ -410,6 +412,48 @@ public:
 			int verbose_level);
 	// uses orbits_schreier::orbit_of_sets
 	// needs Subgroup_sims to set up action by conjugation
+	void identify_subgroups_from_file(
+			groups::any_group *AG,
+			std::string &fname,
+			std::string &col_label,
+			int expand_go,
+			int verbose_level);
+	void identify_groups_from_csv_file(
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			std::string &fname,
+			std::string &col_label,
+			int verbose_level);
+	void get_classses_expanded(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			classes_of_elements_expanded *&Classes_of_elements_expanded,
+			int verbose_level);
+	void split_by_classes(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			std::string &fname,
+			std::string &col_label,
+			int verbose_level);
+	void identify_elements_by_classes(
+			groups::sims *Sims,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			long int *Elt_rk, int nb_elements,
+			int *&class_index,
+			int verbose_level);
+	void identify_elements_by_classes(
+			groups::sims *Sims,
+			groups::any_group *Any_group_H,
+			groups::any_group *Any_group_G,
+			int expand_by_go,
+			std::string &fname, std::string &col_label,
+			int *&Class_index,
+			int verbose_level);
 
 
 };
@@ -502,6 +546,105 @@ public:
 
 };
 
+
+
+// #############################################################################
+// classes_of_elements_expanded.cpp
+// #############################################################################
+
+//! Expanded list of conjugacy classes of elements which includes the orbits
+
+class classes_of_elements_expanded {
+
+public:
+
+	interfaces::conjugacy_classes_and_normalizers *Classes;
+	groups::sims *sims_G;
+	groups::any_group *Any_group;
+	int expand_by_go;
+	std::string label;
+	std::string label_latex;
+
+	int *Idx;
+	int nb_idx;
+
+	actions::action *A_conj;
+
+	orbit_of_elements **Orbit_of_elements; // [nb_idx]
+
+
+
+	classes_of_elements_expanded();
+	~classes_of_elements_expanded();
+	void init(
+			interfaces::conjugacy_classes_and_normalizers *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			std::string &label,
+			std::string &label_latex,
+			int verbose_level);
+	void report(
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
+	void report2(
+			std::ostream &ost,
+			int verbose_level);
+
+
+};
+
+
+
+// #############################################################################
+// classes_of_subgroups_expanded.cpp
+// #############################################################################
+
+//! lattice of subgroups with classes of conjugate subgroups expanded
+
+class classes_of_subgroups_expanded {
+
+public:
+
+	interfaces::conjugacy_classes_of_subgroups *Classes;
+	groups::sims *sims_G;
+	groups::any_group *Any_group;
+	int expand_by_go;
+	std::string label;
+	std::string label_latex;
+
+	int *Idx;
+	int nb_idx;
+
+	//groups::sims *Sims_G;
+	actions::action *A_conj;
+
+	orbit_of_subgroups **Orbit_of_subgroups; // [nb_idx]
+
+
+
+	classes_of_subgroups_expanded();
+	~classes_of_subgroups_expanded();
+	void init(
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			groups::sims *sims_G,
+			groups::any_group *Any_group,
+			int expand_by_go,
+			std::string &label,
+			std::string &label_latex,
+			int verbose_level);
+	void report(
+			std::string &label,
+			std::string &label_tex,
+			int verbose_level);
+	void report2(
+			std::ostream &ost,
+			int verbose_level);
+
+};
+
+
 // #############################################################################
 // element_processing_description.cpp
 // #############################################################################
@@ -526,6 +669,9 @@ public:
 	int f_with_fix_structure;
 
 	int f_order_of_products_of_pairs;
+
+	// ToDo: undocumented
+	int f_products_of_pairs;
 
 	int f_conjugate;
 	std::string conjugate_data;
@@ -570,6 +716,10 @@ public:
 	int f_generators;
 
 	int f_elements;
+
+	// ToDo: undocumented
+	int f_select_elements;
+	std::string select_elements_ranks;
 
 	int f_export_group_table;
 
@@ -665,11 +815,28 @@ public:
 	// Magma:
 	int f_classes;
 
+	int f_split_by_classes;
+	std::string split_by_classes_fname;
+	std::string split_by_classes_column;
+
+	int f_identify_elements_by_class;
+	std::string identify_elements_by_class_fname;
+	std::string identify_elements_by_class_column;
+	int identify_elements_by_class_expand_go;
+	std::string identify_elements_by_class_supergroup;
+
 	int f_subgroup_lattice_magma;
 
-	// undocumented:
+	int f_identify_subgroups_from_file;
+	std::string identify_subgroups_from_file_fname;
+	std::string identify_subgroups_from_file_col_label;
+	int identify_subgroups_from_expand_go;
+
+
+	// undocumented (too specialized):
 	int f_find_subgroup;
 	int find_subgroup_order;
+
 
 	//int f_test_if_geometric;
 	//int test_if_geometric_depth;
@@ -711,6 +878,10 @@ public:
 	int f_rational_normal_form;
 	std::string rational_normal_form_input;
 
+
+	// TABLES/group_theoretic_activity_3.tex
+
+
 	int f_find_conjugating_element;
 	std::string find_conjugating_element_element_from;
 	std::string find_conjugating_element_element_to;
@@ -721,10 +892,6 @@ public:
 	std::string group_of_automorphisms_by_images_of_generators_elements;
 	std::string group_of_automorphisms_by_images_of_generators_images;
 
-
-
-
-	// TABLES/group_theoretic_activity_3.tex
 
 
 	int f_order_of_products;
@@ -870,6 +1037,84 @@ public:
 };
 
 
+// #############################################################################
+// orbit_of_elements.cpp
+// #############################################################################
+
+//! an orbit of elements representing a conjugacy class
+
+class orbit_of_elements {
+
+public:
+
+	interfaces::conjugacy_classes_and_normalizers *Class;
+
+
+	int idx;
+
+
+	long int go_P;
+	int *Element;
+	long int Element_rk;
+	long int *Elements_P;
+	orbits_schreier::orbit_of_sets *Orbits_P;
+
+	int orbit_length;
+	long int *Table_of_elements; // sorted
+
+
+	orbit_of_elements();
+	~orbit_of_elements();
+	void init(
+			groups::any_group *Any_group,
+			groups::sims *Sims_G,
+			actions::action *A_conj,
+			interfaces::conjugacy_classes_and_normalizers *Classes,
+			int idx,
+			int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// orbit_of_subgroups.cpp
+// #############################################################################
+
+//! an orbit of subgroups representing a conjugacy class
+
+class orbit_of_subgroups {
+
+public:
+
+	groups::conjugacy_class_of_subgroups *Class;
+
+
+	int idx;
+
+
+	long int go_P;
+	groups::sims *Sims_P;
+	long int *Elements_P;
+	orbits_schreier::orbit_of_sets *Orbits_P;
+
+
+
+	orbit_of_subgroups();
+	~orbit_of_subgroups();
+	void init(
+			groups::any_group *Any_group,
+			groups::sims *Sims_G,
+			actions::action *A_conj,
+			interfaces::conjugacy_classes_of_subgroups *Classes,
+			int idx,
+			int verbose_level);
+
+};
+
+
+
 
 // #############################################################################
 // polynomial_ring_activity.cpp
@@ -921,6 +1166,9 @@ public:
 
 	int f_report;
 
+	// ToDo undocumented:
+	int f_report_elements_coded;
+
 	int f_export_GAP;
 
 	int f_transform_variety;
@@ -937,6 +1185,8 @@ public:
 
 	int f_field_reduction;
 	int field_reduction_subfield_index;
+
+	int f_rational_canonical_form;
 
 
 

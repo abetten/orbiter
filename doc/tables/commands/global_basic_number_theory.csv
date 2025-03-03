@@ -1,6 +1,21 @@
 ROW,C1,C2,C3
 0,"tab:basic:number:theory",,
 1,"Basic Number Theory Commands",,
-1,"\verb'-draw_mod_n' "," options "," Draws the integers modulo $n$ on a circle. For possible options, see Table~\ref{tab:draw:mod:n}. "
+1,"\verb'-primitive_root' "," $p$ "," Computes a primitive root modulo $p$. "
+1,"\verb'-smallest_primitive_root' "," $p$ "," Computes the smallest primitive root modulo $p$. "
+1,"\verb'-smallest_primitive_root_interval' "," m1 m2 "," Computes the smallest primitive root modulo m for all $m$ with $m1 \le m \le m2$. "
+1,"\verb'-number_of_primitive_roots_interval' "," m1 m2 ","  Counts the number of primitive roots modulo m for all $m$ with $m1 \le m \le m2$. "
+1,"\verb'-inverse_mod' "," $a$ $p$ "," Computes the modular inverse of $a$ modulo $p$, i.e. an integer $b$ with $ab \equiv 1$ mod $p$. "
+1,"\verb'-extended_gcd' "," $a$ $b$ "," Computes integers $g,$ $u,$ and $v$ such that $g = \gcd(a,b) = ua + vb.$ "
+1,"\verb'-power_mod' "," $a$ $k$ $n$ "," Compute the power $a^k$ mod $n$. "
+1,"\verb'-discrete_log' "," $y$ $a$ $m$ "," Computes $x$ such that $a^x \equiv y$ mod $m$. Employs a brute force algorithm. "
+1,"\verb'-square_root' "," $n$ "," computes $\lfloor \sqrt{a} \rfloor$ over the integers. "
+1,"\verb'-square_root_mod' "," $a$ $p$ "," Computes an integer $b$ such that $b^2 \equiv a$ mod $p$. Here, $p$ must be a prime number. "
+1,"\verb'-all_square_roots_mod_n' "," $a$ $n$ "," Computes all integers $b$ such that $b^2 \equiv a$ mod $n$. "
+1,"\verb'-count_subprimitive' "," Q\_max H\_max "," Count subprimitive polynomials for $q \le Q\_max$ "
+1,"\verb'-order_of_q_mod_n' "," $q$ $n_{\min}$ $n_{\max}$ "," Computes the order ${\rm ord}(q,n)$ of $q$ modulo $n$ for all $n$ with $n_{\min} \le n \le n_{\max}$ for which $\gcd(n,q) = 1$. Also computes $\varphi(n)$ and $\varphi(n)/{\rm ord}(q,n)$. "
+1,"\verb'-eulerfunction_interval' "," n1 n2 "," Compute Euler's totient function $\varphi(n)$ for all n with $n1 \le n \le n2.$ "
+1,"\verb'-jacobi' "," $a$ $p$ "," Computes the Jacobi symbol $\left( \frac{a}{p} \right)$"
 1,"\verb'-Chinese_remainders' "," R M "," Solves a system of congruences with remainders R and moduli M. R and M must be vectors whose labels are given. "
+1,"\verb'-draw_mod_n' "," options "," Draws the integers modulo $n$ on a circle. For possible options, see Table~\ref{tab:draw:mod:n}. "
 END

@@ -200,11 +200,12 @@ void conjugacy_classes_of_subgroups::report(
 	int i;
 	other::orbiter_kernel_system::file_io Fio;
 
+#if 0
 	cout << "i : class_order_of_element : class_normalizer_order" << endl;
 	for (i = 0; i < nb_classes; i++) {
 		cout << i << " : " << endl;
 	}
-
+#endif
 
 
 	//other::data_structures::string_tools ST;
@@ -354,6 +355,8 @@ void conjugacy_classes_of_subgroups::report(
 	}
 }
 
+
+
 void conjugacy_classes_of_subgroups::export_csv(
 		groups::sims *override_sims,
 		int verbose_level)
@@ -435,6 +438,7 @@ void conjugacy_classes_of_subgroups::report_classes(
 	cout << "The conjugacy classes are:" << endl;
 	for (idx = 0; idx < nb_classes; idx++) {
 
+		ost << "\\section{Conjugacy class of subgroups " << idx << " / " << nb_classes << "}" << endl;
 
 		Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
 

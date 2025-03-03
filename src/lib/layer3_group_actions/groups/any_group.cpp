@@ -1352,6 +1352,38 @@ void any_group::all_elements(
 	}
 
 }
+
+void any_group::select_elements(
+		long int *Index_of_elements, int nb_elements,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::select_elements" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::select_elements "
+				"before Subgroup_sims->all_elements" << endl;
+	}
+	Subgroup_sims->select_elements(
+			Index_of_elements, nb_elements,
+			vec,
+			verbose_level);
+	if (f_v) {
+		cout << "any_group::select_elements "
+				"after Subgroup_sims->all_elements" << endl;
+	}
+
+	if (f_v) {
+		cout << "any_group::select_elements done" << endl;
+	}
+
+}
+
+
 void any_group::export_inversion_graphs(
 		std::string &fname, int verbose_level)
 {
@@ -2137,6 +2169,62 @@ void any_group::order_of_products_of_pairs(
 }
 
 
+void any_group::products_of_pairs(
+		data_structures_groups::vector_ge *Elements,
+		data_structures_groups::vector_ge *&Products,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_pairs" << endl;
+	}
+
+
+
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
+
+
+	Products = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Products->init(A, verbose_level);
+
+	Products->allocate(nb_elements * nb_elements, 0 /* verbose_level */);
+
+
+	int i, j;
+
+
+
+	for (i = 0; i < nb_elements; i++) {
+
+
+		for (j = 0; j < nb_elements; j++) {
+
+
+			A->Group_element->element_mult(
+					Elements->ith(i),
+					Elements->ith(j),
+					Products->ith(i * nb_elements + j), 0);
+
+
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_pairs done" << endl;
+	}
+}
+
+
+
+
+
 void any_group::conjugate(
 		std::string &label_of_elements,
 		std::string &conjugate_data,
@@ -2836,31 +2924,33 @@ void any_group::print()
 	A->print_info();
 }
 
-void any_group::classes(
+void any_group::get_conjugacy_classes_of_elements(
+		groups::sims *Sims,
+		interfaces::conjugacy_classes_and_normalizers *&class_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::classes" << endl;
+		cout << "any_group::get_conjugacy_classes_of_elements" << endl;
 	}
 
 
 
 	if (Subgroup_gens == NULL) {
-		cout << "any_group::classes Subgroup_gens == NULL" << endl;
+		cout << "any_group::get_conjugacy_classes_of_elements Subgroup_gens == NULL" << endl;
 		exit(1);
 	}
 
-	groups::sims *Sims;
-	interfaces::conjugacy_classes_and_normalizers *class_data;
+	//groups::sims *Sims;
+	//interfaces::conjugacy_classes_and_normalizers *class_data;
 
-	Sims = Subgroup_gens->create_sims(verbose_level);
+	//Sims = Subgroup_gens->create_sims(verbose_level);
 
 	interfaces::magma_interface Magma;
 
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"before Magma.get_conjugacy_classes_and_normalizers" << endl;
 	}
 	Magma.get_conjugacy_classes_and_normalizers(
@@ -2869,13 +2959,13 @@ void any_group::classes(
 			class_data,
 			verbose_level);
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"after Magma.get_conjugacy_classes_and_normalizers" << endl;
 	}
 
-
+#if 0
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"before class_data->report" << endl;
 	}
 	class_data->report(
@@ -2883,35 +2973,37 @@ void any_group::classes(
 			label_tex,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"after class_data->report" << endl;
 	}
 
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"before class_data->export_csv" << endl;
 	}
 	class_data->export_csv(
 			Sims,
 			verbose_level);
 	if (f_v) {
-		cout << "any_group::classes "
+		cout << "any_group::get_conjugacy_classes_of_elements "
 				"after class_data->export_csv" << endl;
 	}
 
 
 	FREE_OBJECT(class_data);
+#endif
 
 
 
-	FREE_OBJECT(Sims);
+	//FREE_OBJECT(Sims);
 
 
 	if (f_v) {
-		cout << "any_group::classes done" << endl;
+		cout << "any_group::get_conjugacy_classes_of_elements done" << endl;
 	}
 }
 
+#if 0
 void any_group::subgroup_lattice_magma(
 		int verbose_level)
 {
@@ -2987,6 +3079,63 @@ void any_group::subgroup_lattice_magma(
 
 	if (f_v) {
 		cout << "any_group::subgroup_lattice_magma done" << endl;
+	}
+}
+#endif
+
+
+void any_group::get_subgroup_lattice(
+		groups::sims *Sims,
+		interfaces::conjugacy_classes_of_subgroups *&class_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::get_subgroup_lattice" << endl;
+	}
+
+
+
+	if (Subgroup_gens == NULL) {
+		cout << "any_group::get_subgroup_lattice Subgroup_gens == NULL" << endl;
+		exit(1);
+	}
+
+
+	//Sims = Subgroup_sims;
+
+	//Sims = Subgroup_gens->create_sims(verbose_level);
+
+	interfaces::magma_interface Magma;
+
+
+	if (f_v) {
+		cout << "any_group::get_subgroup_lattice "
+				"before Magma.get_subgroup_lattice" << endl;
+	}
+
+	Magma.get_subgroup_lattice(
+			A, Sims,
+			label, label_tex,
+			class_data,
+			verbose_level);
+
+	if (f_v) {
+		cout << "any_group::get_subgroup_lattice "
+				"after Magma.get_subgroup_lattice" << endl;
+	}
+
+	f_has_class_data = true;
+
+
+
+
+	//FREE_OBJECT(Sims);
+
+
+	if (f_v) {
+		cout << "any_group::get_subgroup_lattice done" << endl;
 	}
 }
 
@@ -3071,6 +3220,49 @@ void any_group::get_generators(
 		cout << "any_group::get_generators done" << endl;
 	}
 }
+
+void any_group::get_elements(
+		data_structures_groups::vector_ge *&elements,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::get_elements" << endl;
+	}
+
+	long int go;
+
+	go = Subgroup_gens->group_order_as_lint();
+
+	elements = NEW_OBJECT(data_structures_groups::vector_ge);
+	elements->null();
+	elements->init(A, verbose_level);
+	if (f_v) {
+		cout << "any_group::get_elements "
+				"before vector_copy->allocate" << endl;
+	}
+	elements->allocate(go, verbose_level);
+	if (f_v) {
+		cout << "any_group::get_elements before loop" << endl;
+	}
+
+	long int i;
+
+	for (i = 0; i < go; i++) {
+		Subgroup_sims->element_unrank_lint(i, elements->ith(i));
+	}
+
+	if (f_v) {
+		cout << "any_group::get_elements after loop" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::get_elements done" << endl;
+	}
+}
+
 
 
 

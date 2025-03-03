@@ -27,6 +27,8 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_report = false;
 
+	f_report_elements_coded = false;
+
 	f_export_GAP = false;
 
 	f_transform_variety = false;
@@ -43,6 +45,8 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_field_reduction = false;
 	field_reduction_subfield_index = 0;
+
+	f_rational_canonical_form = false;
 
 }
 
@@ -69,6 +73,12 @@ int vector_ge_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_elements_coded") == 0) {
+			f_report_elements_coded = true;
+			if (f_v) {
+				cout << "-report_elements_coded " << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-export_GAP") == 0) {
@@ -116,6 +126,12 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-field_reduction " << field_reduction_subfield_index << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-rational_canonical_form") == 0) {
+			f_rational_canonical_form = true;
+			if (f_v) {
+				cout << "-rational_canonical_form " << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -142,6 +158,9 @@ void vector_ge_activity_description::print()
 	if (f_report) {
 		cout << "-report " << endl;
 	}
+	if (f_report_elements_coded) {
+		cout << "-report_elements_coded " << endl;
+	}
 	if (f_export_GAP) {
 		cout << "-export_GAP " << endl;
 	}
@@ -162,6 +181,9 @@ void vector_ge_activity_description::print()
 	}
 	if (f_field_reduction) {
 		cout << "-field_reduction " << field_reduction_subfield_index << endl;
+	}
+	if (f_rational_canonical_form) {
+		cout << "-rational_canonical_form " << endl;
 	}
 
 }

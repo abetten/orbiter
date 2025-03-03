@@ -16,5 +16,5 @@ ROW,C1,C2,C3
 1,"\verb'-export_codewords_by_weight' "," fname  ","  "
 1,"\verb'-export_genma' ","  fname ","  "
 1,"\verb'-export_checkma' "," fname  ","  "
-1,"\verb'-f_export_checkma_as_projective_set' "," fname  ","  "
+1,"\verb'-export_checkma_as_projective_set' "," fname  ","  "
 END

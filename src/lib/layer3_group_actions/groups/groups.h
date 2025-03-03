@@ -157,6 +157,10 @@ public:
 	void all_elements(
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
+	void select_elements(
+			long int *Index_of_elements, int nb_elements,
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
 	void export_inversion_graphs(
 			std::string &fname, int verbose_level);
 	void random_element(
@@ -199,6 +203,10 @@ public:
 			data_structures_groups::vector_ge *Elements,
 			//int *element_data, int nb_elements,
 			int verbose_level);
+	void products_of_pairs(
+			data_structures_groups::vector_ge *Elements,
+			data_structures_groups::vector_ge *&Products,
+			int verbose_level);
 	void conjugate(
 			std::string &label_of_elements,
 			std::string &conjugate_data,
@@ -236,12 +244,23 @@ public:
 			int intersection_size,
 			int verbose_level);
 	void print();
-	void classes(
+	void get_conjugacy_classes_of_elements(
+			groups::sims *Sims,
+			interfaces::conjugacy_classes_and_normalizers *&class_data,
 			int verbose_level);
+#if 0
 	void subgroup_lattice_magma(
+			int verbose_level);
+#endif
+	void get_subgroup_lattice(
+			groups::sims *Sims,
+			interfaces::conjugacy_classes_of_subgroups *&class_data,
 			int verbose_level);
 	void get_generators(
 			data_structures_groups::vector_ge *&gens,
+			int verbose_level);
+	void get_elements(
+			data_structures_groups::vector_ge *&elements,
 			int verbose_level);
 
 
@@ -295,8 +314,9 @@ public:
 		int verbose_level);
 	void single_class_data(
 			std::vector<std::string > &data, int verbose_level);
+	std::string class_label();
 	void report_single_class(
-			std::ofstream &ost, int verbose_level);
+			std::ostream &ost, int verbose_level);
 
 
 };
@@ -1414,6 +1434,8 @@ public:
 		// returns the index of the first base point 
 		// which is moved by a given generator. 
 		// previously called generator_depth
+	std::string stringify_base_images(
+			int gen_idx, int verbose_level);
 	int depth_in_stabilizer_chain(
 			int *elt, int verbose_level);
 		// returns the index of the first base point 
@@ -1421,6 +1443,7 @@ public:
 		// previously called generator_depth
 	void group_order(
 			algebra::ring_theory::longinteger_object &go);
+	std::string stringify_group_order();
 	void group_order_verbose(
 			algebra::ring_theory::longinteger_object &go,
 			int verbose_level);
@@ -1471,6 +1494,11 @@ public:
 			algebra::ring_theory::longinteger_object &a, int *elt);
 		// Computes the rank of the element in elt into a.
 		// uses eltrk1, eltrk2
+	int test_membership_and_rank_element(
+			algebra::ring_theory::longinteger_object &a, int *elt, int verbose_level);
+	// Computes the rank of the element in elt into a.
+	// uses eltrk1, eltrk2
+	// returns false if the element is not a member of the group
 	void element_unrank_lint(
 			long int rk, int *Elt, int verbose_level);
 	void element_unrank_lint(
@@ -1526,6 +1554,10 @@ public:
 			int orbit_idx, std::vector<int> &Orb,
 			int verbose_level);
 	void all_elements(
+			data_structures_groups::vector_ge *&vec,
+			int verbose_level);
+	void select_elements(
+			long int *Index_of_elements, int nb_elements,
 			data_structures_groups::vector_ge *&vec,
 			int verbose_level);
 	void all_elements_save_csv(

@@ -182,7 +182,7 @@ void table_of_irreducible_polynomials::init(
 				if (!is_irreducible(
 						poly, verbose_level)) {
 					cout << "table_of_irreducible_polynomials::init "
-							"polynomial " << i << " among "
+							"error: polynomial " << i << " among "
 							"the list of polynomials of degree " << d
 							<< " is not irreducible" << endl;
 					exit(1);

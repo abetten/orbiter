@@ -731,7 +731,9 @@ void orbits_global::orbits_on_points_from_generators(
 
 
 void orbits_global::orbits_on_subsets(
-		groups::any_group *AG,
+		groups::any_group *AG_base,
+		groups::any_group *AG_action,
+		groups::strong_generators *Subgroup_gens,
 		poset_classification::poset_classification_control *Control,
 		poset_classification::poset_classification *&PC,
 		int subset_size,
@@ -754,17 +756,17 @@ void orbits_global::orbits_on_subsets(
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"label=" << AG->label << endl;
+				"label=" << AG_action->label << endl;
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"A_base=" << endl;
-		AG->A_base->print_info();
+				"AG_base=" << endl;
+		AG_base->A->print_info();
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
-				"A=" << endl;
-		AG->A->print_info();
+				"AG_action=" << endl;
+		AG_action->A->print_info();
 	}
 	if (f_v) {
 		cout << "orbits_global::orbits_on_subsets "
@@ -772,7 +774,7 @@ void orbits_global::orbits_on_subsets(
 
 		algebra::ring_theory::longinteger_object go;
 
-		AG->Subgroup_gens->group_order(go);
+		Subgroup_gens->group_order(go);
 
 		cout << go << endl;
 	}
@@ -783,8 +785,8 @@ void orbits_global::orbits_on_subsets(
 				"before Poset->init_subset_lattice" << endl;
 	}
 	Poset->init_subset_lattice(
-			AG->A_base, AG->A,
-			AG->Subgroup_gens,
+			AG_base->A, AG_action->A,
+			Subgroup_gens,
 			verbose_level);
 
 	if (f_v) {
@@ -805,7 +807,7 @@ void orbits_global::orbits_on_subsets(
 				"before orbits_on_poset_post_processing" << endl;
 	}
 	orbits_on_poset_post_processing(
-			AG,
+			AG_base, AG_action,
 			PC, subset_size,
 			verbose_level);
 	if (f_v) {
@@ -868,7 +870,8 @@ void orbits_global::orbits_of_one_subset(
 
 
 void orbits_global::orbits_on_poset_post_processing(
-		groups::any_group *AG,
+		groups::any_group *AG_base,
+		groups::any_group *AG_action,
 		poset_classification::poset_classification *PC,
 		int depth,
 		int verbose_level)

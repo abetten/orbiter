@@ -1023,7 +1023,7 @@ void matrix_group_element::GL_unpack(
 			Elt[Matrix_group->n * Matrix_group->n + i] = get_digit(elt, Matrix_group->n, i);
 		}
 		if (Matrix_group->f_semilinear) {
-			Elt[Matrix_group->n * Matrix_group->n] = decode_frobenius(elt);
+			Elt[Matrix_group->n * Matrix_group->n + Matrix_group->n] = decode_frobenius(elt);
 		}
 	}
 	else if (Matrix_group->f_general_linear) {

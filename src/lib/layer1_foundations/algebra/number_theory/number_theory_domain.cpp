@@ -2600,6 +2600,87 @@ int number_theory_domain::get_prime_from_table(
 	return the_first_thousand_primes[idx];
 }
 
+void number_theory_domain::Chinese_remainders_text(
+		std::string &R_text,
+		std::string &M_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text" << endl;
+	}
+
+	long int *R;
+	int sz1;
+	long int *M;
+	int sz2;
+
+	Get_lint_vector_from_label(R_text, R, sz1, 0 /* verbose_level */);
+	Get_lint_vector_from_label(M_text, M, sz2, 0 /* verbose_level */);
+
+	std::vector<long int> Remainders;
+	std::vector<long int> Moduli;
+	int i;
+	long int x, Modulus;
+
+	if (sz1 != sz2) {
+		cout << "number_theory_domain::Chinese_remainders_text "
+				"remainders and moduli must have the same length" << endl;
+		exit(1);
+	}
+
+	for (i = 0; i < sz1; i++) {
+		Remainders.push_back(R[i]);
+		Moduli.push_back(M[i]);
+	}
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text "
+				"before Chinese_Remainders" << endl;
+	}
+	x = Chinese_Remainders(
+			Remainders,
+			Moduli, Modulus, verbose_level - 1);
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text "
+				"after Chinese_Remainders" << endl;
+	}
+
+
+	cout << "number_theory_domain::Chinese_remainders_text "
+			"The solution is " << x << " modulo " << Modulus << endl;
+
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object xl, Ml;
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text "
+				"before D.Chinese_Remainders" << endl;
+	}
+	D.Chinese_Remainders(
+			Remainders,
+			Moduli,
+			xl, Ml, verbose_level - 1);
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text "
+				"after D.Chinese_Remainders" << endl;
+	}
+
+	cout << "number_theory_domain::Chinese_remainders_text "
+			"The solution is " << xl << " modulo " << Ml
+			<< " (computed in longinteger)" << endl;
+
+	FREE_lint(R);
+	FREE_lint(M);
+
+	if (f_v) {
+		cout << "number_theory_domain::Chinese_remainders_text done" << endl;
+	}
+}
+
+
+
 long int number_theory_domain::Chinese_Remainders(
 		std::vector<long int> &Remainders,
 		std::vector<long int> &Moduli,
@@ -2658,6 +2739,9 @@ long int number_theory_domain::ChineseRemainder2(
 	x = a1 + k * p1;
 	return x;
 }
+
+
+
 
 
 void number_theory_domain::sieve(
@@ -3217,14 +3301,16 @@ int number_theory_domain::eulers_totient_function(
 		int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "number_theory_domain::eulers_totient_function" << endl;
+	}
+
 	int nb_primes, *primes, *exponents;
 	int i, p, e;
 	ring_theory::longinteger_domain D;
 	ring_theory::longinteger_object N, R, A, B, C;
 
-	if (f_v) {
-		cout << "number_theory_domain::eulers_totient_function" << endl;
-	}
 	N.create(n);
 	D.factor(N, nb_primes, primes, exponents, verbose_level);
 	R.create(1);
@@ -3259,6 +3345,12 @@ void number_theory_domain::do_jacobi(
 		long int jacobi_top,
 		long int jacobi_bottom, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "number_theory_domain::do_jacobi" << endl;
+	}
+
 	string fname;
 	string author;
 	string title;
@@ -3306,8 +3398,12 @@ void number_theory_domain::do_jacobi(
 
 	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
+	if (f_v) {
+		cout << "number_theory_domain::do_jacobi done" << endl;
+	}
 
 }
+
 
 void number_theory_domain::elliptic_curve_addition_table(
 		geometry::projective_geometry::projective_space *P2,
@@ -3315,22 +3411,29 @@ void number_theory_domain::elliptic_curve_addition_table(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, k;
-	int pi, pj, pk;
-	other::data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "number_theory_domain::elliptic_curve_addition_table" << endl;
 	}
+	int i, j, k;
+	int pi, pj, pk;
+	other::data_structures::sorting Sorting;
+
 	Table = NEW_int(nb_pts * nb_pts);
+
 	for (i = 0; i < nb_pts; i++) {
+
 		pi = Pts[i];
+
 		for (j = 0; j < nb_pts; j++) {
+
 			pj = Pts[j];
 			pk = elliptic_curve_addition(P2, A6, pi, pj,
 					0 /* verbose_level */);
+
 			if (!Sorting.int_vec_search(Pts, nb_pts, pk, k)) {
-				cout << "number_theory_domain::elliptic_curve_addition_table cannot find point pk" << endl;
+				cout << "number_theory_domain::elliptic_curve_addition_table "
+						"cannot find point pk" << endl;
 				cout << "i=" << i << " pi=" << pi << " j=" << j
 						<< " pj=" << pj << " pk=" << pk << endl;
 				cout << "Pts: ";
@@ -3353,6 +3456,11 @@ int number_theory_domain::elliptic_curve_addition(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+
+	if (f_v) {
+		cout << "number_theory_domain::elliptic_curve_addition" << endl;
+	}
+
 	int p1[3];
 	int p2[3];
 	int p3[3];
@@ -3361,10 +3469,6 @@ int number_theory_domain::elliptic_curve_addition(
 	int x3, y3, z3;
 	int a1, a2, a3, a4, a6;
 	int p3_rk;
-
-	if (f_v) {
-		cout << "number_theory_domain::elliptic_curve_addition" << endl;
-	}
 
 	a1 = A6[0];
 	a2 = A6[1];

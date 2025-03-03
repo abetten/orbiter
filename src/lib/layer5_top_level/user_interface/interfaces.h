@@ -247,6 +247,15 @@ public:
 
 class interface_algebra {
 
+
+
+
+
+
+
+	// Section 10.1
+	// TABLES/global_basic_number_theory.csv
+
 	int f_primitive_root;
 	std::string primitive_root_p;
 
@@ -292,12 +301,6 @@ class interface_algebra {
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
 
-	int f_character_table_symmetric_group;
-	int character_table_symmetric_group_n;
-
-	int f_make_A5_in_PSL_2_q;
-	int make_A5_in_PSL_2_q_q;
-
 	int f_order_of_q_mod_n;
 	int order_of_q_mod_n_q;
 	int order_of_q_mod_n_n_min;
@@ -307,13 +310,23 @@ class interface_algebra {
 	int eulerfunction_interval_n_min;
 	int eulerfunction_interval_n_max;
 
-	int f_young_symmetrizer;
-	int young_symmetrizer_n;
+	int f_jacobi;
+	long int jacobi_top;
+	long int jacobi_bottom;
 
-	int f_young_symmetrizer_sym_4;
+	int f_Chinese_remainders;
+	std::string Chinese_remainders_R;
+	std::string Chinese_remainders_M;
+
 
 	int f_draw_mod_n;
 	other::graphics::draw_mod_n_description *Draw_mod_n_description;
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
+
 
 	int f_power_function_mod_n;
 	int power_function_mod_n_k;
@@ -330,6 +343,11 @@ class interface_algebra {
 	std::string all_rational_normal_forms_finite_field_label;
 	int all_rational_normal_forms_d;
 
+	int f_compute_rational_normal_form;
+	std::string compute_rational_normal_form_field_label;
+	int compute_rational_normal_form_d;
+	std::string compute_rational_normal_form_data;
+
 	int f_eigenstuff;
 	std::string eigenstuff_finite_field_label;
 	int eigenstuff_n;
@@ -339,13 +357,24 @@ class interface_algebra {
 	int f_smith_normal_form;
 	std::string smith_normal_form_matrix;
 
-	int f_jacobi;
-	long int jacobi_top;
-	long int jacobi_bottom;
 
-	int f_Chinese_remainders;
-	std::string Chinese_remainders_R;
-	std::string Chinese_remainders_M;
+
+	// representation theory:
+	int f_character_table_symmetric_group;
+	int character_table_symmetric_group_n;
+
+	int f_young_symmetrizer;
+	int young_symmetrizer_n;
+
+	int f_young_symmetrizer_sym_4;
+
+
+
+	// global group theory:
+
+	int f_make_A5_in_PSL_2_q;
+	int make_A5_in_PSL_2_q_q;
+
 
 	int f_order_of_group_Anq;
 	int order_of_group_Anq_n;
@@ -388,6 +417,9 @@ public:
 
 
 class interface_coding_theory {
+
+	// Section 11.1
+	// TABLES/global_coding_theory.csv
 
 	int f_make_macwilliams_system;
 	int make_macwilliams_system_q;
@@ -462,6 +494,10 @@ public:
 
 class interface_combinatorics {
 
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
+
 	int f_random_permutation;
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
@@ -509,20 +545,21 @@ class interface_combinatorics {
 
 	int f_pentomino_puzzle;
 
+
+	// Section 12.1
+	// TABLES/combinatorics_2.csv
+
 #if 0
 	int f_regular_linear_space_classify;
 	apps_combinatorics::regular_linear_space_description *Rls_descr;
 #endif
 
-	int f_domino_portrait;
-	int domino_portrait_D;
-	int domino_portrait_s;
-	std::string domino_portrait_fname;
-	other::graphics::layered_graph_draw_options *domino_portrait_draw_options;
 
+	// undocumented:
 	int f_read_solutions_and_tally;
 	std::string read_solutions_and_tally_fname;
 	int read_solutions_and_tally_sz;
+
 
 	int f_make_elementary_symmetric_functions;
 	int make_elementary_symmetric_functions_n;
@@ -547,6 +584,7 @@ class interface_combinatorics {
 	combinatorics::geometry_builder::geometry_builder_description
 		*Geometry_builder_description;
 
+
 	int f_union;
 	std::string union_set_of_sets_fname;
 	std::string union_input_fname;
@@ -569,6 +607,14 @@ class interface_combinatorics {
 	std::string read_widor_fname;
 
 	int f_Kaempfer;
+
+	int f_domino_portrait;
+	int domino_portrait_D;
+	int domino_portrait_s;
+	std::string domino_portrait_fname;
+	other::graphics::layered_graph_draw_options *domino_portrait_draw_options;
+
+
 
 public:
 	interface_combinatorics();
@@ -609,6 +655,8 @@ typedef enum cipher_type cipher_type;
 
 class interface_cryptography {
 
+	// ToDo: undocumented:
+
 	int f_cipher;
 	cipher_type t;
 	int f_decipher;
@@ -624,29 +672,15 @@ class interface_cryptography {
 	std::string guess;
 	std::string key;
 
-	int f_RSA;
-	long int RSA_d;
-	long int RSA_m;
-	std::string RSA_text;
-
-	int f_RSA_setup;
-	int RSA_setup_nb_bits;
-	int RSA_setup_nb_tests_solovay_strassen;
-	int RSA_setup_f_miller_rabin_test;
-
-	int f_RSA_encrypt_text;
-	int RSA_block_size;
-	std::string RSA_encrypt_text;
-
-	int f_sift_smooth;
-	int sift_smooth_from;
-	int sift_smooth_len;
-	std::string sift_smooth_factor_base;
-
 	int f_quadratic_sieve;
 	int quadratic_sieve_n;
 	int quadratic_sieve_factorbase;
 	int quadratic_sieve_x0;
+
+
+	// Section 10.3
+	// TABLES/cryptography_1.csv
+
 
 	int f_solovay_strassen;
 	int solovay_strassen_p;
@@ -655,6 +689,11 @@ class interface_cryptography {
 	int f_miller_rabin;
 	int miller_rabin_p;
 	int miller_rabin_nb_times;
+
+	// ToDo: undocumented:
+	int f_miller_rabin_text;
+	int miller_rabin_text_nb_times;
+	std::string miller_rabin_number_text;
 
 	int f_fermat_test;
 	int fermat_test_p;
@@ -668,9 +707,33 @@ class interface_cryptography {
 
 	int f_find_strong_pseudoprime;
 
-	int f_miller_rabin_text;
-	int miller_rabin_text_nb_times;
-	std::string miller_rabin_number_text;
+
+	int f_RSA_encrypt_text;
+	int RSA_block_size;
+	std::string RSA_encrypt_text;
+
+	int f_RSA;
+	long int RSA_d;
+	long int RSA_m;
+	std::string RSA_text;
+
+	int f_RSA_setup;
+	int RSA_setup_nb_bits;
+	int RSA_setup_nb_tests_solovay_strassen;
+	int RSA_setup_f_miller_rabin_test;
+
+
+
+
+
+	// Section 10.1
+	// TABLES/number_theoretic_commands.csv
+
+
+	int f_sift_smooth;
+	int sift_smooth_from;
+	int sift_smooth_len;
+	std::string sift_smooth_factor_base;
 
 	int f_random;
 	int random_nb;
@@ -1286,6 +1349,10 @@ public:
 
 	std::string define_label;
 
+	// TABLES/aaa_orbiter_objects1.csv
+
+
+
 	int f_finite_field;
 	algebra::field_theory::finite_field_description
 		*Finite_field_description;
@@ -1384,6 +1451,8 @@ public:
 	//poset_classification::poset_classification_control
 	//	*packing_with_assumed_symmetry_choose_fixed_points_control;
 
+
+	// TABLES/aaa_orbiter_objects2.csv
 
 	int f_packing_long_orbits;
 	std::string packing_long_orbits_choose_fixed_points_label;

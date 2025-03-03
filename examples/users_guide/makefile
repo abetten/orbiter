@@ -1372,7 +1372,9 @@ NEUMAIER_GRAPH_16_1_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1
 
 NEUMAIER_GRAPH_16_2_ADJ="1,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,1,0,0,0,0,1,1,0,0,1,1,1,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,0,1,0,0,1,0,1,0,1,0,1,1,0,1,0,1,1,1,1,0,0,1,1,1,0,1,1,0,1,0,1,1,0,1,0,0,1,1,1,1,1,1,1"
 
-# Section 12.4 Classification of Configurations and Geometries
+
+
+# Section 12.5 Classification of Configurations and Geometries
 
 
 
@@ -1507,6 +1509,13 @@ DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1=-subgroup \
 
 DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1= -mask_label "mask1" -depth 5
 
+
+
+# Section 14.5: Design Theory - Flag transitive designs
+
+
+
+PRAEGER_DESIGN_45_12_3_GENS="1,1,0, 1,3,0, 1,51,0, 1,76,0, 2,0,0, 3,0,1, 16,0,0, 3,0,1"
 
 
 
@@ -5217,8 +5226,11 @@ test_5_2:
 	make PGL_4_5
 	make PGGL_3_4
 	make PGGL_3_8
+	make AGGL_1_4
+	make AGGL_1_8
 	make AGL_1_27
 	make AGGL_2_27
+	make AGGL_1_81
 	make SP_4_2
 	make PSP_4_4
 	make PGOp_4_2
@@ -5491,10 +5503,23 @@ PGGL_3_8:
 	$(OPEN) PGGL_3_8_report.pdf
 
 
+AGGL_1_4:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 4 -end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end
+
+
+AGGL_1_8:
+	$(ORBITER) -v 4 \
+		-define F -finite_field -q 8 -end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end
+
 
 
 AGL_1_27:
-	$(ORBITER) -v 2 \
+	$(ORBITER) -v 4 \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 \
 		-end \
@@ -5523,6 +5548,24 @@ AGGL_2_27:
 	$(OPEN) AGGL_2_27_report.pdf
 
 #The order of the group AGGL(2, 27) is 1117679472
+
+AGGL_1_81:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 \
+			-override_polynomial 89 \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-with AGGL -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end
+	$(PDFLATEX) AGGL_1_81_report.tex
+	$(OPEN) AGGL_1_81_report.pdf
+
 
 
 SP_4_2:
@@ -5967,9 +6010,12 @@ quaternion:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-print_elements_tex \
 			-report_group_table \
 			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
 		-end
 	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_report.tex
 	$(OPEN) SL_2_3_Subgroup_quaternion_8_report.pdf
@@ -5991,8 +6037,11 @@ cube_group:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-print_elements_tex \
 			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
 		-end
 	$(PDFLATEX) GL_3_3_Subgroup_cube_48_report.tex
 	$(OPEN) GL_3_3_Subgroup_cube_48_report.pdf
@@ -6009,8 +6058,11 @@ tetra_group:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-print_elements_tex \
 			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
 		-end
 	$(PDFLATEX) GL_3_3_Subgroup_tetra_12_report.tex
 	$(OPEN) GL_3_3_Subgroup_tetra_12_report.pdf
@@ -6030,8 +6082,11 @@ Hesse_group:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-print_elements_tex \
 			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-print_elements_tex \
 		-end
 	$(PDFLATEX) PGGL_3_4_Subgroup_Hesse_432_report.tex
 	$(OPEN) PGGL_3_4_Subgroup_Hesse_432_report.pdf
@@ -7257,6 +7312,7 @@ PGL_3_2_classes:
 #		-classes \
 
 
+
 PGL_4_2_classes_based_on_normal_form:
 	$(ORBITER) -v 3 \
 		-define G -linear_group -PGL 4 2 -end \
@@ -7444,17 +7500,18 @@ test_5_6:
 	make Hirschfeld_stab_subgroup_lattice_magma
 	make PGGL_2_4_classes
 	make PGLstar_3_2_classes
+	make PGL_4_2_classes
 	make PGL_3_11_classes
 	make PGL_7_2_classes
 	make PGL_8_2_classes
 	make Hirschfeld_stab_classes
 	make PGGL_2_4_cent_2A
-	#make Normalizer_of_H5
+	make Normalizer_of_H5
 	make PGGL_3_4_classes
 	make classes_PGGL_4_4
 	make classes_PGL_4_5
 	#make PGL_4_5_3B_class_again
-	#make Normalizer_of_Z22_in_PGL_2_9
+	make Normalizer_of_Z22_in_PGL_2_9
 	make PGOm_6_2_classes
 	make PGOm_6_2_Class_2A
 	#make PGOm_6_2_Class_2A_print
@@ -7585,6 +7642,16 @@ PGLstar_3_2_classes:
 			-classes \
 		-end
 
+PGL_4_2_classes:
+	$(ORBITER) -v 3 \
+		-define G -linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end
+	$(PDFLATEX) PGL_4_2_report_classes_of_elements.tex
+	$(OPEN) PGL_4_2_report_classes_of_elements.pdf
+
 
 
 PGL_3_11_classes:
@@ -7713,7 +7780,6 @@ Normalizer_of_H5:
 	$(PDFLATEX) Sym_13_Subgroup_H5_5_normalizer.tex
 	$(OPEN) Sym_13_Subgroup_H5_5_normalizer.pdf
 
-# ToDo: ! Missing $ inserted.
 
 
 
@@ -7956,6 +8022,7 @@ test_5_8:
 	make Higman_Sims_group_subgroup_lattice
 	make Higman_Sims_subgroup_176a
 	make Higman_Sims_subgroup_176b
+	make Butler12_PSP_6_2_conjugate
 
 
 U_3_3:
@@ -8172,6 +8239,50 @@ Higman_Sims_subgroup_176b:
 	$(PDFLATEX) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.tex
 	$(OPEN) Sym_100_Subgroup_HS_44352000_subgroup_by_lattice_586_report.pdf
 
+
+
+Butler12_PSP_6_2_conjugate:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGL 6 F \
+			-symplectic_group \
+		-end \
+		-assign gens -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-generators \
+		-end \
+		-define m1 -vector \
+			-permutation_matrix "0,2,4,1,3,5" \
+		-end \
+		-define m1t -vector \
+			-permutation_matrix_inverse "0,2,4,1,3,5" \
+		-end \
+		-define M1 -vector_ge \
+			-action G \
+			-vector_data m1 \
+		-end \
+		-define M1t -vector_ge \
+			-action G \
+			-vector_data m1t \
+		-end \
+		-assign gens2 -from \
+		-with gens -and M1t -do \
+		-vector_ge_activity \
+			-conjugate \
+		-end \
+		-with gens2 -do \
+		-vector_ge_activity \
+			-report \
+		-end
+	$(PDFLATEX) PGL_6_2_elements.tex
+	$(OPEN) PGL_6_2_elements.pdf
+
+# generates the symplectic group associated with the bilinear form 
+# whose gram matrix is 
+# 0 I
+# I 0
+# (only in characteristic two)
 
 
 
@@ -9476,8 +9587,8 @@ Op_6_2_orthogonal_reflections:
 				-print \
 			-end \
 		-end
-	pdflatex Op_6_2_orthogonal_reflections_elements.tex
-	open Op_6_2_orthogonal_reflections_elements.pdf
+	$(PDFLATEX) Op_6_2_orthogonal_reflections_elements.tex
+	$(OPEN) Op_6_2_orthogonal_reflections_elements.pdf
 
 
 
@@ -17368,12 +17479,175 @@ Neumaier_graph_25:
 
 
 ###############################################################################
-# Section 12.3: Combinatorial Linear Spaces
+# Section 12.3: Combinatorial Objects with Group
+
+SECTION_COMBINATORIAL_OBJECTS_WITH_GROUP:
+
+
+test_12_3:
+	make geo_10_3_Desargues_configuration_c
+	make Praeger_45_12_3_design_group
+
+
+
+geo_10_3_Desargues_configuration_c:
+	$(ORBITER) -v 10 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 \
+		-end \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines \
+			-output_to_inc_file \
+		-end \
+		-define C -combinatorial_object \
+			-label 10_3 "{\rm 10\\_3}" \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-nauty_control -end \
+			-end \
+		-end \
+		-assign Object7 -from \
+		-with C -do \
+		-combinatorial_object_activity \
+			-get_combo_with_group 7 \
+		-end \
+		-with Object7 -do \
+			-combo_activity \
+				-report \
+					-show_TDO \
+					-show_TDA \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
+				-end \
+		-end \
+		-print_symbols
+	$(PDFLATEX) 10_3_object7_report.tex
+	$(OPEN) 10_3_object7_report.pdf
+
+
+
+Praeger_45_12_3_design_group:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 \
+			-override_polynomial 89 \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-define G -linear_group -AGGL 1 F \
+			-subgroup_by_generators G 3240 \
+			8 $(PRAEGER_DESIGN_45_12_3_GENS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define v -vector \
+			-dense $(PRAEGER_DESIGN_45_12_3_GENS) \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define L -modified_group -from G \
+			-subgroup_by_lattice 43 \
+		-end \
+		-define R -modified_group -from G \
+			-subgroup_by_lattice 44 \
+		-end \
+		-with L -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with R -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-create_flag_transitive_geometry L R \
+		-end
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			AGGL_1_81_Subgroup_G_3240_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_43_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_44_intersection_size.csv \
+			Praeger_6.csv \
+			3,6,8 \
+			0,1,0
+	$(ORBITER) -v 8 \
+		-define Praeger_45 -vector \
+			-file Praeger_6.csv -format 45 \
+		-end \
+		-define D -design \
+			-from_incidence_matrix Praeger_45 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end
+	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label Praeger Praeger \
+			-file_of_incidence_geometries \
+				Praeger_45_flags.txt 45 45 540 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -end \
+			-end \
+		-end \
+		-assign Object -from \
+		-with C -do \
+		-combinatorial_object_activity \
+			-get_combo_with_group 0 \
+		-end \
+		-with Object -do \
+			-combo_activity \
+				-report \
+					-export_flag_orbits \
+					-show_incidence_matrices \
+					-show_TDO \
+					-show_TDA \
+					-export_group_GAP \
+					-dont_show_incidence_matrices \
+					-incidence_draw_options Doinc \
+				-end \
+		-end \
+		-assign A -from \
+		-with Object -do \
+			-combo_activity \
+				-get_group \
+		-end \
+		-print_symbols
+	#$(PDFLATEX) Praeger_object0_report.tex
+	#$(OPEN) Praeger_object0_report.pdf
+
+
+
+
+###############################################################################
+# Section 12.4: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 
-test_12_3:
+test_12_4:
 	make linsp6
 	make linsp7
 	make linsp30_pt_types
@@ -17458,9 +17732,9 @@ linsp30_pt_distribution:
 
 
 ###############################################################################
-# Section 12.4: Combinatorial Linear Spaces
+# Section 12.5: Combinatorial Linear Spaces
 
-test_12_4:
+test_12_5:
 	make geo_pasch
 	make geo_petersen
 	make geo_7_3
@@ -18101,11 +18375,11 @@ geo_MOL6.inc:
 
 
 ###############################################################################
-# Section 12.5: Tactical Decompositions
+# Section 12.6: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
-test_12_5:
+test_12_6:
 	make max_arc_16_4_start
 	make max_arc_16_4_convert_stack_tdo
 	make max_arc_16_4_refine
@@ -19131,13 +19405,29 @@ design_PG_2_4:
 		-define D -design -field F -family PG_2_q -end \
 		-with D -do \
 			-design_activity \
-				export_flags \
+				-export_flags \
 		-end \
 		-with D -do \
 			-design_activity \
 				-export_blocks \
 		-end
 
+
+design_elliptic_semiplane_Baker1978:
+	$(ORBITER) -v 8 \
+		-define D -design -sporadic Baker_1978 -end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end
+
+
+#Baker1978_flags.txt
+#Baker1978_blocks.csv
 
 
 wreath_product_designs_n4_k2_inc.txt:
@@ -19925,6 +20215,155 @@ PG_2_27_special:
 
 
 
+
+###############################################################################
+# Section 14.5: Design Theory - Flag transitive designs
+
+SECTION_DESIGN_THEORY_FLAG_TRANSITIVE_DESIGNS:
+
+test_14_5:
+	make Praeger_design_45_12_3
+	make Praeger_design_change_values
+	make Praeger_45_12_3_design
+	make Praeger_45_12_3_design_c
+	
+
+
+Praeger_design_45_12_3:
+	$(ORBITER) -v 4 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 81 \
+			-override_polynomial 89 \
+		-end \
+		-define AGGL -linear_group -AGGL 1 F \
+			-end \
+		-define G -linear_group -AGGL 1 F \
+			-subgroup_by_generators G 3240 \
+			8 $(PRAEGER_DESIGN_45_12_3_GENS) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-define v -vector \
+			-dense $(PRAEGER_DESIGN_45_12_3_GENS) \
+		-end \
+		-define gens -vector_ge \
+			-action AGGL \
+			-vector_data v \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-with gens -do \
+		-vector_ge_activity \
+			-field_reduction 4 \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-subgroup_lattice_magma \
+		-end \
+		-define L -modified_group -from G \
+			-subgroup_by_lattice 43 \
+		-end \
+		-define R -modified_group -from G \
+			-subgroup_by_lattice 44 \
+		-end \
+		-with L -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with R -do \
+		-group_theoretic_activity \
+			-report Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-create_flag_transitive_geometry L R \
+		-end
+
+
+# AGGL_1_81_Subgroup_G_3240_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_43_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_44_intersection_size.csv
+
+
+
+Praeger_design_change_values:
+	$(ORBITER) -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-change_values \
+			AGGL_1_81_Subgroup_G_3240_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_43_AGGL_1_81_Subgroup_G_3240_subgroup_by_lattice_44_intersection_size.csv \
+			Praeger_6.csv \
+			3,6,8 \
+			0,1,0
+
+
+
+Praeger_45_12_3_design:
+	$(ORBITER) -v 8 \
+		-define Praeger_45 -vector \
+			-file Praeger_6.csv -format 45 \
+		-end \
+		-define D -design \
+			-from_incidence_matrix Praeger_45 \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_flags \
+		-end \
+		-with D -do \
+			-design_activity \
+				-export_blocks \
+		-end \
+		-with D -do \
+			-design_activity \
+				-save \
+				-intersection_matrix \
+		-end
+
+#Praeger_45_flags.txt
+
+Praeger_45_12_3_design_c:
+	$(ORBITER) -v 3 \
+		-define Doinc -draw_incidence_structure_options \
+			-width 60 -width_10 6 -end \
+		-define C -combinatorial_object \
+			-label Praeger Praeger \
+			-file_of_incidence_geometries \
+				Praeger_45_flags.txt 45 45 540 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-nauty_control -end \
+			-end \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-report \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group_GAP \
+				-incidence_draw_options Doinc \
+			-end \
+		-end
+	$(PDFLATEX) Praeger_classification.tex
+	$(OPEN) Praeger_classification.pdf
+	$(ORBITER) -v 2 -draw_matrix \
+		-input_csv_file Praeger_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file Praeger_object0_INP.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	convert \
+		Praeger_object0_INP_flag_orbits_draw.bmp \
+		Praeger_object0_INP_flag_orbits_draw.png
+	open Praeger_object0_INP_flag_orbits_draw.png
+
+# ago = 19440
 
 
 ###############################################################################
@@ -20951,8 +21390,8 @@ PGL_4_3_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	pdflatex PGL_4_3_classes_out.tex
-	open PGL_4_3_classes_out.pdf
+	$(PDFLATEX) PGL_4_3_classes_out.tex
+	$(OPEN) PGL_4_3_classes_out.pdf
 
 
 
@@ -21094,8 +21533,8 @@ PG_3_3_assume_5_packings_classify:
 				-incidence_draw_options Doinc \
 			-end \
 		-end
-	pdflatex PG_3_3_assuming_5_classification.tex
-	open PG_3_3_assuming_5_classification.pdf
+	$(PDFLATEX) PG_3_3_assuming_5_classification.tex
+	$(OPEN) PG_3_3_assuming_5_classification.pdf
 
 
 
@@ -22963,7 +23402,6 @@ test_17_3:
 	make geo_7_3_c
 	make geo_10_3_c
 	make geo_10_3_c_lex_least
-	make geo_10_3_Desargues_configuration_c
 	#make geo_14_3_c
 	#make geo_15_3_c
 	make TFC_24_3_c
@@ -23151,48 +23589,6 @@ geo_10_3_c_lex_least:
 
 
 
-geo_10_3_Desargues_configuration_c:
-	$(ORBITER) -v 10 \
-		-define Doinc -draw_incidence_structure_options \
-			-width 60 -width_10 6 \
-		-end \
-		-define Test_lines -set -loop 4 11 1 -end \
-		-define Geo -geometry_builder \
-			-V 10 -B 10 -TDO 3 -fuse 1 \
-			-fname_GEO 10_3 \
-			-test Test_lines \
-			-output_to_inc_file \
-		-end \
-		-define C -combinatorial_object \
-			-label 10_3 "{\rm 10\\_3}" \
-			-file_of_incidence_geometries 10_3.inc 10 10 30 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 10 \
-				-nauty_control -end \
-			-end \
-		-end \
-		-assign Object7 -from \
-		-with C -do \
-		-combinatorial_object_activity \
-			-get_combo_with_group 7 \
-		-end \
-		-with Object7 -do \
-			-combo_activity \
-				-report \
-					-show_TDO \
-					-show_TDA \
-					-dont_show_incidence_matrices \
-					-incidence_draw_options Doinc \
-				-end \
-		-end \
-		-print_symbols
-	pdflatex 10_3_object7_report.tex
-	open 10_3_object7_report.pdf
 
 
 
@@ -24538,9 +24934,12 @@ Edge_curve_17_group:
 		-end \
 		-with G -do \
 			-group_theoretic_activity \
-				-print_elements_tex \
 				-report_group_table \
 				-report Do \
+		-end \
+		-with G -do \
+			-group_theoretic_activity \
+				-print_elements_tex \
 		-end
 	$(PDFLATEX) PGL_3_17_Subgroup_Stab_Edge_24_report.tex
 	$(OPEN) PGL_3_17_Subgroup_Stab_Edge_24_report.pdf
@@ -24812,8 +25211,8 @@ Sym_6_Schreier_tree_draw:
 			-radius 25 -line_width 1.3 \
 			-y_stretch 1.0 -scale 0.5 \
 		-end
-	pdflatex images_tree_draw.tex
-	open images_tree_draw.pdf
+	$(PDFLATEX) images_tree_draw.tex
+	$(OPEN) images_tree_draw.pdf
 
 
 Aut_Sym_6_group:
@@ -26363,8 +26762,8 @@ stabilizer_of_mmx:
 				-export_group_GAP \
 			-end \
 		-end
-	pdflatex decomp_classification.tex
-	open decomp_classification.pdf
+	$(PDFLATEX) decomp_classification.tex
+	$(OPEN) decomp_classification.pdf
 
 
 

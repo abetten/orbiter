@@ -801,7 +801,9 @@ void sims::init_generator_depth_and_perm(
 	if (f_v) {
 		cout << "sims::init_generator_depth_and_perm" << endl;
 		cout << "gens.len=" << gens.len << endl;
-		cout << "action=" << A->label << endl;
+		cout << "action=" << A->label << " : ";
+		A->print_info();
+		cout << endl;
 	}
 	if (my_base_len != A->base_len()) {
 		cout << "sims::init_generator_depth_and_perm "
@@ -809,9 +811,12 @@ void sims::init_generator_depth_and_perm(
 		exit(1);
 	}
 
+	Int_vec_zero(nb_gen, A->base_len() + 1);
+#if 0
 	for (i = 0; i <= A->base_len(); i++) {
 		nb_gen[i] = 0;
 	}
+#endif
 	gen_depth = NEW_int(gens.len);
 	gen_perm = NEW_int(gens.len);
 	for (i = 0; i < gens.len; i++) {
@@ -830,6 +835,25 @@ void sims::init_generator_depth_and_perm(
 				cout << "gens.len=" << gens.len << endl;
 				cout << "gen_depth[i]=" << gen_depth[i] << endl;
 				cout << "gen_depth[i - 1]=" << gen_depth[i - 1] << endl;
+				cout << "A: ";
+				A->print_info();
+				cout << "gens=" << endl;
+				gens.print(cout);
+				cout << "generator depth = ";
+				Int_vec_print(cout, gen_depth, i + 1);
+				cout << endl;
+
+
+
+				for (j = 0; j <= i; j++) {
+
+					std::string s;
+
+					s = stringify_base_images(
+						j, 0 /* verbose_level*/);
+
+					cout << "base images of generator " << j << " are " << s << endl;
+				}
 				exit(1);
 			}
 		}
@@ -1006,6 +1030,30 @@ int sims::generator_depth_in_stabilizer_chain(
 	return A->base_len();
 }
 
+std::string sims::stringify_base_images(
+		int gen_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::stringify_base_images" << endl;
+		cout << "sims::stringify_base_images A = " << A->label << endl;
+	}
+	string s;
+	int i, bi, j;
+
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
+		j = get_image(bi, gen_idx);
+		s += std::to_string(j);
+		if (i < A->base_len() - 1) {
+			s += ",";
+		}
+	}
+	return s;
+}
+
+
 int sims::depth_in_stabilizer_chain(
 		int *elt, int verbose_level)
 // returns the index of the first base point 
@@ -1052,6 +1100,25 @@ void sims::group_order(
 	//cout << endl;
 	D.multiply_up(go, orbit_len, my_base_len /*A->base_len()*/, 0);
 	//cout << "sims::group_order after D.multiply_up" << endl;
+}
+
+std::string sims::stringify_group_order()
+{
+	std::string s;
+	algebra::ring_theory::longinteger_object go;
+
+	group_order(go);
+
+	s = go.stringify() + " = ";
+	//cout << "Order " << go << " = ";
+	//int_vec_print(cout, Sims->orbit_len, base_len());
+	for (int t = 0; t < A->base_len(); t++) {
+		s += std::to_string(get_orbit_length(t));
+		if (t < A->base_len() - 1) {
+			s += " * ";
+		}
+	}
+	return s;
 }
 
 void sims::group_order_verbose(
@@ -1428,6 +1495,80 @@ void sims::element_rank(
 		A->Group_element->element_move(eltrk2, eltrk1, false);
 	}
 }
+
+
+int sims::test_membership_and_rank_element(
+		algebra::ring_theory::longinteger_object &a, int *elt, int verbose_level)
+// Computes the rank of the element in elt into a.
+// uses eltrk1, eltrk2
+// returns false if the element is not a member of the group
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::test_membership_and_rank_element" << endl;
+	}
+
+	long int i, j, bi, jj, l;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object b, c;
+
+	A->Group_element->element_move(elt, eltrk1, false);
+	a.zero();
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
+		l = orbit_len[i];
+
+		if (i > 0) {
+			b.create(l);
+			D.mult(a, b, c);
+			c.assign_to(a);
+		}
+
+		jj = A->Group_element->element_image_of(bi, eltrk1, false);
+		//cout << "at level " << i << ", maps bi = "
+		// << bi << " to " << jj << endl;
+		j = orbit_inv[i][jj];
+		if (j >= orbit_len[i]) {
+
+			if (f_v) {
+				cout << "sims::test_membership_and_rank_element "
+						"element is not a member of the group" << endl;
+			}
+			return false;
+
+#if 0
+			cout << "sims::element_rank j >= orbit_len[i]" << endl;
+			cout << "i=" << i << endl;
+			cout << "jj=bi^elt=" << jj << endl;
+			cout << "j=orbit_inv[i][jj]=" << j << endl;
+			cout << "base=";
+			Lint_vec_print(cout, A->get_base(), A->base_len());
+			cout << endl;
+			cout << "orbit_len=";
+			Int_vec_print(cout, orbit_len, A->base_len());
+			cout << endl;
+			cout << "elt=" << endl;
+			A->Group_element->element_print(eltrk1, cout);
+			exit(1);
+#endif
+		}
+		b.create(j);
+		D.add(a, b, c);
+		c.assign_to(a);
+
+		coset_rep_inv(eltrk3, i, j, 0 /* verbose_level */);
+
+		A->Group_element->element_mult(eltrk1, eltrk3, eltrk2, false);
+		A->Group_element->element_move(eltrk2, eltrk1, false);
+	}
+	if (f_v) {
+		cout << "sims::test_membership_and_rank_element done" << endl;
+	}
+	return true;
+}
+
+
 
 void sims::element_unrank_lint(
 		long int rk, int *Elt, int verbose_level)
@@ -2451,6 +2592,44 @@ void sims::all_elements(
 		cout << "sims::all_elements done" << endl;
 	}
 }
+
+void sims::select_elements(
+		long int *Index_of_elements, int nb_elements,
+		data_structures_groups::vector_ge *&vec,
+		int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::select_elements" << endl;
+	}
+
+	algebra::ring_theory::longinteger_object go;
+	long int i, goi, a;
+
+	group_order(go);
+	goi = go.as_int();
+
+	vec = NEW_OBJECT(data_structures_groups::vector_ge);
+	vec->init(A, 0 /*verbose_level*/);
+	vec->allocate(nb_elements, verbose_level);
+
+
+	for (i = 0; i < nb_elements; i++) {
+		a = Index_of_elements[i];
+		if (a < 0 || a >= goi) {
+			cout << "sims::select_elements element index is out of range" << endl;
+			exit(1);
+		}
+		element_unrank_lint(a, vec->ith(i));
+	}
+
+	if (f_v) {
+		cout << "sims::select_elements done" << endl;
+	}
+}
+
 
 
 void sims::all_elements_save_csv(

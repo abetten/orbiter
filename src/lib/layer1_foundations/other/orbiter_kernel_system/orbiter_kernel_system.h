@@ -371,6 +371,12 @@ public:
 			std::string &fname_out,
 			int from, int last, int step,
 			int verbose_level);
+	void append_column_of_int(
+			std::string &fname,
+			std::string &fname_out,
+			int *Data, int data_sz,
+			std::string &new_col_label,
+			int verbose_level);
 
 
 };

@@ -111,6 +111,30 @@ void vector_ge_activity::perform_activity(
 
 	}
 
+	else if (Descr->f_report_elements_coded) {
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity report_elements_coded" << endl;
+		}
+
+		actions::action *A_special;
+
+		A_special = vec[0]->A;
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before vec[0]->report_elements_coded" << endl;
+		}
+		vec[0]->report_elements_coded(
+				A_special->label,
+				true /* f_override_action */, A_special,
+				verbose_level);
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before vec[0]->report_elements_coded" << endl;
+		}
+
+	}
 
 	else if (Descr->f_export_GAP) {
 
@@ -354,7 +378,7 @@ void vector_ge_activity::perform_activity(
 	else if (Descr->f_field_reduction) {
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
-					"-field_reduction " << Descr->field_reduction_subfield_index<< endl;
+					"-field_reduction " << Descr->field_reduction_subfield_index << endl;
 		}
 
 		if (f_v) {
@@ -370,6 +394,26 @@ void vector_ge_activity::perform_activity(
 		}
 
 	}
+	else if (Descr->f_rational_canonical_form) {
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"-rational_canonical_form " << endl;
+		}
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before rational_normal_form" << endl;
+		}
+		vec[0]->rational_normal_form(
+					verbose_level);
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after rational_normal_form" << endl;
+		}
+
+	}
+
+
 
 
 	if (f_v) {

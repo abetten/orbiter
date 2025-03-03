@@ -21,6 +21,7 @@ orbits_create::orbits_create()
 	Descr = NULL;
 
 	Group = NULL;
+	Group_action = NULL;
 
 	f_has_Orb = false;
 	Orb = NULL;
@@ -90,6 +91,12 @@ void orbits_create::init(
 
 		Group = Get_any_group(Descr->group_label);
 		prefix.assign(Group->label);
+	}
+
+	if (Descr->f_group_action) {
+
+		Group_action = Get_any_group(Descr->group_action_label);
+		prefix += "_in_action_" + Group_action->label;
 	}
 
 
@@ -171,6 +178,10 @@ void orbits_create::init(
 			cout << "orbits_create::init please specify the group using -group <label>" << endl;
 			exit(1);
 		}
+		if (!Descr->f_group_action) {
+			cout << "orbits_create::init please specify the group using -group_action <label>" << endl;
+			exit(1);
+		}
 
 		poset_classification::poset_classification_control *Control =
 				Get_poset_classification_control(
@@ -180,11 +191,19 @@ void orbits_create::init(
 		orbits::orbits_global Orbits;
 
 		if (f_v) {
+			cout << "Strong generators Group->Subgroup_gens:" << endl;
+			Group->Subgroup_gens->print_generators(cout, 0 /* verbose_level */);
+			cout << "Strong generators Group->Subgroup_gens in tex:" << endl;
+			Group->Subgroup_gens->print_generators_tex(cout);
+		}
+
+		if (f_v) {
 			cout << "orbits_create::init before Orbits.orbits_on_subsets" << endl;
 		}
 
 		Orbits.orbits_on_subsets(
-				Group, Control, On_subsets,
+				Group, Group_action, Group->Subgroup_gens,
+				Control, On_subsets,
 				Descr->on_subsets_size, verbose_level);
 
 		f_has_On_subsets = true;

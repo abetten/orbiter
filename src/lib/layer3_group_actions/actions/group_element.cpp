@@ -2775,6 +2775,30 @@ std::string group_element::stringify(
 	return Int_vec_stringify(Elt, A->make_element_size);
 }
 
+std::string group_element::stringify_base_images(
+		int *Elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::stringify_base_images" << endl;
+		cout << "group_element::stringify_base_images A = " << A->label << endl;
+	}
+	string s;
+	int i, bi, j;
+
+	for (i = 0; i < A->base_len(); i++) {
+		bi = A->base_i(i);
+		j = element_image_of(bi, Elt, 0 /* verbose_level*/);
+		s += std::to_string(j);
+		if (i < A->base_len() - 1) {
+			s += ",";
+		}
+	}
+	return s;
+}
+
+
 
 }}}
 

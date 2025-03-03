@@ -581,7 +581,7 @@ public:
 class orthogonal_space_activity_description {
 public:
 
-	// TABLES/orthogonal_space_activity.tex
+	// TABLES/orthogonal_space_activity.csv
 
 	int f_cheat_sheet_orthogonal;
 	std::string cheat_sheet_orthogonal_draw_options_label;

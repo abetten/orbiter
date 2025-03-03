@@ -278,6 +278,8 @@ void conjugacy_class_of_elements::single_class_data(
 	s = std::to_string(goi);
 
 	data.push_back(s);
+
+#if 0
 	char c[2];
 
 	c[0] = 'A' + sub_idx;
@@ -286,7 +288,9 @@ void conjugacy_class_of_elements::single_class_data(
 	str.assign(c);
 
 	s = std::to_string(goi) + str;
+#endif
 
+	s = class_label();
 	data.push_back(s);
 
 	s = Class_size.stringify();
@@ -303,11 +307,26 @@ void conjugacy_class_of_elements::single_class_data(
 	}
 }
 
+std::string conjugacy_class_of_elements::class_label()
+{
+	string s, str;
 
+
+	char c[2];
+
+	c[0] = 'A' + sub_idx;
+	c[1] = 0;
+
+	str.assign(c);
+
+	s = std::to_string(goi) + str;
+
+	return s;
+}
 
 
 void conjugacy_class_of_elements::report_single_class(
-		std::ofstream &ost, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

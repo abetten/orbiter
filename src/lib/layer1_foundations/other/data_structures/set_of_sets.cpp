@@ -358,6 +358,7 @@ void set_of_sets::init_from_csv_file(
 		int underlying_set_size,
 		std::string &fname,
 		int verbose_level)
+// outdated. Better use Fio.Csv_file_support->read_column_and_parse instead
 {
 	int f_v = (verbose_level >= 1);
 	int i;

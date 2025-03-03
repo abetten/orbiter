@@ -404,6 +404,10 @@ public:
 	int nb_primes_available();
 	int get_prime_from_table(
 			int idx);
+	void Chinese_remainders_text(
+			std::string &R_text,
+			std::string &M_text,
+			int verbose_level);
 	long int Chinese_Remainders(
 			std::vector<long int> &Remainders,
 			std::vector<long int> &Moduli,

@@ -31,6 +31,7 @@ semifield_trace::semifield_trace()
 	ELT1 = ELT2 = ELT3 = NULL;
 	M1 = NULL;
 	Basis = NULL;
+	Rational_normal_form = NULL;
 	basis_tmp = NULL;
 	base_cols = NULL;
 	R1 = NULL;
@@ -55,6 +56,10 @@ semifield_trace::~semifield_trace()
 	if (Basis) {
 		FREE_int(Basis);
 	}
+	if (Rational_normal_form) {
+		FREE_int(Rational_normal_form);
+	}
+
 	if (basis_tmp) {
 		FREE_int(basis_tmp);
 	}
@@ -85,6 +90,7 @@ void semifield_trace::init(
 
 	M1 = NEW_int(n * n);
 	Basis = NEW_int(k * k);
+	Rational_normal_form = NEW_int(k * k);
 	basis_tmp = NEW_int(k /* basis_sz */ * k2);
 	base_cols = NEW_int(k2);
 
@@ -169,7 +175,7 @@ void semifield_trace::trace_very_general(
 	// Do adjustment to get the right coset representative.
 	// Apply fusion element if necessary
 
-	L2->C->identify_matrix(input_basis + 1 * k2, R1, Basis, 0 /* verbose_level */);
+	L2->C->identify_matrix(input_basis + 1 * k2, R1, Basis, Rational_normal_form, 0 /* verbose_level */);
 
 	idx = L2->C->find_class_rep(L2->R, L2->nb_classes, R1, 0 /* verbose_level */);
 	d = L2->class_to_flag_orbit[idx];

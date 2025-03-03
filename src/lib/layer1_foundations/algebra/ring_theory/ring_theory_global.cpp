@@ -2146,7 +2146,9 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 }
 
 int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
-		algebra::field_theory::finite_field *F, int d, int verbose_level)
+		algebra::field_theory::finite_field *F,
+		int d,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

@@ -724,6 +724,10 @@ public:
 			int f_with_permutation,
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
+	void report_elements_coded(
+			std::string &label,
+			int f_override_action, actions::action *A_special,
+			int verbose_level);
 	void print_generators_tex(
 			algebra::ring_theory::longinteger_object &go,
 			std::ostream &ost);
@@ -831,6 +835,8 @@ public:
 			int *Elt, vector_ge *&result, int verbose_level);
 	void field_reduction(
 			int subfield_index,
+			int verbose_level);
+	void rational_normal_form(
 			int verbose_level);
 
 };

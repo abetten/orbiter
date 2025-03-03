@@ -236,6 +236,7 @@ void conjugacy_classes_and_normalizers::create_classes(
 
 void conjugacy_classes_and_normalizers::report(
 		groups::sims *override_sims,
+		std::string &label,
 		std::string &label_latex,
 		int verbose_level)
 {
@@ -255,21 +256,20 @@ void conjugacy_classes_and_normalizers::report(
 
 
 
-	other::data_structures::string_tools ST;
+	//other::data_structures::string_tools ST;
 	algebra::ring_theory::longinteger_object go;
 
 	override_sims->group_order(go);
 	cout << "The group has order " << go << endl;
 
-	string fname_latex;
+	string fname_report;
 
-	fname_latex = fname;
+	fname_report = label + "_classes.tex";
 
-	ST.replace_extension_with(fname_latex, ".tex");
 
 
 	{
-		ofstream ost(fname_latex);
+		ofstream ost(fname_report);
 		string title, author, extra_praeamble;
 		other::l1_interfaces::latex_interface L;
 
@@ -317,8 +317,8 @@ void conjugacy_classes_and_normalizers::report(
 
 		L.foot(ost);
 	}
-	cout << "Written file " << fname_latex << " of size "
-			<< Fio.file_size(fname_latex) << endl;
+	cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
 
 
 
@@ -442,16 +442,55 @@ void conjugacy_classes_and_normalizers::export_csv(
 }
 
 void conjugacy_classes_and_normalizers::report_classes(
-		std::ofstream &ost, int verbose_level)
+		std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "conjugacy_classes_and_normalizers::report_classes" << endl;
 	}
+
+
+	report_summary_table(ost, verbose_level);
+
 	int idx;
 
+	for (idx = 0; idx < nb_classes; idx++) {
+
+
+		Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
+
+	}
+
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes "
+				"before export_csv" << endl;
+	}
+	export_csv(verbose_level);
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes "
+				"after export_csv" << endl;
+	}
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_classes done" << endl;
+	}
+}
+
+void conjugacy_classes_and_normalizers::report_summary_table(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "conjugacy_classes_and_normalizers::report_summary_table" << endl;
+	}
+
+
 	cout << "The conjugacy classes are:" << endl;
+
+	int idx;
 
 	std::vector< std::vector<std::string > > Data;
 
@@ -522,27 +561,6 @@ void conjugacy_classes_and_normalizers::report_classes(
 	ost << endl;
 
 
-	for (idx = 0; idx < nb_classes; idx++) {
-
-
-		Conjugacy_class[idx]->report_single_class(ost, verbose_level - 1);
-
-	}
-
-
-	if (f_v) {
-		cout << "conjugacy_classes_and_normalizers::report_classes "
-				"before export_csv" << endl;
-	}
-	export_csv(verbose_level);
-	if (f_v) {
-		cout << "conjugacy_classes_and_normalizers::report_classes "
-				"after export_csv" << endl;
-	}
-
-	if (f_v) {
-		cout << "conjugacy_classes_and_normalizers::report_classes done" << endl;
-	}
 }
 
 void conjugacy_classes_and_normalizers::export_csv(

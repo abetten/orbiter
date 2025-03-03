@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:activities:part1",,
 1,"Orbiter Activities (Part 1)",,
+1,"X","p{3cm}","X"
+1,"Command","Reference","Type of Activity"
 1,"\verb'-finite_field_activity' ","Sections~\ref{sec:finite:fields} and~\ref{sec:extension:fields} ","An activity for finite fields."
 1,"\verb'-polynomial_ring_activity' ","Table~\ref{tab:polynomial:ring:activities} "," An activity for a polynomial ring."
 1,"\verb'-projective_space_activity' ","Section~\ref{sec:FPG} ","An activity for a projective space."
@@ -14,5 +16,4 @@ ROW,C1,C2,C3
 1,"\verb'-graph_theoretic_activity' ","Section~\ref{sec:graphtheory} ","An activity for a graph."
 1,"\verb'-classification_of_cubic_surfaces_' \verb'with_double_sixes_activity' ","Section~\ref{sec:cubicsurfaces:creation} "," An activity for a cubic surface."
 1,"\verb'-spread_table_activity' ","Section~\ref{sec:packings} "," An activity associated with a table of spreads."
-1,"\verb'-packing_with_symmetry_' \verb'assumption_activity' "," Section~\ref{sec:packings} ","An activity related to creating packings with assumed symmetry group."
 END

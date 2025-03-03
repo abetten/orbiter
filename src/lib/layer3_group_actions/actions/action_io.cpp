@@ -36,10 +36,18 @@ void action::report(
 	ost << "\\section*{The Action}" << endl;
 
 
+	if (f_v) {
+		cout << "action::report "
+				"before report_group_name_and_degree" << endl;
+	}
 	report_group_name_and_degree(
 			ost,
-			LG_Draw_options,
-			verbose_level);
+			//LG_Draw_options,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action::report "
+				"after report_group_name_and_degree" << endl;
+	}
 
 	if (f_strong_gens) {
 
@@ -65,8 +73,8 @@ void action::report(
 	}
 	report_what_we_act_on(
 			ost,
-			LG_Draw_options,
-			verbose_level);
+			//LG_Draw_options,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "action::report after report_what_we_act_on" << endl;
 	}
@@ -99,7 +107,6 @@ void action::report(
 #endif
 
 
-
 	}
 
 	if (type_G == wreath_product_t) {
@@ -109,7 +116,7 @@ void action::report(
 		if (f_v) {
 			cout << "action::report before W->report" << endl;
 		}
-		W->report(ost, verbose_level);
+		W->report(ost, verbose_level - 1);
 		if (f_v) {
 			cout << "action::report after W->report" << endl;
 		}
@@ -140,6 +147,9 @@ void action::report(
 	}
 
 	if (Stabilizer_chain) {
+		if (f_v) {
+			cout << "action::report Stabilizer_chain is allocated" << endl;
+		}
 		if (base_len()) {
 			ost << "action::report\\\\" << endl;
 			ost << "Base: $";
@@ -164,7 +174,7 @@ void action::report(
 			cout << "action::report after S->report" << endl;
 		}
 	}
-	if (Stabilizer_chain) {
+	if (Stabilizer_chain && base_len() > 0) {
 		if (f_v) {
 			cout << "action::report we have Stabilizer_chain" << endl;
 		}
@@ -181,7 +191,7 @@ void action::report(
 			}
 			Global.report_strong_generators(
 					ost,
-					LG_Draw_options,
+					//LG_Draw_options,
 					SG,
 					this,
 					verbose_level);
@@ -201,7 +211,7 @@ void action::report(
 
 void action::report_group_name_and_degree(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		//other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -222,7 +232,7 @@ void action::report_group_name_and_degree(
 
 void action::report_type_of_action(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *O,
+		//other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	std::string txt;
@@ -240,7 +250,7 @@ void action::report_type_of_action(
 
 void action::report_what_we_act_on(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *O,
+		//other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -250,7 +260,15 @@ void action::report_what_we_act_on(
 	}
 
 
-	report_type_of_action(ost, O, verbose_level);
+	if (f_v) {
+		cout << "action::report_what_we_act_on "
+				"before report_type_of_action" << endl;
+	}
+	report_type_of_action(ost, verbose_level);
+	if (f_v) {
+		cout << "action::report_what_we_act_on "
+				"after report_type_of_action" << endl;
+	}
 
 	if (is_matrix_group()) {
 
@@ -331,14 +349,19 @@ void action::report_what_we_act_on(
 
 		}
 
-
+#if 0
 		ost << "The finite field ${\\mathbb F}_{" << F->q << "}$:\\\\" << endl;
 
 		F->Io->cheat_sheet(ost, verbose_level);
 
 		ost << endl << "\\bigskip" << endl << endl;
+#endif
 
-
+	}
+	else {
+		if (f_v) {
+			cout << "action::report_what_we_act_on is_matrix_group is false" << endl;
+		}
 	}
 
 #if 0
@@ -407,13 +430,52 @@ void action::print_symmetry_group_type(
 
 }
 
+std::string action::stringify_subaction_labels()
+{
+	string s, s1;
 
+	if (subaction) {
+		s1 = subaction->stringify_subaction_labels();
+		s = label + " -> " + s1;
+	}
+	else {
+		s = label;
+	}
+	return s;
+}
 
 void action::print_info()
 {
+	action_global AG;
+
+	string s_type;
+	string s_base;
+	string s_go;
+
+	s_type = AG.stringify_symmetry_group_type(type_G);
+	s_base = stringify_base();
+
+	if (f_has_sims) {
+		s_go = Sims->stringify_group_order();
+	}
+	else {
+		s_go = "no sims";
+	}
+
+
+	string s_sub;
+
+	s_sub = stringify_subaction_labels();
+
 	cout << "ACTION " << label << " : " << label_tex
-			<< " degree=" << degree << " of type ";
-	print_symmetry_group_type(cout);
+			<< " degree=" << degree << " of type " << s_type
+			<< " : " << s_base
+			<< " : " << s_go
+			<< " : " << ptr->label
+			<< " : sub = " << s_sub << endl;
+
+#if 0
+	//print_symmetry_group_type(cout);
 	cout << endl;
 	cout << "low_level_point_size=" << low_level_point_size;
 	cout << ", f_has_sims=" << f_has_sims;
@@ -428,38 +490,9 @@ void action::print_info()
 	else {
 		cout << "the action is not linear" << endl;
 	}
-
-	print_base();
-
-#if 0
-	if (Stabilizer_chain) {
-		if (base_len()) {
-			cout << "base: ";
-			Lint_vec_print(cout, get_base(), base_len());
-			cout << endl;
-		}
-	}
-	else {
-		cout << "The action does not have a stabilizer chain" << endl;
-	}
 #endif
+	//print_base();
 
-	if (f_has_sims) {
-		cout << "has sims" << endl;
-		algebra::ring_theory::longinteger_object go;
-
-		Sims->group_order(go);
-		cout << "Order " << go << " = ";
-		//int_vec_print(cout, Sims->orbit_len, base_len());
-		for (int t = 0; t < base_len(); t++) {
-			cout << Sims->get_orbit_length(t);
-			if (t < base_len() - 1) {
-				cout << " * ";
-			}
-		}
-		//cout << endl;
-	}
-	cout << endl;
 
 }
 
@@ -504,6 +537,37 @@ void action::print_base()
 #endif
 }
 
+std::string action::stringify_base()
+{
+	string s;
+
+	if (Stabilizer_chain) {
+		if (base_len() == 0) {
+			s =  "base of length zero";
+		}
+		else {
+			int i;
+			for (i = 0; i < base_len(); i++) {
+				s += std::to_string(base_i(i));
+				if (i < base_len() - 1) {
+					s += ", ";
+				}
+			}
+			s += " tl=";
+			for (i = 0; i < base_len(); i++) {
+				s += std::to_string(transversal_length_i(i));
+				if (i < base_len() - 1) {
+					s += ", ";
+				}
+			}
+		}
+	}
+	else {
+		s = " - ";
+	}
+	return s;
+}
+
 void action::print_base(
 		std::ostream &ost)
 {
@@ -511,12 +575,23 @@ void action::print_base(
 		int i;
 
 		ost << "action " << label << " has base ";
-		for (i = 0; i < base_len(); i++) {
-			ost << ", " << base_i(i);
+		if (base_len() == 0) {
+			ost << "of length zero" << endl;
 		}
-		ost << " and transversal_length: ";
-		for (i = 0; i < base_len(); i++) {
-			ost << ", " << transversal_length_i(i);
+		else {
+			for (i = 0; i < base_len(); i++) {
+				ost << base_i(i);
+				if (i < base_len() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << " and transversal_length: ";
+			for (i = 0; i < base_len(); i++) {
+				ost << transversal_length_i(i);
+				if (i < base_len() - 1) {
+					ost << ", ";
+				}
+			}
 		}
 		ost << endl;
 	}

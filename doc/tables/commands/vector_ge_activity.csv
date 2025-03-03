@@ -2,8 +2,12 @@ ROW,C1,C2,C3
 0,"tab:vector:ge:activity",,
 1,"Vector of Group Elements Activities",,
 1,"\verb'-report' ","  "," Produce a report of the group elements in the vector. "
+1,"\verb'-report_elements_coded' ","  "," Produce a report of the group elements in the vector in coded form. "
 1,"\verb'-export_GAP' ","  "," Export the group elements to GAP and generate the group. "
 1,"\verb'-transform_variety' "," variety "," Transform the given variety by the group elements in the vector. "
+1,"\verb'-multiply' ","  "," Multiply corresponding elements in the input vectors. Multiple input vectors can be given using the \verb'-with' command. "
+1,"\verb'-conjugate' ","  "," Conjugate all elements of the first vector by the first (and only) entry in the second vector. Multiple input vectors can be given using the \verb'-with' command. "
+1,"\verb'-conjugate_inverse' ","  "," Same as \verb'-conjugate', but use the inverse element instead. "
 1,"\verb'-select_subset' "," indexset "," Create a new vector from the elements given in the index set. The index set must be a label of a vector of integers. Indexing of elements of the vector is zero-based. "
 1,"\verb'-field_reduction' "," s "," Perform field reduction w.r.t. the subfield of the given index s. The group must be a matrix group over a field admitting a subfield of index s."
 END

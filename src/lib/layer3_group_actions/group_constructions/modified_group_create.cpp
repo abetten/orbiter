@@ -38,13 +38,17 @@ modified_group_create::modified_group_create()
 
 		action_on_self_by_right_multiplication_sims = NULL;
 		Action_by_right_multiplication = NULL;
+
+		Action_by_conjugation_base_group = NULL;
+
 }
 
 
 modified_group_create::~modified_group_create()
 {
 	Record_death();
-		Descr = NULL;
+
+	Descr = NULL;
 }
 
 
@@ -248,6 +252,24 @@ void modified_group_create::modified_group_init(
 					"after create_action_on_self_by_right_multiplication" << endl;
 		}
 	}
+	else if (Descr->f_action_on_self_by_conjugation) {
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"before create_action_on_self_by_conjugation" << endl;
+		}
+
+		create_action_on_self_by_conjugation(Descr, verbose_level);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"after create_action_on_self_by_conjugation" << endl;
+		}
+	}
+
+
+
+
 	else if (Descr->f_direct_product) {
 
 		if (f_v) {
@@ -1438,6 +1460,113 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 				"done" << endl;
 	}
 }
+
+
+
+void modified_group_create::create_action_on_self_by_conjugation(
+		group_modification_description *description,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	groups::any_group *AG;
+
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+	label = AG->label;
+	label_tex = AG->label_tex;
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	//A_modified = A_previous;
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"before AG->Subgroup_gens->create_sims" << endl;
+	}
+	//Action_by_conjugation_base_group = AG->Subgroup_gens->create_sims(verbose_level);
+	Action_by_conjugation_base_group = AG->Subgroup_sims;
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"after AG->Subgroup_gens->create_sims" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"before A_previous->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
+	A_modified = A_previous->Induced_action->create_induced_action_by_conjugation(
+			Action_by_conjugation_base_group /* groups::sims *Base_group */, false /* f_ownership */,
+			false /* f_basis */, NULL,
+			verbose_level);
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"after A_previous->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
+
+
+	A_modified->f_is_linear = false;
+
+	f_has_strong_generators = true;
+
+	//A_modified->f_is_linear = A_previous->f_is_linear;
+	//A_modified->dimension = A_previous->dimension;
+
+	f_has_strong_generators = true;
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+	Strong_gens = AG->Subgroup_gens;
+
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"action A_modified created: ";
+		A_modified->print_info();
+	}
+
+
+	label += "_ByConj";
+	label_tex += "{\\rm ByConj}";
+
+
+
+	if (f_v) {
+		cout << "modified_group_create::create_action_on_self_by_conjugation "
+				"done" << endl;
+	}
+}
+
+
+
 
 void modified_group_create::create_product_action(
 		group_modification_description *description,

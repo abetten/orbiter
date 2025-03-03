@@ -67,7 +67,8 @@ public:
 	~gl_classes();
 	void init(
 			int k,
-			algebra::field_theory::finite_field *F, int verbose_level);
+			algebra::field_theory::finite_field *F,
+			int verbose_level);
 	int select_partition_first(
 			int *Select, int *Select_partition,
 		int verbose_level);
@@ -101,7 +102,7 @@ public:
 		int f_no_eigenvalue_one,
 		int verbose_level);
 	void identify_matrix(
-			int *Mtx, gl_class_rep *R, int *Basis,
+			int *Mtx, gl_class_rep *R, int *Basis, int *Rational_normal_form,
 		int verbose_level);
 	void identify2(
 			int *Mtx,

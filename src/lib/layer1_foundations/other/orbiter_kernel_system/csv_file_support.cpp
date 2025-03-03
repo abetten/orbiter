@@ -3846,6 +3846,84 @@ void csv_file_support::collect_stats(
 }
 
 
+void csv_file_support::append_column_of_int(
+		std::string &fname,
+		std::string &fname_out,
+		int *Data, int data_sz,
+		std::string &new_col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int "
+				"reading file " << fname << endl;
+	}
+
+
+	std::string *col_labels;
+	std::string *Table;
+	int m, n;
+
+	read_table_of_strings(
+			fname, col_labels,
+			Table, m, n,
+			verbose_level);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int "
+				"nb_rows = " << m << endl;
+	}
+
+	if (m != data_sz) {
+		cout << "csv_file_support::append_column_of_int m != data_sz" << endl;
+		exit(1);
+	}
+
+	std::string *Table_out;
+	std::string *Col_headings;
+	int nb_rows = m;
+	int nb_cols = n + 1;
+	int i, j;
+
+	Table_out = new std::string[nb_rows * nb_cols];
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < n; j++) {
+			Table_out[i * nb_cols + j] = Table[i * n + j];
+		}
+		Table_out[i * nb_cols + n] = std::to_string(Data[i]);
+	}
+
+	Col_headings = new std::string[nb_cols];
+	for (j = 0; j < n; j++) {
+		Col_headings[j] = col_labels[j];
+	}
+	Col_headings[n] = new_col_label;
+
+	other::data_structures::string_tools ST;
+
+	fname_out = fname;
+
+	ST.chop_off_extension(fname_out);
+
+	fname_out += "_append.csv";
+
+	write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table_out,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table;
+	delete [] col_labels;
+	delete [] Table_out;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int done" << endl;
+	}
+}
+
 
 
 }}}}

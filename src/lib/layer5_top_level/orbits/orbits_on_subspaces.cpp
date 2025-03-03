@@ -199,6 +199,7 @@ void orbits_on_subspaces::init(
 	}
 	Orbits.orbits_on_poset_post_processing(
 			Group,
+			Group,
 			orbits_on_subspaces_PC, Control->depth,
 			verbose_level);
 	if (f_v) {

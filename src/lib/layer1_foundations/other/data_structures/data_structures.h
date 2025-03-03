@@ -1313,6 +1313,8 @@ public:
 	void init_from_csv_file(
 			int underlying_set_size,
 			std::string &fname, int verbose_level);
+	// outdated.
+	// Better use Fio.Csv_file_support->read_column_and_parse instead
 	void init_from_orbiter_file(
 			int underlying_set_size,
 			std::string &fname, int verbose_level);
@@ -2408,7 +2410,8 @@ public:
 class vector_builder_description {
 public:
 
-	// vector_ge_builder.tex
+
+	// TABLES/vector_builder.tex
 
 
 	int f_field;

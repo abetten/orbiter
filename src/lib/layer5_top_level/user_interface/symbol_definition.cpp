@@ -2321,7 +2321,8 @@ void symbol_definition::definition_of_orthogonal_space(
 		cout << "symbol_definition::definition_of_orthogonal_space "
 				"before get_or_create_finite_field" << endl;
 	}
-	Orthogonal_space_with_action_description->F = get_or_create_finite_field(
+	Orthogonal_space_with_action_description->F =
+			get_or_create_finite_field(
 			Orthogonal_space_with_action_description->input_q,
 			verbose_level);
 	if (f_v) {
@@ -4158,7 +4159,8 @@ void symbol_definition::load_finite_field_PG(
 					"creating the finite field of order " << q << endl;
 		}
 		Projective_space_with_action_description->F = NEW_OBJECT(algebra::field_theory::finite_field);
-		Projective_space_with_action_description->F->finite_field_init_small_order(q,
+		Projective_space_with_action_description->F->finite_field_init_small_order(
+				q,
 				false /* f_without_tables */,
 				true /* f_compute_related_fields */,
 				verbose_level - 1);

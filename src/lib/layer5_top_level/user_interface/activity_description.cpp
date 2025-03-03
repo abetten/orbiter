@@ -59,6 +59,11 @@ activity_description::activity_description()
 	f_spread_table_activity = false;
 	Spread_table_activity_description = NULL;
 
+
+
+	// orbiter_activities2.csv
+
+
 	f_packing_classify_activity_description = false;
 	Packing_classify_activity_description = NULL;
 

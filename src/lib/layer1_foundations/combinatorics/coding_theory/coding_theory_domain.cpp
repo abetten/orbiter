@@ -1995,6 +1995,7 @@ void coding_theory_domain::do_polynomial(
 		std::string &polynomial_text,
 		//int f_embellish, int embellish_radius,
 		int verbose_level)
+// this function is not used anywhere
 {
 	int f_v = (verbose_level >= 1);
 

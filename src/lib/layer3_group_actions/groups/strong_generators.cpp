@@ -1461,6 +1461,11 @@ void strong_generators::print_generators(
 		ost << "generator " << i << " / "
 				<< gens->len << " is: " << endl;
 		A->Group_element->element_print(gens->ith(i), ost);
+		string s;
+
+		s = A->Group_element->stringify_base_images(
+				gens->ith(i), 0 /* verbose_level */);
+		ost << "base images: " << s << endl;
 		ost << "as permutation: " << endl;
 		if (A->degree < 400) {
 			A->Group_element->element_print_as_permutation_with_offset(
@@ -1882,6 +1887,11 @@ void strong_generators::print_generators_tex(
 		ost << "$" << endl;
 		A->Group_element->element_print_latex(gens->ith(i), ost);
 		ost << "$" << endl;
+		string s;
+
+		s = A->Group_element->stringify_base_images(
+				gens->ith(i), 0 /* verbose_level */);
+		ost << "base images: " << s << " ";
 		if (i < gens->len - 1) {
 			ost << ", " << endl;
 		}

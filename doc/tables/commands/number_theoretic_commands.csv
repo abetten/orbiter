@@ -5,3 +5,6 @@ ROW,C1,C2,C3
 1,"\verb'-random' "," $n$ fname "," Creates $n$ random numbers and writes them to the csv file \verb'fname' "
 1,"\verb'-random_last' "," $n$  "," Creates $n$ random numbers prints the last one "
 1,"\verb'-affine_sequence' "," $a$ $b$ $p$  "," Splits the interval $[0,p-1]$ into affine sequences of the form $x_{n+1} = a x_n + b \mod p$ "
+END
+	// Section 10.1
+	// number_theoretic_commands.csv

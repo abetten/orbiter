@@ -547,6 +547,73 @@ void vector_ge::report_elements(
 }
 
 
+void vector_ge::report_elements_coded(
+		std::string &label,
+		int f_override_action, actions::action *A_special,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::report_elements_coded" << endl;
+	}
+
+	other::orbiter_kernel_system::file_io Fio;
+
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+
+
+	string fname;
+
+	fname = label + "_elements.tex";
+
+
+	{
+		ofstream ost(fname);
+		other::l1_interfaces::latex_interface L;
+		L.head_easy(ost);
+
+
+		actions::action *A1;
+
+
+		if (f_override_action) {
+			A1 = A_special;
+		}
+		else {
+			A1 = A;
+		}
+
+		int i;
+
+		for (i = 0; i < len; i++) {
+
+			Elt = ith(i);
+
+			A1->Group_element->print_for_make_element(
+					ost, Elt);
+			ost << "\\\\" << endl;
+		}
+
+
+
+		L.foot(ost);
+
+	}
+	if (f_v) {
+		cout << "vector_ge::report_elements_coded "
+			"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "vector_ge::report_elements_coded done" << endl;
+	}
+}
+
+
 
 
 void vector_ge::print_generators_tex(
@@ -841,7 +908,7 @@ void vector_ge::print_for_make_element(
 	int i, l;
 
 	l = len;
-	ost << "Strong generators: (" << l << " of them)" << endl;
+	ost << "vector of length " << l << ":" << endl;
 	for (i = 0; i < l; i++) {
 		A->Group_element->element_print_for_make_element(ith(i), ost);
 		ost << "\\\\" << endl;
@@ -2003,6 +2070,84 @@ void vector_ge::field_reduction(
 }
 
 
+void vector_ge::rational_normal_form(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::rational_normal_form" << endl;
+	}
+
+#if 0
+
+	algebra::basic_algebra::matrix_group *M;
+
+	M = A->get_matrix_group();
+
+	algebra::field_theory::finite_field *F;
+
+	F = M->GFq;
+
+
+	apps_algebra::algebra_global_with_action Algebra;
+	int *matrix_data;
+	int sz;
+
+	algebra::field_theory::finite_field *F;
+
+	F = Get_finite_field(compute_rational_normal_form_field_label);
+
+	Int_vec_scan(compute_rational_normal_form_data, matrix_data, sz);
+
+	if (sz != compute_rational_normal_form_d * compute_rational_normal_form_d) {
+		cout << "vector_ge::rational_normal_form matrix size incorrect" << endl;
+		exit(1);
+	}
+
+	int d;
+	int *Basis;
+	int *Rational_normal_form;
+
+	d = compute_rational_normal_form_d;
+	Basis = NEW_int(d * d);
+	Rational_normal_form = NEW_int(d * d);
+
+
+	if (f_v) {
+		cout << "vector_ge::rational_normal_form "
+				"before Algebra.compute_rational_normal_form" << endl;
+	}
+	Algebra.compute_rational_normal_form(
+			F, compute_rational_normal_form_d,
+			matrix_data,
+			Basis, Rational_normal_form,
+			verbose_level);
+	if (f_v) {
+		cout << "vector_ge::rational_normal_form "
+				"after Algebra.compute_rational_normal_form" << endl;
+	}
+
+	if (f_v) {
+		cout << "vector_ge::rational_normal_form "
+				"Basis = " << endl;
+		Int_matrix_print(Basis, d, d);
+		cout << "vector_ge::rational_normal_form "
+				"Rational_normal_form = " << endl;
+		Int_matrix_print(Rational_normal_form, d, d);
+	}
+
+
+	FREE_int(matrix_data);
+	FREE_int(Basis);
+	FREE_int(Rational_normal_form);
+
+#endif
+
+	if (f_v) {
+		cout << "vector_ge::rational_normal_form done" << endl;
+	}
+}
 
 
 }}}

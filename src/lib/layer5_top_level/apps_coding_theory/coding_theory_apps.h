@@ -57,7 +57,7 @@ class coding_theoretic_activity_description {
 
 public:
 
-	// TABLSES/coding_theoretic_activity_1.tex
+	// TABLES/coding_theoretic_activity_1.tex
 
 	int f_report;
 
@@ -90,6 +90,7 @@ public:
 	int f_Sylvester_Hadamard_code;
 	int Sylvester_Hadamard_code_n;
 
+	// undocumented:
 	int f_NTT;
 	int NTT_n;
 	int NTT_q;
@@ -119,7 +120,7 @@ public:
 	std::string export_checkma_as_projective_set_fname;
 
 
-	// TABLSES/coding_theoretic_activity_2.tex
+	// TABLES/coding_theoretic_activity_2.tex
 
 
 	int f_make_diagram;
@@ -135,7 +136,7 @@ public:
 	int f_Hamming_space_distance_matrix;
 	int Hamming_space_distance_matrix_n;
 
-	// TABLSES/coding_theoretic_activity_2.tex
+	// TABLES/coding_theoretic_activity_3.tex
 
 
 	// CRC stuff:

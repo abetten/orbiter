@@ -231,6 +231,8 @@ public:
 
 	int f_action_on_self_by_right_multiplication;
 
+	int f_action_on_self_by_conjugation;
+
 	int f_direct_product;
 	std::string direct_product_input;
 	std::string direct_product_subgroup_order;
@@ -486,6 +488,8 @@ public:
 	groups::sims *action_on_self_by_right_multiplication_sims;
 	induced_actions::action_by_right_multiplication *Action_by_right_multiplication;
 
+	groups::sims *Action_by_conjugation_base_group;
+
 
 
 	modified_group_create();
@@ -524,6 +528,9 @@ public:
 			group_modification_description *description,
 			int verbose_level);
 	void create_action_on_self_by_right_multiplication(
+			group_modification_description *description,
+			int verbose_level);
+	void create_action_on_self_by_conjugation(
 			group_modification_description *description,
 			int verbose_level);
 	void create_product_action(

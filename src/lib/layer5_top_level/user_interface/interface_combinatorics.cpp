@@ -25,6 +25,10 @@ interface_combinatorics::interface_combinatorics()
 {
 	Record_birth();
 
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
+
 	f_random_permutation = false;
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
@@ -73,7 +77,11 @@ interface_combinatorics::interface_combinatorics()
 
 	f_pentomino_puzzle = false;
 
-#if 0
+	// Section 12.1
+	// TABLES/combinatorics_2.csv
+
+
+	#if 0
 	f_regular_linear_space_classify = false;
 	Rls_descr = NULL;
 #endif
@@ -147,6 +155,10 @@ void interface_combinatorics::print_help(
 	other::data_structures::string_tools ST;
 
 
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
+
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <int : degree> <string : <fname_csv>" << endl;
 	}
@@ -189,12 +201,16 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
 		cout << "-pentomino_puzzle" << endl;
 	}
+
+	// Section 12.1
+	// TABLES/combinatorics_2.csv
+
+#if 0
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		cout << "-regular_linear_space_classify <description>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
-		cout << "-domino_portrait <string : fname> <int : D> <int : s> <layered_graph_options>" << endl;
-	}
+#endif
+
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		cout << "-read_solutions_and_tally <string : fname> <int :read_solutions_and_tally_sz>" << endl;
 	}
@@ -234,6 +250,9 @@ void interface_combinatorics::print_help(
 	else if (ST.stringcmp(argv[i], "-Kaempfer") == 0) {
 		cout << "-Kaempfer " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
+		cout << "-domino_portrait <string : fname> <int : D> <int : s> <layered_graph_options>" << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(
@@ -244,6 +263,10 @@ int interface_combinatorics::recognize_keyword(
 	if (i >= argc) {
 		return false;
 	}
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
 
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
@@ -287,12 +310,16 @@ int interface_combinatorics::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
 		return true;
 	}
+
+	// Section 12.1
+	// TABLES/combinatorics_2.csv
+
+#if 0
 	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
-		return true;
-	}
+#endif
+
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		return true;
 	}
@@ -332,6 +359,9 @@ int interface_combinatorics::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-Kaempfer") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -350,6 +380,10 @@ void interface_combinatorics::read_arguments(
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
 	}
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
 
 	if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		f_random_permutation = true;
@@ -501,27 +535,12 @@ void interface_combinatorics::read_arguments(
 		}
 	}
 #endif
-	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
-		f_domino_portrait = true;
-		if (f_v) {
-			cout << "-domino_portrait " << endl;
-		}
-		domino_portrait_D = ST.strtoi(argv[++i]);
-		domino_portrait_s = ST.strtoi(argv[++i]);
-		domino_portrait_fname.assign(argv[++i]);
-		domino_portrait_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
-		i += domino_portrait_draw_options->read_arguments(argc - i - 1,
-				argv + i + 1, verbose_level);
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments "
-					"finished reading -domino_portrait" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
+
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
+
 	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		f_read_solutions_and_tally = true;
 		read_solutions_and_tally_fname.assign(argv[++i]);
@@ -661,6 +680,27 @@ void interface_combinatorics::read_arguments(
 				<< " " << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-domino_portrait") == 0) {
+		f_domino_portrait = true;
+		if (f_v) {
+			cout << "-domino_portrait " << endl;
+		}
+		domino_portrait_D = ST.strtoi(argv[++i]);
+		domino_portrait_s = ST.strtoi(argv[++i]);
+		domino_portrait_fname.assign(argv[++i]);
+		domino_portrait_draw_options = NEW_OBJECT(other::graphics::layered_graph_draw_options);
+		i += domino_portrait_draw_options->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments "
+					"finished reading -domino_portrait" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -670,6 +710,10 @@ void interface_combinatorics::read_arguments(
 
 void interface_combinatorics::print()
 {
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
 
 	if (f_random_permutation) {
 		cout << "-random_permutation " << random_permutation_degree << endl;
@@ -723,19 +767,18 @@ void interface_combinatorics::print()
 	if (f_pentomino_puzzle) {
 		cout << "-pentomino_puzzle " <<endl;
 	}
+
+
+	// Section 12.1
+	// TABLES/combinatorics_2.csv
+
+
 #if 0
 	if (f_regular_linear_space_classify) {
 		cout << "-regular_linear_space_classify " << endl;
 		//Rls_descr->print();
 	}
 #endif
-	if (f_domino_portrait) {
-		cout << "-draw_layered_graph " << domino_portrait_D
-				<< " " << domino_portrait_s
-				<< " " << domino_portrait_fname;
-			cout << endl;
-		domino_portrait_draw_options->print();
-	}
 	if (f_read_solutions_and_tally) {
 		cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
 				<< " " << read_solutions_and_tally_sz << endl;
@@ -805,6 +848,13 @@ void interface_combinatorics::print()
 		cout << "-Kaempfer "
 			<< " " << endl;
 	}
+	if (f_domino_portrait) {
+		cout << "-draw_layered_graph " << domino_portrait_D
+				<< " " << domino_portrait_s
+				<< " " << domino_portrait_fname;
+			cout << endl;
+		domino_portrait_draw_options->print();
+	}
 
 }
 
@@ -817,6 +867,10 @@ void interface_combinatorics::worker(
 	if (f_v) {
 		cout << "interface_combinatorics::worker" << endl;
 	}
+
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
 
 
 	if (f_random_permutation) {
@@ -930,6 +984,11 @@ void interface_combinatorics::worker(
 		FREE_OBJECT(P);
 
 	}
+
+	// Section 12.1
+	// TABLES/combinatorics_1.csv
+
+
 #if 0
 	else if (f_regular_linear_space_classify) {
 
@@ -948,17 +1007,6 @@ void interface_combinatorics::worker(
 
 	}
 #endif
-	else if (f_domino_portrait) {
-		other::graphics::graphical_output GO;
-
-		GO.do_domino_portrait(
-				domino_portrait_D,
-				domino_portrait_s,
-				domino_portrait_fname,
-				domino_portrait_draw_options,
-				verbose_level);
-
-	}
 	else if (f_read_solutions_and_tally) {
 
 		other::orbiter_kernel_system::file_io Fio;
@@ -1145,6 +1193,17 @@ void interface_combinatorics::worker(
 			cout << "interface_combinatorics::worker "
 					"after Dirk_Kaempfer_main" << endl;
 		}
+	}
+	else if (f_domino_portrait) {
+		other::graphics::graphical_output GO;
+
+		GO.do_domino_portrait(
+				domino_portrait_D,
+				domino_portrait_s,
+				domino_portrait_fname,
+				domino_portrait_draw_options,
+				verbose_level);
+
 	}
 
 

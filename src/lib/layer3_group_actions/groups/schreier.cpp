@@ -1023,7 +1023,7 @@ void schreier::compute_all_point_orbits(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
@@ -1035,9 +1035,11 @@ void schreier::compute_all_point_orbits(
 
 	int pt, pt_loc, cur, pt0;
 
+#if 0
 	if (degree > ONE_MILLION) {
 		f_vv = false;
 	}
+#endif
 
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "

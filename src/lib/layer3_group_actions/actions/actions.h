@@ -377,15 +377,15 @@ public:
 			int verbose_level);
 	void report_group_name_and_degree(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			//other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_type_of_action(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *O,
+			//other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report_what_we_act_on(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *O,
+			//other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 
 
@@ -394,10 +394,12 @@ public:
 			std::ostream &ost);
 	void print_symmetry_group_type(
 			std::ostream &ost);
+	std::string stringify_subaction_labels();
 	void print_info();
 	void report_basic_orbits(
 			std::ostream &ost);
 	void print_base();
+	std::string stringify_base();
 	void print_base(
 			std::ostream &ost);
 	void print_bare_base(
@@ -461,6 +463,8 @@ public:
 
 	void action_print_symmetry_group_type(
 			std::ostream &ost,
+			symmetry_group_type a);
+	std::string stringify_symmetry_group_type(
 			symmetry_group_type a);
 	void get_symmetry_group_type_text(
 			std::string &txt, std::string &tex,
@@ -831,7 +835,27 @@ public:
 			int verbose_level);
 	void report_strong_generators(
 			std::ostream &ost,
-			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			//other::graphics::layered_graph_draw_options *LG_Draw_options,
+			groups::strong_generators *SG,
+			action *A,
+			int verbose_level);
+	void report_strong_generators_GAP(
+			std::ostream &ost,
+			groups::strong_generators *SG,
+			action *A,
+			int verbose_level);
+	void report_strong_generators_fining(
+			std::ostream &ost,
+			groups::strong_generators *SG,
+			action *A,
+			int verbose_level);
+	void report_strong_generators_magma(
+			std::ostream &ost,
+			groups::strong_generators *SG,
+			action *A,
+			int verbose_level);
+	void report_strong_generators_orbiter(
+			std::ostream &ost,
 			groups::strong_generators *SG,
 			action *A,
 			int verbose_level);
@@ -1492,6 +1516,8 @@ public:
 		int verbose_level);
 	std::string stringify(
 		int *Elt);
+	std::string stringify_base_images(
+			int *Elt, int verbose_level);
 
 
 };

@@ -58,6 +58,8 @@ group_modification_description::group_modification_description()
 
 	f_action_on_self_by_right_multiplication = false;
 
+	f_action_on_self_by_conjugation = false;
+
 	f_direct_product = false;
 	//std::string direct_product_input;
 	//std::string direct_product_subgroup_order;
@@ -201,6 +203,13 @@ int group_modification_description::read_arguments(
 				cout << "-action_on_self_by_right_multiplication" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-action_on_self_by_conjugation") == 0) {
+			f_action_on_self_by_conjugation = true;
+			if (f_v) {
+				cout << "-action_on_self_by_conjugation" << endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-direct_product") == 0) {
 			f_direct_product = true;
 			direct_product_input.assign(argv[++i]);
@@ -361,6 +370,9 @@ void group_modification_description::print()
 	}
 	if (f_action_on_self_by_right_multiplication) {
 		cout << "-action_on_self_by_right_multiplication" << endl;
+	}
+	if (f_action_on_self_by_conjugation) {
+		cout << "-action_on_self_by_conjugation" << endl;
 	}
 	if (f_direct_product) {
 		cout << "-direct_product "

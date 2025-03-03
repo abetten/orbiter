@@ -217,6 +217,9 @@ public:
 	int f_group;
 	std::string group_label;
 
+	int f_group_action;
+	std::string group_action_label;
+
 	int f_on_points;
 
 	int f_on_points_with_generators;
@@ -298,6 +301,7 @@ public:
 	orbits_create_description *Descr;
 
 	groups::any_group *Group;
+	groups::any_group *Group_action;
 
 	std::string prefix;
 	std::string label_txt;
@@ -413,7 +417,9 @@ public:
 			int verbose_level);
 
 	void orbits_on_subsets(
-			groups::any_group *AG,
+			groups::any_group *AG_base,
+			groups::any_group *AG_action,
+			groups::strong_generators *Subgroup_gens,
 			poset_classification::poset_classification_control *Control,
 			poset_classification::poset_classification *&PC,
 			int subset_size,
@@ -427,7 +433,8 @@ public:
 			int &size,
 			int verbose_level);
 	void orbits_on_poset_post_processing(
-			groups::any_group *AG,
+			groups::any_group *AG_base,
+			groups::any_group *AG_action,
 			poset_classification::poset_classification *PC,
 			int depth,
 			int verbose_level);

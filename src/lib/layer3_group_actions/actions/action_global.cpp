@@ -38,6 +38,17 @@ void action_global::action_print_symmetry_group_type(
 	ost << txt;
 }
 
+std::string action_global::stringify_symmetry_group_type(
+		symmetry_group_type a)
+{
+	std::string txt;
+	std::string tex;
+
+	get_symmetry_group_type_text(txt, tex, a);
+	return txt;
+}
+
+
 void action_global::get_symmetry_group_type_text(
 		std::string &txt, std::string &tex,
 		symmetry_group_type a)
@@ -5325,6 +5336,7 @@ void action_global::rational_normal_form(
 
 	int *Mtx1;
 	int *Basis1;
+	int *Rational_normal_form;
 	algebra::linear_algebra::gl_class_rep *R1;
 
 	//Mtx1 = NEW_int(n);
@@ -5332,6 +5344,7 @@ void action_global::rational_normal_form(
 
 
 	Basis1 = NEW_int(n * n);
+	Rational_normal_form = NEW_int(n * n);
 
 	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
@@ -5339,7 +5352,7 @@ void action_global::rational_normal_form(
 		cout << "action_global::rational_normal_form "
 				"before identify_matrix Mtx1" << endl;
 	}
-	C->identify_matrix(Mtx1, R1, Basis1, verbose_level);
+	C->identify_matrix(Mtx1, R1, Basis1, Rational_normal_form, verbose_level);
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
 				"after identify_matrix Mtx1" << endl;
@@ -5378,6 +5391,7 @@ void action_global::rational_normal_form(
 	FREE_int(B);
 	FREE_int(Bv);
 	FREE_int(Basis1);
+	FREE_int(Rational_normal_form);
 	FREE_OBJECT(R1);
 	FREE_OBJECT(C);
 
@@ -5468,6 +5482,8 @@ void action_global::find_conjugating_element(
 	int *Mtx2;
 	int *Basis1;
 	int *Basis2;
+	int *Rational_normal_form1;
+	int *Rational_normal_form2;
 	algebra::linear_algebra::gl_class_rep *R1;
 	algebra::linear_algebra::gl_class_rep *R2;
 
@@ -5478,6 +5494,8 @@ void action_global::find_conjugating_element(
 
 	Basis1 = NEW_int(n * n);
 	Basis2 = NEW_int(n * n);
+	Rational_normal_form1 = NEW_int(n * n);;
+	Rational_normal_form2 = NEW_int(n * n);;
 
 	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 	R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
@@ -5486,7 +5504,7 @@ void action_global::find_conjugating_element(
 		cout << "action_global::find_conjugating_element "
 				"before identify_matrix Mtx1" << endl;
 	}
-	C->identify_matrix(Mtx1, R1, Basis1, verbose_level);
+	C->identify_matrix(Mtx1, R1, Basis1, Rational_normal_form1, verbose_level);
 	if (f_v) {
 		cout << "action_global::find_conjugating_element "
 				"after identify_matrix Mtx1" << endl;
@@ -5496,13 +5514,18 @@ void action_global::find_conjugating_element(
 		cout << "action_global::find_conjugating_element "
 				"before identify_matrix Mtx2" << endl;
 	}
-	C->identify_matrix(Mtx2, R2, Basis2, verbose_level);
+	C->identify_matrix(Mtx2, R2, Basis2, Rational_normal_form2, verbose_level);
 	if (f_v) {
 		cout << "action_global::find_conjugating_element "
 				"after identify_matrix Mtx2" << endl;
 	}
 
-
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Basis1);
+	FREE_int(Basis2);
+	FREE_int(Rational_normal_form1);
+	FREE_int(Rational_normal_form2);
 
 	if (f_v) {
 		cout << "action_global::find_conjugating_element done" << endl;
@@ -6141,7 +6164,7 @@ actions::action *action_global::create_action_on_k_subspaces(
 
 void action_global::report_strong_generators(
 		std::ostream &ost,
-		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		//other::graphics::layered_graph_draw_options *LG_Draw_options,
 		groups::strong_generators *SG,
 		action *A,
 		int verbose_level)
@@ -6154,6 +6177,58 @@ void action_global::report_strong_generators(
 
 	// GAP:
 
+	report_strong_generators_GAP(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Fining:
+
+	report_strong_generators_fining(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Magma:
+
+	report_strong_generators_magma(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+	// Orbiter compact form:
+
+	report_strong_generators_orbiter(
+			ost,
+			SG,
+			A,
+			verbose_level - 1);
+
+
+
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators done" << endl;
+	}
+}
+
+void action_global::report_strong_generators_GAP(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators_GAP" << endl;
+	}
 	ost << "GAP export: \\\\" << endl;
 	ost << "\\begin{verbatim}" << endl;
 	if (f_v) {
@@ -6166,9 +6241,23 @@ void action_global::report_strong_generators(
 				"after SG->print_generators_gap" << endl;
 	}
 	ost << "\\end{verbatim}" << endl;
+	if (f_v) {
+		cout << "action_global::report_strong_generators_GAP done" << endl;
+	}
+}
 
 
-	// Fining:
+void action_global::report_strong_generators_fining(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators_fining" << endl;
+	}
 
 	ost << "Fining export: \\\\" << endl;
 	ost << "\\begin{verbatim}" << endl;
@@ -6183,8 +6272,24 @@ void action_global::report_strong_generators(
 	}
 	ost << "\\end{verbatim}" << endl;
 
+	if (f_v) {
+		cout << "action_global::report_strong_generators_fining done" << endl;
+	}
 
-	// Magma:
+}
+
+
+void action_global::report_strong_generators_magma(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators_magma" << endl;
+	}
 
 	ost << "Magma export: \\\\" << endl;
 	ost << "\\begin{verbatim}" << endl;
@@ -6199,8 +6304,23 @@ void action_global::report_strong_generators(
 	}
 	ost << "\\end{verbatim}" << endl;
 
+	if (f_v) {
+		cout << "action_global::report_strong_generators_magma done" << endl;
+	}
+}
 
-	// Orbiter compact form:
+
+void action_global::report_strong_generators_orbiter(
+		std::ostream &ost,
+		groups::strong_generators *SG,
+		action *A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::report_strong_generators_orbiter" << endl;
+	}
 
 	ost << "Compact form: \\\\" << endl;
 	ost << "\\begin{verbatim}" << endl;
@@ -6215,10 +6335,8 @@ void action_global::report_strong_generators(
 	}
 	ost << "\\end{verbatim}" << endl;
 
-
-
 	if (f_v) {
-		cout << "action_global::report_strong_generators done" << endl;
+		cout << "action_global::report_strong_generators_orbiter done" << endl;
 	}
 }
 
@@ -6254,6 +6372,10 @@ void action_global::report(
 				"before Strong_gens->create_sims" << endl;
 	}
 	H = Strong_gens->create_sims(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::report "
+				"after Strong_gens->create_sims" << endl;
+	}
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -6311,10 +6433,21 @@ void action_global::report(
 		ost << "\\noindent The group acts on a set of size "
 				<< A->degree << "\\\\" << endl;
 #endif
+
+		if (f_v) {
+			cout << "action_global::report "
+					"before A->report_what_we_act_on" << endl;
+		}
+
 		A->report_what_we_act_on(
 				ost,
-				LG_Draw_options,
-				verbose_level);
+				//LG_Draw_options,
+				verbose_level - 2);
+
+		if (f_v) {
+			cout << "action_global::report "
+					"after A->report_what_we_act_on" << endl;
+		}
 
 
 #if 0
@@ -6336,21 +6469,31 @@ void action_global::report(
 #endif
 
 		cout << "Strong generators:\\\\" << endl;
+		if (f_v) {
+			cout << "action_global::report "
+					"before Strong_gens->print_generators_tex" << endl;
+		}
 		Strong_gens->print_generators_tex(ost);
+		if (f_v) {
+			cout << "action_global::report "
+					"after Strong_gens->print_generators_tex" << endl;
+		}
 
 
 		if (f_v) {
-			cout << "action_global::report before A->report" << endl;
+			cout << "action_global::report "
+					"before A->report" << endl;
 		}
 
 		A->report(
 				ost, true /*f_sims*/, H,
 				true /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
-				verbose_level);
+				verbose_level - 2);
 
 		if (f_v) {
-			cout << "action_global::report after A->report" << endl;
+			cout << "action_global::report "
+					"after A->report" << endl;
 		}
 
 		if (f_v) {
@@ -6483,12 +6626,24 @@ void action_global::report(
 			groups::sylow_structure *Syl;
 
 			Syl = NEW_OBJECT(groups::sylow_structure);
+			if (f_v) {
+				cout << "action_global::report before Syl->init" << endl;
+			}
 			Syl->init(
 					H,
 					label,
 					label_tex,
-					verbose_level);
+					verbose_level - 2);
+			if (f_v) {
+				cout << "action_global::report after Syl->init" << endl;
+			}
+			if (f_v) {
+				cout << "action_global::report before Syl->report" << endl;
+			}
 			Syl->report(ost);
+			if (f_v) {
+				cout << "action_global::report after Syl->report" << endl;
+			}
 
 		}
 		else {

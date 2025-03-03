@@ -75,6 +75,21 @@ void poset_with_group_action::init_subset_lattice(
 	Strong_gens->group_order(go);
 	f_has_orbit_based_testing = false;
 	if (f_v) {
+		cout << "poset_with_group_action::init_subset_lattice "
+				"A  = ";
+		A->print_info();
+		cout << "poset_with_group_action::init_subset_lattice "
+				"A2 = ";
+		A2->print_info();
+		cout << "poset_with_group_action::init_subset_lattice generators = ";
+		Strong_gens->print_generators_tex(cout);
+		Strong_gens->print_generators(cout, 0 /* verbose_level */);
+	}
+
+
+
+
+	if (f_v) {
 		cout << "poset_with_group_action::init_subset_lattice done" << endl;
 	}
 }
@@ -374,13 +389,25 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 
 
 	if (f_v) {
-		cout << "poset_with_group_action::orbits_on_k_sets_compute calling Gen->init" << endl;
+		cout << "poset_with_group_action::orbits_on_k_sets_compute "
+				"before Gen->initialize_and_allocate_root_node" << endl;
 	}
 	Gen->initialize_and_allocate_root_node(
 			Control,
 			this,
 			k /* sz */,
 			verbose_level - 1);
+	if (f_v) {
+		cout << "poset_with_group_action::orbits_on_k_sets_compute "
+				"after Gen->initialize_and_allocate_root_node" << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_with_group_action::orbits_on_k_sets_compute generators = ";
+		Strong_gens->print_generators_tex(cout);
+		Strong_gens->print_generators(cout, 0 /* verbose_level */);
+	}
+
 
 	other::orbiter_kernel_system::os_interface Os;
 	int schreier_depth = k;
@@ -390,13 +417,17 @@ poset_classification *poset_with_group_action::orbits_on_k_sets_compute(
 
 	if (f_v) {
 		cout << "poset_with_group_action::orbits_on_k_sets_compute "
-				"calling generator_main" << endl;
-		}
+				"before Gen->main" << endl;
+	}
 	Gen->main(t0,
 		schreier_depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "poset_with_group_action::orbits_on_k_sets_compute "
+				"after Gen->main" << endl;
+	}
 
 
 	if (f_v) {

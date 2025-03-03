@@ -14,6 +14,7 @@ ROW,C1,C2,C3
 1,"\verb'-projectivity_subgroup' ","  "," Create the projectivity subgroup of a semilinear group. "
 1,"\verb'-subfield_subgroup' "," $k$ "," Create the subfield subgroup w.r.t. $\bbF_s$. Here $k = \frac{q-1}{s-1}$. "
 1,"\verb'-action_on_self_by_' \verb'right_multiplication' "," "," Create the action on the group itself by right multiplication. "
+1,"\verb'-action_on_self_by_conjugation' "," "," Create the action on the group itself by conjugation. "
 1,"\verb'-direct_product' "," list order gens "," Create the direct product action of the two actions given in list (comma separated). Then create the subgroup of the given order from the given generators. "
 1,"\verb'-polarity_extension' "," G0 P "," Create the polarity extension of G0. P is the underlying projective space on which G0 acts. "
 1,"\verb'-automorphism_group' ","  "," Create the automorphism group of the input group (which is given in \verb'-from'). This command requires Magma. "
@@ -22,3 +23,4 @@ ROW,C1,C2,C3
 1,"\verb'-nauty_control' ","  options "," Nauty options, see Table~\ref{tab:nauty:control}.  "
 1,"\verb'-from' "," label "," Specify the input group action (this option can be repeated). "
 END
+

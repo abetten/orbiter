@@ -481,6 +481,39 @@ void orbit_of_sets::get_table_of_orbits(
 	}
 }
 
+#if 0
+void orbit_of_sets::get_table_of_orbits_as_lint_matrix(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+
+	long int *Table;
+	int orbit_length, set_size;
+
+
+	set_size = sz;
+	orbit_length = used_length;
+	if (f_v) {
+		cout << "orbit_of_sets::get_table_of_orbits orbit_length="
+				<< orbit_length << endl;
+	}
+
+
+	Table = NEW_lint(orbit_length * set_size);
+	for (i = 0; i < orbit_length; i++) {
+		for (j = 0; j < set_size; j++) {
+			Table[i * set_size + j] = Sets[i][j];
+		}
+	}
+
+
+	if (f_v) {
+		cout << "orbit_of_sets::get_table_of_orbits done" << endl;
+	}
+}
+#endif
+
 
 void orbit_of_sets::get_table_of_orbits_and_hash_values(
 		long int *&Table,

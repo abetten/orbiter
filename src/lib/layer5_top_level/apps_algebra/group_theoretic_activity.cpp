@@ -196,6 +196,61 @@ void group_theoretic_activity::perform_activity(
 	}
 
 
+	else if (Descr->f_select_elements) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_select_elements " << Descr->select_elements_ranks << endl;
+		}
+
+		data_structures_groups::vector_ge *vec;
+
+
+		long int *Index_of_elements;
+		int nb_elements;
+
+		Get_lint_vector_from_label(Descr->select_elements_ranks,
+				Index_of_elements, nb_elements, 0 /* verbose_level */);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"nb_elements = " << nb_elements << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->all_elements" << endl;
+		}
+		AG->select_elements(
+				Index_of_elements, nb_elements,
+				vec,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->all_elements" << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_sel_elements";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = vec;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+	}
+
+
+
 
 
 	else if (Descr->f_export_group_table) {
@@ -271,7 +326,8 @@ void group_theoretic_activity::perform_activity(
 
 		actions::action_global AcGl;
 
-		AcGl.apply_based_on_text(AG->A,
+		AcGl.apply_based_on_text(
+				 AG->A,
 				Descr->apply_input,
 				Descr->apply_element, verbose_level);
 
@@ -386,7 +442,8 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->A->raise_to_the_power_based_on_text" << endl;
 		}
-		AcGl.raise_to_the_power_based_on_text(AG->A,
+		AcGl.raise_to_the_power_based_on_text(
+				AG->A,
 				Descr->raise_to_the_power_a_text,
 				Descr->raise_to_the_power_exponent_text,
 				verbose_level);
@@ -459,7 +516,8 @@ void group_theoretic_activity::perform_activity(
 					"before AG->do_canonical_image_GAP" << endl;
 		}
 		AG->do_canonical_image_GAP(
-				Descr->canonical_image_GAP_input_set, verbose_level);
+				Descr->canonical_image_GAP_input_set,
+				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->do_canonical_image_GAP" << endl;
@@ -718,17 +776,167 @@ void group_theoretic_activity::perform_activity(
 					"f_classes" << endl;
 		}
 
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->classes" << endl;
+		groups::sims *Sims;
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
+			exit(1);
 		}
-		AG->classes(verbose_level);
+
+		Sims = AG->Subgroup_sims;
+
+		classes_of_elements_expanded *Classes_of_elements_expanded;
+
+		algebra_global_with_action Algebra_global_with_action;
+
+		int expand_by_go = 10000;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->classes" << endl;
+					"before Algebra_global_with_action.get_classses_expanded" << endl;
+		}
+		Algebra_global_with_action.get_classses_expanded(
+				Sims,
+				AG,
+				expand_by_go,
+				Classes_of_elements_expanded,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra_global_with_action.get_classses_expanded" << endl;
 		}
 
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Classes_of_elements_expanded->Classes->report" << endl;
+		}
+		Classes_of_elements_expanded->Classes->report(
+				Sims,
+				AG->label,
+				AG->label_tex,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Classes_of_elements_expanded->Classes->report" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before class_data->export_csv" << endl;
+		}
+		Classes_of_elements_expanded->Classes->export_csv(
+				Sims,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after class_data->export_csv" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Classes_of_elements_expanded->report" << endl;
+		}
+		Classes_of_elements_expanded->report(
+				AG->label,
+				AG->label_tex,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Classes_of_elements_expanded->report" << endl;
+		}
+
+		FREE_OBJECT(Classes_of_elements_expanded->Classes);
+		Classes_of_elements_expanded->Classes = NULL;
+		FREE_OBJECT(Classes_of_elements_expanded);
+
+
+
+
+	}
+	else if (Descr->f_split_by_classes) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_split_by_classes" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"fname = " << Descr->split_by_classes_fname << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"column = " << Descr->split_by_classes_column << endl;
+		}
+
+		groups::sims *Sims;
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+
+		int expand_by_go = 10000;
+
+		algebra_global_with_action Algebra_global_with_action;
+
+		Algebra_global_with_action.split_by_classes(
+				Sims,
+				AG,
+				expand_by_go,
+				Descr->split_by_classes_fname,
+				Descr->split_by_classes_column,
+				verbose_level);
+
+
+
+	}
+	else if (Descr->f_identify_elements_by_class) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_identify_elements_by_classes" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"fname = " << Descr->identify_elements_by_class_fname << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"column = " << Descr->identify_elements_by_class_column << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"identify_elements_by_class_expand_go = " << Descr->identify_elements_by_class_expand_go << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"supergroup = " << Descr->identify_elements_by_class_supergroup << endl;
+		}
+
+		groups::sims *Sims;
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+		groups::any_group *Any_group_G;
+
+
+		Any_group_G = Get_any_group(Descr->identify_elements_by_class_supergroup);
+
+
+		algebra_global_with_action Algebra_global_with_action;
+
+		int *Class_index;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Algebra_global_with_action.identify_elements_by_classes" << endl;
+		}
+		Algebra_global_with_action.identify_elements_by_classes(
+			Sims,
+			AG,
+			Any_group_G,
+			Descr->identify_elements_by_class_expand_go,
+			Descr->identify_elements_by_class_fname, Descr->identify_elements_by_class_column,
+			Class_index,
+			verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra_global_with_action.identify_elements_by_classes" << endl;
+		}
 	}
 
 	else if (Descr->f_subgroup_lattice_magma) {
@@ -736,15 +944,93 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_subgroup_lattice_magma" << endl;
 		}
+
+		groups::sims *Sims;
+		//interfaces::conjugacy_classes_of_subgroups *class_data;
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before AG->subgroup_lattice_magma" << endl;
+					"before AG->get_subgroup_lattice" << endl;
 		}
-		AG->subgroup_lattice_magma(verbose_level);
+		//AG->subgroup_lattice_magma(verbose_level);
+
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+		AG->get_subgroup_lattice(
+				Sims,
+				AG->class_data,
+				verbose_level);
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->f_subgroup_lattice_magma" << endl;
+					"after AG->get_subgroup_lattice" << endl;
 		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before class_data->report" << endl;
+		}
+		AG->class_data->report(
+				Sims,
+				AG->label,
+				AG->label_tex,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after class_data->report" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before class_data->export_csv" << endl;
+		}
+		AG->class_data->export_csv(
+				Sims,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after class_data->export_csv" << endl;
+		}
+
+
+		// class_data is now part of AG, don't free it
+
+		//FREE_OBJECT(Sims);
+
+	}
+	else if (Descr->f_identify_subgroups_from_file) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					" -identify_subgroups_from_file" << Descr->identify_subgroups_from_file_fname
+					<< " -identify_subgroups_from_expand_go" << Descr->identify_subgroups_from_expand_go
+					<< endl;
+		}
+
+
+		algebra_global_with_action Algebra_global_with_action;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Algebra_global_with_action.identify_subgroups_from_file" << endl;
+		}
+		Algebra_global_with_action.identify_subgroups_from_file(
+				AG,
+				Descr->identify_subgroups_from_file_fname,
+				Descr->identify_subgroups_from_file_col_label,
+				Descr->identify_subgroups_from_expand_go,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra_global_with_action.identify_subgroups_from_file" << endl;
+		}
+
+
+
 	}
 
 	else if (Descr->f_find_subgroup) {

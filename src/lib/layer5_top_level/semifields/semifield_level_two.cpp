@@ -74,6 +74,8 @@ semifield_level_two::semifield_level_two()
 	ELT1 = ELT2 = ELT3 = NULL;
 	M1 = NULL;
 	Basis1 = Basis2 = NULL;
+	Rational_normal_form1 = NULL;
+	Rational_normal_form2 = NULL;
 
 	R1 = R2 = NULL;
 
@@ -307,6 +309,14 @@ semifield_level_two::~semifield_level_two()
 	if (Basis2) {
 		FREE_int(Basis2);
 	}
+	if (Rational_normal_form1) {
+		FREE_int(Rational_normal_form1);
+	}
+	if (Rational_normal_form2) {
+		FREE_int(Rational_normal_form2);
+	}
+
+
 	if (R1) {
 		FREE_OBJECT(R1);
 	}
@@ -405,6 +415,8 @@ void semifield_level_two::init(
 	M1 = NEW_int(n * n);
 	Basis1 = NEW_int(k * k);
 	Basis2 = NEW_int(k * k);
+	Rational_normal_form1 = NEW_int(k * k);
+	Rational_normal_form2 = NEW_int(k * k);
 
 	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 	R2 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
@@ -708,7 +720,7 @@ void semifield_level_two::downstep(
 					"class " << i << " before identify_matrix" << endl;
 		}
 		C->identify_matrix(Mtx_2, R2,
-				class_rep_plus_I_Basis[i],
+				class_rep_plus_I_Basis[i], Rational_normal_form1,
 				verbose_level - 1);
 		if (f_vv) {
 			cout << "class_rep_plus_I_Basis[i]" << endl;
@@ -872,7 +884,7 @@ void semifield_level_two::compute_stabilizers_downstep(
 
 			F->Linear_algebra->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
 
-			C->identify_matrix(Mtx_2, R2, Basis, verbose_level - 3);
+			C->identify_matrix(Mtx_2, R2, Basis, Rational_normal_form1, verbose_level - 3);
 
 			A_PGLk->Group_element->make_element(Elt, Basis, 0);
 
@@ -1297,11 +1309,11 @@ void semifield_level_two::trace(
 	if (f_v) {
 		cout << "semifield_level_two::trace before identify_matrix Mtx5" << endl;
 	}
-	C->identify_matrix(Mtx5, R1, Basis1, verbose_level);
+	C->identify_matrix(Mtx5, R1, Basis1, Rational_normal_form1, verbose_level);
 	if (f_v) {
 		cout << "semifield_level_two::trace before identify_matrix Mtx6" << endl;
 	}
-	C->identify_matrix(Mtx6, R2, Basis2, verbose_level);
+	C->identify_matrix(Mtx6, R2, Basis2, Rational_normal_form2, verbose_level);
 
 	if (f_v) {
 		cout << "semifield_level_two::trace before find_class_rep R1" << endl;

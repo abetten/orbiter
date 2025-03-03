@@ -21,6 +21,7 @@ namespace user_interface {
 interface_algebra::interface_algebra()
 {
 	Record_birth();
+
 	f_primitive_root = false;
 	//std::string primitive_root_p;
 
@@ -73,12 +74,6 @@ interface_algebra::interface_algebra()
 	count_subprimitive_H_max = 0;
 
 
-	f_character_table_symmetric_group = false;
-	character_table_symmetric_group_n = 0;
-
-	f_make_A5_in_PSL_2_q = false;
-	make_A5_in_PSL_2_q_q = 0;
-
 	f_order_of_q_mod_n = false;
 	order_of_q_mod_n_q = 0;
 	order_of_q_mod_n_n_min = 0;
@@ -88,14 +83,23 @@ interface_algebra::interface_algebra()
 	eulerfunction_interval_n_min = 0;
 	eulerfunction_interval_n_max = 0;
 
-	f_young_symmetrizer = false;
-	young_symmetrizer_n = 0;
+	f_jacobi = false;
+	jacobi_top = 0;
+	jacobi_bottom = 0;
 
-	f_young_symmetrizer_sym_4 = false;
-
+	f_Chinese_remainders = false;
+	//std::string Chinese_remainders_R;
+	//std::string Chinese_remainders_M;
 
 	f_draw_mod_n = false;
 	Draw_mod_n_description = NULL;
+
+
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
 
 	f_power_function_mod_n = false;
 	power_function_mod_n_k = 0;
@@ -106,6 +110,11 @@ interface_algebra::interface_algebra()
 	//std::string all_rational_normal_forms_finite_field_label;
 	all_rational_normal_forms_d = 0;
 
+	f_compute_rational_normal_form = false;
+	//std::string compute_rational_normal_form_field_label;
+	compute_rational_normal_form_d = 0;
+	//std::string compute_rational_normal_form_data;
+
 	f_eigenstuff = false;
 	//std::string eigenstuff_finite_field_label;
 	eigenstuff_n = 0;
@@ -115,13 +124,24 @@ interface_algebra::interface_algebra()
 	f_smith_normal_form = false;
 	//std::string smith_normal_form_matrix
 
-	f_jacobi = false;
-	jacobi_top = 0;
-	jacobi_bottom = 0;
 
-	f_Chinese_remainders = false;
-	//std::string Chinese_remainders_R;
-	//std::string Chinese_remainders_M;
+
+	// representation theory:
+
+	f_character_table_symmetric_group = false;
+	character_table_symmetric_group_n = 0;
+
+	f_young_symmetrizer = false;
+	young_symmetrizer_n = 0;
+
+	f_young_symmetrizer_sym_4 = false;
+
+
+
+	// global group theory:
+
+	f_make_A5_in_PSL_2_q = false;
+	make_A5_in_PSL_2_q_q = 0;
 
 
 	f_order_of_group_Anq = false;
@@ -186,32 +206,33 @@ void interface_algebra::print_help(
 	else if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
-		cout << "-character_table_symmetric_group <int : deg> " << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
-		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		cout << "-order_of_q_mod_n <int : q> <int : n_min> <int : n_max>  " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
 		cout << "-eulerfunction_interval <int : n_min> <int : n_max>  " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
-		cout << "-young_symmetrizer  " << endl;
+	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
+		cout << "-jacobi <int : top> <int : bottom>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
-		cout << "-young_symmetrizer_sym_4  " << endl;
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		cout << "-draw_mod_n descr -end" << endl;
 	}
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
 	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
 		cout << "-power_function_mod_n <int : a> <int : n>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		cout << "-all_rational_normal_forms <string : finite_field_label> <int : degree>" << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-compute_rational_normal_form") == 0) {
+		cout << "-compute_rational_normal_form <string : finite_field_label>  <int : d> <string : matrix_entries>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
 		cout << "-eigenstuff <string : finite_field_label> <int : n> <intvec : coeffs>" << endl;
@@ -219,11 +240,21 @@ void interface_algebra::print_help(
 	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
 		cout << "-smith_normal_form <string : matrix_label>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
-		cout << "-jacobi <int : top> <int : bottom>" << endl;
+
+	// representation theory:
+	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
+		cout << "-character_table_symmetric_group <int : deg> " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
-		cout << "-Chinese_remainders <string : Remainders> <string : Moduli>" << endl;
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
+		cout << "-young_symmetrizer  " << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		cout << "-young_symmetrizer_sym_4  " << endl;
+	}
+
+	// global group theory:
+	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+		cout << "-make_A5_in_PSL_2_q <int : q> " << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
 		cout << "-order_of_group_Anq <int : n> <int : q>" << endl;
@@ -287,31 +318,34 @@ int interface_algebra::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
-		return true;
-	}
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
+	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		return true;
 	}
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
+
 	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-compute_rational_normal_form") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
@@ -320,10 +354,20 @@ int interface_algebra::recognize_keyword(
 	else if (ST.stringcmp(argv[i], "-smith_normal_form") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
+
+	// representation theory:
+	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		return true;
+	}
+
+	// global group theory:
+	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
@@ -459,16 +503,6 @@ void interface_algebra::read_arguments(
 				<< " " << count_subprimitive_H_max
 				<< endl;
 	}
-	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
-		f_character_table_symmetric_group = true;
-		character_table_symmetric_group_n = ST.strtoi(argv[++i]);
-		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
-	}
-	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
-		f_make_A5_in_PSL_2_q = true;
-		make_A5_in_PSL_2_q_q = ST.strtoi(argv[++i]);
-		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
-	}
 
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		f_order_of_q_mod_n = true;
@@ -488,17 +522,23 @@ void interface_algebra::read_arguments(
 				<< " " << eulerfunction_interval_n_min
 				<< " " << eulerfunction_interval_n_max << " " << endl;
 	}
-
-
-
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
-		f_young_symmetrizer = true;
-		young_symmetrizer_n = ST.strtoi(argv[++i]);
-		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
+	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
+		f_jacobi = true;
+		jacobi_top = ST.strtoi(argv[++i]);
+		jacobi_bottom = ST.strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-jacobi " << jacobi_top << " "
+					<< jacobi_bottom << endl;
+		}
 	}
-	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
-		f_young_symmetrizer_sym_4 = true;
-		cout << "-young_symmetrizer_sym_4 " << endl;
+	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
+		f_Chinese_remainders = true;
+		Chinese_remainders_R.assign(argv[++i]);
+		Chinese_remainders_M.assign(argv[++i]);
+		if (f_v) {
+			cout << "-Chinese_remainders " << Chinese_remainders_R
+					<< " " << Chinese_remainders_M << endl;
+		}
 	}
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		f_draw_mod_n = true;
@@ -517,6 +557,12 @@ void interface_algebra::read_arguments(
 		cout << "-draw_mod_n " << endl;
 		Draw_mod_n_description->print();
 	}
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
+
 	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
 		f_power_function_mod_n = true;
 		power_function_mod_n_k = ST.strtoi(argv[++i]);
@@ -530,11 +576,25 @@ void interface_algebra::read_arguments(
 		all_rational_normal_forms_finite_field_label.assign(argv[++i]);
 		all_rational_normal_forms_d = ST.strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-f_all_rational_normal_forms "
+			cout << "-all_rational_normal_forms "
 				<< all_rational_normal_forms_finite_field_label
 				<< " " << all_rational_normal_forms_d << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-compute_rational_normal_form") == 0) {
+		f_compute_rational_normal_form = true;
+		compute_rational_normal_form_field_label.assign(argv[++i]);
+		compute_rational_normal_form_d = ST.strtoi(argv[++i]);
+		compute_rational_normal_form_data.assign(argv[++i]);
+		if (f_v) {
+			cout << "-compute_rational_normal_form "
+				<< compute_rational_normal_form_field_label
+				<< " " << compute_rational_normal_form_d
+				<< " " << compute_rational_normal_form_data << endl;
+		}
+	}
+
+
 	else if (ST.stringcmp(argv[i], "-eigenstuff") == 0) {
 		f_eigenstuff = true;
 		eigenstuff_finite_field_label.assign(argv[++i]);
@@ -555,23 +615,29 @@ void interface_algebra::read_arguments(
 				<< smith_normal_form_matrix << endl;
 		}
 	}
-	else if (ST.stringcmp(argv[i], "-jacobi") == 0) {
-		f_jacobi = true;
-		jacobi_top = ST.strtoi(argv[++i]);
-		jacobi_bottom = ST.strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-jacobi " << jacobi_top << " "
-					<< jacobi_bottom << endl;
-		}
+
+	// representation theory:
+	else if (ST.stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
+		f_character_table_symmetric_group = true;
+		character_table_symmetric_group_n = ST.strtoi(argv[++i]);
+		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-Chinese_remainders") == 0) {
-		f_Chinese_remainders = true;
-		Chinese_remainders_R.assign(argv[++i]);
-		Chinese_remainders_M.assign(argv[++i]);
-		if (f_v) {
-			cout << "-Chinese_remainders " << Chinese_remainders_R
-					<< " " << Chinese_remainders_M << endl;
-		}
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
+		f_young_symmetrizer = true;
+		young_symmetrizer_n = ST.strtoi(argv[++i]);
+		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
+	}
+	else if (ST.stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		f_young_symmetrizer_sym_4 = true;
+		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+
+
+	// global group theory:
+	else if (ST.stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+		f_make_A5_in_PSL_2_q = true;
+		make_A5_in_PSL_2_q_q = ST.strtoi(argv[++i]);
+		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-order_of_group_Anq") == 0) {
 		f_order_of_group_Anq = true;
@@ -649,34 +715,34 @@ void interface_algebra::print()
 				<< " " << count_subprimitive_H_max
 				<< endl;
 	}
-	if (f_character_table_symmetric_group) {
-		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
-	}
-	if (f_make_A5_in_PSL_2_q) {
-		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
-	}
 	if (f_order_of_q_mod_n) {
 		cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
 				<< " " << order_of_q_mod_n_n_min
 				<< " " << order_of_q_mod_n_n_max << " " << endl;
 	}
-
 	if (f_eulerfunction_interval) {
 		cout << "-eulerfunction_interval "
 				<< " " << eulerfunction_interval_n_min
 				<< " " << eulerfunction_interval_n_max << " " << endl;
 	}
-
-	if (f_young_symmetrizer) {
-		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
+	if (f_jacobi) {
+		cout << "-jacobi " << jacobi_top << " "
+				<< jacobi_bottom << endl;
 	}
-	if (f_young_symmetrizer_sym_4) {
-		cout << "-young_symmetrizer_sym_4 " << endl;
+	if (f_Chinese_remainders) {
+		cout << "-Chinese_remainders " << Chinese_remainders_R
+				<< " " << Chinese_remainders_M << endl;
 	}
 	if (f_draw_mod_n) {
 		cout << "-draw_mod_n " << endl;
 		Draw_mod_n_description->print();
 	}
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
+
 	if (f_power_function_mod_n) {
 		cout << "-power_function_mod_n " << " " << power_function_mod_n_k << " " << power_function_mod_n_n << endl;
 	}
@@ -685,6 +751,12 @@ void interface_algebra::print()
 		cout << "-all_rational_normal_forms "
 				<< all_rational_normal_forms_finite_field_label
 				<< " " << all_rational_normal_forms_d << endl;
+	}
+	if (f_compute_rational_normal_form) {
+		cout << "-compute_rational_normal_form "
+			<< compute_rational_normal_form_field_label
+			<< " " << compute_rational_normal_form_d
+			<< " " << compute_rational_normal_form_data << endl;
 	}
 	if (f_eigenstuff) {
 		cout << "-eigenstuff "
@@ -696,13 +768,22 @@ void interface_algebra::print()
 		cout << "-smith_normal_form "
 			<< smith_normal_form_matrix << endl;
 	}
-	if (f_jacobi) {
-		cout << "-jacobi " << jacobi_top << " "
-				<< jacobi_bottom << endl;
+
+	// representation theory:
+	if (f_character_table_symmetric_group) {
+		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
 	}
-	if (f_Chinese_remainders) {
-		cout << "-Chinese_remainders " << Chinese_remainders_R
-				<< " " << Chinese_remainders_M << endl;
+	if (f_young_symmetrizer) {
+		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
+	}
+	if (f_young_symmetrizer_sym_4) {
+		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+
+
+	// global group theory:
+	if (f_make_A5_in_PSL_2_q) {
+		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
 	if (f_order_of_group_Anq) {
 		cout << "-order_of_group_Anq " << order_of_group_Anq_n << " "
@@ -734,9 +815,17 @@ void interface_algebra::worker(
 		algebra::number_theory::number_theory_domain NT;
 
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_discrete_log" << endl;
+		}
 		NT.do_discrete_log(
 				discrete_log_y, discrete_log_a, discrete_log_m,
 				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_discrete_log" << endl;
+		}
 	}
 	else if (f_primitive_root) {
 
@@ -746,41 +835,89 @@ void interface_algebra::worker(
 		algebra::ring_theory::longinteger_object p;
 
 		p.create_from_base_10_string(primitive_root_p);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_primitive_root_longinteger" << endl;
+		}
 		NT.do_primitive_root_longinteger(p, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_primitive_root_longinteger" << endl;
+		}
 	}
 	else if (f_smallest_primitive_root) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_smallest_primitive_root" << endl;
+		}
 		NT.do_smallest_primitive_root(smallest_primitive_root_p, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_smallest_primitive_root" << endl;
+		}
 	}
 	else if (f_smallest_primitive_root_interval) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_smallest_primitive_root_interval" << endl;
+		}
 		NT.do_smallest_primitive_root_interval(
 				smallest_primitive_root_interval_min,
 				smallest_primitive_root_interval_max, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_smallest_primitive_root_interval" << endl;
+		}
 	}
 	else if (f_number_of_primitive_roots_interval) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_number_of_primitive_roots_interval" << endl;
+		}
 		NT.do_number_of_primitive_roots_interval(
 				smallest_primitive_root_interval_min,
 				smallest_primitive_root_interval_max, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_number_of_primitive_roots_interval" << endl;
+		}
 	}
 	else if (f_inverse_mod) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_inverse_mod" << endl;
+		}
 		NT.do_inverse_mod(inverse_mod_a, inverse_mod_n, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_inverse_mod" << endl;
+		}
 	}
 	else if (f_extended_gcd) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_extended_gcd" << endl;
+		}
 		NT.do_extended_gcd(extended_gcd_a, extended_gcd_b, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_extended_gcd" << endl;
+		}
 	}
 	else if (f_power_mod) {
 
@@ -794,19 +931,43 @@ void interface_algebra::worker(
 		k.create_from_base_10_string(power_mod_k);
 		n.create_from_base_10_string(power_mod_n);
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_power_mod" << endl;
+		}
 		NT.do_power_mod(a, k, n, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_power_mod" << endl;
+		}
 	}
 	else if (f_square_root) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.square_root" << endl;
+		}
 		NT.square_root(square_root_number, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.square_root" << endl;
+		}
 	}
 	else if (f_square_root_mod) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.square_root_mod" << endl;
+		}
 		NT.square_root_mod(square_root_mod_a, square_root_mod_m, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.square_root_mod" << endl;
+		}
 	}
 
 	else if (f_all_square_roots_mod_n) {
@@ -815,8 +976,19 @@ void interface_algebra::worker(
 		vector<long int> S;
 		int i;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.all_square_roots_mod_n_by_exhaustive_search_lint" << endl;
+		}
 		NT.all_square_roots_mod_n_by_exhaustive_search_lint(
-				all_square_roots_mod_n_a, all_square_roots_mod_n_n, S, verbose_level);
+				all_square_roots_mod_n_a,
+				all_square_roots_mod_n_n,
+				S,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.all_square_roots_mod_n_by_exhaustive_search_lint" << endl;
+		}
 
 		cout << "We found " << S.size() << " square roots of "
 				<< all_square_roots_mod_n_a << " mod " << all_square_roots_mod_n_n << endl;
@@ -825,32 +997,22 @@ void interface_algebra::worker(
 			cout << i << " : " << S[i] << endl;
 		}
 	}
-	else if (f_character_table_symmetric_group) {
-
-		apps_algebra::algebra_global_with_action A;
-
-		A.do_character_table_symmetric_group(
-				character_table_symmetric_group_n,
-				verbose_level);
-
-	}
-
-	else if (f_make_A5_in_PSL_2_q) {
-
-		group_constructions::group_constructions_global Group_constructions_global;
-
-		Group_constructions_global.A5_in_PSL_(
-				make_A5_in_PSL_2_q_q, verbose_level);
-
-	}
 
 	else if (f_count_subprimitive) {
 
 		algebra::basic_algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.count_subprimitive" << endl;
+		}
 		Algebra.count_subprimitive(
 				count_subprimitive_Q_max,
 				count_subprimitive_H_max);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.count_subprimitive" << endl;
+		}
 	}
 #if 0
 	else if (f_search_for_primitive_polynomial_in_range) {
@@ -867,51 +1029,108 @@ void interface_algebra::worker(
 
 		algebra::basic_algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.order_of_q_mod_n" << endl;
+		}
 		Algebra.order_of_q_mod_n(
-				order_of_q_mod_n_q, order_of_q_mod_n_n_min, order_of_q_mod_n_n_max,
+				order_of_q_mod_n_q,
+				order_of_q_mod_n_n_min,
+				order_of_q_mod_n_n_max,
 				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.order_of_q_mod_n" << endl;
+		}
 
 	}
-
 	else if (f_eulerfunction_interval) {
 
 		algebra::number_theory::number_theory_domain NT;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_eulerfunction_interval" << endl;
+		}
 		NT.do_eulerfunction_interval(
-				eulerfunction_interval_n_min, eulerfunction_interval_n_max,
+				eulerfunction_interval_n_min,
+				eulerfunction_interval_n_max,
 				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_eulerfunction_interval" << endl;
+		}
 
 	}
+	else if (f_jacobi) {
 
+		algebra::number_theory::number_theory_domain NT;
 
-	else if (f_young_symmetrizer) {
-		apps_algebra::algebra_global_with_action Algebra;
-
-		Algebra.young_symmetrizer(young_symmetrizer_n, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.do_jacobi" << endl;
+		}
+		NT.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after NT.do_jacobi" << endl;
+		}
 	}
+	else if (f_Chinese_remainders) {
 
-	else if (f_young_symmetrizer_sym_4) {
-		apps_algebra::algebra_global_with_action Algebra;
+		algebra::number_theory::number_theory_domain NT;
 
-		Algebra.young_symmetrizer_sym_4(verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.Chinese_remainders_text" << endl;
+		}
+		NT.Chinese_remainders_text(
+				Chinese_remainders_R,
+				Chinese_remainders_M,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before NT.Chinese_remainders_text" << endl;
+		}
+
 	}
-
 	else if (f_draw_mod_n) {
 		other::graphics::plot_tools PT;
 
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before PT.draw_mod_n" << endl;
+		}
 		PT.draw_mod_n(
 				Draw_mod_n_description,
 				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after PT.draw_mod_n" << endl;
+		}
 	}
+
+
+	// Section 10.1
+	// TABLES/interface_algebra.csv
+
 
 	else if (f_power_function_mod_n) {
 
 		algebra::basic_algebra::algebra_global Algebra;
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.power_function_mod_n" << endl;
+		}
 		Algebra.power_function_mod_n(
 				power_function_mod_n_k, power_function_mod_n_n,
 				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.power_function_mod_n" << endl;
+		}
 
 	}
 
@@ -925,11 +1144,78 @@ void interface_algebra::worker(
 
 		F = Get_finite_field(all_rational_normal_forms_finite_field_label);
 
-		Algebra.classes_GL(
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.make_classes_GL" << endl;
+		}
+
+		Algebra.make_classes_GL(
 				F, all_rational_normal_forms_d,
-				false /* f_no_eigenvalue_one */, verbose_level);
+				false /* f_no_eigenvalue_one */,
+				verbose_level);
+
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.make_classes_GL" << endl;
+		}
 
 
+
+	}
+
+	else if (f_compute_rational_normal_form) {
+
+		apps_algebra::algebra_global_with_action Algebra;
+		int *matrix_data;
+		int sz;
+
+		algebra::field_theory::finite_field *F;
+
+		F = Get_finite_field(compute_rational_normal_form_field_label);
+
+		Int_vec_scan(compute_rational_normal_form_data, matrix_data, sz);
+
+		if (sz != compute_rational_normal_form_d * compute_rational_normal_form_d) {
+			cout << "interface_algebra::worker matrix size incorrect" << endl;
+			exit(1);
+		}
+
+		int d;
+		int *Basis;
+		int *Rational_normal_form;
+
+		d = compute_rational_normal_form_d;
+		Basis = NEW_int(d * d);
+		Rational_normal_form = NEW_int(d * d);
+
+
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.compute_rational_normal_form" << endl;
+		}
+		Algebra.compute_rational_normal_form(
+				F, compute_rational_normal_form_d,
+				matrix_data,
+				Basis, Rational_normal_form,
+				verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.compute_rational_normal_form" << endl;
+		}
+
+		if (f_v) {
+			cout << "gl_classes::identify_matrix "
+					"Basis = " << endl;
+			Int_matrix_print(Basis, d, d);
+			cout << "gl_classes::identify_matrix "
+					"Rational_normal_form = " << endl;
+			Int_matrix_print(Rational_normal_form, d, d);
+		}
+
+
+		FREE_int(matrix_data);
+		FREE_int(Basis);
+		FREE_int(Rational_normal_form);
 
 	}
 
@@ -951,7 +1237,15 @@ void interface_algebra::worker(
 			exit(1);
 		}
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.do_eigenstuff" << endl;
+		}
 		Algebra.do_eigenstuff(F, eigenstuff_n, data, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.do_eigenstuff" << endl;
+		}
 
 	}
 
@@ -969,8 +1263,16 @@ void interface_algebra::worker(
 		Get_matrix(smith_normal_form_matrix, A, m, n);
 
 
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before Algebra.smith_normal_form" << endl;
+		}
 		Algebra.smith_normal_form(
 					A, m, n, smith_normal_form_matrix, verbose_level);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after Algebra.smith_normal_form" << endl;
+		}
 
 
 #if 0
@@ -1011,59 +1313,40 @@ void interface_algebra::worker(
 #endif
 
 	}
-	else if (f_jacobi) {
 
-		algebra::number_theory::number_theory_domain NT;
+	// representation theory:
+	else if (f_character_table_symmetric_group) {
 
-		NT.do_jacobi(jacobi_top, jacobi_bottom, verbose_level);
-	}
-	else if (f_Chinese_remainders) {
+		apps_algebra::algebra_global_with_action A;
 
-		long int *R;
-		int sz1;
-		long int *M;
-		int sz2;
-
-		Get_vector_or_set(Chinese_remainders_R, R, sz1);
-		Get_vector_or_set(Chinese_remainders_M, M, sz2);
-
-		algebra::number_theory::number_theory_domain NT;
-		std::vector<long int> Remainders;
-		std::vector<long int> Moduli;
-		int i;
-		long int x, Modulus;
-
-		if (sz1 != sz2) {
-			cout << "remainders and moduli must have the same length" << endl;
-			exit(1);
-		}
-
-		for (i = 0; i < sz1; i++) {
-			Remainders.push_back(R[i]);
-			Moduli.push_back(M[i]);
-		}
-
-		x = NT.Chinese_Remainders(
-				Remainders,
-				Moduli, Modulus, verbose_level);
-
-
-		cout << "The solution is " << x << " modulo " << Modulus << endl;
-
-		algebra::ring_theory::longinteger_domain D;
-		algebra::ring_theory::longinteger_object xl, Ml;
-
-		D.Chinese_Remainders(
-				Remainders,
-				Moduli,
-				xl, Ml, verbose_level);
-
-		cout << "The solution is " << xl << " modulo " << Ml << " (computed in longinteger)" << endl;
-
-		FREE_lint(R);
-		FREE_lint(M);
+		A.do_character_table_symmetric_group(
+				character_table_symmetric_group_n,
+				verbose_level);
 
 	}
+	else if (f_young_symmetrizer) {
+		apps_algebra::algebra_global_with_action Algebra;
+
+		Algebra.young_symmetrizer(young_symmetrizer_n, verbose_level);
+	}
+
+	else if (f_young_symmetrizer_sym_4) {
+		apps_algebra::algebra_global_with_action Algebra;
+
+		Algebra.young_symmetrizer_sym_4(verbose_level);
+	}
+
+
+	// global group theory:
+	else if (f_make_A5_in_PSL_2_q) {
+
+		group_constructions::group_constructions_global Group_constructions_global;
+
+		Group_constructions_global.A5_in_PSL_(
+				make_A5_in_PSL_2_q_q, verbose_level);
+
+	}
+
 	else if (f_order_of_group_Anq) {
 
 		if (f_v) {

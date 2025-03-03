@@ -14,4 +14,7 @@ ROW,C1,C2,C3
 1,"\verb'-sparse' "," data "," Provide data in sparse form, i.e. as pairs value and position. "
 1,"\verb'-concatenate' "," list "," Concatenate the given vectors. List is a comma separated list of vectors that have been created before. "
 1,"\verb'-loop' "," $s$ $u$ $d$ "," Create vector entries of the form $s + id<u,$ $i \in \bbZ.$  The upper bound $u$ itself will not be part of the sequence. "
+1,"\verb'-index_of_support' "," vec "," Create the index set of support of the vector vec. This is the set of all $i$ such that vec[i] is nonzero. "
+1,"\verb'-permutation_matrix' "," list "," Create the permutation matrix defined by the 0-based list of integers. "
+1,"\verb'-permutation_matrix_inverse' "," list "," Create the inverse permutation matrix defined by the 0-based list of integers. "
 END

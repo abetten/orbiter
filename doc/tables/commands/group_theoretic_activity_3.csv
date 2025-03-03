@@ -1,6 +1,8 @@
 ROW,C1,C2,C3
 0,"tab:grouptasks3",,
 1,"Group theoretic activities (Part 3)",,
+1,"\verb'-find_conjugating_element' "," $a$ $b$ ","Computes an element $g$ which conjugates $a$ to $b$ or states that the given elements $a$ and $b$ are not conjugate. "
+1,"\verb'-group_of_automorphisms_' \verb'by_images_of_generators' "," label v images ","Creates a group of automorphisms by assigning image values to certain generators. The vector v is a vector of group elements. The image values are numerical values representing indices in the vector v. "
 1,"\verb'-order_of_products' ","  $g_1 \ldots g_n$ ","Computes the orders of all products $g_ig_j$, $1 \le i,j \le n.$ Writes a table with these orders to file."
 1,"\verb'-reverse_isomorphism_exterior_square' ","  ","Given a set of generators of a subgroup of $\PGO^+(6,q)$ as $6\times 6$ matrixes, the command computes the inverse image of the generators in $\PGL(4,q)$ (if possible)."
 1,"\verb'-reverse_isomorphism_exterior_' \verb'square_vector_of_ge' "," vector  ","applies reverse isomorphism exterior square to all elements in the given vector object."

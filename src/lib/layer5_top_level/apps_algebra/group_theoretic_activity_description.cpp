@@ -35,6 +35,9 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_elements = false;
 
+	f_select_elements = false;
+	//std::string select_elements_ranks;
+
 
 	f_export_group_table = false;
 
@@ -98,6 +101,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string element_unrank_data;
 
 
+
+
 	// part 2:
 
 
@@ -128,7 +133,24 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	// Magma:
 	f_classes = false;
 
+	f_split_by_classes = false;
+	//std::string split_by_classes_fname;
+	//std::string split_by_classes_column;
+
+
+	f_identify_elements_by_class = false;
+	//std::string identify_elements_by_class_fname;
+	//std::string identify_elements_by_class_column;
+	identify_elements_by_class_expand_go = 0;
+	//std::string identify_elements_by_class_supergroup;
+
+
 	f_subgroup_lattice_magma = false;
+
+	f_identify_subgroups_from_file = false;
+	//std::string identify_subgroups_from_file_fname;
+	//std::string identify_subgroups_from_file_col_label;
+	identify_subgroups_from_expand_go = 0;
 
 
 	// undocumented:
@@ -364,6 +386,14 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-elements" << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-select_elements") == 0) {
+			f_select_elements = true;
+			select_elements_ranks.assign(argv[++i]);
+			if (f_v) {
+				cout << "-select_elements " << select_elements_ranks << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-export_group_table") == 0) {
 			f_export_group_table = true;
@@ -579,13 +609,49 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-classes " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-split_by_classes") == 0) {
+			f_split_by_classes = true;
+			split_by_classes_fname.assign(argv[++i]);
+			split_by_classes_column.assign(argv[++i]);
+			if (f_v) {
+				cout << "-split_by_classes " << split_by_classes_fname
+						<< " " << split_by_classes_column << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-identify_elements_by_class") == 0) {
+			f_identify_elements_by_class = true;
+			identify_elements_by_class_fname.assign(argv[++i]);
+			identify_elements_by_class_column.assign(argv[++i]);
+			identify_elements_by_class_expand_go = ST.strtoi(argv[++i]);
+			identify_elements_by_class_supergroup.assign(argv[++i]);
+			if (f_v) {
+				cout << "-identify_elements_by_class "
+						<< identify_elements_by_class_fname
+						<< " " << identify_elements_by_class_column
+						<< " " << identify_elements_by_class_expand_go
+						<< " " << identify_elements_by_class_supergroup
+						<< endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_magma") == 0) {
 			f_subgroup_lattice_magma = true;
 			if (f_v) {
 				cout << "-subgroup_lattice_magma " << endl;
 			}
 		}
-
+		else if (ST.stringcmp(argv[i], "-identify_subgroups_from_file") == 0) {
+			f_identify_subgroups_from_file = true;
+			identify_subgroups_from_file_fname.assign(argv[++i]);
+			identify_subgroups_from_file_col_label.assign(argv[++i]);
+			identify_subgroups_from_expand_go = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-identify_subgroups_from_file "
+						<< identify_subgroups_from_file_fname
+						<< " " << identify_subgroups_from_file_col_label
+						<< " " << identify_subgroups_from_expand_go
+						<< endl;
+			}
+		}
 
 		else if (ST.stringcmp(argv[i], "-find_subgroup") == 0) {
 			f_find_subgroup = true;
@@ -1051,6 +1117,10 @@ void group_theoretic_activity_description::print()
 	if (f_elements) {
 		cout << "-elements" << endl;
 	}
+	if (f_select_elements) {
+		cout << "-select_elements " << select_elements_ranks << endl;
+	}
+
 	if (f_export_group_table) {
 		cout << "-export_group_table" << endl;
 	}
@@ -1148,8 +1218,27 @@ void group_theoretic_activity_description::print()
 	if (f_classes) {
 		cout << "-classes " << endl;
 	}
+	if (f_split_by_classes) {
+		cout << "-split_by_classes " << split_by_classes_fname
+				<< " " << split_by_classes_column << endl;
+	}
+	if (f_identify_elements_by_class) {
+		cout << "-identify_elements_by_class "
+				<< identify_elements_by_class_fname
+				<< " " << identify_elements_by_class_column
+				<< " " << identify_elements_by_class_expand_go
+				<< " " << identify_elements_by_class_supergroup
+				<< endl;
+	}
 	if (f_subgroup_lattice_magma) {
 		cout << "-subgroup_lattice_magma " << endl;
+	}
+	if (f_identify_subgroups_from_file) {
+		cout << "-identify_subgroups_from_file "
+				<< identify_subgroups_from_file_fname
+				<< " " << identify_subgroups_from_file_col_label
+				<< " " << identify_subgroups_from_expand_go
+				<< endl;
 	}
 
 	if (f_find_subgroup) {
