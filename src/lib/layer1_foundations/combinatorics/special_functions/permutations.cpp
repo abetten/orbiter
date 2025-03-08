@@ -272,6 +272,17 @@ void permutations::perm_print(
 			false, false, 0, false, NULL, NULL);
 }
 
+std::string permutations::stringify(
+		int *a, int n, std::string &options)
+{
+	string s;
+
+	s += perm_stringify_offset(a, n, 0,
+			true, //f_print_cycles_of_length_one
+			false, false, 0, false, NULL, NULL);
+	return s;
+}
+
 void permutations::perm_print_with_point_labels(
 		std::ostream &ost,
 		int *a, int n,
@@ -429,6 +440,144 @@ void permutations::perm_print_offset(
 	}
 	FREE_int(have_seen);
 }
+
+
+std::string permutations::perm_stringify_offset(
+	int *a, int n,
+	int offset,
+	int f_print_cycles_of_length_one,
+	int f_cycle_length,
+	int f_max_cycle_length,
+	int max_cycle_length,
+	int f_orbit_structure,
+	std::string *Point_labels, void *data)
+{
+	string s;
+
+	int *have_seen;
+	int i, l, l1, first, next, len;
+	int f_nothing_printed_at_all = true;
+	int *orbit_length = NULL;
+	int nb_orbits = 0;
+
+	//cout << "perm_print_offset n=" << n << " offset=" << offset << endl;
+	if (f_orbit_structure) {
+		orbit_length = NEW_int(n);
+	}
+	have_seen = NEW_int(n);
+	for (l = 0; l < n; l++) {
+		have_seen[l] = false;
+	}
+	l = 0;
+	while (l < n) {
+		if (have_seen[l]) {
+			l++;
+			continue;
+		}
+		// work on a next cycle, starting at position l:
+		first = l;
+		//cout << "perm_print_offset cycle starting
+		//"with " << first << endl;
+		l1 = l;
+		len = 1;
+		while (true) {
+			if (l1 >= n) {
+				cout << "perm_print_offset cycle starting with "
+						<< first << endl;
+				cout << "l1 = " << l1 << " >= n" << endl;
+				exit(1);
+			}
+			have_seen[l1] = true;
+			next = a[l1];
+			if (next >= n) {
+				cout << "perm_print_offset next = " << next
+						<< " >= n = " << n << endl;
+				// print_list(ost);
+				exit(1);
+			}
+			if (next == first) {
+				break;
+			}
+			if (have_seen[next]) {
+				cout << "perm_print_offset have_seen[next]" << endl;
+				cout << "first=" << first << endl;
+				cout << "len=" << len << endl;
+				cout << "l1=" << l1 << endl;
+				cout << "next=" << next << endl;
+				for (i = 0; i < n; i++) {
+					cout << i << " : " << a[i] << endl;
+				}
+				exit(1);
+			}
+			l1 = next;
+			len++;
+		}
+		//cout << "perm_print_offset cycle starting with "
+		//<< first << " has length " << len << endl;
+		//cout << "nb_orbits=" << nb_orbits << endl;
+		if (f_orbit_structure) {
+			orbit_length[nb_orbits++] = len;
+		}
+		if (!f_print_cycles_of_length_one) {
+			if (len == 1) {
+				continue;
+			}
+		}
+		if (f_max_cycle_length && len > max_cycle_length) {
+			continue;
+		}
+		f_nothing_printed_at_all = false;
+		// print cycle, beginning with first:
+		l1 = first;
+		s += "(";
+		while (true) {
+			if (Point_labels) {
+#if 0
+				stringstream sstr;
+
+				(*point_label)(sstr, l1, point_label_data);
+				ost << sstr.str();
+#endif
+				s += Point_labels[l1];
+			}
+			else {
+				s += std::to_string(l1 + offset);
+			}
+			next = a[l1];
+			if (next == first) {
+				break;
+			}
+			s += ", ";
+			l1 = next;
+		}
+		s += ")"; //  << endl;
+		if (f_cycle_length) {
+			if (len >= 10) {
+				s += "_{" + std::to_string(len) + "}";
+			}
+		}
+		//cout << "perm_print_offset done printing cycle" << endl;
+	}
+	if (f_nothing_printed_at_all) {
+		s += "id";
+	}
+	if (f_orbit_structure) {
+
+		other::data_structures::tally C;
+
+		C.init(orbit_length, nb_orbits, false, 0);
+
+		cout << "cycle type: ";
+		//int_vec_print(cout, orbit_length, nb_orbits);
+		//cout << " = ";
+		C.print_bare(false /* f_backwards*/);
+
+		FREE_int(orbit_length);
+	}
+	FREE_int(have_seen);
+	return s;
+}
+
 
 void permutations::perm_cycle_type(
 		int *perm, long int degree, int *cycles, int &nb_cycles)

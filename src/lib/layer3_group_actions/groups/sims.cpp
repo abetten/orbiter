@@ -116,15 +116,7 @@ sims::~sims()
 		FREE_pint(orbit_inv);
 		FREE_pint(prev);
 		FREE_pint(label);
-		}
-#if 0
-	if (Path) {
-		FREE_int(Path);
 	}
-	if (Label) {
-		FREE_int(Label);
-	}
-#endif
 	if (f_v) {
 		cout << "sims::~sims freeing orbit_len" << endl;
 	}
@@ -327,9 +319,6 @@ void sims::init(
 		prev[i] = NEW_int(transversal_length);
 		label[i] = NEW_int(transversal_length);
 	}
-	//Path = NEW_int(A->degree + 1);
-	//Label = NEW_int(A->degree + 1);
-	
 	FREE_int(nb_gen);
 	
 	
@@ -414,10 +403,6 @@ void sims::reallocate_base(
 	int **old_orbit_inv = orbit_inv;
 	int **old_prev = prev;
 	int **old_label = label;
-#if 0
-	int *old_Path = Path;
-	int *old_Label = Label;
-#endif
 	
 	if (f_v) {
 		cout << "sims::reallocate_base" << endl;
@@ -495,17 +480,6 @@ void sims::reallocate_base(
 		}
 	}
 	nb_gen[my_base_len] = 0;
-#if 0
-	nb_gen[A->base_len - 1] = old_nb_gen[A->base_len - 1];
-	nb_gen[A->base_len] = 0;
-	path[A->base_len - 1] = 0;
-	orbit[A->base_len - 1] = NEW_int(A->degree);
-	orbit_inv[A->base_len - 1] = NEW_int(A->degree);
-	prev[A->base_len - 1] = NEW_int(A->degree);
-	label[A->base_len - 1] = NEW_int(A->degree);
-	initialize_table(A->base_len - 1);
-	init_trivial_orbit(A->base_len - 1);
-#endif
 	if (old_nb_gen) {
 		FREE_int(old_nb_gen);
 	}
@@ -527,12 +501,6 @@ void sims::reallocate_base(
 	if (old_label) {
 		FREE_pint(old_label);
 	}
-#if 0
-	if (old_Path)
-		FREE_int(old_Path);
-	if (old_Label)
-		FREE_int(old_Label);
-#endif
 	if (f_v) {
 		cout << "sims::reallocate_base done" << endl;
 	}
@@ -552,13 +520,7 @@ void sims::initialize_table(
 
 	Int_vec_mone(prev[i], transversal_length);
 	Int_vec_mone(label[i], transversal_length);
-#if 0
-	int j;
-	for (j = 0; j < transversal_length; j++) {
-		prev[i][j] = -1;
-		label[i][j] = -1;
-	}
-#endif
+
 	orbit_len[i] = 0;
 	if (f_v) {
 		cout << "sims::initialize_table done" << endl;
@@ -579,7 +541,8 @@ void sims::init_trivial_group(
 		cout << "sims::init_trivial_group" << endl;
 	}
 	if (f_v) {
-		cout << "sims::init_trivial_group A->label = " << A->label << endl;
+		cout << "sims::init_trivial_group "
+				"A->label = " << A->label << endl;
 	}
 
 	if (A->Stabilizer_chain == NULL) {
@@ -720,12 +683,14 @@ void sims::init_generators(
 		}
 		if (f_vv) {
 			cout << "sims::init_generators "
-					"i = " << i << " / " << nb << " : before gens.copy_in" << endl;
+					"i = " << i << " / " << nb
+					<< " : before gens.copy_in" << endl;
 		}
 		gens.copy_in(i, elt + i * A->elt_size_in_int);
 		if (f_vv) {
 			cout << "sims::init_generators "
-					"i = " << i << " / " << nb << " : after gens.copy_in" << endl;
+					"i = " << i << " / " << nb
+					<< " : after gens.copy_in" << endl;
 		}
 		if (f_vvv) {
 			A->Group_element->element_print_quick(
@@ -733,14 +698,16 @@ void sims::init_generators(
 		}
 		if (f_vv) {
 			cout << "sims::init_generators "
-					"i = " << i << " / " << nb << " : before A->Group_element->element_invert" << endl;
+					"i = " << i << " / " << nb
+					<< " : before A->Group_element->element_invert" << endl;
 		}
 		A->Group_element->element_invert(
 				elt + i * A->elt_size_in_int,
 				gens_inv.ith(i), verbose_level - 1);
 		if (f_vv) {
 			cout << "sims::init_generators "
-					"i = " << i << " / " << nb << " : after A->Group_element->element_invert" << endl;
+					"i = " << i << " / " << nb
+					<< " : after A->Group_element->element_invert" << endl;
 		}
 	}
 	if (f_v) {
@@ -812,11 +779,7 @@ void sims::init_generator_depth_and_perm(
 	}
 
 	Int_vec_zero(nb_gen, A->base_len() + 1);
-#if 0
-	for (i = 0; i <= A->base_len(); i++) {
-		nb_gen[i] = 0;
-	}
-#endif
+
 	gen_depth = NEW_int(gens.len);
 	gen_perm = NEW_int(gens.len);
 	for (i = 0; i < gens.len; i++) {
@@ -852,7 +815,8 @@ void sims::init_generator_depth_and_perm(
 					s = stringify_base_images(
 						j, 0 /* verbose_level*/);
 
-					cout << "base images of generator " << j << " are " << s << endl;
+					cout << "base images of generator "
+							<< j << " are " << s << endl;
 				}
 				exit(1);
 			}
@@ -951,7 +915,8 @@ void sims::add_generator(
 		cout << "sims::add_generator "
 				"before A->element_invert" << endl;
 	}
-	A->Group_element->element_invert(elt, gens_inv.ith(idx), false);
+	A->Group_element->element_invert(
+			elt, gens_inv.ith(idx), false);
 	
 	if (f_v) {
 		cout << "sims::add_generator "
@@ -1019,13 +984,15 @@ int sims::generator_depth_in_stabilizer_chain(
 		}
 		if (j != bi) {
 			if (f_v) {
-				cout << "sims::generator_depth_in_stabilizer_chain depth is equal to " << i << endl;
+				cout << "sims::generator_depth_in_stabilizer_chain "
+						"depth is equal to " << i << endl;
 			}
 			return i;
 		}
 	}
 	if (f_v) {
-		cout << "sims::generator_depth_in_stabilizer_chain depth is equal to " << A->base_len() << endl;
+		cout << "sims::generator_depth_in_stabilizer_chain "
+				"depth is equal to " << A->base_len() << endl;
 	}
 	return A->base_len();
 }
@@ -1077,13 +1044,15 @@ int sims::depth_in_stabilizer_chain(
 		}
 		if (j != bi) {
 			if (f_v) {
-				cout << "sims::depth_in_stabilizer_chain depth is equal to " << i << endl;
+				cout << "sims::depth_in_stabilizer_chain "
+						"depth is equal to " << i << endl;
 			}
 			return i;
 		}
 	}
 	if (f_v) {
-		cout << "sims::depth_in_stabilizer_chain depth is equal to " << A->base_len() << endl;
+		cout << "sims::depth_in_stabilizer_chain "
+				"depth is equal to " << A->base_len() << endl;
 	}
 	return A->base_len();
 }
@@ -1256,7 +1225,92 @@ void sims::path_unrank_lint(
 
 		path[h] = a % l;
 		a = a / l;
+	}
+}
+
+int sims::first_moved_based_on_path(
+		long int a)
+{
+
+	path_unrank_lint(a);
+
+	int h;
+
+	for (h = 0; h < A->base_len(); h++) {
+		if (path[h] != 0) {
+			return h;
 		}
+	}
+	return A->base_len();
+}
+
+int sims::advance_at_given_level(
+		long int a, long int &b, int level)
+{
+
+	path_unrank_lint(a);
+
+	int l, t;
+
+
+	l = orbit_len[level];
+
+	if (path[level] < l - 1) {
+		path[level]++;
+		for (t = level + 1; t < A->base_len(); t++) {
+			path[t] = 0;
+		}
+		b = path_rank_lint();
+		return true;
+	}
+	else {
+		for (t = level + 1; t < A->base_len(); t++) {
+			l = orbit_len[t];
+			path[t] = l - 1;
+		}
+		b = path_rank_lint();
+		return false;
+#if 0
+		for (h = level - 1; h >= 0; h--) {
+			l = orbit_len[h];
+			if (path[h] < l - 1) {
+				path[h]++;
+				for (t = h + 1; t < A->base_len(); t++) {
+					path[t] = 0;
+				}
+				b = path_rank_lint();
+				return true;
+			}
+		}
+		b = a + 1;
+		return false;
+#endif
+	}
+}
+
+
+
+void sims::make_path(
+		algebra::ring_theory::longinteger_object &a,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ii, l, r;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object q;
+
+	if (f_v) {
+		cout << "sims::make_path rk=" << a << endl;
+	}
+	for (ii = A->base_len() - 1; ii >= 0; ii--) {
+		l = orbit_len[ii];
+
+		D.integral_division_by_int(a, l, q, r);
+		q.assign_to(a);
+
+		path[ii] = r;
+		//cout << r << " ";
+	}
 }
 
 long int sims::path_rank_lint()
@@ -1267,9 +1321,9 @@ long int sims::path_rank_lint()
 	for (h = 0; h < A->base_len(); h++) {
 		if (h) {
 			a *= orbit_len[h];
-			}
-		a += path[h];
 		}
+		a += path[h];
+	}
 	return a;
 }
 
@@ -1285,13 +1339,13 @@ void sims::element_from_path(
 	
 	if (f_v) {
 		cout << "sims::element_from_path" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "path=";
 		Int_vec_print(cout, path, A->base_len());
 		cout << endl;
 		cout << "A->degree=" << A->degree << endl;
-		}
+	}
 #if 0
 	if (f_v) {
 		cout << "i : orbit[0][i] : orbit_inv[0][i] : "
@@ -1313,14 +1367,14 @@ void sims::element_from_path(
 		if (f_v) {
 			cout << "sims::element_from_path level "
 					<< i << " coset " << j << " before coset_rep" << endl;
-			}
+		}
 		coset_rep(eltrk3, i, j, verbose_level);
 
 
 		if (f_v) {
 			cout << "sims::element_from_path level "
 					<< i << " coset " << j << " after coset_rep" << endl;
-			}
+		}
 
 		if (f_vv) {
 			cout << "sims::element_from_path level "
@@ -1328,7 +1382,7 @@ void sims::element_from_path(
 			cout << "cosetrep:" << endl;
 			A->Group_element->element_print_quick(eltrk3, cout);
 			cout << endl;
-			}
+		}
 		
 		//A->element_print_as_permutation(cosetrep, cout);
 		//cout << endl;
@@ -1336,11 +1390,11 @@ void sims::element_from_path(
 		// pre multiply the coset representative:
 		A->Group_element->element_mult(eltrk3, eltrk1, eltrk2, 0);
 		A->Group_element->element_move(eltrk2, eltrk1, 0);
-		}
+	}
 	A->Group_element->element_move(eltrk1, elt, 0);
 	if (f_v) {
 		cout << "sims::element_from_path done" << endl;
-		}
+	}
 }
 
 void sims::element_from_path_inv(
@@ -1380,6 +1434,7 @@ void sims::element_from_path_inv(
 	A->Group_element->element_move(eltrk1, elt, false);
 }
 
+
 void sims::element_unrank(
 		algebra::ring_theory::longinteger_object &a,
 		int *elt, int verbose_level)
@@ -1391,13 +1446,20 @@ void sims::element_unrank(
 // The computed group element will be computed into Elt1
 {
 	int f_v = (verbose_level >= 1);
-	int ii, l, r;
-	algebra::ring_theory::longinteger_domain D;
-	algebra::ring_theory::longinteger_object q;
 	
 	if (f_v) {
 		cout << "sims::element_unrank rk=" << a << endl;
 	}
+
+	make_path(
+			a,
+			verbose_level);
+
+#if 0
+	int ii, l, r;
+	algebra::ring_theory::longinteger_domain D;
+	algebra::ring_theory::longinteger_object q;
+
 	for (ii = A->base_len() - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
 
@@ -1408,6 +1470,8 @@ void sims::element_unrank(
 		//cout << r << " ";
 	}
 	//cout << endl;
+#endif
+
 	if (f_v) {
 		cout << "sims::element_unrank path=";
 		Int_vec_print(cout, path, A->base_len());
@@ -1498,7 +1562,8 @@ void sims::element_rank(
 
 
 int sims::test_membership_and_rank_element(
-		algebra::ring_theory::longinteger_object &a, int *elt, int verbose_level)
+		algebra::ring_theory::longinteger_object &a,
+		int *elt, int verbose_level)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 // returns false if the element is not a member of the group
@@ -2356,7 +2421,8 @@ void sims::random_schreier_generator(
 		exit(1);
 	}
 	
-	A->Group_element->element_mult(schreier_gen1, eltrk3, schreier_gen, 0);
+	A->Group_element->element_mult(
+			schreier_gen1, eltrk3, schreier_gen, 0);
 	if (f_vv) {
 		cout << "sims::random_schreier_generator "
 				"after the while loop" << endl;
@@ -2573,6 +2639,9 @@ void sims::all_elements(
 		cout << "sims::all_elements" << endl;
 	}
 
+
+
+
 	algebra::ring_theory::longinteger_object go;
 	long int i, goi;
 
@@ -2619,7 +2688,8 @@ void sims::select_elements(
 	for (i = 0; i < nb_elements; i++) {
 		a = Index_of_elements[i];
 		if (a < 0 || a >= goi) {
-			cout << "sims::select_elements element index is out of range" << endl;
+			cout << "sims::select_elements "
+					"element index is out of range" << endl;
 			exit(1);
 		}
 		element_unrank_lint(a, vec->ith(i));
@@ -2732,6 +2802,146 @@ void sims::get_all_base_orbits(
 	if (f_v) {
 		cout << "sims::get_all_base_orbits done" << endl;
 	}
+}
+
+int sims::element_from_path_and_test_permutation_property(
+		int *elt, int &fail_depth, int verbose_level)
+// given coset representatives in path[], the corresponding
+// element is multiplied.
+// uses eltrk1, eltrk2, eltrk3
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
+
+	if (f_v) {
+		cout << "sims::element_from_path_and_test_permutation_property" << endl;
+	}
+
+	if (!A->is_matrix_group()) {
+		cout << "sims::element_from_path_and_test_permutation_property "
+				"not a matrix group" << endl;
+		exit(1);
+	}
+
+	if (f_vv) {
+		cout << "path=";
+		Int_vec_print(cout, path, A->base_len());
+		cout << endl;
+		cout << "A->degree=" << A->degree << endl;
+	}
+
+	fail_depth = A->base_len();
+	A->Group_element->element_one(eltrk1, false);
+	for (i = 0; i < A->base_len(); i++) {
+		j = path[i];
+		if (f_v) {
+			cout << "sims::element_from_path_and_test_permutation_property level "
+					<< i << " coset " << j << " before coset_rep" << endl;
+		}
+		coset_rep(eltrk3, i, j, verbose_level);
+
+
+		if (f_v) {
+			cout << "sims::element_from_path_and_test_permutation_property level "
+					<< i << " coset " << j << " after coset_rep" << endl;
+		}
+
+		if (f_vv) {
+			cout << "sims::element_from_path_and_test_permutation_property level "
+					<< i << " coset " << j << ":" << endl;
+			cout << "cosetrep:" << endl;
+			A->Group_element->element_print_quick(eltrk3, cout);
+			cout << endl;
+		}
+
+		//A->element_print_as_permutation(cosetrep, cout);
+		//cout << endl;
+
+		// pre multiply the coset representative:
+		A->Group_element->element_mult(eltrk3, eltrk1, eltrk2, 0);
+
+		// test unit vector property in row i:
+		algebra::basic_algebra::matrix_group *Matrix_group;
+
+		Matrix_group = A->get_matrix_group();
+		int d;
+		int idx_nonzero;
+
+		d = Matrix_group->n;
+		if (!Int_vec_of_Hamming_weight_one(eltrk2 + i * d, idx_nonzero, d)) {
+			fail_depth = i;
+			return false;
+		}
+
+
+
+		A->Group_element->element_move(eltrk2, eltrk1, 0);
+	}
+	A->Group_element->element_move(eltrk1, elt, 0);
+	if (f_v) {
+		cout << "sims::element_from_path_and_test_permutation_property done" << endl;
+	}
+	return true;
+}
+
+void sims::permutation_subgroup(
+		std::vector<long int> &Gens,
+		int verbose_level)
+{
+	algebra::ring_theory::longinteger_object go;
+	long int i, j, goi, cnt;
+	int *Elt;
+	int fail_depth;
+
+
+	Elt = NEW_int(A->elt_size_in_int);
+
+	group_order(go);
+	goi = go.as_lint();
+
+	cnt = 0;
+	for (i = 0; i < goi; i++) {
+
+		path_unrank_lint(i);
+
+		if ((i % 10000) == 0) {
+			cout << "sims::permutation_subgroup i=" << i << " / " << goi << endl;
+		}
+
+		if (element_from_path_and_test_permutation_property(
+				Elt, fail_depth, verbose_level - 2)) {
+
+			cout << "sims::permutation_subgroup " << i << " : "
+					<< " has the permutation property, cnt = " << cnt << endl;
+			A->Group_element->element_print(Elt, cout);
+
+			Gens.push_back(i);
+
+			cnt++;
+		}
+
+#if 1
+		else {
+
+			if (advance_at_given_level(
+					i, j, fail_depth)) {
+				i = j - 1;
+			}
+			else {
+				i = j;
+			}
+
+		}
+#endif
+	}
+	cout << "sims::permutation_subgroup "
+			"the order of the permutation subgroup is " << cnt << endl;
+	cout << "Number of generators = " << Gens.size() << endl;
+	cout << "Generators = ";
+	Lint_vec_stl_print(cout, Gens);
+	cout << endl;
+	FREE_int(Elt);
 }
 
 

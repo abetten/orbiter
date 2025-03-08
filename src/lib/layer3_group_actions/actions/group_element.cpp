@@ -335,6 +335,21 @@ void group_element::print_for_make_element_no_commas(
 }
 
 
+void group_element::make_list_of_images(
+		int *images, void *elt)
+{
+	//int *images = NEW_int(A.degree);
+
+	int i, j;
+
+	for (i = 0; i < A->degree; i++) {
+		j = element_image_of(i, elt, 0 /* verbose_level */);
+		images[i] = j;
+	}
+
+}
+
+
 
 // #############################################################################
 
@@ -344,8 +359,11 @@ long int group_element::element_image_of(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "group_element::element_image_of using ptr table " << A->ptr->label << endl;
-		cout << "group_element::element_image_of A->ptr->nb_times_image_of_called = " << A->ptr->nb_times_image_of_called << endl;
+		cout << "group_element::element_image_of "
+				"using ptr table " << A->ptr->label << endl;
+		cout << "group_element::element_image_of "
+				"A->ptr->nb_times_image_of_called = "
+				<< A->ptr->nb_times_image_of_called << endl;
 	}
 
 	if (A->ptr == NULL) {
@@ -518,17 +536,18 @@ void group_element::element_print_latex(
 	(*A->ptr->ptr_element_print_latex)(*A, elt, ost);
 }
 
+std::string group_element::element_stringify(
+		void *elt, std::string &options)
+{
+	return (*A->ptr->ptr_element_stringify)(*A, elt, options);
+}
+
 void group_element::element_print_latex_with_extras(
 		void *elt, std::string &label, std::ostream &ost)
 {
-	//int *fp,;
 	int n, ord;
 
-	//fp = NEW_int(A->degree);
-	//n = count_fixed_points(elt, fp, 0);
 	n = count_fixed_points(elt, 0);
-	//cout << "with " << n << " fixed points" << endl;
-	//FREE_int(fp);
 
 	ord = element_order(elt);
 
@@ -762,13 +781,6 @@ void group_element::element_print_as_permutation_with_offset_and_max_cycle_lengt
 	compute_permutation(
 			elt,
 			perm, 0 /* verbose_level */);
-#if 0
-	for (i = 0; i < A->degree; i++) {
-		j = element_image_of(i, elt, false);
-		perm[i] = j;
-	}
-#endif
-	//perm_print(ost, v, degree);
 
 	Combi.Permutations->perm_print_offset(
 			ost, perm, A->degree, offset,
@@ -803,12 +815,6 @@ int group_element::element_signum_of_permutation(
 	compute_permutation(
 			elt,
 			perm, 0 /* verbose_level */);
-#if 0
-	for (i = 0; i < A->degree; i++) {
-		j = element_image_of(i, elt, false);
-		perm[i] = j;
-	}
-#endif
 
 	sgn = Combi.Permutations->perm_signum(perm, A->degree);
 
@@ -838,7 +844,6 @@ void group_element::element_write_file_fp(
 	}
 	element_pack(Elt, elt, false);
 	fp.write(elt, A->coded_elt_size_in_char);
-	//fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 }
 
 void group_element::element_read_file_fp(
@@ -850,7 +855,6 @@ void group_element::element_read_file_fp(
 
 	elt = element_rw_memory_object;
 	fp.read(elt, A->coded_elt_size_in_char);
-	//fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 	element_unpack(elt, Elt, false);
 	if (f_v) {
 		element_print(Elt, cout);
@@ -867,23 +871,16 @@ void group_element::element_write_file(
 	int f_v = (verbose_level >= 1);
 	other::orbiter_kernel_system::file_io Fio;
 
-#if 0
-	FILE *f2;
-	f2 = fopen(fname, "wb");
-	element_write_file_fp(Elt, f2, 0/* verbose_level*/);
-	fclose(f2);
-#else
 	{
 		ofstream fp(fname, ios::binary);
 
 		element_write_file_fp(Elt, fp, 0/* verbose_level*/);
 	}
-#endif
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 }
 
 void group_element::element_read_file(
@@ -899,20 +896,11 @@ void group_element::element_read_file(
 				"reading from file " << fname
 				<< " of size " << Fio.file_size(fname) << endl;
 	}
-#if 0
-	FILE *f2;
-	f2 = fopen(fname, "rb");
-	element_read_file_fp(Elt, f2, 0/* verbose_level*/);
-
-	fclose(f2);
-#else
 	{
 		ifstream fp(fname, ios::binary);
 
 		element_read_file_fp(Elt, fp, 0/* verbose_level*/);
 	}
-
-#endif
 }
 
 void group_element::element_write_to_memory_object(
@@ -973,8 +961,6 @@ void group_element::element_write_to_file_binary(
 				"A->coded_elt_size_in_char == 0" << endl;
 		exit(1);
 	}
-	//elt = NEW_char(coded_elt_size_in_char);
-		// memory allocation should be avoided in a low-level function
 	elt = element_rw_memory_object;
 	if (elt == NULL) {
 		cout << "group_element::element_write_to_file_binary "
@@ -985,7 +971,6 @@ void group_element::element_write_to_file_binary(
 
 	element_pack(Elt, elt, verbose_level);
 	fp.write(elt, A->coded_elt_size_in_char);
-	//FREE_char(elt);
 	if (f_v) {
 		cout << "group_element::element_write_to_file_binary done" << endl;
 	}
@@ -1002,17 +987,15 @@ void group_element::element_read_from_file_binary(
 	if (f_v) {
 		cout << "group_element::element_read_from_file_binary" << endl;
 	}
-	//elt = NEW_char(coded_elt_size_in_char);
-		// memory allocation should be avoided in a low-level function
 	elt = element_rw_memory_object;
 
 	if (f_v) {
 		cout << "group_element::element_read_from_file_binary "
-				"coded_elt_size_in_char=" << A->coded_elt_size_in_char << endl;
+				"coded_elt_size_in_char="
+				<< A->coded_elt_size_in_char << endl;
 	}
 	fp.read(elt, A->coded_elt_size_in_char);
 	element_unpack(elt, Elt, verbose_level);
-	//FREE_char(elt);
 	if (f_v) {
 		cout << "group_element::element_read_from_file_binary done" << endl;
 	}
@@ -1800,7 +1783,8 @@ void group_element::make_element_from_base_image(
 	for (i = 0; i < A->base_len(); i++) {
 
 		if (f_v) {
-			cout << "group_element::make_element_from_base_image i = " << i << " / " << A->base_len() << endl;
+			cout << "group_element::make_element_from_base_image "
+					"i = " << i << " / " << A->base_len() << endl;
 		}
 
 
@@ -1856,7 +1840,8 @@ void group_element::make_element_from_base_image(
 					0 /*verbose_level*/);
 			cout << endl;
 
-			cout << "group_element::make_element_from_base_image i=" << i << " bi=" << bi
+			cout << "group_element::make_element_from_base_image "
+					"i=" << i << " bi=" << bi
 					<< " desired base image = yi = " << yi << " yi reverse = z = "
 					<< z << " j=orbit_inv(i,z)=" << j << endl;
 		}
@@ -1864,7 +1849,8 @@ void group_element::make_element_from_base_image(
 		S->coset_rep(Elt5, i, j, 0);
 
 		if (f_vv) {
-			cout << "group_element::make_element_from_base_image cosetrep_i_j_=cosetrep_" << i << "_" << j << "_=" << endl;
+			cout << "group_element::make_element_from_base_image "
+					"cosetrep_i_j_=cosetrep_" << i << "_" << j << "_=" << endl;
 
 			element_print_quick(Elt5, cout);
 
@@ -1884,10 +1870,12 @@ void group_element::make_element_from_base_image(
 		element_move(Elt4, Elt3, 0);
 
 		if (f_vv) {
-			cout << "group_element::make_element_from_base_image Elt3 = cosetrep*Elt3 = " << endl;
+			cout << "group_element::make_element_from_base_image "
+					"Elt3 = cosetrep*Elt3 = " << endl;
 		}
 		if (f_vv) {
-			cout << "group_element::make_element_from_base_image after left multiplying, Elt3=" << endl;
+			cout << "group_element::make_element_from_base_image "
+					"after left multiplying, Elt3=" << endl;
 			element_print_quick(Elt3, cout);
 
 			element_print_base_images(Elt3);
@@ -1900,7 +1888,8 @@ void group_element::make_element_from_base_image(
 				0/*verbose_level*/);
 			cout << endl;
 
-			cout << "group_element::make_element_from_base_image computing image of bi=" << bi << endl;
+			cout << "group_element::make_element_from_base_image "
+					"computing image of bi=" << bi << endl;
 		}
 
 		c = element_image_of(bi, Elt3, 0);

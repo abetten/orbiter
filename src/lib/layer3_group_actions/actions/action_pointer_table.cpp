@@ -79,7 +79,7 @@ void action_pointer_table::save_stats(
 void action_pointer_table::null_function_pointers()
 {
 	label.assign("null");
-	// 26 function pointers:
+	// 27 function pointers:
 	ptr_element_image_of = NULL;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;
@@ -98,6 +98,7 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_print = NULL;
 	ptr_element_print_quick = NULL;
 	ptr_element_print_latex = NULL;
+	ptr_element_stringify = NULL;
 	ptr_element_print_latex_with_point_labels = NULL;
 	ptr_element_print_verbose = NULL;
 	ptr_element_code_for_make_element = NULL;
@@ -114,7 +115,7 @@ void action_pointer_table::null_function_pointers()
 void action_pointer_table::copy_from_but_reset_counters(
 		action_pointer_table *T)
 {
-	// copy 26 function pointers:
+	// copy 27 function pointers:
 	ptr_element_image_of = T->ptr_element_image_of;
 	ptr_element_image_of_low_level = T->ptr_element_image_of_low_level;
 	ptr_element_linear_entry_ij = T->ptr_element_linear_entry_ij;
@@ -133,6 +134,7 @@ void action_pointer_table::copy_from_but_reset_counters(
 	ptr_element_print = T->ptr_element_print;
 	ptr_element_print_quick = T->ptr_element_print_quick;
 	ptr_element_print_latex = T->ptr_element_print_latex;
+	ptr_element_stringify = T->ptr_element_stringify;
 	ptr_element_print_latex_with_point_labels = T->ptr_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = T->ptr_element_print_verbose;
 	ptr_element_code_for_make_element = T->ptr_element_code_for_make_element;

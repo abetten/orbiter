@@ -355,7 +355,6 @@ void any_group::create_latex_report(
 
 void any_group::create_latex_report(
 		other::graphics::layered_graph_draw_options *LG_Draw_options,
-		int f_sylow, int f_group_table, //int f_classes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -397,17 +396,6 @@ void any_group::create_latex_report(
 					extra_praeamble /* extra_praeamble */);
 
 
-			if (f_v) {
-				cout << "any_group::create_latex_report before report" << endl;
-			}
-#if 0
-			report(
-					ost,
-					f_sylow, f_group_table,
-					//f_classes,
-					LG_Draw_options,
-					verbose_level);
-#endif
 
 			actions::action_global Action_global;
 
@@ -422,7 +410,6 @@ void any_group::create_latex_report(
 					label_tex,
 					A,
 					Subgroup_gens,
-					f_sylow, f_group_table,
 					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
@@ -449,17 +436,6 @@ void any_group::create_latex_report(
 
 
 
-#if 0
-			actions::action *A_base;
-			actions::action *A;
-
-			std::string label;
-			std::string label_tex;
-
-			groups::strong_generators *Subgroup_gens;
-			groups::sims *Subgroup_sims;
-#endif
-
 			if (f_v) {
 				cout << "any_group::create_latex_report after report" << endl;
 			}
@@ -481,6 +457,172 @@ void any_group::create_latex_report(
 		cout << "any_group::create_latex_report done" << endl;
 	}
 }
+
+
+void any_group::create_group_table_report(
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::create_group_table_report" << endl;
+	}
+	if (f_v) {
+		cout << "any_group::create_group_table_report "
+				"label = " << label << endl;
+		cout << "any_group::create_group_table_report "
+				"label_tex = " << label_tex << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author, extra_praeamble;
+
+		fname = label + "_group_table_report.tex";
+		title = "The group table of $" + label_tex + "$";
+		author = "";
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_group_table_report "
+						"before Action_global.report_group_table" << endl;
+			}
+			Action_global.report_group_table(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					LG_Draw_options,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_group_table_report "
+						"after Action_global.report_group_table" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "any_group::create_group_table_report done" << endl;
+	}
+}
+
+
+
+
+void any_group::create_report_sylow_subgroups(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::create_report_sylow_subgroups" << endl;
+	}
+	if (f_v) {
+		cout << "any_group::create_report_sylow_subgroups "
+				"label = " << label << endl;
+		cout << "any_group::create_report_sylow_subgroups "
+				"label_tex = " << label_tex << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author, extra_praeamble;
+
+		fname = label + "_sylow_report.tex";
+		title = "The Sylow structure of $" + label_tex + "$";
+		author = "";
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			actions::action_global Action_global;
+
+
+			if (f_v) {
+				cout << "any_group::create_report_sylow_subgroups "
+						"before Action_global.report_sylow" << endl;
+			}
+			Action_global.report_sylow(
+					ost,
+					label,
+					label_tex,
+					A,
+					Subgroup_gens,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_report_sylow_subgroups "
+						"after Action_global.report_sylow" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "any_group::create_report_sylow_subgroups done" << endl;
+	}
+}
+
+
 
 
 void any_group::export_group_table(
@@ -1616,6 +1758,89 @@ void any_group::element_unrank(
 
 	if (f_v) {
 		cout << "any_group::element_unrank done" << endl;
+	}
+}
+
+void any_group::element_unrank_STL_lint(
+		std::vector<long int> &Ranks,
+		data_structures_groups::vector_ge *&Elts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::element_unrank_STL_lint" << endl;
+	}
+
+	actions::action *A1;
+
+	A1 = A;
+
+	groups::sims *Sims;
+	//groups::strong_generators *SG;
+
+	//SG = get_strong_generators();
+
+	//H = SG->create_sims(verbose_level);
+
+	Sims = Subgroup_sims;
+
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	if (f_v) {
+		cout << "any_group::element_unrank_STL_lint "
+				"group order Sims = " << Sims->group_order_lint() << endl;
+	}
+
+	int m;
+	m = Ranks.size();
+
+	Elts = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Elts->init(A1, verbose_level);
+
+	Elts->allocate(m, verbose_level);
+
+	int h;
+
+	for (h = 0; h < Ranks.size(); h++) {
+
+		int *Elt;
+
+		Elt = NEW_int(A1->elt_size_in_int);
+
+
+		algebra::ring_theory::longinteger_object a;
+
+		a.create(Ranks[h]);
+
+		if (f_v) {
+			cout << "any_group::element_unrank_STL_lint "
+					"Creating element of rank " << a << endl;
+		}
+
+		Sims->element_unrank(a, Elt);
+
+		if (f_v) {
+			cout << "Element " << h << " / " << m << endl;
+			A1->Group_element->element_print(Elt, cout);
+			cout << endl;
+		}
+
+		A1->Group_element->element_move(Elt, Elts->ith(h), 0 /* verbose_level */);
+		//A1->Group_element->element_code_for_make_element(
+		//			Elt, Elt_data + h * n);
+
+
+
+
+		FREE_int(Elt);
+		//FREE_OBJECT(Sims);
+	}
+
+
+	if (f_v) {
+		cout << "any_group::element_unrank_STL_lint done" << endl;
 	}
 }
 

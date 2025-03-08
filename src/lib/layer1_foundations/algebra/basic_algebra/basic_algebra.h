@@ -617,6 +617,7 @@ public:
 
 private:
 
+
 	int *Elt1, *Elt2, *Elt3;
 		// used for mult, invert
 	int *Elt4;
@@ -714,6 +715,8 @@ public:
 			int *Elt, std::ostream &ost);
 	void GL_print_latex(
 			int *Elt, std::ostream &ost);
+	std::string GL_stringify(
+			int *Elt, std::string &options);
 	void GL_print_latex_with_print_point_function(
 			int *Elt,
 			std::ostream &ost,
@@ -794,6 +797,9 @@ public:
 		// use Frobenius automorphism
 
 	int f_kernel_is_diagonal_matrices;
+
+	int offset_affine_vector;
+	int offset_frobenius;
 
 	int bits_per_digit;
 	int bits_per_elt;

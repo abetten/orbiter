@@ -66,6 +66,9 @@ static void perm_group_element_print(
 static void perm_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string perm_group_element_stringify(
+		action &A,
+		void *elt, std::string &options);
 static void perm_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -106,6 +109,7 @@ void action_pointer_table::init_function_pointers_permutation_group()
 	ptr_element_print = perm_group_element_print;
 	ptr_element_print_quick = perm_group_element_print; // no quick version here!
 	ptr_element_print_latex = perm_group_element_print_latex;
+	ptr_element_stringify = perm_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			perm_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = perm_group_element_print_verbose;
@@ -463,6 +467,18 @@ static void perm_group_element_print_latex(
 
 	G.print(Elt, ost);
 	//G.print_with_action(&A, Elt, ost);
+}
+
+static std::string perm_group_element_stringify(
+		action &A,
+		void *elt, std::string &options)
+{
+	group_constructions::permutation_representation_domain &G = *A.G.perm_grp;
+	int *Elt = (int *) elt;
+	string s;
+
+	s = G.stringify(Elt, options);
+	return s;
 }
 
 static void perm_group_element_print_latex_with_point_labels(

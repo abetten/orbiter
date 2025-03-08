@@ -3924,6 +3924,56 @@ void csv_file_support::append_column_of_int(
 	}
 }
 
+void csv_file_support::write_STL_lint_vec(
+		std::string &fname_out,
+		std::vector<long int> &Gens,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::write_STL_lint_vec "
+				"writing file " << fname_out << endl;
+	}
+
+
+	int h;
+	std::string *Table;
+	int nb_rows, nb_cols;
+
+	nb_rows = Gens.size();
+	nb_cols = 2;
+
+	Table = new string [nb_rows * nb_cols];
+
+	for (h = 0; h < nb_rows; h++) {
+		Table[h * nb_cols + 0] = std::to_string(h);
+		Table[h * nb_cols + 1] = std::to_string(Gens[h]);
+	}
+
+	std::string headings;
+
+	headings = "case,number";
+
+	write_table_of_strings(
+			fname_out,
+			nb_rows, nb_cols, Table,
+			headings,
+			verbose_level);
+
+	if (f_v) {
+		cout << "Written file " << fname_out << " of size "
+			<< Fio->file_size(fname_out) << endl;
+	}
+
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "csv_file_support::write_STL_lint_vec done" << endl;
+	}
+
+}
 
 
 }}}}

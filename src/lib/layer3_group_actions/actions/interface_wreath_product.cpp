@@ -84,6 +84,8 @@ static void wreath_product_group_element_print_quick(
 static void wreath_product_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string wreath_product_group_element_stringify(
+		action &A, void *elt, std::string &options);
 static void wreath_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -123,6 +125,7 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 	ptr_element_print = wreath_product_group_element_print;
 	ptr_element_print_quick = wreath_product_group_element_print_quick;
 	ptr_element_print_latex = wreath_product_group_element_print_latex;
+	ptr_element_stringify = wreath_product_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			wreath_product_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = wreath_product_group_element_print_verbose;
@@ -499,6 +502,17 @@ static void wreath_product_group_element_print_latex(
 	int *Elt = (int *) elt;
 
 	W.element_print_latex(Elt, ost);
+}
+
+static std::string wreath_product_group_element_stringify(
+		action &A, void *elt, std::string &options)
+{
+	group_constructions::wreath_product &W = *A.G.wreath_product_group;
+	int *Elt = (int *) elt;
+	string s;
+
+	s = W.element_stringify(Elt, options);
+	return s;
 }
 
 static void wreath_product_group_element_print_latex_with_point_labels(

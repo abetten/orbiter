@@ -1013,6 +1013,35 @@ void wreath_product::element_print_latex(
 	ost << "\\right)" << endl;
 }
 
+std::string wreath_product::element_stringify(
+		int *Elt, std::string &options)
+{
+	int f;
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+	string s;
+
+	s += "\\left(";
+	for (f = 0; f < nb_factors; f++) {
+		s += M->Element->GL_stringify(Elt + offset_i(f), options);
+	}
+	s += "; \\;\n";
+	s += Combi.Permutations->stringify(Elt, nb_factors, options);
+#if 0
+	ost << "[";
+	for (f = 0; f < nb_factors; f++) {
+		ost << Elt[f];
+		if (f < nb_factors - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "]";
+#endif
+	s += "\\right)\n";
+	return s;
+}
+
+
+
 void wreath_product::compute_base_and_transversals(
 		int verbose_level)
 {

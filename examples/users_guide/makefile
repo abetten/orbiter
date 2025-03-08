@@ -3875,7 +3875,6 @@ test_4:
 	make test_4_3
 	make test_4_4
 	make test_4_5
-	make test_4_6
 
 
 
@@ -4635,86 +4634,6 @@ BLT_database_67_4:
 
 
 
-###############################################################################
-# Section 4.6: Activities for Geometric Objects
-
-
-SECTION_ACTIVITIES_FOR_GEOMETRIC_OBJECTS:
-
-
-
-test_4_6:
-	make Edge_curve_17
-	make Edge_curve_17_line_type
-
-
-
-
-
-Edge_curve_17:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 17 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "X,Y,Z" "X,Y,Z" \
-		-end \
-		-assign Eqn -from \
-		-with R -do \
-			-ring_theoretic_activity \
-			-parse_equation \
-				"Edge_curve" "Edge\_curve" \
-				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
-				f 3 \
-		-end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -geometric_object P \
-			-projective_variety R \
-				"Edge_q17" "Edge\_q17" \
-				Eqn \
-		-end
-
-
-
-
-
-Edge_curve_17_line_type:
-	$(ORBITER) -v 6 \
-		-define F -finite_field -q 17 -end \
-		-define R -polynomial_ring \
-			-field F \
-			-number_of_variables 3 \
-			-homogeneous_of_degree 4 \
-			-monomial_ordering_partition \
-			-variables "X,Y,Z" "X,Y,Z" \
-		-end \
-		-assign Eqn -from \
-		-with R -do \
-			-ring_theoretic_activity \
-			-parse_equation \
-				"Edge_curve" "Edge\_curve" \
-				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
-				f 3 \
-		-end \
-		-define P -projective_space -n 2 -field F -v 0 -end \
-		-define C -geometric_object P \
-			-projective_variety R \
-				"Edge_q17" "Edge\_q17" \
-				Eqn \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-line_type_old \
-		-end \
-		-print_symbols
-
-#( 4^6, 2^30, 1^132, 0^139 )
-
-
-
-
 
 
 ###############################################################################
@@ -5208,7 +5127,8 @@ Group_M12:
 SECTION_LINEAR_GROUPS:
 
 test_5_2:
-	make PGL_2_3
+	make GL_2_3_elements_dense
+	make PGL_2_3_elements_dense
 	make PGL_2_17
 	make PSL_2_17
 	make PGL_3_2
@@ -5225,7 +5145,7 @@ test_5_2:
 	make L_4_5
 	make PGL_4_5
 	make PGGL_3_4
-	make PGGL_3_8
+	#make PGGL_3_8 problem in Syl->init (too slow)
 	make AGGL_1_4
 	make AGGL_1_8
 	make AGL_1_27
@@ -5244,19 +5164,42 @@ test_5_2:
 	make M24_matrix_group
 
 
-PGL_2_3:
+GL_2_3_elements_dense:
+	$(ORBITER) -v 2 \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 2 F -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) GL_2_3_elements.tex
+	$(OPEN) GL_2_3_elements.pdf
+
+
+PGL_2_3_elements_dense:
 	$(ORBITER) -v 2 \
 		-define Do -draw_options \
 			-radius 200 -line_width 0.3 \
 		-end \
-		-define F -finite_field -q 3 -end \
-		-define G -linear_group -PGL 2 F -end \
+		-define G -linear_group -PGL 2 3 -end \
+		-assign elements -from \
 		-with G -do \
 		-group_theoretic_activity \
-			-report Do \
-		-end
-	$(PDFLATEX) PGL_2_3_report.tex
-	$(OPEN) PGL_2_3_report.pdf
+			-elements \
+		-end \
+		-with elements -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_2_3_elements.tex
+	$(OPEN) PGL_2_3_elements.pdf
 
 
 PGL_2_17:
@@ -5481,12 +5424,19 @@ PGGL_3_4:
 		-with G -do \
 		-group_theoretic_activity \
 			-report Do \
-			-report_sylow \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-sylow \
 		-end
 	$(PDFLATEX) PGGL_3_4_report.tex
 	$(OPEN) PGGL_3_4_report.pdf
+	$(PDFLATEX) PGGL_3_4_sylow_report.tex
+	$(OPEN) PGGL_3_4_sylow_report.pdf
 
 
+
+#problem:
 
 PGGL_3_8:
 	$(ORBITER) -v 2 \
@@ -5497,10 +5447,16 @@ PGGL_3_8:
 		-with G -do \
 		-group_theoretic_activity \
 			-report Do \
-			-report_sylow \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-sylow \
 		-end
 	$(PDFLATEX) PGGL_3_8_report.tex
 	$(OPEN) PGGL_3_8_report.pdf
+
+# problem in Syl->init
+
 
 
 AGGL_1_4:
@@ -5600,8 +5556,8 @@ PSP_4_4:
 		-group_theoretic_activity \
 			-report Do \
 		-end
-	$(PDFLATEX) PGL_4_4_Sp_4_4_report.tex
-	$(OPEN) PGL_4_4_Sp_4_4_report.pdf
+	$(PDFLATEX) PSp_4_4_report.tex
+	$(OPEN) PSp_4_4_report.pdf
 
 #order 979200
 
@@ -5954,7 +5910,10 @@ Sym3_in_PGL_2_3_group_table:
 		-with G -do \
 		-group_theoretic_activity \
 			-report Do \
-			-report_group_table \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-group_table Do \
 		-end
 	$(PDFLATEX) PGL_2_3_group_table_order_6.tex
 	$(OPEN) PGL_2_3_group_table_order_6.pdf
@@ -6010,7 +5969,10 @@ quaternion:
 		-end \
 		-with G -do \
 		-group_theoretic_activity \
-			-report_group_table \
+			-group_table Do \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
 			-report Do \
 		-end \
 		-with G -do \
@@ -6019,6 +5981,8 @@ quaternion:
 		-end
 	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_report.tex
 	$(OPEN) SL_2_3_Subgroup_quaternion_8_report.pdf
+	$(PDFLATEX) SL_2_3_Subgroup_quaternion_8_group_table_report.tex
+	$(OPEN) SL_2_3_Subgroup_quaternion_8_group_table_report.pdf
 
 
 cube_group:
@@ -6342,14 +6306,14 @@ Cyclic_6_aut:
 		-define G -permutation_group -cyclic_group 6 -end \
 		-with G -do \
 			-group_theoretic_activity \
-			-report Do \
+				-report Do \
 		-end \
 		-define A -modified_group -from G \
 			-automorphism_group \
 		-end \
 		-with A -do \
 			-group_theoretic_activity \
-			-report Do \
+				-report Do \
 		-end
 	$(PDFLATEX) C_6_aut_report.tex
 	$(OPEN) C_6_aut_report.pdf
@@ -6362,14 +6326,14 @@ Elementary_abelian_8_aut:
 		-define G -permutation_group -elementary_abelian_group 8 -end \
 		-with G -do \
 			-group_theoretic_activity \
-			-report Do \
+				-report Do \
 		-end \
 		-define A -modified_group -from G \
 			-automorphism_group \
 		-end \
 		-with A -do \
 			-group_theoretic_activity \
-			-report Do \
+				-report Do \
 		-end
 	$(PDFLATEX) E_8_aut_report.tex
 	$(OPEN) E_8_aut_report.pdf
@@ -6406,11 +6370,34 @@ Alternating_5:
 		-with Alt5 -do \
 		-group_theoretic_activity \
 			-report Do \
+		-end \
+		-with Alt5 -do \
+		-group_theoretic_activity \
+			-group_table Do \
+		-end \
+		-with Alt5 -do \
+		-group_theoretic_activity \
+			-export_group_table \
+		-end
+	$(ORBITER) -v 2 \
+		-define all_one_r -vector -repeat 1 60 -end \
+		-define all_one_c -vector -repeat 1 60 -end \
+		-draw_matrix \
+			-input_csv_file \
+				Sym_5_EvenSub_group_table.csv \
+			-box_width 20 \
+			-bit_depth 24 \
+			-partition 3 all_one_r all_one_c \
 		-end
 	$(PDFLATEX) Sym_5_EvenSub_report.tex
 	$(OPEN) Sym_5_EvenSub_report.pdf
+	$(PDFLATEX) Sym_5_EvenSub_group_table_report.tex
+	$(OPEN) Sym_5_EvenSub_group_table_report.pdf
+	convert Sym_5_EvenSub_group_table_draw.bmp Sym_5_EvenSub_group_table_draw.png
+	$(OPEN) Sym_5_EvenSub_group_table_draw.png
 
 # group order 60
+#Sym_5_EvenSub_group_table.csv
 
 
 Alternating_5_derived:
@@ -7614,18 +7601,9 @@ PGGL_2_4_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(MAGMA_EXE) PGGL_2_4_classes.magma
-	$(ORBITER) -v 3 \
-		-define G \
-		-linear_group -PGGL 2 4 \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-classes \
-		-end
-	$(PDFLATEX) PGGL_2_4_classes_out.tex
-	$(OPEN) PGGL_2_4_classes_out.pdf
-	$(OPEN) PGGL_2_4_classes_out.csv
+	$(PDFLATEX) PGGL_2_4_classes.tex
+	$(OPEN) PGGL_2_4_classes.pdf
+
 
 
 
@@ -17184,8 +17162,10 @@ test_12:
 	make test_12_1
 	make test_12_2
 	make test_12_3
-	make test_12_4 # slow
-	make test_12_5 # slow
+	make test_12_4
+	make test_12_5
+	make test_12_6
+	make test_12_7
 
 
 
@@ -17478,13 +17458,99 @@ Neumaier_graph_25:
 
 
 
+
+
 ###############################################################################
-# Section 12.3: Combinatorial Objects with Group
+# Section 12.3: Activities for Geometric Objects
+
+
+SECTION_ACTIVITIES_FOR_GEOMETRIC_OBJECTS:
+
+
+
+test_12_3:
+	make Edge_curve_17
+	make Edge_curve_17_line_type
+
+
+
+
+
+Edge_curve_17:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -geometric_object P \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				Eqn \
+		-end
+
+
+
+
+
+Edge_curve_17_line_type:
+	$(ORBITER) -v 6 \
+		-define F -finite_field -q 17 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "X,Y,Z" "X,Y,Z" \
+		-end \
+		-assign Eqn -from \
+		-with R -do \
+			-ring_theoretic_activity \
+			-parse_equation \
+				"Edge_curve" "Edge\_curve" \
+				$(EDGE_CURVE_EQUATION_ALGEBRAIC) \
+				f 3 \
+		-end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define C -geometric_object P \
+			-projective_variety R \
+				"Edge_q17" "Edge\_q17" \
+				Eqn \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-line_type_old \
+		-end \
+		-print_symbols
+
+#( 4^6, 2^30, 1^132, 0^139 )
+
+
+
+
+
+
+
+
+###############################################################################
+# Section 12.4: Combinatorial Objects with Group
 
 SECTION_COMBINATORIAL_OBJECTS_WITH_GROUP:
 
 
-test_12_3:
+test_12_4:
 	make geo_10_3_Desargues_configuration_c
 	make Praeger_45_12_3_design_group
 
@@ -17642,12 +17708,12 @@ Praeger_45_12_3_design_group:
 
 
 ###############################################################################
-# Section 12.4: Combinatorial Linear Spaces
+# Section 12.5: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 
-test_12_4:
+test_12_5:
 	make linsp6
 	make linsp7
 	make linsp30_pt_types
@@ -17732,9 +17798,9 @@ linsp30_pt_distribution:
 
 
 ###############################################################################
-# Section 12.5: Combinatorial Linear Spaces
+# Section 12.6: Combinatorial Linear Spaces
 
-test_12_5:
+test_12_6:
 	make geo_pasch
 	make geo_petersen
 	make geo_7_3
@@ -18375,11 +18441,11 @@ geo_MOL6.inc:
 
 
 ###############################################################################
-# Section 12.6: Tactical Decompositions
+# Section 12.7: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
-test_12_6:
+test_12_7:
 	make max_arc_16_4_start
 	make max_arc_16_4_convert_stack_tdo
 	make max_arc_16_4_refine

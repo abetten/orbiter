@@ -9,5 +9,7 @@ ROW,C1,C2,C3
 1,"\verb'-tensor_permutations' ","  "," Computes the permutation representation of the generators of the wreath product. "
 1,"\verb'-classify_ovoids' "," descr "," "
 1,"\verb'-representation_on_polynomials' "," R ","Computes the representation of the built-in generating set of the present group in the action on homogeneous polynomials as defined in the ring R. This function assumes a linear group."
+1,"\verb'-canonical_image_GAP' "," S ","Compute the canonical image of the set $S$ using GAP. "
+1,"\verb'-canonical_image' "," S ","Compute the canonical image of the set $S$ using Orbiter. "
 END
 

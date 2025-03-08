@@ -206,6 +206,26 @@ void int_vec::mone(
 	}
 }
 
+int int_vec::is_Hamming_weight_one(
+		int *v, int &idx_nonzero, long int len)
+{
+	int i;
+	int f_first = true;
+
+	for (i = 0; i < len; i++) {
+		if (v[i]) {
+			if (f_first) {
+				f_first = false;
+				idx_nonzero = i;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 void int_vec::copy(
 		int *from, int *to, long int len)
 {

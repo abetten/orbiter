@@ -90,6 +90,7 @@ void vector_ge_activity::perform_activity(
 		int f_with_permutation = true;
 		int f_override_action = true;
 		actions::action *A_special;
+		std::string options;
 
 		A_special = vec[0]->A;
 		if (f_v) {
@@ -101,6 +102,39 @@ void vector_ge_activity::perform_activity(
 				f_with_permutation,
 				f_override_action,
 				A_special,
+				options,
+				verbose_level);
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after vec->report_elements" << endl;
+		}
+
+
+	}
+	else if (Descr->f_report_with_options) {
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity f_report_with_options" << endl;
+		}
+
+		int f_with_permutation = true;
+		int f_override_action = true;
+		actions::action *A_special;
+		std::string options;
+
+		options = Descr->report_options;
+		A_special = vec[0]->A;
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before vec[0]->report_elements" << endl;
+		}
+		vec[0]->report_elements(
+				A_special->label,
+				f_with_permutation,
+				f_override_action,
+				A_special,
+				options,
 				verbose_level);
 
 		if (f_v) {
@@ -118,6 +152,7 @@ void vector_ge_activity::perform_activity(
 		}
 
 		actions::action *A_special;
+		string fname_out;
 
 		A_special = vec[0]->A;
 		if (f_v) {
@@ -126,6 +161,7 @@ void vector_ge_activity::perform_activity(
 		}
 		vec[0]->report_elements_coded(
 				A_special->label,
+				fname_out,
 				true /* f_override_action */, A_special,
 				verbose_level);
 
@@ -336,7 +372,9 @@ void vector_ge_activity::perform_activity(
 		int *Selection;
 		int len;
 
-		Get_int_vector_from_label(Descr->select_subset_vector_label, Selection, len, 0 /* verbose_level */);
+		Get_int_vector_from_label(
+				Descr->select_subset_vector_label, Selection, len,
+				0 /* verbose_level */);
 
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "

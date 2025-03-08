@@ -1135,6 +1135,28 @@ void polarity_extension::element_print_easy_latex(
 	ost << "\\\\" << endl;
 }
 
+std::string polarity_extension::element_stringify(
+		int *Elt, std::string &options)
+{
+	string s;
+	int f;
+
+	s += "\\left(";
+	for (f = 0; f < 2; f++) {
+		//ost << "component " << f << ":" << endl;
+		if (f == 0) {
+			s += M->Element->GL_stringify(Elt + element_coding_offset[0], options);
+			s += ",";
+		}
+		else {
+			s += std::to_string(Elt[element_coding_offset[1]]) + "\n";
+		}
+	}
+	s += "\\right)";
+	s += "\\\\\n";
+	return s;
+}
+
 void polarity_extension::element_code_for_make_element(
 		int *Elt, int *data)
 {

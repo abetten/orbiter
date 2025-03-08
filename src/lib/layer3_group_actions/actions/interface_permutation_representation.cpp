@@ -87,6 +87,8 @@ static void permutation_representation_group_element_print_quick(
 static void permutation_representation_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string permutation_representation_group_element_stringify(
+		action &A, void *elt, std::string &options);
 static void permutation_representation_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -122,6 +124,7 @@ void action_pointer_table::init_function_pointers_permutation_representation_gro
 	ptr_element_print = permutation_representation_group_element_print;
 	ptr_element_print_quick = permutation_representation_group_element_print_quick;
 	ptr_element_print_latex = permutation_representation_group_element_print_latex;
+	ptr_element_stringify = permutation_representation_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			permutation_representation_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = permutation_representation_group_element_print_verbose;
@@ -477,6 +480,17 @@ static void permutation_representation_group_element_print_latex(
 
 
 	P.element_print_latex(Elt, ost);
+}
+
+static std::string permutation_representation_group_element_stringify(
+		action &A, void *elt, std::string &options)
+{
+	group_constructions::permutation_representation &P = *A.G.Permutation_representation;
+	int *Elt = (int *) elt;
+	string s;
+
+	s = P.element_stringify(Elt, options);
+	return s;
 }
 
 static void permutation_representation_group_element_print_latex_with_point_labels(

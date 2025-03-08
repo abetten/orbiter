@@ -425,6 +425,22 @@ void permutation_representation_domain::print(
 	//cout << "perm_group::print done" << endl;
 }
 
+std::string permutation_representation_domain::stringify(
+		int *Elt, std::string &options)
+{
+
+	combinatorics::other_combinatorics::combinatorics_domain Combi;
+
+	string s;
+
+
+	//cout << "perm_group::print before perm_print" << endl;
+	s = Combi.Permutations->stringify(Elt, degree, options);
+	//ost << endl;
+	//cout << "perm_group::print done" << endl;
+	return s;
+}
+
 void permutation_representation_domain::print_with_point_labels(
 		int *Elt,
 		ostream &ost,

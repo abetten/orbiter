@@ -200,6 +200,8 @@ public:
 		int offset, int f_cycle_length);
 	void perm_print(
 			std::ostream &ost, int *a, int n);
+	std::string stringify(
+			int *a, int n, std::string &options);
 	void perm_print_with_point_labels(
 			std::ostream &ost,
 			int *a, int n,
@@ -210,6 +212,15 @@ public:
 			std::ostream &ost, int *a, int n);
 	void perm_print_offset(
 			std::ostream &ost,
+		int *a, int n,
+		int offset,
+		int f_print_cycles_of_length_one,
+		int f_cycle_length,
+		int f_max_cycle_length,
+		int max_cycle_length,
+		int f_orbit_structure,
+		std::string *Point_labels, void *data);
+	std::string perm_stringify_offset(
 		int *a, int n,
 		int offset,
 		int f_print_cycles_of_length_one,

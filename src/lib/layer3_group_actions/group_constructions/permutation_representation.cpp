@@ -244,6 +244,15 @@ void permutation_representation::element_print_latex(
 	A_original->Group_element->element_print_latex(Elt, ost);
 }
 
+std::string permutation_representation::element_stringify(
+		int *Elt, std::string &options)
+{
+	string s;
+
+	s = A_original->Group_element->element_stringify(Elt, options);
+	return s;
+}
+
 
 
 

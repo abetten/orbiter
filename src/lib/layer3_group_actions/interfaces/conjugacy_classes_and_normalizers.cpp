@@ -550,7 +550,8 @@ void conjugacy_classes_and_normalizers::report_summary_table(
 		}
 		ost << "\\begin{center}" << endl;
 		L.print_tabular_of_strings(
-				ost, Table + I * nb_pp * nb_cols, nb_r, nb_cols);
+				ost,
+				Table + I * nb_pp * nb_cols, nb_r, nb_cols);
 		ost << "\\end{center}" << endl;
 
 

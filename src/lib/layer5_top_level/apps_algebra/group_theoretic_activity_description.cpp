@@ -27,9 +27,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_report = false;
 	//std::string report_draw_options;
 
-	f_report_sylow = false;
-	f_report_group_table = false;
-	//f_report_classes = false;
+	f_group_table = false;
+	//std::string group_table_draw_options;
+
+	f_sylow = false;
+
 
 	f_generators = false;
 
@@ -77,13 +79,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_export_gap = false;
 
 	f_export_magma = false;
-
-	// GAP
-	f_canonical_image_GAP = false;
-	//std::string canonical_image_GAP_input_set;
-
-	f_canonical_image = false;
-	//std::string canonical_image_input_set;
 
 	f_search_element_of_order = false;
 	search_element_order = 0;
@@ -144,13 +139,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	identify_elements_by_class_expand_go = 0;
 	//std::string identify_elements_by_class_supergroup;
 
-
-	f_subgroup_lattice_magma = false;
-
-	f_identify_subgroups_from_file = false;
-	//std::string identify_subgroups_from_file_fname;
-	//std::string identify_subgroups_from_file_col_label;
-	identify_subgroups_from_expand_go = 0;
 
 
 	// undocumented:
@@ -324,6 +312,25 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_representation_on_polynomials = false;
 	//std::string representation_on_polynomials_ring;
 
+	// GAP
+	f_canonical_image_GAP = false;
+	//std::string canonical_image_GAP_input_set;
+
+	f_canonical_image = false;
+	//std::string canonical_image_input_set;
+
+
+
+	// TABLES/group_theoretic_activity_5.tex
+
+	f_subgroup_lattice_magma = false;
+
+	f_identify_subgroups_from_file = false;
+	//std::string identify_subgroups_from_file_fname;
+	//std::string identify_subgroups_from_file_col_label;
+	identify_subgroups_from_expand_go = 0;
+
+	f_permutation_subgroup = false;
 
 }
 
@@ -346,6 +353,9 @@ int group_theoretic_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+
+		// 1
+
 		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = true;
 			report_draw_options.assign(argv[++i]);
@@ -353,26 +363,19 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-report " << report_draw_options << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-report_sylow") == 0) {
-			f_report_sylow = true;
+		else if (ST.stringcmp(argv[i], "-group_table") == 0) {
+			f_group_table = true;
+			group_table_draw_options.assign(argv[++i]);
 			if (f_v) {
-				cout << "-report_sylow" << endl;
+				cout << "-group_table " << group_table_draw_options << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-report_group_table") == 0) {
-			f_report_group_table = true;
+		else if (ST.stringcmp(argv[i], "-sylow") == 0) {
+			f_sylow = true;
 			if (f_v) {
-				cout << "-report_group_table" << endl;
+				cout << "-sylow" << endl;
 			}
 		}
-#if 0
-		else if (ST.stringcmp(argv[i], "-report_classes") == 0) {
-			f_report_classes = true;
-			if (f_v) {
-				cout << "-report_classes" << endl;
-			}
-		}
-#endif
 
 		else if (ST.stringcmp(argv[i], "-generators") == 0) {
 			f_generators = true;
@@ -499,22 +502,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-export_magma " << endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-canonical_image_GAP") == 0) {
-			f_canonical_image_GAP = true;
-			canonical_image_GAP_input_set.assign(argv[++i]);
-			if (f_v) {
-				cout << "-canonical_image_GAP "
-						<< canonical_image_GAP_input_set << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
-			f_canonical_image = true;
-			canonical_image_input_set.assign(argv[++i]);
-			if (f_v) {
-				cout << "-canonical_image " << canonical_image_input_set << endl;
-			}
-		}
-
 		else if (ST.stringcmp(argv[i], "-search_element_of_order") == 0) {
 			f_search_element_of_order = true;
 			search_element_order = ST.strtoi(argv[++i]);
@@ -550,6 +537,10 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-element_unrank " << element_unrank_data << endl;
 			}
 		}
+
+
+		// 2
+
 		else if (ST.stringcmp(argv[i], "-find_singer_cycle") == 0) {
 			f_find_singer_cycle = true;
 			if (f_v) {
@@ -633,26 +624,6 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (ST.stringcmp(argv[i], "-subgroup_lattice_magma") == 0) {
-			f_subgroup_lattice_magma = true;
-			if (f_v) {
-				cout << "-subgroup_lattice_magma " << endl;
-			}
-		}
-		else if (ST.stringcmp(argv[i], "-identify_subgroups_from_file") == 0) {
-			f_identify_subgroups_from_file = true;
-			identify_subgroups_from_file_fname.assign(argv[++i]);
-			identify_subgroups_from_file_col_label.assign(argv[++i]);
-			identify_subgroups_from_expand_go = ST.strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-identify_subgroups_from_file "
-						<< identify_subgroups_from_file_fname
-						<< " " << identify_subgroups_from_file_col_label
-						<< " " << identify_subgroups_from_expand_go
-						<< endl;
-			}
-		}
-
 		else if (ST.stringcmp(argv[i], "-find_subgroup") == 0) {
 			f_find_subgroup = true;
 			find_subgroup_order = ST.strtoi(argv[++i]);
@@ -763,6 +734,9 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+
+
+		// 3
 
 		else if (ST.stringcmp(argv[i], "-find_conjugating_element") == 0) {
 			f_find_conjugating_element = true;
@@ -925,6 +899,11 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << subgroup_lattice_find_overgroup_in_orbit_orbit_global2 << endl;
 			}
 		}
+
+
+		// 4
+
+
 		else if (ST.stringcmp(argv[i], "-subgroup_lattice_create_flag_transitive_geometry_with_partition") == 0) {
 			f_subgroup_lattice_create_flag_transitive_geometry_with_partition = true;
 			subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit = ST.strtoi(argv[++i]);
@@ -1078,6 +1057,49 @@ int group_theoretic_activity_description::read_arguments(
 						<< representation_on_polynomials_ring << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-canonical_image_GAP") == 0) {
+			f_canonical_image_GAP = true;
+			canonical_image_GAP_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-canonical_image_GAP "
+						<< canonical_image_GAP_input_set << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
+			f_canonical_image = true;
+			canonical_image_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-canonical_image " << canonical_image_input_set << endl;
+			}
+		}
+
+		// 5:
+
+		else if (ST.stringcmp(argv[i], "-subgroup_lattice_magma") == 0) {
+			f_subgroup_lattice_magma = true;
+			if (f_v) {
+				cout << "-subgroup_lattice_magma " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-identify_subgroups_from_file") == 0) {
+			f_identify_subgroups_from_file = true;
+			identify_subgroups_from_file_fname.assign(argv[++i]);
+			identify_subgroups_from_file_col_label.assign(argv[++i]);
+			identify_subgroups_from_expand_go = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-identify_subgroups_from_file "
+						<< identify_subgroups_from_file_fname
+						<< " " << identify_subgroups_from_file_col_label
+						<< " " << identify_subgroups_from_expand_go
+						<< endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-permutation_subgroup") == 0) {
+			f_permutation_subgroup = true;
+			if (f_v) {
+				cout << "-permutation_subgroup " << endl;
+			}
+		}
 
 
 
@@ -1105,11 +1127,11 @@ void group_theoretic_activity_description::print()
 	if (f_report) {
 		cout << "-report " << report_draw_options << endl;
 	}
-	if (f_report_sylow) {
-		cout << "-report_sylow" << endl;
+	if (f_group_table) {
+		cout << "-group_table " << group_table_draw_options << endl;
 	}
-	if (f_report_group_table) {
-		cout << "-report_group_table" << endl;
+	if (f_sylow) {
+		cout << "-sylow" << endl;
 	}
 	if (f_generators) {
 		cout << "-generators" << endl;
@@ -1165,12 +1187,6 @@ void group_theoretic_activity_description::print()
 	if (f_export_magma) {
 		cout << "-export_magma " << endl;
 	}
-	if (f_canonical_image_GAP) {
-		cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
-	}
-	if (f_canonical_image) {
-		cout << "-canonical_image " << canonical_image_input_set << endl;
-	}
 
 	if (f_search_element_of_order) {
 		cout << "-search_element_of_order " << search_element_order << endl;
@@ -1189,6 +1205,11 @@ void group_theoretic_activity_description::print()
 	if (f_element_unrank) {
 		cout << "-element_unrank " << element_unrank_data << endl;
 	}
+
+
+	//  2
+
+
 	if (f_find_singer_cycle) {
 		cout << "-find_singer_cycle " << endl;
 	}
@@ -1228,16 +1249,6 @@ void group_theoretic_activity_description::print()
 				<< " " << identify_elements_by_class_column
 				<< " " << identify_elements_by_class_expand_go
 				<< " " << identify_elements_by_class_supergroup
-				<< endl;
-	}
-	if (f_subgroup_lattice_magma) {
-		cout << "-subgroup_lattice_magma " << endl;
-	}
-	if (f_identify_subgroups_from_file) {
-		cout << "-identify_subgroups_from_file "
-				<< identify_subgroups_from_file_fname
-				<< " " << identify_subgroups_from_file_col_label
-				<< " " << identify_subgroups_from_expand_go
 				<< endl;
 	}
 
@@ -1293,6 +1304,10 @@ void group_theoretic_activity_description::print()
 				<< rational_normal_form_input
 				<< endl;
 	}
+
+
+	// 3
+
 
 	if (f_find_conjugating_element) {
 		cout << "-find_conjugating_element "
@@ -1383,6 +1398,11 @@ void group_theoretic_activity_description::print()
 				<< " " << subgroup_lattice_find_overgroup_in_orbit_group1
 				<< " " << subgroup_lattice_find_overgroup_in_orbit_orbit_global2 << endl;
 	}
+
+
+	// 4
+
+
 	if (f_subgroup_lattice_create_flag_transitive_geometry_with_partition) {
 		cout << "-subgroup_lattice_create_flag_transitive_geometry_with_partition "
 				<< subgroup_lattice_create_flag_transitive_geometry_with_partition_P_orbit
@@ -1458,6 +1478,29 @@ void group_theoretic_activity_description::print()
 		cout << "-representation_on_polynomials "
 				<< representation_on_polynomials_ring << endl;
 	}
+	if (f_canonical_image_GAP) {
+		cout << "-canonical_image_GAP " << canonical_image_GAP_input_set << endl;
+	}
+	if (f_canonical_image) {
+		cout << "-canonical_image " << canonical_image_input_set << endl;
+	}
+
+	// 5
+
+	if (f_subgroup_lattice_magma) {
+		cout << "-subgroup_lattice_magma " << endl;
+	}
+	if (f_identify_subgroups_from_file) {
+		cout << "-identify_subgroups_from_file "
+				<< identify_subgroups_from_file_fname
+				<< " " << identify_subgroups_from_file_col_label
+				<< " " << identify_subgroups_from_expand_go
+				<< endl;
+	}
+	if (f_permutation_subgroup) {
+		cout << "-permutation_subgroup " << endl;
+	}
+
 
 
 }

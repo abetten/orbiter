@@ -709,15 +709,16 @@ public:
 	int f_report;
 	std::string report_draw_options;
 
-		// flags that apply to report:
-		int f_report_sylow;
-		int f_report_group_table;
+	int f_group_table;
+	std::string group_table_draw_options;
+
+	int f_sylow;
+
 
 	int f_generators;
 
 	int f_elements;
 
-	// ToDo: undocumented
 	int f_select_elements;
 	std::string select_elements_ranks;
 
@@ -758,13 +759,6 @@ public:
 
 	int f_export_magma;
 
-
-	// GAP:
-	int f_canonical_image_GAP;
-	std::string canonical_image_GAP_input_set;
-
-	int f_canonical_image;
-	std::string canonical_image_input_set;
 
 	int f_search_element_of_order;
 	int search_element_order;
@@ -825,12 +819,6 @@ public:
 	int identify_elements_by_class_expand_go;
 	std::string identify_elements_by_class_supergroup;
 
-	int f_subgroup_lattice_magma;
-
-	int f_identify_subgroups_from_file;
-	std::string identify_subgroups_from_file_fname;
-	std::string identify_subgroups_from_file_col_label;
-	int identify_subgroups_from_expand_go;
 
 
 	// undocumented (too specialized):
@@ -989,6 +977,26 @@ public:
 	int f_representation_on_polynomials;
 	std::string representation_on_polynomials_ring;
 
+	// GAP:
+	int f_canonical_image_GAP;
+	std::string canonical_image_GAP_input_set;
+
+	int f_canonical_image;
+	std::string canonical_image_input_set;
+
+
+	// TABLES/group_theoretic_activity_5.tex
+
+
+	int f_subgroup_lattice_magma;
+
+	int f_identify_subgroups_from_file;
+	std::string identify_subgroups_from_file_fname;
+	std::string identify_subgroups_from_file_col_label;
+	int identify_subgroups_from_expand_go;
+
+	// ToDo undocumented
+	int f_permutation_subgroup;
 
 
 	group_theoretic_activity_description();
@@ -1166,7 +1174,9 @@ public:
 
 	int f_report;
 
-	// ToDo undocumented:
+	int f_report_with_options;
+	std::string report_options;
+
 	int f_report_elements_coded;
 
 	int f_export_GAP;

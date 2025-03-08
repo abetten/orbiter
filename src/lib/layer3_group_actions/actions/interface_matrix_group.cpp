@@ -87,6 +87,9 @@ static void matrix_group_element_print_quick(
 static void matrix_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string matrix_group_element_stringify(
+		action &A,
+		void *elt, std::string &options);
 static void matrix_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -126,6 +129,7 @@ void action_pointer_table::init_function_pointers_matrix_group()
 	ptr_element_print = matrix_group_element_print;
 	ptr_element_print_quick = matrix_group_element_print_quick;
 	ptr_element_print_latex = matrix_group_element_print_latex;
+	ptr_element_stringify = matrix_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			matrix_group_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = matrix_group_element_print_verbose;
@@ -247,13 +251,13 @@ static int matrix_group_element_is_one(
 	
 	if (f_v) {
 		cout << "matrix_group_element_is_one" << endl;
-		}
+	}
 	if (G.f_kernel_is_diagonal_matrices) {
 		f_is_one = G.Element->GL_is_one(Elt);
-		}
+	}
 	else if (!G.f_projective) {
 		f_is_one = G.Element->GL_is_one(Elt);
-		}
+	}
 	else {
 		cout << "matrix_group_element_is_one: warning: "
 				"using slow identity element test" << endl;
@@ -263,19 +267,19 @@ static int matrix_group_element_is_one(
 			if (j != i) {
 				f_is_one = false;
 				break;
-				}
 			}
 		}
+	}
 	if (f_v) {
 		if (f_is_one) {
 			cout << "matrix_group_element_is_one "
 					"returns YES" << endl;
-			}
+		}
 		else {
 			cout << "matrix_group_element_is_one "
 					"returns NO" << endl;
-			}
 		}
+	}
 	return f_is_one;
 }
 
@@ -290,7 +294,7 @@ static void matrix_group_element_unpack(
 	
 	if (f_v) {
 		cout << "matrix_group_element_unpack" << endl;
-		}
+	}
 	G.Element->GL_unpack(elt1, Elt1, verbose_level - 1);
 }
 
@@ -328,37 +332,6 @@ static void matrix_group_element_retrieve(
 	G.Element->retrieve(
 			hdl, elt, verbose_level);
 	
-#if 0
-	if (f_v) {
-		cout << "matrix_group_element_retrieve "
-				"hdl = " << hdl << endl;
-	}
-	if (elt == NULL) {
-		cout << "matrix_group_element_retrieve "
-				"elt == NULL" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "matrix_group_element_retrieve "
-				"overall_length = " << G.Element->Elts->overall_length << endl;
-	}
-	if (hdl >= G.Element->Elts->overall_length) {
-		cout << "matrix_group_element_retrieve "
-				"hdl = " << hdl << endl;
-		cout << "matrix_group_element_retrieve "
-				"overall_length = " << G.Element->Elts->overall_length << endl;
-		exit(1);
-	}
-
-	p_elt = G.Element->Elts->s_i(hdl);
-	//if (f_v) {
-	//	element_print_packed(G, p_elt, cout);
-	//	}
-	G.Element->GL_unpack(p_elt, Elt, verbose_level);
-	if (f_v) {
-		G.Element->GL_print_easy(Elt, cout);
-	}
-#endif
 }
 
 static int matrix_group_element_store(
@@ -375,14 +348,6 @@ static int matrix_group_element_store(
 	}
 	hdl = G.Element->store(
 			elt, verbose_level);
-#if 0
-	G.Element->GL_pack(Elt, G.Element->elt1, verbose_level);
-	hdl = G.Element->Elts->store(G.Element->elt1);
-	if (f_v) {
-		cout << "matrix_group_element_store "
-				"hdl = " << hdl << endl;
-	}
-#endif
 	return hdl;
 }
 
@@ -440,11 +405,11 @@ static void matrix_group_element_invert(
 	if (f_vv) {
 		cout << "A=" << endl;
 		G.Element->GL_print_easy(AA, cout);
-		}
+	}
 	G.Element->GL_invert(AA, AAv);
 	if (f_v) {
 		cout << "matrix_group_element_invert done" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "Av=" << endl;
 		G.Element->GL_print_easy(AAv, cout);
@@ -636,6 +601,18 @@ static void matrix_group_element_print_latex(
 #endif
 }
 
+static std::string matrix_group_element_stringify(
+		action &A,
+		void *elt, std::string &options)
+{
+	algebra::basic_algebra::matrix_group &G = *A.G.matrix_grp;
+	int *Elt = (int *) elt;
+	std::string s;
+
+	s = G.Element->GL_stringify(Elt, options);
+	return s;
+}
+
 static void matrix_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -662,7 +639,11 @@ static void matrix_group_element_print_as_permutation(
 		cout << "matrix_group_element_print_as_permutation "
 				"degree = " << A.degree << endl;
 	}
-	int *p = NEW_int(A.degree);
+	int *images = NEW_int(A.degree);
+
+	A.Group_element->make_list_of_images(
+			images, Elt);
+#if 0
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation
 		//computing image of i=" << i << endl;
@@ -671,10 +652,12 @@ static void matrix_group_element_print_as_permutation(
 		//else
 			//f_v = false;
 		j = A.Group_element->element_image_of(i, Elt, 0 /* verbose_level */);
-		p[i] = j;
+		images[i] = j;
 	}
-	Combi.Permutations->perm_print(ost, p, A.degree);
-	FREE_int(p);
+#endif
+
+	Combi.Permutations->perm_print(ost, images, A.degree);
+	FREE_int(images);
 }
 
 static void matrix_group_element_print_verbose(
@@ -690,13 +673,22 @@ static void matrix_group_element_print_verbose(
 	int i, j;
 	
 	if (A.degree < 100) {
-		int *p = NEW_int(A.degree);
+
+		int *images = NEW_int(A.degree);
+
+
+		A.Group_element->make_list_of_images(
+				images, Elt);
+
+#if 0
 		for (i = 0; i < A.degree; i++) {
 			j = A.Group_element->element_image_of(i, Elt, false);
-			p[i] = j;
+			images[i] = j;
 		}
-		Combi.Permutations->perm_print(ost, p, A.degree);
-		FREE_int(p);
+#endif
+
+		Combi.Permutations->perm_print(ost, images, A.degree);
+		FREE_int(images);
 	}
 	else {
 #if 0

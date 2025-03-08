@@ -86,6 +86,8 @@ static void polarity_extension_element_print_quick(
 static void polarity_extension_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string polarity_extension_element_stringify(
+		action &A, void *elt, std::string &options);
 static void polarity_extension_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -129,7 +131,7 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_dispose = polarity_extension_element_dispose;
 	ptr_element_print = polarity_extension_element_print;
 	ptr_element_print_quick = polarity_extension_element_print_quick;
-	ptr_element_print_latex = polarity_extension_element_print_latex;
+	ptr_element_stringify = polarity_extension_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			polarity_extension_element_print_latex_with_point_labels;
 	ptr_element_print_verbose = polarity_extension_element_print_verbose;
@@ -470,6 +472,17 @@ static void polarity_extension_element_print_latex(
 	int *Elt = (int *) elt;
 
 	P.element_print_easy_latex(Elt, ost);
+}
+
+static std::string polarity_extension_element_stringify(
+		action &A, void *elt, std::string &options)
+{
+	group_constructions::polarity_extension &P = *A.G.Polarity_extension;
+	int *Elt = (int *) elt;
+	string s;
+
+	s = P.element_stringify(Elt, options);
+	return s;
 }
 
 

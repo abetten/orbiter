@@ -2,8 +2,8 @@ ROW,C1,C2,C3
 0,"tab:grouptasks",,
 1,"Group theoretic activities (Part 1)",,
 1,"\verb'-report' "," options ","Produce a latex report for the group. Considers the given draw options. "
-1,"\verb'-report_sylow' "," ","Include Sylow subgroups in the report (requires \verb'-report'). "
-1,"\verb'-report_group_table' "," ","Include the group table in the report (requires \verb'-report'). "
+1,"\verb'-group_table' "," options "," Produce a latex report for the group table. Considers the given draw options. "
+1,"\verb'-sylow' "," "," Produce a latex report for the sylow subgroups. "
 1,"\verb'-generators' ","  ","Returns the generators of the group as a vector of group elements. "
 1,"\verb'-elements' ","  ","Returns the elements of the group as a vector of group elements. "
 1,"\verb'-select_elements' "," list ","Returns the elements of the group whose ranks are given in the list as a vector of group elements. "
@@ -19,8 +19,6 @@ ROW,C1,C2,C3
 1,"\verb'-export_orbiter' ","  ","Exports the group to Orbiter. "
 1,"\verb'-export_gap' ","  ","Exports the group to GAP~\cite{GAP}. "
 1,"\verb'-export_magma' ","  ","Exports the group to Magma~\cite{Magma}. "
-1,"\verb'-canonical_image_GAP' "," S ","Compute the canonical image of the set $S$ using GAP. "
-1,"\verb'-canonical_image' "," S ","Compute the canonical image of the set $S$ using Orbiter. "
 1,"\verb'-search_element_of_order' "," $i$ ","Finds all elements of order $i$ in the group ($i \in {\mathbb N}$). "
 1,"\verb'-find_standard_generators' "," $a$ $b$ $c$ "," Finds all pairs of elements $x,y$ in $G$ such that $|x| = a,$ $|y|=b$, and $|xy|=c$. Such pairs are called standard generators. "
 1,"\verb'-element_rank' "," $s$ "," Determines the rank of the group element $s$ in the given group. $s$ is given in coded form."

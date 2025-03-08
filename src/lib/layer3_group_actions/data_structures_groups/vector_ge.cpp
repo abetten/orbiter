@@ -458,6 +458,7 @@ void vector_ge::report_elements(
 		std::string &label,
 		int f_with_permutation,
 		int f_override_action, actions::action *A_special,
+		std::string &options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -465,6 +466,38 @@ void vector_ge::report_elements(
 	if (f_v) {
 		cout << "vector_ge::report_elements" << endl;
 	}
+
+
+	std::map<std::string, std::string> symbol_table;
+
+	other::data_structures::string_tools ST;
+
+	ST.parse_value_pairs(symbol_table,
+			options, verbose_level - 1);
+
+	int f_dense = false;
+
+	{
+		std::map<std::string, std::string>::iterator it = symbol_table.begin();
+
+
+		// Iterate through the map and print the elements
+		while (it != symbol_table.end()) {
+			string label;
+			string val;
+
+			label = it->first;
+			val = it->second;
+			//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+			//assignment.insert(std::make_pair(label, a));
+			if (ST.stringcmp(label, "dense") == 0) {
+				f_dense = true;;
+			}
+			++it;
+		}
+	}
+
+
 
 	other::orbiter_kernel_system::file_io Fio;
 
@@ -490,49 +523,83 @@ void vector_ge::report_elements(
 
 		Order = NEW_int(len);
 
-		ost << "Group elements in action ";
-		ost << "$";
+
 		if (f_override_action) {
 			A1 = A_special;
 		}
 		else {
 			A1 = A;
 		}
-		ost << A1->label_tex;
-		ost << "$\\\\" << endl;
 
-		int i;
 
-		for (i = 0; i < len; i++) {
+		if (f_dense) {
 
-			Elt = ith(i);
+			int i;
 
-			ord = A1->Group_element->element_order(Elt);
-			ost << "Element " << setw(5) << i << " / "
-					<< len << " of order " << ord << ":" << endl;
+			for (i = 0; i < len; i++) {
 
-			A1->print_one_element_tex(
-					ost,
-					Elt, f_with_permutation);
+				Elt = ith(i);
 
-			Order[i] = ord;
+				//ord = A1->Group_element->element_order(Elt);
+				//ost << "Element " << setw(5) << i << " / "
+				//		<< len << " of order " << ord << ":" << endl;
+
+				ost << "$" << endl;
+				A1->Group_element->element_print_latex(Elt, ost);
+				ost << "$" << endl;
+
+#if 0
+				A1->print_one_element_tex(
+						ost,
+						Elt, f_with_permutation);
+#endif
+
+				if (i < len - 1) {
+					ost << ", ";
+				}
+				ost << endl;
+				//Order[i] = ord;
+			}
+
+		}
+		else {
+			ost << "Group elements in action ";
+			ost << "$";
+			ost << A1->label_tex;
+			ost << "$\\\\" << endl;
+
+			int i;
+
+			for (i = 0; i < len; i++) {
+
+				Elt = ith(i);
+
+				ord = A1->Group_element->element_order(Elt);
+				ost << "Element " << setw(5) << i << " / "
+						<< len << " of order " << ord << ":" << endl;
+
+				A1->print_one_element_tex(
+						ost,
+						Elt, f_with_permutation);
+
+				Order[i] = ord;
+			}
+			other::data_structures::tally T;
+
+			T.init(Order, len, false, 0 /*verbose_level*/);
+
+			ost << "Order structure:\\\\" << endl;
+			ost << "$" << endl;
+			T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
+			ost << "$" << endl;
+			ost << "\\\\" << endl;
+
+
+
+			FREE_int(Order);
 		}
 
-		other::data_structures::tally T;
-
-		T.init(Order, len, false, 0 /*verbose_level*/);
-
-		ost << "Order structure:\\\\" << endl;
-		ost << "$" << endl;
-		T.print_file_tex_we_are_in_math_mode(ost, true /* f_backwards */);
-		ost << "$" << endl;
-		ost << "\\\\" << endl;
-
-
-
 		L.foot(ost);
-
-		FREE_int(Order);
 
 	}
 	if (f_v) {
@@ -549,6 +616,7 @@ void vector_ge::report_elements(
 
 void vector_ge::report_elements_coded(
 		std::string &label,
+		std::string &fname_out,
 		int f_override_action, actions::action *A_special,
 		int verbose_level)
 {
@@ -565,13 +633,13 @@ void vector_ge::report_elements_coded(
 	algebra::ring_theory::longinteger_object go;
 
 
-	string fname;
+	//string fname_out;
 
-	fname = label + "_elements.tex";
+	fname_out = label + "_elements.tex";
 
 
 	{
-		ofstream ost(fname);
+		ofstream ost(fname_out);
 		other::l1_interfaces::latex_interface L;
 		L.head_easy(ost);
 
@@ -604,7 +672,8 @@ void vector_ge::report_elements_coded(
 	}
 	if (f_v) {
 		cout << "vector_ge::report_elements_coded "
-			"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+			"Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
 	}
 
 
@@ -752,7 +821,8 @@ void vector_ge::reallocate_and_insert_at(
 	data = data2;
 	len = len + 1;
 	if (position < 0 || position >= len) {
-		cout << "vector_ge::reallocate_and_insert_at position out of bounds, position=" << position << endl;
+		cout << "vector_ge::reallocate_and_insert_at "
+				"position out of bounds, position=" << position << endl;
 		exit(1);
 	}
 	copy_in(position, elt);

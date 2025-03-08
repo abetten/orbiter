@@ -700,6 +700,8 @@ public:
 			int *Elt, uchar *elt);
 	void print(
 			int *Elt, std::ostream &ost);
+	std::string stringify(
+			int *Elt, std::string &options);
 	void print_with_point_labels(
 			int *Elt,
 			std::ostream &ost,
@@ -786,6 +788,8 @@ public:
 			int *Elt, std::ostream &ost);
 	void element_print_latex(
 			int *Elt, std::ostream &ost);
+	std::string element_stringify(
+			int *Elt, std::string &options);
 };
 
 
@@ -904,6 +908,8 @@ public:
 			int *Elt, std::ostream &ost);
 	void element_print_easy_latex(
 			int *Elt, std::ostream &ost);
+	std::string element_stringify(
+			int *Elt, std::string &options);
 	void element_code_for_make_element(
 			int *Elt, int *data);
 	void element_print_for_make_element(
@@ -1065,6 +1071,8 @@ public:
 			int *Elt, std::ostream &ost);
 	void element_print_latex(
 			int *Elt, std::ostream &ost);
+	std::string element_stringify(
+			int *Elt, std::string &options);
 	void compute_base_and_transversals(
 			int verbose_level);
 	void make_strong_generators_data(

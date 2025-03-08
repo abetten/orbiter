@@ -31,6 +31,10 @@ matrix_group::matrix_group()
 
 	f_semilinear = false;
 	f_kernel_is_diagonal_matrices = false;
+
+	offset_affine_vector = 0;
+	offset_frobenius = 0;
+
 	bits_per_digit = 0;
 	bits_per_elt = 0;
 	bits_extension_degree = 0;
@@ -105,6 +109,12 @@ void matrix_group::init_projective_group(
 	make_element_size = n * n;
 	if (f_semilinear) {
 		make_element_size++;
+		offset_affine_vector = 0;
+		offset_frobenius = n * n;
+	}
+	else {
+		offset_affine_vector = 0;
+		offset_frobenius = 0;
 	}
 	f_kernel_is_diagonal_matrices = true;
 	degree = Gg.nb_PG_elements(n - 1, F->q);
@@ -194,6 +204,12 @@ void matrix_group::init_affine_group(
 	make_element_size = n * n + n;
 	if (f_semilinear) {
 		make_element_size++;
+		offset_affine_vector = n * n;
+		offset_frobenius = n * n + n;
+	}
+	else {
+		offset_affine_vector = n * n;
+		offset_frobenius = 0;
 	}
 
 	other::data_structures::string_tools ST;
@@ -279,6 +295,12 @@ void matrix_group::init_general_linear_group(
 	make_element_size = n * n;
 	if (f_semilinear) {
 		make_element_size++;
+		offset_affine_vector = 0;
+		offset_frobenius = n * n;
+	}
+	else {
+		offset_affine_vector = 0;
+		offset_frobenius = 0;
 	}
 
 	other::data_structures::string_tools ST;

@@ -1,0 +1,7 @@
+ROW,C1,C2,C3
+0,"tab:grouptasks5",,
+1,"Group theoretic activities (Part 5)",,
+1,"\verb'-subgroup_lattice_magma' ","  ","Computes the lattice of subgroups by means of conjugacy classes of subgroups, see Section~\ref{sec:group:magma}."
+1,"\verb'-identify_subgroups_from_file' "," file col-label grouporder ","Identifies subgroups of a given order in the lattice of subgroups (which is computed using magma just as in the previous command). The subgroups are read from the given column in the given file. Subgroups can have any size. Groups whose size does not match are ignored. A file with the results of the identification is written. "
+END
+

@@ -553,12 +553,17 @@ public:
 			int a);
 	void print_element(
 			std::ostream &ost, int a);
+	std::string stringify_element(
+			int a);
 	void print_element_str(
 			std::stringstream &ost, int a);
 	void print_element_with_symbol(
 			std::ostream &ost,
 		int a, int f_exponential,
 		int width, std::string &symbol);
+	std::string stringify_element_with_symbol(
+			int a, int f_exponential,
+			int width, std::string &symbol);
 	void print_element_with_symbol_str(
 			std::stringstream &ost,
 			int a, int f_exponential,
@@ -635,6 +640,8 @@ public:
 		std::ostream &ost, long int *Pts, int nb_pts, int len);
 	void print_matrix_latex(
 			std::ostream &ost, int *A, int m, int n);
+	std::string stringify_matrix_latex(
+			int *A, int m, int n);
 	void print_matrix_numerical_latex(
 			std::ostream &ost, int *A, int m, int n);
 	void read_from_string_coefficient_vector(

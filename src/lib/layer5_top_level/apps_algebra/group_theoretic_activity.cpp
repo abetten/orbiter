@@ -106,12 +106,55 @@ void group_theoretic_activity::perform_activity(
 		}
 		AG->create_latex_report(
 				Draw_options,
-				Descr->f_report_sylow,
-				Descr->f_report_group_table,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->create_latex_report" << endl;
+		}
+
+	}
+
+	else if (Descr->f_group_table) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_group_table" << endl;
+		}
+
+		other::graphics::layered_graph_draw_options *Draw_options;
+
+		Draw_options = Get_draw_options(Descr->group_table_draw_options);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->create_group_table_report" << endl;
+		}
+		AG->create_group_table_report(
+				Draw_options,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->create_group_table_report" << endl;
+		}
+
+	}
+
+	else if (Descr->f_sylow) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_sylow" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->create_report_sylow_subgroups" << endl;
+		}
+		AG->create_report_sylow_subgroups(
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->create_report_sylow_subgroups" << endl;
 		}
 
 	}
@@ -169,6 +212,7 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"before AG->all_elements" << endl;
 		}
+
 		AG->all_elements(
 				vec,
 				verbose_level);
@@ -505,43 +549,6 @@ void group_theoretic_activity::perform_activity(
 		}
 	}
 
-	else if (Descr->f_canonical_image_GAP) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_canonical_image_GAP" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_canonical_image_GAP" << endl;
-		}
-		AG->do_canonical_image_GAP(
-				Descr->canonical_image_GAP_input_set,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_canonical_image_GAP" << endl;
-		}
-	}
-
-	else if (Descr->f_canonical_image) {
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_canonical_image" << endl;
-		}
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->do_canonical_image_orbiter" << endl;
-		}
-		AG->do_canonical_image_orbiter(
-				Descr->canonical_image_input_set, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->do_canonical_image_orbiter" << endl;
-		}
-	}
-
 
 	else if (Descr->f_search_element_of_order) {
 
@@ -778,7 +785,8 @@ void group_theoretic_activity::perform_activity(
 
 		groups::sims *Sims;
 		if (AG->Subgroup_sims == NULL) {
-			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
+			cout << "group_theoretic_activity::perform_activity "
+					"Subgroup_sims == NULL" << endl;
 			exit(1);
 		}
 
@@ -939,99 +947,6 @@ void group_theoretic_activity::perform_activity(
 		}
 	}
 
-	else if (Descr->f_subgroup_lattice_magma) {
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"f_subgroup_lattice_magma" << endl;
-		}
-
-		groups::sims *Sims;
-		//interfaces::conjugacy_classes_of_subgroups *class_data;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before AG->get_subgroup_lattice" << endl;
-		}
-		//AG->subgroup_lattice_magma(verbose_level);
-
-		if (AG->Subgroup_sims == NULL) {
-			cout << "group_theoretic_activity::perform_activity Subgroup_sims == NULL" << endl;
-			exit(1);
-		}
-
-		Sims = AG->Subgroup_sims;
-
-		AG->get_subgroup_lattice(
-				Sims,
-				AG->class_data,
-				verbose_level);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after AG->get_subgroup_lattice" << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before class_data->report" << endl;
-		}
-		AG->class_data->report(
-				Sims,
-				AG->label,
-				AG->label_tex,
-				verbose_level - 1);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after class_data->report" << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before class_data->export_csv" << endl;
-		}
-		AG->class_data->export_csv(
-				Sims,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after class_data->export_csv" << endl;
-		}
-
-
-		// class_data is now part of AG, don't free it
-
-		//FREE_OBJECT(Sims);
-
-	}
-	else if (Descr->f_identify_subgroups_from_file) {
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					" -identify_subgroups_from_file" << Descr->identify_subgroups_from_file_fname
-					<< " -identify_subgroups_from_expand_go" << Descr->identify_subgroups_from_expand_go
-					<< endl;
-		}
-
-
-		algebra_global_with_action Algebra_global_with_action;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra_global_with_action.identify_subgroups_from_file" << endl;
-		}
-		Algebra_global_with_action.identify_subgroups_from_file(
-				AG,
-				Descr->identify_subgroups_from_file_fname,
-				Descr->identify_subgroups_from_file_col_label,
-				Descr->identify_subgroups_from_expand_go,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra_global_with_action.identify_subgroups_from_file" << endl;
-		}
-
-
-
-	}
 
 	else if (Descr->f_find_subgroup) {
 		if (f_v) {
@@ -1156,6 +1071,8 @@ void group_theoretic_activity::perform_activity(
 		int f_override_action = true;
 		actions::action *A_special;
 
+		std::string options;
+
 		A_special = AG->A;
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1166,6 +1083,7 @@ void group_theoretic_activity::perform_activity(
 				f_with_permutation,
 				f_override_action,
 				A_special,
+				options,
 				verbose_level);
 
 		if (f_v) {
@@ -2054,6 +1972,234 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"after Algebra.representation_on_polynomials" << endl;
 		}
+
+	}
+	else if (Descr->f_canonical_image_GAP) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_canonical_image_GAP" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_canonical_image_GAP" << endl;
+		}
+		AG->do_canonical_image_GAP(
+				Descr->canonical_image_GAP_input_set,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_canonical_image_GAP" << endl;
+		}
+	}
+
+	else if (Descr->f_canonical_image) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_canonical_image" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->do_canonical_image_orbiter" << endl;
+		}
+		AG->do_canonical_image_orbiter(
+				Descr->canonical_image_input_set, verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->do_canonical_image_orbiter" << endl;
+		}
+	}
+
+	// 5
+
+	else if (Descr->f_subgroup_lattice_magma) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_subgroup_lattice_magma" << endl;
+		}
+
+		groups::sims *Sims;
+		//interfaces::conjugacy_classes_of_subgroups *class_data;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->get_subgroup_lattice" << endl;
+		}
+		//AG->subgroup_lattice_magma(verbose_level);
+
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity "
+					"Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+		AG->get_subgroup_lattice(
+				Sims,
+				AG->class_data,
+				verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AG->get_subgroup_lattice" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before class_data->report" << endl;
+		}
+		AG->class_data->report(
+				Sims,
+				AG->label,
+				AG->label_tex,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after class_data->report" << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before class_data->export_csv" << endl;
+		}
+		AG->class_data->export_csv(
+				Sims,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after class_data->export_csv" << endl;
+		}
+
+
+		// class_data is now part of AG, don't free it
+
+		//FREE_OBJECT(Sims);
+
+	}
+	else if (Descr->f_identify_subgroups_from_file) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					" -identify_subgroups_from_file" << Descr->identify_subgroups_from_file_fname
+					<< " -identify_subgroups_from_expand_go" << Descr->identify_subgroups_from_expand_go
+					<< endl;
+		}
+
+
+		algebra_global_with_action Algebra_global_with_action;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Algebra_global_with_action.identify_subgroups_from_file" << endl;
+		}
+		Algebra_global_with_action.identify_subgroups_from_file(
+				AG,
+				Descr->identify_subgroups_from_file_fname,
+				Descr->identify_subgroups_from_file_col_label,
+				Descr->identify_subgroups_from_expand_go,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra_global_with_action.identify_subgroups_from_file" << endl;
+		}
+
+
+
+	}
+
+	else if (Descr->f_permutation_subgroup) {
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_permutation_subgroup"
+					<< endl;
+		}
+
+
+		groups::sims *Sims;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AG->get_subgroup_lattice" << endl;
+		}
+
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity "
+					"Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+		std::vector<long int> Generator_ranks;
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Sims->permutation_subgroup" << endl;
+		}
+		Sims->permutation_subgroup(
+				Generator_ranks,
+				verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Sims->permutation_subgroup" << endl;
+		}
+
+		cout << "group_theoretic_activity::perform_activity "
+				"generators for the permutation subgroup:" << endl;
+		Lint_vec_stl_print_fully(cout, Generator_ranks);
+		cout << endl;
+
+
+		data_structures_groups::vector_ge *Elts;
+
+		//int *Elt_data;
+		//int m, n;
+
+		AG->element_unrank_STL_lint(
+				Generator_ranks,
+				Elts,
+				verbose_level);
+
+
+		string fname;
+
+		fname = AG->label + "_permutation_subgroup_generators.csv";
+
+		other::orbiter_kernel_system::file_io Fio;
+
+#if 0
+		int f_override_action = false;
+		Elts->report_elements_coded(
+				fname_base,
+				f_override_action, NULL /* A_special */,
+				verbose_level);
+#endif
+
+		Elts->save_csv(
+				fname, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+
+#if 0
+
+		string fname_out;
+
+		fname_out = AG->label + "_perm_subgrp_gens.csv";
+
+
+		Fio.Csv_file_support->write_STL_lint_vec(
+				fname_out,
+				Generator_ranks,
+				verbose_level);
+
+#endif
+
 
 	}
 

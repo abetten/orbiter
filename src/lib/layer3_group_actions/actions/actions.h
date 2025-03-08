@@ -377,15 +377,12 @@ public:
 			int verbose_level);
 	void report_group_name_and_degree(
 			std::ostream &ost,
-			//other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
 	void report_type_of_action(
 			std::ostream &ost,
-			//other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 	void report_what_we_act_on(
 			std::ostream &ost,
-			//other::graphics::layered_graph_draw_options *O,
 			int verbose_level);
 
 
@@ -775,6 +772,8 @@ public:
 			std::string &element_from,
 			std::string &element_to,
 			int verbose_level);
+
+	// orbiter data files:
 	void read_orbit_rep_and_candidates_from_files_and_process(
 			action *A,
 			std::string &prefix,
@@ -824,6 +823,9 @@ public:
 		int &nb_cases,
 		int verbose_level);
 	// reads an orbiter data file
+
+
+
 	other::data_structures::set_of_sets *set_of_sets_copy_and_apply(
 			action *A,
 			int *Elt,
@@ -835,7 +837,6 @@ public:
 			int verbose_level);
 	void report_strong_generators(
 			std::ostream &ost,
-			//other::graphics::layered_graph_draw_options *LG_Draw_options,
 			groups::strong_generators *SG,
 			action *A,
 			int verbose_level);
@@ -865,8 +866,22 @@ public:
 			std::string &label_tex,
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
-			int f_sylow, int f_group_table,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report_group_table(
+			std::ostream &ost,
+			std::string &label,
+			std::string &label_tex,
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report_sylow(
+			std::ostream &ost,
+			std::string &label,
+			std::string &label_tex,
+			actions::action *A,
+			groups::strong_generators *Strong_gens,
 			int verbose_level);
 	void report_groups_and_normalizers(
 			action *A,
@@ -918,7 +933,7 @@ public:
 
 	std::string label;
 
-	/** function pointers for group actions. there are 26 of them. */
+	/** function pointers for group actions. there are 27 of them. */
 	long int (*ptr_element_image_of)(
 			action &A, long int a, void *elt, int verbose_level);
 	void (*ptr_element_image_of_low_level)(
@@ -955,6 +970,8 @@ public:
 			action &A, void *elt, std::ostream &ost);
 	void (*ptr_element_print_latex)(
 			action &A, void *elt, std::ostream &ost);
+	std::string (*ptr_element_stringify)(
+			action &A, void *elt, std::string &options);
 	void (*ptr_element_print_latex_with_point_labels)(
 			action &A,
 		void *elt, std::ostream &ost,
@@ -1277,6 +1294,8 @@ public:
 			std::ostream &ost, void *elt);
 	void print_for_make_element_no_commas(
 			std::ostream &ost, void *elt);
+	void make_list_of_images(
+			int *images, void *elt);
 
 	long int element_image_of(
 			long int a, void *elt, int verbose_level);
@@ -1316,6 +1335,8 @@ public:
 			void *elt, std::ostream &ost);
 	void element_print_latex(
 			void *elt, std::ostream &ost);
+	std::string element_stringify(
+			void *elt, std::string &options);
 	void element_print_latex_with_extras(
 			void *elt, std::string &label, std::ostream &ost);
 	void element_print_latex_with_point_labels(

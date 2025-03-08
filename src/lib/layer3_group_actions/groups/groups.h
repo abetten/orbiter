@@ -103,7 +103,11 @@ public:
 			int verbose_level);
 	void create_latex_report(
 			other::graphics::layered_graph_draw_options *O,
-			int f_sylow, int f_group_table, //int f_classes,
+			int verbose_level);
+	void create_group_table_report(
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void create_report_sylow_subgroups(
 			int verbose_level);
 	void export_group_table(
 			int verbose_level);
@@ -169,6 +173,10 @@ public:
 			std::string &elt_data, int verbose_level);
 	void element_unrank(
 			std::string &rank_string, int verbose_level);
+	void element_unrank_STL_lint(
+			std::vector<long int> &Ranks,
+			data_structures_groups::vector_ge *&Elts,
+			int verbose_level);
 	void automorphism_by_generator_images_save(
 			int *Images, int m, int n,
 			int *Perms, long int go,
@@ -1469,8 +1477,15 @@ public:
 		// swaps two points given by their cosets
 	void path_unrank_lint(
 			long int a);
+	int first_moved_based_on_path(
+			long int a);
+	int advance_at_given_level(
+			long int a, long int &b, int level);
+	void make_path(
+			algebra::ring_theory::longinteger_object &a,
+			int verbose_level);
 	long int path_rank_lint();
-	
+
 	void element_from_path(
 			int *elt, int verbose_level);
 		// given coset representatives in path[], 
@@ -1495,7 +1510,8 @@ public:
 		// Computes the rank of the element in elt into a.
 		// uses eltrk1, eltrk2
 	int test_membership_and_rank_element(
-			algebra::ring_theory::longinteger_object &a, int *elt, int verbose_level);
+			algebra::ring_theory::longinteger_object &a,
+			int *elt, int verbose_level);
 	// Computes the rank of the element in elt into a.
 	// uses eltrk1, eltrk2
 	// returns false if the element is not a member of the group
@@ -1568,6 +1584,11 @@ public:
 			std::vector<int> &base_orbit_idx, int verbose_level);
 	void get_all_base_orbits(
 			std::vector<int> &base_orbit_idx, int verbose_level);
+	int element_from_path_and_test_permutation_property(
+			int *elt, int &fail_depth, int verbose_level);
+	void permutation_subgroup(
+			std::vector<long int> &Gens,
+			int verbose_level);
 
 
 	// sims_main.cpp:

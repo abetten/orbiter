@@ -298,7 +298,8 @@ void sims::transitive_extension_using_coset_representatives(
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->Group_element->element_mult(coset_reps + j * A->elt_size_in_int,
+		A->Group_element->element_mult(
+				coset_reps + j * A->elt_size_in_int,
 				Elt2, Elt3, 0);
 
 		if (f_vv) {
@@ -384,7 +385,8 @@ void sims::transitive_extension_using_generators(
 
 		random_element(Elt2, verbose_level - 1);
 
-		A->Group_element->element_mult(Elt_gens + j * A->elt_size_in_int, Elt2, Elt3, 0);
+		A->Group_element->element_mult(
+				Elt_gens + j * A->elt_size_in_int, Elt2, Elt3, 0);
 
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_generators "
@@ -452,17 +454,20 @@ void sims::point_stabilizer_stabchain_with_action(
 	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	if (f_v) {
-		cout << "sims::point_stabilizer_stabchain_with_action group order = " << go << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"group order = " << go << endl;
 	}
 
 	O.init(A2, verbose_level - 2);
 
 	if (f_v) {
-		cout << "sims::point_stabilizer_stabchain_with_action before O.init_generators" << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"before O.init_generators" << endl;
 	}
 	O.init_generators(gens, verbose_level - 2);
 	if (f_v) {
-		cout << "sims::point_stabilizer_stabchain_with_action after O.init_generators" << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action "
+				"after O.init_generators" << endl;
 	}
 
 	if (f_vvv && A2->degree < 150) {
@@ -887,7 +892,7 @@ void sims::conjugate(
 					<< image << endl;
 				if (false) {
 					A->Group_element->element_print(A->Group_element->Elt2, cout);
-					cout  << endl;
+					cout << endl;
 				}
 			}
 			add_generator_at_level(A->Group_element->Elt2, drop_out_level,
@@ -959,7 +964,8 @@ int sims::test_if_in_set_stabilizer(
 	for (i = 0; i < goi; i++) {
 		a.create(i);
 		element_unrank(a, Elt1);
-		if (A->Group_element->check_if_in_set_stabilizer(Elt1,
+		if (A->Group_element->check_if_in_set_stabilizer(
+				Elt1,
 				size, set, verbose_level)) {
 			if (f_vv) {
 				cout << "element " << i
@@ -1044,7 +1050,8 @@ int sims::find_element_with_exactly_n_fixpoints_in_given_action(
 	goi = go.as_lint();
 	for (i = 0; i < goi; i++) {
 		element_unrank_lint(i, Elt);
-		order = A_given->Group_element->element_order_and_cycle_type(Elt, cycle_type);
+		order = A_given->Group_element->element_order_and_cycle_type(
+				Elt, cycle_type);
 		if (cycle_type[0] == nb_fixpoints) {
 			if (f_v) {
 				cout << "sims::find_element_with_exactly_n_fixpoints_in_given_action "
@@ -1382,7 +1389,8 @@ long int sims::find_element_of_given_order_int(
 		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 	}
-	A->Group_element->element_power_int_in_place(Elt1, d, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(
+			Elt1, d, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
@@ -1454,7 +1462,8 @@ int sims::find_element_of_given_order_int(
 		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 	}
-	A->Group_element->element_power_int_in_place(Elt1, d, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(
+			Elt1, d, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
@@ -1497,7 +1506,8 @@ void sims::find_element_of_prime_power_order(
 			break;
 		}
 	}
-	A->Group_element->element_power_int_in_place(Elt, o, verbose_level - 1);
+	A->Group_element->element_power_int_in_place(
+			Elt, o, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_prime_power_order done, "
 				"e=" << e << " nb_trials=" << nb_trials << endl;
@@ -2355,13 +2365,16 @@ void sims::dimino_with_multiple_generators(
 	for (i = 0; i < nb_cosets; i++) {
 		for (j = 0; j < nb_gens; j++) {
 			if (f_vv) {
-				cout << "sims::dimino_with_multiple_generators coset rep " << i << " = " << cosets[i] << endl;
-				cout << "sims::dimino_with_multiple_generators generator " << j << " = " << gens[j] << endl;
+				cout << "sims::dimino_with_multiple_generators "
+						"coset rep " << i << " = " << cosets[i] << endl;
+				cout << "sims::dimino_with_multiple_generators "
+						"generator " << j << " = " << gens[j] << endl;
 			}
 
 			c = mult_by_rank(cosets[i], gens[j]);
 			if (f_vv) {
-				cout << "sims::dimino_with_multiple_generators coset rep " << i << " times generator "
+				cout << "sims::dimino_with_multiple_generators "
+						"coset rep " << i << " times generator "
 						<< j << " is " << c << endl;
 			}
 			if (Sorting.int_vec_search(group, group_sz, c, idx)) {
@@ -2371,7 +2384,8 @@ void sims::dimino_with_multiple_generators(
 				continue;
 			}
 			if (f_vv) {
-				cout << "sims::dimino_with_multiple_generators new coset rep" << endl;
+				cout << "sims::dimino_with_multiple_generators "
+						"new coset rep" << endl;
 			}
 			new_coset_rep = c;
 
@@ -2381,13 +2395,15 @@ void sims::dimino_with_multiple_generators(
 			}
 			Sorting.int_vec_heapsort(group, group_sz);
 			if (f_vv) {
-				cout << "sims::dimino_with_multiple_generators new group size = " << group_sz << endl;
+				cout << "sims::dimino_with_multiple_generators "
+						"new group size = " << group_sz << endl;
 			}
 			cosets[nb_cosets++] = new_coset_rep;
 		}
 	}
 	if (f_vv) {
-		cout << "sims::dimino_with_multiple_generators, the group order has been updated to " << group_sz << endl;
+		cout << "sims::dimino_with_multiple_generators, "
+				"the group order has been updated to " << group_sz << endl;
 	}
 
 	if (f_v) {

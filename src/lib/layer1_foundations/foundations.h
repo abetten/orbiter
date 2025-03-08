@@ -961,6 +961,7 @@ namespace other {
 
 #define Int_vec_print_integer_matrix(A,B,C,D) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix(A, B, C, D)
 #define Int_vec_print_integer_matrix_width(A,B,C,D,E,F) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, E, F)
+#define Int_matrix_print_width(A,B,C,D,E) other::orbiter_kernel_system::Orbiter->Int_vec->print_integer_matrix_width(A, B, C, D, D, E)
 
 #define Int_vec_copy(from, to, len) other::orbiter_kernel_system::Orbiter->Int_vec->copy(from, to, len)
 #define Lint_vec_copy(from, to, len) other::orbiter_kernel_system::Orbiter->Lint_vec->copy(from, to, len)
@@ -987,6 +988,9 @@ namespace other {
 #define Int_matrix_print_ost(A, B, C, D) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_ost(A, B, C, D)
 
 #define Int_matrix_print_bitwise(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_print_bitwise(A, B, C)
+
+#define Make_block_matrix_2x2(Mtx,k,A,B,C,D) other::orbiter_kernel_system::Orbiter->Int_vec->matrix_make_block_matrix_2x2(Mtx, k, A, B, C, D)
+
 
 
 #define Int_vec_zero(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->zero(A, B);
@@ -1016,6 +1020,9 @@ namespace other {
 #define Int_vec_mone(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->mone(A, B)
 #define Lint_vec_mone(A, B) other::orbiter_kernel_system::Orbiter->Lint_vec->mone(A, B)
 
+#define Int_vec_of_Hamming_weight_one(V, IDX, LEN) other::orbiter_kernel_system::Orbiter->Int_vec->is_Hamming_weight_one(V, IDX, LEN)
+
+
 #define Int_vec_print_Cpp(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->print_Cpp(A, B, C)
 
 #define Int_vec_complement(A, B, C) other::orbiter_kernel_system::Orbiter->Int_vec->complement(A, B, C)
@@ -1037,7 +1044,7 @@ namespace other {
 
 #define Int_vec_distribution(A, B, C, D, E) other::orbiter_kernel_system::Orbiter->Int_vec->distribution(A, B, C, D, E)
 
-#define Int_vec_find_first_nonzero_entry(A, B) pivot = other::orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
+#define Int_vec_find_first_nonzero_entry(A, B) other::orbiter_kernel_system::Orbiter->Int_vec->find_first_nonzero_entry(A, B)
 
 
 #define Int_vec_compare(p, q, len) other::orbiter_kernel_system::Orbiter->Int_vec->compare(p, q, len)

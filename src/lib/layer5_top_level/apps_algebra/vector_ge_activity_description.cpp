@@ -27,6 +27,9 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_report = false;
 
+	f_report_with_options = false;
+	//std::string report_options;
+
 	f_report_elements_coded = false;
 
 	f_export_GAP = false;
@@ -73,6 +76,13 @@ int vector_ge_activity_description::read_arguments(
 			f_report = true;
 			if (f_v) {
 				cout << "-report " << endl;
+			}
+		}
+		else if (ST.stringcmp(argv[i], "-report_with_options") == 0) {
+			f_report_with_options = true;
+			report_options.assign(argv[++i]);
+			if (f_v) {
+				cout << "-report " << report_options << endl;
 			}
 		}
 		else if (ST.stringcmp(argv[i], "-report_elements_coded") == 0) {
@@ -156,7 +166,10 @@ void vector_ge_activity_description::print()
 {
 
 	if (f_report) {
-		cout << "-report " << endl;
+		cout << "-report " << report_options << endl;
+	}
+	if (f_report_with_options) {
+		cout << "-report " << report_options << endl;
 	}
 	if (f_report_elements_coded) {
 		cout << "-report_elements_coded " << endl;

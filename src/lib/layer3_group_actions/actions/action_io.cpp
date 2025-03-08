@@ -211,7 +211,6 @@ void action::report(
 
 void action::report_group_name_and_degree(
 		std::ostream &ost,
-		//other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,7 +231,6 @@ void action::report_group_name_and_degree(
 
 void action::report_type_of_action(
 		std::ostream &ost,
-		//other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	std::string txt;
@@ -250,7 +248,6 @@ void action::report_type_of_action(
 
 void action::report_what_we_act_on(
 		std::ostream &ost,
-		//other::graphics::layered_graph_draw_options *O,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

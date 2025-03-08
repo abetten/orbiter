@@ -321,6 +321,41 @@ void finite_field_io::print_element(
 	}
 }
 
+std::string finite_field_io::stringify_element(
+		int a)
+{
+
+	string s;
+	int width;
+	int f_print_as_exponentials = true;
+
+	if (F->Descr) {
+		f_print_as_exponentials = F->Descr->f_print_as_exponentials;
+	}
+
+	if (F == NULL) {
+		cout << "finite_field_io::print_element F == NULL" << endl;
+		exit(1);
+	}
+	if (F->e == 1) {
+		s += std::to_string(a);
+	}
+	else {
+		if (f_print_as_exponentials) {
+			width = 10;
+		}
+		else {
+			width = F->log10_of_q;
+		}
+
+		s = stringify_element_with_symbol(
+				a, f_print_as_exponentials,
+				width, F->get_symbol_for_print());
+	}
+	return s;
+}
+
+
 void finite_field_io::print_element_str(
 		std::stringstream &ost, int a)
 {
@@ -384,6 +419,66 @@ void finite_field_io::print_element_with_symbol(
 		ost << setw((int) width) << a;
 	}
 }
+
+std::string finite_field_io::stringify_element_with_symbol(
+		int a, int f_exponential,
+		int width, std::string &symbol)
+{
+	string s;
+	int b;
+
+	if (f_exponential) {
+#if 0
+		if (symbol == NULL) {
+			cout << "finite_field_io::print_element_with_symbol "
+					"symbol == NULL" << endl;
+			return;
+		}
+#endif
+		if (a == 0) {
+			//print_repeated_character(ost, ' ', width - 1);
+			s += "0";
+		}
+		else if (a == 1) {
+			//print_repeated_character(ost, ' ', width - 1);
+			s += "1";
+		}
+		else {
+			b = F->log_alpha(a);
+			if (b == F->q - 1) {
+				b = 0;
+			}
+			s += symbol;
+			if (b > 1) {
+				s += "^{" + std::to_string(b) + "}";
+			}
+			else {
+				s += " ";
+			}
+		}
+	}
+	else {
+		string s1;
+
+		s1 = std::to_string(a);
+		if (s1.length() < width) {
+			int nb_needed;
+			int i;
+
+			nb_needed = s1.length() - width;
+			for (i = 0; i < nb_needed; i++) {
+				string s2;
+
+				s2 = " " + s1;
+				s1 = s2;
+			}
+		}
+		s += s1;
+		//ost << setw((int) width) << a;
+	}
+	return s;
+}
+
 
 void finite_field_io::print_element_with_symbol_str(
 		std::stringstream &ost,
@@ -1681,6 +1776,41 @@ void finite_field_io::print_matrix_latex(
 	ost << "\\right]" << endl;
 
 }
+
+std::string finite_field_io::stringify_matrix_latex(
+		int *A, int m, int n)
+{
+	string s;
+	int i, j, a;
+
+	s += "\\left[\n";
+	s += "\\begin{array}{*{" + std::to_string(n) + "}{r}}\n";
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = A[i * n + j];
+
+#if 0
+			if (is_prime(GFq->q)) {
+				ost << setw(w) << a << " ";
+			}
+			else {
+				ost << a;
+				// GFq->print_element(ost, a);
+			}
+#else
+			s += stringify_element(a);
+#endif
+
+			if (j < n - 1)
+				s += " & ";
+		}
+		s += "\\\\\n";
+	}
+	s += "\\end{array}\n";
+	s += "\\right]\n";
+	return  s;
+}
+
 
 void finite_field_io::print_matrix_numerical_latex(
 		std::ostream &ost, int *A, int m, int n)

@@ -302,6 +302,23 @@ void conjugacy_class_of_elements::single_class_data(
 	s = std::to_string(ngo);
 	data.push_back(s);
 
+
+	int *Elt;
+
+	Elt = nice_gens->ith(0);
+	//ost << "Representing element is" << endl;
+
+
+	string options;
+
+	options = "";
+
+	s = "$" + Class_data->A->Group_element->element_stringify(Elt, options) + "$";
+	data.push_back(s);
+
+
+
+	//A1->Group_element->element_print_latex(Elt, ost);
 	if (f_v) {
 		cout << "conjugacy_class_of_elements::single_class_data done" << endl;
 	}

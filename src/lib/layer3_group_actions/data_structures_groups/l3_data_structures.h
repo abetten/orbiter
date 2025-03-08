@@ -723,9 +723,11 @@ public:
 			std::string &label,
 			int f_with_permutation,
 			int f_override_action, actions::action *A_special,
+			std::string &options,
 			int verbose_level);
 	void report_elements_coded(
 			std::string &label,
+			std::string &fname_out,
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
 	void print_generators_tex(

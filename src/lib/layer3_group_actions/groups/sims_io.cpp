@@ -748,7 +748,8 @@ void sims::save_list_of_elements(
 			element_unrank_lint(i, Elt1);
 			//cout << "element " << i << ":" << endl;
 			//A->element_print(Elt1, cout);
-			A->Group_element->element_write_file_fp(Elt1, fp, 0/* verbose_level*/);
+			A->Group_element->element_write_file_fp(
+					Elt1, fp, 0/* verbose_level*/);
 			//A->element_print_as_permutation(Elt1, cout);
 			//AA.print_as_permutation(cout, Elt1);
 			//cout << endl;

@@ -597,6 +597,8 @@ public:
 			int *v, long int len);
 	void mone(
 			int *v, long int len);
+	int is_Hamming_weight_one(
+			int *v, int &idx_nonzero, long int len);
 	void copy(
 			int *from, int *to, long int len);
 	void copy_to_lint(
