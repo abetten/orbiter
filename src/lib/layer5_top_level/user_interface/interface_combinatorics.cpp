@@ -861,6 +861,7 @@ void interface_combinatorics::print()
 
 void interface_combinatorics::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 

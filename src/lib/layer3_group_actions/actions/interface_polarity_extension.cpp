@@ -131,6 +131,7 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_dispose = polarity_extension_element_dispose;
 	ptr_element_print = polarity_extension_element_print;
 	ptr_element_print_quick = polarity_extension_element_print_quick;
+	ptr_element_print_latex = polarity_extension_element_print_latex;
 	ptr_element_stringify = polarity_extension_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			polarity_extension_element_print_latex_with_point_labels;

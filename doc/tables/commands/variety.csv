@@ -11,4 +11,5 @@ ROW,C1,C2,C3
 1,"\verb'-second_equation_by_coefficients' "," eqn "," An optional secondary defining equation as a list of coefficients in the chosen ordering of monomials. "
 1,"\verb'-points' "," pts "," The set of $\bbF_q$-rational points (optional). "
 1,"\verb'-bitangents' "," lines "," A set of lines (optional). "
+1,"\verb'-transform' "," element "," Apply the transformation by the given group element. "
 END

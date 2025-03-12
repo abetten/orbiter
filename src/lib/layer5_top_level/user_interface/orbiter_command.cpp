@@ -285,28 +285,92 @@ void orbiter_command::execute(
 	}
 
 	if (f_symbol_table) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Symbol_table->worker" << endl;
+		}
 		Symbol_table->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Symbol_table->worker" << endl;
+		}
 	}
 	else if (f_algebra) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Algebra->worker" << endl;
+		}
 		Algebra->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Algebra->worker" << endl;
+		}
 	}
 	else if (f_cryptography) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Cryptography->worker" << endl;
+		}
 		Cryptography->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Cryptography->worker" << endl;
+		}
 	}
 	else if (f_combinatorics) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Combinatorics->worker" << endl;
+		}
 		Combinatorics->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Combinatorics->worker" << endl;
+		}
 	}
 	else if (f_coding_theory) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Coding_theory->worker" << endl;
+		}
 		Coding_theory->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Coding_theory->worker" << endl;
+		}
 	}
 	else if (f_povray) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Povray->worker" << endl;
+		}
 		Povray->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Povray->worker" << endl;
+		}
 	}
 	else if (f_projective) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Projective->worker" << endl;
+		}
 		Projective->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Projective->worker" << endl;
+		}
 	}
 	else if (f_toolkit) {
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"before Toolkit->worker" << endl;
+		}
 		Toolkit->worker(verbose_level);
+		if (f_v) {
+			cout << "orbiter_command::execute "
+					"after Toolkit->worker" << endl;
+		}
 	}
 	else {
 		cout << "orbiter_command::execute unknown type" << endl;
@@ -325,31 +389,33 @@ void orbiter_command::print()
 	if (f_symbol_table) {
 		Symbol_table->print();
 	}
-	else if (f_algebra) {
+	if (f_algebra) {
 		Algebra->print();
 	}
-	else if (f_cryptography) {
+	if (f_cryptography) {
 		Cryptography->print();
 	}
-	else if (f_combinatorics) {
+	if (f_combinatorics) {
 		Combinatorics->print();
 	}
-	else if (f_coding_theory) {
+	if (f_coding_theory) {
 		Coding_theory->print();
 	}
-	else if (f_povray) {
+	if (f_povray) {
 		Povray->print();
 	}
-	else if (f_projective) {
+	if (f_projective) {
 		Projective->print();
 	}
-	else if (f_toolkit) {
+	if (f_toolkit) {
 		Toolkit->print();
 	}
+#if 0
 	else {
 		cout << "orbiter_command::print unknown type" << endl;
 		exit(1);
 	}
+#endif
 
 }
 

@@ -632,7 +632,7 @@ static void matrix_group_element_print_as_permutation(
 	//matrix_group &G = *A.G.matrix_grp;
 	int f_v = false;
 	int *Elt = (int *) elt;
-	int i, j;
+	//int i, j;
 	combinatorics::other_combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
@@ -670,7 +670,7 @@ static void matrix_group_element_print_verbose(
 
 	G.Element->GL_print_easy(Elt, ost);
 	ost << "\n";
-	int i, j;
+	//int i, j;
 	
 	if (A.degree < 100) {
 

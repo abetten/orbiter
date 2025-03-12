@@ -839,6 +839,8 @@ public:
 			int subfield_index,
 			int verbose_level);
 	void rational_normal_form(
+			vector_ge *&Rational_normal_forms,
+			vector_ge *&Base_changes,
 			int verbose_level);
 
 };

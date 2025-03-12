@@ -272,6 +272,7 @@ void interface_projective::print()
 
 void interface_projective::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 

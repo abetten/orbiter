@@ -304,6 +304,7 @@ void interface_symbol_table::read_from(
 
 void interface_symbol_table::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 
@@ -329,7 +330,10 @@ void interface_symbol_table::worker(
 			cout << "interface_symbol_table::worker "
 					"before Activity_description->worker" << endl;
 		}
-		Activity_description->worker(nb_output, Output, verbose_level);
+		Activity_description->worker(
+				with_labels,
+				nb_output, Output,
+				verbose_level);
 		if (f_v) {
 			cout << "interface_symbol_table::worker "
 					"after Activity_description->worker" << endl;
@@ -347,36 +351,28 @@ void interface_symbol_table::worker(
 						"performing the assignment" << endl;
 			}
 
-			if (assign_labels.size() > nb_output) {
+			if (f_v) {
 				cout << "interface_symbol_table::worker "
-						"assign_labels.size() > nb_output" << endl;
-				exit(1);
+						"before do_assignment" << endl;
 			}
-
-			int i;
-
-			for (i = 0; i < assign_labels.size(); i++) {
-				if (f_v) {
-					cout << "interface_symbol_table::worker "
-							"assigning " << assign_labels[i] << endl;
-				}
-
-				Output[i].label = assign_labels[i];
-
-
-				if (f_v) {
-					cout << "interface_symbol_table::worker "
-							"before add_symbol_table_entry" << endl;
-				}
-				Orbiter_top_level_session->add_symbol_table_entry(
-						assign_labels[i], Output + i, verbose_level);
-				if (f_v) {
-					cout << "interface_symbol_table::worker "
-							"after add_symbol_table_entry" << endl;
-				}
-
-
+			do_assignment(
+					nb_output,
+					Output,
+					verbose_level);
+			if (f_v) {
+				cout << "interface_symbol_table::worker "
+						"after do_assignment" << endl;
 			}
+#if 0
+			int f_assign;
+			std::vector<std::string> assign_labels;
+
+			int f_print_symbols;
+
+			int f_with;
+			std::vector<std::string> with_labels;
+#endif
+
 			if (f_v) {
 				cout << "interface_symbol_table::worker "
 						"performing the assignment done" << endl;
@@ -386,6 +382,53 @@ void interface_symbol_table::worker(
 	}
 	if (f_v) {
 		cout << "interface_symbol_table::worker done" << endl;
+	}
+}
+
+void interface_symbol_table::do_assignment(
+		int &nb_output,
+		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_assignment" << endl;
+	}
+
+	if (assign_labels.size() > nb_output) {
+		cout << "interface_symbol_table::do_assignment "
+				"assign_labels.size() > nb_output" << endl;
+		exit(1);
+	}
+
+	int i;
+
+	for (i = 0; i < assign_labels.size(); i++) {
+		if (f_v) {
+			cout << "interface_symbol_table::do_assignment "
+					"assigning " << assign_labels[i] << endl;
+		}
+
+		Output[i].label = assign_labels[i];
+
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_assignment "
+					"before add_symbol_table_entry" << endl;
+		}
+		Orbiter_top_level_session->add_symbol_table_entry(
+				assign_labels[i], Output + i, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_assignment "
+					"after add_symbol_table_entry" << endl;
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_assignment done" << endl;
 	}
 }
 

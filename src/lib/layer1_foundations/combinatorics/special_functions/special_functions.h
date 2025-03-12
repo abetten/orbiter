@@ -271,9 +271,12 @@ public:
 	algebra::ring_theory::homogeneous_polynomial_domain *Poly;
 		// Poly[i] = polynomial of degree i in n + 1 variables.
 		// i = 1,..,max_degree
+
 	int **A_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
 	int **B_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
 	int **C_poly; // [1..max_degree][Poly[i].get_nb_monomials()]
+		// the zero-th entry is not used
+
 	int *Kernel;
 	int dim_kernel;
 

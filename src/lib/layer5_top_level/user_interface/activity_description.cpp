@@ -817,6 +817,7 @@ void activity_description::read_arguments(
 
 
 void activity_description::worker(
+		std::vector<std::string> &with_labels,
 		int &nb_output,
 		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
@@ -826,6 +827,15 @@ void activity_description::worker(
 	if (f_v) {
 		cout << "activity_description::worker" << endl;
 		cout << "activity_description::worker verbose_level = " << verbose_level << endl;
+		cout << "activity_description::worker number of inputs = " << with_labels.size() << endl;
+		int i;
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
 	}
 
 
@@ -1065,7 +1075,7 @@ void activity_description::worker(
 			cout << "activity_description::worker f_vector_ge_activity" << endl;
 		}
 
-		do_vector_ge_activity(nb_output, Output, verbose_level);
+		do_vector_ge_activity(with_labels, nb_output, Output, verbose_level);
 	}
 	else if (f_combo_activity) {
 
@@ -2887,6 +2897,7 @@ void activity_description::do_variety_activity(
 }
 
 void activity_description::do_vector_ge_activity(
+		std::vector<std::string> &with_labels,
 		int &nb_output,
 		other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 		int verbose_level)
@@ -2936,6 +2947,7 @@ void activity_description::do_vector_ge_activity(
 				Vector_ge_activity_description,
 				pVB,
 				nb_objects,
+				with_labels,
 				verbose_level);
 
 

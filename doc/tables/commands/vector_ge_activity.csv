@@ -11,4 +11,5 @@ ROW,C1,C2,C3
 1,"\verb'-conjugate_inverse' ","  "," Same as \verb'-conjugate', but use the inverse element instead. "
 1,"\verb'-select_subset' "," indexset "," Create a new vector from the elements given in the index set. The index set must be a label of a vector of integers. Indexing of elements of the vector is zero-based. "
 1,"\verb'-field_reduction' "," s "," Perform field reduction w.r.t. the subfield of the given index s. The group must be a matrix group over a field admitting a subfield of index s."
+1,"\verb'-rational_canonical_form' ","  "," Computes the rational normal form of each element. Returns a vector containing all rational normal forms and a second vector containing all transformation matrices. "
 END

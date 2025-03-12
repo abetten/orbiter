@@ -75,7 +75,7 @@ void variety_object::init(
 	variety_object::Descr = Descr;
 
 
-	if (Descr->f_has_projective_space_pointer) {
+	if (Descr->f_projective_space_pointer) {
 		Projective_space = Descr->Projective_space_pointer;
 	}
 	else {
@@ -86,7 +86,7 @@ void variety_object::init(
 	if (Descr->f_ring) {
 		Ring = Get_ring(Descr->ring_label);
 	}
-	else if (Descr->f_has_ring_pointer) {
+	else if (Descr->f_ring_pointer) {
 		Ring = Descr->Ring_pointer;
 	}
 	else {
@@ -97,7 +97,7 @@ void variety_object::init(
 
 
 
-	if (Descr->f_has_equation_in_algebraic_form) {
+	if (Descr->f_equation_in_algebraic_form) {
 		if (f_v) {
 			cout << "variety_object::init "
 					"before parse_equation_in_algebraic_form" << endl;
@@ -137,7 +137,7 @@ void variety_object::init(
 
 		}
 	}
-	else if (Descr->f_has_equation_by_coefficients) {
+	else if (Descr->f_equation_by_coefficients) {
 		if (f_v) {
 			cout << "variety_object::init "
 					"before parse_equation_by_coefficients" << endl;
@@ -168,7 +168,7 @@ void variety_object::init(
 	int nb_pts;
 	int nb_bitangents;
 
-	if (Descr->f_has_points) {
+	if (Descr->f_points) {
 		long int *Pts;
 
 		Lint_vec_scan(Descr->points_txt, Pts, nb_pts);
@@ -184,7 +184,7 @@ void variety_object::init(
 		enumerate_points(verbose_level);
 	}
 
-	if (Descr->f_has_bitangents) {
+	if (Descr->f_bitangents) {
 		long int *Bitangents;
 
 		Lint_vec_scan(Descr->bitangents_txt, Bitangents, nb_bitangents);

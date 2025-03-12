@@ -22,24 +22,24 @@ namespace group_constructions {
 modified_group_create::modified_group_create()
 {
 	Record_birth();
-		Descr = NULL;
+	Descr = NULL;
 
-		//std::string label;
-		//std::string label_tex;
+	//std::string label;
+	//std::string label_tex;
 
-		//initial_strong_gens = NULL;
+	//initial_strong_gens = NULL;
 
-		A_base = NULL;
-		A_previous = NULL;
-		A_modified = NULL;
+	A_base = NULL;
+	A_previous = NULL;
+	A_modified = NULL;
 
-		f_has_strong_generators = false;
-		Strong_gens = NULL;
+	f_has_strong_generators = false;
+	Strong_gens = NULL;
 
-		action_on_self_by_right_multiplication_sims = NULL;
-		Action_by_right_multiplication = NULL;
+	action_on_self_by_right_multiplication_sims = NULL;
+	Action_by_right_multiplication = NULL;
 
-		Action_by_conjugation_base_group = NULL;
+	Action_by_conjugation_base_group = NULL;
 
 }
 
@@ -198,6 +198,7 @@ void modified_group_create::modified_group_init(
 
 		cout << "modified_group_create::modified_group_init "
 				"f_point_stabilizer can not be handled here" << endl;
+		// see apps_algebra::algebra_global_with_action
 		exit(1);
 
 	}
@@ -206,6 +207,7 @@ void modified_group_create::modified_group_init(
 
 		cout << "modified_group_create::modified_group_init "
 				"f_set_stabilizer can not be handled here" << endl;
+		// see apps_algebra::algebra_global_with_action
 		exit(1);
 	}
 
@@ -395,9 +397,26 @@ void modified_group_create::modified_group_init(
 
 		cout << "modified_group_create::modified_group_init "
 				"f_stabilizer_of_variety can not be handled here" << endl;
+		// see apps_algebra::algebra_global_with_action
 		exit(1);
 
 	}
+
+	else if (Descr->f_subgroup_by_generators) {
+
+
+		cout << "modified_group_create::modified_group_init "
+				"f_subgroup_by_generators can not be handled here" << endl;
+		// see apps_algebra::algebra_global_with_action
+		exit(1);
+
+		if (f_v) {
+			cout << "modified_group_create::modified_group_init "
+					"f_subgroup_by_generators " << Descr->subgroup_by_generators_label << endl;
+		}
+	}
+
+
 	else if (Descr->f_import) {
 
 		if (f_v) {
@@ -2042,6 +2061,101 @@ void modified_group_create::create_subgroup_by_lattice(
 		cout << "modified_group_create::create_subgroup_by_lattice done" << endl;
 	}
 }
+
+
+#if 0
+void modified_group_create::create_subgroup_by_generators(
+		std::string &gens_label,
+		int verbose_level)
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_generators gens_label=" << gens_label << endl;
+	}
+
+	if (Descr->from.size() != 1) {
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	groups::any_group *AG;
+
+	AG = (groups::any_group *) Get_any_group_opaque(Descr->from[0]);
+
+
+	//apps_algebra::vector_ge_builder *VB;
+
+	//VB = Get_object_of_type_vector_ge(gens_label);
+
+
+
+	A_base = AG->A_base;
+	A_previous = AG->A;
+
+
+
+
+
+	label = AG->label + "_subgroup_by_generators_" + gens_label;
+	label_tex = AG->label_tex + "{\\rm \\_subgroup\\_by\\_generators\\_" + gens_label + "}";
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"label = " << label << endl;
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"label_tex = " << label_tex << endl;
+	}
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"A_base=";
+		A_base->print_info();
+		cout << endl;
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"A_previous=";
+		A_previous->print_info();
+		cout << endl;
+	}
+
+	if (!AG->f_has_class_data) {
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"the subgroup lattice has not been computed yet" << endl;
+		exit(1);
+	}
+
+
+	actions::action_global Action_global;
+
+	A_modified = Action_global.init_subgroup_from_strong_generators(
+			AG->A_base,
+			Strong_gens_temp,
+			verbose_level - 1);
+
+	A_modified->label = label;
+	A_modified->label_tex = label_tex;
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"A_modified->label = " << A_modified->label << endl;
+		cout << "modified_group_create::create_subgroup_by_generators "
+				"A_modified->label_tex = " << A_modified->label_tex << endl;
+	}
+
+
+	// Strong_gens should be in the new action.
+
+	f_has_strong_generators = true;
+	Strong_gens = A_modified->Strong_gens->create_copy(verbose_level - 4);
+	//Strong_gens = AG->class_data->Conjugacy_class[orbit_index]->gens->create_copy(verbose_level - 4);
+
+	if (f_v) {
+		cout << "modified_group_create::create_subgroup_by_generators done" << endl;
+	}
+}
+
+#endif
 
 
 void modified_group_create::import_group(

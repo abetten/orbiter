@@ -214,13 +214,13 @@ public:
 	void make_classes_GL(
 			algebra::field_theory::finite_field *F,
 			int d, int f_no_eigenvalue_one, int verbose_level);
+#if 0
 	void compute_rational_normal_form(
 			algebra::field_theory::finite_field *F,
 			int d,
 			int *matrix_data,
 			int *Basis, int *Rational_normal_form,
 			int verbose_level);
-#if 0
 	void do_identify_one(
 			int q, int d,
 			int f_no_eigenvalue_one, int elt_idx,
@@ -298,6 +298,12 @@ public:
 			actions::action *A1, actions::action *A2,
 			int order_a, int order_b, int order_ab,
 			int verbose_level);
+	void find_standard_generators_M24(
+			groups::any_group *Any_group,
+			actions::action *A1, actions::action *A2,
+			int *Elt_a, int *Elt_b,
+			int verbose_level);
+	// the order will be computed using the action A2
 	void do_character_table_symmetric_group(
 			int deg, int verbose_level);
 	void group_of_automorphisms_by_images_of_generators(
@@ -405,6 +411,11 @@ public:
 			group_constructions::group_modification_description *Descr,
 			std::string &variety_label,
 			int verbose_level);
+	void create_subgroup_by_generators(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			std::string &subgroup_by_generators_label,
+			int verbose_level);
 	void conjugacy_class_of(
 			groups::any_group *Any_group,
 			std::string &label_of_class,
@@ -431,6 +442,7 @@ public:
 			groups::any_group *Any_group,
 			int expand_by_go,
 			classes_of_elements_expanded *&Classes_of_elements_expanded,
+			data_structures_groups::vector_ge *&Reps,
 			int verbose_level);
 	void split_by_classes(
 			groups::sims *Sims,
@@ -767,6 +779,8 @@ public:
 	int find_standard_generators_order_a;
 	int find_standard_generators_order_b;
 	int find_standard_generators_order_ab;
+
+	int f_find_standard_generators_M24;
 
 	int f_element_rank;
 	std::string element_rank_data;
@@ -1197,6 +1211,8 @@ public:
 	int field_reduction_subfield_index;
 
 	int f_rational_canonical_form;
+	// returns two vectors:
+	// the rational canonical forms and the base change matrices
 
 
 
@@ -1226,12 +1242,15 @@ public:
 	vector_ge_activity_description *Descr;
 
 	int nb_objects;
-	apps_algebra::vector_ge_builder **VB;
 
-	data_structures_groups::vector_ge **vec;
+	std::vector<std::string> *with_labels;
+
+	apps_algebra::vector_ge_builder **VB; // [nb_objects]
+
+	data_structures_groups::vector_ge **vec; // [nb_objects]
 
 	int nb_output;
-	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output;
+	other::orbiter_kernel_system::orbiter_symbol_table_entry *Output; // [nb_output]
 
 	vector_ge_activity();
 	~vector_ge_activity();
@@ -1239,6 +1258,7 @@ public:
 			vector_ge_activity_description *Descr,
 			apps_algebra::vector_ge_builder **VB,
 			int nb_objects,
+			std::vector<std::string> &with_labels,
 			int verbose_level);
 	void perform_activity(
 			int verbose_level);

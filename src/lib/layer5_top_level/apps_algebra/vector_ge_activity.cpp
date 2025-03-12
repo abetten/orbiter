@@ -24,6 +24,7 @@ vector_ge_activity::vector_ge_activity()
 	Record_birth();
 	Descr = NULL;
 	nb_objects = 0;
+	with_labels= NULL;
 	VB = NULL;
 	vec = NULL;
 
@@ -46,6 +47,7 @@ void vector_ge_activity::init(
 		vector_ge_activity_description *Descr,
 		apps_algebra::vector_ge_builder **VB,
 		int nb_objects,
+		std::vector<std::string> &with_labels,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -57,6 +59,7 @@ void vector_ge_activity::init(
 
 	vector_ge_activity::Descr = Descr;
 	vector_ge_activity::nb_objects = nb_objects;
+	vector_ge_activity::with_labels = &with_labels;
 	vector_ge_activity::VB = VB;
 	vec = (data_structures_groups::vector_ge **) NEW_pvoid(nb_objects);
 
@@ -87,18 +90,25 @@ void vector_ge_activity::perform_activity(
 			cout << "vector_ge_activity::perform_activity f_report" << endl;
 		}
 
-		int f_with_permutation = true;
+		int f_with_permutation = false;
 		int f_override_action = true;
 		actions::action *A_special;
 		std::string options;
 
+
 		A_special = vec[0]->A;
+		options = "";
+
+		std::string label;
+
+		label = A_special->label + "_" + (*with_labels)[0];
+
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
 					"before vec[0]->report_elements" << endl;
 		}
 		vec[0]->report_elements(
-				A_special->label,
+				label,
 				f_with_permutation,
 				f_override_action,
 				A_special,
@@ -118,19 +128,24 @@ void vector_ge_activity::perform_activity(
 			cout << "vector_ge_activity::perform_activity f_report_with_options" << endl;
 		}
 
-		int f_with_permutation = true;
+		int f_with_permutation = false;
 		int f_override_action = true;
 		actions::action *A_special;
 		std::string options;
 
 		options = Descr->report_options;
 		A_special = vec[0]->A;
+
+		std::string label;
+
+		label = A_special->label + "_" + (*with_labels)[0];
+
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
 					"before vec[0]->report_elements" << endl;
 		}
 		vec[0]->report_elements(
-				A_special->label,
+				label,
 				f_with_permutation,
 				f_override_action,
 				A_special,
@@ -155,12 +170,18 @@ void vector_ge_activity::perform_activity(
 		string fname_out;
 
 		A_special = vec[0]->A;
+
+		std::string label;
+
+		label = A_special->label + "_" + (*with_labels)[0];
+
+
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
 					"before vec[0]->report_elements_coded" << endl;
 		}
 		vec[0]->report_elements_coded(
-				A_special->label,
+				label,
 				fname_out,
 				true /* f_override_action */, A_special,
 				verbose_level);
@@ -184,7 +205,11 @@ void vector_ge_activity::perform_activity(
 
 		string fname;
 
-		fname = A_special->label + "_elements.gap";
+		//fname = A_special->label + "_elements.gap";
+
+
+		fname = A_special->label + "_" + (*with_labels)[0] + ".gap";
+
 
 		{
 			std::ofstream ost(fname);
@@ -252,7 +277,7 @@ void vector_ge_activity::perform_activity(
 				0 /* verbose_level */);
 
 		nb_output = 1;
-		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
 
 		string output_label;
 
@@ -304,7 +329,7 @@ void vector_ge_activity::perform_activity(
 		}
 
 		nb_output = 1;
-		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
 
 		string output_label;
 
@@ -348,7 +373,7 @@ void vector_ge_activity::perform_activity(
 				0 /* verbose_level */);
 
 		nb_output = 1;
-		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
 
 		string output_label;
 
@@ -398,7 +423,7 @@ void vector_ge_activity::perform_activity(
 		}
 
 		nb_output = 1;
-		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
 
 		string output_label;
 
@@ -438,16 +463,43 @@ void vector_ge_activity::perform_activity(
 					"-rational_canonical_form " << endl;
 		}
 
+		data_structures_groups::vector_ge *Rational_normal_forms;
+		data_structures_groups::vector_ge *Base_changes;
+
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
 					"before rational_normal_form" << endl;
 		}
 		vec[0]->rational_normal_form(
+					Rational_normal_forms,
+					Base_changes,
 					verbose_level);
 		if (f_v) {
 			cout << "vector_ge_activity::perform_activity "
 					"after rational_normal_form" << endl;
 		}
+
+		nb_output = 2;
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
+
+		string output_label0;
+		string output_label1;
+
+		output_label0 = "rational_normal_form";
+		output_label1 = "base_change";
+
+		apps_algebra::vector_ge_builder *VB0;
+		apps_algebra::vector_ge_builder *VB1;
+
+		VB0 = NEW_OBJECT(apps_algebra::vector_ge_builder);
+		VB1 = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB0->V = Rational_normal_forms;
+		VB1->V = Base_changes;
+
+		Output[0].init_vector_ge(output_label0, VB0, verbose_level);
+		Output[1].init_vector_ge(output_label1, VB1, verbose_level);
+
 
 	}
 

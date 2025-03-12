@@ -157,6 +157,7 @@ public:
 			int argc, std::string *argv, int &i,
 			int verbose_level);
 	void worker(
+			std::vector<std::string> &with_labels,
 			int &nb_output,
 			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
@@ -226,6 +227,7 @@ public:
 	void do_variety_activity(
 			int verbose_level);
 	void do_vector_ge_activity(
+			std::vector<std::string> &with_labels,
 			int &nb_output,
 			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
 			int verbose_level);
@@ -913,6 +915,10 @@ public:
 			int argc, std::string *argv, int &i, int verbose_level);
 	void worker(
 			int verbose_level);
+	void do_assignment(
+			int &nb_output,
+			other::orbiter_kernel_system::orbiter_symbol_table_entry *&Output,
+			int verbose_level);
 	void print();
 	void print_with();
 
@@ -1349,7 +1355,7 @@ public:
 
 	std::string define_label;
 
-	// TABLES/aaa_orbiter_objects1.csv
+	// TABLES/orbiter_objects1.csv
 
 
 
@@ -1452,7 +1458,7 @@ public:
 	//	*packing_with_assumed_symmetry_choose_fixed_points_control;
 
 
-	// TABLES/aaa_orbiter_objects2.csv
+	// TABLES/orbiter_objects2.csv
 
 	int f_packing_long_orbits;
 	std::string packing_long_orbits_choose_fixed_points_label;

@@ -1041,6 +1041,27 @@ int group_element::element_has_order_two(
 	return ret;
 }
 
+void group_element::mult_abc(
+		int *Elt_a,
+		int *Elt_b,
+		int *Elt_c,
+		int *Elt_abc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "group_element::mult_abc" << endl;
+	}
+
+	element_mult(Elt_a, Elt_b, Elt1, 0);
+	element_mult(Elt1, Elt_c, Elt_abc, 0);
+	if (f_v) {
+		cout << "group_element::mult_abc done" << endl;
+	}
+}
+
 int group_element::product_has_order_two(
 		int *E1,
 		int *E2, int verbose_level)
@@ -2084,10 +2105,60 @@ void group_element::make_element(
 	}
 }
 
+void group_element::element_power_int(
+		int *Elt, int *Elt_power_n,
+		int n, int verbose_level)
+// n must be >= 0
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::element_power_int" << endl;
+	}
+	if (n < 0) {
+		cout << "group_element::element_power_int n < 0" << endl;
+		exit(1);
+	}
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	move(Elt, Elt2);
+	one(Elt3);
+	while (n) {
+		if (ODD(n)) {
+			mult(Elt2, Elt3, Elt4);
+			move(Elt4, Elt3);
+		}
+		mult(Elt2, Elt2, Elt4);
+		move(Elt4, Elt2);
+		n >>= 1;
+	}
+	move(Elt3, Elt_power_n);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	if (f_v) {
+		cout << "group_element::element_power_int done" << endl;
+	}
+}
+
 void group_element::element_power_int_in_place(
 		int *Elt,
 		int n, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::element_power_int_in_place" << endl;
+	}
+	if (n < 0) {
+		cout << "group_element::element_power_int_in_place n < 0" << endl;
+		exit(1);
+	}
 	int *Elt2;
 	int *Elt3;
 	int *Elt4;
@@ -2110,12 +2181,21 @@ void group_element::element_power_int_in_place(
 	FREE_int(Elt2);
 	FREE_int(Elt3);
 	FREE_int(Elt4);
+	if (f_v) {
+		cout << "group_element::element_power_int_in_place done" << endl;
+	}
 }
 
-void group_element::word_in_ab(
+void group_element::evaluate_word_in_ab(
 		int *Elt1, int *Elt2, int *Elt3,
-		const char *word, int verbose_level)
+		std::string &word, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_element::evaluate_word_in_ab" << endl;
+	}
+
 	int *Elt4;
 	int *Elt5;
 	int l, i;
@@ -2124,7 +2204,7 @@ void group_element::word_in_ab(
 	Elt4 = NEW_int(A->elt_size_in_int);
 	Elt5 = NEW_int(A->elt_size_in_int);
 	one(Elt4);
-	l = strlen(word);
+	l = word.length();
 	for (i = 0; i < l; i++) {
 		if (word[i] == 'a') {
 			mult(Elt4, Elt1, Elt5);
@@ -2135,7 +2215,8 @@ void group_element::word_in_ab(
 			move(Elt5, Elt4);
 		}
 		else {
-			cout << "word must consist of a and b" << endl;
+			cout << "group_element::evaluate_word_in_ab "
+					"word must consist of a and b" << endl;
 			exit(1);
 		}
 	}
@@ -2143,6 +2224,10 @@ void group_element::word_in_ab(
 
 	FREE_int(Elt4);
 	FREE_int(Elt5);
+
+	if (f_v) {
+		cout << "group_element::evaluate_word_in_ab done" << endl;
+	}
 }
 
 void group_element::evaluate_word(

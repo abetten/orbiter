@@ -109,7 +109,6 @@ void polynomial_function_domain::init(
 	Q = NT.i_power_j_lint(q, n);
 
 	if (f_v) {
-		cout << "polynomial_function_domain::init n=" << n << endl;
 		cout << "polynomial_function_domain::init q=" << q << endl;
 		cout << "polynomial_function_domain::init max_degree=" << max_degree << endl;
 		cout << "polynomial_function_domain::init Q=" << Q << endl;
@@ -118,7 +117,7 @@ void polynomial_function_domain::init(
 	affine_points = NEW_lint(Q);
 
 	v = NEW_int(n);
-	v1 = NEW_int(n);
+	v1 = NEW_int(n + 1);
 	w = NEW_int(n);
 	f = NEW_int(Q);
 	f2 = NEW_int(Q);
@@ -176,10 +175,12 @@ void polynomial_function_domain::setup_polynomial_rings(
 		// So, we are really making homogeneous polynomials
 		// for projective space PG(n,2) with n+1 variables.
 	if (f_v) {
-		cout << "polynomial_function_domain::setup_polynomial_rings nb_vars = " << nb_vars << endl;
+		cout << "polynomial_function_domain::setup_polynomial_rings "
+				"nb_vars = " << nb_vars << endl;
 	}
 	if (f_v) {
-		cout << "polynomial_function_domain::setup_polynomial_rings max_degree = " << max_degree << endl;
+		cout << "polynomial_function_domain::setup_polynomial_rings "
+				"max_degree = " << max_degree << endl;
 	}
 
 	Poly = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, max_degree + 2);
@@ -195,7 +196,7 @@ void polynomial_function_domain::setup_polynomial_rings(
 		}
 		if (f_v) {
 			cout << "polynomial_function_domain::setup_polynomial_rings "
-					"before Poly[degree].init" << endl;
+					"before Poly[" << degree << "].init" << endl;
 		}
 		Poly[degree].init(
 				Fq, nb_vars, degree,

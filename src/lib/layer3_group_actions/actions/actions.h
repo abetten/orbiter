@@ -765,7 +765,10 @@ public:
 			int verbose_level);
 	void rational_normal_form(
 			actions::action *A,
-			std::string &element_given,
+			//std::string &element_given,
+			int *element_given,
+			int *Basis1,
+			int *Rational_normal_form,
 			int verbose_level);
 	void find_conjugating_element(
 			actions::action *A,
@@ -1413,6 +1416,12 @@ public:
 		int verbose_level);
 	int element_has_order_two(
 			int *E1, int verbose_level);
+	void mult_abc(
+			int *Elt_a,
+			int *Elt_b,
+			int *Elt_c,
+			int *Elt_abc,
+			int verbose_level);
 	int product_has_order_two(
 			int *E1, int *E2, int verbose_level);
 	int product_has_order_three(
@@ -1486,12 +1495,15 @@ public:
 			std::string &data_string, int verbose_level);
 	void make_element(
 			int *Elt, int *data, int verbose_level);
+	void element_power_int(
+			int *Elt, int *Elt_power_n,
+			int n, int verbose_level);
 	void element_power_int_in_place(
 			int *Elt,
 		int n, int verbose_level);
-	void word_in_ab(
+	void evaluate_word_in_ab(
 			int *Elt1, int *Elt2, int *Elt3,
-		const char *word, int verbose_level);
+			std::string &word, int verbose_level);
 	void evaluate_word(
 			int *Elt, int *word, int len,
 			data_structures_groups::vector_ge *gens,

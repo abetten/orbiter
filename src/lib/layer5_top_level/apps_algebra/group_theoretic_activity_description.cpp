@@ -89,6 +89,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	find_standard_generators_order_ab = 0;
 
 
+	f_find_standard_generators_M24 = false;
+
 	f_element_rank = false;
 	// std::string element_rank_data;
 
@@ -522,6 +524,13 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-find_standard_generators_M24") == 0) {
+			f_find_standard_generators_M24 = true;
+			if (f_v) {
+				cout << "-find_standard_generators_M24 " << endl;
+			}
+		}
+
 
 		else if (ST.stringcmp(argv[i], "-element_rank") == 0) {
 			f_element_rank = true;
@@ -1197,6 +1206,9 @@ void group_theoretic_activity_description::print()
 					<< " " << find_standard_generators_order_b
 					<< " " << find_standard_generators_order_ab
 					<< endl;
+	}
+	if (f_find_standard_generators_M24) {
+		cout << "-find_standard_generators_M24 " << endl;
 	}
 
 	if (f_element_rank) {

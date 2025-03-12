@@ -80,12 +80,12 @@ void variety_object_with_action::create_variety(
 
 
 	if (VD->f_projective_space) {
-		VD->f_has_projective_space_pointer = true;
+		VD->f_projective_space_pointer = true;
 		VD->Projective_space_pointer = Get_projective_space(VD->projective_space_label)->P;
 	}
 
-	if (VD->f_has_bitangents == false) {
-		VD->f_has_bitangents = true;
+	if (VD->f_bitangents == false) {
+		VD->f_bitangents = true;
 		VD->bitangents_txt = "";
 	}
 

@@ -242,11 +242,15 @@ public:
 	std::string polarity_extension_input;
 	std::string polarity_extension_PA;
 
+	// ToDo undocumented
 	int f_on_middle_layer_grassmannian;
 
+	// ToDo undocumented
 	int f_on_points_and_hyperplanes;
 
+	// ToDo undocumented
 	int f_holomorph;
+
 
 	int f_automorphism_group;
 
@@ -256,10 +260,14 @@ public:
 	int f_stabilizer_of_variety;
 	std::string stabilizer_of_variety_label;
 
+	int f_subgroup_by_generators;
+	std::string subgroup_by_generators_label;
+
 	int f_nauty_control;
 	other::l1_interfaces::nauty_interface_control *Nauty_interface_control;
 
 
+	// ToDo undocumented:
 	int f_import;
 
 	std::vector<std::string> from;
@@ -546,6 +554,9 @@ public:
 			int verbose_level);
 	void create_subgroup_by_lattice(
 			int orbit_index,
+			int verbose_level);
+	void create_subgroup_by_generators(
+			std::string &gens_label,
 			int verbose_level);
 	void import_group(
 			int verbose_level);

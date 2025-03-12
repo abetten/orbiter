@@ -803,6 +803,7 @@ void interface_algebra::print()
 
 void interface_algebra::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1165,7 +1166,7 @@ void interface_algebra::worker(
 
 	else if (f_compute_rational_normal_form) {
 
-		apps_algebra::algebra_global_with_action Algebra;
+		//apps_algebra::algebra_global_with_action Algebra;
 		int *matrix_data;
 		int sz;
 
@@ -1188,19 +1189,57 @@ void interface_algebra::worker(
 		Basis = NEW_int(d * d);
 		Rational_normal_form = NEW_int(d * d);
 
+		actions::action_global Action_global;
+
+		actions::action *A;
+		algebra::ring_theory::longinteger_object Go;
+		data_structures_groups::vector_ge *nice_gens;
+
+
+		A = NEW_OBJECT(actions::action);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"before A->Known_groups->init_projective_group" << endl;
+		}
+		A->Known_groups->init_projective_group(
+				d /* n */, F,
+				false /* f_semilinear */,
+				true /* f_basis */,
+				true /* f_init_sims */,
+				nice_gens,
+				0 /*verbose_level*/);
+		if (f_v) {
+			cout << "interface_algebra::worker "
+					"after A->Known_groups->init_projective_group" << endl;
+		}
+
+		FREE_OBJECT(nice_gens);
+
+		A->print_base();
+		A->group_order(Go);
+
+
 
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"before Algebra.compute_rational_normal_form" << endl;
+					"before Action_global.rational_normal_form" << endl;
 		}
+		Action_global.rational_normal_form(
+				A,
+				//compute_rational_normal_form_data,
+				matrix_data,
+				Basis, Rational_normal_form,
+				verbose_level);
+#if 0
 		Algebra.compute_rational_normal_form(
 				F, compute_rational_normal_form_d,
 				matrix_data,
 				Basis, Rational_normal_form,
 				verbose_level);
+#endif
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"after Algebra.compute_rational_normal_form" << endl;
+					"after Action_global.rational_normal_form" << endl;
 		}
 
 		if (f_v) {
@@ -1212,6 +1251,7 @@ void interface_algebra::worker(
 			Int_matrix_print(Rational_normal_form, d, d);
 		}
 
+		FREE_OBJECT(A);
 
 		FREE_int(matrix_data);
 		FREE_int(Basis);

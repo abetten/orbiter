@@ -83,6 +83,9 @@ group_modification_description::group_modification_description()
 	f_stabilizer_of_variety = false;
 	//std::string stabilizer_of_variety_label;
 
+	f_subgroup_by_generators = false;
+	//std::string subgroup_by_generators_label;
+
 	f_nauty_control = false;
 	Nauty_interface_control = NULL;
 
@@ -272,6 +275,13 @@ int group_modification_description::read_arguments(
 				cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-subgroup_by_generators") == 0) {
+			f_subgroup_by_generators = true;
+			subgroup_by_generators_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-subgroup_by_generators " << subgroup_by_generators_label << endl;
+			}
+		}
 		else if (ST.stringcmp(argv[i], "-nauty_control") == 0) {
 			if (f_v) {
 				cout << "-nauty_control " << endl;
@@ -404,6 +414,9 @@ void group_modification_description::print()
 	}
 	if (f_stabilizer_of_variety) {
 		cout << "-stabilizer_of_variety " << stabilizer_of_variety_label << endl;
+	}
+	if (f_subgroup_by_generators) {
+		cout << "-subgroup_by_generators " << subgroup_by_generators_label << endl;
 	}
 	if (f_nauty_control) {
 		cout << "-nauty_control " << endl;

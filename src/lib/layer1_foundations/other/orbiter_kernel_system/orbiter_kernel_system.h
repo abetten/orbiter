@@ -1671,7 +1671,7 @@ public:
 	void seed_random_generator_with_system_time();
 	void seed_random_generator(
 			int seed);
-	int random_integer(
+	long int random_integer(
 			int p);
 	int os_seconds_past_1970();
 	void get_string_from_command_line(

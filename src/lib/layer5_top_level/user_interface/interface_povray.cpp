@@ -128,6 +128,7 @@ void interface_povray::print()
 
 void interface_povray::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 

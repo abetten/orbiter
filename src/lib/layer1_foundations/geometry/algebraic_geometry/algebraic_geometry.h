@@ -2193,16 +2193,18 @@ public:
 	int f_projective_space;
 	std::string projective_space_label;
 
-	int f_has_projective_space_pointer;
+	// not to be documented:
+	int f_projective_space_pointer;
 	geometry::projective_geometry::projective_space *Projective_space_pointer;
 
 	int f_ring;
 	std::string ring_label;
 
-	int f_has_ring_pointer;
+	// not to be documented:
+	int f_ring_pointer;
 	algebra::ring_theory::homogeneous_polynomial_domain *Ring_pointer;
 
-	int f_has_equation_in_algebraic_form;
+	int f_equation_in_algebraic_form;
 	std::string equation_in_algebraic_form_text;
 
 	int f_set_parameters;
@@ -2210,21 +2212,22 @@ public:
 	std::string set_parameters_label_tex;
 	std::string set_parameters_values;
 
-	int f_has_equation_by_coefficients;
+	int f_equation_by_coefficients;
 	std::string equation_by_coefficients_text;
 
-	int f_has_second_equation_in_algebraic_form;
+	int f_second_equation_in_algebraic_form;
 	std::string second_equation_in_algebraic_form_text;
 
-	int f_has_second_equation_by_coefficients;
+	int f_second_equation_by_coefficients;
 	std::string second_equation_by_coefficients_text;
 
-	int f_has_points;
+	int f_points;
 	std::string points_txt;
 
-	int f_has_bitangents;
+	int f_bitangents;
 	std::string bitangents_txt;
 
+	/// ToDo: undocumented:
 	std::vector<std::string> transformations;
 
 

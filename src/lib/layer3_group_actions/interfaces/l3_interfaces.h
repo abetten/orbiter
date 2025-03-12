@@ -68,6 +68,10 @@ public:
 	void export_csv(
 			groups::sims *override_sims,
 			int verbose_level);
+	void get_representatives(
+			groups::sims *override_sims,
+			data_structures_groups::vector_ge *&Reps,
+			int verbose_level);
 	void report_classes(
 			std::ostream &ost, int verbose_level);
 	void report_summary_table(

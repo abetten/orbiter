@@ -845,14 +845,18 @@ void algebra_global_with_action::make_classes_GL(
 }
 
 
-
+#if 0
+// please use action_global::rational_normal_form
 void algebra_global_with_action::compute_rational_normal_form(
 		algebra::field_theory::finite_field *F,
 		int d,
 		int *matrix_data,
 		int *Basis, int *Rational_normal_form,
 		int verbose_level)
+// opens a projective group action to make the element.
 // matrix_data[d * d]
+// list could go in level 3
+// compare action_global::rational_normal_form
 {
 	int f_v = (verbose_level >= 1);
 
@@ -985,6 +989,8 @@ void algebra_global_with_action::compute_rational_normal_form(
 		cout << "algebra_global_with_action::compute_rational_normal_form done" << endl;
 	}
 }
+#endif
+
 
 #if 0
 void algebra_global_with_action::do_identify_one(
@@ -2068,11 +2074,13 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_eigenstuff_from_file before do_eigenstuff" << endl;
+		cout << "algebra_global_with_action::do_eigenstuff_from_file "
+				"before do_eigenstuff" << endl;
 	}
 	do_eigenstuff(F, n, Data, verbose_level);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_eigenstuff_from_file after do_eigenstuff" << endl;
+		cout << "algebra_global_with_action::do_eigenstuff_from_file "
+				"after do_eigenstuff" << endl;
 	}
 
 
@@ -3185,15 +3193,17 @@ void algebra_global_with_action::find_standard_generators(
 	int *Elt_b;
 	int *Elt_ab;
 	algebra::ring_theory::longinteger_object go;
-	int i, j, cnt, ord;
+	long int i, j, cnt, ord;
+	long int goi;
 
 	Elt_a = NEW_int(A1->elt_size_in_int);
 	Elt_b = NEW_int(A1->elt_size_in_int);
 	Elt_ab = NEW_int(A1->elt_size_in_int);
 	H->group_order(go);
 
+	goi = go.as_lint();
 	cnt = 0;
-	for (i = 0; i < go.as_int(); i++) {
+	for (i = 0; i < goi; i++) {
 		H->element_unrank_lint(i, Elt_a);
 
 
@@ -3212,7 +3222,7 @@ void algebra_global_with_action::find_standard_generators(
 			continue;
 		}
 
-		for (j = 0; j < go.as_int(); j++) {
+		for (j = 0; j < goi; j++) {
 			H->element_unrank_lint(j, Elt_b);
 
 
@@ -3267,6 +3277,308 @@ void algebra_global_with_action::find_standard_generators(
 		cout << "algebra_global_with_action::find_standard_generators done" << endl;
 	}
 }
+
+
+void algebra_global_with_action::find_standard_generators_M24(
+		groups::any_group *Any_group,
+		actions::action *A1, actions::action *A2,
+		int *Elt_a, int *Elt_b,
+		int verbose_level)
+// the order will be computed using the action A2
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24" << endl;
+	}
+	groups::sims *H;
+	groups::strong_generators *SG;
+
+	SG = Any_group->get_strong_generators();
+
+	H = SG->create_sims(verbose_level);
+
+	algebra::ring_theory::longinteger_object go;
+	long int goi;
+
+	H->group_order(go);
+
+	goi = go.as_lint();
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"group order H = " << goi << endl;
+	}
+
+
+	int *Elt_1;
+	//int *Elt_a;
+	//int *Elt_b;
+	int *Elt_ab;
+	int *Elt_x0;
+	int *Elt_y0;
+	int *Elt_x;
+	int *Elt_y;
+	int *Elt_xy;
+	int *Elt_s;
+	int *Elt_t;
+	int *Elt_sv;
+	int *Elt_tv;
+	long int i, j, s, t, ord;
+	int cnt_i, cnt_j, cnt_k;
+
+	Elt_1 = NEW_int(A1->elt_size_in_int);
+	//Elt_a = NEW_int(A1->elt_size_in_int);
+	//Elt_b = NEW_int(A1->elt_size_in_int);
+	Elt_ab = NEW_int(A1->elt_size_in_int);
+	Elt_x0 = NEW_int(A1->elt_size_in_int);
+	Elt_y0 = NEW_int(A1->elt_size_in_int);
+	Elt_x = NEW_int(A1->elt_size_in_int);
+	Elt_y = NEW_int(A1->elt_size_in_int);
+	Elt_xy = NEW_int(A1->elt_size_in_int);
+	Elt_s = NEW_int(A1->elt_size_in_int);
+	Elt_t = NEW_int(A1->elt_size_in_int);
+	Elt_sv = NEW_int(A1->elt_size_in_int);
+	Elt_tv = NEW_int(A1->elt_size_in_int);
+
+
+
+	other::orbiter_kernel_system::os_interface Os;
+
+
+
+	cnt_i = 0;
+
+	while (true) {
+
+		i = Os.random_integer(goi);
+		cnt_i++;
+
+
+		H->element_unrank_lint(i, Elt_x0);
+
+
+		ord = A2->Group_element->element_order(Elt_x0);
+
+		if (ord == 10) {
+			break;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Element x0 = " << setw(5) << i << " / "
+				<< goi << " has order 10, found after " << cnt_i << " iterations" << endl;
+		A1->Group_element->element_print(Elt_x0, cout);
+		cout << endl;
+	}
+
+
+	A1->Group_element->element_power_int(
+			Elt_x0, Elt_x,
+			5, 0 /* verbose_level*/);
+
+
+	ord = A2->Group_element->element_order(Elt_x);
+
+	if (ord != 2) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Elt_x must have order 2" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Element x has order 2" << endl;
+		A1->Group_element->element_print(Elt_x, cout);
+		cout << endl;
+	}
+
+
+
+	cnt_j = 0;
+
+	while (true) {
+
+		j = Os.random_integer(goi);
+		cnt_j++;
+
+		H->element_unrank_lint(j, Elt_y0);
+
+
+		ord = A2->Group_element->element_order(Elt_y0);
+
+		if (ord == 15) {
+			break;
+		}
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Element y0 = " << setw(5) << i << " / "
+				<< goi << " has order 15, found after " << cnt_j << " iterations" << endl;
+		A1->Group_element->element_print(Elt_y0, cout);
+		cout << endl;
+		//A->element_print_as_permutation(Elt_y0, cout);
+		//cout << endl;
+	}
+
+
+	A1->Group_element->element_power_int(
+			Elt_y0, Elt_y,
+			5, 0 /* verbose_level*/);
+
+
+	ord = A2->Group_element->element_order(Elt_y);
+
+	if (ord != 3) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Elt_y must have order 3" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Element y has order 3" << endl;
+		A1->Group_element->element_print(Elt_y, cout);
+		cout << endl;
+	}
+
+
+
+	cnt_k = 0;
+	while (true) {
+
+		s = Os.random_integer(goi);
+		t = Os.random_integer(goi);
+		cnt_k++;
+
+		H->element_unrank_lint(s, Elt_s);
+		H->element_unrank_lint(t, Elt_t);
+
+		A1->Group_element->element_invert(
+				Elt_s, Elt_sv, 0 /* verbose_level*/);
+		A1->Group_element->element_invert(
+				Elt_t, Elt_tv, 0 /* verbose_level*/);
+
+		A1->Group_element->mult_abc(
+				Elt_sv,
+				Elt_x,
+				Elt_s,
+				Elt_a,
+				0 /* verbose_level*/);
+
+		A1->Group_element->mult_abc(
+				Elt_tv,
+				Elt_y,
+				Elt_t,
+				Elt_b,
+				0 /* verbose_level*/);
+
+		A1->Group_element->element_mult(
+				Elt_a, Elt_b, Elt_ab, 0 /* verbose_level*/);
+
+		ord = A2->Group_element->element_order(Elt_ab);
+
+		if (ord == 23) {
+			break;
+		}
+	}
+
+	std::string word;
+
+	word = "abababbababbabb"; // ab(ababb)^2abb
+
+	A1->Group_element->evaluate_word_in_ab(
+			Elt_a, Elt_b, Elt_1,
+			word, 0 /* verbose_level*/);
+
+	ord = A2->Group_element->element_order(Elt_1);
+
+
+	if (ord == 5) {
+		if (f_v) {
+			cout << "algebra_global_with_action::find_standard_generators_M24 "
+					"Element " << word << " has order 5" << endl;
+			A1->Group_element->element_print(Elt_y, cout);
+			cout << endl;
+			cout << "inverting b" << endl;
+		}
+		A1->Group_element->invert_in_place(Elt_b);
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"Element a*b has order 23, after "
+				"(" << cnt_i << "," << cnt_j << "," << cnt_k << ") "
+						"iterations" << endl;
+
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"a = " << endl;
+		A1->Group_element->element_print(Elt_a, cout);
+		cout << endl;
+
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"b = " << endl;
+		A1->Group_element->element_print(Elt_b, cout);
+		cout << endl;
+
+	}
+
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"a = " << setw(5) << i << ", b=" << setw(5) << j
+				<< " : " << cnt << ":" << endl;
+		cout << "a=" << endl;
+		A2->Group_element->element_print(Elt_a, cout);
+		cout << endl;
+		A2->Group_element->element_print_as_permutation(Elt_a, cout);
+		cout << endl;
+		cout << "b=" << endl;
+		A2->Group_element->element_print(Elt_b, cout);
+		cout << endl;
+		A2->Group_element->element_print_as_permutation(Elt_b, cout);
+		cout << endl;
+		cout << "ab=" << endl;
+		A2->Group_element->element_print(Elt_ab, cout);
+		cout << endl;
+		A2->Group_element->element_print_as_permutation(Elt_ab, cout);
+		cout << endl;
+	}
+#endif
+
+
+#if 0
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 "
+				"we found " << cnt << " group elements with "
+				"ord_a = " << order_a << " ord_b  = " << order_b
+				<< " and ord_ab = " << order_ab << endl;
+	}
+#endif
+
+	FREE_int(Elt_1);
+	//FREE_int(Elt_a);
+	//FREE_int(Elt_b);
+	FREE_int(Elt_ab);
+	FREE_int(Elt_x0);
+	FREE_int(Elt_y0);
+	FREE_int(Elt_x);
+	FREE_int(Elt_y);
+	FREE_int(Elt_xy);
+	FREE_int(Elt_s);
+	FREE_int(Elt_t);
+	FREE_int(Elt_sv);
+	FREE_int(Elt_tv);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators_M24 done" << endl;
+	}
+}
+
+
 
 void algebra_global_with_action::do_character_table_symmetric_group(
 		int deg, int verbose_level)
@@ -3899,7 +4211,8 @@ void algebra_global_with_action::do_orbits_on_subspaces(
 
 
 	if (!Any_group->A->f_is_linear) {
-		cout << "algebra_global_with_action::do_orbits_on_subspaces !A->f_is_linear" << endl;
+		cout << "algebra_global_with_action::do_orbits_on_subspaces "
+				"!A->f_is_linear" << endl;
 		cout << "group:" << endl;
 		Any_group->print();
 		exit(1);
@@ -3944,7 +4257,8 @@ void algebra_global_with_action::do_tensor_classify(
 	}
 
 	if (!Any_group->f_linear_group) {
-		cout << "algebra_global_with_action::do_tensor_classify !Any_group->f_linear_group" << endl;
+		cout << "algebra_global_with_action::do_tensor_classify "
+				"!Any_group->f_linear_group" << endl;
 		exit(1);
 	}
 
@@ -3962,21 +4276,25 @@ void algebra_global_with_action::do_tensor_classify(
 	T = NEW_OBJECT(apps_geometry::tensor_classify);
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_tensor_classify before T->init" << endl;
+		cout << "algebra_global_with_action::do_tensor_classify "
+				"before T->init" << endl;
 	}
 	T->init(F, Any_group->LG, verbose_level - 1);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_tensor_classify after T->init" << endl;
+		cout << "algebra_global_with_action::do_tensor_classify "
+				"after T->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "algebra_global_with_action::do_tensor_classify before classify_poset" << endl;
+		cout << "algebra_global_with_action::do_tensor_classify "
+				"before classify_poset" << endl;
 	}
 	T->classify_poset(depth,
 			Control,
 			verbose_level);
 	if (f_v) {
-		cout << "algebra_global_with_action::do_tensor_classify after classify_poset" << endl;
+		cout << "algebra_global_with_action::do_tensor_classify "
+				"after classify_poset" << endl;
 	}
 
 
@@ -4130,7 +4448,6 @@ void algebra_global_with_action::print_action_on_surface(
 	SC->SOG->print_action_on_surface(
 			label_of_elements,
 			Elements,
-			//element_data, nb_elements,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::print_action_on_surface "
@@ -4154,11 +4471,6 @@ void algebra_global_with_action::element_processing(
 		cout << "algebra_global_with_action::element_processing" << endl;
 	}
 
-#if 0
-	int *element_data = NULL;
-	int nb_elements;
-	int n;
-#endif
 
 	apps_algebra::vector_ge_builder *Elements_builder;
 	data_structures_groups::vector_ge *Elements;
@@ -4172,17 +4484,15 @@ void algebra_global_with_action::element_processing(
 
 
 	if (f_v) {
-		cout << "algebra_global_with_action::element_processing getting input" << endl;
+		cout << "algebra_global_with_action::element_processing "
+				"getting input" << endl;
 	}
 
-	Elements_builder = Get_object_of_type_vector_ge(element_processing_descr->input_label);
+	Elements_builder = Get_object_of_type_vector_ge(
+			element_processing_descr->input_label);
 
 	Elements = Elements_builder->V;
 
-#if 0
-	Get_matrix(element_processing_descr->input_label,
-			element_data, nb_elements, n);
-#endif
 
 
 
@@ -4199,7 +4509,6 @@ void algebra_global_with_action::element_processing(
 		Any_group->print_given_elements_tex(
 				element_processing_descr->input_label,
 				Elements,
-				//element_data, nb_elements,
 				element_processing_descr->f_with_permutation,
 				element_processing_descr->f_with_fix_structure,
 				verbose_level);
@@ -4420,6 +4729,7 @@ void algebra_global_with_action::subgroup_lattice_identify_subgroup(
 		int &go, int &layer_idx,
 		int &orb_idx, int &group_idx,
 		int verbose_level)
+// could go to level 3
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4798,6 +5108,31 @@ void algebra_global_with_action::modified_group_init(
 		// output in A_modified
 
 	}
+	else if (Descr->f_subgroup_by_generators) {
+
+		if (f_v) {
+			cout << "algebra_global_with_action::modified_group_init "
+					"f_subgroup_by_generators label=" << Descr->subgroup_by_generators_label << endl;
+		}
+
+		if (f_v) {
+			cout << "algebra_global_with_action::modified_group_init "
+					"before create_subgroup_by_generators" << endl;
+		}
+		create_subgroup_by_generators(
+				Modified_group_create,
+				Descr,
+				Descr->subgroup_by_generators_label,
+				verbose_level);
+
+		if (f_v) {
+			cout << "algebra_global_with_action::modified_group_init "
+					"after create_subgroup_by_generators" << endl;
+		}
+
+		// output in A_modified
+
+	}
 
 
 
@@ -4845,6 +5180,7 @@ void algebra_global_with_action::create_point_stabilizer_subgroup(
 		group_constructions::modified_group_create *Modified_group_create,
 		group_constructions::group_modification_description *Descr,
 		int verbose_level)
+// needs orbits::orbits_global, hence level 5
 // output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
@@ -4941,6 +5277,7 @@ void algebra_global_with_action::create_set_stabilizer_subgroup(
 		group_constructions::modified_group_create *Modified_group_create,
 		group_constructions::group_modification_description *Descr,
 		int verbose_level)
+// needs poset_classification::poset_classification, hence level 5
 // output in A_modified and Strong_gens
 {
 	int f_v = (verbose_level >= 1);
@@ -5131,6 +5468,7 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 		group_constructions::group_modification_description *Descr,
 		std::string &variety_label,
 		int verbose_level)
+// needs canonical_form::canonical_form_classifier, hence level 5
 {
 	int f_v = (verbose_level >= 1);
 
@@ -5309,6 +5647,118 @@ void algebra_global_with_action::modified_group_create_stabilizer_of_variety(
 		cout << "algebra_global_with_action::modified_group_create_stabilizer_of_variety done" << endl;
 	}
 }
+
+
+
+void algebra_global_with_action::create_subgroup_by_generators(
+		group_constructions::modified_group_create *Modified_group_create,
+		group_constructions::group_modification_description *Descr,
+		std::string &subgroup_by_generators_label,
+		int verbose_level)
+// needs vector_ge_builder, hence level5
+// output in A_modified and Strong_gens
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators" << endl;
+	}
+	if (Descr->from.size() != 1) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"need exactly one argument of type -from" << endl;
+		exit(1);
+	}
+
+	groups::any_group *AG;
+
+	AG = Get_any_group(Descr->from[0]);
+
+
+	apps_algebra::vector_ge_builder *VB;
+
+	VB = Get_object_of_type_vector_ge(subgroup_by_generators_label);
+
+	data_structures_groups::vector_ge *nice_gens;
+
+
+	nice_gens = VB->V;
+
+
+	Modified_group_create->A_base = AG->A_base;
+	Modified_group_create->A_previous = AG->A;
+
+	Modified_group_create->label = AG->label;
+	Modified_group_create->label_tex = AG->label_tex;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"A_base=";
+		Modified_group_create->A_base->print_info();
+		cout << endl;
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"A_previous=";
+		Modified_group_create->A_previous->print_info();
+		cout << endl;
+	}
+
+	Modified_group_create->A_modified = Modified_group_create->A_previous;
+
+	actions::action_global Action_global;
+
+
+	groups::strong_generators *SG;
+
+	SG = NEW_OBJECT(groups::strong_generators);
+
+	algebra::ring_theory::longinteger_object target_go;
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"before AG->A_base->generators_to_strong_generators" << endl;
+	}
+	AG->A_base->generators_to_strong_generators(
+		false /* f_target_go */, target_go,
+		nice_gens, SG,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"after AG->A_base->generators_to_strong_generators" << endl;
+	}
+
+	if (false) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"strong generators are:" << endl;
+		SG->print_generators(cout, verbose_level - 1);
+	}
+
+
+	Modified_group_create->f_has_strong_generators = true;
+	Modified_group_create->Strong_gens = SG;
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"before Strong_gens = AG->Subgroup_gens" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"action A_modified created: ";
+		Modified_group_create->A_modified->print_info();
+	}
+
+
+	Modified_group_create->label += "_SubgroupGens" + subgroup_by_generators_label;
+	Modified_group_create->label_tex += "{\\rm SubgroupGens " + subgroup_by_generators_label + "}";
+
+
+
+	if (f_v) {
+		cout << "algebra_global_with_action::create_subgroup_by_generators "
+				"done" << endl;
+	}
+}
+
 
 
 void algebra_global_with_action::conjugacy_class_of(
@@ -5825,6 +6275,7 @@ void algebra_global_with_action::get_classses_expanded(
 		groups::any_group *Any_group,
 		int expand_by_go,
 		classes_of_elements_expanded *&Classes_of_elements_expanded,
+		data_structures_groups::vector_ge *&Reps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5847,6 +6298,19 @@ void algebra_global_with_action::get_classses_expanded(
 				"after AG->get_conjugacy_classes_of_elements" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"before class_data->get_representatives" << endl;
+	}
+	class_data->get_representatives(
+			Sims,
+			Reps,
+			verbose_level);
+	if (f_v) {
+		cout << "algebra_global_with_action::get_classses_expanded "
+				"after class_data->get_representatives" << endl;
+	}
 
 
 
@@ -5897,6 +6361,7 @@ void algebra_global_with_action::split_by_classes(
 	}
 
 	classes_of_elements_expanded *Classes_of_elements_expanded;
+	data_structures_groups::vector_ge *Reps;
 
 
 
@@ -5909,6 +6374,7 @@ void algebra_global_with_action::split_by_classes(
 			Any_group,
 			expand_by_go,
 			Classes_of_elements_expanded,
+			Reps,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::split_by_classes "
@@ -6104,6 +6570,7 @@ void algebra_global_with_action::split_by_classes(
 
 	FREE_OBJECT(SoS);
 	FREE_OBJECT(Classes_of_elements_expanded);
+	FREE_OBJECT(Reps);
 
 
 }
@@ -6126,6 +6593,7 @@ void algebra_global_with_action::identify_elements_by_classes(
 
 
 	classes_of_elements_expanded *Classes_of_elements_expanded;
+	data_structures_groups::vector_ge *Reps;
 
 
 	if (f_v) {
@@ -6137,6 +6605,7 @@ void algebra_global_with_action::identify_elements_by_classes(
 			Any_group_H,
 			expand_by_go,
 			Classes_of_elements_expanded,
+			Reps,
 			verbose_level);
 	if (f_v) {
 		cout << "algebra_global_with_action::identify_elements_by_classes "
@@ -6265,6 +6734,7 @@ void algebra_global_with_action::identify_elements_by_classes(
 
 
 	FREE_OBJECT(Classes_of_elements_expanded);
+	FREE_OBJECT(Reps);
 	FREE_OBJECT(SoS);
 	FREE_int(Elt);
 	FREE_int(data);

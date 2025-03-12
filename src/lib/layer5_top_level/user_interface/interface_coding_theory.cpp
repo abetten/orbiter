@@ -387,6 +387,7 @@ void interface_coding_theory::print()
 
 void interface_coding_theory::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	int f_v = (verbose_level >= 1);
 

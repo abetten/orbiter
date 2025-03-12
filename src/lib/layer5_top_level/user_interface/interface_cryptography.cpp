@@ -691,6 +691,7 @@ void interface_cryptography::print()
 
 void interface_cryptography::worker(
 		int verbose_level)
+// called from orbiter_command::execute
 {
 	if (f_cipher) {
 

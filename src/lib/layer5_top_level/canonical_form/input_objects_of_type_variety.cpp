@@ -630,17 +630,17 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 	VD->f_projective_space = false;
 	//VD->projective_space_label;
 
-	VD->f_has_projective_space_pointer = true;
+	VD->f_projective_space_pointer = true;
 	VD->Projective_space_pointer = Classifier->Ring_with_action->PA->P;
 
 	VD->f_ring = false;
 	VD->ring_label = "";
 
-	VD->f_has_ring_pointer = true;
+	VD->f_ring_pointer = true;
 	VD->Ring_pointer = Classifier->Ring_with_action->Poly_ring;
 
-	VD->f_has_equation_in_algebraic_form = false;
-	VD->f_has_equation_by_coefficients = false;
+	VD->f_equation_in_algebraic_form = false;
+	VD->f_equation_by_coefficients = false;
 
 	if (idx_eqn_algebraic >= 0) {
 		string eqn_txt;
@@ -648,7 +648,7 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 		eqn_txt = S->get_entry_ij(row + 1, idx_eqn_algebraic);
 		ST.remove_specific_character(eqn_txt, '\"');
 
-		VD->f_has_equation_in_algebraic_form = true;
+		VD->f_equation_in_algebraic_form = true;
 		VD->equation_in_algebraic_form_text = eqn_txt;
 	}
 	else if (idx_eqn_by_coefficients >= 0) {
@@ -657,24 +657,24 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 		eqn_txt = S->get_entry_ij(row + 1, idx_eqn_by_coefficients);
 		ST.remove_specific_character(eqn_txt, '\"');
 
-		VD->f_has_equation_by_coefficients = true;
+		VD->f_equation_by_coefficients = true;
 		VD->equation_by_coefficients_text = eqn_txt;
 
 	}
 
 
-	VD->f_has_second_equation_in_algebraic_form = false;
-	VD->f_has_second_equation_by_coefficients = false;
+	VD->f_second_equation_in_algebraic_form = false;
+	VD->f_second_equation_by_coefficients = false;
 
 	if (idx_eqn2_algebraic >= 0) {
 		string eqn_txt;
 		eqn_txt = S->get_entry_ij(row + 1, idx_eqn2_algebraic);
 		ST.remove_specific_character(eqn_txt, '\"');
-		VD->f_has_second_equation_in_algebraic_form = true;
+		VD->f_second_equation_in_algebraic_form = true;
 		VD->second_equation_in_algebraic_form_text = eqn_txt;
 	}
 	else {
-		VD->f_has_second_equation_by_coefficients = true;
+		VD->f_second_equation_by_coefficients = true;
 		string eqn_txt;
 		eqn_txt = S->get_entry_ij(row + 1, idx_eqn2_by_coefficients);
 		ST.remove_specific_character(eqn_txt, '\"');
@@ -687,22 +687,22 @@ void input_objects_of_type_variety::prepare_input_of_variety_type_from_spreadshe
 		string pts_txt;
 		pts_txt = S->get_entry_ij(row + 1, idx_pts);
 		ST.remove_specific_character(pts_txt, '\"');
-		VD->f_has_points = true;
+		VD->f_points = true;
 		VD->points_txt = pts_txt;
 	}
 	else {
-		VD->f_has_points = false;
+		VD->f_points = false;
 	}
 
 	if (idx_bitangents >= 0) {
 		string bitangents_txt;
 		bitangents_txt = S->get_entry_ij(row + 1, idx_bitangents);
 		ST.remove_specific_character(bitangents_txt, '\"');
-		VD->f_has_bitangents = true;
+		VD->f_bitangents = true;
 		VD->bitangents_txt = bitangents_txt;
 	}
 	else {
-		VD->f_has_bitangents = false;
+		VD->f_bitangents = false;
 	}
 
 

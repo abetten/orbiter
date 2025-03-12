@@ -5351,7 +5351,10 @@ void action_global::move_a_to_b_and_stabilizer_of_b(
 
 void action_global::rational_normal_form(
 		actions::action *A,
-		std::string &element_given,
+		//std::string &element_given,
+		int *element_given,
+		int *Basis,
+		int *Rational_normal_form,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -5368,9 +5371,9 @@ void action_global::rational_normal_form(
 
 	M = A->G.matrix_grp;
 
-	int n;
+	//int n;
 
-	n = M->n;
+	//n = M->n;
 
 	algebra::linear_algebra::gl_classes *C;
 
@@ -5413,7 +5416,7 @@ void action_global::rational_normal_form(
 	B = NEW_int(A->elt_size_in_int);
 	Bv = NEW_int(A->elt_size_in_int);
 
-	A->Group_element->make_element_from_string(
+	A->Group_element->make_element(
 			Elt1, element_given, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
@@ -5425,16 +5428,16 @@ void action_global::rational_normal_form(
 
 
 	int *Mtx1;
-	int *Basis1;
-	int *Rational_normal_form;
+	//int *Basis1;
+	//int *Rational_normal_form;
 	algebra::linear_algebra::gl_class_rep *R1;
 
 	//Mtx1 = NEW_int(n);
 	Mtx1 = Elt1;
 
 
-	Basis1 = NEW_int(n * n);
-	Rational_normal_form = NEW_int(n * n);
+	//Basis1 = NEW_int(n * n);
+	//Rational_normal_form = NEW_int(n * n);
 
 	R1 = NEW_OBJECT(algebra::linear_algebra::gl_class_rep);
 
@@ -5442,14 +5445,14 @@ void action_global::rational_normal_form(
 		cout << "action_global::rational_normal_form "
 				"before identify_matrix Mtx1" << endl;
 	}
-	C->identify_matrix(Mtx1, R1, Basis1, Rational_normal_form, verbose_level);
+	C->identify_matrix(Mtx1, R1, Basis, Rational_normal_form, verbose_level);
 	if (f_v) {
 		cout << "action_global::rational_normal_form "
 				"after identify_matrix Mtx1" << endl;
 	}
 
 	A->Group_element->make_element(
-			B, Basis1, 0 /*verbose_level*/);
+			B, Basis, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "B=" << endl;
 		A->Group_element->element_print_quick(B, cout);
@@ -5480,8 +5483,8 @@ void action_global::rational_normal_form(
 	FREE_int(Elt3);
 	FREE_int(B);
 	FREE_int(Bv);
-	FREE_int(Basis1);
-	FREE_int(Rational_normal_form);
+	//FREE_int(Basis1);
+	//FREE_int(Rational_normal_form);
 	FREE_OBJECT(R1);
 	FREE_OBJECT(C);
 

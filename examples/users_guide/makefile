@@ -510,8 +510,22 @@ EDGE_CURVE_EQUATION_ALGEBRAIC="X^4 -Y^4 -Z^4 +2*f^2*Y^2*Z^2 +4*f*X^2*Y*Z"
 # Section 7.5 Algebraic Varieties
 
 
-#-parse_equation_wo_parameters The equation is:
-#( 9, 1, 3, 8, 7, 6, 3, 2, 5, 3, 4, 2, 1, 10, 2 )
+
+
+HIRSCHFELD_EQUATION_XYZW="X^2*W+X*W^2+Y^2*Z+Y*Z^2"
+
+
+CURVE_Q13_FLAG_1_EQN="10*x1^4 + 12*x2^4 + 9*x3^4 + 8*x1^3*x2 + 2*x1*x2^3 + 5*x2^3*x3 + 3*x2*x3^3 + 4*x1^2*x2^2 + 3*x1^2*x3^2 + x2^2*x3^2 + 12*x1^2*x2*x3 + 10*x1*x2^2*x3 + 9*x1*x2*x3^2"
+
+CURVE_Q13_FLAG_1_POINTS="68,71,75,78"
+
+CURVE_Q13_FLAG_1_BITANGENTS="13,126,121,91,150,105,96,170,18,164,29,0,48,100,81,68,137,69,47,8,162,4,149,31,182,169,19,66"
+
+CURVE_Q13_FLAG_1_TRANS_1="4,12,0,1,11,5,12,10,6"
+
+CURVE_Q13_FLAG_1_TRANS_2="1,0,0,12,3,0,9,7,8"
+
+
 
 QUARTIC_CURVE_Q13_FLAG_0_EQN_COEFFICIENTS="9, 1, 3, 8, 7, 6, 3, 2, 5, 3, 4, 2, 1, 10, 2"
 
@@ -522,13 +536,15 @@ QUARTIC_CURVE_Q13_FLAG_0_TRANS="0,6,8,6,8,10,3,12,1"
 # 3 12  1 
 
 
+# Section 7.6 Activities for Algebraic Varieties
+
+
 
 Op_6_eqn="X0*X1+X2*X3+X4*X5"
 
 
 CURVE_Q13_F0_CLEAN2_EQUATION="X0^4 + 4*X1^4 + 9*X2^4 + X0^2*X1^2 + 4*X0^2*X2^2 + 3*X1^2*X2^2"
 
-HIRSCHFELD_EQUATION_XYZW="X^2*W+X*W^2+Y^2*Z+Y*Z^2"
 
 BARTH_EQUATION_GENERAL="4*(PHI^2*X^2-Y^2)*(PHI^2*Y^2-Z^2)*(PHI^2*Z^2-X^2)-(1+2*PHI)*(X^2+Y^2+Z^2-W^2)^2*W^2"
 
@@ -576,7 +592,6 @@ EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
 
 
 
-HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
 
 HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^2"
 
@@ -588,8 +603,6 @@ HIRSCHFELD_SURFACE_EQUATION_ALGEBRAIC_FORM="X0^2*X3 + X1^2*X2 + X1*X2^2 + X0*X3^
 
 ORTHOGONAL_OP_6_2_POINTS_OFF="6,7,10,13,14,15,16,20,24,28,29,30,31,35,39,43, 44, 45, 46, 48, 49, 50, 52, 53, 54, 56, 57, 58"
 
-
-# Section 6.6 Activities for Algebraic Varieties
 
 
 
@@ -836,15 +849,6 @@ HIRSCHFELD_SURFACE_HESSE_PLANES="7,8,11,13,14,16,17,19,28,\
 # Section 9.5 Quartic curves
 
 
-CURVE_Q13_FLAG_1_EQN="10*x1^4 + 12*x2^4 + 9*x3^4 + 8*x1^3*x2 + 2*x1*x2^3 + 5*x2^3*x3 + 3*x2*x3^3 + 4*x1^2*x2^2 + 3*x1^2*x3^2 + x2^2*x3^2 + 12*x1^2*x2*x3 + 10*x1*x2^2*x3 + 9*x1*x2*x3^2"
-
-CURVE_Q13_FLAG_1_POINTS="68,71,75,78"
-
-CURVE_Q13_FLAG_1_BITANGENTS="13,126,121,91,150,105,96,170,18,164,29,0,48,100,81,68,137,69,47,8,162,4,149,31,182,169,19,66"
-
-CURVE_Q13_FLAG_1_TRANS_1="4,12,0,1,11,5,12,10,6"
-
-CURVE_Q13_FLAG_1_TRANS_2="1,0,0,12,3,0,9,7,8"
 
 
 # Section 9.6 Classification of quartic curves
@@ -5746,6 +5750,8 @@ M24_matrix_group:
 
 
 
+
+
 ###############################################################################
 # Section 5.3: Subgroups
 
@@ -7165,6 +7171,7 @@ test_5_5:
 	make normal_forms_PGL_4_5
 	make on_planes
 	make PGL_4_2_random_element
+	make GL_2_3_RNF
 	make PGL_2_3_subgroup_lattice
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_groups
 	make PGL_2_3_subgroup_lattice_load_and_draw_by_orbits
@@ -7179,6 +7186,8 @@ PGL_3_2_elements:
 		-end
 
 # creates PGL_3_2_elements.csv
+
+
 
 
 Sym_3_elements:
@@ -7400,7 +7409,7 @@ PGL_4_2_random_element:
 		-group_theoretic_activity \
 			-random_element r1 \
 		-end \
-	-print_symbols
+		-print_symbols
 
 
 #group order H = 20160
@@ -7419,6 +7428,14 @@ PGL_4_2_random_element:
 #The rank of the element is 9883
 
 #\{0,1,2,3,4\} -> \{13,7,10,6,2\} = \{2,6,7,10,13\}
+
+
+
+
+
+
+
+
 
 
 PGL_2_3_subgroup_lattice:
@@ -7600,7 +7617,8 @@ PGGL_2_4_classes:
 		-with G -do \
 		-group_theoretic_activity \
 			-classes \
-		-end
+		-end \
+		-print_symbols
 	$(PDFLATEX) PGGL_2_4_classes.tex
 	$(OPEN) PGGL_2_4_classes.pdf
 
@@ -7720,8 +7738,8 @@ Hirschfeld_stab_classes:
 		-group_theoretic_activity \
 			-classes \
 		-end
-	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.tex
-	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_classes_out.pdf
+	$(PDFLATEX) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report_classes_of_elements.tex
+	$(OPEN) PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_report_classes_of_elements.pdf
 
 
 
@@ -8271,11 +8289,82 @@ Butler12_PSP_6_2_conjugate:
 SECTION_GROUP_THEORY_ACTIVITIES_FOR_VECTORS:
 
 test_5_9:
+	make PGGL_2_4_classes_reps
+	make PGL_4_4_classes_reps
+	make PGGL_4_4_classes_reps
 	make Sym_6_generators
 	make Sym_6_elements
+	make GL_2_3_RNF
 	make PGL_4_2_orthogonal_reflections_report_vector_ge
 
 
+PGGL_2_4_classes_reps:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 2 4 \
+		-end \
+		-assign reps -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-with reps -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_2_4_reps_elements.tex
+	$(OPEN) PGGL_2_4_reps_elements.pdf
+
+
+PGL_4_4_classes_reps:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGL 4 4 \
+		-end \
+		-assign reps -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-with reps -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with reps -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_4_4_RNF_elements.tex
+	$(OPEN) PGL_4_4_RNF_elements.pdf
+	#$(PDFLATEX) PGL_4_4_reps_elements.tex
+	#$(OPEN) PGL_4_4_reps_elements.pdf
+
+
+
+PGGL_4_4_classes_reps:
+	$(ORBITER) -v 3 \
+		-define G \
+		-linear_group -PGGL 4 4 \
+		-end \
+		-assign reps -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-classes \
+		-end \
+		-with reps -do \
+		-vector_ge_activity \
+			-report \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGGL_4_4_reps_elements.tex
+	$(OPEN) PGGL_4_4_reps_elements.pdf
 
 
 Sym_6_generators:
@@ -8291,8 +8380,9 @@ Sym_6_generators:
 			-report \
 		-end \
 		-print_symbols
-	$(PDFLATEX) Sym_6_elements.tex
-	$(OPEN) Sym_6_elements.pdf
+	$(PDFLATEX) Sym_6_gens_elements.tex
+	$(OPEN) Sym_6_gens_elements.pdf
+
 
 Sym_6_elements:
 	$(ORBITER) -v 3 \
@@ -8307,8 +8397,41 @@ Sym_6_elements:
 			-report \
 		-end \
 		-print_symbols
-	$(PDFLATEX) Sym_6_elements.tex
-	$(OPEN) Sym_6_elements.pdf
+	$(PDFLATEX) Sym_6_elements_elements.tex
+	$(OPEN) Sym_6_elements_elements.pdf
+
+
+
+GL_2_3_RNF:
+	$(ORBITER) -v 2 \
+		-define Do -draw_options \
+			-radius 200 -line_width 0.3 \
+		-end \
+		-define F -finite_field -q 3 -end \
+		-define G -linear_group -GL 2 F -end \
+		-assign elements -from \
+		-with G -do \
+		-group_theoretic_activity \
+			-elements \
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with elements -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-with BaseChange -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) GL_2_3_RNF_elements.tex
+	$(OPEN) GL_2_3_RNF_elements.pdf
+
+
 
 
 PGL_4_2_orthogonal_reflections_report_vector_ge:
@@ -8325,22 +8448,32 @@ PGL_4_2_orthogonal_reflections_report_vector_ge:
 	$(ORBITER) -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define G -linear_group -PGL 4 F -end \
-		-define PGL_4_2_elements -vector_ge \
+		-define reflections -vector_ge \
 			-action G \
 			-read_csv O_1_6_2_orthogonal_reflections_4x4.csv Element \
 		-end \
-		-with PGL_4_2_elements -do \
+		-with reflections -do \
 		-vector_ge_activity \
 			-report \
 		-end \
-		-with PGL_4_2_elements -do \
+		-with reflections -do \
 		-vector_ge_activity \
 			-export_GAP \
-		-end
-	$(PDFLATEX) PGL_4_2_elements.tex
-	$(OPEN) PGL_4_2_elements.pdf
-
-
+		-end \
+		-assign RNF -and BaseChange -from \
+		-with reflections -do \
+		-vector_ge_activity \
+			-rational_canonical_form \
+		-end \
+		-with RNF -do \
+		-vector_ge_activity \
+			-report_with_options "dense=1" \
+		-end \
+		-print_symbols
+	$(PDFLATEX) PGL_4_2_reflections_elements.tex
+	$(OPEN) PGL_4_2_reflections_elements.pdf
+	$(PDFLATEX) PGL_4_2_RNF_elements.tex
+	$(OPEN) PGL_4_2_RNF_elements.pdf
 
 
 
@@ -9630,6 +9763,7 @@ test_7_5:
 	make Op_6_2_variety
 	make curve_q13_f0
 	make Hirschfeld_q2
+	make quartic_curve_q13_f1_apply_transformation
 	make quartic_curve_q13_f0_apply_transformation
 	make Cremona_map
 
@@ -9700,6 +9834,32 @@ Hirschfeld_q2:
 			-equation_in_algebraic_form \
 				$(HIRSCHFELD_EQUATION_XYZW) \
 		-end
+
+
+
+quartic_curve_q13_f1_apply_transformation:
+	$(ORBITER) -v 10 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space -n 2 -field F -v 0 -end \
+		-define R -polynomial_ring \
+			-field F \
+			-number_of_variables 3 \
+			-homogeneous_of_degree 4 \
+			-monomial_ordering_partition \
+			-variables "x1,x2,x3" "x_1,x_2,x_3" \
+		-end \
+		-define V_q13_f1 -variety \
+			-label_txt curve_q13_f1_clean2 \
+			-label_tex curve\_q13\_f1\_clean2 \
+			-projective_space P \
+			-ring R \
+			-equation_in_algebraic_form $(CURVE_Q13_FLAG_1_EQN) \
+			-points $(CURVE_Q13_FLAG_1_POINTS) \
+			-bitangents $(CURVE_Q13_FLAG_1_BITANGENTS) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_1) \
+			-transform $(CURVE_Q13_FLAG_1_TRANS_2) \
+		-end
+
 
 
 
@@ -13424,8 +13584,8 @@ quartic_curve_q13_f1_from_variety:
 			-variables "x1,x2,x3" "x_1,x_2,x_3" \
 		-end \
 		-define V_q13_f1 -variety \
-			-label_txt curve_q13_f0_clean2 \
-			-label_tex curve\_q13\_f0\_clean2 \
+			-label_txt curve_q13_f1_clean2 \
+			-label_tex curve\_q13\_f1\_clean2 \
 			-projective_space P \
 			-ring R \
 			-equation_in_algebraic_form $(CURVE_Q13_FLAG_1_EQN) \
@@ -13434,7 +13594,9 @@ quartic_curve_q13_f1_from_variety:
 			-transform $(CURVE_Q13_FLAG_1_TRANS_1) \
 			-transform $(CURVE_Q13_FLAG_1_TRANS_2) \
 		-end \
-		-with V_q13_f1 -do -variety_activity -compute_group -nauty_control -end -end \
+		-with V_q13_f1 -do -variety_activity \
+			-compute_group -nauty_control -end \
+		-end \
 		-define C -quartic_curve -space P -from_variety V_q13_f1 -end \
 		-with C -do \
 			-quartic_curve_activity \
@@ -15904,7 +16066,7 @@ RM_3_export:
 			-export_codewords RM_3_codewords.csv \
 		-end 
 
-
+#RM_3.magma
 #RM_3_codewords.csv
 
 
@@ -15953,7 +16115,6 @@ RM_3_draw:
 
 
 RM_3_split:
-	#$(ORBITER) -split_by_values RM_3_distance_8_16.csv 
 	$(ORBITER) -split_by_values RM_m3_distance_H_8_16.csv 
 
 RM_3_distance_draw:
@@ -15968,6 +16129,7 @@ RM_3_distance_draw:
 	convert RM_m3_distance_H_8_16_value0_draw.bmp RM_m3_distance_H_8_16_value0_draw.png
 	convert RM_m3_distance_H_8_16_value1_draw.bmp RM_m3_distance_H_8_16_value1_draw.png
 	convert RM_m3_distance_H_8_16_value2_draw.bmp RM_m3_distance_H_8_16_value2_draw.png
+
 
 RM_3_algebraic_normal_form:
 	$(ORBITER) -v 3 \
@@ -19542,6 +19704,7 @@ design_600:
 		-end \
 		-with D -do \
 			-design_activity \
+				-save \
 				-intersection_matrix \
 		-end
 

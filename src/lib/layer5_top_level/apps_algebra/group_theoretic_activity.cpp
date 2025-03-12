@@ -603,6 +603,44 @@ void group_theoretic_activity::perform_activity(
 
 	}
 
+
+	else if (Descr->f_find_standard_generators_M24) {
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"f_find_standard_generators_M24" << endl;
+		}
+
+		algebra_global_with_action Algebra;
+		int *Elt_a;
+		int *Elt_b;
+
+
+		Elt_a = NEW_int(AG->A->elt_size_in_int);
+		Elt_b = NEW_int(AG->A->elt_size_in_int);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before Algebra.find_standard_generators_M24" << endl;
+		}
+		Algebra.find_standard_generators_M24(
+				AG,
+				AG->A, AG->A,
+				Elt_a, Elt_b,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after Algebra.find_standard_generators_M24" << endl;
+		}
+
+		FREE_int(Elt_a);
+		FREE_int(Elt_b);
+
+	}
+
+
 	else if (Descr->f_element_rank) {
 
 		if (f_v) {
@@ -793,10 +831,11 @@ void group_theoretic_activity::perform_activity(
 		Sims = AG->Subgroup_sims;
 
 		classes_of_elements_expanded *Classes_of_elements_expanded;
+		data_structures_groups::vector_ge *Reps;
 
 		algebra_global_with_action Algebra_global_with_action;
 
-		int expand_by_go = 10000;
+		int expand_by_go = 1000;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -807,6 +846,7 @@ void group_theoretic_activity::perform_activity(
 				AG,
 				expand_by_go,
 				Classes_of_elements_expanded,
+				Reps,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -855,11 +895,28 @@ void group_theoretic_activity::perform_activity(
 					"after Classes_of_elements_expanded->report" << endl;
 		}
 
+
+		nb_output = 1;
+		Output = NEW_OBJECT(other::orbiter_kernel_system::orbiter_symbol_table_entry);
+
+		string output_label;
+
+		output_label = AG->label + "_class_reps";
+
+		apps_algebra::vector_ge_builder *VB;
+
+		VB = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB->V = Reps;
+
+		Output->init_vector_ge(output_label, VB, verbose_level);
+
+
+
 		FREE_OBJECT(Classes_of_elements_expanded->Classes);
 		Classes_of_elements_expanded->Classes = NULL;
 		FREE_OBJECT(Classes_of_elements_expanded);
-
-
+		//FREE_OBJECT(Reps);
 
 
 	}
@@ -1427,7 +1484,35 @@ void group_theoretic_activity::perform_activity(
 					"f_rational_normal_form" << endl;
 		}
 
+		actions::action *A;
+
+
+		A = AG->A_base;
+
 		actions::action_global AGlobal;
+		int *Basis;
+		int *Rational_normal_form;
+
+
+		algebra::basic_algebra::matrix_group *M;
+
+		M = A->G.matrix_grp;
+
+		int n;
+
+		n = M->n;
+
+		Basis = NEW_int(n * n);
+		Rational_normal_form = NEW_int(n * n);
+
+		int *matrix_data;
+		int sz;
+
+		Int_vec_scan(Descr->rational_normal_form_input, matrix_data, sz);
+		if (sz != n * n) {
+			cout << "group_theoretic_activity::perform_activity sz != n * n" << endl;
+			exit(1);
+		}
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -1435,12 +1520,18 @@ void group_theoretic_activity::perform_activity(
 		}
 		AGlobal.rational_normal_form(
 				AG->A_base,
-				Descr->rational_normal_form_input,
+				matrix_data,
+				Basis,
+				Rational_normal_form,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AGlobal.rational_normal_form" << endl;
 		}
+
+		FREE_int(Basis);
+		FREE_int(Rational_normal_form);
+
 
 
 	}

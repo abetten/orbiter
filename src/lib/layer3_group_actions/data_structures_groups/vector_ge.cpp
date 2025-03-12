@@ -472,28 +472,32 @@ void vector_ge::report_elements(
 
 	other::data_structures::string_tools ST;
 
-	ST.parse_value_pairs(symbol_table,
-			options, verbose_level - 1);
-
 	int f_dense = false;
 
-	{
-		std::map<std::string, std::string>::iterator it = symbol_table.begin();
+	if (options.length()) {
+
+		ST.parse_value_pairs(symbol_table,
+				options, verbose_level - 1);
 
 
-		// Iterate through the map and print the elements
-		while (it != symbol_table.end()) {
-			string label;
-			string val;
+		{
+			std::map<std::string, std::string>::iterator it = symbol_table.begin();
 
-			label = it->first;
-			val = it->second;
-			//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
-			//assignment.insert(std::make_pair(label, a));
-			if (ST.stringcmp(label, "dense") == 0) {
-				f_dense = true;;
+
+			// Iterate through the map and print the elements
+			while (it != symbol_table.end()) {
+				string label;
+				string val;
+
+				label = it->first;
+				val = it->second;
+				//std::cout << "Key: " << it->first << ", Value: " << it->second << std::endl;
+				//assignment.insert(std::make_pair(label, a));
+				if (ST.stringcmp(label, "dense") == 0) {
+					f_dense = true;;
+				}
+				++it;
 			}
-			++it;
 		}
 	}
 
@@ -571,6 +575,10 @@ void vector_ge::report_elements(
 			int i;
 
 			for (i = 0; i < len; i++) {
+
+				if (f_v) {
+					cout << "Element " << i << " / " << len << ":" << endl;
+				}
 
 				Elt = ith(i);
 
@@ -1127,30 +1135,14 @@ void vector_ge::save_csv(
 			Col_headings,
 			verbose_level);
 
-#if 0
-	{
-		ofstream ost(fname);
-
-		ost << "Row,Element" << endl;
-		for (i = 0; i < len; i++) {
-			Elt = ith(i);
-
-			A->Group_element->element_code_for_make_element(Elt, data);
-
-			stringstream ss;
-			Int_vec_print_bare_str(ss, data, A->make_element_size);
-			ost << i << ",\"" << ss.str() << "\"" << endl;
-		}
-		ost << "END" << endl;
-	}
-#endif
 
 	delete [] Col_headings;
 	delete [] Table;
 	FREE_int(data);
 
 	if (f_v) {
-		cout << "vector_ge::save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "vector_ge::save_csv Written file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
 	}
 
 }
@@ -2141,6 +2133,8 @@ void vector_ge::field_reduction(
 
 
 void vector_ge::rational_normal_form(
+		vector_ge *&Rational_normal_forms,
+		vector_ge *&Base_changes,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2149,70 +2143,69 @@ void vector_ge::rational_normal_form(
 		cout << "vector_ge::rational_normal_form" << endl;
 	}
 
-#if 0
-
-	algebra::basic_algebra::matrix_group *M;
-
-	M = A->get_matrix_group();
-
-	algebra::field_theory::finite_field *F;
-
-	F = M->GFq;
-
-
-	apps_algebra::algebra_global_with_action Algebra;
-	int *matrix_data;
-	int sz;
-
-	algebra::field_theory::finite_field *F;
-
-	F = Get_finite_field(compute_rational_normal_form_field_label);
-
-	Int_vec_scan(compute_rational_normal_form_data, matrix_data, sz);
-
-	if (sz != compute_rational_normal_form_d * compute_rational_normal_form_d) {
-		cout << "vector_ge::rational_normal_form matrix size incorrect" << endl;
-		exit(1);
-	}
-
-	int d;
+	actions::action_global AGlobal;
 	int *Basis;
 	int *Rational_normal_form;
 
-	d = compute_rational_normal_form_d;
-	Basis = NEW_int(d * d);
-	Rational_normal_form = NEW_int(d * d);
+
+	algebra::basic_algebra::matrix_group *M;
+
+	M = A->G.matrix_grp;
+
+	int n;
+
+	n = M->n;
+
+	Rational_normal_forms = NEW_OBJECT(vector_ge);
+	Rational_normal_forms->init(A, 0 /* verbose_level */);
+	Rational_normal_forms->allocate(len, 0 /* verbose_level */);
+
+	Base_changes = NEW_OBJECT(vector_ge);
+	Base_changes->init(A, 0 /* verbose_level */);
+	Base_changes->allocate(len, 0 /* verbose_level */);
+
+	Basis = NEW_int(n * n);
+	Rational_normal_form = NEW_int(n * n);
+
+	int h;
+	int *Elt;
+
+	for (h = 0; h < len; h++) {
+
+		Elt = ith(h);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"h=" << h << " / " << len << endl;
+		}
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"before AGlobal.rational_normal_form" << endl;
+		}
+		AGlobal.rational_normal_form(
+				A,
+				Elt,
+				Basis,
+				Rational_normal_form,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"after AGlobal.rational_normal_form" << endl;
+		}
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity "
+					"h=" << h << " / " << len << " Rational_normal_form=" << endl;
+			Int_matrix_print(Rational_normal_form, n, n);
+		}
+		A->Group_element->make_element(Rational_normal_forms->ith(h), Rational_normal_form, 0 /* verbose_level */);
+		A->Group_element->make_element(Base_changes->ith(h), Basis, 0 /* verbose_level */);
 
 
-	if (f_v) {
-		cout << "vector_ge::rational_normal_form "
-				"before Algebra.compute_rational_normal_form" << endl;
 	}
-	Algebra.compute_rational_normal_form(
-			F, compute_rational_normal_form_d,
-			matrix_data,
-			Basis, Rational_normal_form,
-			verbose_level);
-	if (f_v) {
-		cout << "vector_ge::rational_normal_form "
-				"after Algebra.compute_rational_normal_form" << endl;
-	}
 
-	if (f_v) {
-		cout << "vector_ge::rational_normal_form "
-				"Basis = " << endl;
-		Int_matrix_print(Basis, d, d);
-		cout << "vector_ge::rational_normal_form "
-				"Rational_normal_form = " << endl;
-		Int_matrix_print(Rational_normal_form, d, d);
-	}
-
-
-	FREE_int(matrix_data);
 	FREE_int(Basis);
 	FREE_int(Rational_normal_form);
 
-#endif
 
 	if (f_v) {
 		cout << "vector_ge::rational_normal_form done" << endl;

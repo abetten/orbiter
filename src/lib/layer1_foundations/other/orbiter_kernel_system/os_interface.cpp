@@ -371,17 +371,17 @@ void os_interface::seed_random_generator(
 	srand((unsigned int) seed);
 }
 
-int os_interface::random_integer(
+long int os_interface::random_integer(
 		int p)
 // computes a random integer r with $0 \le r < p.$
 {
-	int n;
+	long int n;
 
 	if (p == 0) {
 		cout << "os_interface::random_integer p = 0" << endl;
 		exit(1);
 	}
-	n = (int)(((double)rand() * (double)p / RAND_MAX)) % p;
+	n = (long int)(((double)rand() * (double)p / RAND_MAX)) % p;
 	return n;
 }
 
