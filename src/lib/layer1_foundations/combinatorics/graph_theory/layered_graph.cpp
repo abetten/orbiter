@@ -37,7 +37,7 @@ layered_graph::~layered_graph()
 	Record_death();
 	if (L) {
 		FREE_OBJECTS(L);
-		}
+	}
 }
 
 void layered_graph::init(
@@ -49,7 +49,7 @@ void layered_graph::init(
 	
 	if (f_v) {
 		cout << "layered_graph::init" << endl;
-		}
+	}
 	layered_graph::nb_layers = nb_layers;
 	layered_graph::fname_base.assign(fname_base);
 
@@ -59,16 +59,17 @@ void layered_graph::init(
 		if (f_v) {
 			cout << "layered_graph::init "
 					"before L[i].init, i=" << i << endl;
-			}
+		}
 		L[i].init(
 				Nb_nodes_layer[i],
-				id_of_first_node, verbose_level);
+				id_of_first_node,
+				verbose_level);
 		id_of_first_node += Nb_nodes_layer[i];
-		}
+	}
 	nb_nodes_total = id_of_first_node;
 	if (f_v) {
 		cout << "layered_graph::init done" << endl;
-		}
+	}
 }
 
 int layered_graph::nb_nodes()
@@ -151,7 +152,7 @@ void layered_graph::place_with_y_stretch(
 	for (i = 0; i < nb_layers; i++) {
 		L[i].y_coordinate = 1. - i * dy - dy2;
 		//L[i].place(verbose_level);
-		}
+	}
 }
 
 void layered_graph::scale_x_coordinates(
@@ -162,7 +163,7 @@ void layered_graph::scale_x_coordinates(
 	for (i = 0; i < nb_layers; i++) {
 		L[i].scale_x_coordinates(x_stretch, verbose_level);
 		//L[i].place(verbose_level);
-		}
+	}
 }
 
 void layered_graph::place_with_grouping(
@@ -177,14 +178,14 @@ void layered_graph::place_with_grouping(
 	if (f_v) {
 		cout << "layered_graph::place_with_grouping "
 				"x_stretch= " << x_stretch << endl;
-		}
+	}
 	dy = 1. / (double) nb_layers;
 	dy2 = dy * .5;
 	for (i = 0; i < nb_layers; i++) {
 		if (f_v) {
 			cout << "layered_graph::place_with_grouping "
 					"layer " << i << endl;
-			}
+		}
 		L[i].y_coordinate = 1. - i * dy - dy2;
 		L[i].place_with_grouping(
 				Group_sizes[i], Nb_groups[i],
@@ -192,11 +193,11 @@ void layered_graph::place_with_grouping(
 		if (f_v) {
 			cout << "layered_graph::place_with_grouping "
 					"layer " << i << " done" << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "layered_graph::place_with_grouping done" << endl;
-		}
+	}
 }
 
 void layered_graph::add_edge(
@@ -254,7 +255,7 @@ void layered_graph::add_text(
 	if (f_v) {
 		cout << "layered_graph::add_text l=" << l
 				<< " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].add_text(text);
 }
 
@@ -265,7 +266,7 @@ void layered_graph::add_data1(
 
 	if (f_v) {
 		cout << "layered_graph::add_data1" << endl;
-		}
+	}
 	f_has_data1 = true;
 	data1 = data;
 }
@@ -280,7 +281,7 @@ void layered_graph::add_node_vec_data(
 	if (f_v) {
 		cout << "layered_graph::add_node_vec_data "
 				"l=" << l << " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].add_vec_data(v, len);
 }
 
@@ -292,7 +293,7 @@ void layered_graph::set_distinguished_element_index(
 	if (f_v) {
 		cout << "layered_graph::set_distinguished_element_index "
 				"l=" << l << " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].set_distinguished_element(index);
 }
 
@@ -306,7 +307,7 @@ void layered_graph::add_node_data1(
 	if (f_v) {
 		cout << "layered_graph::add_node_data1 "
 				"l=" << l << " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].add_data1(data);
 }
 
@@ -319,7 +320,7 @@ void layered_graph::add_node_data2(
 	if (f_v) {
 		cout << "layered_graph::add_node_data2 "
 				"l=" << l << " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].add_data2(data);
 }
 
@@ -332,7 +333,7 @@ void layered_graph::add_node_data3(
 	if (f_v) {
 		cout << "layered_graph::add_node_data3 "
 				"l=" << l << " n=" << n << endl;
-		}
+	}
 	L[l].Nodes[n].add_data3(data);
 }
 
@@ -604,10 +605,14 @@ void layered_graph::draw_edges(
 
 					id = up[h];
 					edge_color = up_color[h];
+					edge_color++;
 
+#if 0
 					if (edge_color == 0) {
 						edge_color = 1;
 					}
+#endif
+
 					find_node_by_id(id, l, n);
 					coordinates(
 							id, O->xin, O->yin,
@@ -653,9 +658,12 @@ void layered_graph::draw_edges(
 					id = up[h];
 					edge_color = up_color[h];
 
+					edge_color++;
+#if 0
 					if (edge_color == 0) {
 						edge_color = 1;
 					}
+#endif
 
 					find_node_by_id(id, l, n);
 					coordinates(
@@ -702,11 +710,13 @@ void layered_graph::draw_edges(
 					int edge_color;
 
 					id = down[h];
-					edge_color = down_color[h];
+					edge_color = down_color[h] + 1;
 
+#if 0
 					if (edge_color == 0) {
 						edge_color = 1;
 					}
+#endif
 
 					find_node_by_id(id, l, n);
 					coordinates(
@@ -758,10 +768,13 @@ void layered_graph::draw_edges(
 
 					id = down[h];
 					edge_color = down_color[h];
+					edge_color++;
 
+#if 0
 					if (edge_color == 0) {
 						edge_color = 1;
 					}
+#endif
 
 					find_node_by_id(id, l, n);
 					coordinates(
@@ -1044,11 +1057,11 @@ void layered_graph::coordinates_direct(
 	if (f_rotated) {
 		x1 = 1 - y_in;
 		y1 = x_in;
-		}
+	}
 	else {
 		x1 = x_in;
 		y1 = y_in;
-		}
+	}
 	x = (int)(x1 * x_max);
 	y = (int)(y1 * y_max);
 }
@@ -1082,9 +1095,9 @@ void layered_graph::find_node_by_id(
 			l = i;
 			n = id - id0;
 			return;
-			}
-		id0 += L[i].nb_nodes;
 		}
+		id0 += L[i].nb_nodes;
+	}
 	cout << "layered_graph::find_node_by_id "
 			"did not find node with id " << id << endl;
 	exit(1);
@@ -1123,17 +1136,17 @@ void layered_graph::read_file(
 		cout << "layered_graph::read_file "
 				"reading file " << fname << " of size "
 				<< Fio.file_size(fname) << endl;
-		}
+	}
 	M.read_file(fname, verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::read_file "
 				"read file " << fname << endl;
-		}
+	}
 	M.cur_pointer = 0;
 	read_memory_object(&M, verbose_level - 1);
 	if (f_v) {
 		cout << "layered_graph::read_file done" << endl;
-		}
+	}
 }
 
 void layered_graph::write_memory_object(
@@ -1146,18 +1159,18 @@ void layered_graph::write_memory_object(
 	
 	if (f_v) {
 		cout << "layered_graph::write_memory_object" << endl;
-		}
+	}
 	m->write_int(1); // version number of this file format
 	if (f_vv) {
 		cout << "after m->write_int(1), "
 				"m->used_length = " << m->used_length << endl;
-		}
+	}
 	m->write_int(nb_layers);
 	if (f_vv) {
 		cout << "after m->write_int(nb_layers), "
 				"nb_layers=" << nb_layers
 				<< " m->used_length = " << m->used_length << endl;
-		}
+	}
 	m->write_int(nb_nodes_total);
 	m->write_int(id_of_first_node);
 
@@ -1166,14 +1179,14 @@ void layered_graph::write_memory_object(
 	m->write_int(data1);
 	for (i = 0; i < nb_layers; i++) {
 		L[i].write_memory_object(m, verbose_level - 1);
-		}
+	}
 	m->write_string(fname_base);
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "layered_graph::write_memory_object "
 				"finished, data size (in chars) = "
 				<< m->used_length << endl;
-		}
+	}
 }
 
 void layered_graph::read_memory_object(
@@ -1194,7 +1207,7 @@ void layered_graph::read_memory_object(
 		cout << "layered_graph::read_memory_object "
 				"unknown version: version = " << version << endl;
 		exit(1);
-		}
+	}
 	m->read_int(&nb_layers);
 	m->read_int(&nb_nodes_total);
 	m->read_int(&id_of_first_node);
@@ -1208,7 +1221,7 @@ void layered_graph::read_memory_object(
 
 	for (i = 0; i < nb_layers; i++) {
 		L[i].read_memory_object(m, verbose_level - 1);
-		}
+	}
 	
 	m->read_string(fname_base);
 
@@ -1217,11 +1230,11 @@ void layered_graph::read_memory_object(
 		cout << "layered_graph::read_memory_object "
 				"unknown the file seems to be corrupt" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "layered_graph::read_memory_object "
 				"finished" << endl;
-		}
+	}
 }
 
 void layered_graph::remove_edges(
@@ -1314,7 +1327,8 @@ void layered_graph::find_all_paths_between(
 	Path.resize(layer2 - layer1 + 1);
 
 
-	find_all_paths_between_recursion(layer1, node1, layer2, node2,
+	find_all_paths_between_recursion(
+			layer1, node1, layer2, node2,
 			layer2, node2,
 			All_Paths, Path,
 			verbose_level);
@@ -1401,7 +1415,7 @@ void layered_graph::create_spanning_tree(
 	
 	if (f_v) {
 		cout << "layered_graph::create_spanning_tree" << endl;
-		}
+	}
 
 	for (l = 0; l < nb_layers; l++) {
 		for (n = 0; n < L[l].nb_nodes; n++) {
@@ -1409,8 +1423,8 @@ void layered_graph::create_spanning_tree(
 			N->layer = l;
 
 			N->allocate_tree_structure(0 /*verbose_level */);
-			}
 		}
+	}
 	for (l = nb_layers - 1; l > 0; l--) {
 		for (n = 0; n < L[l].nb_nodes; n++) {
 			graph_node *N = &L[l].Nodes[n];
@@ -1420,8 +1434,8 @@ void layered_graph::create_spanning_tree(
 			find_node_by_id(id1, l1, n1);
 			graph_node *N1 = &L[l1].Nodes[n1];
 			N1->register_child(this, id, 0 /*verbose_level */);
-			}
 		}
+	}
 
 	compute_depth_first_ranks(verbose_level);
 
@@ -1431,12 +1445,12 @@ void layered_graph::create_spanning_tree(
 		double right = 1;
 		L[0].Nodes[0].place_x_based_on_tree(this,
 				left, right, 0 /*verbose_level*/);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "layered_graph::create_spanning_tree done" << endl;
-		}
+	}
 }
 
 
@@ -1448,14 +1462,14 @@ void layered_graph::compute_depth_first_ranks(
 	
 	if (f_v) {
 		cout << "layered_graph::compute_depth_first_ranks" << endl;
-		}
+	}
 
 	L[0].Nodes[0].depth_first_rank_recursion(this,
 			r, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "layered_graph::compute_depth_first_ranks done" << endl;
-		}
+	}
 }
 
 
@@ -1470,10 +1484,10 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 		cout << "layered_graph::set_radius_factor_for_all_nodes_at_level "
 				"level = " << lvl
 				<< " radius_factor=" << radius_factor << endl;
-		}
+	}
 	for (j = 0; j < L[lvl].nb_nodes; j++) {
 		L[lvl].Nodes[j].radius_factor = radius_factor;
-		}
+	}
 }
 
 
@@ -1494,12 +1508,12 @@ void layered_graph::make_subset_lattice(
 
 	if (f_v) {
 		cout << "layered_graph::make_subset_lattice n=" << n << endl;
-		}
+	}
 
 	Nb = NEW_int(nb_layers);
 	for (i = 0; i <= n; i++) {
 		Nb[i] = Combi.int_n_choose_k(n, i);
-		}
+	}
 
 	set1 = NEW_int(n);
 	set2 = NEW_int(n);
@@ -1513,12 +1527,12 @@ void layered_graph::make_subset_lattice(
 	if (f_vv) {
 		cout << "layered_graph::make_subset_lattice "
 				"after init" << endl;
-		}
+	}
 	place(verbose_level);
 	if (f_vv) {
 		cout << "layered_graph::make_subset_lattice "
 				"after place" << endl;
-		}
+	}
 
 	// create vertex labels:
 	for (k = 0; k <= depth; k++) {
@@ -1536,41 +1550,41 @@ void layered_graph::make_subset_lattice(
 				for (i = k - 1; i >= 0; i--) {
 					if (i) {
 						j0 = set1[i - 1];
-						}
+					}
 					else {
 						j0 = -1;
-						}
+					}
 					cout << "i=" << i << " set1[i]=" << set1[i] << endl;
 					for (j = j0 + 1; j < set1[i]; j++) {
 						cout << "i = " << i << " j=" << j << " adding "
 								 << NT.i_power_j(2, n - j - 1) << endl;
 						a += NT.i_power_j(2, n - j - 1);
-						}
 					}
+				}
 				a += k;
 				text = std::to_string(a);
-				}
+			}
 			else if (f_breadth_first) {
 				a = 0;
 				for (i = 0; i < k; i++) {
 					a += Nb[i];
-					}
+				}
 				a += r;
 				text = std::to_string(a);
-				}
+			}
 			else {
 				if (k) {
 					text = std::to_string(set1[k - 1]);
-					}
+				}
 				else {
 					text = "";
-					}
 				}
+			}
 
 
 			add_text(k, r, text, 0/*verbose_level*/);
-			}
 		}
+	}
 
 	// create edges:
 	for (k = 1; k <= depth; k++) {
@@ -1587,29 +1601,29 @@ void layered_graph::make_subset_lattice(
 					add_edge(k - 1, r0, k, r,
 							1, // edge_color
 							0 /*verbose_level*/);
-					}
 				}
+			}
 			else {
 				for (a = k - 1; a >= 0; a--) {
 					Int_vec_copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
-						}
+					}
 					r0 = Combi.rank_k_subset(set2, n, k - 1);
 					add_edge(k - 1, r0, k, r,
 							1, // edge_color
 							0 /*verbose_level*/);
-					}
 				}
 			}
 		}
+	}
 
 
 	FREE_int(set1);
 	FREE_int(set2);
 	if (f_v) {
 		cout << "layered_graph::make_subset_lattice done" << endl;
-		}
+	}
 }
 
 

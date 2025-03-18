@@ -1281,7 +1281,8 @@ void combinatorial_object_stream::do_algebraic_degree(
 
 	m = (q - 1) * n;
 	if (f_v) {
-		cout << "combinatorial_object_stream::do_algebraic_degree m = " << m << endl;
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"m = " << m << endl;
 	}
 
 
@@ -1489,13 +1490,6 @@ void combinatorial_object_stream::do_algebraic_degree(
 						"degree = " << d << " is not possible" << endl;
 			}
 
-#if 0
-			r = HPD[d].dimension_of_ideal(
-				OwCF->set, OwCF->sz, 0 /*verbose_level*/);
-			if (r) {
-				break;
-			}
-#endif
 
 		}
 
@@ -1522,8 +1516,6 @@ void combinatorial_object_stream::do_algebraic_degree(
 			cout << "combinatorial_object_stream::do_algebraic_degree "
 					"eqn_reduced=" << s << endl;
 		}
-		//HPD[m].print_equation(cout, eqn_reduced);
-		//cout << endl;
 
 
 		if (d < m) {
@@ -1577,6 +1569,179 @@ void combinatorial_object_stream::do_algebraic_degree(
 	}
 }
 
+
+
+void combinatorial_object_stream::make_polynomial_representation(
+		projective_geometry::projective_space_with_action *PA,
+		std::string *&Equation,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::make_polynomial_representation" << endl;
+	}
+
+
+	algebra::ring_theory::homogeneous_polynomial_domain *HPD;
+
+	int n, q, m, i; // qm1;
+
+	n = PA->P->Subspaces->n + 1;
+	q = PA->F->q;
+	//qm1 = q - 1;
+
+	m = (q - 1) * n;
+	if (f_v) {
+		cout << "combinatorial_object_stream::do_algebraic_degree "
+				"m = " << m << endl;
+	}
+
+
+	HPD = NEW_OBJECTS(algebra::ring_theory::homogeneous_polynomial_domain, m + 1);
+
+	for (i = 1; i <= m; i++) {
+
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"before HPD->init i=" << i << endl;
+		}
+		HPD[i].init(
+				PA->F,
+				n /* nb_vars */, i /* degree */,
+				t_PART,
+				verbose_level - 2);
+
+	}
+
+
+
+
+
+	combinatorics::special_functions::special_functions_domain Special_functions_domain;
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::make_polynomial_representation "
+				"before Special_functions_domain.init" << endl;
+	}
+
+	Special_functions_domain.init(
+			PA->P,
+			verbose_level);
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::make_polynomial_representation "
+				"after Special_functions_domain.init" << endl;
+	}
+
+
+
+
+	int input_idx;
+
+
+	Equation = new string[IS->Objects.size()];
+
+	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+		combinatorics::canonical_form_classification::any_combinatorial_object *OwCF;
+
+		OwCF = (combinatorics::canonical_form_classification::any_combinatorial_object *) IS->Objects[input_idx];
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"input_idx =  " << input_idx << " / " << IS->Objects.size() << endl;
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"the input set has size " << OwCF->sz << endl;
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"the input set is: " << endl;
+			Lint_vec_print(cout, OwCF->set, OwCF->sz);
+			cout << endl;
+		}
+
+
+		std::string poly_rep;
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"before Special_functions_domain.make_polynomial_representation" << endl;
+		}
+		Special_functions_domain.make_polynomial_representation(
+				OwCF->set, OwCF->sz,
+				poly_rep,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"after Special_functions_domain.make_polynomial_representation" << endl;
+		}
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"poly_rep = " << poly_rep << endl;
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"string length = " << poly_rep.length() << endl;
+		}
+
+
+		std::string fname;
+
+		if (IS->Descr->f_label) {
+			fname = IS->Descr->label_txt + "_" + std::to_string(input_idx) + "_polynomial.txt";
+		}
+		else {
+			fname = "object_" + std::to_string(input_idx) + "_polynomial.txt";
+		}
+		{
+			std::ofstream ost(fname);
+
+			ost << poly_rep << endl;
+		}
+
+
+		Equation[input_idx] = poly_rep;
+
+		int *eqn;
+		int eqn_size;
+		std::string name_of_formula;
+		std::string name_of_formula_tex;
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"before HPD[m].parse_equation_wo_parameters" << endl;
+		}
+		HPD[m].parse_equation_wo_parameters(
+				name_of_formula,
+				name_of_formula_tex,
+				poly_rep /*equation_text*/,
+				eqn, eqn_size,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"after HPD[m].parse_equation_wo_parameters" << endl;
+		}
+		if (f_v) {
+			cout << "combinatorial_object_stream::make_polynomial_representation "
+					"eqn = ";
+			Int_vec_print(cout, eqn, eqn_size);
+			cout << endl;
+			HPD[m].print_equation(cout, eqn);
+			cout << endl;
+		}
+
+
+	}
+
+
+
+
+
+	if (f_v) {
+		cout << "combinatorial_object_stream::make_polynomial_representation done" << endl;
+	}
+}
 
 
 

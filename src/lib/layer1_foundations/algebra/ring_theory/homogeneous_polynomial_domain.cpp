@@ -4311,7 +4311,7 @@ void homogeneous_polynomial_domain::parse_equation_wo_parameters(
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"before SB->Formula_vector->V[0].simplify" << endl;
 	}
-	SB->Formula_vector->V[0].simplify(verbose_level);
+	SB->Formula_vector->V[0].simplify(verbose_level - 2);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"after SB->Formula_vector->V[0].simplify" << endl;
@@ -4348,7 +4348,7 @@ void homogeneous_polynomial_domain::parse_equation_wo_parameters(
 			true /*f_has_managed_variables*/,
 			managed_variables,
 			f_write_trees_during_expand,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"after Formula_vector->expand" << endl;
@@ -4362,7 +4362,7 @@ void homogeneous_polynomial_domain::parse_equation_wo_parameters(
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"before Formula_vector_after_expand->V[0].simplify" << endl;
 	}
-	Formula_vector_after_expand->V[0].simplify(verbose_level);
+	Formula_vector_after_expand->V[0].simplify(verbose_level - 2);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"after Formula_vector_after_expand->V[0].simplify" << endl;
@@ -4381,7 +4381,7 @@ void homogeneous_polynomial_domain::parse_equation_wo_parameters(
 	}
 	Formula_vector_after_expand->V[0].collect_monomial_terms(
 			I, Coeff,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::parse_equation_wo_parameters "
 				"after collect_monomial_terms" << endl;

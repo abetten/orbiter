@@ -1262,12 +1262,20 @@ void formula_vector::expand(
 	if (f_v) {
 		cout << "formula_vector::expand" << endl;
 	}
+	if (f_v) {
+		cout << "formula_vector::expand "
+				"before init_and_allocate" << endl;
+	}
 	init_and_allocate(
 			label_txt,
 			label_tex,
 			f_has_managed_variables,
 			managed_variables,
 			A->len, verbose_level);
+	if (f_v) {
+		cout << "formula_vector::expand "
+				"after init_and_allocate" << endl;
+	}
 
 
 	f_matrix = A->f_matrix;

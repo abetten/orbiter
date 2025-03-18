@@ -1271,7 +1271,7 @@ void any_group::print_elements(
 }
 
 void any_group::print_elements_tex(
-		int f_with_permutation,
+		//int f_with_permutation,
 		int f_override_action, actions::action *A_special,
 		int verbose_level)
 {
@@ -1311,7 +1311,7 @@ void any_group::print_elements_tex(
 		L.head_easy(fp);
 
 		H->print_all_group_elements_tex(fp,
-				f_with_permutation,
+				//f_with_permutation,
 				f_override_action, A_special);
 		//H->print_all_group_elements_tree(fp);
 		//H->print_all_group_elements_with_permutations_tex(fp);
@@ -1398,7 +1398,8 @@ void any_group::order_of_products_of_elements_by_rank(
 
 		int f_override_action = false;
 
-		H->print_all_group_elements_tex(fp, false, f_override_action, NULL);
+		H->print_all_group_elements_tex(fp, //false,
+				f_override_action, NULL);
 		//H->print_all_group_elements_with_permutations_tex(fp);
 
 		//Schreier.print_and_list_orbits_tex(fp);
@@ -2189,8 +2190,15 @@ void any_group::print_given_elements_tex(
 			ost << "Element " << setw(5) << i << " / "
 					<< Elements->len << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(ost, Elements->ith(i), f_with_permutation);
-			Int_vec_print(ost, Elements->ith(i), A->make_element_size);
+			//A->print_one_element_tex(ost, Elements->ith(i), f_with_permutation);
+
+			ost << "$$" << endl;
+			A->Group_element->element_print_latex(Elements->ith(i), ost);
+			ost << "$$" << endl;
+
+
+
+			Int_vec_print_bare_fully(ost, Elements->ith(i), A->make_element_size);
 			ost << "\\\\" << endl;
 
 			if (f_with_fix_structure) {

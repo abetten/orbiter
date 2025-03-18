@@ -197,8 +197,6 @@ void surface_domain::create_system(
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	long int a;
-	int i, j;
 
 	if (f_v) {
 		cout << "surface_domain::create_system" << endl;
@@ -224,6 +222,8 @@ void surface_domain::create_system(
 
 #if 0
 	long int *pts_on_line;
+	long int a;
+	int i, j;
 
 
 	// Pts is the set of points on the lines in S[]
@@ -289,6 +289,7 @@ void surface_domain::create_system(
 				"n = " << n << endl;
 	}
 	Pt_coords = NEW_int(nb_rows * n);
+	int i;
 
 	for (i = 0; i < nb_rows; i++) {
 		unrank_point(Pt_coords + i * n, Pts[i]);

@@ -747,6 +747,7 @@ public:
 	std::string apply_input;
 	std::string apply_element;
 
+	// ToDo: this should become a vector_ge_activity
 	int f_element_processing;
 	element_processing_description *element_processing_descr;
 
@@ -896,6 +897,7 @@ public:
 
 
 
+	// this should become a vector_ge_activity:
 	int f_order_of_products;
 	std::string order_of_products_elements;
 

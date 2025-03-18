@@ -90,6 +90,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_algebraic_degree = false;
 	//std::string algebraic_degree_PG_label;
 
+	f_polynomial_representation = false;
+	//std::string polynomial_representation_PG_label;
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -307,6 +310,15 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 
+		else if (ST.stringcmp(argv[i], "-polynomial_representation") == 0) {
+			f_polynomial_representation = true;
+			polynomial_representation_PG_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-polynomial_representation " << polynomial_representation_PG_label
+						<< endl;
+			}
+		}
+
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -397,6 +409,10 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_algebraic_degree) {
 		cout << "-algebraic_degree " << algebraic_degree_PG_label
+				<< endl;
+	}
+	if (f_polynomial_representation) {
+		cout << "-polynomial_representation " << polynomial_representation_PG_label
 				<< endl;
 	}
 }

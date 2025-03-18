@@ -21,6 +21,7 @@ ROW,C1,C2,C3
 1,"\verb'-export_magma' ","  ","Exports the group to Magma~\cite{Magma}. "
 1,"\verb'-search_element_of_order' "," $i$ ","Finds all elements of order $i$ in the group ($i \in {\mathbb N}$). "
 1,"\verb'-find_standard_generators' "," $a$ $b$ $c$ "," Finds all pairs of elements $x,y$ in $G$ such that $|x| = a,$ $|y|=b$, and $|xy|=c$. Such pairs are called standard generators. "
+1,"\verb'-find_standard_generators_M24' "," "," Finds a pair of standard generators for $M_{24}$. "
 1,"\verb'-element_rank' "," $s$ "," Determines the rank of the group element $s$ in the given group. $s$ is given in coded form."
 1,"\verb'-element_unrank' "," $r$ "," Produces the group element whose rank is $r$. "
 END

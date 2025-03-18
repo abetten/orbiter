@@ -1088,7 +1088,7 @@ void group_theoretic_activity::perform_activity(
 			cout << "group_theoretic_activity::perform_activity "
 					"f_print_elements_tex" << endl;
 		}
-		int f_with_permutation = true;
+		//int f_with_permutation = true;
 		int f_override_action = true;
 		actions::action *A_special;
 
@@ -1098,7 +1098,7 @@ void group_theoretic_activity::perform_activity(
 					"before AG->print_elements_tex" << endl;
 		}
 		AG->print_elements_tex(
-				f_with_permutation,
+				//f_with_permutation,
 				f_override_action,
 				A_special,
 				verbose_level);

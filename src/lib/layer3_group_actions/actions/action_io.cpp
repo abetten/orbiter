@@ -954,6 +954,7 @@ void action::export_to_orbiter_as_bsgs(
 }
 
 
+#if 0
 void action::print_one_element_tex(
 		std::ostream &ost,
 		int *Elt, int f_with_permutation)
@@ -990,6 +991,7 @@ void action::print_one_element_tex(
 	}
 
 }
+#endif
 
 
 }}}

@@ -397,6 +397,7 @@ void conjugacy_class_of_elements::report_single_class(
 		label = "c_{" + std::to_string(idx) + "} = ";
 
 		Class_data->A->Group_element->element_print_latex_with_extras(Elt, label, ost);
+		ost << "\\\\" << endl;
 
 #if 0
 
@@ -409,10 +410,11 @@ void conjugacy_class_of_elements::report_single_class(
 
 		s_element_coded = Class_data->A->Group_element->element_stringify_code_for_make_element(Elt);
 
-		ost << "$";
+		//ost << "$";
 		ost << s_element_coded;
 		//Class_data->A->Group_element->element_print_for_make_element(Elt, fp);
-		ost << "$\\\\" << endl;
+		//ost << "$" << endl;
+		ost << "\\\\" << endl;
 
 
 

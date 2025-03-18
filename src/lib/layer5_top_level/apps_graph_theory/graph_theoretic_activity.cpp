@@ -565,19 +565,19 @@ void graph_theoretic_activity::perform_activity(
 		}
 
 
-		combinatorics::graph_theory::graph_theory_domain Graph_Domain;
+		combinatorics::graph_theory::graph_theory_subgraph_search Search;
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"before Graph_Domain.find_subgraph" << endl;
+					"before Search.find_subgraph" << endl;
 		}
-		Graph_Domain.find_subgraph(
+		Search.find_subgraph(
 				nb, CG,
 				Descr->find_subgraph_label,
 				verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity "
-					"after Graph_Domain.find_subgraph" << endl;
+					"after Search.find_subgraph" << endl;
 		}
 
 

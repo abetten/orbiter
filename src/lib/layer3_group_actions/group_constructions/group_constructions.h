@@ -260,6 +260,7 @@ public:
 	int f_stabilizer_of_variety;
 	std::string stabilizer_of_variety_label;
 
+	// used in PERMUTATION_SUBGROUP.25
 	int f_subgroup_by_generators;
 	std::string subgroup_by_generators_label;
 

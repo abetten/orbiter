@@ -150,7 +150,7 @@ public:
 	void print_elements(
 			int verbose_level);
 	void print_elements_tex(
-			int f_with_permutation,
+			//int f_with_permutation,
 			int f_override_action, actions::action *A_special,
 			int verbose_level);
 	void order_of_products_of_elements_by_rank(
@@ -1869,7 +1869,7 @@ public:
 	void print_all_group_elements();
 	void print_all_group_elements_tex(
 			std::ostream &ost,
-			int f_with_permutation,
+			//int f_with_permutation,
 			int f_override_action, actions::action *A_special);
 	void print_all_group_elements_tree(
 			std::ostream &ost);

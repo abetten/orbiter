@@ -1045,13 +1045,14 @@ void colored_graph::save(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	graph_theory_domain Graph;
+
+	other::orbiter_kernel_system::file_io Fio;
 
 	if (f_v) {
 		cout << "colored_graph::save" << endl;
 	}
 
-	Graph.save_colored_graph(
+	Fio.save_colored_graph(
 			fname,
 			nb_points, nb_colors, nb_colors_per_vertex,
 			points, point_color,
@@ -1123,17 +1124,20 @@ void colored_graph::load(
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	graph_theory_domain Graph;
-	other::orbiter_kernel_system::file_io Fio;
-	other::data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "colored_graph::load" << endl;
 	}
+
+	//graph_theory_domain Graph;
+	other::orbiter_kernel_system::file_io Fio;
+	other::data_structures::string_tools ST;
+
 	if (f_v) {
-		cout << "colored_graph::load before Graph.load_colored_graph" << endl;
+		cout << "colored_graph::load "
+				"before Fio.load_colored_graph" << endl;
 	}
-	Graph.load_colored_graph(
+	Fio.load_colored_graph(
 			fname,
 		nb_points, nb_colors, nb_colors_per_vertex,
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
@@ -1141,7 +1145,8 @@ void colored_graph::load(
 		Bitvec,
 		verbose_level);
 	if (f_v) {
-		cout << "colored_graph::load after Graph.load_colored_graph" << endl;
+		cout << "colored_graph::load "
+				"after Fio.load_colored_graph" << endl;
 	}
 
 	f_ownership_of_bitvec = true;
@@ -1167,6 +1172,7 @@ void colored_graph::draw_on_circle(
 		cout << "colored_graph::draw_on_circle" << endl;
 	}
 	string fname_full;
+
 	other::orbiter_kernel_system::file_io Fio;
 	
 	fname_full = fname + ".mp";

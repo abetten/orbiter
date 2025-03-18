@@ -112,7 +112,7 @@ test_problem:
 
 
 
-# Section 2.6 vector of group elements
+# Section 2.5 vector of group elements
 
 
 HIRSCHFELD_STAB_GENERATORS="\
@@ -132,7 +132,7 @@ FILE_NAME_CLASS_2A="PGGL_4_4_Subgroup_Hirschfeld_Stab_51840_class_of_2A.csv"
 
 
 
-# Section 2.7 Symbolic Objects
+# Section 2.6 Symbolic Algebra
 
 TEST_FORMULA="(-a+b*b)*x*x+a*b*x"
 

@@ -647,7 +647,7 @@ void int_vec::print_bare_fully(
 	for (i = 0; i < len; i++) {
 		ost << v[i];
 		if (i < len - 1) {
-			ost << ", ";
+			ost << ",";
 		}
 	}
 	//ost << " )";

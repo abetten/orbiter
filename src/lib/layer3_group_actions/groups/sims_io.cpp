@@ -505,7 +505,7 @@ void sims::print_all_group_elements()
 
 void sims::print_all_group_elements_tex(
 		std::ostream &ost,
-		int f_with_permutation,
+		//int f_with_permutation,
 		int f_override_action, actions::action *A_special)
 {
 	int *Elt;
@@ -540,8 +540,13 @@ void sims::print_all_group_elements_tex(
 		ost << "Element " << setw(5) << i << " / "
 				<< go.as_int() << " of order " << ord << ":" << endl;
 
-		A1->print_one_element_tex(ost,
-				Elt, f_with_permutation);
+		//A1->print_one_element_tex(ost,
+		//		Elt, f_with_permutation);
+
+
+		ost << "$$" << endl;
+		A->Group_element->element_print_latex(Elt, ost);
+		ost << "$$" << endl;
 
 		Order[i] = ord;
 	}

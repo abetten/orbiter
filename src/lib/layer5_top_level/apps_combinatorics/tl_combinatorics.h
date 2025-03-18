@@ -179,6 +179,10 @@ public:
 	int f_algebraic_degree;
 	std::string algebraic_degree_PG_label;
 
+	// ToDo undocumented:
+	int f_polynomial_representation;
+	std::string polynomial_representation_PG_label;
+
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
 	int read_arguments(
@@ -329,6 +333,10 @@ public:
 	void do_algebraic_degree(
 			projective_geometry::projective_space_with_action *PA,
 			int *&Algebraic_degree, std::string *&Reduced_equation,
+			int verbose_level);
+	void make_polynomial_representation(
+			projective_geometry::projective_space_with_action *PA,
+			std::string *&Equation,
 			int verbose_level);
 
 };

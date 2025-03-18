@@ -895,9 +895,129 @@ void combinatorial_object_activity::perform_activity_combo(
 
 
 
+
+
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_combo "
 					"after Combo->do_algebraic_degree" << endl;
+		}
+
+	}
+
+
+	else if (Descr->f_polynomial_representation) {
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"f_polynomial_representation" << endl;
+		}
+
+		projective_geometry::projective_space_with_action *PA;
+
+
+
+		PA = Get_projective_space(Descr->polynomial_representation_PG_label);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"before Combo->make_polynomial_representation" << endl;
+		}
+
+
+		//int *Algebraic_degree;
+		std::string *Equation;
+
+		Combo->make_polynomial_representation(
+				PA,
+				Equation,
+				verbose_level);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_combo "
+					"after Combo->make_polynomial_representation" << endl;
+		}
+
+
+		int i;
+
+		for (i = 0; i < Combo->IS->Objects.size(); i++) {
+			cout << i << " : " << Equation[i] << endl;
+		}
+
+		if (Combo->IS->Descr->nb_inputs == 1) {
+			if (Combo->IS->Descr->Input[0].input_type == t_data_input_stream_file_of_points_csv) {
+
+				other::orbiter_kernel_system::file_io Fio;
+
+				other::data_structures::spreadsheet S;
+				other::data_structures::string_tools ST;
+				int nb_sets;
+
+				string fname_in;
+
+				fname_in = Combo->IS->Descr->Input[0].input_string;
+
+				S.read_spreadsheet(fname_in, 0/*verbose_level - 1*/);
+
+				nb_sets = S.nb_rows - 1;
+				if (nb_sets != Combo->IS->Objects.size()) {
+					cout << "combinatorial_object_activity::perform_activity_combo Combo->IS->Objects.size()" << endl;
+					exit(1);
+				}
+
+				//std::string heading1;
+				std::string heading2;
+
+				//heading1 = Combo->IS->Descr->Input[0].input_string2 + "_Algebraic_degree";
+				heading2 = Combo->IS->Descr->Input[0].input_string2 + "_Polynomial";
+
+#if 0
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"before S.add_column_with_int" << endl;
+				}
+				S.add_column_with_int(
+						heading1, Algebraic_degree);
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"after S.add_column_with_int" << endl;
+				}
+#endif
+
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"before S.add_column_with_text" << endl;
+				}
+				S.add_column_with_text(
+						heading2, Equation);
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"after S.add_column_with_text" << endl;
+				}
+
+				string fname_out;
+
+				fname_out = ST.without_extension(fname_in) + "_alg_degree.csv";
+
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"before S.save" << endl;
+				}
+				S.save(fname_out, verbose_level);
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"after S.save" << endl;
+				}
+
+				if (f_v) {
+					cout << "combinatorial_object_activity::perform_activity_combo "
+							"Written file " << fname_out << " of size "
+							<< Fio.file_size(fname_out) << endl;
+				}
+
+			}
 		}
 
 	}

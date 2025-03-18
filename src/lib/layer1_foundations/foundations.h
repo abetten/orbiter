@@ -460,6 +460,7 @@ namespace combinatorics {
 		class graph_layer;
 		class graph_node;
 		class graph_theory_domain;
+		class graph_theory_subgraph_search;
 		class layered_graph;
 		class rainbow_cliques;
 

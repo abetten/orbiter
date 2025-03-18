@@ -115,6 +115,7 @@ ORBITER_MODULES= \
 		layer1_foundations/combinatorics/graph_theory/graph_layer.o \
 		layer1_foundations/combinatorics/graph_theory/graph_node.o \
 		layer1_foundations/combinatorics/graph_theory/graph_theory_domain.o \
+		layer1_foundations/combinatorics/graph_theory/graph_theory_subgraph_search.o \
 		layer1_foundations/combinatorics/graph_theory/layered_graph.o \
 		layer1_foundations/combinatorics/graph_theory/rainbow_cliques.o \
 		layer1_foundations/combinatorics/graph_theory_nauty/naugraph.o \

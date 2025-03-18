@@ -1373,7 +1373,9 @@ void interface_toolkit::print()
 				<< " " << csv_file_extract_column_to_txt_col_label << endl;
 	}
 	if (f_csv_file_latex) {
-		cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+		cout << "-csv_file_latex "
+				<< f_produce_latex_header
+				<< " " << csv_file_latex_fname << endl;
 	}
 	if (f_prepare_tables_for_users_guide) {
 		int j;
@@ -2446,6 +2448,14 @@ void interface_toolkit::worker(
 
 	else if (f_gcd_worksheet) {
 
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"-gcd_worksheet "
+					<< " " << gcd_worksheet_nb_problems
+					<< " " << gcd_worksheet_N
+					<< " " << gcd_worksheet_key
+					<< endl;
+		}
 		algebra::number_theory::number_theory_domain NT;
 
 		NT.create_gcd_worksheet(
@@ -2453,6 +2463,15 @@ void interface_toolkit::worker(
 				verbose_level);
 	}
 	else if (f_draw_layered_graph) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					"-draw_layered_graph "
+					<< " " << draw_layered_graph_fname
+					<< " " << Layered_graph_draw_options
+					<< endl;
+		}
+
 		other::graphics::graphical_output GO;
 
 

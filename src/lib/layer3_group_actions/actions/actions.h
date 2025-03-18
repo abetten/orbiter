@@ -425,10 +425,11 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			groups::strong_generators *SG, int verbose_level);
+#if 0
 	void print_one_element_tex(
 			std::ostream &ost,
 			int *Elt, int f_with_permutation);
-
+#endif
 
 
 	// in backtrack.cpp

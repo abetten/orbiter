@@ -169,7 +169,7 @@ void special_functions_domain::make_polynomial_representation(
 
 	for (h = 0; h < nb_pts_complement; h++) {
 
-		string sh, qm1;
+		string sh, qm1, power_qm1;
 
 		int *v;
 
@@ -183,6 +183,13 @@ void special_functions_domain::make_polynomial_representation(
 			qm1 = std::to_string(q - 1);
 		}
 
+		if (q > 2) {
+			power_qm1 = "^" + qm1;
+		}
+		else {
+			power_qm1 = "";
+		}
+
 		for (i = 0; i < nb_vars; i++) {
 
 			string Xj, Xi;
@@ -194,14 +201,14 @@ void special_functions_domain::make_polynomial_representation(
 
 			if (v[i]) {
 				if (v[i] == 1) {
-					si = "(" + Xj + "^" + qm1 + "-(" + Xi + "-" + Xj + ")^" + qm1 + ")";
+					si = "(" + Xj + power_qm1 + "-(" + Xi + "-" + Xj + ")" + power_qm1 + ")";
 				}
 				else {
-					si = "(" + Xj + "^" + qm1 + "-(" + Xi + "-1*" + std::to_string(v[i]) + "*" + Xj + ")^" + qm1 + ")";
+					si = "(" + Xj + power_qm1 + "-(" + Xi + "-1*" + std::to_string(v[i]) + "*" + Xj + ")" + power_qm1 + ")";
 				}
 			}
 			else {
-				si = "(" + Xj + "^" + qm1 + "-" + Xi + "^" + qm1 + ")";
+				si = "(" + Xj + power_qm1 + "-" + Xi + power_qm1 + ")";
 
 			}
 			if (i == 0) {

@@ -127,11 +127,13 @@ void orbit_of_elements::init(
 	Sorting.lint_vec_heapsort(Table_of_elements, orbit_length);
 
 	if (f_v) {
-		cout << "classes_of_elements_expanded::init "
+		cout << "orbit_of_elements::init "
 				"table of elements:" << endl;
 		Lint_vec_print(cout, Table_of_elements, orbit_length);
-		cout << "classes_of_elements_expanded::init "
-				" idx=" << idx << " number of elements = " << orbit_length << endl;
+		cout << endl;
+		cout << "orbit_of_elements::init "
+				" idx=" << idx
+				<< " number of elements = " << orbit_length << endl;
 	}
 
 

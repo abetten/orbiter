@@ -3446,8 +3446,15 @@ void surface_object_with_group::print_action_on_surface(
 			ost << "Element " << setw(5) << i << " / "
 					<< nb_elements << " of order " << ord << ":" << endl;
 
-			A->print_one_element_tex(
-					ost, Elt, false /*f_with_permutation*/);
+			//A->print_one_element_tex(
+			//		ost, Elt, false /*f_with_permutation*/);
+
+
+			ost << "$$" << endl;
+			A->Group_element->element_print_latex(Elt, ost);
+			ost << "$$" << endl;
+
+
 
 			if (true /* f_with_fix_structure*/) {
 				int f;

@@ -799,26 +799,6 @@ public:
 			int f_prefix, std::string &prefix,
 			int verbose_level);
 #endif
-	void save_as_colored_graph_easy(
-			std::string &fname_base,
-			int n, int *Adj, int verbose_level);
-	void save_colored_graph(
-			std::string &fname,
-			int nb_vertices, int nb_colors,
-			int nb_colors_per_vertex,
-			long int *points, int *point_color,
-			long int *data, int data_sz,
-			other::data_structures::bitvector *Bitvec,
-			int verbose_level);
-	void load_colored_graph(
-			std::string &fname,
-			int &nb_vertices, int &nb_colors,
-			int &nb_colors_per_vertex,
-			long int *&vertex_labels,
-			int *&vertex_colors, long int *&user_data,
-			int &user_data_size,
-			other::data_structures::bitvector *&Bitvec,
-			int verbose_level);
 	int is_association_scheme(
 			int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors,
@@ -922,6 +902,24 @@ public:
 	void eigenvalues(
 			combinatorics::graph_theory::colored_graph *CG,
 			int verbose_level);
+
+};
+
+
+// #############################################################################
+// graph_theory_subgraph_search.cpp
+// #############################################################################
+
+
+//! graph theoretic functions related to subgraph search according to Dynkin diagrams
+
+
+class graph_theory_subgraph_search {
+
+public:
+	graph_theory_subgraph_search();
+	~graph_theory_subgraph_search();
+
 	void find_subgraph(
 			int nb, colored_graph **CG,
 			std::string &subgraph_label, int verbose_level);

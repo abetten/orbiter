@@ -586,9 +586,20 @@ void vector_ge::report_elements(
 				ost << "Element " << setw(5) << i << " / "
 						<< len << " of order " << ord << ":" << endl;
 
+
+				ost << "$$" << endl;
+				A1->Group_element->element_print_latex(Elt, ost);
+				ost << "$$" << endl;
+
+				Int_vec_print_bare_fully(ost, Elt, A->make_element_size);
+				ost << "\\\\" << endl;
+
+
+#if 0
 				A1->print_one_element_tex(
 						ost,
 						Elt, f_with_permutation);
+#endif
 
 				Order[i] = ord;
 			}

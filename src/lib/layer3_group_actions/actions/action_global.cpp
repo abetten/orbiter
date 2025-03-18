@@ -6694,12 +6694,13 @@ void action_global::report_group_table(
 		ost << "$$" << endl;
 		ost << "\\end{sidewaystable}" << endl;
 
-		int f_with_permutation = false;
+		//int f_with_permutation = false;
 		int f_override_action = false;
 		actions::action *A_special = NULL;
 
 		H->print_all_group_elements_tex(ost,
-				f_with_permutation, f_override_action, A_special);
+				//f_with_permutation,
+				f_override_action, A_special);
 
 	}
 

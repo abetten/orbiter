@@ -16,10 +16,13 @@ MODULES = \
 	graph_layer.o \
 	graph_node.o \
 	graph_theory_domain.o \
+	graph_theory_subgraph_search.o \
 	layered_graph.o \
 	rainbow_cliques.o 
 
 
+
+ 
 all : $(MODULES)
 	cd ./Clique; $(MAKE) KClique.o
 

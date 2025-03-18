@@ -1182,7 +1182,7 @@ void matrix_group_element::GL_print_for_make_element(
 	GL_code_for_make_element(
 			Elt, Data);
 
-	Int_vec_print(cout, Data, Matrix_group->make_element_size);
+	Int_vec_print_bare_fully(ost, Data, Matrix_group->make_element_size);
 
 #if 0
 	Int_vec_copy(Elt, D, Matrix_group->n * Matrix_group->n);
