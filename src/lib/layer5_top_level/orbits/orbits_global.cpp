@@ -253,6 +253,7 @@ void orbits_global::orbits_on_points(
 		groups::strong_generators *Strong_gens,
 		int f_load_save,
 		std::string &prefix,
+		int print_interval,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
 {
@@ -277,6 +278,7 @@ void orbits_global::orbits_on_points(
 			Strong_gens,
 			f_load_save,
 			prefix,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "orbits_global::orbits_on_points "
@@ -299,6 +301,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 		data_structures_groups::vector_ge *gens,
 		int f_load_save,
 		std::string &prefix,
+		int print_interval,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
 {
@@ -323,6 +326,7 @@ void orbits_global::orbits_on_points_from_vector_ge(
 			gens,
 			f_load_save,
 			prefix,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "orbits_global::orbits_on_points_from_vector_ge "
@@ -541,11 +545,13 @@ void orbits_global::orbit_of(
 		}
 #endif
 
+	int print_interval = 10000;
+
 	Sch->init_generators(
 			*AG->Subgroup_gens->gens /* *strong_generators */,
 			verbose_level - 2);
 	Sch->initialize_tables();
-	Sch->compute_point_orbit(point_idx, verbose_level);
+	Sch->compute_point_orbit(point_idx, print_interval, verbose_level);
 
 	int orbit_idx = 0;
 
@@ -650,12 +656,15 @@ void orbits_global::orbit_of(
 
 void orbits_global::orbits_on_points(
 		groups::any_group *AG,
-		groups::orbits_on_something *&Orb, int verbose_level)
+		groups::orbits_on_something *&Orb,
+		int print_interval,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbits_global::orbits_on_points" << endl;
+		cout << "orbits_global::orbits_on_points print_interval = " << print_interval << endl;
 	}
 	orbits::orbits_global Orbits;
 
@@ -674,6 +683,7 @@ void orbits_global::orbits_on_points(
 			AG->Subgroup_gens,
 			f_load_save,
 			prefix,
+			print_interval,
 			Orb,
 			verbose_level);
 	if (f_v) {
@@ -690,6 +700,7 @@ void orbits_global::orbits_on_points(
 void orbits_global::orbits_on_points_from_generators(
 		groups::any_group *AG,
 		data_structures_groups::vector_ge *gens,
+		int print_interval,
 		groups::orbits_on_something *&Orb,
 		int verbose_level)
 {
@@ -715,6 +726,7 @@ void orbits_global::orbits_on_points_from_generators(
 			gens,
 			f_load_save,
 			prefix,
+			print_interval,
 			Orb,
 			verbose_level);
 

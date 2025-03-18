@@ -279,7 +279,10 @@ void singer_cycle::init_lines(
 	Sch->init(A2, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_single_generator(nice_gens->ith(0), verbose_level - 2);
-	Sch->compute_all_point_orbits(0);
+
+	int print_interval = 10000;
+
+	Sch->compute_all_point_orbits(print_interval, 0);
 	if (f_v) {
 		cout << "Found " << Sch->nb_orbits << " orbits on lines" << endl;
 		for (i = 0; i < Sch->nb_orbits; i++) {

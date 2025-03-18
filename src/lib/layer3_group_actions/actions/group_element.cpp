@@ -1049,7 +1049,7 @@ void group_element::mult_abc(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int ret;
+	//int ret;
 
 	if (f_v) {
 		cout << "group_element::mult_abc" << endl;

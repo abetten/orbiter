@@ -361,9 +361,11 @@ void hall_system_classify::orbits_on_triples(
 					"computing orbits of the selected group" << endl;
 		}
 
+		int print_interval = 10000;
+
 		Orbits_on_triples =
 				Strong_gens_Hall_reflection->compute_all_point_orbits_schreier(
-				A_on_triples, 0 /*verbose_level*/);
+				A_on_triples, print_interval, 0 /*verbose_level*/);
 
 		if (f_v) {
 			cout << "hall_system_classify::orbits_on_triples "

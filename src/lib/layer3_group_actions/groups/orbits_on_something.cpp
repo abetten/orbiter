@@ -66,6 +66,7 @@ void orbits_on_something::init(
 		strong_generators *SG,
 		int f_load_save,
 		std::string &prefix,
+		int print_interval,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -129,7 +130,7 @@ void orbits_on_something::init(
 		}
 
 		Sch = SG->compute_all_point_orbits_schreier(
-				A, verbose_level - 2);
+				A, print_interval, verbose_level - 2);
 		if (f_v) {
 			cout << "orbits_on_something::init "
 					"after compute_all_point_orbits_schreier" << endl;
@@ -195,6 +196,7 @@ void orbits_on_something::init_from_vector_ge(
 		data_structures_groups::vector_ge *gens,
 		int f_load_save,
 		std::string &prefix,
+		int print_interval,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -255,7 +257,7 @@ void orbits_on_something::init_from_vector_ge(
 		}
 
 		Sch = gens->compute_all_point_orbits_schreier(
-				A, verbose_level - 2);
+				A, print_interval, verbose_level - 2);
 
 		if (f_v) {
 			cout << "orbits_on_something::init_from_vector_ge "

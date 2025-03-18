@@ -125,11 +125,13 @@ void character_table_burnside::do_it(
 
 	Sch->init_generators(*SG->gens, verbose_level - 2);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "character_table_burnside::do_it "
 				"before Sch->compute_all_point_orbits:" << endl;
 	}
-	Sch->compute_all_point_orbits(verbose_level);
+	Sch->compute_all_point_orbits(print_interval, verbose_level);
 	if (f_v) {
 		cout << "character_table_burnside::do_it "
 				"after Sch->compute_all_point_orbits:" << endl;

@@ -735,11 +735,13 @@ int upstep_work::upstep_for_sets(
 
 
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		print_level_extension_info();
 		cout << "computing orbit of point " << pt << endl;
 	}
-	up_orbit.compute_point_orbit(size - 1 /*pt*/, 0);
+	up_orbit.compute_point_orbit(size - 1 /*pt*/, print_interval, 0);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
 		// as new automorphisms are found

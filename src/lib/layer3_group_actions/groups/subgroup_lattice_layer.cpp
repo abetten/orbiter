@@ -278,7 +278,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 				<< " after creating A_on_groups" << endl;
 	}
 
-
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "
@@ -286,7 +286,7 @@ void subgroup_lattice_layer::orbits_under_conjugation(
 				<< " before SG->compute_all_point_orbits_schreier" << endl;
 	}
 	Sch_on_groups = Subgroup_lattice->SG->compute_all_point_orbits_schreier(
-			A_on_groups, verbose_level - 2);
+			A_on_groups, print_interval, verbose_level - 2);
 
 	if (f_v) {
 		cout << "subgroup_lattice_layer::orbits_under_conjugation "

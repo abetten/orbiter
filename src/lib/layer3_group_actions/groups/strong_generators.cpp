@@ -2344,10 +2344,12 @@ void strong_generators::compute_schreier_with_given_action(
 	}
 	Sch = NEW_OBJECT(schreier);
 
+	int print_interval = 10000;
+
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
-	Sch->compute_all_point_orbits(verbose_level - 2);
+	Sch->compute_all_point_orbits(print_interval, verbose_level - 2);
 
 
 	if (f_v) {
@@ -2469,6 +2471,8 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 
 	prefix.assign(Ar->label);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
 				"before Orb->init" << endl;
@@ -2477,6 +2481,7 @@ void strong_generators::orbits_on_set_with_given_action_after_restriction(
 			this,
 			false /* f_load_save */,
 			prefix,
+			print_interval,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_set_with_given_action_after_restriction "
@@ -2543,6 +2548,8 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 
 	prefix.assign(Ar->label);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
 				"before Orb->init" << endl;
@@ -2551,6 +2558,7 @@ void strong_generators::extract_orbit_on_set_with_given_action_after_restriction
 			this,
 			false /* f_load_save */,
 			prefix,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_orbit_on_set_with_given_action_after_restriction "
@@ -2659,6 +2667,8 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 
 	prefix.assign(Ar->label);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
 				"before Orb->init" << endl;
@@ -2667,6 +2677,7 @@ void strong_generators::extract_specific_orbit_on_set_with_given_action_after_re
 			this,
 			false /* f_load_save */,
 			prefix,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "strong_generators::extract_specific_orbit_on_set_with_given_action_after_restriction_by_length "
@@ -2775,13 +2786,16 @@ void strong_generators::orbits_on_points_with_given_action(
 }
 
 schreier *strong_generators::compute_all_point_orbits_schreier(
-		actions::action *A_given, int verbose_level)
+		actions::action *A_given,
+		int print_interval,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;
 
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier " << endl;
+		cout << "strong_generators::compute_all_point_orbits_schreier print_interval = " << print_interval << endl;
 	}
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
@@ -2817,7 +2831,7 @@ schreier *strong_generators::compute_all_point_orbits_schreier(
 		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
-	Sch->compute_all_point_orbits(0 /*verbose_level*/);
+	Sch->compute_all_point_orbits(print_interval, verbose_level - 1);
 	if (f_v) {
 		cout << "strong_generators::compute_all_point_orbits_schreier "
 				"after Sch->compute_all_point_orbits" << endl;
@@ -2843,6 +2857,8 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 	}
 	Sch = NEW_OBJECT(schreier);
 
+	int print_interval = 10000;
+
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
 	Sch->init_generators(*gens, verbose_level - 2);
@@ -2850,7 +2866,7 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"before Sch->compute_point_orbit" << endl;
 	}
-	Sch->compute_point_orbit(pt, 0 /* verbose_level */);
+	Sch->compute_point_orbit(pt, print_interval, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "strong_generators::orbit_of_one_point_schreier "
 				"after Sch->compute_point_orbit" << endl;

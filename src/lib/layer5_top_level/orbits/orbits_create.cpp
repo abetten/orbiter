@@ -115,10 +115,12 @@ void orbits_create::init(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Orbits.orbits_on_points" << endl;
+					"print_interval = " << Descr->print_interval << endl;
 		}
+		cout << "group_theoretic_activity::perform_activity "
+				"before Orbits.orbits_on_points" << endl;
 
-		Orbits.orbits_on_points(Group, Orb, verbose_level);
+		Orbits.orbits_on_points(Group, Orb, Descr->print_interval, verbose_level);
 
 
 
@@ -157,7 +159,7 @@ void orbits_create::init(
 		}
 
 		Orbits.orbits_on_points_from_generators(
-				Group, Gens->V, Orb, verbose_level);
+				Group, Gens->V, Descr->print_interval, Orb, verbose_level);
 
 
 		f_has_Orb = true;

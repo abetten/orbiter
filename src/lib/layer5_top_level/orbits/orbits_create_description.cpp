@@ -81,6 +81,9 @@ orbits_create_description::orbits_create_description()
 	f_override_generators = false;
 	//std::string override_generators_label;
 
+	f_print_interval = false;
+	print_interval = 100000;
+
 }
 
 orbits_create_description::~orbits_create_description()
@@ -267,6 +270,13 @@ int orbits_create_description::read_arguments(
 				cout << "-override_generators " << override_generators_label << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-print_interval") == 0) {
+			f_print_interval = true;
+			print_interval = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-print_interval " << print_interval << endl;
+			}
+		}
 
 
 	#if 0
@@ -358,6 +368,9 @@ void orbits_create_description::print()
 	}
 	if (f_override_generators) {
 		cout << "-override_generators " << override_generators_label << endl;
+	}
+	if (f_print_interval) {
+		cout << "-print_interval " << print_interval << endl;
 	}
 #if 0
 	if (f_recognize) {

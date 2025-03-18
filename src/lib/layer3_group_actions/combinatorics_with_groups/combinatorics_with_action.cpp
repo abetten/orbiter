@@ -486,6 +486,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 	}
 	{
 		groups::schreier *Schreier;
+		int print_interval = 10000;
 
 		Schreier = NEW_OBJECT(groups::schreier);
 		Schreier->init(
@@ -495,7 +496,7 @@ void combinatorics_with_action::refine_decomposition_by_group_orbits_one_side(
 		Schreier->init_generators(
 				*gens->gens /* *generators */,
 				verbose_level - 2);
-		Schreier->compute_all_point_orbits(0 /*verbose_level - 2*/);
+		Schreier->compute_all_point_orbits(print_interval, 0 /*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "combinatorics_with_action::refine_decomposition_by_group_orbits "

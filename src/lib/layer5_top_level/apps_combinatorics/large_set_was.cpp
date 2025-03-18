@@ -113,11 +113,14 @@ void large_set_was::init(
 
 
 	H_orbits = NEW_OBJECT(groups::orbits_on_something);
+	int print_interval = 10000;
+
 
 	H_orbits->init(LS->A_on_designs,
 			H_gens,
 			false /* f_load_save */,
 			Descr->prefix,
+			print_interval,
 			verbose_level);
 
 	// computes all orbits and classifies the orbits by their length

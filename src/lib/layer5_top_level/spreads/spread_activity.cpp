@@ -315,12 +315,15 @@ void spread_activity::report2(
 		prefix1 = Spread_create->label_txt + "_on_gr";
 		prefix2 = Spread_create->label_txt + "_on_spread";
 
+		int print_interval = 10000;
+
 		O1 = NEW_OBJECT(groups::orbits_on_something);
 
 		O1->init(A2,
 				Spread_create->Sg,
 				false /* f_load_save */,
 				prefix1,
+				print_interval,
 				verbose_level);
 
 		ost << "Orbits on grassmannian: ";
@@ -333,6 +336,7 @@ void spread_activity::report2(
 				Spread_create->Sg,
 				false /* f_load_save */,
 				prefix2,
+				print_interval,
 				verbose_level);
 
 

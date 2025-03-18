@@ -3143,11 +3143,13 @@ void wreath_product::orbits_restricted_compute(
 	Sch->initialize_tables();
 	Sch->init_generators(*Gens, verbose_level - 2);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "wreath_product::orbits_restricted_compute "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
-	Sch->compute_all_point_orbits(0 /*verbose_level - 5*/);
+	Sch->compute_all_point_orbits(print_interval, 0 /*verbose_level - 5*/);
 	if (f_v) {
 		cout << "wreath_product::orbits_restricted_compute "
 				"after Sch->compute_all_point_orbits" << endl;

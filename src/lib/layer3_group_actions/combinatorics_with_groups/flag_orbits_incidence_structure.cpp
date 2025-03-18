@@ -137,6 +137,7 @@ void flag_orbits_incidence_structure::init(
 	Orb = NEW_OBJECT(groups::orbits_on_something);
 
 	string prefix;
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
@@ -147,6 +148,7 @@ void flag_orbits_incidence_structure::init(
 			SG,
 			false /* f_load_save */,
 			prefix,
+			print_interval,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "

@@ -459,12 +459,14 @@ void combinatorial_object_with_properties::latex_report(
 #if 1
 	groups::schreier *Sch;
 
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Sch = A_perm->Strong_gens->compute_all_point_orbits_schreier(A_perm,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "combinatorial_object_with_properties::latex_report "

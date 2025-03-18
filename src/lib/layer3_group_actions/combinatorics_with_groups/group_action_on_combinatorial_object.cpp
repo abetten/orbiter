@@ -236,11 +236,14 @@ void group_action_on_combinatorial_object::init(
 		cout << "group_action_on_combinatorial_object::init "
 				"after Sch_points->init_generators" << endl;
 	}
+
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"before Sch_points->compute_all_point_orbits" << endl;
 	}
-	Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
+	Sch_points->compute_all_point_orbits(print_interval, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"after Sch_points->compute_all_point_orbits" << endl;
@@ -257,6 +260,7 @@ void group_action_on_combinatorial_object::init(
 				"computing orbits on lines or blocks" << endl;
 	}
 
+
 	Sch_lines = NEW_OBJECT(groups::schreier);
 	Sch_lines->init(A_on_lines, verbose_level - 2);
 	Sch_lines->initialize_tables();
@@ -266,7 +270,7 @@ void group_action_on_combinatorial_object::init(
 		cout << "group_action_on_combinatorial_object::init "
 				"before Sch_lines->compute_all_point_orbits" << endl;
 	}
-	Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
+	Sch_lines->compute_all_point_orbits(print_interval, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "group_action_on_combinatorial_object::init "
 				"after Sch_lines->compute_all_point_orbits" << endl;

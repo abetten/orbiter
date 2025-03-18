@@ -467,13 +467,14 @@ void set_and_stabilizer::rearrange_by_orbits(
 	groups::schreier *Orb;
 	long int *data2;
 	int f, l, h, cur, j, a, b;
-			
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
 	Orb = Strong_gens->compute_all_point_orbits_schreier(
-			A_on_set, verbose_level);
+			A_on_set, print_interval, verbose_level);
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits "
 				"after compute_all_point_orbits_schreier" << endl;

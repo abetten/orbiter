@@ -277,6 +277,10 @@ public:
 	int f_override_generators;
 	std::string override_generators_label;
 
+	// ToDo: undocumented
+	int f_print_interval;
+	int print_interval;
+
 	orbits_create_description();
 	~orbits_create_description();
 	int read_arguments(
@@ -386,6 +390,7 @@ public:
 			groups::strong_generators *Strong_gens,
 			int f_load_save,
 			std::string &prefix,
+			int print_interval,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 	void orbits_on_points_from_vector_ge(
@@ -393,6 +398,7 @@ public:
 			data_structures_groups::vector_ge *gens,
 			int f_load_save,
 			std::string &prefix,
+			int print_interval,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 	void orbits_on_set_system_from_file(
@@ -409,10 +415,12 @@ public:
 	void orbits_on_points(
 			groups::any_group *AG,
 			groups::orbits_on_something *&Orb,
+			int print_interval,
 			int verbose_level);
 	void orbits_on_points_from_generators(
 			groups::any_group *AG,
 			data_structures_groups::vector_ge *gens,
+			int print_interval,
 			groups::orbits_on_something *&Orb,
 			int verbose_level);
 

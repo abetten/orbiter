@@ -1488,7 +1488,9 @@ int vector_ge::test_if_all_elements_stabilize_a_set(
 
 
 groups::schreier *vector_ge::compute_all_point_orbits_schreier(
-		actions::action *A_given, int verbose_level)
+		actions::action *A_given,
+		int print_interval,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	groups::schreier *Sch;
@@ -1504,6 +1506,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 		cout << endl;
 	}
 
+
 	Sch = NEW_OBJECT(groups::schreier);
 
 	Sch->init(A_given, verbose_level - 2);
@@ -1513,7 +1516,7 @@ groups::schreier *vector_ge::compute_all_point_orbits_schreier(
 		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
-	Sch->compute_all_point_orbits(verbose_level);
+	Sch->compute_all_point_orbits(print_interval, verbose_level);
 	if (f_v) {
 		cout << "vector_ge::compute_all_point_orbits_schreier "
 				"after Sch->compute_all_point_orbits" << endl;

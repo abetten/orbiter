@@ -119,6 +119,7 @@ void blt_set_group_properties::init_orbits_on_points(
 
 	int f_load_save = false;
 	std::string prefix;
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "blt_set_group_properties::init_orbits_on_points "
@@ -129,6 +130,7 @@ void blt_set_group_properties::init_orbits_on_points(
 			Blt_set_with_action->Aut_gens,
 			f_load_save,
 			prefix,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "blt_set_group_properties::init_orbits_on_points "

@@ -514,12 +514,14 @@ public:
 			strong_generators *SG,
 			int f_load_save,
 			std::string &prefix,
+			int print_interval,
 			int verbose_level);
 	void init_from_vector_ge(
 			actions::action *A,
 			data_structures_groups::vector_ge *gens,
 			int f_load_save,
 			std::string &prefix,
+			int print_interval,
 			int verbose_level);
 	void stabilizer_any_point(
 			int pt,
@@ -860,6 +862,7 @@ public:
 	void extend_orbit(
 			int *elt, int verbose_level);
 	void compute_all_point_orbits(
+			int print_interval,
 			int verbose_level);
 #if 0
 	void compute_all_point_orbits_with_preferred_reps(
@@ -874,7 +877,9 @@ public:
 	void compute_all_orbits_on_invariant_subset_lint(
 		int len, long int *subset, int verbose_level);
 	void compute_point_orbit(
-			int pt, int verbose_level);
+			int pt,
+			int print_interval,
+			int verbose_level);
 	void compute_point_orbit_with_limited_depth(
 			int pt, int max_depth, int verbose_level);
 	int sum_up_orbit_lengths();
@@ -2138,7 +2143,8 @@ public:
 		int &nb_orbits, int *&orbit_reps, int verbose_level);
 	schreier *compute_all_point_orbits_schreier(
 			actions::action *A_given,
-		int verbose_level);
+			int print_interval,
+			int verbose_level);
 	schreier *orbit_of_one_point_schreier(
 			actions::action *A_given,
 		int pt, int verbose_level);

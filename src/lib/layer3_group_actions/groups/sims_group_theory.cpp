@@ -483,11 +483,14 @@ void sims::point_stabilizer_stabchain_with_action(
 		}
 	}
 
+
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit" << endl;
 	}
-	O.compute_point_orbit(pt, 0/*verbose_level - 1*/);
+	O.compute_point_orbit(pt, print_interval, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"computing point orbit done" << endl;
@@ -1856,11 +1859,14 @@ void sims::compute_conjugacy_classes(
 
 	Sch->init_generators(*SG->gens, verbose_level - 2);
 
+
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "sims::compute_conjugacy_classes "
 				"Computing conjugacy classes:" << endl;
 	}
-	Sch->compute_all_point_orbits(verbose_level);
+	Sch->compute_all_point_orbits(print_interval, verbose_level);
 
 
 	nb_classes = Sch->nb_orbits;

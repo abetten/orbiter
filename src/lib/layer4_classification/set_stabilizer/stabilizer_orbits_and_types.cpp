@@ -245,8 +245,12 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
 				"before compute_all_point_orbits_schreier" << endl;
 	}
+
+	int print_interval = 10000;
+
 	Schreier = selected_set_stab_gens->compute_all_point_orbits_schreier(
-			CS->SubSt->SubC->A2, 0 /*verbose_level*/);
+			CS->SubSt->SubC->A2, print_interval,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
 				"after compute_all_point_orbits_schreier, "

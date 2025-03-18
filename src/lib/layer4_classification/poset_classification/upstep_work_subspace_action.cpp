@@ -198,6 +198,9 @@ int upstep_work::upstep_subspace_action(
 #endif
 
 	}
+
+	int print_interval = 10000;
+
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"computing initial orbits of hyperplane action:"
@@ -205,6 +208,7 @@ int upstep_work::upstep_subspace_action(
 		}
 	up_orbit.compute_point_orbit(
 			0 /* the initial hyperplane */,
+			print_interval,
 			verbose_level);
 		// computes the orbits of the group H
 		// up_orbit will be extended as soon 

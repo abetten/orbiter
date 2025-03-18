@@ -1020,6 +1020,7 @@ void schreier::extend_orbit(
 }
 
 void schreier::compute_all_point_orbits(
+		int print_interval,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1027,7 +1028,9 @@ void schreier::compute_all_point_orbits(
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits "
-				"verbose_level=" << verbose_level;
+				"verbose_level=" << verbose_level << endl;
+		cout << "schreier::compute_all_point_orbits "
+				"print_interval=" << print_interval << endl;
 		cout << "schreier::compute_all_point_orbits action=";
 		A->print_info();
 		//<< " degree=" << degree << endl;
@@ -1115,7 +1118,7 @@ void schreier::compute_all_point_orbits(
 							"pt_pref=" << pt_pref << endl;
 			pt0 = pt;
 		}
-		compute_point_orbit(pt_pref, verbose_level - 2);
+		compute_point_orbit(pt_pref, print_interval, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
@@ -1173,6 +1176,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	int f_v = (verbose_level >= 1);
 	int *labels, *perm, *perm_inv;
 	other::data_structures::sorting Sorting;
+	int print_interval = 10000;
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits_with_preferred_labels" << endl;
@@ -1225,7 +1229,8 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 					<< pt << " = " << a << " / " << degree << endl;
 		}
 		compute_point_orbit(
-				pt, 0 /*verbose_level - 2*/);
+				pt, print_interval,
+				0 /*verbose_level - 2*/);
 		if (f_v) {
 			cout << "schreier::compute_all_point_orbits_with_"
 					"preferred_labels computing orbit of point "
@@ -1260,6 +1265,9 @@ void schreier::compute_all_orbits_on_invariant_subset(
 		cout << "schreier::compute_all_orbits_on_invariant_subset" << endl;
 		cout << "computing orbits on a set of size " << len << endl;
 	}
+
+	int print_interval = 10000;
+
 	initialize_tables();
 	for (i = 0; i < len; i++) {
 		move_point_here(i, subset[i]);
@@ -1269,7 +1277,7 @@ void schreier::compute_all_orbits_on_invariant_subset(
 		if (f >= len) {
 			break;
 		}
-		compute_point_orbit(orbit[f], 0 /* verbose_level */);
+		compute_point_orbit(orbit[f], print_interval, 0 /* verbose_level */);
 	}
 	if (f > len) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset "
@@ -1295,6 +1303,9 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 		cout << "schreier::compute_all_orbits_on_invariant_subset" << endl;
 		cout << "computing orbits on a set of size " << len << endl;
 	}
+
+	int print_interval = 10000;
+
 	initialize_tables();
 	for (i = 0; i < len; i++) {
 		move_point_here(i, subset[i]);
@@ -1304,7 +1315,7 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 		if (f >= len) {
 			break;
 		}
-		compute_point_orbit(orbit[f], 0 /* verbose_level */);
+		compute_point_orbit(orbit[f], print_interval, 0 /* verbose_level */);
 	}
 	if (f > len) {
 		cout << "schreier::compute_all_orbits_on_invariant_subset "
@@ -1321,7 +1332,9 @@ void schreier::compute_all_orbits_on_invariant_subset_lint(
 }
 
 void schreier::compute_point_orbit(
-		int pt, int verbose_level)
+		int pt,
+		int print_interval,
+		int verbose_level)
 {
 	int pt_loc, cur, cur_pt, total, i, next_pt;
 	int next_pt_loc, total1, cur1;
@@ -1329,7 +1342,7 @@ void schreier::compute_point_orbit(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 
-	int print_interval = 100000;
+	//int print_interval = 100000;
 
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
@@ -1444,7 +1457,8 @@ void schreier::compute_point_orbit(
 						<< orbit_first[nb_orbits] << endl;
 			}
 			if (false) {
-				cout << "schreier::compute_point_orbit cur = " << cur << " total = " << total << endl;
+				cout << "schreier::compute_point_orbit "
+						"cur = " << cur << " total = " << total << endl;
 				//print_orbit(cur, total - 1);
 			}
 		}
@@ -1457,7 +1471,8 @@ void schreier::compute_point_orbit(
 		cur++;
 	}
 	if (f_v) {
-		cout << "schreier::compute_point_orbit orbit is complete, nb_orbits = " << nb_orbits  + 1 << endl;
+		cout << "schreier::compute_point_orbit "
+				"orbit is complete, nb_orbits = " << nb_orbits  + 1 << endl;
 	}
 	orbit_first[nb_orbits + 1] = total;
 	orbit_len[nb_orbits] = total - orbit_first[nb_orbits];
@@ -2154,6 +2169,7 @@ void schreier::orbits_on_invariant_subset_fast(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	int print_interval = 10000;
 	
 	if (f_v) {
 		cout << "schreier::orbits_on_invariant_subset_fast "
@@ -2176,7 +2192,7 @@ void schreier::orbits_on_invariant_subset_fast(
 				cout << "schreier::orbits_on_invariant_subset_fast "
 						"computing orbit no " << nb_orbits << endl;
 			}
-			compute_point_orbit(p, 0);
+			compute_point_orbit(p, print_interval, 0);
 		}
 	}
 #if 0
@@ -2207,6 +2223,7 @@ void schreier::orbits_on_invariant_subset_fast_lint(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "schreier::orbits_on_invariant_subset_fast_lint "
@@ -2229,7 +2246,7 @@ void schreier::orbits_on_invariant_subset_fast_lint(
 				cout << "schreier::orbits_on_invariant_subset_fast_lint "
 						"computing orbit no " << nb_orbits << endl;
 			}
-			compute_point_orbit(p, 0);
+			compute_point_orbit(p, print_interval, 0);
 		}
 	}
 #if 0
@@ -2259,8 +2276,9 @@ void schreier::orbits_on_invariant_subset(
 	int *&orbit_perm, int *&orbit_perm_inv)
 {
 	int i, j, a, pos;
+	int print_interval = 10000;
 	
-	compute_all_point_orbits(0);
+	compute_all_point_orbits(print_interval, 0);
 	nb_orbits_on_subset = 0;
 	orbit_perm = NEW_int(nb_orbits);
 	orbit_perm_inv = NEW_int(nb_orbits);

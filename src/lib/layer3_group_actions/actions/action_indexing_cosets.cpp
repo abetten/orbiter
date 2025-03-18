@@ -105,7 +105,7 @@ void action::coset_unrank(
 #endif
 		Group_element->element_one(Elt, 0);
 		goto done;
-		}
+	}
 	base_pt = base_i(base_idx);
 	if (f_v) {
 		cout << "base_idx = " << base_idx << endl;
@@ -142,8 +142,12 @@ void action::coset_unrank(
 		}
 
 	int nb_U_orbits_on_subset;
+
+	{
+	int print_interval = 10000;
 	
-	G_orb.compute_point_orbit(base_pt, 0 /* verbose_level - 2*/);
+	G_orb.compute_point_orbit(base_pt, print_interval, 0 /* verbose_level - 2*/);
+	}
 	if (f_v) {
 		cout << "orbit of base_pt under G has length " << G_orb.orbit_len[0] << endl;
 		}
@@ -221,13 +225,14 @@ void action::coset_unrank(
 				}
 			groups::sims *Gk = NULL;
 			groups::sims *Uk = NULL;
+			int print_interval = 10000;
 
 			G_orb.initialize_tables();
 			G_orb.init_generators(G->gens, verbose_level - 2);
 				// this is redundant as the generators for G are already in G_orb
 				// in fact, it might be a memory leak
 	
-			G_orb.compute_point_orbit(elt_k, 0 /* verbose_level - 2*/);
+			G_orb.compute_point_orbit(elt_k, print_interval, 0 /* verbose_level - 2*/);
 				// we recompute the orbit, but this time with elt_k as 
 				// orbit representative, so that we can compute 
 				// the stabilizer of elt_k in G
@@ -408,8 +413,12 @@ long int action::coset_rank(
 		}
 
 	//int nb_U_orbits_on_subset;
+
+	{
+	int print_interval = 10000;
 	
-	G_orb.compute_point_orbit(base_pt, 0 /* verbose_level - 2*/);
+	G_orb.compute_point_orbit(base_pt, print_interval, 0 /* verbose_level - 2*/);
+	}
 	if (f_v) {
 		cout << "orbit of base_pt under G has length " << G_orb.orbit_len[0] << endl;
 		cout << "G-orbits: ";
@@ -513,13 +522,16 @@ long int action::coset_rank(
 		groups::sims *Gk = NULL;
 		groups::sims *Uk = NULL;
 
+		int print_interval = 10000;
+
 	G_orb.initialize_tables();
 	G_orb.init_generators(G->gens, verbose_level - 2);
-	G_orb.compute_point_orbit(elt_k, 0 /* verbose_level - 2*/);
+	G_orb.compute_point_orbit(elt_k, print_interval,
+			0 /* verbose_level - 2*/);
 
 	if (f_v) {
 		cout << "orbit of elt_k under G has length " << G_orb.orbit_len[0] << endl;
-		}
+	}
 	G_orb.point_stabilizer(this, G_order, Gk, 0, 0/*verbose_level - 2*/);
 			
 	//D.integral_division_by_int(U_order, len, Uk_order, rem_int);

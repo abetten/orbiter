@@ -621,9 +621,12 @@ void packing_was::compute_H_orbits_on_points(
 				"group=" << P->T->A->label << " : " << P->T->A->label_tex << endl;
 	}
 
+	int print_interval = 10000;
+
 	Point_orbits_under_H->init(
 			P->T->A, H_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_H,
+			print_interval,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -655,6 +658,8 @@ void packing_was::compute_N_orbits_on_points(
 
 	Point_orbits_under_N = NEW_OBJECT(groups::orbits_on_something);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_points "
 				"prefix_point_orbits_under_N=" << prefix_point_orbits_under_N << endl;
@@ -662,6 +667,7 @@ void packing_was::compute_N_orbits_on_points(
 
 	Point_orbits_under_N->init(P->T->A, N_gens, true /*f_load_save*/,
 			prefix_point_orbits_under_N,
+			print_interval,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -704,10 +710,13 @@ void packing_was::compute_H_orbits_on_lines(
 				"group = " << P->T->A2->label << " : " << P->T->A2->label_tex << endl;
 	}
 
+	int print_interval = 10000;
+
 	Line_orbits_under_H->init(
 			P->T->A2, H_gens,
 			true /*f_load_save*/,
 			prefix_line_orbits_under_H,
+			print_interval,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -739,6 +748,8 @@ void packing_was::compute_N_orbits_on_lines(
 
 	Line_orbits_under_N = NEW_OBJECT(groups::orbits_on_something);
 
+	int print_interval = 10000;
+
 	if (f_v) {
 		cout << "packing_was::compute_N_orbits_on_lines "
 				"prefix_line_orbits_under_N=" << prefix_line_orbits_under_N << endl;
@@ -746,6 +757,7 @@ void packing_was::compute_N_orbits_on_lines(
 
 	Line_orbits_under_N->init(P->T->A2, N_gens, true /*f_load_save*/,
 			prefix_line_orbits_under_N,
+			print_interval,
 			verbose_level - 2);
 
 	if (f_v) {
@@ -812,6 +824,7 @@ void packing_was::compute_H_orbits_on_spreads(
 	Spread_orbits_under_H = NEW_OBJECT(groups::orbits_on_something);
 
 
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads "
@@ -820,6 +833,7 @@ void packing_was::compute_H_orbits_on_spreads(
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
 			H_gens,
 			true /*f_load_save*/, prefix_spread_orbits,
+			print_interval,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_spreads "
@@ -1140,7 +1154,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 
 
 
-
+	int print_interval = 10000;
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
@@ -1150,6 +1164,7 @@ void packing_was::compute_H_orbits_on_reduced_spreads(
 			A_on_reduced_spreads,
 			H_gens, true /*f_load_save*/,
 			prefix_reduced_spread_orbits,
+			print_interval,
 			verbose_level);
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "

@@ -217,8 +217,11 @@ void semifield_downstep_node::init(
 				cout << "semifield_downstep_node::init "
 						"before sg->compute_all_point_orbits_schreier" << endl;
 				}
+
+			int print_interval = 10000;
+
 			Sch = sg->compute_all_point_orbits_schreier(
-					A_on_cosets, verbose_level);
+					A_on_cosets, print_interval, verbose_level);
 			cout << "Writing schreier data structure to "
 					"file " << fname << endl;
 			Sch->write_file_binary(fname, verbose_level);

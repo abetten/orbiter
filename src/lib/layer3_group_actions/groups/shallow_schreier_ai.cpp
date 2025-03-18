@@ -34,11 +34,13 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 
 
 
+	int print_interval = 10000;
+
 	// Create a new schreier forest with the same generators
 	groups::schreier* S = NEW_OBJECT(groups::schreier);
 	S->init(sch.A, verbose_level - 2);
 	S->init_generators_recycle_images(*gens2, sch.images, verbose_level - 2);
-	S->compute_all_point_orbits(0);
+	S->compute_all_point_orbits(print_interval, 0);
 
 
 
@@ -92,7 +94,9 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 				random_generator_idx);
 
 
-		S->compute_all_point_orbits(0 /*verbose_level*/);
+		int print_interval = 10000;
+
+		S->compute_all_point_orbits(print_interval, 0 /*verbose_level*/);
 
 
 
@@ -117,9 +121,10 @@ void shallow_schreier_ai::generate_shallow_tree(groups::schreier& sch, int verbo
 	}
 
 
+
 	sch.init(sch.A, verbose_level - 2);
 	sch.init_generators_recycle_images(S->gens, S->images, verbose_level - 2);
-	sch.compute_all_point_orbits(verbose_level);
+	sch.compute_all_point_orbits(print_interval, verbose_level);
 
 
 

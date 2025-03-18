@@ -585,6 +585,8 @@ public:
 	groups::schreier *Orbits_on_trihedral_pairs;
 	groups::schreier *Orbits_on_points_not_on_lines;
 
+	int print_interval;
+
 
 
 	surface_object_with_group();

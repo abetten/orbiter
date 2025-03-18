@@ -808,7 +808,9 @@ public:
 		long int *set, int sz,
 		int verbose_level);
 	groups::schreier *compute_all_point_orbits_schreier(
-			actions::action *A_given, int verbose_level);
+			actions::action *A_given,
+			int print_interval,
+			int verbose_level);
 	void reverse_isomorphism_exterior_square(
 			int verbose_level);
 	void matrix_representation(
