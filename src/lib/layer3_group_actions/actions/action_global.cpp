@@ -6463,6 +6463,7 @@ void action_global::report(
 		std::string &label_tex,
 		actions::action *A,
 		groups::strong_generators *Strong_gens,
+		groups::sims *Sims,
 		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
 {
@@ -6474,13 +6475,14 @@ void action_global::report(
 		cout << "action_global::report" << endl;
 	}
 
-	groups::sims *H;
+	//groups::sims *H;
 
 	if (f_v) {
 		cout << "action_global::report "
 				"creating report for group " << label << endl;
 	}
 
+#if 0
 	//G = initial_strong_gens->create_sims(verbose_level);
 	if (f_v) {
 		cout << "action_global::report "
@@ -6491,15 +6493,16 @@ void action_global::report(
 		cout << "action_global::report "
 				"after Strong_gens->create_sims" << endl;
 	}
+#endif
 
 	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_lint() << endl;
+	cout << "group order H = " << Sims->group_order_lint() << endl;
 
 	int *Elt;
 	algebra::ring_theory::longinteger_object go;
 
 	Elt = NEW_int(A->elt_size_in_int);
-	H->group_order(go);
+	Sims->group_order(go);
 
 
 	{
@@ -6518,7 +6521,7 @@ void action_global::report(
 		ost << "\\section*{The Group $" << label_tex << "$}" << endl;
 
 
-		H->group_order(go);
+		Sims->group_order(go);
 
 		ost << "\\noindent The order of the group $"
 				<< label_tex
@@ -6600,7 +6603,7 @@ void action_global::report(
 		}
 
 		A->report(
-				ost, true /*f_sims*/, H,
+				ost, true /*f_sims*/, Sims,
 				true /* f_strong_gens */, Strong_gens,
 				LG_Draw_options,
 				verbose_level - 2);
@@ -6646,7 +6649,7 @@ void action_global::report(
 		//L.foot(fp);
 	}
 
-	FREE_OBJECT(H)
+	//FREE_OBJECT(H)
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "action_global::report creating report for group " << label << " done" << endl;
@@ -7286,6 +7289,59 @@ void action_global::report_induced_action_on_set_and_kernel(
 	}
 }
 
+
+
+void action_global::products_of_pairs(
+		data_structures_groups::vector_ge *Elements,
+		data_structures_groups::vector_ge *&Products,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::order_of_products_of_pairs" << endl;
+	}
+
+
+
+
+	int nb_elements;
+
+	nb_elements = Elements->len;
+
+
+	Products = NEW_OBJECT(data_structures_groups::vector_ge);
+
+	Products->init(Elements->A, verbose_level);
+
+	Products->allocate(nb_elements * nb_elements, 0 /* verbose_level */);
+
+
+	int i, j;
+
+
+
+	for (i = 0; i < nb_elements; i++) {
+
+
+		for (j = 0; j < nb_elements; j++) {
+
+
+			Elements->A->Group_element->element_mult(
+					Elements->ith(i),
+					Elements->ith(j),
+					Products->ith(i * nb_elements + j), 0);
+
+
+		}
+	}
+
+
+
+	if (f_v) {
+		cout << "action_global::order_of_products_of_pairs done" << endl;
+	}
+}
 
 
 

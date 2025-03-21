@@ -296,6 +296,10 @@ void conjugacy_class_of_elements::single_class_data(
 	s = Class_size.stringify();
 	data.push_back(s);
 
+	if (f_v) {
+		cout << "conjugacy_class_of_elements::single_class_data before centralizer_order.stringify" << endl;
+	}
+
 	s = centralizer_order.stringify();
 	data.push_back(s);
 
@@ -303,18 +307,30 @@ void conjugacy_class_of_elements::single_class_data(
 	data.push_back(s);
 
 
+#if 0
 	int *Elt;
 
 	Elt = nice_gens->ith(0);
 	//ost << "Representing element is" << endl;
 
 
+
 	string options;
 
 	options = "";
 
+	if (f_v) {
+		cout << "conjugacy_class_of_elements::single_class_data before element_stringify" << endl;
+	}
+
 	s = "$" + Class_data->A->Group_element->element_stringify(Elt, options) + "$";
 	data.push_back(s);
+
+
+	if (f_v) {
+		cout << "conjugacy_class_of_elements::single_class_data after element_stringify" << endl;
+	}
+#endif
 
 
 

@@ -29,14 +29,618 @@ packings_global::~packings_global()
 }
 
 
+void packings_global::orbits_under_conjugation(
+		long int *the_set, int set_size,
+		groups::sims *S,
+		groups::strong_generators *SG,
+		data_structures_groups::vector_ge *Transporter,
+		int verbose_level)
+// this is related to Betten, Topalova, Zhelezova 2021,
+// packings in PG(3,4) invariant under an elementary group of order 4
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation" << endl;
+	}
+	actions::action *A_conj;
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"before create_induced_action_by_conjugation" << endl;
+	}
+	A_conj = S->A->Induced_action->create_induced_action_by_conjugation(S,
+			false /* f_ownership */, false /* f_basis */, S,
+			verbose_level);
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"after create_induced_action_by_conjugation" << endl;
+	}
+
+	actions::action *A_conj_restricted;
+	std::string label_of_set;
+	std::string label_of_set_tex;
+
+
+	label_of_set.assign("_on_group");
+	label_of_set_tex.assign("\\_on\\_group");
+
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"before A_conj->restricted_action" << endl;
+	}
+
+	A_conj_restricted = A_conj->Induced_action->restricted_action(
+			the_set, set_size,
+			label_of_set, label_of_set_tex,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"after A_conj->restricted_action" << endl;
+	}
+
+
+
+	groups::schreier Classes;
+	Classes.init(A_conj_restricted, verbose_level - 2);
+	Classes.init_generators(*SG->gens, verbose_level - 2);
+
+	int print_interval = 10000;
+
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"before Classes.compute_all_point_orbits" << endl;
+	}
+	Classes.compute_all_point_orbits(print_interval, 1 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"after Classes.compute_all_point_orbits" << endl;
+		cout << "found " << Classes.nb_orbits << " conjugacy classes" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"before create_subgroups" << endl;
+	}
+	create_subgroups(
+			SG,
+			the_set, set_size, S, A_conj,
+			&Classes,
+			Transporter,
+			verbose_level);
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation "
+				"after create_subgroups" << endl;
+	}
+
+	FREE_OBJECT(A_conj);
+
+	if (f_v) {
+		cout << "packings_global::orbits_under_conjugation done" << endl;
+	}
+}
+
+void packings_global::create_subgroups(
+		groups::strong_generators *SG,
+		long int *the_set, int set_size,
+		groups::sims *S,
+		actions::action *A_conj,
+		groups::schreier *Classes,
+		data_structures_groups::vector_ge *Transporter,
+		int verbose_level)
+// this is related to Betten, Topalova, Zhelezova 2021,
+// packings in PG(3,4) invariant under an elementary abelian group of order 4
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packings_global::create_subgroups" << endl;
+	}
+
+	int i, j;
+	int f, l, rep;
+	long int *the_set_sorted;
+	long int *position;
+	other::data_structures::sorting Sorting;
+	algebra::ring_theory::longinteger_object go;
+
+	SG->group_order(go);
+	if (f_v) {
+		cout << "The group has order " << go << endl;
+	}
+
+	the_set_sorted = NEW_lint(set_size);
+	position = NEW_lint(set_size);
+	Lint_vec_copy(the_set, the_set_sorted, set_size);
+	//Sorting.lint_vec_heapsort(the_set_sorted, set_size);
+	for (i = 0; i < set_size; i++) {
+		position[i] = i;
+	}
+	Sorting.lint_vec_heapsort_with_log(the_set_sorted, position, set_size);
+
+
+	cout << "There are " << Classes->nb_orbits << " orbits "
+			"on the given set of elements by conjugation" << endl;
+	for (i = 0; i < Classes->nb_orbits; i++) {
+
+		f = Classes->orbit_first[i];
+		l = Classes->orbit_len[i];
+		rep = Classes->orbit[f];
+		if (f_v) {
+			cout << "Orbit " << i << " has length " << l
+					<< " representative is " << rep << " = " << the_set[rep] << endl;
+		}
+	}
+
+	long int rk0;
+	long int rk1;
+	long int rk2;
+	int idx;
+	int *Elt0;
+	int *Elt1;
+	int *Elt2;
+	int nb_flag_orbits;
+	long int *Flags;
+	groups::strong_generators **Flag_stab;
+	int *SO;
+	int *SOL;
+	int nb_reject;
+
+	Elt0 = NEW_int(S->A->elt_size_in_int);
+	Elt1 = NEW_int(S->A->elt_size_in_int);
+	Elt2 = NEW_int(S->A->elt_size_in_int);
+
+	f = Classes->orbit_first[0];
+	l = Classes->orbit_len[0];
+	if (l != 1) {
+		cout << "packings_global::create_subgroups l != 1" << endl;
+		exit(1);
+	}
+	rep = Classes->orbit[f];
+	rk0 = the_set[rep];
+
+	S->element_unrank_lint(rk0, Elt0);
+
+	nb_flag_orbits = 0;
+	Flags = NEW_lint(Classes->nb_orbits * 3);
+	Flag_stab = new groups::pstrong_generators [Classes->nb_orbits];
+	SO = NEW_int(Classes->nb_orbits);
+	SOL = NEW_int(Classes->nb_orbits);
+
+	nb_reject = 0;
+
+	for (j = 1; j < Classes->nb_orbits; j++) {
+
+
+
+		f = Classes->orbit_first[j];
+		l = Classes->orbit_len[j];
+		rep = Classes->orbit[f];
+		rk1 = the_set[rep];
+		rk2 = S->mult_by_rank(rk0, rk1, 0 /*verbose_level*/);
+
+		if (Sorting.lint_vec_search(
+				the_set_sorted, set_size, rk2, idx,
+				0 /*verbose_level*/)) {
+			cout << "flag orbit " << nb_flag_orbits << " : "
+					<< j << " l=" << l << " : "
+					<< rk0 << "," << rk1 << "," << rk2 << endl;
+
+			S->element_unrank_lint(rk1, Elt1);
+			S->element_unrank_lint(rk2, Elt2);
+			S->A->Group_element->element_print_quick(Elt0, cout);
+			S->A->Group_element->element_print_quick(Elt1, cout);
+			S->A->Group_element->element_print_quick(Elt2, cout);
+
+			Flags[nb_flag_orbits * 3 + 0] = rk0;
+			Flags[nb_flag_orbits * 3 + 1] = rk1;
+			Flags[nb_flag_orbits * 3 + 2] = rk2;
+			SO[nb_flag_orbits] = j;
+			SOL[nb_flag_orbits] = l;
+
+			if (f_v) {
+				cout << "packings_global::create_subgroups "
+						"before Classes->stabilizer_orbit_rep" << endl;
+			}
+			Flag_stab[nb_flag_orbits] = Classes->stabilizer_orbit_rep(
+					S->A,
+					go,
+					j /* orbit_idx */, 0 /*verbose_level*/);
+			if (f_v) {
+				cout << "packings_global::create_subgroups "
+						"after Classes->stabilizer_orbit_rep" << endl;
+			}
+
+
+			nb_flag_orbits++;
+		}
+		else {
+			cout << "Class " << j << " is rejected because the third element "
+					"does not belong to the same class." << endl;
+			nb_reject++;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "We found " << nb_flag_orbits << " flag orbits, with "
+				<< nb_reject << " may rejected" << endl;
+
+		int h;
+
+		for (h = 0; h < nb_flag_orbits; h++) {
+			algebra::ring_theory::longinteger_object go1;
+
+			cout << "flag orbit " << h << " / " << nb_flag_orbits << ":" << endl;
+			Flag_stab[h]->group_order(go1);
+			rk0 = Flags[h * 3 + 0];
+			rk1 = Flags[h * 3 + 1];
+			rk2 = Flags[h * 3 + 2];
+			S->element_unrank_lint(rk0, Elt0);
+			S->element_unrank_lint(rk1, Elt1);
+			S->element_unrank_lint(rk2, Elt2);
+			cout << h << " : " << SO[h] << " : " << SOL[h]
+				<< " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1
+				<< endl;
+			cout << "The subgroup consists of the following three "
+					"non-identity elements:" << endl;
+			S->A->Group_element->element_print_quick(Elt0, cout);
+			S->A->Group_element->element_print_quick(Elt1, cout);
+			S->A->Group_element->element_print_quick(Elt2, cout);
+
+			Flag_stab[h]->print_generators_tex(cout);
+
+		}
+	}
+
+	int flag;
+	int nb_iso;
+	int *upstep_transversal_size;
+	int *iso_type_of_flag_orbit;
+	int *f_is_definition;
+	int *flag_orbit_of_iso_type;
+	int *f_fused;
+	groups::strong_generators **Aut;
+	long int cur_flag[3];
+	long int cur_flag_mapped1[3];
+	int h, pt;
+
+	upstep_transversal_size = NEW_int(nb_flag_orbits);
+	iso_type_of_flag_orbit = NEW_int(nb_flag_orbits);
+	flag_orbit_of_iso_type = NEW_int(nb_flag_orbits);
+	f_is_definition = NEW_int(nb_flag_orbits);
+	f_fused = NEW_int(nb_flag_orbits);
+	Int_vec_zero(f_is_definition, nb_flag_orbits);
+	Int_vec_zero(f_fused, nb_flag_orbits);
+
+	Aut = new groups::pstrong_generators [nb_flag_orbits];
+
+
+	nb_iso = 0;
+	for (flag = 0; flag < nb_flag_orbits; flag++) {
+
+		if (f_v) {
+			cout << "upstep: considering flag orbit " << flag << " / " << nb_flag_orbits
+					<< " with a flag stabilizer of order "
+					<< Flag_stab[flag]->group_order_as_lint() << endl;
+		}
+
+		if (f_fused[flag]) {
+			if (f_v) {
+				cout << "upstep: flag orbit " << flag << " / " << nb_flag_orbits
+						<< " has been fused, skipping" << endl;
+			}
+			continue;
+		}
+		f_is_definition[flag] = true;
+		iso_type_of_flag_orbit[flag] = nb_iso;
+		flag_orbit_of_iso_type[nb_iso] = flag;
+		upstep_transversal_size[nb_iso] = 1;
+
+		data_structures_groups::vector_ge *transversal;
+
+		transversal = NEW_OBJECT(data_structures_groups::vector_ge);
+		transversal->init(S->A, 0);
+		transversal->allocate(6, 0);
+		for (h = 0; h < 6; h++) {
+			S->A->Group_element->element_one(transversal->ith(h), 0);
+		}
+
+		for (h = 1; h < 6; h++) {
+			if (h == 1) {
+				cur_flag[0] = Flags[flag * 3 + 0];
+				cur_flag[1] = Flags[flag * 3 + 2];
+				cur_flag[2] = Flags[flag * 3 + 1];
+			}
+			else if (h == 2) {
+				cur_flag[0] = Flags[flag * 3 + 1];
+				cur_flag[1] = Flags[flag * 3 + 0];
+				cur_flag[2] = Flags[flag * 3 + 2];
+			}
+			else if (h == 3) {
+				cur_flag[0] = Flags[flag * 3 + 1];
+				cur_flag[1] = Flags[flag * 3 + 2];
+				cur_flag[2] = Flags[flag * 3 + 0];
+			}
+			else if (h == 4) {
+				cur_flag[0] = Flags[flag * 3 + 2];
+				cur_flag[1] = Flags[flag * 3 + 0];
+				cur_flag[2] = Flags[flag * 3 + 1];
+			}
+			else if (h == 5) {
+				cur_flag[0] = Flags[flag * 3 + 2];
+				cur_flag[1] = Flags[flag * 3 + 1];
+				cur_flag[2] = Flags[flag * 3 + 0];
+			}
+
+			// move cur_flag[0] to the_set[0] using the inverse of Transporter
+
+			if (!Sorting.lint_vec_search(the_set_sorted,
+					set_size, cur_flag[0], idx, 0 /*verbose_level*/)) {
+				cout << "cannot find cur_flag[0] in the_set_sorted" << endl;
+				exit(1);
+			}
+			pt = position[idx];
+			S->A->Group_element->element_invert(Transporter->ith(pt), Elt0, 0);
+			for (int u = 0; u < 3; u++) {
+				cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(
+						cur_flag[u], Elt0, 0);
+			}
+			if (cur_flag_mapped1[0] != rk0) {
+				cout << "cur_flag_mapped1[u] != rk0" << endl;
+				exit(1);
+			}
+
+
+
+			if (!Sorting.lint_vec_search(
+					the_set_sorted,
+					set_size, cur_flag_mapped1[1], idx,
+					0 /*verbose_level*/)) {
+				cout << "cannot find cur_flag[1] in the_set_sorted" << endl;
+				exit(1);
+			}
+			pt = position[idx];
+			j = Classes->orbit_number(pt);
+
+
+			if (j == SO[flag]) {
+				cout << "flag " << flag << " coset " << h << ", found an automorphism" << endl;
+
+				int orbit_idx;
+
+				Classes->transporter_from_point_to_orbit_rep(
+						pt,
+						orbit_idx, Elt1, verbose_level);
+
+				S->A->Group_element->element_mult(Elt0, Elt1, Elt2, 0);
+				S->A->Group_element->element_print_quick(Elt2, cout);
+
+				for (int u = 0; u < 3; u++) {
+					cur_flag_mapped1[u] = A_conj->Group_element->element_image_of(
+							cur_flag[u], Elt2, 0);
+				}
+				cout << "which maps as follows:" << endl;
+				for (int u = 0; u < 3; u++) {
+					cout << cur_flag[u] << " -> " << cur_flag_mapped1[u] << endl;
+				}
+
+				S->A->Group_element->element_move(
+						Elt2, transversal->ith(
+						upstep_transversal_size[nb_iso]), 0);
+
+				upstep_transversal_size[nb_iso]++;
+			}
+			else {
+				if (!Sorting.int_vec_search(SO, nb_flag_orbits, j, idx)) {
+					cout << "cannot find j in SO" << endl;
+					exit(1);
+				}
+				cout << "flag " << flag << " coset " << h
+						<< ", fusing with flag " << idx << endl;
+				f_fused[idx] = true;
+			}
+
+		}
+
+		groups::strong_generators *aut;
+
+		aut = NEW_OBJECT(groups::strong_generators);
+
+		if (f_v) {
+			cout << "flag " << flag << " stab order = "
+					<< Flag_stab[flag]->group_order_as_lint()
+					<< " upstep ransversal length = "
+					<< upstep_transversal_size[nb_iso] << endl;
+			cout << "before aut->init_group_extension" << endl;
+		}
+		aut->init(S->A);
+		aut->init_group_extension(Flag_stab[flag],
+				transversal, upstep_transversal_size[nb_iso] /* index */,
+				verbose_level);
+
+		cout << "created a stabilizer of order " << aut->group_order_as_lint() << endl;
+
+		Aut[nb_iso] = aut;
+
+		nb_iso++;
+	}
+
+	cout << "We found " << nb_iso << " conjugacy classes of subgroups" << endl;
+	for (i = 0; i < nb_iso; i++) {
+		flag = flag_orbit_of_iso_type[i];
+		rk0 = Flags[flag * 3 + 0];
+		rk1 = Flags[flag * 3 + 1];
+		rk2 = Flags[flag * 3 + 2];
+		cout << i << " : " << flag << " : " <<  " : " << SO[flag] << " l=" << SOL[flag]
+				<< " : " << rk0 << "," << rk1 << "," << rk2 << " : "
+				<< upstep_transversal_size[i] << " : "
+				<< Aut[i]->group_order_as_lint() << endl;
+
+		S->element_unrank_lint(rk0, Elt0);
+		S->element_unrank_lint(rk1, Elt1);
+		S->element_unrank_lint(rk2, Elt2);
+
+		cout << "The subgroup consists of the following three "
+				"non-identity elements:" << endl;
+		S->A->Group_element->element_print_quick(Elt0, cout);
+		S->A->Group_element->element_print_quick(Elt1, cout);
+		S->A->Group_element->element_print_quick(Elt2, cout);
+
+		Aut[i]->print_generators_tex(cout);
+
+	}
+
+
+	{
+		string fname;
+		string title, author, extra_praeamble;
+
+		fname = "subgroups_of_order_4.tex";
+		title = "Subgroups of order 4";
+
+
+		{
+			ofstream ost(fname);
+			other::l1_interfaces::latex_interface L;
+
+			L.head(ost,
+					false /* f_book*/,
+					true /* f_title */,
+					title, author,
+					false /* f_toc */,
+					false /* f_landscape */,
+					true /* f_12pt */,
+					true /* f_enlarged_page */,
+					true /* f_pagenumbers */,
+					extra_praeamble /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "packings_global::create_subgroups "
+						"before report" << endl;
+			}
+#if 1
+			int h;
+			ost << "There are " << nb_flag_orbits << " flag orbits:\\\\" << endl;
+			for (h = 0; h < nb_flag_orbits; h++) {
+				algebra::ring_theory::longinteger_object go1;
+
+				ost << "Flag orbit " << h << " / " << nb_flag_orbits << ":\\\\" << endl;
+				Flag_stab[h]->group_order(go1);
+				rk0 = Flags[h * 3 + 0];
+				rk1 = Flags[h * 3 + 1];
+				rk2 = Flags[h * 3 + 2];
+				S->element_unrank_lint(rk0, Elt0);
+				S->element_unrank_lint(rk1, Elt1);
+				S->element_unrank_lint(rk2, Elt2);
+				cout << h << " : " << SO[h] << " : " << SOL[h]
+					<< " : (" << rk0 << "," << rk1 << "," << rk2 << ") : " << go1 << endl;
+				ost << "The subgroup consists of the following three "
+						"non-identity elements:\\\\" << endl;
+				ost << "$$" << endl;
+				S->A->Group_element->element_print_latex(Elt0, ost);
+				S->A->Group_element->element_print_latex(Elt1, ost);
+				S->A->Group_element->element_print_latex(Elt2, ost);
+				ost << "$$" << endl;
+				ost << "The flag stabilizer is the following group:\\\\" << endl;
+				Flag_stab[h]->print_generators_tex(ost);
+
+			}
+
+			ost << "\\bigskip" << endl;
+#endif
+
+			ost << "We found " << nb_iso
+					<< " conjugacy classes of subgroups\\\\" << endl;
+			ost << "Subgroup  : Order of normalizer\\\\" << endl;
+			for (i = 0; i < nb_iso; i++) {
+				ost << i << " : " << Aut[i]->group_order_as_lint() << "\\\\" << endl;
+			}
+
+			ost << "\\bigskip" << endl;
+
+			for (i = 0; i < nb_iso; i++) {
+				ost << "Subgroup " << i << " / " << nb_iso << ":\\\\" << endl;
+				flag = flag_orbit_of_iso_type[i];
+				rk0 = Flags[flag * 3 + 0];
+				rk1 = Flags[flag * 3 + 1];
+				rk2 = Flags[flag * 3 + 2];
+				cout << i << " : " << flag << " : "
+						<<  " : " << SO[flag] << " l=" << SOL[flag]
+						<< " : " << rk0 << "," << rk1 << "," << rk2 << " : "
+						<< upstep_transversal_size[i] << " : "
+						<< Aut[i]->group_order_as_lint() << endl;
+
+				S->element_unrank_lint(rk0, Elt0);
+				S->element_unrank_lint(rk1, Elt1);
+				S->element_unrank_lint(rk2, Elt2);
+
+				ost << "The subgroup consists of the following three "
+						"non-identity elements:\\\\" << endl;
+				ost << "$$" << endl;
+				S->A->Group_element->element_print_latex(Elt0, ost);
+				S->A->Group_element->element_print_latex(Elt1, ost);
+				S->A->Group_element->element_print_latex(Elt2, ost);
+				ost << "$$" << endl;
+				S->A->Group_element->element_print_for_make_element(Elt0, ost);
+				ost << "\\\\" << endl;
+				S->A->Group_element->element_print_for_make_element(Elt1, ost);
+				ost << "\\\\" << endl;
+				S->A->Group_element->element_print_for_make_element(Elt2, ost);
+				ost << "\\\\" << endl;
+				ost << "The normalizer is the following group:\\\\" << endl;
+				Aut[i]->print_generators_tex(ost);
+
+				ost << "\\bigskip" << endl;
+
+			}
+
+
+			if (f_v) {
+				cout << "packings_global::create_subgroups after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		other::orbiter_kernel_system::file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	FREE_int(upstep_transversal_size);
+	FREE_int(iso_type_of_flag_orbit);
+	FREE_int(f_is_definition);
+	FREE_int(f_fused);
+	FREE_int(flag_orbit_of_iso_type);
+	FREE_lint(Flags);
+	FREE_int(SO);
+	FREE_int(Elt0);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_lint(the_set_sorted);
+	FREE_lint(position);
+	if (f_v) {
+		cout << "packings_global::create_subgroups done" << endl;
+	}
+}
+
+
+
+
+
+#if 0
 void packings_global::merge_packings(
 		std::string *fnames, int nb_files,
 		std::string &file_of_spreads,
 		combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {
-#if 0
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 
@@ -330,7 +934,6 @@ void packings_global::merge_packings(
 	if (f_v) {
 		cout << "packings_global::merge_packings done" << endl;
 	}
-#endif
 }
 
 void packings_global::select_packings(
@@ -342,7 +945,6 @@ void packings_global::select_packings(
 		combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 		int verbose_level)
 {
-#if 0
 	int f_v = (verbose_level >= 1);
 
 
@@ -727,7 +1329,6 @@ void packings_global::select_packings(
 	if (f_v) {
 		cout << "packings_global::select_packings done" << endl;
 	}
-#endif
 }
 
 
@@ -747,7 +1348,6 @@ void packings_global::select_packings_self_dual(
 	}
 
 
-#if 0
 	int nb_accept = 0;
 	file_io Fio;
 
@@ -1437,9 +2037,9 @@ void packings_global::select_packings_self_dual(
 		cout << "packings_global::select_packings_self_dual "
 				"done, nb_self_dual = " << nb_self_dual << endl;
 	}
-#endif
 
 }
+#endif
 
 
 

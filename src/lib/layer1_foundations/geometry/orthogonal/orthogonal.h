@@ -598,6 +598,8 @@ public:
 
 
 	// hyperbolic_pair_rank_unrank.cpp
+	std::string stringify_point(
+			long int rk, int verbose_level);
 	void unrank_point(
 			int *v,
 		int stride, long int rk, int verbose_level);

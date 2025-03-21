@@ -74,10 +74,12 @@ static void wreath_product_group_element_print(
 	void *elt, std::ostream &ost);
 static void wreath_product_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
+#if 0
 static void wreath_product_group_element_print_for_make_element(
 	action &A, void *elt, std::ostream &ost);
 static void wreath_product_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
+#endif
 static void wreath_product_group_element_print_quick(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -100,11 +102,15 @@ static void wreath_product_group_unrank_point(
 		action &A, long int rk, int *v, int verbose_level);
 static long int wreath_product_group_rank_point(
 		action &A, int *v, int verbose_level);
+static std::string wreath_product_group_stringify_point(
+		action &A, long int rk, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_wreath_product_group()
 {
 	label.assign("function_pointers_wreath_product_group");
+
+	// the first 10:
 	ptr_element_image_of = wreath_product_group_element_image_of;
 	ptr_element_image_of_low_level =
 			wreath_product_group_element_image_of_low_level;
@@ -117,6 +123,9 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 	ptr_element_pack = wreath_product_group_element_pack;
 	ptr_element_retrieve = wreath_product_group_element_retrieve;
 	ptr_element_store = wreath_product_group_element_store;
+
+
+	// the next 10:
 	ptr_element_mult = wreath_product_group_element_mult;
 	ptr_element_invert = wreath_product_group_element_invert;
 	ptr_element_transpose = wreath_product_group_element_transpose;
@@ -128,16 +137,22 @@ void action_pointer_table::init_function_pointers_wreath_product_group()
 	ptr_element_stringify = wreath_product_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			wreath_product_group_element_print_latex_with_point_labels;
+
+
+	// the next 6:
 	ptr_element_print_verbose = wreath_product_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			wreath_product_group_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element =
 			wreath_product_group_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas =
 			wreath_product_group_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = wreath_product_group_print_point;
 	ptr_unrank_point = wreath_product_group_unrank_point;
 	ptr_rank_point = wreath_product_group_rank_point;
+	ptr_stringify_point = wreath_product_group_stringify_point;
 }
 
 
@@ -466,6 +481,7 @@ static void wreath_product_group_element_code_for_make_element(
 #endif
 }
 
+#if 0
 static void wreath_product_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
@@ -484,6 +500,7 @@ static void wreath_product_group_element_print_for_make_element_no_commas(
 
 	W.element_print_for_make_element(Elt, ost);
 }
+#endif
 
 static void wreath_product_group_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
@@ -591,6 +608,17 @@ static long int wreath_product_group_rank_point(
 
 	return rk;
 }
+
+static std::string wreath_product_group_stringify_point(
+		action &A, long int rk, int verbose_level)
+{
+	//action_global AG;
+	//cout << "wreath_product_group_stringify_point" << endl;
+	string s;
+
+	return s;
+}
+
 
 
 

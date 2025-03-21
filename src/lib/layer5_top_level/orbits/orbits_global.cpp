@@ -1341,6 +1341,501 @@ void orbits_global::do_orbits_on_group_elements_under_conjugation(
 
 
 
+void orbits_global::linear_codes_with_bounded_minimum_distance(
+		poset_classification::poset_classification_control *Control,
+		group_constructions::linear_group *LG,
+		int d, int target_depth,
+		poset_classification::poset_classification *&PC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+	poset_classification::poset_with_group_action *Poset;
+
+
+	Control->f_depth = true;
+	Control->depth = target_depth;
+
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"group set up, calling gen->init" << endl;
+		cout << "LG->A2->A->f_has_strong_generators="
+				<< LG->A2->f_has_strong_generators << endl;
+	}
+
+	Poset = NEW_OBJECT(poset_classification::poset_with_group_action);
+
+	Poset->init_subset_lattice(
+			LG->A_linear, LG->A_linear,
+			LG->Strong_gens,
+			verbose_level);
+
+
+	int independence_value = d - 1;
+
+	Poset->add_independence_condition(
+			independence_value,
+			verbose_level);
+
+#if 0
+	Poset->f_print_function = false;
+	Poset->print_function = print_code;
+	Poset->print_function_data = this;
+#endif
+
+	PC = NEW_OBJECT(poset_classification::poset_classification);
+	PC->initialize_and_allocate_root_node(Control, Poset,
+			target_depth, verbose_level);
+
+	int t0;
+	other::orbiter_kernel_system::os_interface Os;
+	int depth;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"before PC->main" << endl;
+	}
+
+	depth = PC->main(t0,
+			target_depth /*schreier_depth*/,
+		true /*f_use_invariant_subset_if_available*/,
+		false /*f_debug */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"after PC->main" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"depth = " << depth << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_global::linear_codes_with_bounded_minimum_distance "
+				"done" << endl;
+	}
+}
+void orbits_global::do_orbits_on_subspaces(
+		groups::any_group *Any_group,
+		poset_classification::poset_classification_control *Control,
+		orbits::orbits_on_subspaces *&OoS,
+		int depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::do_orbits_on_subspaces" << endl;
+	}
+
+
+
+
+	if (!Any_group->A->f_is_linear) {
+		cout << "orbits_global::do_orbits_on_subspaces "
+				"!A->f_is_linear" << endl;
+		cout << "group:" << endl;
+		Any_group->print();
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "group:" << endl;
+		Any_group->print();
+	}
+
+
+	//orbits_on_subspaces *OoS;
+
+	OoS = NEW_OBJECT(orbits::orbits_on_subspaces);
+
+	OoS->init(Any_group, Control, depth, verbose_level);
+
+
+	//finite_field *F;
+
+	//F = LG->F;
+
+
+	//FREE_OBJECT(OoS);
+
+
+	if (f_v) {
+		cout << "orbits_global::do_orbits_on_subspaces done" << endl;
+	}
+}
+
+void orbits_global::do_tensor_classify(
+		groups::any_group *Any_group,
+		std::string &control_label,
+		apps_geometry::tensor_classify *&T,
+		int depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify" << endl;
+	}
+
+	if (!Any_group->f_linear_group) {
+		cout << "orbits_global::do_tensor_classify "
+				"!Any_group->f_linear_group" << endl;
+		exit(1);
+	}
+
+	algebra::field_theory::finite_field *F;
+
+	F = Any_group->LG->F;
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(control_label);
+
+
+
+	//apps_geometry::tensor_classify *T;
+
+	T = NEW_OBJECT(apps_geometry::tensor_classify);
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify "
+				"before T->init" << endl;
+	}
+	T->init(F, Any_group->LG, verbose_level - 1);
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify "
+				"after T->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify "
+				"before classify_poset" << endl;
+	}
+	T->classify_poset(depth,
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify "
+				"after classify_poset" << endl;
+	}
+
+
+
+	//FREE_OBJECT(T);
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_classify done" << endl;
+	}
+}
+
+
+void orbits_global::do_tensor_permutations(
+		groups::any_group *Any_group,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_permutations" << endl;
+	}
+
+	if (!Any_group->f_linear_group) {
+		cout << "orbits_global::do_tensor_permutations "
+				"!Any_group->f_linear_group" << endl;
+		exit(1);
+	}
+	algebra::field_theory::finite_field *F;
+
+	F = Any_group->LG->F;
+
+
+	apps_geometry::tensor_classify *T;
+
+	T = NEW_OBJECT(apps_geometry::tensor_classify);
+
+	T->init(F, Any_group->LG, verbose_level - 1);
+
+
+	FREE_OBJECT(T);
+
+	if (f_v) {
+		cout << "orbits_global::do_tensor_permutations done" << endl;
+	}
+}
+
+
+void orbits_global::do_linear_codes(
+		groups::any_group *Any_group,
+		std::string &control_label,
+		int minimum_distance,
+		int target_size,
+		poset_classification::poset_classification *&PC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::do_linear_codes" << endl;
+	}
+
+	if (!Any_group->f_linear_group) {
+		cout << "orbits_global::do_linear_codes !f_linear_group" << endl;
+		exit(1);
+	}
+
+	poset_classification::poset_classification_control *Control =
+			Get_poset_classification_control(control_label);
+
+	if (f_v) {
+		cout << "orbits_global::do_linear_codes before "
+				"linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+	linear_codes_with_bounded_minimum_distance(
+			Control, Any_group->LG,
+			minimum_distance, target_size,
+			PC,
+			verbose_level);
+
+	if (f_v) {
+		cout << "orbits_global::do_linear_codes after "
+				"linear_codes_with_bounded_minimum_distance" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_global::do_linear_codes done" << endl;
+	}
+}
+
+void orbits_global::do_classify_ovoids(
+		groups::any_group *Any_group,
+		apps_geometry::ovoid_classify_description
+			*Ovoid_classify_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::do_classify_ovoids" << endl;
+	}
+
+	if (!Any_group->f_linear_group) {
+		cout << "orbits_global::do_classify_ovoids "
+				"!Any_group->f_linear_group" << endl;
+		exit(1);
+	}
+
+	apps_geometry::ovoid_classify *Ovoid_classify;
+
+
+	Ovoid_classify = NEW_OBJECT(apps_geometry::ovoid_classify);
+
+
+	Ovoid_classify->init(Ovoid_classify_description,
+			Any_group->LG,
+			verbose_level);
+
+	FREE_OBJECT(Ovoid_classify);
+
+	if (f_v) {
+		cout << "orbits_global::do_classify_ovoids done" << endl;
+	}
+}
+
+void orbits_global::conjugacy_class_of(
+		groups::any_group *Any_group,
+		std::string &label_of_class,
+		std::string &elt_data,
+		int verbose_level)
+// uses orbits_schreier::orbit_of_sets
+// needs Subgroup_sims to set up action by conjugation
+// uses Any_group->Subgroup_sims as base group
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of" << endl;
+	}
+
+#if 0
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+#endif
+
+	int *Elt;
+
+	Elt = NEW_int(Any_group->A->elt_size_in_int);
+
+	algebra::ring_theory::longinteger_object a, b;
+
+#if 1
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"creating element " << elt_data << endl;
+	}
+
+	Any_group->A->Group_element->make_element_from_string(Elt, elt_data, 0);
+
+	Any_group->Subgroup_sims->element_rank(a, Elt);
+
+	a.assign_to(b);
+
+
+#else
+
+
+	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+
+	cout << "Creating element of rank " << a << endl;
+
+	a.assign_to(b);
+
+	H->element_unrank(a, Elt);
+
+#endif
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of Element :" << endl;
+		Any_group->A->Group_element->element_print(Elt, cout);
+		cout << endl;
+	}
+
+
+	actions::action *A_conj;
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"before A->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
+	A_conj = Any_group->A->Induced_action->create_induced_action_by_conjugation(
+			Any_group->Subgroup_sims /*Base_group*/, false /* f_ownership */,
+			false /* f_basis */, NULL /* old_G */,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"after A->Induced_action->create_induced_action_by_conjugation" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"created action A_conj of degree " << A_conj->degree << endl;
+	}
+
+
+
+	orbits_schreier::orbit_of_sets Orb;
+	long int set[1];
+	other::orbiter_kernel_system::file_io Fio;
+
+	set[0] = b.as_lint();
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"before Orb.init" << endl;
+	}
+	Orb.init(
+			Any_group->A, A_conj,
+			set, 1 /* sz */,
+			Any_group->Subgroup_gens->gens,
+			verbose_level);
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"Found an orbit of size " << Orb.used_length << endl;
+	}
+
+	std::vector<long int> Orbit;
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"before Orb.get_orbit_of_points" << endl;
+	}
+	Orb.get_orbit_of_points(Orbit, verbose_level);
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"Found an orbit of size " << Orbit.size() << endl;
+	}
+
+	int *data;
+	int i;
+	int nb_r, nb_c;
+	std::string *Header_cols;
+	std::string *Table;
+
+	nb_r = Orbit.size();
+	nb_c = 1;
+	data = NEW_int(Any_group->A->make_element_size);
+	Table = new std::string [nb_r * nb_c];
+	Header_cols = new std::string [nb_c];
+
+	Header_cols[0] = "elements";
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"collecting orbit elements" << endl;
+	}
+
+	for (i = 0; i < Orbit.size(); i++) {
+		Any_group->Subgroup_sims->element_unrank_lint(Orbit[i], Elt);
+
+		Any_group->A->Group_element->element_code_for_make_element(Elt, data);
+
+		Table[i] = "\"" + Int_vec_stringify(data, Any_group->A->make_element_size) + "\"";
+	}
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"collecting orbit elements done" << endl;
+	}
+
+	string fname;
+
+	fname = Any_group->label + "_class_of_" + label_of_class + ".csv";
+
+	Fio.Csv_file_support->write_table_of_strings_with_col_headings(
+			fname,
+			nb_r, nb_c, Table,
+			Header_cols,
+			verbose_level);
+
+	delete [] Header_cols;
+	delete [] Table;
+
+
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of "
+				"Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+
+	FREE_OBJECT(A_conj);
+
+
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "orbits_global::conjugacy_class_of done" << endl;
+	}
+}
+
+
+
+
+
 
 }}}
 

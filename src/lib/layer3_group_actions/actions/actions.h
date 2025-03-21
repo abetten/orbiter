@@ -247,10 +247,12 @@ public:
 			int depth,
 			data_structures_groups::vector_ge &gen,
 			int verbose_level);
+#if 0
 	void compute_point_stabilizer_chain(
 			data_structures_groups::vector_ge &gen,
 			groups::sims *S, int *sequence, int len,
 		int verbose_level);
+#endif
 	void compute_stabilizer_orbits(
 			other::data_structures::partitionstack *&Staborbits,
 			int verbose_level);
@@ -374,6 +376,10 @@ public:
 			std::ostream &ost, int f_sims, groups::sims *S,
 			int f_strong_gens, groups::strong_generators *SG,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	// reports the sims object from the arguments
+	void report_base(
+			std::ostream &ost,
 			int verbose_level);
 	void report_group_name_and_degree(
 			std::ostream &ost,
@@ -870,8 +876,10 @@ public:
 			std::string &label_tex,
 			actions::action *A,
 			groups::strong_generators *Strong_gens,
+			groups::sims *Sims,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
+	// creates a new sims object from Strong_gens
 	void report_group_table(
 			std::ostream &ost,
 			std::string &label,
@@ -915,6 +923,10 @@ public:
 		groups::sims *Stab, int size, long int *set,
 		int verbose_level);
 	// called from isomorph
+	void products_of_pairs(
+			data_structures_groups::vector_ge *Elements,
+			data_structures_groups::vector_ge *&Products,
+			int verbose_level);
 
 };
 
@@ -937,7 +949,9 @@ public:
 
 	std::string label;
 
-	/** function pointers for group actions. there are 27 of them. */
+	/** function pointers for group actions. there are 26 of them. */
+
+	// the first 10:
 	long int (*ptr_element_image_of)(
 			action &A, long int a, void *elt, int verbose_level);
 	void (*ptr_element_image_of_low_level)(
@@ -958,6 +972,9 @@ public:
 			action &A, int hdl, void *elt, int verbose_level);
 	int (*ptr_element_store)(
 			action &A, void *elt, int verbose_level);
+
+
+	// the second 10:
 	void (*ptr_element_mult)(
 			action &A, void *a, void *b, void *ab, int verbose_level);
 	void (*ptr_element_invert)(
@@ -982,21 +999,28 @@ public:
 		std::string *Point_labels, void *data);
 		//void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		//void *point_label_data);
+
+
+	// the next 6:
 	void (*ptr_element_print_verbose)(
 			action &A, void *elt, std::ostream &ost);
 	void (*ptr_print_point)(
 			action &A, long int i, std::ostream &ost, int verbose_level);
 	void (*ptr_element_code_for_make_element)(
 			action &A, void *elt, int *data);
+#if 0
 	void (*ptr_element_print_for_make_element)(
 			action &A, void *elt, std::ostream &ost);
 	void (*ptr_element_print_for_make_element_no_commas)(
 			action &A,
 		void *elt, std::ostream &ost);
+#endif
 	void (*ptr_unrank_point)(
 			action &A, long int rk, int *v, int verbose_level);
 	long int (*ptr_rank_point)(
 			action &A, int *v, int verbose_level);
+	std::string (*ptr_stringify_point)(
+			action &A, long int rk, int verbose_level);
 
 	/** counters for how often a function has been called */
 	int nb_times_image_of_called;
@@ -1292,6 +1316,8 @@ public:
 			long int rk, int *v);
 	long int rank_point(
 			int *v);
+	std::string stringify_point(
+			long int rk, int verbose_level);
 	void code_for_make_element(
 			int *data, void *elt);
 	void print_for_make_element(

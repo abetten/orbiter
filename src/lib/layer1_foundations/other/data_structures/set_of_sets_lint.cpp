@@ -166,6 +166,14 @@ void set_of_sets_lint::init_set(
 	}
 }
 
+std::string set_of_sets_lint::stringify_set(
+		int idx)
+{
+	string s;
+
+	s = Lint_vec_stringify(Sets[idx], Set_size[idx]);
+	return s;
+}
 
 
 }}}}

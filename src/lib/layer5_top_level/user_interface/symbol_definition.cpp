@@ -2620,9 +2620,9 @@ void symbol_definition::definition_of_modified_group(
 				"before PGC->permutation_group_init" << endl;
 	}
 
-	apps_algebra::algebra_global_with_action Algebra_global_with_action;
+	apps_algebra::modified_group_init_layer5 Modified_group_init_layer5;
 
-	Algebra_global_with_action.modified_group_init(
+	Modified_group_init_layer5.modified_group_init(
 			MGC, Group_modification_description, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_modified_group "

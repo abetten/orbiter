@@ -1390,6 +1390,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 		group_modification_description *description,
 		int verbose_level)
 // output in A_modified and Strong_gens
+// acts on AG->Subgroup_sims
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1426,6 +1427,7 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 	//A_modified = A_previous;
 
 
+#if 0
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
 				"before AG->Subgroup_gens->create_sims" << endl;
@@ -1435,7 +1437,15 @@ void modified_group_create::create_action_on_self_by_right_multiplication(
 		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
 				"after AG->Subgroup_gens->create_sims" << endl;
 	}
+#else
 
+	if (AG->Subgroup_sims == NULL) {
+		cout << "modified_group_create::create_action_on_self_by_right_multiplication "
+				"AG->Subgroup_sims == NULL" << endl;
+		exit(1);
+	}
+	action_on_self_by_right_multiplication_sims = AG->Subgroup_sims;
+#endif
 
 	A_modified = A_previous->Induced_action->induced_action_by_right_multiplication(
 			false /* f_basis */, NULL,
@@ -1486,6 +1496,7 @@ void modified_group_create::create_action_on_self_by_conjugation(
 		group_modification_description *description,
 		int verbose_level)
 // output in A_modified and Strong_gens
+// uses AG->Subgroup_sims as base group (the group we act on)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1527,7 +1538,9 @@ void modified_group_create::create_action_on_self_by_conjugation(
 				"before AG->Subgroup_gens->create_sims" << endl;
 	}
 	//Action_by_conjugation_base_group = AG->Subgroup_gens->create_sims(verbose_level);
+
 	Action_by_conjugation_base_group = AG->Subgroup_sims;
+
 	if (f_v) {
 		cout << "modified_group_create::create_action_on_self_by_conjugation "
 				"after AG->Subgroup_gens->create_sims" << endl;

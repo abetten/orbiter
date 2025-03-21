@@ -26,11 +26,13 @@ void action::report(
 		int f_strong_gens, groups::strong_generators *SG,
 		other::graphics::layered_graph_draw_options *LG_Draw_options,
 		int verbose_level)
+// reports the sims object from the arguments
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::report" << endl;
+		cout << "action::report verbose_level = " << verbose_level << endl;
 	}
 
 	ost << "\\section*{The Action}" << endl;
@@ -42,7 +44,6 @@ void action::report(
 	}
 	report_group_name_and_degree(
 			ost,
-			//LG_Draw_options,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "action::report "
@@ -73,7 +74,6 @@ void action::report(
 	}
 	report_what_we_act_on(
 			ost,
-			//LG_Draw_options,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "action::report after report_what_we_act_on" << endl;
@@ -152,9 +152,26 @@ void action::report(
 		}
 		if (base_len()) {
 			ost << "action::report\\\\" << endl;
-			ost << "Base: $";
+
+			report_base(
+					ost,
+					verbose_level);
+
+#if 0
+			ost << "Base of length " << base_len() << ": $";
 			Lint_vec_print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
+
+			int i;
+			ost << "Base = \\\\" << endl;
+			for (i = 0; i < base_len(); i++) {
+				string s1;
+
+				s1 = Group_element->stringify_point(base_i(i), verbose_level - 1);
+				ost << i << " : " << base_i(i) << " = $(" << s1 << ")$\\\\" << endl;
+			}
+#endif
+
 		}
 		if (f_strong_gens) {
 			ost << "{\\small\\arraycolsep=2pt" << endl;
@@ -187,16 +204,17 @@ void action::report(
 			action_global Global;
 
 			if (f_v) {
-				cout << "action::report before Global.report_strong_generators" << endl;
+				cout << "action::report "
+						"before Global.report_strong_generators" << endl;
 			}
 			Global.report_strong_generators(
 					ost,
-					//LG_Draw_options,
 					SG,
 					this,
 					verbose_level);
 			if (f_v) {
-				cout << "action::report after Global.report_strong_generators" << endl;
+				cout << "action::report "
+						"after Global.report_strong_generators" << endl;
 			}
 
 
@@ -208,7 +226,24 @@ void action::report(
 }
 
 
+void action::report_base(
+		std::ostream &ost,
+		int verbose_level)
+{
+	ost << "Base of length " << base_len() << ": $";
+	Lint_vec_print(ost, get_base(), base_len());
+	ost << "$\\\\" << endl;
 
+	int i;
+	ost << "Base = \\\\" << endl;
+	for (i = 0; i < base_len(); i++) {
+		string s1;
+
+		s1 = Group_element->stringify_point(base_i(i), verbose_level - 1);
+		ost << i << " : " << base_i(i) << " = $(" << s1 << ")$\\\\" << endl;
+	}
+
+}
 void action::report_group_name_and_degree(
 		std::ostream &ost,
 		int verbose_level)
@@ -220,7 +255,8 @@ void action::report_group_name_and_degree(
 	}
 
 	if (label_tex.length() == 0) {
-		cout << "action::report_group_name_and_degree the group has no tex-name" << endl;
+		cout << "action::report_group_name_and_degree "
+				"the group has no tex-name" << endl;
 		exit(1);
 	}
 	ost << "Group action $" << label_tex
@@ -270,7 +306,8 @@ void action::report_what_we_act_on(
 	if (is_matrix_group()) {
 
 		if (f_v) {
-			cout << "action::report_what_we_act_on is_matrix_group is true" << endl;
+			cout << "action::report_what_we_act_on "
+					"is_matrix_group is true" << endl;
 		}
 		algebra::field_theory::finite_field *F;
 		algebra::basic_algebra::matrix_group *M;
@@ -300,16 +337,20 @@ void action::report_what_we_act_on(
 
 			if (G.AO->f_on_points) {
 				ost << "acting on points only\\\\" << endl;
-				ost << "Number of points = " << G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
+				ost << "Number of points = "
+						<< G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
 			}
 			else if (G.AO->f_on_lines) {
 				ost << "acting on lines only\\\\" << endl;
-				ost << "Number of lines = " << G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
+				ost << "Number of lines = "
+						<< G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
 			}
 			else if (G.AO->f_on_points_and_lines) {
 				ost << "acting on points and lines\\\\" << endl;
-				ost << "Number of points = " << G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
-				ost << "Number of lines = " << G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
+				ost << "Number of points = "
+						<< G.AO->O->Hyperbolic_pair->nb_points << "\\\\" << endl;
+				ost << "Number of lines = "
+						<< G.AO->O->Hyperbolic_pair->nb_lines << "\\\\" << endl;
 			}
 
 			G.AO->O->Quadratic_form->report_quadratic_form(
@@ -403,8 +444,10 @@ void action::list_elements_as_permutations_vertically(
 	for (i = 0; i < degree; i++) {
 		ost << setw(3) << i;
 		for (j = 0; j < len; j++) {
-			a = Group_element->element_image_of(i,
-					gens->ith(j), 0 /* verbose_level */);
+			a = Group_element->element_image_of(
+					i,
+					gens->ith(j),
+					0 /* verbose_level */);
 			ost << " & " << setw(3) << a;
 		}
 		ost << "\\\\" << endl;

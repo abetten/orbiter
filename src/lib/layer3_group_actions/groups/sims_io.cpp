@@ -703,19 +703,19 @@ void sims::print_all_transversal_elements()
 	group_order(go);
 
 	for (i = A->base_len() - 1; i >= 0; i--) {
+
 		for (j = 0; j < A->transversal_length_i(i); j++) {
+
 			if (j == 0 && i < A->base_len() - 1) {
 				// skip the identity in the upper transversals
 				continue;
 			}
+
 			Int_vec_zero(path, A->base_len());
-#if 0
-			for (ii = 0; ii < A->base_len(); ii++) {
-				path[ii] = 0;
-			}
-#endif
 			path[i] = j;
+
 			element_from_path(Elt, 0 /* verbose_level */);
+
 			for (ii = 0; ii < A->base_len(); ii++) {
 				cout << setw(5) << path[ii] << " ";
 			}
@@ -727,6 +727,115 @@ void sims::print_all_transversal_elements()
 		}
 	}
 	FREE_int(Elt);
+}
+
+void sims::report_all_transversal_elements(
+		std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::report_all_transversal_elements" << endl;
+	}
+
+	int *Elt;
+	algebra::ring_theory::longinteger_object go;
+	int i, j, ii;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	group_order(go);
+
+	if (f_v) {
+		cout << "Base = \\\\" << endl;
+		for (i = 0; i < A->base_len(); i++) {
+			string s1;
+
+			s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+			cout << i << " : " << A->base_i(i) << " = " << s1 << "\\\\" << endl;
+		}
+	}
+
+	ost << "Base = \\\\" << endl;
+	for (i = 0; i < A->base_len(); i++) {
+		string s1;
+
+		s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+		ost << i << " : " << A->base_i(i) << " = " << s1 << "\\\\" << endl;
+	}
+
+	if (f_v) {
+		cout << "Transversal\\_length = ";
+		for (i = 0; i < A->base_len(); i++) {
+			cout << A->transversal_length_i(i) << " ";
+		}
+		cout << "\\\\" << endl;
+
+	}
+
+	ost << "Transversal\\_length = ";
+	for (i = 0; i < A->base_len(); i++) {
+		ost << A->transversal_length_i(i) << " ";
+	}
+	ost << "\\\\" << endl;
+
+	for (i = A->base_len() - 1; i >= 0; i--) {
+
+		for (j = 0; j < A->transversal_length_i(i); j++) {
+
+			if (j == 0 && i < A->base_len() - 1) {
+				// skip the identity in the upper transversals
+				continue;
+			}
+
+			Int_vec_zero(path, A->base_len());
+			path[i] = j;
+
+			element_from_path(Elt, 10 /* verbose_level */);
+
+			if (f_v) {
+				cout << "sims::report_all_transversal_elements" << endl;
+				cout << "Level " << i << " coset " << j << " : path= ";
+				for (ii = 0; ii < A->base_len(); ii++) {
+					cout << setw(5) << path[ii] << " ";
+				}
+				cout << "\\\\" << endl;
+			}
+
+			ost << "Level " << i << " coset " << j << " : path= ";
+			for (ii = 0; ii < A->base_len(); ii++) {
+				ost << setw(5) << path[ii] << " ";
+			}
+			ost << "\\\\" << endl;
+
+			string s1, s2;
+
+			s1 = A->Group_element->stringify_point(A->base_i(i), verbose_level - 1);
+
+			s2 = A->Group_element->stringify_point(A->orbit_ij(i, j), verbose_level - 1);
+
+			if (f_v) {
+				cout << "$" << A->base_i(i) << " \\mapsto " << A->orbit_ij(i, j) << "$\\\\" << endl;
+				cout << "$(" << s1 << ") \\mapsto (" << s2 << ")$\\\\" << endl;
+			}
+			ost << "$" << A->base_i(i) << " \\mapsto " << A->orbit_ij(i, j) << "$\\\\" << endl;
+			ost << "$(" << s1 << ") \\mapsto (" << s2 << ")$\\\\" << endl;
+
+			if (f_v) {
+				A->Group_element->element_print_latex(Elt, cout);
+			}
+			ost << "$" << endl;
+			A->Group_element->element_print_latex(Elt, ost);
+			ost << "$" << endl;
+			ost << endl;
+			//A->Group_element->element_print_as_permutation(Elt, ost);
+			//ost << endl;
+		}
+	}
+	FREE_int(Elt);
+
+	if (f_v) {
+		cout << "sims::report_all_transversal_elements done" << endl;
+	}
 }
 
 void sims::save_list_of_elements(
@@ -820,6 +929,7 @@ void sims::report(
 	if (f_v) {
 		cout << "sims::report" << endl;
 		cout << "sims::report prefix=" << prefix << endl;
+		cout << "sims::report verbose_level=" << verbose_level << endl;
 	}
 	//int i;
 
@@ -829,29 +939,7 @@ void sims::report(
 	ost << "sims::report\\\\" << endl;
 
 
-	ost << "$$" << endl;
-	ost << "\\begin{array}{|c|c|c|c|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\mbox{Level} & "
-			"\\mbox{Base pt} & "
-			"\\mbox{Orbit length} & "
-			"\\mbox{Subgroup order}\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (int i = 0; i < my_base_len; i++) {
-
-
-
-		algebra::ring_theory::longinteger_object go;
-
-		subgroup_order_verbose(go, i, false /*verbose_level*/);
-		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
-		go.print_not_scientific(ost);
-		ost << "\\\\" << endl;
-		ost << "\\hline" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
+	report_subgroup_chain(ost);
 
 
 	int orbit_idx;
@@ -886,9 +974,52 @@ void sims::report(
 
 	}
 
+	ost << "\\bigskip" << endl;
+
+	ost << "\\section*{Transversal Elements}" << endl;
+
+	if (f_v) {
+		cout << "sims::report before report_all_transversal_elements" << endl;
+	}
+	report_all_transversal_elements(
+			ost, verbose_level);
+	if (f_v) {
+		cout << "sims::report after report_all_transversal_elements" << endl;
+	}
+
+	ost << "\\bigskip" << endl;
+
+
 	if (f_v) {
 		cout << "sims::report done" << endl;
 	}
+}
+
+void sims::report_subgroup_chain(
+		std::ostream &ost)
+{
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Level} & "
+			"\\mbox{Base pt} & "
+			"\\mbox{Orbit length} & "
+			"\\mbox{Subgroup order}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (int i = 0; i < my_base_len; i++) {
+
+		algebra::ring_theory::longinteger_object go;
+
+		subgroup_order_verbose(go, i, false /*verbose_level*/);
+		ost << i << " & " << get_orbit(i, 0) << " & " << get_orbit_length(i) << " & ";
+		go.print_not_scientific(ost);
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+	}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
 }
 
 void sims::report_basic_orbit(
@@ -909,6 +1040,28 @@ void sims::report_basic_orbit(
 
 	fname_base = prefix + "_sims_" + std::to_string(orbit_idx);
 
+	if (f_v) {
+		cout << "sims::report_basic_orbit "
+				"before Algorithms.make_and_draw_tree" << endl;
+	}
+
+	Algorithms.make_and_draw_tree(
+			fname_base,
+			orbit_len[orbit_idx],
+			orbit[orbit_idx],
+			prev[orbit_idx],
+			true /* f_use_pts_inv */,
+			orbit_inv[orbit_idx],
+			LG_Draw_options,
+			verbose_level);
+
+	if (f_v) {
+		cout << "sims::report_basic_orbit "
+				"after Algorithms.make_and_draw_tree" << endl;
+	}
+
+
+#if 0
 	{
 		combinatorics::graph_theory::layered_graph *LG;
 
@@ -917,11 +1070,12 @@ void sims::report_basic_orbit(
 					"before Algorithms.make_layered_graph_for_schreier_vector_tree" << endl;
 		}
 		Algorithms.make_layered_graph_for_schreier_vector_tree(
-			orbit_len[orbit_idx], orbit[orbit_idx],
+			orbit_len[orbit_idx],
+			orbit[orbit_idx],
 			prev[orbit_idx],
-			true /* f_use_pts_inv */, orbit_inv[orbit_idx],
+			true /* f_use_pts_inv */,
+			orbit_inv[orbit_idx],
 			fname_base,
-			//LG_Draw_options,
 			LG,
 			verbose_level - 3);
 		if (f_v) {
@@ -931,19 +1085,23 @@ void sims::report_basic_orbit(
 
 
 		if (f_v) {
-			cout << "sims::report_basic_orbit before LG->place" << endl;
+			cout << "sims::report_basic_orbit "
+					"before LG->place" << endl;
 		}
 		LG->place_with_y_stretch(0.5, verbose_level);
 		if (f_v) {
-			cout << "sims::report_basic_orbit after LG->place" << endl;
+			cout << "sims::report_basic_orbit "
+					"after LG->place" << endl;
 		}
 		if (f_v) {
-			cout << "sims::report_basic_orbit before LG->create_spanning_tree" << endl;
+			cout << "sims::report_basic_orbit "
+					"before LG->create_spanning_tree" << endl;
 		}
 		LG->create_spanning_tree(
 				true /* f_place_x */, verbose_level);
 		if (f_v) {
-			cout << "sims::report_basic_orbit after LG->create_spanning_tree" << endl;
+			cout << "sims::report_basic_orbit "
+					"after LG->create_spanning_tree" << endl;
 		}
 
 
@@ -960,6 +1118,7 @@ void sims::report_basic_orbit(
 
 		FREE_OBJECT(LG);
 	}
+#endif
 
 	ost << "\\input " << fname_base << ".tex" << endl;
 	ost << endl;
@@ -975,12 +1134,12 @@ void sims::report_basic_orbit(
 		cout << "sims::report_basic_orbit after get_orbit" << endl;
 	}
 
-	ost << "Basic orbit " << orbit_idx << " has size " << Orb.size() << "\\\\" << endl;
+	ost << "Basic orbit " << orbit_idx
+			<< " has size " << Orb.size() << "\\\\" << endl;
 
 	Orbit_elements = NEW_int(Orb.size());
 
 	int i;
-
 
 	for (i = 0; i < Orb.size(); i++) {
 		Orbit_elements[i] = Orb[i];

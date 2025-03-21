@@ -122,7 +122,7 @@ public:
 			std::vector<long int> &In, long int *subtract_this, int size,
 			std::vector<long int> &Out,
 			int verbose_level);
-	void export_tree_as_layered_graph(
+	void create_layered_graph_from_tree(
 			int degree,
 			int *orbit_first,
 			int *orbit_len,
@@ -143,6 +143,11 @@ public:
 		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level);
 	// called from sims_io.cpp
+	void make_and_draw_tree(
+			std::string &fname_base,
+			int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+			other::graphics::layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);
@@ -1256,6 +1261,9 @@ public:
 	void init_set(
 			int idx_of_set,
 			long int *set, int sz, int verbose_level);
+	std::string stringify_set(
+			int idx);
+
 };
 
 

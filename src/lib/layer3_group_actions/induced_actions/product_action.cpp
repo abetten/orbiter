@@ -280,6 +280,14 @@ void product_action::element_print_latex(
 	ost << "\\\right)" << endl;
 }
 
+std::string product_action::element_stringify(
+		int *A)
+{
+	string s;
+
+	return s;
+}
+
 void product_action::make_element(
 		int *Elt, int *data, int verbose_level)
 {

@@ -1074,7 +1074,8 @@ void algorithms::process_class_list(
 	}
 
 	if (f_v) {
-		cout << "algorithms::process_class_list Classes_parsed.size()=" << Classes_parsed.size() << endl;
+		cout << "algorithms::process_class_list "
+				"Classes_parsed.size()=" << Classes_parsed.size() << endl;
 	}
 	int i, j;
 	for (i = 0; i < Classes_parsed.size(); i++) {
@@ -1234,7 +1235,8 @@ void algorithms::process_class_list(
 
 
 	if (f_v) {
-		cout << "algorithms::process_class_list maxdepth = " << maxdepth << endl;
+		cout << "algorithms::process_class_list "
+				"maxdepth = " << maxdepth << endl;
 	}
 
 
@@ -1314,7 +1316,7 @@ void algorithms::set_minus(
 }
 
 
-void algorithms::export_tree_as_layered_graph(
+void algorithms::create_layered_graph_from_tree(
 		int degree,
 		int *orbit_first,
 		int *orbit_len,
@@ -1335,14 +1337,14 @@ void algorithms::export_tree_as_layered_graph(
 	int i, j, l, max_depth;
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph" << endl;
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree" << endl;
+		cout << "algorithms::create_layered_graph_from_tree "
 				"verbose_level = " << verbose_level << endl;
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"degree = " << degree << endl;
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"orbit_no = " << orbit_no << endl;
-		//cout << "algorithms::export_tree_as_layered_graph "
+		//cout << "algorithms::create_layered_graph_from_tree "
 		//		"nb_gen = " << gens.len << endl;
 	}
 
@@ -1363,12 +1365,12 @@ void algorithms::export_tree_as_layered_graph(
 	depth = NEW_int(len);
 	horizontal_position = NEW_int(len);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph fst = " << fst << endl;
-		cout << "algorithms::export_tree_as_layered_graph len = " << len << endl;
+		cout << "algorithms::create_layered_graph_from_tree fst = " << fst << endl;
+		cout << "algorithms::create_layered_graph_from_tree len = " << len << endl;
 	}
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"computing max_depth" << endl;
 	}
 	max_depth = 0;
@@ -1379,7 +1381,7 @@ void algorithms::export_tree_as_layered_graph(
 		max_depth = MAX(max_depth, l);
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"max_depth = " << max_depth << endl;
 	}
 
@@ -1399,7 +1401,7 @@ void algorithms::export_tree_as_layered_graph(
 
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"computing number of nodes per level" << endl;
 	}
 
@@ -1409,14 +1411,14 @@ void algorithms::export_tree_as_layered_graph(
 		Nb[l]++;
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph" << endl;
+		cout << "algorithms::create_layered_graph_from_tree" << endl;
 		cout << "number of nodes at depth:" << endl;
 		for (i = 0; i <= max_depth; i++) {
 			cout << i << " : " << Nb[i] << endl;
 		}
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"collecting nodes by level" << endl;
 	}
 	Node = NEW_pint(nb_layers);
@@ -1465,31 +1467,31 @@ void algorithms::export_tree_as_layered_graph(
 	dummy.assign("");
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before LG->init" << endl;
 	}
 	//LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, dummy, verbose_level);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after LG->init" << endl;
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before LG->place" << endl;
 	}
 	LG->place(verbose_level);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after LG->place" << endl;
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before adding edges" << endl;
 	}
 	for (i = 0; i <= max_depth; i++) {
 		if (f_vv) {
-			cout << "algorithms::export_tree_as_layered_graph "
+			cout << "algorithms::create_layered_graph_from_tree "
 					"adding edges at depth "
 					"i=" << i << " / " << max_depth
 					<< " Nb[i]=" << Nb[i] << endl;
@@ -1497,7 +1499,7 @@ void algorithms::export_tree_as_layered_graph(
 		for (j = 0; j < Nb[i]; j++) {
 			n1 = Node[i][j];
 			if (f_vv) {
-				cout << "algorithms::export_tree_as_layered_graph "
+				cout << "algorithms::create_layered_graph_from_tree "
 						"adding edges "
 						"i=" << i << " / " << max_depth
 						<< " j=" << j
@@ -1516,14 +1518,14 @@ void algorithms::export_tree_as_layered_graph(
 #endif
 				j2 = horizontal_position[N2];
 				if (f_vvv) {
-					cout << "algorithms::export_tree_as_layered_graph "
+					cout << "algorithms::create_layered_graph_from_tree "
 							"adding edges "
 							"i=" << i << " / " << max_depth
 							<< " j=" << j << " n1=" << n1
 							<< " N2=" << N2 << " j2=" << j2 << endl;
 				}
 				if (f_vvv) {
-					cout << "algorithms::export_tree_as_layered_graph "
+					cout << "algorithms::create_layered_graph_from_tree "
 							"adding edge ("<< i - 1 << "," << j2 << ") "
 							"-> (" << i << "," << j << ") with color " << label[fst + n1] << endl;
 				}
@@ -1535,11 +1537,11 @@ void algorithms::export_tree_as_layered_graph(
 		}
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after adding edges" << endl;
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before adding node text" << endl;
 	}
 	for (j = 0; j < len; j++) {
@@ -1561,42 +1563,43 @@ void algorithms::export_tree_as_layered_graph(
 				0/*verbose_level*/);
 	}
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after adding node text" << endl;
 	}
 
-	data_structures::string_tools ST;
 
 
 #if 0
+	data_structures::string_tools ST;
+
 	string fname;
 
 	fname = ST.printf_d(fname_mask, orbit_no);
 
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before LG->write_file" << endl;
 	}
 	LG->write_file(fname, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after LG->write_file" << endl;
 	}
 #endif
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before FREE_OBJECT(LG)" << endl;
 	}
 	//FREE_OBJECT(LG);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after FREE_OBJECT(LG)" << endl;
 	}
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"before FREE_int" << endl;
 	}
 	FREE_int(Nb);
@@ -1604,12 +1607,12 @@ void algorithms::export_tree_as_layered_graph(
 	FREE_int(depth);
 	FREE_int(horizontal_position);
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph "
+		cout << "algorithms::create_layered_graph_from_tree "
 				"after FREE_int" << endl;
 	}
 
 	if (f_v) {
-		cout << "algorithms::export_tree_as_layered_graph done" << endl;
+		cout << "algorithms::create_layered_graph_from_tree done" << endl;
 	}
 }
 
@@ -1648,10 +1651,6 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 	std::string &fname_base,
 	combinatorics::graph_theory::layered_graph *&LG,
 	int verbose_level)
-// called from:
-// sims_io.cpp
-// schreier_vector_handler.cpp
-// schreier_vector.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = false; //(verbose_level >= 2);
@@ -1832,6 +1831,88 @@ void algorithms::make_layered_graph_for_schreier_vector_tree(
 	}
 
 }
+
+void algorithms::make_and_draw_tree(
+		std::string &fname_base,
+		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
+		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		int verbose_level)
+// called from:
+// sims_io.cpp
+// schreier_vector_handler.cpp
+// schreier_vector.cpp
+// creates file: fname_base + ".tex"
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"n=" << n << endl;
+	}
+
+	combinatorics::graph_theory::layered_graph *LG;
+
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"before make_and_draw_tree" << endl;
+	}
+	make_layered_graph_for_schreier_vector_tree(
+		n,
+		pts,
+		prev,
+		f_use_pts_inv,
+		pts_inv,
+		fname_base,
+		LG,
+		verbose_level - 3);
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"after make_and_draw_tree" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"before LG->place" << endl;
+	}
+	LG->place_with_y_stretch(0.5, verbose_level);
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"after LG->place" << endl;
+	}
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"before LG->create_spanning_tree" << endl;
+	}
+	LG->create_spanning_tree(
+			true /* f_place_x */, verbose_level);
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree "
+				"after LG->create_spanning_tree" << endl;
+	}
+
+
+
+	std::string fname_layered_graph;
+
+	fname_layered_graph = fname_base + ".layered_graph";
+
+
+
+	LG->write_file(fname_layered_graph, 0 /*verbose_level*/);
+
+	LG->draw_with_options(fname_base, LG_Draw_options,
+			0 /* verbose_level */);
+
+
+	FREE_OBJECT(LG);
+
+	if (f_v) {
+		cout << "algorithms::make_and_draw_tree done" << endl;
+	}
+
+}
+
 
 void algorithms::schreier_vector_compute_depth_and_ancestor(
 	int n, int *pts, int *prev, int f_prev_is_point_index, int *pts_inv,

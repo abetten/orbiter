@@ -77,10 +77,12 @@ static void permutation_representation_group_element_print(
 	void *elt, std::ostream &ost);
 static void permutation_representation_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
+#if 0
 static void permutation_representation_group_element_print_for_make_element(
 	action &A, void *elt, std::ostream &ost);
 static void permutation_representation_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
+#endif
 static void permutation_representation_group_element_print_quick(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -99,11 +101,15 @@ static void permutation_representation_group_element_print_verbose(
 static void permutation_representation_group_print_point(
 		action &A,
 	long int a, std::ostream &ost, int verbose_level);
+static std::string permutation_representation_group_stringify_point(
+		action &A, long int a, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_permutation_representation_group()
 {
 	label.assign("function_pointers_permutation_representation_group");
+
+	// the first 10:
 	ptr_element_image_of = permutation_representation_group_element_image_of;
 	ptr_element_image_of_low_level =
 			permutation_representation_group_element_image_of_low_level;
@@ -116,6 +122,9 @@ void action_pointer_table::init_function_pointers_permutation_representation_gro
 	ptr_element_pack = permutation_representation_group_element_pack;
 	ptr_element_retrieve = permutation_representation_group_element_retrieve;
 	ptr_element_store = permutation_representation_group_element_store;
+
+
+	// the next 10:
 	ptr_element_mult = permutation_representation_group_element_mult;
 	ptr_element_invert = permutation_representation_group_element_invert;
 	ptr_element_transpose = permutation_representation_group_element_transpose;
@@ -127,14 +136,20 @@ void action_pointer_table::init_function_pointers_permutation_representation_gro
 	ptr_element_stringify = permutation_representation_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			permutation_representation_group_element_print_latex_with_point_labels;
+
+
+	// the next 6:
 	ptr_element_print_verbose = permutation_representation_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			permutation_representation_group_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element =
 			permutation_representation_group_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas =
 			permutation_representation_group_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = permutation_representation_group_print_point;
+	ptr_stringify_point = permutation_representation_group_stringify_point;
 }
 
 
@@ -440,6 +455,7 @@ static void permutation_representation_group_element_code_for_make_element(
 	exit(1);
 }
 
+#if 0
 static void permutation_representation_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
@@ -461,6 +477,7 @@ static void permutation_representation_group_element_print_for_make_element_no_c
 			"not yet implemented" << endl;
 	exit(1);
 }
+#endif
 
 static void permutation_representation_group_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
@@ -522,6 +539,17 @@ static void permutation_representation_group_print_point(
 			"not yet implemented" << endl;
 	exit(1);
 }
+
+static std::string permutation_representation_group_stringify_point(
+		action &A, long int a, int verbose_level)
+{
+	//permutation_representation &P = *A.G.Permutation_representation;
+
+	cout << "permutation_representation_group_stringify_point "
+			"not yet implemented" << endl;
+	exit(1);
+}
+
 
 }}}
 

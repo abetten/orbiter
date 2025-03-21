@@ -193,117 +193,18 @@ public:
 
 	algebra_global_with_action();
 	~algebra_global_with_action();
-	void orbits_under_conjugation(
-			long int *the_set, int set_size,
-			groups::sims *S,
-			groups::strong_generators *SG,
-			data_structures_groups::vector_ge *Transporter,
-			int verbose_level);
-	// this is related to Betten, Topalova, Zhelezova 2021,
-	// packings in PG(3,4) invariant under an elementary abelian group of order 4
-	void create_subgroups(
-			groups::strong_generators *SG,
-			long int *the_set, int set_size,
-			groups::sims *S,
-			actions::action *A_conj,
-			groups::schreier *Classes,
-			data_structures_groups::vector_ge *Transporter,
-			int verbose_level);
-	// this is related to Betten, Topalova, Zhelezova 2021,
-	// packings in PG(3,4) invariant under an elementary abelian group of order 4
-	void make_classes_GL(
-			algebra::field_theory::finite_field *F,
-			int d, int f_no_eigenvalue_one, int verbose_level);
-#if 0
-	void compute_rational_normal_form(
-			algebra::field_theory::finite_field *F,
-			int d,
-			int *matrix_data,
-			int *Basis, int *Rational_normal_form,
-			int verbose_level);
-	void do_identify_one(
-			int q, int d,
-			int f_no_eigenvalue_one, int elt_idx,
-			int verbose_level);
-	void do_identify_all(
-			int q, int d,
-			int f_no_eigenvalue_one, int verbose_level);
-	void do_random(
-			int q, int d,
-			int f_no_eigenvalue_one, int verbose_level);
-	void group_table(
-			int q, int d, int f_poly, std::string &poly,
-			int f_no_eigenvalue_one, int verbose_level);
-	void centralizer_in_PGL_d_q_single_element_brute_force(
-			int q, int d,
-			int elt_idx, int verbose_level);
-	void centralizer_in_PGL_d_q_single_element(
-			int q, int d,
-			int elt_idx, int verbose_level);
-	// creates a finite_field, and two actions
-	// using init_projective_group and init_general_linear_group
-	void compute_centralizer_of_all_elements_in_PGL_d_q(
-			int q, int d, int verbose_level);
-#endif
-	void compute_regular_representation(
-			actions::action *A, groups::sims *S,
-			data_structures_groups::vector_ge *SG,
-			int *&perm, int verbose_level);
-	// allocates perm[SG->len * goi]
-#if 0
-	void presentation(
-			actions::action *A,
-			groups::sims *S, int goi,
-			data_structures_groups::vector_ge *gens,
-		int *primes, int verbose_level);
-#endif
 
-	void do_eigenstuff_with_coefficients(
-			algebra::field_theory::finite_field *F,
-			int n, std::string &coeffs_text,
+	void element_processing(
+			groups::any_group *Any_group,
+			element_processing_description *element_processing_descr,
 			int verbose_level);
-	void do_eigenstuff_from_file(
-			algebra::field_theory::finite_field *F,
-			int n, std::string &fname, int verbose_level);
-	void do_eigenstuff(
-			algebra::field_theory::finite_field *F,
-			int size, int *Data, int verbose_level);
 
 
 	void young_symmetrizer(
 			int n, int verbose_level);
 	void young_symmetrizer_sym_4(
 			int verbose_level);
-	void linear_codes_with_bounded_minimum_distance(
-			poset_classification::poset_classification_control *Control,
-			group_constructions::linear_group *LG,
-			int d, int target_depth,
-			poset_classification::poset_classification *&PC,
-			int verbose_level);
-	void permutation_representation_of_element(
-			actions::action *A,
-			std::string &element_description,
-			int verbose_level);
-	void representation_on_polynomials(
-			group_constructions::linear_group *LG,
-			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
-			int verbose_level);
 
-	void search_element_of_order(
-			groups::any_group *Any_group,
-			actions::action *A1, actions::action *A2,
-			int order, int verbose_level);
-	void find_standard_generators(
-			groups::any_group *Any_group,
-			actions::action *A1, actions::action *A2,
-			int order_a, int order_b, int order_ab,
-			int verbose_level);
-	void find_standard_generators_M24(
-			groups::any_group *Any_group,
-			actions::action *A1, actions::action *A2,
-			int *Elt_a, int *Elt_b,
-			int verbose_level);
-	// the order will be computed using the action A2
 	void do_character_table_symmetric_group(
 			int deg, int verbose_level);
 	void group_of_automorphisms_by_images_of_generators(
@@ -345,41 +246,12 @@ public:
 			int *Elt,
 			int *perm, long int go,
 			int verbose_level);
-	void do_orbits_on_subspaces(
-			groups::any_group *Any_group,
-			poset_classification::poset_classification_control *Control,
-			orbits::orbits_on_subspaces *&OoS,
-			int depth, int verbose_level);
-	void do_tensor_classify(
-			groups::any_group *Any_group,
-			std::string &control_label,
-			apps_geometry::tensor_classify *&T,
-			int depth, int verbose_level);
-	void do_tensor_permutations(
-			groups::any_group *Any_group,
-			int verbose_level);
-	void do_linear_codes(
-			groups::any_group *Any_group,
-			std::string &control_label,
-			int minimum_distance,
-			int target_size,
-			poset_classification::poset_classification *&PC,
-			int verbose_level);
-	void do_classify_ovoids(
-			groups::any_group *Any_group,
-			apps_geometry::ovoid_classify_description
-				*Ovoid_classify_description,
-			int verbose_level);
+
 	void print_action_on_surface(
 			groups::any_group *Any_group,
 			std::string &surface_label,
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
-			//int *element_data, int nb_elements,
-			int verbose_level);
-	void element_processing(
-			groups::any_group *Any_group,
-			element_processing_description *element_processing_descr,
 			int verbose_level);
 	void subgroup_lattice_identify_subgroup(
 			groups::any_group *Any_group,
@@ -392,37 +264,9 @@ public:
 			groups::any_group *P,
 			groups::any_group *Q,
 			int verbose_level);
-	void modified_group_init(
-			group_constructions::modified_group_create *Modified_group_create,
-			group_constructions::group_modification_description *Descr,
-			int verbose_level);
-	void create_point_stabilizer_subgroup(
-			group_constructions::modified_group_create *Modified_group_create,
-			group_constructions::group_modification_description *Descr,
-			int verbose_level);
-	// output in A_modified and Strong_gens
-	void create_set_stabilizer_subgroup(
-			group_constructions::modified_group_create *Modified_group_create,
-			group_constructions::group_modification_description *Descr,
-			int verbose_level);
-	// output in A_modified and Strong_gens
-	void modified_group_create_stabilizer_of_variety(
-			group_constructions::modified_group_create *Modified_group_create,
-			group_constructions::group_modification_description *Descr,
-			std::string &variety_label,
-			int verbose_level);
-	void create_subgroup_by_generators(
-			group_constructions::modified_group_create *Modified_group_create,
-			group_constructions::group_modification_description *Descr,
-			std::string &subgroup_by_generators_label,
-			int verbose_level);
-	void conjugacy_class_of(
-			groups::any_group *Any_group,
-			std::string &label_of_class,
-			std::string &elt_data,
-			int verbose_level);
-	// uses orbits_schreier::orbit_of_sets
-	// needs Subgroup_sims to set up action by conjugation
+
+
+
 	void identify_subgroups_from_file(
 			groups::any_group *AG,
 			std::string &fname,
@@ -450,13 +294,6 @@ public:
 			int expand_by_go,
 			std::string &fname,
 			std::string &col_label,
-			int verbose_level);
-	void identify_elements_by_classes(
-			groups::sims *Sims,
-			groups::any_group *Any_group,
-			int expand_by_go,
-			long int *Elt_rk, int nb_elements,
-			int *&class_index,
 			int verbose_level);
 	void identify_elements_by_classes(
 			groups::sims *Sims,
@@ -682,8 +519,10 @@ public:
 
 	int f_order_of_products_of_pairs;
 
+#if 0
 	// ToDo: undocumented
 	int f_products_of_pairs;
+#endif
 
 	int f_conjugate;
 	std::string conjugate_data;
@@ -1061,6 +900,52 @@ public:
 };
 
 
+
+
+// #############################################################################
+// modified_group_init_layer5.cpp
+// #############################################################################
+
+
+//! creating a modified group, using tools that are only available at layer 5
+
+class modified_group_init_layer5 {
+
+public:
+
+	modified_group_init_layer5();
+	~modified_group_init_layer5();
+
+	void modified_group_init(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			int verbose_level);
+	void create_point_stabilizer_subgroup(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			int verbose_level);
+	// output in A_modified and Strong_gens
+	void create_set_stabilizer_subgroup(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			int verbose_level);
+	// output in A_modified and Strong_gens
+	void modified_group_create_stabilizer_of_variety(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			std::string &variety_label,
+			int verbose_level);
+	void create_subgroup_by_generators(
+			group_constructions::modified_group_create *Modified_group_create,
+			group_constructions::group_modification_description *Descr,
+			std::string &subgroup_by_generators_label,
+			int verbose_level);
+
+
+
+};
+
+
 // #############################################################################
 // orbit_of_elements.cpp
 // #############################################################################
@@ -1171,6 +1056,69 @@ public:
 };
 
 
+// #############################################################################
+// rational_normal_form.cpp
+// #############################################################################
+
+
+//! the rational normal form of an endomorphism
+
+class rational_normal_form {
+public:
+
+	rational_normal_form();
+	~rational_normal_form();
+	void make_classes_GL(
+			algebra::field_theory::finite_field *F,
+			int d, int f_no_eigenvalue_one, int verbose_level);
+#if 0
+	void compute_rational_normal_form(
+			algebra::field_theory::finite_field *F,
+			int d,
+			int *matrix_data,
+			int *Basis, int *Rational_normal_form,
+			int verbose_level);
+	void do_identify_one(
+			int q, int d,
+			int f_no_eigenvalue_one, int elt_idx,
+			int verbose_level);
+	void do_identify_all(
+			int q, int d,
+			int f_no_eigenvalue_one, int verbose_level);
+	void do_random(
+			int q, int d,
+			int f_no_eigenvalue_one, int verbose_level);
+	void group_table(
+			int q, int d, int f_poly, std::string &poly,
+			int f_no_eigenvalue_one, int verbose_level);
+	void centralizer_in_PGL_d_q_single_element_brute_force(
+			int q, int d,
+			int elt_idx, int verbose_level);
+	void centralizer_in_PGL_d_q_single_element(
+			int q, int d,
+			int elt_idx, int verbose_level);
+	// creates a finite_field, and two actions
+	// using init_projective_group and init_general_linear_group
+	void compute_centralizer_of_all_elements_in_PGL_d_q(
+			int q, int d, int verbose_level);
+#endif
+	void do_eigenstuff_with_coefficients(
+			algebra::field_theory::finite_field *F,
+			int n, std::string &coeffs_text,
+			int verbose_level);
+	void do_eigenstuff_from_file(
+			algebra::field_theory::finite_field *F,
+			int n, std::string &fname, int verbose_level);
+	void do_eigenstuff(
+			algebra::field_theory::finite_field *F,
+			int size, int *Data, int verbose_level);
+
+
+};
+
+
+
+
 
 
 // #############################################################################
@@ -1216,6 +1164,8 @@ public:
 	// returns two vectors:
 	// the rational canonical forms and the base change matrices
 
+	// ToDo: not documented
+	int f_products_of_pairs;
 
 
 	vector_ge_activity_description();

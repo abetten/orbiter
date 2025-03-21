@@ -668,10 +668,12 @@ void action::strong_generators_at_depth(
 	gen.len = n;
 }
 
+#if 0
 void action::compute_point_stabilizer_chain(
 		data_structures_groups::vector_ge &gen,
 		groups::sims *S, int *sequence, int len,
 		int verbose_level)
+// unused code
 // S points to len + 1 many sims objects
 {
 	int f_v = (verbose_level >= 1);
@@ -737,10 +739,12 @@ void action::compute_point_stabilizer_chain(
 		}
 	}
 }
+#endif
 
 void action::compute_stabilizer_orbits(
 		other::data_structures::partitionstack *&Staborbits,
 		int verbose_level)
+// used in backtrack.cpp
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

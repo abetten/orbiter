@@ -906,6 +906,8 @@ public:
 		int f_on_points, int f_on_lines,
 		int f_on_points_and_lines,
 		int verbose_level);
+	std::string stringify_point(
+			long int rk);
 	void unrank_point(
 			int *v, long int rk);
 	long int rank_point(
@@ -1148,6 +1150,8 @@ public:
 	//		int *Elt, int *Mtx2, int verbose_level);
 	void element_print_latex(
 			int *A, std::ostream &ost);
+	std::string element_stringify(
+			int *Elt);
 };
 
 
@@ -1209,6 +1213,8 @@ public:
 			int *A, std::ostream &ost);
 	void element_print_latex(
 			int *A, std::ostream &ost);
+	std::string element_stringify(
+			int *A);
 	void make_element(
 			int *Elt, int *data, int verbose_level);
 };

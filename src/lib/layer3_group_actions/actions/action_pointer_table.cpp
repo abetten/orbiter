@@ -79,7 +79,9 @@ void action_pointer_table::save_stats(
 void action_pointer_table::null_function_pointers()
 {
 	label.assign("null");
-	// 27 function pointers:
+	// 25 function pointers:
+
+	// the first 10:
 	ptr_element_image_of = NULL;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;
@@ -90,6 +92,8 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_pack = NULL;
 	ptr_element_retrieve = NULL;
 	ptr_element_store = NULL;
+
+	// the second 10:
 	ptr_element_mult = NULL;
 	ptr_element_invert = NULL;
 	ptr_element_transpose = NULL;
@@ -100,13 +104,18 @@ void action_pointer_table::null_function_pointers()
 	ptr_element_print_latex = NULL;
 	ptr_element_stringify = NULL;
 	ptr_element_print_latex_with_point_labels = NULL;
+
+	// the next 6:
 	ptr_element_print_verbose = NULL;
 	ptr_element_code_for_make_element = NULL;
+#if 0
 	ptr_element_print_for_make_element = NULL;
 	ptr_element_print_for_make_element_no_commas = NULL;
+#endif
 	ptr_print_point = NULL;
 	ptr_unrank_point = NULL;
 	ptr_rank_point = NULL;
+	ptr_stringify_point = NULL;
 }
 
 
@@ -115,7 +124,9 @@ void action_pointer_table::null_function_pointers()
 void action_pointer_table::copy_from_but_reset_counters(
 		action_pointer_table *T)
 {
-	// copy 27 function pointers:
+	// copy 25 function pointers:
+
+	// the first 10:
 	ptr_element_image_of = T->ptr_element_image_of;
 	ptr_element_image_of_low_level = T->ptr_element_image_of_low_level;
 	ptr_element_linear_entry_ij = T->ptr_element_linear_entry_ij;
@@ -126,6 +137,9 @@ void action_pointer_table::copy_from_but_reset_counters(
 	ptr_element_pack = T->ptr_element_pack;
 	ptr_element_retrieve = T->ptr_element_retrieve;
 	ptr_element_store = T->ptr_element_store;
+
+
+	// the next 10:
 	ptr_element_mult = T->ptr_element_mult;
 	ptr_element_invert = T->ptr_element_invert;
 	ptr_element_transpose = T->ptr_element_transpose;
@@ -136,13 +150,18 @@ void action_pointer_table::copy_from_but_reset_counters(
 	ptr_element_print_latex = T->ptr_element_print_latex;
 	ptr_element_stringify = T->ptr_element_stringify;
 	ptr_element_print_latex_with_point_labels = T->ptr_element_print_latex_with_point_labels;
+
+	// the next 6:
 	ptr_element_print_verbose = T->ptr_element_print_verbose;
 	ptr_element_code_for_make_element = T->ptr_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element = T->ptr_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas = T->ptr_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = T->ptr_print_point;
 	ptr_unrank_point = T->ptr_unrank_point;
 	ptr_rank_point = T->ptr_rank_point;
+	ptr_stringify_point = T->ptr_stringify_point;
 	reset_counters();
 }
 

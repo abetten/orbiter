@@ -21,6 +21,21 @@ namespace geometry {
 namespace orthogonal_geometry {
 
 
+std::string hyperbolic_pair::stringify_point(
+		long int rk, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	std::string s;
+
+	if (f_v) {
+		cout << "hyperbolic_pair::stringify_point" << endl;
+	}
+
+	unrank_point(rk_pt_v, 1, rk, verbose_level - 1);
+	s = Int_vec_stringify(rk_pt_v, n);
+	return s;
+}
+
 void hyperbolic_pair::unrank_point(
 		int *v, int stride, long int rk, int verbose_level)
 {

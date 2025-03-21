@@ -377,6 +377,12 @@ public:
 			int *Data, int data_sz,
 			std::string &new_col_label,
 			int verbose_level);
+	void append_column_of_int_from_set_of_sets(
+			std::string &fname,
+			std::string &fname_out,
+			other::data_structures::set_of_sets_lint *SoS,
+			std::string &new_col_label,
+			int verbose_level);
 	void write_STL_lint_vec(
 			std::string &fname_out,
 			std::vector<long int> &Gens,

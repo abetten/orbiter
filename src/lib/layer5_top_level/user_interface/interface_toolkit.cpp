@@ -236,6 +236,10 @@ interface_toolkit::interface_toolkit()
 	//std::string intersect_with_vector;
 	//std::string intersect_with_data;
 
+	f_make_set_of_sets = false;
+	//std::string make_set_of_sets_fname_in;
+	//std::string make_set_of_sets_new_col_label;
+	//std::string make_set_of_sets_list;
 
 }
 
@@ -394,8 +398,13 @@ void interface_toolkit::print_help(
 	else if (ST.stringcmp(argv[i], "-intersect_with") == 0) {
 		cout << "-intersect_with <string : vector> <string : data>" << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-make_set_of_sets") == 0) {
+		cout << "-make_set_of_sets <string : fname_in> <string : new_col_label> <string : labels>" << endl;
+	}
 
 }
+
+
 
 int interface_toolkit::recognize_keyword(
 		int argc,
@@ -546,6 +555,9 @@ int interface_toolkit::recognize_keyword(
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-intersect_with") == 0) {
+		return true;
+	}
+	else if (ST.stringcmp(argv[i], "-make_set_of_sets") == 0) {
 		return true;
 	}
 	return false;
@@ -1256,6 +1268,19 @@ void interface_toolkit::read_arguments(
 				<< " " << intersect_with_data << endl;
 		}
 	}
+	else if (ST.stringcmp(argv[i], "-make_set_of_sets") == 0) {
+		f_make_set_of_sets = true;
+		make_set_of_sets_fname_in.assign(argv[++i]);
+		make_set_of_sets_new_col_label.assign(argv[++i]);
+		make_set_of_sets_list.assign(argv[++i]);
+		if (f_v) {
+			cout << "-make_set_of_sets "
+					<< make_set_of_sets_fname_in << " "
+					<< make_set_of_sets_new_col_label << " "
+					<< make_set_of_sets_list<< endl;
+		}
+	}
+
 
 
 	if (f_v) {
@@ -1539,6 +1564,12 @@ void interface_toolkit::print()
 		cout << "-intersect_with "
 				<< intersect_with_vector
 			<< " " << intersect_with_data << endl;
+	}
+	if (f_make_set_of_sets) {
+		cout << "-make_set_of_sets "
+				<< make_set_of_sets_fname_in << " "
+				<< make_set_of_sets_new_col_label << " "
+				<< make_set_of_sets_list<< endl;
 	}
 }
 
@@ -2645,6 +2676,79 @@ void interface_toolkit::worker(
 		cout << "type = " << idx << " has " << T.Set_partition->Set_size[idx] << " elements" << endl;
 		Lint_vec_print_fully(cout, T.Set_partition->Sets[idx], T.Set_partition->Set_size[idx]);
 		cout << endl;
+
+	}
+	else if (f_make_set_of_sets) {
+
+		if (f_v) {
+			cout << "interface_toolkit::worker "
+					" fname_in = " << make_set_of_sets_fname_in
+					<< " new_col_label = " << make_set_of_sets_new_col_label
+					<< " list " << make_set_of_sets_list << endl;
+		}
+
+
+		other::data_structures::string_tools ST;
+		std::vector<std::string> list;
+
+		ST.parse_comma_separated_list(
+				make_set_of_sets_list, list,
+				verbose_level);
+
+
+		other::data_structures::set_of_sets_lint *SoS;
+
+		SoS = NEW_OBJECT(other::data_structures::set_of_sets_lint);
+
+		long int underlying_set_size = 0;
+
+		SoS->init_simple(
+				underlying_set_size,
+				list.size(),
+				0 /* verbose_level */);
+
+
+
+		int i;
+
+		for (i = 0; i < list.size(); i++) {
+
+			long int *data;
+			int sz;
+
+			Get_lint_vector_from_label(
+					list[i],
+					data, sz,
+					verbose_level);
+
+			if (f_v) {
+				cout << "data: ";
+				Lint_vec_print(cout, data, sz);
+				cout << endl;
+			}
+
+			SoS->init_set(
+					i /* idx_of_set */,
+					data, sz,
+					0 /* verbose_level */);
+
+
+			FREE_lint(data);
+
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		std::string fname_out;
+
+
+		Fio.Csv_file_support->append_column_of_int_from_set_of_sets(
+				make_set_of_sets_fname_in,
+				fname_out,
+				SoS,
+				make_set_of_sets_new_col_label,
+				verbose_level);
+
+		FREE_OBJECT(SoS);
 
 	}
 

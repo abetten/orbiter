@@ -310,10 +310,27 @@ long int group_element::rank_point(
 		cout << "group_element::rank_point "
 				"ptr_rank_point == NULL, "
 				"label=" << A->ptr->label << endl;
-		//exit(1);
-		return 0;
+		exit(1);
+		//return 0;
 	}
 	return (*A->ptr->ptr_rank_point)(*A, v, verbose_level);
+}
+
+std::string group_element::stringify_point(
+		long int rk, int verbose_level)
+{
+	string s;
+
+	if (A->ptr->ptr_stringify_point == NULL) {
+		cout << "group_element::stringify_point "
+				"ptr_stringify_point == NULL, "
+				"label=" << A->ptr->label << endl;
+		exit(1);
+	}
+	else {
+		s = (*A->ptr->ptr_stringify_point)(*A, rk, verbose_level);
+	}
+	return s;
 }
 
 void group_element::code_for_make_element(
@@ -325,13 +342,15 @@ void group_element::code_for_make_element(
 void group_element::print_for_make_element(
 		ostream &ost, void *elt)
 {
-	(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
+	element_print_for_make_element(elt, ost);
+	//(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
 }
 
 void group_element::print_for_make_element_no_commas(
 		ostream &ost, void *elt)
 {
-	(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
+	element_print_for_make_element_no_commas(elt, ost);
+	//(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
 }
 
 
@@ -539,6 +558,11 @@ void group_element::element_print_latex(
 std::string group_element::element_stringify(
 		void *elt, std::string &options)
 {
+	cout << "group_element::element_stringify before (*A->ptr->ptr_element_stringify)" << endl;
+	if (A->ptr->ptr_element_stringify == NULL) {
+		cout << "group_element::element_stringify A->ptr->ptr_element_stringify == NULL" << endl;
+		exit(1);
+	}
 	return (*A->ptr->ptr_element_stringify)(*A, elt, options);
 }
 
@@ -594,13 +618,31 @@ std::string group_element::element_stringify_code_for_make_element(
 void group_element::element_print_for_make_element(
 		void *elt, std::ostream &ost)
 {
-	(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
+	int *data;
+
+	data = NEW_int(A->make_element_size);
+	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
+	Int_vec_print_bare_fully(ost, data, A->make_element_size);
+	FREE_int(data);
+	//(*A->ptr->ptr_element_print_for_make_element)(*A, elt, ost);
 }
 
 void group_element::element_print_for_make_element_no_commas(
 		void *elt, std::ostream &ost)
 {
-	(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
+	int *data;
+
+	data = NEW_int(A->make_element_size);
+	(*A->ptr->ptr_element_code_for_make_element)(*A, elt, data);
+
+	int i;
+
+	for (i = 0; i < A->make_element_size; i++) {
+		ost << data[i] << " ";
+	}
+	//Int_vec_print_bare_fully(ost, data, A->make_element_size);
+	FREE_int(data);
+	//(*A->ptr->ptr_element_print_for_make_element_no_commas)(*A, elt, ost);
 }
 
 void group_element::element_print_as_permutation(
@@ -1246,7 +1288,7 @@ int group_element::element_order_if_divisor_of(
 				cout << "group_element::element_order_if_divisor_of "
 						"have_seen[next]" << endl;
 				exit(1);
-				}
+			}
 			l1 = next;
 			len++;
 		}
@@ -2724,11 +2766,13 @@ int group_element::test_if_it_fixes_the_polynomial(
 		cout << "group_element::test_if_it_fixes_the_polynomial "
 				"before action_on_polynomial" << endl;
 	}
+
 	action_on_polynomial(
 		Elt,
 		input1, output,
 		HPD,
 		verbose_level - 1);
+
 	if (f_v) {
 		cout << "group_element::test_if_it_fixes_the_polynomial "
 				"after action_on_polynomial" << endl;

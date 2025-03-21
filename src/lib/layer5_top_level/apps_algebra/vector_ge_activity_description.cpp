@@ -51,6 +51,8 @@ vector_ge_activity_description::vector_ge_activity_description()
 
 	f_rational_canonical_form = false;
 
+	f_products_of_pairs = false;
+
 }
 
 vector_ge_activity_description::~vector_ge_activity_description()
@@ -142,6 +144,12 @@ int vector_ge_activity_description::read_arguments(
 				cout << "-rational_canonical_form " << endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-products_of_pairs") == 0) {
+			f_products_of_pairs = true;
+			if (f_v) {
+				cout << "-products_of_pairs " << endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -197,6 +205,9 @@ void vector_ge_activity_description::print()
 	}
 	if (f_rational_canonical_form) {
 		cout << "-rational_canonical_form " << endl;
+	}
+	if (f_products_of_pairs) {
+		cout << "-products_of_pairs " << endl;
 	}
 
 }

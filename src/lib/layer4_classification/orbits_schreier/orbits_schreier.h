@@ -215,7 +215,7 @@ public:
 	void get_label(
 			std::vector<int> &Label,
 			int verbose_level);
-	void export_tree_as_layered_graph(
+	void create_layered_graph_from_tree(
 			combinatorics::graph_theory::layered_graph *&LG,
 			int verbose_level);
 	void export_tree_as_layered_graph_to_file(

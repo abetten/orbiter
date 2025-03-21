@@ -950,8 +950,8 @@ void orbits_activity::do_export_levels(
 	}
 
 	if (OC->f_has_Orb) {
+
 		string fname_tree_mask;
-		string fname;
 
 		fname_tree_mask = "orbit_" + OC->Group->A->label + "_orbit_" + std::to_string(orbit_idx);
 		other::data_structures::set_of_sets *SoS;
@@ -961,9 +961,30 @@ void orbits_activity::do_export_levels(
 				SoS,
 				verbose_level);
 
-		int i;
 
 		other::orbiter_kernel_system::file_io Fio;
+
+		std::string fname_layers;
+
+		fname_layers = fname_tree_mask + "_level_sets.csv";
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels "
+					"before SoS->save_csv" << endl;
+		}
+
+		SoS->save_csv(
+				fname_layers,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orbits_activity::do_export_levels "
+					"after SoS->save_csv" << endl;
+		}
+
+#if 0
+		int i;
+		string fname;
 
 		for (i = 0; i < SoS->nb_sets; i++) {
 			fname = fname_tree_mask + "_level_" + std::to_string(i) + ".csv";
@@ -1030,6 +1051,8 @@ void orbits_activity::do_export_levels(
 			FREE_int(Labels);
 
 		}
+#endif
+
 	}
 	else if (OC->f_has_On_subsets) {
 

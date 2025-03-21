@@ -105,6 +105,16 @@ void action_on_orthogonal::init(
 	}
 }
 
+std::string action_on_orthogonal::stringify_point(
+		long int rk)
+{
+	string s;
+
+	s = O->Hyperbolic_pair->stringify_point(
+			rk, 0 /* verbose_level */);
+	return s;
+}
+
 void action_on_orthogonal::unrank_point(
 		int *v, long int rk)
 {

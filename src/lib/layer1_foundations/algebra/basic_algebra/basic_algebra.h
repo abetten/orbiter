@@ -757,6 +757,8 @@ public:
 			int hdl, int verbose_level);
 	void print_point(
 			long int a, std::ostream &ost, int verbose_level);
+	std::string stringify_point(
+			long int rk, int verbose_level);
 	void unrank_point(
 			long int rk, int *v, int verbose_level);
 	long int rank_point(

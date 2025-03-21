@@ -96,6 +96,16 @@ void group_theoretic_activity::perform_activity(
 					"f_report" << endl;
 		}
 
+		groups::sims *Sims;
+		if (AG->Subgroup_sims == NULL) {
+			cout << "group_theoretic_activity::perform_activity "
+					"Subgroup_sims == NULL" << endl;
+			exit(1);
+		}
+
+		Sims = AG->Subgroup_sims;
+
+
 		other::graphics::layered_graph_draw_options *Draw_options;
 
 		Draw_options = Get_draw_options(Descr->report_draw_options);
@@ -106,7 +116,10 @@ void group_theoretic_activity::perform_activity(
 		}
 		AG->create_latex_report(
 				Draw_options,
+				Sims,
 				verbose_level);
+
+
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
 					"after AG->create_latex_report" << endl;
@@ -339,22 +352,22 @@ void group_theoretic_activity::perform_activity(
 					"f_permutation_representation_of_element" << endl;
 		}
 
-		algebra_global_with_action Algebra;
+		groups::group_theory_global Group_theory_global;
 
 
 
 		if (f_v) {
 			cout << "any_group::permutation_representation_of_element "
-					"before Algebra.permutation_representation_of_element" << endl;
+					"before Group_theory_global.permutation_representation_of_element" << endl;
 		}
-		Algebra.permutation_representation_of_element(
+		Group_theory_global.permutation_representation_of_element(
 				AG->A,
 				Descr->permutation_representation_element_text,
 				verbose_level);
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after AG->permutation_representation_of_element" << endl;
+					"after Group_theory_global.permutation_representation_of_element" << endl;
 		}
 	}
 
@@ -557,20 +570,19 @@ void group_theoretic_activity::perform_activity(
 					"f_search_element_of_order" << endl;
 		}
 
-		algebra_global_with_action Algebra;
-
+		groups::group_theory_global Group_theory_global;
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra.search_element_of_order" << endl;
+					"before Group_theory_global.search_element_of_order" << endl;
 		}
-		Algebra.search_element_of_order(
-				AG,
+		Group_theory_global.search_element_of_order(
+				AG->Subgroup_sims,
 				AG->A, AG->A,
 				Descr->search_element_order,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra.search_element_of_order" << endl;
+					"after Group_theory_global.search_element_of_order" << endl;
 		}
 	}
 
@@ -581,14 +593,14 @@ void group_theoretic_activity::perform_activity(
 					"f_find_standard_generators" << endl;
 		}
 
-		algebra_global_with_action Algebra;
+		groups::group_theory_global Group_theory_global;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra.find_standard_generators" << endl;
+					"before Group_theory_global.find_standard_generators" << endl;
 		}
-		Algebra.find_standard_generators(
-				AG,
+		Group_theory_global.find_standard_generators(
+				AG->Subgroup_sims,
 				AG->A, AG->A,
 				Descr->find_standard_generators_order_a,
 				Descr->find_standard_generators_order_b,
@@ -598,7 +610,7 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra.find_standard_generators" << endl;
+					"after Group_theory_global.find_standard_generators" << endl;
 		}
 
 	}
@@ -611,7 +623,7 @@ void group_theoretic_activity::perform_activity(
 					"f_find_standard_generators_M24" << endl;
 		}
 
-		algebra_global_with_action Algebra;
+		groups::group_theory_global Group_theory_global;
 		int *Elt_a;
 		int *Elt_b;
 
@@ -621,10 +633,10 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra.find_standard_generators_M24" << endl;
+					"before Group_theory_global.find_standard_generators_M24" << endl;
 		}
-		Algebra.find_standard_generators_M24(
-				AG,
+		Group_theory_global.find_standard_generators_M24(
+				AG->Subgroup_sims,
 				AG->A, AG->A,
 				Elt_a, Elt_b,
 				verbose_level);
@@ -632,7 +644,7 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra.find_standard_generators_M24" << endl;
+					"after Group_theory_global.find_standard_generators_M24" << endl;
 		}
 
 		FREE_int(Elt_a);
@@ -835,7 +847,7 @@ void group_theoretic_activity::perform_activity(
 
 		algebra_global_with_action Algebra_global_with_action;
 
-		int expand_by_go = 1000;
+		int expand_by_go = 10000;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
@@ -995,7 +1007,8 @@ void group_theoretic_activity::perform_activity(
 			AG,
 			Any_group_G,
 			Descr->identify_elements_by_class_expand_go,
-			Descr->identify_elements_by_class_fname, Descr->identify_elements_by_class_column,
+			Descr->identify_elements_by_class_fname,
+			Descr->identify_elements_by_class_column,
 			Class_index,
 			verbose_level);
 		if (f_v) {
@@ -1029,20 +1042,20 @@ void group_theoretic_activity::perform_activity(
 					"f_conjugacy_class_of" << endl;
 		}
 
-		algebra_global_with_action Algebra_global_with_action;
+		orbits::orbits_global Orbits_global;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra_global_with_action.conjugacy_class_of" << endl;
+					"before Orbits_global.conjugacy_class_of" << endl;
 		}
-		Algebra_global_with_action.conjugacy_class_of(
+		Orbits_global.conjugacy_class_of(
 				AG,
 				Descr->conjugacy_class_of_label,
 				Descr->conjugacy_class_of_data,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra_global_with_action.conjugacy_class_of" << endl;
+					"after Orbits_global.conjugacy_class_of" << endl;
 		}
 	}
 	else if (Descr->f_isomorphism_Klein_quadric) {
@@ -1962,14 +1975,14 @@ void group_theoretic_activity::perform_activity(
 					"f_linear_codes" << endl;
 		}
 
-		algebra_global_with_action Algebra_global_with_action;
+		orbits::orbits_global Orbits_global;
 		poset_classification::poset_classification *PC;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra_global_with_action.do_linear_codes" << endl;
+					"before Orbits_global.do_linear_codes" << endl;
 		}
-		Algebra_global_with_action.do_linear_codes(
+		Orbits_global.do_linear_codes(
 				AG,
 				Descr->linear_codes_control,
 				Descr->linear_codes_minimum_distance,
@@ -1978,7 +1991,7 @@ void group_theoretic_activity::perform_activity(
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra_global_with_action.do_linear_codes" << endl;
+					"after Orbits_global.do_linear_codes" << endl;
 		}
 	}
 
@@ -1989,18 +2002,18 @@ void group_theoretic_activity::perform_activity(
 					"f_tensor_permutations" << endl;
 		}
 
-		algebra_global_with_action Algebra_global_with_action;
+		orbits::orbits_global Orbits_global;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra_global_with_action.do_tensor_permutations" << endl;
+					"before Orbits_global.do_tensor_permutations" << endl;
 		}
-		Algebra_global_with_action.do_tensor_permutations(
+		Orbits_global.do_tensor_permutations(
 				AG,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra_global_with_action.do_tensor_permutations" << endl;
+					"after Orbits_global.do_tensor_permutations" << endl;
 		}
 	}
 
@@ -2012,19 +2025,19 @@ void group_theoretic_activity::perform_activity(
 					"f_classify_ovoids" << endl;
 		}
 
-		algebra_global_with_action Algebra_global_with_action;
+		orbits::orbits_global Orbits_global;
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra_global_with_action.do_classify_ovoids" << endl;
+					"before Orbits_global.do_classify_ovoids" << endl;
 		}
-		Algebra_global_with_action.do_classify_ovoids(
+		Orbits_global.do_classify_ovoids(
 				AG,
 				Descr->Ovoid_classify_description,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra_global_with_action.do_classify_ovoids" << endl;
+					"after Orbits_global.do_classify_ovoids" << endl;
 		}
 	}
 
@@ -2037,7 +2050,7 @@ void group_theoretic_activity::perform_activity(
 					"f_representation_on_polynomials" << endl;
 		}
 
-		algebra_global_with_action Algebra;
+		groups::group_theory_global Group_theory_global;
 
 		if (!AG->f_linear_group) {
 			cout << "Descr->f_representation_on_polynomials "
@@ -2053,15 +2066,15 @@ void group_theoretic_activity::perform_activity(
 
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"before Algebra.representation_on_polynomials" << endl;
+					"before Group_theory_global.representation_on_polynomials" << endl;
 		}
-		Algebra.representation_on_polynomials(
+		Group_theory_global.representation_on_polynomials(
 				AG->LG,
 				HPD,
 				verbose_level);
 		if (f_v) {
 			cout << "group_theoretic_activity::perform_activity "
-					"after Algebra.representation_on_polynomials" << endl;
+					"after Group_theory_global.representation_on_polynomials" << endl;
 		}
 
 	}

@@ -1139,7 +1139,7 @@ void interface_algebra::worker(
 
 	else if (f_all_rational_normal_forms) {
 
-		apps_algebra::algebra_global_with_action Algebra;
+		apps_algebra::rational_normal_form Rational_normal_form;
 
 		algebra::field_theory::finite_field *F;
 
@@ -1147,17 +1147,17 @@ void interface_algebra::worker(
 
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"before Algebra.make_classes_GL" << endl;
+					"before Rational_normal_form.make_classes_GL" << endl;
 		}
 
-		Algebra.make_classes_GL(
+		Rational_normal_form.make_classes_GL(
 				F, all_rational_normal_forms_d,
 				false /* f_no_eigenvalue_one */,
 				verbose_level);
 
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"after Algebra.make_classes_GL" << endl;
+					"after Rational_normal_form.make_classes_GL" << endl;
 		}
 
 
@@ -1262,7 +1262,7 @@ void interface_algebra::worker(
 	else if (f_eigenstuff) {
 
 
-		apps_algebra::algebra_global_with_action Algebra;
+		apps_algebra::rational_normal_form Rational_normal_form;
 		int *data;
 		int sz;
 		algebra::field_theory::finite_field *F;
@@ -1279,12 +1279,12 @@ void interface_algebra::worker(
 
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"before Algebra.do_eigenstuff" << endl;
+					"before Rational_normal_form.do_eigenstuff" << endl;
 		}
-		Algebra.do_eigenstuff(F, eigenstuff_n, data, verbose_level);
+		Rational_normal_form.do_eigenstuff(F, eigenstuff_n, data, verbose_level);
 		if (f_v) {
 			cout << "interface_algebra::worker "
-					"after Algebra.do_eigenstuff" << endl;
+					"after Rational_normal_form.do_eigenstuff" << endl;
 		}
 
 	}

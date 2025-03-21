@@ -32,13 +32,13 @@ action_by_right_multiplication::~action_by_right_multiplication()
 	Record_death();
 	if (Base_group && f_ownership) {
 		delete Base_group;
-		}
+	}
 	if (Elt1) {
 		FREE_int(Elt1);
-		}
+	}
 	if (Elt2) {
 		FREE_int(Elt2);
-		}
+	}
 }
 
 void action_by_right_multiplication::init(
@@ -58,8 +58,9 @@ void action_by_right_multiplication::init(
 	Base_group->group_order(go);
 	goi = go.as_int();
 	if (f_v) {
-		cout << "action_by_right_multiplication::init we are acting on a group of order " << goi << endl;
-		}
+		cout << "action_by_right_multiplication::init "
+				"we are acting on a group of order " << goi << endl;
+	}
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 }
@@ -73,17 +74,17 @@ long int action_by_right_multiplication::compute_image(
 
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image i = " << i << endl;
-		}
+	}
 	if (i < 0 || i >= goi) {
 		cout << "action_by_right_multiplication::compute_image i = " << i << " out of range" << endl;
 		exit(1);
-		}
+	}
 	Base_group->element_unrank_lint(i, Elt1);
 	A->Group_element->mult(Elt1, Elt, Elt2);
 	j = Base_group->element_rank_lint(Elt2);
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image image is " << j << endl;
-		}
+	}
 	return j;
 }
 

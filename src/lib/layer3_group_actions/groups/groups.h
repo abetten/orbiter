@@ -103,6 +103,7 @@ public:
 			int verbose_level);
 	void create_latex_report(
 			other::graphics::layered_graph_draw_options *O,
+			groups::sims *Sims,
 			int verbose_level);
 	void create_group_table_report(
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
@@ -210,10 +211,6 @@ public:
 			std::string &label_of_elements,
 			data_structures_groups::vector_ge *Elements,
 			//int *element_data, int nb_elements,
-			int verbose_level);
-	void products_of_pairs(
-			data_structures_groups::vector_ge *Elements,
-			data_structures_groups::vector_ge *&Products,
 			int verbose_level);
 	void conjugate(
 			std::string &label_of_elements,
@@ -472,6 +469,42 @@ public:
 	std::string order_invariant(
 			actions::action *A, groups::strong_generators *SG,
 			int verbose_level);
+	void search_element_of_order(
+			groups::sims *H,
+			actions::action *A1, actions::action *A2,
+			int order, int verbose_level);
+	void find_standard_generators(
+			groups::sims *H,
+			actions::action *A1, actions::action *A2,
+			int order_a, int order_b, int order_ab, int verbose_level);
+	void find_standard_generators_M24(
+			groups::sims *H,
+			actions::action *A1, actions::action *A2,
+			int *Elt_a, int *Elt_b,
+			int verbose_level);
+	void compute_regular_representation(
+			actions::action *A, groups::sims *S,
+			data_structures_groups::vector_ge *SG,
+			int *&perm, int verbose_level);
+	// allocates perm[SG->len * goi]
+
+#if 0
+	void presentation(
+			actions::action *A,
+			groups::sims *S, int goi,
+			data_structures_groups::vector_ge *gens,
+		int *primes, int verbose_level);
+#endif
+	void permutation_representation_of_element(
+			actions::action *A,
+			std::string &element_description,
+			int verbose_level);
+	void representation_on_polynomials(
+			group_constructions::linear_group *LG,
+			algebra::ring_theory::homogeneous_polynomial_domain *HPD,
+			int verbose_level);
+
+
 
 
 };
@@ -1884,6 +1917,8 @@ public:
 	void print_all_group_elements_as_permutations_in_special_action(
 			actions::action *A_special);
 	void print_all_transversal_elements();
+	void report_all_transversal_elements(
+			std::ostream &ost, int verbose_level);
 	void save_list_of_elements(
 			std::string &fname,
 		int verbose_level);
@@ -1895,6 +1930,8 @@ public:
 			std::string &prefix,
 			other::graphics::layered_graph_draw_options *LG_Draw_options,
 			int verbose_level);
+	void report_subgroup_chain(
+			std::ostream &ost);
 	void report_basic_orbit(
 			std::ostream &ost,
 			std::string &prefix,

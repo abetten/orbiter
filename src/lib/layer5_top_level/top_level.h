@@ -125,9 +125,11 @@ namespace apps_algebra {
 	class element_processing_description;
 	class group_theoretic_activity_description;
 	class group_theoretic_activity;
+	class modified_group_init_layer5;
 	class orbit_of_elements;
 	class orbit_of_subgroups;
 	class polynomial_ring_activity;
+	class rational_normal_form;
 	class vector_ge_activity_description;
 	class vector_ge_activity;
 	class vector_ge_builder;

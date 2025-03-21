@@ -670,14 +670,14 @@ void orbit_of_sets::get_label(
 	}
 }
 
-void orbit_of_sets::export_tree_as_layered_graph(
+void orbit_of_sets::create_layered_graph_from_tree(
 		combinatorics::graph_theory::layered_graph *&LG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbit_of_sets::export_tree_as_layered_graph" << endl;
+		cout << "orbit_of_sets::create_layered_graph_from_tree" << endl;
 	}
 
 	other::data_structures::algorithms Algorithms;
@@ -700,14 +700,14 @@ void orbit_of_sets::export_tree_as_layered_graph(
 		orbit[i] = i;
 		orbit_inv[i] = i;
 		prev[i] = Extra[2 * i + 0];
-		label[i] = Extra[2 * i + 1] + 1; // avoid 0=white. black is 1
+		label[i] = Extra[2 * i + 1]; // no +1 here to avoid 0=white. black is 1
 	}
 
 	if (f_v) {
-		cout << "orbit_of_sets::export_tree_as_layered_graph "
-				"before Algorithms.export_tree_as_layered_graph" << endl;
+		cout << "orbit_of_sets::create_layered_graph_from_tree "
+				"before Algorithms.create_layered_graph_from_tree" << endl;
 	}
-	Algorithms.export_tree_as_layered_graph(
+	Algorithms.create_layered_graph_from_tree(
 			used_length /* degree */,
 			orbit_first,
 			orbit_len,
@@ -719,7 +719,7 @@ void orbit_of_sets::export_tree_as_layered_graph(
 			LG,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "orbit_of_sets::export_tree_as_layered_graph "
+		cout << "orbit_of_sets::create_layered_graph_from_tree "
 				"after Algorithms.export_tree_as_layered_graph" << endl;
 	}
 
@@ -729,7 +729,7 @@ void orbit_of_sets::export_tree_as_layered_graph(
 	FREE_int(label);
 
 	if (f_v) {
-		cout << "orbit_of_sets::export_tree_as_layered_graph done" << endl;
+		cout << "orbit_of_sets::create_layered_graph_from_tree done" << endl;
 	}
 
 }
@@ -751,14 +751,14 @@ void orbit_of_sets::export_tree_as_layered_graph_to_file(
 
 	if (f_v) {
 		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
-				"before Orb.export_tree_as_layered_graph" << endl;
+				"before Orb.create_layered_graph_from_tree" << endl;
 	}
-	export_tree_as_layered_graph(
+	create_layered_graph_from_tree(
 			LG,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "orbit_of_sets::export_tree_as_layered_graph_to_file "
-				"after Orb.export_tree_as_layered_graph" << endl;
+				"after Orb.create_layered_graph_from_tree" << endl;
 	}
 
 

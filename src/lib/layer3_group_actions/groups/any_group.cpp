@@ -355,6 +355,7 @@ void any_group::create_latex_report(
 
 void any_group::create_latex_report(
 		other::graphics::layered_graph_draw_options *LG_Draw_options,
+		groups::sims *Sims,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -410,6 +411,7 @@ void any_group::create_latex_report(
 					label_tex,
 					A,
 					Subgroup_gens,
+					Sims,
 					LG_Draw_options,
 					verbose_level);
 			if (f_v) {
@@ -2401,7 +2403,7 @@ void any_group::order_of_products_of_pairs(
 	}
 }
 
-
+#if 0
 void any_group::products_of_pairs(
 		data_structures_groups::vector_ge *Elements,
 		data_structures_groups::vector_ge *&Products,
@@ -2453,7 +2455,7 @@ void any_group::products_of_pairs(
 		cout << "any_group::order_of_products_of_pairs done" << endl;
 	}
 }
-
+#endif
 
 
 
@@ -2462,7 +2464,6 @@ void any_group::conjugate(
 		std::string &label_of_elements,
 		std::string &conjugate_data,
 		data_structures_groups::vector_ge *Elements,
-		//int *element_data, int nb_elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -502,6 +502,71 @@ void vector_ge_activity::perform_activity(
 
 
 	}
+	else if (Descr->f_products_of_pairs) {
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"f_products_of_pairs" << endl;
+		}
+
+		actions::action_global Action_global;
+
+		data_structures_groups::vector_ge *Elements;
+		data_structures_groups::vector_ge *Products;
+
+		Elements = vec[0];
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before Action_global.products_of_pairs" << endl;
+		}
+		Action_global.products_of_pairs(
+				Elements,
+				Products,
+				verbose_level);
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after Action_global.products_of_pairs" << endl;
+		}
+
+		other::orbiter_kernel_system::file_io Fio;
+		string fname;
+
+		fname = (*with_labels)[0] + "_pairs.csv";
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"before Products->save_csv" << endl;
+		}
+		Products->save_csv(
+				fname, verbose_level);
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"after Products->save_csv" << endl;
+		}
+
+		if (f_v) {
+			cout << "vector_ge_activity::perform_activity "
+					"Written file " << fname << " of size "
+						<< Fio.file_size(fname) << endl;
+		}
+
+		nb_output = 1;
+		Output = NEW_OBJECTS(other::orbiter_kernel_system::orbiter_symbol_table_entry, nb_output);
+
+		string output_label0;
+
+		output_label0 = (*with_labels)[0] + "pairs";
+
+		apps_algebra::vector_ge_builder *VB0;
+
+		VB0 = NEW_OBJECT(apps_algebra::vector_ge_builder);
+
+		VB0->V = Products;
+
+		Output[0].init_vector_ge(output_label0, VB0, verbose_level);
+
+	}
 
 
 

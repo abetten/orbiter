@@ -79,18 +79,24 @@ static void perm_group_element_print_verbose(
 static void perm_group_element_code_for_make_element(
 		action &A,
 	void *elt, int *data);
+#if 0
 static void perm_group_element_print_for_make_element(
 		action &A,
 	void *elt, std::ostream &ost);
 static void perm_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
+#endif
 static void perm_group_print_point(
 		action &A, long int a, std::ostream &ost, int verbose_level);
+static std::string perm_group_stringify_point(
+		action &A, long int a, int verbose_level);
 
 
 void action_pointer_table::init_function_pointers_permutation_group()
 {
 	label.assign("function_pointers_permutation_group");
+
+	// the first 10:
 	ptr_element_image_of = perm_group_element_image_of;
 	ptr_element_image_of_low_level = NULL;
 	ptr_element_linear_entry_ij = NULL;
@@ -101,6 +107,9 @@ void action_pointer_table::init_function_pointers_permutation_group()
 	ptr_element_pack = perm_group_element_pack;
 	ptr_element_retrieve = perm_group_element_retrieve;
 	ptr_element_store = perm_group_element_store;
+
+
+	// the next 10:
 	ptr_element_mult = perm_group_element_mult;
 	ptr_element_invert = perm_group_element_invert;
 	ptr_element_transpose = NULL;
@@ -112,15 +121,22 @@ void action_pointer_table::init_function_pointers_permutation_group()
 	ptr_element_stringify = perm_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			perm_group_element_print_latex_with_point_labels;
+
+
+	// the next 5:
 	ptr_element_print_verbose = perm_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			perm_group_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element =
 			perm_group_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas =
 			perm_group_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = perm_group_print_point;
+	ptr_stringify_point = perm_group_stringify_point;
 }
+
 
 static long int perm_group_element_image_of(
 		action &A,
@@ -514,6 +530,7 @@ static void perm_group_element_code_for_make_element(
 	G.code_for_make_element(Elt, data);
 }
 
+#if 0
 static void perm_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
@@ -533,7 +550,7 @@ static void perm_group_element_print_for_make_element_no_commas(
 
 	G.print_for_make_element_no_commas(Elt, ost);
 }
-
+#endif
 
 static void perm_group_print_point(
 		action &A, long int a, std::ostream &ost, int verbose_level)
@@ -557,6 +574,35 @@ static void perm_group_print_point(
 		ost << a;
 	}
 }
+
+
+static std::string perm_group_stringify_point(
+		action &A, long int a, int verbose_level)
+{
+	group_constructions::permutation_representation_domain &G = *A.G.perm_grp;
+	string s;
+
+	if (G.f_product_action) {
+		if (a < G.offset) {
+			s = "r_{" + std::to_string(a) + "}";
+		}
+		else {
+			int x, y;
+
+			a -= G.offset;
+			x = a / G.n;
+			y = a % G.n;
+			s += "(" + std::to_string(x) + "," + std::to_string(y) + ")";
+		}
+	}
+	else {
+		//ost << a;
+	}
+	return s;
+}
+
+
+
 
 }}}
 

@@ -17,9 +17,11 @@ MODULES = \
 	element_processing_description.o \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
+	modified_group_init_layer5.o \
 	orbit_of_elements.o \
 	orbit_of_subgroups.o \
 	polynomial_ring_activity.o \
+	rational_normal_form.o \
 	vector_ge_activity_description.o \
 	vector_ge_activity.o \
 	vector_ge_builder.o \

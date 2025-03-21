@@ -76,10 +76,12 @@ static void polarity_extension_element_print(
 	void *elt, std::ostream &ost);
 static void polarity_extension_element_code_for_make_element(
 	action &A, void *elt, int *data);
+#if 0
 static void polarity_extension_element_print_for_make_element(
 	action &A, void *elt, std::ostream &ost);
 static void polarity_extension_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
+#endif
 static void polarity_extension_element_print_quick(
 		action &A,
 	void *elt, std::ostream &ost);
@@ -104,6 +106,8 @@ static void polarity_extension_unrank_point(
 		action &A, long int rk, int *v, int verbose_level);
 static long int polarity_extension_rank_point(
 		action &A, int *v, int verbose_level);
+static std::string polarity_extension_stringify_point(
+		action &A, long int rk, int verbose_level);
 
 
 
@@ -111,6 +115,8 @@ static long int polarity_extension_rank_point(
 void action_pointer_table::init_function_pointers_polarity_extension()
 {
 	label.assign("function_pointers_polarity_extension");
+
+	// the first 10:
 	ptr_element_image_of = polarity_extension_element_image_of;
 	ptr_element_image_of_low_level =
 			polarity_extension_element_image_of_low_level;
@@ -124,6 +130,9 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_pack = polarity_extension_element_pack;
 	ptr_element_retrieve = polarity_extension_element_retrieve;
 	ptr_element_store = polarity_extension_element_store;
+
+
+	// the next 10:
 	ptr_element_mult = polarity_extension_element_mult;
 	ptr_element_invert = polarity_extension_element_invert;
 	ptr_element_transpose = polarity_extension_element_transpose;
@@ -135,16 +144,22 @@ void action_pointer_table::init_function_pointers_polarity_extension()
 	ptr_element_stringify = polarity_extension_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			polarity_extension_element_print_latex_with_point_labels;
+
+
+	// the next 6:
 	ptr_element_print_verbose = polarity_extension_element_print_verbose;
 	ptr_element_code_for_make_element =
 			polarity_extension_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element =
 			polarity_extension_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas =
 			polarity_extension_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = polarity_extension_print_point;
 	ptr_unrank_point = polarity_extension_unrank_point;
 	ptr_rank_point = polarity_extension_rank_point;
+	ptr_stringify_point = polarity_extension_stringify_point;
 }
 
 
@@ -434,6 +449,7 @@ static void polarity_extension_element_code_for_make_element(
 			Elt, data);
 }
 
+#if 0
 static void polarity_extension_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
@@ -455,6 +471,7 @@ static void polarity_extension_element_print_for_make_element_no_commas(
 	P->element_print_for_make_element_no_commas(
 			Elt, ost);
 }
+#endif
 
 static void polarity_extension_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
@@ -564,6 +581,18 @@ static long int polarity_extension_rank_point(
 	rk = P.rank_point(v, verbose_level);
 
 	return rk;
+}
+
+static std::string polarity_extension_stringify_point(
+		action &A, long int rk, int verbose_level)
+{
+	//group_constructions::polarity_extension &P = *A.G.Polarity_extension;
+	string s;
+
+
+	//rk = P.rank_point(v, verbose_level);
+
+	return s;
 }
 
 

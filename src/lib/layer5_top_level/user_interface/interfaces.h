@@ -1155,6 +1155,12 @@ class interface_toolkit {
 	std::string intersect_with_vector;
 	std::string intersect_with_data;
 
+	// ToDo: undocumented
+	int f_make_set_of_sets;
+	std::string make_set_of_sets_fname_in;
+	std::string make_set_of_sets_new_col_label;
+	std::string make_set_of_sets_list;
+
 
 public:
 

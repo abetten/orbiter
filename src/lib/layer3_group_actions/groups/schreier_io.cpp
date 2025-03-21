@@ -1574,9 +1574,9 @@ void schreier::export_tree_as_layered_graph(
 
 	if (f_v) {
 		cout << "schreier::export_tree_as_layered_graph "
-				"before Algorithms.export_tree_as_layered_graph" << endl;
+				"before Algorithms.create_layered_graph_from_tree" << endl;
 	}
-	Algorithms.export_tree_as_layered_graph(
+	Algorithms.create_layered_graph_from_tree(
 			degree,
 			orbit_first,
 			orbit_len,
@@ -1588,7 +1588,7 @@ void schreier::export_tree_as_layered_graph(
 			LG,
 			verbose_level);
 	if (f_v) {
-		cout << "schreier::export_tree_as_layered_graph "
+		cout << "schreier::create_layered_graph_from_tree "
 				"after Algorithms.export_tree_as_layered_graph" << endl;
 	}
 

@@ -179,7 +179,8 @@ void known_groups::init_linear_group(
 	}
 
 	if (f_v) {
-		cout << "known_groups::init_linear_group dimension = " << A->dimension << endl;
+		cout << "known_groups::init_linear_group "
+				"dimension = " << A->dimension << endl;
 	}
 
 
@@ -561,6 +562,7 @@ void known_groups::setup_linear_group_from_strong_generators(
 		cout << "known_groups::setup_linear_group_from_strong_generators "
 				"before init_matrix_group_strong_generators_builtin" << endl;
 	}
+
 	init_matrix_group_strong_generators_builtin(
 			M,
 			nice_gens,

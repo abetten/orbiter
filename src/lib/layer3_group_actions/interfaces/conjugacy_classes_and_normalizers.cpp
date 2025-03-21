@@ -617,32 +617,37 @@ void conjugacy_classes_and_normalizers::report_summary_table(
 
 	other::l1_interfaces::latex_interface L;
 
-	int nb_pp = 20;
-	int nb_p, nb_r;
-	int I;
 
-	nb_p = (nb_classes + nb_pp - 1)/ nb_pp;
-	for (I = 0; I < nb_p; I++) {
 
-		if (I == nb_p - 1) {
-			nb_r = nb_rows - nb_pp * I;
+
+
+	{
+		int nb_pp = 20;
+		int nb_p, nb_r;
+		int I;
+
+		nb_p = (nb_classes + nb_pp - 1)/ nb_pp;
+		for (I = 0; I < nb_p; I++) {
+
+			if (I == nb_p - 1) {
+				nb_r = nb_rows - nb_pp * I;
+			}
+			else {
+				nb_r = nb_pp;
+			}
+			ost << "\\begin{center}" << endl;
+			L.print_tabular_of_strings(
+					ost,
+					Table + I * nb_pp * nb_cols, nb_r, nb_cols);
+			ost << "\\end{center}" << endl;
+
+
 		}
-		else {
-			nb_r = nb_pp;
-		}
-		ost << "\\begin{center}" << endl;
-		L.print_tabular_of_strings(
-				ost,
-				Table + I * nb_pp * nb_cols, nb_r, nb_cols);
-		ost << "\\end{center}" << endl;
 
-
+		ost << endl;
+		ost << "\\bigskip" << endl;
+		ost << endl;
 	}
-
-	ost << endl;
-	ost << "\\bigskip" << endl;
-	ost << endl;
-
 
 }
 

@@ -384,6 +384,13 @@ void action_on_wedge_product::element_print_latex(
 	ost << "f=" << f << endl;
 }
 
+std::string action_on_wedge_product::element_stringify(
+		int *Elt)
+{
+	string s;
+
+	return s;
+}
 
 
 }}}

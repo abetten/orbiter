@@ -560,9 +560,11 @@ ORBITER_MODULES= \
 		layer5_top_level/apps_algebra/element_processing_description.o \
 		layer5_top_level/apps_algebra/group_theoretic_activity_description.o \
 		layer5_top_level/apps_algebra/group_theoretic_activity.o \
+		layer5_top_level/apps_algebra/modified_group_init_layer5.o \
 		layer5_top_level/apps_algebra/orbit_of_elements.o \
 		layer5_top_level/apps_algebra/orbit_of_subgroups.o \
 		layer5_top_level/apps_algebra/polynomial_ring_activity.o \
+		layer5_top_level/apps_algebra/rational_normal_form.o \
 		layer5_top_level/apps_algebra/vector_ge_activity_description.o \
 		layer5_top_level/apps_algebra/vector_ge_activity.o \
 		layer5_top_level/apps_algebra/vector_ge_builder.o \

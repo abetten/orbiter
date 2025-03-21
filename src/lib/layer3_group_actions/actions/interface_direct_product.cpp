@@ -75,16 +75,20 @@ static void direct_product_group_element_print(
 	void *elt, std::ostream &ost);
 static void direct_product_group_element_code_for_make_element(
 	action &A, void *elt, int *data);
+#if 0
 static void direct_product_group_element_print_for_make_element(
 	action &A, void *elt, std::ostream &ost);
 static void direct_product_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, std::ostream &ost);
+#endif
 static void direct_product_group_element_print_quick(
 		action &A,
 	void *elt, std::ostream &ost);
 static void direct_product_group_element_print_latex(
 		action &A,
 	void *elt, std::ostream &ost);
+static std::string direct_product_group_element_stringify(
+		action &A, void *elt, std::string &options);
 static void direct_product_group_element_print_latex_with_point_labels(
 	action &A,
 	void *elt, std::ostream &ost,
@@ -97,6 +101,8 @@ static void direct_product_group_element_print_verbose(
 static void direct_product_group_print_point(
 		action &A,
 	long int a, std::ostream &ost, int verbose_level);
+static std::string direct_product_group_stringify_point(
+		action &A, long int a, int verbose_level);
 
 
 
@@ -104,6 +110,8 @@ static void direct_product_group_print_point(
 void action_pointer_table::init_function_pointers_direct_product_group()
 {
 	label.assign("function_pointers_direct_product_group");
+
+	// the first 10:
 	ptr_element_image_of = direct_product_group_element_image_of;
 	ptr_element_image_of_low_level =
 			direct_product_group_element_image_of_low_level;
@@ -117,6 +125,8 @@ void action_pointer_table::init_function_pointers_direct_product_group()
 	ptr_element_pack = direct_product_group_element_pack;
 	ptr_element_retrieve = direct_product_group_element_retrieve;
 	ptr_element_store = direct_product_group_element_store;
+
+	// the next 10:
 	ptr_element_mult = direct_product_group_element_mult;
 	ptr_element_invert = direct_product_group_element_invert;
 	ptr_element_transpose = direct_product_group_element_transpose;
@@ -125,16 +135,22 @@ void action_pointer_table::init_function_pointers_direct_product_group()
 	ptr_element_print = direct_product_group_element_print;
 	ptr_element_print_quick = direct_product_group_element_print_quick;
 	ptr_element_print_latex = direct_product_group_element_print_latex;
+	ptr_element_stringify = direct_product_group_element_stringify;
 	ptr_element_print_latex_with_point_labels =
 			direct_product_group_element_print_latex_with_point_labels;
+
+	// the next 6:
 	ptr_element_print_verbose = direct_product_group_element_print_verbose;
 	ptr_element_code_for_make_element =
 			direct_product_group_element_code_for_make_element;
+#if 0
 	ptr_element_print_for_make_element =
 			direct_product_group_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas =
 			direct_product_group_element_print_for_make_element_no_commas;
+#endif
 	ptr_print_point = direct_product_group_print_point;
+	ptr_stringify_point = direct_product_group_stringify_point;
 }
 
 
@@ -421,6 +437,7 @@ static void direct_product_group_element_code_for_make_element(
 	exit(1);
 }
 
+#if 0
 static void direct_product_group_element_print_for_make_element(
 		action &A,
 		void *elt, std::ostream &ost)
@@ -449,6 +466,7 @@ static void direct_product_group_element_print_for_make_element_no_commas(
 	//cout << "direct_product_group_element_print_for_make_element_no_commas "
 	//		"not yet implemented" << endl;
 }
+#endif
 
 static void direct_product_group_element_print_quick(
 		action &A, void *elt, std::ostream &ost)
@@ -467,6 +485,17 @@ static void direct_product_group_element_print_latex(
 	int *Elt = (int *) elt;
 
 	P.element_print_easy_latex(Elt, ost);
+}
+
+static std::string direct_product_group_element_stringify(
+		action &A, void *elt, std::string &options)
+{
+	string s;
+	//group_constructions::direct_product &P = *A.G.direct_product_group;
+	//int *Elt = (int *) elt;
+
+	//P.element_print_easy_latex(Elt, ost);
+	return s;
 }
 
 
@@ -527,6 +556,15 @@ static void direct_product_group_print_point(
 			"not yet implemented" << endl;
 	exit(1);
 }
+
+static std::string direct_product_group_stringify_point(
+		action &A, long int a, int verbose_level)
+{
+	cout << "direct_product_group_stringify_point "
+			"not yet implemented" << endl;
+	exit(1);
+}
+
 
 }}}
 

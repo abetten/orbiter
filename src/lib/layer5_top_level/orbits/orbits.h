@@ -453,6 +453,45 @@ public:
 			std::string &fname_transporter,
 			int verbose_level);
 #endif
+	void linear_codes_with_bounded_minimum_distance(
+			poset_classification::poset_classification_control *Control,
+			group_constructions::linear_group *LG,
+			int d, int target_depth,
+			poset_classification::poset_classification *&PC,
+			int verbose_level);
+	void do_orbits_on_subspaces(
+			groups::any_group *Any_group,
+			poset_classification::poset_classification_control *Control,
+			orbits::orbits_on_subspaces *&OoS,
+			int depth, int verbose_level);
+	void do_tensor_classify(
+			groups::any_group *Any_group,
+			std::string &control_label,
+			apps_geometry::tensor_classify *&T,
+			int depth, int verbose_level);
+	void do_tensor_permutations(
+			groups::any_group *Any_group,
+			int verbose_level);
+	void do_linear_codes(
+			groups::any_group *Any_group,
+			std::string &control_label,
+			int minimum_distance,
+			int target_size,
+			poset_classification::poset_classification *&PC,
+			int verbose_level);
+	void do_classify_ovoids(
+			groups::any_group *Any_group,
+			apps_geometry::ovoid_classify_description
+				*Ovoid_classify_description,
+			int verbose_level);
+	void conjugacy_class_of(
+			groups::any_group *Any_group,
+			std::string &label_of_class,
+			std::string &elt_data,
+			int verbose_level);
+	// uses orbits_schreier::orbit_of_sets
+	// needs Subgroup_sims to set up action by conjugation
+	// uses Any_group->Subgroup_sims as base group
 
 };
 

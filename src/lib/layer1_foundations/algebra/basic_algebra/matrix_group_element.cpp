@@ -280,22 +280,6 @@ int matrix_group_element::GL_element_entry_frobenius(
 		exit(1);
 	}
 	return Elt[Matrix_group->offset_frobenius];
-#if 0
-	if (Matrix_group->f_projective) {
-		return Elt[Matrix_group->n * Matrix_group->n];
-	}
-	else if (Matrix_group->f_affine) {
-		return Elt[Matrix_group->n * Matrix_group->n + Matrix_group->n];
-	}
-	else if (Matrix_group->f_general_linear) {
-		return Elt[Matrix_group->n * Matrix_group->n];
-	}
-	else {
-		cout << "matrix_group_element::GL_element_entry_frobenius "
-				"unknown group type" << endl;
-		exit(1);
-	}
-#endif
 }
 
 long int matrix_group_element::image_of_element(
@@ -711,7 +695,6 @@ void matrix_group_element::GL_mult_internal(
 				cout << "matrix_group_element::GL_mult_internal "
 						"before GFq->semilinear_matrix_mult" << endl;
 			}
-			//GFq->semilinear_matrix_mult(A, B, AB, n);
 			Matrix_group->GFq->Linear_algebra->semilinear_matrix_mult_memory_given(
 					A, B, AB, tmp_M, Matrix_group->n,
 					verbose_level - 1);
@@ -751,7 +734,6 @@ void matrix_group_element::GL_mult_internal(
 				cout << "matrix_group_element::GL_mult_internal "
 						"before GFq->semilinear_matrix_mult" << endl;
 			}
-			//GFq->semilinear_matrix_mult(A, B, AB, n);
 			Matrix_group->GFq->Linear_algebra->semilinear_matrix_mult_memory_given(
 					A, B, AB, tmp_M, Matrix_group->n,
 					verbose_level - 1);
@@ -828,16 +810,6 @@ void matrix_group_element::GL_transpose_only(
 			A + Matrix_group->elt_size_int_half,
 			At + Matrix_group->elt_size_int_half,
 			Matrix_group->n);
-
-#if 0
-	GL_copy_internal(A, At);
-	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
-			At, Matrix_group->n);
-
-	GL_copy_internal(A + Matrix_group->elt_size_int_half, At + Matrix_group->elt_size_int_half);
-	Matrix_group->GFq->Linear_algebra->transpose_matrix_in_place(
-			At + Matrix_group->elt_size_int_half, Matrix_group->n);
-#endif
 
 	if (f_v) {
 		cout << "matrix_group_element::GL_transpose_only done" << endl;
@@ -1012,9 +984,11 @@ void matrix_group_element::GL_unpack(
 	else if (Matrix_group->f_affine) {
 		decode_matrix(
 				Elt, Matrix_group->n, elt);
+
 		for (i = 0; i < Matrix_group->n; i++) {
 			Elt[Matrix_group->offset_affine_vector + i] = get_digit(elt, Matrix_group->n, i);
 		}
+
 		if (Matrix_group->f_semilinear) {
 			Elt[Matrix_group->offset_frobenius] = decode_frobenius(elt);
 		}
@@ -1054,15 +1028,18 @@ void matrix_group_element::GL_pack(
 
 	if (Matrix_group->f_projective) {
 		if (f_v) {
-			cout << "matrix_group_element::GL_pack f_projective" << endl;
+			cout << "matrix_group_element::GL_pack "
+					"f_projective" << endl;
 		}
 		if (f_v) {
-			cout << "matrix_group_element::GL_pack before encode_matrix" << endl;
+			cout << "matrix_group_element::GL_pack "
+					"before encode_matrix" << endl;
 		}
 		encode_matrix(
 				Elt, Matrix_group->n, elt, verbose_level);
 		if (f_v) {
-			cout << "matrix_group_element::GL_pack after encode_matrix" << endl;
+			cout << "matrix_group_element::GL_pack "
+					"after encode_matrix" << endl;
 		}
 		if (Matrix_group->f_semilinear) {
 			encode_frobenius(
@@ -1120,21 +1097,11 @@ void matrix_group_element::GL_pack(
 void matrix_group_element::GL_print_easy(
 		int *Elt, std::ostream &ost)
 {
-    //int i, j, a;
     int w;
 
 	w = (int) Matrix_group->GFq->log10_of_q;
 
 	Int_matrix_print_width(ost, Elt, Matrix_group->n, Matrix_group->n, w);
-#if 0
-	for (i = 0; i < Matrix_group->n; i++) {
-		for (j = 0; j < Matrix_group->n; j++) {
-			a = Elt[i * Matrix_group->n + j];
-			ost << setw(w) << a << " ";
-		}
-		ost << endl;
-	}
-#endif
 	if (Matrix_group->f_affine) {
 		Int_vec_print(ost, Elt + Matrix_group->offset_affine_vector, Matrix_group->n);
 		if (Matrix_group->f_semilinear) {
@@ -1171,10 +1138,6 @@ void matrix_group_element::GL_code_for_make_element(
 void matrix_group_element::GL_print_for_make_element(
 		int *Elt, std::ostream &ost)
 {
-	//int i, j, a;
-	//int w;
-
-	//w = (int) GFq->log10_of_q;
 
 	int *Data;
 	Data = NEW_int(Matrix_group->make_element_size);
@@ -1183,36 +1146,6 @@ void matrix_group_element::GL_print_for_make_element(
 			Elt, Data);
 
 	Int_vec_print_bare_fully(ost, Data, Matrix_group->make_element_size);
-
-#if 0
-	Int_vec_copy(Elt, D, Matrix_group->n * Matrix_group->n);
-
-	if (Matrix_group->f_projective) {
-		Matrix_group->GFq->Projective_space_basic->PG_element_normalize_from_front(
-				D, 1, Matrix_group->n * Matrix_group->n);
-	}
-
-	for (i = 0; i < Matrix_group->n; i++) {
-		for (j = 0; j < Matrix_group->n; j++) {
-			a = D[i * Matrix_group->n + j];
-			ost << a << ",";
-		}
-	}
-	if (Matrix_group->f_affine) {
-		for (i = 0; i < Matrix_group->n; i++) {
-			a = Elt[Matrix_group->offset_affine_vector + i];
-			ost << a << ",";
-		}
-		if (Matrix_group->f_semilinear) {
-			ost << Elt[Matrix_group->offset_frobenius] << ",";
-		}
-	}
-	else {
-		if (Matrix_group->f_semilinear) {
-			ost << Elt[Matrix_group->offset_frobenius] << ",";
-		}
-	}
-#endif
 
 	FREE_int(Data);
 
@@ -1239,39 +1172,12 @@ void matrix_group_element::GL_print_for_make_element_no_commas(
 	}
 	FREE_int(Data);
 
-#if 0
-	int i, j, a;
-	int w;
-
-	w = (int) Matrix_group->GFq->log10_of_q;
-	for (i = 0; i < Matrix_group->n; i++) {
-		for (j = 0; j < Matrix_group->n; j++) {
-			a = Elt[i * Matrix_group->n + j];
-			ost << setw(w) << a << " ";
-		}
-	}
-	if (Matrix_group->f_affine) {
-		for (i = 0; i < Matrix_group->n; i++) {
-			a = Elt[Matrix_group->offset_affine_vector + i];
-			ost << setw(w) << a << " ";
-		}
-		if (Matrix_group->f_semilinear) {
-			ost << Elt[Matrix_group->offset_frobenius] << " ";
-		}
-	}
-	else {
-		if (Matrix_group->f_semilinear) {
-			ost << Elt[Matrix_group->offset_frobenius] << " ";
-		}
-	}
-#endif
 }
 
 void matrix_group_element::GL_print_easy_normalized(
 		int *Elt, std::ostream &ost)
 {
 	int f_v = false;
-    //int i, j, a;
     int w;
 
 	if (f_v) {
@@ -1323,6 +1229,7 @@ void matrix_group_element::GL_print_latex(
 	Int_vec_copy(Elt, D, Matrix_group->n * Matrix_group->n);
 
 	if (Matrix_group->f_projective) {
+
 		//GFq->PG_element_normalize_from_front(D, 1, n * n);
 		Matrix_group->GFq->Projective_space_basic->PG_element_normalize(
 				D, 1, Matrix_group->n * Matrix_group->n);
@@ -1332,9 +1239,10 @@ void matrix_group_element::GL_print_latex(
 			ost, D, Matrix_group->n, Matrix_group->n);
 
 	if (Matrix_group->f_affine) {
+
 		Matrix_group->GFq->Io->print_matrix_latex(
 				ost, Elt + Matrix_group->offset_affine_vector, 1, Matrix_group->n);
-		//int_vec_print(ost, Elt + n * n, n);
+
 		if (Matrix_group->f_semilinear) {
 			ost << "_{" << Elt[Matrix_group->offset_frobenius] << "}" << endl;
 		}
@@ -1587,14 +1495,6 @@ int matrix_group_element::decode_frobenius(
 	uchar mask, d = 0;
 
 	h0 = (int) (Matrix_group->offset_frobenius) * Matrix_group->bits_per_digit;
-#if 0
-	if (Matrix_group->f_affine) {
-		h0 = (int) (Matrix_group->offset_frobenius) * Matrix_group->bits_per_digit;
-	}
-	else {
-		h0 = (int) Matrix_group->offset_frobenius * Matrix_group->bits_per_digit;
-	}
-#endif
 	for (h = (int) Matrix_group->bits_extension_degree - 1; h >= 0; h--) {
 		h1 = h0 + h;
 		word = h1 >> 3;
@@ -1671,14 +1571,6 @@ void matrix_group_element::encode_frobenius(
 	uchar mask;
 
 	h0 = (int) Matrix_group->offset_frobenius * Matrix_group->bits_per_digit;
-#if 0
-	if (Matrix_group->f_affine) {
-		h0 = (int) (Matrix_group->offset_frobenius) * Matrix_group->bits_per_digit;
-	}
-	else {
-		h0 = (int) Matrix_group->offset_frobenius * Matrix_group->bits_per_digit;
-	}
-#endif
 	for (h = 0; h < Matrix_group->bits_extension_degree; h++) {
 		h1 = h0 + h;
 		word = h1 >> 3;
@@ -1898,34 +1790,40 @@ void matrix_group_element::dispose(
 }
 
 void matrix_group_element::print_point(
-		long int a, std::ostream &ost, int verbose_level)
+		long int rk, std::ostream &ost, int verbose_level)
+// v[Matrix_group->n]
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "matrix_group_element::print_point" << endl;
 	}
-	geometry::other_geometry::geometry_global Gg;
 
-	if (Matrix_group->f_projective) {
-		Matrix_group->GFq->Projective_space_basic->PG_element_unrank_modified_lint(
-				v1, 1, Matrix_group->n, a);
-	}
-	else if (Matrix_group->f_affine) {
-		Gg.AG_element_unrank(Matrix_group->GFq->q, v1, 1, Matrix_group->n, a);
-	}
-	else if (Matrix_group->f_general_linear) {
-		Gg.AG_element_unrank(Matrix_group->GFq->q, v1, 1, Matrix_group->n, a);
-	}
-	else {
-		cout << "matrix_group_element::print_point unknown group type" << endl;
-		exit(1);
-	}
+	unrank_point(rk, v1, verbose_level);
 	Int_vec_print(ost, v1, Matrix_group->n);
 }
 
+std::string matrix_group_element::stringify_point(
+		long int rk, int verbose_level)
+// v[Matrix_group->n]
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group_element::stringify_point" << endl;
+	}
+	string s;
+
+	unrank_point(rk, v1, verbose_level);
+	s = Int_vec_stringify(v1, Matrix_group->n);
+	return s;
+}
+
+
+
 void matrix_group_element::unrank_point(
 		long int rk, int *v, int verbose_level)
+// v[Matrix_group->n]
 {
 	int f_v = (verbose_level >= 1);
 

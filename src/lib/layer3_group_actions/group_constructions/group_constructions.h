@@ -481,6 +481,14 @@ public:
 class modified_group_create {
 
 public:
+
+	// See also at level 5:
+	//void algebra_global_with_action::modified_group_init(
+	//		group_constructions::modified_group_create *Modified_group_create,
+	//		group_constructions::group_modification_description *Descr,
+	//		int verbose_level)
+
+
 	group_modification_description *Descr;
 
 	std::string label;

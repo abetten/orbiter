@@ -3924,6 +3924,124 @@ void csv_file_support::append_column_of_int(
 	}
 }
 
+
+void csv_file_support::append_column_of_int_from_set_of_sets(
+		std::string &fname,
+		std::string &fname_out,
+		other::data_structures::set_of_sets_lint *SoS,
+		std::string &new_col_label,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+				"file " << fname << endl;
+	}
+
+	std::string *Table_out;
+	std::string *Col_headings;
+	int nb_rows;
+	int nb_cols;
+	int idx_new_col;
+
+	if (Fio->file_size(fname) <= 0) {
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					" file " << fname << " is empty" << endl;
+		}
+
+		nb_rows = SoS->nb_sets;
+		nb_cols = 1;
+
+
+		Table_out = new std::string[nb_rows * nb_cols];
+
+		Col_headings = new std::string[nb_cols];
+		idx_new_col = 0;
+
+	}
+	else {
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"reading file " << fname << endl;
+		}
+
+		std::string *col_labels;
+		std::string *Table;
+		int m, n;
+
+		read_table_of_strings(
+				fname, col_labels,
+				Table, m, n,
+				verbose_level);
+
+		if (f_v) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"nb_rows = " << m << endl;
+		}
+
+		if (m != SoS->nb_sets) {
+			cout << "csv_file_support::append_column_of_int_from_set_of_sets "
+					"m != SoS->nb_sets" << endl;
+			exit(1);
+		}
+
+		nb_rows = m;
+		nb_cols = n + 1;
+		int i, j;
+
+		Table_out = new std::string[nb_rows * nb_cols];
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < n; j++) {
+				Table_out[i * nb_cols + j] = Table[i * n + j];
+			}
+		}
+		idx_new_col = n;
+
+		Col_headings = new std::string[nb_cols];
+		for (j = 0; j < n; j++) {
+			Col_headings[j] = col_labels[j];
+		}
+
+		delete [] Table;
+		delete [] col_labels;
+
+	}
+
+	int i;
+
+	for (i = 0; i < nb_rows; i++) {
+		Table_out[i * nb_cols + idx_new_col] = "\"" + SoS->stringify_set(i) + "\"";
+	}
+
+	Col_headings[idx_new_col] = new_col_label;
+
+	other::data_structures::string_tools ST;
+
+	fname_out = fname;
+
+	ST.chop_off_extension(fname_out);
+
+	fname_out += "_append.csv";
+
+	write_table_of_strings_with_col_headings(
+			fname_out,
+			nb_rows, nb_cols, Table_out,
+			Col_headings,
+			verbose_level);
+
+	delete [] Table_out;
+	delete [] Col_headings;
+
+	if (f_v) {
+		cout << "csv_file_support::append_column_of_int_from_set_of_sets done" << endl;
+	}
+}
+
+
 void csv_file_support::write_STL_lint_vec(
 		std::string &fname_out,
 		std::vector<long int> &Gens,

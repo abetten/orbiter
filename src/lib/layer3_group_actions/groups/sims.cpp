@@ -1362,6 +1362,7 @@ void sims::element_from_path(
 #endif
 	
 	A->Group_element->element_one(eltrk1, false);
+
 	for (i = 0; i < A->base_len(); i++) {
 		j = path[i];
 		if (f_v) {
@@ -1387,7 +1388,9 @@ void sims::element_from_path(
 		//A->element_print_as_permutation(cosetrep, cout);
 		//cout << endl;
 		
-		// pre multiply the coset representative:
+		// pre multiply the coset representative because
+		// we are going in oder of increasing base depth
+
 		A->Group_element->element_mult(eltrk3, eltrk1, eltrk2, 0);
 		A->Group_element->element_move(eltrk2, eltrk1, 0);
 	}
@@ -1950,6 +1953,10 @@ void sims::compute_coset_rep_path(
 		exit(1);
 	}
 	if (f_vv) {
+		cout << "sims::compute_coset_rep_path path = ";
+		cout << "sims::compute_coset_rep_path "
+				"i=" << i << " j=" << j
+				<< " depth = " << depth << endl;
 		cout << "sims::compute_coset_rep_path path = ";
 		Int_vec_print(cout, Path, depth + 1);
 		cout << endl;

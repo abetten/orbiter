@@ -928,6 +928,29 @@ public:
 
 	packings_global();
 	~packings_global();
+
+	// the following two functions are not called from anywhere:
+
+	void orbits_under_conjugation(
+			long int *the_set, int set_size,
+			groups::sims *S,
+			groups::strong_generators *SG,
+			data_structures_groups::vector_ge *Transporter,
+			int verbose_level);
+	// this is related to Betten, Topalova, Zhelezova 2021,
+	// packings in PG(3,4) invariant under an elementary abelian group of order 4
+	void create_subgroups(
+			groups::strong_generators *SG,
+			long int *the_set, int set_size,
+			groups::sims *S,
+			actions::action *A_conj,
+			groups::schreier *Classes,
+			data_structures_groups::vector_ge *Transporter,
+			int verbose_level);
+	// this is related to Betten, Topalova, Zhelezova 2021,
+	// packings in PG(3,4) invariant under an elementary abelian group of order 4
+
+#if 0
 	void merge_packings(
 			std::string *fnames, int nb_files,
 			std::string &file_of_spreads,
@@ -948,6 +971,7 @@ public:
 			geometry::finite_geometries::spread_tables *Spread_tables,
 			combinatorics::canonical_form_classification::classify_bitvectors *&CB,
 			int verbose_level);
+#endif
 
 };
 
